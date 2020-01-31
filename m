@@ -2,131 +2,159 @@ Return-Path: <SRS0=EOdt=3U=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 545F5C2D0DB
-	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 15:52:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 79297C35240
+	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 15:52:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 16C9B2082E
-	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 15:52:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4457420661
+	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 15:52:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=diamand.org header.i=@diamand.org header.b="J+/Epbpp"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fxEO8Btz"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729224AbgAaPwW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 31 Jan 2020 10:52:22 -0500
-Received: from mail-wm1-f45.google.com ([209.85.128.45]:40663 "EHLO
-        mail-wm1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729030AbgAaPwV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Jan 2020 10:52:21 -0500
-Received: by mail-wm1-f45.google.com with SMTP id t14so9211891wmi.5
-        for <git@vger.kernel.org>; Fri, 31 Jan 2020 07:52:20 -0800 (PST)
+        id S1729233AbgAaPwe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 31 Jan 2020 10:52:34 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:39202 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729016AbgAaPwe (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Jan 2020 10:52:34 -0500
+Received: by mail-wr1-f68.google.com with SMTP id y11so9170758wrt.6
+        for <git@vger.kernel.org>; Fri, 31 Jan 2020 07:52:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=f95LSI90e169v4CPYTQADIrINRbOHQ9H7hhLGf8VqAQ=;
-        b=J+/EpbppCcu1Q9rYyuhbZ3/qHNclsz85/h7a3/Vb55/lZO9fzRdHM62jgeQECAgb/Y
-         zt0WnE8crxBlvfL2CZ6CTaPwkbYCtB6kOkF8ckzpxVl6TUGhJbHfmDsuDzu6QOp0Ewa3
-         tSYzcsx0aqotalkl3XUKdW1DEETSoyQ2BuhCk=
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=Gu/agncmNkZGBITubZfDcQEALaJu785v9MK3LpePjsI=;
+        b=fxEO8BtzFusK3nwjU1BIYYgj7P0a5cYopDh1xeWgJpzz97wrAR5fBi4Mzesg07DVIX
+         hjjFyoBRdI8hBX+p2vH9RJSludfqISNvJE1cYJNTvabnC4jqj3ooFJChkjkbIaOI/nNV
+         n6wctCiinJheKuv9Ca+/94N9KXPingzheuTyXFfhc3UELOz4wgM8aGR0znajJG5cMlln
+         p6wzizmpUNRk4y6zZaUlLbYO+QkMLuGdAniAaDts3ikKxWWmwvTJWJwNOyfeQyrAPULO
+         FiiTbdP3mP4sgWwKFiTxsklCq9p9ULYp7Wl9kMI7WJNibpSKNRqtpM8okNKPRQSm5ITy
+         2fCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=f95LSI90e169v4CPYTQADIrINRbOHQ9H7hhLGf8VqAQ=;
-        b=dN4geHo4DQxIYeDRcfh97xHeNggc3Qqkt3G4sUrbpJSbHfywYLCkYGN9odklk6jkA/
-         318lmk0qooh+dT0gtzuojIolTaMA91El0bNTv5RZa+SH7m4s5JiK1o8yLzkpDBsioNwT
-         XpIbyJvsVQypWIYqBhjuAr0pHNEIrD/LeZrDr2qv48bhQytVbSrr4io6nG6tcNWPAuII
-         YPDYJ9yHN9ERx3W3I/3JjpAobRUj+5+FGHYPwE+j+aTprD+ZcRl+nhg+LeOjEQZkuhKL
-         0zS/65gruWjfkK4Tz4GNKx0Lh0dSVxZuxoiQOH9GGgzRV6ZzYfYr4I4981AqctlfUs2G
-         TpxQ==
-X-Gm-Message-State: APjAAAWNoR5w1nrqsCeDKCSdDOaZqe/34ko6pogLKhYKK+uhFfnSXJNH
-        vAIrpLz4Lf5TtzOR37+i6TD/iOPMN37F8Z8YGX4JdA==
-X-Google-Smtp-Source: APXvYqweTfDEkDfZ0LcxPKt6WgSZE0lTjNqUZo9vC6Gy0mIg+y+f2uMfyh6Rb+iuI9MF9D5nytl7sNB4TWRIeqcC7jw=
-X-Received: by 2002:a1c:e3c2:: with SMTP id a185mr12653894wmh.27.1580485939542;
- Fri, 31 Jan 2020 07:52:19 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=Gu/agncmNkZGBITubZfDcQEALaJu785v9MK3LpePjsI=;
+        b=NVseMYcT99ZWSj3aixOzo2Jsq48B7OWcVti3KBvIUpMWFBLsN0CsQ5rxlQf815VMsp
+         n5QyY/ctu2+57RVetTrEH19xVL8QzAc6/T4zXT2DPKYzrRlgZflle5N3R8O3dd9mZWCV
+         icHhD0X7bGJnfeCwAOBl3NfpMtXrjSeBmAOQRAd3Ejo9fu78lsRnIRqaisCnpNrLjSMQ
+         VcFm6dyxVd9dxX+/9pHp6NvrDQcpDHdOqlYS0jBc/W9DLsrqbMak8awBDL7ig9dKuKFd
+         OXsPqXnOjDrMH6y4qCbZ6XZrJdxNz0vqSuGrz85p+mOsSpRvDwFk/6zp4AVMqg6vfGgr
+         DirQ==
+X-Gm-Message-State: APjAAAW/JD75OigcLr83alKD6Emnobd3lUcZ7aEEvrac3xanxv9w3HKp
+        TARcJuRbqYQPyztyTZjcM6s=
+X-Google-Smtp-Source: APXvYqyAfCc0RUUXP+BHc4NbZFWq/Ltq3qvpkYOVvfgmCajCigY4xMaa6DDQ102l5LecjE3IABtPkw==
+X-Received: by 2002:adf:ec06:: with SMTP id x6mr12363162wrn.335.1580485952212;
+        Fri, 31 Jan 2020 07:52:32 -0800 (PST)
+Received: from szeder.dev (x4db61755.dyn.telefonica.de. [77.182.23.85])
+        by smtp.gmail.com with ESMTPSA id t10sm10792502wmi.40.2020.01.31.07.52.30
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 31 Jan 2020 07:52:31 -0800 (PST)
+Date:   Fri, 31 Jan 2020 16:52:28 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@gmail.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] branch: let '--edit-description' default to rebased
+ branch during rebase
+Message-ID: <20200131155228.GF10482@szeder.dev>
+References: <20200111123533.1613844-1-marcandre.lureau@redhat.com>
+ <CAPig+cQXkiFOz5HczPEgXuSOH_3KsCwXwVwe0qvQzLDtFgnAXw@mail.gmail.com>
+ <CAJ+F1CKW3NACgPdPbmAzYGVwR4iO3r+LCNq+g5st0gcz4X+fzA@mail.gmail.com>
+ <CAPig+cRCMXjjPHc2O8fLmaSm9m-ZO3qR2BoZwG3s5dLHNbiFFQ@mail.gmail.com>
+ <20200112121402.GH32750@szeder.dev>
+ <CAPig+cRvYzm8Cb-AWqOeANRziWyjhWXT32QJ6TsA1==8Joa4zQ@mail.gmail.com>
+ <20200124224113.GJ6837@szeder.dev>
+ <CAJ+F1CL7RD2Rxaskk47f_UCQLP6yaM_woxTb1pag-ejqP9prBg@mail.gmail.com>
 MIME-Version: 1.0
-References: <CAPgZwKbZ0g+VXjnD03hGkRXfwU2DpygLhLBFG3xv1W9c8oQ1fQ@mail.gmail.com>
- <CAE5ih79j+o87yEPbj+nFR6b4rx_NU2eLJite69=+qMdpXdEidw@mail.gmail.com> <CAPgZwKbYKPbZeEY2O22DJBvDpjHRR2XVW9hQ7-tML-UE2bkXYA@mail.gmail.com>
-In-Reply-To: <CAPgZwKbYKPbZeEY2O22DJBvDpjHRR2XVW9hQ7-tML-UE2bkXYA@mail.gmail.com>
-From:   Luke Diamand <luke@diamand.org>
-Date:   Fri, 31 Jan 2020 15:52:08 +0000
-Message-ID: <CAE5ih79xWfjLC48y=mSLhdG2zVR5d-XeAbJJFV2SPTew5FGf+Q@mail.gmail.com>
-Subject: =?UTF-8?Q?Re=3A_git=2Dp4_cannot_use_perforce_client_created_by_p4j?=
-        =?UTF-8?Q?ava_=E2=80=94_=22Expected_view_key_View1_missing=22?=
-To:     Ivan Selin <ivan.selin@toptal.com>
-Cc:     Git Users <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAJ+F1CL7RD2Rxaskk47f_UCQLP6yaM_woxTb1pag-ejqP9prBg@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 31 Jan 2020 at 13:43, Ivan Selin <ivan.selin@toptal.com> wrote:
->
-> Yes, that's exactly the way that I've tried it and it worked for me.
-> Can we have that integrated into git-p4? What can I do to make it
-> happen?
-
-A patch would be very welcome!
-
-See Documentation/SubmittingPatches for details, but it's likely
-enough to just make the change, and then use git format-patch and git
-send-email.
-
-Please ensure you add a "Signed-off-by" (git commit -s).
-
-Thanks!
-Luke
-
-
->
-> On Wed, Jan 29, 2020 at 1:35 PM Luke Diamand <luke@diamand.org> wrote:
+On Thu, Jan 30, 2020 at 10:37:38PM +0100, Marc-André Lureau wrote:
+> Hi
+> 
+> On Fri, Jan 24, 2020 at 11:41 PM SZEDER Gábor <szeder.dev@gmail.com> wrote:
 > >
-> > On Tue, 7 Jan 2020 at 15:53, Ivan Selin <ivan.selin@toptal.com> wrote:
+> > On Sun, Jan 12, 2020 at 08:59:04PM -0500, Eric Sunshine wrote:
+> > > On Sun, Jan 12, 2020 at 7:14 AM SZEDER Gábor <szeder.dev@gmail.com> wrote:
+> > > > On Sat, Jan 11, 2020 at 08:27:11PM -0500, Eric Sunshine wrote:
+> > > > > Taking a deeper look at the code, I'm wondering it would make more
+> > > > > sense to call wt_status_get_state(), which handles 'rebase' and
+> > > > > 'bisect'. Is there a reason that you limited this check to only
+> > > > > 'rebase'?
+> > > >
+> > > > What branch name does wt_status_get_state() return while bisecting?
+> > > > The branch where I started from?  Because that's what 'git status'
+> > > > shows:
+> > > > But am I really on that branch?  Does it really makes sense to edit
+> > > > the description of 'mybranch' by default while bisecting through an
+> > > > old revision range?  I do not think so.
 > > >
-> > > Hello!
-> > >
-> > > If I create a perforce client from java using p4java, it gets created
-> > > with an extra key "ViewDepotType" in client definition. When I try to
-> > > do `git p4 sync --use-client-spec`, git-p4 dies with message like
-> > > "Expected view key View1 missing" =E2=80=94 because it assumes that a=
-ll keys
-> > > starting with "View" are "View0", "View1" and so on.
-> > >
-> > > How to reproduce:
-> > > 1) Create perforce repository;
-> > > 2) Create a perforce client (let's name it "my-client") in said
-> > > perforce repository using p4java; add one view mapping to the client
-> > > on creation;
-> > > 3) Run `P4CLIENT=3Dmy-client git p4 sync --use-client-spec`;
-> > > 4) git p4 finishes with error "Expected view key View1 missing".
-> > >
-> > > Attaching hexdumped/unmarshalled examples of "regular" client
-> > > definition and client created with p4java. Note that p4java's version
-> > > has "ViewDepotType" key and regular client does not. Also,
-> > > "ViewDepotType" key is not showing up in text output of `p4 client
-> > > -o`, only in binary format (`p4 -G client -o`). And I'm attaching a
-> > > patch that solved the issue for me.
-> > >
-> > > Is that information enough or should I add anything else? I'm new to
-> > > git community, but willing to help.
+> > > It's not clear what downside you are pointing out; i.e. why would it
+> > > be a bad thing to be able to set the branch description even while
+> > > bisecting -- especially since `git status` affirms that it knows the
+> > > branch?
 > >
-> > I suspect the problem lies at around line 4220 of git-p4, where it does=
- this:
+> > No, during a bisect operation 'git status' knows the branch where I
+> > _was_ when I started bisecting, and where a 'git bisect reset' will
+> > eventually bring me back when I'm finished, and that has no relation
+> > whatsoever to the revision range that I'm bisecting.
 > >
-> >      view_keys =3D [ k for k in entry.keys() if k.startswith("View") ]
+> > Consider this case:
 > >
-> > I think changing that startswith to a regex match would fix this,
-> > although I have not tried it.
-> > Something like:
+> >   $ git checkout --orphan unrelated-history
+> >   Switched to a new branch 'unrelated-history'
+> >   $ git commit -m "test"
+> >   [unrelated-history (root-commit) 639b9d1047] test
+> >   <...>
+> >   $ git bisect start v2.25.0 v2.24.0
+> >   Bisecting: 361 revisions left to test after this (roughly 9 steps)
+> >   [7034cd094bda4edbcdff7fad1a28fcaaf9b9a040] Sync with Git 2.24.1
+> >   $ git status
+> >   HEAD detached at 7034cd094b
+> >   You are currently bisecting, started from branch 'unrelated-history'.
+> >     (use "git bisect reset" to get back to the original branch)
 > >
-> > is_view =3D re.compile(r'^View\d+$')
-> > view_keys =3D [ k for k in entry.keys() if is_view.match(k) ]
+> >   nothing to commit, working tree clean
+> >
+> > I can't possible be on branch 'unrelated-history' during that
+> > bisection.
 > >
 > >
-> > >
-> > > Regards,
-> > > Ivan.
+> > OTOH, while during a rebase we are technically on a detached HEAD as
+> > well, that rebase operation is all about constructing the new history
+> > of the rebased branch, and once finished that branch will be updated
+> > to point to the tip of the new history, thus it will include all the
+> > commits created while on the detached HEAD.  Therefore, it makes sense
+> > conceptually to treat it as if we were on the rebased branch.  That's
+> > why it makes sense to display the name of the rebased branch in the
+> > Bash prompt, and that's why I think it makes sense to default to edit
+> > the description of the rebased branch without explicitly naming it.
+> >
+> > With bisect that just doesn't make sense.
+> 
+> If the range you are bisecting belongs or lead to the current branch,
+> that still makes sense. And it's probably most of the time. So, I am
+> not sure your objection is valid enough here.
+
+I'm not sure what you mean with "belongs or lead to" a branch.
+
+Do you mean that the range is reachable from the branch that just so
+happened to be checked out when the bisection was started?  Well, I
+have over 30 branches from where v2.25.0 is reachable, and all of them
+are obviously bad candidates for editing their descriptions by default
+while bisecting a totally unrelated issue.
+
