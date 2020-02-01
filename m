@@ -2,182 +2,147 @@ Return-Path: <SRS0=aK8K=3V=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.3 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_IN_DEF_DKIM_WL autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0576EC33CB7
-	for <git@archiver.kernel.org>; Sat,  1 Feb 2020 00:01:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AFC3EC33CB7
+	for <git@archiver.kernel.org>; Sat,  1 Feb 2020 00:48:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B198720722
-	for <git@archiver.kernel.org>; Sat,  1 Feb 2020 00:01:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 791B620663
+	for <git@archiver.kernel.org>; Sat,  1 Feb 2020 00:48:26 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="SdpOCCkz"
+	dkim=pass (2048-bit key) header.d=mcgwiz-com.20150623.gappssmtp.com header.i=@mcgwiz-com.20150623.gappssmtp.com header.b="05xIkfAC"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726322AbgAaX6J (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 31 Jan 2020 18:58:09 -0500
-Received: from mail-qt1-f195.google.com ([209.85.160.195]:33724 "EHLO
-        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726264AbgAaX6J (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Jan 2020 18:58:09 -0500
-Received: by mail-qt1-f195.google.com with SMTP id d5so6868799qto.0
-        for <git@vger.kernel.org>; Fri, 31 Jan 2020 15:58:08 -0800 (PST)
+        id S1726484AbgBAAsZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 31 Jan 2020 19:48:25 -0500
+Received: from mail-lf1-f68.google.com ([209.85.167.68]:46910 "EHLO
+        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726264AbgBAAsY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Jan 2020 19:48:24 -0500
+Received: by mail-lf1-f68.google.com with SMTP id z26so6052367lfg.13
+        for <git@vger.kernel.org>; Fri, 31 Jan 2020 16:48:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=mcgwiz-com.20150623.gappssmtp.com; s=20150623;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=n2TPvNujwEoj7IihHT9IQ1V7kHB4rDc3zzc+at9RjXA=;
-        b=SdpOCCkzdbOkwia57EA4ZID4zqbwUs8+lRMKqz6SSn87FK3E839T8ucb88EmXPN21z
-         btzCfHERNPjIsvISK0mI6Oj+EdarclIQSbFWJt5wGjXWpn6j2sRkl7IY7gmP8vdMkz4/
-         IsiwrmgQ4wfKVp+KRlc3eWV2nr9xnCZhHh5dNio8vTPV3T33d7ljJ3YhmMGIKDdmsmgl
-         +1DC56ipSBmyX5hzg7zZr5gMiptENIhj9FFxxOfVOizc6z5I2fjG3sPFYMw+PZyDRI09
-         UOb/oXlD9IHGWezjSf7ynHMVY6sFmJ6y4j0wL5w2S6beNGkg+IEPXQpHhOEZV0m17FvK
-         MSpg==
+        bh=CgV+nKhIrsvXeeORSzal9aRu4VwEImXDtcL9UdVymNI=;
+        b=05xIkfACXDYMPxSvoxVnIt+N4r3b9BPev4aEwZqMEC1z5xNsAtsW++KP9S5HfLJ50q
+         3gZz5YyWF12VyyTX1SPRIBCBOFQDkhPSx/6O5vqHsjfjn0beoSdk9q/FceU6tneejQra
+         LB8M4M1QVJrm2pIj105WeGauxVrvy/Xs7lanIA1eAxYbpE3KqaBOdc0cnLXRZW/opoJ2
+         kPProDmitTZ1gMsPsYnzqBfG6PQL/IuKiHemQmFwespg5IxIezTP7Cy7lIdXgiW4DK7p
+         +UTJ579aOxp0TGASBfnGaKWdQiANSahUEAdH8XD08VvnnE8XgRWeWsBzHj+hT+CyZpca
+         7jSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=n2TPvNujwEoj7IihHT9IQ1V7kHB4rDc3zzc+at9RjXA=;
-        b=ePrK5UVFZryZOvs/2T64o324XTpiRHEqQHmhveZh9a+CKNoZMpDtQyWVC3NKOiag63
-         X1HZ6jkGzr6H0c2eghkLpZplPjyjfVOUsRdN86BEqKSnX7qCwAo1QI6VJCsgcyZcpKQV
-         s+umPpTQB0ZgBw+CLpym3C/m8aoeGOFjg21c5eDDkCXuWCIHh2MBQaqoHJj0bmrKlV7X
-         py8PhXTWkehwMLmF+dpNmMoMN3FzwXw25Z0cERMVwYm37EKlqkbZ8qfIYnpAnoWEkYH1
-         7+DqRC4ypv5rgqAngpTg0Fwn8oMJ5Z1NfwIUoR6FcOx3XPSzT5KSTKUxx3xfL/wDyRKp
-         UYhQ==
-X-Gm-Message-State: APjAAAWqJfwxRLd9U2q4HVQD7i7nHU1W4xxOC6EKkzbkcgW8OYXosgN9
-        NC77X6VIZgau0pKy43OzYsDZUo/YC/19Qn10vkT2Tw==
-X-Google-Smtp-Source: APXvYqw57oeJlELe3v2AIv9txmygdWH0iuKGaIy9305E51lSXqSXJAfoO/ba5jaIpQnhTwCSYFYhMQ85SB0Hv3w3Qko=
-X-Received: by 2002:aed:2344:: with SMTP id i4mr13352888qtc.136.1580515087283;
- Fri, 31 Jan 2020 15:58:07 -0800 (PST)
+        bh=CgV+nKhIrsvXeeORSzal9aRu4VwEImXDtcL9UdVymNI=;
+        b=EQ0VxxlxEyEATc2Bm4kL3C5UUnELe1biXXioGMcpKYkzZbyuORSugWU/hRj/x+Zfgq
+         gdqjB11gdMe+4swyRhEdIoxjExhcTP6FP4hZ44/6wq+IWLAl84N86HnIzRYvmKp3g4fB
+         WY9jwCH/mv7rxPDLQSAa0dGvAp4qY2bckCaHZtPon5SxfpCFX/a4A2hFOij3cqmYe8go
+         3vuq8umL8v0XxaZggDXICawWCqIAPzth7f8/yLCTXq6m/FxsKd8Ly3S2ylH70wl0Miya
+         /uhgV12fMiRegBoZSHrfAKUjWW5/F/cU0ZYbBfII1B01Q/q1LNrU/0HspWJOwP7KQvqA
+         ST2A==
+X-Gm-Message-State: APjAAAU2HFySUmbvIoF9AL+JUSqtqkDUW5zyMi985hymrFqWjTFPUMtW
+        ivgytXHWK7wASuroipgBYl7S7uPPZhk=
+X-Google-Smtp-Source: APXvYqwfdH42sANU/qsJ0mEV738C84A93MHCpdldiPAKD0Zic3+KTOogfalROgdPSTkJkcbw/xQWxw==
+X-Received: by 2002:ac2:5a43:: with SMTP id r3mr6811605lfn.150.1580518102474;
+        Fri, 31 Jan 2020 16:48:22 -0800 (PST)
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com. [209.85.167.46])
+        by smtp.gmail.com with ESMTPSA id v5sm5358678ljk.67.2020.01.31.16.48.21
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 31 Jan 2020 16:48:22 -0800 (PST)
+Received: by mail-lf1-f46.google.com with SMTP id r14so6106826lfm.5
+        for <git@vger.kernel.org>; Fri, 31 Jan 2020 16:48:21 -0800 (PST)
+X-Received: by 2002:ac2:599c:: with SMTP id w28mr6885232lfn.78.1580518101463;
+ Fri, 31 Jan 2020 16:48:21 -0800 (PST)
 MIME-Version: 1.0
-References: <20200130225818.193825-1-masayasuzuki@google.com>
- <xmqqk1579xa4.fsf@gitster-ct.c.googlers.com> <CAJB1erXnNe0yGvL+wgU9RXAA6Vyx7T2dwM9NgCmUChOtL102NQ@mail.gmail.com>
- <xmqqy2tn8c3w.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqy2tn8c3w.fsf@gitster-ct.c.googlers.com>
-From:   Masaya Suzuki <masayasuzuki@google.com>
-Date:   Fri, 31 Jan 2020 15:57:55 -0800
-Message-ID: <CAJB1erXqK-a2uDPPQDLpdLYnPC8Mcxjo2ER0qSAsD9DOVHSmGQ@mail.gmail.com>
-Subject: Re: [PATCH] doc: describe Git bundle format
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+References: <CAK7jxYgJNvCp=m6rH31HNzN9Mqgaav7_YPvUMZmRb7mdYDZ_1g@mail.gmail.com>
+ <20200131091917.GC2857810@coredump.intra.peff.net>
+In-Reply-To: <20200131091917.GC2857810@coredump.intra.peff.net>
+From:   Mike McGranahan <mike@mcgwiz.com>
+Date:   Fri, 31 Jan 2020 16:48:10 -0800
+X-Gmail-Original-Message-ID: <CAK7jxYjLoXZhRzUWERmJg9ADNhvJt5SLLymPVktiWcT4RC6VpA@mail.gmail.com>
+Message-ID: <CAK7jxYjLoXZhRzUWERmJg9ADNhvJt5SLLymPVktiWcT4RC6VpA@mail.gmail.com>
+Subject: Re: Patch text in git-add patch mode lacks whitespace highlighting
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 31, 2020 at 3:01 PM Junio C Hamano <gitster@pobox.com> wrote:
+I can confirm this fixes the unexpected behavior I reported. (Thanks!)
+I can't speak directly to the plumbing as I don't regularly use thos
+tools.
+
+-Mike
+
+On Fri, Jan 31, 2020 at 1:19 AM Jeff King <peff@peff.net> wrote:
 >
-> Masaya Suzuki <masayasuzuki@google.com> writes:
+> On Thu, Jan 30, 2020 at 01:53:52PM -0800, Mike McGranahan wrote:
 >
-> >> > +prerequisite = "-" obj-id SP comment LF
-> >> > +comment      = *CHAR
-> >>
-> >> Do readers know what CHAR consists of?  Anything other than NUL and
-> >> LF?
+> > I'm using version 2.25.0.windows.1. If I set config "wsErrorHighlight"
+> > to "old", and run `git diff -p`, the resulting patch text highlights
+> > whitespace differences in the old text.
 > >
-> > RFC 5234 defines core rules
-> > (https://tools.ietf.org/html/rfc5234#appendix-B.1), and these CHAR etc
-> > are defined there. It should be OK to use these rules.
->
-> That's not what I asked.  Do readers know that?  Did you tell them
-> that we expect they are familiar with the RFC convention?
-
-The patch says "We will use ABNF notation to define the Git bundle
-format. See protocol-common.txt for the details.", and
-protocol-common.txt says "ABNF notation as described by RFC 5234 is
-used within the protocol documents, except the following replacement
-core rules are used:". In order to interpret this ABNF definition,
-it's not enough to read RFC 5234, but the reader has to read
-protocol-common.txt. Otherwise, they cannot understand what `obj-id`
-is and what `refname` is. Those are not defined in RFC 5234. They're
-defined in protocol-common.txt.
-
-Based on the fact that (1) this document instructs the reader to see
-protocol-common.txt in the beginning and (2) protocol-common.txt is
-needed to interpret this definition and protocol-common.txt says RFC
-5234 describes ABNF format, the readers should know ABNF is defined in
-RFC 5234 and ABNF includes those LF, CHAR, and SP as a part of the
-definition after reading the first sentence and referenced documents.
-
->
-> It might be easier to make the above simple ABNF understandable to
-> those without knowledge of RFC 5234 by spelling out what CHAR in the
-> context of the above description means.  Or to tell them "go over
-> there and learn CHAR then come back".  We need to do one of them.
-
-As I said above, the first sentence says "See protocol-common.txt"
-which includes the reference to the RFC and other non-terminals. Note
-that, not only CHAR, but obj-id and refname are not defined here as
-well. The readers need to reference protocol-common.txt to get the
-definition of them.
-
->
-> > I want to make sure the meaning of prerequisites.
+> > If I then run git-add in interactive patch mode, I expect the diff to
+> > include the whitespace highlights. But actually, it does not.
 > >
-> > 1. Are they meant for a delta base? Or are they meant to represent a
-> > partial/shallow state?
+> > Is this a bug? Thanks for your help.
 >
-> They are meant as the "bottom boundary" of the range of the pack
-> data stored in the bundle.
+> Sort of. It's more of a feature that has not yet been implemented. ;)
 >
-> Think of "git rev-list --objects $heads --not $prerequisites".  If
-> we limit ourselves to commits, in the simplest case, "git log
-> maint..master".  Imagine your repository has everything up to
-> 'maint' (and nothing else) and then you are "git fetch"-ing from
-> another repository that advanced the tip that now points at
-> 'master'.  Imagine the data transferred over the network.  Imagine
-> that data is frozen on disk somehow.  That is what a bundle is.
+> Like the rest of the color config, diff.wsErrorHighlight is not enabled
+> for scriptable plumbing commands like git-diff-index, etc; it is only
+> used for the user-facing porcelain commands like git-diff.
 >
-> So, 'maint' is the prerequisite---for the person who builds the
-> bundle, it can safely be assumed that the bundle will be used only
-> by those who already has 'maint'.
+> So scripts like git-add--interactive, which use the plumbing under the
+> hood, are responsible for deciding which config options should be
+> respected and passing the correct command-line options on to the
+> plumbing. We do that for color.diff, diff.algorithm, and a few others.
+> But nobody has yet taught it that diff.wsErrorHighlight is safe to pass
+> (for the user-facing "color" version of the diff).
 >
-> There is nothing about 'partial' or 'shallow'.  And even though a
-> bundle typically has deltified objects in the packfile, it does not
-> have to.  Some objects are delitifed against prerequisite, and the
-> logic to generate thin packs may even prefer to use the
-> prerequisites as the delta base, but it is merely a side effect that
-> the prerequisites are at the "bottom boundary" of the range.
-
-OK. Then, it's better to make this clear. If you follow the analogy of
-saved git-fetch response, it's possible that these prerequisites are
-interpreted same as "shallow" lines of the shallow clone response.
-It's more like "have" lines of git-fetch request.
-
-> > 2. Do they need to be commits? Or can they be any object type?
-> >
-> > From what I can see, it seems that they should always be commits.
-> >
-> > 3. Does the receiver have to have all reachable objects from prerequisites?
+> The solution for the existing perl script would be something like this:
 >
-> I would say that the receiver needs to have everything that is
-> needed to "complete" prereqs.
+> diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+> index c4b75bcb7f..fac1d1e63e 100755
+> --- a/git-add--interactive.perl
+> +++ b/git-add--interactive.perl
+> @@ -46,6 +46,7 @@
+>  my $normal_color = $repo->get_color("", "reset");
 >
-> Bundle transfer predates shallow or incomplete repositories, but I
-> think that we can (and we should if needed) update it to adjust to
-> these situations by using the appropriate definition of what it
-> means to "complete".  In a lazy clone, it may be sufficient to have
-> promisor remote that has everything reachable from them.  In a
-> shallow clone, the repository may have to be deep enough to have
-> them and objects immediately reachable from them (e.g. trees and
-> blobs for a commit at the "bottom boundary").
-
-I think there are two completeness of a packfile:
-
-* Delta complete: If an object in a packfile is deltified, the delta
-base exists in the same packfile.
-* Object complete: If an object in a packfile contains a reference to
-another object, that object exists in the same packfile.
-
-For example, initial shallow clone response should contain a
-delta-complete object-incomplete packfile. Incremental fetch response
-and bundles with prereqs would have a delta-incomplete
-object-incomplete packfile. Creating delta-incomplete object-complete
-packfile is possible (e.g. create a parallel history with all blobs
-slightly modified and deltify against the original branch. I can
-create a packfile with all objects in one history with all objects
-deltified with the other history), but it's a rare case.
-
-The reader of a bundle SHOULD have all objects reachable from prereqs.
+>  my $diff_algorithm = $repo->config('diff.algorithm');
+> +my $diff_error_highlight = $repo->config('diff.wsErrorHighlight');
+>  my $diff_filter = $repo->config('interactive.difffilter');
+>
+>  my $use_readkey = 0;
+> @@ -727,7 +728,11 @@ sub parse_diff {
+>         my @diff = run_cmd_pipe("git", @diff_cmd, "--", $path);
+>         my @colored = ();
+>         if ($diff_use_color) {
+> -               my @display_cmd = ("git", @diff_cmd, qw(--color --), $path);
+> +               my @display_cmd = ("git", @diff_cmd, qw(--color),
+> +                                  $diff_error_highlight ?
+> +                                    "--ws-error-highlight=$diff_error_highlight" :
+> +                                    (),
+> +                                  qw(--), $path);
+>                 if (defined $diff_filter) {
+>                         # quotemeta is overkill, but sufficient for shell-quoting
+>                         my $diff = join(' ', map { quotemeta } @display_cmd);
+>
+> but this is all being rewritten in C. I'm not sure how the multiple
+> diffs are being handled there.
+>
+> All that said, I kind of wonder if diff.wsErrorHighlight ought to be
+> respected by even plumbing commands. After all, it does nothing unless
+> color is enabled anyway, so I don't think it runs the risk of confusing
+> a user of the plumbing. It's no different than color.diff.*, which we
+> respect even in the plumbing commands (if the caller has manually asked
+> for color, of course).
+>
+> -Peff
