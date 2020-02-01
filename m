@@ -2,214 +2,117 @@ Return-Path: <SRS0=aK8K=3V=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D9718C33CB3
-	for <git@archiver.kernel.org>; Sat,  1 Feb 2020 21:25:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EC992C33CB3
+	for <git@archiver.kernel.org>; Sat,  1 Feb 2020 21:28:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A2E0B2064C
-	for <git@archiver.kernel.org>; Sat,  1 Feb 2020 21:25:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B787820643
+	for <git@archiver.kernel.org>; Sat,  1 Feb 2020 21:28:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="TKhE454J"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="V68wZLgy"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726793AbgBAVZu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 1 Feb 2020 16:25:50 -0500
-Received: from mout.gmx.net ([212.227.15.19]:40619 "EHLO mout.gmx.net"
+        id S1726598AbgBAV24 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 1 Feb 2020 16:28:56 -0500
+Received: from mout.gmx.net ([212.227.17.22]:36523 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726518AbgBAVZu (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Feb 2020 16:25:50 -0500
+        id S1726469AbgBAV24 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Feb 2020 16:28:56 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1580592337;
-        bh=BPY+fjRhuoADpj0x7KKGenWZLkvfcZAPb49RpOU+NNA=;
+        s=badeba3b8450; t=1580592531;
+        bh=ySgjQoctZW3MGe3Cn7PSHyzNCqD48eI4FLBLwgLpIW0=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=TKhE454Jr+dmICy71Wr8ShR2Z5xGnU2id4bKN6Uk2DXLfZaHPChZ6ARg71c+9qveg
-         7d/3itBrDmE0J5JScrXZCf8TR35xkQNP8Dt6pxkD2xdSvUJj9WtuFJViTOozES8B0M
-         nNj0jFWf62stRhD+06FA+rfQxjlX8LmcoJYzxP1Y=
+        b=V68wZLgydsrTPp0JKRf45SLlpTwipRG2qDu38vr2+if/6SYDBOQHa6iTv6mn/LbTY
+         VrlPNfRJurUlirFqZ0tWg//QW8Yubf0BcdEGM//Kp9ydIvYcCVQk820/ZIaTT+vF3E
+         jbpSTcZ+TH3LftqTAcco2P4bePRNUk9Bf9b8kSBA=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.86]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1N2E1M-1jhOlb1Rle-013fT1; Sat, 01
- Feb 2020 22:25:37 +0100
-Date:   Sat, 1 Feb 2020 22:25:36 +0100 (CET)
+Received: from [192.168.0.213] ([37.201.195.86]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MzQkK-1jkDBb1F2W-00vO3S; Sat, 01
+ Feb 2020 22:28:51 +0100
+Date:   Sat, 1 Feb 2020 22:28:50 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org, peff@peff.net,
-        dstolee@microsoft.com, gitster@pobox.com
-Subject: Re: [PATCH 1/3] builtin/commit-graph.c: support
- '--split[=<strategy>]'
-In-Reply-To: <20200131233434.GJ10482@szeder.dev>
-Message-ID: <nycvar.QRO.7.76.6.2002012223490.46@tvgsbejvaqbjf.bet>
-References: <cover.1580430057.git.me@ttaylorr.com> <4f5bc19903f8a1f5b153b5665de378e743e12744.1580430057.git.me@ttaylorr.com> <20200131233434.GJ10482@szeder.dev>
+To:     Shourya Shukla <shouryashukla.oo@gmail.com>
+cc:     jnareb@gmail.com, christian.couder@gmail.com, t.gummerer@gmail.com,
+        git@vger.kernel.org, gitster@pobox.com, stolee@gmail.com
+Subject: Re: [GSoC] Finalising a project
+In-Reply-To: <20200201173841.13760-1-shouryashukla.oo@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2002012226350.46@tvgsbejvaqbjf.bet>
+References: <20200201173841.13760-1-shouryashukla.oo@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1139355825-1580592337=:46"
-X-Provags-ID: V03:K1:W06CqtfkMc/LyySUF+7rM4dbCViPWMXDXb5nwkZIvPOSRHyQK8J
- rjEqFsKYUzSZvXsKcNqa/VrgWZIJB94LyVK8ksaOVxisVHJSRwl6jx2dbSZnDaf08Ih6AmZ
- /p7+tzLg9PTQ2Pto5saw8Re+LWbKLFjlMdJujmSsFdCb6K5tG18YiHCOggzGODCEtES6W1n
- mHVL/QQgVuZ8PPMEfSzqw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:mqkbhnsFtis=:e0A3yGlHrLDTtW4m0BJTjJ
- 9zCL2ndn5l7zyx2Vr4rx14n12EhFiPmx7g7hD7IlGX3/f3P+a54X0kNjd3Cv2C2t3S8ASgwNI
- fEGs1oUB56tYh8zhxjdrer97/KX3vvGsBeDQANoTXlV3AnlgDwj/FExuUL2b+h70uMbVqQNA8
- I3RkABR5+jArQA3b1boil836D/zOTo/lqgGp6cj8+7mIoi/rTHTFjzkUXk78hfAV4nVUwQhaH
- wV8wn9w4Ko+FSIGXFeBSR9aR9MakChKqtlNo5bWKsEiUlvJlCNN+6O6M5Vg+DZ9fNfSsgJ96D
- a1rtGfrQ2Id7d4yDRkC72UuvzmZcpDAUS3Fed3YtmWQbCKUq0/Xq+QjT1/F4TzB5WrX0hbHbm
- d15MTJ7+IVubA6cAksWI7KoUJW1SYARHRx1LsGFDqS5JwZ+ufYhkR+i+zeUmzTN4rndLZwNYf
- qVmYf/RbV11k4Ii+I536b0rZUG7pysNoumggzx008y4CZTHYDonWo7i12Rr/knJMrWfHMvqN7
- sijIXUyiM/WQoZ9WIzDeSOS1SxjKL8Gl1INFhvPqQcr4yXc+GtGWkH2O/p8O33wulJAO4zS+D
- uAungTPrFACSFD2O8nxOoe/fxuCbczFfCAdBFYczZLgAiZ56sUecaXJzX71yg/8lDqzqrxl4R
- MqSzNrKo/Q5iuqJbt/T8ALAG0bBrUAYQi/j2ZrPCKWjAIgUthk8MTaxxoHW67HsrzzVgmVstT
- jDmkobXoMxXK5o0r2rCGbXPCZ3+hUxUTgNeEyayo1v98W8HMQM6BkD9fhlJ4sRNAnKQDBe203
- 4YBGrKV4EhbKnaNrY8kT+yRgUaOIQ6xCep3Tj1G1tcewio9D5ZT+fqGvl2HFgcVYY5i16snqy
- c6UFRLHKBGMLhoWokSTZ9NAGMZgz75EjrKzFY32u3w+RJgADVPV24cuFBsm4S+1ncOFqGKG9e
- diRS0Sunc6R85cDtwaL/8UCR5Bu2FtnzbPcQoylxTbAlQfNaJGf51kMZeC5Xk83AvgmVoAdVO
- 3xC+BPz/VRWHnmbSPgylsBNdF0bjAKSyZtfHJNfddBMgbZGduhXV7x3sNf6hDuSFBWarYZney
- Xb6V2gP4X7uQugjPYnVI8hOAy5W5uQ+73W/fxTTV34e76sGjrsFy9uHzSVYavMIelRu3/PrRe
- rP27g1d0r3IjdiJdiLj1vwr6QrApO8KBa/q3W5PpRqNyih2AZB3fSAhMDjcNJa2nDY3wT6i5E
- sskc7TfdXYt80ZXAg
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:Gc7rbaRDzipJzOtj9hQjL3xeKYOHveebvGmCb9k6yI1XrwfRiMW
+ hJ1wKXnV6jb9oxTV4Dp3sh8FGiuE+61tkjq7xaVBxKcyvNKZ3Bshj2XvNZt2VLnY2uHZ5ny
+ GUB9hLoau6liMH0xxXLjrc7vrntMKCVgj9JIO7SqpEJdJfsZDmndctWXA6z9TOnwY9vAwMB
+ J7EWkm7dw4TJWaAzZWeRA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:4HpwMwL7vAY=:ITFu6h25uri2gJQyAQVHA3
+ Wfo6dxqfmljD/MVpCabC2kknnmavkdOrJy7mLOLFHx05l/p2xwvyex+yIeCwI4lEZ8LCbqe61
+ eej9W4LO4OZC/dhJqAAyIfqOpCMQQ/Mf61qME6LN+JU6UnY2XkdLOwZHZnXVtZ6wsg0zkkkNu
+ yd3OQpbNiIeglpmfSwkWfOt2osUFzQLDJ09NVzsa2P+cK4/1jPFvF3K+qYf3QI2aD72OWGRj2
+ pwbBfnkVd8M9ceS12O8K4AFlixfXc70s3yEIyfTk+z88aSUeWysY7ceA1HXBaz5kxyOOhM90m
+ ZE4SA7Ln/l14ZCXtFjL+U6f+AmiMuU9PM1eLFBEvrMh4C6lfTnZvA6M6Wvyk5arylEL1jlRwT
+ /L5r0c9SzRfh1QwW4si4iL4NKnY/Ea64Q2UX+cIB3ItNzjibSy3s4Mtvig60PwouRfOnDfwA4
+ zUcbBUb1dHZJAdE71JpNOKyfIMmcdD4fYMNMxdU/v/pDmNNuUmOvCXwR/dXO+vhHlZeNS4pHq
+ 2CF9N3cStYjObwcfgJMyViEedTCD6IUe+TJ029dQqIW2jjItxG6JTcExQDNl24RUEGcPDmc1/
+ vdTRnmhOevpUjqRUaAgLtmQ3B5dkQFfRPYkPNAFV1qmoZ9MJnkFPyjwuSRxu+GK6z7VSmYgOJ
+ qCeAWXhsNHY6SM/fAB0W5A8Ly+7QsddS6dyeBhs6EBIC3YOAHcXeOV6udM+FXblKaij09hN54
+ 9VnDWC7+k0qn2pBCRm8hi5D4L1DJNbrkBEWxjguj52c96uCGKiuKcBFYPIuoQFgpX0l25p+w/
+ q4yUbJjYZ7T6OuxqT1BxpPC9L+f3utnZ4PGcj0JejcgSZeFmKb/hjd99+dHRdT306GGTvcIeV
+ 0jHMsCs5ALDdB0zmz6mZ8bktT2pJmnOZHMPKKN9XG+mVTmVG6UzRejg5sNveWH3cxi44SPTrj
+ HRIETGGWKaa5JAYyTtHYwTzQeBLnMHAMrFvXF05uK/9qkBTi10/PbLyvKTswFhups/v3jUuAK
+ E/5stmrv/jPP6UfFeA3mwvwvS7xfclpReG4yaYyYUqHwjB7WnSFf1HawbSvqr3H+kCTCdMWj9
+ k4lL+ZMn78EHtzQA9OlVl6fTdY6/xWPScjORorvTgfPl4LF1RSgW2l4zhIqZ7qxg75wtwsdhn
+ axg0ZB0VdaI0AG33rwcFqZvX6PzbKeAmNy3gt1uYAK21t4lQAIHykZoFQQzYUaMPuhvG1QI2u
+ 1+1ty1kldq2rgebKI
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Shourya,
 
---8323328-1139355825-1580592337=:46
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Sat, 1 Feb 2020, Shourya Shukla wrote:
 
-Hi,
+> Following your and Derrick Stolee's discussion[1][2], I wanted to ask
+> if it would be okay if I start working on the conversion of 'git
+> submodule' from now itself because I inferred that it would take
+> quite some time to complete and one season may not be enough for
+> the same.
 
-On Sat, 1 Feb 2020, SZEDER G=C3=A1bor wrote:
+Oh, there is no need to ask for permission in open source to start work on
+anything. Just do it. ;-)
 
-> On Thu, Jan 30, 2020 at 04:28:17PM -0800, Taylor Blau wrote:
-> > diff --git a/commit-graph.c b/commit-graph.c
-> > index 6d34829f57..02e6ad9d1f 100644
-> > --- a/commit-graph.c
-> > +++ b/commit-graph.c
-> > @@ -1565,15 +1565,18 @@ static void split_graph_merge_strategy(struct =
-write_commit_graph_context *ctx)
-> >  	num_commits =3D ctx->commits.nr;
-> >  	ctx->num_commit_graphs_after =3D ctx->num_commit_graphs_before + 1;
-> >
-> > -	while (g && (g->num_commits <=3D size_mult * num_commits ||
-> > -		    (max_commits && num_commits > max_commits))) {
-> > -		if (g->odb !=3D ctx->odb)
-> > -			break;
-> > +	if (ctx->split_opts->flags !=3D COMMIT_GRAPH_SPLIT_MERGE_PROHIBITED)=
- {
->
-> This line segfaults in the tests 'fetch.writeCommitGraph' and
-> 'fetch.writeCommitGraph with submodules' in 't5510-fetch.sh', because
-> 'git fetch' doesn't pass a 'split_opts' to the commit-graph functions.
+> Also, if the need calls, I will keep working on it post GSoC as well as
+> it would keep the continuum in place. I understand that it is not an
+> easy project and will take quite some time to complete.
 
-I noticed the same. This patch seems to fix it for me:
+Indeed, it will take time. Note that I do not even know whether we will
+participate in GSoC this year (your email sounds as if you assumed that
+you'd "start your GSoC project early" or something).
 
-=2D- snip --
-diff --git a/commit-graph.c b/commit-graph.c
-index a5d7624073f..af5c58833cf 100644
-=2D-- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -1566,7 +1566,8 @@ static void split_graph_merge_strategy(struct write_=
-commit_graph_context *ctx)
- 	num_commits =3D ctx->commits.nr;
- 	ctx->num_commit_graphs_after =3D ctx->num_commit_graphs_before + 1;
+> As of now, I am researching how the previous commands were converted
+> and check if maybe those ways are feasible to convert 'git-submodule'
+> too.
 
--	if (ctx->split_opts->flags !=3D COMMIT_GRAPH_SPLIT_MERGE_PROHIBITED) {
-+	if (ctx->split_opts &&
-+	    ctx->split_opts->flags !=3D COMMIT_GRAPH_SPLIT_MERGE_PROHIBITED) {
- 		while (g && (g->num_commits <=3D size_mult * num_commits ||
- 			    (max_commits && num_commits > max_commits) ||
- 			    (ctx->split_opts->flags =3D=3D COMMIT_GRAPH_SPLIT_MERGE_REQUIRED))=
-) {
-=2D- snap --
+That's a very sensible course of action.
 
-For your convenience, I also pushed this up as
-`tb/commit-graph-split-merge` to https://github.com/dscho/git
-
-Thanks,
-Dscho
-
+Ciao,
+Johannes
 
 >
-> Thread 1 "git" received signal SIGSEGV, Segmentation fault.
-> 0x00000000005113dd in split_graph_merge_strategy (ctx=3D0x9ca930)
->     at commit-graph.c:1568
-> 1568            if (ctx->split_opts->flags !=3D COMMIT_GRAPH_SPLIT_MERGE=
-_PROHIBITED) {
-> (gdb) p *ctx
-> $1 =3D {r =3D 0x9ae2a0 <the_repo>, odb =3D 0x9c0df0, graph_name =3D 0x0,=
- oids =3D {
->     list =3D 0xa02660, nr =3D 12, alloc =3D 1024}, commits =3D {list =3D=
- 0x9caa00,
->     nr =3D 6, alloc =3D 6}, num_extra_edges =3D 0, approx_nr_objects =3D=
- 0,
->   progress =3D 0x0, progress_done =3D 0, progress_cnt =3D 0, base_graph_=
-name =3D 0x0,
->   num_commit_graphs_before =3D 0, num_commit_graphs_after =3D 1,
->   commit_graph_filenames_before =3D 0x0, commit_graph_filenames_after =
-=3D 0x0,
->   commit_graph_hash_after =3D 0x0, new_num_commits_in_base =3D 0,
->   new_base_graph =3D 0x0, append =3D 0, report_progress =3D 1, split =3D=
- 1,
->   check_oids =3D 0, split_opts =3D 0x0}
->                   ^^^^^^^^^^^^^^^^
-> (gdb) bt
-> #0  0x00000000005113dd in split_graph_merge_strategy (ctx=3D0x9ca930)
->     at commit-graph.c:1568
-> #1  0x0000000000512446 in write_commit_graph (odb=3D0x9c0df0, pack_index=
-es=3D0x0,
->     commit_hex=3D0x7fffffffd550,
->     flags=3D(COMMIT_GRAPH_WRITE_PROGRESS | COMMIT_GRAPH_WRITE_SPLIT),
->     split_opts=3D0x0) at commit-graph.c:1891
-> #2  0x000000000050fd86 in write_commit_graph_reachable (odb=3D0x9c0df0,
->     flags=3D(COMMIT_GRAPH_WRITE_PROGRESS | COMMIT_GRAPH_WRITE_SPLIT),
->     split_opts=3D0x0) at commit-graph.c:1174
->     ^^^^^^^^^^^^^^
-> #3  0x0000000000444ea4 in cmd_fetch (argc=3D0, argv=3D0x7fffffffd9b8, pr=
-efix=3D0x0)
->     at builtin/fetch.c:1873
-> #4  0x0000000000406154 in run_builtin (p=3D0x969a88 <commands+840>, argc=
-=3D2,
->     argv=3D0x7fffffffd9b0) at git.c:444
-> #5  0x00000000004064a4 in handle_builtin (argc=3D2, argv=3D0x7fffffffd9b=
-0)
->     at git.c:674
-> #6  0x000000000040674c in run_argv (argcp=3D0x7fffffffd84c, argv=3D0x7ff=
-fffffd840)
->     at git.c:741
-> #7  0x0000000000406bbd in cmd_main (argc=3D2, argv=3D0x7fffffffd9b0) at =
-git.c:872
-> #8  0x00000000004cfd4e in main (argc=3D5, argv=3D0x7fffffffd998)
->     at common-main.c:52
+> I would love to recieve everyone's guidance on this problem and learn
+> ways to solve this!  :)
 >
-> Note that this function split_graph_merge_strategy() does look at
-> various fields in 'ctx->split_opts' a bit earlier, but those accesses
-> are protected by a 'if (ctx->split_opts)' condition.
-> expire_commit_graphs() does the same.
+> Regards,
+> Shourya Shukla
 >
+> [1]: https://lore.kernel.org/git/nycvar.QRO.7.76.6.2001311007590.46@tvgs=
+bejvaqbjf.bet/
+> [2]: https://lore.kernel.org/git/39a8c249-f0bc-fb0f-2ed5-5ecceb6d4789@gm=
+ail.com/
 >
-> > +		while (g && (g->num_commits <=3D size_mult * num_commits ||
-> > +			    (max_commits && num_commits > max_commits) ||
-> > +			    (ctx->split_opts->flags =3D=3D COMMIT_GRAPH_SPLIT_MERGE_REQUIR=
-ED))) {
-> > +			if (g->odb !=3D ctx->odb)
-> > +				break;
-> >
-> > -		num_commits +=3D g->num_commits;
-> > -		g =3D g->base_graph;
-> > +			num_commits +=3D g->num_commits;
-> > +			g =3D g->base_graph;
-> >
-> > -		ctx->num_commit_graphs_after--;
-> > +			ctx->num_commit_graphs_after--;
-> > +		}
-> >  	}
-> >
->
-
---8323328-1139355825-1580592337=:46--
