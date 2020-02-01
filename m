@@ -2,93 +2,84 @@ Return-Path: <SRS0=aK8K=3V=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F08A2C33CB3
-	for <git@archiver.kernel.org>; Sat,  1 Feb 2020 17:38:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D7C82C33CB3
+	for <git@archiver.kernel.org>; Sat,  1 Feb 2020 18:36:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id AF91820679
-	for <git@archiver.kernel.org>; Sat,  1 Feb 2020 17:38:59 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I2BIisdw"
+	by mail.kernel.org (Postfix) with ESMTP id A493920679
+	for <git@archiver.kernel.org>; Sat,  1 Feb 2020 18:36:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726379AbgBARi6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 1 Feb 2020 12:38:58 -0500
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:39605 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726169AbgBARi6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Feb 2020 12:38:58 -0500
-Received: by mail-pg1-f194.google.com with SMTP id 4so5364943pgd.6
-        for <git@vger.kernel.org>; Sat, 01 Feb 2020 09:38:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ZAHqtN6WCx8Rkx3VT3EEhg7qOCIqwKF7tHlrQZHVP9Y=;
-        b=I2BIisdwGsG8yJpHfFc+OZS/C6HWAMb2UajlLMr4gXJ6+EC9dXSVZ5UrMtgqEz0/t/
-         KV6sVArTB+kPs1/0AG6dV41/v+6qHgo9yCbR/JquDbQDGEkzNLBowYwT8djV4K4LnTX1
-         zQ6S+gdgT4aJat6BNEhepbhJmO2Gul0optuHGKcKrBJJ7RmPCkXqxkuYoral2xuuXW7c
-         jWUoQyqArYOyLfQiRt9R5LXX10WugqHB9Sn1cHA8+ljo/55zlu5l8CYx6Z3K3Cj+3Uk6
-         OlA46p4F9nXNWqvsf2bj7fau2V7jpPQqgG8fAMUCveeJ2yOsCVvEP+mnMK67m5Qm7htl
-         M7hw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ZAHqtN6WCx8Rkx3VT3EEhg7qOCIqwKF7tHlrQZHVP9Y=;
-        b=SA7jt2UTrA4EgsNADbBvo3aLYWE4r4kpYorvx8gPaFzZynmuOjIAx4h+5qJMw32Wpi
-         xmqNGUTeOBrP00NIDjdya/SPUAKcJ06CGMHLe4XN/i2pclKHsgl2p/vnwnmHXLFIT5zA
-         vyrUtUBUfnUkaU3kYQiMItdlwZJPBmN9vM9AcsF86FEhUVRAKWfUMAwhXVxYuwd7swiV
-         GUlt6mb4CShypt57jaBAhr2ygOib3H3myz+2TL4f+ce8qrZic6h5DYkn2nljNhmNLF8e
-         L8Jp8R6zh5Yo4pUVFw90AH5N94MZhS7pGYkxNJlH7uPeV2WvskbCHwfn/wQMIlq0rB0M
-         /Scg==
-X-Gm-Message-State: APjAAAUh08HhKqWx1VVLCFuOk5bIqWqfAtvG2zgnMlHDWQNmjNFMRJh8
-        hGOIke5cxHaprp3qAerfXvM=
-X-Google-Smtp-Source: APXvYqz4gshiXacwpZYYwB79E7tI/D1LuodjCnhs0GgLuGJhHfGO6xxN430s3s30f5XmBeRdr6+hRg==
-X-Received: by 2002:a63:e74e:: with SMTP id j14mr16199668pgk.231.1580578737541;
-        Sat, 01 Feb 2020 09:38:57 -0800 (PST)
-Received: from konoha.iitr.ac.in ([103.37.201.177])
-        by smtp.gmail.com with ESMTPSA id h3sm14149281pji.9.2020.02.01.09.38.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 01 Feb 2020 09:38:56 -0800 (PST)
-From:   Shourya Shukla <shouryashukla.oo@gmail.com>
-To:     Johannes.Schindelin@gmx.de
-Cc:     jnareb@gmail.com, christian.couder@gmail.com, t.gummerer@gmail.com,
-        git@vger.kernel.org, gitster@pobox.com, stolee@gmail.com,
-        Shourya Shukla <shouryashukla.oo@gmail.com>
-Subject: [GSoC] Finalising a project
-Date:   Sat,  1 Feb 2020 23:08:41 +0530
-Message-Id: <20200201173841.13760-1-shouryashukla.oo@gmail.com>
-X-Mailer: git-send-email 2.20.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S1726379AbgBASgW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 1 Feb 2020 13:36:22 -0500
+Received: from sdaoden.eu ([217.144.132.164]:45484 "EHLO sdaoden.eu"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726270AbgBASgW (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Feb 2020 13:36:22 -0500
+Received: by sdaoden.eu (Postfix, from userid 1000)
+        id D0CD616054; Sat,  1 Feb 2020 19:36:20 +0100 (CET)
+Date:   Sat, 01 Feb 2020 19:36:19 +0100
+From:   Steffen Nurpmeso <steffen@sdaoden.eu>
+To:     git@vger.kernel.org
+Cc:     Steffen Nurpmeso <steffen@sdaoden.eu>
+Subject: 2.25.0: git rebase -i fails to --continue with staged data
+Message-ID: <20200201183619.tUTI7%steffen@sdaoden.eu>
+Mail-Followup-To: git@vger.kernel.org,
+ Steffen Nurpmeso <steffen@sdaoden.eu>
+User-Agent: s-nail v14.9.16-104-gcdb7645a
+OpenPGP: id=EE19E1C1F2F7054F8D3954D8308964B51883A0DD;
+ url=https://ftp.sdaoden.eu/steffen.asc; preference=signencrypt
+BlahBlahBlah: Any stupid boy can crush a beetle. But all the professors in
+ the world can make no bugs.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello Johannes,
+Hello.
 
-Following your and Derrick Stolee's discussion[1][2], I wanted to ask
-if it would be okay if I start working on the conversion of 'git
-submodule' from now itself because I inferred that it would take
-quite some time to complete and one season may not be enough for
-the same. Also, if the need calls, I will keep working on it post
-GSoC as well as it would keep the continuum in place. I understand
-that it is not an easy project and will take quite some time to complete.
+  #?1|kent:xxx.git$ git alias|grep rema
+  alias.rema rebase -i master
+...
+  #?0|kent:xxx.git$ git status
+  interactive rebase in progress; onto 4a17872e
+  Last commands done (39 commands done):
+     e 6c7e85ef FIXME src/mx/gen-cmd-tab.h: regenerated
+     e 0314b1e7 FIXME src/mx/gen-okeys.h: regenerated
+    (see more in file .git/rebase-merge/done)
+  Next commands to do (41 remaining commands):
+     pick 31fb18fb FIXME NEWS: v14.9.17 ("To bind, or not to bind.."), 2020-02-01
+     pick 763c0a26 [v15-compat] Make *v15-compat*=yes a default!
+    (use "git rebase --edit-todo" to view and edit)
+  You are currently editing a commit while rebasing branch 'notpushed' on '4a17872e'.
+    (use "git commit --amend" to amend the current commit)
+    (use "git rebase --continue" once you are satisfied with your changes)
 
-As of now, I am researching how the previous commands were converted
-and check if maybe those ways are feasible to convert 'git-submodule'
-too.
+  Changes to be committed:
+    (use "git restore --staged <file>..." to unstage)
+          modified:   src/mx/gen-okeys.h
 
-I would love to recieve everyone's guidance on this problem and learn
-ways to solve this!  :)
+  #?0|kent:xxx.git$ git rebase --continue
+  error:
+  You have uncommitted changes in your working tree. Please, commit them
+  first and then run 'git rebase --continue' again.
+  #?1|kent:xxx.git$
 
-Regards,
-Shourya Shukla
+So i was "e"diting commit
 
-[1]: https://lore.kernel.org/git/nycvar.QRO.7.76.6.2001311007590.46@tvgsbejvaqbjf.bet/
-[2]: https://lore.kernel.org/git/39a8c249-f0bc-fb0f-2ed5-5ecceb6d4789@gmail.com/
+     e 0314b1e7 FIXME src/mx/gen-okeys.h: regenerated
+
+but cannot simply --continue here --- before 2.25.0 this would now
+open the editor and then commit what i have into a.k.a. as the
+commit we are editing.  So if i now "commit --amend" i will amend
+the commit before the one i want, if i commit anything else
+i introduce a new commit.
+
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
