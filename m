@@ -2,140 +2,101 @@ Return-Path: <SRS0=aK8K=3V=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 640C8C33C9E
-	for <git@archiver.kernel.org>; Sat,  1 Feb 2020 11:39:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A67FC33C9E
+	for <git@archiver.kernel.org>; Sat,  1 Feb 2020 11:39:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 39BBA206E3
-	for <git@archiver.kernel.org>; Sat,  1 Feb 2020 11:39:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 50721206E3
+	for <git@archiver.kernel.org>; Sat,  1 Feb 2020 11:39:37 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XKUIouoU"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726466AbgBALjX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 1 Feb 2020 06:39:23 -0500
-Received: from cloud.peff.net ([104.130.231.41]:50352 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726297AbgBALjX (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Feb 2020 06:39:23 -0500
-Received: (qmail 21237 invoked by uid 109); 1 Feb 2020 11:39:23 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 01 Feb 2020 11:39:23 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 8244 invoked by uid 111); 1 Feb 2020 11:47:16 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 01 Feb 2020 06:47:16 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Sat, 1 Feb 2020 06:39:22 -0500
-From:   Jeff King <peff@peff.net>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: [PATCH] tree-walk.c: break circular dependency with unpack-trees
-Message-ID: <20200201113922.GE1864948@coredump.intra.peff.net>
-References: <20200130095155.GA839988@coredump.intra.peff.net>
- <20200130095338.GC840531@coredump.intra.peff.net>
- <CABPp-BE7E--8Yz3PAcjPQX2RCsbq0Q0gURi3RJuE64KM0eo6mA@mail.gmail.com>
- <20200131092936.GA2916051@coredump.intra.peff.net>
- <CABPp-BFXwin5mR7z7Ocx9bq5LadFF4CxZR03HzZxh5f=1+F6NQ@mail.gmail.com>
+        id S1726469AbgBALjg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 1 Feb 2020 06:39:36 -0500
+Received: from mail-il1-f175.google.com ([209.85.166.175]:35326 "EHLO
+        mail-il1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726297AbgBALjg (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Feb 2020 06:39:36 -0500
+Received: by mail-il1-f175.google.com with SMTP id g12so8604929ild.2
+        for <git@vger.kernel.org>; Sat, 01 Feb 2020 03:39:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=5wLiyd5Wz7xN4mHdYs+Ol7+IpohG0DvhKDSoiY3WMNU=;
+        b=XKUIouoULUMIBzZzohd0XiXThmgOEp6RS6Ej2RE42eZxO+bU9a+g/Z0xbxVquPC8ag
+         z83lrzaS7sf38x9N1X7E0ej7F7LLe0d33ZGVDRvgTM9Bujx6kkcBV1sPkKjapLGU3tC5
+         ebm82wjubUFAPnQ5foVTuPgnBsokZf5kD639IFq+ciWD66ZNbvUdXtivvpzdhDd1IMih
+         XqHJLDMMrIGYldZGqGgTZU09ESgIvpYZYzu1LsK1Skfn9x/lk0QKUjuUSHacYf325eRt
+         JPObEStxxBCxMSH5cfOLl1YORd3NBI5aOjXCYtG2P5ZCtQcrP7wMMlNiFm2D5+Md9xhP
+         v6OA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to:content-transfer-encoding;
+        bh=5wLiyd5Wz7xN4mHdYs+Ol7+IpohG0DvhKDSoiY3WMNU=;
+        b=QiuAvSuHreyivfnOwtvg64/x9CuvJUWLK5XzurAmK9gDw8QI6taYruolVeyiz8sJ+B
+         e4Y2ruO/h2Yf10vWRXyWccAr/X0gm/CIcRglO9kIpH0VMWNzlyI6Wbz2mOdjXx2Zxf2o
+         843Dss8JMIhBdqhQDkBot71SGQSViXyKOjnsc/U2pJlpQLC7bfMAtn+ldgSHf0nlCojz
+         a1CsxS6rN4KjbRZIw0QVrkvMWNFAr8M/qBf+wseCUM4qTocLc6kecvOjfLwg8HFVw3th
+         999T23H9Q7XJl4u/PSj8oSt7h7knvJBZ2rB49r4K9/v1e3qpqcnGMc84wkLh7iZodKrf
+         8Unw==
+X-Gm-Message-State: APjAAAU18uGi4zq2XKfmc0gXTPGDWvV9erSFi5TGkexHshALDe2xfZRC
+        EKSb0xI4BLNQyhW3gCc+WXDANZbNNQafzIltuYT4Xfuw
+X-Google-Smtp-Source: APXvYqxBOGWxezxtqErr1PjtUCGc3GHI6QsNbnG7pmThv72mtbW+7OfVMHsEKctzhamLZpI6Wn2bW/vJDmttld4mikc=
+X-Received: by 2002:a92:9857:: with SMTP id l84mr6949713ili.41.1580557175325;
+ Sat, 01 Feb 2020 03:39:35 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CABPp-BFXwin5mR7z7Ocx9bq5LadFF4CxZR03HzZxh5f=1+F6NQ@mail.gmail.com>
+Reply-To: noloader@gmail.com
+From:   Jeffrey Walton <noloader@gmail.com>
+Date:   Sat, 1 Feb 2020 06:39:24 -0500
+Message-ID: <CAH8yC8m3JFvEcfFF3z1rrRnEPK-adHGObmkOhNZiph7QJKUWqA@mail.gmail.com>
+Subject: =?UTF-8?B?Z2l0LWNvbXBhdC11dGlsLmg6Nzk4OjEzOiBlcnJvcjogY29uZmxpY3RpbmcgdHlwZXMgZg==?=
+        =?UTF-8?B?b3Ig4oCYaW5ldF9udG9w4oCZ?=
+To:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 31, 2020 at 10:52:30AM -0800, Elijah Newren wrote:
+Hi Everyone,
 
-> As far as I can tell, before your change, we can remove the
->    #include "unpack-trees.h"
-> from tree-walk.c; nothing uses it.  I do like snipping includes and
-> dependencies where they aren't necessary, and this one seems like one
-> that could be removed.
+I'm building the 2.25 release tarball on Solaris 11.3 i86pc. I'm
+catching an error:
 
-Yeah, I think that is the case.
+$ gmake
+    CC fuzz-commit-graph.o
+In file included from commit-graph.h:4:0,
+                 from fuzz-commit-graph.c:1:
+git-compat-util.h:798:13: error: conflicting types for =E2=80=98inet_ntop=
+=E2=80=99
+ const char *inet_ntop(int af, const void *src, char *dst, size_t size);
+             ^
+In file included from git-compat-util.h:226:0,
+                 from commit-graph.h:4,
+                 from fuzz-commit-graph.c:1:
+/usr/include/arpa/inet.h:43:20: note: previous declaration of
+=E2=80=98inet_ntop=E2=80=99 was here
+ extern const char *inet_ntop(int, const void *_RESTRICT_KYWD,
+                    ^
+gmake: *** [fuzz-commit-graph.o] Error 1
 
-> But, it's not a big deal; if you want to leave that for future work
-> for someone else (perhaps even asking me to turn my paragraph above
-> into a commit message that rips it out and defines one #define in
-> terms of the other), that's fine.
+And:
 
-Let's do it now while we're thinking about it. How about the patch below
-on top of my series?
+$ cat -n /usr/include/arpa/inet.h
+...
+    41  #if !defined(_XPG4_2) || defined(_XPG6) || defined(__EXTENSIONS__)
+    42  extern int inet_pton(int, const char *_RESTRICT_KYWD, void
+*_RESTRICT_KYWD);
+    43  extern const char *inet_ntop(int, const void *_RESTRICT_KYWD,
+    44                          char *_RESTRICT_KYWD, socklen_t);
+    45  #endif /* !defined(_XPG4_2) || defined(_XPG6) ||
+defined(__EXTENSIONS__) */
 
--- >8 --
-Subject: [PATCH] tree-walk.c: break circular dependency with unpack-trees
-
-The unpack-trees API depends on the tree-walk API. But we've recently
-introduced a dependency in tree-walk.c on MAX_UNPACK_TREES, which
-doesn't otherwise care about unpack-trees at all.
-
-Let's break that dependency by reversing the constants: we'll introduce
-a new MAX_TRAVERSE_TREES which belongs to the tree-walk API. And then we
-can define MAX_UNPACK_TREES in terms of that (since unpack-trees cannot
-possibly work with more trees than it can traverse at once via
-tree-walk).
-
-The value for both will remain at 8. This is somewhat arbitrary and
-probably more than is necessary, per ca885a4fe6 (read-tree() and
-unpack_trees(): use consistent limit, 2008-03-13), but there's not
-really any pressing need to reduce it.
-
-Suggested-by: Elijah Newren <newren@gmail.com>
-Signed-off-by: Jeff King <peff@peff.net>
----
- tree-walk.c    | 3 +--
- tree-walk.h    | 2 ++
- unpack-trees.h | 2 +-
- 3 files changed, 4 insertions(+), 3 deletions(-)
-
-diff --git a/tree-walk.c b/tree-walk.c
-index 3093cf7098..bb0ad34c54 100644
---- a/tree-walk.c
-+++ b/tree-walk.c
-@@ -1,6 +1,5 @@
- #include "cache.h"
- #include "tree-walk.h"
--#include "unpack-trees.h"
- #include "dir.h"
- #include "object-store.h"
- #include "tree.h"
-@@ -410,7 +409,7 @@ int traverse_trees(struct index_state *istate,
- 		   struct traverse_info *info)
- {
- 	int error = 0;
--	struct name_entry entry[MAX_UNPACK_TREES];
-+	struct name_entry entry[MAX_TRAVERSE_TREES];
- 	int i;
- 	struct tree_desc_x tx[ARRAY_SIZE(entry)];
- 	struct strbuf base = STRBUF_INIT;
-diff --git a/tree-walk.h b/tree-walk.h
-index 826396c8ed..a5058469e9 100644
---- a/tree-walk.h
-+++ b/tree-walk.h
-@@ -3,6 +3,8 @@
- 
- #include "cache.h"
- 
-+#define MAX_TRAVERSE_TREES 8
-+
- /**
-  * The tree walking API is used to traverse and inspect trees.
-  */
-diff --git a/unpack-trees.h b/unpack-trees.h
-index ca94a421a5..ae1557fb80 100644
---- a/unpack-trees.h
-+++ b/unpack-trees.h
-@@ -6,7 +6,7 @@
- #include "string-list.h"
- #include "tree-walk.h"
- 
--#define MAX_UNPACK_TREES 8
-+#define MAX_UNPACK_TREES MAX_TRAVERSE_TREES
- 
- struct cache_entry;
- struct unpack_trees_options;
--- 
-2.25.0.538.g1d5d7023b0
-
+Jeff
