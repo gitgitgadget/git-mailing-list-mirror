@@ -2,105 +2,102 @@ Return-Path: <SRS0=xuSa=3W=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 657B1C35249
-	for <git@archiver.kernel.org>; Sun,  2 Feb 2020 19:22:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FA8FC35249
+	for <git@archiver.kernel.org>; Sun,  2 Feb 2020 19:33:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 117D120679
-	for <git@archiver.kernel.org>; Sun,  2 Feb 2020 19:22:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4BDC720679
+	for <git@archiver.kernel.org>; Sun,  2 Feb 2020 19:33:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=dinwoodie.org header.i=@dinwoodie.org header.b="FTdSBku+"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jEKvkzgC"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726940AbgBBTWi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 2 Feb 2020 14:22:38 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:38437 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726893AbgBBTWh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 Feb 2020 14:22:37 -0500
-Received: by mail-wr1-f66.google.com with SMTP id y17so15237939wrh.5
-        for <git@vger.kernel.org>; Sun, 02 Feb 2020 11:22:36 -0800 (PST)
+        id S1726916AbgBBTdi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 2 Feb 2020 14:33:38 -0500
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:40173 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726290AbgBBTdi (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Feb 2020 14:33:38 -0500
+Received: by mail-lj1-f196.google.com with SMTP id n18so12340395ljo.7
+        for <git@vger.kernel.org>; Sun, 02 Feb 2020 11:33:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dinwoodie.org; s=google;
+        d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=YcFm9TyQCu9kfNFd9XVfL91/Pe1050507TfWejm20gc=;
-        b=FTdSBku+MDBjXijiDTnZqti03cMl7weaG858xJHlB770NOqXP/XSuf+XshKjcXdM8W
-         6JyNHf4UI/eY8/9o389CthOqoYsR6eooRJog76wdoYo06eYRYfToIMDUZdHRa4jNx0qM
-         W8mQuzpWtZjI0MHHXl+xZxNMOFCpab/vftCjU=
+        bh=WY9QOD78qfliQMQjjKqS+nO17m41xBMlrf7pWRBbc8Q=;
+        b=jEKvkzgCeiShjg/T3WjpZbVioiXFMAbs/CQnRDnrxvJ/6YiosTsZZX4i4Y53O54+Gg
+         HRWg7/vj0hqHzFO0v/Uz3kavUnp0be30Ij/5mSYpL5COR6F246fCg+YohLEHzrPVlSrZ
+         kIszOf+fZsTKPNBkVZy0JdoVJGP8fYkFylGLx0GY6T5/bckzTnkxw11uYx2VAlOXKT6W
+         YMBnvD9chJSmPmI/5LTcYFNrs2l3ooBpa0+Of4ez9Dh5597Re6An084syIKaPMjLx1Ph
+         fXjVoYN2xMsEWnovJCaRx/2+OtPnhr+t+0OPf0QCES/pVUdb75RnO81s4dpcEG+JNAPY
+         fLvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=YcFm9TyQCu9kfNFd9XVfL91/Pe1050507TfWejm20gc=;
-        b=fYJtwjjyvX2RCZzIOGjKAaatXKtjzXdrxnMQ5oT91GvLzH7zW/kYG93D33KPPVT8OH
-         LVywLFtq2rWXVo7L40XscHY6s78A3rqS4y/0R0WhXcLiyO+5pjhEJ6jIhIF+7iwVW5qm
-         X/cd5R1IotCcMh4N7QHjXQKCjZSWv8FlSVh5JiroMsbPViHXw66tk2Ogcuj+io6WeFlX
-         HzlFAajhyvctauj117cru5OLsQxPWZIsTYv1Kr8856dRUkokcMw7E3HPhnDLddpI7ZfX
-         ZNcz1l2wSdLerVhGGMjrtLboBtGDiTCextuxQ5u7rrMUi2pBPkp/GfstJbd6g3CKgVK0
-         6gJA==
-X-Gm-Message-State: APjAAAUEhoXDg3aaoaPzlqKXuYJKbmLK12NzN3Z12odT5F16AXnN6ShU
-        mLkCxtsni+qnJHsneFvvb2KGXib71LKIOg==
-X-Google-Smtp-Source: APXvYqwqNUqBSggfCzCTr375YjfCiG0pttsRQQc0hkfbXg5kPfpoDrP6FqupZh59KvuEGJSyxfFpJQ==
-X-Received: by 2002:adf:f6c1:: with SMTP id y1mr10943908wrp.17.1580671355621;
-        Sun, 02 Feb 2020 11:22:35 -0800 (PST)
-Received: from Wheatley.home (host86-185-221-158.range86-185.btcentralplus.com. [86.185.221.158])
-        by smtp.gmail.com with ESMTPSA id z133sm21442344wmb.7.2020.02.02.11.22.34
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 02 Feb 2020 11:22:35 -0800 (PST)
-From:   Adam Dinwoodie <adam@dinwoodie.org>
+        bh=WY9QOD78qfliQMQjjKqS+nO17m41xBMlrf7pWRBbc8Q=;
+        b=pemwJpmXCfCdthLTK4aWqcn7FOo/Su20m2GOoKnueLivrZPooPJF48CoAYqS/hubg7
+         LnHozi9nSkbyzDuQlmPezuoZb/Iy8TazLhguIcJVneILPcslNv+ObeOUTxKYQITVFK7M
+         /e2vKFM8UHRaqShUbBSDdydCIoG+1h4Q/xgOeXuvw4B5ENPV/W/6KuMAU7ePv0+VQdxN
+         WAHblygEqPM775DXRLmRnQsr8GmLso9+bPCtomb1q/Oy71KA/83pebMA/ZElbCyMk9VG
+         J5IqjZn3kk1xDS1UaGcrugr5KpIh/e59kybCYVJ/SR5OvTjzhjDExL9c58APl7B16yCG
+         A+xQ==
+X-Gm-Message-State: APjAAAVRo6uahWKqsB36kn5+267THaMgQEnDt4ZdhM7utHou73/bf1wy
+        aMdXSl6j/YpETmMUZ6uumUVXkRIE
+X-Google-Smtp-Source: APXvYqy4pNzh4p16Dkiymqu3Ghpa5KB575QNJJlQkHU1UUmhYy8WLbYcHDL//28MuH7ZVaacPqhboA==
+X-Received: by 2002:a2e:a402:: with SMTP id p2mr12184524ljn.143.1580672015475;
+        Sun, 02 Feb 2020 11:33:35 -0800 (PST)
+Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
+        by smtp.gmail.com with ESMTPSA id h19sm8397821lji.86.2020.02.02.11.33.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 02 Feb 2020 11:33:34 -0800 (PST)
+From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Ramkumar Ramachandra <artagnon@gmail.com>,
-        Phil Hord <phil.hord@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] diff-options.txt: correct command syntax
-Date:   Sun,  2 Feb 2020 19:22:26 +0000
-Message-Id: <20200202192226.29176-1-adam@dinwoodie.org>
+Cc:     Elijah Newren <newren@gmail.com>
+Subject: [PATCH] git-filter-branch.txt: use {caret} for ^
+Date:   Sun,  2 Feb 2020 20:33:19 +0100
+Message-Id: <20200202193319.1966-1-martin.agren@gmail.com>
 X-Mailer: git-send-email 2.25.0
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the example arguments in the description of the -G diff argument
-to be consistent throughout the description.
+In this paragraph, we have a few instances of the '^' character, which
+we give as "\^". This renders well with AsciiDoc ("^"), but Asciidoctor
+renders it literally as "\^". Dropping the backslashes renders fine
+with Asciidoctor, but not AsciiDoc... Let's use "{caret}" instead, to
+avoid these escaping problems.
 
-Signed-off-by: Adam Dinwoodie <adam@dinwoodie.org>
+Signed-off-by: Martin Ågren <martin.agren@gmail.com>
 ---
- Documentation/diff-options.txt | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ Documentation/git-filter-branch.txt | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index 09faee3b44..84a74cb2da 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -561,19 +561,19 @@ Binary files are searched as well.
- -G<regex>::
- 	Look for differences whose patch text contains added/removed
- 	lines that match <regex>.
- +
- To illustrate the difference between `-S<regex> --pickaxe-regex` and
- `-G<regex>`, consider a commit with the following diff in the same
- file:
- +
- ----
- +    return !regexec(regexp, two->ptr, 1, &regmatch, 0);
- ...
- -    hit = !regexec(regexp, mf2.ptr, 1, &regmatch, 0);
- ----
- +
--While `git log -G"regexec\(regexp"` will show this commit, `git log
---S"regexec\(regexp" --pickaxe-regex` will not (because the number of
-+While `git log -G<regex>` will show this commit, `git log
-+-S<regex> --pickaxe-regex` will not (because the number of
- occurrences of that string did not change).
- +
- Unless `--text` is supplied patches of binary files without a textconv
+diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
+index a530fef7e5..9e58d34c6a 100644
+--- a/Documentation/git-filter-branch.txt
++++ b/Documentation/git-filter-branch.txt
+@@ -467,9 +467,9 @@ impossible for a backward-compatible implementation to ever be fast:
+ 
+ * In editing files, git-filter-branch by design checks out each and
+   every commit as it existed in the original repo.  If your repo has
+-  10\^5 files and 10\^5 commits, but each commit only modifies 5
+-  files, then git-filter-branch will make you do 10\^10 modifications,
+-  despite only having (at most) 5*10^5 unique blobs.
++  10{caret}5 files and 10{caret}5 commits, but each commit only modifies 5
++  files, then git-filter-branch will make you do 10{caret}10 modifications,
++  despite only having (at most) 5*10{caret}5 unique blobs.
+ 
+ * If you try and cheat and try to make git-filter-branch only work on
+   files modified in a commit, then two things happen
 -- 
 2.25.0
 
