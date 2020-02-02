@@ -2,173 +2,105 @@ Return-Path: <SRS0=xuSa=3W=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 11203C35249
-	for <git@archiver.kernel.org>; Sun,  2 Feb 2020 18:44:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 657B1C35249
+	for <git@archiver.kernel.org>; Sun,  2 Feb 2020 19:22:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id CE3F820679
-	for <git@archiver.kernel.org>; Sun,  2 Feb 2020 18:43:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 117D120679
+	for <git@archiver.kernel.org>; Sun,  2 Feb 2020 19:22:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qqYb6ale"
+	dkim=pass (1024-bit key) header.d=dinwoodie.org header.i=@dinwoodie.org header.b="FTdSBku+"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726916AbgBBSny (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 2 Feb 2020 13:43:54 -0500
-Received: from mail-lj1-f195.google.com ([209.85.208.195]:43846 "EHLO
-        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726893AbgBBSnx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 Feb 2020 13:43:53 -0500
-Received: by mail-lj1-f195.google.com with SMTP id a13so12251727ljm.10
-        for <git@vger.kernel.org>; Sun, 02 Feb 2020 10:43:52 -0800 (PST)
+        id S1726940AbgBBTWi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 2 Feb 2020 14:22:38 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:38437 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726893AbgBBTWh (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Feb 2020 14:22:37 -0500
+Received: by mail-wr1-f66.google.com with SMTP id y17so15237939wrh.5
+        for <git@vger.kernel.org>; Sun, 02 Feb 2020 11:22:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:message-id:user-agent
-         :mime-version:content-transfer-encoding;
-        bh=dbC2AY+KXcUkzHXDqCnOJFMEOvy4eHWyVJxi9Upb+V4=;
-        b=qqYb6alefzeG+dDtwLFOH0TP0Rh8QrdE27ppvzbl9r8q7gi2zW0U70L3I5TilQM34J
-         2RUQwv7CNGzXc1sgvTUVLHiaZctF0WVKGBd+ok5vnbtqZVfBOsZ1rcZ1vuU3X/gr1nkr
-         zmjJYS7fX8dbhOc2NIjpSH+MYp62RwF6cSZCTHSO//JuvFNzVznf972XfYtuqd0zLeX7
-         sk79e+pBWzb0mNU34nbzUwXplvRzoTC0EMymzAhE6yvYQ9QRHFlT+LjMWica5qe0zKG8
-         uiBTnWHCiW4QQCc5JeGFsYjlh1IYKFLnNkyHNzGdTtMfvKtn7RIrhcyB7yw6nPWkUEzn
-         tPJQ==
+        d=dinwoodie.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=YcFm9TyQCu9kfNFd9XVfL91/Pe1050507TfWejm20gc=;
+        b=FTdSBku+MDBjXijiDTnZqti03cMl7weaG858xJHlB770NOqXP/XSuf+XshKjcXdM8W
+         6JyNHf4UI/eY8/9o389CthOqoYsR6eooRJog76wdoYo06eYRYfToIMDUZdHRa4jNx0qM
+         W8mQuzpWtZjI0MHHXl+xZxNMOFCpab/vftCjU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=dbC2AY+KXcUkzHXDqCnOJFMEOvy4eHWyVJxi9Upb+V4=;
-        b=k1dVqUw7ZXltpbuC2rDw+OYqZTYUEoLhB0bbM3WEjippFugK/gd3WOwgrxgI7XE/jp
-         XGs+Q6dbjo27297ViM/2xw/NepCwE0P5KcJX+wCQkWEgi8yxs21KCDWIz3l/V1h2+a5h
-         Uft6Q7oEc1M7d5hMsjAjrS/fRxEsBiwSV7szGPrIsyu0NKYM4DkeRZcWFkLLko07R71f
-         mKpbOq3z8dzSSrcsoG9K1D39HwiNzKC40eZ8p+Bne2FcbejGR35tRowPvN85D+MvhixT
-         fSgQBFjgaN0sHSnl8FXIw+BeYdpzJlSZET2R2mXQP/H0osz3c8MKCI3NFBHPbw77aggl
-         Risg==
-X-Gm-Message-State: APjAAAUSs3s/O6dyr4851EIqqh6w2XpIJ5fVb2RQc1JRwti9exct2M4T
-        BFHtMNnnyVZlDs2qr+bhHKM=
-X-Google-Smtp-Source: APXvYqxdso77S7IQlDzXmMnXCCCFm5AKg1bOZhDtRQMU5J9miNR4EmZ/mpY/LS4UapWAOtm546xFOQ==
-X-Received: by 2002:a2e:730e:: with SMTP id o14mr11236148ljc.51.1580669031118;
-        Sun, 02 Feb 2020 10:43:51 -0800 (PST)
-Received: from Laptop-Acer-Aspire-F15 (host-89-229-7-83.dynamic.mm.pl. [89.229.7.83])
-        by smtp.gmail.com with ESMTPSA id l22sm8493474ljb.2.2020.02.02.10.43.49
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 02 Feb 2020 10:43:49 -0800 (PST)
-From:   Jakub Narebski <jnareb@gmail.com>
-To:     Garima Singh <garimasigit@gmail.com>
-Cc:     Garima Singh via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, stolee@gmail.com, szeder.dev@gmail.com,
-        jonathantanmy@google.com, jeffhost@microsoft.com, me@ttaylorr.com,
-        peff@peff.net, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/9] [RFC] Changed Paths Bloom Filters
-References: <pull.497.git.1576879520.gitgitgadget@gmail.com>
-        <86d0c44f5s.fsf@gmail.com>
-        <3aaf02fe-ac83-5694-2c69-e133879a0030@gmail.com>
-        <868sm2ck7w.fsf@gmail.com>
-        <f5625b23-d7c4-9a72-4ed6-69893de103b0@gmail.com>
-Date:   Sun, 02 Feb 2020 19:43:47 +0100
-Message-ID: <86mua0zv6k.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=YcFm9TyQCu9kfNFd9XVfL91/Pe1050507TfWejm20gc=;
+        b=fYJtwjjyvX2RCZzIOGjKAaatXKtjzXdrxnMQ5oT91GvLzH7zW/kYG93D33KPPVT8OH
+         LVywLFtq2rWXVo7L40XscHY6s78A3rqS4y/0R0WhXcLiyO+5pjhEJ6jIhIF+7iwVW5qm
+         X/cd5R1IotCcMh4N7QHjXQKCjZSWv8FlSVh5JiroMsbPViHXw66tk2Ogcuj+io6WeFlX
+         HzlFAajhyvctauj117cru5OLsQxPWZIsTYv1Kr8856dRUkokcMw7E3HPhnDLddpI7ZfX
+         ZNcz1l2wSdLerVhGGMjrtLboBtGDiTCextuxQ5u7rrMUi2pBPkp/GfstJbd6g3CKgVK0
+         6gJA==
+X-Gm-Message-State: APjAAAUEhoXDg3aaoaPzlqKXuYJKbmLK12NzN3Z12odT5F16AXnN6ShU
+        mLkCxtsni+qnJHsneFvvb2KGXib71LKIOg==
+X-Google-Smtp-Source: APXvYqwqNUqBSggfCzCTr375YjfCiG0pttsRQQc0hkfbXg5kPfpoDrP6FqupZh59KvuEGJSyxfFpJQ==
+X-Received: by 2002:adf:f6c1:: with SMTP id y1mr10943908wrp.17.1580671355621;
+        Sun, 02 Feb 2020 11:22:35 -0800 (PST)
+Received: from Wheatley.home (host86-185-221-158.range86-185.btcentralplus.com. [86.185.221.158])
+        by smtp.gmail.com with ESMTPSA id z133sm21442344wmb.7.2020.02.02.11.22.34
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 02 Feb 2020 11:22:35 -0800 (PST)
+From:   Adam Dinwoodie <adam@dinwoodie.org>
+To:     git@vger.kernel.org
+Cc:     Ramkumar Ramachandra <artagnon@gmail.com>,
+        Phil Hord <phil.hord@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] diff-options.txt: correct command syntax
+Date:   Sun,  2 Feb 2020 19:22:26 +0000
+Message-Id: <20200202192226.29176-1-adam@dinwoodie.org>
+X-Mailer: git-send-email 2.25.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Garima Singh <garimasigit@gmail.com> writes:
-> On 1/20/2020 8:48 AM, Jakub Narebski wrote:
+Change the example arguments in the description of the -G diff argument
+to be consistent throughout the description.
 
->>>                                      How often a file has been touched
->>> also makes a difference. The performance gains are less dramatic if the=
-=20
->>> file has a very sparse history even if it is a deep file.
->>=20
->> This looks a bit strange (or maybe I don't understand something).
->>=20
->> Bloom filter can answer "no" and "maybe" to subset inclusion query.
->> This means that if file was *not* changed, with great probability the
->> answer from Bloom filter would be "no", and we would skip diff-ing
->> trees (which may terminate early, though).
->>=20
->> On the other hand if file was changed by the commit, and the answer from
->> a Bloom filter is "maybe", then we have to perform diffing to make sure.
->
-> Yes. What I meant by statement however is that the performance gain i.e.=
-=20
-> difference in performance between using and not using bloom filters, is n=
-ot=20
-> always as dramatic if the history is sparse and the trees aren't touched=
-=20
-> as often. So it is largely dependent on the shape of the repo and the sha=
-pe
-> of the commit graph.=20
+Signed-off-by: Adam Dinwoodie <adam@dinwoodie.org>
+---
+ Documentation/diff-options.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-It probably depends on the depth of changes in a typical skipped commit,
-I think.
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index 09faee3b44..84a74cb2da 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -561,19 +561,19 @@ Binary files are searched as well.
+ -G<regex>::
+ 	Look for differences whose patch text contains added/removed
+ 	lines that match <regex>.
+ +
+ To illustrate the difference between `-S<regex> --pickaxe-regex` and
+ `-G<regex>`, consider a commit with the following diff in the same
+ file:
+ +
+ ----
+ +    return !regexec(regexp, two->ptr, 1, &regmatch, 0);
+ ...
+ -    hit = !regexec(regexp, mf2.ptr, 1, &regmatch, 0);
+ ----
+ +
+-While `git log -G"regexec\(regexp"` will show this commit, `git log
+--S"regexec\(regexp" --pickaxe-regex` will not (because the number of
++While `git log -G<regex>` will show this commit, `git log
++-S<regex> --pickaxe-regex` will not (because the number of
+ occurrences of that string did not change).
+ +
+ Unless `--text` is supplied patches of binary files without a textconv
+-- 
+2.25.0
 
-If we are getting history for the
-core/java/com/android/ims/internal/uce/presence/IPresenceListener.aidl
-and the change is contained in libs/input/ directory, we have to unpack
-only two trees, independent on the depth of the file we are asking
-about.
-
-It could be also possible, if Git is smart enough about it, to halt
-early if we are checking only if given path changed rather than
-calculating a full difftree.  Say, for example, that the change was in
-core/java/org/apache/http/conn/ssl/SSLSocketFactory.java file, while
-we were getting the history for the following file
-core/java/com/android/ims/internal/uce/presence/IPresenceListener.aidl
-After unpacking two or three threes we know that the second file was not
-changed.  But if we compute full diff, we have to unpack 8 trees.
-Quite a difference.
-
-
-All example paths above came from AOSP repository that was used for
-testing different proposed generation numbers v2, see
-https://github.com/derrickstolee/gen-test/blob/master/clone-repos.sh
-
->>> The numbers from the git and linux repos for instance, are for files=20
->>> closer to the root, hence 2x to 5x.=20
->>=20
->> That is quite nice speedup, anyway (git repository cannot be even
->> considered large; medium -- maybe).
->
-> Yeah. Git and Linux served as nice initial test beds. If you have any=20
-> suggestions for interesting repos it would be worth running performanc=20
-> investigations on, do let me know!=20
-
-If we want repositories with deep path hierarchy, Java projects with
-mandated directory structures might be a good choice, for example
-Android (AOSP):
-
-  git clone https://android.googlesource.com/platform/frameworks/base/ andr=
-oid-base
-
-It is also quite large repository; in 2019 it had around 874000 commits,
-around the same as the Linux kernel repository.
-
-Another large repository is Chromium -- though I don't know if it has
-deep filesystem hierarchy.
-
-You can use the list of different large and large-ish repositories from
-https://github.com/derrickstolee/gen-test/blob/master/clone-repos.sh
-Other repositories with large number of commmits not on that list are
-LLVM Compiler, GCC (GNU Compiler Collection) -- just converted to Git,
-Homebrew, and Ruby on Rails.
-
->> P.S. I wonder if it would be worth to create some synthetical repository
->> to test performance gains of Bloom filters, perhaps in t/perf...
->>=20
->
-> I will look into this after I get v1 out on the mailing list.=20
-> Thanks!=20
-
-It would be nice to have, but it can wait.
-
-
-Keep up the good work!
---=20
-Jakub Nar=C4=99bski
