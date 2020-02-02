@@ -2,80 +2,173 @@ Return-Path: <SRS0=xuSa=3W=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 960BFC3524A
-	for <git@archiver.kernel.org>; Sun,  2 Feb 2020 14:12:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 11203C35249
+	for <git@archiver.kernel.org>; Sun,  2 Feb 2020 18:44:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 2656220643
-	for <git@archiver.kernel.org>; Sun,  2 Feb 2020 14:12:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CE3F820679
+	for <git@archiver.kernel.org>; Sun,  2 Feb 2020 18:43:59 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b="faXVZSLe";
-	dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b="faXVZSLe"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qqYb6ale"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726881AbgBBOMp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 2 Feb 2020 09:12:45 -0500
-Received: from fallback18.mail.ru ([185.5.136.250]:57212 "EHLO
-        fallback18.mail.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726836AbgBBOMp (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 Feb 2020 09:12:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru; s=mailru;
-        h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=y9DbmQNMOp+BRlB/EKt8lgp1+1L+j/5sk5tyK7ztrOw=;
-        b=faXVZSLeeqP8cr7iY+H3DJ7xJqg7SwI8jFJfbReE2uMyCc6+tycNiwl5aabwmfgzYjSDKag1EKQHuona3hMOqTY2whJYP0HXH1Xhg72gF7+C0GoyrpW5N4eeA5uOQ+2jyQw8BueADyglpdERchrFQMmAQYBO/b1E40xp8fleR/Q=;
-Received: from [10.161.25.35] (port=44636 helo=smtp58.i.mail.ru)
-        by fallback18.m.smailru.net with esmtp (envelope-from <kostix@bswap.ru>)
-        id 1iyFzO-0007qH-Tc
-        for git@vger.kernel.org; Sun, 02 Feb 2020 17:12:43 +0300
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru; s=mailru;
-        h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=y9DbmQNMOp+BRlB/EKt8lgp1+1L+j/5sk5tyK7ztrOw=;
-        b=faXVZSLeeqP8cr7iY+H3DJ7xJqg7SwI8jFJfbReE2uMyCc6+tycNiwl5aabwmfgzYjSDKag1EKQHuona3hMOqTY2whJYP0HXH1Xhg72gF7+C0GoyrpW5N4eeA5uOQ+2jyQw8BueADyglpdERchrFQMmAQYBO/b1E40xp8fleR/Q=;
-Received: by smtp58.i.mail.ru with esmtpa (envelope-from <kostix@bswap.ru>)
-        id 1iyFzM-0007Nk-G2; Sun, 02 Feb 2020 17:12:40 +0300
-Date:   Sun, 2 Feb 2020 17:12:40 +0300
-From:   Konstantin Khomoutov <kostix@bswap.ru>
-To:     Manav Agarwal <dpsman13016@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Need help to start contributing
-Message-ID: <20200202141240.juzwhpdcjrsduiqy@carbon>
-References: <CACbxD0AG_eX4kH3SyY7FWZLcd4FymuOQ6Kii0czHFJ8SPyEdcw@mail.gmail.com>
+        id S1726916AbgBBSny (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 2 Feb 2020 13:43:54 -0500
+Received: from mail-lj1-f195.google.com ([209.85.208.195]:43846 "EHLO
+        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726893AbgBBSnx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Feb 2020 13:43:53 -0500
+Received: by mail-lj1-f195.google.com with SMTP id a13so12251727ljm.10
+        for <git@vger.kernel.org>; Sun, 02 Feb 2020 10:43:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:date:message-id:user-agent
+         :mime-version:content-transfer-encoding;
+        bh=dbC2AY+KXcUkzHXDqCnOJFMEOvy4eHWyVJxi9Upb+V4=;
+        b=qqYb6alefzeG+dDtwLFOH0TP0Rh8QrdE27ppvzbl9r8q7gi2zW0U70L3I5TilQM34J
+         2RUQwv7CNGzXc1sgvTUVLHiaZctF0WVKGBd+ok5vnbtqZVfBOsZ1rcZ1vuU3X/gr1nkr
+         zmjJYS7fX8dbhOc2NIjpSH+MYp62RwF6cSZCTHSO//JuvFNzVznf972XfYtuqd0zLeX7
+         sk79e+pBWzb0mNU34nbzUwXplvRzoTC0EMymzAhE6yvYQ9QRHFlT+LjMWica5qe0zKG8
+         uiBTnWHCiW4QQCc5JeGFsYjlh1IYKFLnNkyHNzGdTtMfvKtn7RIrhcyB7yw6nPWkUEzn
+         tPJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:date:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=dbC2AY+KXcUkzHXDqCnOJFMEOvy4eHWyVJxi9Upb+V4=;
+        b=k1dVqUw7ZXltpbuC2rDw+OYqZTYUEoLhB0bbM3WEjippFugK/gd3WOwgrxgI7XE/jp
+         XGs+Q6dbjo27297ViM/2xw/NepCwE0P5KcJX+wCQkWEgi8yxs21KCDWIz3l/V1h2+a5h
+         Uft6Q7oEc1M7d5hMsjAjrS/fRxEsBiwSV7szGPrIsyu0NKYM4DkeRZcWFkLLko07R71f
+         mKpbOq3z8dzSSrcsoG9K1D39HwiNzKC40eZ8p+Bne2FcbejGR35tRowPvN85D+MvhixT
+         fSgQBFjgaN0sHSnl8FXIw+BeYdpzJlSZET2R2mXQP/H0osz3c8MKCI3NFBHPbw77aggl
+         Risg==
+X-Gm-Message-State: APjAAAUSs3s/O6dyr4851EIqqh6w2XpIJ5fVb2RQc1JRwti9exct2M4T
+        BFHtMNnnyVZlDs2qr+bhHKM=
+X-Google-Smtp-Source: APXvYqxdso77S7IQlDzXmMnXCCCFm5AKg1bOZhDtRQMU5J9miNR4EmZ/mpY/LS4UapWAOtm546xFOQ==
+X-Received: by 2002:a2e:730e:: with SMTP id o14mr11236148ljc.51.1580669031118;
+        Sun, 02 Feb 2020 10:43:51 -0800 (PST)
+Received: from Laptop-Acer-Aspire-F15 (host-89-229-7-83.dynamic.mm.pl. [89.229.7.83])
+        by smtp.gmail.com with ESMTPSA id l22sm8493474ljb.2.2020.02.02.10.43.49
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 02 Feb 2020 10:43:49 -0800 (PST)
+From:   Jakub Narebski <jnareb@gmail.com>
+To:     Garima Singh <garimasigit@gmail.com>
+Cc:     Garima Singh via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, stolee@gmail.com, szeder.dev@gmail.com,
+        jonathantanmy@google.com, jeffhost@microsoft.com, me@ttaylorr.com,
+        peff@peff.net, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/9] [RFC] Changed Paths Bloom Filters
+References: <pull.497.git.1576879520.gitgitgadget@gmail.com>
+        <86d0c44f5s.fsf@gmail.com>
+        <3aaf02fe-ac83-5694-2c69-e133879a0030@gmail.com>
+        <868sm2ck7w.fsf@gmail.com>
+        <f5625b23-d7c4-9a72-4ed6-69893de103b0@gmail.com>
+Date:   Sun, 02 Feb 2020 19:43:47 +0100
+Message-ID: <86mua0zv6k.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <CACbxD0AG_eX4kH3SyY7FWZLcd4FymuOQ6Kii0czHFJ8SPyEdcw@mail.gmail.com>
-User-Agent: NeoMutt/20180716
-X-7564579A: B8F34718100C35BD
-X-77F55803: 0A44E481635329DB0E1AA8A03B392317179C3E6C7981FFF28A80C3A0DBD6ACACCFD79B27E17499B7F688BCB05C26794D77178619A29E3C9C1DED7DA57C921CF3E6CE816213CE8D0FC33B8B3A8B8962AF
-X-7FA49CB5: 0D63561A33F958A5BB10BA8F8A0D2C173C96383ED259DD70AFBCB1A3F7E670498941B15DA834481FA18204E546F3947CEDCF5861DED71B2F389733CBF5DBD5E9C8A9BA7A39EFB7666BA297DBC24807EA117882F44604297287769387670735209ECD01F8117BC8BEA471835C12D1D977C4224003CC8364767815B9869FA544D8D32BA5DBAC0009BE9E8FC8737B5C224937E7452263E0972376E601842F6C81A12EF20D2F80756B5F012D6517FE479FCD76E601842F6C81A127C277FBC8AE2E8B6D01232022BF41B73AA81AA40904B5D99449624AB7ADAF37F910319684D6E05D725E5C173C3A84C3045DD857D6FE754135872C767BF85DA2F004C906525384306FED454B719173D6462275124DF8B9C9DE2850DD75B2526BE5BFE6E7EFDEDCD789D4C264860C145E
-X-Mailru-Sender: 641179478317D3F0421D0BEF39CFD1382C027698C543D78392FC74525D568F82A96F51CF8A3FC75013BA5AC085B0DF3CFD8FF98A8691EE7BAAB64A3C2C77197FCA12F3F80FA6A2FFE7D80B0F635B57EC67EA787935ED9F1B
-X-Mras: OK
-X-7564579A: EEAE043A70213CC8
-X-77F55803: 5241C2F38277A35D7F9F52485CB584D7271FD7DF62800FDC0F5BB53137D87BDC647379EE6AF6FFC3F16AFDB48C324EDC94E1E1F2DDB2EC4B
-X-7FA49CB5: 0D63561A33F958A574158F6AD5DB45F4D1A4A5E952EFABAA79AB476A5B52DF078941B15DA834481FA18204E546F3947CEDCF5861DED71B2F389733CBF5DBD5E9C8A9BA7A39EFB7666BA297DBC24807EA117882F44604297287769387670735209ECD01F8117BC8BEA471835C12D1D977C4224003CC8364767815B9869FA544D8D32BA5DBAC0009BE9E8FC8737B5C224937E7452263E0972376E601842F6C81A12EF20D2F80756B5F012D6517FE479FCD76E601842F6C81A127C277FBC8AE2E8B6D01232022BF41B73AA81AA40904B5D99449624AB7ADAF37F910319684D6E05D725E5C173C3A84C3045DD857D6FE754135872C767BF85DA2F004C906525384306FED454B719173D6462275124DF8B9C9DE2850DD75B2526BE5BFE6E7EFDEDCD789D4C264860C145E
-X-Mailru-MI: 800
-X-Mailru-Sender: A5480F10D64C9005C4B9C964EF46FD64ABC9777E5BB190D3647379EE6AF6FFC315C3726575FFF916FD27B1545737DED76F53C80213D1719CB3360D9C94DE366A1CC4A9B39F20364B73395D515EC5B64AAE208404248635DF
-X-Mras: OK
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Feb 02, 2020 at 05:56:55PM +0530, Manav Agarwal wrote:
+Garima Singh <garimasigit@gmail.com> writes:
+> On 1/20/2020 8:48 AM, Jakub Narebski wrote:
 
-> Hey there! I am a shell script and Linux kernel programmer and looking
-> forward to making contributions to Git. May you please help me out
-> with some getting started links. I would be very thankful to you if
-> you could help me out with that.
+>>>                                      How often a file has been touched
+>>> also makes a difference. The performance gains are less dramatic if the=
+=20
+>>> file has a very sparse history even if it is a deep file.
+>>=20
+>> This looks a bit strange (or maybe I don't understand something).
+>>=20
+>> Bloom filter can answer "no" and "maybe" to subset inclusion query.
+>> This means that if file was *not* changed, with great probability the
+>> answer from Bloom filter would be "no", and we would skip diff-ing
+>> trees (which may terminate early, though).
+>>=20
+>> On the other hand if file was changed by the commit, and the answer from
+>> a Bloom filter is "maybe", then we have to perform diffing to make sure.
+>
+> Yes. What I meant by statement however is that the performance gain i.e.=
+=20
+> difference in performance between using and not using bloom filters, is n=
+ot=20
+> always as dramatic if the history is sparse and the trees aren't touched=
+=20
+> as often. So it is largely dependent on the shape of the repo and the sha=
+pe
+> of the commit graph.=20
 
-This recent thread on the git-users mailing list [1] should have you
-covered on this topic.
+It probably depends on the depth of changes in a typical skipped commit,
+I think.
 
-To maybe add to what's written there, I'd also suggest looking under the
-"Documentation" directory of your local Git clone [2] - as it contains
-all the relevant material.
+If we are getting history for the
+core/java/com/android/ims/internal/uce/presence/IPresenceListener.aidl
+and the change is contained in libs/input/ directory, we have to unpack
+only two trees, independent on the depth of the file we are asking
+about.
 
-1. https://groups.google.com/d/topic/git-users/89WqodvcEUE/discussion
-2. https://github.com/git/git/tree/master/Documentation
+It could be also possible, if Git is smart enough about it, to halt
+early if we are checking only if given path changed rather than
+calculating a full difftree.  Say, for example, that the change was in
+core/java/org/apache/http/conn/ssl/SSLSocketFactory.java file, while
+we were getting the history for the following file
+core/java/com/android/ims/internal/uce/presence/IPresenceListener.aidl
+After unpacking two or three threes we know that the second file was not
+changed.  But if we compute full diff, we have to unpack 8 trees.
+Quite a difference.
 
+
+All example paths above came from AOSP repository that was used for
+testing different proposed generation numbers v2, see
+https://github.com/derrickstolee/gen-test/blob/master/clone-repos.sh
+
+>>> The numbers from the git and linux repos for instance, are for files=20
+>>> closer to the root, hence 2x to 5x.=20
+>>=20
+>> That is quite nice speedup, anyway (git repository cannot be even
+>> considered large; medium -- maybe).
+>
+> Yeah. Git and Linux served as nice initial test beds. If you have any=20
+> suggestions for interesting repos it would be worth running performanc=20
+> investigations on, do let me know!=20
+
+If we want repositories with deep path hierarchy, Java projects with
+mandated directory structures might be a good choice, for example
+Android (AOSP):
+
+  git clone https://android.googlesource.com/platform/frameworks/base/ andr=
+oid-base
+
+It is also quite large repository; in 2019 it had around 874000 commits,
+around the same as the Linux kernel repository.
+
+Another large repository is Chromium -- though I don't know if it has
+deep filesystem hierarchy.
+
+You can use the list of different large and large-ish repositories from
+https://github.com/derrickstolee/gen-test/blob/master/clone-repos.sh
+Other repositories with large number of commmits not on that list are
+LLVM Compiler, GCC (GNU Compiler Collection) -- just converted to Git,
+Homebrew, and Ruby on Rails.
+
+>> P.S. I wonder if it would be worth to create some synthetical repository
+>> to test performance gains of Bloom filters, perhaps in t/perf...
+>>=20
+>
+> I will look into this after I get v1 out on the mailing list.=20
+> Thanks!=20
+
+It would be nice to have, but it can wait.
+
+
+Keep up the good work!
+--=20
+Jakub Nar=C4=99bski
