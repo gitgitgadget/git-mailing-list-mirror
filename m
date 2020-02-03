@@ -2,56 +2,216 @@ Return-Path: <SRS0=caIn=3X=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BCF67C35247
-	for <git@archiver.kernel.org>; Mon,  3 Feb 2020 21:03:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 563EFC35247
+	for <git@archiver.kernel.org>; Mon,  3 Feb 2020 21:05:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 946952087E
-	for <git@archiver.kernel.org>; Mon,  3 Feb 2020 21:03:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 23A412087E
+	for <git@archiver.kernel.org>; Mon,  3 Feb 2020 21:05:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726331AbgBCVDG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Feb 2020 16:03:06 -0500
-Received: from cloud.peff.net ([104.130.231.41]:51600 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725372AbgBCVDG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Feb 2020 16:03:06 -0500
-Received: (qmail 4423 invoked by uid 109); 3 Feb 2020 21:03:06 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 03 Feb 2020 21:03:06 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27052 invoked by uid 111); 3 Feb 2020 21:11:13 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 03 Feb 2020 16:11:13 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 3 Feb 2020 16:03:05 -0500
-From:   Jeff King <peff@peff.net>
-To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
-Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-Subject: Re: git-filter-branch.txt: wrap "maths" notation in backticks
-Message-ID: <20200203210305.GA11902@coredump.intra.peff.net>
-References: <20200203114549.GA4157558@coredump.intra.peff.net>
- <20200203203650.31914-1-martin.agren@gmail.com>
+        id S1726994AbgBCVFO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Feb 2020 16:05:14 -0500
+Received: from mail-lf1-f67.google.com ([209.85.167.67]:37181 "EHLO
+        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726287AbgBCVFN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Feb 2020 16:05:13 -0500
+Received: by mail-lf1-f67.google.com with SMTP id b15so10733569lfc.4
+        for <git@vger.kernel.org>; Mon, 03 Feb 2020 13:05:12 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=GfJkz1mesfjOkS+YY+KQs9ucovUGPta+buhQ8CcjJTo=;
+        b=SEGHH/VvfUosAYiCWHWIWHIGONmXsyuw0HbwGXeDOc92M+rSG5fMZ5tZBk1MLfOBnV
+         qlZ7Ckf00VGuTMv0vchdfvb+SqtVkLvrq8LDMJATD/esXVYgtnfX1YLU6jqWvKmiKRLn
+         BkRZ57WRBZ/6/dTQSuscn6g3vVOtSMehOwx9/7yPxExLn9lVEDGGXw6/pQYUKog3kIEh
+         fd2onZir/frblL52fA3lCEkYqVHF15l58PM8Kahq1uaPDi/3DSw0NjOGK4g+Otq7UARC
+         k86UkXVXgspKdizmUAKjT1wm5RX58xjeWBFF1ZjbYrVsRvFwJ0FQAdzd+YNlLYKTY/9s
+         Z3KA==
+X-Gm-Message-State: APjAAAVJ9m+KVbqU8vt2p7Ukoo5lHxgBk3ch5dXLOj9/bS++FJd8AzWK
+        HodhZ2BhCIQN4+zskokAS13bTBG++S4=
+X-Google-Smtp-Source: APXvYqzicRz/IkCx2TeF71n7Bcrj96t0L8hKaWGWE8XikKhKdObfzVnRmDl3GJlW6GW/ploAVZ6v+A==
+X-Received: by 2002:a19:4a:: with SMTP id 71mr12986285lfa.50.1580763911523;
+        Mon, 03 Feb 2020 13:05:11 -0800 (PST)
+Received: from beta.herland (160.37-191-159.fiber.lynet.no. [37.191.159.160])
+        by smtp.gmail.com with ESMTPSA id 4sm9676405lfh.73.2020.02.03.13.05.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 03 Feb 2020 13:05:11 -0800 (PST)
+From:   Johan Herland <johan@herland.net>
+To:     git@vger.kernel.org
+Cc:     Johan Herland <johan@herland.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        "Brian M . Carlson" <sandals@crustytoothpaste.net>
+Subject: [PATCH 2/2] notes.c: fix off-by-one error when decreasing notes fanout
+Date:   Mon,  3 Feb 2020 22:04:45 +0100
+Message-Id: <20200203210445.2854-2-johan@herland.net>
+X-Mailer: git-send-email 2.23.1
+In-Reply-To: <20200203210445.2854-1-johan@herland.net>
+References: <20200203210445.2854-1-johan@herland.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20200203203650.31914-1-martin.agren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 03, 2020 at 09:36:50PM +0100, Martin Ågren wrote:
+As noted in the previous commit, the nature of the fanout heuristic
+in the notes code causes the exact point at which we increase or
+decrease the notes fanout to vary with the objects being annotated.
+Since the object ids generated by the test environment are
+deterministic (by design), the notes generated and tested by t3305
+are always the same, and we therefore happen to see the same fanout
+behavior from one run to the next.
 
-> --->8---
-> Subject: [PATCH v2] git-filter-branch.txt: wrap "maths" notation in backticks
+Coincidentally, if we were to change the test environment slightly
+(say by making a test commit on an unrelated branch before we start
+the t3305 test proper), we not only see the fanout switch happen at
+different points, we also manage to trigger a _bug_ in the notes
+code where the fanout 1 -> 0 switch is not applied uniformly across
+the notes tree, but instead yields a notes tree like this:
 
-Yep, this looks fine to me. Thanks.
+  ...
+  bdeafb301e44b0e4db0f738a2d2a7beefdb70b70
+  bff2d39b4f7122bd4c5caee3de353a774d1e632a
+  d3/8ec8f851adf470131178085bfbaab4b12ad2a7
+  e0b173960431a3e692ae929736df3c9b73a11d5b
+  eb3c3aede523d729990ac25c62a93eb47c21e2e3
+  ...
 
-(I'd consider it fine to also put the O(n^2) you found in backticks, but
-if it renders fine in both places already, I'm happy either way).
+The bug occurs when we are writing out a notes tree with a newly
+decreased fanout, and the notes tree contains unexpanded subtrees
+that should be consolidated into the parent tree as a consequence of
+the decreased fanout):
 
--Peff
+Subtrees that happen to sit at an _even_ level in the internal notes
+16-tree structure (in other words: subtrees whose path - "d3" in the
+example above - is unique in the first nibble - i.e. there are no
+other note paths that start with "d") are _not_ unpacked as part of
+the tree writeout. This error will repeat itself in subsequent note
+trees until the subtree is forced to be unpacked. In t3305 this only
+happens when the d38ec8f8 note is itself removed from the tree.
+
+The error is not severe (no information is lost, and the notes code
+is able to read/decode this tree and manipulate it correctly), but
+this is nonetheless a bug in the current implementation that should
+be fixed.
+
+That said, fixing the off-by-one error is not without complications:
+We must take into account that the load_subtree() call from
+for_each_note_helper() (that is now done to correctly unpack the
+subtree while we're writing out the notes tree) may end up inserting
+unpacked non-notes into the linked list of non_note entries held by
+the struct notes_tree. Since we are in the process of writing out the
+notes tree, this linked list is currently in the process of being
+traversed by write_each_non_note_until(). The unpacked non-notes are
+necessarily inserted between the last non-note we wrote out, and the
+next non-note to be written. Hence, we cannot simply hold the
+next_non_note to write in struct write_each_note_data (as we would
+then silently skip these newly inserted notes), but must instead
+always follow the ->next pointer from the last non-note we wrote.
+(This part is was caught by an existing test in t3304.)
+
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: Brian M. Carlson <sandals@crustytoothpaste.net>
+Signed-off-by: Johan Herland <johan@herland.net>
+---
+ notes.c                 | 20 ++++++++++++--------
+ t/t3305-notes-fanout.sh |  6 ++++++
+ 2 files changed, 18 insertions(+), 8 deletions(-)
+
+diff --git a/notes.c b/notes.c
+index 0c79964c26..2de7f4bcfb 100644
+--- a/notes.c
++++ b/notes.c
+@@ -576,16 +576,16 @@ static int for_each_note_helper(struct notes_tree *t, struct int_node *tree,
+ 			 * the note tree that have not yet been explored. There
+ 			 * is a direct relationship between subtree entries at
+ 			 * level 'n' in the tree, and the 'fanout' variable:
+-			 * Subtree entries at level 'n <= 2 * fanout' should be
++			 * Subtree entries at level 'n < 2 * fanout' should be
+ 			 * preserved, since they correspond exactly to a fanout
+ 			 * directory in the on-disk structure. However, subtree
+-			 * entries at level 'n > 2 * fanout' should NOT be
++			 * entries at level 'n >= 2 * fanout' should NOT be
+ 			 * preserved, but rather consolidated into the above
+ 			 * notes tree level. We achieve this by unconditionally
+ 			 * unpacking subtree entries that exist below the
+ 			 * threshold level at 'n = 2 * fanout'.
+ 			 */
+-			if (n <= 2 * fanout &&
++			if (n < 2 * fanout &&
+ 			    flags & FOR_EACH_NOTE_YIELD_SUBTREES) {
+ 				/* invoke callback with subtree */
+ 				unsigned int path_len =
+@@ -602,7 +602,7 @@ static int for_each_note_helper(struct notes_tree *t, struct int_node *tree,
+ 					 path,
+ 					 cb_data);
+ 			}
+-			if (n > fanout * 2 ||
++			if (n >= 2 * fanout ||
+ 			    !(flags & FOR_EACH_NOTE_DONT_UNPACK_SUBTREES)) {
+ 				/* unpack subtree and resume traversal */
+ 				tree->a[i] = NULL;
+@@ -723,13 +723,15 @@ static int write_each_note_helper(struct tree_write_stack *tws,
+ 
+ struct write_each_note_data {
+ 	struct tree_write_stack *root;
+-	struct non_note *next_non_note;
++	struct non_note **nn_list;
++	struct non_note *nn_prev;
+ };
+ 
+ static int write_each_non_note_until(const char *note_path,
+ 		struct write_each_note_data *d)
+ {
+-	struct non_note *n = d->next_non_note;
++	struct non_note *p = d->nn_prev;
++	struct non_note *n = p ? p->next : *d->nn_list;
+ 	int cmp = 0, ret;
+ 	while (n && (!note_path || (cmp = strcmp(n->path, note_path)) <= 0)) {
+ 		if (note_path && cmp == 0)
+@@ -740,9 +742,10 @@ static int write_each_non_note_until(const char *note_path,
+ 			if (ret)
+ 				return ret;
+ 		}
++		p = n;
+ 		n = n->next;
+ 	}
+-	d->next_non_note = n;
++	d->nn_prev = p;
+ 	return 0;
+ }
+ 
+@@ -1177,7 +1180,8 @@ int write_notes_tree(struct notes_tree *t, struct object_id *result)
+ 	strbuf_init(&root.buf, 256 * (32 + the_hash_algo->hexsz)); /* assume 256 entries */
+ 	root.path[0] = root.path[1] = '\0';
+ 	cb_data.root = &root;
+-	cb_data.next_non_note = t->first_non_note;
++	cb_data.nn_list = &(t->first_non_note);
++	cb_data.nn_prev = NULL;
+ 
+ 	/* Write tree objects representing current notes tree */
+ 	flags = FOR_EACH_NOTE_DONT_UNPACK_SUBTREES |
+diff --git a/t/t3305-notes-fanout.sh b/t/t3305-notes-fanout.sh
+index 402057c83a..3b4753e1b4 100755
+--- a/t/t3305-notes-fanout.sh
++++ b/t/t3305-notes-fanout.sh
+@@ -30,6 +30,12 @@ all_notes_have_fanout() {
+ 	done
+ }
+ 
++test_expect_success 'tweak test environment' '
++	git checkout -b nondeterminism &&
++	test_commit A &&
++	git checkout --orphan with_notes;
++'
++
+ test_expect_success 'creating many notes with git-notes' '
+ 	num_notes=300 &&
+ 	i=0 &&
+-- 
+2.23.1
+
