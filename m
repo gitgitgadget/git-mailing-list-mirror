@@ -2,180 +2,116 @@ Return-Path: <SRS0=caIn=3X=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_IN_DEF_DKIM_WL autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 78284C35247
-	for <git@archiver.kernel.org>; Mon,  3 Feb 2020 15:23:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 53D2FC35247
+	for <git@archiver.kernel.org>; Mon,  3 Feb 2020 16:40:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 412BA2192A
-	for <git@archiver.kernel.org>; Mon,  3 Feb 2020 15:23:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2AF3921D7D
+	for <git@archiver.kernel.org>; Mon,  3 Feb 2020 16:40:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aRylg68j"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="khV33sn+"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727542AbgBCPW7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Feb 2020 10:22:59 -0500
-Received: from mail-io1-f42.google.com ([209.85.166.42]:44601 "EHLO
-        mail-io1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726930AbgBCPW7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Feb 2020 10:22:59 -0500
-Received: by mail-io1-f42.google.com with SMTP id z16so12396337iod.11
-        for <git@vger.kernel.org>; Mon, 03 Feb 2020 07:22:58 -0800 (PST)
+        id S1731128AbgBCQkL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Feb 2020 11:40:11 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:37185 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727129AbgBCQkK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Feb 2020 11:40:10 -0500
+Received: by mail-wm1-f66.google.com with SMTP id f129so18013971wmf.2
+        for <git@vger.kernel.org>; Mon, 03 Feb 2020 08:40:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=OBhBo2pZU6gSL7kGNrOAVijDpwxxYUCMWqqzfc2pip4=;
-        b=aRylg68jLm8wwgwfS9A2wSNzLw2jUSak8qlxfD6XoM8yntvQzogYMsaNjg9ypLef3P
-         eqj1UkLItuD5S6EIHcTJfPaaHkcKMAG02QNOfvHLZeY7wCJToMAFAbHd/Aw0p04/3cNC
-         4V89QswJkCeKjbQ8Rr30dTo591ynETQpjwNapI5v8b75TvNYaB+KrzmmhZ2NZL6yMnO2
-         CJ9en2Y1w3l+rTAsBjySoXvo5gJbFJkyoCUVkGosxyzS8Sc1+yD+GRonN001BLxpPRl4
-         PfAkw8E4xl/8Giz08DrfbkVS7M2+RBGf7kVg0a5O722NcXz3VBbYbpDlHmsnyOKP5uwr
-         xRow==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=EP5hlJOqZXw8gKkK/ij/kRmw22NMDHhS+Y0B8YAIIU8=;
+        b=khV33sn+f0INlAy5rdd1wehcHPurfz7DdeS1O6U6oLAinJ3lfKWrdg66ggfdzWM/IO
+         wz9QwQ4e/P5ulMdVr4KOt0fEKjSA0ksr9yHrgd/Jd9sXuMvHBKikFvJyZvVGMiy4FNZQ
+         KlDEILdi/NVvL2pUFwWcFPXBlkghbPsVSFva0ic4od7PYdFjCHr3squzkKOq4m7jgBCf
+         8e5UJembaxfb/XHb+PQrNZuAUfP4TYV4KZ9A3jqaTcZSH3LcZqF8knL/0JgeDsMihnp1
+         ZoV5nl/HIAimFiw+YNuLAY5ALh6PuGqLh8FuYOpUxo0hL5L21FUlZnj65Tk9dLQUYs9x
+         5CwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=OBhBo2pZU6gSL7kGNrOAVijDpwxxYUCMWqqzfc2pip4=;
-        b=c5HvUQ2DGuhvLtEtE4UUKBF39b9kQSG8u1sLWsBC/QHgvgEDSJ+hYhLd2+vdE0NS1q
-         dLqbJFNmn/GS1btT/+Ka5q03HJU/za2g2YTJvr0KGgVkQwRdINjRrJUMnCnff+dIw6gC
-         bQBV7DALLF2aaD+UYusn3C8arEtrE3vhQFuNGqXx8BdrJK66EfBp3EEwRuj1YH1/6J0p
-         GuSKBhNXg8iGaUytPU+q1FhWF+Fdu2Hs+p9l8rszz5u35Tx1sneWBE0OcxUEmH0LiCe0
-         MibMf+cG5Joo7KT7tWCivqYvD7ibRUnivFvKaPnu+pFjXUGDBrktwxsSVVkOi19L4emM
-         CKgg==
-X-Gm-Message-State: APjAAAU9Wr3OCEzsRGQLOkAszcJ609B0MMo/ZZM6gqDONKwq3xOenw7p
-        IyvCUXxs+1e+FTQrDdFOBs8VBhLukLQj/mGQ7F10T8Cp
-X-Google-Smtp-Source: APXvYqzm0SSiezgsiL6vsYrkjCRC6Jxyp2JriIBWccs5UUXssreIqODhOqISeA180MREmw0wtRA2d/jAk3LSh/oi7X8=
-X-Received: by 2002:a02:c951:: with SMTP id u17mr20422242jao.27.1580743377793;
- Mon, 03 Feb 2020 07:22:57 -0800 (PST)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=EP5hlJOqZXw8gKkK/ij/kRmw22NMDHhS+Y0B8YAIIU8=;
+        b=XKXdkGpKNQV+3vIM7vMCtdWwfmLucpUwoFyDXGPiWGcRbVPDiMhHrmSueD4TaWOyaL
+         Wvve6GeBoFtwlfA+RG4qmTrkBcIvbjEcZzuDQaObZ+DHBr3Q6kldYYbB9R4GksdpXTpz
+         9PTFEXNl/kFUIlYygqLrgXyz7w6Se/IV0OXS0NDp96O4/kEoGLq6h1F0+HHDE7n3Tl+i
+         p1vuB1uyNM6ey0NEpXNnG1zSnWx31x7CuQ+sT5P273q9eSnmAba7O8gRbXekUU+7XxgF
+         LMhR/19LWlzHWzGxlxO+Map3Et2Yvq7sON7CekQtdA5vlJTw+tEvZhiu08rKKLCTQJOf
+         SK3Q==
+X-Gm-Message-State: APjAAAVqNRYyrihzbOZfhQ8zld2duNwPO9SAU/Mqlfiqo50G4D8sSlg4
+        VMmtbqYLt9onifgYNm/ykqBjLxsTAJeyg6D1sz4m1g==
+X-Google-Smtp-Source: APXvYqzC8A5gjLvl8UbiRUKF8y+bdGcuDK890cJBp5CQk4BtHTwMF2NLOhCeApdrJS9xafsG/lXOlB6QcM/H7oKEHQw=
+X-Received: by 2002:a1c:610a:: with SMTP id v10mr29111906wmb.44.1580748008427;
+ Mon, 03 Feb 2020 08:40:08 -0800 (PST)
 MIME-Version: 1.0
-Reply-To: noloader@gmail.com
-From:   Jeffrey Walton <noloader@gmail.com>
-Date:   Mon, 3 Feb 2020 10:22:46 -0500
-Message-ID: <CAH8yC8kaWXbN+RYMJnM9em7KKW54+N07JtyS1MZk0qppD=m2BA@mail.gmail.com>
-Subject: Fix inet_ntop and inet_pton on Solaris
-To:     Git List <git@vger.kernel.org>
-Content-Type: multipart/mixed; boundary="000000000000848795059dad7f75"
+References: <pull.539.git.1579808479.gitgitgadget@gmail.com>
+ <9138554.c73hJVQVja@mfick-lnx> <CAFQ2z_NkU6ekZkMqZpcFSEr8M3kfw0tiVCB2doHp3QTZtQ8UNg@mail.gmail.com>
+ <2165647.H0RpPiDeFZ@mfick-lnx> <CAFQ2z_OgGvX3mFLeWSvEqdfxupRuHN_eFgqENaCRHHpO364_xA@mail.gmail.com>
+ <20200130072122.GC2189233@coredump.intra.peff.net>
+In-Reply-To: <20200130072122.GC2189233@coredump.intra.peff.net>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Mon, 3 Feb 2020 17:39:55 +0100
+Message-ID: <CAFQ2z_PvKiz==GyS6J1H1uG0FRPL86JvDj+LjX1We4-yCSVQ+g@mail.gmail.com>
+Subject: Re: [PATCH v2 5/5] Reftable support for git-core
+To:     Jeff King <peff@peff.net>
+Cc:     Martin Fick <mfick@codeaurora.org>,
+        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---000000000000848795059dad7f75
-Content-Type: text/plain; charset="UTF-8"
+On Thu, Jan 30, 2020 at 8:21 AM Jeff King <peff@peff.net> wrote:
+>
+> On Wed, Jan 29, 2020 at 08:50:13PM +0100, Han-Wen Nienhuys wrote:
+>
+> > > That might be a good enough safety. I guess the next question would b=
+e,  would
+> > > it be OK for reftable to ignore and entries under the refs/ dir if th=
+ey happen
+> > > to appear there somehow?
+> >
+> > I propose to ignore refs/ if it is read-only, and fail if it is r/w.
+> > We're not going to look over the files under refs/ . If people
+> > actively try to shoot themselves in the foot, why would we stop them?
+>
+> I'm worried that playing games with permissions is going to lead to
+> confusing outcomes. There are reasons one might want a r/o refs/
+> directory with the current system (e.g., you could have a repository on
+> a read-only mount). Or you might have a system which doesn't implement
+> the full POSIX permissions, and everything appears to be r/w by the
+> user.
 
-Hi Everyone,
+OK, so permissions are out. How about:
 
-inet_ntop and inet_pton were not being detected properly on modern on
-Solaris. This patch revisits the the socket gear configuration on
-SunOS and brings it up to date for Solaris 11.
+  HEAD - convincing enough for old versions to accept
+  refs/ - a standard rwx directory
+  reftable/ - a normal directory
+  reftable-list - the list of tables
+  reads/heads  - a file containing "this repo uses reftables. Upgrade
+to git vXYZ"
 
-According to configure.ac, the three or four functions of interest
-include hstrerror, inet_ntop and inet_pton. The libraries of interest
-are -lresolv -lsocket -lnsl. The configure tests now look for
-inet_ntop and inet_pton in -lsocket -lnsl per the man page. If not
-found, the configure tests fall back to existing behavior by searching
-in -lresolv. And if not found in -lresolv, then NO_INET_NTOP and
-NO_INET_PTON are set.
+this would prevent people from erroneously creating normal branches.
 
-Here's the configure fly-by:
+--=20
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
 
-checking for socket... no
-checking for library containing socket... no
-checking for inet_ntop... no
-checking for library containing inet_ntop... -lnsl
-checking for inet_pton... yes
-checking for hstrerror... no
-checking for library containing hstrerror... -lresolv
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
 
-And config.status:
+Registergericht und -nummer: Hamburg, HRB 86891
 
-$ /usr/gnu/bin/grep -E 'RESOLV|SOCKET|NSL' config.status
-NEEDS_RESOLV=YesPlease
-NEEDS_SOCKET=YesPlease
-NEEDS_NSL=YesPlease
+Sitz der Gesellschaft: Hamburg
 
-Jeff
-
---000000000000848795059dad7f75
-Content-Type: text/x-patch; charset="US-ASCII"; name="solaris.diff"
-Content-Disposition: attachment; filename="solaris.diff"
-Content-Transfer-Encoding: base64
-Content-ID: <f_k66lms9p0>
-X-Attachment-Id: f_k66lms9p0
-
-ZGlmZiAtLWdpdCBhL01ha2VmaWxlIGIvTWFrZWZpbGUKaW5kZXggMDlmOThiNzc3Yy4uNzE2NmIx
-OWFiNCAxMDA2NDQKLS0tIGEvTWFrZWZpbGUKKysrIGIvTWFrZWZpbGUKQEAgLTE0NjEsMTUgKzE0
-NjEsMTUgQEAgaWZuZGVmIExJQkNfQ09OVEFJTlNfTElCSU5UTAogCUVYVExJQlMgKz0gLWxpbnRs
-CiBlbmRpZgogZW5kaWYKK2lmZGVmIE5FRURTX1JFU09MVgorCUVYVExJQlMgKz0gLWxyZXNvbHYK
-K2VuZGlmCiBpZmRlZiBORUVEU19TT0NLRVQKIAlFWFRMSUJTICs9IC1sc29ja2V0CiBlbmRpZgog
-aWZkZWYgTkVFRFNfTlNMCiAJRVhUTElCUyArPSAtbG5zbAogZW5kaWYKLWlmZGVmIE5FRURTX1JF
-U09MVgotCUVYVExJQlMgKz0gLWxyZXNvbHYKLWVuZGlmCiBpZmRlZiBOT19EX1RZUEVfSU5fRElS
-RU5UCiAJQkFTSUNfQ0ZMQUdTICs9IC1ETk9fRF9UWVBFX0lOX0RJUkVOVAogZW5kaWYKZGlmZiAt
-LWdpdCBhL2NvbmZpZ3VyZS5hYyBiL2NvbmZpZ3VyZS5hYwppbmRleCA2NmFlZGI5Mjg4Li5iODNh
-MGU5NzBkIDEwMDY0NAotLS0gYS9jb25maWd1cmUuYWMKKysrIGIvY29uZmlndXJlLmFjCkBAIC03
-MTEsNDAgKzcxMSw1OCBAQCBHSVRfVU5TVEFTSF9GTEFHUygkWkxJQl9QQVRIKQogCiBHSVRfQ09O
-Rl9TVUJTVChbTk9fREVGTEFURV9CT1VORF0pCiAKKyMKKyMgVGhlIG5leHQgZmV3IHRlc3RzIHdp
-bGwgZGVmaW5lIE5FRURTX1JFU09MViwgTkVFRFNfU09DS0VUIG9yCisjIE5FRURTX05TTCBpZiBs
-aW5raW5nIHdpdGggbGlicmVzb2x2LCBsaWJzb2NrZXQgYW5kIGxpYm5zbAorIyBwcm92aWRlcyBz
-b21lIG9mIHRoZSBmdW5jdGlvbnMgd2Ugd291bGQgbm9ybWFsbHkgZ2V0IGZyb20gbGliYy4KK05F
-RURTX1JFU09MVj0KK05FRURTX1NPQ0tFVD0KK05FRURTX05TTD0KKwogIwogIyBEZWZpbmUgTkVF
-RFNfU09DS0VUIGlmIGxpbmtpbmcgd2l0aCBsaWJjIGlzIG5vdCBlbm91Z2ggKFN1bk9TLAogIyBQ
-YXRyaWNrIE1hdXJpdHopLgotQUNfQ0hFQ0tfTElCKFtjXSwgW3NvY2tldF0sCi1bTkVFRFNfU09D
-S0VUPV0sCi1bTkVFRFNfU09DS0VUPVllc1BsZWFzZV0pCi1HSVRfQ09ORl9TVUJTVChbTkVFRFNf
-U09DS0VUXSkKLXRlc3QgLW4gIiRORUVEU19TT0NLRVQiICYmIExJQlM9IiRMSUJTIC1sc29ja2V0
-IgorQUNfQ0hFQ0tfRlVOQyhbc29ja2V0XSwKKyAgICBbXSwKKyAgICBbQUNfU0VBUkNIX0xJQlMo
-W3NvY2tldF0sIFtjXSwKKyAgICAgICBbTkVFRFNfU09DS0VUPV0sCisgICAgICAgW05FRURTX1NP
-Q0tFVD1ZZXNQbGVhc2VdKQorXSkKIAogIwotIyBUaGUgbmV4dCBmZXcgdGVzdHMgd2lsbCBkZWZp
-bmUgTkVFRFNfUkVTT0xWIGlmIGxpbmtpbmcgd2l0aAotIyBsaWJyZXNvbHYgcHJvdmlkZXMgc29t
-ZSBvZiB0aGUgZnVuY3Rpb25zIHdlIHdvdWxkIG5vcm1hbGx5IGdldAotIyBmcm9tIGxpYmMuCi1O
-RUVEU19SRVNPTFY9Ci0jCi0jIERlZmluZSBOT19JTkVUX05UT1AgaWYgbGlua2luZyB3aXRoIC1s
-cmVzb2x2IGlzIG5vdCBlbm91Z2guCi0jIFNvbGFyaXMgMi43IGluIHBhcnRpY3VsYXIgaG9zIGlu
-ZXRfbnRvcCBpbiAtbHJlc29sdi4KKyMgRGVmaW5lIE5PX0lORVRfTlRPUCBpZiBsaW5raW5nIHdp
-dGggLWxyZXNvbHYsIC1sc29ja2V0IGFuZCAtbG5zbAorIyBpcyBub3QgZW5vdWdoLiBTb2xhcmlz
-IDExIHByb3ZpZGVzIGluZXRfbnRvcCBpbiAtbHNvY2tldCAtbG5zbC4KKyMgU29sYXJpcyAyLjcg
-cHJvdmlkZXMgaW5ldF9udG9wIGluIC1scmVzb2x2LgogTk9fSU5FVF9OVE9QPQogQUNfQ0hFQ0tf
-RlVOQyhbaW5ldF9udG9wXSwKICAgICBbXSwKLSAgICBbQUNfQ0hFQ0tfTElCKFtyZXNvbHZdLCBb
-aW5ldF9udG9wXSwKLQlbTkVFRFNfUkVTT0xWPVllc1BsZWFzZV0sCi0JW05PX0lORVRfTlRPUD1Z
-ZXNQbGVhc2VdKQorICAgIFtBQ19TRUFSQ0hfTElCUyhbaW5ldF9udG9wXSwgW3NvY2tldCBuc2xd
-LAorICAgICAgIFtORUVEU19TT0NLRVQ9WWVzUGxlYXNlOyBORUVEU19OU0w9WWVzUGxlYXNlXSwK
-KyAgICAgICBbQUNfQ0hFQ0tfRlVOQyhbaW5ldF9udG9wXSwKKyAgICAgICAgICBbXSwKKyAgICAg
-ICAgICBbQUNfU0VBUkNIX0xJQlMoW2luZXRfbnRvcF0sIFtyZXNvbHZdLAorICAgICAgICAgIFtO
-RUVEU19SRVNPTFY9WWVzUGxlYXNlXSwKKyAgICAgICAgICBbTk9fSU5FVF9QVE9OPVllc1BsZWFz
-ZV0pCisgICAgICAgXSkKKyAgICBdKQogXSkKIEdJVF9DT05GX1NVQlNUKFtOT19JTkVUX05UT1Bd
-KQogIwotIyBEZWZpbmUgTk9fSU5FVF9QVE9OIGlmIGxpbmtpbmcgd2l0aCAtbHJlc29sdiBpcyBu
-b3QgZW5vdWdoLgotIyBTb2xhcmlzIDIuNyBpbiBwYXJ0aWN1bGFyIGhvcyBpbmV0X3B0b24gaW4g
-LWxyZXNvbHYuCisjIERlZmluZSBOT19JTkVUX1BUT04gaWYgbGlua2luZyB3aXRoIC1scmVzb2x2
-LCAtbHNvY2tldCBhbmQgLWxuc2wKKyMgaXMgbm90IGVub3VnaC4gU29sYXJpcyAxMSBwcm92aWRl
-cyBpbmV0X3B0b24gaW4gLWxzb2NrZXQgLWxuc2wuCisjIFNvbGFyaXMgMi43IHByb3ZpZGVzIGlu
-ZXRfcHRvbiBpbiAtbHJlc29sdi4KIE5PX0lORVRfUFRPTj0KIEFDX0NIRUNLX0ZVTkMoW2luZXRf
-cHRvbl0sCiAgICAgW10sCi0gICAgW0FDX0NIRUNLX0xJQihbcmVzb2x2XSwgW2luZXRfcHRvbl0s
-Ci0JW05FRURTX1JFU09MVj1ZZXNQbGVhc2VdLAotCVtOT19JTkVUX1BUT049WWVzUGxlYXNlXSkK
-KyAgICBbQUNfU0VBUkNIX0xJQlMoW2luZXRfcHRvbl0sIFtzb2NrZXQgbnNsXSwKKyAgICAgICBb
-TkVFRFNfU09DS0VUPVllc1BsZWFzZTsgTkVFRFNfTlNMPVllc1BsZWFzZV0sCisgICAgICAgW0FD
-X0NIRUNLX0ZVTkMoW2luZXRfcHRvbl0sCisgICAgICAgICAgW10sCisgICAgICAgICAgW0FDX1NF
-QVJDSF9MSUJTKFtpbmV0X3B0b25dLCBbcmVzb2x2XSwKKyAgICAgICAgICBbTkVFRFNfUkVTT0xW
-PVllc1BsZWFzZV0sCisgICAgICAgICAgW05PX0lORVRfUFRPTj1ZZXNQbGVhc2VdKQorICAgICAg
-IF0pCisgICAgXSkKIF0pCiBHSVRfQ09ORl9TVUJTVChbTk9fSU5FVF9QVE9OXSkKICMKQEAgLTc1
-MywxOSArNzcxLDI2IEBAIEdJVF9DT05GX1NVQlNUKFtOT19JTkVUX1BUT05dKQogTk9fSFNUUkVS
-Uk9SPQogQUNfQ0hFQ0tfRlVOQyhbaHN0cmVycm9yXSwKICAgICBbXSwKLSAgICBbQUNfQ0hFQ0tf
-TElCKFtyZXNvbHZdLCBbaHN0cmVycm9yXSwKLQlbTkVFRFNfUkVTT0xWPVllc1BsZWFzZV0sCi0J
-W05PX0hTVFJFUlJPUj1ZZXNQbGVhc2VdKQorICAgIFtBQ19TRUFSQ0hfTElCUyhbaHN0cmVycm9y
-XSwgW3Jlc29sdl0sCisgICAgICAgW05FRURTX1JFU09MVj1ZZXNQbGVhc2VdLAorICAgICAgIFtO
-T19IU1RSRVJST1I9WWVzUGxlYXNlXSkKIF0pCiBHSVRfQ09ORl9TVUJTVChbTk9fSFNUUkVSUk9S
-XSkKIAogZG5sIFRoaXMgbXVzdCBnbyBhZnRlciBhbGwgdGhlIHBvc3NpYmxlIHBsYWNlcyBmb3Ig
-aXRzIGluaXRpYWxpemF0aW9uLAogZG5sIGluIHRoZSBBQ19DSEVDS19GVU5DIGludm9jYXRpb25z
-IGFib3ZlLgogR0lUX0NPTkZfU1VCU1QoW05FRURTX1JFU09MVl0pCitHSVRfQ09ORl9TVUJTVChb
-TkVFRFNfU09DS0VUXSkKK0dJVF9DT05GX1NVQlNUKFtORUVEU19OU0xdKQorCiAjCi0jIElmIGFu
-eSBvZiB0aGUgYWJvdmUgdGVzdHMgZGV0ZXJtaW5lZCB0aGF0IC1scmVzb2x2IGlzIG5lZWRlZCBh
-dAotIyBidWlsZC10aW1lLCBhbHNvIHNldCBpdCBoZXJlIGZvciByZW1haW5pbmcgY29uZmlndXJl
-LXRpbWUgY2hlY2tzLgorIyBJZiBhbnkgb2YgdGhlIGFib3ZlIHRlc3RzIGRldGVybWluZWQgdGhh
-dCAtbHJlc29sdiwgLWxzb2NrZXQgb3IgLWxuc2wKKyMgYXJlIG5lZWRlZCBhdCBidWlsZC10aW1l
-LCBhbHNvIHNldCBpdCBoZXJlIGZvciByZW1haW5pbmcgY29uZmlndXJlLXRpbWUKKyMgY2hlY2tz
-LiBUaGUgU3VuIG1hbiBwYWdlcyBsaXN0IGxpYnJhcnkgb3JkZXIgYXMgLWxyZXNvbHYgLWxzb2Nr
-ZXQgLWxuc2wuCiB0ZXN0IC1uICIkTkVFRFNfUkVTT0xWIiAmJiBMSUJTPSIkTElCUyAtbHJlc29s
-diIKK3Rlc3QgLW4gIiRORUVEU19TT0NLRVQiICYmIExJQlM9IiRMSUJTIC1sc29ja2V0IgordGVz
-dCAtbiAiJE5FRURTX05TTCIgJiYgTElCUz0iJExJQlMgLWxuc2wiCisKIAogQUNfQ0hFQ0tfTElC
-KFtjXSwgW2Jhc2VuYW1lXSwKIFtORUVEU19MSUJHRU49XSwK
---000000000000848795059dad7f75--
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
