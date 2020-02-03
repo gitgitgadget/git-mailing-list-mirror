@@ -2,85 +2,97 @@ Return-Path: <SRS0=caIn=3X=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+X-Spam-Status: No, score=-2.3 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 19016C35247
-	for <git@archiver.kernel.org>; Mon,  3 Feb 2020 20:15:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0EF01C35247
+	for <git@archiver.kernel.org>; Mon,  3 Feb 2020 20:27:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id DC1AA20658
-	for <git@archiver.kernel.org>; Mon,  3 Feb 2020 20:15:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C4D4F2087E
+	for <git@archiver.kernel.org>; Mon,  3 Feb 2020 20:27:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726930AbgBCUPE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Feb 2020 15:15:04 -0500
-Received: from mail-lj1-f171.google.com ([209.85.208.171]:35140 "EHLO
-        mail-lj1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726201AbgBCUPD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Feb 2020 15:15:03 -0500
-Received: by mail-lj1-f171.google.com with SMTP id q8so16061614ljb.2
-        for <git@vger.kernel.org>; Mon, 03 Feb 2020 12:15:02 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=OiIVGJe00E76ajoLNEcHDxLnPYwOJscxnNOaSxsCq6I=;
-        b=kR5wN94QlwJRtUoezDUWcH0ipaups5LkSBjAbXeqDXGjvrztSOppCKuN1uJ5UPFVme
-         YE3k9vWu+G/nqotkQFBeBnj9Rt7yRYcNLj1a9wHP6VZeXy2+oFho1HgxWhKciwgKeD7k
-         NB8Rjf5PaoY+cWxNddzFv6lCy9/gTHrrCq402gUddI0YLsRjF491VMxTyDaQIl/kB3oF
-         y6nrkq8hLJpfglMWq/YasIP2MxZmTbHKzFxwD5c7UpognqjYCPnITDpAS9565XMnjuU6
-         S/jFDFWXkFzsSkchDG6BEx62lxf4odBq6joVEEEtXiOk3u4but3rk/6xnqVD77WD44ja
-         E0hg==
-X-Gm-Message-State: APjAAAUhntSqY7cPb7TIXrE2XS/V7ucYyMSm5eJfyeG7QQZ12Ng+54e/
-        XI8pbMaJo4z+uQlRMdNnZLUxPfaqVcinHlIqApOi8Lni
-X-Google-Smtp-Source: APXvYqw/zGkqM0B4xENEjXN2sumQgXde+WtL+0LizWe12RCBJ2Xb0/+XA98QDP6bgSnA0C2oRIKL5widyt2xuSZEuqU=
-X-Received: by 2002:a05:651c:1049:: with SMTP id x9mr15114082ljm.233.1580760901695;
- Mon, 03 Feb 2020 12:15:01 -0800 (PST)
-MIME-Version: 1.0
-From:   masukomi <masukomi@masukomi.org>
-Date:   Mon, 3 Feb 2020 15:14:50 -0500
-Message-ID: <CAG4-5WdTkFyCa_MqiRchR9GZgC_NEWdgobPfRfxYhTVqzVCCQw@mail.gmail.com>
-Subject: [bug] git-rev-parse sometimes appends subdirectories to result
+        id S1726872AbgBCU1v (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Feb 2020 15:27:51 -0500
+Received: from mx.sdas.de ([88.198.162.67]:41069 "EHLO mx.sdas.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726272AbgBCU1u (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Feb 2020 15:27:50 -0500
+Received: from [192.168.1.58] (unknown [31.36.247.254])
+        (Authenticated sender: etienne.servais@voucoux.fr)
+        by mx.sdas.de (Postfix) with ESMTPSA id C496B11C0F0;
+        Mon,  3 Feb 2020 21:27:47 +0100 (CET)
+Subject: Re: [PATCH] doc: add documentation for git log --no-follow
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Jeff King <peff@peff.net>
+References: <85e71c97-9e0a-863e-179f-a6e1f14365ce@voucoux.fr>
+ <20200201111636.GC1864948@coredump.intra.peff.net>
+From:   =?UTF-8?Q?=c3=89tienne_Servais?= <etienne.servais@voucoux.fr>
+Message-ID: <8d0dbaa2-938e-1797-98d7-3f9abeb5b863@voucoux.fr>
+Date:   Mon, 3 Feb 2020 21:27:46 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
+MIME-Version: 1.0
+In-Reply-To: <20200201111636.GC1864948@coredump.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Expected behavior
+Le 01/02/2020 à 12:16, Jeff King a écrit :
+> On Sat, Feb 01, 2020 at 12:24:31AM +0100, Étienne Servais wrote:
+> 
+>> This feature was added by commit
+>> 076c98372e (log: add "log.follow" configuration variable, 2015-07-07)
+>> but remained undocumented.
+> 
+> That commit just touched the code; it was originally added by aebbcf5797
+> (diff: accept --no-follow option, 2012-09-21). But I think the general
+> intent of your patch is still valid.
 
-No matter what subdirectory of my repo I am in git rev-parse
---show-toplevel will always return the same result
+Good catch. Corrected in upcoming patch v2
 
-Actual behavior
+>> I couldn't figure if I shall merge the --no-follow doc with the follow
+>> as is done for --no-decorate and --decorate just after.
+> 
+> I think it would make more sense to just put it with --follow, like:
+> 
+>   [--no-]follow::
+> 
+> which matches how --use-mailmap is defined, for instance.
 
-Depending on what subdirectories you are in it will sometimes (not
-always) start appending those subdirectories to the path.
+Ok, I've turned it to (inspired by the --[no-]rename-empty doc)
 
-Reproduction
-
-My git repo root is at
-
-/Users/masukomi/workspace/private_comments
-
-If i run git rev-parse --show-toplevel within that directory it
-returns the correct (identical) path.
-If i run it within /Users/masukomi/workspace/private_comments/src it
-returns the correct path (without the /src)
-If I run it within
-/Users/masukomi/workspace/private_comments/src/tests it suddenly
-starts returning
-
-/Users/masukomi/workspace/private_comments/src/tests
-
-Notes
-
-Git 2.25.0
-macOS 10.15.3
-installed via homebrew.
-no submodules present.
+---follow::
+-       Continue listing the history of a file beyond renames
++--[no-]follow::
++       Whether to continue listing the history of a file beyond renames
+        (works only for a single file).
 
 
+> 
+>> @@ -205,7 +208,8 @@ log.follow::
+>>  	If `true`, `git log` will act as if the `--follow` option was used when
+>>  	a single <path> is given.  This has the same limitations as `--follow`,
+>>  	i.e. it cannot be used to follow multiple files and does not work well
+>> -	on non-linear history.
+>> +	on non-linear history. This setting can be disabled by the `--no-follow`
+>> +	option.
+> 
+> I'm on the fence on this hunk. There are a number of config options that
+> can be canceled or overridden by command-line options. It's a normal
+> pattern for the "--no" variant to do so. So while it often doesn't hurt
+> to give a pointer in the right direction, I don't know that we'd want to
+> start doing so in every such case.
 
-- Kay Rhodes
-https://masukomi.org
+OK. I had just borrowed that sentence from notes.displayRef few lines below.
+Some config options doc follow this direction like log.abbrevCommit or log.mailmap.
+
+I'll follow you on this.
+
+
+-- 
+Étienne Servais
