@@ -2,106 +2,139 @@ Return-Path: <SRS0=caIn=3X=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 490F8C33CAC
-	for <git@archiver.kernel.org>; Mon,  3 Feb 2020 14:10:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 11945C35247
+	for <git@archiver.kernel.org>; Mon,  3 Feb 2020 14:40:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1CDEE2086A
-	for <git@archiver.kernel.org>; Mon,  3 Feb 2020 14:10:00 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MsJiNVFm"
+	by mail.kernel.org (Postfix) with ESMTP id E33B12082E
+	for <git@archiver.kernel.org>; Mon,  3 Feb 2020 14:40:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727715AbgBCOJ6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Feb 2020 09:09:58 -0500
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:43092 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726258AbgBCOJ6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Feb 2020 09:09:58 -0500
-Received: by mail-qk1-f193.google.com with SMTP id j20so14264066qka.10
-        for <git@vger.kernel.org>; Mon, 03 Feb 2020 06:09:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=1DlYWRz6kg/7KrTNUaOMo1y3A0kSh6aQQhMuC/hXSJg=;
-        b=MsJiNVFmty5pKmt2DrGeL6jg9lMaBZUfbPl0zMp4sXtUYeeiaa6k8GWJXe95/cWKlC
-         OCMTSBQ+KGx8NgWnKNpFTYtUoCtPbeL8M1eRMp5u4iZ3PIAUMdyMsPuwawokynPo2KDQ
-         rp0xJSsZZcoziBCxLiHB1YMOwpsgX1Aq37q3d2kL/dm46qykg3tViKIEHv3XDYfNRNyf
-         wYLQkyiXwiqem+BUiinaxf3ipnZb6yaHx96xdi+LDzVu68er7jhYRUZIGI30sxSv2Qvs
-         KRp00HVZHFlnW1s/m9nD3aOPygAF9qOH5J0oXv/zi73BzxvotB9P3ce8oEOqvHm5KC+B
-         6z7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=1DlYWRz6kg/7KrTNUaOMo1y3A0kSh6aQQhMuC/hXSJg=;
-        b=i2LrQhMbSK+xThvqLknPwVdnFKNpdyVOescaDrF6Ufr9yagbt7n2bYtlQSjt1txiQl
-         vkbk/XSKVv8v2aNmmD35py/e6x2qMpcEIS/ob+tLhfE6X005nXDch/Mc2nILSHWoubrM
-         Mv35dPbvAH7jVdt5V/++f4kCbikXZaSAge49jcH0a+z6xY484pvfiRqUmxCcYF/4fDhK
-         Y3tpwB+XPZMLx4gP0LOkwyAUgqPLI3TzuXs+PQlcyrN0i2GxIrJcL9BwditQP8STF3M8
-         Da2CAvZYZHfTHdtJzrXulv+LWCFi/kwoXDYfBVw7aYZ339mX8j3tD05RfwRTF2X//kis
-         NG4w==
-X-Gm-Message-State: APjAAAW1j9DmiMa7BEDxRSDCfDKbppxk+rYauJsH+RSkCpJRPZHS+THy
-        3oiQiMOZ+GbYIsg4p3krNSk=
-X-Google-Smtp-Source: APXvYqzpzzk/VWe0QQFztsB7EghMQaqcYlAOGdAWQNoiMySoJcd85tvMbxlixb1X1aFyFyDh1nLhZA==
-X-Received: by 2002:ae9:e707:: with SMTP id m7mr23367593qka.320.1580738995943;
-        Mon, 03 Feb 2020 06:09:55 -0800 (PST)
-Received: from ?IPv6:2001:4898:6808:13e:f9af:5998:2ee3:6a09? ([2001:4898:a800:1012:aae3:5998:2ee3:6a09])
-        by smtp.gmail.com with ESMTPSA id a145sm9344029qkg.128.2020.02.03.06.09.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 03 Feb 2020 06:09:55 -0800 (PST)
-Subject: Re: [PATCH v4 00/15] Harden the sparse-checkout builtin
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Finn Bryant <finnbryant@gmail.com>
-References: <pull.513.v3.git.1580236003.gitgitgadget@gmail.com>
- <pull.513.v4.git.1580501775.gitgitgadget@gmail.com>
- <CABPp-BHoEgYXgzxjweWDR2BZPhLdW9wcbWzwo6N+HF2kste3WA@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <f28beb17-50dc-ff53-46bf-35010d48d23d@gmail.com>
-Date:   Mon, 3 Feb 2020 09:09:54 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:73.0) Gecko/20100101
- Thunderbird/73.0
+        id S1728495AbgBCOk5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Feb 2020 09:40:57 -0500
+Received: from cloud.peff.net ([104.130.231.41]:51340 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727540AbgBCOk5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Feb 2020 09:40:57 -0500
+Received: (qmail 2932 invoked by uid 109); 3 Feb 2020 14:40:56 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 03 Feb 2020 14:40:56 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 25063 invoked by uid 111); 3 Feb 2020 14:49:02 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 03 Feb 2020 09:49:02 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 3 Feb 2020 09:40:55 -0500
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Subject: [PATCH] index-pack: downgrade twice-resolved REF_DELTA to die()
+Message-ID: <20200203144055.GA4170731@coredump.intra.peff.net>
+References: <85e71c97-9e0a-863e-179f-a6e1f14365ce@voucoux.fr>
 MIME-Version: 1.0
-In-Reply-To: <CABPp-BHoEgYXgzxjweWDR2BZPhLdW9wcbWzwo6N+HF2kste3WA@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+In-Reply-To: <85e71c97-9e0a-863e-179f-a6e1f14365ce@voucoux.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/31/2020 3:36 PM, Elijah Newren wrote:
-> On Fri, Jan 31, 2020 at 12:16 PM Derrick Stolee via GitGitGadget
->> Update in V3:
->>
->>  * Input now uses Peff's recommended pattern: unquote C-style strings over
->>    stdin and otherwise do not un-escape input.
-> 
-> ...and updates in V4 are?  (I looked over the range-diff which
-> definitely helps, but a summary would still be nice.)
+When we're resolving a REF_DELTA, we compare-and-swap its type from
+REF_DELTA to whatever real type the base object has, as discussed in
+ab791dd138 (index-pack: fix race condition with duplicate bases,
+2014-08-29). If the old type wasn't a REF_DELTA, we consider that a
+BUG(). But as discussed in that commit, we might see this case whenever
+we try to resolve an object twice, which may happen because we have
+multiple copies of the base object.
 
-Sorry! I definitely should have double-checked before sending.
+So this isn't a bug at all, but rather a sign that the input pack is
+broken. And indeed, this case is triggered already in t5309.5 and
+t5309.6, which create packs with delta cycles and duplicate bases. But
+we never noticed because those tests are marked expect_failure.
 
-Updates in V4:
+Those tests were added by b2ef3d9ebb (test index-pack on packs with
+recoverable delta cycles, 2013-08-23), which was leaving the door open
+for cases that we theoretically _could_ handle. And when we see an
+already-resolved object like this, in theory we could keep going after
+confirming that the previously resolved child->real_type matches
+base->obj->real_type. But:
 
-* Special-character checking now considers all glob characters
-  ( '[', '*', '\\', '?' ) See Patches 8 and 13.
+  - enforcing the "only resolve once" rule here saves us from an
+    infinite loop in other parts of the code. If we keep going, then the
+    delta cycle in t5309.5 causes us to loop infinitely, as
+    find_ref_delta_children() doesn't realize which objects have already
+    been resolved. So there would be more changes needed to make this
+    case work, and in the meantime we'd be worse off.
 
-* Patch 10 is is now split into two (Patches 10 and 11), to properly
-  escape patterns and to unquote C-style strings. 
+  - any pack that triggers this is broken anyway. It either has a
+    duplicate base object, or it has a cycle which causes us to bring in
+    a duplicate via --fix-thin. In either case, we'd end up rejecting
+    the pack in write_idx_file(), which also detects duplicates.
 
-* The file/directory path bug reported in [1] is fixed in Patch 15.
+So the tests have little value in documenting what we _could_ be doing
+(and have been neglected for 6+ years). Let's switch them to confirming
+that we handle this case cleanly (and switch out the BUG() for a more
+informative die() so that we do so).
 
-Thanks,
--Stolee
+Signed-off-by: Jeff King <peff@peff.net>
+---
+Noticed while running the tests in an environment that complains about
+SIGABRT deaths. Arguably the test suite should be looking for these even
+in test_expect_failure, but it would be a little convoluted to do so
+(e.g., teaching BUG() to write to a marker file, and then checking the
+file). And I think we're better off phrasing things as much as possible
+as expect_success anyway.
 
-[1] https://lore.kernel.org/git/CADSBhNbbO=aq-Oo2MpzDMN2VAX4m6f9Jb-eCtVVX1NfWKE9zJw@mail.gmail.com/
+ builtin/index-pack.c         | 4 +++-
+ t/t5309-pack-delta-cycles.sh | 8 ++++----
+ 2 files changed, 7 insertions(+), 5 deletions(-)
+
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 60a5591039..41a7c11c8e 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -1003,7 +1003,9 @@ static struct base_data *find_unresolved_deltas_1(struct base_data *base,
+ 
+ 		if (!compare_and_swap_type(&child->real_type, OBJ_REF_DELTA,
+ 					   base->obj->real_type))
+-			BUG("child->real_type != OBJ_REF_DELTA");
++			die("REF_DELTA at offset %"PRIuMAX" already resolved (duplicate base %s?)",
++			    (uintmax_t)child->idx.offset,
++			    oid_to_hex(&base->obj->idx.oid));
+ 
+ 		resolve_delta(child, base, result);
+ 		if (base->ref_first == base->ref_last && base->ofs_last == -1)
+diff --git a/t/t5309-pack-delta-cycles.sh b/t/t5309-pack-delta-cycles.sh
+index 491556dad9..6c209ad45c 100755
+--- a/t/t5309-pack-delta-cycles.sh
++++ b/t/t5309-pack-delta-cycles.sh
+@@ -62,13 +62,13 @@ test_expect_success 'index-pack detects REF_DELTA cycles' '
+ 	test_must_fail git index-pack --fix-thin --stdin <cycle.pack
+ '
+ 
+-test_expect_failure 'failover to an object in another pack' '
++test_expect_success 'failover to an object in another pack' '
+ 	clear_packs &&
+ 	git index-pack --stdin <ab.pack &&
+-	git index-pack --stdin --fix-thin <cycle.pack
++	test_must_fail git index-pack --stdin --fix-thin <cycle.pack
+ '
+ 
+-test_expect_failure 'failover to a duplicate object in the same pack' '
++test_expect_success 'failover to a duplicate object in the same pack' '
+ 	clear_packs &&
+ 	{
+ 		pack_header 3 &&
+@@ -77,7 +77,7 @@ test_expect_failure 'failover to a duplicate object in the same pack' '
+ 		pack_obj $A
+ 	} >recoverable.pack &&
+ 	pack_trailer recoverable.pack &&
+-	git index-pack --fix-thin --stdin <recoverable.pack
++	test_must_fail git index-pack --fix-thin --stdin <recoverable.pack
+ '
+ 
+ test_done
+-- 
+2.25.0.541.gdfd61ebb85
