@@ -7,60 +7,61 @@ X-Spam-Status: No, score=-8.2 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7BF90C35247
-	for <git@archiver.kernel.org>; Mon,  3 Feb 2020 21:18:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B0170C35249
+	for <git@archiver.kernel.org>; Mon,  3 Feb 2020 21:18:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3880D20838
-	for <git@archiver.kernel.org>; Mon,  3 Feb 2020 21:18:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7A7B420838
+	for <git@archiver.kernel.org>; Mon,  3 Feb 2020 21:18:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="lcVUtDc6"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="lZvmp4Uv"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727215AbgBCVSH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Feb 2020 16:18:07 -0500
-Received: from mail-pj1-f68.google.com ([209.85.216.68]:39089 "EHLO
-        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725372AbgBCVSG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Feb 2020 16:18:06 -0500
-Received: by mail-pj1-f68.google.com with SMTP id e9so320304pjr.4
-        for <git@vger.kernel.org>; Mon, 03 Feb 2020 13:18:04 -0800 (PST)
+        id S1727084AbgBCVSF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Feb 2020 16:18:05 -0500
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:35668 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726834AbgBCVSD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Feb 2020 16:18:03 -0500
+Received: by mail-pf1-f193.google.com with SMTP id y73so8226856pfg.2
+        for <git@vger.kernel.org>; Mon, 03 Feb 2020 13:18:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=em6c8ZImZhOvxlvjBPGoFZifAkC+lBV7+zc6bNqtq18=;
-        b=lcVUtDc6aLWycXD7s1RPy/EYb1xaFtN8ziCZaR40S4aOyLTORxB7WndUK5bCZ2TgeF
-         9hEby/7Gruqyzsn6nxNYdEVvUe5yzVvkInyi9Q+RT7PN5zEN6CjbOhLZWXqzbhgSYimg
-         pq7+bYISNZJCdhF+xcQIwFJWYDsA4Or17npgWstSI0GLHFDRkWwMAqEvFAHr/AVPO+4w
-         aiwVjOZmu+TgtPqxsp8JKJ6VMs+6jjxhdIMgMWl30iofwFasOVzJNx4n5reJjlvg6hwB
-         UMggSbYeRXnnr8gxdaoeMlr5wFah1FIlss8PGAcTmQ8wHjC3HcaV54mip/voDzrP3bYe
-         wVgQ==
+        bh=Rpt9qlFI/odbFse2IdV+tb0tpQ/vmzBN9ScpN0TY4RI=;
+        b=lZvmp4UvsLtFE9mbfw02x/SxsFgsE9oZGzRNUanhlSOih2Ul9G8ZdtGOGHlQtQIdQq
+         fnYwrivrva7Xo2PVhevCu064nwyk4KIqFdPYS2oNHcujc5cBzmpDn9/3ZhHWpue2RKH6
+         EzrSmLPrN624SV2R22u/wN3Dal8sf/Eks1tnIJpHeehAAotZUmKuMrAOgc1LXPVRH2FU
+         AvmjmfsrMlZGUjvVaywzgSNVJz5vb93IRRMDDKTlw8YPrX8FMgy7Y2y+RyG2maMNuVbG
+         2ES2xHdfzfbwD2MLkvT61mxOMMGSPa9xRnGnzYdLfHm7rbEI3tRzwXe6QemfZQWsE/0c
+         nVlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=em6c8ZImZhOvxlvjBPGoFZifAkC+lBV7+zc6bNqtq18=;
-        b=Pv+rJyeCzsRdRsWNsg9HvA6QIsJ1ETNpjRPLE3T4U1uxPp/1dXAQEyPAZI7+xwXc/u
-         Ad3lSdKqRRzJoV2WM1KbBsB3rbcvRdlzzGJuenBz7yXfW5ppEZvKnTrjHZpdk0HwbwNs
-         ylecRAaJI2RsiVc6+uAm5nGl9kCTrj673+NpKZBEPYVJvErfaPWNl01uiDI7CSZBR/Sv
-         xUWkbY12kairbuw2bUFCeQ8dIe3aeX6JDRdJ5laRKGZpuubksS8t5Tp4NmOa5rdhZ7Cp
-         QBlDyIqIdlwiRnA4CHdc94Im7aLURn4BLw0hzz4BfeOdB/hs9AMCrpKn8XIfF46IuwuL
-         iw3A==
-X-Gm-Message-State: APjAAAVwa0SUdxnAC1stNRujj5TRG76legQXREVB9oocwiX+qoLtbsa7
-        w12VF3VikRFPtvViNuiqo58Q83oCkhOwKQ==
-X-Google-Smtp-Source: APXvYqz/rsw96/r8xWIjHm7cplW1hQJ7DYshg2YgHRRgG8wo+diSbOlDrhifCi7yBJ24ryZnlRpHnw==
-X-Received: by 2002:a17:90a:d985:: with SMTP id d5mr1273189pjv.73.1580764683472;
-        Mon, 03 Feb 2020 13:18:03 -0800 (PST)
+        bh=Rpt9qlFI/odbFse2IdV+tb0tpQ/vmzBN9ScpN0TY4RI=;
+        b=BzQVOKpKYOxdo0YHhmsm6rZ50G8DPLm0XullJshKTjWHSbupXqH90PAIN1RRWrXGJ3
+         GbkTaZCcFQbRwnym0aHGq2JuxsuCznkWwsNlYYLbE/xmR9q06RF299/68mug4M3CEQbo
+         /ivLS4N0SXVnj6pk/IPIckS7ymhE1B+RUcpj4ni7oBfIoZ1Va2Cjktm3pS3VtRbhvUPC
+         y8eZwoVJLDwnW/62v5qSHZFVyd5cvVsJx3/kBq6wYqBdRzi2NQLAMjobGWls10ZPWQsD
+         4bTavio3QiaUlu9DIdjBjqAHUVSk2iKhVrl4+uzhqGNZiAk/a3RjKTSwlYLupFdw8ZoO
+         EW6g==
+X-Gm-Message-State: APjAAAUchwFBIj8mQQgX0nMT0O+WJtP6WNo2ZOD0G1GQ3PleUItHk3no
+        ckIzIBL1+hXTbx+kg4JRsL37A25Nb/JNEw==
+X-Google-Smtp-Source: APXvYqwlLeTVor7R+anbZcdjGho1WtHfwxqtlv+D0O+MkX9uwhJM+l/h0tWCqioOduM+UQoofh3oqw==
+X-Received: by 2002:a62:e30d:: with SMTP id g13mr26858960pfh.92.1580764681813;
+        Mon, 03 Feb 2020 13:18:01 -0800 (PST)
 Received: from localhost ([205.175.106.126])
-        by smtp.gmail.com with ESMTPSA id b21sm22045422pfp.0.2020.02.03.13.18.02
+        by smtp.gmail.com with ESMTPSA id y190sm21964577pfb.82.2020.02.03.13.18.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Feb 2020 13:18:03 -0800 (PST)
-Date:   Mon, 3 Feb 2020 13:18:02 -0800
+        Mon, 03 Feb 2020 13:18:01 -0800 (PST)
+Date:   Mon, 3 Feb 2020 13:18:00 -0800
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, dstolee@microsoft.com, gitster@pobox.com,
         martin.agren@gmail.com
-Subject: [PATCH v2 4/5] commit-graph.c: remove path normalization, comparison
-Message-ID: <f14e95aa7eb2fa4dce2c3e1a1d81dd022efede0b.1580764494.git.me@ttaylorr.com>
+Subject: [PATCH v2 3/5] commit-graph.h: store object directory in 'struct
+ commit_graph'
+Message-ID: <5fd5cfca6e9a59c0bbf62501e6064106cf87df49.1580764494.git.me@ttaylorr.com>
 References: <cover.1580424766.git.me@ttaylorr.com>
  <cover.1580764494.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -73,239 +74,193 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As of the previous patch, all calls to 'commit-graph.c' functions which
-perform path normalization (for e.g., 'get_commit_graph_filename()') are
-of the form 'ctx->odb->path', which is always in normalized form.
+In a previous patch, the 'char *object_dir' in 'struct commit_graph' was
+replaced with a 'struct object_directory'. This patch applies the same
+treatment to 'struct commit_graph', which is another intermediate step
+towards getting rid of all path normalization in 'commit-graph.c'.
 
-Now that there are no callers passing non-normalized paths to these
-functions, ensure that future callers are bound by the same restrictions
-by making these functions take a 'struct object_directory *' instead of
-a 'const char *'. To match, replace all calls with arguments of the form
-'ctx->odb->path' with 'ctx->odb' To recover the path, functions that
-perform path manipulation simply use 'odb->path'.
+Instead of taking a 'char *object_dir', functions that construct a
+'struct commit_graph' now take a 'struct object_directory *'. Any code
+that needs an object directory path use '->path' instead.
 
-Further, avoid string comparisons with arguments of the form
-'odb->path', and instead prefer raw pointer comparisons, which
-accomplish the same effect, but are far less brittle.
-
-This has a pleasant side-effect of making these functions much more
-robust to paths that cannot be normalized by 'normalize_path_copy()',
-i.e., because they are outside of the current working directory.
-
-For example, prior to this patch, Valgrind reports that the following
-uninitialized memory read [1]:
-
-  $ ( cd t && GIT_DIR=../.git valgrind git rev-parse HEAD^ )
-
-because 'normalize_path_copy()' can't normalize '../.git' (since it's
-relative to but above of the current working directory) [2].
-
-By using a 'struct object_directory *' directly,
-'get_commit_graph_filename()' does not need to normalize, because all
-paths are relative to the current working directory since they are
-always read from the '->path' of an object directory.
-
-[1]: https://lore.kernel.org/git/20191027042116.GA5801@sigill.intra.peff.net.
-[2]: The bug here is that 'get_commit_graph_filename()' returns the
-     result of 'normalize_path_copy()' without checking the return
-     value.
+This ensures that all calls to functions that perform path normalization
+are given arguments which do not themselves require normalization. This
+prepares those functions to drop their normalization entirely, which
+will occur in the subsequent patch.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- builtin/commit-graph.c     |  2 +-
- commit-graph.c             | 47 +++++++++++++++-----------------------
- commit-graph.h             |  2 +-
- t/helper/test-read-graph.c |  6 ++---
- 4 files changed, 24 insertions(+), 33 deletions(-)
+ builtin/commit-graph.c |  2 +-
+ commit-graph.c         | 38 +++++++++++++++++++++-----------------
+ commit-graph.h         |  5 +++--
+ 3 files changed, 25 insertions(+), 20 deletions(-)
 
 diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
-index 3501d9077b..b16eba2a7a 100644
+index 31b57e4e1d..3501d9077b 100644
 --- a/builtin/commit-graph.c
 +++ b/builtin/commit-graph.c
-@@ -87,7 +87,7 @@ static int graph_verify(int argc, const char **argv)
- 		flags |= COMMIT_GRAPH_WRITE_PROGRESS;
+@@ -97,7 +97,7 @@ static int graph_verify(int argc, const char **argv)
+ 	if (open_ok)
+ 		graph = load_commit_graph_one_fd_st(fd, &st);
+ 	else
+-		graph = read_commit_graph_one(the_repository, odb->path);
++		graph = read_commit_graph_one(the_repository, odb);
  
- 	odb = find_odb(the_repository, opts.obj_dir);
--	graph_name = get_commit_graph_filename(odb->path);
-+	graph_name = get_commit_graph_filename(odb);
- 	open_ok = open_commit_graph(graph_name, &fd, &st);
- 	if (!open_ok && errno != ENOENT)
- 		die_errno(_("Could not open commit-graph '%s'"), graph_name);
+ 	/* Return failure if open_ok predicted success */
+ 	if (!graph)
 diff --git a/commit-graph.c b/commit-graph.c
-index 3af4a721ee..49541760b5 100644
+index cbfeece112..3af4a721ee 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -44,30 +44,21 @@
- /* Remember to update object flag allocation in object.h */
- #define REACHABLE       (1u<<15)
- 
--char *get_commit_graph_filename(const char *obj_dir)
-+char *get_commit_graph_filename(struct object_directory *odb)
- {
--	char *filename = xstrfmt("%s/info/commit-graph", obj_dir);
--	char *normalized = xmalloc(strlen(filename) + 1);
--	normalize_path_copy(normalized, filename);
--	free(filename);
--	return normalized;
-+	return xstrfmt("%s/info/commit-graph", odb->path);
+@@ -327,14 +327,15 @@ static struct commit_graph *load_commit_graph_one(const char *graph_file)
+ 	return g;
  }
  
--static char *get_split_graph_filename(const char *obj_dir,
-+static char *get_split_graph_filename(struct object_directory *odb,
- 				      const char *oid_hex)
+-static struct commit_graph *load_commit_graph_v1(struct repository *r, const char *obj_dir)
++static struct commit_graph *load_commit_graph_v1(struct repository *r,
++						 struct object_directory *odb)
  {
--	char *filename = xstrfmt("%s/info/commit-graphs/graph-%s.graph",
--				 obj_dir,
--				 oid_hex);
--	char *normalized = xmalloc(strlen(filename) + 1);
--	normalize_path_copy(normalized, filename);
--	free(filename);
--	return normalized;
-+	return xstrfmt("%s/info/commit-graphs/graph-%s.graph", odb->path,
-+		       oid_hex);
- }
- 
--static char *get_chain_filename(const char *obj_dir)
-+static char *get_chain_filename(struct object_directory *odb)
- {
--	return xstrfmt("%s/info/commit-graphs/commit-graph-chain", obj_dir);
-+	return xstrfmt("%s/info/commit-graphs/commit-graph-chain", odb->path);
- }
- 
- static uint8_t oid_version(void)
-@@ -330,7 +321,7 @@ static struct commit_graph *load_commit_graph_one(const char *graph_file)
- static struct commit_graph *load_commit_graph_v1(struct repository *r,
- 						 struct object_directory *odb)
- {
--	char *graph_name = get_commit_graph_filename(odb->path);
-+	char *graph_name = get_commit_graph_filename(odb);
+-	char *graph_name = get_commit_graph_filename(obj_dir);
++	char *graph_name = get_commit_graph_filename(odb->path);
  	struct commit_graph *g = load_commit_graph_one(graph_name);
  	free(graph_name);
  
-@@ -381,7 +372,7 @@ static struct commit_graph *load_commit_graph_chain(struct repository *r,
+ 	if (g)
+-		g->obj_dir = obj_dir;
++		g->odb = odb;
+ 
+ 	return g;
+ }
+@@ -372,14 +373,15 @@ static int add_graph_to_chain(struct commit_graph *g,
+ 	return 1;
+ }
+ 
+-static struct commit_graph *load_commit_graph_chain(struct repository *r, const char *obj_dir)
++static struct commit_graph *load_commit_graph_chain(struct repository *r,
++						    struct object_directory *odb)
+ {
+ 	struct commit_graph *graph_chain = NULL;
+ 	struct strbuf line = STRBUF_INIT;
  	struct stat st;
  	struct object_id *oids;
  	int i = 0, valid = 1, count;
--	char *chain_name = get_chain_filename(odb->path);
-+	char *chain_name = get_chain_filename(odb);
+-	char *chain_name = get_chain_filename(obj_dir);
++	char *chain_name = get_chain_filename(odb->path);
  	FILE *fp;
  	int stat_res;
  
-@@ -414,7 +405,7 @@ static struct commit_graph *load_commit_graph_chain(struct repository *r,
- 
- 		valid = 0;
- 		for (odb = r->objects->odb; odb; odb = odb->next) {
--			char *graph_name = get_split_graph_filename(odb->path, line.buf);
-+			char *graph_name = get_split_graph_filename(odb, line.buf);
- 			struct commit_graph *g = load_commit_graph_one(graph_name);
- 
+@@ -418,7 +420,7 @@ static struct commit_graph *load_commit_graph_chain(struct repository *r, const
  			free(graph_name);
-@@ -1375,7 +1366,7 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
- 			    ctx->odb->path);
- 		ctx->graph_name = strbuf_detach(&tmp_file, NULL);
- 	} else {
--		ctx->graph_name = get_commit_graph_filename(ctx->odb->path);
-+		ctx->graph_name = get_commit_graph_filename(ctx->odb);
- 	}
  
- 	if (safe_create_leading_directories(ctx->graph_name)) {
-@@ -1386,7 +1377,7 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
- 	}
+ 			if (g) {
+-				g->obj_dir = odb->path;
++				g->odb = odb;
  
- 	if (ctx->split) {
--		char *lock_name = get_chain_filename(ctx->odb->path);
-+		char *lock_name = get_chain_filename(ctx->odb);
+ 				if (add_graph_to_chain(g, graph_chain, oids, i)) {
+ 					graph_chain = g;
+@@ -442,23 +444,25 @@ static struct commit_graph *load_commit_graph_chain(struct repository *r, const
+ 	return graph_chain;
+ }
  
- 		hold_lock_file_for_update(&lk, lock_name, LOCK_DIE_ON_ERROR);
+-struct commit_graph *read_commit_graph_one(struct repository *r, const char *obj_dir)
++struct commit_graph *read_commit_graph_one(struct repository *r,
++					   struct object_directory *odb)
+ {
+-	struct commit_graph *g = load_commit_graph_v1(r, obj_dir);
++	struct commit_graph *g = load_commit_graph_v1(r, odb);
  
-@@ -1474,7 +1465,7 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
+ 	if (!g)
+-		g = load_commit_graph_chain(r, obj_dir);
++		g = load_commit_graph_chain(r, odb);
+ 
+ 	return g;
+ }
+ 
+-static void prepare_commit_graph_one(struct repository *r, const char *obj_dir)
++static void prepare_commit_graph_one(struct repository *r,
++				     struct object_directory *odb)
+ {
+ 
+ 	if (r->objects->commit_graph)
+ 		return;
+ 
+-	r->objects->commit_graph = read_commit_graph_one(r, obj_dir);
++	r->objects->commit_graph = read_commit_graph_one(r, odb);
+ }
+ 
+ /*
+@@ -505,7 +509,7 @@ static int prepare_commit_graph(struct repository *r)
+ 	for (odb = r->objects->odb;
+ 	     !r->objects->commit_graph && odb;
+ 	     odb = odb->next)
+-		prepare_commit_graph_one(r, odb->path);
++		prepare_commit_graph_one(r, odb);
+ 	return !!r->objects->commit_graph;
+ }
+ 
+@@ -1470,7 +1474,7 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
  
  	if (ctx->split && ctx->base_graph_name && ctx->num_commit_graphs_after > 1) {
  		char *new_base_hash = xstrdup(oid_to_hex(&ctx->new_base_graph->oid));
--		char *new_base_name = get_split_graph_filename(ctx->new_base_graph->odb->path, new_base_hash);
-+		char *new_base_name = get_split_graph_filename(ctx->new_base_graph->odb, new_base_hash);
+-		char *new_base_name = get_split_graph_filename(ctx->new_base_graph->obj_dir, new_base_hash);
++		char *new_base_name = get_split_graph_filename(ctx->new_base_graph->odb->path, new_base_hash);
  
  		free(ctx->commit_graph_filenames_after[ctx->num_commit_graphs_after - 2]);
  		free(ctx->commit_graph_hash_after[ctx->num_commit_graphs_after - 2]);
-@@ -1510,12 +1501,12 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
- 				}
- 			}
- 		} else {
--			char *graph_name = get_commit_graph_filename(ctx->odb->path);
-+			char *graph_name = get_commit_graph_filename(ctx->odb);
- 			unlink(graph_name);
- 		}
- 
- 		ctx->commit_graph_hash_after[ctx->num_commit_graphs_after - 1] = xstrdup(oid_to_hex(&file_hash));
--		final_graph_name = get_split_graph_filename(ctx->odb->path,
-+		final_graph_name = get_split_graph_filename(ctx->odb,
- 					ctx->commit_graph_hash_after[ctx->num_commit_graphs_after - 1]);
- 		ctx->commit_graph_filenames_after[ctx->num_commit_graphs_after - 1] = final_graph_name;
- 
-@@ -1557,7 +1548,7 @@ static void split_graph_merge_strategy(struct write_commit_graph_context *ctx)
+@@ -1553,7 +1557,7 @@ static void split_graph_merge_strategy(struct write_commit_graph_context *ctx)
  
  	while (g && (g->num_commits <= size_mult * num_commits ||
  		    (max_commits && num_commits > max_commits))) {
--		if (strcmp(g->odb->path, ctx->odb->path))
-+		if (g->odb != ctx->odb)
+-		if (strcmp(g->obj_dir, ctx->odb->path))
++		if (strcmp(g->odb->path, ctx->odb->path))
  			break;
  
  		num_commits += g->num_commits;
-@@ -1569,10 +1560,10 @@ static void split_graph_merge_strategy(struct write_commit_graph_context *ctx)
+@@ -1565,10 +1569,10 @@ static void split_graph_merge_strategy(struct write_commit_graph_context *ctx)
  	ctx->new_base_graph = g;
  
  	if (ctx->num_commit_graphs_after == 2) {
--		char *old_graph_name = get_commit_graph_filename(g->odb->path);
-+		char *old_graph_name = get_commit_graph_filename(g->odb);
+-		char *old_graph_name = get_commit_graph_filename(g->obj_dir);
++		char *old_graph_name = get_commit_graph_filename(g->odb->path);
  
  		if (!strcmp(g->filename, old_graph_name) &&
--		    strcmp(g->odb->path, ctx->odb->path)) {
-+		    g->odb != ctx->odb) {
+-		    strcmp(g->obj_dir, ctx->odb->path)) {
++		    strcmp(g->odb->path, ctx->odb->path)) {
  			ctx->num_commit_graphs_after = 1;
  			ctx->new_base_graph = NULL;
  		}
-@@ -1723,7 +1714,7 @@ static void expire_commit_graphs(struct write_commit_graph_context *ctx)
- 	if (ctx->split_opts && ctx->split_opts->expire_time)
- 		expire_time -= ctx->split_opts->expire_time;
- 	if (!ctx->split) {
--		char *chain_file_name = get_chain_filename(ctx->odb->path);
-+		char *chain_file_name = get_chain_filename(ctx->odb);
- 		unlink(chain_file_name);
- 		free(chain_file_name);
- 		ctx->num_commit_graphs_after = 0;
+@@ -1816,7 +1820,7 @@ int write_commit_graph(struct object_directory *odb,
+ 		ctx->oids.alloc = split_opts->max_commits;
+ 
+ 	if (ctx->append) {
+-		prepare_commit_graph_one(ctx->r, ctx->odb->path);
++		prepare_commit_graph_one(ctx->r, ctx->odb);
+ 		if (ctx->r->objects->commit_graph)
+ 			ctx->oids.alloc += ctx->r->objects->commit_graph->num_commits;
+ 	}
 diff --git a/commit-graph.h b/commit-graph.h
-index 2448134378..5a690723b0 100644
+index 2a6251bd3d..2448134378 100644
 --- a/commit-graph.h
 +++ b/commit-graph.h
-@@ -12,7 +12,7 @@
- 
- struct commit;
- 
--char *get_commit_graph_filename(const char *obj_dir);
-+char *get_commit_graph_filename(struct object_directory *odb);
- int open_commit_graph(const char *graph_file, int *fd, struct stat *st);
- 
- /*
-diff --git a/t/helper/test-read-graph.c b/t/helper/test-read-graph.c
-index d2884efe0a..2c2f65f06c 100644
---- a/t/helper/test-read-graph.c
-+++ b/t/helper/test-read-graph.c
-@@ -11,12 +11,12 @@ int cmd__read_graph(int argc, const char **argv)
- 	int open_ok;
- 	int fd;
- 	struct stat st;
--	const char *object_dir;
+@@ -49,7 +49,7 @@ struct commit_graph {
+ 	uint32_t num_commits;
+ 	struct object_id oid;
+ 	char *filename;
+-	const char *obj_dir;
 +	struct object_directory *odb;
  
- 	setup_git_directory();
--	object_dir = get_object_directory();
-+	odb = the_repository->objects->odb;
+ 	uint32_t num_commits_in_base;
+ 	struct commit_graph *base_graph;
+@@ -62,7 +62,8 @@ struct commit_graph {
+ };
  
--	graph_name = get_commit_graph_filename(object_dir);
-+	graph_name = get_commit_graph_filename(odb);
+ struct commit_graph *load_commit_graph_one_fd_st(int fd, struct stat *st);
+-struct commit_graph *read_commit_graph_one(struct repository *r, const char *obj_dir);
++struct commit_graph *read_commit_graph_one(struct repository *r,
++					   struct object_directory *odb);
+ struct commit_graph *parse_commit_graph(void *graph_map, int fd,
+ 					size_t graph_size);
  
- 	open_ok = open_commit_graph(graph_name, &fd, &st);
- 	if (!open_ok)
 -- 
 2.25.0.119.gaa12b7378b
 
