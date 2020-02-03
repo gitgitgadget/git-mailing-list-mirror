@@ -2,113 +2,132 @@ Return-Path: <SRS0=caIn=3X=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.4 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 95828C33C9E
-	for <git@archiver.kernel.org>; Mon,  3 Feb 2020 06:47:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D0FAFC3524D
+	for <git@archiver.kernel.org>; Mon,  3 Feb 2020 08:12:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 62CEB20658
-	for <git@archiver.kernel.org>; Mon,  3 Feb 2020 06:47:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A093D20721
+	for <git@archiver.kernel.org>; Mon,  3 Feb 2020 08:12:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lKxoXdD/"
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="q4aRBFJp"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727574AbgBCGr1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Feb 2020 01:47:27 -0500
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:43041 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726045AbgBCGr1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Feb 2020 01:47:27 -0500
-Received: by mail-pl1-f195.google.com with SMTP id p11so5447746plq.10
-        for <git@vger.kernel.org>; Sun, 02 Feb 2020 22:47:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=PzgjDVnfmVteAUl+q92RhM3Qcz0mxdpfL+UEg+M69/s=;
-        b=lKxoXdD/Z3eRTvuN0nBfJ7E9MT9HUPQ5qnUFhFi9sw45SZdhezmolIutfICbkAgE/5
-         E3ZukGEbNWQFMlSNudxKfhwoYyiQrxQJNJ3Jv5MzZScUgWU8HM9hE/hZmsjdBP3OChY8
-         urrDxL6VNf4jcV97sZvTTmpjoYTaniGYHEgGphx9ngBL7zyrKgOveZZKcitWPVePJaps
-         KSLyMPfROocJYiruDuonr0R/eN7w6Hmm6LSCak+bo4PdaYpLRmoBGgk46ebf9rJNGBmr
-         EeQ1Q2IJkyPDthCNvKYcYuSPTIXGlxZGXVtgOqImhAiQy3UfZR6jxW2MbTgo1pROMka0
-         81YA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=PzgjDVnfmVteAUl+q92RhM3Qcz0mxdpfL+UEg+M69/s=;
-        b=Wlc7ZxdUaKZKoMPwvgIuFciM5wl6LC47Kzvuc9MhFBfE2+YT4tJtLlZ/uC+zexAbSO
-         bueEWE1cwB3/MVlEnCjcQGVjKieBrSbej+L6wpWSqJdEg6HGA+bb0KXRgOSdFQX3pb18
-         yD9V/JFOKrtms2cUCECWFCbhdE8rphz4qZ/KkvMi0EqC3WPKuUhpYQpf+id/KKGwE2wF
-         jFnL6TFOp8You7wNgSsUZi9ur2GO5/oozfG1tQheARfeOwNtZSaQJ7usz/02UF4aYXJp
-         xp/YgP+qQL0nFTU52gdL/taVHvAhkrcSwtfmlyuV0DozB2OJCY6zAjM0fBWC0GV5Uhq4
-         R3qQ==
-X-Gm-Message-State: APjAAAUwWLnI70oxr7TV3Ft955JsnZKpeQ2no3p2Crw6nLiSUBgytci0
-        4DNh1uS5C7LB9uDzGWhgGNtA0ikgYStnBw==
-X-Google-Smtp-Source: APXvYqxYSVadBr7sPbq73lw8NJ7i27HOZV3rAR668civvrr4bl1p2NZUcCBHXcDgmGh7Frp9hpbZqA==
-X-Received: by 2002:a17:90a:af81:: with SMTP id w1mr28490815pjq.14.1580712445411;
-        Sun, 02 Feb 2020 22:47:25 -0800 (PST)
-Received: from konoha.iitr.ac.in ([103.37.201.177])
-        by smtp.gmail.com with ESMTPSA id w28sm10341913pgl.20.2020.02.02.22.47.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 02 Feb 2020 22:47:24 -0800 (PST)
-From:   Shourya Shukla <shouryashukla.oo@gmail.com>
-To:     git@vger.kernel.org, gitster@pobox.com, johannes.schindelin@gmx.de,
-        christian.couder@gmail.com, peff@peff.net
-Cc:     newren@gmail.com, Shourya Shukla <shouryashukla.oo@gmail.com>
-Subject: sending attachments via git send-email
-Date:   Mon,  3 Feb 2020 12:17:12 +0530
-Message-Id: <20200203064712.14621-1-shouryashukla.oo@gmail.com>
-X-Mailer: git-send-email 2.20.1
+        id S1727745AbgBCIMF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Feb 2020 03:12:05 -0500
+Received: from lelv0143.ext.ti.com ([198.47.23.248]:43326 "EHLO
+        lelv0143.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727240AbgBCIMF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Feb 2020 03:12:05 -0500
+Received: from lelv0265.itg.ti.com ([10.180.67.224])
+        by lelv0143.ext.ti.com (8.15.2/8.15.2) with ESMTP id 0138Bjlj093696;
+        Mon, 3 Feb 2020 02:11:45 -0600
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+        s=ti-com-17Q1; t=1580717505;
+        bh=Ktd7K7CyX1AxHFWRZvjAgX3+k0pQIIz053kXIkPdcJI=;
+        h=Date:From:To:CC:Subject:References:In-Reply-To;
+        b=q4aRBFJp13LYBmATVXJldBPp3JiVwRbAbjWbrwLkaY11/AWj0CDAS/lFbTQXuXdWa
+         sIhsem4S/BWutcH1896GNlDaKtDuDllrToCpuvHMxm1VrZdtuZ7PV2WmpdUUk8gR6+
+         n3PIrZFJSpQryutrkQur+ejI15MFTM7ERS7pWSCM=
+Received: from DLEE115.ent.ti.com (dlee115.ent.ti.com [157.170.170.26])
+        by lelv0265.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 0138Bjm0099671
+        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
+        Mon, 3 Feb 2020 02:11:45 -0600
+Received: from DLEE108.ent.ti.com (157.170.170.38) by DLEE115.ent.ti.com
+ (157.170.170.26) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1847.3; Mon, 3 Feb
+ 2020 02:11:45 -0600
+Received: from fllv0039.itg.ti.com (10.64.41.19) by DLEE108.ent.ti.com
+ (157.170.170.38) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1847.3 via
+ Frontend Transport; Mon, 3 Feb 2020 02:11:45 -0600
+Received: from localhost (ileax41-snat.itg.ti.com [10.172.224.153])
+        by fllv0039.itg.ti.com (8.15.2/8.15.2) with ESMTP id 0138BiQt082180;
+        Mon, 3 Feb 2020 02:11:44 -0600
+Date:   Mon, 3 Feb 2020 13:41:43 +0530
+From:   Pratyush Yadav <p.yadav@ti.com>
+To:     Shourya Shukla <shouryashukla.oo@gmail.com>
+CC:     <git@vger.kernel.org>, <gitster@pobox.com>,
+        <johannes.schindelin@gmx.de>, <christian.couder@gmail.com>,
+        <peff@peff.net>, <newren@gmail.com>
+Subject: Re: sending attachments via git send-email
+Message-ID: <20200203081143.zv6f5tb3prp6kd4v@ti.com>
+References: <20200203064712.14621-1-shouryashukla.oo@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20200203064712.14621-1-shouryashukla.oo@gmail.com>
+User-Agent: NeoMutt/20171215
+X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello everyone,
+Hi Shourya,
 
-I was doing some tests on 'git send-email'[1] and noticed a couple of things:
+My $0.02:
 
-	1. We are not able to send attachments via 'git send-email' unlike
-	   various other mail clients such as GMail, Yahoo, etc. Is there
-	   any particular reason for this (maybe performance issues or code
-	   compatibility issues etc.)?
-	
-	2. Even so, I tried sending an image to myself and noticed that the
-	   command basically does not check if we are sending a text file or
-	   not(though I think it should unless there is any key reason behind it).
-	   On executing the command(when trying to send an image), it asks for the
-	   encoding (that was odd as it did not ask for any of emails I have sent
-           using the command). I entered the command:
-	   'git send-email --to=shouryashukla.oo@gmail.com --subject=test_mail me.JPG'
-	   which prompts:
-	   'The following files are 8bit, but do not declare a Content-Transfer-Encoding.'
-    	   'me.JPG'
-	   'Which 8bit encoding should I declare [UTF-8]?'
-	   So i enter the encoding as '8BIT', which at the end prompts:
-	   'No subject line in me.JPG? at /usr/lib/git-core/git-send-email line 687.'
-	   
-	   Why is this happening even though I entered the subject in the command itself?
+On 03/02/20 12:17PM, Shourya Shukla wrote:
+> Hello everyone,
+> 
+> I was doing some tests on 'git send-email'[1] and noticed a couple of things:
+> 
+> 	1. We are not able to send attachments via 'git send-email' unlike
+> 	   various other mail clients such as GMail, Yahoo, etc. Is there
+> 	   any particular reason for this (maybe performance issues or code
+> 	   compatibility issues etc.)?
 
-	3. I looked up at the script of the command and noticed that there are two files,
-	   namely: 'git-send-email.perl' and 'git-send-email', both are identical except for
-	   an extra 'use lib (split(/:/, $ENV{GITPERLLIB} || '/home/<<username>>/share/perl5'));'
-	   on line 3 of 'git-send-email'(my inference is that we are trying to import the perl
-	   library by splitting the addresses at '/' or something similar). What is the purpose
-	   of the latter file?(I am new to Perl, if I am missing out on anything please forgive
-	   my ignorance).
+IMO git-send-email shouldn't really be used for sending attachments. 
+That is the job of other mail clients that you mention. git-send-email's 
+purpose is to make it easier to send commits/patches via mail in plain 
+text form. Its purpose is not to be a general mail client.
 
-On an additional note, I noticed that there is a test file called 't9001-send-email.sh' which needs
-various style modernisations and maybe other changes too(I glanced at the file so I might have missed
-out on other improvements which could be made). ;-)
+> 	2. Even so, I tried sending an image to myself and noticed that the
+> 	   command basically does not check if we are sending a text file or
+> 	   not(though I think it should unless there is any key reason behind it).
+> 	   On executing the command(when trying to send an image), it asks for the
+> 	   encoding (that was odd as it did not ask for any of emails I have sent
+>            using the command). I entered the command:
+> 	   'git send-email --to=shouryashukla.oo@gmail.com --subject=test_mail me.JPG'
+> 	   which prompts:
+> 	   'The following files are 8bit, but do not declare a Content-Transfer-Encoding.'
+>     	   'me.JPG'
+> 	   'Which 8bit encoding should I declare [UTF-8]?'
+> 	   So i enter the encoding as '8BIT', which at the end prompts:
+> 	   'No subject line in me.JPG? at /usr/lib/git-core/git-send-email line 687.'
+> 	   
+> 	   Why is this happening even though I entered the subject in the command itself?
 
-I would love to hear from the community what exactly is going on and if any improvements are possible in the command. :-)
+I don't know much about the internals of git-send-email (or the JPEG 
+image format), but my guess is git-send-email tries to decode the JPEG 
+file as a text file and then fails to detect encoding, and so asks the 
+user explicitly what the encoding is. I don't necessarily think that is 
+a bad thing. You shouldn't be sending images via git-send-email.
 
+That said, maybe it would be a good idea to check the mime type of the 
+file and warn the user.
+ 
+> 	3. I looked up at the script of the command and noticed that there are two files,
+> 	   namely: 'git-send-email.perl' and 'git-send-email', both are identical except for
+> 	   an extra 'use lib (split(/:/, $ENV{GITPERLLIB} || '/home/<<username>>/share/perl5'));'
+> 	   on line 3 of 'git-send-email'(my inference is that we are trying to import the perl
+> 	   library by splitting the addresses at '/' or something similar). What is the purpose
+> 	   of the latter file?(I am new to Perl, if I am missing out on anything please forgive
+> 	   my ignorance).
+
+Running 'git ls-files | grep git-send-email' gives me:
+
+  Documentation/git-send-email.txt
+  git-send-email.perl
+
+So it means the file 'git-send-email' is not tracked and is an output 
+from the build system. My guess is that the build system inserts this 
+line when you run 'make'. Check the file 
+'perl/header_templates/fixed_prefix.template.pl'.
+
+-- 
 Regards,
-Shourya Shukla
-
-[1]: https://git-scm.com/docs/git-send-email
+Pratyush Yadav
