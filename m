@@ -2,95 +2,183 @@ Return-Path: <SRS0=caIn=3X=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-8.2 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EE1D2C3524D
-	for <git@archiver.kernel.org>; Mon,  3 Feb 2020 17:10:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 07DC7C35247
+	for <git@archiver.kernel.org>; Mon,  3 Feb 2020 17:53:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id BD81B20721
-	for <git@archiver.kernel.org>; Mon,  3 Feb 2020 17:10:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C941120721
+	for <git@archiver.kernel.org>; Mon,  3 Feb 2020 17:53:14 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="HzmX3N22"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="dmSsWLSr"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729026AbgBCRKL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Feb 2020 12:10:11 -0500
-Received: from mail-wm1-f48.google.com ([209.85.128.48]:40372 "EHLO
-        mail-wm1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728195AbgBCRKL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Feb 2020 12:10:11 -0500
-Received: by mail-wm1-f48.google.com with SMTP id t14so93142wmi.5
-        for <git@vger.kernel.org>; Mon, 03 Feb 2020 09:10:10 -0800 (PST)
+        id S1727872AbgBCRxN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Feb 2020 12:53:13 -0500
+Received: from mail-pj1-f68.google.com ([209.85.216.68]:54561 "EHLO
+        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727311AbgBCRxN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Feb 2020 12:53:13 -0500
+Received: by mail-pj1-f68.google.com with SMTP id dw13so78143pjb.4
+        for <git@vger.kernel.org>; Mon, 03 Feb 2020 09:53:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=RAHbCvD/xFxQKuzYq+WNB9fLR1t+0PclJYk/n+ZE5U4=;
-        b=HzmX3N22Yilqp8X1gJpO+7/IEtmp6XZU0EkQTuyPF1dCIxO4gnCwUf5xBJgXj9+RAt
-         ARdPkIDMbWvYFUw/9hvlYU5sOo+pSnrCWvVYcnEgKUgSAHQvEEOKZYip1kklLhpc/Sys
-         6dSDxfKGqIEtvxj9E0Ti/7kncGGEcOvCMZvLnReN4lVkgSscRAUxzEkDgKUe76xyIXRU
-         xso6cPD7yXVlf/dY/lNQpSHV3+b057FjhSut2MygivcFO39J5iCBMwSMi/xxF2UVQh9x
-         Xm91QBAKK/ltiegDpaBbt7ATlhHUsg5ucNMnBfWMxJpJqpvYyNxF7TM1QvDRdI3Pue9m
-         LrEg==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=KTNNqW7UEZlpXXq0pfXyBtW3bO8PpU94D8yVQQ9dcUU=;
+        b=dmSsWLSr3qFzG/CXY0vk5p0E0KTR4DK1LEeKOON9TGRoqX9goAnb0isNJ9qggnnxWb
+         a+OP/8RESiSzl1Qxa0RvMFbcPDZJqcpE7CATBV1poIRESqXnh1uANuSVvtDqDtmGzZOq
+         Y4EgQBkNYhj3ymg1yBdWi2x4ynmZJ383N4Jf00lIfwx/o3nVnLCv5OzKt5Utr+cgSpMP
+         /CE2Usr1JJao0MQdS4xpLN8GmeYet+UCJPMV55ldETjGIKCPRRvkHRSoR6AlolbpQ35r
+         Zq78Tjx+cDOmt9YFj4QVmAFJIm+qjiStUlBlrZMA4GyfPIjfDQ5MQ9uB8ta/tuGSnyqb
+         RuUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=RAHbCvD/xFxQKuzYq+WNB9fLR1t+0PclJYk/n+ZE5U4=;
-        b=avjtzEzH3tbUJEX86+R2om9kqTpPQSJtpkK1f7I/z8d2ry75StISPLNwSeLbEwfoo4
-         sMYZ8Zg7E2nOop6XyA6uJ6yr6kDk6nf15sNrdnq+gTQ9uTpEKyJgKscJNgNK5LLNdPOe
-         B6CbjWEgBTGUCQ4uh7OU2xeXbivENFdcmhNMo97UBnZRoilO676NgYLkPwzmWClEMwNZ
-         Q2iZYeRERuMLdYA2kU9wU8xerbxex5dzH4tWA3TKwzLov/1+bnmXgU3BjnPZLdZ4pYIO
-         e3wYFXw1Z1JqmwQSbWpkXPFqosTz7c+HR1ipTj7UvZaS8Jj39FTwAf3wnyOLtxAdz3UI
-         dPMA==
-X-Gm-Message-State: APjAAAUtUGEpgKxJf+pjJn+8n0fPIfdbzajrz2gkZB7j3QXHdbMOTbAY
-        NS50glEAtcP6KcGwo+bxIUsR/YGEwAtLEVAesGSE4A==
-X-Google-Smtp-Source: APXvYqyhP7zKCYlH3ZQU2Q1XgjROCVXfJG3HwzmGz915g4E+WKsDLrh3+DdkNZ8RCzxyNr1lu6udLV6VQpJXU7+yqJ4=
-X-Received: by 2002:a1c:610a:: with SMTP id v10mr72406wmb.44.1580749809625;
- Mon, 03 Feb 2020 09:10:09 -0800 (PST)
-MIME-Version: 1.0
-References: <pull.539.git.1579808479.gitgitgadget@gmail.com>
- <9138554.c73hJVQVja@mfick-lnx> <CAFQ2z_NkU6ekZkMqZpcFSEr8M3kfw0tiVCB2doHp3QTZtQ8UNg@mail.gmail.com>
- <2165647.H0RpPiDeFZ@mfick-lnx> <CAFQ2z_OgGvX3mFLeWSvEqdfxupRuHN_eFgqENaCRHHpO364_xA@mail.gmail.com>
- <20200130072122.GC2189233@coredump.intra.peff.net> <CAFQ2z_PvKiz==GyS6J1H1uG0FRPL86JvDj+LjX1We4-yCSVQ+g@mail.gmail.com>
- <20200203170555.GB3525@coredump.intra.peff.net>
-In-Reply-To: <20200203170555.GB3525@coredump.intra.peff.net>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Mon, 3 Feb 2020 18:09:56 +0100
-Message-ID: <CAFQ2z_P4p+Vg7AFPusSqEYL3RdtcYh+47vgiXD4RV+LqnDVaVQ@mail.gmail.com>
-Subject: Re: [PATCH v2 5/5] Reftable support for git-core
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=KTNNqW7UEZlpXXq0pfXyBtW3bO8PpU94D8yVQQ9dcUU=;
+        b=A8LgFjIzvnU9NZ+GISLxD3jZMxf2cwoNs5CeL06swHOeLadPEQpgtok1a9jB4Ib7B2
+         kSv8y/YP2LTmQCD4skhUDS7xxYIge2goG3PSQG9dG4goCqEp2GEdjVLPXgjwkqAVoJJg
+         7H47M6WUB9qFbdSv7pGKkm1UX/WApj8z6EPvqJIwHnNhZTBFzwDMfOmfcIxP5eNLrmRV
+         BxlglyjwcvhXLqj6O6JpIeJQY2tmUslriVhzK+ZOehOc4UWhGYcalpdB4fmU/Y6aLLsF
+         IMQ8MM3VPh6JAdHEgcsFZI56hgIVlaa6LSKRWjec9D2i45mKeuF6C3XliU7pJOC4mCtl
+         2z0g==
+X-Gm-Message-State: APjAAAV/B5tygateL+P+u5zEWxDARDH6QKYFOjMevRX1+Aacpaua8J0F
+        07oZyDmy1lt8F9fBafBssz9bLA==
+X-Google-Smtp-Source: APXvYqwbXV/JJ72luCxKfuUzLM/DDcPn2I9I8DI3GzKjMhku13JMp9EyGzEvRuKixiI/AoeRGnf4Rg==
+X-Received: by 2002:a17:902:6ac2:: with SMTP id i2mr24347859plt.221.1580752392112;
+        Mon, 03 Feb 2020 09:53:12 -0800 (PST)
+Received: from localhost ([2601:602:9200:32b0:ac09:c6e5:fcdd:b79b])
+        by smtp.gmail.com with ESMTPSA id r66sm22044166pfc.74.2020.02.03.09.53.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 03 Feb 2020 09:53:11 -0800 (PST)
+Date:   Mon, 3 Feb 2020 09:53:10 -0800
+From:   Taylor Blau <me@ttaylorr.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Martin Fick <mfick@codeaurora.org>,
-        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] index-pack: downgrade twice-resolved REF_DELTA to die()
+Message-ID: <20200203175310.GA54832@syl.local>
+References: <85e71c97-9e0a-863e-179f-a6e1f14365ce@voucoux.fr>
+ <20200203144055.GA4170731@coredump.intra.peff.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20200203144055.GA4170731@coredump.intra.peff.net>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 3, 2020 at 6:05 PM Jeff King <peff@peff.net> wrote:
-> PS I don't know if it's set in stone yet, but if we're changing things
->    around, is it an option to put reftable-list inside the reftable
->    directory, just to keep the top-level uncluttered?
+On Mon, Feb 03, 2020 at 09:40:55AM -0500, Jeff King wrote:
+> When we're resolving a REF_DELTA, we compare-and-swap its type from
+> REF_DELTA to whatever real type the base object has, as discussed in
+> ab791dd138 (index-pack: fix race condition with duplicate bases,
+> 2014-08-29). If the old type wasn't a REF_DELTA, we consider that a
+> BUG(). But as discussed in that commit, we might see this case whenever
+> we try to resolve an object twice, which may happen because we have
+> multiple copies of the base object.
+>
+> So this isn't a bug at all, but rather a sign that the input pack is
+> broken. And indeed, this case is triggered already in t5309.5 and
+> t5309.6, which create packs with delta cycles and duplicate bases. But
+> we never noticed because those tests are marked expect_failure.
+>
+> Those tests were added by b2ef3d9ebb (test index-pack on packs with
+> recoverable delta cycles, 2013-08-23), which was leaving the door open
+> for cases that we theoretically _could_ handle. And when we see an
+> already-resolved object like this, in theory we could keep going after
+> confirming that the previously resolved child->real_type matches
+> base->obj->real_type. But:
+>
+>   - enforcing the "only resolve once" rule here saves us from an
+>     infinite loop in other parts of the code. If we keep going, then the
+>     delta cycle in t5309.5 causes us to loop infinitely, as
+>     find_ref_delta_children() doesn't realize which objects have already
+>     been resolved. So there would be more changes needed to make this
+>     case work, and in the meantime we'd be worse off.
+>
+>   - any pack that triggers this is broken anyway. It either has a
+>     duplicate base object, or it has a cycle which causes us to bring in
+>     a duplicate via --fix-thin. In either case, we'd end up rejecting
+>     the pack in write_idx_file(), which also detects duplicates.
+>
+> So the tests have little value in documenting what we _could_ be doing
+> (and have been neglected for 6+ years). Let's switch them to confirming
+> that we handle this case cleanly (and switch out the BUG() for a more
+> informative die() so that we do so).
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> Noticed while running the tests in an environment that complains about
+> SIGABRT deaths. Arguably the test suite should be looking for these even
+> in test_expect_failure, but it would be a little convoluted to do so
+> (e.g., teaching BUG() to write to a marker file, and then checking the
+> file). And I think we're better off phrasing things as much as possible
+> as expect_success anyway.
+>
+>  builtin/index-pack.c         | 4 +++-
+>  t/t5309-pack-delta-cycles.sh | 8 ++++----
+>  2 files changed, 7 insertions(+), 5 deletions(-)
+>
+> diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+> index 60a5591039..41a7c11c8e 100644
+> --- a/builtin/index-pack.c
+> +++ b/builtin/index-pack.c
+> @@ -1003,7 +1003,9 @@ static struct base_data *find_unresolved_deltas_1(struct base_data *base,
+>
+>  		if (!compare_and_swap_type(&child->real_type, OBJ_REF_DELTA,
+>  					   base->obj->real_type))
+> -			BUG("child->real_type != OBJ_REF_DELTA");
+> +			die("REF_DELTA at offset %"PRIuMAX" already resolved (duplicate base %s?)",
+> +			    (uintmax_t)child->idx.offset,
+> +			    oid_to_hex(&base->obj->idx.oid));
 
-If we're moving things around, we can add this little difference too.
-The original idea was to create a conflict with the old-style storage,
-but putting the list in reftable/ actually makes files -> restable
-conversion slightly more atomic.
+This error message is informative, and matches what you described in the
+patch message.
 
---
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
+>  		resolve_delta(child, base, result);
+>  		if (base->ref_first == base->ref_last && base->ofs_last == -1)
+> diff --git a/t/t5309-pack-delta-cycles.sh b/t/t5309-pack-delta-cycles.sh
+> index 491556dad9..6c209ad45c 100755
+> --- a/t/t5309-pack-delta-cycles.sh
+> +++ b/t/t5309-pack-delta-cycles.sh
+> @@ -62,13 +62,13 @@ test_expect_success 'index-pack detects REF_DELTA cycles' '
+>  	test_must_fail git index-pack --fix-thin --stdin <cycle.pack
+>  '
+>
+> -test_expect_failure 'failover to an object in another pack' '
+> +test_expect_success 'failover to an object in another pack' '
+>  	clear_packs &&
+>  	git index-pack --stdin <ab.pack &&
+> -	git index-pack --stdin --fix-thin <cycle.pack
+> +	test_must_fail git index-pack --stdin --fix-thin <cycle.pack
+>  '
+>
+> -test_expect_failure 'failover to a duplicate object in the same pack' '
+> +test_expect_success 'failover to a duplicate object in the same pack' '
+>  	clear_packs &&
+>  	{
+>  		pack_header 3 &&
+> @@ -77,7 +77,7 @@ test_expect_failure 'failover to a duplicate object in the same pack' '
+>  		pack_obj $A
+>  	} >recoverable.pack &&
+>  	pack_trailer recoverable.pack &&
+> -	git index-pack --fix-thin --stdin <recoverable.pack
+> +	test_must_fail git index-pack --fix-thin --stdin <recoverable.pack
+>  '
 
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+And these hunks all make sense, too.
 
-Registergericht und -nummer: Hamburg, HRB 86891
+>  test_done
+> --
+> 2.25.0.541.gdfd61ebb85
 
-Sitz der Gesellschaft: Hamburg
+This looks great, thanks :-)
 
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+  Reviewed-by: Taylor Blau <me@ttaylorr.com>
+
+Thanks,
+Taylor
