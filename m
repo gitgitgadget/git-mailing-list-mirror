@@ -2,129 +2,113 @@ Return-Path: <SRS0=caIn=3X=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E6AADC33C9E
-	for <git@archiver.kernel.org>; Mon,  3 Feb 2020 04:38:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AE8B8C33C9E
+	for <git@archiver.kernel.org>; Mon,  3 Feb 2020 06:24:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B86E320721
-	for <git@archiver.kernel.org>; Mon,  3 Feb 2020 04:38:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 82AD52082E
+	for <git@archiver.kernel.org>; Mon,  3 Feb 2020 06:24:15 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="S/rkBpJq"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H41cdUYt"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727367AbgBCEiF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 2 Feb 2020 23:38:05 -0500
-Received: from mail-pj1-f66.google.com ([209.85.216.66]:53870 "EHLO
-        mail-pj1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727164AbgBCEiF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 Feb 2020 23:38:05 -0500
-Received: by mail-pj1-f66.google.com with SMTP id n96so5727646pjc.3
-        for <git@vger.kernel.org>; Sun, 02 Feb 2020 20:38:05 -0800 (PST)
+        id S1727454AbgBCGYO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Feb 2020 01:24:14 -0500
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:36425 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726045AbgBCGYO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Feb 2020 01:24:14 -0500
+Received: by mail-pl1-f193.google.com with SMTP id a6so5428180plm.3
+        for <git@vger.kernel.org>; Sun, 02 Feb 2020 22:24:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Hxa6U4mNdkjE8ZtxmMqaPcIckY0dr80EUOohVmlLy2Y=;
-        b=S/rkBpJqmF5N6V+SHZc9F83WsR1U+MhbDMDrZowrMMuZ9hWqrtz5z5r18ul6hIn/QI
-         LaJCLydrvl7qQbtF0Px9OozudyJt+QXxEnkPKT5rXUpDCtp5X3cO86Zf4WcRwc2vF3rn
-         iXCeKvJ5v9dqYNIUyy3AfxIoTaEMhCUjJp9SZ7YPMtLPKAzIenafByRsFHTfP0WL+VsU
-         lRNCdOoXrtKWgwmnWsnRnXLzjASHeHlCYRiHe+FbSVEF+Qz95uu0PtGZPqjyHxoRFLyu
-         9cHlOIBLnzJCDVxQDR2UdW0Y+ituWVt/ls6GubT27KrlH7sOTbIl51OMJGe8OWG4A20y
-         UTbg==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=Qd+JW33B0JtjsSI+BkLppSASNXhGPVsLnprj0NBpFIY=;
+        b=H41cdUYtMxA/7AC3yC255BOjUg4nTtM3/4LfaF1ey8TaJjHYEHb/J3DTaIPfAag/Ft
+         LLENHavU2TRHdwWxc0Ip8JYiD88lcGu1wzI4GNQKI1udmeCAQ+aVIg9F06HssdRrGSsC
+         H3F1tPeDAV7MUv6ctuKn0jcm9YRo3fQiTdQeh8bMhyDPF1VOTfpADhAJsQz57yCwU2Eh
+         3bqZn28RQOH8bljuOlPxYkkh2VZl6NrwF1Qsph0mSQOoJ0nT4VFJWZzvWJAKlnVrY4MQ
+         C1ovdNATJaxT49UYbFF9zG4Ezd0O2LGP9nOY/XoHN1zuF+EaUq0zz5O7wtNba1F9maYq
+         9wtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Hxa6U4mNdkjE8ZtxmMqaPcIckY0dr80EUOohVmlLy2Y=;
-        b=AAdZkixRPJusWeJyd8oPzAU1K0sLOD8oPBm/D1rxoz1JbytcquvHHLzIeqft2YRMJb
-         3d5qX4VPtzeivP++1fudb1wc2pPwiFV0RfYqiHRStTW9Hn0VZR6uxZUVTBFuNzK59GY6
-         SpQNo7vqI/KB1H0SWwLabCc17l4Ba9K3d4sZ45WldVFsNWmAQfY+34vwug/ARtLXRstx
-         9j6mZR0UYJNfxYPvVBbPwACrT+q4q/iRrFdFjpYc+a8n3uJYqWgD5nc7Itozi5H5E3JF
-         PSsXpi2HX6/yal1+dnhkivY3KL2b67wTQQt5UBDKqxarIDwWf87rgzQYnIZw4zuFLw/F
-         rAnQ==
-X-Gm-Message-State: APjAAAX02rRSDHgD5SLFL/kxUXa3wdgbhytHg0oO5pbHklko2CGxDkmc
-        AY/KJxiIN1t1GVSZX6OlFENC0w==
-X-Google-Smtp-Source: APXvYqzWQTCYJjQ/Oz40x4N1vtVoNy80ZePEEKYlJXXIZkhrPjEaa39bgT/M9X0XN+PUwpIhhoAsfg==
-X-Received: by 2002:a17:90a:a10c:: with SMTP id s12mr26892853pjp.47.1580704684961;
-        Sun, 02 Feb 2020 20:38:04 -0800 (PST)
-Received: from localhost ([2601:602:9200:32b0:ac09:c6e5:fcdd:b79b])
-        by smtp.gmail.com with ESMTPSA id c14sm18461265pfn.8.2020.02.02.20.38.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 02 Feb 2020 20:38:04 -0800 (PST)
-Date:   Sun, 2 Feb 2020 20:38:03 -0800
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
-        git@vger.kernel.org, dstolee@microsoft.com, gitster@pobox.com
-Subject: Re: [PATCH 0/6] commit-graph: use 'struct object_directory *'
- everywhere
-Message-ID: <20200203043803.GC23625@syl.local>
-References: <cover.1580424766.git.me@ttaylorr.com>
- <20200131103008.GD2916051@coredump.intra.peff.net>
- <60a4d129-c6a9-1e5f-a467-7db0babbcffa@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Qd+JW33B0JtjsSI+BkLppSASNXhGPVsLnprj0NBpFIY=;
+        b=N73604vLc2HVuSww/6b1tuFutPzzlQzkgh9NVR4rw/64eJyFbPKvcpY3/1usp/qf8n
+         E1y5HHY6/FrkVvGk9MMD9JGOF/VbJ44HALfyu3whfC4iLrkm+Oy+6zBomj31/Bphgtmw
+         dK4JMlAm+2EHAh2uKwwtvsuISf3zXaVWMnn0oOlWR8BmeeBPuAzMIihyTlN8AFl578vd
+         X9lg+HdyVXTSbGQbW45uZx1wZFwCwGReT9yz78g7RqjSlzDO5E+nB7CGPDDGR4mUgZet
+         uhmGeNhzZRek78co1a0fzT7ipQJ4GXjT3WXzvRV5s1RI0whhw4hx5+ZG/78Y7pvghk9Q
+         Uswg==
+X-Gm-Message-State: APjAAAW/dzhMILEiYl0KPIiiWO+b6447SjCiIGHy3IvawVlCQh/NxHW+
+        2CvmFxkwLjdKNCsq5JLRNeDC0ex8+xjsEKlOByA=
+X-Google-Smtp-Source: APXvYqwYouu5pTT/BH1MxqdtPcGaQwKQkIwmmP7D0O7JNOZgEnNXUp1+KwgH8v43E0lauw5eYXPVuL5IL85zGHb0JDE=
+X-Received: by 2002:a17:902:8341:: with SMTP id z1mr21639934pln.178.1580711053620;
+ Sun, 02 Feb 2020 22:24:13 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <60a4d129-c6a9-1e5f-a467-7db0babbcffa@gmail.com>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+References: <20200202192226.29176-1-adam@dinwoodie.org> <CAN0heSoxgsNDbi_tbxEoSSaGOxoJYArqYa-cLu1sPWVvH6wkFg@mail.gmail.com>
+ <20200202204739.GA24686@dinwoodie.org>
+In-Reply-To: <20200202204739.GA24686@dinwoodie.org>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Mon, 3 Feb 2020 07:24:00 +0100
+Message-ID: <CAN0heSpDV2N2L4ukgdWxWJYJC1Hg9KYYkMC9MrqMGkuiv34AmQ@mail.gmail.com>
+Subject: Re: [PATCH] diff-options.txt: correct command syntax
+To:     Adam Dinwoodie <adam@dinwoodie.org>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Ramkumar Ramachandra <artagnon@gmail.com>,
+        Phil Hord <phil.hord@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 31, 2020 at 08:22:42AM -0500, Derrick Stolee wrote:
-> On 1/31/2020 5:30 AM, Jeff King wrote:
-> > On Thu, Jan 30, 2020 at 03:00:40PM -0800, Taylor Blau wrote:
-> >
-> >> This series became a little bit longer than I was expecting it to be, so
-> >> here is the high-level structure:
-> >>
-> >>   - 1/6 fixes a bug in a test that would cause a subsequent failure if
-> >>     unaddressed.
-> >>
-> >>   - 2/6 does the first half of the removal by using 'struct
-> >>     object_directory *'s within the 'commit_graph' structure.
-> >>
-> >>   - 4/6 does the second half by removing 'char *object_dir' usage in the
-> >>     'write_commit_graph_context' structure.
-> >>
-> >>   - 5/6 ties 2/6 and 4/6 together by removing all path normalization
-> >>     completely, fixing the uninitialized read bug.
-> >>
-> >>   - And 6/6 cleans up.
-> >
-> > With the exception of the patch-ordering discussion in the sub-thread
-> > with Martin, this looks good to me.
+On Sun, 2 Feb 2020 at 21:47, Adam Dinwoodie <adam@dinwoodie.org> wrote:
+> On Sunday 02 February 2020 at 08:45 pm +0100, Martin =C3=85gren wrote:
+> > On Sun, 2 Feb 2020 at 20:24, Adam Dinwoodie <adam@dinwoodie.org> wrote:
 >
-> I agree. Martin's comment is a good one. I can't find anything else
-> to improve the series.
-
-Thanks for your review!
-
-> > Patch 3 is a change in user-visible behavior, as it restricts how
-> > --object-dir can be used (it must be the main object-dir or an alternate
-> > within the repository). I don't _think_ anybody would care, as the
-> > semantics of those options seemed kind of ill-defined to me in the first
-> > place. But it's worth calling out as a potential risk. I suppose the
-> > alternative is to make a one-off fake "struct object_directory" within
-> > the process that isn't connected to the repository. But if nobody cares,
-> > I'd just as soon avoid that.
+> Ah, thank you!  I had completely misread what these examples were trying
+> to achieve.  I think your example (or indeed anything from a different
+> domain) would have avoided me getting confused in the first place.
+> Although I'm much less fussed now I realise the problem here was
+> entirely my understanding rather than an error in the docs.
 >
-> I think that this change of behavior is fine, especially because if
-> someone writes a commit-graph to an --object-dir that is not an
-> alternate, then that repo will not discover the new commit-graph
-> anyway.
-
-And thanks for the ack. I would be somewhat surprised if someone were
-really relying on this behavior in practice.
-
-> I do like that you state a possible work-around in case someone shows
-> up with a legitimate use case for a non-alternate object-dir.
+> > BTW, I wonder what "in the same file" tries to say -- my hunch is we
+> > could drop those words without any loss of correctness or readability.
+> > Would you agree?
 >
-> Thanks,
-> -Stolee
+> I think "in the same file" is meaningful here: as I understand it both
+> forms would find a commit that removed a line from one file and added it
+> back to a _different_ file, but only the -G form would pick it when
+> removed and added lines are in the same file.
 
-Thanks,
-Taylor
+You're right, it is needed. At least the way the example is given now,
+where there's some arbitrary amount of left-out context between the "+"
+and the "-" line, it's necessary to limit that by saying that it's in
+the same file. Because this is an example, we're allowed to make it as
+concrete as we see fit. For example:
+
+ To illustrate the difference between `-S<regex> --pickaxe-regex` and
+ `-G<regex>`, consider a commit with the following diff:
+ +
+ ----
+ -    hit =3D !frotz(nitfol, mf2.ptr, 1, 0);
+ +    return !frotz(nitfol, two->ptr, 1, 0);
+ ----
+ +
+ While `git log -G"frotz\(nitfol"` will show this commit, `git log
+ -S"frotz\(nitfol" --pickaxe-regex` will not (because the number of
+ occurrences of that string did not change).
+
+Or does that make it too specific, i.e., could this give readers the
+wrong impression that -G and/or -S and/or the difference explained here
+only apply to such "trivial" cases?
+
+Martin
