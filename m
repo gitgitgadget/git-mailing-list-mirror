@@ -2,113 +2,113 @@ Return-Path: <SRS0=caIn=3X=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	URIBL_BLOCKED,USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AE8B8C33C9E
-	for <git@archiver.kernel.org>; Mon,  3 Feb 2020 06:24:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 95828C33C9E
+	for <git@archiver.kernel.org>; Mon,  3 Feb 2020 06:47:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 82AD52082E
-	for <git@archiver.kernel.org>; Mon,  3 Feb 2020 06:24:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 62CEB20658
+	for <git@archiver.kernel.org>; Mon,  3 Feb 2020 06:47:28 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H41cdUYt"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lKxoXdD/"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727454AbgBCGYO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Feb 2020 01:24:14 -0500
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:36425 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726045AbgBCGYO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Feb 2020 01:24:14 -0500
-Received: by mail-pl1-f193.google.com with SMTP id a6so5428180plm.3
-        for <git@vger.kernel.org>; Sun, 02 Feb 2020 22:24:14 -0800 (PST)
+        id S1727574AbgBCGr1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Feb 2020 01:47:27 -0500
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:43041 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726045AbgBCGr1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Feb 2020 01:47:27 -0500
+Received: by mail-pl1-f195.google.com with SMTP id p11so5447746plq.10
+        for <git@vger.kernel.org>; Sun, 02 Feb 2020 22:47:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=Qd+JW33B0JtjsSI+BkLppSASNXhGPVsLnprj0NBpFIY=;
-        b=H41cdUYtMxA/7AC3yC255BOjUg4nTtM3/4LfaF1ey8TaJjHYEHb/J3DTaIPfAag/Ft
-         LLENHavU2TRHdwWxc0Ip8JYiD88lcGu1wzI4GNQKI1udmeCAQ+aVIg9F06HssdRrGSsC
-         H3F1tPeDAV7MUv6ctuKn0jcm9YRo3fQiTdQeh8bMhyDPF1VOTfpADhAJsQz57yCwU2Eh
-         3bqZn28RQOH8bljuOlPxYkkh2VZl6NrwF1Qsph0mSQOoJ0nT4VFJWZzvWJAKlnVrY4MQ
-         C1ovdNATJaxT49UYbFF9zG4Ezd0O2LGP9nOY/XoHN1zuF+EaUq0zz5O7wtNba1F9maYq
-         9wtA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=PzgjDVnfmVteAUl+q92RhM3Qcz0mxdpfL+UEg+M69/s=;
+        b=lKxoXdD/Z3eRTvuN0nBfJ7E9MT9HUPQ5qnUFhFi9sw45SZdhezmolIutfICbkAgE/5
+         E3ZukGEbNWQFMlSNudxKfhwoYyiQrxQJNJ3Jv5MzZScUgWU8HM9hE/hZmsjdBP3OChY8
+         urrDxL6VNf4jcV97sZvTTmpjoYTaniGYHEgGphx9ngBL7zyrKgOveZZKcitWPVePJaps
+         KSLyMPfROocJYiruDuonr0R/eN7w6Hmm6LSCak+bo4PdaYpLRmoBGgk46ebf9rJNGBmr
+         EeQ1Q2IJkyPDthCNvKYcYuSPTIXGlxZGXVtgOqImhAiQy3UfZR6jxW2MbTgo1pROMka0
+         81YA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Qd+JW33B0JtjsSI+BkLppSASNXhGPVsLnprj0NBpFIY=;
-        b=N73604vLc2HVuSww/6b1tuFutPzzlQzkgh9NVR4rw/64eJyFbPKvcpY3/1usp/qf8n
-         E1y5HHY6/FrkVvGk9MMD9JGOF/VbJ44HALfyu3whfC4iLrkm+Oy+6zBomj31/Bphgtmw
-         dK4JMlAm+2EHAh2uKwwtvsuISf3zXaVWMnn0oOlWR8BmeeBPuAzMIihyTlN8AFl578vd
-         X9lg+HdyVXTSbGQbW45uZx1wZFwCwGReT9yz78g7RqjSlzDO5E+nB7CGPDDGR4mUgZet
-         uhmGeNhzZRek78co1a0fzT7ipQJ4GXjT3WXzvRV5s1RI0whhw4hx5+ZG/78Y7pvghk9Q
-         Uswg==
-X-Gm-Message-State: APjAAAW/dzhMILEiYl0KPIiiWO+b6447SjCiIGHy3IvawVlCQh/NxHW+
-        2CvmFxkwLjdKNCsq5JLRNeDC0ex8+xjsEKlOByA=
-X-Google-Smtp-Source: APXvYqwYouu5pTT/BH1MxqdtPcGaQwKQkIwmmP7D0O7JNOZgEnNXUp1+KwgH8v43E0lauw5eYXPVuL5IL85zGHb0JDE=
-X-Received: by 2002:a17:902:8341:: with SMTP id z1mr21639934pln.178.1580711053620;
- Sun, 02 Feb 2020 22:24:13 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=PzgjDVnfmVteAUl+q92RhM3Qcz0mxdpfL+UEg+M69/s=;
+        b=Wlc7ZxdUaKZKoMPwvgIuFciM5wl6LC47Kzvuc9MhFBfE2+YT4tJtLlZ/uC+zexAbSO
+         bueEWE1cwB3/MVlEnCjcQGVjKieBrSbej+L6wpWSqJdEg6HGA+bb0KXRgOSdFQX3pb18
+         yD9V/JFOKrtms2cUCECWFCbhdE8rphz4qZ/KkvMi0EqC3WPKuUhpYQpf+id/KKGwE2wF
+         jFnL6TFOp8You7wNgSsUZi9ur2GO5/oozfG1tQheARfeOwNtZSaQJ7usz/02UF4aYXJp
+         xp/YgP+qQL0nFTU52gdL/taVHvAhkrcSwtfmlyuV0DozB2OJCY6zAjM0fBWC0GV5Uhq4
+         R3qQ==
+X-Gm-Message-State: APjAAAUwWLnI70oxr7TV3Ft955JsnZKpeQ2no3p2Crw6nLiSUBgytci0
+        4DNh1uS5C7LB9uDzGWhgGNtA0ikgYStnBw==
+X-Google-Smtp-Source: APXvYqxYSVadBr7sPbq73lw8NJ7i27HOZV3rAR668civvrr4bl1p2NZUcCBHXcDgmGh7Frp9hpbZqA==
+X-Received: by 2002:a17:90a:af81:: with SMTP id w1mr28490815pjq.14.1580712445411;
+        Sun, 02 Feb 2020 22:47:25 -0800 (PST)
+Received: from konoha.iitr.ac.in ([103.37.201.177])
+        by smtp.gmail.com with ESMTPSA id w28sm10341913pgl.20.2020.02.02.22.47.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 02 Feb 2020 22:47:24 -0800 (PST)
+From:   Shourya Shukla <shouryashukla.oo@gmail.com>
+To:     git@vger.kernel.org, gitster@pobox.com, johannes.schindelin@gmx.de,
+        christian.couder@gmail.com, peff@peff.net
+Cc:     newren@gmail.com, Shourya Shukla <shouryashukla.oo@gmail.com>
+Subject: sending attachments via git send-email
+Date:   Mon,  3 Feb 2020 12:17:12 +0530
+Message-Id: <20200203064712.14621-1-shouryashukla.oo@gmail.com>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-References: <20200202192226.29176-1-adam@dinwoodie.org> <CAN0heSoxgsNDbi_tbxEoSSaGOxoJYArqYa-cLu1sPWVvH6wkFg@mail.gmail.com>
- <20200202204739.GA24686@dinwoodie.org>
-In-Reply-To: <20200202204739.GA24686@dinwoodie.org>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Mon, 3 Feb 2020 07:24:00 +0100
-Message-ID: <CAN0heSpDV2N2L4ukgdWxWJYJC1Hg9KYYkMC9MrqMGkuiv34AmQ@mail.gmail.com>
-Subject: Re: [PATCH] diff-options.txt: correct command syntax
-To:     Adam Dinwoodie <adam@dinwoodie.org>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Ramkumar Ramachandra <artagnon@gmail.com>,
-        Phil Hord <phil.hord@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, 2 Feb 2020 at 21:47, Adam Dinwoodie <adam@dinwoodie.org> wrote:
-> On Sunday 02 February 2020 at 08:45 pm +0100, Martin =C3=85gren wrote:
-> > On Sun, 2 Feb 2020 at 20:24, Adam Dinwoodie <adam@dinwoodie.org> wrote:
->
-> Ah, thank you!  I had completely misread what these examples were trying
-> to achieve.  I think your example (or indeed anything from a different
-> domain) would have avoided me getting confused in the first place.
-> Although I'm much less fussed now I realise the problem here was
-> entirely my understanding rather than an error in the docs.
->
-> > BTW, I wonder what "in the same file" tries to say -- my hunch is we
-> > could drop those words without any loss of correctness or readability.
-> > Would you agree?
->
-> I think "in the same file" is meaningful here: as I understand it both
-> forms would find a commit that removed a line from one file and added it
-> back to a _different_ file, but only the -G form would pick it when
-> removed and added lines are in the same file.
+Hello everyone,
 
-You're right, it is needed. At least the way the example is given now,
-where there's some arbitrary amount of left-out context between the "+"
-and the "-" line, it's necessary to limit that by saying that it's in
-the same file. Because this is an example, we're allowed to make it as
-concrete as we see fit. For example:
+I was doing some tests on 'git send-email'[1] and noticed a couple of things:
 
- To illustrate the difference between `-S<regex> --pickaxe-regex` and
- `-G<regex>`, consider a commit with the following diff:
- +
- ----
- -    hit =3D !frotz(nitfol, mf2.ptr, 1, 0);
- +    return !frotz(nitfol, two->ptr, 1, 0);
- ----
- +
- While `git log -G"frotz\(nitfol"` will show this commit, `git log
- -S"frotz\(nitfol" --pickaxe-regex` will not (because the number of
- occurrences of that string did not change).
+	1. We are not able to send attachments via 'git send-email' unlike
+	   various other mail clients such as GMail, Yahoo, etc. Is there
+	   any particular reason for this (maybe performance issues or code
+	   compatibility issues etc.)?
+	
+	2. Even so, I tried sending an image to myself and noticed that the
+	   command basically does not check if we are sending a text file or
+	   not(though I think it should unless there is any key reason behind it).
+	   On executing the command(when trying to send an image), it asks for the
+	   encoding (that was odd as it did not ask for any of emails I have sent
+           using the command). I entered the command:
+	   'git send-email --to=shouryashukla.oo@gmail.com --subject=test_mail me.JPG'
+	   which prompts:
+	   'The following files are 8bit, but do not declare a Content-Transfer-Encoding.'
+    	   'me.JPG'
+	   'Which 8bit encoding should I declare [UTF-8]?'
+	   So i enter the encoding as '8BIT', which at the end prompts:
+	   'No subject line in me.JPG? at /usr/lib/git-core/git-send-email line 687.'
+	   
+	   Why is this happening even though I entered the subject in the command itself?
 
-Or does that make it too specific, i.e., could this give readers the
-wrong impression that -G and/or -S and/or the difference explained here
-only apply to such "trivial" cases?
+	3. I looked up at the script of the command and noticed that there are two files,
+	   namely: 'git-send-email.perl' and 'git-send-email', both are identical except for
+	   an extra 'use lib (split(/:/, $ENV{GITPERLLIB} || '/home/<<username>>/share/perl5'));'
+	   on line 3 of 'git-send-email'(my inference is that we are trying to import the perl
+	   library by splitting the addresses at '/' or something similar). What is the purpose
+	   of the latter file?(I am new to Perl, if I am missing out on anything please forgive
+	   my ignorance).
 
-Martin
+On an additional note, I noticed that there is a test file called 't9001-send-email.sh' which needs
+various style modernisations and maybe other changes too(I glanced at the file so I might have missed
+out on other improvements which could be made). ;-)
+
+I would love to hear from the community what exactly is going on and if any improvements are possible in the command. :-)
+
+Regards,
+Shourya Shukla
+
+[1]: https://git-scm.com/docs/git-send-email
