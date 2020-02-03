@@ -6,78 +6,91 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 00068C3524D
-	for <git@archiver.kernel.org>; Mon,  3 Feb 2020 08:43:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 19744C3524D
+	for <git@archiver.kernel.org>; Mon,  3 Feb 2020 08:54:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id C462F20658
-	for <git@archiver.kernel.org>; Mon,  3 Feb 2020 08:43:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E2D732070A
+	for <git@archiver.kernel.org>; Mon,  3 Feb 2020 08:54:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727407AbgBCIn5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Feb 2020 03:43:57 -0500
-Received: from cloud.peff.net ([104.130.231.41]:51072 "HELO cloud.peff.net"
+        id S1727606AbgBCIyG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Feb 2020 03:54:06 -0500
+Received: from cloud.peff.net ([104.130.231.41]:51080 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726214AbgBCIn5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Feb 2020 03:43:57 -0500
-Received: (qmail 1432 invoked by uid 109); 3 Feb 2020 08:43:57 -0000
+        id S1727494AbgBCIyG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Feb 2020 03:54:06 -0500
+Received: (qmail 1472 invoked by uid 109); 3 Feb 2020 08:54:06 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 03 Feb 2020 08:43:57 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 03 Feb 2020 08:54:06 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 23028 invoked by uid 111); 3 Feb 2020 08:52:01 -0000
+Received: (qmail 23132 invoked by uid 111); 3 Feb 2020 09:02:10 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 03 Feb 2020 03:52:01 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 03 Feb 2020 04:02:10 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Mon, 3 Feb 2020 03:43:56 -0500
+Date:   Mon, 3 Feb 2020 03:54:05 -0500
 From:   Jeff King <peff@peff.net>
 To:     Jeffrey Walton <noloader@gmail.com>
 Cc:     Git List <git@vger.kernel.org>
-Subject: Re: Git 2.25 and failed self tests on OS X
-Message-ID: <20200203084356.GB2164@coredump.intra.peff.net>
-References: <CAH8yC8kXPi0teqdZ8NRJ677Z6btbmdafR=y4MFFaKZgZrB=d4A@mail.gmail.com>
+Subject: Re: git-compat-util.h:798:13: =?utf-8?Q?er?=
+ =?utf-8?B?cm9yOiBjb25mbGljdGluZyB0eXBlcyBmb3Ig4oCYaW5ldF9udG9w4oCZ?=
+Message-ID: <20200203085405.GC2164@coredump.intra.peff.net>
+References: <CAH8yC8m3JFvEcfFF3z1rrRnEPK-adHGObmkOhNZiph7QJKUWqA@mail.gmail.com>
+ <CAH8yC8mh0gysNz3Dbrph0f8KZ8DEWaH-6rWg6fSOD-_aGh3=3A@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAH8yC8kXPi0teqdZ8NRJ677Z6btbmdafR=y4MFFaKZgZrB=d4A@mail.gmail.com>
+In-Reply-To: <CAH8yC8mh0gysNz3Dbrph0f8KZ8DEWaH-6rWg6fSOD-_aGh3=3A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Feb 02, 2020 at 11:08:17PM -0500, Jeffrey Walton wrote:
+On Sat, Feb 01, 2020 at 07:12:21AM -0500, Jeffrey Walton wrote:
 
-> I'm seeing some self-tests failures building the 2.25 release tarball
-> on OS X. I'm seeing it on the old PowerMac with OS X 10.5, and a
-> modern Intel Mac with OS X 10.9. PowerMac failures are not too
-> surprising, but the modern Mac should probably pass its self tests.
+> Maybe the include should be <arpa/inet.h> on Sun systems?
+
+It is included already. I think the real problem is that we are
+declaring our own replacement inet_ntop(), which then conflicts with the
+system one.
+
+> I was able to hack around it with the following after configure:
 > 
-> *** t3902-quoted.sh ***
-> not ok 1 - setup
-> #
-> #
-> #               mkdir "$FN" &&
-> #               for_each_name "echo initial >\"\$name\"" &&
-> #               git add . &&
-> #               git commit -q -m Initial &&
-> #
-> #               for_each_name "echo second >\"\$name\"" &&
-> #               git commit -a -m Second &&
-> #
-> #               for_each_name "echo modified >\"\$name\""
+>     # Solaris 11.3 work-around. The OS has inet_ntop and inet_pton
+>     for file in $(find "$PWD" -name 'Makefile')
+>     do
+>         sed '/ifdef NO_INET_NTOP/,+3 d' "$file" > "$file.fixed"
+>         mv "$file.fixed" "$file"
+>         sed '/ifdef NO_INET_PTON/,+3 d' "$file" > "$file.fixed"
+>         mv "$file.fixed" "$file"
+>     done
 
-It's hard to see what's going on with this output. Try running:
+As you found there's a knob for this already. Building with:
 
-  ./t3902-quoted.sh -v -x -i
+  make NO_INET_NTOP= NO_INET_PTON=
 
-to get more verbose output.
+to clear those flags would probably work (as would putting those
+variables in your config.mak file).
 
-Looking at this test, it tries to create files with funny characters in
-the names. Presumably your filesystem isn't happy with one or more of
-them. The verbose output will probably make it clear which.
+But having those variables unset is already the default. The root of the
+problem is likely that the autoconf test seems to get the wrong result
+on Solaris (another workaround would be to remove them from
+config.mak.autogen, but that will get obliterated next time you run
+./configure).
 
-Version 10.9 isn't incredibly new, but these tests have been around a
-long time. If OS X has a problem with these filenames, it seems odd for
-it to be surfacing now.
+The real fix would be teaching configure.ac to check for the correct
+libraries (it looks like it has a -lsocket test already; I'm not sure if
+that isn't being used in the test-compile for inet_ntop(), or if we need
+to also be adding libraries like -lnsl).
 
-Do you know what filesystem you're using? You aren't running the tests
-by any chance on a network mount from a Windows machine?
+I suspect that running autoconf with CFLAGS='-lsocket -lnsl' in the
+environment might also make the problem go away, but it's been a long
+enough time since I touched anything related to autoconf that I'm not
+sure.
+
+This also seems eerily familiar:
+
+  https://lore.kernel.org/git/CAH8yC8kOj5a5PN4V7mj7xZPoNDr-MH-CkirxRKyfx1-qAvfpqQ@mail.gmail.com/
+
+:) I second Junio's notion there that you may be better off skipping
+./configure entirely.
 
 -Peff
