@@ -2,97 +2,156 @@ Return-Path: <SRS0=caIn=3X=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.3 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0EF01C35247
-	for <git@archiver.kernel.org>; Mon,  3 Feb 2020 20:27:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A1B30C35247
+	for <git@archiver.kernel.org>; Mon,  3 Feb 2020 20:37:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id C4D4F2087E
-	for <git@archiver.kernel.org>; Mon,  3 Feb 2020 20:27:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6D6C220658
+	for <git@archiver.kernel.org>; Mon,  3 Feb 2020 20:37:12 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X2203bNN"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726872AbgBCU1v (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Feb 2020 15:27:51 -0500
-Received: from mx.sdas.de ([88.198.162.67]:41069 "EHLO mx.sdas.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726272AbgBCU1u (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Feb 2020 15:27:50 -0500
-Received: from [192.168.1.58] (unknown [31.36.247.254])
-        (Authenticated sender: etienne.servais@voucoux.fr)
-        by mx.sdas.de (Postfix) with ESMTPSA id C496B11C0F0;
-        Mon,  3 Feb 2020 21:27:47 +0100 (CET)
-Subject: Re: [PATCH] doc: add documentation for git log --no-follow
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>
-References: <85e71c97-9e0a-863e-179f-a6e1f14365ce@voucoux.fr>
- <20200201111636.GC1864948@coredump.intra.peff.net>
-From:   =?UTF-8?Q?=c3=89tienne_Servais?= <etienne.servais@voucoux.fr>
-Message-ID: <8d0dbaa2-938e-1797-98d7-3f9abeb5b863@voucoux.fr>
-Date:   Mon, 3 Feb 2020 21:27:46 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.1
+        id S1726853AbgBCUhL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Feb 2020 15:37:11 -0500
+Received: from mail-lj1-f169.google.com ([209.85.208.169]:42115 "EHLO
+        mail-lj1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726272AbgBCUhL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Feb 2020 15:37:11 -0500
+Received: by mail-lj1-f169.google.com with SMTP id d10so16081336ljl.9
+        for <git@vger.kernel.org>; Mon, 03 Feb 2020 12:37:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=mf2a/zE7SODG1sNblkcaSdUcyBAxuDNVQAGgekIpokM=;
+        b=X2203bNNglOY+0zuLshrOKYwON8UrOytzczUbDxEir1YywejHDIx9UjeVvc1/rBs23
+         UEdBBk0znRniOCZ8vvWwvsf7vmwds1dmsp3+Nb7jjPG5Y1mlGiMA9OVLcxG+RIqMbKb+
+         ZDgIG2i/NjLcblH2y0vcYEe7vsrpUdx2SiNPprVJ0De2a3TKhTaz0pGjiLlUsOd+rOIz
+         sutKAK1YccuA+q+gyoV71vYP402RHNR3X52YI10HKS7gE5UDBVCff6FKOwAnu1kRy9aH
+         EANb40CNRG4RKg4sn+HnBlAzDJjzvIeH/QMgBKrjI8gBnxyx+HvuFkc7Wsch9Cj5rcn8
+         ZDlw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=mf2a/zE7SODG1sNblkcaSdUcyBAxuDNVQAGgekIpokM=;
+        b=nKJcSAaxB2O4XmbUijTREij5ga6eYHEWE/l7CMZDLLsxFB2pTpPMFnPXug/w8Wqruf
+         k9+DRrOmHozAFkTBJOmLHa42diCjFOkc8WwruAUnAaWjPaNRULNlCI50bIK6DNfYQ2le
+         JNLuKh7ycT3wClTvHdnaSqn7brs21oygeSt1q6vCNOiZAHuzN767R0sWTHvQ/YTYOLz+
+         IhNfitMN1tvEf5GQ+4ZVRkiUBKc4cTHwSjstMYt5MM5j0+qX07bZZrtlAg2SbYm8a3tb
+         z9yDwSFop4ZgNqycYn9RGxlL1Oc9NXAdYe8sqyK1L0S3pPqQmuR1Awq+Fv8G6cj8qmFb
+         fI8g==
+X-Gm-Message-State: APjAAAUpiAe2j3P5+H5HEdVi/Q5FEXZlMIhBowxyN4mrPKhJ580EO7d8
+        BVvr6q+HKVp/OSKsnBsr55o=
+X-Google-Smtp-Source: APXvYqxM8PEJV+Bxeb/Ouxnance6Nhu7u9D3CMDcY9PfHTItZmvIEwRkycxK/qaLJKc5axUkZL/w0A==
+X-Received: by 2002:a2e:9a04:: with SMTP id o4mr15226933lji.214.1580762229309;
+        Mon, 03 Feb 2020 12:37:09 -0800 (PST)
+Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
+        by smtp.gmail.com with ESMTPSA id 3sm5158244lja.65.2020.02.03.12.37.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 03 Feb 2020 12:37:08 -0800 (PST)
+From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+Subject: Re: git-filter-branch.txt: wrap "maths" notation in backticks
+Date:   Mon,  3 Feb 2020 21:36:50 +0100
+Message-Id: <20200203203650.31914-1-martin.agren@gmail.com>
+X-Mailer: git-send-email 2.25.0
+In-Reply-To: <20200203114549.GA4157558@coredump.intra.peff.net>
+References: <20200203114549.GA4157558@coredump.intra.peff.net>
 MIME-Version: 1.0
-In-Reply-To: <20200201111636.GC1864948@coredump.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Le 01/02/2020 à 12:16, Jeff King a écrit :
-> On Sat, Feb 01, 2020 at 12:24:31AM +0100, Étienne Servais wrote:
-> 
->> This feature was added by commit
->> 076c98372e (log: add "log.follow" configuration variable, 2015-07-07)
->> but remained undocumented.
-> 
-> That commit just touched the code; it was originally added by aebbcf5797
-> (diff: accept --no-follow option, 2012-09-21). But I think the general
-> intent of your patch is still valid.
+On Mon, 3 Feb 2020 at 12:45, Jeff King <peff@peff.net> wrote:
+>
+> On Sun, Feb 02, 2020 at 08:33:19PM +0100, Martin Ågren wrote:
+>
+> > In this paragraph, we have a few instances of the '^' character, which
+> > we give as "\^". This renders well with AsciiDoc ("^"), but Asciidoctor
+> > renders it literally as "\^". Dropping the backslashes renders fine
+> > with Asciidoctor, but not AsciiDoc... Let's use "{caret}" instead, to
+> > avoid these escaping problems.
+>
+> Makes sense.
+>
+> The source is pretty ugly to read both before and after, though. I
 
-Good catch. Corrected in upcoming patch v2
+Yeah, I was happy to have improved the situation a bit, but didn't quite
+feel that it looked great..
 
->> I couldn't figure if I shall merge the --no-follow doc with the follow
->> as is done for --no-decorate and --decorate just after.
-> 
-> I think it would make more sense to just put it with --follow, like:
-> 
->   [--no-]follow::
-> 
-> which matches how --use-mailmap is defined, for instance.
+> wonder if using a literal like `5*10^5` would be even nicer. That makes
+> the source pretty readable, and the output would put it in <tt> or
+> similar. Which maybe is a little funny, but kind of makes sense to me
+> typographically as a kind of "this is math" style.
 
-Ok, I've turned it to (inspired by the --[no-]rename-empty doc)
+Hmm, that somehow makes sense. How about the below? Outside of RelNotes/
+and technical/, I only saw one spot where we could do something similar
+("O(n^2)" in diff-options.txt; it has an accompanying loose "n"). I had
+actually expected more. Most hits for "{caret}" are in revisions.txt
+(duh) and the one hit for "\^" that remains after this patch is a shell
+snippet.
 
----follow::
--       Continue listing the history of a file beyond renames
-+--[no-]follow::
-+       Whether to continue listing the history of a file beyond renames
-        (works only for a single file).
+Going for "1e5" and so on would be one way, I guess, but suffers from
+the same problem that it somehow looks like a random pile of characters
+in the middle of a sentence (unless it's typeset in, e.g., monospace).
 
+One could of course move in a different direction entirely and talk
+about "a thousand", "a million" and so on...
 
-> 
->> @@ -205,7 +208,8 @@ log.follow::
->>  	If `true`, `git log` will act as if the `--follow` option was used when
->>  	a single <path> is given.  This has the same limitations as `--follow`,
->>  	i.e. it cannot be used to follow multiple files and does not work well
->> -	on non-linear history.
->> +	on non-linear history. This setting can be disabled by the `--no-follow`
->> +	option.
-> 
-> I'm on the fence on this hunk. There are a number of config options that
-> can be canceled or overridden by command-line options. It's a normal
-> pattern for the "--no" variant to do so. So while it often doesn't hurt
-> to give a pointer in the right direction, I don't know that we'd want to
-> start doing so in every such case.
+--->8---
+Subject: [PATCH v2] git-filter-branch.txt: wrap "maths" notation in backticks
 
-OK. I had just borrowed that sentence from notes.displayRef few lines below.
-Some config options doc follow this direction like log.abbrevCommit or log.mailmap.
+In this paragraph, we have a few instances of the '^' character, which
+we give as "\^". This renders well with AsciiDoc ("^"), but Asciidoctor
+renders it literally as "\^". Dropping the backslashes renders fine
+with Asciidoctor, but not AsciiDoc...
 
-I'll follow you on this.
+An earlier version of this patch used "{caret}" instead of "^", which
+avoided these escaping problems. The rendering was still so-so, though
+-- these expressions end up set as normal text, similarly to when one
+provides, e.g., computer code in the middle of running text, without
+properly marking it with `backticks` to be monospaced.
 
+As noted by Jeff King, this suggests actually wrapping these
+expressions in backticks, setting them in monospace.
 
+The lone "5" could be left as is or wrapped as `5`. Spell it out as
+"five" instead -- this generally looks better anyway for small numbers
+in the middle of text like this.
+
+Suggested-by: Jeff King <peff@peff.net>
+Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+---
+ Documentation/git-filter-branch.txt | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
+index a530fef7e5..40ba4aa3e6 100644
+--- a/Documentation/git-filter-branch.txt
++++ b/Documentation/git-filter-branch.txt
+@@ -467,9 +467,9 @@ impossible for a backward-compatible implementation to ever be fast:
+ 
+ * In editing files, git-filter-branch by design checks out each and
+   every commit as it existed in the original repo.  If your repo has
+-  10\^5 files and 10\^5 commits, but each commit only modifies 5
+-  files, then git-filter-branch will make you do 10\^10 modifications,
+-  despite only having (at most) 5*10^5 unique blobs.
++  `10^5` files and `10^5` commits, but each commit only modifies five
++  files, then git-filter-branch will make you do `10^10` modifications,
++  despite only having (at most) `5*10^5` unique blobs.
+ 
+ * If you try and cheat and try to make git-filter-branch only work on
+   files modified in a commit, then two things happen
 -- 
-Étienne Servais
+2.25.0
+
