@@ -2,199 +2,227 @@ Return-Path: <SRS0=lL1X=3Y=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E75FC3524A
-	for <git@archiver.kernel.org>; Tue,  4 Feb 2020 03:59:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 43A74C3524A
+	for <git@archiver.kernel.org>; Tue,  4 Feb 2020 04:06:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 66CCA2087E
-	for <git@archiver.kernel.org>; Tue,  4 Feb 2020 03:59:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F2DBD20732
+	for <git@archiver.kernel.org>; Tue,  4 Feb 2020 04:06:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="KKRfbX2p"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="V+M4Acce"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727160AbgBDD7n (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Feb 2020 22:59:43 -0500
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:38874 "EHLO
+        id S1727023AbgBDEGb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Feb 2020 23:06:31 -0500
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:38156 "EHLO
         mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726984AbgBDD7n (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Feb 2020 22:59:43 -0500
-Received: by mail-pl1-f194.google.com with SMTP id t6so6701406plj.5
-        for <git@vger.kernel.org>; Mon, 03 Feb 2020 19:59:41 -0800 (PST)
+        with ESMTP id S1726924AbgBDEGa (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Feb 2020 23:06:30 -0500
+Received: by mail-pl1-f194.google.com with SMTP id t6so6707660plj.5
+        for <git@vger.kernel.org>; Mon, 03 Feb 2020 20:06:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to
          :user-agent;
-        bh=yHZzaLaW3I5CGeYkk9KeG4nVyU47g0XxgDKtHKjtRjI=;
-        b=KKRfbX2pNP116+/dG17rFEjMAmJ/btGBckYP4HNJs3UgoaPp65iJwlVRyJAs1f/Ctv
-         7OZmti2UTJCALlfiFla+vxe7H08e8p/ANYRtBi1/szh4Dx75uU1WsT5jL18OSd/k1/6B
-         fZ80dSRPXhu2+J3EwXifaf548wxK1m0ly1gc6hQZ1RNJSeKSDCQTzDwAIfyvLPgJinLv
-         i7LACIUAZe6HVgBBsF+EHKgAzoxqirK3cfV/1TXvpemVDgeuA/9lwzxvaFAZLRQvFWd6
-         gh8LGh2xUrwHkYCVSoc5EKKNUQK6WjK5UUGo+QY6V2VDhhm/twNqaTOoe0Ex0AUgF4zb
-         yXBg==
+        bh=ZSgTimCbZs8SpqR4m9+JNHGNDpTxSxvi2hP8dt+QXBw=;
+        b=V+M4AcceWNrn3CmA/jikZ4cbNww8F5wsIcQRiQMNJgtOm1iOej6jmQOe9nyGs3ianh
+         nSY3gvL4ufefweqm5zCKIvGNvmDkjJKWTLmu4yUaYkK8v4pJLohLYUh1PWVxpc7aE5i4
+         s0hNyGwpYfk1o+/dAU9SEQNwsdSGeIQ4VamEgg/KxJaJ5VVl0umIBcokBC8HikvzoKvg
+         bhMKcAgNIMKtOiwSb4WfnXOQ8uh2v0Q4/01nWzwkjXi63y6kLvPrZSmuLNBk3ELa2qoc
+         FrLPXL6pHaR5Bnm9XAOtq8wFWmd8ouM0IMeXnk8YH92ehqBWcVbopgrvBfspEMTKSqgo
+         lICw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to:user-agent;
-        bh=yHZzaLaW3I5CGeYkk9KeG4nVyU47g0XxgDKtHKjtRjI=;
-        b=t7GsMjXIgW+HPTyZ7Jsdh6WqHP9wUJeMi5LKu0Gfq5uD1UK+nh9QH9HaOao4L0JBZq
-         yHeZ0LdfJt7AHepCRt1xbsUeqTrKTXgyZ51Wj+FToo678VrvtY90Up/MtQvIIl0aJkDc
-         A6BcZb8uE2dpiBpJKyTOzkMeGkua9uHVee0VQJtZZtDKBBy9MnQrUs+NT2OLKHMUgV/2
-         Fc2p/rLKxYK4UTqE6FRC6UanbqC6wqyvwTx7DrhE8iBipiYdWYUcId/3QkbhblxQ9Mpx
-         EUONbt9yPLqn0hhzXXCoyE/DBq58ov+pICM+Xr3f06bXEn54sxIpcmh2elYHzK8G/C3o
-         PTPw==
-X-Gm-Message-State: APjAAAUQlQp0mfe8HKRKUuhObWYRSymAXuZ0bhqRHxDArr09FwSuwx7/
-        qaZWyqxGGWHKh76b9uGny3Fhng==
-X-Google-Smtp-Source: APXvYqyD9gN0QjwtUWRExKtnh33CFZBSIQfniJSqIaV6HtUANLM30UD/WPEopFX81hhVaWo3wx7mxg==
-X-Received: by 2002:a17:902:a588:: with SMTP id az8mr27915588plb.123.1580788780966;
-        Mon, 03 Feb 2020 19:59:40 -0800 (PST)
+        bh=ZSgTimCbZs8SpqR4m9+JNHGNDpTxSxvi2hP8dt+QXBw=;
+        b=j+hAPLlhHVrn2r1dyp7gj5214irCNjkcABBbNqSuvqwPD3R3Mp5L/oeQpkyVDqFAM5
+         VUZLni+yOq74SLt1T1Yz0Mlu1fzEHetWgXYhpl1R2uZDm8gOawiflwUrxo+6dEWBxFtJ
+         EALagS6xtrIrc49o4ptqyN8kQCHqunWhAP/3Uyho4m0RzQTLXdvFN5I7VuaxJEo6WKAD
+         NmQHyzSZ3DZcHfq0Hl+/vl3dS5QJP9vI8/wvlXbZAKKknxAcaUgIQgz+ZGnhntTZUZ3h
+         7f/6jFmZBfI2kNKc69GotmirtqkLHlyDsuRV3tisx+/EI032XJtAY9BXIC5Md/XyAq1h
+         8Zcg==
+X-Gm-Message-State: APjAAAWqEzpejqZbcX6RwMiNW0wXtz1dXCvUY7qGtVJB+xfgDn3u/rtb
+        aZRVmNX5WVdzjCuAyDnOP0k1Fw==
+X-Google-Smtp-Source: APXvYqzpaQBUzPn4/OweXLwm5sGGA20dArFRLoslEHtIMmqdONT+YD3dU4p2nFsYojyXPyEznnEpyg==
+X-Received: by 2002:a17:902:9b8a:: with SMTP id y10mr25873759plp.114.1580789189607;
+        Mon, 03 Feb 2020 20:06:29 -0800 (PST)
 Received: from localhost ([2601:602:9200:32b0:7c5e:a7ec:bd9e:cd59])
-        by smtp.gmail.com with ESMTPSA id w3sm20444263pgj.48.2020.02.03.19.59.40
+        by smtp.gmail.com with ESMTPSA id r3sm22436176pfg.145.2020.02.03.20.06.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Feb 2020 19:59:40 -0800 (PST)
-Date:   Mon, 3 Feb 2020 19:59:40 -0800
+        Mon, 03 Feb 2020 20:06:29 -0800 (PST)
+Date:   Mon, 3 Feb 2020 20:06:28 -0800
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        peff@peff.net, dstolee@microsoft.com, gitster@pobox.com
+To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH 1/3] builtin/commit-graph.c: support
  '--split[=<strategy>]'
-Message-ID: <20200204035940.GD5790@syl.local>
+Message-ID: <20200204040628.GE5790@syl.local>
 References: <cover.1580430057.git.me@ttaylorr.com>
  <4f5bc19903f8a1f5b153b5665de378e743e12744.1580430057.git.me@ttaylorr.com>
- <20200131233434.GJ10482@szeder.dev>
- <nycvar.QRO.7.76.6.2002012223490.46@tvgsbejvaqbjf.bet>
+ <CAN0heSo29+sf1352EfGv=qFsir-e=Ompja445bh5z3vpOfkaJA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <nycvar.QRO.7.76.6.2002012223490.46@tvgsbejvaqbjf.bet>
+In-Reply-To: <CAN0heSo29+sf1352EfGv=qFsir-e=Ompja445bh5z3vpOfkaJA@mail.gmail.com>
 User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Feb 01, 2020 at 10:25:36PM +0100, Johannes Schindelin wrote:
-> Hi,
+On Fri, Jan 31, 2020 at 08:27:27PM +0100, Martin Ågren wrote:
+> On Fri, 31 Jan 2020 at 01:29, Taylor Blau <me@ttaylorr.com> wrote:
+> > With '--split', the commit-graph machinery writes new commits in another
+> > incremental commit-graph which is part of the existing chain, and
+> > optionally decides to condense the chain into a single commit-graph.
+> > This is done to ensure that the aysmptotic behavior of looking up a
 >
-> On Sat, 1 Feb 2020, SZEDER Gábor wrote:
->
-> > On Thu, Jan 30, 2020 at 04:28:17PM -0800, Taylor Blau wrote:
-> > > diff --git a/commit-graph.c b/commit-graph.c
-> > > index 6d34829f57..02e6ad9d1f 100644
-> > > --- a/commit-graph.c
-> > > +++ b/commit-graph.c
-> > > @@ -1565,15 +1565,18 @@ static void split_graph_merge_strategy(struct write_commit_graph_context *ctx)
-> > >  	num_commits = ctx->commits.nr;
-> > >  	ctx->num_commit_graphs_after = ctx->num_commit_graphs_before + 1;
-> > >
-> > > -	while (g && (g->num_commits <= size_mult * num_commits ||
-> > > -		    (max_commits && num_commits > max_commits))) {
-> > > -		if (g->odb != ctx->odb)
-> > > -			break;
-> > > +	if (ctx->split_opts->flags != COMMIT_GRAPH_SPLIT_MERGE_PROHIBITED) {
-> >
-> > This line segfaults in the tests 'fetch.writeCommitGraph' and
-> > 'fetch.writeCommitGraph with submodules' in 't5510-fetch.sh', because
-> > 'git fetch' doesn't pass a 'split_opts' to the commit-graph functions.
->
-> I noticed the same. This patch seems to fix it for me:
->
-> -- snip --
-> diff --git a/commit-graph.c b/commit-graph.c
-> index a5d7624073f..af5c58833cf 100644
-> --- a/commit-graph.c
-> +++ b/commit-graph.c
-> @@ -1566,7 +1566,8 @@ static void split_graph_merge_strategy(struct write_commit_graph_context *ctx)
->  	num_commits = ctx->commits.nr;
->  	ctx->num_commit_graphs_after = ctx->num_commit_graphs_before + 1;
->
-> -	if (ctx->split_opts->flags != COMMIT_GRAPH_SPLIT_MERGE_PROHIBITED) {
-> +	if (ctx->split_opts &&
-> +	    ctx->split_opts->flags != COMMIT_GRAPH_SPLIT_MERGE_PROHIBITED) {
->  		while (g && (g->num_commits <= size_mult * num_commits ||
->  			    (max_commits && num_commits > max_commits) ||
->  			    (ctx->split_opts->flags == COMMIT_GRAPH_SPLIT_MERGE_REQUIRED))) {
-> -- snap --
->
-> For your convenience, I also pushed this up as
-> `tb/commit-graph-split-merge` to https://github.com/dscho/git
+> asymptotic
 
-Thanks, Dscho. I also published it under the same name on my fork at
-'https://github.com/ttaylorr/git'.
+Thanks, fixed.
 
-> Thanks,
-> Dscho
+> > commit in an incremental chain is dominated by the number of
+> > incrementals in that chain. It can be controlled by the '--max-commits'
+> > and '--size-multiple' options.
+> >
+> > On occasion, callers may want to ensure that 'git commit-graph write
+> > --split' always writes an incremental, and never spends effort
+> > condensing the incremental chain [1]. Previously, this was possible by
+> > passing '--size-multiple=0', but this no longer the case following
+> > 63020f175f (commit-graph: prefer default size_mult when given zero,
+> > 2020-01-02).
+> >
+> > Reintroduce a less-magical variant of the above with a new pair of
+> > arguments to '--split': '--split=no-merge' and '--split=merge-all'. When
+> > '--split=no-merge' is given, the commit-graph machinery will never
+> > condense an existing chain and will always write a new incremental.
+> > Conversely, if '--split=merge-all' is given, any invocation including it
+> > will always condense a chain if one exists.  If '--split' is given with
+> > no arguments, it behaves as before and defers to '--size-multiple', and
+> > so on.
 >
+> I understand your motivation for doing this -- it all seems quite sound
+> to me. Not being too familiar with this commit-graph splitting and
+> merging, I had a hard time groking this terminology though. From what I
+> understand, before this patch, `--split` means "write the commit-graph
+> using the 'split' file-format / in a split fashion". Ok, that makes
+> sense.
 >
-> >
-> > Thread 1 "git" received signal SIGSEGV, Segmentation fault.
-> > 0x00000000005113dd in split_graph_merge_strategy (ctx=0x9ca930)
-> >     at commit-graph.c:1568
-> > 1568            if (ctx->split_opts->flags != COMMIT_GRAPH_SPLIT_MERGE_PROHIBITED) {
-> > (gdb) p *ctx
-> > $1 = {r = 0x9ae2a0 <the_repo>, odb = 0x9c0df0, graph_name = 0x0, oids = {
-> >     list = 0xa02660, nr = 12, alloc = 1024}, commits = {list = 0x9caa00,
-> >     nr = 6, alloc = 6}, num_extra_edges = 0, approx_nr_objects = 0,
-> >   progress = 0x0, progress_done = 0, progress_cnt = 0, base_graph_name = 0x0,
-> >   num_commit_graphs_before = 0, num_commit_graphs_after = 1,
-> >   commit_graph_filenames_before = 0x0, commit_graph_filenames_after = 0x0,
-> >   commit_graph_hash_after = 0x0, new_num_commits_in_base = 0,
-> >   new_base_graph = 0x0, append = 0, report_progress = 1, split = 1,
-> >   check_oids = 0, split_opts = 0x0}
-> >                   ^^^^^^^^^^^^^^^^
-> > (gdb) bt
-> > #0  0x00000000005113dd in split_graph_merge_strategy (ctx=0x9ca930)
-> >     at commit-graph.c:1568
-> > #1  0x0000000000512446 in write_commit_graph (odb=0x9c0df0, pack_indexes=0x0,
-> >     commit_hex=0x7fffffffd550,
-> >     flags=(COMMIT_GRAPH_WRITE_PROGRESS | COMMIT_GRAPH_WRITE_SPLIT),
-> >     split_opts=0x0) at commit-graph.c:1891
-> > #2  0x000000000050fd86 in write_commit_graph_reachable (odb=0x9c0df0,
-> >     flags=(COMMIT_GRAPH_WRITE_PROGRESS | COMMIT_GRAPH_WRITE_SPLIT),
-> >     split_opts=0x0) at commit-graph.c:1174
-> >     ^^^^^^^^^^^^^^
-> > #3  0x0000000000444ea4 in cmd_fetch (argc=0, argv=0x7fffffffd9b8, prefix=0x0)
-> >     at builtin/fetch.c:1873
-> > #4  0x0000000000406154 in run_builtin (p=0x969a88 <commands+840>, argc=2,
-> >     argv=0x7fffffffd9b0) at git.c:444
-> > #5  0x00000000004064a4 in handle_builtin (argc=2, argv=0x7fffffffd9b0)
-> >     at git.c:674
-> > #6  0x000000000040674c in run_argv (argcp=0x7fffffffd84c, argv=0x7fffffffd840)
-> >     at git.c:741
-> > #7  0x0000000000406bbd in cmd_main (argc=2, argv=0x7fffffffd9b0) at git.c:872
-> > #8  0x00000000004cfd4e in main (argc=5, argv=0x7fffffffd998)
-> >     at common-main.c:52
-> >
-> > Note that this function split_graph_merge_strategy() does look at
-> > various fields in 'ctx->split_opts' a bit earlier, but those accesses
-> > are protected by a 'if (ctx->split_opts)' condition.
-> > expire_commit_graphs() does the same.
-> >
-> >
-> > > +		while (g && (g->num_commits <= size_mult * num_commits ||
-> > > +			    (max_commits && num_commits > max_commits) ||
-> > > +			    (ctx->split_opts->flags == COMMIT_GRAPH_SPLIT_MERGE_REQUIRED))) {
-> > > +			if (g->odb != ctx->odb)
-> > > +				break;
-> > >
-> > > -		num_commits += g->num_commits;
-> > > -		g = g->base_graph;
-> > > +			num_commits += g->num_commits;
-> > > +			g = g->base_graph;
-> > >
-> > > -		ctx->num_commit_graphs_after--;
-> > > +			ctx->num_commit_graphs_after--;
-> > > +		}
-> > >  	}
-> > >
-> >
+> >From seeing `--split=no-merge`, I have no idea how to even parse that.
+> Of course I don't want to merge, I want to split! Well not split, but
+> write split files.
+>
+> I think it would help me (and others like me) if we could somehow
+> separate "I want to use 'split' files" from "and here's how I want you
+> to decide on the merging". That is, which "strategy" to use. Obviously,
+> talking about a "merge strategy" would be stupid and "split strategy"
+> also seems a bit odd. "Coalescing strategy"? "Joining strategy"?
+>
+> Or can you convince me otherwise? From which angle should I look at
+> this?
+
+Heh. This is all very reminiscent of an off-list discussion that I had
+with Peff and Stolee before sending this upstream. Originally, I had
+implemented this as:
+
+  $ git commit-graph write --split --[no-]merge
+
+but we decided that this '--merge' and '--no-merge' requiring '--split'
+seemed to indicate that this was better off as an argument to '--split'.
+Of course, there's no getting around that it is... odd to say
+'--split=no-merge' for exactly the reason you suggest.
+
+Here's another way of looking at it: the presence of '--split' means
+"work with split graph files" and the '[no-]merge' argument means:
+"always/never condense multiple layers".
+
+For me, this not only makes the new option language jive, but makes it
+clearer to me than the combination of '--split', '--split --no-merge'
+and '--split --merge', where the third one is truly bizarre. At least
+condensing the second '--' and making 'merge' an argument to 'split'
+makes it clear that the two work together somehow.
+
+If you have a different suggestion, I'd certainly love to hear about it
+and discuss. But, at least as far as our internal discussions have gone,
+this is by far the best option that we have been able to come up with.
+
+> > -With the `--split` option, write the commit-graph as a chain of multiple
+> > -commit-graph files stored in `<dir>/info/commit-graphs`. The new commits
+> > -not already in the commit-graph are added in a new "tip" file. This file
+> > -is merged with the existing file if the following merge conditions are
+> > -met:
+> > +With the `--split[=<strategy>]` option, write the commit-graph as a
+> > +chain of multiple commit-graph files stored in
+> > +`<dir>/info/commit-graphs`. Commit-graph layers are merged based on the
+> > +strategy and other splitting options. The new commits not already in the
+> > +commit-graph are added in a new "tip" file. This file is merged with the
+> > +existing file if the following merge conditions are met:
+> > +* If `--split=merge-always` is specified, then a merge is always
+> > +conducted, and the remaining options are ignored. Conversely, if
+> > +`--split=no-merge` is specified, a merge is never performed, and the
+> > +remaining options are ignored. A bare `--split` defers to the remaining
+> > +options. (Note that merging a chain of commit graphs replaces the
+> > +existing chain with a length-1 chain where the first and only
+> > +incremental holds the entire graph).
+>
+> To better understand the background for this patch, I read the manpage
+> as it stands today. From the section on `--split`, I got this
+> impression: Let's say that `--max-commits` is huge, so all that matters
+> is the `--size-multiple`. Let's say it's two. If the current tip
+> contains three commits and we're about to write one with two, then 2*2 >
+> 3 so we will merge, i.e., write a tip file with five commits. Unless of
+> course *that* is more than half the size of the file before. And so on.
+> We might just merge once, or maybe "many" files in an avalanche effect.
+> Every now and then, such avalanches will go all the way back to the
+> first file.
+>
+> Now this says something different, namely that once we decide to merge,
+> we do it all the way back, no matter what.
+>
+> The commit message of 1771be90c8 ("commit-graph: merge commit-graph
+> chains", 2019-06-18) seems to support my original understanding, at
+> least for `--size-multiple`, but not `--max-commits`, curiously enough.
+>
+> Can you clarify?
+
+1771be90c8 is right, and this documentation is wrong. Upon re-reading
+it, I found the contents of this documentation between those two
+parenthesis to be confusing rather than helpful. For that reason, I
+simply removed it.
+
+> > -               OPT_BOOL(0, "split", &opts.split,
+> > -                       N_("allow writing an incremental commit-graph file")),
+> > +               OPT_CALLBACK_F(0, "split", &split_opts.flags, NULL,
+> > +                       N_("allow writing an incremental commit-graph file"),
+>
+> This still sounds very boolean. Cramming in the "strategy" might be hard
+> -- is this an argument in favor of having two separate options? ;-)
+
+Heh. Exactly how we started these patches when I originally wrote
+them...
+
+> > +enum commit_graph_split_flags {
+> > +       COMMIT_GRAPH_SPLIT_UNSPECIFIED      = 0,
+> > +       COMMIT_GRAPH_SPLIT_MERGE_REQUIRED   = 1,
+> > +       COMMIT_GRAPH_SPLIT_MERGE_PROHIBITED = 2
+> > +};
+>
+> I wonder if this should be "MERGE_AUTO" rather than "UNSPECIFIED". This
+> is related to Stolee's comment, I think.
+
+I think you're right. I changed it in my local v2.
+>
+> Martin
 
 Thanks,
 Taylor
