@@ -2,85 +2,148 @@ Return-Path: <SRS0=lL1X=3Y=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A224C35247
-	for <git@archiver.kernel.org>; Tue,  4 Feb 2020 19:04:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 99549C35247
+	for <git@archiver.kernel.org>; Tue,  4 Feb 2020 19:04:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 2DFF62082E
-	for <git@archiver.kernel.org>; Tue,  4 Feb 2020 19:04:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5DD472082E
+	for <git@archiver.kernel.org>; Tue,  4 Feb 2020 19:04:45 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="OaS9e/MW"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="ddkm+4s4"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727415AbgBDTEF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Feb 2020 14:04:05 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:53965 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727369AbgBDTEF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Feb 2020 14:04:05 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2F58AA58ED;
-        Tue,  4 Feb 2020 14:04:03 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=6djxe9FuMXZKAp6pf9oMiv3QHvA=; b=OaS9e/
-        MWNRCjBcWkGpsx4kLYUaEVaFvcpaQg49Zg08iqQ/G/s7a9kOzCf+QX9Nmwx4AxVj
-        aojIktXQBdi3i7tiEKJORybqpMQgWTywcoC5hczAw+c8xIDHnjpuhTEt234P+Pdo
-        9hSWyYD9DryzRc6gCg63ECrEA0nnRVN8Knahw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=EsvKzI1HZrQS+4nz+xJC4GKsRu7i6k6K
-        4lO40KybbOEnte5ThWUCAliC7rMSVJjWIgWGr+ld+pzpdWMNygZ5aEC4V37/4QEo
-        NdO4JzZr25F4cfaJgwJS9joTNma8zdcBYUeZPu7VOnDtK2XAmdSbqxsuB1aVTcFX
-        BxT4RWOTEUo=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1F883A58EC;
-        Tue,  4 Feb 2020 14:04:03 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 27B00A58E8;
-        Tue,  4 Feb 2020 14:04:00 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     emilyshaffer@google.com
-Cc:     git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v5 13/15] bugreport: add packed object summary
-References: <20200124033436.81097-1-emilyshaffer@google.com>
-        <20200124033436.81097-14-emilyshaffer@google.com>
-Date:   Tue, 04 Feb 2020 11:03:57 -0800
-In-Reply-To: <20200124033436.81097-14-emilyshaffer@google.com>
-        (emilyshaffer@google.com's message of "Thu, 23 Jan 2020 19:34:34
-        -0800")
-Message-ID: <xmqq4kw6899e.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1727442AbgBDTEo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Feb 2020 14:04:44 -0500
+Received: from mout.gmx.net ([212.227.17.21]:44109 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727314AbgBDTEo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Feb 2020 14:04:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1580843074;
+        bh=KUfVsmSGdtA8odY3qYjXkJMtrPRoJ6O2VBPP1iAdxWI=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=ddkm+4s4JF+6M0IstP//Tp3QtXuQiC0on6IM8xffv+cqvXclfh4M/0hfOADoy100i
+         mI+eIKsuHJc9luNnVRXxS5Iw3olpSzdtChwKdw1BS+qHQhB/2vzm7VY2k13DnZUndl
+         JOE/fiwdZyniVHFb3ey8Ge6/xPbsZ4pp9Ra1Rnyw=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.171] ([37.201.195.86]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mwwdf-1jjLnV2eDb-00yRkA; Tue, 04
+ Feb 2020 20:04:34 +0100
+Date:   Tue, 4 Feb 2020 20:04:33 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: dscho@gitforwindows.org
+To:     Jeff King <peff@peff.net>
+cc:     Mike McGranahan <mike@mcgwiz.com>, git@vger.kernel.org
+Subject: Re: Patch text in git-add patch mode lacks whitespace highlighting
+In-Reply-To: <20200203145155.GA272077@coredump.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.2002042003320.1058@tvgsbejvaqbjf.bet>
+References: <CAK7jxYgJNvCp=m6rH31HNzN9Mqgaav7_YPvUMZmRb7mdYDZ_1g@mail.gmail.com> <nycvar.QRO.7.76.6.2001311304140.46@tvgsbejvaqbjf.bet> <20200201110203.GA1864964@coredump.intra.peff.net> <nycvar.QRO.7.76.6.2002012205520.46@tvgsbejvaqbjf.bet>
+ <20200203085456.GD2164@coredump.intra.peff.net> <nycvar.QRO.7.76.6.2002031320180.46@tvgsbejvaqbjf.bet> <20200203145155.GA272077@coredump.intra.peff.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1A0F2FFC-4781-11EA-9920-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:kvD2kJOOAraS8MIRi8CArbsBX/55H8ZuVWse4VWwbPebRH0SHvo
+ DFb+RHFTiUdJPBf5FoNj3YbS45GCrGMZuTG6QoWKi9ygUn0+SWXCcxKUkjQaRjqAfDAjO+o
+ AGJKthI1jq6GIS7/8VL0ymoFhZgeoHd60o+XvYYQMZrPB+9lhEqvksd91lkeCZpzQ9uRB32
+ 3tAc6Mywqwb1ZRNiqBB5g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:5P7xvbPS3OE=:a7tjUJofyQo6DyQUJziDSo
+ 3l1v7YUGiX7iZDiBDm0iyEhA8i7yAm6fa3HUAqlgHEdaxsGKD6jiBOBZ1QeM6lMHk6qqGMY7t
+ AR3lUyLQvIoiXDSOYB3ZZpi5240Vj5B8X/XQ+vbhgi/8R9+yLnToGXo4/Lfbn4l+Obawa85Gm
+ OnsJMNgobf4LmB4/u6Ogof+V7Mfni+6cMFuUpIS5UtPmlX+CPBmAN4FutQORkes4D0+38MF+x
+ Hgnyk1KBt+hVfiqjzmbf7HV5j9fj9zsR8LBUQTFheBu6WsKAH0YYHYvAzw9bxA2XyXFXLuTty
+ qRsqrOcRHLBIVQMj4v3g66h4eQy3pPxLSU+i6VLiJhHNonc4Smaxnq3UpCncNOw8DIn7h3tTL
+ M/vIZoVgPrMmLNwZHaXkrWW/hUJbkf11R3RvGVkX4Ec27Czxl2K/dXOCuB/4P5WybWYrvrvnM
+ bUiRnyovyDcpB4E9Edl14+Ke09JJRMSQJt8pEYLo+xe6SwsqxnTJIzQGMghZ0OgdunC6j2AuM
+ pBWa2Vm6hJrwOmjZx6rkKuqFCaBAG2R/556CgP9HnERe+eM3ueO4jLGJViIetVwZulJCv2cUj
+ Y6/T+7dZtgEhSM+GRGdI9jQ+BPZq05qkVroj8QxMIHXRPaoFw23a2HeXcgSVH0aMEqEFGeXH3
+ qu3VFyBtCT8aHbUU8rbe6EQgRSUNii4fhjAy6ZBuhXV3znD0POJxiVoUWOE8vV6PJ9c1M/Iib
+ va0OpgPRAXkpPI1Gg7qeKH/bi3aJl0My7wNNTX+d6hFZUK4reDbbB25XlHMrIgM2nrkGJlC8o
+ Dreq+qV7iqR7Phbu6jwhoHpNVP6DSzpM30tjW7dIDkA2Oz4iWfVaWQokXAGf+KEKw2AMElXE0
+ d5LSxAmc3UEwr5VG9QkDdWdiGVeitpICl2yb89qYsIgHVrdkciDcPVS0sZnvZpStirVrWyAIA
+ zgtfZCpp6/roolFq/Cv5fbE1koSDQEXVp/CjO7cwe749w/9IhfH+njd8/fheusljILUGEUfqp
+ 0MNfEBG3zpOyHrJcypTRCw7eHMoTmS3iyhkvOkaAw1V+ixP7qvXNfgwpptZ89hy0KBdhR4LIp
+ kdrVSaayBpDk43GvBNDFoyBrDytP4P4OHLCFPH6d/3Eryvq/Ew4ahpw9eKS5Kpy3TRXbRRWrp
+ g9ljhNzNqffMkK/4fSEzDNkCg1FuoESrOFcFoxlAS9xdqfdqvOuw0lje1CMwwuTIMLbhQ1ATp
+ umOM5XhnYuDvhp8u9
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-emilyshaffer@google.com writes:
+Hi Peff,
 
-> From: Emily Shaffer <emilyshaffer@google.com>
+On Mon, 3 Feb 2020, Jeff King wrote:
+
+> On Mon, Feb 03, 2020 at 01:37:48PM +0100, Johannes Schindelin wrote:
 >
-> Alongside the loose object counts, it can be useful to show the number
-> of packs and packed objects. This way we can check whether the repo has
-> an appropriate ratio of packed to loose objects to help determine
-> whether it's behaving correctly.
+> > > The short of my answer is that I think the color-moved stuff might b=
+e a
+> > > candidate, but it's sufficiently different that I think it should be
+> > > decided on as a separate patch.
+> >
+> > I actually wonder whether we should do something completely different.=
+ The
+> > problem with `git diff-files --color`, after all, is that `diff-files`=
+ was
+> > never intended to produce user-facing output, so the `--color` is some=
+what
+> > of a contradiction here. The fact that `diff-files` is a low-level (or
+> > "plumbing") command means that by nature, it wants to control a lot mo=
+re
+> > what the user-provided config can change (typically, scripts calling
+> > `diff-files` expect a certain format, and it would not do at all to he=
+ed
+> > `diff.noPrefix`, for example.
+> >
+> > In that respect, `git add -p` using `diff-files` is kind of wrong: we
+> > _want_ to show the result to the user, with no processing at all (exec=
+pt
+> > the user-provided `diffFilter`).
+>
+> Sort of. The problem is that we need two matching copies of the diff:
+> one to apply, and one to show the user. They don't need to be
+> byte-for-byte identical, but they should correlate at the level of
+> individual lines. And the "one to apply" can take on some user-selected
+> options, as long as the result can still be applied.
+>
+> > So why not introduce a new option to `diff-files` and `diff-index` to =
+ask
+> > it _specifically_ to heed diff UI config settings? I.e. a command-line
+> > option that makes it call
+> >
+> >         git_config(git_diff_ui_config, NULL);
+> >
+> > instead of
+> >
+> >         git_config(git_diff_basic_config, NULL); /* no "diff" UI optio=
+ns */
+>
+> Would you pass that option to both of the diff calls, or just the one
+> generating the human-readable input?
+>
+> If just the human-readable one, then many options that change the line
+> count would be problems: diff.context, diff.interhunkcontext,
+> diff.orderfile, etc.
 
-This step makes me wonder if we want to see the midx as well.
-Didn't we have a bug that manifests only when midx is (or is not) in
-use?
+Darn, you have a very valid point :-(
 
-Similarly, I think use (or non-use) of the commit graph may also be
-a useful information for diagnosing.
+> If both, then some options would be problematic for applying. Just
+> looking over the list, these jump out at me:
+>
+>   - color.diff=3Dalways would obviously be an issue (though TBH I think
+>     anybody doing that is inviting a lot of breakages anyway)
+>
+>   - diff.external would be a problem if it kicked in, though I think it
+>     would require --ext-diff to actually do anything
+>
+>   - diff.submodule would generate diffs that can't be applied
 
+So I guess it is back to your patch, maybe amended by a move of the
+color-moved setting.
 
-
+Ciao,
+Dscho
