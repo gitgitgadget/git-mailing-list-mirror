@@ -2,92 +2,103 @@ Return-Path: <SRS0=lL1X=3Y=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C9C54C2D0B1
-	for <git@archiver.kernel.org>; Tue,  4 Feb 2020 14:14:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 166A1C35247
+	for <git@archiver.kernel.org>; Tue,  4 Feb 2020 16:11:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id AAFC220661
-	for <git@archiver.kernel.org>; Tue,  4 Feb 2020 14:14:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DCEDD2087E
+	for <git@archiver.kernel.org>; Tue,  4 Feb 2020 16:11:35 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hSKLmxNb"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727261AbgBDOOq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Feb 2020 09:14:46 -0500
-Received: from cloud.peff.net ([104.130.231.41]:52076 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727235AbgBDOOm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Feb 2020 09:14:42 -0500
-Received: (qmail 9598 invoked by uid 109); 4 Feb 2020 14:14:42 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 04 Feb 2020 14:14:42 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 32117 invoked by uid 111); 4 Feb 2020 14:22:53 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 04 Feb 2020 09:22:53 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 4 Feb 2020 09:14:41 -0500
-From:   Jeff King <peff@peff.net>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org, dstolee@microsoft.com, gitster@pobox.com
-Subject: Re: [PATCH 1/3] builtin/commit-graph.c: support
- '--split[=<strategy>]'
-Message-ID: <20200204141441.GA563710@coredump.intra.peff.net>
-References: <cover.1580430057.git.me@ttaylorr.com>
- <4f5bc19903f8a1f5b153b5665de378e743e12744.1580430057.git.me@ttaylorr.com>
- <20200131233434.GJ10482@szeder.dev>
- <nycvar.QRO.7.76.6.2002012223490.46@tvgsbejvaqbjf.bet>
- <20200203104730.GK10482@szeder.dev>
- <20200203111117.GC4153124@coredump.intra.peff.net>
- <20200204035821.GB5790@syl.local>
+        id S1727387AbgBDQLe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Feb 2020 11:11:34 -0500
+Received: from mail-ed1-f49.google.com ([209.85.208.49]:45474 "EHLO
+        mail-ed1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727317AbgBDQLe (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Feb 2020 11:11:34 -0500
+Received: by mail-ed1-f49.google.com with SMTP id v28so20253566edw.12
+        for <git@vger.kernel.org>; Tue, 04 Feb 2020 08:11:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=QjBPpWvICH+IT3sviP5cHqew3WvQyXifJ6X5IAbe9cc=;
+        b=hSKLmxNbYVTRoaQ5HjfF6eVpmk+EiBTurzmDhkBOuvqsLGodvMW8erV6Qbp907/nV9
+         vdWf053oymtpzl6qmz7N6iqEDnnkd6AHXJTOCBbbIBflp/SPTub5uGDlo/7we7xQFhoP
+         SNquUYLmFSzYbGwIxITo1J7Yz54SezpOLU9a70Ww9pPGzTK/YddmVb4/fsmKDrRvZt83
+         gzeOHQEgx7jhB621owYWT9h4bLpfpjFvf/waQP34yHx+ybskrsL2+2pkJv4qhLJu48s6
+         K2RNlXR0W3qKf+CjJpGCqGYRXB6R+B863UKeZ1HJ3OnUjedxzZWhPfSo0KNtAYsAh9/B
+         j+tw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=QjBPpWvICH+IT3sviP5cHqew3WvQyXifJ6X5IAbe9cc=;
+        b=WbLKIddZ9/TWYy9aQondTbuuupexbRQBEQOLUXylHm3nRLfuSfbQnzD4synTwnxBPe
+         L/Xiz3dYHMWdOjF1O7AVk18uTjC6Kfl1VKnTkNbf2bYh9jtYXbwVpPxPbNi3evmkK3Gl
+         4w0lqjDvVvo4ptU+agIvAb1v6FUQ9cPF/VZDyJolJ7PuC+GS7EtiFLHBi6376BzCi+vB
+         DVSv7AHXfbmWBGd3EsVG1s52p++rOvr/3Z4044XnmIYtPgMJzP7LyxUvIY3iPwDLbnB/
+         x3unQ5fY9nBPR6bFSV2/1QApc4Q4DnJce0/8NWYfeQ7MUsvBMAL+gzKokJq1G6NHHn00
+         nEZA==
+X-Gm-Message-State: APjAAAU8eTv1Pu1N292rWIY+i9H1dlmHVAIzp9J5dxz1VNqGjhYK4420
+        r+nuNHYyYsaA8aSkHe3T+AcOXUV5oN+Mt1whaCotDrF2kXI=
+X-Google-Smtp-Source: APXvYqx36vQtH0OSwazoUVY1HjGREIul5hpmd77pOT0XVOyR+vzWJS5QVf34rN5KTLU74JjEU8Iu4VX8ZuIRFud8HhM=
+X-Received: by 2002:a17:906:f49:: with SMTP id h9mr27519626ejj.6.1580832691430;
+ Tue, 04 Feb 2020 08:11:31 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200204035821.GB5790@syl.local>
+References: <20200122053455.GA51054@coredump.intra.peff.net> <CAP8UFD1-cswU0gSX3a2KqiExhYgY_qMZ6Sz7FHdxs7mrb_hh-w@mail.gmail.com>
+In-Reply-To: <CAP8UFD1-cswU0gSX3a2KqiExhYgY_qMZ6Sz7FHdxs7mrb_hh-w@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Tue, 4 Feb 2020 17:11:20 +0100
+Message-ID: <CAP8UFD2_qmB1q9vhz=BJo3XG4jnLWDPhCVVb4gAh_pfKoGnZJQ@mail.gmail.com>
+Subject: Re: GSoC and Outreachy Summer 2020?
+To:     Jeff King <peff@peff.net>
+Cc:     git <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 03, 2020 at 07:58:21PM -0800, Taylor Blau wrote:
+On Tue, Feb 4, 2020 at 12:55 PM Christian Couder
+<christian.couder@gmail.com> wrote:
+>
+> On Wed, Jan 22, 2020 at 6:34 AM Jeff King <peff@peff.net> wrote:
+> >
+> > I notice deadlines are approaching for Git to apply for GSoC (Feb 5th)
+> > and for Outreachy (Feb 18th), though we still have some time. Do mentors
+> > have sufficient bandwidth for us to participate?
+>
+> I am willing to mentor or co-mentor someone for GSoC.
+>
+> (Sorry about replying only to Peff previously.)
+>
+> I also just added the following file, made from SoC-2019-Ideas.md:
+>
+> https://github.com/git/git.github.io/blob/master/General-Application-Information.md
+>
+> As with https://github.com/git/git.github.io/blob/master/General-Microproject-Information.md
+> the idea is to not have separate documents for each year and each
+> program (GSoC or Outreachy), but rather point people to the same
+> document that we should update regularly.
 
-> I think that this seems like a good step that we should probably take,
-> but I don't think that it's necessary for the series at hand. The
-> pattern in this function is to define a local variable which has the
-> same value as in split_opts, or a reasonable default if split_opts is
-> NULL (c.f., 'max_commits' and 'size_mult').
-> 
-> So, I think that a safe thing to do which prevents the segv and doesn't
-> change the pattern too much is to write:
-> 
->   enum commit_graph_split_flags flags = COMMIT_GRAPH_SPLIT_MERGE_AUTO;
->   if (ctx->split_opts) {
->     /* ... */
->     flags = ctx->split_opts->flags;
->   }
-> 
->   /* ... */
-> 
->   if (flags != COMMIT_GRAPH_SPLIT_MERGE_PROHIBITED) {
->     while ( ... ) { ... }
->   }
-> 
-> This is adding another local variable, which seems like an odd thing to
-> do *every* time that we add another member to split_opts. So for that
-> reason it seems like in the longer-term we should either force the
-> caller to pass in a blank, or do something else that doesn't require
-> this, but I think that the intermediate cost isn't too bad.
+While at it, I just applied on behalf of Git to the GSoC 2020 and I
+sent invite to possible Organization Administrators. I am one of the
+admins already but we need another person to accept the invite before
+tomorrow as they require at least 2 admins. This is the only thing
+left we need to apply.
 
-It would perhaps be simpler to turn NULL into a _single_ default-filled
-split_opts variable, and then just use it throughout the function. And
-since presumably zero-initialization would yield good defaults (or we'd
-define an INIT macro for the convenience of callers), it would be a
-one-liner that we'd only have to do once.
+The information I used to apply is in:
+https://git.github.io/SoC-2020-Org-Application/
 
-But I think that can wait; the "if" solution discussed seems like a
-straightforward way to make this patch correct both on top of master,
-and when merged with next.
-
--Peff
+Thanks,
+Christian.
