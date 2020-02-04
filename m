@@ -2,98 +2,119 @@ Return-Path: <SRS0=lL1X=3Y=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.2 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DD63BC35247
-	for <git@archiver.kernel.org>; Tue,  4 Feb 2020 21:28:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 55F5BC35247
+	for <git@archiver.kernel.org>; Tue,  4 Feb 2020 21:29:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id ACD8321741
-	for <git@archiver.kernel.org>; Tue,  4 Feb 2020 21:28:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ED0EF2166E
+	for <git@archiver.kernel.org>; Tue,  4 Feb 2020 21:29:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="WjsP2rSe"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="yGDmSC49"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727483AbgBDV2f (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Feb 2020 16:28:35 -0500
-Received: from mail-pj1-f68.google.com ([209.85.216.68]:53006 "EHLO
-        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727412AbgBDV2f (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Feb 2020 16:28:35 -0500
-Received: by mail-pj1-f68.google.com with SMTP id ep11so1982872pjb.2
-        for <git@vger.kernel.org>; Tue, 04 Feb 2020 13:28:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=X0EZji/sCH3j9LFc/KRxzoLVDzMTUsbdwkgN00S1S3E=;
-        b=WjsP2rSeMSEQTT/JQYSSfhkBRPkkdmSIhQk8VhuB2QR3MtYWUfKZ075eCUciQ1hLfX
-         wUX2u1LNzKF37PUEv4NpuZYuOZAiC+Ur80cp7C7rhaXIBKdEoV8UXQJJYFcyU4kmM90n
-         2qRbpoYrXCLJd7nVggU/hqjsZhUZChhmWeAc05caY3Oo8pujuRfxMWQ+ae2mPIbei6Mr
-         syNZe4bSnjUhY2e7vnXSXkhcKHBlc0L1SnbfHuN8BFx1ReS2tsfiPKkS3R/nsrv6XWK3
-         JLFxJHAHrYxD4IeEOVlEubPgzHIcAh8EwRPhWbiTG/PyfyOv7AsFztGIwkXAhi2iO9uE
-         mRpA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=X0EZji/sCH3j9LFc/KRxzoLVDzMTUsbdwkgN00S1S3E=;
-        b=RzTUUzgJ8G01r1uqHgVZZVk+7N+8JmG+ZxFa9LUD0UqvVIWCGrzHlawdBlTOgzP3P4
-         SLszGwNF0hFqbsUL9t70u1ZFEVRBCpdvWDVNTwprcoA7+j/JSoM6xeBfFIO/PhyvFMG2
-         4qqO2xRYfvB2vy1Irec7yQNJKrX3FdW9Q9GagDUjr7qhhgyvZDyxb90R6t9RVseYBzM2
-         QtRyru+IsvKbiMQmmFQz7ItyhH+iAXp35pa9edIBgASYjnI/aMaAUQJOhVGCbN1gcEtY
-         f6IXlMvqGnbqN7SZoygI94yVeCTpbYkHKhXY0PLnW6qmKFMX/SHe1RwE0RgGOpbkenbz
-         8RMQ==
-X-Gm-Message-State: APjAAAV3HgYYc8ZSXuK3L/SptSMTMlCvaYbv0PnUZZr7eZFKj8zRFj3k
-        yy7u82TAJSnoakLElsC31pLDDwS26gHfjg==
-X-Google-Smtp-Source: APXvYqw4SMgYO+3zQbKVFP+rYe6o5M3hBujdA0OIFr4DgHir/BueabJcbLnyIP6LyHoLbtARzkOAlQ==
-X-Received: by 2002:a17:902:61:: with SMTP id 88mr31318165pla.17.1580851714809;
-        Tue, 04 Feb 2020 13:28:34 -0800 (PST)
-Received: from localhost ([2601:602:9200:32b0:fd92:b4b9:d992:34e6])
-        by smtp.gmail.com with ESMTPSA id x25sm26105788pfp.30.2020.02.04.13.28.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Feb 2020 13:28:34 -0800 (PST)
-Date:   Tue, 4 Feb 2020 13:28:33 -0800
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org, peff@peff.net,
-        dstolee@microsoft.com, martin.agren@gmail.com
-Subject: Re: [PATCH v2 2/5] commit-graph.h: store an odb in 'struct
- write_commit_graph_context'
-Message-ID: <20200204212833.GA42626@syl.local>
-References: <d9819cfb33ad95d4206dd1bbf4b38b7fdf69130f.1580764494.git.me@ttaylorr.com>
- <5d3819180dbc9bc33a8fe4354e2320f497151fb4.1580795403.git.me@ttaylorr.com>
- <xmqqzhdy6sbx.fsf@gitster-ct.c.googlers.com>
+        id S1727479AbgBDV3T (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Feb 2020 16:29:19 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:50929 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727389AbgBDV3T (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Feb 2020 16:29:19 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id EEA72A68C9;
+        Tue,  4 Feb 2020 16:29:16 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Sv4HYoYTud+MrdgFlRnVW/sccQE=; b=yGDmSC
+        4996Yi9+jsu6vMz3TE01TZGigiqqW4DvymeTaOT0NVdFgOprkn9unaLoSbuGoW8A
+        CT6oUMidpWaBVcias3sKdldnB6uVkCcaMIL3Sy4SYBRlZRBTkxv06R/MtVh02JaN
+        obym31jo5G4a+FKBhwF1JWoMy8OYlz1pCnINM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=mIJ0ibgEYR3UKVy1gCKFbO27SC/dBj9L
+        SquMIf8tXP5UceE73lTcRL7ukz7IdU030QLoEuVhq/8uPlhFRP41e0qcQxyZl9nc
+        bcUt0J5DgT7LpGTgSCVj+Ama4gSZF7u3AhvD/cSqd5yEDkNtJGsVA3LMcqE9mm9Y
+        ESIAag9gnAU=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id E5CBFA68C5;
+        Tue,  4 Feb 2020 16:29:16 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 1BD06A68C4;
+        Tue,  4 Feb 2020 16:29:13 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>
+Subject: Re: [PATCH v3 3/6] create .git/refs in files-backend.c
+References: <pull.539.v2.git.1580134944.gitgitgadget@gmail.com>
+        <pull.539.v3.git.1580848060.gitgitgadget@gmail.com>
+        <5b7060cb2fc25fc1c71b7c70864ebf758b59aa90.1580848060.git.gitgitgadget@gmail.com>
+Date:   Tue, 04 Feb 2020 13:29:11 -0800
+In-Reply-To: <5b7060cb2fc25fc1c71b7c70864ebf758b59aa90.1580848060.git.gitgitgadget@gmail.com>
+        (Han-Wen Nienhuys via GitGitGadget's message of "Tue, 04 Feb 2020
+        20:27:37 +0000")
+Message-ID: <xmqqeeva6nyw.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqzhdy6sbx.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 63FAC4AA-4795-11EA-AFB2-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 04, 2020 at 11:54:58AM -0800, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
+"Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com> writes:
+
+> From: Han-Wen Nienhuys <hanwen@google.com>
 >
-> > Whoops. In v2, this patch introduces 'find_odb()' as a function in
-> > 'builtin/commit-graph.c', but does not declare it static. This causes
-> > breakage in gcc with '-Wmissing-prototypes'. Here is a correct version
-> > of the patch that does not cause such breakage.
-> >
-> > -- 8< --
-> >
-> > Subject: [PATCH v2 2/5] commit-graph.h: store an odb in 'struct
+> This prepares for supporting the reftable format, which will want
+> create its own file system layout in .git
 >
-> What happened to the rest of the line ;-)?
+> Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+> ---
+>  builtin/init-db.c    | 2 --
+>  refs/files-backend.c | 5 +++++
+>  2 files changed, 5 insertions(+), 2 deletions(-)
+>
+> diff --git a/builtin/init-db.c b/builtin/init-db.c
+> index 944ec77fe1..45bdea0589 100644
+> --- a/builtin/init-db.c
+> +++ b/builtin/init-db.c
+> @@ -226,8 +226,6 @@ static int create_default_files(const char *template_path,
+>  	 * We need to create a "refs" dir in any case so that older
+>  	 * versions of git can tell that this is a repository.
+>  	 */
+> -	safe_create_dir(git_path("refs"), 1);
+> -	adjust_shared_perm(git_path("refs"));
+>  
+>  	if (refs_init_db(&err))
+>  		die("failed to set up refs db: %s", err.buf);
+> diff --git a/refs/files-backend.c b/refs/files-backend.c
+> index 0ea66a28b6..0c53b246e8 100644
+> --- a/refs/files-backend.c
+> +++ b/refs/files-backend.c
+> @@ -3158,6 +3158,11 @@ static int files_init_db(struct ref_store *ref_store, struct strbuf *err)
+>  		files_downcast(ref_store, REF_STORE_WRITE, "init_db");
+>  	struct strbuf sb = STRBUF_INIT;
+>  
+> +	files_ref_path(refs, &sb, "refs");
 
-Heh. Your email made me chuckle since this wasn't the first time I've
-been asked about this today ;-). I manually yanked the 'Subject:' line,
-but not the continuation below it.
+Have you run "git diff --check" before committing?
 
-I'd be happy to re-send a version of this patch to fix this, but if you
-don't mind slicing it up, that works too.
+> +	safe_create_dir(sb.buf, 1);
+> +        /* adjust permissions even if directory already exists. */
 
-Thanks,
-Taylor
+whitespace error here, but this comment is really appreciated.  It
+wasn't immediately clear why we do this again in the original.
+
+> +	adjust_shared_perm(sb.buf);
+> +
+>  	/*
+>  	 * Create .git/refs/{heads,tags}
+>  	 */
