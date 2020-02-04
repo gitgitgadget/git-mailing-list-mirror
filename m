@@ -7,97 +7,108 @@ X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1,
 	USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9216FC35247
-	for <git@archiver.kernel.org>; Tue,  4 Feb 2020 22:51:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CE77EC35247
+	for <git@archiver.kernel.org>; Tue,  4 Feb 2020 22:54:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5957520730
-	for <git@archiver.kernel.org>; Tue,  4 Feb 2020 22:51:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 902A12166E
+	for <git@archiver.kernel.org>; Tue,  4 Feb 2020 22:54:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="PUfYpAYV"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="K0mGIT6f"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727522AbgBDWvZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Feb 2020 17:51:25 -0500
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:38754 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727412AbgBDWvY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Feb 2020 17:51:24 -0500
-Received: by mail-pl1-f195.google.com with SMTP id t6so17862plj.5
-        for <git@vger.kernel.org>; Tue, 04 Feb 2020 14:51:24 -0800 (PST)
+        id S1727612AbgBDWye (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Feb 2020 17:54:34 -0500
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:34297 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727412AbgBDWye (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Feb 2020 17:54:34 -0500
+Received: by mail-pf1-f193.google.com with SMTP id i6so120318pfc.1
+        for <git@vger.kernel.org>; Tue, 04 Feb 2020 14:54:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to
          :user-agent;
-        bh=pTh4Mdam9XNRz0r69Uis8VzFXm62LKdVzQEvGEMA7t4=;
-        b=PUfYpAYVW78tir2ueuW0MurYozPgaTs2dVSqDSiUB5NngzYHMv7rpWg9HtV1cED23D
-         JmzHqboEt4uBJkE1/6Xtg/Qb0L+9g/Hqvyq47snSHwgY+EMuUdwtztOwQyw1Kk5nWavF
-         lP8oiwo1JbzVZ1K6D+UbDkfQn7HuRjLykvu8WbM5ir8vZroGnLBbF/mnme347+RmsGTh
-         qbFvMIT+o6gQLNcvlBlXl/RpQGnR5Uhk+JHTp2XXnvrD5WVZAG7mzWUQ+IcawMkHpCy5
-         fh7Ibrl+VFs0P334sQ29pDabdtOTB9ssiwNmvwyPgrLn5D1Se7C2yEzAay0MdLKfUvAZ
-         pcvA==
+        bh=0ublwM1OPCYAgbY+ApzKgjS/Tl3POX+CugIillfGGA0=;
+        b=K0mGIT6f9cWP2qQy3WCxS9a/P/iBducweS+2K53sF7i/VYkT3a08RUewkF8tuatiPo
+         QApCUH5KOavJnc+QhkWhG6TpZ1SV+TDZg8EFEUE7+JNcbq8Xglzx7LoHcdVImhihJL2G
+         9mhwmcHD4v95Pgwy/we2gAXUCx7pd9na7eRD6jeFbWGxuqeN2UxmYwSeKBy1YDB2KIW8
+         LdychJLQ/jOIMxwz/Rgt8mKHXfjYTi7jiV81RtxBWfeO08MeMKwDXDK4U7OMJtB0bABD
+         9OcVidqrCJYaQTPyIAx+Z4lEYOiYgWWZmlsxXCh0ISB+5fuaqZxxmRuY71mOwR9uTMYr
+         36SA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to:user-agent;
-        bh=pTh4Mdam9XNRz0r69Uis8VzFXm62LKdVzQEvGEMA7t4=;
-        b=VRPAF+IijjUsM6GYgd5FUgQ7eiEnecl7O4keuu9WsAyF9Uw18/39tjYcR+LZTygx5L
-         lzYCAwPxowr0lNFc1TvaQFNKuYGS7zvxJRb18ozc6iOKa3Px4KwkAP1tMeRVrXew/xrS
-         zpgtNXTVBexhd2YmaLYLLvQe2a9RnbPCV6NGt801cq1vmY0HGq/7QLgjzzVZuFKnX0dL
-         SHa0Orb+p/v8VQKdvAoj4o8G+cubK1XAZaP/NXP7isELazDQi+PZJqJOsP7JfZCH1gLI
-         n4CEs9Sz2wXf8xFWpPqCO+bAlsHf46/5Asa2PxzS5wcWmTvo+9OrwplfZ645VPfkH/v3
-         GsKw==
-X-Gm-Message-State: APjAAAUO9c63mBSiCYtANm0Kr8hYLiDKNQOjaBMEC8d2KFGjfiQRRTnr
-        fTOcsudF00bTVPAl1M3+FeDhA0JpEsA=
-X-Google-Smtp-Source: APXvYqykZemb5d66cSSOunu60e9BvWkIM9evx9fKtb8hJ20ljPIcHWRRyh/AX1AXP5bh4LRCtpqOFg==
-X-Received: by 2002:a17:902:d216:: with SMTP id t22mr31757797ply.150.1580856683768;
-        Tue, 04 Feb 2020 14:51:23 -0800 (PST)
+        bh=0ublwM1OPCYAgbY+ApzKgjS/Tl3POX+CugIillfGGA0=;
+        b=iVlegRCuXEfSVZJKD1F2sxutG+XAQVw8UrmaOmkrANRUOTudE/R93DDJE+KVhV30aq
+         LJmtwgKRhreHQDplZVvxPHhEkn1jqA0f8RjIFmgh7aaoOsFFMezBMpdd9QqNbod5ew/C
+         KsUq2fQlKxFwbWFlHmCvaSHpKlpcVHhHwn456irNQ+QdJVZVZknlwgRIelflVewoc+AC
+         1RkcauhlU7WILC4Hk3TvQcYSt341sgAyEKGb1h33JEcatr6bulCXIb1RFLiFCcbLW626
+         TfPju6QoRPTMd7LnB71o+c48qHFcOq0q5TR/AJN5BOMQzbZO6bBC2S61QG3f19/hxTtk
+         b2bQ==
+X-Gm-Message-State: APjAAAUrEBImp0Kqgg/W/+8hJZIz1wupqk38KMfOEPMh4Vg9/thyEtEF
+        578qkRo9X8902QcAFn2ey7+MsMiMUdk=
+X-Google-Smtp-Source: APXvYqyLhTLJI90xOH+4oZ/RlgZWey6m97hDOqU3ngs6qWN16+duaTVrmJ4ewjEcNzSp+DzYOdUDRw==
+X-Received: by 2002:aa7:9a42:: with SMTP id x2mr29892344pfj.71.1580856873381;
+        Tue, 04 Feb 2020 14:54:33 -0800 (PST)
 Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
-        by smtp.gmail.com with ESMTPSA id g9sm25841460pfm.150.2020.02.04.14.51.22
+        by smtp.gmail.com with ESMTPSA id u13sm4707334pjn.29.2020.02.04.14.54.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Feb 2020 14:51:22 -0800 (PST)
-Date:   Tue, 4 Feb 2020 14:51:18 -0800
+        Tue, 04 Feb 2020 14:54:32 -0800 (PST)
+Date:   Tue, 4 Feb 2020 14:54:28 -0800
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     Martin =?iso-8859-1?Q?=C5gren?= <martin.agren@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v5 06/15] bugreport: add compiler info
-Message-ID: <20200204225118.GE87163@google.com>
+Subject: Re: [PATCH v5 07/15] bugreport: add curl version
+Message-ID: <20200204225428.GF87163@google.com>
 References: <20200124033436.81097-1-emilyshaffer@google.com>
- <20200124033436.81097-7-emilyshaffer@google.com>
- <CAN0heSoh87_16y+B5=UXAhbaVnejmRj3XXjy5viABheBz+D3fA@mail.gmail.com>
+ <20200124033436.81097-8-emilyshaffer@google.com>
+ <CAN0heSqiMvMopqpMrnOffsO-nZ6UPWbuHQdB9VxLhWhm-d95rA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAN0heSoh87_16y+B5=UXAhbaVnejmRj3XXjy5viABheBz+D3fA@mail.gmail.com>
+In-Reply-To: <CAN0heSqiMvMopqpMrnOffsO-nZ6UPWbuHQdB9VxLhWhm-d95rA@mail.gmail.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 30, 2020 at 11:21:39PM +0100, Martin Ågren wrote:
-> On Fri, 24 Jan 2020 at 04:40, <emilyshaffer@google.com> wrote:
-> > +#else
-> > +
-> > +static inline void get_compiler_info(struct strbuf *info)
+On Thu, Jan 30, 2020 at 11:27:45PM +0100, Martin Ågren wrote:
+> On Fri, 24 Jan 2020 at 04:41, <emilyshaffer@google.com> wrote:
+> > +static void get_curl_version_info(struct strbuf *curl_info)
 > > +{
-> > +       strbuf_addstr(info, "get_compiler_info() not implemented");
+> > +       struct child_process cp = CHILD_PROCESS_INIT;
+> > +
+> > +       argv_array_push(&cp.args, "git");
+> > +       argv_array_push(&cp.args, "remote-https");
+> > +       argv_array_push(&cp.args, "--build-info");
+> > +       if (capture_command(&cp, curl_info, 0))
+> > +           strbuf_addstr(curl_info, "'git-remote-https --build-info' not supported\n");
+> > +}
+> >
+> >  static void get_system_info(struct strbuf *sys_info)
+> >  {
+> > @@ -31,6 +43,10 @@ static void get_system_info(struct strbuf *sys_info)
+> >         strbuf_addstr(sys_info, "compiler info: ");
+> >         get_compiler_info(sys_info);
+> >         strbuf_complete_line(sys_info);
+> > +
+> > +       strbuf_addstr(sys_info, "git-remote-https --build-info:\n");
+> > +       get_curl_version_info(sys_info);
 > 
-> Maybe "no compiler info available" (or s/ available//, or
-> s/available/reported/), or something else more human-readable?
+> The header here looks a lot like an implementation detail of
+> `get_curl_version_info()`. Or put differently, these risk getting out of
+> sync. Maybe frame the header a bit more human readable: "curl version".
+> But is this "curl version", or more like "git-remote-https version"?
+> There's some discrepancy here.
 
-Hm. I envisioned the target audience for this as "Git developers" (and
-that's why I didn't mark the unimplemented string for translation); Git
-developers know exactly what "get_compiler_info() not implemented"
-means. But I suppose it's just as easy to grep for one string as the
-other.
+Hm, I think you're saying "If we switch to future-https-lib instead of
+cURL for git-remote-https, then this command will be incorrectly named."
+Sure, I agree. It's true that with this change git-remote-https also
+tells us some info about itself.
 
-I am hesitant to say "no info available" or "no info reported" when I'm
-certain there is some environment variable set at build time which
-contains the info we'd want to show here; it really is just a question
-of some Git developer having put in the time to implement this function.
-
-So, I think I will leave it. Thanks for your suggestions.
-
+Thanks.
  - Emily
