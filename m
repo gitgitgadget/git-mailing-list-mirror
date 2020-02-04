@@ -6,102 +6,104 @@ X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 03FE7C35247
-	for <git@archiver.kernel.org>; Tue,  4 Feb 2020 18:20:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BEDB5C35247
+	for <git@archiver.kernel.org>; Tue,  4 Feb 2020 18:29:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A74992082E
-	for <git@archiver.kernel.org>; Tue,  4 Feb 2020 18:20:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8C4FC20674
+	for <git@archiver.kernel.org>; Tue,  4 Feb 2020 18:29:59 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="CvKDtPhp"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KKkwmZ9r"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727415AbgBDSUX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Feb 2020 13:20:23 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62772 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727359AbgBDSUX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Feb 2020 13:20:23 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 59DB851A00;
-        Tue,  4 Feb 2020 13:20:21 -0500 (EST)
+        id S1727415AbgBDS36 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Feb 2020 13:29:58 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64549 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727331AbgBDS36 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Feb 2020 13:29:58 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D1C953B79D;
+        Tue,  4 Feb 2020 13:29:54 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=AgsX2H5VjlEGyXSJZXzJvuG8lCc=; b=CvKDtP
-        hpUqu/GNXVi/jvyvSSrXIHz81tXVvMDaCrw+48GrjNoF9BfniObCmyHtP+zRrTRa
-        KyTzKY7CUP8vDBfavCWyT8lEpHI1pftlFPppWViML7d0t5NC8fRHST1Qhr9mGxBh
-        PdWnHXUK+v3hieSdFPkGVt+bEIwf3O9C2RbmU=
+        :content-type; s=sasl; bh=JUNZPbWjQkRiEz4wg3SvY/Syh/Y=; b=KKkwmZ
+        9rdszLxLYPEiNLi9aIcF9hoy+o2SlFjw8qfdA6csnpFLoIzmKv4MzBoY8ug71arc
+        ggpMl1m9U1Z7XNgE+nvMTNB6vbr+glw63XcKyaiTO9iQNSJyZpKJ3GZbLuudX5d2
+        EEUUav7452ThCkzsH+0zB5pjocXQYWriVTDIU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=VjQ9XksVSVcv+EOhCyM6N0NyzsPoz2Ko
-        MPzyg2qAmTc3Mt0Pmx/3zRaXtXlW2Tgsj8gWY+8O00bq7n8JJcCQ2pFbb9K/H+xO
-        Nl9Q1fZOfQa93GWJSgqj/ZkC2ciSU2LV1XkYc6Ig7N16ZDL+Fw8lrMd+cWBDrZ7V
-        WxsGmNwZAho=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4A4E6519FF;
-        Tue,  4 Feb 2020 13:20:21 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=HuIdUmoTyDvq9G+WHmrV+ksf3Yy80xg3
+        TgJO6ILSctv7FWpAPSBSu4fkl1/Tbsi3kicq62HKpO23ODcBD8S67jpt7Va+x1Nu
+        GY9SJaG3KWh44NzPAJpFQ1wmv1TU3meAD4j8rRZq91lnmg//KhxT2KVJteUrnx3w
+        qxpCjc7fbEc=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C96593B79C;
+        Tue,  4 Feb 2020 13:29:54 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3F867519FE;
-        Tue,  4 Feb 2020 13:20:18 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3AD753B79B;
+        Tue,  4 Feb 2020 13:29:54 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Masaya Suzuki <masayasuzuki@google.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] doc: describe Git bundle format
-References: <20200130225818.193825-1-masayasuzuki@google.com>
-        <xmqqk1579xa4.fsf@gitster-ct.c.googlers.com>
-        <CAJB1erXnNe0yGvL+wgU9RXAA6Vyx7T2dwM9NgCmUChOtL102NQ@mail.gmail.com>
-        <xmqqy2tn8c3w.fsf@gitster-ct.c.googlers.com>
-        <CAJB1erXqK-a2uDPPQDLpdLYnPC8Mcxjo2ER0qSAsD9DOVHSmGQ@mail.gmail.com>
-Date:   Tue, 04 Feb 2020 10:20:16 -0800
-In-Reply-To: <CAJB1erXqK-a2uDPPQDLpdLYnPC8Mcxjo2ER0qSAsD9DOVHSmGQ@mail.gmail.com>
-        (Masaya Suzuki's message of "Fri, 31 Jan 2020 15:57:55 -0800")
-Message-ID: <xmqqpneu8ba7.fsf@gitster-ct.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Mike McGranahan <mike@mcgwiz.com>, git@vger.kernel.org
+Subject: Re: Patch text in git-add patch mode lacks whitespace highlighting
+References: <CAK7jxYgJNvCp=m6rH31HNzN9Mqgaav7_YPvUMZmRb7mdYDZ_1g@mail.gmail.com>
+        <nycvar.QRO.7.76.6.2001311304140.46@tvgsbejvaqbjf.bet>
+        <20200201110203.GA1864964@coredump.intra.peff.net>
+        <nycvar.QRO.7.76.6.2002012205520.46@tvgsbejvaqbjf.bet>
+        <20200203085456.GD2164@coredump.intra.peff.net>
+        <nycvar.QRO.7.76.6.2002031320180.46@tvgsbejvaqbjf.bet>
+        <20200203145155.GA272077@coredump.intra.peff.net>
+Date:   Tue, 04 Feb 2020 10:29:53 -0800
+In-Reply-To: <20200203145155.GA272077@coredump.intra.peff.net> (Jeff King's
+        message of "Mon, 3 Feb 2020 09:51:55 -0500")
+Message-ID: <xmqqlfpi8au6.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: FF4F9B26-477A-11EA-8647-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 5698FF0C-477C-11EA-8220-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Masaya Suzuki <masayasuzuki@google.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> * Delta complete: If an object in a packfile is deltified, the delta
-> base exists in the same packfile.
+> If just the human-readable one, then many options that change the line
+> count would be problems: diff.context, diff.interhunkcontext,
+> diff.orderfile, etc.
+>
+> If both, then some options would be problematic for applying. Just
+> looking over the list, these jump out at me:
+>
+>   - color.diff=always would obviously be an issue (though TBH I think
+>     anybody doing that is inviting a lot of breakages anyway)
+>
+>   - diff.external would be a problem if it kicked in, though I think it
+>     would require --ext-diff to actually do anything
+>
+>   - diff.submodule would generate diffs that can't be applied
 
-Yes, even though "thin" packs delierately violate this to save size,
-normal packs, and more importantly, on-disk packs, are complete in
-this sense.
+What can truly help "git add -p" might be a new output mode from
+"git diff", perhaps, in which instead of writing a stream of text
+(with color codes intermixed), the output machinery makes a call to
+API-user supplied callbacks to report ("type of output line", "the
+payload", "list of coloring information") tuples for each line, so
+that the API-user can synthesize _both_ versions it currently uses
+with a single invocation of "diff"?  There may be tons of "output
+line" types, like the diff header, hunk header, context, removed,
+added, etc., and depending on the type, the form the payload takes
+may be different (e.g. a context line may be just a plain text, a
+hunk header line may be a five-tuple (pre- and post-context line
+numbers and line countsm plus the function-header line text).
 
-> * Object complete: If an object in a packfile contains a reference to
-> another object, that object exists in the same packfile.
+As long as the call the API-user makes to the diff machinery grabs
+everything that is needed for both human and machine consumption in
+a single call, there is no risk of getting confused by two sets of
+inconsistent patch data.
 
-A single packfile that would result from a full clone at some time
-in the project's history would be "complete" in this sense.  Such a
-packfile may contain all objects that are needed to reproduce the
-history up to v1.0.1, or another larger "object complete" packfile
-may contain everything needed for the history up to v3.0.0.  So as a
-concept, this can be defined sensibly.  In the original packfile
-design, however, this concept was not useful (iow, there was nowhere
-that cared if a packfile is "object complete" or not), so I do not
-think there is no explicit "support" to ensure or validate this
-trait in the system.
-
-Obviously, a bundle that stores object incomplete pack must have
-been created with the bottom boundary.
-
-> The reader of a bundle SHOULD have all objects reachable from prereqs.
-
-Perhaps.  
-
-It _might_ be possible to teach "git clone" to produce a shallow
-clone whose shallow cut-off points match the prerequisites of the
-bundle, so it depends on what the reader wants to do with the data,
-though.
-
-Thanks.
 
