@@ -2,174 +2,120 @@ Return-Path: <SRS0=lL1X=3Y=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 88780C35247
-	for <git@archiver.kernel.org>; Tue,  4 Feb 2020 01:05:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B68EC3524D
+	for <git@archiver.kernel.org>; Tue,  4 Feb 2020 01:36:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 45C3D2084E
-	for <git@archiver.kernel.org>; Tue,  4 Feb 2020 01:05:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3C63E21744
+	for <git@archiver.kernel.org>; Tue,  4 Feb 2020 01:36:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="H/sv7AI2"
+	dkim=pass (2048-bit key) header.d=skyboxlabs-com.20150623.gappssmtp.com header.i=@skyboxlabs-com.20150623.gappssmtp.com header.b="KJ+8U1en"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726924AbgBDBFc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Feb 2020 20:05:32 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:53338 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726369AbgBDBFb (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 3 Feb 2020 20:05:31 -0500
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 9A5236044F;
-        Tue,  4 Feb 2020 01:05:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1580778329;
-        bh=+7qrK9ONPj7JbN/AXxsJ20JYk7YQZgKhhLwda6wg8CQ=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=H/sv7AI2u+POMLwaHipb7JHvsWjlyKcNX2+ZHBzGKsDHHvExyoVOr5pfl/tvN1r2/
-         +fQwVRGU2ncUd1DhOYaGtkUERWuLJCUnueQ+lq8CsgDJwds+RqtAC5qMcEWeNmOgxX
-         peyeOk1PF4dtlSBfliQ5LdeYH2QUAefJLHq814Bv1+2H+gqB8wyn0oyLEECmii1UVq
-         tY6A5RtXMy1keoKZJP5u6sdgOILkCOSqXNCDmEt8Odll1QYkVYqVRlmeJV7424rOPO
-         FJo7dA+DQN9eWU7bLDwceDEauk4JNgAtpk9gnrmDkV4VjJCATeNq+JiXCuSYzAo4G2
-         rCRFHRY/V2/mHKlSCSHrAQ/Ju5LnS5XMT8pP42umd65HyCq1FhaIpAXCs0jG9eQeMF
-         vBTvC7tmB121U5fwLWDycxY5fW2KRfQWNNUtmKQAauJvc04IfxPDdVsxs/0+xLllcy
-         Y5LZ3LZBZuelfa9NLIqi7cXP7IDSms57d+xPd0ibE2fQTR8OTDQ
-Date:   Tue, 4 Feb 2020 01:05:23 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Johan Herland <johan@herland.net>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] notes.c: fix off-by-one error when decreasing notes
- fanout
-Message-ID: <20200204010523.GR4113372@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Johan Herland <johan@herland.net>, git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <20200203210445.2854-1-johan@herland.net>
- <20200203210445.2854-2-johan@herland.net>
+        id S1727080AbgBDBgL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Feb 2020 20:36:11 -0500
+Received: from mail-lj1-f193.google.com ([209.85.208.193]:36412 "EHLO
+        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726369AbgBDBgK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Feb 2020 20:36:10 -0500
+Received: by mail-lj1-f193.google.com with SMTP id r19so16750529ljg.3
+        for <git@vger.kernel.org>; Mon, 03 Feb 2020 17:36:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=skyboxlabs-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=vQ34QF+NijeL3aBdJUwfKUtDFYo6wrmHepFJ56LtmIw=;
+        b=KJ+8U1enOxA9TjrtbvJGxUNooKyN0eiPxQVxxETLUOHs8uF9F8jtH8DYGqUJsp3YPu
+         9NyzdzrxFQaJrT6rFHVa/UZdO137Elei1WsN+d83VPgEvMpO0Lbi5wdtd426Yw4MMfCL
+         h33QVq4YPhMwqgc8gssoqz/d5VOXRXArPf7/5OEEX4TmNqpgYV19VzamylvN2hIJgJiK
+         z4ASuN9y4FEFmabsrOG0HFXCCXs8RtcVhYTGov7gkhH4nF8ju5OinmGDN3kba1f/c9r2
+         R+WDzg6O5GSh6ajsU/t9/PyAAYMSTDPjgQzYKM1VXtFKaM7pmSxSGkR03iF32dW5ry/J
+         mmNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=vQ34QF+NijeL3aBdJUwfKUtDFYo6wrmHepFJ56LtmIw=;
+        b=QylUftqdaudKAz3/FY0xknbiF2EpX7NV3Jh9/NmhnPfJlvbEgVnCOS3P+Ox8zH/cB4
+         DUxbO57Fv2dRJiGT9MW3farHUUkLftl9wpG3BHCF8COf5XCo8LPxAFpez3zGz9PR3P+v
+         q/Qr23wRgQjpd5WTnMVSsDmbV4451rWYs3TJa+wZypMqWC2OKlmZU9t6RBDt9nVjakEi
+         xvpU0kCoxYK1yjuL/yk6GJB6BWJhDZA6ipFfCWVyyrhUC3ER92nMw2/d5XiJLMAln+dv
+         ilLHFiyivBiP0ooTewpg2b9or3FMTOScIkSuoH5hHQzXMoNzN6AtCXk3oekHUHDZJe9y
+         4iuw==
+X-Gm-Message-State: APjAAAWWxPIRkQY1cwE4nDrFo6q+sXMllnFA0gw/P/A6VF7Nlhahj5bp
+        7ndYNaVY0EWfVO/bwdZaNSRds2nrPHDa86PKDMMmV3PNgL4=
+X-Google-Smtp-Source: APXvYqxlkvEGsG/r4iN34DsyqnhvXAFDsrO+qxIPoqY3+LPXWehb9Fhe6MAzibytUYzrQikNAOeZaaNHfKGI/DsomIs=
+X-Received: by 2002:a2e:6815:: with SMTP id c21mr14147180lja.10.1580780168666;
+ Mon, 03 Feb 2020 17:36:08 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="ffBYM5qgR8HH9Mta"
-Content-Disposition: inline
-In-Reply-To: <20200203210445.2854-2-johan@herland.net>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.3.0-3-amd64)
+References: <20191213235247.23660-1-yang.zhao@skyboxlabs.com>
+ <20191213235247.23660-2-yang.zhao@skyboxlabs.com> <CABvFv3LH2tYbobn8xBykyC43FB+z16FFOSAX1XjTLFZ2BUqZ1Q@mail.gmail.com>
+ <CAE5ih7-LrK1XZgjhpx3qQqRMQ5MUf-e0q=45VY4cNhHV--nSuQ@mail.gmail.com>
+ <CAE5ih7-ngXsn1+RYSJ9qk_Ajr9x9zLRWNCyUiBGjg=sx_cOuzA@mail.gmail.com>
+ <CAE5ih78dpmPhdsR73cwGJuDYQECDaCvdOuosOAhLyLun9DyL_A@mail.gmail.com> <CABvFv3KcpmCXsM2hSaHTzrb0Lz9BAD23sVcNsjO4uf8xCLDh5g@mail.gmail.com>
+In-Reply-To: <CABvFv3KcpmCXsM2hSaHTzrb0Lz9BAD23sVcNsjO4uf8xCLDh5g@mail.gmail.com>
+From:   Yang Zhao <yang.zhao@skyboxlabs.com>
+Date:   Mon, 3 Feb 2020 17:35:58 -0800
+Message-ID: <CABvFv3KPZ9ibx9+WDkgWJ9Zn1_VyuoX_KiOPxYSvL2AwRVsMxg@mail.gmail.com>
+Subject: Re: [PATCH v2 00/14] git-p4: python3 compatibility
+To:     Luke Diamand <luke@diamand.org>
+Cc:     Git Users <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, Feb 3, 2020 at 10:11 AM Yang Zhao <yang.zhao@skyboxlabs.com> wrote:
+>
+> On Mon, Feb 3, 2020 at 4:54 AM Luke Diamand <luke@diamand.org> wrote:
+> > One very small bug report:
+> >
+> > When doing "git p4 sync" it prints out the percent complete. It looks
+> > like it's no longer rounding it sensibly, so where before it would say
+> > 77%, now it says 77.7777777%.
+> >
+> > It's this line:
+> >
+> >    sys.stdout.write("\rImporting revision %s (%s%%)" % (change, cnt *
+> > 100 / len(changes)))
+> >
+> > I think / just needs replacing with //.
+>
+> Good catch.
+>
+> The patch below should do the trick, and be more explicit about how
+> we're formatting things.
 
---ffBYM5qgR8HH9Mta
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Oops, missed a line. Below is more correct (pardon the webmail patch clobbering)
 
-On 2020-02-03 at 21:04:45, Johan Herland wrote:
-> As noted in the previous commit, the nature of the fanout heuristic
-> in the notes code causes the exact point at which we increase or
-> decrease the notes fanout to vary with the objects being annotated.
-> Since the object ids generated by the test environment are
-> deterministic (by design), the notes generated and tested by t3305
-> are always the same, and we therefore happen to see the same fanout
-> behavior from one run to the next.
->=20
-> Coincidentally, if we were to change the test environment slightly
-> (say by making a test commit on an unrelated branch before we start
-> the t3305 test proper), we not only see the fanout switch happen at
-> different points, we also manage to trigger a _bug_ in the notes
-> code where the fanout 1 -> 0 switch is not applied uniformly across
-> the notes tree, but instead yields a notes tree like this:
->=20
->   ...
->   bdeafb301e44b0e4db0f738a2d2a7beefdb70b70
->   bff2d39b4f7122bd4c5caee3de353a774d1e632a
->   d3/8ec8f851adf470131178085bfbaab4b12ad2a7
->   e0b173960431a3e692ae929736df3c9b73a11d5b
->   eb3c3aede523d729990ac25c62a93eb47c21e2e3
->   ...
->=20
-> The bug occurs when we are writing out a notes tree with a newly
-> decreased fanout, and the notes tree contains unexpanded subtrees
-> that should be consolidated into the parent tree as a consequence of
-> the decreased fanout):
->=20
-> Subtrees that happen to sit at an _even_ level in the internal notes
-> 16-tree structure (in other words: subtrees whose path - "d3" in the
-> example above - is unique in the first nibble - i.e. there are no
-> other note paths that start with "d") are _not_ unpacked as part of
-> the tree writeout. This error will repeat itself in subsequent note
-> trees until the subtree is forced to be unpacked. In t3305 this only
-> happens when the d38ec8f8 note is itself removed from the tree.
->=20
-> The error is not severe (no information is lost, and the notes code
-> is able to read/decode this tree and manipulate it correctly), but
-> this is nonetheless a bug in the current implementation that should
-> be fixed.
->=20
-> That said, fixing the off-by-one error is not without complications:
-> We must take into account that the load_subtree() call from
-> for_each_note_helper() (that is now done to correctly unpack the
-> subtree while we're writing out the notes tree) may end up inserting
-> unpacked non-notes into the linked list of non_note entries held by
-> the struct notes_tree. Since we are in the process of writing out the
-> notes tree, this linked list is currently in the process of being
-> traversed by write_each_non_note_until(). The unpacked non-notes are
-> necessarily inserted between the last non-note we wrote out, and the
-> next non-note to be written. Hence, we cannot simply hold the
-> next_non_note to write in struct write_each_note_data (as we would
-> then silently skip these newly inserted notes), but must instead
-> always follow the ->next pointer from the last non-note we wrote.
-> (This part is was caught by an existing test in t3304.)
+diff --git a/git-p4.py b/git-p4.py
+index ca0a874501..da3a5aa684 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -2959,8 +2959,8 @@ def streamP4FilesCb(self, marshalled):
+             'depotFile' in self.stream_file):
+             size = int(self.stream_file["fileSize"])
+             if size > 0:
+-                progress = 100*self.stream_file['streamContentSize']/size
+-                sys.stdout.write('\r%s %d%% (%i MB)' %
+(self.stream_file['depotFile'], progress, int(size/1024/1024)))
++                progress = self.stream_file['streamContentSize']/size
++                sys.stdout.write('\r{} {:.0%} ({}
+MB)'.format(self.stream_file['depotFile'], progress,
+int(size/1024/1024)))
+                 sys.stdout.flush()
 
-I think you have "is was" here.  You probably want one or the other.
+         self.stream_have_file_info = True
+@@ -3435,7 +3435,7 @@ def importChanges(self, changes, origin_revision=0):
+             self.updateOptionDict(description)
 
-> Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> Cc: Brian M. Carlson <sandals@crustytoothpaste.net>
-
-I generally write my name in lower case, but I think typically we prefer
-to omit Cc lines in patches (unlike LKML), so it may just be better to
-remove these lines.
-
-> Signed-off-by: Johan Herland <johan@herland.net>
-
-Patch 1 looked good to me.  Your explanation here makes sense, but I
-must admit that I still don't understand this code, so I can't give an
-outright approval.  I do appreciate that it comes with a test, though.
-
-I haven't tested, but I expect this series will make Dscho's patch
-unnecessary, so I'll drop it in my reroll unless one of you tells me to
-keep it.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---ffBYM5qgR8HH9Mta
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.19 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl44w1MACgkQv1NdgR9S
-9ouyERAAvLCX696vfXd5unI1aM4Gdde36ouh+nqrqRotYk7HB9QsSzgX5CwzUZEf
-Jh8wQ7COXLuwSNGOcEsEAAZFlrHYAA7R3WXQVyvABnCn24f/+L1MeOAMDgiAW6Hu
-yWHbRlAEmWhJaEM9zVp/i3bo0y1VnxgZfofNtQvWedj/QCCq8byXD24vomog/x6g
-HEXd+HgGwCwPUtjRZI5uPGZMi1EDlaFgN3SH5rNsEEAcl1oLVLxSzWAK+S3R7s9q
-M+Smoc7r8AXgICwq4kQmOcBjVza7s/mswGjvFcIulqvmQANEN5lHuwdb/3cn7NYd
-DTqdS64SnaqlSZaJO0u59QGyzcQNqK8r8Pa5DTKt9tX0JJ0nsicE/8hS40Hk6afk
-tSWPY1kaer+djS0L8zdokFl/eUtI9FrZMllhjwEEsEQICh8xxPKEDss1sRTAaEZh
-yootBiIUoeVFLzP1Y/ekZOFaCv2zDgxC2pLsddgxUnjQ/jg45RUIDhOItBniGwT0
-2JrZOC53dI9rtEaHpyXi7JzSb4wM4sb6eNZvKgk4VQgOs5hnam8C1/28iJFMasjx
-CCKLdJhN5mq8ThNdh+kZHFo7YO4UqWdr0anCUeRIJQ8zs5GTi3bYWt/AvqBNfBpp
-5rHYmv6FP4sKHgc/IiBSsTwiX7IPPf0Zfd9apBM+tnpXSQ9WwUE=
-=vxpl
------END PGP SIGNATURE-----
-
---ffBYM5qgR8HH9Mta--
+             if not self.silent:
+-                sys.stdout.write("\rImporting revision %s (%s%%)" %
+(change, cnt * 100 / len(changes)))
++                sys.stdout.write("\rImporting revision {}
+({:.0%})".format(change, cnt / len(changes)))
+                 sys.stdout.flush()
+             cnt = cnt + 1
