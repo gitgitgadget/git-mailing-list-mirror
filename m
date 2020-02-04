@@ -2,120 +2,230 @@ Return-Path: <SRS0=lL1X=3Y=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.2 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B68EC3524D
-	for <git@archiver.kernel.org>; Tue,  4 Feb 2020 01:36:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DBF73C3524A
+	for <git@archiver.kernel.org>; Tue,  4 Feb 2020 03:47:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3C63E21744
-	for <git@archiver.kernel.org>; Tue,  4 Feb 2020 01:36:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9417E2080D
+	for <git@archiver.kernel.org>; Tue,  4 Feb 2020 03:47:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=skyboxlabs-com.20150623.gappssmtp.com header.i=@skyboxlabs-com.20150623.gappssmtp.com header.b="KJ+8U1en"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="bFGswGRd"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727080AbgBDBgL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Feb 2020 20:36:11 -0500
-Received: from mail-lj1-f193.google.com ([209.85.208.193]:36412 "EHLO
-        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726369AbgBDBgK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Feb 2020 20:36:10 -0500
-Received: by mail-lj1-f193.google.com with SMTP id r19so16750529ljg.3
-        for <git@vger.kernel.org>; Mon, 03 Feb 2020 17:36:09 -0800 (PST)
+        id S1726694AbgBDDrS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Feb 2020 22:47:18 -0500
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:46626 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727072AbgBDDrS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Feb 2020 22:47:18 -0500
+Received: by mail-pg1-f196.google.com with SMTP id z124so8938770pgb.13
+        for <git@vger.kernel.org>; Mon, 03 Feb 2020 19:47:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=skyboxlabs-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=vQ34QF+NijeL3aBdJUwfKUtDFYo6wrmHepFJ56LtmIw=;
-        b=KJ+8U1enOxA9TjrtbvJGxUNooKyN0eiPxQVxxETLUOHs8uF9F8jtH8DYGqUJsp3YPu
-         9NyzdzrxFQaJrT6rFHVa/UZdO137Elei1WsN+d83VPgEvMpO0Lbi5wdtd426Yw4MMfCL
-         h33QVq4YPhMwqgc8gssoqz/d5VOXRXArPf7/5OEEX4TmNqpgYV19VzamylvN2hIJgJiK
-         z4ASuN9y4FEFmabsrOG0HFXCCXs8RtcVhYTGov7gkhH4nF8ju5OinmGDN3kba1f/c9r2
-         R+WDzg6O5GSh6ajsU/t9/PyAAYMSTDPjgQzYKM1VXtFKaM7pmSxSGkR03iF32dW5ry/J
-         mmNg==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=hZjRllp3RY7Y2/qMJZ9sYpDfyxd5NPOGJ69H86pze4U=;
+        b=bFGswGRdAOJgnPBzu7pQASOWakZBeZpLk7nOe5J8y5klBs+2J96dnaGx1203LX8hQ9
+         SbLsM/+pP8ZAQlQT3mrqbdFGtRKRqFFbZ+Ieytuw6WTnb6ef+JxVmYOj3BifNi3UWkv/
+         l/bidxN+PLt3CGrcEw384yYvRA9H34UzyPmf919WQ3XFB3eVet5oKkwjMP43ch1e0g33
+         vGsX4gP4G2j9foJjyyno+FNKqom00u5mb3Brr6MM1Og9kzyfGW5FIJoqv7R7R+UlrOhz
+         toliEVxcNrMTy3EAEUKgNz7Ty7kjk2g/ic+zyBOXmq5dgvqNt3PZWmJUhqKxP75mPeHP
+         ZN8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=vQ34QF+NijeL3aBdJUwfKUtDFYo6wrmHepFJ56LtmIw=;
-        b=QylUftqdaudKAz3/FY0xknbiF2EpX7NV3Jh9/NmhnPfJlvbEgVnCOS3P+Ox8zH/cB4
-         DUxbO57Fv2dRJiGT9MW3farHUUkLftl9wpG3BHCF8COf5XCo8LPxAFpez3zGz9PR3P+v
-         q/Qr23wRgQjpd5WTnMVSsDmbV4451rWYs3TJa+wZypMqWC2OKlmZU9t6RBDt9nVjakEi
-         xvpU0kCoxYK1yjuL/yk6GJB6BWJhDZA6ipFfCWVyyrhUC3ER92nMw2/d5XiJLMAln+dv
-         ilLHFiyivBiP0ooTewpg2b9or3FMTOScIkSuoH5hHQzXMoNzN6AtCXk3oekHUHDZJe9y
-         4iuw==
-X-Gm-Message-State: APjAAAWWxPIRkQY1cwE4nDrFo6q+sXMllnFA0gw/P/A6VF7Nlhahj5bp
-        7ndYNaVY0EWfVO/bwdZaNSRds2nrPHDa86PKDMMmV3PNgL4=
-X-Google-Smtp-Source: APXvYqxlkvEGsG/r4iN34DsyqnhvXAFDsrO+qxIPoqY3+LPXWehb9Fhe6MAzibytUYzrQikNAOeZaaNHfKGI/DsomIs=
-X-Received: by 2002:a2e:6815:: with SMTP id c21mr14147180lja.10.1580780168666;
- Mon, 03 Feb 2020 17:36:08 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=hZjRllp3RY7Y2/qMJZ9sYpDfyxd5NPOGJ69H86pze4U=;
+        b=qMRD8P7nvWwBy+j9XoHaD1WGQl0hqq9Na2ifdpbkvh/xtzpTkoENqhKJh5L+RQvGVN
+         oEQjKkBNBstqx6fZMokdSHyVXUlEVefexXRtEYHZR0P1CdVwtClDah+kpkyEXc+rnY0M
+         un/NyofDuGc7Hjw8Dhf73IIoOfLwyTwkE1WjNWsH7fmPce8ijF4vsBiciZYfJXsVpsT+
+         qnITuNPX5sxOu51nPv967f7ULz717/VQVOI+TmWdE3kRDBFuK6RM5zL/oZsqsFjlDy/K
+         hTEMTbAKwIuAcwWDkhn2aYmpESG74IDaIniTmA3Ije3FJ6sMtBK0SFo3gJqoBz1MV3cx
+         bgLQ==
+X-Gm-Message-State: APjAAAVsD4y3q7jqcgZGMLHhIpujJJudsPemsZs+nEO5U97HCk+wJMk1
+        gQmTrr3BLMjqGdOTtKK1EAMCr3FFHXjLLQ==
+X-Google-Smtp-Source: APXvYqzlz5EY2Vqbylv0MOFQRi6NDZlFWB9iFqeQAl2JC0DXhJRfUO2jTmqkcXn9eYWALjNuPCEQkg==
+X-Received: by 2002:a63:1b0a:: with SMTP id b10mr28317929pgb.56.1580788035823;
+        Mon, 03 Feb 2020 19:47:15 -0800 (PST)
+Received: from localhost ([2601:602:9200:32b0:7c5e:a7ec:bd9e:cd59])
+        by smtp.gmail.com with ESMTPSA id u7sm21584583pfh.128.2020.02.03.19.47.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 03 Feb 2020 19:47:14 -0800 (PST)
+Date:   Mon, 3 Feb 2020 19:47:14 -0800
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org, peff@peff.net,
+        dstolee@microsoft.com, gitster@pobox.com
+Subject: Re: [PATCH 1/3] builtin/commit-graph.c: support
+ '--split[=<strategy>]'
+Message-ID: <20200204034714.GA5790@syl.local>
+References: <cover.1580430057.git.me@ttaylorr.com>
+ <4f5bc19903f8a1f5b153b5665de378e743e12744.1580430057.git.me@ttaylorr.com>
+ <8a648a69-60bd-2b19-facb-1d7821661883@gmail.com>
 MIME-Version: 1.0
-References: <20191213235247.23660-1-yang.zhao@skyboxlabs.com>
- <20191213235247.23660-2-yang.zhao@skyboxlabs.com> <CABvFv3LH2tYbobn8xBykyC43FB+z16FFOSAX1XjTLFZ2BUqZ1Q@mail.gmail.com>
- <CAE5ih7-LrK1XZgjhpx3qQqRMQ5MUf-e0q=45VY4cNhHV--nSuQ@mail.gmail.com>
- <CAE5ih7-ngXsn1+RYSJ9qk_Ajr9x9zLRWNCyUiBGjg=sx_cOuzA@mail.gmail.com>
- <CAE5ih78dpmPhdsR73cwGJuDYQECDaCvdOuosOAhLyLun9DyL_A@mail.gmail.com> <CABvFv3KcpmCXsM2hSaHTzrb0Lz9BAD23sVcNsjO4uf8xCLDh5g@mail.gmail.com>
-In-Reply-To: <CABvFv3KcpmCXsM2hSaHTzrb0Lz9BAD23sVcNsjO4uf8xCLDh5g@mail.gmail.com>
-From:   Yang Zhao <yang.zhao@skyboxlabs.com>
-Date:   Mon, 3 Feb 2020 17:35:58 -0800
-Message-ID: <CABvFv3KPZ9ibx9+WDkgWJ9Zn1_VyuoX_KiOPxYSvL2AwRVsMxg@mail.gmail.com>
-Subject: Re: [PATCH v2 00/14] git-p4: python3 compatibility
-To:     Luke Diamand <luke@diamand.org>
-Cc:     Git Users <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <8a648a69-60bd-2b19-facb-1d7821661883@gmail.com>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 3, 2020 at 10:11 AM Yang Zhao <yang.zhao@skyboxlabs.com> wrote:
+On Fri, Jan 31, 2020 at 09:19:19AM -0500, Derrick Stolee wrote:
+> On 1/30/2020 7:28 PM, Taylor Blau wrote:
+> > With '--split', the commit-graph machinery writes new commits in another
+> > incremental commit-graph which is part of the existing chain, and
+> > optionally decides to condense the chain into a single commit-graph.
+> > This is done to ensure that the aysmptotic behavior of looking up a
+> > commit in an incremental chain is dominated by the number of
+> > incrementals in that chain. It can be controlled by the '--max-commits'
+> > and '--size-multiple' options.
+> >
+> > On occasion, callers may want to ensure that 'git commit-graph write
+> > --split' always writes an incremental, and never spends effort
+> > condensing the incremental chain [1]. Previously, this was possible by
+> > passing '--size-multiple=0', but this no longer the case following
+> > 63020f175f (commit-graph: prefer default size_mult when given zero,
+> > 2020-01-02).
+> >
+> > Reintroduce a less-magical variant of the above with a new pair of
+> > arguments to '--split': '--split=no-merge' and '--split=merge-all'. When
+> > '--split=no-merge' is given, the commit-graph machinery will never
+> > condense an existing chain and will always write a new incremental.
+> > Conversely, if '--split=merge-all' is given, any invocation including it
+> > will always condense a chain if one exists.  If '--split' is given with
+> > no arguments, it behaves as before and defers to '--size-multiple', and
+> > so on.
+> >
+> > [1]: This might occur when, for example, a server administrator running
+> > some program after each push may want to ensure that each job runs
+> > proportional in time to the size of the push, and does not "jump" when
+> > the commit-graph machinery decides to trigger a merge.
+> >
+> > Signed-off-by: Taylor Blau <me@ttaylorr.com>
+> > ---
+> >  Documentation/git-commit-graph.txt | 18 +++++++++++-----
+> >  builtin/commit-graph.c             | 33 ++++++++++++++++++++++++++----
+> >  commit-graph.c                     | 19 +++++++++--------
+> >  commit-graph.h                     |  7 +++++++
+> >  t/t5324-split-commit-graph.sh      | 25 ++++++++++++++++++++++
+> >  5 files changed, 85 insertions(+), 17 deletions(-)
+> >
+> > diff --git a/Documentation/git-commit-graph.txt b/Documentation/git-commit-graph.txt
+> > index 28d1fee505..8d61ba9f56 100644
+> > --- a/Documentation/git-commit-graph.txt
+> > +++ b/Documentation/git-commit-graph.txt
+> > @@ -57,11 +57,19 @@ or `--stdin-packs`.)
+> >  With the `--append` option, include all commits that are present in the
+> >  existing commit-graph file.
+> >  +
+> > -With the `--split` option, write the commit-graph as a chain of multiple
+> > -commit-graph files stored in `<dir>/info/commit-graphs`. The new commits
+> > -not already in the commit-graph are added in a new "tip" file. This file
+> > -is merged with the existing file if the following merge conditions are
+> > -met:
+> > +With the `--split[=<strategy>]` option, write the commit-graph as a
+> > +chain of multiple commit-graph files stored in
+> > +`<dir>/info/commit-graphs`. Commit-graph layers are merged based on the
+> > +strategy and other splitting options. The new commits not already in the
+> > +commit-graph are added in a new "tip" file. This file is merged with the
+> > +existing file if the following merge conditions are met:
+> > +* If `--split=merge-always` is specified, then a merge is always
+> > +conducted, and the remaining options are ignored. Conversely, if
+> > +`--split=no-merge` is specified, a merge is never performed, and the
+> > +remaining options are ignored. A bare `--split` defers to the remaining
+> > +options. (Note that merging a chain of commit graphs replaces the
+> > +existing chain with a length-1 chain where the first and only
+> > +incremental holds the entire graph).
+> >  +
+> >  * If `--size-multiple=<X>` is not specified, let `X` equal 2. If the new
+> >  tip file would have `N` commits and the previous tip has `M` commits and
+> > diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
+> > index de321c71ad..f03b46d627 100644
+> > --- a/builtin/commit-graph.c
+> > +++ b/builtin/commit-graph.c
+> > @@ -9,7 +9,9 @@
+> >
+> >  static char const * const builtin_commit_graph_usage[] = {
+> >  	N_("git commit-graph verify [--object-dir <objdir>] [--shallow] [--[no-]progress]"),
+> > -	N_("git commit-graph write [--object-dir <objdir>] [--append|--split] [--reachable|--stdin-packs|--stdin-commits] [--[no-]progress] <split options>"),
+> > +	N_("git commit-graph write [--object-dir <objdir>] [--append] "
+> > +	   "[--split[=<strategy>]] [--reachable|--stdin-packs|--stdin-commits] "
+> > +	   "[--[no-]progress] <split options>"),
+> >  	NULL
+> >  };
+> >
+> > @@ -19,7 +21,9 @@ static const char * const builtin_commit_graph_verify_usage[] = {
+> >  };
+> >
+> >  static const char * const builtin_commit_graph_write_usage[] = {
+> > -	N_("git commit-graph write [--object-dir <objdir>] [--append|--split] [--reachable|--stdin-packs|--stdin-commits] [--[no-]progress] <split options>"),
+> > +	N_("git commit-graph write [--object-dir <objdir>] [--append] "
+> > +	   "[--split[=<strategy>]] [--reachable|--stdin-packs|--stdin-commits] "
+> > +	   "[--[no-]progress] <split options>"),
+> >  	NULL
+> >  };
+> >
+> > @@ -101,6 +105,25 @@ static int graph_verify(int argc, const char **argv)
+> >  extern int read_replace_refs;
+> >  static struct split_commit_graph_opts split_opts;
+> >
+> > +static int write_option_parse_split(const struct option *opt, const char *arg,
+> > +				    int unset)
+> > +{
+> > +	enum commit_graph_split_flags *flags = opt->value;
+> > +
+> > +	opts.split = 1;
+> > +	if (!arg)
+> > +		return 0;
 >
-> On Mon, Feb 3, 2020 at 4:54 AM Luke Diamand <luke@diamand.org> wrote:
-> > One very small bug report:
-> >
-> > When doing "git p4 sync" it prints out the percent complete. It looks
-> > like it's no longer rounding it sensibly, so where before it would say
-> > 77%, now it says 77.7777777%.
-> >
-> > It's this line:
-> >
-> >    sys.stdout.write("\rImporting revision %s (%s%%)" % (change, cnt *
-> > 100 / len(changes)))
-> >
-> > I think / just needs replacing with //.
+> This allows `--split` to continue working as-is. But should we also
+> set "*flags = COMMIT_GRAPH_SPLIT_UNSPECIFIED" here? This allows one
+> to run "git commit-graph write --split=no-merge --split" (which could
+> happen if "--split=no-merge" is inside an alias).
+
+Yeah, this is an oversight on my part. I think that we should set the
+split option to 'COMMIT_GRAPH_SPLIT_UNSPECIFIED' when '--split' is
+given, for exactly the reason you outlined above. Thanks for the
+suggestion!
+
+> > +test_expect_success '--split=merge-all always merges incrementals' '
+> > +	test_when_finished rm -rf a b c &&
+> > +	rm -rf $graphdir $infodir/commit-graph &&
+> > +	git reset --hard commits/10 &&
+> > +	git rev-list -3 HEAD~4 >a &&
+> > +	git rev-list -2 HEAD~2 >b &&
+> > +	git rev-list -2 HEAD >c &&
+> > +	git commit-graph write --split=no-merge --stdin-commits <a &&
+> > +	git commit-graph write --split=no-merge --stdin-commits <b &&
+> > +	test_line_count = 2 $graphdir/commit-graph-chain &&
+> > +	git commit-graph write --split=merge-all --stdin-commits <c &&
+> > +	test_line_count = 1 $graphdir/commit-graph-chain
+> > +'
+> > +
+> > +test_expect_success '--split=no-merge always writes an incremental' '
+> > +	test_when_finished rm -rf a b &&
+> > +	rm -rf $graphdir &&
+> > +	git reset --hard commits/2 &&
+> > +	git rev-list HEAD~1 >a &&
+> > +	git rev-list HEAD >b &&
+> > +	git commit-graph write --split --stdin-commits <a &&
+> > +	git commit-graph write --split=no-merge --stdin-commits <b &&
+> > +	test_line_count = 2 $graphdir/commit-graph-chain
+> > +'
+> > +
+> >  test_done
 >
-> Good catch.
->
-> The patch below should do the trick, and be more explicit about how
-> we're formatting things.
+> Good tests!
 
-Oops, missed a line. Below is more correct (pardon the webmail patch clobbering)
+Thanks :-).
 
-diff --git a/git-p4.py b/git-p4.py
-index ca0a874501..da3a5aa684 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -2959,8 +2959,8 @@ def streamP4FilesCb(self, marshalled):
-             'depotFile' in self.stream_file):
-             size = int(self.stream_file["fileSize"])
-             if size > 0:
--                progress = 100*self.stream_file['streamContentSize']/size
--                sys.stdout.write('\r%s %d%% (%i MB)' %
-(self.stream_file['depotFile'], progress, int(size/1024/1024)))
-+                progress = self.stream_file['streamContentSize']/size
-+                sys.stdout.write('\r{} {:.0%} ({}
-MB)'.format(self.stream_file['depotFile'], progress,
-int(size/1024/1024)))
-                 sys.stdout.flush()
+> Thanks,
+> -Stolee
 
-         self.stream_have_file_info = True
-@@ -3435,7 +3435,7 @@ def importChanges(self, changes, origin_revision=0):
-             self.updateOptionDict(description)
-
-             if not self.silent:
--                sys.stdout.write("\rImporting revision %s (%s%%)" %
-(change, cnt * 100 / len(changes)))
-+                sys.stdout.write("\rImporting revision {}
-({:.0%})".format(change, cnt / len(changes)))
-                 sys.stdout.flush()
-             cnt = cnt + 1
+Thanks,
+Taylor
