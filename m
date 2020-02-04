@@ -2,75 +2,91 @@ Return-Path: <SRS0=lL1X=3Y=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BFE30C2D0B1
-	for <git@archiver.kernel.org>; Tue,  4 Feb 2020 11:02:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 00349C2D0B1
+	for <git@archiver.kernel.org>; Tue,  4 Feb 2020 11:55:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 9210120730
-	for <git@archiver.kernel.org>; Tue,  4 Feb 2020 11:02:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BD4B820674
+	for <git@archiver.kernel.org>; Tue,  4 Feb 2020 11:55:32 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hvfx5HJi"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U8aPEdHq"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727030AbgBDLCU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Feb 2020 06:02:20 -0500
-Received: from mail-wm1-f53.google.com ([209.85.128.53]:56190 "EHLO
-        mail-wm1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726741AbgBDLCU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Feb 2020 06:02:20 -0500
-Received: by mail-wm1-f53.google.com with SMTP id q9so2747546wmj.5
-        for <git@vger.kernel.org>; Tue, 04 Feb 2020 03:02:19 -0800 (PST)
+        id S1727124AbgBDLzc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Feb 2020 06:55:32 -0500
+Received: from mail-ed1-f44.google.com ([209.85.208.44]:33516 "EHLO
+        mail-ed1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727040AbgBDLzb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Feb 2020 06:55:31 -0500
+Received: by mail-ed1-f44.google.com with SMTP id r21so19561644edq.0
+        for <git@vger.kernel.org>; Tue, 04 Feb 2020 03:55:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=jFXH6cwFP1rGgoynwQ9hHvt20fVv8ocXan1UwRhrUwk=;
-        b=hvfx5HJi2/GBMxhKRCiOFeSH5J77nVT+WMel8neei3xKesbzeTZyuOP1jee4tWx8ra
-         h8Ezc6tQDhyi0oBC2Jyp866I1Q5pmCRb+Z5GOhH5uzYfA3dSiqi/wmKJ1ClwLEO3ZjFS
-         +MtPPeMRRg/YPyPX8JVWgSqodgo+nqvIdnv61KmvALGgJx3ZTDacYDyjHAZ8/kbm3ioD
-         QlMrjjy4q23Jr2JuvpejR35O39iVTmUpjVhlel5kFoiQ5MKvLnbZ5bOcKBM5FFaXh+LB
-         QAa+6qRtkPqni2F44Ko1OXmEY/HDhu7XHuKXuO8Kp2yHhjun2qIDtYoaS8+lTNbWZnEP
-         JJ3w==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=wa1bOMa2XWScxmvQXE9xcIjw1XUUrN4tVT7iJY1PaPQ=;
+        b=U8aPEdHqOwurlKMqsLEyNycSMTyZ6L/B2VjF1jo8clSQU5vl7vwp47xS7oybz6pvb7
+         A9JJQqQD55rEhUVBSOiKvpupj+bWo3jfFnKRvxFzb4sqe83FbfLn7hwFBEInLbHPMA++
+         V3FvTJGux+oKZsKn2cO/3x5c6kanY7afeYWUPHPfLaCucGoqHHrADxQtj7sxIebeinXn
+         hZrVUJMCRIKkFt33GYeXpvTnsj7qmFFtJ551RyjnE+ksYY33eBmGS5oCvqPzuwmnMfWB
+         EWcEwSHejYnq/iFUC+rkqVmesHOC38mYiyOWNR2S9yq5rsPD+Ue+g7LLvDz8KgpiDveb
+         sY2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=jFXH6cwFP1rGgoynwQ9hHvt20fVv8ocXan1UwRhrUwk=;
-        b=ThKUFbQVTI7rSMDNUCF87tuCw1zNTALvJ93vKv2uWJr0JGSkeGH9jUv+HhYEyAgh1n
-         JIWGLTx4U3Lkri4iBWiK+ugsHysEYBYIhlxpiEqFIpZjw8EWLCaTjVwuf/E4FUarYrtf
-         +PRp9ZuP8rs2tdL2aaAad4Ye9jON343JHQxOSxaQiB2b/SfUYNKiy8vNwywjCmmFsx5L
-         jFcFujlWc78nLn5rBI+xqqa0jjwwcrb29thRjuPQ7T2+n7zZMTE/dUuh9OlE34WSpZ/0
-         jGatI0T1+1A27KIiC9w7uj5YUnoDOOxuZnjFNDi4ja3m1JJ7mkO4j8Yrs/8bL6+Akjnu
-         dC2g==
-X-Gm-Message-State: APjAAAUD1APHrPmY+tlxjCrxEOVs2Ns8CLmkvQn9e55v5vfqZ3Hi7gzh
-        MbrZ4o3A/8XgmmvutV0u8Di5F1+X6R5HiPQ6bYs14Xg3caI=
-X-Google-Smtp-Source: APXvYqwcaHB6WaEqMp2hIjY84CVb4FU2m3zy3GwjA3j8SVRPs0yzlAEMYuC3QmmBmWorHErWqIINNUWE8O84UIYvj8Y=
-X-Received: by 2002:a7b:cf39:: with SMTP id m25mr5199453wmg.146.1580814138334;
- Tue, 04 Feb 2020 03:02:18 -0800 (PST)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=wa1bOMa2XWScxmvQXE9xcIjw1XUUrN4tVT7iJY1PaPQ=;
+        b=BVb9icZMh/75fg/5q6j77Le3dbk52KQvZ6OfPzZE0Z9J38Bq9/8bQkORAynDayvOPB
+         AtTvBT6j8DN/3U1sk8HEMB0/D35vDGwfqatosp+UQH5gdHqubTfAcTnKw9zx3/9RESi7
+         gL9AFEF29jxGz3l62SIdBOvTcC/JG82vP3nfKRguwCmp/z2e/q32cqZ5oIq/wQNnWTue
+         KwgtEikdU4CsClIMYChJ94nwqif0KPwzZXEYYA3Zo/D4duUGlVfV+ZZ1cx6H1WoB64Hc
+         Pbk493iReLLaLsVneF0gL6qAUyyEK7685f6BB9DNHTmBkLL1nYKj72uU1ZckWf661zUe
+         uVEQ==
+X-Gm-Message-State: APjAAAUmmUAicsC96vCJr0M4pqEuxJzxHXjINVPqRab+HoIb6PRYEzvB
+        1NrqvAn4QO42PgRAqOSj73fKqrukGf3Wr2VQGx0=
+X-Google-Smtp-Source: APXvYqwTQVjwdf/+83U+2gnWrlwsrF3rea7qx13STRsgpvSO6C5n1R3w27A7SmbJTgsb/5shlvro5Akc36MxdJh3Ymo=
+X-Received: by 2002:a17:906:8595:: with SMTP id v21mr25922206ejx.28.1580817328520;
+ Tue, 04 Feb 2020 03:55:28 -0800 (PST)
 MIME-Version: 1.0
-From:   Ashima Matiman <ashimamatiman83@gmail.com>
-Date:   Tue, 4 Feb 2020 16:32:06 +0530
-Message-ID: <CABdb18jnV752=rQg=TvWjtAJoxoxU4XtSVf46FetxAxf6mRo=Q@mail.gmail.com>
-Subject: Install git 2.12.2 on suse 12.4 from source code
-To:     git@vger.kernel.org
+References: <20200122053455.GA51054@coredump.intra.peff.net>
+In-Reply-To: <20200122053455.GA51054@coredump.intra.peff.net>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Tue, 4 Feb 2020 12:55:15 +0100
+Message-ID: <CAP8UFD1-cswU0gSX3a2KqiExhYgY_qMZ6Sz7FHdxs7mrb_hh-w@mail.gmail.com>
+Subject: Re: GSoC and Outreachy Summer 2020?
+To:     Jeff King <peff@peff.net>
+Cc:     git <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Wed, Jan 22, 2020 at 6:34 AM Jeff King <peff@peff.net> wrote:
+>
+> I notice deadlines are approaching for Git to apply for GSoC (Feb 5th)
+> and for Outreachy (Feb 18th), though we still have some time. Do mentors
+> have sufficient bandwidth for us to participate?
 
-I am trying to install git 2.12.2 on SUSE 12.4 using git binaries.
-After the installation, I am facing issue while executing the following command:
-git clone http
-git clone https
-The error is :
-fatal: Unable to find remote helper for 'https'
+I am willing to mentor or co-mentor someone for GSoC.
 
-Can you help me with finding procedure for proper installation via binaries.
-Looking forward to your reply! :)
+(Sorry about replying only to Peff previously.)
 
-Regards,
-Ashima Matiman
+I also just added the following file, made from SoC-2019-Ideas.md:
+
+https://github.com/git/git.github.io/blob/master/General-Application-Information.md
+
+As with https://github.com/git/git.github.io/blob/master/General-Microproject-Information.md
+the idea is to not have separate documents for each year and each
+program (GSoC or Outreachy), but rather point people to the same
+document that we should update regularly.
+
+Thanks,
+Christian.
