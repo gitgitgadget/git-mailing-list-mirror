@@ -2,85 +2,114 @@ Return-Path: <SRS0=lBg5=3Z=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A9F3C35247
-	for <git@archiver.kernel.org>; Wed,  5 Feb 2020 22:18:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BF029C35247
+	for <git@archiver.kernel.org>; Wed,  5 Feb 2020 22:38:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 2520220730
-	for <git@archiver.kernel.org>; Wed,  5 Feb 2020 22:18:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8E44F2082E
+	for <git@archiver.kernel.org>; Wed,  5 Feb 2020 22:38:22 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="f9wnF0s+"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fLBHQxtT"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727398AbgBEWSm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Feb 2020 17:18:42 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61585 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727116AbgBEWSm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Feb 2020 17:18:42 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id DED0445B96;
-        Wed,  5 Feb 2020 17:18:39 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=HZbtk1f5TY6JIX7iqq8Ub7nTYOc=; b=f9wnF0
-        s+bPnm29z7jZnoBsgwM1VGXaGwsKW0rDPOI4VX+LWf8kxf9IUkZdKYEdUeIgXGKz
-        GAzLrriRL4hRlz7La4x8Be6t21QZ3ghG/CKdGOT8V3jISfKlbyvjFjF9BOAUj1CU
-        QEacxVolwgqnzq/rw80OA3+qR2uMd3Gv10Hp8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=u63N+U06/1qUB2GqfFDqDQSf3ZjTKo/J
-        o3P/3GT9hcu1qXUoRLZNW1UY2CDGyDQJ1myZhnGoaleG+J+G3NY0GJ+RGVT98AZP
-        6p+M0VFJty5F487sG+R3evh1vjMr6Q0P/0ZNiuQ41fCqWds1T5fv3X0vUZfhJzIG
-        QWqaDa7lJdQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D475F45B95;
-        Wed,  5 Feb 2020 17:18:39 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3F8D445B94;
-        Wed,  5 Feb 2020 17:18:39 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Heba Waly <heba.waly@gmail.com>
-Cc:     Heba Waly via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v3] add: use advice API to display hints
-References: <pull.508.v2.git.1578438752.gitgitgadget@gmail.com>
-        <pull.508.v3.git.1580346702203.gitgitgadget@gmail.com>
-        <xmqqimksbo73.fsf@gitster-ct.c.googlers.com>
-        <CACg5j27pTKuhZpZtgNUDNEkhG0+tGx5O=LJCr5E8+2q8v6Zu1w@mail.gmail.com>
-        <xmqq7e10hgwn.fsf@gitster-ct.c.googlers.com>
-        <CACg5j252=wKyh7Ar9vxTwxdYXgkjNvbMA=bJCKOc6UZRJfJmUg@mail.gmail.com>
-Date:   Wed, 05 Feb 2020 14:18:38 -0800
-In-Reply-To: <CACg5j252=wKyh7Ar9vxTwxdYXgkjNvbMA=bJCKOc6UZRJfJmUg@mail.gmail.com>
-        (Heba Waly's message of "Thu, 6 Feb 2020 11:05:33 +1300")
-Message-ID: <xmqqy2tgfzk1.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1727361AbgBEWiV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Feb 2020 17:38:21 -0500
+Received: from mail-ot1-f65.google.com ([209.85.210.65]:38687 "EHLO
+        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727165AbgBEWiV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Feb 2020 17:38:21 -0500
+Received: by mail-ot1-f65.google.com with SMTP id z9so3626052oth.5
+        for <git@vger.kernel.org>; Wed, 05 Feb 2020 14:38:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=pALK4UjT1zThXGdslm5K1jwS32K3zPQtj4Tg0MLPOCI=;
+        b=fLBHQxtT0BNy1Jd0tOoGD8zIuItzKxeLu0WYW5SBxdqXgEZVevIFl9L7uR6AFVavjg
+         eCjjtBgvM8EEq7FGoWWzvSX3WnJUmxvJY6qXjxatvOkkbWiC6ALka/EDFZcv8WLa/Cg1
+         igAhi5SGAsAPWlBu/t2I1WC+oLPF0QTUg5ERS8eRAhxSXe/9UuCi0fuPVQbklRfc/BlU
+         MlJOEg5Ht1r+Fq0LScsd9jjwK+8mGGtuZJuIEU9IUetfvw5pkcAJbKkH1pPxyocZO2uY
+         83hglaLmoaEqkkhulHYxwhp7OL/Syrk5L56LjuG/Jn1RVFple02OBVFEpu0oPNW8lJTM
+         Fq1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=pALK4UjT1zThXGdslm5K1jwS32K3zPQtj4Tg0MLPOCI=;
+        b=PzGrh2ll1dgq04Ld7DqZk3Vsp+Tj2sWNBJSsDkXiOF2CiJ95FPCL2bA7iJgf5gOPr/
+         pYgnvqaelXmWxhAtEPJwPaynW0l8YvjXEFcG7XUwPdVBR7QYH06nvifiVCUfzBgjoj2t
+         BXhaGYibOyu4+OHNSWsdZbFI6o10V88xGKY4GAwhGKVGRdytumVRC4l6WdYZkIL3BH+t
+         74/X9yWelaOlVHkPsinRcM3vIbomyIPv3s8lw2p8XGJ56AHURDOUWiZcGOsEK5YRKf7A
+         /KDUNY56r8XVIgPtHPJQRg2Ei7Da5RNfBSowPm7FgQfysE/hXV6bDwSTNGAtkOtzKB62
+         65Hw==
+X-Gm-Message-State: APjAAAUnJSvs6p+7mBi0xG9d74PtzTNoUK3Nqi28s+MspGnh6u0fwtXA
+        RDfKbIR6XV1KIgbW4hyRNV2oNVpQ2qcB6mhJ+5Y=
+X-Google-Smtp-Source: APXvYqyHgMa2UUwFoUxjR+XOJkES1MBiYGfyeiqqdqJR6BvNmaR3+7zPcWNseBeZRbRcUVJnlSRs8RA+oKrfy5E3jRI=
+X-Received: by 2002:a9d:6f07:: with SMTP id n7mr27042327otq.112.1580942298440;
+ Wed, 05 Feb 2020 14:38:18 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 75C2047A-4865-11EA-8361-C28CBED8090B-77302942!pb-smtp1.pobox.com
+References: <pull.679.v3.git.git.1577217299.gitgitgadget@gmail.com>
+ <pull.679.v4.git.git.1579155273.gitgitgadget@gmail.com> <47e7c9e6-7d83-185d-792d-f8e084c1a7a1@gmail.com>
+ <xmqqa75w68wd.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqa75w68wd.fsf@gitster-ct.c.googlers.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 5 Feb 2020 14:38:07 -0800
+Message-ID: <CABPp-BHONuRyt8VJqRuoCF2rGYZ5EhH9KJXQZ3NO69rYwA5J3g@mail.gmail.com>
+Subject: Re: [PATCH v4 00/19] rebase: make the default backend configurable
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Phillip Wood <phillip.wood123@gmail.com>,
+        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Denton Liu <liu.denton@gmail.com>,
+        Pavel Roskin <plroskin@gmail.com>,
+        Alban Gruin <alban.gruin@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Heba Waly <heba.waly@gmail.com> writes:
+On Wed, Feb 5, 2020 at 1:07 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+>
+> >> Changes possibly missing from this version, for discussion:
+> >>
+> >>   * I did not remove the --am option as suggested by Phillip, since Junio and
+> >>     Phillip were still discussing whether it is wanted/needed.
+> >>   * I did not address the last two items Jonathan brought up as I
+> >>     couldn't find enough information to reproduce or understand the problems.
+> >
+> > I think I've got a fix for the failure with
+> > --committer-date-is-author-date that Jonathan reported which I'll post
+> > next week - the bug was not in this series, it was just exposed by
+> > it. I'll try and read through this series next week as well.
+> >
+> > Best Wishes
+>
+> Thanks.
+>
+> As to the "--am" option, I do not care too deeply about it anymore,
+> so if there is nothing else that we need to further polish, should
+> we move this forward to 'next' soonish?
 
-> No, I agreed with my mentors to wait on this update until that branch
-> is merged in master.
+I was hoping to hear back from Phillip, as he always provides great
+comments.  I believe I've addressed all his comments up through v3,
+but he hasn't had time in the last 2.5 weeks to review v4.
 
-The users will first has to set advise.addnothing and then later has
-to set something different if you do so, no?
+There was also an issue surrounding post-commit hooks that I think
+Jonathan and/or Emily were looking in to.  I haven't heard from them
+in a while, but I didn't think the issue was a blocker either.  If it
+is, I can try to help push something along.
 
-I do not think that is a good decision, and I am not happy to see
-people making such a decision that would hurt our users off list.
-
-> So no need to worry about it.
-
-Yes, I do have to worry about our users.
+So, the current state is that there's nothing left for me to polish
+that I know of.  If others know of things I've missed or want to
+review v4 and point out changes I should make, I'm happy to make them.
