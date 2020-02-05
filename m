@@ -2,116 +2,107 @@ Return-Path: <SRS0=lBg5=3Z=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D591C35247
-	for <git@archiver.kernel.org>; Wed,  5 Feb 2020 21:42:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C766BC35247
+	for <git@archiver.kernel.org>; Wed,  5 Feb 2020 22:05:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5289B2082E
-	for <git@archiver.kernel.org>; Wed,  5 Feb 2020 21:42:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9B972217BA
+	for <git@archiver.kernel.org>; Wed,  5 Feb 2020 22:05:46 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Cw9Wp+q8"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WpaiJjqO"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727149AbgBEVmp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Feb 2020 16:42:45 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:63922 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727033AbgBEVmp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Feb 2020 16:42:45 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id E482BB776E;
-        Wed,  5 Feb 2020 16:42:42 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=aoSJ9NdLFdvp2X5KDtoqyJzH/Cs=; b=Cw9Wp+
-        q8TlMlTgciND9gr8rKGfsmG9W8eQ7Q4AQiPYXBkNY3IqPRXkj5bFy5+lJgb7TB7N
-        Op0DL0Z6Abtd9Ao40ibJj53BWFWFr0pB0aFiMty8/BXGcVV2bVCA+smMYyrXdxq1
-        yhQHabRlKhX8PIzoFHRYruOCcMwO9nRx3Duyw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=KQa/VHzH0XECoyvfyvhFwRAIHPYO28jR
-        c2BtVU+tZBY8lffpzqgsnXeurgjFs192RzBZzShZ+5i8fU0TkLCxATgnExIJ3wmm
-        bGH2cNCr7OTBipKoAMfz7C8KfBl3Nm+axC8RTw/ln6sovbRDjJ/GnnG/v1NhQP08
-        mBQPo9rYQZA=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id DA768B776D;
-        Wed,  5 Feb 2020 16:42:42 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id AE143B776C;
-        Wed,  5 Feb 2020 16:42:39 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Ben Keene <seraphire@gmail.com>
-Cc:     Ben Keene via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v2 2/4] git-p4: create new method gitRunHook
-References: <pull.698.git.git.1579555036314.gitgitgadget@gmail.com>
-        <pull.698.v2.git.git.1580507895.gitgitgadget@gmail.com>
-        <f1f9fdc542353196612f8dd6b996d4fbd1f76c73.1580507895.git.gitgitgadget@gmail.com>
-        <xmqqr1za6q83.fsf@gitster-ct.c.googlers.com>
-        <ac44531e-b02d-5a98-3e25-a305b1250cf6@gmail.com>
-Date:   Wed, 05 Feb 2020 13:42:37 -0800
-In-Reply-To: <ac44531e-b02d-5a98-3e25-a305b1250cf6@gmail.com> (Ben Keene's
-        message of "Wed, 5 Feb 2020 14:56:19 -0500")
-Message-ID: <xmqq36bohfsi.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1727149AbgBEWFp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Feb 2020 17:05:45 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:43715 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727033AbgBEWFp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Feb 2020 17:05:45 -0500
+Received: by mail-ed1-f67.google.com with SMTP id dc19so3724219edb.10
+        for <git@vger.kernel.org>; Wed, 05 Feb 2020 14:05:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=O/7gcbJfcL2eOeSOYK8X+FIJFX+FbFCQIf8O73je4MI=;
+        b=WpaiJjqOgEnQ/U/NFqzD65HvXmQ0J0TJ/68l+P3RxH81TgbHx2mHzy19iMbeVkK6hX
+         u6jqa3RlMa6g4LTQyGrSVN3U8wV29Cbht5zM4Kh0MmxEY2jqse/DJjtWmrkX05HipDUf
+         I3U4+R5xznCju9PueKVcux8OVHpGFjOpBV56kiqICRTUc3EbVEWmk6mQAh4Wj+sL89B6
+         POyzS7ilaFMVZY2WxyTMKcWU37AD+Bf/vNT8pOUru03U4/MkH1uwAL8EXpN0l6m6YI9N
+         PLMi1nw9e5bKaTk1gait7tguKc3YJ+1iOX+0iuABXmZHMcKpcB0zYtu6mm6oXWAMEG1x
+         hqKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=O/7gcbJfcL2eOeSOYK8X+FIJFX+FbFCQIf8O73je4MI=;
+        b=icFDzTvLBHTiEl4A3etg3v+aAjo3ALnC4lC+QbB4QLvBrpiVJuLjH0fqrVWYdWLJGd
+         H5PwWrFWGPpM0Va73wlV+FoIRjSqUseVa43fV/wNRG5P9LdNxYZ5wuMm5QanG8ZfF6g4
+         qa9efWx0LczZNfYzcyl7Et+ckr+KtZcA8Q4tBQ2XneLwYLMrkY2vxl8mm7R12ZWPOSSt
+         oXxa/JRA+OJYkzWfk4SmWCvnircnpsbkuq/XPl1wnQBRJ8D6LrYL8x3thU/tuq7r9qyY
+         bs2SSmGigrtrVGUJzRtGjEVcOIrN9Msv+eJVwn59dHZj09G6WzwZSoPUdx9+/i1WEgKr
+         FbQg==
+X-Gm-Message-State: APjAAAWTaXf0W6pbQVDMQ2ir3/b+uMSLb1hlxkGh/d1RlpZL3hDBtNA/
+        u/FoREu8/zHlTL0DTgPHRFWl3j62RbNS1toSmgQ=
+X-Google-Smtp-Source: APXvYqxMYA5nOHE1G3T/rpNcCcUzDV+PLlNkt37xzi73gzVZRzjzlIrNXZtIgy/XcEEKi0BFP1x+kHID58V3ELkMr/Q=
+X-Received: by 2002:aa7:df09:: with SMTP id c9mr265191edy.133.1580940343736;
+ Wed, 05 Feb 2020 14:05:43 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 6E913C5C-4860-11EA-BDB3-8D86F504CC47-77302942!pb-smtp21.pobox.com
+References: <pull.508.v2.git.1578438752.gitgitgadget@gmail.com>
+ <pull.508.v3.git.1580346702203.gitgitgadget@gmail.com> <xmqqimksbo73.fsf@gitster-ct.c.googlers.com>
+ <CACg5j27pTKuhZpZtgNUDNEkhG0+tGx5O=LJCr5E8+2q8v6Zu1w@mail.gmail.com> <xmqq7e10hgwn.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq7e10hgwn.fsf@gitster-ct.c.googlers.com>
+From:   Heba Waly <heba.waly@gmail.com>
+Date:   Thu, 6 Feb 2020 11:05:33 +1300
+Message-ID: <CACg5j252=wKyh7Ar9vxTwxdYXgkjNvbMA=bJCKOc6UZRJfJmUg@mail.gmail.com>
+Subject: Re: [PATCH v3] add: use advice API to display hints
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Heba Waly via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ben Keene <seraphire@gmail.com> writes:
+No, I agreed with my mentors to wait on this update until that branch
+is merged in master.
+So no need to worry about it.
 
->>> +        hooks_path = os.path.join(os.environ.get("GIT_DIR", ".git"), "hooks")
->> This assumes that the process when his function is called (by the
->> way, even though the title of the patch uses the word "method", this
->> is not a method but a function, no?), it is always at the top level
->> of the working tree.  Is that a good assumption?  I don't know the
->> code well, so "yes it is good because a very early thing we do is to
->> go up to the top" is a good answer.
-> I'm not sure what you mean by top level of the tree unless you mean
-> that it is not part of a class, but a "Free standing" function?
+Thanks,
+Heba
 
-No.  The discussion about function vs method was over immediately
-after we left the parentheses ;-)
-
-The "top level of the working tree" is the directory where the files
-you see in "git ls-tree $commit^{tree}" would appear in.  In our
-project, that is where the primary Makefile, COPYING, Documentation/,
-etc. hangs from.
-
-The code in your patch (quoted above) says that "When $GIT_DIR is
-not set, '.git/hooks/' is the directory the hooks live in".  That is
-true only when your process is at the top level of the working tree.
-If you chdir'ed to a subdirectory (e.g. Documentation/ in our
-project) and then let the quoted code run, hooks_path is set to
-".git/hooks/", but from the point of view of the process running
-inside "Documentation/" subdirectory, it should actually be
-"../.git/hooks/", right?
-
-> And
-> yes, it returns a value so it should be called a function. I'll
-> correct that.
-
-This is an irrelevant tangent ;-) but yeah, it is a function, as
-opposed to a method, because it is not attached to any class.  I did
-not think Python differentiated functions that return a value and
-ones that do not (e.g. Pascal call the latter "procedure").
-
-> I chose to not put the function within a class so
-> that if other hooks should be added, it would not require a refactoring
-> of the code to use the function in other classes.
-
-I think that is a sensible design decision to have a free-standing
-function to execute hooks.
-
-Thanks.
+On Thu, Feb 6, 2020 at 10:18 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Heba Waly <heba.waly@gmail.com> writes:
+>
+> > On Fri, Jan 31, 2020 at 10:59 AM Junio C Hamano <gitster@pobox.com> wrote:
+> >>
+> >> "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> >>
+> >> > From: Heba Waly <heba.waly@gmail.com>
+> >> >
+> >> > In the "add" command, use the advice API to display hints to users,
+> >> > as it provides a neat and a standard format for hint messages, and
+> >> > the message visibility will be configurable.
+> >> >
+> >> > Signed-off-by: Heba Waly <heba.waly@gmail.com>
+> >> > ---
+> >> >     [Outreachy] add: use advise API to display hints
+> >> >
+> >> >     In the "add" command, use the advice API to display hints to users, as
+> >> >     it provides a neat and a standard format for hint messages, and the
+> >> >     message visibility will be configurable.
+> >>
+> >> The topic has been in 'next' for the past week or so already.  If we
+> >> need to make further changes, please do so incrementally.
+> >
+> > Will do, thanks.
+>
+> I was reviewing the draft of the "What's cooking" report and noticed
+> that this update is not there---did I miss one?
+>
+> Thanks.
