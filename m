@@ -2,111 +2,135 @@ Return-Path: <SRS0=lBg5=3Z=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 46D5AC35247
-	for <git@archiver.kernel.org>; Wed,  5 Feb 2020 16:47:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 18580C35247
+	for <git@archiver.kernel.org>; Wed,  5 Feb 2020 17:15:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1033621741
-	for <git@archiver.kernel.org>; Wed,  5 Feb 2020 16:47:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DA51021741
+	for <git@archiver.kernel.org>; Wed,  5 Feb 2020 17:15:21 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="EZUdlpV5"
+	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="LNyEmvAX"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727452AbgBEQrI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Feb 2020 11:47:08 -0500
-Received: from mout.web.de ([212.227.17.11]:40735 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727054AbgBEQrI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Feb 2020 11:47:08 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1580921223;
-        bh=f1nrZR+s+k5ZS/7j3HBk/wyAL47q7cetpMCWG1jKQ8s=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=EZUdlpV536lNUjTMKgMGwSZc+mzKU8jnl/493t6fXR00XRsf1SOwFCxmRVu1AWP7P
-         oF8ews0shj2yDD/ZKKCgBIzfzoXGlGDOC5Av15cZpVr3MCyUxMUuz+FIXd0STgqLZD
-         4p3y8qMrd16vlbcQ7g5/FNYoB0MvitEaboFh0qa4=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([91.47.145.153]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MUncu-1j2Zml0JkC-00Y6CC; Wed, 05
- Feb 2020 17:47:03 +0100
-Subject: Re: [PATCH 01/10] name-rev: rewrite create_or_update_name()
-To:     Andrei Rybak <rybak.a.v@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Cc:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <084909f8-fefa-1fe0-b2ce-74eff47c4972@web.de>
- <b8f6a47e-1cbe-b2c7-cdde-ff2dc28af2b2@web.de>
- <f8b7102a-ecab-1980-c129-ad00f3467655@gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <b983507b-40c2-dd14-9c5e-506f9be8a2e6@web.de>
-Date:   Wed, 5 Feb 2020 17:47:02 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S1726822AbgBERPU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Feb 2020 12:15:20 -0500
+Received: from mail-lf1-f49.google.com ([209.85.167.49]:35453 "EHLO
+        mail-lf1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726534AbgBERPU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Feb 2020 12:15:20 -0500
+Received: by mail-lf1-f49.google.com with SMTP id z18so2052491lfe.2
+        for <git@vger.kernel.org>; Wed, 05 Feb 2020 09:15:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=usp-br.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=430n2Q1+NuPYqyaCP52aGmj/oIW0FGgeFX+vmN6CKAs=;
+        b=LNyEmvAX4wxYpwpxb5rP5KXyrduAndtqkK+Anya4Xcqy9aRrpRtm0RU6ik8A3enhzY
+         nxQA3wWKGrouX8HXD0Q9PPWbX1m2zWLpsYP+JMlvq0+N7NiM6dJEcgZWpOTBc3PgfU+7
+         +WWvnbHDkLjx2OXk0rG2S90mOIGRegFHLP3KGNtkAQK66jxAcnnXmP4Wpc6/ouPICUgB
+         GDOg8sSLGmct/6prgfTVycXG5lnZqElU7BJDbHaniqaTeL82p43GxlTOkJA86PNd2U6L
+         +Asgel8480tyFsPQFK+ZlKgBleWLAwrhQuxuMERJof6f9mXU81+jgKQlAcjU+14Q/Djw
+         k0hA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=430n2Q1+NuPYqyaCP52aGmj/oIW0FGgeFX+vmN6CKAs=;
+        b=jUxOa/39e4ScLMcWyPKkYCqzHl3y3Q5WVppCEev2W7mvlCZXCYk5gPHtr4Jg0AXRyF
+         iEcLuy5LYCXigJzQ19uMOjHut7CcVLqhISJeS6Q20KdYXp4B/2RTA26JLLqQ04Ns958x
+         ul0MTiuIUYxtS4QsEkF9dpH1GhzLiIsllMEuKdJpzrREaRV0AdTBGsSXscER7sbMBcud
+         nEuEryfH3DTEdOWBJlZ6xGmkAYfy8eE05qUukZfDca4/ftMuB+E++XdNkBoVhbZ/V46V
+         OiVea12vhPFzeo65MZnvZORSKqzsExJIZexDyQeqA9Ph/ws0whoEbpDWIGJnetvGW2wM
+         h1aQ==
+X-Gm-Message-State: APjAAAUEPeVAu6SkKDAPBIQCWSYrQy3AouhJtDlq4AM7zGAHNg5bfHH0
+        akcxBVrpnGgBn79JbW0THw6sOrsT6E1shMKyBBtx8RM1zms=
+X-Google-Smtp-Source: APXvYqy50sg2btHXG0Lzv49n6SEY40DYB+71wdOQD5yf506OJ3wTkF0ZYP538l/MUmb/LK7kYaS6oRKLPu4RyEScjIg=
+X-Received: by 2002:a05:6512:2035:: with SMTP id s21mr17449677lfs.99.1580922918596;
+ Wed, 05 Feb 2020 09:15:18 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <f8b7102a-ecab-1980-c129-ad00f3467655@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:RyEmNEFood3uPiEl7F7NpSciF2PhuTU8loJEbfGxwLpxrJyA+ym
- 2kS0Ekv/9Xya0jbIhp05lTh9w2hAXsCVgE8G2sJMntdGwJoF8Vn01w7sAVcGLd0BKryg8Rg
- odVqAtLjdmP0e3tDywgVFYMLkf9zxiYmy3mXDSzsgQnsJL6Co6Y9kgl502UIY02qCxlh0fw
- xBDzHiR4GHHCh9apZWmCQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:PphzMRT2Vyw=:X7E9FUMluUpBrPOcO/aT2V
- WvDJ2wlpTj8zgnzc0o4MpF8Z6zveke95CQZk31Vu2i5ganQR6lh3lkep8wp8UR1PdNOV6KoJb
- aY0QqtsNlSoRcAy7Y0063SwEKkVhf9fTxSN0yoXw0Bj488BUHLQsLE+b7hWTWH4KEJbqt17ui
- +tDJcZ2mFQGL54G2fc2mFy/rm9G/VMKydjDbpCucNaagc5G3hU+qDR7uQInsmdqNnJWCtqwo+
- LP4Ivz7o9hNq1vqVrfr0q4PEErlGVXq+JdbK97ZKHNqOq03F+AesjU6jT6+MisjqMrhXv9CXq
- x+z7m5l2Tc9Fl6aNTrwnq/TdXqD2o7negG/PaML4UBv+ucbnu3/fsrTtE1YAibNrrZhVumTws
- l6jNZywU18wkbqde18aV2PEgbUDj6FTBbCtQSv8iiBHxONOYqXW5GbUFp+DpMZvUz1lygPXyx
- pukD/U83IYSK9quEHP2I7G5bNscP+fJpajOBDfZhT1q5kbAJjP+xNy77zJQKIaVV+DnUKv7AY
- tX+VU+AqTspTARHudZHob55ulP6cJvxQ42HwEeF4Vc2AHPJnIw7JWBqG06H4WQ3Z4Au5oOqTo
- 3KBLYTxs66pQQ6jes14YxDrRGvvpN0eCPEBD7f4vraDauboEi/BaR12lQjzfYnpTsG65EhxBg
- fAtY487AfRk8eOIoBLxz1p/xxzMsHKcjtil8KAT8sFxQgneaAZPZNeNZXgtxsxGWNyFdTTm1j
- D/M94mSDbNBfSLvDhUuL4qwWI6tmWbpAKyL8fCh/KqB07D17TfFuX1ALDHdAnHFKeEGnC62GV
- 3QluxzWC2qpnon99QSb9f5lc/6bSwqy7LJUDIM8oiTWOMLb9S/gp7ubwAGm9GDdV0eHnEDVVG
- ACI4ava2UmxIdWpL5OnVlchabE0wZ7FrWrTt//pndR1dse6i3jjInYftpVZxhmY3a9f64+H5J
- KPou2pbXzIFboWDwRf7bCzsjUURv5pfahZ1spDCpaYsyAul7/pyXu8jIL4WZGZBIaJXzljlaO
- vutk0oNgjZ9g0iPdjK8GlU3tXiE8OIQbTut2WlTASxRj9Zvu6R86Jsey63ZWIlUGfcp+wibtA
- r6lCaE/PEkA5eZhGMes5HZSGUS4WNgKwQ5P2sgvpdTCfVSS07ac6CS4nNE1IuteVvaiMgpevS
- UtE3sEz559veIZ+sKiiK5I5WsCmhvTzg6/Dz0Cdciua5joEQVBuyBVOmc2spDZTYtvuxem8rA
- PjO4nlBXlcAWaPvBl
+References: <20200205141332.lov2f2fvinehcd3a@pengutronix.de>
+In-Reply-To: <20200205141332.lov2f2fvinehcd3a@pengutronix.de>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Wed, 5 Feb 2020 14:15:07 -0300
+Message-ID: <CAHd-oW6p-zs-SZnQsJNWPGE8-Ls3vXvf_HOeO+W=1PsQ_oihZA@mail.gmail.com>
+Subject: Re: git-describe --tags warning: 'X' is really 'Y' here
+To:     Roland Hieber <rhi@pengutronix.de>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 05.02.20 um 17:45 schrieb Andrei Rybak:
-> Hi Ren=C3=A9,
+On Wed, Feb 5, 2020 at 11:13 AM Roland Hieber <rhi@pengutronix.de> wrote:
 >
-> On 2020-02-04 22:14, Ren=C3=A9 Scharfe wrote:
->> This code was moved straight out of name_rev(). As such, we inherited
->> the "goto" to jump from an if into an else-if. We also inherited the
->> fact that "nothing to do -- return NULL" is handled last.
->>
->> Rewrite the function to first handle the "nothing to do" case. Then we
->> can handle the conditional allocation early before going on to populate
->> the struct. No need for goto-ing.
->>
->> Signed-off-by: Martin =C3=85gren <martin.agren@gmail.com>
->> ---
->> Original submission:
->> https://lore.kernel.org/git/20190922081846.14452-1-martin.agren@gmail.c=
-om/
->
-> Judging by this sign-off, link to Martin's email, and shortlog from the =
-cover letter ...
->
->> Martin =C3=85gren (1):
->>   name-rev: rewrite create_or_update_name()
->
-> ... it seems that "From: Martin =C3=85gren <martin.agren@gmail.com>" is =
-missing.
+> Hi,
 
-Yes, indeed.  Sorry for that. :(
+Hi, Roland
 
-Ren=C3=A9
+> I'm working with the GCC Git repo [0] (which was apparently recently
+> converted from SVN [1]), and I'm trying to find out the most recent tag.
+> So on the master branch I do:
+>
+>     gcc (master) $ git describe --tags --abbrev=0
+>     warning: tag 'gcc_9_2_0_release' is really 'releases/gcc-9.2.0' here
+>     gcc_9_2_0_release
+>
+> It took me a while to find out what the warning means, because
+> 'gcc_9_2_0_release' is not in $(git tag -l), and it cannot be used as a
+> ref either:
+>
+>     gcc (master) $ git show gcc_9_2_0_release
+>     fatal: ambiguous argument 'gcc_9_2_0_release': unknown revision or path not in the working tree.
+>     Use '--' to separate paths from revisions, like this:
+>     'git <command> [<revision>...] -- [<file>...]'
+>
+> That name is in the tag itself:
+>
+>     gcc (master) $ git show releases/gcc-9.2.0 | head -n3
+>     tag gcc_9_2_0_release
+>     Tagger: Jakub Jelinek <jakub@gcc.gnu.org>
+>     Date:   2019-08-12 09:38:59
 
+It seems that the commit which added the output message you got is
+212945d ("Teach git-describe to verify annotated tag names before
+output", 2008-02-28) [1]. As the commit message states, the warning is
+emitted when a tag is locally stored under a different name from the
+one it was originally created (being the former the one you will want
+to use at `git show`).
+
+A simple way to replicate what you experienced in a fresh repo is with:
+
+$ git tag -am "testing tag body" testing-tag
+$ mv .git/refs/tags/testing-tag .git/refs/tags/testing-tag-with-new-name
+$ git describe --tags --abbrev=0
+
+Which outputs:
+
+warning: tag 'testing-tag' is really 'testing-tag-with-new-name' here
+testing-tag
+
+And in fact, if we take a look at the tag with hash `dbb1e12` in GCC's
+repo (using `git cat-file -p dbb1e12`) we see that the tag was
+originally created with the name "gcc_9_2_0_release" (that is the name
+stored in the tag object body). But the reference was later renamed,
+since, in the `.git/packed-refs` file, we find the said hash
+associated with "refs/tags/releases/gcc-9.2.0". I think that is what
+`git tag` is warning you about.
+
+> So my question is: is it the intended behaviour of 'git-describe --tags'
+> that it outputs tag names that cannot be used as a ref? If so, what is a
+> good other way to find out the most recent tag?
+>
+
+Hm, other than using the name provided in the warning, I don't know
+about a more 'direct' way. But I'm not very used to `git describe`s
+code, probably others can suggest a better option :)
+
+---
+Matheus
+
+[1]: https://github.com/git/git/commit/212945d4a85dfa172ea55ec73b1d830ef2d8582f
