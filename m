@@ -2,106 +2,127 @@ Return-Path: <SRS0=lBg5=3Z=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1,USER_IN_DEF_DKIM_WL autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DB7CFC35247
-	for <git@archiver.kernel.org>; Wed,  5 Feb 2020 02:35:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C0D2C35247
+	for <git@archiver.kernel.org>; Wed,  5 Feb 2020 02:49:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A06FD2051A
-	for <git@archiver.kernel.org>; Wed,  5 Feb 2020 02:35:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 065C621741
+	for <git@archiver.kernel.org>; Wed,  5 Feb 2020 02:49:46 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="EHkYebX8"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="YOasa9Yd"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727736AbgBECfL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Feb 2020 21:35:11 -0500
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:41090 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727674AbgBECfL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Feb 2020 21:35:11 -0500
-Received: by mail-pg1-f196.google.com with SMTP id l3so182122pgi.8
-        for <git@vger.kernel.org>; Tue, 04 Feb 2020 18:35:11 -0800 (PST)
+        id S1727832AbgBECtF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Feb 2020 21:49:05 -0500
+Received: from mail-pj1-f68.google.com ([209.85.216.68]:40089 "EHLO
+        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727714AbgBECtF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Feb 2020 21:49:05 -0500
+Received: by mail-pj1-f68.google.com with SMTP id 12so303071pjb.5
+        for <git@vger.kernel.org>; Tue, 04 Feb 2020 18:49:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=/dZLCp2PW7l7/IeLwdafJdk3ml+rdpNt4WOdFxoXJfk=;
-        b=EHkYebX8JI402rMquB1Vz97cR9TSr69cJ5+gFvcwCTDXCY2Fex7qxnTwugn1fbEf6F
-         Jnzf1zS/Y7Zz83DRGxqoXP3+8ipznTKADMg1D14YFPSmn7DaLU/L31ONQ27Siwpbb7Fj
-         xZLFBxKoM36s4AupsI0VCR0O7/HQllYYF4jc/+dOQB8ZUvHGmCbuNYESvgeBW0cGkMem
-         Ftq3pd2Wmk6sgt1Z7g2KB4cJzi7yQfhqfC0tki6whOt4W4o2Kd3e0iKxGZIZy29BqBWu
-         b/zkhgAfTrw4jVNBrtcp1es13eNhtVKCoePY5LIKTlPb49AkO+ePOWsYl/CbFDYfJjyb
-         qGNg==
+         :content-disposition:in-reply-to:user-agent;
+        bh=vhVK3bcUnKMaVBo4WNFkVZtpOi6Tm9rLQTn7uiscRe8=;
+        b=YOasa9YdpeyAoOoPUkmglbiC54CKexZJQAfbPJJ1q47t8ovIKiuIE4PoV20h8ccZYY
+         wEtxyXbdlunRcj1ofHMwZIk6nTvtZwskVSthYPGhznNqZTt9htbCILFIwHNX6bY4l/pB
+         GF48WOresY/8nA5d4ixDHYGBlSAZh574TnD/DmhyrKWOZygnHIzD4Tw0cee6SjqFoSYC
+         DcKXaEVogOMK8G/WKUFWau4IhHF7dwDKUPBpSjXJBdtTQ/dTaEh17yxsntQu1dhlWFu3
+         9fRU1fjoCR8cbaI7/ef0xxoQ9J6wxlO18VedWOCoTVHTJdRgau5YnOV4BFeKl+Sr/12r
+         ZFPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=/dZLCp2PW7l7/IeLwdafJdk3ml+rdpNt4WOdFxoXJfk=;
-        b=SmxS9ozFbtKQiBnfe5POr6arvK+g6Hs/CYhBJIKElQpu5H6Q/mAmZVPBX8WpRkAgpF
-         xEvANHG/qG4s1fMZ6P8ebwzbwacRdd064bGcTDEbKsEvIpRSnksaaurg6AG6XYksecOQ
-         boCTeUl/3xu9XE9bM5QdU49dslW8Q9BCmZcl8k2jmsKgD/RMgN/d4jQADY2JcOVTmwEA
-         L1x9s7Jpz/JsZQV6TcF/C4UxGNkZRyzXs18XBIptx2n+C54ObI0KdFrKsm0/VOzKFA+Q
-         c5774wMM41ktebsGE+I9SWttaYUT+x9KN5J79C5KAO6hgL5h+arGdnF1jBxQvx9LzCPv
-         kx5Q==
-X-Gm-Message-State: APjAAAUk+Lw1ivLv6BLDopPk8M3fH2vtngLlFNmKNmYxVXq7UGfoLXmT
-        /PxLyn2FpbQaPt0B7Zxzvt7pqw==
-X-Google-Smtp-Source: APXvYqyTI5yZqf8nXiz4BtOpAGlWgk3foqngqFIIq7Fau+015rHlWMeJfbgO6PsQN9q5Ox8m/3tYVQ==
-X-Received: by 2002:a62:25c6:: with SMTP id l189mr34320234pfl.136.1580870110494;
-        Tue, 04 Feb 2020 18:35:10 -0800 (PST)
-Received: from localhost ([2601:602:9200:32b0:fd92:b4b9:d992:34e6])
-        by smtp.gmail.com with ESMTPSA id k3sm25654144pgc.3.2020.02.04.18.35.08
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=vhVK3bcUnKMaVBo4WNFkVZtpOi6Tm9rLQTn7uiscRe8=;
+        b=AGtxLiT6tyaUvLcZby22n/aSu/mpZQC4+8bwuQa+DtO85lcfcWzZynhMy1Yw/rPUgu
+         UBGuZpM6IT7JO0rr67mV8FdQmYy4nVKnhhpFx+nMLKgY/LKAdHSQs/t+QOY9f0ATxbte
+         vR7CxoLMGRkWWPCQFGU6K0rUhXIuE5uLfU4XbbRRxwO375ISH8h6w+loR9PIDFQrwn82
+         DF7F79W+AlF0texw6kMQ33WYPd0m5I1qXQJD03qWsgctKXbzr7yviTEHZ9ETFw8ejvAJ
+         XVSX7jqwlmFdsEhzGy9mtrD6wtrJufo9yBC0rI5dgCAmi/nktkZpC7pKlRn3DajDFOJc
+         G7MQ==
+X-Gm-Message-State: APjAAAVNM41GugEvqNga57zx20k1isMY1D/6E4IvYBfR7HNbJLpb020H
+        Ja1rbvM/KAwEuxlmQ8MMI5yCMo1gbMI=
+X-Google-Smtp-Source: APXvYqwmpr1mX3MOxQl6CuCAt0HNQNS5vWIccqXtGedxnLVyWHR6spMUFSc+MKKQz5XP1fxVB69I2Q==
+X-Received: by 2002:a17:902:d898:: with SMTP id b24mr32921545plz.133.1580870944565;
+        Tue, 04 Feb 2020 18:49:04 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
+        by smtp.gmail.com with ESMTPSA id g18sm25574812pfi.80.2020.02.04.18.49.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Feb 2020 18:35:09 -0800 (PST)
-Date:   Tue, 4 Feb 2020 18:35:06 -0800
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        Git Mailing List <git@vger.kernel.org>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 01/10] name-rev: rewrite create_or_update_name()
-Message-ID: <20200205023506.GA58070@syl.local>
-References: <084909f8-fefa-1fe0-b2ce-74eff47c4972@web.de>
- <b8f6a47e-1cbe-b2c7-cdde-ff2dc28af2b2@web.de>
- <f0e0ab6c-afde-307e-bbf0-823c576d67ca@gmail.com>
+        Tue, 04 Feb 2020 18:49:03 -0800 (PST)
+Date:   Tue, 4 Feb 2020 18:48:59 -0800
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v5 11/15] bugreport: collect list of populated hooks
+Message-ID: <20200205024859.GM87163@google.com>
+References: <20200124033436.81097-1-emilyshaffer@google.com>
+ <20200124033436.81097-12-emilyshaffer@google.com>
+ <xmqqh8068a5k.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <f0e0ab6c-afde-307e-bbf0-823c576d67ca@gmail.com>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+In-Reply-To: <xmqqh8068a5k.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 04, 2020 at 09:00:23PM -0500, Derrick Stolee wrote:
-> On 2/4/2020 4:14 PM, René Scharfe wrote:
-> > This code was moved straight out of name_rev(). As such, we inherited
-> > the "goto" to jump from an if into an else-if. We also inherited the
-> > fact that "nothing to do -- return NULL" is handled last.
-> >
-> > Rewrite the function to first handle the "nothing to do" case. Then we
-> > can handle the conditional allocation early before going on to populate
-> > the struct. No need for goto-ing.
->
-> I read this carefully and agree it is functionally equivalent.
+On Tue, Feb 04, 2020 at 10:44:39AM -0800, Junio C Hamano wrote:
+> emilyshaffer@google.com writes:
+> 
+> > +	/*
+> > +	 * Doesn't look like there is a list of all possible hooks; so below is
+> > +	 * a transcription of `git help hook`.
+> 
+> That's "git help hooks", if I tried my reproduction correctly.
 
-As did I. I originally thought that my MUA was wrapping the 'else if'
-line oddly, but then I discovered that it's the label's indentation that
-was throwing me off.
+Yep. I'll fix it.
 
-In any case, this makes good sense. Well done indeed.
+> A straight-forward (in the sense of "what we want in the outcome is
+> quite clear" and not in the sense of "anybody can design and implement
+> it with a single 30-line patch") follow-up we can make after this
+> series lands is to rethink how Documentation/githooks.txt is
+> maintained and the list we have here is synchronized with it.
+> 
+> The design could me just the matter of running "grep" of some sort,
+> with appropriate markups that are no-op to AsciiDoctor/AsciiDoc
+> added to the documentation source, to produce this list.
 
-> Since you are removing a goto and rearranging if/else blocks, I thought
-> this response needed to be explicit, at least more than usual. Good work.
->
-> Thanks,
-> -Stolee
+Well, with Martin's suggestion[1] to use annotate:bugreport[include]
+instead of bugreport:include[x], this kind of change becomes a matter of
+course to just use "annotate:hook[x]" and write a script nearly
+identical to generate-bugreport-config-safelist.sh, and add it to the
+Makefile.
 
-Thanks,
-Taylor
+Like I said up-thread, I don't like the idea just because it's awfully
+temporary (pending work that's right below this on my list for the
+coming weeks).
+
+It sounds like you're saying you don't mind any work of this nature
+being done as a follow-up - and that's fine with me, too. I'd just
+rather do the follow-up with enums and a library than with grep and
+sh. :)
+
+> >  static const char * const bugreport_usage[] = {
+> >  	N_("git bugreport [-o|--output <file>]"),
+> >  	NULL
+> > @@ -193,6 +243,9 @@ int cmd_main(int argc, const char **argv)
+> >  	get_header(&buffer, "Safelisted Config Info");
+> >  	get_safelisted_config(&buffer);
+> >  
+> > +	get_header(&buffer, "Configured Hooks");
+> 
+> Phrase nit.  There may be many people who just enabled hooks without
+> configuring, so "Enabled Hooks" may be more appropriate.  We do not
+> have to inspect what is in the hook to determine if it is enabled,
+> but we do need to if we want to tell if a hook is "configured".
+
+Ah, that's a good point. OK, I'll change the wording as you suggested.
+
+ - Emily
