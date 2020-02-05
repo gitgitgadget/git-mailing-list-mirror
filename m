@@ -7,70 +7,69 @@ X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B341C35247
-	for <git@archiver.kernel.org>; Wed,  5 Feb 2020 15:11:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 084F6C352A2
+	for <git@archiver.kernel.org>; Wed,  5 Feb 2020 15:19:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 40AD420702
-	for <git@archiver.kernel.org>; Wed,  5 Feb 2020 15:11:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CCDE422314
+	for <git@archiver.kernel.org>; Wed,  5 Feb 2020 15:19:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EPrSA7L5"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hrSddb8g"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726416AbgBEPLr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Feb 2020 10:11:47 -0500
-Received: from mail-qv1-f67.google.com ([209.85.219.67]:41647 "EHLO
-        mail-qv1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726119AbgBEPLr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Feb 2020 10:11:47 -0500
-Received: by mail-qv1-f67.google.com with SMTP id s7so1240768qvn.8
-        for <git@vger.kernel.org>; Wed, 05 Feb 2020 07:11:46 -0800 (PST)
+        id S1726740AbgBEPTW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Feb 2020 10:19:22 -0500
+Received: from mail-qk1-f195.google.com ([209.85.222.195]:45994 "EHLO
+        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726534AbgBEPTV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Feb 2020 10:19:21 -0500
+Received: by mail-qk1-f195.google.com with SMTP id x1so2127414qkl.12
+        for <git@vger.kernel.org>; Wed, 05 Feb 2020 07:19:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=rHxWRomDtenn4xmIht0S78XhSRMl7TDnInYJ6kv62dU=;
-        b=EPrSA7L5/fLzZla2j0tiZPnHOvlvoDAYseC4uPQYA7BzeT8rtIpemV/4xVxwtr0OcC
-         1PmeXQlnRA+1G7J0oTMwdn3+9dk1ATH8INRQWO0zc8UBrZsOE1MFPNeWo3j3NA6eUH4q
-         7d1i5TPEqV6MEatfXCK9+lTkrmIFAE3jjSds8dl7FqdQH6JBoUETqbYyEG8SvDFV2vZq
-         RUGC2Kgp72Z7RL0ZTiQpEAjtTQIK03YL3RYmbY8O4sEkHN7ioSFkGjxrc/RaLV7vMxaW
-         Z778Mz4uZUws0UIFG2dWa7BD078woisskK4+pNhLpfF5gK2fozOryiy7qQiTeNVszoBD
-         rMhQ==
+        bh=o0lMgfRJtXZDsveOHHOSYlGAv1i1AGUnWvXNT6pLPpI=;
+        b=hrSddb8gssYha5muc71A4lo7EWGW3nYM/whTRHrLpHuQu3dnlsXYS7oatLWYVIdw0H
+         r+Q6hSVHuxruQ+6MKQOdAAM97kCBvXPJx1KIy8xE4Nrqqnzws066mrUGC0fyww51TM2t
+         2MLL0hxeDy7RzkD33hFWKJxeaG92T8ewXIoB/SYJ94HA1EyEfvxehUeMTidz4CLbPewU
+         QPhaI/bXwJlxQLyhbstgv9ggmb5oehExQT45YSLfXaO1wevqgxTTRMTnX8MXksjmnZV5
+         r5WBcCYmKMZK35zoCmgRGb/mCf+GF/CmqzheOZ4/+wTIuZe5EZ6i68goN15105/KpMmC
+         YtIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=rHxWRomDtenn4xmIht0S78XhSRMl7TDnInYJ6kv62dU=;
-        b=qEmXBOZ/Q9DM2idsR4Yk1FlORu+tS94H60OPRp9D17Q4AcHovpLQgM6RRRhO5yfERc
-         fyqXPoRrkoA7b4XahSTKNr5+sDfZMb7MA4ITrVy3JoeTc7ME2BRvKgm31yIY3jBfPLTG
-         GWDxmss+zQ0ZPDtcs13PAQGodBZJj/3MrBnI9+uvaDsKyhITdI76q+aOKOEW8mxsGD1O
-         y7SLSjH9V3MDTsMYoFCXv/NWjTpv8iO7tw8JIajGl/q/L+tgplEYqiZxPHvQGxDGo930
-         MHOlryNrnxsMGOyXfDu0kb9D5ykQt3o5a+xFHXDklk42eJu6lQWKz8KZJsS0+QbqeX33
-         TpVg==
-X-Gm-Message-State: APjAAAXxwf23FsS2WRwVOCOvXDDMkhRzlY6p8sX7VS9uzzjzas6W5b27
-        l397gVh9TBZovWOs5HxaInU=
-X-Google-Smtp-Source: APXvYqzWZPlATePNFM4aTQtAyfXNk2NcSBinAweSfSXkO3abE9LgqXeKz9ym4nDqgo+18maqO7dCbw==
-X-Received: by 2002:a0c:f412:: with SMTP id h18mr33213716qvl.124.1580915505931;
-        Wed, 05 Feb 2020 07:11:45 -0800 (PST)
+        bh=o0lMgfRJtXZDsveOHHOSYlGAv1i1AGUnWvXNT6pLPpI=;
+        b=HzFq5bC2OFBppx3CVM8AKvE8663fMFUiThwHAU3IfB9lCj4yP/XtgEkzEYoLeg8dXB
+         oljvE6rAt8WPiLbb/T5jrr/ajPODtxM0tYdwYmnhD8QURz4zPuUIJL/TgKV22yYIKkci
+         XpP4XkhkYGm0K/cldg6NQecYR8Zdm3wqUBZRM32B3wf+QsNjfsFJFH9wB+52/38D4cGp
+         a9fNQPYDAUYcTD4wVKKF1YwFaBVk2Tn9XTGO3IUFw2bLmtaix+wivKkFzafuRgPnrHeL
+         KIn9Br2549jyVow6ogy1mFdgQbNMEpjbiJB/04iKMsJjJ8MbwCahn1kiUuNPM7eK5YxE
+         zcog==
+X-Gm-Message-State: APjAAAVJ/xzSmF42gOjc5aMP4GNBXfOEarRCiALIOntz2z0B5dLhKXON
+        fXMe60o/i7I4Z2Jfk76qI2E=
+X-Google-Smtp-Source: APXvYqz3Koy+LjFcVShzcQXVrEo5eTCXdH66Hdrsz4VCEzTKoGQn64Ari66voMT5fQvACcQgo4JBnA==
+X-Received: by 2002:ae9:e901:: with SMTP id x1mr31959198qkf.117.1580915960860;
+        Wed, 05 Feb 2020 07:19:20 -0800 (PST)
 Received: from ?IPv6:2001:4898:6808:13e:c9b5:7cd5:1ee4:5066? ([2001:4898:a800:1010:7aeb:7cd5:1ee4:5066])
-        by smtp.gmail.com with ESMTPSA id t23sm11748qtp.82.2020.02.05.07.11.44
+        by smtp.gmail.com with ESMTPSA id c186sm7333217qke.124.2020.02.05.07.19.19
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 05 Feb 2020 07:11:45 -0800 (PST)
-Subject: Re: [PATCH 09/10] name-rev: generate name strings only if they are
- better
+        Wed, 05 Feb 2020 07:19:20 -0800 (PST)
+Subject: Re: [PATCH 10/10] name-rev: release unused name strings
 To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
         Git Mailing List <git@vger.kernel.org>
 Cc:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
         =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
 References: <084909f8-fefa-1fe0-b2ce-74eff47c4972@web.de>
- <77d1d053-8680-5cbe-9182-b6aec9e9b446@web.de>
+ <4eddc458-6294-9b9c-857b-50ba484a7168@web.de>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <3a59d8b4-3c3d-3812-9b7e-ac7e331ccd1c@gmail.com>
-Date:   Wed, 5 Feb 2020 10:11:44 -0500
+Message-ID: <35b282f8-c3a9-e7e3-5ea8-0542e7ce24ac@gmail.com>
+Date:   Wed, 5 Feb 2020 10:19:16 -0500
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:73.0) Gecko/20100101
  Thunderbird/73.0
 MIME-Version: 1.0
-In-Reply-To: <77d1d053-8680-5cbe-9182-b6aec9e9b446@web.de>
+In-Reply-To: <4eddc458-6294-9b9c-857b-50ba484a7168@web.de>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
@@ -79,24 +78,59 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/4/2020 4:25 PM, René Scharfe wrote:
-> -			if (create_or_update_name(parent, new_name, taggerdate,
-> -						  generation, distance,
-> -						  from_tag)) {
-> +			parent_name = create_or_update_name(parent, taggerdate,
-> +							    generation,
-> +							    distance, from_tag);
-> +			if (parent_name) {
+On 2/4/2020 4:26 PM, René Scharfe wrote:
+> The runtime actually increases slightly from:
+> 
+> Benchmark #1: ./git -C ../linux/ name-rev --all
+>   Time (mean ± σ):     828.8 ms ±   5.0 ms    [User: 797.2 ms, System: 31.6 ms]
+>   Range (min … max):   824.1 ms … 838.9 ms    10 runs
+> 
+> ... to:
+> 
+> Benchmark #1: ./git -C ../linux/ name-rev --all
+>   Time (mean ± σ):     847.6 ms ±   3.4 ms    [User: 807.9 ms, System: 39.6 ms]
+>   Range (min … max):   843.4 ms … 854.3 ms    10 runs
+> 
+> Why is that?  In the Chromium repo, ca. 44000 free(3) calls in
+> create_or_update_name() release almost 1GB, while in the Linux repo
+> 240000+ calls release a bit more than 5MB, so the average discarded
+> name is ca.  1000x longer in the latter.
+> 
+> Overall I think it's the right tradeoff to make, as it helps curb the
+> memory usage in repositories with big discarded names, and the added
+> overhead is small.
 
-As someone unfamiliar with the name-rev code, it took me a while to see why
-the algorithm isn't exponential in complexity. It technically _is_, but it
-is of the form 2^{N / MERGE_TRAVERSAL_WEIGHT} = 2^{N / 65535} and only if
-we create a particularly nasty commit history that would never appear in the wild.
+I agree this trade-off is worth it. Your reasoning for why it is
+happening makes sense, too.
 
-But, the critical section is the block above. The confusing part was that
-create_or_update_name() returns NULL if the name is updated, but non-NULL if
-a better name is created. That makes it clear that this change is saving
-allocations.
+> +	if (is_valid_rev_name(name)) {
+> +		if (!is_better_name(name, taggerdate, distance, from_tag))
+> +			return NULL;
+> +
+> +		/*
+> +		 * This string might still be shared with ancestors
+> +		 * (generation > 0).  We can release it here regardless,
+> +		 * because the new name that has just won will be better
+> +		 * for them as well, so name_rev() will replace these
+> +		 * stale pointers when it processes the parents.
+> +		 */
+> +		if (!name->generation)
+> +			free(name->tip_name);
+> +	}
+
+And here, this idea of "still be shared with ancestors" is confusing
+without the additional context that the name-rev algorithm is using
+depth-first-search to find the "best" name. At this point, we are
+trying to replace the existing name with a better one, and use
+"generation == 0" to declare "I am the initial owner of tip_name".
+The rest of the ancestors will replace their tip_name pointer with
+the new name, all while not accessing this freed memory.
+
+Keeping such dangling references to freed memory is certainly
+dangerous, but these references are short-lived within the name_rev()
+method. That limits the possible ways this could cause issues in
+the future.
 
 Thanks,
 -Stolee
+
