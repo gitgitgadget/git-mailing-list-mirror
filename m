@@ -7,95 +7,138 @@ X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 96F77C352A3
-	for <git@archiver.kernel.org>; Wed,  5 Feb 2020 15:20:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 632C3C35247
+	for <git@archiver.kernel.org>; Wed,  5 Feb 2020 15:22:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6E8FE222D9
-	for <git@archiver.kernel.org>; Wed,  5 Feb 2020 15:20:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2A1D020659
+	for <git@archiver.kernel.org>; Wed,  5 Feb 2020 15:22:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ab7WX0wK"
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="loO7C+hO"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727162AbgBEPUd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Feb 2020 10:20:33 -0500
-Received: from mail-qt1-f196.google.com ([209.85.160.196]:35042 "EHLO
-        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727104AbgBEPUc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Feb 2020 10:20:32 -0500
-Received: by mail-qt1-f196.google.com with SMTP id n17so1828887qtv.2
-        for <git@vger.kernel.org>; Wed, 05 Feb 2020 07:20:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:from:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=ZB6kiioUbnDg9NKexifqlbHXOE3qAvUPswtqGWS7wfU=;
-        b=ab7WX0wKViSEVVmB7RwcwWogcHeU1dzzAhg1eAwUa6gg0CQ622JrZBtxCfx8GVLFuf
-         f8t16ZxwtVqDk7TADxKDPt6q80HxuKpcffghCKZN9A6qMTlKj8Hgf/hPflDSFfDXzltV
-         Q8JKKhfgYbTtoRKruX+bC1gMTAh+bzm7Yt8RO9PaOIpgnpxqF0QqECuEVRRiVNGZjATu
-         TA95UU3Ba5x94DuJAfD6cOWtk0JwfPTUFxpNiwKc1DjqtLG4LF1GTeMZZXUoqbwMzWcO
-         zLPcq/m/37CLDYGWMb5j2UFAKi3G92arcJylNzIVuQXzUFcKecpPCYAGg7ToinQDHjHg
-         gEDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=ZB6kiioUbnDg9NKexifqlbHXOE3qAvUPswtqGWS7wfU=;
-        b=k7IJOg67vTsaaXHQRuZttwukdTNQndlYPugQzTrh3vaTsqFGSBjFWTciI1WUFiGBLJ
-         xuYOpwv3cG5FO8cCkodhQxPNqTee2VHntaJhZOh5Cchmt/Owc0j+hgktOBgHTnhwQZJa
-         OHYoyjm55V1eL+iIECC5nqAv4aK4DSNU7H1ZSEU+5WQbp9evqvElMH5q7PBIqVG7syMd
-         PoapOXvY9Ld7raMABK//YZjP5tG6lPTKuv2AcO/L1epmXEbNKz2JB6julMrkSw1+bcjP
-         JrzqQCa6qCgEbNaiRRArJT0HHWoOEJtNg/tCVaXYHdJb0FouL2+nqK8x7LUdT7INHVvZ
-         OwOg==
-X-Gm-Message-State: APjAAAWbV21fHdaiWk7GgRBrdqhVU5RZHYv5DCqtwM1Hi4ke1MvlqZqd
-        lBFRkYYC2IswuCJi1NobIDA=
-X-Google-Smtp-Source: APXvYqwZNgP84KeYVS8E12BbyMkhPF6eX9+GEdo3ibm5QHKkx2jOl89FuPGgZt6xlRfmPkO/FDdoIw==
-X-Received: by 2002:ac8:734c:: with SMTP id q12mr32021153qtp.325.1580916030663;
-        Wed, 05 Feb 2020 07:20:30 -0800 (PST)
-Received: from ?IPv6:2001:4898:6808:13e:c9b5:7cd5:1ee4:5066? ([2001:4898:a800:1010:7aeb:7cd5:1ee4:5066])
-        by smtp.gmail.com with ESMTPSA id w53sm21625qtb.91.2020.02.05.07.20.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 05 Feb 2020 07:20:30 -0800 (PST)
-Subject: Re: [PATCH 00/10] name-rev: improve memory usage
-From:   Derrick Stolee <stolee@gmail.com>
-To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        id S1727050AbgBEPWY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Feb 2020 10:22:24 -0500
+Received: from mout.web.de ([212.227.17.11]:50727 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726416AbgBEPWY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Feb 2020 10:22:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1580916142;
+        bh=eajZuzWAq1kYIRhM2JEmjvSTlrc2EUWRQWVdPRITnZM=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=loO7C+hOFWB+ZdGVgAvNoXA2Xvq94TnRv61o9yQftzUcB7ZozUqAqczkfUSfep1CJ
+         fHGi7bA+XYx1D9g/mYJdc/HSVfKeANy9DR+1MHbaj6UbRLCSj/cxq7x/Emy1tq+/BQ
+         uy19+dx1K2BT/cAhOT4vZrvJ1rxDAvUit9Tum/VA=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.26] ([91.47.145.153]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0M2dTd-1jrK5h00iT-00sJar; Wed, 05
+ Feb 2020 16:17:16 +0100
+Subject: Re: [PATCH 08/10] name-rev: pre-size buffer in get_parent_name()
+To:     Derrick Stolee <stolee@gmail.com>,
         Git Mailing List <git@vger.kernel.org>
 Cc:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
         =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
 References: <084909f8-fefa-1fe0-b2ce-74eff47c4972@web.de>
- <06f8c44c-66aa-d9d5-7653-436424f5c864@gmail.com>
-Message-ID: <d4815a14-eb7e-ae9e-54fe-ebfcdde70128@gmail.com>
-Date:   Wed, 5 Feb 2020 10:20:30 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:73.0) Gecko/20100101
- Thunderbird/73.0
+ <c7f22d8d-10f8-0c97-672e-0a50182901e0@web.de>
+ <9b98835d-d94c-19f5-42ba-d583a33306cc@gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <ea3910e1-f1cb-8a3c-0e32-5c33eeeb8af6@web.de>
+Date:   Wed, 5 Feb 2020 16:16:54 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-In-Reply-To: <06f8c44c-66aa-d9d5-7653-436424f5c864@gmail.com>
+In-Reply-To: <9b98835d-d94c-19f5-42ba-d583a33306cc@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:rZlon1r/TltJjJsxtJYBZdDhlrHNqIEY0zYyQZYVgRTU+1YWiJR
+ g407TSBDfpA47d01m75Jx5QM0I756P5NU2fVEBgg+CXRqkKhoqNEewN4+olPFo2hR10tmCE
+ shcADuYGou/NOgWb5z3ROPVa9IYMJF4042s+pOypumzUyPMXWWYLJWudmNIOrpLdLSeoE2G
+ hY1xibN7ZVXVbx22oLjZQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:GkDgIt7f+zY=:DC3VS9b2nf/B/UjThgz5e0
+ YLEdB3lycHMoTSWNDWvRHoFbKJ3hPHVDWUqmHG41w4YeG5aN+sbQ2lcMx/JINZrX3NkDPz7Mp
+ 2+V+Z6F5iq738QfTL7KtF7njRLT775B1Xr8dUtgaa/YKyI7sqm2X7Y8fHUQ9Z/Afudwd9+9PO
+ F8T3sYN9dZbfJdZeiQAC2e+EKRJKtgDubKfP7Jf8wV/QgF7ZKnLjqNcdu32+G3Hg06VuEvT0h
+ VKDLYcwOivCgG+pM5G59fAx1CcXmKSw68WV41fmSqnM34UKZQObQvKI7NR/pF6NjOG3XeyzX3
+ CDkpf1lPG96t8PtZgqXhighnii458+yOKKmbvKfq2NHj1Iv/5Lxi/5YHUNArtaV2QCfKTIUhO
+ O7LPMreMM/lOQgmPP+tSO55QDeiIbWFjsE1fh6+D67GCcIvlrgEjHug4EDgiN0d5cODLCu4vs
+ GN0jbW5cnE+QFoqukyZOIuscQWfEbtyiaBuS07kV7r+nsEC261d2PU93zc16DAFyC43b90nSX
+ qYU8cZx0lYBy+LtYrfmZLdGDXOtLaDcWW478bFZavJQJWoDpviOPMJEq4+vE6lFSgeKbostOw
+ dSEGJTi9FKyP/Zk8Ibwj6XSBOhTNqogMQePDMy0y9Sqfv+xWFMl8QGNOszXkLvB0E095+/+PJ
+ Fh973Jr4FCsbQXk+uIj07MP5p9oYeW9rM+9CByova5QtbIc/tYr9YYmtNkIkqqG5eBzXexOZA
+ x6iE7AThj1P8iFS0hUnww2zFqSx24GlJg0oUjFgNpaUCviHXuY/+zdEH9SMfqO0uCEwNNycAG
+ iw61OImlDgIFQUWYse5yKC8mwt6YDZPbL6qCRlbmJmDDszCVhj7+HOKBu1CHV5m8RcLW1nYXE
+ MwKHxeH04S517r3dkiDFaO4oFL4R5z1VI2Wz20G0DPVGQbbGK6C3KeLbn8wegxd8jq3fohKbh
+ M+kbIb9iFPCMsyWmBY6NYMK/xhl9tMAlT2Wxjj52Nx8Vrb7T8hIWaFdWcSjCU2UsZzR5LWfrL
+ X2xtvyPUCKOpskUlW5vM/p14zdSxOstrmqAMj72qjInbpVbbul7aX9hgs1pNO9ksNzzDvQu9X
+ j7b8aTZ2wJYVTwqv4EWq2vuZKVyZ1iSQC+EGOMZXncu3rvcA4YTSlFFbTZqxuf9WM2Xa4GxoS
+ XicJATnEcHglQUWAG5qSKRUTL78GFLG1LP+H+QQTL8Iy1mUEcIV468RlS4YtaEZt1OSWxcedr
+ U9wwCHeZ74xNfwXAq
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/4/2020 10:28 PM, Derrick Stolee wrote:
-> On 2/4/2020 4:12 PM, René Scharfe wrote:
->> This series seeks to get reduce the size of memory allocations, the
->> number of reallocations and the amount of leaks in git name-rev, to
->> improve its performance.
-> 
-> I am generally very happy with the performance benefits and think
-> this series is very well organized.
-> 
->>   name-rev: don't leak path copy in name_ref()
->>   name-rev: generate name strings only if they are better
->>   name-rev: release unused name strings
-> 
-> I don't have the right context to understand these patches without
-> applying them and investigating the methods around the changes.
-> They intrigue me, though, so I plan to pick this up again tomorrow.
+Am 05.02.20 um 04:19 schrieb Derrick Stolee:
+> On 2/4/2020 4:24 PM, Ren=C3=A9 Scharfe wrote:
+>> We can calculate the size of new name easily and precisely. Open-code
+>> the xstrfmt() calls and grow the buffers as needed before filling them.
+>> This provides a surprisingly large benefit when working with the
+>> Chromium repository; here are the numbers measured using hyperfine
+>> before:
+>>
+>> Benchmark #1: ./git -C ../chromium/src name-rev --all
+>>   Time (mean =C2=B1 =CF=83):      5.822 s =C2=B1  0.013 s    [User: 5.3=
+04 s, System: 0.516 s]
+>>   Range (min =E2=80=A6 max):    5.803 s =E2=80=A6  5.837 s    10 runs
+>>
+>> ... and with this patch:
+>>
+>> Benchmark #1: ./git -C ../chromium/src name-rev --all
+>>   Time (mean =C2=B1 =CF=83):      1.527 s =C2=B1  0.003 s    [User: 1.0=
+15 s, System: 0.511 s]
+>>   Range (min =E2=80=A6 max):    1.524 s =E2=80=A6  1.535 s    10 runs
+>
+> Nice!
+>
+>> +	if (name->generation > 0) {
+>> +		strbuf_grow(&sb, len +
+>> +			    1 + decimal_width(name->generation) +
+>> +			    1 + decimal_width(parent_number));
+>
+> Just curious: these strbuf_grow() calls are what _really_ improve the
+> performance, right? If you dropped them, then can we expect the performa=
+nce
+> to be similar to the old code?
 
-After looking closely at these three, they LGTM.
+The replaced xstrfmt() is defined in strbuf.c and trivially wraps
+xstrvfmt(), which in turn does:
 
-Thanks,
--Stolee
+	struct strbuf buf =3D STRBUF_INIT;
+	strbuf_vaddf(&buf, fmt, ap);
+	return strbuf_detach(&buf, NULL);
+
+And strbuf_addf() trivially wraps strbuf_vaddf().  So indeed, all
+I did was to inline xstrfmt() and add the strbuf_grow() calls.
+
+Their high impact shocked me a bit.  vsnprintf(3) really doesn't seem
+to like working with a buffer that is too small (when it's supposed to
+just calculate how many bytes it would have needed), at least not in
+the one from glibc 2.29.
+
+>> +		strbuf_addf(&sb, "%.*s~%d^%d", (int)len, name->tip_name,
+>> +			    name->generation, parent_number);
+>> +	} else {
+>> +		strbuf_grow(&sb, len +
+>> +			    1 + decimal_width(parent_number));
+>> +		strbuf_addf(&sb, "%.*s^%d", (int)len, name->tip_name,
+>> +			    parent_number);
+>> +	}
+>> +	return strbuf_detach(&sb, NULL);
+>>  }
+>>
+>>  static void name_rev(struct commit *start_commit,
+>> --
+>> 2.25.0
+>>
+>
