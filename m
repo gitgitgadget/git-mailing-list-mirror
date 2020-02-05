@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-8.2 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EB8A4C35247
-	for <git@archiver.kernel.org>; Wed,  5 Feb 2020 00:28:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 98C7AC3524F
+	for <git@archiver.kernel.org>; Wed,  5 Feb 2020 00:28:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 979FC2082E
-	for <git@archiver.kernel.org>; Wed,  5 Feb 2020 00:28:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 679542082E
+	for <git@archiver.kernel.org>; Wed,  5 Feb 2020 00:28:40 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="Q0fS+Nks"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="nf5GL6z7"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727674AbgBEA2f (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Feb 2020 19:28:35 -0500
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:38019 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727627AbgBEA2f (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Feb 2020 19:28:35 -0500
-Received: by mail-pg1-f196.google.com with SMTP id a33so44608pgm.5
-        for <git@vger.kernel.org>; Tue, 04 Feb 2020 16:28:34 -0800 (PST)
+        id S1727714AbgBEA2i (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Feb 2020 19:28:38 -0500
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:37807 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727619AbgBEA2i (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Feb 2020 19:28:38 -0500
+Received: by mail-pg1-f194.google.com with SMTP id z12so47641pgl.4
+        for <git@vger.kernel.org>; Tue, 04 Feb 2020 16:28:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=5zDfKFta8GDt/KGcGgNyYgxvmHnNvfcgqoaNciXKfRM=;
-        b=Q0fS+NksTxJRCAFUnXeCRu6XuD6nBTpQpfzjJHGB1Y6xb9llA49pr57P5ueqBsxtv+
-         sVhK381faqgiMg8S1PP40hcmpBgKpOx2KAcUSo+SlpUeqxLXFT0GzjE95pBMRPGkCpeX
-         szJ5EOiSVf0Y1zmvZo8v1xEJL1x4sWaNRDE5/fQNtMDiWE95n1KODCxh5qfZ+6TBQziD
-         IXrxKP31S8zIy1f3VhMucEqdRdfANCisNjwGKx1KcYh1DdOj32Abe8YKDxHRKtmdjdXj
-         HAgfCs+VXJZii7uThCbRYLbtlocn8DuSPCZRrR2R+06PiPTrO5+FzDEyrGsfRzxA4JGo
-         o+mg==
+        bh=u6zexRKl+ij3KL4kQYPSiOYlBCnh1v1Hfej621Q8a44=;
+        b=nf5GL6z7s3Ps/wM1ULccaRdkLDB2GdbbuZxcle+79EG3OQ+YcsKgsT9QLT8zbD54SQ
+         Z/CkrO71sSL5aWGqSrc+CL0ZNCDDfiWIqKcDsaNarybgzQlylPDd8PXubja4bQnlmh90
+         V0/ME985yZVdlryGUDTiC5b113d7oC5+9hczyY1qh6vYnEhzF6nZ2n4/R30Bqudp/z1d
+         HEgnSF/dzeKVfaz+kEKOuRXr//3V9BAZqY1n6PrfPtAkUQu3rQJzH0mYvDe+MZy34uzH
+         RCXfsHQpAY/88E1EpihUbXJ8xsHAW7a+OLeM0Hg8uJTGhla0JVw9Uo3jYK0mohaRYGLk
+         lNuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=5zDfKFta8GDt/KGcGgNyYgxvmHnNvfcgqoaNciXKfRM=;
-        b=bK+kF4i8ap1p74PJa/d2ghtoicspSL+OmojRrT+RzbGMAdb3US6i0D13roOUpi5+Hy
-         xc/SJOMkjCx1aleZ1zmaDGqls85SdvQ/0oJcXoHpiRdXlqM2bBgjVREN84bFjyYu07Rl
-         jpXamIRHVQ0V/1GLDiiibCV6JwyX55CUT80boN7eNFMtcXU+olXQ0NDRAsAsiVbXv410
-         HPNcA0QgLScxTwWyXRy+5vsI76WYkhLEKNk3GX9ZIzGSCgvLTIt44zGLIoBdyS2qqTu3
-         6MDyLtDJ+Dff0kXgr8JQFKHoeoKkNdLA/EUz+Bh+WSlrzeEeQ8LP+G2Lb4ybdbtwH7v4
-         NVWw==
-X-Gm-Message-State: APjAAAVzOZiKzZNskdFyoJ+6jDgpO1x+SzSAd63Q9HetWh6TZFQXrTHc
-        oOHfJxVloDj8TbhdFVDKeTnOtN6dNIpyEg==
-X-Google-Smtp-Source: APXvYqxBdY/faKzJJNMGeozIM2g3Jb3ZplhrRkJWeNCY/a6qqB8AX7vGbtUgsvdVRgxQSr9xEl9hrw==
-X-Received: by 2002:a63:da14:: with SMTP id c20mr35322804pgh.280.1580862513957;
-        Tue, 04 Feb 2020 16:28:33 -0800 (PST)
+        bh=u6zexRKl+ij3KL4kQYPSiOYlBCnh1v1Hfej621Q8a44=;
+        b=X3dSzVKD13ngWO1lAUkguRGtzibvXFTkXrIFi3ylc5TzxL5iisIu9kBFS4VtPuOk52
+         bnKkSLvBSjy6wdFa0i5h9hKY/A3GLdvKYCZcHzd48Lq0iwdt/B2BcwMyyXLmYa1KMXUA
+         CLrRMWl/iegtKNN8qoLutE0F03iyi5k1UYuiPFuKpo3NgoKssEpgIKCeMN0y1vzncGue
+         8PaGW+CnJE2/UwTI5aahPmyJTYr80cxZTi525U+lkRsnzbap77XJ/xLGlqu3aJTkMgkl
+         EqQep+huV5UTDJp6HC3sC0eKVvnt93Vhd0AvEtVz8KgnSLbA7tn1xuo+eDV0dgwj/wtf
+         20Og==
+X-Gm-Message-State: APjAAAWyyQsLnNe335iKBh2EJVVnqFBGqjC23lIlPKJGb/7ZDDwOLdg/
+        KY+viOC5/US/1Sx08Ve/z/BKgOWt4gfb0A==
+X-Google-Smtp-Source: APXvYqyK5F6Stk5JUajEv/L4XGK5QDVoX/Mh+AyvAeLUD+DYXn8LvoGHwWpY6VcCwx6L3tyeqx8iHA==
+X-Received: by 2002:a63:d0c:: with SMTP id c12mr15773995pgl.173.1580862515921;
+        Tue, 04 Feb 2020 16:28:35 -0800 (PST)
 Received: from localhost ([2601:602:9200:32b0:fd92:b4b9:d992:34e6])
-        by smtp.gmail.com with ESMTPSA id 70sm25748518pfw.140.2020.02.04.16.28.33
+        by smtp.gmail.com with ESMTPSA id g8sm25435596pfh.43.2020.02.04.16.28.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Feb 2020 16:28:33 -0800 (PST)
-Date:   Tue, 4 Feb 2020 16:28:32 -0800
+        Tue, 04 Feb 2020 16:28:35 -0800 (PST)
+Date:   Tue, 4 Feb 2020 16:28:34 -0800
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, dstolee@microsoft.com, gitster@pobox.com,
         martin.agren@gmail.com
-Subject: [PATCH v2 1/3] builtin/commit-graph.c: support '--split[=<strategy>]'
-Message-ID: <3e19d50148c8d53b30f8f0036a2d3af9f4bb3499.1580862307.git.me@ttaylorr.com>
+Subject: [PATCH v2 2/3] builtin/commit-graph.c: introduce '--input=<source>'
+Message-ID: <1589bc1d69a14fd30499fc2abdc4f096627dd010.1580862307.git.me@ttaylorr.com>
 References: <cover.1580430057.git.me@ttaylorr.com>
  <cover.1580862307.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -73,248 +73,278 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-With '--split', the commit-graph machinery writes new commits in another
-incremental commit-graph which is part of the existing chain, and
-optionally decides to condense the chain into a single commit-graph.
-This is done to ensure that the asymptotic behavior of looking up a
-commit in an incremental chain is dominated by the number of
-incrementals in that chain. It can be controlled by the '--max-commits'
-and '--size-multiple' options.
+The 'write' mode of the 'commit-graph' supports input from a number of
+different sources: pack indexes over stdin, commits over stdin, commits
+reachable from all references, and so on. Each of these options are
+specified with a unique option: '--stdin-packs', '--stdin-commits', etc.
 
-On occasion, callers may want to ensure that 'git commit-graph write
---split' always writes an incremental, and never spends effort
-condensing the incremental chain [1]. Previously, this was possible by
-passing '--size-multiple=0', but this no longer the case following
-63020f175f (commit-graph: prefer default size_mult when given zero,
-2020-01-02).
+Similar to our replacement of 'git config [--<type>]' with 'git config
+[--type=<type>]' (c.f., fb0dc3bac1 (builtin/config.c: support
+`--type=<type>` as preferred alias for `--<type>`, 2018-04-18)), softly
+deprecate '[--<input>]' in favor of '[--input=<source>]'.
 
-Reintroduce a less-magical variant of the above with a new pair of
-arguments to '--split': '--split=no-merge' and '--split=merge-all'. When
-'--split=no-merge' is given, the commit-graph machinery will never
-condense an existing chain and will always write a new incremental.
-Conversely, if '--split=merge-all' is given, any invocation including it
-will always condense a chain if one exists.  If '--split' is given with
-no arguments, it behaves as before and defers to '--size-multiple', and
-so on.
+This makes it more clear to implement new options that are combinations
+of other options (such as, for example, "none", a combination of the old
+"--append" and a new sentinel to specify to _not_ look in other packs,
+which we will implement in a future patch).
 
-[1]: This might occur when, for example, a server administrator running
-some program after each push may want to ensure that each job runs
-proportional in time to the size of the push, and does not "jump" when
-the commit-graph machinery decides to trigger a merge.
+Unfortunately, the new enumerated type is a bitfield, even though it
+makes much more sense as '0, 1, 2, ...'. Even though *almost* all
+options are pairwise exclusive, '--stdin-{packs,commits}' *is*
+compatible with '--append'. For this reason, use a bitfield.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- Documentation/git-commit-graph.txt | 16 +++++++++-----
- builtin/commit-graph.c             | 35 ++++++++++++++++++++++++++----
- commit-graph.c                     | 22 ++++++++++++-------
- commit-graph.h                     |  7 ++++++
- t/t5324-split-commit-graph.sh      | 25 +++++++++++++++++++++
- 5 files changed, 88 insertions(+), 17 deletions(-)
+ Documentation/git-commit-graph.txt | 26 +++++-----
+ builtin/commit-graph.c             | 83 +++++++++++++++++++++---------
+ t/t5318-commit-graph.sh            |  4 +-
+ t/t5324-split-commit-graph.sh      |  2 +-
+ 4 files changed, 76 insertions(+), 39 deletions(-)
 
 diff --git a/Documentation/git-commit-graph.txt b/Documentation/git-commit-graph.txt
-index 28d1fee505..b7fe65ef21 100644
+index b7fe65ef21..2ae9de679a 100644
 --- a/Documentation/git-commit-graph.txt
 +++ b/Documentation/git-commit-graph.txt
-@@ -57,11 +57,17 @@ or `--stdin-packs`.)
- With the `--append` option, include all commits that are present in the
- existing commit-graph file.
+@@ -41,21 +41,21 @@ COMMANDS
+ 
+ Write a commit-graph file based on the commits found in packfiles.
  +
--With the `--split` option, write the commit-graph as a chain of multiple
--commit-graph files stored in `<dir>/info/commit-graphs`. The new commits
--not already in the commit-graph are added in a new "tip" file. This file
--is merged with the existing file if the following merge conditions are
--met:
-+With the `--split[=<strategy>]` option, write the commit-graph as a
-+chain of multiple commit-graph files stored in
-+`<dir>/info/commit-graphs`. Commit-graph layers are merged based on the
-+strategy and other splitting options. The new commits not already in the
-+commit-graph are added in a new "tip" file. This file is merged with the
-+existing file if the following merge conditions are met:
-+* If `--split=merge-always` is specified, then a merge is always
-+conducted, and the remaining options are ignored. Conversely, if
-+`--split=no-merge` is specified, a merge is never performed, and the
-+remaining options are ignored. A bare `--split` defers to the remaining
-+options.
+-With the `--stdin-packs` option, generate the new commit graph by
++With the `--input=stdin-packs` option, generate the new commit graph by
+ walking objects only in the specified pack-indexes. (Cannot be combined
+-with `--stdin-commits` or `--reachable`.)
++with `--input=stdin-commits` or `--input=reachable`.)
  +
- * If `--size-multiple=<X>` is not specified, let `X` equal 2. If the new
- tip file would have `N` commits and the previous tip has `M` commits and
+-With the `--stdin-commits` option, generate the new commit graph by
+-walking commits starting at the commits specified in stdin as a list
++With the `--input=stdin-commits` option, generate the new commit graph
++by walking commits starting at the commits specified in stdin as a list
+ of OIDs in hex, one OID per line. (Cannot be combined with
+-`--stdin-packs` or `--reachable`.)
++`--input=stdin-packs` or `--input=reachable`.)
+ +
+-With the `--reachable` option, generate the new commit graph by walking
+-commits starting at all refs. (Cannot be combined with `--stdin-commits`
+-or `--stdin-packs`.)
++With the `--input=reachable` option, generate the new commit graph by
++walking commits starting at all refs. (Cannot be combined with
++`--input=stdin-commits` or `--input=stdin-packs`.)
+ +
+-With the `--append` option, include all commits that are present in the
+-existing commit-graph file.
++With the `--input=append` option, include all commits that are present
++in the existing commit-graph file.
+ +
+ With the `--split[=<strategy>]` option, write the commit-graph as a
+ chain of multiple commit-graph files stored in
+@@ -105,20 +105,20 @@ $ git commit-graph write
+   using commits in `<pack-index>`.
+ +
+ ------------------------------------------------
+-$ echo <pack-index> | git commit-graph write --stdin-packs
++$ echo <pack-index> | git commit-graph write --input=stdin-packs
+ ------------------------------------------------
+ 
+ * Write a commit-graph file containing all reachable commits.
+ +
+ ------------------------------------------------
+-$ git show-ref -s | git commit-graph write --stdin-commits
++$ git show-ref -s | git commit-graph write --input=stdin-commits
+ ------------------------------------------------
+ 
+ * Write a commit-graph file containing all commits in the current
+   commit-graph file along with those reachable from `HEAD`.
+ +
+ ------------------------------------------------
+-$ git rev-parse HEAD | git commit-graph write --stdin-commits --append
++$ git rev-parse HEAD | git commit-graph write --input=stdin-commits --input=append
+ ------------------------------------------------
+ 
+ 
 diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
-index 4a70b33fb5..4d3c1c46c2 100644
+index 4d3c1c46c2..0ff25896d0 100644
 --- a/builtin/commit-graph.c
 +++ b/builtin/commit-graph.c
-@@ -9,7 +9,9 @@
+@@ -9,8 +9,9 @@
  
  static char const * const builtin_commit_graph_usage[] = {
  	N_("git commit-graph verify [--object-dir <objdir>] [--shallow] [--[no-]progress]"),
--	N_("git commit-graph write [--object-dir <objdir>] [--append|--split] [--reachable|--stdin-packs|--stdin-commits] [--[no-]progress] <split options>"),
-+	N_("git commit-graph write [--object-dir <objdir>] [--append] "
-+	   "[--split[=<strategy>]] [--reachable|--stdin-packs|--stdin-commits] "
-+	   "[--[no-]progress] <split options>"),
+-	N_("git commit-graph write [--object-dir <objdir>] [--append] "
+-	   "[--split[=<strategy>]] [--reachable|--stdin-packs|--stdin-commits] "
++	N_("git commit-graph write [--object-dir <objdir>] "
++	   "[--split[=<strategy>]] "
++	   "[--input=<reachable|stdin-packs|stdin-commits|append>] "
+ 	   "[--[no-]progress] <split options>"),
  	NULL
  };
- 
-@@ -19,7 +21,9 @@ static const char * const builtin_commit_graph_verify_usage[] = {
+@@ -21,18 +22,23 @@ static const char * const builtin_commit_graph_verify_usage[] = {
  };
  
  static const char * const builtin_commit_graph_write_usage[] = {
--	N_("git commit-graph write [--object-dir <objdir>] [--append|--split] [--reachable|--stdin-packs|--stdin-commits] [--[no-]progress] <split options>"),
-+	N_("git commit-graph write [--object-dir <objdir>] [--append] "
-+	   "[--split[=<strategy>]] [--reachable|--stdin-packs|--stdin-commits] "
-+	   "[--[no-]progress] <split options>"),
+-	N_("git commit-graph write [--object-dir <objdir>] [--append] "
+-	   "[--split[=<strategy>]] [--reachable|--stdin-packs|--stdin-commits] "
++	N_("git commit-graph write [--object-dir <objdir>] "
++	   "[--split[=<strategy>]] "
++	   "[--input=<reachable|stdin-packs|stdin-commits|append>] "
+ 	   "[--[no-]progress] <split options>"),
  	NULL
  };
  
-@@ -111,6 +115,27 @@ static int graph_verify(int argc, const char **argv)
- extern int read_replace_refs;
- static struct split_commit_graph_opts split_opts;
- 
-+static int write_option_parse_split(const struct option *opt, const char *arg,
-+				    int unset)
-+{
-+	enum commit_graph_split_flags *flags = opt->value;
++enum commit_graph_input {
++	COMMIT_GRAPH_INPUT_REACHABLE     = (1 << 1),
++	COMMIT_GRAPH_INPUT_STDIN_PACKS   = (1 << 2),
++	COMMIT_GRAPH_INPUT_STDIN_COMMITS = (1 << 3),
++	COMMIT_GRAPH_INPUT_APPEND        = (1 << 4)
++};
 +
-+	opts.split = 1;
-+	if (!arg) {
-+		*flags = COMMIT_GRAPH_SPLIT_MERGE_AUTO;
+ static struct opts_commit_graph {
+ 	const char *obj_dir;
+-	int reachable;
+-	int stdin_packs;
+-	int stdin_commits;
+-	int append;
++	enum commit_graph_input input;
+ 	int split;
+ 	int shallow;
+ 	int progress;
+@@ -57,6 +63,28 @@ static struct object_directory *find_odb(struct repository *r,
+ 	return odb;
+ }
+ 
++static int option_parse_input(const struct option *opt, const char *arg,
++			      int unset)
++{
++	enum commit_graph_input *to = opt->value;
++	if (unset || !strcmp(arg, "packs")) {
++		*to = 0;
 +		return 0;
 +	}
 +
-+	if (!strcmp(arg, "merge-all"))
-+		*flags = COMMIT_GRAPH_SPLIT_MERGE_REQUIRED;
-+	else if (!strcmp(arg, "no-merge"))
-+		*flags = COMMIT_GRAPH_SPLIT_MERGE_PROHIBITED;
++	if (!strcmp(arg, "reachable"))
++		*to |= COMMIT_GRAPH_INPUT_REACHABLE;
++	else if (!strcmp(arg, "stdin-packs"))
++		*to |= COMMIT_GRAPH_INPUT_STDIN_PACKS;
++	else if (!strcmp(arg, "stdin-commits"))
++		*to |= COMMIT_GRAPH_INPUT_STDIN_COMMITS;
++	else if (!strcmp(arg, "append"))
++		*to |= COMMIT_GRAPH_INPUT_APPEND;
 +	else
-+		die(_("unrecognized --split argument, %s"), arg);
-+
++		die(_("unrecognized --input source, %s"), arg);
 +	return 0;
 +}
 +
- static int graph_write(int argc, const char **argv)
+ static int graph_verify(int argc, const char **argv)
  {
- 	struct string_list *pack_indexes = NULL;
-@@ -133,8 +158,10 @@ static int graph_write(int argc, const char **argv)
- 		OPT_BOOL(0, "append", &opts.append,
- 			N_("include all commits already in the commit-graph file")),
+ 	struct commit_graph *graph = NULL;
+@@ -149,14 +177,21 @@ static int graph_write(int argc, const char **argv)
+ 		OPT_STRING(0, "object-dir", &opts.obj_dir,
+ 			N_("dir"),
+ 			N_("The object directory to store the graph")),
+-		OPT_BOOL(0, "reachable", &opts.reachable,
+-			N_("start walk at all refs")),
+-		OPT_BOOL(0, "stdin-packs", &opts.stdin_packs,
+-			N_("scan pack-indexes listed by stdin for commits")),
+-		OPT_BOOL(0, "stdin-commits", &opts.stdin_commits,
+-			N_("start walk at commits listed by stdin")),
+-		OPT_BOOL(0, "append", &opts.append,
+-			N_("include all commits already in the commit-graph file")),
++		OPT_CALLBACK(0, "input", &opts.input, NULL,
++			N_("include commits from this source in the graph"),
++			option_parse_input),
++		OPT_BIT(0, "reachable", &opts.input,
++			N_("start walk at all refs"),
++			COMMIT_GRAPH_INPUT_REACHABLE),
++		OPT_BIT(0, "stdin-packs", &opts.input,
++			N_("scan pack-indexes listed by stdin for commits"),
++			COMMIT_GRAPH_INPUT_STDIN_PACKS),
++		OPT_BIT(0, "stdin-commits", &opts.input,
++			N_("start walk at commits listed by stdin"),
++			COMMIT_GRAPH_INPUT_STDIN_COMMITS),
++		OPT_BIT(0, "append", &opts.input,
++			N_("include all commits already in the commit-graph file"),
++			COMMIT_GRAPH_INPUT_APPEND),
  		OPT_BOOL(0, "progress", &opts.progress, N_("force progress reporting")),
--		OPT_BOOL(0, "split", &opts.split,
--			N_("allow writing an incremental commit-graph file")),
-+		OPT_CALLBACK_F(0, "split", &split_opts.flags, NULL,
-+			N_("allow writing an incremental commit-graph file"),
-+			PARSE_OPT_OPTARG | PARSE_OPT_NONEG,
-+			write_option_parse_split),
- 		OPT_INTEGER(0, "max-commits", &split_opts.max_commits,
- 			N_("maximum number of commits in a non-base split commit-graph")),
- 		OPT_INTEGER(0, "size-multiple", &split_opts.size_multiple,
-diff --git a/commit-graph.c b/commit-graph.c
-index 656dd647d5..3a5cb23cd7 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -1533,27 +1533,33 @@ static void split_graph_merge_strategy(struct write_commit_graph_context *ctx)
+ 		OPT_CALLBACK_F(0, "split", &split_opts.flags, NULL,
+ 			N_("allow writing an incremental commit-graph file"),
+@@ -182,11 +217,13 @@ static int graph_write(int argc, const char **argv)
+ 			     builtin_commit_graph_write_options,
+ 			     builtin_commit_graph_write_usage, 0);
  
- 	int max_commits = 0;
- 	int size_mult = 2;
-+	enum commit_graph_split_flags flags = COMMIT_GRAPH_SPLIT_MERGE_AUTO;
+-	if (opts.reachable + opts.stdin_packs + opts.stdin_commits > 1)
+-		die(_("use at most one of --reachable, --stdin-commits, or --stdin-packs"));
++	if ((!!(opts.input & COMMIT_GRAPH_INPUT_REACHABLE) +
++	     !!(opts.input & COMMIT_GRAPH_INPUT_STDIN_PACKS) +
++	     !!(opts.input & COMMIT_GRAPH_INPUT_STDIN_COMMITS)) > 1)
++		die(_("use at most one of --input=reachable, --input=stdin-commits, or --input=stdin-packs"));
+ 	if (!opts.obj_dir)
+ 		opts.obj_dir = get_object_directory();
+-	if (opts.append)
++	if (opts.input & COMMIT_GRAPH_INPUT_APPEND)
+ 		flags |= COMMIT_GRAPH_WRITE_APPEND;
+ 	if (opts.split)
+ 		flags |= COMMIT_GRAPH_WRITE_SPLIT;
+@@ -196,22 +233,22 @@ static int graph_write(int argc, const char **argv)
+ 	read_replace_refs = 0;
+ 	odb = find_odb(the_repository, opts.obj_dir);
  
- 	if (ctx->split_opts) {
- 		max_commits = ctx->split_opts->max_commits;
- 
- 		if (ctx->split_opts->size_multiple)
- 			size_mult = ctx->split_opts->size_multiple;
-+
-+		flags = ctx->split_opts->flags;
+-	if (opts.reachable) {
++	if (opts.input & COMMIT_GRAPH_INPUT_REACHABLE) {
+ 		if (write_commit_graph_reachable(odb, flags, &split_opts))
+ 			return 1;
+ 		return 0;
  	}
  
- 	g = ctx->r->objects->commit_graph;
- 	num_commits = ctx->commits.nr;
- 	ctx->num_commit_graphs_after = ctx->num_commit_graphs_before + 1;
+ 	string_list_init(&lines, 0);
+-	if (opts.stdin_packs || opts.stdin_commits) {
++	if (opts.input & (COMMIT_GRAPH_INPUT_STDIN_PACKS | COMMIT_GRAPH_INPUT_STDIN_COMMITS)) {
+ 		struct strbuf buf = STRBUF_INIT;
  
--	while (g && (g->num_commits <= size_mult * num_commits ||
--		    (max_commits && num_commits > max_commits))) {
--		if (g->odb != ctx->odb)
--			break;
-+	if (flags != COMMIT_GRAPH_SPLIT_MERGE_PROHIBITED) {
-+		while (g && (g->num_commits <= size_mult * num_commits ||
-+			    (max_commits && num_commits > max_commits) ||
-+			    (flags == COMMIT_GRAPH_SPLIT_MERGE_REQUIRED))) {
-+			if (g->odb != ctx->odb)
-+				break;
+ 		while (strbuf_getline(&buf, stdin) != EOF)
+ 			string_list_append(&lines, strbuf_detach(&buf, NULL));
  
--		num_commits += g->num_commits;
--		g = g->base_graph;
-+			num_commits += g->num_commits;
-+			g = g->base_graph;
+-		if (opts.stdin_packs)
++		if (opts.input & COMMIT_GRAPH_INPUT_STDIN_PACKS)
+ 			pack_indexes = &lines;
+-		if (opts.stdin_commits) {
++		if (opts.input & COMMIT_GRAPH_INPUT_STDIN_COMMITS) {
+ 			commit_hex = &lines;
+ 			flags |= COMMIT_GRAPH_WRITE_CHECK_OIDS;
+ 		}
+diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
+index 0bf98b56ec..786b5f73ef 100755
+--- a/t/t5318-commit-graph.sh
++++ b/t/t5318-commit-graph.sh
+@@ -227,7 +227,7 @@ graph_git_behavior 'cleared graph, commit 8 vs merge 2' full commits/8 merge/2
  
--		ctx->num_commit_graphs_after--;
-+			ctx->num_commit_graphs_after--;
-+		}
- 	}
- 
- 	ctx->new_base_graph = g;
-@@ -1861,7 +1867,7 @@ int write_commit_graph(struct object_directory *odb,
- 		goto cleanup;
- 	}
- 
--	if (!ctx->commits.nr)
-+	if (!ctx->commits.nr && (!ctx->split_opts || ctx->split_opts->flags != COMMIT_GRAPH_SPLIT_MERGE_REQUIRED))
- 		goto cleanup;
- 
- 	if (ctx->split) {
-diff --git a/commit-graph.h b/commit-graph.h
-index e87a6f6360..65a7d2edae 100644
---- a/commit-graph.h
-+++ b/commit-graph.h
-@@ -82,10 +82,17 @@ enum commit_graph_write_flags {
- 	COMMIT_GRAPH_WRITE_CHECK_OIDS = (1 << 3)
- };
- 
-+enum commit_graph_split_flags {
-+	COMMIT_GRAPH_SPLIT_MERGE_AUTO       = 0,
-+	COMMIT_GRAPH_SPLIT_MERGE_REQUIRED   = 1,
-+	COMMIT_GRAPH_SPLIT_MERGE_PROHIBITED = 2
-+};
-+
- struct split_commit_graph_opts {
- 	int size_multiple;
- 	int max_commits;
- 	timestamp_t expire_time;
-+	enum commit_graph_split_flags flags;
- };
- 
- /*
+ test_expect_success 'build graph from latest pack with closure' '
+ 	cd "$TRASH_DIRECTORY/full" &&
+-	cat new-idx | git commit-graph write --stdin-packs &&
++	cat new-idx | git commit-graph write --input=stdin-packs &&
+ 	test_path_is_file $objdir/info/commit-graph &&
+ 	graph_read_expect "9" "extra_edges"
+ '
+@@ -240,7 +240,7 @@ test_expect_success 'build graph from commits with closure' '
+ 	git tag -a -m "merge" tag/merge merge/2 &&
+ 	git rev-parse tag/merge >commits-in &&
+ 	git rev-parse merge/1 >>commits-in &&
+-	cat commits-in | git commit-graph write --stdin-commits &&
++	cat commits-in | git commit-graph write --input=stdin-commits &&
+ 	test_path_is_file $objdir/info/commit-graph &&
+ 	graph_read_expect "6"
+ '
 diff --git a/t/t5324-split-commit-graph.sh b/t/t5324-split-commit-graph.sh
-index c24823431f..a165b48afe 100755
+index a165b48afe..353523eca4 100755
 --- a/t/t5324-split-commit-graph.sh
 +++ b/t/t5324-split-commit-graph.sh
-@@ -344,4 +344,29 @@ test_expect_success 'split across alternate where alternate is not split' '
- 	test_cmp commit-graph .git/objects/info/commit-graph
+@@ -35,7 +35,7 @@ test_expect_success 'create commits and write commit-graph' '
+ 		test_commit $i &&
+ 		git branch commits/$i || return 1
+ 	done &&
+-	git commit-graph write --reachable &&
++	git commit-graph write --input=reachable &&
+ 	test_path_is_file $infodir/commit-graph &&
+ 	graph_read_expect 3
  '
- 
-+test_expect_success '--split=merge-all always merges incrementals' '
-+	test_when_finished rm -rf a b c &&
-+	rm -rf $graphdir $infodir/commit-graph &&
-+	git reset --hard commits/10 &&
-+	git rev-list -3 HEAD~4 >a &&
-+	git rev-list -2 HEAD~2 >b &&
-+	git rev-list -2 HEAD >c &&
-+	git commit-graph write --split=no-merge --stdin-commits <a &&
-+	git commit-graph write --split=no-merge --stdin-commits <b &&
-+	test_line_count = 2 $graphdir/commit-graph-chain &&
-+	git commit-graph write --split=merge-all --stdin-commits <c &&
-+	test_line_count = 1 $graphdir/commit-graph-chain
-+'
-+
-+test_expect_success '--split=no-merge always writes an incremental' '
-+	test_when_finished rm -rf a b &&
-+	rm -rf $graphdir &&
-+	git reset --hard commits/2 &&
-+	git rev-list HEAD~1 >a &&
-+	git rev-list HEAD >b &&
-+	git commit-graph write --split --stdin-commits <a &&
-+	git commit-graph write --split=no-merge --stdin-commits <b &&
-+	test_line_count = 2 $graphdir/commit-graph-chain
-+'
-+
- test_done
 -- 
 2.25.0.119.gaa12b7378b
 
