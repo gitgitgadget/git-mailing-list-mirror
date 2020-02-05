@@ -2,62 +2,65 @@ Return-Path: <SRS0=lBg5=3Z=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AE807C35247
-	for <git@archiver.kernel.org>; Wed,  5 Feb 2020 20:11:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F3FECC35247
+	for <git@archiver.kernel.org>; Wed,  5 Feb 2020 20:12:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 77D9B20720
-	for <git@archiver.kernel.org>; Wed,  5 Feb 2020 20:11:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C58C320720
+	for <git@archiver.kernel.org>; Wed,  5 Feb 2020 20:12:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=monsieurbiz.com header.i=@monsieurbiz.com header.b="ACxeB+EQ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aZtoZcs1"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727085AbgBEULt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Feb 2020 15:11:49 -0500
-Received: from mail-lj1-f193.google.com ([209.85.208.193]:42133 "EHLO
-        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726208AbgBEULt (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Feb 2020 15:11:49 -0500
-Received: by mail-lj1-f193.google.com with SMTP id d10so3614613ljl.9
-        for <git@vger.kernel.org>; Wed, 05 Feb 2020 12:11:46 -0800 (PST)
+        id S1727104AbgBEUM4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Feb 2020 15:12:56 -0500
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:33698 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727033AbgBEUMz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Feb 2020 15:12:55 -0500
+Received: by mail-pf1-f194.google.com with SMTP id n7so1793715pfn.0
+        for <git@vger.kernel.org>; Wed, 05 Feb 2020 12:12:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=monsieurbiz.com; s=google;
+        d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=YYgN9dbnrsNXCkQ30Z4Efaheg6KzihHqwwe95XWhPTk=;
-        b=ACxeB+EQiIQjWJ547/PaXr6Z0XpT/uSFTTTqjXiK1Kb4dFUtGg22/VQAricSXEgO2U
-         Cs3gaLF+hUc+qfhcz7Yt3dbp9d+NXPk48pCERjdjioMWURseCo9LImLv2n7eH3ykb6cG
-         0L7rrm+phcBn91kFbPPj6BOBVW7SGrkV4uwO4=
+        bh=Wwiw/nninTJlLb+E+O1r+t4VyVLJDKkPGCpKKMu4ye4=;
+        b=aZtoZcs1O+9cWtUpGXvSeP1VLXv2ivrC2j0NE6zpzXHMOGk5m6YavbDI9+WneGfAM1
+         7tiohkKv3hPI3eC+i2/l8yEyr3HT6MyP38knN2+rD9VW6NObzJXr7IvLH2/Bnr5NaFmY
+         VxfdcTv7Spe8/OiC7CpWUFS1gRx1Xp/G7zgLuBNfaSD47RUoEAVb59lOmlGpvkoaKFCk
+         uiKMxW1oYLGJ+oX1ZRAKaSgZ1dVf6s3qZ2Kfv0ZXbZYO6vSNGz6t6KEcw4/MVO+o330m
+         GLIQK7nY4aeC6vNGi7vdxPSldapDBrV/FmGayyqP2xd8pntC1axwFq3a982UE0Noogxd
+         GQhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=YYgN9dbnrsNXCkQ30Z4Efaheg6KzihHqwwe95XWhPTk=;
-        b=o9o9I7hYzUsTexQeV+qOzJsQNMvJcalg5EKpkMttacYOgjH1S7tOkSFHjKjNeyg3wE
-         IvaHnbJeTfOejHT05eR73si7P87SXBqe55HDDdVraF0BL1/5JpsWLUcZTu+oYwTO65ng
-         SsAiZn5Rg6YByLCIwVMHOjnS9TQBGxhCLgXD96f9NLQWO9ZuHh7fKp38WAbXJhyj9mMU
-         tsJWxNUAwcNvM4I09a4oDl5URpyQcmd9sxo6+GYdUgSzExPwBn3p72UwAjvoJxX6Hi+J
-         AE7WdO2yUfh2yFUqTHccDmFr3WkRmdg1GEvVpcDSqkqt5TMTj0OmYxbuW/3VH8MzD3w+
-         qVkQ==
-X-Gm-Message-State: APjAAAV2nVmqNti6OvlF6rsCadHYPnO5Gy5YU0Ll/uIh95sslQLj6X5y
-        DkC9VUUtR525PBptmDlFz36OyvKExBfrUXrhbWWcJg==
-X-Google-Smtp-Source: APXvYqz3T7kK/PV5Aby5yTXQ/cb0vcPiPBZFlCBPgKVYv/nuMzjU5UgVhBPrvcxaR/4DFSeHPhfu7uYWOqv0JLmqjXA=
-X-Received: by 2002:a05:651c:299:: with SMTP id b25mr21972643ljo.1.1580933505823;
- Wed, 05 Feb 2020 12:11:45 -0800 (PST)
+        bh=Wwiw/nninTJlLb+E+O1r+t4VyVLJDKkPGCpKKMu4ye4=;
+        b=bjOeWYTeuCUigx+qEB6CtMYFkvThsxew9phxN+vfVq7IOQRbZ9IeeoNvZmma4wgpv/
+         oRpvkq+AfxasHR2lLNbTdu49cxQ8KIfo57BrVCH8TLP3B500RNC+c+1J9EucQVh8NMMn
+         ZxKXMcp/QiSDVp0xetiaADAc2bn1Mrci+nEgKiOUZqTSxyCJPd0jUkJDLDNdg9VxNQ+6
+         GpmBC/25XCfJmZYfvR4Pzfi1dsSGplw2qPwlNeFll+WI0bQdclhU1/t8giRcBAixfmqk
+         lft6n4V2BHHstvKWFtvLAd20tP63cRwV6KiH2uoatexJv1LkJS/BE++4rgi4SAS4s5ez
+         R41g==
+X-Gm-Message-State: APjAAAX+/DAogJfran/x4P2p2rgVZugUsv26VO98El2CE46VQUZ8xdzq
+        tDa417wMV+ZadP90hVkMgbVIeWQPH+xQJ2Ocmq4=
+X-Google-Smtp-Source: APXvYqzdjsQ00nEkAFm0tWf+N/BSHoYNQenucsLbYlJHDU8bZ+eq5dcRDnIQhpzigPVot/SZDVGCONAQgISUvIcEBPY=
+X-Received: by 2002:a63:4282:: with SMTP id p124mr36808638pga.155.1580933573598;
+ Wed, 05 Feb 2020 12:12:53 -0800 (PST)
 MIME-Version: 1.0
-References: <010201671ebf523a-da55f2d8-876a-4b3b-a6fe-29d790bed2c1-000000@eu-west-1.amazonses.com>
- <0102017015765b98-e2e26f61-dd07-4a32-a72f-2d7b2159fffe-000000@eu-west-1.amazonses.com>
- <xmqqv9ok6fa1.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqv9ok6fa1.fsf@gitster-ct.c.googlers.com>
-From:   Jacques Bodin-Hullin <j.bodinhullin@monsieurbiz.com>
-Date:   Wed, 5 Feb 2020 21:11:09 +0100
-Message-ID: <CAAwZSqCN9WShN4e-0i1Q0CwonPda_bysGjwyQcQC6-JC_U_KTg@mail.gmail.com>
-Subject: Re: [PATCH] parse-options: lose an unnecessary space in an error message
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
+References: <20200124033436.81097-1-emilyshaffer@google.com>
+ <20200124033436.81097-11-emilyshaffer@google.com> <CAN0heSo_Ois83gqNrHvNn2HSMMTXvKShxTb_RdG2qY6D7rnthA@mail.gmail.com>
+ <20200205023127.GL87163@google.com>
+In-Reply-To: <20200205023127.GL87163@google.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Wed, 5 Feb 2020 21:12:42 +0100
+Message-ID: <CAN0heSpkjACrgz8T=-VoQxgMZhMM-oSSpVz4HAPB27b_h3fGpA@mail.gmail.com>
+Subject: Re: [PATCH v5 10/15] bugreport: add config values from safelist
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -65,53 +68,70 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-Actually I prefer to keep the parentheses, it makes better sense to me.
-It feels correct with them when I speak it loudly, incorrect without.
-
-BR,
-
-Jacques
-
---=20
-Monsieur Biz
-@jacquesbh
-+33 (0)6 75 54 11 97
-GPG : https://keybase.io/jacquesbh
-
-
-Le mer. 5 f=C3=A9vr. 2020 =C3=A0 19:49, Junio C Hamano <gitster@pobox.com> =
-a =C3=A9crit :
+On Wed, 5 Feb 2020 at 03:31, Emily Shaffer <emilyshaffer@google.com> wrote:
 >
-> Jacques Bodin-Hullin <j.bodinhullin@monsieurbiz.com> writes:
->
-> > Signed-off-by: Jacques Bodin-Hullin <j.bodinhullin@monsieurbiz.com>
-> > ---
-> >  parse-options.c          | 4 ++--
-> >  t/t0040-parse-options.sh | 4 ++--
-> >  2 files changed, 4 insertions(+), 4 deletions(-)
+> On Fri, Jan 31, 2020 at 10:25:06PM +0100, Martin =C3=85gren wrote:
+> > On Fri, 24 Jan 2020 at 04:40, <emilyshaffer@google.com> wrote:
+> > > Taking the build-time generated array and putting it into a set saves=
+ us
+> > > time - since git_config_bugreport() is called for every option the us=
+er
+> > > has configured, performing option lookup in constant time is a useful
+> > > optimization.
 > >
-> > diff --git a/parse-options.c b/parse-options.c
-> > index b42f54d48b96c..71dbe84d896b4 100644
-> > --- a/parse-options.c
-> > +++ b/parse-options.c
-> > @@ -420,7 +420,7 @@ static void check_typos(const char *arg, const stru=
-ct option *options)
-> >               return;
+> > I'm sympathetic to your sending out what you have to obtain comments,
+> > knowing that it's not perfect. It would have saved me some time and
+> > effort if I'd known that this was the case though. An "[RFC]" tag,
+> > perhaps. Or at least tweaking the above part of this commit message to
+> > say that this might be over-engineered, with a reference to [1].
 > >
-> >       if (starts_with(arg, "no-")) {
-> > -             error(_("did you mean `--%s` (with two dashes ?)"), arg);
-> > +             error(_("did you mean `--%s` (with two dashes)?"), arg);
+> > [1] https://lore.kernel.org/git/20200124032905.GA37541@google.com/
 >
-> Makes sense.  Not just there is an extra SP before the question
-> mark, the question mark is about the whole sentence, so pushing
-> it out of the parentheses also is a good change.
+> Yeah, you are right, and thanks for the feedback. I think I had wrapped
+> up the series before I realized there were those significant outstanding
+> comments, but I definitely should have said so in this patch.
 >
-> We might even want to lose the parentheses altogether, i.e.
+> >
+> > > +       int safelist_len =3D sizeof(bugreport_config_safelist) / size=
+of(const char *);
+> >
+> > I was going to suggest ARRAY_SIZE, but then I realized there are some
+> > outstanding questions around whether you need this stuff in the first
+> > place. I'd be inclined to guess that the first version of this would be
+> > "for each safelisted item, obtain it and include", ignoring any "a.*.b"
+> > business. In which case you wouldn't really need this hashset stuff.
 >
->         did you mean `--%s` with two dashes?
+> Regardless, I think it's worth doing nicely for now.
 >
-> Hmm?
+> It seems to me that supporting wildcarding in the config safelist is a
+> superset of supporting static strings in that safelist - that is, if I
+> write it simply to support static strings, a later change to support
+> wildcards would be welcome and non-breaking.
+
+Yeah, agreed. Also, whatever magic the code for gathering the config
+items knows, the annotations in Documentation/, i.e., the generated list
+in bugreport-config-safelist.h will be "synced". That is, until we know
+how to handle "a.*.b" in the safelist, we probably won't be marking
+"a.*.b" as safe. And even if we have some crazy mixed build, it's a
+*safe*list, so we should be fine. (Famous last words?)
+
+On that topic though, and just so we don't mess up from the beginning,
+in the documentation, we typically write something like
+"branch.<name>.merge", i.e., not "branch.*.merge". So I guess the
+"a.*.b" feature would be more like "look for '.<', something, something,
+'>.'." Would that be sufficient? Or would we actually want more
+fine-grained control, i.e., something like regexes?
+
+If so, we'd need to provide those regexes somehow, e.g., as part of the
+asciidoc macro notation. :-/ Do we need to prepare somehow for such a
+future? I don't think we do.
+
+> So I'm going to clean this up without making it more featureful, for
+> now.
 >
-> Thanks.
+> Sorry about the confusion!
+>  - Emily
+
+No worries. :)
+
+Martin
