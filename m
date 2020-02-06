@@ -2,96 +2,133 @@ Return-Path: <SRS0=KD4O=32=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CC043C35247
-	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 19:15:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 33ED9C35247
+	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 19:28:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 946E621775
-	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 19:15:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ED2BC217F4
+	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 19:28:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Vsa820Gp"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="dxhoefkt"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727866AbgBFTPR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Feb 2020 14:15:17 -0500
-Received: from mail-wr1-f41.google.com ([209.85.221.41]:43705 "EHLO
-        mail-wr1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726990AbgBFTPR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Feb 2020 14:15:17 -0500
-Received: by mail-wr1-f41.google.com with SMTP id z9so8531315wrs.10
-        for <git@vger.kernel.org>; Thu, 06 Feb 2020 11:15:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=vnGVMeonW3UkPfezVTpfI5zbwXINiJ/O5inotWsqpLc=;
-        b=Vsa820GpM3lY3YGlbxNyTtevbyAtC4VkVx9GIK2xC2/S85/NFgDvpM8PPUYDYSBuSF
-         wOTJMz0BE8aL+x+Rkvx36e3a9Qps1uJfnbrAPDmhUiHb6+6b2LEkW1P812VjbBgF1E3/
-         qABqQVXFiVTVhaN72/IB2X5Jz1CzREreXPPXGSRoGgKkksmos/20qG7KsB24NeCMtIN2
-         P8bMJVfa49QKs4fkcIOh/Matw5a8jN68x+9br/BRZ3B8ccT3jynOg+pfmKMbqvGhap3S
-         KQoSVZyS8LR/zAIvnkJMlpMO4v2fHdVGvypJHdI861QBO06YzwopcO5oQ3cTqBTSdEG6
-         eeVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=vnGVMeonW3UkPfezVTpfI5zbwXINiJ/O5inotWsqpLc=;
-        b=etZqQgS+Bbg9MLNYcmgAJlMoXQHA5GoSHdpIzr7qr8nErxWzywdhDw0VYH50kHYAKJ
-         xZvUuRljmPkmYyPXsTZtMW8XUb07KJoKhJeFl1IGtq4LkFJc1tEAJYXYteyD8fIkVNFr
-         pDgRfD+4omIGDfXkxlfK7LNbM7bGRzHwljOw+20xSgCS3zy9TaRZ2gZZysS23QrxZAUP
-         Sy9aIV6GB/1p9Ja9FSAZ316/s8TC9bzoFFhytwRk7GxAbx2d8r4TMcMxKWWdu/kUBBDo
-         YwEN50Igk+5qlVuO3rDq8ME/HRhWEumPrrIfZW9wxdQPq2xj2rchcSQCm/KvuN2zmrgr
-         v1lA==
-X-Gm-Message-State: APjAAAVlmMjX4ZNeaTSRclY3kvQXWn3a6avmQ6tgRtVSCJ0ijAysPpNj
-        7pMxtEx70RRx4btCSvssY4hhHetX9JevHVMcwe30Jrst
-X-Google-Smtp-Source: APXvYqz2FFa5aKDXmxh5QbQGuNKoffYVwSTpz8U75H2UkDRRMrRIfbdJs8EEkywgdH9RPIRKPUkWP59pdEOnd0iFoVs=
-X-Received: by 2002:a5d:4d8d:: with SMTP id b13mr5369209wru.6.1581016514784;
- Thu, 06 Feb 2020 11:15:14 -0800 (PST)
+        id S1727906AbgBFT2h (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Feb 2020 14:28:37 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:58760 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727698AbgBFT2h (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Feb 2020 14:28:37 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id AADFCB7C68;
+        Thu,  6 Feb 2020 14:28:32 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=FeMB6YI6DgN03E8sZSHOreJmbio=; b=dxhoef
+        ktWnzryvRYo06rYwg5mopEnMEO3925LINVht3glLNvPqbzAOhUgMkVa0uqT2BYwb
+        VnAPSznJHnIFEC33Zk+GhWDbGsajt5jCb9sDDwWI/7iTpuNzgiIIqrd3TZ5fffqU
+        YhKN4U8cmxh+avI984jAN2IBccPWV3L415FFA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=NpoxEzIqkKTwydWf8M6KL4hRWiZahNZg
+        BKpFsm3hhBycAZj/0wbJu/LMXlD0df37c5TBmXp2LFZzoBihhDqp6CB00H00rFO0
+        Y1eOgD9RlKOYrnzHwUJf60mb1YhAi+JUuvGhwjIohF+3FKT3W64X42iF72uJQvv4
+        jl3G++fRJzc=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id A2909B7C67;
+        Thu,  6 Feb 2020 14:28:32 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C9F41B7C66;
+        Thu,  6 Feb 2020 14:28:29 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Ben Keene via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Ben Keene <seraphire@gmail.com>
+Subject: Re: [PATCH v3 1/5] git-p4: rewrite prompt to be Windows compatible
+References: <pull.698.v2.git.git.1580507895.gitgitgadget@gmail.com>
+        <pull.698.v3.git.git.1581002149.gitgitgadget@gmail.com>
+        <8881d76c46ce0af9a7e3c9e8d61c718beea24906.1581002149.git.gitgitgadget@gmail.com>
+Date:   Thu, 06 Feb 2020 11:28:27 -0800
+In-Reply-To: <8881d76c46ce0af9a7e3c9e8d61c718beea24906.1581002149.git.gitgitgadget@gmail.com>
+        (Ben Keene via GitGitGadget's message of "Thu, 06 Feb 2020 15:15:44
+        +0000")
+Message-ID: <xmqqwo8zecro.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <CAFQ2z_Pac6yb9Vi782VMtPkssNmdc08WntS7xRt8KCFfM6KVsw@mail.gmail.com>
- <CAN0heSqoU1NxOtwaE_ZBBzghLXAeC4CxVh1x8R-efOVtbHdA5g@mail.gmail.com>
-In-Reply-To: <CAN0heSqoU1NxOtwaE_ZBBzghLXAeC4CxVh1x8R-efOVtbHdA5g@mail.gmail.com>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Thu, 6 Feb 2020 20:15:02 +0100
-Message-ID: <CAFQ2z_Mez4khfvXx6R2K9JPagmoQWD-ZnT7rFiAW9Avjt=4PpQ@mail.gmail.com>
-Subject: Re: Printing a uint64_t portably in Git?
-To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: DADFCA8E-4916-11EA-99A8-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 6, 2020 at 7:00 PM Martin =C3=85gren <martin.agren@gmail.com> w=
-rote:
+"Ben Keene via GitGitGadget" <gitgitgadget@gmail.com> writes:
+
+> From: Ben Keene <seraphire@gmail.com>
 >
-> On Thu, 6 Feb 2020 at 18:54, Han-Wen Nienhuys <hanwen@google.com> wrote:
-> > What is the right incantation to do printf of a uint64_t on OSX ?
-> >
-> > Apparently PRIuMAX is to be used for "uintmax_t", and not for "long
-> > long unsigned int".
+> The existing function prompt(prompt_text) does not work correctly when
+> run on Windows 10 bash terminal when launched from the sourcetree
+> GUI application. The stdout is not flushed properly so the prompt text
+> is not displayed to the user until the next flush of stdout, which is
+> quite confusing.
+
+Is that the bug in raw_input(prompt_text) used in the source, or is
+that the bug in your environment (whatever "the sourcetree GUI
+application" is)?  I cannot quite tell if this is butchering code
+that is perfectly working well for other people just to cope with a
+broken invoker that is what really needs fixing, or if it is working
+around a bug in raw_input().  If the former, the change is not what
+we want, and if the latter, the change should go to Python upstream,
+so either way, I am not sure if we want this patch without further
+information.
+
+Anybody on a similar platform have opinion on this?  I am OK as long
+as this change does *not* break the program in an environment that
+it is working fine, but that is not even clear.
+
+> Change this method by:
+> * Adding flush to stderr, stdout, and stdin
+> * Use readline from sys.stdin instead of raw_input.
 >
-> You could cast it? Grepping around, that seems to be how PRIuMAX is
-> used:
+> The existing strip().lower() are retained.
 >
->   printf("%"PRIuMAX"\n", (uintmax_t)var);
+> Signed-off-by: Ben Keene <seraphire@gmail.com>
+> ---
+>  git-p4.py | 6 +++++-
+>  1 file changed, 5 insertions(+), 1 deletion(-)
+>
+> diff --git a/git-p4.py b/git-p4.py
+> index 40d9e7c594..7d8a5ee788 100755
+> --- a/git-p4.py
+> +++ b/git-p4.py
+> @@ -175,7 +175,11 @@ def prompt(prompt_text):
+>      """
+>      choices = set(m.group(1) for m in re.finditer(r"\[(.)\]", prompt_text))
+>      while True:
+> -        response = raw_input(prompt_text).strip().lower()
+> +        sys.stderr.flush()
+> +        sys.stdout.write(prompt_text)
+> +        sys.stdout.flush()
 
-Looks like the inttypes.h standard has the defines that I want.
+raw_input() is getting replace with input() in another series to
+bring us to Python3 compatible world, but because you are getting
+rid of its use, as long as the resulting code works with both
+Python2 and Python3, we are happy ;-)
 
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
+> +        sys.stdin.flush()
 
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+What does it even mean to flush the input stream here?  At least in
+C, it is meaningless and causes an undefined behaviour.
 
-Registergericht und -nummer: Hamburg, HRB 86891
+> +        response=sys.stdin.readline().strip().lower()
+>          if not response:
+>              continue
+>          response = response[0]
 
-Sitz der Gesellschaft: Hamburg
-
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+Thanks.
