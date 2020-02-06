@@ -7,58 +7,58 @@ X-Spam-Status: No, score=-17.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
 	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 535CEC352A2
-	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 00:41:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EEA5CC35247
+	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 00:41:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 126CB21775
-	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 00:41:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C217C2166E
+	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 00:41:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="tfFXxZNE"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="OolPfQPs"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727149AbgBFAld (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Feb 2020 19:41:33 -0500
-Received: from mail-pl1-f201.google.com ([209.85.214.201]:50671 "EHLO
+        id S1727588AbgBFAlf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Feb 2020 19:41:35 -0500
+Received: from mail-pl1-f201.google.com ([209.85.214.201]:33954 "EHLO
         mail-pl1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727572AbgBFAlc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Feb 2020 19:41:32 -0500
-Received: by mail-pl1-f201.google.com with SMTP id g5so2137997plq.17
-        for <git@vger.kernel.org>; Wed, 05 Feb 2020 16:41:32 -0800 (PST)
+        with ESMTP id S1727307AbgBFAlf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Feb 2020 19:41:35 -0500
+Received: by mail-pl1-f201.google.com with SMTP id j8so2171553plk.1
+        for <git@vger.kernel.org>; Wed, 05 Feb 2020 16:41:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=CQZ2Bvrq0TpsF/pxowKghBdFuTljBZeQYUnQLxdO4bo=;
-        b=tfFXxZNEXCzBuIU70U/9HjpbRMRcs0ni2Ta/QoH187BHOuWZW+xhANL4KU6lkcVVwm
-         5xQzDt3Pay8uDsjMsM+Ddnhn/elg04+yYOUyyM5gW4djpkDEvF0tT/sv0Wudz3r0DIFb
-         NirV12+Wk97zM0yyP62OqGdMDRFCt6JWjWS2BUyVghkM7PAXXxXhxARpzzBz/ecGTQIx
-         jZC1zjcsgf9pYXCxRPskVk4036EFvHtnzt8bO6wssvKfMHbB7avsnkIxH4FEu5OHEE2k
-         mUYsV7nTKwfsiv6kvlbfKLPGSYkZXbqyb1nT1WRoeemwpxgS3jW+PbUdxWcY6qrnSoJS
-         9cfw==
+        bh=nJNkj4A/VbaQrOpNCNLsBz3dJqXhe+B0PfpbB72FC2U=;
+        b=OolPfQPs5R4WNnd4lnXvbSE1NifGMFaAr1cqQkckM8sQqOQZXiRypx4vJ2/98LD6MU
+         GK4Q7Wx18Z2Uoy0lKM9SYQl+ywOeaHo7hH7ziqLu1TbXEZAbM3T8OfxIiaEZTEeOKhnr
+         2FVxOQO9Kjdjjk9qHFnWIFzOIctUBqu88CcGxA8gHP7T+6ig3nKAt4PISvHxsPGaOyWm
+         890nfw0fMakbEHsEPIq7uhePdn138rV2XSPQSJB0ZpK2kRNWY5C5noTH5EgAKvQjhTAp
+         lIgZ0uXa3GbViOSzSbVw3D2/X6ktyIZp+uyLT+pXCi9zAlxIF5+u+DJJaoZTI0gcDtzq
+         8o4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=CQZ2Bvrq0TpsF/pxowKghBdFuTljBZeQYUnQLxdO4bo=;
-        b=e7ndFaB1WyfoldRE9gSH9IPq43DaaK+7TYfUjspwkx7Tf2vr0cVtV7GLL1frsmlm8q
-         lUx+dbEGpFWO9UQXd8aq01Ismru0QogzhHXytJHJdQ+y/MnbmhLplmU16h0guOi/JdEh
-         pxyoahloBLMkrESZ/72DE/cxXUFMKAzztxNILSr87/fQ7IGLfQFLAX7BmrzvgSfiE8Cr
-         FprjRMfkC2iGiKW1r9U2/MqCHKycKjX6bLIgIC12Q4JT/I9WsTKYx7CTNv+L7gW0nWVj
-         DWW1I/z1MWJyn361arQ7YEsuLwDUYqxJgR1GQkf+FiAEQDhf/oyb8C0MdHMRT+65vDvy
-         R27w==
-X-Gm-Message-State: APjAAAXUSX9K5xcWwdiowqLvE2l2Y8zbxsFfSXFuz4JoUMVPn76aH21D
-        80Odqj8y7czBc9DcCjumUu+CXAR4yrNMXcxzM6b1DAzblwfXUP+NfKfA2rLDjlSdRQrGKWJgmTM
-        ZHo46QKTa+ynhRoXVuvpOsicBSIZTvz2BgcTkqZCRLa3J67j71ga46cSAFh+r4liAL9UPM1eUPA
+        bh=nJNkj4A/VbaQrOpNCNLsBz3dJqXhe+B0PfpbB72FC2U=;
+        b=f5+U1b7roN21d+Zun+uxyuwAh2zkr1pUq0M4OS53viANgn/Oj1gYKVBAhQ0S45Zdi2
+         9zDyYtqFDZn9dmzpqAghHMnRQ6dLqnl7lRWXqkKMiWPahDXNEHJdhUUHWj3oXtwmVsQm
+         q0VSHrabHzSTMHPHuOWMXk9/FRXjHIRPtifafqL6Od5A1nKWp/sGPjMDoLhVXhUd1CE0
+         XiLaE0cCgIGCcsV8TnhKTkT9Nj7O7wSEswh24bIhHCEO/OSaKxF/XC5/tB1uTq4lsZJJ
+         lLjFkGNH9mlL5z1m72kGtm98HHWg0MF3wIrZ9JKOznPTFBcVnog/AgikQaRR0tBzHjgI
+         T3Jg==
+X-Gm-Message-State: APjAAAWGQljPnZaAa/OxJ7A9xByolCeAhX/TXyyaNztFV2T+vWE+4U5q
+        Zy+wcY49KhjaGn4oFyvjBvpeQoR83ya0rFKPC7UXBly05zIYSB69SAUM77a6fMA4ofTkPXVTv2q
+        wy7lDryJfiBeaQrXirGY4sWF7nELPdt2Ax9a/HBNFlG94EV7dhOk/pMa1kZDlRfytpPSPt6IOMQ
         ==
-X-Google-Smtp-Source: APXvYqzsUoEcKlWoTjCqEwNMsPFh2krMZqUlZzTTYDk5FIhHyQgU3crIlwmJdcDYj6J79KxR3WcIaivVHlqq6MdU0D8=
-X-Received: by 2002:a65:68ce:: with SMTP id k14mr638634pgt.336.1580949691425;
- Wed, 05 Feb 2020 16:41:31 -0800 (PST)
-Date:   Wed,  5 Feb 2020 16:40:57 -0800
+X-Google-Smtp-Source: APXvYqw7WaWCGymzfv8ep2tH7G0zfEwG2qrKfNv9r3ZC9GfmMF0MbkVXsDAoyGphmhfyEzHaT64wsyZuExRKn5ldP6E=
+X-Received: by 2002:a63:7a0f:: with SMTP id v15mr629063pgc.139.1580949694024;
+ Wed, 05 Feb 2020 16:41:34 -0800 (PST)
+Date:   Wed,  5 Feb 2020 16:40:58 -0800
 In-Reply-To: <20200206004108.261317-1-emilyshaffer@google.com>
-Message-Id: <20200206004108.261317-5-emilyshaffer@google.com>
+Message-Id: <20200206004108.261317-6-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20200206004108.261317-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.25.0.341.g760bfbb309-goog
-Subject: [PATCH v6 04/15] bugreport: gather git version and build info
+Subject: [PATCH v6 05/15] bugreport: add uname info
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -68,165 +68,57 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Knowing which version of Git a user has and how it was built allows us
-to more precisely pin down the circumstances when a certain issue
-occurs, so teach bugreport how to tell us the same output as 'git
-version --build-options'.
-
-It's not ideal to directly call 'git version --build-options' because
-that output goes to stdout. Instead, wrap the version string in a helper
-within help.[ch] library, and call that helper from within the bugreport
-library.
+The contents of uname() can give us some insight into what sort of
+system the user is running on, and help us replicate their setup if need
+be. The domainname field is not guaranteed to be available, so don't
+collect it.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
- Documentation/git-bugreport.txt |  4 +++
- bugreport.c                     | 19 ++++++++++++-
- help.c                          | 48 ++++++++++++++++++++-------------
- help.h                          |  1 +
- 4 files changed, 52 insertions(+), 20 deletions(-)
+ Documentation/git-bugreport.txt |  1 +
+ bugreport.c                     | 13 +++++++++++++
+ 2 files changed, 14 insertions(+)
 
 diff --git a/Documentation/git-bugreport.txt b/Documentation/git-bugreport.txt
-index 52d49ed7aa..6ce2ae2eff 100644
+index 6ce2ae2eff..4dd72c60f5 100644
 --- a/Documentation/git-bugreport.txt
 +++ b/Documentation/git-bugreport.txt
-@@ -23,6 +23,10 @@ The following information is requested from the user:
-  - Expected behavior
-  - Actual behavior
+@@ -26,6 +26,7 @@ The following information is requested from the user:
+ The following information is captured automatically:
  
-+The following information is captured automatically:
-+
-+ - 'git version --build-options'
-+
+  - 'git version --build-options'
++ - uname sysname, release, version, and machine strings
+ 
  OPTIONS
  -------
- -o <path>::
 diff --git a/bugreport.c b/bugreport.c
-index db46fb88be..dd21be9d68 100644
+index dd21be9d68..4c4b877ea1 100644
 --- a/bugreport.c
 +++ b/bugreport.c
-@@ -1,8 +1,17 @@
--#include "builtin.h"
-+#include "cache.h"
- #include "parse-options.h"
- #include "stdio.h"
- #include "strbuf.h"
- #include "time.h"
-+#include "help.h"
+@@ -7,10 +7,23 @@
+ 
+ static void get_system_info(struct strbuf *sys_info)
+ {
++	struct utsname uname_info;
 +
-+static void get_system_info(struct strbuf *sys_info)
-+{
-+	/* get git version from native cmd */
-+	strbuf_addstr(sys_info, "git version:\n");
-+	get_version_info(sys_info, 1);
-+	strbuf_complete_line(sys_info);
-+}
+ 	/* get git version from native cmd */
+ 	strbuf_addstr(sys_info, "git version:\n");
+ 	get_version_info(sys_info, 1);
+ 	strbuf_complete_line(sys_info);
++
++	/* system call for other version info */
++	strbuf_addstr(sys_info, "uname -a: ");
++	if (uname(&uname_info))
++		strbuf_addf(sys_info, "uname() failed with code %d\n", errno);
++	else
++		strbuf_addf(sys_info, "%s %s %s %s\n",
++			    uname_info.sysname,
++			    uname_info.release,
++			    uname_info.version,
++			    uname_info.machine);
+ }
  
  static const char * const bugreport_usage[] = {
- 	N_("git bugreport [-o|--output-directory <file>] [-s|--suffix <format>]"),
-@@ -32,6 +41,11 @@ static int get_bug_template(struct strbuf *template)
- 	return 0;
- }
- 
-+static void get_header(struct strbuf *buf, const char *title)
-+{
-+	strbuf_addf(buf, "\n\n[%s]\n", title);
-+}
-+
- int cmd_main(int argc, const char **argv)
- {
- 	struct strbuf buffer = STRBUF_INIT;
-@@ -67,6 +81,9 @@ int cmd_main(int argc, const char **argv)
- 
- 	get_bug_template(&buffer);
- 
-+	get_header(&buffer, "System Info");
-+	get_system_info(&buffer);
-+
- 	report = fopen_for_writing(report_path.buf);
- 
- 	if (report == NULL) {
-diff --git a/help.c b/help.c
-index 190722fb0a..44cee69c11 100644
---- a/help.c
-+++ b/help.c
-@@ -622,8 +622,33 @@ const char *help_unknown_cmd(const char *cmd)
- 	exit(1);
- }
- 
-+void get_version_info(struct strbuf *buf, int show_build_options)
-+{
-+	/*
-+	 * The format of this string should be kept stable for compatibility
-+	 * with external projects that rely on the output of "git version".
-+	 *
-+	 * Always show the version, even if other options are given.
-+	 */
-+	strbuf_addf(buf, "git version %s\n", git_version_string);
-+
-+	if (show_build_options) {
-+		strbuf_addf(buf, "cpu: %s\n", GIT_HOST_CPU);
-+		if (git_built_from_commit_string[0])
-+			strbuf_addf(buf, "built from commit: %s\n",
-+			       git_built_from_commit_string);
-+		else
-+			strbuf_addstr(buf, "no commit associated with this build\n");
-+		strbuf_addf(buf, "sizeof-long: %d\n", (int)sizeof(long));
-+		strbuf_addf(buf, "sizeof-size_t: %d\n", (int)sizeof(size_t));
-+		strbuf_addf(buf, "shell-path: %s\n", SHELL_PATH);
-+		/* NEEDSWORK: also save and output GIT-BUILD_OPTIONS? */
-+	}
-+}
-+
- int cmd_version(int argc, const char **argv, const char *prefix)
- {
-+	struct strbuf buf = STRBUF_INIT;
- 	int build_options = 0;
- 	const char * const usage[] = {
- 		N_("git version [<options>]"),
-@@ -637,26 +662,11 @@ int cmd_version(int argc, const char **argv, const char *prefix)
- 
- 	argc = parse_options(argc, argv, prefix, options, usage, 0);
- 
--	/*
--	 * The format of this string should be kept stable for compatibility
--	 * with external projects that rely on the output of "git version".
--	 *
--	 * Always show the version, even if other options are given.
--	 */
--	printf("git version %s\n", git_version_string);
-+	get_version_info(&buf, build_options);
-+	printf("%s", buf.buf);
-+
-+	strbuf_release(&buf);
- 
--	if (build_options) {
--		printf("cpu: %s\n", GIT_HOST_CPU);
--		if (git_built_from_commit_string[0])
--			printf("built from commit: %s\n",
--			       git_built_from_commit_string);
--		else
--			printf("no commit associated with this build\n");
--		printf("sizeof-long: %d\n", (int)sizeof(long));
--		printf("sizeof-size_t: %d\n", (int)sizeof(size_t));
--		printf("shell-path: %s\n", SHELL_PATH);
--		/* NEEDSWORK: also save and output GIT-BUILD_OPTIONS? */
--	}
- 	return 0;
- }
- 
-diff --git a/help.h b/help.h
-index 9071894e8c..500521b908 100644
---- a/help.h
-+++ b/help.h
-@@ -37,6 +37,7 @@ void add_cmdname(struct cmdnames *cmds, const char *name, int len);
- void exclude_cmds(struct cmdnames *cmds, struct cmdnames *excludes);
- int is_in_cmdlist(struct cmdnames *cmds, const char *name);
- void list_commands(unsigned int colopts, struct cmdnames *main_cmds, struct cmdnames *other_cmds);
-+void get_version_info(struct strbuf *buf, int show_build_options);
- 
- /*
-  * call this to die(), when it is suspected that the user mistyped a
 -- 
 2.25.0.341.g760bfbb309-goog
 
