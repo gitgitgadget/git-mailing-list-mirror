@@ -2,133 +2,129 @@ Return-Path: <SRS0=KD4O=32=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 33ED9C35247
-	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 19:28:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9655C35247
+	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 19:41:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id ED2BC217F4
-	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 19:28:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BAE12218AC
+	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 19:41:41 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="dxhoefkt"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cZSEUFmC"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727906AbgBFT2h (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Feb 2020 14:28:37 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:58760 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727698AbgBFT2h (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Feb 2020 14:28:37 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id AADFCB7C68;
-        Thu,  6 Feb 2020 14:28:32 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=FeMB6YI6DgN03E8sZSHOreJmbio=; b=dxhoef
-        ktWnzryvRYo06rYwg5mopEnMEO3925LINVht3glLNvPqbzAOhUgMkVa0uqT2BYwb
-        VnAPSznJHnIFEC33Zk+GhWDbGsajt5jCb9sDDwWI/7iTpuNzgiIIqrd3TZ5fffqU
-        YhKN4U8cmxh+avI984jAN2IBccPWV3L415FFA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=NpoxEzIqkKTwydWf8M6KL4hRWiZahNZg
-        BKpFsm3hhBycAZj/0wbJu/LMXlD0df37c5TBmXp2LFZzoBihhDqp6CB00H00rFO0
-        Y1eOgD9RlKOYrnzHwUJf60mb1YhAi+JUuvGhwjIohF+3FKT3W64X42iF72uJQvv4
-        jl3G++fRJzc=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id A2909B7C67;
-        Thu,  6 Feb 2020 14:28:32 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C9F41B7C66;
-        Thu,  6 Feb 2020 14:28:29 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Ben Keene via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Ben Keene <seraphire@gmail.com>
-Subject: Re: [PATCH v3 1/5] git-p4: rewrite prompt to be Windows compatible
-References: <pull.698.v2.git.git.1580507895.gitgitgadget@gmail.com>
-        <pull.698.v3.git.git.1581002149.gitgitgadget@gmail.com>
-        <8881d76c46ce0af9a7e3c9e8d61c718beea24906.1581002149.git.gitgitgadget@gmail.com>
-Date:   Thu, 06 Feb 2020 11:28:27 -0800
-In-Reply-To: <8881d76c46ce0af9a7e3c9e8d61c718beea24906.1581002149.git.gitgitgadget@gmail.com>
-        (Ben Keene via GitGitGadget's message of "Thu, 06 Feb 2020 15:15:44
-        +0000")
-Message-ID: <xmqqwo8zecro.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1727866AbgBFTlk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Feb 2020 14:41:40 -0500
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:44299 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727479AbgBFTlk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Feb 2020 14:41:40 -0500
+Received: by mail-pf1-f193.google.com with SMTP id y5so3625831pfb.11
+        for <git@vger.kernel.org>; Thu, 06 Feb 2020 11:41:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=YFp3WKXDaQrUUsBREPKYVmuo8DnEYjuCYWnTkY8Ee8A=;
+        b=cZSEUFmCl0hl3s9s7DrLIV/oU4kmI9ybvNpP0tuSDa+DdulgHq6tjkR8ILc0LOPGHC
+         PYeFvN9RFUJsdiujp60/N3VppSoWsQkAOHwfxeBlVSxUGIBsNNHg4/sPPVpvuRpB7WSj
+         hO8Ut/6EQLdWTku0hYVvfjT2L6HmYEaylIFe507Wx8ohAk+ug3msyyDfia/z1GGA33yS
+         2bTxdPVeMTWASn76r93mi0RW2et3jYRy0dOVA1S5DXOdcbscYVVWHPx6wdRKhPDKuFSk
+         S61q9mFbaBS3+3ZyvADpeZ4smcYm9MrkR9aWbFVxsdEFjC8nO6F0fOj9nDTRLKn4H7ta
+         3V2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=YFp3WKXDaQrUUsBREPKYVmuo8DnEYjuCYWnTkY8Ee8A=;
+        b=E/+bzhhC8+YmjxzECG25WN8B0ETryHV6TD+qyz9ixdKvZv1k/lEtyVPckZG/o5qc/y
+         FELhz6z8ucsidPoeCIHd4mijHxIUGoOyA9qbrRln2lTCCUZM/BDV3ddOW52gIBkNztXj
+         LyzH62oTlRjUdE6omXXgQ+tK1siAQYU8YG5dDJRpP5/FuI8QEY3ugibdwYEkp8VH9rmn
+         q2k+Pdo5B2r4WXphXM+QDpmorcQbk1X3VGxIbjwTzyOaCFBFtx2O/+TMXXql5gBoLBN/
+         4Eo9S92YcaWIq/ujpqGg3RcosHSGpqF0qHujwZjg678VwyhwhXtMfWa7Iv1iX6A0QrvS
+         JdmA==
+X-Gm-Message-State: APjAAAX3vYzSL2Pm9mJeGPqdy2bPdGA561LqboqYF7qwsLGRQMtvgI+6
+        /8Cgaw1U/1HFCDHWR77/hRAx/0PfSrNz1sI1nLc=
+X-Google-Smtp-Source: APXvYqxQtQP8zpfY+iKnSYqelDo0J3jvewp+B74q5vl8q+PlRraQhJtirH0n4dacZzwiN8U6VYENkgjhlg8dqMFDrfI=
+X-Received: by 2002:aa7:848c:: with SMTP id u12mr5421382pfn.12.1581018099890;
+ Thu, 06 Feb 2020 11:41:39 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: DADFCA8E-4916-11EA-99A8-B0405B776F7B-77302942!pb-smtp20.pobox.com
+References: <cover.1580430057.git.me@ttaylorr.com> <cover.1580862307.git.me@ttaylorr.com>
+ <3e19d50148c8d53b30f8f0036a2d3af9f4bb3499.1580862307.git.me@ttaylorr.com>
+In-Reply-To: <3e19d50148c8d53b30f8f0036a2d3af9f4bb3499.1580862307.git.me@ttaylorr.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Thu, 6 Feb 2020 20:41:28 +0100
+Message-ID: <CAN0heSrXZd7ktBTHaYFWjhW=NcGx5gL52-unSDaC4ZoNf96HFA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/3] builtin/commit-graph.c: support '--split[=<strategy>]'
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Ben Keene via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Wed, 5 Feb 2020 at 01:28, Taylor Blau <me@ttaylorr.com> wrote:
+> diff --git a/Documentation/git-commit-graph.txt b/Documentation/git-commit-graph.txt
+> index 28d1fee505..b7fe65ef21 100644
+> --- a/Documentation/git-commit-graph.txt
+> +++ b/Documentation/git-commit-graph.txt
+> @@ -57,11 +57,17 @@ or `--stdin-packs`.)
+>  With the `--append` option, include all commits that are present in the
+>  existing commit-graph file.
+>  +
+> -With the `--split` option, write the commit-graph as a chain of multiple
+> -commit-graph files stored in `<dir>/info/commit-graphs`. The new commits
+> -not already in the commit-graph are added in a new "tip" file. This file
+> -is merged with the existing file if the following merge conditions are
+> -met:
+> +With the `--split[=<strategy>]` option, write the commit-graph as a
+> +chain of multiple commit-graph files stored in
+> +`<dir>/info/commit-graphs`. Commit-graph layers are merged based on the
+> +strategy and other splitting options. The new commits not already in the
+> +commit-graph are added in a new "tip" file. This file is merged with the
+> +existing file if the following merge conditions are met:
 
-> From: Ben Keene <seraphire@gmail.com>
->
-> The existing function prompt(prompt_text) does not work correctly when
-> run on Windows 10 bash terminal when launched from the sourcetree
-> GUI application. The stdout is not flushed properly so the prompt text
-> is not displayed to the user until the next flush of stdout, which is
-> quite confusing.
+Please add a lone "+" here.
 
-Is that the bug in raw_input(prompt_text) used in the source, or is
-that the bug in your environment (whatever "the sourcetree GUI
-application" is)?  I cannot quite tell if this is butchering code
-that is perfectly working well for other people just to cope with a
-broken invoker that is what really needs fixing, or if it is working
-around a bug in raw_input().  If the former, the change is not what
-we want, and if the latter, the change should go to Python upstream,
-so either way, I am not sure if we want this patch without further
-information.
+> +* If `--split=merge-always` is specified, then a merge is always
+> +conducted, and the remaining options are ignored. Conversely, if
+> +`--split=no-merge` is specified, a merge is never performed, and the
+> +remaining options are ignored. A bare `--split` defers to the remaining
+> +options.
+>  +
 
-Anybody on a similar platform have opinion on this?  I am OK as long
-as this change does *not* break the program in an environment that
-it is working fine, but that is not even clear.
+Similar to this existing one here. There's some minor misrendering here
+otherwise.
 
-> Change this method by:
-> * Adding flush to stderr, stdout, and stdin
-> * Use readline from sys.stdin instead of raw_input.
->
-> The existing strip().lower() are retained.
->
-> Signed-off-by: Ben Keene <seraphire@gmail.com>
-> ---
->  git-p4.py | 6 +++++-
->  1 file changed, 5 insertions(+), 1 deletion(-)
->
-> diff --git a/git-p4.py b/git-p4.py
-> index 40d9e7c594..7d8a5ee788 100755
-> --- a/git-p4.py
-> +++ b/git-p4.py
-> @@ -175,7 +175,11 @@ def prompt(prompt_text):
->      """
->      choices = set(m.group(1) for m in re.finditer(r"\[(.)\]", prompt_text))
->      while True:
-> -        response = raw_input(prompt_text).strip().lower()
-> +        sys.stderr.flush()
-> +        sys.stdout.write(prompt_text)
-> +        sys.stdout.flush()
+>  * If `--size-multiple=<X>` is not specified, let `X` equal 2. If the new
+>  tip file would have `N` commits and the previous tip has `M` commits and
 
-raw_input() is getting replace with input() in another series to
-bring us to Python3 compatible world, but because you are getting
-rid of its use, as long as the resulting code works with both
-Python2 and Python3, we are happy ;-)
+> -               OPT_BOOL(0, "split", &opts.split,
+> -                       N_("allow writing an incremental commit-graph file")),
+> +               OPT_CALLBACK_F(0, "split", &split_opts.flags, NULL,
+> +                       N_("allow writing an incremental commit-graph file"),
+> +                       PARSE_OPT_OPTARG | PARSE_OPT_NONEG,
+> +                       write_option_parse_split),
 
-> +        sys.stdin.flush()
 
-What does it even mean to flush the input stream here?  At least in
-C, it is meaningless and causes an undefined behaviour.
+I keep getting back to this -- sorry! So this actually forbids
+"--no-split", which used to work before. Unfortunate?
 
-> +        response=sys.stdin.readline().strip().lower()
->          if not response:
->              continue
->          response = response[0]
+I have to ask, what is the long-term plan for the two formats (split and
+non-split)? As I understand it, and I might well be wrong, the non-split
+format came first and the split format was a user-experience
+improvement. Should we expect that `--split` becomes the default? In
+which case `--no-split` would be needed. Or might the non-split format
+go away entirely, leaving `--split` a no-op and `--split=<strategy>` a
+pretty funky way of choosing a strategy for the one-and-only file
+format?
 
-Thanks.
+To try to be concrete, here's a suggestion: `--format=split` and
+`--split-strategy=<strategy>`.
+
+Martin
