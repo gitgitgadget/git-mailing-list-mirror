@@ -2,188 +2,144 @@ Return-Path: <SRS0=KD4O=32=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CD110C2D0B1
-	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 10:58:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BB61DC2D0B1
+	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 11:45:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 9902F20659
-	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 10:58:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8DED521741
+	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 11:45:21 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JJKurtzn"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="DJKDf1jD"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727572AbgBFK6E (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Feb 2020 05:58:04 -0500
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:37340 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726365AbgBFK6E (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Feb 2020 05:58:04 -0500
-Received: by mail-pl1-f194.google.com with SMTP id c23so2210192plz.4
-        for <git@vger.kernel.org>; Thu, 06 Feb 2020 02:58:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=ldATcm8clGJHCHG1a+tGPcEdnsEk5PQOyKw/DKw3CM8=;
-        b=JJKurtznvZz5uULw8KURg9fpej+QUK9CGey9DH/eHta6e54/YPlQZzc7iuxO8JYwc8
-         Q0/FgWWruLTnmTe3gIZjaKU4MpRYoAdo3rm99v2LCbIjMRfdVDkbtS6/5J/488fNj2rb
-         CwIcQ/SOA7DZUMu+0Bd8QMxPuJ1c59hXa2Ytd0JwJBoH5BgfWAyirhThpvw4PvT3dswm
-         xsQyXCxxjttJbJI3LwtqjL++L5DlULeRqNYNSVk3PMA1xW9GNGxQLlrt/ls4s67ha5LA
-         b4cf2iGiIIYh+uW2RBX7AUfxv328Hd5n1Y43bLc1l/XFF8M4PhDNSUM9Hn3QGHcXFRjJ
-         xuuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=ldATcm8clGJHCHG1a+tGPcEdnsEk5PQOyKw/DKw3CM8=;
-        b=LxVH22uuftF6gmA8tnrLIhS3dnPx/swN5SnPjknaGdVmpHVB8vPJo/4mjhnqsMjZre
-         6QTffniPCBXBhX++GxTCEvCJV42PXZmBL+L7Wht+NCXJGRUzCE/HdX9vKo/JCc0CDF0P
-         Neas1NrIUoSFQ4n999nPU5Cu2YRD4W0ndeDOpqIRHtmDbbdnmWQ8zYKXtM3xK9N8X+q4
-         kXKaPIubU1Mbn2sjz4gQXoMvKiqEgybrNvZxMCsSv4/Ds6Qx4LmxgBkWGcEJGZqAdPIf
-         iflnVR6Zk1h/kmFXyyOSeFGQTNPXcSpZqEZZ+iSpqktSZG4vMKCfwmf7ugy62iRPjshR
-         4TTQ==
-X-Gm-Message-State: APjAAAXjSo3WZ5dOHDyx31UjuA6qVWAuEp8soKCE5hpZnxUgFfiZVRMt
-        mSp5sNCwWsGRE5pM/mVaQf8RqU1i
-X-Google-Smtp-Source: APXvYqy1yDt7eH+mSyc850N5gRU9azKwET+ZF9baxxKq3rHlmnE6e7UhGu5+QlfwYIhcCUKUsmI4OA==
-X-Received: by 2002:a17:902:8f8a:: with SMTP id z10mr3155415plo.169.1580986683204;
-        Thu, 06 Feb 2020 02:58:03 -0800 (PST)
-Received: from localhost.localdomain (115-189-93-166.mobile.spark.co.nz. [115.189.93.166])
-        by smtp.gmail.com with ESMTPSA id u13sm2944293pjn.29.2020.02.06.02.58.00
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 06 Feb 2020 02:58:02 -0800 (PST)
-From:   Heba Waly <heba.waly@gmail.com>
-To:     git@vger.kernel.org
-Cc:     emilyshaffer@google.com, gitster@pobox.com,
-        jonathantanmy@google.com, Heba Waly <heba.waly@gmail.com>
-Subject: [PATCH 1/1] add: change advice config variables used by the add API
-Date:   Thu,  6 Feb 2020 23:57:30 +1300
-Message-Id: <20200206105730.16231-2-heba.waly@gmail.com>
-X-Mailer: git-send-email 2.21.0 (Apple Git-122.2)
-In-Reply-To: <20200206105730.16231-1-heba.waly@gmail.com>
-References: <20200206105730.16231-1-heba.waly@gmail.com>
+        id S1727584AbgBFLpU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Feb 2020 06:45:20 -0500
+Received: from mout.gmx.net ([212.227.17.20]:33793 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727111AbgBFLpU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Feb 2020 06:45:20 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1580989515;
+        bh=yCTsx0/U6kF2ITk9cXLoRPXYQasUhxBjNCfC6vowN3o=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=DJKDf1jD0YZKMld+3CVcUDG5VlA9Qtaeqgc1RH2tiZ6yJEQehFA111ud8KbNXGpg2
+         Bcwe3L0X2R0Xxkbi8e0vAAuPBJzE+u6CqzV+OdomGe0ETCbxlbwYOwGM2LumBRD2yd
+         TIH+DzHGXfsdbDyn8vdI1kIuPkM0SL2NuRTx+Sng=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.86]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MulqN-1jpRGc3CuR-00rpvP; Thu, 06
+ Feb 2020 12:45:14 +0100
+Date:   Thu, 6 Feb 2020 12:45:11 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Yang Zhao <yang.zhao@skyboxlabs.com>
+Subject: Re: What's cooking in git.git (Jan 2020, #04; Wed, 22)
+In-Reply-To: <20200206090632.GA17842@szeder.dev>
+Message-ID: <nycvar.QRO.7.76.6.2002061243500.3718@tvgsbejvaqbjf.bet>
+References: <20200122235333.GA6837@szeder.dev> <xmqqftg6671g.fsf@gitster-ct.c.googlers.com> <20200123141626.GB6837@szeder.dev> <20200123175645.GF6837@szeder.dev> <nycvar.QRO.7.76.6.2001232237590.46@tvgsbejvaqbjf.bet> <20200124120240.GG6837@szeder.dev>
+ <nycvar.QRO.7.76.6.2001250133510.46@tvgsbejvaqbjf.bet> <xmqqeev8694x.fsf@gitster-ct.c.googlers.com> <20200206002754.GM10482@szeder.dev> <nycvar.QRO.7.76.6.2002060930210.3718@tvgsbejvaqbjf.bet> <20200206090632.GA17842@szeder.dev>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/mixed; boundary="8323328-1997163078-1580989513=:3718"
+X-Provags-ID: V03:K1:aBcFP0/yP6hNOHnDnW++EeO58amNcGCJft6Xah1cuVc+ud8lLaG
+ 6XpW+RKKdwT76VoLaZ1zEpAt/jOmFz+g1T0LKqhttO5rg+P9AKZ2MCt1fQgap7CGbtUqWQU
+ joWIuNNOXZ7rnC2JPbb1HxcN6gYTBHrnkYmoYtzCN5J0ZAhM1nZoYCL/pp/0R8f2hyc9sWi
+ R7zWBbHZTPDbF511lpKPw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:FNYiuCscV8Q=:C2EKYFS/I3JxzDQuDizG2Z
+ hVqd7jTbBFrzehVS9gmOmm3uTO5+4JdTp38Z9Vuw5IzTwfq4zadT7jEACbRUZZP0twK8kMWnf
+ Y49PiN+L/zte2PlO5a7meTsBzvKRHAnsSqb5rfFfCyOtdheKAUqv4T/SMy/sMzCNUq0RtkkSL
+ Asb98RfGNzWu79YZbVyP3ladgKCxYqDaqJfzk10ZsS5syOb4xCT+ftogQRtQIt5c8BbQ78BaA
+ omwtpRXDoy+EP4kP8UqXsKbipwyvAc2DMNF+pkSWV7rAI3+arggYkzkGH1O5bETfWDVs+UoY2
+ 4aMNQial5+Dz6TsWEBwy5gBwhsulXZpq4wVlQv+44kwGt8no4sh2SQnZ1ZBovCoOsgHTeUNE2
+ JoZXawUg8mfsmzZkg/mllSY9A+FPDBGAA+tNiE7rYo2beakMfv6z0QNdjTcJuf1UR8c6IUCxI
+ E9RB+KNquGeic+O3s0xw0Jw9usVhccVjzvq6bPQTnuS5wJRB2X80bhd4Av7/+kSNfxqNtfEIB
+ IFSbXorsO2NAN5FNMoSWFh/eXR1QRq20XnFvWl4z6uDdUyMc6/UQN9cGL8NX7rD1WwiOZfLab
+ Ivt2VDFSSCWHeVMosr0d4KZardbnwdItzFxFfdH/DnNPSU+o5vd6EompNliod5JoQ566wTagT
+ J+l80RtsP93l0ZgdvA2o9x72fnA8n0GCIeJwzuhB78lVzEEMQzvsvN4aJnf0BBBqsv2g6Us+G
+ pRDC/UGlMK8+bbdntevn18x7rbpCGcOctZx5B1YOhIrjBuCZgqk6ZQnIr5CIWuL5xlKqqfq+z
+ y+wGWzU+Dw6xFVV7gbTCqIfYEqiVsJ/RXx8gz+8KWlSxYgW8+6462IBNRQyeDjiJUXO0pko0S
+ Tf5ujzDXZvn+Ntn7MUZ34LXcRaWp1kf/p/55h8Zca+5d66zbn8hHV5jB+Ub9UAualzgAYN0Ua
+ B83NZwn5BI67/aJA0NKGvfjPlQeOXYgcjO9lPDL1qEIhoG5opd5QwrQy0//q2o5IY3O2ZzuOh
+ C1xi6YIzxkZEt7ZvjVQXRPRnkboJTaFz8uBYwbXn86HXHagjNy0/oA1g5AYPhmynq3zBGp7fH
+ g4OS8RDZrP5j1+mR+k2Vn7gKVDhspqhxiIB2lg6uS9ldagYp/AxSP798YvpL2DqVFTuL5qOYe
+ G3STGqcz57D/Zqnan4Q/783uCBmvYqQdntHRLxJq1hTofeXfZm4ZKACO6iJPjVpyqM5SiEXxh
+ wg6ubje8VEmnRjYT8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-advice.addNothing config variable is used to control the visibility of
-two advice messages in the add library. This config variable is
-replaced by two new variables, whose names are more clear and relevant
-to the two cases.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Also add the two new variables to the documentation.
+--8323328-1997163078-1580989513=:3718
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Heba Waly <heba.waly@gmail.com>
----
- Documentation/config/advice.txt |  6 ++++++
- advice.c                        |  6 ++++--
- advice.h                        |  3 ++-
- builtin/add.c                   | 12 ++++++++----
- t/t3700-add.sh                  |  2 ++
- 5 files changed, 22 insertions(+), 7 deletions(-)
+Hi G=C3=A1bor,
 
-diff --git a/Documentation/config/advice.txt b/Documentation/config/advice.txt
-index 4be93f8ad9..bdd37c3eaa 100644
---- a/Documentation/config/advice.txt
-+++ b/Documentation/config/advice.txt
-@@ -110,4 +110,10 @@ advice.*::
- 	submoduleAlternateErrorStrategyDie::
- 		Advice shown when a submodule.alternateErrorStrategy option
- 		configured to "die" causes a fatal error.
-+	addIgnoredFile::
-+		Advice shown if a user attempts to add an ignored file to
-+		the index.
-+	addEmptyPathspec::
-+		Advice shown if a user runs the add command without providing
-+		the pathspec parameter.
- --
-diff --git a/advice.c b/advice.c
-index 098ac0abea..97f3f981b4 100644
---- a/advice.c
-+++ b/advice.c
-@@ -31,7 +31,8 @@ int advice_graft_file_deprecated = 1;
- int advice_checkout_ambiguous_remote_branch_name = 1;
- int advice_nested_tag = 1;
- int advice_submodule_alternate_error_strategy_die = 1;
--int advice_add_nothing = 1;
-+int advice_add_ignored_file = 1;
-+int advice_add_empty_pathspec = 1;
- 
- static int advice_use_color = -1;
- static char advice_colors[][COLOR_MAXLEN] = {
-@@ -92,7 +93,8 @@ static struct {
- 	{ "checkoutAmbiguousRemoteBranchName", &advice_checkout_ambiguous_remote_branch_name },
- 	{ "nestedTag", &advice_nested_tag },
- 	{ "submoduleAlternateErrorStrategyDie", &advice_submodule_alternate_error_strategy_die },
--	{ "addNothing", &advice_add_nothing },
-+	{ "addIgnoredFile", &advice_add_ignored_file },
-+	{ "addEmptyPathspec", &advice_add_empty_pathspec },
- 
- 	/* make this an alias for backward compatibility */
- 	{ "pushNonFastForward", &advice_push_update_rejected }
-diff --git a/advice.h b/advice.h
-index 83287b0594..0e6e58d9f8 100644
---- a/advice.h
-+++ b/advice.h
-@@ -31,7 +31,8 @@ extern int advice_graft_file_deprecated;
- extern int advice_checkout_ambiguous_remote_branch_name;
- extern int advice_nested_tag;
- extern int advice_submodule_alternate_error_strategy_die;
--extern int advice_add_nothing;
-+extern int advice_add_ignored_file;
-+extern int advice_add_empty_pathspec;
- 
- int git_default_advice_config(const char *var, const char *value);
- __attribute__((format (printf, 1, 2)))
-diff --git a/builtin/add.c b/builtin/add.c
-index 57b3186f69..0e66934f3a 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -390,8 +390,10 @@ static int add_files(struct dir_struct *dir, int flags)
- 		fprintf(stderr, _(ignore_error));
- 		for (i = 0; i < dir->ignored_nr; i++)
- 			fprintf(stderr, "%s\n", dir->ignored[i]->name);
--		if (advice_add_nothing)
--			advise(_("Use -f if you really want to add them.\n"));
-+		if (advice_add_ignored_file)
-+			advise(_("Use -f if you really want to add them.\n"
-+				"Turn this message off by running\n"
-+				"\"git config advice.addIgnoredFile false\""));
- 		exit_status = 1;
- 	}
- 
-@@ -481,8 +483,10 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 
- 	if (require_pathspec && pathspec.nr == 0) {
- 		fprintf(stderr, _("Nothing specified, nothing added.\n"));
--		if (advice_add_nothing)
--			advise( _("Maybe you wanted to say 'git add .'?\n"));
-+		if (advice_add_empty_pathspec)
-+			advise( _("Maybe you wanted to say 'git add .'?\n"
-+				"Turn this message off by running\n"
-+				"\"git config advice.addEmptyPathspec false\""));
- 		return 0;
- 	}
- 
-diff --git a/t/t3700-add.sh b/t/t3700-add.sh
-index a649805369..88bc799807 100755
---- a/t/t3700-add.sh
-+++ b/t/t3700-add.sh
-@@ -327,6 +327,8 @@ cat >expect.err <<\EOF
- The following paths are ignored by one of your .gitignore files:
- ignored-file
- hint: Use -f if you really want to add them.
-+hint: Turn this message off by running
-+hint: "git config advice.addIgnoredFile false"
- EOF
- cat >expect.out <<\EOF
- add 'track-this'
--- 
-2.21.0 (Apple Git-122.2)
+On Thu, 6 Feb 2020, SZEDER G=C3=A1bor wrote:
 
+> On Thu, Feb 06, 2020 at 09:57:51AM +0100, Johannes Schindelin wrote:
+> >
+> > On Thu, 6 Feb 2020, SZEDER G=C3=A1bor wrote:
+> >
+> > > On Wed, Feb 05, 2020 at 01:01:50PM -0800, Junio C Hamano wrote:
+> > > >
+> > > > If linux-gcc and linux-clang labels are not visible, linux-clang-p=
+y2
+> > > > and osx-py3 would not be, either, so...
+> > >
+> > > The 'linux-gcc' and 'linux-clang' labels are not visible on Travis C=
+I,
+> > > because those jobs as part of the build matrix, and, consequently, w=
+e
+> > > can't set the a 'jobname' environment variable for them in
+> > > '.travis.yml'.  If we were to include additional jobs for the Python
+> > > scripts, then for those we can (and should!) set
+> > > 'jobname=3Dlinux-python' or something, and that would be visible on =
+the
+> > > Travis CI web interface, just like e.g. 'jobname=3DStaticAnalysis'.
+> >
+> > I think we can see that jobname very well, though. If you direct your =
+web
+> > browser to
+> > https://travis-ci.org/git/git/builds/646646192?utm_source=3Dgithub_sta=
+tus&utm_medium=3Dnotification
+> > you will see something like this:
+> >
+> >     Build jobs		View config
+> >
+> > ! 5281.1 AMD64		Compiler: clang Xcode: xcode10.1 C	no environment vari=
+ables set	8 min 20 sec
+> > ! 5281.2 AMD64		Compiler: gcc Xcode: xcode10.1 C	no environment variab=
+les set	8 min 23 sec
+> > X 5281.3 AMD64		Compiler: clang Xcode: xcode10.1 C	no environment vari=
+ables set	1 min 57 sec
+> > X 5281.4 AMD64		Compiler: gcc Xcode: xcode10.1 C	no environment variab=
+les set	2 min 41 sec
+> > ! 5281.5 AMD64		Xcode: xcode10.1 C			jobname=3DGIT_TEST_GETTEXT_POISON=
+	5 min 14 sec
+> > X 5281.6 AMD64		Xcode: xcode10.1 C			jobname=3Dlinux-gcc-4.8		1 min 13=
+ sec
+> > ! 5281.7 AMD64		Xcode: xcode10.1 C			jobname=3DLinux32			6 min 50 sec
+> > =E2=9C=93 5281.8 AMD64		Xcode: xcode10.1 C			jobname=3DStaticAnalysis	=
+	10 min 56 sec
+> > =E2=9C=93 5281.9 AMD64		Xcode: xcode10.1 C			jobname=3DDocumentation		=
+6 min 15 sec
+>
+> I don't see any 'linux-gcc' and 'linux-clang' jobnames.
+
+Ah, that's what you meant. Indeed, those are not displayed because we set
+them at the wrong layer, they would need to be defined in `.travis.yml`.
+You probably _can_ use variables in the `jobname`.
+
+Ciao,
+Dscho
+
+--8323328-1997163078-1580989513=:3718--
