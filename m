@@ -2,137 +2,156 @@ Return-Path: <SRS0=KD4O=32=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FF6CC35247
-	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 01:33:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F54FC35247
+	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 01:35:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1283820661
-	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 01:33:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 71281214AF
+	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 01:35:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HktNrTsD"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F+k57FC8"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727653AbgBFBdI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Feb 2020 20:33:08 -0500
-Received: from mail-ot1-f48.google.com ([209.85.210.48]:36015 "EHLO
-        mail-ot1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727565AbgBFBdI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Feb 2020 20:33:08 -0500
-Received: by mail-ot1-f48.google.com with SMTP id j20so3994746otq.3
-        for <git@vger.kernel.org>; Wed, 05 Feb 2020 17:33:08 -0800 (PST)
+        id S1727594AbgBFBfh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Feb 2020 20:35:37 -0500
+Received: from mail-pj1-f68.google.com ([209.85.216.68]:39383 "EHLO
+        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727307AbgBFBfh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Feb 2020 20:35:37 -0500
+Received: by mail-pj1-f68.google.com with SMTP id e9so1774218pjr.4
+        for <git@vger.kernel.org>; Wed, 05 Feb 2020 17:35:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=HUcQc2lc+zJAvq1g3yGr2CW813ZY/WznYqFhcdpM/Zk=;
-        b=HktNrTsDduZ5m05Bn+OQeRgTVSx7tjj5rwAlW754Mz+uFSNG2xRAWaj5o91pWw24pg
-         5psoKbLZqNC8NqAJQscz/SNHYCnfzigVZQsAR1bHu8OyhvTuldNf5eQ2brDNWdpvFmYy
-         n4dh7MTYmhumo7APNE/slo58KMpOt1YOYZ91DVLfHOlAzjC1/4TdEwKJ/MD4shU61V4i
-         GoHejt1Ydf/zxg+PA16yGfYEWQiCRGzStkkP4iOxu0cLZIxn3gPdYOG4ZWpsKxWq731d
-         9PfLLF26pHPZU0Cr8rruf45P18bAqsYrrE7yLQbBjF7EZwtUX8GBJyP16a73UL2fzlyf
-         ofrg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=svjPBq0vHfnigY0beRXmgM6GVtQOp9ulRfAiwuCyi7Q=;
+        b=F+k57FC8K8bfu1J3X6PDNZu1oMuVSf6KGFIZX9eeaAocVJpVSQsuqDQJDPc/TWvsdN
+         twnp/mdRtsBUe5OW7qUlekZOJjNJ7N/tbkmmbjqUSSso+u9HQc0ZurcTpSrgxeWFjbN/
+         TUeFPh3hj/6cF9h8ihWpexH1BOMvEpVKydQGA5xy6qpkF4FhAfefWwlZ61De1e3pWOhv
+         dJBhk5KDVGSCp4QJvHLl2VONEe0Xc2/7OEKC4HhC4KV1CsTq+DTcCcxyE64Fn+yqIzGy
+         j/X99/tmw92CsP1IlgbXRRw5ihu9Gz0x3DtLf2xDkmnXk45pK7vYjR4xcPHrjPaBGD/4
+         d58A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=HUcQc2lc+zJAvq1g3yGr2CW813ZY/WznYqFhcdpM/Zk=;
-        b=p7IjdzdAMKgHtx986XXf74TU5q2vTw6OzdFUME9MNwJazmWSGkr1pQ23ydLIU6SdfY
-         2C6a9ef1wMRDEt7GeB96RELCHOt6Mmqx4pA3ATy0djZspJQwu4rfhNF49SUFYiMhO6M4
-         7UWa06Jw3uEbzUCHkNt/Xv9aotzQn8zw5yUKCaiKfNkXR6MfBiFfVzgvfsGTOP1rWubi
-         MleXfb1W+sISmkImTOZuSvVGUkQmhrPyJQ4ARuGHE2Mn5swK+NSZWB91RP212Kius5ze
-         HMadhdHoF8Rc8JZ5Y5qBfw39hAITYnJnztWn5RX7hMJoxO1L++SuGSv5GjiDML0ix1MC
-         X5Jw==
-X-Gm-Message-State: APjAAAV8c1lRisTKNwaockKihaPx1gunJBGh+zX69OPfJCeLH7f+VcDu
-        axE5XqRey26CFv9YvtiCByG5ELEjbHzpxGr3UA/Rtg==
-X-Google-Smtp-Source: APXvYqzFo+WhJkMPC4/8e/kWHwEyTKeO57FfjG4IDZ8+/9q8WDBfKdz1qWkrelwIl62OACZCUROs4ll6pKqcYyfrDNw=
-X-Received: by 2002:a9d:6f07:: with SMTP id n7mr27589800otq.112.1580952787896;
- Wed, 05 Feb 2020 17:33:07 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=svjPBq0vHfnigY0beRXmgM6GVtQOp9ulRfAiwuCyi7Q=;
+        b=JK98ZFllzHeHBTVAx7q65iMGywXZQgZHhQXG4daTnQzOTcIb2NgbicxUvmIGrsFRYh
+         Lgk1wgIkQrIODwnL7GXIaDDgNEr6L9GiMx/RYgEYCXKrS1ZwYm+thV75Hi/rFX9ET0Pj
+         I6pWHz3yxeiCKA//CowQmTHZrRSBcMOfqaW1BYRp1MHCJDVe4XmrTnnmcCuLqDzZCmgk
+         ZeOF9JWV4BjfWWXFWVglfqot0rvW/hqdaDbaaDS/YPSxd8ZxfXI8eDaCNDYiPU3NpsWh
+         pfWDMGC5AgEeTBb11y/MsMpBJvCu4udisiQiB3RiUQPKL/OZg8wTFzLTcDD5Yw1b1lkU
+         3PKg==
+X-Gm-Message-State: APjAAAXPbfgsLMH5i/A7dkKDpoATD6viOIjV3ZpHTH+otzq00+bvbJt3
+        ej/1D1VnBfvXcNNmoEnxYJI=
+X-Google-Smtp-Source: APXvYqzd4GCl7Gjzic6u4kTu3b5815Gq6iX2vftp8t9SNfLDKcboWNnFCeS29Em6IvVcnx2MeRB9Ow==
+X-Received: by 2002:a17:90a:3745:: with SMTP id u63mr1196468pjb.123.1580952936831;
+        Wed, 05 Feb 2020 17:35:36 -0800 (PST)
+Received: from localhost ([2402:800:6374:7754:86a8:b650:771:4d56])
+        by smtp.gmail.com with ESMTPSA id 23sm768087pfh.28.2020.02.05.17.35.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 05 Feb 2020 17:35:36 -0800 (PST)
+Date:   Thu, 6 Feb 2020 08:35:33 +0700
+From:   Danh Doan <congdanhqx@gmail.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v6 01/15] help: move list_config_help to builtin/help
+Message-ID: <20200206013533.GA3993@danh.dev>
+References: <20200206004108.261317-1-emilyshaffer@google.com>
+ <20200206004108.261317-2-emilyshaffer@google.com>
 MIME-Version: 1.0
-References: <xmqqpnesfw74.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqpnesfw74.fsf@gitster-ct.c.googlers.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 5 Feb 2020 17:32:56 -0800
-Message-ID: <CABPp-BF0SO92wxY-dM14Vxv6BGA5=T=CicdwbiaZ7c9w6-j2jQ@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Feb 2020, #01; Wed, 5)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200206004108.261317-2-emilyshaffer@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 5, 2020 at 3:36 PM Junio C Hamano <gitster@pobox.com> wrote:
-> * en/fill-directory-exponential (2020-01-31) 6 commits
->  - t7063: blindly accept diffs
->  - dir: replace exponential algorithm with a linear one
->  - dir: refactor treat_directory to clarify control flow
->  - dir: fix confusion based on variable tense
->  - dir: fix broken comment
->  - dir: consolidate treat_path() and treat_one_path()
->  (this branch uses en/fill-directory-fixes-more.)
->
->  The directory traversal code had redundant recursive calls which
->  made its performance characteristics exponential wrt the depth of
->  the tree, which was corrected.
->
->  Still RFC?
->  cf. <pull.700.v2.git.git.1580495486.gitgitgadget@gmail.com>
+On 2020-02-05 16:40:54-0800, Emily Shaffer <emilyshaffer@google.com> wrote:
+> diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
+> index 71158f7d8b..45fecf8bdf 100755
+> --- a/generate-cmdlist.sh
+> +++ b/generate-cmdlist.sh
+> @@ -76,23 +76,6 @@ print_command_list () {
+>  	echo "};"
+>  }
+>  
+> -print_config_list () {
+> -	cat <<EOF
+> -static const char *config_name_list[] = {
+> -EOF
+> -	grep -h '^[a-zA-Z].*\..*::$' Documentation/*config.txt Documentation/config/*.txt |
+> -	sed '/deprecated/d; s/::$//; s/,  */\n/g' |
+> -	sort |
+> -	while read line
+> -	do
+> -		echo "	\"$line\","
+> -	done
+> -	cat <<EOF
+> -	NULL,
+> -};
+> -EOF
+> -}
+> -
+>  exclude_programs=
+>  while test "--exclude-program" = "$1"
+>  do
+> @@ -113,5 +96,3 @@ echo
+>  define_category_names "$1"
+>  echo
+>  print_command_list "$1"
+> -echo
+> -print_config_list
+> diff --git a/generate-configlist.sh b/generate-configlist.sh
+> new file mode 100755
+> index 0000000000..eca6a00c30
+> --- /dev/null
+> +++ b/generate-configlist.sh
+> @@ -0,0 +1,24 @@
+> +#!/bin/sh
+> +
+> +echo "/* Automatically generated by generate-configlist.sh */"
+> +echo
+> +
+> +print_config_list () {
+> +	cat <<EOF
+> +static const char *config_name_list[] = {
+> +EOF
+> +	grep -h '^[a-zA-Z].*\..*::$' Documentation/*config.txt Documentation/config/*.txt |
+> +	sed '/deprecated/d; s/::$//; s/,  */\n/g' |
+> +	sort |
+> +	while read line
+> +	do
+> +		echo "	\"$line\","
+> +	done
 
-Yes, definitely.  (At least) Two things before it's ready to advance:
-  1) Either the last commit needs to be squashed down, or if it's
-wrong, the code modified to handle the untracked-cache bits correctly.
-I'm hoping someone who's familiar with the untracked-cache (or even
-the index format) can sanity check this piece or even just provide a
-pointer or two about its purpose, design, etc.
-  2) This is a somewhat significant change to how fill_directory()
-works, and it's very hard to be confident that nothing is broken by
-it.  See the commit message of the second to last commit.  I would
-really appreciate another pair of eyes.
+This while-read-echo was moved from generate-cmdlist.sh,
+which has some logic to work with read-variable.
 
-If no one responds within a week or so with pointers on the
-untracked-cache, then I'll dig back in and try to figure out what I
-can.  I'm not sure if anyone will review the general fill_directory()
-stuff; we may just have to bite the bullet at some point by merging it
-and then watch out for problems.  I'll at least look over it all once
-again when I look at the untracked-cache stuff before submitting the
-next re-roll.
+We're moving it out, I think apply this diff on top of it will make the code easier to read.
+
+diff --git a/generate-configlist.sh b/generate-configlist.sh
+index eca6a00c30..163dbf30bb 100755
+--- a/generate-configlist.sh
++++ b/generate-configlist.sh
+@@ -10,10 +10,7 @@ EOF
+ 	grep -h '^[a-zA-Z].*\..*::$' Documentation/*config.txt Documentation/config/*.txt |
+ 	sed '/deprecated/d; s/::$//; s/,  */\n/g' |
+ 	sort |
+-	while read line
+-	do
+-		echo "	\"$line\","
+-	done
++	sed 's/^/	"/; s/$/",/'
+ 	cat <<EOF
+ 	NULL,
+ };
 
 
-> * en/rebase-backend (2020-01-17) 19 commits
->  - rebase: change the default backend from "am" to "merge"
->  - rebase: make the backend configurable via config setting
->  - rebase tests: repeat some tests using the merge backend instead of am
->  - rebase tests: mark tests specific to the am-backend with --am
->  - rebase: drop '-i' from the reflog for interactive-based rebases
->  - git-prompt: change the prompt for interactive-based rebases
->  - rebase: add an --am option
->  - rebase: move incompatibility checks between backend options a bit earlier
->  - git-rebase.txt: add more details about behavioral differences of backends
->  - rebase: allow more types of rebases to fast-forward
->  - t3432: make these tests work with either am or merge backends
->  - rebase: fix handling of restrict_revision
->  - rebase: make sure to pass along the quiet flag to the sequencer
->  - rebase, sequencer: remove the broken GIT_QUIET handling
->  - t3406: simplify an already simple test
->  - rebase (interactive-backend): fix handling of commits that become empty
->  - rebase (interactive-backend): make --keep-empty the default
->  - t3404: directly test the behavior of interest
->  - git-rebase.txt: update description of --allow-empty-message
->
->  "git rebase" has learned to use the sequencer backend by default,
->  while allowing "--am" option to go back to the traditional "am"
->  backend.
->
->  Waiting for reviews and/or Acks.
->  cf. <CABPp-BHONuRyt8VJqRuoCF2rGYZ5EhH9KJXQZ3NO69rYwA5J3g@mail.gmail.com>
 
-I would like to give Phillip a bit more time for a final review since
-he said he'd try to review v4, but it's also been a few weeks and I
-don't want to delay indefinitely.  So if he hasn't responded by your
-next "What's cooking", I'll probably ask that we just merge it down to
-next at that time.
+-- 
+Danh
