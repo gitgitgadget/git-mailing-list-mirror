@@ -2,153 +2,89 @@ Return-Path: <SRS0=KD4O=32=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1,
-	USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 14A66C35247
-	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 19:49:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A43B2C35247
+	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 19:51:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id C054D21775
-	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 19:49:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7090820720
+	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 19:51:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="UOD2EbVz"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C51Dw8lv"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727773AbgBFTtg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Feb 2020 14:49:36 -0500
-Received: from mail-pj1-f42.google.com ([209.85.216.42]:40121 "EHLO
-        mail-pj1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727698AbgBFTtg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Feb 2020 14:49:36 -0500
-Received: by mail-pj1-f42.google.com with SMTP id 12so426366pjb.5
-        for <git@vger.kernel.org>; Thu, 06 Feb 2020 11:49:36 -0800 (PST)
+        id S1727872AbgBFTvJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Feb 2020 14:51:09 -0500
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:37964 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727698AbgBFTvJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Feb 2020 14:51:09 -0500
+Received: by mail-pl1-f196.google.com with SMTP id t6so2766298plj.5
+        for <git@vger.kernel.org>; Thu, 06 Feb 2020 11:51:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=uDmSuApAdJGhTQC+wFk7yHJTlmSgFbRTUo2t8H/Y7ro=;
-        b=UOD2EbVz5jIvKXuWXY5D+fLDDj28ERwORkMXwzNaL9pLilrBEDpy3YBZ417tyxWWPL
-         gH3cYmBUcS6YK1oExkUpB4d3UgmbmFCkdgUqdy/Nj6pGGewPbgvVizLk28BFO67UKUAz
-         TLKESUT4cg5ySWk4bZr9Y5mpZofUVZjBIp+MEnyEHOgzq7AlU1ez6G6jAnUETXYyHJo1
-         Ymki/t57yrAyqbpLKx/MVlUZxvkEb6F+AE1WAknmoaJymakuKk1A6ISCe6BP9LnL47X5
-         bMEC6y032w8TgOgKV4PE09xtpIH0zCpcP2ourvH341rk48ecwn95F9h24hQDrg5OuGlv
-         GAag==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=xWVPECYcivAdzW3sVevetThdmZcUYTU9K3UCRUX4uJA=;
+        b=C51Dw8lvHME5TbliwegYbwiiX2aEwe5VTHbSthWxIbBJPCBmmTfk3jpNoWkKw18XwP
+         Bh1/t+d+s/RAzGfKWYwh2l9XMucw2xZLvHO3EgxRTXwqoXBLRvqq9tdjLT0VrsmJsbZZ
+         C0i9j4PkzJbGhzqRGpMo1FMhgg3L3TompjN7DILcHJ9XBzglc7QOESz/9ahrCRrg5cc8
+         0NXSE67VXR3DbFacWZ9VL+7qauEayH6yjj7DcMPybcwgnPezaAadDTpU9E1AvWZsXZQN
+         7P04V7imBhX2QJlDxNzIj22b3uTwVWU5w+KJHtZk9R9bVciChYvS4nwrQNRzSrZ1i+/w
+         oIYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=uDmSuApAdJGhTQC+wFk7yHJTlmSgFbRTUo2t8H/Y7ro=;
-        b=ZdwBYeaPC5F29UOd/8VI0BQ4KA13LpmAXSTj9JEO7t6aEqf9YGxJnZ13ZIoGUNsGVo
-         EnQVNTJt7tkAJ+A/bWKEF2K4+5t8HbuIgHVfykWX2ikhUwt0+diYtGIzLEeKcVZJTxhI
-         i6r3AXwmHV2DC6e81qCQo80oncnC3zMXtUrVkF4aic+exm5fIRf/Wi7/zxKsCp9gdHws
-         gtMAePa1foDuPGkxOpwj2MzDp5HupoFHwgyzo5jqrWb1Zy52kXCdyO3zUF0B1ri6xZEL
-         F6If5FaNj9V9L+FykeKIi/qL5m5KBdkl/WAbDUuP4sHvS3P6Gq0+YznQjRUyi4tBdixb
-         KVDQ==
-X-Gm-Message-State: APjAAAURME6y5v2BJa/eshcmC2k5+c4OvI1ivq1nmpvTPBo/3eNwdr9w
-        br/Higl+QGmAwpXCUzyBDvX35g==
-X-Google-Smtp-Source: APXvYqzCOQ2JAYCyuOxZUc9NwRI2rtve+NxtWiMHOLRDJxB/FgqXEB0Rm2DkVxvjDrUM7etC2VqRZg==
-X-Received: by 2002:a17:902:c693:: with SMTP id r19mr5962173plx.25.1581018575387;
-        Thu, 06 Feb 2020 11:49:35 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
-        by smtp.gmail.com with ESMTPSA id e1sm189833pff.188.2020.02.06.11.49.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Feb 2020 11:49:34 -0800 (PST)
-Date:   Thu, 6 Feb 2020 11:49:29 -0800
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v7] MyFirstContribution: add avenues for getting help
-Message-ID: <20200206194929.GA190927@google.com>
-References: <20200124210148.220007-1-emilyshaffer@google.com>
- <20200124212602.74194-1-emilyshaffer@google.com>
- <20200124215628.GI6837@szeder.dev>
- <xmqqh80kctcn.fsf@gitster-ct.c.googlers.com>
- <20200206010704.GN10482@szeder.dev>
- <xmqqh803fzf1.fsf@gitster-ct.c.googlers.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=xWVPECYcivAdzW3sVevetThdmZcUYTU9K3UCRUX4uJA=;
+        b=KF3mDymSiqv3M4gbvf6AK+Ya1UEZ/2p/h+w0uLh6fEqyvWdXkFOvZOYo3doF+4uyzZ
+         kHmcbOZp+Dga9UVCOMZfK/4ZTVo4WQhqm9rMSpSewRvZ28vMsYYn25BLccCrJ3W/BFiH
+         mXZoKP+Yl5XbM8tyGB+E41WVmGPrAqsgCuARYf6hybkiAeZhiyIps83Lvqh2E4R+Xk9R
+         V1FM6DchLeaBc904Nh0BrWYc9V/FHoq1m9OJLSk5klYNum7iYFSH6+tFXQAybDY03Tse
+         Cogx9Id4HVb6tGN1F0gGixY99wAyHyzKi/zhbtLgyDP07PfMoj4EF8H4z+4adNkAhOiO
+         WQ7A==
+X-Gm-Message-State: APjAAAUquBxI7/f9YdhIZYzx3iuJD5/iRCumuJUrTL/ThFj8Pwl25qfr
+        WvLsBPT4MMjRNMECmAAqs697eBt0bKSIkZo8/a4=
+X-Google-Smtp-Source: APXvYqzzw21FaCWlbG7nnHWMn6LLa23JNwK5A7K15Gk53C7m+/qRKFE34u9Y1djONEyX02b4l86HNyYAiSq9GazmZYs=
+X-Received: by 2002:a17:902:a706:: with SMTP id w6mr5706445plq.79.1581018668451;
+ Thu, 06 Feb 2020 11:51:08 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqh803fzf1.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <cover.1580430057.git.me@ttaylorr.com> <cover.1580862307.git.me@ttaylorr.com>
+ <4c6425f0da9a6e5ae86530a12f18959ada07404b.1580862307.git.me@ttaylorr.com>
+In-Reply-To: <4c6425f0da9a6e5ae86530a12f18959ada07404b.1580862307.git.me@ttaylorr.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Thu, 6 Feb 2020 20:50:57 +0100
+Message-ID: <CAN0heSrRJYc8DoWQ+NHR5LJ1z7d1GGBni2waP0_Lv7gMYjPPEg@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] builtin/commit-graph.c: support '--input=none'
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 06, 2020 at 08:33:54AM -0800, Junio C Hamano wrote:
-> SZEDER Gábor <szeder.dev@gmail.com> writes:
-> 
-> > On Fri, Jan 24, 2020 at 03:44:40PM -0800, Junio C Hamano wrote:
-> >
-> >> ...  The more important part, from my point of view,
-> >> is that we offer choices (the proposed doc update illustrates
-> >> three).
-> >
-> > I remember a discussion about whether that list and its archive should
-> > be open or closed, and I agree that offering choices is good.
-> > However, since that mentoring list requires registration, we have to
-> > carefully consider how to present it to newcomers.
-> >
-> > Openly accessible knowledge is a fundamental value, and it's the
-> > foundation of open source.  Therefore, we definitely should not direct
-> > newcomers to a closed mailing list as the first option, it can only be
-> > a fallback.
-> 
-> I am not that dogmatic ;-) I would be very unhappy and probably
-> would not have joined if the main development community was closed,
-> but I do not think the "knowledge" the "closed mentoring list for
-> those who are shy" are meant to impart to newbies will be something
-> that will be so well kept secret that are shared among only those in
-> the closed list.  I expect the mentoring list to be repeating what
-> those who graduated "new"-ness consider pretty much common public
-> knowledge.
-> 
-> Having said that, my reading did hiccup when queuing Emily's text,
-> in that it listed the mentoring list first, and (more problematic)
-> the only choice among the three described with a word "great" was
-> that one.  Also, now I re-read it, the last sentence "You must join
-> the group to view messages or post", without explaining why it is
-> set up that way is bound to give a wrong impression, I suppose.  I
-> presume that the reason why those who wanted to make the mentoring
-> list closed was because they thought it would be nicer for shysters,
-> but if that is the case, it probably is better to spell that out.
+On Wed, 5 Feb 2020 at 01:28, Taylor Blau <me@ttaylorr.com> wrote:
+> @@ -57,6 +57,12 @@ walking commits starting at all refs. (Cannot be combined with
+>  With the `--input=append` option, include all commits that are present
+>  in the existing commit-graph file.
+>  +
+> +With the `--input=none` option, behave as if `--input=append` were
+> +given, but do not walk other packs to find additional commits.
+> +
 
-Sure. I think I didn't do so in an effort to be brief. I'll think on
-this today and send some suggestions here (rather than rerolling).
+Similar to my comment in patch 1/3. Please add a "+" instead of an empty
+line. This one actually trips up the rendering quite a bit of a lot of
+what follows.
 
-> 
-> > The text should list git@vger as the first option, since that's the
-> > only open mailing list we have, it should clearly emphasize that
-> > newcomers are very welcome, and should explicitly encourage them to
-> > post their questions here, no matter how trivial or silly they think
-> > those questions are, we'll be always glad to answer them.
-> 
-> I have no problem with seeing an expanded invitation to the main
-> list.  I do not have a strong opinion on the order of three items.
+> +If none of the above options are given, then generate the new
+> +commit-graph by walking over all pack-indexes.
+> ++
 
-Me neither, and placing git@vger first does give me an opportunity to
-say something like "if you feel worried about asking publicly, this list
-is a more private setting" in reference to the mentors list. So that's
-an option I could get behind.
+This one's good.
 
-> 
-> > The closed mailing list can be mentioned third as a fallback for those
-> > who would prefer not to end up on public record right away or who have
-> > any technical issues with posting to the main mailing list.
-> 
-> I'll mark the topic on hold (it is in 'next'), and would give the
-> stakeholders some time to settle the discussion, perhaps with
-> counter-proposals in an incremental patch form.  Would it be
-> reasonable to set the deadline around the end of the next week?
-
-Yeah, that is OK for me. I'll try and send another email with some ideas
-today or tomorrow.
-
-Thanks for the feedback, Gábor - I appreciate it.
-
- - Emily
+Martin
