@@ -7,58 +7,58 @@ X-Spam-Status: No, score=-17.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
 	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 71636C35247
-	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 00:41:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 28C7FC35247
+	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 00:42:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 43ACD2166E
-	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 00:41:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ECB8D2166E
+	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 00:42:01 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="tQpHJxBh"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="g5jRzJwh"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727667AbgBFAl6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Feb 2020 19:41:58 -0500
-Received: from mail-pl1-f202.google.com ([209.85.214.202]:46902 "EHLO
-        mail-pl1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727653AbgBFAl6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Feb 2020 19:41:58 -0500
-Received: by mail-pl1-f202.google.com with SMTP id t17so2152686plr.13
-        for <git@vger.kernel.org>; Wed, 05 Feb 2020 16:41:56 -0800 (PST)
+        id S1727680AbgBFAmB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Feb 2020 19:42:01 -0500
+Received: from mail-pf1-f202.google.com ([209.85.210.202]:46463 "EHLO
+        mail-pf1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727669AbgBFAmA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Feb 2020 19:42:00 -0500
+Received: by mail-pf1-f202.google.com with SMTP id c185so2665453pfb.13
+        for <git@vger.kernel.org>; Wed, 05 Feb 2020 16:41:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=xlXdAkOdeNCyXnBIIbCTdCvrGPJlWzWwSA2EvqUHyXk=;
-        b=tQpHJxBhPofIKnDL5e4w1OctNpnEuQhSgNWiXK6LFp8fl7j8Uz4bF1s5NCUPd0BkM6
-         GURaiAzxzdIrvpugC8H3TI29LKKJcpwfWJ5RO87YowL4e6NIcccZv681Cf7Fq9jA3Y/W
-         E8HMwjtlIervZID97aEeAwhxldidk8bbt8rRrz1g2qnF1lTXk9CBRkxYV/bylc+Dpf+T
-         C5Qwzre1cVsGEptzuYiAGjmN7fHkL3Vcc02bPhDSfKuWUvGbhLIkMFTRpmMfav2jyVXv
-         qT7wNcvaimdFIihvxFQ4kZtr2w8qxAxuMRqS41FQhy2Bgv2NXq0GlZE91WsjU7epsQDg
-         gNMw==
+        bh=+SEt9cIEjZWJQuaMOwoMeoDn/4LSCl52Nai+V0nkf20=;
+        b=g5jRzJwhexYOABCaMOSRTbpKq3B3M8QloSn7+WvtN3JtZHJwD3+xfSK2AYuh4wyHqD
+         X3UzEv0UPx6PqMQ6zAC4PnFm8gSBpIMnHAEDEzjHz0M5EafaAGFLN0Eyc3RS3Wuamy98
+         mQovZwzG5dy99mM/gxaI34g6vCkroAYh9D+QkmT1EU7+jBeyDB+L3fks9oDurQVl4Un1
+         KEyEd8xFmROJx7jpDLORSRPGaLmrV23j8NufqVKVFi9qjkx190QTMuh8wrg1M0IAjip1
+         CUghNxbe3Cy3ecZQojl6eTj0nQ+GjBq4Y/iVDfENm7tKKscPprEqKx8iREsiyjV5yK6O
+         xexQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=xlXdAkOdeNCyXnBIIbCTdCvrGPJlWzWwSA2EvqUHyXk=;
-        b=OtnNY8ErUdPJCavNxXkaM7ElkJNOgq1QYKnfePKie8Lj4eVABkW0uwbi7M4WPFSohn
-         c3KFl92I7wWvWxGgwWMv7nA3PCmKPRsJt5Gl5gviIsLKDnZy5Emi+HFjfaACmm6dGs6z
-         hzOVhOAPfG+gwLqyOzNyoVmWP9zxM1xeNp2HbOewjnh1Hmv18MbVVx7M1oYVEiJWeRJx
-         t6XdyM/f7GYa3mU43JoKVcmCdaJdt1spMEYsm62JuVA7Wcdd0vmTsugixwTAIgL+23id
-         mvcdd9gquehR4r9Pi6dVxJZd/wsWrHp8sPFTOcvrJ7qyjrE33/B6rqStt1p1gjizMkd+
-         BZUQ==
-X-Gm-Message-State: APjAAAUq2Akz1R53UkbeFJHY1f/EJukT4wsknYw5bkgqBfU/XlNbcpJl
-        t/5VnDBue5FwF0eF32jEEMtC21hvEN6GyC0Im4JFhYVOknZSQiQFxrawLH1W35qWZrDB7Z8Ad5d
-        t7kCdk5SdxXAm0sWD7UglcbjyZNHeq1wIzbl97nQ13w4Lt5Oc6lb2xMoyh8UxiV5gJxlSz8J5Mg
+        bh=+SEt9cIEjZWJQuaMOwoMeoDn/4LSCl52Nai+V0nkf20=;
+        b=SZOJUaayK2iBT/nHOHWdtYvUtmbArMzbGzQM9NyiNK732UHHadwW5gKAwBJwYeLVnv
+         oIJ9RmAQVCZi5yv8msAmszJ735ltG8xKCzReNwvrf5NQkpiIHlLnzHolQaHSVODTuuaH
+         52YNiQZ9nEz6Wa/E43q4XLN6uaVhnaCXcfBcGAyRnbTLQQXZXT9C+N7YPQpz6dyemGh1
+         y2sP53OXT/DC4laKof7QZeIgqWB/MGmxPzkbTZv90pE1/fyGMpckXgqC/jVZ0hOhh7tW
+         6FXA0Jp4l6Rm4aONK4r8IJERLff/8RPoXE5wY3aiiGygo18+DIGiP243mmBBnvWEQiGD
+         X4Og==
+X-Gm-Message-State: APjAAAWO5plaVSxqkfgYJ4xOoYx/QzEHbeJ3n48yP4Sj0x8Ty10fhc/b
+        0D7PjZjypEREHYYMmGSy2ziOkIkLJ7nccO/gF50F1exQmGOkorfTvJ1WwmGxrKcXCLGChh4HtBP
+        niEG37BJXK8epNsWg52Ug2B2CyuoRQNlYmLFM5WPwF7TGZP0z96+mLH3cbe2ndb81U5nOLLUcqg
         ==
-X-Google-Smtp-Source: APXvYqwuBYO2l7N7rfeXS+H4W8J0mj0FsZXnOeLfrQJGt/kPsVu1Ea8qhSpq1/xPM/7R1zV7N68lOMzvOOtYN5c9GNI=
-X-Received: by 2002:a63:7515:: with SMTP id q21mr668826pgc.63.1580949715950;
- Wed, 05 Feb 2020 16:41:55 -0800 (PST)
-Date:   Wed,  5 Feb 2020 16:41:07 -0800
+X-Google-Smtp-Source: APXvYqzqLKY8WGtiZ8L1vtX28etY/4GBC+U4H5VZZKEHymYQ2veajrIHycL2KbYbP/Kynuhe+exe/NSbJLlMblcMSyM=
+X-Received: by 2002:a63:ba05:: with SMTP id k5mr653594pgf.158.1580949718327;
+ Wed, 05 Feb 2020 16:41:58 -0800 (PST)
+Date:   Wed,  5 Feb 2020 16:41:08 -0800
 In-Reply-To: <20200206004108.261317-1-emilyshaffer@google.com>
-Message-Id: <20200206004108.261317-15-emilyshaffer@google.com>
+Message-Id: <20200206004108.261317-16-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20200206004108.261317-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.25.0.341.g760bfbb309-goog
-Subject: [PATCH v6 14/15] bugreport: list contents of $OBJDIR/info
+Subject: [PATCH v6 15/15] bugreport: summarize contents of alternates file
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -68,100 +68,96 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Miscellaneous information used about the object store can end up in
-.git/objects/info; this can help us understand what may be going on with
-the object store when the user is reporting a bug. Otherwise, it could
-be difficult to track down what is going wrong with an object which
-isn't kept locally to .git/objects/ or .git/objects/pack. Having some
-understanding of where the user's objects may be kept can save us some
-hops during the bug reporting process.
+In some cases, it could be that the user is having a problem with an
+object which isn't present in their normal object directory. We can get
+a hint that that might be the case by examining the list of alternates
+where their object may be stored instead. Since paths to alternates may
+be sensitive, we'll instead count how many alternates have been
+specified and note how many of them exist or are broken.
+
+While object-cache.h describes a function "foreach_alt_odb()", this
+function does not provide information on broken alternates, which are
+skipped over in "link_alt_odb_entry()". Since the goal is to identify
+missing alternates, we can gather the contents of
+.git/objects/info/alternates manually.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
  Documentation/git-bugreport.txt |  1 +
- bugreport.c                     | 54 +++++++++++++++++++++++++++++++++
- 2 files changed, 55 insertions(+)
+ bugreport.c                     | 45 +++++++++++++++++++++++++++++++++
+ 2 files changed, 46 insertions(+)
 
 diff --git a/Documentation/git-bugreport.txt b/Documentation/git-bugreport.txt
-index 309b34fc42..a21d081616 100644
+index a21d081616..e870900c80 100644
 --- a/Documentation/git-bugreport.txt
 +++ b/Documentation/git-bugreport.txt
-@@ -34,6 +34,7 @@ The following information is captured automatically:
-  - A list of enabled hooks
+@@ -35,6 +35,7 @@ The following information is captured automatically:
   - The number of loose objects in the repository
   - The number of packs and packed objects in the repository
-+ - A list of the contents of .git/objects/info (or equivalent)
+  - A list of the contents of .git/objects/info (or equivalent)
++ - The number of valid and invalid alternates
  
  OPTIONS
  -------
 diff --git a/bugreport.c b/bugreport.c
-index d554488f3e..3a3d33f680 100644
+index 3a3d33f680..9d4d5c8e6f 100644
 --- a/bugreport.c
 +++ b/bugreport.c
-@@ -204,6 +204,57 @@ static void get_packed_object_summary(struct strbuf *obj_info, int nongit)
- 
+@@ -255,6 +255,48 @@ static void get_object_info_summary(struct strbuf *obj_info, int nongit)
+ 	strbuf_release(&dirpath);
  }
  
-+static void list_contents_of_dir_recursively(struct strbuf *contents,
-+				      	     struct strbuf *dirpath)
++static void get_alternates_summary(struct strbuf *alternates_info, int nongit)
 +{
-+	struct dirent *d;
-+	DIR *dir;
-+	size_t path_len;
-+
-+	dir = opendir(dirpath->buf);
-+	if (!dir)
-+		return;
-+
-+	strbuf_complete(dirpath, '/');
-+	path_len = dirpath->len;
-+
-+	while ((d = readdir(dir))) {
-+		if (!strcmp(d->d_name, ".") || !strcmp(d->d_name, ".."))
-+			continue;
-+
-+		strbuf_addbuf(contents, dirpath);
-+		strbuf_addstr(contents, d->d_name);
-+		strbuf_complete_line(contents);
-+
-+		if (d->d_type == DT_DIR) {
-+			strbuf_addstr(dirpath, d->d_name);
-+			list_contents_of_dir_recursively(contents, dirpath);
-+		}
-+		strbuf_setlen(dirpath, path_len);
-+	}
-+
-+	closedir(dir);
-+}
-+
-+static void get_object_info_summary(struct strbuf *obj_info, int nongit)
-+{
-+	struct strbuf dirpath = STRBUF_INIT;
++	struct strbuf alternates_path = STRBUF_INIT;
++	struct strbuf alternate = STRBUF_INIT;
++	FILE *file;
++	size_t exists = 0, broken = 0;
 +
 +	if (nongit) {
-+		strbuf_addstr(obj_info,
-+			"not run from a git repository - object info unavailable\n");
++		strbuf_addstr(alternates_info,
++			"not run from a git repository - alternates unavailable\n");
 +		return;
 +	}
 +
-+	strbuf_addstr(&dirpath, get_object_directory());
-+	strbuf_complete(&dirpath, '/');
-+	strbuf_addstr(&dirpath, "info/");
++	strbuf_addstr(&alternates_path, get_object_directory());
++	strbuf_complete(&alternates_path, '/');
++	strbuf_addstr(&alternates_path, "info/alternates");
 +
-+	list_contents_of_dir_recursively(obj_info, &dirpath);
++	file = fopen(alternates_path.buf, "r");
++	if (!file) {
++		strbuf_addstr(alternates_info, "No alternates file found.\n");
++		strbuf_release(&alternates_path);
++		return;
++	}
 +
-+	strbuf_release(&dirpath);
++	while (strbuf_getline(&alternate, file) != EOF) {
++		if (!access(alternate.buf, F_OK))
++			exists++;
++		else
++			broken++;
++	}
++
++	strbuf_addf(alternates_info,
++		    "%zd alternates found (%zd working, %zd broken)\n",
++		    exists + broken,
++		    exists,
++		    broken);
++
++	fclose(file);
++	strbuf_release(&alternate);
++	strbuf_release(&alternates_path);
 +}
 +
  static const char * const bugreport_usage[] = {
  	N_("git bugreport [-o|--output-directory <file>] [-s|--suffix <format>]"),
  	NULL
-@@ -292,6 +343,9 @@ int cmd_main(int argc, const char **argv)
- 	get_header(&buffer, "Packed Object Summary");
- 	get_packed_object_summary(&buffer, nongit_ok);
+@@ -346,6 +388,9 @@ int cmd_main(int argc, const char **argv)
+ 	get_header(&buffer, "Object Info Summary");
+ 	get_object_info_summary(&buffer, nongit_ok);
  
-+	get_header(&buffer, "Object Info Summary");
-+	get_object_info_summary(&buffer, nongit_ok);
++	get_header(&buffer, "Alternates");
++	get_alternates_summary(&buffer, nongit_ok);
 +
  	report = fopen_for_writing(report_path.buf);
  
