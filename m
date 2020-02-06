@@ -2,129 +2,224 @@ Return-Path: <SRS0=KD4O=32=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E9655C35247
-	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 19:41:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3DB9BC35247
+	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 19:42:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id BAE12218AC
-	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 19:41:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DDAF721775
+	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 19:42:14 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cZSEUFmC"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="nR5qTpUL"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727866AbgBFTlk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Feb 2020 14:41:40 -0500
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:44299 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727479AbgBFTlk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Feb 2020 14:41:40 -0500
-Received: by mail-pf1-f193.google.com with SMTP id y5so3625831pfb.11
-        for <git@vger.kernel.org>; Thu, 06 Feb 2020 11:41:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=YFp3WKXDaQrUUsBREPKYVmuo8DnEYjuCYWnTkY8Ee8A=;
-        b=cZSEUFmCl0hl3s9s7DrLIV/oU4kmI9ybvNpP0tuSDa+DdulgHq6tjkR8ILc0LOPGHC
-         PYeFvN9RFUJsdiujp60/N3VppSoWsQkAOHwfxeBlVSxUGIBsNNHg4/sPPVpvuRpB7WSj
-         hO8Ut/6EQLdWTku0hYVvfjT2L6HmYEaylIFe507Wx8ohAk+ug3msyyDfia/z1GGA33yS
-         2bTxdPVeMTWASn76r93mi0RW2et3jYRy0dOVA1S5DXOdcbscYVVWHPx6wdRKhPDKuFSk
-         S61q9mFbaBS3+3ZyvADpeZ4smcYm9MrkR9aWbFVxsdEFjC8nO6F0fOj9nDTRLKn4H7ta
-         3V2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=YFp3WKXDaQrUUsBREPKYVmuo8DnEYjuCYWnTkY8Ee8A=;
-        b=E/+bzhhC8+YmjxzECG25WN8B0ETryHV6TD+qyz9ixdKvZv1k/lEtyVPckZG/o5qc/y
-         FELhz6z8ucsidPoeCIHd4mijHxIUGoOyA9qbrRln2lTCCUZM/BDV3ddOW52gIBkNztXj
-         LyzH62oTlRjUdE6omXXgQ+tK1siAQYU8YG5dDJRpP5/FuI8QEY3ugibdwYEkp8VH9rmn
-         q2k+Pdo5B2r4WXphXM+QDpmorcQbk1X3VGxIbjwTzyOaCFBFtx2O/+TMXXql5gBoLBN/
-         4Eo9S92YcaWIq/ujpqGg3RcosHSGpqF0qHujwZjg678VwyhwhXtMfWa7Iv1iX6A0QrvS
-         JdmA==
-X-Gm-Message-State: APjAAAX3vYzSL2Pm9mJeGPqdy2bPdGA561LqboqYF7qwsLGRQMtvgI+6
-        /8Cgaw1U/1HFCDHWR77/hRAx/0PfSrNz1sI1nLc=
-X-Google-Smtp-Source: APXvYqxQtQP8zpfY+iKnSYqelDo0J3jvewp+B74q5vl8q+PlRraQhJtirH0n4dacZzwiN8U6VYENkgjhlg8dqMFDrfI=
-X-Received: by 2002:aa7:848c:: with SMTP id u12mr5421382pfn.12.1581018099890;
- Thu, 06 Feb 2020 11:41:39 -0800 (PST)
+        id S1727875AbgBFTmO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Feb 2020 14:42:14 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54666 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727630AbgBFTmN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Feb 2020 14:42:13 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0724F43D1F;
+        Thu,  6 Feb 2020 14:42:11 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=D3tbRLkBYZaBnd8yBv2GqS1yu44=; b=nR5qTp
+        ULNg2yR/YX2w4w9cSbOxnAPU7FFdcY/eDZcHY7vcG4IdX9WshmovwqWQLWyz9XET
+        gXyW3nOAXD8pZb8qvQuBEuyo3qO3IywWSr5gwL8LL2/cnX39C0UJ5Ku8SlMHwoKJ
+        uUt0nX8rICDw0KndchCB0hYo8kdPtkqbJrMfQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Asv1xj1wuepfCYBl7yvKhdV2DbDSeM7w
+        36j3UAEd+Sq+iKi9CMJstovDvnByAXHhOa1DREhvNOb+84xuOxkzCxNpDXt5wkoG
+        lKF+Am5e5un5Wxu4lRygmKjQSiiWezANFbLvwenPbqQk2xH3ix4XmyB2bUA3sG9r
+        GMFPDe2mGB8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id F0A3C43D1E;
+        Thu,  6 Feb 2020 14:42:10 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5B8C343D1D;
+        Thu,  6 Feb 2020 14:42:10 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Ben Keene via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Ben Keene <seraphire@gmail.com>
+Subject: Re: [PATCH v3 3/5] git-p4: add --no-verify option
+References: <pull.698.v2.git.git.1580507895.gitgitgadget@gmail.com>
+        <pull.698.v3.git.git.1581002149.gitgitgadget@gmail.com>
+        <b538ad08b6f931cab27f084364669583743e4839.1581002149.git.gitgitgadget@gmail.com>
+Date:   Thu, 06 Feb 2020 11:42:08 -0800
+In-Reply-To: <b538ad08b6f931cab27f084364669583743e4839.1581002149.git.gitgitgadget@gmail.com>
+        (Ben Keene via GitGitGadget's message of "Thu, 06 Feb 2020 15:15:46
+        +0000")
+Message-ID: <xmqqpnerec4v.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <cover.1580430057.git.me@ttaylorr.com> <cover.1580862307.git.me@ttaylorr.com>
- <3e19d50148c8d53b30f8f0036a2d3af9f4bb3499.1580862307.git.me@ttaylorr.com>
-In-Reply-To: <3e19d50148c8d53b30f8f0036a2d3af9f4bb3499.1580862307.git.me@ttaylorr.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Thu, 6 Feb 2020 20:41:28 +0100
-Message-ID: <CAN0heSrXZd7ktBTHaYFWjhW=NcGx5gL52-unSDaC4ZoNf96HFA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/3] builtin/commit-graph.c: support '--split[=<strategy>]'
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: C3F60B74-4918-11EA-B230-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 5 Feb 2020 at 01:28, Taylor Blau <me@ttaylorr.com> wrote:
-> diff --git a/Documentation/git-commit-graph.txt b/Documentation/git-commit-graph.txt
-> index 28d1fee505..b7fe65ef21 100644
-> --- a/Documentation/git-commit-graph.txt
-> +++ b/Documentation/git-commit-graph.txt
-> @@ -57,11 +57,17 @@ or `--stdin-packs`.)
->  With the `--append` option, include all commits that are present in the
->  existing commit-graph file.
->  +
-> -With the `--split` option, write the commit-graph as a chain of multiple
-> -commit-graph files stored in `<dir>/info/commit-graphs`. The new commits
-> -not already in the commit-graph are added in a new "tip" file. This file
-> -is merged with the existing file if the following merge conditions are
-> -met:
-> +With the `--split[=<strategy>]` option, write the commit-graph as a
-> +chain of multiple commit-graph files stored in
-> +`<dir>/info/commit-graphs`. Commit-graph layers are merged based on the
-> +strategy and other splitting options. The new commits not already in the
-> +commit-graph are added in a new "tip" file. This file is merged with the
-> +existing file if the following merge conditions are met:
+"Ben Keene via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Please add a lone "+" here.
+> From: Ben Keene <seraphire@gmail.com>
+>
+> Add new command line option --no-verify:
+>
+> Add a new command line option "--no-verify" to the Submit command of
+> git-p4.py.  This option will function in the spirit of the existing
+> --no-verify command line option found in git commit. It will cause the
+> P4 Submit function to ignore the existing p4-pre-submit.
+>
+> Change the execution of the existing trigger p4-pre-submit to honor the
+> --no-verify option. Before exiting on failure of this hook, display
+> text to the user explaining which hook has failed and the impact
+> of using the --no-verify option.
+>
+> Change the call of the p4-pre-submit hook to use the new run_git_hook
+> function. This is in preparation of additional hooks to be added.
+>
+> Signed-off-by: Ben Keene <seraphire@gmail.com>
+> ---
+>  Documentation/git-p4.txt   | 10 ++++++++--
+>  Documentation/githooks.txt |  5 ++++-
+>  git-p4.py                  | 30 +++++++++++++++++++-----------
+>  3 files changed, 31 insertions(+), 14 deletions(-)
 
-> +* If `--split=merge-always` is specified, then a merge is always
-> +conducted, and the remaining options are ignored. Conversely, if
-> +`--split=no-merge` is specified, a merge is never performed, and the
-> +remaining options are ignored. A bare `--split` defers to the remaining
-> +options.
->  +
+Nicely done.  If your strategy is to "add a feature and use it in
+the same patch as the feature is added", which is what is done for
+the new "no-verify" feature that is applied to existing p4-pre-submit
+hook, then the code that runs p4-pre-submit in the original should
+be changed to use run_git_hook() in the previous step, which added
+the new run_git_hook() feature.
 
-Similar to this existing one here. There's some minor misrendering here
-otherwise.
+I see new print() that is not protected with "if verbose:"; is it
+debugging cruft added during development, or is it a useful addition
+for end-users to see under --verbose mode?  I suspect it is the
+latter.
 
->  * If `--size-multiple=<X>` is not specified, let `X` equal 2. If the new
->  tip file would have `N` commits and the previous tip has `M` commits and
+Thanks.
 
-> -               OPT_BOOL(0, "split", &opts.split,
-> -                       N_("allow writing an incremental commit-graph file")),
-> +               OPT_CALLBACK_F(0, "split", &split_opts.flags, NULL,
-> +                       N_("allow writing an incremental commit-graph file"),
-> +                       PARSE_OPT_OPTARG | PARSE_OPT_NONEG,
-> +                       write_option_parse_split),
-
-
-I keep getting back to this -- sorry! So this actually forbids
-"--no-split", which used to work before. Unfortunate?
-
-I have to ask, what is the long-term plan for the two formats (split and
-non-split)? As I understand it, and I might well be wrong, the non-split
-format came first and the split format was a user-experience
-improvement. Should we expect that `--split` becomes the default? In
-which case `--no-split` would be needed. Or might the non-split format
-go away entirely, leaving `--split` a no-op and `--split=<strategy>` a
-pretty funky way of choosing a strategy for the one-and-only file
-format?
-
-To try to be concrete, here's a suggestion: `--format=split` and
-`--split-strategy=<strategy>`.
-
-Martin
+> diff --git a/Documentation/git-p4.txt b/Documentation/git-p4.txt
+> index 3494a1db3e..362b50eb21 100644
+> --- a/Documentation/git-p4.txt
+> +++ b/Documentation/git-p4.txt
+> @@ -374,14 +374,20 @@ These options can be used to modify 'git p4 submit' behavior.
+>      been submitted. Implies --disable-rebase. Can also be set with
+>      git-p4.disableP4Sync. Sync with origin/master still goes ahead if possible.
+>  
+> -Hook for submit
+> -~~~~~~~~~~~~~~~
+> +Hooks for submit
+> +----------------
+> +
+> +p4-pre-submit
+> +~~~~~~~~~~~~~
+> +
+>  The `p4-pre-submit` hook is executed if it exists and is executable.
+>  The hook takes no parameters and nothing from standard input. Exiting with
+>  non-zero status from this script prevents `git-p4 submit` from launching.
+> +It can be bypassed with the `--no-verify` command line option.
+>  
+>  One usage scenario is to run unit tests in the hook.
+>  
+> +
+>  Rebase options
+>  ~~~~~~~~~~~~~~
+>  These options can be used to modify 'git p4 rebase' behavior.
+> diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+> index 50365f2914..8cf6b08b55 100644
+> --- a/Documentation/githooks.txt
+> +++ b/Documentation/githooks.txt
+> @@ -520,7 +520,10 @@ p4-pre-submit
+>  
+>  This hook is invoked by `git-p4 submit`. It takes no parameters and nothing
+>  from standard input. Exiting with non-zero status from this script prevent
+> -`git-p4 submit` from launching. Run `git-p4 submit --help` for details.
+> +`git-p4 submit` from launching. It can be bypassed with the `--no-verify`
+> +command line option. Run `git-p4 submit --help` for details.
+> +
+> +
+>  
+>  post-index-change
+>  ~~~~~~~~~~~~~~~~~
+> diff --git a/git-p4.py b/git-p4.py
+> index d4c39f112b..b377484464 100755
+> --- a/git-p4.py
+> +++ b/git-p4.py
+> @@ -1583,13 +1583,17 @@ def __init__(self):
+>                                       "work from a local git branch that is not master"),
+>                  optparse.make_option("--disable-p4sync", dest="disable_p4sync", action="store_true",
+>                                       help="Skip Perforce sync of p4/master after submit or shelve"),
+> +                optparse.make_option("--no-verify", dest="no_verify", action="store_true",
+> +                                     help="Bypass p4-pre-submit"),
+>          ]
+>          self.description = """Submit changes from git to the perforce depot.\n
+> -    The `p4-pre-submit` hook is executed if it exists and is executable.
+> -    The hook takes no parameters and nothing from standard input. Exiting with
+> -    non-zero status from this script prevents `git-p4 submit` from launching.
+> +    The `p4-pre-submit` hook is executed if it exists and is executable. It
+> +    can be bypassed with the `--no-verify` command line option. The hook takes
+> +    no parameters and nothing from standard input. Exiting with a non-zero status
+> +    from this script prevents `git-p4 submit` from launching.
+>  
+> -    One usage scenario is to run unit tests in the hook."""
+> +    One usage scenario is to run unit tests in the hook.
+> +    """
+>  
+>          self.usage += " [name of git branch to submit into perforce depot]"
+>          self.origin = ""
+> @@ -1607,6 +1611,7 @@ def __init__(self):
+>          self.exportLabels = False
+>          self.p4HasMoveCommand = p4_has_move_command()
+>          self.branch = None
+> +        self.no_verify = False
+>  
+>          if gitConfig('git-p4.largeFileSystem'):
+>              die("Large file system not supported for git-p4 submit command. Please remove it from config.")
+> @@ -1993,6 +1998,9 @@ def applyCommit(self, id):
+>          applyPatchCmd = patchcmd + "--check --apply -"
+>          patch_succeeded = True
+>  
+> +        if verbose:
+> +            print("TryPatch: %s" % tryPatchCmd)
+> +
+>          if os.system(tryPatchCmd) != 0:
+>              fixed_rcs_keywords = False
+>              patch_succeeded = False
+> @@ -2032,6 +2040,7 @@ def applyCommit(self, id):
+>                  print("Retrying the patch with RCS keywords cleaned up")
+>                  if os.system(tryPatchCmd) == 0:
+>                      patch_succeeded = True
+> +                    print("Patch succeesed this time")
+>  
+>          if not patch_succeeded:
+>              for f in editedFiles:
+> @@ -2400,13 +2409,12 @@ def run(self, args):
+>              sys.exit("number of commits (%d) must match number of shelved changelist (%d)" %
+>                       (len(commits), num_shelves))
+>  
+> -        hooks_path = gitConfig("core.hooksPath")
+> -        if len(hooks_path) <= 0:
+> -            hooks_path = os.path.join(os.environ.get("GIT_DIR", ".git"), "hooks")
+> -
+> -        hook_file = os.path.join(hooks_path, "p4-pre-submit")
+> -        if os.path.isfile(hook_file) and os.access(hook_file, os.X_OK) and subprocess.call([hook_file]) != 0:
+> -            sys.exit(1)
+> +        if not self.no_verify:
+> +            if not run_git_hook("p4-pre-submit"):
+> +                print("\nThe p4-pre-submit hook failed, aborting the submit.\n\nYou can skip " \
+> +                    "this pre-submission check by adding\nthe command line option '--no-verify', " \
+> +                    "however,\nthis will also skip the p4-changelist hook as well.")
+> +                sys.exit(1)
+>  
+>          #
+>          # Apply the commits, one at a time.  On failure, ask if should
