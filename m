@@ -2,113 +2,96 @@ Return-Path: <SRS0=KD4O=32=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DA616C35247
-	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 20:53:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 981A5C35247
+	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 20:57:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A416D21741
-	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 20:53:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 67C07218AC
+	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 20:57:00 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MinqNdlj"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UY/kvMXo"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727830AbgBFUx2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Feb 2020 15:53:28 -0500
-Received: from mail-lj1-f195.google.com ([209.85.208.195]:46830 "EHLO
-        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727698AbgBFUx2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Feb 2020 15:53:28 -0500
-Received: by mail-lj1-f195.google.com with SMTP id x14so7587649ljd.13
-        for <git@vger.kernel.org>; Thu, 06 Feb 2020 12:53:27 -0800 (PST)
+        id S1727773AbgBFU47 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Feb 2020 15:56:59 -0500
+Received: from mail-pl1-f182.google.com ([209.85.214.182]:37170 "EHLO
+        mail-pl1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727526AbgBFU47 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Feb 2020 15:56:59 -0500
+Received: by mail-pl1-f182.google.com with SMTP id c23so51792plz.4
+        for <git@vger.kernel.org>; Thu, 06 Feb 2020 12:56:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=qvioO68ZdfPHSHgR06fOUVbF4sNENIGcUgMajVPcQUg=;
-        b=MinqNdljjpg6+WMYzamIi+8RbpvG1zKumnxa0Uz6+8zjrUa9ueyqPqa/YI3U2vB5XU
-         qW6Q+7F2GryV9LGePsp6lhbrCjMrPvezbpsKBUY8t1WF7HpJatpbGhsyW7vva8rlhcfw
-         dE74ozMmX5S8vKiebSNmlj43wGXz+KmK/kV9iq0fOy9M0EXlkisksL32KOjNU9muLz+t
-         /vwWjByBL+FyY6BpZseSW/khcl4/bIIBmLp9WYJqvTh+BZZYSKHGvVs71bdZ9vY9u0ko
-         nacs06f0Xx/jlyFNV31/GSDpwD3ww8Mev4gwiILweicR6+zd8kf6qISKt4/6Jlea1DGH
-         YVSw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=y1xBI70Ip3d0toIfcJC0Bnm6cmVhFNFP4twcuyS9Igk=;
+        b=UY/kvMXojoIlsQjz23JMdPwpAgx4afYE/s1awMN/pxzcMGwLd9UjM0w6uJ2XopkbxS
+         GaXPWSTwE0dmuY8xhhiPYSCvmFzp67xeAnoJ+tu30e4R3EN1OpZi35jLiP25U1OeBOST
+         0xpzc/UfwRTP9JS7fzH2NyFoBBufCKpfsE9Ht/sMuj16EyOeE48BTEW3Z65uwxJqK4gP
+         JmKoC/mijrjPtGcZSWtJ4j8KUedi5JiFTDQ8/WcthR05tZeUfNFVHOXAzdLOdN7rMaDD
+         cb9kA75/32RUcxrEJTrOgZQoBYI5J1qMhcL+Jclw4nUDRNX6WfOjAn7RX9Rly2Xq3khz
+         Ko+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=qvioO68ZdfPHSHgR06fOUVbF4sNENIGcUgMajVPcQUg=;
-        b=RtPIEreblIrIejKJIu99xHLXzCZmIT2xRbEkNlvN5yeGPEUjl/IF7LMNCFrDmO+vLU
-         AzxdZy0d14TYT4ADq6mkwGNlh45RUGGoAdqVx+VMGWihx1mBz2KB41XZQk+oe6/nl5IA
-         2Ww2T3v7oqycRalkEHVBwV1EA01qpQIZ14bx49Jj7sBEsd/wrY8C5nvwmRLqwmmJK8nu
-         ilyKIw7cik5FX7wnsBl5v5uKLf3284nyD3Jfk28Q2C5hcFwt6tqDMMLHTvdfaXj9EMy2
-         WNmLQhcN5Y+ZNI1751GDmSrSoewcaycgF4ga33ZmvGJ5Wjw1kVUNFbvpbtCbtPatTCVE
-         lfog==
-X-Gm-Message-State: APjAAAXlrV2udP9rdYx7Uos+QZNaoR2ENDQ/p297tAO+VMOLnJyYk+ov
-        CUUgCh5Wr6/NYBwkW2cZAEZzMuds
-X-Google-Smtp-Source: APXvYqzXhtCnE5x/8FGb/6NvliRPAAO+RzGFbtmaoeTJj2FiBQA/MdTLodRrPzvYlOaZ15NehyjzdA==
-X-Received: by 2002:a2e:965a:: with SMTP id z26mr3349087ljh.104.1581022405868;
-        Thu, 06 Feb 2020 12:53:25 -0800 (PST)
-Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
-        by smtp.gmail.com with ESMTPSA id n2sm211890ljj.1.2020.02.06.12.53.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Feb 2020 12:53:24 -0800 (PST)
-From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Adam Dinwoodie <adam@dinwoodie.org>
-Subject: [PATCH] diff-options.txt: avoid "regex" overload in example
-Date:   Thu,  6 Feb 2020 21:53:01 +0100
-Message-Id: <20200206205301.27367-1-martin.agren@gmail.com>
-X-Mailer: git-send-email 2.25.0
-In-Reply-To: <20200202204739.GA24686@dinwoodie.org>
-References: <20200202204739.GA24686@dinwoodie.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=y1xBI70Ip3d0toIfcJC0Bnm6cmVhFNFP4twcuyS9Igk=;
+        b=q2D8lS3jOiYwbx3ujY+583VU4oNG3OG5tk1T4Xpx5Q+XLdogMREZdT8rEI9aPtab8P
+         j3EHGZmgA9BQ/RXnn8P4prh0Y5o9/JIg8ecPdG9w1EeiE8CKsInmGS66vJNn7gb/UYvD
+         Jos0NSlrpKO4lEzobMdCO2MxpHBYtAiKDmH2VY5N6BlRvDlFpsKw+kp9hv97/1jnEWcm
+         7OWSbK3eCJSrKvecCjEof7w4ociJuqiGZkpbp5dHKjNFdDoR33K+gTGNQtdNqCyqr4qV
+         3kbEIVvZwdgjX4cwmTgn7VuDuJRuJ0k5RtGsmRG17zAb3RkR1MKJ2yQTmbCuH4lb04f6
+         1p4A==
+X-Gm-Message-State: APjAAAUb0/z+EBICvl2xONiXnyk2JV3TsPOTlfPeyPRnarHHLYOBFvc8
+        ujTQ027DgyBoybR9gmcH8liUsQqUHiPwejieWfYtkQ==
+X-Google-Smtp-Source: APXvYqyiFw2PB6SkE3c+dAqQMqIKFSHwMdGMmmsYU0+OgeVnrEFu4zju16+tgunoY2HiHyGSKIeA6leHEyYkFnfkauA=
+X-Received: by 2002:a17:90a:1b42:: with SMTP id q60mr6593550pjq.108.1581022618695;
+ Thu, 06 Feb 2020 12:56:58 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <xmqqpnesfw74.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqpnesfw74.fsf@gitster-ct.c.googlers.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Thu, 6 Feb 2020 21:56:47 +0100
+Message-ID: <CAN0heSpxhoAqSvN_TJHPntSagx3oA4s7iUebHcsYML8NSYwfUA@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Feb 2020, #01; Wed, 5)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When we exemplify the difference between `-G` and `-S` (using
-`--pickaxe-regex`), we do so using an example diff and git-diff
-invocation involving "regexec", "regexp", "regmatch", ...
+On Thu, 6 Feb 2020 at 00:36, Junio C Hamano <gitster@pobox.com> wrote:
+> [Stalled]
 
-The example is correct, but we can make it easier to untangle by
-avoiding writing "regex.*" unless it's really needed to make our point.
+> * ma/config-bool-valex (2019-11-14) 8 commits
+>  - builtin/config: die if "value_regex" doesn't canonicalize as boolean
+>  - builtin/config: warn if "value_regex" doesn't canonicalize as boolean
+>  - builtin/config: canonicalize "value_regex" with `--type=bool-or-int`
+>  - builtin/config: canonicalize "value_regex" with `--type=bool`
+>  - builtin/config: collect "value_regexp" data in a struct
+>  - builtin/config: extract `handle_value_regex()` from `get_value()`
+>  - t1300: modernize part of script
+>  - config: make `git_parse_maybe_bool_text()` public
+>
+>  "git config" can be told to affect the existing entries that
+>  "match" the given value via its value_regex argument.  It learned
+>  to normalize the value set in the configuration and the value given
+>  from the command line before computing they "match", e.g. "true" in
+>  the configuration file can now match with "yes" given from the
+>  command line.
+>
+>  Needs a bit more work?
+>  cf. <CAN0heSrtwi9V607vBX9PMSfNLQ8iGcno6_iGuR4Fs8ndGxqh8A@mail.gmail.com>
 
-Use some made-up, non-regexy words instead.
+Definitely needs more work; definitely stalled. I keep getting back to
+this only to realize that I'm not quite sure in which direction to pull
+it. Please feel free to discard this whenever it gets in your way, or
+long before that.
 
-Reported-by: Adam Dinwoodie <adam@dinwoodie.org>
-Signed-off-by: Martin Ågren <martin.agren@gmail.com>
----
- Documentation/diff-options.txt | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index 09faee3b44..bb31f0c42b 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -567,13 +567,13 @@ To illustrate the difference between `-S<regex> --pickaxe-regex` and
- file:
- +
- ----
--+    return !regexec(regexp, two->ptr, 1, &regmatch, 0);
-++    return frotz(nitfol, two->ptr, 1, 0);
- ...
---    hit = !regexec(regexp, mf2.ptr, 1, &regmatch, 0);
-+-    hit = frotz(nitfol, mf2.ptr, 1, 0);
- ----
- +
--While `git log -G"regexec\(regexp"` will show this commit, `git log
---S"regexec\(regexp" --pickaxe-regex` will not (because the number of
-+While `git log -G"frotz\(nitfol"` will show this commit, `git log
-+-S"frotz\(nitfol" --pickaxe-regex` will not (because the number of
- occurrences of that string did not change).
- +
- Unless `--text` is supplied patches of binary files without a textconv
--- 
-2.25.0
-
+Martin
