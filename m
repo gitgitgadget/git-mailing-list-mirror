@@ -2,119 +2,113 @@ Return-Path: <SRS0=KD4O=32=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A6B6EC35247
-	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 19:59:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DA616C35247
+	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 20:53:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 73D9022314
-	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 19:59:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A416D21741
+	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 20:53:29 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sgUcOhR8"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MinqNdlj"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727711AbgBFT7D (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Feb 2020 14:59:03 -0500
-Received: from mail-pl1-f176.google.com ([209.85.214.176]:39403 "EHLO
-        mail-pl1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727479AbgBFT7D (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Feb 2020 14:59:03 -0500
-Received: by mail-pl1-f176.google.com with SMTP id g6so2771264plp.6
-        for <git@vger.kernel.org>; Thu, 06 Feb 2020 11:59:02 -0800 (PST)
+        id S1727830AbgBFUx2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Feb 2020 15:53:28 -0500
+Received: from mail-lj1-f195.google.com ([209.85.208.195]:46830 "EHLO
+        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727698AbgBFUx2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Feb 2020 15:53:28 -0500
+Received: by mail-lj1-f195.google.com with SMTP id x14so7587649ljd.13
+        for <git@vger.kernel.org>; Thu, 06 Feb 2020 12:53:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=4uy5a2VmKpiROVvw4tGoTCLQaPvJVZDzy6O54iHgfW0=;
-        b=sgUcOhR8P5pjq1uTKJAq0TaIC2pljBGB34JP6iBswSD92koMjmAaT/LEOWLqbqaPFx
-         ZxOUppEh0UEqxlWlY7KNrTagF5k9dT9ewEfTDHyhmN9a4Ugrtf5oyxLLOmjZkfHjs5Qd
-         6shtOGtUGt4v/j443WUXaIpBFGiFyZSN3QIRuSRO/yHBT6FXF4fvoNfHAfRAPeweFJDk
-         T9wQs5FEowr71pT9MMFw7ajU0QtpYQNdFS3yIum/kzTnSeMNsJioWDXAe+PR9brU9KbQ
-         aTvMlRgBtMy4R6Z379MeHoFLMIH7T2dLpSuzJpd5W7AEmBOzPD9NunTJnCEd4QTrT12/
-         ihMg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=qvioO68ZdfPHSHgR06fOUVbF4sNENIGcUgMajVPcQUg=;
+        b=MinqNdljjpg6+WMYzamIi+8RbpvG1zKumnxa0Uz6+8zjrUa9ueyqPqa/YI3U2vB5XU
+         qW6Q+7F2GryV9LGePsp6lhbrCjMrPvezbpsKBUY8t1WF7HpJatpbGhsyW7vva8rlhcfw
+         dE74ozMmX5S8vKiebSNmlj43wGXz+KmK/kV9iq0fOy9M0EXlkisksL32KOjNU9muLz+t
+         /vwWjByBL+FyY6BpZseSW/khcl4/bIIBmLp9WYJqvTh+BZZYSKHGvVs71bdZ9vY9u0ko
+         nacs06f0Xx/jlyFNV31/GSDpwD3ww8Mev4gwiILweicR6+zd8kf6qISKt4/6Jlea1DGH
+         YVSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=4uy5a2VmKpiROVvw4tGoTCLQaPvJVZDzy6O54iHgfW0=;
-        b=a3qO2JrmQZsmpycnSi0HhEhF6Irk4AujcgF/ifQx5xkN4Ufh7np9sUwiP8TtcHkn4X
-         qdNyHHPXHINbjm9XWgyMnjapHsJkhP1ZF6WsiVGtuZiTvSHmhD5pK9xtrPPqp3hCftvj
-         Eu0qtkOUhpr0kJqKg1pkTTsv8ja0XI2mDBQs1GUmpKxuO+97qcwxjRRV0qlmp95D01nW
-         Jd3lnA1IhTXjigt1Hv2GD4xf72ULCWmoTTuG71MZCFnugZjIIgUr8CRI4XB1M/NdUKBJ
-         qHu9wB0ZcWOx4ifsZqqaL0hDcWajfGT6BJmL85Hl4bHhFTLdz1V9pZ7OK5v+l69xLkqP
-         6hag==
-X-Gm-Message-State: APjAAAW38kIEjjmaU9wCL22ZBQO6fh7XowIYMQVwW3t+vwQkSgiLtu6S
-        i3Yzm6O8CODtd+w3R3duxYwCSbIt3zXXXcfPdlU=
-X-Google-Smtp-Source: APXvYqzpYdNrGuXLHkFSVBKhQGiAVpnZz1kfyd8bi2Hl0UC32h+7hfPPnj5zaql5MgwbNdnMVBH0OTN6X/ISJw2CgD4=
-X-Received: by 2002:a17:902:ba93:: with SMTP id k19mr5792588pls.197.1581019142512;
- Thu, 06 Feb 2020 11:59:02 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=qvioO68ZdfPHSHgR06fOUVbF4sNENIGcUgMajVPcQUg=;
+        b=RtPIEreblIrIejKJIu99xHLXzCZmIT2xRbEkNlvN5yeGPEUjl/IF7LMNCFrDmO+vLU
+         AzxdZy0d14TYT4ADq6mkwGNlh45RUGGoAdqVx+VMGWihx1mBz2KB41XZQk+oe6/nl5IA
+         2Ww2T3v7oqycRalkEHVBwV1EA01qpQIZ14bx49Jj7sBEsd/wrY8C5nvwmRLqwmmJK8nu
+         ilyKIw7cik5FX7wnsBl5v5uKLf3284nyD3Jfk28Q2C5hcFwt6tqDMMLHTvdfaXj9EMy2
+         WNmLQhcN5Y+ZNI1751GDmSrSoewcaycgF4ga33ZmvGJ5Wjw1kVUNFbvpbtCbtPatTCVE
+         lfog==
+X-Gm-Message-State: APjAAAXlrV2udP9rdYx7Uos+QZNaoR2ENDQ/p297tAO+VMOLnJyYk+ov
+        CUUgCh5Wr6/NYBwkW2cZAEZzMuds
+X-Google-Smtp-Source: APXvYqzXhtCnE5x/8FGb/6NvliRPAAO+RzGFbtmaoeTJj2FiBQA/MdTLodRrPzvYlOaZ15NehyjzdA==
+X-Received: by 2002:a2e:965a:: with SMTP id z26mr3349087ljh.104.1581022405868;
+        Thu, 06 Feb 2020 12:53:25 -0800 (PST)
+Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
+        by smtp.gmail.com with ESMTPSA id n2sm211890ljj.1.2020.02.06.12.53.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 06 Feb 2020 12:53:24 -0800 (PST)
+From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Adam Dinwoodie <adam@dinwoodie.org>
+Subject: [PATCH] diff-options.txt: avoid "regex" overload in example
+Date:   Thu,  6 Feb 2020 21:53:01 +0100
+Message-Id: <20200206205301.27367-1-martin.agren@gmail.com>
+X-Mailer: git-send-email 2.25.0
+In-Reply-To: <20200202204739.GA24686@dinwoodie.org>
+References: <20200202204739.GA24686@dinwoodie.org>
 MIME-Version: 1.0
-References: <xmqqpnesfw74.fsf@gitster-ct.c.googlers.com> <20200206025130.GA22748@syl.local>
- <20200206085747.GA17654@szeder.dev> <20200206174837.GA55561@syl.local>
-In-Reply-To: <20200206174837.GA55561@syl.local>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Thu, 6 Feb 2020 20:58:50 +0100
-Message-ID: <CAN0heSrcMYwy72oR0HA+ptEutLFqvs14RLF5AVE1ATJTUj=eVw@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Feb 2020, #01; Wed, 5)
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 6 Feb 2020 at 18:48, Taylor Blau <me@ttaylorr.com> wrote:
->
-> On Thu, Feb 06, 2020 at 09:57:48AM +0100, SZEDER G=C3=A1bor wrote:
-> > On Wed, Feb 05, 2020 at 06:51:30PM -0800, Taylor Blau wrote:
-> > > > * tb/commit-graph-split-merge (2020-02-05) 3 commits
-> > > >  - builtin/commit-graph.c: support '--input=3Dnone'
-> > > >  - builtin/commit-graph.c: introduce '--input=3D<source>'
-> > > >  - builtin/commit-graph.c: support '--split[=3D<strategy>]'
-> > > >  (this branch uses tb/commit-graph-object-dir.)
-> > > >
-> > > >  The code to write out the commit-graph has been taught a few
-> > > >  options to control if the resulting graph chains should be merged
-> > > >  or a single new incremental graph is created.
-> > > >
-> > > >  Will merge to 'next'?
-> > >
-> > > I think that this is ready. Martin =C3=85gren and I discussed a littl=
-e bit
-> > > about the rationale behind why the new options were chosen over
-> > > alternatives, but I think we reached consensus (at least, the thread =
-has
-> > > been quiet for a few days after sending 'v2').
-> > >
-> > > So, if you're asking whether or not this is ready to merge to 'next',
-> > > I'd say that it is, but I'd like to hear from Martin's thoughts, too.
-> > > (For what it's worth, we're *also* running this at GitHub, and withou=
-t
-> > > issue).
-> >
-> > Please don't rush it, those '--input=3D<source>' options need more
-> > consideration.
->
-> Of course, and I'm happy to discuss more, if that's what others discuss.
-> I thought that things had settled since the thread quieted down after
-> sending 'v2'. But, if there's more to discuss, certainly we should do
-> that before queuing this up.
->
-> Let's wait a little while longer and see what happens there before
-> queuing this topic.
+When we exemplify the difference between `-G` and `-S` (using
+`--pickaxe-regex`), we do so using an example diff and git-diff
+invocation involving "regexec", "regexp", "regmatch", ...
 
-I feel there's something awkward about these new options, but it's not
-like I have brilliant suggestions to offer. But I don't think it hurts
-to wait a little and see if others chime in.
+The example is correct, but we can make it easier to untangle by
+avoiding writing "regex.*" unless it's really needed to make our point.
 
-At a minimum, the two comments (patches 1/3 and 3/3) I just left on some
-asciidoc hickups should be fixed before this graduates (that should be
-easy). I'll be happy to test and give a thumbs-up if needed.
+Use some made-up, non-regexy words instead.
 
-Martin
+Reported-by: Adam Dinwoodie <adam@dinwoodie.org>
+Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+---
+ Documentation/diff-options.txt | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index 09faee3b44..bb31f0c42b 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -567,13 +567,13 @@ To illustrate the difference between `-S<regex> --pickaxe-regex` and
+ file:
+ +
+ ----
+-+    return !regexec(regexp, two->ptr, 1, &regmatch, 0);
+++    return frotz(nitfol, two->ptr, 1, 0);
+ ...
+--    hit = !regexec(regexp, mf2.ptr, 1, &regmatch, 0);
++-    hit = frotz(nitfol, mf2.ptr, 1, 0);
+ ----
+ +
+-While `git log -G"regexec\(regexp"` will show this commit, `git log
+--S"regexec\(regexp" --pickaxe-regex` will not (because the number of
++While `git log -G"frotz\(nitfol"` will show this commit, `git log
++-S"frotz\(nitfol" --pickaxe-regex` will not (because the number of
+ occurrences of that string did not change).
+ +
+ Unless `--text` is supplied patches of binary files without a textconv
+-- 
+2.25.0
+
