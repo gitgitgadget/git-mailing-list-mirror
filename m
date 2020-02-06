@@ -4,127 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-17.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
-	version=3.4.0
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
+	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C159C35247
-	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 00:41:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4736C35247
+	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 00:41:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 205BE2166E
-	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 00:41:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8FF242166E
+	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 00:41:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="s4+T/EL/"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Tkmb7wmK"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727658AbgBFAlx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Feb 2020 19:41:53 -0500
-Received: from mail-pj1-f74.google.com ([209.85.216.74]:50181 "EHLO
-        mail-pj1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727653AbgBFAlx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Feb 2020 19:41:53 -0500
-Received: by mail-pj1-f74.google.com with SMTP id z12so2204438pju.0
-        for <git@vger.kernel.org>; Wed, 05 Feb 2020 16:41:51 -0800 (PST)
+        id S1727663AbgBFAlz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Feb 2020 19:41:55 -0500
+Received: from mail-vs1-f74.google.com ([209.85.217.74]:33680 "EHLO
+        mail-vs1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727653AbgBFAlz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Feb 2020 19:41:55 -0500
+Received: by mail-vs1-f74.google.com with SMTP id y15so279169vso.0
+        for <git@vger.kernel.org>; Wed, 05 Feb 2020 16:41:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=HXAJ+iFjamq+8uYEpgJHgUKO9+FVivh727MB+qeHfTA=;
-        b=s4+T/EL/FS4DplPZdX6e/zRcETF1KeYoN+qKNpm3+76iheo9rVhXZmK81wjX384ppm
-         clhGNSY1L8/UTTFQJEJSFdmRxBVlxDKvwDNwNxOya6cjzhBqZWs2mxh64qdG4IqElDBh
-         X6/4JRZgGWsoykK28gBYqLo7uXUxlzOEdX8PRbGXCK8BfF3+2soNbKud/DZlHKkhExW4
-         NgRSqRjPdJc/A7qcYb+3xEhED66KTdA/CciCtH1xh8Ks8RM6hOWq3tB9wBR++UxHUZ/2
-         cSIcnDLoQj6R1dEOdbSR2G4hyhIQuNAqLGTtkdnB4mKMzwv+llVGf10Lt/KlWfj48UIX
-         cqBA==
+        bh=AVYYQp3rUELKcwibZIXczAtH5lQZZgoIvNRRLEVVSbs=;
+        b=Tkmb7wmK3SLkywHgPorGoZN/EA2o0SXNvPNvkTZNsY6YA3cH28M2d3w0xjhzXKom/u
+         Xp6jnimDhFDMh+6aEWukI/tFrbNVp6ySNkNjeOpv3dV0omBuW0rloqz98ZuhFUvHV3lI
+         6LWn1igcdCQPckmzMgA+rqlbtxTltw4PRJdEn8XZGp/yuMH5RbfNc1i2DF4pm2hGXH3J
+         mqNL3wvGKjlwnbZu6Yi5C5rAv/STajGZom8FlPhKnu07PfkhlvFkO/klRzetvvdOtCQ2
+         6Q0u3HePfOLk+NWaPD1lvX9hvLqQus3BafXqDiMnqLvXUkuzWcfIGaEljKjW/D1Bs7hW
+         XtIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=HXAJ+iFjamq+8uYEpgJHgUKO9+FVivh727MB+qeHfTA=;
-        b=omlwbHW0iKMjtf+6OoA63WIZmrpfPUJ6B0Yv+9LTNXrh1IOr1+y8IEn6eugs71WOh/
-         LUcECD5U4rGLAinVHh/9fDO22HMPGCDfsUDoIBc6PW8437WPwcJ/enhaHWWYSgi4XGKJ
-         RIAUbQPXzx/D8wUAQWHZwnYu2nyZM3pyZizE7DMrCOQYNFFHKpdQcxtpHT0bmjTYYeQJ
-         g14KVluqbgf9OH3QeG/8sB67N8iziSgTr1eB50xVSQ8uVlNgNNzQYz5ZXtqmaLQJpuWV
-         TgW/YRd57JAzc93+tYD3HEBehSeIvz+o0b1ftsQWsLUY3b2MpyZvuabbLcgmVZ28LqfC
-         DjXA==
-X-Gm-Message-State: APjAAAWEUFmyjY3YizCbmgWpIAkT4beaizDJJp51Nm+CnsUKCGBufSGO
-        Hx8W4qrS/SxlbhDaxRMyei56qBJfTAbLklbu1jys3xnCCglMMJ+A4UvbqIvAVlApKu+kYDvdBzK
-        VCDwHqDdEyU0zBZ2ULv9OscUcAVCZ+MDkjjKxg0JHokn74n7hkNd/EsHd/V+nEXcWvadlVyWlAA
+        bh=AVYYQp3rUELKcwibZIXczAtH5lQZZgoIvNRRLEVVSbs=;
+        b=O3Y/r8yjDqi+P3jyT4r3N1W/w3Nc9aLSz2qAB0jRTO45ykp18Urk0Wc4hbNKnUacqk
+         jsVZLZu6w0EMoHiAlLtK++9Rr0p+X1ZEolSZcx2HFD/Gr+SiMbT0NM+okZmH6ibjJphA
+         KzqOF3wL5AgBjz6mmv70zJIvjdlAx94JCaN7Imxjj3kduJEfsxDU43m2xPRU15TtbjVr
+         Gujk5dVALPBEEodrdw+Km1a/Gq3kQ3Muf86jVC+THbrwOud1wdxo3M/pm+Y/jptxAno7
+         tsbXo9ZXPYYuRckiMam0NRVReKfM1K6ozRsKlA5zCbjWWAdTHyl4Va82o1dF28m0JNfA
+         YIDQ==
+X-Gm-Message-State: APjAAAWQ/KJw7vJqfA74+KVTxJsGmMAxYWYCXYv4C7hUQUh9AWmcdNlE
+        74KSSK8x1d0qMnULOdLxHY3MTVlB8zTi7wiK7dmlJckYLVTax2tBbRNZmROLCSQvl0g8f6+LXm+
+        8TZPMFW6tTehJEYz6hFG784F2VcNV2OK4tguamm+O5azPWVGckY4W3TjCmiRREyD0aoDTad3zmg
         ==
-X-Google-Smtp-Source: APXvYqyfEIdWycxit6MIuxcNE62TLpfxx/vp0vV8JCMjUvwJ4rVZzEIMwH9qfkF2PGapHOjjKvIvny3M+CNmsBAsMfk=
-X-Received: by 2002:a63:d406:: with SMTP id a6mr684882pgh.264.1580949710924;
- Wed, 05 Feb 2020 16:41:50 -0800 (PST)
-Date:   Wed,  5 Feb 2020 16:41:05 -0800
+X-Google-Smtp-Source: APXvYqy8ofNv6/teoDd9AILK7xRbgVZlYZAMXgRk73pBdvj8rl0zX9pGik11CGLdQ5W41CgxZ6L3zpyaIMiVjWKvLe0=
+X-Received: by 2002:ab0:48cf:: with SMTP id y15mr245874uac.26.1580949713427;
+ Wed, 05 Feb 2020 16:41:53 -0800 (PST)
+Date:   Wed,  5 Feb 2020 16:41:06 -0800
 In-Reply-To: <20200206004108.261317-1-emilyshaffer@google.com>
-Message-Id: <20200206004108.261317-13-emilyshaffer@google.com>
+Message-Id: <20200206004108.261317-14-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20200206004108.261317-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.25.0.341.g760bfbb309-goog
-Subject: [PATCH v6 12/15] bugreport: count loose objects
+Subject: [PATCH v6 13/15] bugreport: add packed object summary
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
-Cc:     Emily Shaffer <emilyshaffer@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Emily Shaffer <emilyshaffer@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The number of unpacked objects in a user's repository may help us
-understand the root of the problem they're seeing, especially if a
-command is running unusually slowly.
+Alongside the loose object counts, it can be useful to show the number
+of packs and packed objects. This way we can check whether the repo has
+an appropriate ratio of packed to loose objects to help determine
+whether it's behaving correctly.
 
-Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Add a utility to easily traverse all packfiles in a given repository.
+Use it in packfile.c and remove a redundant call to
+prepare_packed_git(), which is already called in get_all_packs().
+
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
+Perhaps the macro should be in another patch? I didn't spend a lot of
+time looking for anybody who could conceivably be iterating packs; if I
+were to do so, I'd break this change out separately.
+
+I considered following the pattern in the rest of the file, where the
+foreach takes a callback and data pointer, but found it would be
+cumbersome to use with for_each_packed_object() - I'd have to add a new
+callback just to handle the pack, and bundle that function's callback
+data along with the callback pointer. It seemed like overkill.
+
+ - Emily
+
  Documentation/git-bugreport.txt |  1 +
- bugreport.c                     | 52 +++++++++++++++++++++++++++++++++
- 2 files changed, 53 insertions(+)
+ bugreport.c                     | 30 ++++++++++++++++++++++++++++++
+ object-store.h                  |  6 ++++++
+ packfile.c                      |  3 +--
+ 4 files changed, 38 insertions(+), 2 deletions(-)
 
 diff --git a/Documentation/git-bugreport.txt b/Documentation/git-bugreport.txt
-index 779c9c7fd9..7e1ed44cb4 100644
+index 7e1ed44cb4..309b34fc42 100644
 --- a/Documentation/git-bugreport.txt
 +++ b/Documentation/git-bugreport.txt
-@@ -32,6 +32,7 @@ The following information is captured automatically:
-  - $SHELL
+@@ -33,6 +33,7 @@ The following information is captured automatically:
   - Selected config values
   - A list of enabled hooks
-+ - The number of loose objects in the repository
+  - The number of loose objects in the repository
++ - The number of packs and packed objects in the repository
  
  OPTIONS
  -------
 diff --git a/bugreport.c b/bugreport.c
-index 3b0a2b12cc..9552e2922e 100644
+index 9552e2922e..d554488f3e 100644
 --- a/bugreport.c
 +++ b/bugreport.c
-@@ -10,6 +10,7 @@
- #include "bugreport-config-safelist.h"
- #include "khash.h"
- #include "run-command.h"
-+#include "object-store.h"
- 
- static void get_git_remote_https_version_info(struct strbuf *version_info)
- {
-@@ -128,6 +129,54 @@ static void get_populated_hooks(struct strbuf *hook_info, int nongit)
- 	}
+@@ -177,6 +177,33 @@ static void get_loose_object_summary(struct strbuf *obj_info, int nongit) {
+ 		    total_count_questionable ? " (problem during count)" : "");
  }
  
-+static int loose_object_cb(const struct object_id *oid, const char *path,
-+			   void *data) {
-+	int *loose_object_count = data;
-+
-+	if (loose_object_count) {
-+		(*loose_object_count)++;
-+		return 0;
-+	}
-+
-+	return 1;
-+}
-+
-+static void get_loose_object_summary(struct strbuf *obj_info, int nongit) {
-+
-+	int local_loose_object_count = 0, total_loose_object_count = 0;
-+	int local_count_questionable = 0, total_count_questionable = 0;
++static void get_packed_object_summary(struct strbuf *obj_info, int nongit)
++{
++	struct packed_git *pack = NULL;
++	int pack_count = 0;
++	int object_count = 0;
 +
 +	if (nongit) {
 +		strbuf_addstr(obj_info,
@@ -132,44 +129,70 @@ index 3b0a2b12cc..9552e2922e 100644
 +		return;
 +	}
 +
-+	local_count_questionable = for_each_loose_object(
-+					loose_object_cb,
-+					&local_loose_object_count,
-+					FOR_EACH_OBJECT_LOCAL_ONLY);
++	for_each_pack(the_repository, pack) {
++		pack_count++;
++		/*
++		 * To accurately count how many objects are packed, look inside
++		 * the packfile's index.
++		 */
++		open_pack_index(pack);
++		object_count += pack->num_objects;
++	}
 +
-+	total_count_questionable = for_each_loose_object(
-+					loose_object_cb,
-+					&total_loose_object_count,
-+					0);
++	strbuf_addf(obj_info, "%d total packs (%d objects)\n", pack_count,
++		    object_count);
 +
-+	strbuf_addf(obj_info, "%d local loose objects%s\n",
-+		    local_loose_object_count,
-+		    local_count_questionable ? " (problem during count)" : "");
-+
-+	strbuf_addf(obj_info, "%d alternate loose objects%s\n",
-+		    total_loose_object_count - local_loose_object_count,
-+		    (local_count_questionable || total_count_questionable)
-+			? " (problem during count)"
-+			: "");
-+
-+	strbuf_addf(obj_info, "%d total loose objects%s\n",
-+		    total_loose_object_count,
-+		    total_count_questionable ? " (problem during count)" : "");
 +}
 +
  static const char * const bugreport_usage[] = {
  	N_("git bugreport [-o|--output-directory <file>] [-s|--suffix <format>]"),
  	NULL
-@@ -210,6 +259,9 @@ int cmd_main(int argc, const char **argv)
- 	get_header(&buffer, "Enabled Hooks");
- 	get_populated_hooks(&buffer, nongit_ok);
+@@ -262,6 +289,9 @@ int cmd_main(int argc, const char **argv)
+ 	get_header(&buffer, "Loose Object Counts");
+ 	get_loose_object_summary(&buffer, nongit_ok);
  
-+	get_header(&buffer, "Loose Object Counts");
-+	get_loose_object_summary(&buffer, nongit_ok);
++	get_header(&buffer, "Packed Object Summary");
++	get_packed_object_summary(&buffer, nongit_ok);
 +
  	report = fopen_for_writing(report_path.buf);
  
  	if (report == NULL) {
+diff --git a/object-store.h b/object-store.h
+index 55ee639350..518c73469d 100644
+--- a/object-store.h
++++ b/object-store.h
+@@ -6,6 +6,7 @@
+ #include "list.h"
+ #include "sha1-array.h"
+ #include "strbuf.h"
++#include "packfile.h"
+ 
+ struct object_directory {
+ 	struct object_directory *next;
+@@ -403,4 +404,9 @@ int for_each_object_in_pack(struct packed_git *p,
+ int for_each_packed_object(each_packed_object_fn, void *,
+ 			   enum for_each_object_flags flags);
+ 
++#define for_each_pack(repo, pack) 		\
++		for (pack = get_all_packs(repo);\
++		     pack;			\
++		     pack = pack->next)
++
+ #endif /* OBJECT_STORE_H */
+diff --git a/packfile.c b/packfile.c
+index 7e7c04e4d8..6873827fb5 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -2061,8 +2061,7 @@ int for_each_packed_object(each_packed_object_fn cb, void *data,
+ 	int r = 0;
+ 	int pack_errors = 0;
+ 
+-	prepare_packed_git(the_repository);
+-	for (p = get_all_packs(the_repository); p; p = p->next) {
++	for_each_pack(the_repository, p) {
+ 		if ((flags & FOR_EACH_OBJECT_LOCAL_ONLY) && !p->pack_local)
+ 			continue;
+ 		if ((flags & FOR_EACH_OBJECT_PROMISOR_ONLY) &&
 -- 
 2.25.0.341.g760bfbb309-goog
 
