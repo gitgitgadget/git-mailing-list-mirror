@@ -2,140 +2,113 @@ Return-Path: <SRS0=KD4O=32=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B0665C2D0B1
-	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 14:00:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C3903C2D0B1
+	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 15:15:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 846DB217F4
-	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 14:00:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 92F4420838
+	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 15:15:55 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GM5NEeKn"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K3eKEpj1"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727828AbgBFOAU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Feb 2020 09:00:20 -0500
-Received: from mail-qt1-f195.google.com ([209.85.160.195]:46597 "EHLO
-        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727769AbgBFOAU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Feb 2020 09:00:20 -0500
-Received: by mail-qt1-f195.google.com with SMTP id e25so4486491qtr.13
-        for <git@vger.kernel.org>; Thu, 06 Feb 2020 06:00:19 -0800 (PST)
+        id S1727457AbgBFPPy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Feb 2020 10:15:54 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:35922 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727325AbgBFPPx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Feb 2020 10:15:53 -0500
+Received: by mail-wr1-f65.google.com with SMTP id z3so7677383wru.3
+        for <git@vger.kernel.org>; Thu, 06 Feb 2020 07:15:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=cRo9uLY6Z01Nt1BQ/6IKU3cmXE4DbuS5GBROjWjhhcI=;
-        b=GM5NEeKnRk0rcl4Y129YJ2aEE88M1u1jONUaze6HU+4IpfjJDq+7yef8+GBkdmezex
-         zCkCOJOYlBAYnqhQoZ+d1dBdPA2SBLuKrxw7a317ZvA8H28dTD+w4gvRnNtD2tCu/Rgl
-         t3E+Vy4SXIJ93BUptMAtJWwzZWNNDqid9zbNRqqvGtpITJETFsyNhbxCjFk13QoHWsAb
-         zy0W3NtHjCktwhdPODO5tmbPy7akxOE6peAFmq7o77WNp8lgVoRc7PoszSCP/5c99RLJ
-         Dl3OGTJ9sRXvcMPH7tzx71zRzisqbDGYDIxcm03tDnGqMCIhZFcbg1rMKNDZVOBHvsYw
-         xgDw==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=39fy91fgGzKvFe/kdRqWd1b5A2SJFlQxpy83ONk/D2o=;
+        b=K3eKEpj1oH05ILbmADt/HWLfMaMhkMw/6G0P4g83dJ/uQNrVk/CmCR417IGpZEp+u2
+         ADffSfMcpLf+F+H8zqbz7AUS49tvy+SKkKppKcvqGynhIbfM5iydWWTAUmg2SLSKIOKS
+         8w05Rzpp8HbqVcLT34f2E8iu53Vsx0sb0DM9KL12nfz+0kiTWroA+X6bmKAkaKyJSELa
+         fqBnRNCX9Y/4ZSQmzLGjuLsVxIrd60cDT+N0RkCyS1JoQKytA4FQYxHULt3CbuwQJLGA
+         XrzG6UWG27p49JpHiwysXpU7IlKPAL9GPxdQ7oYbHqNFEDkxIiGvLLkCU7M32hn89tX9
+         uezA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=cRo9uLY6Z01Nt1BQ/6IKU3cmXE4DbuS5GBROjWjhhcI=;
-        b=lpZA5LV13Pbvt8cdUobeKlGKQKYl3xU3YUfOPOm1Z88IFnFVDheW0BrXgvZu7583V6
-         Oxucv015IUjnNiP/2xE6MSktFiJxdC4N/sHtdZGOH2NXipHjfPjORF2lgLMOE/vssPox
-         HQWkoyYxhjuutNmgCS6w+AFtjv9IhZj0WykflwAOJK0juNgv+zSytOUnNCWWUvhyOu4D
-         /iDaG7pakLtK9hS2wVnNnj3pQBjUxOUYzl1ewVIToD4V/8vWlFr+q5ZXRu6KZ1OK4L2t
-         yL+K27O6CMYBpv4dy2KZFcKWHHJN+bgg9tMhV8JEQazMNUwasO4QyvMX+7EO1NG97tB8
-         0cDA==
-X-Gm-Message-State: APjAAAUl383uXxh2BriuY/pTchJq+VzWHm0ywTRaYVn+DG32z5D6jV9S
-        ThBasSYTha0ks8zdNG3fEvGI3U10UCuKPA==
-X-Google-Smtp-Source: APXvYqwzmjKJo5jF10riiRfVeOE3IVeBgsszuFqtoiOwyV6e029FY+bqwI1XxdjXPr0BAD3ReMzqIw==
-X-Received: by 2002:ac8:6bd9:: with SMTP id b25mr2691443qtt.347.1580997618652;
-        Thu, 06 Feb 2020 06:00:18 -0800 (PST)
-Received: from [10.10.31.126] ([24.229.121.34])
-        by smtp.gmail.com with ESMTPSA id l17sm1472811qkk.22.2020.02.06.06.00.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Feb 2020 06:00:18 -0800 (PST)
-Subject: Re: [PATCH v2 2/4] git-p4: create new method gitRunHook
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Ben Keene via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-References: <pull.698.git.git.1579555036314.gitgitgadget@gmail.com>
- <pull.698.v2.git.git.1580507895.gitgitgadget@gmail.com>
- <f1f9fdc542353196612f8dd6b996d4fbd1f76c73.1580507895.git.gitgitgadget@gmail.com>
- <xmqqr1za6q83.fsf@gitster-ct.c.googlers.com>
- <ac44531e-b02d-5a98-3e25-a305b1250cf6@gmail.com>
- <xmqq36bohfsi.fsf@gitster-ct.c.googlers.com>
-From:   Ben Keene <seraphire@gmail.com>
-Message-ID: <9cf8790e-6d13-4653-cddc-f5328f22b0df@gmail.com>
-Date:   Thu, 6 Feb 2020 09:00:17 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.2
-MIME-Version: 1.0
-In-Reply-To: <xmqq36bohfsi.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=39fy91fgGzKvFe/kdRqWd1b5A2SJFlQxpy83ONk/D2o=;
+        b=cJUcfZJbIi9MhQmmUZDlP6BTU98ue9oljtbOQrfm1aSubgfOjz/hXqXwgxlPso+TTm
+         XXo/yaWNFMLvcvhQAslSz6fBqhCUiAB0n0qudRuO8HuUt3tApMNqFDv+bCT+97tcisrW
+         2MhqAxXvkmTt8FAS8OzSIL2s7w5zeipTFafwOTI5yvbXgBvy3zuC/Unbxyiv8Q3Yszi1
+         2yksbOrF2H3Z8ahuEpeEU++A4r9m76jrJUqVCTPjQuI/zdRbVs3HQSPlLTpYw44eP70L
+         ad3lcLnSHAyREhlcUUEsoSwLctDKZUYVowqj3SGI0jzEjrD/AZCiii55CF7l2IqVnGBu
+         YQpw==
+X-Gm-Message-State: APjAAAWt07fFajgeD9zzxcv/VkPJ4AOC3SVPaqeqDhIWCUgBakgik16D
+        8E1ytNV99hZ89Db/S3HOGUS/BQvI
+X-Google-Smtp-Source: APXvYqwobSUILDjXFy8C762ruXEpAsTdPE5OcTGpaXwZwXjoRgcszfAUKtzoLT2B+MEW7buqlq/90w==
+X-Received: by 2002:adf:e984:: with SMTP id h4mr4342760wrm.275.1581002151440;
+        Thu, 06 Feb 2020 07:15:51 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id z19sm3845327wmi.35.2020.02.06.07.15.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 06 Feb 2020 07:15:50 -0800 (PST)
+Message-Id: <8881d76c46ce0af9a7e3c9e8d61c718beea24906.1581002149.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.698.v3.git.git.1581002149.gitgitgadget@gmail.com>
+References: <pull.698.v2.git.git.1580507895.gitgitgadget@gmail.com>
+        <pull.698.v3.git.git.1581002149.gitgitgadget@gmail.com>
+From:   "Ben Keene via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 06 Feb 2020 15:15:44 +0000
+Subject: [PATCH v3 1/5] git-p4: rewrite prompt to be Windows compatible
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Ben Keene <seraphire@gmail.com>, Ben Keene <seraphire@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Ben Keene <seraphire@gmail.com>
 
-On 2/5/2020 4:42 PM, Junio C Hamano wrote:
-> Ben Keene <seraphire@gmail.com> writes:
->
->>>> +        hooks_path = os.path.join(os.environ.get("GIT_DIR", ".git"), "hooks")
->>> This assumes that the process when his function is called (by the
->>> way, even though the title of the patch uses the word "method", this
->>> is not a method but a function, no?), it is always at the top level
->>> of the working tree.  Is that a good assumption?  I don't know the
->>> code well, so "yes it is good because a very early thing we do is to
->>> go up to the top" is a good answer.
->> I'm not sure what you mean by top level of the tree unless you mean
->> that it is not part of a class, but a "Free standing" function?
-> No.  The discussion about function vs method was over immediately
-> after we left the parentheses ;-)
->
-> The "top level of the working tree" is the directory where the files
-> you see in "git ls-tree $commit^{tree}" would appear in.  In our
-> project, that is where the primary Makefile, COPYING, Documentation/,
-> etc. hangs from.
->
-> The code in your patch (quoted above) says that "When $GIT_DIR is
-> not set, '.git/hooks/' is the directory the hooks live in".  That is
-> true only when your process is at the top level of the working tree.
-> If you chdir'ed to a subdirectory (e.g. Documentation/ in our
-> project) and then let the quoted code run, hooks_path is set to
-> ".git/hooks/", but from the point of view of the process running
-> inside "Documentation/" subdirectory, it should actually be
-> "../.git/hooks/", right?
+The existing function prompt(prompt_text) does not work correctly when
+run on Windows 10 bash terminal when launched from the sourcetree
+GUI application. The stdout is not flushed properly so the prompt text
+is not displayed to the user until the next flush of stdout, which is
+quite confusing.
 
-Okay, NOW I get what you meant.  Thank you for the explanation!
-The hook directory resolution is what was originally found in the
-git-p4.py script.  I just tried to describe what it is doing
-because I moved the code around.
+Change this method by:
+* Adding flush to stderr, stdout, and stdin
+* Use readline from sys.stdin instead of raw_input.
 
-As best as I understand the mechanics, and I haven't examined the
-source code of git, this is just experimental, the GIT_DIR environment
-value is set (at least in Git for Windows) when the program is
-executed, so this always has GIT_DIR set, which may be why this
-wasn't an issue in the past?
+The existing strip().lower() are retained.
 
-Does this prompt the need to search the hierarchy if we don't find
-the directory?
+Signed-off-by: Ben Keene <seraphire@gmail.com>
+---
+ git-p4.py | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
->> And
->> yes, it returns a value so it should be called a function. I'll
->> correct that.
-> This is an irrelevant tangent ;-) but yeah, it is a function, as
-> opposed to a method, because it is not attached to any class.  I did
-> not think Python differentiated functions that return a value and
-> ones that do not (e.g. Pascal call the latter "procedure").
->
->> I chose to not put the function within a class so
->> that if other hooks should be added, it would not require a refactoring
->> of the code to use the function in other classes.
-> I think that is a sensible design decision to have a free-standing
-> function to execute hooks.
->
-> Thanks.
+diff --git a/git-p4.py b/git-p4.py
+index 40d9e7c594..7d8a5ee788 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -175,7 +175,11 @@ def prompt(prompt_text):
+     """
+     choices = set(m.group(1) for m in re.finditer(r"\[(.)\]", prompt_text))
+     while True:
+-        response = raw_input(prompt_text).strip().lower()
++        sys.stderr.flush()
++        sys.stdout.write(prompt_text)
++        sys.stdout.flush()
++        sys.stdin.flush()
++        response=sys.stdin.readline().strip().lower()
+         if not response:
+             continue
+         response = response[0]
+-- 
+gitgitgadget
+
