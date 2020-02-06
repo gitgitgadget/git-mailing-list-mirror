@@ -4,93 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB0DCC352A2
-	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 23:07:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0FD79C35247
+	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 23:32:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 4AD76214AF
-	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 23:07:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D722821775
+	for <git@archiver.kernel.org>; Thu,  6 Feb 2020 23:32:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="x6yjJSnz"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="u+f3ZRdL"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727505AbgBFXHF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Feb 2020 18:07:05 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54532 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726509AbgBFXHE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Feb 2020 18:07:04 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 89D324E3BF;
-        Thu,  6 Feb 2020 18:07:02 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=1G3P0jOg6pWlkipzQvJQDzWLFN8=; b=x6yjJS
-        nzJKyGy2dXbRegFvi9SAt9JZ8LlcS3p/NGBqylD6pynsNqiqiZ2+sU5ezH7uhl5h
-        RxwrxZ8huzG9Aa5SH7MK6W/FFi3k0vBoKDq5a5j6W6/BjgfeJ3vMy9y4t7NEauIg
-        BFM8bgBqr+UfNsouMnCUGdsyhu+NZFjy7rqZ4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=USCpdUKQJl2/PWYYxRPpmDfH8RM/Om0E
-        52ogFN4xgqF2rC1ihI4in8TWQ34XkiBtiNNeE8WPoSUtSl2vlwbwuSnTTAWTVjIA
-        fUCG+oZcNW8LwYiSr92ZeQNQOz3IZVF9S3+HXxwb6Xn1wsUYN3QhEzm4mmM9QUoZ
-        XqTlq5VqQ4o=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7E5244E3BE;
-        Thu,  6 Feb 2020 18:07:02 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1726673AbgBFXcD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Feb 2020 18:32:03 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:55442 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726502AbgBFXcD (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 6 Feb 2020 18:32:03 -0500
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BB9CA4E3BD;
-        Thu,  6 Feb 2020 18:07:01 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: [PATCH v4 4/5] Add reftable library
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 3B69060456;
+        Thu,  6 Feb 2020 23:32:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1581031922;
+        bh=t8RiE3nnbZwXNgk781bffmw/lCMa5ZCPiDW817aKrkg=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=u+f3ZRdLUSpIbffLqCHI58QHd5y2UqcNTjrcwX6+sWAiWrZnEU85jdfxNHCaroX8M
+         pcNum4B03AFiZPFxgsFrosxIApFABURvwvrsRHIFTwHzicXPbMOcAsRwjw/AUEMPJT
+         06Qy4hIAitCmSnfmlde2f7/sBXKfAi8v8GtSCWvysCE//pXp8WpiPVa3OSra6Yc2RS
+         n5lrkL5ZIRkscXxo5kSZJ4KTUDtl9HxPZo1G0k60yfJy1AWOHxo6Kz/y5Mc4+vPgEC
+         fcWkyjM2Gl++QTlHttMeVcCUYvCwQB6XMcgi42pgCDPQsUYwxB5zFkw+4PCkT+xAW/
+         f4Dedpt6i3BcRLcqkjWRRfuAJJ/PDpcoTNyVoy9zbfL+N9uARF/xPUh/6EJawg1A9k
+         Go0CcsUYjmxcMEMIB+a8WqwsNWD6dfF1EyZaShrlmK7ZrTUlXn1KHTej3wA/FLhdFL
+         ATklhSGRHS3smhRN9uo3kOxFjp0a0VDSdEAwJ58r72lQADgqa8y
+Date:   Thu, 6 Feb 2020 23:31:56 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>
+Subject: Re: [PATCH v4 0/5] Reftable support git-core
+Message-ID: <20200206233156.GD6573@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>
 References: <pull.539.v3.git.1580848060.gitgitgadget@gmail.com>
-        <pull.539.v4.git.1581029756.gitgitgadget@gmail.com>
-        <02d2ca8b878a67a3334b222725645dd035b4289c.1581029756.git.gitgitgadget@gmail.com>
-Date:   Thu, 06 Feb 2020 15:07:00 -0800
-In-Reply-To: <02d2ca8b878a67a3334b222725645dd035b4289c.1581029756.git.gitgitgadget@gmail.com>
-        (Han-Wen Nienhuys via GitGitGadget's message of "Thu, 06 Feb 2020
-        22:55:55 +0000")
-Message-ID: <xmqqftfne2nf.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+ <pull.539.v4.git.1581029756.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 623A49F0-4935-11EA-8138-C28CBED8090B-77302942!pb-smtp1.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="5gxpn/Q6ypwruk0T"
+Content-Disposition: inline
+In-Reply-To: <pull.539.v4.git.1581029756.gitgitgadget@gmail.com>
+X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
+ 5.4.0-2-amd64)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> +static struct block_stats *writer_block_stats(struct writer *w, byte typ)
-> +{
-> +	switch (typ) {
-> +	case 'r':
-> +		return &w->stats.ref_stats;
-> +	case 'o':
-> +		return &w->stats.obj_stats;
-> +	case 'i':
-> +		return &w->stats.idx_stats;
-> +	case 'g':
-> +		return &w->stats.log_stats;
-> +	}
-> +	assert(false);
-> +	return NULL;
-> +}
+--5gxpn/Q6ypwruk0T
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-As assert() turns into nothing, this is not a particularly good way
-to document that "if control reaches here, that means we found a
-programming error".  
+On 2020-02-06 at 22:55:51, Han-Wen Nienhuys via GitGitGadget wrote:
+> This adds the reftable library, and hooks it up as a ref backend.
+>=20
+> At this point, I am mainly interested in feedback on the spots marked with
+> XXX in the Git source code.
+>=20
+> v3
+>=20
+>  * passes gitgitgadget CI.
 
-We intead would use BUG("message") in our codebase, which is marked
-as NORETURN (so "return NULL" after it would be a dead code).
+It's interesting you should say that, because one thing I'm missing here
+is some tests.  Since SHA-256 support is rapidly coming to Git, I'd like
+to make sure that this series works with SHA-256 repositories, but I
+can't do that if there are no tests.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-Thanks.
+--5gxpn/Q6ypwruk0T
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.19 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl48oewACgkQv1NdgR9S
+9ou/oRAAqBLP4w32nHFNVuv6HBfsyEbVuS+vYsSg6KHpm8BmQfbN1rDVc38kQFa1
+5LHrcPqVKbYbLpSnTt06fJtJOw5TKT7AXExvhICWeng3p1H0LlvGZYsnjrqXLOYE
+UYEclS2q3SgPdGDDmtcbSTiS6nIVC8uY4Hx5//jIqKXzCnjhBHF/GNG7Y/fYlP2g
+sqlQVyvcPxnSIVNSr7mvQJtn4aG3hTCJcSUgVoqIPq4I6Liz2HV04msilRn/rsew
+3g1k6sKfSEbybVmm5MzK50cGDXseFTg5uGbHeWYArsiIGrbXLwKLg+QjkedVy88e
+tishpFnrSsGVKkvPJlg40PAafjlDHdiFLvpBIiLYc3nem3hm4CasWWqvlJWYe0CX
+pbwTnalPHk5LnCHY82xtB3/KqCjyJFcuBupVh5geHSBSEGLNl21OepjYj8tP90PB
+WnrpHfr8PpizaYe34lRKZMGTXhVRpeWoW0qNM4Mdyux01YxL4oGuT4lWgvuU7j8T
+Xr0GmtpQX9nWhzs4YGNReoaYwvQ6kY4NDn/V+BNFewdghCZSN8rSqOzrQ+uRP8+E
+z9ku8cH07eWqY5+ZwbR356UVFuOe5WSZyxeyxf2zv3Q9uq0R2zhkxKhcuSj0rRye
+KHsTnW51RtHahx2MC0abShnsPANIlIFvjRicCAzQG3iPjbuSIik=
+=18p0
+-----END PGP SIGNATURE-----
+
+--5gxpn/Q6ypwruk0T--
