@@ -2,94 +2,79 @@ Return-Path: <SRS0=Q4JT=33=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.4 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 38A09C352A2
-	for <git@archiver.kernel.org>; Fri,  7 Feb 2020 11:02:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D271C352A2
+	for <git@archiver.kernel.org>; Fri,  7 Feb 2020 11:02:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0FA0020720
-	for <git@archiver.kernel.org>; Fri,  7 Feb 2020 11:02:24 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="fZjkONWR"
+	by mail.kernel.org (Postfix) with ESMTP id 01A1322314
+	for <git@archiver.kernel.org>; Fri,  7 Feb 2020 11:02:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726867AbgBGLCW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 Feb 2020 06:02:22 -0500
-Received: from fllv0015.ext.ti.com ([198.47.19.141]:35552 "EHLO
-        fllv0015.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726674AbgBGLCW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Feb 2020 06:02:22 -0500
-Received: from lelv0266.itg.ti.com ([10.180.67.225])
-        by fllv0015.ext.ti.com (8.15.2/8.15.2) with ESMTP id 017B2IT5098896;
-        Fri, 7 Feb 2020 05:02:18 -0600
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1581073338;
-        bh=yiuPazv0EfxFbK37Uy/s7iFwwke4lCeGt9p1izx2l/M=;
-        h=Date:From:To:CC:Subject:References:In-Reply-To;
-        b=fZjkONWRp2h40aCFhLpkBqhgzv81wIVHGteEtjMo784NZm9FdFyBXRy9Stb+kjxft
-         bUbQMMvb5doFTmTnhwP0CCRsI97kvnMQrqM0l183FygYdRneGWbAcrvgZJxZ2O259f
-         adAYKfmTWhUfjVtvLpqttmvydcLcU/9G4TEVtwSM=
-Received: from DFLE107.ent.ti.com (dfle107.ent.ti.com [10.64.6.28])
-        by lelv0266.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 017B2IGk095509
-        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Fri, 7 Feb 2020 05:02:18 -0600
-Received: from DFLE108.ent.ti.com (10.64.6.29) by DFLE107.ent.ti.com
- (10.64.6.28) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1847.3; Fri, 7 Feb
- 2020 05:02:18 -0600
-Received: from fllv0040.itg.ti.com (10.64.41.20) by DFLE108.ent.ti.com
- (10.64.6.29) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1847.3 via
- Frontend Transport; Fri, 7 Feb 2020 05:02:18 -0600
-Received: from localhost (ileax41-snat.itg.ti.com [10.172.224.153])
-        by fllv0040.itg.ti.com (8.15.2/8.15.2) with ESMTP id 017B2Hn1116116;
-        Fri, 7 Feb 2020 05:02:18 -0600
-Date:   Fri, 7 Feb 2020 16:32:16 +0530
-From:   Pratyush Yadav <p.yadav@ti.com>
-To:     Junio C Hamano <gitster@pobox.com>
-CC:     =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>,
-        "Michael S. Tsirkin" <mst@redhat.com>, <git@vger.kernel.org>
-Subject: Re: bug? illegal text in commit log
-Message-ID: <20200207110216.ppf5aksfkam54bip@ti.com>
-References: <20200204010524-mutt-send-email-mst@kernel.org>
- <b005193f-24b7-7b6f-f3dc-c7a98db14ed7@web.de>
- <xmqqd0arfyw8.fsf@gitster-ct.c.googlers.com>
+        id S1727092AbgBGLC0 convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Fri, 7 Feb 2020 06:02:26 -0500
+Received: from claranet-outbound-smtp08.uk.clara.net ([195.8.89.41]:48518 "EHLO
+        claranet-outbound-smtp08.uk.clara.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726674AbgBGLCZ (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 7 Feb 2020 06:02:25 -0500
+X-Greylist: delayed 1167 seconds by postgrey-1.27 at vger.kernel.org; Fri, 07 Feb 2020 06:02:25 EST
+Received: from 79-76-60-118.dynamic.dsl.as9105.com ([79.76.60.118]:36085 helo=PDSDELL)
+        by relay08.mail.eu.clara.net (relay.clara.net [81.171.239.38]:10465)
+        with esmtpa (authdaemon_login:gershenson-smith) id 1j0168-0006Nd-SO  for git@vger.kernel.org
+        (return-path <paul@pauldsmith.org.uk>); Fri, 07 Feb 2020 10:42:57 +0000
+From:   <paul@pauldsmith.org.uk>
+To:     <git@vger.kernel.org>
+References: <VI1P192MB025548BB0508125DF9B5852DC81C0@VI1P192MB0255.EURP192.PROD.OUTLOOK.COM>
+In-Reply-To: <VI1P192MB025548BB0508125DF9B5852DC81C0@VI1P192MB0255.EURP192.PROD.OUTLOOK.COM>
+Subject: Support 'help' for custom/alias commands
+Date:   Fri, 7 Feb 2020 10:42:56 -0000
+Message-ID: <005001d5dda3$5bc12510$13436f30$@pauldsmith.org.uk>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqd0arfyw8.fsf@gitster-ct.c.googlers.com>
-User-Agent: NeoMutt/20171215
-X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
+Content-Type: text/plain;
+        charset="iso-8859-1"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+thread-index: AQJYcFYYt0Fq+QhLlA5BsdLSkzFOOqcKZa7g
+Content-Language: en-gb
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06/02/20 08:45AM, Junio C Hamano wrote:
-> René Scharfe <l.s.r@web.de> writes:
-> 
-> > Like a Lines: header specifying the number of lines in the commit message?
-> 
-> The only part of the workflow that can count the number reliably is
-> format-patch.  But the output of format-patch is designed to be
-> edited further, and expecting users to adjust the number when they
-> make such an edit is a bit too much.
+Adding a custom comment (let’s call is ‘foolish’) is easy but then you
+someone types ‘git help foolish’, they get some strange message about help
+not being found.
 
-I haven't thought this through, but I'll throw the idea out anyway:
+There are two problems with this:
 
-How about counting lines in the diff (the one generated by format-patch, 
-not the one in the commit message) instead of lines in the commit 
-message? This way, the bottom n lines in the mail (barring the 
-signature) are the diff contents.
+1. It’s hard for users to create good documentation in the same format as
+the core git product 2. The git ‘help’ processing currently looks in one,
+and one place only and that location is often ‘locked down’ meaning that
+mere users cannot add their custom help to this directory.
 
-I personally have often edited the commit message and added comments 
-below the '---' line in the patches output by format-patch, but I rarely 
-ever manually edit the diff. It is just really easy to corrupt the patch 
-when you manually edit it.
+I propose that #1 be solved by creating a command/tool and documentation
+that explains how to mimic the input to the standard Git help files and have
+them processed to create the HTML/HTML5/MAN help normally produced.  Ideally
+it would do exactly the same processing as the core tools (perhaps even
+having their docs built using this tool now) and use exactly the same
+template files that core git uses.
 
--- 
-Regards,
-Pratyush Yadav
+I propose that #2 be solved by allowing a new set of ‘git config’ fields.
+The layout should be sensible and should users to be able to set a git
+variable which then means that the core git help finds their help text.
+Possible we want to force
+
+<where I installed my tool>/docs/man, or html, or html5
+
+And the git config variable be something like
+“help.custom.foolish=<where-foolish-is-installed>/docs”
+
+Paul DS.
+
+P.S. I have a perfectly respectable e-mail address at
+paul_d_smith@hotmail.com which I have used for years - why won't you accept
+e-mails from it?
+
+
+
