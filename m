@@ -2,136 +2,193 @@ Return-Path: <SRS0=Q4JT=33=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2DDD4C04EB5
-	for <git@archiver.kernel.org>; Fri,  7 Feb 2020 15:48:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1BFC5C2BA83
+	for <git@archiver.kernel.org>; Fri,  7 Feb 2020 16:15:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id F34C5217BA
-	for <git@archiver.kernel.org>; Fri,  7 Feb 2020 15:48:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E427721775
+	for <git@archiver.kernel.org>; Fri,  7 Feb 2020 16:15:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C+csYQOh"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fbNV5F7I"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727379AbgBGPso (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 Feb 2020 10:48:44 -0500
-Received: from mail-qt1-f194.google.com ([209.85.160.194]:40090 "EHLO
-        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727341AbgBGPsn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Feb 2020 10:48:43 -0500
-Received: by mail-qt1-f194.google.com with SMTP id v25so2157113qto.7
-        for <git@vger.kernel.org>; Fri, 07 Feb 2020 07:48:43 -0800 (PST)
+        id S1726988AbgBGQPi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 Feb 2020 11:15:38 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:42451 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726951AbgBGQPh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Feb 2020 11:15:37 -0500
+Received: by mail-wr1-f65.google.com with SMTP id k11so3330309wrd.9
+        for <git@vger.kernel.org>; Fri, 07 Feb 2020 08:15:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=MBsYMuBsA5t8svE+NcB6xyjYQflLIrPpY7vkuGt0oBI=;
-        b=C+csYQOhqcwAwyn0JCwenF7mgged4dlABbj3DjQlF1MO3ZOI80etKC3Bj/ONENWlf1
-         8b/Kg7LiJD0ai9+dQ9THUpHd8fCceTtznILj+ytLC0JFAWgiYZK8vsyvAt5/NbAQqeEz
-         UcZrSqmhru61S3bUw3O0NEudkuNjBCWi493Di7BHdvgTQNU9eFHlIh+C+lBeHeY9uJyn
-         UVM4/z6q98qhaLJKycqJH6AEMpoLpB2MXguoVBUY1hn6T1K1OZIZIn8AyedG7Cbs76B7
-         TOvFAdnT/A+ke5ZMcM2THSUhSW7ntt+qEVFQ16av6tClOBcj00TbdNGSvQ03I3U0d58f
-         nnKw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=9FU8/cbdAQ1B1ZzTlVWewCaR8fMm+oM2/yH7sJGlBfw=;
+        b=fbNV5F7IrIbf1Gef9KhXff+jBHqez6H4+lx3vLuggpetFj2/h/mKL9jDGVnuiXwUXY
+         8Qc08+RFkmuRvJNQTDOBd6Y9Bp3yi/tTZgfnN5wgsD3WZTjGUEW78bJsRXik1LfCSZAw
+         QaUuAq7LdJtbyuoVGNjj6GfgimTdVzYyI5PkWauAo+EmPuXEpPtYVsPV9fu1V8XNpyFn
+         Fp0J760xfkHEsd+2ea7dH5Jj3p9faUv4LTgiZxX5VMmq6mDkRf+ualsO/j7RSjxOsYZf
+         Wtx/nLJ3vT92aYh8PW7aHq6nFLYx+kIGBXl5Bz2mBemljPmX9/Gy1UAyRtgntSaLwL2I
+         NcIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=MBsYMuBsA5t8svE+NcB6xyjYQflLIrPpY7vkuGt0oBI=;
-        b=EhOLSZqd7JILGYpmCItaHzvHuXQ+juPVRxcIhoqy2aAv2maeAqqdcRnMd11gbuWaAi
-         g3Io0dwaaCcKvZHRUI9md7i6dx+3+SkHvps+QBz/ENPpkq2oAbEj5d4a9f7tAf5xEKmZ
-         yfQ+8Hyf04mQf3FLFd/qKkeu2FnQJHJwOGDAGWQbS3mVa+wJ+mSZsO2QZ3FtJoUlg9vq
-         GSlLPZwBfPMk1CmHGm5CbjYlZFD6Doe/+x3lKkgGCJkAcGVwUQYbXHGcj9IRqE5SDP3R
-         3l+pjjn/jvHYoSwj5fS9Bqh4bTfTBxywrydWaC8Ex/Pza6CXkYwFBZKNhpuHjqNJcc6w
-         MLgg==
-X-Gm-Message-State: APjAAAXYA9GY7oru22IE3BYedIr3EmDKmhzymO40THoI1kdnBB40EF0N
-        RrUc4nIhWOOSOSFVcm4Uol4=
-X-Google-Smtp-Source: APXvYqzBQc0Gl0uS7kfn0NBOXH4JUTUQ/FYDSa9sWk1IEhdZfE+fR204gLrx3+L8awX97Pwo82VOyw==
-X-Received: by 2002:ac8:6708:: with SMTP id e8mr7732208qtp.215.1581090522583;
-        Fri, 07 Feb 2020 07:48:42 -0800 (PST)
-Received: from ?IPv6:2001:4898:6808:13e:439:e50b:6e3c:1277? ([2001:4898:a800:1012:b56c:e50b:6e3c:1277])
-        by smtp.gmail.com with ESMTPSA id y26sm1589691qtc.94.2020.02.07.07.48.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 07 Feb 2020 07:48:41 -0800 (PST)
-Subject: Re: [PATCH v2 1/3] builtin/commit-graph.c: support
- '--split[=<strategy>]'
-To:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <cover.1580430057.git.me@ttaylorr.com>
- <cover.1580862307.git.me@ttaylorr.com>
- <3e19d50148c8d53b30f8f0036a2d3af9f4bb3499.1580862307.git.me@ttaylorr.com>
- <CAN0heSrXZd7ktBTHaYFWjhW=NcGx5gL52-unSDaC4ZoNf96HFA@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <3acac399-9476-e4ad-556e-e0138380eeb0@gmail.com>
-Date:   Fri, 7 Feb 2020 10:48:39 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:73.0) Gecko/20100101
- Thunderbird/73.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=9FU8/cbdAQ1B1ZzTlVWewCaR8fMm+oM2/yH7sJGlBfw=;
+        b=WYxvpVs8BEKvwCNAP/XmYwyd5fTOj2kGeRbf0L03uG7s3UjPD4s2to/Gb7DoAFJq4S
+         T/c7HECpicKDsFdJKoORhcCUQsNBN9ndQ63HKCskCVOyRRR4QLR7yqhyx2DMsfJtiHTy
+         OqAVfMp/3Id340TnIS5LOZPPqWnz/ZuLlaKLc943RnQVtNwK2dOGV6LGe7P5TBn8NmGm
+         Tdd1q+ZlDDO2kt5LxeHoFFiEUA0fRxDkI0ZyRgMUVf2r9fjAAHgcPijhZQKwaficjzjR
+         M/NGP1cZaoUAmUyoUx1twpgyJXoXOEQUxy62Sy/YGh5cu2Rv8zN+BQBOlE3k6BM/FaNi
+         RAmQ==
+X-Gm-Message-State: APjAAAV3SfcqTO0q0cEMiOkItI59PCl+kQQQlI2xuzEgF3zyvWX8mEje
+        QeA5GNAj2OeOBtVHZ8aEwwI=
+X-Google-Smtp-Source: APXvYqxeCm8cmiJCs4cs7rcAIeg7CZomDprLuHq+z+7aGDhjgty7FJvhcASDQa+9AUnu+zgXwmdq8w==
+X-Received: by 2002:a5d:4204:: with SMTP id n4mr5416308wrq.123.1581092134904;
+        Fri, 07 Feb 2020 08:15:34 -0800 (PST)
+Received: from szeder.dev (x4db318d8.dyn.telefonica.de. [77.179.24.216])
+        by smtp.gmail.com with ESMTPSA id y8sm3820969wma.10.2020.02.07.08.15.32
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 07 Feb 2020 08:15:33 -0800 (PST)
+Date:   Fri, 7 Feb 2020 17:15:28 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Garima Singh <garimasigit@gmail.com>,
+        Garima Singh via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, jonathantanmy@google.com,
+        jeffhost@microsoft.com, me@ttaylorr.com, peff@peff.net,
+        jnareb@gmail.com, christian.couder@gmail.com,
+        emilyshaffer@gmail.com, gitster@pobox.com,
+        Garima Singh <garima.singh@microsoft.com>
+Subject: Re: [PATCH v2 00/11] Changed Paths Bloom Filters
+Message-ID: <20200207161528.GA18146@szeder.dev>
+References: <pull.497.git.1576879520.gitgitgadget@gmail.com>
+ <pull.497.v2.git.1580943390.gitgitgadget@gmail.com>
+ <20200207135249.GD2868@szeder.dev>
+ <140cf2f4-23d5-09ab-8f23-bbbd397c68f7@gmail.com>
+ <88c8e5da-72f2-25cc-f55b-f62500c52a24@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CAN0heSrXZd7ktBTHaYFWjhW=NcGx5gL52-unSDaC4ZoNf96HFA@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <88c8e5da-72f2-25cc-f55b-f62500c52a24@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/6/2020 2:41 PM, Martin Ågren wrote:
-> On Wed, 5 Feb 2020 at 01:28, Taylor Blau <me@ttaylorr.com> wrote:
->>  * If `--size-multiple=<X>` is not specified, let `X` equal 2. If the new
->>  tip file would have `N` commits and the previous tip has `M` commits and
+On Fri, Feb 07, 2020 at 10:36:58AM -0500, Derrick Stolee wrote:
+> On 2/7/2020 10:09 AM, Garima Singh wrote:
+> > 
+> > On 2/7/2020 8:52 AM, SZEDER Gábor wrote:
+> >>>  * Added unit tests for the bloom filter computation layer
+> >>
+> >> This fails on big endian, e.g. in Travis CI's s390x build:
+> >>
+> >>   https://travis-ci.org/szeder/git-cooking-topics-for-travis-ci/jobs/647253022#L2210
+> >>
+> >> (The link highlights the failure, but I'm afraid your browser won't
+> >> jump there right away; you'll have to click on the print-test-failures
+> >> fold at the bottom, and scroll down a bit...)
+> >>
+> > 
+> > Thank you so much for running this pipeline and pointing out the error!
+> > 
+> > We will carefully review our interactions with the binary data and 
+> > hopefully solve this in the next version. 
 > 
->> -               OPT_BOOL(0, "split", &opts.split,
->> -                       N_("allow writing an incremental commit-graph file")),
->> +               OPT_CALLBACK_F(0, "split", &split_opts.flags, NULL,
->> +                       N_("allow writing an incremental commit-graph file"),
->> +                       PARSE_OPT_OPTARG | PARSE_OPT_NONEG,
->> +                       write_option_parse_split),
+> Szeder,
+> 
+> Thanks so much for running this test. We don't have access to a big endian
+> machine right now, so could you please apply this patch and re-run your tests?
+
+Unfortunately, it still failed:
+
+  https://travis-ci.org/szeder/git-cooking-topics-for-travis-ci/jobs/647395554#L2204
+
+> The issue is described in the message below, and Garima is working to ensure
+> the handling of the filter data is clarified in the next version.
+> 
+> This is an issue from WAY back in the original prototype, and it highlights
+> that we've never been writing the data in network-byte order. This is completely
+> my fault.
+> 
+> Thanks,
+> -Stolee
 > 
 > 
-> I keep getting back to this -- sorry! So this actually forbids
-> "--no-split", which used to work before. Unfortunate?
-
-That certainly is unfortunate. Hopefully no one is taking a dependence on
-this, which only means something if they had a `--split` previously in
-the command-line arguments.
-
-> I have to ask, what is the long-term plan for the two formats (split and
-> non-split)? As I understand it, and I might well be wrong, the non-split
-> format came first and the split format was a user-experience
-> improvement. Should we expect that `--split` becomes the default?
-
-In some ways, the split is now the default because that is how it is
-written during 'git fetch' using fetch.writeCommitGraph. However, I
-don't think that it will ever become the default for the commit-graph
-builtin.
-
-> In
-> which case `--no-split` would be needed. Or might the non-split format
-> go away entirely, leaving `--split` a no-op and `--split=<strategy>` a
-> pretty funky way of choosing a strategy for the one-and-only file
-> format?
-
-In some ways, the --split=merge-all is similar, except it writes a one-line
-commit-graph-chain file and puts a .graph file in
-.git/objects/info/commit-graphs instead of writing to .git/objects/commit-graph.
-
-> To try to be concrete, here's a suggestion: `--format=split` and
-> `--split-strategy=<strategy>`.
-
-Why --format=split instead of leaving it as --[no-]split? Is there a reason to
-introduce this string-based option when there are only two options right now?
-
-Perhaps using --split-strategy=<strategy> is the most backwards-compatible
-option, especially because we won't need --split="" to substitute for
-"auto-merge". However, I wonder if this is a case where we should make the
-hard choice to sacrifice a narrow backwards-compatibility in favor of a
-simplified set of options?
-
-Thanks,
--Stolee
+> -->8--
+> 
+> From c1067db5d618b2dae430dfe373a11c771517da9e Mon Sep 17 00:00:00 2001
+> From: Derrick Stolee <dstolee@microsoft.com>
+> Date: Fri, 7 Feb 2020 10:24:05 -0500
+> Subject: [PATCH] fixup! bloom: core Bloom filter implementation for changed
+>  paths
+> 
+> The 'data' field of 'struct bloom_filter' can point to a memory location
+> (when computing one before writing to the commit-graph) or a memmap()'d
+> file location (when reading from the Bloom data chunk of the commit-graph
+> file). This means that the memory representation may be backwards in
+> Little Endian or Big Endian machines.
+> 
+> Always write and read bits from 'filter->data' using network order. This
+> allows us to avoid loading the data streams from the file into memory
+> buffers.
+> 
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  bloom.c               | 6 ++++--
+>  t/helper/test-bloom.c | 2 +-
+>  2 files changed, 5 insertions(+), 3 deletions(-)
+> 
+> diff --git a/bloom.c b/bloom.c
+> index 90d84dc713..aa6896584b 100644
+> --- a/bloom.c
+> +++ b/bloom.c
+> @@ -124,8 +124,9 @@ void add_key_to_filter(struct bloom_key *key,
+>  	for (i = 0; i < settings->num_hashes; i++) {
+>  		uint64_t hash_mod = key->hashes[i] % mod;
+>  		uint64_t block_pos = hash_mod / BITS_PER_WORD;
+> +		uint64_t bit = get_bitmask(hash_mod);
+>  
+> -		filter->data[block_pos] |= get_bitmask(hash_mod);
+> +		filter->data[block_pos] |= htonll(bit);
+>  	}
+>  }
+>  
+> @@ -269,7 +270,8 @@ int bloom_filter_contains(struct bloom_filter *filter,
+>  	for (i = 0; i < settings->num_hashes; i++) {
+>  		uint64_t hash_mod = key->hashes[i] % mod;
+>  		uint64_t block_pos = hash_mod / BITS_PER_WORD;
+> -		if (!(filter->data[block_pos] & get_bitmask(hash_mod)))
+> +		uint64_t bit = get_bitmask(hash_mod);
+> +		if (!(filter->data[block_pos] & htonll(bit)))
+>  			return 0;
+>  	}
+>  
+> diff --git a/t/helper/test-bloom.c b/t/helper/test-bloom.c
+> index 9b4be97f75..09b2bb0a00 100644
+> --- a/t/helper/test-bloom.c
+> +++ b/t/helper/test-bloom.c
+> @@ -23,7 +23,7 @@ static void print_bloom_filter(struct bloom_filter *filter) {
+>  	printf("Filter_Length:%d\n", filter->len);
+>  	printf("Filter_Data:");
+>  	for (i = 0; i < filter->len; i++){
+> -		printf("%"PRIx64"|", filter->data[i]);
+> +		printf("%"PRIx64"|", ntohll(filter->data[i]));
+>  	}
+>  	printf("\n");
+>  }
+> -- 
+> 2.25.0.vfs.1.1.1.g9906319d24.dirty
+> 
+> 
+> 
