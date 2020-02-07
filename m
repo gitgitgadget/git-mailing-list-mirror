@@ -2,187 +2,142 @@ Return-Path: <SRS0=Q4JT=33=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 06DDEC04EB5
-	for <git@archiver.kernel.org>; Fri,  7 Feb 2020 15:37:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A67EC04EB5
+	for <git@archiver.kernel.org>; Fri,  7 Feb 2020 15:45:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id CE2A420720
-	for <git@archiver.kernel.org>; Fri,  7 Feb 2020 15:37:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 30D3B20720
+	for <git@archiver.kernel.org>; Fri,  7 Feb 2020 15:45:55 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sFjHiP88"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Xh1bzgAU"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727011AbgBGPhO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 Feb 2020 10:37:14 -0500
-Received: from mail-qt1-f194.google.com ([209.85.160.194]:33291 "EHLO
-        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726874AbgBGPhN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Feb 2020 10:37:13 -0500
-Received: by mail-qt1-f194.google.com with SMTP id d5so2164704qto.0
-        for <git@vger.kernel.org>; Fri, 07 Feb 2020 07:37:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=AGg4SwuF/fUmcFuevjy4Oec7CBPmZcLEN7jrMsTc54k=;
-        b=sFjHiP88Z+15vcb2InsbAMnsXQA9niJkM5jMQtxx78DpVkeVTvI1phw4fHc6BmPpQy
-         /BM+y8ICvDR1RyUvM12855znWj69AFYM8jZipmgHodH9seKVufExXKAOeDfmKCX1DB5o
-         Zte06xfVR49y4EZabAflvOSox0t2Jz5pnt79JN5LCEVQ80qwJ32UZCIviBJdLB92z6O+
-         VXWMxoWCEIFwZpFArlx41Z1e4r6eb0dTOqbPbIR77+TNja9NJm/ugxzpnPSOtmHEdhBj
-         Fm0xM0dWthEUFuF64NfGaJWZ7q7XHokuis/+bG2gVCUpn0dEQoz8tAcS/2wJzVS3ix16
-         Qhcw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=AGg4SwuF/fUmcFuevjy4Oec7CBPmZcLEN7jrMsTc54k=;
-        b=c0T+fb6mz18UGA41d9ZfOl7JwgidF1qbCksUFQ8OZeqgU0cvHvi4ommRQz9X+RHVJk
-         bma56lSWkW/9d4n3/dfbUAu27UrxRG4+0wb2xc+i6oYvoEOaDC1HC0yBhr75MBQd7aPU
-         AWBLIMrHtldipzrov7xmPtyhgzojubXdTXwdziT8JmT1QhJNhzX/GLtL1qG+YJB0PHDc
-         hU67SGgAsUCxBjbUICXsxZP8daGXUqlxtpt968bUY+aosw0LQnQNLW5uOLM+962XFxXk
-         8BAPPfzxgQ1uS6NsFbzFGkorKEA/l3H912pOww9WsQq8+EJNg9hLfv+2RpvqF2EZg+hP
-         ybuw==
-X-Gm-Message-State: APjAAAWexbdZ3Fxp3Qffy+vRhqXUPIH8o3/3JQY8kM24+yvk+GMtSEJZ
-        lLP9Bpr4f4X/Oy0A4aT3Ch0=
-X-Google-Smtp-Source: APXvYqx+4bwXGbQbgiiWGOVeFH8p47tpUs7smZjoVHk4SurvbsEePAK8Z1kyHIJadtMdKK1w1rMRoQ==
-X-Received: by 2002:ac8:43c1:: with SMTP id w1mr7753457qtn.156.1581089832130;
-        Fri, 07 Feb 2020 07:37:12 -0800 (PST)
-Received: from ?IPv6:2001:4898:6808:13e:439:e50b:6e3c:1277? ([2001:4898:a800:1010:b56e:e50b:6e3c:1277])
-        by smtp.gmail.com with ESMTPSA id h7sm1494015qke.30.2020.02.07.07.36.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 07 Feb 2020 07:37:00 -0800 (PST)
-Subject: Re: [PATCH v2 00/11] Changed Paths Bloom Filters
-To:     Garima Singh <garimasigit@gmail.com>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        Garima Singh via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, jonathantanmy@google.com,
-        jeffhost@microsoft.com, me@ttaylorr.com, peff@peff.net,
-        jnareb@gmail.com, christian.couder@gmail.com,
-        emilyshaffer@gmail.com, gitster@pobox.com,
-        Garima Singh <garima.singh@microsoft.com>
-References: <pull.497.git.1576879520.gitgitgadget@gmail.com>
- <pull.497.v2.git.1580943390.gitgitgadget@gmail.com>
- <20200207135249.GD2868@szeder.dev>
- <140cf2f4-23d5-09ab-8f23-bbbd397c68f7@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <88c8e5da-72f2-25cc-f55b-f62500c52a24@gmail.com>
-Date:   Fri, 7 Feb 2020 10:36:58 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:73.0) Gecko/20100101
- Thunderbird/73.0
+        id S1726954AbgBGPpy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 Feb 2020 10:45:54 -0500
+Received: from mout.gmx.net ([212.227.15.15]:44891 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726874AbgBGPpy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Feb 2020 10:45:54 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1581090347;
+        bh=IB3H8A/j8Uzc8fAL0at/6HJfEryVQi7nYZRdBbEfAC0=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Xh1bzgAUvDdNxK+50AIQsJx9BoQlX9ne7RMpBIVthj6FjaBAP7HUYP4DgTet2az31
+         9d7S71UdYMr53m3qWgBttb20cEVYGtLeR4CdpY9Qfy2/ULBFBHot4cOlJyEJXVRUcO
+         nH0cCU/Lz+VVgPiu1VkZwg0eyHHAgRkSA+tlFJsA=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from MININT-QA14EDB ([46.114.111.241]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N7zBR-1jdwpU1e9j-0152hH; Fri, 07
+ Feb 2020 16:45:47 +0100
+Date:   Fri, 7 Feb 2020 16:45:42 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Markus Klein via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Markus Klein <masmiseim@gmx.de>
+Subject: Re: [PATCH v2] clone: use submodules.recurse option for automatically
+ clone submodules
+In-Reply-To: <xmqq1rr7fsh3.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2002071621160.3718@tvgsbejvaqbjf.bet>
+References: <pull.695.git.git.1580505092071.gitgitgadget@gmail.com>        <pull.695.v2.git.git.1580851963616.gitgitgadget@gmail.com> <xmqq1rr7fsh3.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <140cf2f4-23d5-09ab-8f23-bbbd397c68f7@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:c9LAnRqy0VaUZxCKTDnfObqacPImk40QSvDQPLsZLBzIIj7NvU1
+ FxjOEiW3/tbR+tYO+QBfAbKYMlrTa1t0DULCDWSbx1PXWk49cp6mVdq9zSMl24dc1lB8fSZ
+ HN20KhrYALJmJ9/LWsy+Fcwph/w5bulqrBPL0ceTdTVWoVhHk6joYL+l458ZrlpgmDLBgXB
+ fMnSD4xcz8qP8w2UgL/dA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:dza8qgBOB+Q=:8IaD6uaeJGw3JS91MPUERO
+ T3RPje5TZgaINU91XHhsaEuLCUzCsp8tTAfJpShkWTYvxEn6mj693PjrjYMX6RFCNXvXS/lqf
+ mkxZjBq8QGV9c7JQuw3O2nDMBmNksObQ0f9IBnwvw760h7zIx9kxMRAb/hbpBweUBXLsEVDAS
+ loBEM067EGHRwaz2Oq4JZIvJ491LsO4dGK8VJkTtqeldBDLE6+KwtH+Z4Zs1I/7h9cx/NB+sE
+ nqeDGS5OEWM8euPQaxu+VQjFgDKepW+1OTF/t/QPc7jGlmt0xPW/CarNzybbpzGEjTjioU9yk
+ 1imiwTAFBNdrzr64hul6BS02WfxSN/VigpJaD/v/c0KNYoMgQ2WDsPxWyH0A2mub9LSbCvBl4
+ V4ot7N/s4DUG+bdNORlhihCQsJe4VlBz51fr0SoxfjHUiO6ZwfKZKrdLoXdtoh3FzPOG7OsTi
+ qEpgmP4kXB+JDdB5NEI3MA3GiEh5r0OkARAgqahFrHyVNmrweE4ZCMz/x0nM9xXzeNJHB+J60
+ ppVxeIN5KYew2G7TQ9/RqrsCFGVZjwe5310UDDaHRd8dLtzoYwx48oG1/xvsPf4DjfOBSRFgO
+ IiYc5Is9AyIHGsptmv67WDtASvnfs3gLX+KH4moNqlNwlKea6eVZkRi8UZlPeToExnQiQDuqV
+ SAoXalVhv5JokCO45VDGtv4oo7/Rjvg95d5nzwqLG3+m122T247KjKp1zcAVxPV/sKRrpHd59
+ 0h/urKyJ2jKNX036MkNJtyuCG5APKfzbSmEgsHAGtJHC+UuMrvxam8qEu4Z0wuJc1XvopW3/X
+ zoUu/64bOEzAoIYWPvZu4StxUeEiV6XXxe+anMUU9Wy5xeFvo3/VloVHUyk3hUkvOOXW1A0W8
+ rvRuda2zTZZm6c3HZRXAxYvw+NDF9lT34oG/oYUvd0Y2+tGtqe+CvOe0+YevCQjLFuhV/kysh
+ dUyR0EBBqxxY04GaqmzardlpXgUoipO+eAkc4vqCjGudid/iDSSQsQJqFNVskHaiMkQ+Cw/ZF
+ vuCnEjzd615FtFwPNpi+uOFvf51mc8191cUDhKd5Sgu55txOx144CetTtzqd7LlSyBH+eOjJ9
+ aSJLGce5mXswcHSjNSAaBFypK6lpsJB23m30KxaXonF83JlXvihqLLlFFmxN2JeoLyE47FheB
+ i4YwTIax2nNbi4Odm7SKSvlbpun6Vfi+8T/ffU0JtJjYYB4XR+9vzcw/275wJ+58LAqAE6bvB
+ cq+l8K80GNn0Gn3WG
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/7/2020 10:09 AM, Garima Singh wrote:
-> 
-> On 2/7/2020 8:52 AM, SZEDER Gábor wrote:
->>>  * Added unit tests for the bloom filter computation layer
->>
->> This fails on big endian, e.g. in Travis CI's s390x build:
->>
->>   https://travis-ci.org/szeder/git-cooking-topics-for-travis-ci/jobs/647253022#L2210
->>
->> (The link highlights the failure, but I'm afraid your browser won't
->> jump there right away; you'll have to click on the print-test-failures
->> fold at the bottom, and scroll down a bit...)
->>
-> 
-> Thank you so much for running this pipeline and pointing out the error!
-> 
-> We will carefully review our interactions with the binary data and 
-> hopefully solve this in the next version. 
+Hi Junio,
 
-Szeder,
+On Thu, 6 Feb 2020, Junio C Hamano wrote:
 
-Thanks so much for running this test. We don't have access to a big endian
-machine right now, so could you please apply this patch and re-run your tests?
+> "Markus Klein via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> > +static int git_clone_config(const char *var, const char *value, void =
+*cb)
+> > +{
+> > +	if (!strcmp(var, "submodule.recurse") && git_config_bool(var, value)=
+) {
+> > +		string_list_append(&option_recurse_submodules, "true");
+> > +		return 0;
+>
+> The breakage of this is not apparent, but this is misleading.  If
+> submodule.recurse is set to a value that git_config_bool() would say
+> "false", the if statement is skipped, and you end up calling
+> git_default_config() with "submodule.recurse", even though you are
+> supposed to have already dealt with the setting.
+>
+> 	if (!strcmp(var, "submodule.recurse")) {
+> 		if (git_config_bool(var, value))
+> 			...
+> 		return 0; /* done with the variable either way */
+> 	}
+>
+> is more appropriate.
 
-The issue is described in the message below, and Garima is working to ensure
-the handling of the filter data is clarified in the next version.
+Good catch, and I think you will have to do even more: in the "else" case,
+it is possible that the user overrode a `submodule.recurse` from the
+system config in their user-wide config, so we must _undo_ the
+`string_list_append().
 
-This is an issue from WAY back in the original prototype, and it highlights
-that we've never been writing the data in network-byte order. This is completely
-my fault.
+Further, it is probably not a good idea to append "true" _twice_ if
+multiple configs in the chain specify `submodule.recurse =3D true`.
 
-Thanks,
--Stolee
+> I still do not know what this code is trying to do by appending "true"
+> as many times as submodule.recurse appears in the configuration file(s),
+> though.
+>
+> When given from the command line, i.e.
+>
+> 	git clone --no-recurse-submodules ...
+> 	git clone --recurse-submodules    ...
+> 	git clone --recurse-submodules=3D<something> ...
+>
+> recurse_submodules_cb() reacts to them by
+>
+>  (1) clearing what have been accumulated so far,
+>  (2) appending the match-all "." pathspec, and
+>  (3) appending the <something> string
+>
+> to option_recurse_submodules string list.  But given that
+> submodule.recurse is not (and will not be without an involved
+> transition plan) a pathspec but merely a boolean, I would think
+> appending hardcoded string constant "true" makes little sense.
+> After sorting the list, these values become values of the
+> submodule.active configuration variable whose values are pathspec
+> elements in cmd_clone(); see the part of the code before it makes a
+> call to init_db().
 
+Indeed, I think I even pointed out that "true" is not an appropriate value
+to use here: https://github.com/git/git/pull/695/#discussion_r367866708
 
--->8--
-
-From c1067db5d618b2dae430dfe373a11c771517da9e Mon Sep 17 00:00:00 2001
-From: Derrick Stolee <dstolee@microsoft.com>
-Date: Fri, 7 Feb 2020 10:24:05 -0500
-Subject: [PATCH] fixup! bloom: core Bloom filter implementation for changed
- paths
-
-The 'data' field of 'struct bloom_filter' can point to a memory location
-(when computing one before writing to the commit-graph) or a memmap()'d
-file location (when reading from the Bloom data chunk of the commit-graph
-file). This means that the memory representation may be backwards in
-Little Endian or Big Endian machines.
-
-Always write and read bits from 'filter->data' using network order. This
-allows us to avoid loading the data streams from the file into memory
-buffers.
-
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- bloom.c               | 6 ++++--
- t/helper/test-bloom.c | 2 +-
- 2 files changed, 5 insertions(+), 3 deletions(-)
-
-diff --git a/bloom.c b/bloom.c
-index 90d84dc713..aa6896584b 100644
---- a/bloom.c
-+++ b/bloom.c
-@@ -124,8 +124,9 @@ void add_key_to_filter(struct bloom_key *key,
- 	for (i = 0; i < settings->num_hashes; i++) {
- 		uint64_t hash_mod = key->hashes[i] % mod;
- 		uint64_t block_pos = hash_mod / BITS_PER_WORD;
-+		uint64_t bit = get_bitmask(hash_mod);
- 
--		filter->data[block_pos] |= get_bitmask(hash_mod);
-+		filter->data[block_pos] |= htonll(bit);
- 	}
- }
- 
-@@ -269,7 +270,8 @@ int bloom_filter_contains(struct bloom_filter *filter,
- 	for (i = 0; i < settings->num_hashes; i++) {
- 		uint64_t hash_mod = key->hashes[i] % mod;
- 		uint64_t block_pos = hash_mod / BITS_PER_WORD;
--		if (!(filter->data[block_pos] & get_bitmask(hash_mod)))
-+		uint64_t bit = get_bitmask(hash_mod);
-+		if (!(filter->data[block_pos] & htonll(bit)))
- 			return 0;
- 	}
- 
-diff --git a/t/helper/test-bloom.c b/t/helper/test-bloom.c
-index 9b4be97f75..09b2bb0a00 100644
---- a/t/helper/test-bloom.c
-+++ b/t/helper/test-bloom.c
-@@ -23,7 +23,7 @@ static void print_bloom_filter(struct bloom_filter *filter) {
- 	printf("Filter_Length:%d\n", filter->len);
- 	printf("Filter_Data:");
- 	for (i = 0; i < filter->len; i++){
--		printf("%"PRIx64"|", filter->data[i]);
-+		printf("%"PRIx64"|", ntohll(filter->data[i]));
- 	}
- 	printf("\n");
- }
--- 
-2.25.0.vfs.1.1.1.g9906319d24.dirty
-
-
-
+Ciao,
+Dscho
