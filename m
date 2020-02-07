@@ -2,130 +2,154 @@ Return-Path: <SRS0=Q4JT=33=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D3A2BC2BA83
-	for <git@archiver.kernel.org>; Fri,  7 Feb 2020 22:21:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8323DC2BA83
+	for <git@archiver.kernel.org>; Fri,  7 Feb 2020 23:46:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A371B20720
-	for <git@archiver.kernel.org>; Fri,  7 Feb 2020 22:21:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 40BAC21741
+	for <git@archiver.kernel.org>; Fri,  7 Feb 2020 23:46:26 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="qXjimbsb"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="S7A6tWKc"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727118AbgBGWVu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 Feb 2020 17:21:50 -0500
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:38146 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727032AbgBGWVu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Feb 2020 17:21:50 -0500
-Received: by mail-qk1-f193.google.com with SMTP id p10so535735qkk.5
-        for <git@vger.kernel.org>; Fri, 07 Feb 2020 14:21:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=dAnUd63oHXMCaJNfBamZgWKb7E/Tb76LALtPSXyUZKQ=;
-        b=qXjimbsbyRLa/9AFudGxDB1ldn9dmWOp9Cl99fEHs15nZAox+THIsODjOaNFV69ZKc
-         GlTfSPFIPil3B4mCBqoWrVItgE7FamItVu/wQDXWuWKl5uTUDKDCT9Y48o+VcnT+Os0t
-         Qsz0R7SIl/VOnCduJwd2IvIO8AEali4g6CZuB15o7z2Wilc2J/hhKgslRVNfIqWLSifK
-         RBQYHvNFsTB18VFQg6r63Vr0023cBFPEI79WB3V1pC932BWDECDj+5wAwGInevvVm9WZ
-         4eBvDn0bUFTitdkqRrByYh2lK8Tme0tB21pjLy9omxuPdOz8RD5jtjf5n7LYEQ+NTQS+
-         J6gg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=dAnUd63oHXMCaJNfBamZgWKb7E/Tb76LALtPSXyUZKQ=;
-        b=bUqapA0zVmtt8ER1MqQE5EHRuZZlpso3GA/PZ2qPzpFEoPQrTkplWlLThWKUo/y+ZX
-         tevk3vMdrwGRejvwWTqvgf2BhtbiqLga0zAQGMsm0yjWRxfytYM9ZUSmJdWqNKyKGKTd
-         mkz8XyPsk+xuVNjV5Q3wwVPgxVx4f4JIsyfnvTdW2s8O7EdxUufUV7J1hYs9OwoBDABd
-         41OuUvkEKlfMfO7SFqfKSNC+6Ei0OzDKx5JNb5XiIntqSpJEVIYc/m0RMkck0+TxOR2g
-         Q7w3F2qIUrV4Ghwy5IGzxeW4KQeiWa3MOwfwKyNtTNjc+ZAEzFSkxqF1cx8UkF23R7bG
-         jtRg==
-X-Gm-Message-State: APjAAAUSAZcmpBf49koRTAa+fHdQNTbKrk9uxCwFQvsBzJPkU+7Ykg2C
-        aw+Z8FyCEPJ51CWfQ+zhWZldU0d5vYm6R+mjyjuyLA==
-X-Google-Smtp-Source: APXvYqxMvtzH6+svbH9M5ItIHI2/1tuUNx/taNN/PS+tAc/O+LUddphxMKjO9oTKqtW9+KvUXzO5a42sX9LaMAFPcQs=
-X-Received: by 2002:a37:4b48:: with SMTP id y69mr1141592qka.216.1581114109017;
- Fri, 07 Feb 2020 14:21:49 -0800 (PST)
+        id S1727113AbgBGXqZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 Feb 2020 18:46:25 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:56302 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727065AbgBGXqZ (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 7 Feb 2020 18:46:25 -0500
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 138FD60479;
+        Fri,  7 Feb 2020 23:46:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1581119183;
+        bh=566YGElJ45MIM2CmaEs996YdUV1+tRIsTZjOfSEHnvc=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=S7A6tWKc9/HEKidjhOFniRHHZ75FnCR367ts7lNxOvOvB4AIn6AdnF/H1Fxb2L6v2
+         9XM8qScbyvE0QncfrOnNEUS0ar4dEf3/AzkAVW6kuZms+f5K+dnak6cENBH6jHquvD
+         gdJ/3HoxhbR2CHS5UEv8pHa/wwyb/+WMuwttINp3lnp1WVfdzMCovo6+G/Npv5gtHg
+         uZxedJMo7MaqemsiYhrkoIseNGZ1hs1mLg2W8wllo6dc/lwaNNyio1R1jWVwU88HaT
+         5Z0ZbnFEhbzywQ4tYCL9wMEk4SUFE7aRgTfq7ljowDUTS5k5asue8DiTjJnfaGyCyp
+         bVPRm+BsPUSp2LlaKsO2UcEx58jxcsvUbN7fedAplVF0VI7iKBIYAdnVa7PZQx9t1o
+         tauJmo2qfNNnFHTO8XZEZYD59EDsDSVa5wLBptTQNhtA0a1HqUdTnYaQYakxrBfIot
+         Nk2x/sW/19N8o+BdawiIgB/Hufb4f9ZZ2W76r3P8Fp53NcBpAYy
+Date:   Fri, 7 Feb 2020 23:46:18 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     paul@pauldsmith.org.uk
+Cc:     git@vger.kernel.org
+Subject: Re: Support 'help' for custom/alias commands
+Message-ID: <20200207234618.GH6573@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        paul@pauldsmith.org.uk, git@vger.kernel.org
+References: <VI1P192MB025548BB0508125DF9B5852DC81C0@VI1P192MB0255.EURP192.PROD.OUTLOOK.COM>
+ <005001d5dda3$5bc12510$13436f30$@pauldsmith.org.uk>
 MIME-Version: 1.0
-References: <20200131221800.240352-1-masayasuzuki@google.com>
- <20200207204225.123764-1-masayasuzuki@google.com> <CAJB1erXMR_aCqVPsH6WQZdC7yybOBCUbwkJDv3LtU2f0ymNmbQ@mail.gmail.com>
- <xmqqlfpe2jx3.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqlfpe2jx3.fsf@gitster-ct.c.googlers.com>
-From:   Masaya Suzuki <masayasuzuki@google.com>
-Date:   Fri, 7 Feb 2020 14:21:37 -0800
-Message-ID: <CAJB1erVZ5E6FxtD8gJXXpzJjquvksLxpz+h1TzG52Yr9DFmDRQ@mail.gmail.com>
-Subject: Re: [PATCH v3] doc: describe Git bundle format
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="uJrvpPjGB3z5kYrA"
+Content-Disposition: inline
+In-Reply-To: <005001d5dda3$5bc12510$13436f30$@pauldsmith.org.uk>
+X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
+ 5.4.0-2-amd64)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 7, 2020 at 12:59 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Masaya Suzuki <masayasuzuki@google.com> writes:
->
-> > On Fri, Feb 7, 2020 at 12:42 PM Masaya Suzuki <masayasuzuki@google.com> wrote:
-> >> +=== Note on the shallow clone and a Git bundle
-> >> +
-> >> +Note that the prerequisites does not represent a shallow-clone boundary. The
-> >
-> > the prerequisites do not
->
-> Grammo aside, I am not sure if that particular Note is beneficial to
-> begin with.  I would imagine that you can get a bundle that holds
-> all the objects in a shallow repository by specifying the range that
-> match the shallow-clone boundary when you run "git bundle create"
-> while disabling thin-pack generation.
 
-Yes. The reason that I've been trying to check the semantics of the
-prerequisites is that I DO recognize that this is possible
-format-wise. I'm not sure if this Git implementation can create such
-bundles, but format-wise such bundles can be created.
+--uJrvpPjGB3z5kYrA
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-When writing a Git bundle parser in other implementations (like JGit),
-it's not clear whether, as a library, I should support such use cases.
-If such usage is supported in the format, then the semantics of the
-prerequisites changes. Currently the prerequisites are defined as the
-objects that are NOT included in the bundle, and the reader of the
-bundle MUST already have, in order to use the data in the bundle. If
-the format supports shallow-cloned repository, this will be defined as
-the objects that are NOT included in the bundle. If the reader wants
-to read this bundle as if it's a non-shallow clone, the reader of the
-bundle MUST have the objects that are reachable from these
-prerequisites. If the reader wants to read this bundle as if it's a
-shallow clone, the reader MUST treat these as a shallow boundary.
+On 2020-02-07 at 10:42:56, paul@pauldsmith.org.uk wrote:
+> Adding a custom comment (let=E2=80=99s call is =E2=80=98foolish=E2=80=99)=
+ is easy but then you
+> someone types =E2=80=98git help foolish=E2=80=99, they get some strange m=
+essage about help
+> not being found.
+>=20
+> There are two problems with this:
+>=20
+> 1. It=E2=80=99s hard for users to create good documentation in the same f=
+ormat as
+> the core git product 2. The git =E2=80=98help=E2=80=99 processing current=
+ly looks in one,
+> and one place only and that location is often =E2=80=98locked down=E2=80=
+=99 meaning that
+> mere users cannot add their custom help to this directory.
 
-Also, this change will put further restrictions on the pack. "Pack" is
-the pack data stream "git fetch" would send. If the writer of a bundle
-wants to write as a shallow-clone pack, the pack MUST NOT reference
-objects outside of the shallow boundary from the pack file as a delta
-base. The writer MAY reference the commit objects outside of the
-shallow boundary as a parent.
+It is possible to extend the set of locations that one can use for man
+by setting MANPATH.  If you do so, something like "git foolish --help"
+does indeed work.
 
-The readers and the writers of bundles MUST communicate whether a
-bundle represents a shallow clone repository in other means. The
-bundle file does not have any indicator whether it's a shallow clone
-bundle or not.
+> I propose that #1 be solved by creating a command/tool and documentation
+> that explains how to mimic the input to the standard Git help files and h=
+ave
+> them processed to create the HTML/HTML5/MAN help normally produced.=C2=A0=
+ Ideally
+> it would do exactly the same processing as the core tools (perhaps even
+> having their docs built using this tool now) and use exactly the same
+> template files that core git uses.
 
-> The support of shallow-clone by Git may be incomplete and it may not
-> be easy to form such a range, and "git bundle create" command may
-> not have a knob to disable thin-pack generation, but that does not
-> mean that the bundle *format* cannot be used to represent the
-> shallow boundary.
+There is such a tool, and it's called Asciidoctor.  However, it's
+written in Ruby, and not all users will want to install Ruby as part of
+their Git installation.  It does work nicely, though, and I use it for
+my own custom Git subcommands.
 
-As I wrote above, if this bundle format supports the shallow clone
-state, the semantics will change and writers and readers have
-different constraints on the packs. In order to do so, the readers and
-the writers have to agree whether it's a shallow clone or not in other
-mean since the bundle file doesn't have such indicators. I think it's
-better to prohibit such use cases (or at least make it as unintended
-usage), and then create a different bundle format version that
-supports shallow clone boundary (so that the bundle file can be more
-close to the frozen git-fetch response).
+Also, if a user prefers to use a different tool for creating manual
+pages or HTML documentation, they can certainly do so.
+
+> I propose that #2 be solved by allowing a new set of =E2=80=98git config=
+=E2=80=99 fields.
+> The layout should be sensible and should users to be able to set a git
+> variable which then means that the core git help finds their help text.
+> Possible we want to force
+>=20
+> <where I installed my tool>/docs/man, or html, or html5
+>=20
+> And the git config variable be something like
+> =E2=80=9Chelp.custom.foolish=3D<where-foolish-is-installed>/docs=E2=80=9D
+
+I think specifying a single location may be a problem because different
+types of documentation live in different locations.  On Debian, man
+pages live in /usr/share/man, but HTML documentation lives in
+/usr/share/doc.
+
+We could theoretically add support for this if we did help.foolish.man
+and help.foolish.html, though.
+
+I don't feel strongly enough about this to implement it, but if you're
+interested, I could review a patch.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--uJrvpPjGB3z5kYrA
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.19 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl499soACgkQv1NdgR9S
+9ovbKQ//YlQE26zfBAWsjBjm0n2KOQcMMr08CvZLuOFvVBfxngmcDyYXPWqmwrpA
+lb57LP3N92JoEOUljujiYDz/NHpZhhAClQp231BDE7rfqQEAA8XSDBmQqe2JPw/Q
+7Q37dvu/s1zcubBQV9LHo3muntzEZMHkDhzXSxnPhgxYPNGUppvl00JD6FEmh5z8
+CD/DkAu1dh4hKCp6B/8CgU4gy1FloEa8xRU3HzMY+JoPrJ6tYGN26llmn3tfrPPL
+1Ne9DXUWD34W1JkIO8Bj4Ckg8Gh8KgQhC9f7M6DfI0Eq2/9wR5L766ZMbYSXR2nQ
+PDHof2/40qXBfdoXnrhRg07IeZzDAjn0/E3TqRO47M3Hlmz3OcMyr6JAy1dmlZBn
+33I/MDIT6xSUwv83MwUHidAMvzmrijZK+/xbNThfe9cBM/Ujf5/wvp7Y2RvySAqZ
+tB1cPEyg6oK4t2HCik6xLCRtt4rp2qp1djgeIRTs8pPHBdqJp/Vss3Gau8Q9xZRt
+jalWYt44UldkDCk1zOvtVXyb6NeopClNF+uOwtHvWrBP2vSH/KwUlvw6kH2oljau
+fxfJsdI3H+MpD2U1NB1q7v2e/tSZZzsZHCQGhFf/x2LrnyiYUGySFDo+v9uk4V6Z
+UwOxgx/6WMQ+umRGFrsyjHIMU618qpgTVmrduVTTsKo/PDNlOrk=
+=pdxx
+-----END PGP SIGNATURE-----
+
+--uJrvpPjGB3z5kYrA--
