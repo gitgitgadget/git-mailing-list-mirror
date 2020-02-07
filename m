@@ -2,76 +2,158 @@ Return-Path: <SRS0=Q4JT=33=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EC989C352A2
-	for <git@archiver.kernel.org>; Fri,  7 Feb 2020 11:30:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D91BC352A2
+	for <git@archiver.kernel.org>; Fri,  7 Feb 2020 11:50:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5DB6920726
-	for <git@archiver.kernel.org>; Fri,  7 Feb 2020 11:30:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 328D4214AF
+	for <git@archiver.kernel.org>; Fri,  7 Feb 2020 11:50:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b="Xg3yVTcM";
-	dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b="Xg3yVTcM"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SK0TW8kM"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726861AbgBGLaB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 Feb 2020 06:30:01 -0500
-Received: from fallback13.mail.ru ([94.100.179.30]:59546 "EHLO
-        fallback13.mail.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726674AbgBGLaB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Feb 2020 06:30:01 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru; s=mailru;
-        h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=g/EHDcZdHac7H9E6HA3ZDDG6zv+DWwAR4d+O4dAli7s=;
-        b=Xg3yVTcMzo+HfZbY56euz2O5kaA6QQwzyY9VQY4AS/RIHQeWYEVb8EZwyaU/w0fcN2/yPDfgARGrlH5mlddcDjAXyO1Z6HtWeoZrh3jmpY+wEseA77bB/SZvZ4BDUtWSZ9dzcksx87iYn3SetvEc3uQKqbvHSOsYXNfiYSTIkq4=;
-Received: from [10.161.64.47] (port=60306 helo=smtp39.i.mail.ru)
-        by fallback13.m.smailru.net with esmtp (envelope-from <kostix@bswap.ru>)
-        id 1j01pb-0004SF-QR
-        for git@vger.kernel.org; Fri, 07 Feb 2020 14:29:56 +0300
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru; s=mailru;
-        h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=g/EHDcZdHac7H9E6HA3ZDDG6zv+DWwAR4d+O4dAli7s=;
-        b=Xg3yVTcMzo+HfZbY56euz2O5kaA6QQwzyY9VQY4AS/RIHQeWYEVb8EZwyaU/w0fcN2/yPDfgARGrlH5mlddcDjAXyO1Z6HtWeoZrh3jmpY+wEseA77bB/SZvZ4BDUtWSZ9dzcksx87iYn3SetvEc3uQKqbvHSOsYXNfiYSTIkq4=;
-Received: by smtp39.i.mail.ru with esmtpa (envelope-from <kostix@bswap.ru>)
-        id 1j01pU-0006vz-Ot; Fri, 07 Feb 2020 14:29:49 +0300
-Date:   Fri, 7 Feb 2020 14:29:48 +0300
-From:   Konstantin Khomoutov <kostix@bswap.ru>
-To:     paul@pauldsmith.org.uk
-Cc:     git@vger.kernel.org
-Subject: Re: Support 'help' for custom/alias commands
-Message-ID: <20200207112948.et2t4r4mhh2wkqbr@carbon>
-References: <VI1P192MB025548BB0508125DF9B5852DC81C0@VI1P192MB0255.EURP192.PROD.OUTLOOK.COM>
- <005001d5dda3$5bc12510$13436f30$@pauldsmith.org.uk>
+        id S1726988AbgBGLuB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 Feb 2020 06:50:01 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:40906 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726942AbgBGLuA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Feb 2020 06:50:00 -0500
+Received: by mail-wm1-f67.google.com with SMTP id t14so2394491wmi.5
+        for <git@vger.kernel.org>; Fri, 07 Feb 2020 03:49:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=NK1l3i2sLhZ9OqKYeB0ogUyQgJznCbclnyZgHx91FkU=;
+        b=SK0TW8kM9fSaBL4Q95X/2KJuh+Nqdy5hvQuR6drYGtiwBmg2N8Dcu0SOvj4nFUUvOG
+         fB37M9/7bBEhN9vGfQVgCGXbkm3fF0WuaUk9/RgD2MFWkVwvP3Ul9lN9m0kHR3RSxnm7
+         mvY7HtPlY4c/H3JKzBRnW92CmTV9lL1bfT9Khr59eSgz0jNznIMRFh0DO4A7W0dftVRi
+         BcdQUFKnyxgjO8JsumpWsEwZ98VPbPqSkuOk3JBLtPlHzcrmDVhnEwEujTiJsTY5YkOS
+         1Ot07dJaaW2NjO1+cFdYWhKAb8fWb1iOSf33qmZkJ1CTi6uaAWFHT8x3YO1DYEvu1r2G
+         eGnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=NK1l3i2sLhZ9OqKYeB0ogUyQgJznCbclnyZgHx91FkU=;
+        b=oCY02Tb9mx+rSnGpVi8GY42UkkAXDhRk804SZFclimKtwYnXMHX533Dq6eGeDeeFvb
+         K24ITaD6dyp79p4PMeo+bU8jJ3Qm1LI+4m7viBzu/tyBK7kQEylZyaLjK8tIRsNHDZEX
+         ayrZgR1CGkc7qw8NqtvIyAqtqTg0eHGuwRv5kQfSH+jb9ouEi6He2cFUyODQUw75yW/5
+         ecHI3mK05Me/XOjoXF/hMBh8FQGQdiG7lOAsMXLs7u3qU05RZh+JqTpmHixu4akb0Uw1
+         qmpkJSTtWHoYZT0NyZbYBK7vkAR6vBcmXepj0HNQeYj4pmRbvgtXzqRUyvPXEunGmAVS
+         MIXg==
+X-Gm-Message-State: APjAAAUhE+yh/iU7fy08eK+c/AcJzFef7H2nfiLEmId6cSxQ2gYlHGGS
+        dANXwLQ27/8+P/lHnwx4/k9SVdPo
+X-Google-Smtp-Source: APXvYqzh2+UtXYm0xmBhxgOgEMVEFiojLpAi5k8PGqciMI51wSVFW4ZVzf9fNwm9q20fz9K4J7rNVw==
+X-Received: by 2002:a7b:c4cc:: with SMTP id g12mr4307790wmk.68.1581076196925;
+        Fri, 07 Feb 2020 03:49:56 -0800 (PST)
+Received: from szeder.dev (x4db318d8.dyn.telefonica.de. [77.179.24.216])
+        by smtp.gmail.com with ESMTPSA id z3sm3025410wrs.32.2020.02.07.03.49.55
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 07 Feb 2020 03:49:56 -0800 (PST)
+Date:   Fri, 7 Feb 2020 12:49:54 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [BUG?] 'git rebase --abort' couldn't abort aborted rebase
+Message-ID: <20200207114954.GB2868@szeder.dev>
+References: <20200207111008.GA2868@szeder.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <005001d5dda3$5bc12510$13436f30$@pauldsmith.org.uk>
-User-Agent: NeoMutt/20180716
-X-7564579A: B8F34718100C35BD
-X-77F55803: 0A44E481635329DB0E1AA8A03B392317179C3E6C7981FFF2D839C272D0A8AAE6014D3C5A17411901F688BCB05C26794DA360785B1D43490076DA170500C993D7B5C9E94B0218B9A52A3F357B744FB0BC
-X-7FA49CB5: 0D63561A33F958A521B20DC372AF0DF872B52B4FF0D7C1B8F9DA6551D3D95D0D8941B15DA834481FA18204E546F3947C062BEEFFB5F8EA3EF6B57BC7E64490618DEB871D839B7333395957E7521B51C2545D4CF71C94A83E9FA2833FD35BB23D27C277FBC8AE2E8B8C7ADC89C2F0B2A5A471835C12D1D977C4224003CC8364767815B9869FA544D8D32BA5DBAC0009BE9E8FC8737B5C224937E7452263E0972376E601842F6C81A12EF20D2F80756B5F012D6517FE479FCD76E601842F6C81A127C277FBC8AE2E8BA1EC3898FE79602D3AA81AA40904B5D99449624AB7ADAF37593B4A69AE7113BD725E5C173C3A84C3A27B50A64E76B53235872C767BF85DA2F004C906525384306FED454B719173D6462275124DF8B9C9DE2850DD75B2526BE5BFE6E7EFDEDCD789D4C264860C145E
-X-Mailru-Sender: 641179478317D3F0421D0BEF39CFD138B8F9BB4BCCC2686F5FCCEEC8E6776078E6AA8FE5C48F72C413BA5AC085B0DF3CFD8FF98A8691EE7BAAB64A3C2C77197FCA12F3F80FA6A2FFE7D80B0F635B57EC67EA787935ED9F1B
-X-Mras: OK
-X-7564579A: EEAE043A70213CC8
-X-77F55803: E8DB3678F13EF3E07F9F52485CB584D7271FD7DF62800FDC332136375983C1E42926E865FB5223435873DC3171837A7EFD04BF8229D084AF
-X-7FA49CB5: 0D63561A33F958A5D536BB5BEE41FC297C5F25081DE77B69793D68E480E4DC988941B15DA834481FA18204E546F3947C4E7D9683544204AFF6B57BC7E64490618DEB871D839B7333395957E7521B51C2545D4CF71C94A83E9FA2833FD35BB23D27C277FBC8AE2E8B6F2CC4E8575B0B9FA471835C12D1D977C4224003CC8364767815B9869FA544D8D32BA5DBAC0009BE9E8FC8737B5C224937E7452263E0972376E601842F6C81A12EF20D2F80756B5F012D6517FE479FCD76E601842F6C81A127C277FBC8AE2E8B8FA608DA6CD568A33AA81AA40904B5D99449624AB7ADAF3726B9191E2D567F0E725E5C173C3A84C3A27B50A64E76B53235872C767BF85DA2F004C906525384306FED454B719173D6462275124DF8B9C9DE2850DD75B2526BE5BFE6E7EFDEDCD789D4C264860C145E
-X-Mailru-MI: 800
-X-Mailru-Sender: A5480F10D64C90051785D1A6F86B13516A4F1BB49A3131912926E865FB522343F1E90838FFE501F5FD27B1545737DED76F53C80213D1719CB3360D9C94DE366A1CC4A9B39F20364B73395D515EC5B64AAE208404248635DF
-X-Mras: OK
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200207111008.GA2868@szeder.dev>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 07, 2020 at 10:42:56AM -0000, paul@pauldsmith.org.uk wrote:
+On Fri, Feb 07, 2020 at 12:10:08PM +0100, SZEDER Gábor wrote:
+> That's a good subject, isn't it? :)
+> 
+> So, to clarify: apparently it is possible to abort an ongoing 'git
+> rebase' process with ctrl-C in just the right moment that a subsequent
+> 'git rebase --abort' will refuse to clear it up.
+> 
+> I somehow messed up the upstream and branch parameters of 'git
+> rebase', and ended up trying to rebase a fairly recent (post v2.24.0)
+> branch on top of v2.22.0.  Upon seeing the unexpectedly large number
+> of patches I realized that something is wrong, hit ctrl-C right away,
+> and this is what happened:
+> 
+>   $ git rebase v2.22.0 <a-branch-on-top-of-2.24.0>
+>   First, rewinding head to replay your work on top of it...
+>   Generating patches: 100% (1108/1108), done.
+>   Applying: send-email: move the read_config() function above getopts
+>   Applying: send-email: rename the @bcclist variable for consistency
+>   Applying: send-email: do defaults -> config -> getopt in that order
+>   Using index info to reconstruct a base tree...
+>   M       git-send-email.perl
+>   M       t/t9001-send-email.sh
+>   Falling back to patching base and 3-way merge...
+>   Auto-merging t/t9001-send-email.sh
+>   Auto-merging git-send-email.perl
+>   ^C
+>   ((5f07da12ac...) *|REBASE 3/1108)$ git rebase --abort 
+>   error: could not read '/home/szeder/src/git/.git/worktrees/WT/rebase-apply/head-name': No such file or directory
+>    
+> "Fortunately" it was in a separate worktree, so I could easily get out
+> of the situation by forcibly deleting that worktree.  Unfortunately,
+> that was exactly what I did, instead of securing the failed state for
+> later analysis...  sorry.
 
-[...]
-> P.S. I have a perfectly respectable e-mail address at
-> paul_d_smith@hotmail.com which I have used for years - why won't you accept
-> e-mails from it?
+> All this is with a git built from current 'next', with a bunch of
+> unrelated (none of them touches rebase or the sequencer) patches on
+> top.
 
-The filters at vger.kernel.org do not allow mails which contain
-text/html parts (mails which contain _only_ them are surely dropped; not
-sure about mails with multipart/alternative, which do contain a
-text/plain counterpart).  Was this the case?
+Trying to reproduce it is a hit or miss... well, mostly miss :)
+
+There is a rather short window when 'git rebase' applies patches
+before hitting a first merge conflict.  If the ctrl-C arrives before
+'git rebase' starts applying patches, then it cleans everything up,
+and we are not rebasing, so there is no need for 'git rebase --abort'.
+Once 'git rebase' stops because of the merge conflict we get our shell
+back, and 'git rebase --abort' works as it should.  But after a good
+couple of tries I managed to hit ctrl-C while 'git rebase' was
+applying patches:
+
+  $ ./BUILDS/v2.25.0/bin/git rebase v2.22.0 v2.24.0^{commit}
+  First, rewinding head to replay your work on top of it...
+  Generating patches: 100% (1049/1049), done.
+  Applying: send-email: move the read_config() function above getopts
+  ^C
+  ((v2.22.0) +|REBASE 1/1049)$ ./BUILDS/v2.25.0/bin/git rebase --abort
+  error: could not read '.git/rebase-apply/head-name': No such file or directory
+
+Note that I'm using v2.25.0 here, so the problem is not with 'next' or
+with my patches.  Also note that I reproduced the error in the main
+worktree, and only using commits that are present in git.git.
+
+
+Finally, note the 'v2.24.0^{commit}' parameter, in particular the
+'^{commit}' part.  That's important, because without it we stumble
+upon _another_ bug:
+
+  $ git rebase v2.22.0 v2.24.0
+  error: Object 1cc4bc0fcd93f816d514d77c29f2cc9ffdd8ae09 not a commit
+  First, rewinding head to replay your work on top of it...
+  Generating patches: 100% (1049/1049), done.
+  Applying: send-email: move the read_config() function above getopts
+  < ... applying further patches and hitting a merge conflict ... >
+  Resolve all conflicts manually, mark them as resolved with
+  "git add/rm <conflicted_files>", then run "git rebase --continue".
+  You can instead skip this commit: run "git rebase --skip".
+  To abort and get back to the state before "git rebase", run "git rebase --abort".
+  (detached HEAD *+|REBASE 7/1049)$ git rebase --abort 
+  error: update_ref failed for ref 'HEAD': cannot update ref 'HEAD': trying to write non-commit object 1cc4bc0fcd93f816d514d77c29f2cc9ffdd8ae09 to branch 'HEAD'
+
+So 'git rebase' shows an error right at the beginning when rebasing a
+tag, but then continues anyway.  However, 'git rebase --abort' can't
+restore the original state.
 
