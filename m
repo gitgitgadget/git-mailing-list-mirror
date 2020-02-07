@@ -8,210 +8,181 @@ X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 677A0C04EB5
-	for <git@archiver.kernel.org>; Fri,  7 Feb 2020 15:30:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 06DDEC04EB5
+	for <git@archiver.kernel.org>; Fri,  7 Feb 2020 15:37:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 2AFEB22464
-	for <git@archiver.kernel.org>; Fri,  7 Feb 2020 15:30:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CE2A420720
+	for <git@archiver.kernel.org>; Fri,  7 Feb 2020 15:37:14 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pfVXwrHN"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sFjHiP88"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727009AbgBGPar (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 Feb 2020 10:30:47 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:33217 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726974AbgBGPar (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Feb 2020 10:30:47 -0500
-Received: by mail-wr1-f65.google.com with SMTP id u6so3213388wrt.0
-        for <git@vger.kernel.org>; Fri, 07 Feb 2020 07:30:45 -0800 (PST)
+        id S1727011AbgBGPhO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 Feb 2020 10:37:14 -0500
+Received: from mail-qt1-f194.google.com ([209.85.160.194]:33291 "EHLO
+        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726874AbgBGPhN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Feb 2020 10:37:13 -0500
+Received: by mail-qt1-f194.google.com with SMTP id d5so2164704qto.0
+        for <git@vger.kernel.org>; Fri, 07 Feb 2020 07:37:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=TXh6NF2Kdx1kUn6r/NtaSfMcIJzCp8avPTK9snFiCME=;
-        b=pfVXwrHNsyY6ylD+OfS28fknoOwulNkNl3cd7QSstTB0B4bBpMcHNPZVBOuWs7UzCq
-         pK/VvbO+dOmB48qEnRwQuBKwC4G2EkFPnFyUzKO7io2JdwxSZ94ashtqR7O85yYKvav/
-         o5P+QzILehQL2at3dyzXJeSlVFcf6bRIN0bEoVTgzFJEMGEgE1fJfUH62pTiACliv/1P
-         +NE/ZykpDDg9ukdZdnXu2D4XLQpQZ911RV2/iJgOj/2q1WYUsjzPuD/RidnDOpxi5k/k
-         i/EqU5iYZy+DbLbGLNJT3lwBm4cxYJRpXFRX9awARBGlw1kgd1ACz58uWfPmO3wxXZ50
-         HAvA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=AGg4SwuF/fUmcFuevjy4Oec7CBPmZcLEN7jrMsTc54k=;
+        b=sFjHiP88Z+15vcb2InsbAMnsXQA9niJkM5jMQtxx78DpVkeVTvI1phw4fHc6BmPpQy
+         /BM+y8ICvDR1RyUvM12855znWj69AFYM8jZipmgHodH9seKVufExXKAOeDfmKCX1DB5o
+         Zte06xfVR49y4EZabAflvOSox0t2Jz5pnt79JN5LCEVQ80qwJ32UZCIviBJdLB92z6O+
+         VXWMxoWCEIFwZpFArlx41Z1e4r6eb0dTOqbPbIR77+TNja9NJm/ugxzpnPSOtmHEdhBj
+         Fm0xM0dWthEUFuF64NfGaJWZ7q7XHokuis/+bG2gVCUpn0dEQoz8tAcS/2wJzVS3ix16
+         Qhcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=TXh6NF2Kdx1kUn6r/NtaSfMcIJzCp8avPTK9snFiCME=;
-        b=raB0enVpjg+kasiVKxRh3ibpOtNtVwl2lcRgt/NRlwdtSM30OJzLAYhTIbUNVOifW7
-         H+t8VrYrPR2XvmvscjABuob7BSD8EpqQh+T06W4XBcXk+XHISCi5T8GngYYwwWq3wByJ
-         UUaYc05AbyCebcHy0qmTcRumkxGrk9Bhxed0siMAebeC+vdYBlQs4rBgfOwxh1zYnuB5
-         mpbq+wzNLLoA4PlZS0S0DDupp4fdxrZN838qihLmGr3bpmfL0GkYp0K6FILoLx9HeiO6
-         ByLW7rN0uWfUuIhqxSRnGh8fof7PWo00JzBK0nCsGtA45ykxJK2h4+g2uedOefNwrKRP
-         8jGQ==
-X-Gm-Message-State: APjAAAUEhkxDrBjOiNX23tU9D5QXb2oTCGC8FfsxeazacCBCfU3d2R1y
-        H/bn+GLSqGHIejqO/dKiuEA=
-X-Google-Smtp-Source: APXvYqzpdF4lRarL8phMZ6HBo4107s4ovS94ZvUkRXTDMWEQwrygIN6EivHXAP5c2PqsnCVwPeNhLg==
-X-Received: by 2002:adf:e984:: with SMTP id h4mr5328093wrm.275.1581089445255;
-        Fri, 07 Feb 2020 07:30:45 -0800 (PST)
-Received: from szeder.dev (x4db318d8.dyn.telefonica.de. [77.179.24.216])
-        by smtp.gmail.com with ESMTPSA id z19sm3673886wmi.35.2020.02.07.07.30.43
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 07 Feb 2020 07:30:44 -0800 (PST)
-Date:   Fri, 7 Feb 2020 16:30:42 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     git@vger.kernel.org,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v6 09/15] bugreport: generate config safelist based on
- docs
-Message-ID: <20200207153042.GI2868@szeder.dev>
-References: <20200206004108.261317-1-emilyshaffer@google.com>
- <20200206004108.261317-10-emilyshaffer@google.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=AGg4SwuF/fUmcFuevjy4Oec7CBPmZcLEN7jrMsTc54k=;
+        b=c0T+fb6mz18UGA41d9ZfOl7JwgidF1qbCksUFQ8OZeqgU0cvHvi4ommRQz9X+RHVJk
+         bma56lSWkW/9d4n3/dfbUAu27UrxRG4+0wb2xc+i6oYvoEOaDC1HC0yBhr75MBQd7aPU
+         AWBLIMrHtldipzrov7xmPtyhgzojubXdTXwdziT8JmT1QhJNhzX/GLtL1qG+YJB0PHDc
+         hU67SGgAsUCxBjbUICXsxZP8daGXUqlxtpt968bUY+aosw0LQnQNLW5uOLM+962XFxXk
+         8BAPPfzxgQ1uS6NsFbzFGkorKEA/l3H912pOww9WsQq8+EJNg9hLfv+2RpvqF2EZg+hP
+         ybuw==
+X-Gm-Message-State: APjAAAWexbdZ3Fxp3Qffy+vRhqXUPIH8o3/3JQY8kM24+yvk+GMtSEJZ
+        lLP9Bpr4f4X/Oy0A4aT3Ch0=
+X-Google-Smtp-Source: APXvYqx+4bwXGbQbgiiWGOVeFH8p47tpUs7smZjoVHk4SurvbsEePAK8Z1kyHIJadtMdKK1w1rMRoQ==
+X-Received: by 2002:ac8:43c1:: with SMTP id w1mr7753457qtn.156.1581089832130;
+        Fri, 07 Feb 2020 07:37:12 -0800 (PST)
+Received: from ?IPv6:2001:4898:6808:13e:439:e50b:6e3c:1277? ([2001:4898:a800:1010:b56e:e50b:6e3c:1277])
+        by smtp.gmail.com with ESMTPSA id h7sm1494015qke.30.2020.02.07.07.36.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 07 Feb 2020 07:37:00 -0800 (PST)
+Subject: Re: [PATCH v2 00/11] Changed Paths Bloom Filters
+To:     Garima Singh <garimasigit@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        Garima Singh via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, jonathantanmy@google.com,
+        jeffhost@microsoft.com, me@ttaylorr.com, peff@peff.net,
+        jnareb@gmail.com, christian.couder@gmail.com,
+        emilyshaffer@gmail.com, gitster@pobox.com,
+        Garima Singh <garima.singh@microsoft.com>
+References: <pull.497.git.1576879520.gitgitgadget@gmail.com>
+ <pull.497.v2.git.1580943390.gitgitgadget@gmail.com>
+ <20200207135249.GD2868@szeder.dev>
+ <140cf2f4-23d5-09ab-8f23-bbbd397c68f7@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <88c8e5da-72f2-25cc-f55b-f62500c52a24@gmail.com>
+Date:   Fri, 7 Feb 2020 10:36:58 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:73.0) Gecko/20100101
+ Thunderbird/73.0
 MIME-Version: 1.0
+In-Reply-To: <140cf2f4-23d5-09ab-8f23-bbbd397c68f7@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20200206004108.261317-10-emilyshaffer@google.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 05, 2020 at 04:41:02PM -0800, Emily Shaffer wrote:
-> Add a new step to the build to generate a safelist of git-config
-> variables which are appropriate to include in the output of
-> git-bugreport. New variables can be added to the safelist by annotating
-> their documentation in Documentation/config with the "annotate" macro,
-> which is a no-op in AsciiDoc and AsciiDoctor.
+On 2/7/2020 10:09 AM, Garima Singh wrote:
 > 
-> Some configs are private in nature, and can contain remote URLs,
-> passwords, or other sensitive information. In the event that a user
-> doesn't notice their information while reviewing a bugreport, that user
-> may leak their credentials to other individuals, mailing lists, or bug
-> tracking tools inadvertently. Heuristic blocklisting of configuration
-> keys is imperfect and prone to false negatives; given the nature of the
-> information which can be leaked, a safelist is more reliable.
+> On 2/7/2020 8:52 AM, SZEDER Gábor wrote:
+>>>  * Added unit tests for the bloom filter computation layer
+>>
+>> This fails on big endian, e.g. in Travis CI's s390x build:
+>>
+>>   https://travis-ci.org/szeder/git-cooking-topics-for-travis-ci/jobs/647253022#L2210
+>>
+>> (The link highlights the failure, but I'm afraid your browser won't
+>> jump there right away; you'll have to click on the print-test-failures
+>> fold at the bottom, and scroll down a bit...)
+>>
 > 
-> However, it's possible that in some situations, an organization may be
-> less concerned with privacy of things like remote URLs and branch names,
-> and more concerned with ease of diagnosis for their support staff. In
-> those cases, it may make more sense for that organization to modify the
-> code to use a blocklist. To that end, we should try to mark configs which
-> are definitely safe, and configs which are definitely unsafe, and leave
-> blank configs which are somewhere in between. To mark a config as safe,
-> add "annotate:bugreport[include]" to the corresponding line in the
-> config documentation; to mark it as unsafe, add
-> "annotate:bugreport[exclude]" instead.
+> Thank you so much for running this pipeline and pointing out the error!
 > 
-> Generating bugreport-config-safelist.h at build time by grepping the
-> documentation for this new macro helps us prevent staleness. The macro
-> itself is a no-op and should not alter the appearance of the
-> documentation in either AsciiDoc or AsciiDoctor, confirmable by running:
-> 
->   cd Documentation
->   ./doc-diff --asciidoctor HEAD^ HEAD
->   ./doc-diff --asciidoc HEAD^ HEAD
-> 
-> Diffing the rendered HTML shows that only inline comments were added,
-> which shouldn't be a problem.
-> 
-> Additionally, add annotations to the sendemail config documentation in
-> order to demonstrate a proof of concept.
-> 
-> Helped-by: Martin Ågren <martin.agren@gmail.com>
-> Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
-> ---
->  .gitignore                              |  1 +
->  Documentation/asciidoc.conf             |  9 ++++
->  Documentation/asciidoctor-extensions.rb |  5 +++
->  Documentation/config/sendemail.txt      | 56 ++++++++++++-------------
->  Makefile                                |  7 ++++
->  generate-bugreport-config-safelist.sh   | 17 ++++++++
->  6 files changed, 67 insertions(+), 28 deletions(-)
->  create mode 100755 generate-bugreport-config-safelist.sh
-> 
-> diff --git a/.gitignore b/.gitignore
-> index d89bf9e11e..bd2f49b996 100644
-> --- a/.gitignore
-> +++ b/.gitignore
-> @@ -192,6 +192,7 @@
->  /gitweb/static/gitweb.min.*
->  /config-list.h
->  /command-list.h
-> +/bugreport-config-safelist.h
->  *.tar.gz
->  *.dsc
->  *.deb
-> diff --git a/Documentation/asciidoc.conf b/Documentation/asciidoc.conf
-> index 8fc4b67081..663e06481f 100644
-> --- a/Documentation/asciidoc.conf
-> +++ b/Documentation/asciidoc.conf
-> @@ -6,9 +6,14 @@
->  #
->  # Show Git link as: <command>(<section>); if section is defined, else just show
->  # the command.
-> +#
-> +# The annotate macro does nothing as far as rendering is
-> +# concerned -- we just grep for it in the sources to populate
-> +# things like the bugreport safelist.
->  
->  [macros]
->  (?su)[\\]?(?P<name>linkgit):(?P<target>\S*?)\[(?P<attrlist>.*?)\]=
-> +(?su)[\\]?(?P<name>annotate):(?P<target>\S*?)\[(?P<attrlist>.*?)\]=
->  
->  [attributes]
->  asterisk=&#42;
-> @@ -28,6 +33,8 @@ ifdef::backend-docbook[]
->  {0#<citerefentry>}
->  {0#<refentrytitle>{target}</refentrytitle><manvolnum>{0}</manvolnum>}
->  {0#</citerefentry>}
-> +[annotate-inlinemacro]
-> +{0#}
->  endif::backend-docbook[]
->  
->  ifdef::backend-docbook[]
-> @@ -94,4 +101,6 @@ ifdef::backend-xhtml11[]
->  git-relative-html-prefix=
->  [linkgit-inlinemacro]
->  <a href="{git-relative-html-prefix}{target}.html">{target}{0?({0})}</a>
-> +[annotate-inlinemacro]
-> +<!-- -->
->  endif::backend-xhtml11[]
-> diff --git a/Documentation/asciidoctor-extensions.rb b/Documentation/asciidoctor-extensions.rb
-> index d906a00803..382bd8f6f4 100644
-> --- a/Documentation/asciidoctor-extensions.rb
-> +++ b/Documentation/asciidoctor-extensions.rb
-> @@ -37,6 +37,10 @@ module Git
->            output = output.sub(/<\/refmeta>/, new_tags + "</refmeta>")
->          end
->          output
-> +
-> +    class AnnotateProcessor < Asciidoctor::Extensions::InlineMacroProcessor
-> +      def process(parent, target, attrs)
-> +        ""
+> We will carefully review our interactions with the binary data and 
+> hopefully solve this in the next version. 
 
-This change breaks building the documentation with Asciidoctor v1.5.8:
+Szeder,
 
-  /home/travis/.rvm/rubies/ruby-2.5.3/lib/ruby/site_ruby/2.5.0/rubygems/core_ext/kernel_require.rb:59:in `require': /home/travis/build/git/git/Documentation/asciidoctor-extensions.rb:41: class definition in method body (SyntaxError)
-  
-  ...xtensions::InlineMacroProcessor
-  
-  ...                               ^
-  
-  /home/travis/build/git/git/Documentation/asciidoctor-extensions.rb:53: syntax error, unexpected end-of-input, expecting keyword_end
+Thanks so much for running this test. We don't have access to a big endian
+machine right now, so could you please apply this patch and re-run your tests?
+
+The issue is described in the message below, and Garima is working to ensure
+the handling of the filter data is clarified in the next version.
+
+This is an issue from WAY back in the original prototype, and it highlights
+that we've never been writing the data in network-byte order. This is completely
+my fault.
+
+Thanks,
+-Stolee
 
 
-  https://travis-ci.org/git/git/jobs/647093871#L1127
+-->8--
 
->        end
->      end
->    end
-> @@ -45,4 +49,5 @@ end
->  Asciidoctor::Extensions.register do
->    inline_macro Git::Documentation::LinkGitProcessor, :linkgit
->    postprocessor Git::Documentation::DocumentPostProcessor
-> +  inline_macro Git::Documentation::AnnotateProcessor, :annotate
->  end
+From c1067db5d618b2dae430dfe373a11c771517da9e Mon Sep 17 00:00:00 2001
+From: Derrick Stolee <dstolee@microsoft.com>
+Date: Fri, 7 Feb 2020 10:24:05 -0500
+Subject: [PATCH] fixup! bloom: core Bloom filter implementation for changed
+ paths
+
+The 'data' field of 'struct bloom_filter' can point to a memory location
+(when computing one before writing to the commit-graph) or a memmap()'d
+file location (when reading from the Bloom data chunk of the commit-graph
+file). This means that the memory representation may be backwards in
+Little Endian or Big Endian machines.
+
+Always write and read bits from 'filter->data' using network order. This
+allows us to avoid loading the data streams from the file into memory
+buffers.
+
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ bloom.c               | 6 ++++--
+ t/helper/test-bloom.c | 2 +-
+ 2 files changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/bloom.c b/bloom.c
+index 90d84dc713..aa6896584b 100644
+--- a/bloom.c
++++ b/bloom.c
+@@ -124,8 +124,9 @@ void add_key_to_filter(struct bloom_key *key,
+ 	for (i = 0; i < settings->num_hashes; i++) {
+ 		uint64_t hash_mod = key->hashes[i] % mod;
+ 		uint64_t block_pos = hash_mod / BITS_PER_WORD;
++		uint64_t bit = get_bitmask(hash_mod);
+ 
+-		filter->data[block_pos] |= get_bitmask(hash_mod);
++		filter->data[block_pos] |= htonll(bit);
+ 	}
+ }
+ 
+@@ -269,7 +270,8 @@ int bloom_filter_contains(struct bloom_filter *filter,
+ 	for (i = 0; i < settings->num_hashes; i++) {
+ 		uint64_t hash_mod = key->hashes[i] % mod;
+ 		uint64_t block_pos = hash_mod / BITS_PER_WORD;
+-		if (!(filter->data[block_pos] & get_bitmask(hash_mod)))
++		uint64_t bit = get_bitmask(hash_mod);
++		if (!(filter->data[block_pos] & htonll(bit)))
+ 			return 0;
+ 	}
+ 
+diff --git a/t/helper/test-bloom.c b/t/helper/test-bloom.c
+index 9b4be97f75..09b2bb0a00 100644
+--- a/t/helper/test-bloom.c
++++ b/t/helper/test-bloom.c
+@@ -23,7 +23,7 @@ static void print_bloom_filter(struct bloom_filter *filter) {
+ 	printf("Filter_Length:%d\n", filter->len);
+ 	printf("Filter_Data:");
+ 	for (i = 0; i < filter->len; i++){
+-		printf("%"PRIx64"|", filter->data[i]);
++		printf("%"PRIx64"|", ntohll(filter->data[i]));
+ 	}
+ 	printf("\n");
+ }
+-- 
+2.25.0.vfs.1.1.1.g9906319d24.dirty
+
+
+
