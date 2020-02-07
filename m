@@ -6,84 +6,97 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A01B5C2BA83
-	for <git@archiver.kernel.org>; Fri,  7 Feb 2020 20:59:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 108C9C2BA83
+	for <git@archiver.kernel.org>; Fri,  7 Feb 2020 21:12:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5C67F222D9
-	for <git@archiver.kernel.org>; Fri,  7 Feb 2020 20:59:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A9ABC21741
+	for <git@archiver.kernel.org>; Fri,  7 Feb 2020 21:12:40 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="VFustWsu"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="W/ywOPp4"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727473AbgBGU71 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 Feb 2020 15:59:27 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:63050 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727075AbgBGU71 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Feb 2020 15:59:27 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 39F78A8F06;
-        Fri,  7 Feb 2020 15:59:25 -0500 (EST)
+        id S1727068AbgBGVMj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 Feb 2020 16:12:39 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51126 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726947AbgBGVMj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Feb 2020 16:12:39 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0293155C82;
+        Fri,  7 Feb 2020 16:12:39 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=35BU8WGwzktwFh/BTUCbCCVa7Lg=; b=VFustW
-        su2YpPQRpufDeqXoeKIXTtFLlUc3uTBqgaxU0VjMcU4+wVEhPYXRSwU36LefsyJZ
-        s6/4h0sQTyxeND6qIdeIzOt2OvqAyIrpr73tKl/FxXLzs71vOgBRhUnLW+Xy1Zgs
-        GBVwmViVHtptCOI6dV36uydNWRXT0wZ0P47R8=
+        :content-type:content-transfer-encoding; s=sasl; bh=yD73h2/5G91V
+        c54ZYQi652pmFFo=; b=W/ywOPp4E2BTEYgAbriYvHEq5ZAXgEll7vIbglvT9zTT
+        +DIjPcjiGNo1W45vfgo0Pgoh1RtJwqImkZAIIgY4DV5jZ8h0EUcGlAUI8yLeYXcn
+        EF/X1dwqpOWZDz1VwQO11KvDqt4nc0Y0S6GvSqPKFKh9XJzaMElFneevzRPD/WE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=bVl6q+ss631J0Ao/g5UggiLEoQspiiXI
-        m0lGYLEEg7rlBTBq2R5IgMtpgt5qGhXYCpnT9BHd5uF/F1JZxKjaoSZxQvQMh6Qy
-        215S+2mIata9gkY8N8x/8zKiUKBTeou5kZFhkKxTD6Td/rNRPB1yexBVMQf2cUvq
-        Va2Kt/iK7MU=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 326F3A8F05;
-        Fri,  7 Feb 2020 15:59:25 -0500 (EST)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=gkn4Du
+        /iMw2vUV5V5GXz9vKJIHOQDKjJLqm78HxnL67b22Xl9jdsRWXhlyqqxEL4n3T3T3
+        GBazRr5ozR+vhMhQ84aoADsU45Q3lH9ITinvyIzVLbdGU6tUmEPDTSNKZtbdGEdF
+        5v6kzf+yo/SUWnINpv7Fgb/CHhjnaoL+IpBec=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id EEF9A55C81;
+        Fri,  7 Feb 2020 16:12:38 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 649BFA8F01;
-        Fri,  7 Feb 2020 15:59:22 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5C8E255C80;
+        Fri,  7 Feb 2020 16:12:38 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Masaya Suzuki <masayasuzuki@google.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v3] doc: describe Git bundle format
-References: <20200131221800.240352-1-masayasuzuki@google.com>
-        <20200207204225.123764-1-masayasuzuki@google.com>
-        <CAJB1erXMR_aCqVPsH6WQZdC7yybOBCUbwkJDv3LtU2f0ymNmbQ@mail.gmail.com>
-Date:   Fri, 07 Feb 2020 12:59:20 -0800
-In-Reply-To: <CAJB1erXMR_aCqVPsH6WQZdC7yybOBCUbwkJDv3LtU2f0ymNmbQ@mail.gmail.com>
-        (Masaya Suzuki's message of "Fri, 7 Feb 2020 12:44:12 -0800")
-Message-ID: <xmqqlfpe2jx3.fsf@gitster-ct.c.googlers.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Pratyush Yadav <p.yadav@ti.com>,
+        "Michael S. Tsirkin" <mst@redhat.com>, git@vger.kernel.org
+Subject: Re: bug? illegal text in commit log
+References: <20200204010524-mutt-send-email-mst@kernel.org>
+        <b005193f-24b7-7b6f-f3dc-c7a98db14ed7@web.de>
+        <xmqqd0arfyw8.fsf@gitster-ct.c.googlers.com>
+        <20200207110216.ppf5aksfkam54bip@ti.com>
+        <c67e59a2-0f81-8311-e14c-f27876e45cf0@web.de>
+Date:   Fri, 07 Feb 2020 13:12:37 -0800
+In-Reply-To: <c67e59a2-0f81-8311-e14c-f27876e45cf0@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Fri, 7 Feb 2020 21:31:03 +0100")
+Message-ID: <xmqqh8022jay.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B747B916-49EC-11EA-BA99-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 91B6CC94-49EE-11EA-A870-C28CBED8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Masaya Suzuki <masayasuzuki@google.com> writes:
+Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 
-> On Fri, Feb 7, 2020 at 12:42 PM Masaya Suzuki <masayasuzuki@google.com> wrote:
->> +=== Note on the shallow clone and a Git bundle
->> +
->> +Note that the prerequisites does not represent a shallow-clone boundary. The
+> That's a good idea from a usability point of view.  However, mailinfo()
+> parses patches line by line.  It doesn't know the total number of lines
+> until it's done.  (It would if the Lines header from RFC 1036 was
+> mandatory for emails; RFC 2076 says it's "not standardized for use in
+> e-mail".)  It cannot easily go back at that point.
 >
-> the prerequisites do not
+> Reading the whole message into a buffer or a temporary file would be an
+> option, but that would give up the nice property that patches are
+> streamed.
 
-Grammo aside, I am not sure if that particular Note is beneficial to
-begin with.  I would imagine that you can get a bundle that holds
-all the objects in a shallow repository by specifying the range that
-match the shallow-clone boundary when you run "git bundle create"
-while disabling thin-pack generation.
+True, but we could do a two-pass approach, perhaps?  That is
 
-The support of shallow-clone by Git may be incomplete and it may not
-be easy to form such a range, and "git bundle create" command may
-not have a knob to disable thin-pack generation, but that does not
-mean that the bundle *format* cannot be used to represent the
-shallow boundary.
+ * The first pass does exactly the same as what today's code does,
+   PLUS it prepares for the case where we thought the log message
+   ended because we saw "diff -" or "Index: " before seeing "---",
+   by scanning for the first "---"while running handle_patch().
+
+   If there is no such "oops, a 'diff -' in the log message fooled
+   us" event, we complete with what today's code does.
+
+ * But if we detect such a case during the first pass, we run
+   ourselves again with the same input and arguments, PLUS an extra,
+   new option, which tells us that "we know '---' exists in the
+   input and it *is* the patchbreak.  This of course can be done
+   only when the standard input is seekable, but builtin/am.c does
+   store the mail in a file, so...
 
