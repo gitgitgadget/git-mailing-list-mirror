@@ -5,117 +5,99 @@ X-Spam-Level:
 X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A4F74C04EB5
-	for <git@archiver.kernel.org>; Fri,  7 Feb 2020 15:09:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DFA98C04EB5
+	for <git@archiver.kernel.org>; Fri,  7 Feb 2020 15:09:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 74B1E20838
-	for <git@archiver.kernel.org>; Fri,  7 Feb 2020 15:09:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B493720838
+	for <git@archiver.kernel.org>; Fri,  7 Feb 2020 15:09:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lmzLhIBq"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d5qY6wTN"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727065AbgBGPJB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 Feb 2020 10:09:01 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:39406 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727005AbgBGPJB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Feb 2020 10:09:01 -0500
-Received: by mail-wm1-f67.google.com with SMTP id c84so3134115wme.4
-        for <git@vger.kernel.org>; Fri, 07 Feb 2020 07:09:00 -0800 (PST)
+        id S1727005AbgBGPJL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 Feb 2020 10:09:11 -0500
+Received: from mail-qk1-f196.google.com ([209.85.222.196]:40069 "EHLO
+        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726901AbgBGPJL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Feb 2020 10:09:11 -0500
+Received: by mail-qk1-f196.google.com with SMTP id b7so2476151qkl.7
+        for <git@vger.kernel.org>; Fri, 07 Feb 2020 07:09:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=Zw7FfLmoUj/D5/+ZLEYvgnYQOwiDLMQvNyDQ6U3MziE=;
-        b=lmzLhIBqjDTIncUksYSxozd69V0oS1QyipWo6Wv91Bak2cjeOAgTcx4A0GcYTFy+oo
-         9hE+PJlwOKDXsK/QDrwDriHZPaaR2IyhHTKssISdHGrAbNKxHKTn6ZUlxrrFZ3CJijKa
-         tKvlJTF8gZNVajhy8o6adx6v4a9d6OsG0cP6TSt9Kw+Q6Yv0cYzJGRKGokkVncORJles
-         WQTwyv+BhWh057MRAu/g2KSCrf+nKqc9rJgXFHXltpZXHVn5Ealfxrc9M80MkpXEX9at
-         2R27kIjVZP/+zmxCErYblARimihUe6MgKIpK0rNtkGnjR3W3T+EfcG8jzF+tsW6+cDQk
-         Q1Vg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=0WuNGMWsZzHatvIQpcRt+WxecI1KQuxRd3007SmT53k=;
+        b=d5qY6wTNA2S0nP352WK8bNN6LaIMMG0z7njUvSAT4zYp8mUghS5jChgcI9UYppSuVE
+         wMsPkE38Og5dwf03pj8EN14SZdcJ+WM7OXQsvJU4o2XuyRN1xGRyElh8yE6vkmNsMI4u
+         s+NCaTuC6HIYiMA0qAU5AJKC778dZpBbKnVzwV/4yJGQeb0bAN8FndNBVZr6gKh7jJ0a
+         h13seMoUlflazaoXYXjFBz2qJm4/xU+kYZbk1mJIhXeEgkWey74xTc+uneqL5qcLK3nq
+         0AllO1111TMU1R47YkruYQedktwnW9gGyRx2jyiO74MJbXYE7sbtFMyM+U7D+aWsiKCr
+         z0Sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=Zw7FfLmoUj/D5/+ZLEYvgnYQOwiDLMQvNyDQ6U3MziE=;
-        b=lawPpRljD/My+Fv17jbMiFmjcNsEOSonfh1KgUVn+jfYjTIptI9QdHSanhk4roVK7i
-         j9Ca1xiEKgJAcLO1CkH7A7pMI47AhEUJnO7gKBCpONqdCVh2zY8yfDUrjH4EGo7ftt1w
-         q965zApS7ZxzERqPLnsHaxrT3U3y+rXPNQp3Du/4h7iTtCtoFCJFaKiBTJ65jkG1tVqT
-         H0HMJchkpCi6llyrbNSkSqv+lnSdkP7y6IA6lkIv44oAB+xQo67iPceIb6fxSbMt1rxd
-         6A+EV/zKaMM4fxRA8cbTYKICEk9VHCaCZCOpub1QV/jeXhz1XlaMYaHX7A6axBjA0O1V
-         SwTQ==
-X-Gm-Message-State: APjAAAUWGwEkyhpnhturdbq5AlFWuotqgRXE11UfIbWVOmYuQeyax85c
-        PytfPNLQ/66El87yIMawesI=
-X-Google-Smtp-Source: APXvYqwJ7rVTqTjAtHmq17ZAuuCD+kkQYfHWtoCrHxZdBziZOuPSJMm5GZQLQAlsUCMmqZvS4+UAiQ==
-X-Received: by 2002:a1c:1d09:: with SMTP id d9mr4983763wmd.91.1581088139460;
-        Fri, 07 Feb 2020 07:08:59 -0800 (PST)
-Received: from szeder.dev (x4db318d8.dyn.telefonica.de. [77.179.24.216])
-        by smtp.gmail.com with ESMTPSA id l8sm3791127wmj.2.2020.02.07.07.08.58
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 07 Feb 2020 07:08:58 -0800 (PST)
-Date:   Fri, 7 Feb 2020 16:08:57 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v6 10/15] bugreport: add config values from safelist
-Message-ID: <20200207150857.GH2868@szeder.dev>
-References: <20200206004108.261317-1-emilyshaffer@google.com>
- <20200206004108.261317-11-emilyshaffer@google.com>
- <20200207144725.GF2868@szeder.dev>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=0WuNGMWsZzHatvIQpcRt+WxecI1KQuxRd3007SmT53k=;
+        b=bipL+HY414M9Z4Ga1Z32UgRlbcO/pyivjtkt3ULr14HYaO3xYIewhAYfh6WULIGGjr
+         qEqpQxI1V1T/TXwIipVf9tNF3RdBxt4SGGn3m6DMLUhvjwERounVE1rH4hFNyTIAmRfF
+         tC8IetIgJ108QSyZ76yI4W3L8Uq2UGFTElLQ/L1Gd2zTHmwVyaMX720wnN97diwJDw4S
+         CJqIQ37f9sPAbB7CvII/8qzZbUhCpM2fCukTCnsEvi1EcS+BUXH5ngqyr2pPDNeuYVCF
+         prTqFG9yJjJAfKvgzolt7l+yga8PXV0yEnxKzB2Fax6mCQAp8UuIE82fs+APA6Denjnk
+         zjbA==
+X-Gm-Message-State: APjAAAVAkxkm3QnetgNjY1ZXAkXYwVs86VOGTrkre00MVJoT3fEHRDbM
+        9hyOVF6xT/254dClaZCUAA0=
+X-Google-Smtp-Source: APXvYqxkl68ipyHi+7i8iLKlkt+Xxv2pNW2/YXnXl3AoSA5geLZy3OyjpqrYsWBetj20qUOcgP4vqg==
+X-Received: by 2002:a37:4f51:: with SMTP id d78mr7611715qkb.28.1581088150843;
+        Fri, 07 Feb 2020 07:09:10 -0800 (PST)
+Received: from ?IPv6:2001:4898:6808:13f:18c0:79da:271a:172b? ([2001:4898:a800:1010:c9f6:79da:271a:172b])
+        by smtp.gmail.com with ESMTPSA id v78sm1418476qkb.48.2020.02.07.07.09.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 07 Feb 2020 07:09:10 -0800 (PST)
+Subject: Re: [PATCH v2 00/11] Changed Paths Bloom Filters
+To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        Garima Singh via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, stolee@gmail.com, jonathantanmy@google.com,
+        jeffhost@microsoft.com, me@ttaylorr.com, peff@peff.net,
+        jnareb@gmail.com, christian.couder@gmail.com,
+        emilyshaffer@gmail.com, gitster@pobox.com,
+        Garima Singh <garima.singh@microsoft.com>
+References: <pull.497.git.1576879520.gitgitgadget@gmail.com>
+ <pull.497.v2.git.1580943390.gitgitgadget@gmail.com>
+ <20200207135249.GD2868@szeder.dev>
+From:   Garima Singh <garimasigit@gmail.com>
+Message-ID: <140cf2f4-23d5-09ab-8f23-bbbd397c68f7@gmail.com>
+Date:   Fri, 7 Feb 2020 10:09:09 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.2
 MIME-Version: 1.0
+In-Reply-To: <20200207135249.GD2868@szeder.dev>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20200207144725.GF2868@szeder.dev>
-User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 07, 2020 at 03:47:25PM +0100, SZEDER Gábor wrote:
-> On Wed, Feb 05, 2020 at 04:41:03PM -0800, Emily Shaffer wrote:
-> > +static void get_safelisted_config(struct strbuf *config_info)
-> > +{
-> > +	size_t idx;
-> > +	struct string_list_item *it = NULL;
-> > +	struct key_value_info *kv_info = NULL;
-> > +
-> > +	for (idx = 0; idx < ARRAY_SIZE(bugreport_config_safelist); idx++) {
+
+On 2/7/2020 8:52 AM, SZEDER Gábor wrote:
+>>  * Added unit tests for the bloom filter computation layer
 > 
-> GCC 9 complains about this loop condition:
+> This fails on big endian, e.g. in Travis CI's s390x build:
 > 
->       CC bugreport.o
->   
->   bugreport.c: In function 'get_safelisted_config':
->   
->   bugreport.c:66:20: error: comparison of unsigned expression < 0 is always false [-Werror=type-limits]
->   
->      66 |  for (idx = 0; idx < ARRAY_SIZE(bugreport_config_safelist); idx++) {
->   
->         |                    ^
+>   https://travis-ci.org/szeder/git-cooking-topics-for-travis-ci/jobs/647253022#L2210
 > 
-> I don't understand this error, that autogenerated
-> 'bugreport_config_safelist' array clearly has a a non-zero size.
-> What am I missing?
+> (The link highlights the failure, but I'm afraid your browser won't
+> jump there right away; you'll have to click on the print-test-failures
+> fold at the bottom, and scroll down a bit...)
+> 
 
-macOS 'sed', that's what I was missing :)
+Thank you so much for running this pipeline and pointing out the error!
 
-So that array is in fact empty on macOS, because the entries of that
-array are generated with:
+We will carefully review our interactions with the binary data and 
+hopefully solve this in the next version. 
 
-  # cat all regular files in Documentation/config
-  find Documentation/config -type f -exec cat {} \; |
-  # print the command name which matches the annotate-bugreport macro
-  sed -n 's/^\(.*\) \+annotate:bugreport\[include\].* ::$/  "\1",/p' | sort
-
-and the 'sed' included in macOS apparently interprets that '\+'
-differently than GNU 'sed', and as a result won't match anything.
-
-FWIW, that '\+' doesn't seem to be necessary, though, and after
-removing it the resulting generated array looked good to me (and to
-the compiler) both on Linux and macOS.
-
+Cheers!
+Garima Singh
