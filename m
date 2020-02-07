@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0EE82C352A2
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 576DCC352A5
 	for <git@archiver.kernel.org>; Fri,  7 Feb 2020 00:53:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D574020838
-	for <git@archiver.kernel.org>; Fri,  7 Feb 2020 00:53:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 30054214AF
+	for <git@archiver.kernel.org>; Fri,  7 Feb 2020 00:53:41 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="SECx9Hfr"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Of2BuARe"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727381AbgBGAxi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Feb 2020 19:53:38 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:55546 "EHLO
+        id S1727443AbgBGAxj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Feb 2020 19:53:39 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:55540 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726509AbgBGAxf (ORCPT
+        by vger.kernel.org with ESMTP id S1726628AbgBGAxf (ORCPT
         <rfc822;git@vger.kernel.org>); Thu, 6 Feb 2020 19:53:35 -0500
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 609F260456;
-        Fri,  7 Feb 2020 00:53:34 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id DAA62607F2;
+        Fri,  7 Feb 2020 00:53:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
         s=default; t=1581036814;
-        bh=WLjgqN2esEpcT1vh2z6VDQ+nQ6v3NyDvQpsQeaNWli0=;
+        bh=snn3ipitnVKnfdSmFkxVT2rdkSiMLOg8kWgB9I9O0cY=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=SECx9HfrySjz21MnTry5lEgaz82eYXYSA+vau4ktzlt1ZBqHZ3L0AGANf1dNnQbQV
-         1AwWkl1TPhE5+c7QUYURWEqGzJevD5f/C1kVDcAANA3oSwkLGV9bouzxtP5ewi/rPo
-         YPmP/gSkMfLkgJP+1pc9b2OFeH8R0qdoYddaE3bwwLGWSCMq1jgWX9g3oXWwuGbq4y
-         kuVvYoe+VcAXkECAfK0Wt5A3Pbd4yhVaRqV/EeQjqId8KJos125hXTDBuu6lV5ca2/
-         EzmM3EKpPc1JrdbosEcDWYrZ2YM3ln6uiAbabDLGJSzLs0OnCqeqLDvP+yZi1qVw9e
-         fuc+GoePNZmvOIExmzjPuuQSpXPKopKi+qZdzOOtiNrN+0wH0gQp611HlN27KQCrVS
-         AJuuOl2SJmhMU/8/phgZsK92X5hAzBcaG+oXqrRJ4xfLWRHKBWooj4W6asocxDlj4P
-         q48u0wlTvEfzp1+gg389gfKFvtX/qSraNowSgwG+qPdJYBRWCO7
+        b=Of2BuARe4YRHcG12dJHr7qlvG12q8t89w+n6j65w+wKyYIT7JM/LkwcZ5cnYsz5mv
+         sewXHSmGqDQR7p+5GOoAhvrK++1+x3k2hRbw21GbpxNXn8BBEo1kNDGMh+TuBDJURI
+         TMhY9q3ZCuF4TzFjLY/4Fzs7V0LObKTe/Q/YaHzMA/1YujCpZ9Zg+yshihIFhVklG0
+         H8++nY4Q4TjaBhxLzYJ/ZdsqReNyXLB7ybDJS13/VGCP1m1m6IxdtaIKvWUWPQGZ+H
+         NMUY3SoAtqF96tUHWklKdq6Qrmgc+9ERJxvMtNNCO9P7Wyotwp/n2xjOdc6atR14pz
+         KjW1L0XbNsY7Iw1EJ5tgLkns5+j3ar3o0+P7kIko5dtb4Bhpc+ycOHlEBeCbk/f4U0
+         H3i/DYs0mx2S4A6e6oAEr1Yyko/hpIOjQK6FZNP1vu11D19/xb1eMNtsIdvKzAyu38
+         GqMFvgck6q2pbt2CiZUOkFh7/4oKjSv0DqQHT7yRchjcJ9RFHRK
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 06/21] t3311: make test work with SHA-256
-Date:   Fri,  7 Feb 2020 00:52:39 +0000
-Message-Id: <20200207005254.1495851-7-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 05/21] t3310: make test work with SHA-256
+Date:   Fri,  7 Feb 2020 00:52:38 +0000
+Message-Id: <20200207005254.1495851-6-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.25.0.225.g125e21ebc7
 In-Reply-To: <20200207005254.1495851-1-sandals@crustytoothpaste.net>
 References: <20200207005254.1495851-1-sandals@crustytoothpaste.net>
@@ -58,113 +58,161 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Replace the hard-coded SHA-1 constants with the use of test_oid to look
-up an appropriate constant for each hash algorithm.  In addition, adjust
-the fanout checks to look for either zero or one slashes in the filename
-without needing to check for an explicit length.
+up an appropriate constant for each hash algorithm.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t3311-notes-merge-fanout.sh | 60 ++++++++++++++++++++---------------
- 1 file changed, 35 insertions(+), 25 deletions(-)
+ t/t3310-notes-merge-manual-resolve.sh | 84 ++++++++++++++++++---------
+ 1 file changed, 58 insertions(+), 26 deletions(-)
 
-diff --git a/t/t3311-notes-merge-fanout.sh b/t/t3311-notes-merge-fanout.sh
-index 37151a3adc..5b675417e9 100755
---- a/t/t3311-notes-merge-fanout.sh
-+++ b/t/t3311-notes-merge-fanout.sh
-@@ -29,15 +29,10 @@ verify_fanout () {
- 	git ls-tree -r --name-only "refs/notes/$notes_ref" |
- 	while read path
- 	do
--		case "$path" in
--		??/??????????????????????????????????????)
--			: true
--			;;
--		*)
-+		echo "$path" | grep "^../[0-9a-f]*$" || {
- 			echo "Invalid path \"$path\"" &&
--			return 1
--			;;
--		esac
-+			return 1;
-+		}
- 	done
- }
- 
-@@ -48,15 +43,10 @@ verify_no_fanout () {
- 	git ls-tree -r --name-only "refs/notes/$notes_ref" |
- 	while read path
- 	do
--		case "$path" in
--		????????????????????????????????????????)
--			: true
--			;;
--		*)
-+		echo "$path" | grep -v "^../.*" || {
- 			echo "Invalid path \"$path\"" &&
--			return 1
--			;;
--		esac
-+			return 1;
-+		}
- 	done
- }
- 
-@@ -67,7 +57,27 @@ test_expect_success 'setup a few initial commits with notes (notes ref: x)' '
- 	do
- 		test_commit "commit$i" >/dev/null &&
- 		git notes add -m "notes for commit$i" || return 1
--	done
-+	done &&
-+
-+	git log --format=oneline &&
+diff --git a/t/t3310-notes-merge-manual-resolve.sh b/t/t3310-notes-merge-manual-resolve.sh
+index 2dea846e25..806d812a17 100755
+--- a/t/t3310-notes-merge-manual-resolve.sh
++++ b/t/t3310-notes-merge-manual-resolve.sh
+@@ -13,7 +13,39 @@ test_expect_success 'setup commits' '
+ 	test_commit 2nd &&
+ 	test_commit 3rd &&
+ 	test_commit 4th &&
+-	test_commit 5th
++	test_commit 5th &&
 +
 +	test_oid_cache <<-EOF
-+	hash05a sha1:aed91155c7a72c2188e781fdf40e0f3761b299db
-+	hash04a sha1:99fab268f9d7ee7b011e091a436c78def8eeee69
-+	hash03a sha1:953c20ae26c7aa0b428c20693fe38bc687f9d1a9
-+	hash02a sha1:6358796131b8916eaa2dde6902642942a1cb37e1
-+	hash01a sha1:b02d459c32f0e68f2fe0981033bb34f38776ba47
-+	hash03b sha1:9f506ee70e20379d7f78204c77b334f43d77410d
-+	hash02b sha1:23a47d6ea7d589895faf800752054818e1e7627b
++	hash04a sha1:6e8e3febca3c2bb896704335cc4d0c34cb2f8715
++	hash03a sha1:e5388c10860456ee60673025345fe2e153eb8cf8
++	hash02a sha1:ceefa674873670e7ecd131814d909723cce2b669
++	hash04b sha1:e2bfd06a37dd2031684a59a6e2b033e212239c78
++	hash03b sha1:5772f42408c0dd6f097a7ca2d24de0e78d1c46b1
++	hash01b sha1:b0a6021ec006d07e80e9b20ec9b444cbd9d560d3
++	hash04c sha1:cff59c793c20bb49a4e01bc06fb06bad642e0d54
++	hash02c sha1:283b48219aee9a4105f6cab337e789065c82c2b9
++	hash01c sha1:0a81da8956346e19bcb27a906f04af327e03e31b
++	hash04d sha1:00494adecf2d9635a02fa431308d67993f853968
++	hash01e sha1:f75d1df88cbfe4258d49852f26cfc83f2ad4494b
++	hash04f sha1:021faa20e931fb48986ffc6282b4bb05553ac946
++	hash01f sha1:0a59e787e6d688aa6309e56e8c1b89431a0fc1c1
++	hash05g sha1:304dfb4325cf243025b9957486eb605a9b51c199
 +
-+	hash05a sha256:3aae5d26619d96dba93795f66325716e4cbc486884f95a6adee8fb0615a76d12
-+	hash04a sha256:07e43dd3d89fe634d3252e253b426aacc7285a995dcdbcf94ac284060a1122cf
-+	hash03a sha256:26fb52eaa7f4866bf735254587be7b31209ec10e525912ffd8e8ba549ba892ff
-+	hash02a sha256:b57ebdf23634e750dcbc4b9a37991d70f90830d568a0e4529ce9de0a3f8d605c
-+	hash01a sha256:377903b1572bd5117087a5518fcb1011b5053cccbc59e3c7c823a8615204173b
-+	hash03b sha256:04e7b392fda7c185bfa17c9179b56db732edc2dc2b3bf887308dcaabb717270d
-+	hash02b sha256:66099aaaec49a485ed990acadd9a9b81232ea592079964113d8f581ff69ef50b
++	hash04a	sha256:f18a935e65866345098b3b754071dbf9f3aa3520eb27a7b036b278c5e2f1ed7e
++	hash03a	sha256:713035dc94067a64e5fa6e4e1821b7c3bde49a77c7cb3f80eaadefa1ca41b3d2
++	hash02a	sha256:f160a67e048b6fa75bec3952184154045076692cf5dccd3da21e3fd34b7a3f0f
++	hash04b sha256:c7fba0d6104917fbf35258f40b9fa4fc697cfa992deecd1570a3b08d0a5587a9
++	hash03b sha256:7287a2d78a3766c181b08df38951d784b08b72a44f571ed6d855bd0be22c70f6
++	hash01b sha256:da96cf778c15d0a2bb76f98b2a62f6c9c01730fa7030e8f08ef0191048e7d620
++	hash04c sha256:cb615d2def4b834d5f55b2351df97dc92bee4f5009d285201427f349081c8aca
++	hash02c sha256:63bb527e0b4e1c8e1dd0d54dd778ca7c3718689fd6e37c473044cfbcf1cacfdb
++	hash01c sha256:5b87237ac1fbae0246256fed9f9a1f077c4140fb7e6444925f8dbfa5ae406cd8
++	hash04d sha256:eeddc9f9f6cb3d6b39b861659853f10891dc373e0b6eecb09e03e39b6ce64714
++	hash01e sha256:108f521b1a74c2e6d0b52a4eda87e09162bf847f7d190cfce496ee1af0b29a5a
++	hash04f sha256:901acda0454502b3bbd281f130c419e6c8de78afcf72a8def8d45ad31462bce4
++	hash01f sha256:a2d99d1b8bf23c8af7d9d91368454adc110dfd5cc068a4cebb486ee8f5a1e16c
++	hash05g sha256:4fef015b01da8efe929a68e3bb9b8fbad81f53995f097befe8ebc93f12ab98ec
 +	EOF
  '
  
- commit_sha1=$(git rev-parse commit1^{commit})
-@@ -77,11 +87,11 @@ commit_sha4=$(git rev-parse commit4^{commit})
- commit_sha5=$(git rev-parse commit5^{commit})
+ commit_sha1=$(git rev-parse 1st^{commit})
+@@ -33,9 +65,9 @@ verify_notes () {
+ }
  
  cat <<EOF | sort >expect_notes_x
--aed91155c7a72c2188e781fdf40e0f3761b299db $commit_sha5
--99fab268f9d7ee7b011e091a436c78def8eeee69 $commit_sha4
--953c20ae26c7aa0b428c20693fe38bc687f9d1a9 $commit_sha3
--6358796131b8916eaa2dde6902642942a1cb37e1 $commit_sha2
--b02d459c32f0e68f2fe0981033bb34f38776ba47 $commit_sha1
-+$(test_oid hash05a) $commit_sha5
+-6e8e3febca3c2bb896704335cc4d0c34cb2f8715 $commit_sha4
+-e5388c10860456ee60673025345fe2e153eb8cf8 $commit_sha3
+-ceefa674873670e7ecd131814d909723cce2b669 $commit_sha2
 +$(test_oid hash04a) $commit_sha4
 +$(test_oid hash03a) $commit_sha3
 +$(test_oid hash02a) $commit_sha2
-+$(test_oid hash01a) $commit_sha1
  EOF
  
  cat >expect_log_x <<EOF
-@@ -145,9 +155,9 @@ test_expect_success 'Fast-forward merge (y => x)' '
+@@ -63,9 +95,9 @@ test_expect_success 'setup merge base (x)' '
+ '
+ 
+ cat <<EOF | sort >expect_notes_y
+-e2bfd06a37dd2031684a59a6e2b033e212239c78 $commit_sha4
+-5772f42408c0dd6f097a7ca2d24de0e78d1c46b1 $commit_sha3
+-b0a6021ec006d07e80e9b20ec9b444cbd9d560d3 $commit_sha1
++$(test_oid hash04b) $commit_sha4
++$(test_oid hash03b) $commit_sha3
++$(test_oid hash01b) $commit_sha1
+ EOF
+ 
+ cat >expect_log_y <<EOF
+@@ -95,9 +127,9 @@ test_expect_success 'setup local branch (y)' '
  '
  
  cat <<EOF | sort >expect_notes_z
--9f506ee70e20379d7f78204c77b334f43d77410d $commit_sha3
--23a47d6ea7d589895faf800752054818e1e7627b $commit_sha2
--b02d459c32f0e68f2fe0981033bb34f38776ba47 $commit_sha1
-+$(test_oid hash03b) $commit_sha3
-+$(test_oid hash02b) $commit_sha2
-+$(test_oid hash01a) $commit_sha1
+-cff59c793c20bb49a4e01bc06fb06bad642e0d54 $commit_sha4
+-283b48219aee9a4105f6cab337e789065c82c2b9 $commit_sha2
+-0a81da8956346e19bcb27a906f04af327e03e31b $commit_sha1
++$(test_oid hash04c) $commit_sha4
++$(test_oid hash02c) $commit_sha2
++$(test_oid hash01c) $commit_sha1
  EOF
  
  cat >expect_log_z <<EOF
+@@ -193,9 +225,9 @@ test_expect_success 'merge z into m (== y) with default ("manual") resolver => C
+ '
+ 
+ cat <<EOF | sort >expect_notes_z
+-00494adecf2d9635a02fa431308d67993f853968 $commit_sha4
+-283b48219aee9a4105f6cab337e789065c82c2b9 $commit_sha2
+-0a81da8956346e19bcb27a906f04af327e03e31b $commit_sha1
++$(test_oid hash04d) $commit_sha4
++$(test_oid hash02c) $commit_sha2
++$(test_oid hash01c) $commit_sha1
+ EOF
+ 
+ cat >expect_log_z <<EOF
+@@ -231,8 +263,8 @@ test_expect_success 'cannot do merge w/conflicts when previous merge is unfinish
+ # Setup non-conflicting merge between x and new notes ref w
+ 
+ cat <<EOF | sort >expect_notes_w
+-ceefa674873670e7ecd131814d909723cce2b669 $commit_sha2
+-f75d1df88cbfe4258d49852f26cfc83f2ad4494b $commit_sha1
++$(test_oid hash02a) $commit_sha2
++$(test_oid hash01e) $commit_sha1
+ EOF
+ 
+ cat >expect_log_w <<EOF
+@@ -258,10 +290,10 @@ test_expect_success 'setup unrelated notes ref (w)' '
+ '
+ 
+ cat <<EOF | sort >expect_notes_w
+-6e8e3febca3c2bb896704335cc4d0c34cb2f8715 $commit_sha4
+-e5388c10860456ee60673025345fe2e153eb8cf8 $commit_sha3
+-ceefa674873670e7ecd131814d909723cce2b669 $commit_sha2
+-f75d1df88cbfe4258d49852f26cfc83f2ad4494b $commit_sha1
++$(test_oid hash04a) $commit_sha4
++$(test_oid hash03a) $commit_sha3
++$(test_oid hash02a) $commit_sha2
++$(test_oid hash01e) $commit_sha1
+ EOF
+ 
+ cat >expect_log_w <<EOF
+@@ -291,10 +323,10 @@ test_expect_success 'can do merge without conflicts even if previous merge is un
+ '
+ 
+ cat <<EOF | sort >expect_notes_m
+-021faa20e931fb48986ffc6282b4bb05553ac946 $commit_sha4
+-5772f42408c0dd6f097a7ca2d24de0e78d1c46b1 $commit_sha3
+-283b48219aee9a4105f6cab337e789065c82c2b9 $commit_sha2
+-0a59e787e6d688aa6309e56e8c1b89431a0fc1c1 $commit_sha1
++$(test_oid hash04f) $commit_sha4
++$(test_oid hash03b) $commit_sha3
++$(test_oid hash02c) $commit_sha2
++$(test_oid hash01f) $commit_sha1
+ EOF
+ 
+ cat >expect_log_m <<EOF
+@@ -430,9 +462,9 @@ test_expect_success 'redo merge of z into m (== y) with default ("manual") resol
+ '
+ 
+ cat <<EOF | sort >expect_notes_m
+-304dfb4325cf243025b9957486eb605a9b51c199 $commit_sha5
+-283b48219aee9a4105f6cab337e789065c82c2b9 $commit_sha2
+-0a59e787e6d688aa6309e56e8c1b89431a0fc1c1 $commit_sha1
++$(test_oid hash05g) $commit_sha5
++$(test_oid hash02c) $commit_sha2
++$(test_oid hash01f) $commit_sha1
+ EOF
+ 
+ cat >expect_log_m <<EOF
