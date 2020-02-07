@@ -2,104 +2,120 @@ Return-Path: <SRS0=Q4JT=33=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 81E83C04EB5
-	for <git@archiver.kernel.org>; Fri,  7 Feb 2020 14:54:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A4F74C04EB5
+	for <git@archiver.kernel.org>; Fri,  7 Feb 2020 15:09:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 567FD21775
-	for <git@archiver.kernel.org>; Fri,  7 Feb 2020 14:54:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 74B1E20838
+	for <git@archiver.kernel.org>; Fri,  7 Feb 2020 15:09:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nmMtt5EM"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lmzLhIBq"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726982AbgBGOyP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 Feb 2020 09:54:15 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:38643 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726674AbgBGOyP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Feb 2020 09:54:15 -0500
-Received: by mail-wr1-f68.google.com with SMTP id y17so3035117wrh.5
-        for <git@vger.kernel.org>; Fri, 07 Feb 2020 06:54:12 -0800 (PST)
+        id S1727065AbgBGPJB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 Feb 2020 10:09:01 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:39406 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727005AbgBGPJB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Feb 2020 10:09:01 -0500
+Received: by mail-wm1-f67.google.com with SMTP id c84so3134115wme.4
+        for <git@vger.kernel.org>; Fri, 07 Feb 2020 07:09:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=wYNM96sOXuJ2GwUMO8kflXrRXimL3FfDfPu2p9XNGZI=;
-        b=nmMtt5EMpeUImtjMKVbF1FPVpHtH/8I6eMyDCxhcHeI26X01C5sdnQDgmjC0gqQTsM
-         evnqdJxpzSQkdyg7Sm3HN66JxusepVbNBBuV3rQ3n7s//XIa5GsB9Cx4mN4r5pWlaPx0
-         CwrVTeV0rC75KMXjdCanlSUA7eRT7AQ2xqb4a5Orf04x9kFKMEz2/xE85oGRsxUYG0gb
-         4fFZUOSXkrUfMjDp5MdaRyLVKpgD8Lq7hhNzFjQhNsbuxGEjF2VML7xmUvJ/6m/uOkWT
-         S1dR44NbgXhKjicwYaSxT7UgyI8DWygnTQWxo4kVfH6ptFusi6NaWQQXDOKEdMZ4mSju
-         UdGg==
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=Zw7FfLmoUj/D5/+ZLEYvgnYQOwiDLMQvNyDQ6U3MziE=;
+        b=lmzLhIBqjDTIncUksYSxozd69V0oS1QyipWo6Wv91Bak2cjeOAgTcx4A0GcYTFy+oo
+         9hE+PJlwOKDXsK/QDrwDriHZPaaR2IyhHTKssISdHGrAbNKxHKTn6ZUlxrrFZ3CJijKa
+         tKvlJTF8gZNVajhy8o6adx6v4a9d6OsG0cP6TSt9Kw+Q6Yv0cYzJGRKGokkVncORJles
+         WQTwyv+BhWh057MRAu/g2KSCrf+nKqc9rJgXFHXltpZXHVn5Ealfxrc9M80MkpXEX9at
+         2R27kIjVZP/+zmxCErYblARimihUe6MgKIpK0rNtkGnjR3W3T+EfcG8jzF+tsW6+cDQk
+         Q1Vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=wYNM96sOXuJ2GwUMO8kflXrRXimL3FfDfPu2p9XNGZI=;
-        b=enULYfQUkjZSADu+D6T/OOPKTO9VqtyYt8abtonlzanFOl2U1baNcHj9gFEMrQBg5/
-         KRogVk16odPF+QBzKgS+Lr8AhEZwlAvzYZe2foNTDukrJtvmUZGHkOF70rZhayuFtfO4
-         qQ4PYcwQxSZyIPutlkPjy6ghuVk7mMGD1WQ+P5MkimaPO58soMHzjRHLDXXzRM3AfPOd
-         JoKF1pg7cmQ31CixJrEN/hplc2tbFvoBG82xiGiMScY6XrxaY6rh2woPxXz7s7SaIqML
-         wRxNMNAmiLKLqdXbS2YNM4ZtxZ7yirlDvA+IU/lTlvx8jZeRTiCzdwHx+y+ik6LcT+7Y
-         NVvQ==
-X-Gm-Message-State: APjAAAWhMAyRgwBFB6/NVihgJ17ljOqJ/K3lXdgd0V6s/PAlvq398vZm
-        W6tlPFfDs1xEMtUtcaNzdGw=
-X-Google-Smtp-Source: APXvYqwtVZSChFPtawlX/OFZBp78vej1PybVwGC53KVRtS3sRLeCr7azCelbvuXTocyZ8/NZclmpmA==
-X-Received: by 2002:a05:6000:118e:: with SMTP id g14mr5405371wrx.39.1581087251637;
-        Fri, 07 Feb 2020 06:54:11 -0800 (PST)
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=Zw7FfLmoUj/D5/+ZLEYvgnYQOwiDLMQvNyDQ6U3MziE=;
+        b=lawPpRljD/My+Fv17jbMiFmjcNsEOSonfh1KgUVn+jfYjTIptI9QdHSanhk4roVK7i
+         j9Ca1xiEKgJAcLO1CkH7A7pMI47AhEUJnO7gKBCpONqdCVh2zY8yfDUrjH4EGo7ftt1w
+         q965zApS7ZxzERqPLnsHaxrT3U3y+rXPNQp3Du/4h7iTtCtoFCJFaKiBTJ65jkG1tVqT
+         H0HMJchkpCi6llyrbNSkSqv+lnSdkP7y6IA6lkIv44oAB+xQo67iPceIb6fxSbMt1rxd
+         6A+EV/zKaMM4fxRA8cbTYKICEk9VHCaCZCOpub1QV/jeXhz1XlaMYaHX7A6axBjA0O1V
+         SwTQ==
+X-Gm-Message-State: APjAAAUWGwEkyhpnhturdbq5AlFWuotqgRXE11UfIbWVOmYuQeyax85c
+        PytfPNLQ/66El87yIMawesI=
+X-Google-Smtp-Source: APXvYqwJ7rVTqTjAtHmq17ZAuuCD+kkQYfHWtoCrHxZdBziZOuPSJMm5GZQLQAlsUCMmqZvS4+UAiQ==
+X-Received: by 2002:a1c:1d09:: with SMTP id d9mr4983763wmd.91.1581088139460;
+        Fri, 07 Feb 2020 07:08:59 -0800 (PST)
 Received: from szeder.dev (x4db318d8.dyn.telefonica.de. [77.179.24.216])
-        by smtp.gmail.com with ESMTPSA id 18sm3497569wmf.1.2020.02.07.06.54.10
+        by smtp.gmail.com with ESMTPSA id l8sm3791127wmj.2.2020.02.07.07.08.58
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 07 Feb 2020 06:54:10 -0800 (PST)
-Date:   Fri, 7 Feb 2020 15:54:09 +0100
+        Fri, 07 Feb 2020 07:08:58 -0800 (PST)
+Date:   Fri, 7 Feb 2020 16:08:57 +0100
 From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
 To:     Emily Shaffer <emilyshaffer@google.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v6 03/15] bugreport: add tool to generate debugging info
-Message-ID: <20200207145409.GG2868@szeder.dev>
+Subject: Re: [PATCH v6 10/15] bugreport: add config values from safelist
+Message-ID: <20200207150857.GH2868@szeder.dev>
 References: <20200206004108.261317-1-emilyshaffer@google.com>
- <20200206004108.261317-4-emilyshaffer@google.com>
+ <20200206004108.261317-11-emilyshaffer@google.com>
+ <20200207144725.GF2868@szeder.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20200206004108.261317-4-emilyshaffer@google.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200207144725.GF2868@szeder.dev>
 User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 05, 2020 at 04:40:56PM -0800, Emily Shaffer wrote:
-> Teach Git how to prompt the user for a good bug report: reproduction
-> steps, expected behavior, and actual behavior. Later, Git can learn how
-> to collect some diagnostic information from the repository.
+On Fri, Feb 07, 2020 at 03:47:25PM +0100, SZEDER Gábor wrote:
+> On Wed, Feb 05, 2020 at 04:41:03PM -0800, Emily Shaffer wrote:
+> > +static void get_safelisted_config(struct strbuf *config_info)
+> > +{
+> > +	size_t idx;
+> > +	struct string_list_item *it = NULL;
+> > +	struct key_value_info *kv_info = NULL;
+> > +
+> > +	for (idx = 0; idx < ARRAY_SIZE(bugreport_config_safelist); idx++) {
 > 
-> If users can send us a well-written bug report which contains diagnostic
-> information we would otherwise need to ask the user for, we can reduce
-> the number of question-and-answer round trips between the reporter and
-> the Git contributor.
+> GCC 9 complains about this loop condition:
 > 
-> Users may also wish to send a report like this to their local "Git
-> expert" if they have put their repository into a state they are confused
-> by.
+>       CC bugreport.o
+>   
+>   bugreport.c: In function 'get_safelisted_config':
+>   
+>   bugreport.c:66:20: error: comparison of unsigned expression < 0 is always false [-Werror=type-limits]
+>   
+>      66 |  for (idx = 0; idx < ARRAY_SIZE(bugreport_config_safelist); idx++) {
+>   
+>         |                    ^
 > 
-> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
-> ---
->  .gitignore                      |  1 +
->  Documentation/git-bugreport.txt | 41 ++++++++++++++++
->  Makefile                        |  5 ++
->  bugreport.c                     | 85 +++++++++++++++++++++++++++++++++
->  t/t0091-bugreport.sh            | 49 +++++++++++++++++++
->  5 files changed, 181 insertions(+)
->  create mode 100644 Documentation/git-bugreport.txt
->  create mode 100644 bugreport.c
->  create mode 100755 t/t0091-bugreport.sh
+> I don't understand this error, that autogenerated
+> 'bugreport_config_safelist' array clearly has a a non-zero size.
+> What am I missing?
 
-Please add a corresponding entry to 'command-list.txt' as well.
-According to the comment at the beginning of that file, all, even
-external commands should be included there.
+macOS 'sed', that's what I was missing :)
+
+So that array is in fact empty on macOS, because the entries of that
+array are generated with:
+
+  # cat all regular files in Documentation/config
+  find Documentation/config -type f -exec cat {} \; |
+  # print the command name which matches the annotate-bugreport macro
+  sed -n 's/^\(.*\) \+annotate:bugreport\[include\].* ::$/  "\1",/p' | sort
+
+and the 'sed' included in macOS apparently interprets that '\+'
+differently than GNU 'sed', and as a result won't match anything.
+
+FWIW, that '\+' doesn't seem to be necessary, though, and after
+removing it the resulting generated array looked good to me (and to
+the compiler) both on Linux and macOS.
 
