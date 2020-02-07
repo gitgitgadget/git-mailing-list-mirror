@@ -2,142 +2,136 @@ Return-Path: <SRS0=Q4JT=33=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A67EC04EB5
-	for <git@archiver.kernel.org>; Fri,  7 Feb 2020 15:45:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2DDD4C04EB5
+	for <git@archiver.kernel.org>; Fri,  7 Feb 2020 15:48:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 30D3B20720
-	for <git@archiver.kernel.org>; Fri,  7 Feb 2020 15:45:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F34C5217BA
+	for <git@archiver.kernel.org>; Fri,  7 Feb 2020 15:48:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Xh1bzgAU"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C+csYQOh"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726954AbgBGPpy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 Feb 2020 10:45:54 -0500
-Received: from mout.gmx.net ([212.227.15.15]:44891 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726874AbgBGPpy (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Feb 2020 10:45:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1581090347;
-        bh=IB3H8A/j8Uzc8fAL0at/6HJfEryVQi7nYZRdBbEfAC0=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Xh1bzgAUvDdNxK+50AIQsJx9BoQlX9ne7RMpBIVthj6FjaBAP7HUYP4DgTet2az31
-         9d7S71UdYMr53m3qWgBttb20cEVYGtLeR4CdpY9Qfy2/ULBFBHot4cOlJyEJXVRUcO
-         nH0cCU/Lz+VVgPiu1VkZwg0eyHHAgRkSA+tlFJsA=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from MININT-QA14EDB ([46.114.111.241]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1N7zBR-1jdwpU1e9j-0152hH; Fri, 07
- Feb 2020 16:45:47 +0100
-Date:   Fri, 7 Feb 2020 16:45:42 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Markus Klein via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Markus Klein <masmiseim@gmx.de>
-Subject: Re: [PATCH v2] clone: use submodules.recurse option for automatically
- clone submodules
-In-Reply-To: <xmqq1rr7fsh3.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.2002071621160.3718@tvgsbejvaqbjf.bet>
-References: <pull.695.git.git.1580505092071.gitgitgadget@gmail.com>        <pull.695.v2.git.git.1580851963616.gitgitgadget@gmail.com> <xmqq1rr7fsh3.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727379AbgBGPso (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 Feb 2020 10:48:44 -0500
+Received: from mail-qt1-f194.google.com ([209.85.160.194]:40090 "EHLO
+        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727341AbgBGPsn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Feb 2020 10:48:43 -0500
+Received: by mail-qt1-f194.google.com with SMTP id v25so2157113qto.7
+        for <git@vger.kernel.org>; Fri, 07 Feb 2020 07:48:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=MBsYMuBsA5t8svE+NcB6xyjYQflLIrPpY7vkuGt0oBI=;
+        b=C+csYQOhqcwAwyn0JCwenF7mgged4dlABbj3DjQlF1MO3ZOI80etKC3Bj/ONENWlf1
+         8b/Kg7LiJD0ai9+dQ9THUpHd8fCceTtznILj+ytLC0JFAWgiYZK8vsyvAt5/NbAQqeEz
+         UcZrSqmhru61S3bUw3O0NEudkuNjBCWi493Di7BHdvgTQNU9eFHlIh+C+lBeHeY9uJyn
+         UVM4/z6q98qhaLJKycqJH6AEMpoLpB2MXguoVBUY1hn6T1K1OZIZIn8AyedG7Cbs76B7
+         TOvFAdnT/A+ke5ZMcM2THSUhSW7ntt+qEVFQ16av6tClOBcj00TbdNGSvQ03I3U0d58f
+         nnKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=MBsYMuBsA5t8svE+NcB6xyjYQflLIrPpY7vkuGt0oBI=;
+        b=EhOLSZqd7JILGYpmCItaHzvHuXQ+juPVRxcIhoqy2aAv2maeAqqdcRnMd11gbuWaAi
+         g3Io0dwaaCcKvZHRUI9md7i6dx+3+SkHvps+QBz/ENPpkq2oAbEj5d4a9f7tAf5xEKmZ
+         yfQ+8Hyf04mQf3FLFd/qKkeu2FnQJHJwOGDAGWQbS3mVa+wJ+mSZsO2QZ3FtJoUlg9vq
+         GSlLPZwBfPMk1CmHGm5CbjYlZFD6Doe/+x3lKkgGCJkAcGVwUQYbXHGcj9IRqE5SDP3R
+         3l+pjjn/jvHYoSwj5fS9Bqh4bTfTBxywrydWaC8Ex/Pza6CXkYwFBZKNhpuHjqNJcc6w
+         MLgg==
+X-Gm-Message-State: APjAAAXYA9GY7oru22IE3BYedIr3EmDKmhzymO40THoI1kdnBB40EF0N
+        RrUc4nIhWOOSOSFVcm4Uol4=
+X-Google-Smtp-Source: APXvYqzBQc0Gl0uS7kfn0NBOXH4JUTUQ/FYDSa9sWk1IEhdZfE+fR204gLrx3+L8awX97Pwo82VOyw==
+X-Received: by 2002:ac8:6708:: with SMTP id e8mr7732208qtp.215.1581090522583;
+        Fri, 07 Feb 2020 07:48:42 -0800 (PST)
+Received: from ?IPv6:2001:4898:6808:13e:439:e50b:6e3c:1277? ([2001:4898:a800:1012:b56c:e50b:6e3c:1277])
+        by smtp.gmail.com with ESMTPSA id y26sm1589691qtc.94.2020.02.07.07.48.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 07 Feb 2020 07:48:41 -0800 (PST)
+Subject: Re: [PATCH v2 1/3] builtin/commit-graph.c: support
+ '--split[=<strategy>]'
+To:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <cover.1580430057.git.me@ttaylorr.com>
+ <cover.1580862307.git.me@ttaylorr.com>
+ <3e19d50148c8d53b30f8f0036a2d3af9f4bb3499.1580862307.git.me@ttaylorr.com>
+ <CAN0heSrXZd7ktBTHaYFWjhW=NcGx5gL52-unSDaC4ZoNf96HFA@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <3acac399-9476-e4ad-556e-e0138380eeb0@gmail.com>
+Date:   Fri, 7 Feb 2020 10:48:39 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:73.0) Gecko/20100101
+ Thunderbird/73.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:c9LAnRqy0VaUZxCKTDnfObqacPImk40QSvDQPLsZLBzIIj7NvU1
- FxjOEiW3/tbR+tYO+QBfAbKYMlrTa1t0DULCDWSbx1PXWk49cp6mVdq9zSMl24dc1lB8fSZ
- HN20KhrYALJmJ9/LWsy+Fcwph/w5bulqrBPL0ceTdTVWoVhHk6joYL+l458ZrlpgmDLBgXB
- fMnSD4xcz8qP8w2UgL/dA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:dza8qgBOB+Q=:8IaD6uaeJGw3JS91MPUERO
- T3RPje5TZgaINU91XHhsaEuLCUzCsp8tTAfJpShkWTYvxEn6mj693PjrjYMX6RFCNXvXS/lqf
- mkxZjBq8QGV9c7JQuw3O2nDMBmNksObQ0f9IBnwvw760h7zIx9kxMRAb/hbpBweUBXLsEVDAS
- loBEM067EGHRwaz2Oq4JZIvJ491LsO4dGK8VJkTtqeldBDLE6+KwtH+Z4Zs1I/7h9cx/NB+sE
- nqeDGS5OEWM8euPQaxu+VQjFgDKepW+1OTF/t/QPc7jGlmt0xPW/CarNzybbpzGEjTjioU9yk
- 1imiwTAFBNdrzr64hul6BS02WfxSN/VigpJaD/v/c0KNYoMgQ2WDsPxWyH0A2mub9LSbCvBl4
- V4ot7N/s4DUG+bdNORlhihCQsJe4VlBz51fr0SoxfjHUiO6ZwfKZKrdLoXdtoh3FzPOG7OsTi
- qEpgmP4kXB+JDdB5NEI3MA3GiEh5r0OkARAgqahFrHyVNmrweE4ZCMz/x0nM9xXzeNJHB+J60
- ppVxeIN5KYew2G7TQ9/RqrsCFGVZjwe5310UDDaHRd8dLtzoYwx48oG1/xvsPf4DjfOBSRFgO
- IiYc5Is9AyIHGsptmv67WDtASvnfs3gLX+KH4moNqlNwlKea6eVZkRi8UZlPeToExnQiQDuqV
- SAoXalVhv5JokCO45VDGtv4oo7/Rjvg95d5nzwqLG3+m122T247KjKp1zcAVxPV/sKRrpHd59
- 0h/urKyJ2jKNX036MkNJtyuCG5APKfzbSmEgsHAGtJHC+UuMrvxam8qEu4Z0wuJc1XvopW3/X
- zoUu/64bOEzAoIYWPvZu4StxUeEiV6XXxe+anMUU9Wy5xeFvo3/VloVHUyk3hUkvOOXW1A0W8
- rvRuda2zTZZm6c3HZRXAxYvw+NDF9lT34oG/oYUvd0Y2+tGtqe+CvOe0+YevCQjLFuhV/kysh
- dUyR0EBBqxxY04GaqmzardlpXgUoipO+eAkc4vqCjGudid/iDSSQsQJqFNVskHaiMkQ+Cw/ZF
- vuCnEjzd615FtFwPNpi+uOFvf51mc8191cUDhKd5Sgu55txOx144CetTtzqd7LlSyBH+eOjJ9
- aSJLGce5mXswcHSjNSAaBFypK6lpsJB23m30KxaXonF83JlXvihqLLlFFmxN2JeoLyE47FheB
- i4YwTIax2nNbi4Odm7SKSvlbpun6Vfi+8T/ffU0JtJjYYB4XR+9vzcw/275wJ+58LAqAE6bvB
- cq+l8K80GNn0Gn3WG
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CAN0heSrXZd7ktBTHaYFWjhW=NcGx5gL52-unSDaC4ZoNf96HFA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On 2/6/2020 2:41 PM, Martin Ågren wrote:
+> On Wed, 5 Feb 2020 at 01:28, Taylor Blau <me@ttaylorr.com> wrote:
+>>  * If `--size-multiple=<X>` is not specified, let `X` equal 2. If the new
+>>  tip file would have `N` commits and the previous tip has `M` commits and
+> 
+>> -               OPT_BOOL(0, "split", &opts.split,
+>> -                       N_("allow writing an incremental commit-graph file")),
+>> +               OPT_CALLBACK_F(0, "split", &split_opts.flags, NULL,
+>> +                       N_("allow writing an incremental commit-graph file"),
+>> +                       PARSE_OPT_OPTARG | PARSE_OPT_NONEG,
+>> +                       write_option_parse_split),
+> 
+> 
+> I keep getting back to this -- sorry! So this actually forbids
+> "--no-split", which used to work before. Unfortunate?
 
-On Thu, 6 Feb 2020, Junio C Hamano wrote:
+That certainly is unfortunate. Hopefully no one is taking a dependence on
+this, which only means something if they had a `--split` previously in
+the command-line arguments.
 
-> "Markus Klein via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > +static int git_clone_config(const char *var, const char *value, void =
-*cb)
-> > +{
-> > +	if (!strcmp(var, "submodule.recurse") && git_config_bool(var, value)=
-) {
-> > +		string_list_append(&option_recurse_submodules, "true");
-> > +		return 0;
->
-> The breakage of this is not apparent, but this is misleading.  If
-> submodule.recurse is set to a value that git_config_bool() would say
-> "false", the if statement is skipped, and you end up calling
-> git_default_config() with "submodule.recurse", even though you are
-> supposed to have already dealt with the setting.
->
-> 	if (!strcmp(var, "submodule.recurse")) {
-> 		if (git_config_bool(var, value))
-> 			...
-> 		return 0; /* done with the variable either way */
-> 	}
->
-> is more appropriate.
+> I have to ask, what is the long-term plan for the two formats (split and
+> non-split)? As I understand it, and I might well be wrong, the non-split
+> format came first and the split format was a user-experience
+> improvement. Should we expect that `--split` becomes the default?
 
-Good catch, and I think you will have to do even more: in the "else" case,
-it is possible that the user overrode a `submodule.recurse` from the
-system config in their user-wide config, so we must _undo_ the
-`string_list_append().
+In some ways, the split is now the default because that is how it is
+written during 'git fetch' using fetch.writeCommitGraph. However, I
+don't think that it will ever become the default for the commit-graph
+builtin.
 
-Further, it is probably not a good idea to append "true" _twice_ if
-multiple configs in the chain specify `submodule.recurse =3D true`.
+> In
+> which case `--no-split` would be needed. Or might the non-split format
+> go away entirely, leaving `--split` a no-op and `--split=<strategy>` a
+> pretty funky way of choosing a strategy for the one-and-only file
+> format?
 
-> I still do not know what this code is trying to do by appending "true"
-> as many times as submodule.recurse appears in the configuration file(s),
-> though.
->
-> When given from the command line, i.e.
->
-> 	git clone --no-recurse-submodules ...
-> 	git clone --recurse-submodules    ...
-> 	git clone --recurse-submodules=3D<something> ...
->
-> recurse_submodules_cb() reacts to them by
->
->  (1) clearing what have been accumulated so far,
->  (2) appending the match-all "." pathspec, and
->  (3) appending the <something> string
->
-> to option_recurse_submodules string list.  But given that
-> submodule.recurse is not (and will not be without an involved
-> transition plan) a pathspec but merely a boolean, I would think
-> appending hardcoded string constant "true" makes little sense.
-> After sorting the list, these values become values of the
-> submodule.active configuration variable whose values are pathspec
-> elements in cmd_clone(); see the part of the code before it makes a
-> call to init_db().
+In some ways, the --split=merge-all is similar, except it writes a one-line
+commit-graph-chain file and puts a .graph file in
+.git/objects/info/commit-graphs instead of writing to .git/objects/commit-graph.
 
-Indeed, I think I even pointed out that "true" is not an appropriate value
-to use here: https://github.com/git/git/pull/695/#discussion_r367866708
+> To try to be concrete, here's a suggestion: `--format=split` and
+> `--split-strategy=<strategy>`.
 
-Ciao,
-Dscho
+Why --format=split instead of leaving it as --[no-]split? Is there a reason to
+introduce this string-based option when there are only two options right now?
+
+Perhaps using --split-strategy=<strategy> is the most backwards-compatible
+option, especially because we won't need --split="" to substitute for
+"auto-merge". However, I wonder if this is a case where we should make the
+hard choice to sacrifice a narrow backwards-compatibility in favor of a
+simplified set of options?
+
+Thanks,
+-Stolee
