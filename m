@@ -6,47 +6,47 @@ X-Spam-Status: No, score=-9.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D852CC352A1
-	for <git@archiver.kernel.org>; Sat,  8 Feb 2020 20:44:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 77AE6C35242
+	for <git@archiver.kernel.org>; Sat,  8 Feb 2020 20:44:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B020822522
-	for <git@archiver.kernel.org>; Sat,  8 Feb 2020 20:44:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4FD8022522
+	for <git@archiver.kernel.org>; Sat,  8 Feb 2020 20:44:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727507AbgBHUoK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 8 Feb 2020 15:44:10 -0500
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:40317 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727484AbgBHUoK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Feb 2020 15:44:10 -0500
-Received: by mail-lj1-f196.google.com with SMTP id n18so2882215ljo.7
-        for <git@vger.kernel.org>; Sat, 08 Feb 2020 12:44:09 -0800 (PST)
+        id S1727516AbgBHUoM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 8 Feb 2020 15:44:12 -0500
+Received: from mail-lf1-f65.google.com ([209.85.167.65]:33457 "EHLO
+        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726192AbgBHUoM (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Feb 2020 15:44:12 -0500
+Received: by mail-lf1-f65.google.com with SMTP id n25so1595130lfl.0
+        for <git@vger.kernel.org>; Sat, 08 Feb 2020 12:44:10 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=m0rF2g35Iz7OdlO6RWoH9FQsT53aRfjYymMhOSLYwgo=;
-        b=dZcF5rk8u64aOuntn25PBGSM3VcKZJUSzRUxqStPb39KNCYTr8mcPmN+COQvKqJ6bo
-         NfYrQnfWQEzUD0M8ZcyZOC+Qa+CS/2BtuoQ7+jct6es4QuHaOEWG3E6Fy8/OnFoZjdOc
-         KcDDVhmX1jdrhPnWBJ0YXe3bv+27QgY72z7RM+zD4Rk4s2XRHJ752NqIUQM0WxGN4F2i
-         UyEFKDWm8w3eE7RIrlBaGPdvfXvDnBnUOCWykWPp09y2YC5BK0yFox24/CYUh096AKg7
-         jYnwVyL0D+oOzSa+YVlCJB8GLT56r62WRWRLrYZXgYAdqwziIUrLMdSedvcJyVB7Z25a
-         mrXA==
-X-Gm-Message-State: APjAAAWYWT1dDK7eB73EOEEI7McEpuvGFkwa3nxtAcvPW9aGlwhUDopf
-        GKPl3AJXVyrJPSQzNks7r74=
-X-Google-Smtp-Source: APXvYqyhI6R8sFKR3S5gDlRKTF9A49q4wMimmjRTzBSe5lzcm1FQSyr7h7YNZ/Wt+vEVYnXu3wbUow==
-X-Received: by 2002:a2e:90c6:: with SMTP id o6mr3531275ljg.129.1581194648526;
-        Sat, 08 Feb 2020 12:44:08 -0800 (PST)
+        bh=OorHmPU1ldmlqeJIgy62b6Y8jcfAJumo5hdNFBDoTzA=;
+        b=c2UJ4py4fRKhPRmvJ1TA9VZei18Q7eNdUabCcRXtntuynIShJK27yy2AiYh8ooLlND
+         3iYXNSB/dEA7ODbvCC4h3bsK97KgonaC9VXpLFKkKwp8uOUzMFmOp4pyEQgv1Y90hUSR
+         WF1F4HHMWDw375YKNgEz+GwnY+ZvKNwRNsMlPUU38/035ujborEExKKe98VNbuvs4JNM
+         hreahVHEbp8oqBi6IFFc48oEH7eTT0raXHg88s22phNek0DsvhPTRK1tBFLy8Qz/qWt5
+         RCIr4YGGvakxEs2+paEBM4M98uhI9p8idmXnDf2AvnnHas0D+xRVDIEx59ue/IG1ZFAt
+         NGwQ==
+X-Gm-Message-State: APjAAAW7++twGox+k7EzyugVV+oC45DL3NKlqPH04UlTqZGY/NOzfWjH
+        3XQIWTeGSdMyMuRwrQFHUfw=
+X-Google-Smtp-Source: APXvYqzvKR+D8A3lpXbUwUB0rwBnA9GXyk2WA0jl57PK4ytmGq7QyibpH6OLOk3i4l4NSKs0fOJ2KA==
+X-Received: by 2002:ac2:4246:: with SMTP id m6mr2578735lfl.165.1581194649505;
+        Sat, 08 Feb 2020 12:44:09 -0800 (PST)
 Received: from beta.herland (160.37-191-159.fiber.lynet.no. [37.191.159.160])
-        by smtp.gmail.com with ESMTPSA id g15sm3614080ljl.10.2020.02.08.12.44.07
+        by smtp.gmail.com with ESMTPSA id g15sm3614080ljl.10.2020.02.08.12.44.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Sat, 08 Feb 2020 12:44:08 -0800 (PST)
 From:   Johan Herland <johan@herland.net>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net,
         Johannes.Schindelin@gmx.de, Johan Herland <johan@herland.net>
-Subject: [PATCH v2 1/2] t3305: check notes fanout more carefully and robustly
-Date:   Sat,  8 Feb 2020 21:44:03 +0100
-Message-Id: <20200208204404.5531-2-johan@herland.net>
+Subject: [PATCH v2 2/2] notes.c: fix off-by-one error when decreasing notes fanout
+Date:   Sat,  8 Feb 2020 21:44:04 +0100
+Message-Id: <20200208204404.5531-3-johan@herland.net>
 X-Mailer: git-send-email 2.23.1
 In-Reply-To: <20200208204404.5531-1-johan@herland.net>
 References: <20200208204404.5531-1-johan@herland.net>
@@ -57,185 +57,158 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In short, before this patch, this test script:
- - creates many notes
- - verifies that all notes in the notes tree has a fanout of 1
- - removes most notes
- - verifies that the notes in the notes tree now has a fanout of 0
+As noted in the previous commit, the nature of the fanout heuristic
+in the notes code causes the exact point at which we increase or
+decrease the notes fanout to vary with the objects being annotated.
+Since the object ids generated by the test environment are
+deterministic (by design), the notes generated and tested by t3305
+are always the same, and we therefore happen to see the same fanout
+behavior from one run to the next.
 
-The fanout verification only happened twice: after creating all the
-notes, and after removing most of them.
+Coincidentally, if we were to change the test environment slightly
+(say by making a test commit on an unrelated branch before we start
+the t3305 test proper), we not only see the fanout switch happen at
+different points, we also manage to trigger a _bug_ in the notes
+code where the fanout 1 -> 0 switch is not applied uniformly across
+the notes tree, but instead yields a notes tree like this:
 
-This patch strengthens the test by checking the fanout after _each_
-added/removed note: We assert that the switch from fanout 0 -> 1
-happens exactly once while adding notes (and that the switch pervades
-the entire notes tree). Likewise, we assert that the switch from
-fanout 1 -> 0 happens exactly once while removing notes.
+  ...
+  bdeafb301e44b0e4db0f738a2d2a7beefdb70b70
+  bff2d39b4f7122bd4c5caee3de353a774d1e632a
+  d3/8ec8f851adf470131178085bfbaab4b12ad2a7
+  e0b173960431a3e692ae929736df3c9b73a11d5b
+  eb3c3aede523d729990ac25c62a93eb47c21e2e3
+  ...
 
-Additionally, we decrease the number of notes left after removal,
-from 50 to 15 notes, in order to ensure that fanout 1 -> 0 transition
-keeps happening regardless of external factors[1].
+The bug occurs when we are writing out a notes tree with a newly
+decreased fanout, and the notes tree contains unexpanded subtrees
+that should be consolidated into the parent tree as a consequence of
+the decreased fanout):
 
-[1]: Currently (with the SHA1 hash function and the deterministic
-object ids of the test environment) the fanout heuristic in the notes
-code happens to switch from 0 -> 1 at 109 notes, and from 1 -> 0 at
-59 notes. However, changing the hash function or other external
-factors will vary these numbers, and the latter may - in theory - go
-as low as 15. For more details, please see the discussion at
-https://public-inbox.org/git/20200125230035.136348-4-sandals@crustytoothpaste.net/
+Subtrees that happen to sit at an _even_ level in the internal notes
+16-tree structure (in other words: subtrees whose path - "d3" in the
+example above - is unique in the first nibble - i.e. there are no
+other note paths that start with "d") are _not_ unpacked as part of
+the tree writeout. This error will repeat itself in subsequent note
+trees until the subtree is forced to be unpacked. In t3305 this only
+happens when the d38ec8f8 note is itself removed from the tree.
+
+The error is not severe (no information is lost, and the notes code
+is able to read/decode this tree and manipulate it correctly), but
+this is nonetheless a bug in the current implementation that should
+be fixed.
+
+That said, fixing the off-by-one error is not without complications:
+We must take into account that the load_subtree() call from
+for_each_note_helper() (that is now done to correctly unpack the
+subtree while we're writing out the notes tree) may end up inserting
+unpacked non-notes into the linked list of non_note entries held by
+the struct notes_tree. Since we are in the process of writing out the
+notes tree, this linked list is currently in the process of being
+traversed by write_each_non_note_until(). The unpacked non-notes are
+necessarily inserted between the last non-note we wrote out, and the
+next non-note to be written. Hence, we cannot simply hold the
+next_non_note to write in struct write_each_note_data (as we would
+then silently skip these newly inserted notes), but must instead
+always follow the ->next pointer from the last non-note we wrote.
+(This part was caught by an existing test in t3304.)
 
 Signed-off-by: Johan Herland <johan@herland.net>
 ---
- t/t3305-notes-fanout.sh | 101 ++++++++++++++++++++++++++++++----------
- 1 file changed, 76 insertions(+), 25 deletions(-)
+ notes.c                 | 20 ++++++++++++--------
+ t/t3305-notes-fanout.sh |  6 ++++++
+ 2 files changed, 18 insertions(+), 8 deletions(-)
 
+diff --git a/notes.c b/notes.c
+index 0c79964c26..2de7f4bcfb 100644
+--- a/notes.c
++++ b/notes.c
+@@ -576,16 +576,16 @@ static int for_each_note_helper(struct notes_tree *t, struct int_node *tree,
+ 			 * the note tree that have not yet been explored. There
+ 			 * is a direct relationship between subtree entries at
+ 			 * level 'n' in the tree, and the 'fanout' variable:
+-			 * Subtree entries at level 'n <= 2 * fanout' should be
++			 * Subtree entries at level 'n < 2 * fanout' should be
+ 			 * preserved, since they correspond exactly to a fanout
+ 			 * directory in the on-disk structure. However, subtree
+-			 * entries at level 'n > 2 * fanout' should NOT be
++			 * entries at level 'n >= 2 * fanout' should NOT be
+ 			 * preserved, but rather consolidated into the above
+ 			 * notes tree level. We achieve this by unconditionally
+ 			 * unpacking subtree entries that exist below the
+ 			 * threshold level at 'n = 2 * fanout'.
+ 			 */
+-			if (n <= 2 * fanout &&
++			if (n < 2 * fanout &&
+ 			    flags & FOR_EACH_NOTE_YIELD_SUBTREES) {
+ 				/* invoke callback with subtree */
+ 				unsigned int path_len =
+@@ -602,7 +602,7 @@ static int for_each_note_helper(struct notes_tree *t, struct int_node *tree,
+ 					 path,
+ 					 cb_data);
+ 			}
+-			if (n > fanout * 2 ||
++			if (n >= 2 * fanout ||
+ 			    !(flags & FOR_EACH_NOTE_DONT_UNPACK_SUBTREES)) {
+ 				/* unpack subtree and resume traversal */
+ 				tree->a[i] = NULL;
+@@ -723,13 +723,15 @@ static int write_each_note_helper(struct tree_write_stack *tws,
+ 
+ struct write_each_note_data {
+ 	struct tree_write_stack *root;
+-	struct non_note *next_non_note;
++	struct non_note **nn_list;
++	struct non_note *nn_prev;
+ };
+ 
+ static int write_each_non_note_until(const char *note_path,
+ 		struct write_each_note_data *d)
+ {
+-	struct non_note *n = d->next_non_note;
++	struct non_note *p = d->nn_prev;
++	struct non_note *n = p ? p->next : *d->nn_list;
+ 	int cmp = 0, ret;
+ 	while (n && (!note_path || (cmp = strcmp(n->path, note_path)) <= 0)) {
+ 		if (note_path && cmp == 0)
+@@ -740,9 +742,10 @@ static int write_each_non_note_until(const char *note_path,
+ 			if (ret)
+ 				return ret;
+ 		}
++		p = n;
+ 		n = n->next;
+ 	}
+-	d->next_non_note = n;
++	d->nn_prev = p;
+ 	return 0;
+ }
+ 
+@@ -1177,7 +1180,8 @@ int write_notes_tree(struct notes_tree *t, struct object_id *result)
+ 	strbuf_init(&root.buf, 256 * (32 + the_hash_algo->hexsz)); /* assume 256 entries */
+ 	root.path[0] = root.path[1] = '\0';
+ 	cb_data.root = &root;
+-	cb_data.next_non_note = t->first_non_note;
++	cb_data.nn_list = &(t->first_non_note);
++	cb_data.nn_prev = NULL;
+ 
+ 	/* Write tree objects representing current notes tree */
+ 	flags = FOR_EACH_NOTE_DONT_UNPACK_SUBTREES |
 diff --git a/t/t3305-notes-fanout.sh b/t/t3305-notes-fanout.sh
-index 831f83d211..402057c83a 100755
+index 402057c83a..3b4753e1b4 100755
 --- a/t/t3305-notes-fanout.sh
 +++ b/t/t3305-notes-fanout.sh
-@@ -4,6 +4,32 @@ test_description='Test that adding/removing many notes triggers automatic fanout
+@@ -30,6 +30,12 @@ all_notes_have_fanout() {
+ 	done
+ }
  
- . ./test-lib.sh
- 
-+path_has_fanout() {
-+	path=$1 &&
-+	fanout=$2 &&
-+	after_last_slash=$((40 - $fanout * 2)) &&
-+	echo $path | grep -q "^\([0-9a-f]\{2\}/\)\{$fanout\}[0-9a-f]\{$after_last_slash\}$"
-+}
-+
-+touched_one_note_with_fanout() {
-+	notes_commit=$1 &&
-+	modification=$2 &&  # 'A' for addition, 'D' for deletion
-+	fanout=$3 &&
-+	diff=$(git diff-tree --no-commit-id --name-status --root -r $notes_commit) &&
-+	path=$(echo $diff | sed -e "s/^$modification[\t ]//") &&
-+	path_has_fanout "$path" $fanout;
-+}
-+
-+all_notes_have_fanout() {
-+	notes_commit=$1 &&
-+	fanout=$2 &&
-+	git ls-tree -r --name-only $notes_commit 2>/dev/null |
-+	while read path
-+	do
-+		path_has_fanout $path $fanout || return 1
-+	done
-+}
++test_expect_success 'tweak test environment' '
++	git checkout -b nondeterminism &&
++	test_commit A &&
++	git checkout --orphan with_notes;
++'
 +
  test_expect_success 'creating many notes with git-notes' '
  	num_notes=300 &&
  	i=0 &&
-@@ -20,7 +46,7 @@ test_expect_success 'creating many notes with git-notes' '
- 
- test_expect_success 'many notes created correctly with git-notes' '
- 	git log | grep "^    " > output &&
--	i=300 &&
-+	i=$num_notes &&
- 	while test $i -gt 0
- 	do
- 		echo "    commit #$i" &&
-@@ -30,34 +56,46 @@ test_expect_success 'many notes created correctly with git-notes' '
- 	test_cmp expect output
- '
- 
--test_expect_success 'many notes created with git-notes triggers fanout' '
--	# Expect entire notes tree to have a fanout == 1
--	git ls-tree -r --name-only refs/notes/commits |
--	while read path
-+test_expect_success 'stable fanout 0 is followed by stable fanout 1' '
-+	i=$num_notes &&
-+	fanout=0 &&
-+	while test $i -gt 0
- 	do
--		echo $path | grep "^../[0-9a-f]*$" || {
--			echo "Invalid path \"$path\"" &&
--			return 1;
--		}
--	done
-+		i=$(($i - 1)) &&
-+		if touched_one_note_with_fanout refs/notes/commits~$i A $fanout
-+		then
-+			continue
-+		elif test $fanout -eq 0
-+		then
-+			fanout=1 &&
-+			if all_notes_have_fanout refs/notes/commits~$i $fanout
-+			then
-+				echo "Fanout 0 -> 1 at refs/notes/commits~$i" &&
-+				continue
-+			fi
-+		fi &&
-+		echo "Failed fanout=$fanout check at refs/notes/commits~$i" &&
-+		git ls-tree -r --name-only refs/notes/commits~$i &&
-+		return 1
-+	done &&
-+	all_notes_have_fanout refs/notes/commits 1
- '
- 
- test_expect_success 'deleting most notes with git-notes' '
--	num_notes=250 &&
-+	remove_notes=285 &&
- 	i=0 &&
- 	git rev-list HEAD |
--	while test $i -lt $num_notes && read sha1
-+	while test $i -lt $remove_notes && read sha1
- 	do
- 		i=$(($i + 1)) &&
- 		test_tick &&
--		git notes remove "$sha1" ||
--		exit 1
-+		git notes remove "$sha1" 2>/dev/null || return 1
- 	done
- '
- 
- test_expect_success 'most notes deleted correctly with git-notes' '
--	git log HEAD~250 | grep "^    " > output &&
--	i=50 &&
-+	git log HEAD~$remove_notes | grep "^    " > output &&
-+	i=$(($num_notes - $remove_notes)) &&
- 	while test $i -gt 0
- 	do
- 		echo "    commit #$i" &&
-@@ -67,16 +105,29 @@ test_expect_success 'most notes deleted correctly with git-notes' '
- 	test_cmp expect output
- '
- 
--test_expect_success 'deleting most notes triggers fanout consolidation' '
--	# Expect entire notes tree to have a fanout == 0
--	git ls-tree -r --name-only refs/notes/commits |
--	while read path
-+test_expect_success 'stable fanout 1 is followed by stable fanout 0' '
-+	i=$remove_notes &&
-+	fanout=1 &&
-+	while test $i -gt 0
- 	do
--		echo $path | grep -v "^../.*" || {
--			echo "Invalid path \"$path\"" &&
--			return 1;
--		}
--	done
-+		i=$(($i - 1)) &&
-+		if touched_one_note_with_fanout refs/notes/commits~$i D $fanout
-+		then
-+			continue
-+		elif test $fanout -eq 1
-+		then
-+			fanout=0 &&
-+			if all_notes_have_fanout refs/notes/commits~$i $fanout
-+			then
-+				echo "Fanout 1 -> 0 at refs/notes/commits~$i" &&
-+				continue
-+			fi
-+		fi &&
-+		echo "Failed fanout=$fanout check at refs/notes/commits~$i" &&
-+		git ls-tree -r --name-only refs/notes/commits~$i &&
-+		return 1
-+	done &&
-+	all_notes_have_fanout refs/notes/commits 0
- '
- 
- test_done
 -- 
 2.23.1
 
