@@ -8,53 +8,53 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5203BC35250
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F318DC352A1
 	for <git@archiver.kernel.org>; Sat,  8 Feb 2020 09:08:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id BA76622464
-	for <git@archiver.kernel.org>; Sat,  8 Feb 2020 09:08:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CD9A3217BA
+	for <git@archiver.kernel.org>; Sat,  8 Feb 2020 09:08:40 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="r80AUdch"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WuliMiju"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727492AbgBHJIh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 8 Feb 2020 04:08:37 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:40722 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727465AbgBHJIf (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Feb 2020 04:08:35 -0500
-Received: by mail-wm1-f66.google.com with SMTP id t14so5218427wmi.5
-        for <git@vger.kernel.org>; Sat, 08 Feb 2020 01:08:34 -0800 (PST)
+        id S1727505AbgBHJIk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 8 Feb 2020 04:08:40 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:54771 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727456AbgBHJIi (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Feb 2020 04:08:38 -0500
+Received: by mail-wm1-f67.google.com with SMTP id g1so4824970wmh.4
+        for <git@vger.kernel.org>; Sat, 08 Feb 2020 01:08:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=auj2PpN7jw/nCeMzZ55W8zrFR3AQWT85aqwAv1NJUPg=;
-        b=r80AUdchyUZ88QiyJZksk5Ih8AfUuTgDV8Cn+6c2+IDXwDpkCm8a6zASgTs6/Oflya
-         wecyrKXpiJ0XyCikUL2cfd1WR7mzBAAGg27OQr9OvExKiTkYd7p68cUWBBoaeeEwcryJ
-         VxItkuSZ2X7VdT32voGNVOxeM5f7dOuN45V7zUj5dDUzO7bMs3COZo9P4ga3h74PqeO6
-         E65bSt7PacWpNjNTR7G3Cv9vbzP+EtDWP5r0bxFxS4g7jJwDSHqLhSHZ+jDFGwA8QrMm
-         QmiYXeyYAOEqgKU/o5/yDZfuAnPL8SNU0XxA+Cvgm5z50zJ1nLbu83q7sahpFcsE0IPB
-         b1Uw==
+        bh=BZA+MS84eFTTHIZpvKxlzTaC/Nse0E6Ugur+gY3o55U=;
+        b=WuliMijugBPWLQzMe+JAsPUFRepjTN10gfN+clj9oggF/v+9AtQCuM+GDzBuErg+lZ
+         entXEAw4dN1cHlYN0usWCtv45mMPzCWi7sjJApVH0C96YwlX1U2SfZCz1u+KHD2Gwr8O
+         U2dg03zlJXBE8C64+0m+ot/g0tCq8RqGYtrc1QX4GwFM9Ajtm7qHaBu2xqM+iKUVaqie
+         gmcmKhEbwXWiyTuT4gIlaWZQhbQIGDVT7EL2bX7ESiGHDYka/lGAqnoI92wZCc3Q8BOU
+         tIdOqSgzmspkgo7Ia33UExmoFOqHuqLauj98s/4d0+suSnkFxULMndtl8+ErVokSb0ky
+         /5jQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=auj2PpN7jw/nCeMzZ55W8zrFR3AQWT85aqwAv1NJUPg=;
-        b=ln+nHaK49LULbGEQBfLDqEbmbDfx71VxB81Sn4PGvDdgDV9lObnThaGniQq6r/nbZe
-         cUi6DRW713It1tDoWy5GEzEAvo7f6x3l8B/LTSskSZdmUr3ti7GIzNX3W5/XRvqmUwta
-         D31cNlfEWMNwYi5SeDjWO5UOEmFLHs5CSle5v+VBjUm6tNys1NAoVYXdv93bToPsI4Cn
-         TSUXTRQT26zonaSD7bEQ8OqNtomGde3M+zImnEwHQTOmogk/UZarOFBNDNO8z07zTjR7
-         qHE/XwwcAe0GwUld4BPhd3kPKEuDBNyQzve8sgd2MFr1nr0IB1OSYZ11j0VcATeuaj51
-         BBrQ==
-X-Gm-Message-State: APjAAAWu1B0md6UM6fL9JyK8RAtoW155UpQMmH5CSZXhgsTbxs4uVBM2
-        CLz5HTkXOAaLEOfmPMTsront3zsb
-X-Google-Smtp-Source: APXvYqwT2/BwTgF3qYrz3c6aTfFBnVDBgWPWDjeUFYON68op1AN+JDuq6JlSb6h81AYcMoIdLg768Q==
-X-Received: by 2002:a1c:1b4d:: with SMTP id b74mr3616265wmb.33.1581152913397;
-        Sat, 08 Feb 2020 01:08:33 -0800 (PST)
+        bh=BZA+MS84eFTTHIZpvKxlzTaC/Nse0E6Ugur+gY3o55U=;
+        b=qUt4h1sEaWguboWYqXyC45UYwNwaNsLb3Y6dtFGIHdA3XvXcFP4alD2bPTZ1AlxvM1
+         QnKkyiWCe035RiR6ywwG/f22J96LV7CO+UdyOMjwBXTJYx1tD4uTYu4qCVTVdAdYTNno
+         wObK/rIr9P8yJBZLIZTuGkgwW5NafxUrdGhHIuGYUDNNaIQ5MrQnBpC9SWq+ATf4Fj8F
+         5OBTZf1CjaaboSENGqMVV9CehQ7+v5dbLqgLjVKNbg71e/hQA1fEfcd5iVrl7tG/hj6b
+         TEDnVfke/KDXzD1AF+BqLqfiA0N9cmRxm0nVHCndSXYGau6B3GoQ4QVCxMyZe1GamKzQ
+         7pXA==
+X-Gm-Message-State: APjAAAV9Yq0sgSt/c0CsH9LAl/Ss8pvjSlQ4qTE8wQptnOQ/ptya2F7U
+        R0n7trYGWiBQLb2Rw0Y6uyMwZ0bo
+X-Google-Smtp-Source: APXvYqzJV2wjHBcfsDGod3Z9vPjULIoFvB/gpJlxvTxHxcE27EPn9cjFEeoidOdOHYcFK6Ae0Ohxgw==
+X-Received: by 2002:a1c:8151:: with SMTP id c78mr1681184wmd.29.1581152914682;
+        Sat, 08 Feb 2020 01:08:34 -0800 (PST)
 Received: from localhost.localdomain ([139.47.115.4])
-        by smtp.gmail.com with ESMTPSA id e1sm6999346wrt.84.2020.02.08.01.08.32
+        by smtp.gmail.com with ESMTPSA id e1sm6999346wrt.84.2020.02.08.01.08.33
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 08 Feb 2020 01:08:33 -0800 (PST)
+        Sat, 08 Feb 2020 01:08:34 -0800 (PST)
 From:   Miriam Rubio <mirucam@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Pranit Bauva <pranit.bauva@gmail.com>,
@@ -62,9 +62,9 @@ Cc:     Pranit Bauva <pranit.bauva@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Tanushree Tumane <tanushreetumane@gmail.com>,
         Miriam Rubio <mirucam@gmail.com>
-Subject: [PATCH v3 08/13] bisect: libify `exit_if_skipped_commits` to `error_if_skipped*` and its dependents
-Date:   Sat,  8 Feb 2020 10:06:59 +0100
-Message-Id: <20200208090704.26506-9-mirucam@gmail.com>
+Subject: [PATCH v3 09/13] bisect: libify `bisect_checkout`
+Date:   Sat,  8 Feb 2020 10:07:00 +0100
+Message-Id: <20200208090704.26506-10-mirucam@gmail.com>
 X-Mailer: git-send-email 2.25.0
 In-Reply-To: <20200208090704.26506-1-mirucam@gmail.com>
 References: <20200208090704.26506-1-mirucam@gmail.com>
@@ -85,7 +85,9 @@ Emulate try catch in C by converting `exit(<positive-value>)` to
 `return <negative-value>`. Follow POSIX conventions to return
 <negative-value> to indicate error.
 
-Update all callers to handle the error returns.
+Turn `exit()` to `return` calls in `bisect_checkout()`.
+Changes related to return values have no bad side effects on the
+code that calls `bisect_checkout()`.
 
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
 Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
@@ -93,88 +95,53 @@ Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
 Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
 Signed-off-by: Miriam Rubio <mirucam@gmail.com>
 ---
- bisect.c | 17 +++++++++++------
- bisect.h |  5 ++++-
- 2 files changed, 15 insertions(+), 7 deletions(-)
+ bisect.c | 19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
 diff --git a/bisect.c b/bisect.c
-index e4573c7ba1..85bda3500b 100644
+index 85bda3500b..f6582ddfed 100644
 --- a/bisect.c
 +++ b/bisect.c
-@@ -661,11 +661,11 @@ static void bisect_common(struct rev_info *revs)
- 		mark_edges_uninteresting(revs, NULL, 0);
+@@ -704,9 +704,10 @@ static int is_expected_rev(const struct object_id *oid)
+ 	return res;
  }
  
--static void exit_if_skipped_commits(struct commit_list *tried,
-+static enum bisect_error error_if_skipped_commits(struct commit_list *tried,
- 				    const struct object_id *bad)
+-static int bisect_checkout(const struct object_id *bisect_rev, int no_checkout)
++static enum bisect_error bisect_checkout(const struct object_id *bisect_rev, int no_checkout)
  {
- 	if (!tried)
--		return;
-+		return BISECT_OK;
+ 	char bisect_rev_hex[GIT_MAX_HEXSZ + 1];
++	enum bisect_error res = BISECT_OK;
  
- 	printf("There are only 'skip'ped commits left to test.\n"
- 	       "The first %s commit could be any of:\n", term_bad);
-@@ -676,7 +676,8 @@ static void exit_if_skipped_commits(struct commit_list *tried,
- 	if (bad)
- 		printf("%s\n", oid_to_hex(bad));
- 	printf(_("We cannot bisect more!\n"));
--	exit(2);
-+
-+	return BISECT_ONLY_SKIPPED_LEFT;
+ 	memcpy(bisect_rev_hex, oid_to_hex(bisect_rev), the_hash_algo->hexsz + 1);
+ 	update_ref(NULL, "BISECT_EXPECTED_REV", bisect_rev, NULL, 0, UPDATE_REFS_DIE_ON_ERR);
+@@ -716,14 +717,24 @@ static int bisect_checkout(const struct object_id *bisect_rev, int no_checkout)
+ 		update_ref(NULL, "BISECT_HEAD", bisect_rev, NULL, 0,
+ 			   UPDATE_REFS_DIE_ON_ERR);
+ 	} else {
+-		int res;
+ 		res = run_command_v_opt(argv_checkout, RUN_GIT_CMD);
+ 		if (res)
+-			exit(res);
++			/*
++			 * Errors in `run_command()` itself, signaled by res < 0,
++			 * and errors in the child process, signaled by res > 0
++			 * can both be treated as regular BISECT_FAILURE (-1).
++			 */
++			return -abs(res);
+ 	}
+ 
+ 	argv_show_branch[1] = bisect_rev_hex;
+-	return run_command_v_opt(argv_show_branch, RUN_GIT_CMD);
++	res = run_command_v_opt(argv_show_branch, RUN_GIT_CMD);
++	/*
++	 * Errors in `run_command()` itself, signaled by res < 0,
++	 * and errors in the child process, signaled by res > 0
++	 * can both be treated as regular BISECT_FAILURE (-1).
++	 */
++	return -abs(res);
  }
  
- static int is_expected_rev(const struct object_id *oid)
-@@ -950,6 +951,7 @@ enum bisect_error bisect_next_all(struct repository *r, const char *prefix, int
- 	struct rev_info revs;
- 	struct commit_list *tried;
- 	int reaches = 0, all = 0, nr, steps;
-+	enum bisect_error res = BISECT_OK;
- 	struct object_id *bisect_rev;
- 	char *steps_msg;
- 
-@@ -972,8 +974,9 @@ enum bisect_error bisect_next_all(struct repository *r, const char *prefix, int
- 		 * We should exit here only if the "bad"
- 		 * commit is also a "skip" commit.
- 		 */
--		exit_if_skipped_commits(tried, NULL);
--
-+		res = error_if_skipped_commits(tried, NULL);
-+		if (res < 0)
-+			exit(-res);
- 		printf(_("%s was both %s and %s\n"),
- 		       oid_to_hex(current_bad_oid),
- 		       term_good,
-@@ -990,7 +993,9 @@ enum bisect_error bisect_next_all(struct repository *r, const char *prefix, int
- 	bisect_rev = &revs.commits->item->object.oid;
- 
- 	if (oideq(bisect_rev, current_bad_oid)) {
--		exit_if_skipped_commits(tried, current_bad_oid);
-+		res = error_if_skipped_commits(tried, current_bad_oid);
-+		if (res)
-+			exit(-res);
- 		printf("%s is the first %s commit\n", oid_to_hex(bisect_rev),
- 			term_bad);
- 		show_diff_tree(r, prefix, revs.commits->item);
-diff --git a/bisect.h b/bisect.h
-index c921ead02c..19d90e4870 100644
---- a/bisect.h
-+++ b/bisect.h
-@@ -37,10 +37,13 @@ struct rev_list_info {
-  * commit has been found (and possibly checked out) and it
-  * should be tested.
-  * BISECT_FAILED error code: default error code.
-+ * BISECT_ONLY_SKIPPED_LEFT error code: only skipped
-+ * commits left to be tested.
-  */
- enum bisect_error {
- 	BISECT_OK = 0,
--	BISECT_FAILED = -1
-+	BISECT_FAILED = -1,
-+	BISECT_ONLY_SKIPPED_LEFT = -2
- };
- 
- enum bisect_error bisect_next_all(struct repository *r,
+ static struct commit *get_commit_reference(struct repository *r,
 -- 
 2.25.0
 
