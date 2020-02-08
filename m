@@ -8,61 +8,63 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 47DAEC35250
-	for <git@archiver.kernel.org>; Sat,  8 Feb 2020 09:08:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1644EC352A1
+	for <git@archiver.kernel.org>; Sat,  8 Feb 2020 09:08:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 22B7D22522
+	by mail.kernel.org (Postfix) with ESMTP id E5AF422314
 	for <git@archiver.kernel.org>; Sat,  8 Feb 2020 09:08:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y7i8U+1t"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fr2W6O+r"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727466AbgBHJIe (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1727478AbgBHJIf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 8 Feb 2020 04:08:35 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:50410 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727456AbgBHJIe (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 8 Feb 2020 04:08:34 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:54768 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727446AbgBHJIc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Feb 2020 04:08:32 -0500
-Received: by mail-wm1-f68.google.com with SMTP id g1so4824845wmh.4
-        for <git@vger.kernel.org>; Sat, 08 Feb 2020 01:08:30 -0800 (PST)
+Received: by mail-wm1-f65.google.com with SMTP id a5so4868736wmb.0
+        for <git@vger.kernel.org>; Sat, 08 Feb 2020 01:08:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=7cidQ2/1P7oKcKMitQp8G7KJy2dGBePySTf6krnU+sU=;
-        b=Y7i8U+1tj2OMRWDUAg2sL+IapXnnuj3kXd3BVkM/gDmFXG4zISVXPUG45tNTwu3pcW
-         FlU0kHg7XbSjn3HAUzXdr8VQtjmSR4Rq+v+0U0EYcOuDqND20se8K5EzFZyi9vgyHnYz
-         k8fyYSgGU1N9j0mK2HeT9A8gXrSkUIfUgs3LjZAwXjhksHop/1Ww3DZiAJeChPh9zlTq
-         lADFmMZiSmc58cRG5kF8cAhfCmABBNrx3fiDQF3nvis+tZPTfN7Z96TJOu0OrVvbWTpC
-         nFy0Qtt7b3P77BNRK/2+h4qPDackshOwjTOfwIOuFlcex9ncQMJ0b7McUGdB0bmPSXP+
-         d0sg==
+        bh=P7LEZGJjRIfYsumNABEw6099v9waAI03KQWY0SNTAtY=;
+        b=fr2W6O+rK3tpz0lKqY5Z23vkLkPSOuiRoNTCbcyFGLS+H4rc9EPIRkPESc9WarqIHt
+         DwFc7tcBZwPfQYTQ7xzliKAY22EBKs09NMZU2LDRMi/kaPw/aRDS9pcwYezRpepv7gMR
+         aMdYO7GThxQsh+9b7uR24X+nLmSw8UvXEAU7hPZ1T+MCjAhL3HtcEx6UTH+JWZ7SNyBG
+         ELZEWs7ttJPzAcl3h84+fPcVaLOmhNokh5XRWunFa6owXoPUs4PCEOTTnSsnkBefYzhX
+         sn7FjUXmNXQ3rR3DcI3alBkNcAGReQoZNqnTJ4gGJsRRBq2nnps86uFgLEzQ8z1JRZuZ
+         Cgxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=7cidQ2/1P7oKcKMitQp8G7KJy2dGBePySTf6krnU+sU=;
-        b=CJ3Z0r5xhsCjaZZJ3ltsONkzbWqQjGIonhNfX54ai9SwVoYtCDEM5uFPg/kYSwNFGF
-         mJsFIjOOfZHzttYqAFGhkjoSGMl8ukjeB+KEUpMnO9zsK2iLusm5KcDm67m8hAvWHYVQ
-         M52xmBMzVYIR14rtW8//+KgSSrxH50GWBuujOg78IaG0i73xxRMxzvZQgLOkegjWvxHH
-         CEIi0wslVRPXtOR/ANhlniOygMNqGyVO2m2uQmhoLugqxVVv7z1l2EqktHOEpCuX4lFi
-         T7Jb3+cSLGm+9WfPeh/xjhSvYurRsNy4vxVoBMaF71wZ1rrqlWGXSBYdCkJfzzG0lNjj
-         f63A==
-X-Gm-Message-State: APjAAAUTWeqDojQQiJIi5LVsV2HGisO3um8toi/LmML4UloCCMEn58zu
-        Xx+pwYRsF8vKFPc1BVEMGsAdwscF
-X-Google-Smtp-Source: APXvYqxplu5gOsMPSwQf4ogr68ka7FSJ72zVA/nsaWv5AN9tZ+ydHA+fwwcUZsjy5yuPv/E0lsbcuQ==
-X-Received: by 2002:a7b:ce8b:: with SMTP id q11mr3608395wmj.100.1581152909620;
-        Sat, 08 Feb 2020 01:08:29 -0800 (PST)
+        bh=P7LEZGJjRIfYsumNABEw6099v9waAI03KQWY0SNTAtY=;
+        b=bIIGCkplwYn8/7IOWYeEsfpgeh1IsUxYaof+O76nJ0S+DExZFbmKPIS/U+06pTz7IK
+         d8v3GBgOTwgGgh9pmLg2ehHG7sodLFG4tsRhkrIMaKhN/eV5M0JFeL/44Pd4X7pEChG4
+         wJQ5EYqMVLU6g3/mIQ5X3f9vUmzPWiHGW0zZ+1uKOQH/MS5TlzPS8PUt7+o66a4CzQ77
+         l34q1fDfOJvUZ2beY9ITQsM2FHMl4/0VxLNheSilD8LEaQCZ9cbmQvbwsSoDRpve6tDr
+         TY5gqta4KGRorZX+BIpWWpwthaLu9gtinIrmWPITiYRxkYB1Zjzf4ybXghiQeqvJUR69
+         ezZQ==
+X-Gm-Message-State: APjAAAX/ePXSAN5Nxqb4n7UNDx7fmWyZ/6TtLa6vv5kXOA4/cC/gs6Yj
+        QpQmhCK6j9ukkzTWjybW7LXPDDUK
+X-Google-Smtp-Source: APXvYqzclBXWmG+zAypPYmkHfJ38fLxEn0Yb7Ix5osKCi5FWTwTQW8gFlzTTpU8KQvAKExhkcdulZw==
+X-Received: by 2002:a1c:65d6:: with SMTP id z205mr3456704wmb.38.1581152912023;
+        Sat, 08 Feb 2020 01:08:32 -0800 (PST)
 Received: from localhost.localdomain ([139.47.115.4])
-        by smtp.gmail.com with ESMTPSA id e1sm6999346wrt.84.2020.02.08.01.08.28
+        by smtp.gmail.com with ESMTPSA id e1sm6999346wrt.84.2020.02.08.01.08.30
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 08 Feb 2020 01:08:29 -0800 (PST)
+        Sat, 08 Feb 2020 01:08:31 -0800 (PST)
 From:   Miriam Rubio <mirucam@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Tanushree Tumane <tanushreetumane@gmail.com>,
+Cc:     Pranit Bauva <pranit.bauva@gmail.com>,
         Christian Couder <chriscool@tuxfamily.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Tanushree Tumane <tanushreetumane@gmail.com>,
         Miriam Rubio <mirucam@gmail.com>
-Subject: [PATCH v3 05/13] bisect--helper: introduce new `decide_next()` function
-Date:   Sat,  8 Feb 2020 10:06:56 +0100
-Message-Id: <20200208090704.26506-6-mirucam@gmail.com>
+Subject: [PATCH v3 07/13] bisect--helper: return error codes from `cmd_bisect__helper()`
+Date:   Sat,  8 Feb 2020 10:06:58 +0100
+Message-Id: <20200208090704.26506-8-mirucam@gmail.com>
 X-Mailer: git-send-email 2.25.0
 In-Reply-To: <20200208090704.26506-1-mirucam@gmail.com>
 References: <20200208090704.26506-1-mirucam@gmail.com>
@@ -73,119 +75,36 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Tanushree Tumane <tanushreetumane@gmail.com>
+From: Pranit Bauva <pranit.bauva@gmail.com>
 
-Let's refactor code from bisect_next_check() into a new
-decide_next() helper function.
+Since we want to get rid of git-bisect.sh, it would be necessary
+to convert bisect.c exit() calls to return statements so
+that errors can be reported. Let's prepare for that by making
+it possible to return different error codes than just 0 or 1.
 
-This removes some goto statements and makes the code simpler,
-clearer and easier to understand.
-
-While at it `bad_ref` and `good_glob` are not const any more
-to void casting them inside `free()`.
+Different error codes might enable a bisecting script calling the
+bisect command that uses this function to do different things
+depending on the exit status of the bisect command.
 
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
 Signed-off-by: Miriam Rubio <mirucam@gmail.com>
 ---
- builtin/bisect--helper.c | 66 +++++++++++++++++++++-------------------
- 1 file changed, 34 insertions(+), 32 deletions(-)
+ builtin/bisect--helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index 21de5c096c..e21d3d1a4c 100644
+index e21d3d1a4c..e6bd4d6645 100644
 --- a/builtin/bisect--helper.c
 +++ b/builtin/bisect--helper.c
-@@ -291,26 +291,14 @@ static const char need_bisect_start_warning[] =
- 	   "You then need to give me at least one %s and %s revision.\n"
- 	   "You can use \"git bisect %s\" and \"git bisect %s\" for that.");
- 
--static int bisect_next_check(const struct bisect_terms *terms,
--			     const char *current_term)
-+static int decide_next(const struct bisect_terms *terms,
-+		       const char *current_term, int missing_good,
-+		       int missing_bad)
- {
--	int missing_good = 1, missing_bad = 1, res = 0;
--	const char *bad_ref = xstrfmt("refs/bisect/%s", terms->term_bad);
--	const char *good_glob = xstrfmt("%s-*", terms->term_good);
--
--	if (ref_exists(bad_ref))
--		missing_bad = 0;
--
--	for_each_glob_ref_in(mark_good, good_glob, "refs/bisect/",
--			     (void *) &missing_good);
--
- 	if (!missing_good && !missing_bad)
--		goto finish;
--
--	if (!current_term) {
--		res = -1;
--		goto finish;
--	}
-+		return 0;
-+	if (!current_term)
-+		return -1;
- 
- 	if (missing_good && !missing_bad &&
- 	    !strcmp(current_term, terms->term_good)) {
-@@ -321,7 +309,7 @@ static int bisect_next_check(const struct bisect_terms *terms,
- 		 */
- 		warning(_("bisecting only with a %s commit"), terms->term_bad);
- 		if (!isatty(0))
--			goto finish;
-+			return 0;
- 		/*
- 		 * TRANSLATORS: Make sure to include [Y] and [n] in your
- 		 * translation. The program will only accept English input
-@@ -329,21 +317,35 @@ static int bisect_next_check(const struct bisect_terms *terms,
- 		 */
- 		yesno = git_prompt(_("Are you sure [Y/n]? "), PROMPT_ECHO);
- 		if (starts_with(yesno, "N") || starts_with(yesno, "n"))
--			res = -1;
--		goto finish;
--	}
--	if (!is_empty_or_missing_file(git_path_bisect_start())) {
--		res = error(_(need_bad_and_good_revision_warning),
--			       vocab_bad, vocab_good, vocab_bad, vocab_good);
--	} else {
--		res = error(_(need_bisect_start_warning),
--			       vocab_good, vocab_bad, vocab_good, vocab_bad);
-+			return -1;
-+		return 0;
+@@ -713,5 +713,5 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 		return error("BUG: unknown subcommand '%d'", cmdmode);
  	}
- 
--finish:
--	free((void *) good_glob);
--	free((void *) bad_ref);
--	return res;
-+	if (!is_empty_or_missing_file(git_path_bisect_start()))
-+		return error(_(need_bad_and_good_revision_warning),
-+			     vocab_bad, vocab_good, vocab_bad, vocab_good);
-+	else
-+		return error(_(need_bisect_start_warning),
-+			     vocab_good, vocab_bad, vocab_good, vocab_bad);
-+}
-+
-+static int bisect_next_check(const struct bisect_terms *terms,
-+			     const char *current_term)
-+{
-+	int missing_good = 1, missing_bad = 1;
-+	char *bad_ref = xstrfmt("refs/bisect/%s", terms->term_bad);
-+	char *good_glob = xstrfmt("%s-*", terms->term_good);
-+
-+	if (ref_exists(bad_ref))
-+		missing_bad = 0;
-+
-+	for_each_glob_ref_in(mark_good, good_glob, "refs/bisect/",
-+			     (void *) &missing_good);
-+
-+	free(good_glob);
-+	free(bad_ref);
-+
-+	return decide_next(terms, current_term, missing_good, missing_bad);
+ 	free_terms(&terms);
+-	return !!res;
++	return abs(res);
  }
- 
- static int get_terms(struct bisect_terms *terms)
 -- 
 2.25.0
 
