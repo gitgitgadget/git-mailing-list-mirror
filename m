@@ -8,61 +8,60 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 81175C352A4
-	for <git@archiver.kernel.org>; Sat,  8 Feb 2020 09:08:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F1457C35254
+	for <git@archiver.kernel.org>; Sat,  8 Feb 2020 09:08:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id F3A07217BA
+	by mail.kernel.org (Postfix) with ESMTP id C93EE22314
 	for <git@archiver.kernel.org>; Sat,  8 Feb 2020 09:08:32 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YCA6UY6y"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FDbHr3hq"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727443AbgBHJIb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 8 Feb 2020 04:08:31 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:39032 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727379AbgBHJIa (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1727403AbgBHJIa (ORCPT <rfc822;git@archiver.kernel.org>);
         Sat, 8 Feb 2020 04:08:30 -0500
-Received: by mail-wm1-f68.google.com with SMTP id c84so5237003wme.4
-        for <git@vger.kernel.org>; Sat, 08 Feb 2020 01:08:29 -0800 (PST)
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:37164 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726920AbgBHJI3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Feb 2020 04:08:29 -0500
+Received: by mail-wm1-f65.google.com with SMTP id f129so5251839wmf.2
+        for <git@vger.kernel.org>; Sat, 08 Feb 2020 01:08:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=+qCo2LVoN7kUc0bghjWPOu/0zLYqhaSIxCXScK4jhRc=;
-        b=YCA6UY6yJ/TFf0j9omZy0IxcZjSISajwJT1TA889O8YPAqJdF3hEVa8K8Mll6i0cjN
-         riZOJZxcKFO6m7H2XeZDtAy0lAcHhCrW4y1i6H+nqsMEm/lgIx77xk0EoiLtxDVWH7Ff
-         vjDKF2xoz2w5CfOCrt5Zu9XAJU9l8u+y962UIKGEYtWee6/Nk9l83qwkm7SWseoS+ymX
-         FPMhNuyqC4bcsWBZGY8V1R1y7HSYZSe6Lqsa6jM+ilHIwuu6iI02lLlihsy5nH+BGQuU
-         z1KHp5hnbO5L1wXgYE7Aq412NzS8VSXSAcmy/37+u3xs0tmr0sUhR/X5Iyr6e8/w9MW+
-         Ai3w==
+        bh=F/E7cK3VSiOwE85cFoKaYycycoziCZiL2QoxWjjLcEQ=;
+        b=FDbHr3hqag5akZNKfylSfOUnqOLzT4U1XQ3Bfn5VEHaEWuoqGu9QZroG979GubdEfx
+         wV724Wwh3hJS7MrTRZaCXUgOAJ7Gtj0ZfAf7t/yiXfGs1+L6bqb4KvQ8ppWjuwC0f/4m
+         CHcYI8ajJZnpeIXSjYBWxz9vBS2rJv3xiYgMSi5gFn+tjkH3bz4Ns1zXXqiHEoEYNmUW
+         hhE6kK6DB7jWlEcPiMv02Z5JVuEL/0lHAtEMHUmLArS0MwHgsgdP+xxuQ5vS/993XFUm
+         nHwFjGqXwYtHSTl4inGlaVIUqkIDxOabbyIhGJJqqM6LnbuQgwAHaGyDPdqzKMxDbpf4
+         r3Fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=+qCo2LVoN7kUc0bghjWPOu/0zLYqhaSIxCXScK4jhRc=;
-        b=HNjJZjVX5+8nAHHUnvnKZbqd7NfQ1LbtAHgx2y2Cb44fxDKlmciv1MM5wI4iSO6yga
-         2updH1mXpF8CH7DzREUtqrzR7gEVCRGtFqUJNaO8A+Z3Te5WAbOBNPHQH9UUk/z/Wvib
-         g4evU5+MaStRiM5JXjjdMEhOAEdOY68/rHyGXSMHK5fZhl+AQ3MaCDaOTNun2Y4+3HB6
-         FkLkxNWy5IChpAjXVUFuvCLNdLaCnqxxBukCbM7r+LDp0kEnSTv3pOcbP9/p6hMqdahf
-         ne3ZmGxA+bSzZ5o/toJizuSnxal9jlbwvbyC+x5JOw7gViNTONRy+Abz1sCM+z5CShqg
-         hsCQ==
-X-Gm-Message-State: APjAAAVwxJw9iGKOJeMSXcKywYZHSolRn1QdKUgGyg1XF6p+fcIjds2j
-        vY4hELkF/ohnYDQGw2P+CgqgmmsY
-X-Google-Smtp-Source: APXvYqzW+zLre+andgvnEomheb5y+JvGZIQMWBZHfFUGS7D/v4qr7dZZIwC2wyoyrzJ+IjNSBxYmTQ==
-X-Received: by 2002:a1c:a752:: with SMTP id q79mr3389055wme.64.1581152908502;
-        Sat, 08 Feb 2020 01:08:28 -0800 (PST)
+        bh=F/E7cK3VSiOwE85cFoKaYycycoziCZiL2QoxWjjLcEQ=;
+        b=gW4j2w3WUOr7Q5O5GcuuAsd2HGXHs75G6e5xjxiiHCs3NCCu9xEFo/79PYZxLkhL0H
+         ckhIlT3nPtHrrQRKDDQEfFGg2pwbmzBPgvHfRfaVZcmYeiNKJPlMvszoowBNdX+45YRT
+         CtB8u/19QGEU0rqYFb6Y7N3qELTM3vFjnLhSyh8pW/6KE+sITqqJYdI9f1b7+ydLB/d/
+         h82C/xpPGrKSDenKofSeccoXDHZJ3cz+5GmTLj0CR59tdwJudsUql1BHXbz0xg4h8Gnt
+         KHC71qPDGu3PdVbP852g19sMtQt7q1QcvJ+MvNSTHwtb3FIbAfsFX3y2znqxtsbTnZk2
+         NUqQ==
+X-Gm-Message-State: APjAAAU1kZUGGxLMWnnsjgKn4NF9pwa87sljiIUqHWDLjb8vt5BFRqp4
+        X21xAae+CezfxX5Me3XbCAMDjFSp
+X-Google-Smtp-Source: APXvYqxTKcYCbVrioiSh4YfUHRkMOPmMF3U6FYyx1cRTs1+AwBc3V2tmxANDXkOUwRjW2zuLZh7AQQ==
+X-Received: by 2002:a7b:c109:: with SMTP id w9mr3508178wmi.14.1581152907375;
+        Sat, 08 Feb 2020 01:08:27 -0800 (PST)
 Received: from localhost.localdomain ([139.47.115.4])
-        by smtp.gmail.com with ESMTPSA id e1sm6999346wrt.84.2020.02.08.01.08.27
+        by smtp.gmail.com with ESMTPSA id e1sm6999346wrt.84.2020.02.08.01.08.26
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 08 Feb 2020 01:08:28 -0800 (PST)
+        Sat, 08 Feb 2020 01:08:26 -0800 (PST)
 From:   Miriam Rubio <mirucam@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Pranit Bauva <pranit.bauva@gmail.com>,
-        Tanushree Tumane <tanushreetumane@gmail.com>,
-        Miriam Rubio <mirucam@gmail.com>
-Subject: [PATCH v3 04/13] run-command: make `exists_in_PATH()` non-static
-Date:   Sat,  8 Feb 2020 10:06:55 +0100
-Message-Id: <20200208090704.26506-5-mirucam@gmail.com>
+Cc:     Miriam Rubio <mirucam@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH v3 03/13] bisect: use the standard 'if (!var)' way to check for 0
+Date:   Sat,  8 Feb 2020 10:06:54 +0100
+Message-Id: <20200208090704.26506-4-mirucam@gmail.com>
 X-Mailer: git-send-email 2.25.0
 In-Reply-To: <20200208090704.26506-1-mirucam@gmail.com>
 References: <20200208090704.26506-1-mirucam@gmail.com>
@@ -73,60 +72,37 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Pranit Bauva <pranit.bauva@gmail.com>
+Instead of using 'var == 0' in an if condition, let's use '!var' and
+make 'bisect.c' more consistent with the rest of the code.
 
-Removes the `static` keyword from `exists_in_PATH()` function
-and declares the function in `run-command.h` file.
-The function will be used in bisect_visualize() in a later
-commit.
-
-`exists_in_PATH()` and `locate_in_PATH()` functions don't
-depend on file-local variables.
-
-Mentored by: Christian Couder <chriscool@tuxfamily.org>
-Mentored by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
+Mentored-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Miriam Rubio <mirucam@gmail.com>
 ---
- run-command.c |  2 +-
- run-command.h | 11 +++++++++++
- 2 files changed, 12 insertions(+), 1 deletion(-)
+ bisect.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/run-command.c b/run-command.c
-index f5e1149f9b..4df975178d 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -210,7 +210,7 @@ static char *locate_in_PATH(const char *file)
- 	return NULL;
- }
- 
--static int exists_in_PATH(const char *file)
-+int exists_in_PATH(const char *file)
+diff --git a/bisect.c b/bisect.c
+index e81c91d02c..83cb5b3a98 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -572,7 +572,7 @@ static int sqrti(int val)
  {
- 	char *r = locate_in_PATH(file);
- 	int found = r != NULL;
-diff --git a/run-command.h b/run-command.h
-index 592d9dc035..7c8e206d97 100644
---- a/run-command.h
-+++ b/run-command.h
-@@ -172,6 +172,17 @@ void child_process_clear(struct child_process *);
+ 	float d, x = val;
  
- int is_executable(const char *name);
+-	if (val == 0)
++	if (!val)
+ 		return 0;
  
-+/**
-+ * Returns if a $PATH given by parameter is found or not (it is NULL). This
-+ * function uses locate_in_PATH() function that emulates the path search that
-+ * execvp would perform. Memory used to store the resultant path is freed by
-+ * the function.
-+ *
-+ * The caller should ensure that $PATH contains no directory
-+ * separators.
-+ */
-+int exists_in_PATH(const char *);
-+
- /**
-  * Start a sub-process. Takes a pointer to a `struct child_process`
-  * that specifies the details and returns pipe FDs (if requested).
+ 	do {
+@@ -869,7 +869,7 @@ static void check_good_are_ancestors_of_bad(struct repository *r,
+ 		goto done;
+ 
+ 	/* Bisecting with no good rev is ok. */
+-	if (good_revs.nr == 0)
++	if (!good_revs.nr)
+ 		goto done;
+ 
+ 	/* Check if all good revs are ancestor of the bad rev. */
 -- 
 2.25.0
 
