@@ -2,124 +2,85 @@ Return-Path: <SRS0=3Zv9=35=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 431C0C2BA83
-	for <git@archiver.kernel.org>; Sun,  9 Feb 2020 17:44:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B12B3C2BA83
+	for <git@archiver.kernel.org>; Sun,  9 Feb 2020 17:56:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0B431207FF
-	for <git@archiver.kernel.org>; Sun,  9 Feb 2020 17:44:56 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="uSOLv9MR"
+	by mail.kernel.org (Postfix) with ESMTP id 760C62081E
+	for <git@archiver.kernel.org>; Sun,  9 Feb 2020 17:56:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727427AbgBIRoz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 9 Feb 2020 12:44:55 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53102 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727413AbgBIRoz (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Feb 2020 12:44:55 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E63733B0D4;
-        Sun,  9 Feb 2020 12:44:52 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Q0xf0zTzqhiwxfrNhmcXFmu/V5s=; b=uSOLv9
-        MRVdkwnZJ051oCeD60rc7lMzcqXUOBk1KveXpMhY2fjjfNFfwSRxm0zbt8myK/SG
-        yCritWEyMRes52l+ZjMo8gf1fG85007zC+3dAjKrmS11CsiBzI1nGhqovX6Fwwo5
-        U6Yi1yRuq/WHsCv0KQ4nXOXACutsNrXPD3Cdo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Af98VsT2fnnu1Y+SdQvmhfKERj0EDx9e
-        aOpiAdACqMsMCQPlzUBZDRRdn1oVX4dEdapFfK2tNkakPGcE+PdPBBsKikx/FW1F
-        7THIc4CqNc7UKGbk1Z3eBPxPnuG/6C6cKUcHj26R9iaEsrlzX6RsOmR5MiC2PytW
-        BK9kKBT/btI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id DBC253B0D3;
-        Sun,  9 Feb 2020 12:44:52 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4D8E23B0D1;
-        Sun,  9 Feb 2020 12:44:52 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "i.Dark_Templar" <darktemplar@dark-templar-archives.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC PATCH 1/3] git-merge: add option to format default message using multiple lines
-References: <20200209131623.5827-1-darktemplar@dark-templar-archives.net>
-        <20200209131623.5827-2-darktemplar@dark-templar-archives.net>
-Date:   Sun, 09 Feb 2020 09:44:51 -0800
-In-Reply-To: <20200209131623.5827-2-darktemplar@dark-templar-archives.net>
-        (i. Dark Templar's message of "Sun, 9 Feb 2020 16:16:21 +0300")
-Message-ID: <xmqqtv3z1wq4.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1727813AbgBIR4N convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Sun, 9 Feb 2020 12:56:13 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:39135 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727787AbgBIR4N (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Feb 2020 12:56:13 -0500
+Received: by mail-wm1-f66.google.com with SMTP id c84so7977671wme.4
+        for <git@vger.kernel.org>; Sun, 09 Feb 2020 09:56:11 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=aFUpogqxspNYJdx/9Xa5eP9PjIye2oQOuQT6BI5nPRM=;
+        b=pZ/LxMuLBP4wYf0epaQET5MyMw3CaNQOKJnrkFEx6mU6RjM872H8vRYegbFQ0zwrYZ
+         +gqlzgNe6GXwtESnjgCfh8M2sGwBd944ZVb0jE6SEFLaNLzy9s3U85lXbZ+omoK5w3+A
+         wGEqRJGgPi7hiCNuweteKIvAWMJ4pH/GH8pkLYGPp7zclv4sFrJeMtkxoB/dQLJPb8zu
+         QobmHSqxVYZzXuj7r399U30bip4Zk88VNI3IwczU6zdvy4NSKyknaFHKKUXctC98US8O
+         I+YHv1rJhoRq1/qnlwfAv5QpJMpeDYnz+w8pshsfjxvd/wkqY94PQv4a3W/SYAEgwP6R
+         +spQ==
+X-Gm-Message-State: APjAAAVd+lXfGhTBQG/7iq1uzoCgBcWmSyYACw7XeVqiCF2y6pwhffAu
+        S3bqMpXw60Roi6dxwSdsXYBzyHdKvwXOBtUxZaY=
+X-Google-Smtp-Source: APXvYqzKClei4Zh74FYxZ6x7Gzhoj4zjAlYeBQjTZRepdPdVumT+5Vq83BakW7ziomBXyYb0OijOqPi6zfoOpPzVUOU=
+X-Received: by 2002:a7b:c190:: with SMTP id y16mr10628186wmi.107.1581270970991;
+ Sun, 09 Feb 2020 09:56:10 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E0300F0E-4B63-11EA-9B10-C28CBED8090B-77302942!pb-smtp1.pobox.com
+References: <11b82734-f61c-5e73-2d0c-22208c06d495@web.de> <c729aaab-68d7-9cfa-8981-97eaa72a5ebe@web.de>
+In-Reply-To: <c729aaab-68d7-9cfa-8981-97eaa72a5ebe@web.de>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sun, 9 Feb 2020 12:56:00 -0500
+Message-ID: <CAPig+cQpzc6eZyOo9N=4sR3pBFza299rRn_wP0w2W7Zf5CWThg@mail.gmail.com>
+Subject: Re: [PATCH 2/4] parse-options: factor out parse_options_count()
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"i.Dark_Templar" <darktemplar@dark-templar-archives.net> writes:
-
-> If a lot of objects is merged at once, default commit message
-> could become one very long line, which might be inconvenient to read.
-> This change implements an option to change default autogenerated message
-> so it'd take multiple lines, but each line wouldn't be long.
-> 
-> An artificial example.
+On Sun, Feb 9, 2020 at 10:56 AM René Scharfe <l.s.r@web.de> wrote:
+> Add a helper function to count the number of options (excluding the
+> final OPT_END()) and use it to simplify parse_options_dup() and
+> parse_options_concat().
 >
-> Original merge commit message:
->     Merge branch 'branch_with_some_long_name_1', remote-tracking branch 'clone/remote_branch_with_some_name', tags 'some_tag' and 'some_other_tag'; commit 'ae46a39cead2b42282abce725e90b561c06e94ba'; commit '33d0281e0eeb2a5e9907ebedc230e28c46865092' into merge7
+> Signed-off-by: René Scharfe <l.s.r@web.de>
+> ---
+> diff --git a/parse-options-cb.c b/parse-options-cb.c
+> @@ -159,16 +159,20 @@ int parse_opt_tertiary(const struct option *opt, const char *arg, int unset)
+>  struct option *parse_options_dup(const struct option *o)
+>  {
+>         const struct option *orig = o;
+>         struct option *opts;
+> -       int nr = 0;
+> -
+> -       while (o && o->type != OPTION_END) {
+> -               nr++;
+> -               o++;
+> -       }
+> +       size_t nr = parse_options_count(o);
 >
-> Multiline merge commit message:
->     Merge into merge8:
->     branch 'branch_with_some_long_name_1'
->     remote-tracking branch 'clone/remote_branch_with_some_name'
->     tag 'some_tag'
->     tag 'some_other_tag'
->     commit 'ae46a39cead2b42282abce725e90b561c06e94ba'
->     commit '33d0281e0eeb2a5e9907ebedc230e28c46865092'
+>         ALLOC_ARRAY(opts, nr + 1);
+>         COPY_ARRAY(opts, orig, nr);
 
-
-How would these commits appear in the "git shorlog" output?  Losing
-some information is OK (after all, you are making the 'title' of the
-merge commit less crowded to prefer 'simpler' summary in exchange),
-but you'd need to strike a good balance what to discard.  Is the
-fact that the name of branch that got some unspecified new things
-was 'merge8' the most important thing to convey?
-
-If you make the commit 'title' a short one-line summary, you MUST
-have a blank line after that line.  Otherwise, the 'where does the
-title of this commit object end?' logic will helpfully merge all the
-lines in the first paragraph (i.e. up to the first blank line) into
-one long line, defeating your effort to make the summary simpler by
-losing details.  That is:
-
-    Merge 6 commits into merge8
-
-    branch 'branch_with_some_long_name_1'
-    remote-tracking ...
-    ...
-
-That's it for the 'mechanics', i.e. a discussion about how a good
-design of this 'feature' should look like.
-
-About the feature itself, I am not sure.  Even though I admit I was
-the one who invented octupus merges, and it does make the history
-look "pretty" in gitk when used judiciously, its practical benefit
-over repeated pairwise merges is doubtful.  Besides, it makes
-bisection less efficient.  So from that point of view, I am not sure
-if we want a feature to encourage creation of more octopus merges.
-
-I haven't read the code yet---I usually don't before figuring out if
-the feature and its design makes sense---so I have no comment on the
-actual change at this moment.  I may send a separate review message
-later.
-
-Thanks.
+This could use a little more cleanup. After this change, 'o' is never
+again consulted or changed, and 'orig' points at the original value of
+'o', which means 'o' and 'orig' have the same value now always.
+Therefore, the additional cleanup would be to drop the declaration and
+assignment of 'orig' and reference 'o' in COPY_ARRAY() rather than
+'orig'.
