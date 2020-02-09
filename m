@@ -2,87 +2,91 @@ Return-Path: <SRS0=3Zv9=35=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D84CDC2BA83
-	for <git@archiver.kernel.org>; Sun,  9 Feb 2020 17:27:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C377AC352A4
+	for <git@archiver.kernel.org>; Sun,  9 Feb 2020 17:36:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 9E0F220733
-	for <git@archiver.kernel.org>; Sun,  9 Feb 2020 17:27:19 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="a0ulpu92"
+	by mail.kernel.org (Postfix) with ESMTP id A6340207FF
+	for <git@archiver.kernel.org>; Sun,  9 Feb 2020 17:36:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727420AbgBIR1S (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 9 Feb 2020 12:27:18 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52476 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727409AbgBIR1S (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Feb 2020 12:27:18 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7A86B59C1B;
-        Sun,  9 Feb 2020 12:27:17 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=bUAQg6c4zT49K1zKSzgLl7VeQkQ=; b=a0ulpu
-        92RQ0hyRwZjEsD28vbXqJEBBb6NL1JK3UjxZKt3DtO09AJnG0zOF3ajnp6qOsqz+
-        vKnTczq+2fgxtZqA5lvw8iCmyxBpwLjsjbN1a0XWGvztWTkd9Vu8zDBKcOo7McgO
-        hvSmNfr4sqxCotcXQLq4yTYw5EuDrbfx79KFg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=gFkJArQg5SEbfqJL+yczZrFlFjne/6pz
-        9zQFm8z9HfU/HqPDoQOwSr4SGerELkccJ/Y87qTYWSgbUzhiNdqaIUwceUTZWEhs
-        uP0rl7KWVaxjnb9btue2ur5OGM57GvRCadq2zt5lcZ+HqG+bKhtCT3cdjjI7BQ51
-        uJ2oNkbailg=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 701FE59C1A;
-        Sun,  9 Feb 2020 12:27:17 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 97CA559C17;
-        Sun,  9 Feb 2020 12:27:16 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Finn Bryant <finnbryant@gmail.com>
-Subject: Re: [PATCH v4 00/15] Harden the sparse-checkout builtin
-References: <pull.513.v3.git.1580236003.gitgitgadget@gmail.com>
-        <pull.513.v4.git.1580501775.gitgitgadget@gmail.com>
-        <CABPp-BHoEgYXgzxjweWDR2BZPhLdW9wcbWzwo6N+HF2kste3WA@mail.gmail.com>
-        <f28beb17-50dc-ff53-46bf-35010d48d23d@gmail.com>
-        <20200208233247.GD33529@syl.local>
-Date:   Sun, 09 Feb 2020 09:27:15 -0800
-In-Reply-To: <20200208233247.GD33529@syl.local> (Taylor Blau's message of
-        "Sat, 8 Feb 2020 15:32:47 -0800")
-Message-ID: <xmqq1rr33c3w.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1727409AbgBIRgf convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Sun, 9 Feb 2020 12:36:35 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:46085 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727406AbgBIRgf (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Feb 2020 12:36:35 -0500
+Received: by mail-wr1-f65.google.com with SMTP id z7so4632256wrl.13
+        for <git@vger.kernel.org>; Sun, 09 Feb 2020 09:36:34 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=G6CO+USGkQFFv4mkN1q1T24HzbhAxIRVOdukLORV/p8=;
+        b=ipCPLmujizGJfK9smZ3KjJSdHiQYCpyTtbYS4fazIgVHDBpImGJ0pJk9i7n373WZHy
+         4HQ3GT0uiRC2pLOkdjAjxwpRwpGqw8nbHxaR8PHaLeXBjR40/LxkZ5Xq2oUEXHobACVg
+         LdhwJ47ZlwIaxpTCUz7rTsNwH2LvruA8H25fjadEUkJhyy+h7qb/JRgn6mOaKce8W73L
+         wiwVLlHETNKVFr4Gw5TGMzKFvJHpurTPHj4r3jg9T1eA6Xkrw82TVnRFHqE1BtFouRDF
+         KGBiKUSVrctKCiyx6mG3ZexXrMTElwxsaHfIQGEdOFNEqYDo2M9+VCXr1Np07Qdz+1Pa
+         fxZA==
+X-Gm-Message-State: APjAAAXd9dpwFAy75ldwU59A/iMW0iePX/frty7O1EujSh/LkQvCBcmq
+        kG/nrVApcgj58yVD0O/hCXz8CojmJF8zMW2yC6c=
+X-Google-Smtp-Source: APXvYqxL6TSICbodVhh/IZuEaLSEnnXjkCyNq7aOePJE4KftM+S1RC9uiea+voEKGlfy279Ze6Te+CE2Zmdqnfjxd+U=
+X-Received: by 2002:adf:fd87:: with SMTP id d7mr12529054wrr.226.1581269793513;
+ Sun, 09 Feb 2020 09:36:33 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 6AF26AD6-4B61-11EA-B92C-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+References: <019be197-e0aa-1234-e16f-6561d8340023@web.de> <b31c46a8-380b-3528-27a5-a2dddacaf837@web.de>
+In-Reply-To: <b31c46a8-380b-3528-27a5-a2dddacaf837@web.de>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sun, 9 Feb 2020 12:36:22 -0500
+Message-ID: <CAPig+cQdJ0NJSWZN-2ckeLB7RfU9GZ7LGvVX4y+Q1daPnW8WsA@mail.gmail.com>
+Subject: Re: [PATCH v2] strbuf: add and use strbuf_insertstr()
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
-
-> On Mon, Feb 03, 2020 at 09:09:54AM -0500, Derrick Stolee wrote:
-> ...
-> Thanks for including these. I haven't been super active in the earlier
-> rounds of review on this series, but I gave a thorough look to what you
-> have in v4, and it all looks good to me.
+On Sun, Feb 9, 2020 at 8:45 AM René Scharfe <l.s.r@web.de> wrote:
+> Add a function for inserting a C string into a strbuf.  Use it
+> throughout the source to get rid of magic string length constants and
+> explicit strlen() calls.
 >
-> Please consider this:
+> Like strbuf_addstr(), implement it as an inline function to avoid the
+> implicit strlen() calls to cause runtime overhead.
 >
->   Reviewed-by: Taylor Blau <me@ttaylorr.com>
+> Signed-off-by: René Scharfe <l.s.r@web.de>
+> ---
+> diff --git a/mailinfo.c b/mailinfo.c
+> @@ -570,7 +570,7 @@ static int check_header(struct mailinfo *mi,
+>                 len = strlen("Content-Type: ");
+>                 strbuf_add(&sb, line->buf + len, line->len - len);
+>                 decode_header(mi, &sb);
+> -               strbuf_insert(&sb, 0, "Content-Type: ", len);
+> +               strbuf_insertstr(&sb, 0, "Content-Type: ");
+>                 handle_content_type(mi, &sb);
 
-Thanks, all.
+Meh. We've already computed the length of "Content-Type: " a few lines
+earlier, so taking advantage of that value when inserting the string
+literal is perfectly sensible. Thus, I'm not convinced that this
+change is an improvement.
+
+Digging deeper, though, I have to wonder why this bothers inserting
+"Content-Type: " at all. None of the other cases handled by
+check_header() bother re-inserting the header, so why this one? I
+thought it might be because handle_content_type() depends upon the
+header being present, but from my reading, this does not appear to be
+the case. handle_content_type() calls has_attr_value() and
+slurp_attr() to examine the incoming line, but neither of those seem
+to expect any sort of "<Header>: " either. Thus, it appears that the
+insertion of "Content-Type: " is superfluous. If this is indeed the
+case, then rather than converting this to strbuf_insertstr(), I could
+see it being pulled out into a separate patch which merely removes the
+strbuf_insert() call.
