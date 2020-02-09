@@ -8,135 +8,113 @@ X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92720C2BA83
-	for <git@archiver.kernel.org>; Sun,  9 Feb 2020 18:28:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BE979C2BA83
+	for <git@archiver.kernel.org>; Sun,  9 Feb 2020 18:36:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 51BB3207FF
-	for <git@archiver.kernel.org>; Sun,  9 Feb 2020 18:28:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 92E5620733
+	for <git@archiver.kernel.org>; Sun,  9 Feb 2020 18:36:42 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="M0L/j/z9"
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="YiBTpX/8"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727413AbgBIS2j (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 9 Feb 2020 13:28:39 -0500
-Received: from mout.web.de ([212.227.15.14]:52273 "EHLO mout.web.de"
+        id S1727447AbgBISgl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 9 Feb 2020 13:36:41 -0500
+Received: from mout.web.de ([212.227.15.14]:60299 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727388AbgBIS2j (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Feb 2020 13:28:39 -0500
+        id S1727416AbgBISgl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Feb 2020 13:36:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1581272913;
-        bh=3ZE34+sO/uvcLc4GgmFFGrUmWVgYeINUJQaTyWCqYZ0=;
+        s=dbaedf251592; t=1581273398;
+        bh=lpu3vkeu80Blzk5xIGdZ5nWYJddfZo3jpdLf7+BDCDg=;
         h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=M0L/j/z9XWVHEoUDP9AuB4XNsoYxfMlF6v2ZnP7BtPjwSsvi+Ey4rL+O6x4yNBAZz
-         /OFGXSxA/iadhtqoIEfyI/LKGFZq5QsrdhQDOmLdAr2oLxayMs2KXgZMMd3L3/Wtf9
-         392dtCLnPaO8V99zH9CIW69rcByFZv81m842qLOc=
+        b=YiBTpX/8p6oY2oIZIDlr8EqzHCHf0fwk+sRoO1mtdVJ9MuqxvqCCSnT0DcXsJH+K9
+         8v0mQQx3QR1lcJMHnnsUMyggrqY+lt4vFjEQgFFQnIu4c/7DPvBJCa9w/VwWrZ8Y4I
+         qwGuSEBmDbHwDu+DzUrzDYnm2vvpCWD1CKywiomo=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([91.47.145.153]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MCZTG-1jAEzK4C0I-009SdI; Sun, 09
- Feb 2020 19:28:33 +0100
-Subject: Re: [PATCH v2] strbuf: add and use strbuf_insertstr()
+Received: from [192.168.178.26] ([91.47.145.153]) by smtp.web.de (mrweb004
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0M9ui8-1jBu3h3Lzc-00B73J; Sun, 09
+ Feb 2020 19:36:37 +0100
+Subject: Re: [PATCH 2/4] parse-options: factor out parse_options_count()
 To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>
-References: <019be197-e0aa-1234-e16f-6561d8340023@web.de>
- <b31c46a8-380b-3528-27a5-a2dddacaf837@web.de>
- <CAPig+cQdJ0NJSWZN-2ckeLB7RfU9GZ7LGvVX4y+Q1daPnW8WsA@mail.gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+References: <11b82734-f61c-5e73-2d0c-22208c06d495@web.de>
+ <c729aaab-68d7-9cfa-8981-97eaa72a5ebe@web.de>
+ <CAPig+cQpzc6eZyOo9N=4sR3pBFza299rRn_wP0w2W7Zf5CWThg@mail.gmail.com>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <60b491a1-2b71-d5a5-398f-e6743e2c617a@web.de>
-Date:   Sun, 9 Feb 2020 19:28:31 +0100
+Message-ID: <4577baea-0cc6-5fd9-a1c4-699b15dae380@web.de>
+Date:   Sun, 9 Feb 2020 19:36:36 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.9.0
 MIME-Version: 1.0
-In-Reply-To: <CAPig+cQdJ0NJSWZN-2ckeLB7RfU9GZ7LGvVX4y+Q1daPnW8WsA@mail.gmail.com>
+In-Reply-To: <CAPig+cQpzc6eZyOo9N=4sR3pBFza299rRn_wP0w2W7Zf5CWThg@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:9jpty5IuuzJwhkqUw5b4z/AOvaJTCAq1iVWmIA9rNeataKUffR+
- 8TwWQWK8mhSmaIcsXaT9y9trpnb5Wnkn4mqJDHSrQ9OT4sHmcIkXD1q3F2GFqVA3rgmLP5i
- Deor8JNydOeh5/OQahwKoDzX+0LnYUhaL2QlfGpHSEJTzNHhB51UNBVpqByaWFGmY5SSMIu
- jWOif+uhqjo7Eg7pVCPpw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:kqgWLyy91XA=:hfzkUmvJsnVgK5Q7wF52IN
- egk/naYzu4zzR2U1SgZVndUy6RmF7lYlB7rvsBDkmKkKR7s8utV6K8iAqHTB2aZXCO+MbTk67
- JAmeUcX8S4VGMxceMqyxcNE2AxNpS0Nm+ZjtInwNEm1nZETC26usrMO5G/+pkvkmCUetPz3uc
- Fi7P1Y6cbGbYTcY2pUqLCXmQyLbFMqyrlGaVHk8sAubx/BqgB2qAOwCOGm7y40su5NDOEpt4P
- GMVSGEsSpQQjZuw7jltb/KnSgzXyFO0LjKTbPiFhnHJnTWFe3J/b+s0vVikiRAzlD57zXIYso
- ZIEKB6N3JQhlAWjC63EB2YfRtI5/l3HEWzFDKrCrcQaEgeX0lE7QKqDXcLoz2xJW5Q1JcRJkn
- B1kdHfOc0z7dl9SLHBHKPjd26y1OpRGbQD6IMeRJ4LPfBZBzazuMSb1/SN0Tm96U9PfAIfVal
- etWLzDsOuahU0WKyX9rcohKGoq312LiO756wSIDEUeeETK+INvJi/ZJfTxe5LEFexYV1snj8r
- eG7NYrXNSFjCphFhdmqlqFiT3TOk6SMbWFd0fcgZH4VpmCWibm2kxtl+jQICfKlZys+XY0F2s
- HkVe59toOrqn7jw5yaEv290Ncoc8Q2NdRaRmrABP5ebdZQcK3RIOfqeARj9H4cMjK/ZVAmqUV
- 7hojrLsTyGylZH2fOI7z7zEnN6KOCuebZT6OOKtno1pmAUjO3FYs4NZFYjMTMInG35c33HdAV
- /EaPoorlWNwzkgnWQvf+XuEcFvSHdf/i/8+7LcHvngJwYANNLHCIdPnDwMXytt7iLL/JadZs/
- xyDYUOTbfAWI/lONhGxTj6oXa5mbE+Ia0cIwHCq6mnPsG2n4VgJ2eRtvrgXbGqzi1VQ6wpfXh
- Hkm8Sdgyq3xgfpb7mxEyuXBD5do7Yc/4DrVinpY3zJIb6mqYJvENmQ0A1radwxIdyVxs3u/SA
- /iCz37aOrJGvRknPtUqNQGcaskFVmQrimVMtup0jyjcoCjX2peneXKF1zPgkOtmDyw+j6qOaR
- l4Z64/W2eTRmdxYmXX8mCNZU80hojX+Z35UGfn4Ql3p6P5sSrOX/kF4mUg3aSHk19qDaBU/xP
- sV6cvs+k4ggJZ6u99z/G1a5hcqzJ2QJCSWkzqUHx1x7HqKF941Nht1NGq0BKUEGAz3Ya5M5c2
- bvbPVyRodk5l0Ou0ojNm4kNwi64uY1Q2rRWa5CRKqyNP1CiqiTHXMvQPIk8p249/9JXGzX67A
- PsNhnyEic0Hskl8Pw
+X-Provags-ID: V03:K1:3iw43YuqagYb98hTClkIdVAAvL6UBz7e5PtM+Hg41OV7v0IJWml
+ m9OSQVFDjlvg2VwhveUQPQdI/qAKoJH421uDVnEx6YY7eELvAYdlZwGCj09FOFdSFZQXvKf
+ 3MX0DRl81xo39oCgBTzSOIc4bJy8RZ7GTJal4q/5WfgXOAl0tSrmBLOrQSQkpxSUDA77iSN
+ GWseLmzFT/O6m4UhVV73g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:XLe1bkHnwDQ=:tLmI0Gn2KdLxUVm5zXFtVn
+ tsDj6JniLSbDMiIxCOy2KoAtAyjrCYR5m+TyYuqawO2vDpSgSXptbU1G5Y7m4R6OZT2KoukBA
+ lkIH7hfORHzGqtKx6zxrJtJaSUmY+cZyymGffLvZJ+8Zpboc0a18jimA/nlYfZgd5I4/ppGYe
+ X6WeJo+xmiwgS50PgVol+m4SOz/YGD3tSj9PqZG/jC2vtXTxVj/h9g11Dai8sKpPk+ETBthIH
+ OBRTvq6QP0A24SVVntjWnlbMyrFCNx3xdxeCF9i4inYFm5Br6aWfyWNIPNyKi8F+0w66FADmt
+ OGDucgXc82MsgmJGB0mJ6e8xcBLbs8bmKpRUJRbG5XM3UOTaCetlRyJLUIChOm7SH0cb8DqNq
+ ZRKGgH2gY90dZs2LiHQ/JYOyDl87KHmGli0hfRQLW06BLQidsAp25S3yyP7jSzBMLObQuqKif
+ ICEH1umT1RDtchaYin3KBLk8F0z0mw7LEQByFs1Bxhr/y79eQrBt9/k5pX2Bspt5Yr6myJ16r
+ IXVr0BhWtlLpjmlNPJQU3VgdUp3/E5nuZpJpcwzGGWbBtfPVhbIlirQ3oY4nbukwTDpKM0fIk
+ amyqSchWOtdu2XADRuRi6OLktCzFXL+KCILtlHum6czh+BfxjBgKbFwDK+vuEdKkoILNEXP57
+ 3zKDCuPQn7bchgeNFRVFb2RExP7EnEwtIAsNJt8gOAK896VwTZQxPYVJIyPmcqTr2dMFLfFqK
+ TXlLBWQKjR6+vBrvXNgLKoJ8I7jnr1/+dUUjuNV+lHt0lIOB2CQdQXKyzspaXJptsf1N9ldM6
+ P0hlfastFeVrMwl5V7TrfgwzW8D8dkKmBwK7oXIRYuVh+Er/d4echZpbaBiyDVnkYP65s9zPQ
+ b8bIk9OEEdJn93wXdwODy+nwsQFRIyroxb89TX/Di6LUSHY9dH+G6R+OVyKRTbX+VnEaRvpDj
+ 6fe9CDCQTYTX4lXifYMg6chkAaQR+/8YN8QM2oGXjTTVs8aHDjU2ybaEUvzXz1nJaBN0ocjqq
+ NMZacHEyx/ugLMF+PrmXphMBvPN/wEp611danZNat/nIek/mux54KNyBkVlBCxVyeO4Q5DLBt
+ +EqR4eiBoWgkgGuXHq/wqior+U5i357fLvHR2adyOPbkEFZElvi5keTJiMlNCPM+rllmA15XH
+ 3HM9y/sdjnQuyMYfKAVxfwrvG+LUzK/CupFfWU5bkesvJnlM5SrRpsjSAAHnR8asbz785GYyD
+ 3JslKmx2S5HB6oQQT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 09.02.20 um 18:36 schrieb Eric Sunshine:
-> On Sun, Feb 9, 2020 at 8:45 AM Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
->> Add a function for inserting a C string into a strbuf.  Use it
->> throughout the source to get rid of magic string length constants and
->> explicit strlen() calls.
->>
->> Like strbuf_addstr(), implement it as an inline function to avoid the
->> implicit strlen() calls to cause runtime overhead.
+Am 09.02.20 um 18:56 schrieb Eric Sunshine:
+> On Sun, Feb 9, 2020 at 10:56 AM Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
+>> Add a helper function to count the number of options (excluding the
+>> final OPT_END()) and use it to simplify parse_options_dup() and
+>> parse_options_concat().
 >>
 >> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 >> ---
->> diff --git a/mailinfo.c b/mailinfo.c
->> @@ -570,7 +570,7 @@ static int check_header(struct mailinfo *mi,
->>                 len =3D strlen("Content-Type: ");
->>                 strbuf_add(&sb, line->buf + len, line->len - len);
->>                 decode_header(mi, &sb);
->> -               strbuf_insert(&sb, 0, "Content-Type: ", len);
->> +               strbuf_insertstr(&sb, 0, "Content-Type: ");
->>                 handle_content_type(mi, &sb);
+>> diff --git a/parse-options-cb.c b/parse-options-cb.c
+>> @@ -159,16 +159,20 @@ int parse_opt_tertiary(const struct option *opt, =
+const char *arg, int unset)
+>>  struct option *parse_options_dup(const struct option *o)
+>>  {
+>>         const struct option *orig =3D o;
+>>         struct option *opts;
+>> -       int nr =3D 0;
+>> -
+>> -       while (o && o->type !=3D OPTION_END) {
+>> -               nr++;
+>> -               o++;
+>> -       }
+>> +       size_t nr =3D parse_options_count(o);
+>>
+>>         ALLOC_ARRAY(opts, nr + 1);
+>>         COPY_ARRAY(opts, orig, nr);
 >
-> Meh. We've already computed the length of "Content-Type: " a few lines
-> earlier, so taking advantage of that value when inserting the string
-> literal is perfectly sensible.
+> This could use a little more cleanup. After this change, 'o' is never
+> again consulted or changed, and 'orig' points at the original value of
+> 'o', which means 'o' and 'orig' have the same value now always.
+> Therefore, the additional cleanup would be to drop the declaration and
+> assignment of 'orig' and reference 'o' in COPY_ARRAY() rather than
+> 'orig'.
 
-Well, yes, but it would be more sensible if we'd have only a single
-string here.  At the source code level we have two string constants that
-happen to have the same contents.  Handling them separately is
-reasonable, I think.
+True, but that would go beyond the purpose of this patch, which is to
+extract a count function.  While it enables the cleanup you mentioned,
+the latter should go into its own patch.  The last one in the series
+takes care of it.
 
-The compiler is merging those two, and resolves the other strlen() call
-at compile time, so the generated code is the same.
-
-> Thus, I'm not convinced that this change is an improvement.
-
-The improvement is to untangle the handling of those two string
-constants and to use a C string without having to pass along its
-length.  That doesn't make the code clean, yet, admittedly.
-
-> Digging deeper, though, I have to wonder why this bothers inserting
-> "Content-Type: " at all. None of the other cases handled by
-> check_header() bother re-inserting the header, so why this one? I
-> thought it might be because handle_content_type() depends upon the
-> header being present, but from my reading, this does not appear to be
-> the case. handle_content_type() calls has_attr_value() and
-> slurp_attr() to examine the incoming line, but neither of those seem
-> to expect any sort of "<Header>: " either. Thus, it appears that the
-> insertion of "Content-Type: " is superfluous. If this is indeed the
-> case, then rather than converting this to strbuf_insertstr(), I could
-> see it being pulled out into a separate patch which merely removes the
-> strbuf_insert() call.
-
-Interesting.  It makes sense that handle_content_type() wouldn't need
-such a header prefix -- it's only called if its existence in the line
-has been confirmed.  And I also don't see a hint in the code that
-would justify the insertion.
-
-Do you care to send a follow-up patch (or one against master if you're
-not convinced by my reasoning given above)?
-
-Thanks,
 Ren=C3=A9
