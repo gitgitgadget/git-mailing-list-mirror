@@ -2,129 +2,165 @@ Return-Path: <SRS0=3Zv9=35=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.2 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.2 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D3FFDC2BA83
-	for <git@archiver.kernel.org>; Sun,  9 Feb 2020 23:03:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 64125C2BA83
+	for <git@archiver.kernel.org>; Sun,  9 Feb 2020 23:10:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 94199207FF
-	for <git@archiver.kernel.org>; Sun,  9 Feb 2020 23:03:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 31FC320838
+	for <git@archiver.kernel.org>; Sun,  9 Feb 2020 23:10:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="KuT34R7w"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="t/EYI8Bl"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726915AbgBIXD0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 9 Feb 2020 18:03:26 -0500
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:40052 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726843AbgBIXD0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Feb 2020 18:03:26 -0500
-Received: by mail-pg1-f195.google.com with SMTP id z7so2881794pgk.7
-        for <git@vger.kernel.org>; Sun, 09 Feb 2020 15:03:24 -0800 (PST)
+        id S1726915AbgBIXKn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 9 Feb 2020 18:10:43 -0500
+Received: from mail-pj1-f65.google.com ([209.85.216.65]:53181 "EHLO
+        mail-pj1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726860AbgBIXKn (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Feb 2020 18:10:43 -0500
+Received: by mail-pj1-f65.google.com with SMTP id ep11so3368531pjb.2
+        for <git@vger.kernel.org>; Sun, 09 Feb 2020 15:10:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=xO8vycCCZf7pi7VwMuEi/cKG8phmCf9+lh4zlN2B3ek=;
-        b=KuT34R7wHlLbHSl5ac8sbjBbUqJ1Xmcj5YlKh9UwLGlE9WqyneuVpoQ4560q7C8Ro9
-         xW6TfhjPqwMEFrstp41/1NIjw5Ub5ueocLOsnLc2hg033VeK2lhihvM1XdRL052bnzF1
-         n4n2bXlYRx29WsjoCNSNxXAqUsbkKhrXMUNGIC/R+WplJuWYTyDJN4aOeSh2NxOqGbBx
-         nYmS/SjKb19jOpoOVRtB4EvxmUdx5G899PKuWi/xV6XwSFU2vt7PfPue5G0aqKapWyBO
-         +jdwVXpEY34PDYH2gtYQaWMOtDL4p6e8Lv5ae9Z+LLv6gvFdpyNZbjKqvpa/82hnbaDx
-         VW+g==
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=6l970MjcI4dnE71QwhTDTMsxh4SOI6457fvnju9sjho=;
+        b=t/EYI8Bla1qS6GOUd2Gjs5LopfCs0TEfL58hXN7CUKCqUeTEOFfe+3beBNWkfISzgy
+         qc+77boYmto84iBq7TIVoHAHm29vryHiHJqgP1Fwt+x/rw0XoK3d01MRFva1QCwRXdGo
+         KnZdt9jYVZ1ao8RsDJPNKYUm0befR7xRvNCedNKGY0zQh/x/6lCGZZKEYWRilpkhqJrT
+         1zGa1I8BaTBW56HvE6WGnRW+Mf2h5dTCgmrgmYvwHyXSW40mkTd2uF6B6coNkdZvzQ8I
+         Uc1mK4jepKkfJkwRxAmSwhICPZ7+UrJZ0wsplnXMK4PVfYQ9qLasRvaV9g50VO/cMR7G
+         VWGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=xO8vycCCZf7pi7VwMuEi/cKG8phmCf9+lh4zlN2B3ek=;
-        b=t36NW3Yb76n35E1OAb+I6D+Fp175WcJvzfJrnk8WTPpY3CpAD13oRyhw/IEMVVPsV9
-         5Aru5SylErhPOqbk31OAS8PWXGc6oIec6foX9f/s9oNwLy7w2i70uC2ckW6D+7LEx7rr
-         yBa/JdtaiK8DaqgA8YN2OZLbeaYf2yq7r/Bbfm3BvrT5jF6zBPUdnZtim5wh6kkRCWSi
-         AhzKZKHTTuanV1dZ7gqgmD757H9ZUNCNdHv72xY0uSnjryeXdJcM/4gDNcmEYfjWmxp6
-         7lk0W/9Pk72k+70mhNGTR6y3KVL6UWPnYQwt9lP2BNARDCftvPJGxEV1mFoYgWsCHlup
-         szCA==
-X-Gm-Message-State: APjAAAVT8GJ44c9TxQ/GBf5YBEqHkQPYS+JVmplSEQpTtPygbf/bV7Sl
-        mtM7EVkIz51WskfYO/uryN3Fo3zjDP1Wl1O3
-X-Google-Smtp-Source: APXvYqzRQdMkep/eeMj6ITUwuLkhmu2ObbMEdATy5lxP/jUnsjwaHV6iSDY10j1s05X2L+NB5vKKmQ==
-X-Received: by 2002:a62:ed19:: with SMTP id u25mr10414381pfh.173.1581289403876;
-        Sun, 09 Feb 2020 15:03:23 -0800 (PST)
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=6l970MjcI4dnE71QwhTDTMsxh4SOI6457fvnju9sjho=;
+        b=j451Cal3KH3KIuIPP6lBqAB3mSLBR3yHnN8t5z8Brc1MEyqh5bor4qaobFxly6wJ0G
+         jPIJvVsezpliAx76gPH67KzQ3INFmgRDk9UbjNIQTAFHX7REVwknTEpE6plOtViQJyex
+         QUNRn+329zQBktvYZc6X/IQzH9k633H7MqSkURxNnQQ0ripMDtDD9fVHv6THMh6TxqrP
+         1EDHH6a39PZQdYhmQdlkY5XK0Q6JhLYvrByGlRsvuwggehSq4wjYAATXZM6XsP0hWGyH
+         JlYpG8dCGh5yFSotUl5ymLC7wxS2WSQ6zpaCsU+UsILv90Ao/2A8G5gro8WXR2ykycsD
+         LzkA==
+X-Gm-Message-State: APjAAAXJLY17jDUgPw6pJ1pSolYOS37QHIycuO3AXI+q14rtDO6Z8J64
+        K+07VamIisXxpMqt8mtr5LbvseutW244yc37
+X-Google-Smtp-Source: APXvYqxiZa7SvHjhyqaAzGFeiqjzLHX6I0utpgWLpqctnpwWnjeN+8ZWuTSAQ5A3FwygnbqI0jzBnw==
+X-Received: by 2002:a17:902:9a4c:: with SMTP id x12mr9606754plv.297.1581289841645;
+        Sun, 09 Feb 2020 15:10:41 -0800 (PST)
 Received: from localhost ([2601:602:9200:32b0:317f:c53e:b83c:7fcb])
-        by smtp.gmail.com with ESMTPSA id h3sm9956658pfo.102.2020.02.09.15.03.23
+        by smtp.gmail.com with ESMTPSA id q29sm10091365pgc.15.2020.02.09.15.10.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 09 Feb 2020 15:03:23 -0800 (PST)
-Date:   Sun, 9 Feb 2020 15:03:22 -0800
+        Sun, 09 Feb 2020 15:10:41 -0800 (PST)
+Date:   Sun, 9 Feb 2020 15:10:40 -0800
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] ci: ignore rubygems warning in the "Documentation" job
-Message-ID: <20200209230322.GA4530@syl.local>
-References: <pull.707.git.git.1581287776574.gitgitgadget@gmail.com>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v2] strbuf: add and use strbuf_insertstr()
+Message-ID: <20200209231040.GB4530@syl.local>
+References: <019be197-e0aa-1234-e16f-6561d8340023@web.de>
+ <b31c46a8-380b-3528-27a5-a2dddacaf837@web.de>
+ <CAPig+cQdJ0NJSWZN-2ckeLB7RfU9GZ7LGvVX4y+Q1daPnW8WsA@mail.gmail.com>
+ <60b491a1-2b71-d5a5-398f-e6743e2c617a@web.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <pull.707.git.git.1581287776574.gitgitgadget@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <60b491a1-2b71-d5a5-398f-e6743e2c617a@web.de>
 User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes,
+On Sun, Feb 09, 2020 at 07:28:31PM +0100, René Scharfe wrote:
+> Am 09.02.20 um 18:36 schrieb Eric Sunshine:
+> > On Sun, Feb 9, 2020 at 8:45 AM René Scharfe <l.s.r@web.de> wrote:
+> >> Add a function for inserting a C string into a strbuf.  Use it
+> >> throughout the source to get rid of magic string length constants and
+> >> explicit strlen() calls.
+> >>
+> >> Like strbuf_addstr(), implement it as an inline function to avoid the
+> >> implicit strlen() calls to cause runtime overhead.
+> >>
+> >> Signed-off-by: René Scharfe <l.s.r@web.de>
+> >> ---
+> >> diff --git a/mailinfo.c b/mailinfo.c
+> >> @@ -570,7 +570,7 @@ static int check_header(struct mailinfo *mi,
+> >>                 len = strlen("Content-Type: ");
+> >>                 strbuf_add(&sb, line->buf + len, line->len - len);
+> >>                 decode_header(mi, &sb);
+> >> -               strbuf_insert(&sb, 0, "Content-Type: ", len);
+> >> +               strbuf_insertstr(&sb, 0, "Content-Type: ");
+> >>                 handle_content_type(mi, &sb);
+> >
+> > Meh. We've already computed the length of "Content-Type: " a few lines
+> > earlier, so taking advantage of that value when inserting the string
+> > literal is perfectly sensible.
+>
+> Well, yes, but it would be more sensible if we'd have only a single
+> string here.  At the source code level we have two string constants that
+> happen to have the same contents.  Handling them separately is
+> reasonable, I think.
+>
+> The compiler is merging those two, and resolves the other strlen() call
+> at compile time, so the generated code is the same.
 
-On Sun, Feb 09, 2020 at 10:36:16PM +0000, Johannes Schindelin via GitGitGadget wrote:
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> A recent update in the Linux VM images used by Azure Pipelines surfaced
-> a new problem in the "Documentation" job. Apparently, this warning
-> appears 396 times on `stderr` when running `make doc`:
->
-> /usr/lib/ruby/vendor_ruby/rubygems/defaults/operating_system.rb:10: warning: constant Gem::ConfigMap is deprecated
->
-> This problem was already reported to the `rubygems` project via
-> https://github.com/rubygems/rubygems/issues/3068.
->
-> As there is nothing Git can do about this warning, and as the
-> "Documentation" job reports this warning as a failure, let's just
-> silence it and move on.
+Yes, if 'strbuf_insertstr' weren't inlined, I'd be less eager to make
+this suggestion, but since it *is* inlined, I don't think that the
+compiler will generate substantially different instructions whether we
+use one or the other here.
 
-Thanks for explaining, and for taking time to silence errors such as
-these that we can't do anything about. Everything as explained makes
-good sense to me.
+> > Thus, I'm not convinced that this change is an improvement.
+>
+> The improvement is to untangle the handling of those two string
+> constants and to use a C string without having to pass along its
+> length.  That doesn't make the code clean, yet, admittedly.
 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->     Fix CI/PR failures in the "Documentation" job
+Agreed.
+
+> > Digging deeper, though, I have to wonder why this bothers inserting
+> > "Content-Type: " at all. None of the other cases handled by
+> > check_header() bother re-inserting the header, so why this one? I
+> > thought it might be because handle_content_type() depends upon the
+> > header being present, but from my reading, this does not appear to be
+> > the case. handle_content_type() calls has_attr_value() and
+> > slurp_attr() to examine the incoming line, but neither of those seem
+> > to expect any sort of "<Header>: " either. Thus, it appears that the
+> > insertion of "Content-Type: " is superfluous. If this is indeed the
+> > case, then rather than converting this to strbuf_insertstr(), I could
+> > see it being pulled out into a separate patch which merely removes the
+> > strbuf_insert() call.
 >
->     It would probably make sense to apply this to maint, too, as it will
->     cause CI failures even if there is nothing actionable to be done to
->     really fix this on Git's side.
+> Interesting.  It makes sense that handle_content_type() wouldn't need
+> such a header prefix -- it's only called if its existence in the line
+> has been confirmed.  And I also don't see a hint in the code that
+> would justify the insertion.
 >
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-707%2Fdscho%2Fworkaround-for-rubygems-using-deprecated-component-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-707/dscho/workaround-for-rubygems-using-deprecated-component-v1
-> Pull-Request: https://github.com/git/git/pull/707
->
->  ci/test-documentation.sh | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/ci/test-documentation.sh b/ci/test-documentation.sh
-> index b3e76ef863..de41888430 100755
-> --- a/ci/test-documentation.sh
-> +++ b/ci/test-documentation.sh
-> @@ -7,6 +7,7 @@
->
->  filter_log () {
->  	sed -e '/^GIT_VERSION = /d' \
-> +	    -e "/constant Gem::ConfigMap is deprecated/d" \
->  	    -e '/^    \* new asciidoc flags$/d' \
->  	    -e '/stripped namespace before processing/d' \
->  	    -e '/Attributed.*IDs for element/d' \
->
-> base-commit: d0654dc308b0ba76dd8ed7bbb33c8d8f7aacd783
-> --
-> gitgitgadget
+> Do you care to send a follow-up patch (or one against master if you're
+> not convinced by my reasoning given above)?
+
+I certainly can't speak for Eric, but for my $.02 I don't think that
+it's worth holding this series up. This seems like a separate issue to
+me, and I'd rather it not get get in the way of a perfectly good patch
+in the meantime.
+
+For now, this increases the churn a little bit, but that is the price
+we have to pay for the new 'strbuf_insertstr' to be applied/used
+consistently.
+
+I'd be happy to see this go further, but I'd be just as happy to stop
+where we're at.
+
+> Thanks,
+> René
 
 Thanks,
 Taylor
