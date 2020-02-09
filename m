@@ -6,62 +6,68 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 10AE6C2BA83
-	for <git@archiver.kernel.org>; Sun,  9 Feb 2020 17:26:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D84CDC2BA83
+	for <git@archiver.kernel.org>; Sun,  9 Feb 2020 17:27:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id BD14920714
-	for <git@archiver.kernel.org>; Sun,  9 Feb 2020 17:26:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9E0F220733
+	for <git@archiver.kernel.org>; Sun,  9 Feb 2020 17:27:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="DLKpcrcm"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="a0ulpu92"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727408AbgBIR0D (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 9 Feb 2020 12:26:03 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55144 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727397AbgBIR0C (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Feb 2020 12:26:02 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D5D8B3AFB8;
-        Sun,  9 Feb 2020 12:26:01 -0500 (EST)
+        id S1727420AbgBIR1S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 9 Feb 2020 12:27:18 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52476 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727409AbgBIR1S (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Feb 2020 12:27:18 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7A86B59C1B;
+        Sun,  9 Feb 2020 12:27:17 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=wsM21fQBlkktuBnY6DIL8XjcDRI=; b=DLKpcr
-        cmkjp9DBzW9mHDEVNvKK5QLNCaiQ8BMKQjLFaG1RWjoo9nAkPF7jzF5w3BIie0jy
-        4SOlc8XuKvzuwUqYMTpeCsoyzcoxPNG/opafXOOBoWFkdeMzggHmhD/PtPO54+4q
-        WLZlkyHPXVyHQqmrZyexVNGGPBHz+gZJ5Pe3w=
+        :content-type; s=sasl; bh=bUAQg6c4zT49K1zKSzgLl7VeQkQ=; b=a0ulpu
+        92RQ0hyRwZjEsD28vbXqJEBBb6NL1JK3UjxZKt3DtO09AJnG0zOF3ajnp6qOsqz+
+        vKnTczq+2fgxtZqA5lvw8iCmyxBpwLjsjbN1a0XWGvztWTkd9Vu8zDBKcOo7McgO
+        hvSmNfr4sqxCotcXQLq4yTYw5EuDrbfx79KFg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=cMB8AC/JAV8erYmlqnku80mXg/eUANYF
-        iv/yjLle8h50MVYXHZwGxNS5MUEDJ4HOt0nZJ6pxKhK4pRozw2T9wU5wh0VAJIQH
-        2dc1nmlePosc8DDSi/uqG/Tif/LTd2AUMb0Ed+5X0JLretfN9rCFZ9iIi/1bHEfv
-        Z8aTC4f6FiQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8C04C3AFB6;
-        Sun,  9 Feb 2020 12:26:01 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=gFkJArQg5SEbfqJL+yczZrFlFjne/6pz
+        9zQFm8z9HfU/HqPDoQOwSr4SGerELkccJ/Y87qTYWSgbUzhiNdqaIUwceUTZWEhs
+        uP0rl7KWVaxjnb9btue2ur5OGM57GvRCadq2zt5lcZ+HqG+bKhtCT3cdjjI7BQ51
+        uJ2oNkbailg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 701FE59C1A;
+        Sun,  9 Feb 2020 12:27:17 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 54F1B3AFB5;
-        Sun,  9 Feb 2020 12:26:00 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 97CA559C17;
+        Sun,  9 Feb 2020 12:27:16 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        git@vger.kernel.org, Adam Dinwoodie <adam@dinwoodie.org>
-Subject: Re: [PATCH] diff-options.txt: avoid "regex" overload in example
-References: <20200202204739.GA24686@dinwoodie.org>
-        <20200206205301.27367-1-martin.agren@gmail.com>
-        <20200208232405.GC33529@syl.local>
-Date:   Sun, 09 Feb 2020 09:25:59 -0800
-In-Reply-To: <20200208232405.GC33529@syl.local> (Taylor Blau's message of
-        "Sat, 8 Feb 2020 15:24:05 -0800")
-Message-ID: <xmqq5zgf3c60.fsf@gitster-ct.c.googlers.com>
+Cc:     Derrick Stolee <stolee@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Finn Bryant <finnbryant@gmail.com>
+Subject: Re: [PATCH v4 00/15] Harden the sparse-checkout builtin
+References: <pull.513.v3.git.1580236003.gitgitgadget@gmail.com>
+        <pull.513.v4.git.1580501775.gitgitgadget@gmail.com>
+        <CABPp-BHoEgYXgzxjweWDR2BZPhLdW9wcbWzwo6N+HF2kste3WA@mail.gmail.com>
+        <f28beb17-50dc-ff53-46bf-35010d48d23d@gmail.com>
+        <20200208233247.GD33529@syl.local>
+Date:   Sun, 09 Feb 2020 09:27:15 -0800
+In-Reply-To: <20200208233247.GD33529@syl.local> (Taylor Blau's message of
+        "Sat, 8 Feb 2020 15:32:47 -0800")
+Message-ID: <xmqq1rr33c3w.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 3D7C70A6-4B61-11EA-90F8-C28CBED8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 6AF26AD6-4B61-11EA-B92C-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -69,9 +75,14 @@ X-Mailing-List: git@vger.kernel.org
 
 Taylor Blau <me@ttaylorr.com> writes:
 
-> This is a good idea, and I think that it removes additional, unnecessary
-> confusion from the documentation here.
+> On Mon, Feb 03, 2020 at 09:09:54AM -0500, Derrick Stolee wrote:
+> ...
+> Thanks for including these. I haven't been super active in the earlier
+> rounds of review on this series, but I gave a thorough look to what you
+> have in v4, and it all looks good to me.
+>
+> Please consider this:
 >
 >   Reviewed-by: Taylor Blau <me@ttaylorr.com>
 
-Thanks, both.
+Thanks, all.
