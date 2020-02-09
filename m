@@ -6,116 +6,72 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5AE35C35250
-	for <git@archiver.kernel.org>; Sun,  9 Feb 2020 16:39:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 10AE6C2BA83
+	for <git@archiver.kernel.org>; Sun,  9 Feb 2020 17:26:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 23A6F20715
-	for <git@archiver.kernel.org>; Sun,  9 Feb 2020 16:39:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BD14920714
+	for <git@archiver.kernel.org>; Sun,  9 Feb 2020 17:26:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="dfdGoWJa"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="DLKpcrcm"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727753AbgBIQjF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 9 Feb 2020 11:39:05 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:57482 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727698AbgBIQjF (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 9 Feb 2020 11:39:05 -0500
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S1727408AbgBIR0D (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 9 Feb 2020 12:26:03 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55144 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727397AbgBIR0C (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Feb 2020 12:26:02 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D5D8B3AFB8;
+        Sun,  9 Feb 2020 12:26:01 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=wsM21fQBlkktuBnY6DIL8XjcDRI=; b=DLKpcr
+        cmkjp9DBzW9mHDEVNvKK5QLNCaiQ8BMKQjLFaG1RWjoo9nAkPF7jzF5w3BIie0jy
+        4SOlc8XuKvzuwUqYMTpeCsoyzcoxPNG/opafXOOBoWFkdeMzggHmhD/PtPO54+4q
+        WLZlkyHPXVyHQqmrZyexVNGGPBHz+gZJ5Pe3w=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=cMB8AC/JAV8erYmlqnku80mXg/eUANYF
+        iv/yjLle8h50MVYXHZwGxNS5MUEDJ4HOt0nZJ6pxKhK4pRozw2T9wU5wh0VAJIQH
+        2dc1nmlePosc8DDSi/uqG/Tif/LTd2AUMb0Ed+5X0JLretfN9rCFZ9iIi/1bHEfv
+        Z8aTC4f6FiQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8C04C3AFB6;
+        Sun,  9 Feb 2020 12:26:01 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 46F6360791;
-        Sun,  9 Feb 2020 16:39:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1581266343;
-        bh=pTmzRT5IJ0DGuCranmG+/W2xQsDzpnTOlbh04z1hQDs=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=dfdGoWJa6KsUBRBdC/Frwo7JDQPc5WERFE+Zj0dmnXqQJCPBvjgMB3gUPgX7HNqJd
-         7B37PJRhBQAXDhfwWdNvu3sHkYhl5Blg2Y4BJQmdgSaID33vZMqzVcjjZdZ0PgCPj9
-         LFOMiYqA1Pf0aZBU+Ibep7iTFqx24CGPvKwjpmSqajqBLJkdmTFoEwHzZDPCuSCjin
-         dzU2oyshgZiF1yeQa+hwQAgQLSdGEn0h+LFr/VB8fAVE5Mm17QwA3uK0ZBORetx9OW
-         3ykRlikF/x9RwSBvKgLqjvwPyeTOXHzSPLfKmwmnO6KYB0d7fbEdF247H67CZeEcg9
-         IsgMhU91ygAy2HOyqlcbcybA/Jh62xDfPsKPSHHhWOClnW/2l90oVx/P32gp7yJYzZ
-         AJFJZOaah0rB2Uoqognog2wrOLmObCO2hVCLzN3fHAFmCEAD9BQlbBNdt/mJ/pQKif
-         IysitdKl5NHYmFuiX9CBd53pzBftFu2O3eFLLjOnAon/VjgsKsj
-Date:   Sun, 9 Feb 2020 16:38:57 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     paul@pauldsmith.org.uk
-Cc:     git@vger.kernel.org
-Subject: Re: Support 'help' for custom/alias commands
-Message-ID: <20200209163857.GA7054@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        paul@pauldsmith.org.uk, git@vger.kernel.org
-References: <VI1P192MB025548BB0508125DF9B5852DC81C0@VI1P192MB0255.EURP192.PROD.OUTLOOK.COM>
- <005001d5dda3$5bc12510$13436f30$@pauldsmith.org.uk>
- <20200207234618.GH6573@camp.crustytoothpaste.net>
- <00df01d5df4a$e422af70$ac680e50$@pauldsmith.org.uk>
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 54F1B3AFB5;
+        Sun,  9 Feb 2020 12:26:00 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        git@vger.kernel.org, Adam Dinwoodie <adam@dinwoodie.org>
+Subject: Re: [PATCH] diff-options.txt: avoid "regex" overload in example
+References: <20200202204739.GA24686@dinwoodie.org>
+        <20200206205301.27367-1-martin.agren@gmail.com>
+        <20200208232405.GC33529@syl.local>
+Date:   Sun, 09 Feb 2020 09:25:59 -0800
+In-Reply-To: <20200208232405.GC33529@syl.local> (Taylor Blau's message of
+        "Sat, 8 Feb 2020 15:24:05 -0800")
+Message-ID: <xmqq5zgf3c60.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="RnlQjJ0d97Da+TV1"
-Content-Disposition: inline
-In-Reply-To: <00df01d5df4a$e422af70$ac680e50$@pauldsmith.org.uk>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.4.0-3-amd64)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3D7C70A6-4B61-11EA-90F8-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Taylor Blau <me@ttaylorr.com> writes:
 
---RnlQjJ0d97Da+TV1
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> This is a good idea, and I think that it removes additional, unnecessary
+> confusion from the documentation here.
+>
+>   Reviewed-by: Taylor Blau <me@ttaylorr.com>
 
-On 2020-02-09 at 13:14:42, paul@pauldsmith.org.uk wrote:
-> Brian,
->=20
-> Thanks for considering this.  I've not tried MANPATH but will take a look=
- - my employers use both Linux and Windows so this would only address half =
-the issue but I also understand your comments on "one config to rule them a=
-ll" and the HTML/MAN issue.
->=20
-> I've used ASCIIDOCTOR already to create config but I feel it would be nic=
-e if that could be rolled up into some sort of bundle but it users don't wa=
-nt Ruby then yes, it's not going to work for them.  My personal take is tha=
-t anyone wanting docs for their custom applications should create them like=
- core Git does - and with Docker and similar it's easy to isolate an enviro=
-nment so perhaps a Docker image might be the way to go.
-
-I don't see a problem with us shipping the stylesheets and tooling we
-use for our conversions as something people can use, and then if they
-want to install AsciiDoc or Asciidoctor, they can use the same scripts.
-That wouldn't be that hard to do.
-
-Personally, though, I find that I don't benefit from them much when I
-write documentation, and so I don't use them.  Other people may feel
-differently, though.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---RnlQjJ0d97Da+TV1
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.19 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl5ANaEACgkQv1NdgR9S
-9osFgw//V/YIXBCYfoqS1V9zfK592B06pYU/Gz9S+VhcRsWvnPrt3WYCwvOj5TIR
-/+9ZvnTzbqGbXTU/6KwC/RBeTg8M4AGNc5RBHYkhHjpENP4rw9VV8nkzbFUHkF1J
-ytzPC9AeKNecHN4zbK8i2q+Xbrxh63V9PVSiUNcct5LIdq5KG9qr7HaYtiDGSoYj
-7zZg2Dfi2iCvhKDbnR20/0CEfpJJGSG4EgEjAdr08cWLWCnxpkhRCG87macor/S1
-8pO9e3/WesVZ1NjweWIRK9zDJfti4FN+aF0gLs/6IISXlZNlbMpzQwKxBmSNo/Y8
-ian85ez/9DZwrhBAJ7NNNnnUuGbQ9QRhhSXWRSpeR8lMJBPmx6gSOpy5rliVfEUp
-b4tCiLF9V9lVDGv+Q6lTcFd9T9PdfDXvnId9XGutk3JrI3MfGbdjY2JD4QK5iQjE
-Pt8NTijXvhRaq4I6kkJLG5e+BQ52100Z9qUgnAtu3UIdrCiGlHqkUWhpCe4oPZZC
-UwEJljM4PLLFSKJ9+dW1NASftHSxPl+Q8nwBIP+ey0MF7rh2UyHvilMf3kAOCJtS
-5VAS5hS1B719Ae1hH8mUIRIUzy0Mf36PBG10BIz2yKQOombmBsXox2E+0sBT3j3b
-FACbMB0DY7ctkzQe1oROaupDZVnaapY54A46kFwCw3/Z4MnN0H8=
-=+RVq
------END PGP SIGNATURE-----
-
---RnlQjJ0d97Da+TV1--
+Thanks, both.
