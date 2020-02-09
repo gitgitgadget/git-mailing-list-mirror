@@ -2,71 +2,82 @@ Return-Path: <SRS0=3Zv9=35=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 833B2C35250
-	for <git@archiver.kernel.org>; Sun,  9 Feb 2020 13:16:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 17C9BC35250
+	for <git@archiver.kernel.org>; Sun,  9 Feb 2020 13:26:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 611BF20733
-	for <git@archiver.kernel.org>; Sun,  9 Feb 2020 13:16:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D9D3D2080C
+	for <git@archiver.kernel.org>; Sun,  9 Feb 2020 13:26:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727704AbgBINQQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 9 Feb 2020 08:16:16 -0500
-Received: from claranet-outbound-smtp02.uk.clara.net ([195.8.89.35]:53886 "EHLO
-        claranet-outbound-smtp02.uk.clara.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727514AbgBINQQ (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 9 Feb 2020 08:16:16 -0500
-Received: from 79-76-59-82.dynamic.dsl.as9105.com ([79.76.59.82]:13822 helo=PDSDELL)
-        by relay02.mail.eu.clara.net (relay.clara.net [81.171.239.32]:10465)
-        with esmtpa (authdaemon_login:gershenson-smith) id 1j0mRZ-00049a-6r 
-        (return-path <paul@pauldsmith.org.uk>); Sun, 09 Feb 2020 13:16:13 +0000
-From:   <paul@pauldsmith.org.uk>
-To:     "'Konstantin Khomoutov'" <kostix@bswap.ru>,
-        <paul@pauldsmith.org.uk>
-Cc:     <git@vger.kernel.org>
-References: <VI1P192MB025548BB0508125DF9B5852DC81C0@VI1P192MB0255.EURP192.PROD.OUTLOOK.COM> <005001d5dda3$5bc12510$13436f30$@pauldsmith.org.uk> <20200207112948.et2t4r4mhh2wkqbr@carbon>
-In-Reply-To: <20200207112948.et2t4r4mhh2wkqbr@carbon>
-Subject: RE: Support 'help' for custom/alias commands
-Date:   Sun, 9 Feb 2020 13:16:12 -0000
-Message-ID: <00e001d5df4b$1a042c40$4e0c84c0$@pauldsmith.org.uk>
+        id S1727661AbgBIN0g (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 9 Feb 2020 08:26:36 -0500
+Received: from h4.fbrelay.privateemail.com ([131.153.2.45]:39011 "EHLO
+        h4.fbrelay.privateemail.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727626AbgBIN0f (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 9 Feb 2020 08:26:35 -0500
+Received: from MTA-07-4.privateemail.com (mta-07.privateemail.com [198.54.127.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by h3.fbrelay.privateemail.com (Postfix) with ESMTPS id DF48A8020C
+        for <git@vger.kernel.org>; Sun,  9 Feb 2020 08:19:27 -0500 (EST)
+Received: from MTA-07.privateemail.com (localhost [127.0.0.1])
+        by MTA-07.privateemail.com (Postfix) with ESMTP id BEFF160034;
+        Sun,  9 Feb 2020 08:19:26 -0500 (EST)
+Received: from localhost.localdomain (unknown [10.20.151.209])
+        by MTA-07.privateemail.com (Postfix) with ESMTPA id D66D560043;
+        Sun,  9 Feb 2020 13:19:25 +0000 (UTC)
+From:   "i.Dark_Templar" <darktemplar@dark-templar-archives.net>
+To:     git@vger.kernel.org
+Cc:     "i.Dark_Templar" <darktemplar@dark-templar-archives.net>
+Subject: [RFC PATCH 3/3] Enable merge commit message type autoselect logic by default
+Date:   Sun,  9 Feb 2020 16:16:23 +0300
+Message-Id: <20200209131623.5827-4-darktemplar@dark-templar-archives.net>
+X-Mailer: git-send-email 2.24.1
+In-Reply-To: <20200209131623.5827-1-darktemplar@dark-templar-archives.net>
+References: <20200209131623.5827-1-darktemplar@dark-templar-archives.net>
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQJYcFYYt0Fq+QhLlA5BsdLSkzFOOgHxLHG/AgomR1+m7dqioA==
-Content-Language: en-gb
+Content-Transfer-Encoding: 8bit
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Possibly.  I use Outlook as my mail client and did select "Plain Text" for
-both e-mail attempts.  The error message implied it was the sending e-mail
-address (paul_d_smith@hotmail.com) that it didn't like, not the e-mail
-itself.
+Signed-off-by: i.Dark_Templar <darktemplar@dark-templar-archives.net>
+---
+ Documentation/config/fmt-merge-msg.txt | 2 +-
+ builtin/fmt-merge-msg.c                | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-Regards,
-Paul DS.
-
------Original Message-----
-From: Konstantin Khomoutov <kostix@bswap.ru> 
-Sent: 07 February 2020 11:30
-To: paul@pauldsmith.org.uk
-Cc: git@vger.kernel.org
-Subject: Re: Support 'help' for custom/alias commands
-
-On Fri, Feb 07, 2020 at 10:42:56AM -0000, paul@pauldsmith.org.uk wrote:
-
-[...]
-> P.S. I have a perfectly respectable e-mail address at 
-> paul_d_smith@hotmail.com which I have used for years - why won't you 
-> accept e-mails from it?
-
-The filters at vger.kernel.org do not allow mails which contain text/html
-parts (mails which contain _only_ them are surely dropped; not sure about
-mails with multipart/alternative, which do contain a text/plain
-counterpart).  Was this the case?
+diff --git a/Documentation/config/fmt-merge-msg.txt b/Documentation/config/fmt-merge-msg.txt
+index 3829095222..acd998cca8 100644
+--- a/Documentation/config/fmt-merge-msg.txt
++++ b/Documentation/config/fmt-merge-msg.txt
+@@ -10,7 +10,7 @@ merge.log::
+ 	true is a synonym for 20.
+ 
+ merge.messageType::
+-	Configure default merge commit message type. `original` is used
++	Configure default merge commit message type. `autoselect` is used
+ 	if no value or an invalid value is set.
+ 	+
+ 	* `original` keeps old merge commit message format which takes only one line.
+diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
+index 0bc6ce5b05..8fa39030d3 100644
+--- a/builtin/fmt-merge-msg.c
++++ b/builtin/fmt-merge-msg.c
+@@ -18,7 +18,7 @@ enum message_format {
+ 	MESSAGE_FORMAT_ORIGINAL = 0,
+ 	MESSAGE_FORMAT_MULTILINE = 1,
+ 	MESSAGE_FORMAT_AUTOSELECT = 2,
+-	MESSAGE_FORMAT_DEFAULT = MESSAGE_FORMAT_ORIGINAL
++	MESSAGE_FORMAT_DEFAULT = MESSAGE_FORMAT_AUTOSELECT
+ };
+ 
+ static const char * const fmt_merge_msg_usage[] = {
+-- 
+2.24.1
 
