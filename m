@@ -8,107 +8,152 @@ X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B376C35250
-	for <git@archiver.kernel.org>; Sun,  9 Feb 2020 15:58:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 92333C35250
+	for <git@archiver.kernel.org>; Sun,  9 Feb 2020 15:59:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id F2A0B20715
-	for <git@archiver.kernel.org>; Sun,  9 Feb 2020 15:58:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 619E72080C
+	for <git@archiver.kernel.org>; Sun,  9 Feb 2020 15:59:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="loegrE+a"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IBHgXdGU"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727768AbgBIP6q (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 9 Feb 2020 10:58:46 -0500
-Received: from mout.web.de ([212.227.15.4]:41321 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727320AbgBIP6p (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Feb 2020 10:58:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1581263922;
-        bh=gVpJwl2EREnaPklYJGzt87BmVM5DZK/FdVv8qmL/Scw=;
-        h=X-UI-Sender-Class:Subject:From:To:Cc:References:Date:In-Reply-To;
-        b=loegrE+aNR+AxM6FIn5eXcclCgTTxFjA8sznAkPZzCJE8Rhs20Wx5VFhp7GK2jF4+
-         p6IglanzChDyJDktza6jsDO+w28WQ2L8RHvh+t1Xl0aqLiOclNLMpxAvv6BoOD524E
-         20BH88/LhdFcsk40q5yefR3Ha15/aBdjg7SLfD7o=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([91.47.145.153]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MSIwN-1iv4lF2ypn-00TSSB; Sun, 09
- Feb 2020 16:58:42 +0100
-Subject: [PATCH 4/4] parse-options: simplify parse_options_dup()
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Jeff King <peff@peff.net>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1?= =?UTF-8?Q?y?= 
-        <pclouds@gmail.com>
-References: <11b82734-f61c-5e73-2d0c-22208c06d495@web.de>
-Message-ID: <162fb36a-6dd1-c178-9032-d3f4213930a6@web.de>
-Date:   Sun, 9 Feb 2020 16:58:42 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S1727682AbgBIP7K (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 9 Feb 2020 10:59:10 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:36640 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727320AbgBIP7K (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Feb 2020 10:59:10 -0500
+Received: by mail-wm1-f68.google.com with SMTP id p17so7816425wma.1
+        for <git@vger.kernel.org>; Sun, 09 Feb 2020 07:59:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=CvP76tqHd5Y/IkFX6oXnWBrwjyADMQJ1UuXv9Pj3qJ4=;
+        b=IBHgXdGUNW4fh7QzPdefXSjmuB7pJcezc6AJf2BPjSHADe5ehrKt132rVjE0XsoXaX
+         sAxsP9PbyUD5a80aXENMUc9q2ej+IluHioLXGm5F+fWNRZHGhqwUdqTyO7oAAD4bIFHB
+         nLQ1GzMMsjXnM2XVbclhM0ZP2/dp5c4qWvLPwOh8AYJZZmmMMxgHWCCSl9dDRIlfO6BA
+         znkfD49ljGPeDiZH+7cSnl5S7+tKTfcIfLpgFqX/pIVBZxTLn4B9JAn6p3cHfadl6FjI
+         +3oDv24eYxBTMAum5+ajyQaVlkqO9bdDmEenHZGsLE39rxpakRKpdZrANbqKp0+Zrw19
+         LJUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=CvP76tqHd5Y/IkFX6oXnWBrwjyADMQJ1UuXv9Pj3qJ4=;
+        b=kd4sbFfL9YJOaquN6wDYNimKmR+u3kjfujjILBUVrqqh6rVHda725Aq7kISbAeHQMC
+         RBFjERWOUzMveEO1Cl//xw943Lv3x0/rjVVMXtR0LcoG8hmke7XxndLNakPYOwsgstyT
+         YDcdxcTvUJ9H03nhuecwMFjXcgIeFkDSp3NPyDKsVthX1nejeqdBqBepdPy2pTB9yXLE
+         mZBF85bDPV3Jzb5u7r6ZoxVxfbvCnXBkPhd13cbrDvCoIms6g/U/+cTbDCZFrrHLUbdL
+         BxDm8jQywK5QZfvKc06dumm6EUbhv2Ynr+eKua1CsQMYVc0lGSGDIp2hF+FvycJh3sqp
+         cZdQ==
+X-Gm-Message-State: APjAAAWwukq5c5W4jEW9gSCP5GNAJSGf2XJWQs647RDX57Dhve+629vT
+        9WMMRt+5CoZUQ7WL9LMaqeA=
+X-Google-Smtp-Source: APXvYqy+dQsjqAh/ygnd516Wmx3K0UD68HOXZJavMhUfHJ5BXmrHd2VEyQZiK8jJOOsFfi73sLyzaQ==
+X-Received: by 2002:a7b:c152:: with SMTP id z18mr10036407wmi.70.1581263948625;
+        Sun, 09 Feb 2020 07:59:08 -0800 (PST)
+Received: from [192.168.1.240] (85.25.198.146.dyn.plus.net. [146.198.25.85])
+        by smtp.gmail.com with ESMTPSA id p15sm11537773wma.40.2020.02.09.07.59.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 09 Feb 2020 07:59:08 -0800 (PST)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v4 01/19] git-rebase.txt: update description of
+ --allow-empty-message
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Johannes.Schindelin@gmx.de, phillip.wood@dunelm.org.uk,
+        liu.denton@gmail.com, gitster@pobox.com, plroskin@gmail.com,
+        alban.gruin@gmail.com, szeder.dev@gmail.com, jrnieder@gmail.com,
+        emilyshaffer@google.com, Elijah Newren <newren@gmail.com>
+References: <pull.679.v3.git.git.1577217299.gitgitgadget@gmail.com>
+ <pull.679.v4.git.git.1579155273.gitgitgadget@gmail.com>
+ <3ea48d53940cb7e1a82a8a6eb819497c0448af6a.1579155273.git.gitgitgadget@gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <09f2a9bd-1fd2-b44b-a279-baf37ae23391@gmail.com>
+Date:   Sun, 9 Feb 2020 15:59:06 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
 MIME-Version: 1.0
-In-Reply-To: <11b82734-f61c-5e73-2d0c-22208c06d495@web.de>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <3ea48d53940cb7e1a82a8a6eb819497c0448af6a.1579155273.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:BYT0sHuf9N7U3ue32XIVwt3rATgiEyTyHJNey2yPj4sdcJGEihj
- 7lOUi8LORPocoei6DO5b33WAK0D5N+F1O8r1TWtBC9Jy3cw8jHMEQBEHn457QAvsNB7PtvR
- DGV2YeVW25v+NEOUIhoa8HHaqg0yj0my1gJqERDeHikf9ujt0/nYVyjslkX8mVR4cJXZ6gs
- oswGON6hUqCo1TsuYJ3Fg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:77Ox6AoB1ek=:DDza2jmpZkCKajcuB+9FzY
- D+2Z/Q4gMt70tuc1qL55TO6emBJ9fB4srpflYOz47BpskYLySM5EawgCE/B1jVvExVPNwjH/t
- A93hiWgjT0S1tvdtPmFpCUaxxeSFCwxO6PUZD4GVSpr5ot8DNfMbm/R6EUkvMKLzm3Apss77I
- xj5oZShW6EXh5S/XlP6IbpAPnQnfsGZsmirwlSf8XWIujz5zCnsUXO+d4NqDmx/A4gDANe/0V
- PhcopM3v9lSK45j2k3eFyO3tjrDo/t8jxYd6+V7qjNMMvcoLypc9acP8rx86dY4/gpPBotjLr
- fop8326V6qwd+DeNvykNpsx6rJYhJ/hNVugyn7i3Ni7lC+rTPeXYoTQbvyIkJ6LinUdNZGXPN
- ReA75iwRn3yLx1IkG7D2fi6pA2Dv9kwKMFYxKsSJRzyTYGVvU9aybjatFWCylsBvYyA4ldDMB
- AUyxCniSAEA7KR9AaIa1MwNGz+MWm17OAm4PAKQdw5EY6eqgqK+XWydyLRAVPNLbTkdce1bch
- +jicJqRGLeVa8A0tTph4ELbovBh+JB3mLgE1K3+XwzfEIS1JAe4BbiA0nI7H1EUDTXLlTMX4c
- W3INieBWNd1UFxi5sh0jGkwdu0ORRvctkoIpYFbzOFJ0d4uaZKfmpoSJ56c8890jAS1eoJ55C
- Bw7/q9MVT1fSiEb7jYOOqDwEtH8V3ff2Tl5ritJPJBOzliWbVBawazq1hjMu2iz/nIXHFONrL
- jjU8EtBTjQo1twA6Qk43/6egpWTJUvQ7I8bCgs09S4Cd+q5yr2mGDeKVSxf5ed1vBPy+7uKA/
- 7v8h24/TU4DfL6mxkPt3npqEo6ZZk/8sG5JSLGfXahAuYNWHFfTICHXvXnHYceUuicTZjdkcU
- Vd1K+7MKfOWcVO6ELVWClRiRvxFmDmQi5sqHPBdCuXdX5RFEFpWg4g25N+Z5Qwnt8r9PUbDpl
- J37Kl5oH5mipzP4lA86qYbiW0GIaVIyobtmxbvnEj8p7VIcnN7Hz1k9uoXKN6CiyS3oxwTGvx
- SBvzNt3AkTg/k5xZfGljsHX7WjK+nMnfv+eDaey65QKMPDC/SWIQj72sqQN71iZV42zEqANgH
- TPa5dG+D8Pmxml1g6erUPEyshdAZdDqkfMRsdxEyx2KTKKDPblZMF8PHTv8HNN5Gv+7OMXG0J
- TyNrBznIhdm1sC2YByyVhqpUO6AUlLu8oTuRk9CiERLpoB4vLS7C04U3jhTEx8uKxxVo3szO2
- EnqOrIk3locxrWH1h
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Simplify parse_options_dup() by making it a trivial wrapper of
-parse_options_concat() by making use of the facts that the latter
-duplicates its input as well and that appending an empty set is a no-op.
+Hi Elijah
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- parse-options-cb.c | 12 +++---------
- 1 file changed, 3 insertions(+), 9 deletions(-)
+On 16/01/2020 06:14, Elijah Newren via GitGitGadget wrote:
+> From: Elijah Newren <newren@gmail.com>
+> 
+> Commit b00bf1c9a8dd ("git-rebase: make --allow-empty-message the
+> default", 2018-06-27) made --allow-empty-message the default and thus
+> turned --allow-empty-message into a no-op but did not update the
+> documentation to reflect this.  Update the documentation now, and hide
+> the option from the normal -h output since it is not useful.
+> 
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+>   Documentation/git-rebase.txt |  7 ++++---
+>   builtin/rebase.c             | 12 +++++++-----
+>   2 files changed, 11 insertions(+), 8 deletions(-)
+> 
+> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+> index 0c4f038dd6..c83be7ffc2 100644
+> --- a/Documentation/git-rebase.txt
+> +++ b/Documentation/git-rebase.txt
+> @@ -265,9 +265,10 @@ See also INCOMPATIBLE OPTIONS below.
+>   See also INCOMPATIBLE OPTIONS below.
+>   
+>   --allow-empty-message::
+> -	By default, rebasing commits with an empty message will fail.
+> -	This option overrides that behavior, allowing commits with empty
+> -	messages to be rebased.
+> +	No-op.  Rebasing commits with an empty message used to fail
+> +	and this option would override that behavior, allowing commits
+> +	with empty messages to be rebased.  Now commits with an empty
+> +	message do not cause rebasing to halt.
 
-diff --git a/parse-options-cb.c b/parse-options-cb.c
-index 7d56681130..a28b55be48 100644
-=2D-- a/parse-options-cb.c
-+++ b/parse-options-cb.c
-@@ -170,15 +170,9 @@ static size_t parse_options_count(const struct option=
- *opt)
+Do we want to mention that the user can pass --no-allow-empty-message to 
+override this?
 
- struct option *parse_options_dup(const struct option *o)
- {
--	const struct option *orig =3D o;
--	struct option *opts;
--	size_t nr =3D parse_options_count(o);
--
--	ALLOC_ARRAY(opts, nr + 1);
--	COPY_ARRAY(opts, orig, nr);
--	memset(opts + nr, 0, sizeof(*opts));
--	opts[nr].type =3D OPTION_END;
--	return opts;
-+	struct option no_options[] =3D { OPT_END() };
-+
-+	return parse_options_concat(o, no_options);
- }
+Best Wishes
 
- struct option *parse_options_concat(const struct option *a,
-=2D-
-2.25.0
+Phillip
+
+>   +
+>   See also INCOMPATIBLE OPTIONS below.
+>   
+> diff --git a/builtin/rebase.c b/builtin/rebase.c
+> index 8081741f8a..faa4e0d406 100644
+> --- a/builtin/rebase.c
+> +++ b/builtin/rebase.c
+> @@ -453,8 +453,9 @@ int cmd_rebase__interactive(int argc, const char **argv, const char *prefix)
+>   		OPT_NEGBIT(0, "ff", &opts.flags, N_("allow fast-forward"),
+>   			   REBASE_FORCE),
+>   		OPT_BOOL(0, "keep-empty", &opts.keep_empty, N_("keep empty commits")),
+> -		OPT_BOOL(0, "allow-empty-message", &opts.allow_empty_message,
+> -			 N_("allow commits with empty messages")),
+> +		OPT_BOOL_F(0, "allow-empty-message", &opts.allow_empty_message,
+> +			   N_("allow commits with empty messages"),
+> +			   PARSE_OPT_HIDDEN),
+>   		OPT_BOOL(0, "rebase-merges", &opts.rebase_merges, N_("rebase merge commits")),
+>   		OPT_BOOL(0, "rebase-cousins", &opts.rebase_cousins,
+>   			 N_("keep original branch points of cousins")),
+> @@ -1495,9 +1496,10 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>   		OPT_STRING_LIST('x', "exec", &exec, N_("exec"),
+>   				N_("add exec lines after each commit of the "
+>   				   "editable list")),
+> -		OPT_BOOL(0, "allow-empty-message",
+> -			 &options.allow_empty_message,
+> -			 N_("allow rebasing commits with empty messages")),
+> +		OPT_BOOL_F(0, "allow-empty-message",
+> +			   &options.allow_empty_message,
+> +			   N_("allow rebasing commits with empty messages"),
+> +			   PARSE_OPT_HIDDEN),
+>   		{OPTION_STRING, 'r', "rebase-merges", &rebase_merges,
+>   			N_("mode"),
+>   			N_("try to rebase merges instead of skipping them"),
+> 
