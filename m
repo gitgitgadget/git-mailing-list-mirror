@@ -2,119 +2,109 @@ Return-Path: <SRS0=3Zv9=35=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-8.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 06961C3F68F
-	for <git@archiver.kernel.org>; Sun,  9 Feb 2020 10:23:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 56ECEC35250
+	for <git@archiver.kernel.org>; Sun,  9 Feb 2020 11:14:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D25492080C
-	for <git@archiver.kernel.org>; Sun,  9 Feb 2020 10:23:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 22E8F20726
+	for <git@archiver.kernel.org>; Sun,  9 Feb 2020 11:14:00 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="gZOpq22q"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UoErP2An"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727626AbgBIKXh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 9 Feb 2020 05:23:37 -0500
-Received: from mout.web.de ([212.227.15.4]:39717 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726078AbgBIKXh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Feb 2020 05:23:37 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1581243810;
-        bh=svToECR2XDt3Z/YGkf4errq7mCFsZXlQT0B9vTBWXzw=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=gZOpq22qJc6ecW7pFZQnWgjpEQomL1ei68FLRJMixMweGeb2E8+xMQXS9A3jpMx9u
-         0HArsUQjp54CrvHxhJ/G+kmatq5Qe6HtZuaU5rNVph/KShenCZpSDSg6XP/oVyn+70
-         D6WogZtjZyntuwa2atrto3JDHuTyknHb2VsjLof0=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([91.47.145.153]) by smtp.web.de (mrweb003
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0Lfzwp-1jJaA51x3T-00pbY7; Sun, 09
- Feb 2020 11:23:30 +0100
-Subject: Re: [PATCH] strbuf: add and use strbuf_insertstr()
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-References: <019be197-e0aa-1234-e16f-6561d8340023@web.de>
- <20200208230801.GA33529@syl.local>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <b0fc55fd-2ed5-25c4-850e-4c69199e0db3@web.de>
-Date:   Sun, 9 Feb 2020 11:23:26 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S1727131AbgBILN4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 9 Feb 2020 06:13:56 -0500
+Received: from mail-pj1-f67.google.com ([209.85.216.67]:52905 "EHLO
+        mail-pj1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726378AbgBILN4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Feb 2020 06:13:56 -0500
+Received: by mail-pj1-f67.google.com with SMTP id ep11so2913772pjb.2
+        for <git@vger.kernel.org>; Sun, 09 Feb 2020 03:13:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ElqYs9Ms2NMkg39LUoaEFSGQnKbEghmM5C5Oza9xeLA=;
+        b=UoErP2AnvcblUXnUB8FfMgljJ92vkb0Lu1aIZdsQk5fG+yTYcMprZK7mIlVIRJ5QxK
+         acVCAXUS+aLKFO3q5LCpjm45ARrE4puF20YB68Bvdl0+2PL34JqoWphdtXBSiKL7oX2E
+         38GagWvUgLKB2R+h6nNBF/YVw/NaMYSpjHpOfng22Iq+xoFnAaT1Wiuz1CNOmjooWUl5
+         LlAgfdfy32qFGOBdZba0ILJwah5spSMrDMCwALTGqUA4jRtoaUg1EtNPtckTWQlUTeAw
+         Uh5xDApChZpnE3kLeZUHuIAAv8DbIZ5z4imHf2ndI96lnETumynRjXoGOZqBpQvZXo8O
+         KZDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ElqYs9Ms2NMkg39LUoaEFSGQnKbEghmM5C5Oza9xeLA=;
+        b=Q3G9sfJtz/cnhvfjlbeje7pIjlbV4n9bhlhbOQi90TIufMBaYg0CAb4CslCBAWhPYT
+         /W9w/q7MPY5Mle9RwXjgBYqSL3dX+4yAxy09BlqPZxRKHfwdzyXDs8D/k+cSnboLWrDg
+         jNwcbgIMo0nyp7lGQWjBs+xq9KK5YEsTFvYJe78jaJnuNu1AaGpLq1/69BTWtnikKegR
+         e5XAmkvJllLmOv2XP3LnacYcBo07ajzO2qYCUtMzBUcMmaZQt1Hr2DzaAZrkqHI7pzhw
+         g3f6a8M6yL22/Uv2z8D6oJjEZwJibs9JtDyUF58l10BZE3BntfN9W9ditx54XImSL/iW
+         ijgg==
+X-Gm-Message-State: APjAAAWtuLnOayUvWhWxO80QG9rjkSvIaSTeNaTuUNF0S87omR03Nk8f
+        KfsKu2+9NwvZ6fN8cF2rEa7v530iOFGvfA==
+X-Google-Smtp-Source: APXvYqzCO3Q+qpH5e98ronDgpSL2o2LmT1Nr1GI9QAi3s4HJ2dOGywy37183YhogMoGhm/nTFwDIBA==
+X-Received: by 2002:a17:902:868d:: with SMTP id g13mr8150141plo.36.1581246835011;
+        Sun, 09 Feb 2020 03:13:55 -0800 (PST)
+Received: from konoha.iitr.ac.in ([103.37.201.177])
+        by smtp.gmail.com with ESMTPSA id v8sm8391412pff.151.2020.02.09.03.13.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 09 Feb 2020 03:13:54 -0800 (PST)
+From:   Shourya Shukla <shouryashukla.oo@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Johannes.Schindelin@gmx.de, chriscool@tuxfamily.org, peff@peff.net,
+        t.gummerer@gmail.com
+Subject: Conversion of 'git submodule' to C: need some help
+Date:   Sun,  9 Feb 2020 16:43:49 +0530
+Message-Id: <20200209111349.20472-1-shouryashukla.oo@gmail.com>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-In-Reply-To: <20200208230801.GA33529@syl.local>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:NJvo4VTp4s9ipgi+s9XNrGkttMRRymwPO1iuFSuhPMntiK9J5bm
- 5+GtDlfOyiqAPk/Lbyp0B1pKJKEIvcO0VJtBWmmyPe0Mn0TqCuCxCeKHbEP7MLlyhFap2pK
- WpLzPRb/fsUzwjftFuiK+68h8QvcsK6T2Cnu7jjFNIjtxNS1icL4LZL9qpQ4QsAYqhnsMQo
- 4ARYz+9lUp1A/H4KBbTSg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:LOkGgD18m34=:vc5cdCDwJcJ3JppY2i+BYw
- Zbw2h9Tbtuk6XaRwvTTQ043RfdOKeMnxUHdBik14WR+Naoaffk/fprXvcoJ45nkyJBkyjISi+
- B2PXzmOURh2IORYF+++Y/nEKlGlV7qqGCBLe1r9Nm60kXIHDbSASumPEUvaoDg7gbX+X5rQ8s
- dxv5SHGKtCmhXocAhuQKwQS5JBpYeOoQy2QA3f1578lPUpkuVkqH8nBLss6t0fEH/QW7pY8bo
- 2/vHqQOeqLTK3Xx+nkoxmIlAB14gNAbIgHGvKTuDuvbb0CLYKgDaprAYfJQQ8aUmJNr1AJ9Sq
- 8SImbgWpcLKWHKiDFtMrKuQULrxknh4/VLW1T4cTxR9bnyTj/aN7tXCZlRYmQeIrvuczHhGdt
- NDl/mBMqn5/L0w78kmzf7uyqq6M6Bp+kGy3aMfCOlDbfFeQoXTWKFgziKe+ngm4cJJNwB7zYV
- Edb7GN+HRdIVbr9KzIe0j0umLBDCxgUNWpQABdeFPsPksmNWm5UtOqD+rN536MzEu2pEaENnt
- EBYpyzNy2Qgl+UYVbBmG0465gWULvltRvkKQ68lAoxKN5uHOdF8LutgvNX0sK/XdxWWxH3hdU
- R2Vg2sYx1jrkvHvH2rDLZj6HXCd7ZsNRDWdOF+FECTd83oWFpLP1qUnfT1GT8eCxdRniAcpQ/
- uYS5UBt+NNRomRZWtvXZP6uvN6Gx88h+X81J7XGscV4zr8cklRRM73hHEZgKwHH3i0Euvbeqf
- G8mV63/opQg5148uXUFqxcRRi67ZWhTLPwpcjulTXkgR1qr70at2WM2qWBJtTWv40+FAfNhMv
- w+c3WQUXZmaHAoWSfq8ODw6jpnQRIRquJPsXiYaaq/SWvKVKBNDtv9J7NwPoOeVS5Vy50o80E
- HI+VyVV9a0YojxziAwqxo8rHuOPdXNsDD9IBRXk7PPViokAPPW8fosv9ZbCxQnSpm45zjfkRe
- qfJIi0YfQl/uoqFQDshWDsLPcz5tM90aHLUNxvcEzj0pwn83a+FjKozY3Osrx2nl2YhllLLn+
- LQ2u1SgpQd+52beNvHHTaLjavVwzISZ3qQKsSC5JNUX7ELUDfGVTGKjP87f4HADDxqbXR7yVM
- gnGwdqQX2p+BiPBJO0D5yO7Ztt4rMZsciHebLCXpjTwfBd39g+ZMpi6DuVIcUWqPYmbjcyElB
- EzKey3RLyxoIk8teepVfOUQtT26yIngiIb9uChVXUtxLSAHO59Eoul3ZC74L3qsFaiaOzzD26
- icXiMu4T5Ij2SX595
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 09.02.20 um 00:08 schrieb Taylor Blau:
-> Hi Ren=C3=A9,
->
-> On Sat, Feb 08, 2020 at 08:56:43PM +0100, Ren=C3=A9 Scharfe wrote:
->> Add a function for inserting a C string into a strbuf.  Use it
->> throughout the source to get rid of magic string length constants and
->> explicit strlen() calls.
->>
->> Like strbuf_addstr(), implement it as an inline function to avoid the
->> implicit strlen() calls to cause runtime overhead.
->
-> This all looks quite reasonable to me. Did you have a specific
-> motivation in mind when writing this patch, other than to get rid of
-> having to call strlen on the same argument like:
->
->   strbuf_insert(&buf, pos, x, strlen(x))
->
-> ? Not that this needs more motivation than that, I'm just curious.
+Hello everyone,
 
-No, that's it.
+I was trying to understand the code of 'git submodule'[1]. This is
+also in reference to this conversation I had before[2].
 
-> I looked through 'git grep strbuf_insert(', and only noticed one spot
-> that I could be updated with 'strbuf_insertstr' in mailinfo.c:
->
-> diff --git a/mailinfo.c b/mailinfo.c
-> index c535dec2e9..543962d40c 100644
-> --- a/mailinfo.c
-> +++ b/mailinfo.c
-> @@ -570,7 +570,7 @@ static int check_header(struct mailinfo *mi,
->     len =3D strlen("Content-Type: ");
->     strbuf_add(&sb, line->buf + len, line->len - len);
->     decode_header(mi, &sb);
-> -		strbuf_insert(&sb, 0, "Content-Type: ", len);
-> +		strbuf_insertstr(&sb, 0, "Content-Type: ");
->     handle_content_type(mi, &sb);
->     ret =3D 1;
->     goto check_header_out;
+I read the code and stumbled across a function with a 'TODO' tag[3].
+Here we want to change the aforementioned function into a 'repo_submodule_init'
+function I suppose.
 
-Right.  Missed that one because the strlen() call is not in side the
-strbuf_insert() invocation.
+I am facing some problems and would love some insight on them:
+	
+	1. What exactly are we aiming in [3]? To replace the function completely
+	   or to just add some 'repo_submodule_init' functionality?
 
-Ren=C3=A9
+	2. Something I inferred was that functions with names of the pattern 'strbuf_git_*'
+	   are trying to 'create a path'(are they physically creating the path or just
+	   instructing git about them?) while functions of the pattern 'git_*' are trying
+	   to check some conditions denoted by their function names(for instance
+	   'git_config_rename_section_in_file')? Is this inference correct to some extent?
+
+	3. How does one check which all parts of a command have been completed? Is it checked
+	   by looking at the file history or by comparing with the shell script of the command
+	   or are there any other means?
+	
+	4. Is it fine if I am not able to understand the purpose of certain functions right now(such as
+	   'add_submodule_odb')? I am able to get a rough idea of what the functions are doing but I am
+	   not able to decode certain functions line-by-line.
+
+Currently, I am studying in depth about 'git objects' and the submodule command on the git Documentation.
+What else do would you advise me to strengthen my understanding of the code and git in general?
+
+Regards,
+Shourya Shukla
+
+[1]: https://github.com/periperidip/git/blob/v2.25.0/submodule.c
+[2]: https://lore.kernel.org/git/20200201173841.13760-1-shouryashukla.oo@gmail.com/
+[3]: https://github.com/periperidip/git/blob/v2.25.0/submodule.c#L168
+
