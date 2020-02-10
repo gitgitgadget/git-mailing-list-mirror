@@ -7,60 +7,61 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 674CBC352A4
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BBBAFC47409
 	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 00:31:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 33D3E20870
+	by mail.kernel.org (Postfix) with ESMTP id 9352121739
 	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 00:31:14 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ll91FUSf"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q10t/Zci"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727411AbgBJAbK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 9 Feb 2020 19:31:10 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:40017 "EHLO
+        id S1727429AbgBJAbM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 9 Feb 2020 19:31:12 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:40022 "EHLO
         mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727045AbgBJAbH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Feb 2020 19:31:07 -0500
-Received: by mail-wr1-f68.google.com with SMTP id t3so5415819wru.7
-        for <git@vger.kernel.org>; Sun, 09 Feb 2020 16:31:07 -0800 (PST)
+        with ESMTP id S1727369AbgBJAbL (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Feb 2020 19:31:11 -0500
+Received: by mail-wr1-f68.google.com with SMTP id t3so5415920wru.7
+        for <git@vger.kernel.org>; Sun, 09 Feb 2020 16:31:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=/f/RbunZ3oX3X6TkjfyxUFiJayzsGjXKRgQcjZDFgRo=;
-        b=ll91FUSfNBunhRNUizUqA5Ct5669Az4CORmsZouKTjy+m1ltk6BiP/jEsOYumm2rNh
-         V8riC41ZzlB+hrIxZO6ro8DUQCQoUFbzW5uOj0jAy0/7fwfVslA3xHCTNQWtJntyRaxe
-         Jf7Dbt7q72CIO0KLt2R6cbwSfymeqXkJsoDjVssl+gHvHsVhDMdpe1ifJD58fExlcRAt
-         a721K93EKe3V/nnbP5I9DyIvwozdFpHqLEeZLwBPtX+SGTY4CDodPH9pKOkOmrQqTLE6
-         b3H48I/KukUVuDbbfwfJA34793Mb/p35F21ILcCge5LKby4EZ/WDwisJukxK0/TNX3HL
-         HtLw==
+        bh=k8tgdFvIaea/EUh1trQg/Jcnd/2uUJbrdJ7MXu61oDk=;
+        b=Q10t/ZcityPwJEJBDOCE6xWKxHEvcbvMYY8AKY61uU8Hb7QQYiOmNM9HvIpki2U8d8
+         to3o7sOPtHf80ksQOgJOPmnvLikIU6QaZN3mFA/zsBjNuDWimJPtFKignAUWemTqz/yH
+         6qdcJRBPmMIfz4v9ytkdP+czE/zPU+wyoplIDFjX+Z1jAAnHG+Ja8gPcKStB2NYebcAU
+         /khtbpw2dTec1F8tzuIOzxMzg+excBLcvjDBbnZSrNx0XbDzxNe9Ih8NVOv1mswlyY9X
+         5XCHSCMx9kyTJ46HjKZq/u0LYgszdnSy1cdpmCirfU1irvW69u6GUVrh0PxEXhubZkzE
+         N3PQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=/f/RbunZ3oX3X6TkjfyxUFiJayzsGjXKRgQcjZDFgRo=;
-        b=ScVOhIrkafF/Yw8TX9tZ6lxv8jrNNuBLRSVmOUdkZ19dE+ZoKIATd5u2fT0s5+moov
-         TWi/Mnmly2v4q/dx8h4+2VCaaBrR+q+6Y7BNRINGUH/8wy4aiBDGR8vMLXaY34juBbSw
-         4JrhbClHFZ1IJ0lxmVmFWmSBGiots8lXUX85LUQKRAVk93cMpnmaJnP6Vlrk1Kb6HW31
-         a7AC+NFEEdOfy4A4Z9E7tiRAjGV7kLL+Qdn4cTvqDQsSHgU8VWhWFqXF2q5hVJa+QoaI
-         ZbMYvJC3PbSLmIVUPnp2+Fn5qpFqtGG+b9x5Zn7eyeW/oyduhYbIcRenSpBySXKtAQLs
-         aMdQ==
-X-Gm-Message-State: APjAAAX++kQ5moj8I+kg2CEHZMjvxbAZhbVk9/rcTfDmVkGqw4K9Rq19
-        8GnngCJMocKDYNFSOXWcI952x3dp
-X-Google-Smtp-Source: APXvYqyPP3wmyzvNE+tl1W0VXgv8va2Fjx7LqJsGsCYs+l0u7Wbf2irwOftKqCcdIKEo6yWB4DO+uw==
-X-Received: by 2002:adf:f109:: with SMTP id r9mr12954640wro.406.1581294666258;
-        Sun, 09 Feb 2020 16:31:06 -0800 (PST)
+        bh=k8tgdFvIaea/EUh1trQg/Jcnd/2uUJbrdJ7MXu61oDk=;
+        b=G7I1i/7VyixmXasBmTQfo3SJODHgoaW47HpM+ahP7jmFHVbHgU/mtIawfbRoiJ0ob3
+         Fun5C+rvxWN3GeVHAC3pi4j+k1wYjiAGzO7/tEShtno9UH8ov/Rd3/qiCoOJJ93k+gdL
+         vMmo29vYTbsIUSwq8XbMPn3699UzKKGRK7Z+0t9YeC6/a/wEJYHEfmavY1/f1oCJMYuF
+         ySV+SRkBGR2oMuHxPzR1+AH4Cqbzo2wNwwIk1myqslRs/xcppiIK3JNhaobB67KKdGsr
+         Y0XZWxpN8iKxLdqjnKW5FgguvZ7Y+w4N10oQfPT4+Bn9QorvJ1LWoXZY/6TnRM+Gczv1
+         xjDQ==
+X-Gm-Message-State: APjAAAWcdaRqJRJ0SkSZsu2GLObpN1VsBNV4vgOwbOn7U7g3wzpjZ6Dv
+        wkHItVVINAeNQPwovXwtYlWN9d2D
+X-Google-Smtp-Source: APXvYqwK2VdNC54nh3hYatiT5NqZwaFvS5phgUthQdLlnCT8NQ30KdarPYa/80NIil9K7z32KmbevQ==
+X-Received: by 2002:adf:8b59:: with SMTP id v25mr13747434wra.419.1581294669371;
+        Sun, 09 Feb 2020 16:31:09 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i16sm13275269wrr.71.2020.02.09.16.31.05
+        by smtp.gmail.com with ESMTPSA id a5sm13025993wmb.37.2020.02.09.16.31.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 09 Feb 2020 16:31:05 -0800 (PST)
-Message-Id: <64c20d0556e9e72663940da7f58a8e55a75fa9d0.1581294660.git.gitgitgadget@gmail.com>
+        Sun, 09 Feb 2020 16:31:08 -0800 (PST)
+Message-Id: <f76463ee90c1bc294ed503af19a47190f72778a8.1581294660.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.478.v7.git.1581294660.gitgitgadget@gmail.com>
 References: <pull.478.v6.git.1580268865.gitgitgadget@gmail.com>
         <pull.478.v7.git.1581294660.gitgitgadget@gmail.com>
 From:   "Matthew Rogers via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 10 Feb 2020 00:30:55 +0000
-Subject: [PATCH v7 06/10] config: clarify meaning of command line scoping
+Date:   Mon, 10 Feb 2020 00:30:59 +0000
+Subject: [PATCH v7 10/10] config: add '--show-scope' to print the scope of a
+ config value
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,73 +76,186 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Matthew Rogers <mattr94@gmail.com>
 
-CONFIG_SCOPE_CMDLINE is generally used in the code to refer to config
-values passed in via the -c option.  Options passed in using this
-mechanism share similar scoping characteristics with the --file and
---blob options of the 'config' command, namely that they are only in use
-for that single invocation of git, and that they supersede the normal
-system/global/local hierarchy.  This patch introduces
-CONFIG_SCOPE_COMMAND to reflect this new idea, which also makes
-CONFIG_SCOPE_CMDLINE redundant.
+When a user queries config values with --show-origin, often it's
+difficult to determine what the actual "scope" (local, global, etc.) of
+a given value is based on just the origin file.
+
+Teach 'git config' the '--show-scope' option to print the scope of all
+displayed config values.  Note that we should never see anything of
+"submodule" scope as that is only ever used by submodule-config.c when
+parsing the '.gitmodules' file.
 
 Signed-off-by: Matthew Rogers <mattr94@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- config.c              | 6 +++---
- config.h              | 2 +-
- t/t1308-config-set.sh | 2 +-
- 3 files changed, 5 insertions(+), 5 deletions(-)
+ Documentation/git-config.txt | 15 ++++++---
+ builtin/config.c             | 20 ++++++++++--
+ t/t1300-config.sh            | 59 ++++++++++++++++++++++++++++++++++++
+ 3 files changed, 87 insertions(+), 7 deletions(-)
 
-diff --git a/config.c b/config.c
-index 7422bdebb1..fe1e44a43a 100644
---- a/config.c
-+++ b/config.c
-@@ -1737,7 +1737,7 @@ static int do_git_config_sequence(const struct config_options *opts,
- 		free(path);
- 	}
+diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
+index 899e92a1c9..7573160f21 100644
+--- a/Documentation/git-config.txt
++++ b/Documentation/git-config.txt
+@@ -9,18 +9,18 @@ git-config - Get and set repository or global options
+ SYNOPSIS
+ --------
+ [verse]
+-'git config' [<file-option>] [--type=<type>] [--show-origin] [-z|--null] name [value [value_regex]]
++'git config' [<file-option>] [--type=<type>] [--show-origin] [--show-scope] [-z|--null] name [value [value_regex]]
+ 'git config' [<file-option>] [--type=<type>] --add name value
+ 'git config' [<file-option>] [--type=<type>] --replace-all name value [value_regex]
+-'git config' [<file-option>] [--type=<type>] [--show-origin] [-z|--null] --get name [value_regex]
+-'git config' [<file-option>] [--type=<type>] [--show-origin] [-z|--null] --get-all name [value_regex]
+-'git config' [<file-option>] [--type=<type>] [--show-origin] [-z|--null] [--name-only] --get-regexp name_regex [value_regex]
++'git config' [<file-option>] [--type=<type>] [--show-origin] [--show-scope] [-z|--null] --get name [value_regex]
++'git config' [<file-option>] [--type=<type>] [--show-origin] [--show-scope] [-z|--null] --get-all name [value_regex]
++'git config' [<file-option>] [--type=<type>] [--show-origin] [--show-scope] [-z|--null] [--name-only] --get-regexp name_regex [value_regex]
+ 'git config' [<file-option>] [--type=<type>] [-z|--null] --get-urlmatch name URL
+ 'git config' [<file-option>] --unset name [value_regex]
+ 'git config' [<file-option>] --unset-all name [value_regex]
+ 'git config' [<file-option>] --rename-section old_name new_name
+ 'git config' [<file-option>] --remove-section name
+-'git config' [<file-option>] [--show-origin] [-z|--null] [--name-only] -l | --list
++'git config' [<file-option>] [--show-origin] [--show-scope] [-z|--null] [--name-only] -l | --list
+ 'git config' [<file-option>] --get-color name [default]
+ 'git config' [<file-option>] --get-colorbool name [stdout-is-tty]
+ 'git config' [<file-option>] -e | --edit
+@@ -222,6 +222,11 @@ Valid `<type>`'s include:
+ 	the actual origin (config file path, ref, or blob id if
+ 	applicable).
  
--	current_parsing_scope = CONFIG_SCOPE_CMDLINE;
-+	current_parsing_scope = CONFIG_SCOPE_COMMAND;
- 	if (!opts->ignore_cmdline && git_config_from_parameters(fn, data) < 0)
- 		die(_("unable to parse command-line config"));
++--show-scope::
++	Similar to `--show-origin` in that it augments the output of
++	all queried config options with the scope of that value
++	(local, global, system, command).
++
+ --get-colorbool name [stdout-is-tty]::
  
-@@ -3305,8 +3305,8 @@ const char *config_scope_name(enum config_scope scope)
- 		return "local";
- 	case CONFIG_SCOPE_WORKTREE:
- 		return "worktree";
--	case CONFIG_SCOPE_CMDLINE:
--		return "command line";
-+	case CONFIG_SCOPE_COMMAND:
-+		return "command";
- 	default:
- 		return "unknown";
- 	}
-diff --git a/config.h b/config.h
-index d3ed41ef8e..b570f4ce43 100644
---- a/config.h
-+++ b/config.h
-@@ -301,7 +301,7 @@ enum config_scope {
- 	CONFIG_SCOPE_GLOBAL,
- 	CONFIG_SCOPE_LOCAL,
- 	CONFIG_SCOPE_WORKTREE,
--	CONFIG_SCOPE_CMDLINE,
-+	CONFIG_SCOPE_COMMAND,
+ 	Find the color setting for `name` (e.g. `color.diff`) and output
+diff --git a/builtin/config.c b/builtin/config.c
+index 0a9778b714..ee4aef6a35 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -33,6 +33,7 @@ static int end_nul;
+ static int respect_includes_opt = -1;
+ static struct config_options config_options;
+ static int show_origin;
++static int show_scope;
+ 
+ #define ACTION_GET (1<<0)
+ #define ACTION_GET_ALL (1<<1)
+@@ -155,6 +156,7 @@ static struct option builtin_config_options[] = {
+ 	OPT_BOOL(0, "name-only", &omit_values, N_("show variable names only")),
+ 	OPT_BOOL(0, "includes", &respect_includes_opt, N_("respect include directives on lookup")),
+ 	OPT_BOOL(0, "show-origin", &show_origin, N_("show origin of config (file, standard input, blob, command line)")),
++	OPT_BOOL(0, "show-scope", &show_scope, N_("show scope of config (worktree, local, global, system, command)")),
+ 	OPT_STRING(0, "default", &default_value, N_("value"), N_("with --get, use default value when missing entry")),
+ 	OPT_END(),
  };
- const char *config_scope_name(enum config_scope scope);
+@@ -189,11 +191,23 @@ static void show_config_origin(struct strbuf *buf)
+ 	strbuf_addch(buf, term);
+ }
  
-diff --git a/t/t1308-config-set.sh b/t/t1308-config-set.sh
-index 728a2b87ce..fba0abe429 100755
---- a/t/t1308-config-set.sh
-+++ b/t/t1308-config-set.sh
-@@ -265,7 +265,7 @@ test_expect_success 'iteration shows correct origins' '
- 	value=from-cmdline
- 	origin=command line
- 	name=
--	scope=command line
-+	scope=command
- 	EOF
- 	GIT_CONFIG_PARAMETERS=$cmdline_config test-tool config iterate >actual &&
- 	test_cmp expect actual
++static void show_config_scope(struct strbuf *buf)
++{
++	const char term = end_nul ? '\0' : '\t';
++	const char *scope = config_scope_name(current_config_scope());
++
++	strbuf_addstr(buf, N_(scope));
++	strbuf_addch(buf, term);
++}
++
+ static int show_all_config(const char *key_, const char *value_, void *cb)
+ {
+-	if (show_origin) {
++	if (show_origin || show_scope) {
+ 		struct strbuf buf = STRBUF_INIT;
+-		show_config_origin(&buf);
++		if (show_scope)
++			show_config_scope(&buf);
++		if (show_origin)
++			show_config_origin(&buf);
+ 		/* Use fwrite as "buf" can contain \0's if "end_null" is set. */
+ 		fwrite(buf.buf, 1, buf.len, stdout);
+ 		strbuf_release(&buf);
+@@ -213,6 +227,8 @@ struct strbuf_list {
+ 
+ static int format_config(struct strbuf *buf, const char *key_, const char *value_)
+ {
++	if (show_scope)
++		show_config_scope(buf);
+ 	if (show_origin)
+ 		show_config_origin(buf);
+ 	if (show_keys)
+diff --git a/t/t1300-config.sh b/t/t1300-config.sh
+index e5fb9114f6..5464c46c18 100755
+--- a/t/t1300-config.sh
++++ b/t/t1300-config.sh
+@@ -1771,6 +1771,65 @@ test_expect_success '--show-origin blob ref' '
+ 	test_cmp expect output
+ '
+ 
++test_expect_success '--show-scope with --list' '
++	cat >expect <<-EOF &&
++	global	user.global=true
++	global	user.override=global
++	global	include.path=$INCLUDE_DIR/absolute.include
++	global	user.absolute=include
++	local	user.local=true
++	local	user.override=local
++	local	include.path=../include/relative.include
++	local	user.relative=include
++	command	user.cmdline=true
++	EOF
++	git -c user.cmdline=true config --list --show-scope >output &&
++	test_cmp expect output
++'
++
++test_expect_success !MINGW '--show-scope with --blob' '
++	blob=$(git hash-object -w "$CUSTOM_CONFIG_FILE") &&
++	cat >expect <<-EOF &&
++	command	user.custom=true
++	EOF
++	git config --blob=$blob --show-scope --list >output &&
++	test_cmp expect output
++'
++
++test_expect_success '--show-scope with --local' '
++	cat >expect <<-\EOF &&
++	local	user.local=true
++	local	user.override=local
++	local	include.path=../include/relative.include
++	EOF
++	git config --local --list --show-scope >output &&
++	test_cmp expect output
++'
++
++test_expect_success '--show-scope getting a single value' '
++	cat >expect <<-\EOF &&
++	local	true
++	EOF
++	git config --show-scope --get user.local >output &&
++	test_cmp expect output
++'
++
++test_expect_success '--show-scope with --show-origin' '
++	cat >expect <<-EOF &&
++	global	file:$HOME/.gitconfig	user.global=true
++	global	file:$HOME/.gitconfig	user.override=global
++	global	file:$HOME/.gitconfig	include.path=$INCLUDE_DIR/absolute.include
++	global	file:$INCLUDE_DIR/absolute.include	user.absolute=include
++	local	file:.git/config	user.local=true
++	local	file:.git/config	user.override=local
++	local	file:.git/config	include.path=../include/relative.include
++	local	file:.git/../include/relative.include	user.relative=include
++	command	command line:	user.cmdline=true
++	EOF
++	git -c user.cmdline=true config --list --show-origin --show-scope >output &&
++	test_cmp expect output
++'
++
+ test_expect_success '--local requires a repo' '
+ 	# we expect 128 to ensure that we do not simply
+ 	# fail to find anything and return code "1"
 -- 
 gitgitgadget
-
