@@ -2,166 +2,100 @@ Return-Path: <SRS0=dWK1=36=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C42BC35254
-	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 19:03:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5CA7EC35254
+	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 19:30:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 041782080C
-	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 19:03:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0606120661
+	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 19:30:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cJFiWVyk"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="qJgjLXLc"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727434AbgBJTDL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Feb 2020 14:03:11 -0500
-Received: from mail-qt1-f194.google.com ([209.85.160.194]:34447 "EHLO
-        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726831AbgBJTDL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Feb 2020 14:03:11 -0500
-Received: by mail-qt1-f194.google.com with SMTP id h12so6001727qtu.1
-        for <git@vger.kernel.org>; Mon, 10 Feb 2020 11:03:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=CQHz0XbOjNmt+mb55mfXhPvYEk7D6DykEvUd845E8Ek=;
-        b=cJFiWVykeDBhFXpFmOYFau6XuXVdiP97CBEl3PeHej365P/370mm/X8OcutzD8xjWS
-         mYx+CjF4/X1040ZxPHUkqyN0fPZVnVh0WnmVvgs5xPUXBGKqaey8tEpTsx13GDyyMgBJ
-         wTE2I39WNo0fJXX0XmQRCODpYTbJ33E+1YOs8SY0J0tGxlMxruEXmmcKA+mm/rBJa9qM
-         t1LirdhzPD+d4Bezm9fW+8s0BmLIMpqlcnvWbV/BKT28WEvgVeJdVWUeqinQmCgt7srh
-         vYfDfnewaecu4KsRb8WBULqXp2OXyb5CLb4QE5wNivcKGkncBLfsES+Ol9EtuGmitnls
-         a2mg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=CQHz0XbOjNmt+mb55mfXhPvYEk7D6DykEvUd845E8Ek=;
-        b=bfVhqvmQijDW6MNpn3LfQamked3fN5DWzz7mfTFs2vp7ZkX79K9kg6PaZUpaFkfRBi
-         PgrZlm0860NaeHwgjU1AfH2KxLhGAyzsRy+v47uCJ61YXWyDePI0MMg/RSdYY+e9LED6
-         RYnsZ/QyKjilYgp63UfS2fVnkt5EjlQANhi/mot9I+PJBSnXtaEkqxvdIKi0poDtPgib
-         hZw1iNfl0mZwqHmmpMwpmU53edINpMwlEbbNHJo9FGCMqGfE5q+w6v4vURRwHRqJRkIo
-         TDamsZpLpl5skDKadyh5ZNx2I045MZlHwt/v3B7lRzLxaZneJ0r76G+meqJDeRlXCWSp
-         xk7A==
-X-Gm-Message-State: APjAAAXGGXRnG357wMKUjundIs3kLDkZVt2cna/rkrqqd9lIwKGntVxy
-        +oy2gFBbWxwwmprj8OdETo5zIzpiYj0=
-X-Google-Smtp-Source: APXvYqxD07YiMJCcHtGSbp72Bojzu99wUiXLr4fVT5RYfJuUss3EC5fJL3/2Q1f65+VNOw2WdJj+RQ==
-X-Received: by 2002:aed:3302:: with SMTP id u2mr10912314qtd.156.1581361389598;
-        Mon, 10 Feb 2020 11:03:09 -0800 (PST)
-Received: from [10.10.31.126] ([24.229.121.34])
-        by smtp.gmail.com with ESMTPSA id x22sm623038qtq.30.2020.02.10.11.03.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 10 Feb 2020 11:03:09 -0800 (PST)
-Subject: Re: [PATCH v3 2/5] git-p4: create new function run_git_hook
-To:     Junio C Hamano <gitster@pobox.com>,
-        Ben Keene via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org
-References: <pull.698.v2.git.git.1580507895.gitgitgadget@gmail.com>
- <pull.698.v3.git.git.1581002149.gitgitgadget@gmail.com>
- <85918a7edb6482cc1c555917075f8cfd2f18ba32.1581002149.git.gitgitgadget@gmail.com>
- <xmqqo8ubec4n.fsf@gitster-ct.c.googlers.com>
-From:   Ben Keene <seraphire@gmail.com>
-Message-ID: <2ab5f3cf-51f4-21d9-5741-0ec53f3035dd@gmail.com>
-Date:   Mon, 10 Feb 2020 14:03:08 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.2
+        id S1727433AbgBJTau (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Feb 2020 14:30:50 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62251 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727003AbgBJTau (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Feb 2020 14:30:50 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id AF589446B2;
+        Mon, 10 Feb 2020 14:30:47 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=5ypISC2tN9HQHOWiviUR4X1oapo=; b=qJgjLX
+        LcBzuoaIBfDLgvXDFPel/xA8Tc5yOKdm9R6AXwhwlFqt2FCsUe0ShhQf5rgpkPNT
+        +CZhlax7aD6Zeh70+lck4KTt2fa9bUbJS2mVAu4XUyT6OEKiamVYC7wEdakoM81B
+        0AgbK+t5jaTqM+koa6m3WkwBfw/DgOHn5e15U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=lL9VrMB4s4NGXSeWme4CVCpwO+6ZaLzX
+        zOnGMllYGIx0rT5a/moOVhpu4krWEly1f3G7l7y/APOBCHUj1vgCMJjFre+bpMYQ
+        Jk2C09oY8F3uSA2ObYwTSILjSeKycXLq0XhC3EXp2vrX6lsejd6QML6WUGBZthGH
+        Hy8hT/u0iM8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A66E3446B1;
+        Mon, 10 Feb 2020 14:30:47 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1B4EA446B0;
+        Mon, 10 Feb 2020 14:30:47 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Heba Waly via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Heba Waly <heba.waly@gmail.com>
+Subject: Re: [PATCH] advice: refactor advise API
+References: <pull.548.git.1581311049547.gitgitgadget@gmail.com>
+        <97406f9e-b8ef-b5b9-3987-cdef843b31a5@gmail.com>
+Date:   Mon, 10 Feb 2020 11:30:46 -0800
+In-Reply-To: <97406f9e-b8ef-b5b9-3987-cdef843b31a5@gmail.com> (Derrick
+        Stolee's message of "Mon, 10 Feb 2020 09:38:51 -0500")
+Message-ID: <xmqq8slaz1cp.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqo8ubec4n.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Type: text/plain
+X-Pobox-Relay-ID: D65B017C-4C3B-11EA-A7E9-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Derrick Stolee <stolee@gmail.com> writes:
 
-On 2/6/2020 2:42 PM, Junio C Hamano wrote:
-> "Ben Keene via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>> +static const char turn_off_instructions[] =
+>> +N_("\n"
+>> +"Turn this message off by running\n"
+>> +"\"git config %s false\"");
 >
->> +def run_git_hook(cmd, param=[]):
->> +    """Execute a hook if the hook exists."""
->> +    if verbose:
->> +        sys.stderr.write("Looking for hook: %s\n" % cmd)
->> +        sys.stderr.flush()
->> +
->> +    hooks_path = gitConfig("core.hooksPath")
->> +    if len(hooks_path) <= 0:
->> +        hooks_path = os.path.join(os.environ.get("GIT_DIR", ".git"), "hooks")
-> Using the .get() with default is misleading, I think (see an earlier reply).
-Looking back through the original discussion, I see that it was decided that
-the application uses "rev-parse --git-dir" and "rev-parse --show-cdup" 
-to find
-the top directory of the git repo. At least for testing, being able to 
-resolve
-the .git directory directly is useful.  I will modify the code to throw an
-exception if neither GIT_DIR or .git resolve correctly.
+> I have mixed feelings on the use of these instructions. Perhaps at
+> minimum the addition of these instructions could be left to a
+> separate patch than the creation of advise_ng().
 >
->> +    if not isinstance(param, list):
->> +        param=[param]
->> +
->> +    # resolve hook file name, OS depdenent
->> +    hook_file = os.path.join(hooks_path, cmd)
->> +    if platform.system() == 'Windows':
->> +        if not os.path.isfile(hook_file):
->> +            # look for the file with an extension
->> +            files = glob.glob(hook_file + ".*")
->> +            if not files:
->> +                return True
->> +            files.sort()
->> +            hook_file = files[0]
->> +
->> +    if not os.path.isfile(hook_file) or not os.access(hook_file, os.X_OK):
->> +        return True
->> +
->> +    return run_hook_command(hook_file, param) == 0
->> +
->> +def run_hook_command(cmd, param):
->> +    """Executes a git hook command
->> +       cmd = the command line file to be executed. This can be
->> +       a file that is run by OS association.
->> +
->> +       param = a list of parameters to pass to the cmd command
->> +
->> +       On windows, the extension is checked to see if it should
->> +       be run with the Git for Windows Bash shell.  If there
->> +       is no file extension, the file is deemed a bash shell
->> +       and will be handed off to sh.exe. Otherwise, Windows
->> +       will be called with the shell to handle the file assocation.
->> +
->> +       For non Windows operating systems, the file is called
->> +       as an executable.
->> +    """
->> +    cli = [cmd] + param
->> +    use_shell = False
->> +    if platform.system() == 'Windows':
->> +        (root,ext) = os.path.splitext(cmd)
->> +        if ext == "":
->> +            exe_path = os.environ.get("EXEPATH")
->> +            if exe_path is None:
->> +                exe_path = ""
->> +            else:
->> +                exe_path = os.path.join(exe_path, "bin")
->> +            cli = [os.path.join(exe_path, "SH.EXE")] + cli
->> +        else:
->> +            use_shell = True
-> Please ask somebody familiar with Windows to review this "if
-> Windows" and the other one in run_git_hook().
->
->> +    return subprocess.call(cli, shell=use_shell)
->> +
->> +
->>   def write_pipe(c, stdin):
->>       if verbose:
->>           sys.stderr.write('Writing pipe: %s\n' % str(c))
->> @@ -4125,7 +4187,6 @@ def printUsage(commands):
->>       "unshelve" : P4Unshelve,
->>   }
->>   
->> -
->>   def main():
->>       if len(sys.argv[1:]) == 0:
->>           printUsage(commands.keys())
+> My biggest concern is that this adds unexpected noise to users who
+> want the advice to stay. I'm calling attention to it, because this
+> part isn't a simple refactor like the rest of the patch.
+> ...
+> I definitely tend to recommend more tests than most, but perhaps this
+> unit test is overkill? You demonstrate a good test below using a real
+> Git command, which should be sufficient. If the "turn this message off"
+> part gets removed, then you will still have coverage of your method.
+> It just won't require a test change because it would not modify behavior.
+> ...
+
+All good suggestions.  Thanks for an excellent review.
+
+Another thing.  
+
+advise_ng() may have been a good name for illustration but is a
+horrible name for real-world use (imagine we need to revamp the API
+one more time in the future---what would it be called, which has to
+say that it is newer than the "next generation"?
+advise_3rd_try()?).
+
+Thanks.
