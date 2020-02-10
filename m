@@ -2,130 +2,166 @@ Return-Path: <SRS0=dWK1=36=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0495AC35254
-	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 18:51:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C42BC35254
+	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 19:03:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id CFA7920733
-	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 18:51:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 041782080C
+	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 19:03:12 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cJFiWVyk"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727121AbgBJSvL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Feb 2020 13:51:11 -0500
-Received: from mta-07-4.privateemail.com ([68.65.122.27]:26881 "EHLO
-        MTA-07-4.privateemail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726991AbgBJSvL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Feb 2020 13:51:11 -0500
-X-Greylist: delayed 106308 seconds by postgrey-1.27 at vger.kernel.org; Mon, 10 Feb 2020 13:51:11 EST
-Received: from MTA-07.privateemail.com (localhost [127.0.0.1])
-        by MTA-07.privateemail.com (Postfix) with ESMTP id 6DC2660046;
-        Mon, 10 Feb 2020 13:51:06 -0500 (EST)
-Received: from [192.168.0.88] (unknown [10.20.151.246])
-        by MTA-07.privateemail.com (Postfix) with ESMTPA id 133F560049;
-        Mon, 10 Feb 2020 18:51:02 +0000 (UTC)
-Subject: Re: [RFC PATCH 1/3] git-merge: add option to format default message
- using multiple lines
-To:     Junio C Hamano <gitster@pobox.com>
+        id S1727434AbgBJTDL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Feb 2020 14:03:11 -0500
+Received: from mail-qt1-f194.google.com ([209.85.160.194]:34447 "EHLO
+        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726831AbgBJTDL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Feb 2020 14:03:11 -0500
+Received: by mail-qt1-f194.google.com with SMTP id h12so6001727qtu.1
+        for <git@vger.kernel.org>; Mon, 10 Feb 2020 11:03:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=CQHz0XbOjNmt+mb55mfXhPvYEk7D6DykEvUd845E8Ek=;
+        b=cJFiWVykeDBhFXpFmOYFau6XuXVdiP97CBEl3PeHej365P/370mm/X8OcutzD8xjWS
+         mYx+CjF4/X1040ZxPHUkqyN0fPZVnVh0WnmVvgs5xPUXBGKqaey8tEpTsx13GDyyMgBJ
+         wTE2I39WNo0fJXX0XmQRCODpYTbJ33E+1YOs8SY0J0tGxlMxruEXmmcKA+mm/rBJa9qM
+         t1LirdhzPD+d4Bezm9fW+8s0BmLIMpqlcnvWbV/BKT28WEvgVeJdVWUeqinQmCgt7srh
+         vYfDfnewaecu4KsRb8WBULqXp2OXyb5CLb4QE5wNivcKGkncBLfsES+Ol9EtuGmitnls
+         a2mg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=CQHz0XbOjNmt+mb55mfXhPvYEk7D6DykEvUd845E8Ek=;
+        b=bfVhqvmQijDW6MNpn3LfQamked3fN5DWzz7mfTFs2vp7ZkX79K9kg6PaZUpaFkfRBi
+         PgrZlm0860NaeHwgjU1AfH2KxLhGAyzsRy+v47uCJ61YXWyDePI0MMg/RSdYY+e9LED6
+         RYnsZ/QyKjilYgp63UfS2fVnkt5EjlQANhi/mot9I+PJBSnXtaEkqxvdIKi0poDtPgib
+         hZw1iNfl0mZwqHmmpMwpmU53edINpMwlEbbNHJo9FGCMqGfE5q+w6v4vURRwHRqJRkIo
+         TDamsZpLpl5skDKadyh5ZNx2I045MZlHwt/v3B7lRzLxaZneJ0r76G+meqJDeRlXCWSp
+         xk7A==
+X-Gm-Message-State: APjAAAXGGXRnG357wMKUjundIs3kLDkZVt2cna/rkrqqd9lIwKGntVxy
+        +oy2gFBbWxwwmprj8OdETo5zIzpiYj0=
+X-Google-Smtp-Source: APXvYqxD07YiMJCcHtGSbp72Bojzu99wUiXLr4fVT5RYfJuUss3EC5fJL3/2Q1f65+VNOw2WdJj+RQ==
+X-Received: by 2002:aed:3302:: with SMTP id u2mr10912314qtd.156.1581361389598;
+        Mon, 10 Feb 2020 11:03:09 -0800 (PST)
+Received: from [10.10.31.126] ([24.229.121.34])
+        by smtp.gmail.com with ESMTPSA id x22sm623038qtq.30.2020.02.10.11.03.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 10 Feb 2020 11:03:09 -0800 (PST)
+Subject: Re: [PATCH v3 2/5] git-p4: create new function run_git_hook
+To:     Junio C Hamano <gitster@pobox.com>,
+        Ben Keene via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org
-References: <20200209131623.5827-1-darktemplar@dark-templar-archives.net>
- <20200209131623.5827-2-darktemplar@dark-templar-archives.net>
- <xmqqtv3z1wq4.fsf@gitster-ct.c.googlers.com>
-From:   "i.Dark_Templar" <darktemplar@dark-templar-archives.net>
-Message-ID: <2f0417b3-9e9e-f0db-ab11-92dd7cd2b29a@dark-templar-archives.net>
-Date:   Mon, 10 Feb 2020 21:51:02 +0300
+References: <pull.698.v2.git.git.1580507895.gitgitgadget@gmail.com>
+ <pull.698.v3.git.git.1581002149.gitgitgadget@gmail.com>
+ <85918a7edb6482cc1c555917075f8cfd2f18ba32.1581002149.git.gitgitgadget@gmail.com>
+ <xmqqo8ubec4n.fsf@gitster-ct.c.googlers.com>
+From:   Ben Keene <seraphire@gmail.com>
+Message-ID: <2ab5f3cf-51f4-21d9-5741-0ec53f3035dd@gmail.com>
+Date:   Mon, 10 Feb 2020 14:03:08 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.2
 MIME-Version: 1.0
-In-Reply-To: <xmqqtv3z1wq4.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+In-Reply-To: <xmqqo8ubec4n.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Virus-Scanned: ClamAV using ClamSMTP
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-09.02.2020 20:44, Junio C Hamano пишет:
-> "i.Dark_Templar" <darktemplar@dark-templar-archives.net> writes:
-> 
->> If a lot of objects is merged at once, default commit message
->> could become one very long line, which might be inconvenient to read.
->> This change implements an option to change default autogenerated message
->> so it'd take multiple lines, but each line wouldn't be long.
->>
->> An artificial example.
->>
->> Original merge commit message:
->>     Merge branch 'branch_with_some_long_name_1', remote-tracking branch 'clone/remote_branch_with_some_name', tags 'some_tag' and 'some_other_tag'; commit 'ae46a39cead2b42282abce725e90b561c06e94ba'; commit '33d0281e0eeb2a5e9907ebedc230e28c46865092' into merge7
->>
->> Multiline merge commit message:
->>     Merge into merge8:
->>     branch 'branch_with_some_long_name_1'
->>     remote-tracking branch 'clone/remote_branch_with_some_name'
->>     tag 'some_tag'
->>     tag 'some_other_tag'
->>     commit 'ae46a39cead2b42282abce725e90b561c06e94ba'
->>     commit '33d0281e0eeb2a5e9907ebedc230e28c46865092'
-> 
-> 
-> How would these commits appear in the "git shorlog" output?  Losing
-> some information is OK (after all, you are making the 'title' of the
-> merge commit less crowded to prefer 'simpler' summary in exchange),
-> but you'd need to strike a good balance what to discard.  Is the
-> fact that the name of branch that got some unspecified new things
-> was 'merge8' the most important thing to convey?
-> 
-> If you make the commit 'title' a short one-line summary, you MUST
-> have a blank line after that line.  Otherwise, the 'where does the
-> title of this commit object end?' logic will helpfully merge all the
-> lines in the first paragraph (i.e. up to the first blank line) into
-> one long line, defeating your effort to make the summary simpler by
-> losing details.  That is:
-> 
->     Merge 6 commits into merge8
-> 
->     branch 'branch_with_some_long_name_1'
->     remote-tracking ...
->     ...
-> 
-> That's it for the 'mechanics', i.e. a discussion about how a good
-> design of this 'feature' should look like.
-> 
-> About the feature itself, I am not sure.  Even though I admit I was
-> the one who invented octupus merges, and it does make the history
-> look "pretty" in gitk when used judiciously, its practical benefit
-> over repeated pairwise merges is doubtful.  Besides, it makes
-> bisection less efficient.  So from that point of view, I am not sure
-> if we want a feature to encourage creation of more octopus merges.
-> 
-> I haven't read the code yet---I usually don't before figuring out if
-> the feature and its design makes sense---so I have no comment on the
-> actual change at this moment.  I may send a separate review message
-> later.
-> 
-> Thanks.
-> 
 
-Thank you for feedback.
-
-I totally forgot about title in commit message and short log. I think
-I'd like to take your suggestion and modify it a bit.
-I want to add some text before enumeration of commits into message like
-this:
-
-Merge 6 commits into merge8
-
-Following commits are merged:
-branch 'branch_with_some_long_name_1'
-remote-tracking ...
-...
-
-As for octopus merge, there are still some situations where it has some
-advantages over series of pairwise merges, although I agree that it
-might be uncommon cases. I can name linking multiple previously
-unrelated histories as one such case. Bisect could be useless and
-history would look better in my opinion.
-
-If this feature would be fine with updated commit message, I'll update
-my changes and send updated patch series.
+On 2/6/2020 2:42 PM, Junio C Hamano wrote:
+> "Ben Keene via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+>> +def run_git_hook(cmd, param=[]):
+>> +    """Execute a hook if the hook exists."""
+>> +    if verbose:
+>> +        sys.stderr.write("Looking for hook: %s\n" % cmd)
+>> +        sys.stderr.flush()
+>> +
+>> +    hooks_path = gitConfig("core.hooksPath")
+>> +    if len(hooks_path) <= 0:
+>> +        hooks_path = os.path.join(os.environ.get("GIT_DIR", ".git"), "hooks")
+> Using the .get() with default is misleading, I think (see an earlier reply).
+Looking back through the original discussion, I see that it was decided that
+the application uses "rev-parse --git-dir" and "rev-parse --show-cdup" 
+to find
+the top directory of the git repo. At least for testing, being able to 
+resolve
+the .git directory directly is useful.  I will modify the code to throw an
+exception if neither GIT_DIR or .git resolve correctly.
+>
+>> +    if not isinstance(param, list):
+>> +        param=[param]
+>> +
+>> +    # resolve hook file name, OS depdenent
+>> +    hook_file = os.path.join(hooks_path, cmd)
+>> +    if platform.system() == 'Windows':
+>> +        if not os.path.isfile(hook_file):
+>> +            # look for the file with an extension
+>> +            files = glob.glob(hook_file + ".*")
+>> +            if not files:
+>> +                return True
+>> +            files.sort()
+>> +            hook_file = files[0]
+>> +
+>> +    if not os.path.isfile(hook_file) or not os.access(hook_file, os.X_OK):
+>> +        return True
+>> +
+>> +    return run_hook_command(hook_file, param) == 0
+>> +
+>> +def run_hook_command(cmd, param):
+>> +    """Executes a git hook command
+>> +       cmd = the command line file to be executed. This can be
+>> +       a file that is run by OS association.
+>> +
+>> +       param = a list of parameters to pass to the cmd command
+>> +
+>> +       On windows, the extension is checked to see if it should
+>> +       be run with the Git for Windows Bash shell.  If there
+>> +       is no file extension, the file is deemed a bash shell
+>> +       and will be handed off to sh.exe. Otherwise, Windows
+>> +       will be called with the shell to handle the file assocation.
+>> +
+>> +       For non Windows operating systems, the file is called
+>> +       as an executable.
+>> +    """
+>> +    cli = [cmd] + param
+>> +    use_shell = False
+>> +    if platform.system() == 'Windows':
+>> +        (root,ext) = os.path.splitext(cmd)
+>> +        if ext == "":
+>> +            exe_path = os.environ.get("EXEPATH")
+>> +            if exe_path is None:
+>> +                exe_path = ""
+>> +            else:
+>> +                exe_path = os.path.join(exe_path, "bin")
+>> +            cli = [os.path.join(exe_path, "SH.EXE")] + cli
+>> +        else:
+>> +            use_shell = True
+> Please ask somebody familiar with Windows to review this "if
+> Windows" and the other one in run_git_hook().
+>
+>> +    return subprocess.call(cli, shell=use_shell)
+>> +
+>> +
+>>   def write_pipe(c, stdin):
+>>       if verbose:
+>>           sys.stderr.write('Writing pipe: %s\n' % str(c))
+>> @@ -4125,7 +4187,6 @@ def printUsage(commands):
+>>       "unshelve" : P4Unshelve,
+>>   }
+>>   
+>> -
+>>   def main():
+>>       if len(sys.argv[1:]) == 0:
+>>           printUsage(commands.keys())
