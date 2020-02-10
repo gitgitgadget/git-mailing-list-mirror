@@ -2,132 +2,120 @@ Return-Path: <SRS0=dWK1=36=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C93EC352A4
-	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 20:37:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EC116C352A4
+	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 20:40:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 2D93E20715
-	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 20:37:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AF8502082F
+	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 20:40:07 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="arFsDLrY"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727121AbgBJUh1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Feb 2020 15:37:27 -0500
-Received: from cloud.peff.net ([104.130.231.41]:56810 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727003AbgBJUh0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Feb 2020 15:37:26 -0500
-Received: (qmail 1466 invoked by uid 109); 10 Feb 2020 20:37:26 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 10 Feb 2020 20:37:26 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 25987 invoked by uid 111); 10 Feb 2020 20:46:12 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 10 Feb 2020 15:46:12 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 10 Feb 2020 15:37:25 -0500
-From:   Jeff King <peff@peff.net>
-To:     Heba Waly via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Heba Waly <heba.waly@gmail.com>
-Subject: Re: [PATCH] advice: refactor advise API
-Message-ID: <20200210203725.GA620581@coredump.intra.peff.net>
-References: <pull.548.git.1581311049547.gitgitgadget@gmail.com>
+        id S1727199AbgBJUkG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Feb 2020 15:40:06 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:59239 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727003AbgBJUkG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Feb 2020 15:40:06 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id A097AB95D4;
+        Mon, 10 Feb 2020 15:40:04 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=G0XQKeYGDAfh5+nt8LhvNcIBBdM=; b=arFsDL
+        rYJjYc73s+JaFPKO5JLyjRLv/gcfw+QDLeVWUrzgrcIe6fU++VYqKxfTYFe2i8Cg
+        5C2R2Rn9+sTArRvvJYA8TN2MYPPUIWMPuwF/gLbXEpKxrdxEI9rip0okJ98gD2Dk
+        d3Qb1rxo8r/XyjNjWP6UQ1y8t7qEvzDKkVYGU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=PRmZksPEeS1f33bZKLO4VuPAQnVhhauy
+        wL6gPjMTRQaH9oiwJQa/tMZpcrcK913Wy2I2NlpjM8vCSsDeY3iopX5cpG99SQp9
+        9iJaTSN++/pMcWDCxDLasY87EArWHWJdjoe2qUr+enu4v908mA/4L3Rk3Cn8NwXk
+        6UIs6WauzzY=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 98A86B95D3;
+        Mon, 10 Feb 2020 15:40:04 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B2AC5B95CE;
+        Mon, 10 Feb 2020 15:40:01 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
+        Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
+Subject: Re: [PATCH v2 2/8] rm: support the --pathspec-from-file option
+References: <pull.530.git.1579190965.gitgitgadget@gmail.com>
+        <pull.530.v2.git.1581345948.gitgitgadget@gmail.com>
+        <7ccbab52e51423a9ba74c0cab77448ceabb9dcdc.1581345948.git.gitgitgadget@gmail.com>
+Date:   Mon, 10 Feb 2020 12:39:58 -0800
+In-Reply-To: <7ccbab52e51423a9ba74c0cab77448ceabb9dcdc.1581345948.git.gitgitgadget@gmail.com>
+        (Alexandr Miloslavskiy via GitGitGadget's message of "Mon, 10 Feb 2020
+        14:45:41 +0000")
+Message-ID: <xmqq4kvyyy5d.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <pull.548.git.1581311049547.gitgitgadget@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 82B3F59C-4C45-11EA-AEA5-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 10, 2020 at 05:04:09AM +0000, Heba Waly via GitGitGadget wrote:
+"Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
->     The advice API is currently a little bit confusing to call. quoting from
->     [1]:
->     
->     When introducing a new advice message, you would
->     
->      * come up with advice.frotz configuration variable
->     
->      * define and declare advice_frotz global variable that defaults to
->        true
->     
->      * sprinkle calls like this:
->     
->       if (advice_frotz)
->         advise(_("helpful message about frotz"));
->     
->     A new approach was suggested in [1] which this patch is based upon.
+> diff --git a/t/t3601-rm-pathspec-file.sh b/t/t3601-rm-pathspec-file.sh
+> new file mode 100755
+> index 0000000000..4542a0f02f
+> --- /dev/null
+> +++ b/t/t3601-rm-pathspec-file.sh
+> @@ -0,0 +1,79 @@
+> +#!/bin/sh
+> +
+> +test_description='rm --pathspec-from-file'
+> +
+> +. ./test-lib.sh
+> +
+> +test_tick
+> +
+> +test_expect_success setup '
+> +	echo A >fileA.t &&
+> +	echo B >fileB.t &&
+> +	echo C >fileC.t &&
+> +	echo D >fileD.t &&
+> +	git add fileA.t fileB.t fileC.t fileD.t &&
+> +	git commit -m "files" &&
+> +	
 
-I agree that the current procedure is a bit painful, and I think this is
-a step in the right direction. But...
+Trailing whitespace on this line.
 
->     After this patch the plan is to migrate the rest of the advise calls to
->     advise_ng and then finally remove advise() and rename advise_ng() to
->     advise()
+> +	git tag checkpoint
+> +'
+> + ...
+> +test_expect_success 'error conditions' '
+> +	restore_checkpoint &&
+> +	echo fileA.t >list &&
+> +
+> +	test_must_fail git rm --pathspec-from-file=list -- fileA.t 2>err &&
+> +	test_i18ngrep -e "--pathspec-from-file is incompatible with pathspec arguments" err &&
+> +
+> +	test_must_fail git rm --pathspec-file-nul 2>err &&
+> +	test_i18ngrep -e "--pathspec-file-nul requires --pathspec-from-file" err &&
+> +	
 
-...this step may not be possible, for a few reasons:
+And here too.
 
-  1. Some of the sites do more than just advise(). E.g., branch.c checks
-     the flag and calls both error() and advise().
-
-  2. Some callers may have to do work to generate the arguments. If I
-     have:
-
-       advise("advice.foo", "some data: %s", generate_data());
-
-     then we'll call generate_data() even if we'll throw away the result
-     in the end.
-
-Similarly, some users of advice_* variables do not call advise() at all
-(some call die(), some like builtin/rm.c stuff the result in a strbuf,
-and I don't even know what's going on with wt_status.hints. :)
-
-So I think you may need to phase it in a bit more, like:
-
-  a. introduce want_advice() which decides whether or not to show the
-     advice based on a config key. I'd also suggest making the "advice."
-     part of the key implicit, just to make life easier for the callers.
-
-  b. introduce advise_key() which uses want_advice() and advise() under
-     the hood to do what your advise_ng() is doing here.
-
-  c. convert simple patterns of:
-
-       if (advice_foo)
-          advise("bar");
-
-     into:
-
-       advise_key("foo", "bar");
-
-     and drop advice_foo where possible.
-
-  d. handle more complex cases one-by-one. For example, with something
-     like:
-
-       if (advice_foo)
-         die("bar");
-
-     we probably want:
-
-       if (want_advice("foo"))
-         die("bar");
-
-     instead. Using string literals is more accident-prone than
-     variables (because the compiler doesn't notice if we misspell them)
-     but I think is OK for cases where we just refer to the key once.
-     For others (e.g., advice_commit_before_merge has 13 mentions),
-     either keep the variable. Or alternatively make a wrapper like:
-
-       int want_advice_commit_before_merge(void)
-       {
-               return want_advice("commitbeforemerge");
-       }
-
-     if we want to drop the existing mechanism to load all of the
-     variables at the beginning.
-
--Peff
+> +	>empty_list &&
+> +	test_must_fail git rm --pathspec-from-file=empty_list 2>err &&
+> +	test_i18ngrep -e "No pathspec was given. Which files should I remove?" err
+> +'
+> +
+> +test_done
