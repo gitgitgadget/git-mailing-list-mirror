@@ -2,120 +2,76 @@ Return-Path: <SRS0=dWK1=36=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EC116C352A4
-	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 20:40:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C733C352A4
+	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 21:01:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id AF8502082F
-	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 20:40:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 68A4D2072C
+	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 21:01:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="arFsDLrY"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TFgivLU6"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727199AbgBJUkG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Feb 2020 15:40:06 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:59239 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727003AbgBJUkG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Feb 2020 15:40:06 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id A097AB95D4;
-        Mon, 10 Feb 2020 15:40:04 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=G0XQKeYGDAfh5+nt8LhvNcIBBdM=; b=arFsDL
-        rYJjYc73s+JaFPKO5JLyjRLv/gcfw+QDLeVWUrzgrcIe6fU++VYqKxfTYFe2i8Cg
-        5C2R2Rn9+sTArRvvJYA8TN2MYPPUIWMPuwF/gLbXEpKxrdxEI9rip0okJ98gD2Dk
-        d3Qb1rxo8r/XyjNjWP6UQ1y8t7qEvzDKkVYGU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=PRmZksPEeS1f33bZKLO4VuPAQnVhhauy
-        wL6gPjMTRQaH9oiwJQa/tMZpcrcK913Wy2I2NlpjM8vCSsDeY3iopX5cpG99SQp9
-        9iJaTSN++/pMcWDCxDLasY87EArWHWJdjoe2qUr+enu4v908mA/4L3Rk3Cn8NwXk
-        6UIs6WauzzY=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 98A86B95D3;
-        Mon, 10 Feb 2020 15:40:04 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B2AC5B95CE;
-        Mon, 10 Feb 2020 15:40:01 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
-        Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
-Subject: Re: [PATCH v2 2/8] rm: support the --pathspec-from-file option
-References: <pull.530.git.1579190965.gitgitgadget@gmail.com>
-        <pull.530.v2.git.1581345948.gitgitgadget@gmail.com>
-        <7ccbab52e51423a9ba74c0cab77448ceabb9dcdc.1581345948.git.gitgitgadget@gmail.com>
-Date:   Mon, 10 Feb 2020 12:39:58 -0800
-In-Reply-To: <7ccbab52e51423a9ba74c0cab77448ceabb9dcdc.1581345948.git.gitgitgadget@gmail.com>
-        (Alexandr Miloslavskiy via GitGitGadget's message of "Mon, 10 Feb 2020
-        14:45:41 +0000")
-Message-ID: <xmqq4kvyyy5d.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1727433AbgBJVBu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Feb 2020 16:01:50 -0500
+Received: from mail-qk1-f169.google.com ([209.85.222.169]:39028 "EHLO
+        mail-qk1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726563AbgBJVBu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Feb 2020 16:01:50 -0500
+Received: by mail-qk1-f169.google.com with SMTP id w15so8012902qkf.6
+        for <git@vger.kernel.org>; Mon, 10 Feb 2020 13:01:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=bY/v0yxYpO8T0DDQuD/KLvjK+2F+q2IAwgMgmiZisMc=;
+        b=TFgivLU6CzFdGj8iZI0lNhgRUvY8L+O9S4r6golz7ZO9bNy8ibm6tyZ3iVa8ccpKgs
+         2dvSppJlcYvGdtl+ukvkp1s5sEqpG2AwsM1MptnsJ0unMF+JgTY5FEpqwMg1axlYNYFW
+         ibn6vpTCZ4ocf5Iwy0vGA9SAhPOp9IgkkYYgvCHXtk0g4ALP5u1MvrbJmWt+soc4g63f
+         fAG/tB0kk1E7G914oAQAhdXP5WPtXg5N1OHMS2aSdlxvXkRrz/PBp0+Ncx2Nmkwabqnl
+         +2kkRtbJDsA8KItDPBvQVzvYrsqsFs9ggV8/fLAfA40KEA9+DAg76C049h6Hvv3Ycjsu
+         GuCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=bY/v0yxYpO8T0DDQuD/KLvjK+2F+q2IAwgMgmiZisMc=;
+        b=Rgs5ewPIMPBJL2hxyePMvY22c5y+H/wwcKi4Gm4qN2h5fgJ3Y4RamORodkH4x//HFr
+         FLEpOeog0yT3t6kKK7b0XTVeUYksjstpStyjDzb0FQSfzKbEo/Wfs9GeVbbDLy+rMKQf
+         um6toN+o2sl921S7UuKYxaH2spbo2J0CfGjOvaioyxQD+3pJU8a1FuDiJ8LN5qBD0E59
+         8RgibCOxHu1WZPWFA9NEaMe2eOSgS1r4e8yM7aj0qRYEyVDVPDZlT8laSIWBMgq/FHNS
+         AC6zuXH2PS+e0tOfA1+BsnzUGaOMTkN3OwCb8pYFxDiFGYNv7FOZnYw64RotQadVjQCH
+         BbaQ==
+X-Gm-Message-State: APjAAAVwjCX4so+xhH+GeU5jA9ggo2D4t2bLU7zvSmV51U5uSey1AJOT
+        yllRttxXEQZzvQAr8rBrjYFeomyODsm67pLHzDE=
+X-Google-Smtp-Source: APXvYqxfjzRyChBcfFLZZgearwYp31JoXEpaoeGDGHLi85iw7NNEy9I08cth0n9+PpMW4p+TOsKOx6JZ3SkVn5N/kkA=
+X-Received: by 2002:a05:620a:10b3:: with SMTP id h19mr3292459qkk.149.1581368509362;
+ Mon, 10 Feb 2020 13:01:49 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 82B3F59C-4C45-11EA-AEA5-B0405B776F7B-77302942!pb-smtp20.pobox.com
+From:   Abhishek Kumar <abhishekkumar8222@gmail.com>
+Date:   Tue, 11 Feb 2020 02:30:00 +0530
+Message-ID: <CAHk66ftUsKU2+Uhy-a7V5QcRdO7ShcYUk28qz7WAm28wGFmPOg@mail.gmail.com>
+Subject: Re: Git tedious verbosity
+To:     midenok@gmail.com
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+Greetings Aleksey
 
-> diff --git a/t/t3601-rm-pathspec-file.sh b/t/t3601-rm-pathspec-file.sh
-> new file mode 100755
-> index 0000000000..4542a0f02f
-> --- /dev/null
-> +++ b/t/t3601-rm-pathspec-file.sh
-> @@ -0,0 +1,79 @@
-> +#!/bin/sh
-> +
-> +test_description='rm --pathspec-from-file'
-> +
-> +. ./test-lib.sh
-> +
-> +test_tick
-> +
-> +test_expect_success setup '
-> +	echo A >fileA.t &&
-> +	echo B >fileB.t &&
-> +	echo C >fileC.t &&
-> +	echo D >fileD.t &&
-> +	git add fileA.t fileB.t fileC.t fileD.t &&
-> +	git commit -m "files" &&
-> +	
+You can look into using `--short` and `--porcelain` flags.
 
-Trailing whitespace on this line.
+> Git offered enabling/disabling advice by using the 'advice.*' key in the configuration.
 
-> +	git tag checkpoint
-> +'
-> + ...
-> +test_expect_success 'error conditions' '
-> +	restore_checkpoint &&
-> +	echo fileA.t >list &&
-> +
-> +	test_must_fail git rm --pathspec-from-file=list -- fileA.t 2>err &&
-> +	test_i18ngrep -e "--pathspec-from-file is incompatible with pathspec arguments" err &&
-> +
-> +	test_must_fail git rm --pathspec-file-nul 2>err &&
-> +	test_i18ngrep -e "--pathspec-file-nul requires --pathspec-from-file" err &&
-> +	
+Read up on this StackOverflow question on "How to turn off the help
+hints in git output?" [1]. These should do the trick, but feel free to
+elaborate if you need something more specific.
 
-And here too.
+Regards
+Abhishek
 
-> +	>empty_list &&
-> +	test_must_fail git rm --pathspec-from-file=empty_list 2>err &&
-> +	test_i18ngrep -e "No pathspec was given. Which files should I remove?" err
-> +'
-> +
-> +test_done
+[1]: https://stackoverflow.com/q/55463863
