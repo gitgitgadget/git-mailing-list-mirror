@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 79403C2BA83
-	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 00:31:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F3F9EC3B184
+	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 00:31:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5039B20870
-	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 00:31:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BE30821775
+	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 00:31:14 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cCZZ0w2h"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ErXPypYe"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727143AbgBJAbJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 9 Feb 2020 19:31:09 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:34032 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725868AbgBJAbH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Feb 2020 19:31:07 -0500
-Received: by mail-wm1-f67.google.com with SMTP id s144so7270591wme.1
-        for <git@vger.kernel.org>; Sun, 09 Feb 2020 16:31:05 -0800 (PST)
+        id S1727431AbgBJAbN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 9 Feb 2020 19:31:13 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:44574 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727417AbgBJAbL (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Feb 2020 19:31:11 -0500
+Received: by mail-wr1-f66.google.com with SMTP id m16so5373952wrx.11
+        for <git@vger.kernel.org>; Sun, 09 Feb 2020 16:31:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=S5xC/P12VNHtpjPFt8lVuD5oVQFR/XnHEfUnxYChP+o=;
-        b=cCZZ0w2haDEj/6Xrxrpqtrvn5rrcVZz2QwAYtqwr0CNYGzzWz2TnRxpMlJT/Xe6gxz
-         YJ8/7fs6zzFKYB8gzFV95CS6pM/lZDkUpoqtWPqepUO48UUjqb8sBO7KZ825l7qTYjzW
-         ehpeWi0ZwrdF2YouEF19KO9nwaUeQvjOmUhI9N+0Mz+1MbA4Bu/lX3cM1LJR1dkaeqpt
-         ObZGVRfFQRAJwRWgSD7g+6CdoZNeeMReXc6MOc5y9K0M1o3UwIDjezVOI88JdgKjKN1e
-         59HHygSDtO+NpLdgawitgiv6zXCDUzBJJetLfEv5Gq6medswc0O/nrejCtCI+iYjl2vr
-         rTOw==
+        bh=ura7joPGvQVceXsTwzocUlrhSEn5DAEWoPVexjnRSW4=;
+        b=ErXPypYei8+GJnJpy3w9TWDdwNkp3c6KTC8lWQmr4Vaty6TxotO2ONXCWFUmKL4VAZ
+         FG+qy32Gz0qJn9fA6WpSxLIzCqt2sTdi9PYjzX3K3gre2oVDIJ3IQxzlwe58x4VNG4+H
+         xE4XJPD8+94ixoCg3yVT6tqjsx5W2iTdumGnff+Dm78f2dAIaWalAT/odR776KBbc5Ql
+         Sg9k4Hf7eviNDnBRcb2R30cy+DZT7rS8hpkpY/e7x04eS35i4SEprW3qLVxE/JXLRlM4
+         LP//uSimnNMhjWqDdQlkz0gso4o5ksNcI82CH6GYw9epjxAK+02rAM88WTKF/NSYiUj9
+         AkVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=S5xC/P12VNHtpjPFt8lVuD5oVQFR/XnHEfUnxYChP+o=;
-        b=A1R7igpu+cI9cywKXqT9XfEu6JLwxzzmQiglpjSxTV3y7mxQf63Xn3DIEdVBsMJcAh
-         QyOn0ttSYfQdlI1SDSfGi03+OOXDjhPprtk0R80qInZydHLR9JlPxfhDr42uZSWx0JNA
-         GvmOyg4E2aDVGraIv7ZlSo+DZEbpQrimoiIaPZFxAlc2rSf0kYVa9ONEkWO1jmXoZXhp
-         PfD+rStXERhbWoeoaGBxy6bLB0ihyxJvxA3+Vil8zsXg+Irpx2tR7C5r+HnDCThJdkXV
-         Lx5pY4nYiBbgynJ3j7vEr3ppn5pFwJltCglu/a/dKu+fXV6MgkcG6NBpNKFw0VW/ZQEn
-         iMgQ==
-X-Gm-Message-State: APjAAAWTr2+KYXgTjPT8eGQJGXWo4zSmkNQtUqTIGiUt0BO99GaOEFiK
-        bBzQOwru0nKvZySRlR7i99UNMMbn
-X-Google-Smtp-Source: APXvYqyNOF5iYNylZmR5/Gui5CRZOGrh78DUA0LskxCY4ruZ3L9oNYDW+ZQlx1/X+k6E+trgpVEP7Q==
-X-Received: by 2002:a1c:6085:: with SMTP id u127mr12192866wmb.144.1581294664777;
-        Sun, 09 Feb 2020 16:31:04 -0800 (PST)
+        bh=ura7joPGvQVceXsTwzocUlrhSEn5DAEWoPVexjnRSW4=;
+        b=mEZpClEaX/qSV5SPkQ33CJWklXnamwYTkKBE1vN/Df/zm59nMRN3pMqBnOmEKdeBwW
+         nFt1NbOQDeYAgQQ+dcyzShEtlRlqXltASXANNGrC5D6qi4uGAdNIKoXhTB/ztWPlUpjs
+         9fgKA/0b/L6oSH+i+JAosx6fZiFz6QWTkU4t9FVMT0Oz1Pi4BlSfZWEbORVLi2GYM8Cq
+         SX/bo4fTyhCuLzTeWAUAr9MwYjf/NVFJl/wTTWeEwE6gWifsgqceTbjRoVlCZ+KI4dt8
+         hYJJ5O9NmFOtkIpHNh/XdZGCIL0eLNCMz4t9RsM4s/fcSRHuyOh7BIGtrYE/JHOL16m3
+         NUmQ==
+X-Gm-Message-State: APjAAAUzWK4OZfUqB/5OGRCuK3OEaFLHQc5tmNKSUsgTOZrrG9DY0ZiX
+        EHI2NOkUnIGEMKPiGjSUQGzp7rP/
+X-Google-Smtp-Source: APXvYqy6MifxdDJeG5RURAXdWPytMc6qhzTak1bp5iRjz9i9vvmM8Wo0pRXQKIZq9VQAfU753q1XhA==
+X-Received: by 2002:adf:ea85:: with SMTP id s5mr13038704wrm.75.1581294668583;
+        Sun, 09 Feb 2020 16:31:08 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 18sm12581939wmf.1.2020.02.09.16.31.04
+        by smtp.gmail.com with ESMTPSA id a62sm13376380wmh.33.2020.02.09.16.31.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 09 Feb 2020 16:31:04 -0800 (PST)
-Message-Id: <14b0f278196ab9ab130402c2ef79adb0543655ef.1581294660.git.gitgitgadget@gmail.com>
+        Sun, 09 Feb 2020 16:31:08 -0800 (PST)
+Message-Id: <dd376246ec75e50b2e07f10ae7ec1e59c1e0572f.1581294660.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.478.v7.git.1581294660.gitgitgadget@gmail.com>
 References: <pull.478.v6.git.1580268865.gitgitgadget@gmail.com>
         <pull.478.v7.git.1581294660.gitgitgadget@gmail.com>
 From:   "Matthew Rogers via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 10 Feb 2020 00:30:53 +0000
-Subject: [PATCH v7 04/10] config: make scope_name non-static and rename it
+Date:   Mon, 10 Feb 2020 00:30:58 +0000
+Subject: [PATCH v7 09/10] submodule-config: add subomdule config scope
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,115 +75,62 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Matthew Rogers <mattr94@gmail.com>
 
-To prepare for the upcoming --show-scope option, we require the ability
-to convert a config_scope enum to a string.  As this was originally
-implemented as a static function 'scope_name()' in
-t/helper/test-config.c, we expose it via config.h and give it a less
-ambiguous name 'config_scope_name()'
+Before the changes to teach git_config_source to remember scope
+information submodule-config.c never needed to consider the question of
+config scope.  Even though zeroing out git_config_source is still
+correct and preserved the previous behavior of setting the scope to
+CONFIG_SCOPE_UNKNOWN, it's better to be explicit about such situations
+by explicitly setting the scope.  As none of the current config_scope
+enumerations make sense we create CONFIG_SCOPE_SUBMODULE to describe the
+situation.
 
 Signed-off-by: Matthew Rogers <mattr94@gmail.com>
 ---
- config.c               | 16 ++++++++++++++++
- config.h               |  2 ++
- t/helper/test-config.c | 17 +----------------
- t/t1308-config-set.sh  |  2 +-
- 4 files changed, 20 insertions(+), 17 deletions(-)
+ config.c           | 2 ++
+ config.h           | 1 +
+ submodule-config.c | 4 +++-
+ 3 files changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/config.c b/config.c
-index d75f88ca0c..83bb98d65e 100644
+index 9b6afca210..18a6bdd9ff 100644
 --- a/config.c
 +++ b/config.c
-@@ -3297,6 +3297,22 @@ const char *current_config_origin_type(void)
+@@ -3311,6 +3311,8 @@ const char *config_scope_name(enum config_scope scope)
+ 		return "worktree";
+ 	case CONFIG_SCOPE_COMMAND:
+ 		return "command";
++	case CONFIG_SCOPE_SUBMODULE:
++		return "submodule";
+ 	default:
+ 		return "unknown";
  	}
- }
- 
-+const char *config_scope_name(enum config_scope scope)
-+{
-+	switch (scope) {
-+	case CONFIG_SCOPE_SYSTEM:
-+		return "system";
-+	case CONFIG_SCOPE_GLOBAL:
-+		return "global";
-+	case CONFIG_SCOPE_REPO:
-+		return "repo";
-+	case CONFIG_SCOPE_CMDLINE:
-+		return "command line";
-+	default:
-+		return "unknown";
-+	}
-+}
-+
- const char *current_config_name(void)
- {
- 	const char *name;
 diff --git a/config.h b/config.h
-index 91fd4c5e96..dcb8c274d4 100644
+index 165cacb7da..fe0addb0dc 100644
 --- a/config.h
 +++ b/config.h
-@@ -35,6 +35,7 @@ struct object_id;
- 
- #define CONFIG_REGEX_NONE ((void *)1)
- 
-+
- struct git_config_source {
- 	unsigned int use_stdin:1;
- 	const char *file;
-@@ -301,6 +302,7 @@ enum config_scope {
- 	CONFIG_SCOPE_REPO,
- 	CONFIG_SCOPE_CMDLINE,
+@@ -42,6 +42,7 @@ enum config_scope {
+ 	CONFIG_SCOPE_LOCAL,
+ 	CONFIG_SCOPE_WORKTREE,
+ 	CONFIG_SCOPE_COMMAND,
++	CONFIG_SCOPE_SUBMODULE,
  };
-+const char *config_scope_name(enum config_scope scope);
+ const char *config_scope_name(enum config_scope scope);
  
- enum config_scope current_config_scope(void);
- const char *current_config_origin_type(void);
-diff --git a/t/helper/test-config.c b/t/helper/test-config.c
-index 214003d5b2..1e3bc7c8f4 100644
---- a/t/helper/test-config.c
-+++ b/t/helper/test-config.c
-@@ -37,21 +37,6 @@
-  *
-  */
- 
--static const char *scope_name(enum config_scope scope)
--{
--	switch (scope) {
--	case CONFIG_SCOPE_SYSTEM:
--		return "system";
--	case CONFIG_SCOPE_GLOBAL:
--		return "global";
--	case CONFIG_SCOPE_REPO:
--		return "repo";
--	case CONFIG_SCOPE_CMDLINE:
--		return "cmdline";
--	default:
--		return "unknown";
--	}
--}
- static int iterate_cb(const char *var, const char *value, void *data)
+diff --git a/submodule-config.c b/submodule-config.c
+index 85064810b2..b8e97d8ae8 100644
+--- a/submodule-config.c
++++ b/submodule-config.c
+@@ -635,7 +635,9 @@ static void submodule_cache_check_init(struct repository *repo)
+ static void config_from_gitmodules(config_fn_t fn, struct repository *repo, void *data)
  {
- 	static int nr;
-@@ -63,7 +48,7 @@ static int iterate_cb(const char *var, const char *value, void *data)
- 	printf("value=%s\n", value ? value : "(null)");
- 	printf("origin=%s\n", current_config_origin_type());
- 	printf("name=%s\n", current_config_name());
--	printf("scope=%s\n", scope_name(current_config_scope()));
-+	printf("scope=%s\n", config_scope_name(current_config_scope()));
- 
- 	return 0;
- }
-diff --git a/t/t1308-config-set.sh b/t/t1308-config-set.sh
-index 7b4e1a63eb..5f3e71a160 100755
---- a/t/t1308-config-set.sh
-+++ b/t/t1308-config-set.sh
-@@ -265,7 +265,7 @@ test_expect_success 'iteration shows correct origins' '
- 	value=from-cmdline
- 	origin=command line
- 	name=
--	scope=cmdline
-+	scope=command line
- 	EOF
- 	GIT_CONFIG_PARAMETERS=$cmdline_config test-tool config iterate >actual &&
- 	test_cmp expect actual
+ 	if (repo->worktree) {
+-		struct git_config_source config_source = { 0 };
++		struct git_config_source config_source = {
++			0, .scope = CONFIG_SCOPE_SUBMODULE
++		};
+ 		const struct config_options opts = { 0 };
+ 		struct object_id oid;
+ 		char *file;
 -- 
 gitgitgadget
 
