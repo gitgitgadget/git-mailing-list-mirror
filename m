@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 916C2C35254
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 674CBC352A4
 	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 00:31:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6864A208C4
+	by mail.kernel.org (Postfix) with ESMTP id 33D3E20870
 	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 00:31:14 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Sc0a7HKz"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ll91FUSf"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727420AbgBJAbK (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1727411AbgBJAbK (ORCPT <rfc822;git@archiver.kernel.org>);
         Sun, 9 Feb 2020 19:31:10 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:53337 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726077AbgBJAbJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Feb 2020 19:31:09 -0500
-Received: by mail-wm1-f65.google.com with SMTP id s10so8000326wmh.3
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:40017 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727045AbgBJAbH (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Feb 2020 19:31:07 -0500
+Received: by mail-wr1-f68.google.com with SMTP id t3so5415819wru.7
         for <git@vger.kernel.org>; Sun, 09 Feb 2020 16:31:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=EpCF2mbXa1o231UCUM901GtSSBdi0hN4zgCKA6px8vs=;
-        b=Sc0a7HKz8SvP/5iVejMqLinwuBilpi4BC3IvT2wWr99a+NNcEZJipxlf9+BHG0SNzi
-         AQC1E6TF/afQ/WEIhrl6fmdLcAEMEeUU8MJPy8/96mnWx6zfXDO+w1lBA3eykNj05UvC
-         c7hNovh2aMBblA3KKloDa6xzNqqlmZIh5Wwj0aC8pCT8BEpT1p+nv7g8sVUk3HUpIbmx
-         o7Z9lGBZscvWAj2QsGkWTYgIcl5GirC8rHTHnqM82kIImC6H/2PfoqSZiJFnKaFY51vz
-         9Zt6XL00E76Wdl80fKG80+BOKByA3RAUi3sfzkALbiVtGx0yxG37ha6sFRsN3AhWbd4D
-         eWIA==
+        bh=/f/RbunZ3oX3X6TkjfyxUFiJayzsGjXKRgQcjZDFgRo=;
+        b=ll91FUSfNBunhRNUizUqA5Ct5669Az4CORmsZouKTjy+m1ltk6BiP/jEsOYumm2rNh
+         V8riC41ZzlB+hrIxZO6ro8DUQCQoUFbzW5uOj0jAy0/7fwfVslA3xHCTNQWtJntyRaxe
+         Jf7Dbt7q72CIO0KLt2R6cbwSfymeqXkJsoDjVssl+gHvHsVhDMdpe1ifJD58fExlcRAt
+         a721K93EKe3V/nnbP5I9DyIvwozdFpHqLEeZLwBPtX+SGTY4CDodPH9pKOkOmrQqTLE6
+         b3H48I/KukUVuDbbfwfJA34793Mb/p35F21ILcCge5LKby4EZ/WDwisJukxK0/TNX3HL
+         HtLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=EpCF2mbXa1o231UCUM901GtSSBdi0hN4zgCKA6px8vs=;
-        b=L/fW7em1dIXAqSM4PXDj5FnZYtnS0FNh5fDNm/ktMbOsLLo3eL2HCAk99XJaHuFHMv
-         8s0YUqajHPGu6e49E/m0+h7fte0Oh7BKHbyc9KLkh4bHZPCLrtUWVwmbVJsAkSHCYF6B
-         kt5+DEGYqZ9SPvUvdVltqlEgVb8/EvqlQnozB5Ng1zudKj4Ls93sd3Z34kzOZKFvf+IV
-         LQV4p/lzIqmW0f8ZaemOuVhX+X7Vpft6eAThDvU+uoIW1ga67Erasf+y1HqQLvrWUTPX
-         k86CjDJJy7HMos7l36ttZewssOSJgXWxRTDRQMNjLnwDZNt0b/4i62oybsUWB6sdbeda
-         ERfw==
-X-Gm-Message-State: APjAAAXo17N/lXAatTHT4ZTrO5DzKjfIsOECFBnrvsjI1oiHOnlTz3TD
-        cr53xvR27woHsrZL07A4rSRlTTIW
-X-Google-Smtp-Source: APXvYqxCdxhf5b7jH1CPBDo8ew/jyFv2cSP1uu/8boluz1eGmSReDWhq9c0VAAyO3IZipCCi3yVNPw==
-X-Received: by 2002:a1c:7907:: with SMTP id l7mr11364542wme.37.1581294667047;
-        Sun, 09 Feb 2020 16:31:07 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r15sm12927193wmh.21.2020.02.09.16.31.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=/f/RbunZ3oX3X6TkjfyxUFiJayzsGjXKRgQcjZDFgRo=;
+        b=ScVOhIrkafF/Yw8TX9tZ6lxv8jrNNuBLRSVmOUdkZ19dE+ZoKIATd5u2fT0s5+moov
+         TWi/Mnmly2v4q/dx8h4+2VCaaBrR+q+6Y7BNRINGUH/8wy4aiBDGR8vMLXaY34juBbSw
+         4JrhbClHFZ1IJ0lxmVmFWmSBGiots8lXUX85LUQKRAVk93cMpnmaJnP6Vlrk1Kb6HW31
+         a7AC+NFEEdOfy4A4Z9E7tiRAjGV7kLL+Qdn4cTvqDQsSHgU8VWhWFqXF2q5hVJa+QoaI
+         ZbMYvJC3PbSLmIVUPnp2+Fn5qpFqtGG+b9x5Zn7eyeW/oyduhYbIcRenSpBySXKtAQLs
+         aMdQ==
+X-Gm-Message-State: APjAAAX++kQ5moj8I+kg2CEHZMjvxbAZhbVk9/rcTfDmVkGqw4K9Rq19
+        8GnngCJMocKDYNFSOXWcI952x3dp
+X-Google-Smtp-Source: APXvYqyPP3wmyzvNE+tl1W0VXgv8va2Fjx7LqJsGsCYs+l0u7Wbf2irwOftKqCcdIKEo6yWB4DO+uw==
+X-Received: by 2002:adf:f109:: with SMTP id r9mr12954640wro.406.1581294666258;
         Sun, 09 Feb 2020 16:31:06 -0800 (PST)
-Message-Id: <f61985375c5096b863dc99ef613d864bfd010d96.1581294660.git.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id i16sm13275269wrr.71.2020.02.09.16.31.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 09 Feb 2020 16:31:05 -0800 (PST)
+Message-Id: <64c20d0556e9e72663940da7f58a8e55a75fa9d0.1581294660.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.478.v7.git.1581294660.gitgitgadget@gmail.com>
 References: <pull.478.v6.git.1580268865.gitgitgadget@gmail.com>
         <pull.478.v7.git.1581294660.gitgitgadget@gmail.com>
 From:   "Matthew Rogers via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 10 Feb 2020 00:30:56 +0000
-Subject: [PATCH v7 07/10] config: preserve scope in do_git_config_sequence
+Date:   Mon, 10 Feb 2020 00:30:55 +0000
+Subject: [PATCH v7 06/10] config: clarify meaning of command line scoping
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,42 +75,73 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Matthew Rogers <mattr94@gmail.com>
 
-do_git_config_sequence operated under the assumption that it was correct
-to set current_parsing_scope to CONFIG_SCOPE_UNKNOWN as part of the
-cleanup it does after it finishes execution.  This is incorrect, as it
-blows away the current_parsing_scope if do_git_config_sequence is called
-recursively.  As such situations are rare (git config running with the
-'--blob' option is one example) this has yet to cause a problem, but the
-upcoming '--show-scope' option will experience issues in that case, lets
-teach do_git_config_sequence to preserve the current_parsing_scope from
-before it started execution.
+CONFIG_SCOPE_CMDLINE is generally used in the code to refer to config
+values passed in via the -c option.  Options passed in using this
+mechanism share similar scoping characteristics with the --file and
+--blob options of the 'config' command, namely that they are only in use
+for that single invocation of git, and that they supersede the normal
+system/global/local hierarchy.  This patch introduces
+CONFIG_SCOPE_COMMAND to reflect this new idea, which also makes
+CONFIG_SCOPE_CMDLINE redundant.
 
 Signed-off-by: Matthew Rogers <mattr94@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- config.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ config.c              | 6 +++---
+ config.h              | 2 +-
+ t/t1308-config-set.sh | 2 +-
+ 3 files changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/config.c b/config.c
-index fe1e44a43a..0e2c693e78 100644
+index 7422bdebb1..fe1e44a43a 100644
 --- a/config.c
 +++ b/config.c
-@@ -1702,6 +1702,7 @@ static int do_git_config_sequence(const struct config_options *opts,
- 	char *xdg_config = xdg_config_home("config");
- 	char *user_config = expand_user_path("~/.gitconfig", 0);
- 	char *repo_config;
-+	enum config_scope prev_parsing_scope = current_parsing_scope;
+@@ -1737,7 +1737,7 @@ static int do_git_config_sequence(const struct config_options *opts,
+ 		free(path);
+ 	}
  
- 	if (opts->commondir)
- 		repo_config = mkpathdup("%s/config", opts->commondir);
-@@ -1741,7 +1742,7 @@ static int do_git_config_sequence(const struct config_options *opts,
+-	current_parsing_scope = CONFIG_SCOPE_CMDLINE;
++	current_parsing_scope = CONFIG_SCOPE_COMMAND;
  	if (!opts->ignore_cmdline && git_config_from_parameters(fn, data) < 0)
  		die(_("unable to parse command-line config"));
  
--	current_parsing_scope = CONFIG_SCOPE_UNKNOWN;
-+	current_parsing_scope = prev_parsing_scope;
- 	free(xdg_config);
- 	free(user_config);
- 	free(repo_config);
+@@ -3305,8 +3305,8 @@ const char *config_scope_name(enum config_scope scope)
+ 		return "local";
+ 	case CONFIG_SCOPE_WORKTREE:
+ 		return "worktree";
+-	case CONFIG_SCOPE_CMDLINE:
+-		return "command line";
++	case CONFIG_SCOPE_COMMAND:
++		return "command";
+ 	default:
+ 		return "unknown";
+ 	}
+diff --git a/config.h b/config.h
+index d3ed41ef8e..b570f4ce43 100644
+--- a/config.h
++++ b/config.h
+@@ -301,7 +301,7 @@ enum config_scope {
+ 	CONFIG_SCOPE_GLOBAL,
+ 	CONFIG_SCOPE_LOCAL,
+ 	CONFIG_SCOPE_WORKTREE,
+-	CONFIG_SCOPE_CMDLINE,
++	CONFIG_SCOPE_COMMAND,
+ };
+ const char *config_scope_name(enum config_scope scope);
+ 
+diff --git a/t/t1308-config-set.sh b/t/t1308-config-set.sh
+index 728a2b87ce..fba0abe429 100755
+--- a/t/t1308-config-set.sh
++++ b/t/t1308-config-set.sh
+@@ -265,7 +265,7 @@ test_expect_success 'iteration shows correct origins' '
+ 	value=from-cmdline
+ 	origin=command line
+ 	name=
+-	scope=command line
++	scope=command
+ 	EOF
+ 	GIT_CONFIG_PARAMETERS=$cmdline_config test-tool config iterate >actual &&
+ 	test_cmp expect actual
 -- 
 gitgitgadget
 
