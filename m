@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92DF0C3B188
-	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 14:46:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B791C352A3
+	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 14:46:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6CD442082F
-	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 14:46:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2C954208C4
+	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 14:46:01 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CfEvOKY6"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MfQNcXLc"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728910AbgBJOqD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Feb 2020 09:46:03 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:55122 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728750AbgBJOp6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Feb 2020 09:45:58 -0500
-Received: by mail-wm1-f66.google.com with SMTP id g1so592856wmh.4
-        for <git@vger.kernel.org>; Mon, 10 Feb 2020 06:45:56 -0800 (PST)
+        id S1728854AbgBJOp4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Feb 2020 09:45:56 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:51936 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728782AbgBJOpz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Feb 2020 09:45:55 -0500
+Received: by mail-wm1-f68.google.com with SMTP id t23so612498wmi.1
+        for <git@vger.kernel.org>; Mon, 10 Feb 2020 06:45:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=ubH80nIvBvfjUe23mPuEp5tOlQqQCnh68izcvQilASs=;
-        b=CfEvOKY62KOhviaxoMnmhRaTUGjRoS0yIcWmWKNKr3FRqIlPkT+PWwmcUjNQWTwLiB
-         UrofPB/C7Wf1uKpsT7fuqnh3tad1PSLuhFLi6mQ5j4IXpKpCArAOyX+HldO/ngmgc/w8
-         Ora6BQJ01ad+gThdhyVIlTL3evTzZbPhjNgoheKyz+xt+XmKnyYXWHjXkNki989xfcg4
-         +aOwqejKTf6XIGkxVl323pgd+eimOGFypOvJExPyUhFZFGwM/j4GVgZrwcxTP3bTiS+S
-         5D8abd0ZdDhvA+MuU1now+UP0OawoFCHrh0zLw9ToA0AWg8urgxQeicS5mQC/+yUsfQh
-         yK7A==
+        bh=bCIqXzOckgxEsS+5cMOhrDW/Cs7AQBiXb8UMN5cEHQI=;
+        b=MfQNcXLcytEuED0pKffHXmWIa/+I0EUJhPozisDi5VoKcKDQMt9IqCFe6u9ChXPm0q
+         CwdeMi3zTKlqiA6ak08Ja1UkSYKDZPBzVKp4N02v7RGLFs6qYqvkbMdcCdp3taOKAY28
+         o2TlumyFyTpkdUxaNS1t0kcHhPRvdtpYIgZYTXLV1LVAX6eZbFVKmhQyVmt1oPgT/DYB
+         /XsJajpSdbz+VN4F8gRxNFe0cCM8Xc9VgHJk6K+/PTPpwdGzbAwZBNDeTiydElGuC5m3
+         UB+N3ohBdwA5ZLpLkqFc6mtGtspZuPy3qZpkL5qOVHLOYPYwfvOuJuvsVOPCV8molCER
+         o9DA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ubH80nIvBvfjUe23mPuEp5tOlQqQCnh68izcvQilASs=;
-        b=XADk8naLWAqY7zyfHaXbQkyilrR3eW+KJgf0OCw124ghhs64VmCamPUNfmU4PmxYFR
-         f8UplpMvVHvKEKbTmBrL7A5F64n5/5cryWqDUWTuvIShqEfzSB8NfWlfUYzed/swKHCm
-         Zhcv80yG+2ebKoCER3vttX8uvcJvvzri7fu6zQNoj+84EG7S+s7/A1PM0OPMZONCvU6a
-         I2RxAqO1DKQEsz5H+wUuIW1zhToMBegq5NPMRX9+fUjFeRj9D2cfMku0nm4xrGWI9ycV
-         IUi/qC5aZZuifl6K/BqbuiCMaRtmTfvGmq3WtcaF6oN5TJga/q9Evyy1Oio2Zp6QlVF9
-         s8cA==
-X-Gm-Message-State: APjAAAUh8PYm8pkjcn0q4fhLxiEw3oTPiwpOWDyB5KtqEuVvIVwnlwP4
-        DBbFpYC6UCvpVKcahqQYDMlLTkeK
-X-Google-Smtp-Source: APXvYqy8GwbS6AZio4Opdop19tYyZhwmsREXg8RASd9Pno8rBgwW8o9OKEdIYlnT+bwVGLa0RlIu+Q==
-X-Received: by 2002:a05:600c:2942:: with SMTP id n2mr15348353wmd.87.1581345955449;
-        Mon, 10 Feb 2020 06:45:55 -0800 (PST)
+        bh=bCIqXzOckgxEsS+5cMOhrDW/Cs7AQBiXb8UMN5cEHQI=;
+        b=WusmeEtTR0gedUQtxBJFVLV5fipnbrfl0QYC386mFfw3XpTAGYJ0TvHXKFZgTbNSip
+         UvVRusSDqU6fnf86e49oBs7W9OOGdZ0qwt5Noa47KWrpgvVVcDUaGiAXLSHMugrORNpd
+         /rH9dWZV01ZHfPcdLzdzKhM4mk3xHKb2EaAt7C+ubfNwZ+p5A5ChatbGTSclLRFABW1G
+         UOgk654RGxgoxTs28JaMGK/hN1tWQVFeKGkcj70o70RosiuRH0ewjwwc9VMlNS8DBVhU
+         BO1lGjaNccMZ5On5ScVIl1JjWq/K4Mf8rRq8vbdvJPHoCCzeebfV5/+vUERzpjtjkbev
+         w9Tg==
+X-Gm-Message-State: APjAAAUb1+lcDgOnnz/ECGW5eQihkOfEzolpS6y0Wr+VbBmfSTLT9UEp
+        m+HqanMwQv6KFf7Ok0otUwJJX/t8
+X-Google-Smtp-Source: APXvYqzjBc42+D93TKh06T0l92WXlmRZ3LAxAJ1fAgVLUrA2oL3W6SYCR0y+cprK0taaiI0GsOwvAQ==
+X-Received: by 2002:a1c:6209:: with SMTP id w9mr13468432wmb.183.1581345952500;
+        Mon, 10 Feb 2020 06:45:52 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w19sm850773wmc.22.2020.02.10.06.45.54
+        by smtp.gmail.com with ESMTPSA id s19sm824341wmj.33.2020.02.10.06.45.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Feb 2020 06:45:54 -0800 (PST)
-Message-Id: <0558cbbe38e695bd59766d0046ec18ad08e12909.1581345948.git.gitgitgadget@gmail.com>
+        Mon, 10 Feb 2020 06:45:52 -0800 (PST)
+Message-Id: <db3a96720ce94cc93c8bcefe08d3340ae4e08cae.1581345948.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.530.v2.git.1581345948.gitgitgadget@gmail.com>
 References: <pull.530.git.1579190965.gitgitgadget@gmail.com>
         <pull.530.v2.git.1581345948.gitgitgadget@gmail.com>
 From:   "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 10 Feb 2020 14:45:46 +0000
-Subject: [PATCH v2 7/8] stash: eliminate crude option parsing
+Date:   Mon, 10 Feb 2020 14:45:43 +0000
+Subject: [PATCH v2 4/8] doc: stash: split options from description (2)
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,167 +76,173 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 
-Eliminate crude option parsing and rely on real parsing instead, because
-1) Crude parsing is crude, for example it's not capable of
-   handling things like `git stash -m Message`
-2) Adding options in two places is inconvenient and prone to bugs
+Together with the previous patch, this brings docs for `git stash` to
+the common layout used for most other commands (see for example docs
+for `git add`, `git commit`, `git checkout`, `git reset`) where all
+options are documented in a separate list.
 
-As a side result, the case of `git stash -m Message` gets fixed.
-Also give a good error message instead of just throwing usage at user.
+After some thinking and having a look at docs for `git svn` and
+`git `submodule`, I have arrived at following conclusions:
+  * Options should be described in a list rather then text to
+    facilitate lookup for user.
+  * Single list is better then multiple lists because it avoids
+    copy&pasting descriptions between subcommands (or, without
+    copy&pasting, user will have to look up missing options in other
+    subcommands).
+  * As a consequence, commands section should only give brief info and
+    list possible options. Since options have good enough names, user
+	will only need to look up the "interesting" options.
+  * Every option should list which subcommands support it.
 
-----
+I have decided to use alphabetical sorting in the list of options to
+facilitate lookup for user.
 
-Some review of what's been happening to this code:
-
-Before [1], `git-stash.sh` only verified that all args begin with `-` :
-
-	# The default command is "push" if nothing but options are given
-	seen_non_option=
-	for opt
-	do
-		case "$opt" in
-		--) break ;;
-		-*) ;;
-		*) seen_non_option=t; break ;;
-		esac
-	done
-
-Later, [1] introduced the duplicate code I'm now removing, also making
-the previous test more strict by white-listing options.
-
-----
-
-[1] Commit 40af1468 ("stash: convert `stash--helper.c` into `stash.c`" 2019-02-26)
+There is some text editing done to make old descriptions better fit
+into the list-style format.
 
 Signed-off-by: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 ---
- builtin/stash.c  | 59 +++++++++++++++++-------------------------------
- t/t3903-stash.sh |  5 ++++
- 2 files changed, 26 insertions(+), 38 deletions(-)
+ Documentation/git-stash.txt | 92 +++++++++++++++++++++++--------------
+ 1 file changed, 57 insertions(+), 35 deletions(-)
 
-diff --git a/builtin/stash.c b/builtin/stash.c
-index 879fc5f368..ed84ff2e16 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -1451,8 +1451,10 @@ static int do_push_stash(const struct pathspec *ps, const char *stash_msg, int q
- 	return ret;
- }
+diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
+index 2dedc21997..c1c16623cb 100644
+--- a/Documentation/git-stash.txt
++++ b/Documentation/git-stash.txt
+@@ -43,8 +43,8 @@ created stash, `stash@{1}` is the one before it, `stash@{2.hours.ago}`
+ is also possible). Stashes may also be referenced by specifying just the
+ stash index (e.g. the integer `n` is equivalent to `stash@{n}`).
  
--static int push_stash(int argc, const char **argv, const char *prefix)
-+static int push_stash(int argc, const char **argv, const char *prefix,
-+		      int push_assumed)
- {
-+	int force_assume = 0;
- 	int keep_index = -1;
- 	int patch_mode = 0;
- 	int include_untracked = 0;
-@@ -1474,10 +1476,22 @@ static int push_stash(int argc, const char **argv, const char *prefix)
- 		OPT_END()
- 	};
+-OPTIONS
+--------
++COMMANDS
++--------
  
--	if (argc)
-+	if (argc) {
-+		force_assume = !strcmp(argv[0], "-p");
- 		argc = parse_options(argc, argv, prefix, options,
- 				     git_stash_push_usage,
--				     0);
-+				     PARSE_OPT_KEEP_DASHDASH);
-+	}
+ push [-p|--patch] [-k|--[no-]keep-index] [-u|--include-untracked] [-a|--all] [-q|--quiet] [-m|--message <message>] [--] [<pathspec>...]::
+ 
+@@ -86,7 +86,7 @@ show [<options>] [<stash>]::
+ 
+ 	Show the changes recorded in the stash entry as a diff between the
+ 	stashed contents and the commit back when the stash entry was first
+-	created. When no `<stash>` is given, it shows the latest one.
++	created.
+ 	By default, the command shows the diffstat, but it will accept any
+ 	format known to 'git diff' (e.g., `git stash show -p stash@{1}`
+ 	to view the second most recent entry in patch form).
+@@ -116,8 +116,7 @@ branch <branchname> [<stash>]::
+ 	the commit at which the `<stash>` was originally created, applies the
+ 	changes recorded in `<stash>` to the new working tree and index.
+ 	If that succeeds, and `<stash>` is a reference of the form
+-	`stash@{<revision>}`, it then drops the `<stash>`. When no `<stash>`
+-	is given, applies the latest one.
++	`stash@{<revision>}`, it then drops the `<stash>`.
+ +
+ This is useful if the branch on which you ran `git stash push` has
+ changed enough that `git stash apply` fails due to conflicts. Since
+@@ -133,9 +132,6 @@ clear::
+ drop [-q|--quiet] [<stash>]::
+ 
+ 	Remove a single stash entry from the list of stash entries.
+-	When no `<stash>` is given, it removes the latest one.
+-	i.e. `stash@{0}`, otherwise `<stash>` must be a valid stash
+-	log reference of the form `stash@{<revision>}`.
+ 
+ create::
+ 
+@@ -152,40 +148,66 @@ store::
+ 	reflog.  This is intended to be useful for scripts.  It is
+ 	probably not the command you want to use; see "push" above.
+ 
+-If the `--all` option is used instead then the
+-ignored files are stashed and cleaned in addition to the untracked files.
+-
+-If the `--include-untracked` option is used, all untracked files are also
+-stashed and then cleaned up with `git clean`, leaving the working directory
+-in a very clean state.
++OPTIONS
++-------
++-a::
++--all::
++	This option is only valid for `push` and `save` commands.
+++
++All ignored and untracked files are also stashed and then cleaned
++up with `git clean`.
+ 
+-If the `--index` option is used, then tries to reinstate not only the working
+-tree's changes, but also the index's ones. However, this can fail, when you
+-have conflicts (which are stored in the index, where you therefore can no
+-longer apply the changes as they were originally).
++-u::
++--include-untracked::
++	This option is only valid for `push` and `save` commands.
+++
++All untracked files are also stashed and then cleaned up with
++`git clean`.
+ 
+-If the `--keep-index` option is used, all changes already added to the
+-index are left intact.
++--index::
++	This option is only valid for `pop` and `apply` commands.
+++
++Tries to reinstate not only the working tree's changes, but also
++the index's ones. However, this can fail, when you have conflicts
++(which are stored in the index, where you therefore can no longer
++apply the changes as they were originally).
 +
-+	if (argc) {
-+		if (!strcmp(argv[0], "--")) {
-+			argc--;
-+			argv++;
-+		} else if (push_assumed && !force_assume) {
-+			die("subcommand wasn't specified; 'push' can't be assumed due to unexpected token '%s'",
-+			    argv[0]);
-+		}
-+	}
++-k::
++--keep-index::
++--no-keep-index::
++	This option is only valid for `push` and `save` commands.
+++
++All changes already added to the index are left intact.
  
- 	parse_pathspec(&ps, 0, PATHSPEC_PREFER_FULL | PATHSPEC_PREFIX_ORIGIN,
- 		       prefix, argv);
-@@ -1550,7 +1564,6 @@ static int use_builtin_stash(void)
+-With `--patch`, you can interactively select hunks from the diff
+-between HEAD and the working tree to be stashed.  The stash entry is
+-constructed such that its index state is the same as the index state
+-of your repository, and its worktree contains only the changes you
+-selected interactively.  The selected changes are then rolled back
+-from your worktree. See the ``Interactive Mode'' section of
+-linkgit:git-add[1] to learn how to operate the `--patch` mode.
++-p::
++--patch::
++	This option is only valid for `push` and `save` commands.
+++
++Interactively select hunks from the diff between HEAD and the
++working tree to be stashed.  The stash entry is constructed such
++that its index state is the same as the index state of your
++repository, and its worktree contains only the changes you selected
++interactively.  The selected changes are then rolled back from your
++worktree. See the ``Interactive Mode'' section of linkgit:git-add[1]
++to learn how to operate the `--patch` mode.
+ +
+ The `--patch` option implies `--keep-index`.  You can use 
+ `--no-keep-index` to override this.
  
- int cmd_stash(int argc, const char **argv, const char *prefix)
- {
--	int i = -1;
- 	pid_t pid = getpid();
- 	const char *index_file;
- 	struct argv_array args = ARGV_ARRAY_INIT;
-@@ -1583,7 +1596,7 @@ int cmd_stash(int argc, const char **argv, const char *prefix)
- 		    (uintmax_t)pid);
- 
- 	if (!argc)
--		return !!push_stash(0, NULL, prefix);
-+		return !!push_stash(0, NULL, prefix, 0);
- 	else if (!strcmp(argv[0], "apply"))
- 		return !!apply_stash(argc, argv, prefix);
- 	else if (!strcmp(argv[0], "clear"))
-@@ -1603,45 +1616,15 @@ int cmd_stash(int argc, const char **argv, const char *prefix)
- 	else if (!strcmp(argv[0], "create"))
- 		return !!create_stash(argc, argv, prefix);
- 	else if (!strcmp(argv[0], "push"))
--		return !!push_stash(argc, argv, prefix);
-+		return !!push_stash(argc, argv, prefix, 0);
- 	else if (!strcmp(argv[0], "save"))
- 		return !!save_stash(argc, argv, prefix);
- 	else if (*argv[0] != '-')
- 		usage_msg_opt(xstrfmt(_("unknown subcommand: %s"), argv[0]),
- 			      git_stash_usage, options);
- 
--	if (strcmp(argv[0], "-p")) {
--		while (++i < argc && strcmp(argv[i], "--")) {
--			/*
--			 * `akpqu` is a string which contains all short options,
--			 * except `-m` which is verified separately.
--			 */
--			if ((strlen(argv[i]) == 2) && *argv[i] == '-' &&
--			    strchr("akpqu", argv[i][1]))
--				continue;
+-When pathspec is given to 'git stash push', the new stash entry records the
+-modified states only for the files that match the pathspec.  The index
+-entries and working tree files are then rolled back to the state in
+-HEAD only for these files, too, leaving files that do not match the
+-pathspec intact.
 -
--			if (!strcmp(argv[i], "--all") ||
--			    !strcmp(argv[i], "--keep-index") ||
--			    !strcmp(argv[i], "--no-keep-index") ||
--			    !strcmp(argv[i], "--patch") ||
--			    !strcmp(argv[i], "--quiet") ||
--			    !strcmp(argv[i], "--include-untracked"))
--				continue;
--
--			/*
--			 * `-m` and `--message=` are verified separately because
--			 * they need to be immediately followed by a string
--			 * (i.e.`-m"foobar"` or `--message="foobar"`).
--			 */
--			if (starts_with(argv[i], "-m") ||
--			    starts_with(argv[i], "--message="))
--				continue;
--
--			usage_with_options(git_stash_usage, options);
--		}
--	}
--
-+	/* Assume 'stash push' */
- 	argv_array_push(&args, "push");
- 	argv_array_pushv(&args, argv);
--	return !!push_stash(args.argc, args.argv, prefix);
-+	return !!push_stash(args.argc, args.argv, prefix, 1);
- }
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index ea56e85e70..3ad23e2502 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -285,6 +285,11 @@ test_expect_success 'stash --no-keep-index' '
- 	test bar,bar2 = $(cat file),$(cat file2)
- '
- 
-+test_expect_success 'dont assume push with non-option args' '
-+	test_must_fail git stash -q drop 2>err &&
-+	test_i18ngrep -e "subcommand wasn'\''t specified; '\''push'\'' can'\''t be assumed due to unexpected token '\''drop'\''" err
-+'
+-When no `<stash>` is given, `stash@{0}` is assumed, otherwise `<stash>` must
+-be a reference of the form `stash@{<revision>}`.
++<pathspec>...::
++	This option is only valid for `push` command.
+++
++The new stash entry records the modified states only for the files
++that match the pathspec.  The index entries and working tree files
++are then rolled back to the state in HEAD only for these files,
++too, leaving files that do not match the pathspec intact.
 +
- test_expect_success 'stash --invalid-option' '
- 	echo bar5 >file &&
- 	echo bar6 >file2 &&
++<stash>::
++	This option is only valid for `apply`, `branch`, `drop`, `pop`,
++	`show` commands.
+++
++A reference of the form `stash@{<revision>}`. When no `<stash>` is
++given, the latest stash is assumed (that is, `stash@{0}`).
+ 
+ DISCUSSION
+ ----------
 -- 
 gitgitgadget
 
