@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 825D3C352A3
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D5528C352A4
 	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 14:45:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5374C20873
+	by mail.kernel.org (Postfix) with ESMTP id AE0C320873
 	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 14:45:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YwNAt0Sa"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kFjMqDgu"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728885AbgBJOp5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1728888AbgBJOp5 (ORCPT <rfc822;git@archiver.kernel.org>);
         Mon, 10 Feb 2020 09:45:57 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:46002 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728769AbgBJOpx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Feb 2020 09:45:53 -0500
-Received: by mail-wr1-f66.google.com with SMTP id g3so6988449wrs.12
-        for <git@vger.kernel.org>; Mon, 10 Feb 2020 06:45:52 -0800 (PST)
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:39990 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728738AbgBJOpw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Feb 2020 09:45:52 -0500
+Received: by mail-wm1-f67.google.com with SMTP id t14so621917wmi.5
+        for <git@vger.kernel.org>; Mon, 10 Feb 2020 06:45:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=rmSJGPnCV5djEoGHTIwck4H4KwpzvNlqsbHiJGq/mnE=;
-        b=YwNAt0SaZAk3w8mhtUs1I1xeVfiPsZFJmvTJxEthAgwobEpuyil8WwpkyNB2+NkUNf
-         mm7StyL3V11POe06YhPSwt+/VG7SOU1uNiGvy63i3VqmxtBVz3HBf5nIuJYHLWA42mlU
-         BDvphg4Luq5hpzXSDS/5T9wRUNrKRGLSuATx/Si9G4DubBIsFPOQ/rNt6C0OFDM4p2f2
-         V6Lx6MzVzMj0+wMt6l6fwYiDVvqi1Uxnf+xijVduFqqwNNQkT6DOdj/aasBw6Xax3Idx
-         HX7oXZsX9NkXunv0v3aIfh8SvsbGapVYZG/4PIhWM9lIkgNjSg+z9WQoO1xPO1/iWbv8
-         j3Eg==
+        bh=lWNe8ZOU5ZJwdci14t4PB6WCJ/g25rTTh2vF6pXDOIc=;
+        b=kFjMqDguKUun3TRrgjd5KYp1HvHeiZcK+7LlMJTblFtazPwHeOM40+0JegD2rX54rE
+         T2piZ/9RnHxKC1iNy8GhIEH1hruvelrMExEFW86dr/98yftYnH8aaECo5+3dnEkxSJL+
+         YqACCwsMyrbsEfeo2wX3BQ4j4sIuYYr7u+gheAGs5ecUpQmmjQJJfz/1NSy8ERPZxAbY
+         rjs3sjC0d5NoZZ8fCPcTBLlL4ZCJQqJ640IDjLdrvPL2EpfrbVuVZ9KiCJvIvlzab/zh
+         S/gRiy5+l68IofuXtjMTrKxVrtMF7rEDkgtDCjgli/rCMt4/udmPVSJnJBOZtoXaOsfC
+         2Cpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=rmSJGPnCV5djEoGHTIwck4H4KwpzvNlqsbHiJGq/mnE=;
-        b=fUKWkGyeOkroQgH0MoLNa5qphxZDVZJC1XKTGLylYM9k1PcK+KMH+awPF6PcMgkZlX
-         p6wYvxdv8dBc19GQ/wiuBb0QTrNWZSwpVA1x80/HgvyacLViWZjXmDQCGkNd9ElfX+e8
-         oJ7xN+RbfYhm4tyS17sA2XcBfoL/LltZ0w1OtTsY9ezQpQzFQfOcXkU3N50v6X28zMkq
-         O4oAQXe3YOOziegS8qdflJvdbufvAPwToWGdJtrUocbVWuIhieEzNGhSkyxDp1D2nMS8
-         ZduagI/mrf6WZJVTslHXHeUQyxcKT2OzNouAphbBNlQMmzMhaP+EGVDK0iISo9NNpLUX
-         D0SQ==
-X-Gm-Message-State: APjAAAUuDyufW9pr4IYkBDXK/kh3jpdK+YjXb1P+urikmz/CptKi9dQL
-        koAjzbIN56QKsnc0/7E0ouFBtb7k
-X-Google-Smtp-Source: APXvYqxLlLgXMVKqB+N0KwfsY18TP2MSIV2U7SAf5IHPVHHlWLqrRoePI0Z0gBq2zBkkuLc/V9ScOQ==
-X-Received: by 2002:a5d:4a0f:: with SMTP id m15mr2321748wrq.415.1581345951701;
-        Mon, 10 Feb 2020 06:45:51 -0800 (PST)
+        bh=lWNe8ZOU5ZJwdci14t4PB6WCJ/g25rTTh2vF6pXDOIc=;
+        b=QaJfEQXIe0ZGXdJtjl0EPXbECwSsrGIsRu1jJ6IDNiSGXVyABrYmDVlBDeiT4TQglx
+         PPShB3JVXhex1pE99+YwooE54lNw3ocptKBTrZBDtr/C+c3QUl03JwgFgBhi4vY5E6Ys
+         I82wMkm1KaUzM1N5uIpdhn01fmJGRL7mHguN9jZ9KmoIz2WnnWsHD4viLsL2uXlSH413
+         870x9ubv2cnBweWMGgXJnQ69EkZEEzdUVilFjl7qXSaPR5dRmHd/Gn8J5c/JK5WPttQp
+         dfDOdBajvVGMiblpI8EemflT1O6af/o3EUbp1AfKTJ2kpWexDXimURHirMJTIP5Ii4mX
+         5oyQ==
+X-Gm-Message-State: APjAAAWkRjzaAMjXrgSGIuEJjmZC9tEJDOFfExf6D4P/I+BDX8OZqVS7
+        re+sRxaNqrAD1UoiZ1H7TrqKhMJb
+X-Google-Smtp-Source: APXvYqx3+FuDj21WxM+KjtLXU3sLvGSXFpbx43EVN0LjXRea9zAjwdFkZqSZovIYobXdzdabZ1jFbQ==
+X-Received: by 2002:a7b:c1d0:: with SMTP id a16mr15749960wmj.175.1581345950247;
+        Mon, 10 Feb 2020 06:45:50 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d9sm777728wrx.94.2020.02.10.06.45.51
+        by smtp.gmail.com with ESMTPSA id e17sm727409wrn.62.2020.02.10.06.45.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Feb 2020 06:45:51 -0800 (PST)
-Message-Id: <8c212fc0ed416fcd6a2da798cf92d4f2edae3608.1581345948.git.gitgitgadget@gmail.com>
+        Mon, 10 Feb 2020 06:45:49 -0800 (PST)
+Message-Id: <2e8c8ad8158aae391b485394868a8c2a48d5118d.1581345948.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.530.v2.git.1581345948.gitgitgadget@gmail.com>
 References: <pull.530.git.1579190965.gitgitgadget@gmail.com>
         <pull.530.v2.git.1581345948.gitgitgadget@gmail.com>
 From:   "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 10 Feb 2020 14:45:42 +0000
-Subject: [PATCH v2 3/8] doc: stash: split options from description (1)
+Date:   Mon, 10 Feb 2020 14:45:40 +0000
+Subject: [PATCH v2 1/8] doc: rm: synchronize <pathspec> description
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,107 +76,97 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 
-This patch moves blocks of text as-is to make it easier to review the
-next patch.
+This patch continues the effort that is already applied to
+`git commit`, `git reset`, `git checkout` etc.
+
+1) Changed outdated descriptions to mention pathspec instead.
+2) Added reference to 'linkgit:gitglossary[7]'.
+3) Removed content that merely repeated gitglossary.
+4) Merged the remainder of "discussion" into `<patchspec>`.
 
 Signed-off-by: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 ---
- Documentation/git-stash.txt | 68 +++++++++++++++++++------------------
- 1 file changed, 35 insertions(+), 33 deletions(-)
+ Documentation/git-rm.txt | 50 +++++++++++++++++-----------------------
+ 1 file changed, 21 insertions(+), 29 deletions(-)
 
-diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
-index 53e1a1205d..2dedc21997 100644
---- a/Documentation/git-stash.txt
-+++ b/Documentation/git-stash.txt
-@@ -58,31 +58,6 @@ non-option arguments are not allowed to prevent a misspelled
- subcommand from making an unwanted stash entry.  The two exceptions to this
- are `stash -p` which acts as alias for `stash push -p` and pathspecs,
- which are allowed after a double hyphen `--` for disambiguation.
--+
--When pathspec is given to 'git stash push', the new stash entry records the
--modified states only for the files that match the pathspec.  The index
--entries and working tree files are then rolled back to the state in
--HEAD only for these files, too, leaving files that do not match the
--pathspec intact.
--+
--If the `--keep-index` option is used, all changes already added to the
--index are left intact.
--+
--If the `--include-untracked` option is used, all untracked files are also
--stashed and then cleaned up with `git clean`, leaving the working directory
--in a very clean state. If the `--all` option is used instead then the
--ignored files are stashed and cleaned in addition to the untracked files.
--+
--With `--patch`, you can interactively select hunks from the diff
--between HEAD and the working tree to be stashed.  The stash entry is
--constructed such that its index state is the same as the index state
--of your repository, and its worktree contains only the changes you
--selected interactively.  The selected changes are then rolled back
--from your worktree. See the ``Interactive Mode'' section of
--linkgit:git-add[1] to learn how to operate the `--patch` mode.
--+
--The `--patch` option implies `--keep-index`.  You can use
--`--no-keep-index` to override this.
+diff --git a/Documentation/git-rm.txt b/Documentation/git-rm.txt
+index b5c46223c4..e02a08e5ef 100644
+--- a/Documentation/git-rm.txt
++++ b/Documentation/git-rm.txt
+@@ -8,16 +8,16 @@ git-rm - Remove files from the working tree and from the index
+ SYNOPSIS
+ --------
+ [verse]
+-'git rm' [-f | --force] [-n] [-r] [--cached] [--ignore-unmatch] [--quiet] [--] <file>...
++'git rm' [-f | --force] [-n] [-r] [--cached] [--ignore-unmatch] [--quiet] [--] <pathspec>...
  
- save [-p|--patch] [-k|--[no-]keep-index] [-u|--include-untracked] [-a|--all] [-q|--quiet] [<message>]::
+ DESCRIPTION
+ -----------
+-Remove files from the index, or from the working tree and the index.
+-`git rm` will not remove a file from just your working directory.
+-(There is no option to remove a file only from the working tree
+-and yet keep it in the index; use `/bin/rm` if you want to do that.)
+-The files being removed have to be identical to the tip of the branch,
+-and no updates to their contents can be staged in the index,
++Remove files matching pathspec from the index, or from the working tree
++and the index. `git rm` will not remove a file from just your working
++directory. (There is no option to remove a file only from the working
++tree and yet keep it in the index; use `/bin/rm` if you want to do
++that.) The files being removed have to be identical to the tip of the
++branch, and no updates to their contents can be staged in the index,
+ though that default behavior can be overridden with the `-f` option.
+ When `--cached` is given, the staged content has to
+ match either the tip of the branch or the file on disk,
+@@ -26,15 +26,20 @@ allowing the file to be removed from just the index.
  
-@@ -128,14 +103,6 @@ pop [--index] [-q|--quiet] [<stash>]::
- Applying the state can fail with conflicts; in this case, it is not
- removed from the stash list. You need to resolve the conflicts by hand
- and call `git stash drop` manually afterwards.
--+
--If the `--index` option is used, then tries to reinstate not only the working
--tree's changes, but also the index's ones. However, this can fail, when you
--have conflicts (which are stored in the index, where you therefore can no
--longer apply the changes as they were originally).
--+
--When no `<stash>` is given, `stash@{0}` is assumed, otherwise `<stash>` must
--be a reference of the form `stash@{<revision>}`.
- 
- apply [--index] [-q|--quiet] [<stash>]::
- 
-@@ -185,6 +152,41 @@ store::
- 	reflog.  This is intended to be useful for scripts.  It is
- 	probably not the command you want to use; see "push" above.
- 
-+If the `--all` option is used instead then the
-+ignored files are stashed and cleaned in addition to the untracked files.
-+
-+If the `--include-untracked` option is used, all untracked files are also
-+stashed and then cleaned up with `git clean`, leaving the working directory
-+in a very clean state.
-+
-+If the `--index` option is used, then tries to reinstate not only the working
-+tree's changes, but also the index's ones. However, this can fail, when you
-+have conflicts (which are stored in the index, where you therefore can no
-+longer apply the changes as they were originally).
-+
-+If the `--keep-index` option is used, all changes already added to the
-+index are left intact.
-+
-+With `--patch`, you can interactively select hunks from the diff
-+between HEAD and the working tree to be stashed.  The stash entry is
-+constructed such that its index state is the same as the index state
-+of your repository, and its worktree contains only the changes you
-+selected interactively.  The selected changes are then rolled back
-+from your worktree. See the ``Interactive Mode'' section of
-+linkgit:git-add[1] to learn how to operate the `--patch` mode.
+ OPTIONS
+ -------
+-<file>...::
+-	Files to remove.  Fileglobs (e.g. `*.c`) can be given to
+-	remove all matching files.  If you want Git to expand
+-	file glob characters, you may need to shell-escape them.
+-	A leading directory name
+-	(e.g. `dir` to remove `dir/file1` and `dir/file2`) can be
+-	given to remove all files in the directory, and recursively
+-	all sub-directories,
+-	but this requires the `-r` option to be explicitly given.
++<pathspec>...::
++	Files to remove.  A leading directory name (e.g. `dir` to remove
++	`dir/file1` and `dir/file2`) can be given to remove all files in
++	the directory, and recursively all sub-directories, but this
++	requires the `-r` option to be explicitly given.
 ++
-+The `--patch` option implies `--keep-index`.  You can use 
-+`--no-keep-index` to override this.
-+
-+When pathspec is given to 'git stash push', the new stash entry records the
-+modified states only for the files that match the pathspec.  The index
-+entries and working tree files are then rolled back to the state in
-+HEAD only for these files, too, leaving files that do not match the
-+pathspec intact.
-+
-+When no `<stash>` is given, `stash@{0}` is assumed, otherwise `<stash>` must
-+be a reference of the form `stash@{<revision>}`.
-+
- DISCUSSION
- ----------
++The command removes only the paths that are known to Git.
+++
++File globbing matches across directory boundaries.  Thus, given two
++directories `d` and `d2`, there is a difference between using
++`git rm 'd*'` and `git rm 'd/*'`, as the former will also remove all
++of directory `d2`.
+++
++For more details, see the 'pathspec' entry in linkgit:gitglossary[7].
  
+ -f::
+ --force::
+@@ -69,19 +74,6 @@ OPTIONS
+ 	for each file removed. This option suppresses that output.
+ 
+ 
+-DISCUSSION
+-----------
+-
+-The <file> list given to the command can be exact pathnames,
+-file glob patterns, or leading directory names.  The command
+-removes only the paths that are known to Git.  Giving the name of
+-a file that you have not told Git about does not remove that file.
+-
+-File globbing matches across directory boundaries.  Thus, given
+-two directories `d` and `d2`, there is a difference between
+-using `git rm 'd*'` and `git rm 'd/*'`, as the former will
+-also remove all of directory `d2`.
+-
+ REMOVING FILES THAT HAVE DISAPPEARED FROM THE FILESYSTEM
+ --------------------------------------------------------
+ There is no option for `git rm` to remove from the index only
 -- 
 gitgitgadget
 
