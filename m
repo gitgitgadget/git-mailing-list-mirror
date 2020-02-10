@@ -2,140 +2,132 @@ Return-Path: <SRS0=dWK1=36=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E0D36C35254
-	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 19:56:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C93EC352A4
+	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 20:37:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id AD0D72080C
-	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 19:56:46 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="dPZdi5eN"
+	by mail.kernel.org (Postfix) with ESMTP id 2D93E20715
+	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 20:37:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727434AbgBJT4p (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Feb 2020 14:56:45 -0500
-Received: from mail-pj1-f45.google.com ([209.85.216.45]:40954 "EHLO
-        mail-pj1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727003AbgBJT4p (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Feb 2020 14:56:45 -0500
-Received: by mail-pj1-f45.google.com with SMTP id 12so203652pjb.5
-        for <git@vger.kernel.org>; Mon, 10 Feb 2020 11:56:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=4tfAIv7FJtj8nGeGsVedvk2NOovOhGINsBNVfHCWbxA=;
-        b=dPZdi5eNb5vGWucLWLtO2SFhdsY2BDAELG58SGoiaFXlOEOnM0dpvgAPl2JDKPGc1X
-         ClP6NnCuraVyIPVX7yreFD1/bnPHyDGxffeF4CgaB72V/VVAgAav4my2a2OGmqCovK5O
-         xYJOljgr0GiK1u0mXNsN15Cz3heaP2RbuYn39C3C6FFHFdcifU/UZvcn9lexeG55RFQT
-         ojId5oysxsN8BYhjOUWJFg/QKgXYlmvguZyywrCjLyqvQWIqEVZHTavpi/7rp0FAykYy
-         Xu/4ye1VTrUpHWiVfdhrxQRNmeYxrX2PZKFWMNOmOVTLI0M6f65EN6sC9yZM14MyYeq9
-         sGPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=4tfAIv7FJtj8nGeGsVedvk2NOovOhGINsBNVfHCWbxA=;
-        b=bDkwud/aQvWhuHyupk+K5kN+no/ZDCs1u5UpKLYEV2klEEj0IekVOyNzk/NxdVyqmz
-         86UFpnCK6jf4yG1yi086QPZ6457R485bep+WRT/YuVXROwagbaDqthWDaxfMbEU2ECxB
-         M6jawVCrlm5kHhgZJU89K7M0ee/Uj8T6RSPokADiNovTmI4hLdSd/qeYnN1sx9C8tkNg
-         RmGqkXDois/3MuMtSDX+CgAiQH3bRoGxaF4CLMGyW9qfGnarATsedLXQrS9H4IR9T/E3
-         ZYhZXE4FM09KCqLEo+01+6TERT040zSjzXqs3lniQRqn78mvIAZfy+582pWyc+h8LOio
-         FkbQ==
-X-Gm-Message-State: APjAAAWIg4pvXNgHCVrZ08WTfx5XmX1p7QNuiGXP8I6YczPNafelpNUN
-        aWLrj+503/0JDvOmBvwxz44lHFdM92K9GA08
-X-Google-Smtp-Source: APXvYqwNKX7xsqFx+gpsG2cMDgwZqdke8rIztLqRtTJ7qDu2ShnenMgGMxausICCyKDCyD8caD7Uww==
-X-Received: by 2002:a17:90a:c20d:: with SMTP id e13mr798497pjt.95.1581364604721;
-        Mon, 10 Feb 2020 11:56:44 -0800 (PST)
-Received: from localhost ([205.175.106.6])
-        by smtp.gmail.com with ESMTPSA id fz21sm238321pjb.15.2020.02.10.11.56.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Feb 2020 11:56:44 -0800 (PST)
-Date:   Mon, 10 Feb 2020 11:56:43 -0800
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: What's cooking in git.git (Feb 2020, #01; Wed, 5)
-Message-ID: <20200210195643.GC46461@syl.local>
-References: <xmqqpnesfw74.fsf@gitster-ct.c.googlers.com>
- <20200206025130.GA22748@syl.local>
- <20200206085747.GA17654@szeder.dev>
- <20200206174837.GA55561@syl.local>
- <CAN0heSrcMYwy72oR0HA+ptEutLFqvs14RLF5AVE1ATJTUj=eVw@mail.gmail.com>
+        id S1727121AbgBJUh1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Feb 2020 15:37:27 -0500
+Received: from cloud.peff.net ([104.130.231.41]:56810 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727003AbgBJUh0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Feb 2020 15:37:26 -0500
+Received: (qmail 1466 invoked by uid 109); 10 Feb 2020 20:37:26 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 10 Feb 2020 20:37:26 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 25987 invoked by uid 111); 10 Feb 2020 20:46:12 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 10 Feb 2020 15:46:12 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 10 Feb 2020 15:37:25 -0500
+From:   Jeff King <peff@peff.net>
+To:     Heba Waly via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Heba Waly <heba.waly@gmail.com>
+Subject: Re: [PATCH] advice: refactor advise API
+Message-ID: <20200210203725.GA620581@coredump.intra.peff.net>
+References: <pull.548.git.1581311049547.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAN0heSrcMYwy72oR0HA+ptEutLFqvs14RLF5AVE1ATJTUj=eVw@mail.gmail.com>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+In-Reply-To: <pull.548.git.1581311049547.gitgitgadget@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 06, 2020 at 08:58:50PM +0100, Martin Ågren wrote:
-> On Thu, 6 Feb 2020 at 18:48, Taylor Blau <me@ttaylorr.com> wrote:
-> >
-> > On Thu, Feb 06, 2020 at 09:57:48AM +0100, SZEDER Gábor wrote:
-> > > On Wed, Feb 05, 2020 at 06:51:30PM -0800, Taylor Blau wrote:
-> > > > > * tb/commit-graph-split-merge (2020-02-05) 3 commits
-> > > > >  - builtin/commit-graph.c: support '--input=none'
-> > > > >  - builtin/commit-graph.c: introduce '--input=<source>'
-> > > > >  - builtin/commit-graph.c: support '--split[=<strategy>]'
-> > > > >  (this branch uses tb/commit-graph-object-dir.)
-> > > > >
-> > > > >  The code to write out the commit-graph has been taught a few
-> > > > >  options to control if the resulting graph chains should be merged
-> > > > >  or a single new incremental graph is created.
-> > > > >
-> > > > >  Will merge to 'next'?
-> > > >
-> > > > I think that this is ready. Martin Ågren and I discussed a little bit
-> > > > about the rationale behind why the new options were chosen over
-> > > > alternatives, but I think we reached consensus (at least, the thread has
-> > > > been quiet for a few days after sending 'v2').
-> > > >
-> > > > So, if you're asking whether or not this is ready to merge to 'next',
-> > > > I'd say that it is, but I'd like to hear from Martin's thoughts, too.
-> > > > (For what it's worth, we're *also* running this at GitHub, and without
-> > > > issue).
-> > >
-> > > Please don't rush it, those '--input=<source>' options need more
-> > > consideration.
-> >
-> > Of course, and I'm happy to discuss more, if that's what others discuss.
-> > I thought that things had settled since the thread quieted down after
-> > sending 'v2'. But, if there's more to discuss, certainly we should do
-> > that before queuing this up.
-> >
-> > Let's wait a little while longer and see what happens there before
-> > queuing this topic.
->
-> I feel there's something awkward about these new options, but it's not
-> like I have brilliant suggestions to offer. But I don't think it hurts
-> to wait a little and see if others chime in.
->
-> At a minimum, the two comments (patches 1/3 and 3/3) I just left on some
-> asciidoc hickups should be fixed before this graduates (that should be
-> easy). I'll be happy to test and give a thumbs-up if needed.
+On Mon, Feb 10, 2020 at 05:04:09AM +0000, Heba Waly via GitGitGadget wrote:
 
-I have amended both of those patches (1/3 and 3/3) locally, and pushed
-it to 'https://github.com/ttaylorr/git' under the branch named
-'tb/commit-graph-split-merge'.
+>     The advice API is currently a little bit confusing to call. quoting from
+>     [1]:
+>     
+>     When introducing a new advice message, you would
+>     
+>      * come up with advice.frotz configuration variable
+>     
+>      * define and declare advice_frotz global variable that defaults to
+>        true
+>     
+>      * sprinkle calls like this:
+>     
+>       if (advice_frotz)
+>         advise(_("helpful message about frotz"));
+>     
+>     A new approach was suggested in [1] which this patch is based upon.
 
-I'll wait a couple of more days or so to see if there's any more
-discussion on that thread, and if there isn't, I'll send those as an
-anticipated final v3.
+I agree that the current procedure is a bit painful, and I think this is
+a step in the right direction. But...
 
-> Martin
+>     After this patch the plan is to migrate the rest of the advise calls to
+>     advise_ng and then finally remove advise() and rename advise_ng() to
+>     advise()
 
-Thanks,
-Taylor
+...this step may not be possible, for a few reasons:
+
+  1. Some of the sites do more than just advise(). E.g., branch.c checks
+     the flag and calls both error() and advise().
+
+  2. Some callers may have to do work to generate the arguments. If I
+     have:
+
+       advise("advice.foo", "some data: %s", generate_data());
+
+     then we'll call generate_data() even if we'll throw away the result
+     in the end.
+
+Similarly, some users of advice_* variables do not call advise() at all
+(some call die(), some like builtin/rm.c stuff the result in a strbuf,
+and I don't even know what's going on with wt_status.hints. :)
+
+So I think you may need to phase it in a bit more, like:
+
+  a. introduce want_advice() which decides whether or not to show the
+     advice based on a config key. I'd also suggest making the "advice."
+     part of the key implicit, just to make life easier for the callers.
+
+  b. introduce advise_key() which uses want_advice() and advise() under
+     the hood to do what your advise_ng() is doing here.
+
+  c. convert simple patterns of:
+
+       if (advice_foo)
+          advise("bar");
+
+     into:
+
+       advise_key("foo", "bar");
+
+     and drop advice_foo where possible.
+
+  d. handle more complex cases one-by-one. For example, with something
+     like:
+
+       if (advice_foo)
+         die("bar");
+
+     we probably want:
+
+       if (want_advice("foo"))
+         die("bar");
+
+     instead. Using string literals is more accident-prone than
+     variables (because the compiler doesn't notice if we misspell them)
+     but I think is OK for cases where we just refer to the key once.
+     For others (e.g., advice_commit_before_merge has 13 mentions),
+     either keep the variable. Or alternatively make a wrapper like:
+
+       int want_advice_commit_before_merge(void)
+       {
+               return want_advice("commitbeforemerge");
+       }
+
+     if we want to drop the existing mechanism to load all of the
+     variables at the beginning.
+
+-Peff
