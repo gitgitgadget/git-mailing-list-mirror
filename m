@@ -2,67 +2,66 @@ Return-Path: <SRS0=dWK1=36=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B7BDEC35254
-	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 18:11:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 57011C35254
+	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 18:14:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 85A712082F
-	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 18:11:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 24D6A2082F
+	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 18:14:21 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="F/G5Gj3F"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="M+pnrH2F"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726961AbgBJSLP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Feb 2020 13:11:15 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56954 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726809AbgBJSLP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Feb 2020 13:11:15 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 476F443F12;
-        Mon, 10 Feb 2020 13:11:10 -0500 (EST)
+        id S1726957AbgBJSOU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Feb 2020 13:14:20 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:60487 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726809AbgBJSOU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Feb 2020 13:14:20 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 400B8B86DB;
+        Mon, 10 Feb 2020 13:14:18 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=VTNiFGH7Cpnm4lxY1nYvzHXnz2o=; b=F/G5Gj
-        3FdUxNsK8erPnteGW96Ms1XzIkueRh03hXcV4JaHq5Zgk4p+9o3iWPhqtwkLBU18
-        itZjk5VXux7jhpjczcECfESULY9P65MUB2sv+xFKkl+4iagH/wM31tHwaC8qdfLj
-        G4u5EDj4WjfOuzDk2q1w0HVcfOXt9CNjVdyxw=
+        :content-type; s=sasl; bh=WMJBzCt5HVU8ZGh2YIlgQDDx9AE=; b=M+pnrH
+        2FIaATb+Nb07cJ/0AQuywZUxIiarg/RHKN5iIel/7Y2IzWqcNP6pUGzfiQKWlfsq
+        xFA9GK64/4bTHefIL3YqGTA7A2TIh3f4E6LixmvMk840BqxzlfZegBGAzyKmXQ0u
+        lx/E9QByUaRcfJVvtRNWAZejv7DHn5pMekMU8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=VtrwC6JGwiWEW7b4yIIy1yeXvpURBiMC
-        Q035FCyLQK5vw+qGgzwwc3V8YI9BSYWyLwAiOEJw3D6B8jlaVETXwH9tk83F1pL2
-        8OLYoH9WZ/ZuZhEgVhCN+sblLbkp59OXh5pYr6mVY6TNHqEVWx3lT/8ce7yanz2n
-        uvphOBGSNcM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4070F43F10;
-        Mon, 10 Feb 2020 13:11:10 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=Bus9g4jxX+jAJit+iHRnB7Xe1z+rEkA6
+        V5DtE8s7ubcbfWvmSsfJzbEkb5cbWFoatWc4bzsejdcQp/B+Dn5T1/3XvPqeoZ2u
+        4DIZKYGluz1gkGxW2q/mVMRtk0wroSvAe0QEQIcSRg1dnkQqO3bYc1yY/BlxOGsf
+        pl9e7LPXQOE=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 27DC1B86DA;
+        Mon, 10 Feb 2020 13:14:18 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9DF8F43F0F;
-        Mon, 10 Feb 2020 13:11:09 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 52135B86D9;
+        Mon, 10 Feb 2020 13:14:15 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     "Matthew Rogers via GitGitGadget" <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Matthew Rogers <mattr94@gmail.com>
-Subject: Re: [PATCH v7 07/10] config: preserve scope in do_git_config_sequence
+Subject: Re: [PATCH v7 08/10] config: teach git_config_source to remember its scope
 References: <pull.478.v6.git.1580268865.gitgitgadget@gmail.com>
         <pull.478.v7.git.1581294660.gitgitgadget@gmail.com>
-        <f61985375c5096b863dc99ef613d864bfd010d96.1581294660.git.gitgitgadget@gmail.com>
-Date:   Mon, 10 Feb 2020 10:11:08 -0800
-In-Reply-To: <f61985375c5096b863dc99ef613d864bfd010d96.1581294660.git.gitgitgadget@gmail.com>
+        <6c59c5cace7e1f8fc16737c2c9dcf2016397caa1.1581294660.git.gitgitgadget@gmail.com>
+Date:   Mon, 10 Feb 2020 10:14:13 -0800
+In-Reply-To: <6c59c5cace7e1f8fc16737c2c9dcf2016397caa1.1581294660.git.gitgitgadget@gmail.com>
         (Matthew Rogers via GitGitGadget's message of "Mon, 10 Feb 2020
-        00:30:56 +0000")
-Message-ID: <xmqqzhdqz51f.fsf@gitster-ct.c.googlers.com>
+        00:30:57 +0000")
+Message-ID: <xmqqv9oez4wa.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: B6C3793A-4C30-11EA-A7B0-C28CBED8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 257146B4-4C31-11EA-8100-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -72,45 +71,22 @@ X-Mailing-List: git@vger.kernel.org
 
 > From: Matthew Rogers <mattr94@gmail.com>
 >
-> do_git_config_sequence operated under the assumption that it was correct
-> to set current_parsing_scope to CONFIG_SCOPE_UNKNOWN as part of the
-> cleanup it does after it finishes execution.  This is incorrect, as it
-> blows away the current_parsing_scope if do_git_config_sequence is called
-> recursively.  As such situations are rare (git config running with the
-> '--blob' option is one example) this has yet to cause a problem, but the
-> upcoming '--show-scope' option will experience issues in that case, lets
-> teach do_git_config_sequence to preserve the current_parsing_scope from
-> before it started execution.
+> There are many situations where the scope of a config command is known
+> beforehand, such as passing of '--local', '--file', etc. to an
+> invocation of git config.  However, this information is lost when moving
+> from builtin/config.c to /config.c.  This historically hasn't been a big
+> deal, but to prepare for the upcoming --show-scope option we teach
+> git_config_source to keep track of the source and the config machinery
+> to use that information to set current_parsing_scope appropriately.
 >
 > Signed-off-by: Matthew Rogers <mattr94@gmail.com>
 > ---
->  config.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
+>  builtin/config.c | 16 +++++++++++++---
+>  config.c         |  3 +++
+>  config.h         | 20 ++++++++++----------
+>  3 files changed, 26 insertions(+), 13 deletions(-)
 
-This step is new and it does make sense.
+This is split from the last step in the previous round, and the
+splitting makes sense.
 
 Thanks.
-
-
-
-> diff --git a/config.c b/config.c
-> index fe1e44a43a..0e2c693e78 100644
-> --- a/config.c
-> +++ b/config.c
-> @@ -1702,6 +1702,7 @@ static int do_git_config_sequence(const struct config_options *opts,
->  	char *xdg_config = xdg_config_home("config");
->  	char *user_config = expand_user_path("~/.gitconfig", 0);
->  	char *repo_config;
-> +	enum config_scope prev_parsing_scope = current_parsing_scope;
->  
->  	if (opts->commondir)
->  		repo_config = mkpathdup("%s/config", opts->commondir);
-> @@ -1741,7 +1742,7 @@ static int do_git_config_sequence(const struct config_options *opts,
->  	if (!opts->ignore_cmdline && git_config_from_parameters(fn, data) < 0)
->  		die(_("unable to parse command-line config"));
->  
-> -	current_parsing_scope = CONFIG_SCOPE_UNKNOWN;
-> +	current_parsing_scope = prev_parsing_scope;
->  	free(xdg_config);
->  	free(user_config);
->  	free(repo_config);
