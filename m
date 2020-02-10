@@ -2,107 +2,105 @@ Return-Path: <SRS0=dWK1=36=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.3 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BE03C3B186
-	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 15:06:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A787C352A3
+	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 15:06:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 651AA20714
-	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 15:06:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3C75D20714
+	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 15:06:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728815AbgBJPGo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Feb 2020 10:06:44 -0500
-Received: from s3.sipsolutions.net ([144.76.43.62]:58084 "EHLO
-        sipsolutions.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726809AbgBJPGo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Feb 2020 10:06:44 -0500
-Received: by sipsolutions.net with esmtpsa (TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
-        (Exim 4.93)
-        (envelope-from <johannes@sipsolutions.net>)
-        id 1j1Ae2-0004iO-72; Mon, 10 Feb 2020 16:06:42 +0100
-Message-ID: <a52c8163abfba107a27b359a1588a68efdc581a8.camel@sipsolutions.net>
-Subject: Re: [PATCH] pack-format: correct multi-pack-index description
-From:   Johannes Berg <johannes@sipsolutions.net>
-To:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org
-Date:   Mon, 10 Feb 2020 16:06:41 +0100
-In-Reply-To: <08dbc3be-34a7-fb8d-e0bd-56a79ab5b65a@gmail.com> (sfid-20200210_160205_899758_698E8FB8)
-References: <20200207221640.46876-1-johannes@sipsolutions.net>
-         <8d50143b-adb9-c642-5ca6-d51662c37dda@gmail.com>
-         <526a7a3d8d135c9b97890c1c238ca5baaa138c3c.camel@sipsolutions.net>
-         <28b6fd7f-85ea-9ef1-1977-888cdd737c6d@gmail.com>
-         <c077a2100038edf2b0c486c0d364bd00f3921074.camel@sipsolutions.net>
-         <08dbc3be-34a7-fb8d-e0bd-56a79ab5b65a@gmail.com>
-         (sfid-20200210_160205_899758_698E8FB8)
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.34.2 (3.34.2-1.fc31) 
+        id S1729412AbgBJPGs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Feb 2020 10:06:48 -0500
+Received: from smtprelay01.ispgateway.de ([80.67.31.39]:25639 "EHLO
+        smtprelay01.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726809AbgBJPGr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Feb 2020 10:06:47 -0500
+X-Greylist: delayed 1183 seconds by postgrey-1.27 at vger.kernel.org; Mon, 10 Feb 2020 10:06:46 EST
+Received: from [84.175.181.115] (helo=[192.168.2.6])
+        by smtprelay01.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
+        (Exim 4.92.3)
+        (envelope-from <alexandr.miloslavskiy@syntevo.com>)
+        id 1j1AKw-0007hq-7l; Mon, 10 Feb 2020 15:46:58 +0100
+Subject: Re: [PATCH 2/8] rm: support the --pathspec-from-file option
+To:     Junio C Hamano <gitster@pobox.com>,
+        Alexandr Miloslavskiy via GitGitGadget 
+        <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+References: <pull.530.git.1579190965.gitgitgadget@gmail.com>
+ <5611e3ae326bb7f61abf870e3b2851226b6af1d8.1579190965.git.gitgitgadget@gmail.com>
+ <xmqqftg8a9fp.fsf@gitster-ct.c.googlers.com>
+From:   Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
+Message-ID: <19ab18db-3149-02b1-41d8-7ddb42c3757d@syntevo.com>
+Date:   Mon, 10 Feb 2020 15:46:58 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.2
 MIME-Version: 1.0
+In-Reply-To: <xmqqftg8a9fp.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
+X-Df-Sender: YWxleGFuZHIubWlsb3NsYXZza2l5QHN5bnRldm8uY29t
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 2020-02-10 at 10:02 -0500, Derrick Stolee wrote:
-> Git loads the multi-pack-index file, which includes a sorted list of
-> the packs it covers. It then scans the "pack" directory for pack-indexes
-> and checks if they are covered by the multi-pack-index. If not, then
-> Git will add them to the packed_git struct and use them as normal.
-> The hope is that this list of "uncovered" packs is small compared to
-> the data covered by the multi-pack-index.
+Sorry for late reply, I was on vacation. Now I'm back and ready to 
+continue :)
+
+Thanks for your review!
+
+On 21.01.2020 20:36, Junio C Hamano wrote:
+>> Decisions taken for simplicity:
+>> 1) It is not allowed to pass pathspec in both args and file.
+>>
+>> `if (!argc)` block was adapted to work with --pathspec-from-file. For
+>> that, I also had to parse pathspec earlier. Now it happens before
+>> `read_cache()` / `hold_locked_index()` / `setup_work_tree()`, which
+>> sounds fine to me.
 > 
-> This allows Git to continue functioning after an action like "git fetch"
-> that adds a new pack but may not want to rewrite the multi-pack-index.
+> That is not an explanation nor justification.
 
-Ah, ok.
+I'm not exactly sure what are you suggesting. My best guess is that you 
+want to remove "`if (!argc)` block was adapted" paragraph from commit 
+message? I thought about it and it feels wrong to leave this change 
+unexplained. Or are you suggesting to reword it? If so, please give a hint.
 
-So then perhaps I'll just make bup write the multi-pack-index file as
-is. This is fine, there's no real need to have multiple, I just didn't
-want to have to make sure the file was always consistent.
-
-Or maybe just call git to do it, and only be able to read the resulting
-file :-)
-
-> Our background maintenance essentially runs these commands:
+>> In case of empty pathspec, there is now a clear error message instead
+>> of showing usage.
 > 
->  1. git multi-pack-index write
->  2. git multi-pack-index expire
->  3. git multi-pack-index repack
+> Hmph, "git rm --pathspec-from-file=/dev/null" would say "nothing
+> specified, nothing removed" and it makes perfect sense, but I am not
+> sure "git rm" that gives the same message is better than the output
+> by usage_with_options(builtin_rm_usage, builtin_rm_options).
+
+What feels wrong to me is when I make a mistake and git just slams me 
+with usage, and then it's up to me to figure what could be wrong. I 
+myself struggled to find a mistake a couple times (in similar cases, not 
+in this specific one) and didn't like the experience.
+
+This could be a lot worse when there's no mistake, just the file was 
+empty - but you already agreed that showing a new error message is 
+reasonable with '--pathspec-from-file'.
+
+Still, without '--pathspec-from-file', it should still be better to 
+point to a specific error rather then "here's usage and try to find a 
+difference". I have reworded the error message in V2 in hopes that it 
+will be less controversial.
+
+If you still don't like it, I will change it to only show the new error 
+with '--pathspec-from-file'.
+
+>> +static int ignore_unmatch = 0, pathspec_file_nul = 0;
+>> +static char *pathspec_from_file = NULL;
 > 
-> Step 1 ensures all packs are pulled into the multi-pack-index. Step 2
-> deletes any pack-files whose objects are contained in newer pack-files.
-> Step 3 creates a new pack-file containing all objects from a set of
-> small pack-files (using the --batch-size=X option). This process helps
-> incrementally reduce the size and number of packs. That may be helpful
-> for your backup took, too.
+> We may want to clean these "explicitly initialize to 0/NULL" up at
+> some point.  The clean-up itself would not be in the scope of this
+> patch, of course, but not making it worse is something this patch
+> can do to help.
 
-I'll have to look at this in more detail later, and understand exactly
-what the steps do here. Evidently that modifies pack files, which I
-hadn't expected for a type of "index" command :-)
-
-> Perhaps after an incremental multi-pack-index is added, then Git could
-> (optionally) have a mode that only checks the multi-pack-index to
-> avoid scanning the packs directory. It would require inserting a
-> multi-pack-index write into the index-pack logic so Git.
-
-I guess you'd still want to read non-covered pack files just in case old
-git was used or something though.
-
-> I'm not sure if that mode would be helpful, since the pack directory
-> scan is typically done once per command and is relatively fast.
-
-Right.
-
-> > > That said: if someone wanted to contribute an incremental format,
-> > > then I would be happy to review it!
-> > 
-> > I might still get motivated to do so :-)
-> 
-> YOU CAN DO IT! (Did that help?)
-
-:-)
-
-Thanks,
-johannes
-
+Changed in V2.
