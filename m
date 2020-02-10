@@ -2,348 +2,102 @@ Return-Path: <SRS0=dWK1=36=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BD2B8C35254
-	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 05:04:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 721FAC352A4
+	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 07:16:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 79FB722464
-	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 05:04:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3A58920838
+	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 07:16:00 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Pt7hO8Dq"
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="ISKIDr86"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726227AbgBJFEO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Feb 2020 00:04:14 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:38990 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726103AbgBJFEN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Feb 2020 00:04:13 -0500
-Received: by mail-wm1-f68.google.com with SMTP id c84so8945984wme.4
-        for <git@vger.kernel.org>; Sun, 09 Feb 2020 21:04:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=sHUtkb9IxKs3JR5JXCyi2/+h3bf/n/DmUaHMUJD9/RY=;
-        b=Pt7hO8DqkMiEVCRn1xT+2kytxLJxRAMK4n5ozTa3WyK4XwiIFrzOWCIkT4ZHRln6Zz
-         5qDqUwEeEaOM9aoY8/YV0Rj9oCboLD5Yw7KP0nWaIYq6meaIytYfYBsOXXHNmThHZN8p
-         vjU4lXGkB59v5AP1IB6TwXL1PRBbGPoCwjZDWAXS9WdpnaA40DYYni4O3Eu3SMKz3eSh
-         NinmYsoXSe5W9fpvsqHZNWJliTfSEvRLzU+aMjy5uJ52I6wpPi/OxftlXzDFg5aYw6Ub
-         WtILbLuWhK0xK3igiTKLzEvVAgzylEU22KytnryG+12RIItm4f4u/DuV42pcLJbCQL5L
-         vo3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=sHUtkb9IxKs3JR5JXCyi2/+h3bf/n/DmUaHMUJD9/RY=;
-        b=Ws0FSIqVJhS5w/BOhqZl1f/yQ3LNrxojQPR1CZY+mA0TFI85EOyL0nETysXh+yMARQ
-         4NkFQ6tvIoTPl33sagKggQhucgIgmQKSYJwPUpImvPQcoOsOMjOa9KDgYrAnVN8imo4Z
-         +kEyjd1p91XiEJvc1gPYTlLYjT7KLJGrjC8/p6+B3x3SgZnddsmUc3W0GDUWdSGVoqgS
-         rJ0Al2qCNZLENmlFJAaPaWWh0nH75+xlosrxIBsQZ3ngj1ZOndHjMUl1UIBAl1gq3105
-         EubMU6OTYzCD8CxCdalCVluYhLE8AQZ1MZAln8+94b3GzzE8/0psVi0jmyVnZzem7Xcj
-         ZHow==
-X-Gm-Message-State: APjAAAVJ91DbDz2C1fluf6xZhrU16hgceTC7++H7s3IKxqCVzPRqpQGf
-        d0ZtbCRgG8UY0QPH15z6U6y4s3hg
-X-Google-Smtp-Source: APXvYqx6/mF/DXXZ4t2DurTN+cGbyQ9jdPAySspunz053wnsnInuxd+3sUkrfM60M6cDUVRQzImF1A==
-X-Received: by 2002:a1c:e28a:: with SMTP id z132mr12683955wmg.157.1581311050614;
-        Sun, 09 Feb 2020 21:04:10 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s8sm13760920wmh.26.2020.02.09.21.04.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 09 Feb 2020 21:04:10 -0800 (PST)
-Message-Id: <pull.548.git.1581311049547.gitgitgadget@gmail.com>
-From:   "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 10 Feb 2020 05:04:09 +0000
-Subject: [PATCH] advice: refactor advise API
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1727079AbgBJHPr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Feb 2020 02:15:47 -0500
+Received: from mout.web.de ([212.227.15.3]:49779 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726118AbgBJHPr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Feb 2020 02:15:47 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1581318939;
+        bh=fgojvUymxcvWwWjSbbitmgCwBIqJbU8Pe4bPy8HnfRk=;
+        h=X-UI-Sender-Class:Subject:From:To:Cc:References:Date:In-Reply-To;
+        b=ISKIDr867oDV4ohe/W2Wqx7pkrAdtgJL3KxmMRwXn2UwPWo5PKdSqIIQssZou0wmb
+         lg5yrbmgWUxtZ7+PBdamxIuJG+eapi0vUGkkuDOZWpCbGkTevT8lM55l1mgo7FnX++
+         eahiVOd5K9CKT3jUTZ7QYlC1mroGCZVloBsvi6C4=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.26] ([91.47.145.153]) by smtp.web.de (mrweb004
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0LsNpI-1jTtsx0Yky-011ygN; Mon, 10
+ Feb 2020 08:15:39 +0100
+Subject: [PATCH 2/1] mailinfo: don't insert header prefix for
+ handle_content_type()
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+References: <019be197-e0aa-1234-e16f-6561d8340023@web.de>
+ <b31c46a8-380b-3528-27a5-a2dddacaf837@web.de>
+Message-ID: <35ef5149-2da9-a147-fb5b-8f175ff617e7@web.de>
+Date:   Mon, 10 Feb 2020 08:15:19 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Heba Waly <heba.waly@gmail.com>, Heba Waly <heba.waly@gmail.com>
+In-Reply-To: <b31c46a8-380b-3528-27a5-a2dddacaf837@web.de>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:LKZoJ4SVMdGSITcYK8Jx/4o7T/V1MOxe8uL6c+/1Qfg+vNma9VY
+ F5LYxoau4GlZmssXUIz5r62DdDAalcRaKUEOdGK/1jZUn/KFoDu+Rkvih5kMEL39RHO9JZ0
+ PtyKe9XQbpPkv5M4XBOVDRvF/qyQP4vytGlNhAKJuEGzGM4Zq9UhW1jE+Gza9LP7sI2N2lw
+ DAuO/9XrTsTucqPlbLIHQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:fyxfy2BFXd4=:6lwAfRPY5LzkBkL3gDFXAE
+ i16Mb79xoXAAiut+hMK5hM6f+euPS4MRtGSr3G6VktpbP9d8tE2leFYxfcCmt2cd9z/smvbIZ
+ OtYR1bqCEaFc/eKmYKzFFa8pMTD7IyxgDyHmmiNh/FbWkWDnZNMIGw9vRUG4o/U6ILLPQr/P4
+ /opz+pn5oKqw6pHQPoCEXdK1CnJ6tMQkz84f5Af8ph8tp3wwNGqmYe/s4UPHnV9OvPh3g//DD
+ MBg8Ma1pjeHOfpevMeL+AqddXoT8JdLGkg+/CwKZkOlc7txG9nyL/vaYTgyGSQCmJUBDEHPOq
+ iL4JYJpMu8GkNF5nhQCxNRvIMkIX21Snssyvyi52lSgqdeTI/mtrpWfd6mMpXDFWUOdhIUl+u
+ zWJUCInuaJ+MvbUvGxfamC/wwPTXJ7SVzm1o7CqE1kx0VsSX6b9fDYlq+zoxeZDwvCMKMT0B3
+ jjHBWAb362VNqjsFQFY+Zkcq8BZwtxZZuP2deD0I9tBgi1edfikvjv7j89U7aMmpeo2jZ6Vlx
+ Ri91RTuWck0qcS9n0e76MaHYi64E2oDXjHppDd9pzs2HZqzRKbvbtdMWnpwNKm4z2s7NqQqCx
+ KjttxjohTsfiVubg3Bi/FdcmHuspbodagFbn5G7oQVtrCNIz9PbrlKubMzur20L4jZSCmlETJ
+ uWdK5gEpyZgqeejHbVyQsYOLUbI+Z4mFvPhUvrMuVY0a0UXBoqeGWo+tMeUssTDsDC0/3MRaf
+ GRwwpl249DfQAZLs/9j9yM0PJfUKOQsOUVE+Mg5mTiopu/eYs91jxB15L/C3slW+TXroEdmbh
+ l8XvcpZeQuTeN7zzfd5ROFq36PLw53iko6tyStke85jhSTaOzOtpEhAMqyPF4+ViIkpAt8ZCI
+ JISCle2q0hIOBapCrCjMW4m/1gyLxucNO5ADDZDDbI3/6mZzblOVHJT2JV/WrMdhr0JkrfnBm
+ safqFFbtKCs6uqPOm24f8nssWhcuU6wl0I71o2TQM/knYx3BHBe/a/iPf3Zrq+6NeGlGRZDD1
+ tmaDXVoiHMORQoZw6h6gpN2UqnXMt+FGFMTgHer4cAQwh6N3LysMnz948zsN+UngF3kC80Nto
+ H4pb4U6e3rosEwNgcUzPxAlHdlLZH6uYP6pPKrazmhHdEqAzWFKuVm2wNEiwbRXUZgRQkp5rr
+ K093arlG8ujgyqNuJjqDcsb50jEU1Wm7f8zPjkNz/OySgTG93L6hJgfATfAEeulpX8GZe+L2N
+ sgy2jeIU0K6pyYWDm
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Heba Waly <heba.waly@gmail.com>
+handle_content_type() only cares about the value after "Content-Type: ";
+there is no need to insert that string for it.
 
-Add a new advise_ng function that can check the visibility of advice
-messages before printing.
+Suggested-by: Eric Sunshine <sunshine@sunshineco.com>
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ mailinfo.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-Currently it's very easy for the callers to miss checking the
-visibility step. Also, it makes more sense for this step to be handled
-by the advice library.
-
-Also change the advise call in tag library from advise() to advise_ng()
-to construct an example of the usage of the new API.
-
-Signed-off-by: Heba Waly <heba.waly@gmail.com>
----
-    [RFC][Outreachy] advice: refactor advise API
-    
-    The advice API is currently a little bit confusing to call. quoting from
-    [1]:
-    
-    When introducing a new advice message, you would
-    
-     * come up with advice.frotz configuration variable
-    
-     * define and declare advice_frotz global variable that defaults to
-       true
-    
-     * sprinkle calls like this:
-    
-      if (advice_frotz)
-        advise(_("helpful message about frotz"));
-    
-    A new approach was suggested in [1] which this patch is based upon.
-    
-    A new advise_ng() is introduced to gradually replace advise()
-    
-    pros of the new advise():
-    
-     * The caller doesn't need to define a new global variable when
-       introducing a new message.
-     * The caller doesn't need to check the visibility of the message before
-       calling advise_ng().
-     * The caller still needs to come up with advice.frotz config variable
-       and will call advice_ng as follows: advice_ng("advice.frotz",
-       _("helpful message about frotz"));
-    
-    After this patch the plan is to migrate the rest of the advise calls to
-    advise_ng and then finally remove advise() and rename advise_ng() to
-    advise()
-    
-    [1] 
-    https://public-inbox.org/git/xmqqzhf5cw69.fsf@gitster-ct.c.googlers.com/
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-548%2FHebaWaly%2Fadvice_refactoring-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-548/HebaWaly/advice_refactoring-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/548
-
- Makefile               |  1 +
- advice.c               | 37 +++++++++++++++++++++++++++++++++++--
- advice.h               |  6 +++++-
- builtin/tag.c          |  4 ++--
- t/helper/test-advise.c | 15 +++++++++++++++
- t/helper/test-tool.c   |  1 +
- t/helper/test-tool.h   |  1 +
- t/t0018-advice.sh      | 29 +++++++++++++++++++++++++++++
- t/t7004-tag.sh         |  2 ++
- 9 files changed, 91 insertions(+), 5 deletions(-)
- create mode 100644 t/helper/test-advise.c
- create mode 100755 t/t0018-advice.sh
-
-diff --git a/Makefile b/Makefile
-index 09f98b777c..ed923a3e81 100644
---- a/Makefile
-+++ b/Makefile
-@@ -695,6 +695,7 @@ X =
- 
- PROGRAMS += $(patsubst %.o,git-%$X,$(PROGRAM_OBJS))
- 
-+TEST_BUILTINS_OBJS += test-advise.o
- TEST_BUILTINS_OBJS += test-chmtime.o
- TEST_BUILTINS_OBJS += test-config.o
- TEST_BUILTINS_OBJS += test-ctype.o
-diff --git a/advice.c b/advice.c
-index 249c60dcf3..4793e59223 100644
---- a/advice.c
-+++ b/advice.c
-@@ -29,7 +29,6 @@ int advice_ignored_hook = 1;
- int advice_waiting_for_editor = 1;
- int advice_graft_file_deprecated = 1;
- int advice_checkout_ambiguous_remote_branch_name = 1;
--int advice_nested_tag = 1;
- int advice_submodule_alternate_error_strategy_die = 1;
- 
- static int advice_use_color = -1;
-@@ -89,7 +88,6 @@ static struct {
- 	{ "waitingForEditor", &advice_waiting_for_editor },
- 	{ "graftFileDeprecated", &advice_graft_file_deprecated },
- 	{ "checkoutAmbiguousRemoteBranchName", &advice_checkout_ambiguous_remote_branch_name },
--	{ "nestedTag", &advice_nested_tag },
- 	{ "submoduleAlternateErrorStrategyDie", &advice_submodule_alternate_error_strategy_die },
- 
- 	/* make this an alias for backward compatibility */
-@@ -118,6 +116,41 @@ void advise(const char *advice, ...)
- 	strbuf_release(&buf);
- }
- 
-+static const char turn_off_instructions[] =
-+N_("\n"
-+"Turn this message off by running\n"
-+"\"git config %s false\"");
-+
-+void advise_ng(const char *key, const char *advice, ...)
-+{
-+	int value = 1;
-+	struct strbuf buf = STRBUF_INIT;
-+	va_list params;
-+	const char *cp, *np;
-+	
-+	git_config_get_bool(key, &value);
-+	
-+	if(value)
-+	{
-+		va_start(params, advice);
-+		strbuf_vaddf(&buf, advice, params);
-+		va_end(params);
-+
-+		strbuf_addf(&buf, turn_off_instructions, key);
-+		
-+		for (cp = buf.buf; *cp; cp = np) {
-+			np = strchrnul(cp, '\n');
-+			fprintf(stderr,	_("%shint: %.*s%s\n"),
-+				advise_get_color(ADVICE_COLOR_HINT),
-+				(int)(np - cp), cp,
-+				advise_get_color(ADVICE_COLOR_RESET));
-+			if (*np)
-+				np++;
-+		}
-+		strbuf_release(&buf);
-+	}
-+}
-+
- int git_default_advice_config(const char *var, const char *value)
- {
- 	const char *k, *slot_name;
-diff --git a/advice.h b/advice.h
-index b706780614..ad4da2d65d 100644
---- a/advice.h
-+++ b/advice.h
-@@ -29,12 +29,16 @@ extern int advice_ignored_hook;
- extern int advice_waiting_for_editor;
- extern int advice_graft_file_deprecated;
- extern int advice_checkout_ambiguous_remote_branch_name;
--extern int advice_nested_tag;
- extern int advice_submodule_alternate_error_strategy_die;
- 
- int git_default_advice_config(const char *var, const char *value);
- __attribute__((format (printf, 1, 2)))
- void advise(const char *advice, ...);
-+
-+/**
-+ Checks the visibility of the advice before priniting.
-+ */
-+void advise_ng(const char *key, const char *advice, ...);
- int error_resolve_conflict(const char *me);
- void NORETURN die_resolve_conflict(const char *me);
- void NORETURN die_conclude_merge(void);
-diff --git a/builtin/tag.c b/builtin/tag.c
-index e0a4c25382..7fe1ff3ed0 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -231,8 +231,8 @@ static void create_tag(const struct object_id *object, const char *object_ref,
- 	if (type <= OBJ_NONE)
- 		die(_("bad object type."));
- 
--	if (type == OBJ_TAG && advice_nested_tag)
--		advise(_(message_advice_nested_tag), tag, object_ref);
-+	if (type == OBJ_TAG)
-+		advise_ng("advice.nestedTag", _(message_advice_nested_tag), tag, object_ref);
- 
- 	strbuf_addf(&header,
- 		    "object %s\n"
-diff --git a/t/helper/test-advise.c b/t/helper/test-advise.c
-new file mode 100644
-index 0000000000..b6ec90fd18
---- /dev/null
-+++ b/t/helper/test-advise.c
-@@ -0,0 +1,15 @@
-+#include "test-tool.h"
-+#include "cache.h"
-+#include "advice.h"
-+
-+int cmd__advise_ng(int argc, const char **argv)
-+{
-+	if (!argv[1] || !argv[2])
-+	die("usage: %s <key> <advice>", argv[0]);
-+
-+	setup_git_directory();
-+
-+	advise_ng(argv[1], argv[2]);
-+
-+	return 0;
-+}
-diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-index f20989d449..f903f32bb6 100644
---- a/t/helper/test-tool.c
-+++ b/t/helper/test-tool.c
-@@ -14,6 +14,7 @@ struct test_cmd {
- };
- 
- static struct test_cmd cmds[] = {
-+	{ "advise", cmd__advise_ng },
- 	{ "chmtime", cmd__chmtime },
- 	{ "config", cmd__config },
- 	{ "ctype", cmd__ctype },
-diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-index 8ed2af71d1..e5e955beb9 100644
---- a/t/helper/test-tool.h
-+++ b/t/helper/test-tool.h
-@@ -4,6 +4,7 @@
- #define USE_THE_INDEX_COMPATIBILITY_MACROS
- #include "git-compat-util.h"
- 
-+int cmd__advise_ng(int argc, const char **argv);
- int cmd__chmtime(int argc, const char **argv);
- int cmd__config(int argc, const char **argv);
- int cmd__ctype(int argc, const char **argv);
-diff --git a/t/t0018-advice.sh b/t/t0018-advice.sh
-new file mode 100755
-index 0000000000..d012db515d
---- /dev/null
-+++ b/t/t0018-advice.sh
-@@ -0,0 +1,29 @@
-+#!/bin/sh
-+
-+test_description='Test advise_ng functionality'
-+
-+. ./test-lib.sh
-+
-+cat > expected <<EOF
-+hint: This is a piece of advice
-+hint: Turn this message off by running
-+hint: "git config advice.configVariable false"
-+EOF
-+test_expect_success 'advise should be printed when config variable is unset' '
-+	test-tool advise "advice.configVariable" "This is a piece of advice" 2>actual &&
-+	test_i18ncmp expected actual
-+'
-+
-+test_expect_success 'advise should be printed when config variable is set to true' '
-+	test_config advice.configVariable true &&
-+	test-tool advise "advice.configVariable" "This is a piece of advice" 2>actual &&
-+	test_i18ncmp expected actual
-+'
-+
-+test_expect_success 'advise should not be printed when config variable is set to false' '
-+	test_config advice.configVariable false &&
-+	test-tool advise "advice.configVariable" "This is a piece of advice" 2>actual &&
-+	test_must_be_empty actual
-+'
-+
-+test_done
-diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index 6db92bd3ba..b7c8d41899 100755
---- a/t/t7004-tag.sh
-+++ b/t/t7004-tag.sh
-@@ -1726,6 +1726,8 @@ test_expect_success 'recursive tagging should give advice' '
- 	hint: already a tag. If you meant to tag the object that it points to, use:
- 	hint: |
- 	hint: 	git tag -f nested annotated-v4.0^{}
-+	hint: Turn this message off by running
-+	hint: "git config advice.nestedTag false"
- 	EOF
- 	git tag -m nested nested annotated-v4.0 2>actual &&
- 	test_i18ncmp expect actual
-
-base-commit: c7a62075917b3340f908093f63f1161c44ed1475
--- 
-gitgitgadget
+diff --git a/mailinfo.c b/mailinfo.c
+index 543962d40c..402ef04dd1 100644
+=2D-- a/mailinfo.c
++++ b/mailinfo.c
+@@ -570,7 +570,6 @@ static int check_header(struct mailinfo *mi,
+ 		len =3D strlen("Content-Type: ");
+ 		strbuf_add(&sb, line->buf + len, line->len - len);
+ 		decode_header(mi, &sb);
+-		strbuf_insertstr(&sb, 0, "Content-Type: ");
+ 		handle_content_type(mi, &sb);
+ 		ret =3D 1;
+ 		goto check_header_out;
+=2D-
+2.25.0
