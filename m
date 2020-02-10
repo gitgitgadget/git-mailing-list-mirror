@@ -2,77 +2,130 @@ Return-Path: <SRS0=dWK1=36=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DEC05C35254
-	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 18:49:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0495AC35254
+	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 18:51:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id AEB8A20838
-	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 18:49:40 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a6H06ifN"
+	by mail.kernel.org (Postfix) with ESMTP id CFA7920733
+	for <git@archiver.kernel.org>; Mon, 10 Feb 2020 18:51:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727496AbgBJStj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Feb 2020 13:49:39 -0500
-Received: from mail-lj1-f176.google.com ([209.85.208.176]:36252 "EHLO
-        mail-lj1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726991AbgBJStj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Feb 2020 13:49:39 -0500
-Received: by mail-lj1-f176.google.com with SMTP id r19so8525738ljg.3
-        for <git@vger.kernel.org>; Mon, 10 Feb 2020 10:49:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=RZzC1mXph5A8p3rIOKg215mFoGiAw2rt1gOJTprbO4s=;
-        b=a6H06ifNl2VrJRFty7dDqJ8ZszI2BfLktcp+2y2AZUib+E7YIkddhjFYQr6ZzGJfNI
-         EhA5CmPL+k49cBaoEgsVuvG+fwfXEcWIgLt7PeZbxFmkOF5JBYOgKnD70+WPSszhNoLb
-         z8mk4/NVhUMDTaJD4cugFi3CX8DkX02GJnND9+o+oeiEsG3ld42OyXfyC9uhSrmStJ26
-         aeR61zQOYWdbjJshA+yX8f0SxuCKs1ArFh0EPqPjLUPj+0UQuv4J3B7320ea3p14mgDD
-         L4i1J/EsvJ+lxNMF0sjKn4TXkKJHpYa94Q2a4fuHvI0HN9AhGZwuZNmXjAIEv/V96V2I
-         rmIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=RZzC1mXph5A8p3rIOKg215mFoGiAw2rt1gOJTprbO4s=;
-        b=BDEDiRN8diV2ZRsQjVKZiDaXkOcyiyKF2BduzCPtnr+sceAZ+A9jt3smJos+gtFmFO
-         zmI2QPHsdX6vxbwgxxZt0fiYH/ObYDIaw31YcxQx/1EzZ2SXstO39sgaaoaDg3vLXxEv
-         FXZYlIYG+GKOHl5WQoak4OKhumXCblWfk6K0kCCgpNtmHx5UTRkyIJi+ng8VuN3+Kxgb
-         PMvzfM46d6rpd1uP6ymChMxAXH41wmvYrG4O3Jsgwu/M4vATHayZLRWM2O4CbuALOA20
-         Kc6SHdjxe1gcl5BKOpvNw+G156mJ/nQOfQkF70yFDnWo2jbez7muA4b1p96ECauXqktB
-         GiZQ==
-X-Gm-Message-State: APjAAAXMILUACszVaa69lmOVFpBnzxZnn7gN/HeTpydYIAakvkzrlkz6
-        PO+yhatsbE2S+pZq4pmrjmBQ/Zed1XHo6Z9zt+Uo6g==
-X-Google-Smtp-Source: APXvYqzaNKsBtS4c66YJiVrGffWl35/cqAA38NkVC8wRO7o90bhvMnJdxVOi9rYO+T9g+EqdaV+n/keXVeZeYi64PqE=
-X-Received: by 2002:a2e:9110:: with SMTP id m16mr1729035ljg.140.1581360576003;
- Mon, 10 Feb 2020 10:49:36 -0800 (PST)
+        id S1727121AbgBJSvL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Feb 2020 13:51:11 -0500
+Received: from mta-07-4.privateemail.com ([68.65.122.27]:26881 "EHLO
+        MTA-07-4.privateemail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726991AbgBJSvL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Feb 2020 13:51:11 -0500
+X-Greylist: delayed 106308 seconds by postgrey-1.27 at vger.kernel.org; Mon, 10 Feb 2020 13:51:11 EST
+Received: from MTA-07.privateemail.com (localhost [127.0.0.1])
+        by MTA-07.privateemail.com (Postfix) with ESMTP id 6DC2660046;
+        Mon, 10 Feb 2020 13:51:06 -0500 (EST)
+Received: from [192.168.0.88] (unknown [10.20.151.246])
+        by MTA-07.privateemail.com (Postfix) with ESMTPA id 133F560049;
+        Mon, 10 Feb 2020 18:51:02 +0000 (UTC)
+Subject: Re: [RFC PATCH 1/3] git-merge: add option to format default message
+ using multiple lines
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+References: <20200209131623.5827-1-darktemplar@dark-templar-archives.net>
+ <20200209131623.5827-2-darktemplar@dark-templar-archives.net>
+ <xmqqtv3z1wq4.fsf@gitster-ct.c.googlers.com>
+From:   "i.Dark_Templar" <darktemplar@dark-templar-archives.net>
+Message-ID: <2f0417b3-9e9e-f0db-ab11-92dd7cd2b29a@dark-templar-archives.net>
+Date:   Mon, 10 Feb 2020 21:51:02 +0300
 MIME-Version: 1.0
-References: <CAF8BazCScMN1sBspcCycOJBcepbkKfJUvh_hL9MSgNVvs4jKGQ@mail.gmail.com>
-In-Reply-To: <CAF8BazCScMN1sBspcCycOJBcepbkKfJUvh_hL9MSgNVvs4jKGQ@mail.gmail.com>
-From:   Aleksey Midenkov <midenok@gmail.com>
-Date:   Mon, 10 Feb 2020 21:49:23 +0300
-Message-ID: <CAF8BazA_Nd82keE6XG5XV5+bq0FekZYuq_ifUMAvgvd0-iGetQ@mail.gmail.com>
-Subject: Git tedious verbosity
-To:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <xmqqtv3z1wq4.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Can you please disable all these meaningless messages which become
-more and more plentiful with each new version, like:
+09.02.2020 20:44, Junio C Hamano пишет:
+> "i.Dark_Templar" <darktemplar@dark-templar-archives.net> writes:
+> 
+>> If a lot of objects is merged at once, default commit message
+>> could become one very long line, which might be inconvenient to read.
+>> This change implements an option to change default autogenerated message
+>> so it'd take multiple lines, but each line wouldn't be long.
+>>
+>> An artificial example.
+>>
+>> Original merge commit message:
+>>     Merge branch 'branch_with_some_long_name_1', remote-tracking branch 'clone/remote_branch_with_some_name', tags 'some_tag' and 'some_other_tag'; commit 'ae46a39cead2b42282abce725e90b561c06e94ba'; commit '33d0281e0eeb2a5e9907ebedc230e28c46865092' into merge7
+>>
+>> Multiline merge commit message:
+>>     Merge into merge8:
+>>     branch 'branch_with_some_long_name_1'
+>>     remote-tracking branch 'clone/remote_branch_with_some_name'
+>>     tag 'some_tag'
+>>     tag 'some_other_tag'
+>>     commit 'ae46a39cead2b42282abce725e90b561c06e94ba'
+>>     commit '33d0281e0eeb2a5e9907ebedc230e28c46865092'
+> 
+> 
+> How would these commits appear in the "git shorlog" output?  Losing
+> some information is OK (after all, you are making the 'title' of the
+> merge commit less crowded to prefer 'simpler' summary in exchange),
+> but you'd need to strike a good balance what to discard.  Is the
+> fact that the name of branch that got some unspecified new things
+> was 'merge8' the most important thing to convey?
+> 
+> If you make the commit 'title' a short one-line summary, you MUST
+> have a blank line after that line.  Otherwise, the 'where does the
+> title of this commit object end?' logic will helpfully merge all the
+> lines in the first paragraph (i.e. up to the first blank line) into
+> one long line, defeating your effort to make the summary simpler by
+> losing details.  That is:
+> 
+>     Merge 6 commits into merge8
+> 
+>     branch 'branch_with_some_long_name_1'
+>     remote-tracking ...
+>     ...
+> 
+> That's it for the 'mechanics', i.e. a discussion about how a good
+> design of this 'feature' should look like.
+> 
+> About the feature itself, I am not sure.  Even though I admit I was
+> the one who invented octupus merges, and it does make the history
+> look "pretty" in gitk when used judiciously, its practical benefit
+> over repeated pairwise merges is doubtful.  Besides, it makes
+> bisection less efficient.  So from that point of view, I am not sure
+> if we want a feature to encourage creation of more octopus merges.
+> 
+> I haven't read the code yet---I usually don't before figuring out if
+> the feature and its design makes sense---so I have no comment on the
+> actual change at this moment.  I may send a separate review message
+> later.
+> 
+> Thanks.
+> 
 
-Updated 1 path from the index
+Thank you for feedback.
 
-And all these repeated tips with lots of text on git push/pull which
-are only first-time useful but nag people for years.
+I totally forgot about title in commit message and short log. I think
+I'd like to take your suggestion and modify it a bit.
+I want to add some text before enumeration of commits into message like
+this:
 
---
-All the best,
+Merge 6 commits into merge8
 
-Aleksey Midenkov
-@midenok
+Following commits are merged:
+branch 'branch_with_some_long_name_1'
+remote-tracking ...
+...
+
+As for octopus merge, there are still some situations where it has some
+advantages over series of pairwise merges, although I agree that it
+might be uncommon cases. I can name linking multiple previously
+unrelated histories as one such case. Bisect could be useless and
+history would look better in my opinion.
+
+If this feature would be fine with updated commit message, I'll update
+my changes and send updated patch series.
