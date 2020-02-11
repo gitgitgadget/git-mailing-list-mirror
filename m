@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E9A4C3B187
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 83058C352A3
 	for <git@archiver.kernel.org>; Tue, 11 Feb 2020 18:58:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 01C452168B
+	by mail.kernel.org (Postfix) with ESMTP id 5CB502168B
 	for <git@archiver.kernel.org>; Tue, 11 Feb 2020 18:58:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J3YHPO6K"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dyZjGbBe"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730813AbgBKS6J (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Feb 2020 13:58:09 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:45558 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730696AbgBKS6J (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Feb 2020 13:58:09 -0500
-Received: by mail-wr1-f66.google.com with SMTP id g3so12715376wrs.12
-        for <git@vger.kernel.org>; Tue, 11 Feb 2020 10:58:07 -0800 (PST)
+        id S1730824AbgBKS6K (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Feb 2020 13:58:10 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:36618 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730807AbgBKS6K (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Feb 2020 13:58:10 -0500
+Received: by mail-wm1-f67.google.com with SMTP id p17so4980886wma.1
+        for <git@vger.kernel.org>; Tue, 11 Feb 2020 10:58:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=RsZglsNnw4Dxu30zclNRqvtGtTwNRbIm2GiByo9/2uU=;
-        b=J3YHPO6KilYgg5cI+4lInW2cHkJ7u1jWQvJX9gGhBCkHy8AN/l3rsdk8S2JH6TdUV5
-         d5+PcrOXUpgZSJUXcIAHst6wcz1SPS4nXMLXUQDTL0K7sBsv7mJwEeNB5pNfhtfEMpFF
-         dciwr8JO6fYDxKyDS/GGOIz+25b/DWULr36KKWfplafKjYKtM3YXlvhKQDRQa5wkut74
-         GqbHTW52zNOAndlDgiDiK4EzxiH+hG0v657a+PKheE3lEf5nNVPuvTyvOPnd6QpjT9xx
-         IM9ZHyrMXTJca21jJDSE7DxXFVeHyTliSJBfrHF4NXNJc+JiXWRYFdqSPxIUHlaFRrPu
-         pVFA==
+        bh=jGcbyrVQL4orM6E0ROGoNo+AJQD5tx13ZwD/K8lwTOs=;
+        b=dyZjGbBeIFctF+wAZOf1+0jWxCefPN9HGsBRBhceffh2f0wEHgsTB4ADWFa55K1Ep+
+         XbWvgYEvBZ2pOm+EnADsoZUsyOpdxe6j+cd7w83yJRzt5E4a9btqhcAPrLfo0YIJhgCv
+         j2zFGKlB32R2v751lmBkxYswUkb6hgcT7ZAit/MV0PNpM5r48yXbZvu+6i/rL44mXGeK
+         fJGcBm9sh9CgTL6cImifSnVHUw0vZIDNm23KngtO4WOdO6tGZtdV8yfN+UEba+JQn2L1
+         RRIP1If8YDpxh/IjCgxujAV63wB8r3PvBuUEKOOiEzArBbDFi3IaN8BO+IwfdCryRPUp
+         oxjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=RsZglsNnw4Dxu30zclNRqvtGtTwNRbIm2GiByo9/2uU=;
-        b=smLC+ULhRNe9mNqXdaXHKJyfjvfAUCIPdHdLbdFDanDGUN4wuhUD8X0FB0Pav5KQVl
-         +Htg9s9e7VXHsV9YXS1SeOwzczkV1EGcqePCXYSN3L8uSmoiyH2f9ESabdCcUHKNa5s9
-         ZYfznF4jIlBnKyW/W0IdB+rvyJlxeW63kp0ntYC55DGuqWVfFA8vosH0oISRyU2OIfsV
-         5S5TLa4XaPW4dTgcohSHZhFqjwzflMiBxPhoQIFQUrob039peJo6W0N/VWTEPARXaHtq
-         ERZBefiohz9aRd+wNTrHntn/X2T1fgOw2pbSrBM6rS9lBfpnsgcKaHtqv9eaaoxXfZZt
-         KFng==
-X-Gm-Message-State: APjAAAXvq2NuIMa6XF6M+nQj7IUd11efxvCH5qEdY+zSx5IKp+wsvn0v
-        gAsCk2Hwm0ApQ3mrSheThxGD+Byf
-X-Google-Smtp-Source: APXvYqyQLgSHITmf9kZC4F+kOXeNBtWkBLlwLr4R1BEiOY/XuZmF2YvC/PTQ41+LijkeFRiBW5BEPA==
-X-Received: by 2002:adf:d850:: with SMTP id k16mr9796724wrl.216.1581447487104;
+        bh=jGcbyrVQL4orM6E0ROGoNo+AJQD5tx13ZwD/K8lwTOs=;
+        b=HCVHwoy+gp3I9vkcXzgrcoaPRJXqCWiLUUI44d0oiIajhBoE+CC8uc0g1hu2V0sOLx
+         YkD/bsrSqM0x0zceYDl1fvBHTNe1skvmKAuXwlC7LZca+nj4YAK/GftkFjMYNNwiolZ7
+         bd9sE0SjTeDKayuew11duuTt6HgA2v/Lkoys83AipqqeKTG92UE5J6K1BBHiLIr9eVhA
+         1c/hTf0a3prCZ0+2Fgk79zR33Inx7P9jyQGo7aHl8BU5UCZxgXHVrHuzT79ZG7lV5dOa
+         V2A9qB3uhAYQFi+tU4GNpwZBS3tlyf/uF1eEQ8dDZ0+y4AbZUTP/7d2JNAXvA6OzZv0w
+         n1Yw==
+X-Gm-Message-State: APjAAAXqnWYz4KTuLG/X7MHx/3sh7UM7CKXO1f65utXWhZmnm7/2GUwk
+        H6NaivKL33R6lSvBOgKaADOTTE1m
+X-Google-Smtp-Source: APXvYqxHeTPPSrjgZYZL/Y22DZG9AYneyGjdNZSvUcftc3MRBjkUxmQ/Q+ewMBJz+80zfTBX1SlS3g==
+X-Received: by 2002:a7b:c190:: with SMTP id y16mr7243712wmi.107.1581447487957;
         Tue, 11 Feb 2020 10:58:07 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a6sm6516160wrm.69.2020.02.11.10.58.06
+        by smtp.gmail.com with ESMTPSA id f1sm6355264wro.85.2020.02.11.10.58.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Feb 2020 10:58:06 -0800 (PST)
-Message-Id: <71c51ccfb0c53fdac67ba35d474c51a9da0c28e0.1581447484.git.gitgitgadget@gmail.com>
+        Tue, 11 Feb 2020 10:58:07 -0800 (PST)
+Message-Id: <a2342f716195ed18cc36613224e59baa88965fe0.1581447485.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.698.v5.git.git.1581447484.gitgitgadget@gmail.com>
 References: <pull.698.v4.git.git.1581372376.gitgitgadget@gmail.com>
         <pull.698.v5.git.git.1581447484.gitgitgadget@gmail.com>
 From:   "Ben Keene via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 11 Feb 2020 18:57:58 +0000
-Subject: [PATCH v5 1/7] git-p4: rewrite prompt to be Windows compatible
+Date:   Tue, 11 Feb 2020 18:57:59 +0000
+Subject: [PATCH v5 2/7] git-p4: create new function run_git_hook
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,39 +75,172 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Ben Keene <seraphire@gmail.com>
 
-The existing function prompt(prompt_text) does not work correctly when
-run on Windows 10 bash terminal when launched from the sourcetree
-GUI application. The stdout is not flushed properly so the prompt text
-is not displayed to the user until the next flush of stdout, which is
-quite confusing.
+This commit is in preparation of introducing new p4 submit hooks.
 
-Change this method by:
-* Adding flush to stderr, stdout, and stdin
-* Use readline from sys.stdin instead of raw_input.
+The current code in the python script git-p4.py makes the assumption
+that the git hooks can be executed by subprocess.call() function.
+However, when git is run on Windows, this may not work as expected.
 
-The existing strip().lower() are retained.
+The subprocess.call() does not cover all the use cases for properly
+executing the various types of executable files on Windows.
+
+Prepare for remediation by adding a new function, run_git_hook, that
+takes 2 parameters:
+* the short filename of an optionally registered git hook
+* an optional list of parameters
+
+The run_git_hook function will honor the existing behavior seen in the
+current code for executing the p4-pre-submit hook:
+
+* Hooks are looked for in core.hooksPath directory.
+* If core.hooksPath is not set, then the current .git/hooks directory
+  is checked.
+* If the hook does not exist, the function returns True.
+* If the hook file is not accessible, the function returns True.
+* If the hook returns a zero exit code when executed, the function
+  return True.
+* If the hook returns a non-zero exit code, the function returns False.
+
+Add the following additional functionality if git-p4.py is run on
+Windows.
+* If hook file is not located without an extension, search for
+  any file in the associated hook directory (from the list above) that
+  has the same name but with an extension.
+* If the file is still not found, return True (the hook is missing)
+
+Add a new function run_hook_command() that wraps the OS dependent
+functionality for actually running the subprocess.call() with OS
+dependent behavior:
+
+If a hook file exists on Windows:
+* If there is no extension, set the launch executable to be SH.EXE
+  - Look for SH.EXE under the environmental variable EXEPATH in the
+    bin/ directory.
+  - If %EXEPATH%/bin/sh.exe exists, use this as the actual executable.
+  - If %EXEPATH%/bin/sh.exe does not exist, use sh.exe
+  - Execute subprocess.call() without the shell (shell=False)
+* If there is an extension, execute subprocess.call() with teh shell
+  (shell=True) and consider the file to be the executable.
+
+The return value from run_hook_command() is the subprocess.call()
+return value.
+
+These functions are added in this commit, but are only staged and not
+yet used.
 
 Signed-off-by: Ben Keene <seraphire@gmail.com>
 ---
- git-p4.py | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ git-p4.py | 76 ++++++++++++++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 69 insertions(+), 7 deletions(-)
 
 diff --git a/git-p4.py b/git-p4.py
-index 40d9e7c594..65b6d4dca0 100755
+index 65b6d4dca0..4eccea3fa5 100755
 --- a/git-p4.py
 +++ b/git-p4.py
-@@ -175,7 +175,10 @@ def prompt(prompt_text):
-     """
-     choices = set(m.group(1) for m in re.finditer(r"\[(.)\]", prompt_text))
-     while True:
--        response = raw_input(prompt_text).strip().lower()
+@@ -26,6 +26,7 @@
+ import zlib
+ import ctypes
+ import errno
++import glob
+ 
+ # support basestring in python3
+ try:
+@@ -185,6 +186,73 @@ def prompt(prompt_text):
+         if response in choices:
+             return response
+ 
++def run_git_hook(cmd, param=[]):
++    """Execute a hook if the hook exists."""
++    if verbose:
++        sys.stderr.write("Looking for hook: %s\n" % cmd)
 +        sys.stderr.flush()
-+        sys.stdout.write(prompt_text)
-+        sys.stdout.flush()
-+        response=sys.stdin.readline().strip().lower()
-         if not response:
-             continue
-         response = response[0]
++
++    hooks_path = gitConfig("core.hooksPath")
++    if len(hooks_path) <= 0:
++        hooks_path = os.path.join(os.environ["GIT_DIR"], "hooks")
++
++    if not isinstance(param, list):
++        param=[param]
++
++    # resolve hook file name, OS depdenent
++    hook_file = os.path.join(hooks_path, cmd)
++    if platform.system() == 'Windows':
++        if not os.path.isfile(hook_file):
++            # look for the file with an extension
++            files = glob.glob(hook_file + ".*")
++            if not files:
++                return True
++            files.sort()
++            hook_file = files.pop()
++            while hook_file.upper().endswith(".SAMPLE"):
++                # The file is a sample hook. We don't want it
++                if len(files) > 0:
++                    hook_file = files.pop()
++                else:
++                    return True
++
++    if not os.path.isfile(hook_file) or not os.access(hook_file, os.X_OK):
++        return True
++
++    return run_hook_command(hook_file, param) == 0
++
++def run_hook_command(cmd, param):
++    """Executes a git hook command
++       cmd = the command line file to be executed. This can be
++       a file that is run by OS association.
++
++       param = a list of parameters to pass to the cmd command
++
++       On windows, the extension is checked to see if it should
++       be run with the Git for Windows Bash shell.  If there
++       is no file extension, the file is deemed a bash shell
++       and will be handed off to sh.exe. Otherwise, Windows
++       will be called with the shell to handle the file assocation.
++
++       For non Windows operating systems, the file is called
++       as an executable.
++    """
++    cli = [cmd] + param
++    use_shell = False
++    if platform.system() == 'Windows':
++        (root,ext) = os.path.splitext(cmd)
++        if ext == "":
++            exe_path = os.environ.get("EXEPATH")
++            if exe_path is None:
++                exe_path = ""
++            else:
++                exe_path = os.path.join(exe_path, "bin")
++            cli = [os.path.join(exe_path, "SH.EXE")] + cli
++        else:
++            use_shell = True
++    return subprocess.call(cli, shell=use_shell)
++
++
+ def write_pipe(c, stdin):
+     if verbose:
+         sys.stderr.write('Writing pipe: %s\n' % str(c))
+@@ -2337,12 +2405,7 @@ def run(self, args):
+             sys.exit("number of commits (%d) must match number of shelved changelist (%d)" %
+                      (len(commits), num_shelves))
+ 
+-        hooks_path = gitConfig("core.hooksPath")
+-        if len(hooks_path) <= 0:
+-            hooks_path = os.path.join(os.environ.get("GIT_DIR", ".git"), "hooks")
+-
+-        hook_file = os.path.join(hooks_path, "p4-pre-submit")
+-        if os.path.isfile(hook_file) and os.access(hook_file, os.X_OK) and subprocess.call([hook_file]) != 0:
++        if not run_git_hook("p4-pre-submit"):
+             sys.exit(1)
+ 
+         #
+@@ -4124,7 +4187,6 @@ def printUsage(commands):
+     "unshelve" : P4Unshelve,
+ }
+ 
+-
+ def main():
+     if len(sys.argv[1:]) == 0:
+         printUsage(commands.keys())
 -- 
 gitgitgadget
 
