@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 579AFC35242
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A5A6C3B187
 	for <git@archiver.kernel.org>; Tue, 11 Feb 2020 18:58:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 2A72A2168B
+	by mail.kernel.org (Postfix) with ESMTP id 79C062173E
 	for <git@archiver.kernel.org>; Tue, 11 Feb 2020 18:58:15 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d6e09j4u"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kAxa6g/t"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730845AbgBKS6O (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1730854AbgBKS6O (ORCPT <rfc822;git@archiver.kernel.org>);
         Tue, 11 Feb 2020 13:58:14 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:53953 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730807AbgBKS6M (ORCPT <rfc822;git@vger.kernel.org>);
+Received: from mail-wr1-f46.google.com ([209.85.221.46]:41997 "EHLO
+        mail-wr1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730831AbgBKS6M (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 11 Feb 2020 13:58:12 -0500
-Received: by mail-wm1-f67.google.com with SMTP id s10so5021763wmh.3
-        for <git@vger.kernel.org>; Tue, 11 Feb 2020 10:58:10 -0800 (PST)
+Received: by mail-wr1-f46.google.com with SMTP id k11so13776056wrd.9
+        for <git@vger.kernel.org>; Tue, 11 Feb 2020 10:58:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=wwhNZbumD67NNG9L80tgBsexUQGiFgu2wBg2CR09VDg=;
-        b=d6e09j4u016gHQnRg4Y4sGDzwaKeH83RXXJjjwPbRoIwuaL7XytFbfgu070JFp6Tan
-         7IwP1kN+/Bu36vZswzDBlIR3ZGDt6mSKqQCW80gLlIp+NJ12ZbtHCkC6MZyzsda7pFms
-         dgzlu2bKr7tO9CgYogdjb8NEM+821xYUrfTysrZFLG2LpB2ViTgxPJgwBOPhc0wUAA56
-         8HUVuCe9j+fe3TSq/GyqsG4y5Tk3MkTVgJg0AqPGs4/zk3G7uKo7OiwxNbzM/grFveMY
-         SGMvVfT55TlVx0WVeXCX/GQkk2K3mC0uwROenSaI9qozrGxgk6AGp0fwlLnqacMNmhBn
-         8oUg==
+        bh=Zn8vN0yMoJ6nSN+rJsVUi7ptGiBWrWxgFvCn/ezqD+0=;
+        b=kAxa6g/tcc+iA6U7y8utfHMOys9xw1/WtGB3UmfqmRLsqny+VfUa6l7JDmQJN1GSFd
+         XhgGl6C6pJpgFdH5qsj065zCFuDmKoSUISso83UliikUwgL1zWGHboapOBuKIEEACzt6
+         y2fA8dqyatRFIz/nJh1UiAckd2INk4bbPZb3gIU0rSHPqAn/ugtPxGiFcmxtuoPK5HG/
+         h6UZ5HHg8XPGioJOAAL3ggoeJYAqVlvEg++VHALF9Cfay8F0q9h+qATA5nz6/UEpa8If
+         1dz+zUs6TMiEnQGdlKm2kuUmwLwq6sPFp3D7BWr0QW8prZjthQcqldCUVMorm61r90iO
+         s2Ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=wwhNZbumD67NNG9L80tgBsexUQGiFgu2wBg2CR09VDg=;
-        b=shDrRCzIXKYpriWle4Ahn6Nzl87cxI2Q7mFjNPwXn7+thjfjyXzH/N7IFAY0dZCyvW
-         pNZOxhSO48wjMzJe3rn10Pb3K2PAVpH79L6DXOQ2ZQLajL9LKz9gkrEEAVyN46sOz7DD
-         g/erBU3i+5YoxjI2tnFSP4XFPoldyEsJEiSiWq/bp+y7RZ8YDHdA8jXC/VDvGXqCiSXb
-         N2InZ535GOdcoc02YTI47gJ0Y/q05ASia1/2Pjm83v8hUO9t2tHirHaqifx9vvnolZXK
-         iDpQ4igbC2Q7rapbCXDMwdLTLb9Ri6aESW2s+eR8PkTEmm/Xyr0jFuqJXrYeffqIAhuX
-         V3Xw==
-X-Gm-Message-State: APjAAAULLzRLDXj4TK9yCh+uFlLfgad6yB8lVRlF1boIFWrtTe+yvXsB
-        xI4EY/0EoC3IkW25bTMFZrA09ZkE
-X-Google-Smtp-Source: APXvYqzwsaP8REgFxSp/uFmXvaAYVhqXlUc+MhXkwhOLdwoHIaquQ4RvxVFlwMK5eSfNqGIoFWZWxg==
-X-Received: by 2002:a05:600c:224a:: with SMTP id a10mr7204678wmm.143.1581447490109;
+        bh=Zn8vN0yMoJ6nSN+rJsVUi7ptGiBWrWxgFvCn/ezqD+0=;
+        b=Tn+tIAVwC3b4lW+xKSGhqwi2bI3qgK0FWr8LWdQYI+p7P687EQdJYnFOs4lxlvFRVd
+         MLdWC/2VDgbCQxlJnxLn7/YVOjNFx6YzrX9hTT75VaE2rfCZJoQAgIDK4YyFkvX/UehF
+         NxApR8yFzI6YK2/KY15R9vWKFoCD3yT2Y7iaEBI2M9uQBPX7ysoSKRta+c58XUjrXmLb
+         xG4vOh3clemYhvVGkuUOSmh6nizD4qjWVbaYPAoMI+0GqbBsfTnAvOf0JftRW6ab8++P
+         I5x1JxYe6nJc8yEa2++HGU7xJoBGfdUtHNXqyI0B4VNzbfWKM9AUEAoD+S6Cmu3A2WUR
+         Oidg==
+X-Gm-Message-State: APjAAAWtPWF5NGcXQnJJiAJLI2o51qnWxgTg741Ww/1k16cibAe5yHbt
+        pafQyrgJWg2A+XdKRbrcf8n592BR
+X-Google-Smtp-Source: APXvYqxZ5Jvu5596wORCc+NnpRi85PPlaOOAiAw7O+eX2ho/tGxtiFxuTSuAFDqypf5RLQwzG6Aalw==
+X-Received: by 2002:adf:f886:: with SMTP id u6mr10074860wrp.409.1581447490916;
         Tue, 11 Feb 2020 10:58:10 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a9sm6425398wrn.3.2020.02.11.10.58.09
+        by smtp.gmail.com with ESMTPSA id h18sm6578512wrv.78.2020.02.11.10.58.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Feb 2020 10:58:09 -0800 (PST)
-Message-Id: <5299f61e4e17938654d7013295e4f545b86e033a.1581447485.git.gitgitgadget@gmail.com>
+        Tue, 11 Feb 2020 10:58:10 -0800 (PST)
+Message-Id: <7a6d9fafceafae953d80513d62446b753de88768.1581447485.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.698.v5.git.git.1581447484.gitgitgadget@gmail.com>
 References: <pull.698.v4.git.git.1581372376.gitgitgadget@gmail.com>
         <pull.698.v5.git.git.1581447484.gitgitgadget@gmail.com>
 From:   "Ben Keene via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 11 Feb 2020 18:58:02 +0000
-Subject: [PATCH v5 5/7] git-p4: restructure code in submit
+Date:   Tue, 11 Feb 2020 18:58:03 +0000
+Subject: [PATCH v5 6/7] git-p4: add p4 submit hooks
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,174 +75,218 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Ben Keene <seraphire@gmail.com>
 
-In preparation for adding new hooks to the submit method of git-p4,
-restructure the applyCommit function in the P4Submit class.  Make the
-following changes:
+The git command "commit" supports a number of hooks that support
+changing the behavior of the commit command.  The git-p4.py program only
+has one existing hook, "p4-pre-submit".  This command occurs early in
+the process.  There are no hooks in the process flow for modifying
+the P4 changelist text programmatically.
 
-* Move all the code after the definition of submitted = False into the
-  Try-Finally block. This ensures that any error that occurs will
-  properly recover.  This is not necessary with the current code because
-  none of it should throw an exception, however the next set of changes
-  will introduce exceptional code.
+Adds 3 new hooks to git-p4.py to the submit option.
 
-  Existing flow control can remain as defined - the if-block for
-  prepare-p4-only sets the local variable "submitted" to True and exits
-  the function. New early exits, leave submitted set to False so the
-  Finally block will undo changes to the P4 workspace.
+The new hooks are:
+* p4-prepare-changelist - Execute this hook after the changelist file
+  has been created. The hook will be executed even if the
+  --prepare-p4-only option is set.  This hook ignores the --no-verify
+  option in keeping with the existing behavior of git commit.
 
-* Make the small usability change of adding an empty string to the
-  print statements displayed to the user when the prepare-p4-only option
-  is selected.  On Windows, the command print() may display a set of
-  parentheses "()" to the user when the print() function is called with
-  no parameters. By supplying an empty string, the intended blank line
-  will print as expected.
+* p4-changelist - Execute this hook after the user has edited the
+  changelist. Do not execute this hook if the user has selected the
+  --prepare-p4-only option. This hook will honor the --no-verify,
+  following the conventions of git commit.
 
-* Fix a small bug when the submittedTemplate is edited by the user
-  and all content in the file is removed. The existing code will throw
-  an exception if the separateLine is not found in the file. Change this
-  code to test for the separator line using a find() test first and only
-  split on the separator if it is found.
+* p4-post-changelist - Execute this hook after the P4 submission process
+  has completed successfully. This hook takes no parameters and is
+  executed regardless of the --no-verify option.  It's return value will
+  not be checked.
 
-* Additionally, add the new behavior that if the changelist file has
-  been completely emptied that the Submit action for this changelist
-  will be aborted.
+The calls to the new hooks: p4-prepare-changelist, p4-changelist,
+and p4-post-changelist should all be called inside the try-finally
+block.
 
 Signed-off-by: Ben Keene <seraphire@gmail.com>
 ---
- git-p4.py | 92 ++++++++++++++++++++++++++++++-------------------------
- 1 file changed, 51 insertions(+), 41 deletions(-)
+ Documentation/git-p4.txt   | 35 +++++++++++++++++++++++++++++
+ Documentation/githooks.txt | 46 ++++++++++++++++++++++++++++++++++++++
+ git-p4.py                  | 35 ++++++++++++++++++++++++++++-
+ 3 files changed, 115 insertions(+), 1 deletion(-)
 
+diff --git a/Documentation/git-p4.txt b/Documentation/git-p4.txt
+index 362b50eb21..dab9609013 100644
+--- a/Documentation/git-p4.txt
++++ b/Documentation/git-p4.txt
+@@ -387,6 +387,41 @@ It can be bypassed with the `--no-verify` command line option.
+ 
+ One usage scenario is to run unit tests in the hook.
+ 
++p4-prepare-changelist
++~~~~~~~~~~~~~~~~~~~~~
++
++The `p4-prepare-changelist` hook is executed right after preparing
++the default changelist message and before the editor is started.
++It takes one parameter, the name of the file that contains the
++changelist text. Exiting with a non-zero status from the script
++will abort the process.
++
++The purpose of the hook is to edit the message file in place,
++and it is not supressed by the `--no-verify` option. This hook
++is called even if `--prepare-p4-only` is set.
++
++p4-changelist
++~~~~~~~~~~~~~
++
++The `p4-changelist` hook is executed after the changelist
++message has been edited by the user. It can be bypassed with the
++`--no-verify` option. It takes a single parameter, the name
++of the file that holds the proposed changelist text. Exiting
++with a non-zero status causes the command to abort.
++
++The hook is allowed to edit the changelist file and can be used
++to normalize the text into some project standard format. It can
++also be used to refuse the Submit after inspect the message file.
++
++p4-post-changelist
++~~~~~~~~~~~~~~~~~~
++
++The `p4-post-changelist` hook is invoked after the submit has
++successfully occured in P4. It takes no parameters and is meant
++primarily for notification and cannot affect the outcome of the
++git p4 submit action.
++
++
+ 
+ Rebase options
+ ~~~~~~~~~~~~~~
+diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+index 8cf6b08b55..8aa9c2176c 100644
+--- a/Documentation/githooks.txt
++++ b/Documentation/githooks.txt
+@@ -515,6 +515,52 @@ The exit status determines whether git will use the data from the
+ hook to limit its search.  On error, it will fall back to verifying
+ all files and folders.
+ 
++p4-changelist
++~~~~~~~~~~~~~
++
++This hook is invoked by `git-p4 submit`.
++
++The `p4-changelist` hook is executed after the changelist
++message has been edited by the user. It can be bypassed with the
++`--no-verify` option. It takes a single parameter, the name
++of the file that holds the proposed changelist text. Exiting
++with a non-zero status causes the command to abort.
++
++The hook is allowed to edit the changelist file and can be used
++to normalize the text into some project standard format. It can
++also be used to refuse the Submit after inspect the message file.
++
++Run `git-p4 submit --help` for details.
++
++p4-prepare-changelist
++~~~~~~~~~~~~~~~~~~~~~
++
++This hook is invoked by `git-p4 submit`.
++
++The `p4-prepare-changelist` hook is executed right after preparing
++the default changelist message and before the editor is started.
++It takes one parameter, the name of the file that contains the
++changelist text. Exiting with a non-zero status from the script
++will abort the process.
++
++The purpose of the hook is to edit the message file in place,
++and it is not supressed by the `--no-verify` option. This hook
++is called even if `--prepare-p4-only` is set.
++
++Run `git-p4 submit --help` for details.
++
++p4-post-changelist
++~~~~~~~~~~~~~~~~~~
++
++This hook is invoked by `git-p4 submit`.
++
++The `p4-post-changelist` hook is invoked after the submit has
++successfully occured in P4. It takes no parameters and is meant
++primarily for notification and cannot affect the outcome of the
++git p4 submit action.
++
++Run `git-p4 submit --help` for details.
++
+ p4-pre-submit
+ ~~~~~~~~~~~~~
+ 
 diff --git a/git-p4.py b/git-p4.py
-index c969d9235b..b6da7bcb02 100755
+index b6da7bcb02..f14c71c97d 100755
 --- a/git-p4.py
 +++ b/git-p4.py
-@@ -2102,47 +2102,47 @@ def applyCommit(self, id):
-         tmpFile.write(submitTemplate)
-         tmpFile.close()
+@@ -1589,7 +1589,7 @@ def __init__(self):
+                 optparse.make_option("--disable-p4sync", dest="disable_p4sync", action="store_true",
+                                      help="Skip Perforce sync of p4/master after submit or shelve"),
+                 optparse.make_option("--no-verify", dest="no_verify", action="store_true",
+-                                     help="Bypass p4-pre-submit"),
++                                     help="Bypass p4-pre-submit and p4-changelist hooks"),
+         ]
+         self.description = """Submit changes from git to the perforce depot.\n
+     The `p4-pre-submit` hook is executed if it exists and is executable. It
+@@ -1598,6 +1598,28 @@ def __init__(self):
+     from this script prevents `git-p4 submit` from launching.
  
--        if self.prepare_p4_only:
--            #
--            # Leave the p4 tree prepared, and the submit template around
--            # and let the user decide what to do next
--            #
--            print()
--            print("P4 workspace prepared for submission.")
--            print("To submit or revert, go to client workspace")
--            print("  " + self.clientPath)
--            print()
--            print("To submit, use \"p4 submit\" to write a new description,")
--            print("or \"p4 submit -i <%s\" to use the one prepared by" \
--                  " \"git p4\"." % fileName)
--            print("You can delete the file \"%s\" when finished." % fileName)
--
--            if self.preserveUser and p4User and not self.p4UserIsMe(p4User):
--                print("To preserve change ownership by user %s, you must\n" \
--                      "do \"p4 change -f <change>\" after submitting and\n" \
--                      "edit the User field.")
--            if pureRenameCopy:
--                print("After submitting, renamed files must be re-synced.")
--                print("Invoke \"p4 sync -f\" on each of these files:")
--                for f in pureRenameCopy:
--                    print("  " + f)
--
--            print()
--            print("To revert the changes, use \"p4 revert ...\", and delete")
--            print("the submit template file \"%s\"" % fileName)
--            if filesToAdd:
--                print("Since the commit adds new files, they must be deleted:")
--                for f in filesToAdd:
--                    print("  " + f)
--            print()
--            return True
--
--        #
--        # Let the user edit the change description, then submit it.
--        #
+     One usage scenario is to run unit tests in the hook.
++
++    The `p4-prepare-changelist` hook is executed right after preparing the default
++    changelist message and before the editor is started. It takes one parameter,
++    the name of the file that contains the changelist text. Exiting with a non-zero
++    status from the script will abort the process.
++
++    The purpose of the hook is to edit the message file in place, and it is not
++    supressed by the `--no-verify` option. This hook is called even if
++    `--prepare-p4-only` is set.
++
++    The `p4-changelist` hook is executed after the changelist message has been
++    edited by the user. It can be bypassed with the `--no-verify` option. It
++    takes a single parameter, the name of the file that holds the proposed
++    changelist text. Exiting with a non-zero status causes the command to abort.
++
++    The hook is allowed to edit the changelist file and can be used to normalize
++    the text into some project standard format. It can also be used to refuse the
++    Submit after inspect the message file.
++
++    The `p4-post-changelist` hook is invoked after the submit has successfully
++    occured in P4. It takes no parameters and is meant primarily for notification
++    and cannot affect the outcome of the git p4 submit action.
+     """
+ 
+         self.usage += " [name of git branch to submit into perforce depot]"
+@@ -2105,6 +2127,10 @@ def applyCommit(self, id):
          submitted = False
  
          try:
-+
-+            if self.prepare_p4_only:
-+                #
-+                # Leave the p4 tree prepared, and the submit template around
-+                # and let the user decide what to do next
-+                #
-+                submitted = True
-+                print("")
-+                print("P4 workspace prepared for submission.")
-+                print("To submit or revert, go to client workspace")
-+                print("  " + self.clientPath)
-+                print("")
-+                print("To submit, use \"p4 submit\" to write a new description,")
-+                print("or \"p4 submit -i <%s\" to use the one prepared by" \
-+                      " \"git p4\"." % fileName)
-+                print("You can delete the file \"%s\" when finished." % fileName)
-+
-+                if self.preserveUser and p4User and not self.p4UserIsMe(p4User):
-+                    print("To preserve change ownership by user %s, you must\n" \
-+                          "do \"p4 change -f <change>\" after submitting and\n" \
-+                          "edit the User field.")
-+                if pureRenameCopy:
-+                    print("After submitting, renamed files must be re-synced.")
-+                    print("Invoke \"p4 sync -f\" on each of these files:")
-+                    for f in pureRenameCopy:
-+                        print("  " + f)
-+
-+                print("")
-+                print("To revert the changes, use \"p4 revert ...\", and delete")
-+                print("the submit template file \"%s\"" % fileName)
-+                if filesToAdd:
-+                    print("Since the commit adds new files, they must be deleted:")
-+                    for f in filesToAdd:
-+                        print("  " + f)
-+                print("")
-+                sys.stdout.flush()
-+                return True
-+
++            # Allow the hook to edit the changelist text before presenting it
++            # to the user.
++            if not run_git_hook("p4-prepare-changelist", [fileName]):
++                return False
+ 
+             if self.prepare_p4_only:
+                 #
+@@ -2144,6 +2170,12 @@ def applyCommit(self, id):
+                 return True
+ 
              if self.edit_template(fileName):
++                if not self.no_verify:
++                    if not run_git_hook("p4-changelist", [fileName]):
++                        print("The p4-changelist hook failed.")
++                        sys.stdout.flush()
++                        return False
++
                  # read the edited message and submit
                  tmpFile = open(fileName, "rb")
-@@ -2150,7 +2150,15 @@ def applyCommit(self, id):
-                 tmpFile.close()
-                 if self.isWindows:
-                     message = message.replace("\r\n", "\n")
--                submitTemplate = message[:message.index(separatorLine)]
-+                if message.find(separatorLine) <> -1:
-+                    submitTemplate = message[:message.index(separatorLine)]
-+                else:
-+                    submitTemplate = message
-+
-+                if len(submitTemplate.strip()) == 0:
-+                    print("Changelist is empty, aborting this changelist.")
-+                    sys.stdout.flush()
-+                    return False
+                 message = tmpFile.read()
+@@ -2181,6 +2213,7 @@ def applyCommit(self, id):
  
-                 if update_shelve:
-                     p4_write_pipe(['shelve', '-r', '-i'], submitTemplate)
-@@ -2174,19 +2182,21 @@ def applyCommit(self, id):
                  submitted = True
  
++                run_git_hook("p4-post-changelist")
          finally:
--            # skip this patch
-+            # Revert changes if we skip this patch
+             # Revert changes if we skip this patch
              if not submitted or self.shelve:
-                 if self.shelve:
-                     print ("Reverting shelved files.")
-                 else:
-                     print ("Submission cancelled, undoing p4 changes.")
-+                sys.stdout.flush()
-                 for f in editedFiles | filesToDelete:
-                     p4_revert(f)
-                 for f in filesToAdd:
-                     p4_revert(f)
-                     os.remove(f)
- 
--        os.remove(fileName)
-+            if not self.prepare_p4_only:
-+                os.remove(fileName)
-         return submitted
- 
-     # Export git tags as p4 labels. Create a p4 label and then tag
 -- 
 gitgitgadget
 
