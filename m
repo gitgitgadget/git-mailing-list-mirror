@@ -2,96 +2,84 @@ Return-Path: <SRS0=9mHE=37=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 27BBCC352A3
-	for <git@archiver.kernel.org>; Tue, 11 Feb 2020 06:10:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E47FBC352A3
+	for <git@archiver.kernel.org>; Tue, 11 Feb 2020 09:22:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id F19B320714
-	for <git@archiver.kernel.org>; Tue, 11 Feb 2020 06:10:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ADDE220848
+	for <git@archiver.kernel.org>; Tue, 11 Feb 2020 09:22:23 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="CAh055SC"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="ax7mym2G"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727987AbgBKGK5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Feb 2020 01:10:57 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63744 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727959AbgBKGK4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Feb 2020 01:10:56 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9E01D3EC05;
-        Tue, 11 Feb 2020 01:10:55 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=+xfUoIX49cKLQu7dFLysNnBuTwo=; b=CAh055
-        SCqWAF4mO9uihYiZxOPMWRrv8PUMnNj2WeiRdBBjQRawZ7Oe7Gzxz+7OfRpft+pl
-        qW3WQIWCORmLC1HTvI2sJwPrd1PeU5MWegsF/mayUmpp/Edxlc9amolTtj3g2lUZ
-        /LjQYdtACKeYhnlAtFl0L7J36X77sh1/+5VhQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=HTP3+r2CI+Lj0yau+D7wksSh8MkkR5ZE
-        nxGAMNs1TzWGMbeKG25FJ5bkBEdmUwqKIiW44Rjvkl7L0Vh5vjRc4jKR4vjjMzqc
-        5L2xBSKAuVZNiJTGoREfdKCIAvo0t3kD39bPYOMB3HtEYAwTSQNxgwUISQSmKptf
-        GjEtVNPHoVA=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 82D783EC04;
-        Tue, 11 Feb 2020 01:10:55 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D74C53EC01;
-        Tue, 11 Feb 2020 01:10:54 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Matt Rogers <mattr94@gmail.com>
-Cc:     Matthew Rogers via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v7 04/10] config: make scope_name non-static and rename it
-References: <pull.478.v6.git.1580268865.gitgitgadget@gmail.com>
-        <pull.478.v7.git.1581294660.gitgitgadget@gmail.com>
-        <14b0f278196ab9ab130402c2ef79adb0543655ef.1581294660.git.gitgitgadget@gmail.com>
-        <xmqqd0am1fsc.fsf@gitster-ct.c.googlers.com>
-        <CAOjrSZvm-3qVw4880MeDVk59ToCwp9vMC1zFp-SYaDsFd3Y=8g@mail.gmail.com>
-Date:   Mon, 10 Feb 2020 22:10:53 -0800
-In-Reply-To: <CAOjrSZvm-3qVw4880MeDVk59ToCwp9vMC1zFp-SYaDsFd3Y=8g@mail.gmail.com>
-        (Matt Rogers's message of "Mon, 10 Feb 2020 19:30:22 -0500")
-Message-ID: <xmqq5zgdy7pu.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1727821AbgBKJWW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Feb 2020 04:22:22 -0500
+Received: from mout.gmx.net ([212.227.17.21]:34315 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727264AbgBKJWV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Feb 2020 04:22:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1581412940;
+        bh=PpMdL69j7osvQn7Ji2f/NYiff6kZJGFLL4VAuZeSTYM=;
+        h=X-UI-Sender-Class:From:To:Subject:Date;
+        b=ax7mym2Gi39awnTv2ecdJpv7sFfm2gsg7dbdT51x3ko3C6BoLOXkQ6C+UQdZ4uOYZ
+         gBYU6gAD7VHD9Vz3oC+yz1+/1xz76D99MCvzR41QPg3+5m1ixN41fUk4TVnnkEzs+R
+         JGlaVZwY3B47oyMFGXGTZI19RNHWnVjKbYQC8+OA=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [194.114.62.122] ([194.114.62.122]) by web-mail.gmx.net
+ (3c-app-gmx-bap62.server.lan [172.19.172.132]) (via HTTP); Tue, 11 Feb 2020
+ 10:22:20 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 432B9E66-4C95-11EA-A6D6-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+Message-ID: <trinity-f39d7ed5-e4c9-45fe-944c-b5cb101cfdcd-1581412940557@3c-app-gmx-bap62>
+From:   "Steve Keller" <keller.steve@gmx.de>
+To:     git@vger.kernel.org
+Subject: Develop a patch series with git?
+Content-Type: text/plain; charset=UTF-8
+Date:   Tue, 11 Feb 2020 10:22:20 +0100
+Importance: normal
+Sensitivity: Normal
+X-Priority: 3
+X-Provags-ID: V03:K1:BZw8jNpcqpHboPh1GdPtxBvbHBJpgRyYRDzxhXqu3NtbmIqen425Vd7MMcaACxJx+A2RL
+ 0ljV5X+ydCJrKQHAWYc5P7w7UKiTDUtvDMBaKxLS9O7KhxIKM4Tf3N8EF2dH/Wr9ovVXUBXVV9Gk
+ muREKes5jmGUYJJkzxyAdvGJZn6F8HJJSxMRyCVu+A8WXA3qeBm6yoqv4QE/lKcoxb+6EW9lzzy9
+ fBvRvd6EPFoX5ecJl5rIBAtEPev4PyDKCAzrhe7aoaljR5VWv+O406YfMNmfBMOvUiAxmjeuI0Eg
+ 3s=
+X-UI-Out-Filterresults: notjunk:1;V03:K0:a9mKFXY1Clg=:A33I5j5+Dxl5pnJgX0P4y0
+ rSZ0FT79/D/fbXr8tfwBbZwtjrEOwchEeNS6bNbJoH8G6p5Br+knoHzbSJdTwDylsPtI27LfF
+ df/Yoll0YJwMRGeG04HS7WjNAyCoSZpOOGGkqxgGI1zrPBeAenxqsZ5AM2FEnQwx+piUdcvyP
+ uT+Gjz5lm3m06hjBIQsZTDXN1UZgTuM/u8xlRcQkl/2i3ZVF0DbC0SseTRPoYHdkjt1B9knfK
+ Gr9IWxKbcwICrSuxtP9N+kdPVuFcekXOzRnTTKDJmY9YDwpTRIjFOlImGPVTCXKbVg4WWB9SE
+ /E6YWb2gw3X89ZaWipNHVl/jjzMm7wjAYzRhjjhPPZfmlZ68d9jCla3/iDGrUhip4i039jZuE
+ c8jgI7bW7dYSYJDw65LmJ//OtSB3iN+n9X8VWme++z7FX6L8h/wsqN2hk4CoUjBo0Gh+5upIT
+ vhOAE74t4oUZlAzAlWB7Di25icQdAHqqCVbi1KVQdXTMm8ijcd5bj5CPGvRZZX+f4tmoK9yY3
+ V84Pu9FUGHUHPreqkKGPH0nX+WkEaGYVuFbGyjyvmGAeNKsPRbaklkiij0M6v7ToqXXZt2/1P
+ RvuhRUDZZ/w5silpFZoWlHCeVztUA0X68yfgditbBnTAb8Mq2D4rJ4WfUjbN5D5W3d7zeGQv5
+ txVbEaaQCqQJ4oMewgFwW6Rxem3qDi+dF9x/fbT8vf3CEGFOASMkjyb0bpc9IlFcyBpo=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Matt Rogers <mattr94@gmail.com> writes:
+I wonder how git supports developing a series of small patches.  In my
+usual development I go back and forth along a series of patches before
+I can commit them all.  I use quilt for that.
 
->> How are you reviewing the patches in your own series before sending
->> them out?  This round is better than the previous rounds where we
->> didn't have a matching change to the tests so "make test" may not
->> have passed in the middle of the series, though...
->>
->
-> I went through each patch individually using rebase -i and built/tested it.
-> Although just to save time I only did t1300 and t1308 since I believe those were
-> the only ones that should be affected.  I can write a script that
-> would run the whole
-> test suite overnight for me and make sure the series shakes out okay,
-> if you'd like.
+Say I want to add feature FOO and start a patch "FOO" editing some
+source file.  In the process of doing so I realize that I need an
+extension of some function to base my patch on, so I do "quilt pop" to
+undo patch FOO and insert a new patch BAR and then re-apply FOO by
+calling quilt push.  No I can use the new extension from BAR in my
+current patch FOO.  The patch series often contains quite a number of
+patches and I push, pop, and edit these patches quite often.  Only
+when everything is done I use git commit all the patches into the
+repository.
 
-What I like does not matter.  
+My question is whether there is git functionality to replace quilt.
+Or is the combination of quilt and git common?
 
-What I pointed out for 04/10 wouldn't have been caught by your
-testing anyway, as both the code and the test had matching
-unnecessry changes.  I was wondering if you are relying too heavily
-on just tests and without actually proofreading the changes to see
-if they still make sense in the context of the updated series, and
-if my suspicion was correct, if there are something reviewers can do
-to help the authors.
-
+Steve
 
