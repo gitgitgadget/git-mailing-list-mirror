@@ -2,98 +2,117 @@ Return-Path: <SRS0=9mHE=37=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.5 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1275DC35242
-	for <git@archiver.kernel.org>; Tue, 11 Feb 2020 23:39:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DFA1C35242
+	for <git@archiver.kernel.org>; Tue, 11 Feb 2020 23:40:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D04662070A
-	for <git@archiver.kernel.org>; Tue, 11 Feb 2020 23:39:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3BFC92070A
+	for <git@archiver.kernel.org>; Tue, 11 Feb 2020 23:40:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="kOPn0C2c"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="y0Dzi4jG"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728344AbgBKXjg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Feb 2020 18:39:36 -0500
-Received: from mout.gmx.net ([212.227.15.15]:45973 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728339AbgBKXjf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Feb 2020 18:39:35 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1581464371;
-        bh=ojz0mGOTVTzx4zH5NZoniu/G1Sky8FTkLm0UJ7fEXiI=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=kOPn0C2ccqx0F98Is3HbQzTmY5MQZ7jJIU4er/ENsrkVd32ygqC7WJP9Yy6DiELUh
-         ZkgdnjKlXymCruszOxDFzSL4MUkcIBsUqdf56fCuTi6jbsPj5gDC45v8FVSxYKazUx
-         MQKRfv0ZqjOl1kzrasM0ZslePwnmdnAeDvtHbKdI=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.86]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M2O6e-1j4PDY2v0w-003tsk; Wed, 12
- Feb 2020 00:39:30 +0100
-Date:   Wed, 12 Feb 2020 00:39:29 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org
-Subject: js/ci-squelch-doc-warning, was Re: What's cooking in git.git (Feb
- 2020, #02; Mon, 10)
-In-Reply-To: <xmqqmu9qxej1.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.2002120036570.3718@tvgsbejvaqbjf.bet>
-References: <xmqqmu9qxej1.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1728175AbgBKXkI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Feb 2020 18:40:08 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:59084 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728117AbgBKXkH (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 11 Feb 2020 18:40:07 -0500
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id A59E36048E;
+        Tue, 11 Feb 2020 23:40:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1581464406;
+        bh=+QAw/JEzH/bzWRIBsnqjHjZ1GStboXNCeN4ScE5+x8s=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=y0Dzi4jGxPTxhKOTHwtY533f9+OPJJVbUL2k9eE1X8UC5DJIGdGX+ZFyJut8HX/fJ
+         SP5HPUHkEjmbmfwRqb6FtQqibievB/rc3ZfS2fDbUFlK9rXhb+EbeykkHG/FPe+o5d
+         qqZkpQE61vLLRCWO8cpB7/lPBc6MKH7W1Olkv8c4hX8UQeouAY7sa9BFOXx3RKQ8JA
+         1idSXbE/d38ycjBhXT+HrIi/i/2L8XNpFrmcJenXx51JaUHMbp/pf8avY434gDScod
+         YFucoQMcSGifgWRtP7Tj8a2G4oeIS5a/REGM8mQeAJUIM1otkEO48j76lDxF9JrGEZ
+         GsRa5unxw35FwuCm1jMrymdZq58XMcWU+1zHZVBkmAp3poR0tFVW6MvNApd80klpMY
+         +iL/3kVp/8hvi3qpDQwVjHJ/ZVLsVUM2+wvMmYxT02ZaRSc03OH7CYhoKzkSksrKvS
+         cAo5DHrNNnO3lbj85w7wZ+giRiAXYW3GB6v3lfazid+J3JcwEeE
+Date:   Tue, 11 Feb 2020 23:40:00 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Han-Wen Nienhuys <hanwen@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
+Subject: Re: [PATCH v4 4/5] Add reftable library
+Message-ID: <20200211234000.GA6464@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Han-Wen Nienhuys <hanwen@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
+References: <pull.539.v3.git.1580848060.gitgitgadget@gmail.com>
+ <pull.539.v4.git.1581029756.gitgitgadget@gmail.com>
+ <02d2ca8b878a67a3334b222725645dd035b4289c.1581029756.git.gitgitgadget@gmail.com>
+ <20200207001612.GF6573@camp.crustytoothpaste.net>
+ <CAFQ2z_P+sdd5+46Ov_CO8ae4j_3aA4ahdVR5D_K1qKSQ-q+OcQ@mail.gmail.com>
+ <20200211000520.GA6454@camp.crustytoothpaste.net>
+ <CAFQ2z_N1sYh1TBzKue5y0039xQ+F6BBEUcFYCXS_OKjoxJ7v_g@mail.gmail.com>
+ <xmqqwo8tw0ec.fsf@gitster-ct.c.googlers.com>
+ <CAFQ2z_P-nK4OSb-CWwm2Fqh=kc3H4PsHu6K8Zxh_HRW9_-Z2yQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:I0LB5epSAFcSVrMLnAbx3uSfkLHlq+peRYTyQDh8C968idLWNuT
- 4ZdNs7B2/yaLK6xsa4RKkvWJsLexYLyNp29kBiX+0cX0Lk28nn/z3wAK1HIFXdDkynnwJNT
- zFK4uL7pW1BSnnfW7dPGVyc3G9IGGaSwoIWav48kGxS8SC1dHPS2wowQ0rHhPGx3fHMa0YU
- 6VxWP3L18SbUy2kTueE7A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:ig2z1f6SyPQ=:0Id0TwdF+h4n3FjoqLmKa/
- yfe+AT8M6lgWaDyCeKyEwkdsV1poTleYyWaAP0i3UXmzEY407f2RkvwM3qTCCDreGo+J3Aa8X
- g0V8pDzx5A3PgrqDfuPGljq1g0hBHn1anoikAeEcpOS/mFWt/ku7W3KtYfqb+ZkEmz9JfNs6B
- imKqEScJT7X3gE3OySPrGVlh1B/51GEkGgmWs11iTrHlVP+IRcdpfmzr5P/PA2SsA899xWkls
- R8Ox+AmCj/WZ1iqB/tJMo1f2CJ2wI9VSatI9P5UJyfxF+4u3dECNGaWpMo9UQxC9k23cSoG7I
- 5mk3XJ8qzrL4tWzUOgUQnJqQv++VxDqv8NA931HWP/RmGmaqckqJFDhXKl9t1nDrbzRPjspWe
- Sxit9Zv/wdHxWxOdMjQ+NDvWMy/GA7+EjDNcbZvMNph4tUc6HBFMfwNI6ik9/8+alr8WLgqpW
- OzBh/MSXp3GPk04qdP1HFAoFokKoSxGONmIQ+5+gevsxoAunZdK/thjCgk1xE4ICn/Pkq8hPa
- XApt7m5+dl9yOqvOPsrB2+bbmkWF2GMmR1vi6gQu6euEKh4C8gQDtqYQqOCFf20+x7/ufM/TX
- dcazuJC6a5OT6ZGWalOQvYO9bcW2Bbg/YgiVpere9M6tSULp95Ur1zdZktoL/ACIOUBHBXRT0
- M3+Tt7TZDkoSam35+T7fvkN/2y4W+kVptY7oMRneMzAyyeR195Vu4RKjZTMYLSsXMhXdK6pGc
- bnf7JXdo8yD3A38+orw6yeMbIdbHNY6BlsIsGTEUTm2MMH7u5iCPWgw+LmjXYHjNZjYr4ofQp
- J4a9JIk6uYSQAjyIojBXzXnlR+7TRoAkte0dpU+BltcOLEKsjMRpzvdeQJeI6J7CtuHyjOMjA
- FDE2Plio64m8oZpn21eUm+Hy5HhpzBDrykgmuiNiJT1FFPwIUVdxuFy3puq0XPvKaVVJyhVx7
- TaKaDIQipZ5qRXLh5F+IX4NQYEZSKitGBwl2LzBn1er/avwZrs2UhZF/i0nwg3IfNZMdz8Ll+
- nalMgUZsnfbYSr+Y4AF+B2DLmmSsCWdMbQcQv9S4mE58qv5GlvwSopvBOoUZ/NWuBBeOr/R+y
- IUWIbW79wZVP564YNfCbNUYbAXfUB3fC0KwsBwog9QQOrOlJcAqIRWvZxjKg0H1TfrvSH55cs
- BWVm+MpOdo7QfJMcM6rU9vvbm7x7klTdUKGQzGVpDMW4AtKh+8O2b2dEg7W0NVLmEqrzP7Zed
- mh9LbgFVUhuBjMJhQ
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="pf9I7BMVVzbSWLtt"
+Content-Disposition: inline
+In-Reply-To: <CAFQ2z_P-nK4OSb-CWwm2Fqh=kc3H4PsHu6K8Zxh_HRW9_-Z2yQ@mail.gmail.com>
+X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
+ 5.4.0-3-amd64)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
 
-On Mon, 10 Feb 2020, Junio C Hamano wrote:
+--pf9I7BMVVzbSWLtt
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> * js/ci-squelch-doc-warning (2020-02-10) 1 commit
->  - ci: ignore rubygems warning in the "Documentation" job
->
->  Squelch unhelpful warning message during documentation build.
->
->  Will merge to 'next'.
+On 2020-02-11 at 16:40:56, Han-Wen Nienhuys wrote:
+> I can see a future where we have a different format that allows for
+> more metadata so we can encode the hash size separately. But maybe
+> that can be for format v3 and up.
+>=20
+> Let's do format v2 =3D format v1 but with 32-byte hashes.
 
-To be clear, this _is_ a warning message, but the CI builds are _failing_
-because of it (the "Documentation" job expects `stderr` to be clean except
-for some known warnings).
+The way we've preferred to do this in Git is to write a four-byte hash
+identifier into the file, but we have legacy concerns here, so I think
+switching to v2 for SHA-256 is fine.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-As a consequence, all the PR builds at https://github.com/git/git are
-failing (except for PRs targeting `pu` or `next`, but I don't think that
-there are currently any).
+--pf9I7BMVVzbSWLtt
+Content-Type: application/pgp-signature; name="signature.asc"
 
-So maybe we could fast-track this change all the way into `maint`?
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.19 (GNU/Linux)
 
-Thanks,
-Dscho
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl5DO1AACgkQv1NdgR9S
+9ovDng/8DiJCo++KgoOUGvCZPZi2MRkzQUTGeWgVgmHl9hd9v6ZOY5WBxxucV7Vy
+JIcyo/0wZFYS6tmHs7/fLxUQ7XCBVVk7pQdUJ3xDRn1pjOVEdMvUZ4PVn8VgJD0L
+F53TnARKj1BUPBixC2xBnck+VWqc5wpS1DXP+ttpP/oNqIds2qXkf7hpo4OdipEo
+wHuGoykX0VwkkJGHW5dmJ2hV0NGiTmm9zzhKpzlnheXNq/cvRKBYAPoTcR3CX9t9
+STUr+HRewz0o7DxsjAj/Tzi1GxlFWORv/SKV/5Wut3ytvcX2D/PPXRurd0XVezyf
+nkSrB4Hd/9Mjo7Y/i+nF9H0k3rirEQ3ofkPJNN68BAI3ipsAukFs7YTKRswKVZ/F
+boSAtSrA+VphK2vXas+HZ0C31HEvYCQIdlaYcHyBjdOSjTiw7Z2pup5boUmvycjG
+TlKWpnvk+OK82eO6hilEqMOOZjYgCyZ/Sxv2QgmgV9JBonV9WOMs0rBbiO39ENdE
+e0lNv6K8QRpkFeXvjkGr9xCosO08vyPWhlku23ARxb0nHM8+OPuAI5BX8P6ivpCA
+I23pFUaHL6WCQk/B7Q1la0uhXrye+4RUB9FYRIuiQ74+LjNboUgHA9pSGri388jp
+gXpfTHz7e+WPks798XAfYLJd49/t4SsNIlg5dg+iwnF4em7nUpE=
+=1jEY
+-----END PGP SIGNATURE-----
+
+--pf9I7BMVVzbSWLtt--
