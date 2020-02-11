@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A07FC3B189
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DE75C352A3
 	for <git@archiver.kernel.org>; Tue, 11 Feb 2020 18:58:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6D69821D7D
+	by mail.kernel.org (Postfix) with ESMTP id 398F121739
 	for <git@archiver.kernel.org>; Tue, 11 Feb 2020 18:58:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bFxJbvIZ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KnqpPmzk"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730837AbgBKS6N (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1730842AbgBKS6N (ORCPT <rfc822;git@archiver.kernel.org>);
         Tue, 11 Feb 2020 13:58:13 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:36761 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730808AbgBKS6L (ORCPT <rfc822;git@vger.kernel.org>);
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:44226 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727722AbgBKS6L (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 11 Feb 2020 13:58:11 -0500
-Received: by mail-wr1-f67.google.com with SMTP id z3so13825080wru.3
-        for <git@vger.kernel.org>; Tue, 11 Feb 2020 10:58:09 -0800 (PST)
+Received: by mail-wr1-f65.google.com with SMTP id m16so13763156wrx.11
+        for <git@vger.kernel.org>; Tue, 11 Feb 2020 10:58:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=/UIX+i4pqEtOl8elqbLxcbXJF0mnPDhMyhfoDVg7bus=;
-        b=bFxJbvIZ1B6cJG37Ea4rgNq2sjFhvrOjzGYmp/9uk0QAhMum9LsvmGZj6uK2GTdWFI
-         ab5JsCgWVoKF2Zng7OW8HGK/ZKCIl/3U8Oj52FqPnnivxyL4z3vN6FeeJx6SeilX05Mv
-         kxhodCe4h3Z9T4eeSUkxbR989WW+c9VhmQHl9ilvwYFYaYQmMwKAmUDOK7J5fQs6XcCO
-         aJRxl3D9vgfGoV6sBEDfq2DOxg5z+krWMrQ77yXbFfaHGsvQDQMl4M2Ny+Z3bAXWM7cy
-         4oOP6sJxtnzFIhglQDzvBOQV9eZVwg5QmdWiZYXIVXIGPrk2fLi6Ok2wct5S8afRIacl
-         4PsQ==
+        bh=Vw5qC2GoztL0B9O6MLGAEj6794odm2BdjiURoalFecE=;
+        b=KnqpPmzkrR00QF7rsStwzSEl056xQAx+GoZDIzqtJsCH0usMhaecFn8uGa3B19JFCE
+         Y3T8/sW/MFqC3XUeyWpIKFUvqm83rZYel+KnAVkSlcHo7IQC0+osV5X7pyY+IESoqSuC
+         Xvr3Kk2608mdGf/6m+3AOorAX7ltjFy/pZ3gk9VYEOe+fXAsjz9MOVOwx6S/+IU0eDO4
+         WIXu/vBD9pTP6ExdfMf9Jv65cyxeUedOdW1GzOLomEaXoBgV/zH/B8PLT61B435BVP+7
+         BTcFoMOweX98B71039dWiyK8T0GKqD6ICgOGECLUVF14l+dnSXO7oDv+tVPwuY9xsU4l
+         HfTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=/UIX+i4pqEtOl8elqbLxcbXJF0mnPDhMyhfoDVg7bus=;
-        b=dVxK0+u9XiN4G/doAQSlaWy8zhqdAy+xfeNGArGXLvdlhNrTdXC/UL+L7cgEax8IPj
-         HSi3Uu6HB75BwF5FNMv9NFlDdgORuTEWQedzIzkwYQZZnOFPlNXIKFyvKUF9f62iaVlM
-         bYmoTMMmdrfekPGJSppYoBQ7RmxJwY2O/ug9r0/5qIfgSNyvbVfSJiteCzKrjp0qf2DL
-         MXCPUGUMv0iY0QvkFrDG1y+sffNxI+YcOVu+JIvRLKnIHFc4ac2Y+gjoq8mTTsD9CUI9
-         pS656I00HfI8D9QD/VGDjpzRoeevuPWpWNrxw8nhJrwg2fYjoCPoGvK8xEjHnkodMECw
-         woBw==
-X-Gm-Message-State: APjAAAW01KBq9GpSrKpymxALCHHc+ONOtwQiBI7D+XAZNnwLqCmiIBC9
-        bsVahEGH/NeLyIeCYbJ/jEk++9Se
-X-Google-Smtp-Source: APXvYqyeGKHBDCZQuwRGvBemheZeqMHMKNBE2ilZB/PDOgTAqAZhIx2uG7AOqBo0/oecAft0+N/ObA==
-X-Received: by 2002:adf:e746:: with SMTP id c6mr9473056wrn.323.1581447488682;
-        Tue, 11 Feb 2020 10:58:08 -0800 (PST)
+        bh=Vw5qC2GoztL0B9O6MLGAEj6794odm2BdjiURoalFecE=;
+        b=YfmSbJ26jtHPa09k5pA5YFyyUSBwZU11WIv8jZkj4zyqhkL8MsrmRa3oS8fnXXszgK
+         LO+rju/MP5YvO1zFjkmj9StIDZTFEl6v7OwfyD/KV43JVNNgV9HdChSMri+fxatnvHky
+         /kdNxM4XCBbbQX8oID0I0mC5/5hGzR7C17aA8OJs6AFWXp9cvKfM+UyCAolzLfmSJr6W
+         2MEEiTcdFknvS8XOmawFFvCONhRWL3ce1kkIVSBkT0FDkZ9MopH2FMsxJGhbDoAcqRLo
+         j3ETivNRkGlQdPG68mgshKPPQIjjRPhCtsWmwVVpPc496jpL5GVzXL3P7Ey7ypUl5+ua
+         Okng==
+X-Gm-Message-State: APjAAAXtBh5Rt0oTRFGcieiYArc2J4MKMW9Iv1pD0Y9cUASM80hfpQLA
+        agBnBxN/ivNP3g4Yakndwe4tY9jF
+X-Google-Smtp-Source: APXvYqwwxmdbEpTIJrPhI+UZWEQlAZHBSHyA/FpQAZUQmoqYME6THsGfsmzegZm7cQgPtNul0ax4Fg==
+X-Received: by 2002:a5d:6a88:: with SMTP id s8mr9957238wru.173.1581447489411;
+        Tue, 11 Feb 2020 10:58:09 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k7sm4792909wmi.19.2020.02.11.10.58.08
+        by smtp.gmail.com with ESMTPSA id v14sm6461879wrm.28.2020.02.11.10.58.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 11 Feb 2020 10:58:08 -0800 (PST)
-Message-Id: <5f2b47bf6aa2686d2c8d9a47f73daed59cd94af5.1581447485.git.gitgitgadget@gmail.com>
+Message-Id: <05b8c7ad673ec465ade93c53261fd83dd7cbbce0.1581447485.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.698.v5.git.git.1581447484.gitgitgadget@gmail.com>
 References: <pull.698.v4.git.git.1581372376.gitgitgadget@gmail.com>
         <pull.698.v5.git.git.1581447484.gitgitgadget@gmail.com>
 From:   "Ben Keene via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 11 Feb 2020 18:58:00 +0000
-Subject: [PATCH v5 3/7] git-p4: add p4-pre-submit exit text
+Date:   Tue, 11 Feb 2020 18:58:01 +0000
+Subject: [PATCH v5 4/7] git-p4: add --no-verify option
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,39 +75,132 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Ben Keene <seraphire@gmail.com>
 
-When the p4-pre-submit exits with a non-zero exit code, the application
-will abort the process with no additional information presented to the
-user. This can be confusing for new users as it may not be clear that
-the p4-pre-submit action caused the error.
+Add new command line option --no-verify:
 
-Add text to explain why the program aborted the submit action.
+Add a new command line option "--no-verify" to the Submit command of
+git-p4.py.  This option will function in the spirit of the existing
+--no-verify command line option found in git commit. It will cause the
+P4 Submit function to ignore the existing p4-pre-submit.
+
+Change the execution of the existing trigger p4-pre-submit to honor the
+--no-verify option. Before exiting on failure of this hook, display
+text to the user explaining which hook has failed and the impact
+of using the --no-verify option.
+
+Change the call of the p4-pre-submit hook to use the new run_git_hook
+function. This is in preparation of additional hooks to be added.
 
 Signed-off-by: Ben Keene <seraphire@gmail.com>
 ---
- git-p4.py | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ Documentation/git-p4.txt   | 10 ++++++++--
+ Documentation/githooks.txt |  5 ++++-
+ git-p4.py                  | 32 +++++++++++++++++++-------------
+ 3 files changed, 31 insertions(+), 16 deletions(-)
 
+diff --git a/Documentation/git-p4.txt b/Documentation/git-p4.txt
+index 3494a1db3e..362b50eb21 100644
+--- a/Documentation/git-p4.txt
++++ b/Documentation/git-p4.txt
+@@ -374,14 +374,20 @@ These options can be used to modify 'git p4 submit' behavior.
+     been submitted. Implies --disable-rebase. Can also be set with
+     git-p4.disableP4Sync. Sync with origin/master still goes ahead if possible.
+ 
+-Hook for submit
+-~~~~~~~~~~~~~~~
++Hooks for submit
++----------------
++
++p4-pre-submit
++~~~~~~~~~~~~~
++
+ The `p4-pre-submit` hook is executed if it exists and is executable.
+ The hook takes no parameters and nothing from standard input. Exiting with
+ non-zero status from this script prevents `git-p4 submit` from launching.
++It can be bypassed with the `--no-verify` command line option.
+ 
+ One usage scenario is to run unit tests in the hook.
+ 
++
+ Rebase options
+ ~~~~~~~~~~~~~~
+ These options can be used to modify 'git p4 rebase' behavior.
+diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+index 50365f2914..8cf6b08b55 100644
+--- a/Documentation/githooks.txt
++++ b/Documentation/githooks.txt
+@@ -520,7 +520,10 @@ p4-pre-submit
+ 
+ This hook is invoked by `git-p4 submit`. It takes no parameters and nothing
+ from standard input. Exiting with non-zero status from this script prevent
+-`git-p4 submit` from launching. Run `git-p4 submit --help` for details.
++`git-p4 submit` from launching. It can be bypassed with the `--no-verify`
++command line option. Run `git-p4 submit --help` for details.
++
++
+ 
+ post-index-change
+ ~~~~~~~~~~~~~~~~~
 diff --git a/git-p4.py b/git-p4.py
-index 4eccea3fa5..b1c86678fc 100755
+index b1c86678fc..c969d9235b 100755
 --- a/git-p4.py
 +++ b/git-p4.py
-@@ -2405,7 +2405,15 @@ def run(self, args):
+@@ -1588,13 +1588,17 @@ def __init__(self):
+                                      "work from a local git branch that is not master"),
+                 optparse.make_option("--disable-p4sync", dest="disable_p4sync", action="store_true",
+                                      help="Skip Perforce sync of p4/master after submit or shelve"),
++                optparse.make_option("--no-verify", dest="no_verify", action="store_true",
++                                     help="Bypass p4-pre-submit"),
+         ]
+         self.description = """Submit changes from git to the perforce depot.\n
+-    The `p4-pre-submit` hook is executed if it exists and is executable.
+-    The hook takes no parameters and nothing from standard input. Exiting with
+-    non-zero status from this script prevents `git-p4 submit` from launching.
++    The `p4-pre-submit` hook is executed if it exists and is executable. It
++    can be bypassed with the `--no-verify` command line option. The hook takes
++    no parameters and nothing from standard input. Exiting with a non-zero status
++    from this script prevents `git-p4 submit` from launching.
+ 
+-    One usage scenario is to run unit tests in the hook."""
++    One usage scenario is to run unit tests in the hook.
++    """
+ 
+         self.usage += " [name of git branch to submit into perforce depot]"
+         self.origin = ""
+@@ -1612,6 +1616,7 @@ def __init__(self):
+         self.exportLabels = False
+         self.p4HasMoveCommand = p4_has_move_command()
+         self.branch = None
++        self.no_verify = False
+ 
+         if gitConfig('git-p4.largeFileSystem'):
+             die("Large file system not supported for git-p4 submit command. Please remove it from config.")
+@@ -2405,16 +2410,17 @@ def run(self, args):
              sys.exit("number of commits (%d) must match number of shelved changelist (%d)" %
                       (len(commits), num_shelves))
  
--        if not run_git_hook("p4-pre-submit"):
-+        try:
-+            if not run_git_hook("p4-pre-submit"):
-+                print("\nThe p4-pre-submit hook failed, aborting the submit.\n\nYou can skip " \
-+                    "this pre-submission check by adding\nthe command line option '--no-verify', " \
-+                    "however,\nthis will also skip the p4-changelist hook as well.")
-+                sys.exit(1)
-+        except Exception as e:
-+            print("\nThe p4-pre-submit hook failed, aborting the submit.\n\nThe hook failed "\
-+                "with the error '{0}'".format(e.message) )
-             sys.exit(1)
+-        try:
+-            if not run_git_hook("p4-pre-submit"):
+-                print("\nThe p4-pre-submit hook failed, aborting the submit.\n\nYou can skip " \
+-                    "this pre-submission check by adding\nthe command line option '--no-verify', " \
+-                    "however,\nthis will also skip the p4-changelist hook as well.")
++        if not self.no_verify:
++            try:
++                if not run_git_hook("p4-pre-submit"):
++                    print("\nThe p4-pre-submit hook failed, aborting the submit.\n\nYou can skip " \
++                        "this pre-submission check by adding\nthe command line option '--no-verify', " \
++                        "however,\nthis will also skip the p4-changelist hook as well.")
++                    sys.exit(1)
++            except Exception as e:
++                print("\nThe p4-pre-submit hook failed, aborting the submit.\n\nThe hook failed "\
++                    "with the error '{0}'".format(e.message) )
+                 sys.exit(1)
+-        except Exception as e:
+-            print("\nThe p4-pre-submit hook failed, aborting the submit.\n\nThe hook failed "\
+-                "with the error '{0}'".format(e.message) )
+-            sys.exit(1)
  
          #
+         # Apply the commits, one at a time.  On failure, ask if should
 -- 
 gitgitgadget
 
