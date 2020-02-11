@@ -4,61 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D1802C352A4
-	for <git@archiver.kernel.org>; Tue, 11 Feb 2020 02:20:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 91AAAC352A4
+	for <git@archiver.kernel.org>; Tue, 11 Feb 2020 02:35:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A25FF2082F
-	for <git@archiver.kernel.org>; Tue, 11 Feb 2020 02:20:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6A03820714
+	for <git@archiver.kernel.org>; Tue, 11 Feb 2020 02:35:16 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eg9A6j8V"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CeAdF0BD"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727779AbgBKCU2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Feb 2020 21:20:28 -0500
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:44509 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727493AbgBKCU2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Feb 2020 21:20:28 -0500
-Received: by mail-ed1-f68.google.com with SMTP id g19so2818616eds.11
-        for <git@vger.kernel.org>; Mon, 10 Feb 2020 18:20:27 -0800 (PST)
+        id S1727782AbgBKCfP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Feb 2020 21:35:15 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:35160 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727752AbgBKCfP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Feb 2020 21:35:15 -0500
+Received: by mail-ed1-f67.google.com with SMTP id f8so2894860edv.2
+        for <git@vger.kernel.org>; Mon, 10 Feb 2020 18:35:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=7QU0Xalu1egPs7OxufX8RRg4g0mg1EtGmz4ULh3Zz+4=;
-        b=eg9A6j8VrrICmSKJOAUpmKswfQeDwX35cRQ3sCg49jsfUqSEegsmo9RU1vFjXc5e55
-         fW8gOj95AIfn5J+Qz2meA0Udg2kK4MVTjfVlf4D2yyH5x05csq+xqc1HppRyLNi+wx91
-         1JEjXF/v/M6zAMp8w+aIWkI1DYX8w2q44amlk0uCoOJ7MisOIL3SL5/tXJaEnfHgBv+O
-         99GDm2pjdLA5OyPI628YRuf/w5cboxS/Adw3Iydmt83T1oGPAwScYvcNPy9qbwegBiKS
-         yi591lE72aVsC9A8hpKTcgqzeCN7HSQl4TzJFSp5kSyINogsQPCxLonX7nN+yZwAIMDO
-         XlMQ==
+        bh=qb1pkDwgGRVUFfNBCHS/qwscoALakfS2vGYQu42Ei2I=;
+        b=CeAdF0BDDfVt7SoK+/IJdugBXNKAT5LvbUoRzMSTOqjldjCNmp44taGqfsKA8f1tkl
+         61Yat5vEg+LIRV63Q1R00KK9fCwwczXa/VfvFIyarvUovHFHChkU6UEkBaj+c7gdgWTU
+         vR+w/8P9WRm6+nIoLU7uGprNjtXgo8xU00XAaRQwCDt5kC0qQZ2O6MkQMbXCvLxqM8De
+         +FQnvxIieNID+ylKjFzIFcmV46jmt22txdA9f4GLLQlbPsuhZws3AG4Bd1ZskXi8ovVL
+         UV8NVtUKtdT6vUI3w6Escx+c4BuPUuE5nbPabJO+xMCHNpLliqdGeWbw3RdsRwhhKMqH
+         hsGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=7QU0Xalu1egPs7OxufX8RRg4g0mg1EtGmz4ULh3Zz+4=;
-        b=lNW/9KDppYWZJGszbTEbT1MAz/50LFjB3ceGSk1jfEWkBHyVeln08dbJ/As7efXe7h
-         eTiuVs2jpATosBC55six9mt5z3THVBXanisWKkiFGJTV3/6491wBI3cRAArLkgpPsWeH
-         I7NMyV5XNc3ezZ037KfNsI7tiFosvTAX41o+mSs9aoHRpRo+nm3ZjehnQqW6scBJKJJk
-         vCkbvoQkZZ4Y3zxRuTQYAV6WqocQH9NNgq7bNooFCyYiaT9ZGEnjZ7V0qwkwNDeFLpsJ
-         c0bgkeV4LwAfoshHiCm1HszkuGwpjkK105K7enijyTnnLRo0Ag8U2T/Zkl6Uv1wAPKQU
-         PMmw==
-X-Gm-Message-State: APjAAAU2e3C7lOptvmzdABUD5UQImbSJntdJYh9T2PnjUZYoK3kwv3WV
-        FiDq1V7XOMhkOMSi7nnGm50GXGAUkCeuZHNNHn8fyzly
-X-Google-Smtp-Source: APXvYqya7d8yDXL2w3UJJJ99Lm87XCtrNIpYE3iHPU8X/wUyExK8//S1TrbFDkNN/+qwTWUpFbaLba3lxuAWZeVv2U4=
-X-Received: by 2002:a17:907:375:: with SMTP id rs21mr3914827ejb.352.1581387626622;
- Mon, 10 Feb 2020 18:20:26 -0800 (PST)
+        bh=qb1pkDwgGRVUFfNBCHS/qwscoALakfS2vGYQu42Ei2I=;
+        b=T8uq5bPZTWzmAHG948xhVmGIgKPigtyAxf5U3BlYHViRlkPKr40zCRkHkt2qofEVP9
+         kBVCH/0Bkzb2WBdam8hvTsXkX2zJ6xRdjztRzFvI8ndU+pX8+kYorjS1n4b63YaNz4b6
+         6zEGv0OUWFAxsl5gJaB+2dlHZoYZYSTRkuD/j69xwit4MFmtO4R8+bPIfeRcQ1GM6wUv
+         847FZj8XOhm+HN8w9QHEpc33nYCG37AUBXrsL9ZfUNiMTWCudTTeaDtc1XcZxHf0GIzx
+         yKAVc2ihDuj58bAfxPorab1jFI+r/s42XxyKoPqAqDhmY9wNR1ODxLnjegAx27phBA/8
+         pUUQ==
+X-Gm-Message-State: APjAAAUwBXCTN9NfSMf51pUIqeKIcPIM83rvQnaPfy+PzpuEob1WweGN
+        VAieDolEBqruMhFVeZ2opNrJdnVFR3KNteT/gi4=
+X-Google-Smtp-Source: APXvYqzW/reVKRqWw1I5C41gQxWYSO12uw+bEliVimbEWxVBL8ir+AVRSvcMFX4cdBu+12lzUvoLZyZnjw+mvegX1uY=
+X-Received: by 2002:a17:906:22cf:: with SMTP id q15mr3815941eja.77.1581388513505;
+ Mon, 10 Feb 2020 18:35:13 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.548.git.1581311049547.gitgitgadget@gmail.com> <20200210203725.GA620581@coredump.intra.peff.net>
-In-Reply-To: <20200210203725.GA620581@coredump.intra.peff.net>
+References: <pull.548.git.1581311049547.gitgitgadget@gmail.com>
+ <20200210203725.GA620581@coredump.intra.peff.net> <20200210225528.GD190927@google.com>
+In-Reply-To: <20200210225528.GD190927@google.com>
 From:   Heba Waly <heba.waly@gmail.com>
-Date:   Tue, 11 Feb 2020 15:20:15 +1300
-Message-ID: <CACg5j276+BnuTe+1eMQTALPL-Ngfy=N5udyz=EQ++29=_2R9aQ@mail.gmail.com>
+Date:   Tue, 11 Feb 2020 15:35:02 +1300
+Message-ID: <CACg5j262pndH=-WdnxtRs63evL8DKvx5w2T0G2-R4LdjZBRf_g@mail.gmail.com>
 Subject: Re: [PATCH] advice: refactor advise API
-To:     Jeff King <peff@peff.net>
-Cc:     Heba Waly via GitGitGadget <gitgitgadget@gmail.com>,
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     Jeff King <peff@peff.net>,
+        Heba Waly via GitGitGadget <gitgitgadget@gmail.com>,
         Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
@@ -66,102 +68,60 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 11, 2020 at 9:37 AM Jeff King <peff@peff.net> wrote:
+On Tue, Feb 11, 2020 at 11:55 AM Emily Shaffer <emilyshaffer@google.com> wrote:
 >
-> On Mon, Feb 10, 2020 at 05:04:09AM +0000, Heba Waly via GitGitGadget wrote:
->
-> >     The advice API is currently a little bit confusing to call. quoting from
-> >     [1]:
+> On Mon, Feb 10, 2020 at 03:37:25PM -0500, Jeff King wrote:
 > >
-> >     When introducing a new advice message, you would
+> >      instead. Using string literals is more accident-prone than
+> >      variables (because the compiler doesn't notice if we misspell them)
+> >      but I think is OK for cases where we just refer to the key once.
+> >      For others (e.g., advice_commit_before_merge has 13 mentions),
+> >      either keep the variable. Or alternatively make a wrapper like:
 > >
-> >      * come up with advice.frotz configuration variable
+> >        int want_advice_commit_before_merge(void)
+> >        {
+> >                return want_advice("commitbeforemerge");
+> >        }
 > >
-> >      * define and declare advice_frotz global variable that defaults to
-> >        true
-> >
-> >      * sprinkle calls like this:
-> >
-> >       if (advice_frotz)
-> >         advise(_("helpful message about frotz"));
-> >
-> >     A new approach was suggested in [1] which this patch is based upon.
+> >      if we want to drop the existing mechanism to load all of the
+> >      variables at the beginning.
 >
-> I agree that the current procedure is a bit painful, and I think this is
-> a step in the right direction. But...
+> I tend to disagree on both counts. I'd personally rather see something
+> like 'void advise_key(enum advice, char *format, ...)'.
 >
-> >     After this patch the plan is to migrate the rest of the advise calls to
-> >     advise_ng and then finally remove advise() and rename advise_ng() to
-> >     advise()
->
-> ...this step may not be possible, for a few reasons:
->
->   1. Some of the sites do more than just advise(). E.g., branch.c checks
->      the flag and calls both error() and advise().
->
->   2. Some callers may have to do work to generate the arguments. If I
->      have:
->
->        advise("advice.foo", "some data: %s", generate_data());
->
->      then we'll call generate_data() even if we'll throw away the result
->      in the end.
->
-> Similarly, some users of advice_* variables do not call advise() at all
-> (some call die(), some like builtin/rm.c stuff the result in a strbuf,
-> and I don't even know what's going on with wt_status.hints. :)
->
-> So I think you may need to phase it in a bit more, like:
->
->   a. introduce want_advice() which decides whether or not to show the
->      advice based on a config key. I'd also suggest making the "advice."
->      part of the key implicit, just to make life easier for the callers.
+> As I understand it, Heba wanted to avoid that pattern so that people
+> adding a new advice didn't need to modify the advice library. However, I
+> think there's value to having a centralized list of all possible advices
+> (besides the documentation). The per-advice wrapper is harder to iterate
+> than an enum, and will also result in a lot of samey code if we decide
+> we want to use that pattern for more advices.
 >
 
-yes, I agree.
+I think Peff is suggesting the wrapper for only those rare cases where
+a single advice config variable is being checked several times around
+the code base, but this doesn't mean we'll have many of them. In my
+own opinion, I don't see the need for the list of advices, I think
+it'll add unneeded complexity to the advice library and the
+introduction of new advice messages. Mainly because I don't see a
+scenario where we'd need to iterate through them, so I don't know ...
 
->   b. introduce advise_key() which uses want_advice() and advise() under
->      the hood to do what your advise_ng() is doing here.
+> (In fact, with git-bugreport I'm running into a lot of regret that hooks
+> are invoked in the way Peff describes - 'find_hook("pre-commit")' -
+> rather than with an enum naming the hook; it's very hard to check all
+> possible hooks, and hard to examine the codebase and determine which
+> hooks do and don't exist.)
 >
->   c. convert simple patterns of:
+> When Heba began to describe this project I had hoped for a final product
+> like 'void show_advice(enum advice_config)' which looked up the
+> appropriate string from the advice library instead of asking the caller
+> to provide it, although seeing the need for varargs has demonstrated to
+> me that that's not feasible :) But I think taking the advice config key
+> as an argument is possibly too far the other direction. At that point,
+> it starts to beg the question, "why isn't this function in config.h and
+> called print_if_configured(cfgname, message, ...)?"
 >
->        if (advice_foo)
->           advise("bar");
+> Although, take this all with a grain of salt. I think I lean towards
+> this much encapsulation after a sordid history with C++ and an
+> enlightened C developer may not choose it ;)
 >
->      into:
->
->        advise_key("foo", "bar");
->
->      and drop advice_foo where possible.
->
->   d. handle more complex cases one-by-one. For example, with something
->      like:
->
->        if (advice_foo)
->          die("bar");
->
->      we probably want:
->
->        if (want_advice("foo"))
->          die("bar");
->
->      instead. Using string literals is more accident-prone than
->      variables (because the compiler doesn't notice if we misspell them)
->      but I think is OK for cases where we just refer to the key once.
->      For others (e.g., advice_commit_before_merge has 13 mentions),
->      either keep the variable. Or alternatively make a wrapper like:
->
->        int want_advice_commit_before_merge(void)
->        {
->                return want_advice("commitbeforemerge");
->        }
->
->      if we want to drop the existing mechanism to load all of the
->      variables at the beginning.
->
-
-All make sense to me, thanks for the feedback.
-
-> -Peff
-
-Heba
+>  - Emily
