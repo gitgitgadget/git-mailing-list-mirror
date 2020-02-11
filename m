@@ -2,96 +2,102 @@ Return-Path: <SRS0=9mHE=37=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 53B28C352A4
-	for <git@archiver.kernel.org>; Tue, 11 Feb 2020 02:39:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B7A30C352A3
+	for <git@archiver.kernel.org>; Tue, 11 Feb 2020 06:08:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 2B87D2070A
-	for <git@archiver.kernel.org>; Tue, 11 Feb 2020 02:39:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6C8E320714
+	for <git@archiver.kernel.org>; Tue, 11 Feb 2020 06:08:22 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O+WaTcUR"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="a8E3rfrs"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727877AbgBKCjS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Feb 2020 21:39:18 -0500
-Received: from mail-oi1-f193.google.com ([209.85.167.193]:42347 "EHLO
-        mail-oi1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727752AbgBKCjS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Feb 2020 21:39:18 -0500
-Received: by mail-oi1-f193.google.com with SMTP id j132so11361556oih.9
-        for <git@vger.kernel.org>; Mon, 10 Feb 2020 18:39:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=0tn/8veDcbMeuge5ZVkDVJIkXV3lMrYrffYGREJyQwk=;
-        b=O+WaTcUR/vYsuLZo1J7khnHw/HMHeWfmXtXZrw6gJv6+t1oAzlKtka7EmzfOde6Tge
-         YHCfiSJQZRs37d6w73IvNF6uWWKnVz3R6ebvqKMp4EpQ9P2bTePTbCABduIopwIxHK5+
-         NF7SbI9r8IDU7AXMWPRzZUYmIILNGWNxi5mKGwQZSmPx6KREfaAqLIEaJCAeUH0DOww5
-         pUirjcRifQEmHrjqvGkR3rw4HeLuC5G+Hi6didQcqu/nxhdUEBVrp4ip5UIUHmj/KDoT
-         g/0Suv70nb/aGqMn87HBCWwEP+MGXb63aRKigesomuOQmdYwXDC+GVMb2LVKV9xJ7TbY
-         Wfkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=0tn/8veDcbMeuge5ZVkDVJIkXV3lMrYrffYGREJyQwk=;
-        b=dO0vV1qyCTaV7MmPCoSAX8g5m3WMVvjo2WBmSM8xFcuH0SlCwF1ludwW5AG+PDfR+r
-         k9XuAebwVicGTMlOTQag3TEywalhpEzqYmutsVk/4IMIIQbytMOv5IJMqJ1zZz2gBEvE
-         y4wA+h2RbWYYhr+gReqdBZJjaEaE0561M2FTV0+HiIMPoBvM2Pznm+I00kcBkJgaGzeu
-         NoxdMsb5ZYy/JG8KWSqxF0G13gRrNTfVDh1Kaiysiv6D9Udg9GMAZ/IBHKw7zoNvVxeW
-         DDTR9ywxc9PjcP4Bia0dNtpyATxJuStNepJecCoSUlM+Cg7P8FhAO2Z9r/NAe0+Vuv59
-         XfYg==
-X-Gm-Message-State: APjAAAW3MuOT5E5D7UswEjxS2K371SEk3rTxU6l6UaFUfpTe/VeRpEoQ
-        WTmsn6pbfxQY3lWdJcmtgXWklS5n018=
-X-Google-Smtp-Source: APXvYqxZTo1VkPxArlqV8MhLRoxKjhDf5fD8U+21m2uDCVl0gmpEKbxeTcqH5x1n3fynR3pNAU3nlg==
-X-Received: by 2002:aca:e084:: with SMTP id x126mr1458465oig.97.1581388756881;
-        Mon, 10 Feb 2020 18:39:16 -0800 (PST)
-Received: from [192.168.1.83] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id i8sm738991otr.41.2020.02.10.18.39.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 10 Feb 2020 18:39:16 -0800 (PST)
-Subject: Re: [PATCH] advice: refactor advise API
+        id S1727934AbgBKGIV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Feb 2020 01:08:21 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:61440 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727806AbgBKGIV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Feb 2020 01:08:21 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id B6BBABCA3F;
+        Tue, 11 Feb 2020 01:08:20 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=vziw6wv5wFG3lEn8OjeEbbetYMc=; b=a8E3rf
+        rsgKXiieDOfbTOcinDqNiP6pq8DFQJ6+3mGPq7MKbkfodMj5pyhS/z5h84BDLN3B
+        hr+1JYM6tAzThIOR1PrMgdqN/rF4vc3zUFnWbn4gTHKTELx7wEKG8y+JUBawi2t2
+        7ijTpH9kkljHgDRVlxd9LyQ0yxmaiyifv5M4o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ieM518/+O2iFRT63SWKr3u5GUEiOMGLO
+        fLD6Fjv+36mVhm0FeoOILhADJALHWoEODtg1jShleCKazH+veiUQXXagj2gOvnHc
+        d/se7ViCE0SDuJEzsrDzxORJK2f8heycEFQHf9yv+fSpyqvMwqsV1OGW7FjUBMzH
+        Rcw/hlQMdF4=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id AF3C3BCA3E;
+        Tue, 11 Feb 2020 01:08:20 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id DB4CDBCA3C;
+        Tue, 11 Feb 2020 01:08:17 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Heba Waly <heba.waly@gmail.com>
 Cc:     Heba Waly via GitGitGadget <gitgitgadget@gmail.com>,
         Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH] advice: refactor advise API
 References: <pull.548.git.1581311049547.gitgitgadget@gmail.com>
- <97406f9e-b8ef-b5b9-3987-cdef843b31a5@gmail.com>
- <CACg5j27SyHsc0soh_MUJHtAowjGxQ5e5ZBoXsDKfXCV2OMUpTQ@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <86f2abc4-c5ee-1b6c-94d1-0c7576a16efa@gmail.com>
-Date:   Mon, 10 Feb 2020 21:39:14 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:73.0) Gecko/20100101
- Thunderbird/73.0
+        <xmqqeev2xdq8.fsf@gitster-ct.c.googlers.com>
+        <CACg5j26RAEdABySzpDEYmo4m+HDPn9jNDP087d3K9gCro4m-Sg@mail.gmail.com>
+Date:   Mon, 10 Feb 2020 22:08:15 -0800
+In-Reply-To: <CACg5j26RAEdABySzpDEYmo4m+HDPn9jNDP087d3K9gCro4m-Sg@mail.gmail.com>
+        (Heba Waly's message of "Tue, 11 Feb 2020 15:01:33 +1300")
+Message-ID: <xmqqa75py7u8.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <CACg5j27SyHsc0soh_MUJHtAowjGxQ5e5ZBoXsDKfXCV2OMUpTQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: E599BE90-4C94-11EA-A70E-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/10/2020 6:56 PM, Heba Waly wrote:
-> On Tue, Feb 11, 2020 at 3:38 AM Derrick Stolee <stolee@gmail.com> wrote:
->>
->> I definitely tend to recommend more tests than most, but perhaps this
->> unit test is overkill? You demonstrate a good test below using a real
->> Git command, which should be sufficient. If the "turn this message off"
->> part gets removed, then you will still have coverage of your method.
->> It just won't require a test change because it would not modify behavior.
->>
-> 
-> I see your point but I wanted to make sure advise_ng honors the config
-> variable using tests 2 & 3 in `t0018-advice.sh`
-> and `t7004-tag.sh` didn't seem like a good place to add these tests.
+Heba Waly <heba.waly@gmail.com> writes:
 
-You're right. I wasn't considering the case of not showing the message
-with respect to the config.
+> On Tue, Feb 11, 2020 at 11:46 AM Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>>
+>> As I outlined in [1], I think the over-simplified
+>> "advise_ng(<advise.key>, _(<message>), ...)"  would be too limited
+>> to replace the current users, without a pair of helper functions,
+>> one to just check for the guarding advise.key, and the other to
+>> unconditionally show the message (i.e. the latter is what the
+>> current advise() is).
+>>
+>
+> I agree with adding the first helper, specially after Peff's comments,
+> but I don't see why we would keep the current advise() which
+> unconditionally shows the message...
 
--Stolee
+Look again at the message you referenced in your message that
+started this round, and read its comment:
+
+	if (advise_ng_enabled("frotz")) {
+		char *result = expensive_computation(...);
+
+		/*
+                 * advise_ng("frotz", _("message %s about frotz", result));
+                 * is fine as well, but slightly less efficient as
+                 * it would involve another call to *_enabled(), so use
+		 * the unconditional form of the call
+		 */
+		advise_ng_raw(_("message %s about frotz", result));
+
+		free(result);
+	}
+
