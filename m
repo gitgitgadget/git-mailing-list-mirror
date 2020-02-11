@@ -2,180 +2,134 @@ Return-Path: <SRS0=9mHE=37=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,LONGWORDS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-11.1 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_SANE_1,USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FBFFC35242
-	for <git@archiver.kernel.org>; Tue, 11 Feb 2020 21:25:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EEFD9C35242
+	for <git@archiver.kernel.org>; Tue, 11 Feb 2020 22:40:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 4D85620659
-	for <git@archiver.kernel.org>; Tue, 11 Feb 2020 21:25:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BE4FA20659
+	for <git@archiver.kernel.org>; Tue, 11 Feb 2020 22:40:28 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Gdmbw+bK"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ZeWKdEFB"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727597AbgBKVZX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Feb 2020 16:25:23 -0500
-Received: from mout.gmx.net ([212.227.15.18]:55841 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726968AbgBKVZX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Feb 2020 16:25:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1581456320;
-        bh=8WtFu7jUoWAD5iFe4Wpa3BIPbAAWTkneMiK29KL0sAo=;
-        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
-        b=Gdmbw+bK9t0Dxyh9Jdhbwbs/6o4SoitX3ZouDYCaGagsUwZvAQ1KftvSFgDXyBriY
-         +H4OYdSy8HS4w0FCOgposab7bpfunlDwghOd1gq5egU/d0xEOdeb+5fsAc2dAGWqjG
-         AIqOwVd4YcDAikV+D7U/g4JTIwjbhV8XLyt+R3NA=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from oki.localdomain ([77.9.23.22]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MnakR-1jkcpp2Ot3-00jcQL; Tue, 11
- Feb 2020 22:25:20 +0100
-From:   Stefan Dotterweich <stefandotterweich@gmx.de>
-To:     git@vger.kernel.org
-Cc:     Paul Mackerras <paulus@ozlabs.org>,
-        Stefan Dotterweich <stefandotterweich@gmx.de>
-Subject: [PATCH] gitk: add diff lines background colors
-Date:   Tue, 11 Feb 2020 22:24:48 +0100
-Message-Id: <20200211212448.9288-1-stefandotterweich@gmx.de>
-X-Mailer: git-send-email 2.24.1
+        id S1727279AbgBKWk1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Feb 2020 17:40:27 -0500
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:43504 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727041AbgBKWk0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Feb 2020 17:40:26 -0500
+Received: by mail-pl1-f196.google.com with SMTP id p11so126805plq.10
+        for <git@vger.kernel.org>; Tue, 11 Feb 2020 14:40:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=6+ZigYEZxLnXKmsmgDvakjGc7KrTAjH3X64k93zss6c=;
+        b=ZeWKdEFB2fjKFE71jiMwbQYkFFwD0HsiY4xt7nb7LLWk/qpYtNB8JnNDwQtuCdubom
+         AWUK9Ry3/Dn1+cID4qkf1V5x86rok3MnSzKbvc9QG7LIBob2STM6md4hB7VM5T9psAHp
+         S23FksQb0zLVDFPVAh6vKqFUVRihnjRgV3jUoUE6LhnvGYqghM14TYxOjOkwWmqLpYmR
+         1UDR7QkuCZbiffjUSyTgQwrB8Jt8hnI9aPzi+NrkV1pVFxN9yCvL10xrB8IUaNhlFI4j
+         mx/tzQEOWcWydQ+YvQDxR366KvkTuHYtyjP170OFfLYy0kv3b7ftgoJGjXhoLzN8h4qp
+         AcVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=6+ZigYEZxLnXKmsmgDvakjGc7KrTAjH3X64k93zss6c=;
+        b=Ec2Q9F4dsxCujIJ8GZXlPFUHs+hi+VJDbvqxJi+lBmX5LBWCifaS82B8apAcette4G
+         YxmeTwjzk2fs9i4yINL7/e/Xal/6GaGhAhLab44lo5yVK21IfXEjSBnnoG3WyKHshfGN
+         GDHHD55h1Y4P73dHGR/G6XTL5ITQ30cwT9vYDnDAYvm2DZg4v1KxXjpt/ztlmGo+qHdv
+         uX0SMq1Cd3FxwH4+WpTcqhmTEf7LDU212IeNN2XB0JrDBGn+OVm3OGIIr6kXkuZQEj5v
+         K2nWHaWUX/f2R++rVqlr2W3ViAaPgLU6jKttLC97tWV5JgR62gE4EtbrOTSvx54XCu1m
+         +vig==
+X-Gm-Message-State: APjAAAVW1k/6MX4uKM8VJkgtmn+z705/nXIIKr4rU901gCR0AD0rtNos
+        YjG6xI5Ci//D0+5bFdhjwKIuGw==
+X-Google-Smtp-Source: APXvYqzEpF3Hz4cXzhSTvCWsqI4cnEHSoqHWAkcQ5Rb/cUla7UG5ZUK03M6pSVMI2QX/mmcSKrWhKw==
+X-Received: by 2002:a17:90b:3109:: with SMTP id gc9mr6237311pjb.30.1581460825895;
+        Tue, 11 Feb 2020 14:40:25 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
+        by smtp.gmail.com with ESMTPSA id o14sm4920094pgm.67.2020.02.11.14.40.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Feb 2020 14:40:25 -0800 (PST)
+Date:   Tue, 11 Feb 2020 14:40:21 -0800
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v6 03/15] bugreport: add tool to generate debugging info
+Message-ID: <20200211224021.GF190927@google.com>
+References: <20200206004108.261317-1-emilyshaffer@google.com>
+ <20200206004108.261317-4-emilyshaffer@google.com>
+ <20200207141802.GE2868@szeder.dev>
+ <xmqq5zgi44em.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:ZQRU/B/N38sLPJdFoSVfSA4EUztlPzf49z9OwN2GjjT9ueWjN1Y
- M/IDOHgqgNdOUI/XLVgQ2/+A9s79HY6AjoxgskYu3Peb6h8ZcWHbo9dAS5V2zBXI4tGG88x
- qJz9n1Vaw60YSADZEMToQEOUMWunO857s0EVVWgLRfY3KiQzmQztracKm8BT190BMb/Z7ND
- 2Baa2VLGlwaiAS4aV8z8w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:LOGwi3Nn8T8=:xam5vln2ZKn+X1sSk/Wl9U
- QEjo94RQbflWd5vgkiVheuV5+6IG9/FIElupQzibe87N/fEQqUmO/LDeCQ/joKVrXx03rFOJj
- +WnuJmgjhBSZaYKMVPsHbkJWA3zYh/K0LTZBIkzIsahgFGdhVzYZKdLGo63YCuYt5yFi+EA7u
- /NBBx0UR0Wzwmern3ILcs0Am+XJmZxmYLVLTc60ax1zm++EcdwdwjCFBhBwcPzM3qPvJnJZUc
- 9Th90lprBzp6pl1AuIzYCGIpLFSzUgdRwgrx2j9opEdb8GjVboJPPcTOVJpmnX2By57PekriX
- ogYSVEy9J1RuHD6c3Hwb/nRtPmWzdx+/PwTr1Pnl5BmMgh4ue8OflfDj1jGuRBnk6S+JW1/Aj
- J2K8XklXI7TX2CNJPJlyvVwV+uy0gvFVxgxAofpoYWYJ4uAvl3AxQkiBAigYzQTnTrhSKj934
- Rgt9h5djcYIOCyfCjXyCMrsauGTae4rUzayZ1JI2SMArQf2Mx7PthM1R16XbTRBpEZTu4evbV
- Q+0xLB5ZK6g3vuatKrj+/u4dCw2Jz30CzZTzZy6Ol2gak9DWd4clpPHbppkhWw9v8s64v/YBu
- 1XNJpZAiuPibR4TwRHQDXMTM1k3OQFTnYoQ68qb2j7pf/LPGB8kD2pG1wJrYR9Uc5p88jUZ2w
- JTxj5PZZfHO3arhR28FO4e/9lJXz/Ozqis6qNEa8V86w3ZkuasIOuyyJiw+VyRiNbNn1u2yg1
- 0nfNB88CA0r/iVD6J1hAjj9bWI0v4idLwTYAD7juNaIJ8SmjJNt2qNzGNR1a8y7SST6SFes2P
- 1ujo2WF5Ap0HjM2EOoRtfEOXbonOmvneXLPFUSQD9LUBgsBZzAiigrML99MVVbujom3vK9jJH
- aknsR1RQ+Lhg+9f5Y0lB7HCPvaaTC3JJl6V3lfd609SpALTJDQMMghQQHOVvtHuvN+/wTmp8a
- L4T/hlNXbhQrU7mQwNl3A2qpZfNqGKzK3MGQDl+RMDZ5gbfVGXgp/dvbes8NmgT6vDpoxddLL
- YQWP9jRmAvWxH8dRuvrzlc4kBsql7MYErDyqCz4CgfXkGFrExGTqiP4/kODLF0bEee8Xh/zE6
- tuNT7CTvCRd3CoL6uQPe38rDIqcRfXbdq0CRTLlvd2jmDnYPp/rfFl0ioqhlMtEsXaKT4x+ue
- 9DZACVpwbye95I2IAyaEzz9dkWwfaa4C6yDmAWjm4heD1QQ74oI/Yh8colJrmER7NyPG8Np5U
- QVVAK1+HmqxSQCT6i
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqq5zgi44em.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Not using colored background for added and removed lines is a missed
-opportunity to make diff lines easier to grasp visually.
+On Fri, Feb 07, 2020 at 10:51:29AM -0800, Junio C Hamano wrote:
+> SZEDER Gábor <szeder.dev@gmail.com> writes:
+> 
+> > On Wed, Feb 05, 2020 at 04:40:56PM -0800, Emily Shaffer wrote:
+> >> diff --git a/t/t0091-bugreport.sh b/t/t0091-bugreport.sh
+> >> new file mode 100755
+> >> index 0000000000..451badff0c
+> >> --- /dev/null
+> >> +++ b/t/t0091-bugreport.sh
+> >> @@ -0,0 +1,49 @@
+> >> +#!/bin/sh
+> >> +
+> >> +test_description='git bugreport'
+> >> +
+> >> +. ./test-lib.sh
+> >> +
+> >> +# Headers "[System Info]" will be followed by a non-empty line if we put some
+> >> +# information there; we can make sure all our headers were followed by some
+> >> +# information to check if the command was successful.
+> >> +HEADER_PATTERN="^\[.*\]$"
+> >> +check_all_headers_populated() {
+> >> +	while read -r line; do
+> >> +		if test "$(grep "$HEADER_PATTERN" "$line")"; then
+> >> +			echo "$line"
+> >> +			read -r nextline
+> >> +			if test -z "$nextline"; then
+> >> +				return 1;
+> >> +			fi
+> >> +		fi
+> >> +	done
+> >> +}
+> >> +
+> >> +test_expect_success 'creates a report with content in the right places' '
+> >> +	git bugreport &&
+> >> +	REPORT="$(ls git-bugreport-*)" &&
+> >
+> > What if the globbing were to match more than one file?
+> 
+> An often-useful pattern is to make the command report the output
+> filename, i.e.
+> 
+> 	REPORT=$(git butreport) &&
+> 
+> if the design insists that "git bugreport" should allocate a
+> filename in order to make it easy to guarantee uniqueness.
+> 
+> Of course, we can make the invoker supply filename, e.g.
+> 
+> 	REPORT=$(generate-output-filename) &&
+> 	git bugreport -o "$REPORT" ;# or git bugreport >"$REPORT"
 
-Use a subtle red/green background by default. Make the font slightly darke=
-r
-to improve contrast.
-
-Signed-off-by: Stefan Dotterweich <stefandotterweich@gmx.de>
-=2D--
-The variable diffcolors seems like a fitting place for the two new colors.
-However, adding them to that list causes problems if diffcolors saved in
-.gitk then contains three instead of five colors. This could be solved by
-modifying the variable after loading .gitk. I'm not sure if that would be
-the preferred approach or where to implement a special case like that. To
-avoid the problem, I introduced a new variable diffbgcolors.
-
- gitk | 22 +++++++++++++++++++---
- 1 file changed, 19 insertions(+), 3 deletions(-)
-
-diff --git a/gitk b/gitk
-index da84e22..66c237a 100755
-=2D-- a/gitk
-+++ b/gitk
-@@ -2073,7 +2073,7 @@ proc makewindow {} {
-     global rowctxmenu fakerowmenu mergemax wrapcomment
-     global highlight_files gdttype
-     global searchstring sstring
--    global bgcolor fgcolor bglist fglist diffcolors selectbgcolor
-+    global bgcolor fgcolor bglist fglist diffcolors diffbgcolors selectbg=
-color
-     global uifgcolor uifgdisabledcolor
-     global filesepbgcolor filesepfgcolor
-     global mergecolors foundbgcolor currentsearchhitbgcolor
-@@ -2434,7 +2434,9 @@ proc makewindow {} {
-     $ctext tag conf filesep -font textfontbold -fore $filesepfgcolor -bac=
-k $filesepbgcolor
-     $ctext tag conf hunksep -fore [lindex $diffcolors 2]
-     $ctext tag conf d0 -fore [lindex $diffcolors 0]
-+    $ctext tag conf d0 -back [lindex $diffbgcolors 0]
-     $ctext tag conf dresult -fore [lindex $diffcolors 1]
-+    $ctext tag conf dresult -back [lindex $diffbgcolors 1]
-     $ctext tag conf m0 -fore [lindex $mergecolors 0]
-     $ctext tag conf m1 -fore [lindex $mergecolors 1]
-     $ctext tag conf m2 -fore [lindex $mergecolors 2]
-@@ -11607,6 +11609,7 @@ proc prefspage_general {notebook} {
-
- proc prefspage_colors {notebook} {
-     global NS uicolor bgcolor fgcolor ctext diffcolors selectbgcolor mark=
-bgcolor
-+    global diffbgcolors
-
-     set page [create_prefs_page $notebook.colors]
-
-@@ -11629,11 +11632,23 @@ proc prefspage_colors {notebook} {
- 	-command [list choosecolor diffcolors 0 $page.diffold [mc "diff old line=
-s"] \
- 		      [list $ctext tag conf d0 -foreground]]
-     grid x $page.diffoldbut $page.diffold -sticky w
-+    label $page.diffoldbg -padx 40 -relief sunk -background [lindex $diff=
-bgcolors 0]
-+    ${NS}::button $page.diffoldbgbut -text [mc "Diff: old lines bg"] \
-+	-command [list choosecolor diffbgcolors 0 $page.diffoldbg \
-+		      [mc "diff old lines bg"] \
-+		      [list $ctext tag conf d0 -background]]
-+    grid x $page.diffoldbgbut $page.diffoldbg -sticky w
-     label $page.diffnew -padx 40 -relief sunk -background [lindex $diffco=
-lors 1]
-     ${NS}::button $page.diffnewbut -text [mc "Diff: new lines"] \
- 	-command [list choosecolor diffcolors 1 $page.diffnew [mc "diff new line=
-s"] \
- 		      [list $ctext tag conf dresult -foreground]]
-     grid x $page.diffnewbut $page.diffnew -sticky w
-+    label $page.diffnewbg -padx 40 -relief sunk -background [lindex $diff=
-bgcolors 1]
-+    ${NS}::button $page.diffnewbgbut -text [mc "Diff: new lines bg"] \
-+	-command [list choosecolor diffbgcolors 1 $page.diffnewbg \
-+		      [mc "diff new lines bg"] \
-+		      [list $ctext tag conf dresult -background]]
-+    grid x $page.diffnewbgbut $page.diffnewbg -sticky w
-     label $page.hunksep -padx 40 -relief sunk -background [lindex $diffco=
-lors 2]
-     ${NS}::button $page.hunksepbut -text [mc "Diff: hunk header"] \
- 	-command [list choosecolor diffcolors 2 $page.hunksep \
-@@ -12377,7 +12392,8 @@ if {[tk windowingsystem] eq "win32"} {
- 	set web_browser "xdg-open"
-     }
- }
--set diffcolors {red "#00a000" blue}
-+set diffcolors {"#c30000" "#009800" blue}
-+set diffbgcolors {"#fff3f3" "#f0fff0"}
- set diffcontext 3
- set mergecolors {red blue "#00ff00" purple brown "#009090" magenta "#8080=
-00" "#009000" "#ff0080" cyan "#b07070" "#70b0f0" "#70f0b0" "#f0b070" "#ff7=
-0b0"}
- set ignorespace 0
-@@ -12448,7 +12464,7 @@ set config_variables {
-     remotebgcolor tagbgcolor tagfgcolor tagoutlinecolor reflinecolor
-     filesepbgcolor filesepfgcolor linehoverbgcolor linehoverfgcolor
-     linehoveroutlinecolor mainheadcirclecolor workingfilescirclecolor
--    indexcirclecolor circlecolors linkfgcolor circleoutlinecolor
-+    indexcirclecolor circlecolors linkfgcolor circleoutlinecolor diffbgco=
-lors
-     web_browser
- }
- foreach var $config_variables {
-=2D-
-2.24.1
-
+Yeah, this is an option and I've changed the offending test - which
+captures a variable based on globbing - to use --suffix and force a
+filename.
