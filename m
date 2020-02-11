@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 83058C352A3
-	for <git@archiver.kernel.org>; Tue, 11 Feb 2020 18:58:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 579AFC35242
+	for <git@archiver.kernel.org>; Tue, 11 Feb 2020 18:58:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5CB502168B
-	for <git@archiver.kernel.org>; Tue, 11 Feb 2020 18:58:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2A72A2168B
+	for <git@archiver.kernel.org>; Tue, 11 Feb 2020 18:58:15 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dyZjGbBe"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d6e09j4u"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730824AbgBKS6K (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Feb 2020 13:58:10 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:36618 "EHLO
+        id S1730845AbgBKS6O (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Feb 2020 13:58:14 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:53953 "EHLO
         mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730807AbgBKS6K (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Feb 2020 13:58:10 -0500
-Received: by mail-wm1-f67.google.com with SMTP id p17so4980886wma.1
-        for <git@vger.kernel.org>; Tue, 11 Feb 2020 10:58:08 -0800 (PST)
+        with ESMTP id S1730807AbgBKS6M (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Feb 2020 13:58:12 -0500
+Received: by mail-wm1-f67.google.com with SMTP id s10so5021763wmh.3
+        for <git@vger.kernel.org>; Tue, 11 Feb 2020 10:58:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=jGcbyrVQL4orM6E0ROGoNo+AJQD5tx13ZwD/K8lwTOs=;
-        b=dyZjGbBeIFctF+wAZOf1+0jWxCefPN9HGsBRBhceffh2f0wEHgsTB4ADWFa55K1Ep+
-         XbWvgYEvBZ2pOm+EnADsoZUsyOpdxe6j+cd7w83yJRzt5E4a9btqhcAPrLfo0YIJhgCv
-         j2zFGKlB32R2v751lmBkxYswUkb6hgcT7ZAit/MV0PNpM5r48yXbZvu+6i/rL44mXGeK
-         fJGcBm9sh9CgTL6cImifSnVHUw0vZIDNm23KngtO4WOdO6tGZtdV8yfN+UEba+JQn2L1
-         RRIP1If8YDpxh/IjCgxujAV63wB8r3PvBuUEKOOiEzArBbDFi3IaN8BO+IwfdCryRPUp
-         oxjw==
+        bh=wwhNZbumD67NNG9L80tgBsexUQGiFgu2wBg2CR09VDg=;
+        b=d6e09j4u016gHQnRg4Y4sGDzwaKeH83RXXJjjwPbRoIwuaL7XytFbfgu070JFp6Tan
+         7IwP1kN+/Bu36vZswzDBlIR3ZGDt6mSKqQCW80gLlIp+NJ12ZbtHCkC6MZyzsda7pFms
+         dgzlu2bKr7tO9CgYogdjb8NEM+821xYUrfTysrZFLG2LpB2ViTgxPJgwBOPhc0wUAA56
+         8HUVuCe9j+fe3TSq/GyqsG4y5Tk3MkTVgJg0AqPGs4/zk3G7uKo7OiwxNbzM/grFveMY
+         SGMvVfT55TlVx0WVeXCX/GQkk2K3mC0uwROenSaI9qozrGxgk6AGp0fwlLnqacMNmhBn
+         8oUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=jGcbyrVQL4orM6E0ROGoNo+AJQD5tx13ZwD/K8lwTOs=;
-        b=HCVHwoy+gp3I9vkcXzgrcoaPRJXqCWiLUUI44d0oiIajhBoE+CC8uc0g1hu2V0sOLx
-         YkD/bsrSqM0x0zceYDl1fvBHTNe1skvmKAuXwlC7LZca+nj4YAK/GftkFjMYNNwiolZ7
-         bd9sE0SjTeDKayuew11duuTt6HgA2v/Lkoys83AipqqeKTG92UE5J6K1BBHiLIr9eVhA
-         1c/hTf0a3prCZ0+2Fgk79zR33Inx7P9jyQGo7aHl8BU5UCZxgXHVrHuzT79ZG7lV5dOa
-         V2A9qB3uhAYQFi+tU4GNpwZBS3tlyf/uF1eEQ8dDZ0+y4AbZUTP/7d2JNAXvA6OzZv0w
-         n1Yw==
-X-Gm-Message-State: APjAAAXqnWYz4KTuLG/X7MHx/3sh7UM7CKXO1f65utXWhZmnm7/2GUwk
-        H6NaivKL33R6lSvBOgKaADOTTE1m
-X-Google-Smtp-Source: APXvYqxHeTPPSrjgZYZL/Y22DZG9AYneyGjdNZSvUcftc3MRBjkUxmQ/Q+ewMBJz+80zfTBX1SlS3g==
-X-Received: by 2002:a7b:c190:: with SMTP id y16mr7243712wmi.107.1581447487957;
-        Tue, 11 Feb 2020 10:58:07 -0800 (PST)
+        bh=wwhNZbumD67NNG9L80tgBsexUQGiFgu2wBg2CR09VDg=;
+        b=shDrRCzIXKYpriWle4Ahn6Nzl87cxI2Q7mFjNPwXn7+thjfjyXzH/N7IFAY0dZCyvW
+         pNZOxhSO48wjMzJe3rn10Pb3K2PAVpH79L6DXOQ2ZQLajL9LKz9gkrEEAVyN46sOz7DD
+         g/erBU3i+5YoxjI2tnFSP4XFPoldyEsJEiSiWq/bp+y7RZ8YDHdA8jXC/VDvGXqCiSXb
+         N2InZ535GOdcoc02YTI47gJ0Y/q05ASia1/2Pjm83v8hUO9t2tHirHaqifx9vvnolZXK
+         iDpQ4igbC2Q7rapbCXDMwdLTLb9Ri6aESW2s+eR8PkTEmm/Xyr0jFuqJXrYeffqIAhuX
+         V3Xw==
+X-Gm-Message-State: APjAAAULLzRLDXj4TK9yCh+uFlLfgad6yB8lVRlF1boIFWrtTe+yvXsB
+        xI4EY/0EoC3IkW25bTMFZrA09ZkE
+X-Google-Smtp-Source: APXvYqzwsaP8REgFxSp/uFmXvaAYVhqXlUc+MhXkwhOLdwoHIaquQ4RvxVFlwMK5eSfNqGIoFWZWxg==
+X-Received: by 2002:a05:600c:224a:: with SMTP id a10mr7204678wmm.143.1581447490109;
+        Tue, 11 Feb 2020 10:58:10 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f1sm6355264wro.85.2020.02.11.10.58.07
+        by smtp.gmail.com with ESMTPSA id a9sm6425398wrn.3.2020.02.11.10.58.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Feb 2020 10:58:07 -0800 (PST)
-Message-Id: <a2342f716195ed18cc36613224e59baa88965fe0.1581447485.git.gitgitgadget@gmail.com>
+        Tue, 11 Feb 2020 10:58:09 -0800 (PST)
+Message-Id: <5299f61e4e17938654d7013295e4f545b86e033a.1581447485.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.698.v5.git.git.1581447484.gitgitgadget@gmail.com>
 References: <pull.698.v4.git.git.1581372376.gitgitgadget@gmail.com>
         <pull.698.v5.git.git.1581447484.gitgitgadget@gmail.com>
 From:   "Ben Keene via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 11 Feb 2020 18:57:59 +0000
-Subject: [PATCH v5 2/7] git-p4: create new function run_git_hook
+Date:   Tue, 11 Feb 2020 18:58:02 +0000
+Subject: [PATCH v5 5/7] git-p4: restructure code in submit
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,172 +75,174 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Ben Keene <seraphire@gmail.com>
 
-This commit is in preparation of introducing new p4 submit hooks.
+In preparation for adding new hooks to the submit method of git-p4,
+restructure the applyCommit function in the P4Submit class.  Make the
+following changes:
 
-The current code in the python script git-p4.py makes the assumption
-that the git hooks can be executed by subprocess.call() function.
-However, when git is run on Windows, this may not work as expected.
+* Move all the code after the definition of submitted = False into the
+  Try-Finally block. This ensures that any error that occurs will
+  properly recover.  This is not necessary with the current code because
+  none of it should throw an exception, however the next set of changes
+  will introduce exceptional code.
 
-The subprocess.call() does not cover all the use cases for properly
-executing the various types of executable files on Windows.
+  Existing flow control can remain as defined - the if-block for
+  prepare-p4-only sets the local variable "submitted" to True and exits
+  the function. New early exits, leave submitted set to False so the
+  Finally block will undo changes to the P4 workspace.
 
-Prepare for remediation by adding a new function, run_git_hook, that
-takes 2 parameters:
-* the short filename of an optionally registered git hook
-* an optional list of parameters
+* Make the small usability change of adding an empty string to the
+  print statements displayed to the user when the prepare-p4-only option
+  is selected.  On Windows, the command print() may display a set of
+  parentheses "()" to the user when the print() function is called with
+  no parameters. By supplying an empty string, the intended blank line
+  will print as expected.
 
-The run_git_hook function will honor the existing behavior seen in the
-current code for executing the p4-pre-submit hook:
+* Fix a small bug when the submittedTemplate is edited by the user
+  and all content in the file is removed. The existing code will throw
+  an exception if the separateLine is not found in the file. Change this
+  code to test for the separator line using a find() test first and only
+  split on the separator if it is found.
 
-* Hooks are looked for in core.hooksPath directory.
-* If core.hooksPath is not set, then the current .git/hooks directory
-  is checked.
-* If the hook does not exist, the function returns True.
-* If the hook file is not accessible, the function returns True.
-* If the hook returns a zero exit code when executed, the function
-  return True.
-* If the hook returns a non-zero exit code, the function returns False.
-
-Add the following additional functionality if git-p4.py is run on
-Windows.
-* If hook file is not located without an extension, search for
-  any file in the associated hook directory (from the list above) that
-  has the same name but with an extension.
-* If the file is still not found, return True (the hook is missing)
-
-Add a new function run_hook_command() that wraps the OS dependent
-functionality for actually running the subprocess.call() with OS
-dependent behavior:
-
-If a hook file exists on Windows:
-* If there is no extension, set the launch executable to be SH.EXE
-  - Look for SH.EXE under the environmental variable EXEPATH in the
-    bin/ directory.
-  - If %EXEPATH%/bin/sh.exe exists, use this as the actual executable.
-  - If %EXEPATH%/bin/sh.exe does not exist, use sh.exe
-  - Execute subprocess.call() without the shell (shell=False)
-* If there is an extension, execute subprocess.call() with teh shell
-  (shell=True) and consider the file to be the executable.
-
-The return value from run_hook_command() is the subprocess.call()
-return value.
-
-These functions are added in this commit, but are only staged and not
-yet used.
+* Additionally, add the new behavior that if the changelist file has
+  been completely emptied that the Submit action for this changelist
+  will be aborted.
 
 Signed-off-by: Ben Keene <seraphire@gmail.com>
 ---
- git-p4.py | 76 ++++++++++++++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 69 insertions(+), 7 deletions(-)
+ git-p4.py | 92 ++++++++++++++++++++++++++++++-------------------------
+ 1 file changed, 51 insertions(+), 41 deletions(-)
 
 diff --git a/git-p4.py b/git-p4.py
-index 65b6d4dca0..4eccea3fa5 100755
+index c969d9235b..b6da7bcb02 100755
 --- a/git-p4.py
 +++ b/git-p4.py
-@@ -26,6 +26,7 @@
- import zlib
- import ctypes
- import errno
-+import glob
+@@ -2102,47 +2102,47 @@ def applyCommit(self, id):
+         tmpFile.write(submitTemplate)
+         tmpFile.close()
  
- # support basestring in python3
- try:
-@@ -185,6 +186,73 @@ def prompt(prompt_text):
-         if response in choices:
-             return response
+-        if self.prepare_p4_only:
+-            #
+-            # Leave the p4 tree prepared, and the submit template around
+-            # and let the user decide what to do next
+-            #
+-            print()
+-            print("P4 workspace prepared for submission.")
+-            print("To submit or revert, go to client workspace")
+-            print("  " + self.clientPath)
+-            print()
+-            print("To submit, use \"p4 submit\" to write a new description,")
+-            print("or \"p4 submit -i <%s\" to use the one prepared by" \
+-                  " \"git p4\"." % fileName)
+-            print("You can delete the file \"%s\" when finished." % fileName)
+-
+-            if self.preserveUser and p4User and not self.p4UserIsMe(p4User):
+-                print("To preserve change ownership by user %s, you must\n" \
+-                      "do \"p4 change -f <change>\" after submitting and\n" \
+-                      "edit the User field.")
+-            if pureRenameCopy:
+-                print("After submitting, renamed files must be re-synced.")
+-                print("Invoke \"p4 sync -f\" on each of these files:")
+-                for f in pureRenameCopy:
+-                    print("  " + f)
+-
+-            print()
+-            print("To revert the changes, use \"p4 revert ...\", and delete")
+-            print("the submit template file \"%s\"" % fileName)
+-            if filesToAdd:
+-                print("Since the commit adds new files, they must be deleted:")
+-                for f in filesToAdd:
+-                    print("  " + f)
+-            print()
+-            return True
+-
+-        #
+-        # Let the user edit the change description, then submit it.
+-        #
+         submitted = False
  
-+def run_git_hook(cmd, param=[]):
-+    """Execute a hook if the hook exists."""
-+    if verbose:
-+        sys.stderr.write("Looking for hook: %s\n" % cmd)
-+        sys.stderr.flush()
+         try:
 +
-+    hooks_path = gitConfig("core.hooksPath")
-+    if len(hooks_path) <= 0:
-+        hooks_path = os.path.join(os.environ["GIT_DIR"], "hooks")
++            if self.prepare_p4_only:
++                #
++                # Leave the p4 tree prepared, and the submit template around
++                # and let the user decide what to do next
++                #
++                submitted = True
++                print("")
++                print("P4 workspace prepared for submission.")
++                print("To submit or revert, go to client workspace")
++                print("  " + self.clientPath)
++                print("")
++                print("To submit, use \"p4 submit\" to write a new description,")
++                print("or \"p4 submit -i <%s\" to use the one prepared by" \
++                      " \"git p4\"." % fileName)
++                print("You can delete the file \"%s\" when finished." % fileName)
 +
-+    if not isinstance(param, list):
-+        param=[param]
++                if self.preserveUser and p4User and not self.p4UserIsMe(p4User):
++                    print("To preserve change ownership by user %s, you must\n" \
++                          "do \"p4 change -f <change>\" after submitting and\n" \
++                          "edit the User field.")
++                if pureRenameCopy:
++                    print("After submitting, renamed files must be re-synced.")
++                    print("Invoke \"p4 sync -f\" on each of these files:")
++                    for f in pureRenameCopy:
++                        print("  " + f)
 +
-+    # resolve hook file name, OS depdenent
-+    hook_file = os.path.join(hooks_path, cmd)
-+    if platform.system() == 'Windows':
-+        if not os.path.isfile(hook_file):
-+            # look for the file with an extension
-+            files = glob.glob(hook_file + ".*")
-+            if not files:
++                print("")
++                print("To revert the changes, use \"p4 revert ...\", and delete")
++                print("the submit template file \"%s\"" % fileName)
++                if filesToAdd:
++                    print("Since the commit adds new files, they must be deleted:")
++                    for f in filesToAdd:
++                        print("  " + f)
++                print("")
++                sys.stdout.flush()
 +                return True
-+            files.sort()
-+            hook_file = files.pop()
-+            while hook_file.upper().endswith(".SAMPLE"):
-+                # The file is a sample hook. We don't want it
-+                if len(files) > 0:
-+                    hook_file = files.pop()
++
+             if self.edit_template(fileName):
+                 # read the edited message and submit
+                 tmpFile = open(fileName, "rb")
+@@ -2150,7 +2150,15 @@ def applyCommit(self, id):
+                 tmpFile.close()
+                 if self.isWindows:
+                     message = message.replace("\r\n", "\n")
+-                submitTemplate = message[:message.index(separatorLine)]
++                if message.find(separatorLine) <> -1:
++                    submitTemplate = message[:message.index(separatorLine)]
 +                else:
-+                    return True
++                    submitTemplate = message
 +
-+    if not os.path.isfile(hook_file) or not os.access(hook_file, os.X_OK):
-+        return True
-+
-+    return run_hook_command(hook_file, param) == 0
-+
-+def run_hook_command(cmd, param):
-+    """Executes a git hook command
-+       cmd = the command line file to be executed. This can be
-+       a file that is run by OS association.
-+
-+       param = a list of parameters to pass to the cmd command
-+
-+       On windows, the extension is checked to see if it should
-+       be run with the Git for Windows Bash shell.  If there
-+       is no file extension, the file is deemed a bash shell
-+       and will be handed off to sh.exe. Otherwise, Windows
-+       will be called with the shell to handle the file assocation.
-+
-+       For non Windows operating systems, the file is called
-+       as an executable.
-+    """
-+    cli = [cmd] + param
-+    use_shell = False
-+    if platform.system() == 'Windows':
-+        (root,ext) = os.path.splitext(cmd)
-+        if ext == "":
-+            exe_path = os.environ.get("EXEPATH")
-+            if exe_path is None:
-+                exe_path = ""
-+            else:
-+                exe_path = os.path.join(exe_path, "bin")
-+            cli = [os.path.join(exe_path, "SH.EXE")] + cli
-+        else:
-+            use_shell = True
-+    return subprocess.call(cli, shell=use_shell)
-+
-+
- def write_pipe(c, stdin):
-     if verbose:
-         sys.stderr.write('Writing pipe: %s\n' % str(c))
-@@ -2337,12 +2405,7 @@ def run(self, args):
-             sys.exit("number of commits (%d) must match number of shelved changelist (%d)" %
-                      (len(commits), num_shelves))
++                if len(submitTemplate.strip()) == 0:
++                    print("Changelist is empty, aborting this changelist.")
++                    sys.stdout.flush()
++                    return False
  
--        hooks_path = gitConfig("core.hooksPath")
--        if len(hooks_path) <= 0:
--            hooks_path = os.path.join(os.environ.get("GIT_DIR", ".git"), "hooks")
--
--        hook_file = os.path.join(hooks_path, "p4-pre-submit")
--        if os.path.isfile(hook_file) and os.access(hook_file, os.X_OK) and subprocess.call([hook_file]) != 0:
-+        if not run_git_hook("p4-pre-submit"):
-             sys.exit(1)
+                 if update_shelve:
+                     p4_write_pipe(['shelve', '-r', '-i'], submitTemplate)
+@@ -2174,19 +2182,21 @@ def applyCommit(self, id):
+                 submitted = True
  
-         #
-@@ -4124,7 +4187,6 @@ def printUsage(commands):
-     "unshelve" : P4Unshelve,
- }
+         finally:
+-            # skip this patch
++            # Revert changes if we skip this patch
+             if not submitted or self.shelve:
+                 if self.shelve:
+                     print ("Reverting shelved files.")
+                 else:
+                     print ("Submission cancelled, undoing p4 changes.")
++                sys.stdout.flush()
+                 for f in editedFiles | filesToDelete:
+                     p4_revert(f)
+                 for f in filesToAdd:
+                     p4_revert(f)
+                     os.remove(f)
  
--
- def main():
-     if len(sys.argv[1:]) == 0:
-         printUsage(commands.keys())
+-        os.remove(fileName)
++            if not self.prepare_p4_only:
++                os.remove(fileName)
+         return submitted
+ 
+     # Export git tags as p4 labels. Create a p4 label and then tag
 -- 
 gitgitgadget
 
