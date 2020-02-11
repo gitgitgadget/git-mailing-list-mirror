@@ -2,86 +2,81 @@ Return-Path: <SRS0=9mHE=37=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B394C352A3
-	for <git@archiver.kernel.org>; Tue, 11 Feb 2020 17:06:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 039F1C352A3
+	for <git@archiver.kernel.org>; Tue, 11 Feb 2020 17:14:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3A25B20578
-	for <git@archiver.kernel.org>; Tue, 11 Feb 2020 17:06:43 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Uyvk5Zp1"
+	by mail.kernel.org (Postfix) with ESMTP id D55F020848
+	for <git@archiver.kernel.org>; Tue, 11 Feb 2020 17:13:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728644AbgBKRGm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Feb 2020 12:06:42 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53330 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728288AbgBKRGm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Feb 2020 12:06:42 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 43B60429C7;
-        Tue, 11 Feb 2020 12:06:41 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Z7+ESFqJs0lOk1A0kQJ7G7JFBG8=; b=Uyvk5Z
-        p1CVeOuBEooJL1t9LJvi62ZG8gh8pSSOK4nQtesA4Ao9skuermgbMy7NHn6QBfQP
-        wvabSCm41O2ynxUwUVHXcG+43dgTYUsfByS4d22ZB9HBWaRUVvgDamL56o3DYao7
-        oZzMCasSa7OuvWjvFmGcbUAZQ922xWAsCD4Tc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=HHSntxmLmtGFXbzLmHFlyktKLw7RtkQi
-        AeCPiSmPL/YyhH1jqHg60NlAljSxoUJobmAMmmK0MjfIZrvzZWaisBLtpXeF1w81
-        Nco+0Qub8qsmtrnfn7H3s2WOXehyoGUyUwBvni3u0NtXrMPQsZpLZ0gsGSvqK5CM
-        qQVTPaUrAw8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3C121429C6;
-        Tue, 11 Feb 2020 12:06:41 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 988A4429C5;
-        Tue, 11 Feb 2020 12:06:40 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, me@ttaylorr.com, peff@peff.net,
-        newren@gmail.com, Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 0/4] Sparse-checkout: Add subcommand and Windows paths
-References: <pull.546.git.1581433344.gitgitgadget@gmail.com>
-Date:   Tue, 11 Feb 2020 09:06:39 -0800
-In-Reply-To: <pull.546.git.1581433344.gitgitgadget@gmail.com> (Derrick Stolee
-        via GitGitGadget's message of "Tue, 11 Feb 2020 15:02:20 +0000")
-Message-ID: <xmqqimkdvysg.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1728367AbgBKRN6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Feb 2020 12:13:58 -0500
+Received: from cloud.peff.net ([104.130.231.41]:57520 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1728078AbgBKRN6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Feb 2020 12:13:58 -0500
+Received: (qmail 8555 invoked by uid 109); 11 Feb 2020 17:13:58 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 11 Feb 2020 17:13:58 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 32068 invoked by uid 111); 11 Feb 2020 17:22:49 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 11 Feb 2020 12:22:49 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 11 Feb 2020 12:13:57 -0500
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v2] strbuf: add and use strbuf_insertstr()
+Message-ID: <20200211171357.GA2118476@coredump.intra.peff.net>
+References: <019be197-e0aa-1234-e16f-6561d8340023@web.de>
+ <b31c46a8-380b-3528-27a5-a2dddacaf837@web.de>
+ <CAPig+cQdJ0NJSWZN-2ckeLB7RfU9GZ7LGvVX4y+Q1daPnW8WsA@mail.gmail.com>
+ <20200210234427.GA632160@coredump.intra.peff.net>
+ <a5622196-1978-2fe5-144f-99edc5516dd6@web.de>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: DF101EDC-4CF0-11EA-9A45-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <a5622196-1978-2fe5-144f-99edc5516dd6@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Tue, Feb 11, 2020 at 05:18:02PM +0100, René Scharfe wrote:
 
-> This is based on ds/sparse-checkout-harden.
->
-> The sparse-checkout builtin currently lets users modify their
-> sparse-checkout file with the all-or-nothing "set" subcommand. It may be
-> easier for a user to expand their sparse cone using a "git sparse-checkout
-> add <pattern/path> ..." subcommand.
+> And you could rename it to skip_header() to fix the issue that its name
+> starts with cmp but its return value is the inverse of a cmp-style
+> function.
 
-Makes sense.  
+Good suggestion.
 
-I suspect that people may get greedy and start saying "now we can
-add a new directory (say, Documentation/) without repeating what we
-already configured, I want a way to add a new directory without some
-of the paths in that directory (say, Documentation/ but not
-Documentation/technical/)", but that won't happen until people can
-use "add", so let's take small incremental steps, and addition of
-"add" is such a good first step.
+> And it could take a char pointer instead of a strbuf, to reduce its
+> dependencies and make it more widely useful -- but that might also be
+> a case of YAGNI.
 
-Will queue.  Thanks.
+I didn't take this one because all of the callers have strbuf, and it
+saves them from dereferencing.
+
+> > -			strbuf_add(&sb, line->buf + len + 2, line->len - len - 2);
+> > +			strbuf_addstr(&sb, val);
+> 
+> That assumes the header value never contains NULs.  Valid?
+
+I think so, but I pulled it out to a separate patch so that it could be
+argued for explicitly.
+
+> The repeated sequence cmp_header()+strbuf_add{,str}()+decode_header()
+> makes me itchy.
+
+Yeah, it's ugly and I factored it out in a new patch. But the
+boilerplate and docstring ends up longer than the savings. ;)
+
+-Peff
