@@ -2,94 +2,107 @@ Return-Path: <SRS0=9mHE=37=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F1E9C352A3
-	for <git@archiver.kernel.org>; Tue, 11 Feb 2020 13:40:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 18A31C3B186
+	for <git@archiver.kernel.org>; Tue, 11 Feb 2020 14:20:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id E50E72070A
-	for <git@archiver.kernel.org>; Tue, 11 Feb 2020 13:40:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E036120870
+	for <git@archiver.kernel.org>; Tue, 11 Feb 2020 14:20:08 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="vfE0qxG1"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hjb5MWni"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728386AbgBKNkh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Feb 2020 08:40:37 -0500
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:43237 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727653AbgBKNkg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Feb 2020 08:40:36 -0500
-Received: by mail-pg1-f193.google.com with SMTP id u131so5734893pgc.10
-        for <git@vger.kernel.org>; Tue, 11 Feb 2020 05:40:36 -0800 (PST)
+        id S1730070AbgBKOUI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Feb 2020 09:20:08 -0500
+Received: from mail-lf1-f52.google.com ([209.85.167.52]:41080 "EHLO
+        mail-lf1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729590AbgBKOUH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Feb 2020 09:20:07 -0500
+Received: by mail-lf1-f52.google.com with SMTP id m30so7115291lfp.8
+        for <git@vger.kernel.org>; Tue, 11 Feb 2020 06:20:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=6cW6YfQdymMN1eDkG0CPIA+nwOtGmZ3pronI/Q73cGM=;
-        b=vfE0qxG1F7yzT1TkzaPXgSkrResaC6WRR3byZPimjW9hO3k8SfIhMV0tcvQ3dbPYYq
-         hoLCDSlmZrQ2XyZtmyNX+scTr5nHlFYVfNeXxcNg9Cj2ksiOgCC6nt5pdtbW1qe2vgpt
-         wbjKL0Af3oARX4omz3r0wJLCua3rSXPAK/HkwNH00Y8sJRMu/2/JFjsLzd88+e4gSDDR
-         WkxIF4dAJzKwEXjg1hMFfnSFOPCgv1tqU+zBgD5BvQasYxsJ36XDa9rawNx5eUYU/RZ9
-         XJbm/LRaedHCIjYOfWonarYhz112rH2gXd1/Ja3BWwVwdEE1G0Yv3cmjdkx2Q1BYdb93
-         R1Cw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=tMlUSXHdCQgStt9ncrRmRR0UfqvoRdzUKzMl/c19cHs=;
+        b=hjb5MWniHSL1AOrghtRdh9PbwDFImJjo9Q7eO4Sca0MTw5oeiql8XE3D6cXHw2GHTQ
+         F2lX4/KNt+UfBrzk9106bu2Uxc8IRw+UgiLQlosjnQ8boZ3MkLhVsf5QPkEp1Ogp3iCv
+         SssiXAPDNgTvaaZmP11r2QDfc5eMbOFblQ2iO4c3+HxyHxemwXRILCEKc7yBUi/hI8sN
+         12OoydOsMspq4X+i1ctqXKiB4Pym48u/sqAucyAKfGGOfJCqliC3Iwsu6vt3XNJYJaTn
+         XlgCMFTbwaSnEivVWqA6cGsJuFO7hEwt7UKgDfWecXHyNM4gRyyANSZa2vt6aZGTkbQC
+         gcKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=6cW6YfQdymMN1eDkG0CPIA+nwOtGmZ3pronI/Q73cGM=;
-        b=pQXaCZaN9MhVRDhmCDTKM8uCp97oifsQsdjwTThcsOr9n5Fr6u1HrSW1PoehOUgENa
-         xFftUdOISpgb7nt9XyIKgOpEbXFfhTSeO9rxcqyp4tYyuUt2HlZdBqQLbin7OxPfMtJ5
-         uClxZDEo3DUWaTdSbwtqMLGh8iMS0xBf43Xbuu/YBElZvX31EsOAZ1lZvEFjs2unjd9L
-         guLKljxiPbBsRCbTfGh05yJawsz+rkKQkVyljDvKFDIvUdFl92jYLhDewcGXZ6bsJLK9
-         zKjzvjLwYJPud2BAO2IBpWKUPUnP3qfImpWBEf3ocS4ipMM2Q+q4AmG2CZzfBHm+3+N0
-         paNw==
-X-Gm-Message-State: APjAAAVAiCmqODpzs5Da+mp3afNpUuV8hPXjDFmM+2aaYSwRRJ2kWtX/
-        JgX+ibIkbqUIULLMMGO4GmI=
-X-Google-Smtp-Source: APXvYqxc4rIW3PP28wpDp9/Pt+IxPGO7mvZlph1ODzv6xyV9ahpCHKzFQv8TN3rPMbmO82S3DGHmfA==
-X-Received: by 2002:a63:583:: with SMTP id 125mr3165840pgf.100.1581428435965;
-        Tue, 11 Feb 2020 05:40:35 -0800 (PST)
-Received: from konoha.iitr.ac.in ([103.37.201.172])
-        by smtp.gmail.com with ESMTPSA id 13sm4178011pgo.13.2020.02.11.05.40.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Feb 2020 05:40:35 -0800 (PST)
-From:   Shourya Shukla <shouryashukla.oo@gmail.com>
-To:     keller.steve@gmx.de
-Cc:     git@vger.kernel.org, Shourya Shukla <shouryashukla.oo@gmail.com>
-Subject: Re: Develop a patch series with git?
-Date:   Tue, 11 Feb 2020 19:10:22 +0530
-Message-Id: <20200211134022.7975-1-shouryashukla.oo@gmail.com>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <trinity-f39d7ed5-e4c9-45fe-944c-b5cb101cfdcd-1581412940557@3c-app-gmx-bap62>
-References: <trinity-f39d7ed5-e4c9-45fe-944c-b5cb101cfdcd-1581412940557@3c-app-gmx-bap62>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=tMlUSXHdCQgStt9ncrRmRR0UfqvoRdzUKzMl/c19cHs=;
+        b=WAzP/PjTKsfSHe1OXy5XAsKG3P1SEX/Pjk0Jf+uF6aPZlBXwq2YnS1+GzDQdgAhN5H
+         sF1MRtIcUxrldfNeIntltcCsOHJBt+qyshJkM91bkxo69rWX8cB5JI4YbwVO4At3FZvP
+         knkwDC4Oqr+iHZxCANo6nQEpLDzdoqh7nGEKEFCfY1pDRQm9QgDw03tvoRI7KEe3h5Gy
+         IHrMLM8DASfnkYiN2/08dbXah4YUOOYU4xZOSnFgnTc10Aw1kUHMZB7qxM05go4+tWly
+         xV98So8sl0nlt7/q1WWuHDHU03+NObdpAYK2nUgnXDVPYKTSC4MgzhFhWonFd5mdgv25
+         xEKg==
+X-Gm-Message-State: APjAAAU5FJPkRhcMdwITNArwsF5eGZiq1q99mRlo/n2npULHWqEfh4bW
+        pPN6zIZTkjp5gMYGSExU//2Zvz42aIofbtGveYpriumL
+X-Google-Smtp-Source: APXvYqxG39/Z8gCTthQfOs6iuk3KtB8Y/XSQhGJei86jNGWJGOBgTtT9whGWJ8TvmuMitzD5hqPZ2VEdeXYewGwKuY4=
+X-Received: by 2002:a19:dc1e:: with SMTP id t30mr3745779lfg.34.1581430806264;
+ Tue, 11 Feb 2020 06:20:06 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CAHk66ftUsKU2+Uhy-a7V5QcRdO7ShcYUk28qz7WAm28wGFmPOg@mail.gmail.com>
+In-Reply-To: <CAHk66ftUsKU2+Uhy-a7V5QcRdO7ShcYUk28qz7WAm28wGFmPOg@mail.gmail.com>
+From:   Aleksey Midenkov <midenok@gmail.com>
+Date:   Tue, 11 Feb 2020 17:19:53 +0300
+Message-ID: <CAF8BazCpFyr_tpayWVtbk7V2LAtXaVmEKTCRQbgLYg4AvmvLvQ@mail.gmail.com>
+Subject: Re: Git tedious verbosity
+To:     Abhishek Kumar <abhishekkumar8222@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello Steve,
+Hi Abhishek!
 
-> My question is whether there is git functionality to replace quilt.
-> Or is the combination of quilt and git common?
+Nice info, thanks. Does that disable maintenance messages like:
 
-I think we can use interactive rebase[1] as well as 'git am'[2] (am = apply mail)
-to apply a series of patches from a mailbox.
+Updated 1 path from the index
 
-In the case of, let's say a dependency missing on your end, you can do an
-interactive rebase using 'git rebase -i' to edit your _mini-commits_ which
-you will be making on applying the patches to include the dependencies. One
-can also 'squash' commits together(i.e. meld multiple commits into one) in
-case you want a smaller commit history or you think there is a redundancy in
-any of your commits.
+Or gc about garbage collection? Actually bad defaults is big problem
+developers undeservedly ignore. You can control everything but you
+have to switch hundreds of options, because software defaults are
+oriented on dumbest user. Let's overcome this bad tendency and satisfy
+smartest users, not the dumbest ones. Unix was always terse system
+which provided little to no output by default. Let's honor that good
+tradition and not submit to "Google-Got-It" virus.
 
-BTW, I think that 'git quiltimport' is quite old now right? And maybe even
-obsolete?
 
-Best,
-Shourya Shukla
 
-[1]: https://git-scm.com/book/en/v2/Git-Tools-Rewriting-History
-[2]: https://git-scm.com/docs/git-am
+On Tue, Feb 11, 2020 at 12:01 AM Abhishek Kumar
+<abhishekkumar8222@gmail.com> wrote:
+>
+> Greetings Aleksey
+>
+> You can look into using `--short` and `--porcelain` flags.
+>
+> > Git offered enabling/disabling advice by using the 'advice.*' key in the configuration.
+>
+> Read up on this StackOverflow question on "How to turn off the help
+> hints in git output?" [1]. These should do the trick, but feel free to
+> elaborate if you need something more specific.
+>
+> Regards
+> Abhishek
+>
+> [1]: https://stackoverflow.com/q/55463863
+
+
+
+--
+All the best,
+
+Aleksey Midenkov
+@midenok
