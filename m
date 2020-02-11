@@ -4,100 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B7A30C352A3
-	for <git@archiver.kernel.org>; Tue, 11 Feb 2020 06:08:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 27BBCC352A3
+	for <git@archiver.kernel.org>; Tue, 11 Feb 2020 06:10:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6C8E320714
-	for <git@archiver.kernel.org>; Tue, 11 Feb 2020 06:08:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F19B320714
+	for <git@archiver.kernel.org>; Tue, 11 Feb 2020 06:10:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="a8E3rfrs"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="CAh055SC"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727934AbgBKGIV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Feb 2020 01:08:21 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:61440 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727806AbgBKGIV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Feb 2020 01:08:21 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id B6BBABCA3F;
-        Tue, 11 Feb 2020 01:08:20 -0500 (EST)
+        id S1727987AbgBKGK5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Feb 2020 01:10:57 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:63744 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727959AbgBKGK4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Feb 2020 01:10:56 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9E01D3EC05;
+        Tue, 11 Feb 2020 01:10:55 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=vziw6wv5wFG3lEn8OjeEbbetYMc=; b=a8E3rf
-        rsgKXiieDOfbTOcinDqNiP6pq8DFQJ6+3mGPq7MKbkfodMj5pyhS/z5h84BDLN3B
-        hr+1JYM6tAzThIOR1PrMgdqN/rF4vc3zUFnWbn4gTHKTELx7wEKG8y+JUBawi2t2
-        7ijTpH9kkljHgDRVlxd9LyQ0yxmaiyifv5M4o=
+        :content-type; s=sasl; bh=+xfUoIX49cKLQu7dFLysNnBuTwo=; b=CAh055
+        SCqWAF4mO9uihYiZxOPMWRrv8PUMnNj2WeiRdBBjQRawZ7Oe7Gzxz+7OfRpft+pl
+        qW3WQIWCORmLC1HTvI2sJwPrd1PeU5MWegsF/mayUmpp/Edxlc9amolTtj3g2lUZ
+        /LjQYdtACKeYhnlAtFl0L7J36X77sh1/+5VhQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ieM518/+O2iFRT63SWKr3u5GUEiOMGLO
-        fLD6Fjv+36mVhm0FeoOILhADJALHWoEODtg1jShleCKazH+veiUQXXagj2gOvnHc
-        d/se7ViCE0SDuJEzsrDzxORJK2f8heycEFQHf9yv+fSpyqvMwqsV1OGW7FjUBMzH
-        Rcw/hlQMdF4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id AF3C3BCA3E;
-        Tue, 11 Feb 2020 01:08:20 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=HTP3+r2CI+Lj0yau+D7wksSh8MkkR5ZE
+        nxGAMNs1TzWGMbeKG25FJ5bkBEdmUwqKIiW44Rjvkl7L0Vh5vjRc4jKR4vjjMzqc
+        5L2xBSKAuVZNiJTGoREfdKCIAvo0t3kD39bPYOMB3HtEYAwTSQNxgwUISQSmKptf
+        GjEtVNPHoVA=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 82D783EC04;
+        Tue, 11 Feb 2020 01:10:55 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id DB4CDBCA3C;
-        Tue, 11 Feb 2020 01:08:17 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D74C53EC01;
+        Tue, 11 Feb 2020 01:10:54 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Heba Waly <heba.waly@gmail.com>
-Cc:     Heba Waly via GitGitGadget <gitgitgadget@gmail.com>,
+To:     Matt Rogers <mattr94@gmail.com>
+Cc:     Matthew Rogers via GitGitGadget <gitgitgadget@gmail.com>,
         Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] advice: refactor advise API
-References: <pull.548.git.1581311049547.gitgitgadget@gmail.com>
-        <xmqqeev2xdq8.fsf@gitster-ct.c.googlers.com>
-        <CACg5j26RAEdABySzpDEYmo4m+HDPn9jNDP087d3K9gCro4m-Sg@mail.gmail.com>
-Date:   Mon, 10 Feb 2020 22:08:15 -0800
-In-Reply-To: <CACg5j26RAEdABySzpDEYmo4m+HDPn9jNDP087d3K9gCro4m-Sg@mail.gmail.com>
-        (Heba Waly's message of "Tue, 11 Feb 2020 15:01:33 +1300")
-Message-ID: <xmqqa75py7u8.fsf@gitster-ct.c.googlers.com>
+Subject: Re: [PATCH v7 04/10] config: make scope_name non-static and rename it
+References: <pull.478.v6.git.1580268865.gitgitgadget@gmail.com>
+        <pull.478.v7.git.1581294660.gitgitgadget@gmail.com>
+        <14b0f278196ab9ab130402c2ef79adb0543655ef.1581294660.git.gitgitgadget@gmail.com>
+        <xmqqd0am1fsc.fsf@gitster-ct.c.googlers.com>
+        <CAOjrSZvm-3qVw4880MeDVk59ToCwp9vMC1zFp-SYaDsFd3Y=8g@mail.gmail.com>
+Date:   Mon, 10 Feb 2020 22:10:53 -0800
+In-Reply-To: <CAOjrSZvm-3qVw4880MeDVk59ToCwp9vMC1zFp-SYaDsFd3Y=8g@mail.gmail.com>
+        (Matt Rogers's message of "Mon, 10 Feb 2020 19:30:22 -0500")
+Message-ID: <xmqq5zgdy7pu.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: E599BE90-4C94-11EA-A70E-B0405B776F7B-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 432B9E66-4C95-11EA-A6D6-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Heba Waly <heba.waly@gmail.com> writes:
+Matt Rogers <mattr94@gmail.com> writes:
 
-> On Tue, Feb 11, 2020 at 11:46 AM Junio C Hamano <gitster@pobox.com> wrote:
->>
->>
->> As I outlined in [1], I think the over-simplified
->> "advise_ng(<advise.key>, _(<message>), ...)"  would be too limited
->> to replace the current users, without a pair of helper functions,
->> one to just check for the guarding advise.key, and the other to
->> unconditionally show the message (i.e. the latter is what the
->> current advise() is).
+>> How are you reviewing the patches in your own series before sending
+>> them out?  This round is better than the previous rounds where we
+>> didn't have a matching change to the tests so "make test" may not
+>> have passed in the middle of the series, though...
 >>
 >
-> I agree with adding the first helper, specially after Peff's comments,
-> but I don't see why we would keep the current advise() which
-> unconditionally shows the message...
+> I went through each patch individually using rebase -i and built/tested it.
+> Although just to save time I only did t1300 and t1308 since I believe those were
+> the only ones that should be affected.  I can write a script that
+> would run the whole
+> test suite overnight for me and make sure the series shakes out okay,
+> if you'd like.
 
-Look again at the message you referenced in your message that
-started this round, and read its comment:
+What I like does not matter.  
 
-	if (advise_ng_enabled("frotz")) {
-		char *result = expensive_computation(...);
+What I pointed out for 04/10 wouldn't have been caught by your
+testing anyway, as both the code and the test had matching
+unnecessry changes.  I was wondering if you are relying too heavily
+on just tests and without actually proofreading the changes to see
+if they still make sense in the context of the updated series, and
+if my suspicion was correct, if there are something reviewers can do
+to help the authors.
 
-		/*
-                 * advise_ng("frotz", _("message %s about frotz", result));
-                 * is fine as well, but slightly less efficient as
-                 * it would involve another call to *_enabled(), so use
-		 * the unconditional form of the call
-		 */
-		advise_ng_raw(_("message %s about frotz", result));
-
-		free(result);
-	}
 
