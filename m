@@ -7,59 +7,60 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A030C352A4
-	for <git@archiver.kernel.org>; Wed, 12 Feb 2020 19:19:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 42A3CC3B187
+	for <git@archiver.kernel.org>; Wed, 12 Feb 2020 19:19:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id F21BF21739
-	for <git@archiver.kernel.org>; Wed, 12 Feb 2020 19:19:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 133772082F
+	for <git@archiver.kernel.org>; Wed, 12 Feb 2020 19:19:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qU0cn4Mf"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="uLQPyPb2"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729029AbgBLTTR (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1729033AbgBLTTS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Feb 2020 14:19:18 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:34735 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727231AbgBLTTR (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 12 Feb 2020 14:19:17 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:36762 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729010AbgBLTTQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Feb 2020 14:19:16 -0500
-Received: by mail-wm1-f67.google.com with SMTP id p17so3881599wma.1
-        for <git@vger.kernel.org>; Wed, 12 Feb 2020 11:19:15 -0800 (PST)
+Received: by mail-wr1-f68.google.com with SMTP id n10so1832224wrm.1
+        for <git@vger.kernel.org>; Wed, 12 Feb 2020 11:19:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=IhhUEVQhypOC1SjJS26KH+6S9VoyyVb0vmmtJ2aGBpM=;
-        b=qU0cn4MfmswWOLdmbHFWAeDxBvI7q5eJmr3FNZ3SCz5WhPtzQi2K53LqAhVTqCDROX
-         sXcej/rKULci3h0xQslzb5ivuRfUHAXu07Zyu04R1p/0A8wAl4hilbUvRme6RrYEgpr8
-         0Hfq0VVyL4izbw6E5GhVo9mhqxXpRv4/Chpf847YBjDlCrFrDDDTVo0yxWSP7iSETDN1
-         scVwL22Ei2pp4otZW1pBMNC524AjmvhRzJE3w3zXuD9yqs16+MYvsjZjmMo2RH9lBfZv
-         NsA1XCmSfSJVuX/E+HzyiQZXuEtf6NzbBu/GqsyDSgma2QGQuYydy8p7nzowH1ouHAgn
-         Mvzw==
+        bh=cFXoXbSaXwaW0KrHK7ZmljCX3KtFHJMNZypnZtF8yEA=;
+        b=uLQPyPb2txBqHEYHJlemEKN/2rV/nzTJUdu9xM6y0T/25EFamhL50B2ZoCl+wFSSXW
+         3WMoD0Rbs6+ZI/avy22t8NibuszyQcN7zVwF5aq9ZuZM37W8Qky1jKPt4W56jKjIecn0
+         H+vRSsyZVMBXS/5LMWcjYmymPlP4jBI+U5FqQpOIl7U4f0Sowphpb/sCdseB2J2qSv/u
+         PvFcVs/trQvpZddWPnnCkSMt3yU2E3D1f51xs14z8Dlb8sUxLLAyOTIQzveg06o+EsBs
+         BFk6Ec+3djebl4Q8h2hCTGV0dq1hBCE+COMaoO/E8h1o5FLCmG2A+H/r48Foo10hv/1+
+         KJnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=IhhUEVQhypOC1SjJS26KH+6S9VoyyVb0vmmtJ2aGBpM=;
-        b=SIfQ+CGQTAb0yK+IvsrXB8n1+t8dHO2ZjOxjdlNYwndFts+AloUzPd+jzE1BEBFwjv
-         //2BajdQJ5VWzaQXpmwvY61yTjb/AOysZsbF9Tw4vYDsUpD6dYBD4ekDom5SWCgRNMMM
-         VmpkKS7660nzVz711ihfYPkrlrdfjLav0w8PwGXGOf6yxDSi4dlOnhVcQJfL9q/iC8eF
-         rPYQBdfZod6Aqeesf97FUY7/6VBRBkhRDUD6Ade5hRSjqokpcdDeO5/8E85f7qWIdgSg
-         fHIsInl8z0526IV/KQahfOkdfVUCfZgTulXDMSCJzjFzoNbsX5SFccL3j0GRM/zz/Tgn
-         QIKQ==
-X-Gm-Message-State: APjAAAUOhSzfin2yoAqOQCTUXn4tLgCUTnHBeNi4SzJfAMwrTYdzaaRj
-        NByW9cbosdnrnhCrcjEKyOBelWVh
-X-Google-Smtp-Source: APXvYqxDKHTUZ/7WPiDZ+lRxufRWMf+mMnztEbL+WDP1Ch5E36pMMq70hhXCpNUEXe3zXKUYK4YE3g==
-X-Received: by 2002:a1c:688a:: with SMTP id d132mr580008wmc.189.1581535154542;
-        Wed, 12 Feb 2020 11:19:14 -0800 (PST)
+        bh=cFXoXbSaXwaW0KrHK7ZmljCX3KtFHJMNZypnZtF8yEA=;
+        b=b/KQvPaxUIg761ZHXhgwNsTFFqf3VGDUT+Noobsh9+nc+nWSCU7oJv8sYZ33QHj9iA
+         riNKtEqX1k8t1Sh7r6LOjjrdEDUs7S6SPCw6ODhPHDZVCtWkMxY84M8muMQdLRR2K/9j
+         CoEg6ZF4fo2TLZXY4anAutS9WeAiNht4hsIqpoBpaLHOL39sEdXBzZWbkt5EZcLas88e
+         nd43wvFikJf+4WL/NfOyKrxPj3on8ijJRxG61YApLsc13hs7GSbdFWB21ho4FJZZy+qy
+         GRxOwTVlNC6K23iNA9dO78nf5aWCKW7bnfIKNAgMfrvjjrZHT3EkDeDg6KPtyKynKjq3
+         k1dw==
+X-Gm-Message-State: APjAAAX0iYgCbw7viK8BCDqTBdDXovDPP9Ccd/H4VuFNgE24SvIEPrwR
+        1dCO39x58YgiErSzBQYsXsGRt2Oh
+X-Google-Smtp-Source: APXvYqyXVBvVfSbwlnKrnK4fMhpoXqVcSxDAXCWADWXOgxggGRmidVbRBQGdmjz6llpLjwqUUDH4hQ==
+X-Received: by 2002:adf:f0cb:: with SMTP id x11mr16930234wro.421.1581535153008;
+        Wed, 12 Feb 2020 11:19:13 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w8sm2027742wmm.0.2020.02.12.11.19.13
+        by smtp.gmail.com with ESMTPSA id x6sm1717156wmi.44.2020.02.12.11.19.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Feb 2020 11:19:14 -0800 (PST)
-Message-Id: <ef8ec98181ff03d756be80f1d3796eda98c7f475.1581535151.git.gitgitgadget@gmail.com>
+        Wed, 12 Feb 2020 11:19:12 -0800 (PST)
+Message-Id: <d98b7caff56cc839f251ac43c36826ecf800cf2f.1581535151.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.545.git.1581535151.gitgitgadget@gmail.com>
 References: <pull.545.git.1581535151.gitgitgadget@gmail.com>
 From:   "Parth Gala via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 12 Feb 2020 19:19:09 +0000
-Subject: [PATCH 3/5] object.c: parse_object_or_die() accept 'r' as parameter
+Date:   Wed, 12 Feb 2020 19:19:07 +0000
+Subject: [PATCH 1/5] object.c: get_max_object_index and get_indexed_object
+ accept 'r' parameter
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,244 +75,225 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Parth Gala <parthpgala@gmail.com>
 
-'parse_object_or_die()' and its callers are modified to enable
-passing 'r' as an argument to 'parse_object_or_die()'.
+Currently the two functions use global variable 'the_repository' to access
+the values stored in it. This makes 'the_repository' to be existent even
+when not required.
+
+This commit replaces it with 'r' which is passed as a parameter to those
+functions.
 
 Signed-off-by: Parth Gala <parthpgala@gmail.com>
 ---
- builtin/grep.c  | 6 ++++--
- builtin/prune.c | 3 ++-
- bundle.c        | 8 +++++---
- object.c        | 4 ++--
- object.h        | 2 +-
- pack-bitmap.c   | 5 +++--
- reachable.c     | 6 ++++--
- upload-pack.c   | 4 +++-
- 8 files changed, 24 insertions(+), 14 deletions(-)
+ builtin/fsck.c       |  5 +++--
+ builtin/index-pack.c |  5 +++--
+ builtin/name-rev.c   |  5 +++--
+ object.c             |  8 ++++----
+ object.h             |  4 ++--
+ shallow.c            | 10 ++++++----
+ upload-pack.c        | 10 ++++++----
+ 7 files changed, 27 insertions(+), 20 deletions(-)
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 50ce8d9461..c4156b0560 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -406,6 +406,7 @@ static int grep_submodule(struct grep_opt *opt,
- 			  const char *filename, const char *path, int cached)
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index 8d13794b14..d2b4336f7e 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -375,6 +375,7 @@ static void check_object(struct object *obj)
+ static void check_connectivity(void)
  {
- 	struct repository subrepo;
-+	struct repository *r = the_repository;
- 	struct repository *superproject = opt->repo;
- 	const struct submodule *sub = submodule_from_path(superproject,
- 							  &null_oid, path);
-@@ -455,7 +456,7 @@ static int grep_submodule(struct grep_opt *opt,
- 		unsigned long size;
- 		struct strbuf base = STRBUF_INIT;
- 
--		object = parse_object_or_die(oid, oid_to_hex(oid));
-+		object = parse_object_or_die(r, oid, oid_to_hex(oid));
- 
- 		grep_read_lock();
- 		data = read_object_with_reference(&subrepo,
-@@ -802,6 +803,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 	const char *show_in_pager = NULL, *default_pager = "dummy";
- 	struct grep_opt opt;
- 	struct object_array list = OBJECT_ARRAY_INIT;
-+	struct repository *r = the_repository;
- 	struct pathspec pathspec;
- 	struct string_list path_list = STRING_LIST_INIT_NODUP;
- 	int i;
-@@ -1037,7 +1039,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 			break;
- 		}
- 
--		object = parse_object_or_die(&oid, arg);
-+		object = parse_object_or_die(r, &oid, arg);
- 		if (!seen_dashdash)
- 			verify_non_filename(prefix, arg);
- 		add_object_array_with_path(object, arg, &list, oc.mode, oc.path);
-diff --git a/builtin/prune.c b/builtin/prune.c
-index 2b76872ad2..6d478717ef 100644
---- a/builtin/prune.c
-+++ b/builtin/prune.c
-@@ -125,6 +125,7 @@ static void remove_temporary_files(const char *path)
- int cmd_prune(int argc, const char **argv, const char *prefix)
- {
- 	struct rev_info revs;
-+	struct repository *r = the_repository;
- 	int exclude_promisor_objects = 0;
- 	const struct option options[] = {
- 		OPT__DRY_RUN(&show_only, N_("do not remove, show only")),
-@@ -154,7 +155,7 @@ int cmd_prune(int argc, const char **argv, const char *prefix)
- 		const char *name = *argv++;
- 
- 		if (!get_oid(name, &oid)) {
--			struct object *object = parse_object_or_die(&oid,
-+			struct object *object = parse_object_or_die(r, &oid,
- 								    name);
- 			add_pending_object(&revs, object, "");
- 		}
-diff --git a/bundle.c b/bundle.c
-index 99439e07a1..26231f2a38 100644
---- a/bundle.c
-+++ b/bundle.c
-@@ -298,6 +298,7 @@ static int compute_and_write_prerequisites(int bundle_fd,
- {
- 	struct child_process rls = CHILD_PROCESS_INIT;
- 	struct strbuf buf = STRBUF_INIT;
-+	struct repository *r = the_repository;
- 	FILE *rls_fout;
- 	int i;
- 
-@@ -316,13 +317,13 @@ static int compute_and_write_prerequisites(int bundle_fd,
- 		if (buf.len > 0 && buf.buf[0] == '-') {
- 			write_or_die(bundle_fd, buf.buf, buf.len);
- 			if (!get_oid_hex(buf.buf + 1, &oid)) {
--				struct object *object = parse_object_or_die(&oid,
-+				struct object *object = parse_object_or_die(r, &oid,
- 									    buf.buf);
- 				object->flags |= UNINTERESTING;
- 				add_pending_object(revs, object, buf.buf);
- 			}
- 		} else if (!get_oid_hex(buf.buf, &oid)) {
--			struct object *object = parse_object_or_die(&oid,
-+			struct object *object = parse_object_or_die(r, &oid,
- 								    buf.buf);
- 			object->flags |= SHOWN;
- 		}
-@@ -347,6 +348,7 @@ static int write_bundle_refs(int bundle_fd, struct rev_info *revs)
- {
- 	int i;
- 	int ref_count = 0;
+ 	int i, max;
 +	struct repository *r = the_repository;
  
- 	for (i = 0; i < revs->pending.nr; i++) {
- 		struct object_array_entry *e = revs->pending.objects + i;
-@@ -407,7 +409,7 @@ static int write_bundle_refs(int bundle_fd, struct rev_info *revs)
- 				 * end up triggering "empty bundle"
- 				 * error.
- 				 */
--				obj = parse_object_or_die(&oid, e->name);
-+				obj = parse_object_or_die(r, &oid, e->name);
- 				obj->flags |= SHOWN;
- 				add_pending_object(revs, obj, e->name);
- 			}
-diff --git a/object.c b/object.c
-index 90338a509c..0a7a278c88 100644
---- a/object.c
-+++ b/object.c
-@@ -236,10 +236,10 @@ struct object *parse_object_buffer(struct repository *r, const struct object_id
- 	return obj;
- }
- 
--struct object *parse_object_or_die(const struct object_id *oid,
-+struct object *parse_object_or_die(struct repository *r, const struct object_id *oid,
- 				   const char *name)
- {
--	struct object *o = parse_object(the_repository, oid);
-+	struct object *o = parse_object(r, oid);
- 	if (o)
- 		return o;
- 
-diff --git a/object.h b/object.h
-index 375236cec3..92af2ead8f 100644
---- a/object.h
-+++ b/object.h
-@@ -135,7 +135,7 @@ struct object *parse_object(struct repository *r, const struct object_id *oid);
-  * "name" parameter is not NULL, it is included in the error message
-  * (otherwise, the hex object ID is given).
-  */
--struct object *parse_object_or_die(const struct object_id *oid, const char *name);
-+struct object *parse_object_or_die(struct repository *, const struct object_id *oid, const char *name);
- 
- /* Given the result of read_sha1_file(), returns the object after
-  * parsing it.  eaten_p indicates if the object has a borrowed copy
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index e07c798879..b7f9aebc7b 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -682,6 +682,7 @@ static int in_bitmapped_pack(struct bitmap_index *bitmap_git,
- struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs)
- {
- 	unsigned int i;
-+	struct repository *r = the_repository;
- 
- 	struct object_list *wants = NULL;
- 	struct object_list *haves = NULL;
-@@ -699,7 +700,7 @@ struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs)
- 		struct object *object = revs->pending.objects[i].item;
- 
- 		if (object->type == OBJ_NONE)
--			parse_object_or_die(&object->oid, NULL);
-+			parse_object_or_die(r, &object->oid, NULL);
- 
- 		while (object->type == OBJ_TAG) {
- 			struct tag *tag = (struct tag *) object;
-@@ -709,7 +710,7 @@ struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs)
- 			else
- 				object_list_insert(object, &wants);
- 
--			object = parse_object_or_die(get_tagged_oid(tag), NULL);
-+			object = parse_object_or_die(r, get_tagged_oid(tag), NULL);
- 		}
- 
- 		if (object->flags & UNINTERESTING)
-diff --git a/reachable.c b/reachable.c
-index 8f50235b28..c661a1c892 100644
---- a/reachable.c
-+++ b/reachable.c
-@@ -31,13 +31,14 @@ static int add_one_ref(const char *path, const struct object_id *oid,
- {
- 	struct rev_info *revs = (struct rev_info *)cb_data;
- 	struct object *object;
-+	struct repository *r = the_repository;
- 
- 	if ((flag & REF_ISSYMREF) && (flag & REF_ISBROKEN)) {
- 		warning("symbolic ref is dangling: %s", path);
- 		return 0;
+ 	/* Traverse the pending reachable objects */
+ 	traverse_reachable();
+@@ -400,12 +401,12 @@ static void check_connectivity(void)
  	}
  
--	object = parse_object_or_die(oid, path);
-+	object = parse_object_or_die(r, oid, path);
- 	add_pending_object(revs, object, "");
+ 	/* Look up all the requirements, warn about missing objects.. */
+-	max = get_max_object_index();
++	max = get_max_object_index(r);
+ 	if (verbose)
+ 		fprintf_ln(stderr, _("Checking connectivity (%d objects)"), max);
  
- 	return 0;
-@@ -68,6 +69,7 @@ static void add_recent_object(const struct object_id *oid,
+ 	for (i = 0; i < max; i++) {
+-		struct object *obj = get_indexed_object(i);
++		struct object *obj = get_indexed_object(r, i);
+ 
+ 		if (obj)
+ 			check_object(obj);
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 60a5591039..d2115535bc 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -218,14 +218,15 @@ static unsigned check_object(struct object *obj)
+ static unsigned check_objects(void)
  {
- 	struct object *obj;
- 	enum object_type type;
+ 	unsigned i, max, foreign_nr = 0;
 +	struct repository *r = the_repository;
  
- 	if (mtime <= data->timestamp)
- 		return;
-@@ -86,7 +88,7 @@ static void add_recent_object(const struct object_id *oid,
- 	switch (type) {
- 	case OBJ_TAG:
- 	case OBJ_COMMIT:
--		obj = parse_object_or_die(oid, NULL);
-+		obj = parse_object_or_die(r, oid, NULL);
- 		break;
- 	case OBJ_TREE:
- 		obj = (struct object *)lookup_tree(the_repository, oid);
+-	max = get_max_object_index();
++	max = get_max_object_index(r);
+ 
+ 	if (verbose)
+ 		progress = start_delayed_progress(_("Checking objects"), max);
+ 
+ 	for (i = 0; i < max; i++) {
+-		foreign_nr += check_object(get_indexed_object(i));
++		foreign_nr += check_object(get_indexed_object(r, i));
+ 		display_progress(progress, i + 1);
+ 	}
+ 
+diff --git a/builtin/name-rev.c b/builtin/name-rev.c
+index 6b9e8c850b..afe9f6df01 100644
+--- a/builtin/name-rev.c
++++ b/builtin/name-rev.c
+@@ -456,6 +456,7 @@ static void name_rev_line(char *p, struct name_ref_data *data)
+ int cmd_name_rev(int argc, const char **argv, const char *prefix)
+ {
+ 	struct object_array revs = OBJECT_ARRAY_INIT;
++	struct repository *r = the_repository;
+ 	int all = 0, transform_stdin = 0, allow_undefined = 1, always = 0, peel_tag = 0;
+ 	struct name_ref_data data = { 0, 0, STRING_LIST_INIT_NODUP, STRING_LIST_INIT_NODUP };
+ 	struct option opts[] = {
+@@ -553,9 +554,9 @@ int cmd_name_rev(int argc, const char **argv, const char *prefix)
+ 	} else if (all) {
+ 		int i, max;
+ 
+-		max = get_max_object_index();
++		max = get_max_object_index(r);
+ 		for (i = 0; i < max; i++) {
+-			struct object *obj = get_indexed_object(i);
++			struct object *obj = get_indexed_object(r, i);
+ 			if (!obj || obj->type != OBJ_COMMIT)
+ 				continue;
+ 			show_name(obj, NULL,
+diff --git a/object.c b/object.c
+index 142ef69399..549fbe69ca 100644
+--- a/object.c
++++ b/object.c
+@@ -10,14 +10,14 @@
+ #include "packfile.h"
+ #include "commit-graph.h"
+ 
+-unsigned int get_max_object_index(void)
++unsigned int get_max_object_index(struct repository *r)
+ {
+-	return the_repository->parsed_objects->obj_hash_size;
++	return r->parsed_objects->obj_hash_size;
+ }
+ 
+-struct object *get_indexed_object(unsigned int idx)
++struct object *get_indexed_object(struct repository *r, unsigned int idx)
+ {
+-	return the_repository->parsed_objects->obj_hash[idx];
++	return r->parsed_objects->obj_hash[idx];
+ }
+ 
+ static const char *object_type_strings[] = {
+diff --git a/object.h b/object.h
+index 25f5ab3d54..5a8ae274ee 100644
+--- a/object.h
++++ b/object.h
+@@ -98,12 +98,12 @@ int type_from_string_gently(const char *str, ssize_t, int gentle);
+ /*
+  * Return the current number of buckets in the object hashmap.
+  */
+-unsigned int get_max_object_index(void);
++unsigned int get_max_object_index(struct repository *);
+ 
+ /*
+  * Return the object from the specified bucket in the object hashmap.
+  */
+-struct object *get_indexed_object(unsigned int);
++struct object *get_indexed_object(struct repository *, unsigned int);
+ 
+ /*
+  * This can be used to see if we have heard of the object before, but
+diff --git a/shallow.c b/shallow.c
+index 7fd04afed1..4537d98482 100644
+--- a/shallow.c
++++ b/shallow.c
+@@ -510,6 +510,7 @@ static void paint_down(struct paint_info *info, const struct object_id *oid,
+ 		       unsigned int id)
+ {
+ 	unsigned int i, nr;
++	struct repository *r = the_repository;
+ 	struct commit_list *head = NULL;
+ 	int bitmap_nr = DIV_ROUND_UP(info->nr_bits, 32);
+ 	size_t bitmap_size = st_mult(sizeof(uint32_t), bitmap_nr);
+@@ -563,9 +564,9 @@ static void paint_down(struct paint_info *info, const struct object_id *oid,
+ 		}
+ 	}
+ 
+-	nr = get_max_object_index();
++	nr = get_max_object_index(r);
+ 	for (i = 0; i < nr; i++) {
+-		struct object *o = get_indexed_object(i);
++		struct object *o = get_indexed_object(r, i);
+ 		if (o && o->type == OBJ_COMMIT)
+ 			o->flags &= ~SEEN;
+ 	}
+@@ -608,6 +609,7 @@ void assign_shallow_commits_to_refs(struct shallow_info *info,
+ 	struct object_id *oid = info->shallow->oid;
+ 	struct oid_array *ref = info->ref;
+ 	unsigned int i, nr;
++	struct repository *r = the_repository;
+ 	int *shallow, nr_shallow = 0;
+ 	struct paint_info pi;
+ 
+@@ -622,9 +624,9 @@ void assign_shallow_commits_to_refs(struct shallow_info *info,
+ 	 * Prepare the commit graph to track what refs can reach what
+ 	 * (new) shallow commits.
+ 	 */
+-	nr = get_max_object_index();
++	nr = get_max_object_index(r);
+ 	for (i = 0; i < nr; i++) {
+-		struct object *o = get_indexed_object(i);
++		struct object *o = get_indexed_object(r, i);
+ 		if (!o || o->type != OBJ_COMMIT)
+ 			continue;
+ 
 diff --git a/upload-pack.c b/upload-pack.c
-index 6d196e275b..daea9059f0 100644
+index a00d7ece6b..cb7312268f 100644
 --- a/upload-pack.c
 +++ b/upload-pack.c
-@@ -1210,6 +1210,8 @@ static int parse_want_ref(struct packet_writer *writer, const char *line,
- 			  struct object_array *want_obj)
- {
- 	const char *arg;
+@@ -450,6 +450,7 @@ static int do_reachable_revlist(struct child_process *cmd,
+ 		"rev-list", "--stdin", NULL,
+ 	};
+ 	struct object *o;
 +	struct repository *r = the_repository;
-+
- 	if (skip_prefix(line, "want-ref ", &arg)) {
- 		struct object_id oid;
- 		struct string_list_item *item;
-@@ -1223,7 +1225,7 @@ static int parse_want_ref(struct packet_writer *writer, const char *line,
- 		item = string_list_append(wanted_refs, arg);
- 		item->util = oiddup(&oid);
+ 	char namebuf[GIT_MAX_HEXSZ + 2]; /* ^ + hash + LF */
+ 	int i;
+ 	const unsigned hexsz = the_hash_algo->hexsz;
+@@ -472,8 +473,8 @@ static int do_reachable_revlist(struct child_process *cmd,
  
--		o = parse_object_or_die(&oid, arg);
-+		o = parse_object_or_die(r, &oid, arg);
- 		if (!(o->flags & WANTED)) {
- 			o->flags |= WANTED;
- 			add_object_array(o, NULL, want_obj);
+ 	namebuf[0] = '^';
+ 	namebuf[hexsz + 1] = '\n';
+-	for (i = get_max_object_index(); 0 < i; ) {
+-		o = get_indexed_object(--i);
++	for (i = get_max_object_index(r); 0 < i; ) {
++		o = get_indexed_object(r, --i);
+ 		if (!o)
+ 			continue;
+ 		if (reachable && o->type == OBJ_COMMIT)
+@@ -520,6 +521,7 @@ static int get_reachable_list(struct object_array *src,
+ 	struct child_process cmd = CHILD_PROCESS_INIT;
+ 	int i;
+ 	struct object *o;
++	struct repository *r = the_repository;
+ 	char namebuf[GIT_MAX_HEXSZ + 2]; /* ^ + hash + LF */
+ 	const unsigned hexsz = the_hash_algo->hexsz;
+ 
+@@ -538,8 +540,8 @@ static int get_reachable_list(struct object_array *src,
+ 			o->flags &= ~TMP_MARK;
+ 		}
+ 	}
+-	for (i = get_max_object_index(); 0 < i; i--) {
+-		o = get_indexed_object(i - 1);
++	for (i = get_max_object_index(r); 0 < i; i--) {
++		o = get_indexed_object(r, i - 1);
+ 		if (o && o->type == OBJ_COMMIT &&
+ 		    (o->flags & TMP_MARK)) {
+ 			add_object_array(o, NULL, reachable);
 -- 
 gitgitgadget
 
