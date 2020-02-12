@@ -2,113 +2,167 @@ Return-Path: <SRS0=D6Hn=4A=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A9972C352A4
-	for <git@archiver.kernel.org>; Wed, 12 Feb 2020 22:13:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A461C352A4
+	for <git@archiver.kernel.org>; Wed, 12 Feb 2020 22:26:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7C9192082F
-	for <git@archiver.kernel.org>; Wed, 12 Feb 2020 22:13:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 632942168B
+	for <git@archiver.kernel.org>; Wed, 12 Feb 2020 22:26:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="HAlvct5o"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JjwNDeyC"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728447AbgBLWNl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Feb 2020 17:13:41 -0500
-Received: from mail-qv1-f67.google.com ([209.85.219.67]:36270 "EHLO
-        mail-qv1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727564AbgBLWNl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Feb 2020 17:13:41 -0500
-Received: by mail-qv1-f67.google.com with SMTP id db9so1707217qvb.3
-        for <git@vger.kernel.org>; Wed, 12 Feb 2020 14:13:40 -0800 (PST)
+        id S1729186AbgBLW0B (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Feb 2020 17:26:01 -0500
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:33058 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728185AbgBLW0B (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Feb 2020 17:26:01 -0500
+Received: by mail-pf1-f195.google.com with SMTP id n7so1948379pfn.0
+        for <git@vger.kernel.org>; Wed, 12 Feb 2020 14:26:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=mAzU2geDuLVagJ9IhS2Z49g1pIeYgci4zP6GpHOUA6g=;
-        b=HAlvct5owelcxDRlhFbeiECgP572btfnj0X3WSrJC2M8mY7jjJXkn2YkHsDM5lHBu7
-         2QrYNnS7Qzrqu0KTGDRZDNP439tPsSKUBmy3LDurXcp66YcXbMvRQ3CYcyx/15BlY5Iv
-         W0X+mG3weAsmlGFEOyLVmCLKq6fAx1HCGMkeX5R+Pfc6MR3EGv2Tsq8ZajDpa8z5u8Od
-         TzI72i1b6M07wcrChgmDT8oQl4o7Xi2p/sViX7P4vrPe0Cvyt+An/nraWR7NEb7ShQTq
-         Qqe8IPT6bVOXXM5RtEMIqcwmRa/L8wiDCyriaRq3f0zJo79ftKLNswQidCnNPSepjHda
-         IlgA==
+        d=gmail.com; s=20161025;
+        h=subject:references:from:to:cc:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=tyUSt5wnWfud31qxloqsDKBDE8nint8GWO7Rm5Egy0A=;
+        b=JjwNDeyCOA5TeSPPpFUxRhL5415lf6/tXq12i1i2EPTewwL19vbA6NP8LsUVaQywz4
+         9KBVWWNxw0Wr6co7RXjFH3XJTmS5dD3sV8B9n8HtEUjOepmGM8Jdh6WjzXC8A8GC8jPQ
+         bpmz18S3eh66A0zx3PXS+6YG3heXx/e4qJguGQpxyTzgKFCh8OiaesBghbwTyMoaLVXf
+         E0aSRcxM5S9LOJyjvgHuDryTTXorHIt2mMZy9A2P12XkZsuO8xq7zAS9ReSwN/894vOz
+         DXi4/mQ86F4uWP788yCEA/1R2fp/NjqWWXRMcG+5FrKMhXonD2nKhMvfQjz79e1pd5sy
+         gMgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=mAzU2geDuLVagJ9IhS2Z49g1pIeYgci4zP6GpHOUA6g=;
-        b=qVfmxxcwMvvfDeN3aame2u2pOtU7IIe35CsuO1WUE85bsFuWn+hX15X9d0U/hyCiNz
-         RBEjr0iaoHsHYF3qNR16/3UQ4DXF0atGXoF/2DJeYgWx6bO8cnNkU/s7VYYxeDtVjUr0
-         nhdzrcuvR5oaAJVZdM2mA4MVQmEJUK8QcchkODjE94ANIvx5x1/WIFABSsCmfk0Rl4tY
-         Ck895n3+Fg+M1bZrLf4gbut+08jVBhjimitRFac7RPYPruFWEx04wooJVisQKsBhrgtY
-         v+lv26u2fVqXe5i7LmKwrrX6Iw4/Gu6cXDXt58X7YC0PBSL6bTBqBhBdJxvqUgl63TPs
-         wRBQ==
-X-Gm-Message-State: APjAAAU9d+s8P/0323WalKDv9iAztUfaQNft6Y58cC2sc2qOWc98hFf8
-        OAjM5qUInevYECxOAQFLDAZ1Nm6ENDJg9Yu6oCgxIC71B9A=
-X-Google-Smtp-Source: APXvYqxiCdqEXnmvcfqf04yXUFRQj8Hu0lHp+/g9w0HGZ1e/lEGi1ylUbLIlwrrYv8krY14cZAduco7GCn0NXNHZYo8=
-X-Received: by 2002:ad4:4511:: with SMTP id k17mr8743820qvu.135.1581545619973;
- Wed, 12 Feb 2020 14:13:39 -0800 (PST)
-MIME-Version: 1.0
-References: <20200131221800.240352-1-masayasuzuki@google.com>
- <20200207204225.123764-1-masayasuzuki@google.com> <CAJB1erXMR_aCqVPsH6WQZdC7yybOBCUbwkJDv3LtU2f0ymNmbQ@mail.gmail.com>
- <xmqqlfpe2jx3.fsf@gitster-ct.c.googlers.com> <CAJB1erVZ5E6FxtD8gJXXpzJjquvksLxpz+h1TzG52Yr9DFmDRQ@mail.gmail.com>
- <xmqqa75t3l1h.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqa75t3l1h.fsf@gitster-ct.c.googlers.com>
-From:   Masaya Suzuki <masayasuzuki@google.com>
-Date:   Wed, 12 Feb 2020 14:13:29 -0800
-Message-ID: <CAJB1erWuCTYtGdjiwBT3hhbH5Jrdr+cE8duwtoH=P7Fe6BmUpg@mail.gmail.com>
-Subject: Re: [PATCH v3] doc: describe Git bundle format
-To:     Junio C Hamano <gitster@pobox.com>
+        h=x-gm-message-state:subject:references:from:to:cc:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=tyUSt5wnWfud31qxloqsDKBDE8nint8GWO7Rm5Egy0A=;
+        b=oH4H7xI6+c4YjzvJTF9zczo+lp9pDxtGEshePY4GOKGT2Bj7yPRaFqqZHRheqfgXRv
+         XvQCsAeMCSMPAF8CuhFhV0Sulr01VgSx9DUvHWio0ufXfWx52UfdzBmlFkX4HUrdBgL8
+         NL8EFJLj0PkzovB1lk9SVkGsYjWdTBQuH8pLTCo1dSf661kqpjlnc4/iVnujAC5QbcHH
+         qL9sAZ9CmpU4nWdAUWMF6YOAeYHSrqVzFbMGzXmGkfcjXkOyGAV10snVIMRiL3/su7ol
+         3F2mnVEnZFzGKhmhTdgc3SeDKWaGyGHoqYuoYaWrpfH3ND2YLdKzTGfiGW4iP+kTxE75
+         ZtvA==
+X-Gm-Message-State: APjAAAWx8iFJiVxV4MUvkGfPEulosiBCp1lv2KnmsHu537k7s5jPNOWy
+        P7Rq5lL+2l5rZIzsli9IKW9uclhE
+X-Google-Smtp-Source: APXvYqzGKmll9yS+CU1An/fIvFYsnxS0G0Ph6/lHR7N7CvkDsHKFujjajgQV8fnstfV/Xnc23Eqhdw==
+X-Received: by 2002:a63:1503:: with SMTP id v3mr10879257pgl.295.1581546360027;
+        Wed, 12 Feb 2020 14:26:00 -0800 (PST)
+Received: from [192.168.0.113] ([27.106.79.123])
+        by smtp.gmail.com with ESMTPSA id z30sm242442pfq.154.2020.02.12.14.25.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 12 Feb 2020 14:25:59 -0800 (PST)
+Subject: Fwd: Re: [PATCH 0/5] object.c: localize global the_repository
+ variable into r
+References: <4cb3c2cc-b73d-0ea6-1f56-4c7a18d05532@gmail.com>
+From:   parth gala <parthpgala@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
 Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+X-Forwarded-Message-Id: <4cb3c2cc-b73d-0ea6-1f56-4c7a18d05532@gmail.com>
+Message-ID: <dac7264e-969d-259f-3d43-ac69a628d624@gmail.com>
+Date:   Thu, 13 Feb 2020 03:55:57 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
+MIME-Version: 1.0
+In-Reply-To: <4cb3c2cc-b73d-0ea6-1f56-4c7a18d05532@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 7, 2020 at 5:49 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Masaya Suzuki <masayasuzuki@google.com> writes:
->
-> > Yes. The reason that I've been trying to check the semantics of the
-> > prerequisites is that I DO recognize that this is possible
-> > format-wise. I'm not sure if this Git implementation can create such
-> > bundles, but format-wise such bundles can be created.
->
-> Yeah, now I get it.
->
-> The problem is *not* that v2 format "cannot represent a shallow
-> clone repository", but is that there is nothing that prevents a
-> bundle in v2 format from depending on objects behind (not just at)
-> the shallow boundary, making it impossible for a reader to guarantee
-> that a bundle with prereqs can be used to create an equivalent
-> shallow repository with shallow boundary at the same place as
-> prereqs.  IOW, bundle with prereqs in the v2 format allows more
-> objects to be omitted than an equivalent shallow repository omits,
-> because prereqs and shallow cutoff points mean different things.
 
-Yes. So, I think it's better to say prereqs and shallow boundaries are
-different.
 
-> While we are at it, I suspect that with reachability bitmap, a "git
-> fetch" that updates a history up to commit A to a new history up to
-> commit B can omit more objects than what is directly reachable from
-> the commit A.  That is, if A's direct child (call it C) is a commit
-> that reverts A, a blob in A's tree won't be in the bundle (because A
-> is a prereq), but the blob at the same path in C is the same blob as
-> the blob at the same path in A's parent (that is what it means for
-> that A's direct child to be a revert of A).  In the normal
-> enumeration based on object-walk to decide which objects to send,
-> such a blob in C will be included in the pack,
 
-That's interesting. I have never looked CGit's implementation, but I
-think JGit would omit those objects. (At least that was my
-understanding. Not confirmed with the code.)
+-------- Forwarded Message --------
+Subject: 	Re: [PATCH 0/5] object.c: localize global the_repository 
+variable into r
+Date: 	Thu, 13 Feb 2020 03:26:30 +0530
+From: 	parth gala <parthpgala@gmail.com>
+To: 	Taylor Blau <me@ttaylorr.com>
 
-Anyway. Is it OK with adding this small note on "prereq is not a
-shallow boundary"? In practice, there are not many Git implementations
-that handle Git bundles, so it's not that big deal as long those few
-implementers recognize this, but this document is meant for those
-implementers.
+
+
+
+On 13/02/20 1:48 am, Taylor Blau wrote:
+> Hi Parth,
+>
+> On Wed, Feb 12, 2020 at 07:19:06PM +0000, Parth Gala via GitGitGadget wrote:
+>> I have created this commit in response to
+>> https://github.com/gitgitgadget/git/issues/379#issue-503866117.
+> Fantastic! Thank you for working on this.
+>
+>> All the functions in object.c which relied on 'the_repository' have
+>> been modified.  The functions calling these functions in object.c
+>> consisted calls to other functions using 'the_repository' as well, and
+>> although I intended to use 'r' at all those instances, I thought it
+>> would make more sense when we would deal with their callee functions
+>> in another similar patch. What do you think ?
+> That makes sense, and follows the conventions that other similar
+> refactorings have done in the past.
+>
+> Any reason why you decided to start with 'object.c'? Not that any such
+> reason is necessary, I'm just curious about how you came to this
+> decision.
+
+I am new to the git community and while searching for issues to solve I
+found the issue linked above.
+I figured solving it would give me a good experience navigating
+and exploring the huge repository.
+
+Initially I grepped to find all functions using `the_repository` but
+randomly chose object.c since the refactoring had to start somewhere.
+Special thanks to Johannes Schindelin for this.
+
+>> Signed-off-by: Parth Gala parthpgala@gmail.com [parthpgala@gmail.com]
+> Even though you *do* need a 'Signed-off-by' in each of your patches,
+> adding it in the cover letter is not necessary.
+
+I probably did not check the preview I sent to myself carefully for
+this. Will make note of it.
+
+>> Parth Gala (5):
+>>     object.c: get_max_object_index and get_indexed_object accept 'r'
+>>       parameter
+>>     object.c: lookup_unknown_object() accept 'r' as parameter
+>>     object.c: parse_object_or_die() accept 'r' as parameter
+>>     object.c: clear_object_flags() accept 'r' as parameter
+>>     object.c: clear_commit_marks_all() accept 'r' as parameter
+>>
+>>    builtin/checkout.c               |  3 ++-
+>>    builtin/fsck.c                   |  8 +++++---
+>>    builtin/grep.c                   |  6 ++++--
+>>    builtin/index-pack.c             |  5 +++--
+>>    builtin/log.c                    |  3 ++-
+>>    builtin/name-rev.c               |  5 +++--
+>>    builtin/pack-objects.c           |  3 ++-
+>>    builtin/prune.c                  |  3 ++-
+>>    bundle.c                         |  8 +++++---
+>>    http-push.c                      |  3 ++-
+>>    object.c                         | 32 ++++++++++++++++----------------
+>>    object.h                         | 12 ++++++------
+>>    pack-bitmap.c                    |  5 +++--
+>>    reachable.c                      |  6 ++++--
+>>    refs.c                           |  3 ++-
+>>    revision.c                       |  3 ++-
+>>    shallow.c                        | 13 ++++++++-----
+>>    t/helper/test-example-decorate.c |  7 ++++---
+>>    upload-pack.c                    | 19 ++++++++++++-------
+>>    walker.c                         |  3 ++-
+>>    20 files changed, 89 insertions(+), 61 deletions(-)
+>>
+>>
+>> base-commit: 0ad714499976290d9a0229230cbe4efae930b8dc
+>> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-545%2FParthGala2k%2Flocalize-the_repository-variable-v1
+>> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-545/ParthGala2k/localize-the_repository-variable-v1
+>> Pull-Request: https://github.com/gitgitgadget/git/pull/545
+>> --
+>> gitgitgadget
+> Thanks,
+> Taylor
