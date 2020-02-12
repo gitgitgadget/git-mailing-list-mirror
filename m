@@ -2,100 +2,140 @@ Return-Path: <SRS0=D6Hn=4A=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MSGID_FROM_MTA_HEADER,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-10.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 66D68C3B186
-	for <git@archiver.kernel.org>; Wed, 12 Feb 2020 19:50:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EBC3AC352A4
+	for <git@archiver.kernel.org>; Wed, 12 Feb 2020 20:18:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3E71C2468D
-	for <git@archiver.kernel.org>; Wed, 12 Feb 2020 19:50:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BC4C924677
+	for <git@archiver.kernel.org>; Wed, 12 Feb 2020 20:18:15 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=CEDARON.onmicrosoft.com header.i=@CEDARON.onmicrosoft.com header.b="YiysX3hv"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="aFl86vsE"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729083AbgBLTu3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Feb 2020 14:50:29 -0500
-Received: from mail-dm6nam10on2084.outbound.protection.outlook.com ([40.107.93.84]:47456
-        "EHLO NAM10-DM6-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1728866AbgBLTu3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Feb 2020 14:50:29 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Eo2d3ggIsKXz1twO8OAv70H0F7745f4/VDO/NUdwVWxdeSrg4AiKdBXwpu1hcmZ+20zNr+xQtn9HFwX1ir+WXnhU69JgWHnb/kGmRlY5I7TPsk6c32jpo8nhL7s34O05s75J8safb+K/sZPFvv21L3jAEqqPVs0Zs8KBLNw3wf8M218DURstp2nIQCyBYlAW0bv6yisJAzQKAw1Ow8ariXp+zwXYnnvJ/uZKWlQX59iRkXMTxuUTZzl/EHSVP6QxeSxDkt+rUCoxtPaHKh2GAue1iFCl3cUvgHltv38gxyWkEVkhm47n3gFtTc1HpCTwQb+w068o9IXcoVuSQ2qsvw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=iZPrCoGB1avLHh3rlDYLaXTvyoXsXPW3oS4i4cbrfXY=;
- b=anMjJjiDwK85inJr71BS17UBQW/kM+rYvTqieLrqgq36f/bt0TKMAVpB5C7mKtQoP9TLThOLypZFpZf/9hzZ/wOLd4K51kwURjbDe53zY/OkiSYfQBoZJcAJRCws0RAzNMKfqtA0dXIBaQvgao72uCufNLjfeX0Sq1rTxmC7QQpXIZKyiJ7+oOVkdxMDSTkoyc4KfaZiq6/6TqfEBI2rmy7KNnZzF6RBIUxyl93y+l9GFx5Xorfabqob94+MwNvTuvuK75Gc8C2zvAQj35RjYIRHH28jolItRxIPUQFBAjd1zY6CkvkEYt6SicSTjMNkYJGOpXueb1y1cs1V8aMIpQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=cedaron.com; dmarc=pass action=none header.from=cedaron.com;
- dkim=pass header.d=cedaron.com; arc=none
+        id S1728866AbgBLUSP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Feb 2020 15:18:15 -0500
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:46197 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727361AbgBLUSO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Feb 2020 15:18:14 -0500
+Received: by mail-pl1-f195.google.com with SMTP id y8so1361464pll.13
+        for <git@vger.kernel.org>; Wed, 12 Feb 2020 12:18:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=CEDARON.onmicrosoft.com; s=selector2-CEDARON-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=iZPrCoGB1avLHh3rlDYLaXTvyoXsXPW3oS4i4cbrfXY=;
- b=YiysX3hvXysnJAWNUa8prX+ttSAS/CWeEMUs6ejBfURDVwr3Mfu2YP9qaIQv8BAxDsSHYQl5tpdSNLxWPJeAUrwGPAHxMkFXR1JxYnqUyiq9UjEUlZ8FGJDXPmkogjz0Thwv1y3LT31zusGO/l/S6V3K69UDN5hvVUzQtkutV/0=
-Authentication-Results: spf=none (sender IP is )
- smtp.mailfrom=jhudson@cedaron.com; 
-Received: from MWHPR20MB1583.namprd20.prod.outlook.com (10.171.150.136) by
- MWHPR20MB1663.namprd20.prod.outlook.com (10.173.105.135) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2707.21; Wed, 12 Feb 2020 19:50:25 +0000
-Received: from MWHPR20MB1583.namprd20.prod.outlook.com
- ([fe80::d998:bca0:9377:4211]) by MWHPR20MB1583.namprd20.prod.outlook.com
- ([fe80::d998:bca0:9377:4211%3]) with mapi id 15.20.2707.030; Wed, 12 Feb 2020
- 19:50:25 +0000
-To:     git@vger.kernel.org
-From:   Joshua Hudson <jhudson@cedaron.com>
-Subject: Feature Request: commits where $LOCAL and $REMOTE are from
-Message-ID: <2b914152-9d1d-bb2d-ddf7-f7c915239cbe@cedaron.com>
-Date:   Wed, 12 Feb 2020 11:50:23 -0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.2
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-ClientProxiedBy: BY5PR04CA0026.namprd04.prod.outlook.com
- (2603:10b6:a03:1d0::36) To MWHPR20MB1583.namprd20.prod.outlook.com
- (2603:10b6:300:13b::8)
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=U3ZRXIlRWwvWoLDZdmQ56RZ0gFezjkpjYPha+wm5K3U=;
+        b=aFl86vsEGM5l5Yk1dKCkZV+7ot57rmkdhsEUDxBJsHvyMF5fjgmraLEnwxNMGhJQXe
+         fGAYJgEDjBq8UmSsLoBh30R9RcfwvGjVz8pDDv/Fbz63xOj8VCY33GHLDe2EoU9244hA
+         X81XuTUBJpk9Byi+VKgJ9CvbEtGEUKjkRBohXD9/a+GNvKESI8sY+AEZ3xC4I1uWzC7s
+         N7vxl7FR8wZW/0TW+o9io2Uh/d507QN9GqZi+LNiW1fe1IxBfxpoJFtpyWdxXfM1G044
+         7rWsWK+qfVtI9z/wM3mMUsitbDZw4ZGze71vDYLzELe/HRkIAVJ5DrPNSuBgvu0bVYEJ
+         Sybg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=U3ZRXIlRWwvWoLDZdmQ56RZ0gFezjkpjYPha+wm5K3U=;
+        b=kxW7wJH9VCAZa4uPTyu32bs/o4qRUEqhbyJwlYmqLp5u0zmKI8eCcnSCHephQnnhTd
+         YLpGQBtKpfDaHer8+R7Ewnt6G6J39tJXEUyh75WTH0hREfWjvtjWSWL1OC7WGNGwHyd7
+         Ds2RcXUuh/54N37OUMIs3WmxQ3wImOvIMyrdyamSy0cBtbvS3NFrbWHrG/NNusRri1zC
+         Yogs5aW354+H7C6du3+kKuf547Gi2oYkwScEDcf6ETLpxaSpAU8UJlmAHAlR2g21RxSY
+         yCGGJzidvFoiYe4eQV4ssBNJikgzsfOpWsuK/qawV52yiaEIQjob6I87ZV7Ra1NJqx/s
+         +Pkg==
+X-Gm-Message-State: APjAAAWs+oouhWAVvZxgOQ0yS1oaBgoV9a7n5tfIzvf7QTv7zcd4oBTN
+        qrjx+PretW/TDMI6GL9/paA0OA==
+X-Google-Smtp-Source: APXvYqwTtb70ZLa4XG3CVFherIkqwl8SnXDec72cYdEZEwp+wSp84DKi2sWcfMgVbgQzvzTCCIN7CQ==
+X-Received: by 2002:a17:90b:8d1:: with SMTP id ds17mr879231pjb.33.1581538692564;
+        Wed, 12 Feb 2020 12:18:12 -0800 (PST)
+Received: from localhost ([205.175.106.8])
+        by smtp.gmail.com with ESMTPSA id k8sm1424008pgg.18.2020.02.12.12.18.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Feb 2020 12:18:11 -0800 (PST)
+Date:   Wed, 12 Feb 2020 12:18:10 -0800
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Parth Gala via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Parth Gala <parthpgala@gmail.com>
+Subject: Re: [PATCH 0/5] object.c: localize global the_repository variable
+ into r
+Message-ID: <20200212201810.GB4364@syl.local>
+References: <pull.545.git.1581535151.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Received: from [172.29.8.74] (12.139.157.2) by BY5PR04CA0026.namprd04.prod.outlook.com (2603:10b6:a03:1d0::36) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2707.24 via Frontend Transport; Wed, 12 Feb 2020 19:50:24 +0000
-X-Originating-IP: [12.139.157.2]
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 17f5b1e5-29bc-47cb-e41a-08d7aff4cd65
-X-MS-TrafficTypeDiagnostic: MWHPR20MB1663:
-X-Microsoft-Antispam-PRVS: <MWHPR20MB166316CE6CB961F95E6AD5A6A41B0@MWHPR20MB1663.namprd20.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:3383;
-X-Forefront-PRVS: 0311124FA9
-X-Forefront-Antispam-Report: SFV:NSPM;SFS:(10009020)(39840400004)(136003)(366004)(396003)(346002)(376002)(199004)(189003)(31696002)(66476007)(66556008)(316002)(66946007)(86362001)(52116002)(8936002)(81156014)(16576012)(81166006)(31686004)(8676002)(2616005)(26005)(16526019)(6486002)(2906002)(6916009)(4744005)(186003)(956004)(5660300002)(36756003)(508600001);DIR:OUT;SFP:1101;SCL:1;SRVR:MWHPR20MB1663;H:MWHPR20MB1583.namprd20.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
-Received-SPF: None (protection.outlook.com: cedaron.com does not designate
- permitted sender hosts)
-X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: SPlhCoPXMYdDMX/wo+rPqqf6Em04DaHVHE8LsJTL+/UZC1cyEEEpz7eaWg8KGzCOouATY0QMA4Cndr93Pd0m0mgjIphJbV6BerIa2RBc4czVCpUcxaAAU1yRROy6ADqb5bnVByjWVtD2PuAKO92UXW+tnd09ebD7FZOXg33HE/yPk1Kenvdfdj7l1zmiFwvblF2xu4UXMRJ1W5rWdVhHQYFEtwcen/qlAADrO37vJh8NYMqCPcBUDkjbywfQH/yGxFLZNXlT9YEdaUNojmKtUkAyZtAbEF+LmYCq9H7zMCoaKePPGYTt9d+UFyfJ9QtJfVtjoPekIyu+p1pcJrmdqHlFijC5DP98CG3sqmM9XliOJA1wEycZ6E2oe11OtnfbyifsXB4weSGMxRFq9VHPiGZ39AH5TOngti0Dd6gLKGPDcnue3jDI6GQXbt80inaD
-X-MS-Exchange-AntiSpam-MessageData: UZt71g9PdmVZIWnpJXWv5yMIKIxCwU/ElalbyrWQ7PZOLFFJspx7KYuwkQ+54YelyP03Jg9pBaGotoPe/7Q6vL80AxL2UXfUMWSo3Df1BY0N+vTWCIfLsCWUGOlsOMVK0yo5rmwqTsKIw9E3mHWCpA==
-X-OriginatorOrg: cedaron.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 17f5b1e5-29bc-47cb-e41a-08d7aff4cd65
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Feb 2020 19:50:25.2300
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: a1e0d90e-c09b-4bb6-9534-4bb03188f5a0
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 9PYOeNx+2gNOvNrKiT2olo8fo44Uthtx5bTr2vWoPKQaFcl4OjbDyuXrdeiGry4woLPHXDa6U5t61KQS2Ho3/Q==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHPR20MB1663
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <pull.545.git.1581535151.gitgitgadget@gmail.com>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We got ourselves in a bit of a pickle. We are trying to write a custom 
-diff/merge tool for some of our files in source control, but to display 
-a readable diff, we need to read other files, that may or may not have 
-changed.
+Hi Parth,
 
-We think we can solve this problem with two more variables in the 
-command line that tell us which commit hash to fetch the additional 
-files from (yes, it can be the working tree; we'd like to know if it is).
+On Wed, Feb 12, 2020 at 07:19:06PM +0000, Parth Gala via GitGitGadget wrote:
+> I have created this commit in response to
+> https://github.com/gitgitgadget/git/issues/379#issue-503866117.
 
+Fantastic! Thank you for working on this.
+
+> All the functions in object.c which relied on 'the_repository' have
+> been modified.  The functions calling these functions in object.c
+> consisted calls to other functions using 'the_repository' as well, and
+> although I intended to use 'r' at all those instances, I thought it
+> would make more sense when we would deal with their callee functions
+> in another similar patch. What do you think ?
+
+That makes sense, and follows the conventions that other similar
+refactorings have done in the past.
+
+Any reason why you decided to start with 'object.c'? Not that any such
+reason is necessary, I'm just curious about how you came to this
+decision.
+
+> Signed-off-by: Parth Gala parthpgala@gmail.com [parthpgala@gmail.com]
+
+Even though you *do* need a 'Signed-off-by' in each of your patches,
+adding it in the cover letter is not necessary.
+
+> Parth Gala (5):
+>   object.c: get_max_object_index and get_indexed_object accept 'r'
+>     parameter
+>   object.c: lookup_unknown_object() accept 'r' as parameter
+>   object.c: parse_object_or_die() accept 'r' as parameter
+>   object.c: clear_object_flags() accept 'r' as parameter
+>   object.c: clear_commit_marks_all() accept 'r' as parameter
+>
+>  builtin/checkout.c               |  3 ++-
+>  builtin/fsck.c                   |  8 +++++---
+>  builtin/grep.c                   |  6 ++++--
+>  builtin/index-pack.c             |  5 +++--
+>  builtin/log.c                    |  3 ++-
+>  builtin/name-rev.c               |  5 +++--
+>  builtin/pack-objects.c           |  3 ++-
+>  builtin/prune.c                  |  3 ++-
+>  bundle.c                         |  8 +++++---
+>  http-push.c                      |  3 ++-
+>  object.c                         | 32 ++++++++++++++++----------------
+>  object.h                         | 12 ++++++------
+>  pack-bitmap.c                    |  5 +++--
+>  reachable.c                      |  6 ++++--
+>  refs.c                           |  3 ++-
+>  revision.c                       |  3 ++-
+>  shallow.c                        | 13 ++++++++-----
+>  t/helper/test-example-decorate.c |  7 ++++---
+>  upload-pack.c                    | 19 ++++++++++++-------
+>  walker.c                         |  3 ++-
+>  20 files changed, 89 insertions(+), 61 deletions(-)
+>
+>
+> base-commit: 0ad714499976290d9a0229230cbe4efae930b8dc
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-545%2FParthGala2k%2Flocalize-the_repository-variable-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-545/ParthGala2k/localize-the_repository-variable-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/545
+> --
+> gitgitgadget
+
+Thanks,
+Taylor
