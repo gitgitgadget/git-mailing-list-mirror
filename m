@@ -2,122 +2,93 @@ Return-Path: <SRS0=D6Hn=4A=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,FSL_HELO_FAKE,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6449DC35242
-	for <git@archiver.kernel.org>; Wed, 12 Feb 2020 00:21:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F03D8C35242
+	for <git@archiver.kernel.org>; Wed, 12 Feb 2020 01:36:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 36561206CC
-	for <git@archiver.kernel.org>; Wed, 12 Feb 2020 00:21:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C14A720724
+	for <git@archiver.kernel.org>; Wed, 12 Feb 2020 01:36:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="CyQX5UZ5"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ISKCt3fT"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728047AbgBLAVg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Feb 2020 19:21:36 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:59124 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727985AbgBLAVg (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 11 Feb 2020 19:21:36 -0500
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id D05FA60478
-        for <git@vger.kernel.org>; Wed, 12 Feb 2020 00:21:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1581466895;
-        bh=JVb/d46ukEXijtCcvfe5TQHY/QsLNp9xaiTVhpaZMWk=;
-        h=Date:From:To:Subject:Content-Type:Content-Disposition:From:
-         Reply-To:Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:
-         Resent-Cc:In-Reply-To:References:Content-Type:Content-Disposition;
-        b=CyQX5UZ5kmEDZa9DM4cNbQmU6ee2+xnT0ApT0YUYQzf9rKft+ZjGQmBpF3CUN54GM
-         s2/tzKEnUeNIfd6W4VgbpsEUUHwawuolMJKdc/NGXXo8ZMbR0I1ihzFmDt3szyblLr
-         NAOgh1dEobmj1uSWgT6DkhlXDx3a1BwXuFjm66s2yJT3XtJyANAbehFy5+aKeBLFFk
-         54dMcTKai4TJ7PqBAjKgHKzsFnqJJp3FDrL+u6594yg5GiVtByw36hbu1pQbDbKkBe
-         jO975CGQVUYJBWVzIDeETPJIfIvyYUl5U7ouQ4WnY8YXNhM6VZ/laX6wcj7hhCvQUS
-         /RS2qJkKcT1hbDUDoLQM3lxT4tlcyfX8s+N71Q1kbzPV4qNt8lnundU+c8jerNYWYy
-         E8Ri0YaTFN3PaCTyP7pUbsoMNFdnWeeGX45l3+/kZ9oMZR9xFk2FDkXxYJ2fubqFRC
-         6PFgxRqr8jHptJW+e7BnHJ4FSw4/lQPbJOpGQreDCHvjEY0i3cv
-Date:   Wed, 12 Feb 2020 00:21:29 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     git@vger.kernel.org
-Subject: Git representative on AsciiDoc Working Group
-Message-ID: <20200212002129.GB6464@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
+        id S1728180AbgBLBfl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Feb 2020 20:35:41 -0500
+Received: from mail-pg1-f170.google.com ([209.85.215.170]:46297 "EHLO
+        mail-pg1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727865AbgBLBfl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Feb 2020 20:35:41 -0500
+Received: by mail-pg1-f170.google.com with SMTP id b35so185247pgm.13
+        for <git@vger.kernel.org>; Tue, 11 Feb 2020 17:35:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=+9nqptLpZrECQnmjBfLnVIBOvBVwolqv9w93hsEc4WI=;
+        b=ISKCt3fTItUIn/Y8vDYgSPpBHn4RdkrlZnzPRIDdzLnCrV1btoWzuR7m/R5GLSYYJ9
+         k/x1D8XWRMdwMzVgSykrahAF+b3NW5dt1PLRG/l0QpdiahRdzC5nc3FFqorPQsv6Po/6
+         yWaeG13GZb48E6oHRDzsWpG2utlSBRIjGpcaVNMzblc95SazmPyKKJiXNarmRu02lGGC
+         uc1F5B+nNyJx+4mnwB2P4MXc2lbm63SBdiao7jVIpSOrBPyCfsryeBxJ+ioO1akoQXaj
+         75hB/VY57ocFW6flvpQ/3JtqjZi7NOIyOgUF0X2TBsey45/wgmJ0/I6nReRrn9HBgySP
+         C6sg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=+9nqptLpZrECQnmjBfLnVIBOvBVwolqv9w93hsEc4WI=;
+        b=sNarP3RD0pxTHvNt+dJvfGB8vVF9Vwr//aOvvVkLno0ptMwngD6Hx+cKH4RrFJmZnl
+         oV6WH8gI1byBXl38CNtvda5iQLAxuHq7DH9wjbwJbAtr08N/vVkYxbkgfnFAH37+j2Q3
+         xE89o8ztM7YNj7Br4OeYFZXMzh6dw4BO8Zep/tqzmOqAiH3qG/6nO2hI9syoGOACWf8N
+         EDtoYVGawuUbFqgfzRNVGiNVa0JLoYH4V8UDIBlsLe1ctthgVWoMNiEoLEYJ9dSM08ga
+         pAXxeVUEwduD6jf+1Q7fz77FlNJYwvfKDlgRVOx1gTHoX1eoDqaSOE+JZV7HfqO3sxUX
+         LCNg==
+X-Gm-Message-State: APjAAAXGIaKcW8SIoWOfE+9oOcbmP4+fhL3uM0jtcGJdyb/XqhD4a4Je
+        7dWVB6drbRL3hwm8pWi+DE8=
+X-Google-Smtp-Source: APXvYqxtrK0T8XYVZgDk6eg4mNjxMOH5ESD+SZZTZ361aEwaXKZO0mK3fTyg6cyqsFdAAM3krvRZxA==
+X-Received: by 2002:aa7:9633:: with SMTP id r19mr6229177pfg.90.1581471339445;
+        Tue, 11 Feb 2020 17:35:39 -0800 (PST)
+Received: from google.com (240.242.82.34.bc.googleusercontent.com. [34.82.242.240])
+        by smtp.gmail.com with ESMTPSA id k9sm4300367pjo.19.2020.02.11.17.35.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Feb 2020 17:35:38 -0800 (PST)
+Date:   Wed, 12 Feb 2020 01:35:37 +0000
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Toon Claes <toon@iotcl.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: URL rewrites for submodules
+Message-ID: <20200212013537.GA18770@google.com>
+References: <87wo8ucgar.fsf@iotcl.com>
+ <xmqqv9oexfnr.fsf@gitster-ct.c.googlers.com>
+ <87sgjgdeh5.fsf@iotcl.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="+g7M9IMkV8truYOl"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.4.0-3-amd64)
+In-Reply-To: <87sgjgdeh5.fsf@iotcl.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi,
 
---+g7M9IMkV8truYOl
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Toon Claes wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
 
-I've had folks from OpenDevise reach out to me and let me know that they're
-launching a standardization initiative for AsciiDoc under the Eclipe
-Foundation's open standardization process.  The goal is to standardize the
-language, ensure compatibility across implementations, and provide a refere=
-nce
-implementation, with input from implementers, users, and others.
+>> If you define them instead in $HOME/.gitconfig, that would apply
+>> equally to all repositories you would access.
+>
+> Yes, that makes sense to me too. But in my testing adding URL rewrites
+> did not apply to submodules anyway.
 
-They'd like to extend an invitation for the Git project to send a
-representative, since we're a significant user of AsciiDoc.  I'm sending out
-this email to see what the project thinks and if anyone would be interested=
- in
-fulfulling that role.
+Hm, that doesn't match my experience --- I've been able to use URL
+rewrite rules reliably.
 
-Here's a bit of a summary on what will be involved:
+Do you have a sequence of commands I can run to reproduce the issue
+you're running into?
 
-  As a Working Group member, the Git project will have the opportunity to:
-
-  - Influence the scope and roadmap of the AsciiDoc standardization effort
-  - Help define the AsciiDoc specification, including terminology, syntax,
-  document model, behavior, and extension points
-  - Establish compatibility rules that ensure portability and
-  interoperability of content and language extensions
-
-  To learn more about the AsciiDoc Working Group and how it works, please
-  refer to the welcome messages on the mailing list:
-
-  - https://www.eclipse.org/lists/asciidoc-wg/msg00001.html
-  - https://www.eclipse.org/lists/asciidoc-wg/msg00002.html
-
-If anyone has any questions, I'll do my best to answer them, or to pull in =
-folks
-who can if I can't.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---+g7M9IMkV8truYOl
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.19 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl5DRQkACgkQv1NdgR9S
-9ouXIA//YtVXQQvP8VB0V+nU0ohX9Iu+lH9EC/uqZnySdUR/hHYQI9LtZHOlIU0I
-o4if3ZEELHgFzlojz7VS0/ON9OxCXQsFZzfZvL+NPhEQzZWO2ufuWgXQWH6mEBOr
-6OzZMN/VF8mTE49bh3wC1STm8tCPNwHmn5HrPW2v1m15eDMJSHQLms7iJ/IY/MBB
-P4KcLbVCdvP/he4Y3yvy7dRK1ZQzSRG28gWMXCbtCTOFFO49LJS1OhzWkzWhYHSX
-QTuD37Jsv7yWvu7mNQUpi70rU4goTp8rVqG8uQBDi0OxByOMbVWpAGoGv59rYkCJ
-XY9uZTtJAOlJ/2eyrxJm5VA405zJ0akBwZLlbGWPoxxILLwmLrWLcmKyv6/UJaqU
-a5wWi779VspBbqjWgTUzOgyvNO8GNqFqgQ8KdhcCjF+xPhc43cXDzbwegICuG5lB
-nbpROabGbSvSbsg051VYQgmOJxOPTEjUwKVQz6ChpMP8ykE7mkB94WCBsZ0e48Rx
-7JwIFOXG1oAs0hniTzdftnd9+fsYJK5QeD+3g09Jp8yGmhSk7iKMqV4cZq0+fMIj
-YqlmdKJIJkEslLMjlWKdh3CvslDqs4eIhEElRM5cF7Ye5f/Af/PiGJpPcAof0sOX
-KF/+4lMqw9cESJxUvDxSFLnYnIHkV+NrTFZUKIIGWn6jKfohoBY=
-=s7Qq
------END PGP SIGNATURE-----
-
---+g7M9IMkV8truYOl--
+Thanks and hope that helps,
+Jonathan
