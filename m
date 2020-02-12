@@ -2,95 +2,119 @@ Return-Path: <SRS0=D6Hn=4A=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B2D3C2BA83
-	for <git@archiver.kernel.org>; Wed, 12 Feb 2020 18:19:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B0B45C352A4
+	for <git@archiver.kernel.org>; Wed, 12 Feb 2020 19:19:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1557F20848
-	for <git@archiver.kernel.org>; Wed, 12 Feb 2020 18:19:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 858E22082F
+	for <git@archiver.kernel.org>; Wed, 12 Feb 2020 19:19:15 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="dJ9YlP04"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RNfqcBRK"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728794AbgBLSTS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Feb 2020 13:19:18 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59334 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727054AbgBLSTR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Feb 2020 13:19:17 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id EBB0C4B6D0;
-        Wed, 12 Feb 2020 13:19:16 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=BzWiGANS31jr
-        PG6wy12ytmwAG7g=; b=dJ9YlP04qP+DctyhVXaPUBMFndsluDfp5atZNV+e2G23
-        EgKsp9dr9vEE8nCPhFRdKJLFGgNXCvZLOlU6F0jrNAbBv24YlU8SsgHzoVyFIKf8
-        kxUZwhHod2GCtRQ4I7XobAPYKWmGeMV1tYuKpmikXp9xcgKYZeHfCoMOytTVPqc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=t+Xkaw
-        YdXaAUKApKyezunf5nfmQ6UdKSPuElM4DVt866mljutahL0ULniMg0e29plHw00r
-        JYD+qZ493kMG4p80ZE0AxVHJKXxwniDKQvllqeZoxs4uZ27H2p9T90O816cn0CEI
-        QO47MMfHKKq58TrTsHVOcmniHKq1/+fSba9RM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E10EC4B6CF;
-        Wed, 12 Feb 2020 13:19:16 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 49FB54B6CD;
-        Wed, 12 Feb 2020 13:19:16 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>, Garima Singh <garimasigit@gmail.com>
-Cc:     git@vger.kernel.org, peff@peff.net, dstolee@microsoft.com,
-        martin.agren@gmail.com
-Subject: Re: [PATCH v3 0/3] builtin/commit-graph.c: new split/merge options
-References: <cover.1580430057.git.me@ttaylorr.com>
-        <cover.1581486293.git.me@ttaylorr.com>
-Date:   Wed, 12 Feb 2020 10:19:14 -0800
-In-Reply-To: <cover.1581486293.git.me@ttaylorr.com> (Taylor Blau's message of
-        "Tue, 11 Feb 2020 21:47:50 -0800")
-Message-ID: <xmqqy2t7u0rh.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1728852AbgBLTTO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Feb 2020 14:19:14 -0500
+Received: from mail-wm1-f50.google.com ([209.85.128.50]:51689 "EHLO
+        mail-wm1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727231AbgBLTTO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Feb 2020 14:19:14 -0500
+Received: by mail-wm1-f50.google.com with SMTP id t23so3613547wmi.1
+        for <git@vger.kernel.org>; Wed, 12 Feb 2020 11:19:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=F4hEVXLuXIRK/E4EdMJKxYmJ98cSVHXHJUVXCc4MVH8=;
+        b=RNfqcBRKbVlYt9dgKeA3ZNIsR2BJ71TgUz88Vh/l3wHJt55O/VXu3kTtBsoxpGgCJ+
+         svbEBYEbbNqt9tOchE3MsKqDYG2Hi6LCN4qs95FFCqlj5hT02Dw2gmgLiRzjo/+K6W/N
+         OR9BHL0Q5AN1NPIhLvQnPefMZwAxcbwfKCp6AXlXMIFsscFvxYI5dNcpuLzUmrhjje7o
+         0B3AvFDmeE0TAHilRc6tVoMYk0EfFIl2GX2rrY+NIRS4gnvZr1KmLBHaWyBPO5xjbqUN
+         iEgfHsAR/byd4DtChJOnvmV8gwBTUcfpNoWgUmxFJQmm16bfnAwEG8UyX9WqX3XWZmAt
+         hHKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=F4hEVXLuXIRK/E4EdMJKxYmJ98cSVHXHJUVXCc4MVH8=;
+        b=I0xsT3SCRdO2/A4X5iJD2zitOQG+pdU1DH805CscJZ1s7HcSFzQejhTa2QjanqGwsI
+         kWKCp9etXZ4tWoTTrbOnlnRiClSkbH3hMglrjfoEKyhBT3GI0GdUsWLeVHPBMhyS9Bf4
+         0LIlqynEoxOyvqBLOiGJenf5s9mL6i0iKxKBb0pMk3gQQkx2cG1ZQzhGNzGN32AdkNLq
+         MRtxsloq5lquoak7juQV4C4/vfKgWYy9mtwx/z6YmEAJrBB6dYUwhfJCzeElsjUr/VDi
+         cXiOivEzMfgDM4QrTNSSRHI2xGRaKDjV+ucjaCi64L+A9s1cGtCXjj9TT8S1TYezUah1
+         81hQ==
+X-Gm-Message-State: APjAAAWF5d2G6qZrukzH/TxXpwNxF0Y//965yjY+TiKnatqwyr2SEZ9b
+        HMGT03P6gSOLeAeoIyV/WMx+VdY+
+X-Google-Smtp-Source: APXvYqxoS6AfMlcsDYl19JbPl7kGCGiVFuDHO9WwhD7L59pTAcGjRo+k6cZbqZ1m+Qg4LKhuv7cR2Q==
+X-Received: by 2002:a7b:c1da:: with SMTP id a26mr578805wmj.155.1581535152286;
+        Wed, 12 Feb 2020 11:19:12 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id p5sm1732538wrt.79.2020.02.12.11.19.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Feb 2020 11:19:11 -0800 (PST)
+Message-Id: <pull.545.git.1581535151.gitgitgadget@gmail.com>
+From:   "Parth Gala via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 12 Feb 2020 19:19:06 +0000
+Subject: [PATCH 0/5] object.c: localize global the_repository variable into r
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 2DA909B8-4DC4-11EA-937C-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Parth Gala <parthpgala@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
+I have created this commit in response to 
+https://github.com/gitgitgadget/git/issues/379#issue-503866117. All the
+functions in object.c which relied on 'the_repository' have been modified.
+The functions calling these functions in object.c consisted calls to other
+functions using 'the_repository' as well, and although I intended to use 'r'
+at all those instances, I thought it would make more sense when we would
+deal with their callee functions in another similar patch. What do you think
+?
 
-> Attached is what I anticipate/hope to be the final reroll of my series
-> to add new arguments to the 'git commit-graph write --split' flag to
-> allow callers to force or prohibit the commit-graph machinery to merge
-> multiple commit-graph layers.
->
-> I was keeping an eye out for more discussion about whether or not these
-> flags were acceptable by reviewers. Martin =C3=85gren and Derrick Stole=
-e have
-> both chimed in that they seem OK.
->
-> Since there hasn't been much more discussion in this thread, I replayed
-> this series on top of 'tb/commit-graph-use-odb' (which was itself
-> rebased on 'master'). I picked up a couple of ASCIIDoc changes along th=
-e
-> way, and a range-diff is included below.
+Signed-off-by: Parth Gala parthpgala@gmail.com [parthpgala@gmail.com]
 
-I haven't had a chance to form an opinion on this topic, and will
-let others comment on it first.
+Parth Gala (5):
+  object.c: get_max_object_index and get_indexed_object accept 'r'
+    parameter
+  object.c: lookup_unknown_object() accept 'r' as parameter
+  object.c: parse_object_or_die() accept 'r' as parameter
+  object.c: clear_object_flags() accept 'r' as parameter
+  object.c: clear_commit_marks_all() accept 'r' as parameter
 
-This topic and the "changed paths bloom filter" topic obviously and
-inevitably have trivial textual conflicts.  When today's integration
-result is pushed out in 6 hours or so, please see if the resolution
-is reasonable in 'pu'.
+ builtin/checkout.c               |  3 ++-
+ builtin/fsck.c                   |  8 +++++---
+ builtin/grep.c                   |  6 ++++--
+ builtin/index-pack.c             |  5 +++--
+ builtin/log.c                    |  3 ++-
+ builtin/name-rev.c               |  5 +++--
+ builtin/pack-objects.c           |  3 ++-
+ builtin/prune.c                  |  3 ++-
+ bundle.c                         |  8 +++++---
+ http-push.c                      |  3 ++-
+ object.c                         | 32 ++++++++++++++++----------------
+ object.h                         | 12 ++++++------
+ pack-bitmap.c                    |  5 +++--
+ reachable.c                      |  6 ++++--
+ refs.c                           |  3 ++-
+ revision.c                       |  3 ++-
+ shallow.c                        | 13 ++++++++-----
+ t/helper/test-example-decorate.c |  7 ++++---
+ upload-pack.c                    | 19 ++++++++++++-------
+ walker.c                         |  3 ++-
+ 20 files changed, 89 insertions(+), 61 deletions(-)
 
-Thanks.
+
+base-commit: 0ad714499976290d9a0229230cbe4efae930b8dc
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-545%2FParthGala2k%2Flocalize-the_repository-variable-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-545/ParthGala2k/localize-the_repository-variable-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/545
+-- 
+gitgitgadget
