@@ -2,108 +2,129 @@ Return-Path: <SRS0=D6Hn=4A=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 18946C2BA83
-	for <git@archiver.kernel.org>; Wed, 12 Feb 2020 04:34:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 90E0EC352A4
+	for <git@archiver.kernel.org>; Wed, 12 Feb 2020 05:47:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id DE2FC2073C
-	for <git@archiver.kernel.org>; Wed, 12 Feb 2020 04:34:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 60B5E2073C
+	for <git@archiver.kernel.org>; Wed, 12 Feb 2020 05:47:55 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Shin9GNM"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="Ql7W4hTY"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727966AbgBLEew (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Feb 2020 23:34:52 -0500
-Received: from mail-lj1-f179.google.com ([209.85.208.179]:42750 "EHLO
-        mail-lj1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726960AbgBLEev (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Feb 2020 23:34:51 -0500
-Received: by mail-lj1-f179.google.com with SMTP id d10so678855ljl.9
-        for <git@vger.kernel.org>; Tue, 11 Feb 2020 20:34:50 -0800 (PST)
+        id S1728249AbgBLFry (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Feb 2020 00:47:54 -0500
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:33913 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725843AbgBLFrx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Feb 2020 00:47:53 -0500
+Received: by mail-pl1-f194.google.com with SMTP id j7so527607plt.1
+        for <git@vger.kernel.org>; Tue, 11 Feb 2020 21:47:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:in-reply-to:references:user-agent:date
-         :message-id:mime-version;
-        bh=/aA1o9eOZp3Ajsn/cdDvGgsPX9LZFSgwM2ra5bOHyys=;
-        b=Shin9GNM51yEkRcAFioldEW/8QL7Locw/hoRorUZy3H2tXBXZVL90/pHDsHc2p8RBo
-         GPsL4KOh5WwNMqQkfQsTGsRtjUPQbdRE2LaU/lXmKHGxFfCU+AcSwhfYn0gcqHT12Hbx
-         cKjPIP9aPNr3Y9yXuFSxcIToHCHV/AWTFNIySvgmy+4yipYyiT5m6h4uNZdPLgSrgMCQ
-         LfBmS5Kwdnm6AyEIPBlW9jnkXKeZ5wMV9/UTo5VzFQ5QbJErBQYMiXx/xYFbMPiZ5fJ5
-         vH8CQlGchCO8/v0dPTBIlEdNt0A9zKthvcymTOHu88b/37Cvlnt8vqwMNYGFSFzuZgzp
-         Efcw==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=sC/D/e9+2AyF5QfgHstvgi1Jq6hnrBDosp21U36E1eM=;
+        b=Ql7W4hTYpgAUnhT+/QUs7/y7VZV6X/DYd6JGg1YKmT+rxT/boWdRSi1MrdD3BKQWcc
+         vQvFyRnQDmQmuRvpNuykV84O8Kq+aLmSLRMHZ7owNtylemQgcSgy01+SPLDiiezbFO/f
+         YapMLy8xhuXEEbb9jHbl1SwYOg+Sck54yholGyEm+CutaKeTFgwEoiymmu9g/zDnkAwo
+         eBReLxrrDQxxrqBrl7STy06KCysqfGUvoJGnS5ayogPw7gWz/CE+mv0z1fhhTzoMPN3j
+         uqzof16I3Fz9URCQ1jZhDGHPeJut1ZPyJ/erHhT9sO0UezDIgU2DlGbi+8Tgy2ZO/342
+         Cz7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:in-reply-to:references
-         :user-agent:date:message-id:mime-version;
-        bh=/aA1o9eOZp3Ajsn/cdDvGgsPX9LZFSgwM2ra5bOHyys=;
-        b=TM1qj7SO0o0tvX9QBB2H7gQBSDSXbS18yE2qi0BWGwoOlwl715wAYA68JYsrQ8SsYa
-         NZkSu1snKrLs+d3Un3BY72uq2lT/59lk7+CumQ75plJize586A1x9VDsI4WK46QSF/Ms
-         vepYDXKar6sROLqpt1LFY9u5RFJP5EuMRiCdMJDPj098WqM7wI3CLANCbJXT9iCgooi8
-         HAa4reCkcjOfhKfEBAMrufaYaexDtcJZ8Xnsqbl0CBRZFe+Xcd977+muJ6OfQRurdesW
-         k/e2vz4dTGZLaYvzH5pB9RSyLYMzMv8ddIWeRv++TB5ZAoNNuKE18kxbxFenX1o06qLL
-         RxxA==
-X-Gm-Message-State: APjAAAXw7StHJGAB4cyLaDDUzeltiCSw9M2PoRM12ECnahUrTYuTJ/eN
-        hQp9NQEw63qlSKR8drot55IRcNz7
-X-Google-Smtp-Source: APXvYqxgWJfy5qKs4mWvqqgcKiyI48oVCsNV2s4X4K6ymSui36gy4XUzzuwMEAhAkKzEAqW73wi0bA==
-X-Received: by 2002:a2e:b60d:: with SMTP id r13mr6353009ljn.40.1581482089134;
-        Tue, 11 Feb 2020 20:34:49 -0800 (PST)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id q14sm2745948lfc.60.2020.02.11.20.34.47
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=sC/D/e9+2AyF5QfgHstvgi1Jq6hnrBDosp21U36E1eM=;
+        b=ucoKJMVHV0fE4uN/UC2oXwuN4smouqq1BDNvDd89QDWeFNVA9THQrl5NKQdg5Pjjw5
+         yREIw6D+BitOyyMGJ3R5QISS6OX2YiH4CHVvSTfMuu67lkG1FlNqwuhEDMmfP1/PPFkp
+         V18mL4Zo5J9hP8Nb/F8S5PxQTn/evHFWQ1gkkuDZly8QVm9enD7BGtRhbY93icPEbtin
+         eU+rIhyoVqkR6T4bzq0W7eXgkSYnkKptW5wrHFx295Rn2I+BcWq0vUXCt43YenaF1nQh
+         4Byn6wZh3UVHQ4aEtWahszn9H150Lz2AB4d3gj6yFIP2QCSOpABdN4QqGTvZmxpQ+3ii
+         MrNw==
+X-Gm-Message-State: APjAAAXCysAzJUistvc/cv4nAi3Qd3pHGGO8JhH7uCEnutqkjxnalftk
+        gobwY04TXwpbmugwOh7C7N6wS46Y0p7N4A==
+X-Google-Smtp-Source: APXvYqxbneVFKHR1OdgkOUqBE+ZtSaKGpHb/pvn6RY9DZhgCpNIEWSCzHp35+dBssfBUx30qjQ3L2Q==
+X-Received: by 2002:a17:90a:7781:: with SMTP id v1mr8107395pjk.108.1581486472735;
+        Tue, 11 Feb 2020 21:47:52 -0800 (PST)
+Received: from localhost ([2601:602:9200:32b0:e4b4:608a:57ae:c0a6])
+        by smtp.gmail.com with ESMTPSA id h62sm6205370pfg.95.2020.02.11.21.47.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Feb 2020 20:34:48 -0800 (PST)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Aleksey Midenkov <midenok@gmail.com>,
-        Abhishek Kumar <abhishekkumar8222@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: Git tedious verbosity
-In-Reply-To: <20200211195627.GF2127797@coredump.intra.peff.net> (Jeff King's
-        message of "Tue, 11 Feb 2020 14:56:27 -0500")
-References: <CAHk66ftUsKU2+Uhy-a7V5QcRdO7ShcYUk28qz7WAm28wGFmPOg@mail.gmail.com>
-        <CAF8BazCpFyr_tpayWVtbk7V2LAtXaVmEKTCRQbgLYg4AvmvLvQ@mail.gmail.com>
-        <20200211195549.GE2127797@coredump.intra.peff.net>
-        <20200211195627.GF2127797@coredump.intra.peff.net>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
-Date:   Wed, 12 Feb 2020 07:34:46 +0300
-Message-ID: <87k14se849.fsf@osv.gnss.ru>
+        Tue, 11 Feb 2020 21:47:51 -0800 (PST)
+Date:   Tue, 11 Feb 2020 21:47:50 -0800
+From:   Taylor Blau <me@ttaylorr.com>
+To:     git@vger.kernel.org
+Cc:     peff@peff.net, dstolee@microsoft.com, gitster@pobox.com,
+        martin.agren@gmail.com
+Subject: [PATCH v3 0/3] builtin/commit-graph.c: new split/merge options
+Message-ID: <cover.1581486293.git.me@ttaylorr.com>
+References: <cover.1580430057.git.me@ttaylorr.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <cover.1580430057.git.me@ttaylorr.com>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Hi everybody,
 
-> On Tue, Feb 11, 2020 at 02:55:49PM -0500, Jeff King wrote:
->
->> On Tue, Feb 11, 2020 at 05:19:53PM +0300, Aleksey Midenkov wrote:
->> 
->> > Nice info, thanks. Does that disable maintenance messages like:
->> > 
->> > Updated 1 path from the index
->> 
->> I don't think it does. Usually how this works is that we add new
->> messages which we think might be helpful, enable them by default (since
->> users aren't likely to find out about them if they never see them!), and
->> then if they turn out to be annoying or verbose, add an advice.* config
->> option to allow people to avoid them.
->> 
->> The message quoted above is a relatively new one, and I don't think it's
->> hit that third step yet. Patches welcome. :)
->
-> Oh, and if you want to see the complete list, look for "advice.*" in
-> "git help config".
+Attached is what I anticipate/hope to be the final reroll of my series
+to add new arguments to the 'git commit-graph write --split' flag to
+allow callers to force or prohibit the commit-graph machinery to merge
+multiple commit-graph layers.
 
-It says:
+I was keeping an eye out for more discussion about whether or not these
+flags were acceptable by reviewers. Martin Ågren and Derrick Stolee have
+both chimed in that they seem OK.
 
-   All advice.* variables default to true, and you can tell Git that you
-   do not need help by setting these to false:
+Since there hasn't been much more discussion in this thread, I replayed
+this series on top of 'tb/commit-graph-use-odb' (which was itself
+rebased on 'master'). I picked up a couple of ASCIIDoc changes along the
+way, and a range-diff is included below.
 
-If there were an option to set that default to 'false' (advice.default
-maybe?), it'd have answered the demands of the experts, I think.
+Thanks again.
 
--- Sergey
+Taylor Blau (3):
+  builtin/commit-graph.c: support '--split[=<strategy>]'
+  builtin/commit-graph.c: introduce '--input=<source>'
+  builtin/commit-graph.c: support '--input=none'
+
+ Documentation/git-commit-graph.txt |  51 ++++++++-----
+ builtin/commit-graph.c             | 115 +++++++++++++++++++++++------
+ commit-graph.c                     |  28 ++++---
+ commit-graph.h                     |  10 ++-
+ t/t5318-commit-graph.sh            |   4 +-
+ t/t5324-split-commit-graph.sh      |  53 ++++++++++++-
+ 6 files changed, 205 insertions(+), 56 deletions(-)
+
+Range-diff against v2:
+1:  6428dac6e5 ! 1:  e1635a0e34 builtin/commit-graph.c: support '--split[=<strategy>]'
+    @@ Documentation/git-commit-graph.txt: or `--stdin-packs`.)
+     +strategy and other splitting options. The new commits not already in the
+     +commit-graph are added in a new "tip" file. This file is merged with the
+     +existing file if the following merge conditions are met:
+    +++
+     +* If `--split=merge-always` is specified, then a merge is always
+     +conducted, and the remaining options are ignored. Conversely, if
+     +`--split=no-merge` is specified, a merge is never performed, and the
+2:  c7ba70e19d = 2:  655fe63076 builtin/commit-graph.c: introduce '--input=<source>'
+3:  7d6a608acd ! 3:  4e85c6f7e4 builtin/commit-graph.c: support '--input=none'
+    @@ Documentation/git-commit-graph.txt: walking commits starting at all refs. (Canno
+      +
+     +With the `--input=none` option, behave as if `--input=append` were
+     +given, but do not walk other packs to find additional commits.
+    -+
+    +++
+     +If none of the above options are given, then generate the new
+     +commit-graph by walking over all pack-indexes.
+     ++
+--
+2.25.0.119.gaa12b7378b
