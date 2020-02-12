@@ -2,94 +2,92 @@ Return-Path: <SRS0=D6Hn=4A=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D1BE5C352A4
-	for <git@archiver.kernel.org>; Wed, 12 Feb 2020 21:11:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C16BEC352A4
+	for <git@archiver.kernel.org>; Wed, 12 Feb 2020 21:13:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8E33B206DB
-	for <git@archiver.kernel.org>; Wed, 12 Feb 2020 21:11:09 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Et/91+1s"
+	by mail.kernel.org (Postfix) with ESMTP id 9347A206D7
+	for <git@archiver.kernel.org>; Wed, 12 Feb 2020 21:13:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727947AbgBLVLI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Feb 2020 16:11:08 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:64497 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727420AbgBLVLI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Feb 2020 16:11:08 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C4DB5A4B93;
-        Wed, 12 Feb 2020 16:11:07 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=nNangZEPqPHkR5bFhmOEkPVybUs=; b=Et/91+
-        1sOGzw6/fpsf0UZn/IQb+2DUwHk3Ur/wXswYHZezQS6EpKnLQbV5InALbQuCN1VJ
-        utmxn/uKK9c0saYDU5bnd1pzv+WbhAwe5sfm8JrzXzGhc+SgYJX6OLR0yyoAPPnh
-        DXGDREO3EbDY40Q+IcwyW0teNeP52KLuE5K3g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=E3BCwPBepNAvo18DAfP7HQsiUozOFUTv
-        yE8eNPMLaGrXCw40R6LdkaQ+xy/fmsPE7HhDfjuIj3avZbvReu4Jxfoap1LmN7f9
-        7RMvv1G1TcIvGj4rLpKwxxgJ3nDLmQ1Kfuex+cK1L4HZ7CB2z2cs8K/8eFuGuFf0
-        NoKXtIX4XeA=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id BCDB3A4B92;
-        Wed, 12 Feb 2020 16:11:07 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id E6CE0A4B8C;
-        Wed, 12 Feb 2020 16:11:04 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
+        id S1729047AbgBLVN4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Feb 2020 16:13:56 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:55246 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727420AbgBLVN4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Feb 2020 16:13:56 -0500
+Received: by mail-wm1-f67.google.com with SMTP id g1so3919701wmh.4
+        for <git@vger.kernel.org>; Wed, 12 Feb 2020 13:13:55 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=WTcXxM1vaVfK01MbrVTHucRbJ+esuSybn374X6KSGrQ=;
+        b=YRxZLkNUMgsJDm/OYZiyt0z91DkN9ZqX1MY9YuVLMnckGE28Dl9wSW/s0laliGsrxm
+         AhIHAgU/CKTvrlHBwZ8L5rngV6U0AlgnLwXgDX2R2S7dH/MlSZUR7t2bgtjmEyC1mr93
+         w/l6VLdaOEYloeYzdSbpj68gE31oYdxIa13ckz+RAlImn/hGrKQiN2ethRk4QpHeN0Sa
+         yPMbGgXEMsdjD7kZ7KiBsM3sEOyhEvQFgz5cq5bheKNxnJCV6tRVh7oYXGY1QSBvQecp
+         sAYxf6A3ANXus9p1B7+YX2w/eBM3EURe+IH3cz/uxIb1AZTzHmmEyCaoPNb9DexWhZ9A
+         /flg==
+X-Gm-Message-State: APjAAAUKAPENuuFLNgvN8j9yfropJRD8UknQMUQS3JmRI5AZHtizotd9
+        sJGDTP4d1l5gu4iFTfq1GrAwy4buOzYm6P2peC35GsQ4
+X-Google-Smtp-Source: APXvYqwI4ExlcbH9SRzYacDPZJ+UiObWUuvz7w0owDJmRNFcAMHFe1DdWYxj0tLNjXlp2qHzuLmjoseJ+N4ytBB7q4c=
+X-Received: by 2002:a05:600c:21c6:: with SMTP id x6mr994428wmj.177.1581542034297;
+ Wed, 12 Feb 2020 13:13:54 -0800 (PST)
+MIME-Version: 1.0
+References: <pull.545.git.1581535151.gitgitgadget@gmail.com>
+ <d98b7caff56cc839f251ac43c36826ecf800cf2f.1581535151.git.gitgitgadget@gmail.com>
+ <20200212202210.GC4364@syl.local>
+In-Reply-To: <20200212202210.GC4364@syl.local>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 12 Feb 2020 16:13:42 -0500
+Message-ID: <CAPig+cQhh8pNppSsGGk62-VoHsOUv0aNTxHtDWY+_pousR+KMg@mail.gmail.com>
+Subject: Re: [PATCH 1/5] object.c: get_max_object_index and get_indexed_object
+ accept 'r' parameter
 To:     Taylor Blau <me@ttaylorr.com>
 Cc:     Parth Gala via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Parth Gala <parthpgala@gmail.com>
-Subject: Re: [PATCH 2/5] object.c: lookup_unknown_object() accept 'r' as parameter
-References: <pull.545.git.1581535151.gitgitgadget@gmail.com>
-        <16dd64618ab6a086727685e9eca3850fabc46437.1581535151.git.gitgitgadget@gmail.com>
-        <20200212202540.GD4364@syl.local>
-Date:   Wed, 12 Feb 2020 13:11:02 -0800
-In-Reply-To: <20200212202540.GD4364@syl.local> (Taylor Blau's message of "Wed,
-        12 Feb 2020 12:25:40 -0800")
-Message-ID: <xmqqtv3vtst5.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2E168D5E-4DDC-11EA-A6FC-B0405B776F7B-77302942!pb-smtp20.pobox.com
+        Git List <git@vger.kernel.org>,
+        Parth Gala <parthpgala@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
-
-> ... same question about why assigning:
+On Wed, Feb 12, 2020 at 3:22 PM Taylor Blau <me@ttaylorr.com> wrote:
+> On Wed, Feb 12, 2020 at 07:19:07PM +0000, Parth Gala via GitGitGadget wrote:
+> > diff --git a/builtin/fsck.c b/builtin/fsck.c
+> > @@ -375,6 +375,7 @@ static void check_object(struct object *obj)
+> >  static void check_connectivity(void)
+> >  {
+> >       int i, max;
+> > +     struct repository *r = the_repository;
 >
->   struct repository *r = the_repository;
->
-> and passing 'r' everywhere is preferable to simply passing
-> 'the_repository' in directly.
-> ...
->>  static void mark_object_for_connectivity(const struct object_id *oid)
->>  {
->> -	struct object *obj = lookup_unknown_object(oid);
->> +	struct repository *r = the_repository;
->> +	struct object *obj = lookup_unknown_object(r, oid);
->>  	obj->flags |= HAS_OBJ;
->>  }
+> Is there a reason that you assign use/assign 'r' here? [...]
+> but I'm not sure that it's necessary here. Could you instead pass
+> 'the_repository' directly to the functions that now require it?
 
-I do not claim that it applies to this particular function, and the
-function is too small for it to matter, but when a function is large
-enough and it always works on one single repository, it would make
-it easier to later update the function further to set up 'r'
-upfront, making it point at the_repository for now, and to use 'r'
-throughout the function.  That way, when the time comes to update
-the function to work on an arbitrary repository, the only change
-required will be to turn the local variable 'r' to an incoming
-parameter the caller can supply.
+One benefit of doing it this way is that future patches will be much
+less noisy which convert these callers to also work with any
+'repository' object. For instance, after the current patch, we have:
+
+    static void check_connectivity(void)
+    {
+        struct repository *r = the_repository;
+        max = get_max_object_index(r);
+        ...
+
+A future patch which converts check_connectivity() to work with any
+repository will then require very little change -- just adding an 'r'
+argument to the function declaration, and dropping the line which
+declares 'r':
+
+    static void check_connectivity(struct repository *r)
+    {
+        max = get_max_object_index(r);
+        ...
+
+So, I'm fine with this patch series' approach of declaring a variable
+'r' like this.
