@@ -7,322 +7,274 @@ X-Spam-Status: No, score=-8.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BC12C352A4
-	for <git@archiver.kernel.org>; Wed, 12 Feb 2020 20:22:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CC1EC352A4
+	for <git@archiver.kernel.org>; Wed, 12 Feb 2020 20:25:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 2EB4C21739
-	for <git@archiver.kernel.org>; Wed, 12 Feb 2020 20:22:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 071AF2465D
+	for <git@archiver.kernel.org>; Wed, 12 Feb 2020 20:25:43 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="NOZOL/Fx"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="qhYaTiDy"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729129AbgBLUWO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Feb 2020 15:22:14 -0500
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:38611 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727439AbgBLUWN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Feb 2020 15:22:13 -0500
-Received: by mail-pg1-f194.google.com with SMTP id d6so1795258pgn.5
-        for <git@vger.kernel.org>; Wed, 12 Feb 2020 12:22:12 -0800 (PST)
+        id S1727582AbgBLUZm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Feb 2020 15:25:42 -0500
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:34091 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725821AbgBLUZm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Feb 2020 15:25:42 -0500
+Received: by mail-pl1-f196.google.com with SMTP id j7so1391255plt.1
+        for <git@vger.kernel.org>; Wed, 12 Feb 2020 12:25:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=mVi1QPrfhFfNKQ/lJZJIILVSXUhsjUqEoKJLS7lNet8=;
-        b=NOZOL/FxrC7Nx8pZcnTdukaAuT6s7//Hk/w8SLrdJSMujy5tE92r+xBAtgZxAtWoFa
-         +yL0E6iq3dU3QxcZq5LYjcIb5vOv2O7b02T1dwDa1LTb0zFW37xwc6WYIRkGMhFykQjU
-         JO7RS3bAHY7zejEgxd663lVMncvpEqEXLjOrgahU13OZXa+sjBheyjugeq9YJ5gtDCWh
-         ClypP7AEicpjmCpVKaHwNWnK3ik0X9obbzxZqFxMqPDBwyXAZVOwWzwoXxKHpDRkRNri
-         HZakPfs7frE/uahp8jE48hXrklD8t9/96LtXWhxcTb6boc3mWtnkumUE4KJmU5ZE9vh2
-         DRWA==
+        bh=s5cim649LF2ynkQT6C6Zm/OLqHFbUQN0L5kf16mNnk8=;
+        b=qhYaTiDyDw9jmImtsbvT9xVaFaB76sbdOk4TPXMo2aezogaFOF4NPVSUQLkoeTQ/BJ
+         QfaqToqXfzjqwzGkdiLP2deDoZmkqVoiwTWCZxLiCTHXen8nV9k1zV2TpHtsK19AwZKh
+         +BIp5FWJP1Y5v2ySl1lMcKX/XVmJ2e6VIQIrSv/KazCoyBBlQUmV3UEXrsHGe70GqveP
+         VLihHzoeDx2v5bP7J2+ItRhzxgW5bMMiSPLSXVbidIeLymi9fEPROrStsLAs5nTO5ayk
+         1zfD5qse9rgpge5TEJh02kq/daaKohhathJTLrKMGTH6p0G8KRksNy37q1nn4I8afYTs
+         ez2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=mVi1QPrfhFfNKQ/lJZJIILVSXUhsjUqEoKJLS7lNet8=;
-        b=T2M42oV2XP50bAnsJ+SzqiOCQEpWio5oyQecD4VXNzDc8KG4X38Y0WeOovDctsy74V
-         cKf2MlMIDi+/1J8/2ojsdITWb+zH/htvkPy2J+uOQB3dk1VsG1xwIvvtNm10VAo6IaQp
-         DgqsVWFX2S0L1a0tivX5nXCipHDI1XG4jafK/2azyHFjXIAg1fJDGYZ1v/rAy4yhX0LS
-         cXyhYlK40Zge+UilDELRW39QF84XykjUINbQ7Y1hZXSkCbd2ZViaQv/xG+hjUm8CZxwm
-         vK+dsl8Fz7VXeC/67/MOGqqKTQCjbCbM8A7Vd8jyisOoRdQsPgZWHHyLotj2xs9IicLN
-         xhbQ==
-X-Gm-Message-State: APjAAAVXB9k8eYP6kLRSobGaU6pevVSZINYLru3jETQGbBiupXc2y/jD
-        8+db1SvnwWrECeobgdP6/F+DmA==
-X-Google-Smtp-Source: APXvYqwTfVEXoAFIEdRphPWivaTuNWkSyeHCE/yFYytotz83bCmoQg0essjhIHjmqh3ZekfGkeTTzQ==
-X-Received: by 2002:a63:3004:: with SMTP id w4mr14309078pgw.164.1581538931776;
-        Wed, 12 Feb 2020 12:22:11 -0800 (PST)
+        bh=s5cim649LF2ynkQT6C6Zm/OLqHFbUQN0L5kf16mNnk8=;
+        b=Tqywe2q9o1wMf53ezeh/0FXZqBVyPMRZUEuV8wpHcWPTt4lfjhS7Fif1pWnKVYy1iU
+         +ek+R2mGEINRWBxfMsDO6X12wLy5jHjqQNRbHdv1Y3FJs1inE/HFRvGzIF46us01hegG
+         OqaKxW1CTBXg9dfZe+T5gfEckbqfcw121FlInViQqzqzAJThipylR1BXBkeG0VnyZbNp
+         vXk9zgJEmJo3RL1PElgsjeGwoxX/SeWx/5nrYNtmpmgJy3PUITopjkvFQzBfkqPG1Bk9
+         /JTrV0HQ/27xW21TBRtK+FlmlTrWxHMZ/L2Jm/eZUoAZrK9ie1uqhVbYKmj9USBdte/4
+         7Utw==
+X-Gm-Message-State: APjAAAWADpDCdge0IPj1hfxuX0cVMvJk4sKtICrV/0Z3M4dg9PQW65/x
+        yzNrrs3AkSrAD7onruhe9TXfWA==
+X-Google-Smtp-Source: APXvYqwCgVrc+4zNLPpWxgU/Fr9lhQZ9CxIM9Q/4BlyiU16rG364R5uALNjehE2ZTOt4qj6YfB3snA==
+X-Received: by 2002:a17:902:8b89:: with SMTP id ay9mr9821591plb.309.1581539141472;
+        Wed, 12 Feb 2020 12:25:41 -0800 (PST)
 Received: from localhost ([205.175.106.8])
-        by smtp.gmail.com with ESMTPSA id l10sm111167pjy.5.2020.02.12.12.22.11
+        by smtp.gmail.com with ESMTPSA id g7sm110290pfq.33.2020.02.12.12.25.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Feb 2020 12:22:11 -0800 (PST)
-Date:   Wed, 12 Feb 2020 12:22:10 -0800
+        Wed, 12 Feb 2020 12:25:41 -0800 (PST)
+Date:   Wed, 12 Feb 2020 12:25:40 -0800
 From:   Taylor Blau <me@ttaylorr.com>
 To:     Parth Gala via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Parth Gala <parthpgala@gmail.com>
-Subject: Re: [PATCH 1/5] object.c: get_max_object_index and
- get_indexed_object accept 'r' parameter
-Message-ID: <20200212202210.GC4364@syl.local>
+Subject: Re: [PATCH 2/5] object.c: lookup_unknown_object() accept 'r' as
+ parameter
+Message-ID: <20200212202540.GD4364@syl.local>
 References: <pull.545.git.1581535151.gitgitgadget@gmail.com>
- <d98b7caff56cc839f251ac43c36826ecf800cf2f.1581535151.git.gitgitgadget@gmail.com>
+ <16dd64618ab6a086727685e9eca3850fabc46437.1581535151.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <d98b7caff56cc839f251ac43c36826ecf800cf2f.1581535151.git.gitgitgadget@gmail.com>
+In-Reply-To: <16dd64618ab6a086727685e9eca3850fabc46437.1581535151.git.gitgitgadget@gmail.com>
 User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 12, 2020 at 07:19:07PM +0000, Parth Gala via GitGitGadget wrote:
+On Wed, Feb 12, 2020 at 07:19:08PM +0000, Parth Gala via GitGitGadget wrote:
 > From: Parth Gala <parthpgala@gmail.com>
 >
-> Currently the two functions use global variable 'the_repository' to access
-> the values stored in it. This makes 'the_repository' to be existent even
-> when not required.
+> 'lookup_unknown_object()' and its callers are modified to enable
+> passing 'r' as an argument to 'lookup_unknown_object()' in an
+> effort to reduce dependence on global 'the_repository' variable.
 
-Nit: please wrap your commit messages at 72 characters instead of 80.
+The changes in 'object.[ch]' look sane to me here, again, but I have the
+same question about why assigning:
 
-> This commit replaces it with 'r' which is passed as a parameter to those
-> functions
+  struct repository *r = the_repository;
 
-Makes sense.
+and passing 'r' everywhere is preferable to simply passing
+'the_repository' in directly.
 
 > Signed-off-by: Parth Gala <parthpgala@gmail.com>
 > ---
->  builtin/fsck.c       |  5 +++--
->  builtin/index-pack.c |  5 +++--
->  builtin/name-rev.c   |  5 +++--
->  object.c             |  8 ++++----
->  object.h             |  4 ++--
->  shallow.c            | 10 ++++++----
->  upload-pack.c        | 10 ++++++----
->  7 files changed, 27 insertions(+), 20 deletions(-)
+>  builtin/fsck.c                   | 3 ++-
+>  builtin/pack-objects.c           | 3 ++-
+>  http-push.c                      | 3 ++-
+>  object.c                         | 8 ++++----
+>  object.h                         | 2 +-
+>  refs.c                           | 3 ++-
+>  t/helper/test-example-decorate.c | 7 ++++---
+>  upload-pack.c                    | 3 ++-
+>  walker.c                         | 3 ++-
+>  9 files changed, 21 insertions(+), 14 deletions(-)
 >
 > diff --git a/builtin/fsck.c b/builtin/fsck.c
-> index 8d13794b14..d2b4336f7e 100644
+> index d2b4336f7e..cd0b67f3bc 100644
 > --- a/builtin/fsck.c
 > +++ b/builtin/fsck.c
-> @@ -375,6 +375,7 @@ static void check_object(struct object *obj)
->  static void check_connectivity(void)
+> @@ -745,7 +745,8 @@ static int fsck_cache_tree(struct cache_tree *it)
+>
+>  static void mark_object_for_connectivity(const struct object_id *oid)
 >  {
->  	int i, max;
+> -	struct object *obj = lookup_unknown_object(oid);
 > +	struct repository *r = the_repository;
-
-Is there a reason that you assign use/assign 'r' here? I can find a few
-other such instances of it in:
-
-  $ git grep -l 'struct repository \*r = '
-  builtin/merge-tree.c
-  builtin/sparse-checkout.c
-  builtin/update-index.c
-  fetch-pack.c
-  read-cache.c
-  t/helper/test-reach.c
-  tree.c
-
-but I'm not sure that it's necessary here. Could you instead pass
-'the_repository' directly to the functions that now require it?
-
->  	/* Traverse the pending reachable objects */
->  	traverse_reachable();
-> @@ -400,12 +401,12 @@ static void check_connectivity(void)
->  	}
+> +	struct object *obj = lookup_unknown_object(r, oid);
+>  	obj->flags |= HAS_OBJ;
+>  }
 >
->  	/* Look up all the requirements, warn about missing objects.. */
-> -	max = get_max_object_index();
-> +	max = get_max_object_index(r);
-
-For example, changing this line to:
-
-  max = get_max_object_index(the_repository);
-
->  	if (verbose)
->  		fprintf_ln(stderr, _("Checking connectivity (%d objects)"), max);
->
->  	for (i = 0; i < max; i++) {
-> -		struct object *obj = get_indexed_object(i);
-> +		struct object *obj = get_indexed_object(r, i);
->
->  		if (obj)
->  			check_object(obj);
-> diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-> index 60a5591039..d2115535bc 100644
-> --- a/builtin/index-pack.c
-> +++ b/builtin/index-pack.c
-> @@ -218,14 +218,15 @@ static unsigned check_object(struct object *obj)
->  static unsigned check_objects(void)
+> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> index 393c20a2d7..b03f4378a0 100644
+> --- a/builtin/pack-objects.c
+> +++ b/builtin/pack-objects.c
+> @@ -2891,6 +2891,7 @@ static void add_objects_in_unpacked_packs(void)
 >  {
->  	unsigned i, max, foreign_nr = 0;
+>  	struct packed_git *p;
+>  	struct in_pack in_pack;
+> +	struct repository *r = the_repository;
+>  	uint32_t i;
+>
+>  	memset(&in_pack, 0, sizeof(in_pack));
+> @@ -2910,7 +2911,7 @@ static void add_objects_in_unpacked_packs(void)
+>
+>  		for (i = 0; i < p->num_objects; i++) {
+>  			nth_packed_object_oid(&oid, p, i);
+> -			o = lookup_unknown_object(&oid);
+> +			o = lookup_unknown_object(r, &oid);
+>  			if (!(o->flags & OBJECT_ADDED))
+>  				mark_in_pack_object(o, p, &in_pack);
+>  			o->flags |= OBJECT_ADDED;
+> diff --git a/http-push.c b/http-push.c
+> index 822f326599..c26d03b21b 100644
+> --- a/http-push.c
+> +++ b/http-push.c
+> @@ -1416,6 +1416,7 @@ static void one_remote_ref(const char *refname)
+>  {
+>  	struct ref *ref;
+>  	struct object *obj;
 > +	struct repository *r = the_repository;
 >
-> -	max = get_max_object_index();
-> +	max = get_max_object_index(r);
+>  	ref = alloc_ref(refname);
 >
->  	if (verbose)
->  		progress = start_delayed_progress(_("Checking objects"), max);
->
->  	for (i = 0; i < max; i++) {
-> -		foreign_nr += check_object(get_indexed_object(i));
-> +		foreign_nr += check_object(get_indexed_object(r, i));
->  		display_progress(progress, i + 1);
->  	}
->
-> diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-> index 6b9e8c850b..afe9f6df01 100644
-> --- a/builtin/name-rev.c
-> +++ b/builtin/name-rev.c
-> @@ -456,6 +456,7 @@ static void name_rev_line(char *p, struct name_ref_data *data)
->  int cmd_name_rev(int argc, const char **argv, const char *prefix)
->  {
->  	struct object_array revs = OBJECT_ARRAY_INIT;
-> +	struct repository *r = the_repository;
->  	int all = 0, transform_stdin = 0, allow_undefined = 1, always = 0, peel_tag = 0;
->  	struct name_ref_data data = { 0, 0, STRING_LIST_INIT_NODUP, STRING_LIST_INIT_NODUP };
->  	struct option opts[] = {
-> @@ -553,9 +554,9 @@ int cmd_name_rev(int argc, const char **argv, const char *prefix)
->  	} else if (all) {
->  		int i, max;
->
-> -		max = get_max_object_index();
-> +		max = get_max_object_index(r);
->  		for (i = 0; i < max; i++) {
-> -			struct object *obj = get_indexed_object(i);
-> +			struct object *obj = get_indexed_object(r, i);
->  			if (!obj || obj->type != OBJ_COMMIT)
->  				continue;
->  			show_name(obj, NULL,
+> @@ -1432,7 +1433,7 @@ static void one_remote_ref(const char *refname)
+>  	 * may be required for updating server info later.
+>  	 */
+>  	if (repo->can_update_info_refs && !has_object_file(&ref->old_oid)) {
+> -		obj = lookup_unknown_object(&ref->old_oid);
+> +		obj = lookup_unknown_object(r, &ref->old_oid);
+>  		fprintf(stderr,	"  fetch %s for %s\n",
+>  			oid_to_hex(&ref->old_oid), refname);
+>  		add_fetch_request(obj);
 > diff --git a/object.c b/object.c
-> index 142ef69399..549fbe69ca 100644
+> index 549fbe69ca..90338a509c 100644
 > --- a/object.c
 > +++ b/object.c
-> @@ -10,14 +10,14 @@
->  #include "packfile.h"
->  #include "commit-graph.h"
->
-> -unsigned int get_max_object_index(void)
-> +unsigned int get_max_object_index(struct repository *r)
->  {
-> -	return the_repository->parsed_objects->obj_hash_size;
-> +	return r->parsed_objects->obj_hash_size;
+> @@ -177,12 +177,12 @@ void *object_as_type(struct repository *r, struct object *obj, enum object_type
+>  	}
 >  }
 >
-> -struct object *get_indexed_object(unsigned int idx)
-> +struct object *get_indexed_object(struct repository *r, unsigned int idx)
+> -struct object *lookup_unknown_object(const struct object_id *oid)
+> +struct object *lookup_unknown_object(struct repository *r, const struct object_id *oid)
 >  {
-> -	return the_repository->parsed_objects->obj_hash[idx];
-> +	return r->parsed_objects->obj_hash[idx];
+> -	struct object *obj = lookup_object(the_repository, oid);
+> +	struct object *obj = lookup_object(r, oid);
+>  	if (!obj)
+> -		obj = create_object(the_repository, oid,
+> -				    alloc_object_node(the_repository));
+> +		obj = create_object(r, oid,
+> +				    alloc_object_node(r));
+>  	return obj;
 >  }
 >
->  static const char *object_type_strings[] = {
 > diff --git a/object.h b/object.h
-> index 25f5ab3d54..5a8ae274ee 100644
+> index 5a8ae274ee..375236cec3 100644
 > --- a/object.h
 > +++ b/object.h
-> @@ -98,12 +98,12 @@ int type_from_string_gently(const char *str, ssize_t, int gentle);
->  /*
->   * Return the current number of buckets in the object hashmap.
->   */
-> -unsigned int get_max_object_index(void);
-> +unsigned int get_max_object_index(struct repository *);
+> @@ -144,7 +144,7 @@ struct object *parse_object_or_die(const struct object_id *oid, const char *name
+>  struct object *parse_object_buffer(struct repository *r, const struct object_id *oid, enum object_type type, unsigned long size, void *buffer, int *eaten_p);
 >
->  /*
->   * Return the object from the specified bucket in the object hashmap.
->   */
-> -struct object *get_indexed_object(unsigned int);
-> +struct object *get_indexed_object(struct repository *, unsigned int);
+>  /** Returns the object, with potentially excess memory allocated. **/
+> -struct object *lookup_unknown_object(const struct object_id *oid);
+> +struct object *lookup_unknown_object(struct repository *, const struct object_id *oid);
 >
->  /*
->   * This can be used to see if we have heard of the object before, but
-> diff --git a/shallow.c b/shallow.c
-> index 7fd04afed1..4537d98482 100644
-> --- a/shallow.c
-> +++ b/shallow.c
-> @@ -510,6 +510,7 @@ static void paint_down(struct paint_info *info, const struct object_id *oid,
->  		       unsigned int id)
+>  struct object_list *object_list_insert(struct object *item,
+>  				       struct object_list **list_p);
+> diff --git a/refs.c b/refs.c
+> index 1ab0bb54d3..a630a8c271 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -379,7 +379,8 @@ static int filter_refs(const char *refname, const struct object_id *oid,
+>
+>  enum peel_status peel_object(const struct object_id *name, struct object_id *oid)
 >  {
->  	unsigned int i, nr;
+> -	struct object *o = lookup_unknown_object(name);
 > +	struct repository *r = the_repository;
->  	struct commit_list *head = NULL;
->  	int bitmap_nr = DIV_ROUND_UP(info->nr_bits, 32);
->  	size_t bitmap_size = st_mult(sizeof(uint32_t), bitmap_nr);
-> @@ -563,9 +564,9 @@ static void paint_down(struct paint_info *info, const struct object_id *oid,
->  		}
->  	}
+> +	struct object *o = lookup_unknown_object(r, name);
 >
-> -	nr = get_max_object_index();
-> +	nr = get_max_object_index(r);
->  	for (i = 0; i < nr; i++) {
-> -		struct object *o = get_indexed_object(i);
-> +		struct object *o = get_indexed_object(r, i);
->  		if (o && o->type == OBJ_COMMIT)
->  			o->flags &= ~SEEN;
->  	}
-> @@ -608,6 +609,7 @@ void assign_shallow_commits_to_refs(struct shallow_info *info,
->  	struct object_id *oid = info->shallow->oid;
->  	struct oid_array *ref = info->ref;
->  	unsigned int i, nr;
+>  	if (o->type == OBJ_NONE) {
+>  		int type = oid_object_info(the_repository, name, NULL);
+> diff --git a/t/helper/test-example-decorate.c b/t/helper/test-example-decorate.c
+> index c8a1cde7d2..6b3262a9d3 100644
+> --- a/t/helper/test-example-decorate.c
+> +++ b/t/helper/test-example-decorate.c
+> @@ -10,6 +10,7 @@ int cmd__example_decorate(int argc, const char **argv)
+>  	struct object_id two_oid = { {2} };
+>  	struct object_id three_oid = { {3} };
+>  	struct object *one, *two, *three;
 > +	struct repository *r = the_repository;
->  	int *shallow, nr_shallow = 0;
->  	struct paint_info pi;
 >
-> @@ -622,9 +624,9 @@ void assign_shallow_commits_to_refs(struct shallow_info *info,
->  	 * Prepare the commit graph to track what refs can reach what
->  	 * (new) shallow commits.
+>  	int decoration_a, decoration_b;
+>
+> @@ -26,8 +27,8 @@ int cmd__example_decorate(int argc, const char **argv)
+>  	 * Add 2 objects, one with a non-NULL decoration and one with a NULL
+>  	 * decoration.
 >  	 */
-> -	nr = get_max_object_index();
-> +	nr = get_max_object_index(r);
->  	for (i = 0; i < nr; i++) {
-> -		struct object *o = get_indexed_object(i);
-> +		struct object *o = get_indexed_object(r, i);
->  		if (!o || o->type != OBJ_COMMIT)
->  			continue;
->
+> -	one = lookup_unknown_object(&one_oid);
+> -	two = lookup_unknown_object(&two_oid);
+> +	one = lookup_unknown_object(r, &one_oid);
+> +	two = lookup_unknown_object(r, &two_oid);
+>  	ret = add_decoration(&n, one, &decoration_a);
+>  	if (ret)
+>  		BUG("when adding a brand-new object, NULL should be returned");
+> @@ -56,7 +57,7 @@ int cmd__example_decorate(int argc, const char **argv)
+>  	ret = lookup_decoration(&n, two);
+>  	if (ret != &decoration_b)
+>  		BUG("lookup should return added declaration");
+> -	three = lookup_unknown_object(&three_oid);
+> +	three = lookup_unknown_object(r, &three_oid);
+>  	ret = lookup_decoration(&n, three);
+>  	if (ret)
+>  		BUG("lookup for unknown object should return NULL");
 > diff --git a/upload-pack.c b/upload-pack.c
-> index a00d7ece6b..cb7312268f 100644
+> index cb7312268f..6d196e275b 100644
 > --- a/upload-pack.c
 > +++ b/upload-pack.c
-> @@ -450,6 +450,7 @@ static int do_reachable_revlist(struct child_process *cmd,
->  		"rev-list", "--stdin", NULL,
->  	};
->  	struct object *o;
+> @@ -962,7 +962,8 @@ static void receive_needs(struct packet_reader *reader, struct object_array *wan
+>  static int mark_our_ref(const char *refname, const char *refname_full,
+>  			const struct object_id *oid)
+>  {
+> -	struct object *o = lookup_unknown_object(oid);
 > +	struct repository *r = the_repository;
->  	char namebuf[GIT_MAX_HEXSZ + 2]; /* ^ + hash + LF */
->  	int i;
->  	const unsigned hexsz = the_hash_algo->hexsz;
-> @@ -472,8 +473,8 @@ static int do_reachable_revlist(struct child_process *cmd,
+> +	struct object *o = lookup_unknown_object(r, oid);
 >
->  	namebuf[0] = '^';
->  	namebuf[hexsz + 1] = '\n';
-> -	for (i = get_max_object_index(); 0 < i; ) {
-> -		o = get_indexed_object(--i);
-> +	for (i = get_max_object_index(r); 0 < i; ) {
-> +		o = get_indexed_object(r, --i);
->  		if (!o)
->  			continue;
->  		if (reachable && o->type == OBJ_COMMIT)
-> @@ -520,6 +521,7 @@ static int get_reachable_list(struct object_array *src,
->  	struct child_process cmd = CHILD_PROCESS_INIT;
->  	int i;
->  	struct object *o;
+>  	if (ref_is_hidden(refname, refname_full)) {
+>  		o->flags |= HIDDEN_REF;
+> diff --git a/walker.c b/walker.c
+> index 06cd2bd569..098c69ebe1 100644
+> --- a/walker.c
+> +++ b/walker.c
+> @@ -258,6 +258,7 @@ void walker_targets_free(int targets, char **target, const char **write_ref)
+>  int walker_fetch(struct walker *walker, int targets, char **target,
+>  		 const char **write_ref, const char *write_ref_log_details)
+>  {
 > +	struct repository *r = the_repository;
->  	char namebuf[GIT_MAX_HEXSZ + 2]; /* ^ + hash + LF */
->  	const unsigned hexsz = the_hash_algo->hexsz;
->
-> @@ -538,8 +540,8 @@ static int get_reachable_list(struct object_array *src,
->  			o->flags &= ~TMP_MARK;
+>  	struct strbuf refname = STRBUF_INIT;
+>  	struct strbuf err = STRBUF_INIT;
+>  	struct ref_transaction *transaction = NULL;
+> @@ -285,7 +286,7 @@ int walker_fetch(struct walker *walker, int targets, char **target,
+>  			error("Could not interpret response from server '%s' as something to pull", target[i]);
+>  			goto done;
 >  		}
+> -		if (process(walker, lookup_unknown_object(&oids[i])))
+> +		if (process(walker, lookup_unknown_object(r, &oids[i])))
+>  			goto done;
 >  	}
-> -	for (i = get_max_object_index(); 0 < i; i--) {
-> -		o = get_indexed_object(i - 1);
-> +	for (i = get_max_object_index(r); 0 < i; i--) {
-> +		o = get_indexed_object(r, i - 1);
->  		if (o && o->type == OBJ_COMMIT &&
->  		    (o->flags & TMP_MARK)) {
->  			add_object_array(o, NULL, reachable);
+>
 > --
 > gitgitgadget
-
-Otherwise this looks pretty good.
+>
 
 Thanks,
 Taylor
