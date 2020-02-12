@@ -2,130 +2,119 @@ Return-Path: <SRS0=D6Hn=4A=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D39D8C2BA83
-	for <git@archiver.kernel.org>; Wed, 12 Feb 2020 11:28:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 74546C2BA83
+	for <git@archiver.kernel.org>; Wed, 12 Feb 2020 11:44:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id AAD19206D7
-	for <git@archiver.kernel.org>; Wed, 12 Feb 2020 11:28:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3DF8F20848
+	for <git@archiver.kernel.org>; Wed, 12 Feb 2020 11:44:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LucI3/T1"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="egV/CieB"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725821AbgBLL2A (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Feb 2020 06:28:00 -0500
-Received: from mail-wr1-f41.google.com ([209.85.221.41]:36782 "EHLO
-        mail-wr1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728043AbgBLL17 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Feb 2020 06:27:59 -0500
-Received: by mail-wr1-f41.google.com with SMTP id z3so1833182wru.3
-        for <git@vger.kernel.org>; Wed, 12 Feb 2020 03:27:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=MtpR2nxgyE1feWxzLJ5KQz+9+nAw6qvZ/x2yu8CjiQ8=;
-        b=LucI3/T1CuojqPIX9CcvKGjMbwwmkt6QKw4ardiiqbqfiqZ3+Cq/G336cpPRbk8tvb
-         8acpHkY/1+4hw8hE3j70dPB8E2d5qSq+VMsRHgkhlkFAniQDIvrDiM3ZVj5hRiZu7aEo
-         8J2N4Z6+2GkneJatFeI+VloFt7p1/oSfZXtnotgWM/e/Q/i81htxmWIgkqXBk8umkP8O
-         HtAuwHeWptRzQVOFGhhxRG7DkiSS+1sPJ/0gJ/cK3L2qXFAw+BXzWyZHlVyxpLafPY2C
-         MhvOOMf2+20Mh6jDWRCkXaBuBTO3vzg4yANB80FOZQBAoVSPT2l3J8R2Io4K0sJMkIKx
-         7JJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=MtpR2nxgyE1feWxzLJ5KQz+9+nAw6qvZ/x2yu8CjiQ8=;
-        b=JrxXDVLaUtGlN5rrHB+mRcKzCXmufFmrQOuRTfpneuz290l6mcQNYTcrnRdk/rBw6o
-         A4JdwtuTlGJgSag1fey45ZdIedsiYMlzUDJewMhJ8dpdMQya9SQ6LmJ40D7UWVDx+zWl
-         K0XB0wcfsTi4s3kmdzAcd3jD1pscg80pB9Xvj2fOoyy7tMXsNGhgTgUepucf6FDltfLl
-         uhUkzxkCMeIYfckJhjgOrHheleDaQZ6Hm/aX3snvkTOipPHX+JAetUQMQfqBW5JxTssL
-         vA2V5u5Y00oFo5TwQWwAru194s7ulUvADJS5iKia66+w+wTfXkYWZXejKIPeKC8fnn5m
-         SsWg==
-X-Gm-Message-State: APjAAAWJPgV8jJPg/I8xtl8zDPWpi5dkcIu3Ct4ryb15V6KilxfTMxPp
-        Y8m9GDaP+gN2Rt9nrdMGAXYlt5ca
-X-Google-Smtp-Source: APXvYqz4duGNdgOX+Runj4INrUli52UOcmiFU+mIYznEJesgPa4l6Lb6MgSZrN2z4MJ5NwSumfxGfA==
-X-Received: by 2002:adf:fa08:: with SMTP id m8mr14667386wrr.366.1581506877442;
-        Wed, 12 Feb 2020 03:27:57 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v22sm345869wml.11.2020.02.12.03.27.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Feb 2020 03:27:56 -0800 (PST)
-Message-Id: <pull.552.git.1581506876000.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 12 Feb 2020 11:27:55 +0000
-Subject: [PATCH] tests: fix --write-junit-xml with subshells
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1728194AbgBLLoq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Feb 2020 06:44:46 -0500
+Received: from mout.gmx.net ([212.227.17.21]:39403 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727111AbgBLLoq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Feb 2020 06:44:46 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1581507880;
+        bh=nwdKs/xaPgaYQdsiUj3+L3iEPJFr3hCHkDIWu8gLXHI=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=egV/CieB+ag2ZoaX/vpJOYKxUG4vrKhVegaHOdr0/VFMK1e0243zt7C4qxEOkbpkF
+         dXRXTW9VcFrtKLkTpt6N0IJUzCf2yJ9CCGSN7SnBNi4jfF6GRj/b6uwM39Ilxy06Xw
+         V8HJlVFHmcXyAMmYx911+IZMUA6bWZmQnO68d8Gg=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.86]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mw9UK-1jKKlW2kL6-00s6O2; Wed, 12
+ Feb 2020 12:44:38 +0100
+Date:   Wed, 12 Feb 2020 12:44:38 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: Re: js/ci-squelch-doc-warning, was Re: What's cooking in git.git
+ (Feb 2020, #02; Mon, 10)
+In-Reply-To: <xmqqk14sv96b.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2002121243450.3718@tvgsbejvaqbjf.bet>
+References: <xmqqmu9qxej1.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.2002120036570.3718@tvgsbejvaqbjf.bet> <xmqqk14sv96b.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:HY3obADQF5KoWE4czp/WMyJxDgrx8UL/H3BtCmpOOGcIfNtYCKb
+ vjbakntRtKtDnurQqQS7d5ksRaau1IiZc2dxStGywgFfBGdE3k8OfITx0GdUKskgCGQYWw6
+ Fklu7cpoRmDhPz750a7B5mg6blR9vQ5FLeJbuUF6GjyBFLZK6sDgg5sUh0WlQfws+xN5omg
+ fXGaVnTv6aM3S7DyxdWGw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:zJYTEU4dEQA=:8j17XT8WHIwpAbf7Bd0ZFU
+ szhhTiRpWylcwkXBuueLH63A6UbPcCI0Am7MmkylJXqvcsGT1wJYVKEIK2mQYnsFX+FnMITDq
+ j95iGaysTnh2MYJ7B/5/ptUkkK72Zv0jIaWjFuZpWVGt6VsEI1T2A5N72yKx97tIG87KXBPFX
+ yb4pOGkXgZs83Nz2WizykhTQfpy3IlJM2tTVGR4IRgB/HMg8R9wVq/ZRGeK3J1ttuHa9UAtzq
+ ShIkimlEPTrlOqjA1qJJOzfsaVZpQwJjdUsDKiU5LpB2J/9kaQKqj7rQ6HqNXTz7RTYly5r1Y
+ GpYBi8FhZ5DOMOBh21OFMyb2kY7NgZySGmQbBq7HKPIprTCuiA26GQHOndT9fQgNlAHuscQFR
+ 3p9EKIQJG2M94NcTRFgtwRBQUUjJqMdhtO7whOvtl1X6PkvRAC25BJkHlTaNVYaF00axsm6Vd
+ TlmF1+mQ1kuWXVgok5jnBJcLJYnGGMjNgQT/6PTKfaCOYfjIzTZUcP6k1f+Sv4cFyBZq3EiDY
+ bZGG5mTqOk/1pIxc2WJb8u1bOo7DXA+Anajh6CyLORTpL7Gxz7RrBBxCU3fcWN6Xfsn7sc72B
+ IL0vhpIYmkwSQUY2UaibBXWFYSn4Uy2dMcb6yxBXLJ+8PDxSanB6c+BQYDtQNWR8gWO6zE2zZ
+ Vx/WARvC4avi67SyeDs8oZf2LT5jWA3O6O51lLjvE04HKpymVWxa/SAHwG2SdpIW+c+algESt
+ JJwnrYFNuIol2SVZzR7HrMIfkiBbJhbWklc6uMLq+da0jculpXOV1yenpB00C5Kv8TAIKVF9N
+ SDPYW7TQsVtBrFBlYfaFumkUqzEIS+HaZLd6EEmfH1ISK1ZfLDvzhhzxRKeM5JVid7xQnfpOJ
+ e6SDrB0Fh6Lt2S3TXsscmD+gQ+YfjcHBZaHJdYD9MNZbk0R8KfXwmWTxQayct6rYC/WMrsM5b
+ pNjM2GZ9A/5Nmf5xil1fO55+sKNEcrLvkMdoxv4wRChDeeuJe71WN/8n4bga3d47zNC57dnAP
+ uJfwHI+G5T0K3m8ItKLI5v+98uIvtLXOYIDH3S/dqv2m9rKVstYJva/1/P2sZyOhkAuZ9Z0XH
+ 9QaEfIouw37Y0DqjBS2EAvCxkcXkBWw46AIRHfte0n2RzhRIR3gE3d6mJIxj0wsFJeacrokxC
+ lKUinmP2MTNO3O/fpZvq/YzCVEbt0nedOxc8OOAFgtEFxWEINH0EC6CYZ+8zOr0siSuxBQJnJ
+ 513lYaNyK9KgEHPMw
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Hi Junio,
 
-In t0000, more precisely in its `test_bool_env` test case, there are two
-subshells that are supposed to fail. To be even _more_ precise, they
-fail by calling the `error` function, and that is okay, because it is in
-a subshell, and it is expected that those two subshell invocations fail.
+On Tue, 11 Feb 2020, Junio C Hamano wrote:
 
-However, the `error` function also tries to finalize the JUnit XML (if
-that XML was asked for, via `--write-junit-xml`. As a consequence, the
-XML is edited to add a `time` attribute for the `testsuite` tag. And
-since there are two expected `error` calls in addition to the final
-`test_done`, the `finalize_junit_xml` function is called three times and
-naturally the `time` attribute is added _three times_.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+> > On Mon, 10 Feb 2020, Junio C Hamano wrote:
+> >
+> >> * js/ci-squelch-doc-warning (2020-02-10) 1 commit
+> >>  - ci: ignore rubygems warning in the "Documentation" job
+> >>
+> >>  Squelch unhelpful warning message during documentation build.
+> >>
+> >>  Will merge to 'next'.
+> >
+> > To be clear, this _is_ a warning message, but the CI builds are _faili=
+ng_
+> > because of it (the "Documentation" job expects `stderr` to be clean ex=
+cept
+> > for some known warnings).
+> >
+> > As a consequence, all the PR builds at https://github.com/git/git are
+> > failing (except for PRs targeting `pu` or `next`, but I don't think th=
+at
+> > there are currently any).
+> >
+> > So maybe we could fast-track this change all the way into `maint`?
+>
+> Don't worry.  As it only affects the doc builds and nothing else,
+> there is no need to rush, but unlike topics that update end-user
+> experience (for which, the minimum gestation periods are 1 day
+> outside 'next' and 7 days in 'next' before hitting 'master'),
+> obvious and trivial docfixes and developer support topics are
+> usually fast-tracked by often immediately hitting 'next' and
+> spending as few as 2 days in 'next'.  I think this is one of these
+> topics.
 
-Azure Pipelines is not happy with that, complaining thusly:
+Excellent.
 
- ##[warning]Failed to read D:\a\1\s\t\out\TEST-t0000-basic.xml. Error : 'time' is a duplicate attribute name. Line 2, position 82..
+Also, I noticed that you merged the `smuge` typo fix to `next` within a
+couple of hours of me contributing it; Thank you so much for that!
 
-One possible way to address this would be to unset `write_junit_xml` in
-the `test_bool_env` test case.
-
-But that would be fragile, as other `error` calls in subshells could be
-introduced.
-
-So let's just modify `finalize_junit_xml` to remove any `time` attribute
-before adding the authoritative one.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-    Fix a warning in the Azure Pipelines runs
-    
-    Yet another thing I stumbled across...
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-552%2Fdscho%2Fwrite-junit-xml-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-552/dscho/write-junit-xml-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/552
-
- t/test-lib.sh | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 44df51be8f..0ea1e5a05e 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1083,7 +1083,8 @@ finalize_junit_xml () {
- 
- 		# adjust the overall time
- 		junit_time=$(test-tool date getnanos $junit_suite_start)
--		sed "s/<testsuite [^>]*/& time=\"$junit_time\"/" \
-+		sed -e "s/\(<testsuite.*\) time=\"[^\"]*\"/\1/" \
-+			-e "s/<testsuite [^>]*/& time=\"$junit_time\"/" \
- 			<"$junit_xml_path" >"$junit_xml_path.new"
- 		mv "$junit_xml_path.new" "$junit_xml_path"
- 
-
-base-commit: de93cc14ab7e8db7645d8dbe4fd2603f76d5851f
--- 
-gitgitgadget
+Ciao,
+Dscho
