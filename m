@@ -2,85 +2,88 @@ Return-Path: <SRS0=eUpu=4B=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.4 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 88F51C2BA83
-	for <git@archiver.kernel.org>; Thu, 13 Feb 2020 14:41:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DC4F2C2BA83
+	for <git@archiver.kernel.org>; Thu, 13 Feb 2020 14:45:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 4CF9B2073C
-	for <git@archiver.kernel.org>; Thu, 13 Feb 2020 14:41:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AEC4F2073C
+	for <git@archiver.kernel.org>; Thu, 13 Feb 2020 14:45:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i/GJVGkA"
+	dkim=pass (1024-bit key) header.d=rasmusvillemoes.dk header.i=@rasmusvillemoes.dk header.b="hKZkAWsK"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726780AbgBMOlI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Feb 2020 09:41:08 -0500
-Received: from mail-vs1-f42.google.com ([209.85.217.42]:41197 "EHLO
-        mail-vs1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725781AbgBMOlH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Feb 2020 09:41:07 -0500
-Received: by mail-vs1-f42.google.com with SMTP id k188so3703691vsc.8
-        for <git@vger.kernel.org>; Thu, 13 Feb 2020 06:41:07 -0800 (PST)
+        id S1727199AbgBMOpT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Feb 2020 09:45:19 -0500
+Received: from mail-lj1-f174.google.com ([209.85.208.174]:39839 "EHLO
+        mail-lj1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726300AbgBMOpT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Feb 2020 09:45:19 -0500
+Received: by mail-lj1-f174.google.com with SMTP id o15so6891372ljg.6
+        for <git@vger.kernel.org>; Thu, 13 Feb 2020 06:45:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=IEztEJfotaSZd0cd0WkjedwmaipsJtresi8/ywSD3xA=;
-        b=i/GJVGkA+IspRu5YUsSSKd5AY0J0SxxlfKMIbCRIWH6Uqgb1SUlrteaf+GaWAeFmNC
-         gHKhCTqX9SuiM3Z0Sg56GgZ8wHF4NOBEWd4seIBxKYCiix4suvxSHw7yo3yOMyU81CLQ
-         nP5kXemT7Ragqua5OdNfqu9qjFwnNJWrmZi61IUpFnYtZlGJ2F12S0KDT9xp6b7eDkQW
-         9aupm0SMvFsctg4OYLJJIhgi4oLBOkz2uajhnr/MQmJAade7wsRta2GWru53GwmH/qqH
-         p9neCsnPoRt50L/sP6JyqKPcxtSab2TYbVFdWb/WWp2bSfZcZ0pv9qj8Bst0PG4dWAg2
-         43SQ==
+        d=rasmusvillemoes.dk; s=google;
+        h=from:subject:to:message-id:date:user-agent:mime-version
+         :content-language:content-transfer-encoding;
+        bh=Qxkf61rhTCqD5hSSEtMitQhOoSldfUqOna6CdDWmbt8=;
+        b=hKZkAWsKjXx50TK7MLk5oq8luTA3awU7K5vr0TppVOI1CIRI/lkWi353P4u0V1mqdh
+         cys78zgWvSHOS2GyjfIRG5jIzc2py1+kTnBE+mUxLGBDx8j6n4OWPO0VSxDLGZ9n21E6
+         9v+mX1NCoj1nhV2YumlTeoVHWEIjccNjJrOec=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=IEztEJfotaSZd0cd0WkjedwmaipsJtresi8/ywSD3xA=;
-        b=WN3dOSCcThTwP09fv4EcOzakzawC/eKIiy8C8itdZdSlHB0zWlm2sFUn4eBPfl288t
-         I7HxPvSmcqHZrGtPFkzSv6EXL5yhEaEL+64MaLei2p7VcjU5ANSGNfW+W3Kf17etSevA
-         m+N/yWc4shwgbk/tXav14r57/V6Oif6lIOu9Ps8Epfl6rI6zsCVr5INRXPq/Ehn2F/02
-         445mSw7sSe+lQZ5edX49blB/oboA4oO2kB4sR/1jdtntia7vh7AnDxrkMUNUL4YgjuHM
-         pne671nLuUTPPp3P5McaKYg4n1p24hVuHdtvL+C0FV9tJYyvdVAd5iyL97fN06sSkcNr
-         zegQ==
-X-Gm-Message-State: APjAAAW7IFj+oxHVoTNTzDIAfFLzTAbNbMpo9sdugoomd50d+iYyUkVU
-        Mh+DmPYcawtUjoxsSWYX/ZxerImichMd3l//i2GsS2Od
-X-Google-Smtp-Source: APXvYqyuduwzvzjTF4iw2UGl9KWTEXFxfUVVSagTrzoNZ98679xbNmjGqAt+B6PmwelxAJK2u7F0hkpLMeIfr7bxIhQ=
-X-Received: by 2002:a67:15c7:: with SMTP id 190mr2182968vsv.178.1581604866341;
- Thu, 13 Feb 2020 06:41:06 -0800 (PST)
+        h=x-gm-message-state:from:subject:to:message-id:date:user-agent
+         :mime-version:content-language:content-transfer-encoding;
+        bh=Qxkf61rhTCqD5hSSEtMitQhOoSldfUqOna6CdDWmbt8=;
+        b=NLXuIntKbhTLL5rImUOm9JlvLfy3wb4ccL8cyDHkLdAZ+nPZlFh8iW+wgPe/NWvHYo
+         Mpt11B3ia7q3QRdvwGc67s58JBAFncYbvHaWXaSDfKFNfgyk+n6Mwk82uXB0bhz2ccNJ
+         6K+fUUwjO1kwaUT2/VYzorzkD+4KJ2cRD1hHtffb8xbVm2abcqQwGXsNXt6dc8Qq/ATt
+         vzkHs5ioqzYqrlTzhIEwjINiWqna7Ut/OxiuYZolaq+BJHmQ6BfZIPXs+BoLf0iO2HjG
+         F1mXZ9pSAPYZxauEST0vlYV3xusFC1ETERMgEqlCAx3GTM+yGt9ZxORpoytvKxv4zQMW
+         LI2A==
+X-Gm-Message-State: APjAAAUrbr2RNqb5gCzf0qPrEHvx3BGPJ5M1PAPUs9FMsiNcZ64IpOiA
+        2tMGp3k/8b97bLtUWYfDfN6Tkz/aNDkwAQX8
+X-Google-Smtp-Source: APXvYqyy4JjlMHrb+pWzpsEF7NRVWut/NawS65Qny9vsH1E7GFtnUeb1LTnJAaEr45MvrIOYV6zPXw==
+X-Received: by 2002:a2e:9748:: with SMTP id f8mr11852513ljj.178.1581605116264;
+        Thu, 13 Feb 2020 06:45:16 -0800 (PST)
+Received: from [172.16.11.50] ([81.216.59.226])
+        by smtp.gmail.com with ESMTPSA id e12sm1382419lfc.70.2020.02.13.06.45.15
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 13 Feb 2020 06:45:15 -0800 (PST)
+From:   Rasmus Villemoes <rv@rasmusvillemoes.dk>
+Subject: recursive cloning with --reference-if-able + --dissociate
+To:     Git Mailing List <git@vger.kernel.org>
+Message-ID: <83602548-c0a6-db37-ccdf-5c0f4b233b2e@rasmusvillemoes.dk>
+Date:   Thu, 13 Feb 2020 15:45:14 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
 MIME-Version: 1.0
-From:   =?UTF-8?Q?Martin_Vejn=C3=A1r?= <vejnar.martin@gmail.com>
-Date:   Thu, 13 Feb 2020 15:40:55 +0100
-Message-ID: <CAJFfRmt65DV5bZa5yTvg9sDb8SS8dFFyX7Zm23T7mAHL58v1Lw@mail.gmail.com>
-Subject: Calculating major.minor.patch from commit hash
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=windows-1252
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I'd like my releases to have major.minor.patch version number. While
-increments of major.minor are something one has to do manually, I
-don't want to do that for patch.
+At $dayjob, most of our projects are organized as a rather small
+superproject, with a number of git submodules. Usually, one of those
+submodules is a linux kernel git tree.
 
-So I was thinking of having a VERSION file in the repo containing
-major.minor and then calculate patch at the given commit C
-automatically as the length of the longest path starting at C in the
-subgraph containing only commits in which VERSION is the same as C's.
+For CI testing, we create a fresh docker container which starts by doing
+a "git clone --recursive $superproject", which takes quite a while due
+to the linux repo. So we'd like to speed that up by having a reasonable
+up-to-date linux repo on each build slave, mapping that into the docker
+container, and then telling git "when you get to cloning the src/linux
+submodule, look over here for objects", i.e. having some way to have
+--reference-if-able and --disassociate in effect for submodules.
 
-I can do that pretty easily right now by
+If this is already possible, I can't find it in the documentation. And
+if it doesn't exist, I can't really think of a good way to define the UI
+for giving those options (other than, perhaps, having a top-level
+--reference-if-able pass down to the submodules with the meaning 'when
+initializing the submodule at some/path, try to use the submodule, if
+any, at some/path in the referenced top-level repo'".
 
-* identifying commits in which VERSION changes with `git log --
-VERSION` and then
-* walking the graph in topo order with `git log --format=format:"%H %P"`.
-
-The latter step can terminate early, so it doesn't have to walk the
-entire repo, but the latter walks everything and can be quite slow.
-
-Is there a more efficient way to do this?
-
-If not, would there be an interest in a new builtin (git-depth?) that
-would calculate the value?
--- 
-Martin
+Rasmus
