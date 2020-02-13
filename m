@@ -2,129 +2,83 @@ Return-Path: <SRS0=eUpu=4B=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D50B4C352A3
-	for <git@archiver.kernel.org>; Thu, 13 Feb 2020 21:18:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D682BC352A3
+	for <git@archiver.kernel.org>; Thu, 13 Feb 2020 21:47:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A91B1218AC
-	for <git@archiver.kernel.org>; Thu, 13 Feb 2020 21:18:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9895F206B6
+	for <git@archiver.kernel.org>; Thu, 13 Feb 2020 21:47:45 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ESlvyjx6"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="hyqfGwzq"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728068AbgBMVS4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Feb 2020 16:18:56 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61672 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727772AbgBMVS4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Feb 2020 16:18:56 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8BB5454FD6;
-        Thu, 13 Feb 2020 16:18:54 -0500 (EST)
+        id S1728204AbgBMVro (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Feb 2020 16:47:44 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:51799 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727772AbgBMVro (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Feb 2020 16:47:44 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B3C95BD83F;
+        Thu, 13 Feb 2020 16:47:43 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=A/K5UGOcNmtL
-        AZN5Ud7VmTO2Wj0=; b=ESlvyjx6oDq9k/l6NuDwqf0H9qQRDSGZI/VtOqvYmU2a
-        uM4lupHvmDi/czZdr1LMDLWQjeAp3yTjSXbYVRaibttmT5Vv+cIPGZgOx7TUEe3S
-        sdX8eFl/1U6w0qkIFcWGW4ZWTUDxN1uOXYVgbb4LGrDxcaC5HNcwFcgAtLZWF2I=
+        :content-type; s=sasl; bh=1e+NSqGNELWShxlXnB/He6x27Ak=; b=hyqfGw
+        zqiU2pw8Mlip9iGZQ26jApgp4QN6f34CvXpo+1bEyGIoy4shwWd78PoVNa0z4R0g
+        Np5eOPIywhYMD9x9xN4O9sE9kE0D4T8vp9VFku04pFOeNr97+ItJURSnf64WA3rK
+        8yeEh2/1OIeDcP5CD7CjUuRrAyfp50cZD0yqU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=Z6T2av
-        DOOemUcRBXrvvlZIZjra/5bVEuSzj6V7r4ORNkzDLvNgaRFMxlAhgCSSL4VWuoto
-        MW0zPzNp1lP9c9JCRDhuF/gzWiWOFEPZhN3l6Bi3ZpB0JkJM0w8Hn7ODd+eHW3d4
-        j4bThREViWiLL1GBHaSVWHR+WUNq/pSJ7uqT8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8365B54FD5;
-        Thu, 13 Feb 2020 16:18:54 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=pk+AwgEjiV4waj4xgMP+XXovF5CLK4fJ
+        ucDqnhWpFTpuovoYgbAsjnT/D+zDsDJwffMHZ7AIa2sBwCClqJ8kt395VpuVI1Cm
+        DI5y0KIXKWqft5L9MuR27TnlRgpkmWvJdpEQpMiZ4l5N1gDFy1XJSJQJWStp7QiP
+        7zSLIs8dRG4=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id ABCC5BD83E;
+        Thu, 13 Feb 2020 16:47:43 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E46C254FD4;
-        Thu, 13 Feb 2020 16:18:53 -0500 (EST)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B4B12BD83D;
+        Thu, 13 Feb 2020 16:47:40 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org, Yang Zhao <yang.zhao@skyboxlabs.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: yz/p4-py3, was Re: What's cooking in git.git (Feb 2020, #03; Wed, 12)
-References: <xmqqo8u3tqly.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.2002131401130.46@tvgsbejvaqbjf.bet>
-        <xmqq7e0qtqsm.fsf@gitster-ct.c.googlers.com>
-Date:   Thu, 13 Feb 2020 13:18:52 -0800
-In-Reply-To: <xmqq7e0qtqsm.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Thu, 13 Feb 2020 08:06:49 -0800")
-Message-ID: <xmqqk14qqj7n.fsf@gitster-ct.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 07/13] rev-list: allow bitmaps when counting objects
+References: <20200213021506.GA1124607@coredump.intra.peff.net>
+        <20200213022005.GG1126038@coredump.intra.peff.net>
+Date:   Thu, 13 Feb 2020 13:47:38 -0800
+In-Reply-To: <20200213022005.GG1126038@coredump.intra.peff.net> (Jeff King's
+        message of "Wed, 12 Feb 2020 21:20:05 -0500")
+Message-ID: <xmqqftfeqhvp.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 700AA70C-4EA6-11EA-9B1D-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 754C77A0-4EAA-11EA-B7A1-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> OK, any one of you wants to do the honors of wrapping up the
-> proposed patch with a log message to replace the tip commit to allow
-> us to move forward?
+> -	count_bitmap_commit_list(bitmap_git, &commit_count, NULL, NULL, NULL);
+> +	count_bitmap_commit_list(bitmap_git, &commit_count,
+> +				 revs->tree_objects ? &tree_count : NULL,
+> +				 revs->blob_objects ? &blob_count : NULL,
+> +				 revs->tag_objects ? &tag_count : NULL);
 
+So count_bitmap_commit_list() has been prepared to count non-commits
+already, but we are just starting to use that feature?
 
-So the diff was taken from <20200123175645.GF6837@szeder.dev>; with
-Szeder's SoB (and possibly wordsmithing the log message) let's tie
-this loose end.
+Interesting.
+
+> -	printf("%d\n", commit_count);
+> +	printf("%d\n", commit_count + tree_count + blob_count + tag_count);
 
 Thanks.
-
--- >8 --
-
-From: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
-Date: Thu, 23 Jan 2020 18:56:45 +0100
-Subject: [PATCH] ci: use python3 in linux-gcc and osx-gcc and python2 els=
-ewhere
-
-Python2 reached end of life, and we have been preparing git-p4
-(which is the sole in-tree user of Python) to work with Python3
-but we haven't told our CI jobs to use Python3 anywhere yet.
-
-Pick two jobs and use Python3 there, while leaving other jobs
-to still stick to Python2 for now.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- ci/lib.sh | 6 ++++++
- 1 file changed, 6 insertions(+)
-
-diff --git a/ci/lib.sh b/ci/lib.sh
-index a90d0dc0fd..c3a8cd2104 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -162,6 +162,9 @@ linux-clang|linux-gcc)
- 	if [ "$jobname" =3D linux-gcc ]
- 	then
- 		export CC=3Dgcc-8
-+		MAKEFLAGS=3D"$MAKEFLAGS PYTHON_PATH=3D$(which python3)"
-+	else
-+		MAKEFLAGS=3D"$MAKEFLAGS PYTHON_PATH=3D$(which python2)"
- 	fi
-=20
- 	export GIT_TEST_HTTPD=3Dtrue
-@@ -182,6 +185,9 @@ osx-clang|osx-gcc)
- 	if [ "$jobname" =3D osx-gcc ]
- 	then
- 		export CC=3Dgcc-9
-+		MAKEFLAGS=3D"$MAKEFLAGS PYTHON_PATH=3D$(which python3)"
-+	else
-+		MAKEFLAGS=3D"$MAKEFLAGS PYTHON_PATH=3D$(which python2)"
- 	fi
-=20
- 	# t9810 occasionally fails on Travis CI OS X
---=20
-2.25.0-462-gba6e6679b4
-
