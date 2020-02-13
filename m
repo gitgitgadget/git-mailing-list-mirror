@@ -2,89 +2,162 @@ Return-Path: <SRS0=eUpu=4B=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1,
+	USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 45485C352A3
-	for <git@archiver.kernel.org>; Thu, 13 Feb 2020 22:34:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BDCE5C352A3
+	for <git@archiver.kernel.org>; Thu, 13 Feb 2020 22:58:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 22AD621734
-	for <git@archiver.kernel.org>; Thu, 13 Feb 2020 22:34:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 875BE20873
+	for <git@archiver.kernel.org>; Thu, 13 Feb 2020 22:58:42 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ESjAaRYf"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727754AbgBMWeJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Feb 2020 17:34:09 -0500
-Received: from cloud.peff.net ([104.130.231.41]:42894 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726780AbgBMWeJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Feb 2020 17:34:09 -0500
-Received: (qmail 17608 invoked by uid 109); 13 Feb 2020 22:34:09 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 13 Feb 2020 22:34:09 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 17309 invoked by uid 111); 13 Feb 2020 22:43:05 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 13 Feb 2020 17:43:05 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 13 Feb 2020 17:34:07 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
+        id S1727848AbgBMW6l (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Feb 2020 17:58:41 -0500
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:43831 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727347AbgBMW6l (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Feb 2020 17:58:41 -0500
+Received: by mail-pg1-f193.google.com with SMTP id u12so3546509pgb.10
+        for <git@vger.kernel.org>; Thu, 13 Feb 2020 14:58:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=mrXp2lHXpVoViZQXJIaAKH76DEz/hpcaRSROR4BEVJI=;
+        b=ESjAaRYfOS0VSsZ3XOAYWkne3qv4Boo0O7P41cldGQ9mxFmmwGCFc8lbNRgkbuUrgB
+         alyUb3rmd+xgvGRn8NZNNkSZNYGMwABLJAPYemaglUGjC4fK3i9koj7/nKVOpbzXKdVi
+         /g97lPUfE9Quki+gxBJR0t/0JNnnL+5Pca6gMLPZZJaWuyMLm5ZhYrx5UnMptY/iIe7R
+         0qkwZzkSSolpmHXdMpUcGhM4d5h1N0uWgOXOgnEOceVlEbeVGaVUbJZKwmO7BRe+0DxM
+         PK8n3dW/9Z1zp9Exvg3+9i665zy5FVXtjsYaivYo+BLr4UCOsQzwYXdZFJcZXn12gbfD
+         yeXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=mrXp2lHXpVoViZQXJIaAKH76DEz/hpcaRSROR4BEVJI=;
+        b=MeugYWtqoSpZcZW9sg1c9yWAMH7xGlw2ayjXKnUHBWcJu0C3s/4xEGaT2D2uJBHWnr
+         BmwLeWWX3y0ACyUdBc7tGmvVZEYFarQv5zPisT3YkhIKWwCVqVQcG7v+f4P2UrskM3Vx
+         HhyDoNowS2SeKErz9vAdCzR0oVgtlVXSNMKQ3S2oCxby5YtN73C1Zwj7UU5W7g+OtviP
+         rJJgudT1OnaWhtbXGIt6vvd36UMnQZwD4jZapfn6DURay2oJBDq48A98g+goO+SMebdM
+         VAe4F2cozbMuN6XgIoeUl57WkU2OR4jAMKtjXI+QVxZ+luNSk8cFCHTn/YlkiYZhR6UN
+         kxwg==
+X-Gm-Message-State: APjAAAWNXiSvFImvBJGmwHU1o38jfb49RwWkj7UC0NTzLQCwRTS5nxbK
+        acLUQzTflUIDEUG8r88TObnVTVJdsCo=
+X-Google-Smtp-Source: APXvYqxKJMXYBpuSNfpfKWZCdBpKoevAlCwXp9/KUSxwaFYrLm4uTCE/UmBooRCx0V65igLvS9W96w==
+X-Received: by 2002:aa7:93a6:: with SMTP id x6mr151500pff.72.1581634719806;
+        Thu, 13 Feb 2020 14:58:39 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
+        by smtp.gmail.com with ESMTPSA id e10sm4211340pgt.78.2020.02.13.14.58.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 13 Feb 2020 14:58:38 -0800 (PST)
+Date:   Thu, 13 Feb 2020 14:58:34 -0800
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Danh Doan <congdanhqx@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 09/13] rev-list: use bitmap filters for traversal
-Message-ID: <20200213223407.GB25317@coredump.intra.peff.net>
-References: <20200213021506.GA1124607@coredump.intra.peff.net>
- <20200213022125.GI1126038@coredump.intra.peff.net>
- <xmqqblq2qga8.fsf@gitster-ct.c.googlers.com>
+Subject: Re: [PATCH v6 01/15] help: move list_config_help to builtin/help
+Message-ID: <20200213225834.GI190927@google.com>
+References: <20200206004108.261317-1-emilyshaffer@google.com>
+ <20200206004108.261317-2-emilyshaffer@google.com>
+ <20200206013533.GA3993@danh.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqblq2qga8.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <20200206013533.GA3993@danh.dev>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 13, 2020 at 02:22:07PM -0800, Junio C Hamano wrote:
-
-> Jeff King <peff@peff.net> writes:
-> 
-> > This just passes the filter-options struct to prepare_bitmap_walk().
-> > Since the bitmap code doesn't actually support any filters yet, it will
-> > fallback to the non-bitmap code if any --filter is specified. But this
-> > lets us exercise that rejection code path, as well as getting us ready
-> > to test filters via rev-list when we _do_ support them.
-> 
-> So we used to look at filter_options.choice and declared any filter
-> is incompatible with use_bitmap_index quite early, but now we let
-> each of the try_bitmap_*() helpers check what is in the filter and
-> make their own decisions.
-> 
-> Of course, the prepare_bitmap_walk() call at the beginning of these
-> helpers does not know how to work with any filter at this point in
-> the series, so all of the above cancel out :-).
-> 
-> Makes sense.
-> 
-> I wonder if the "revs.prune" thing that forces use_bitmap_index off
-> should also move to prepare_bitmap_walk() at some point in the
-> series (or after the current series is done).  After all, the point
-> of introducing try_bitmap_*() helpers was to let these bitmap
-> specific logic to know what is and is not compatible with the bitmap
-> routines.
-
-Ah, interesting thought. Yeah, we could push it down to that level to
-avoid rev-list having to know details about how the bitmap code works.
-That could replace the earlier patch to consolidate the filter/prune
-logic. And then in this patch, this hunk:
-
-> > @@ -612,7 +614,7 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
-> >  	    (revs.left_right || revs.cherry_mark))
-> >  		die(_("marked counting is incompatible with --objects"));
+On Thu, Feb 06, 2020 at 08:35:33AM +0700, Danh Doan wrote:
+> On 2020-02-05 16:40:54-0800, Emily Shaffer <emilyshaffer@google.com> wrote:
+> > diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
+> > index 71158f7d8b..45fecf8bdf 100755
+> > --- a/generate-cmdlist.sh
+> > +++ b/generate-cmdlist.sh
+> > @@ -76,23 +76,6 @@ print_command_list () {
+> >  	echo "};"
+> >  }
 > >  
-> > -	if (filter_options.choice || revs.prune)
-> > +	if (revs.prune)
-> >  		use_bitmap_index = 0;
+> > -print_config_list () {
+> > -	cat <<EOF
+> > -static const char *config_name_list[] = {
+> > -EOF
+> > -	grep -h '^[a-zA-Z].*\..*::$' Documentation/*config.txt Documentation/config/*.txt |
+> > -	sed '/deprecated/d; s/::$//; s/,  */\n/g' |
+> > -	sort |
+> > -	while read line
+> > -	do
+> > -		echo "	\"$line\","
+> > -	done
+> > -	cat <<EOF
+> > -	NULL,
+> > -};
+> > -EOF
+> > -}
+> > -
+> >  exclude_programs=
+> >  while test "--exclude-program" = "$1"
+> >  do
+> > @@ -113,5 +96,3 @@ echo
+> >  define_category_names "$1"
+> >  echo
+> >  print_command_list "$1"
+> > -echo
+> > -print_config_list
+> > diff --git a/generate-configlist.sh b/generate-configlist.sh
+> > new file mode 100755
+> > index 0000000000..eca6a00c30
+> > --- /dev/null
+> > +++ b/generate-configlist.sh
+> > @@ -0,0 +1,24 @@
+> > +#!/bin/sh
+> > +
+> > +echo "/* Automatically generated by generate-configlist.sh */"
+> > +echo
+> > +
+> > +print_config_list () {
+> > +	cat <<EOF
+> > +static const char *config_name_list[] = {
+> > +EOF
+> > +	grep -h '^[a-zA-Z].*\..*::$' Documentation/*config.txt Documentation/config/*.txt |
+> > +	sed '/deprecated/d; s/::$//; s/,  */\n/g' |
+> > +	sort |
+> > +	while read line
+> > +	do
+> > +		echo "	\"$line\","
+> > +	done
+> 
+> This while-read-echo was moved from generate-cmdlist.sh,
+> which has some logic to work with read-variable.
+> 
+> We're moving it out, I think apply this diff on top of it will make the code easier to read.
+> 
+> diff --git a/generate-configlist.sh b/generate-configlist.sh
+> index eca6a00c30..163dbf30bb 100755
+> --- a/generate-configlist.sh
+> +++ b/generate-configlist.sh
+> @@ -10,10 +10,7 @@ EOF
+>  	grep -h '^[a-zA-Z].*\..*::$' Documentation/*config.txt Documentation/config/*.txt |
+>  	sed '/deprecated/d; s/::$//; s/,  */\n/g' |
+>  	sort |
+> -	while read line
+> -	do
+> -		echo "	\"$line\","
+> -	done
+> +	sed 's/^/	"/; s/$/",/'
+>  	cat <<EOF
+>  	NULL,
+>  };
 
-would just drop this conditional entirely. I like it.
+Thanks for the suggestion. You're right that I didn't look into the
+contents of this script much, because I was just moving it; I modified
+your sed expression slightly so it performs just one operation:
 
--Peff
+  sed 's/^.*$/    "\0",/'
+
+ - Emily
