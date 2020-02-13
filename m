@@ -2,74 +2,94 @@ Return-Path: <SRS0=eUpu=4B=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B53BDC2BA83
-	for <git@archiver.kernel.org>; Thu, 13 Feb 2020 14:55:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5401CC3B18C
+	for <git@archiver.kernel.org>; Thu, 13 Feb 2020 16:07:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 864252082F
-	for <git@archiver.kernel.org>; Thu, 13 Feb 2020 14:55:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 20368206ED
+	for <git@archiver.kernel.org>; Thu, 13 Feb 2020 16:07:00 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P7afHAbV"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="aZ72L6we"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726780AbgBMOzA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Feb 2020 09:55:00 -0500
-Received: from mail-vs1-f51.google.com ([209.85.217.51]:44901 "EHLO
-        mail-vs1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726282AbgBMOzA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Feb 2020 09:55:00 -0500
-Received: by mail-vs1-f51.google.com with SMTP id p6so3733653vsj.11
-        for <git@vger.kernel.org>; Thu, 13 Feb 2020 06:54:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=s5xe7rERR9CTqBJiGKvioVWWbiCGkB+YuQC+3PdjGno=;
-        b=P7afHAbVk6eHYtdJ4o4w41IK4RnkCBr26d9DQDhbNLU9F8Chtq0q6FWAq4vxYEnrR1
-         1uiiu8I3E2oaQQe5swdDvRsxLBeQ0wlo3EUF1c1fRS/0f3Kn3P1j0X60xcHJ/3GtevVv
-         uos2eQm1JrqzgNdJPgcLUC5US0hQy3aEbGkICbYdgR09RSA0yxgGo444TH4VbdRJk9ZU
-         j7JsTOrivprmFuT7J33VmJuUinV0yKJ6tr/AbiSA0nPRx3XCL4eo+vQM7kYTFfwH5tLx
-         IgDUnS26q411D68Ef9nw2myBwD2/rvNeNkQpBBZwEABMTiSuablOph9v0+SqpRej262M
-         DjKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=s5xe7rERR9CTqBJiGKvioVWWbiCGkB+YuQC+3PdjGno=;
-        b=lT97QZpSTGARi7QDBhYTZZ7VhDNQ86jFNGNrRbX1whA+dHvsKfcJMF9lcSn6ZvpTcV
-         sZe6gUM/5Pp4hQTOdpQ3IV9fh9u60lir4gVd7LUGYu5VjkXp8yjhECm22EJoL1uZER19
-         RELGj3gdbgekme7Zs1+Fn91RFbC77qBxqQ8liCPbsHt4CJYFWBkjlPN8zJbHGjIBnq4k
-         AHvfi9laaD4HaseugbOYiIKAfjiySi27N7PFw8ORzno8pMR9nTdTCORVEzWQXAaD8hYK
-         t+GS4ucZPdHx6YI3NLbEg/YJNSRDMW+3+lOafFBrh9VcAUH3cPyt2uqy0QueE/HJWt0/
-         ceoQ==
-X-Gm-Message-State: APjAAAVewX5MzfM1vwlKrNzStzts2H6LZ7WAm638hvE708EfBHsReTeQ
-        Pj2B4yXAwvrcpuxnWFQbXntiXXD6wkRaZBpkCAdCnQ==
-X-Google-Smtp-Source: APXvYqzHwxTAxqphG5aIzS2yUJvj25Shw8zCH2l1XjpnjKeaM1uBWoUFWlH+46lyLHr5pfv5L/6o3R1SJ24Da98Dngk=
-X-Received: by 2002:a67:15c7:: with SMTP id 190mr2220489vsv.178.1581605699301;
- Thu, 13 Feb 2020 06:54:59 -0800 (PST)
+        id S1728571AbgBMQG7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Feb 2020 11:06:59 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:61692 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727881AbgBMQG5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Feb 2020 11:06:57 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8196FAC518;
+        Thu, 13 Feb 2020 11:06:55 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=4B1cMIfxqY6+luW9yWTBaOQCq64=; b=aZ72L6
+        wer9xQndjZSse59wgnKuEYsx/CqzwG80VFDR0RYXBu23i+gLlUtWYvAOphJiWNm9
+        zW4XQ/3qcBj926N1L4N+WGCLBHvb/UI2BkFi2l0vWDoPjQeKsB2ZLzIparF6jGe2
+        EvszhUHdoqnEgoeBN4BKFYDcVwqWr6iWM/ya0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=nb3wPwaCuALkEt5R5wYFnw8IcJtYtNP/
+        X2UTjvqL2GJCibKNU6cW0cam151tMCt/3X/6oBK42BATAKCez7sHkYMzdxYie4C8
+        hOTbTuVkNDtAQ+XNsMW+bYy0ko/8RC24Iw/KXpQvHaG5YTAEF7IDAM4GL7IYT+b6
+        OJneZWgh/Ac=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7924FAC517;
+        Thu, 13 Feb 2020 11:06:55 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 81EB1AC513;
+        Thu, 13 Feb 2020 11:06:51 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Yang Zhao <yang.zhao@skyboxlabs.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: yz/p4-py3, was Re: What's cooking in git.git (Feb 2020, #03; Wed, 12)
+References: <xmqqo8u3tqly.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.2002131401130.46@tvgsbejvaqbjf.bet>
+Date:   Thu, 13 Feb 2020 08:06:49 -0800
+In-Reply-To: <nycvar.QRO.7.76.6.2002131401130.46@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Thu, 13 Feb 2020 14:02:23 +0100 (CET)")
+Message-ID: <xmqq7e0qtqsm.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <CAJFfRmt65DV5bZa5yTvg9sDb8SS8dFFyX7Zm23T7mAHL58v1Lw@mail.gmail.com>
- <014f01d5e27c$5f5166d0$1df43470$@nexbridge.com>
-In-Reply-To: <014f01d5e27c$5f5166d0$1df43470$@nexbridge.com>
-From:   =?UTF-8?Q?Martin_Vejn=C3=A1r?= <vejnar.martin@gmail.com>
-Date:   Thu, 13 Feb 2020 15:54:48 +0100
-Message-ID: <CAJFfRmt3w60Yq+HS9oVmGtfPMzLeKzFSnkwS7v4_xe+eEWSxzw@mail.gmail.com>
-Subject: Re: Calculating major.minor.patch from commit hash
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: D89E3774-4E7A-11EA-8738-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 13, 2020 at 3:46 PM Randall S. Becker
-<rsbecker@nexbridge.com> wrote:
-> You should consider using annotated tags and the git describe command to derive your release number. [...]
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-I'd like to avoid tags in this case, because a new tag/deletion of a
-tag could change the hash->version mapping and I'd like that to be
-stable.
+> On Wed, 12 Feb 2020, Junio C Hamano wrote:
+>
+>> * yz/p4-py3 (2020-01-15) 14 commits
+>>  . ci: also run linux-gcc pipeline with python3.5 environment
+>>  - git-p4: use python3's input() everywhere
+>>  ...
+>>
+>>  Update "git p4" to work with Python 3.
+>>
+>>  Hold.
+>>  The last step is too wasteful to run full tests twice.
+>>  cf. <20200122235333.GA6837@szeder.dev>
+>>  cf. <20200123175645.GF6837@szeder.dev>
+>
+> All right, all right, all right! If we cannot find any better way than to
+> just use Python2 in -clang and Python3 in -gcc (or was it the other way
+> round, I forget), then we cannot find any better way, and I won't hold
+> this up any longer.
+
+OK, any one of you wants to do the honors of wrapping up the
+proposed patch with a log message to replace the tip commit to allow
+us to move forward?
+
+Thanks.
+
