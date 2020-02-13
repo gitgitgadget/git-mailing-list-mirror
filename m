@@ -2,99 +2,127 @@ Return-Path: <SRS0=eUpu=4B=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EFA8DC3B189
-	for <git@archiver.kernel.org>; Thu, 13 Feb 2020 16:38:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B549DC2BA83
+	for <git@archiver.kernel.org>; Thu, 13 Feb 2020 16:55:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id C73B924650
-	for <git@archiver.kernel.org>; Thu, 13 Feb 2020 16:38:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 86012206ED
+	for <git@archiver.kernel.org>; Thu, 13 Feb 2020 16:55:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c6SPYyh7"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ctk+h1Z7"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728301AbgBMQi1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Feb 2020 11:38:27 -0500
-Received: from mail-pj1-f67.google.com ([209.85.216.67]:37317 "EHLO
-        mail-pj1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727828AbgBMQi0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Feb 2020 11:38:26 -0500
-Received: by mail-pj1-f67.google.com with SMTP id m13so2650822pjb.2
-        for <git@vger.kernel.org>; Thu, 13 Feb 2020 08:38:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=6I06vU+2kw8fhjypwqyqBpdHpDfy+SSwNMkSz5o44FE=;
-        b=c6SPYyh7OjQ4BKIXyGOLyCfL1MLEcz+8f+VYGdV/a3SyZFNZuE/7tbfGBHEOHZ53VR
-         g3FvvJ/AgfctXMJtODJ/UGwWzd/nuEQsOzb3dKMOd7QXWybFeLI2pLrmTm95cKSDPkcj
-         wQeg0a0gbue+UtyQbyThEolve+BXoT1LdXY03LDqPsEAY6FW4R5oq/LX/B42BYGSXM0P
-         qpGH2gZOpEn1Bt7bMjbWmXCP/OqCfzn90py9Eltln+sIT4YdS9hYjDROqz5H0BpZHezM
-         36gaQeN8Vt+E31BQNffYS0o3KcMzVT6tNQsZ9e/riAdh6VMKJnp6rBuVwDokFcg6rZYA
-         k1Ow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=6I06vU+2kw8fhjypwqyqBpdHpDfy+SSwNMkSz5o44FE=;
-        b=E1B4EtfsrzRKrzVGVCrCdoQHO1itLtdoeP4eBzDsisEvTZVHKAg6TR2/+5RD8izWx7
-         lzzY4RwW3//3Qi+5SeYBbiNp5NGjcGq4MiJInvYRcFsLETWzmklNcYFGE/SWHgyUVGJJ
-         D9CUyvlfxsARHp4qQRFv8m2Oqm79GWtBfcDgyb8i7A5lBxqQwMmPx8DuORW/64hkfJzk
-         Q7Qb9uthAYvHu9u7ViCShAuFCama8gTxn0lNoRyQNiOc0fIQ8QRwwqAi/Vbe6ilUqTHg
-         +rZR4A6fj1ZXGw0p9FC1iN1ipkz5QbLsPAV3aAmMpo3lo14EveTdCu+dl/yL655RaLJx
-         VFWg==
-X-Gm-Message-State: APjAAAX2mR39OPJjzE+5GHVDv2Yaij1HhfnzI6pTZeQvA0HDHHJ2dOys
-        BXNJsLF9Zv+nMk/2oHG3QdsIELRL0Fcn1g==
-X-Google-Smtp-Source: APXvYqxlN9wXkjxSJI5sy/a5/ZWzknyXaH0SyPDWKHPR+vPSzpjLdc8bB1zUb6WomHfQQunysN3rVA==
-X-Received: by 2002:a17:90a:c301:: with SMTP id g1mr6034168pjt.88.1581611904662;
-        Thu, 13 Feb 2020 08:38:24 -0800 (PST)
-Received: from konoha.iitr.ac.in ([103.37.201.172])
-        by smtp.gmail.com with ESMTPSA id d14sm3396734pjz.12.2020.02.13.08.38.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Feb 2020 08:38:23 -0800 (PST)
-From:   Shourya Shukla <shouryashukla.oo@gmail.com>
-To:     johannes.schindelin@gmx.de
-Cc:     chriscool@tuxfamily.org, git@vger.kernel.org, gitster@pobox.com,
-        peff@peff.net
-Subject: Re: [PATCH 1/1][RFC][GSoC] submodule: using 'is_writing_gitmodules_ok()' for a stricter check
-Date:   Thu, 13 Feb 2020 22:08:19 +0530
-Message-Id: <20200213163819.6495-1-shouryashukla.oo@gmail.com>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <nycvar.QRO.7.76.6.2002131435301.46@tvgsbejvaqbjf.bet>
-References: <nycvar.QRO.7.76.6.2002131435301.46@tvgsbejvaqbjf.bet>
+        id S1727963AbgBMQzY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Feb 2020 11:55:24 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:51012 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727705AbgBMQzY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Feb 2020 11:55:24 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6C8F7BB95F;
+        Thu, 13 Feb 2020 11:55:22 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=3bUGuGVvtYI07Fwr1tJEe7ZjgAo=; b=Ctk+h1
+        Z7CHiGqKXY2Oqr16Nyv7Eb/8+QSSLsbJf8Q2gzdjg9U3nifHG0mk5sDcaNIVrc3B
+        Aakr24MM4H1nlOuVBBPxRL99p6f4H1t/bOM3Sp1IURdmpdKRIQoADoDhqOo6cwXu
+        rVxyViV3SewVY29Ncvir1L5hZI/K+/1x3JuOs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Dgegabbor87856bxX0ALY1WW0I1qL4Qs
+        N5QUWPv5GMRT5amQJel5EaaCO66CUh0dMpo6elytHGOhelYhdRDTmb49SfETO7c8
+        ESmkTD8Qc2ZhP+M1umFYbkNoYAjvKAck9RnbK/5/roEbYWJM/I1K2O086Y09zIf9
+        6b8kqzdtupE=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 642DFBB95C;
+        Thu, 13 Feb 2020 11:55:22 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 56527BB958;
+        Thu, 13 Feb 2020 11:55:19 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Edmundo Carmona Antoranz <eantoranz@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] [RFC PATCH] stash save/push: add --index-only option
+References: <20200212235033.782656-1-eantoranz@gmail.com>
+        <CAOc6etbkMJf9qSNMU4fD4KeHE6NuMRUuQf_cBos_oxuYwaaeAA@mail.gmail.com>
+        <xmqqblq3t6w1.fsf@gitster-ct.c.googlers.com>
+        <CAOc6etYA79mTHB595cCVphmYmFECYvgPgV09SNo-pdEPEVD37w@mail.gmail.com>
+Date:   Thu, 13 Feb 2020 08:55:17 -0800
+In-Reply-To: <CAOc6etYA79mTHB595cCVphmYmFECYvgPgV09SNo-pdEPEVD37w@mail.gmail.com>
+        (Edmundo Carmona Antoranz's message of "Thu, 13 Feb 2020 07:21:54
+        -0600")
+Message-ID: <xmqqr1yys9ze.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9DD0EF2C-4E81-11EA-B048-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello Johannes,
+Edmundo Carmona Antoranz <eantoranz@gmail.com> writes:
 
-I understand your point of view here. What I am trying to say is that we must update
-our .gitmodules if atleast the function 'is_writing_gitmodules_ok()' passes.
+> Fair enough. It's ok to explain here, right?
 
-Before, we used to pass the if condition if our .gitmomdules existed and it did not matter
-if there were any traces of it in the index.
+Yes, absolutely.   How it works is 
 
-> But we're in the function called `update_path_in_gitmodules()` which
-> suggests that we're working on an existing, valid `.gitmodules`.
+ - an author comes up with a patch and its explanation and
+   justificaiton, 
 
-But we still originally(before my patch) checked for the existence of .gitmodules right?
-The functions exits with error in case of absence of the file(which should happen).
+ - reviewers ask clarifications on what was unclear, point out what
+   was wrong in the code, etc., and then 
 
-> So I do not think that we can proceed if `.gitmodules` is absent from
-> disk, even if in case that it is _also_ absent from the index and from the
-> current branch.
+ - the author responds with "here is what I meant", "yeah, you're
+   right that the code is wrong--would it be right to write it this
+   way?", and/or "not really, the code is OK because ...", etc.
 
-Yes that is one case, but the other case is that _if_ the file exists, it **should** not
-exist in the index or our current branch(which must be necessary to ensure before making
-any updates to the file right?). This is the case which was not covered before but I have
-tried to cover it in my patch.
+All that exchange is to come up with a more polished version that
+has correct code that is explained and justified in a clear manner.
 
-Is this explanation correct?
+The next iteration the author then sends would of course include the
+fixes to bugs pointed out during the review, but also would explain
+and justify the change better---the explanation in the original did
+not convey what the author wanted to tell, but the explanation the
+author gave during the review discussion did so better, so the new
+iteration can learn from that exchange.
 
-Regards,
-Shourya Shukla
+> There's no simple way to stash only
+> what you have on index while retaining your working tree state.
+
+Yes, that much can be inferred from what it does ("there is no easy
+way to do X, so I am adding X").
+
+The question is why would one want to do X in the first place.
+
+IIUC, the simplest workflow using the new feature may go like this:
+
+	$ edit file ;# edit a bit
+	$ git add file
+	$ edit file ;# even even more
+	$ git stash --cached
+
+After all of the above is done, "git stash list" may show that there
+is a single stash that records the changes you made to the file
+right after you added it, without your further changes (because you
+are taking what is in the index).  Your working tree has all the
+changes you made to file, both before and after "git add", and your
+index is clean.
+
+After you got yourself into this state where your index is clean,
+your working tree file has all changes, and your stash entry has
+only the earlier half of the change, what are you going to do with
+that stash entry?  If we learn the answer to that question, perhaps
+we may find (or we may even have) a better or easier way to achieve
+whatever you were planning to do with that stash entry by some other
+means---it might not even involve "git stash"---but without knowing
+that, we cannot tell if the new feature is a good idea.
+
+Thanks.
