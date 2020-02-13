@@ -8,59 +8,60 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E32FC3B18C
-	for <git@archiver.kernel.org>; Thu, 13 Feb 2020 18:59:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0AA82C352A3
+	for <git@archiver.kernel.org>; Thu, 13 Feb 2020 18:59:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id E2470217F4
-	for <git@archiver.kernel.org>; Thu, 13 Feb 2020 18:59:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DB112206CC
+	for <git@archiver.kernel.org>; Thu, 13 Feb 2020 18:59:16 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LkOSnBmg"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FV+783xn"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728306AbgBMS7P (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Feb 2020 13:59:15 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:54201 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728222AbgBMS7O (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1728272AbgBMS7O (ORCPT <rfc822;git@archiver.kernel.org>);
         Thu, 13 Feb 2020 13:59:14 -0500
-Received: by mail-wm1-f66.google.com with SMTP id s10so7442544wmh.3
-        for <git@vger.kernel.org>; Thu, 13 Feb 2020 10:59:14 -0800 (PST)
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:43097 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727665AbgBMS7O (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Feb 2020 13:59:14 -0500
+Received: by mail-wr1-f67.google.com with SMTP id r11so7994086wrq.10
+        for <git@vger.kernel.org>; Thu, 13 Feb 2020 10:59:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=YsSaa/Z5vJG5CKfKt+TlxmKS+vUz5pHfvqPlP5QYe48=;
-        b=LkOSnBmgchmcUg8MTbR9QkYWgECrHCDHSyt5Zt1H1JJ9PYmbKzscsWn0jdGb26wWhY
-         DryT7J7CH+TBve/BqK21ztEzILvbjkCzl/RtfjbVJu5V5/td3c8JYPAWyWfaQGxHDE99
-         JtmbcTjT7d5svvZKKBqk3XXzVcy/7/yTDTAzuzsVa2wnAjkPCLWFvFA0630wNoOgDsD1
-         w4Tk9M6jwbNPkh8EM798o5JONK033sJpImXHOdDtoMbUyuJ/mcqk2M0xhOd1MlEfFk+n
-         oEJ1yXhV5jBoz9kz17/MkshDyyDNgqYkPnGXkosW+00v+XSc8cXP+hKUooTjczESwmKc
-         Z1vg==
+        bh=IdKCESMQ+SzRi7//uH5ZlU0/7iBrSjkU4CP5tGuZb7k=;
+        b=FV+783xn5jbc/QcUBuDxVE8bp78RYDN1mTw5N/Sfasz0NC0op+Z0MuvkrGtII9+gMX
+         pswTA0YSlzHY/sFo8OgF2Zj3y5WXnt0snzoVTiljmHBpJhR++rQ6RDNW/nNWy82sp7vL
+         IbYL+os8HHd2zWRnee0v+x3pehuc2AsVOG51/CJEuEF1wHO9diZ2n+L5UGaMkVUxBMmF
+         nhSQzFRGBohd0gmQTxiZyUNWbNXwNsY4jKwYH3PndzO2CacD2RKvRueFzS6wTyOA94Zo
+         GOZEdH5OWiFE3zyp7l4qz/A5PG8lLYdovbyMJl01OECoL9ewKy5dZURpzRZ+REZ7fssa
+         b5UQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=YsSaa/Z5vJG5CKfKt+TlxmKS+vUz5pHfvqPlP5QYe48=;
-        b=h/EBdGgIP3NdL1RWtqqw65SvlHSNk+FxjMruwMzm/eC4Vq+kQkDPq6gq8EMZEJuI9W
-         QxOnKR8xl5UGOPHFbLsPLo5AGmTcZdheTuHV6AX6OJNV+v/+msmik1eRQxTenhWWIKhx
-         IGs9k3rT0ijM+DB8XVa/4O0F3VOXd9aPfEAec9oBHIbfcUeTEoPiC6npzSs89X2mCgB8
-         RTwBXdfacHOPCtUGJsvPkN5tFzCc/kIexU2YhlL8MO6Gsh7CqOy4VU5DR0VOkvYP7y5C
-         Kg7lH2HQLEpeMxRNSRwLKvcKeD7+OyeyHBMYDX0X9Ge5Ckevd1reIePGrrymUYGVsH90
-         jj3Q==
-X-Gm-Message-State: APjAAAUbbzt/ENScRMP5IpT+r4hZ52zZRiYGeuNCSJsm8sDHV62Iw4mY
-        Ia/vVnlYyND8zML3ooty6csa+Jsm
-X-Google-Smtp-Source: APXvYqzmPi3Se7legm1dMdihaXAaAwwwEK2dBpHCew5H1LWNlTutD1AcpUhcJqpjpIVTkEgwzZA4FQ==
-X-Received: by 2002:a05:600c:2503:: with SMTP id d3mr6997318wma.84.1581620353311;
-        Thu, 13 Feb 2020 10:59:13 -0800 (PST)
+        bh=IdKCESMQ+SzRi7//uH5ZlU0/7iBrSjkU4CP5tGuZb7k=;
+        b=acM2W7kcTcxF4yzleAaNS2bF1UZyegQzAvyxfrgt7Xd41nI80XsPKD2XU5rm3TInLF
+         luy5KF8u9U7V1i7oDf4PB9CEYFsvkCIHb3MLIrBiI8MfZWe60f87LpLwIO1r1Dfi6HRa
+         JFyVHEOIoK/P6fOh9vNF5B1DTjUkENDRFJ8DgmBYXLGplDpPplQT31tTdFQ8P72gAh1U
+         CrkIbhovWl4p1v2t1LBBr8gxBOe4WyT/YzHbpSYR+RTPkBb++xH4OppT5w590KxR/Rx3
+         bIRGrkiBUfFewlOR3KAyghq/6P4p1rtAkNqx+l3Bwtq4fR3SpFGk7fbfc3aF0qGIOLJ/
+         3Pyw==
+X-Gm-Message-State: APjAAAWiNiFYaAhkVjcBsRPy+0dca5Zc2cVmx5kW7kpbymfe4LrJADx0
+        odrUjyQLxhXWYxypxZHk2v4JJ/47
+X-Google-Smtp-Source: APXvYqwYpZ0STRwK/MaLXSUIiE6tdXO0v/k5XnWrMSHY1giaP87jpLKwul9fpyMYUUryfRWNjj6SRA==
+X-Received: by 2002:a5d:6886:: with SMTP id h6mr23227296wru.154.1581620352638;
+        Thu, 13 Feb 2020 10:59:12 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n8sm3780841wrx.42.2020.02.13.10.59.12
+        by smtp.gmail.com with ESMTPSA id m21sm3942535wmi.27.2020.02.13.10.59.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 13 Feb 2020 10:59:12 -0800 (PST)
-Message-Id: <d156d04ca87f9fcffb1c08a08576dddcdc64c055.1581620351.git.gitgitgadget@gmail.com>
+Message-Id: <902c8a3f17153ebd3871aa51e5cabe9338438655.1581620351.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.535.git.1581620351.gitgitgadget@gmail.com>
 References: <pull.535.git.1581620351.gitgitgadget@gmail.com>
 From:   "Hariom Verma via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 13 Feb 2020 18:59:09 +0000
-Subject: [PATCH 2/3] t5509: initialized `pushee` as bare repository
+Date:   Thu, 13 Feb 2020 18:59:08 +0000
+Subject: [PATCH 1/3] get_main_worktree(): allow it to be called in the Git
+ directory
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,34 +76,34 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Hariom Verma <hariom18599@gmail.com>
 
-`receive.denyCurrentBranch` currently has a bug where it allows pushing
-into the current branch of a non-bare repository as long as it does not
-have any commits. This would cause t5509 to fail once that bug is fixed
-because it pushes into an unborn current branch.
+When called in the Git directory of a non-bare repository, this function
+would not return the directory of the main worktree, but of the Git
+directory instead.
 
-In t5509, no operations are performed inside `pushee`, as it is only a
-target for `git push` and `git ls-remote` calls. Therefore it does not
-need to have a worktree. So, it is safe to change `pushee` to a bare
-repository.
+The reason: when the Git directory is the current working directory, the
+absolute path of the common directory will be reported with a trailing
+`/.git/.`, which the code of `get_main_worktree()` does not handle
+correctly.
+
+Let's fix this.
 
 Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Hariom Verma <hariom18599@gmail.com>
 ---
- t/t5509-fetch-push-namespaces.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ worktree.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/t/t5509-fetch-push-namespaces.sh b/t/t5509-fetch-push-namespaces.sh
-index 75cbfcc392..e3975bd21d 100755
---- a/t/t5509-fetch-push-namespaces.sh
-+++ b/t/t5509-fetch-push-namespaces.sh
-@@ -20,7 +20,7 @@ test_expect_success setup '
- 	) &&
- 	commit0=$(cd original && git rev-parse HEAD^) &&
- 	commit1=$(cd original && git rev-parse HEAD) &&
--	git init pushee &&
-+	git init --bare pushee &&
- 	git init puller
- '
+diff --git a/worktree.c b/worktree.c
+index 5b4793caa3..7c8cd21317 100644
+--- a/worktree.c
++++ b/worktree.c
+@@ -51,6 +51,7 @@ static struct worktree *get_main_worktree(void)
+ 	struct strbuf worktree_path = STRBUF_INIT;
+ 
+ 	strbuf_add_absolute_path(&worktree_path, get_git_common_dir());
++	strbuf_strip_suffix(&worktree_path, "/.");
+ 	if (!strbuf_strip_suffix(&worktree_path, "/.git"))
+ 		strbuf_strip_suffix(&worktree_path, "/.");
  
 -- 
 gitgitgadget
