@@ -2,109 +2,109 @@ Return-Path: <SRS0=eUpu=4B=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D2AC0C2BA83
-	for <git@archiver.kernel.org>; Thu, 13 Feb 2020 13:02:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 600D6C3B18B
+	for <git@archiver.kernel.org>; Thu, 13 Feb 2020 13:22:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A622624671
-	for <git@archiver.kernel.org>; Thu, 13 Feb 2020 13:02:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3175220873
+	for <git@archiver.kernel.org>; Thu, 13 Feb 2020 13:22:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="lRi+ucO+"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qNiscu/c"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729934AbgBMNC3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Feb 2020 08:02:29 -0500
-Received: from mout.gmx.net ([212.227.15.15]:39071 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729557AbgBMNC3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Feb 2020 08:02:29 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1581598943;
-        bh=sqltgop/Mb2/Zalzvi/4HR0+MdvXoJ/KhZ5ra2l9e8E=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=lRi+ucO+R8GamQ0PlfETv17a/rAbvngh0aKj5aajizkhzZii0ORe811KGIhw3vSYK
-         jHAJpqGS9RmVn2gwKjJZDfZkxIxmE4PfknlmpTurbTjCuj6N+IJgcAm0/swxZGfgkW
-         43uDMfngnJ5BOlp6SKTkg9wYjwx6RoTOQ/GlFG5k=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.86]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MOREi-1iqcj248cg-00Px4Y; Thu, 13
- Feb 2020 14:02:23 +0100
-Date:   Thu, 13 Feb 2020 14:02:23 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org
-Subject: yz/p4-py3, was Re: What's cooking in git.git (Feb 2020, #03; Wed,
- 12)
-In-Reply-To: <xmqqo8u3tqly.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.2002131401130.46@tvgsbejvaqbjf.bet>
-References: <xmqqo8u3tqly.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1729990AbgBMNWF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Feb 2020 08:22:05 -0500
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:39267 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729557AbgBMNWF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Feb 2020 08:22:05 -0500
+Received: by mail-pf1-f194.google.com with SMTP id 84so3076653pfy.6
+        for <git@vger.kernel.org>; Thu, 13 Feb 2020 05:22:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=rhmXx9N9kYViUBuJSVU/A0/OEfRERxJQIiaW/V5tKyw=;
+        b=qNiscu/cpAsbP5uzNc2JggiQZpfmTFFl26h4tNeKbwlCkxA+kIU3VfNuzdmFX2fGPt
+         mvP1G0ZbJQXcCJuyWxeWHiG/GuRmg2lYcPzJJeUAzcvAKb//+gLYB9ukH1O/MIvclQun
+         F0a3NuBsvbTfj2B3BJvlfrEyn8qoCMEovnFi4vEevruTAkP5X9Is76T+dq0/jCYtQ//+
+         srO8Nq655Xx0fLn0BITE+tu4JTNmI0CpKMEZWy9Q9fC+uMq9xMPfcFcToK5yqNJnegtH
+         bMeAhvsBNBfr5zwk3+Fra1PDhtmB2A0jKSvc283kJgRaj7SoIWYVPy+CX6Mkaoyqmmm3
+         +9Xw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=rhmXx9N9kYViUBuJSVU/A0/OEfRERxJQIiaW/V5tKyw=;
+        b=XOBfJbK5kgFWc2YIVutiLYNDRaZJiet+i1NI+SaA2X+pv+WH5x5a4vkwe2pvxSD6KC
+         7V9Wrzk/YS8VUK4DAhOKe2jU9yBGkG/dJ/HWgAuq61V3ZJY3H27frd3o2DZGwSpBqB5Q
+         uIqjVtIdrRAC58WqJ8IJ+stg1enFdDFO2ShmHfpVbga6WESO6LGa+fsBpLRqNM5KRQw9
+         4YnicgvBB+M+eJYHjh/XaIjU4za18inBIs8aJyQGfqJxeyuI+qcWt7wPceqNwy+4ecGT
+         q71KMST7VzmeQKcdAcqJWPPOBtoU5ThWVdJgrjZTpQa3LEvlPkIDfq1S1+fyN7vX2VIA
+         9J3Q==
+X-Gm-Message-State: APjAAAVDiSopoU3y3K8mTBanskUwSrymEyl58WVJ95pWX1puBX18j989
+        nxu5uuiNrTugES21f/MjXanSe5KChNA2dfjNLWV23kKEAR4NiQ==
+X-Google-Smtp-Source: APXvYqy6Zvp1pVb1BF1VcaQyNitP+XdV+dmz+4npq296lYu/6UKeUJklUOYLlmebnjg8aZYKFemsgbU8PInjpYlj77g=
+X-Received: by 2002:aa7:9908:: with SMTP id z8mr16200496pff.68.1581600125027;
+ Thu, 13 Feb 2020 05:22:05 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:9HhLc7rz+XEpBdGMoApXbi+75PdJCESp6Ri/wLMb8FpOdKjpxku
- D2yLO+BNW2WDk5AkhMcE0VUwlV/6DmpN+uF0FLeX+TvErNGaGdG33tnXJ1rk+p8h33y56yk
- bs1S6fjMDi8SXhczoBt7WBl/5dFhCyd0/0OTbsJ0k3bS5HbyHbMv7SvCIobYL/Feb6MzQL8
- CjmybCe2PwGQy+Qt9/a9A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:h9ucNLZqBvU=:+DL4UAkWzKUCs95u0zzfPC
- XEpgjIH1tcavnLxaDA8isVItY6380o/hZr/9lje8bNnztrnXyJeoodXHInWGM5+U/LrQVnmkc
- xKvLIijWqWUX7DQOsJeYTtSH69w+vBP04nyoFTSIvEdxpTqyKJqgfd7NmCxH5FIWOEEOABAcn
- FYwsYmqSzayv/uwmOhw9nP+CLQNfh1Wu92172WRGt+VKC9FuBN23LXhRafDGqC7+NtzGMn2T7
- B/bru/Wz6gxTBToWKdLSZ7YNGwb3QdNAjpybC4boqqdUWVuU8gjImqrkTuATNUIO3eAtN880H
- opCM9oVIzxZDYula7uTOCn79ju9BjAmNSeG66/z1FKo7mJGpM/JpDaZbIFvqZF8oqok0zj4k/
- XHxhpmDevHaAqU3ZN1tBJLWswMMqciiAlhb9RrWxMfqrbv9yvqAwm0J7nNN/+uwblFhwLn76J
- 7NZju0C48+k5FbZJOMNED+69TEIFYiPGf9NN9xVjnsu3IySTBIaSGxRm6MkkL/Xq3cTt3mmkP
- yiSp7lolhXh2es6v1NSofitIJAhgjH9Qc4Vh+ay/8CwRjrTiHxU5FijwfVpiD3ZOykkwlgkWi
- NMUNwdL5nzYIC4O6OJnE7Iioz4zolj3B1VjNFNpxcNEROhNXVeoIGMOhWDsJqkBpFzEgpCC8y
- siWNAp3uKm8hzsOLQHWbl4T56RxjIOUP6fHBMy5sXsARHDlTJ7/sBQGzYCMudYFFy0iZBv2aY
- FeQch4undJu4omgkkz/QOpgCBezWsUWg93XyVWDhR1E7PFeoy94MI6Ov+IT5XdrJjwehq3eOu
- f8jxX1kJYy3SmvP3t/2cFO46TYzJdrJR9yZYqX488nOabgklDSFBr1fIsKGa1ZWl6vO4KjH2G
- dp4fxMXu7bHYuFFNn2/fMWR8wPf71EyCC0ebxuHfHKhq+GQxAFI57/1LeTM8XneucV30ZU8/4
- BQO9oP6rqC1GjGqcBOIduycTamb6bk73i04zIkOHc1PJIKpjkXfbydR3RZY5itOdYh7tGHMfG
- YqbVC3APgbQGhmoA+zTt7EWQLl3zBrrO0BjzW+6a5LwAW0sB6PH2kqVT+Bi3SO7sAmN36Ia3T
- 5Lj6nXSDHK+Mben8IfMLvhpBGxbANJDwRz7V58M9bi4xzGBpmoN3bQmn4IWoCg7ZwD92JZBVp
- 49vt2N7nftjfSR70DL0O7kCP6/84NZu37yULkxLdza1KVSdFd2AGKUBHVMzmmKlqX8kqYFKPo
- 8ayBbFqLhFMyHdPhp
-Content-Transfer-Encoding: quoted-printable
+References: <20200212235033.782656-1-eantoranz@gmail.com> <CAOc6etbkMJf9qSNMU4fD4KeHE6NuMRUuQf_cBos_oxuYwaaeAA@mail.gmail.com>
+ <xmqqblq3t6w1.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqblq3t6w1.fsf@gitster-ct.c.googlers.com>
+From:   Edmundo Carmona Antoranz <eantoranz@gmail.com>
+Date:   Thu, 13 Feb 2020 07:21:54 -0600
+Message-ID: <CAOc6etYA79mTHB595cCVphmYmFECYvgPgV09SNo-pdEPEVD37w@mail.gmail.com>
+Subject: Re: [PATCH] [RFC PATCH] stash save/push: add --index-only option
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-On Wed, 12 Feb 2020, Junio C Hamano wrote:
-
-> * yz/p4-py3 (2020-01-15) 14 commits
->  . ci: also run linux-gcc pipeline with python3.5 environment
->  - git-p4: use python3's input() everywhere
->  - git-p4: simplify regex pattern generation for parsing diff-tree
->  - git-p4: use dict.items() iteration for python3 compatibility
->  - git-p4: use functools.reduce instead of reduce
->  - git-p4: fix freezing while waiting for fast-import progress
->  - git-p4: use marshal format version 2 when sending to p4
->  - git-p4: open .gitp4-usercache.txt in text mode
->  - git-p4: convert path to unicode before processing them
->  - git-p4: encode/decode communication with git for python3
->  - git-p4: encode/decode communication with p4 for python3
->  - git-p4: remove string type aliasing
->  - git-p4: change the expansion test from basestring to list
->  - git-p4: make python2.7 the oldest supported version
+On Wed, Feb 12, 2020 at 11:04 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
->  Update "git p4" to work with Python 3.
+> I am not sure if you explained how useful the "feature" being
+> proposed is, which is a very important skill to exercise to entice
+> readers to start reading and helping your code.
 >
->  Hold.
->  The last step is too wasteful to run full tests twice.
->  cf. <20200122235333.GA6837@szeder.dev>
->  cf. <20200123175645.GF6837@szeder.dev>
+> Why is it useful to be able to do this?  It is unclear at least to
+> me.
 
-All right, all right, all right! If we cannot find any better way than to
-just use Python2 in -clang and Python3 in -gcc (or was it the other way
-round, I forget), then we cannot find any better way, and I won't hold
-this up any longer.
+Fair enough. It's ok to explain here, right? There's no simple way to stash only
+what you have on index while retaining your working tree state.
 
-Ciao,
-Dscho
+I would do this to achieve it:
+save what I have on the index somehow
+$ git commit -m "will drop this revision later"
+
+that revision I just created has what I want to stash, actually
+
+$ git stash save -m "want to keep this on working tree when I finish"
+
+my work tree is now clean (perhaps with untracked files)
+
+$ git reset soft HEAD~1 # get what I had on index before
+
+now I can stash... this is what I originally intended
+
+$ git stash save -m "what I really meant to stash"
+
+and now I need to get the working tree the way I had it when I started:
+
+git stash pop stash@{1}
+
+
+All of that with git stash push --index-only... well, git stash push --cached
+
+>
+> By the way, per "git help cli", the name for this new option that is
+> more in line with the rest of the system would be "--cached"; it
+> would tell Git to work only on the data in the index (as opposed to
+> the working tree files).
+> .
+>
