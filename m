@@ -2,119 +2,85 @@ Return-Path: <SRS0=eUpu=4B=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B796C2BA83
-	for <git@archiver.kernel.org>; Thu, 13 Feb 2020 18:35:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D05AC2BA83
+	for <git@archiver.kernel.org>; Thu, 13 Feb 2020 18:40:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 56B30222C2
-	for <git@archiver.kernel.org>; Thu, 13 Feb 2020 18:35:53 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sP+jfpI6"
+	by mail.kernel.org (Postfix) with ESMTP id 22480222C2
+	for <git@archiver.kernel.org>; Thu, 13 Feb 2020 18:40:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727993AbgBMSfw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Feb 2020 13:35:52 -0500
-Received: from mail-oi1-f196.google.com ([209.85.167.196]:33891 "EHLO
-        mail-oi1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727779AbgBMSfw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Feb 2020 13:35:52 -0500
-Received: by mail-oi1-f196.google.com with SMTP id l136so6817683oig.1
-        for <git@vger.kernel.org>; Thu, 13 Feb 2020 10:35:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=a0/mmWxC3hm8AEyU5xNBK7+OXystdf8dZJMikuoN98w=;
-        b=sP+jfpI6amOJoRnj8maM6HREO7vXJQ/raHnrBsDZ+tvgLiOZx+eRkBH30dkicyMmNv
-         TpAhtlEiNja2OCFW5CNZE8/baPGjwXwGE3Hgu9X3cL9dxPBWIIs/7rDgSu0ZOmdQkKV7
-         jvqZU8q34jmmPhiigfsxdxWccyU82Y53JAA95y+/DMKTCtsT2ycPhWkYnToa90j6YeGP
-         5Tt89MeyRJFmxI4HDQT18HTEeEau2hNjTnyKzYviybg1OKce/rtahv6C8NhE/mmqOqb9
-         Qc0va16TtR/moXQZzeJCMSpe6GkEZanW6/T9elY+UtFk2bCnwZwR/6OPVYIWScLUfVcv
-         ojTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=a0/mmWxC3hm8AEyU5xNBK7+OXystdf8dZJMikuoN98w=;
-        b=dXCSiicvDcaqdN2HP1bbvnBLneU5lIJax2RS5O5hvRCKQRpgb75RwLleA1XFuGGKny
-         Z3Ww78HPbaXE/wKOGvxDXjdwySHx4Om0Eydra0Xik+AS/tod5ryVKisJk4oW/RfRoJOg
-         e3a3ucMW+DCs2roQFKHxKsWslsVVuqkTUHZ0PHFWQ5sfm83+5wdA+e3AxT8RhvQRkWrf
-         oBfu92x16qMu4En71OZcmOvAmEm6gOg4GDnEVp5OTsAWnPXEu+B+s4+pWdYDzzIQ7fkG
-         fW0cj42S05u344/Y1fmtShwBw/EwmJie7/0X+tgvKuGvzjirGCMxFrRlB5XVSqtxWVVF
-         Rfhg==
-X-Gm-Message-State: APjAAAV/MHadEB555FQ2bC+TUzBO9bRvPqHGNWifb5qH3bSkW27zVtnd
-        Pv3dihUfYRV82BKy+W2FEWaXemlsLJv4uWquWcraAw==
-X-Google-Smtp-Source: APXvYqz/Utzkh2ho5bY8Hrm1VwKBCDK9aI9mP6J3z+pi6D06FFaftoc7fsCWhOxlzfVkJ2hEiZMbwkbaPA9/XxoMZ+k=
-X-Received: by 2002:a05:6808:b18:: with SMTP id s24mr3775738oij.31.1581618949845;
- Thu, 13 Feb 2020 10:35:49 -0800 (PST)
+        id S1728076AbgBMSkf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Feb 2020 13:40:35 -0500
+Received: from cloud.peff.net ([104.130.231.41]:42616 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725781AbgBMSkf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Feb 2020 13:40:35 -0500
+Received: (qmail 16541 invoked by uid 109); 13 Feb 2020 18:40:34 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 13 Feb 2020 18:40:34 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 15655 invoked by uid 111); 13 Feb 2020 18:49:30 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 13 Feb 2020 13:49:30 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 13 Feb 2020 13:40:33 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 03/13] rev-list: fallback to non-bitmap traversal when
+ filtering
+Message-ID: <20200213184033.GA15046@coredump.intra.peff.net>
+References: <20200213021506.GA1124607@coredump.intra.peff.net>
+ <20200213021730.GC1126038@coredump.intra.peff.net>
+ <xmqq8sl6s63c.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-References: <pull.679.v3.git.git.1577217299.gitgitgadget@gmail.com>
- <pull.679.v4.git.git.1579155273.gitgitgadget@gmail.com> <3ea48d53940cb7e1a82a8a6eb819497c0448af6a.1579155273.git.gitgitgadget@gmail.com>
- <09f2a9bd-1fd2-b44b-a279-baf37ae23391@gmail.com>
-In-Reply-To: <09f2a9bd-1fd2-b44b-a279-baf37ae23391@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 13 Feb 2020 10:35:38 -0800
-Message-ID: <CABPp-BHgGcp8FzrOGfbp4-5Dzda8v76GRR-8RimWfdMSZOntuQ@mail.gmail.com>
-Subject: Re: [PATCH v4 01/19] git-rebase.txt: update description of --allow-empty-message
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Denton Liu <liu.denton@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Pavel Roskin <plroskin@gmail.com>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq8sl6s63c.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+On Thu, Feb 13, 2020 at 10:19:19AM -0800, Junio C Hamano wrote:
 
-On Sun, Feb 9, 2020 at 7:59 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
->
-> Hi Elijah
->
-...
-> > diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-> > index 0c4f038dd6..c83be7ffc2 100644
-> > --- a/Documentation/git-rebase.txt
-> > +++ b/Documentation/git-rebase.txt
-> > @@ -265,9 +265,10 @@ See also INCOMPATIBLE OPTIONS below.
-> >   See also INCOMPATIBLE OPTIONS below.
+> Jeff King <peff@peff.net> writes:
+> 
+> > The "--use-bitmap-index" option is usually aspirational: if we have
+> > bitmaps and the request can be fulfilled more quickly using them we'll
+> > do so, but otherwise fall back to a non-bitmap traversal.
 > >
-> >   --allow-empty-message::
-> > -     By default, rebasing commits with an empty message will fail.
-> > -     This option overrides that behavior, allowing commits with empty
-> > -     messages to be rebased.
-> > +     No-op.  Rebasing commits with an empty message used to fail
-> > +     and this option would override that behavior, allowing commits
-> > +     with empty messages to be rebased.  Now commits with an empty
-> > +     message do not cause rebasing to halt.
->
-> Do we want to mention that the user can pass --no-allow-empty-message to
-> override this?
+> > The exception is object filtering, which explicitly dies if the two
+> > options are combined. Let's convert this to the usual fallback behavior.
+> >
+> > This is a minor convenience for now (since the caller can easily know
+> > that --filter and --use-bitmap-index don't combine), but will become
+> > much more useful as we start to support _some_ filters with bitmaps, but
+> > not others.
+> 
+> Makes sense.  
+> 
+> Perhaps the option should have been called allow-bitmap-index or
+> something along that line, but it is too late ;-)
 
-Interesting point.  I could be persuaded towards that, but I'm leaning
-against it based on the logic in b00bf1c9a8dd which this commit was
-based upon.
+Yeah. It's also annoyingly long to type, and makes for long lines in the
+test scripts. ;)
 
-However, even if we do want to mention --no-allow-empty-message, I'd
-rather do that in a different series.  This patch is already slightly
-tangential to the series, but it at least fixes the documentation for
-a previously-documented option -- an option that happens to be similar
-in spirit to the ones being touched by the series.  Adding
-documentation for a previously undocumented option, while possibly
-laudable, feels like taking a tangent to a tangent to me.  (And this
-series is already long enough and is still hanging after two months,
-so...)
+There are also some weird semantics with the fallback, because the
+output may differ depending on whether we use bitmaps (see one of the
+later patches). I wouldn't be opposed to cleaning this up and giving it
+a new option ("--allow-bitmaps" or something) to keep compatibility, but
+it's out of scope here.
 
+The existing option (and my suggestion, as well as most of the internal
+code) are guilty of equating "bitmap" with "object reachability bitmap".
+There's lots of things one might use bitmaps for, and at some point we
+might even expose such a thing via rev-list.
 
-Elijah
+Anyway, that concludes my rant. I don't think any of these are urgent to
+fix, and definitely shouldn't be part of this series.
+
+-Peff
