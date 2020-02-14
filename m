@@ -2,88 +2,102 @@ Return-Path: <SRS0=nsHh=4C=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,FSL_HELO_FAKE,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 15CF5C352A3
-	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 02:10:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9DC1BC35242
+	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 04:17:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D25142187F
-	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 02:10:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5D114222C2
+	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 04:17:43 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hv5Cnfzf"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="x5G18Ux6"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728405AbgBNCKb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Feb 2020 21:10:31 -0500
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:42696 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728141AbgBNCKa (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Feb 2020 21:10:30 -0500
-Received: by mail-pf1-f193.google.com with SMTP id 4so4061128pfz.9
-        for <git@vger.kernel.org>; Thu, 13 Feb 2020 18:10:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=QWtvL6Rgj1Bx4w/VZwaWjU/Bymgp+fbasN6v8ZaRpmE=;
-        b=Hv5CnfzfHk+Pd9eAjWaluso/qr5SuZe+9TiCCiVzU2+oqzcbuzE/SpOMAf3/KQ6ttf
-         denRm2ABIxNJ0HHeph5JaztryIeFm6p5N4DcE59NUscR9EsKxMb3dBI/vh7WAERbIm+A
-         E6A2DCkntB2wrnutxSVaYu6D0IxupS6tWrboarrvXnY4y1OGUyYRRzb2vI5zVnf2P7zV
-         jYd1aH35fXWP9ra5/uDGll2i8tZbeLDJhE+eIL3fNTcgGF/gNc4MYdVB+kUCSrAZm7tN
-         SVoFrQP5d1d8x3ITZ/rQCtMks1zobmN4eKCaQ+LGZ0AH37Ir4QOzpGApizny5NXgdr2i
-         ysPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=QWtvL6Rgj1Bx4w/VZwaWjU/Bymgp+fbasN6v8ZaRpmE=;
-        b=T+gWD/kF+LzKkOWqNtXPf+L9gMLC/ZKm+RkiHHYvDH3Z+QgnA/2GvQXQm3QhXX8lio
-         FJBJatP21w1/EFpa4OIeO3tGmBsE0qQlREDR7VevGF6G3qJ4A47HrN6IgeRbMBPAajmP
-         SwHigSyboyOmzSLVXPovuGd/VGhyL+1WgG6k3yLmQYjFtNGZVNPU2CL808rHmNCR+fP8
-         DqvB1zLRUuUVWedHIvA0PKyIZO4w4VaK7MC0fckVcLjrmzISIjpW/4XD8Ui44wWPCIfz
-         uOJVuu8SFa0tXixzPvd/gFJ0QSFmt8trKaExwGFgPXydJ6hg3gfNehj0rqNUxGd2uphx
-         gjOQ==
-X-Gm-Message-State: APjAAAXO2EGfJiwCqg6SofR4WJdma+Xb74Sep2IObTM2DurvsaNo9RS9
-        4hQXmAwIhltLUOtRXPiv1T8=
-X-Google-Smtp-Source: APXvYqy24DJxt7++ddD+w+bTFVSbOuEvRVzYD166NvVhQVRRVWpSI5s54kFvO8QpGtnWlNdPhClXVA==
-X-Received: by 2002:a62:e414:: with SMTP id r20mr930009pfh.154.1581646230078;
-        Thu, 13 Feb 2020 18:10:30 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
-        by smtp.gmail.com with ESMTPSA id t11sm4394689pgi.15.2020.02.13.18.10.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Feb 2020 18:10:28 -0800 (PST)
-Date:   Thu, 13 Feb 2020 18:10:27 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH] MyFirstContribution: rephrase contact info
-Message-ID: <20200214021027.GA191976@google.com>
-References: <xmqqh803fzf1.fsf@gitster-ct.c.googlers.com>
- <20200214020359.17463-1-emilyshaffer@google.com>
+        id S1728486AbgBNERm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Feb 2020 23:17:42 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54580 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728336AbgBNERm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Feb 2020 23:17:42 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 390EC426B9;
+        Thu, 13 Feb 2020 23:17:41 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=oyD6uY2uU8xo+kY/zxDOu2ZFCA8=; b=x5G18U
+        x6FUv7ABd2fBBve7b7yJIMwe4Kj8HyxOFkziOvUPU93TKLYDn2ZoMXLMMoBeBIxd
+        8HiI2QuwDTyft/uGdtwTAD/WQIbI45jl6s9KSOmTswRc0Ks7zV9c1TbFwolQDD1I
+        PwLmwIkiiqr+N1pqfGH/uqaMYG9+9jot7J6yw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=m+4K/lTBti/Y8Nn87/7OP51ukIHC3QJy
+        fwKxn6p74j6ml6tTKJ65kTG6LwCyIdLDqeyg5qp2b948fCTZeXALi7b7+PjFwPy+
+        uJM3hWPsQ+oqC5FhTGIOJhB+J6CfbfIDFMzrP1VbDvKej2YPJ3bePqFKF2pcdLjw
+        7zFEHrakS6c=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2FE92426B8;
+        Thu, 13 Feb 2020 23:17:41 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9A656426B7;
+        Thu, 13 Feb 2020 23:17:40 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Yang Zhao <yang.zhao@skyboxlabs.com>
+Cc:     git@vger.kernel.org,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Han-Wen Nienhuys <hanwen@google.com>
+Subject: Re: yz/p4-py3, was Re: What's cooking in git.git (Feb 2020, #03; Wed, 12)
+References: <xmqqo8u3tqly.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.2002131401130.46@tvgsbejvaqbjf.bet>
+        <xmqq7e0qtqsm.fsf@gitster-ct.c.googlers.com>
+        <xmqqk14qqj7n.fsf@gitster-ct.c.googlers.com>
+Date:   Thu, 13 Feb 2020 20:17:39 -0800
+In-Reply-To: <xmqqk14qqj7n.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Thu, 13 Feb 2020 13:18:52 -0800")
+Message-ID: <xmqqtv3tpzto.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200214020359.17463-1-emilyshaffer@google.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain
+X-Pobox-Relay-ID: F0B8D9FC-4EE0-11EA-B018-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emily Shaffer wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Make an effort not to discourage new users from mailing questions to
-> git@vger.kernel.org, and explain the purpose of the mentoring list in
-> contrast to the main list.
->
-> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
-> ---
->  Documentation/MyFirstContribution.txt | 29 +++++++++++++++------------
->  1 file changed, 16 insertions(+), 13 deletions(-)
+> So the diff was taken from <20200123175645.GF6837@szeder.dev>; with
+> Szeder's SoB (and possibly wordsmithing the log message) let's tie
+> this loose end.
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Now we are running some tests under py3, we seem to be failing the
+tip of 'pu'
 
-Thanks for tying up this loose end.
+    https://travis-ci.org/git/git/jobs/650160479
+
+that is getting a SyntaxError.
+
+    if message.find(separatorLine) <> -1:
+
+There are other breakages whose causes are already identified in the
+recent list messages, e.g.
+
+    https://travis-ci.org/git/git/jobs/650160481
+
+is due to a non-portable sed invocation in the bugreport topic,
+
+    https://travis-ci.org/git/git/jobs/650160486
+
+is also due to the same topic, and
+
+    https://travis-ci.org/git/git/jobs/650160483
+
+is due to the forbidden "for (type var = init; ...)" construct in
+new C code.
