@@ -7,58 +7,58 @@ X-Spam-Status: No, score=-17.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
 	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 79A4CC3B194
-	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 01:54:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 43EAEC352A3
+	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 01:54:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 4998E222C2
-	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 01:54:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1971B2187F
+	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 01:54:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Oq2EixUA"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="aWOUcAAv"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728332AbgBNByH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Feb 2020 20:54:07 -0500
-Received: from mail-vk1-f202.google.com ([209.85.221.202]:50141 "EHLO
-        mail-vk1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728193AbgBNByH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Feb 2020 20:54:07 -0500
-Received: by mail-vk1-f202.google.com with SMTP id v134so2719094vkd.16
-        for <git@vger.kernel.org>; Thu, 13 Feb 2020 17:54:06 -0800 (PST)
+        id S1728319AbgBNByG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Feb 2020 20:54:06 -0500
+Received: from mail-pf1-f202.google.com ([209.85.210.202]:41235 "EHLO
+        mail-pf1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728193AbgBNByF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Feb 2020 20:54:05 -0500
+Received: by mail-pf1-f202.google.com with SMTP id e16so4978955pff.8
+        for <git@vger.kernel.org>; Thu, 13 Feb 2020 17:54:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=I3RloJdvp1spyqvHvZLdZ6xHw0Qu5/WY3tHVJyxBInE=;
-        b=Oq2EixUAwpIjwuf480Nbf7A0yAMTf8mm9botAVw1KOuAupkrj4ImzaQNpCRUpqym9r
-         V8Q5wk9MFp52h6+14tNawPaBNshiBykjNKS/WGna39wotFYsL1hF3aId/HfrweM4fS5K
-         1SoyA4+v9LpqDjtaVWck/GjuBFW3AUsCbgbQTNmL0MuI3Zdr9Uy3YalsDrG5FXw0KUSX
-         TEpaq3eiuYrqbmX7/vh5k7kztmqD3IJUxwDo36nPufrYg+Jl34OWizcnqLsmrDzSEzvu
-         U/ZR1F4uY6AnCBubgPcoxG1kP3wz29wiemzaHhlcd9UVT/jsll0OTjbn3OokDgLbgFQK
-         Wu2A==
+        bh=gQ3tMQClfO9NRhDHuTTv3sshyVDNk3yEHLSJCyjQC4o=;
+        b=aWOUcAAv6VR08Z4mJoJaNxvnmKd91bx6AUtX28SWNXB4rCYy2CS0sEKjkFpcqfmu4F
+         xp596dhQe+JB+lm1Z2E75jTy5ms7YRsCShwYPQx2HpUszGW/bo8yDIHNYZePlJ1006tM
+         57yAnip+i9MaoWhEZyCeRIgcvsOxJJ3/XocpScUGgxYbvd4SSvN7QqOVHlJ2eZ/SB4tO
+         Da2XIvblllhliNrRG+DzYArpvs22BsOiggGj8uSqkW2TIBcawauh9KTtDBg4KStrW/UR
+         heZxIbf2zf13p4hwzsNyyZQ6m4a0cVAoN53yz0i7xGFmWiW0lbayyJlIFnv1exxZoGMg
+         gktg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=I3RloJdvp1spyqvHvZLdZ6xHw0Qu5/WY3tHVJyxBInE=;
-        b=Dk/lvGijmPtNNi7eHKUXHijbo0f8qHSrW2Z7PFcJDxfkqfGfYBTuV+l16U6xbaHn3E
-         0R4q4zOCtGtmIDkkhmTLS4R4q9IDUeKONlkmbV9ThA/6CdJXTh2fBBI3zjedFwtcBYqP
-         fGyrGW8SLytw6PNGHz1tHsxCnj6xvmuRDoMg20MTsOPMzoK9c7QaaVPbDc3IW/4rjzjf
-         VyWstY8cloKAiCLi93eWByTEWi13eFQKgKTDVQihGvBW4MYpf+by/zwwsV6cMGw6zFKS
-         nDeQy0U3ZE+qDcluK7vHoPukSJoZmfoDJkxdRwQxc7Gn5GeWiZQcGUMbLqB283FoX3Rx
-         kkEw==
-X-Gm-Message-State: APjAAAVw/+8kToQ5gAOP/dcIF2PcdV/s5uIhAIvC7kyPQjXzy82cbkvh
-        qED6uZt3+WfhrLV+lxDh1kkUreTDTDlLDaKfzhvH1CaZpZVVCP/hm0Y5R+hPxBuVL3ryOdUm/x+
-        2D0/mQo/JxRolxDjhkADzmflzqauzxulrnYb2JRgyxJLiajMcoD7uRe1En89u/tZWUpo83nZd+A
+        bh=gQ3tMQClfO9NRhDHuTTv3sshyVDNk3yEHLSJCyjQC4o=;
+        b=HlMjG+fmHlGUjkjZtaNmG5k27eFE5zUsQWcKZD+kovCJHEUFewvdFXdV1NSyEI4dE6
+         RXn0dNunFh/PO7bWL9z2Clw4hRZSA/LsAD2u8HXuuctBusJPtBVb+8B3cc8e7vQYpyFg
+         hlEb+NmJIiQj2NL76I/hGMyzhGvE+mb/0giMJ4e4fSl7od3Lbt2dlLOEaixK4M9egygp
+         4FyEYayBRkfZ7qhqOZHO9F4XBt62n7yM1c2qC3ier//d7JoWZHhsJ87TztAkAjTGlDXT
+         k52TO5ikALoIYWKniVX9u2keRXOLZdgVFZlnLRi11y15k2uymf9hPy6RcNwiMngKiPhJ
+         yskw==
+X-Gm-Message-State: APjAAAViFLONgSxyQHkJ/aZ7CbBqCsA+7hv2FZzIkApCI9L44KsvF0co
+        m0meSmep7dL7QdT+TJmD+36M3+yztt/ZbykwBQtoueWSYcP+YghCo5wzMw8uPi/Tpfe/DY6qwRi
+        Jp3MJ1Ln94TccQsB0o65j5xkI1aZYd28W3uKHrWYKDppSlXwZpnotxi+qJjoPBZBoXneELTFQPQ
         ==
-X-Google-Smtp-Source: APXvYqxoBpAau5vC5CHLtj+OAmOBKrctD2sCGZ23WG2nlUzJV3ChFyFbhIHAZvjsRxtEwD9krOzhCvbAWXXeIW6kjnU=
-X-Received: by 2002:ab0:4aca:: with SMTP id t10mr425670uae.89.1581645246122;
- Thu, 13 Feb 2020 17:54:06 -0800 (PST)
-Date:   Thu, 13 Feb 2020 17:53:34 -0800
+X-Google-Smtp-Source: APXvYqxy/aJXOiHVj/1V1o7CVkwP+u3j/AE8qXq+3ALN4+pAcE4DVcT4zAUZCqUw0MaWwO1hnaKRThy3M80xTHAq4lA=
+X-Received: by 2002:a63:66c6:: with SMTP id a189mr779748pgc.401.1581645243781;
+ Thu, 13 Feb 2020 17:54:03 -0800 (PST)
+Date:   Thu, 13 Feb 2020 17:53:33 -0800
 In-Reply-To: <20200214015343.201946-1-emilyshaffer@google.com>
-Message-Id: <20200214015343.201946-7-emilyshaffer@google.com>
+Message-Id: <20200214015343.201946-6-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20200214015343.201946-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.25.0.265.gbab2e86ba0-goog
-Subject: [PATCH v7 06/15] bugreport: add compiler info
+Subject: [PATCH v7 05/15] bugreport: add uname info
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -68,85 +68,57 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-To help pinpoint the source of a regression, it is useful to know some
-info about the compiler which the user's Git client was built with. By
-adding a generic get_compiler_info() in 'compat/' we can choose which
-relevant information to share per compiler; to get started, let's
-demonstrate the version of glibc if the user built with 'gcc'.
+The contents of uname() can give us some insight into what sort of
+system the user is running on, and help us replicate their setup if need
+be. The domainname field is not guaranteed to be available, so don't
+collect it.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
  Documentation/git-bugreport.txt |  1 +
- bugreport.c                     |  5 +++++
- compat/compiler.h               | 24 ++++++++++++++++++++++++
- 3 files changed, 30 insertions(+)
- create mode 100644 compat/compiler.h
+ bugreport.c                     | 13 +++++++++++++
+ 2 files changed, 14 insertions(+)
 
 diff --git a/Documentation/git-bugreport.txt b/Documentation/git-bugreport.txt
-index 4dd72c60f5..8bbc4c960c 100644
+index 6ce2ae2eff..4dd72c60f5 100644
 --- a/Documentation/git-bugreport.txt
 +++ b/Documentation/git-bugreport.txt
-@@ -27,6 +27,7 @@ The following information is captured automatically:
+@@ -26,6 +26,7 @@ The following information is requested from the user:
+ The following information is captured automatically:
  
   - 'git version --build-options'
-  - uname sysname, release, version, and machine strings
-+ - Compiler-specific info string
++ - uname sysname, release, version, and machine strings
  
  OPTIONS
  -------
 diff --git a/bugreport.c b/bugreport.c
-index b76a1dfb2a..4f9101caeb 100644
+index b7504fe322..b76a1dfb2a 100644
 --- a/bugreport.c
 +++ b/bugreport.c
-@@ -4,6 +4,7 @@
- #include "strbuf.h"
- #include "time.h"
- #include "help.h"
-+#include "compat/compiler.h"
+@@ -7,10 +7,23 @@
  
  static void get_system_info(struct strbuf *sys_info)
  {
-@@ -24,6 +25,10 @@ static void get_system_info(struct strbuf *sys_info)
- 			    uname_info.release,
- 			    uname_info.version,
- 			    uname_info.machine);
++	struct utsname uname_info;
 +
-+	strbuf_addstr(sys_info, "compiler info: ");
-+	get_compiler_info(sys_info);
-+	strbuf_complete_line(sys_info);
+ 	/* get git version from native cmd */
+ 	strbuf_addstr(sys_info, "git version:\n");
+ 	get_version_info(sys_info, 1);
+ 	strbuf_complete_line(sys_info);
++
++	/* system call for other version info */
++	strbuf_addstr(sys_info, "uname -a: ");
++	if (uname(&uname_info))
++		strbuf_addf(sys_info, "uname() failed with code %d\n", errno);
++	else
++		strbuf_addf(sys_info, "%s %s %s %s\n",
++			    uname_info.sysname,
++			    uname_info.release,
++			    uname_info.version,
++			    uname_info.machine);
  }
  
  static const char * const bugreport_usage[] = {
-diff --git a/compat/compiler.h b/compat/compiler.h
-new file mode 100644
-index 0000000000..bda5098e1b
---- /dev/null
-+++ b/compat/compiler.h
-@@ -0,0 +1,24 @@
-+#ifndef COMPILER_H
-+#define COMPILER_H
-+
-+#include "git-compat-util.h"
-+#include "strbuf.h"
-+
-+#ifdef __GLIBC__
-+#include <gnu/libc-version.h>
-+
-+static inline void get_compiler_info(struct strbuf *info)
-+{
-+	strbuf_addf(info, "glibc: %s", gnu_get_libc_version());
-+}
-+
-+#else
-+
-+static inline void get_compiler_info(struct strbuf *info)
-+{
-+	strbuf_addstr(info, "get_compiler_info() not implemented");
-+}
-+
-+#endif
-+
-+#endif /* COMPILER_H */
 -- 
 2.25.0.265.gbab2e86ba0-goog
 
