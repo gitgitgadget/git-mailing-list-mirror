@@ -2,113 +2,330 @@ Return-Path: <SRS0=nsHh=4C=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B96A2C2BA83
-	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 18:10:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 90489C2BA83
+	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 18:21:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8D8882168B
-	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 18:10:53 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="eD/gKB9O"
+	by mail.kernel.org (Postfix) with ESMTP id 66DC82168B
+	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 18:21:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2403959AbgBNSKv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Feb 2020 13:10:51 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54875 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2403917AbgBNSKv (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Feb 2020 13:10:51 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 049863CB25;
-        Fri, 14 Feb 2020 13:10:46 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=ufzv5cRW3sNV
-        nYyBUZhmpvLNT+c=; b=eD/gKB9On5y7yfWxsHJOAKojiT9Rf4IcECo6RC0i27es
-        7xMHFNJGtwkOt190y3SndlqEiFs3xmdpPuGLyXzCGawweS2YgT1dFnamVoU2jNf+
-        OrREPKtfHQyL8DY04q5/ULQ6uoDrpu3jwFXhBs9F1w5nyskRjOZfAwgm41jiUjc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=AvAADL
-        KW1ULaPyMd1T4B0L0ArGcoRgRZrFj6Mncpqp0w8DSnVoDT+4FLp3WXPzDm/6d8Fs
-        3AHtHvl5ycqusEnLl5FImK0DtFjfY/KWSqavuPqtU5xK1MPA4qUNffBYqXY9C7hw
-        5VolXZ/FN1H7chr36dVmdEYPKjxci1WNqmqDA=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id EF56A3CB24;
-        Fri, 14 Feb 2020 13:10:45 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 59C673CB23;
-        Fri, 14 Feb 2020 13:10:45 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Ben Keene <seraphire@gmail.com>
-Cc:     Denton Liu <liu.denton@gmail.com>,
-        Yang Zhao <yang.zhao@skyboxlabs.com>, git@vger.kernel.org,
-        SZEDER =?utf-8?Q?G?= =?utf-8?Q?=C3=A1bor?= 
-        <szeder.dev@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: yz/p4-py3, was Re: What's cooking in git.git (Feb 2020, #03; Wed, 12)
-References: <xmqqo8u3tqly.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.2002131401130.46@tvgsbejvaqbjf.bet>
-        <xmqq7e0qtqsm.fsf@gitster-ct.c.googlers.com>
-        <xmqqk14qqj7n.fsf@gitster-ct.c.googlers.com>
-        <xmqqtv3tpzto.fsf@gitster-ct.c.googlers.com>
-        <20200214051505.GA16130@generichostname>
-        <7fc48fbe-4cf4-7a0a-22f6-eac9692abc9b@gmail.com>
-        <xmqq8sl5p0hf.fsf@gitster-ct.c.googlers.com>
-        <9d1d3f2e-fef2-bcba-8065-c33ff6c5c0c3@gmail.com>
-Date:   Fri, 14 Feb 2020 10:10:44 -0800
-In-Reply-To: <9d1d3f2e-fef2-bcba-8065-c33ff6c5c0c3@gmail.com> (Ben Keene's
-        message of "Fri, 14 Feb 2020 12:05:15 -0500")
-Message-ID: <xmqqimk9nior.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S2394833AbgBNSVu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Feb 2020 13:21:50 -0500
+Received: from cloud.peff.net ([104.130.231.41]:43680 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S2390489AbgBNSVu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Feb 2020 13:21:50 -0500
+Received: (qmail 22923 invoked by uid 109); 14 Feb 2020 18:21:48 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 14 Feb 2020 18:21:48 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 23623 invoked by uid 111); 14 Feb 2020 18:30:45 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 14 Feb 2020 13:30:45 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 14 Feb 2020 13:21:47 -0500
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 0/15] combining object filters and bitmaps
+Message-ID: <20200214182147.GA654525@coredump.intra.peff.net>
+References: <20200213021506.GA1124607@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 51F22C9A-4F55-11EA-BD32-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <20200213021506.GA1124607@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ben Keene <seraphire@gmail.com> writes:
+Here's a v2 based on the early feedback from Junio, and a few things I
+noticed while addressing it:
 
-> On 2/14/2020 12:01 PM, Junio C Hamano wrote:
->> Ben Keene <seraphire@gmail.com> writes:
->>
->>> On 2/14/2020 12:15 AM, Denton Liu wrote:
->>>> This change comes from 'git-p4: restructure code in submit' in
->>>> 'bk/p4-pre-edit-changelist' which introduced the use of the `<>`
->>>> operator. In Python 2, this is valid but in Python 3, it was removed=
-.
->>>>
->>>> We can simply replace the `<>` with `!=3D` which is the new way of
->>>> writing "not equals".
->>> Absolutely. I'm committing the change now.
->> Thanks.
->>
->> I didn't mean that the use of <> was the only bug in 'pu' wrt Python
->> 3.  I see you sent a new round out, but has it been tested under
->> Python 3 already?  Just checking to set my expectation right.
-> I have not been able to test my changes under Py3. Unfortunately I
-> don't have the bandwidth at present to incorporate Yang's code into
-> this code for testing. I've been having to work with Python 2 at
-> present and using my changes locally.=C2=A0 I have tried to not use Pyt=
-hon2
-> only code, but cross compatible code but I'm not sure what other
-> errors might be present.
->
-> I'm fine if this needs to stay pending until Yang is complete and
-> I can then retest with the new code.
+ - patch 4 now moves the check for revs.prune into the pack-bitmap code,
+   rather than rearranging it within rev-list.
 
-Nah, I'd have replaced and rebuilt 'pu' anyway.  I just wanted to
-know how much I should be surprised if I saw any other Python3
-issues when Travis sees the updated 'pu' later today.
+ - I noticed some more opportunities to reuse the "compare the results
+   of a bitmap and non-bitmap traversal" code, so I factored that out
+   into its own commit (patch 8)
+
+ - I realized another long-standing annoyance is simple to fix: before
+   we did not know how to do "rev-list --use-bitmap-index" without
+   "--objects", but it was pretty easy to support. That's patch 9.
+
+The range diff below is a little noisy because of the ripple effects of
+some of those changes. If you just want to review the substantive
+changes, look at patches 4, 8, and 9.
+
+  [01/15]: pack-bitmap: factor out type iterator initialization
+  [02/15]: pack-bitmap: fix leak of haves/wants object lists
+  [03/15]: rev-list: fallback to non-bitmap traversal when filtering
+  [04/15]: pack-bitmap: refuse to do a bitmap traversal with pathspecs
+  [05/15]: rev-list: factor out bitmap-optimized routines
+  [06/15]: rev-list: make --count work with --objects
+  [07/15]: rev-list: allow bitmaps when counting objects
+  [08/15]: t5310: factor out bitmap traversal comparison
+  [09/15]: rev-list: allow commit-only bitmap traversals
+  [10/15]: pack-bitmap: basic noop bitmap filter infrastructure
+  [11/15]: rev-list: use bitmap filters for traversal
+  [12/15]: bitmap: add bitmap_unset() function
+  [13/15]: pack-bitmap: implement BLOB_NONE filtering
+  [14/15]: pack-bitmap: implement BLOB_LIMIT filtering
+  [15/15]: pack-objects: support filters with bitmaps
+
+ builtin/pack-objects.c             |   6 +-
+ builtin/rev-list.c                 | 114 +++++++++---
+ ewah/bitmap.c                      |   8 +
+ ewah/ewok.h                        |   1 +
+ object.c                           |   9 +
+ object.h                           |   2 +
+ pack-bitmap.c                      | 272 +++++++++++++++++++++++++----
+ pack-bitmap.h                      |   5 +-
+ reachable.c                        |   4 +-
+ t/perf/p5310-pack-bitmaps.sh       |  22 +++
+ t/t5310-pack-bitmaps.sh            |  36 +++-
+ t/t6000-rev-list-misc.sh           |  12 ++
+ t/t6113-rev-list-bitmap-filters.sh |  56 ++++++
+ t/test-lib-functions.sh            |  27 +++
+ 14 files changed, 504 insertions(+), 70 deletions(-)
+ create mode 100755 t/t6113-rev-list-bitmap-filters.sh
+
+Range-diff from v1:
+
+ 1:  283874f2ac =  1:  4424d745de pack-bitmap: factor out type iterator initialization
+ 2:  68e7bed41c =  2:  bc0576868f pack-bitmap: fix leak of haves/wants object lists
+ 3:  1182593fb2 =  3:  9d2ef09b9b rev-list: fallback to non-bitmap traversal when filtering
+ 4:  03b20e9b66 <  -:  ---------- rev-list: consolidate bitmap-disabling options
+ -:  ---------- >  4:  ce7969221a pack-bitmap: refuse to do a bitmap traversal with pathspecs
+ 5:  91032b0d78 =  5:  a9a5513bb0 rev-list: factor out bitmap-optimized routines
+ 6:  c7c3a31cf3 !  6:  eab5dd34bc rev-list: make --count work with --objects
+    @@ builtin/rev-list.c: int cmd_rev_list(int argc, const char **argv, const char *pr
+     +	    (revs.left_right || revs.cherry_mark))
+     +		die(_("marked counting is incompatible with --objects"));
+     +
+    - 	if (filter_options.choice || revs.prune)
+    + 	if (filter_options.choice)
+      		use_bitmap_index = 0;
+      
+     
+ 7:  0aabf6262b =  7:  04af6b9362 rev-list: allow bitmaps when counting objects
+ -:  ---------- >  8:  4b93d064b1 t5310: factor out bitmap traversal comparison
+ -:  ---------- >  9:  d89509fa8f rev-list: allow commit-only bitmap traversals
+ 8:  969238ec42 ! 10:  c64d4db8e8 pack-bitmap: basic noop bitmap filter infrastructure
+    @@ builtin/rev-list.c: static int try_bitmap_count(struct rev_info *revs)
+      		return -1;
+      
+     @@ builtin/rev-list.c: static int try_bitmap_traversal(struct rev_info *revs)
+    - 	if (!revs->tag_objects || !revs->tree_objects || !revs->blob_objects)
+    + 	if (revs->max_count >= 0)
+      		return -1;
+      
+     -	bitmap_git = prepare_bitmap_walk(revs);
+    @@ pack-bitmap.c: static int in_bitmapped_pack(struct bitmap_index *bitmap_git,
+      	unsigned int i;
+      
+     @@ pack-bitmap.c: struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs)
+    - 	struct bitmap *wants_bitmap = NULL;
+    - 	struct bitmap *haves_bitmap = NULL;
+    + 	if (revs->prune)
+    + 		return NULL;
+      
+    --	struct bitmap_index *bitmap_git = xcalloc(1, sizeof(*bitmap_git));
+    -+	struct bitmap_index *bitmap_git;
+    -+
+     +	if (!can_filter_bitmap(filter))
+     +		return NULL;
+     +
+      	/* try to open a bitmapped pack, but don't parse it yet
+      	 * because we may not need to use it */
+    -+	bitmap_git = xcalloc(1, sizeof(*bitmap_git));
+    - 	if (open_pack_bitmap(revs->repo, bitmap_git) < 0)
+    - 		goto cleanup;
+    - 
+    + 	bitmap_git = xcalloc(1, sizeof(*bitmap_git));
+     @@ pack-bitmap.c: struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs)
+      	if (haves_bitmap)
+      		bitmap_and_not(wants_bitmap, haves_bitmap);
+    @@ pack-bitmap.h
+      
+      static const char BITMAP_IDX_SIGNATURE[] = {'B', 'I', 'T', 'M'};
+      
+    -@@ pack-bitmap.h: void count_bitmap_commit_list(struct bitmap_index *, uint32_t *commits,
+    - void traverse_bitmap_commit_list(struct bitmap_index *,
+    +@@ pack-bitmap.h: void traverse_bitmap_commit_list(struct bitmap_index *,
+    + 				 struct rev_info *revs,
+      				 show_reachable_fn show_reachable);
+      void test_bitmap_walk(struct rev_info *revs);
+     -struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs);
+    @@ reachable.c: void mark_reachable_objects(struct rev_info *revs, int mark_reflog,
+     -	bitmap_git = prepare_bitmap_walk(revs);
+     +	bitmap_git = prepare_bitmap_walk(revs, NULL);
+      	if (bitmap_git) {
+    - 		traverse_bitmap_commit_list(bitmap_git, mark_object_seen);
+    + 		traverse_bitmap_commit_list(bitmap_git, revs, mark_object_seen);
+      		free_bitmap_index(bitmap_git);
+ 9:  b4eb8fcb9d ! 11:  caa69ac535 rev-list: use bitmap filters for traversal
+    @@ builtin/rev-list.c: static int try_bitmap_count(struct rev_info *revs)
+      	struct bitmap_index *bitmap_git;
+      
+     @@ builtin/rev-list.c: static int try_bitmap_traversal(struct rev_info *revs)
+    - 	if (!revs->tag_objects || !revs->tree_objects || !revs->blob_objects)
+    + 	if (revs->max_count >= 0)
+      		return -1;
+      
+     -	bitmap_git = prepare_bitmap_walk(revs, NULL);
+    @@ builtin/rev-list.c: int cmd_rev_list(int argc, const char **argv, const char *pr
+      	    (revs.left_right || revs.cherry_mark))
+      		die(_("marked counting is incompatible with --objects"));
+      
+    --	if (filter_options.choice || revs.prune)
+    -+	if (revs.prune)
+    - 		use_bitmap_index = 0;
+    - 
+    +-	if (filter_options.choice)
+    +-		use_bitmap_index = 0;
+    +-
+      	save_commit_buffer = (revs.verbose_header ||
+    + 			      revs.grep_filter.pattern_list ||
+    + 			      revs.grep_filter.header_list);
+     @@ builtin/rev-list.c: int cmd_rev_list(int argc, const char **argv, const char *prefix)
+      		progress = start_delayed_progress(show_progress, 0);
+      
+10:  b518070c12 = 12:  d3e7462138 bitmap: add bitmap_unset() function
+11:  438c21082e ! 13:  07ee699520 pack-bitmap: implement BLOB_NONE filtering
+    @@ Commit message
+             bitmaps is about the same as our loop here, but it might make the
+             code a bit simpler).
+     
+    -    The regression tests just compare the bitmap output to the non-bitmap
+    -    output. Since the code internally falls back to the non-bitmap path in
+    -    some cases, this is at risk of being a trivial noop. To combat this,
+    -    we'll check for small differences between the two outputs (see the
+    -    comment in the test). This is a little fragile, as it's possible that we
+    -    may teach the fallback path for --use-bitmap-index to produce
+    -    bitmap-like output in the future. But the exact ordering of objects
+    -    would likely be different in such a case, anyway.
+    +    Here are perf results for the new test on git.git:
+     
+    -    Plus we'd catch an unexpected fallback when running the perf suite, as
+    -    things would get slower. Here's what it looks like now (on git.git):
+    -
+    -    Test                                    HEAD^             HEAD
+    -    --------------------------------------------------------------------------------
+    -    5310.7: rev-list count with blob:none   1.67(1.62+0.05)   0.22(0.21+0.02) -86.8%
+    +      Test                                    HEAD^             HEAD
+    +      --------------------------------------------------------------------------------
+    +      5310.9: rev-list count with blob:none   1.67(1.62+0.05)   0.22(0.21+0.02) -86.8%
+     
+      ## pack-bitmap.c ##
+     @@ pack-bitmap.c: static int in_bitmapped_pack(struct bitmap_index *bitmap_git,
+    @@ pack-bitmap.c: static int filter_bitmap(struct bitmap_index *bitmap_git,
+      }
+     
+      ## t/perf/p5310-pack-bitmaps.sh ##
+    -@@ t/perf/p5310-pack-bitmaps.sh: test_perf 'pack to file (bitmap)' '
+    - 	git pack-objects --use-bitmap-index --all pack1b </dev/null >/dev/null
+    +@@ t/perf/p5310-pack-bitmaps.sh: test_perf 'rev-list (objects)' '
+    + 	git rev-list --all --use-bitmap-index --objects >/dev/null
+      '
+      
+     +test_perf 'rev-list count with blob:none' '
+    @@ t/t6113-rev-list-bitmap-filters.sh: test_expect_success 'filters fallback to non
+      	test_cmp expect actual
+      '
+      
+    -+# the bitmap and regular traversals produce subtly different output:
+    -+#
+    -+#   - regular output is in traversal order, whereas bitmap is split by type,
+    -+#     with non-packed objects at the end
+    -+#
+    -+#   - regular output has a space and the pathname appended to non-commit
+    -+#     objects; bitmap output omits this
+    -+#
+    -+# Normalize and compare the two. The second argument should always be the
+    -+# bitmap output.
+    -+cmp_bitmap_traversal () {
+    -+	if cmp "$1" "$2"
+    -+	then
+    -+		echo >&2 "identical raw outputs; are you sure bitmaps were used?"
+    -+		return 1
+    -+	fi &&
+    -+	cut -d' ' -f1 "$1" | sort >"$1.normalized" &&
+    -+	sort "$2" >"$2.normalized" &&
+    -+	test_cmp "$1.normalized" "$2.normalized"
+    -+}
+    -+
+     +test_expect_success 'blob:none filter' '
+     +	git rev-list --objects --filter=blob:none HEAD >expect &&
+     +	git rev-list --use-bitmap-index \
+     +		     --objects --filter=blob:none HEAD >actual &&
+    -+	cmp_bitmap_traversal expect actual
+    ++	test_bitmap_traversal expect actual
+     +'
+     +
+     +test_expect_success 'blob:none filter with specified blob' '
+     +	git rev-list --objects --filter=blob:none HEAD HEAD:two.t >expect &&
+     +	git rev-list --use-bitmap-index \
+     +		     --objects --filter=blob:none HEAD HEAD:two.t >actual &&
+    -+	cmp_bitmap_traversal expect actual
+    ++	test_bitmap_traversal expect actual
+     +'
+     +
+      test_done
+12:  05cd57f0ba ! 14:  f35fab09a0 pack-bitmap: implement BLOB_LIMIT filtering
+    @@ Commit message
+         than BLOB_NONE, but still produces a noticeable speedup (these results
+         are on git.git):
+     
+    -      Test                                        HEAD~2            HEAD
+    +      Test                                         HEAD~2            HEAD
+           ------------------------------------------------------------------------------------
+    -      5310.7: rev-list count with blob:none       1.80(1.77+0.02)   0.22(0.20+0.02) -87.8%
+    -      5310.8: rev-list count with blob:limit=1k   1.99(1.96+0.03)   0.29(0.25+0.03) -85.4%
+    +      5310.9:  rev-list count with blob:none       1.80(1.77+0.02)   0.22(0.20+0.02) -87.8%
+    +      5310.10: rev-list count with blob:limit=1k   1.99(1.96+0.03)   0.29(0.25+0.03) -85.4%
+     
+         The implementation is similar to the BLOB_NONE one, with the exception
+         that we have to go object-by-object while walking the blob-type bitmap
+    @@ t/t6113-rev-list-bitmap-filters.sh: test_description='rev-list combining bitmaps
+      
+      test_expect_success 'filters fallback to non-bitmap traversal' '
+     @@ t/t6113-rev-list-bitmap-filters.sh: test_expect_success 'blob:none filter with specified blob' '
+    - 	cmp_bitmap_traversal expect actual
+    + 	test_bitmap_traversal expect actual
+      '
+      
+     +test_expect_success 'blob:limit filter' '
+     +	git rev-list --objects --filter=blob:limit=5 HEAD >expect &&
+     +	git rev-list --use-bitmap-index \
+     +		     --objects --filter=blob:limit=5 HEAD >actual &&
+    -+	cmp_bitmap_traversal expect actual
+    ++	test_bitmap_traversal expect actual
+     +'
+     +
+     +test_expect_success 'blob:limit filter with specified blob' '
+    @@ t/t6113-rev-list-bitmap-filters.sh: test_expect_success 'blob:none filter with s
+     +	git rev-list --use-bitmap-index \
+     +		     --objects --filter=blob:limit=5 \
+     +		     HEAD HEAD:much-larger-blob-two.t >actual &&
+    -+	cmp_bitmap_traversal expect actual
+    ++	test_bitmap_traversal expect actual
+     +'
+     +
+      test_done
+13:  1e5befb73a ! 15:  797dbfe28f pack-objects: support filters with bitmaps
+    @@ Commit message
+         This unsurprisingly makes things faster for partial clones of large
+         repositories (here we're cloning linux.git):
+     
+    -      Test                              HEAD^               HEAD
+    +      Test                               HEAD^               HEAD
+           ------------------------------------------------------------------------------
+    -      5310.9: simulated partial clone   38.94(37.28+5.87)   11.06(11.27+4.07) -71.6%
+    +      5310.11: simulated partial clone   38.94(37.28+5.87)   11.06(11.27+4.07) -71.6%
+     
+      ## builtin/pack-objects.c ##
+     @@ builtin/pack-objects.c: static int pack_options_allow_reuse(void)
