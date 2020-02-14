@@ -6,90 +6,74 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 87D35C2BA83
-	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 17:01:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CD68AC2BA83
+	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 17:04:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3652F20656
-	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 17:01:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A225320656
+	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 17:04:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="hTK1OXMb"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="R+PmXb5B"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404562AbgBNRBJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Feb 2020 12:01:09 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:61266 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404052AbgBNRBG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Feb 2020 12:01:06 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5C043B6250;
-        Fri, 14 Feb 2020 12:01:06 -0500 (EST)
+        id S2392699AbgBNREQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Feb 2020 12:04:16 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:60732 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2392487AbgBNREL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Feb 2020 12:04:11 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4E9C4C38CC;
+        Fri, 14 Feb 2020 12:04:10 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=E3P4aqt6LXrWvNCKx4Zh/hRFt1Y=; b=hTK1OX
-        MbfCzf2GsxQyylHVu0EeZsyceUfDV8vs6/fEdJhWWbqB5hhnSB5Ml3Hqt+tilT09
-        pnrKIrUvEwvrrKME6gqp6i5UR1c2msDZcbpZMpgn0+WHm+HSYeNBTMsC1z5q7rjE
-        S0u08Jfd929f49KvAypMFVNwNWHKigitwJraA=
+        :content-type; s=sasl; bh=Vhwn3u3uSN7q2hEfitISrJe7+HM=; b=R+PmXb
+        5BBoIgWZphYFXwxlqcsbEzZIwDXgYPJzPAHDC+P/vXD/BsI41XOjQaHapPAVjXk5
+        KjUZu586L3kmy4AKjzmtBjhJa/bnudLbdEx8JFYGpvnZMitl5R/R/fRm8YW6I9xZ
+        KH4tYLj4JkN+xAFTxFyB31mSdaNtojDSGVQiA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=OhHBNCbuAxV+khZxmSCZy4xTFpDbC0rK
-        +yCuagYJBx/HcdJVBtUza5C/+55lajMQ/+n4UUqORNWAZhNWrt5dmT6ih9v5lCJT
-        /d2j41Ib7e3eclNrbouvrnui5uBUWPNm1HLQrfY43wC0Tyz4WOKBfJv4qRkNPcSk
-        uyzh14/auqM=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 545D4B624F;
-        Fri, 14 Feb 2020 12:01:06 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=m0SP59ahwwksMQfV1qNGHRlPiKlVIdRG
+        kPfrziRTOvl8Quf8tktdX3OYZxoBPixZv5asZ9f8AKYbLoXO5m7xUdN9gPcW+92R
+        3jxPsRfDdeQ+EiZoFRcN5CJLyGwMXdLJgKSatQJ4yqHjXelkY7nlBr+jXwZexZ6W
+        79+NNg0Jc0c=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 479C2C38CB;
+        Fri, 14 Feb 2020 12:04:10 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 77838B6249;
-        Fri, 14 Feb 2020 12:01:03 -0500 (EST)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 69704C38CA;
+        Fri, 14 Feb 2020 12:04:07 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Ben Keene <seraphire@gmail.com>
-Cc:     Denton Liu <liu.denton@gmail.com>,
-        Yang Zhao <yang.zhao@skyboxlabs.com>, git@vger.kernel.org,
-        SZEDER =?utf-8?Q?G?= =?utf-8?Q?=C3=A1bor?= 
-        <szeder.dev@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: yz/p4-py3, was Re: What's cooking in git.git (Feb 2020, #03; Wed, 12)
-References: <xmqqo8u3tqly.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.2002131401130.46@tvgsbejvaqbjf.bet>
-        <xmqq7e0qtqsm.fsf@gitster-ct.c.googlers.com>
-        <xmqqk14qqj7n.fsf@gitster-ct.c.googlers.com>
-        <xmqqtv3tpzto.fsf@gitster-ct.c.googlers.com>
-        <20200214051505.GA16130@generichostname>
-        <7fc48fbe-4cf4-7a0a-22f6-eac9692abc9b@gmail.com>
-Date:   Fri, 14 Feb 2020 09:01:00 -0800
-In-Reply-To: <7fc48fbe-4cf4-7a0a-22f6-eac9692abc9b@gmail.com> (Ben Keene's
-        message of "Fri, 14 Feb 2020 09:39:50 -0500")
-Message-ID: <xmqq8sl5p0hf.fsf@gitster-ct.c.googlers.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v7 14/15] bugreport: list contents of $OBJDIR/info
+References: <20200214015343.201946-1-emilyshaffer@google.com>
+        <20200214015343.201946-15-emilyshaffer@google.com>
+Date:   Fri, 14 Feb 2020 09:04:05 -0800
+In-Reply-To: <20200214015343.201946-15-emilyshaffer@google.com> (Emily
+        Shaffer's message of "Thu, 13 Feb 2020 17:53:42 -0800")
+Message-ID: <xmqq4kvtp0ca.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 955A4378-4F4B-11EA-AA88-B0405B776F7B-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 02FCEB24-4F4C-11EA-9D43-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ben Keene <seraphire@gmail.com> writes:
+Emily Shaffer <emilyshaffer@google.com> writes:
 
-> On 2/14/2020 12:15 AM, Denton Liu wrote:
->> This change comes from 'git-p4: restructure code in submit' in
->> 'bk/p4-pre-edit-changelist' which introduced the use of the `<>`
->> operator. In Python 2, this is valid but in Python 3, it was removed.
->>
->> We can simply replace the `<>` with `!=` which is the new way of
->> writing "not equals".
-> Absolutely. I'm committing the change now.
+> Miscellaneous information used about the object store can end up in
+> .git/objects/info; this can help us understand what may be going on with
+> the object store when the user is reporting a bug. Otherwise, it could
+> be difficult to track down what is going wrong with an object which
+> isn't kept locally to .git/objects/ or .git/objects/pack. Having some
+> understanding of where the user's objects may be kept can save us some
+> hops during the bug reporting process.
 
-Thanks.
-
-I didn't mean that the use of <> was the only bug in 'pu' wrt Python
-3.  I see you sent a new round out, but has it been tested under
-Python 3 already?  Just checking to set my expectation right.
-
+This step seems to have a new whitespace breakage that did not exist
+in the previous round.
