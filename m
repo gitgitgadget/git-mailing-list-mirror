@@ -2,196 +2,141 @@ Return-Path: <SRS0=nsHh=4C=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-17.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
+	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 776F6C3F68F
-	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 23:08:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E2245C35242
+	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 23:29:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 4E6292086A
-	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 23:08:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B26702086A
+	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 23:29:40 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="qphdRVTY"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="sYG7oK3Q"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727934AbgBNXIJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Feb 2020 18:08:09 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:32958 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725955AbgBNXIJ (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 14 Feb 2020 18:08:09 -0500
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id BFD406079B;
-        Fri, 14 Feb 2020 23:08:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1581721688;
-        bh=GnKK0RrNPB+/OrNKc7VMf69RhrAzVHTMICW5+YimF2o=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-         In-Reply-To:References:Content-Type:Content-Disposition;
-        b=qphdRVTYWAFY1zm/iGH/ODrExiR418YJL3faorj898Ua96EBsFZno4f6q8jHYZ6uu
-         tZdzAGBzbdYmJmaWvqHnQDNATpkl8H76LfMPnZvcxepuXMqZpNpf8M6TxiyCFBteIW
-         SV3XdtXQHzEs98xdAv5h7nvIQ0VmtR1DOvm9r35zHmNE0tmLWAFzjSHt8d1dKcqRh+
-         4EI+iU8esplNJFkwJhIFJBfBtHlBu8Wi1SCxyCITnWonIy3i0kkyJ0mc3ngTTandCA
-         xU4dElxBdLc3/hAlTL4cP35JikZ8RRLmNDEKxEwmUzoU4hyNxxuze21CGG1H9L6ng7
-         ygnRPWVyI56ZUHKxiSKCR3c7npwTQT09c7rAXYz8rNC+S643/VTUCB1FePkeSYQ9Bo
-         I0qw616zoc7YoVZGHb7wQoNjgNrGbETE4LaLP4rxzo5cabFUOxKOmJi+eCdCIQzevJ
-         n6Di+91uSelnQSPY0PVdYp7rfjuT31E+SIX8ChHu652yCpA9MAy
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     <git@vger.kernel.org>
-Cc:     Jeff King <peff@peff.net>
-Subject: [PATCH 3/3] credential: allow wildcard patterns when matching config
-Date:   Fri, 14 Feb 2020 22:59:29 +0000
-Message-Id: <20200214225929.541306-4-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.25.0.265.gbab2e86ba0
-In-Reply-To: <20200214225929.541306-1-sandals@crustytoothpaste.net>
-References: <20200214225929.541306-1-sandals@crustytoothpaste.net>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S1728002AbgBNX3j (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Feb 2020 18:29:39 -0500
+Received: from mail-pl1-f202.google.com ([209.85.214.202]:48945 "EHLO
+        mail-pl1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727529AbgBNX3j (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Feb 2020 18:29:39 -0500
+Received: by mail-pl1-f202.google.com with SMTP id d20so6042382pls.15
+        for <git@vger.kernel.org>; Fri, 14 Feb 2020 15:29:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=wgj/BAayUUNkxM5pCbN7k+HJ8nTUtoqZJn5HmdHrdKg=;
+        b=sYG7oK3QKMNDrsidhy56/kuFpfVXQNZBdxxHcLTRkhtLYCnjJHre6DE8hSfdrtZbFY
+         lM+BBVg9i1US9UTsUv6rFQmettXT1iYMI0BxMt9xpLgRvN7imNqwXwSeXLK3qW981BNb
+         wMYJwq/DLfgf2YMXequ1tAOr/3NwOwkphweHt5L5/lum2CGwmPjQQyyrcyNnYlGeG4jx
+         3Nt1utmbo2B+bozYqIhlodaKPwAfUzGEvCCu95PuDwuAucyUGfaDYMv9LgW+KNjiCwq1
+         PvqE4XGjamfxyK18oOpEIUcrIBMPHKHr86NheF04ONPW0kly8QFjkoQooOSb6dwH7JR8
+         0E1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=wgj/BAayUUNkxM5pCbN7k+HJ8nTUtoqZJn5HmdHrdKg=;
+        b=jQwhpLqJA7zuD8lk1kBQn2vkewyN6m4sW7lpYsw0KutF4Pg0tL266saIX7LrXit+rq
+         WQPXe1XaAh+LOSLR4GVzMmQRo9By7a1AJKCUD8TXs5fDLt2HJUmrP+AH3Z3wclYWUy12
+         92O/ULtNix4vm8E5XikKt3GiBZ+SBWDSS3H1lSG9Q9YWXsAqieC2LGOAY6ugFq5YmE1L
+         MtCSeK/VJdJDYZtYa5b8KvHhggkBb40aZxmPkbpyZsv1/C+dGUaHnPyBmEmr2jfeTcEb
+         7qTMIUIEZpAW0SREHQ5X4ejgogd9a5B898z6LolfL58IKPHry7dlSXL1kOUCdbyeN1+n
+         Y+Rw==
+X-Gm-Message-State: APjAAAUfGMC3ELEyIWukrdpPMcwpTIYn9meTajYWi6sXa/9ojlq0WbnY
+        SgqForgKPm9NnTuKmARZB6UOvbRMAESk7K27SRXOsxShNIAjyOmVg8q7C3+8rWWAIIxZjqN7BwK
+        5M98je2K6+WBHcKL9blkGIjHl+L8tJBWhGgAH969VLRla3OK3xxOTQyZMhkzXtgvSwILBUMFB2A
+        ==
+X-Google-Smtp-Source: APXvYqywBqw/D0l7Vtov+tMxVpECSQWwfPC+L9nMkNaGEfZEMhwNM//lAaR0cVGltOzx9YDHs90lZp3Wo1BG+ZPY5lw=
+X-Received: by 2002:a63:650:: with SMTP id 77mr5816630pgg.102.1581722978552;
+ Fri, 14 Feb 2020 15:29:38 -0800 (PST)
+Date:   Fri, 14 Feb 2020 15:29:33 -0800
+Message-Id: <20200214232933.243520-1-emilyshaffer@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.25.0.265.gbab2e86ba0-goog
+Subject: [RFC PATCH] prefix_path: show gitdir when arg is outside repo
+From:   emilyshaffer@google.com
+To:     git@vger.kernel.org
+Cc:     Emily Shaffer <emilyshaffer@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: brian m. carlson <bk2204@github.com>
+From: Emily Shaffer <emilyshaffer@google.com>
 
-In some cases, a user will want to use a specific credential helper for
-a wildcard pattern, such as https://*.corp.example.com. Use the urlmatch
-code to match a pattern for a URL to allow this behavior.
+When developing a script, it can be painful to understand why Git thinks
+something is outside the current repo, if the current repo isn't what
+the user thinks it is. Since this can be tricky to diagnose, especially
+in cases like submodules or nested worktrees, let's give the user a hint
+about which repository is offended about that path.
 
-Since we are handling URLs using urlmatch, remove the custom code to
-match URLs, since it is no longer needed.
-
-Signed-off-by: brian m. carlson <bk2204@github.com>
+Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
- Documentation/gitcredentials.txt |  4 +++-
- credential.c                     | 41 +++++++++++++++++---------------
- t/t0300-credentials.sh           | 20 ++++++++++++++++
- 3 files changed, 45 insertions(+), 20 deletions(-)
+This one comes from a user feature request. This user is running some
+Git client commands on a build machine somewhere and finding it hard to
+reason about the cause of the "outside repo" error.
 
-diff --git a/Documentation/gitcredentials.txt b/Documentation/gitcredentials.txt
-index ea759fdee5..12cb032352 100644
---- a/Documentation/gitcredentials.txt
-+++ b/Documentation/gitcredentials.txt
-@@ -131,7 +131,9 @@ context would not match:
- because the hostnames differ. Nor would it match `foo.example.com`; Git
- compares hostnames exactly, without considering whether two hosts are part of
- the same domain. Likewise, a config entry for `http://example.com` would not
--match: Git compares the protocols exactly.
-+match: Git compares the protocols exactly.  However, you may use wildcards in
-+the domain name and other pattern matching techniques as with the `http.<url>.*`
-+options.
+I see two arguments:
+
+For:
+ - A user checking their own `pwd` might still not come to the same
+   conclusion Git does about the current repo, if their filesystem is in
+   some weird state
+ - This warning is intended for human eyes (die(), stderr) so it's reasonable
+   to give some info to make the human's life easier
+
+Against:
+ - It's chatty, especially given the absolute directory. This may be a
+   pretty common mistake ('git add' with thumbfingers?) so it could be
+   chatty, frequently - not great.
+   (Sidebar: Just including the relative directory is really not very
+   useful - since you're still left thinking, "relative to where?")
+
+I also dug around a little to see whether I could consolidate the
+pathspec.c logic, which is nearly identical to setup.c, into another
+helper in setup.c (a la prefix_path_1()). But since the die() message is
+somewhat different, and init_pathspec_item() is the _only_ place which
+uses prefix_path_gently() in this way, it wasn't feasible. (The other
+caller of prefix_path_gently() is immediately below prefix_path(), and
+doesn't die at all, print errors, or capture out-params from
+prefix_path_gently().)
+
+ - Emily
+
+ pathspec.c | 3 ++-
+ setup.c    | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/pathspec.c b/pathspec.c
+index 128f27fcb7..5d661df5cf 100644
+--- a/pathspec.c
++++ b/pathspec.c
+@@ -439,7 +439,8 @@ static void init_pathspec_item(struct pathspec_item *item, unsigned flags,
+ 		match = prefix_path_gently(prefix, prefixlen,
+ 					   &prefixlen, copyfrom);
+ 		if (!match)
+-			die(_("%s: '%s' is outside repository"), elt, copyfrom);
++			die(_("%s: '%s' is outside repository at '%s'"), elt,
++			    copyfrom, absolute_path(get_git_dir()));
+ 	}
  
- If the "pattern" URL does include a path component, then this too must match
- exactly: the context `https://example.com/bar/baz.git` will match a config
-diff --git a/credential.c b/credential.c
-index 62be651b03..08904e247f 100644
---- a/credential.c
-+++ b/credential.c
-@@ -6,6 +6,7 @@
- #include "url.h"
- #include "prompt.h"
- #include "sigchain.h"
-+#include "urlmatch.h"
- 
- void credential_init(struct credential *c)
+ 	item->match = match;
+diff --git a/setup.c b/setup.c
+index 12228c0d9c..48cc2320cb 100644
+--- a/setup.c
++++ b/setup.c
+@@ -121,7 +121,8 @@ char *prefix_path(const char *prefix, int len, const char *path)
  {
-@@ -40,7 +41,7 @@ static int credential_config_callback(const char *var, const char *value,
- 				      void *data)
- {
- 	struct credential *c = data;
--	const char *key, *dot;
-+	const char *key;
- 
- 	if (!skip_prefix(var, "credential.", &key))
- 		return 0;
-@@ -48,23 +49,6 @@ static int credential_config_callback(const char *var, const char *value,
- 	if (!value)
- 		return config_error_nonbool(var);
- 
--	dot = strrchr(key, '.');
--	if (dot) {
--		struct credential want = CREDENTIAL_INIT;
--		char *url = xmemdupz(key, dot - key);
--		int matched;
--
--		credential_from_url(&want, url);
--		matched = credential_match(&want, c);
--
--		credential_clear(&want);
--		free(url);
--
--		if (!matched)
--			return 0;
--		key = dot + 1;
--	}
--
- 	if (!strcmp(key, "helper")) {
- 		if (*value)
- 			string_list_append(&c->helpers, value);
-@@ -87,11 +71,30 @@ static int proto_is_http(const char *s)
- 	return !strcmp(s, "https") || !strcmp(s, "http");
+ 	char *r = prefix_path_gently(prefix, len, NULL, path);
+ 	if (!r)
+-		die(_("'%s' is outside repository"), path);
++		die(_("'%s' is outside repository at '%s'"), path,
++		    absolute_path(get_git_dir()));
+ 	return r;
  }
  
-+static void credential_describe(struct credential *c, struct strbuf *out);
-+
- static void credential_apply_config(struct credential *c)
- {
-+	char *normalized_url;
-+	struct urlmatch_config config = { STRING_LIST_INIT_DUP };
-+	struct strbuf url = STRBUF_INIT;
-+
- 	if (c->configured)
- 		return;
--	git_config(credential_config_callback, c);
-+
-+	config.section = "credential";
-+	config.key = NULL;
-+	config.collect_fn = credential_config_callback;
-+	config.cascade_fn = git_default_config;
-+	config.cb = c;
-+
-+	credential_describe(c, &url);
-+	normalized_url = url_normalize(url.buf, &config.url);
-+
-+	git_config(urlmatch_config_entry, &config);
-+	free(normalized_url);
-+	strbuf_release(&url);
-+
- 	c->configured = 1;
- 
- 	if (!c->use_http_path && proto_is_http(c->protocol)) {
-diff --git a/t/t0300-credentials.sh b/t/t0300-credentials.sh
-index 82eaaea0f4..516b3268f9 100755
---- a/t/t0300-credentials.sh
-+++ b/t/t0300-credentials.sh
-@@ -289,6 +289,26 @@ test_expect_success 'http paths can be part of context' '
- 	EOF
- '
- 
-+test_expect_success 'context uses urlmatch' '
-+	test_config "credential.https://*.org.useHttpPath" true &&
-+	check fill "verbatim foo bar" <<-\EOF
-+	protocol=https
-+	host=example.org
-+	path=foo.git
-+	--
-+	protocol=https
-+	host=example.org
-+	path=foo.git
-+	username=foo
-+	password=bar
-+	--
-+	verbatim: get
-+	verbatim: protocol=https
-+	verbatim: host=example.org
-+	verbatim: path=foo.git
-+	EOF
-+'
-+
- test_expect_success 'helpers can abort the process' '
- 	test_must_fail git \
- 		-c credential.helper="!f() { echo quit=1; }; f" \
+-- 
+2.25.0.265.gbab2e86ba0-goog
+
