@@ -6,32 +6,32 @@ X-Spam-Status: No, score=-6.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F8CCC3B1BA
-	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 18:22:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AD63C3B1B9
+	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 18:22:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1DDAE2168B
-	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 18:22:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5A508222C2
+	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 18:22:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2394912AbgBNSWb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Feb 2020 13:22:31 -0500
-Received: from cloud.peff.net ([104.130.231.41]:43716 "HELO cloud.peff.net"
+        id S2388280AbgBNSWj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Feb 2020 13:22:39 -0500
+Received: from cloud.peff.net ([104.130.231.41]:43722 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S2394916AbgBNSW3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Feb 2020 13:22:29 -0500
-Received: (qmail 22981 invoked by uid 109); 14 Feb 2020 18:22:28 -0000
+        id S2394801AbgBNSWb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Feb 2020 13:22:31 -0500
+Received: (qmail 22988 invoked by uid 109); 14 Feb 2020 18:22:30 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 14 Feb 2020 18:22:28 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 14 Feb 2020 18:22:30 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 23673 invoked by uid 111); 14 Feb 2020 18:31:25 -0000
+Received: (qmail 23677 invoked by uid 111); 14 Feb 2020 18:31:27 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 14 Feb 2020 13:31:25 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 14 Feb 2020 13:31:27 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Fri, 14 Feb 2020 13:22:27 -0500
+Date:   Fri, 14 Feb 2020 13:22:29 -0500
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 09/15] rev-list: allow commit-only bitmap traversals
-Message-ID: <20200214182227.GI150965@coredump.intra.peff.net>
+Subject: [PATCH v2 10/15] pack-bitmap: basic noop bitmap filter infrastructure
+Message-ID: <20200214182229.GJ150965@coredump.intra.peff.net>
 References: <20200214182147.GA654525@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -42,204 +42,161 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ever since we added reachability bitmap support, we've been able to use
-it with rev-list to get the full list of objects, like:
+Currently you can't use object filters with bitmaps, but we plan to
+support at least some filters with bitmaps. Let's introduce some
+infrastructure that will help us do that:
 
-  git rev-list --objects --use-bitmap-index --all
+  - prepare_bitmap_walk() now accepts a list_objects_filter_options
+    parameter (which can be NULL for no filtering; all the current
+    callers pass this)
 
-But you can't do so without --objects, since we weren't ready to just
-show the commits. However, the internals of the bitmap code are mostly
-ready for this: they avoid opening up trees when walking to fill in the
-bitmaps. We just need to actually pass in the rev_info to
-traverse_bitmap_commit_list() so it knows which types to bother
-triggering our callback for.
+  - we'll bail early if the filter is incompatible with bitmaps (just as
+    we would if there were no bitmaps at all). Currently all filters are
+    incompatible.
 
-For completeness, the perf test now covers both the existing --objects
-case, as well as the new commits-only behavior (the objects one got way
-faster when we introduced bitmaps, but obviously isn't improved now).
+  - we'll filter the resulting bitmap; since there are no supported
+    filters yet, this is always a noop.
 
-Here are numbers for linux.git:
-
-  Test                         HEAD^               HEAD
-  ------------------------------------------------------------------------
-  5310.7: rev-list (commits)   8.29(8.10+0.19)       1.76(1.72+0.04) -78.8%
-  5310.8: rev-list (objects)   8.06(7.94+0.12)       8.14(7.94+0.13) +1.0%
-
-That run was cheating a little, as I didn't have any commit-graph in the
-repository, and we'd built it by default these days when running git-gc.
-Here are numbers with a commit-graph:
-
-  Test                         HEAD^               HEAD
-  ------------------------------------------------------------------------
-  5310.7: rev-list (commits)   0.70(0.58+0.12)     0.51(0.46+0.04) -27.1%
-  5310.8: rev-list (objects)   6.20(6.09+0.10)     6.27(6.16+0.11) +1.1%
-
-Still an improvement, but a lot less impressive.
-
-We could have the perf script remove any commit-graph to show the
-out-sized effect, but it probably makes sense to leave it in what would
-be a more typical setup.
+There should be no behavior change yet, but we'll support some actual
+filters in a future patch.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/pack-objects.c       |  3 ++-
- builtin/rev-list.c           |  9 +--------
- pack-bitmap.c                | 20 +++++++++++++++-----
- pack-bitmap.h                |  1 +
- reachable.c                  |  2 +-
- t/perf/p5310-pack-bitmaps.sh |  8 ++++++++
- t/t5310-pack-bitmaps.sh      |  6 ++++++
- 7 files changed, 34 insertions(+), 15 deletions(-)
+ builtin/pack-objects.c |  2 +-
+ builtin/rev-list.c     |  4 ++--
+ pack-bitmap.c          | 26 +++++++++++++++++++++++++-
+ pack-bitmap.h          |  4 +++-
+ reachable.c            |  2 +-
+ 5 files changed, 32 insertions(+), 6 deletions(-)
 
 diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 393c20a2d7..06915ebe7f 100644
+index 06915ebe7f..2bb81c2133 100644
 --- a/builtin/pack-objects.c
 +++ b/builtin/pack-objects.c
-@@ -3054,7 +3054,8 @@ static int get_object_list_from_bitmap(struct rev_info *revs)
- 		display_progress(progress_state, nr_result);
- 	}
+@@ -3040,7 +3040,7 @@ static int pack_options_allow_reuse(void)
  
--	traverse_bitmap_commit_list(bitmap_git, &add_object_entry_from_bitmap);
-+	traverse_bitmap_commit_list(bitmap_git, revs,
-+				    &add_object_entry_from_bitmap);
- 	return 0;
- }
- 
-diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index 70f3207ecc..937324cef0 100644
---- a/builtin/rev-list.c
-+++ b/builtin/rev-list.c
-@@ -434,18 +434,11 @@ static int try_bitmap_traversal(struct rev_info *revs)
- 	if (revs->max_count >= 0)
+ static int get_object_list_from_bitmap(struct rev_info *revs)
+ {
+-	if (!(bitmap_git = prepare_bitmap_walk(revs)))
++	if (!(bitmap_git = prepare_bitmap_walk(revs, NULL)))
  		return -1;
  
--	/*
--	 * Our bitmap result will return all objects, and we're not
--	 * yet prepared to show only particular types.
--	 */
--	if (!revs->tag_objects || !revs->tree_objects || !revs->blob_objects)
--		return -1;
--
- 	bitmap_git = prepare_bitmap_walk(revs);
+ 	if (pack_options_allow_reuse() &&
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index 937324cef0..6ff5e175fa 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -407,7 +407,7 @@ static int try_bitmap_count(struct rev_info *revs)
+ 	 */
+ 	max_count = revs->max_count;
+ 
+-	bitmap_git = prepare_bitmap_walk(revs);
++	bitmap_git = prepare_bitmap_walk(revs, NULL);
  	if (!bitmap_git)
  		return -1;
  
--	traverse_bitmap_commit_list(bitmap_git, &show_object_fast);
-+	traverse_bitmap_commit_list(bitmap_git, revs, &show_object_fast);
- 	free_bitmap_index(bitmap_git);
- 	return 0;
- }
+@@ -434,7 +434,7 @@ static int try_bitmap_traversal(struct rev_info *revs)
+ 	if (revs->max_count >= 0)
+ 		return -1;
+ 
+-	bitmap_git = prepare_bitmap_walk(revs);
++	bitmap_git = prepare_bitmap_walk(revs, NULL);
+ 	if (!bitmap_git)
+ 		return -1;
+ 
 diff --git a/pack-bitmap.c b/pack-bitmap.c
-index a97b717e55..2fbc748b19 100644
+index 2fbc748b19..48c8694f92 100644
 --- a/pack-bitmap.c
 +++ b/pack-bitmap.c
-@@ -599,6 +599,7 @@ static struct bitmap *find_objects(struct bitmap_index *bitmap_git,
+@@ -12,6 +12,7 @@
+ #include "packfile.h"
+ #include "repository.h"
+ #include "object-store.h"
++#include "list-objects-filter-options.h"
+ 
+ /*
+  * An entry on the bitmap index, representing the bitmap for a given
+@@ -711,7 +712,25 @@ static int in_bitmapped_pack(struct bitmap_index *bitmap_git,
+ 	return 0;
  }
  
- static void show_extended_objects(struct bitmap_index *bitmap_git,
-+				  struct rev_info *revs,
- 				  show_reachable_fn show_reach)
- {
- 	struct bitmap *objects = bitmap_git->result;
-@@ -612,6 +613,11 @@ static void show_extended_objects(struct bitmap_index *bitmap_git,
- 			continue;
- 
- 		obj = eindex->objects[i];
-+		if ((obj->type == OBJ_BLOB && !revs->blob_objects) ||
-+		    (obj->type == OBJ_TREE && !revs->tree_objects) ||
-+		    (obj->type == OBJ_TAG && !revs->tag_objects))
-+			continue;
+-struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs)
++static int filter_bitmap(struct bitmap_index *bitmap_git,
++			 struct object_list *tip_objects,
++			 struct bitmap *to_filter,
++			 struct list_objects_filter_options *filter)
++{
++	if (!filter || filter->choice == LOFC_DISABLED)
++		return 0;
 +
- 		show_reach(&obj->oid, obj->type, 0, eindex->hashes[i], NULL, 0);
- 	}
- }
-@@ -872,16 +878,20 @@ int reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
- }
- 
- void traverse_bitmap_commit_list(struct bitmap_index *bitmap_git,
-+				 struct rev_info *revs,
- 				 show_reachable_fn show_reachable)
- {
- 	assert(bitmap_git->result);
- 
- 	show_objects_for_type(bitmap_git, OBJ_COMMIT, show_reachable);
--	show_objects_for_type(bitmap_git, OBJ_TREE, show_reachable);
--	show_objects_for_type(bitmap_git, OBJ_BLOB, show_reachable);
--	show_objects_for_type(bitmap_git, OBJ_TAG, show_reachable);
--
--	show_extended_objects(bitmap_git, show_reachable);
-+	if (revs->tree_objects)
-+		show_objects_for_type(bitmap_git, OBJ_TREE, show_reachable);
-+	if (revs->blob_objects)
-+		show_objects_for_type(bitmap_git, OBJ_BLOB, show_reachable);
-+	if (revs->tag_objects)
-+		show_objects_for_type(bitmap_git, OBJ_TAG, show_reachable);
++	/* filter choice not handled */
++	return -1;
++}
 +
-+	show_extended_objects(bitmap_git, revs, show_reachable);
- }
++static int can_filter_bitmap(struct list_objects_filter_options *filter)
++{
++	return !filter_bitmap(NULL, NULL, NULL, filter);
++}
++
++struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs,
++					 struct list_objects_filter_options *filter)
+ {
+ 	unsigned int i;
  
- static uint32_t count_object_type(struct bitmap_index *bitmap_git,
+@@ -731,6 +750,9 @@ struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs)
+ 	if (revs->prune)
+ 		return NULL;
+ 
++	if (!can_filter_bitmap(filter))
++		return NULL;
++
+ 	/* try to open a bitmapped pack, but don't parse it yet
+ 	 * because we may not need to use it */
+ 	bitmap_git = xcalloc(1, sizeof(*bitmap_git));
+@@ -800,6 +822,8 @@ struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs)
+ 	if (haves_bitmap)
+ 		bitmap_and_not(wants_bitmap, haves_bitmap);
+ 
++	filter_bitmap(bitmap_git, wants, wants_bitmap, filter);
++
+ 	bitmap_git->result = wants_bitmap;
+ 	bitmap_git->haves = haves_bitmap;
+ 
 diff --git a/pack-bitmap.h b/pack-bitmap.h
-index 466c5afa09..b0c06a212e 100644
+index b0c06a212e..956775d0bb 100644
 --- a/pack-bitmap.h
 +++ b/pack-bitmap.h
-@@ -44,6 +44,7 @@ struct bitmap_index *prepare_bitmap_git(struct repository *r);
- void count_bitmap_commit_list(struct bitmap_index *, uint32_t *commits,
- 			      uint32_t *trees, uint32_t *blobs, uint32_t *tags);
- void traverse_bitmap_commit_list(struct bitmap_index *,
-+				 struct rev_info *revs,
+@@ -8,6 +8,7 @@
+ struct commit;
+ struct repository;
+ struct rev_info;
++struct list_objects_filter_options;
+ 
+ static const char BITMAP_IDX_SIGNATURE[] = {'B', 'I', 'T', 'M'};
+ 
+@@ -47,7 +48,8 @@ void traverse_bitmap_commit_list(struct bitmap_index *,
+ 				 struct rev_info *revs,
  				 show_reachable_fn show_reachable);
  void test_bitmap_walk(struct rev_info *revs);
- struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs);
+-struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs);
++struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs,
++					 struct list_objects_filter_options *filter);
+ int reuse_partial_packfile_from_bitmap(struct bitmap_index *,
+ 				       struct packed_git **packfile,
+ 				       uint32_t *entries, off_t *up_to);
 diff --git a/reachable.c b/reachable.c
-index 8f50235b28..0919f025c4 100644
+index 0919f025c4..77a60c70a5 100644
 --- a/reachable.c
 +++ b/reachable.c
-@@ -225,7 +225,7 @@ void mark_reachable_objects(struct rev_info *revs, int mark_reflog,
+@@ -223,7 +223,7 @@ void mark_reachable_objects(struct rev_info *revs, int mark_reflog,
+ 	cp.progress = progress;
+ 	cp.count = 0;
  
- 	bitmap_git = prepare_bitmap_walk(revs);
+-	bitmap_git = prepare_bitmap_walk(revs);
++	bitmap_git = prepare_bitmap_walk(revs, NULL);
  	if (bitmap_git) {
--		traverse_bitmap_commit_list(bitmap_git, mark_object_seen);
-+		traverse_bitmap_commit_list(bitmap_git, revs, mark_object_seen);
+ 		traverse_bitmap_commit_list(bitmap_git, revs, mark_object_seen);
  		free_bitmap_index(bitmap_git);
- 		return;
- 	}
-diff --git a/t/perf/p5310-pack-bitmaps.sh b/t/perf/p5310-pack-bitmaps.sh
-index 6a3a42531b..e52f66ec9e 100755
---- a/t/perf/p5310-pack-bitmaps.sh
-+++ b/t/perf/p5310-pack-bitmaps.sh
-@@ -39,6 +39,14 @@ test_perf 'pack to file (bitmap)' '
- 	git pack-objects --use-bitmap-index --all pack1b </dev/null >/dev/null
- '
- 
-+test_perf 'rev-list (commits)' '
-+	git rev-list --all --use-bitmap-index >/dev/null
-+'
-+
-+test_perf 'rev-list (objects)' '
-+	git rev-list --all --use-bitmap-index --objects >/dev/null
-+'
-+
- test_expect_success 'create partial bitmap state' '
- 	# pick a commit to represent the repo tip in the past
- 	cutoff=$(git rev-list HEAD~100 -1) &&
-diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
-index b8645ae070..2c64d0c441 100755
---- a/t/t5310-pack-bitmaps.sh
-+++ b/t/t5310-pack-bitmaps.sh
-@@ -80,6 +80,12 @@ rev_list_tests() {
- 		test_cmp expect actual
- 	'
- 
-+	test_expect_success "enumerate commits ($state)" '
-+		git rev-list --use-bitmap-index HEAD >actual &&
-+		git rev-list HEAD >expect &&
-+		test_bitmap_traversal --no-confirm-bitmaps expect actual
-+	'
-+
- 	test_expect_success "enumerate --objects ($state)" '
- 		git rev-list --objects --use-bitmap-index HEAD >actual &&
- 		git rev-list --objects HEAD >expect &&
 -- 
 2.25.0.796.gcc29325708
 
