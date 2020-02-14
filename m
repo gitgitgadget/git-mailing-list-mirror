@@ -2,100 +2,74 @@ Return-Path: <SRS0=nsHh=4C=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 70B52C35242
-	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 20:43:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B9243C35242
+	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 20:51:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 35572222C4
-	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 20:43:42 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Vb6OJbE8"
+	by mail.kernel.org (Postfix) with ESMTP id 83E99222C2
+	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 20:51:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730328AbgBNUnl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Feb 2020 15:43:41 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:53179 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728941AbgBNUnl (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Feb 2020 15:43:41 -0500
-Received: by mail-wm1-f68.google.com with SMTP id p9so11332491wmc.2
-        for <git@vger.kernel.org>; Fri, 14 Feb 2020 12:43:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:openpgp:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=hciQzN9MJUkywsUQWWH3VgBhX5k7o8aTEefNy2dWfxI=;
-        b=Vb6OJbE8riKn1lRXE/hGAuwxfl9KFY6gCUVebzAancOHe16wF2MJhAWgbFZjFEynJX
-         Wa719mn2tNddX5bbu1dDESS+1EhNjDGVZ7+riBovy/4rvIKGBbkqC0+X3uBCRdQn+v46
-         2pp+LzdKmiNTzlUsjLzv0+LxTRu82+KF21zSziqKm+MBK/oWSPs55Iyh33/k778EuXjc
-         ejiDABP3a9ZSY+/MBe6HuJ99fmb6tK+bkO0D3L0jSvWYm9viSFoVxmbr1HCBYBhFUl12
-         01DPHIEMTAr6NMp6oeFq4DaQjg2BCwPcDO6AUjneNBtju/itLPnsV5ectfvyFeG0UhxV
-         UQ2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:openpgp:message-id
-         :date:user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=hciQzN9MJUkywsUQWWH3VgBhX5k7o8aTEefNy2dWfxI=;
-        b=lO49zbtwjcQJSQjcxsDuSZdI329wRcfro/S5G0mjAymY74hXIwNBrOduiZeyPLx9nX
-         xWwFJnXNCjNxqUPeIk4rsqt02hXc5Ji5O1HGsHP4YqaMDRlQzi/txYW9rpHkdz62uBTv
-         ngSdPSII2A0b2Hm9WJyjKaLXfUGcik3eYW4I/nCAhrWygvqA/E0IWOz6tNlY/ftO+pfG
-         qbHJLQfBm18IUinheUkgPxzmli4bLqwyTDFesSH78rXEyxx063Klim57O1t923RxtBlG
-         IycCJI/8DlPwmvzpfTSwAg4kY2VOrNBRPRxC2dTOXMktMB2+tXpsfVLooH/kA0ny+ZbA
-         OdkQ==
-X-Gm-Message-State: APjAAAWHKtZBfZLI5I1Ck4Hc5MNC0GsaVUK0S1zLds3sqjtgJJ3mznBO
-        tO3gG038TZY9rcC9PQlTd4g3p5kC
-X-Google-Smtp-Source: APXvYqzlJLpcW4N8ligkE+EPlziJabyz9/tk6UBq87PSTFUDzCay1Hs+FCyk15Jw6ZKBUkRhLcJjcA==
-X-Received: by 2002:a05:600c:2c44:: with SMTP id r4mr6296449wmg.140.1581713019232;
-        Fri, 14 Feb 2020 12:43:39 -0800 (PST)
-Received: from [192.168.0.104] (atoulouse-658-1-28-28.w86-222.abo.wanadoo.fr. [86.222.27.28])
-        by smtp.gmail.com with ESMTPSA id r1sm8238310wrx.11.2020.02.14.12.43.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 14 Feb 2020 12:43:38 -0800 (PST)
-Subject: Re: [PATCH v1] builtin/rebase: remove a call to get_oid() on
- `options.switch_to'
+        id S2388860AbgBNUvw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Feb 2020 15:51:52 -0500
+Received: from cloud.peff.net ([104.130.231.41]:43864 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S2387970AbgBNUvw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Feb 2020 15:51:52 -0500
+Received: (qmail 23591 invoked by uid 109); 14 Feb 2020 20:51:52 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 14 Feb 2020 20:51:52 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 24386 invoked by uid 111); 14 Feb 2020 21:00:49 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 14 Feb 2020 16:00:49 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 14 Feb 2020 15:51:51 -0500
+From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, phillip.wood@dunelm.org.uk,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <20200121193226.24297-1-alban.gruin@gmail.com>
- <xmqq1rrr6ww2.fsf@gitster-ct.c.googlers.com>
-From:   Alban Gruin <alban.gruin@gmail.com>
-Openpgp: preference=signencrypt
-Message-ID: <df9ede1c-f657-d96f-2d4c-479245f2a2d8@gmail.com>
-Date:   Fri, 14 Feb 2020 21:43:32 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.3.0
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 04/15] pack-bitmap: refuse to do a bitmap traversal
+ with pathspecs
+Message-ID: <20200214205151.GB1210277@coredump.intra.peff.net>
+References: <20200214182147.GA654525@coredump.intra.peff.net>
+ <20200214182216.GD150965@coredump.intra.peff.net>
+ <xmqqeeuxng8x.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqq1rrr6ww2.fsf@gitster-ct.c.googlers.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: fr-FR
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+In-Reply-To: <xmqqeeuxng8x.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On Fri, Feb 14, 2020 at 11:03:26AM -0800, Junio C Hamano wrote:
 
-Le 22/01/2020 à 21:47, Junio C Hamano a écrit :
-> Alban Gruin <alban.gruin@gmail.com> writes:
+> Jeff King <peff@peff.net> writes:
 > 
->> When `options.switch_to' is set, `options.orig_head' is populated right
->> after.  Therefore, there is no need to parse `switch_to' again.
->>
->> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
->> ---
->>  builtin/rebase.c | 10 +---------
->>  1 file changed, 1 insertion(+), 9 deletions(-)
+> > It would also prepare us for a day where this case _is_ handled, but
+> > that's pretty unlikely. E.g., we could use bitmaps to generate the set
+> > of commits, and then diff each commit to see if it matches the pathspec.
 > 
-> Sounds good.
-> 
+> Would the gs/commit-graph-path-filter topic possibly help in this regard?
+> I was wondering how it would fit within the framework this series sets
+> up to teach object-filtering and reachability-bitmap codepaths to
+> work well together.
 
-Did this patch fell through the cracks?
+I think it would make the scheme I described faster, because that diff
+becomes faster. So the commit traversal itself becomes proportionally
+more expensive. And if we could speed that up with bitmaps, that's some
+improvement. OTOH, my later timings in patch 9 showed that commit graphs
+already make that part pretty fast. And they do so without a bunch of
+weird restrictions and hassles. So I suspect it's not really worth the
+effort to implement this half-way bitmaps approach (for a special case
+that it's not even clear anybody cares about).
 
-Alban
+But if somebody _does_ do so, I don't think we'd need to do anything too
+special to integrate with commit-graph-path-filter. The nice thing about
+that approach is that the pathspec pruning will just magically return
+the same answer, but faster.
 
-
+-Peff
