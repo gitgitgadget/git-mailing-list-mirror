@@ -7,58 +7,58 @@ X-Spam-Status: No, score=-17.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
 	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BA8A1C3B18F
-	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 01:54:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A4D4FC3B195
+	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 01:54:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 87F302168B
-	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 01:54:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 74E1D20848
+	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 01:54:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="vpwKV54t"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="nsbrRUsG"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728469AbgBNByS (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1728479AbgBNByT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Feb 2020 20:54:19 -0500
+Received: from mail-pf1-f202.google.com ([209.85.210.202]:33630 "EHLO
+        mail-pf1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728467AbgBNByS (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 13 Feb 2020 20:54:18 -0500
-Received: from mail-qk1-f201.google.com ([209.85.222.201]:36302 "EHLO
-        mail-qk1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728454AbgBNByQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Feb 2020 20:54:16 -0500
-Received: by mail-qk1-f201.google.com with SMTP id r142so5102228qke.3
-        for <git@vger.kernel.org>; Thu, 13 Feb 2020 17:54:16 -0800 (PST)
+Received: by mail-pf1-f202.google.com with SMTP id c72so4974972pfc.0
+        for <git@vger.kernel.org>; Thu, 13 Feb 2020 17:54:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=NmUjZIAliovE6D2f3OLHzof6gg4XCMhi7ZLvLLnkEdA=;
-        b=vpwKV54tUoCF5YUSRXSDCYZuob97KgsDSgoFSUHWWxdrPTuXGZ4iO48dKsJWBOL3Vh
-         5jQhpG+tOUREO/or4FYLKGakdK5QV3yvrIfpDSzNEtr+8A4PF99Oai9TygC2RROcVR9s
-         w4WxDpgEa94B/FWioMY4WI+yLUzxhKl4RXeJ4lQV3xLQzLtfzNyBLlJC/jkKk4aTTyQF
-         SaWC6m0NY9VyznTU1b46u7sUbfwJefeV3KJOisxdvo+5N7ZAbwZ0DPEqWltQeFXUlLrt
-         L7uPjs5oN+cTreaPXc6NMQQN0aUFtbT9Dcxv4gdo7kyOzjUyL547bYbv55aXKFik3BHi
-         FZzg==
+        bh=KtQc2NqQlhwB5rQ3CSYNZW6h8xao3iiZQNiOwbO0syc=;
+        b=nsbrRUsGf9cYXjUqBd7VTIBPv214mWQNRdQoLea8UNcmMGu67GqVzST7WXlP3WcriK
+         avFdRxJPDJ1DPcLQBt3SF+t2Qqt9/sXqM0wF7eCUjrX3vCwjiDZ7aa/mVO1sZwVIVJ1M
+         mf2OliT/1vlRkFoWzhCtCyD1N9eOiwVReOP3CTumLJYp//KuBZrXEqW0tCIVC1Zfakr3
+         FeAv97C2Okvu/FWiqLDk+BFSYFdQiCafcZta5X1vw4h+HhUbxu8sldB/PP6pcu2PsRfF
+         QgZGh6db2jB8ulVooIzgq4JuLgPB4go7K6I4zSySB01Pkb2oK6Vi/W80tnYL5a0rZaUM
+         Uc/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=NmUjZIAliovE6D2f3OLHzof6gg4XCMhi7ZLvLLnkEdA=;
-        b=TCyouUZvbvdPcTOEOOUkZ4OVKaZ1NEGDQo/cTez61tBSP9R+KHbHeAHvNpm1oN4kGw
-         UFrk4QSvcD89s/aLHo0cUaPmcairtIgY7QVbyi6+I0EvtUBxOBW7TifjUyEdsLOqEPD0
-         AkamHQYe4ix92ZQyDsXR8RQ8gOkCNCbnTpUJYBzCicfa4Y1cQxokFgRt+YHQVXbgBK9T
-         eBJrdQ3yfS+bOX5PDb+TYpgCdtIvvj4oT28AU91Y3rwJZkZO0nqulVNFF1FH9XQ7nEFO
-         8r9AgA+mq00K5F4vtocsdlJJb2rUatqIuQ5PeMWt/OySr3k6q/pFHxQOJKj8CzXI490p
-         LDvg==
-X-Gm-Message-State: APjAAAUQmKJ9ixXmIkTkgePTbgZb/VNHUnE9CbpdpIOM+3rHMlwEvIfw
-        h185WqMz4grgkYCIs3JNHrdfD6pUjCFumFRQyBT6unrXhXqavq0pfF5t++GJX++B85ANqcelf+c
-        waRucB+qHgK8tJM940rh7clJFcoLBG4BzOrXL1+PYgoB0eTsw+1TJb04QJ7d3yb9sdZllbT7I0w
+        bh=KtQc2NqQlhwB5rQ3CSYNZW6h8xao3iiZQNiOwbO0syc=;
+        b=ap0zcwQDMdgrV9bPfMnnB/h8TFedwmdRECg+VIA8IfE64TTfTMO04yjG6UAawRIuTS
+         foDUDldztk1Y6Bq59joENaokFgzDzMn/HdxC9xyojzcON66BQMA4SpBY+wqFYPy61M5y
+         P8MDW3cP8OxVHcI9Y+jJdR0LclxgY4dgSBMXnOruDFRBdW3frxk16LLo365zfsWiR4QM
+         mWXPd0LypO5Opgqb/Xhv/2iPUL0NYGE1gR4gqOsFWRZQB2ANPuby67em5/GgvFEkKFG/
+         bm1tahHlxwbJ4o5c0Drf4nwrCZL6TIxikY43sO98VBWWFLg0eYRHQPk7spYS64ZUthQQ
+         3GHw==
+X-Gm-Message-State: APjAAAU4HedRNja1wcYmViTlc2XnS8mxLOReyWuE9EVIpynsQz42qdKa
+        OyziRRreYyrzIOtKsDLRNq8uZqub6i/06N8yXAFvtUA063bCUrg51SGagbDDNODk15yRK/kXoVX
+        wn5XOp68YYJT4A+hllKzcg1wyWaoVv0R1K2iamJDl92/LWR28mgeR+OlnXiIREZmgg8PAMJXvdw
         ==
-X-Google-Smtp-Source: APXvYqyTJXJbOE6PVyLJh2reiHxSk3utqLaqeqEgMbKyE8uclePkDmlfrB/maBaaWWp/RnlvYUoGjJBy1G7c0VYqMyI=
-X-Received: by 2002:a05:620a:2119:: with SMTP id l25mr463148qkl.248.1581645255611;
- Thu, 13 Feb 2020 17:54:15 -0800 (PST)
-Date:   Thu, 13 Feb 2020 17:53:38 -0800
+X-Google-Smtp-Source: APXvYqwAFPoWMDEN6eo8zFJCCE8yNrNiX7MT6aT1HbyR2fyuCC31aR8L6tA9N6ErFkWY1cHbBJenjF8CHwTuMLemA6A=
+X-Received: by 2002:a63:cb11:: with SMTP id p17mr935226pgg.42.1581645257911;
+ Thu, 13 Feb 2020 17:54:17 -0800 (PST)
+Date:   Thu, 13 Feb 2020 17:53:39 -0800
 In-Reply-To: <20200214015343.201946-1-emilyshaffer@google.com>
-Message-Id: <20200214015343.201946-11-emilyshaffer@google.com>
+Message-Id: <20200214015343.201946-12-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20200214015343.201946-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.25.0.265.gbab2e86ba0-goog
-Subject: [PATCH v7 10/15] bugreport: add config values from safelist
+Subject: [PATCH v7 11/15] bugreport: collect list of populated hooks
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -68,87 +68,100 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teach bugreport to gather the values of config options which are present
-in 'bugreport-config-safelist.h', and show their origin scope.
+Occasionally a failure a user is seeing may be related to a specific
+hook which is being run, perhaps without the user realizing. While the
+contents of hooks can be sensitive - containing user data or process
+information specific to the user's organization - simply knowing that a
+hook is being run at a certain stage can help us to understand whether
+something is going wrong.
 
-Many config options are sensitive, and many Git add-ons use config
-options which git-core does not know about; it is better only to gather
-config options which we know to be safe, rather than excluding options
-which we know to be unsafe.
-
-Rather than including the path to someone's config, which can reveal
-filesystem layout and project names, just name the scope (e.g. system,
-global, local) of the config source.
+Without a definitive list of hook names within the code, we compile our
+own list from the documentation. This is likely prone to bitrot. To
+reduce the amount of code humans need to read, we turn the list into a
+string_list and iterate over it (as we are calling the same find_hook
+operation on each string). However, since bugreport should primarily be
+called by the user, the performance loss from massaging the string
+seems acceptable.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
  Documentation/git-bugreport.txt |  1 +
- Makefile                        |  2 ++
- bugreport.c                     | 34 +++++++++++++++++++++++++++++++++
- 3 files changed, 37 insertions(+)
+ bugreport.c                     | 53 +++++++++++++++++++++++++++++++++
+ 2 files changed, 54 insertions(+)
 
 diff --git a/Documentation/git-bugreport.txt b/Documentation/git-bugreport.txt
-index 23265b0d74..4e9171d1bd 100644
+index 4e9171d1bd..779c9c7fd9 100644
 --- a/Documentation/git-bugreport.txt
 +++ b/Documentation/git-bugreport.txt
-@@ -30,6 +30,7 @@ The following information is captured automatically:
-  - Compiler-specific info string
+@@ -31,6 +31,7 @@ The following information is captured automatically:
   - 'git remote-https --build-info'
   - $SHELL
-+ - Selected config values
+  - Selected config values
++ - A list of enabled hooks
  
  OPTIONS
  -------
-diff --git a/Makefile b/Makefile
-index 2bc9f112ea..7b139230ae 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2131,6 +2131,8 @@ git$X: git.o GIT-LDFLAGS $(BUILTIN_OBJS) $(GITLIBS)
- 
- help.sp help.s help.o: command-list.h
- 
-+bugreport.sp bugreport.s bugreport.o: bugreport-config-safelist.h
-+
- builtin/help.sp builtin/help.s builtin/help.o: config-list.h GIT-PREFIX
- builtin/help.sp builtin/help.s builtin/help.o: EXTRA_CPPFLAGS = \
- 	'-DGIT_HTML_PATH="$(htmldir_relative_SQ)"' \
 diff --git a/bugreport.c b/bugreport.c
-index c1475601bf..1a9430a857 100644
+index 1a9430a857..7e6147a935 100644
 --- a/bugreport.c
 +++ b/bugreport.c
-@@ -6,6 +6,9 @@
- #include "help.h"
- #include "compat/compiler.h"
- #include "run-command.h"
-+#include "config.h"
-+#include "bugreport-config-safelist.h"
-+#include "khash.h"
+@@ -9,6 +9,7 @@
+ #include "config.h"
+ #include "bugreport-config-safelist.h"
+ #include "khash.h"
++#include "run-command.h"
  
  static void get_git_remote_https_version_info(struct strbuf *version_info)
  {
-@@ -52,6 +55,29 @@ static void get_system_info(struct strbuf *sys_info)
- 	strbuf_complete_line(sys_info);
+@@ -78,6 +79,55 @@ static void get_safelisted_config(struct strbuf *config_info)
+ 	}
  }
  
-+static void get_safelisted_config(struct strbuf *config_info)
++static void get_populated_hooks(struct strbuf *hook_info, int nongit)
 +{
-+	size_t idx;
-+	struct string_list_item *it = NULL;
-+	struct key_value_info *kv_info = NULL;
++	/*
++	 * Doesn't look like there is a list of all possible hooks; so below is
++	 * a transcription of `git help hooks`.
++	 */
++	const char *hooks = "applypatch-msg,"
++			    "pre-applypatch,"
++			    "post-applypatch,"
++			    "pre-commit,"
++			    "pre-merge-commit,"
++			    "prepare-commit-msg,"
++			    "commit-msg,"
++			    "post-commit,"
++			    "pre-rebase,"
++			    "post-checkout,"
++			    "post-merge,"
++			    "pre-push,"
++			    "pre-receive,"
++			    "update,"
++			    "post-receive,"
++			    "post-update,"
++			    "push-to-checkout,"
++			    "pre-auto-gc,"
++			    "post-rewrite,"
++			    "sendemail-validate,"
++			    "fsmonitor-watchman,"
++			    "p4-pre-submit,"
++			    "post-index-changex";
++	struct string_list hooks_list = STRING_LIST_INIT_DUP;
++	struct string_list_item *iter = NULL;
 +
-+	for (idx = 0; idx < ARRAY_SIZE(bugreport_config_safelist); idx++) {
-+		const struct string_list *list =
-+			git_config_get_value_multi(bugreport_config_safelist[idx]);
 +
-+		if (!list)
-+			continue;
++	if (nongit) {
++		strbuf_addstr(hook_info,
++			"not run from a git repository - no hooks to show\n");
++		return;
++	}
 +
-+		strbuf_addf(config_info, "%s:\n", bugreport_config_safelist[idx]);
-+		for_each_string_list_item(it, list) {
-+			kv_info = it->util;
-+			strbuf_addf(config_info, "  %s (%s)\n", it->string,
-+				    kv_info ? config_scope_name(kv_info->scope)
-+					    : "source unknown");
++	string_list_split(&hooks_list, hooks, ',', -1);
++
++	for_each_string_list_item(iter, &hooks_list) {
++		if (find_hook(iter->string)) {
++			strbuf_addstr(hook_info, iter->string);
++			strbuf_complete_line(hook_info);
 +		}
 +	}
 +}
@@ -156,31 +169,12 @@ index c1475601bf..1a9430a857 100644
  static const char * const bugreport_usage[] = {
  	N_("git bugreport [-o|--output-directory <file>] [-s|--suffix <format>]"),
  	NULL
-@@ -94,6 +120,7 @@ int cmd_main(int argc, const char **argv)
- 	char *option_output = NULL;
- 	char *option_suffix = "%F-%H%M";
- 	struct stat statbuf;
-+	int nongit_ok = 0;
+@@ -166,6 +216,9 @@ int cmd_main(int argc, const char **argv)
+ 	get_header(&buffer, "Safelisted Config Info");
+ 	get_safelisted_config(&buffer);
  
- 	const struct option bugreport_options[] = {
- 		OPT_STRING('o', "output-directory", &option_output, N_("path"),
-@@ -102,6 +129,10 @@ int cmd_main(int argc, const char **argv)
- 			   N_("specify a strftime format suffix for the filename")),
- 		OPT_END()
- 	};
-+
-+	/* Prerequisite for hooks and config checks */
-+	setup_git_directory_gently(&nongit_ok);
-+
- 	argc = parse_options(argc, argv, "", bugreport_options,
- 			     bugreport_usage, 0);
- 
-@@ -132,6 +163,9 @@ int cmd_main(int argc, const char **argv)
- 	get_header(&buffer, "System Info");
- 	get_system_info(&buffer);
- 
-+	get_header(&buffer, "Safelisted Config Info");
-+	get_safelisted_config(&buffer);
++	get_header(&buffer, "Enabled Hooks");
++	get_populated_hooks(&buffer, nongit_ok);
 +
  	report = fopen_for_writing(report_path.buf);
  
