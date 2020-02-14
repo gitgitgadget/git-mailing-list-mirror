@@ -6,32 +6,33 @@ X-Spam-Status: No, score=-6.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 80C78C2BA83
-	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 18:22:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B058C3B1B9
+	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 18:22:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5FF70222C2
-	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 18:22:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 48BF62168B
+	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 18:22:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2394897AbgBNSWN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Feb 2020 13:22:13 -0500
-Received: from cloud.peff.net ([104.130.231.41]:43684 "HELO cloud.peff.net"
+        id S2394896AbgBNSWR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Feb 2020 13:22:17 -0500
+Received: from cloud.peff.net ([104.130.231.41]:43694 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S2394893AbgBNSWJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Feb 2020 13:22:09 -0500
-Received: (qmail 22929 invoked by uid 109); 14 Feb 2020 18:22:09 -0000
+        id S2394893AbgBNSWP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Feb 2020 13:22:15 -0500
+Received: (qmail 22943 invoked by uid 109); 14 Feb 2020 18:22:14 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 14 Feb 2020 18:22:09 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 14 Feb 2020 18:22:14 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 23635 invoked by uid 111); 14 Feb 2020 18:31:06 -0000
+Received: (qmail 23649 invoked by uid 111); 14 Feb 2020 18:31:11 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 14 Feb 2020 13:31:06 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 14 Feb 2020 13:31:11 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Fri, 14 Feb 2020 13:22:08 -0500
+Date:   Fri, 14 Feb 2020 13:22:13 -0500
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 01/15] pack-bitmap: factor out type iterator initialization
-Message-ID: <20200214182208.GA150965@coredump.intra.peff.net>
+Subject: [PATCH v2 03/15] rev-list: fallback to non-bitmap traversal when
+ filtering
+Message-ID: <20200214182213.GC150965@coredump.intra.peff.net>
 References: <20200214182147.GA654525@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -42,123 +43,73 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When count_object_type() wants to iterate over the bitmap of all objects
-of a certain type, we have to pair up OBJ_COMMIT with bitmap->commits,
-and so forth. Since we're about to add more code to iterate over these
-bitmaps, let's pull the initialization into its own function.
+The "--use-bitmap-index" option is usually aspirational: if we have
+bitmaps and the request can be fulfilled more quickly using them we'll
+do so, but otherwise fall back to a non-bitmap traversal.
 
-We can also use this to simplify traverse_bitmap_commit_list(). It
-accomplishes the same thing by manually passing the object type and the
-bitmap to show_objects_for_type(), but using our helper we just need the
-object type.
+The exception is object filtering, which explicitly dies if the two
+options are combined. Let's convert this to the usual fallback behavior.
+This is a minor convenience for now (since the caller can easily know
+that --filter and --use-bitmap-index don't combine), but will become
+much more useful as we start to support _some_ filters with bitmaps, but
+not others.
 
-Note there's one small code change here: previously we'd simply return
-zero when counting an unknown object type, and now we'll BUG(). This
-shouldn't matter in practice, as all of the callers pass in only usual
-commit/tree/blob/tag types.
+The test infrastructure here is bigger than necessary for checking this
+one small feature. But it will serve as the basis for more filtering
+bitmap tests in future patches.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- pack-bitmap.c | 63 +++++++++++++++++++++++++++------------------------
- 1 file changed, 33 insertions(+), 30 deletions(-)
+ builtin/rev-list.c                 |  4 ++--
+ t/t6113-rev-list-bitmap-filters.sh | 24 ++++++++++++++++++++++++
+ 2 files changed, 26 insertions(+), 2 deletions(-)
+ create mode 100755 t/t6113-rev-list-bitmap-filters.sh
 
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index e07c798879..9ca356ee29 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -616,9 +616,35 @@ static void show_extended_objects(struct bitmap_index *bitmap_git,
- 	}
- }
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index e28d62ec64..bce406bd1e 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -521,8 +521,8 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+ 	if (revs.show_notes)
+ 		die(_("rev-list does not support display of notes"));
  
-+static void init_type_iterator(struct ewah_iterator *it,
-+			       struct bitmap_index *bitmap_git,
-+			       enum object_type type)
-+{
-+	switch (type) {
-+	case OBJ_COMMIT:
-+		ewah_iterator_init(it, bitmap_git->commits);
-+		break;
+-	if (filter_options.choice && use_bitmap_index)
+-		die(_("cannot combine --use-bitmap-index with object filtering"));
++	if (filter_options.choice)
++		use_bitmap_index = 0;
+ 
+ 	save_commit_buffer = (revs.verbose_header ||
+ 			      revs.grep_filter.pattern_list ||
+diff --git a/t/t6113-rev-list-bitmap-filters.sh b/t/t6113-rev-list-bitmap-filters.sh
+new file mode 100755
+index 0000000000..977f8d0930
+--- /dev/null
++++ b/t/t6113-rev-list-bitmap-filters.sh
+@@ -0,0 +1,24 @@
++#!/bin/sh
 +
-+	case OBJ_TREE:
-+		ewah_iterator_init(it, bitmap_git->trees);
-+		break;
++test_description='rev-list combining bitmaps and filters'
++. ./test-lib.sh
 +
-+	case OBJ_BLOB:
-+		ewah_iterator_init(it, bitmap_git->blobs);
-+		break;
++test_expect_success 'set up bitmapped repo' '
++	# one commit will have bitmaps, the other will not
++	test_commit one &&
++	git repack -adb &&
++	test_commit two
++'
 +
-+	case OBJ_TAG:
-+		ewah_iterator_init(it, bitmap_git->tags);
-+		break;
++test_expect_success 'filters fallback to non-bitmap traversal' '
++	# use a path-based filter, since they are inherently incompatible with
++	# bitmaps (i.e., this test will never get confused by later code to
++	# combine the features)
++	filter=$(echo "!one" | git hash-object -w --stdin) &&
++	git rev-list --objects --filter=sparse:oid=$filter HEAD >expect &&
++	git rev-list --use-bitmap-index \
++		     --objects --filter=sparse:oid=$filter HEAD >actual &&
++	test_cmp expect actual
++'
 +
-+	default:
-+		BUG("object type %d not stored by bitmap type index", type);
-+		break;
-+	}
-+}
-+
- static void show_objects_for_type(
- 	struct bitmap_index *bitmap_git,
--	struct ewah_bitmap *type_filter,
- 	enum object_type object_type,
- 	show_reachable_fn show_reach)
- {
-@@ -633,7 +659,7 @@ static void show_objects_for_type(
- 	if (bitmap_git->reuse_objects == bitmap_git->pack->num_objects)
- 		return;
- 
--	ewah_iterator_init(&it, type_filter);
-+	init_type_iterator(&it, bitmap_git, object_type);
- 
- 	while (i < objects->word_alloc && ewah_iterator_next(&filter, &it)) {
- 		eword_t word = objects->words[i] & filter;
-@@ -835,14 +861,10 @@ void traverse_bitmap_commit_list(struct bitmap_index *bitmap_git,
- {
- 	assert(bitmap_git->result);
- 
--	show_objects_for_type(bitmap_git, bitmap_git->commits,
--		OBJ_COMMIT, show_reachable);
--	show_objects_for_type(bitmap_git, bitmap_git->trees,
--		OBJ_TREE, show_reachable);
--	show_objects_for_type(bitmap_git, bitmap_git->blobs,
--		OBJ_BLOB, show_reachable);
--	show_objects_for_type(bitmap_git, bitmap_git->tags,
--		OBJ_TAG, show_reachable);
-+	show_objects_for_type(bitmap_git, OBJ_COMMIT, show_reachable);
-+	show_objects_for_type(bitmap_git, OBJ_TREE, show_reachable);
-+	show_objects_for_type(bitmap_git, OBJ_BLOB, show_reachable);
-+	show_objects_for_type(bitmap_git, OBJ_TAG, show_reachable);
- 
- 	show_extended_objects(bitmap_git, show_reachable);
- }
-@@ -857,26 +879,7 @@ static uint32_t count_object_type(struct bitmap_index *bitmap_git,
- 	struct ewah_iterator it;
- 	eword_t filter;
- 
--	switch (type) {
--	case OBJ_COMMIT:
--		ewah_iterator_init(&it, bitmap_git->commits);
--		break;
--
--	case OBJ_TREE:
--		ewah_iterator_init(&it, bitmap_git->trees);
--		break;
--
--	case OBJ_BLOB:
--		ewah_iterator_init(&it, bitmap_git->blobs);
--		break;
--
--	case OBJ_TAG:
--		ewah_iterator_init(&it, bitmap_git->tags);
--		break;
--
--	default:
--		return 0;
--	}
-+	init_type_iterator(&it, bitmap_git, type);
- 
- 	while (i < objects->word_alloc && ewah_iterator_next(&filter, &it)) {
- 		eword_t word = objects->words[i++] & filter;
++test_done
 -- 
 2.25.0.796.gcc29325708
 
