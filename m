@@ -7,58 +7,58 @@ X-Spam-Status: No, score=-17.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
 	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A4D4FC3B195
-	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 01:54:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E302C352A3
+	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 01:54:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 74E1D20848
-	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 01:54:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 50C4A20848
+	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 01:54:22 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="nsbrRUsG"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="cgbTuakU"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728479AbgBNByT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Feb 2020 20:54:19 -0500
-Received: from mail-pf1-f202.google.com ([209.85.210.202]:33630 "EHLO
-        mail-pf1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728467AbgBNByS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Feb 2020 20:54:18 -0500
-Received: by mail-pf1-f202.google.com with SMTP id c72so4974972pfc.0
-        for <git@vger.kernel.org>; Thu, 13 Feb 2020 17:54:18 -0800 (PST)
+        id S1728483AbgBNByV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Feb 2020 20:54:21 -0500
+Received: from mail-yb1-f201.google.com ([209.85.219.201]:39922 "EHLO
+        mail-yb1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728200AbgBNByN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Feb 2020 20:54:13 -0500
+Received: by mail-yb1-f201.google.com with SMTP id y123so6535710yby.6
+        for <git@vger.kernel.org>; Thu, 13 Feb 2020 17:54:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=KtQc2NqQlhwB5rQ3CSYNZW6h8xao3iiZQNiOwbO0syc=;
-        b=nsbrRUsGf9cYXjUqBd7VTIBPv214mWQNRdQoLea8UNcmMGu67GqVzST7WXlP3WcriK
-         avFdRxJPDJ1DPcLQBt3SF+t2Qqt9/sXqM0wF7eCUjrX3vCwjiDZ7aa/mVO1sZwVIVJ1M
-         mf2OliT/1vlRkFoWzhCtCyD1N9eOiwVReOP3CTumLJYp//KuBZrXEqW0tCIVC1Zfakr3
-         FeAv97C2Okvu/FWiqLDk+BFSYFdQiCafcZta5X1vw4h+HhUbxu8sldB/PP6pcu2PsRfF
-         QgZGh6db2jB8ulVooIzgq4JuLgPB4go7K6I4zSySB01Pkb2oK6Vi/W80tnYL5a0rZaUM
-         Uc/Q==
+        bh=/khBfeqMsFSzVsQmvZgWwvtD4WlIt5dmIasVZVck7D0=;
+        b=cgbTuakUbyjRZBbpxC+zuIu/FzA2/xFOEJcovBRo5g0IiujieuLIfC9MqjjyqmlRjx
+         SEJrDyDMJXUXEweVl5Q5/cWfxw2Ijq0Sb2hcqqPSCRjPFjXs9gpVo7xs7sar6BVuKQOo
+         VOAeAyvOaHaxEFOVu4x15CqL+lmOkXQlc2Glgwv1swz5aRMFYjjwMxieUefZYEj2YqOg
+         40JC6gbk9zxsa5lTMggNaJBjvX063ER7QkZqPemYQbTqNBuAKJy2a4uBTVDPmyhpxa7k
+         teb2TobzV0xV8/2UUOr2Uhm1gwIqYxIhY1FvBxmUAfawLEr1V6jyrT0SY9ieDld7r8rU
+         0NDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=KtQc2NqQlhwB5rQ3CSYNZW6h8xao3iiZQNiOwbO0syc=;
-        b=ap0zcwQDMdgrV9bPfMnnB/h8TFedwmdRECg+VIA8IfE64TTfTMO04yjG6UAawRIuTS
-         foDUDldztk1Y6Bq59joENaokFgzDzMn/HdxC9xyojzcON66BQMA4SpBY+wqFYPy61M5y
-         P8MDW3cP8OxVHcI9Y+jJdR0LclxgY4dgSBMXnOruDFRBdW3frxk16LLo365zfsWiR4QM
-         mWXPd0LypO5Opgqb/Xhv/2iPUL0NYGE1gR4gqOsFWRZQB2ANPuby67em5/GgvFEkKFG/
-         bm1tahHlxwbJ4o5c0Drf4nwrCZL6TIxikY43sO98VBWWFLg0eYRHQPk7spYS64ZUthQQ
-         3GHw==
-X-Gm-Message-State: APjAAAU4HedRNja1wcYmViTlc2XnS8mxLOReyWuE9EVIpynsQz42qdKa
-        OyziRRreYyrzIOtKsDLRNq8uZqub6i/06N8yXAFvtUA063bCUrg51SGagbDDNODk15yRK/kXoVX
-        wn5XOp68YYJT4A+hllKzcg1wyWaoVv0R1K2iamJDl92/LWR28mgeR+OlnXiIREZmgg8PAMJXvdw
+        bh=/khBfeqMsFSzVsQmvZgWwvtD4WlIt5dmIasVZVck7D0=;
+        b=b5WXeQR5MIi75Tn0lvD+dW2mXlxrwj6qpA+Vr2+H56r+Fbo4V1IzuTVJkZBgCTq2cJ
+         5iv9ujNOjgAt/ppFbyt5UExGwEz8ma/uUc2pAexqyuv2phrmJK9HhUhXEGWt7PwvD5ft
+         HMO/09CMV+LAFam5qSPen9EXS9i4IrldTWwO9hOq9VpOx2PTA5nmEiSCumvuV6iJifUG
+         74nHRQWrsjj4X7yblryixI1omeQXa+HFliZ5/0USXhu/7OTBOS/QgNzp0rlRRDT/D9h9
+         0Rmhtl4qaMGD+xxN94NsgzTyEJ4W9/temB7qmWBLXIKh+a+D64WG5hKuhgNVpd8wG2jP
+         M/Fg==
+X-Gm-Message-State: APjAAAVV8zolB0IeOjTq3/jt15UagxmMycqlNqNaTz90PW4vLz+RfApM
+        4MVqVZEEO3H6zHnblG25U9QNHgLSU4rc8L0mFoYf8ZKi9SBa7GlJEkuJ9JBVj/j7Ut5ACJui7UP
+        F6m5ZI8/H4SABvxS0j2l6O/0vWrMdxwt2bPpkupJ1emuO1nqrkxL8ap0eQPtnX3oL0PltMyAnvw
         ==
-X-Google-Smtp-Source: APXvYqwAFPoWMDEN6eo8zFJCCE8yNrNiX7MT6aT1HbyR2fyuCC31aR8L6tA9N6ErFkWY1cHbBJenjF8CHwTuMLemA6A=
-X-Received: by 2002:a63:cb11:: with SMTP id p17mr935226pgg.42.1581645257911;
- Thu, 13 Feb 2020 17:54:17 -0800 (PST)
-Date:   Thu, 13 Feb 2020 17:53:39 -0800
+X-Google-Smtp-Source: APXvYqy/77rjyC8bDjBb5rAucZn47xqZzlsSV2akABB4mGhIis7efko/csip7bjLV+/6KJU4J6TTI8qhuWd9aifVRvY=
+X-Received: by 2002:a25:8041:: with SMTP id a1mr608697ybn.420.1581645250665;
+ Thu, 13 Feb 2020 17:54:10 -0800 (PST)
+Date:   Thu, 13 Feb 2020 17:53:36 -0800
 In-Reply-To: <20200214015343.201946-1-emilyshaffer@google.com>
-Message-Id: <20200214015343.201946-12-emilyshaffer@google.com>
+Message-Id: <20200214015343.201946-9-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20200214015343.201946-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.25.0.265.gbab2e86ba0-goog
-Subject: [PATCH v7 11/15] bugreport: collect list of populated hooks
+Subject: [PATCH v7 08/15] bugreport: include user interactive shell
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -68,117 +68,52 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Occasionally a failure a user is seeing may be related to a specific
-hook which is being run, perhaps without the user realizing. While the
-contents of hooks can be sensitive - containing user data or process
-information specific to the user's organization - simply knowing that a
-hook is being run at a certain stage can help us to understand whether
-something is going wrong.
-
-Without a definitive list of hook names within the code, we compile our
-own list from the documentation. This is likely prone to bitrot. To
-reduce the amount of code humans need to read, we turn the list into a
-string_list and iterate over it (as we are calling the same find_hook
-operation on each string). However, since bugreport should primarily be
-called by the user, the performance loss from massaging the string
-seems acceptable.
+It's possible a user may complain about the way that Git interacts with
+their interactive shell, e.g. autocompletion or shell prompt. In that
+case, it's useful for us to know which shell they're using
+interactively.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
- Documentation/git-bugreport.txt |  1 +
- bugreport.c                     | 53 +++++++++++++++++++++++++++++++++
- 2 files changed, 54 insertions(+)
+ Documentation/git-bugreport.txt | 1 +
+ bugreport.c                     | 5 +++++
+ 2 files changed, 6 insertions(+)
 
 diff --git a/Documentation/git-bugreport.txt b/Documentation/git-bugreport.txt
-index 4e9171d1bd..779c9c7fd9 100644
+index 33df4dec7f..23265b0d74 100644
 --- a/Documentation/git-bugreport.txt
 +++ b/Documentation/git-bugreport.txt
-@@ -31,6 +31,7 @@ The following information is captured automatically:
+@@ -29,6 +29,7 @@ The following information is captured automatically:
+  - uname sysname, release, version, and machine strings
+  - Compiler-specific info string
   - 'git remote-https --build-info'
-  - $SHELL
-  - Selected config values
-+ - A list of enabled hooks
++ - $SHELL
  
  OPTIONS
  -------
 diff --git a/bugreport.c b/bugreport.c
-index 1a9430a857..7e6147a935 100644
+index bfdff33368..c1475601bf 100644
 --- a/bugreport.c
 +++ b/bugreport.c
-@@ -9,6 +9,7 @@
- #include "config.h"
- #include "bugreport-config-safelist.h"
- #include "khash.h"
-+#include "run-command.h"
- 
- static void get_git_remote_https_version_info(struct strbuf *version_info)
+@@ -21,6 +21,7 @@ static void get_git_remote_https_version_info(struct strbuf *version_info)
+ static void get_system_info(struct strbuf *sys_info)
  {
-@@ -78,6 +79,55 @@ static void get_safelisted_config(struct strbuf *config_info)
- 	}
- }
+ 	struct utsname uname_info;
++	char *shell = NULL;
  
-+static void get_populated_hooks(struct strbuf *hook_info, int nongit)
-+{
-+	/*
-+	 * Doesn't look like there is a list of all possible hooks; so below is
-+	 * a transcription of `git help hooks`.
-+	 */
-+	const char *hooks = "applypatch-msg,"
-+			    "pre-applypatch,"
-+			    "post-applypatch,"
-+			    "pre-commit,"
-+			    "pre-merge-commit,"
-+			    "prepare-commit-msg,"
-+			    "commit-msg,"
-+			    "post-commit,"
-+			    "pre-rebase,"
-+			    "post-checkout,"
-+			    "post-merge,"
-+			    "pre-push,"
-+			    "pre-receive,"
-+			    "update,"
-+			    "post-receive,"
-+			    "post-update,"
-+			    "push-to-checkout,"
-+			    "pre-auto-gc,"
-+			    "post-rewrite,"
-+			    "sendemail-validate,"
-+			    "fsmonitor-watchman,"
-+			    "p4-pre-submit,"
-+			    "post-index-changex";
-+	struct string_list hooks_list = STRING_LIST_INIT_DUP;
-+	struct string_list_item *iter = NULL;
-+
-+
-+	if (nongit) {
-+		strbuf_addstr(hook_info,
-+			"not run from a git repository - no hooks to show\n");
-+		return;
-+	}
-+
-+	string_list_split(&hooks_list, hooks, ',', -1);
-+
-+	for_each_string_list_item(iter, &hooks_list) {
-+		if (find_hook(iter->string)) {
-+			strbuf_addstr(hook_info, iter->string);
-+			strbuf_complete_line(hook_info);
-+		}
-+	}
-+}
-+
- static const char * const bugreport_usage[] = {
- 	N_("git bugreport [-o|--output-directory <file>] [-s|--suffix <format>]"),
- 	NULL
-@@ -166,6 +216,9 @@ int cmd_main(int argc, const char **argv)
- 	get_header(&buffer, "Safelisted Config Info");
- 	get_safelisted_config(&buffer);
+ 	/* get git version from native cmd */
+ 	strbuf_addstr(sys_info, "git version:\n");
+@@ -42,6 +43,10 @@ static void get_system_info(struct strbuf *sys_info)
+ 	get_compiler_info(sys_info);
+ 	strbuf_complete_line(sys_info);
  
-+	get_header(&buffer, "Enabled Hooks");
-+	get_populated_hooks(&buffer, nongit_ok);
++	shell = getenv("SHELL");
++	strbuf_addf(sys_info, "$SHELL (typically, interactive shell): %s\n",
++		    shell ? shell : "<unset>");
 +
- 	report = fopen_for_writing(report_path.buf);
- 
- 	if (report == NULL) {
+ 	strbuf_addstr(sys_info, "git-remote-https --build-info:\n");
+ 	get_git_remote_https_version_info(sys_info);
+ 	strbuf_complete_line(sys_info);
 -- 
 2.25.0.265.gbab2e86ba0-goog
 
