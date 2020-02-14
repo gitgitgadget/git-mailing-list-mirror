@@ -2,131 +2,89 @@ Return-Path: <SRS0=nsHh=4C=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 913F9C35242
-	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 21:05:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D4F35C3F68F
+	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 21:23:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5360B206CC
-	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 21:05:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A3F3C222C2
+	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 21:23:32 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="dVRgFbP1"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CjGLpG58"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730163AbgBNVFu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Feb 2020 16:05:50 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:32882 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726191AbgBNVFu (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 14 Feb 2020 16:05:50 -0500
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 7B53360791;
-        Fri, 14 Feb 2020 21:05:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1581714348;
-        bh=nHZvRpQqJZOyDUIeK1qa8+IfYe/TxDMSdAfJ2DlS3tc=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=dVRgFbP1kAM5VeLschbxG3CBbrurBc4RslaJuDoabwUc4M032tYtjc+pyCX+h8sw0
-         zoLQkS33onry00OitLTC2rhCuomNfR43tdnFzXnQQbHHvp8jqVMtCNzK2+AWI+i+jt
-         9G4CTWY7/45ZvhLnTD9/8vO50NwyWS4LK2gqp1hsd7ak+2gBtnfMGSe9LASFmNEadx
-         HQPhAOq/3gLdlhYmWnouxBLZJKUjgT+mDeIkF5CBtTKH88u4ATNbM7Dh34wwlDMcZm
-         1frPINfJBDPNrJC4O036Mle2hGxuJP+jGu90p13ZDiJNfsTNrbJ42SqPXrCf7RrCDB
-         66SL2ycF4vtlwX6w5odHQb8JJPqoTvbQt27Mla0ARgZ1ozLj32agc6qCa7pUiq0PTv
-         2XxVgfu9GzAdVjZ2okZZ+KKacARNG/Dgtuh0oxegy6LU9cAh8YW/eYAW8KSemipR6z
-         AiFOl1T075SbGoCiVkhZoevXXBqYDy+rrjeG1H5JO14AL0++Bbt
-Date:   Fri, 14 Feb 2020 21:05:44 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: Git representative on AsciiDoc Working Group
-Message-ID: <20200214210544.GA6664@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>, git@vger.kernel.org
-References: <20200212002129.GB6464@camp.crustytoothpaste.net>
- <20200214062335.GB605125@coredump.intra.peff.net>
- <nycvar.QRO.7.76.6.2002141306350.46@tvgsbejvaqbjf.bet>
+        id S2388780AbgBNVXa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Feb 2020 16:23:30 -0500
+Received: from mail-io1-f45.google.com ([209.85.166.45]:36500 "EHLO
+        mail-io1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728123AbgBNVX3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Feb 2020 16:23:29 -0500
+Received: by mail-io1-f45.google.com with SMTP id d15so12104912iog.3
+        for <git@vger.kernel.org>; Fri, 14 Feb 2020 13:23:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=icRWPn80kPnyRQcE9aZ9yZAwzUAD2zFO8keJqJBCH3g=;
+        b=CjGLpG58OyAfAr/FO93CTIP7fU1BJlC6RLeQ5PJmFNfO9Q8HPMngUecIm+lmrssIp6
+         /6ItQm1GaYiK8Dm60HSjQg/fojMI9SCk1GF4vhi4CkKFlPv3D/9QvIKDazo0ocGdtUSj
+         ++3VgufVz8bP/5Z8Wwgo1L0E+C5i7B9UwGLVmMeUvDu/CIZdDY9MVBFvdAFIRIQOQ4zy
+         bzRgs1jSwTzjnGRhxfV6+ssuvDSf97ldyD3ZD9dVqKeUnixFWztzZJBhLj+NmyDugWIb
+         ofHXZ4Uv8FFs/A2n44r4ss97msCSCT4FJKcrRauNoomYLZUQG43848JAzNYiZqAc8jES
+         nEeg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=icRWPn80kPnyRQcE9aZ9yZAwzUAD2zFO8keJqJBCH3g=;
+        b=n91YUPy8nZKqapXfK6ttl8rFrWmzHasMeVkGdIbrPucnl4kl0qqeHHoIK/yo/m/0XF
+         HZCuZNaTy5kUFOZJ0p2J73YBUNRj1FoFpShO4wnfXqkj/hDZ/ua7GP6Cpxit3f0ilmVk
+         hh2oZTHQ7JXAAXF6SbsSAeFhDIvmlEM8cyEoH9/mwACpvSFj3BmtG7RyE3qU4Aj5pjxa
+         zQ/Sx9r8Lt/ePxfV9WDU18Gbd46D6XeDXQzQRKqZVc05353Q0NlFy3Z5PJapxAEOjMlb
+         uEEmdDw0XdOSdrX4SsHTFZKu8J1i3MBEwSUnL23kOqOmObCrAw9SO3hB/NDZbZOoD3kW
+         M4wA==
+X-Gm-Message-State: APjAAAUgci3DrN85m8PEESHm5O9KzTsJnuAs5KtSXZsCC2lTvltf3cNE
+        ymxwMsKCBXVZD9frNxAarGNY9XBqVNiUWIRzXbHh+5JlZDE=
+X-Google-Smtp-Source: APXvYqz0VaejoM9e71UB+jKf7lpZI/QpXa/4ieKz5kKPPlfKbRxw021EaE+YRar3NhnP+Y3/qKBa3+T9vMSNe75HuYs=
+X-Received: by 2002:a6b:7310:: with SMTP id e16mr3948626ioh.107.1581715409137;
+ Fri, 14 Feb 2020 13:23:29 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="pWyiEgJYm5f9v55/"
-Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.2002141306350.46@tvgsbejvaqbjf.bet>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.5.0-rc5-amd64)
+From:   Bruno Macabeus <bruno.macabeus@gmail.com>
+Date:   Fri, 14 Feb 2020 21:23:18 +0000
+Message-ID: <CANnkH-ViK9qySZGi=xbcE4YDiskhLxDsH21DMxTEHi6=X0EZuQ@mail.gmail.com>
+Subject: Feature Suggestion: Allow to enforce "rename" in git while committing
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hello for all,
 
---pWyiEgJYm5f9v55/
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+initially I posted a question on Stack Overflow asking if is possible
+to do something using Git, but seems that there is no away to do that,
+and I think that it could be useful in order to improve the
+organisation on logs.
 
-On 2020-02-14 at 12:07:00, Johannes Schindelin wrote:
-> Hi,
->=20
-> On Fri, 14 Feb 2020, Jeff King wrote:
->=20
-> > On Wed, Feb 12, 2020 at 12:21:29AM +0000, brian m. carlson wrote:
-> >
-> > > I've had folks from OpenDevise reach out to me and let me know that t=
-hey're
-> > > launching a standardization initiative for AsciiDoc under the Eclipe
-> > > Foundation's open standardization process.  The goal is to standardiz=
-e the
-> > > language, ensure compatibility across implementations, and provide a =
-reference
-> > > implementation, with input from implementers, users, and others.
-> > >
-> > > They'd like to extend an invitation for the Git project to send a
-> > > representative, since we're a significant user of AsciiDoc.  I'm send=
-ing out
-> > > this email to see what the project thinks and if anyone would be inte=
-rested in
-> > > fulfulling that role.
-> >
-> > [...]
-> > As far as choosing a representative from the project, I'd probably
-> > nominate you. ;)
->=20
-> I'd probably second this. ;-)
+My user case is:
+- I'm doing a refactor on a project, migrating from JS to TS
+- So I need to rename a file from index.js to index.ts (for example)
+- Since the TS build steps are different, I also need to change its contents
+- Sometimes I need to do so much changes that git thinks that I
+removed index.js and created index.ts, but it's wrong, losing its
+tracking on logs!
 
-I'm happy to fill this role if the project would like.  The main
-interest for me when representing the Git project would be a focus on
-compatibility between implementations, which has historically been a
-minor pain point for us.  That, of course, is the whole point of
-standardization.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+I should not create one commit just renaming the file and on another
+commit updating its content, because the project won't build on the
+first commit (since the build steps is different on a .ts file). And I
+don't want to create a commit that the project can't be built on.
 
---pWyiEgJYm5f9v55/
-Content-Type: application/pgp-signature; name="signature.asc"
+So I think that would be useful explicitly say to git "Hey, you should
+forgot the minimum similarity threshold on this file and on this
+commit. I renamed this file from index.js to index.ts. You should bind
+they".
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.19 (GNU/Linux)
+Is it make sense?
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl5HC6gACgkQv1NdgR9S
-9ou7Bg//fKJg5wlCAta6fhYghswihuAoWRy7gaeZ3QQEERdRPsJCTbDk2TscgzCi
-xhrvcGpuqEls8UI7VwgLcCaUoPb8K7Y6wiPmM5eTYJjmXuUM0pO20EcncuyQirQX
-PIvEg3hvt4iJWlfq+FNsdpogup3lCTwvXmE3ppf3vP/cYhDk/ot3FP0gUngh+LCo
-wOpaQb6MmHS6aYUzTodgmgh0TrUoJtbFnyt6k5Kr4VJWqEEQ90I9lrf39vF6v+Ax
-+UU7Xh1YB9hdXjd398Iw8rdANuBU5/m3PlykFrDTuwL4B/zj/16A3NWsbbJ2c1P1
-cFG/f0YJpTfpC/RqyRV5XHi0kGN9kziqxIWTwDiAeihcaJpRxeUWUD7EjqZxhraq
-lZ325MtIL+VpVfdrhLSeL3gi+k0VVavRnPhJhS/d0fME2RvsPF70UOizlC7GiMJ9
-suvPah3vpoJ1GbMRve/MYfgnacu4LC8JB3xh7xPBivLbS/Ie+1tNrxDTuorKu3CJ
-piyIixLrNl1ft6cbbPEcU1aIKLdhtLOCJF2sYSnv/EuwN667sLERkyBooXkw7ern
-sZq+YvnVGZNuBcgStXGVEFQJ7D0fRrLpCtWGvLu5X1xNuLwPJ/rgy9VY7AqQkFyO
-Fw992QVJh92JZcFoJoZnRWjl6md/EG6J43rz5t0jA6YEHWdBLjw=
-=oSRz
------END PGP SIGNATURE-----
-
---pWyiEgJYm5f9v55/--
+Thank you!
