@@ -6,76 +6,96 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7EEE0C35242
-	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 06:36:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BC760C35242
+	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 06:44:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 4CE732187F
-	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 06:36:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9A8B92187F
+	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 06:44:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728783AbgBNGgu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Feb 2020 01:36:50 -0500
-Received: from cloud.peff.net ([104.130.231.41]:43190 "HELO cloud.peff.net"
+        id S1726179AbgBNGo3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Feb 2020 01:44:29 -0500
+Received: from cloud.peff.net ([104.130.231.41]:43204 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725840AbgBNGgu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Feb 2020 01:36:50 -0500
-Received: (qmail 19233 invoked by uid 109); 14 Feb 2020 06:36:50 -0000
+        id S1725897AbgBNGo3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Feb 2020 01:44:29 -0500
+Received: (qmail 19266 invoked by uid 109); 14 Feb 2020 06:44:29 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 14 Feb 2020 06:36:50 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 14 Feb 2020 06:44:29 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19311 invoked by uid 111); 14 Feb 2020 06:45:46 -0000
+Received: (qmail 19341 invoked by uid 111); 14 Feb 2020 06:53:25 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 14 Feb 2020 01:45:46 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 14 Feb 2020 01:53:25 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Fri, 14 Feb 2020 01:36:49 -0500
+Date:   Fri, 14 Feb 2020 01:44:28 -0500
 From:   Jeff King <peff@peff.net>
-To:     "Crabtree, Andrew" <andrew.crabtree@hpe.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Inconsistent results from git rev-parse --show-toplevel
-Message-ID: <20200214063649.GD605125@coredump.intra.peff.net>
-References: <TU4PR8401MB111758B9513DD7D8B96CBFAAF90E0@TU4PR8401MB1117.NAMPRD84.PROD.OUTLOOK.COM>
- <xmqqftg4zkvo.fsf@gitster-ct.c.googlers.com>
- <TU4PR8401MB1117B81EB9240905AA36B1E9F9090@TU4PR8401MB1117.NAMPRD84.PROD.OUTLOOK.COM>
- <20200125195319.GA5519@coredump.intra.peff.net>
- <TU4PR8401MB1117E8EEB853728B0392D83CF9090@TU4PR8401MB1117.NAMPRD84.PROD.OUTLOOK.COM>
- <20200130102933.GE840531@coredump.intra.peff.net>
- <TU4PR8401MB111777B793EA9C3D5336CE26F9040@TU4PR8401MB1117.NAMPRD84.PROD.OUTLOOK.COM>
+To:     Marius Bakke <marius@devup.no>
+Cc:     git@vger.kernel.org
+Subject: Re: RFC: Merge hints
+Message-ID: <20200214064428.GE605125@coredump.intra.peff.net>
+References: <87pnexmcjr.fsf@devup.no>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <TU4PR8401MB111777B793EA9C3D5336CE26F9040@TU4PR8401MB1117.NAMPRD84.PROD.OUTLOOK.COM>
+In-Reply-To: <87pnexmcjr.fsf@devup.no>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 30, 2020 at 09:59:31PM +0000, Crabtree, Andrew wrote:
+On Sun, Feb 02, 2020 at 12:52:24PM +0100, Marius Bakke wrote:
 
-> > > But the bigger thing, I think, is: who is setting GIT_DIR but not
-> > > setting GIT_WORK_TREE to match? Because IMHO that's the situation
-> > > that is causing the confusion.
+> It would be convenient if git had a facility for adding "merge hints",
+> both for automatic conflict resolution, as well as giving clues to
+> persons inheriting or merging a branch.
+
+To some degree, the git-rerere command does this.
+
+It doesn't let you do the kind of pattern transformations you suggested,
+but it does let you resolve a _particular_ conflict once, and then
+repeat it again. So it's useful if you're going to find the same
+conflict multiple times (e.g., merging to multiple long-running
+branches) or if you want to communicate resolutions to somebody (you can
+share your merge result, and they can use rerere-train to seed their own
+database).
+
+But it sounds like you're more interested in the pattern ones, where you
+don't see the _same_ conflict over and over, but rather just similar
+ones (your example where one side changes the signature of foo(), but
+the other side keeps adding new callers).
+
+In my experience you can't really solve that in an automated way (you
+have to decide in each case what should go into the new parameter!). But
+assuming you could, it seems like this could all be done outside of Git
+itself.
+
+For example:
+
+> It seems to me that git could offer better tools to deal with this.
+> Perhaps a ".mergehints", where you could provide a regular expression
+> either for automatic merge resolution, or just have git complain loudly
+> when a given pattern is merged (say, introduce conflict markers even
+> though there were no "real" conflicts).  I.e.:
 > 
-> > but it fails a test in t5601 around git-clone. 
+> [hint1]
+> files = *.c
+> pattern = FOO_STR
+> transform = s/FOO_STR/STR
 > 
-> Thanks jeff.  It looks like this might have been tried previously and
-> abandoned?  I'm pretty far out of my league here in terms of how
-> things are supposed to operate and any history around the previous
-> attempts at making it work.
-> [...]
-> commit d95138e695d99d32dcad528a2a7974f434c51e79
+> [hint2]
+> files = *.py
+> pattern = 'foo('
+> conflict = true
 
-Yeah, the commit you found was doing exactly the thing I suggested. IMHO
-the right path forward is to actually fix the weirdness in git-clone. It
-would be a backwards incompatibility, but a pretty obscure one. I think
-we're likely to help more people than hurt by being able to handle
-$GIT_WORK_TREE consistently. At least that's my gut feeling.
+Once Git sees the conflicted state, you should be able to mark up those
+conflicts using an external tool. You operate on the file with conflict
+markers from your working tree, or you can access the original base,
+"theirs" and "ours" content in stages 1, 2, and 3 of the index. So if
+you have a smart tool which understands merging and understands the
+syntax of your files, it could apply those transforms.
 
-I guess one way to fix it without breaking compatibility would be for us
-to set $GIT_WORK_TREE alongside $GIT_DIR, but _also_ set a special
-$GIT_CLONE_NO_RESPECT_WORK_TREE variable that would instruct it that the
-caller isn't trying to do trigger the special $GIT_WORK_TREE behavior.
-
-But we'd have to carry that hack around forever, which doesn't excite
-me.
+That's more or less how git-mergetool works (feeding those three files
+to whatever custom tool you like). I don't have a good knowledge of what
+tools are out there that might support something like this, though (I
+typically just look at the conflicts manually in an editor).
 
 -Peff
