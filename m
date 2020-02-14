@@ -2,110 +2,113 @@ Return-Path: <SRS0=nsHh=4C=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 417BCC3B1A1
-	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 16:49:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 50C8EC3B1A4
+	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 16:57:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0EA2F2082F
-	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 16:49:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2A8D52082F
+	for <git@archiver.kernel.org>; Fri, 14 Feb 2020 16:57:43 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k/W15jgn"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="MznG0qjk"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2393957AbgBNQt3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Feb 2020 11:49:29 -0500
-Received: from mail-qk1-f176.google.com ([209.85.222.176]:39437 "EHLO
-        mail-qk1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2405289AbgBNQt2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Feb 2020 11:49:28 -0500
-Received: by mail-qk1-f176.google.com with SMTP id w15so9812072qkf.6
-        for <git@vger.kernel.org>; Fri, 14 Feb 2020 08:49:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=7asV2dB4zg9aevB7POhVCtqjX9ttrQKM1URVr3w7jWo=;
-        b=k/W15jgnDn2IUgSZ5Qhi2Wtwvu8pBcaQA+EytoPEVObRYvp7pcpAgMPPdwzyxL9BLe
-         vXorOQQnEsT4iIkPi3MLATSarbkxHJVeeILH/J/qabcY/5Fn5iC0zXwAZScXkfMGE9d1
-         2k7pXtrIB3CM1ajkKx5FoKhH6TydxF2I7IkTd9pN8i2W9pnnozdM43g8OP01ptpcV6b6
-         lJfh5ErvHVkdP+4/DY6Z3IX3K6mrwuGt9j2gHRZEj4csSBo07nUF9frqD5vWcwWBcvYD
-         DZQq/7f6SYjBgOnzotsy91CYcG/J9Bu/2JbOnexxVP1GtpgN3NLXzQA4JBxWDdFPmBR7
-         Z5Og==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=7asV2dB4zg9aevB7POhVCtqjX9ttrQKM1URVr3w7jWo=;
-        b=DmrcJwT+vpJES8/JZqME6dVYIfQX7QJ3rRDRzs8QhXMMxBycd33O/9nNEtUh6Bew94
-         hgD4fTIS5NCVgiXJjWQJIsVPmAkk3bahPUpbg6kty6JCy59cLwo9amPnC5waZDZpQUnG
-         BVi22qJh+zFMtuKpvSJEwwwI8fVROl/KvGqEAH7zjy+vgOdx3McVRoFAkJkSu2a6oegt
-         Cpowulf3C1WOhPtzP3RsWbP+hZMWu29fHbfy6nWgnZTtoj8QaTWpR8Znkt7eoTj2Hiyr
-         OOHJ5Z90WV9dZoEhdTDf8HQQSiMEpINVV0Gdrzl1XAatiWEEgb15gHOhdXKRYzpBC4as
-         beOQ==
-X-Gm-Message-State: APjAAAWZWgfSVR/cB5WlZlchccHibJo2pz4i4GmOnojgi1eQFovn0ag8
-        A9Fc8oAtwO13Syf+sVv9EF+yd6gZ
-X-Google-Smtp-Source: APXvYqyoIVmDQLzQLP+/lzSpZAo46fzGWVYfl8vl61WTm9DI0afdFXBcglyRAdWZafbANETrsPPkfA==
-X-Received: by 2002:a37:e55:: with SMTP id 82mr3537943qko.370.1581698967182;
-        Fri, 14 Feb 2020 08:49:27 -0800 (PST)
-Received: from [100.95.28.84] ([204.48.92.84])
-        by smtp.gmail.com with ESMTPSA id x131sm190112qka.1.2020.02.14.08.49.26
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 14 Feb 2020 08:49:26 -0800 (PST)
-Content-Type: text/plain;
-        charset=utf-8
-Mime-Version: 1.0 (1.0)
-Subject: Re: How to force configure script to use curl ?
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-X-Mailer: iPhone Mail (16B92)
-In-Reply-To: <20200214061714.GA605125@coredump.intra.peff.net>
-Date:   Fri, 14 Feb 2020 11:49:25 -0500
-Cc:     git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <EF7D86BC-9EF7-4333-A786-2EC7DCF72C74@gmail.com>
-References: <A0910AA2-D24B-4DF5-8D39-8E2D8B56955B@gmail.com> <20200214061714.GA605125@coredump.intra.peff.net>
+        id S2393970AbgBNQ5h (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Feb 2020 11:57:37 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:60382 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2394035AbgBNQ5g (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Feb 2020 11:57:36 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2BB1AC3841;
+        Fri, 14 Feb 2020 11:57:35 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=t1V1b7VkbHPaAVFEpXfkNsLvIIU=; b=MznG0q
+        jkPejrI/bwgp+Rx15m/z7MWoIYl/AM8tmGzWMIGdf3H+ruIeR6Wy/woqZoSbJTqk
+        jD7ZtbSuHn5z+NODsSw34nJbWJsZBUZofXI28p2BQ8RGqohUa/wyzmQ/l0qro703
+        dk4bztM9ABd9lBBOP94jeRB9/WAfb353WYrIM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=oG4lwa14Le4h0uj0tJBdK4s2cIB0l33M
+        BTINrirqPfWqxN5F24u1jU4hCDv/iIo+Unkutos8wncZzjkPTkouhIq4Selb4IN5
+        g/4YEumAGduO1C7XRTXQBoGu7tDScpj1H+6jhOE3O+N3Rt+MoPz5wm7icimagmuX
+        zdg02oSKA8w=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0EF1DC3840;
+        Fri, 14 Feb 2020 11:57:35 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 2A395C383F;
+        Fri, 14 Feb 2020 11:57:32 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
+Cc:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        Roland Hieber <rhi@pengutronix.de>, git <git@vger.kernel.org>
+Subject: Re: git-describe --tags warning: 'X' is really 'Y' here
+References: <20200205141332.lov2f2fvinehcd3a@pengutronix.de>
+        <CAHd-oW6p-zs-SZnQsJNWPGE8-Ls3vXvf_HOeO+W=1PsQ_oihZA@mail.gmail.com>
+        <20200214065352.GG605125@coredump.intra.peff.net>
+Date:   Fri, 14 Feb 2020 08:57:29 -0800
+In-Reply-To: <20200214065352.GG605125@coredump.intra.peff.net> (Jeff King's
+        message of "Fri, 14 Feb 2020 01:53:52 -0500")
+Message-ID: <xmqqd0ahp0na.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1765287A-4F4B-11EA-88E9-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+Jeff King <peff@peff.net> writes:
 
-Thanks for a very sensible suggestion!
+>> >     gcc (master) $ git describe --tags --abbrev=0
+>> >     warning: tag 'gcc_9_2_0_release' is really 'releases/gcc-9.2.0' here
+>> >     gcc_9_2_0_release
+>> >
+>> > It took me a while to find out what the warning means, because
+>> > 'gcc_9_2_0_release' is not in $(git tag -l), and it cannot be used as a
+>> > ref either:
+>> [...]
+>> It seems that the commit which added the output message you got is
+>> 212945d ("Teach git-describe to verify annotated tag names before
+>> output", 2008-02-28) [1]. As the commit message states, the warning is
+>> emitted when a tag is locally stored under a different name from the
+>> one it was originally created (being the former the one you will want
+>> to use at `git show`).
+>
+> Yeah, I think that is what's going on with that warning, but there's a
+> weird thing about the actual stdout output. We see a tag object whose
+> name doesn't match the ref. What's the "real" name of that tag? Is it
+> the name in the object, and the ref is wrong? Or is the ref correct, and
+> the object is wrong?
+>
+> You could get pretty philosophical there, I think, but it seems slightly
+> annoying that we print the name from the object to stdout, when one
+> cannot then use that name to access the tag in any way.
+>
+> I.e., I think it might be reasonable to issue that warning but then
+> print "releases/gcc-9.2.0" instead.
 
-Philippe.=20
+I agree.  What the tag creator, whom you treat as more authoritative
+than yourself, called "gcc_9_2_0_release", is stored at a wrong
+place by you and you have to call it "releases/gcc-9.2.0".  So the
+right way (at least philosophically) to phrase the warning message
+should reflect that a bit better, perhaps
 
-> Le 14 f=C3=A9vr. 2020 =C3=A0 01:17, Jeff King <peff@peff.net> a =C3=A9crit=
- :
->=20
->> On Wed, Feb 12, 2020 at 05:08:06PM -0500, Philippe Blain wrote:
->>=20
->> Is there a way to force the configure script to error out if it does
->> not find curl (or any one of the optional dependencies that I happen
->> to need for my build?)
->=20
-> I don't think so. It would probably be possible for configure.ac to
-> behave this way. Looking at the code, I think GIT_PARSE_WITH would have
-> to record the affirmative for "--with" instead of just canceling a
-> previous "--without", and then the part that does curl auto-detection
-> would need to complain if it doesn't find curl at that point.
->=20
-> But our use of autoconf is not very extensive, and in fact most
-> developers do not use it at all. If you know you want curl, you're
-> better off just overriding it explicitly with the Makefile knob:
->=20
->  make NO_CURL=3D
->=20
-> or:
->=20
->  echo NO_CURL=3D >>config.mak
->  make
->=20
-> Either of those will override the NO_CURL setting done by the configure
-> script (you can see the full list of knobs set by configure in
-> config.mak.autogen).
->=20
-> -Peff
+  warning: tag 'releases/gcc-9.2.0' is externally known as 'gcc_9_2_0_release'
+  releases/gcc-9.2.0
+
+to hint that 'releases/gcc-9.2.0' is merely how you name it and the
+real name of the tag itself is gcc_9_2_0_release, although in
+practice everybody would be calling the tag with the same wrong
+name, as that is how cloning and fetching of tags work ;-).
+
+
