@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F9CCC71150
-	for <git@archiver.kernel.org>; Sat, 15 Feb 2020 21:36:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B9D5C7114E
+	for <git@archiver.kernel.org>; Sat, 15 Feb 2020 21:36:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6F636217F4
+	by mail.kernel.org (Postfix) with ESMTP id E66FB20718
 	for <git@archiver.kernel.org>; Sat, 15 Feb 2020 21:36:55 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="uWsINMaZ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hIJN8WzJ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727802AbgBOVgy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 15 Feb 2020 16:36:54 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:34631 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726478AbgBOVgw (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 Feb 2020 16:36:52 -0500
-Received: by mail-wm1-f66.google.com with SMTP id s144so4539931wme.1
-        for <git@vger.kernel.org>; Sat, 15 Feb 2020 13:36:51 -0800 (PST)
+        id S1727804AbgBOVgz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 15 Feb 2020 16:36:55 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:32829 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726696AbgBOVgv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 Feb 2020 16:36:51 -0500
+Received: by mail-wm1-f65.google.com with SMTP id m10so4544397wmc.0
+        for <git@vger.kernel.org>; Sat, 15 Feb 2020 13:36:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Nw0eSS2rjMRKATbtO4rQNZMP69QdvpcLcVkJ5jxheAM=;
-        b=uWsINMaZ4d5Sg1RupDxZDYB6PsRxwDtaTWN5JCHv7EVyp8+WfE9hzWvQ4OhY1DZ9In
-         WEMWYR7SdpfLNE3ct8cHxu1n354Hz9gUWkpc8HpgaVIo3S6FoH/ScG90Nk+RZq0UcXPq
-         +H6ZEl9VYijejYx86nXhwQOSgdkXVfVPa+MJxSBMbzt5eBcUZNyt9OvDTf28809AmY0H
-         TC8l6xx4vOXL7kVmEgYN36wn8Rg9oGHWBhGJ9GBv4/7NG3mThktTpnZ1lM66ZdJ8AqDE
-         +RLvOebNvK1WdFH8rb7B1MOBWjf+iBGgZylZMB+YrCML/663vqn+gD/pt3GWE9k1SAKp
-         MIRg==
+        bh=Y88HFj1HTqfOCJfJjSYqyXiWQTTZtUTBCp/BMqKwKD4=;
+        b=hIJN8WzJdm3dwvCJNmTAgxR5wDSIYyckxDSVdChQxqQtKvpIxaR8i/KfEhy/qusuA7
+         6af6UrlErTd7cYuImfb02rK2qhShSKpmO+Va5d5iFChm+Pg9Dz+H02BEJXJoMfavm1bM
+         VqetFVYf5DvFTWIteAOmqvXP82mnsxkL58qdckVey/9QfOBTBB9ezJ6DvURIM948KFe9
+         aLgvDNBLqNaga1R8AX4ecTR2mpNy/j6LTOyCxh8iIrHzh99h/0+kYv21e3AaS8R9LlAT
+         Ol3UewRSpfJtphWJEr/Vw/SXuCDBE9udIU1/cUe99vglxmdvWnyO+QEatL4o8Iu6VBuk
+         t4WQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Nw0eSS2rjMRKATbtO4rQNZMP69QdvpcLcVkJ5jxheAM=;
-        b=jxyfatjkOFzI42/abijBh3XRy2KVC3xsAwE86sD9Zww3xJ7PYlV2ATF/rBpiKYH6nG
-         7CM2ephbcfUDyPUl7ZNhiZxMeX2s3wyXt2qI58gF/25zKVJnU3vbd1pkACvxRywaxnq7
-         vBSnKcT3s7ykYNCMJrCFUh/Md8wYRHkKPLyjWOMW5/SlSCtio8J3piY2t5OZhRHTQaay
-         3pU9cLWqYuiOfOC5O0SoPYElUPARxmWXEwnHr+5sWT/5G8yPzqtlPLR2tuXjt90rq77U
-         dAW2Z2hd6lb+7/ALx7a7k2kSsfq4Zdg3JLAZCANMyMF/LVFCl3Z05o86lWGWDgwm4M6Z
-         YNDQ==
-X-Gm-Message-State: APjAAAWRXelV6ugcrTtKomM7b516PFJo91Igu7Z4SYyBw1xm2IEhWNAv
-        QkwikAjqi1x3+ssAsoztmWhxC4p5
-X-Google-Smtp-Source: APXvYqzE8FLrwi3DyfOPhtxpVhu8s+BHikLKo1Jz2GC9+UvBjZhBBB/6gMADsoHPBrYtXcVCUuJ2zA==
-X-Received: by 2002:a1c:660a:: with SMTP id a10mr12275184wmc.122.1581802610148;
-        Sat, 15 Feb 2020 13:36:50 -0800 (PST)
+        bh=Y88HFj1HTqfOCJfJjSYqyXiWQTTZtUTBCp/BMqKwKD4=;
+        b=gu92kwwcFOzLQhRcuGjt7QKv8cXLbk6Y7kUi8z5AM9l7n6p7h8PvcACOXFgRbYYayB
+         Gcn5WQa7SUvWkvVaFWockR6hTSyFlQddi4jIzoplUZO7vgVjpYQ+gy7YL8iEF+nzNKBB
+         BqyLqsVWcUunyWgwXg4E89WuzEASzbN3dDTWdETWWXfStR4qNXd6g1TW66bqZeAmFNyf
+         k/nhZfKWMoZ7msmnah0uZcQXvIi9EW9vEiERfZhWzENiCJbgUZXTuhw9kpETNzVYWRif
+         e/fZmXS+bYbFGj940dBkI6HXIMjok1E8PIBoo57wqxGjDlSdaOeIort4q5f9uBiih5ZW
+         OrPg==
+X-Gm-Message-State: APjAAAU4pPILbOBY1UuyMQaGtPz7A0O7lO8Gr6Vj2Z0SIn0/nyJDDf/W
+        yFlrmRMz6AIaNWHeoKwe8jNHOeh6
+X-Google-Smtp-Source: APXvYqynjQl/NlnQ8NKQl3nobNRaqmTprvCbLwoVdjoplrj9+q8BNFHkOkZ37rNAxVwrbEmvRWtD5g==
+X-Received: by 2002:a1c:f60e:: with SMTP id w14mr12303145wmc.188.1581802605761;
+        Sat, 15 Feb 2020 13:36:45 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r1sm12687914wrx.11.2020.02.15.13.36.49
+        by smtp.gmail.com with ESMTPSA id w22sm12886134wmk.34.2020.02.15.13.36.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 15 Feb 2020 13:36:49 -0800 (PST)
-Message-Id: <bcd04ec4ded1858a6e1d2292bbc0d34ec28c2f57.1581802602.git.gitgitgadget@gmail.com>
+        Sat, 15 Feb 2020 13:36:45 -0800 (PST)
+Message-Id: <74cab9a32b3704228cbb247975adb13ade46ff91.1581802602.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.679.v5.git.git.1581802602.gitgitgadget@gmail.com>
 References: <pull.679.v4.git.git.1579155273.gitgitgadget@gmail.com>
         <pull.679.v5.git.git.1581802602.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 15 Feb 2020 21:36:30 +0000
-Subject: [PATCH v5 09/20] t3432: make these tests work with either am or merge
- backends
+Date:   Sat, 15 Feb 2020 21:36:24 +0000
+Subject: [PATCH v5 03/20] rebase (interactive-backend): make --keep-empty the
+ default
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,115 +80,468 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-t3432 had several stress tests for can_fast_forward(), whose intent was
-to ensure we were using the optimization of just fast forwarding when
-possible.  However, these tests verified that fast forwards had happened
-based on the output that rebase printed to the terminal.  We can instead
-test more directly that we actually fast-forwarded by checking the
-reflog, which also has the side effect of making the tests applicable
-for the merge/interactive backend.
+Different rebase backends have different treatment for commits which
+start empty (i.e. have no changes relative to their parent), and the
+--keep-empty option was added at some point to allow adjusting behavior.
+The handling of commits which start empty is actually quite similar to
+commit b00bf1c9a8dd (git-rebase: make --allow-empty-message the default,
+2018-06-27), which pointed out that the behavior for various backends is
+often more happenstance than design.  The specific change made in that
+commit is actually quite relevant as well and much of the logic there
+directly applies here.
 
-This change does lose the distinction between "noop" and "noop-force",
-but as stated in commit c9efc216830f ("t3432: test for --no-ff's
-interaction with fast-forward", 2019-08-27) which introduced that
-distinction: "These tests aren't supposed to endorse the status quo,
-just test for what we're currently doing.".
+It makes a lot of sense in 'git commit' to error out on the creation of
+empty commits, unless an override flag is provided.  However, once
+someone determines that there is a rare case that merits using the
+manual override to create such a commit, it is somewhere between
+annoying and harmful to have to take extra steps to keep such
+intentional commits around.  Granted, empty commits are quite rare,
+which is why handling of them doesn't get considered much and folks tend
+to defer to existing (accidental) behavior and assume there was a reason
+for it, leading them to just add flags (--keep-empty in this case) that
+allow them to override the bad defaults.  Fix the interactive backend so
+that --keep-empty is the default, much like we did with
+--allow-empty-message.  The am backend should also be fixed to have
+--keep-empty semantics for commits that start empty, but that is not
+included in this patch other than a testcase documenting the failure.
 
-This change does not actually run these tests with the merge/interactive
-backend; instead this is just a preparatory commit.  A subsequent commit
-which fixes can_fast_forward() to work with that backend will then also
-change t3432 to add tests of that backend as well.
+Note that there was one test in t3421 which appears to have been written
+expecting --keep-empty to not be the default as correct behavior.  This
+test was introduced in commit 00b8be5a4d38 ("add tests for rebasing of
+empty commits", 2013-06-06), which was part of a series focusing on
+rebase topology and which had an interesting original cover letter at
+https://lore.kernel.org/git/1347949878-12578-1-git-send-email-martinvonz@gmail.com/
+which noted
+    Your input especially appreciated on whether you agree with the
+    intent of the test cases.
+and then went into a long example about how one of the many tests added
+had several questions about whether it was correct.  As such, I believe
+most the tests in that series were about testing rebase topology with as
+many different flags as possible and were not trying to state in general
+how those flags should behave otherwise.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- t/t3432-rebase-fast-forward.sh | 48 ++++++++++++++++------------------
- 1 file changed, 22 insertions(+), 26 deletions(-)
+ Documentation/git-rebase.txt      | 24 ++++++-----
+ builtin/rebase.c                  | 28 +++++++++----
+ rebase-interactive.c              |  7 +---
+ rebase-interactive.h              |  2 +-
+ sequencer.c                       | 20 ++++-----
+ sequencer.h                       |  2 +-
+ t/t3421-rebase-topology-linear.sh | 16 +++----
+ t/t3424-rebase-empty.sh           | 70 +++++++++++++++++++++++++++++++
+ t/t3427-rebase-subtree.sh         | 12 +++---
+ 9 files changed, 126 insertions(+), 55 deletions(-)
+ create mode 100755 t/t3424-rebase-empty.sh
 
-diff --git a/t/t3432-rebase-fast-forward.sh b/t/t3432-rebase-fast-forward.sh
-index 92f95b57da1..7432c0e2415 100755
---- a/t/t3432-rebase-fast-forward.sh
-+++ b/t/t3432-rebase-fast-forward.sh
-@@ -44,19 +44,15 @@ test_rebase_same_head_ () {
- 	test_expect_$status "git rebase$flag $* with $changes is $what with $cmp HEAD" "
- 		oldhead=\$(git rev-parse HEAD) &&
- 		test_when_finished 'git reset --hard \$oldhead' &&
-+		cp .git/logs/HEAD expect &&
- 		git rebase$flag $* >stdout &&
- 		if test $what = work
- 		then
--			# Must check this case first, for 'is up to
--			# date, rebase forced[...]rewinding head' cases
--			test_i18ngrep 'rewinding head' stdout
-+			old=\$(wc -l <expect) &&
-+			test_line_count '-gt' \$old .git/logs/HEAD
- 		elif test $what = noop
- 		then
--			test_i18ngrep 'is up to date' stdout &&
--			test_i18ngrep ! 'rebase forced' stdout
--		elif test $what = noop-force
--		then
--			test_i18ngrep 'is up to date, rebase forced' stdout
-+			test_cmp expect .git/logs/HEAD
- 		fi &&
- 		newhead=\$(git rev-parse HEAD) &&
- 		if test $cmp = same
-@@ -71,14 +67,14 @@ test_rebase_same_head_ () {
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index c83be7ffc20..1d19542d79f 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -259,10 +259,13 @@ See also INCOMPATIBLE OPTIONS below.
+ 	unchanged as a result.
  
- changes='no changes'
- test_rebase_same_head success noop same success work same
--test_rebase_same_head success noop same success noop-force same master
--test_rebase_same_head success noop same success noop-force diff --onto B B
--test_rebase_same_head success noop same success noop-force diff --onto B... B
--test_rebase_same_head success noop same success noop-force same --onto master... master
--test_rebase_same_head success noop same success noop-force same --keep-base master
--test_rebase_same_head success noop same success noop-force same --keep-base
--test_rebase_same_head success noop same success noop-force same --no-fork-point
--test_rebase_same_head success noop same success noop-force same --keep-base --no-fork-point
-+test_rebase_same_head success noop same success work same master
-+test_rebase_same_head success noop same success work diff --onto B B
-+test_rebase_same_head success noop same success work diff --onto B... B
-+test_rebase_same_head success noop same success work same --onto master... master
-+test_rebase_same_head success noop same success work same --keep-base master
-+test_rebase_same_head success noop same success work same --keep-base
-+test_rebase_same_head success noop same success work same --no-fork-point
-+test_rebase_same_head success noop same success work same --keep-base --no-fork-point
- test_rebase_same_head success noop same success work same --fork-point master
- test_rebase_same_head success noop same success work diff --fork-point --onto B B
- test_rebase_same_head success noop same success work diff --fork-point --onto B... B
-@@ -91,14 +87,14 @@ test_expect_success 'add work same to side' '
+ --keep-empty::
+-	Keep the commits that do not change anything from its
+-	parents in the result.
++	No-op.  Rebasing commits that started empty (had no change
++	relative to their parent) used to fail and this option would
++	override that behavior, allowing commits with empty changes to
++	be rebased.  Now commits with no changes do not cause rebasing
++	to halt.
+ +
+-See also INCOMPATIBLE OPTIONS below.
++See also BEHAVIORAL DIFFERENCES and INCOMPATIBLE OPTIONS below.
  
- changes='our changes'
- test_rebase_same_head success noop same success work same
--test_rebase_same_head success noop same success noop-force same master
--test_rebase_same_head success noop same success noop-force diff --onto B B
--test_rebase_same_head success noop same success noop-force diff --onto B... B
--test_rebase_same_head success noop same success noop-force same --onto master... master
--test_rebase_same_head success noop same success noop-force same --keep-base master
--test_rebase_same_head success noop same success noop-force same --keep-base
--test_rebase_same_head success noop same success noop-force same --no-fork-point
--test_rebase_same_head success noop same success noop-force same --keep-base --no-fork-point
-+test_rebase_same_head success noop same success work same master
-+test_rebase_same_head success noop same success work diff --onto B B
-+test_rebase_same_head success noop same success work diff --onto B... B
-+test_rebase_same_head success noop same success work same --onto master... master
-+test_rebase_same_head success noop same success work same --keep-base master
-+test_rebase_same_head success noop same success work same --keep-base
-+test_rebase_same_head success noop same success work same --no-fork-point
-+test_rebase_same_head success noop same success work same --keep-base --no-fork-point
- test_rebase_same_head success noop same success work same --fork-point master
- test_rebase_same_head success noop same success work diff --fork-point --onto B B
- test_rebase_same_head success noop same success work diff --fork-point --onto B... B
-@@ -112,8 +108,8 @@ test_expect_success 'add work same to upstream' '
+ --allow-empty-message::
+ 	No-op.  Rebasing commits with an empty message used to fail
+@@ -577,15 +580,14 @@ There are some subtle differences how the backends behave.
+ Empty commits
+ ~~~~~~~~~~~~~
+ 
+-The am backend drops any "empty" commits, regardless of whether the
+-commit started empty (had no changes relative to its parent to
+-start with) or ended empty (all changes were already applied
+-upstream in other commits).
++The am backend unfortunately drops intentionally empty commits, i.e.
++commits that started empty, though these are rare in practice.  It
++also drops commits that become empty and has no option for controlling
++this behavior.
+ 
+-The interactive backend drops commits by default that
+-started empty and halts if it hits a commit that ended up empty.
+-The `--keep-empty` option exists for the interactive backend to allow
+-it to keep commits that started empty.
++The interactive backend keeps intentionally empty commits.
++Unfortunately, it always halts whenever it runs across a commit that
++becomes empty, even when the rebase is not explicitly interactive.
+ 
+ Directory rename detection
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index faa4e0d4065..537b3241ce3 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -77,7 +77,6 @@ struct rebase_options {
+ 	const char *action;
+ 	int signoff;
+ 	int allow_rerere_autoupdate;
+-	int keep_empty;
+ 	int autosquash;
+ 	char *gpg_sign_opt;
+ 	int autostash;
+@@ -375,7 +374,6 @@ static int run_rebase_interactive(struct rebase_options *opts,
+ 
+ 	git_config_get_bool("rebase.abbreviatecommands", &abbreviate_commands);
+ 
+-	flags |= opts->keep_empty ? TODO_LIST_KEEP_EMPTY : 0;
+ 	flags |= abbreviate_commands ? TODO_LIST_ABBREVIATE_CMDS : 0;
+ 	flags |= opts->rebase_merges ? TODO_LIST_REBASE_MERGES : 0;
+ 	flags |= opts->rebase_cousins > 0 ? TODO_LIST_REBASE_COUSINS : 0;
+@@ -439,6 +437,17 @@ static int run_rebase_interactive(struct rebase_options *opts,
+ 	return ret;
+ }
+ 
++static int parse_opt_keep_empty(const struct option *opt, const char *arg,
++				int unset)
++{
++	struct rebase_options *opts = opt->value;
++
++	BUG_ON_OPT_ARG(arg);
++
++	opts->type = REBASE_INTERACTIVE;
++	return 0;
++}
++
+ static const char * const builtin_rebase_interactive_usage[] = {
+ 	N_("git rebase--interactive [<options>]"),
+ 	NULL
+@@ -452,7 +461,10 @@ int cmd_rebase__interactive(int argc, const char **argv, const char *prefix)
+ 	struct option options[] = {
+ 		OPT_NEGBIT(0, "ff", &opts.flags, N_("allow fast-forward"),
+ 			   REBASE_FORCE),
+-		OPT_BOOL(0, "keep-empty", &opts.keep_empty, N_("keep empty commits")),
++		{ OPTION_CALLBACK, 'k', "keep-empty", &options, NULL,
++			N_("(DEPRECATED) keep empty commits"),
++			PARSE_OPT_NOARG | PARSE_OPT_HIDDEN,
++			parse_opt_keep_empty },
+ 		OPT_BOOL_F(0, "allow-empty-message", &opts.allow_empty_message,
+ 			   N_("allow commits with empty messages"),
+ 			   PARSE_OPT_HIDDEN),
+@@ -1145,7 +1157,6 @@ static int run_specific_rebase(struct rebase_options *opts, enum action action)
+ 		opts->allow_rerere_autoupdate ?
+ 			opts->allow_rerere_autoupdate == RERERE_AUTOUPDATE ?
+ 			"--rerere-autoupdate" : "--no-rerere-autoupdate" : "");
+-	add_var(&script_snippet, "keep_empty", opts->keep_empty ? "yes" : "");
+ 	add_var(&script_snippet, "autosquash", opts->autosquash ? "t" : "");
+ 	add_var(&script_snippet, "gpg_sign_opt", opts->gpg_sign_opt);
+ 	add_var(&script_snippet, "cmd", opts->cmd);
+@@ -1483,8 +1494,10 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 				 "ignoring them"),
+ 			      REBASE_PRESERVE_MERGES, PARSE_OPT_HIDDEN),
+ 		OPT_RERERE_AUTOUPDATE(&options.allow_rerere_autoupdate),
+-		OPT_BOOL('k', "keep-empty", &options.keep_empty,
+-			 N_("preserve empty commits during rebase")),
++		{ OPTION_CALLBACK, 'k', "keep-empty", &options, NULL,
++			N_("(DEPRECATED) keep empty commits"),
++			PARSE_OPT_NOARG | PARSE_OPT_HIDDEN,
++			parse_opt_keep_empty },
+ 		OPT_BOOL(0, "autosquash", &options.autosquash,
+ 			 N_("move commits that begin with "
+ 			    "squash!/fixup! under -i")),
+@@ -1747,9 +1760,6 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 	if (!(options.flags & REBASE_NO_QUIET))
+ 		argv_array_push(&options.git_am_opts, "-q");
+ 
+-	if (options.keep_empty)
+-		imply_interactive(&options, "--keep-empty");
+-
+ 	if (gpg_sign) {
+ 		free(options.gpg_sign_opt);
+ 		options.gpg_sign_opt = xstrfmt("-S%s", gpg_sign);
+diff --git a/rebase-interactive.c b/rebase-interactive.c
+index aa18ae82b72..7e7b4061bfb 100644
+--- a/rebase-interactive.c
++++ b/rebase-interactive.c
+@@ -28,7 +28,7 @@ static enum missing_commit_check_level get_missing_commit_check_level(void)
+ 	return MISSING_COMMIT_CHECK_IGNORE;
+ }
+ 
+-void append_todo_help(unsigned keep_empty, int command_count,
++void append_todo_help(int command_count,
+ 		      const char *shortrevisions, const char *shortonto,
+ 		      struct strbuf *buf)
+ {
+@@ -80,11 +80,6 @@ void append_todo_help(unsigned keep_empty, int command_count,
+ 			"the rebase will be aborted.\n\n");
+ 
+ 	strbuf_add_commented_lines(buf, msg, strlen(msg));
+-
+-	if (!keep_empty) {
+-		msg = _("Note that empty commits are commented out");
+-		strbuf_add_commented_lines(buf, msg, strlen(msg));
+-	}
+ }
+ 
+ int edit_todo_list(struct repository *r, struct todo_list *todo_list,
+diff --git a/rebase-interactive.h b/rebase-interactive.h
+index 44dbb06311a..05354ca3417 100644
+--- a/rebase-interactive.h
++++ b/rebase-interactive.h
+@@ -5,7 +5,7 @@ struct strbuf;
+ struct repository;
+ struct todo_list;
+ 
+-void append_todo_help(unsigned keep_empty, int command_count,
++void append_todo_help(int command_count,
+ 		      const char *shortrevisions, const char *shortonto,
+ 		      struct strbuf *buf);
+ int edit_todo_list(struct repository *r, struct todo_list *todo_list,
+diff --git a/sequencer.c b/sequencer.c
+index b9dbf1adb07..c21fc202b1c 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -1489,7 +1489,7 @@ static int allow_empty(struct repository *r,
+ 		       struct replay_opts *opts,
+ 		       struct commit *commit)
+ {
+-	int index_unchanged, empty_commit;
++	int index_unchanged, originally_empty;
+ 
+ 	/*
+ 	 * Three cases:
+@@ -1513,10 +1513,10 @@ static int allow_empty(struct repository *r,
+ 	if (opts->keep_redundant_commits)
+ 		return 1;
+ 
+-	empty_commit = is_original_commit_empty(commit);
+-	if (empty_commit < 0)
+-		return empty_commit;
+-	if (!empty_commit)
++	originally_empty = is_original_commit_empty(commit);
++	if (originally_empty < 0)
++		return originally_empty;
++	if (!originally_empty)
+ 		return 0;
+ 	else
+ 		return 1;
+@@ -4566,7 +4566,6 @@ static int make_script_with_merges(struct pretty_print_context *pp,
+ 				   struct rev_info *revs, struct strbuf *out,
+ 				   unsigned flags)
+ {
+-	int keep_empty = flags & TODO_LIST_KEEP_EMPTY;
+ 	int rebase_cousins = flags & TODO_LIST_REBASE_COUSINS;
+ 	int root_with_onto = flags & TODO_LIST_ROOT_WITH_ONTO;
+ 	struct strbuf buf = STRBUF_INIT, oneline = STRBUF_INIT;
+@@ -4629,8 +4628,6 @@ static int make_script_with_merges(struct pretty_print_context *pp,
+ 		if (!to_merge) {
+ 			/* non-merge commit: easy case */
+ 			strbuf_reset(&buf);
+-			if (!keep_empty && is_empty)
+-				strbuf_addf(&buf, "%c ", comment_line_char);
+ 			strbuf_addf(&buf, "%s %s %s", cmd_pick,
+ 				    oid_to_hex(&commit->object.oid),
+ 				    oneline.buf);
+@@ -4797,7 +4794,6 @@ int sequencer_make_script(struct repository *r, struct strbuf *out, int argc,
+ 	struct pretty_print_context pp = {0};
+ 	struct rev_info revs;
+ 	struct commit *commit;
+-	int keep_empty = flags & TODO_LIST_KEEP_EMPTY;
+ 	const char *insn = flags & TODO_LIST_ABBREVIATE_CMDS ? "p" : "pick";
+ 	int rebase_merges = flags & TODO_LIST_REBASE_MERGES;
+ 
+@@ -4833,12 +4829,10 @@ int sequencer_make_script(struct repository *r, struct strbuf *out, int argc,
+ 		return make_script_with_merges(&pp, &revs, out, flags);
+ 
+ 	while ((commit = get_revision(&revs))) {
+-		int is_empty  = is_original_commit_empty(commit);
++		int is_empty = is_original_commit_empty(commit);
+ 
+ 		if (!is_empty && (commit->object.flags & PATCHSAME))
+ 			continue;
+-		if (!keep_empty && is_empty)
+-			strbuf_addf(out, "%c ", comment_line_char);
+ 		strbuf_addf(out, "%s %s ", insn,
+ 			    oid_to_hex(&commit->object.oid));
+ 		pretty_print_commit(&pp, commit, out);
+@@ -4975,7 +4969,7 @@ int todo_list_write_to_file(struct repository *r, struct todo_list *todo_list,
+ 
+ 	todo_list_to_strbuf(r, todo_list, &buf, num, flags);
+ 	if (flags & TODO_LIST_APPEND_TODO_HELP)
+-		append_todo_help(flags & TODO_LIST_KEEP_EMPTY, count_commands(todo_list),
++		append_todo_help(count_commands(todo_list),
+ 				 shortrevisions, shortonto, &buf);
+ 
+ 	res = write_message(buf.buf, buf.len, file, 0);
+diff --git a/sequencer.h b/sequencer.h
+index 9f9ae291e3c..c165e0ff254 100644
+--- a/sequencer.h
++++ b/sequencer.h
+@@ -132,7 +132,7 @@ int sequencer_rollback(struct repository *repo, struct replay_opts *opts);
+ int sequencer_skip(struct repository *repo, struct replay_opts *opts);
+ int sequencer_remove_state(struct replay_opts *opts);
+ 
+-#define TODO_LIST_KEEP_EMPTY (1U << 0)
++/* #define TODO_LIST_KEEP_EMPTY (1U << 0) */ /* No longer used */
+ #define TODO_LIST_SHORTEN_IDS (1U << 1)
+ #define TODO_LIST_ABBREVIATE_CMDS (1U << 2)
+ #define TODO_LIST_REBASE_MERGES (1U << 3)
+diff --git a/t/t3421-rebase-topology-linear.sh b/t/t3421-rebase-topology-linear.sh
+index 325072b0a33..57334dca7e4 100755
+--- a/t/t3421-rebase-topology-linear.sh
++++ b/t/t3421-rebase-topology-linear.sh
+@@ -205,17 +205,17 @@ test_expect_success 'setup of linear history for empty commit tests' '
+ test_run_rebase () {
+ 	result=$1
+ 	shift
+-	test_expect_$result "rebase $* drops empty commit" "
++	test_expect_$result "rebase $* keeps begin-empty commits" "
+ 		reset_rebase &&
+-		git rebase $* c l &&
+-		test_cmp_rev c HEAD~2 &&
+-		test_linear_range 'd l' c..
++		git rebase $* j l &&
++		test_cmp_rev c HEAD~4 &&
++		test_linear_range 'j d k l' c..
+ 	"
+ }
+-test_run_rebase success ''
++test_run_rebase failure ''
+ test_run_rebase success -m
+ test_run_rebase success -i
+-test_have_prereq !REBASE_P || test_run_rebase success -p
++test_have_prereq !REBASE_P || test_run_rebase failure -p
+ 
+ test_run_rebase () {
+ 	result=$1
+@@ -230,7 +230,7 @@ test_run_rebase () {
+ test_run_rebase success ''
+ test_run_rebase success -m
+ test_run_rebase success -i
+-test_have_prereq !REBASE_P || test_run_rebase failure -p
++test_have_prereq !REBASE_P || test_run_rebase success -p
+ 
+ test_run_rebase () {
+ 	result=$1
+@@ -245,7 +245,7 @@ test_run_rebase () {
+ test_run_rebase success ''
+ test_run_rebase success -m
+ test_run_rebase success -i
+-test_have_prereq !REBASE_P || test_run_rebase failure -p
++test_have_prereq !REBASE_P || test_run_rebase success -p
+ test_run_rebase success --rebase-merges
+ 
+ #       m
+diff --git a/t/t3424-rebase-empty.sh b/t/t3424-rebase-empty.sh
+new file mode 100755
+index 00000000000..3b716e980e7
+--- /dev/null
++++ b/t/t3424-rebase-empty.sh
+@@ -0,0 +1,70 @@
++#!/bin/sh
++
++test_description='git rebase of commits that start or become empty'
++
++. ./test-lib.sh
++
++test_expect_success 'setup test repository' '
++	test_write_lines 1 2 3 4 5 6 7 8 9 10 >numbers &&
++	test_write_lines A B C D E F G H I J >letters &&
++	git add numbers letters &&
++	git commit -m A &&
++
++	git branch upstream &&
++	git branch localmods &&
++
++	git checkout upstream &&
++	test_write_lines A B C D E >letters &&
++	git add letters &&
++	git commit -m B &&
++
++	test_write_lines 1 2 3 4 five 6 7 8 9 ten >numbers &&
++	git add numbers &&
++	git commit -m C &&
++
++	git checkout localmods &&
++	test_write_lines 1 2 3 4 five 6 7 8 9 10 >numbers &&
++	git add numbers &&
++	git commit -m C2 &&
++
++	git commit --allow-empty -m D &&
++
++	test_write_lines A B C D E >letters &&
++	git add letters &&
++	git commit -m "Five letters ought to be enough for anybody"
++'
++
++test_expect_failure 'rebase (am-backend) with a variety of empty commits' '
++	test_when_finished "git rebase --abort" &&
++	git checkout -B testing localmods &&
++	# rebase (--am) should not drop commits that start empty
++	git rebase upstream &&
++
++	test_write_lines D C B A >expect &&
++	git log --format=%s >actual &&
++	test_cmp expect actual
++'
++
++test_expect_failure 'rebase --merge with a variety of empty commits' '
++	test_when_finished "git rebase --abort" &&
++	git checkout -B testing localmods &&
++	# rebase --merge should not halt on the commit that becomes empty
++	git rebase --merge upstream &&
++
++	test_write_lines D C B A >expect &&
++	git log --format=%s >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'rebase --interactive with a variety of empty commits' '
++	git checkout -B testing localmods &&
++	test_must_fail git rebase --interactive upstream &&
++
++	git rebase --skip &&
++
++	test_write_lines D C B A >expect &&
++	git log --format=%s >actual &&
++	test_cmp expect actual
++'
++
++test_done
+diff --git a/t/t3427-rebase-subtree.sh b/t/t3427-rebase-subtree.sh
+index bec48e6a1f9..8dceef61cff 100755
+--- a/t/t3427-rebase-subtree.sh
++++ b/t/t3427-rebase-subtree.sh
+@@ -85,23 +85,23 @@ test_expect_failure REBASE_P 'Rebase -Xsubtree --keep-empty --preserve-merges --
+ 	verbose test "$(commit_message HEAD)" = "Empty commit"
  '
  
- changes='our and their changes'
--test_rebase_same_head success noop same success noop-force diff --onto B B
--test_rebase_same_head success noop same success noop-force diff --onto B... B
-+test_rebase_same_head success noop same success work diff --onto B B
-+test_rebase_same_head success noop same success work diff --onto B... B
- test_rebase_same_head success noop same success work diff --onto master... master
- test_rebase_same_head success noop same success work diff --keep-base master
- test_rebase_same_head success noop same success work diff --keep-base
+-test_expect_success 'Rebase -Xsubtree --keep-empty --onto commit' '
++test_expect_success 'Rebase -Xsubtree --onto commit' '
+ 	reset_rebase &&
+ 	git checkout -b rebase-onto to-rebase &&
+-	test_must_fail git rebase -Xsubtree=files_subtree --keep-empty --onto files-master master &&
++	test_must_fail git rebase -Xsubtree=files_subtree --onto files-master master &&
+ 	: first pick results in no changes &&
+-	git rebase --continue &&
++	git rebase --skip &&
+ 	verbose test "$(commit_message HEAD~2)" = "master4" &&
+ 	verbose test "$(commit_message HEAD~)" = "files_subtree/master5" &&
+ 	verbose test "$(commit_message HEAD)" = "Empty commit"
+ '
+ 
+-test_expect_success 'Rebase -Xsubtree --keep-empty --rebase-merges --onto commit' '
++test_expect_success 'Rebase -Xsubtree --rebase-merges --onto commit' '
+ 	reset_rebase &&
+ 	git checkout -b rebase-merges-onto to-rebase &&
+-	test_must_fail git rebase -Xsubtree=files_subtree --keep-empty --rebase-merges --onto files-master --root &&
++	test_must_fail git rebase -Xsubtree=files_subtree --rebase-merges --onto files-master --root &&
+ 	: first pick results in no changes &&
+-	git rebase --continue &&
++	git rebase --skip &&
+ 	verbose test "$(commit_message HEAD~2)" = "master4" &&
+ 	verbose test "$(commit_message HEAD~)" = "files_subtree/master5" &&
+ 	verbose test "$(commit_message HEAD)" = "Empty commit"
 -- 
 gitgitgadget
 
