@@ -2,199 +2,165 @@ Return-Path: <SRS0=Fd5/=4D=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EAC6AC71150
-	for <git@archiver.kernel.org>; Sat, 15 Feb 2020 21:37:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3BAF5C352A3
+	for <git@archiver.kernel.org>; Sat, 15 Feb 2020 21:40:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id C0C3C2086A
-	for <git@archiver.kernel.org>; Sat, 15 Feb 2020 21:37:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0070620718
+	for <git@archiver.kernel.org>; Sat, 15 Feb 2020 21:40:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i0MgnJpT"
+	dkim=pass (2048-bit key) header.d=amat.com header.i=@amat.com header.b="LdE2VTpY"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727932AbgBOVhM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 15 Feb 2020 16:37:12 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:37187 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727787AbgBOVgz (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 Feb 2020 16:36:55 -0500
-Received: by mail-wm1-f67.google.com with SMTP id a6so14555151wme.2
-        for <git@vger.kernel.org>; Sat, 15 Feb 2020 13:36:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=/5TWiNBQa+LnBDeU6aNAaUqHhevtYCCIHRn9vC2FzeA=;
-        b=i0MgnJpT0THFHdTj6RTC9/65na23tIiISTWq2wtwF4bWPyiLxV4QZ399RyBVGxDT7B
-         jvfqJuikGsg7rXq27TIF29xHWzc6cvUhtItfh67CXqJaNsYXT/drhaX1zBX3D45YVOo0
-         DfZetgZ1BludZLij8/O6yYLLL/rfyjygGU8a9BOQKs8Rwq22f5lMnHhOOqQzrfQHhTew
-         G0HDfgcsE5fZUjVp1uw4lBHMTR/HsTl276hAlX35d+2JbuCSldjG64glRsh925kJwdID
-         fdM37WKieZ/s7pLe0TIxiCLmCmkrEeIV5qTOjHYvm7qt15XvYZHTbac3EeeGCZC+8lGC
-         m29Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=/5TWiNBQa+LnBDeU6aNAaUqHhevtYCCIHRn9vC2FzeA=;
-        b=agMpGO29u/Xxqp3mu1D0N2C5i92CKYSu6Fu3Le6vpSa4X985WLfmCqwNZpU66+tX2l
-         UgXAe+pC6WaluG/zbnubtCoU/Uo+V+VdZlSz/4fbi0IpcJ6stC0oZFfpVhCtbt9D8aHS
-         m1Le7UWjRQUUa7phGWtcQa2SzHpmnr9zY5mQ8QVFYyzx/gyvVIMtW72brcbR+hszSJ06
-         oL9WjfdUau35LD23tH/sQ+RZ1biefrWjK0DKoN53/nxQ8FSwAxCsILLUlh6kq8ez0r0V
-         nhCkfSNugj1KrkAhM/fStOb9xHQ3gYVROQhH4hJ9xKSZDjv+4F2KlVVNcUe8h8WRmKYx
-         IxQQ==
-X-Gm-Message-State: APjAAAWnur6CKzhLb+Ta9Ve4E6qBgB7rSBBf/dsteNqevq+GbuyJW73o
-        Xz40X6oshsFj5PGBDaxmJl+m7f9P
-X-Google-Smtp-Source: APXvYqwlT4gEkUR80SgEAPsMTcuSIwR8+PusrQjU1M3I6XRy1DZ9qQ0nQE6/mQqECbOi/BdZXXntEg==
-X-Received: by 2002:a1c:9d08:: with SMTP id g8mr11768849wme.141.1581802611544;
-        Sat, 15 Feb 2020 13:36:51 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p12sm12081269wrx.10.2020.02.15.13.36.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 15 Feb 2020 13:36:51 -0800 (PST)
-Message-Id: <11e96b9a5fab2fe18a9f97d66358febdd810d99c.1581802602.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.679.v5.git.git.1581802602.gitgitgadget@gmail.com>
-References: <pull.679.v4.git.git.1579155273.gitgitgadget@gmail.com>
-        <pull.679.v5.git.git.1581802602.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 15 Feb 2020 21:36:32 +0000
-Subject: [PATCH v5 11/20] git-rebase.txt: add more details about behavioral
- differences of backends
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1726478AbgBOVkJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 15 Feb 2020 16:40:09 -0500
+Received: from mx0b-00128c01.pphosted.com ([205.220.173.92]:26572 "EHLO
+        mx0b-00128c01.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726273AbgBOVkI (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 15 Feb 2020 16:40:08 -0500
+X-Greylist: delayed 1724 seconds by postgrey-1.27 at vger.kernel.org; Sat, 15 Feb 2020 16:40:08 EST
+Received: from pps.filterd (m0187208.ppops.net [127.0.0.1])
+        by mx0b-00128c01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id 01FLAVAL003635
+        for <git@vger.kernel.org>; Sat, 15 Feb 2020 13:11:24 -0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amat.com; h=from : to : subject :
+ date : message-id : references : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=secureemail;
+ bh=eMA8zmBl/mHUz6CV/IjfmRzCjw60++wXn/o4vige3v0=;
+ b=LdE2VTpYW3wi6ibk+DDkJuIwkCoZc3ClNEY4eLtFMInfP6jeIYWiWVzlx0jUVV2uU4TG
+ lQPYMo6zYxH1rk3JjMh5dlIGOZVrICIbd372PPvfj9L5mL97VpYRARvUlBJ6SQ0VSmIm
+ 3igkZDH2+rscyV8Gbt21LwmyzAXH0m6UT2L1AHR9HReUZX7A3ChCA7Qk4YcRwGn702VJ
+ /wqhCb153nkfSBE3wPsv+DTHEomKFyDwHxZXw+Isfy4Ir8zU/KLM8YrEHAjiCZFHcLlI
+ FJ1IRw12EGxw9XDk/hJUlG1bmJh8o9FTMXMivUPtQPuKOB4i42d6aLnWuTtbXTAm6IlF jA== 
+Received: from eur04-vi1-obe.outbound.protection.outlook.com (mail-vi1eur04lp2055.outbound.protection.outlook.com [104.47.14.55])
+        by mx0b-00128c01.pphosted.com with ESMTP id 2y6fa2rdwp-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+        for <git@vger.kernel.org>; Sat, 15 Feb 2020 13:11:24 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=as5FehpKmwLC4ATFuO1GADpyLv6RFOZz/fHv8Y3t2pD4URQmwXBk1ESaHvjmb+tlys+S0OJTvDQaM+bBZL1u3NF/bD+XijzXA+giJrrKzBOpdLjKFXe+Af1cd4T830W3uhZdMLTV9DfJsPOx3LUWh1jeMfu5qqdgigbs0ejUnQvkb2FxB/39cGf64mZG7ydFdZ5vtBJU/dErOBI2sEFjrsfW2198dBP0VkLyIM+2QAk+Csx2F3GfDqelbkLvTmq19YYRInoEXnzv19kH+TanHtGpzNb7ry5FzBI4HfzBXI7QxBnAQjjNt8x2Ik1eoQwBM39g2WGlP2HRzxoTE6e41Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=eMA8zmBl/mHUz6CV/IjfmRzCjw60++wXn/o4vige3v0=;
+ b=aDUoXvN7nja8/9+fbvwRKgd16YALbXYwWAhABqfky8KFezO902sRbNvNs9R8aEm+Fe7xiumg5BdkKODZom2Ku0YMCGCdbS8H0suuUS+Y8aOD+LkbxMfLZfReT7lQI71HDfbVfLeQfFIc4/mpn24a+hkKJ3oMRS7a/5Ney4dJ/RzmGZTYRv2qQe3uzjA3L4fuBjOD3SDkR4bhPAXpI9VDCO3esLMKJf8Tb1v9mX9cV4Tc9JbMFmYkkb4qKNXi0g0xdLlPLtGHmspN0rj6/Ij41fLMoEU1cTbiNXk/NZj0kWQKWkVsPCJubfIrTJ4B+mOxUr/pCdwaGhFneAqCCTNsaQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amat.com; dmarc=pass action=none header.from=amat.com;
+ dkim=pass header.d=amat.com; arc=none
+Received: from AM6PR09MB2598.eurprd09.prod.outlook.com (20.177.115.143) by
+ AM6PR09MB2535.eurprd09.prod.outlook.com (20.177.115.88) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2729.27; Sat, 15 Feb 2020 21:11:20 +0000
+Received: from AM6PR09MB2598.eurprd09.prod.outlook.com
+ ([fe80::48e:1ce9:87b3:b3b5]) by AM6PR09MB2598.eurprd09.prod.outlook.com
+ ([fe80::48e:1ce9:87b3:b3b5%2]) with mapi id 15.20.2729.028; Sat, 15 Feb 2020
+ 21:11:20 +0000
+From:   <Boaz_Nahum@amat.com>
+To:     <git@vger.kernel.org>
+Subject: FW: bug: fatal: this operation must be run in a work tree - after
+ enabling worktreeConfig=true
+Thread-Topic: bug: fatal: this operation must be run in a work tree - after
+ enabling worktreeConfig=true
+Thread-Index: AdXkK+eZTVi1/o0rS5yRA49d0Td4rgAGGkUg
+Date:   Sat, 15 Feb 2020 21:11:19 +0000
+Message-ID: <AM6PR09MB25980EF868A3FA782109D8DE9A140@AM6PR09MB2598.eurprd09.prod.outlook.com>
+References: <AM6PR09MB2598893AEA5DB2D55DDFBF299A140@AM6PR09MB2598.eurprd09.prod.outlook.com>
+In-Reply-To: <AM6PR09MB2598893AEA5DB2D55DDFBF299A140@AM6PR09MB2598.eurprd09.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [212.25.107.145]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-ht: Tenant
+x-ms-office365-filtering-correlation-id: 68ed5635-734e-45a6-140d-08d7b25b9a97
+x-ms-traffictypediagnostic: AM6PR09MB2535:
+x-microsoft-antispam-prvs: <AM6PR09MB25358C4AE8F125F3477F66209A140@AM6PR09MB2535.eurprd09.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:9508;
+x-forefront-prvs: 03142412E2
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(4636009)(396003)(136003)(346002)(366004)(39850400004)(376002)(189003)(199004)(76116006)(66946007)(66556008)(66476007)(66446008)(64756008)(5660300002)(26005)(52536014)(186003)(33656002)(6506007)(316002)(9686003)(6916009)(478600001)(8936002)(86362001)(71200400001)(55016002)(81166006)(2906002)(2940100002)(8676002)(81156014)(7696005);DIR:OUT;SFP:1102;SCL:1;SRVR:AM6PR09MB2535;H:AM6PR09MB2598.eurprd09.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+received-spf: None (protection.outlook.com: amat.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: NQN3BCTYLx47ySQeCWnFE3A+AEb+ihjSFFcj1F9yVy+IhnyMbB4gj76NzBSIDF5mmQK7gDZaANhfKkGBzcwPLO3s7rGxG09Z2eiIGq3xodaZaPJMQL2rPHgs0QXahry8DT4fApHnaY2KFyHv5zNtnLvMNXVt6CbYS6IiRbgveZ+vKBU3XzsuKCgjfHOzBDB6k/Ffn6xZiT9EF5IwjTomEU22x+u8K8Qs/eK+Sv+S4kIxa9MRL5LDXAoCUK7hU16IQQuAqIH5A+LznU0ErigMNTbfpNvqWurFSrFg4/GWYq5ZAk0GbkKEj5KBFUV4AjJHddd55tm62SUQiSDwOIv5N3sW5kPHgUIDRfR3ClusriP6mPRWrWwcdhV8EkclcqcKUa2NvNqs3A07osFx0oegZN1sDJ/eAZvTTRNKhsgAfSyTON6YS7oqNdA30f3THKNe
+x-ms-exchange-antispam-messagedata: faNigHFhuzZxn7e98UuO6HxaZsibzcTNTk4NC+8uU80nvWPhqGzlTmzAKsWvBvg+FedWHeMo8fBsAmITy/6pF5T/TqWIyqRFKUH5xSMW2DW+OQl/sZFXUSMKI5zRA8LJvokLq03ogYIiHx10Io/loA==
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Johannes.Schindelin@gmx.de, phillip.wood@dunelm.org.uk,
-        liu.denton@gmail.com, gitster@pobox.com, plroskin@gmail.com,
-        alban.gruin@gmail.com, szeder.dev@gmail.com, jrnieder@gmail.com,
-        emilyshaffer@google.com, Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
+X-OriginatorOrg: amat.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 68ed5635-734e-45a6-140d-08d7b25b9a97
+X-MS-Exchange-CrossTenant-originalarrivaltime: 15 Feb 2020 21:11:19.9566
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 709c2643-b1a9-4415-ad0f-521cfa6ba3f5
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 1msU25Bda0dPxf2gMfBlfLBea912jR4X0g/JYs7YXQZZIIpqeSZK19o/92tb4CkgCSJDNXZqBMxWQQc78tQFQg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM6PR09MB2535
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138,18.0.572
+ definitions=2020-02-15_08:2020-02-14,2020-02-15 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
+ priorityscore=1501 suspectscore=0 phishscore=0 spamscore=0 impostorscore=0
+ malwarescore=0 clxscore=1015 lowpriorityscore=0 mlxlogscore=999 mlxscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2001150001 definitions=main-2002150185
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- Documentation/git-rebase.txt | 85 +++++++++++++++++++++++++++++++++---
- 1 file changed, 80 insertions(+), 5 deletions(-)
+Hi
+(English is not my language)
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index e1c6f918013..6e2569cd8a7 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -416,7 +416,7 @@ with `--keep-base` in order to drop those commits from your branch.
- 
- --ignore-whitespace::
- --whitespace=<option>::
--	These flag are passed to the 'git apply' program
-+	These flags are passed to the 'git apply' program
- 	(see linkgit:git-apply[1]) that applies the patch.
- +
- See also INCOMPATIBLE OPTIONS below.
-@@ -563,8 +563,8 @@ The following options:
- 
-  * --committer-date-is-author-date
-  * --ignore-date
-- * --whitespace
-  * --ignore-whitespace
-+ * --whitespace
-  * -C
- 
- are incompatible with the following options:
-@@ -615,9 +615,84 @@ handling commits that become empty.
- Directory rename detection
- ~~~~~~~~~~~~~~~~~~~~~~~~~~
- 
--Directory rename heuristics are enabled in the merge and interactive
--backends.  Due to the lack of accurate tree information, directory
--rename detection is disabled in the am backend.
-+Due to the lack of accurate tree information (arising from
-+constructing fake ancestors with the limited information available in
-+patches), directory rename detection is disabled in the am backend.
-+Disabled directory rename detection means that if one side of history
-+renames a directory and the other adds new files to the old directory,
-+then the new files will be left behind in the old directory without
-+any warning at the time of rebasing that you may want to move these
-+files into the new directory.
-+
-+Directory rename detection works with the merge and interactive
-+backends to provide you warnings in such cases.
-+
-+Context
-+~~~~~~~
-+
-+The am backend works by creating a sequence of patches (by calling
-+`format-patch` internally), and then applying the patches in sequence
-+(calling `am` internally).  Patches are composed of multiple hunks,
-+each with line numbers, a context region, and the actual changes.  The
-+line numbers have to be taken with some fuzz, since the other side
-+will likely have inserted or deleted lines earlier in the file.  The
-+context region is meant to help find how to adjust the line numbers in
-+order to apply the changes to the right lines.  However, if multiple
-+areas of the code have the same surrounding lines of context, the
-+wrong one can be picked.  There are real-world cases where this has
-+caused commits to be reapplied incorrectly with no conflicts reported.
-+Setting diff.context to a larger value may prevent such types of
-+problems, but increases the chance of spurious conflicts (since it
-+will require more lines of matching context to apply).
-+
-+The interactive backend works with a full copy of each relevant file,
-+insulating it from these types of problems.
-+
-+Labelling of conflicts markers
-+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-+
-+When there are content conflicts, the merge machinery tries to
-+annotate each side's conflict markers with the commits where the
-+content came from.  Since the am backend drops the original
-+information about the rebased commits and their parents (and instead
-+generates new fake commits based off limited information in the
-+generated patches), those commits cannot be identified; instead it has
-+to fall back to a commit summary.  Also, when merge.conflictStyle is
-+set to diff3, the am backend will use "constructed merge base" to
-+label the content from the merge base, and thus provide no information
-+about the merge base commit whatsoever.
-+
-+The interactive backend works with the full commits on both sides of
-+history and thus has no such limitations.
-+
-+Hooks
-+~~~~~
-+
-+The am backend has not traditionally called the post-commit hook,
-+while the merge/interactive backend has.  However, this was by
-+accident of implementation rather than by design.  Both backends
-+should have the same behavior, though it is not clear which one is
-+correct.
-+
-+Miscellaneous differences
-+~~~~~~~~~~~~~~~~~~~~~~~~~
-+
-+There are a few more behavioral differences that most folks would
-+probably consider inconsequential but which are mentioned for
-+completeness:
-+
-+* Reflog: The two backends will use different wording when describing
-+  the changes made in the reflog, though both will make use of the
-+  word "rebase".
-+
-+* Progress, informational, and error messages: The two backends
-+  provide slightly different progress and informational messages.
-+  Also, the am backend writes error messages (such as "Your files
-+  would be overwritten...") to stdout, while the interactive backend
-+  writes them to stderr.
-+
-+* State directories: The two backends keep their state in different
-+  directories under .git/
- 
- include::merge-strategies.txt[]
- 
--- 
-gitgitgadget
+We started to work with sparse-checkout and we found two issues.
 
+We work with bare repository, with a worktree 'arounds' it.
+
+Two issues:
+
+Issue 1) fatal: this operation must be run in a work tree
+
+TO reproduce, In bare repository:
+   git worktree add ../testwt pub/empty -no-checkout
+Switch to worktree
+  git sparse-checkout init
+
+Result:
+
+    fatal: this operation must be run in a work tree
+any operation in any worktree now ends with:
+    fatal: this operation must be run in a work tree
+
+This is because  extensions.worktreeConfig=3Dtrue
+Workaround
+1. core.bare=3Dfalse in bare - not acceptable
+2. Remove worktreeConfig=3Dtrue  - not good idea if we want to work with sp=
+arse-checkout
+3. core.bare=3Dfalse  in worktree, but we need to apply it on any worktree
+
+Please note that this happens even  if in time of creating worktree worktre=
+eConfig=3Dtrue
+
+Issue 2) fatal: Unable to create 'F:/views/MonoCentral/worktrees/testwt3/in=
+fo/sparse-checkout.lock': No such file or directory
+
+To reproduce, same as above, but worktreeConfig=3Dfalse before starting,
+Result:
+    fatal: Unable to create 'F:/views/MonoCentral/worktrees/testwt3/info/sp=
+arse-checkout.lock': No such file or directory
+
+Workaround:
+  Set extensions.worktreeConfig=3Dtrue  before adding the worktree or runni=
+ng sparse-checkout
+
+
+
+Thanks
+Boaz
+
+
+The content of this message is APPLIED MATERIALS CONFIDENTIAL. If you are n=
+ot the intended recipient, please notify me, delete this email and do not u=
+se or distribute this email.
