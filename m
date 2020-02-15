@@ -2,147 +2,102 @@ Return-Path: <SRS0=Fd5/=4D=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-5.2 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D928C3F68F
-	for <git@archiver.kernel.org>; Sat, 15 Feb 2020 00:02:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C0BCEC35242
+	for <git@archiver.kernel.org>; Sat, 15 Feb 2020 00:10:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 51076217F4
-	for <git@archiver.kernel.org>; Sat, 15 Feb 2020 00:02:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9608C2073A
+	for <git@archiver.kernel.org>; Sat, 15 Feb 2020 00:10:41 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="ZGOYi6iG"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="BgnN8Bd2"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727649AbgBOACg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Feb 2020 19:02:36 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:32990 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727455AbgBOACg (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 14 Feb 2020 19:02:36 -0500
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 2E16960791;
-        Sat, 15 Feb 2020 00:02:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1581724955;
-        bh=LC6UYZd3TUfWyRbf3yZPdYoy1QUCGI4pFGTW/MMlOXs=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=ZGOYi6iGYHscPDtvYEpFhCS0R7J4sDSL4tZfdRh2ZP2qD+FReKKUx14FSQw5SkGqn
-         BvPhdVTPH0OeYhq6G8Ly6BTY5x7axH+FLgbru5JnOiwKY0tfn1RK7NKkJ0EKiHSgOh
-         ytWXUqG+zbStdcn2JZkgkNzyxPe9+HVCNex0qs5hewQwXyJMGFFpWUMCus/V0lhflV
-         M5tyhnKjIZCX9ChctpOKMHdy5z2jkqlOvIN+wC35agcJWNSxykHIfyUAIWhOHDUze/
-         LiCtL787Ez89H1GipHZfH0457ChdSyF/1i80lye6w0yLLEaT3cwT38OWMBQt4LmVTJ
-         g/+Biqpv9NeLClXIWo6wK1bAjXowF+27lsFS8VRhLgbZp7kFkuKYRU8pbxdh4/UO/r
-         3Ntn/JnZLZa5bgOSW64TV9DDyBaODREyo/Vqan2Pc0t//Rx/9t7mv7akb5LQlHRsy5
-         r3JoBQwInncjoqkdGte/i5Pf454sMgV8O7QsUE+Q2CLOpkvAt+R
-Date:   Sat, 15 Feb 2020 00:02:30 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     emilyshaffer@google.com
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC PATCH] prefix_path: show gitdir when arg is outside repo
-Message-ID: <20200215000230.GA6134@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        emilyshaffer@google.com, git@vger.kernel.org
-References: <20200214232933.243520-1-emilyshaffer@google.com>
+        id S1727641AbgBOAKk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Feb 2020 19:10:40 -0500
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:44873 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726079AbgBOAKk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Feb 2020 19:10:40 -0500
+Received: by mail-pl1-f194.google.com with SMTP id d9so4301069plo.11
+        for <git@vger.kernel.org>; Fri, 14 Feb 2020 16:10:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=yksVEJVTGsk5YP3yWTxS1lfHWIpjQnaYmORYYU4CLoI=;
+        b=BgnN8Bd2KapBJOeMx4oV3A5o5jwbCfpYuNA2nC0yiA26+8KzqgTFYI4PTV51G7x4+U
+         1tRyjRVUX4j/fzqmdsEqv0MwrFdLnPpH/e8SALYvG4kNMxt5iPARfJSf/guNyYBMhsRY
+         eUhrqAoCSP2YJChiJ4WornC7a69/cGCWjakdunzYOaWQdwVOEnVohM/IwAaWPw8MHKoV
+         qhNEgMRMzSmEA80kM85mAF/+jxQMY6I0FRb4Jfipluow/IpOoW35hbHMsPrw6Ivh9vAv
+         562gsuEhyQc6tKpjcQj6KQIEuTXYdo/sFlZEyYR/4+PVDObjv62FZJQrVH/nRzG+8om1
+         Kctw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=yksVEJVTGsk5YP3yWTxS1lfHWIpjQnaYmORYYU4CLoI=;
+        b=oHWhjATS7gDA+zGwqpwtDwj+tDv9iYP+Ugguk53EtungP7TzaZmfm4P3sD3DuzoLQL
+         XwGRjYQo8WTFS2KRE+v9AnJ+8MVcArTIV2N3lAkSQFKVyTqTzzNeKxNAD+vjKsSf8LjS
+         Y94A1yYtI6xbPHG/Y8nOSvFTuxUd+JNNNO1CiuyGXh04hKEWLEkk1cadKfdqucqZm/s6
+         QFPx4rH0hWIqAb0S0X8Tv2lKjufHWP3gid9brFUYpgSRUZ0l5kLAzAgeZy8c+YUxYTyf
+         EZoZ6gG5UqMcZM4WxGQtzwr3eEqZ2Sn3YSOXKwA+A6OvCaj3WP+xy2KFFfyDhUaX50v0
+         dTvg==
+X-Gm-Message-State: APjAAAWkbq/66rppMSD1gm/6GlwtPvqpICOETQPtZLzqZg+6qIp7cieo
+        pCoTxtfSyYY1316xLc532LkjjQ==
+X-Google-Smtp-Source: APXvYqy8SJ9/JBUVamW7ELC9dmjEQ9Obw33ALii+VZDpti9mWiuD0zsVkuNXHJayaZDa4TIDuyqvOQ==
+X-Received: by 2002:a17:902:b598:: with SMTP id a24mr5588790pls.262.1581725438024;
+        Fri, 14 Feb 2020 16:10:38 -0800 (PST)
+Received: from localhost ([2600:100f:b02c:92d4:11e2:3a54:273f:b5fe])
+        by smtp.gmail.com with ESMTPSA id x132sm8251150pfc.148.2020.02.14.16.10.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 14 Feb 2020 16:10:37 -0800 (PST)
+Date:   Fri, 14 Feb 2020 16:10:36 -0800
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 01/15] pack-bitmap: factor out type iterator
+ initialization
+Message-ID: <20200215001036.GD11400@syl.local>
+References: <20200214182147.GA654525@coredump.intra.peff.net>
+ <20200214182208.GA150965@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="J/dobhs11T7y2rNN"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20200214232933.243520-1-emilyshaffer@google.com>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.4.0-4-amd64)
+In-Reply-To: <20200214182208.GA150965@coredump.intra.peff.net>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Peff,
 
---J/dobhs11T7y2rNN
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Fri, Feb 14, 2020 at 01:22:08PM -0500, Jeff King wrote:
+> When count_object_type() wants to iterate over the bitmap of all objects
+> of a certain type, we have to pair up OBJ_COMMIT with bitmap->commits,
+> and so forth. Since we're about to add more code to iterate over these
+> bitmaps, let's pull the initialization into its own function.
+>
+> We can also use this to simplify traverse_bitmap_commit_list(). It
+> accomplishes the same thing by manually passing the object type and the
+> bitmap to show_objects_for_type(), but using our helper we just need the
+> object type.
+>
+> Note there's one small code change here: previously we'd simply return
+> zero when counting an unknown object type, and now we'll BUG(). This
+> shouldn't matter in practice, as all of the callers pass in only usual
+> commit/tree/blob/tag types.
 
-On 2020-02-14 at 23:29:33, emilyshaffer@google.com wrote:
-> From: Emily Shaffer <emilyshaffer@google.com>
->=20
-> When developing a script, it can be painful to understand why Git thinks
-> something is outside the current repo, if the current repo isn't what
-> the user thinks it is. Since this can be tricky to diagnose, especially
-> in cases like submodules or nested worktrees, let's give the user a hint
-> about which repository is offended about that path.
->=20
-> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
-> ---
-> This one comes from a user feature request. This user is running some
-> Git client commands on a build machine somewhere and finding it hard to
-> reason about the cause of the "outside repo" error.
->=20
-> I see two arguments:
->=20
-> For:
->  - A user checking their own `pwd` might still not come to the same
->    conclusion Git does about the current repo, if their filesystem is in
->    some weird state
->  - This warning is intended for human eyes (die(), stderr) so it's reason=
-able
->    to give some info to make the human's life easier
->=20
-> Against:
->  - It's chatty, especially given the absolute directory. This may be a
->    pretty common mistake ('git add' with thumbfingers?) so it could be
->    chatty, frequently - not great.
->    (Sidebar: Just including the relative directory is really not very
->    useful - since you're still left thinking, "relative to where?")
+This all makes sense, as does the refactoring below.
 
-I'm very much in favor of this patch.  I recently ran into a similar
-problem with Git LFS with path canonicalization and having both paths in
-the error message made it immediately obvious what the problem was.
+On a relaid note: since you sent 'v2' before I had popped enough items
+off of my TODO list to look at your 'v1', I'll start my review in this
+thread instead of in v1.
 
-> diff --git a/pathspec.c b/pathspec.c
-> index 128f27fcb7..5d661df5cf 100644
-> --- a/pathspec.c
-> +++ b/pathspec.c
-> @@ -439,7 +439,8 @@ static void init_pathspec_item(struct pathspec_item *=
-item, unsigned flags,
->  		match =3D prefix_path_gently(prefix, prefixlen,
->  					   &prefixlen, copyfrom);
->  		if (!match)
-> -			die(_("%s: '%s' is outside repository"), elt, copyfrom);
-> +			die(_("%s: '%s' is outside repository at '%s'"), elt,
-> +			    copyfrom, absolute_path(get_git_dir()));
+> Signed-off-by: Jeff King <peff@peff.net>
 
-Do we want the top level directory in these two spots instead of the git
-directory?  I suspect that might be more helpful, since it looks like
-we're dealing with working tree files.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---J/dobhs11T7y2rNN
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.19 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl5HNRYACgkQv1NdgR9S
-9ouPJg/9EXAr57pivavtg73JZpgQIMHOllPmIRJgeDCgLVrQdFxVYxhh4qNXrI4C
-3TikW8QFkjwPjCTeljNvcjG8n9YL0G2VE2e1WcH3i3UXZLsCvyrBmgn+DySs23cQ
-XeUTOJzL2An+E2PD+RE0geB5zRX2Cg0zb7kDAblzm1ZbpK/ESb9JrT9FnTcAXWVj
-sGFvSARPM50JVvlf1LmBE1tDHfAkVykRrMh/9ThHsPZ3sYot06wMLDbSr36vQK0R
-oDhHRLI5gAKsG8lUFS2e66A+2wNv1Ca3zFGwiGBF99PLrSTjPzGxB2QGqguyllDN
-RxnQg1Ea4Uzg2S9lN895AzlUYA1b8pWxQzKTNKiK2USBilE+Rt8lPtnQAIJYrIuy
-MuIBNUAq6TF/T6h6zYpoW8JQqqK2H+ZLnWLLEvpRbJyaQwFpzKJdk6wotejxnJLu
-dHt+mZUn7xxh3UDbdMrEbxOsaHwT+C4NommuuuPq/0ZODoGcS8AApfGLaExUzeV8
-WdUkI49S2a1sdT5GxKavzgUtkkEJXfKx5+6JWeVJvFXhL4KsvyCtFMRJFbth+0Oh
-0jnZTN2jFxQNhPeiMN8np+OdwPcmahlaahdlGH937DLGKOj2lpowTMSec8Bigd/u
-+lmuTbG2ds3jiymJeTgKaEMCR6HP9DlPKUtGRi2vIyrWKzRSn+8=
-=Bdas
------END PGP SIGNATURE-----
-
---J/dobhs11T7y2rNN--
+Thanks,
+Taylor
