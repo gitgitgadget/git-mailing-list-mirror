@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C617C71153
-	for <git@archiver.kernel.org>; Sat, 15 Feb 2020 21:37:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EC001C76197
+	for <git@archiver.kernel.org>; Sat, 15 Feb 2020 21:37:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 643BD20718
-	for <git@archiver.kernel.org>; Sat, 15 Feb 2020 21:37:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C362820718
+	for <git@archiver.kernel.org>; Sat, 15 Feb 2020 21:37:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="uIfg+xac"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z3t6Qj/1"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727921AbgBOVhJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 15 Feb 2020 16:37:09 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:32930 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727803AbgBOVg4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 Feb 2020 16:36:56 -0500
-Received: by mail-wr1-f66.google.com with SMTP id u6so15184227wrt.0
-        for <git@vger.kernel.org>; Sat, 15 Feb 2020 13:36:54 -0800 (PST)
+        id S1727860AbgBOVg6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 15 Feb 2020 16:36:58 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:50832 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727723AbgBOVgu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 Feb 2020 16:36:50 -0500
+Received: by mail-wm1-f67.google.com with SMTP id a5so13508298wmb.0
+        for <git@vger.kernel.org>; Sat, 15 Feb 2020 13:36:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=4t0VPzSVYXvPuRAW0ZaeZTwxYoTXZVffuGhwliznBmI=;
-        b=uIfg+xacZO+oTG0tgLsORAk4vaCm4giccupS4abB3WmADfsphuFKkkeR2ZFygi2v+o
-         cLd1ub0f8rEdiAjvAPgEUoOkWG4z16eGYvIT+jDVxS3Hqyci3O0EncqUU/zotesWSMvS
-         T6OPB0gsfnxP5YghBZtLU/mzB5FmkejqkTNs1yxoLFY3M1mGke2kYMk6muPERlhcNYpn
-         pmbV9fCw1ZfpszNcCP36a1H/puiP5qiBcHweCGK2A7j1GNZIqDz0gzVHdgViIQaPOKJZ
-         FTCw+JJEA6brPKB71VAKZCR4lLM2melDtXzDahQPklzvhGFZnyvfaHVw1vLNZ8mkV/Uv
-         8k7w==
+        bh=oeAaq7XlkNBPKiqt31AgJ3ysPNcuHyyS8Eorjb4EBR8=;
+        b=Z3t6Qj/1/qFO2bF0b5i98vbdhu5SBrLRMjXgx1I5VMFB7dRGcem0oz9mSWzZ+H2Qw1
+         lyxaIRW6kMqDOIaVab4VCUEdQ8lvaA+Vl4UfOCw2EcZG2NxDPzV872pUhnCeZ0rt1b2B
+         y6khlwDpQ/fczhI3D9nGYUobeuFOKKBAktFI3Uoz/ZFNv2NXo5D9BX2Hp9Vdfjuk5e86
+         ib/Dtk/C+P/+0gznv85yru7lPjBDpLEZB5Tp1Fk+03HmSUw6UiRWnm4FRQofsJ2YsXjp
+         Z8ckf2B7V5Xl7FCgF9Zj66UZDlIzvIcih+ZXed7X1R1QzC78KEkNQUgjFmgbwHQNC/ha
+         I0jQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=4t0VPzSVYXvPuRAW0ZaeZTwxYoTXZVffuGhwliznBmI=;
-        b=k9dg0BvFw13UMDutDsSFo0n70nobiKhUiusru9ku06wyF9xy5rDnnPbkNEhK5JSxbM
-         /Bi3Y3m5f+E7JU5nfTMd1BxXYL5gpqjdMvm6dzjdIww0TZ+hqQQrOdsRPsE19bv4pPdJ
-         cWj6urqty1ZP1SE9lZ53nYkVX17t4hARAekn3qEewJFUYe7xJzdYsuRtvMe/YzVH/npX
-         74s0WzMidpEJ1xOIuZw5/byuDS+c9+o5PPfIBV9FPMU/DyoMlAZy8J3+ptdp97p6Oh9Y
-         6WqEiRE4mf8sDpOiFGFZCNoWO7lDmUFoBvIYTS+/I92Z7wy6p5rLj1zjV7DlG8rqQqDS
-         pZ3g==
-X-Gm-Message-State: APjAAAWHdt9FfJyvvrxgFh2ikaUXXee7cfZJ/Y9gEaw6tFc/7Gs38b/m
-        BPKz72cFstzM+SRVUkYiIu5+m6Tu
-X-Google-Smtp-Source: APXvYqxAF6gNywMCUu8wgf1qFe7TIwWpWhfdEoN9b4zTRSU+WcBJtr8BaP0wwC1kauowRrNRBIz/AQ==
-X-Received: by 2002:adf:dd4d:: with SMTP id u13mr12424682wrm.394.1581802613670;
-        Sat, 15 Feb 2020 13:36:53 -0800 (PST)
+        bh=oeAaq7XlkNBPKiqt31AgJ3ysPNcuHyyS8Eorjb4EBR8=;
+        b=c3/Q/VDGuMRD0o3NYBZBdHDU+kPA+ViAymp1GvIww7tmxMhrlaJd9ldOVa/+ucDgjj
+         g2OUHFmtars31mE4fTjL/qVBbtIPxj2yf/iguidUV9CMXDJPFiBt6sWQuOha2AdBDDN0
+         ISFNvtsV/R2rYDRCZlJ4rrV3g3RUSrKy1ZcsYQt31+iitk8u5EoVJsIbc6JwSm5VMprc
+         jmfJrko99g1Sj2n03obeS4p9m8aGH+we1a4o390P3PjomPiRJ+c1Dll4Mnr3QhB5KXK5
+         9vazX1AgahfZSxgWVVnAWriHxcAzAxo7Lkd2syw/aWAOovKSidgcvIMzGvtFJId5JmcZ
+         Nk/A==
+X-Gm-Message-State: APjAAAUcrl6BQlxg3fvjF9S/nuXyRm8ReWQr8cWsMGA0FFnVj66XqqLm
+        LPhF5pMUvtTXH1aXaEJZr4/DfBgu
+X-Google-Smtp-Source: APXvYqyzZCjczKgRIg2XQ73Ishk2I9ZQJ0KePwuTMXjsB7/G1I5Q5HR+rirqqk5TtT5gf4l45BmEdA==
+X-Received: by 2002:a05:600c:291d:: with SMTP id i29mr12816593wmd.39.1581802608753;
+        Sat, 15 Feb 2020 13:36:48 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y185sm13852895wmg.2.2020.02.15.13.36.53
+        by smtp.gmail.com with ESMTPSA id v17sm12567329wrt.91.2020.02.15.13.36.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 15 Feb 2020 13:36:53 -0800 (PST)
-Message-Id: <e4c04d3cf8b0c6a459bf192bfb34aca9733870c5.1581802602.git.gitgitgadget@gmail.com>
+        Sat, 15 Feb 2020 13:36:48 -0800 (PST)
+Message-Id: <3dccb58d0660de8ab931e1540f5fd0c0083954e9.1581802602.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.679.v5.git.git.1581802602.gitgitgadget@gmail.com>
 References: <pull.679.v4.git.git.1579155273.gitgitgadget@gmail.com>
         <pull.679.v5.git.git.1581802602.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 15 Feb 2020 21:36:35 +0000
-Subject: [PATCH v5 14/20] git-prompt: change the prompt for interactive-based
- rebases
+Date:   Sat, 15 Feb 2020 21:36:28 +0000
+Subject: [PATCH v5 07/20] rebase: make sure to pass along the quiet flag to
+ the sequencer
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,97 +80,57 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-In the past, we had different prompts for different types of rebases:
-   REBASE: for am-based rebases
-   REBASE-m: for merge-based rebases
-   REBASE-i: for interactive-based rebases
-
-It's not clear why this distinction was necessary or helpful; when the
-prompt was added in commit e75201963f67 ("Improve bash prompt to detect
-various states like an unfinished merge", 2007-09-30), it simply added
-these three different types.  Perhaps there was a useful purpose back
-then, but there have been some changes:
-
-  * The merge backend was deleted after being implemented on top of the
-    interactive backend, causing the prompt for merge-based rebases to
-    change from REBASE-m to REBASE-i.
-  * The interactive backend is used for multiple different types of
-    non-interactive rebases, so the "-i" part of the prompt doesn't
-    really mean what it used to.
-  * Rebase backends have gained more abilities and have a great deal of
-    overlap, sometimes making it hard to distinguish them.
-  * Behavioral differences between the backends have also been ironed
-    out.
-  * We want to change the default backend from am to interactive, which
-    means people would get "REBASE-i" by default if we didn't change
-    the prompt, and only if they specified --am or --whitespace or -C
-    would they get the "REBASE" prompt.
-  * In the future, we plan to have "--whitespace", "-C", and even "--am"
-    run the interactive backend once it can handle everything the
-    am-backend can.
-
-For all these reasons, make the prompt for any type of rebase just be
-"REBASE".
-
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- contrib/completion/git-prompt.sh | 6 +-----
- t/t9903-bash-prompt.sh           | 8 ++++----
- 2 files changed, 5 insertions(+), 9 deletions(-)
+ builtin/rebase.c  | 3 ++-
+ t/t3400-rebase.sh | 8 +++++++-
+ 2 files changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
-index 1d510cd47be..014cd7c3cfc 100644
---- a/contrib/completion/git-prompt.sh
-+++ b/contrib/completion/git-prompt.sh
-@@ -429,11 +429,7 @@ __git_ps1 ()
- 		__git_eread "$g/rebase-merge/head-name" b
- 		__git_eread "$g/rebase-merge/msgnum" step
- 		__git_eread "$g/rebase-merge/end" total
--		if [ -f "$g/rebase-merge/interactive" ]; then
--			r="|REBASE-i"
--		else
--			r="|REBASE-m"
--		fi
-+		r="|REBASE"
- 	else
- 		if [ -d "$g/rebase-apply" ]; then
- 			__git_eread "$g/rebase-apply/next" step
-diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
-index 88bc733ad69..7ca35d358d6 100755
---- a/t/t9903-bash-prompt.sh
-+++ b/t/t9903-bash-prompt.sh
-@@ -163,7 +163,7 @@ test_expect_success 'prompt - inside bare repository' '
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index 7551f950593..1a664137d29 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -120,6 +120,7 @@ static struct replay_opts get_replay_opts(const struct rebase_options *opts)
+ 	replay.allow_empty_message = opts->allow_empty_message;
+ 	replay.drop_redundant_commits = (opts->empty == EMPTY_DROP);
+ 	replay.keep_redundant_commits = (opts->empty == EMPTY_KEEP);
++	replay.quiet = !(opts->flags & REBASE_NO_QUIET);
+ 	replay.verbose = opts->flags & REBASE_VERBOSE;
+ 	replay.reschedule_failed_exec = opts->reschedule_failed_exec;
+ 	replay.gpg_sign = xstrdup_or_null(opts->gpg_sign_opt);
+@@ -1476,7 +1477,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 			 N_("allow pre-rebase hook to run")),
+ 		OPT_NEGBIT('q', "quiet", &options.flags,
+ 			   N_("be quiet. implies --no-stat"),
+-			   REBASE_NO_QUIET| REBASE_VERBOSE | REBASE_DIFFSTAT),
++			   REBASE_NO_QUIET | REBASE_VERBOSE | REBASE_DIFFSTAT),
+ 		OPT_BIT('v', "verbose", &options.flags,
+ 			N_("display a diffstat of what changed upstream"),
+ 			REBASE_NO_QUIET | REBASE_VERBOSE | REBASE_DIFFSTAT),
+diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
+index 221b35f2df3..79762b989a4 100755
+--- a/t/t3400-rebase.sh
++++ b/t/t3400-rebase.sh
+@@ -206,12 +206,18 @@ test_expect_success 'cherry-picked commits and fork-point work together' '
+ 	test_cmp expect D
  '
  
- test_expect_success 'prompt - interactive rebase' '
--	printf " (b1|REBASE-i 2/3)" >expected &&
-+	printf " (b1|REBASE 2/3)" >expected &&
- 	write_script fake_editor.sh <<-\EOF &&
- 		echo "exec echo" >"$1"
- 		echo "edit $(git log -1 --format="%h")" >>"$1"
-@@ -180,7 +180,7 @@ test_expect_success 'prompt - interactive rebase' '
+-test_expect_success 'rebase -q is quiet' '
++test_expect_success 'rebase --am -q is quiet' '
+ 	git checkout -b quiet topic &&
+ 	git rebase -q master >output.out 2>&1 &&
+ 	test_must_be_empty output.out
  '
  
- test_expect_success 'prompt - rebase merge' '
--	printf " (b2|REBASE-i 1/3)" >expected &&
-+	printf " (b2|REBASE 1/3)" >expected &&
- 	git checkout b2 &&
- 	test_when_finished "git checkout master" &&
- 	test_must_fail git rebase --merge b1 b2 &&
-@@ -189,11 +189,11 @@ test_expect_success 'prompt - rebase merge' '
- 	test_cmp expected "$actual"
- '
- 
--test_expect_success 'prompt - rebase' '
-+test_expect_success 'prompt - rebase am' '
- 	printf " (b2|REBASE 1/3)" >expected &&
- 	git checkout b2 &&
- 	test_when_finished "git checkout master" &&
--	test_must_fail git rebase b1 b2 &&
-+	test_must_fail git rebase --am b1 b2 &&
- 	test_when_finished "git rebase --abort" &&
- 	__git_ps1 >"$actual" &&
- 	test_cmp expected "$actual"
++test_expect_success 'rebase --merge -q is quiet' '
++	git checkout -B quiet topic &&
++	git rebase --merge -q master >output.out 2>&1 &&
++	test_must_be_empty output.out
++'
++
+ test_expect_success 'Rebase a commit that sprinkles CRs in' '
+ 	(
+ 		echo "One" &&
 -- 
 gitgitgadget
 
