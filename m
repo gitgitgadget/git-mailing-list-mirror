@@ -5,63 +5,63 @@ X-Spam-Level:
 X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 78E95C71150
-	for <git@archiver.kernel.org>; Sat, 15 Feb 2020 21:36:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 06E96C76195
+	for <git@archiver.kernel.org>; Sat, 15 Feb 2020 21:37:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 50B5B217F4
-	for <git@archiver.kernel.org>; Sat, 15 Feb 2020 21:36:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D28EE20718
+	for <git@archiver.kernel.org>; Sat, 15 Feb 2020 21:36:59 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fvHOw617"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RLZIi2Lx"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727833AbgBOVg4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 15 Feb 2020 16:36:56 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:44214 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727727AbgBOVgv (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 Feb 2020 16:36:51 -0500
-Received: by mail-wr1-f68.google.com with SMTP id m16so15098662wrx.11
-        for <git@vger.kernel.org>; Sat, 15 Feb 2020 13:36:50 -0800 (PST)
+        id S1727868AbgBOVg6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 15 Feb 2020 16:36:58 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:53296 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727785AbgBOVgy (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 Feb 2020 16:36:54 -0500
+Received: by mail-wm1-f65.google.com with SMTP id s10so13526272wmh.3
+        for <git@vger.kernel.org>; Sat, 15 Feb 2020 13:36:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=SLnqtLk+4aSqBz/JN1WZZ1+FrIkJmWOVx9kZHrhk6vs=;
-        b=fvHOw617YgKygoU1HZyE/En8cUIAFJwbctJofuIAqFvmMFJEOqnAsIMsbawkmv7bMO
-         LEc8T51I2zpztFuIzCPwAXGETQ8RQ9eq6gRxiv6PFaAN7E2lHD6uO6GQnt+cNs4gsnb8
-         b5gMYtJ3usJO7D6/zyvoO9EHXoipEJZN/NVTC6y9lhWbPY4vyg08WbMu2xuicOVO0VzD
-         691Q5WNq2Rm9px8xHAHJ6tux5AY4HFksXaANj7o6XC7+2JYPoGVTYjls/VncPPuWNvkb
-         12S0HVAYiVbov367Yu0syVzKTSfERfsvlQp94cFkSiQJc4MnHq1VjAoWNKDv8t/72Htv
-         EzrA==
+        bh=jBHnPqPC6gfu7bSIASbl8Avw7/lF+yCz5kqVQfLGBWk=;
+        b=RLZIi2LxHxvdZsPwZcmhQE7ZTmN3hgBKpbuw0137Q/JmVetUIArfCsrqotDur/JD3X
+         h4Oh0b4PpxubA/sztVG5OnhRsV7clvDkSGlEUbzqWNgAfEFYACVi/BbDbw6YaPexDfq9
+         hgbncnyiH0GsZxBwYlgb/jObVYmbiAc9xfnxVIFRbe+6jzXy0prr/xurYXAIbsHEoA2t
+         mNzRWq0cpa3Fds0lZCWmIrjOV+G+astjzlA1l9YSVC8LuYv5fr3bWxG50HFZH+Y7fX1A
+         81a2P9pYMSF3kqC+x8jSlV52VvmC9vlkcSUbyGURO9ZnDNVQqt391+1aKHOLyiNru6VW
+         bRLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=SLnqtLk+4aSqBz/JN1WZZ1+FrIkJmWOVx9kZHrhk6vs=;
-        b=DL0vUU2Pr8cfJoqXQezVL3qRiSp9xK6yk5nF4YhhZc0W4VH+w536/N5iCPWTvmxImy
-         BG2XBnQY/IWL2xsP5Co1gVqSRJJbqOfL9BqSEg/0i/arYDntbJYQiT7eKXv0WGBcRtNX
-         G1ts/sj5L/WDq72K35qe8Phd3AfuarkqzBETFlTAeaq2hin2EZ61fTT1vnyd8SFP+nwS
-         8i2EQUgiiyrhsmOjJtxF+1dqA8cJ/suCgurfEGfalZb2e4o7ph/oGyhgUVGdkYMgoFIq
-         Zyz86LEc6eA6s/L2LGMTzY0Fmq8zlk27zPjH7oyxuBtbw5Btjb1PEjLzaQ98s/BkWKzF
-         AhKg==
-X-Gm-Message-State: APjAAAVCatRXtI7+G+5RZX80MQLVf5/KJxONv/S5cmsA2BBeQOF5l6lb
-        B5+P1NnosMA9PW9z+84WRHZHWeyH
-X-Google-Smtp-Source: APXvYqx1M+cz4bkQ+3jJTdS/obDTs1g0e5fkFqqfnK0AJJ8wf8VAe5o3eUS/aaaW2O+zstjWFZGK9Q==
-X-Received: by 2002:a5d:4fce:: with SMTP id h14mr12687645wrw.60.1581802609404;
-        Sat, 15 Feb 2020 13:36:49 -0800 (PST)
+        bh=jBHnPqPC6gfu7bSIASbl8Avw7/lF+yCz5kqVQfLGBWk=;
+        b=lJUu9l/3Z4D/+Wsox5LCHZux+CIt53jY1tyhWzxkEeynst3XIXyFPLru3siyfGTPge
+         vceyHdBoOzvyupPvKYFRswzdfH0ay0dK2fljW6lgbLBQ7bVkJxtb3NoVm66qvEgbJDs9
+         aOrHFuv2MMPTr8XjtSKk3FML2grgC0nyYk/YrRDzJfijkiEq2798TeoyP1hHz1Wej804
+         B5Kym1J0sUSnlCu7d50unmglY+gbRnwR/F3srjoGYe5ID8PIt3G4FdbsAaOrzzL7+KjR
+         iFnXkhRy4ZaCMkEP83fjArBQzVdjej1uBqX0HTpxf8Hc+mH8dfbkUUkOK+VVTuUegDK1
+         PuRQ==
+X-Gm-Message-State: APjAAAXCx5sm9cdVcXJSKVEt/aQ7o59WF7JgivAwOKN1x1PF6pwmTylL
+        6XuIiR/fKPdW5VjWXM1b6sIq8EJw
+X-Google-Smtp-Source: APXvYqxfvVR7bLo6US5X3GkSs5TaWPpecKZo2x69hx/yh8UKDH25sVDG0gsfAZc5qK0XS439Ew0TCw==
+X-Received: by 2002:a7b:c1da:: with SMTP id a26mr13030800wmj.155.1581802612320;
+        Sat, 15 Feb 2020 13:36:52 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l6sm13085371wrn.26.2020.02.15.13.36.48
+        by smtp.gmail.com with ESMTPSA id c15sm13121557wrt.1.2020.02.15.13.36.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 15 Feb 2020 13:36:49 -0800 (PST)
-Message-Id: <4e6f5ce8c46253ae0eb6afddcdc513b8ff57da17.1581802602.git.gitgitgadget@gmail.com>
+        Sat, 15 Feb 2020 13:36:51 -0800 (PST)
+Message-Id: <0c921919dcee49e90825e1f42177ce58f8b3eb5f.1581802602.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.679.v5.git.git.1581802602.gitgitgadget@gmail.com>
 References: <pull.679.v4.git.git.1579155273.gitgitgadget@gmail.com>
         <pull.679.v5.git.git.1581802602.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 15 Feb 2020 21:36:29 +0000
-Subject: [PATCH v5 08/20] rebase: fix handling of restrict_revision
+Date:   Sat, 15 Feb 2020 21:36:33 +0000
+Subject: [PATCH v5 12/20] rebase: move incompatibility checks between backend
+ options a bit earlier
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,72 +79,51 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-restrict_revision in the original shell script was an excluded revision
-range.  It is also treated that way by the am-backend.  In the
-conversion from shell to C (see commit 6ab54d17be3f ("rebase -i:
-implement the logic to initialize $revisions in C", 2018-08-28)), the
-interactive-backend accidentally treated it as a positive revision
-rather than a negated one.
-
-This was missed as there were no tests in the testsuite that tested an
-interactive rebase with fork-point behavior.
-
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- builtin/rebase.c  |  4 ++--
- t/t3400-rebase.sh | 20 +++++++++++++++++++-
- 2 files changed, 21 insertions(+), 3 deletions(-)
+ builtin/rebase.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
 diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 1a664137d29..8264a9243f1 100644
+index 6e9a2fedc7f..a2f05f783d8 100644
 --- a/builtin/rebase.c
 +++ b/builtin/rebase.c
-@@ -348,8 +348,8 @@ static int do_interactive_rebase(struct rebase_options *opts, unsigned flags)
+@@ -1878,6 +1878,17 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 	if (isatty(2) && options.flags & REBASE_NO_QUIET)
+ 		strbuf_addstr(&options.git_format_patch_opt, " --progress");
  
- 	argv_array_pushl(&make_script_args, "", revisions, NULL);
- 	if (opts->restrict_revision)
--		argv_array_push(&make_script_args,
--				oid_to_hex(&opts->restrict_revision->object.oid));
-+		argv_array_pushf(&make_script_args, "^%s",
-+				 oid_to_hex(&opts->restrict_revision->object.oid));
- 
- 	ret = sequencer_make_script(the_repository, &todo_list.buf,
- 				    make_script_args.argc, make_script_args.argv,
-diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
-index 79762b989a4..71fd6396cdc 100755
---- a/t/t3400-rebase.sh
-+++ b/t/t3400-rebase.sh
-@@ -165,11 +165,29 @@ test_expect_success 'rebase works with format.useAutoBase' '
- 	git rebase master
- '
- 
--test_expect_success 'default to common base in @{upstream}s reflog if no upstream arg' '
-+test_expect_success 'default to common base in @{upstream}s reflog if no upstream arg (--merge)' '
- 	git checkout -b default-base master &&
- 	git checkout -b default topic &&
- 	git config branch.default.remote . &&
- 	git config branch.default.merge refs/heads/default-base &&
-+	git rebase --merge &&
-+	git rev-parse --verify default-base >expect &&
-+	git rev-parse default~1 >actual &&
-+	test_cmp expect actual &&
-+	git checkout default-base &&
-+	git reset --hard HEAD^ &&
-+	git checkout default &&
-+	git rebase --merge &&
-+	git rev-parse --verify default-base >expect &&
-+	git rev-parse default~1 >actual &&
-+	test_cmp expect actual
-+'
++	if (options.git_am_opts.argc) {
++		/* all am options except -q are compatible only with --am */
++		for (i = options.git_am_opts.argc - 1; i >= 0; i--)
++			if (strcmp(options.git_am_opts.argv[i], "-q"))
++				break;
 +
-+test_expect_success 'default to common base in @{upstream}s reflog if no upstream arg' '
-+	git checkout -B default-base master &&
-+	git checkout -B default topic &&
-+	git config branch.default.remote . &&
-+	git config branch.default.merge refs/heads/default-base &&
- 	git rebase &&
- 	git rev-parse --verify default-base >expect &&
- 	git rev-parse default~1 >actual &&
++		if (is_interactive(&options) && i >= 0)
++			die(_("cannot combine am options with either "
++			      "interactive or merge options"));
++	}
++
+ 	switch (options.type) {
+ 	case REBASE_MERGE:
+ 	case REBASE_INTERACTIVE:
+@@ -1908,17 +1919,6 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 	if (reschedule_failed_exec >= 0)
+ 		options.reschedule_failed_exec = reschedule_failed_exec;
+ 
+-	if (options.git_am_opts.argc) {
+-		/* all am options except -q are compatible only with --am */
+-		for (i = options.git_am_opts.argc - 1; i >= 0; i--)
+-			if (strcmp(options.git_am_opts.argv[i], "-q"))
+-				break;
+-
+-		if (is_interactive(&options) && i >= 0)
+-			die(_("cannot combine am options with either "
+-			      "interactive or merge options"));
+-	}
+-
+ 	if (options.signoff) {
+ 		if (options.type == REBASE_PRESERVE_MERGES)
+ 			die("cannot combine '--signoff' with "
 -- 
 gitgitgadget
 
