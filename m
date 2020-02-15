@@ -7,152 +7,147 @@ X-Spam-Status: No, score=-8.2 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C8714C35242
-	for <git@archiver.kernel.org>; Sat, 15 Feb 2020 00:15:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 75E1CC35242
+	for <git@archiver.kernel.org>; Sat, 15 Feb 2020 00:22:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 9F202207FF
-	for <git@archiver.kernel.org>; Sat, 15 Feb 2020 00:15:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 480E8206D7
+	for <git@archiver.kernel.org>; Sat, 15 Feb 2020 00:22:37 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="Nx0Pu8eq"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="RadYNjtN"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727684AbgBOAPy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Feb 2020 19:15:54 -0500
-Received: from mail-pj1-f68.google.com ([209.85.216.68]:51924 "EHLO
-        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726079AbgBOAPy (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Feb 2020 19:15:54 -0500
-Received: by mail-pj1-f68.google.com with SMTP id fa20so4517240pjb.1
-        for <git@vger.kernel.org>; Fri, 14 Feb 2020 16:15:54 -0800 (PST)
+        id S1727680AbgBOAWg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Feb 2020 19:22:36 -0500
+Received: from mail-pj1-f67.google.com ([209.85.216.67]:54288 "EHLO
+        mail-pj1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726079AbgBOAWg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Feb 2020 19:22:36 -0500
+Received: by mail-pj1-f67.google.com with SMTP id dw13so4507722pjb.4
+        for <git@vger.kernel.org>; Fri, 14 Feb 2020 16:22:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=c2drQC6LZjfpf7JWJyX/8Ct3jl8o6bQoeWyf7VYcpGg=;
-        b=Nx0Pu8eq8pGhA9wxzCV8BvQYIN4Pt0Fv1Bagi/wbMgpxSDVrAlu1VQha0OtuKJY/SB
-         q7irSodHnWKFZB3/n+xVl0cxc4p1nKFQ5FUNSYtVjugjH70+PCuygkC+qbNpjmhGe2HO
-         62CX2oISAmrqV3Y6r1zcfnUaNJV2vnFMJ4jE7V2IA23rLL7bTpi291w81hRA1QfBLtui
-         EN36RteUfCFjO4t4+J0pR6yfqqF/8aDwTLhqjo4qt9+NAfGEKfE2w+jm+uUpqszAoGpe
-         /oShr3EdWmTrnbbjrjMKM0nwiS6nuCWHpPDAFfiuKsBLoYk0uDO8m39IFOKd+bON83h4
-         neBg==
+        bh=NpjAW50TvasOEj02AjprmW4r+hNOJXBgygxMIBZhjMw=;
+        b=RadYNjtNqjLQ6vDXq8BAYnc8IP8UjeIOLpifwp1Hu+H1qAdG0lf++L+Lf0UJipASTb
+         iT0YuVGM5CbU8mRg45Q1sQnnQN6oWqnb95JJ6jKhc4NkU71ZGH6XZMpt4+1Qcfm+IKr9
+         UQRb6fQ/DlcTVqF2Y0/Gm9qckJzigf2TtVXdXaMVwoIXnwN0X2e1IpuBJWJdB1inArjT
+         AYCnZr6VCH0OyPleki9BLej6iXrMzGvjkYZe9iYk5udd8AX206gEQIY7UpLJTZWMIu5H
+         c0K9NDffgi5RsKqbQBGr7+b+aeHWMZhfDOh/QfXEeVdeTp1kroOmqfa8kHMJJPG5gVZl
+         GfLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=c2drQC6LZjfpf7JWJyX/8Ct3jl8o6bQoeWyf7VYcpGg=;
-        b=YEhH0hXhOQ5U7Idygq/NvfDzcfpX6YvRpj2DUIG4AbH+IWJvDvcG2EPSlKoEyhtsPr
-         5uJ3JGtwsQzDEOOAij0VRSN1ZvMWuhATxmRHzYm4mC3NGzYjJsKnnnzg8dIrG+rlbcVQ
-         Om/5xjrVjTuzoi2HvmnRWCHtsmuCuWToil3ZEGQExWuVVtZCQNMhrSv2o85Bh0mFC8J/
-         ie8io7E/fI428U5/aUkZMynXzz9l09v2xV5USjdTbgc4J+jovkIkKXG8L2CZ/kJJHfrv
-         drlqK9tf9MhiqxO9Vun71NL1fniMYVxokBWupYQNYTfY/0hzkviuIy03CxGan3/fDVzV
-         Pb6g==
-X-Gm-Message-State: APjAAAV5ACKZuXkUj8Yt7zE6DgRSh/P/n9co3Kc1NYTjmas/GOMVhAhN
-        2gyPGadD1HngHtya1LvduHUvVsD6/lQ9Jw==
-X-Google-Smtp-Source: APXvYqyC6vOJoLtvGdosMojjXjchfNW7T3RB/UGZbHhXuGIfaKCrBJ0Dcv1Yuh+su2Tgy50rkmjVRg==
-X-Received: by 2002:a17:90b:46cf:: with SMTP id jx15mr6876163pjb.2.1581725753676;
-        Fri, 14 Feb 2020 16:15:53 -0800 (PST)
+        bh=NpjAW50TvasOEj02AjprmW4r+hNOJXBgygxMIBZhjMw=;
+        b=l563y3APoRwZxnIP+eDch+AxopYHNCoqYcOE2mGJqxHeG/9ZyLo6sI4c7TOOqTBYv1
+         2P/A5TWFTXXYM3z95YtwJSc8wk8UisPa2Pgr/7Q32kDKm4j+QwV9hcSsaZ3yUtU0Lq/8
+         Ra7RgMzDufMp1Xore5P8GahVYDHcOlpZr7oVyU+ZaoaRNo8FXBiU42nym8QMxs26BdpG
+         ibJFdvLZuv+zVByy96uAFP/203AQc5lpBCGMPEJKGttrem9IXe468SMdK8QUyu+n/h8p
+         sN6/xEjWEkKfLqglibn+8tWHmoojYL7THnpjbK5L/AEDO1H0biCT6ahXW/uCTtOOjwOF
+         6kLQ==
+X-Gm-Message-State: APjAAAUamuS2xvxCN/JGRYwf6qS01DD2gqJBJu85c1Y5w3KCbymTfcmm
+        S2WMJk4JLKZXFp0VV9ciRPItRv34kab4ww==
+X-Google-Smtp-Source: APXvYqzQ3/tRjmZvptnLZxOn2Si72YZ/ssrte312IpMzuAuR2o/jN9lV/qAdS3584J4+Bc26jo9DcA==
+X-Received: by 2002:a17:90a:b009:: with SMTP id x9mr6662916pjq.124.1581726154074;
+        Fri, 14 Feb 2020 16:22:34 -0800 (PST)
 Received: from localhost ([2600:100f:b02c:92d4:11e2:3a54:273f:b5fe])
-        by smtp.gmail.com with ESMTPSA id 5sm8348532pfx.163.2020.02.14.16.15.53
+        by smtp.gmail.com with ESMTPSA id w14sm8228617pgi.22.2020.02.14.16.22.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Feb 2020 16:15:53 -0800 (PST)
-Date:   Fri, 14 Feb 2020 16:15:52 -0800
+        Fri, 14 Feb 2020 16:22:33 -0800 (PST)
+Date:   Fri, 14 Feb 2020 16:22:32 -0800
 From:   Taylor Blau <me@ttaylorr.com>
 To:     Jeff King <peff@peff.net>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 02/15] pack-bitmap: fix leak of haves/wants object
- lists
-Message-ID: <20200215001552.GE11400@syl.local>
+Subject: Re: [PATCH v2 03/15] rev-list: fallback to non-bitmap traversal when
+ filtering
+Message-ID: <20200215002232.GF11400@syl.local>
 References: <20200214182147.GA654525@coredump.intra.peff.net>
- <20200214182211.GB150965@coredump.intra.peff.net>
+ <20200214182213.GC150965@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20200214182211.GB150965@coredump.intra.peff.net>
+In-Reply-To: <20200214182213.GC150965@coredump.intra.peff.net>
 User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 14, 2020 at 01:22:11PM -0500, Jeff King wrote:
-> When we do a bitmap-aware revision traversal, we create an object_list
-> for each of the "haves" and "wants" tips. After creating the result
-> bitmaps these are no longer needed or used, but we never free the list
-> memory.
+On Fri, Feb 14, 2020 at 01:22:13PM -0500, Jeff King wrote:
+> The "--use-bitmap-index" option is usually aspirational: if we have
+> bitmaps and the request can be fulfilled more quickly using them we'll
+> do so, but otherwise fall back to a non-bitmap traversal.
+>
+> The exception is object filtering, which explicitly dies if the two
+> options are combined. Let's convert this to the usual fallback behavior.
+> This is a minor convenience for now (since the caller can easily know
+> that --filter and --use-bitmap-index don't combine), but will become
+> much more useful as we start to support _some_ filters with bitmaps, but
+> not others.
+
+Yeah, I think that this convenience is worth it early on instead of
+lumping in these changes in a future patch.
+
+> The test infrastructure here is bigger than necessary for checking this
+> one small feature. But it will serve as the basis for more filtering
+> bitmap tests in future patches.
 >
 > Signed-off-by: Jeff King <peff@peff.net>
 > ---
->  object.c      | 9 +++++++++
->  object.h      | 2 ++
->  pack-bitmap.c | 5 +++++
->  3 files changed, 16 insertions(+)
+>  builtin/rev-list.c                 |  4 ++--
+>  t/t6113-rev-list-bitmap-filters.sh | 24 ++++++++++++++++++++++++
+>  2 files changed, 26 insertions(+), 2 deletions(-)
+>  create mode 100755 t/t6113-rev-list-bitmap-filters.sh
 >
-> diff --git a/object.c b/object.c
-> index 142ef69399..4d11949b38 100644
-> --- a/object.c
-> +++ b/object.c
-> @@ -307,6 +307,15 @@ int object_list_contains(struct object_list *list, struct object *obj)
->  	return 0;
->  }
+> diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+> index e28d62ec64..bce406bd1e 100644
+> --- a/builtin/rev-list.c
+> +++ b/builtin/rev-list.c
+> @@ -521,8 +521,8 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+>  	if (revs.show_notes)
+>  		die(_("rev-list does not support display of notes"));
 >
-> +void object_list_free(struct object_list **list)
-> +{
-> +	while (*list) {
-> +		struct object_list *p = *list;
-> +		*list = p->next;
-> +		free(p);
-> +	}
-> +}
-
-Hmm. I was going to write a comment saying more-or-less, "I think I'm
-nitpicking here, but I'm not crazy about this as a 'while' loop". But,
-when I wrote this as a 'for' loop instead, I wrote a use-after-free, and
-then when I rid the code of that, it wasn't any more readable than the
-version above.
-
->  /*
->   * A zero-length string to which object_array_entry::name can be
->   * initialized without requiring a malloc/free.
-> diff --git a/object.h b/object.h
-> index 25f5ab3d54..2dbabfca0a 100644
-> --- a/object.h
-> +++ b/object.h
-> @@ -151,6 +151,8 @@ struct object_list *object_list_insert(struct object *item,
+> -	if (filter_options.choice && use_bitmap_index)
+> -		die(_("cannot combine --use-bitmap-index with object filtering"));
+> +	if (filter_options.choice)
+> +		use_bitmap_index = 0;
 >
->  int object_list_contains(struct object_list *list, struct object *obj);
->
-> +void object_list_free(struct object_list **list);
+>  	save_commit_buffer = (revs.verbose_header ||
+>  			      revs.grep_filter.pattern_list ||
+> diff --git a/t/t6113-rev-list-bitmap-filters.sh b/t/t6113-rev-list-bitmap-filters.sh
+> new file mode 100755
+> index 0000000000..977f8d0930
+> --- /dev/null
+> +++ b/t/t6113-rev-list-bitmap-filters.sh
+> @@ -0,0 +1,24 @@
+> +#!/bin/sh
 > +
->  /* Object array handling .. */
->  void add_object_array(struct object *obj, const char *name, struct object_array *array);
->  void add_object_array_with_path(struct object *obj, const char *name, struct object_array *array, unsigned mode, const char *path);
-> diff --git a/pack-bitmap.c b/pack-bitmap.c
-> index 9ca356ee29..6c06099dc7 100644
-> --- a/pack-bitmap.c
-> +++ b/pack-bitmap.c
-> @@ -787,10 +787,15 @@ struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs)
->  	bitmap_git->result = wants_bitmap;
->  	bitmap_git->haves = haves_bitmap;
->
-> +	object_list_free(&wants);
-> +	object_list_free(&haves);
+> +test_description='rev-list combining bitmaps and filters'
+> +. ./test-lib.sh
 > +
-
-Makes sense.
-
->  	return bitmap_git;
->
->  cleanup:
->  	free_bitmap_index(bitmap_git);
-> +	object_list_free(&wants);
-> +	object_list_free(&haves);
-
-Ditto.
-
->  	return NULL;
->  }
->
+> +test_expect_success 'set up bitmapped repo' '
+> +	# one commit will have bitmaps, the other will not
+> +	test_commit one &&
+> +	git repack -adb &&
+> +	test_commit two
+> +'
+> +
+> +test_expect_success 'filters fallback to non-bitmap traversal' '
+> +	# use a path-based filter, since they are inherently incompatible with
+> +	# bitmaps (i.e., this test will never get confused by later code to
+> +	# combine the features)
+> +	filter=$(echo "!one" | git hash-object -w --stdin) &&
+> +	git rev-list --objects --filter=sparse:oid=$filter HEAD >expect &&
+> +	git rev-list --use-bitmap-index \
+> +		     --objects --filter=sparse:oid=$filter HEAD >actual &&
+> +	test_cmp expect actual
+> +'
+> +
+> +test_done
 > --
 > 2.25.0.796.gcc29325708
+
+Makes sense.
 
 Thanks,
 Taylor
