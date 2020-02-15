@@ -2,179 +2,143 @@ Return-Path: <SRS0=Fd5/=4D=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A69A5C352A3
-	for <git@archiver.kernel.org>; Sat, 15 Feb 2020 21:34:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 57757C352A3
+	for <git@archiver.kernel.org>; Sat, 15 Feb 2020 21:36:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7903F2083B
-	for <git@archiver.kernel.org>; Sat, 15 Feb 2020 21:34:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1D1C320718
+	for <git@archiver.kernel.org>; Sat, 15 Feb 2020 21:36:48 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="jvDDNRF4"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y6WdRFtP"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726340AbgBOVea (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 15 Feb 2020 16:34:30 -0500
-Received: from mail-qv1-f66.google.com ([209.85.219.66]:45226 "EHLO
-        mail-qv1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726254AbgBOVe3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 Feb 2020 16:34:29 -0500
-Received: by mail-qv1-f66.google.com with SMTP id l14so5959600qvu.12
-        for <git@vger.kernel.org>; Sat, 15 Feb 2020 13:34:27 -0800 (PST)
+        id S1726957AbgBOVgq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 15 Feb 2020 16:36:46 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:50828 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726275AbgBOVgq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 Feb 2020 16:36:46 -0500
+Received: by mail-wm1-f68.google.com with SMTP id a5so13508208wmb.0
+        for <git@vger.kernel.org>; Sat, 15 Feb 2020 13:36:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp-br.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=4CY75xxh9Otw3y5X8gFoWhIG98FQnsPDpzWq9PuEmhQ=;
-        b=jvDDNRF4jWgnCTEnHruk8raqlJwi8QpZ4+PA/S3lnR3V9hdgJR6SFx6I8LQ7nHIY8N
-         39FIyVDTRu2umBHcfaxN+j5yP/sbxF1SBTrGKODfPFsKlxOLviDysYwIXFsJp80FoxTy
-         qG68HopFBSITKb7dsmmK+VSJSjmHEXoBUeAbuVziSFo3dErsiRdqboHS3FKZMGWddftq
-         HNynsk/YxqssERO440FRxTgjgQ7kiVZySpsFUGVs+asHyyePKDiSchrD5MpcUo4LRCa4
-         9+mdpf3QBMIn+oxukFOG96K0K3OH7HOjtUGgjcvbRtDBtNtnxT7XO7JODNBkjib4TJkO
-         HMqQ==
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=3IyIY6+Nk/2dCh9RYX4x+RM8iaX7XYvZbmfA9bqZvX8=;
+        b=Y6WdRFtPJs9Oz7QFbmyEC8VnJ+D7zPhBF9qrwn7Jl4204r9ZctY0TYdofD6sMG5UCY
+         I+nSMAfykqB3nmcaTArPBEfSy6E7xeYqpp2jCcEoirTgBaTF79DE8hXtY82FfGJS5sjL
+         0ace04Sea6EghtMERUPkcA0bT62AGAGzKiuj1X1YmkHAPr3735X502om0qDjbxqokzLR
+         htV/WiP43Tyo0Ml7Zcfccqh45GYADdYV04lxwGeNYc91YJ9rkvL0SNZdj9oYrnX+xzLm
+         AA6qIpHPz23TVSOr+kEM1bRcwFs8Y0mXSzYSQapiPt2Jm+QoC8z/V+LJxjDdHym8qvFP
+         PNkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=4CY75xxh9Otw3y5X8gFoWhIG98FQnsPDpzWq9PuEmhQ=;
-        b=IqWbQx6E5x1S87/MZ/KXWR0gF/GvDJepyQVKrxwkzO7lV+dMM63lSvAFzbfo+ksItA
-         awNzLKSjyDVJnQswYr5K6CQkqIj45nURiWj+wVjIm9RZLKLUYKGwM0ljN5ZQo1xGXjy3
-         SDuHKSOmlj23y96U8DLbQUf2BLmGGZt4tJqJK9VOUMh8z+aLY++xREvqxU7GHYuMhhZz
-         edPIx2fGunAqc6NSjRqy3N9ESZdpLswiuOCQ/VEtBM11+KubdLMz4JthkOuo8AztGovM
-         nXzo1BFosCVcW3wT+CQ5HDQDGkSVqSjCbI7G2rA1hxe7xM1Wx6vUFgM8OSP8lfUUqv6e
-         tdRA==
-X-Gm-Message-State: APjAAAVhvn8B/3MYS66S4LdTerpJ0yTp1GPYhKKVMY+CPvqixXGXr7KT
-        9sfV0mNhmEir46KBaxwE3/J3ZooBbXk=
-X-Google-Smtp-Source: APXvYqw6J0d+P1SVKo6kwzOfDOPn8og66vGk2Xal/D2Ng+3Oyv9FiqARdt9zGiz4cypNTwWqj1FU9A==
-X-Received: by 2002:a05:6214:6aa:: with SMTP id s10mr7580662qvz.138.1581802466427;
-        Sat, 15 Feb 2020 13:34:26 -0800 (PST)
-Received: from mango.spo.virtua.com.br ([2804:14c:81:942d::1])
-        by smtp.gmail.com with ESMTPSA id c17sm5962244qko.134.2020.02.15.13.34.23
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=3IyIY6+Nk/2dCh9RYX4x+RM8iaX7XYvZbmfA9bqZvX8=;
+        b=LMq05wXrYvcN5bvea/lwK6ohi5VK7jfNMuHZ8y5WkxP0pogdYe0gZhaqtC7VGZZn0E
+         +Wpx+berLj+CQ7hTwvMvVdQauRKYN5yTJWf4ROukI1/0jlsK1pCux8+s6JGAJReGEjR6
+         TrbIZZyVBCh68oEJm1z1o9nWYAwjX1NXhuu0CpuljYbBkvk2eIExgjWUh9zRszPfMZ54
+         GkE0MYVw9JC54RKPht+hTDpwgAsnMe05daQOYgCBeHYSdO7RuBdRVjeNojuR9DelMDjl
+         /GiI0hE6epvpr8Msd1bzY2OhsdBjpxbBIdFTPkcr/MbwMH9GIholAZH0XNHbVY0LiKXd
+         BF5w==
+X-Gm-Message-State: APjAAAVitKyI61yg+L9cl0rnsYPofp5WM5mHUfzGeYu6kztzcxfULF5L
+        mAKyZyM+b8E7n8OiHcXkeg8rqIB+
+X-Google-Smtp-Source: APXvYqzJndOxggEu/vMeUAxUofVIKmSFADSoDw0hjr41OMGuVVyCPIfgM+LjpekCGb2noxJJLG21Aw==
+X-Received: by 2002:a1c:a1c3:: with SMTP id k186mr12361678wme.179.1581802604107;
+        Sat, 15 Feb 2020 13:36:44 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id x6sm12782837wrr.6.2020.02.15.13.36.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 15 Feb 2020 13:34:25 -0800 (PST)
-From:   Matheus Tavares <matheus.bernardino@usp.br>
-To:     git@vger.kernel.org
-Cc:     peff@peff.net, gitster@pobox.com, rhi@pengutronix.de
-Subject: [PATCH] describe: output tag's ref instead of embedded name
-Date:   Sat, 15 Feb 2020 18:34:13 -0300
-Message-Id: <fcf19a46b80322c5579142efe4ec681a4dcbdd28.1581802264.git.matheus.bernardino@usp.br>
-X-Mailer: git-send-email 2.25.0
-In-Reply-To: <xmqqd0ahp0na.fsf@gitster-ct.c.googlers.com>
-References: <xmqqd0ahp0na.fsf@gitster-ct.c.googlers.com>
-MIME-Version: 1.0
+        Sat, 15 Feb 2020 13:36:43 -0800 (PST)
+Message-Id: <3ea48d53940cb7e1a82a8a6eb819497c0448af6a.1581802602.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.679.v5.git.git.1581802602.gitgitgadget@gmail.com>
+References: <pull.679.v4.git.git.1579155273.gitgitgadget@gmail.com>
+        <pull.679.v5.git.git.1581802602.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sat, 15 Feb 2020 21:36:22 +0000
+Subject: [PATCH v5 01/20] git-rebase.txt: update description of
+ --allow-empty-message
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Johannes.Schindelin@gmx.de, phillip.wood@dunelm.org.uk,
+        liu.denton@gmail.com, gitster@pobox.com, plroskin@gmail.com,
+        alban.gruin@gmail.com, szeder.dev@gmail.com, jrnieder@gmail.com,
+        emilyshaffer@google.com, Elijah Newren <newren@gmail.com>,
+        Elijah Newren <newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If a tag describes a commit, we currently output not the tag's ref but
-its embedded name. This means that when the tag is locally stored under
-a different name, the output given cannot be used to access the tag in
-any way. A warning is also emitted in this case, but the message is not
-very enlightening:
+From: Elijah Newren <newren@gmail.com>
 
-$ git tag -am "testing tag body" testing-tag
-$ mv .git/refs/tags/testing-tag .git/refs/tags/testing-tag-with-new-name
-$ git describe --tags --abbrev=0
-warning: tag 'testing-tag' is really 'testing-tag-with-new-name' here
-testing-tag
+Commit b00bf1c9a8dd ("git-rebase: make --allow-empty-message the
+default", 2018-06-27) made --allow-empty-message the default and thus
+turned --allow-empty-message into a no-op but did not update the
+documentation to reflect this.  Update the documentation now, and hide
+the option from the normal -h output since it is not useful.
 
-Let's make git-describe output the tag's local name instead and
-rephrase the warning to reflect the situation a little better.
-
-Since the embedded name will no longer be needed for correct output, we
-can convert the die() call in append_name() when a tag doesn't have the
-embedded name to a warning(). Also, this function will now have two
-disconnected responsibilities: verifying if the tag's embedded name
-matches the ref and actually appending the ref to a given buffer (which
-does not depend on the parsed tag object itself). Thus, to increase
-intelligibility, let's make the function specialize in the former and do
-the latter outside it.
-
-Suggested-by: Jeff King <peff@peff.net>
-Suggested-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
+Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- builtin/describe.c  | 23 ++++++++---------------
- t/t6120-describe.sh |  4 ++--
- 2 files changed, 10 insertions(+), 17 deletions(-)
+ Documentation/git-rebase.txt |  7 ++++---
+ builtin/rebase.c             | 12 +++++++-----
+ 2 files changed, 11 insertions(+), 8 deletions(-)
 
-diff --git a/builtin/describe.c b/builtin/describe.c
-index b6df81d8d0..6a11604d2e 100644
---- a/builtin/describe.c
-+++ b/builtin/describe.c
-@@ -267,7 +267,7 @@ static unsigned long finish_depth_computation(
- 	return seen_commits;
- }
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index 0c4f038dd60..c83be7ffc20 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -265,9 +265,10 @@ See also INCOMPATIBLE OPTIONS below.
+ See also INCOMPATIBLE OPTIONS below.
  
--static void append_name(struct commit_name *n, struct strbuf *dst)
-+static void verify_tag_embedded_name(struct commit_name *n)
- {
- 	if (n->prio == 2 && !n->tag) {
- 		n->tag = lookup_tag(the_repository, &n->oid);
-@@ -276,19 +276,11 @@ static void append_name(struct commit_name *n, struct strbuf *dst)
- 	}
- 	if (n->tag && !n->name_checked) {
- 		if (!n->tag->tag)
--			die(_("annotated tag %s has no embedded name"), n->path);
--		if (strcmp(n->tag->tag, all ? n->path + 5 : n->path))
--			warning(_("tag '%s' is really '%s' here"), n->tag->tag, n->path);
-+			warning(_("annotated tag %s has no embedded name"), n->path);
-+		else if (strcmp(n->tag->tag, all ? n->path + 5 : n->path))
-+			warning(_("tag '%s' is externally known as '%s'"), n->path, n->tag->tag);
- 		n->name_checked = 1;
- 	}
--
--	if (n->tag) {
--		if (all)
--			strbuf_addstr(dst, "tags/");
--		strbuf_addstr(dst, n->tag->tag);
--	} else {
--		strbuf_addstr(dst, n->path);
--	}
- }
+ --allow-empty-message::
+-	By default, rebasing commits with an empty message will fail.
+-	This option overrides that behavior, allowing commits with empty
+-	messages to be rebased.
++	No-op.  Rebasing commits with an empty message used to fail
++	and this option would override that behavior, allowing commits
++	with empty messages to be rebased.  Now commits with an empty
++	message do not cause rebasing to halt.
+ +
+ See also INCOMPATIBLE OPTIONS below.
  
- static void append_suffix(int depth, const struct object_id *oid, struct strbuf *dst)
-@@ -313,7 +305,8 @@ static void describe_commit(struct object_id *oid, struct strbuf *dst)
- 		/*
- 		 * Exact match to an existing ref.
- 		 */
--		append_name(n, dst);
-+		verify_tag_embedded_name(n);
-+		strbuf_addstr(dst, n->path);
- 		if (longformat)
- 			append_suffix(0, n->tag ? get_tagged_oid(n->tag) : oid, dst);
- 		if (suffix)
-@@ -447,8 +440,8 @@ static void describe_commit(struct object_id *oid, struct strbuf *dst)
- 				oid_to_hex(&gave_up_on->object.oid));
- 		}
- 	}
--
--	append_name(all_matches[0].name, dst);
-+	verify_tag_embedded_name(all_matches[0].name);
-+	strbuf_addstr(dst, all_matches[0].name->path);
- 	if (abbrev)
- 		append_suffix(all_matches[0].depth, &cmit->object.oid, dst);
- 	if (suffix)
-diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
-index 09c50f3f04..d34c091e0b 100755
---- a/t/t6120-describe.sh
-+++ b/t/t6120-describe.sh
-@@ -129,9 +129,9 @@ test_expect_success 'rename tag A to Q locally' '
- 	mv .git/refs/tags/A .git/refs/tags/Q
- '
- cat - >err.expect <<EOF
--warning: tag 'A' is really 'Q' here
-+warning: tag 'Q' is externally known as 'A'
- EOF
--check_describe A-* HEAD
-+check_describe Q-* HEAD
- test_expect_success 'warning was displayed for Q' '
- 	test_i18ncmp err.expect err.actual
- '
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index 8081741f8aa..faa4e0d4065 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -453,8 +453,9 @@ int cmd_rebase__interactive(int argc, const char **argv, const char *prefix)
+ 		OPT_NEGBIT(0, "ff", &opts.flags, N_("allow fast-forward"),
+ 			   REBASE_FORCE),
+ 		OPT_BOOL(0, "keep-empty", &opts.keep_empty, N_("keep empty commits")),
+-		OPT_BOOL(0, "allow-empty-message", &opts.allow_empty_message,
+-			 N_("allow commits with empty messages")),
++		OPT_BOOL_F(0, "allow-empty-message", &opts.allow_empty_message,
++			   N_("allow commits with empty messages"),
++			   PARSE_OPT_HIDDEN),
+ 		OPT_BOOL(0, "rebase-merges", &opts.rebase_merges, N_("rebase merge commits")),
+ 		OPT_BOOL(0, "rebase-cousins", &opts.rebase_cousins,
+ 			 N_("keep original branch points of cousins")),
+@@ -1495,9 +1496,10 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		OPT_STRING_LIST('x', "exec", &exec, N_("exec"),
+ 				N_("add exec lines after each commit of the "
+ 				   "editable list")),
+-		OPT_BOOL(0, "allow-empty-message",
+-			 &options.allow_empty_message,
+-			 N_("allow rebasing commits with empty messages")),
++		OPT_BOOL_F(0, "allow-empty-message",
++			   &options.allow_empty_message,
++			   N_("allow rebasing commits with empty messages"),
++			   PARSE_OPT_HIDDEN),
+ 		{OPTION_STRING, 'r', "rebase-merges", &rebase_merges,
+ 			N_("mode"),
+ 			N_("try to rebase merges instead of skipping them"),
 -- 
-2.25.0
+gitgitgadget
 
