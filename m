@@ -5,64 +5,63 @@ X-Spam-Level:
 X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5653BC7114E
-	for <git@archiver.kernel.org>; Sat, 15 Feb 2020 21:37:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EAC6AC71150
+	for <git@archiver.kernel.org>; Sat, 15 Feb 2020 21:37:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 2A2E320718
-	for <git@archiver.kernel.org>; Sat, 15 Feb 2020 21:37:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C0C3C2086A
+	for <git@archiver.kernel.org>; Sat, 15 Feb 2020 21:37:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YVikvf6k"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i0MgnJpT"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727910AbgBOVhI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 15 Feb 2020 16:37:08 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:37893 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727809AbgBOVg5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 Feb 2020 16:36:57 -0500
-Received: by mail-wr1-f65.google.com with SMTP id y17so15115046wrh.5
-        for <git@vger.kernel.org>; Sat, 15 Feb 2020 13:36:55 -0800 (PST)
+        id S1727932AbgBOVhM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 15 Feb 2020 16:37:12 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:37187 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727787AbgBOVgz (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 Feb 2020 16:36:55 -0500
+Received: by mail-wm1-f67.google.com with SMTP id a6so14555151wme.2
+        for <git@vger.kernel.org>; Sat, 15 Feb 2020 13:36:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=t9gEZ3+Y6NXQh5fb85RzqcUJjWRClOqZL/HMoN9HXA0=;
-        b=YVikvf6kv+9H+gqbmM+Aq3sEZagQ26BYw/ynSyST1M1KGSWQyYk52YtKd6ajdLvYJK
-         Lc2NHoWxg9W8al6abrSDWv+MnkX5cLElZ4h93UekHVmCP60yGcHuBv4JCce3qaoJprJi
-         5SQ4i0UBhx67SAWmJN+Ers+lLDP6UeXAYqIwHDAPCOEyBEbMWqhSkWE8V6QvOwVnYEu0
-         4uA4rDVGnfVznp8oEGjZgFiVaMHRge2YjDaoi3fORiUoxDT+mtnjtVTze3vawAaDR/76
-         NjtaqmhbVh1MpbS2WoB2LX/hgnswNQmmgp2Uo+zqnRcUaJrpgTJNMZURbbU8h+HIBYkW
-         JzMw==
+        bh=/5TWiNBQa+LnBDeU6aNAaUqHhevtYCCIHRn9vC2FzeA=;
+        b=i0MgnJpT0THFHdTj6RTC9/65na23tIiISTWq2wtwF4bWPyiLxV4QZ399RyBVGxDT7B
+         jvfqJuikGsg7rXq27TIF29xHWzc6cvUhtItfh67CXqJaNsYXT/drhaX1zBX3D45YVOo0
+         DfZetgZ1BludZLij8/O6yYLLL/rfyjygGU8a9BOQKs8Rwq22f5lMnHhOOqQzrfQHhTew
+         G0HDfgcsE5fZUjVp1uw4lBHMTR/HsTl276hAlX35d+2JbuCSldjG64glRsh925kJwdID
+         fdM37WKieZ/s7pLe0TIxiCLmCmkrEeIV5qTOjHYvm7qt15XvYZHTbac3EeeGCZC+8lGC
+         m29Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=t9gEZ3+Y6NXQh5fb85RzqcUJjWRClOqZL/HMoN9HXA0=;
-        b=odtFzo4cuFiXz/Om38BcKcKoVqOAtkqtgk2S2O3/nRptxbqsQ8FAWuoEJNv/lwAZLN
-         Sii9k0WhxKwT3/Vt8NAD5GY00sWNaGIbC8E2J7XS+kTtiupG1gf1UnVeM/6xLnm+z9IU
-         W0E1P1okq0pjp2GQZHgG8sZHI04UntSakxgf9c5xaMgtXApDJPYbMSbR/XtxZDRjaNsf
-         zPV5yMlLSRy2LBHXMCHw/bZpQyRX1nloPNwso/gwsFvMGIdktrKqAsdye6tH/0A7mfYG
-         Pt9Gks8X8lK9gLmHJsdxLDNNohezNO9PMtSDMLOIjQycz2Dlt6AZm14j0rjwOGQAo8ct
-         TWhQ==
-X-Gm-Message-State: APjAAAX18W+ep8mMKSci9OOJfMGltm6r9qdwpk9SBPM0I8XHTRVC9dDe
-        k9tGWQmiYSW6ZRDjgZZFKzhAnE/c
-X-Google-Smtp-Source: APXvYqyOs/pjY5UP/+2GcOLcwkeQja0d2mYrKQoux0OR8JUpi/lUk3+Fm8o7DpoNO4rYaVysNf/tjg==
-X-Received: by 2002:a5d:510f:: with SMTP id s15mr11545477wrt.408.1581802614426;
-        Sat, 15 Feb 2020 13:36:54 -0800 (PST)
+        bh=/5TWiNBQa+LnBDeU6aNAaUqHhevtYCCIHRn9vC2FzeA=;
+        b=agMpGO29u/Xxqp3mu1D0N2C5i92CKYSu6Fu3Le6vpSa4X985WLfmCqwNZpU66+tX2l
+         UgXAe+pC6WaluG/zbnubtCoU/Uo+V+VdZlSz/4fbi0IpcJ6stC0oZFfpVhCtbt9D8aHS
+         m1Le7UWjRQUUa7phGWtcQa2SzHpmnr9zY5mQ8QVFYyzx/gyvVIMtW72brcbR+hszSJ06
+         oL9WjfdUau35LD23tH/sQ+RZ1biefrWjK0DKoN53/nxQ8FSwAxCsILLUlh6kq8ez0r0V
+         nhCkfSNugj1KrkAhM/fStOb9xHQ3gYVROQhH4hJ9xKSZDjv+4F2KlVVNcUe8h8WRmKYx
+         IxQQ==
+X-Gm-Message-State: APjAAAWnur6CKzhLb+Ta9Ve4E6qBgB7rSBBf/dsteNqevq+GbuyJW73o
+        Xz40X6oshsFj5PGBDaxmJl+m7f9P
+X-Google-Smtp-Source: APXvYqwlT4gEkUR80SgEAPsMTcuSIwR8+PusrQjU1M3I6XRy1DZ9qQ0nQE6/mQqECbOi/BdZXXntEg==
+X-Received: by 2002:a1c:9d08:: with SMTP id g8mr11768849wme.141.1581802611544;
+        Sat, 15 Feb 2020 13:36:51 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d204sm13496971wmd.30.2020.02.15.13.36.53
+        by smtp.gmail.com with ESMTPSA id p12sm12081269wrx.10.2020.02.15.13.36.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 15 Feb 2020 13:36:53 -0800 (PST)
-Message-Id: <f0f00c1e7fdecaa159848b6c51dea3d7180e1283.1581802602.git.gitgitgadget@gmail.com>
+        Sat, 15 Feb 2020 13:36:51 -0800 (PST)
+Message-Id: <11e96b9a5fab2fe18a9f97d66358febdd810d99c.1581802602.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.679.v5.git.git.1581802602.gitgitgadget@gmail.com>
 References: <pull.679.v4.git.git.1579155273.gitgitgadget@gmail.com>
         <pull.679.v5.git.git.1581802602.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 15 Feb 2020 21:36:36 +0000
-Subject: [PATCH v5 15/20] rebase: drop '-i' from the reflog for
- interactive-based rebases
+Date:   Sat, 15 Feb 2020 21:36:32 +0000
+Subject: [PATCH v5 11/20] git-rebase.txt: add more details about behavioral
+ differences of backends
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,101 +79,122 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-A large variety of rebase types are supported by the interactive
-machinery, not just the explicitly interactive ones.  These all share
-the same code and write the same reflog messages, but the "-i" moniker
-in those messages doesn't really have much meaning.  It also becomes
-somewhat distracting once we switch the default from the am-backend to
-the interactive one.  Just remove the "-i" from these messages.
-
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- builtin/rebase.c              |  2 +-
- sequencer.c                   |  8 ++++----
- t/t3404-rebase-interactive.sh | 10 +++++-----
- 3 files changed, 10 insertions(+), 10 deletions(-)
+ Documentation/git-rebase.txt | 85 +++++++++++++++++++++++++++++++++---
+ 1 file changed, 80 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 77abe674cb9..ffaa7935240 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -1441,7 +1441,7 @@ static void set_reflog_action(struct rebase_options *options)
- 	if (env && strcmp("rebase", env))
- 		return; /* only override it if it is "rebase" */
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index e1c6f918013..6e2569cd8a7 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -416,7 +416,7 @@ with `--keep-base` in order to drop those commits from your branch.
  
--	strbuf_addf(&buf, "rebase -i (%s)", options->action);
-+	strbuf_addf(&buf, "rebase (%s)", options->action);
- 	setenv(GIT_REFLOG_ACTION_ENVIRONMENT, buf.buf, 1);
- 	strbuf_release(&buf);
- }
-diff --git a/sequencer.c b/sequencer.c
-index f475d2a3b1c..f8e242b6695 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -290,7 +290,7 @@ int sequencer_remove_state(struct replay_opts *opts)
- 			char *eol = strchr(p, '\n');
- 			if (eol)
- 				*eol = '\0';
--			if (delete_ref("(rebase -i) cleanup", p, NULL, 0) < 0) {
-+			if (delete_ref("(rebase) cleanup", p, NULL, 0) < 0) {
- 				warning(_("could not delete '%s'"), p);
- 				ret = -1;
- 			}
-@@ -324,7 +324,7 @@ static const char *action_name(const struct replay_opts *opts)
- 	case REPLAY_PICK:
- 		return N_("cherry-pick");
- 	case REPLAY_INTERACTIVE_REBASE:
--		return N_("rebase -i");
-+		return N_("rebase");
- 	}
- 	die(_("unknown action: %d"), opts->action);
- }
-@@ -628,7 +628,7 @@ static int do_recursive_merge(struct repository *r,
- 			       COMMIT_LOCK | SKIP_IF_UNCHANGED))
- 		/*
- 		 * TRANSLATORS: %s will be "revert", "cherry-pick" or
--		 * "rebase -i".
-+		 * "rebase".
- 		 */
- 		return error(_("%s: Unable to write new index file"),
- 			_(action_name(opts)));
-@@ -3199,7 +3199,7 @@ static int do_label(struct repository *r, const char *name, int len)
- 		return error(_("illegal label name: '%.*s'"), len, name);
+ --ignore-whitespace::
+ --whitespace=<option>::
+-	These flag are passed to the 'git apply' program
++	These flags are passed to the 'git apply' program
+ 	(see linkgit:git-apply[1]) that applies the patch.
+ +
+ See also INCOMPATIBLE OPTIONS below.
+@@ -563,8 +563,8 @@ The following options:
  
- 	strbuf_addf(&ref_name, "refs/rewritten/%.*s", len, name);
--	strbuf_addf(&msg, "rebase -i (label) '%.*s'", len, name);
-+	strbuf_addf(&msg, "rebase (label) '%.*s'", len, name);
+  * --committer-date-is-author-date
+  * --ignore-date
+- * --whitespace
+  * --ignore-whitespace
++ * --whitespace
+  * -C
  
- 	transaction = ref_store_transaction_begin(refs, &err);
- 	if (!transaction) {
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index c41531f3490..a31583eb2fd 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -223,7 +223,7 @@ test_expect_success 'reflog for the branch shows state before rebase' '
- '
+ are incompatible with the following options:
+@@ -615,9 +615,84 @@ handling commits that become empty.
+ Directory rename detection
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~
  
- test_expect_success 'reflog for the branch shows correct finish message' '
--	printf "rebase -i (finish): refs/heads/branch1 onto %s\n" \
-+	printf "rebase (finish): refs/heads/branch1 onto %s\n" \
- 		"$(git rev-parse branch2)" >expected &&
- 	git log -g --pretty=%gs -1 refs/heads/branch1 >actual &&
- 	test_cmp expected actual
-@@ -1162,10 +1162,10 @@ test_expect_success 'rebase -i produces readable reflog' '
- 	git branch -f branch-reflog-test H &&
- 	git rebase -i --onto I F branch-reflog-test &&
- 	cat >expect <<-\EOF &&
--	rebase -i (finish): returning to refs/heads/branch-reflog-test
--	rebase -i (pick): H
--	rebase -i (pick): G
--	rebase -i (start): checkout I
-+	rebase (finish): returning to refs/heads/branch-reflog-test
-+	rebase (pick): H
-+	rebase (pick): G
-+	rebase (start): checkout I
- 	EOF
- 	git reflog -n4 HEAD |
- 	sed "s/[^:]*: //" >actual &&
+-Directory rename heuristics are enabled in the merge and interactive
+-backends.  Due to the lack of accurate tree information, directory
+-rename detection is disabled in the am backend.
++Due to the lack of accurate tree information (arising from
++constructing fake ancestors with the limited information available in
++patches), directory rename detection is disabled in the am backend.
++Disabled directory rename detection means that if one side of history
++renames a directory and the other adds new files to the old directory,
++then the new files will be left behind in the old directory without
++any warning at the time of rebasing that you may want to move these
++files into the new directory.
++
++Directory rename detection works with the merge and interactive
++backends to provide you warnings in such cases.
++
++Context
++~~~~~~~
++
++The am backend works by creating a sequence of patches (by calling
++`format-patch` internally), and then applying the patches in sequence
++(calling `am` internally).  Patches are composed of multiple hunks,
++each with line numbers, a context region, and the actual changes.  The
++line numbers have to be taken with some fuzz, since the other side
++will likely have inserted or deleted lines earlier in the file.  The
++context region is meant to help find how to adjust the line numbers in
++order to apply the changes to the right lines.  However, if multiple
++areas of the code have the same surrounding lines of context, the
++wrong one can be picked.  There are real-world cases where this has
++caused commits to be reapplied incorrectly with no conflicts reported.
++Setting diff.context to a larger value may prevent such types of
++problems, but increases the chance of spurious conflicts (since it
++will require more lines of matching context to apply).
++
++The interactive backend works with a full copy of each relevant file,
++insulating it from these types of problems.
++
++Labelling of conflicts markers
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++
++When there are content conflicts, the merge machinery tries to
++annotate each side's conflict markers with the commits where the
++content came from.  Since the am backend drops the original
++information about the rebased commits and their parents (and instead
++generates new fake commits based off limited information in the
++generated patches), those commits cannot be identified; instead it has
++to fall back to a commit summary.  Also, when merge.conflictStyle is
++set to diff3, the am backend will use "constructed merge base" to
++label the content from the merge base, and thus provide no information
++about the merge base commit whatsoever.
++
++The interactive backend works with the full commits on both sides of
++history and thus has no such limitations.
++
++Hooks
++~~~~~
++
++The am backend has not traditionally called the post-commit hook,
++while the merge/interactive backend has.  However, this was by
++accident of implementation rather than by design.  Both backends
++should have the same behavior, though it is not clear which one is
++correct.
++
++Miscellaneous differences
++~~~~~~~~~~~~~~~~~~~~~~~~~
++
++There are a few more behavioral differences that most folks would
++probably consider inconsequential but which are mentioned for
++completeness:
++
++* Reflog: The two backends will use different wording when describing
++  the changes made in the reflog, though both will make use of the
++  word "rebase".
++
++* Progress, informational, and error messages: The two backends
++  provide slightly different progress and informational messages.
++  Also, the am backend writes error messages (such as "Your files
++  would be overwritten...") to stdout, while the interactive backend
++  writes them to stderr.
++
++* State directories: The two backends keep their state in different
++  directories under .git/
+ 
+ include::merge-strategies.txt[]
+ 
 -- 
 gitgitgadget
 
