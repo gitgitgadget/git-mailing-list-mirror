@@ -2,134 +2,157 @@ Return-Path: <SRS0=Fd5/=4D=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.2 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EDE35C35242
-	for <git@archiver.kernel.org>; Sat, 15 Feb 2020 00:14:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C8714C35242
+	for <git@archiver.kernel.org>; Sat, 15 Feb 2020 00:15:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id BF5D72082F
-	for <git@archiver.kernel.org>; Sat, 15 Feb 2020 00:14:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9F202207FF
+	for <git@archiver.kernel.org>; Sat, 15 Feb 2020 00:15:55 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Ovrc3Rsp"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="Nx0Pu8eq"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727602AbgBOAOD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Feb 2020 19:14:03 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:33012 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726079AbgBOAOD (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 14 Feb 2020 19:14:03 -0500
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 186DA6048E;
-        Sat, 15 Feb 2020 00:14:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1581725642;
-        bh=DsXdgeol+uP27TAjnKartXWZqMlw3zIYwtfVvnwX1NQ=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=Ovrc3RspUtKqjfWiU0AnBMX/D13+n3Wfw86xU8aZRN9Vd578qi3GiRGBqhRYVK6lM
-         Zzkc7XJiSrzpc7CCwug4xrMnmHdhNi9FTaW/aZ3DzurRaGWR4NhiTaWovhycCbBIpt
-         2LO5DA/9JXsNFxS6L2vrxAvzQnecSxMvWWwKWFwM7YP7MDtz3/n2ySG57vZs70lxUY
-         AuZdi2rKltjF/fHHLybCSi6gHIorfQPST2vOvK46PHpE9L2H2aMQpOxmuptW4nGa8m
-         XKDlyDPT+MzXws+zKWTEB8cqQAjwUBaZJxe3ulclUfg/rStPi+oGQvoBTZr2o2qn/k
-         p+drwh9neNNzjojPrF4JgHum7OI9+wzqOS+9L2Ux+suWpggStTP3UmCJtdQfMKdTgS
-         hdH+wYFwdy6fThnkoGlMmDD1pb1TqAakziL7GA6d/uqK48jn6ZDtuEqsbfqUn1OIYa
-         F0v4jpms7HTEc+jV6mGwv3mALI0AKCwH+z4TWYAuwo+HVve/KCg
-Date:   Sat, 15 Feb 2020 00:13:57 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/3] Wildcard matching for credentials
-Message-ID: <20200215001357.GB6134@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>
-References: <20200214225929.541306-1-sandals@crustytoothpaste.net>
- <20200214235822.GA11400@syl.local>
+        id S1727684AbgBOAPy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Feb 2020 19:15:54 -0500
+Received: from mail-pj1-f68.google.com ([209.85.216.68]:51924 "EHLO
+        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726079AbgBOAPy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Feb 2020 19:15:54 -0500
+Received: by mail-pj1-f68.google.com with SMTP id fa20so4517240pjb.1
+        for <git@vger.kernel.org>; Fri, 14 Feb 2020 16:15:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=c2drQC6LZjfpf7JWJyX/8Ct3jl8o6bQoeWyf7VYcpGg=;
+        b=Nx0Pu8eq8pGhA9wxzCV8BvQYIN4Pt0Fv1Bagi/wbMgpxSDVrAlu1VQha0OtuKJY/SB
+         q7irSodHnWKFZB3/n+xVl0cxc4p1nKFQ5FUNSYtVjugjH70+PCuygkC+qbNpjmhGe2HO
+         62CX2oISAmrqV3Y6r1zcfnUaNJV2vnFMJ4jE7V2IA23rLL7bTpi291w81hRA1QfBLtui
+         EN36RteUfCFjO4t4+J0pR6yfqqF/8aDwTLhqjo4qt9+NAfGEKfE2w+jm+uUpqszAoGpe
+         /oShr3EdWmTrnbbjrjMKM0nwiS6nuCWHpPDAFfiuKsBLoYk0uDO8m39IFOKd+bON83h4
+         neBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=c2drQC6LZjfpf7JWJyX/8Ct3jl8o6bQoeWyf7VYcpGg=;
+        b=YEhH0hXhOQ5U7Idygq/NvfDzcfpX6YvRpj2DUIG4AbH+IWJvDvcG2EPSlKoEyhtsPr
+         5uJ3JGtwsQzDEOOAij0VRSN1ZvMWuhATxmRHzYm4mC3NGzYjJsKnnnzg8dIrG+rlbcVQ
+         Om/5xjrVjTuzoi2HvmnRWCHtsmuCuWToil3ZEGQExWuVVtZCQNMhrSv2o85Bh0mFC8J/
+         ie8io7E/fI428U5/aUkZMynXzz9l09v2xV5USjdTbgc4J+jovkIkKXG8L2CZ/kJJHfrv
+         drlqK9tf9MhiqxO9Vun71NL1fniMYVxokBWupYQNYTfY/0hzkviuIy03CxGan3/fDVzV
+         Pb6g==
+X-Gm-Message-State: APjAAAV5ACKZuXkUj8Yt7zE6DgRSh/P/n9co3Kc1NYTjmas/GOMVhAhN
+        2gyPGadD1HngHtya1LvduHUvVsD6/lQ9Jw==
+X-Google-Smtp-Source: APXvYqyC6vOJoLtvGdosMojjXjchfNW7T3RB/UGZbHhXuGIfaKCrBJ0Dcv1Yuh+su2Tgy50rkmjVRg==
+X-Received: by 2002:a17:90b:46cf:: with SMTP id jx15mr6876163pjb.2.1581725753676;
+        Fri, 14 Feb 2020 16:15:53 -0800 (PST)
+Received: from localhost ([2600:100f:b02c:92d4:11e2:3a54:273f:b5fe])
+        by smtp.gmail.com with ESMTPSA id 5sm8348532pfx.163.2020.02.14.16.15.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 14 Feb 2020 16:15:53 -0800 (PST)
+Date:   Fri, 14 Feb 2020 16:15:52 -0800
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 02/15] pack-bitmap: fix leak of haves/wants object
+ lists
+Message-ID: <20200215001552.GE11400@syl.local>
+References: <20200214182147.GA654525@coredump.intra.peff.net>
+ <20200214182211.GB150965@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="eAbsdosE1cNLO4uF"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20200214235822.GA11400@syl.local>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.4.0-4-amd64)
+In-Reply-To: <20200214182211.GB150965@coredump.intra.peff.net>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Feb 14, 2020 at 01:22:11PM -0500, Jeff King wrote:
+> When we do a bitmap-aware revision traversal, we create an object_list
+> for each of the "haves" and "wants" tips. After creating the result
+> bitmaps these are no longer needed or used, but we never free the list
+> memory.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  object.c      | 9 +++++++++
+>  object.h      | 2 ++
+>  pack-bitmap.c | 5 +++++
+>  3 files changed, 16 insertions(+)
+>
+> diff --git a/object.c b/object.c
+> index 142ef69399..4d11949b38 100644
+> --- a/object.c
+> +++ b/object.c
+> @@ -307,6 +307,15 @@ int object_list_contains(struct object_list *list, struct object *obj)
+>  	return 0;
+>  }
+>
+> +void object_list_free(struct object_list **list)
+> +{
+> +	while (*list) {
+> +		struct object_list *p = *list;
+> +		*list = p->next;
+> +		free(p);
+> +	}
+> +}
 
---eAbsdosE1cNLO4uF
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Hmm. I was going to write a comment saying more-or-less, "I think I'm
+nitpicking here, but I'm not crazy about this as a 'while' loop". But,
+when I wrote this as a 'for' loop instead, I wrote a use-after-free, and
+then when I rid the code of that, it wasn't any more readable than the
+version above.
 
-On 2020-02-14 at 23:58:22, Taylor Blau wrote:
-> Hi brian,
->=20
-> On Fri, Feb 14, 2020 at 10:59:26PM +0000, brian m. carlson wrote:
-> > This series introduces wildcard matching (that is, urlmatch support) for
-> > credential config options, just like for the http options.  This is
-> > helpful in corporate environments where custom credentials should be
-> > used across a wide variety of subdomains.
-> >
-> > In addition, there's an additional test for urlmatch behavior with
-> > multiple subdomains and a mailmap update for the email address used in
-> > this series.
->=20
-> I can imagine that this is perhaps for Git LFS, which I could see
-> benefiting from this change. My review has nothing to do with my
-> affiliation (or lack thereof) to LFS.
+>  /*
+>   * A zero-length string to which object_array_entry::name can be
+>   * initialized without requiring a malloc/free.
+> diff --git a/object.h b/object.h
+> index 25f5ab3d54..2dbabfca0a 100644
+> --- a/object.h
+> +++ b/object.h
+> @@ -151,6 +151,8 @@ struct object_list *object_list_insert(struct object *item,
+>
+>  int object_list_contains(struct object_list *list, struct object *obj);
+>
+> +void object_list_free(struct object_list **list);
+> +
+>  /* Object array handling .. */
+>  void add_object_array(struct object *obj, const char *name, struct object_array *array);
+>  void add_object_array_with_path(struct object *obj, const char *name, struct object_array *array, unsigned mode, const char *path);
+> diff --git a/pack-bitmap.c b/pack-bitmap.c
+> index 9ca356ee29..6c06099dc7 100644
+> --- a/pack-bitmap.c
+> +++ b/pack-bitmap.c
+> @@ -787,10 +787,15 @@ struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs)
+>  	bitmap_git->result = wants_bitmap;
+>  	bitmap_git->haves = haves_bitmap;
+>
+> +	object_list_free(&wants);
+> +	object_list_free(&haves);
+> +
 
-It was originally prompted by a discussion that someone started on the
-Git LFS issue tracker, yes.  I pointed out that it's actually Git that
-controls credential helper matching and so I sent a patch.
+Makes sense.
 
-I've also worked somewhere with multiple internal Git servers, so I can
-imagine this would also be valuable in such an environment.
+>  	return bitmap_git;
+>
+>  cleanup:
+>  	free_bitmap_index(bitmap_git);
+> +	object_list_free(&wants);
+> +	object_list_free(&haves);
 
-> I gave your patches a review, and they all look quite good to me. Thanks
-> especially for 2/3, which I would have suggested were it not already
-> there ;-).
+Ditto.
 
-I think there was some discussion on the list about whether allowing
-multiple wildcards and wildcards in any part of the domain name was
-intentional or not, and it was decided that it was.  I promised to
-follow up with a patch to the testsuite, and here I am, some time later.
+>  	return NULL;
+>  }
+>
+> --
+> 2.25.0.796.gcc29325708
 
-> This looks good to me, so please have my:
->=20
->   Reviewed-by: Taylor Blau <me@ttaylorr.com>
-
-Thanks.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---eAbsdosE1cNLO4uF
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.19 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl5HN8UACgkQv1NdgR9S
-9otp1g//VYjhGbC8+ymskw/E7IEBahbq+n3CCwT9dBCvk/b7L7sGhSDX8BaalVZX
-tRKpL4OZdfZatsoC7ksB0RHKamhaxZWvj3w5SYHDd9bw+Kdm9hvREOJXIuGFntQV
-/WBcCnZ3g2yczLDNMVaIu3RNeWF9QnqqYAFtZRRlr6snAfYkiEpILp+FWIIAROvQ
-vblEI7hVq78NVnMhqtGP4+hOvfXhcWd9eAX2ZLZItpn1/FiwdtyHoixsIHxNZndn
-5Y4OPQOxZbRArrPYAKi9kc0jL0sS7EisPlP7wE/Mab+Nod50qAqK5I22vvZMDhaq
-IX1pLOwAKsw4iwq5y2zPyuhadXZX5yvEhxsq3UxYBLDfAEiTzYqtnKnw/rkUxav7
-yrxVnTxfXaNqbjbepZN7j2NoKQD0FUQXKZOGIkv0DNKO3fo2r2A6uDQuLxM8Jxxj
-94/9bvgsBcRohSAFjjok7IFvxxlWYC/DHqcAcOatB2hP1YK+HhxbXOHgAM7xXNC0
-i0WahmnGZ4cxaaH/YGMVwL4gBnwpB0MeHVSd9cn8JO7cAwLGxsLcaFOjoQwc0yXu
-e9xsCvmJffRd4Qr8a4jwr0OYN9kwdr0qraZU0ek7T0+vRAun7ghFfeOrQt2mBZnX
-LT09LihhFXQjptLh6wktAliEV2w6zRp4xSZi1cs/XzecKUgxLKg=
-=aW24
------END PGP SIGNATURE-----
-
---eAbsdosE1cNLO4uF--
+Thanks,
+Taylor
