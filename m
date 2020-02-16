@@ -2,101 +2,133 @@ Return-Path: <SRS0=2Qsv=4E=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B2A13C2BA83
-	for <git@archiver.kernel.org>; Sun, 16 Feb 2020 13:28:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B2B8C2BA83
+	for <git@archiver.kernel.org>; Sun, 16 Feb 2020 13:48:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 83CB32084E
-	for <git@archiver.kernel.org>; Sun, 16 Feb 2020 13:28:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 05CFC206E2
+	for <git@archiver.kernel.org>; Sun, 16 Feb 2020 13:48:48 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OcpHUGWj"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DWoLNItA"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728187AbgBPN2K (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 16 Feb 2020 08:28:10 -0500
-Received: from mail-lf1-f50.google.com ([209.85.167.50]:34394 "EHLO
-        mail-lf1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728148AbgBPN2K (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 16 Feb 2020 08:28:10 -0500
-Received: by mail-lf1-f50.google.com with SMTP id l18so9948608lfc.1
-        for <git@vger.kernel.org>; Sun, 16 Feb 2020 05:28:09 -0800 (PST)
+        id S1727781AbgBPNsq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 16 Feb 2020 08:48:46 -0500
+Received: from mail-pg1-f182.google.com ([209.85.215.182]:37495 "EHLO
+        mail-pg1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726618AbgBPNsp (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 16 Feb 2020 08:48:45 -0500
+Received: by mail-pg1-f182.google.com with SMTP id z12so7654094pgl.4
+        for <git@vger.kernel.org>; Sun, 16 Feb 2020 05:48:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=ubSamxlswvPFne75KwKkiCwT9+pwrzSXdo3SIEPCl8M=;
-        b=OcpHUGWjQvfvI4yEeo3YhUayAdaxVl1CZMinWNq/d/c8AkpC+ZmxPdJ9NFToH+nmbp
-         pam9Zt3bgLp1gd6MHLVG57VvhMOW4BnVP7p0dY2Xz5cA9hTcwBjVJQkeIYb0Rmg555FV
-         X5YeXtKkba8ceD1KDJlbq3lBsHcAZrj70BdvUsCsHUTWrVIciM5s1JwIN/gYYpGjPeb9
-         C2ewDoN+UmJGmnVFUdFnqBZSmlKpqQPBU+DR9gBq8KpT2WwQ83ScsTDDUA9wMPUh9R7v
-         RajnbmsUCaZQJceU89IRZi3YMyAUBn7NB4bUnSO449A9OMXQd9lsP3sAfH0IEpbfpn7l
-         I7FQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=kgmcPIYOLU7HcOM1eLDSxVJiwU8V4U8bCUaWbdYepWI=;
+        b=DWoLNItA+44DJt/ZQFVilISoPfoPHHcdl/8dRr6rITp/4XtfuzRS7YX7k8Jl8Mo7I5
+         DtWri7wtWtjViF+YEL7S9SbHSFl4Uk2zuSS//I0yh/b5B+y9alBrmfif5edEIZX6GGTZ
+         ZhE4ghx/UOQS+duLjQbZ9tDliHiN67WZaBIRSPSeNOi7DzFzyHcS0UB6GG1CGIAZCqX9
+         JCdsr8jBCczPsstkAPY3pn2XaS/5ebE+bDNllLbJEeWt1ij7QsLmBDLA4rPBO5cRUOZ0
+         gxVk12O4e0m2697W6zkIBn1n7sz2ZU0cEcfwjf2qfkZoYCKjfrOb1DiFXcFHquZH5hxC
+         bnNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=ubSamxlswvPFne75KwKkiCwT9+pwrzSXdo3SIEPCl8M=;
-        b=mWdUjsCiyt/wS8xYYtzvrizD7prUH4mwCz+R2h2ipDQIuxQMik+3SbUQpSNOkWNCN5
-         6cIVvwetx0m6iqfSnx0eyuNsZHwhMiwp64X8rv70Cn8rI30eoN/hjpyhALz0ecZW2ZDZ
-         SofLLjEwTpT8APEpH1O4S1N5IGyaE+hBU/NTf7QQZryG3k3V8mk44NLuC95tqgvyP5oh
-         mdxNu4ECoQTdL+lUw6jgq1HUHtb5jAfgIz2jHfh2ecUYwwDQnKUOOtQFGEkPor+jEKLR
-         THaFYXsYaRZsURsqTU4tQlrDY22G9TulcvBd5dR3rEZ2TVeG7LMpjJbo1XjmzBzHfD9K
-         69ZA==
-X-Gm-Message-State: APjAAAX6WpyJ8emq2ELoIJ3GKMkLaW+wBVspHjtSTIUPE/TRt0uIgRYv
-        wY80/lG4pKxavuLf4kLHNY+wn/KVDeoT0AOOQxw=
-X-Google-Smtp-Source: APXvYqwPU7pklffk+QYvj9bwHS/VRiTa6WQLipH3aKTmUL6p6cLP+7Afb81M6Tl3UlQJGJ0gy82u6scC5DgiLH8MTi8=
-X-Received: by 2002:a19:cb95:: with SMTP id b143mr5806359lfg.158.1581859688350;
- Sun, 16 Feb 2020 05:28:08 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=kgmcPIYOLU7HcOM1eLDSxVJiwU8V4U8bCUaWbdYepWI=;
+        b=hdrJV3ZiqFMJl0J6Pn8axuc07agTS5oBmey4YbLPhV+xk3atMl6ieADFa4m/tLljyy
+         mAlRo54auPul9mx/uOrzcr0VybTxJ5T/OsLRErHkoIHEfJuJzxcixU9sokpGsxaFrn9q
+         lwpRi/lCAitqoye3E7aSr0Gc1e/FNyBi7MCT3zSAnUUc63Nfq6WX5vsMBz5pyxr/Er5K
+         +9yWCroyCa6LPwjk5T9RBYCr9XrCjChR8WcdwTkPkrAq/OBcSSQ8PYmFwP1UlbrNEU9O
+         FVugaIzUNKEjunRetjrOSdz9B8fRfNbhlP8ahCUaiKZGspKlPjf5t3jObzHBSSKRWux1
+         iOCQ==
+X-Gm-Message-State: APjAAAWoPSE/uteoDsl5LWGXx7XUKN4O5kt7I9zGUC8QXRHON5+VDBiQ
+        3JeNj75koYylLGHSBvXj5V20/FofyM0=
+X-Google-Smtp-Source: APXvYqzqS7MBzQ7oHg/2zEqPSO8NjGoyyRW7zXayj6+q8aq2L/rhH5Kt1d4M3efEVZYbTlFA2I/rXg==
+X-Received: by 2002:a63:34b:: with SMTP id 72mr12588243pgd.278.1581860923217;
+        Sun, 16 Feb 2020 05:48:43 -0800 (PST)
+Received: from Abhishek-Arch.nitk.ac.in ([218.248.46.83])
+        by smtp.gmail.com with ESMTPSA id m12sm13302006pjf.25.2020.02.16.05.48.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 16 Feb 2020 05:48:42 -0800 (PST)
+From:   Abhishek Kumar <abhishekkumar8222@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [GSoC Patch 1/5] lib-log-graph.sh: consolidate test_cmp_graph logic
+Date:   Sun, 16 Feb 2020 19:17:46 +0530
+Message-Id: <20200216134750.18947-1-abhishekkumar8222@gmail.com>
+X-Mailer: git-send-email 2.25.0
 MIME-Version: 1.0
-References: <CAN=yFFn8GOobGpo2d3N8una4EE3L9nFTckH3D7rZ=G4d=MTmnQ@mail.gmail.com>
-In-Reply-To: <CAN=yFFn8GOobGpo2d3N8una4EE3L9nFTckH3D7rZ=G4d=MTmnQ@mail.gmail.com>
-From:   pedro rijo <pedrorijo91@gmail.com>
-Date:   Sun, 16 Feb 2020 13:27:32 +0000
-Message-ID: <CAPMsMoD+i_xnSWOY7PY92GSn8GfbBcpfZzec-Zj3B=tdGM_H5w@mail.gmail.com>
-Subject: Re: Error 500 from git-scm.com
-To:     Giovanni Tirloni <giovanni.tirloni@gmail.com>
-Cc:     Git Users <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks for reporting the problem Giovanni.
+Logic for comparing log graphs is duplicated across test scripts.
 
-Just saw a bunch of 500 on the heroku dashboard. I see some memory
-warning, not sure why yet, but just re-deployed the app and it seems
-to have fixed. Will try to better understand the problem and post it
-here
+This patchset consolidates such logic into lib-log-graph.
 
-Thanks
+Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Abhishek Kumar <abhishekkumar8222@gmail.com>
+---
+1. I don't think this patchset requires a cover letter or extended
+commit descriptions - Fairly simple, straightforward changes.
+2. This patchset closes issue #471 from gitgitgadget.
 
-Giovanni Tirloni <giovanni.tirloni@gmail.com> escreveu no dia domingo,
-16/02/2020 =C3=A0(s) 13:17:
->
-> Hello,
->
-> I'm currently getting HTTP error 500 from various links in the
-> git-scm.com website:
->
-> https://git-scm.com/about
-> https://git-scm.com/downloads
-> https://git-scm.com/community
-> https://git-scm.com/download/gui/win
-> https://git-scm.com/about/small-and-fast
-> https://git-scm.com/about/branching-and-merging
-> https://git-scm.com/about/free-and-open-source
->
-> Regards,
-> Giovanni
+ t/lib-log-graph.sh | 39 +++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 39 insertions(+)
+ create mode 100644 t/lib-log-graph.sh
 
+diff --git a/t/lib-log-graph.sh b/t/lib-log-graph.sh
+new file mode 100644
+index 0000000000..999f2600de
+--- /dev/null
++++ b/t/lib-log-graph.sh
+@@ -0,0 +1,39 @@
++# Helpers shared by the test scripts for comparing log graphs.
++
++sanitize_output() {
++	sed -e 's/ *$//' \
++	    -e 's/commit [0-9a-f]*$/commit COMMIT_OBJECT_NAME/' \
++	    -e 's/Merge: [ 0-9a-f]*$/Merge: MERGE_PARENTS/' \
++	    -e 's/Merge tag.*/Merge HEADS DESCRIPTION/' \
++	    -e 's/Merge commit.*/Merge HEADS DESCRIPTION/' \
++	    -e 's/, 0 deletions(-)//' \
++	    -e 's/, 0 insertions(+)//' \
++	    -e 's/ 1 files changed, / 1 file changed, /' \
++	    -e 's/, 1 deletions(-)/, 1 deletion(-)/' \
++	    -e 's/, 1 insertions(+)/, 1 insertion(+)/' \
++	    -e 's/index [0-9a-f]*\.\.[0-9a-f]*/index BEFORE..AFTER/'
++}
++
++# Assume expected graph is in file `expect`
++test_cmp_graph_file() {
++	git log --graph "$@" >output &&
++	sanitize_output >output.trimmed <output &&
++	test_i18ncmp expect output.trimmed
++}
++
++test_cmp_graph() {
++	cat >expect &&
++	test_cmp_graph_file "$@"
++}
++
++# Assume expected graph is in file `expect.colors`
++test_cmp_colored_graph_file() {
++	git log --graph --color=always "$@" >output.colors.raw &&
++	test_decode_color <output.colors.raw | sed "s/ *\$//" >output.colors &&
++	test_cmp expect.colors output.colors
++}
++
++test_cmp_colored_graph() {
++	cat >expect.colors &&
++	test_cmp_colored_graph_file "$@"
++}
+-- 
+2.25.0
 
-
---=20
-Obrigado,
-
-Pedro Rijo
