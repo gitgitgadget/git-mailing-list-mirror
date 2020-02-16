@@ -6,62 +6,62 @@ X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 75037C3B1BF
-	for <git@archiver.kernel.org>; Sun, 16 Feb 2020 23:34:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CFD76C3B1BF
+	for <git@archiver.kernel.org>; Sun, 16 Feb 2020 23:37:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 32D692086A
-	for <git@archiver.kernel.org>; Sun, 16 Feb 2020 23:34:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 94ABB208C3
+	for <git@archiver.kernel.org>; Sun, 16 Feb 2020 23:37:00 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="gGpGE52P"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="MwJqH4hO"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726962AbgBPXeS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 16 Feb 2020 18:34:18 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56579 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726059AbgBPXeR (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 16 Feb 2020 18:34:17 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A094B57FDF;
-        Sun, 16 Feb 2020 18:34:15 -0500 (EST)
+        id S1727772AbgBPXg7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 16 Feb 2020 18:36:59 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:51524 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726059AbgBPXg7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 16 Feb 2020 18:36:59 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2B550AE2BE;
+        Sun, 16 Feb 2020 18:36:58 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ylAgawULDd+FyMSRhC9GnY0QIRM=; b=gGpGE5
-        2P4ssJQzvGqnXFKAJ87tb/E1T53GjjnptpUSxVG6o/lHaRBdn76vG06moAyiibGL
-        CU5xYcziM315ewn806iZyVEN30yhY+kcyuXNieVp9isfeXCQTd/T+VLUjAxPheZx
-        OOIenAv1FnSzWqfxk+JHly/bOyaMzjNlTJ/P0=
+        :content-type; s=sasl; bh=v15SbXKO4gbba2DzyInEKslYK1g=; b=MwJqH4
+        hOZMClyIHS7fhwe3XyBQOud1qHKwHtoBIf6zs1/efhFaP3lULBAx+nW4W97JE0MR
+        NPLIbaxXFzQmUBmyzge+cmqxLy4Dfm0B+n9jMp8P/RxjTGAtQmtTHplKTzHneM5c
+        MqzyzG7JH4+FOb8QuWeOdBqtcJsVkG6L6FLQc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=q1rsTW10hpjAXkdU/4dPYq8u6j1XUNtW
-        99Y3fUa1eD8B+XpHzb5zDm9dTMZlPapQMlWKrw/DRBFfGDSP98UKu1z4NM9/S66r
-        3zoeTL/1xhMXHWovglX5DE52hBFNgebvGKhpXr1DKa7KgvbMzwYE1oANGfbQEPhF
-        DAClrWmIuBM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9683757FDE;
-        Sun, 16 Feb 2020 18:34:15 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=IyJjJnbDJ+kezxRpPmIe/eLIPUlYJOLh
+        /NJ7oX2HUsF1Ngviu01jlw/O7zGTFYizAEFsDgtHoNJNA3V1GIGfu91wI2ibsRnJ
+        ccVuBwg8Ims/P6XLtlhWPP5Wcv5dkwQjNMss2BirMd/UOlHbZd3+PrhrEf91Vta+
+        clBe/y5HrBY=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2310EAE2BD;
+        Sun, 16 Feb 2020 18:36:58 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F052457FD3;
-        Sun, 16 Feb 2020 18:34:14 -0500 (EST)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 4C0B1AE2BC;
+        Sun, 16 Feb 2020 18:36:55 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
 Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Subject: Re: [PATCH v2 06/15] rev-list: make --count work with --objects
+Subject: Re: [PATCH v2 07/15] rev-list: allow bitmaps when counting objects
 References: <20200214182147.GA654525@coredump.intra.peff.net>
-        <20200214182220.GF150965@coredump.intra.peff.net>
-        <20200215004216.GA15192@syl.local>
-        <20200215064818.GB1633703@coredump.intra.peff.net>
-Date:   Sun, 16 Feb 2020 15:34:13 -0800
-In-Reply-To: <20200215064818.GB1633703@coredump.intra.peff.net> (Jeff King's
-        message of "Sat, 15 Feb 2020 01:48:18 -0500")
-Message-ID: <xmqqwo8mm7ii.fsf@gitster-ct.c.googlers.com>
+        <20200214182222.GG150965@coredump.intra.peff.net>
+        <20200215004555.GB15192@syl.local>
+        <20200215065500.GC1633703@coredump.intra.peff.net>
+Date:   Sun, 16 Feb 2020 15:36:53 -0800
+In-Reply-To: <20200215065500.GC1633703@coredump.intra.peff.net> (Jeff King's
+        message of "Sat, 15 Feb 2020 01:55:00 -0500")
+Message-ID: <xmqqsgjam7e2.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: D7CDB508-5114-11EA-B76B-C28CBED8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 375DD05C-5115-11EA-884D-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -69,15 +69,30 @@ X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
->> > +	if (revs->count) {
->> > +		revs->count_right++;
->> > +		return;
->> > +	}
->> > +
+>> > +	uint32_t commit_count = 0,
+>> > +		 tag_count = 0,
+>> > +		 tree_count = 0,
+>> > +		 blob_count = 0;
 >> 
->> Hmm. This puzzled me at first. Do you think that it could benefit from a
->> comment?
+>> Hmm, I don't usually see the comma-separated declaration/initialization
+>> in git.git. Is there a reason you did it here? Not that I really mind
+>> one way or the other, just interested.
 >
-> What would it say (i.e., I'm not sure what confused you)?
+> The variables are all related, and all should have the same type. I'd
+> complain about a patch that did:
+>
+>   int ret, count;
+>
+> because there's no logical reason those two variables have the same
+> type. They just happen to. And putting them both on the same line is
+> even worse, because it makes a diff changing one of them noisy.
+>
+> But in the code quoted above, if one of them changes, they would all
+> (presumably) change. So I think it communicates something to group them
+> like this.
 
-I think the question reader had was "why *right*?"
+I often apply exactly the same criteria as above to my code and
+review---since it is not just you (or me), perhaps CodingGuideline
+can help other readers, but I am OK to delay documenting it until we
+find the third person who has been applying this rule that has not
+been spelt out explicitly ;-)
