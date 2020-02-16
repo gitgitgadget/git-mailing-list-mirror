@@ -2,350 +2,639 @@ Return-Path: <SRS0=2Qsv=4E=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E03CC2BA83
-	for <git@archiver.kernel.org>; Sun, 16 Feb 2020 13:48:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BE90EC2BA83
+	for <git@archiver.kernel.org>; Sun, 16 Feb 2020 14:46:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 215B6206E2
-	for <git@archiver.kernel.org>; Sun, 16 Feb 2020 13:48:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6A39920857
+	for <git@archiver.kernel.org>; Sun, 16 Feb 2020 14:46:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fqOFKjjL"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IeZaxK9f"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728148AbgBPNsu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 16 Feb 2020 08:48:50 -0500
-Received: from mail-pl1-f179.google.com ([209.85.214.179]:33308 "EHLO
-        mail-pl1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727933AbgBPNsu (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 16 Feb 2020 08:48:50 -0500
-Received: by mail-pl1-f179.google.com with SMTP id ay11so5668098plb.0
-        for <git@vger.kernel.org>; Sun, 16 Feb 2020 05:48:49 -0800 (PST)
+        id S1728205AbgBPOqs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 16 Feb 2020 09:46:48 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:41581 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728198AbgBPOqs (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 16 Feb 2020 09:46:48 -0500
+Received: by mail-wr1-f66.google.com with SMTP id c9so16577781wrw.8
+        for <git@vger.kernel.org>; Sun, 16 Feb 2020 06:46:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Ch8DAzCAJNn7naIx5r87yR81G/cwFQYt++WyCnvrzS0=;
-        b=fqOFKjjLJoDkvYQfYPD8TiX+gbaHe3xJToMGCXyD98byyHzoq1tYxERS9fNo8gni9P
-         xOFRXK6goVWP9q+pKIjuhzV/KfRzt9Mwa5dQySx36r688TSuXvj/COWlr+Lrp+k1P2rO
-         5M/vs+xu5zjii9Nsstzv36zVn/FmKcoHykpQRT8AssUh7LzN9/kWrfqROhGjEn4V4zxK
-         FBkizSXDZ3MRSEDzVHsmwMCu7svdJB1vZYJYIvRnbbIDVQoqG00E+RUFNFQH5Rc3baR8
-         XvCs1ofqPBvByBucgCxEtaAE0Meqm84ikXq9wp7TyEyB9KLOBxBtyBsfwKYJ3Vky35lw
-         BreA==
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=cEhWV5hq3Bchtt5KnqRHhmKipG3n58CH7irdyPVV1zI=;
+        b=IeZaxK9fjBSZtc21tXOvxNtRjJOZ5QNV5oQuF6+azxyFVtuSpTANaqdT2mt2vnedBf
+         3vvMh3YKinoRvWyn5gZI3l8sPGfn65y/hpJLXYp2H58DoWu5sfj2xja7/DbD2oFa7EUA
+         gB0G5P2i9ardw7xkCpFK1MygYyVZpi55Yla+/uXM81DqTNK1xub5XbPAlCsd3UO+e+Ul
+         GLtpTl3PylxfDWGVW86VG4o7VTYRLgselBbyWe54KCnZe7sWGZH/UFjNOdZqc6IGzPLp
+         +oABVIurr5JPopQ2QWpZONhOUewF1ZdH1yyLR9D3hQpFvyCc3GGLgeOB6PjYLtGk/xoq
+         xkOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Ch8DAzCAJNn7naIx5r87yR81G/cwFQYt++WyCnvrzS0=;
-        b=Dn2siOhrNZWUDJQ/4EsynwPwrMn1p95s3kxxvH3h8SqTPgqqw1nHF2Vcof/lJvOfaZ
-         MorcEFYnEZo0Qqbku8/ko59rD8yFf3gbZLopegBzx1IBNQCvAxnKYdNyKp4fgnA3gGja
-         Z0Gzarayi7FB9g0YC4unl6q9f1i3RJoR4MVkaa5wJtTykfrtvGINtIfAf5uDIEKwWQe1
-         QDtFwkw8HehZURPjDnXbpOYvCaDkZJ4X1ZLCD27fbIcmnJQGtq0UzX5IgXkRlSkkJTcZ
-         TpZgGri2KZgDPJ2lHwLv2locDxj7nGgFwTgVmPv0fghnmQH3fri5ZUHd9b23dvC7ZinI
-         DMhQ==
-X-Gm-Message-State: APjAAAVlUavaiAYTkP4S91lC7nf4ZZhlEcQZEuP7hmaCsGE/x8O0usfp
-        flmmN4rXwpDhd89GYPwmwfrPIkfHDL8=
-X-Google-Smtp-Source: APXvYqw5fsiZkTh+08IioKC6EPbF2suRpm3zMyr6lS461Uywu8XtPVPi66BxIARqHUGtcSaDS5HCLQ==
-X-Received: by 2002:a17:90a:ac0f:: with SMTP id o15mr14457288pjq.133.1581860928426;
-        Sun, 16 Feb 2020 05:48:48 -0800 (PST)
-Received: from Abhishek-Arch.nitk.ac.in ([218.248.46.83])
-        by smtp.gmail.com with ESMTPSA id m12sm13302006pjf.25.2020.02.16.05.48.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 16 Feb 2020 05:48:48 -0800 (PST)
-From:   Abhishek Kumar <abhishekkumar8222@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [GSoC Patch 4/5] t4214: use lib-log-graph functions
-Date:   Sun, 16 Feb 2020 19:17:49 +0530
-Message-Id: <20200216134750.18947-4-abhishekkumar8222@gmail.com>
-X-Mailer: git-send-email 2.25.0
-In-Reply-To: <20200216134750.18947-1-abhishekkumar8222@gmail.com>
-References: <20200216134750.18947-1-abhishekkumar8222@gmail.com>
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=cEhWV5hq3Bchtt5KnqRHhmKipG3n58CH7irdyPVV1zI=;
+        b=heGYvhewer5jrLXPf/mJUSia+2X4JxLZ9kBdw12ZmxLuUNpMBvS6O1lb3UBDXNY9E+
+         VLsx06mJ821CZL+UwQqCNYtjeQIHNHUxvqUUvYYoUAQnGdzAFue8GizwG4rRsfJTrd4w
+         7RBmHiEqcgcQo2m8AwYNAk0c4HSPoKTzpVzo56oswg1aFi9br10ThCfLt2B/KDMy+S8W
+         xomISsGpkeiwHJWiyxsvUVcqqB/eOBHucCh/UxIq42jzXM47nfk0AAJkzknwSPZk4vWz
+         KGdupd24kB2sfedOlTMO30pdHvqlHsK2hxIusaL3KrKLqW1q1huJjjddRwTP/P7l72uE
+         Okrg==
+X-Gm-Message-State: APjAAAXYf4WRxruko/L+iHmQAyytzu/vYOEAiUsofUC4QCZG/RsuhSqv
+        +pjNzBZHNfSyZHY2/cP8+sVLSVqr
+X-Google-Smtp-Source: APXvYqzopksEWgfR+lFq4qJNWhYdhOAvFY3C3Y61a0B+P3f2VjDRXDm3C9ag9hisc2CfJxl52HkTMw==
+X-Received: by 2002:adf:f0c8:: with SMTP id x8mr16413665wro.359.1581864403900;
+        Sun, 16 Feb 2020 06:46:43 -0800 (PST)
+Received: from [192.168.1.240] (85.25.198.146.dyn.plus.net. [146.198.25.85])
+        by smtp.gmail.com with ESMTPSA id v131sm13186751wme.23.2020.02.16.06.46.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 16 Feb 2020 06:46:43 -0800 (PST)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v4 04/19] rebase (interactive-backend): fix handling of
+ commits that become empty
+To:     Elijah Newren <newren@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Denton Liu <liu.denton@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Pavel Roskin <plroskin@gmail.com>,
+        Alban Gruin <alban.gruin@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>
+References: <pull.679.v3.git.git.1577217299.gitgitgadget@gmail.com>
+ <pull.679.v4.git.git.1579155273.gitgitgadget@gmail.com>
+ <c9542a2abe0da284c28f1c71566db8fc5c47c1a5.1579155273.git.gitgitgadget@gmail.com>
+ <4da2874e-b96a-e81c-c2ac-4b3f06c9926d@gmail.com>
+ <CABPp-BGRGkjBk9aY8DUXJY52e5u_aAVd8-dspEcW6Se3v-G4-Q@mail.gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <f93b9f73-10c5-b94b-df4e-bfdb05a9723a@gmail.com>
+Date:   Sun, 16 Feb 2020 14:46:41 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <CABPp-BGRGkjBk9aY8DUXJY52e5u_aAVd8-dspEcW6Se3v-G4-Q@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Signed-off-by: Abhishek Kumar <abhishekkumar8222@gmail.com>
----
- t/t4214-log-graph-octopus.sh | 86 ++++++++----------------------------
- 1 file changed, 19 insertions(+), 67 deletions(-)
+Hi Elijah
 
-diff --git a/t/t4214-log-graph-octopus.sh b/t/t4214-log-graph-octopus.sh
-index 40d27db674..e85cf07d2c 100755
---- a/t/t4214-log-graph-octopus.sh
-+++ b/t/t4214-log-graph-octopus.sh
-@@ -3,6 +3,7 @@
- test_description='git log --graph of skewed left octopus merge.'
- 
- . ./test-lib.sh
-+. "$TEST_DIRECTORY"/lib-log-graph.sh
- 
- test_expect_success 'set up merge history' '
- 	test_commit initial &&
-@@ -24,7 +25,7 @@ test_expect_success 'set up merge history' '
- '
- 
- test_expect_success 'log --graph with tricky octopus merge, no color' '
--	cat >expect.uncolored <<-\EOF &&
-+	test_cmp_graph --pretty=tformat:%s --color=never --date-order left octopus-merge <<-\EOF
- 	* left
- 	| *-.   octopus-merge
- 	|/|\ \
-@@ -37,14 +38,11 @@ test_expect_success 'log --graph with tricky octopus merge, no color' '
- 	|/
- 	* initial
- 	EOF
--	git log --color=never --graph --date-order --pretty=tformat:%s left octopus-merge >actual.raw &&
--	sed "s/ *\$//" actual.raw >actual &&
--	test_cmp expect.uncolored actual
- '
- 
- test_expect_success 'log --graph with tricky octopus merge with colors' '
- 	test_config log.graphColors red,green,yellow,blue,magenta,cyan &&
--	cat >expect.colors <<-\EOF &&
-+	test_cmp_colored_graph --pretty=tformat:%s --date-order left octopus-merge <<-\EOF
- 	* left
- 	<RED>|<RESET> *<MAGENTA>-<RESET><MAGENTA>.<RESET>   octopus-merge
- 	<RED>|<RESET><RED>/<RESET><YELLOW>|<RESET><BLUE>\<RESET> <MAGENTA>\<RESET>
-@@ -57,16 +55,13 @@ test_expect_success 'log --graph with tricky octopus merge with colors' '
- 	<MAGENTA>|<RESET><MAGENTA>/<RESET>
- 	* initial
- 	EOF
--	git log --color=always --graph --date-order --pretty=tformat:%s left octopus-merge >actual.colors.raw &&
--	test_decode_color <actual.colors.raw | sed "s/ *\$//" >actual.colors &&
--	test_cmp expect.colors actual.colors
- '
- 
- # Repeat the previous two tests with "normal" octopus merge (i.e.,
- # without the first parent skewing to the "left" branch column).
- 
- test_expect_success 'log --graph with normal octopus merge, no color' '
--	cat >expect.uncolored <<-\EOF &&
-+	test_cmp_graph --pretty=tformat:%s --color=never --date-order octopus-merge <<-\EOF
- 	*---.   octopus-merge
- 	|\ \ \
- 	| | | * 4
-@@ -78,13 +73,11 @@ test_expect_success 'log --graph with normal octopus merge, no color' '
- 	|/
- 	* initial
- 	EOF
--	git log --color=never --graph --date-order --pretty=tformat:%s octopus-merge >actual.raw &&
--	sed "s/ *\$//" actual.raw >actual &&
--	test_cmp expect.uncolored actual
- '
- 
- test_expect_success 'log --graph with normal octopus merge with colors' '
--	cat >expect.colors <<-\EOF &&
-+	test_config log.graphColors red,green,yellow,blue,magenta,cyan &&
-+	test_cmp_colored_graph --pretty=tformat:%s --date-order octopus-merge <<-\EOF
- 	*<YELLOW>-<RESET><YELLOW>-<RESET><BLUE>-<RESET><BLUE>.<RESET>   octopus-merge
- 	<RED>|<RESET><GREEN>\<RESET> <YELLOW>\<RESET> <BLUE>\<RESET>
- 	<RED>|<RESET> <GREEN>|<RESET> <YELLOW>|<RESET> * 4
-@@ -96,14 +89,10 @@ test_expect_success 'log --graph with normal octopus merge with colors' '
- 	<BLUE>|<RESET><BLUE>/<RESET>
- 	* initial
- 	EOF
--	test_config log.graphColors red,green,yellow,blue,magenta,cyan &&
--	git log --color=always --graph --date-order --pretty=tformat:%s octopus-merge >actual.colors.raw &&
--	test_decode_color <actual.colors.raw | sed "s/ *\$//" >actual.colors &&
--	test_cmp expect.colors actual.colors
- '
- 
- test_expect_success 'log --graph with normal octopus merge and child, no color' '
--	cat >expect.uncolored <<-\EOF &&
-+	test_cmp_graph --pretty=tformat:%s --color=never --date-order after-merge <<-\EOF
- 	* after-merge
- 	*---.   octopus-merge
- 	|\ \ \
-@@ -116,13 +105,11 @@ test_expect_success 'log --graph with normal octopus merge and child, no color'
- 	|/
- 	* initial
- 	EOF
--	git log --color=never --graph --date-order --pretty=tformat:%s after-merge >actual.raw &&
--	sed "s/ *\$//" actual.raw >actual &&
--	test_cmp expect.uncolored actual
- '
- 
- test_expect_success 'log --graph with normal octopus and child merge with colors' '
--	cat >expect.colors <<-\EOF &&
-+	test_config log.graphColors red,green,yellow,blue,magenta,cyan &&
-+	test_cmp_colored_graph --pretty=tformat:%s --date-order after-merge <<-\EOF
- 	* after-merge
- 	*<BLUE>-<RESET><BLUE>-<RESET><MAGENTA>-<RESET><MAGENTA>.<RESET>   octopus-merge
- 	<GREEN>|<RESET><YELLOW>\<RESET> <BLUE>\<RESET> <MAGENTA>\<RESET>
-@@ -135,14 +122,10 @@ test_expect_success 'log --graph with normal octopus and child merge with colors
- 	<MAGENTA>|<RESET><MAGENTA>/<RESET>
- 	* initial
- 	EOF
--	test_config log.graphColors red,green,yellow,blue,magenta,cyan &&
--	git log --color=always --graph --date-order --pretty=tformat:%s after-merge >actual.colors.raw &&
--	test_decode_color <actual.colors.raw | sed "s/ *\$//" >actual.colors &&
--	test_cmp expect.colors actual.colors
- '
- 
- test_expect_success 'log --graph with tricky octopus merge and its child, no color' '
--	cat >expect.uncolored <<-\EOF &&
-+	test_cmp_graph --pretty=tformat:%s --color=never --date-order left after-merge <<-\EOF
- 	* left
- 	| * after-merge
- 	| *-.   octopus-merge
-@@ -156,14 +139,10 @@ test_expect_success 'log --graph with tricky octopus merge and its child, no col
- 	|/
- 	* initial
- 	EOF
--	git log --color=never --graph --date-order --pretty=tformat:%s left after-merge >actual.raw &&
--	sed "s/ *\$//" actual.raw >actual &&
--	test_cmp expect.uncolored actual
- '
- 
- test_expect_success 'log --graph with tricky octopus merge and its child with colors' '
--	test_config log.graphColors red,green,yellow,blue,magenta,cyan &&
--	cat >expect.colors <<-\EOF &&
-+	test_cmp_colored_graph --pretty=tformat:%s --date-order left after-merge <<-\EOF
- 	* left
- 	<RED>|<RESET> * after-merge
- 	<RED>|<RESET> *<CYAN>-<RESET><CYAN>.<RESET>   octopus-merge
-@@ -177,13 +156,10 @@ test_expect_success 'log --graph with tricky octopus merge and its child with co
- 	<CYAN>|<RESET><CYAN>/<RESET>
- 	* initial
- 	EOF
--	git log --color=always --graph --date-order --pretty=tformat:%s left after-merge >actual.colors.raw &&
--	test_decode_color <actual.colors.raw | sed "s/ *\$//" >actual.colors &&
--	test_cmp expect.colors actual.colors
- '
- 
- test_expect_success 'log --graph with crossover in octopus merge, no color' '
--	cat >expect.uncolored <<-\EOF &&
-+	test_cmp_graph --pretty=tformat:%s --date-order after-4 octopus-merge <<-\EOF
- 	* after-4
- 	| *---.   octopus-merge
- 	| |\ \ \
-@@ -200,14 +176,11 @@ test_expect_success 'log --graph with crossover in octopus merge, no color' '
- 	|/
- 	* initial
- 	EOF
--	git log --color=never --graph --date-order --pretty=tformat:%s after-4 octopus-merge >actual.raw &&
--	sed "s/ *\$//" actual.raw >actual &&
--	test_cmp expect.uncolored actual
- '
- 
- test_expect_success 'log --graph with crossover in octopus merge with colors' '
- 	test_config log.graphColors red,green,yellow,blue,magenta,cyan &&
--	cat >expect.colors <<-\EOF &&
-+	test_cmp_colored_graph --pretty=tformat:%s --date-order after-4 octopus-merge <<-\EOF
- 	* after-4
- 	<RED>|<RESET> *<BLUE>-<RESET><BLUE>-<RESET><RED>-<RESET><RED>.<RESET>   octopus-merge
- 	<RED>|<RESET> <GREEN>|<RESET><YELLOW>\<RESET> <BLUE>\<RESET> <RED>\<RESET>
-@@ -224,13 +197,10 @@ test_expect_success 'log --graph with crossover in octopus merge with colors' '
- 	<MAGENTA>|<RESET><MAGENTA>/<RESET>
- 	* initial
- 	EOF
--	git log --color=always --graph --date-order --pretty=tformat:%s after-4 octopus-merge >actual.colors.raw &&
--	test_decode_color <actual.colors.raw | sed "s/ *\$//" >actual.colors &&
--	test_cmp expect.colors actual.colors
- '
- 
- test_expect_success 'log --graph with crossover in octopus merge and its child, no color' '
--	cat >expect.uncolored <<-\EOF &&
-+	test_cmp_graph --pretty=tformat:%s --date-order after-4 after-merge <<-\EOF
- 	* after-4
- 	| * after-merge
- 	| *---.   octopus-merge
-@@ -248,14 +218,11 @@ test_expect_success 'log --graph with crossover in octopus merge and its child,
- 	|/
- 	* initial
- 	EOF
--	git log --color=never --graph --date-order --pretty=tformat:%s after-4 after-merge >actual.raw &&
--	sed "s/ *\$//" actual.raw >actual &&
--	test_cmp expect.uncolored actual
- '
- 
- test_expect_success 'log --graph with crossover in octopus merge and its child with colors' '
- 	test_config log.graphColors red,green,yellow,blue,magenta,cyan &&
--	cat >expect.colors <<-\EOF &&
-+	test_cmp_colored_graph --pretty=tformat:%s --date-order after-4 after-merge <<-\EOF
- 	* after-4
- 	<RED>|<RESET> * after-merge
- 	<RED>|<RESET> *<MAGENTA>-<RESET><MAGENTA>-<RESET><RED>-<RESET><RED>.<RESET>   octopus-merge
-@@ -273,13 +240,10 @@ test_expect_success 'log --graph with crossover in octopus merge and its child w
- 	<CYAN>|<RESET><CYAN>/<RESET>
- 	* initial
- 	EOF
--	git log --color=always --graph --date-order --pretty=tformat:%s after-4 after-merge >actual.colors.raw &&
--	test_decode_color <actual.colors.raw | sed "s/ *\$//" >actual.colors &&
--	test_cmp expect.colors actual.colors
- '
- 
- test_expect_success 'log --graph with unrelated commit and octopus tip, no color' '
--	cat >expect.uncolored <<-\EOF &&
-+	test_cmp_graph --pretty=tformat:%s --color=never --date-order --pretty=tformat:%s after-initial octopus-merge <<-\EOF
- 	* after-initial
- 	| *---.   octopus-merge
- 	| |\ \ \
-@@ -296,14 +260,11 @@ test_expect_success 'log --graph with unrelated commit and octopus tip, no color
- 	|/
- 	* initial
- 	EOF
--	git log --color=never --graph --date-order --pretty=tformat:%s after-initial octopus-merge >actual.raw &&
--	sed "s/ *\$//" actual.raw >actual &&
--	test_cmp expect.uncolored actual
- '
- 
- test_expect_success 'log --graph with unrelated commit and octopus tip with colors' '
- 	test_config log.graphColors red,green,yellow,blue,magenta,cyan &&
--	cat >expect.colors <<-\EOF &&
-+	test_cmp_colored_graph --pretty=tformat:%s --date-order after-initial octopus-merge <<-\EOF
- 	* after-initial
- 	<RED>|<RESET> *<BLUE>-<RESET><BLUE>-<RESET><MAGENTA>-<RESET><MAGENTA>.<RESET>   octopus-merge
- 	<RED>|<RESET> <GREEN>|<RESET><YELLOW>\<RESET> <BLUE>\<RESET> <MAGENTA>\<RESET>
-@@ -320,13 +281,10 @@ test_expect_success 'log --graph with unrelated commit and octopus tip with colo
- 	<RED>|<RESET><RED>/<RESET>
- 	* initial
- 	EOF
--	git log --color=always --graph --date-order --pretty=tformat:%s after-initial octopus-merge >actual.colors.raw &&
--	test_decode_color <actual.colors.raw | sed "s/ *\$//" >actual.colors &&
--	test_cmp expect.colors actual.colors
- '
- 
- test_expect_success 'log --graph with unrelated commit and octopus child, no color' '
--	cat >expect.uncolored <<-\EOF &&
-+	test_cmp_graph --pretty=tformat:%s --color=never --date-order after-initial after-merge <<-\EOF
- 	* after-initial
- 	| * after-merge
- 	| *---.   octopus-merge
-@@ -344,14 +302,11 @@ test_expect_success 'log --graph with unrelated commit and octopus child, no col
- 	|/
- 	* initial
- 	EOF
--	git log --color=never --graph --date-order --pretty=tformat:%s after-initial after-merge >actual.raw &&
--	sed "s/ *\$//" actual.raw >actual &&
--	test_cmp expect.uncolored actual
- '
- 
- test_expect_success 'log --graph with unrelated commit and octopus child with colors' '
- 	test_config log.graphColors red,green,yellow,blue,magenta,cyan &&
--	cat >expect.colors <<-\EOF &&
-+	test_cmp_colored_graph --pretty=tformat:%s --date-order after-initial after-merge <<-\EOF
- 	* after-initial
- 	<RED>|<RESET> * after-merge
- 	<RED>|<RESET> *<MAGENTA>-<RESET><MAGENTA>-<RESET><CYAN>-<RESET><CYAN>.<RESET>   octopus-merge
-@@ -369,9 +324,6 @@ test_expect_success 'log --graph with unrelated commit and octopus child with co
- 	<RED>|<RESET><RED>/<RESET>
- 	* initial
- 	EOF
--	git log --color=always --graph --date-order --pretty=tformat:%s after-initial after-merge >actual.colors.raw &&
--	test_decode_color <actual.colors.raw | sed "s/ *\$//" >actual.colors &&
--	test_cmp expect.colors actual.colors
- '
- 
- test_done
--- 
-2.25.0
+On 13/02/2020 18:54, Elijah Newren wrote:
+> On Mon, Feb 10, 2020 at 6:27 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
+>>
+>> Hi Elijah
+>>
+>> On 16/01/2020 06:14, Elijah Newren via GitGitGadget wrote:
+>>> From: Elijah Newren <newren@gmail.com>
+>>>
+>>> As established in the previous commit and commit b00bf1c9a8dd
+>>> (git-rebase: make --allow-empty-message the default, 2018-06-27), the
+>>> behavior for rebase with different backends in various edge or corner
+>>> cases is often more happenstance than design.  This commit addresses
+>>> another such corner case: commits which "become empty".
+>>>
+>>> A careful reader may note that there are two types of commits which would
+>>> become empty due to a rebase:
+>>>
+>>>     * [clean cherry-pick] Commits which are clean cherry-picks of upstream
+>>>       commits, as determined by `git log --cherry-mark ...`.  Re-applying
+>>>       these commits would result in an empty set of changes and a
+>>>       duplicative commit message; i.e. these are commits that have
+>>>       "already been applied" upstream.
+>>>
+>>>     * [become empty] Commits which are not empty to start, are not clean
+>>>       cherry-picks of upstream commits, but which still become empty after
+>>>       being rebased.  This happens e.g. when a commit has changes which
+>>>       are a strict subset of the changes in an upstream commit, or when
+>>>       the changes of a commit can be found spread across or among several
+>>>       upstream commits.
+>>>
+>>> Clearly, in both cases the changes in the commit in question are found
+>>> upstream already, but the commit message may not be in the latter case.
+>>>
+>>> When cherry-mark can determine a commit is already upstream, then
+>>> because of how cherry-mark works this means the upstream commit message
+>>> was about the *exact* same set of changes.  Thus, the commit messages
+>>> can be assumed to be fully interchangeable (and are in fact likely to be
+>>> completely identical).  As such, the clean cherry-pick case represents a
+>>> case when there is no information to be gained by keeping the extra
+>>> commit around.  All rebase types have always dropped these commits, and
+>>> no one to my knowledge has ever requested that we do otherwise.
+>>>
+>>> For many of the become empty cases (and likely even most), we will also
+>>> be able to drop the commit without loss of information -- but this isn't
+>>> quite always the case.  Since these commits represent cases that were
+>>> not clean cherry-picks, there is no upstream commit message explaining
+>>> the same set of changes.  Projects with good commit message hygiene will
+>>> likely have the explanation from our commit message contained within or
+>>> spread among the relevant upstream commits, but not all projects run
+>>> that way.  As such, the commit message of the commit being rebased may
+>>> have reasoning that suggests additional changes that should be made to
+>>> adapt to the new base, or it may have information that someone wants to
+>>> add as a note to another commit, or perhaps someone even wants to create
+>>> an empty commit with the commit message as-is.
+>>>
+>>> Junio commented on the "become-empty" types of commits as follows[1]:
+>>>
+>>>       WRT a change that ends up being empty (as opposed to a change that
+>>>       is empty from the beginning), I'd think that the current behaviour
+>>>       is desireable one.  "am" based rebase is solely to transplant an
+>>>       existing history and want to stop much less than "interactive" one
+>>>       whose purpose is to polish a series before making it publishable,
+>>>       and asking for confirmation ("this has become empty--do you want to
+>>>       drop it?") is more appropriate from the workflow point of view.
+>>>
+>>> [1] https://lore.kernel.org/git/xmqqfu1fswdh.fsf@gitster-ct.c.googlers.com/
+>>>
+>>> I would simply add that his arguments for "am"-based rebases actually
+>>> apply to all non-explicitly-interactive rebases.  Also, since we are
+>>> stating that different cases should have different defaults, it may be
+>>> worth providing a flag to allow users to select which behavior they want
+>>> for these commits.
+>>>
+>>> Introduce a new command line flag for selecting the desired behavior:
+>>>       --empty={drop,keep,ask}
+>>> with the definitions:
+>>>       drop: drop commits which become empty
+>>>       keep: keep commits which become empty
+>>>       ask:  provide the user a chance to interact and pick what to do with
+>>>             commits which become empty on a case-by-case basis
+>>>
+>>> In line with Junio's suggestion, if the --empty flag is not specified,
+>>> pick defaults as follows:
+>>>       explicitly interactive: ask
+>>>       otherwise: drop
+>>
+>> Looking at the implementation there is a third option - if `--exec` is
+>> given without `-i` then the default is "keep". I'm not sure if having
+>> different defaults is convenient or confusing but don't feel that
+>> strongly about it.
+> 
+> Heh, in https://lore.kernel.org/git/404424d7-f520-8f89-efef-ca03e66fcd43@gmail.com/
+> you argued that having different defaults was confusing and sounded
+> like you felt strongly about it.  Granted, there has been a lot of
+> simplification to the implementation (and description) since then but
+> I'm still inclined to go with the simpler and more easily explained
+> behavior for the defaults based on what you said there.
 
+I would still prefer a common default but I can see the logic to the 
+defaults you are proposing I just think it makes it hard to explain and 
+it'll end up surprising someone who was expecting a different default. 
+When I said I didn't feel that strongly I meant that it wasn't worth 
+holding up this just for this.
+
+Best Wishes
+
+Phillip
+
+>> I've got a few minor comments below (the mains ones
+>> are saying which commit has been dropped and testing the default
+>> behavior when --empty is not given) but basically I like the new patch.
+>> Thanks for working on this, the commit message does a good job of
+>> explaining the changes.
+> 
+> :-)
+> 
+>>> Signed-off-by: Elijah Newren <newren@gmail.com>
+>>> ---
+>>>    Documentation/git-rebase.txt | 27 ++++++++++++++++---
+>>>    builtin/rebase.c             | 52 ++++++++++++++++++++++++++++++++++++
+>>>    sequencer.c                  | 48 +++++++++++++++++++++++++--------
+>>>    sequencer.h                  |  1 +
+>>>    t/t3424-rebase-empty.sh      | 50 +++++++++++++++++++++++++++++-----
+>>>    t/t3427-rebase-subtree.sh    |  8 +++---
+>>>    6 files changed, 161 insertions(+), 25 deletions(-)
+>>>
+>>> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+>>> index 1d19542d79..551a91d764 100644
+>>> --- a/Documentation/git-rebase.txt
+>>> +++ b/Documentation/git-rebase.txt
+>>> @@ -258,6 +258,22 @@ See also INCOMPATIBLE OPTIONS below.
+>>>        original branch. The index and working tree are also left
+>>>        unchanged as a result.
+>>>
+>>> +--empty={drop,keep,ask}::
+>>> +     How to handle commits that are not empty to start and are not
+>>> +     clean cherry-picks of any upstream commit, but which become
+>>> +     empty after rebasing (because they contain a subset of already
+>>> +     upstream changes).  With drop (the default), commits that
+>>> +     become empty are dropped.  With keep, such commits are kept.
+>>> +     With ask (implied by --interactive), the rebase will halt when
+>>> +     an empty commit is applied allowing you to choose whether to
+>>> +     drop it, edit files more, or just commit the empty changes.
+>>
+>> We should probably document the default for --exec without -i
+> 
+> I did, but I guess it wasn't clear enough.  Maybe I should add "Note
+> that other options like --exec will use the default of drop unless
+> -i/--interactive is specified."?
+> 
+>>> +Note that commits which start empty are kept, and commits which are
+>>> +clean cherry-picks (as determined by `git log --cherry-mark ...`) are
+>>> +always dropped.
+>>> ++
+>>> +See also INCOMPATIBLE OPTIONS below.
+>>> +
+>>>    --keep-empty::
+>>>        No-op.  Rebasing commits that started empty (had no change
+>>>        relative to their parent) used to fail and this option would
+>>> @@ -561,6 +577,7 @@ are incompatible with the following options:
+>>>     * --interactive
+>>>     * --exec
+>>>     * --keep-empty
+>>> + * --empty=
+>>>     * --edit-todo
+>>>     * --root when used in combination with --onto
+>>>
+>>> @@ -569,6 +586,7 @@ In addition, the following pairs of options are incompatible:
+>>>     * --preserve-merges and --interactive
+>>>     * --preserve-merges and --signoff
+>>>     * --preserve-merges and --rebase-merges
+>>> + * --preserve-merges and --empty=
+>>>     * --keep-base and --onto
+>>>     * --keep-base and --root
+>>>
+>>> @@ -585,9 +603,12 @@ commits that started empty, though these are rare in practice.  It
+>>>    also drops commits that become empty and has no option for controlling
+>>>    this behavior.
+>>>
+>>> -The interactive backend keeps intentionally empty commits.
+>>> -Unfortunately, it always halts whenever it runs across a commit that
+>>> -becomes empty, even when the rebase is not explicitly interactive.
+>>> +The interactive backend keeps intentionally empty commits.  Similar to
+>>> +the am backend, by default the interactive backend drops commits that
+>>> +become empty unless -i/--interactive is specified (in which case it
+>>> +stops and asks the user what to do).  The interactive backend also has
+>>> +an --empty={drop,keep,ask} option for changing the behavior of
+>>> +handling commits that become empty.
+>>>
+>>>    Directory rename detection
+>>>    ~~~~~~~~~~~~~~~~~~~~~~~~~~
+>>> diff --git a/builtin/rebase.c b/builtin/rebase.c
+>>> index 537b3241ce..c299869e7b 100644
+>>> --- a/builtin/rebase.c
+>>> +++ b/builtin/rebase.c
+>>> @@ -50,8 +50,16 @@ enum rebase_type {
+>>>        REBASE_PRESERVE_MERGES
+>>>    };
+>>>
+>>> +enum empty_type {
+>>> +     EMPTY_UNSPECIFIED = -1,
+>>> +     EMPTY_DROP,
+>>> +     EMPTY_KEEP,
+>>> +     EMPTY_ASK
+>>> +};
+>>> +
+>>>    struct rebase_options {
+>>>        enum rebase_type type;
+>>> +     enum empty_type empty;
+>>>        const char *state_dir;
+>>>        struct commit *upstream;
+>>>        const char *upstream_name;
+>>> @@ -91,6 +99,7 @@ struct rebase_options {
+>>>
+>>>    #define REBASE_OPTIONS_INIT {                               \
+>>>                .type = REBASE_UNSPECIFIED,             \
+>>> +             .empty = EMPTY_UNSPECIFIED,             \
+>>>                .flags = REBASE_NO_QUIET,               \
+>>>                .git_am_opts = ARGV_ARRAY_INIT,         \
+>>>                .git_format_patch_opt = STRBUF_INIT     \
+>>> @@ -109,6 +118,8 @@ static struct replay_opts get_replay_opts(const struct rebase_options *opts)
+>>>                replay.allow_rerere_auto = opts->allow_rerere_autoupdate;
+>>>        replay.allow_empty = 1;
+>>>        replay.allow_empty_message = opts->allow_empty_message;
+>>> +     replay.drop_redundant_commits = (opts->empty == EMPTY_DROP);
+>>> +     replay.keep_redundant_commits = (opts->empty == EMPTY_KEEP);
+>>>        replay.verbose = opts->flags & REBASE_VERBOSE;
+>>>        replay.reschedule_failed_exec = opts->reschedule_failed_exec;
+>>>        replay.gpg_sign = xstrdup_or_null(opts->gpg_sign_opt);
+>>> @@ -444,6 +455,10 @@ static int parse_opt_keep_empty(const struct option *opt, const char *arg,
+>>>
+>>>        BUG_ON_OPT_ARG(arg);
+>>>
+>>> +     /*
+>>> +      * If we ever want to remap --keep-empty to --empty=keep, insert:
+>>> +      *      opts->empty = unset ? EMPTY_UNSPECIFIED : EMPTY_KEEP;
+>>> +      */
+>>>        opts->type = REBASE_INTERACTIVE;
+>>>        return 0;
+>>>    }
+>>> @@ -1350,6 +1365,29 @@ static int parse_opt_interactive(const struct option *opt, const char *arg,
+>>>        return 0;
+>>>    }
+>>>
+>>> +static enum empty_type parse_empty_value(const char *value)
+>>> +{
+>>> +     if (!strcasecmp(value, "drop"))
+>>> +             return EMPTY_DROP;
+>>> +     else if (!strcasecmp(value, "keep"))
+>>> +             return EMPTY_KEEP;
+>>> +     else if (!strcasecmp(value, "ask"))
+>>> +             return EMPTY_ASK;
+>>> +
+>>> +     die(_("unrecognized empty type '%s'; valid values are \"drop\", \"keep\", and \"ask\"."), value);
+>>> +}
+>>> +
+>>> +static int parse_opt_empty(const struct option *opt, const char *arg, int unset)
+>>> +{
+>>> +     struct rebase_options *options = opt->value;
+>>> +     enum empty_type value = parse_empty_value(arg);
+>>> +
+>>> +     BUG_ON_OPT_NEG(unset);
+>>> +
+>>> +     options->empty = value;
+>>> +     return 0;
+>>> +}
+>>> +
+>>>    static void NORETURN error_on_missing_default_upstream(void)
+>>>    {
+>>>        struct branch *current_branch = branch_get(NULL);
+>>> @@ -1494,6 +1532,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>>>                                 "ignoring them"),
+>>>                              REBASE_PRESERVE_MERGES, PARSE_OPT_HIDDEN),
+>>>                OPT_RERERE_AUTOUPDATE(&options.allow_rerere_autoupdate),
+>>> +             OPT_CALLBACK_F(0, "empty", &options, N_("{drop,keep,ask}"),
+>>> +                            N_("how to handle empty commits"),
+>>
+>> Maybe we should say "how to handle commits that become empty" to
+>> distinguish them from commits that start empty which we always keep
+> 
+> Ooh, good catch; will fix.
+> 
+>>> +                            PARSE_OPT_NONEG, parse_opt_empty),
+>>>                { OPTION_CALLBACK, 'k', "keep-empty", &options, NULL,
+>>>                        N_("(DEPRECATED) keep empty commits"),
+>>>                        PARSE_OPT_NOARG | PARSE_OPT_HIDDEN,
+>>> @@ -1760,6 +1801,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>>>        if (!(options.flags & REBASE_NO_QUIET))
+>>>                argv_array_push(&options.git_am_opts, "-q");
+>>>
+>>> +     if (options.empty != EMPTY_UNSPECIFIED)
+>>> +             imply_interactive(&options, "--empty");
+>>> +
+>>>        if (gpg_sign) {
+>>>                free(options.gpg_sign_opt);
+>>>                options.gpg_sign_opt = xstrfmt("-S%s", gpg_sign);
+>>> @@ -1843,6 +1887,14 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>>>                break;
+>>>        }
+>>>
+>>> +     if (options.empty == EMPTY_UNSPECIFIED) {
+>>> +             if (options.flags & REBASE_INTERACTIVE_EXPLICIT)
+>>> +                     options.empty = EMPTY_ASK;
+>>> +             else if (exec.nr > 0)
+>>> +                     options.empty = EMPTY_KEEP;
+>>> +             else
+>>> +                     options.empty = EMPTY_DROP;
+>>> +     }
+>>>        if (reschedule_failed_exec > 0 && !is_interactive(&options))
+>>>                die(_("--reschedule-failed-exec requires "
+>>>                      "--exec or --interactive"));
+>>> diff --git a/sequencer.c b/sequencer.c
+>>> index c21fc202b1..354d0b5a38 100644
+>>> --- a/sequencer.c
+>>> +++ b/sequencer.c
+>>> @@ -158,6 +158,8 @@ static GIT_PATH_FUNC(rebase_path_strategy, "rebase-merge/strategy")
+>>>    static GIT_PATH_FUNC(rebase_path_strategy_opts, "rebase-merge/strategy_opts")
+>>>    static GIT_PATH_FUNC(rebase_path_allow_rerere_autoupdate, "rebase-merge/allow_rerere_autoupdate")
+>>>    static GIT_PATH_FUNC(rebase_path_reschedule_failed_exec, "rebase-merge/reschedule-failed-exec")
+>>> +static GIT_PATH_FUNC(rebase_path_drop_redundant_commits, "rebase-merge/drop_redundant_commits")
+>>> +static GIT_PATH_FUNC(rebase_path_keep_redundant_commits, "rebase-merge/keep_redundant_commits")
+>>>
+>>>    static int git_sequencer_config(const char *k, const char *v, void *cb)
+>>>    {
+>>> @@ -1483,7 +1485,11 @@ static int is_original_commit_empty(struct commit *commit)
+>>>    }
+>>>
+>>>    /*
+>>> - * Do we run "git commit" with "--allow-empty"?
+>>> + * Should empty commits be allowed?  Return status:
+>>> + *    <0: Error in is_index_unchanged(r) or is_original_commit_empty(commit)
+>>> + *     0: Halt on empty commit
+>>> + *     1: Allow empty commit
+>>> + *     2: Drop empty commit
+>>>     */
+>>>    static int allow_empty(struct repository *r,
+>>>                       struct replay_opts *opts,
+>>> @@ -1492,14 +1498,17 @@ static int allow_empty(struct repository *r,
+>>>        int index_unchanged, originally_empty;
+>>>
+>>>        /*
+>>> -      * Three cases:
+>>> +      * Four cases:
+>>>         *
+>>>         * (1) we do not allow empty at all and error out.
+>>>         *
+>>> -      * (2) we allow ones that were initially empty, but
+>>> -      * forbid the ones that become empty;
+>>> +      * (2) we allow ones that were initially empty, and
+>>> +      *     just drop the ones that become empty
+>>>         *
+>>> -      * (3) we allow both.
+>>> +      * (3) we allow ones that were initially empty, but
+>>> +      *     halt for the ones that become empty;
+>>> +      *
+>>> +      * (4) we allow both.
+>>>         */
+>>>        if (!opts->allow_empty)
+>>>                return 0; /* let "git commit" barf as necessary */
+>>> @@ -1516,10 +1525,12 @@ static int allow_empty(struct repository *r,
+>>>        originally_empty = is_original_commit_empty(commit);
+>>>        if (originally_empty < 0)
+>>>                return originally_empty;
+>>> -     if (!originally_empty)
+>>> -             return 0;
+>>> -     else
+>>> +     if (originally_empty)
+>>>                return 1;
+>>> +     else if (opts->drop_redundant_commits)
+>>> +             return 2;
+>>> +     else
+>>> +             return 0;
+>>>    }
+>>>
+>>>    static struct {
+>>> @@ -1730,7 +1741,7 @@ static int do_pick_commit(struct repository *r,
+>>>        char *author = NULL;
+>>>        struct commit_message msg = { NULL, NULL, NULL, NULL };
+>>>        struct strbuf msgbuf = STRBUF_INIT;
+>>> -     int res, unborn = 0, reword = 0, allow;
+>>> +     int res, unborn = 0, reword = 0, allow, drop_commit;
+>>>
+>>>        if (opts->no_commit) {
+>>>                /*
+>>> @@ -1935,13 +1946,18 @@ static int do_pick_commit(struct repository *r,
+>>>                goto leave;
+>>>        }
+>>>
+>>> +     drop_commit = 0;
+>>>        allow = allow_empty(r, opts, commit);
+>>>        if (allow < 0) {
+>>>                res = allow;
+>>>                goto leave;
+>>> -     } else if (allow)
+>>> +     } else if (allow == 1) {
+>>>                flags |= ALLOW_EMPTY;
+>>> -     if (!opts->no_commit) {
+>>> +     } else if (allow == 2) {
+>>> +             drop_commit = 1;
+>>> +             fprintf(stderr, _("No changes -- Patch already applied.\n"));
+>>
+>> nit pick - usually messages start with a lowercase letter. Would it be
+>> helpful to explicitly state which commit is being dropped as well as
+>> why? Something like
+>>     dropping <oid> <subject> - patch contents already upstream
+> 
+> I was actually just trying to mimic the am-backend here, and copied
+> its message verbatim for this case (see am_run() in builtin/am.c).
+> However, your version does seem more helpful and informative.  I'll
+> look into it implementing it here.
+> 
+>>
+>>> +     } // else allow == 0 and there's nothing special to do
+>>
+>> We don't use // for comments
+> 
+> Oops, sorry.  Will fix.
+> 
+>>
+>>> +     if (!opts->no_commit && !drop_commit) {
+>>>                if (author || command == TODO_REVERT || (flags & AMEND_MSG))
+>>>                        res = do_commit(r, msg_file, author, opts, flags);
+>>>                else
+>>> @@ -2495,6 +2511,12 @@ static int read_populate_opts(struct replay_opts *opts)
+>>>                if (file_exists(rebase_path_reschedule_failed_exec()))
+>>>                        opts->reschedule_failed_exec = 1;
+>>>
+>>> +             if (file_exists(rebase_path_drop_redundant_commits()))
+>>> +                     opts->drop_redundant_commits = 1;
+>>> +
+>>> +             if (file_exists(rebase_path_keep_redundant_commits()))
+>>> +                     opts->keep_redundant_commits = 1;
+>>> +
+>>>                read_strategy_opts(opts, &buf);
+>>>                strbuf_release(&buf);
+>>>
+>>> @@ -2574,6 +2596,10 @@ int write_basic_state(struct replay_opts *opts, const char *head_name,
+>>>                write_file(rebase_path_gpg_sign_opt(), "-S%s\n", opts->gpg_sign);
+>>>        if (opts->signoff)
+>>>                write_file(rebase_path_signoff(), "--signoff\n");
+>>> +     if (opts->drop_redundant_commits)
+>>> +             write_file(rebase_path_drop_redundant_commits(), "%s", "");
+>>> +     if (opts->keep_redundant_commits)
+>>> +             write_file(rebase_path_keep_redundant_commits(), "%s", "");
+>>>        if (opts->reschedule_failed_exec)
+>>>                write_file(rebase_path_reschedule_failed_exec(), "%s", "");
+>>>
+>>> diff --git a/sequencer.h b/sequencer.h
+>>> index c165e0ff25..3b0ab9141f 100644
+>>> --- a/sequencer.h
+>>> +++ b/sequencer.h
+>>> @@ -39,6 +39,7 @@ struct replay_opts {
+>>>        int allow_rerere_auto;
+>>>        int allow_empty;
+>>>        int allow_empty_message;
+>>> +     int drop_redundant_commits;
+>>>        int keep_redundant_commits;
+>>>        int verbose;
+>>>        int quiet;
+>>> diff --git a/t/t3424-rebase-empty.sh b/t/t3424-rebase-empty.sh
+>>> index 22d97e143b..dcb4cb4751 100755
+>>> --- a/t/t3424-rebase-empty.sh
+>>> +++ b/t/t3424-rebase-empty.sh
+>>> @@ -34,7 +34,7 @@ test_expect_success 'setup test repository' '
+>>>        git commit -m "Five letters ought to be enough for anybody"
+>>>    '
+>>>
+>>> -test_expect_failure 'rebase (am-backend) with a variety of empty commits' '
+>>> +test_expect_failure 'rebase (am-backend)' '
+>>>        test_when_finished "git rebase --abort" &&
+>>>        git checkout -B testing localmods &&
+>>>        # rebase (--am) should not drop commits that start empty
+>>> @@ -45,11 +45,29 @@ test_expect_failure 'rebase (am-backend) with a variety of empty commits' '
+>>>        test_cmp expect actual
+>>>    '
+>>>
+>>> -test_expect_failure 'rebase --merge with a variety of empty commits' '
+>>> -     test_when_finished "git rebase --abort" &&
+>>> +test_expect_success 'rebase --merge --empty=drop' '
+>>>        git checkout -B testing localmods &&
+>>> -     # rebase --merge should not halt on the commit that becomes empty
+>>> -     git rebase --merge upstream &&
+>>> +     git rebase --merge --empty=drop upstream &&
+>>> +
+>>> +     test_write_lines D C B A >expect &&
+>>> +     git log --format=%s >actual &&
+>>> +     test_cmp expect actual
+>>> +'
+>>> +
+>>> +test_expect_success 'rebase --merge --empty=keep' '
+>>> +     git checkout -B testing localmods &&
+>>> +     git rebase --merge --empty=keep upstream &&
+>>> +
+>>> +     test_write_lines D C2 C B A >expect &&
+>>> +     git log --format=%s >actual &&
+>>> +     test_cmp expect actual
+>>> +'
+>>> +
+>>> +test_expect_success 'rebase --merge --empty=ask' '
+>>> +     git checkout -B testing localmods &&
+>>> +     test_must_fail git rebase --merge --empty=ask upstream &&
+>>> +
+>>> +     git rebase --skip &&
+>>>
+>>>        test_write_lines D C B A >expect &&
+>>>        git log --format=%s >actual &&
+>>> @@ -58,9 +76,27 @@ test_expect_failure 'rebase --merge with a variety of empty commits' '
+>>>
+>>>    GIT_SEQUENCE_EDITOR=: && export GIT_SEQUENCE_EDITOR
+>>>
+>>> -test_expect_success 'rebase --interactive with a variety of empty commits' '
+>>> +test_expect_success 'rebase --interactive --empty=drop' '
+>>> +     git checkout -B testing localmods &&
+>>> +     git rebase --interactive --empty=drop upstream &&
+>>> +
+>>> +     test_write_lines D C B A >expect &&
+>>> +     git log --format=%s >actual &&
+>>> +     test_cmp expect actual
+>>> +'
+>>> +
+>>> +test_expect_success 'rebase --interactive --empty=keep' '
+>>> +     git checkout -B testing localmods &&
+>>> +     git rebase --interactive --empty=keep upstream &&
+>>> +
+>>> +     test_write_lines D C2 C B A >expect &&
+>>> +     git log --format=%s >actual &&
+>>> +     test_cmp expect actual
+>>> +'
+>>> +
+>>> +test_expect_success 'rebase --interactive --empty=ask' '
+>>>        git checkout -B testing localmods &&
+>>> -     test_must_fail git rebase --interactive upstream &&
+>>> +     test_must_fail git rebase --interactive --empty=ask upstream &&
+>>>
+>>>        git rebase --skip &&
+>>
+>> As the default if --empty is not given is supposed to vary depending on
+>> the other options given it would be good to test that I think
+> 
+> I'll add some tests.
+> 
+> 
+> Thanks for the thorough review!
+> Elijah
+> 
