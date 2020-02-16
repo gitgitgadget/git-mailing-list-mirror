@@ -2,116 +2,164 @@ Return-Path: <SRS0=2Qsv=4E=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B1E7C3B1BF
-	for <git@archiver.kernel.org>; Sun, 16 Feb 2020 21:16:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8035BC7619E
+	for <git@archiver.kernel.org>; Sun, 16 Feb 2020 21:39:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id F24CC2072C
-	for <git@archiver.kernel.org>; Sun, 16 Feb 2020 21:16:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4BD5C2084E
+	for <git@archiver.kernel.org>; Sun, 16 Feb 2020 21:39:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Obyfa3Y6"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CvlhkPgC"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727723AbgBPVQK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 16 Feb 2020 16:16:10 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:34354 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726020AbgBPVQJ (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 16 Feb 2020 16:16:09 -0500
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 6DFAA6048E;
-        Sun, 16 Feb 2020 21:16:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1581887768;
-        bh=UGHbDV20dYoYV+e8AKgOEx8kpEqsibqJs9JvbGWQryc=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=Obyfa3Y6sZZQ+GqGluSZGkrqYx1EoxCS72N/qgAvbFmgSkw8zOaYy5gmb9aES5KKq
-         hXRSO37EStPemxeu+mI7P5umeP6tuWUI2aXOJRT7hZNtgU4J2F+JK/siClNIxinRGE
-         4F63EGlYcetr3pUsd2SvLwCpC/RiynRtCp2xXyccOmuzdeVYleSNCPu4Tcm9jXQoH+
-         EjYqetMt+8M8s6w5eznkVC+nJsFYuZW4ov4acZNv1EHrP09c68RJ1Nfeh8ABvQPQrf
-         chBEubjs+SK6nw7fYnG8+M1MCd1WGSbVq05OhjifT9Ulqaeqyub3wgvFdkXSCahi8f
-         P6De/VtDQzxQizRw+1ZRzcSy8dHVn6YNj66P+cvcANOBmDPNvBnlp6yI0ZWFtx3/+b
-         3xXHqJKMjvQLVHyRjLxQi/Ob8wYc2rpnhsompupJznzs0TQN6wbd3Dsjcar0r3hGLl
-         +TvH8eCdb3NcBZTq6QSZFAbXpvG4z/AaUuRPjhLAY+PxArr85Fa
-Date:   Sun, 16 Feb 2020 21:16:04 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     lyle.ziegelmiller@gmail.com
-Cc:     git@vger.kernel.org
-Subject: Re: ! [remote rejected] master -> master (unpacker error)
-Message-ID: <20200216211604.GE6134@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        lyle.ziegelmiller@gmail.com, git@vger.kernel.org
-References: <000001d5e4e3$91ffb0a0$b5ff11e0$@gmail.com>
+        id S1726245AbgBPVjP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 16 Feb 2020 16:39:15 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:56058 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726036AbgBPVjP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 16 Feb 2020 16:39:15 -0500
+Received: by mail-wm1-f68.google.com with SMTP id q9so15228086wmj.5
+        for <git@vger.kernel.org>; Sun, 16 Feb 2020 13:39:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=3ut+zzuNw5A43I9v+2Qn46rQb2uhSvRXnz2OEh0owEo=;
+        b=CvlhkPgCknKowVsdyKurFfySHHfyfbPcUiXZUUduRn80jREfMPp7ucaDNNK+AoIwip
+         7/Wn7D8eGSh6AjA2HDf0PLtvQ9bE3gcLjqyBaNFtFCm9LtSYegFoFm9g+eppMvgJ1iSa
+         j8LPFndjm9jo10h+72RsxtpD3lqjv3j+opBzjUo4zv519XUjYA/g07hn3N0YcfsYiIav
+         VSozfgp8mvkXFhg2uVsm8lHCXtCJ0h+lidBGYpuxu2/mnMKGgH4fNdHfI0MMHVMrlXuQ
+         fUKOoyXOMtA3ADQW8QdJ8Ff7lYORUmbcJpsOoJXeamt8PEDxTxfMjBr2hj/8WhIEnPTX
+         cyvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=3ut+zzuNw5A43I9v+2Qn46rQb2uhSvRXnz2OEh0owEo=;
+        b=b+e0FI5pAvLDmWNJVfZU5OJYoZRJy1Zh7wgbkTNmjoA+9pRbhrCpUB20pDpNOQmISm
+         i5IbiGjvHNikgiYS4HrihQM52BSi9k08Wl/psDUry/kp3kCqnmdA+JSD1xlAmmbrAni2
+         SHAIVMUER7FXty2Ckc0lVkM7c3YmZQalCql5iebUhb8Mregzkb6eX2vTI7QLgUU9NlIl
+         KHeqFbH3bBkB3TKkCEuGRoCpPQs5CyQVPISV/Nlqdz0UWO29lQ+CBFCf2KxXtpkPX7OY
+         zEyrU0Wis73EUcy1aPHegVqEwlZHHRVkyjzOZSRjURaNU8DwlKwp9ygBuY2h0S7rECZ1
+         IcMg==
+X-Gm-Message-State: APjAAAWNA9+G18mW88h4XgziLVJUUo/tAaGiDBuNX1sie3NoQLfUtRrR
+        o8WOvtcIGQp03PDPgVTiHRBRBcjy
+X-Google-Smtp-Source: APXvYqyLsrBAm/CKewys3uyqc2Mh7s/XYGv4ArlSWOl6aUUw+u6DGgnsyiQT2uHVcI7AVHeIm7OI+Q==
+X-Received: by 2002:a05:600c:54e:: with SMTP id k14mr17158770wmc.115.1581889152730;
+        Sun, 16 Feb 2020 13:39:12 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id l132sm18372280wmf.16.2020.02.16.13.39.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 16 Feb 2020 13:39:12 -0800 (PST)
+Message-Id: <3e4f52e55268727815990b9a96daffc365bd99e0.1581889150.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.548.v2.git.1581889150.gitgitgadget@gmail.com>
+References: <pull.548.git.1581311049547.gitgitgadget@gmail.com>
+        <pull.548.v2.git.1581889150.gitgitgadget@gmail.com>
+From:   "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sun, 16 Feb 2020 21:39:09 +0000
+Subject: [PATCH v2 2/2] advice: extract vadvise() from advise()
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="lteA1dqeVaWQ9QQl"
-Content-Disposition: inline
-In-Reply-To: <000001d5e4e3$91ffb0a0$b5ff11e0$@gmail.com>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.4.0-4-amd64)
+To:     git@vger.kernel.org
+Cc:     Heba Waly <heba.waly@gmail.com>, Heba Waly <heba.waly@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Heba Waly <heba.waly@gmail.com>
 
---lteA1dqeVaWQ9QQl
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+extract a version of advise() that uses an explict 'va_list' parameter.
+Call it from advise() and advise_if_enabled() for a functionally
+equivalent version.
 
-On 2020-02-16 at 16:10:12, lyle.ziegelmiller@gmail.com wrote:
-> Hi
->=20
-> Any updates on this error I emailed a while back?
->=20
-> lylez@LJZ-DELLPC ~/python
-> $ git push
-> Enumerating objects: 5, done.
-> Counting objects: 100% (5/5), done.
-> Delta compression using up to 4 threads
-> Compressing objects: 100% (2/2), done.
-> Writing objects: 100% (3/3), 279 bytes | 23.00 KiB/s, done.
-> Total 3 (delta 1), reused 0 (delta 0)
-> remote: fatal: not a git repository: '.'
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+Signed-off-by: Heba Waly <heba.waly@gmail.com>
+---
+ advice.c | 45 +++++++++++++++++++--------------------------
+ 1 file changed, 19 insertions(+), 26 deletions(-)
 
-This error is telling you that Git doesn't think the remote location is
-a Git repository.  It could be because it really isn't one, or it could
-be that the permissions are wrong.
-
-It could also be that the repository is mostly there but very slightly
-corrupt and therefore can't be detected as one.  For example, it could
-be missing its HEAD reference.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---lteA1dqeVaWQ9QQl
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.19 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl5JsRQACgkQv1NdgR9S
-9ouP+hAAxQdRGhHBJjSdGiJxigCrTvkDIx91WWDJLGrfic1WJKUNZHFvxqbdaoM1
-YNkfonIvpXiazQpXYpJWfcN3aeskt87zDUnY8RZ41NeWK6Fi4tDm6XgLNN1M7g/H
-VyzRWlgEfgrVRIE6xeVzqIkImX8M2+VnZuOO+rSIY08jU4GMyj44VzjTLUVOtslL
-BLXMtTDfSKdsBWquplh3+P63ZOoU3UdtQAT8ogcrjGqygcRrH3O5p4w1h1iqqv4L
-zv38GFYWVgjQFXAJ7xUix+M/dpqBYZ1FNUPTRB21Md6eBx0eovlJm+TIr4ylFKBw
-xA0lh4Y7qi0g5VexQke4zmdwPMMVXE0hVVl57TeJJzu+nTqS6LYHlwGRkdZDxnTG
-Cvzd7EtgKaDM7sWFZVjjl+8PdpPbNsE/vAhNEQKppyK8U017/0GnbDvZ4epzIfyU
-ZNzV7iTWA24p/SAxhgpjmUAjPtuSD0mzTX3gSfQH60VavAMKiAvJDztzAxqtMqq9
-Lve41SyJTiTiQcfr4SrKKpJmuV/Alc1BGKzq240u5PIbqoYWk5B+nirceHY4sbUH
-zJ1uQHY8l3ImEbg/umh3EXTaOXsn6hT5bPkvB73CYwomOnD40x2xfd+4tcofOMtv
-NC42ClQt3NQUiZ3Th2wvDHsgI+bjYVEE3tdTN2QPz3QaofZbXfY=
-=4M5/
------END PGP SIGNATURE-----
-
---lteA1dqeVaWQ9QQl--
+diff --git a/advice.c b/advice.c
+index 8cedc649afa..6c0be19a7c5 100644
+--- a/advice.c
++++ b/advice.c
+@@ -128,15 +128,20 @@ static const char *advice_config_keys[] = {
+ 	[SUBMODULE_ALTERNATE_ERROR_STRATEGY_DIE] = "submoduleAlternateErrorStrategyDie"
+ };
+ 
+-void advise(const char *advice, ...)
++static const char turn_off_instructions[] =
++N_("\n"
++   "Disable this message with \"git config %s false\"");
++
++static void vadvise(const char *advice, va_list params,
++		    int display_instructions, char *key)
+ {
+ 	struct strbuf buf = STRBUF_INIT;
+-	va_list params;
+ 	const char *cp, *np;
+ 
+-	va_start(params, advice);
+ 	strbuf_vaddf(&buf, advice, params);
+-	va_end(params);
++
++	if(display_instructions)
++		strbuf_addf(&buf, turn_off_instructions, key);
+ 
+ 	for (cp = buf.buf; *cp; cp = np) {
+ 		np = strchrnul(cp, '\n');
+@@ -165,37 +170,25 @@ int advice_push_update_rejected_enabled(void)
+ 	
+ }
+ 
+-static const char turn_off_instructions[] =
+-N_("\n"
+-   "Disable this message with \"git config %s false\"");
++void advise(const char *advice, ...)
++{
++	va_list params;
++	va_start(params, advice);
++	vadvise(advice, params, 0, "");
++	va_end(params);
++}
+ 
+ void advise_if_enabled(enum advice_type type, const char *advice, ...)
+ {
+-	struct strbuf buf = STRBUF_INIT;
+-	char *key = xstrfmt("%s.%s", "advice", advice_config_keys[type]);
+ 	va_list params;
+-	const char *cp, *np;
+-	
++	char *key = xstrfmt("%s.%s", "advice", advice_config_keys[type]);
++
+ 	if(!advice_enabled(type))
+ 		return;
+ 
+ 	va_start(params, advice);
+-	strbuf_vaddf(&buf, advice, params);
++	vadvise(advice, params, 1, key);
+ 	va_end(params);
+-
+-	strbuf_addf(&buf, turn_off_instructions, key);
+-	
+-	for (cp = buf.buf; *cp; cp = np) {
+-		np = strchrnul(cp, '\n');
+-		fprintf(stderr,	_("%shint: %.*s%s\n"),
+-			advise_get_color(ADVICE_COLOR_HINT),
+-			(int)(np - cp), cp,
+-			advise_get_color(ADVICE_COLOR_RESET));
+-		if (*np)
+-			np++;
+-	}
+-	strbuf_release(&buf);
+-
+ }
+ 
+ int git_default_advice_config(const char *var, const char *value)
+-- 
+gitgitgadget
