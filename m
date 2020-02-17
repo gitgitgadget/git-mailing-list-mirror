@@ -7,70 +7,95 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 453D9C34022
-	for <git@archiver.kernel.org>; Mon, 17 Feb 2020 18:24:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BFF8C34022
+	for <git@archiver.kernel.org>; Mon, 17 Feb 2020 18:42:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1F97C20836
-	for <git@archiver.kernel.org>; Mon, 17 Feb 2020 18:24:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 067D622525
+	for <git@archiver.kernel.org>; Mon, 17 Feb 2020 18:42:00 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lwfCVvsC"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z1ukGEUj"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728543AbgBQSYi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Feb 2020 13:24:38 -0500
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:38179 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726833AbgBQSYi (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Feb 2020 13:24:38 -0500
-Received: by mail-pg1-f193.google.com with SMTP id d6so9626130pgn.5
-        for <git@vger.kernel.org>; Mon, 17 Feb 2020 10:24:37 -0800 (PST)
+        id S1727283AbgBQSl7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Feb 2020 13:41:59 -0500
+Received: from mail-ot1-f65.google.com ([209.85.210.65]:32866 "EHLO
+        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726781AbgBQSl6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Feb 2020 13:41:58 -0500
+Received: by mail-ot1-f65.google.com with SMTP id w6so7851444otk.0
+        for <git@vger.kernel.org>; Mon, 17 Feb 2020 10:41:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=a0TTq9nLYTjLUkxrNaYn/xFOa34bEook14Ag/+A7/3A=;
-        b=lwfCVvsCzlVD32kmSBd7U41LrPlNpmCzTKSDJ4nMh4Ve2q5rU9npqseu/9HEFsiQTH
-         6OJQbNDlRncBW10bLn/6TkD6mKuSaNpP6T5QJkWH8XtOu6VvkQj000idh7FZ1ln9dmql
-         iTyrw245WXY9ztoPpPlVXQRgFOzKUG2XSDlRx7UAwy6AOOhaLIEI7mY7M2hD5Po9rfob
-         CpgbwVVr5uKuveuPEke7ApVUVA7+tgR5QvM2UvS3NIUMXKJOBDx6PE7koTlSXJzJ9lCq
-         lyRQ0kymbdddV1Oybc62vDA1OYbAqDrOUjE9DVz/2oHXxBgDH2pHc3SBor8o48KDYvbR
-         J9dQ==
+        bh=uDRJl9pxJUCBScoVA4nqzlbjb6WYQWR3bdNjzJQMsRY=;
+        b=Z1ukGEUjTqStZXE3xXP9lfMNHC50vGvcRVx2XQOxg4fmSomi7325U3QBs6N5yXVaEx
+         O6cuZAXAWeq/A4hGG0UV2YOHLgtr/4LS7ZHioB5BiSrnMdAqd1jKrAUyHY8T0ndNZMgl
+         OUVOn7wHL/OeA5iVDoQfUv1iX7Wk5Vf7cJltx01ovMDc0HY8N4i2VVe+91Us9mBSmjRi
+         Fn3oeNZPzh84w0/LZm4VBHr61anXCpKuSg3YvblKXAAyPtQ0Hex4I+D97l0/fWv0lOGi
+         gAUbfbtkrg25u/3oaX2NUXEHTkm8DZ6EfXnd23Wx2Gj8SScUSeRumjthNb1cTM99SUgz
+         kpCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=a0TTq9nLYTjLUkxrNaYn/xFOa34bEook14Ag/+A7/3A=;
-        b=lKuO41fCrGsAWA2/WiwPKanM4NJcUttiUeYQowp4B/UlTCo9Yjs9jsJI2CdRKR23oC
-         HplFg53UBGtJKtWF1oftHoMvif/PFzrDYB6hxYo3w/aC4zXLKqOck3ysy/XRwo+GhOx3
-         QTdQFKmyeHdAekqDQbMbipy65qlQRQyQ9BPRYUrtCvN0eGCEaOXZ5UnrNvrFX5N2gNdq
-         BLF2tqbzjlwA+sngt1icL71He9x2PnA13//a5+9vcw3fd1OGQnBJJEDETZehg0YFfP+J
-         FoJAma1gGTqZEU9REgXu2Q+PRVwzh0+8n2N6joparZAARicUpgpo2+HzH0uQhtgLd46l
-         6/oA==
-X-Gm-Message-State: APjAAAVTE7AG2QaiW4XHb/6rxL/0gwGRoGlcqWTcmHqWBUXkZuepHfhJ
-        L1N1v0lyTN8uZeDwD0HD03YEFZNupl57t8482Cs=
-X-Google-Smtp-Source: APXvYqwNjETGLTfjunHf3jqm5SXsXjlMtE6Xm7icuniPK7nT/FukkLU6Za2/vZeYrpwNbFMAKnpkU7qD8x6YLOOd950=
-X-Received: by 2002:aa7:848c:: with SMTP id u12mr16862225pfn.12.1581963877409;
- Mon, 17 Feb 2020 10:24:37 -0800 (PST)
+        bh=uDRJl9pxJUCBScoVA4nqzlbjb6WYQWR3bdNjzJQMsRY=;
+        b=Ex8ULdUJU85RB+XoCaDnrMw5iPgUWfimUuqv6CiEOlRdK6keGSt531w1XzUAe677m7
+         TKWpnbrXyCOxo7zlg6fYK1hxvMCW1PbH+uzMXxENKsmUwa8YhC4dy92MDu5YRqoIUYbe
+         9lVn9Fx7/5p5Qu0Kw+2Db9rr536AKALxZBhYhegyZ58Gw4yyQE/9HthU2NL9vc5Acss9
+         WoDtT+fS9uap4q92xoO0JzXRP/ZxzW8AZtb1A0gECgaDNsl82sXe11o9mGLBSvIeuAK6
+         2TegQSiOdlMp7Cm1PFPNTOTc9lZYgFGdwXkLyTrAu+28BdKWWZXohkGVgl3InSqEOGmH
+         TA/A==
+X-Gm-Message-State: APjAAAULdq4hh5TxqD2Npxj/SspLoNCdVmO6gvHC+L+Ls2Vq3sNgNiT3
+        NUE/ylee9XWGIf1HZ2dqlzdOc2Nxfi3RI6NQkKk=
+X-Google-Smtp-Source: APXvYqynDEVOgvbkc+pj3X4PjrcHt+8k5z5YzxiqyBn8MR76V2AjFhRtAKwb7sTYYk9+j77gnb1Kv+0JQbr2QpNF5+M=
+X-Received: by 2002:a9d:6457:: with SMTP id m23mr13373707otl.162.1581964917913;
+ Mon, 17 Feb 2020 10:41:57 -0800 (PST)
 MIME-Version: 1.0
-References: <cover.1580430057.git.me@ttaylorr.com> <cover.1581486293.git.me@ttaylorr.com>
-In-Reply-To: <cover.1581486293.git.me@ttaylorr.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Mon, 17 Feb 2020 19:24:26 +0100
-Message-ID: <CAN0heSrAr0i=JQ5ARqCJzsRo2+L2NFAjBwTEEq-fE=ObT4=Ykw@mail.gmail.com>
-Subject: Re: [PATCH v3 0/3] builtin/commit-graph.c: new split/merge options
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Junio C Hamano <gitster@pobox.com>
+References: <pull.711.git.git.1581956106255.gitgitgadget@gmail.com> <xmqqimk5ks39.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqimk5ks39.fsf@gitster-ct.c.googlers.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 17 Feb 2020 10:41:47 -0800
+Message-ID: <CABPp-BEbojaeYkSMR7vntW0SkWf6dVOko5H=jqT-Yv2USRerxA@mail.gmail.com>
+Subject: Re: [PATCH] check-ignore: fix handling with negated patterns
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 12 Feb 2020 at 06:47, Taylor Blau <me@ttaylorr.com> wrote:
-> I picked up a couple of ASCIIDoc changes along the
-> way, and a range-diff is included below.
+On Mon, Feb 17, 2020 at 10:05 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> > From: Elijah Newren <newren@gmail.com>
+> >
+> > check-ignore was meant to check ignore rules the same way git status and
+> > other commands would, and to report whether a path is excluded.  It
+> > failed to do this (and generated a few bug reports), however, because it
+> > did not account for negated patterns.
+>
+> I suspect that the above distorts history.  IIRC, it was meant as a
+> tool to see which exact pattern in the exclude sequence had the
+> final say for the given needle, written primarily as a debugging
+> aid.  In that context, "This rule has the final say", whether the
+> rule is a negative or positive, still means something.
 
-Yup, this fixes the documentation misrendering from the previous round.
+I can reword it; how does the following sound?
 
-Martin
+check-ignore claims that it reports whether each path it is given is
+excluded.  However, it fails to do so because it did not account for
+negated patterns.
+
+
+Also, I think the "This rule has the final say" functionality of the
+tool might still be useful, so I kept it -- see my updates to the
+--verbose flag (mentioned later in the commit message).
+
+> It is just the behavior is _much_ less useful for those who want to
+> know what the final say is, and I tend to agree that we probably are
+> better off changing its output to reflect "so, are we ignoring the
+> path after all? yes/no?" because we are pretty much done with
+> debugging the exclude API implementation.
