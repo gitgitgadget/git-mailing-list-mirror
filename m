@@ -2,275 +2,227 @@ Return-Path: <SRS0=dbxk=4F=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CE00EC34022
-	for <git@archiver.kernel.org>; Mon, 17 Feb 2020 21:56:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FDD0C34022
+	for <git@archiver.kernel.org>; Mon, 17 Feb 2020 22:01:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 9A5F720836
-	for <git@archiver.kernel.org>; Mon, 17 Feb 2020 21:56:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 563D920801
+	for <git@archiver.kernel.org>; Mon, 17 Feb 2020 22:01:16 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Zjf2D9fQ"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="d4UvX2/p"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730016AbgBQV4V (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Feb 2020 16:56:21 -0500
-Received: from mail-lf1-f67.google.com ([209.85.167.67]:44618 "EHLO
-        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729204AbgBQV4V (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Feb 2020 16:56:21 -0500
-Received: by mail-lf1-f67.google.com with SMTP id v201so12895943lfa.11
-        for <git@vger.kernel.org>; Mon, 17 Feb 2020 13:56:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:message-id:user-agent
-         :mime-version;
-        bh=H6IYYD6du1pQKykKFvkyuHo6biyNv8EOXu+5rRzTMfA=;
-        b=Zjf2D9fQylbfjRv1WNTk7/81DjbpAzQS7Pi6M8XkKaPM1111leG9o0b7C43mMLE7GW
-         NR+++NaiQ9LkKVc0nlo6ueYCCgJRDStv76GF8+sl0+Lcs/uqv4ns1dZDO7SWHrjJqoxv
-         EzImgJVkHhg5BH6riEfZ10TZUDWtRmmdSehIvtBD1pWWuNxmMOqQfg2c6/XKjU2aw4NC
-         sQYWypdQhi5dMCXqOPwttJyVJiSGiCR1zYHzpvLnK/MYQMVNup6/alg8RZnY3cLm12CW
-         CGE2rKSlZc54ecb90dZ23jkEdDkcy0GTgLnAEJ6reYHfFv1ceSxoGVqN0FaRLdSPOtj9
-         5trA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:message-id
-         :user-agent:mime-version;
-        bh=H6IYYD6du1pQKykKFvkyuHo6biyNv8EOXu+5rRzTMfA=;
-        b=arHMN/+stXYEFLsmtfEbKH4McjABm2tEUxtbgCiGPsLCOcsQLrgJIK7lQwda9WJrgi
-         CaMiQy7k6O1Bj8D8hrXtIk/SXSeRnX1LvTtTSl50XiIuBJkZXIHq5CD0FwnhERJe8bLD
-         FELDdjUaYT+7t3Aum811CcW/OVN2zOcB8IU4VKMu2XgnMeQ0AR6GHrAkW9Jos68JXsft
-         L6kiHp2FiwOxTF2J7xnDL2Jq2XLzGwMScasvqps83/XDBAiG/hKM4UzEgR0/GY/Xk/Hl
-         eNjVTcMs3B1NfTiMiiT19tet/PDXbA8T1BqLflP6+JqyO1szbPCv5+Vqe26nKd4LRTWw
-         naSA==
-X-Gm-Message-State: APjAAAVEGDAmdFZZLXQXV6YGucEUvi2MMBPqx5nd09BloQe/VfyoPEWP
-        F1tYmhcl35MUNv0Xs/+P+DE=
-X-Google-Smtp-Source: APXvYqxB8gqU2ac8ROieakZS+83BhOtWVK2NueDu6I9/rP/JyP3BILkosjzlcjT0M2xFh+umfLUH/w==
-X-Received: by 2002:a19:2351:: with SMTP id j78mr8921499lfj.173.1581976578026;
-        Mon, 17 Feb 2020 13:56:18 -0800 (PST)
-Received: from Laptop-Acer-Aspire-F15 (host-89-229-7-83.dynamic.mm.pl. [89.229.7.83])
-        by smtp.gmail.com with ESMTPSA id f16sm984503lfm.40.2020.02.17.13.56.16
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 17 Feb 2020 13:56:17 -0800 (PST)
-From:   Jakub Narebski <jnareb@gmail.com>
-To:     "Garima Singh via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
-        Garima Singh <garimasigit@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Emily Shaffer <emilyshaffer@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Garima Singh <garima.singh@microsoft.com>
-Subject: Re: [PATCH v2 04/11] commit-graph: compute Bloom filters for changed paths
-References: <pull.497.git.1576879520.gitgitgadget@gmail.com>
-        <pull.497.v2.git.1580943390.gitgitgadget@gmail.com>
-        <c17bbcbc66ea77bb480391804d1f2db66ffa0926.1580943390.git.gitgitgadget@gmail.com>
-Date:   Mon, 17 Feb 2020 22:56:12 +0100
-Message-ID: <86k14klvyb.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
+        id S1726025AbgBQWBP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Feb 2020 17:01:15 -0500
+Received: from mout.gmx.net ([212.227.17.20]:59615 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725873AbgBQWBP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Feb 2020 17:01:15 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1581976872;
+        bh=yFtqWl/Tx1sRt5zdRGEux6KoL40EpJFPBU8h6lgDbG0=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=d4UvX2/psTqD44UTUwGzUzCXDXRhg3OMxcVsXFbPthbZjZoBU4KGchO/ku/lYIOtU
+         VDSZSg8WVvB2sttNp0eF+D8KqVcoY8/HzKZFPJYgmAxG7HoHFWgeGYWG28Pt0+0E/Z
+         UIVLM+WSkuTGl1+axssDPfGX9jQFqXVjV7nqzz3E=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.86]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Msq6C-1jJPUl34O0-00tDXa; Mon, 17
+ Feb 2020 23:01:11 +0100
+Date:   Mon, 17 Feb 2020 23:00:55 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Christian Couder <christian.couder@gmail.com>
+cc:     Miriam Rubio <mirucam@gmail.com>, git <git@vger.kernel.org>,
+        Pranit Bauva <pranit.bauva@gmail.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Tanushree Tumane <tanushreetumane@gmail.com>
+Subject: Re: [PATCH 12/29] bisect--helper: reimplement `bisect_next` and
+ `bisect_auto_next` shell functions in C
+In-Reply-To: <CAP8UFD1UBPwYLUEdUJj3k1Yj0Y9dD6RyGh1dFL=wsSNihErqZQ@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2002172245430.46@tvgsbejvaqbjf.bet>
+References: <20200120143800.900-1-mirucam@gmail.com> <20200120143800.900-13-mirucam@gmail.com> <nycvar.QRO.7.76.6.2001301619340.46@tvgsbejvaqbjf.bet> <CAP8UFD1UBPwYLUEdUJj3k1Yj0Y9dD6RyGh1dFL=wsSNihErqZQ@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:rZLqWqtDbOJvjj5fZFCK2tg7p6juS+uySQExSVnPTa9iYH3A2p9
+ pkVSxUijwLq2H6Cgqarbb8c5BwKUr37ASfujJQWrXY/SKi9Wnma+6pEIh2Tr0blpClyGJER
+ K7/NC0ajBDHTY74E5w18cOSdgVTwLQEmBysm3Zk1wniSFnoMFs/holWj1avELwfTt0fgiou
+ Ehc5WmcoaL/AQIho7KAmQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:2QkeQa9pMWE=:7JfS8wNYs9Tb/mxXqGSVIC
+ TxkYNEj9HwlV6hoZ3ZCdyTwW6eIdghc3mhqc+glAnEQXzkZ7fPObaYZbTSu2fYnTnA30pv9al
+ 7IPg9xOwycHNvtA1Y8tOJSfFsY0s1/RvfUyD+uNQ8vMVWXbBWQjkTbzJDmm2Eed0nfYpebL9x
+ cWZbQom8IQ0+NQ7eHNHrcs6bxogVkeEXKD2u6oiITkkR9qhjIgwuYxBlc6Tv4vk7JKwlkCPNO
+ wmannDdgVIxTaTuTp/2DtS+NEL9ozY8L9vMlVLiSzo1M6Tbh9211nltLHdxynITA1IqfU3GJx
+ jTvvxrZawwar/id3lQdwLTBMtOzGD5zSJ4ePQv4cUUwV+rFvzBbyGAVOumymDbgIL0XHKtaMA
+ tEfr6eom1iysAGlRqdzRcDNJfDkY7JakFYDvl0ov5X6Loq48wQKWOP7qxnoEqx9ZLR1D+RWj7
+ E3QovFq+ehZxeOAqHx4T+sNvrMqL6NPNNpXA/Cg2PZdZMFqlvwUaoKUMuFYUnRraQ4H3uhNC+
+ imgYMSTu19Vf6c3KSxKNggmgPugtWFnBvFZQIGEuNyTfHcSO/PzjGys0T23iCwluATM2/jJ2O
+ xCY06J3ViIN/G3N3fAKmrB+IvMshxs2KMkpTROM96vqxvHYF/rxEyWMH/+7WtT92MQQzzUKfL
+ P0OtY75gVdDF0PwUn17Uy0w8koflIwRElz6YoUDZYFhqOl+K/u/+8YlDa9ORpgHdzolz/Ye7k
+ R8TlP7xUj1YUpej3uUN1ZWHdck4Y0re3B/oFztDr+h4JbYMYxwSPXlCi6HcQoIwIWJSWMSuyN
+ PABOI3+oY598+WCGNnZrHpO4QUpnpWquY6jG+vaYEADrjRb9vnPesIiFK+su+0PF4uO5kInr6
+ Gdkm38Os+JJ++OtAJtdw2OfRx8BQ5uvuYf+wCRti8XAlYeQsLcXPtKs6wIBNfnQsfHXSNcN4E
+ TyBNg7y1xo/W8wISvwCjZvOHciV1VEU3aptub11G7a1KY1DwQ0C2t8XirkOP6LzS8sMrn2+fR
+ B9HEi4ETvwPOI9VzA7T72XxvLNPpJ8fxhBhfcBVsq3KQRjb5bgTzoSgXwzzzemZbuoVc4Y0Rz
+ U9I64/RNSiPTyTGlvlZ3UZ+Y/DHToXb9hxs5YJ3BXZoEeZ43sgMUzJEMd616JB873qTQu/jNa
+ h6c489e44rUc+wtfcpv1Q5wXEeRROQHCukrKOteX/RAJJDZ+SNmw88DrptJsNmQ/qJUw2EvlC
+ +Cu0la8m5cDXqi+rV
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Garima Singh via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Hi Chris,
 
-> From: Garima Singh <garima.singh@microsoft.com>
-> Subject: [PATCH v2 04/11] commit-graph: compute Bloom filters for changed paths
+On Mon, 17 Feb 2020, Christian Couder wrote:
+
+> On Thu, Jan 30, 2020 at 11:47 PM Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> >
+> > On Mon, 20 Jan 2020, Miriam Rubio wrote:
 >
-> Compute Bloom filters for the paths that changed between a commit and its
-> first parent using the implementation in bloom.c, when the
-> COMMIT_GRAPH_WRITE_CHANGED_PATHS flag is set. This computation is done on a
-> commit-by-commit basis. We will write these Bloom filters to the commit graph
-> file in the next change.
-
-I have no major complaints about the contents of this patch (except lack
-of test, and type of total_bloom_filter_data_size), but the commit
-message could have been worded better.
-
-I would write something like this instead:
-
-  Add new COMMIT_GRAPH_WRITE_CHANGED_PATHS flag that makes Git compute
-  Bloom filters that store the information about changed paths (that
-  changed between a commit and its first parent) for each commit in the
-  commit-graph.  This computation is done on a commit-by-commit basis.
-
-  We will write these Bloom filters to the commit-graph file, to store
-  this data on disk, in the next change in this series.
-
-In my opinion the fact that we compute Bloom filters for each and every
-commit in the commit-graph file is more important than quite obvious
-fact that we use implementation from bloom.c.
-
+> > > +static void prepare_rev_argv(struct bisect_terms *terms, struct arg=
+v_array *rev_argv)> > +{
+> > > +     struct string_list good_revs =3D STRING_LIST_INIT_DUP;
+> > > +     char *term_good =3D xstrfmt("%s-*", terms->term_good);
+> > > +
+> > > +     for_each_glob_ref_in(register_good_ref, term_good,
+> > > +                          "refs/bisect/", &good_revs);
+> > > +
+> > > +     argv_array_pushl(rev_argv, "skipped_commits", "refs/bisect/bad=
+", "--not", NULL);
+> > > +     for (int i =3D 0; i < good_revs.nr; i++)
+> > > +             argv_array_push(rev_argv, good_revs.items[i].string);
+> > > +
+> > > +     string_list_clear(&good_revs, 0);
+> > > +     free(term_good);
+> > > +}
+> >
+> > Maybe we should fold that into `prepare_revs()`? We could then render =
+the
+> > arguments directly into `revs` (via `add_pending_object()`, after sett=
+ing
+> > obj->flags |=3D UNINTERESTING`) rather than formatting them into a str=
+ing
+> > list, then deep-copy them into an `argv_array` only to parse them back
+> > into OIDs that we already had in the first place.
 >
-> Helped-by: Derrick Stolee <dstolee@microsoft.com>
-> Signed-off-by: Garima Singh <garima.singh@microsoft.com>
-> ---
->  commit-graph.c | 32 +++++++++++++++++++++++++++++++-
->  commit-graph.h |  3 ++-
->  2 files changed, 33 insertions(+), 2 deletions(-)
+> The current code is a straightforward port from shell. If we do what
+> you suggest, yeah, it will be less wasteful, but on the other hand it
+> will be less easy to see that we are doing a good job of properly
+> porting code from shell.
 
-It would be good to have at least sanity check of this feature, perhaps
-one that would check that the number of per-commit Bloom filters on slab
-matches the number of commits in the commit-graph.
+If you reason that way, you will have to use tons of `run_command()` calls
+to translate the shell code as verbatim as possible.
 
-It could look something like this:
+However, as you can see from our commit history, we do not do that.
+Instead, we use the more powerful expressiveness of C to come up with more
+elegant code than to slavishly convert shell code to inelegant C code.
 
-  test_expect_success 'create Bloom filters for all commit-graph commits' '
-  	# create commit-graph with 2 commits
-  	git rev-parse HEAD HEAD^ | git commit-graph write --stdin-commits &&
-  	# generate Bloom filters for commit-graph commits
-  	cat >commands <<\-EOF &&
-  	add-graph-commits
-  	filters-count
-  	EOF
-  	NUM_FILTERS=$(git test-tool bloom <commands) %%
-  	test "$NUM_FILTERS" -eq 2
-  '
+> I suggest we try to focus on the later rather than the former right now,
+> especially as performance is not very important here.
 
+Oh, but my comment was totally not about performance, and pretty much
+exclusively about readability.
+
+If Miriam goes with my suggestion, it will result in more readable code
+that is easier to review and therefore much more likely to be free of
+unintentional bugs.
+
+> Using small functions also makes it easy to see that we are properly
+> releasing memory. A previous version of this code had everything into
+> a big function that used goto statements and it was less clear that we
+> released everything.
+
+If you want to make it easier to avoid double-free()s and memory leaks, I
+am a bit puzzled how you want to claim that the current "we're copying the
+strings so often that pretty much everybody loses track of them" approach
+should be superior to adding the strings once, and once only, to a string
+array.
+
+> > > +static int bisect_skipped_commits(struct bisect_terms *terms)
+> > > +{
+> > > +     int res =3D 0;
+> > > +     FILE *fp =3D NULL;
+> > > +     struct rev_info revs;
+> > > +
+> > > +     fp =3D fopen(git_path_bisect_log(), "a");
+> > > +     if (!fp)
+> > > +             return error_errno(_("could not open '%s' for appendin=
+g"),
+> > > +                               git_path_bisect_log());
+> > > +
+> > > +     res =3D prepare_revs(terms, &revs);
+> > > +
+> > > +     if (!res)
+> > > +             res =3D process_skipped_commits(fp, terms, &revs);
+> > > +
+> > > +     fclose(fp);
+> > > +     return res;
+> > > +}
+> >
+> > This is again a very short wrapper around another function, so it will
+> > probably make sense to merge the two, otherwise the boilerplate might =
+very
+> > well outweigh the actual code doing actual work.
 >
-> diff --git a/commit-graph.c b/commit-graph.c
-> index 3c4d411326..724bfcffc4 100644
-> --- a/commit-graph.c
-> +++ b/commit-graph.c
-> @@ -16,6 +16,7 @@
->  #include "hashmap.h"
->  #include "replace-object.h"
->  #include "progress.h"
-> +#include "bloom.h"
->  
->  #define GRAPH_SIGNATURE 0x43475048 /* "CGPH" */
->  #define GRAPH_CHUNKID_OIDFANOUT 0x4f494446 /* "OIDF" */
-> @@ -795,9 +796,11 @@ struct write_commit_graph_context {
->  	unsigned append:1,
->  		 report_progress:1,
->  		 split:1,
-> -		 check_oids:1;
-> +		 check_oids:1,
-> +		 changed_paths:1;
+> Yeah, there is perhaps a significant amount of boiler plate, but the
+> code is much easier to check for leaks than when everything was in the
+> same big function and there were goto statements, so I think it's a
+> reasonable trade-off
 
-All right, this flag will be used for handling future `--changed-paths`
-option to the `git commit-graph write`.
+Given this snippet, I would strongly disagree with this assessment:
 
->  
->  	const struct split_commit_graph_opts *split_opts;
-> +	uint32_t total_bloom_filter_data_size;
+    fp =3D fopen(git_path_bisect_log(), "a");
+    if (!fp)
+            res =3D error_errno(_("could not open '%s' for appending"),
+                              git_path_bisect_log());
+    else
+            res =3D prepare_revs(terms, &revs);
 
-This is total size of Bloom filters data, in bytes, that will later be
-used for BDAT chunk size.  However the commit-graph format uses 8 bytes
-for byte-offset, not 4 bytes.  Why it is uint32_t and not uint64_t then?
+    if (!res)
+            res =3D process_skipped_commits(fp, terms, &revs);
 
->  };
->  
->  static void write_graph_chunk_fanout(struct hashfile *f,
-> @@ -1140,6 +1143,28 @@ static void compute_generation_numbers(struct write_commit_graph_context *ctx)
->  	stop_progress(&ctx->progress);
->  }
->  
-> +static void compute_bloom_filters(struct write_commit_graph_context *ctx)
-> +{
-> +	int i;
-> +	struct progress *progress = NULL;
-> +
-> +	load_bloom_filters();
-> +
-> +	if (ctx->report_progress)
-> +		progress = start_progress(
-> +			_("Computing commit diff Bloom filters"),
-> +			ctx->commits.nr);
-> +
+    if (fp)
+            fclose(fp);
 
-Shouldn't we initialize ctx->total_bloom_filter_data_size to 0 here?  We
-cannot use compute_bloom_filters() to _update_ Bloom filters data, I
-think -- we don't distinguish here between new and existing data (where
-existing data size is already included in total Bloom filters size).  At
-least I don't think so.
+There is positively no need for a `goto` whatsoever.
 
+> > > +             fclose(fp);
+> > > +     } else {
+> > > +             res =3D error_errno(_("could not open '%s' for "
+> > > +                                 "appending"),
+> > > +                               git_path_bisect_log());
+> > > +     }
+> >
+> > This pattern of opening a file, writing something into it, and then re=
+turn
+> > success, otherwise failure, seems like a repeated pattern. In other wo=
+rds,
+> > it would be a good candidate for factoring out into its own function.
+>
+> Yeah, but it seems that in this patch series we use the pattern only
+> once. So I think it's fair to leave that for another patch series with
+> cleanups and performance improvements or perhaps for microprojects.
 
-> +	for (i = 0; i < ctx->commits.nr; i++) {
-> +		struct commit *c = ctx->commits.list[i];
+Sure, we could repeat past mistakes in this patch series, too.
 
-Here we process commit in whatever order commits are in the
-commits.list, which probably means lexicographical order, in practice
-random order.
+If, on the other hand, we use this patch series as "an excuse" to
+introduce such a helper, no future patch series will have to use the same
+kind of argument as you just offered. Instead, we will have an improved
+API that will help not only this patch series, but many more to come.
 
-> +		struct bloom_filter *filter = get_bloom_filter(ctx->r, c);
-> +		ctx->total_bloom_filter_data_size += sizeof(uint64_t) * filter->len;
-> +		display_progress(progress, i + 1);
-> +	}
-> +
-> +	stop_progress(&progress);
-> +}
-> +
->  static int add_ref_to_list(const char *refname,
->  			   const struct object_id *oid,
->  			   int flags, void *cb_data)
+There is tons of precedent for this kind of thing, where we add an
+introductory patch at the beginning of a patch series, factoring out
+already-existing code into a more reusable shape, and then use it.
 
-> @@ -1794,6 +1819,8 @@ int write_commit_graph(const char *obj_dir,
->  	ctx->split = flags & COMMIT_GRAPH_WRITE_SPLIT ? 1 : 0;
->  	ctx->check_oids = flags & COMMIT_GRAPH_WRITE_CHECK_OIDS ? 1 : 0;
->  	ctx->split_opts = split_opts;
-> +	ctx->changed_paths = flags & COMMIT_GRAPH_WRITE_BLOOM_FILTERS ? 1 : 0;
-> +	ctx->total_bloom_filter_data_size = 0;
->  
->  	if (ctx->split) {
->  		struct commit_graph *g;
-> @@ -1888,6 +1915,9 @@ int write_commit_graph(const char *obj_dir,
->  
->  	compute_generation_numbers(ctx);
->  
-> +	if (ctx->changed_paths)
-> +		compute_bloom_filters(ctx);
-> +
+So why not repeat that pattern and do the same thing here?
 
-All right.
-
->  	res = write_commit_graph_file(ctx);
->  
->  	if (ctx->split)
-> diff --git a/commit-graph.h b/commit-graph.h
-> index 7f5c933fa2..952a4b83be 100644
-> --- a/commit-graph.h
-> +++ b/commit-graph.h
-> @@ -76,7 +76,8 @@ enum commit_graph_write_flags {
->  	COMMIT_GRAPH_WRITE_PROGRESS   = (1 << 1),
->  	COMMIT_GRAPH_WRITE_SPLIT      = (1 << 2),
->  	/* Make sure that each OID in the input is a valid commit OID. */
-> -	COMMIT_GRAPH_WRITE_CHECK_OIDS = (1 << 3)
-> +	COMMIT_GRAPH_WRITE_CHECK_OIDS = (1 << 3),
-> +	COMMIT_GRAPH_WRITE_BLOOM_FILTERS = (1 << 4)
-
-All right.
-
-
-Side note: perhaps we could add trailing comma after new enum entry,
-that is
-
-  +	COMMIT_GRAPH_WRITE_BLOOM_FILTERS = (1 << 4),
-
-following new CodingGuidelines recommendation
-
- - We try to support a wide range of C compilers to compile Git with,
-   including old ones.  You should not use features from newer C
-   standard, even if your compiler groks them.
-
-   There are a few exceptions to this guideline:
-
-   . since early 2012 with e1327023ea, we have been using an enum
-     definition whose last element is followed by a comma.  This, like
-     an array initializer that ends with a trailing comma, can be used
-     to reduce the patch noise when adding a new identifier at the end.
-
-https://github.com/git/git/blob/master/Documentation/CodingGuidelines#L197
-
->  };
->  
->  struct split_commit_graph_opts {
+Ciao,
+Johannes
