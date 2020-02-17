@@ -8,53 +8,53 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A2D23C7619B
-	for <git@archiver.kernel.org>; Mon, 17 Feb 2020 08:41:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 25663C7619B
+	for <git@archiver.kernel.org>; Mon, 17 Feb 2020 08:41:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 77ADB2064C
-	for <git@archiver.kernel.org>; Mon, 17 Feb 2020 08:41:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EE12A2064C
+	for <git@archiver.kernel.org>; Mon, 17 Feb 2020 08:41:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="vOhKdgGG"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IS6m1lic"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728546AbgBQIl2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Feb 2020 03:41:28 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:37546 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728539AbgBQIl2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Feb 2020 03:41:28 -0500
-Received: by mail-wr1-f68.google.com with SMTP id w15so18555271wru.4
-        for <git@vger.kernel.org>; Mon, 17 Feb 2020 00:41:26 -0800 (PST)
+        id S1728555AbgBQIlb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Feb 2020 03:41:31 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:33007 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728547AbgBQIla (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Feb 2020 03:41:30 -0500
+Received: by mail-wm1-f66.google.com with SMTP id m10so6833524wmc.0
+        for <git@vger.kernel.org>; Mon, 17 Feb 2020 00:41:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=P7LEZGJjRIfYsumNABEw6099v9waAI03KQWY0SNTAtY=;
-        b=vOhKdgGGvwkylXO1DYdsBPrBLPq1d4sgq9tfeAu9JGxpg2xTnQQDRjSS7A+yweHbaS
-         0AY9LGdZ2CExjzY/tnVnqN3kBN4ujJxvEcZ2ub8Sjuxe6JGdlPr6vWOm20iiWiamxWHI
-         blFpnjqW+KT1ypSr9/M7QvbPHJya+qbcSV/qg3g5ftVeSoI+22dvalkN8xuPGzUxSR0t
-         JAl2V2zjNoF3ayqg2sjj3zjuWKvC2o1YgFePK5KSgJjaRO5aEkmv+bSjAxRj27GFle20
-         Kgv4l8yeirXFMjiQML2zHep76OtbYwbzGivhlQ/o91whWiNi3Cud6tKZwv7OL7D1lVHU
-         9LnA==
+        bh=BZA+MS84eFTTHIZpvKxlzTaC/Nse0E6Ugur+gY3o55U=;
+        b=IS6m1liceWUttbQ6ceQMdPZO7KbzwWth2jzLLaGr3VtKQNF1+RVhXfxEE8Cd7loBwg
+         ZQa5wbePJ1vTLIqbF0AvqHnD6lbAvdyC8e4QXAL3KiIxp+9af20KyS2FoBgFauSPrQNM
+         iozJygKina/hDEHnxcmehD1ssk7ncNx6w/2Q+pIjF9V2OK+4R15c541nksheMerkSMIU
+         vEKQQvX2D/knxq5+ZEtscriBV0VY3mKNSDyworvovDH0fgWlErSOuOH0oKZKJTeWSB2D
+         g/UGRUtWWSBfCdlSPPpqte5/5J33+xFtuVrwMrqr3W54gfyGmaOsLs27RVoTX+k0cA0N
+         3iIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=P7LEZGJjRIfYsumNABEw6099v9waAI03KQWY0SNTAtY=;
-        b=o3lI/mbIHI8dly7v+n/C5xncsX9fNY02I1dDdKA+Y1VKvDDZ/RijECFnY3LyKemywV
-         rvYRHpKO9XP7k3kNQA8rXJQBguPYs/ENXCCARQpSKriLwbyDY4fJ47NRjwNNuYbAq8p1
-         bUNxnDDSrBCf8yS6ioPf2ZSr1Gb4olOe6Z/ZFLhVsX51EAxSLDeLzsATqxcEI2WHWBjQ
-         JbVp6UKCdImNdqkDGjKSMzkrlu9I/IoEZ6BYD6Z21qTzyajgELys90+VNCT0bh4bBWQh
-         kv4zvK6hah4XQlvZseclgeGo7PyPTjZwvE4e/FC897613/6Ab/9oJ89/naad1ebUklb1
-         jpww==
-X-Gm-Message-State: APjAAAUcGCPwKwOIdl5or5ORsclIzE0UjtvRU+qm9wNU8QPxNv7MncfI
-        C8iYPLrEyxsAL8JxwsCKBH9/GDDR
-X-Google-Smtp-Source: APXvYqzV9HdhKkvbCisSqWygGOBDIghT8IGDi4gkSIYnoyl6+UFC1XTEqMl2H/gDp1GpVEdLpH0VSQ==
-X-Received: by 2002:adf:f507:: with SMTP id q7mr20417389wro.384.1581928885605;
-        Mon, 17 Feb 2020 00:41:25 -0800 (PST)
+        bh=BZA+MS84eFTTHIZpvKxlzTaC/Nse0E6Ugur+gY3o55U=;
+        b=Z5MSg/GadT2/RWJvEZzKVNcMXKJAeqVDewblgsqo/qTwAe9XbYGcNamWIXyteKxiy6
+         Rss0WPdE67sVtZAA5PSyyL7btHq63vdH0nzwqk9vvttc5t2ggjWvHWrUUytZWpSJ0T53
+         sOruQU+03h4mgWdc3iUB2cosxKn+ow4sMb7a5CAl4gEOUDjTmqfShbBi3IXdXqWLZvCE
+         /6Ww9J3y9gOOzSaoFZEugceIb2dzcJzK41u+yR1RD6Dd8jtAsfle+OdlBtUY9IGN/b5f
+         5gk/2tOb0TY4dbsHa+tv3FYo+RCARdsG15WCvFelcRc1kgA3RIJ0XJzKIfA3gZWF270F
+         HAng==
+X-Gm-Message-State: APjAAAXn0UG2uSEqs1Hjw+DYY5Rp59Ae90sqH5IHb20ncDfPaEkk1l6R
+        0eq7BIoKfHIxbN/XctE9LEFVvVPd
+X-Google-Smtp-Source: APXvYqyZRBkDuY3A2HqI4DJSEmT9uoUteQ8lAPoHRBgoflWKUshtSWjR1RAYIQIu6pKsdwKcy4bbFg==
+X-Received: by 2002:a1c:4d08:: with SMTP id o8mr21465035wmh.86.1581928888190;
+        Mon, 17 Feb 2020 00:41:28 -0800 (PST)
 Received: from localhost.localdomain ([139.47.115.4])
-        by smtp.gmail.com with ESMTPSA id s22sm19187149wmh.4.2020.02.17.00.41.24
+        by smtp.gmail.com with ESMTPSA id s22sm19187149wmh.4.2020.02.17.00.41.27
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 17 Feb 2020 00:41:25 -0800 (PST)
+        Mon, 17 Feb 2020 00:41:27 -0800 (PST)
 From:   Miriam Rubio <mirucam@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Pranit Bauva <pranit.bauva@gmail.com>,
@@ -62,9 +62,9 @@ Cc:     Pranit Bauva <pranit.bauva@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Tanushree Tumane <tanushreetumane@gmail.com>,
         Miriam Rubio <mirucam@gmail.com>
-Subject: [PATCH v4 06/12] bisect--helper: return error codes from `cmd_bisect__helper()`
-Date:   Mon, 17 Feb 2020 09:40:33 +0100
-Message-Id: <20200217084039.78215-7-mirucam@gmail.com>
+Subject: [PATCH v4 08/12] bisect: libify `bisect_checkout`
+Date:   Mon, 17 Feb 2020 09:40:35 +0100
+Message-Id: <20200217084039.78215-9-mirucam@gmail.com>
 X-Mailer: git-send-email 2.25.0
 In-Reply-To: <20200217084039.78215-1-mirucam@gmail.com>
 References: <20200217084039.78215-1-mirucam@gmail.com>
@@ -77,34 +77,71 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Pranit Bauva <pranit.bauva@gmail.com>
 
-Since we want to get rid of git-bisect.sh, it would be necessary
-to convert bisect.c exit() calls to return statements so
-that errors can be reported. Let's prepare for that by making
-it possible to return different error codes than just 0 or 1.
+Since we want to get rid of git-bisect.sh, it would be necessary to
+convert those exit() calls to return statements so that errors can be
+reported.
 
-Different error codes might enable a bisecting script calling the
-bisect command that uses this function to do different things
-depending on the exit status of the bisect command.
+Emulate try catch in C by converting `exit(<positive-value>)` to
+`return <negative-value>`. Follow POSIX conventions to return
+<negative-value> to indicate error.
+
+Turn `exit()` to `return` calls in `bisect_checkout()`.
+Changes related to return values have no bad side effects on the
+code that calls `bisect_checkout()`.
 
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
 Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
 Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
 Signed-off-by: Miriam Rubio <mirucam@gmail.com>
 ---
- builtin/bisect--helper.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ bisect.c | 19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index e21d3d1a4c..e6bd4d6645 100644
---- a/builtin/bisect--helper.c
-+++ b/builtin/bisect--helper.c
-@@ -713,5 +713,5 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 		return error("BUG: unknown subcommand '%d'", cmdmode);
- 	}
- 	free_terms(&terms);
--	return !!res;
-+	return abs(res);
+diff --git a/bisect.c b/bisect.c
+index 85bda3500b..f6582ddfed 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -704,9 +704,10 @@ static int is_expected_rev(const struct object_id *oid)
+ 	return res;
  }
+ 
+-static int bisect_checkout(const struct object_id *bisect_rev, int no_checkout)
++static enum bisect_error bisect_checkout(const struct object_id *bisect_rev, int no_checkout)
+ {
+ 	char bisect_rev_hex[GIT_MAX_HEXSZ + 1];
++	enum bisect_error res = BISECT_OK;
+ 
+ 	memcpy(bisect_rev_hex, oid_to_hex(bisect_rev), the_hash_algo->hexsz + 1);
+ 	update_ref(NULL, "BISECT_EXPECTED_REV", bisect_rev, NULL, 0, UPDATE_REFS_DIE_ON_ERR);
+@@ -716,14 +717,24 @@ static int bisect_checkout(const struct object_id *bisect_rev, int no_checkout)
+ 		update_ref(NULL, "BISECT_HEAD", bisect_rev, NULL, 0,
+ 			   UPDATE_REFS_DIE_ON_ERR);
+ 	} else {
+-		int res;
+ 		res = run_command_v_opt(argv_checkout, RUN_GIT_CMD);
+ 		if (res)
+-			exit(res);
++			/*
++			 * Errors in `run_command()` itself, signaled by res < 0,
++			 * and errors in the child process, signaled by res > 0
++			 * can both be treated as regular BISECT_FAILURE (-1).
++			 */
++			return -abs(res);
+ 	}
+ 
+ 	argv_show_branch[1] = bisect_rev_hex;
+-	return run_command_v_opt(argv_show_branch, RUN_GIT_CMD);
++	res = run_command_v_opt(argv_show_branch, RUN_GIT_CMD);
++	/*
++	 * Errors in `run_command()` itself, signaled by res < 0,
++	 * and errors in the child process, signaled by res > 0
++	 * can both be treated as regular BISECT_FAILURE (-1).
++	 */
++	return -abs(res);
+ }
+ 
+ static struct commit *get_commit_reference(struct repository *r,
 -- 
 2.25.0
 
