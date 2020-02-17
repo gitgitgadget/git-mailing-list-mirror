@@ -2,126 +2,331 @@ Return-Path: <SRS0=dbxk=4F=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 15CFFC34021
-	for <git@archiver.kernel.org>; Mon, 17 Feb 2020 16:25:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E8CA0C34021
+	for <git@archiver.kernel.org>; Mon, 17 Feb 2020 16:25:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D99F720725
-	for <git@archiver.kernel.org>; Mon, 17 Feb 2020 16:25:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B364B20725
+	for <git@archiver.kernel.org>; Mon, 17 Feb 2020 16:25:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OvU4jcpL"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nlG4P+B7"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727217AbgBQQZm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Feb 2020 11:25:42 -0500
-Received: from mail-pl1-f171.google.com ([209.85.214.171]:40161 "EHLO
-        mail-pl1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726779AbgBQQZl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Feb 2020 11:25:41 -0500
-Received: by mail-pl1-f171.google.com with SMTP id y1so6917637plp.7
-        for <git@vger.kernel.org>; Mon, 17 Feb 2020 08:25:41 -0800 (PST)
+        id S1727513AbgBQQZz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Feb 2020 11:25:55 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:37345 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726779AbgBQQZz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Feb 2020 11:25:55 -0500
+Received: by mail-wr1-f65.google.com with SMTP id w15so20485132wru.4
+        for <git@vger.kernel.org>; Mon, 17 Feb 2020 08:25:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:references:in-reply-to:subject:date:message-id
-         :mime-version:content-transfer-encoding:thread-index
-         :content-language;
-        bh=QJbKmhMI1dLREiFAYoU6uAvbfM8CGBVwIEYVr2eo3fo=;
-        b=OvU4jcpLdsu0CelTioMhiayZXxXlK55tFt48nbsY+InikPHcncu/lTuuZS673gJ+zS
-         EZ9YDvEMRPh6KtV8gjTlGgvhFL+1pm3Btwgd9oOh4mDAVU8mzwVms5WLFnK0JsdbajTn
-         wr3aj9IkYqAY9G7hHW6SJRYGv5EKaG0BB/XsRvGspnEnYW90iCS59+Elv8onF9u5Kw8t
-         j4GivJIdnEzxCEa+fWQV6YnusXrQ4poS4hBvbPpzkqOjZt+HqOZrZ2FrzxIFMURRhW3W
-         zaZNyfn+Wubuw+jY51TGDQ4r9QB6AEGl6FVCLBvJrYOSx/uxLu1+os9Po23KFf47ra6Q
-         7NPw==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=1Icdibs278wdcEyeEa6dZGn2G2zwN4jx0iZney9lxIM=;
+        b=nlG4P+B7HQmmPSfZiilLGZ14ZuSE4Ev79lkvPQDNO3vR2a9yY04qGCDYmWdkL/7G9K
+         Y7+DDW/tl1Jb4LO7xDn8sC4vxhOIpzMFPDZRJHARoX4mGCU2l+kuqcsnDTUR3tPouZWJ
+         /Ggj44yOebEDHZPCdlA8jRpZktYhJN8bJ77l7C7rZaV2boGuk3woAGOL+yav1NN6j/p8
+         WcJiuYx7xjda5EcALCd3AbXBa0YakXZBnTymsNex6gp7NwZPJdMgi86Ks+jlxRFgXx/R
+         q2p4t6WDbsVov6msMOYmiGDqt7iUS0E1u3XcAdXs1FcMap+9VFAFdDrcVov/e6rqpS/J
+         RCvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:references:in-reply-to:subject:date
-         :message-id:mime-version:content-transfer-encoding:thread-index
-         :content-language;
-        bh=QJbKmhMI1dLREiFAYoU6uAvbfM8CGBVwIEYVr2eo3fo=;
-        b=LSKJC7PhRqi0Oqhe2HPjDAAriCLQ3o/UzC8PY3dsOzDEOxYv+eIwNvX0olzeGWRXyc
-         CJ0IqqbHkPudK8j0lthMWT/YLJMD8xiHoGXTgb9WJUG1m1H8ew164cUpAQqe2IDLLe1Z
-         EG0BYq2xpb9l0Gzj76Cqwmx8qyuyTB0x/MXF7Z43GdhaJQs/ue2K+65VWw+dfg6mTHxo
-         pNn/PTU3PyYS6FvtX0q3kzNgOO94aEiwWX3d1zum5O6KKGPXDD2fd38sluna9yMr8NZ9
-         avk+QNfwR76QO4UV8a2liaEHWosEOg3EulPBZzy15hd8ThhgiDSEzUuKhgHqRejjOevh
-         wzJA==
-X-Gm-Message-State: APjAAAUswkxwiVNP9J6jpY2KhJ035kQXVXsaXoi1eoDwkbvCuDvir+5g
-        rAQqZ3VO0lufrbWniXqk3jEJh3y4obQe2w==
-X-Google-Smtp-Source: APXvYqx4fYp7wCSXhh0leLdNvxYxjCM3vtIzG2s/rpCooHSAVC1hLfD0leLyqi6OO4bNxUQEFJ+DOQ==
-X-Received: by 2002:a17:902:bb83:: with SMTP id m3mr16963678pls.258.1581956740983;
-        Mon, 17 Feb 2020 08:25:40 -0800 (PST)
-Received: from LJZDELLPC ([184.103.41.156])
-        by smtp.gmail.com with ESMTPSA id r8sm1100409pjo.22.2020.02.17.08.25.39
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 17 Feb 2020 08:25:40 -0800 (PST)
-From:   <lyle.ziegelmiller@gmail.com>
-To:     "'brian m. carlson'" <sandals@crustytoothpaste.net>
-Cc:     <git@vger.kernel.org>
-References: <000001d5e4e3$91ffb0a0$b5ff11e0$@gmail.com> <20200216211604.GE6134@camp.crustytoothpaste.net>
-In-Reply-To: <20200216211604.GE6134@camp.crustytoothpaste.net>
-Subject: RE: ! [remote rejected] master -> master (unpacker error)
-Date:   Mon, 17 Feb 2020 09:25:38 -0700
-Message-ID: <001801d5e5ae$e4375780$aca60680$@gmail.com>
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=1Icdibs278wdcEyeEa6dZGn2G2zwN4jx0iZney9lxIM=;
+        b=qdyyooMDqiycVqsq05z/Gf6f73HtH5dklrphik69TM2jQGI/bt36fXbOwlyvk1vidx
+         KtFOC5twtpgt0nADVTawf5Wi9uTat9NleWUKW+DYXEa+wh6hdi/t/A7yPBUmA5OfFOfR
+         i5TdeW/KRLhCVHmsmasmU/0LpiJNoPm3DYshFDfP49cmyq9F9d+zrbMbbcMci+osh9HJ
+         puNRvRD2mJaMv9s+SV1LucYsyb9Dy7r3bGYAqFZQYH61HDXikd8jIgkYEBE98g0IrjvK
+         4aTsZnCdNjGRHjEWQHTC79mObs6THfBRGt51Iln1QUBdPWBQxv5ojYPRp5KQXq/SnVET
+         V4zw==
+X-Gm-Message-State: APjAAAW81eaHpnKVPVgs7tDmGVAuuSHMkn9cdRcTQNUORCXmZzkNw2Vs
+        RszZqui9R0pKTbMmVag3+TpLtoU3
+X-Google-Smtp-Source: APXvYqwwArj8yUtfiCY8IilBifDzvvbaPhY9LUJo3OO8hDYGAaMYviUOOGlH7td6IpNIj30JUFJY8w==
+X-Received: by 2002:adf:ca07:: with SMTP id o7mr22405835wrh.49.1581956751025;
+        Mon, 17 Feb 2020 08:25:51 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id s15sm1531845wrp.4.2020.02.17.08.25.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 17 Feb 2020 08:25:50 -0800 (PST)
+Message-Id: <pull.553.v2.git.1581956750001.gitgitgadget@gmail.com>
+In-Reply-To: <pull.553.git.1581619239467.gitgitgadget@gmail.com>
+References: <pull.553.git.1581619239467.gitgitgadget@gmail.com>
+From:   "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 17 Feb 2020 16:25:49 +0000
+Subject: [PATCH v2] mingw: workaround for hangs when sending STDIN
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQMhw4Eo4Ohz4QZPcWFj6oDqlRz55AI5bVuwpXYKphA=
-Content-Language: en-us
+To:     git@vger.kernel.org
+Cc:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
+        Erik Faye-Lund <kusmabite@gmail.com>,
+        Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>,
+        Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I wrote a bunch of emails about this in December 2019. Did they all get =
-lost?
+From: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 
-I'm consistently able to clone the repository, but I can never push to =
-it. I used to be able to. I've explored all possibilities that I know =
-of.
+Explanation
+-----------
+The problem here is flawed `poll()` implementation. When it tries to
+see if pipe can be written without blocking, it eventually calls
+`NtQueryInformationFile()` and tests `WriteQuotaAvailable`. However,
+the meaning of quota was misunderstood. The value of quota is reduced
+when either some data was written to a pipe, *or* there is a pending
+read on the pipe. Therefore, if there is a pending read of size >= then
+the pipe's buffer size, poll() will think that pipe is not writable and
+will hang forever, usually that means deadlocking both pipe users.
 
-I'm using Windows 10, and the Cygwin version of Git.
+I have studied the problem and found that Windows pipes track two values:
+`QuotaUsed` and `BytesInQueue`. The code in `poll()` apparently wants to
+know `BytesInQueue` instead of quota. Unfortunately, `BytesInQueue` can
+only be requested from read end of the pipe, while `poll()` receives
+write end.
 
-$ git --version
-git version 2.21.0
+The git's implementation of `poll()` was copied from gnulib, which also
+contains a flawed implementation up to today.
 
-Regards
+I also had a look at implementation in cygwin, which is also broken in a
+subtle way. It uses this code in `pipe_data_available()`:
+	fpli.WriteQuotaAvailable = (fpli.OutboundQuota - fpli.ReadDataAvailable)
+However, `ReadDataAvailable` always returns 0 for the write end of the pipe,
+turning the code into an obfuscated version of returning pipe's total
+buffer size, which I guess will in turn have `poll()` always say that pipe
+is writable. The commit that introduced the code doesn't say anything about
+this change, so it could be some debugging code that slipped in.
 
-Lyle
+These are the typical sizes used in git:
+0x2000 - default read size in `strbuf_read()`
+0x1000 - default read size in CRT, used by `strbuf_getwholeline()`
+0x2000 - pipe buffer size in compat\mingw.c
 
------Original Message-----
-From: brian m. carlson <sandals@crustytoothpaste.net>=20
-Sent: Sunday, February 16, 2020 2:16 PM
-To: lyle.ziegelmiller@gmail.com
-Cc: git@vger.kernel.org
-Subject: Re: ! [remote rejected] master -> master (unpacker error)
+As a consequence, as soon as child process uses `strbuf_read()`,
+`poll()` in parent process will hang forever, deadlocking both
+processes.
 
-On 2020-02-16 at 16:10:12, lyle.ziegelmiller@gmail.com wrote:
-> Hi
->=20
-> Any updates on this error I emailed a while back?
->=20
-> lylez@LJZ-DELLPC ~/python
-> $ git push
-> Enumerating objects: 5, done.
-> Counting objects: 100% (5/5), done.
-> Delta compression using up to 4 threads Compressing objects: 100%=20
-> (2/2), done.
-> Writing objects: 100% (3/3), 279 bytes | 23.00 KiB/s, done.
-> Total 3 (delta 1), reused 0 (delta 0)
-> remote: fatal: not a git repository: '.'
+This results in two observable behaviors:
+1) If parent process begins sending STDIN quickly (and usually that's
+   the case), then first `poll()` will succeed and first block will go
+   through. MAX_IO_SIZE_DEFAULT is 8MB, so if STDIN exceeds 8MB, then
+   it will deadlock.
+2) If parent process waits a little bit for any reason (including OS
+   scheduler) and child is first to issue `strbuf_read()`, then it will
+   deadlock immediately even on small STDINs.
 
-This error is telling you that Git doesn't think the remote location is =
-a Git repository.  It could be because it really isn't one, or it could =
-be that the permissions are wrong.
+The problem is illustrated by `git stash push`, which will currently
+read the entire patch into memory and then send it to `git apply` via
+STDIN. If patch exceeds 8MB, git hangs on Windows.
 
-It could also be that the repository is mostly there but very slightly =
-corrupt and therefore can't be detected as one.  For example, it could =
-be missing its HEAD reference.
---
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+Possible solutions
+------------------
+1) Somehow obtain `BytesInQueue` instead of `QuotaUsed`
+   I did a pretty thorough search and didn't find any ways to obtain
+   the value from write end of the pipe.
+2) Also give read end of the pipe to `poll()`
+   That can be done, but it will probably invite some dirty code,
+   because `poll()`
+   * can accept multiple pipes at once
+   * can accept things that are not pipes
+   * is expected to have a well known signature.
+3) Make `poll()` always reply "writable" for write end of the pipe
+   Afterall it seems that cygwin (accidentally?) does that for years.
+   Also, it should be noted that `pump_io_round()` writes 8MB blocks,
+   completely ignoring the fact that pipe's buffer size is only 8KB,
+   which means that pipe gets clogged many times during that single
+   write. This may invite a deadlock, if child's STDERR/STDOUT gets
+   clogged while it's trying to deal with 8MB of STDIN. Such deadlocks
+   could be defeated with writing less than pipe's buffer size per
+   round, and always reading everything from STDOUT/STDERR before
+   starting next round. Therefore, making `poll()` always reply
+   "writable" shouldn't cause any new issues or block any future
+   solutions.
+4) Increase the size of the pipe's buffer
+   The difference between `BytesInQueue` and `QuotaUsed` is the size
+   of pending reads. Therefore, if buffer is bigger than size of reads,
+   `poll()` won't hang so easily. However, I found that for example
+   `strbuf_read()` will get more and more hungry as it reads large inputs,
+   eventually surpassing any reasonable pipe buffer size.
 
+Chosen solution
+---------------
+Make `poll()` always reply "writable" for write end of the pipe.
+Hopefully one day someone will find a way to implement it properly.
+
+Signed-off-by: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
+---
+    mingw: git stash push hangs if patch > 8MB
+    
+    Changes since V1
+    ------------------
+    Some polishing based on code review in V1
+    1) Fixed some spelling in commit message
+    2) Reworked test to be more compatible with different shells
+    
+    ------------------
+    Please read the commit message for more information.
+    
+    The specific problem of `git stash push` exists since `git stash`
+    was converted into built-in [1].
+    
+    On a side note, I think that `git stash push` could be optimized by
+    replacing the code that reads entire `git diff-index` into memory
+    and then sends it to `git apply`. With large stash, that could mean
+    handling a very large patch.
+    
+    Is it possible to instead directly invoke (without even starting a
+    new process) something like `git revert --no-commit -m 1 7091f172` ?
+    
+    [1] Commit d553f538 ("stash: convert push to builtin" 2019-02-26)
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-553%2FSyntevoAlex%2F%230245(git)_poll_hang-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-553/SyntevoAlex/#0245(git)_poll_hang-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/553
+
+Range-diff vs v1:
+
+ 1:  e2cb36c34c2 ! 1:  2a1e8f80c5c mingw: workaround for hangs when sending STDIN
+     @@ -49,6 +49,10 @@
+             scheduler) and child is first to issue `strbuf_read()`, then it will
+             deadlock immediately even on small STDINs.
+      
+     +    The problem is illustrated by `git stash push`, which will currently
+     +    read the entire patch into memory and then send it to `git apply` via
+     +    STDIN. If patch exceeds 8MB, git hangs on Windows.
+     +
+          Possible solutions
+          ------------------
+          1) Somehow obtain `BytesInQueue` instead of `QuotaUsed`
+     @@ -67,14 +71,14 @@
+             which means that pipe gets clogged many times during that single
+             write. This may invite a deadlock, if child's STDERR/STDOUT gets
+             clogged while it's trying to deal with 8MB of STDIN. Such deadlocks
+     -       could  be defeated with writing less then pipe's buffer size per
+     +       could be defeated with writing less than pipe's buffer size per
+             round, and always reading everything from STDOUT/STDERR before
+             starting next round. Therefore, making `poll()` always reply
+             "writable" shouldn't cause any new issues or block any future
+             solutions.
+          4) Increase the size of the pipe's buffer
+             The difference between `BytesInQueue` and `QuotaUsed` is the size
+     -       of pending reads. Therefore, if buffer is bigger then size of reads,
+     +       of pending reads. Therefore, if buffer is bigger than size of reads,
+             `poll()` won't hang so easily. However, I found that for example
+             `strbuf_read()` will get more and more hungry as it reads large inputs,
+             eventually surpassing any reasonable pipe buffer size.
+     @@ -147,7 +151,17 @@
+       '
+       
+      +test_expect_success 'stash handles large files' '
+     -+	printf "%1023s\n%.0s" "x" {1..16384} >large_file.txt &&
+     ++	x=0123456789abcde\n && # 16
+     ++	x=$x$x$x$x$x$x$x$x  && # 128
+     ++	x=$x$x$x$x$x$x$x$x  && # 1k
+     ++	x=$x$x$x$x$x$x$x$x  && # 8k
+     ++	x=$x$x$x$x$x$x$x$x  && # 64k
+     ++	x=$x$x$x$x$x$x$x$x  && # 512k
+     ++	x=$x$x$x$x$x$x$x$x  && # 4m
+     ++	x=$x$x              && # 8m
+     ++	echo $x >large_file.txt &&
+     ++	unset x             && # release memory
+     ++
+      +	git stash push --include-untracked -- large_file.txt
+      +'
+      +
+
+
+ compat/poll/poll.c | 31 +++----------------------------
+ t/t3903-stash.sh   | 15 +++++++++++++++
+ 2 files changed, 18 insertions(+), 28 deletions(-)
+
+diff --git a/compat/poll/poll.c b/compat/poll/poll.c
+index 0e95dd493c9..afa6d245846 100644
+--- a/compat/poll/poll.c
++++ b/compat/poll/poll.c
+@@ -139,22 +139,10 @@ win32_compute_revents (HANDLE h, int *p_sought)
+   INPUT_RECORD *irbuffer;
+   DWORD avail, nbuffer;
+   BOOL bRet;
+-  IO_STATUS_BLOCK iosb;
+-  FILE_PIPE_LOCAL_INFORMATION fpli;
+-  static PNtQueryInformationFile NtQueryInformationFile;
+-  static BOOL once_only;
+ 
+   switch (GetFileType (h))
+     {
+     case FILE_TYPE_PIPE:
+-      if (!once_only)
+-	{
+-	  NtQueryInformationFile = (PNtQueryInformationFile)(void (*)(void))
+-	    GetProcAddress (GetModuleHandleW (L"ntdll.dll"),
+-			    "NtQueryInformationFile");
+-	  once_only = TRUE;
+-	}
+-
+       happened = 0;
+       if (PeekNamedPipe (h, NULL, 0, NULL, &avail, NULL) != 0)
+ 	{
+@@ -166,22 +154,9 @@ win32_compute_revents (HANDLE h, int *p_sought)
+ 
+       else
+ 	{
+-	  /* It was the write-end of the pipe.  Check if it is writable.
+-	     If NtQueryInformationFile fails, optimistically assume the pipe is
+-	     writable.  This could happen on Win9x, where NtQueryInformationFile
+-	     is not available, or if we inherit a pipe that doesn't permit
+-	     FILE_READ_ATTRIBUTES access on the write end (I think this should
+-	     not happen since WinXP SP2; WINE seems fine too).  Otherwise,
+-	     ensure that enough space is available for atomic writes.  */
+-	  memset (&iosb, 0, sizeof (iosb));
+-	  memset (&fpli, 0, sizeof (fpli));
+-
+-	  if (!NtQueryInformationFile
+-	      || NtQueryInformationFile (h, &iosb, &fpli, sizeof (fpli),
+-					 FilePipeLocalInformation)
+-	      || fpli.WriteQuotaAvailable >= PIPE_BUF
+-	      || (fpli.OutboundQuota < PIPE_BUF &&
+-		  fpli.WriteQuotaAvailable == fpli.OutboundQuota))
++	  /* It was the write-end of the pipe. Unfortunately there is no
++	     reliable way of knowing if it can be written without blocking.
++	     Just say that it's all good. */
+ 	    happened |= *p_sought & (POLLOUT | POLLWRNORM | POLLWRBAND);
+ 	}
+       return happened;
+diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+index ea56e85e70d..ed23cd6a7f3 100755
+--- a/t/t3903-stash.sh
++++ b/t/t3903-stash.sh
+@@ -1285,4 +1285,19 @@ test_expect_success 'stash handles skip-worktree entries nicely' '
+ 	git rev-parse --verify refs/stash:A.t
+ '
+ 
++test_expect_success 'stash handles large files' '
++	x=0123456789abcde\n && # 16
++	x=$x$x$x$x$x$x$x$x  && # 128
++	x=$x$x$x$x$x$x$x$x  && # 1k
++	x=$x$x$x$x$x$x$x$x  && # 8k
++	x=$x$x$x$x$x$x$x$x  && # 64k
++	x=$x$x$x$x$x$x$x$x  && # 512k
++	x=$x$x$x$x$x$x$x$x  && # 4m
++	x=$x$x              && # 8m
++	echo $x >large_file.txt &&
++	unset x             && # release memory
++
++	git stash push --include-untracked -- large_file.txt
++'
++
+ test_done
+
+base-commit: d8437c57fa0752716dde2d3747e7c22bf7ce2e41
+-- 
+gitgitgadget
