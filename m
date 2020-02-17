@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 185FFC34024
-	for <git@archiver.kernel.org>; Mon, 17 Feb 2020 17:25:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CD841C34027
+	for <git@archiver.kernel.org>; Mon, 17 Feb 2020 17:25:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id E57D120801
-	for <git@archiver.kernel.org>; Mon, 17 Feb 2020 17:25:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9A34120801
+	for <git@archiver.kernel.org>; Mon, 17 Feb 2020 17:25:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lzmf7ti6"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H2tix6BJ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729660AbgBQRZ0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Feb 2020 12:25:26 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:40356 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728995AbgBQRZ0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Feb 2020 12:25:26 -0500
-Received: by mail-wr1-f66.google.com with SMTP id t3so20706438wru.7
-        for <git@vger.kernel.org>; Mon, 17 Feb 2020 09:25:25 -0800 (PST)
+        id S1729712AbgBQRZg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Feb 2020 12:25:36 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:51796 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729681AbgBQRZb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Feb 2020 12:25:31 -0500
+Received: by mail-wm1-f66.google.com with SMTP id t23so134442wmi.1
+        for <git@vger.kernel.org>; Mon, 17 Feb 2020 09:25:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=D7gH03SwXw/yITHHsF4wOerpPkhm1CYTuLfO64Gp/zE=;
-        b=lzmf7ti6Ijg3212RTUO97pv8UVbbQqSeqPvabsrLgmvaciUWRGR32qwSWjXw9Nssqz
-         d5D9FmEhwyiZnFoAniUCx1+ZYLhJDWy6ek0ixxG+4m0CO6CMZYNynwf9fuO9e4RRA/To
-         UZNMNngU/tUw5ZTXQhzTlOSgzeOkw+wP2xoxna0gApN6+e4lEVZgpte6H8ErT1xtHYEw
-         dGseWTC7cDMYnIjGosaNt7IuXFaAfFtVWBH5NzQS05mYMkbstvKRX901pfA7opGA6XzQ
-         o0kjyfvYGgOFHfQMG9chlL/efgX/qTtpuajX+DdeTWaDf0gKyNq7C6AlR57yJiAgsAt2
-         5UdA==
+        bh=922JIO9OiZx+Hx7ovbjND8UXNcB0spap8OV4FDQUMxU=;
+        b=H2tix6BJ8mtnv7jdZRorkpM8YvHc1JW47liQPKv5AVnWZXJdO27JVONI70N7ItB+ky
+         78Tz8i+7ks1lbsVk2wxffJwwg20xBR+uNJVjYw8rVQJbCd0KueKUcisKt535QocwRPI0
+         eVUK34EiXqvTUy/WKJ7miPbFfZeYAh1MtnvaA3rlDpXfiZUr6C51Lpg76YHdLKcg1DVG
+         R/ohHx2bgLqY/fL6PFz0Xy+cQGWinzUFVPENqrZGEpfKC/Z+K9+ufXc9DvICrJkH/5rP
+         PJ5rzO7DY1Lgj/a2tS5IYmNpEDu90FA2sRFlQDYEHuqyz8AZ10fHV4l5KqRFN1/PdjiS
+         aoSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=D7gH03SwXw/yITHHsF4wOerpPkhm1CYTuLfO64Gp/zE=;
-        b=mblomFRQ2Ttcg37GCA5sVCw6r24juuTIFL7fdQaJ78K9rdItjPTGSFuAbCN5dX6gAI
-         BuS0Gac80ugP+yw0qeW1tknwlafMJzVE7oSHjqeN2QXz0U8AitLLKznAUYQyTOyG8rLo
-         CDqq/e5DGEocr2QcbkS8iiayEP2MLC6rI2H2F5LDT1ENbpr9xvRaVyeU9qZVjGn/7T9w
-         BrUYdAb5QPZEKbJJvFMMPEKkD4xXbOEMzcLAhNQwLB4gXPFifg1RpbtP9bdgDJSnaGHq
-         ppTlvHuJ9hffQCjhpxtd5HjvFMMzfyRZT7EfkFylek7i2jQS6m2b8YcevnNx+z/9T8+9
-         I3Lg==
-X-Gm-Message-State: APjAAAXegSFtHapqGbsKWqWrWJ3rZHZ2Rz7LkMtOuLxoAfAs1w8to1b6
-        B7AeQNU4hTeeRDSlDhJqCEGPTN4p
-X-Google-Smtp-Source: APXvYqyrsRYwwL0y7wx8XFWameqhULAC9+dAs38gI+H/RbvbnnmOsLdT2W4zMpuRwijUF38cHlp3Ew==
-X-Received: by 2002:a05:6000:367:: with SMTP id f7mr22845508wrf.174.1581960324127;
-        Mon, 17 Feb 2020 09:25:24 -0800 (PST)
+        bh=922JIO9OiZx+Hx7ovbjND8UXNcB0spap8OV4FDQUMxU=;
+        b=iV0jk4XLGl6JMGEz1evaDCn6yiVLNsjBuhnb0F8j0kIOFLn5NUPlCkUq/TLKKEgHIv
+         Ggl7G2+GWdOQT0cbJOccIk1ICtp9XG2T6hXLScIpk0JwUQGhryONT1BIDk+0zBv4w8IQ
+         Z+2xB8c3WLzDrvyH2Gzl/3VheYhFvW8jvYB5ZCpCLwYa9r4ZbF39kEjDo4m37Alk+h9s
+         vaoBwJBLLFElWKZiAHYcKd0qlHoHSMHlJnr/rSU2e/+B4lqkaaSL/saoyfeNrolGNo9w
+         L+5mqkKoInLLalyEZyBFS3JlJymcfiTkOW/UCu38aoxvxfFG5H7XgopVq25wmLDHSpz+
+         sDYQ==
+X-Gm-Message-State: APjAAAUV3s5QgwWSJwbJbrBUE9IuB4ocG0QDGpbhK7iGxRXWwkMh8fQE
+        /RjLPBYq6T3csS4SuPIbKuJ66dnG
+X-Google-Smtp-Source: APXvYqzQ+9CsbIHy4/BN5OfMaUJ33wknWM3eoGUJPhDg5PuQEghhzLElUraXblvdCukY+xQy38SxIQ==
+X-Received: by 2002:a05:600c:2254:: with SMTP id a20mr60377wmm.97.1581960328816;
+        Mon, 17 Feb 2020 09:25:28 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a16sm2051798wrt.30.2020.02.17.09.25.23
+        by smtp.gmail.com with ESMTPSA id f1sm1893424wro.85.2020.02.17.09.25.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Feb 2020 09:25:23 -0800 (PST)
-Message-Id: <cf065e905dcd8e44a1ee87602a7525c537eab27d.1581960322.git.gitgitgadget@gmail.com>
+        Mon, 17 Feb 2020 09:25:28 -0800 (PST)
+Message-Id: <d34eaf4a27236591a9bc345d5a2cb465542a3243.1581960322.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.530.v3.git.1581960322.gitgitgadget@gmail.com>
 References: <pull.530.v2.git.1581345948.gitgitgadget@gmail.com>
         <pull.530.v3.git.1581960322.gitgitgadget@gmail.com>
 From:   "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 17 Feb 2020 17:25:15 +0000
-Subject: [PATCH v3 1/8] doc: rm: synchronize <pathspec> description
+Date:   Mon, 17 Feb 2020 17:25:21 +0000
+Subject: [PATCH v3 7/8] stash: eliminate crude option parsing
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,97 +77,167 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 
-This patch continues the effort that is already applied to
-`git commit`, `git reset`, `git checkout` etc.
+Eliminate crude option parsing and rely on real parsing instead, because
+1) Crude parsing is crude, for example it's not capable of
+   handling things like `git stash -m Message`
+2) Adding options in two places is inconvenient and prone to bugs
 
-1) Changed outdated descriptions to mention pathspec instead.
-2) Added reference to 'linkgit:gitglossary[7]'.
-3) Removed content that merely repeated gitglossary.
-4) Merged the remainder of "discussion" into `<patchspec>`.
+As a side result, the case of `git stash -m Message` gets fixed.
+Also give a good error message instead of just throwing usage at user.
+
+----
+
+Some review of what's been happening to this code:
+
+Before [1], `git-stash.sh` only verified that all args begin with `-` :
+
+	# The default command is "push" if nothing but options are given
+	seen_non_option=
+	for opt
+	do
+		case "$opt" in
+		--) break ;;
+		-*) ;;
+		*) seen_non_option=t; break ;;
+		esac
+	done
+
+Later, [1] introduced the duplicate code I'm now removing, also making
+the previous test more strict by white-listing options.
+
+----
+
+[1] Commit 40af1468 ("stash: convert `stash--helper.c` into `stash.c`" 2019-02-26)
 
 Signed-off-by: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 ---
- Documentation/git-rm.txt | 50 +++++++++++++++++-----------------------
- 1 file changed, 21 insertions(+), 29 deletions(-)
+ builtin/stash.c  | 59 +++++++++++++++++-------------------------------
+ t/t3903-stash.sh |  5 ++++
+ 2 files changed, 26 insertions(+), 38 deletions(-)
 
-diff --git a/Documentation/git-rm.txt b/Documentation/git-rm.txt
-index b5c46223c44..e02a08e5efd 100644
---- a/Documentation/git-rm.txt
-+++ b/Documentation/git-rm.txt
-@@ -8,16 +8,16 @@ git-rm - Remove files from the working tree and from the index
- SYNOPSIS
- --------
- [verse]
--'git rm' [-f | --force] [-n] [-r] [--cached] [--ignore-unmatch] [--quiet] [--] <file>...
-+'git rm' [-f | --force] [-n] [-r] [--cached] [--ignore-unmatch] [--quiet] [--] <pathspec>...
+diff --git a/builtin/stash.c b/builtin/stash.c
+index 879fc5f3683..ed84ff2e168 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -1451,8 +1451,10 @@ static int do_push_stash(const struct pathspec *ps, const char *stash_msg, int q
+ 	return ret;
+ }
  
- DESCRIPTION
- -----------
--Remove files from the index, or from the working tree and the index.
--`git rm` will not remove a file from just your working directory.
--(There is no option to remove a file only from the working tree
--and yet keep it in the index; use `/bin/rm` if you want to do that.)
--The files being removed have to be identical to the tip of the branch,
--and no updates to their contents can be staged in the index,
-+Remove files matching pathspec from the index, or from the working tree
-+and the index. `git rm` will not remove a file from just your working
-+directory. (There is no option to remove a file only from the working
-+tree and yet keep it in the index; use `/bin/rm` if you want to do
-+that.) The files being removed have to be identical to the tip of the
-+branch, and no updates to their contents can be staged in the index,
- though that default behavior can be overridden with the `-f` option.
- When `--cached` is given, the staged content has to
- match either the tip of the branch or the file on disk,
-@@ -26,15 +26,20 @@ allowing the file to be removed from just the index.
+-static int push_stash(int argc, const char **argv, const char *prefix)
++static int push_stash(int argc, const char **argv, const char *prefix,
++		      int push_assumed)
+ {
++	int force_assume = 0;
+ 	int keep_index = -1;
+ 	int patch_mode = 0;
+ 	int include_untracked = 0;
+@@ -1474,10 +1476,22 @@ static int push_stash(int argc, const char **argv, const char *prefix)
+ 		OPT_END()
+ 	};
  
- OPTIONS
- -------
--<file>...::
--	Files to remove.  Fileglobs (e.g. `*.c`) can be given to
--	remove all matching files.  If you want Git to expand
--	file glob characters, you may need to shell-escape them.
--	A leading directory name
--	(e.g. `dir` to remove `dir/file1` and `dir/file2`) can be
--	given to remove all files in the directory, and recursively
--	all sub-directories,
--	but this requires the `-r` option to be explicitly given.
-+<pathspec>...::
-+	Files to remove.  A leading directory name (e.g. `dir` to remove
-+	`dir/file1` and `dir/file2`) can be given to remove all files in
-+	the directory, and recursively all sub-directories, but this
-+	requires the `-r` option to be explicitly given.
-++
-+The command removes only the paths that are known to Git.
-++
-+File globbing matches across directory boundaries.  Thus, given two
-+directories `d` and `d2`, there is a difference between using
-+`git rm 'd*'` and `git rm 'd/*'`, as the former will also remove all
-+of directory `d2`.
-++
-+For more details, see the 'pathspec' entry in linkgit:gitglossary[7].
+-	if (argc)
++	if (argc) {
++		force_assume = !strcmp(argv[0], "-p");
+ 		argc = parse_options(argc, argv, prefix, options,
+ 				     git_stash_push_usage,
+-				     0);
++				     PARSE_OPT_KEEP_DASHDASH);
++	}
++
++	if (argc) {
++		if (!strcmp(argv[0], "--")) {
++			argc--;
++			argv++;
++		} else if (push_assumed && !force_assume) {
++			die("subcommand wasn't specified; 'push' can't be assumed due to unexpected token '%s'",
++			    argv[0]);
++		}
++	}
  
- -f::
- --force::
-@@ -69,19 +74,6 @@ OPTIONS
- 	for each file removed. This option suppresses that output.
+ 	parse_pathspec(&ps, 0, PATHSPEC_PREFER_FULL | PATHSPEC_PREFIX_ORIGIN,
+ 		       prefix, argv);
+@@ -1550,7 +1564,6 @@ static int use_builtin_stash(void)
  
+ int cmd_stash(int argc, const char **argv, const char *prefix)
+ {
+-	int i = -1;
+ 	pid_t pid = getpid();
+ 	const char *index_file;
+ 	struct argv_array args = ARGV_ARRAY_INIT;
+@@ -1583,7 +1596,7 @@ int cmd_stash(int argc, const char **argv, const char *prefix)
+ 		    (uintmax_t)pid);
  
--DISCUSSION
------------
+ 	if (!argc)
+-		return !!push_stash(0, NULL, prefix);
++		return !!push_stash(0, NULL, prefix, 0);
+ 	else if (!strcmp(argv[0], "apply"))
+ 		return !!apply_stash(argc, argv, prefix);
+ 	else if (!strcmp(argv[0], "clear"))
+@@ -1603,45 +1616,15 @@ int cmd_stash(int argc, const char **argv, const char *prefix)
+ 	else if (!strcmp(argv[0], "create"))
+ 		return !!create_stash(argc, argv, prefix);
+ 	else if (!strcmp(argv[0], "push"))
+-		return !!push_stash(argc, argv, prefix);
++		return !!push_stash(argc, argv, prefix, 0);
+ 	else if (!strcmp(argv[0], "save"))
+ 		return !!save_stash(argc, argv, prefix);
+ 	else if (*argv[0] != '-')
+ 		usage_msg_opt(xstrfmt(_("unknown subcommand: %s"), argv[0]),
+ 			      git_stash_usage, options);
+ 
+-	if (strcmp(argv[0], "-p")) {
+-		while (++i < argc && strcmp(argv[i], "--")) {
+-			/*
+-			 * `akpqu` is a string which contains all short options,
+-			 * except `-m` which is verified separately.
+-			 */
+-			if ((strlen(argv[i]) == 2) && *argv[i] == '-' &&
+-			    strchr("akpqu", argv[i][1]))
+-				continue;
 -
--The <file> list given to the command can be exact pathnames,
--file glob patterns, or leading directory names.  The command
--removes only the paths that are known to Git.  Giving the name of
--a file that you have not told Git about does not remove that file.
+-			if (!strcmp(argv[i], "--all") ||
+-			    !strcmp(argv[i], "--keep-index") ||
+-			    !strcmp(argv[i], "--no-keep-index") ||
+-			    !strcmp(argv[i], "--patch") ||
+-			    !strcmp(argv[i], "--quiet") ||
+-			    !strcmp(argv[i], "--include-untracked"))
+-				continue;
 -
--File globbing matches across directory boundaries.  Thus, given
--two directories `d` and `d2`, there is a difference between
--using `git rm 'd*'` and `git rm 'd/*'`, as the former will
--also remove all of directory `d2`.
+-			/*
+-			 * `-m` and `--message=` are verified separately because
+-			 * they need to be immediately followed by a string
+-			 * (i.e.`-m"foobar"` or `--message="foobar"`).
+-			 */
+-			if (starts_with(argv[i], "-m") ||
+-			    starts_with(argv[i], "--message="))
+-				continue;
 -
- REMOVING FILES THAT HAVE DISAPPEARED FROM THE FILESYSTEM
- --------------------------------------------------------
- There is no option for `git rm` to remove from the index only
+-			usage_with_options(git_stash_usage, options);
+-		}
+-	}
+-
++	/* Assume 'stash push' */
+ 	argv_array_push(&args, "push");
+ 	argv_array_pushv(&args, argv);
+-	return !!push_stash(args.argc, args.argv, prefix);
++	return !!push_stash(args.argc, args.argv, prefix, 1);
+ }
+diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+index ea56e85e70d..3ad23e2502b 100755
+--- a/t/t3903-stash.sh
++++ b/t/t3903-stash.sh
+@@ -285,6 +285,11 @@ test_expect_success 'stash --no-keep-index' '
+ 	test bar,bar2 = $(cat file),$(cat file2)
+ '
+ 
++test_expect_success 'dont assume push with non-option args' '
++	test_must_fail git stash -q drop 2>err &&
++	test_i18ngrep -e "subcommand wasn'\''t specified; '\''push'\'' can'\''t be assumed due to unexpected token '\''drop'\''" err
++'
++
+ test_expect_success 'stash --invalid-option' '
+ 	echo bar5 >file &&
+ 	echo bar6 >file2 &&
 -- 
 gitgitgadget
 
