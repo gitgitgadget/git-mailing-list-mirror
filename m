@@ -7,59 +7,60 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A9D1EC7619C
-	for <git@archiver.kernel.org>; Mon, 17 Feb 2020 04:53:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BBA35C35242
+	for <git@archiver.kernel.org>; Mon, 17 Feb 2020 04:53:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7F63820726
-	for <git@archiver.kernel.org>; Mon, 17 Feb 2020 04:53:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8FEF720725
+	for <git@archiver.kernel.org>; Mon, 17 Feb 2020 04:53:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DPXLUxc4"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OEmsIH1w"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727991AbgBQExQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 16 Feb 2020 23:53:16 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:34683 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726656AbgBQExN (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1727996AbgBQExR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 16 Feb 2020 23:53:17 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:35427 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727872AbgBQExN (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 16 Feb 2020 23:53:13 -0500
-Received: by mail-wr1-f68.google.com with SMTP id n10so16037575wrm.1
-        for <git@vger.kernel.org>; Sun, 16 Feb 2020 20:53:11 -0800 (PST)
+Received: by mail-wr1-f66.google.com with SMTP id w12so17983889wrt.2
+        for <git@vger.kernel.org>; Sun, 16 Feb 2020 20:53:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=lnsT90haYi8aXQv2xc7ovgJBe4ZUQqvZxZRum5GQbr4=;
-        b=DPXLUxc4HdJ6IvRPmf/xnPzNNiMKdTmnRRUhoi/kNFBBtGPGkkZMfPMH/Ul+2J0j4Y
-         lOw1A+hGGFmX9CYVpcCrfGvxxZeAgnwJPZXm4hCcWbPLAIwcm8+VioQQEq6/jakZa/5J
-         xQzLIpJRXjnsjin1FYHEXTJw5IMLISOV2mKl6SN5pJyRo050vPdIkjd4/HZvIA5WbUMA
-         C8MVtVpuYqq7L5dD/Hqai7lggRd3B7fOkFxdbrq5lxnBh76N9Fp3wx8uCC/E6Dc5CQxs
-         pE0Wei9oAluIOeP86Akgh60o0TG9eyb6uN8E7cmqjk/EL50FrWEOsQgeWxnDbf2XgtQy
-         BAUg==
+        bh=fNHHYop37NoayjUMF4vkw/ZhMKFfXENYfUyVkavDQhE=;
+        b=OEmsIH1w94mSFBE2jzKNNJ6ethd8dzx3qDoSeGxKLQeJm/kC1hiRllXwYyEFy4hW4U
+         4QwL0VRFjk8LqcnA01RPXbWTtoMUXyObJWhK5XOZcdwGR9htCHmr6QvMaiSle4akFeeo
+         h4ARCOH2BL4Sm70HWnr5a435enp657x0sF7xiHTB5paHfm3Slbs8HJgPPRvWb5pyVcAS
+         LCDlIeVrfoQUt6YW9HhVfZsQhrPk60BLjDo7jdlRj2FYqUFBOjekJq+9tqdO7wQFIViC
+         TKAm7iKkCbuOLb18ZRGm8sXSe2tlXMM9w/W2SvCmmk9hDuY5IalVmmtbaL+jE/T/rXYt
+         PXIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=lnsT90haYi8aXQv2xc7ovgJBe4ZUQqvZxZRum5GQbr4=;
-        b=JL2b+M30Ezw++qKcE/oEdp9tQO0p2JYn383uk4f1IXZ149L50Stv0IHFeCLnKg2ee5
-         mSoQFraDRRMgzgtL5HGaA/vi03TBQmzp4RW2/MBL5neInetI9ASCnKhgXzI4gQfK/Nva
-         +8PkTa3S3gJqWWRqp0k1r8W3rwJ7DvYxCmi2ws86ub4JQvg4+UKD+NFvBpJsPejlv5o4
-         FpZkc2D3fZjws7/RkpNOzPaOcZ+gCIOUDJmeCHsGPftxn5RuHZIdJCBLI5AhoLW/f67Y
-         t8tBU9DLyLgXWvqRPFB/RfKD0m2Vddux1o/1fGiqprnByBF8D/HYfrrMcfDP9E8Ed1o/
-         M3DQ==
-X-Gm-Message-State: APjAAAVjJR/ah/nNX0LRJU2wp2yi+u0E1ql3Bb6yden5OmFTjXyoUHgH
-        DzX7mXyv3kBTw82Xt/gvWr4chXHS
-X-Google-Smtp-Source: APXvYqy98+Pwz6pfnpdf9WrtM5Y1M9x1RCkMTxRI9Ezwyl+6CyIrXURZjkLEpL537xHsrMK3E5U4iw==
-X-Received: by 2002:adf:ee0b:: with SMTP id y11mr19198907wrn.62.1581915189447;
-        Sun, 16 Feb 2020 20:53:09 -0800 (PST)
+        bh=fNHHYop37NoayjUMF4vkw/ZhMKFfXENYfUyVkavDQhE=;
+        b=tc30zFcfv0RgO2GPDO4hYSQxkpkISuLE31xG9sw4Ewwj/rLlH1LgKZ5LQ0ZwwrSTyW
+         kcmie08jWgZverJ6pJzkyw9CdbxCQT8ZR3HBguECCQ+KgTXUjAmiBKq0tAFc2grhZbFO
+         jjUTtbl3gYzQOWv2kYKDI7/w+EX1Vg1kmxN2OZERYJSH/Qu8vGmx3SA5cTTl1gkeP7z4
+         uoBgZozkkUfqZNMkIAqGwOej3+9doPeSkuy3jPJdDLotCWVEZiMk2v6Fdslf5FkN/jKQ
+         kyz+obb0DO64YqKZbrdUtNWvi9EEv4DqljQlo0kSgc4MiTD7WuF6IoYlKimaNUc/sgSe
+         DQXA==
+X-Gm-Message-State: APjAAAXEalqvAgAbT38glQYzdysWhg1GhIR/pCyz+Y5Q+Q2V08GVAaiC
+        gaUYTP8kJE/gBKdBvX2sMOKvx1is
+X-Google-Smtp-Source: APXvYqy95ECmrSy3X4AAlD8kIBsUNG7T8zSS/ZxBAKQHmxab164ceIJ+4sxnPKCy2ieqx9wcZqmHug==
+X-Received: by 2002:adf:a285:: with SMTP id s5mr20560877wra.118.1581915191523;
+        Sun, 16 Feb 2020 20:53:11 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c77sm18463753wmd.12.2020.02.16.20.53.08
+        by smtp.gmail.com with ESMTPSA id m3sm19751836wrs.53.2020.02.16.20.53.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 16 Feb 2020 20:53:09 -0800 (PST)
-Message-Id: <fa64ff03647e85d79414da6776309ab7488bc2be.1581915186.git.gitgitgadget@gmail.com>
+        Sun, 16 Feb 2020 20:53:11 -0800 (PST)
+Message-Id: <70b2a20b4ebb09ccb85b576c212075ab1ca75601.1581915186.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.555.git.1581915186.gitgitgadget@gmail.com>
 References: <pull.555.git.1581915186.gitgitgadget@gmail.com>
 From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 17 Feb 2020 04:53:03 +0000
-Subject: [PATCH 3/6] t/lib-submodule-update: move a test to the right section
+Date:   Mon, 17 Feb 2020 04:53:06 +0000
+Subject: [PATCH 6/6] t/lib-submodule-update: add test removing nested
+ submodules
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,71 +78,68 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Philippe Blain <levraiphilippeblain@gmail.com>
 
-The test "$command: submodule branch is not changed, detach HEAD
-instead" is in the "Appearing submodule" section of
-test_submodule_recursing_with_args_common(), but this test updates a
-submodule; it does not test a transition from a state with no submodule
-to a state with a submodule.
+The previous commit fixed a bug with the (no submodule) -> (nested
+submodules) transition for commands in the unpack-trees machinery.
 
-As such, for consistency, move it to the "Modified submodule" section of
-the same function. While at it, add a comment describing the test.
+Let's add a test for the reverse transition (going from nested
+submodules to no submodule), as it is not being tested currently.
+
+While at it, uniformize the capitalization in the list of tests.
 
 Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
 ---
- t/lib-submodule-update.sh | 33 +++++++++++++++++----------------
- 1 file changed, 17 insertions(+), 16 deletions(-)
+ t/lib-submodule-update.sh | 20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
 
 diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
-index 5f9eb682f6a..417da3602ae 100755
+index ab30b2da24f..64fc6487dd9 100755
 --- a/t/lib-submodule-update.sh
 +++ b/t/lib-submodule-update.sh
-@@ -658,22 +658,6 @@ test_submodule_recursing_with_args_common() {
- 			test_submodule_content sub1 origin/add_sub1
- 		)
- 	'
--	test_expect_success "$command: submodule branch is not changed, detach HEAD instead" '
--		prolog &&
--		reset_work_tree_to_interested add_sub1 &&
--		(
--			cd submodule_update &&
--			git -C sub1 checkout -b keep_branch &&
--			git -C sub1 rev-parse HEAD >expect &&
--			git branch -t modify_sub1 origin/modify_sub1 &&
--			$command modify_sub1 &&
--			test_superproject_content origin/modify_sub1 &&
--			test_submodule_content sub1 origin/modify_sub1 &&
--			git -C sub1 rev-parse keep_branch >actual &&
--			test_cmp expect actual &&
--			test_must_fail git -C sub1 symbolic-ref HEAD
--		)
--	'
+@@ -297,7 +297,7 @@ test_submodule_content () {
+ # - Directory containing tracked files replaced by submodule
+ # - Submodule replaced by tracked files in directory
+ # - Submodule replaced by tracked file with the same name
+-# - tracked file replaced by submodule
++# - Tracked file replaced by submodule
+ #
+ # The default is that submodule contents aren't changed until "git submodule
+ # update" is run. And even then that command doesn't delete the work tree of
+@@ -621,12 +621,13 @@ test_submodule_forced_switch () {
+ # - Directory containing tracked files replaced by submodule
+ # - Submodule replaced by tracked files in directory
+ # - Submodule replaced by tracked file with the same name
+-# - tracked file replaced by submodule
++# - Tracked file replaced by submodule
+ #
+ # New test cases
+ # - Removing a submodule with a git directory absorbs the submodules
+ #   git directory first into the superproject.
+ # - Switching from no submodule to nested submodules
++# - Switching from nested submodules to no submodule
  
- 	# Replacing a tracked file with a submodule produces a checked out submodule
- 	test_expect_success "$command: replace tracked file with submodule checks out submodule" '
-@@ -789,6 +773,23 @@ test_submodule_recursing_with_args_common() {
- 			test_submodule_content sub1 origin/add_sub1
+ # Internal function; use test_submodule_switch_recursing_with_args() or
+ # test_submodule_forced_switch_recursing_with_args() instead.
+@@ -760,6 +761,21 @@ test_submodule_recursing_with_args_common() {
  		)
  	'
-+	# Updating a submodule does not touch the currently checked out branch in the submodule
-+	test_expect_success "$command: submodule branch is not changed, detach HEAD instead" '
+ 
++	# Switching to a commit without nested submodules removes their worktrees
++	test_expect_success "$command: worktrees of nested submodules are removed" '
 +		prolog &&
-+		reset_work_tree_to_interested add_sub1 &&
++		reset_work_tree_to_interested add_nested_sub &&
 +		(
 +			cd submodule_update &&
-+			git -C sub1 checkout -b keep_branch &&
-+			git -C sub1 rev-parse HEAD >expect &&
-+			git branch -t modify_sub1 origin/modify_sub1 &&
-+			$command modify_sub1 &&
-+			test_superproject_content origin/modify_sub1 &&
-+			test_submodule_content sub1 origin/modify_sub1 &&
-+			git -C sub1 rev-parse keep_branch >actual &&
-+			test_cmp expect actual &&
-+			test_must_fail git -C sub1 symbolic-ref HEAD
++			git branch -t no_submodule origin/no_submodule &&
++			$command no_submodule &&
++			test_superproject_content origin/no_submodule &&
++			! test_path_is_dir sub1 &&
++			test_must_fail git config -f .git/modules/sub1/config core.worktree &&
++			test_must_fail git config -f .git/modules/sub1/modules/sub2/config core.worktree
 +		)
 +	'
- }
- 
- # Declares and invokes several tests that, in various situations, checks that
++
+ 	########################## Modified submodule #########################
+ 	# Updating a submodule sha1 updates the submodule's work tree
+ 	test_expect_success "$command: modified submodule updates submodule work tree" '
 -- 
 gitgitgadget
-
