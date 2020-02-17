@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CFEBC34021
-	for <git@archiver.kernel.org>; Mon, 17 Feb 2020 17:25:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C505C34025
+	for <git@archiver.kernel.org>; Mon, 17 Feb 2020 17:25:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0D28D208C4
-	for <git@archiver.kernel.org>; Mon, 17 Feb 2020 17:25:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5D55320801
+	for <git@archiver.kernel.org>; Mon, 17 Feb 2020 17:25:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E22UQxOc"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QLCxpalr"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729665AbgBQRZ2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Feb 2020 12:25:28 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:45728 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728736AbgBQRZ1 (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1729678AbgBQRZ3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Feb 2020 12:25:29 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:39463 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729375AbgBQRZ1 (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 17 Feb 2020 12:25:27 -0500
-Received: by mail-wr1-f67.google.com with SMTP id g3so20685321wrs.12
-        for <git@vger.kernel.org>; Mon, 17 Feb 2020 09:25:25 -0800 (PST)
+Received: by mail-wm1-f68.google.com with SMTP id c84so113408wme.4
+        for <git@vger.kernel.org>; Mon, 17 Feb 2020 09:25:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=XPx4ASDYR2fnaQiWxe0tNHGusrRUUIG4Ac3NwH2Bvsg=;
-        b=E22UQxOcrStBddJQdey2kZc4GHCje9MA4ZYi4ZdqDuOUFJjzNH08awjUiM/N7G+FGK
-         G/lbNKw30yJ+DyCPVGmfnTrc3awRugdL1xNE1FcejDogX2nBZiUNCVrPN3BudAocgXRZ
-         LRBiDxTtp3mB5Hkj0eIpzTX/2nhIccmwUIi5kbBmU+79jTBMft1Ml7GR8CsDJ2aYLCJ8
-         /O9nZumMUHoWLknn7wT/RhtSmaBlztc+6xOxGanB1cl0y5oQqlBmvQzf8s/w+n1gWcyI
-         5rP3UHGheRgH0hc1EtaqrM+PjlKWWP59NxewOc407cQOQbbXPEDfAxt0b+lOl+/0dO/q
-         JJ0Q==
+        bh=s6UKQ3UVj1/6S4yg9rFPtjA48MHEQRyxGGe85J73NIo=;
+        b=QLCxpalrvrnjuXTrrMs0zwtJHneI0TPLA9AGwv4VdiFTk5MewjG5X59C3p1JOcb6oU
+         BnpQdWnWsme8feG20aOOLx33CbQDE3OI+wE2JUSX9xX/+9Z8YBks9ElAb1mZEZMZdCqi
+         QBI4UIVVZM4yTVe5t+hjmw832CeFLYAZbTW6OcybFlRp55fuNN8BlLe3st5hG6UvqGuQ
+         Uzf/vpa3Scpu9YOVxs7jOHDFx8S7TW1Lr7cPHLbS7brfuP2Su3cfKjxDaGKXTdrpfYtf
+         otyMqRETAkfJM5nQP+AWohnR8YJCMRbdXp4qZPZB/8FQi+tVuQ8hGBZCtZuKXGNDHLX7
+         WHyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=XPx4ASDYR2fnaQiWxe0tNHGusrRUUIG4Ac3NwH2Bvsg=;
-        b=ZPysn4AxOG/wRMMvfCxqpsFhE1M99Z0/mbH8z11NseqL0V9StKKrcjatvZLrp1XIzV
-         ennU1ySUmwqUjuu3Wan79rvBatPwFLVSaUTAAOz2TWqoTCjzlwTXGHoqTXZw37QVxep/
-         4Slxrk1Wmjjl3Xn82rL60pULBrCdvYWHMLrZUQxOUtwpBFCWqDweRexwSq5fVSrdSW90
-         vok+vQ9lcepAz7dHHd6cJE1ROJBs1eZgL7r1IGLgFw5T3hpm1d+nIlzgmLVLWRw0t1Xg
-         a4CLxNOzNXKoRj+FPsaoHzXbgBF8C3P39IxU9+GGpaD0tj+fzGFzQLgYsBw6E7lB0eG9
-         I/lQ==
-X-Gm-Message-State: APjAAAXgQWIyDWojJKOcYO+5k/Dd/ysrtXT3WUxdLpYyp7fMc5Jd73T/
-        lCCOpcxdnoYR4HdV5ui2sTIBEE7T
-X-Google-Smtp-Source: APXvYqwlr7p9RIRrlqtnqTnFKQofgB0aJBu8165bWSxr8H+Wk1vR7xTo1YV/2nghKgMepANriVxPPQ==
-X-Received: by 2002:a5d:6a88:: with SMTP id s8mr23126066wru.173.1581960324943;
-        Mon, 17 Feb 2020 09:25:24 -0800 (PST)
+        bh=s6UKQ3UVj1/6S4yg9rFPtjA48MHEQRyxGGe85J73NIo=;
+        b=cq7DR7xVSzV9EwR34Z3Wrefdwr8by2xZN4DD02F49ADtqvmZB/1aXrgZRHAtgpd2bj
+         0FHRWHqv3A/Qyvtqai2nFC+GSwRA2BosNbCg8drU08sNMoE4z79hdBRIFcb02v6zHZRN
+         W1DaBczmvNf0FuzWe1OoS6wssWVseXkRCVWa7Hf1FBFb3RZ48HKnrTpn5To+Bdpxx1HX
+         cJPZFDEW5uiMpOUbLWCf0sT7U2HEsQO0TjXoBMeSOlxjJfZQIP5U1Vsjsf6aIwROUMp9
+         sgDQTIO5nDx7klOt9nlO+u10I76eihVs+0cdLGrgng+H9ccTsbqvwgMlcVnPF9qn7IpK
+         YP3w==
+X-Gm-Message-State: APjAAAWE5OrVDz+UW/UWqDdxhgZFXbv39slebHLxLCQ3bQs6XY7UpVVO
+        Wf7xYrax6lIK+i1/QhWbJUwUwTTj
+X-Google-Smtp-Source: APXvYqydezy4V4mEeUgIcViREkNimwXNidJjpd0FI3q4xGDzzma8MIOukkOMvydmoHZWAzux++SQlg==
+X-Received: by 2002:a7b:c0c4:: with SMTP id s4mr60316wmh.131.1581960325853;
+        Mon, 17 Feb 2020 09:25:25 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j15sm2004023wrp.9.2020.02.17.09.25.24
+        by smtp.gmail.com with ESMTPSA id c15sm1870359wrt.1.2020.02.17.09.25.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Feb 2020 09:25:24 -0800 (PST)
-Message-Id: <7c657dea89e900a023af1130545f6c3341841840.1581960322.git.gitgitgadget@gmail.com>
+        Mon, 17 Feb 2020 09:25:25 -0800 (PST)
+Message-Id: <bb300215d4978cf64d4c60d92c13acd7464b545b.1581960322.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.530.v3.git.1581960322.gitgitgadget@gmail.com>
 References: <pull.530.v2.git.1581345948.gitgitgadget@gmail.com>
         <pull.530.v3.git.1581960322.gitgitgadget@gmail.com>
 From:   "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 17 Feb 2020 17:25:16 +0000
-Subject: [PATCH v3 2/8] rm: support the --pathspec-from-file option
+Date:   Mon, 17 Feb 2020 17:25:17 +0000
+Subject: [PATCH v3 3/8] doc: stash: split options from description (1)
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,230 +77,107 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 
-Decisions taken for simplicity:
-1) It is not allowed to pass pathspec in both args and file.
-
-Adjustments were needed for `if (!argc)` block:
-
-This code actually means "pathspec is not present". Previously, pathspec
-could only come from commandline arguments, so testing for `argc` was a
-valid way of testing for the presence of pathspec. But this is no longer
-true with `--pathspec-from-file`.
-
-During the entire `--pathspec-from-file` story, I tried to keep its
-behavior very close to giving pathspec on commandline, so that switching
-from one to another doesn't involve any surprises.
-
-However, throwing usage at user in the case of empty
-`--pathspec-from-file` would puzzle because there's nothing wrong with
-"usage" (that is, argc/argv array).
-
-On the other hand, throwing usage in the old case also feels bad to me.
-While it's less of a puzzle, I (as user) never liked the experience of
-comparing my commandline to "usage", trying to spot a difference. Since
-it's already known what the error is, it feels a lot better to give that
-specific error to user.
-
-Judging from [1] it doesn't seem that showing usage in this case was
-important (the patch was to avoid segfault), and it doesn't fit into how
-other commands react to empty pathspec (see for example `git add` with a
-custom message).
-
-Therefore, I decided to show new error text in both cases. In order to
-continue testing for error early, I moved `parse_pathspec()` higher. Now
-it happens before `read_cache()` / `hold_locked_index()` /
-`setup_work_tree()`, which shouldn't cause any issues.
-
-[1] Commit 7612a1ef ("git-rm: honor -n flag" 2006-06-09)
+This patch moves blocks of text as-is to make it easier to review the
+next patch.
 
 Signed-off-by: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 ---
- Documentation/git-rm.txt    | 17 +++++++-
- builtin/rm.c                | 28 ++++++++++---
- t/t3601-rm-pathspec-file.sh | 79 +++++++++++++++++++++++++++++++++++++
- 3 files changed, 117 insertions(+), 7 deletions(-)
- create mode 100755 t/t3601-rm-pathspec-file.sh
+ Documentation/git-stash.txt | 68 +++++++++++++++++++------------------
+ 1 file changed, 35 insertions(+), 33 deletions(-)
 
-diff --git a/Documentation/git-rm.txt b/Documentation/git-rm.txt
-index e02a08e5efd..ab750367fde 100644
---- a/Documentation/git-rm.txt
-+++ b/Documentation/git-rm.txt
-@@ -8,7 +8,9 @@ git-rm - Remove files from the working tree and from the index
- SYNOPSIS
- --------
- [verse]
--'git rm' [-f | --force] [-n] [-r] [--cached] [--ignore-unmatch] [--quiet] [--] <pathspec>...
-+'git rm' [-f | --force] [-n] [-r] [--cached] [--ignore-unmatch]
-+	  [--quiet] [--pathspec-from-file=<file> [--pathspec-file-nul]]
-+	  [--] [<pathspec>...]
+diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
+index 53e1a1205d3..2dedc219974 100644
+--- a/Documentation/git-stash.txt
++++ b/Documentation/git-stash.txt
+@@ -58,31 +58,6 @@ non-option arguments are not allowed to prevent a misspelled
+ subcommand from making an unwanted stash entry.  The two exceptions to this
+ are `stash -p` which acts as alias for `stash push -p` and pathspecs,
+ which are allowed after a double hyphen `--` for disambiguation.
+-+
+-When pathspec is given to 'git stash push', the new stash entry records the
+-modified states only for the files that match the pathspec.  The index
+-entries and working tree files are then rolled back to the state in
+-HEAD only for these files, too, leaving files that do not match the
+-pathspec intact.
+-+
+-If the `--keep-index` option is used, all changes already added to the
+-index are left intact.
+-+
+-If the `--include-untracked` option is used, all untracked files are also
+-stashed and then cleaned up with `git clean`, leaving the working directory
+-in a very clean state. If the `--all` option is used instead then the
+-ignored files are stashed and cleaned in addition to the untracked files.
+-+
+-With `--patch`, you can interactively select hunks from the diff
+-between HEAD and the working tree to be stashed.  The stash entry is
+-constructed such that its index state is the same as the index state
+-of your repository, and its worktree contains only the changes you
+-selected interactively.  The selected changes are then rolled back
+-from your worktree. See the ``Interactive Mode'' section of
+-linkgit:git-add[1] to learn how to operate the `--patch` mode.
+-+
+-The `--patch` option implies `--keep-index`.  You can use
+-`--no-keep-index` to override this.
  
- DESCRIPTION
- -----------
-@@ -73,6 +75,19 @@ For more details, see the 'pathspec' entry in linkgit:gitglossary[7].
- 	`git rm` normally outputs one line (in the form of an `rm` command)
- 	for each file removed. This option suppresses that output.
+ save [-p|--patch] [-k|--[no-]keep-index] [-u|--include-untracked] [-a|--all] [-q|--quiet] [<message>]::
  
-+--pathspec-from-file=<file>::
-+	Pathspec is passed in `<file>` instead of commandline args. If
-+	`<file>` is exactly `-` then standard input is used. Pathspec
-+	elements are separated by LF or CR/LF. Pathspec elements can be
-+	quoted as explained for the configuration variable `core.quotePath`
-+	(see linkgit:git-config[1]). See also `--pathspec-file-nul` and
-+	global `--literal-pathspecs`.
-+
-+--pathspec-file-nul::
-+	Only meaningful with `--pathspec-from-file`. Pathspec elements are
-+	separated with NUL character and all other characters are taken
-+	literally (including newlines and quotes).
-+
+@@ -128,14 +103,6 @@ pop [--index] [-q|--quiet] [<stash>]::
+ Applying the state can fail with conflicts; in this case, it is not
+ removed from the stash list. You need to resolve the conflicts by hand
+ and call `git stash drop` manually afterwards.
+-+
+-If the `--index` option is used, then tries to reinstate not only the working
+-tree's changes, but also the index's ones. However, this can fail, when you
+-have conflicts (which are stored in the index, where you therefore can no
+-longer apply the changes as they were originally).
+-+
+-When no `<stash>` is given, `stash@{0}` is assumed, otherwise `<stash>` must
+-be a reference of the form `stash@{<revision>}`.
  
- REMOVING FILES THAT HAVE DISAPPEARED FROM THE FILESYSTEM
- --------------------------------------------------------
-diff --git a/builtin/rm.c b/builtin/rm.c
-index 19ce95a901b..4858631e0f0 100644
---- a/builtin/rm.c
-+++ b/builtin/rm.c
-@@ -235,7 +235,8 @@ static int check_local_mod(struct object_id *head, int index_only)
- }
+ apply [--index] [-q|--quiet] [<stash>]::
  
- static int show_only = 0, force = 0, index_only = 0, recursive = 0, quiet = 0;
--static int ignore_unmatch = 0;
-+static int ignore_unmatch = 0, pathspec_file_nul;
-+static char *pathspec_from_file;
+@@ -185,6 +152,41 @@ store::
+ 	reflog.  This is intended to be useful for scripts.  It is
+ 	probably not the command you want to use; see "push" above.
  
- static struct option builtin_rm_options[] = {
- 	OPT__DRY_RUN(&show_only, N_("dry run")),
-@@ -245,6 +246,8 @@ static struct option builtin_rm_options[] = {
- 	OPT_BOOL('r', NULL,             &recursive,  N_("allow recursive removal")),
- 	OPT_BOOL( 0 , "ignore-unmatch", &ignore_unmatch,
- 				N_("exit with a zero status even if nothing matched")),
-+	OPT_PATHSPEC_FROM_FILE(&pathspec_from_file),
-+	OPT_PATHSPEC_FILE_NUL(&pathspec_file_nul),
- 	OPT_END(),
- };
++If the `--all` option is used instead then the
++ignored files are stashed and cleaned in addition to the untracked files.
++
++If the `--include-untracked` option is used, all untracked files are also
++stashed and then cleaned up with `git clean`, leaving the working directory
++in a very clean state.
++
++If the `--index` option is used, then tries to reinstate not only the working
++tree's changes, but also the index's ones. However, this can fail, when you
++have conflicts (which are stored in the index, where you therefore can no
++longer apply the changes as they were originally).
++
++If the `--keep-index` option is used, all changes already added to the
++index are left intact.
++
++With `--patch`, you can interactively select hunks from the diff
++between HEAD and the working tree to be stashed.  The stash entry is
++constructed such that its index state is the same as the index state
++of your repository, and its worktree contains only the changes you
++selected interactively.  The selected changes are then rolled back
++from your worktree. See the ``Interactive Mode'' section of
++linkgit:git-add[1] to learn how to operate the `--patch` mode.
+++
++The `--patch` option implies `--keep-index`.  You can use 
++`--no-keep-index` to override this.
++
++When pathspec is given to 'git stash push', the new stash entry records the
++modified states only for the files that match the pathspec.  The index
++entries and working tree files are then rolled back to the state in
++HEAD only for these files, too, leaving files that do not match the
++pathspec intact.
++
++When no `<stash>` is given, `stash@{0}` is assumed, otherwise `<stash>` must
++be a reference of the form `stash@{<revision>}`.
++
+ DISCUSSION
+ ----------
  
-@@ -259,8 +262,24 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
- 
- 	argc = parse_options(argc, argv, prefix, builtin_rm_options,
- 			     builtin_rm_usage, 0);
--	if (!argc)
--		usage_with_options(builtin_rm_usage, builtin_rm_options);
-+
-+	parse_pathspec(&pathspec, 0,
-+		       PATHSPEC_PREFER_CWD,
-+		       prefix, argv);
-+
-+	if (pathspec_from_file) {
-+		if (pathspec.nr)
-+			die(_("--pathspec-from-file is incompatible with pathspec arguments"));
-+
-+		parse_pathspec_file(&pathspec, 0,
-+				    PATHSPEC_PREFER_CWD,
-+				    prefix, pathspec_from_file, pathspec_file_nul);
-+	} else if (pathspec_file_nul) {
-+		die(_("--pathspec-file-nul requires --pathspec-from-file"));
-+	}
-+
-+	if (!pathspec.nr)
-+		die(_("No pathspec was given. Which files should I remove?"));
- 
- 	if (!index_only)
- 		setup_work_tree();
-@@ -270,9 +289,6 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
- 	if (read_cache() < 0)
- 		die(_("index file corrupt"));
- 
--	parse_pathspec(&pathspec, 0,
--		       PATHSPEC_PREFER_CWD,
--		       prefix, argv);
- 	refresh_index(&the_index, REFRESH_QUIET|REFRESH_UNMERGED, &pathspec, NULL, NULL);
- 
- 	seen = xcalloc(pathspec.nr, 1);
-diff --git a/t/t3601-rm-pathspec-file.sh b/t/t3601-rm-pathspec-file.sh
-new file mode 100755
-index 00000000000..7de21f8bcff
---- /dev/null
-+++ b/t/t3601-rm-pathspec-file.sh
-@@ -0,0 +1,79 @@
-+#!/bin/sh
-+
-+test_description='rm --pathspec-from-file'
-+
-+. ./test-lib.sh
-+
-+test_tick
-+
-+test_expect_success setup '
-+	echo A >fileA.t &&
-+	echo B >fileB.t &&
-+	echo C >fileC.t &&
-+	echo D >fileD.t &&
-+	git add fileA.t fileB.t fileC.t fileD.t &&
-+	git commit -m "files" &&
-+
-+	git tag checkpoint
-+'
-+
-+restore_checkpoint () {
-+	git reset --hard checkpoint
-+}
-+
-+verify_expect () {
-+	git status --porcelain --untracked-files=no -- fileA.t fileB.t fileC.t fileD.t >actual &&
-+	test_cmp expect actual
-+}
-+
-+test_expect_success 'simplest' '
-+	restore_checkpoint &&
-+
-+	cat >expect <<-\EOF &&
-+	D  fileA.t
-+	EOF
-+
-+	echo fileA.t | git rm --pathspec-from-file=- &&
-+	verify_expect
-+'
-+
-+test_expect_success '--pathspec-file-nul' '
-+	restore_checkpoint &&
-+
-+	cat >expect <<-\EOF &&
-+	D  fileA.t
-+	D  fileB.t
-+	EOF
-+
-+	printf "fileA.t\0fileB.t\0" | git rm --pathspec-from-file=- --pathspec-file-nul &&
-+	verify_expect
-+'
-+
-+test_expect_success 'only touches what was listed' '
-+	restore_checkpoint &&
-+
-+	cat >expect <<-\EOF &&
-+	D  fileB.t
-+	D  fileC.t
-+	EOF
-+
-+	printf "fileB.t\nfileC.t\n" | git rm --pathspec-from-file=- &&
-+	verify_expect
-+'
-+
-+test_expect_success 'error conditions' '
-+	restore_checkpoint &&
-+	echo fileA.t >list &&
-+
-+	test_must_fail git rm --pathspec-from-file=list -- fileA.t 2>err &&
-+	test_i18ngrep -e "--pathspec-from-file is incompatible with pathspec arguments" err &&
-+
-+	test_must_fail git rm --pathspec-file-nul 2>err &&
-+	test_i18ngrep -e "--pathspec-file-nul requires --pathspec-from-file" err &&
-+
-+	>empty_list &&
-+	test_must_fail git rm --pathspec-from-file=empty_list 2>err &&
-+	test_i18ngrep -e "No pathspec was given. Which files should I remove?" err
-+'
-+
-+test_done
 -- 
 gitgitgadget
 
