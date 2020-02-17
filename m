@@ -2,80 +2,86 @@ Return-Path: <SRS0=dbxk=4F=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 911FFC34022
-	for <git@archiver.kernel.org>; Mon, 17 Feb 2020 18:02:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 79749C34021
+	for <git@archiver.kernel.org>; Mon, 17 Feb 2020 18:05:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6D05920836
-	for <git@archiver.kernel.org>; Mon, 17 Feb 2020 18:02:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 36E40207FD
+	for <git@archiver.kernel.org>; Mon, 17 Feb 2020 18:05:03 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="OshHDtsT"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729021AbgBQSCB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Feb 2020 13:02:01 -0500
-Received: from smtprelay03.ispgateway.de ([80.67.31.37]:34396 "EHLO
-        smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726707AbgBQSCB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Feb 2020 13:02:01 -0500
-Received: from [24.134.116.61] (helo=[192.168.92.208])
-        by smtprelay03.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
-        (Exim 4.92.3)
-        (envelope-from <alexandr.miloslavskiy@syntevo.com>)
-        id 1j3kiU-0004Ku-BD; Mon, 17 Feb 2020 19:01:58 +0100
-Subject: Re: [PATCH v2] mingw: workaround for hangs when sending STDIN
-To:     Eric Sunshine <sunshine@sunshineco.com>,
-        Alexandr Miloslavskiy via GitGitGadget 
-        <gitgitgadget@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
-        Erik Faye-Lund <kusmabite@gmail.com>
-References: <pull.553.git.1581619239467.gitgitgadget@gmail.com>
- <pull.553.v2.git.1581956750001.gitgitgadget@gmail.com>
- <CAPig+cQWMvBi4vkAFMjV7LWjKJudja08ZqVMNfLfALxbBfpzXg@mail.gmail.com>
-From:   Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
-Message-ID: <11825e4b-c92c-d5ad-9a6f-5fa89d48862c@syntevo.com>
-Date:   Mon, 17 Feb 2020 19:01:57 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
+        id S1729204AbgBQSFC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Feb 2020 13:05:02 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52318 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726707AbgBQSFC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Feb 2020 13:05:02 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 105825420B;
+        Mon, 17 Feb 2020 13:05:00 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ZIMinWWBBO5GStrTG5PCmw+3IbM=; b=OshHDt
+        sTkfj9WPiJnP4brptQ9pnGaKzrpSOrk2860SyaqYAKeNVx5mqFevT03tChuEpAmU
+        hfSTKWTpBMT09M5DpQz6DA2XaocbYGSOfQGvsfnYK9YtOQUdeYWRblPegPKwWHKU
+        fhF5DSy4qqM/VLZjVmcB4vBjLdd18uPR9mNOA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=sbYfbe8Xavs7VZTzJBsFYDQe95yAEy+b
+        Y+3F2hw6W9tvss7VUBQ4aSD4EaPfdamUSEd92cYKhm33Ip0w2yowXqYH3qYSkR1E
+        DbTtoLR3ooKpzrpc74vvpXcN6UPdsnmSyPamGvk6uppYm86giCeSdLIvRJ9kYjmL
+        yWHWl/BENFo=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 07D5C54209;
+        Mon, 17 Feb 2020 13:05:00 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6F79B54208;
+        Mon, 17 Feb 2020 13:04:59 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH] check-ignore: fix handling with negated patterns
+References: <pull.711.git.git.1581956106255.gitgitgadget@gmail.com>
+Date:   Mon, 17 Feb 2020 10:04:58 -0800
+In-Reply-To: <pull.711.git.git.1581956106255.gitgitgadget@gmail.com> (Elijah
+        Newren via GitGitGadget's message of "Mon, 17 Feb 2020 16:15:06
+        +0000")
+Message-ID: <xmqqimk5ks39.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <CAPig+cQWMvBi4vkAFMjV7LWjKJudja08ZqVMNfLfALxbBfpzXg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-Df-Sender: YWxleGFuZHIubWlsb3NsYXZza2l5QHN5bnRldm8uY29t
+Content-Type: text/plain
+X-Pobox-Relay-ID: 03018060-51B0-11EA-81FE-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 17.02.2020 18:24, Eric Sunshine wrote:
->> +       x=0123456789abcde\n && # 16
-> 
-> Did you intend for the \n in this assignment to be a literal newline?
-> Every shell with which I tested treats it instead as an escaped 'n'.
+"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-I'm such a novice shell script writer :(
-Yes, I intended a newline.
+> From: Elijah Newren <newren@gmail.com>
+>
+> check-ignore was meant to check ignore rules the same way git status and
+> other commands would, and to report whether a path is excluded.  It
+> failed to do this (and generated a few bug reports), however, because it
+> did not account for negated patterns.
 
-> By the way, are the embedded newlines actually important to the test
-> itself, or are they just for human consumption if the test fails?I
-> ask because I was curious about how other tests create large files,
-> and found that a mechanism similar to your original (but without the
-> pitfalls) has been used. For instance, t1050-large.sh uses:
-> 
->      printf "%2000000s" X >large1 &&
-> 
-> which is plenty portable and (presumably) doesn't have such demanding
-> memory consumption.
+I suspect that the above distorts history.  IIRC, it was meant as a
+tool to see which exact pattern in the exclude sequence had the
+final say for the given needle, written primarily as a debugging
+aid.  In that context, "This rule has the final say", whether the
+rule is a negative or positive, still means something.
 
-They are not important to the test; the test only needs to internally 
-have a 8+ mb patch.
-
-This only comes from my feeling that super-large lines could cause other 
-unexpected things, such as hitting various completely reasonable limits 
-and/or causing unwanted slowdowns. Frankly, I didn't test.
-
-Frankly, I already had concerns about adding the test. Now I have 
-re-evaluated things and finally decided to move the test into commit 
-message instead. With it, all compatibility etc questions are resolved.
+It is just the behavior is _much_ less useful for those who want to
+know what the final say is, and I tend to agree that we probably are
+better off changing its output to reflect "so, are we ignoring the
+path after all? yes/no?" because we are pretty much done with
+debugging the exclude API implementation.
