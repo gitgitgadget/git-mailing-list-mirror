@@ -1,114 +1,225 @@
-Return-Path: <SRS0=2Qsv=4E=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=dbxk=4F=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ED4DEC3B1BF
-	for <git@archiver.kernel.org>; Sun, 16 Feb 2020 23:49:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 28031C76199
+	for <git@archiver.kernel.org>; Mon, 17 Feb 2020 00:01:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 946142086A
-	for <git@archiver.kernel.org>; Sun, 16 Feb 2020 23:49:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E32B3208C3
+	for <git@archiver.kernel.org>; Mon, 17 Feb 2020 00:01:08 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="wmuZNbAQ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ipmuph+n"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727963AbgBPXtq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 16 Feb 2020 18:49:46 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:50806 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726142AbgBPXtq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 16 Feb 2020 18:49:46 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 86EAEAE4E1;
-        Sun, 16 Feb 2020 18:49:45 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=chERRkjbCD4HcFUhv8VK1/4DNCQ=; b=wmuZNb
-        AQSZFDXGGQ8ZMnCGIJRpfkKj3eUQn71oH3hEbCoL4KgPo/GulzviZmqC7SuIJYv3
-        Vj2WNH6vOkeYHJ/3HBpaPaqZZQfrVrw8q1w8C6lfizx7c+sLlrVWSOIOmk8pN6Ou
-        nux5NU1duNdiT/cFCw7sttmdCHWMKTUVc9oDc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=F/eqAtX8TufvVW/IyLR+26ATrf7K9dyo
-        YCvgEUfxXPFaxrYXMmFkXrulWixvuon0F18m6RBsDSrcKQ3M469L9bfmAIL4hinx
-        ybKp+G93cuwA0KGutNgU4AVtU3fDtlNAVw3Kh77LH16U6aq1VccfrIidxQ3VNsQn
-        GsfoEYsW5Xs=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7E91FAE4E0;
-        Sun, 16 Feb 2020 18:49:45 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id AD348AE4DF;
-        Sun, 16 Feb 2020 18:49:42 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Hariom verma <hariom18599@gmail.com>
-Cc:     git <git@vger.kernel.org>, johannes.schindelin@gmx.de
-Subject: Re: [PATCH 2/3] t5509: initialized `pushee` as bare repository
-References: <pull.535.git.1581620351.gitgitgadget@gmail.com>
-        <d156d04ca87f9fcffb1c08a08576dddcdc64c055.1581620351.git.gitgitgadget@gmail.com>
-        <xmqqsgjeqm6w.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.2002141252050.46@tvgsbejvaqbjf.bet>
-        <xmqqpnehp5x4.fsf@gitster-ct.c.googlers.com>
-        <CA+CkUQ-PERGy8xJ-a=5kzbN+N9f4uVQ35Hc4Aob70gJGz++fKQ@mail.gmail.com>
-Date:   Sun, 16 Feb 2020 15:49:40 -0800
-In-Reply-To: <CA+CkUQ-PERGy8xJ-a=5kzbN+N9f4uVQ35Hc4Aob70gJGz++fKQ@mail.gmail.com>
-        (Hariom verma's message of "Sun, 16 Feb 2020 03:22:48 +0530")
-Message-ID: <xmqqo8tym6sr.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726256AbgBQABE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 16 Feb 2020 19:01:04 -0500
+Received: from mail-lj1-f193.google.com ([209.85.208.193]:32960 "EHLO
+        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726145AbgBQABE (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 16 Feb 2020 19:01:04 -0500
+Received: by mail-lj1-f193.google.com with SMTP id y6so16777905lji.0
+        for <git@vger.kernel.org>; Sun, 16 Feb 2020 16:01:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=WBiR2+px7lBEqzO7jPoZfORjESPWcC+DG5K78o7YV9k=;
+        b=Ipmuph+nrno6bqpXH+J0MP+aMyhtLmF7Vh3e6jcFD3iMRnLuVwBWbbimOQSfGEtlJ4
+         GX+r2p7WFusZ8Bylx0KrlCBrHplLRfrksFyqJLF2wTY1kLfL6edJhvGaB7Y/fULb+FQg
+         6nQYwPkouAAHTDao+FqenJ6HU7zsEr5R5XOzcNfeYnMZIT9/iTsofk0arhiP5kdymv/G
+         dhtORp13O3ND2iGzWpNTjYYsjyvAscKmfq4wc1J9YWnGwTvhMQlQTXv3aprj+HvNouOF
+         GCaPvfu3nknIhMgV9ftEDMPU5+R2LT9aJaPbbZJz0Jxhi66joU2dxexOgaIWVrPiPex2
+         PQ7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version:content-transfer-encoding;
+        bh=WBiR2+px7lBEqzO7jPoZfORjESPWcC+DG5K78o7YV9k=;
+        b=cqIliMrLxbVREH3PNgwrXMp7c4H6lLJYG/hOv7tFnI4mpinq5PNXZMA1hd1KRwvchk
+         c6C4QSMx+CnvwknF4xOaVHzbja1SAMw8Z6jBOONa3TVASX40MML96iAgMVQ6hEJNoaju
+         bShA8OSRvCoxJsoeNi/RrMbaEoB/B5saQ7BqQAA7jeEN3zDS7cqIQP/vqhI6pzeIwezQ
+         HIWyshjwxD6iJErCXTGR/btrZRGrVfTfFquiyk11jEW97QZff0rJi/kIxqexYlBEccQ+
+         pjCnyI8JmWIQhtm7H3dVe/epnMQnItzJuOvEJ+uzLI7qljldH+BSsZAq3NtpE6auh206
+         R3og==
+X-Gm-Message-State: APjAAAUNhY2pRw8js3VAYI+SJ+bZN756RzV2v/BdnTrGUcBtBCPhLu6s
+        Y+4Mo+vHOakbgBcy/dv1Rjk=
+X-Google-Smtp-Source: APXvYqyQgC0ggD5vG7QkDyPFcZ2/jiu0JAMjDAB53r8KjiXB5CD1fQPmXpn2lGY2Zxmss7spjymsQA==
+X-Received: by 2002:a2e:9955:: with SMTP id r21mr8092551ljj.283.1581897661561;
+        Sun, 16 Feb 2020 16:01:01 -0800 (PST)
+Received: from Laptop-Acer-Aspire-F15 (host-89-229-7-83.dynamic.mm.pl. [89.229.7.83])
+        by smtp.gmail.com with ESMTPSA id d5sm6574346lfb.20.2020.02.16.16.00.59
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 16 Feb 2020 16:01:00 -0800 (PST)
+From:   Jakub Narebski <jnareb@gmail.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
+        Garima Singh <garimasigit@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Emily Shaffer <emilyshaffer@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Garima Singh <garima.singh@microsoft.com>
+Subject: Re: [PATCH v2 03/11] diff: halt tree-diff early after max_changes
+References: <pull.497.git.1576879520.gitgitgadget@gmail.com>
+        <pull.497.v2.git.1580943390.gitgitgadget@gmail.com>
+        <a698c04a78cf2988fb822e0aa532989f925e0a9e.1580943390.git.gitgitgadget@gmail.com>
+Date:   Mon, 17 Feb 2020 01:00:53 +0100
+In-Reply-To: <a698c04a78cf2988fb822e0aa532989f925e0a9e.1580943390.git.gitgitgadget@gmail.com>
+        (Derrick Stolee via GitGitGadget's message of "Wed, 05 Feb 2020
+        22:56:22 +0000")
+Message-ID: <86h7zqqdze.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 00C593FC-5117-11EA-B769-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hariom verma <hariom18599@gmail.com> writes:
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> On Fri, Feb 14, 2020 at 8:33 PM Junio C Hamano <gitster@pobox.com> wrote:
->> If the series is fixing two bugs, perhaps 2/3 can first fix it for a
->> primary worktree case by seeing what HEAD symref for the primary
->> worktree points at is the target of a push without iterating over
->> all the worktrees, have the test change in 2/3 (i.e. "fixing the
->> 'unborn' case revealed a wrong expectation in an existing test"),
->> and a couple of new tests to see what a push from sideways would do
->> to an unborn branch that is checked out in the primary worktree when
->> .denyCurrentBranch is and isn't in effect.
->>
->> Then 3/3 can use the same logic to see if one worktree is OK with
->> the proposed ref update by the push used in 2/3 (which no longer
->> uses refs_resolve_unsafe()') to check for all worktrees.  The new
->> tests introduced in 2/3 would be extended to see what happens when
->> the unborn branch getting updated by the push happens to be checked
->> out in a secondary worktree.
+> From: Derrick Stolee <dstolee@microsoft.com>
 >
-> As far as my understanding goes, what we want is:
-> 1) fixing `.denyCurrentBranch` for unborn branches in primary worktree. (2/3)
-> 2) writing test (expect it to fail if `unborn` & 'non-bare' case) (2/3)
-> 3) making `.denyCurrentBranch` respect all worktrees. (3/3)
-> 4) extending tests written in step 2 for secondary worktrees. (3/3)
+> When computing the changed-paths bloom filters for the commit-graph,
+> we limit the size of the filter by restricting the number of paths
+> in the diff. Instead of computing a large diff and then ignoring the
+> result, it is better to halt the diff computation early.
+
+Good idea.
+
 >
-> Correct me if I'm wrong.
+> Create a new "max_changes" option in struct diff_options. If non-zero,
+> then halt the diff computation after discovering strictly more changed
+> paths. This includes paths corresponding to trees that change.
 
-If the above is what _you_ want, then there is nothing for me to
-correct ;-)
+All right; also, it doesn't need to be exact, though it would be good if
+it was.
 
-What I suggested was somewhat different, though.
+512 changed paths (changed files) usually generate more than 512
+elements to be added to the Bloom filter (changed directories and
+files), anyway.
 
-  1) get_main_worktree() fix you have as [1/3] in the current round.
+>
+> Use this max_changes option in the bloom filter calculations. This
+> reduces the time taken to compute the filters for the Linux kernel
+> repo from 2m50s to 2m35s. On a large internal repository with ~500
+> commits that perform tree-wide changes, the time reduced from
+> 6m15s to 3m48s.
 
-  2) fix `.denyCurrentBranch` for unborn branches in the primary
-     worktree, new tests for the cases I outlined in the message you
-     are responding to, and adjusting the test (i.e. what you have
-     as [2/3] in the current round).
+I wonder if there is some large open-source project with many commits
+performing tree-wide changes, that is with many commits with more than
+512 changed files with respect to the first parent.
 
-  3) fix `.denyCurrentBranch` to pay attention to HEAD of not just
-     the primary worktree but of all the worktrees, and add tests.
+Maybe https://github.com/whosonfirst-data/whosonfirst-data-venue-us-ny
+from "Top Ten Worst Repositories to host on GitHub - Git Merge 2017"
+could be a good repository to test ;-)
 
-Thanks.
+>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> Signed-off-by: Garima Singh <garima.singh@microsoft.com>
+
+Looks good to me, but that is from cursory examination.
+Don't know the area to say anything more.
+
+> ---
+>  bloom.c     | 4 +++-
+>  diff.h      | 5 +++++
+>  tree-diff.c | 6 ++++++
+>  3 files changed, 14 insertions(+), 1 deletion(-)
+>
+> diff --git a/bloom.c b/bloom.c
+> index 6082193a75..818382c03b 100644
+> --- a/bloom.c
+> +++ b/bloom.c
+> @@ -134,6 +134,7 @@ struct bloom_filter *get_bloom_filter(struct reposito=
+ry *r,
+>  	struct bloom_filter_settings settings =3D DEFAULT_BLOOM_FILTER_SETTINGS;
+>  	int i;
+>  	struct diff_options diffopt;
+> +	int max_changes =3D 512;
+>=20=20
+>  	if (!bloom_filters.slab_size)
+>  		return NULL;
+> @@ -142,6 +143,7 @@ struct bloom_filter *get_bloom_filter(struct reposito=
+ry *r,
+>=20=20
+>  	repo_diff_setup(r, &diffopt);
+>  	diffopt.flags.recursive =3D 1;
+> +	diffopt.max_changes =3D max_changes;
+>  	diff_setup_done(&diffopt);
+>=20=20
+>  	if (c->parents)
+> @@ -150,7 +152,7 @@ struct bloom_filter *get_bloom_filter(struct reposito=
+ry *r,
+>  		diff_tree_oid(NULL, &c->object.oid, "", &diffopt);
+>  	diffcore_std(&diffopt);
+>=20=20
+> -	if (diff_queued_diff.nr <=3D 512) {
+> +	if (diff_queued_diff.nr <=3D max_changes) {
+>  		struct hashmap pathmap;
+>  		struct pathmap_hash_entry* e;
+>  		struct hashmap_iter iter;
+> diff --git a/diff.h b/diff.h
+> index 6febe7e365..9443dc1b00 100644
+> --- a/diff.h
+> +++ b/diff.h
+> @@ -285,6 +285,11 @@ struct diff_options {
+>  	/* Number of hexdigits to abbreviate raw format output to. */
+>  	int abbrev;
+>=20=20
+> +	/* If non-zero, then stop computing after this many changes. */
+> +	int max_changes;
+> +	/* For internal use only. */
+> +	int num_changes;
+> +
+>  	int ita_invisible_in_index;
+>  /* white-space error highlighting */
+>  #define WSEH_NEW (1<<12)
+> diff --git a/tree-diff.c b/tree-diff.c
+> index 33ded7f8b3..f3d303c6e5 100644
+> --- a/tree-diff.c
+> +++ b/tree-diff.c
+> @@ -434,6 +434,9 @@ static struct combine_diff_path *ll_diff_tree_paths(
+>  		if (diff_can_quit_early(opt))
+>  			break;
+>=20=20
+> +		if (opt->max_changes && opt->num_changes > opt->max_changes)
+> +			break;
+> +
+>  		if (opt->pathspec.nr) {
+>  			skip_uninteresting(&t, base, opt);
+>  			for (i =3D 0; i < nparent; i++)
+> @@ -518,6 +521,7 @@ static struct combine_diff_path *ll_diff_tree_paths(
+>=20=20
+>  			/* t=E2=86=93 */
+>  			update_tree_entry(&t);
+> +			opt->num_changes++;
+>  		}
+>=20=20
+>  		/* t > p[imin] */
+> @@ -535,6 +539,7 @@ static struct combine_diff_path *ll_diff_tree_paths(
+>  		skip_emit_tp:
+>  			/* =E2=88=80 pi=3Dp[imin]  pi=E2=86=93 */
+>  			update_tp_entries(tp, nparent);
+> +			opt->num_changes++;
+>  		}
+>  	}
+>=20=20
+> @@ -552,6 +557,7 @@ struct combine_diff_path *diff_tree_paths(
+>  	const struct object_id **parents_oid, int nparent,
+>  	struct strbuf *base, struct diff_options *opt)
+>  {
+> +	opt->num_changes =3D 0;
+>  	p =3D ll_diff_tree_paths(p, oid, parents_oid, nparent, base, opt);
+>=20=20
+>  	/*
