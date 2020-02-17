@@ -7,35 +7,36 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DDA40C34022
-	for <git@archiver.kernel.org>; Mon, 17 Feb 2020 14:52:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D02EC34021
+	for <git@archiver.kernel.org>; Mon, 17 Feb 2020 14:52:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5427320679
+	by mail.kernel.org (Postfix) with ESMTP id DC288207FD
 	for <git@archiver.kernel.org>; Mon, 17 Feb 2020 14:52:48 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=cmpwn.com header.i=@cmpwn.com header.b="Cl4lFuK1"
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=cmpwn.com header.i=@cmpwn.com header.b="V07/mCOq"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729226AbgBQOwp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Feb 2020 09:52:45 -0500
-Received: from mail.cmpwn.com ([45.56.77.53]:56534 "EHLO mail.cmpwn.com"
+        id S1729271AbgBQOwq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Feb 2020 09:52:46 -0500
+Received: from mail.cmpwn.com ([45.56.77.53]:56536 "EHLO mail.cmpwn.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727421AbgBQOwp (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1728845AbgBQOwp (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 17 Feb 2020 09:52:45 -0500
-X-Greylist: delayed 486 seconds by postgrey-1.27 at vger.kernel.org; Mon, 17 Feb 2020 09:52:45 EST
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=cmpwn.com; s=cmpwn;
-        t=1581950679; bh=IgLIwNxn7fV+CBBDAxh9W/EaK0xrGkJBILiDCQ4n7F4=;
-        h=From:To:Cc:Subject:Date;
-        b=Cl4lFuK11iKC3yrwWelTH2SA0uAA4EmUkishx9pAVhnt6rAqIgbuKEQZprjkTRQlH
-         UpL+6ajOMCYQxBbidWrzlhRKKTiDMdZFn3023LIXoGDIfQAQyBkq10X1BxqHn+PsgD
-         yC2uVTgWJ/w6MjFW08XPtqGEWi6n4BV9WonVxm7E=
+        t=1581950679; bh=LCsoJMxvg5kY0wDDYrHHOd/feJFEMbhLj3YkB0VIvJU=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References;
+        b=V07/mCOqoKPJU7VKtc+9FgNdKdkiK3MUe1oOZeNdQe/y/rtE9TUvolrMMedf1Q3yZ
+         4OU23Jq4iOQD9hwSZj0fnJz9Yp2aWLj21dgm86wQscQsTLCEy1fTzlyeBtTyEFsjAa
+         wW5oSwmvYWu7rm7oVBX+5FoWCKqmKJicQZSa09Qc=
 From:   Drew DeVault <sir@cmpwn.com>
 To:     git@vger.kernel.org, Stefan Beller <stefanbeller@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
 Cc:     Drew DeVault <sir@cmpwn.com>
-Subject: [PATCH 1/2] git-receive-pack: document push options
-Date:   Mon, 17 Feb 2020 09:44:31 -0500
-Message-Id: <20200217144432.43920-1-sir@cmpwn.com>
+Subject: [PATCH 2/2] send-pack: downgrade push options error to warning
+Date:   Mon, 17 Feb 2020 09:44:32 -0500
+Message-Id: <20200217144432.43920-2-sir@cmpwn.com>
 X-Mailer: git-send-email 2.25.0
+In-Reply-To: <20200217144432.43920-1-sir@cmpwn.com>
+References: <20200217144432.43920-1-sir@cmpwn.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -43,31 +44,29 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This adds the missing documentation on how git push options are
-presented to the pre-receive hook.
+Because the receiving end has to explicitly enable
+receive.advertisePushOptions, and many servers don't, it doesn't make
+sense to set push options globally when half of your pushes are just
+going to die.
 
 Signed-off-by: Drew DeVault <sir@cmpwn.com>
 ---
- Documentation/git-receive-pack.txt | 6 ++++++
- 1 file changed, 6 insertions(+)
+ send-pack.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/git-receive-pack.txt b/Documentation/git-receive-pack.txt
-index 25702ed730..69b3e77776 100644
---- a/Documentation/git-receive-pack.txt
-+++ b/Documentation/git-receive-pack.txt
-@@ -109,6 +109,12 @@ the following environment variables:
- This hook is called before any refname is updated and before any
- fast-forward checks are performed.
+diff --git a/send-pack.c b/send-pack.c
+index 0407841ae8..8c81825e7d 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -439,7 +439,7 @@ int send_pack(struct send_pack_args *args,
+ 	use_atomic = atomic_supported && args->atomic;
  
-+If the user has specified any push options (see linkgit:git-push[1]),
-+`GIT_PUSH_OPTION_COUNT` is set to the number of options, and
-+`GIT_PUSH_OPTION_N` is set where N is an integer from 0 thru
-+`GIT_PUSH_OPTION_COUNT` - 1. In order for to receive push options,
-+`receive.advertisePushOptions` must be enabled on the server.
-+
- If the pre-receive hook exits with a non-zero exit status no updates
- will be performed, and the update, post-receive and post-update
- hooks will not be invoked either.  This can be useful to quickly
+ 	if (args->push_options && !push_options_supported)
+-		die(_("the receiving end does not support push options"));
++		warning(_("the receiving end does not support push options"));
+ 
+ 	use_push_options = push_options_supported && args->push_options;
+ 
 -- 
 2.25.0
 
