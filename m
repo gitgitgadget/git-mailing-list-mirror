@@ -3,93 +3,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 32D8AC34022
-	for <git@archiver.kernel.org>; Mon, 17 Feb 2020 20:41:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 565F8C34022
+	for <git@archiver.kernel.org>; Mon, 17 Feb 2020 21:02:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id E1D092072C
-	for <git@archiver.kernel.org>; Mon, 17 Feb 2020 20:41:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 17C8B2070B
+	for <git@archiver.kernel.org>; Mon, 17 Feb 2020 21:02:49 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Aj8Xhn9W"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Yxc71dmM"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729606AbgBQUlV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Feb 2020 15:41:21 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64915 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727300AbgBQUlU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Feb 2020 15:41:20 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A30255E892;
-        Mon, 17 Feb 2020 15:41:18 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=5NR86omsZOYtIyski22WPfUGX8U=; b=Aj8Xhn
-        9W29taum5z2yyACO4GjIiBHRWE0YSMri5dNJjzdcdAYoO43Rio2nQoZ+vobtnAiJ
-        bAFm6oQ185sM/NjGhq8sbWAX/pO8ZQOLHoriTJcsxpWOQKR+cxU9yEpoxpTLCIvc
-        nTO65TCDw9uqQUsqAdWK5hcGAv8OdWxoBt5Bw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=gUg0lQNB9oRiGpOgWKRTSgY8vQfoZg29
-        PpfMvkWMinzVFItADoGwqv4VlpRWrarPp/H5lvCuxiaVm07HXisxnAe1VFAgEFur
-        coxuke83BowRIb8cjTofpqyWKmdL/mtaGwiwki6bNkUoN61nu8XWuuZdij63VbBw
-        FdJ4/51d5Uo=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9ABF15E891;
-        Mon, 17 Feb 2020 15:41:18 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 12D0D5E890;
-        Mon, 17 Feb 2020 15:41:17 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] check-ignore: fix handling with negated patterns
-References: <pull.711.git.git.1581956106255.gitgitgadget@gmail.com>
-        <xmqqimk5ks39.fsf@gitster-ct.c.googlers.com>
-        <CABPp-BEbojaeYkSMR7vntW0SkWf6dVOko5H=jqT-Yv2USRerxA@mail.gmail.com>
-Date:   Mon, 17 Feb 2020 12:41:16 -0800
-In-Reply-To: <CABPp-BEbojaeYkSMR7vntW0SkWf6dVOko5H=jqT-Yv2USRerxA@mail.gmail.com>
-        (Elijah Newren's message of "Mon, 17 Feb 2020 10:41:47 -0800")
-Message-ID: <xmqqeeutkkur.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1729110AbgBQVCq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Feb 2020 16:02:46 -0500
+Received: from mout.gmx.net ([212.227.15.18]:40815 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727300AbgBQVCq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Feb 2020 16:02:46 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1581973364;
+        bh=V/F3CcEotJZBGsOSughyZhskewwEL/jLl5T+ENAt/L0=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Yxc71dmM6U0mHkHwQD0kVRnjVpamBSqTE6/fkAGfwZcZC7Z8Gs2+hOs21H6ULXcT4
+         sAOqWwohEzBE7ReaLDhqdI2ieznGEO7iglku5x+8a3/N8GFjNSHqbvkzpXRWzQaCkZ
+         AmPPdoaauTFlVUxpNorBG3JtxOtwbDoP/CDenxeU=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.86]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mn2aD-1jmRPf0dGh-00k8Bk; Mon, 17
+ Feb 2020 22:02:44 +0100
+Date:   Mon, 17 Feb 2020 22:02:28 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jeffrey Walton <noloader@gmail.com>
+cc:     Git List <git@vger.kernel.org>
+Subject: Re: What does Git call services like GitHub and GitLab?
+In-Reply-To: <CAH8yC8mnjmz7cTGzkpVQ2+ss7VGuSZ84hY-kHs8h5k53uEGSCw@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2002172201560.46@tvgsbejvaqbjf.bet>
+References: <CAH8yC8mnjmz7cTGzkpVQ2+ss7VGuSZ84hY-kHs8h5k53uEGSCw@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D9193F66-51C5-11EA-8244-C28CBED8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:I9SCi9S5jzlyK3N3c4knp+Z0Q/jWaNIyc3qOpdHyObBeWf3vBsF
+ JWnQBm8oU3LTy8gk3haDEFQQf13Qnc4g+CK80PtHmgcRcLAlgpB6AygFUlVMCuDLqbu2FT0
+ 16+QpgTvrqmZhjz1YthgMNzXAwK1Z+GVlUwm91hB+TJtC2fOEwpshL93uc8tv7MKQB3cyNY
+ VizuuWkO1e9cAFLzsbaMQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:mJG2qkzTajY=:ZElQKru3RkeuDis0yPs/08
+ lW2RiPpnRSt3Jt11LCjlbMqCRCn+GAx2wcEKxpi1tGTZyt6L+twREXxL4dOCcWaWX+1S9K6sw
+ kEWusrPYq0EYzUpYkI1HVpZuKaJvstYTFetnF6zXvuJunDGRD1r8OjNJrDycEvyCBoAEoQO8O
+ fvydaFbbv3/3rE1LHgBnU2bpgMgsjWDpZnaN2ixtKO8cFcmW06zjwdTf6Tj0SOPA89DDadZTk
+ Er03f2xAmeWnJfcZslEXErA24te5pmA/w6OkkXHR4uQG/yuN1BwrqAv44VNhaEU8NtHPyrQRJ
+ dF7NUz7rMQoLOxuHJTVQIGM9y8WhYyO4q0nP1AgrhAPlfmJJr+NWoCZ2kPNUncJIE8JcZ4gGE
+ R/60kRhhTj4ZV/ELj5C0ePpcH44huLoOmWnY7fwKKDVOZTAEVpTbk8x6jHA5AWRLAMarcvYzQ
+ OB6gGkFt7R+GW1Bq/raTu/Nm7gq835Okfj4+NdSVLJW/W2sXwhLn8etTQG4qsLc7+2lJufica
+ 5lEf8GRE3CbLGNC6ofncMKsj7kOdV92n6lD1S8d0kWkWbDNBp64EEgsDzIVUCMrId+tfzt98U
+ wr1MIJgj5+CaNAelN6ofjWPWHKUQr/YWi4Y2APC3rM7FB0FwXwNe1nxHXdpCwRKja8o+mGlUV
+ hXdSxlDsu3qzegcYMwUyaGlK9jqSozGLqPB6SybnkjLnH/hQ7MHBa75USX32R0XWq++ihfIX+
+ X9OI6ABd6DR7gWfaLD50WjEC3Q9oY2jE8gXULDrq2Md98LyHBXF67aRK5Ke5wrMZsJrnV0MVl
+ hoF+rL9Dc2kO0ocK/AQwP1/hocZGfeqgNMxcGmroXLuW+wTxgW2IhX1K4wcsB/PIRlgkW5Vx3
+ 2MXjTXv+Q/DlOwLXEOPVmX+/MQaR2S9Kf25dHy4xhX4gOa8qbGhWrpmorYLD6Gc8lHvOdxCLZ
+ IsgPpYPv1MUn0++4BQI7S62MWnxVF7BfJYPf8O6Pplbg+JoWC3pgeA25a7N0fIO1wDfuENTP6
+ Ftvm+lY11iWiaA5qpqZtJW+1naxamaRfIZinlYUm+FEJOlibTM7Uh9e7lJFRteoMuzM0GGL9Q
+ rSBkGMd5SdwM8x6aGjfYq1Iuy0VP8wdHmXay9Z7Lu275MYWevqRydV4gf4I187DY6MrqMRwqE
+ 1S/TeKaZRIqYO9A/3rl+6ZFXFvcnO8KjD30xTVaKuneVSEZdr0/fxKtnhaK6Yr3cwmkV+qr+a
+ evKLn6qCGF8vmzijX
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+Hi Jeff,
 
->> I suspect that the above distorts history.  IIRC, it was meant as a
->> tool to see which exact pattern in the exclude sequence had the
->> final say for the given needle, written primarily as a debugging
->> aid.  In that context, "This rule has the final say", whether the
->> rule is a negative or positive, still means something.
->
-> I can reword it; how does the following sound?
->
-> check-ignore claims that it reports whether each path it is given is
-> excluded.  However, it fails to do so because it did not account for
-> negated patterns.
+On Sat, 15 Feb 2020, Jeffrey Walton wrote:
 
-I am not sure about "claims" part.  
+> Forgive my ignorance... What does Git call services like GitHub and GitLab?
 
-Isn't it more like "check-ignore has been the tool that reports the
-rule that has final say on each of the paths it is given, but that
-is not very useful when the user wants to see if the path is
-excluded (e.g. the rule with the final say may be negative).  Let's
-change the behaviour so that it reports if the path is excluded or
-not"?  As I said, I tend to agree with the direction your patch
-wants to go (iow, we probably are better off changing the
-behaviour"); the question is if we want a transition plan and how
-extensive it needs be if we do.
+I usually refer to them as "hosters" or "commercial Git hosting services".
 
+Ciao,
+Johannes
