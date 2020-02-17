@@ -2,188 +2,122 @@ Return-Path: <SRS0=dbxk=4F=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D38FC34024
-	for <git@archiver.kernel.org>; Mon, 17 Feb 2020 17:15:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6678CC34021
+	for <git@archiver.kernel.org>; Mon, 17 Feb 2020 17:17:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6510F208C4
-	for <git@archiver.kernel.org>; Mon, 17 Feb 2020 17:15:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3624C20578
+	for <git@archiver.kernel.org>; Mon, 17 Feb 2020 17:17:24 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IJovBldT"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="gzYzgUKp"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729146AbgBQRPz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Feb 2020 12:15:55 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:38184 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726397AbgBQRPy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Feb 2020 12:15:54 -0500
-Received: by mail-wm1-f68.google.com with SMTP id a9so91982wmj.3
-        for <git@vger.kernel.org>; Mon, 17 Feb 2020 09:15:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=Kx1lPyhkyg6NIm7XY45aSDxNVxGQVEBK9qq9NxqmhP8=;
-        b=IJovBldTkqtygjxcm7Ez1Dzrz8r2n/lQaewYeLkpNW4Dg8dh70fHs5cqres82dO4/3
-         4vFRNFOLd/FwEKUaWY2d27TzTJ6Sp3p+bFYWIcvT44gaTmNOGozX77sljTfU8efEZgmy
-         oROa1w8YXS4jpv0f+nY+m07xXKGKwLG0eAHEXP7nXco2Lmf1IduDsTFWBcU1CLLl3giw
-         gP46xpCOOTnYrXlvQAk0SVyw0pdsN6mDk6thZ6EvfqhbLq9wbvCUsMWq6IYYaQfMEarV
-         HxhCDLs3Ogx1IJD8fxtrrod/EfQsi9syQXrkuDLaUQd0oGROtlVLlhI4a+wNJWJXaSAT
-         U+MQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=Kx1lPyhkyg6NIm7XY45aSDxNVxGQVEBK9qq9NxqmhP8=;
-        b=UgnnJnjY+M2IWBlB1HUSbAOqoegUy960x0vA/8xySLdNGYhgLW58Cj3Y8FcgwDI99v
-         Kd2Q0UGlXp5jtOaDHK8ZwLRhj6B/ud8UrhaJFZat81YqbMbT7Y+KVXV9Gcr+4tfmsbnW
-         nlH3zzPVq1pynYBh7QlySfVRAKT/qUEZgpdHRQHdfs1s2G0nt3xOvq1oJE+QluYmiAxR
-         AWFAPvgtiPYkEAxB7FOfR+p7wQOZaYWBMvTq/vlsChO0VeT6dq43CQQwL/Vg6dDeL06i
-         u2CkPlR7LRh6ntgXRdSuFvmPkodBW/Zb65Yq1uKomqDiG/X4PCW84NAUTIj0OfH1vAYX
-         ZwJg==
-X-Gm-Message-State: APjAAAXEY/6XylqEw/vOJ8nqVgxR1zYAFHvCl8jTBgsQDtg7b6oCqCay
-        iBrZuLC8SCsmPZ0LtFw28Ml03smA
-X-Google-Smtp-Source: APXvYqw1114G70WFtmbysazenpa17RSXpw3pitst0gHZGkBzpbDZuhvD71bg44TPtTlXCQoBlbAzlg==
-X-Received: by 2002:a1c:4e01:: with SMTP id g1mr76635wmh.12.1581959752464;
-        Mon, 17 Feb 2020 09:15:52 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n3sm1726025wrs.8.2020.02.17.09.15.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Feb 2020 09:15:52 -0800 (PST)
-Message-Id: <pull.712.git.git.1581959751454.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 17 Feb 2020 17:15:51 +0000
-Subject: [PATCH] t3424: new rebase testcase documenting a stat-dirty-like
- failure
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1726977AbgBQRRX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Feb 2020 12:17:23 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:34960 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726788AbgBQRRW (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 17 Feb 2020 12:17:22 -0500
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 8FC2360478;
+        Mon, 17 Feb 2020 17:17:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1581959841;
+        bh=G5lqPEDLPqlFdzDvjlo5vFbyCNFI7+MuZeDG5KjFuwA=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=gzYzgUKpNYIuWpOZ4eCtlXrWdlRzhv3oyz5qewmTMHQbEE0dd+tSNqf3TQw0kLdUO
+         ZRlZfygcTbWBW08L3DJSztAyolUVokJ1SHMD2RaDWddpi3rTrRZAmNiAkUduHcTe1k
+         MXCm50eXxomH5P3cyr66USFs/s4exkciY5a80pjOyefhiRuALYq0n5CJmaYkZJspN1
+         WZcp8mZ1BoZQXKiuMORvjRCcrFVnkOyNYS+e9KOwTsC7FO6mWC5+yOob8PJl0rqGUb
+         2cdBjuyUdiFkMyDSnEqXYh5goi5BjdICJhogL/zdLZGQAVi0pCFZjgkuOkpMGUXART
+         cEXQ5sOZ5l5QLo/sucqhvpqxgoYeGJbx6b/tWdqMNB9XJw77IhPc1NsId1cm/9tl6z
+         pChQRJFYB2eemrs2Krd+6DR7/o0GGHzEZahsd0ko8P+94Vgh3dym657KBW8xr9w7In
+         nyngphtKheJwwxJOdbGXgEZbElUwMjQy+mtVmt9JzJou3RIM47+
+Date:   Mon, 17 Feb 2020 17:17:17 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     lyle.ziegelmiller@gmail.com
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: ! [remote rejected] master -> master (unpacker error)
+Message-ID: <20200217171717.GG6134@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        lyle.ziegelmiller@gmail.com, git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <000001d5e4e3$91ffb0a0$b5ff11e0$@gmail.com>
+ <20200216211604.GE6134@camp.crustytoothpaste.net>
+ <001801d5e5ae$e4375780$aca60680$@gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>, Elijah Newren <newren@gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="oOB74oR0WcNeq9Zb"
+Content-Disposition: inline
+In-Reply-To: <001801d5e5ae$e4375780$aca60680$@gmail.com>
+X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
+ 5.4.0-4-amd64)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
 
-A user discovered a case where they had a stack of 20 simple commits to
-rebase, and the rebase would succeed in picking the first commit and
-then error out with a pair of "Could not execute the todo command" and
-"Your local changes to the following files would be overwritten by
-merge" messages.
+--oOB74oR0WcNeq9Zb
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Their steps actually made use of the -i flag, but I switched it over to
--m to make it simpler to trigger the bug.  With that flag, it bisects
-back to commit 68aa495b590d (rebase: implement --merge via the
-interactive machinery, 2018-12-11), but that's misleading.  If you
-change the -m flag to --keep-empty, then the problem persists and will
-bisect back to 356ee4659bb5 (sequencer: try to commit without forking
-'git commit', 2017-11-24)
+On 2020-02-17 at 16:25:38, lyle.ziegelmiller@gmail.com wrote:
+> I wrote a bunch of emails about this in December 2019. Did they all get l=
+ost?
 
-After playing with the testcase for a bit, I discovered that added
---exec "sleep 1" to the command line makes the rebase succeed, making me
-suspect there is some kind of discard and reloading of caches that lead
-us to believe that something is stat dirty, but I didn't succeed in
-digging any further than that.
+No, I don't believe so.  However, sometimes people get busy and things
+fall through the cracks, so pinging like you did is a good idea.
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
-    t3424: new rebase testcase documenting a stat-dirty-like failure
-    
-    A user discovered a case where they had a stack of 20 simple commits to
-    rebase, and the rebase would succeed in picking the first commit and
-    then error out with a pair of "Could not execute the todo command" and
-    "Your local changes to the following files would be overwritten by
-    merge" messages.
-    
-    Their steps actually made use of the -i flag, but I switched it over to
-    -m to make it simpler to trigger the bug. With that flag, it bisects
-    back to commit 68aa495b590d (rebase: implement --merge via the
-    interactive machinery, 2018-12-11), but that's misleading. If you change
-    the -m flag to --keep-empty, then the problem persists and will bisect
-    back to 356ee4659bb5 (sequencer: try to commit without forking 'git
-    commit', 2017-11-24)
-    
-    After playing with the testcase for a bit, I discovered that added
-    --exec "sleep 1" to the command line makes the rebase succeed, making me
-    suspect there is some kind of discard and reloading of caches that lead
-    us to believe that something is stat dirty, but I didn't succeed in
-    digging any further than that.
+> I'm consistently able to clone the repository, but I can never push to it=
+=2E I used to be able to. I've explored all possibilities that I know of.
+>=20
+> I'm using Windows 10, and the Cygwin version of Git.
+>=20
+> $ git --version
+> git version 2.21.0
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-712%2Fnewren%2Fdocument-rebase-failure-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-712/newren/document-rebase-failure-v1
-Pull-Request: https://github.com/git/git/pull/712
+It looks like you're pushing to a UNC path, and I don't know how that
+works with Cygwin.  It may be that it used to work, but something
+changed in Cygwin or Git.
 
- t/t3424-rebase-across-mode-change.sh | 52 ++++++++++++++++++++++++++++
- 1 file changed, 52 insertions(+)
- create mode 100755 t/t3424-rebase-across-mode-change.sh
+I've CC'd the Git for Windows maintainer (Dscho) in case he has some
+ideas.  While he doesn't package the Cygwin Git, he might know what's
+going on.  I'm not very familiar with Cygwin at all, not being a Windows
+user.  You could also try reporting this to the Cygwin bug tracker and
+see if they can figure things out.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-diff --git a/t/t3424-rebase-across-mode-change.sh b/t/t3424-rebase-across-mode-change.sh
-new file mode 100755
-index 00000000000..4d2eb1dd7c6
---- /dev/null
-+++ b/t/t3424-rebase-across-mode-change.sh
-@@ -0,0 +1,52 @@
-+#!/bin/sh
-+
-+test_description='git rebase across mode change'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	rm -rf ../stupid &&
-+	git init ../stupid &&
-+	cd ../stupid &&
-+	mkdir DS &&
-+	>DS/whatever &&
-+	git add DS &&
-+	git commit -m base &&
-+
-+	git branch side1 &&
-+	git branch side2 &&
-+
-+	git checkout side1 &&
-+	git rm -rf DS &&
-+	ln -s unrelated DS &&
-+	git add DS &&
-+	git commit -m side1 &&
-+
-+	git checkout side2 &&
-+	>unrelated &&
-+	git add unrelated &&
-+	git commit -m commit1 &&
-+
-+	echo >>unrelated &&
-+	git commit -am commit2
-+'
-+
-+test_expect_success 'rebase changes with the apply backend' '
-+	test_when_finished "git rebase --abort || true" &&
-+	git checkout -b apply-backend side2 &&
-+	git rebase side1
-+'
-+
-+test_expect_failure 'rebase changes with the merge backend' '
-+	test_when_finished "git rebase --abort || true" &&
-+	git checkout -b merge-backend side2 &&
-+	git rebase -m side1
-+'
-+
-+test_expect_success 'rebase changes with the merge backend with a delay' '
-+	test_when_finished "git rebase --abort || true" &&
-+	git checkout -b merge-delay-backend side2 &&
-+	git rebase -m --exec "sleep 1" side1
-+'
-+
-+test_done
+--oOB74oR0WcNeq9Zb
+Content-Type: application/pgp-signature; name="signature.asc"
 
-base-commit: e68e29171cc2d6968902e0654b5687fbe1ccb903
--- 
-gitgitgadget
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.19 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl5Kyp0ACgkQv1NdgR9S
+9ov++xAAsAVZKqW5oJWAcoGm+3VIkz3OSjD9vikh0VuWZ6KICMeq7KDPYjjE9SX+
+MB97l8KvyvBenPlMT5K/Ec0pPPCjN93zzkd+kVO8UVMyxWAX6HJmIPscr5m1TOKr
+njvzqSPDgoUQ5GSXSW7TPqwPuF1Obv6ki65lnwgt6+lJ1myJS4WCR/S1CSDSH8K8
+H+vLJO1hi7Wb2qYRuqfxr4ynojBToa79ijzzQ/9shwv3PyvP/WtYTUtw10rSpmTQ
+GYpVv1biuswDjubiboCLZ0hcYLOwrhLb+/YY64Rjwxfc6Ay6Y6B6gGOc8gxuZgQQ
+oOD+v8z2GUO4R+ULdTd+uG2SWy7ENCLfhfkAKapUE7ivm/dZC2Zr+/3EspRDCn1b
+Mb02r8Z0pqJm1XddMODtwPpauRv4/lHIoS5xWkKGCVVbo0P/yLZgDqBfzqfuNnSj
+3GeY3qDtlZbPazgjOn8m/OwRV1qmsSvdgwcyErTSEpmI2/RpL2VC97q0k6lmsoXS
+tcsGyBimAcmdAcf9BhCSwMPrEjNT0w/sF6x9IaVhaEnlEoxjmaJvokkuNuCRHQAK
+vIZQmQKCvDXzfcoQq4QbLYMfnx0Fr5O4HBSz0hOsDp88TWbQG8bTczqRmEJ+OYqT
+g5kHhxLku6HdCG0AJEw20cKB/sjdkSP02vD8ZT52Qo2Y7k1bPDE=
+=7/1x
+-----END PGP SIGNATURE-----
+
+--oOB74oR0WcNeq9Zb--
