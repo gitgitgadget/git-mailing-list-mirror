@@ -2,89 +2,296 @@ Return-Path: <SRS0=PlGQ=4G=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CF20C3404B
-	for <git@archiver.kernel.org>; Tue, 18 Feb 2020 23:05:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C436EC34031
+	for <git@archiver.kernel.org>; Tue, 18 Feb 2020 23:05:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 203CD24656
-	for <git@archiver.kernel.org>; Tue, 18 Feb 2020 23:05:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8A76E2173E
+	for <git@archiver.kernel.org>; Tue, 18 Feb 2020 23:05:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="lUI4NQJO"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OSq1K9nN"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727646AbgBRXF2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Feb 2020 18:05:28 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60522 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726820AbgBRXFY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Feb 2020 18:05:24 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id EE36440BE8;
-        Tue, 18 Feb 2020 18:05:22 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=g6ES9VTLg+DRln0KQRsijCia7+M=; b=lUI4NQ
-        JOxrDypW0L9XinMrF4MzLpLee7PYSTbKgkBxeCYF+eEnxiPzzHuAS5xXjuTUT47M
-        7Ym8x/RLMhjWrZ+6eV4beV3bEuMsceofZ5Gdo8eAcrKXRghIF8eB39FsrTykla9T
-        nSPC088GgsiVENHMaaXXyXtZB+YswP/u6M1Cc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=eIk+QehAqRyRQrdY5j52x1c5dy6g2BSl
-        JnCCQDwhTglAnUbyDNg11VZ9mSTu4ntIXRVZlqXhWORQH+0q6s5RNDRkatQ/u+/c
-        F+dHQZAsHdEBs/uQXDpaUufnC/24+H+rP7oyDKNHKlQcT8AkTxk0k8d1h5HsQgqh
-        0n4SFmJFpzQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E5FD640BE5;
-        Tue, 18 Feb 2020 18:05:22 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 582CD40BE3;
-        Tue, 18 Feb 2020 18:05:22 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Matheus Tavares <matheus.bernardino@usp.br>, git@vger.kernel.org,
-        rhi@pengutronix.de
-Subject: Re: [PATCH] describe: output tag's ref instead of embedded name
-References: <xmqqd0ahp0na.fsf@gitster-ct.c.googlers.com>
-        <fcf19a46b80322c5579142efe4ec681a4dcbdd28.1581802264.git.matheus.bernardino@usp.br>
-        <20200216065101.GA2937208@coredump.intra.peff.net>
-        <xmqqd0abk7zc.fsf@gitster-ct.c.googlers.com>
-        <20200218195402.GA21586@coredump.intra.peff.net>
-Date:   Tue, 18 Feb 2020 15:05:21 -0800
-In-Reply-To: <20200218195402.GA21586@coredump.intra.peff.net> (Jeff King's
-        message of "Tue, 18 Feb 2020 14:54:02 -0500")
-Message-ID: <xmqq4kvnijim.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1727723AbgBRXFn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Feb 2020 18:05:43 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:35972 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726820AbgBRXFn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Feb 2020 18:05:43 -0500
+Received: by mail-wr1-f67.google.com with SMTP id z3so26042488wru.3
+        for <git@vger.kernel.org>; Tue, 18 Feb 2020 15:05:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=OwU+wb8Zhm1hn91pinsHdF0fF25TuHGJOlVu2nk31xI=;
+        b=OSq1K9nNBnrvstJH1Xh/8FQwfLDXWlkQlJxQG5GOmBgT6gFFc2/FIJOs4DuxkJLBfs
+         BaRsZEklLlHjTT+0ODPa9cc170TOcyNFlN0w9lXb31NbBqzHL2Z8e3Gt7F/BrNLtJpwu
+         UzbxWgRfE91JbD/5+sVWEOzEurGd5yqvhWub4IcaqMp6cVYP5Febxh+ZeaoR3hKFsdtO
+         TdKTTXVwub19Y2sHjjSvSVRSkZcCL+CklgujQIUc0nAEAVY2TEjKPHWgjs3ONOJAIWn6
+         Hoe97YLzh170cv8QShxF4wc9uFJLdGrX5u/qNgZ9DoUNBErkcuM2wZ23FB18mRpBBqqV
+         OblQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=OwU+wb8Zhm1hn91pinsHdF0fF25TuHGJOlVu2nk31xI=;
+        b=ShjpZQbkQPp10/1zbt+j7TQCU+1hF9UhXu7sMYO54Dlk2PIgVNrCJwtM74UEz6yCLz
+         icD11fT0Ike4yfhCUFkfNuK1HjxvA6H+H6KJ0e4o7hMP6fSaLGxf6ay9oSeOU/oIrv9Q
+         3xmKC4pLh92PS11YoRiI3rpSLeFh64I/L0oirqhN09CqrERU/hy6LsrdNAA84VI8Cz48
+         A2GTqr3yz2zFUjzbUtn2Mkfu7KM0L9s5wsF9MfYcQNGAi2unDpNbiGzBPCfRKODuyfi2
+         IqPH8D9y0QzYHPh5RkJaqwCnTEth5D8CqzGWPG4c6+dyg1O2mNyOZ4NmDfnGlJHo2ZVq
+         HkTQ==
+X-Gm-Message-State: APjAAAWG6Crx62q++XSpyQpAmrlMsJe4xF7hPIE2UdkxWTcyj+KJjejO
+        nIfBoBCNJw7OO6N0ikpLZCN50LfD
+X-Google-Smtp-Source: APXvYqxqzHydc8tcMDWexsiGhjF88b6u3l2U/5iAlyjfgnOQ6za+2+0RKy4/08fi/lAkVTUrAF785A==
+X-Received: by 2002:adf:e602:: with SMTP id p2mr28739092wrm.388.1582067138839;
+        Tue, 18 Feb 2020 15:05:38 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id z10sm364899wmk.31.2020.02.18.15.05.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 18 Feb 2020 15:05:38 -0800 (PST)
+Message-Id: <pull.711.v3.git.git.1582067137362.gitgitgadget@gmail.com>
+In-Reply-To: <pull.711.v2.git.git.1582058162095.gitgitgadget@gmail.com>
+References: <pull.711.v2.git.git.1582058162095.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 18 Feb 2020 23:05:37 +0000
+Subject: [PATCH v3] check-ignore: fix documentation and implementation to
+ match
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 23E82DEE-52A3-11EA-8E89-C28CBED8090B-77302942!pb-smtp1.pobox.com
+To:     git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>, Elijah Newren <newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Coming back to the original topic, ...
+From: Elijah Newren <newren@gmail.com>
 
-> If a tag describes a commit, we currently output not the tag's ref but
-> its embedded name. This means that when the tag is locally stored under
-> a different name, the output given cannot be used to access the tag in
-> any way. A warning is also emitted in this case, but the message is not
-> very enlightening:
+check-ignore has two different modes, and neither of these modes has an
+implementation that matches the documentation.  These modes differ in
+whether they just print paths or whether they also print the final
+pattern matched by the path.  The fix is different for both modes, so
+I'll discuss both separately.
 
-None of the above is wrong per-se, but the reason why we chose to
-use the real name of the tag in the tag object, while issuing a
-warning, was so that people can correct the mistake of storing an
-annotated tag A to a wrong refname Q.  If "describe" gave a name
-based on refname Q, there is no incentive to correct the situation
-to use the right refname.  The name that describes the commits
-relative to the real name of the A is *not* usable by design, until
-the refname is corrected (i.e. the tag is stored in the right
-place).
+=== First (default) mode ===
 
-So I am not 100% confident that the original patch is a good idea.
+The first mode is documented as:
+
+    For each pathname given via the command-line or from a file via
+    --stdin, check whether the file is excluded by .gitignore (or other
+    input files to the exclude mechanism) and output the path if it is
+    excluded.
+
+However, it fails to do this because it did not account for negated
+patterns.  Commands other than check-ignore verify exclusion rules via
+calling
+
+   ... -> treat_one_path() -> is_excluded() -> last_matching_pattern()
+
+while check-ignore has a call path of the form:
+
+   ... -> check_ignore()                    -> last_matching_pattern()
+
+The fact that the latter does not include the call to is_excluded()
+means that it is susceptible to to messing up negated patterns (since
+that is the only significant thing is_excluded() adds over
+last_matching_pattern()).  Unfortunately, we can't make it just call
+is_excluded(), because the same codepath is used by the verbose mode
+which needs to know the matched pattern in question.  This brings us
+to...
+
+=== Second (verbose) mode ===
+
+The second mode, known as verbose mode, references the first in the
+documentation and says:
+
+    Also output details about the matching pattern (if any) for each
+    given pathname. For precedence rules within and between exclude
+    sources, see gitignore(5).
+
+The "Also" means it will print patterns that match the exclude rules as
+noted for the first mode, and also print which pattern matches.  Unless
+more information is printed than just pathname and pattern (which is not
+done), this definition is somewhat ill-defined and perhaps even
+self-contradictory for negated patterns: A path which matches a negated
+exclude pattern is NOT excluded and thus shouldn't be printed by the
+former logic, while it certainly does match one of the explicit patterns
+and thus should be printed by the latter logic.
+
+=== Resolution ==
+
+Since the second mode exists to find out which pattern matches given
+paths, and showing the user a pattern that begins with a '!' is
+sufficient for them to figure out whether the pattern is excluded, the
+existing behavior is desirable -- we just need to update the
+documentation to match the implementation (i.e. it is about printing
+which pattern is matched by paths, not about showing which paths are
+excluded).
+
+For the first or default mode, users just want to know whether a pattern
+is excluded.  As such, the existing documentation is desirable; change
+the implementation to match the documented behavior.
+
+Finally, also adjust a few tests in t0008 that were caught up by this
+discrepancy in how negated paths were handled.
+
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+    check-ignore: fix handling with negated patterns
+    
+    Changes since v2:
+    
+     * Add missing comma, as pointed out by Junio.
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-711%2Fnewren%2Ffix-check-ignore-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-711/newren/fix-check-ignore-v3
+Pull-Request: https://github.com/git/git/pull/711
+
+Range-diff vs v2:
+
+ 1:  1c289cb4d9a ! 1:  99d2e466844 check-ignore: fix documentation and implementation to match
+     @@ -83,7 +83,7 @@
+      -	for each given pathname. For precedence rules within and
+      -	between exclude sources, see linkgit:gitignore[5].
+      +	Instead of printing the paths that are excluded, for each path
+     -+	that matches an exclude pattern print the exclude pattern
+     ++	that matches an exclude pattern, print the exclude pattern
+      +	together with the path.  (Matching an exclude pattern usually
+      +	means the path is excluded, but if the pattern begins with '!'
+      +	then it is a negated pattern and matching it means the path is
+
+
+ Documentation/git-check-ignore.txt | 12 ++++++---
+ builtin/check-ignore.c             |  3 +++
+ t/t0008-ignores.sh                 | 39 ++++++++++++++++++------------
+ 3 files changed, 35 insertions(+), 19 deletions(-)
+
+diff --git a/Documentation/git-check-ignore.txt b/Documentation/git-check-ignore.txt
+index 8b2d49c79e1..0c3924a63d2 100644
+--- a/Documentation/git-check-ignore.txt
++++ b/Documentation/git-check-ignore.txt
+@@ -30,9 +30,15 @@ OPTIONS
+ 	valid with a single pathname.
+ 
+ -v, --verbose::
+-	Also output details about the matching pattern (if any)
+-	for each given pathname. For precedence rules within and
+-	between exclude sources, see linkgit:gitignore[5].
++	Instead of printing the paths that are excluded, for each path
++	that matches an exclude pattern, print the exclude pattern
++	together with the path.  (Matching an exclude pattern usually
++	means the path is excluded, but if the pattern begins with '!'
++	then it is a negated pattern and matching it means the path is
++	NOT excluded.)
+++
++For precedence rules within and between exclude sources, see
++linkgit:gitignore[5].
+ 
+ --stdin::
+ 	Read pathnames from the standard input, one per line,
+diff --git a/builtin/check-ignore.c b/builtin/check-ignore.c
+index 5a4f92395f3..ea5d0ae3a6a 100644
+--- a/builtin/check-ignore.c
++++ b/builtin/check-ignore.c
+@@ -108,6 +108,9 @@ static int check_ignore(struct dir_struct *dir,
+ 			int dtype = DT_UNKNOWN;
+ 			pattern = last_matching_pattern(dir, &the_index,
+ 							full_path, &dtype);
++			if (!verbose && pattern &&
++			    pattern->flags & PATTERN_FLAG_NEGATIVE)
++				pattern = NULL;
+ 		}
+ 		if (!quiet && (pattern || show_non_matching))
+ 			output_pattern(pathspec.items[i].original, pattern);
+diff --git a/t/t0008-ignores.sh b/t/t0008-ignores.sh
+index 1744cee5e99..370a389e5c5 100755
+--- a/t/t0008-ignores.sh
++++ b/t/t0008-ignores.sh
+@@ -424,9 +424,24 @@ test_expect_success 'local ignore inside a sub-directory with --verbose' '
+ 	)
+ '
+ 
+-test_expect_success_multi 'nested include' \
+-	'a/b/.gitignore:8:!on*	a/b/one' '
+-	test_check_ignore "a/b/one"
++test_expect_success 'nested include of negated pattern' '
++	expect "" &&
++	test_check_ignore "a/b/one" 1
++'
++
++test_expect_success 'nested include of negated pattern with -q' '
++	expect "" &&
++	test_check_ignore "-q a/b/one" 1
++'
++
++test_expect_success 'nested include of negated pattern with -v' '
++	expect "a/b/.gitignore:8:!on*	a/b/one" &&
++	test_check_ignore "-v a/b/one" 0
++'
++
++test_expect_success 'nested include of negated pattern with -v -n' '
++	expect "a/b/.gitignore:8:!on*	a/b/one" &&
++	test_check_ignore "-v -n a/b/one" 0
+ '
+ 
+ ############################################################################
+@@ -460,7 +475,6 @@ test_expect_success 'cd to ignored sub-directory' '
+ 	expect_from_stdin <<-\EOF &&
+ 		foo
+ 		twoooo
+-		../one
+ 		seven
+ 		../../one
+ 	EOF
+@@ -543,7 +557,6 @@ test_expect_success 'global ignore' '
+ 		globalthree
+ 		a/globalthree
+ 		a/per-repo
+-		globaltwo
+ 	EOF
+ 	test_check_ignore "globalone per-repo globalthree a/globalthree a/per-repo not-ignored globaltwo"
+ '
+@@ -586,17 +599,7 @@ EOF
+ cat <<-\EOF >expected-default
+ 	one
+ 	a/one
+-	a/b/on
+-	a/b/one
+-	a/b/one one
+-	a/b/one two
+-	"a/b/one\"three"
+-	a/b/two
+ 	a/b/twooo
+-	globaltwo
+-	a/globaltwo
+-	a/b/globaltwo
+-	b/globaltwo
+ EOF
+ cat <<-EOF >expected-verbose
+ 	.gitignore:1:one	one
+@@ -696,8 +699,12 @@ cat <<-EOF >expected-all
+ 	$global_excludes:2:!globaltwo	../b/globaltwo
+ 	::	c/not-ignored
+ EOF
++cat <<-EOF >expected-default
++../one
++one
++b/twooo
++EOF
+ grep -v '^::	' expected-all >expected-verbose
+-sed -e 's/.*	//' expected-verbose >expected-default
+ 
+ broken_c_unquote stdin >stdin0
+ 
+
+base-commit: bfdd66e72fffd18235757bedbf355fd4176d6019
+-- 
+gitgitgadget
