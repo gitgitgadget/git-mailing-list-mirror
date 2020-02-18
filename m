@@ -2,104 +2,83 @@ Return-Path: <SRS0=PlGQ=4G=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F6FDC34026
-	for <git@archiver.kernel.org>; Tue, 18 Feb 2020 19:37:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 45E5AC34026
+	for <git@archiver.kernel.org>; Tue, 18 Feb 2020 19:54:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 75E1C2464E
-	for <git@archiver.kernel.org>; Tue, 18 Feb 2020 19:37:00 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JOy069Kk"
+	by mail.kernel.org (Postfix) with ESMTP id 1952421D56
+	for <git@archiver.kernel.org>; Tue, 18 Feb 2020 19:54:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726380AbgBRTg7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Feb 2020 14:36:59 -0500
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:37634 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726339AbgBRTg7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Feb 2020 14:36:59 -0500
-Received: by mail-pl1-f193.google.com with SMTP id c23so8482346plz.4
-        for <git@vger.kernel.org>; Tue, 18 Feb 2020 11:36:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:from:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=1b3B/cnU36Oz+p9dlYzR48qDZgNZ3nplBdDI+AmuzjI=;
-        b=JOy069Kk76DB+SdwoMvwAyvJElC1rExFJeSluKoXp5dwpihE9NT9FxsubkFt3PRucX
-         fuf85CQs+h3OpmKrS7TL8gGslz/pQHrjB1XnMVmLo3Xlpc6EIu39l05Hdcb+UjWzdRWN
-         JwUhmFAC0dZp7zRB63BzAsG9LAXnytj1f+4ZNGJosz/0VnqTdCSzDQxNzAOYteuFL52U
-         q6Oa47ctTXzeT9OeY3ppLtjuExS2rcMcLVXQT58ReOB5ZQ4q5wpd9W9a4tiiy4WDpVS1
-         KoJmiJY5xJxHZETPTDLemc1uXupwK48q5w0ozxul3MciYALHtnp3NsajI6GN4hETDPhE
-         As8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=1b3B/cnU36Oz+p9dlYzR48qDZgNZ3nplBdDI+AmuzjI=;
-        b=nwNYi4xjF7zS9SdVzTXt0du4RFF9Y2fZhVJlTRJnccemrelP12AW7AYtTIyYcAcAO9
-         IuQLtgFvijG3e8Fu5jcKISDFqcWTdqXaH6RLJBmaw3wgZqcIXytxZfKruD9WAzMzcfQr
-         t3DapqhouGUOQPxCIPPHu7aU8aCdyaXKTt7y4m870KzAhoatOjmPDMFpt4cgFK4OjJkQ
-         WQLbUe8HV+qVwBRf0O1EkY7vzkOSAzKbOOQNbEVWQFzeVRnmZWbF6nYlckuaW7CJlkpD
-         pGpkuXvJ05COSG9HCmDx5hbpK0p9iJaWepvDSOr3pBS6UNm6Q1lrgooDI7YAvxlnlKln
-         QnbQ==
-X-Gm-Message-State: APjAAAWV39XASdfHRtia4dv0tMT9hBbtZdVvK+w6cFcO/kSr2hLsFpcY
-        hpsu1m+jhaDZhw3lVe7ak2ap6u3i6F4=
-X-Google-Smtp-Source: APXvYqxo9HRMWa7PkUx02huOKfPjdUTbv0d02wcSy0tgJBqvQgLNtr/DSXasxcGCO65bcvvyzSi8oA==
-X-Received: by 2002:a17:902:ff08:: with SMTP id f8mr23281762plj.261.1582054618791;
-        Tue, 18 Feb 2020 11:36:58 -0800 (PST)
-Received: from ?IPv6:2001:4898:6808:13e:493e:b22e:e9c8:d09a? ([2001:4898:e008:3:d278:b22e:e9c8:d09a])
-        by smtp.gmail.com with ESMTPSA id a35sm5794478pgl.20.2020.02.18.11.36.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 18 Feb 2020 11:36:58 -0800 (PST)
-Subject: Re: [PATCH v2 13/15] pack-bitmap: implement BLOB_NONE filtering
-From:   Derrick Stolee <stolee@gmail.com>
-To:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
-References: <20200214182147.GA654525@coredump.intra.peff.net>
- <20200214182236.GM150965@coredump.intra.peff.net>
- <800e4714-200e-6256-5538-ef39f6d9246c@gmail.com>
-Message-ID: <ffb700bf-862c-8a40-453b-9d7adb638798@gmail.com>
-Date:   Tue, 18 Feb 2020 14:36:55 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:73.0) Gecko/20100101
- Thunderbird/73.0
+        id S1726380AbgBRTyE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Feb 2020 14:54:04 -0500
+Received: from cloud.peff.net ([104.130.231.41]:47096 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726283AbgBRTyE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Feb 2020 14:54:04 -0500
+Received: (qmail 19928 invoked by uid 109); 18 Feb 2020 19:54:04 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 18 Feb 2020 19:54:03 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 21961 invoked by uid 111); 18 Feb 2020 20:03:04 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 18 Feb 2020 15:03:04 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 18 Feb 2020 14:54:02 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Matheus Tavares <matheus.bernardino@usp.br>, git@vger.kernel.org,
+        rhi@pengutronix.de
+Subject: Re: [PATCH] describe: output tag's ref instead of embedded name
+Message-ID: <20200218195402.GA21586@coredump.intra.peff.net>
+References: <xmqqd0ahp0na.fsf@gitster-ct.c.googlers.com>
+ <fcf19a46b80322c5579142efe4ec681a4dcbdd28.1581802264.git.matheus.bernardino@usp.br>
+ <20200216065101.GA2937208@coredump.intra.peff.net>
+ <xmqqd0abk7zc.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-In-Reply-To: <800e4714-200e-6256-5538-ef39f6d9246c@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+In-Reply-To: <xmqqd0abk7zc.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/18/2020 2:26 PM, Derrick Stolee wrote:
-> On 2/14/2020 1:22 PM, Jeff King wrote:
->> +test_perf 'rev-list count with blob:none' '
->> +	git rev-list --use-bitmap-index --count --objects --all \
->> +		--filter=blob:none >/dev/null
->> +'
-> 
-> I wondered why you chose to extend these tests instead of using
-> p5600-partial-clone.sh, but I guess this script definitely creates
-> the bitmap for the test. When I tested p5600-partial-clone.sh below,
-> I manually repacked the Linux repo to have a bitmap:
-> 
-> Test                          v2.25.0               HEAD                    
-> ----------------------------------------------------------------------------
-> 5600.2: clone without blobs   79.81(111.34+11.35)   36.00(69.37+7.30) -54.9%
-> 5600.3: checkout of result    45.56(114.59+4.81)    46.43(80.50+5.41) +1.9% 
-> 
-> Perhaps results for these tests would also be appropriate for your
-> commit messages?
+On Tue, Feb 18, 2020 at 11:31:35AM -0800, Junio C Hamano wrote:
 
-And speaking of valuable performance tests to update: should we take
-the loop of fetch tests in p5311-pack-bitmaps-fetch.sh and make
-equivalent versions in p5600-partial-clone.sh? It would be good to
-make sure that the incremental fetches also improve in this scenario.
+> Jeff King <peff@peff.net> writes:
+> 
+> > I think the conversion of the die() to warning() makes sense here. Do we
+> > want to cover that with a test?
+> 
+> I presume that you are talking about this case.
+> 
+> >  	if (n->tag && !n->name_checked) {
+> >  		if (!n->tag->tag)
+> > -			die(_("annotated tag %s has no embedded name"), n->path);
+> > +			warning(_("annotated tag %s has no embedded name"), n->path);
 
-Thanks,
--Stolee
+Yep, that's the one.
+
+> The attached is my attempt to craft such a test.  It turns out that
+> it is tricky to trigger this die/warning.  I haven't dug deeply
+> enough, but I suspect this might be a dead code now.
+
+Thanks for digging so deeply on this. I think you're right that we'll
+never get a "struct tag" with a NULL tag field because
+parse_tag_buffer() unconditionally puts something there or returns an
+error.
+
+We probably used to be able to trigger this by "double parsing" the tag
+(probably with two refs pointing at the same tag object), in which case
+the first would mark it as parsed but return an error, and the second
+would quietly return "oh, it's already parsed". But I fixed that
+recently in 228c78fbd4 (commit, tag: don't set parsed bit for parse
+failures, 2019-10-25).
+
+So yeah, I think I'd be OK to turn this into a BUG(), or just eliminate
+it entirely (we'd segfault, which is BUG-equivalent ;) ).
+
+-Peff
