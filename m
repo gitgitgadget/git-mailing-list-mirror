@@ -2,132 +2,183 @@ Return-Path: <SRS0=PlGQ=4G=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5191EC34026
-	for <git@archiver.kernel.org>; Tue, 18 Feb 2020 18:18:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E91AEC34026
+	for <git@archiver.kernel.org>; Tue, 18 Feb 2020 19:24:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 29FE8208C4
-	for <git@archiver.kernel.org>; Tue, 18 Feb 2020 18:18:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AF9FD2464E
+	for <git@archiver.kernel.org>; Tue, 18 Feb 2020 19:24:15 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dLQluX+U"
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="Y0RZqkf7"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726539AbgBRSSZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Feb 2020 13:18:25 -0500
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:38067 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726276AbgBRSSZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Feb 2020 13:18:25 -0500
-Received: by mail-pf1-f196.google.com with SMTP id x185so11053787pfc.5
-        for <git@vger.kernel.org>; Tue, 18 Feb 2020 10:18:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=eFeI+bczeaqoAHVobr1ls4+YIqc30sdSM0JRwm6lAzY=;
-        b=dLQluX+U4rHfofbeZ0YS/d+SHpMdoVXMIgIds0uOXJUnJQs5MTSVJ2XVMqPcgPK1KF
-         hYgpQCDjm98GTJApIkuWZp83VhVzgD6nZIT16qMOGhdVopy50t/4Vj4fY+o1JQjtfPUe
-         Z0k5vRxTicF9lhYDa9wohtvmI03LDXtEWyfl13/oVjcnqC6pccrW69rSxRbxgwPwGNGl
-         Y23AvDGp4yvdWvDK5ciThQupTjkJwimMVhCteKRSaHFf6Z59DL0WdE8nJQ9xHjF7PZ37
-         e87OE2zrkFcvlVsYZu7J+3qSpRc/zWUsHptHAjE2M2/bP1QKCjf7fnd8lq8qcAi3ks0/
-         CyDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=eFeI+bczeaqoAHVobr1ls4+YIqc30sdSM0JRwm6lAzY=;
-        b=IGZCMY5r/RiM04zCyt+XKgxrcgkWQLCJ3WaXMAmik0Qd0IzswKdgtlSkl3l3Kc1NW7
-         RFrG0nZjaB76Wii1gKPUdtXj/oCDMEB8IM6VqbYgaIT4BB+j4ekNnOXTphkWpRfD295G
-         +8aRmu3WU34WBSZOrZlAZj+SZXYq/EBH0c0PFaLoqr/S9XNeVFtKE3tJDSJQm72lugq4
-         V8M0EPl99d44FtYXe0F3ZAv62IRlm71gMPxFILScmgABtjuCR1F84LaEfz3YCNrrFR4g
-         4FGHTbS95YuXzLyMqC627z8PSHlnxWEiMmmX/gxj0+daym1+mvL0yjZ0LuxhYvpq1uUt
-         Fk7Q==
-X-Gm-Message-State: APjAAAVUBUPlkuixeIc1eRNe4ErbdLc11gu4oGFQKdRXi/8qou2M+1pK
-        jgJQSyoCf4tur2zA0PRuaAQ=
-X-Google-Smtp-Source: APXvYqzdAN4Vr33GNhLbe6vZjeQbMKdPySY3jzgz7M75XA1Iq0T7DamMR1Fpr/nHPYLjT4hVQFWHGg==
-X-Received: by 2002:a63:8f49:: with SMTP id r9mr24405848pgn.190.1582049904819;
-        Tue, 18 Feb 2020 10:18:24 -0800 (PST)
-Received: from ?IPv6:2001:4898:6808:13e:493e:b22e:e9c8:d09a? ([2001:4898:e008:1:d27a:b22e:e9c8:d09a])
-        by smtp.gmail.com with ESMTPSA id y10sm5120657pfq.110.2020.02.18.10.18.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 18 Feb 2020 10:18:24 -0800 (PST)
-Subject: Re: [PATCH v2 09/15] rev-list: allow commit-only bitmap traversals
-To:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
-References: <20200214182147.GA654525@coredump.intra.peff.net>
- <20200214182227.GI150965@coredump.intra.peff.net>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <967821c8-aca4-52ff-8eb9-01a74f5a8144@gmail.com>
-Date:   Tue, 18 Feb 2020 13:18:21 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:73.0) Gecko/20100101
- Thunderbird/73.0
+        id S1726346AbgBRTYO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Feb 2020 14:24:14 -0500
+Received: from mout.web.de ([212.227.17.12]:50967 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726296AbgBRTYO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Feb 2020 14:24:14 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1582053844;
+        bh=/8hPCBjcirRLGgPb3S6O7wILYbGdxA7G0NwVdqN1aSM=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=Y0RZqkf715/cS2F2P4bEBENP8jnXiIDrdSFjh1EUTnf6devC16bKV2bged1+5XPbY
+         tbwACSRpOoqjQ3oTBNzIdYTrSuhOtFxeO9C3fxQ7Fg49/bEwpN57Boo1ffSR+wBmWT
+         dDcVygh0qoGmiouzDSKcAEIcSazJ9Bo9arEQQHEE=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.26] ([91.47.145.153]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MGiUP-1jHYby3T3R-00DacV; Tue, 18
+ Feb 2020 20:24:03 +0100
+Subject: Re: Bug: Git: Clone: University Network: No Output on Terminal
+To:     Manish Devgan <manish.nsit8@gmail.com>
+Cc:     git@vger.kernel.org,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>
+References: <CABVXwf6q1xMFhw+xd5f8GKATwC9k8mrXUkykpGgvTj7hv9pwEw@mail.gmail.com>
+ <4d17a541-3c5c-0cf3-6ea6-11c214aa4674@web.de>
+ <CABVXwf404m9FdsoLxYxZriYT6uif_fsMs8B4dY4RmeQojqK9Wg@mail.gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <9ed26e7e-c19c-cdb2-0710-3b91bf31291b@web.de>
+Date:   Tue, 18 Feb 2020 20:24:01 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.2
 MIME-Version: 1.0
-In-Reply-To: <20200214182227.GI150965@coredump.intra.peff.net>
+In-Reply-To: <CABVXwf404m9FdsoLxYxZriYT6uif_fsMs8B4dY4RmeQojqK9Wg@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:pCNOvvT6ggp4Xj/G3pnlLhFIqOGZJrbkLUq1N99WhENBKhdeYBg
+ TOm5+j5PH1kdCqnJ8/LuSQyhK3SUkbkdRB5dGF2jw5imrEwe5W/VBnOi6BWFH6dXF6eNlew
+ IhLY4PX4V6l+AScpnGpJM7M9hPSaEtyT92m9t5fhHngsLM+d9P/tPPLxZvkdHaKk0p9byoa
+ ZJ1RD8tQdw6GlnyFxUNdg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:TKIZ+QzoxYA=:mqGx9l9KTqslelpQWU/qUq
+ 1D398cFCbZEhnoRIJ+BidAzypAA/z2LsGZCG4mfMJQptJTu6cme6JeSWkLzQJBQX6oytaFcgY
+ upxJagfl2J37LVwI4BGcnozPWqOLnEJeLq+YK0oOM3AX8f4dJOHV1kh3mB9dz2k+c27OqajJI
+ anubjb8ckS6pPORunW8hdxgHK5loI5ycniwuEFtuhhlwwcqO+93SU2AuNbjz+5V1QUlEpHBeI
+ nAEGhhM6BkFxbRDa/hO3pUPtfZDOw1/K52Gav+geXzjRnXKQ6f2/kLyTIuWAglRKBYJAp68X0
+ 5mWbrIGCkvlPMq/34uHvxjdvQzQ/QgCCL5ot4EMssg/qdNfB5CmiaTEoez2zCQp5N5NVyt1LO
+ c24P9xOvaFFTMv2c9ic1fouNHCKlGYbpzGc5i1pJTiEpGr7VcbvUe7s3bwtdAHeCzG369LLXT
+ DJAEECvmokv1P6Q9NX9kmT2+g8g0nxgX3InWrEYUSqHNRe0FkAX1IYbgE5ZsKEcm/GkiHKmpN
+ izeZjzPvkMZ1YYmaJ5ZR/L7Pv2EO0jEl9kLmi/yJ6kbUH9GyQngXUsr0oXAPpmci2+dJqsOae
+ z4RMr5+vR1JESk5KXeOF33fP/N1vLHb2P/BZ8n6CSzFtrLkNJ0mcmSR4Z/hJJ1cUTsd+91NNq
+ fvyX7vIOvPnlnKueZyl+TdsLPmMNjZQBRzhkHDjLnjugMQx9ftDddsSbLcTvkqxAA8rUFemoh
+ tmu1EQk4Ef64y7KJEo/XwH8zCK7E9/YnbwwKZaS3tO5Dg741heEJE8iyTPlexraEcWx6PHXIU
+ T0843dx1/qhSrxxjG1ubmbPW0oBrU52oW0FhXpDlTjZKgJ0/uaoPxxdTPT4hvnAkDMM9l2gCy
+ cgHgZ7abhRwypDzumD0RYcy3UAtqpES+L7sL416/CriRtPzo6+57SVuEhPbuau8BK/JN2IxwU
+ onAAaXPqbjJv2om2wdSzg+jsVTIxu2uVSS+7Me5dsL8sa1gtIi+CcXsUHZxgMBiOVygOAq1e2
+ p0F4HItf3hSHOI+VvX6V/sRmD0frMOxUWrWwq94lI9s4dC0OyXPyV8WbdzU2xGglV5k/vj9Mc
+ S/tDy54ogVzwpzl24ygNSct3PPeldwGuiUto9BFricrOgE5+Wq3jxVAmSkvxA/VPkLGacg3Cb
+ JrWbHYiGWkXJ3GrvO+pchxug5TKR7uYCvhftCJjWGm5QANWD0nfKgoKzPvR7X0a+7Mn3cfMkc
+ R46zPE/rfR9xnHtC7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/14/2020 1:22 PM, Jeff King wrote:
-> Here are numbers for linux.git:
-> 
->   Test                         HEAD^               HEAD
->   ------------------------------------------------------------------------
->   5310.7: rev-list (commits)   8.29(8.10+0.19)       1.76(1.72+0.04) -78.8%
->   5310.8: rev-list (objects)   8.06(7.94+0.12)       8.14(7.94+0.13) +1.0%
+Am 18.02.20 um 12:25 schrieb Manish Devgan:
+> The -vvv option puts out a great deal of stuff on my terminal which is
+> a sort of assurance that the command is working but it seems to print
+> huge loads of text which definitely does not make any sense to me at
+> least. I'd be more happy to see as you mentioned, a number or perhaps
+> a spinning wheel
+> which denotes that the command is working.
 
-Nice.
+How about something like this?
 
-> That run was cheating a little, as I didn't have any commit-graph in the
-> repository, and we'd built it by default these days when running git-gc.
-> Here are numbers with a commit-graph:
-> 
->   Test                         HEAD^               HEAD
->   ------------------------------------------------------------------------
->   5310.7: rev-list (commits)   0.70(0.58+0.12)     0.51(0.46+0.04) -27.1%
->   5310.8: rev-list (objects)   6.20(6.09+0.10)     6.27(6.16+0.11) +1.1%
-> 
-> Still an improvement, but a lot less impressive.
+=2D- >8 --
+Subject: [PATCH] remote-curl: show progress for fetches over dumb HTTP
 
-I think this is still impressive, because you are still allocating the
-object structs and writing data to the output. The commit-graph code allows
-cheating and doing very little work when navigating from one commit to
-another. I suppose the biggest difference between these two approaches is
-that the object cache contains "parsed" commits at the end (with allocated
-parents and initialized commit times) and we needed a priority queue for
-the commit walk. I'm impressed that this is still 27% improvement!
+Fetching over dumb HTTP transport doesn't show any progress, even with
+the option --progress.  If the connection is slow or there is a lot of
+data to get then this can take a long time while the user is left to
+wonder if git got stuck.
 
-> diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
-> index b8645ae070..2c64d0c441 100755
-> --- a/t/t5310-pack-bitmaps.sh
-> +++ b/t/t5310-pack-bitmaps.sh
-> @@ -80,6 +80,12 @@ rev_list_tests() {
->  		test_cmp expect actual
->  	'
->  
-> +	test_expect_success "enumerate commits ($state)" '
-> +		git rev-list --use-bitmap-index HEAD >actual &&
-> +		git rev-list HEAD >expect &&
-> +		test_bitmap_traversal --no-confirm-bitmaps expect actual
-> +	'
-> +
+We don't know the number of objects to fetch at the outset, but we can
+count the ones we got.  Show an open-ended progress indicator based on
+that number if the user asked for it.
 
-I was wondering if there is anything we could add to the "expect"
-command that could better guarantee these commits show up in a
-different order than the bitmap order, allowing us to drop the
-"--no-confirm-bitmaps". Perhaps the issue is the merge structure
-of the repository, and how it will cause these orders to always
-agree?
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ remote-curl.c |  1 +
+ walker.c      | 13 ++++++++++++-
+ walker.h      |  1 +
+ 3 files changed, 14 insertions(+), 1 deletion(-)
 
-I suppose "--topo-order" may actually present an order _even closer_
-to the bitmap order.
+diff --git a/remote-curl.c b/remote-curl.c
+index 8eb96152f5..e4cd321844 100644
+=2D-- a/remote-curl.c
++++ b/remote-curl.c
+@@ -1026,6 +1026,7 @@ static int fetch_dumb(int nr_heads, struct ref **to_=
+fetch)
 
-Thanks,
--Stolee
+ 	walker =3D get_http_walker(url.buf);
+ 	walker->get_verbosely =3D options.verbosity >=3D 3;
++	walker->get_progress =3D options.progress;
+ 	walker->get_recover =3D 0;
+ 	ret =3D walker_fetch(walker, nr_heads, targets, NULL, NULL);
+ 	walker_free(walker);
+diff --git a/walker.c b/walker.c
+index bb010f7a2b..4984bf8b3d 100644
+=2D-- a/walker.c
++++ b/walker.c
+@@ -8,6 +8,7 @@
+ #include "tag.h"
+ #include "blob.h"
+ #include "refs.h"
++#include "progress.h"
+
+ static struct object_id current_commit_oid;
+
+@@ -162,6 +163,11 @@ static int process(struct walker *walker, struct obje=
+ct *obj)
+ static int loop(struct walker *walker)
+ {
+ 	struct object_list *elem;
++	struct progress *progress =3D NULL;
++	uint64_t nr =3D 0;
++
++	if (walker->get_progress)
++		progress =3D start_delayed_progress(_("Fetching objects"), 0);
+
+ 	while (process_queue) {
+ 		struct object *obj =3D process_queue->item;
+@@ -176,15 +182,20 @@ static int loop(struct walker *walker)
+ 		 */
+ 		if (! (obj->flags & TO_SCAN)) {
+ 			if (walker->fetch(walker, obj->oid.hash)) {
++				stop_progress(&progress);
+ 				report_missing(obj);
+ 				return -1;
+ 			}
+ 		}
+ 		if (!obj->type)
+ 			parse_object(the_repository, &obj->oid);
+-		if (process_object(walker, obj))
++		if (process_object(walker, obj)) {
++			stop_progress(&progress);
+ 			return -1;
++		}
++		display_progress(progress, ++nr);
+ 	}
++	stop_progress(&progress);
+ 	return 0;
+ }
+
+diff --git a/walker.h b/walker.h
+index 6d8ae00e5b..d40b016bab 100644
+=2D-- a/walker.h
++++ b/walker.h
+@@ -10,6 +10,7 @@ struct walker {
+ 	int (*fetch)(struct walker *, unsigned char *sha1);
+ 	void (*cleanup)(struct walker *);
+ 	int get_verbosely;
++	int get_progress;
+ 	int get_recover;
+
+ 	int corrupt_object_found;
+=2D-
+2.25.1
