@@ -2,116 +2,145 @@ Return-Path: <SRS0=PlGQ=4G=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 746C7C34026
-	for <git@archiver.kernel.org>; Tue, 18 Feb 2020 16:39:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A7AA6C34048
+	for <git@archiver.kernel.org>; Tue, 18 Feb 2020 17:08:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 48245208C4
-	for <git@archiver.kernel.org>; Tue, 18 Feb 2020 16:39:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7D4D820801
+	for <git@archiver.kernel.org>; Tue, 18 Feb 2020 17:08:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="PsYPeefu"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YyzEd16n"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726422AbgBRQjt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Feb 2020 11:39:49 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59801 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726360AbgBRQjt (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Feb 2020 11:39:49 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id BB7575B50C;
-        Tue, 18 Feb 2020 11:39:46 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=TjlWIQxboiFQ9wtsum9BKT25nT8=; b=PsYPee
-        fuhnTMoCQLepMrgcYEZMJxbz8nxDkVZbBk8Ew5G1MnyfFHK+oDGomL9SqYQteZSI
-        ni3OhNdtgjjRlgzY4x6SbWvd0uNuvdO38pTbVIlrjMEIKj7AuqXho1ofYgzEBr7Q
-        w68iO0W8H89GCzffMHjQf+UUcVl3ip6tFgI2o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=xIJ0jqFnjM8JJgZs29o6RkAlJQT26I+h
-        4XsG8cJAhWZ8nrjMKTIn1LUD9In71lNO/qbwJueuHXbKPgN84AHOObZM0CHl9NJm
-        zP+K9rpBCjMfm6Mqpejq4iVZ4W3SjqhLbwy9yR7PUFkkpX/g/GgOfw9+zRPLlZFQ
-        BpiFejbwdNQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B0F375B50B;
-        Tue, 18 Feb 2020 11:39:46 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1A4DE5B509;
-        Tue, 18 Feb 2020 11:39:46 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
-        Erik Faye-Lund <kusmabite@gmail.com>,
-        Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v3] mingw: workaround for hangs when sending STDIN
-References: <pull.553.v2.git.1581956750001.gitgitgadget@gmail.com>
-        <pull.553.v3.git.1581962486972.gitgitgadget@gmail.com>
-Date:   Tue, 18 Feb 2020 08:39:44 -0800
-In-Reply-To: <pull.553.v3.git.1581962486972.gitgitgadget@gmail.com> (Alexandr
-        Miloslavskiy via GitGitGadget's message of "Mon, 17 Feb 2020 18:01:26
-        +0000")
-Message-ID: <xmqqy2szkfxr.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1727727AbgBRRIM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Feb 2020 12:08:12 -0500
+Received: from mail-wm1-f42.google.com ([209.85.128.42]:37562 "EHLO
+        mail-wm1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726528AbgBRRIM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Feb 2020 12:08:12 -0500
+Received: by mail-wm1-f42.google.com with SMTP id a6so3755879wme.2
+        for <git@vger.kernel.org>; Tue, 18 Feb 2020 09:08:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=wV04z/nCytS2pH5kahTIobSb8Va01UnJmu1SQQ8Gd3I=;
+        b=YyzEd16nPxbjwtjVYxljBJBMWTn/DlxMEObakqJvgjpNlg9uRgchUh2lUpl/NVCukO
+         jqwDNWtngooaBqrGLTU7b55ouyIdQbUWeLLwXF3OOc9dTMGhoAviV3ctLkf+Dfkik29C
+         JPyNJdH8LBGpFsOUGAOHUDT+F5iYn16NcbpOEz9QQNuab1Lp7UfE4PPWz87MljtnmuGj
+         jXIaiRkIT4lLGCke0NzTCjHb59l7YAdOsaF6S5uXjg9pMWzq2Q1ErEhJpfcv4AWV69Fy
+         mXU+swFOm8gaTr2qWnsZTc8rLmMXIjpgr2XKAUHAhdymd6lJdbdEbImTvpTro2hYy188
+         PmdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=wV04z/nCytS2pH5kahTIobSb8Va01UnJmu1SQQ8Gd3I=;
+        b=VviOaNnrBtAPyQR/Z+1VEjHreE7Fh/pKIbmklt+2d1Qzp/Hlze9aYtcYHFlm613dlS
+         yNzi0GNOTI1UHb14bgjQTkcGX3xXb8hq6oHmfX3iAN7KzGM+7Px1oltjXbry/8RTGuVc
+         eMLZsH86RLSWKhE5FO07cEjJp/9h7ZI7reBAIDp/VeJuC3aIzOZzR/q0rC8mWNNNKJN5
+         iRNLbGSKo5mbBVdcx4VHZqJLTbOuah6ctbYC4aU/ZoRt1R0KLxXh0mEAW/D3L0/IjmrW
+         6JNXjEwVMDuEtmnOBixbx8gn0T46HYhq6aPd27SLJo8b0ScKk4l+2QI0hOr6FSHtxLM8
+         WD6w==
+X-Gm-Message-State: APjAAAXahAsVJHyic8PF0+NDRhJ4t/vyde6fM0zfvwP6wErvuoKyDSfJ
+        svTFgG2Ve1PxIBAUeQqlTJM=
+X-Google-Smtp-Source: APXvYqxMQ0hFGBpYn6i5H4ae3YpTtUHUzVKnDHXiUZlUFUS86cLThEXygvNBEfEu4ml4nbd+VmBKqA==
+X-Received: by 2002:a05:600c:230d:: with SMTP id 13mr4392148wmo.12.1582045690954;
+        Tue, 18 Feb 2020 09:08:10 -0800 (PST)
+Received: from mithrim ([147.210.21.27])
+        by smtp.gmail.com with ESMTPSA id o4sm6943714wrx.25.2020.02.18.09.08.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 18 Feb 2020 09:08:10 -0800 (PST)
+Date:   Tue, 18 Feb 2020 18:08:08 +0100
+From:   Damien Robert <damien.olivier.robert@gmail.com>
+To:     Philippe Blain <levraiphilippeblain@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Nested submodule checkout
+Message-ID: <20200218170808.dh4s65b475yqs3oz@mithrim>
+X-PGP-Key: http://www.normalesup.org/~robert/pro/files/Damien_Olivier_Robert.asc
+X-Start-Date: Tue, 18 Feb 2020 17:49:44 +0100
+References: <20200214224242.knmzkwx7ls4sote7@doriath>
+ <0123F1ED-C421-4C1F-896B-E54C9D345A34@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 45A0C422-526D-11EA-A5D1-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <0123F1ED-C421-4C1F-896B-E54C9D345A34@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+Hi Philippe,
 
-> From: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
->
-> Explanation
-> -----------
-> The problem here is flawed `poll()` implementation. When it tries to
-> see if pipe can be written without blocking, it eventually calls
-> `NtQueryInformationFile()` and tests `WriteQuotaAvailable`. However,
-> the meaning of quota was misunderstood. The value of quota is reduced
-> when either some data was written to a pipe, *or* there is a pending
-> read on the pipe. Therefore, if there is a pending read of size >= then
-> the pipe's buffer size, poll() will think that pipe is not writable and
-> will hang forever, usually that means deadlocking both pipe users.
-> ...
-> Chosen solution
-> ---------------
-> Make `poll()` always reply "writable" for write end of the pipe.
-> Hopefully one day someone will find a way to implement it properly.
->
-> Reproduction
-> ------------
-> printf "%8388608s" X >large_file.txt
-> git stash push --include-untracked -- large_file.txt
->
-> I have decided not to include this as test to avoid slowing down the
-> test suite. I don't expect the specific problem to come back, and
-> chances are that `git stash push` will be reworked to avoid sending the
-> entire patch via STDIN.
->
-> Signed-off-by: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
-> ---
+From Philippe Blain, Sun 16 Feb 2020 at 23:51:43 (-0500) :
+> I reported the same bug to the list back in September [1]
 
-Thanks for a detailed description.
+Meta question: is there an easy way I could have found your bug report?
 
-I notice that we saw no comments from Windows experts for these
-three rounds.  Can somebody give an Ack (or nack) on it at least?
+> and I’m glad to say I just finished (today!) a patch series [2] that fixes this bug.
 
-I picked obvious "experts" in the output from 
+Great! Thanks for the patches!
 
-    $ git shortlog --since=1.year --no-merges master compat/ming\* compat/win\*
+> Here you just did ` git commit -am 'Add submodule plam’` so the next command according to your reproducer above would be `git checkout nosubmodules`
+> 
+> > Migrating git directory of 'plam' from
+> > '/data/dams/var/tmp/ploum/plam/.git' to
+> > '/data/dams/var/tmp/ploum/.git/modules/plam'
+> > Migrating git directory of 'plam/plim' from
+> > '/data/dams/var/tmp/ploum/plam/plim/.git' to
+> > '/data/dams/var/tmp/ploum/.git/modules/plam/modules/plim'
+> > Switched to branch 'nosubmodules'
+> > Your branch is behind 'master' by 1 commit, and can be fast-forwarded.
+> >  (use "git pull" to update your local branch)
+> 
+> Here, git is migrating the git directories of both submodules to the git directory of the superproject (ploum). This tells me you probably have the `submodule.recurse` config set somewhere, as this is the behaviour I get I if I do `git checkout --recurse-submodules nosubmodules`.
 
-Thanks.
+Yes, you are of course right. I should have specified it in my bug report,
+I tried to specify the setting explicitely in the last checkout but as you
+noticed I forgot to specify it in all other commands, sorry about the
+noise.
+
+> That’s another hint that you have `submodule.recurse` set. I don’t get this error doing `git reset --hard`, but I get it doing `git reset --hard --recurse-submodules` (or `git reset --hard --r`, which works and is quicker to type!). `git reset` populates the index, so now `git ls-files -s` would now show the correct content of ‘plam’.
+
+Oh, I did not know git expand unambiguous long options!
+
+By the way the fact that `git reset` also support `--recurse-submodules` is not
+specified in the man page. (It is in the help text thought).
+
+And it would be nice if the documentation of submodule.recurse in
+git-config specify the list of all affected commands, rather than just "all
+commands that have a --recurse-submodules options".
+
+(I could send a patch for this if there is interest)
+
+> > Note that I wasn't able to reproduce in this small examples, but when
+> > trying to repair I also add some strange errors of the form
+> > '.git is not a git directory' (where .git was a pseudo symlink
+> > gitdir: ../.git/modules/plam).
+
+-> This is explained by your Patch 5/6
+
+> would have correctly checked out the submodules. I have a git alias ‘no-rs’ (for no recurse-submodules) that I use in these situations:
+>     git config --global alias.no-rs ‘-c submodule.recurse=0’
+
+Can you use alias to define option settings (rather than commands followed
+by options) without using the 'f() {}' trick?
+
+Using your alias, I get
+fatal: empty alias for no-rs
+
+> Then the `submodule update` call above could be shortened to 
+>     git no-rs submodule update --recursive --force
+
+> Note that using the `submodule.recurse` config also applies to internal calls to git commands (issued by other git commands), so using adding `--no-recurse-submodules` to the command line might not be enough to completely turn off the effect of that config, hence this handy alias.
+
+Ohh, good to know!
+
+-- 
+Damien Robert
+http://www.normalesup.org/~robert/pro
