@@ -2,162 +2,87 @@ Return-Path: <SRS0=PlGQ=4G=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B91D1C34031
-	for <git@archiver.kernel.org>; Tue, 18 Feb 2020 20:59:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5071CC34031
+	for <git@archiver.kernel.org>; Tue, 18 Feb 2020 21:05:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 94B3A2070B
-	for <git@archiver.kernel.org>; Tue, 18 Feb 2020 20:59:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DFB762070B
+	for <git@archiver.kernel.org>; Tue, 18 Feb 2020 21:05:10 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="xGuQULty"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726422AbgBRU7H (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Feb 2020 15:59:07 -0500
-Received: from cloud.peff.net ([104.130.231.41]:47232 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726352AbgBRU7H (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Feb 2020 15:59:07 -0500
-Received: (qmail 20289 invoked by uid 109); 18 Feb 2020 20:59:07 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 18 Feb 2020 20:59:07 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 22422 invoked by uid 111); 18 Feb 2020 21:08:07 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 18 Feb 2020 16:08:07 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 18 Feb 2020 15:59:06 -0500
-From:   Jeff King <peff@peff.net>
-To:     Drew DeVault <sir@cmpwn.com>
-Cc:     git@vger.kernel.org, Stefan Beller <stefanbeller@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] push: introduce --push-option-if-able
-Message-ID: <20200218205906.GB22630@coredump.intra.peff.net>
-References: <20200218200913.128519-1-sir@cmpwn.com>
+        id S1726512AbgBRVFK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Feb 2020 16:05:10 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58478 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726352AbgBRVFJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Feb 2020 16:05:09 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0E4C65CFE4;
+        Tue, 18 Feb 2020 16:05:08 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=3XIqXQ/UTTgWlMvCEzMtW4Xeosk=; b=xGuQUL
+        tyjXG5RObVpyZqGAdLIF2iTmLICwTQZHOgd/dfWIzUQnSImI80sDIeIOi7GBhsDu
+        U5wQIDR20bARCZT1rcXajd+W3ODwAQRpfapKuUnz7s6czjAjHDToaVugkraWsdtI
+        FPnJosJVa1imhRx30Nuc6HihqDgBn9GHeY6S0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=LM1V/iTzMViziMEDwE3BZitPLOxbco7Q
+        9Eyo9XQvVxAiY90qWmzRl/Y+gvec6D0YlIs75hJ9ic0e6A/wmndsvpCTjSdlne+W
+        O3CZvfKVXsePm1db7I18U0z3gl6E/ByeaK3qnbMBI5zkzFPS92BUPdqkPCafkzAk
+        CtHg1wsd9w0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E4A5A5CFE2;
+        Tue, 18 Feb 2020 16:05:07 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E56045CFDC;
+        Tue, 18 Feb 2020 16:05:04 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>
+Subject: Re: [PATCH v6 0/5] Reftable support git-core
+References: <pull.539.v5.git.1581344060.gitgitgadget@gmail.com>
+        <pull.539.v6.git.1582015420.gitgitgadget@gmail.com>
+Date:   Tue, 18 Feb 2020 13:05:02 -0800
+In-Reply-To: <pull.539.v6.git.1582015420.gitgitgadget@gmail.com> (Han-Wen
+        Nienhuys via GitGitGadget's message of "Tue, 18 Feb 2020 08:43:35
+        +0000")
+Message-ID: <xmqqy2szip35.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200218200913.128519-1-sir@cmpwn.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 55FDF59A-5292-11EA-B676-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 18, 2020 at 03:09:14PM -0500, Drew DeVault wrote:
+Here is what I got from "git am --whitespace=fix" on these five patches.
+Does it match your test application?
 
-> This introduces a --push-option-if-able, and along with it updates
-> send-pack, transport, push, etc to track the list of push options
-> specified via this flag. These options will be used if the remote
-> supports push options, but will not cause the push operation to
-> terminate if the remote does not support push options.
-> 
-> This is desirable in the following scenario: you frequently use two git
-> hosts, A and B, of which only B supports push options. If you wish to
-> set a push option globally (via git config push.pushOptions), any
-> attempts to push to host A will fail, requiring you to explicitly
-> override it at the command line. This renders the push.pushOption
-> config value basically useless for a lot of users.
-
-Unsurprisingly, this approach makes sense to me. :)
-
-The implementation looks like the right direction, but I noticed a few
-things I think are worth addressing:
-
->  Documentation/config/push.txt      |  6 +++++
->  Documentation/git-push.txt         | 14 +++++++++++-
->  Documentation/git-receive-pack.txt | 10 +++++++++
->  Documentation/githooks.txt         |  3 ++-
->  builtin/push.c                     | 35 +++++++++++++++++++++++++-----
->  send-pack.c                        |  9 ++++++--
->  send-pack.h                        |  2 +-
->  submodule.c                        | 11 +++++++++-
->  submodule.h                        |  1 +
->  transport-helper.c                 |  3 +++
->  transport.c                        |  2 ++
->  transport.h                        |  5 +++++
-
-We'd probably want some test coverage of the new command-line and config
-options. Looks like t/t5545-push-options.sh would be a good place to add
-it, and you should be able to emulate some of the existing tests there.
-
-> @@ -224,6 +225,17 @@ already exists on the remote side.
->  	line, the values of configuration variable `push.pushOption`
->  	are used instead.
->  
-> +--push-option-if-able=<option>::
-> +	Identical to --push-option, but does not terminate the push if the
-> +	remote does not support push options. This is useful, for example,
-> +	if you wish to globally enable a push option for use on a specific
-> +	git host, but also occasionally push to hosts which do not have
-> +	push options enabled. If you were to use --push-option instead,
-> +	pushing to the latter would cause the push to be aborted.
-> +	When no `--push-option-if-able=<option>` is given from the command
-> +	line, the values of configuration variable `push.pushOptionIfAble`
-> +	are used instead.
-
-The discussion of the rationale looks good here.
-
-How do the two command-line lists (and their config counterparts)
-interact? E.g., if I do:
-
-  git push --push-option-if-able=foo
-
-we know that overrides push.pushOptionIfAble config. Does it / should it
-override push.pushOption? Likewise, a blank config option resets the
-list. Would:
-
-  [push]
-  pushOptionIfAble = foo
-  pushOption =
-
-send "foo" or not?
-
-IMHO we should consider it from the user's point of view as a single
-list of push options, some of which are annotated with "if able" and
-some not (and the answer would be "yes" to both of my questions).
-
-And then the implementation could reflect that by using a single list.
-I think that simplifies things by not having to pass around both lists.
-You should be able to use string_list's util field to store the flag
-(either allocate and point to a struct for each option, or just cast 0/1
-to a void pointer).
-
-> diff --git a/Documentation/git-receive-pack.txt b/Documentation/git-receive-pack.txt
-> index 25702ed730..992ef5784f 100644
-> --- a/Documentation/git-receive-pack.txt
-> +++ b/Documentation/git-receive-pack.txt
-> @@ -109,6 +109,16 @@ the following environment variables:
->  This hook is called before any refname is updated and before any
->  fast-forward checks are performed.
->  
-> +The number of push options given on the command line of
-> +`git push --push-option=...` can be read from the environment
-> +variable `GIT_PUSH_OPTION_COUNT`, and the options themselves are
-> +found in `GIT_PUSH_OPTION_0`, `GIT_PUSH_OPTION_1`,...
-> +If it is negotiated to not use the push options phase, the
-> +environment variables will not be set. If the client selects
-> +to use push options, but doesn't transmit any, the count variable
-> +will be set to zero, `GIT_PUSH_OPTION_COUNT=0`. In order for to receive push
-> +options, `receive.advertisePushOptions` must be enabled on the server.
-
-I think this documentation change made more sense as a separate patch
-(since the server side is not affected either way by the "if able"
-feature).
-
-It still has the "for to" typo (or am I misreading it?).
-
-> diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-> index 3dccab5375..48103116fd 100644
-> --- a/Documentation/githooks.txt
-> +++ b/Documentation/githooks.txt
-> @@ -283,7 +283,8 @@ found in `GIT_PUSH_OPTION_0`, `GIT_PUSH_OPTION_1`,...
->  If it is negotiated to not use the push options phase, the
->  environment variables will not be set. If the client selects
->  to use push options, but doesn't transmit any, the count variable
-> -will be set to zero, `GIT_PUSH_OPTION_COUNT=0`.
-> +will be set to zero, `GIT_PUSH_OPTION_COUNT=0`. In order for to receive push
-> +options, `receive.advertisePushOptions` must be enabled on the server.
-
-Likewise here (including the typo ;) ).
-
--Peff
+Applying: refs.h: clarify reflog iteration order
+Applying: create .git/refs in files-backend.c
+Applying: refs: document how ref_iterator_advance_fn should handle symrefs
+.git/rebase-apply/patch:145: trailing whitespace.
+    
+.git/rebase-apply/patch:147: trailing whitespace.
+    
+.git/rebase-apply/patch:6544: indent with spaces.
+        left = *destLen;
+.git/rebase-apply/patch:6545: indent with spaces.
+        *destLen = 0;
+.git/rebase-apply/patch:6548: indent with spaces.
+        left = 1;
+warning: squelched 15 whitespace errors
+warning: 20 lines applied after fixing whitespace errors.
+Applying: Add reftable library
+Applying: Reftable support for git-core
