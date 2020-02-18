@@ -2,146 +2,150 @@ Return-Path: <SRS0=PlGQ=4G=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DD40EC34049
-	for <git@archiver.kernel.org>; Tue, 18 Feb 2020 19:27:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CD24FC34026
+	for <git@archiver.kernel.org>; Tue, 18 Feb 2020 19:31:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B619E24125
-	for <git@archiver.kernel.org>; Tue, 18 Feb 2020 19:27:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A551B24125
+	for <git@archiver.kernel.org>; Tue, 18 Feb 2020 19:31:43 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W5rUPspP"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="qwsLIpby"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726620AbgBRT1B (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Feb 2020 14:27:01 -0500
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:41281 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726380AbgBRT05 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Feb 2020 14:26:57 -0500
-Received: by mail-pl1-f194.google.com with SMTP id t14so8470062plr.8
-        for <git@vger.kernel.org>; Tue, 18 Feb 2020 11:26:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=5yhnOoTNcdfp/uzc+2+m5kYRrpk5IaXEdSAbrz/ZhVE=;
-        b=W5rUPspPdGdwKNl/pAJaCjIgSKMoLEsxZVd16N8BU8kzVCXpI4ARAQSQj8NU9iE/2m
-         UcEc5oGWRtaPnI/Q+CGqfPZ/nrkoLiMP/HVsaYry297W9GDTspK7il4Y/kXXL+3F1BCu
-         Xn+T+yRnAFVvqaeTIaQo+H/fBpr3jjE70hK5MWYKfmcJ8I7AdQpGcqoL/q9V+9Q5SqqY
-         hnFr96tlf601AM8vzL66njMqcTxs4ADbj6pCXmBcF3nrcNXJ2fj3ugx7E2sYMb8up6gP
-         BNqcWQC1OltM7R06iVnAFyhuJQSBz7hVUm3AZSlVtOCIgFT/1BesGj8BnTX0dcXUNbxe
-         nzeQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=5yhnOoTNcdfp/uzc+2+m5kYRrpk5IaXEdSAbrz/ZhVE=;
-        b=aUl0A73cLohT4MK7fJlFMAF+tQe08mmOlrG0P4Oz1quzfxtbYV4INRREpYUIDYhQV+
-         V/b/ItVggul5jpx7ynlnMbeO6Fp6E8ZTcNDHEK8/TjChdNxW9Mj0CviWkjn5eF4GUqTZ
-         axpTVVuAUZb/dimzmKmJPaQmK8goB/riIovDr92N1s/kWGraHsa0dwBSOQU7fZf3RlT1
-         AmhVdcGYq4S+6bw6R1RJNJi+xkI5CWVvuqisjwmKrwrxxphmkW1Mau2IxAtIQuAjVCfM
-         UsfVogDXDw1cFRDJUf1ieepHTkuKOBmUXTxB69fexX4cWeCxccGZKErTmUe6AQ35Za8y
-         J6Tw==
-X-Gm-Message-State: APjAAAVnLthUzWw9xrOSNdR/svCddNAfCwzC5OryW+M5MaJFOdlTZnXh
-        ETlsdmskEd8mcFjg1Cw/aqg=
-X-Google-Smtp-Source: APXvYqxESNHCrlx9qetPmbNRqlrYq26mv+zl1zTpHxyr7Ne5bgs2N6ccKiLO/NuzBMaXfyvFjiPrDg==
-X-Received: by 2002:a17:90a:9dc3:: with SMTP id x3mr4453098pjv.45.1582054016508;
-        Tue, 18 Feb 2020 11:26:56 -0800 (PST)
-Received: from ?IPv6:2001:4898:6808:13e:493e:b22e:e9c8:d09a? ([2001:4898:e008:1:d27a:b22e:e9c8:d09a])
-        by smtp.gmail.com with ESMTPSA id o10sm5596210pgq.68.2020.02.18.11.26.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 18 Feb 2020 11:26:55 -0800 (PST)
-Subject: Re: [PATCH v2 13/15] pack-bitmap: implement BLOB_NONE filtering
-To:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
-References: <20200214182147.GA654525@coredump.intra.peff.net>
- <20200214182236.GM150965@coredump.intra.peff.net>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <800e4714-200e-6256-5538-ef39f6d9246c@gmail.com>
-Date:   Tue, 18 Feb 2020 14:26:53 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:73.0) Gecko/20100101
- Thunderbird/73.0
+        id S1726380AbgBRTbm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Feb 2020 14:31:42 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59351 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726283AbgBRTbm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Feb 2020 14:31:42 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 90AA15C6B9;
+        Tue, 18 Feb 2020 14:31:37 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=d/z2AN71UeA1mnzzmysKqzmr3zw=; b=qwsLIp
+        bySJAaiLOanz4zqylePMdmUloitFDtgDjjL2zhOdUtkkVuJR9xkXESgTKk3WqxK3
+        nEj/cfQlQ4DhKBCaQP8+o2FG9a8E5TXMn3Dh/wn03Kc0ZOfPJ5hggRAGC+MYFwi7
+        bF/04lZc8TzcNHKc6Cc6STL8vKEaaJWWBu/VU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=BcSq2PrR2kuVofvHYhN+hdpzjRAzY57Z
+        mshYOWA0W1l34ynjdc+1FyNAri3A62qkRfgVcV4qN8OJxUUM0caBn5A+ymfMBIUS
+        TjkgAeqv7Y0R2AqnJqmOD0z1/EDBEynblEVAu+Kgi/8p+VnUS2swPRdOUI9YJVOw
+        WRgZ+2LMU/k=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 884365C6B8;
+        Tue, 18 Feb 2020 14:31:37 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E88295C6B7;
+        Tue, 18 Feb 2020 14:31:36 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Matheus Tavares <matheus.bernardino@usp.br>, git@vger.kernel.org,
+        rhi@pengutronix.de
+Subject: Re: [PATCH] describe: output tag's ref instead of embedded name
+References: <xmqqd0ahp0na.fsf@gitster-ct.c.googlers.com>
+        <fcf19a46b80322c5579142efe4ec681a4dcbdd28.1581802264.git.matheus.bernardino@usp.br>
+        <20200216065101.GA2937208@coredump.intra.peff.net>
+Date:   Tue, 18 Feb 2020 11:31:35 -0800
+In-Reply-To: <20200216065101.GA2937208@coredump.intra.peff.net> (Jeff King's
+        message of "Sun, 16 Feb 2020 01:51:01 -0500")
+Message-ID: <xmqqd0abk7zc.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20200214182236.GM150965@coredump.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 475E13E2-5285-11EA-BCE1-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/14/2020 1:22 PM, Jeff King wrote:
-> We can easily support BLOB_NONE filters with bitmaps. Since we know the
-> types of all of the objects, we just need to clear the result bits of
-> any blobs.
-> 
-> Note two subtleties in the implementation (which I also called out in
-> comments):
-> 
->   - we have to include any blobs that were specifically asked for (and
->     not reached through graph traversal) to match the non-bitmap version
+Jeff King <peff@peff.net> writes:
 
-I have a concern here, but maybe I'm worrying about nothing. When a
-partial clone asks for a pack of missing blobs, will your code create
-an empty bitmap and then add bits to that bitmap one-by-one instead
-of appending to a simple object list?
+> I think the conversion of the die() to warning() makes sense here. Do we
+> want to cover that with a test?
 
-In the typical case where we ask for specific commits and trees, we
-expect a very small number of blobs to add to the resulting bitmap.
-When no commits or trees are included in the wants, then we don't
-need the bitmap at all. IIRC an EWAH bitmap is relatively expensive
-to update bits one at a time, so this is not incredibly efficient.
+I presume that you are talking about this case.
 
-I apologize that I don't have the time to dig into this myself.
+>  	if (n->tag && !n->name_checked) {
+>  		if (!n->tag->tag)
+> -			die(_("annotated tag %s has no embedded name"), n->path);
+> +			warning(_("annotated tag %s has no embedded name"), n->path);
 
->   - we have to handle in-pack and "ext_index" objects separately.
->     Arguably prepare_bitmap_walk() could be adding these ext_index
->     objects to the type bitmaps. But it doesn't for now, so let's match
->     the rest of the bitmap code here (it probably wouldn't be an
->     efficiency improvement to do so since the cost of extending those
->     bitmaps is about the same as our loop here, but it might make the
->     code a bit simpler).
-> 
-> Here are perf results for the new test on git.git:
-> 
->   Test                                    HEAD^             HEAD
->   --------------------------------------------------------------------------------
->   5310.9: rev-list count with blob:none   1.67(1.62+0.05)   0.22(0.21+0.02) -86.8%
-...
-> diff --git a/t/perf/p5310-pack-bitmaps.sh b/t/perf/p5310-pack-bitmaps.sh
-> index e52f66ec9e..936742314c 100755
-> --- a/t/perf/p5310-pack-bitmaps.sh
-> +++ b/t/perf/p5310-pack-bitmaps.sh
-> @@ -47,6 +47,11 @@ test_perf 'rev-list (objects)' '
->  	git rev-list --all --use-bitmap-index --objects >/dev/null
->  '
->  
-> +test_perf 'rev-list count with blob:none' '
-> +	git rev-list --use-bitmap-index --count --objects --all \
-> +		--filter=blob:none >/dev/null
-> +'
+The attached is my attempt to craft such a test.  It turns out that
+it is tricky to trigger this die/warning.  I haven't dug deeply
+enough, but I suspect this might be a dead code now.
 
-I wondered why you chose to extend these tests instead of using
-p5600-partial-clone.sh, but I guess this script definitely creates
-the bitmap for the test. When I tested p5600-partial-clone.sh below,
-I manually repacked the Linux repo to have a bitmap:
+A few curious points about the attached *test* that does not work.
 
-Test                          v2.25.0               HEAD                    
-----------------------------------------------------------------------------
-5600.2: clone without blobs   79.81(111.34+11.35)   36.00(69.37+7.30) -54.9%
-5600.3: checkout of result    45.56(114.59+4.81)    46.43(80.50+5.41) +1.9% 
+ * "git tag -a" cannot create a tag without tagname.  We need to
+   resort to "git hash-object -t tag".
 
-Perhaps results for these tests would also be appropriate for your
-commit messages?
+ * "git hash-object -t tag" has internal consistency check, and
+   rejects input that lack the tagname.  We need to resort to the
+   --literally option.
 
-Note the +1.9% for the checkout. It's unlikely that this is actually
-something meaningful, but it _could_ be related to my concerns above
-about building a blob list from an empty bitmap.
+ * Instead of "cat U.objname >.git/refs/tags/U", the method that is
+   agnostic to the ref backend implementation, such as "git tag U
+   $(cat U.objname)" or "git update-ref refs/tags/U $(cat
+   U.objname)" should be usable and should be used.  But they
+   complain that the object whose name is $(cat U.objname) does
+   *NOT* exist.  I suspect we are triggering an error return from
+   parse_tag_buffer() and parse_tag(), which tells
+   parse_object_buffer() to return NULL, which in turn means there
+   is no such object to its caller.
 
-Thanks,
--Stolee
+And of course, "check_describe U A^1" does not even see "U" and does
+not complain.  I think that happens way before this part of the
+code.  add_to_known_names() calls replace_name() that in turn calls
+parse_tag() and a malformed annotated tag there won't even become
+a candidate to describe the given commit, I think.
+
+So, we might want to revisit this, analyze what happens fully, and
+replace it die/warning with a BUG(), if it turns out to be a dead
+code.
+
+ t/t6120-describe.sh | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
+
+diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
+index 960fd99bb1..7544278782 100755
+--- a/t/t6120-describe.sh
++++ b/t/t6120-describe.sh
+@@ -6,7 +6,7 @@ test_description='test describe
+         .--------------o----o----o----x
+        /                   /    /
+  o----o----o----o----o----.    /
+-       \        A    c        /
++       \   U    A    c        /
+         .------------o---o---o
+                    D,R   e
+ '
+@@ -140,6 +140,20 @@ test_expect_success 'rename tag Q back to A' '
+ 	mv .git/refs/tags/Q .git/refs/tags/A
+ '
+ 
++test_expect_success 'warn for annotated tag without tagname' '
++	git cat-file tag A >A.txt &&
++	sed -e "s/object .*/object $(git rev-parse A^1)/" \
++	    -e "/^tag A/d" A.txt |
++	git hash-object -w --literally --stdin -t tag >U.objname &&
++	cat U.objname >.git/refs/tags/U &&
++
++	check_describe U A^1 &&
++	cat >err.expect <<-\EOF &&
++	warning: annotated tag U has no embedded name
++	EOF
++	test_i18ncmp err.expect err.actual
++'
++
+ test_expect_success 'pack tag refs' 'git pack-refs'
+ check_describe A-* HEAD
+ 
