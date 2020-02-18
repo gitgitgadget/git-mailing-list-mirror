@@ -2,104 +2,150 @@ Return-Path: <SRS0=PlGQ=4G=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1,
+	USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B1F3C34031
-	for <git@archiver.kernel.org>; Tue, 18 Feb 2020 23:28:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6413EC34031
+	for <git@archiver.kernel.org>; Tue, 18 Feb 2020 23:46:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id F142822B48
-	for <git@archiver.kernel.org>; Tue, 18 Feb 2020 23:28:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2EA392173E
+	for <git@archiver.kernel.org>; Tue, 18 Feb 2020 23:46:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="YQt84YfD"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="DBYFuoyk"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727930AbgBRX2a (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Feb 2020 18:28:30 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:55296 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727872AbgBRX23 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Feb 2020 18:28:29 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5C315BEA1B;
-        Tue, 18 Feb 2020 18:28:29 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=phBLnRB4LyCkYMU99rS3QWyXQT8=; b=YQt84Y
-        fDaY8LRdIstKuSakI9a/iNIoRDGjd7YdljNDT+LcubE87wlpSL1kAbZutiEBhtxj
-        GritoBMJb9P8w1topZ1X0ukayxDZwlH4VFFCOMktnKDgc1wPs4UsbFC+Ii/YkwT0
-        vjzTfZhVCk+OhDTJwxtY6IrqLh9Kp+5R6mRQY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=kFOMMTPCsEywE9TV5PJgTL1Y5A56nqU5
-        p3W2Cs1TPmvDdN5h/SuK5YnHtussPQfqt+emaNCH2YtMd3CShkT0cW0R8+w+aFUz
-        2QmxQegobSXNi9i6cIO6fNTTJkSeac0cReATnhKQkqLe0BHnLeP3fIJszyN9wiKu
-        HwCH+qnhwn4=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 53FB8BEA1A;
-        Tue, 18 Feb 2020 18:28:29 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 839D5BEA19;
-        Tue, 18 Feb 2020 18:28:26 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Matheus Tavares <matheus.bernardino@usp.br>, git@vger.kernel.org,
-        rhi@pengutronix.de
-Subject: Re: [PATCH] describe: output tag's ref instead of embedded name
-References: <xmqqd0ahp0na.fsf@gitster-ct.c.googlers.com>
-        <fcf19a46b80322c5579142efe4ec681a4dcbdd28.1581802264.git.matheus.bernardino@usp.br>
-        <20200216065101.GA2937208@coredump.intra.peff.net>
-        <xmqqd0abk7zc.fsf@gitster-ct.c.googlers.com>
-        <20200218195402.GA21586@coredump.intra.peff.net>
-        <xmqq4kvnijim.fsf@gitster-ct.c.googlers.com>
-Date:   Tue, 18 Feb 2020 15:28:24 -0800
-In-Reply-To: <xmqq4kvnijim.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Tue, 18 Feb 2020 15:05:21 -0800")
-Message-ID: <xmqqzhdfh3vr.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726749AbgBRXqf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Feb 2020 18:46:35 -0500
+Received: from mail-pj1-f65.google.com ([209.85.216.65]:52814 "EHLO
+        mail-pj1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726641AbgBRXqf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Feb 2020 18:46:35 -0500
+Received: by mail-pj1-f65.google.com with SMTP id ep11so1745165pjb.2
+        for <git@vger.kernel.org>; Tue, 18 Feb 2020 15:46:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=+pjUrXg3IqzA5zVD5kqNggEn07pEF0p4gIBBsGpawWQ=;
+        b=DBYFuoykO1fzX2sED137H9FEBj5a2UvFufvXwvWFOpJQ1IGoZSkJW572qb9uuGeuZx
+         zcwMmInyqxBc/aJ28pgfi/tGQ31+7HY0dJrgzgnyQ2dPhuNKPOtLRJZmz91juNhJj6nQ
+         pOOSAyUSrp+aGdnZnbYWF7A2vTGzmBEsPZTN3ygX7f9+0Mgil7mPRNFWL9GflVKbdZLV
+         Z9r2tT5UYAwgs+sgJ9/1jrGcwCFY2NwSwBwBlXUFzK9FyOHC4CHOX6h6O3+QIpkRQsjg
+         RkH9Jqq9vtIT0GAKxo1inAOcnnlUjWY6DUMOruXr7ndkwHeshEbO9EAvg6Z2eQsxoERl
+         WSxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=+pjUrXg3IqzA5zVD5kqNggEn07pEF0p4gIBBsGpawWQ=;
+        b=Ql8LRJF9JGiFPNKgiY805AbUJaN5pHYemIcG6YraxBFNIoCY/6z50r7xDPiXRH0Irx
+         SWP1uX1ZPO3WzHMsBqN+VdkM6vpCCnqdkM019CTo9YWsd2UMIbAOd+YIsNemDLuQ/Ey7
+         Al5FpFxz3jHloIgBSLHEsc4x26XxIXDPKGSpXVbTXRtVpErP6U+ywqfq9WVA5FjkpQEy
+         7VlDrZWfG9vtEL9MnTXs+dwa3vZF/IYNXNcXwfk72+M1YyAzf/5s2SgAFXt8xQYWkLns
+         X9d5prTn54izYYGGI3NCXYoXa/yvFnkgwVxqh+59K/x6qMe1BZG0Pd++IPjRE5cEkG0N
+         5CIA==
+X-Gm-Message-State: APjAAAVX9dh7rTLoDdlpTrf+tB0Jy9wIC0LpA/l3arOoX4XT7ncSvtI0
+        XTBl5lQbmucYWN29FDOjePgOz9dGKm8=
+X-Google-Smtp-Source: APXvYqzvJ70i4GSFdYEAKjkuNasNOLPB/0BG7rfVkZ7yLFhi2ZlFlQgvq/C1r0zR0tLPSUaT0D2yVQ==
+X-Received: by 2002:a17:90a:c78f:: with SMTP id gn15mr5591813pjb.64.1582069594142;
+        Tue, 18 Feb 2020 15:46:34 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
+        by smtp.gmail.com with ESMTPSA id m12sm55482pjf.25.2020.02.18.15.46.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 18 Feb 2020 15:46:33 -0800 (PST)
+Date:   Tue, 18 Feb 2020 15:46:28 -0800
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v7 03/15] bugreport: add tool to generate debugging info
+Message-ID: <20200218234628.GA1461@google.com>
+References: <20200214015343.201946-1-emilyshaffer@google.com>
+ <20200214015343.201946-4-emilyshaffer@google.com>
+ <xmqqzhdlnksn.fsf@gitster-ct.c.googlers.com>
+ <20200215015729.GN190927@google.com>
+ <xmqq1rqvogif.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5CF0DCB4-52A6-11EA-9200-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq1rqvogif.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Sat, Feb 15, 2020 at 10:24:40AM -0800, Junio C Hamano wrote:
+> Emily Shaffer <emilyshaffer@google.com> writes:
+> 
+> > On Fri, Feb 14, 2020 at 09:25:12AM -0800, Junio C Hamano wrote:
+> >> Emily Shaffer <emilyshaffer@google.com> writes:
+> >> 
+> >> > +	switch (safe_create_leading_directories(report_path.buf)) {
+> >> 
+> >> This helper is about creating paths in the working tree and Git
+> >> repository,
+> >
+> > It's also used by cmd_format_patch() with --output-directory specified,
+> > which is how I found it.
+> 
+> And that is an example of a good use of this helper.  What will be
+> written out there should be visible by the same people as those who
+> have access to the repository; get_shared_repo() and adjust_perm()
+> based on what the repository you are taking patches from is
+> perfectly sensible.  And as it is format-patch, we know we have
+> get_shared_repo() working, and we know which repository we are
+> working on.
+> 
+> Output directory for bugreport is on the same boat when we know the
+> users are producing a report on their use of Git within a
+> repository.  It is not clear if the tool is started without any
+> repository---it happens to do a random safe thing (i.e. I think
+> get_shared_repo() gives PERM_UMASK, which tells adjust_perm() not to
+> do anything especial) right now, but there is no guarantee that we
+> will keep it working like that.  Somebody may come and demaind
+> get_shared_perm() to die() when outside a repository, for example,
+> and that would break the nice property that lets bugreport working
+> outside a repository.
 
-> Coming back to the original topic, ...
->
->> If a tag describes a commit, we currently output not the tag's ref but
->> its embedded name. This means that when the tag is locally stored under
->> a different name, the output given cannot be used to access the tag in
->> any way. A warning is also emitted in this case, but the message is not
->> very enlightening:
->
-> None of the above is wrong per-se, but the reason why we chose to
-> use the real name of the tag in the tag object, while issuing a
-> warning, was so that people can correct the mistake of storing an
-> annotated tag A to a wrong refname Q.  If "describe" gave a name
-> based on refname Q, there is no incentive to correct the situation
-> to use the right refname.  The name that describes the commits
-> relative to the real name of the A is *not* usable by design, until
-> the refname is corrected (i.e. the tag is stored in the right
-> place).
->
-> So I am not 100% confident that the original patch is a good idea.
+Hm, this would break the convention of the name of
+safe_create_leading_directories() too though right? As I understood it,
+"safe_foo" in this codebase means "this function will not die()"?
 
-FWIW, this design came from 212945d4 ("Teach git-describe to verify
-annotated tag names before output", 2008-02-28).  Shawn was quite
-explicit that use of the real name was deliberate:
+> 
+> I just wanted to make sure that somebody will be keeping an eye to
+> remind those who propose such a change in the future.  A comment
+> near where get_shared_repo() happens may be something that can be
+> done with a minimum effort when code that depends on that property
+> is introduced at the same time.
 
-    If an annotated tag describes a commit we want to favor the name
-    listed in the body of the tag, rather than whatever name it has
-    been stored under locally.  By doing so it is easier to converse
-    about tags with others, even if the tags happen to be fetched to
-    a different name than it was given by its creator.
+Ok. I want to make sure I understand you right. I think you're saying,
+"This is OK, except if someone changes get_shared_repo() it could break,
+so we need a way to warn someone that it could break." It sounds like
+you suggested leaving a comment in the
+safe_create_leading_directories() helper. My own preference is to write
+a test so that it's explicit that we depend on that behavior, instead -
+it's easy to gloss over a comment or read a different part of the
+codebase, but it's hard to ignore a breaking test. It'd be trivial to
+add one, so I will in v8 - unless I misunderstood you.
 
-and I tend to agree with the original rationale.
+> 
+> >> I thought I read somewhere that this tool is meant to be usable
+> >> outside a repository?  If that is not the case, then the use of this
+> >> helper is OK.  If not, we may want to make sure that it will stay to
+> >> be safe to use the helper (I think it happens to be OK right now,
+> 
+> I am actually OK if we limit the use of this tool to "use with a
+> repository that is not corrupt", as coping with these kinds of
+> breakages that in the main Git executable we deem "needs manual
+> intervention" inside a single process is too painful (it would have
+> been easier to cope with these too if we stuck with a script that
+> invokes many discrete commands and acts on their errors, but that is
+> optimizing for rare case and not recommended).  But we should tell
+> users about the limitation and encourage them to ask for help in non
+> automatable means.
+
+I think you're saying, "Mention this drawback in the manpage for
+git-bugreport." Sounds like a good idea to me, so I'll add it for v8.
+
+ - Emily
