@@ -4,102 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E09FFC34047
-	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 16:38:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2DDD5C34047
+	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 16:55:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B43BF24654
-	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 16:38:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F093B2464E
+	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 16:55:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="VsTO+ACk"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Y5hhFJTJ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726794AbgBSQiV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 Feb 2020 11:38:21 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:53903 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726514AbgBSQiV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Feb 2020 11:38:21 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9DE9FC03E8;
-        Wed, 19 Feb 2020 11:38:19 -0500 (EST)
+        id S1726593AbgBSQzK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 Feb 2020 11:55:10 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64730 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726528AbgBSQzJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Feb 2020 11:55:09 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3C40146C16;
+        Wed, 19 Feb 2020 11:55:07 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=9ic4UZIMQ6dU5SdWAA2dy5tuc9k=; b=VsTO+A
-        Ck1u4qjhnAv8iBH5Ryy7alQ45ta9oft5hEhvl/YSmeqSnuzVqnGcXflv/aICS6OH
-        gHJQNUg4uRHxO6H26n5K9hHzMSUixfrxh32k+4QQNYPLde51etV+API1dtSWjhcL
-        f8QtKcxNnuny954eBLEYq8t39JCjQlivBUce0=
+        :content-type; s=sasl; bh=YV3IVPmzvk0RYGbJHHYZCb+F9cQ=; b=Y5hhFJ
+        TJaXyl+lbXEHxNVs7cv/qWeF8/18YyW+8ms0zRMNpChil76UGg0Rn8fU9ePc2IDw
+        qXY/J6qT2eqv+UBXVtojZ/H6kDzgDg6uXG6uMDRJONeE9tH/O42uekt1qS4iXESL
+        9twfZz32FCW9qLDmJl/6P3ZeNiFbXO37XmjvE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=v3upe9YzIfNrlLWb4Kr7N1Lr3smKLIF/
-        vzKxc0edlGW7KVqfOABosRFVCIfB6h1FBZmMCGIozqkxK3sFtK37c1ZnpNcDrguW
-        oSYgaAXWTs74tWooLfGfZP1h3uK/u1AOiQ2eKdUwjNUWv6oB9alyTsrNTCknyZmS
-        lJ3eGZOKxIA=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 95B68C03E7;
-        Wed, 19 Feb 2020 11:38:19 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=WqgI9GFg8DOF+snw8+8rOurPai2dwNWF
+        h6hDCk5Ph9SxvkqKHR2YnrJssOkU7/119mhAnISa0QC5ZwzhbVp7vYl8Dtupoxt3
+        nQvOqSMBbxWeX+XNVnz3fZEJGExNrUcjesOBKUzzs7F6K8TT3risTVjyOhgLDy4B
+        Vmz5KGtPAj0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0CEEA46C14;
+        Wed, 19 Feb 2020 11:55:07 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 8B1A9C03E5;
-        Wed, 19 Feb 2020 11:38:15 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B53B346C13;
+        Wed, 19 Feb 2020 11:55:05 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] t3424: new rebase testcase documenting a stat-dirty-like failure
-References: <pull.712.git.git.1581959751454.gitgitgadget@gmail.com>
-        <CABPp-BEtnmzDp0E4=0y9eEMKQ89FcrsK9h-1Mqcd2FDV_EBohw@mail.gmail.com>
-        <ed8dc52c-db50-f6fa-9583-8ad4af23d327@gmail.com>
-        <CABPp-BHBv+_HkExM1q6WAZZyMhR=UPNQZDhE8jFSQFNoCtgytg@mail.gmail.com>
-        <deae766d-f552-2e30-fb49-e7e187ee984b@gmail.com>
-        <CABPp-BFij++-6P2ht1EacGXaX4vA_CuBQEfz6M9w9CadXHC8Jw@mail.gmail.com>
-Date:   Wed, 19 Feb 2020 08:38:13 -0800
-In-Reply-To: <CABPp-BFij++-6P2ht1EacGXaX4vA_CuBQEfz6M9w9CadXHC8Jw@mail.gmail.com>
-        (Elijah Newren's message of "Wed, 19 Feb 2020 08:00:45 -0800")
-Message-ID: <xmqqblpuh6ru.fsf@gitster-ct.c.googlers.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH v7 03/15] bugreport: add tool to generate debugging info
+References: <20200214015343.201946-1-emilyshaffer@google.com>
+        <20200214015343.201946-4-emilyshaffer@google.com>
+        <nycvar.QRO.7.76.6.2002191515310.46@tvgsbejvaqbjf.bet>
+Date:   Wed, 19 Feb 2020 08:55:04 -0800
+In-Reply-To: <nycvar.QRO.7.76.6.2002191515310.46@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Wed, 19 Feb 2020 15:18:09 +0100 (CET)")
+Message-ID: <xmqq7e0ih5zr.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 3A123342-5336-11EA-B5DD-B0405B776F7B-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 942F09CA-5338-11EA-ACFD-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
->> I think `--exec true` would be better as it makes it clear that it's not
->> a timing issue. I've changed do_recursive_merge() to print the mtime and
->> mode of "DS" before and after the merge which gives
->>
->> HEAD is now at abd8fe3 side1
->> Rebasing (1/2) # picking commit1
->> DS mtime, mode before merge 1582109854, 120000
->> DS mtime, mode after merge 0, 120000
->> Rebasing (2/2) # picking commit2
->> DS mtime, mode before merge 0, 120000
->> error: Your local changes to the following files would be overwritten by
->> merge:
->>         DS
->>
->> So it looks like the problem is that when we pick commit1 we don't
->> update the index entry for DS properly in merge_trees()
->>
->> Best Wishes
->>
->> Phillip
+>> +int cmd_main(int argc, const char **argv)
+>> +{
+>> +...
+>> +	if (report == NULL) {
+>> +		strbuf_release(&report_path);
+>> +		die("couldn't open '%s' for writing", report_path.buf);
+>> +	}
+>> +
+>> +	strbuf_write(&buffer, report);
+>> +	fclose(report);
+>> +
+>> +	fprintf(stderr, _("Created new report at '%s'.\n"), report_path.buf);
+>> +
+>> +	UNLEAK(buffer);
+>> +	UNLEAK(report_path);
+>> +	return -launch_editor(report_path.buf, NULL, NULL);
 >
-> Oh, indeed, so this was my bug.  Thanks for jumping in and
-> investigating; I probably should have found that lead but I just
-> didn't.  Anyway, with your extra information I dug around for a bit
-> and I think I found the fix.  I'll post it soon.
+> This would be the first time (at least that _I_ know of) that we use `-`
+> in this way. We seem to use `!!` a lot more often. And now I wonder
+> whether there is a reason for that `-` that I missed?
 
-Nice.  I recall that somebody said that no bug is deep enough to
-hide from us when we have sufficient number of eyeballs ;-)
+In general, our preferred way to report an error from API functions
+is to return a negative number and a success is reported by
+returning zero.
 
+The argument to exit(3), which the return value from the main()
+function essentially is, on the other hand, is expected to be a
+small non-negative integer.  As long as we are in tight control of
+the range of the returned value from launch_editor() (i.e. it must
+return a small non-positive integer whose negation is suitable to be
+fed to exit(3)), the above is fine.
+
+The idiom "return !!fn();" is to canonicalize the value to 0 or 1
+for the caller who asked "so, did fn() give us 0 or non-zero?",
+which can also be used as the value given to exit(3), and could be
+more appropriate under some conditions:
+
+ - we MUST know launch_editor() returns zero if and only if it is
+   successful.
+
+ - we do not have to be confident to be in tight control of the
+   range of the returned value from launch_editor() (e.g. it could
+   return a positive upon an error).
+
+ - we MUST NOT care to differenciate different error codes returned
+   from launch_editor().  IOW, we must be fine to give the invoker
+   of the program only 0 (success) or 1 (unspecified failure).
+
+Use of "return !!fn();" that is not to give to exit(3) is probably
+more common in our codebase.  See apply.c::try_create_file() and the
+comment before the function about its possible return values for
+example.
