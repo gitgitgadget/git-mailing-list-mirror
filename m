@@ -2,141 +2,106 @@ Return-Path: <SRS0=H/u6=4H=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D943EC34056
-	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 18:40:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 97391C34056
+	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 18:53:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id AF56724670
-	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 18:40:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 647AC2064C
+	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 18:53:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="BuB8zoN1"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="jxZaPR4R"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726643AbgBSSkY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 Feb 2020 13:40:24 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56738 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726613AbgBSSkY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Feb 2020 13:40:24 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5FEA3477E8;
-        Wed, 19 Feb 2020 13:40:19 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=33DnFQMK0dcxm8B6Y1LSSILt7cs=; b=BuB8zo
-        N1FnMtGnyLsOTfnf5C9u6Uw0FLHh3NXzJ5zhXsUnrLQeTYyNx7fmBnzkMazAcC8O
-        peJ+hl7cSUWPdzJt+Ot8gyvO/xlv1mi1cwAhF5CnmYvKe0Gy0AfP8Def9sdvHcrI
-        yqaqIO4WsQGnGEvbdNqU2bla3ZjfDvrvytxaA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=glWM/yvdefKgFVR1wzanoLEcLHQd9LWN
-        MirzUxEAS/LqntUmCGzVfjyFaiegkkMAR4v9eHDODJVSZk6VqIr64rtuFoHC05yL
-        9dVJPROUsbn+Ia9TJuDKz9st/yuBNJZ0wnmZrhY2fq5ozkQkfq3xeqbM3VSI0lcP
-        2LOHG09tUek=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 57EA9477E7;
-        Wed, 19 Feb 2020 13:40:19 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A10AB477E6;
-        Wed, 19 Feb 2020 13:40:18 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v4 2/2] merge-recursive: fix the refresh logic in update_file_flags
-References: <pull.712.v3.git.git.1582064105813.gitgitgadget@gmail.com>
-        <pull.712.v4.git.git.1582131847.gitgitgadget@gmail.com>
-        <ba297fd67bb98bd06408241030cf42f410d5d366.1582131847.git.gitgitgadget@gmail.com>
-Date:   Wed, 19 Feb 2020 10:40:17 -0800
-In-Reply-To: <ba297fd67bb98bd06408241030cf42f410d5d366.1582131847.git.gitgitgadget@gmail.com>
-        (Elijah Newren via GitGitGadget's message of "Wed, 19 Feb 2020
-        17:04:07 +0000")
-Message-ID: <xmqq4kvmfmjy.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726713AbgBSSxe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 Feb 2020 13:53:34 -0500
+Received: from mout.gmx.net ([212.227.17.21]:32811 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726651AbgBSSxe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Feb 2020 13:53:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1582138412;
+        bh=Vx+CduZaYqtsibQfATMEQ4CSFnlK/IEqcGwniy6QzF0=;
+        h=X-UI-Sender-Class:From:To:Subject:Date;
+        b=jxZaPR4Rzpi7IexrdYxKhzicUrO3I9pCzPLHfgShg7Dc71x1k4VRAtXNWGIv6bECt
+         otrzMduRzYyD0u64sYZjHZi6hO8OAtr5OInavuVGSDhoaRzjqbRcLLZohZ/yqU+tcY
+         MmuVSPGmnJUCf/96sGYo371oxxaWpKkouM0Ku9vs=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from fv-az767.0o1ik3tpy2tupi0xpbgwdxt1ze.bx.internal.cloudapp.net
+ ([13.92.211.228]) by mail.gmx.com (mrgmx105 [212.227.17.168]) with ESMTPSA
+ (Nemesis) id 1MUXtY-1ivnJM11E0-00QVS6; Wed, 19 Feb 2020 19:53:32 +0100
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
+        git-packagers@googlegroups.com
+Subject: [ANNOUNCE] Git for Windows 2.25.1
+Date:   Wed, 19 Feb 2020 18:53:29 +0000
+Message-Id: <20200219185329.6640-1-johannes.schindelin@gmx.de>
+X-Mailer: git-send-email 2.25.0
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 46F98C02-5347-11EA-8E5E-C28CBED8090B-77302942!pb-smtp1.pobox.com
+Fcc:    Sent
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:m1FQs8OKgsoBIsvN8jjrbDKdZXYlc5jpCOW+7MiDKybq/WaoPj0
+ WhwGs9zOFv+xZdL9YyobeaDm+KmhEOWUOebtYOnuK1WnvFFhf4mNgKB32ajLVVgPevlwZcy
+ IbFWoBrHoZ8EB3gFB12SOgy0h+NkaYnGjZ6dNsZKvKMcaEsVL5X+fEPAOsrSzVL5LffQqU8
+ bYPsxFcCePXLttSJ1VH0g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:C8xWA4tVvJc=:EMR2drM8eE3nsxsGiKgkV7
+ JS4LR+Vd4+T08Ck+m8+aQElsBhTiuV+W71JGb6+XtpGfQD9ka7iPptjrR4ai/0KDQC6E4i0+v
+ +fYxwbXa2k8LJYK1/ToLoN0H2p1T74LXD7hgEGK7yhz/qzmDyKSqJy3Mwlsa+ecBwZ4hEpVrG
+ LLz/i8zqmoqSZheeTTdV7ybM2sePtw8NBeK2/N99cp9BP9wye9sVvD0eSkT86IMYAdzaNmlCD
+ skmqopLisR5kd8JHkavn9pcPCpiVIzun/SGuzfmzH8sUcEyYYhmTE3Wmq8ZNMTkQbQODfqqwp
+ bG3USbdgL74PBlPRlIGAyGA0RhU1Suts0Gjhc0jH4qdVjoNqm7cvWUm9xHqnB2zw5effcS+rw
+ XiiXN6RscCwdvTt3N2s0rYoAhO4kKEKofj/sHip+Q2i9wfyis2zpO3B6NrWaq52KvZdTNOo+J
+ 0ET6qN7ME0iZoBsWs5+eYhX2pPBuicTkWsDRCt8SCKgc6xVSA6bCPGqITHsDImU//ieKr5Qon
+ yGH14mK/Kfc0r3NTDYaxOqZ7zrXK1oqQqY1KXynFH7ujr6Tk9KObsxLh1/MWveWS3fh5/PZRd
+ um4Oh3r23EqT+xqSW2+kT/9V4ZAplrBbz10U2zW8NfBcCm1cjh29N0+muse6mxHXUUEuPjcLb
+ AiHyfIunx7D2FL1/Qv8To7QatGFevLfGJxg8s6lVU37c4VtpuwfIgUNCUIwRYUcRY6+bjms8b
+ DADf3x4QdEinNT3gjVrJnexAOLmy5Xjpg9MBUiNCzEgEa9VIMZSYeMJbWrfVbcjgyr6Jqo/Cb
+ eR0UX2Bt1jlXmsJc6TD2BLYADRSI4AkWLWc95A0N5p/tDRnHh6KZmWZx4u6IS/IwmerINmi02
+ aopj/SIrpndl+XZKMnqERdXXPLw8IVACowoDoTKt6UDJaARK/8g4cEGgCeS9iHdwkYjBcnPzZ
+ DQOgW+V3y3XYg1lCibQUjzsxtayDForo7ApLE504BXroxkMll9fK52D4fqucrAVKu9GYDYnWO
+ +7OyzrEvtazu3lMPi1elDndmNgOpXcaWztafYw2k//zMgTaams7w6tHBKo3JUII6pc4ek2ny4
+ qExXQkvTanKytTHwdE2I2c9BD8vdG5d5AJOsoFqeA7tHhn73RBdURMZDS3vNMeVUu6HMvTnPS
+ xwx2YxMODdWFW94F4KDzF2awAFNt6X7KPL6pGbMxl+0oUB5rLe4nJRa+8FqgPjoLBWCqf43e/
+ wau9OOfjEMnwZ8HYe
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+From:
 
-> From: Elijah Newren <newren@gmail.com>
->
-> If we need to delete a higher stage entry in the index to place the file
-> at stage 0, then we'll lose that file's stat information.  In such
-> situations we may still be able to detect that the file on disk is the
-> version we want (as noted by our comment in the code:
->   /* do not overwrite file if already present */
-> ), but we do still need to update the mtime since we are creating a new
-> cache_entry for that file.  Update the logic used to determine whether
-> we refresh a file's mtime.
->
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->  merge-recursive.c                    | 7 +++++--
->  t/t3433-rebase-across-mode-change.sh | 2 +-
->  2 files changed, 6 insertions(+), 3 deletions(-)
->
-> diff --git a/merge-recursive.c b/merge-recursive.c
-> index aee1769a7ac..e6f943c5ccc 100644
-> --- a/merge-recursive.c
-> +++ b/merge-recursive.c
-> @@ -998,10 +998,13 @@ static int update_file_flags(struct merge_options *opt,
->  		free(buf);
->  	}
->  update_index:
-> -	if (!ret && update_cache)
-> -		if (add_cacheinfo(opt, contents, path, 0, update_wd,
-> +	if (!ret && update_cache) {
-> +		int refresh = (!opt->priv->call_depth &&
-> +			       contents->mode != S_IFGITLINK);
-> +		if (add_cacheinfo(opt, contents, path, 0, refresh,
->  				  ADD_CACHE_OK_TO_ADD))
->  			return -1;
+Dear Git users,
 
-Hmph, !.call_depth would avoid resetting update_wd to 0, so the only
-difference this patch makes is when the caller of this helper passed
-(update_wd == 0) during the outermost merge.  We did not tell
-add_cacheinfo() to refresh, and refresh_cache_entry() was not
-called.  But the new code forces refresh to happen for normal
-entries.  The proposed log message explains that a refresh is needed
-for a new cache entry, but if I am reading the code correctly, this
-function is called with !update_wd from two places, one of which is
-the "Adding %s" /* do not overwrite ... */ the log message mentions.
+It is my pleasure to announce that Git for Windows 2.25.1 is available fro=
+m:
 
-But the other one?  When both sides added identically, we do have an
-up-to-date result on our side already, so shouldn't we avoid forcing
-update_wd in that case?
+	https://gitforwindows.org/
 
-I do not think passing refresh==1 in that case will produce an
-incorrect result, but doesn't it force an unnecessary refreshing?
 
-Puzzled.
 
-> +	}
->  	return ret;
->  }
->  
-> diff --git a/t/t3433-rebase-across-mode-change.sh b/t/t3433-rebase-across-mode-change.sh
-> index f11fc35c3ee..05df964670f 100755
-> --- a/t/t3433-rebase-across-mode-change.sh
-> +++ b/t/t3433-rebase-across-mode-change.sh
-> @@ -33,7 +33,7 @@ test_expect_success 'rebase changes with the apply backend' '
->  	git rebase side1
->  '
->  
-> -test_expect_failure 'rebase changes with the merge backend' '
-> +test_expect_success 'rebase changes with the merge backend' '
->  	test_when_finished "git rebase --abort || true" &&
->  	git checkout -b merge-backend side2 &&
->  	git rebase -m side1
+Git-2.25.1-64-bit.exe | 9e442131f7dc0de24db1369a4fe02659c2d642bf60ce6d88e3=
+1340eedaa18da1
+Git-2.25.1-32-bit.exe | 4408525b8b314f2ec8cf8f3c00e8bae27cb4071790af23908e=
+6c908a7d48e5e1
+PortableGit-2.25.1-64-bit.7z.exe | a3f594440431bddbbc434afc88b8acef286c34d=
+caa20c150a884e274e8696b36
+PortableGit-2.25.1-32-bit.7z.exe | 9054e283465ca1153043bae4cf515782b3e0a3b=
+d95c28bfb20f66de3922da1d0
+MinGit-2.25.1-64-bit.zip | f59da958ee779ef1454e4d0cb24cb51278049c578c4e6d0=
+1ba9e1b6f61dfcb1a
+MinGit-2.25.1-32-bit.zip | 91ae315d7f5ceedbdba5644521c65b9889027877a096589=
+1da988707917ad9d5
+MinGit-2.25.1-busybox-64-bit.zip | 602389feca195968935c61482e977072f226c7d=
+e0b3fac98923622fe706f1175
+MinGit-2.25.1-busybox-32-bit.zip | 18888012944e6239783d66db101fad402fd907d=
+29980a020bbd32dfa959173ed
+Git-2.25.1-64-bit.tar.bz2 | dfab87d6bcaa54e179544d7a343c7e4f5b45604573de31=
+203542e87899962c1b
+Git-2.25.1-32-bit.tar.bz2 | 6e1a06b5a8d7e47eeaf3228333bf1c1b834ec6dca0fad6=
+1434783f2ad2c9da46
+
+Ciao,
+
