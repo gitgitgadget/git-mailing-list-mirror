@@ -2,105 +2,110 @@ Return-Path: <SRS0=H/u6=4H=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.2 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C9C28C7114E
-	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 22:07:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 142E6C5ACC4
+	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 22:09:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 9D6E02465D
-	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 22:07:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DADEB24670
+	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 22:09:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="RchrojSD"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="MSeNnueL"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727939AbgBSWHV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 Feb 2020 17:07:21 -0500
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:40865 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727082AbgBSWHV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Feb 2020 17:07:21 -0500
-Received: by mail-pg1-f194.google.com with SMTP id z7so795726pgk.7
-        for <git@vger.kernel.org>; Wed, 19 Feb 2020 14:07:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=/iCpG/K9BmhIzGsXoxZR2Q0/5y+JqJQYmOG7x+uxKoA=;
-        b=RchrojSDI1gkgay0Iv5OAFPOUh7lrLy7Xah+AH9ZnzGA/GN4TMkZRFm1a5v8z3fmmZ
-         QLV+n+/0RCD1TgCuLIEGFXcxMKhnjkkINhjX9P7YId9EWQ1mWRnMPfRKkz4WSxsAePPa
-         pgiLO+VzJKa7O8Elp4mKv2vo9oTxj5H5AOmC4rKU99l7jlxq7agZJIA6vx5FLRqkpgVz
-         TCHaD+kKhhtZ5RlrEof98wKEf6fW2CLBM9mvvgDiJkj+3Y74+n7GFNppI+taqDEWSN4z
-         EWFqDqHj/vDutLcfw84uutIDNIfJXZC04bUrcoe2w5zKNFf6cbHVDCNZUFtwVv/thnto
-         Io5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=/iCpG/K9BmhIzGsXoxZR2Q0/5y+JqJQYmOG7x+uxKoA=;
-        b=rdfgO1oVo1iMn01rcRMRmKUfA8MYi+UxR07p17ydptI+C+pXp/V3l2oYFKQfZs7N+A
-         ojJJfTTwVTmxe9GF5x8rzSvAkY9DBzr8tByHzZYNd0znBATwGFoEdEU88T3SuBDvYKjy
-         zrkO2gcdRnSVTyaTYc2kJZvaZM28QvtrD+3JXEiGm2w9mfa0pTho89gb3ufc7cszKvF+
-         9iQFXmqvCTMluYOdeRgk2BrB1az8MhfDVWG6sdVShzzmOzIRLGLCRi2xYs6YUhmckbZs
-         l2RuzmrkI3h3oCT6C4NTkzdT6q2Bvv5qkGHiZPVN5bRCcForO2vkQogxLSrtxOViX3e7
-         qyPQ==
-X-Gm-Message-State: APjAAAUOMarGdzPJ8aCAqoWuqyBBqkK5XiihtxpXUnf4QZ2WIFTzgV/5
-        2fxj1+uFcbAOjO/QE4+MChNRU9ucu1Iiww==
-X-Google-Smtp-Source: APXvYqxzgsO8AkDBTxy+iqPavtLPlelflblPAOxY+38TQ8a+RIunjV4AU0glxgiUetBcZWhyXLc0kw==
-X-Received: by 2002:a63:1e5e:: with SMTP id p30mr31794296pgm.112.1582150040161;
-        Wed, 19 Feb 2020 14:07:20 -0800 (PST)
-Received: from localhost ([205.175.106.52])
-        by smtp.gmail.com with ESMTPSA id r26sm674214pga.55.2020.02.19.14.07.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Feb 2020 14:07:19 -0800 (PST)
-Date:   Wed, 19 Feb 2020 14:07:18 -0800
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Feb 2020, #04; Mon, 17)
-Message-ID: <20200219220718.GD5101@syl.local>
-References: <xmqq36b8lvdl.fsf@gitster-ct.c.googlers.com>
- <20200219195822.GA5101@syl.local>
- <xmqqy2syckju.fsf@gitster-ct.c.googlers.com>
+        id S1727648AbgBSWJz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 Feb 2020 17:09:55 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53919 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727637AbgBSWJz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Feb 2020 17:09:55 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id BCB9C3ECDB;
+        Wed, 19 Feb 2020 17:09:50 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=hLvR75bAX3bx2nUx9MOgn7728PU=; b=MSeNnu
+        eLRhu2xMCuRIjaT3yukB3LWl3mOHWUpbboWS7COHMAGQzGraqRN8F/DkEkTGKEqT
+        eJuTClnCjueysY8swYQdVf7XJoSnq2ELQTu76G+266BZJKvT17nOFlfEjVEnlPTI
+        dNcE40HmoBYgz5CbndP5k+K27h+txjEjnML8o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=JYNq6R5omO70Rb/CI7msXCCupMGDnXuY
+        82Y5WRzgyym+lRMPAAdoWCen6HLFqJKNpjFl4w1jSGfPETgAQZUNgmSp8h84L4x2
+        xvGK6m1/vjnNBQww/l7+owEwo+K6AYzagolOkNpZFdRPzuPXHiqY4wKHip9/F2lA
+        gjrG79031+A=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B4BD43ECD9;
+        Wed, 19 Feb 2020 17:09:50 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 283303ECD8;
+        Wed, 19 Feb 2020 17:09:50 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v7 03/15] bugreport: add tool to generate debugging info
+References: <20200214015343.201946-1-emilyshaffer@google.com>
+        <20200214015343.201946-4-emilyshaffer@google.com>
+        <nycvar.QRO.7.76.6.2002191515310.46@tvgsbejvaqbjf.bet>
+        <xmqq7e0ih5zr.fsf@gitster-ct.c.googlers.com>
+        <20200219215231.GA26221@google.com>
+Date:   Wed, 19 Feb 2020 14:09:48 -0800
+In-Reply-To: <20200219215231.GA26221@google.com> (Emily Shaffer's message of
+        "Wed, 19 Feb 2020 13:52:31 -0800")
+Message-ID: <xmqqtv3mcjpv.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqy2syckju.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 8C2CE73E-5364-11EA-9988-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 19, 2020 at 01:51:49PM -0800, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
+Emily Shaffer <emilyshaffer@google.com> writes:
+
+> launch_specified_editor() has a handful of exit points, of three kinds:
+>  1. return error(something)
+>  2. raise(sigsomething)
+>  3. return 0
+>     a. when the editor process closed happily, but the user supplied
+>        NULL instead of a buffer. That is, the user didn't want the
+>        contents of the editor given back to them in a strbuf.
+>     b. when the editor process closed happily and the user's supplied
+>        buffer was filled with the file's contents with no issue.
 >
-> > On Mon, Feb 17, 2020 at 02:08:38PM -0800, Junio C Hamano wrote:
-> >
-> >> * tb/commit-graph-split-merge (2020-02-12) 3 commits
-> >>  - builtin/commit-graph.c: support '--input=none'
-> >>  - builtin/commit-graph.c: introduce '--input=<source>'
-> >>  - builtin/commit-graph.c: support '--split[=<strategy>]'
-> >>
-> >>  The code to write out the commit-graph has been taught a few
-> >>  options to control if the resulting graph chains should be merged
-> >>  or a single new incremental graph is created.
-> >>
-> >>  Waiting for the discussion to settle.
-> >>  cf. <20200212205028.GE4364@syl.local>
-> >
-> > I think that this discussion is still "settling", although the thread
-> > hasn't had any activity for a few days now.
-> >
-> > I wanted to get feedback from my response to Eric Sunshine before saying
-> > that we have consensus, but otherwise I think this is moving along.
->
-> Did you mean Szeder?
+> So I think we can check "yes" here.
 
-I did, whoops. Thanks for noticing (and sorry to Eric, who I see has
-responded just above :-)).
+Heh.  If we raised a signal to kill ourselves, then we won't be
+returning a value from launch_editor() anyway.  That case won't
+affect the "between returning negation or !!, which is more
+appropriate?" discussion, I think.
 
-> https://lore.kernel.org/git/cover.1581486293.git.me@ttaylorr.com/
+>>  - we MUST NOT care to differenciate different error codes returned
+>>    from launch_editor().  IOW, we must be fine to give the invoker
+>>    of the program only 0 (success) or 1 (unspecified failure).
 
-Thanks,
-Taylor
+I actually think this holds for the codepath.  A failure from
+start_command() returns error(), and finish_command() that waits for
+the spawned editor process to complete yields the exit status from
+the editor, but unless we re-raise the signal that killed the editor
+process to ourselves, we just turn any non-zero exit into "return
+error()", so it is safe to say launch_editor() can return either 0
+or -1 and nothing else.  Would we later want to tell callers of
+launch_editor() how/why the editor session failed by returning
+something else?  I do not offhand think of any---we do not even
+differenciate between failure to start (e.g. misspelt command name
+for the editor) and other failures WITH the return value and
+consider it sufficient to tell the user with different error
+message right now.
+
+So in practice returning -launch_editor() and !!launch_editor()
+would not make any difference, I would think.
+
