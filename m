@@ -6,64 +6,64 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 965F8C34022
-	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 21:36:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 93FE3C3524E
+	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 21:39:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3A25A24654
-	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 21:36:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 67D6124654
+	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 21:39:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="sZtZCnPX"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="rRClDo7H"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727277AbgBSVgr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 Feb 2020 16:36:47 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:59324 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726645AbgBSVgr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Feb 2020 16:36:47 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0A85EC5E2E;
-        Wed, 19 Feb 2020 16:36:45 -0500 (EST)
+        id S1727400AbgBSVjd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 Feb 2020 16:39:33 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:58073 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726703AbgBSVjd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Feb 2020 16:39:33 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 66777C2201;
+        Wed, 19 Feb 2020 16:39:31 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=WcksNdBerVgUZUdFasLZMnRIYnc=; b=sZtZCn
-        PXFAJcygWZEB4xVOWGfWYleXPjyv1C096vAo+Nf4yIUO6lxT/LMFCZ2U5k2WLciX
-        Nf4oF17V+/4gfiUn5ERXc07fMSXnllsm8Jt6wVepASenP2m6hNzC/O1N116i3en7
-        uaGn7yX6PUVPXQwYM84mv2V4mEiywqPK5D1Yw=
+        :content-type; s=sasl; bh=8YV0g/7VYgrjJaNqpTz1S2wW1S0=; b=rRClDo
+        7HYILFmHtYqGl92NyR/TpWfeCIA5QjrQcauEIq2F0QETV+J3tt+UIhRla2npABe1
+        h6SInGcmNJ5yT5dLUiCm6DHM+1GiNEdt+JvPsoAYkfc6hYjmXiVYIOe2vPfugjJQ
+        v7gBt/NMpAK7Sz6UZCD66GY8edSjuqYh2sH3I=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=o6fycJtK/9DGLmfi7153C8XZagW/zLMs
-        AKlpo78rFIVww2LqZDRD0+4EUkQjpiWQGSQOCg4VZcHIkShD5qgMKiBX2SUxvl6a
-        uWS/jq0QthlQAOI/esF2LU1BIzVVakH8DIA3CKb2sSSPFS8f2ij075BKEVL+8oOl
-        UImFxVrY5SM=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 02BBDC5E2D;
-        Wed, 19 Feb 2020 16:36:45 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=pcNMH/BPMsA3kvYmUwt1Wkc8bcdENu4m
+        HHdhKmHQnSSYb1mnkgKeIyVL4do147xMWXQZiSNe1jIVkRMMMOSx8mWdeH5t8ln0
+        N20qai00tCARAhyIJk4cfPdoes9kC+bS6mXGg1BieNwI4GfI4GuHJVkl8vUro/KV
+        9RbWdZqZZfY=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5D9EEC2200;
+        Wed, 19 Feb 2020 16:39:31 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 2A26DC5E2C;
-        Wed, 19 Feb 2020 16:36:42 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 7702AC21FF;
+        Wed, 19 Feb 2020 16:39:28 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Elijah Newren <newren@gmail.com>
 Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
         Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] check-ignore: fix handling with negated patterns
-References: <pull.711.git.git.1581956106255.gitgitgadget@gmail.com>
-        <xmqqimk5ks39.fsf@gitster-ct.c.googlers.com>
-        <CABPp-BEbojaeYkSMR7vntW0SkWf6dVOko5H=jqT-Yv2USRerxA@mail.gmail.com>
-        <xmqqeeutkkur.fsf@gitster-ct.c.googlers.com>
-        <CABPp-BHaTK62W4_rUaJXNUPSfu9cBD5MrmjgbJeMuA+7s3+rGg@mail.gmail.com>
-Date:   Wed, 19 Feb 2020 13:36:39 -0800
-In-Reply-To: <CABPp-BHaTK62W4_rUaJXNUPSfu9cBD5MrmjgbJeMuA+7s3+rGg@mail.gmail.com>
-        (Elijah Newren's message of "Mon, 17 Feb 2020 13:07:46 -0800")
-Message-ID: <xmqq7e0idztk.fsf@gitster-ct.c.googlers.com>
+Subject: Re: [PATCH v4 2/2] merge-recursive: fix the refresh logic in update_file_flags
+References: <pull.712.v3.git.git.1582064105813.gitgitgadget@gmail.com>
+        <pull.712.v4.git.git.1582131847.gitgitgadget@gmail.com>
+        <ba297fd67bb98bd06408241030cf42f410d5d366.1582131847.git.gitgitgadget@gmail.com>
+        <xmqq4kvmfmjy.fsf@gitster-ct.c.googlers.com>
+        <CABPp-BFH2qgM2oR-6g-3RgPegpq4yZujizxCb=_Ax0g2WFOYYw@mail.gmail.com>
+Date:   Wed, 19 Feb 2020 13:39:26 -0800
+In-Reply-To: <CABPp-BFH2qgM2oR-6g-3RgPegpq4yZujizxCb=_Ax0g2WFOYYw@mail.gmail.com>
+        (Elijah Newren's message of "Wed, 19 Feb 2020 11:32:03 -0800")
+Message-ID: <xmqq36b6dzox.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: EB3D3E72-535F-11EA-9B8A-8D86F504CC47-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 4E5ECEA8-5360-11EA-A5E8-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -71,15 +71,37 @@ X-Mailing-List: git@vger.kernel.org
 
 Elijah Newren <newren@gmail.com> writes:
 
-> No, it is not more like that; the check-ignore manpage currently claims this:
+>> Hmph, !.call_depth would avoid resetting update_wd to 0, so the only
+>> difference this patch makes is when the caller of this helper passed
+>> (update_wd == 0) during the outermost merge.  We did not tell
+>> add_cacheinfo() to refresh, and refresh_cache_entry() was not
+>> called.  But the new code forces refresh to happen for normal
+>> entries.  The proposed log message explains that a refresh is needed
+>> for a new cache entry, but if I am reading the code correctly, this
+>> function is called with !update_wd from two places, one of which is
+>> the "Adding %s" /* do not overwrite ... */ the log message mentions.
+>>
+>> But the other one?  When both sides added identically, we do have an
+>> up-to-date result on our side already, so shouldn't we avoid forcing
+>> update_wd in that case?
 >
->        For each pathname given via the command-line or from a file via
-> --stdin, check whether the file is excluded by .gitignore (or
->        other input files to the exclude mechanism) and output the path
-> if it is excluded.
+> This change doesn't force update_wd (write out a new file, also
+> implies refreshing is needed), this only forces refreshing (check
+> stat-related fields of existing file).
+>
+>> I do not think passing refresh==1 in that case will produce an
+>> incorrect result, but doesn't it force an unnecessary refreshing?
+>>
+>> Puzzled.
+>
+> It does force a refreshing, and it is a necessary one based on
+> merge-recursive's design.  You can verify by putting an "exit 1" right
+> ...
+> So, this was a bug all along for BOTH cases, we just didn't notice before.
 
-Thanks.  I wasn't paying attention to what happened to the manpage
-(or to the command for that matter) after I wrote it as a debugging
-aid X-<.
+Ah, thanks.  It was just me getting a wrong impression from the
+proposed log message that only the other one needed refresh; if both
+sides need a refresh, then the change is absolutely correct.
 
-The updated version looked reasonable to me.  Thanks.
+Thanks for clearing my puzzlement.  Will queue.
+
