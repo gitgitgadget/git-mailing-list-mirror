@@ -2,116 +2,135 @@ Return-Path: <SRS0=H/u6=4H=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8417C34056
-	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 19:33:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ACEA2C34056
+	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 19:34:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 673CC2465D
-	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 19:33:20 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kX0WGd/9"
+	by mail.kernel.org (Postfix) with ESMTP id 88173208E4
+	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 19:34:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726680AbgBSTdT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 Feb 2020 14:33:19 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:35012 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726648AbgBSTdT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Feb 2020 14:33:19 -0500
-Received: by mail-wm1-f68.google.com with SMTP id b17so1980469wmb.0
-        for <git@vger.kernel.org>; Wed, 19 Feb 2020 11:33:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=ieZDFUL8BwlFawxBxTHvAigF4OMXOMk5mVZo/BSetcg=;
-        b=kX0WGd/9oppJ/C2yaZ1MpBHlj/BlAxHiY6SGeVqrmx444x7BAi8+2RA8vxk/eYp3iW
-         QqIbtlHqfry1IUZuzRuKRiiDJNE6Rsk4auRr79y9r12jBl9qJ4clKD0oz0S0TS/lGyC0
-         okb65yR+eq066lZm/H/4g1VutfFnFgJNXaYn0M5L4ty+K4yRPP3qc3FhWj8v+e9WXV4D
-         ScBvKcKk6Y7MT6obioMZO+gbWVr/0qVPgcKvhEXLGL9ZYUWvrtnwKVoqhKHuR3KLwSlT
-         y4AzNymYemKUm6oeRHSvpOR9/OmA8/mKYlGPFp2XxF9Via4c3UVtSqxM+kMGScxlPmGZ
-         1djQ==
+        id S1726703AbgBSTe4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 Feb 2020 14:34:56 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:34766 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726648AbgBSTe4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Feb 2020 14:34:56 -0500
+Received: by mail-wr1-f66.google.com with SMTP id n10so1982380wrm.1
+        for <git@vger.kernel.org>; Wed, 19 Feb 2020 11:34:55 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:cc:references:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=ieZDFUL8BwlFawxBxTHvAigF4OMXOMk5mVZo/BSetcg=;
-        b=FfQ6RmxCMKwVifq6FcXCIGXgtIU1zuvEytR3BVFE9f3s/H09bJQhuOKpK8lJVKgDTX
-         w96xVpvKbuYEbrcIH3q/dzogB1tCbciyvmQ/+UDLy9SzYXgtWFFO4x9oF0v8bU/LtuK+
-         abgpRD5zHCAsKPsY2dknnaZTN0+DzABzI2XDY/G8ACJD5mWa/9zyyMkP68kGV2HhNMVQ
-         t0IssNERqHEX6sHopRJVKFhNi9H9T45AbanSF4rKDo+24Acm4XY/96B0L5CdgI3sFkk2
-         zeLMn25vxkvwUCsno7e47NNzg9VypBqFWt2As9xYsFx9tg049V4NtH61BUhE5tbVi5uJ
-         qimw==
-X-Gm-Message-State: APjAAAUVR0miYc5FEX6B0Vr+V/vqF/KXyVh0V9d2pNWXi7GrkMjK6UI1
-        VVqq+4wMGdS2brfThNtZjJUk+Pqf
-X-Google-Smtp-Source: APXvYqzvj3RpkG1BOaWFTfMpb8HYVojZ6FvplvTdMO7J2rT4sTzq819jgiJks7olztMr04gfysdAyA==
-X-Received: by 2002:a1c:b0c3:: with SMTP id z186mr11372775wme.36.1582140797480;
-        Wed, 19 Feb 2020 11:33:17 -0800 (PST)
-Received: from [192.168.1.240] (85.25.198.146.dyn.plus.net. [146.198.25.85])
-        by smtp.gmail.com with ESMTPSA id y8sm1007504wma.10.2020.02.19.11.33.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 19 Feb 2020 11:33:16 -0800 (PST)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] t3424: new rebase testcase documenting a stat-dirty-like
- failure
-To:     Elijah Newren <newren@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <pull.712.git.git.1581959751454.gitgitgadget@gmail.com>
- <CABPp-BEtnmzDp0E4=0y9eEMKQ89FcrsK9h-1Mqcd2FDV_EBohw@mail.gmail.com>
- <ed8dc52c-db50-f6fa-9583-8ad4af23d327@gmail.com>
- <CABPp-BHBv+_HkExM1q6WAZZyMhR=UPNQZDhE8jFSQFNoCtgytg@mail.gmail.com>
- <deae766d-f552-2e30-fb49-e7e187ee984b@gmail.com>
- <CABPp-BFij++-6P2ht1EacGXaX4vA_CuBQEfz6M9w9CadXHC8Jw@mail.gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <73f32ad3-204e-09a8-d424-5a3534358676@gmail.com>
-Date:   Wed, 19 Feb 2020 19:33:15 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=oI4tBeGAefCD0aBKh0ElKb9OxJM+x0OMXRW/GSUHYI0=;
+        b=Puzw0NOTYfCs/KFKe5BvHEYT9tCk3dskol/QdAwOBfN3Cd9PquzT8ugnDYZLVUXpdY
+         vvXU4KcpTlVZvyvMfKM6T6Y3LyQpzavFMltVLwsOGJGssRSyOxZiasra9jSHXvdij54F
+         1R8RpqSMMkbmqQoaZrF2JBvPF31D8o0Jr/Fq6keBpsHLG/GzOZqc16BdKAdRpEbVM9qp
+         fhkvH0rLvF1MUR/Qu6ZSMa1dH5sGNqtdC/HzRyA324+JxDcXg2r6AXSQ7mDRx5W3LODd
+         6LJZynFOakO97DDycsFKuVnoDVOJ+gAYKR3NOhhIwkZRh3/SHA6Clh4ClGMzgqia/pBe
+         pFog==
+X-Gm-Message-State: APjAAAVms3GYk2GREuOspqXGJ/5r9nTPmBhpUsy4qhFiwLdciDabOIyn
+        NId92OC4W0sud3drAYpJbs7ogPO0QRDLO2V+jH9dNg==
+X-Google-Smtp-Source: APXvYqwPYvMgGY4vV/VGL2M8Bsh3WjlM5OSn9SUydK4mlV58LsOK0E4V6jKzq9f7N6sjDL7hWMY76tqAiplKGg3vTy4=
+X-Received: by 2002:adf:fd87:: with SMTP id d7mr39452779wrr.226.1582140894955;
+ Wed, 19 Feb 2020 11:34:54 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CABPp-BFij++-6P2ht1EacGXaX4vA_CuBQEfz6M9w9CadXHC8Jw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
+References: <20200219161352.13562-1-pbonzini@redhat.com> <20200219161352.13562-4-pbonzini@redhat.com>
+In-Reply-To: <20200219161352.13562-4-pbonzini@redhat.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 19 Feb 2020 14:34:43 -0500
+Message-ID: <CAPig+cQOZwA3aAzBko-RL8UnW77DuBY-s_-J2D+35Ofn=fFfsg@mail.gmail.com>
+Subject: Re: [PATCH 3/4] am: support --show-current-patch=raw as a synonym for--show-current-patch
+To:     Paolo Bonzini <pbonzini@redhat.com>
+Cc:     Git List <git@vger.kernel.org>, bfields@redhat.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah
+On Wed, Feb 19, 2020 at 11:15 AM <pbonzini@redhat.com> wrote:
+> [...]
+> We would like therefore to add a new mode to "git am" that copies
+> .git/rebase-merge/patch to stdout.  In order to preserve backwards
+> compatibility, "git am --show-current-patch"'s behavior as to stay as
 
-On 19/02/2020 16:00, Elijah Newren wrote:
-> Hi Phillip,
-> 
->>
->> HEAD is now at abd8fe3 side1
->> Rebasing (1/2) # picking commit1
->> DS mtime, mode before merge 1582109854, 120000
->> DS mtime, mode after merge 0, 120000
->> Rebasing (2/2) # picking commit2
->> DS mtime, mode before merge 0, 120000
->> error: Your local changes to the following files would be overwritten by
->> merge:
->>          DS
->>
->> So it looks like the problem is that when we pick commit1 we don't
->> update the index entry for DS properly in merge_trees()
->>
->> Best Wishes
->>
->> Phillip
-> 
-> Oh, indeed, so this was my bug.  Thanks for jumping in and
-> investigating; I probably should have found that lead but I just
-> didn't.  Anyway, with your extra information I dug around for a bit
-> and I think I found the fix.  I'll post it soon.
+s/as to/has to/
 
-I'm glad that was helpful, thanks for fixing the bug
+> is, and the new functionality will be added as an optional
+> argument to --show-current-patch.  As a start, add the code to parse
+> submodes.  For now "raw" is the only valid submode, and it prints
+> the full e-mail message just like "git am --show-current-patch".
+>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+> diff --git a/builtin/am.c b/builtin/am.c
+> @@ -2078,7 +2082,14 @@ static int show_patch(struct am_state *state)
+> -       patch_path = am_path(state, msgnum(state));
+> +       switch (sub_mode) {
+> +       case SHOW_PATCH_RAW:
+> +               patch_path = am_path(state, msgnum(state));
+> +               break;
+> +       default:
+> +               abort();
+> +       }
 
-Phillip
+I expect that this abort() is likely to go away in the next patch, so
+it's not such a big deal, but the usual way to indicate that this is
+an impossible condition is with BUG() rather than abort(). So, if you
+happen to re-roll for some reason, perhaps consider using BUG()
+instead.
+
+> @@ -2130,8 +2141,42 @@ enum resume_type {
+> +static int parse_opt_show_current_patch(const struct option *opt, const char *arg, int unset)
+> +{
+> +       int new_value = SHOW_PATCH_RAW;
+> +
+> +       if (arg) {
+> +               for (new_value = 0; new_value < ARRAY_SIZE(valid_modes); new_value++) {
+> +                       if (!strcmp(arg, valid_modes[new_value]))
+> +                               break;
+> +               }
+> +               if (new_value >= ARRAY_SIZE(valid_modes))
+> +                       return error(_("Invalid value for --show-current-patch: %s"), arg);
+> +       }
+
+I think the more typical way of coding this in this project is to
+initialize 'new_value' to -1. Doing so will make it easier to some day
+add a configuration value as fallback for when the sub-mode is not
+specified on the command line. So, it would look something like this:
+
+    int submode = -1;
+    if (arg) {
+        int i;
+        for (i = 0; i < ARRAY_SIZE(valid_modes); i++)
+            if (!strcmp(arg, valid_modes[i]))
+                break;
+        if (i >= ARRAY_SIZE(valid_modes))
+            return error(_("invalid value for --show-current-patch: %s"), arg);
+        submode = i;
+    }
+
+    /* fall back to config value */
+    if (submode < 0) {
+        /* check if config value available and assign 'sudmode' */
+    }
+
+> +       if (resume->mode == RESUME_SHOW_PATCH && new_value != resume->sub_mode)
+> +               return error(_("--show-current-patch=%s is incompatible with "
+> +                              "--show-current-patch=%s"),
+> +                            arg, valid_modes[resume->sub_mode]);
+
+So, this allows --show-current-patch=<foo> to be specified multiple
+times but only as long as <foo> is the same each time, and errors out
+otherwise. That's rather harsh and makes it difficult for someone to
+override a value specified earlier on the command line (say, coming
+from a Git alias). The typical way this is handled is "last wins"
+rather than making it an error.
+
+> +       resume->mode = RESUME_SHOW_PATCH;
+> +       resume->sub_mode = new_value;
+> +       return 0;
+> +}
