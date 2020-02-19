@@ -7,132 +7,116 @@ X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1,
 	USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B003C5ACC4
-	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 22:45:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 150F2C5ACC5
+	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 23:07:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3BC9020656
-	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 22:45:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CE50C208C4
+	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 23:07:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="EGKiOj3+"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="AB8twDg5"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727740AbgBSWpx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 Feb 2020 17:45:53 -0500
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:39407 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727082AbgBSWpw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Feb 2020 17:45:52 -0500
-Received: by mail-pf1-f195.google.com with SMTP id 84so827079pfy.6
-        for <git@vger.kernel.org>; Wed, 19 Feb 2020 14:45:52 -0800 (PST)
+        id S1727804AbgBSXHF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 Feb 2020 18:07:05 -0500
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:45473 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727429AbgBSXHE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Feb 2020 18:07:04 -0500
+Received: by mail-pf1-f196.google.com with SMTP id 2so840119pfg.12
+        for <git@vger.kernel.org>; Wed, 19 Feb 2020 15:07:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=DGrrXe8UArrvIvKsvvN2uhEO8bA99ZAo1agnXUFmmlQ=;
-        b=EGKiOj3+o81mrKyy8GI9sMdLH8jNEwdwlUgKkCPK3MsdHaNDEMImLJk98T3uypu+Oc
-         D0mzpvYo8P3v+2PuU/xirok53b76lRiQ20o0u7GIRsDi36rqbKAFFs4poGw/pKdkfta9
-         D+tGZGL2QyB5JpYyp/1nVpr0Oz3Pkrc6xIbV7pZsS6ERBl9MWBkBSp9oK0iSdYWc0QNX
-         HTTsQ7MRRw1fxQMzGz1Gc3HpFB9s/pb8SfOPLOAYPXdJRSEOVYihGPw4m2gycyLR82ZL
-         S6IZECgTvhEEUpo9pnTuiy54cpK0w2L+4JXrTlX9B5L+iGkepWjbAh28C0Qows1iaiJH
-         dv9g==
+        bh=cd1dR2axYLINdIkBKy0TwTVDmd4gehqtEtNHHqBtbM8=;
+        b=AB8twDg5y+Nswwl+dOgXVJj9p40Hp7/aJHq6aLn72AAEfb081VMMG7jsezaHOkb4I4
+         TT0C+DzJp7Sk7ATk/hbuwKvdsTH400dE8DlmGPYAozhhaownx/I1udtWjEgdY1+kBvgh
+         TzoJ9heCnhxuuTzyBPsKQkz0oJCLGJLryemsl1YmpoBlV9//uQ1vRRRLlv6ZPDOwxJpY
+         Ci2e1ua3KVeOQpb/PbsboyK9h8z7ScXNC+OIrvoSiKI3O6vtEQ/auag6HsH9wXbRSU10
+         JafVaC82T/6YnKpEmSnFw7EgARbNDkvFRJTA2OX5mx+OCMihvOZCjhvIvsz1uRUw48mh
+         0M3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=DGrrXe8UArrvIvKsvvN2uhEO8bA99ZAo1agnXUFmmlQ=;
-        b=ftzqSWUsCiff6MzosoXx3ELDRAhyJV2YAyTzaztFNEj2WFfqHsYnaAhLprWxeRpbOZ
-         S2pp5NklzEoZ8TsA1nQWz0uctT2EJB9D0gr5OVG+OSDYa6ALxwJ8ESMTwR3lfUENy3fv
-         xPobcRaeZ7tZ1UMTYvG5mX5yG7p2jyMjB9v7m1SYQVH0IlGhplo9i5CPMEjU4NpTXB1D
-         Rd0MheG2KRH0HDBrJ5Bed3BOcX3XDH4abApfPCnTEo73p6H+6Z704bD5og6+zZ/KTHyt
-         frgnY4DeZpB5ADAeKx0ATeqPQl76bdnBaEJW5bwHmfIni4+YIrfajyat7CQhFp+ZbEKj
-         o1UA==
-X-Gm-Message-State: APjAAAX1hhl56c2lFVak6q1JeHM+TT1Vf+9NgCjGH1wMWePqcb/WxAqB
-        zFNM4qLr7Qfz52sSWbSg+lE5PY4RIw4=
-X-Google-Smtp-Source: APXvYqyhIthcJMM/dvD2BS0mtkqIfc4JIujOvR6KJs7hSFLG+6lGA+EFx10sa+ZMdRtEbn/0FxzUIA==
-X-Received: by 2002:a62:b604:: with SMTP id j4mr10491955pff.93.1582152351943;
-        Wed, 19 Feb 2020 14:45:51 -0800 (PST)
+        bh=cd1dR2axYLINdIkBKy0TwTVDmd4gehqtEtNHHqBtbM8=;
+        b=DHT5KrXJGOKEglabzgZ87wGgsSVbNZc6aevjFSO9Furxnl7YNE92UmJmvR0F+uhNxd
+         ON+yTzT7XKouiEq0uWAg5JDf3w3kiRE2dhD1WXZJnLRU+NKgpgRNyQQSRCZ8DtEr01Ah
+         esJjPVPfo8/cJCLzSRmQpTd4jOJxBr6dzd/J8/cZfrzBMsndidf+70pWzg/YTdocsrpe
+         CP7oaAHbX7fnG9CTpa1IMRozO+EZIJqDH+EdTbxacLajVyjUtTdvAvaQ4Py6xEDzNuwn
+         80rsEjjpXJW5/5jDiWzTxkgGIk7fYXxrE/25Z7v5SmK+2fXoC2Jkbk+qeTFyCtLxifPB
+         InzQ==
+X-Gm-Message-State: APjAAAViKn/7CQHIoXFtuYP66UKn84gvjRbxgi/Cy7SkTVMmZEnP3JGI
+        ig3e0xsI6ijWLBhjteKP88zBd5r9QjE=
+X-Google-Smtp-Source: APXvYqxJkrdwoFi1yArIgFopayUcvqX0u1uxs//hwyP0nueuK9TcxyP4Ht2hfLwClkxUVRgaKtz/9g==
+X-Received: by 2002:a63:1e1d:: with SMTP id e29mr30558743pge.347.1582153623948;
+        Wed, 19 Feb 2020 15:07:03 -0800 (PST)
 Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
-        by smtp.gmail.com with ESMTPSA id a10sm712622pgk.71.2020.02.19.14.45.51
+        by smtp.gmail.com with ESMTPSA id u11sm848061pjn.2.2020.02.19.15.07.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Feb 2020 14:45:51 -0800 (PST)
-Date:   Wed, 19 Feb 2020 14:45:47 -0800
+        Wed, 19 Feb 2020 15:07:03 -0800 (PST)
+Date:   Wed, 19 Feb 2020 15:06:59 -0800
 From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v7 06/15] bugreport: add compiler info
-Message-ID: <20200219224547.GC26221@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v7 03/15] bugreport: add tool to generate debugging info
+Message-ID: <20200219230659.GA79731@google.com>
 References: <20200214015343.201946-1-emilyshaffer@google.com>
- <20200214015343.201946-7-emilyshaffer@google.com>
- <nycvar.QRO.7.76.6.2002191521140.46@tvgsbejvaqbjf.bet>
+ <20200214015343.201946-4-emilyshaffer@google.com>
+ <nycvar.QRO.7.76.6.2002191515310.46@tvgsbejvaqbjf.bet>
+ <xmqq7e0ih5zr.fsf@gitster-ct.c.googlers.com>
+ <20200219215231.GA26221@google.com>
+ <xmqqtv3mcjpv.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.2002191521140.46@tvgsbejvaqbjf.bet>
+In-Reply-To: <xmqqtv3mcjpv.fsf@gitster-ct.c.googlers.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 19, 2020 at 03:23:34PM +0100, Johannes Schindelin wrote:
-> Hi Emily,
+On Wed, Feb 19, 2020 at 02:09:48PM -0800, Junio C Hamano wrote:
+> Emily Shaffer <emilyshaffer@google.com> writes:
 > 
-> On Thu, 13 Feb 2020, Emily Shaffer wrote:
+> > launch_specified_editor() has a handful of exit points, of three kinds:
+> >  1. return error(something)
+> >  2. raise(sigsomething)
+> >  3. return 0
+> >     a. when the editor process closed happily, but the user supplied
+> >        NULL instead of a buffer. That is, the user didn't want the
+> >        contents of the editor given back to them in a strbuf.
+> >     b. when the editor process closed happily and the user's supplied
+> >        buffer was filled with the file's contents with no issue.
+> >
+> > So I think we can check "yes" here.
 > 
-> > To help pinpoint the source of a regression, it is useful to know some
-> > info about the compiler which the user's Git client was built with. By
-> > adding a generic get_compiler_info() in 'compat/' we can choose which
-> > relevant information to share per compiler; to get started, let's
-> > demonstrate the version of glibc if the user built with 'gcc'.
+> Heh.  If we raised a signal to kill ourselves, then we won't be
+> returning a value from launch_editor() anyway.  That case won't
+> affect the "between returning negation or !!, which is more
+> appropriate?" discussion, I think.
 > 
-> I agree with the need for the compiler information, but in the patch I
-> only see information about glibc being printed out. Shouldn't we use
-> `__GNUC__` and `__GNUC_MINOR__` here?
+> >>  - we MUST NOT care to differenciate different error codes returned
+> >>    from launch_editor().  IOW, we must be fine to give the invoker
+> >>    of the program only 0 (success) or 1 (unspecified failure).
 > 
-> Don't get me wrong, the glibc version is good and all, but the compiler
-> information might be even more crucial. Git for Windows had to hold back
-> compiling with GCC v8.x for a while, for example, because the stacksmasher
-> was broken. Similar issues are not unheard of, and could help pinpoint
-> compiler-related problems a lot quicker.
+> I actually think this holds for the codepath.  A failure from
+> start_command() returns error(), and finish_command() that waits for
+> the spawned editor process to complete yields the exit status from
+> the editor, but unless we re-raise the signal that killed the editor
+> process to ourselves, we just turn any non-zero exit into "return
+> error()", so it is safe to say launch_editor() can return either 0
+> or -1 and nothing else.  Would we later want to tell callers of
+> launch_editor() how/why the editor session failed by returning
+> something else?  I do not offhand think of any---we do not even
+> differenciate between failure to start (e.g. misspelt command name
+> for the editor) and other failures WITH the return value and
+> consider it sufficient to tell the user with different error
+> message right now.
+> 
+> So in practice returning -launch_editor() and !!launch_editor()
+> would not make any difference, I would think.
 
-Hm, sure. Good point - thanks.
-
-This does make me start to wonder, though - does it really make sense to
-have ifdef-gated redefinitions of the whole get_compiler_info() method
-like I do now? I wonder if it makes more sense to have only one
-definition, so we can write down everything we know regardless of which
-pieces are put together. My thinking is something like this - what if I
-am using glibc, but not a GNU compiler? (The GNU docs on __GCC__
-indicate this is a situation that might occur - "a non-GCC compiler that
-claims to accept the GNU C dialects") Is there some striking reason not
-to implement this compat command thusly instead:
-
-  #ifdef __GLIBC__
-  #include <gnu/libc-version.h>
-  #endif
-
-  static inline void get_compiler_info(struct strbuf *info)
-  {
-  	#ifdef __GLIBC__
-	strbuf_addf(info, "glibc: %s\n", gnu_get_libc_version());
-	#endif
-
-	#ifdef __GNUC__
-	strbuf_addf(info, "gnuc: %d.%d\n", __GNUC__, __GNUC_MINOR__);
-	#endif
-
-	#ifdef _MSC_VER
-	strbuf_addf(info, "msc runtime: %s\n", some_msc_info());
-	#endif
-  }
-
-The thinking being - this way if I decide to use, say, LLVM + glibc,
-then I don't need to reimplement this command with all the glibc
-diagnostics again. Or, if someone else already wrote diagnostics for
-LLVM with some other libc, then it even Just Works for me and my new
-combination.
-
-That said, I'm reasoning about these combinations of compilers and libcs
-and whatever else from an inexperienced viewpoint, so maybe this isn't
-necessary?
-
- - Emily
+Then, let's do the least surprising thing. I'll switch it to !! for the
+next reroll.
