@@ -2,155 +2,135 @@ Return-Path: <SRS0=H/u6=4H=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DFBD8C34047
-	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 11:01:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D591C34047
+	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 11:14:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id AA6BC206DB
-	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 11:01:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CAAEA2067D
+	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 11:14:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N/ETGHVW"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="C+w7qUd3"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726777AbgBSLBy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 Feb 2020 06:01:54 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:56024 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726767AbgBSLBy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Feb 2020 06:01:54 -0500
-Received: by mail-wm1-f65.google.com with SMTP id q9so105549wmj.5
-        for <git@vger.kernel.org>; Wed, 19 Feb 2020 03:01:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=ILdvWpIHyHURtZRM6ergoZ/2MWhUk6PD7NMny/Yd8dE=;
-        b=N/ETGHVWBmvk9YnaLlk8/3+8tS0PEuq8/trsswpPdhGv54cyXc84PgRP2ARgJqvezH
-         InTOzj09z1OguW1gyCUEH9XdxFGiRCxCklCF6Pkuppacfso190o/ZXNKv/sVRtGLI8Ed
-         vkDoqT8IrM3xrEbdiD/qCDHKYauCiZ3BlSh+Fyl/y+LfP3ikjFjYWqBdlzKsXiAxpbnx
-         agSToPV+xACRD0N//19Tvb58co4ctJ+q3xJ1+pG2CVcPi4uDaWSygIX8gCHIHpDtLLoU
-         6FpePoA/DZwtBBvB/a7jAOTIWlOAylh8lIanonXaXMWa0ZrlBHzjC8k8coFqI85V3tAS
-         yM1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:cc:references:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=ILdvWpIHyHURtZRM6ergoZ/2MWhUk6PD7NMny/Yd8dE=;
-        b=tBXQa0l7IE5e+6EPcJFGUmuGKn5NomwXBFC8ytwhXPQ7CHtjWtM2Fnojva2R8U2ak0
-         DdYu6a5UfTBOODRZCUHfeui2+DM0ElrUAjdu6xwOZJ5uHEw+q5MpNi+AG9RlVP5SDI5d
-         n+1JwfLpbH4uZKrV76KvtVfLlGuvUKeczbk9Gr2sty6GgRT1RYe1DWwVAF1NiamXmlZL
-         pay8I2ACGf/6PkGpUeOBdS4YyMs05ESCuJsXvBSutIoWhVIj0KLyjoQX7odK8GPYf+dT
-         xyh4qKUycM7lqjT67x1eb+eDLDK6Pf8Z8oyEGEFQqteeTmX56HcmpaOAA1sYRVJrxhYI
-         mzpQ==
-X-Gm-Message-State: APjAAAWmckdOPehwJWwOpbNMvrTiTv+QpDCsqPsvPTvdaCVHp9Wo7e+j
-        wFLsK5hp/q8p7cetsQ4IYkMIhT+N
-X-Google-Smtp-Source: APXvYqwkjBj4IrRdDSapEtw8Lr+aCxY7XQG3y1yHZne+2vVN2VS//gAyFBkY+QAydoB8ckITwXkBhw==
-X-Received: by 2002:a1c:451:: with SMTP id 78mr8950228wme.125.1582110111770;
-        Wed, 19 Feb 2020 03:01:51 -0800 (PST)
-Received: from [192.168.1.240] (85.25.198.146.dyn.plus.net. [146.198.25.85])
-        by smtp.gmail.com with ESMTPSA id e1sm2405981wrt.84.2020.02.19.03.01.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 19 Feb 2020 03:01:51 -0800 (PST)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] t3424: new rebase testcase documenting a stat-dirty-like
- failure
-To:     Elijah Newren <newren@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <pull.712.git.git.1581959751454.gitgitgadget@gmail.com>
- <CABPp-BEtnmzDp0E4=0y9eEMKQ89FcrsK9h-1Mqcd2FDV_EBohw@mail.gmail.com>
- <ed8dc52c-db50-f6fa-9583-8ad4af23d327@gmail.com>
- <CABPp-BHBv+_HkExM1q6WAZZyMhR=UPNQZDhE8jFSQFNoCtgytg@mail.gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <deae766d-f552-2e30-fb49-e7e187ee984b@gmail.com>
-Date:   Wed, 19 Feb 2020 11:01:49 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.1
+        id S1726551AbgBSLOS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 Feb 2020 06:14:18 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55050 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726469AbgBSLOS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Feb 2020 06:14:18 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0C73244889;
+        Wed, 19 Feb 2020 06:14:16 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=EGb9YspM2/wOe8Eo8XnK9zmfdeI=; b=C+w7qU
+        d3fwA9TAZoZlkW5bKL3sdt1tgzXwkMafv4IaFZ8mCQhXmyh7pg0a/ISMqo1dWFac
+        YcBu5jPzcG5H5BRgNX8vmaE6zgXVhA0blyEMtWojhGwtfWaw5NSmWI3k51f/sLMN
+        ToQam8C4SdkNACy0EdXQ1Qouh2O0aepmazHpE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Z4OaSm3t2uvF7xlWXSA1BhESmWFhz2xz
+        W6PMqf7kVJfRsZ8GAFyrpXZ3cmwQ7GhRD4yFO3jWaGsxr0D8Rx0dQ0e/v8rrkV6/
+        Gb2djHvm1ZOzNPThOFD6j2HxAyeUjX1W1cfkdlpDnmaL2pAD1M12cedkwVvz15yK
+        HYEanhPvHYg=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 03E3044888;
+        Wed, 19 Feb 2020 06:14:16 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 595D944887;
+        Wed, 19 Feb 2020 06:14:15 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Matheus Tavares <matheus.bernardino@usp.br>, git@vger.kernel.org,
+        rhi@pengutronix.de
+Subject: Re: [PATCH] describe: output tag's ref instead of embedded name
+References: <xmqqd0ahp0na.fsf@gitster-ct.c.googlers.com>
+        <fcf19a46b80322c5579142efe4ec681a4dcbdd28.1581802264.git.matheus.bernardino@usp.br>
+        <20200216065101.GA2937208@coredump.intra.peff.net>
+        <xmqqd0abk7zc.fsf@gitster-ct.c.googlers.com>
+        <20200218195402.GA21586@coredump.intra.peff.net>
+        <xmqq4kvnijim.fsf@gitster-ct.c.googlers.com>
+        <xmqqzhdfh3vr.fsf@gitster-ct.c.googlers.com>
+        <20200219015733.GA81560@coredump.intra.peff.net>
+        <xmqqr1yrgt2d.fsf@gitster-ct.c.googlers.com>
+        <20200219035650.GA84414@coredump.intra.peff.net>
+Date:   Wed, 19 Feb 2020 03:14:14 -0800
+In-Reply-To: <20200219035650.GA84414@coredump.intra.peff.net> (Jeff King's
+        message of "Tue, 18 Feb 2020 22:56:50 -0500")
+Message-ID: <xmqqftf6hlrt.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <CABPp-BHBv+_HkExM1q6WAZZyMhR=UPNQZDhE8jFSQFNoCtgytg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: F6CEC262-5308-11EA-BD6F-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah
+Jeff King <peff@peff.net> writes:
 
-On 18/02/2020 15:59, Elijah Newren wrote:
-> On Tue, Feb 18, 2020 at 7:05 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
->>
->> Hi Elijah
->>
->> On 17/02/2020 19:12, Elijah Newren wrote:
->>> I forgot to add some cc's in GitGitGadget before submitting; adding now...
->>>
->>> On Mon, Feb 17, 2020 at 9:15 AM Elijah Newren via GitGitGadget
->>> <gitgitgadget@gmail.com> wrote:
->>>>
->>>> From: Elijah Newren <newren@gmail.com>
->>>>
->>>> A user discovered a case where they had a stack of 20 simple commits to
->>>> rebase, and the rebase would succeed in picking the first commit and
->>>> then error out with a pair of "Could not execute the todo command" and
->>>> "Your local changes to the following files would be overwritten by
->>>> merge" messages.
->>>>
->>>> Their steps actually made use of the -i flag, but I switched it over to
->>>> -m to make it simpler to trigger the bug.  With that flag, it bisects
->>>> back to commit 68aa495b590d (rebase: implement --merge via the
->>>> interactive machinery, 2018-12-11), but that's misleading.  If you
->>>> change the -m flag to --keep-empty, then the problem persists and will
->>>> bisect back to 356ee4659bb5 (sequencer: try to commit without forking
->>>> 'git commit', 2017-11-24)
->>>>
->>>> After playing with the testcase for a bit, I discovered that added
->>>> --exec "sleep 1" to the command line makes the rebase succeed, making me
->>>> suspect there is some kind of discard and reloading of caches that lead
->>>> us to believe that something is stat dirty, but I didn't succeed in
->>>> digging any further than that.
+> I think a left a few things unsaid in my "v1.0-bob" example. I was
+> imagining that there are _two_ v1.0 tags floating around. One that you
+> consider "wrong", tagged by Bob, and one you like. You keep the latter
+> in refs/tags/v1.0.
 
-I think `--exec true` would be better as it makes it clear that it's not 
-a timing issue. I've changed do_recursive_merge() to print the mtime and 
-mode of "DS" before and after the merge which gives
+Ahh, OK.  
 
-HEAD is now at abd8fe3 side1
-Rebasing (1/2) # picking commit1
-DS mtime, mode before merge 1582109854, 120000
-DS mtime, mode after merge 0, 120000
-Rebasing (2/2) # picking commit2
-DS mtime, mode before merge 0, 120000
-error: Your local changes to the following files would be overwritten by 
-merge:
-	DS
+To continue playing devil's advocate and to step back a bit,
 
-So it looks like the problem is that when we pick commit1 we don't 
-update the index entry for DS properly in merge_trees()
+ - The "git describe" command finds that the given commit is
+   "closest" to that tag Bob called "v1.0".
 
-Best Wishes
+ - But if it outputs "v1.0" like the current code does, it cannot be
+   fed back to get_oid() to name the right object, if the given commit
+   is "at" the tag (i.e. there is no "-$number-g$objectname" suffix),
+   which is a problem.  We want "git describe" to give an output
+   usable with get_oid() and the name must refer to the correct
+   object (i.e. the one given to "git describe" as an input).
 
-Phillip
+There are multiple approaches to make it possible to feed the output
+back to get_oid() to obtain correct result:
 
->> Intriguing - it's strange that it errors out picking commit2, not
->> commit1 I'll try and have a look at it. There seem to be some leftover
->> bits at the start of the test that want removing see below
-> 
-> I know, right?  It's kinda weird.
-> 
->>>> +test_expect_success 'setup' '
->>>> +       rm -rf ../stupid &&
->>>> +       git init ../stupid &&
->>>> +       cd ../stupid &&
->>
->> I think these 3 lines must be left over from you trying this out before
->> making it a test
-> 
-> Whoops, yes you are exactly right.  I'll remove them.
-> 
+ - We can describe it based on "v1.0-bob" (i.e. refname, not
+   tagname), which is what the proposed patch wants to do.  
+
+   This is nice as it simply exploits the fact that namespace of the
+   refs ensures that there can locally be only one tag "v1.0".
+
+ - We can always add "-$number-g$objectname" suffix when we need to
+   base the output of "git describe" on such a tag whose name does
+   not match its refname.  Both names "v1.0-bob-0-g0123456" and
+   "v1.0-0-g0123456" would be accepted by get_oid() and refer to the
+   same object 0123456.  
+
+   If we do this, there is no longer any requirement that the
+   "tagname" part alone of the output must be usable with get_oid()
+   to name the correct object, and because "v1.0-bob" is merely a
+   local name external people may not even know about, using
+   "v1.0-bob-0-g0123456" may be less desirable than using
+   "v1.0-0-g0123456".
+
+ - We can skip the "wrong" tag and not use it to name anything.
+   "git describe" may use some other tag that is stored in its right
+   place, which may be a bit more distant than tag "v1.0-bob".  The
+   warning message may indicate "we would have used this tag to name
+   the object because it was the closest, but we skipped because of
+   a tagname anomaly".  
+
+   This may be what the person who moved Bob's "v1.0" to "v1.0-bob"
+   intended---it is a "wrong" tag that is kept only to communicate
+   _about_ the tag, not to be used to refer to other objects
+   relative to it.
+
+The "use the refname" and the "use -0-gXXXXXX suffix if using a tag
+at a wrong place" approaches are simple and would produce a more
+"correct" result than what we currently give.  The "don't use it"
+approach simply sidesteps the problem altogether, which is sort-of
+attractive ;-)
