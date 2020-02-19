@@ -2,99 +2,103 @@ Return-Path: <SRS0=H/u6=4H=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 37D12C34047
-	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 10:08:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 35AA0C34047
+	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 10:44:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 10A16207FD
-	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 10:08:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CB82621D56
+	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 10:44:58 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KIgVCRsz"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726495AbgBSKIo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 Feb 2020 05:08:44 -0500
-Received: from metis.ext.pengutronix.de ([85.220.165.71]:41421 "EHLO
-        metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726270AbgBSKIo (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Feb 2020 05:08:44 -0500
-Received: from ptx.hi.pengutronix.de ([2001:67c:670:100:1d::c0])
-        by metis.ext.pengutronix.de with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <rhi@pengutronix.de>)
-        id 1j4MHW-0005oN-Am; Wed, 19 Feb 2020 11:08:38 +0100
-Received: from rhi by ptx.hi.pengutronix.de with local (Exim 4.89)
-        (envelope-from <rhi@pengutronix.de>)
-        id 1j4MHS-0005rg-Js; Wed, 19 Feb 2020 11:08:34 +0100
-Date:   Wed, 19 Feb 2020 11:08:34 +0100
-From:   Roland Hieber <rhi@pengutronix.de>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>,
-        Matheus Tavares <matheus.bernardino@usp.br>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] describe: output tag's ref instead of embedded name
-Message-ID: <20200219100834.7456mp4qq5two4t7@pengutronix.de>
-References: <xmqqd0ahp0na.fsf@gitster-ct.c.googlers.com>
- <fcf19a46b80322c5579142efe4ec681a4dcbdd28.1581802264.git.matheus.bernardino@usp.br>
- <20200216065101.GA2937208@coredump.intra.peff.net>
- <xmqqd0abk7zc.fsf@gitster-ct.c.googlers.com>
- <20200218195402.GA21586@coredump.intra.peff.net>
- <xmqq4kvnijim.fsf@gitster-ct.c.googlers.com>
- <xmqqzhdfh3vr.fsf@gitster-ct.c.googlers.com>
- <20200219015733.GA81560@coredump.intra.peff.net>
- <xmqqr1yrgt2d.fsf@gitster-ct.c.googlers.com>
+        id S1726762AbgBSKo6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 Feb 2020 05:44:58 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:50288 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726469AbgBSKo5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Feb 2020 05:44:57 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id D2641BE12F;
+        Wed, 19 Feb 2020 05:44:55 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=kDity66cyUdw4Ue/u8XBVy4GNQw=; b=KIgVCR
+        sz7UaxNxXjyT9Phyy81f83igC4rsJuthNAtDToycxrJw09FRWwDPbQSuQ5iNQI5Q
+        KecadTyKqymRpHM0XDafUaXBbXWvuX4OVIS180vKvPnWKHmnx1F38lO2FRCA2D1+
+        44JN5W+0MwF8UWhBJk4Sv8ETrWf1OggufGPPo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=gprfcCwRcS4dTTICWTXUj2MuCuU14m9q
+        BGbNjSXh65P7c+/Kka9K7JaQhfKZ9VQUzj2K2WJttwj6HbMNYE9QMGt+C6lCDbQY
+        1LMzGPellvrWFj2yJjFsQcI9oe5v3zCgzUlpb0diHbt4yyqS7s/50oBuORjDcbls
+        MU50Zbydtm8=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id CC136BE12E;
+        Wed, 19 Feb 2020 05:44:55 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 06EE8BE12D;
+        Wed, 19 Feb 2020 05:44:52 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Robear Selwans <rwagih.rw@gmail.com>
+Cc:     Abhishek Kumar <abhishekkumar8222@gmail.com>, git@vger.kernel.org,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        =?utf-8?B?Tmd1eeG7hW4g?= =?utf-8?B?VGjDoWkgTmfhu41j?= Duy 
+        <pclouds@gmail.com>, Jeff King <peff@peff.net>,
+        Pratik Karki <predatoramigo@gmail.com>
+Subject: Re: [GSoC][RFC][PATCH 2/2] STRBUF_INIT_CONST: Adapting strbuf_* functions
+References: <CAHk66fskrfcJ0YFDhfimVBTJZB4um7r=GdQuM8heJdZtF8D7UQ@mail.gmail.com>
+        <xmqq36b7k4i6.fsf@gitster-ct.c.googlers.com>
+        <CALH1-Xr3HVZzDn2-9EvmdiBWmxWQ-zfExM2LNJyR1wR+dgxRSQ@mail.gmail.com>
+        <xmqqv9o3gthb.fsf@gitster-ct.c.googlers.com>
+        <CALH1-XoXdpAxYj7r1ouc-v4KrVuYDocBFFC++7eFiRwdHFxmUA@mail.gmail.com>
+Date:   Wed, 19 Feb 2020 02:44:50 -0800
+In-Reply-To: <CALH1-XoXdpAxYj7r1ouc-v4KrVuYDocBFFC++7eFiRwdHFxmUA@mail.gmail.com>
+        (Robear Selwans's message of "Wed, 19 Feb 2020 06:34:19 +0200")
+Message-ID: <xmqqmu9ehn4t.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqr1yrgt2d.fsf@gitster-ct.c.googlers.com>
-X-Sent-From: Pengutronix Hildesheim
-X-URL:  http://www.pengutronix.de/
-X-IRC:  #ptxdist @freenode
-X-Accept-Language: de,en
-X-Accept-Content-Type: text/plain
-X-Uptime: 11:06:16 up 226 days, 16:16, 93 users,  load average: 0.23, 0.28,
- 0.25
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-SA-Exim-Connect-IP: 2001:67c:670:100:1d::c0
-X-SA-Exim-Mail-From: rhi@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+Content-Type: text/plain
+X-Pobox-Relay-ID: DC5F8A96-5304-11EA-8737-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 18, 2020 at 07:22:02PM -0800, Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
-> 
-> >> FWIW, this design came from 212945d4 ("Teach git-describe to verify
-> >> annotated tag names before output", 2008-02-28).  Shawn was quite
-> >> explicit that use of the real name was deliberate:
-> >> 
-> >>     If an annotated tag describes a commit we want to favor the name
-> >>     listed in the body of the tag, rather than whatever name it has
-> >>     been stored under locally.  By doing so it is easier to converse
-> >>     about tags with others, even if the tags happen to be fetched to
-> >>     a different name than it was given by its creator.
-> >> 
-> >> and I tend to agree with the original rationale.
-> >
-> > Thanks, I should have dug into the history in the first place.
-> >
-> > Still, I'm not entirely convinced. As a decentralized system, I think
-> > our first duty is to make things convenient and workable for the
-> > preferences of the local repository, and second to facilitate
-> > communication with other people's clones of the same repository.
-> 
-> Yes, and that can be done by either (1) locally moving a tag that is
-> stored in a wrong location to where it wants to be, or (2) locally
-> *creating* a tag that suits the preferences of the local repository,
-> ignoring the tag obtained from outside world that is stored in a
-> wrong place.  The latter would not help to facilitate communication,
-> though.
+Robear Selwans <rwagih.rw@gmail.com> writes:
 
-FWIW, I think the reason here was a move from SVN to git by the help of
-git-svn, and in that process deciding that tag names should follow a
-different (less out-dated?) format.
+> On Wed, Feb 19, 2020 at 5:13 AM Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> Yes, but the case that matters to _your_ use is sb->alloc == 0.  You
+>> do not want to let a broken strbuf (presumably broken by changes
+>> other than your own) to pass, when you can detect it.  And for that,
+>> paying attention to sb->len _might_ make sense, but then the check
+>> won't be
+>>
+>>         if (sb->alloc < sb->len)
+>>                 make it mutable;
+>>
+>> you'd rather be writing something like
+>>
+>>         if (!sb->alloc)
+>>                 make it mutable;
+>>         else if (sb->alloc < sb->len)
+>>                 BUG("somebody fed a corrupt strbuf to me");
+>
+> Ooh so what you meant, is that corrupt `strbuf`s need to be
+> anticipated even if they
+> don't make much sense. Smart.
 
- - Roland
+I don't know if that is smart, but the point is that sb->alloc is
+the only thing you need to care about if you want to see if the
+strbuf is borrowing from a const string, and it does not make much
+sense not to catch a corruption, _if_ you are to check the value of
+sb->len as well.
+
