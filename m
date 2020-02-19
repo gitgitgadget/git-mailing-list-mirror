@@ -4,103 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EC53EC34022
-	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 03:13:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A90CEC34022
+	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 03:22:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 9BB462176D
-	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 03:13:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 799DA24655
+	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 03:22:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Xxuw3nUX"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Yjrfcflh"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728285AbgBSDNL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Feb 2020 22:13:11 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:55410 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728219AbgBSDNL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Feb 2020 22:13:11 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3E36ABBD9E;
-        Tue, 18 Feb 2020 22:13:09 -0500 (EST)
+        id S1728266AbgBSDWG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Feb 2020 22:22:06 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54486 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728256AbgBSDWG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Feb 2020 22:22:06 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B05BC5F12A;
+        Tue, 18 Feb 2020 22:22:04 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=JIBdwwdrY4uXsT8E09dqfGvL49A=; b=Xxuw3n
-        UXzQaj4+aAzTn8C6tt9aqTKEQ29Vb44HmCxJFOC6f9iolEAeYVGo63iVUzp2EYsy
-        remIeNb8oNQf02aF3s5nqunccr6WDyFGi7sUZWJA4zjtN7auPriWbWOVc2bOC0HV
-        o5AbWIHBnaun9iykqsB/VyXCTDAGBhkNn6aOs=
+        :content-type; s=sasl; bh=BVw5sE5S1c2DDcDE4mDyIc+I0eY=; b=Yjrfcf
+        lhFdNivP6NlWs3vC6AKuWWSEfSdWGHhYFUOvj3VZM/wDTgY1BC4hU6bWjtXCNmBH
+        FMlYOsf6GGR/8lMzlAnw2HwK/Z580HCsgnCAyYZBnlY0OT9IpRu1cbN64Zn8EP0+
+        hKYwV+obN1R++lQ6jzRFVogzJbZ2cqxkuYg8Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=yKt702uSMXJQuhBMCCv+CnkNQ99xuul9
-        nASaNqNeF4pbBAhr3YrKLvWuCXxSyzsRLWXvlJbaBSoF6QMRughtNLrqNr9WwiYz
-        4tEfU+yDIhISrIABiWawO2NK5QGuKg2heYGPvLNJIUyZSvPsHTFBbLkddTxyoQ4s
-        34+KQBb5MvU=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 36340BBD9D;
-        Tue, 18 Feb 2020 22:13:09 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=s9d69hL2Yfv/FsbzTjJYGw0WZbilClVO
+        BQ7KG4bsyyrbyuHDbktYHshW8DfikBxYCXlr0/FtDg9dt0uus8FbfwZ1gEvqCy2i
+        E9/T6nnezNJq7WaYUV//5TRQREPudLk40RRedaIvHz9qkJ1bB6yNTmGXc9n0i/cK
+        RqH5oVCx5iM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A6C935F129;
+        Tue, 18 Feb 2020 22:22:04 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 6837CBBD9C;
-        Tue, 18 Feb 2020 22:13:06 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 03D205F128;
+        Tue, 18 Feb 2020 22:22:03 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Robear Selwans <rwagih.rw@gmail.com>
-Cc:     Abhishek Kumar <abhishekkumar8222@gmail.com>, git@vger.kernel.org,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        =?utf-8?B?Tmd1eeG7hW4g?= =?utf-8?B?VGjDoWkgTmfhu41j?= Duy 
-        <pclouds@gmail.com>, Jeff King <peff@peff.net>,
-        Pratik Karki <predatoramigo@gmail.com>
-Subject: Re: [GSoC][RFC][PATCH 2/2] STRBUF_INIT_CONST: Adapting strbuf_* functions
-References: <CAHk66fskrfcJ0YFDhfimVBTJZB4um7r=GdQuM8heJdZtF8D7UQ@mail.gmail.com>
-        <xmqq36b7k4i6.fsf@gitster-ct.c.googlers.com>
-        <CALH1-Xr3HVZzDn2-9EvmdiBWmxWQ-zfExM2LNJyR1wR+dgxRSQ@mail.gmail.com>
-Date:   Tue, 18 Feb 2020 19:13:04 -0800
-In-Reply-To: <CALH1-Xr3HVZzDn2-9EvmdiBWmxWQ-zfExM2LNJyR1wR+dgxRSQ@mail.gmail.com>
-        (Robear Selwans's message of "Wed, 19 Feb 2020 03:43:26 +0200")
-Message-ID: <xmqqv9o3gthb.fsf@gitster-ct.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Matheus Tavares <matheus.bernardino@usp.br>, git@vger.kernel.org,
+        rhi@pengutronix.de
+Subject: Re: [PATCH] describe: output tag's ref instead of embedded name
+References: <xmqqd0ahp0na.fsf@gitster-ct.c.googlers.com>
+        <fcf19a46b80322c5579142efe4ec681a4dcbdd28.1581802264.git.matheus.bernardino@usp.br>
+        <20200216065101.GA2937208@coredump.intra.peff.net>
+        <xmqqd0abk7zc.fsf@gitster-ct.c.googlers.com>
+        <20200218195402.GA21586@coredump.intra.peff.net>
+        <xmqq4kvnijim.fsf@gitster-ct.c.googlers.com>
+        <xmqqzhdfh3vr.fsf@gitster-ct.c.googlers.com>
+        <20200219015733.GA81560@coredump.intra.peff.net>
+Date:   Tue, 18 Feb 2020 19:22:02 -0800
+In-Reply-To: <20200219015733.GA81560@coredump.intra.peff.net> (Jeff King's
+        message of "Tue, 18 Feb 2020 20:57:33 -0500")
+Message-ID: <xmqqr1yrgt2d.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: BF946128-52C5-11EA-816B-B0405B776F7B-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 0002E08A-52C7-11EA-BE35-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Robear Selwans <rwagih.rw@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
->> Also, isn't "if (sb->alloc < sb->len)" too loose a check for the new
->> feature?  AFAICS in 1/2, a strbuf that is still borrowing a const
->> string always has sb->alloc==0.  Other instances of strbuf that
->> happens to satisify the above condition, e.g. (sb->len == 5 &&
->> sb->alloc == 1), is an error.  If we are to check the condition
->> about sb->len, shouldn't we diagnose such a case as an error, no?
-> AFAIK after reading the documentation for `strbuf`, there is no other
-> case where `sb->len > sb->alloc` as `alloc` needs to always be more
-> than `len`. I'd like to be corrected if mistaken, though.
+>> FWIW, this design came from 212945d4 ("Teach git-describe to verify
+>> annotated tag names before output", 2008-02-28).  Shawn was quite
+>> explicit that use of the real name was deliberate:
+>> 
+>>     If an annotated tag describes a commit we want to favor the name
+>>     listed in the body of the tag, rather than whatever name it has
+>>     been stored under locally.  By doing so it is easier to converse
+>>     about tags with others, even if the tags happen to be fetched to
+>>     a different name than it was given by its creator.
+>> 
+>> and I tend to agree with the original rationale.
+>
+> Thanks, I should have dug into the history in the first place.
+>
+> Still, I'm not entirely convinced. As a decentralized system, I think
+> our first duty is to make things convenient and workable for the
+> preferences of the local repository, and second to facilitate
+> communication with other people's clones of the same repository.
 
-Yes, but the case that matters to _your_ use is sb->alloc == 0.  You
-do not want to let a broken strbuf (presumably broken by changes
-other than your own) to pass, when you can detect it.  And for that,
-paying attention to sb->len _might_ make sense, but then the check
-won't be 
+Yes, and that can be done by either (1) locally moving a tag that is
+stored in a wrong location to where it wants to be, or (2) locally
+*creating* a tag that suits the preferences of the local repository,
+ignoring the tag obtained from outside world that is stored in a
+wrong place.  The latter would not help to facilitate communication,
+though.
 
-	if (sb->alloc < sb->len)
-		make it mutable;
+> If for whatever reason I chose to call my version of the global v1.0 tag
+> as "v1.0-bob", then it seems friendlier to me to report the name that
+> can actually be used with further local commands (and remind the user of
+> the global name) than the other way around.
 
-you'd rather be writing something like
+That you can do with "git tag v1.0-bob <whatever object>" locally, no?
 
-	if (!sb->alloc)
-		make it mutable;
-	else if (sb->alloc < sb->len)
-		BUG("somebody fed a corrupt strbuf to me");
+> Though TBH the situation is rare enough that I kind of doubt it matters
+> all that much either way. It's been like this for over a decade, and
+> this is the first time I recall it being brought up.
 
-If the primary purpose of make_mutable() is *not* about catching
-random strbuf corruption, then the whole "else if" part is not
-needed, and the check should become a equation only about sb->alloc,
-not a comparison between alloc and len (which would trigger for *both*
-your const-initialized strbuf *and* a corrupt one you did not anticipate
-to see).
+Yeah, I do not think this is an often-arising concern.  It's merely
+what the expected and recommended direction to escape when it
+happens, and what the warning message should say to make the
+recommendation communicated better, I think.
+
+Note that I started this to play a devil's advocate.  As an object
+is immutable, while it can be named with any refname, if easing
+communication between project participants is one of the goals, it
+seems that taking what is in the object as authoritative is the only
+workable way.
+
