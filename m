@@ -2,127 +2,164 @@ Return-Path: <SRS0=H/u6=4H=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DB64CC34056
-	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 20:17:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AD968C3524E
+	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 20:34:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 984D724654
-	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 20:17:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7842B24654
+	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 20:34:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="wLlaYwXk"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m4g32THh"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726703AbgBSURm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 Feb 2020 15:17:42 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53120 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726645AbgBSURm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Feb 2020 15:17:42 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5AE7F3DF00;
-        Wed, 19 Feb 2020 15:17:38 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Rg5xDTm3LF8GPUJ6kQV7yRYFMqo=; b=wLlaYw
-        XkaSDgOdy29IO5uB2bRUMbCmg5tmxW60WkfVjv0Gw24zoxS39FoBe60iJ4DbfoF0
-        Eh/VIGxN6Vw43FvsYxtC6U3BN3DOhLGDY4B4Ei1RDkBqO45Jf2UP2kUHBWaTgSG2
-        p3XocYHRE65DRDHG4sCSygaBdD9VgYPpEiJ+A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=g9N6d4dkhzoBpGSX/iDPaCqQI7ozxTQw
-        xzuBd8EZ666IKV9KCMWRGUIhDRsV3VFLPc5bjRyTmripDqnFGbfevanTeCj2aZYt
-        sBihWGcDr2L2GbYsqpGX/VXLu2wjHDSCDhQg8L/4oZpunbPC99fwcYPxUyLZBeAC
-        /JDAB9GDKl4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 51E953DEFF;
-        Wed, 19 Feb 2020 15:17:37 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AEA3A3DEFD;
-        Wed, 19 Feb 2020 15:17:36 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Paolo Bonzini <pbonzini@redhat.com>,
-        Git List <git@vger.kernel.org>, bfields@redhat.com
-Subject: Re: [PATCH 3/4] am: support --show-current-patch=raw as a synonym for--show-current-patch
-References: <20200219161352.13562-1-pbonzini@redhat.com>
-        <20200219161352.13562-4-pbonzini@redhat.com>
-        <CAPig+cQOZwA3aAzBko-RL8UnW77DuBY-s_-J2D+35Ofn=fFfsg@mail.gmail.com>
-Date:   Wed, 19 Feb 2020 12:17:35 -0800
-In-Reply-To: <CAPig+cQOZwA3aAzBko-RL8UnW77DuBY-s_-J2D+35Ofn=fFfsg@mail.gmail.com>
-        (Eric Sunshine's message of "Wed, 19 Feb 2020 14:34:43 -0500")
-Message-ID: <xmqqmu9ee3hc.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1727576AbgBSUeH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 Feb 2020 15:34:07 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:34177 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727035AbgBSUeH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Feb 2020 15:34:07 -0500
+Received: by mail-wr1-f68.google.com with SMTP id n10so2167243wrm.1
+        for <git@vger.kernel.org>; Wed, 19 Feb 2020 12:34:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=C5KPLfghLVF3H1oAYilsqZovlCM05/fDn4pWmjwGGdE=;
+        b=m4g32THhQAukWD2Ru3ORwuWDLeB4C1g5MpPG4xVjmof4ij9nQZhnFqmt/BISLm3Q5H
+         cSiFyZdZaJIfV3ZkeFsiLu0iMtcpNJwvodGTDYiMbhhe98FT16kgdamic3oj1tWq4eis
+         M+Yn5xkTvFgAe8xzHEHjvoyTHjmybnR/I9GjtcNcGqYEIM0tzHwchgilS1oK5TDHPGu1
+         JdxQhN96ShgSS4TtFMMwY9gwJuT/kqnKWo5DvV5D4uhO6To3knztefPRVbRWTHObDsRi
+         eMPFx8EaipNzp8xkHsZ6se2loLW+Fmc42RreNR0gevAxytU9rXzZM/jBgQP4u7tPiZiB
+         LZmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=C5KPLfghLVF3H1oAYilsqZovlCM05/fDn4pWmjwGGdE=;
+        b=tqpHeIcrUjD4UM4ELjmeX3jmd8/bN/uqgDvX6zl3pZY1S8DBaTois79zH5HWPaM2/Z
+         XtCl6jB9fH/mt+05Wl475dkCaZwAuQnCoUMSw4jt2KN+MRzZssfMeu7w/fR/VYhv1BKb
+         huw3S8XjYG1BLzQbuH/QLiVTiSMnVFKr8gYmXoyerv2J3b69Io+MOKgFaPbEbtvxVx6+
+         CFF8UQAtqyjUg06GQc+K4qGHyFymr4voeOv4lnGZHofPSdelmGtF4FbzFiMLgHqMDBQj
+         U+FMA2KwOUU4XYG6ZLhqqUcM4BSAhnAv7XI/8tnch8tVyqkRyP5M5kLlqzQbIEIvbn4m
+         +hPQ==
+X-Gm-Message-State: APjAAAUJIq0XlTVpTw8vx0FeGdrl5dZ4uzOXNLE4Oqrc81oVv9ImN4Sz
+        ouEmjemVVO9NcLbTpIu6VwVzsbA4
+X-Google-Smtp-Source: APXvYqx5gvfwHKjVZw5R1XH8PTpNvBaD8tcC3MEEby6Q3oRjRnk2o9vbcwpOSwHaBGvnnRVUayUnCg==
+X-Received: by 2002:adf:bbcf:: with SMTP id z15mr38264480wrg.266.1582144445097;
+        Wed, 19 Feb 2020 12:34:05 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id s15sm1239313wrp.4.2020.02.19.12.34.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 19 Feb 2020 12:34:04 -0800 (PST)
+Message-Id: <a2a145c705e2751d4ced9cc71e62d5c560adb6e6.1582144442.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.548.v3.git.1582144442.gitgitgadget@gmail.com>
+References: <pull.548.v2.git.1581889150.gitgitgadget@gmail.com>
+        <pull.548.v3.git.1582144442.gitgitgadget@gmail.com>
+From:   "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 19 Feb 2020 20:34:01 +0000
+Subject: [PATCH v3 2/2] advice: extract vadvise() from advise()
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: DEBAD020-5354-11EA-BC27-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+To:     git@vger.kernel.org
+Cc:     Heba Waly <heba.waly@gmail.com>, Heba Waly <heba.waly@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+From: Heba Waly <heba.waly@gmail.com>
 
-> I think the more typical way of coding this in this project is to
-> initialize 'new_value' to -1. Doing so will make it easier to some day
-> add a configuration value as fallback for when the sub-mode is not
-> specified on the command line. So, it would look something like this:
->
->     int submode = -1;
->     if (arg) {
->         int i;
->         for (i = 0; i < ARRAY_SIZE(valid_modes); i++)
->             if (!strcmp(arg, valid_modes[i]))
->                 break;
->         if (i >= ARRAY_SIZE(valid_modes))
->             return error(_("invalid value for --show-current-patch: %s"), arg);
->         submode = i;
->     }
->
->     /* fall back to config value */
->     if (submode < 0) {
->         /* check if config value available and assign 'sudmode' */
->     }
+extract a version of advise() that uses an explict 'va_list' parameter.
+Call it from advise() and advise_if_enabled() for a functionally
+equivalent version.
 
-Hmph?  Isn't the usual pattern more like this:
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+Signed-off-by: Heba Waly <heba.waly@gmail.com>
+---
+ advice.c | 45 +++++++++++++++++++--------------------------
+ 1 file changed, 19 insertions(+), 26 deletions(-)
 
-
-	static int submode = -1; /* unspecified */
-
-	int cmd_foo(...)
-	{
-		git_config(...); /* this may update submode */
-		parse_options(...); /* this may further update submode */
-
-		if (submode < 0)
-			submode = ... some default value ...;
-
-to implement "config gives a custom default, command line overrides,
-but when there is neither, there is a hard-coded default"?
-
-Of course, the variable can be initialized to the default value to
-lose the "-1 /* unspecified */" bit.
-
->> +       if (resume->mode == RESUME_SHOW_PATCH && new_value != resume->sub_mode)
->> +               return error(_("--show-current-patch=%s is incompatible with "
->> +                              "--show-current-patch=%s"),
->> +                            arg, valid_modes[resume->sub_mode]);
->
-> So, this allows --show-current-patch=<foo> to be specified multiple
-> times but only as long as <foo> is the same each time, and errors out
-> otherwise. That's rather harsh and makes it difficult for someone to
-> override a value specified earlier on the command line (say, coming
-> from a Git alias). The typical way this is handled is "last wins"
-> rather than making it an error.
-
-Yup, the last one wins is something I would have expected.  And if
-we follow that (which is the usual pattern), I suspect that we won't
-even need the first two steps of this series?
-
-Thanks for a review.
+diff --git a/advice.c b/advice.c
+index 345319005ac..0c144c69487 100644
+--- a/advice.c
++++ b/advice.c
+@@ -128,15 +128,20 @@ static const char *advice_config_keys[] = {
+ 	[SUBMODULE_ALTERNATE_ERROR_STRATEGY_DIE] = "submoduleAlternateErrorStrategyDie"
+ };
+ 
+-void advise(const char *advice, ...)
++static const char turn_off_instructions[] =
++N_("\n"
++   "Disable this message with \"git config %s false\"");
++
++static void vadvise(const char *advice, va_list params,
++		    int display_instructions, char *key)
+ {
+ 	struct strbuf buf = STRBUF_INIT;
+-	va_list params;
+ 	const char *cp, *np;
+ 
+-	va_start(params, advice);
+ 	strbuf_vaddf(&buf, advice, params);
+-	va_end(params);
++
++	if(display_instructions)
++		strbuf_addf(&buf, turn_off_instructions, key);
+ 
+ 	for (cp = buf.buf; *cp; cp = np) {
+ 		np = strchrnul(cp, '\n');
+@@ -169,37 +174,25 @@ int advice_enabled(enum advice_type type)
+ 	}
+ }
+ 
+-static const char turn_off_instructions[] =
+-N_("\n"
+-   "Disable this message with \"git config %s false\"");
++void advise(const char *advice, ...)
++{
++	va_list params;
++	va_start(params, advice);
++	vadvise(advice, params, 0, "");
++	va_end(params);
++}
+ 
+ void advise_if_enabled(enum advice_type type, const char *advice, ...)
+ {
+-	struct strbuf buf = STRBUF_INIT;
+-	char *key = xstrfmt("%s.%s", "advice", advice_config_keys[type]);
+ 	va_list params;
+-	const char *cp, *np;
+-	
++	char *key = xstrfmt("%s.%s", "advice", advice_config_keys[type]);
++
+ 	if(!advice_enabled(type))
+ 		return;
+ 
+ 	va_start(params, advice);
+-	strbuf_vaddf(&buf, advice, params);
++	vadvise(advice, params, 1, key);
+ 	va_end(params);
+-
+-	strbuf_addf(&buf, turn_off_instructions, key);
+-	
+-	for (cp = buf.buf; *cp; cp = np) {
+-		np = strchrnul(cp, '\n');
+-		fprintf(stderr,	_("%shint: %.*s%s\n"),
+-			advise_get_color(ADVICE_COLOR_HINT),
+-			(int)(np - cp), cp,
+-			advise_get_color(ADVICE_COLOR_RESET));
+-		if (*np)
+-			np++;
+-	}
+-	strbuf_release(&buf);
+-
+ }
+ 
+ int git_default_advice_config(const char *var, const char *value)
+-- 
+gitgitgadget
