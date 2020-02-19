@@ -2,64 +2,64 @@ Return-Path: <SRS0=H/u6=4H=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2205AC34047
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 85592C34050
 	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 16:14:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id E123720675
-	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 16:14:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5DECD2464E
+	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 16:14:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="s9xVJGMg"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hu18vTy1"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726729AbgBSQOF (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1726750AbgBSQOF (ORCPT <rfc822;git@archiver.kernel.org>);
         Wed, 19 Feb 2020 11:14:05 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:33228 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726671AbgBSQOE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Feb 2020 11:14:04 -0500
-Received: by mail-wm1-f68.google.com with SMTP id m10so717931wmc.0
-        for <git@vger.kernel.org>; Wed, 19 Feb 2020 08:14:02 -0800 (PST)
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:32901 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726652AbgBSQOF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Feb 2020 11:14:05 -0500
+Received: by mail-wr1-f68.google.com with SMTP id u6so1267641wrt.0
+        for <git@vger.kernel.org>; Wed, 19 Feb 2020 08:14:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=uUIb95tsG3/5nd2WAuAHsCbhEA1nqoQa0F31tEEtT/M=;
-        b=s9xVJGMgseQHAPbtfyPERSjAUoS44KJTN3MnMHGFwzvFBzN2CW2oOxRLs+JBd7hyph
-         NKLjtJJXacBysv8Z+GVINutXJ2wSCTXJXNu8j8xXB1F6qU8VZ5oMbE3hOWWykwOHh4X7
-         mhDPTo7Gcb0mSM0T2VMAEjUcfIbtrCoSNeR6KL3o5KVM3cGqpdiQZka2KIlaE1zinxZj
-         /77XXOOb7bc83ZyCOKjt9QHDME7CmpxkewSnINcliEabXyoVdfF7wh8uUnzPESnD7xgv
-         ECGCY5KP14sCnbNwwTtax8VvCv6K0l12nQ00R2r8UTe/AOBZzStj7HqU23WQEKcpSGE5
-         sa0Q==
+        bh=1HeNBGTCHLBFXDlEWBx2/w5BRA6WwEkqzTU7qxxx2Nk=;
+        b=hu18vTy1myVTXoLIN6mfAtsLZk/DGbYt8n5OUKGH93iPuNFyYUzrs6U7EmD+KDKdjZ
+         cwKxlUkkZfjH3cOlJ1WQbPv7IBaWaM+U047lSyTvmfGuIT1awdK7P4XEPgpJ8I5mIjkA
+         OGpmVdh1GAedfBk8mXbE2YTz2J5z5anlmN6jQMKTz086Pf1FZFfNn0p1GOUYa0nZtWdu
+         aVWZlGWCij2BjDwszlZQy16YOWueQIkph+AjD7Sehavu7DbvqNQiFUtLhGdhrziQyPUA
+         jwA65adKyKgISaTKAEk3C7WdeK42bdXFgDD6hDCN+ZCj1oOAHzrp9lef+S3gq75SlBxd
+         qaxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
          :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=uUIb95tsG3/5nd2WAuAHsCbhEA1nqoQa0F31tEEtT/M=;
-        b=MiOUWpBQE9VvmdV7+QbQqFfWhFyLSQtaTFYpYHN7sSd+T7CaV6gkFUm4Ls8MPpLBhe
-         o5WL4vB+iz9KhQR8SGCkUD1J/H3yt3IxlXT9UdbBeB+guhz0/GvuhxlSw5zKMHH7e94W
-         Nzkp0RX6apfEewnCAhOlkLG3zR6iNiJUoPq6Tyx1tAqBlGeWfRyCR9rlLuWIZY0AQUTP
-         /0oCebpeYu0GQe8jLjGEWtlszEv8D3wn+AD8yZaKt1hPH0wJ5Jzp6yAxTTEz9cBPunKn
-         cyWfiwlaQp0z7tQFtEj5LQOxpG130l3d5T1vp4lf7l2dbJfAlduoE+ZymeHm07dPmGos
-         pfRQ==
-X-Gm-Message-State: APjAAAVOX+uL1CAilNdd19FSsyOMbhL8IxUa+PguS+6Ru+4+8I/HA59e
-        86sUIuZEcya+k7CbTw5XQKDEsadV
-X-Google-Smtp-Source: APXvYqxNiD19kNNvEzKcRsOSg2M08jhDrouzcV7IZSryytHten6MdvqmrLU2HngosjyZ4EuOO3B7kg==
-X-Received: by 2002:a7b:c389:: with SMTP id s9mr10409416wmj.7.1582128841421;
-        Wed, 19 Feb 2020 08:14:01 -0800 (PST)
+        bh=1HeNBGTCHLBFXDlEWBx2/w5BRA6WwEkqzTU7qxxx2Nk=;
+        b=U9nT232mKfww7rGPxELlHd+9rdTNK6FoxDbmzbnaj0OsCygHqGxohXpEcQi1QXYFbS
+         9G/RZ4YiBiaVrC+huiXQEw3nZCQ8bBngcpGgROIaqSSaDqEiGsFFygcOaoo9+yMrLF4B
+         8udZt/XNw7Gs3Y6r90OcaNoyr51csp6pFtmS0rKG03iolSRg+3KMAP9hIgqCWjhoZJ1W
+         8lmJXYya7lkBStvDE5gXt+TyvBkDwE2+AXEYYY7LYaQbGVijqIeKuf+6IMb8gd0qZLu5
+         KbE7+s4qEJgr0ZKX50Qmlp1NIyfsuulFDKB0MLTf4IN6HlTMlpmPurs766B1UfjJWCZR
+         HTuw==
+X-Gm-Message-State: APjAAAUWaETruZoUvmfIKfJ0WR1Fg3+6KdhFJrrEXL0sRSoztJYz1vBd
+        nlhlyK13pLj3KgilaOdkAxUAhpyo
+X-Google-Smtp-Source: APXvYqyYjYvv/JEGtH9dI48LCOjvO/zuhkYL3beHURLufVMHb4dUlJL9kXytxUTIifQ8zfGx6Mg/fA==
+X-Received: by 2002:a5d:4052:: with SMTP id w18mr36232897wrp.112.1582128843034;
+        Wed, 19 Feb 2020 08:14:03 -0800 (PST)
 Received: from localhost.localdomain ([2001:b07:6468:f312:ec41:5e57:ff4d:8e51])
-        by smtp.gmail.com with ESMTPSA id w7sm376771wmi.9.2020.02.19.08.13.59
+        by smtp.gmail.com with ESMTPSA id w7sm376771wmi.9.2020.02.19.08.14.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Feb 2020 08:14:00 -0800 (PST)
+        Wed, 19 Feb 2020 08:14:02 -0800 (PST)
 From:   pbonzini@redhat.com
 To:     git@vger.kernel.org
 Cc:     bfields@redhat.com
-Subject: [PATCH 1/4] parse-options: convert "command mode" to a flag
-Date:   Wed, 19 Feb 2020 17:13:49 +0100
-Message-Id: <20200219161352.13562-2-pbonzini@redhat.com>
+Subject: [PATCH 2/4] am: convert "resume" variable to a struct
+Date:   Wed, 19 Feb 2020 17:13:50 +0100
+Message-Id: <20200219161352.13562-3-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.21.1
 In-Reply-To: <20200219161352.13562-1-pbonzini@redhat.com>
 References: <20200219161352.13562-1-pbonzini@redhat.com>
@@ -72,149 +72,120 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Paolo Bonzini <pbonzini@redhat.com>
 
-OPTION_CMDMODE is essentially OPTION_SET_INT plus the extra check
-that the variable had not set before.  In order to allow custom
-processing, change it to OPTION_SET_INT plus a new flag that takes
-care of the check.  This works as long as the option value points
-to an int.
-
-Add testcases while at it.
+This will allow stashing the submode of --show-current-patch.  Using
+a struct will allow accessing both fields from outside cmd_am (through
+container_of).
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- parse-options.c               | 20 +++++++++-----------
- parse-options.h               |  8 ++++----
- t/helper/test-parse-options.c |  2 ++
- t/t0040-parse-options.sh      | 18 ++++++++++++++++++
- 4 files changed, 33 insertions(+), 15 deletions(-)
+ builtin/am.c | 32 ++++++++++++++++++--------------
+ 1 file changed, 18 insertions(+), 14 deletions(-)
 
-diff --git a/parse-options.c b/parse-options.c
-index a0cef401fc..c6e9e2733b 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -61,7 +61,7 @@ static enum parse_opt_result opt_command_mode_error(
- 	 */
- 	for (that = all_opts; that->type != OPTION_END; that++) {
- 		if (that == opt ||
--		    that->type != OPTION_CMDMODE ||
-+		    !(that->flags & PARSE_OPT_CMDMODE) ||
- 		    that->value != opt->value ||
- 		    that->defval != *(int *)opt->value)
- 			continue;
-@@ -95,6 +95,14 @@ static enum parse_opt_result get_value(struct parse_opt_ctx_t *p,
- 	if (!(flags & OPT_SHORT) && p->opt && (opt->flags & PARSE_OPT_NOARG))
- 		return error(_("%s takes no value"), optname(opt, flags));
+diff --git a/builtin/am.c b/builtin/am.c
+index 8181c2aef3..a89e1a96ed 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -2118,7 +2118,7 @@ static int parse_opt_patchformat(const struct option *opt, const char *arg, int
+ 	return 0;
+ }
  
-+	/*
-+	 * Giving the same mode option twice, although unnecessary,
-+	 * is not a grave error, so let it pass.
-+	 */
-+	if ((opt->flags & PARSE_OPT_CMDMODE) &&
-+	    *(int *)opt->value && *(int *)opt->value != opt->defval)
-+		return opt_command_mode_error(opt, all_opts, flags);
-+
- 	switch (opt->type) {
- 	case OPTION_LOWLEVEL_CALLBACK:
- 		return opt->ll_callback(p, opt, NULL, unset);
-@@ -130,16 +138,6 @@ static enum parse_opt_result get_value(struct parse_opt_ctx_t *p,
- 		*(int *)opt->value = unset ? 0 : opt->defval;
- 		return 0;
- 
--	case OPTION_CMDMODE:
--		/*
--		 * Giving the same mode option twice, although is unnecessary,
--		 * is not a grave error, so let it pass.
--		 */
--		if (*(int *)opt->value && *(int *)opt->value != opt->defval)
--			return opt_command_mode_error(opt, all_opts, flags);
--		*(int *)opt->value = opt->defval;
--		return 0;
--
- 	case OPTION_STRING:
- 		if (unset)
- 			*(const char **)opt->value = NULL;
-diff --git a/parse-options.h b/parse-options.h
-index 1d60205881..fece5ba628 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -18,7 +18,6 @@ enum parse_opt_type {
- 	OPTION_BITOP,
- 	OPTION_COUNTUP,
- 	OPTION_SET_INT,
--	OPTION_CMDMODE,
- 	/* options with arguments (usually) */
- 	OPTION_STRING,
- 	OPTION_INTEGER,
-@@ -47,7 +46,8 @@ enum parse_opt_option_flags {
- 	PARSE_OPT_LITERAL_ARGHELP = 64,
- 	PARSE_OPT_SHELL_EVAL = 256,
- 	PARSE_OPT_NOCOMPLETE = 512,
--	PARSE_OPT_COMP_ARG = 1024
-+	PARSE_OPT_COMP_ARG = 1024,
-+	PARSE_OPT_CMDMODE = 2048
+-enum resume_mode {
++enum resume_type {
+ 	RESUME_FALSE = 0,
+ 	RESUME_APPLY,
+ 	RESUME_RESOLVED,
+@@ -2128,6 +2128,10 @@ enum resume_mode {
+ 	RESUME_SHOW_PATCH
  };
  
- enum parse_opt_result {
-@@ -168,8 +168,8 @@ struct option {
- #define OPT_BOOL(s, l, v, h)        OPT_BOOL_F(s, l, v, h, 0)
- #define OPT_HIDDEN_BOOL(s, l, v, h) { OPTION_SET_INT, (s), (l), (v), NULL, \
- 				      (h), PARSE_OPT_NOARG | PARSE_OPT_HIDDEN, NULL, 1}
--#define OPT_CMDMODE(s, l, v, h, i)  { OPTION_CMDMODE, (s), (l), (v), NULL, \
--				      (h), PARSE_OPT_NOARG|PARSE_OPT_NONEG, NULL, (i) }
-+#define OPT_CMDMODE(s, l, v, h, i)  { OPTION_SET_INT, (s), (l), (v), NULL, \
-+				      (h), PARSE_OPT_CMDMODE|PARSE_OPT_NOARG|PARSE_OPT_NONEG, NULL, (i) }
- #define OPT_INTEGER(s, l, v, h)     OPT_INTEGER_F(s, l, v, h, 0)
- #define OPT_MAGNITUDE(s, l, v, h)   { OPTION_MAGNITUDE, (s), (l), (v), \
- 				      N_("n"), (h), PARSE_OPT_NONEG }
-diff --git a/t/helper/test-parse-options.c b/t/helper/test-parse-options.c
-index af82db06ac..2051ce57db 100644
---- a/t/helper/test-parse-options.c
-+++ b/t/helper/test-parse-options.c
-@@ -121,6 +121,8 @@ int cmd__parse_options(int argc, const char **argv)
- 		OPT_INTEGER('j', NULL, &integer, "get a integer, too"),
- 		OPT_MAGNITUDE('m', "magnitude", &magnitude, "get a magnitude"),
- 		OPT_SET_INT(0, "set23", &integer, "set integer to 23", 23),
-+		OPT_CMDMODE(0, "mode1", &integer, "set integer to 1 (cmdmode option)", 1),
-+		OPT_CMDMODE(0, "mode2", &integer, "set integer to 2 (cmdmode option)", 2),
- 		OPT_CALLBACK('L', "length", &integer, "str",
- 			"get length of <str>", length_callback),
- 		OPT_FILENAME('F', "file", &file, "set file to <file>"),
-diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
-index 9d7c7fdaa2..7f4c15a52b 100755
---- a/t/t0040-parse-options.sh
-+++ b/t/t0040-parse-options.sh
-@@ -23,6 +23,8 @@ usage: test-tool parse-options <options>
-     -j <n>                get a integer, too
-     -m, --magnitude <n>   get a magnitude
-     --set23               set integer to 23
-+    --mode1               set integer to 1 (cmdmode option)
-+    --mode2               set integer to 2 (cmdmode option)
-     -L, --length <str>    get length of <str>
-     -F, --file <file>     set file to <file>
++struct resume_mode {
++	enum resume_type mode;
++};
++
+ static int git_am_config(const char *k, const char *v, void *cb)
+ {
+ 	int status;
+@@ -2145,7 +2149,7 @@ int cmd_am(int argc, const char **argv, const char *prefix)
+ 	int binary = -1;
+ 	int keep_cr = -1;
+ 	int patch_format = PATCH_FORMAT_UNKNOWN;
+-	enum resume_mode resume = RESUME_FALSE;
++	struct resume_mode resume = { . mode = RESUME_FALSE };
+ 	int in_progress;
+ 	int ret = 0;
  
-@@ -324,6 +326,22 @@ test_expect_success 'OPT_NEGBIT() works' '
- 	test-tool parse-options --expect="boolean: 6" -bb --no-neg-or4
- '
+@@ -2214,22 +2218,22 @@ int cmd_am(int argc, const char **argv, const char *prefix)
+ 			PARSE_OPT_NOARG),
+ 		OPT_STRING(0, "resolvemsg", &state.resolvemsg, NULL,
+ 			N_("override error message when patch failure occurs")),
+-		OPT_CMDMODE(0, "continue", &resume,
++		OPT_CMDMODE(0, "continue", &resume.mode,
+ 			N_("continue applying patches after resolving a conflict"),
+ 			RESUME_RESOLVED),
+-		OPT_CMDMODE('r', "resolved", &resume,
++		OPT_CMDMODE('r', "resolved", &resume.mode,
+ 			N_("synonyms for --continue"),
+ 			RESUME_RESOLVED),
+-		OPT_CMDMODE(0, "skip", &resume,
++		OPT_CMDMODE(0, "skip", &resume.mode,
+ 			N_("skip the current patch"),
+ 			RESUME_SKIP),
+-		OPT_CMDMODE(0, "abort", &resume,
++		OPT_CMDMODE(0, "abort", &resume.mode,
+ 			N_("restore the original branch and abort the patching operation."),
+ 			RESUME_ABORT),
+-		OPT_CMDMODE(0, "quit", &resume,
++		OPT_CMDMODE(0, "quit", &resume.mode,
+ 			N_("abort the patching operation but keep HEAD where it is."),
+ 			RESUME_QUIT),
+-		OPT_CMDMODE(0, "show-current-patch", &resume,
++		OPT_CMDMODE(0, "show-current-patch", &resume.mode,
+ 			N_("show the patch being applied."),
+ 			RESUME_SHOW_PATCH),
+ 		OPT_BOOL(0, "committer-date-is-author-date",
+@@ -2281,12 +2285,12 @@ int cmd_am(int argc, const char **argv, const char *prefix)
+ 		 *    intend to feed us a patch but wanted to continue
+ 		 *    unattended.
+ 		 */
+-		if (argc || (resume == RESUME_FALSE && !isatty(0)))
++		if (argc || (resume.mode == RESUME_FALSE && !isatty(0)))
+ 			die(_("previous rebase directory %s still exists but mbox given."),
+ 				state.dir);
  
-+test_expect_success 'OPT_CMDMODE() works' '
-+	test-tool parse-options --expect="integer: 1" --mode1
-+'
-+
-+test_expect_success 'OPT_CMDMODE() detects incompatibility' '
-+	test_must_fail test-tool parse-options --mode1 --mode2 >output 2>output.err &&
-+	test_must_be_empty output &&
-+	grep "incompatible with --mode" output.err
-+'
-+
-+test_expect_success 'OPT_CMDMODE() detects incompatibility with something else' '
-+	test_must_fail test-tool parse-options --set23 --mode2 >output 2>output.err &&
-+	test_must_be_empty output &&
-+	grep "incompatible with something else" output.err
-+'
-+
- test_expect_success 'OPT_COUNTUP() with PARSE_OPT_NODASH works' '
- 	test-tool parse-options --expect="boolean: 6" + + + + + +
- '
+-		if (resume == RESUME_FALSE)
+-			resume = RESUME_APPLY;
++		if (resume.mode == RESUME_FALSE)
++			resume.mode = RESUME_APPLY;
+ 
+ 		if (state.signoff == SIGNOFF_EXPLICIT)
+ 			am_append_signoff(&state);
+@@ -2300,7 +2304,7 @@ int cmd_am(int argc, const char **argv, const char *prefix)
+ 		 * stray directories.
+ 		 */
+ 		if (file_exists(state.dir) && !state.rebasing) {
+-			if (resume == RESUME_ABORT || resume == RESUME_QUIT) {
++			if (resume.mode == RESUME_ABORT || resume.mode == RESUME_QUIT) {
+ 				am_destroy(&state);
+ 				am_state_release(&state);
+ 				return 0;
+@@ -2311,7 +2315,7 @@ int cmd_am(int argc, const char **argv, const char *prefix)
+ 				state.dir);
+ 		}
+ 
+-		if (resume)
++		if (resume.mode)
+ 			die(_("Resolve operation not in progress, we are not resuming."));
+ 
+ 		for (i = 0; i < argc; i++) {
+@@ -2329,7 +2333,7 @@ int cmd_am(int argc, const char **argv, const char *prefix)
+ 		argv_array_clear(&paths);
+ 	}
+ 
+-	switch (resume) {
++	switch (resume.mode) {
+ 	case RESUME_FALSE:
+ 		am_run(&state, 0);
+ 		break;
 -- 
 2.21.1
 
