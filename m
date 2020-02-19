@@ -8,59 +8,59 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A5E8C34055
-	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 16:21:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BED2BC34050
+	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 16:21:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 61E6E2465D
-	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 16:21:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 97A8D2465D
+	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 16:21:59 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QBtkl4M7"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e9ReEnXk"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726754AbgBSQV5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1726777AbgBSQV6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 Feb 2020 11:21:58 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:37250 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726514AbgBSQV5 (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 19 Feb 2020 11:21:57 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:43181 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726672AbgBSQV5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Feb 2020 11:21:57 -0500
-Received: by mail-wr1-f67.google.com with SMTP id r11so1209441wrq.10
-        for <git@vger.kernel.org>; Wed, 19 Feb 2020 08:21:55 -0800 (PST)
+Received: by mail-wr1-f65.google.com with SMTP id w15so1252241wru.4
+        for <git@vger.kernel.org>; Wed, 19 Feb 2020 08:21:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=ZaV+f3N3NLhoX3MRcHYiDxFDwVds7NM2PMz6oDgoBNk=;
-        b=QBtkl4M756UAgAZHkqXHd37qXHdRzxmyoRt3TXv+zaWbXPqQ6anoNIOWI4aStqnF3r
-         LvQdXPh81g5u8h1d8DTosVNfRF+utnKgIyMEWp4c2sCHqJtvKngG8uoZN/fWEEUV8jvW
-         99dVG/R1udPLohMHNP9hmV6YxIIWBOmPekfT7Z1HsKE+zY8Rh7NXaNAH15kJmYmJrXCl
-         ZOV3rPslELK/JSaXjyq577Y7g4bo3EbOnH6YuG+x+FacatKC+yC/9hB9hjFu+NZi9BS0
-         4ketcyswzs8J6KWBhHv0Vm1TX9LpYuq1xRr/Gfks4vstq3NLJBeYJizl3zHBRrclbsVi
-         bWNA==
+        bh=QOlAw8r3za8uo1YqxBtBcHBy6PEOKurX4bZpEUtVFgo=;
+        b=e9ReEnXkmWPr3GGAuN2kPMSD7Al1sd0VsiWMvZ0drXtK9VMDSsIUcwUBxVOROfskuB
+         elYioXzDBESkRUNLCYGd/QGlyCkmBkLbG+9QARszpDTtmhJThlfXA5iBfWOhGkS5DfFV
+         Q3FrLfPcqSC4Rl2xuxxzxvkvE2l44DPkSWVvUC9Edn5Ru9gJKftBg1IUxPQFoO8wC1sr
+         Fn9RRpgJoWvMPQxUr1BCzo3i+wyXRXkWHfUBwYtvhvz1fulX7oXKK4JyoNkKw14avoCu
+         Q5zPMKiivjxQkiStv+/6Psdf6a/t2TDbrPDjG9BtyyhU6YOWub/IOXYl3wieTV17cOxB
+         fMLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ZaV+f3N3NLhoX3MRcHYiDxFDwVds7NM2PMz6oDgoBNk=;
-        b=N9XWlvBPsEcFxQtY9yPTKxQmRZMaCg74TJxMNdtJin1I7Sbm9T0zQ/oSHhRH4Xud8T
-         TJIPj0e0P2CKDXpB8LXAMkR410CX9SLrhyxlvr3SgOvk7HZGWHPRAKfADg+7mf3P5hmG
-         n7cqWsK660OMg7c+oa375ZP7JwDf3ycnUiidBWx/w3fFC7IEgwfrqWBabrM12vIc/fbp
-         y0rfq1qPMI5XPm8vSIFNNuXVbnZRwAzIko2XdosjM8gHYZzgaq3wj6VzfJd1AaaPq5fY
-         C+U8z09IkbGA0Y/tEdEaFt4HhTKeJV6ZnqPZPzJrGwzmMEyliZcs+Z+m5SX888PzMzVF
-         hbvw==
-X-Gm-Message-State: APjAAAUb048sepxFa6ts5C/PD+qd0d77yC18wTHi8/cP3r+3TZynoW/U
-        8ZEblt/kfkMaaJBwLPNYI6J0JHsP
-X-Google-Smtp-Source: APXvYqy5HOCKHFVPVzM+YVuNxMhz4fwXQn1GYOBigXq5/HqTkuyMzwxdwNWM39i4Q6UokDSLU5nCIA==
-X-Received: by 2002:adf:e692:: with SMTP id r18mr37061939wrm.413.1582129314567;
-        Wed, 19 Feb 2020 08:21:54 -0800 (PST)
+        bh=QOlAw8r3za8uo1YqxBtBcHBy6PEOKurX4bZpEUtVFgo=;
+        b=NJMen6rCjeFbMGrzx//Rle3Cq2CR3kJtZCeI5Vc3YBQ4CNYwJQGtyD6J6TVbLyxSm/
+         CbmrNopGY5qSAUt2TajT7b0S7WS6Rc7B5rBHsLuU2JjtN6Cipf4pAaFxRVxeZTxwgTbH
+         8D9KbpO4R/ZmYVGymklFeeoYC8GAx80JKeePBZsJk9PurInrXf8264KsK+QKNe1LGXgz
+         n5CL7BwThh9STz0Vf3Lpx9JM3YOAHmHlBcnZ3s4byKL0vOXFXJK9XSgHPVTDNiFmCi+0
+         zBY5xjJnSN6XBYpP968FeumvZxkoNM+lV4fX79Nulv4fX4Cv8VGJqV1dgMgpWu+06uGE
+         C0mw==
+X-Gm-Message-State: APjAAAVM4hl2o/1IJ0V7wqQcXMi4B6cm+y5mEtSGy5UhzMbSU0j96P7E
+        sph8rc7PbUJGJ8NhpZCJl9bgygld
+X-Google-Smtp-Source: APXvYqzTSlX8ye185ZzvGrCTR+nxKu5MJYmGHWMyHTayYsG6G0QSxwldkst0u8Cd0UFLUbUBixz8AQ==
+X-Received: by 2002:a5d:5188:: with SMTP id k8mr36774116wrv.151.1582129315562;
+        Wed, 19 Feb 2020 08:21:55 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y17sm252222wrs.82.2020.02.19.08.21.53
+        by smtp.gmail.com with ESMTPSA id n3sm342161wrs.8.2020.02.19.08.21.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Wed, 19 Feb 2020 08:21:54 -0800 (PST)
-Message-Id: <dbc1bdcae16f8b9941add514264b0fe04cda48c0.1582129312.git.gitgitgadget@gmail.com>
+Message-Id: <937a882261d4d4552a144e5f0efad8abd8002ab4.1582129312.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.556.git.1582129312.gitgitgadget@gmail.com>
 References: <pull.556.git.1582129312.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 19 Feb 2020 16:21:51 +0000
-Subject: [PATCH 1/2] partial-clone: demonstrate bugs in partial fetch
+Date:   Wed, 19 Feb 2020 16:21:52 +0000
+Subject: [PATCH 2/2] partial-clone: avoid fetching when looking for objects
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,78 +76,84 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-While testing partial clone, I noticed some odd behavior. I was testing
-a way of running 'git init', followed by manually configuring the remote
-for partial clone, and then running 'git fetch'. Astonishingly, I saw
-the 'git fetch' process start asking the server for multiple rounds of
-pack-file downloads! When tweaking the situation a little more, I
-discovered that I could cause the remote to hang up with an error.
+When using partial-clone, do_oid_object_info_extended() can trigger a
+fetch for missing objects. This can be extremely expensive when asking
+for a tag or commit, as we are completely removed from the context of
+the missing object and thus supply no "haves" in the request.
 
-Add two tests that demonstrate these two issues.
+6462d5eb9a (fetch: remove fetch_if_missing=0, 2019-11-05) removed a
+global variable that prevented these fetches in favor of a bitflag.
+However, some object existence checks were not updated to use this flag.
 
-In the first test, we find that when fetching with blob filters from
-a repository that previously did not have any tags, the 'git fetch
---tags origin' command fails because the server sends "multiple
-filter-specs cannot be combined".
+Update find_non_local_tags() to use OBJECT_INFO_SKIP_FETCH_OBJECT in
+addition to OBJECT_INFO_QUICK. The _QUICK option only prevents
+repreparing the pack-file structures. We need to be extremely careful
+about supplying _SKIP_FETCH_OBJECT when we expect an object to not exist
+due to updated refs.
 
-In the second test, we see that a 'git fetch origin' request with
-several ref updates results in multiple pack-file downloads. This must
-be due to Git trying to fault-in the objects pointed by the refs. What
-makes this matter particularly nasty is that this goes through the
-do_oid_object_info_extended() method, so there are no "haves" in the
-negotiation. This leads the remote to send every reachable commit and
-tree from each new ref, providing a quadratic amount of data transfer!
-This test is fixed if we revert 6462d5eb9a (fetch: remove
-fetch_if_missing=0, 2019-11-05), but that revert causes other test
-failures. The real fix will need more care.
-
-The tests are ordered in this way because if I swap the test order the
-tag test will succeed instead of fail. I believe this is because somehow
-we need the srv.bare repo to not have any tags when we clone, but then
-have tags in our next fetch.
+This resolves a broken test in t5616-partial-clone.sh.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- t/t5616-partial-clone.sh | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+ builtin/fetch.c          | 10 +++++-----
+ t/t5616-partial-clone.sh |  2 +-
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index b4c6d921d06..fd69c4f69d7 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -335,6 +335,7 @@ static void find_non_local_tags(const struct ref *refs,
+ 	struct string_list_item *remote_ref_item;
+ 	const struct ref *ref;
+ 	struct refname_hash_entry *item = NULL;
++	const int quick_flags = OBJECT_INFO_QUICK | OBJECT_INFO_SKIP_FETCH_OBJECT;
+ 
+ 	refname_hash_init(&existing_refs);
+ 	refname_hash_init(&remote_refs);
+@@ -353,10 +354,9 @@ static void find_non_local_tags(const struct ref *refs,
+ 		 */
+ 		if (ends_with(ref->name, "^{}")) {
+ 			if (item &&
+-			    !has_object_file_with_flags(&ref->old_oid,
+-							OBJECT_INFO_QUICK) &&
++			    !has_object_file_with_flags(&ref->old_oid, quick_flags) &&
+ 			    !oidset_contains(&fetch_oids, &ref->old_oid) &&
+-			    !has_object_file_with_flags(&item->oid, OBJECT_INFO_QUICK) &&
++			    !has_object_file_with_flags(&item->oid, quick_flags) &&
+ 			    !oidset_contains(&fetch_oids, &item->oid))
+ 				clear_item(item);
+ 			item = NULL;
+@@ -370,7 +370,7 @@ static void find_non_local_tags(const struct ref *refs,
+ 		 * fetch.
+ 		 */
+ 		if (item &&
+-		    !has_object_file_with_flags(&item->oid, OBJECT_INFO_QUICK) &&
++		    !has_object_file_with_flags(&item->oid, quick_flags) &&
+ 		    !oidset_contains(&fetch_oids, &item->oid))
+ 			clear_item(item);
+ 
+@@ -391,7 +391,7 @@ static void find_non_local_tags(const struct ref *refs,
+ 	 * checked to see if it needs fetching.
+ 	 */
+ 	if (item &&
+-	    !has_object_file_with_flags(&item->oid, OBJECT_INFO_QUICK) &&
++	    !has_object_file_with_flags(&item->oid, quick_flags) &&
+ 	    !oidset_contains(&fetch_oids, &item->oid))
+ 		clear_item(item);
+ 
 diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
-index fea56cda6d3..ed2ef45c37a 100755
+index ed2ef45c37a..c70516734d5 100755
 --- a/t/t5616-partial-clone.sh
 +++ b/t/t5616-partial-clone.sh
-@@ -374,6 +374,32 @@ test_expect_success 'fetch lazy-fetches only to resolve deltas, protocol v2' '
- 	grep "want $(cat hash)" trace
+@@ -385,7 +385,7 @@ test_expect_failure 'verify fetch succeeds when asking for new tags' '
+ 	git -C tag-test fetch --tags origin
  '
  
-+test_expect_failure 'verify fetch succeeds when asking for new tags' '
-+	git clone --filter=blob:none "file://$(pwd)/srv.bare" tag-test &&
-+	for i in I J K
-+	do
-+		test_commit -C src $i &&
-+		git -C src branch $i
-+	done &&
-+	git -C srv.bare fetch --tags origin +refs/heads/*:refs/heads/* &&
-+	git -C tag-test fetch --tags origin
-+'
-+
-+test_expect_failure 'verify fetch downloads only one pack when updating refs' '
-+	git clone --filter=blob:none "file://$(pwd)/srv.bare" pack-test &&
-+	ls pack-test/.git/objects/pack/*pack >pack-list &&
-+	test_line_count = 2 pack-list &&
-+	for i in A B C
-+	do
-+		test_commit -C src $i &&
-+		git -C src branch $i
-+	done &&
-+	git -C srv.bare fetch origin +refs/heads/*:refs/heads/* &&
-+	git -C pack-test fetch origin &&
-+	ls pack-test/.git/objects/pack/*pack >pack-list &&
-+	test_line_count = 3 pack-list
-+'
-+
- . "$TEST_DIRECTORY"/lib-httpd.sh
- start_httpd
- 
+-test_expect_failure 'verify fetch downloads only one pack when updating refs' '
++test_expect_success 'verify fetch downloads only one pack when updating refs' '
+ 	git clone --filter=blob:none "file://$(pwd)/srv.bare" pack-test &&
+ 	ls pack-test/.git/objects/pack/*pack >pack-list &&
+ 	test_line_count = 2 pack-list &&
 -- 
 gitgitgadget
-
