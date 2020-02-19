@@ -7,116 +7,102 @@ X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1,
 	USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 150F2C5ACC5
-	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 23:07:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 20AAAC5ACC5
+	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 23:16:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id CE50C208C4
-	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 23:07:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E4685208C4
+	for <git@archiver.kernel.org>; Wed, 19 Feb 2020 23:16:00 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="AB8twDg5"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="jSWChbqd"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727804AbgBSXHF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 Feb 2020 18:07:05 -0500
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:45473 "EHLO
+        id S1726708AbgBSXQA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 Feb 2020 18:16:00 -0500
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:33981 "EHLO
         mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727429AbgBSXHE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Feb 2020 18:07:04 -0500
-Received: by mail-pf1-f196.google.com with SMTP id 2so840119pfg.12
-        for <git@vger.kernel.org>; Wed, 19 Feb 2020 15:07:04 -0800 (PST)
+        with ESMTP id S1726613AbgBSXP7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Feb 2020 18:15:59 -0500
+Received: by mail-pf1-f196.google.com with SMTP id i6so878660pfc.1
+        for <git@vger.kernel.org>; Wed, 19 Feb 2020 15:15:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=cd1dR2axYLINdIkBKy0TwTVDmd4gehqtEtNHHqBtbM8=;
-        b=AB8twDg5y+Nswwl+dOgXVJj9p40Hp7/aJHq6aLn72AAEfb081VMMG7jsezaHOkb4I4
-         TT0C+DzJp7Sk7ATk/hbuwKvdsTH400dE8DlmGPYAozhhaownx/I1udtWjEgdY1+kBvgh
-         TzoJ9heCnhxuuTzyBPsKQkz0oJCLGJLryemsl1YmpoBlV9//uQ1vRRRLlv6ZPDOwxJpY
-         Ci2e1ua3KVeOQpb/PbsboyK9h8z7ScXNC+OIrvoSiKI3O6vtEQ/auag6HsH9wXbRSU10
-         JafVaC82T/6YnKpEmSnFw7EgARbNDkvFRJTA2OX5mx+OCMihvOZCjhvIvsz1uRUw48mh
-         0M3g==
+        bh=xeWbib+0mz0wHhEQROHmlAmjHwLtJpdeCtUnvqVP0e8=;
+        b=jSWChbqdssmNhu6MmpJ23DQ3HeUZNlkV381QqjaQtq2Bgqx8LC88n7x5+R43VeyJhB
+         nhSZKXwceh5sT6RG1CT/D7Dvjc/637uQfOZnaJH8XfYLxV4KMEnS5Be+poLnfJLSTZB3
+         QbUbOyVOQekWV6GWgV4gY8wNIFhh3IYaEhyMkbncOo+m7Fk2be/7KBL3SywJNH2hvr94
+         ikil2OXne5MbTeYUUrHN1KvsojiS9Ajw8xjiSiO7Lw7Zmd5mhVfH9lj7n92KIhNtsR3L
+         nvnOs3elTuYml48G06kXgNAYGenEPpXcyMcaW4djgmijAx2H81SrOqdx7aSoIiqsp3hZ
+         n2fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=cd1dR2axYLINdIkBKy0TwTVDmd4gehqtEtNHHqBtbM8=;
-        b=DHT5KrXJGOKEglabzgZ87wGgsSVbNZc6aevjFSO9Furxnl7YNE92UmJmvR0F+uhNxd
-         ON+yTzT7XKouiEq0uWAg5JDf3w3kiRE2dhD1WXZJnLRU+NKgpgRNyQQSRCZ8DtEr01Ah
-         esJjPVPfo8/cJCLzSRmQpTd4jOJxBr6dzd/J8/cZfrzBMsndidf+70pWzg/YTdocsrpe
-         CP7oaAHbX7fnG9CTpa1IMRozO+EZIJqDH+EdTbxacLajVyjUtTdvAvaQ4Py6xEDzNuwn
-         80rsEjjpXJW5/5jDiWzTxkgGIk7fYXxrE/25Z7v5SmK+2fXoC2Jkbk+qeTFyCtLxifPB
-         InzQ==
-X-Gm-Message-State: APjAAAViKn/7CQHIoXFtuYP66UKn84gvjRbxgi/Cy7SkTVMmZEnP3JGI
-        ig3e0xsI6ijWLBhjteKP88zBd5r9QjE=
-X-Google-Smtp-Source: APXvYqxJkrdwoFi1yArIgFopayUcvqX0u1uxs//hwyP0nueuK9TcxyP4Ht2hfLwClkxUVRgaKtz/9g==
-X-Received: by 2002:a63:1e1d:: with SMTP id e29mr30558743pge.347.1582153623948;
-        Wed, 19 Feb 2020 15:07:03 -0800 (PST)
+        bh=xeWbib+0mz0wHhEQROHmlAmjHwLtJpdeCtUnvqVP0e8=;
+        b=HQi0ehRowmpAAd9DzqRrg7p8bLIFiu/8RKqZ/xjuWwxMrn3/k+b5Q22Ttauzhhuksh
+         fAbRJsrCqWcx+D5AFw/8Sxu9ril6be6s4Erp+SBUJYNF1GpIVvu8Z5x0sdLXcSVhN4hr
+         eTX/N0gazpJ497lMSaHFxT8DQMBZQ5N5rlg1/3yq22RzkBmLUhKHIbI+g5YQ4m7kq800
+         X2Zwqh0bmvezyxq/v2KffqOr9DyBBjR1qhf+un6JciXyrzAHs3nvX1fowFUdK5fqoHUE
+         WbN6S2U2dA1p1ArjDQFBQACZrtt6qjUbZ46cEZ8VhmE7p8/gPF8y4rkh17a25jhEMJxl
+         OkgA==
+X-Gm-Message-State: APjAAAUBM4ksyXf3Bj7WRtpb1J43xaR3Qmx+cbD1UwG18Opiuk3XLVGQ
+        RvzWPVQZChuScsDyShFA3S4ldu256K4=
+X-Google-Smtp-Source: APXvYqwMwBVx9J0leWeBV1eeDvyzwLq05cwjMI08VH6SZTkrNuOSeEG/X9USuq0wKDUa+XlP17jMOA==
+X-Received: by 2002:a63:fc51:: with SMTP id r17mr30007771pgk.292.1582154159053;
+        Wed, 19 Feb 2020 15:15:59 -0800 (PST)
 Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
-        by smtp.gmail.com with ESMTPSA id u11sm848061pjn.2.2020.02.19.15.07.03
+        by smtp.gmail.com with ESMTPSA id u1sm673896pfn.133.2020.02.19.15.15.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Feb 2020 15:07:03 -0800 (PST)
-Date:   Wed, 19 Feb 2020 15:06:59 -0800
+        Wed, 19 Feb 2020 15:15:58 -0800 (PST)
+Date:   Wed, 19 Feb 2020 15:15:54 -0800
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org
+Cc:     git@vger.kernel.org
 Subject: Re: [PATCH v7 03/15] bugreport: add tool to generate debugging info
-Message-ID: <20200219230659.GA79731@google.com>
+Message-ID: <20200219231554.GB79731@google.com>
 References: <20200214015343.201946-1-emilyshaffer@google.com>
  <20200214015343.201946-4-emilyshaffer@google.com>
- <nycvar.QRO.7.76.6.2002191515310.46@tvgsbejvaqbjf.bet>
- <xmqq7e0ih5zr.fsf@gitster-ct.c.googlers.com>
- <20200219215231.GA26221@google.com>
- <xmqqtv3mcjpv.fsf@gitster-ct.c.googlers.com>
+ <xmqqzhdlnksn.fsf@gitster-ct.c.googlers.com>
+ <20200215015729.GN190927@google.com>
+ <xmqq1rqvogif.fsf@gitster-ct.c.googlers.com>
+ <20200218234628.GA1461@google.com>
+ <20200218235622.GB1461@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqtv3mcjpv.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <20200218235622.GB1461@google.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 19, 2020 at 02:09:48PM -0800, Junio C Hamano wrote:
-> Emily Shaffer <emilyshaffer@google.com> writes:
+On Tue, Feb 18, 2020 at 03:56:22PM -0800, Emily Shaffer wrote:
+> On Tue, Feb 18, 2020 at 03:46:28PM -0800, Emily Shaffer wrote:
+> > On Sat, Feb 15, 2020 at 10:24:40AM -0800, Junio C Hamano wrote:
+> > > I am actually OK if we limit the use of this tool to "use with a
+> > > repository that is not corrupt", as coping with these kinds of
+> > > breakages that in the main Git executable we deem "needs manual
+> > > intervention" inside a single process is too painful (it would have
+> > > been easier to cope with these too if we stuck with a script that
+> > > invokes many discrete commands and acts on their errors, but that is
+> > > optimizing for rare case and not recommended).  But we should tell
+> > > users about the limitation and encourage them to ask for help in non
+> > > automatable means.
+> > 
+> > I think you're saying, "Mention this drawback in the manpage for
+> > git-bugreport." Sounds like a good idea to me, so I'll add it for v8.
 > 
-> > launch_specified_editor() has a handful of exit points, of three kinds:
-> >  1. return error(something)
-> >  2. raise(sigsomething)
-> >  3. return 0
-> >     a. when the editor process closed happily, but the user supplied
-> >        NULL instead of a buffer. That is, the user didn't want the
-> >        contents of the editor given back to them in a strbuf.
-> >     b. when the editor process closed happily and the user's supplied
-> >        buffer was filled with the file's contents with no issue.
-> >
-> > So I think we can check "yes" here.
+> I'm pretty unsure about how you wanted this to sound; rather than
+> sending a v8 only to revise it a lot, I'll send the paragraph for
+> wordsmithing beforehand. Is this what you meant?
 > 
-> Heh.  If we raised a signal to kill ourselves, then we won't be
-> returning a value from launch_editor() anyway.  That case won't
-> affect the "between returning negation or !!, which is more
-> appropriate?" discussion, I think.
-> 
-> >>  - we MUST NOT care to differenciate different error codes returned
-> >>    from launch_editor().  IOW, we must be fine to give the invoker
-> >>    of the program only 0 (success) or 1 (unspecified failure).
-> 
-> I actually think this holds for the codepath.  A failure from
-> start_command() returns error(), and finish_command() that waits for
-> the spawned editor process to complete yields the exit status from
-> the editor, but unless we re-raise the signal that killed the editor
-> process to ourselves, we just turn any non-zero exit into "return
-> error()", so it is safe to say launch_editor() can return either 0
-> or -1 and nothing else.  Would we later want to tell callers of
-> launch_editor() how/why the editor session failed by returning
-> something else?  I do not offhand think of any---we do not even
-> differenciate between failure to start (e.g. misspelt command name
-> for the editor) and other failures WITH the return value and
-> consider it sufficient to tell the user with different error
-> message right now.
-> 
-> So in practice returning -launch_editor() and !!launch_editor()
-> would not make any difference, I would think.
+>   This tool is invoked via the typical Git setup process, which means that in some
+>   cases, it might not be able to launch - for example, if a relevant config file
+>   is unreadable. In this kind of scenario, it may be helpful to manually gather
+>   the kind of information listed above when manually asking for help.
 
-Then, let's do the least surprising thing. I'll switch it to !! for the
-next reroll.
+Since I saw lots of replies from Junio elsewhere in this thread, I'll
+take the silence here as assent. v8 on its way momentarily.
+
+ - Emily
