@@ -6,91 +6,87 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 91200C11D07
-	for <git@archiver.kernel.org>; Thu, 20 Feb 2020 11:19:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BBF26C11D04
+	for <git@archiver.kernel.org>; Thu, 20 Feb 2020 11:25:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5ED96207FD
-	for <git@archiver.kernel.org>; Thu, 20 Feb 2020 11:19:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 912E32071E
+	for <git@archiver.kernel.org>; Thu, 20 Feb 2020 11:25:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727677AbgBTLTC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Feb 2020 06:19:02 -0500
-Received: from cloud.peff.net ([104.130.231.41]:49104 "HELO cloud.peff.net"
+        id S1727589AbgBTLZk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Feb 2020 06:25:40 -0500
+Received: from cloud.peff.net ([104.130.231.41]:49124 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727495AbgBTLTC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Feb 2020 06:19:02 -0500
-Received: (qmail 3239 invoked by uid 109); 20 Feb 2020 11:19:01 -0000
+        id S1726837AbgBTLZk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Feb 2020 06:25:40 -0500
+Received: (qmail 3305 invoked by uid 109); 20 Feb 2020 11:25:40 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 20 Feb 2020 11:19:01 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 20 Feb 2020 11:25:40 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3451 invoked by uid 111); 20 Feb 2020 11:28:03 -0000
+Received: (qmail 3516 invoked by uid 111); 20 Feb 2020 11:34:42 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 20 Feb 2020 06:28:03 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 20 Feb 2020 06:34:42 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 20 Feb 2020 06:19:01 -0500
+Date:   Thu, 20 Feb 2020 06:25:39 -0500
 From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v6 0/5] Reftable support git-core
-Message-ID: <20200220111901.GA1252160@coredump.intra.peff.net>
-References: <pull.539.v5.git.1581344060.gitgitgadget@gmail.com>
- <pull.539.v6.git.1582015420.gitgitgadget@gmail.com>
- <xmqqy2szip35.fsf@gitster-ct.c.googlers.com>
- <CAOw_e7abpAwTkb6qKZjbxxw7XrAWdhcANbjAWvRxi1_fT5vSDA@mail.gmail.com>
- <xmqq36b6h5o2.fsf@gitster-ct.c.googlers.com>
- <CAOw_e7ZztSCzpmaCYg2c1iaZLWSsYz4dYegT0V0dHVaDy8A_uQ@mail.gmail.com>
- <xmqq8skyfnxm.fsf@gitster-ct.c.googlers.com>
+Cc:     Matheus Tavares <matheus.bernardino@usp.br>, git@vger.kernel.org,
+        rhi@pengutronix.de
+Subject: Re: [PATCH] describe: output tag's ref instead of embedded name
+Message-ID: <20200220112539.GB1252160@coredump.intra.peff.net>
+References: <fcf19a46b80322c5579142efe4ec681a4dcbdd28.1581802264.git.matheus.bernardino@usp.br>
+ <20200216065101.GA2937208@coredump.intra.peff.net>
+ <xmqqd0abk7zc.fsf@gitster-ct.c.googlers.com>
+ <20200218195402.GA21586@coredump.intra.peff.net>
+ <xmqq4kvnijim.fsf@gitster-ct.c.googlers.com>
+ <xmqqzhdfh3vr.fsf@gitster-ct.c.googlers.com>
+ <20200219015733.GA81560@coredump.intra.peff.net>
+ <xmqqr1yrgt2d.fsf@gitster-ct.c.googlers.com>
+ <20200219035650.GA84414@coredump.intra.peff.net>
+ <xmqqftf6hlrt.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqq8skyfnxm.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqftf6hlrt.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 19, 2020 at 10:10:29AM -0800, Junio C Hamano wrote:
+On Wed, Feb 19, 2020 at 03:14:14AM -0800, Junio C Hamano wrote:
 
-> Han-Wen Nienhuys <hanwenn@gmail.com> writes:
+> Jeff King <peff@peff.net> writes:
 > 
-> > On Wed, Feb 19, 2020 at 6:02 PM Junio C Hamano <gitster@pobox.com> wrote:
-> >
-> >> > your checker is tripping over code imported from zlib. I added a /*
-> >> > clang-format off */ comment to avoid reformatting this code. What do
-> >> > you suggest?
-> >>
-> >> Use zlib from the system instead?
-> >
-> > uncompress2 is a 2016 addition to zlib. It doesn't pass on
-> > gitgitgadget's CI, because it is using an older version of zlib.
+> > I think a left a few things unsaid in my "v1.0-bob" example. I was
+> > imagining that there are _two_ v1.0 tags floating around. One that you
+> > consider "wrong", tagged by Bob, and one you like. You keep the latter
+> > in refs/tags/v1.0.
 > 
-> Ahh.
+> Ahh, OK.  
 > 
-> It is OK (and indeed you're right that you cannot avoid it) to ship
-> a reasonably new snapshot as a fallback in such a case, but it still
-> is far more preferrable to avoid linking with the fallback snapshot
-> copy when a working one is available on the system, especially for a
-> widely used and established library like zlib, because we have one
-> less thing to keep up-to-date with the security patches made to the
-> upstream.
+> To continue playing devil's advocate and to step back a bit,
+> 
+>  - The "git describe" command finds that the given commit is
+>    "closest" to that tag Bob called "v1.0".
+> 
+>  - But if it outputs "v1.0" like the current code does, it cannot be
+>    fed back to get_oid() to name the right object, if the given commit
+>    is "at" the tag (i.e. there is no "-$number-g$objectname" suffix),
+>    which is a problem.  We want "git describe" to give an output
+>    usable with get_oid() and the name must refer to the correct
+>    object (i.e. the one given to "git describe" as an input).
+> 
+> There are multiple approaches to make it possible to feed the output
+> back to get_oid() to obtain correct result:
+> [...]
 
-If this were substantial code, I'd agree. But this is really just a thin
-wrapper around the usual loop zlib inflate() loop that we already do in
-a dozen places in our code (e.g., unpack_loose_rest(), which even does
-the "did we consume all the bytes" check that uncompress2 allows).
+Thanks for clearly laying out your thinking. All of what you wrote makes
+sense to me and I'd be OK with any of the options you described.
 
-I'm not sure it is worth the mental energy of adding a Makefile knob to
-use the zlib version if we can just open-code it ourselves (or provide
-our own custom helper that we always use).
-
-And if it _is_ worth taking the zlib version because we're concerned
-that it may contain or gain bugfixes[1], then possibly we should
-be using it in lots more places (though probably not everywhere, as we
-do sometimes need the streaming behavior of the loop).
-
-[1] I'll admit we've hit some subtleties with that loop in the past,
-    especially around corrupted or bogus inputs, but I think we've
-    shaken them all out these days.
+The "-g$objectname" one is kind of clever, and definitely not something
+I had thought of. We already have "--long", and of course we'd show the
+long version for any name that isn't an exact match anyway. So as an
+added bonus, it seems unlikely to surprise anybody who is expecting the
+current "show the tag, not the refname" output (though again, this is
+rare enough that I think people simply expect them to be the same ;) ).
 
 -Peff
