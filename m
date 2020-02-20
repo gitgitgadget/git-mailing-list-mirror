@@ -2,453 +2,247 @@ Return-Path: <SRS0=QcP8=4I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 961DEC11D05
-	for <git@archiver.kernel.org>; Thu, 20 Feb 2020 09:16:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B0240C11D04
+	for <git@archiver.kernel.org>; Thu, 20 Feb 2020 09:50:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 66BDA2465D
-	for <git@archiver.kernel.org>; Thu, 20 Feb 2020 09:16:37 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tlsJh8uf"
+	by mail.kernel.org (Postfix) with ESMTP id 8617D24656
+	for <git@archiver.kernel.org>; Thu, 20 Feb 2020 09:50:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726821AbgBTJQd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Feb 2020 04:16:33 -0500
-Received: from mail-pf1-f171.google.com ([209.85.210.171]:43677 "EHLO
-        mail-pf1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726501AbgBTJQc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Feb 2020 04:16:32 -0500
-Received: by mail-pf1-f171.google.com with SMTP id s1so1609441pfh.10
-        for <git@vger.kernel.org>; Thu, 20 Feb 2020 01:16:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=d5/n7QS9kdwD4kbXz7bpD2eh3Z1pKTQ1A2acNbhBSgE=;
-        b=tlsJh8ufelxQ3sxTzI2BEx6csf398qCt4Z4YSAXmxjPtaWfwR+3LTLiYw0T8AcO8aj
-         AXdL+Hlsk0RfAKS9zxdWNii6dQTTUElGk8MG6xLXYt70lVplCIRTedKFEOL0z7ULUOE7
-         62OEw7GMGmryowPf22eiNqDDbrTnf4rnd9Q1xxzgvvBYVr5Hi2cOjwtCMyyIU+SrvbhI
-         HxjUXYvWkFuAHxAK0m0PxSP4BBYporZKUfX69bWyglCbiKocUCPXymHzUW9Bpeqr7LUo
-         OLqtwVDV3uA7nTtpZxk3gqTKKKFPEUtklCDJ0CwCpeDdpAi9sNhdzrQOQng4FXqI2Ext
-         xkrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=d5/n7QS9kdwD4kbXz7bpD2eh3Z1pKTQ1A2acNbhBSgE=;
-        b=fZTmYK1lJaXlD+l1gazj1FYNAF/euISwbJJhXf/c1pASCYytaCZ9VDyjgjMjDsOCWo
-         VjM1uQ2sIiW0mjFxJ4gdOdcYi5nzS0fLoXKQkJMUXMsOucyAGpk637EzIHBYy5whX6+4
-         sbuy4J/GdaK06mdE9CkW0u0MXm802F5znR6yTmZA0vCgx0UzmtpBa7Cf9QTsWhbWy8pq
-         0rkfPlD6+NLfP2YlgTdb9iGHisNDyBCek8Uk0avUoU+VlmgSBvc2PvRcOa+oNA3/eSWF
-         yPzvE8H2OoWsKWHquOZD7MjUYz8ynNlItLIsQL7ec/pCtENGNpm7oMhOiJPR+XHcyYYc
-         wUrQ==
-X-Gm-Message-State: APjAAAVsxkRmwVYr1lIyGG6jMdihk9FDfa8dM2LBKbh4PJOLgi1DWgVw
-        f0nDI8HJilTXn5XyCWZxhgOvH8zcKZ8=
-X-Google-Smtp-Source: APXvYqz4KYjlq7pDCxqDLWwQANZHMwBnTfJahREAae0zTpx03cNNUUrQHxu8tCj7HAJz+dXzDZUKMw==
-X-Received: by 2002:a62:6c6:: with SMTP id 189mr31437515pfg.224.1582190190050;
-        Thu, 20 Feb 2020 01:16:30 -0800 (PST)
-Received: from Abhishek-Arch.nitk.ac.in ([218.248.46.107])
-        by smtp.gmail.com with ESMTPSA id c8sm2745381pgq.30.2020.02.20.01.16.28
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Feb 2020 01:16:29 -0800 (PST)
-From:   Abhishek Kumar <abhishekkumar8222@gmail.com>
-To:     git@vger.kernel.org
-Subject: [GSoC PATCH v2 1/2] lib-log-graph: consolidate test_cmp_graph logic
-Date:   Thu, 20 Feb 2020 14:45:27 +0530
-Message-Id: <20200220091528.28472-2-abhishekkumar8222@gmail.com>
-X-Mailer: git-send-email 2.25.0
-In-Reply-To: <20200220091528.28472-1-abhishekkumar8222@gmail.com>
-References: <20200216134750.18947-1-abhishekkumar8222@gmail.com>
- <20200220091528.28472-1-abhishekkumar8222@gmail.com>
+        id S1726830AbgBTJu5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Feb 2020 04:50:57 -0500
+Received: from mout.kundenserver.de ([212.227.126.131]:44267 "EHLO
+        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726759AbgBTJu5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Feb 2020 04:50:57 -0500
+Received: from mail.cetitecgmbh.com ([87.190.42.90]) by
+ mrelayeu.kundenserver.de (mreue010 [212.227.15.167]) with ESMTPSA (Nemesis)
+ id 1N5max-1jX8JZ29G7-017AUb for <git@vger.kernel.org>; Thu, 20 Feb 2020
+ 10:50:54 +0100
+Received: from pflvmailgateway.corp.cetitec.com (unknown [127.0.0.1])
+        by mail.cetitecgmbh.com (Postfix) with ESMTP id 5169C64FB00
+        for <git@vger.kernel.org>; Thu, 20 Feb 2020 09:50:54 +0000 (UTC)
+X-Virus-Scanned: amavisd-new at cetitec.com
+Received: from mail.cetitecgmbh.com ([127.0.0.1])
+        by pflvmailgateway.corp.cetitec.com (pflvmailgateway.corp.cetitec.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id G7HAbhd8kA1b for <git@vger.kernel.org>;
+        Thu, 20 Feb 2020 10:50:53 +0100 (CET)
+Received: from pfwsexchange.corp.cetitec.com (unknown [10.10.1.99])
+        by mail.cetitecgmbh.com (Postfix) with ESMTPS id 7955E64F9D5
+        for <git@vger.kernel.org>; Thu, 20 Feb 2020 10:50:53 +0100 (CET)
+Received: from pflmari.corp.cetitec.com (10.10.2.141) by
+ PFWSEXCHANGE.corp.cetitec.com (10.10.1.99) with Microsoft SMTP Server (TLS)
+ id 15.0.1320.4; Thu, 20 Feb 2020 10:50:53 +0100
+Received: by pflmari.corp.cetitec.com (Postfix, from userid 1000)
+        id 1A4F7804E9; Thu, 20 Feb 2020 10:50:53 +0100 (CET)
+Date:   Thu, 20 Feb 2020 10:50:53 +0100
+From:   Alex Riesen <alexander.riesen@cetitec.com>
+To:     <git@vger.kernel.org>
+Subject: t3513-revert-submodule.sh (3513.8) fails sometimes
+Message-ID: <20200220095053.GA8865@pflmari>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/mixed; boundary="ew6BAiZeqk4r7MaW"
+Content-Disposition: inline
+X-Originating-IP: [10.10.2.141]
+X-ClientProxiedBy: PFWSEXCHANGE.corp.cetitec.com (10.10.1.99) To
+ PFWSEXCHANGE.corp.cetitec.com (10.10.1.99)
+X-EsetResult: clean, is OK
+X-EsetId: 37303A29536F936F607565
+X-Provags-ID: V03:K1:VYlIB1gOuBXjq0eroIpIsYnmOpaB2E6ZDjEwkx8TaOfp2M2bVzS
+ xjDqHxAuWtVyk5a0pZobDBnDvN+WshGcUb3UhgfNkhcofnDUDMHEo/ZgIxZSzjQ5sJW+Ytg
+ RWmhB1R3uYZaqUySpCGmA4vBxqolbktyHaLv0npyGUbslb0eNwTmBLNw35y0lYBWxJYERFh
+ xRWhbO0nWsJFflN8sAb8g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:qmy3CWtS3JU=:k4oQOyNfT040WcksnlGDRE
+ JTIjvUeeuLq3eR/roVFeK53MAHa0NpjMQq7jAWcAD2TER5ZFYv0sTrCtH8jONpYuBsa8vZxOG
+ w+Y+ANgIONjBQ7joVWqw1RG04GsNOrnjmkGuOqWJm7Kl4TRv4n2MdrvBtyj+st1zc0JpboiJm
+ wvd1jtqDuqN6rKj0DjTSWYIf7oiHzVA+r5LZJGDu3vj6wAUduEog/4n+8RfmwleKRgdMuRBji
+ u5rbEoiMZVVAtFs5+5XC1jb2eTzALzyjEc6ZafuEzZedG3dKDL9Di5TDWca7AYSveTzbAWIHy
+ YcRthO5cmWy3H2JK+Rav1dReks0ax1pJ9cJLsyEJjYfA3YE3zHzCpO4/LId1pwyk/bi7twbhc
+ g06IiqwiQjLmWpta9rUBGwvXxKgvnRYNmOkG6HWgM8ukMFVUChZVmNjv0unumDeazrj+yaMQw
+ v0qi2CEuSPn+bEqB9nN+FnWPly2NVO739LlwrKK9GY5LhzmkV5oZyBcxq8daYWEZWV/9VhwG5
+ 61mbT/AjrUEuNbt+iLQdUk/tbACt/c4upQTEX7WkVAHkBuZFk0LAVhoPgBu1HWHwiru2aKutb
+ yffFZBIhA3JZrWejYEajilJPW1SJ6QgS42U5YOuC5RIcSzKraPSxJegqU63kMLH6CIH2vwFfU
+ UhH+ofBxS9c4L+AgCX/hZnFcAlTCTiUXDTe8P2aNZc1ENBheatDuG5HEbaqJUi6+iozAg9CCc
+ TkXZvnHXraPff1gUctGzx74PSCnZA3bE9Ev4NToCzkZrpK/MnHCtKeZ0YQOPeQaKsVplrOrGe
+ xeHPhhX97OFBRZwERy/ur0zkw0FPWFoKe+SjVkfmPPqfFXp3KaP4/YsLbY5pnuczNFLmlB2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Logic for comparing log graphs is duplicated across test scripts.
+--ew6BAiZeqk4r7MaW
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
 
-This patch consolidates such logic into lib-log-graph.
+Hi,
 
-Signed-off-by: Abhishek Kumar <abhishekkumar8222@gmail.com>
----
- t/lib-log-graph.sh           | 22 +++++++++++++++
- t/t3430-rebase-merges.sh     |  5 ++--
- t/t4202-log.sh               | 53 ++++++++++--------------------------
- t/t4214-log-graph-octopus.sh | 46 ++++++++++---------------------
- t/t4215-log-skewed-merges.sh |  5 ++--
- 5 files changed, 54 insertions(+), 77 deletions(-)
- create mode 100755 t/lib-log-graph.sh
+the test fails for some reason, relatively rarely (20 per 100
+invocations). I could not find the why, so I'm just posting the logs
+below with the full log attached.
 
-diff --git a/t/lib-log-graph.sh b/t/lib-log-graph.sh
-new file mode 100755
-index 0000000000..97cde44dc7
---- /dev/null
-+++ b/t/lib-log-graph.sh
-@@ -0,0 +1,22 @@
-+# Helps shared by the test scripts for comparing log graphs.
-+
-+sanitize_log_output () {
-+	sed -e 's/ *$//' \
-+	    -e 's/commit [0-9a-f]*$/commit COMMIT_OBJECT_NAME/' \
-+	    -e 's/Merge: [ 0-9a-f]*$/Merge: MERGE_PARENTS/' \
-+	    -e 's/Merge tag.*/Merge HEADS DESCRIPTION/' \
-+	    -e 's/Merge commit.*/Merge HEADS DESCRIPTION/' \
-+	    -e 's/index [0-9a-f]*\.\.[0-9a-f]*/index BEFORE..AFTER/'
-+}
-+
-+lib_test_cmp_graph () {
-+	git log --graph "$@" >output &&
-+	sed 's/ *$//' >output.sanitized < output &&
-+	test_i18ncmp expect output.sanitized
-+}
-+
-+lib_test_cmp_short_graph () {
-+	git log --graph --pretty=short "$@" >output &&
-+	sanitize_log_output >output.sanitized < output &&
-+	test_i18ncmp expect output.sanitized
-+}
-diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
-index e72ca348ea..a1bc3e2001 100755
---- a/t/t3430-rebase-merges.sh
-+++ b/t/t3430-rebase-merges.sh
-@@ -20,12 +20,11 @@ Initial setup:
- '
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-rebase.sh
-+. "$TEST_DIRECTORY"/lib-log-graph.sh
- 
- test_cmp_graph () {
- 	cat >expect &&
--	git log --graph --boundary --format=%s "$@" >output &&
--	sed "s/ *$//" <output >output.trimmed &&
--	test_cmp expect output.trimmed
-+	lib_test_cmp_graph --boundary --format=%s "$@"
- }
- 
- test_expect_success 'setup' '
-diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index 192347a3e1..e025a9cfc2 100755
---- a/t/t4202-log.sh
-+++ b/t/t4202-log.sh
-@@ -5,6 +5,11 @@ test_description='git log'
- . ./test-lib.sh
- . "$TEST_DIRECTORY/lib-gpg.sh"
- . "$TEST_DIRECTORY/lib-terminal.sh"
-+. "$TEST_DIRECTORY/lib-log-graph.sh"
-+
-+test_cmp_graph () {
-+	lib_test_cmp_graph --format=%s "$@"
-+}
- 
- test_expect_success setup '
- 
-@@ -452,8 +457,7 @@ cat > expect <<EOF
- EOF
- 
- test_expect_success 'simple log --graph' '
--	git log --graph --pretty=tformat:%s >actual &&
--	test_cmp expect actual
-+	test_cmp_graph
- '
- 
- cat > expect <<EOF
-@@ -467,8 +471,7 @@ cat > expect <<EOF
- EOF
- 
- test_expect_success 'simple log --graph --line-prefix="123 "' '
--	git log --graph --line-prefix="123 " --pretty=tformat:%s >actual &&
--	test_cmp expect actual
-+	test_cmp_graph --line-prefix="123 "
- '
- 
- test_expect_success 'set up merge history' '
-@@ -495,9 +498,7 @@ cat > expect <<\EOF
- EOF
- 
- test_expect_success 'log --graph with merge' '
--	git log --graph --date-order --pretty=tformat:%s |
--		sed "s/ *\$//" >actual &&
--	test_cmp expect actual
-+	test_cmp_graph --date-order
- '
- 
- cat > expect <<\EOF
-@@ -516,9 +517,7 @@ cat > expect <<\EOF
- EOF
- 
- test_expect_success 'log --graph --line-prefix="| | | " with merge' '
--	git log --line-prefix="| | | " --graph --date-order --pretty=tformat:%s |
--		sed "s/ *\$//" >actual &&
--	test_cmp expect actual
-+	test_cmp_graph --line-prefix="| | | " --date-order
- '
- 
- cat > expect.colors <<\EOF
-@@ -676,9 +675,7 @@ cat > expect <<\EOF
- EOF
- 
- test_expect_success 'log --graph with merge' '
--	git log --graph --date-order --pretty=tformat:%s |
--		sed "s/ *\$//" >actual &&
--	test_cmp expect actual
-+	test_cmp_graph --date-order
- '
- 
- test_expect_success 'log.decorate configuration' '
-@@ -1213,24 +1210,8 @@ cat >expect <<\EOF
-   +one
- EOF
- 
--sanitize_output () {
--	sed -e 's/ *$//' \
--	    -e 's/commit [0-9a-f]*$/commit COMMIT_OBJECT_NAME/' \
--	    -e 's/Merge: [ 0-9a-f]*$/Merge: MERGE_PARENTS/' \
--	    -e 's/Merge tag.*/Merge HEADS DESCRIPTION/' \
--	    -e 's/Merge commit.*/Merge HEADS DESCRIPTION/' \
--	    -e 's/, 0 deletions(-)//' \
--	    -e 's/, 0 insertions(+)//' \
--	    -e 's/ 1 files changed, / 1 file changed, /' \
--	    -e 's/, 1 deletions(-)/, 1 deletion(-)/' \
--	    -e 's/, 1 insertions(+)/, 1 insertion(+)/' \
--	    -e 's/index [0-9a-f]*\.\.[0-9a-f]*/index BEFORE..AFTER/'
--}
--
- test_expect_success 'log --graph with diff and stats' '
--	git log --no-renames --graph --pretty=short --stat -p >actual &&
--	sanitize_output >actual.sanitized <actual &&
--	test_i18ncmp expect actual.sanitized
-+	lib_test_cmp_short_graph --no-renames --stat -p
- '
- 
- cat >expect <<\EOF
-@@ -1505,9 +1486,7 @@ cat >expect <<\EOF
- EOF
- 
- test_expect_success 'log --line-prefix="*** " --graph with diff and stats' '
--	git log --line-prefix="*** " --no-renames --graph --pretty=short --stat -p >actual &&
--	sanitize_output >actual.sanitized <actual &&
--	test_i18ncmp expect actual.sanitized
-+	lib_test_cmp_short_graph --line-prefix="*** " --no-renames --stat -p
- '
- 
- cat >expect <<-\EOF
-@@ -1529,9 +1508,7 @@ cat >expect <<-\EOF
- EOF
- 
- test_expect_success 'log --graph with --name-status' '
--	git log --graph --format=%s --name-status tangle..reach >actual &&
--	sanitize_output <actual >actual.sanitized &&
--	test_cmp expect actual.sanitized
-+	test_cmp_graph --name-status tangle..reach
- '
- 
- cat >expect <<-\EOF
-@@ -1553,9 +1530,7 @@ cat >expect <<-\EOF
- EOF
- 
- test_expect_success 'log --graph with --name-only' '
--	git log --graph --format=%s --name-only tangle..reach >actual &&
--	sanitize_output <actual >actual.sanitized &&
--	test_cmp expect actual.sanitized
-+	test_cmp_graph --name-only tangle..reach
- '
- 
- test_expect_success 'dotdot is a parent directory' '
-diff --git a/t/t4214-log-graph-octopus.sh b/t/t4214-log-graph-octopus.sh
-index 40d27db674..dedb72ace6 100755
---- a/t/t4214-log-graph-octopus.sh
-+++ b/t/t4214-log-graph-octopus.sh
-@@ -3,6 +3,12 @@
- test_description='git log --graph of skewed left octopus merge.'
- 
- . ./test-lib.sh
-+. "$TEST_DIRECTORY"/lib-log-graph.sh
-+
-+test_cmp_graph () {
-+	cat >expect &&
-+	lib_test_cmp_graph --color=never --date-order --format=%s "$@"
-+}
- 
- test_expect_success 'set up merge history' '
- 	test_commit initial &&
-@@ -24,7 +30,7 @@ test_expect_success 'set up merge history' '
- '
- 
- test_expect_success 'log --graph with tricky octopus merge, no color' '
--	cat >expect.uncolored <<-\EOF &&
-+	test_cmp_graph left octopus-merge <<-\EOF
- 	* left
- 	| *-.   octopus-merge
- 	|/|\ \
-@@ -37,9 +43,6 @@ test_expect_success 'log --graph with tricky octopus merge, no color' '
- 	|/
- 	* initial
- 	EOF
--	git log --color=never --graph --date-order --pretty=tformat:%s left octopus-merge >actual.raw &&
--	sed "s/ *\$//" actual.raw >actual &&
--	test_cmp expect.uncolored actual
- '
- 
- test_expect_success 'log --graph with tricky octopus merge with colors' '
-@@ -66,7 +69,7 @@ test_expect_success 'log --graph with tricky octopus merge with colors' '
- # without the first parent skewing to the "left" branch column).
- 
- test_expect_success 'log --graph with normal octopus merge, no color' '
--	cat >expect.uncolored <<-\EOF &&
-+	test_cmp_graph octopus-merge <<-\EOF
- 	*---.   octopus-merge
- 	|\ \ \
- 	| | | * 4
-@@ -78,9 +81,6 @@ test_expect_success 'log --graph with normal octopus merge, no color' '
- 	|/
- 	* initial
- 	EOF
--	git log --color=never --graph --date-order --pretty=tformat:%s octopus-merge >actual.raw &&
--	sed "s/ *\$//" actual.raw >actual &&
--	test_cmp expect.uncolored actual
- '
- 
- test_expect_success 'log --graph with normal octopus merge with colors' '
-@@ -103,7 +103,7 @@ test_expect_success 'log --graph with normal octopus merge with colors' '
- '
- 
- test_expect_success 'log --graph with normal octopus merge and child, no color' '
--	cat >expect.uncolored <<-\EOF &&
-+	test_cmp_graph after-merge <<-\EOF
- 	* after-merge
- 	*---.   octopus-merge
- 	|\ \ \
-@@ -116,9 +116,6 @@ test_expect_success 'log --graph with normal octopus merge and child, no color'
- 	|/
- 	* initial
- 	EOF
--	git log --color=never --graph --date-order --pretty=tformat:%s after-merge >actual.raw &&
--	sed "s/ *\$//" actual.raw >actual &&
--	test_cmp expect.uncolored actual
- '
- 
- test_expect_success 'log --graph with normal octopus and child merge with colors' '
-@@ -142,7 +139,7 @@ test_expect_success 'log --graph with normal octopus and child merge with colors
- '
- 
- test_expect_success 'log --graph with tricky octopus merge and its child, no color' '
--	cat >expect.uncolored <<-\EOF &&
-+	test_cmp_graph left after-merge <<-\EOF
- 	* left
- 	| * after-merge
- 	| *-.   octopus-merge
-@@ -156,9 +153,6 @@ test_expect_success 'log --graph with tricky octopus merge and its child, no col
- 	|/
- 	* initial
- 	EOF
--	git log --color=never --graph --date-order --pretty=tformat:%s left after-merge >actual.raw &&
--	sed "s/ *\$//" actual.raw >actual &&
--	test_cmp expect.uncolored actual
- '
- 
- test_expect_success 'log --graph with tricky octopus merge and its child with colors' '
-@@ -183,7 +177,7 @@ test_expect_success 'log --graph with tricky octopus merge and its child with co
- '
- 
- test_expect_success 'log --graph with crossover in octopus merge, no color' '
--	cat >expect.uncolored <<-\EOF &&
-+	test_cmp_graph after-4 octopus-merge <<-\EOF
- 	* after-4
- 	| *---.   octopus-merge
- 	| |\ \ \
-@@ -200,9 +194,6 @@ test_expect_success 'log --graph with crossover in octopus merge, no color' '
- 	|/
- 	* initial
- 	EOF
--	git log --color=never --graph --date-order --pretty=tformat:%s after-4 octopus-merge >actual.raw &&
--	sed "s/ *\$//" actual.raw >actual &&
--	test_cmp expect.uncolored actual
- '
- 
- test_expect_success 'log --graph with crossover in octopus merge with colors' '
-@@ -230,7 +221,7 @@ test_expect_success 'log --graph with crossover in octopus merge with colors' '
- '
- 
- test_expect_success 'log --graph with crossover in octopus merge and its child, no color' '
--	cat >expect.uncolored <<-\EOF &&
-+	test_cmp_graph after-4 after-merge <<-\EOF
- 	* after-4
- 	| * after-merge
- 	| *---.   octopus-merge
-@@ -248,9 +239,6 @@ test_expect_success 'log --graph with crossover in octopus merge and its child,
- 	|/
- 	* initial
- 	EOF
--	git log --color=never --graph --date-order --pretty=tformat:%s after-4 after-merge >actual.raw &&
--	sed "s/ *\$//" actual.raw >actual &&
--	test_cmp expect.uncolored actual
- '
- 
- test_expect_success 'log --graph with crossover in octopus merge and its child with colors' '
-@@ -279,7 +267,7 @@ test_expect_success 'log --graph with crossover in octopus merge and its child w
- '
- 
- test_expect_success 'log --graph with unrelated commit and octopus tip, no color' '
--	cat >expect.uncolored <<-\EOF &&
-+	test_cmp_graph after-initial octopus-merge <<-\EOF
- 	* after-initial
- 	| *---.   octopus-merge
- 	| |\ \ \
-@@ -296,9 +284,6 @@ test_expect_success 'log --graph with unrelated commit and octopus tip, no color
- 	|/
- 	* initial
- 	EOF
--	git log --color=never --graph --date-order --pretty=tformat:%s after-initial octopus-merge >actual.raw &&
--	sed "s/ *\$//" actual.raw >actual &&
--	test_cmp expect.uncolored actual
- '
- 
- test_expect_success 'log --graph with unrelated commit and octopus tip with colors' '
-@@ -326,7 +311,7 @@ test_expect_success 'log --graph with unrelated commit and octopus tip with colo
- '
- 
- test_expect_success 'log --graph with unrelated commit and octopus child, no color' '
--	cat >expect.uncolored <<-\EOF &&
-+	test_cmp_graph after-initial after-merge <<-\EOF
- 	* after-initial
- 	| * after-merge
- 	| *---.   octopus-merge
-@@ -344,9 +329,6 @@ test_expect_success 'log --graph with unrelated commit and octopus child, no col
- 	|/
- 	* initial
- 	EOF
--	git log --color=never --graph --date-order --pretty=tformat:%s after-initial after-merge >actual.raw &&
--	sed "s/ *\$//" actual.raw >actual &&
--	test_cmp expect.uncolored actual
- '
- 
- test_expect_success 'log --graph with unrelated commit and octopus child with colors' '
-diff --git a/t/t4215-log-skewed-merges.sh b/t/t4215-log-skewed-merges.sh
-index 1d0d3240ff..e1e94176da 100755
---- a/t/t4215-log-skewed-merges.sh
-+++ b/t/t4215-log-skewed-merges.sh
-@@ -3,12 +3,11 @@
- test_description='git log --graph of skewed merges'
- 
- . ./test-lib.sh
-+. "$TEST_DIRECTORY"/lib-log-graph.sh
- 
- check_graph () {
- 	cat >expect &&
--	git log --graph --pretty=tformat:%s "$@" >actual.raw &&
--	sed "s/ *$//" actual.raw >actual &&
--	test_cmp expect actual
-+	lib_test_cmp_graph --format=%s "$@"
- }
- 
- test_expect_success 'log --graph with merge fusing with its left and right neighbors' '
--- 
-2.25.0
+The test has been failing here for at least a year (the logs below done with
+v2.25.1).
 
+I have a config.mak:
+
+    USE_LIBPCRE2=YesPlease
+    OPENSSL_SHA256=YesPlease
+
+    CFLAGS += -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=1
+    CFLAGS += -fstack-protector-strong
+    CFLAGS += -fpie
+    LDFLAGS += -z relro -z now
+    LDFLAGS += -pie
+
+There local modifications, but none in the core core (small customizations in gitk).
+
+The file system where the test is run on is an ext4 volume (an old, but still
+usable ssd). The kernel is an v5.5.3. Debian without systemd. Not a container.
+Not a VM.
+
+expecting success of 3513.8 'git_revert: replace submodule containing a .git directory with a directory must fail': 
+		prolog &&
+		reset_work_tree_to add_sub1 &&
+		(
+			cd submodule_update &&
+			git branch -t replace_sub1_with_directory origin/replace_sub1_with_directory &&
+			replace_gitfile_with_git_dir sub1 &&
+			test_must_fail $command replace_sub1_with_directory &&
+			test_superproject_content origin/add_sub1 &&
+			test_git_directory_is_unchanged sub1 &&
+			test_submodule_content sub1 origin/add_sub1
+		)
+	
+Cloning into 'submodule_update'...
+done.
+Branch 'add_sub1' set up to track remote branch 'add_sub1' from 'origin'.
+Switched to a new branch 'add_sub1'
+Submodule 'sub1' (/home/ari/compile/git/t/trash directory.t3513-revert-submodule/submodule_update_sub1) registered for path 'sub1'
+Cloning into '/home/ari/compile/git/t/trash directory.t3513-revert-submodule/submodule_update/sub1'...
+done.
+Submodule path 'sub1': checked out '4a3c63c700bd465527a865db70efb925e380182c'
+Branch 'replace_sub1_with_directory' set up to track remote branch 'replace_sub1_with_directory' from 'origin'.
+error: The following untracked working tree files would be overwritten by checkout:
+	sub1/file1
+	sub1/file2
+Please move or remove them before you switch branches.
+Aborting
+'actual' is not empty, it contains:
+:100644 100644 587be6b4c3f93f93c489c0111bba5596147a26cb 0000000000000000000000000000000000000000 M	file1
+:100644 100644 975fbec8256d3e8a3797e7a3611380f27c49f4ac 0000000000000000000000000000000000000000 M	file2
+not ok 8 - git_revert: replace submodule containing a .git directory with a directory must fail
+#	
+#			prolog &&
+#			reset_work_tree_to add_sub1 &&
+#			(
+#				cd submodule_update &&
+#				git branch -t replace_sub1_with_directory origin/replace_sub1_with_directory &&
+#				replace_gitfile_with_git_dir sub1 &&
+#				test_must_fail $command replace_sub1_with_directory &&
+#				test_superproject_content origin/add_sub1 &&
+#				test_git_directory_is_unchanged sub1 &&
+#				test_submodule_content sub1 origin/add_sub1
+#			)
+#		
+
+Regards,
+Alex
+
+--ew6BAiZeqk4r7MaW
+Content-Type: application/x-xz
+Content-Disposition: attachment; filename="t3513-revert-submodule.log.xz"
+Content-Transfer-Encoding: base64
+
+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
+Z/sCAAAAAARZWg==
+
+--ew6BAiZeqk4r7MaW--
