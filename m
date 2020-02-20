@@ -2,142 +2,113 @@ Return-Path: <SRS0=QcP8=4I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 911A6C11D0C
-	for <git@archiver.kernel.org>; Thu, 20 Feb 2020 19:33:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B5F46C11D0C
+	for <git@archiver.kernel.org>; Thu, 20 Feb 2020 19:45:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5D3B8208C4
-	for <git@archiver.kernel.org>; Thu, 20 Feb 2020 19:33:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8B901206F4
+	for <git@archiver.kernel.org>; Thu, 20 Feb 2020 19:45:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="euDvt5zy"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Jl/KSR/n"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728390AbgBTTdg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Feb 2020 14:33:36 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:56751 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728248AbgBTTdg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Feb 2020 14:33:36 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3775FA9326;
-        Thu, 20 Feb 2020 14:33:31 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Lbasp1dS2XoXJfGlonB58fJhV4w=; b=euDvt5
-        zy/3vzbW9E57HnT89Ge7oVyqZ4aRVBtLdUayq9TEadVXbWF/XXyn2Yo5yUK8rzmZ
-        p5CJ9AHtfUZ/eyluMTY1t3ie57Fpgd+gxnVTCYwGcUYeUen3E7s5zmllxhmB1C6E
-        CUtcjytHl3hsoR3bec+HqZC6EtX26cPQ0VgLs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=v+xFqoRIcv/vaTxP7J4cTkWrNpCyNOw1
-        DfwX6GuxWIkcykmAKLoOjVPEkoOkS4JXqRDhTS301da01APT7f4STierXpKZUmzZ
-        5DW4MHL4vdCLbIvdikolryOv3kPMjyerJJBiqv9yIH1b73WYd1E3GOC2yw6WVZfE
-        d9dpH7GjfN8=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 304E2A9325;
-        Thu, 20 Feb 2020 14:33:31 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 7F5FDA9324;
-        Thu, 20 Feb 2020 14:33:28 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v8 03/15] bugreport: add tool to generate debugging info
-References: <20200220015858.181086-1-emilyshaffer@google.com>
-        <20200220015858.181086-4-emilyshaffer@google.com>
-Date:   Thu, 20 Feb 2020 11:33:26 -0800
-In-Reply-To: <20200220015858.181086-4-emilyshaffer@google.com> (Emily
-        Shaffer's message of "Wed, 19 Feb 2020 17:58:46 -0800")
-Message-ID: <xmqq8skxawah.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1728834AbgBTTpY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Feb 2020 14:45:24 -0500
+Received: from mail-ot1-f65.google.com ([209.85.210.65]:38941 "EHLO
+        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728334AbgBTTpY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Feb 2020 14:45:24 -0500
+Received: by mail-ot1-f65.google.com with SMTP id 77so4811940oty.6
+        for <git@vger.kernel.org>; Thu, 20 Feb 2020 11:45:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=ydEnWKjDDEE5YwUUXOCc9fE2UVU+REBNzJQka7zE5dc=;
+        b=Jl/KSR/nuFcbUiLOobAf1M5qUeo9fruBkCNC9WGRqIq0Tg4k4pYmbJ6Nozi1l78QBB
+         UdSRQmdXeSn+CBt/x08joGaurJDWsNG2DJy0FNbMISw/cevCIwjsP37QmxGo0wcIqozM
+         tdtOLmgp61A3MFaC4WuUvXeRGxcnDKUGRdESH45BRb19dvQdZWTwD7v7fWMKNJwTeizi
+         mPb+DT8fJWcOhADToP8+yRJEuFV2aYmkwglQ4tbJRJT6XHIneX6rpSYxts8NLkr38VjX
+         KqZN1trw02u4CmH+haLAYYXRPXfY1NRv0CTdL8nfogaNHqUqfY8i0AOpFRcpQW/fafL6
+         nXcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=ydEnWKjDDEE5YwUUXOCc9fE2UVU+REBNzJQka7zE5dc=;
+        b=gVLLLSYkJEAlhwDp09A9W0ayCckn/r+ZLf6MKkGLFgbqpv1MBqR4F/HJgxHgQ+VWtl
+         vK5i8PCQIodWAtPW4hgzmi7dKAVZT3i/Bl20hNnyaM+Tu87K/1MlM1p37bi9uHkARm6c
+         V3WHDYddJ/s8JghRnes5ehOb4sQfjzmE711RxdN0JAKMr3IkK5TcZAgfd7fIYwb7RvvD
+         FL9g3aV9hgkJfPUcfv/zL7YOuFrSx1w25UpEyUs71prc3AtRAcgi4ksGkRdM/h26LB5M
+         6IVgAeP298zXMDya0fLogT6PhhoMGnI5D6pysgpmsfPFhMcoiJvWMHFK/XR4GePHoFQs
+         q5Pw==
+X-Gm-Message-State: APjAAAXHj2eXwUxZgu2n6G1G28Trx8mfmIA4V2f/mRdxqUV/My0nlScr
+        yIPUpdK762/T7qXSbMgWwh2EasJyyo02ulmONtQ=
+X-Google-Smtp-Source: APXvYqxmkQ77WUUB8TPMUo/Jdpr/qIGQdbRZi6Oat+pk6TJn1tu5TCTc3NYuJDwQlw1XXi7V0YAVdVBIeu3l0UKjd5w=
+X-Received: by 2002:a9d:7c81:: with SMTP id q1mr6773855otn.112.1582227923540;
+ Thu, 20 Feb 2020 11:45:23 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: DEB1B346-5417-11EA-8B9C-B0405B776F7B-77302942!pb-smtp20.pobox.com
+References: <BL0PR2101MB108917C204868FA653C2948680130@BL0PR2101MB1089.namprd21.prod.outlook.com>
+In-Reply-To: <BL0PR2101MB108917C204868FA653C2948680130@BL0PR2101MB1089.namprd21.prod.outlook.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 20 Feb 2020 11:45:12 -0800
+Message-ID: <CABPp-BE8t+M5A8BpkYzs-WkoKDTCR_4jiT-vqwpLriuxhx46eQ@mail.gmail.com>
+Subject: Re: BUG: git clean -d cannot remove files from read-only directories
+To:     Adam Milazzo <Adam.Milazzo@microsoft.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emily Shaffer <emilyshaffer@google.com> writes:
+On Thu, Feb 20, 2020 at 10:58 AM Adam Milazzo
+<Adam.Milazzo@microsoft.com> wrote:
+>
+> > It is how UNIX-like filesystem works, isn't it?
+>
+> Sure, but it doesn't have to be how "git clean -d" works. In particular, =
+"git clean -ffd" could be more forceful, or there could be another option o=
+r a third level of force beyond the current two levels.
+>
+> It really comes back to this question: "How can I avoid the failure, give=
+n that I am running 'git clean' from a script and not interactively?" The o=
+nly answer I could find that's not unreasonable is to parse the text output=
+ of 'git status -s' to find the untracked directories and then run 'chmod -=
+R u+w' on each of those directories before running 'git clean -d'." I can d=
+o that, but I still think a "force" (or other) flag that really forces the =
+cleanup would be preferable, especially given that this isn't a completely =
+idiosyncratic scenario but one that will happen more and more as go modules=
+ are adopted (unless go is changed to stop putting them in read-only direct=
+ories).
 
-> +	argc = parse_options(argc, argv, "", bugreport_options,
-> +			     bugreport_usage, 0);
 
-Which one between an empty string and NULL is more appropriate to be
-passed as "prefix" here?  I assume that this is *not* really a git
-program, and no repository/working-tree discovery is involved, and
-you won't be using OPT_FILENAME, so it would probably be OK.
+Tying permission override to e.g -ffd would be a really bad idea.
+People would start adopting that for the permission override reason,
+then someone is going to accidentally nuke a git submodule with
+unpushed changes.
 
-> +
-> +	if (option_output) {
-> +		strbuf_addstr(&report_path, option_output);
-> +		strbuf_complete(&report_path, '/');
-> +	}
-> +
-> +
-> +	strbuf_addstr(&report_path, "git-bugreport-");
-> +	strbuf_addftime(&report_path, option_suffix, localtime(&now), 0, 0);
-> +	strbuf_addstr(&report_path, ".txt");
-> +
-> +	if (!stat(report_path.buf, &statbuf))
-> +		die("'%s' already exists", report_path.buf);
+Tying it to -fd doesn't have that particular problem, but I'm worried
+a bit about a slippery slope if we do it.  If we say that "git clean
+-fd" should check and modify directory permission bits, should it also
+check and modify any necessary ACLs?  What if the user in question
+doesn't have perms, but the user in question is in sudoers -- should
+git try to see if they can run chown or chattr under sudo too?
 
-Missed i18n/l10n, but I do not think it is a useful thing for this
-check to be here in the first place.
+Also, another way to look at this; currently 'git clean -fd' behaves
+the same on untracked directories as 'rm -rf' does and I think that's
+a good model for how to behave.  Why should they be different?
 
-> +	switch (safe_create_leading_directories(report_path.buf)) {
-> +	case SCLD_OK:
-> +	case SCLD_EXISTS:
-> +		break;
-> +	default:
-> +		die(_("could not create leading directories for '%s'"),
-> +		    report_path.buf);
-> +	}
-> +
-> +	get_bug_template(&buffer);
-> +
-> +	report = fopen_for_writing(report_path.buf);
-
-fopen_for_writing() does not give good semantics for what you seem
-to want to do here (i.e. to make sure you do not overwrite an
-existing one).  It even has "if we cannot open it, retry after
-unlinking" logic in it, which screams "this function is designed for
-those who want to overwrite the file", and if you look at its
-callers, they are _all_ about opening a file for writing with a well
-known name like FETCH_HEAD, COMMIT_EDITMSG, etc.
-
-Besides, a stat() that dies when a file exists would not
-help---since that check, you've spent non-zero time, creating
-leading directories and preparing boilerplate in the buffer,
-and there is no guarantee somebody else used the same filename
-in the meantime.
-
-If you want to avoid overwriting an existing file (which I think is
-a good idea---I just do not think the earlier "if (!stat()) die()"
-is a good way to do so), the only sensible way to do so is to ask
-your open/creat to fail if there already is a file---that is how
-you'd avoid racing with another process that may be creating such a
-file.  Grep for O_EXCL to find where the flag is used with O_CREAT
-to see how it is done.
-
-> +	if (report == NULL) {
-
-Style. "if (!report)"
-
-> +		strbuf_release(&report_path);
-> +		die("couldn't open '%s' for writing", report_path.buf);
-
-Do we see a use-after-free here?  Also missed i18n/l10n.
-
-It is embarrassing on the reviewers' side that this (which is not
-new in this round at all and hasn't changed since v6) hasn't been
-caught for a few rounds X-<.
-
-Thanks.
+$ git clean -fd unwritable-dir/
+warning: failed to remove unwritable-dir/a: Permission denied
+warning: failed to remove unwritable-dir/b: Permission denied
+warning: failed to remove unwritable-dir/c: Permission denied
+$ rm -rf unwritable-dir/
+rm: cannot remove 'unwritable-dir/a': Permission denied
+rm: cannot remove 'unwritable-dir/b': Permission denied
+rm: cannot remove 'unwritable-dir/c': Permission denied
