@@ -2,174 +2,102 @@ Return-Path: <SRS0=QcP8=4I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1,
-	USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.4 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E05BDC11D00
-	for <git@archiver.kernel.org>; Thu, 20 Feb 2020 22:33:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DB0DC11D00
+	for <git@archiver.kernel.org>; Thu, 20 Feb 2020 22:34:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id ADFEA206F4
-	for <git@archiver.kernel.org>; Thu, 20 Feb 2020 22:33:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4F643208E4
+	for <git@archiver.kernel.org>; Thu, 20 Feb 2020 22:34:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="S2PzJLG/"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="OEaCN2sM"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729219AbgBTWd3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Feb 2020 17:33:29 -0500
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:35608 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728582AbgBTWd3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Feb 2020 17:33:29 -0500
-Received: by mail-pl1-f193.google.com with SMTP id g6so2119857plt.2
-        for <git@vger.kernel.org>; Thu, 20 Feb 2020 14:33:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=DCa2R9jRA461jjfi6ctBMPrbnEaDia2899ShpUYJ4uQ=;
-        b=S2PzJLG/+qBFg4HNTBxl+qyU8JgflSD0tqMQw6+4svvQwMKIfO+w7UNtzKx/wXpq+9
-         u2qa2g6X6G5Myfg45Sys8UCfyTxvdw5tB/QR5J7bcjTb1CyUAuIzWuu044/orMbGAzBq
-         rQKSciuwTSDYldzMIr2CRkKi/vTmNJmecwxPOUjIceT9LwMjVowRSKQItZOR7AtDey8h
-         c36e6Jdfh5Qp4i2y+5zrhRYDzS3iLDo0ZKt6qWP/v8U/BgI+gz34GOhwOpYHaO9lrabD
-         flPtyahA3PEqZcxZYvR7TAG8UdEc5LJvT4+BsiNxS96SHodvCUu/qcslQ9HR1g53Di+a
-         Ji9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=DCa2R9jRA461jjfi6ctBMPrbnEaDia2899ShpUYJ4uQ=;
-        b=HTfpENRTcy36dVeFDZDG82mm/RemuF4/S7RKAvwVOo1gnd87aHMT15JMqVGiQXJdjx
-         z+OdI/QtCk36FiUOGF7ItFzwPYBF2iY4tVJrly/LMdFb2qGBP/9kNvyA2hiTM9ReXJzE
-         DsAgDS68TOhh59CHCHu4qtXGTqqVZzvCzgbLPyvN3OtizBNd5J8Hi2/mcCQTTH/1tCRS
-         nKM0kj3zcUPuIUhoOiZfQwijP3YJxbMN7zMX691ooC7w4gtSrKfL0KAASFzkzcCaYxLI
-         b0ehMfjZnxXf3sbpSUMwcfKlmQTJ4+XN9PZhgB2B0aiEXLX/z9/Uy+ow2VDsFmtcp27L
-         h2xw==
-X-Gm-Message-State: APjAAAVM69Wm2sCMqzzCmtPAFHAtVqZ12Gc+oo0ZuA+kF0c5UTRQuIri
-        D/xQfTPUf0SKvJORAXgZB5S6D6AVtxQ=
-X-Google-Smtp-Source: APXvYqz33rIZp78vAeGPGQnlNpOFYcYlqU3y98wkxqTjPrloZchL+p9eDUfnZVlIr0ZKtFYUH/UoGQ==
-X-Received: by 2002:a17:902:fe93:: with SMTP id x19mr33681729plm.155.1582238008667;
-        Thu, 20 Feb 2020 14:33:28 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
-        by smtp.gmail.com with ESMTPSA id o19sm4155644pjr.2.2020.02.20.14.33.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Feb 2020 14:33:27 -0800 (PST)
-Date:   Thu, 20 Feb 2020 14:33:23 -0800
-From:   Emily Shaffer <emilyshaffer@google.com>
+        id S1729090AbgBTWeD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Feb 2020 17:34:03 -0500
+Received: from mout.gmx.net ([212.227.15.19]:47665 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728582AbgBTWeD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Feb 2020 17:34:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1582238037;
+        bh=j7vRSk8nCKCMfqQQ7nrrgUJhA1B3h5UZ3oYWOodv6m8=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=OEaCN2sMlzuqgC+DfXZJajbb4a8dMzqnc6ZcmpMH1hrP0eAgRD2Z6LFG9mD7VP8A4
+         inh6Ji4Admu9aJ2uGKL7V6YBIuvJA2NGj2t7H5zxhC8rpwooBPqxkI1MnWeXz80uFG
+         zyb8PJ6SSZ3z+O1FnynGnup8DOIxAoxNEXuckXOI=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.86]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MnJhO-1jlyz23qWi-00jIp7; Thu, 20
+ Feb 2020 23:33:57 +0100
+Date:   Thu, 20 Feb 2020 23:33:52 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v8 03/15] bugreport: add tool to generate debugging info
-Message-ID: <20200220223323.GD2447@google.com>
-References: <20200220015858.181086-1-emilyshaffer@google.com>
- <20200220015858.181086-4-emilyshaffer@google.com>
- <xmqq8skxawah.fsf@gitster-ct.c.googlers.com>
+cc:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH v7 07/15] bugreport: add git-remote-https version
+In-Reply-To: <xmqqpneacim1.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2002202333340.46@tvgsbejvaqbjf.bet>
+References: <20200214015343.201946-1-emilyshaffer@google.com> <20200214015343.201946-8-emilyshaffer@google.com> <nycvar.QRO.7.76.6.2002191524460.46@tvgsbejvaqbjf.bet> <20200219222807.GB26221@google.com> <xmqqpneacim1.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq8skxawah.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:Qi1yaOglNzsba+W3H9aGYuw0pBMZNNcKIczGaTjrhvHfexFeZDJ
+ mXTWUs3Cm0qeFaCi4Kl3LCfVNHdp2p8C02ZYYYz0LQBUcFkHmXygbFzA3Rkd8c7o0raFQAb
+ TtHUpmVI8vQELCjmC8DUTTgsYtSREFDg0ZPhqkkL90RYD6rEte/kHiBfxNzVa7wGt6AO+GE
+ 22iBFH5TAYn9DGvN+ei9A==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:qtmIJWbzL9c=:U4j6Dv7W7XWvdQcwsds5lB
+ hhbPYNSZHj30v+T00GTOLhYXA4noyodJ1LVaqbIZI3vbSlav9j26oUC7jTRoGojaq1X1w3Nbl
+ DxwJcYbNU5vwAfdl2VTPZApmFzaJaooWFdb0RyzI3+dtOpxBkzNWZKAsOkgDfa3A4JVDIa92Y
+ E1+BmvWYxkwezkfXDL7NuiMJ3SF981dywRb8Xe2INjXrSu1VO6G4wuI0odx6WG4dcpdkV66gH
+ GxJaIAUJrJLHeFFHpdyi62UDiPqfgP08japfWPXQrmEWpIEoOeK7rGzR3IEm3FcVis+O5t78G
+ tjeXM4lakhoad+n3tV38zQIgfTWGM8GdoM7glruaYRlU6GggBYKVogRjQBnYx44hUkRQZUQwO
+ KAs8IDklzUJkyaj8fKN9d71MxnrsH5z5T60ca/P4iIv5Hu7vgtDEKyaEmhuEcyHYpUIBcXZmT
+ W6ilrlXdq6pzd0IiAqfTocIOnBwNrHkzQDV5artonC3LiXqhHO49OvA+Aux8b9jiR5EG2m4A8
+ P2BWIr1jG0RtuVPe63+ZTNUBtAeaHrNMyKStzvdwlzYpg/yi7wCr/iTppJZGmnBoVNIincqhs
+ n/ZJmMfMqWpoU/QuIgQrI7P1ofHofOUEkoxmQLZBGChLKOrGdDESnsF3m8ilr2+fVJxot5trt
+ Xj5Qgo64eYJBuZqawfIoDwlN0rUzp/lTfj0OUzc3MWHRs3njvP4KjdwRwUoXn52x6g225tVyi
+ QorZ2CAjcmtoKhosK5DtCBlh6JJqjbxZXKosFLYLx6vSfJjstBIH1hHSsOQUNhdIy6CfR+UY8
+ oKHOiiON6Z/u+u1uC0a0ZbiJjCUAMDiiAMbZ13f3VaTo1uG3apIrS826EKQtlyw02lqHcKJHM
+ syYskk7MYCWezWQ5oBAfzMhl8vQoLq0zMm80YyvGX1MQX6lz68l+aTks+m0UWV80j7RFf8VjG
+ cmmFtvOGgF0AFvppMYnIKyryx1iA8k9IMbCXhVLm+0ZNHRY5UXmePaefgY6JIouuhYYWw5FPQ
+ RRx/WVhRAxuZy6jkkVcCkuYn+svzxmqvbHqcVeZYYw3yN/FPQHY9SO/59qUA1YOrMOf90RQOo
+ tocX1NueIrYZBrB6jJTqre0JPvGJsN38Gp6ctD/VRFUdECYIDvKkqbRepRytOhkOJ3OQrsOa2
+ 2czBSZlHHTFkrM6K9LjlTS0AJFVJJCdEzuLThrCwtPdKgjvpZiNQnxpC4cZg5pI71VYkn1Gl5
+ KxAHf7m6wjbwgusZn
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 20, 2020 at 11:33:26AM -0800, Junio C Hamano wrote:
+Hi Junio,
+
+On Wed, 19 Feb 2020, Junio C Hamano wrote:
+
 > Emily Shaffer <emilyshaffer@google.com> writes:
-> 
-> > +	argc = parse_options(argc, argv, "", bugreport_options,
-> > +			     bugreport_usage, 0);
-> 
-> Which one between an empty string and NULL is more appropriate to be
-> passed as "prefix" here?  I assume that this is *not* really a git
-> program, and no repository/working-tree discovery is involved, and
-> you won't be using OPT_FILENAME, so it would probably be OK.
-> 
-> > +
-> > +	if (option_output) {
-> > +		strbuf_addstr(&report_path, option_output);
-> > +		strbuf_complete(&report_path, '/');
-> > +	}
-> > +
-> > +
-> > +	strbuf_addstr(&report_path, "git-bugreport-");
-> > +	strbuf_addftime(&report_path, option_suffix, localtime(&now), 0, 0);
-> > +	strbuf_addstr(&report_path, ".txt");
-> > +
-> > +	if (!stat(report_path.buf, &statbuf))
-> > +		die("'%s' already exists", report_path.buf);
-> 
-> Missed i18n/l10n, but I do not think it is a useful thing for this
-> check to be here in the first place.
-> 
-> > +	switch (safe_create_leading_directories(report_path.buf)) {
-> > +	case SCLD_OK:
-> > +	case SCLD_EXISTS:
-> > +		break;
-> > +	default:
-> > +		die(_("could not create leading directories for '%s'"),
-> > +		    report_path.buf);
-> > +	}
-> > +
-> > +	get_bug_template(&buffer);
-> > +
-> > +	report = fopen_for_writing(report_path.buf);
-> 
-> fopen_for_writing() does not give good semantics for what you seem
-> to want to do here (i.e. to make sure you do not overwrite an
-> existing one).  It even has "if we cannot open it, retry after
-> unlinking" logic in it, which screams "this function is designed for
-> those who want to overwrite the file", and if you look at its
-> callers, they are _all_ about opening a file for writing with a well
-> known name like FETCH_HEAD, COMMIT_EDITMSG, etc.
-> 
-> Besides, a stat() that dies when a file exists would not
-> help---since that check, you've spent non-zero time, creating
-> leading directories and preparing boilerplate in the buffer,
-> and there is no guarantee somebody else used the same filename
-> in the meantime.
+>
+> >> Also, in keeping with the existing code, we would need to use
+> >> `--build-options` here (this is what `git version` calls the equivale=
+nt
+> >> mode).
+> >>
+> >> _However_.
+> >>
+> >> I like your `--build-info` a lot more than `--build-options` (because=
+ the
+> >> latter is very misleading: the commit and the date of the build are n=
+ot
+> >> "options" at all).
+> >
+> > Sure. Thanks for saying so.
+>
+> I don't think anybody would mind introducing --build-info to "git
+> version" as a synonym and deprecate --build-options from it ;-)
 
-Good point. Ouch.
+Heh. I almost suggested this. Almost.
 
-> 
-> If you want to avoid overwriting an existing file (which I think is
-> a good idea---I just do not think the earlier "if (!stat()) die()"
-> is a good way to do so), the only sensible way to do so is to ask
-> your open/creat to fail if there already is a file---that is how
-> you'd avoid racing with another process that may be creating such a
-> file.  Grep for O_EXCL to find where the flag is used with O_CREAT
-> to see how it is done.
-
-Sure. Thanks, I reworked it to use open().
-
-By the way, I noticed reading the GNU manual that file descriptors may
-not be supported outside of GNU environments; but I also noticed that 1)
-Git uses open() lots of places to use O_EXCL, and 2) fopen() doesn't
-support exclusive opens (except in glibc, and nobody is using that
-particular option in the Git codebase now). So I guess it's safe to use
-open()...
-
-> 
-> > +	if (report == NULL) {
-> 
-> Style. "if (!report)"
-
-The type of 'report' changes using open(), so this check changes too.
-Now it says "if (report < 0)" - per the open() doc, it returns a
-positive fd or -1.
-
-> 
-> > +		strbuf_release(&report_path);
-> > +		die("couldn't open '%s' for writing", report_path.buf);
-> 
-> Do we see a use-after-free here?  Also missed i18n/l10n.
-
-Hm. I suppose it's OK to UNLEAK() like we do at the successful exit
-since the die() will end the process. Added i18n too.
-
-> It is embarrassing on the reviewers' side that this (which is not
-> new in this round at all and hasn't changed since v6) hasn't been
-> caught for a few rounds X-<.
-
-Well, I'm embarrassed to have written it in the first place.
-
- - Emily
+Ciao,
+Dscho
