@@ -7,58 +7,58 @@ X-Spam-Status: No, score=-17.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
 	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B1916C11D41
-	for <git@archiver.kernel.org>; Thu, 20 Feb 2020 01:59:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C575C11D42
+	for <git@archiver.kernel.org>; Thu, 20 Feb 2020 01:59:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8158A21D56
-	for <git@archiver.kernel.org>; Thu, 20 Feb 2020 01:59:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 47F1C24671
+	for <git@archiver.kernel.org>; Thu, 20 Feb 2020 01:59:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="RVF2VdaC"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="d3qJSF5l"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727778AbgBTB7P (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 Feb 2020 20:59:15 -0500
-Received: from mail-pl1-f201.google.com ([209.85.214.201]:34721 "EHLO
-        mail-pl1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727469AbgBTB7O (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Feb 2020 20:59:14 -0500
-Received: by mail-pl1-f201.google.com with SMTP id j8so1331287plk.1
-        for <git@vger.kernel.org>; Wed, 19 Feb 2020 17:59:14 -0800 (PST)
+        id S1727809AbgBTB7T (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 Feb 2020 20:59:19 -0500
+Received: from mail-pj1-f73.google.com ([209.85.216.73]:34591 "EHLO
+        mail-pj1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727338AbgBTB7Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Feb 2020 20:59:16 -0500
+Received: by mail-pj1-f73.google.com with SMTP id v8so852582pju.1
+        for <git@vger.kernel.org>; Wed, 19 Feb 2020 17:59:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=gMuK/aYCnWssb/NyknfIvTffg+RtpoiWKCFbfUo6DKo=;
-        b=RVF2VdaCn4mfJjoApXiUZTeMQmeQegUmI6reUdCw/+hB3aF5nXF58EMGYGXKQuN+Eg
-         qquF9T0iSE8o3XSdT5BS1meA8lF6YgUPePbfRVrdhaz7n9gVK/W1cEvbWNS3XoSaxDso
-         hEDHd4UUYO+/q4VVhfl27HTl8ZD6Gg7cxawPRnTu191mKR3bDwPIBz2t1llYrpgp7lH2
-         ps4Wq3qRH+AMl6fTPtoGLW6sETp2ifOM1z0WwnhSu6p0z1ZJZcre0SjvIUMeG/4SJfXw
-         TsKw3lU5oSG+Y98+r83Yvo3+B1+eJkDEeAl6B4zDQxdWDXd4qs1YiAVMzlLfrc83CQIb
-         4Ndw==
+        bh=PPv7++FpeksN7EXMu0/NkT5FBZuOUS9HjZTLmuUSToA=;
+        b=d3qJSF5ljd529rVyytAoUF8kLKHTgO3/A9yGfAEqMdNtaLzKIY4y8GrxVZ8zmUTwg2
+         p5XTQjB5XiCQqZuChmr4DZNxkI6y3Alaert9FqWFLpg0R0icR27X0pQUkkb9ZwtCGa/g
+         qd1hDy7KNF1RLJXyDJ6+4hzKbxxAnWlyNFT24RAuhGdrpYVp19muiGUZKn6WyQcwRzkI
+         cWAw4rqp/xpW3XVKPEBTrz3fL92Xvrb9lUhiButcBZPJ1mwgU8ijAJ1OWfabkUSJzJjy
+         SEi0mUbXHl7MH4Kf75aRpTTNZCX7Za6dlcXOckGXvScPyq2Oj9yZx+BoSs7AvbWnmGfi
+         Pgzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=gMuK/aYCnWssb/NyknfIvTffg+RtpoiWKCFbfUo6DKo=;
-        b=q9GKf0z2F7SiaSwwSMq91TVZ2EAPObBddHVO7FDPS7gLBf24DdI9Jr8Pjg6ccngC33
-         TiQ0Npz8sSz++pwpWoYmC3b8rC7zYKpmF821S83Zg7ZTdfnICr8H8NoOZOhhBHC3qREl
-         85oTC+dbNpEJc8782XuYHMa9V5C3jQiDIENIkHZ6fEW3jeJq26LDDwLhZvrteGUCyW2M
-         bx04BREwSd5L4Tf6ZFusP/LJV5QHDdZjgC60kyfL7j7plp87VI+sDXr8kGhqD3MyaPam
-         XNw3GpXFanSqe3RzRk9CMcWFlzvfkXAmbzLnUHmmE4tCTSj0zOOHebPWeX246I8NrGk9
-         g+Jg==
-X-Gm-Message-State: APjAAAXlmBw0y/K3170i3CEwRaPqXPNV6K3uD+G7B8ZYGrNCnUtMhKvh
-        ooG60HORK+uopFwmwTUIOI5d3h57Ajzbs9MkJxe7yc3Yi98dyJ8bl/SzLE2vQdw9X+GGdRGtpGe
-        gCCrFK5eXObHqy75Xo6H6QB7agPtvAks+S8uEkgT4faJrtYNdzj0BSGSjLYtUjd8IqrNchwmydw
+        bh=PPv7++FpeksN7EXMu0/NkT5FBZuOUS9HjZTLmuUSToA=;
+        b=B4AbjmHgaY29erkAk1Oru9z4HsPGPRLbSBtEUg5Pbog6fMkWx8mJXlg2+Mmthu6zPo
+         a0gkUs985caGTLBfZ4+5A/IdJ7xay+8sx0i8nUOXOX43iqd/fGZPExCa+sh54NdfRQUL
+         6HWpb7/QT5/VjBbVZ7HvXgWO4YktQIgUDhuUlcuRaRrTGYqVsx7c6qeCohv3CQuzt+lm
+         GYauzi3XJPEKY1s7I9pnFQhcpjxZTFUSnwGYW3LLNJwPxXkDZawVfNtE12uXjSx2TQOc
+         KinxxrflYDflBKy7lU3B9tzq72JYwc+r5PdxY3SXz5yzi0pv3d00TlXXVHEZG6/riqok
+         Oxqg==
+X-Gm-Message-State: APjAAAWg7jw2GoIxZYa3g5JmGOEXw6pS6ckrjFrOcej1qTQ5SFMu9quk
+        62AZVqUC1D90WDkNdNsZTvs0OBlrp9i6sGMIEb9DzpJTTSOmq+OdplHEu6r5QJCqLBshcretGqH
+        AKNDaMDYI+yw77TNO9ZppmuJXZjpc8tiDJKTNSqhzzZxCO/WClYHu2yVye2sQ62WYXVigRbqEAQ
         ==
-X-Google-Smtp-Source: APXvYqw6Zlu9EqVAyXzqVyiltCGysMn7XK4hfcDij9qYi5fExAU0YRBnn3K0/IkUQA6CN+oRPodw2/OuLPNn+wdTGVY=
-X-Received: by 2002:a63:ca04:: with SMTP id n4mr30782897pgi.110.1582163953705;
- Wed, 19 Feb 2020 17:59:13 -0800 (PST)
-Date:   Wed, 19 Feb 2020 17:58:46 -0800
+X-Google-Smtp-Source: APXvYqxGnPvwud3Ch9bzFj1ivFI7eCOkCHkaTz3Pq3rVmG7qEXi2hySj5yKzIrryxrku0UYueEPr72ON8ymYsniQIvA=
+X-Received: by 2002:a63:78c4:: with SMTP id t187mr27922321pgc.88.1582163955953;
+ Wed, 19 Feb 2020 17:59:15 -0800 (PST)
+Date:   Wed, 19 Feb 2020 17:58:47 -0800
 In-Reply-To: <20200220015858.181086-1-emilyshaffer@google.com>
-Message-Id: <20200220015858.181086-4-emilyshaffer@google.com>
+Message-Id: <20200220015858.181086-5-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20200220015858.181086-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.25.0.265.gbab2e86ba0-goog
-Subject: [PATCH v8 03/15] bugreport: add tool to generate debugging info
+Subject: [PATCH v8 04/15] bugreport: gather git version and build info
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -68,298 +68,165 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teach Git how to prompt the user for a good bug report: reproduction
-steps, expected behavior, and actual behavior. Later, Git can learn how
-to collect some diagnostic information from the repository.
+Knowing which version of Git a user has and how it was built allows us
+to more precisely pin down the circumstances when a certain issue
+occurs, so teach bugreport how to tell us the same output as 'git
+version --build-options'.
 
-If users can send us a well-written bug report which contains diagnostic
-information we would otherwise need to ask the user for, we can reduce
-the number of question-and-answer round trips between the reporter and
-the Git contributor.
-
-Users may also wish to send a report like this to their local "Git
-expert" if they have put their repository into a state they are confused
-by.
+It's not ideal to directly call 'git version --build-options' because
+that output goes to stdout. Instead, wrap the version string in a helper
+within help.[ch] library, and call that helper from within the bugreport
+library.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
- .gitignore                      |  1 +
- Documentation/git-bugreport.txt | 46 ++++++++++++++++
- Makefile                        |  5 ++
- bugreport.c                     | 94 +++++++++++++++++++++++++++++++++
- command-list.txt                |  1 +
- t/t0091-bugreport.sh            | 61 +++++++++++++++++++++
- 6 files changed, 208 insertions(+)
- create mode 100644 Documentation/git-bugreport.txt
- create mode 100644 bugreport.c
- create mode 100755 t/t0091-bugreport.sh
+ Documentation/git-bugreport.txt |  4 +++
+ bugreport.c                     | 19 ++++++++++++-
+ help.c                          | 48 ++++++++++++++++++++-------------
+ help.h                          |  1 +
+ 4 files changed, 52 insertions(+), 20 deletions(-)
 
-diff --git a/.gitignore b/.gitignore
-index ea97de83f3..d89bf9e11e 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -25,6 +25,7 @@
- /git-bisect--helper
- /git-blame
- /git-branch
-+/git-bugreport
- /git-bundle
- /git-cat-file
- /git-check-attr
 diff --git a/Documentation/git-bugreport.txt b/Documentation/git-bugreport.txt
-new file mode 100644
-index 0000000000..1f9fde5cde
---- /dev/null
+index 1f9fde5cde..f44ae8cbe7 100644
+--- a/Documentation/git-bugreport.txt
 +++ b/Documentation/git-bugreport.txt
-@@ -0,0 +1,46 @@
-+git-bugreport(1)
-+================
-+
-+NAME
-+----
-+git-bugreport - Collect information for user to file a bug report
-+
-+SYNOPSIS
-+--------
-+[verse]
-+'git bugreport' [(-o | --output-directory) <path>] [(-s | --suffix) <format>]
-+
-+DESCRIPTION
-+-----------
-+Captures information about the user's machine, Git client, and repository state,
-+as well as a form requesting information about the behavior the user observed,
-+into a single text file which the user can then share, for example to the Git
-+mailing list, in order to report an observed bug.
-+
-+The following information is requested from the user:
-+
-+ - Reproduction steps
-+ - Expected behavior
-+ - Actual behavior
-+
-+This tool is invoked via the typical Git setup process, which means that in some
-+cases, it might not be able to launch - for example, if a relevant config file
-+is unreadable. In this kind of scenario, it may be helpful to manually gather
-+the kind of information listed above when manually asking for help.
-+
-+OPTIONS
-+-------
-+-o <path>::
-+--output-directory <path>::
-+	Place the resulting bug report file in `<path>` instead of the root of
-+	the Git repository.
-+
-+-s <format>::
-+--suffix <format>::
-+	Specify an alternate suffix for the bugreport name, to create a file
-+	named 'git-bugreport-<formatted suffix>'. This should take the form of a
-+	link:strftime[3] format string; the current local time will be used.
-+
-+GIT
-+---
-+Part of the linkgit:git[1] suite
-diff --git a/Makefile b/Makefile
-index c552312d3f..9e6705061d 100644
---- a/Makefile
-+++ b/Makefile
-@@ -681,6 +681,7 @@ EXTRA_PROGRAMS =
- # ... and all the rest that could be moved out of bindir to gitexecdir
- PROGRAMS += $(EXTRA_PROGRAMS)
+@@ -23,6 +23,10 @@ The following information is requested from the user:
+  - Expected behavior
+  - Actual behavior
  
-+PROGRAM_OBJS += bugreport.o
- PROGRAM_OBJS += credential-store.o
- PROGRAM_OBJS += daemon.o
- PROGRAM_OBJS += fast-import.o
-@@ -2461,6 +2462,10 @@ endif
- git-%$X: %.o GIT-LDFLAGS $(GITLIBS)
- 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(LIBS)
- 
-+git-bugreport$X: bugreport.o GIT-LDFLAGS $(GITLIBS)
-+	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
-+		$(LIBS)
++The following information is captured automatically:
 +
- git-imap-send$X: imap-send.o $(IMAP_SEND_BUILDDEPS) GIT-LDFLAGS $(GITLIBS)
- 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
- 		$(IMAP_SEND_LDFLAGS) $(LIBS)
++ - 'git version --build-options'
++
+ This tool is invoked via the typical Git setup process, which means that in some
+ cases, it might not be able to launch - for example, if a relevant config file
+ is unreadable. In this kind of scenario, it may be helpful to manually gather
 diff --git a/bugreport.c b/bugreport.c
-new file mode 100644
-index 0000000000..8d4a76fdac
---- /dev/null
+index 8d4a76fdac..27f813643d 100644
+--- a/bugreport.c
 +++ b/bugreport.c
-@@ -0,0 +1,94 @@
-+#include "builtin.h"
-+#include "parse-options.h"
-+#include "stdio.h"
-+#include "strbuf.h"
-+#include "time.h"
+@@ -1,8 +1,17 @@
+-#include "builtin.h"
++#include "cache.h"
+ #include "parse-options.h"
+ #include "stdio.h"
+ #include "strbuf.h"
+ #include "time.h"
++#include "help.h"
 +
-+static const char * const bugreport_usage[] = {
-+	N_("git bugreport [-o|--output-directory <file>] [-s|--suffix <format>]"),
-+	NULL
-+};
-+
-+static int get_bug_template(struct strbuf *template)
++static void get_system_info(struct strbuf *sys_info)
 +{
-+	const char template_text[] = N_(
-+"Thank you for filling out a Git bug report!\n"
-+"Please answer the following questions to help us understand your issue.\n"
-+"\n"
-+"What did you do before the bug happened? (Steps to reproduce your issue)\n"
-+"\n"
-+"What did you expect to happen? (Expected behavior)\n"
-+"\n"
-+"What happened instead? (Actual behavior)\n"
-+"\n"
-+"What's different between what you expected and what actually happened?\n"
-+"\n"
-+"Anything else you want to add:\n"
-+"\n"
-+"Please review the rest of the bug report below.\n"
-+"You can delete any lines you don't wish to share.\n");
-+
-+	strbuf_addstr(template, template_text);
-+	return 0;
++	/* get git version from native cmd */
++	strbuf_addstr(sys_info, "git version:\n");
++	get_version_info(sys_info, 1);
++	strbuf_complete_line(sys_info);
 +}
-+
-+int cmd_main(int argc, const char **argv)
+ 
+ static const char * const bugreport_usage[] = {
+ 	N_("git bugreport [-o|--output-directory <file>] [-s|--suffix <format>]"),
+@@ -32,6 +41,11 @@ static int get_bug_template(struct strbuf *template)
+ 	return 0;
+ }
+ 
++static void get_header(struct strbuf *buf, const char *title)
 +{
-+	struct strbuf buffer = STRBUF_INIT;
-+	struct strbuf report_path = STRBUF_INIT;
-+	FILE *report;
-+	time_t now = time(NULL);
-+	char *option_output = NULL;
-+	char *option_suffix = "%F-%H%M";
-+	struct stat statbuf;
-+
-+	const struct option bugreport_options[] = {
-+		OPT_STRING('o', "output-directory", &option_output, N_("path"),
-+			   N_("specify a destination for the bugreport file")),
-+		OPT_STRING('s', "suffix", &option_suffix, N_("format"),
-+			   N_("specify a strftime format suffix for the filename")),
-+		OPT_END()
-+	};
-+	argc = parse_options(argc, argv, "", bugreport_options,
-+			     bugreport_usage, 0);
-+
-+	if (option_output) {
-+		strbuf_addstr(&report_path, option_output);
-+		strbuf_complete(&report_path, '/');
-+	}
-+
-+
-+	strbuf_addstr(&report_path, "git-bugreport-");
-+	strbuf_addftime(&report_path, option_suffix, localtime(&now), 0, 0);
-+	strbuf_addstr(&report_path, ".txt");
-+
-+	if (!stat(report_path.buf, &statbuf))
-+		die("'%s' already exists", report_path.buf);
-+
-+	switch (safe_create_leading_directories(report_path.buf)) {
-+	case SCLD_OK:
-+	case SCLD_EXISTS:
-+		break;
-+	default:
-+		die(_("could not create leading directories for '%s'"),
-+		    report_path.buf);
-+	}
-+
-+	get_bug_template(&buffer);
-+
-+	report = fopen_for_writing(report_path.buf);
-+
-+	if (report == NULL) {
-+		strbuf_release(&report_path);
-+		die("couldn't open '%s' for writing", report_path.buf);
-+	}
-+
-+	strbuf_write(&buffer, report);
-+	fclose(report);
-+
-+	fprintf(stderr, _("Created new report at '%s'.\n"), report_path.buf);
-+
-+	UNLEAK(buffer);
-+	UNLEAK(report_path);
-+	return !!launch_editor(report_path.buf, NULL, NULL);
-+}
-diff --git a/command-list.txt b/command-list.txt
-index 2087894655..185e5e3f05 100644
---- a/command-list.txt
-+++ b/command-list.txt
-@@ -54,6 +54,7 @@ git-archive                             mainporcelain
- git-bisect                              mainporcelain           info
- git-blame                               ancillaryinterrogators          complete
- git-branch                              mainporcelain           history
-+git-bugreport                           ancillaryinterrogators
- git-bundle                              mainporcelain
- git-cat-file                            plumbinginterrogators
- git-check-attr                          purehelpers
-diff --git a/t/t0091-bugreport.sh b/t/t0091-bugreport.sh
-new file mode 100755
-index 0000000000..65f664fdac
---- /dev/null
-+++ b/t/t0091-bugreport.sh
-@@ -0,0 +1,61 @@
-+#!/bin/sh
-+
-+test_description='git bugreport'
-+
-+. ./test-lib.sh
-+
-+# Headers "[System Info]" will be followed by a non-empty line if we put some
-+# information there; we can make sure all our headers were followed by some
-+# information to check if the command was successful.
-+HEADER_PATTERN="^\[.*\]$"
-+
-+check_all_headers_populated () {
-+	while read -r line
-+	do
-+		if test "$(grep "$HEADER_PATTERN" "$line")"
-+		then
-+			echo "$line"
-+			read -r nextline
-+			if test -z "$nextline"; then
-+				return 1;
-+			fi
-+		fi
-+	done
++	strbuf_addf(buf, "\n\n[%s]\n", title);
 +}
 +
-+test_expect_success 'creates a report with content in the right places' '
-+	git bugreport -s check-headers &&
-+	check_all_headers_populated <git-bugreport-check-headers.txt &&
-+	test_when_finished rm git-bugreport-check-headers.txt
-+'
+ int cmd_main(int argc, const char **argv)
+ {
+ 	struct strbuf buffer = STRBUF_INIT;
+@@ -76,6 +90,9 @@ int cmd_main(int argc, const char **argv)
+ 
+ 	get_bug_template(&buffer);
+ 
++	get_header(&buffer, "System Info");
++	get_system_info(&buffer);
 +
-+test_expect_success 'dies if file with same name as report already exists' '
-+	>>git-bugreport-duplicate.txt &&
-+	test_must_fail git bugreport --suffix duplicate &&
-+	test_when_finished rm git-bugreport-duplicate.txt
-+'
+ 	report = fopen_for_writing(report_path.buf);
+ 
+ 	if (report == NULL) {
+diff --git a/help.c b/help.c
+index 190722fb0a..44cee69c11 100644
+--- a/help.c
++++ b/help.c
+@@ -622,8 +622,33 @@ const char *help_unknown_cmd(const char *cmd)
+ 	exit(1);
+ }
+ 
++void get_version_info(struct strbuf *buf, int show_build_options)
++{
++	/*
++	 * The format of this string should be kept stable for compatibility
++	 * with external projects that rely on the output of "git version".
++	 *
++	 * Always show the version, even if other options are given.
++	 */
++	strbuf_addf(buf, "git version %s\n", git_version_string);
 +
-+test_expect_success '--output-directory puts the report in the provided dir' '
-+	git bugreport -o foo/ &&
-+	test_path_is_file foo/git-bugreport-* &&
-+	test_when_finished rm -fr foo/
-+'
++	if (show_build_options) {
++		strbuf_addf(buf, "cpu: %s\n", GIT_HOST_CPU);
++		if (git_built_from_commit_string[0])
++			strbuf_addf(buf, "built from commit: %s\n",
++			       git_built_from_commit_string);
++		else
++			strbuf_addstr(buf, "no commit associated with this build\n");
++		strbuf_addf(buf, "sizeof-long: %d\n", (int)sizeof(long));
++		strbuf_addf(buf, "sizeof-size_t: %d\n", (int)sizeof(size_t));
++		strbuf_addf(buf, "shell-path: %s\n", SHELL_PATH);
++		/* NEEDSWORK: also save and output GIT-BUILD_OPTIONS? */
++	}
++}
 +
-+test_expect_success 'incorrect arguments abort with usage' '
-+	test_must_fail git bugreport --false 2>output &&
-+	test_i18ngrep usage output &&
-+	test_path_is_missing git-bugreport-*
-+'
+ int cmd_version(int argc, const char **argv, const char *prefix)
+ {
++	struct strbuf buf = STRBUF_INIT;
+ 	int build_options = 0;
+ 	const char * const usage[] = {
+ 		N_("git version [<options>]"),
+@@ -637,26 +662,11 @@ int cmd_version(int argc, const char **argv, const char *prefix)
+ 
+ 	argc = parse_options(argc, argv, prefix, options, usage, 0);
+ 
+-	/*
+-	 * The format of this string should be kept stable for compatibility
+-	 * with external projects that rely on the output of "git version".
+-	 *
+-	 * Always show the version, even if other options are given.
+-	 */
+-	printf("git version %s\n", git_version_string);
++	get_version_info(&buf, build_options);
++	printf("%s", buf.buf);
 +
-+test_expect_success 'runs outside of a git dir' '
-+	nongit git bugreport &&
-+	test_when_finished rm non-repo/git-bugreport-*
-+'
-+
-+test_expect_success 'can create leading directories outside of a git dir' '
-+	nongit git bugreport -o foo/bar/baz &&
-+	test_when_finished rm -fr foo/bar/baz
-+'
-+
-+
-+test_done
++	strbuf_release(&buf);
+ 
+-	if (build_options) {
+-		printf("cpu: %s\n", GIT_HOST_CPU);
+-		if (git_built_from_commit_string[0])
+-			printf("built from commit: %s\n",
+-			       git_built_from_commit_string);
+-		else
+-			printf("no commit associated with this build\n");
+-		printf("sizeof-long: %d\n", (int)sizeof(long));
+-		printf("sizeof-size_t: %d\n", (int)sizeof(size_t));
+-		printf("shell-path: %s\n", SHELL_PATH);
+-		/* NEEDSWORK: also save and output GIT-BUILD_OPTIONS? */
+-	}
+ 	return 0;
+ }
+ 
+diff --git a/help.h b/help.h
+index 9071894e8c..500521b908 100644
+--- a/help.h
++++ b/help.h
+@@ -37,6 +37,7 @@ void add_cmdname(struct cmdnames *cmds, const char *name, int len);
+ void exclude_cmds(struct cmdnames *cmds, struct cmdnames *excludes);
+ int is_in_cmdlist(struct cmdnames *cmds, const char *name);
+ void list_commands(unsigned int colopts, struct cmdnames *main_cmds, struct cmdnames *other_cmds);
++void get_version_info(struct strbuf *buf, int show_build_options);
+ 
+ /*
+  * call this to die(), when it is suspected that the user mistyped a
 -- 
 2.25.0.265.gbab2e86ba0-goog
 
