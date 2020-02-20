@@ -2,103 +2,113 @@ Return-Path: <SRS0=QcP8=4I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1,
+	USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 48761C11D00
-	for <git@archiver.kernel.org>; Thu, 20 Feb 2020 23:30:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E61E3C11D00
+	for <git@archiver.kernel.org>; Thu, 20 Feb 2020 23:33:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 174CE20801
-	for <git@archiver.kernel.org>; Thu, 20 Feb 2020 23:30:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AF2C220801
+	for <git@archiver.kernel.org>; Thu, 20 Feb 2020 23:33:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="rzdpbDZt"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="TmsqyTTI"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729345AbgBTXaX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Feb 2020 18:30:23 -0500
-Received: from mail-lf1-f65.google.com ([209.85.167.65]:35982 "EHLO
-        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727135AbgBTXaW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Feb 2020 18:30:22 -0500
-Received: by mail-lf1-f65.google.com with SMTP id f24so99897lfh.3
-        for <git@vger.kernel.org>; Thu, 20 Feb 2020 15:30:20 -0800 (PST)
+        id S1729279AbgBTXd3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Feb 2020 18:33:29 -0500
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:42693 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727135AbgBTXd3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Feb 2020 18:33:29 -0500
+Received: by mail-pf1-f196.google.com with SMTP id 4so187648pfz.9
+        for <git@vger.kernel.org>; Thu, 20 Feb 2020 15:33:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp-br.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=pc2L0/dC1/Dv+tECKVDK7R28mN3TEOurWY/6k1nuTOA=;
-        b=rzdpbDZtq/AmxNXQNci5sy2AnchL1nELr4AmqZ9ft1aEX/XBsU8lUxKEQ7zNJw0TID
-         V/Eu+B+2hI2qh2cLDDcvdyEtPJqI+K/5y76mF6l9DJJ+dfP9wr6CinaWLm1wj7QLGxt6
-         9vTyqfF4scE/LBlpUkmiNvYWDQTVyXANLyb16+saSQumBnharRrgh5NnUJRlHx2uHCa4
-         qmF4U9By6jtKqAu9zrY2A/+UAzlglnrCuuAcY8A6INkxSGAoJQVhKOs9SDJlpWXhySzc
-         334XXdEB07RwUxDQ2/GKnZcuE2NS0A5bTzCDO7Fn2fQw5oaK/QS870bfBeU+WQFx4RW1
-         gUHA==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Sf2ei2Dz4wEezH6lLJ9XG+5wY/dUvJXJ5ZNCA5Zs7Gs=;
+        b=TmsqyTTIBFQyNKQD8NrK28/GvlldDDRJH7GLPjO2R40bMMSj3As4Q3+mNP38kP5kTK
+         xQDMtkcZMH0pYLKv71fkRtwujsqv/2pZde5ESj0RyigPn2ln1IeW8jCMzlx3yT+WhPoi
+         3hz+C0oGIYtqi2P/X8L9AlovNtlXz/hDdEiD6/PSzaatMbSJNApouyHPgRacCtUyteVc
+         k69BjUWstw2g4Xusz2U7UtlCkY1VTV/TXVLc6UzOWkIPkXli3zt7+rlfd5RV40MLC/eq
+         Hi74OhzzI0hG9Mgckh6LEgGwEsLXi/Mnwl7hCadVtABiOe2l/VMQsWFZVnTL9kkfizPt
+         VAWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=pc2L0/dC1/Dv+tECKVDK7R28mN3TEOurWY/6k1nuTOA=;
-        b=ARx6plGUMVvkaylkhqtqiBlvuZ5SkbiXHO7Wo5DKLJnfBYip7NCNFTcRxSjw5lL0w6
-         eOO2iT9o1eccf4atnk1smZZhVOGCzRXqYMcyLu3fBetLEDbdj85d7bzTQYeyDIWTKjTS
-         tVN1Gp0bTy61iEFqAJf2Z2fRtV9yoF7om6BBjBP0qBkZzKstYECLXdkCZc1AQGpuuMop
-         U2tBVhz/ML6/HuvwJaktfV2BnJ12FvLetN8Bbzi1Fo5RUA5t165rXwXbD9M4JUE2V9t0
-         seQfC9XEVuM7EMABON35oItBxN2ycplFj/9XJpEMWnGPCIiaH1T7uXHChkDKj3WP3zEe
-         hV6Q==
-X-Gm-Message-State: APjAAAWHRR+x4aoe5Zjvk6aZ2pSFWd8JzZHWIqA5FHqhsQYyX1dugubX
-        faGTRR1/ASBXRTVYuLCt423guk+w5GiT3DracOVbCA==
-X-Google-Smtp-Source: APXvYqyeeHLtVFO+GdzQzIFZGWYXmeEdiUoaxCVW0O85upI/prZKvJd37X3wq4g1OwfA/2UdtT249FlTb+WAbYUx6QM=
-X-Received: by 2002:a19:550d:: with SMTP id n13mr18313294lfe.48.1582241419667;
- Thu, 20 Feb 2020 15:30:19 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Sf2ei2Dz4wEezH6lLJ9XG+5wY/dUvJXJ5ZNCA5Zs7Gs=;
+        b=OGcSGzSGJpLjIZWQPX5UlDmR1sTm8zzykSU3JaAr5NixA1/9rC28mMUUQoeWsPpfNY
+         lMMs47irJ7IaR/K8xsZet9ZlvTyujvdgMAXvuZ3Lr46ojkS+mvC0D6B39CKoRCFxImhU
+         EHVTb9T+Thn/2OdyUwUJOlacMGjd8XOwbaJk+mkx6XTiZn5GxzST4AIhHKvCrz/Fm+43
+         BMrNE38TT1SeomxxxSRvloZKA6vVsCqoHCTmXUTDLrW+vWLmAgkfypER41Ii70v40YkQ
+         FKws2KgRrLvm5Kx+8t7jWSpSZfXq96T6aF3N17/A7RWAdn7xYku/4A955ZhjO1GS7bAq
+         KTUQ==
+X-Gm-Message-State: APjAAAXxgniBd9uT+8iTIVqpFHliyXY+12SflUnYM7xqkSyfhQ4f88XL
+        hxWMc0yK7i34WTnFCTLi8EtDO8Sm+74=
+X-Google-Smtp-Source: APXvYqz6gd3VSss6NtgxL7ekOBbykPC1o5yv+sQZbPI57NBJs7UsKxL/6n7LsPXFo/AX83QNLQMsWQ==
+X-Received: by 2002:a63:e30e:: with SMTP id f14mr33258362pgh.260.1582241608580;
+        Thu, 20 Feb 2020 15:33:28 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
+        by smtp.gmail.com with ESMTPSA id w11sm676318pfn.4.2020.02.20.15.33.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 20 Feb 2020 15:33:28 -0800 (PST)
+Date:   Thu, 20 Feb 2020 15:33:23 -0800
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v7 06/15] bugreport: add compiler info
+Message-ID: <20200220233323.GI2447@google.com>
+References: <20200214015343.201946-1-emilyshaffer@google.com>
+ <20200214015343.201946-7-emilyshaffer@google.com>
+ <nycvar.QRO.7.76.6.2002191521140.46@tvgsbejvaqbjf.bet>
+ <20200219224547.GC26221@google.com>
+ <nycvar.QRO.7.76.6.2002202306390.46@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-References: <20200220214647.451064-1-kolyshkin@gmail.com>
-In-Reply-To: <20200220214647.451064-1-kolyshkin@gmail.com>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Thu, 20 Feb 2020 20:30:08 -0300
-Message-ID: <CAHd-oW61vuuvs25iOkLJ--Wv39ZXFF87_-pV=vX=oTibRinn5Q@mail.gmail.com>
-Subject: Re: [PATCH] completion: add diff --color-moved[-ws]
-To:     Kir Kolyshkin <kolyshkin@gmail.com>
-Cc:     git <git@vger.kernel.org>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.2002202306390.46@tvgsbejvaqbjf.bet>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 20, 2020 at 6:47 PM Kir Kolyshkin <kolyshkin@gmail.com> wrote:
->
-> These options are available since git v2.15, but somehow
-> eluded from the completion script.
->
-> Signed-off-by: Kir Kolyshkin <kolyshkin@gmail.com>
-> ---
->  contrib/completion/git-completion.bash | 15 +++++++++++++++
->  1 file changed, 15 insertions(+)
->
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index 1aac5a56c0..43cb6a312d 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -1487,9 +1487,16 @@ __git_diff_algorithms="myers minimal patience histogram"
->
->  __git_diff_submodule_formats="diff log short"
->
-> +__git_color_moved_opts="no default plain blocks zebra dimmed-zebra"
-> +
-> +__git_color_moved_ws_opts="no ignore-space-at-eol ignore-all-space
-> +                       allow-indentation-change"
+On Thu, Feb 20, 2020 at 11:33:05PM +0100, Johannes Schindelin wrote:
+> Hi Emily,
+> 
+> On Wed, 19 Feb 2020, Emily Shaffer wrote:
+> 
+> >   #ifdef __GLIBC__
+> >   #include <gnu/libc-version.h>
+> >   #endif
+> >
+> >   static inline void get_compiler_info(struct strbuf *info)
+> >   {
+> >   	#ifdef __GLIBC__
+> > 	strbuf_addf(info, "glibc: %s\n", gnu_get_libc_version());
+> > 	#endif
+> >
+> > 	#ifdef __GNUC__
+> > 	strbuf_addf(info, "gnuc: %d.%d\n", __GNUC__, __GNUC_MINOR__);
+> > 	#endif
+> >
+> > 	#ifdef _MSC_VER
+> > 	strbuf_addf(info, "msc runtime: %s\n", some_msc_info());
+> 
+> You could do it this way right away:
+> 
+> 	strbuf_addf(info, "MSVC version: %d.%d\n",
+> 		    _MSC_VER / 100, _MSC_VER % 100);
+> 
+> Note: this is _not_ the MSVC _runtime_ version, but really the compiler
+> version.
+> 
+> You could also use _MSC_FULL_VER, which is a bit more complete.
 
-I think "ignore-space-change" is missing in the above list. Besides
-that, the patch LGTM.
+Sorry, but I'm not comfortable sending code I can't check for myself
+(and already muscle-memoried into my format-patch/send-email workflow).
+If you send a scissors I can roll it into the series with your SOB.
 
-As a side-note: when we have an option with an already filled value,
-e.g. `--color-moved-ws=allow-identation-change,`, although it accepts
-more values as a comma separated list, pressing <tab><tab> won't
-suggest others. But I think the helper functions in
-git-completion.bash don't provide an easy way to do that right now
-(and there might even be a bug in bash-completion involving this [1]).
-So, I think the patch is good as it is (just adding the missing item
-to that list) :)
-
-[1]: https://github.com/scop/bash-completion/issues/240
+ - Emily
