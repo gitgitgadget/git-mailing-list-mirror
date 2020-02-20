@@ -2,211 +2,120 @@ Return-Path: <SRS0=QcP8=4I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.4 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C6F71C11D07
-	for <git@archiver.kernel.org>; Thu, 20 Feb 2020 14:08:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 608ECC11D05
+	for <git@archiver.kernel.org>; Thu, 20 Feb 2020 14:15:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 95A5A208E4
-	for <git@archiver.kernel.org>; Thu, 20 Feb 2020 14:08:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 34163208C4
+	for <git@archiver.kernel.org>; Thu, 20 Feb 2020 14:15:26 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="bYGh/i7Y"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ldOAdjv2"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728117AbgBTOIc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Feb 2020 09:08:32 -0500
-Received: from mout.gmx.net ([212.227.17.22]:47917 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727761AbgBTOIc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Feb 2020 09:08:32 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1582207709;
-        bh=sHHAcpcVNOB+ngGuQfhhAEmCn+r/Cpia1zx3zcRjVFk=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=bYGh/i7Y7HXFInpZH1/N8Y4dxM4v8fxuDIPQLOI8J1wx90CCVLb0NJLX1wXQdE7R+
-         d2A9eOwMCwuQjGANT7oryX79SBRYt9ge0Aa/g71b5/El+6QMNj4eqtI9dA6sk6eIQk
-         +kyJSNiDwXJnAL9c4IMVADqsQzc/SfZixPQjQrao=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.86]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MSc1B-1iuAZo141Z-00Sv5p; Thu, 20
- Feb 2020 15:08:29 +0100
-Date:   Thu, 20 Feb 2020 15:08:27 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Emily Shaffer <emilyshaffer@google.com>
-cc:     git@vger.kernel.org
-Subject: Re: [PATCH v8 15/15] bugreport: summarize contents of alternates
- file
-In-Reply-To: <20200220015858.181086-16-emilyshaffer@google.com>
-Message-ID: <nycvar.QRO.7.76.6.2002201458120.46@tvgsbejvaqbjf.bet>
-References: <20200220015858.181086-1-emilyshaffer@google.com> <20200220015858.181086-16-emilyshaffer@google.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1728139AbgBTOPX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Feb 2020 09:15:23 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:32841 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726959AbgBTOPX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Feb 2020 09:15:23 -0500
+Received: by mail-wr1-f66.google.com with SMTP id u6so4870237wrt.0
+        for <git@vger.kernel.org>; Thu, 20 Feb 2020 06:15:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=8YfXzIg0+we8LgF75TdO0ZhbpE4kK6RNtPgmS7qmZHE=;
+        b=ldOAdjv2kxf9uooPw0K/E+aR9GPI8Ki4u48psM3X80ZRt1n+nnZBSAh69rnseJuyJl
+         tBo+TgGz9JD3UnzO0U53uoY7/nPRubG2ZPHNxyOsDphkEg/gQoBIv5DgUnMreb5E1AYv
+         719Sqgo7dSD0kdCxL1/UwdrdiN/FTDX8jc+AVsaH8275HJGd5JsVPkk5ptttShFxJzBZ
+         wyKDkPLbH/lNvpPEOBMbb2X+3H5vf3UL5n2cUVeWJpS8IPsUhf51qkIVPvl3gP6iBwGe
+         8HpBB65r2AEPyKDBO9s43VH9kgSWO0h1+Z1stmAAgJT2cg4kxP4mby9pt+KSc1MA9x0o
+         oALg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+         :mime-version:content-transfer-encoding;
+        bh=8YfXzIg0+we8LgF75TdO0ZhbpE4kK6RNtPgmS7qmZHE=;
+        b=C0tIK63MkWDhILHz0apnTM3Cfg3UNM5gNKQaY/3YuFCkzaw0E+qvx4lzFBqLrOWvbu
+         pqxAgsvNU5eD4ovRMuScV7ifojJ/wNWht8VRHPoyIyOh/LyCzph0DUv+TRE/g8hGTC6S
+         N6b9ZW4Crt3tNtCsBE7PnCWHREHrFLTHVxMGtF9SwGyr3D9jWl/VR4tikEJ2VQ7G5Vb8
+         4A8VoPFmwh51uTro0c8gqE6Mg59kfjMF4fsAu9juPq/iXKNmYR/WYY3Q2utIl3T1IXdo
+         GSBbHRyCqCvzv0BFfeVMqdi367wcUmgsATD3mT5LMIg6viCrEW+2XNyEIWZEL7Hn8j+j
+         TiCg==
+X-Gm-Message-State: APjAAAUPwpTSubuKlsc0XeJ/trZ0x1QSlF6JG19QrJ4A1voOpJoQRSDn
+        65Rp8sYeDaSpAx49vDego1Bb3lR1
+X-Google-Smtp-Source: APXvYqzYt8Zj/cbF+Q6WmyvARzqdtLZv3Tqa6UapnKynkdzxVIXW4t+gUbdjySyBYLNE9uzdJ+wH6g==
+X-Received: by 2002:a5d:640d:: with SMTP id z13mr41117236wru.181.1582208121358;
+        Thu, 20 Feb 2020 06:15:21 -0800 (PST)
+Received: from donizetti.redhat.com (nat-pool-mxp-u.redhat.com. [149.6.153.187])
+        by smtp.gmail.com with ESMTPSA id v15sm4933614wrf.7.2020.02.20.06.15.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 20 Feb 2020 06:15:20 -0800 (PST)
+From:   pbonzini@redhat.com
+To:     git@vger.kernel.org
+Cc:     sunshine@sunshineco.com
+Subject: [PATCH v2 0/5] am: provide a replacement for "cat .git/rebase-apply/patch"
+Date:   Thu, 20 Feb 2020 15:15:14 +0100
+Message-Id: <20200220141519.28315-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.21.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:mGKmBQBPIFya8Pl1knIPPOIKFBGuFj05igS8p5NxR1iGkPgQo2g
- W83tUSb68CBak2GaWtIrS5DBmJCtmVFem0i7WaDdH2h6Vc+5idXvurkbFHkH4Eoe5xKHrJp
- cLvWKzyvSE8VFh3shqnRztoZgJYCS34JQ+/2GWrt9+LUEb+D2nxrp+XsKNFWqbwiHfOcca8
- kMCa5jwzgQydEemgMWbpw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:0NjxRFGr18E=:Rtq8ZCX3m3IgfL3HATs/em
- e9A/8d1Qgu3nvKv0mAtufSnpk0pKA3l/hUo7nqyke33JOQm3tZKtNCsd3LxR1qI91A9baiNj+
- C4tOZ/mG5Glmbubz+H20f2hHRx+R0khhwyhsBmk82VoV9AZ/Zw5BqGEeIScN4gfHgPgxZRNTN
- kFHslE0RJLL5TW+IT3xWra7nOwcLdYiHvJp+z0iT5hyBBMdtiYsXYb7Phh8J93BwY+6r+ffG4
- WpMn++vlEb2zepSmIX0wLYwgGqSlZR1Rr1ufYUspUz+L8V2eVP55IccBkaEM9gbxHnBS+3+pw
- w6xWYjTtlPZzYFNnQoazku7jredkkOK5BvaaEq66pB8SCIVvB/Xn9gvp6BpxZavWnKhh6Fg9+
- ktSZXyNHzaJ6oHNW5baAwlmnKz0Kfcq/6ogRahBXC0vpQQh3taGVHnWz46g6wjZtTlgZlJQIT
- IsSyRQ7T7kYtX53pDtnCpvbIO+yxoHnRRns1m036AwJc3GABmGHRl3uXwaM0qdKRPTqXv66SA
- Jlm87w0v2auz7v1si6/xoCO0qRBYJMgmaScNus+zM5aNYZpAlBb7FkPgiv7CK7N4rDdupNPGh
- zyGa8flteGNVWycIf2lAAZNhG8veswJLGKqB56Nl48ByTDpwgr0KtOo3jIf5yAqX61azZul/H
- FqKLZpoY0KNZaMkk3vrgamtDWcm6J8YMIAiwcyHgn8feNU+eV+qzsGBOu60ogup6rYdxLnU6q
- 5PW04d1Msh8p5LAMNqic1cPGY2tmDBWDECx1aEWrN9wNg1T07yJqgO+J3W6pBD1pQ+EBvjF2X
- y7yE88lF6hrXeDhf6K9ChNKOUZgMDsv0mzTbcuCQjYWp3ZZdkW/tAqyYLO1kqtVvE+5Rv3JnB
- nSbih/eKapg17PPyb1fLS0ZusOX+JR2upy3kuzh8g5EPpVL66lI0ufpueM/yCI00nfpnnnzhE
- pn7/1kau8EmJ2dyZEYP4wws4nvfKjmq6vf7TUWqfBi2iO7mRWwpBTK28xNCni2wXcm0NtuGyF
- Cx7ILtwcOw0429IVhH4qg0wNM4BRXGilaynsywSejzHSFmkWAxKdw1TWt3fHZWYz8aD7Ki22V
- 7CxODD45KMPzQu5lAt70kIAVsrdEhR5bOFbdGOLekkbSIHEYdqgrxSxlQDvZq6yE0fj30XM1e
- 5Mo/EvTP88LVm39ARvzNW/P6hNR6umJClPyZEZOvG5y0Jj2g2Yw0hmIHswpfwE/iwMYg0DLiD
- ICZ31DbIk0hP6uMRo
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Emily,
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-On Wed, 19 Feb 2020, Emily Shaffer wrote:
+When "git am --show-current-patch" was added in commit 984913a210 ("am:
+add --show-current-patch", 2018-02-12), "git am" started recommending it
+as a replacement for .git/rebase-merge/patch.  Unfortunately the suggestion
+is misguided; for example, the output "git am --show-current-patch" cannot
+be passed to "git apply" if it is encoded as quoted-printable or base64.
 
-> In some cases, it could be that the user is having a problem with an
-> object which isn't present in their normal object directory. We can get
-> a hint that that might be the case by examining the list of alternates
-> where their object may be stored instead. Since paths to alternates may
-> be sensitive, we'll instead count how many alternates have been
-> specified and note how many of them exist or are broken.
->
-> While object-cache.h describes a function "foreach_alt_odb()", this
-> function does not provide information on broken alternates, which are
-> skipped over in "link_alt_odb_entry()". Since the goal is to identify
-> missing alternates, we can gather the contents of
-> .git/objects/info/alternates manually.
+This series adds a new mode to "git am --show-current-patch" in order to
+straighten the suggestion.  "--show-current-patch" grows an optional
+argument, where the default behavior can now also be obtained with
+"--show-current-patch=raw" and ".git/rebase-apply/patch" can be retrieved
+with "--show-current-patch=diff".
 
-Makes sense.
-
-> diff --git a/bugreport.c b/bugreport.c
-> index 1d61e0f642..1640a71086 100644
-> --- a/bugreport.c
-> +++ b/bugreport.c
-> @@ -255,6 +255,48 @@ static void get_object_info_summary(struct strbuf *=
-obj_info, int nongit)
->  	strbuf_release(&dirpath);
->  }
->
-> +static void get_alternates_summary(struct strbuf *alternates_info, int =
-nongit)
-> +{
-> +	struct strbuf alternates_path =3D STRBUF_INIT;
-> +	struct strbuf alternate =3D STRBUF_INIT;
-
-I am not sure that those variables and the parameter need to repeat
-"alternate", I find it rather distracting. If it were me, I would rename
-the parameter to `info`, the first strbuf to `path` and the second to
-`line`. This function is so specific to read the alternates file that it
-is quite obvious what their roles are.
-
-> +	FILE *file;
-> +	size_t exists =3D 0, broken =3D 0;
-> +
-> +	if (nongit) {
-> +		strbuf_addstr(alternates_info,
-> +			"not run from a git repository - alternates unavailable\n");
-> +		return;
-> +	}
-> +
-> +	strbuf_addstr(&alternates_path, get_object_directory());
-> +	strbuf_complete(&alternates_path, '/');
-> +	strbuf_addstr(&alternates_path, "info/alternates");
-> +
-> +	file =3D fopen(alternates_path.buf, "r");
-> +	if (!file) {
-> +		strbuf_addstr(alternates_info, "No alternates file found.\n");
-> +		strbuf_release(&alternates_path);
-> +		return;
-> +	}
-> +
-> +	while (strbuf_getline(&alternate, file) !=3D EOF) {
-> +		if (!access(alternate.buf, F_OK))
-
-Should we make sure that the alternate is actually valid objects directory
-here? Like, look whether it is a directory, not a file or a (possibly
-dangling) symbolic link. This seems to be the only check
-`alt_odb_usable()` performs, so that should probably be good enough here,
-too.
-
-> +			exists++;
-> +		else
-> +			broken++;
-> +	}
-> +
-> +	strbuf_addf(alternates_info,
-> +		    "%zd alternates found (%zd working, %zd broken)\n",
-
-Sadly, `%zd` is not portable. Therefore, `pu` (and `es/bugreport`) do not
-even _build_ on Windows. I need this to make it work:
-
-=2D- snip --
-diff --git a/bugreport.c b/bugreport.c
-index 3770aa73fae..5033668e22f 100644
-=2D-- a/bugreport.c
-+++ b/bugreport.c
-@@ -287,10 +287,11 @@ static void get_alternates_summary(struct strbuf *al=
-ternates_info, int nongit)
- 	}
-
- 	strbuf_addf(alternates_info,
--		    "%zd alternates found (%zd working, %zd broken)\n",
--		    exists + broken,
--		    exists,
--		    broken);
-+		    "%"PRIuMAX" alternates found "
-+		    "(%"PRIuMAX" working, %"PRIuMAX" broken)\n",
-+		    (uintmax_t)(exists + broken),
-+		    (uintmax_t)exists,
-+		    (uintmax_t)broken);
-
- 	fclose(file);
- 	strbuf_release(&alternate);
-=2D- snap --
-
-Could you incorporate that into the next iteration, please?
+This requires a little surgery in patches 1 and 2 in order to convert
+--show-current-patch from OPTION_CMDMODE to OPTION_CALLBACK.  After this,
+the last two patches implement the new syntax and feature.
 
 Thanks,
-Dscho
 
-> +		    exists + broken,
-> +		    exists,
-> +		    broken);
-> +
-> +	fclose(file);
-> +	strbuf_release(&alternate);
-> +	strbuf_release(&alternates_path);
-> +}
-> +
->  static const char * const bugreport_usage[] =3D {
->  	N_("git bugreport [-o|--output-directory <file>] [-s|--suffix <format>=
-]"),
->  	NULL
-> @@ -355,6 +397,9 @@ int cmd_main(int argc, const char **argv)
->  	get_header(&buffer, "Object Info Summary");
->  	get_object_info_summary(&buffer, nongit_ok);
->
-> +	get_header(&buffer, "Alternates");
-> +	get_alternates_summary(&buffer, nongit_ok);
-> +
->  	report =3D fopen_for_writing(report_path.buf);
->
->  	if (report =3D=3D NULL) {
-> --
-> 2.25.0.265.gbab2e86ba0-goog
->
->
+Paolo
+
+v1->v2: - split testcases to a separate patch [Junio]
+	- improve commit messages [Junio]
+	- fix spacing in designated initializer [Junio]
+	- use test_i18ngrep [Eric]
+	- replace abort with BUG [Eric]
+	- replace "diff|raw" with "(diff|raw)" in docs and help [Eric]
+	- improve docs wording [Eric]
+
+Paolo Bonzini (5):
+  parse-options: add testcases for OPT_CMDMODE()
+  parse-options: convert "command mode" to a flag
+  am: convert "resume" variable to a struct
+  am: support --show-current-patch=raw as a synonym
+    for--show-current-patch
+  am: support --show-current-patch=diff to retrieve
+    .git/rebase-apply/patch
+
+ Documentation/git-am.txt               | 10 +--
+ builtin/am.c                           | 96 ++++++++++++++++++++------
+ contrib/completion/git-completion.bash |  5 ++
+ parse-options.c                        | 20 +++---
+ parse-options.h                        |  8 +--
+ t/helper/test-parse-options.c          |  2 +
+ t/t0040-parse-options.sh               | 18 +++++
+ t/t4150-am.sh                          | 20 ++++++
+ 8 files changed, 140 insertions(+), 39 deletions(-)
+
+-- 
+2.21.1
+
