@@ -2,212 +2,127 @@ Return-Path: <SRS0=QcP8=4I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-6.4 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D29A5C11D0A
-	for <git@archiver.kernel.org>; Thu, 20 Feb 2020 14:15:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5AA7FC11D0B
+	for <git@archiver.kernel.org>; Thu, 20 Feb 2020 16:01:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 9CF0F208E4
-	for <git@archiver.kernel.org>; Thu, 20 Feb 2020 14:15:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 23C1420659
+	for <git@archiver.kernel.org>; Thu, 20 Feb 2020 16:01:01 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dz6wRVm5"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="MnvLdNLP"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728271AbgBTOPb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Feb 2020 09:15:31 -0500
-Received: from mail-wm1-f42.google.com ([209.85.128.42]:35271 "EHLO
-        mail-wm1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728248AbgBTOPa (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Feb 2020 09:15:30 -0500
-Received: by mail-wm1-f42.google.com with SMTP id b17so2230552wmb.0
-        for <git@vger.kernel.org>; Thu, 20 Feb 2020 06:15:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=jpPsizAx1REte/H4RpYeY3J30V7EBkwmGV+AmNPsm9E=;
-        b=dz6wRVm5SHmsCKk/H1Ae3tdDk2Dmn0pdQdLva3aemmPElv9CrsX7YFLz9ubGK1bz9Z
-         1tGHECpIq88N1vHPKyZxJgIuFtfBlXlMN2Ls52Nd0ijMBsnQBGGY8IZmhuQnqMURB6Q3
-         u8hNuawD/PHlTpvcGiNnpVGXAJgE7zOlglh/g8k6dkWZAEwHNu4Img25LuXuvBqwMb0v
-         cfq1IwOxu3zCMNbvg9/DPO3uY4kJy8TXAffiMv2Gxb//473axpXAUXMTJ4GRJgJnwE/t
-         JCUDn4LdQ5YrDk7fWiMo5phUMpdJaf4gWV9k63eBt5rYoPrVRIQ0fqo/S5GYBIgfsW8c
-         etMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
-         :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=jpPsizAx1REte/H4RpYeY3J30V7EBkwmGV+AmNPsm9E=;
-        b=ub0cv1b6dIxhoff8Ag+ilSbsSBGkNoWideqcIEidukI2h9fQHssMKcD2igVa4VhiZ7
-         QgxcdfOUMCBTf3fv0fWnuFDO97ymfnk8QMMFqrQTx6tNzFsY1vonHCLeniqMEgj8N/G+
-         AF9eInD3VX4mcyKisaqE83Ge/GL4XcFTJW8XXM3+2Xok8avMEMvoQdf0Z3pZvH+NKAGx
-         PlxQRPnZtwMUrmcukfsjbA8gGP1Mbf2VHTerIVCaf1qB/QjzraUmgfH0bal6YD2I0qUF
-         YtEzmZ0fD4Y2OgTuB8I8/2BKEwGlKz5wiZYO6N8PXGUn5orpY/y7SmBjJwrp09bSnx3c
-         lG8Q==
-X-Gm-Message-State: APjAAAUTg2evxr9RKXzc5htRcBXOA/bqivAFUhKcn+P5y+8PTZQ7Bffk
-        dezq/d54XR/KT+v8+RbxeA3Sa+/h
-X-Google-Smtp-Source: APXvYqzNKg4Np3ncnQIcnxcZR+SPww2SsC1/0DFMFqGoXtSro7XRHfGGqf2uSsJav8lMTitt1b0kyQ==
-X-Received: by 2002:a1c:610a:: with SMTP id v10mr4713482wmb.44.1582208127048;
-        Thu, 20 Feb 2020 06:15:27 -0800 (PST)
-Received: from donizetti.redhat.com (nat-pool-mxp-u.redhat.com. [149.6.153.187])
-        by smtp.gmail.com with ESMTPSA id v15sm4933614wrf.7.2020.02.20.06.15.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Feb 2020 06:15:26 -0800 (PST)
-From:   pbonzini@redhat.com
-To:     git@vger.kernel.org
-Cc:     sunshine@sunshineco.com
-Subject: [PATCH v2 5/5] am: support --show-current-patch=diff to retrieve .git/rebase-apply/patch
-Date:   Thu, 20 Feb 2020 15:15:19 +0100
-Message-Id: <20200220141519.28315-6-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.21.1
-In-Reply-To: <20200220141519.28315-1-pbonzini@redhat.com>
-References: <20200220141519.28315-1-pbonzini@redhat.com>
+        id S1728649AbgBTQBA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Feb 2020 11:01:00 -0500
+Received: from mout.gmx.net ([212.227.15.18]:45831 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728414AbgBTQBA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Feb 2020 11:01:00 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1582214453;
+        bh=Hzf62wHmWknyOLe9g1jwXISqQ4idFxG45yZ3ugGPEcQ=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=MnvLdNLPbnD24KUueHyIcv8fDV8lCtJ5NXnZeCJmO/ZSsFOQK82eXdZg8cu1oG59h
+         aId9IiuEUHmZZM3Vvg5KkHs41jrqrsLGXzmnqX6uHWYujclI3CrtOtDYPDWIcyvVIA
+         wPNcb2WuMtiVGTju6N0IcYNHiIhNmiUozkzj7M/4=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.86]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M4s4r-1j3QoN3H7f-00220a; Thu, 20
+ Feb 2020 17:00:52 +0100
+Date:   Thu, 20 Feb 2020 17:00:48 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Eric Sunshine <sunshine@sunshineco.com>
+cc:     Paolo Bonzini <pbonzini@redhat.com>,
+        Git List <git@vger.kernel.org>, bfields@redhat.com
+Subject: Re: [PATCH 1/4] parse-options: convert "command mode" to a flag
+In-Reply-To: <CAPig+cQkBKJLW3-W4SS0KX9+Gs2fT-Z-DrvVpcVOLZpFmVBoQA@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2002201659500.46@tvgsbejvaqbjf.bet>
+References: <20200219161352.13562-1-pbonzini@redhat.com> <20200219161352.13562-2-pbonzini@redhat.com> <CAPig+cQkBKJLW3-W4SS0KX9+Gs2fT-Z-DrvVpcVOLZpFmVBoQA@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:aqpyEj7PjE+xT8GKyFgJwowrGniSgz5kKDPwjsbd9lECxlfpZPd
+ biwbKoL0UeuPfHzhl2PAVo8cKLxjDt80DamYd/dy7LlQONZsEQ26Ay5T0edDSGsoSaF8iyw
+ 1Pn/2cbqJXdF9uwSI3bMC/TX+BIvqB44vQuNSO1oGZm/OP8J2F6ELoHpb3JOUlKCbz4EDMt
+ gLHZEnDBc25vDzlpnaq3Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:36CXlD2YRHg=:wDyU69DY0V4gZwD3U3w6D3
+ AHlPNbIbHGb5RH+7Vz9JZd5tsP04rBt+Lbjn0fppwuitrHZUc2CYfj6gaxTCNsJIbBLQsMA4g
+ J5pHB+tQAIL5tZ68TXC1O84NHVtd6vgP+9GR28ruEQpnWbwIRjDSQZC7MtC0qAh3xPCZ6r7Im
+ mm7EGWmf3m7YpR59U+nrlWyys3CcggAUhR3oqQTMVXemYAHohP8biDyqYaWevZhIonTG7k2hn
+ IyWg6E3iU2kem0PGyjTtUGc4ih8sdODIIqPsTvObc6GUQuz7OuakRoWQVl09ukrlXyC5HhkW4
+ ohy6Du0phiSTaEhTgMXW4K7kdzQLZXIaFQTO6xQpbt/Ve1SLSnq8mfBvDkNBQ+menpnR3j8SY
+ Ri7jLMxV8xv5fOoJm78ZZWWSGNzqGHKEiaeVow00bRvKrc+CdVJCVz3N6jG0XcQp+VF7JC4Xz
+ 6YgQPr+oPVeE1tEzBsQYlRPaDBGyomOQTTr2otqXIkpH5vSQzICJFp7OCPzcnmaM6DjNxr4lp
+ X8Y99y0oEGxEYPfGqDWCLoAVzZQnUVk/T073JziSl0ndgpoT6K05RXDu20UmonwCB26BWWPok
+ EmvgT/RJ3ADEP35xYCtYjWtvvTCDmsoaMbZHWRKhupCi3gvkl0dv4y0c/rODju70fR//0O7Z3
+ xQXUEQBu6K8VBYtFxOR+G28fJzK10CD+7SMX+g9yUU8Cz69XfrTQI0wXwtREVEEq54n/KNhrn
+ 0VLki2NkPl63cElTdHFc+jivyfzVGO8bUb0tQOMI0ieoj+GLNt3SwBsb/dWb/O4AZ6ylABbAz
+ xWipT7nC8/dtK8G0nWhYfoUMJOzSz++5EI21yN8Y0buiLQpAIcaQh1ooYXwzqhu4x1xYgyswg
+ OIHnwJSdwhCNuubDfHE2lUW47MrbPm34SetWuXINlI7ThqJBV0bCtIyE9BviSp8nRu9tb6ktv
+ gJbSex424DcPlyaDSlq7vtYlirZPzDP5hJK8p3lpFVtzhJId+6Wi2NixCzVZ85l91uc76d0Wz
+ Qo5HZVQSr6yQLU5k/NCH1P/k+pmaQ3tO8qCIFUEjR75MzCYj8BLonyyccxLFafTcOtTSIs0yF
+ nPFJlT7d6EZ8LMxWXikzCC+qgVaNgD2Tt6hy0wJkNghkQZNd/h0ooNQ6KQp7IUEtVKQDi0tKX
+ 2fyj1Y3JanYRuveZ3gVyXvX63V/ITfe/UOcuonS4QbRIxdbb5UvjTUUrwoMt8I4KKmKQotMXR
+ J/i1MZ2+YLSUCMwMt
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+Hi Eric,
 
-When "git am --show-current-patch" was added in commit 984913a210 ("am:
-add --show-current-patch", 2018-02-12), "git am" started recommending it
-as a replacement for .git/rebase-merge/patch.  Unfortunately the suggestion
-is somewhat misguided; for example, the output of "git am --show-current-patch"
-cannot be passed to "git apply" if it is encoded as quoted-printable
-or base64.  Add a new mode to "git am --show-current-patch" in order to
-straighten the suggestion.
+On Wed, 19 Feb 2020, Eric Sunshine wrote:
 
-Reported-by: J. Bruce Fields <bfields@redhat.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
-v1->v2: - replace "diff|raw" with "(diff|raw)" in docs and help [Eric]
-	- improve docs wording [Eric]
+> On Wed, Feb 19, 2020 at 11:15 AM <pbonzini@redhat.com> wrote:
+> > OPTION_CMDMODE is essentially OPTION_SET_INT plus the extra check
+> > that the variable had not set before.  In order to allow custom
+> > processing, change it to OPTION_SET_INT plus a new flag that takes
+> > care of the check.  This works as long as the option value points
+> > to an int.
+> >
+> > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> > ---
+> > diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
+> > @@ -324,6 +326,22 @@ test_expect_success 'OPT_NEGBIT() works' '
+> > +test_expect_success 'OPT_CMDMODE() detects incompatibility' '
+> > +       test_must_fail test-tool parse-options --mode1 --mode2 >output=
+ 2>output.err &&
+> > +       test_must_be_empty output &&
+> > +       grep "incompatible with --mode" output.err
+> > +'
+>
+> The error message may have been localized, so use test_i18ngrep()
+> instead of 'grep':
+>
+>     test_i18ngrep "incompatible with --mode" output.err
 
- Documentation/git-am.txt               | 11 ++++++-----
- builtin/am.c                           |  9 +++++++--
- contrib/completion/git-completion.bash |  2 +-
- t/t4150-am.sh                          | 10 ++++++++++
- 4 files changed, 24 insertions(+), 8 deletions(-)
+The error message _is_ localized, causing the GETTEXT_POISON job to fail:
 
-diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
-index 590b711536..ab5754e05d 100644
---- a/Documentation/git-am.txt
-+++ b/Documentation/git-am.txt
-@@ -16,7 +16,7 @@ SYNOPSIS
- 	 [--exclude=<path>] [--include=<path>] [--reject] [-q | --quiet]
- 	 [--[no-]scissors] [-S[<keyid>]] [--patch-format=<format>]
- 	 [(<mbox> | <Maildir>)...]
--'git am' (--continue | --skip | --abort | --quit | --show-current-patch[=raw])
-+'git am' (--continue | --skip | --abort | --quit | --show-current-patch[=(diff|raw)])
- 
- DESCRIPTION
- -----------
-@@ -176,10 +176,11 @@ default.   You can use `--no-utf8` to override this.
- 	Abort the patching operation but keep HEAD and the index
- 	untouched.
- 
----show-current-patch[=raw]::
--	Show the raw contents of the e-mail message at which `git am`
--	has stopped due to conflicts.  The argument must be omitted or
--	`raw`.
-+--show-current-patch[=(diff|raw)]::
-+	Show the message at which `git am` has stopped due to
-+	conflicts.  If `raw` is specified, show the raw contents of
-+	the e-mail message; if `diff`, show the diff portion only.
-+	Defaults to `raw`.
- 
- DISCUSSION
- ----------
-diff --git a/builtin/am.c b/builtin/am.c
-index 54b04da86d..e3dfd93c25 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -83,6 +83,7 @@ enum signoff_type {
- 
- enum show_patch_type {
- 	SHOW_PATCH_RAW = 0,
-+	SHOW_PATCH_DIFF = 1,
- };
- 
- struct am_state {
-@@ -1767,7 +1768,7 @@ static void am_run(struct am_state *state, int resume)
- 				linelen(state->msg), state->msg);
- 
- 			if (advice_amworkdir)
--				advise(_("Use 'git am --show-current-patch' to see the failed patch"));
-+				advise(_("Use 'git am --show-current-patch=diff' to see the failed patch"));
- 
- 			die_user_resolve(state);
- 		}
-@@ -2086,6 +2087,9 @@ static int show_patch(struct am_state *state, enum show_patch_type sub_mode)
- 	case SHOW_PATCH_RAW:
- 		patch_path = am_path(state, msgnum(state));
- 		break;
-+	case SHOW_PATCH_DIFF:
-+		patch_path = am_path(state, "patch");
-+		break;
- 	default:
- 		BUG("invalid mode for --show-current-patch");
- 	}
-@@ -2154,6 +2158,7 @@ static int parse_opt_show_current_patch(const struct option *opt, const char *ar
- 	 * when you add new options
- 	 */
- 	const char *valid_modes[] = {
-+		[SHOW_PATCH_DIFF] = "diff",
- 		[SHOW_PATCH_RAW] = "raw"
- 	};
- 	int new_value = SHOW_PATCH_RAW;
-@@ -2279,7 +2284,7 @@ int cmd_am(int argc, const char **argv, const char *prefix)
- 			N_("abort the patching operation but keep HEAD where it is."),
- 			RESUME_QUIT),
- 		{ OPTION_CALLBACK, 0, "show-current-patch", &resume.mode,
--		  "raw",
-+		  "(diff|raw)",
- 		  N_("show the patch being applied"),
- 		  PARSE_OPT_CMDMODE | PARSE_OPT_OPTARG | PARSE_OPT_NONEG | PARSE_OPT_LITERAL_ARGHELP,
- 		  parse_opt_show_current_patch, RESUME_SHOW_PATCH },
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 247f34f1fa..1151697f01 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1197,7 +1197,7 @@ __git_count_arguments ()
- 
- __git_whitespacelist="nowarn warn error error-all fix"
- __git_patchformat="mbox stgit stgit-series hg mboxrd"
--__git_showcurrentpatch="raw"
-+__git_showcurrentpatch="diff raw"
- __git_am_inprogress_options="--skip --continue --resolved --abort --quit --show-current-patch"
- 
- _git_am ()
-diff --git a/t/t4150-am.sh b/t/t4150-am.sh
-index afe456e75e..cb45271457 100755
---- a/t/t4150-am.sh
-+++ b/t/t4150-am.sh
-@@ -671,11 +671,21 @@ test_expect_success 'am --show-current-patch=raw' '
- 	test_cmp .git/rebase-apply/0001 actual.patch
- '
- 
-+test_expect_success 'am --show-current-patch=diff' '
-+	git am --show-current-patch=diff >actual.patch &&
-+	test_cmp .git/rebase-apply/patch actual.patch
-+'
-+
- test_expect_success 'am accepts repeated --show-current-patch' '
- 	git am --show-current-patch --show-current-patch=raw >actual.patch &&
- 	test_cmp .git/rebase-apply/0001 actual.patch
- '
- 
-+test_expect_success 'am detects incompatible --show-current-patch' '
-+	test_must_fail git am --show-current-patch=raw --show-current-patch=diff &&
-+	test_must_fail git am --show-current-patch --show-current-patch=diff
-+'
-+
- test_expect_success 'am --skip works' '
- 	echo goodbye >expected &&
- 	git am --skip &&
--- 
-2.21.1
+https://dev.azure.com/gitgitgadget/git/_build/results?buildId=3D31113&view=
+=3Dms.vss-test-web.build-test-results-tab&runId=3D97704&resultId=3D102357&=
+paneView=3Ddebug
 
+So yes. It needs to be changed to `test_i18ngrep`.
+
+Thanks,
+Johannes
+
+>
+> > +
+> > +test_expect_success 'OPT_CMDMODE() detects incompatibility with somet=
+hing else' '
+> > +       test_must_fail test-tool parse-options --set23 --mode2 >output=
+ 2>output.err &&
+> > +       test_must_be_empty output &&
+> > +       grep "incompatible with something else" output.err
+> > +'
+>
+> Ditto.
+>
+>
