@@ -2,89 +2,95 @@ Return-Path: <SRS0=QcP8=4I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-0.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,FSL_HELO_FAKE,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B1E74C11D05
-	for <git@archiver.kernel.org>; Thu, 20 Feb 2020 16:07:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E8CDC11D10
+	for <git@archiver.kernel.org>; Thu, 20 Feb 2020 17:20:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7DC13207FD
-	for <git@archiver.kernel.org>; Thu, 20 Feb 2020 16:07:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E5B48208E4
+	for <git@archiver.kernel.org>; Thu, 20 Feb 2020 17:20:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="AdzaLmW+"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="q2xovEjX"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728627AbgBTQHP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Feb 2020 11:07:15 -0500
-Received: from mout.web.de ([212.227.15.3]:32845 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728523AbgBTQHP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Feb 2020 11:07:15 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1582214823;
-        bh=u0hkZ0H0gkSlzakhAJW2XvLhxUuof9D+Rx5e1XEefa4=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=AdzaLmW+jvN0rgu+OLNz2JR+SJ+jKjtMpiSJMJESwDk6jlRDsHPf0A2G/XNkcy+LI
-         sTupYD6YeXB7Qpt5TOm3CoOT52pYUX7rEGrH16hQdW2PLdv7UjRWG5Vt2fMmQLj0wr
-         TtMani5HYoOdKk1AzRPJ2NWbmpwFfb5tYkUhXIbM=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([91.47.145.153]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MK6mD-1j3z0M0h9h-001Rbg; Thu, 20
- Feb 2020 17:07:03 +0100
-Subject: Re: Bug: Git: Clone: University Network: No Output on Terminal
-To:     Manish Devgan <manish.nsit8@gmail.com>
-Cc:     git@vger.kernel.org,
+        id S1728698AbgBTRUF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Feb 2020 12:20:05 -0500
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:38190 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728173AbgBTRUE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Feb 2020 12:20:04 -0500
+Received: by mail-pg1-f196.google.com with SMTP id d6so2263313pgn.5
+        for <git@vger.kernel.org>; Thu, 20 Feb 2020 09:20:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=BebCYY0fF+cLgoUzyUdjPiqFzI0NwpVTBaFGIO0OZFI=;
+        b=q2xovEjXD9RYoU1RLMazqacB7aSd97Clw4OxSdlxwdnxniRh/JtZLKizZ+vJMnRZvH
+         LQBG1DzVBdIJ7LuVbnOhhSoyFNA2hoO0W+e3IAYUyglTvHIKYQ7sYxLSzgfOKmLxdEA6
+         rsCyOjW+f7Le/+CZt06cTxpJ7U6U/571l8w4dfnVzaxN1MaI2NVyQGwWCZ+rGSbCsenW
+         UJy4f0tK4RukqSf8YCgqW2Egkh5wxCe7wWgONEKqNEHLo7k8FHVJcQavs+sxph5Jnfkx
+         UqfcmFWceiZn4lDZMb9BsqpBMXlcwia6/TX/jdXbtkCYT9ZwH81fnpynbyUZxJ9OyocU
+         Abbw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=BebCYY0fF+cLgoUzyUdjPiqFzI0NwpVTBaFGIO0OZFI=;
+        b=nprSZPSuaqu6Y7Vy5oK/30JSfTpvUbVMImEjZcdoJQOewx0ys1W7t/VdAxzK3wPLFj
+         l09GzLXgiDP69+sA83FU6NAJimnQ1AoxDOrpdWCSCXkKzcrwMrLelg1WXGZOl6AQtVcz
+         Rd7LU1ck0edtM92Pb0Wx5Eptl/86m9I6hQaW1cjMKG/BNU6OIH2gI7ErhYNWB2NjizFV
+         AuHTOULMyLO6Q/M86et240HWvU2gg4StQi0dfYkGXKFNmhNEeKdXiQ0RE26pCKaS/hwO
+         sAE1yzVjmCEmgrfxHcpM6KkS2flOb7ZEJ3UPpjCYVHV2xCgMiYoSMlatDI+3JCxj3sMW
+         eazg==
+X-Gm-Message-State: APjAAAV4Ngs3RsKJn/87Tn9+uMWHiwMsmgicoP13P69I2ALhGDJw7I4d
+        U8n6KmWMeu4mbP6Oh0O+grs7zaQL
+X-Google-Smtp-Source: APXvYqyD59vRTGlb12UVAWmYbSm1SplVeb05vZGMWOV1fEyPo8qwe5O0tSZKjeOtVlxeehKNQ95ylw==
+X-Received: by 2002:a63:ee12:: with SMTP id e18mr6492678pgi.33.1582219202757;
+        Thu, 20 Feb 2020 09:20:02 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
+        by smtp.gmail.com with ESMTPSA id y18sm197320pfe.19.2020.02.20.09.20.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 20 Feb 2020 09:20:02 -0800 (PST)
+Date:   Thu, 20 Feb 2020 09:20:00 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Han-Wen Nienhuys <hanwen@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>
-References: <CABVXwf6q1xMFhw+xd5f8GKATwC9k8mrXUkykpGgvTj7hv9pwEw@mail.gmail.com>
- <4d17a541-3c5c-0cf3-6ea6-11c214aa4674@web.de>
- <CABVXwf404m9FdsoLxYxZriYT6uif_fsMs8B4dY4RmeQojqK9Wg@mail.gmail.com>
- <9ed26e7e-c19c-cdb2-0710-3b91bf31291b@web.de>
- <CABVXwf6mPXWof3RHshDo=FSX8dvqUYDFH6-ecaCXDi4KhY8QJQ@mail.gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <520ed4fd-40cf-04ff-4717-f7d5c962a748@web.de>
-Date:   Thu, 20 Feb 2020 17:07:00 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.2
+        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
+Subject: Re: [PATCH v4 4/5] Add reftable library
+Message-ID: <20200220172000.GA61093@google.com>
+References: <pull.539.v3.git.1580848060.gitgitgadget@gmail.com>
+ <pull.539.v4.git.1581029756.gitgitgadget@gmail.com>
+ <02d2ca8b878a67a3334b222725645dd035b4289c.1581029756.git.gitgitgadget@gmail.com>
+ <20200207001612.GF6573@camp.crustytoothpaste.net>
+ <CAFQ2z_P+sdd5+46Ov_CO8ae4j_3aA4ahdVR5D_K1qKSQ-q+OcQ@mail.gmail.com>
+ <20200211000520.GA6454@camp.crustytoothpaste.net>
+ <CAFQ2z_N1sYh1TBzKue5y0039xQ+F6BBEUcFYCXS_OKjoxJ7v_g@mail.gmail.com>
+ <xmqqwo8tw0ec.fsf@gitster-ct.c.googlers.com>
+ <CAFQ2z_OF=P6YYuFkB5=4w0-nX+g59bagZGvcUBg_kSh-gOdAbQ@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CABVXwf6mPXWof3RHshDo=FSX8dvqUYDFH6-ecaCXDi4KhY8QJQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:oMsqpvy9P87guwBdjDHn2x8n1ERWK2oO7lhngkptwpR2VsN1DWX
- adkVYhTJG9aznPHckc7AU2pdrPuRYjwFrJN9ojXluadn0WA2HNNYxn45x/fVbwCS4ceIFJN
- oRRjbY4SGGQWCbL0THY+r7TwTzdnIfjX8WQhykcacF0u2jC1ZhzpmmoFEYynlZIDfQCvwAD
- TGC7UZj0uKCTYUap32yvg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:B5jUBFJUsCk=:RN0juoHB4wyggV7bJtCziY
- Mvvm3Oh5QF1ucnNlLB8OOqP6tY41qQn7H0CuovOlrWy+kTeOxe2CqyNS+B3vXcuHwkwkTIpap
- yfO59T4PmgjUl2RnXKRcnLJ7Jchf7/YWEXdV+HtZCFyrf5BeifjJZw8pJw3a6m4whLu9kjz0C
- kB8+IzS/QtSThKwm/LNCCSc1DXIG04qiKhe4qUDRtB9Zv/u1jlJaltKmfSoU359qK0tLR2ptQ
- CHqbRdmVRzTr9hZYWhw4WsrqsCcMCPi/5dOWCOKYt376hi4ZN5q215jnQEHnsu15dKsQapZ+8
- fY5r3SqlwcJCNZ3wnxmmhZD/u2R1De74P1QvoYMrO3GIYJ+xwt6CxqC6WjnbMIXpnjCX7YO55
- oEix0sE+dWqR2RX90i5WPcS8PTDNkKwPG4gO4AaSrAOYs2a1siD7UwVXuhJGv/idr4sCeVpD5
- LJd0sSeWDs4jqvDfNBOIcsYMHkiVEaTZy7PVR+TBsj3WXMWozs49j4+mCQUa4hHgNk4QC4Dbk
- UhEiUUJvDGJtMGyprhr05ITN58ma9gXrtuZGnJfRYs3hxy6hO2ZDloba8xfpZm4+u5GObgNqM
- 2IqUFOUnM7otMCSkoAaXykw/je3HvdOxQ+UZOPDxcat8dtaFZnFrmwFBigrgm0jmuvILE5gO/
- k5CIVbvz9biYb6R+rLXKdSiJ+W+31Af8WI5eYPAzC9Te0jtzBJtX90o5lSIzK67TFp2TISNy8
- hSD+Uk6pZ3wWumnAcpy2H6ts8LXrX5gIZ9TBSvCmSjG4lE9y+08atLN1bqm2JfyT9y+a3B8Fp
- 28Pn1ot2OPkd1h8WX36c3V+mIV7lUQRTyPWjTVTvfrW6p2A0qlUnNOL2PaYJypSa2QAxcTcXk
- NKXA9p0Leb5KbI7iQq730VGUerKpltCHeD4PXHFLd6nxjHiqYYPFwiLA4hm7X4ESVxnQsoRos
- XeIAiIm8V5kICW4GvN8/FrNMPrLsXDyuPxkB+GOO1t9wkq0nQPmwpvOS7dqskCQNzRENduv8X
- tNYcelsF0tMokH7WGuc0delgrmOYkyjgbTI/3D6klyKvaBcfyt4M+0hUXzI2ybdF2mFA2yKHp
- a/+iy3UCHcmPBZgUgWoQzMN6Cs2w1yXkO7ZOzBft3kwyG8TGFcdqK6dOUJpccoD2xtKTebjvU
- j/O5gVwRnhxLao9B+Wncwo2GKMgwlZho46bIFwECb4LpRo0+fA06m1OttNJl7MS2lj1/JjYE+
- CAoz8WUMlI468Jdjy
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAFQ2z_OF=P6YYuFkB5=4w0-nX+g59bagZGvcUBg_kSh-gOdAbQ@mail.gmail.com>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 20.02.20 um 11:20 schrieb Manish Devgan:
-> This is great. But perhaps I would want the output to come
-> irrespective of --progress argument in case of dumb_http.
+Han-Wen Nienhuys wrote:
 
-It's on by default if you use git on a terminal (as opposed to calling
-it from a script).
+> The ground truth for the format is the spec. The spec is part of the
+> JGit repository, so it seems reasonable for it to be reviewed there.
+> Do you want to move it somewhere else?
 
-Ren=C3=A9
+Let's stick a copy in Documentation/technical.  I can send a patch to
+Git to do that today, and we can update the doc in JGit to point to
+Git's version as the canonical one.
+
+Thanks,
+Jonathan
