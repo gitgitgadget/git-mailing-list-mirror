@@ -2,94 +2,142 @@ Return-Path: <SRS0=QcP8=4I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.1 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1,
+	USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2CF6FC11D00
-	for <git@archiver.kernel.org>; Thu, 20 Feb 2020 22:59:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B3904C11D00
+	for <git@archiver.kernel.org>; Thu, 20 Feb 2020 23:03:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id F32B620801
-	for <git@archiver.kernel.org>; Thu, 20 Feb 2020 22:59:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 813B120801
+	for <git@archiver.kernel.org>; Thu, 20 Feb 2020 23:03:28 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="IX8IZxPQ"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="pibx8iBh"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729246AbgBTW7y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Feb 2020 17:59:54 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53946 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729213AbgBTW7x (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Feb 2020 17:59:53 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C866247F66;
-        Thu, 20 Feb 2020 17:59:51 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=nJP1Yp2uR/zJYJLct7NLz/u+Bcg=; b=IX8IZx
-        PQTly9lK3fMqOhaXZohmNB0KJgQj9fhmK1HJcsxfQYupniqi3bUmrYdgmHmJwNly
-        xlNODueV4CP8S4MNPuc/ZJrBsxmTSDWwud/tDl91jdGDsYnFhMxE5ZZX9i3S8xKZ
-        EOAsJg54vYrYOmKSFQ7k73k/svZBwtd8pwP+Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Y7BaGKOtVaUJVz7rm419zialfTeLZrB6
-        /GGfdAJeF1wMIHZTifIqA8eszZIfVn/w3YlXtN4XZyObsj4mTpqn+W03VkQ5KpdX
-        RnWPJDVAAee+sXp1l89OVEwWsl83OYl/q2yY20li/NVG7pr9MxOgOMW72ILxlkIq
-        dD3oBDvGdBw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id BFC6047F64;
-        Thu, 20 Feb 2020 17:59:51 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 32EFB47F62;
-        Thu, 20 Feb 2020 17:59:51 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Cc:     Jeff King <peff@peff.net>, git <git@vger.kernel.org>,
-        Roland Hieber <rhi@pengutronix.de>
-Subject: Re: [PATCH] describe: output tag's ref instead of embedded name
-References: <fcf19a46b80322c5579142efe4ec681a4dcbdd28.1581802264.git.matheus.bernardino@usp.br>
-        <20200216065101.GA2937208@coredump.intra.peff.net>
-        <xmqqd0abk7zc.fsf@gitster-ct.c.googlers.com>
-        <20200218195402.GA21586@coredump.intra.peff.net>
-        <xmqq4kvnijim.fsf@gitster-ct.c.googlers.com>
-        <xmqqzhdfh3vr.fsf@gitster-ct.c.googlers.com>
-        <20200219015733.GA81560@coredump.intra.peff.net>
-        <xmqqr1yrgt2d.fsf@gitster-ct.c.googlers.com>
-        <20200219035650.GA84414@coredump.intra.peff.net>
-        <xmqqftf6hlrt.fsf@gitster-ct.c.googlers.com>
-        <20200220112539.GB1252160@coredump.intra.peff.net>
-        <xmqq4kvlcgcz.fsf@gitster-ct.c.googlers.com>
-        <CAHd-oW7HJb2d10U_dcbB6G-UdopQ7HKyghAji=9VhmAgn3Dw_Q@mail.gmail.com>
-Date:   Thu, 20 Feb 2020 14:59:49 -0800
-In-Reply-To: <CAHd-oW7HJb2d10U_dcbB6G-UdopQ7HKyghAji=9VhmAgn3Dw_Q@mail.gmail.com>
-        (Matheus Tavares Bernardino's message of "Thu, 20 Feb 2020 19:19:20
-        -0300")
-Message-ID: <xmqqftf49862.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1729354AbgBTXD1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Feb 2020 18:03:27 -0500
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:43879 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729295AbgBTXD1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Feb 2020 18:03:27 -0500
+Received: by mail-pg1-f194.google.com with SMTP id u12so2664062pgb.10
+        for <git@vger.kernel.org>; Thu, 20 Feb 2020 15:03:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=z3q9YFaV3VI5Mn0dXlKp1JhD2nt3hyNg+oUwPpgzhKs=;
+        b=pibx8iBhpK5Gw2DNm6XVeoN0tSq7SaxBsJZ1zlANm2dXKOpyLo/Le2Dt13F/3h/7eP
+         /Stw7bWO7NHg9mTVFHQyagKELlOmdpoaj6ivvFb7g1XVLp63CMJ/YeGynnMBfUCTcLCK
+         //soLqMK69dK5X2gCzm8E3EH3AL35EF0zsgI/tY8zhFoGH5M4EizOAdonYvTN+CPaXmt
+         N4LO4KIj/poy2RDvWaTJvGkr7QePl1qu0zxgaT0wBZQ82es52T8Cg2v3WHWac8EzRSU8
+         +6KZDCAegAROHhQ9XSt8EnKtL07H80UTwQ5mImh/gVXtHxRxOA79IRrmUbb+z6a/016W
+         kdBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=z3q9YFaV3VI5Mn0dXlKp1JhD2nt3hyNg+oUwPpgzhKs=;
+        b=px/8KxtaqyTwEcQfXZoqE7q3nZpzZZh5a5kSQ6vqLXTVyWMzDqviuTAECjtWcklNzN
+         2x8kiW8Qxy/zInLfOSrE/sZ4Cq0MgCoO+pGtsvN5KThwOwwVtfu6YrN9/4bu/ScJIfEN
+         U6MOX2FKsqN0G8TcpzelyF6ih1zXPm2vABVFz8PkORO/9A75vHqUI4UBNBPZcXGin0pc
+         4Z0VkED/2wExsLpkOEZ2+9uFdoFgXGssY0zA59m4hKE4SegMZQUA4ihF1fgBB4QJvsJJ
+         Vj1JldWu/JWOFxWwQ8ltcdNORHZcj1iNAfEaw2uPPf/+Zpc6w29cYwQ/leDfKOYkDr84
+         5VCg==
+X-Gm-Message-State: APjAAAW7HrxQijuFR3tnvHh4HQpYn7Dsz7UXTQiTOGXvGgy7NdklY21z
+        i4uAE17amEJk9duZ74XB6NhfaA==
+X-Google-Smtp-Source: APXvYqzitdyDhLEQ9DTnI2Ejy+cpZKeAKse4aVJj1nMsMvITjKuTvWGSD0FTRmd+duVd2ljA+DUBzg==
+X-Received: by 2002:a63:f60b:: with SMTP id m11mr34216484pgh.288.1582239805492;
+        Thu, 20 Feb 2020 15:03:25 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
+        by smtp.gmail.com with ESMTPSA id fz21sm446682pjb.15.2020.02.20.15.03.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 20 Feb 2020 15:03:25 -0800 (PST)
+Date:   Thu, 20 Feb 2020 15:03:20 -0800
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v8 04/15] bugreport: gather git version and build info
+Message-ID: <20200220230320.GE2447@google.com>
+References: <20200220015858.181086-1-emilyshaffer@google.com>
+ <20200220015858.181086-5-emilyshaffer@google.com>
+ <xmqq4kvlaup9.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B35963A2-5434-11EA-AC3A-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq4kvlaup9.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Matheus Tavares Bernardino <matheus.bernardino@usp.br> writes:
+On Thu, Feb 20, 2020 at 12:07:46PM -0800, Junio C Hamano wrote:
+> Emily Shaffer <emilyshaffer@google.com> writes:
+> 
+> > +static void get_system_info(struct strbuf *sys_info)
+> > +{
+> > +	/* get git version from native cmd */
+> > +	strbuf_addstr(sys_info, "git version:\n");
+> > +	get_version_info(sys_info, 1);
+> > +	strbuf_complete_line(sys_info);
+> 
+> It is a bit curious use of "don't do anything if sys_info ends with
+> a complete line, but complete it if it ends with an imcomplete
+> line".  That tells the readers that we do not know what
+> get_version_info() will do (now or in the future) to its output
+> buffer.
+> 
+> > +}
+> > ...
+> > diff --git a/help.c b/help.c
+> > index 190722fb0a..44cee69c11 100644
+> > --- a/help.c
+> > +++ b/help.c
+> > @@ -622,8 +622,33 @@ const char *help_unknown_cmd(const char *cmd)
+> >  	exit(1);
+> >  }
+> >  
+> > +void get_version_info(struct strbuf *buf, int show_build_options)
+> > +{
+> > +	/*
+> > +	 * The format of this string should be kept stable for compatibility
+> > +	 * with external projects that rely on the output of "git version".
+> > +	 *
+> > +	 * Always show the version, even if other options are given.
+> > +	 */
+> > +	strbuf_addf(buf, "git version %s\n", git_version_string);
+> 
+> This ends the output with a complete line when !show_build_options ...
+> 
+> > +	if (show_build_options) {
+> > +		strbuf_addf(buf, "cpu: %s\n", GIT_HOST_CPU);
+> > +		if (git_built_from_commit_string[0])
+> > +			strbuf_addf(buf, "built from commit: %s\n",
+> > +			       git_built_from_commit_string);
+> > +		else
+> > +			strbuf_addstr(buf, "no commit associated with this build\n");
+> > +		strbuf_addf(buf, "sizeof-long: %d\n", (int)sizeof(long));
+> > +		strbuf_addf(buf, "sizeof-size_t: %d\n", (int)sizeof(size_t));
+> > +		strbuf_addf(buf, "shell-path: %s\n", SHELL_PATH);
+> > +		/* NEEDSWORK: also save and output GIT-BUILD_OPTIONS? */
+> 
+> ... and the pattern indicates the output will end with a complete
+> line when !!show_build_options, too.
+> 
+> > +	}
+> > +}
+> 
+> So, was the strbuf_complete_line() merely defensive programming?  It
+> may deserve a comment if it will stay there.
 
-> I now this is just an illustration, but shouldn't this example be "git
-> describe --contains v1.0-bob~1"?
+It was meant defensively, here and elsewhere in the series. I figured
+that for something like this, which is mostly bounded by human writing
+in an editor and then by file IO, spurious string-checking was not such
+a big deal.
 
-No, none of the patches discussed in this thread would not affect
-anything in --contains (as it is a completely different program).
-The example was bad to use one commit _before_; I meant to use one
-commit _after_ the tag.
+Are you suggesting to comment around the strbuf_complete_line() calls,
+or to comment around get_version_info() that it should end in newline?
 
-> Another case that came to my mind is when the user runs `git describe
-> --abrev=0 HEAD` and v1.0-bob points to HEAD~. In this case, v1.0 will
-> be displayed without suffix,...
-
-In this case, v1.0-1- is followed by the full object name, I think.
+ - Emily
