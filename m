@@ -2,64 +2,66 @@ Return-Path: <SRS0=QcP8=4I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 382A8C11D25
-	for <git@archiver.kernel.org>; Thu, 20 Feb 2020 20:58:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E8EB9C11D20
+	for <git@archiver.kernel.org>; Thu, 20 Feb 2020 21:04:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0EE6020679
-	for <git@archiver.kernel.org>; Thu, 20 Feb 2020 20:58:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A7A60208E4
+	for <git@archiver.kernel.org>; Thu, 20 Feb 2020 21:04:41 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="oGRty5tn"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Zs1esa5R"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729156AbgBTU6o (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Feb 2020 15:58:44 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:61120 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729141AbgBTU6j (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Feb 2020 15:58:39 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id C7A51AE50E;
-        Thu, 20 Feb 2020 15:58:37 -0500 (EST)
+        id S1729036AbgBTVEk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Feb 2020 16:04:40 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63651 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728582AbgBTVEk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Feb 2020 16:04:40 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BCA8A51083;
+        Thu, 20 Feb 2020 16:04:36 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=6WJXkzkVJRikGa+FkYM6e4DUM94=; b=oGRty5
-        tnRccZq459i9csOqMk0tCRhrPie/wLxvFFyAUAtO6F60/2C22q9gDJ24Ec6Tw+mG
-        S0V0g1GQecOBwcsVReIwDDIqP3Qu2KgGWHTZyOBpPGt2fbxY3LYtEL1/EZ5p5JRH
-        UaDO/2T+tOGDge+3K9UF1Og4CKUgTrtpGsNcM=
+        :content-type; s=sasl; bh=JDS+yH26cZ3sJamMrofJvncEMXw=; b=Zs1esa
+        5RcMjkZserT7biMHO8uo0rchTLoC3VidaZG/aEZQy2nC6cZUA2e57U0IioaxzA3f
+        sRX5/PQJT6V2Ch8vDoWHtaF+Ns6RVuFxKkf2ZYw9P4L4G+g9zO0zxHFMDXTPg7F5
+        PYpbghZVIsDuZwRyxYnnplqZyt21srGf7dOGE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=fz1hPKMAe8bdJ1PtxOm3KRSGBCfqi1v6
-        9LNfHffQgNhflA1BpzMoN52xEQPE2L7U/6TqZwvpscURQJaoQT5S+3dCa70e4gZi
-        inOt9M7wWq1L8NQRAy1B5ZmP68tlCXdJrTLcJwYcV9ix2+2vR3ZrBF13E4KW86tJ
-        at9rGrktaRI=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id BEBFFAE50B;
-        Thu, 20 Feb 2020 15:58:37 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=Iexp4Y51MEJ70GZHAsRdmJAxPNa+taEn
+        E3rKXvM2SZX4eepHCZoVARWUReCUUvfDO3fiwfWlgCgGKGNz0NXKyyydWbdutwHC
+        GGUtDfPFNb6cgzuzoBUXCEYER2Uzr/oHCLaInaS8ZIg08szHRe49OSgV/hpGlG+V
+        widWCXMalnQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B4C6451082;
+        Thu, 20 Feb 2020 16:04:36 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 27457AE50A;
-        Thu, 20 Feb 2020 15:58:35 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1F24A51081;
+        Thu, 20 Feb 2020 16:04:36 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v8 11/15] bugreport: collect list of populated hooks
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v8 12/15] bugreport: count loose objects
 References: <20200220015858.181086-1-emilyshaffer@google.com>
-        <20200220015858.181086-12-emilyshaffer@google.com>
-Date:   Thu, 20 Feb 2020 12:58:32 -0800
-In-Reply-To: <20200220015858.181086-12-emilyshaffer@google.com> (Emily
-        Shaffer's message of "Wed, 19 Feb 2020 17:58:54 -0800")
-Message-ID: <xmqqeeup9ds7.fsf@gitster-ct.c.googlers.com>
+        <20200220015858.181086-13-emilyshaffer@google.com>
+Date:   Thu, 20 Feb 2020 13:04:33 -0800
+In-Reply-To: <20200220015858.181086-13-emilyshaffer@google.com> (Emily
+        Shaffer's message of "Wed, 19 Feb 2020 17:58:55 -0800")
+Message-ID: <xmqqa75d9di6.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: C27CB340-5423-11EA-9AA6-8D86F504CC47-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 99A3FFB8-5424-11EA-A6CE-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -67,94 +69,106 @@ X-Mailing-List: git@vger.kernel.org
 
 Emily Shaffer <emilyshaffer@google.com> writes:
 
-> +static void get_populated_hooks(struct strbuf *hook_info, int nongit)
-> +{
-> +	/*
-> +	 * Doesn't look like there is a list of all possible hooks; so below is
-> +	 * a transcription of `git help hooks`.
-> +	 */
-
-It may want to become a NEEDSWORK comment.
-
-> +	const char *hooks = "applypatch-msg,"
-> +			    "pre-applypatch,"
-> +			    "post-applypatch,"
-> +			    "pre-commit,"
-> +			    "pre-merge-commit,"
-> +			    "prepare-commit-msg,"
-> +			    "commit-msg,"
-> +			    "post-commit,"
-> +			    "pre-rebase,"
-> +			    "post-checkout,"
-> +			    "post-merge,"
-> +			    "pre-push,"
-> +			    "pre-receive,"
-> +			    "update,"
-> +			    "post-receive,"
-> +			    "post-update,"
-> +			    "push-to-checkout,"
-> +			    "pre-auto-gc,"
-> +			    "post-rewrite,"
-> +			    "sendemail-validate,"
-> +			    "fsmonitor-watchman,"
-> +			    "p4-pre-submit,"
-> +			    "post-index-changex";
-
-Typo here?
-
-> +	struct string_list hooks_list = STRING_LIST_INIT_DUP;
-> +	struct string_list_item *iter = NULL;
+> The number of unpacked objects in a user's repository may help us
+> understand the root of the problem they're seeing, especially if a
+> command is running unusually slowly.
+>
+> Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+> ---
+>  Documentation/git-bugreport.txt |  1 +
+>  bugreport.c                     | 52 +++++++++++++++++++++++++++++++++
+>  2 files changed, 53 insertions(+)
+>
+> diff --git a/Documentation/git-bugreport.txt b/Documentation/git-bugreport.txt
+> index 4d01528540..4fe1c60506 100644
+> --- a/Documentation/git-bugreport.txt
+> +++ b/Documentation/git-bugreport.txt
+> @@ -32,6 +32,7 @@ The following information is captured automatically:
+>   - $SHELL
+>   - Selected config values
+>   - A list of enabled hooks
+> + - The number of loose objects in the repository
+>  
+>  This tool is invoked via the typical Git setup process, which means that in some
+>  cases, it might not be able to launch - for example, if a relevant config file
+> diff --git a/bugreport.c b/bugreport.c
+> index b5a0714a7f..fb7bc72723 100644
+> --- a/bugreport.c
+> +++ b/bugreport.c
+> @@ -10,6 +10,7 @@
+>  #include "bugreport-config-safelist.h"
+>  #include "khash.h"
+>  #include "run-command.h"
+> +#include "object-store.h"
+>  
+>  static void get_git_remote_https_version_info(struct strbuf *version_info)
+>  {
+> @@ -128,6 +129,54 @@ static void get_populated_hooks(struct strbuf *hook_info, int nongit)
+>  	}
+>  }
+>  
+> +static int loose_object_cb(const struct object_id *oid, const char *path,
+> +			   void *data) {
+> +	int *loose_object_count = data;
 > +
+> +	if (loose_object_count) {
+> +		(*loose_object_count)++;
+> +		return 0;
+> +	}
+> +
+> +	return 1;
+
+What is the point of returning 1 here to abort the iteration early?
+Wouldn't it be a BUG() if this callback ends up gettting called with
+NULL in data?
+
+> +}
+> +
+> +static void get_loose_object_summary(struct strbuf *obj_info, int nongit) {
+> +
+> +	int local_loose_object_count = 0, total_loose_object_count = 0;
+> +	int local_count_questionable = 0, total_count_questionable = 0;
 > +
 > +	if (nongit) {
-> +		strbuf_addstr(hook_info,
-> +			"not run from a git repository - no hooks to show\n");
+> +		strbuf_addstr(obj_info,
+> +			"not run from a git repository - no objects to show\n");
 > +		return;
 > +	}
 > +
-> +	string_list_split(&hooks_list, hooks, ',', -1);
+> +	local_count_questionable = for_each_loose_object(
+> +					loose_object_cb,
+> +					&local_loose_object_count,
+> +					FOR_EACH_OBJECT_LOCAL_ONLY);
 > +
-> +	for_each_string_list_item(iter, &hooks_list) {
-
-I do not get why you want to use string_list for this, especially if
-you need to use string_list_split.
-
-To me,
-
-	int i;
-	const char *hook[] = {
-		"applypatch-msg",
-	        "pre-applypatch",
-		...
-		"post-index-change",
-	};
-
-	for (i = 0; i < ARRAY_SIZE(hook); i++) {
-		if (hook[i] is enabled)
-			strbuf_addf(hook_info, "%s\n", hook[i]);
-	}
-
-would be far easier to understand.  Do you have an external source
-that can feed you a single long string of comma separated hook names
-in mind, so that the initialization of *hooks will become simpler
-that way, or something?
-
-> +		if (find_hook(iter->string)) {
-> +			strbuf_addstr(hook_info, iter->string);
-> +			strbuf_complete_line(hook_info);
-> +		}
-> +	}
+> +	total_count_questionable = for_each_loose_object(
+> +					loose_object_cb,
+> +					&total_loose_object_count,
+> +					0);
+> +	strbuf_addf(obj_info, "%d local loose objects%s\n",
+> +		    local_loose_object_count,
+> +		    local_count_questionable ? " (problem during count)" : "");
+> +
+> +	strbuf_addf(obj_info, "%d alternate loose objects%s\n",
+> +		    total_loose_object_count - local_loose_object_count,
+> +		    (local_count_questionable || total_count_questionable)
+> +			? " (problem during count)"
+> +			: "");
+> +
+> +	strbuf_addf(obj_info, "%d total loose objects%s\n",
+> +		    total_loose_object_count,
+> +		    total_count_questionable ? " (problem during count)" : "");
 > +}
 > +
 >  static const char * const bugreport_usage[] = {
 >  	N_("git bugreport [-o|--output-directory <file>] [-s|--suffix <format>]"),
 >  	NULL
-> @@ -166,6 +216,9 @@ int cmd_main(int argc, const char **argv)
->  	get_header(&buffer, "Safelisted Config Info");
->  	get_safelisted_config(&buffer);
+> @@ -219,6 +268,9 @@ int cmd_main(int argc, const char **argv)
+>  	get_header(&buffer, "Enabled Hooks");
+>  	get_populated_hooks(&buffer, nongit_ok);
 >  
-> +	get_header(&buffer, "Enabled Hooks");
-> +	get_populated_hooks(&buffer, nongit_ok);
+> +	get_header(&buffer, "Loose Object Counts");
+> +	get_loose_object_summary(&buffer, nongit_ok);
 > +
 >  	report = fopen_for_writing(report_path.buf);
 >  
