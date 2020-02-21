@@ -2,532 +2,281 @@ Return-Path: <SRS0=3Brp=4J=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 18A5EC35657
-	for <git@archiver.kernel.org>; Fri, 21 Feb 2020 17:32:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 402FFC35646
+	for <git@archiver.kernel.org>; Fri, 21 Feb 2020 17:41:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B8B08222C4
-	for <git@archiver.kernel.org>; Fri, 21 Feb 2020 17:32:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0ADB2222C4
+	for <git@archiver.kernel.org>; Fri, 21 Feb 2020 17:41:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BcHSf/vz"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FSSFt/sJ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727291AbgBURcA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Feb 2020 12:32:00 -0500
-Received: from mail-lj1-f194.google.com ([209.85.208.194]:45523 "EHLO
-        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726541AbgBURb7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Feb 2020 12:31:59 -0500
-Received: by mail-lj1-f194.google.com with SMTP id e18so2974101ljn.12
-        for <git@vger.kernel.org>; Fri, 21 Feb 2020 09:31:57 -0800 (PST)
+        id S1727434AbgBURl2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Feb 2020 12:41:28 -0500
+Received: from mail-oi1-f182.google.com ([209.85.167.182]:39504 "EHLO
+        mail-oi1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725947AbgBURl1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Feb 2020 12:41:27 -0500
+Received: by mail-oi1-f182.google.com with SMTP id z2so2369133oih.6
+        for <git@vger.kernel.org>; Fri, 21 Feb 2020 09:41:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=0PB57b2nbeOd9z1iEeOaMUH9hksIGUWBBPb/0X4S1i4=;
-        b=BcHSf/vzlGXzbnNJIq9QU9VRkUw4pMlzoIC7uYS6dV7uAWyJPq+SjYCmDa9Bxz7mm/
-         opLS819rPc54Rz8mGkBcvHWVI9mpwL7XdbDa2kl8Wd17CPa3wwQDij9PjHuP5KZqcGTW
-         LO0M32TF2FnD57/6LFoMUOJoR8Nr/u4rLKcz6pG8ytAo7tW5pPJmEt+wLiV2H2oaQvYr
-         WpdVOZiJft1/EEkh5Nq2egHPLnsWZ6nEe7cftOjs3EHY2AKgquMNXGxSyyNej8ulyFMa
-         VC+/tRQNk053zzUlPN4B5q2XXu0iZPC/DDScU/4ePlTn14lo8NN0XljRxU/dktP0DVBp
-         egEg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=sMhWowbfWNO6GF3kTveex99KwDfIhVqyDCyXL0sXr+A=;
+        b=FSSFt/sJhO7iGUp492aFRJiqTvo5g2cr28r65xmvTcpGKa+sTqWWsIHIiLSYJM2Jb3
+         3/87ulcjuBvBafwO560co6KqPuZHLeGR7neLEv97QYG8weh4ZvAQXoFqr2ZmmVGnaiib
+         Fswbct2BZaYyH16M/kSz8SvO6Boo/pGfl8BSc6GUf4syRBBYTcnSMblAarrQJOVx/BKj
+         mtURdbvz0wB6+fbAefEdZi0QfLa2kQHn0Ev+SsFF736IZ+4CUp0rScjT+o/sSZ1br8o7
+         o/d48JFdleMWbZO04ScSB9lrxiqmGLvmf3A0kwamUw1mvxiYLM7mgpTBW5rAq9qGad84
+         Yk5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version:content-transfer-encoding;
-        bh=0PB57b2nbeOd9z1iEeOaMUH9hksIGUWBBPb/0X4S1i4=;
-        b=KJttruTREj2pJ9CiUygfEHmY5BveJB8tWtsEObuhY0StA1hIPBoENCJtx/hw6hTPHw
-         pJl8I25+26LVI3VPSIfxJzO4sFkj7i9KvxyHpm4ImcD8fLZfg8XBVkKPti/lHfSRKdpG
-         c7PflaowCNvDoUEbTZYWGZ1VuxAi1tU67Qkk49/6Ej099Swh6kuMeDiWsTiQgYsZ9CWE
-         FIG1OWG5qnSq/Yx+gZXuJNsoi925IpxryAI5SXsY9tdoVMfIdjBLC4or9tDe+vX/iFs4
-         9/rybKYdTn4+HsQh77L+qXSsjBHDTQIm0NplibUerPJQSyN/ZFMYrxiwZR7lU66jxfJV
-         7niQ==
-X-Gm-Message-State: APjAAAXyEwLB6MWEWYE6enXZn2OIY1pQUmmShuuOclle82wPf2ubBa2X
-        Gm9ro5CpFEDRNsg05TFDKfU=
-X-Google-Smtp-Source: APXvYqyZMqCKPELarcRh6mlMGRweVe+wTbDg2m3kz2TSZr46VG0Fjzg1WSEmXIhx1JJ4onJTjx1O+g==
-X-Received: by 2002:a2e:860c:: with SMTP id a12mr22846981lji.146.1582306316721;
-        Fri, 21 Feb 2020 09:31:56 -0800 (PST)
-Received: from Laptop-Acer-Aspire-F15 (host-89-229-7-83.dynamic.mm.pl. [89.229.7.83])
-        by smtp.gmail.com with ESMTPSA id k12sm1982601lfc.33.2020.02.21.09.31.55
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 21 Feb 2020 09:31:55 -0800 (PST)
-From:   Jakub Narebski <jnareb@gmail.com>
-To:     "Garima Singh via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, stolee@gmail.com, szeder.dev@gmail.com,
-        jonathantanmy@google.com, jeffhost@microsoft.com, me@ttaylorr.com,
-        peff@peff.net, garimasigit@gmail.com, christian.couder@gmail.com,
-        emilyshaffer@gmail.com, gitster@pobox.com,
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=sMhWowbfWNO6GF3kTveex99KwDfIhVqyDCyXL0sXr+A=;
+        b=X8Uuq7KKZQ3pnNdIf0VNILNu0a5EeTAogEgN3/jsvRg3BsMfe+IYVBPFXtfi8mzdbL
+         7kHIVaFfr1Xd6gxMg8OLBPK8ZgDH95mBU8HinR4VQ8IJCSVCrummf/QiLJOW1Zl5lJNV
+         zqw+s137BFZjJyUuQXWiLhL9nKDP8X7ow3oZQN3uGdGQEJCzkQYWj2gHduhXHx8vO/d8
+         dALYJzSBZEsRpLTlfu/xxfYdSGagnKyIR6f4rCqHjz+IvN3TwmkLm+bBTvsu7YSwMbSy
+         XP58geXKzQcg7oEUO1W5hDYkrwQDoBqPM5/Kq0YLgtBSQ9END76GzxphXgeHtethwiIo
+         GoHw==
+X-Gm-Message-State: APjAAAVAqeX3YorrZLjuFt55GisxlaDXKPTDPglMOaiW1hDNKw6fZUsr
+        8bxoDKFw+6zBufs8SY9T7Xg=
+X-Google-Smtp-Source: APXvYqwRBGBmcL0PgJOBtmcihYlI/brO9Urg0QdjMGGxVynbrjL7L8I1G3ZpdAP3KyCu2QZKo67AtA==
+X-Received: by 2002:aca:cf07:: with SMTP id f7mr2931669oig.5.1582306884863;
+        Fri, 21 Feb 2020 09:41:24 -0800 (PST)
+Received: from ?IPv6:2600:1700:b00:7980:4883:85f3:7819:d905? ([2600:1700:b00:7980:4883:85f3:7819:d905])
+        by smtp.gmail.com with ESMTPSA id l75sm705505oig.2.2020.02.21.09.41.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 21 Feb 2020 09:41:24 -0800 (PST)
+Subject: Re: [PATCH v2 00/11] Changed Paths Bloom Filters
+To:     Jakub Narebski <jnareb@gmail.com>,
+        Garima Singh via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
+        Christian Couder <christian.couder@gmail.com>,
+        Emily Shaffer <emilyshaffer@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
         Garima Singh <garima.singh@microsoft.com>
-Subject: Re: [PATCH v2 10/11] revision.c: use Bloom filters to speed up path based revision walks
 References: <pull.497.git.1576879520.gitgitgadget@gmail.com>
-        <pull.497.v2.git.1580943390.gitgitgadget@gmail.com>
-        <77f1c561e8205c0598b57bf572640d21d64757f8.1580943390.git.gitgitgadget@gmail.com>
-Date:   Fri, 21 Feb 2020 18:31:50 +0100
-In-Reply-To: <77f1c561e8205c0598b57bf572640d21d64757f8.1580943390.git.gitgitgadget@gmail.com>
-        (Garima Singh via GitGitGadget's message of "Wed, 05 Feb 2020 22:56:29
-        +0000")
-Message-ID: <86o8trdeyh.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
+ <pull.497.v2.git.1580943390.gitgitgadget@gmail.com>
+ <86a75swuie.fsf@gmail.com>
+From:   Garima Singh <garimasigit@gmail.com>
+Message-ID: <fdcbd793-57c2-f5ea-ccb9-cf34e911b669@gmail.com>
+Date:   Fri, 21 Feb 2020 12:41:22 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.5.0
 MIME-Version: 1.0
+In-Reply-To: <86a75swuie.fsf@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Garima Singh via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> From: Garima Singh <garima.singh@microsoft.com>
->
-> Revision walk will now use Bloom filters for commits to speed up revision
-> walks for a particular path (for computing history for that path), if they
-> are present in the commit-graph file.
-
-Why do we need to turn this feature off for --walk-reflog?
-
-Anyway, in my opinion this restriction should be stated explicitly in
-the commit message, if kept.=20
-
->
-> We load the Bloom filters during the prepare_revision_walk step, but only
-> when dealing with a single pathspec.
-
-I would add the qualifier "currently" here, i.e. s/only/currently only/
-to make it clear that it is the limitation of current implementation,
-and not the inherent implementation of the technique.
-
->                                      While comparing trees in
-> rev_compare_trees(), if the Bloom filter says that the file is not differ=
-ent
-> between the two trees, we don't need to compute the expensive diff. This =
-is
-> where we get our performance gains. The other response of the Bloom filter
-> is `maybe`, in which case we fall back to the full diff calculation to
-> determine if the path was changed in the commit.
-
-All right, looks good.
-
-Very minor nitpick: s/`maybe`/'maybe'/ (in my opinion).
-
->
-> Performance Gains:
-> We tested the performance of `git log -- <path>` on the git repo, the lin=
-ux
-> and some internal large repos, with a variety of paths of varying depths.
-
-Another repository that we could test Bloom filters feature would be, as
-I have written before, Android AOSP frameworks core repository
-https://android.googlesource.com/platform/frameworks/base/
-because being written in Java it has deep path hierarchy, and it also
-has large number of commits.
-
->
-> On the git and linux repos:
-> - we observed a 2x to 5x speed up.
-
-It would be nice to have at least one specific and repeatable example:
-in given repository, starting from given commit or tag, following the
-history of given path, what are timing results for doing some specific
-command with and without Bloom filters computed and enabled.
-
-One might also want to know the cost of this speedup: how much disk
-space does it take (i.e. how large is the commit-graph file with and
-without Bloom filters chunks), and how long does it take to compute
-(i.e. how much time writing commit-graph takes with and without using
---changed-paths options).
-
->
-> On a large internal repo with files seated 6-10 levels deep in the tree:
-> - we observed 10x to 20x speed ups, with some paths going up to 28 times
->   faster.
-
-This is good to know.
-
-In the future we might want to have procedurally generated synthetic
-repository, where we would be able to control number of files, depth of
-filesystem hierarchy, average number of changes per commit, etc. to be
-used for performance testing.  (Just wishful thinking)
-
->
-> Helped-by: Derrick Stolee <dstolee@microsoft.com
-> Helped-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
-> Helped-by: Jonathan Tan <jonathantanmy@google.com>
-> Signed-off-by: Garima Singh <garima.singh@microsoft.com>
-> ---
->  revision.c                 | 124 +++++++++++++++++++++++++++++++-
->  revision.h                 |  11 +++
->  t/helper/test-read-graph.c |   4 ++
->  t/t4216-log-bloom.sh       | 140 +++++++++++++++++++++++++++++++++++++
->  4 files changed, 277 insertions(+), 2 deletions(-)
->  create mode 100755 t/t4216-log-bloom.sh
->
-> diff --git a/revision.c b/revision.c
-> index 8136929e23..d1622afa17 100644
-> --- a/revision.c
-> +++ b/revision.c
-> @@ -29,6 +29,8 @@
->  #include "prio-queue.h"
->  #include "hashmap.h"
->  #include "utf8.h"
-> +#include "bloom.h"
-> +#include "json-writer.h"
->=20=20
->  volatile show_early_output_fn_t show_early_output;
->=20=20
-> @@ -624,11 +626,114 @@ static void file_change(struct diff_options *optio=
-ns,
->  	options->flags.has_changes =3D 1;
->  }
->=20=20
-> +static int bloom_filter_atexit_registered;
-> +static unsigned int count_bloom_filter_maybe;
-> +static unsigned int count_bloom_filter_definitely_not;
-> +static unsigned int count_bloom_filter_false_positive;
-> +static unsigned int count_bloom_filter_not_present;
-> +static unsigned int count_bloom_filter_length_zero;
-> +
-> +static void trace2_bloom_filter_statistics_atexit(void)
-> +{
-> +	struct json_writer jw =3D JSON_WRITER_INIT;
-> +
-> +	jw_object_begin(&jw, 0);
-> +	jw_object_intmax(&jw, "filter_not_present", count_bloom_filter_not_pres=
-ent);
-> +	jw_object_intmax(&jw, "zero_length_filter", count_bloom_filter_length_z=
-ero);
-> +	jw_object_intmax(&jw, "maybe", count_bloom_filter_maybe);
-> +	jw_object_intmax(&jw, "definitely_not", count_bloom_filter_definitely_n=
-ot);
-> +	jw_end(&jw);
-> +
-> +	trace2_data_json("bloom", the_repository, "statistics", &jw);
-> +
-> +	jw_release(&jw);
-> +}
-
-I thought that it would be better to put this part together with tests
-that absolutely require this functionality in a separate subsequent
-patch, but now I am not so sure.  It is nice to have all or almost all
-tests created in a single patch.
-
-Looks good to me, but I don't know much about trace2 API, so take it
-with a pinch of salt.
-
-> +
-> +static void prepare_to_use_bloom_filter(struct rev_info *revs)
-> +{
-> +	struct pathspec_item *pi;
-> +	char *path_alloc =3D NULL;
-> +	const char *path;
-> +	int last_index;
-> +	int len;
-> +
-> +	if (!revs->commits)
-> +	    return;
-
-I see that we need this because in next command we dereference
-revs->commits to get revs->commits->item.
-
-If I understand it correctly empty pending list may happen with "--all"
-or "--glob" options, but somebody with more experience in this area of
-code is needed to state for sure.
-
-Should we test `git log --all -- <path>`?
-
-> +
-> +	repo_parse_commit(revs->repo, revs->commits->item);
-
-Are we calling this function for its side-effects?  Wouldn't using
-prepare_commit_graph(revs->repo) here be a better solution?
-
-> +
-> +	if (!revs->repo->objects->commit_graph)
-> +		return;
-
-Looks good to me.  If there is no commit graph, then there are no Bloom
-filters to consult.
-
-> +
-> +	revs->bloom_filter_settings =3D revs->repo->objects->commit_graph->bloo=
-m_filter_settings;
-
-Hmmm... is that why bloom_filter_settings is a pointer to struct, and
-not struct itself?
-
-> +	if (!revs->bloom_filter_settings)
-> +		return;
-
-Looks good to me.  If there is no Bloomm filter in the commit-graph
-file, then there are no Bloom filters to consult.
-
-> +
-> +	pi =3D &revs->pruning.pathspec.items[0];
-> +	last_index =3D pi->len - 1;
-> +
-
-It might be a good idea to add a comment explaining what is happening
-here, for example:
-
-  +	/* remove single trailing slash from path, if needed */
-> +	if (pi->match[last_index] =3D=3D '/') {
-> +	    path_alloc =3D xstrdup(pi->match);
-> +	    path_alloc[last_index] =3D '\0';
-> +	    path =3D path_alloc;
-> +	} else
-> +	    path =3D pi->match;
-> +
-> +	len =3D strlen(path);
-
-We can avoid computing strlen(path) here, because in first branch of
-this conditional we have len =3D last_index, in the second branch we have
-len =3D pi->len.
-
-> +
-> +	revs->bloom_key =3D xmalloc(sizeof(struct bloom_key));
-> +	fill_bloom_key(path, len, revs->bloom_key, revs->bloom_filter_settings);
-
-All right, this is the meat of this function: creating bloom_key for a
-path.  Looks good to me.
-
-> +
-> +	if (trace2_is_enabled() && !bloom_filter_atexit_registered) {
-> +		atexit(trace2_bloom_filter_statistics_atexit);
-> +		bloom_filter_atexit_registered =3D 1;
-> +	}
-
-OK, here we register trace2 Bloom filter statistics handler, but only
-once, and only when needed.
-
-> +
-> +	free(path_alloc);
-
-OK, path_alloc is either xstrdup-ed string, or NULL, and is no longer
-needed (after possibly being used to create bloom_key).
-
-> +}
-> +
-> +static int check_maybe_different_in_bloom_filter(struct rev_info *revs,
-> +						 struct commit *commit)
-> +{
-> +	struct bloom_filter *filter;
-> +	int result;
-> +
-> +	if (!revs->repo->objects->commit_graph)
-> +		return -1;
-> +
-> +	if (commit->generation =3D=3D GENERATION_NUMBER_INFINITY)
-> +		return -1;
-
-Idle thought: would it be useful to gather for trace2 statistics also
-number of commits encountered that were outside commit-graph?
-
-> +
-> +	filter =3D get_bloom_filter(revs->repo, commit, 0);
-> +
-> +	if (!filter) {
-> +		count_bloom_filter_not_present++;
-> +		return -1;
-> +	}
-> +
-> +	if (!filter->len) {
-> +		count_bloom_filter_length_zero++;
-> +		return -1;
-> +	}
-> +
-> +	result =3D bloom_filter_contains(filter,
-> +				       revs->bloom_key,
-> +				       revs->bloom_filter_settings);
-> +
-> +	if (result)
-> +		count_bloom_filter_maybe++;
-> +	else
-> +		count_bloom_filter_definitely_not++;
-> +
-> +	return result;
-> +}
-
-The whole check_maybe_different_in_bloom_filter() looks good to me,
-thanks to designing and building a good API.
-
-> +
->  static int rev_compare_tree(struct rev_info *revs,
-> -			    struct commit *parent, struct commit *commit)
-> +			    struct commit *parent, struct commit *commit, int nth_parent)
->  {
->  	struct tree *t1 =3D get_commit_tree(parent);
->  	struct tree *t2 =3D get_commit_tree(commit);
-> +	int bloom_ret =3D 1;
-
-I don't understand why it is initialized to 1, and not to 0.
-
->=20=20
->  	if (!t1)
->  		return REV_TREE_NEW;
-> @@ -653,11 +758,23 @@ static int rev_compare_tree(struct rev_info *revs,
->  			return REV_TREE_SAME;
->  	}
->=20=20
-> +	if (revs->pruning.pathspec.nr =3D=3D 1 && !revs->reflog_info && !nth_pa=
-rent) {
-
-Shouldn't we check upfront here that revs->bloom_key is not NULL?
-I don't think we check this down the callchain...
-
-Or even better replace the first two checks with it, as revs->bloom_key
-is set only if (revs->pruning.pathspec.nr =3D=3D 1 && !revs->reflog_info),
-see addition to prepare_revision_walk() below.
-
-Of course the !nth_parent check needs to be kept, as this changes during
-the revision walk (it is a limitation of current version of Bloom filter
-in that only changes with respect to first parent are stored in filter).
-
-> +		bloom_ret =3D check_maybe_different_in_bloom_filter(revs, commit);
-> +
-> +		if (bloom_ret =3D=3D 0)
-> +			return REV_TREE_SAME;
-> +	}
-
-All right, if we have single pathspec, and we don't walk reflog (?), and
-we are interested in first parent, then we query the Bloom filter.
-
-The Bloom filter can return 'no' or 'maybe'; if it returns 'no' then we
-can short-circuit and avoid computing the tree diff.
-
-> +
->  	tree_difference =3D REV_TREE_SAME;
->  	revs->pruning.flags.has_changes =3D 0;
->  	if (diff_tree_oid(&t1->object.oid, &t2->object.oid, "",
->  			   &revs->pruning) < 0)
->  		return REV_TREE_DIFFERENT;
-> +
-> +	if (!nth_parent)
-
-Shouldn't this condition be exactly the same as for running
-check_maybe_different_in_bloom_filter()?  Otherwise due to initializing
-bloom_ret to 1 we would get wrong statistics, isn't it?
-
-> +		if (bloom_ret =3D=3D 1 && tree_difference =3D=3D REV_TREE_SAME)
-> +			count_bloom_filter_false_positive++;
-> +
-
-All right, looks good.
-
->  	return tree_difference;
->  }
->=20=20
-> @@ -855,7 +972,7 @@ static void try_to_simplify_commit(struct rev_info *r=
-evs, struct commit *commit)
->  			die("cannot simplify commit %s (because of %s)",
->  			    oid_to_hex(&commit->object.oid),
->  			    oid_to_hex(&p->object.oid));
-> -		switch (rev_compare_tree(revs, p, commit)) {
-> +		switch (rev_compare_tree(revs, p, commit, nth_parent)) {
->  		case REV_TREE_SAME:
->  			if (!revs->simplify_history || !relevant_commit(p)) {
->  				/* Even if a merge with an uninteresting
-
-OK, we are just dding new parameter, with the information needed to
-decide whether Bloom filters can be used or not.
-
-> @@ -3362,6 +3479,8 @@ int prepare_revision_walk(struct rev_info *revs)
->  				       FOR_EACH_OBJECT_PROMISOR_ONLY);
->  	}
->=20=20
-> +	if (revs->pruning.pathspec.nr =3D=3D 1 && !revs->reflog_info)
-> +		prepare_to_use_bloom_filter(revs);
-
-Well, the limitation that the technique _currently_ works only with a
-single pathspec is stated explicitly, but the fact that it is turned off
-for some reason for --walk-reflog is not.
-
-Otherwise, looks good to me.
-
->  	if (revs->no_walk !=3D REVISION_WALK_NO_WALK_UNSORTED)
->  		commit_list_sort_by_date(&revs->commits);
->  	if (revs->no_walk)
-> @@ -3379,6 +3498,7 @@ int prepare_revision_walk(struct rev_info *revs)
->  		simplify_merges(revs);
->  	if (revs->children.name)
->  		set_children(revs);
-> +
->  	return 0;
->  }
-
-Unrelated coding style fixup, but we are doing changes in the
-neighborhood.  All right, I can agree to that.
-
->=20=20
-> diff --git a/revision.h b/revision.h
-> index 475f048fb6..7c026fe41f 100644
-> --- a/revision.h
-> +++ b/revision.h
-> @@ -56,6 +56,8 @@ struct repository;
->  struct rev_info;
->  struct string_list;
->  struct saved_parents;
-> +struct bloom_key;
-> +struct bloom_filter_settings;
->  define_shared_commit_slab(revision_sources, char *);
->=20=20
->  struct rev_cmdline_info {
-> @@ -291,6 +293,15 @@ struct rev_info {
->  	struct revision_sources *sources;
->=20=20
->  	struct topo_walk_info *topo_walk_info;
-> +
-> +	/* Commit graph bloom filter fields */
-> +	/* The bloom filter key for the pathspec */
-> +	struct bloom_key *bloom_key;
-> +	/*
-> +	 * The bloom filter settings used to generate the key.
-> +	 * This is loaded from the commit-graph being used.
-> +	 */
-> +	struct bloom_filter_settings *bloom_filter_settings;
-
-It is nice having those explanatory comments.
-
-Sidenote: if I understand it correctly, revs->bloom_key is allocated but
-never free()d.  On the other hand revs->bloom_filter_settings is a weak
-reference / is set to the value of other pointer, which is allocated and
-free()d together with commit_graph struct.
-
->  };
->=20=20
->  int ref_excluded(struct string_list *, const char *path);
-> diff --git a/t/helper/test-read-graph.c b/t/helper/test-read-graph.c
-> index d2884efe0a..aff597c7a3 100644
-> --- a/t/helper/test-read-graph.c
-> +++ b/t/helper/test-read-graph.c
-> @@ -45,6 +45,10 @@ int cmd__read_graph(int argc, const char **argv)
->  		printf(" commit_metadata");
->  	if (graph->chunk_extra_edges)
->  		printf(" extra_edges");
-> +	if (graph->chunk_bloom_indexes)
-> +		printf(" bloom_indexes");
-> +	if (graph->chunk_bloom_data)
-> +		printf(" bloom_data");
->  	printf("\n");
-
-This chunk could be moved to the commit adding --changed-paths
-option... on the other hand if all tests are to be added by this patch,
-it can be left as is.
-
->=20=20
->  	UNLEAK(graph);
-> diff --git a/t/t4216-log-bloom.sh b/t/t4216-log-bloom.sh
-> new file mode 100755
-> index 0000000000..19eca1864b
-> --- /dev/null
-> +++ b/t/t4216-log-bloom.sh
-[...]
-
-I'll leave reviewing tests of this feature for the next email.
-
-Best regards,
---=20
-Jakub Nar=C4=99bski
+
+On 2/8/2020 6:04 PM, Jakub Narebski wrote:
+> "Garima Singh via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> Hey! 
+>>
+>> The commit graph feature brought in a lot of performance improvements across
+>> multiple commands. However, file based history continues to be a performance
+>> pain point, especially in large repositories. 
+>>
+>> Adopting changed path Bloom filters has been discussed on the list before,
+>> and a prototype version was worked on by SZEDER Gábor, Jonathan Tan and Dr.
+>> Derrick Stolee [1]. This series is based on Dr. Stolee's proof of
+>> concept in [2].
+> 
+> Sidenote: I wondered why it did use MurmurHash3 (64-bit version), which
+> requires adding its implementation, instead of reusing FNV-1 hash
+> (Fowler–Noll–Vo hash function) used by Git hashmap implementation, see
+> https://github.com/git/git/blob/228f53135a4a41a37b6be8e4d6e2b6153db4a8ed/hashmap.h#L109
+> Beside the fact that everyone is using MurmurHash for Bloom filters ;-)
+> 
+> It turns out that in various benchmark MurmurHash is faster and also
+> slightly better as a hash than FNV-1 or FNV-1b.
+> 
+> 
+> I wonder then if it would be a good idea (in the future) to make it easy
+> to use hashmap with MurmurHash3 instead of FNV-1, or maybe to even make
+> it the default for hashing strings.
+> 
+
+Making Murmur3 hash the default for hashing strings is definitely outside the
+scope of this series. Also, if the method signatures for the murmur3 hash 
+matched the existing hash method signatures in hashmap.c, then it would be 
+appropriate to place them adjacently, even if no hashmap consumer uses it for 
+hashmaps. However, we need the option to start at a custom seed to do our double
+hashing. A change in the future that involves adopting murmur3 in the hashmap
+code would involve a simple code move before creating the new methods that 
+avoid a custom seed. So for now, it makes sense that these methods leave in 
+bloom.c where they are being used for a very specific purpose. 
+
+>>
+>> Performance Gains: We tested the performance of git log -- path on the git
+>> repo, the linux repo and some internal large repos, with a variety of paths
+>> of varying depths.
+> 
+> As I wrote in reply to previous version of this series, a good public
+> repository (and thus being able to use by anyone) to test the Bloom
+> filter performance improvements could be AOSP (Android) base:
+> 
+>   https://android.googlesource.com/platform/frameworks/base/
+> 
+> which is a large repository with long path depths (due to Java file
+> naming conventions).
+> 
+
+Thank you! I will incorporate these results into the commit messages as 
+appropriate in v3. 
+
+>>
+>> On the git and linux repos: We observed a 2x to 5x speed up.
+>>
+>> On a large internal repo with files seated 6-10 levels deep in the tree: We
+>> observed 10x to 20x speed ups, with some paths going up to 28 times faster.
+> 
+> Very nice! Good work!
+> 
+> What is the cost of this feature, that is how long it takes to generate
+> Bloom filters, and how much larger commit-graph file gets?  It would be
+> nice to know.
+> 
+
+The cost of writing is much better now with Peff and Dr. Stolee's improvements. 
+I will include these numbers as well in the commit messages as appropriate in 
+v3. 
+
+>>
+>> Future Work (not included in the scope of this series):
+>>
+>>  1. Supporting multiple path based revision walk
+> 
+> Shouldn't then tests that were added in v2 mark use of Bloom filters
+> with multiple paths revision walking as _not working *yet*_
+> (test_expect_failure), and not expected to not work (test_expect_success
+> with test_bloom_filters_not_used)?
+> 
+
+My intent is to ensure that bloom filters are not being used in any of the 
+unsupported code paths. I don't have a strong preference about the test 
+semantics as long as I get that coverage :) So I will look into switching it 
+to test_expect_failure as you have suggested. 
+
+>> Derrick Stolee (2):
+>>   diff: halt tree-diff early after max_changes
+>>   commit-graph: examine commits by generation number
+>>
+>> Garima Singh (8):
+>>   commit-graph: use MAX_NUM_CHUNKS
+>>   bloom: core Bloom filter implementation for changed paths
+>>   commit-graph: compute Bloom filters for changed paths
+>>   commit-graph: write Bloom filters to commit graph file
+>>   commit-graph: reuse existing Bloom filters during write.
+>>   commit-graph: add --changed-paths option to write subcommand
+>>   revision.c: use Bloom filters to speed up path based revision walks
+>>   commit-graph: add GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS test flag
+>>
+>> Jeff King (1):
+>>   commit-graph: examine changed-path objects in pack order
+> 
+> The shortlog summary is a fine tool to show contributors to the patch
+> series, but is not as useful to show patch series as a whole: splitting
+> of patches and their ordering.
+> 
+
+This is a GitGitGadget specific thing, and it is probably by design. I have 
+opened an issue in that repo for any follow up discussions:
+  https://github.com/gitgitgadget/gitgitgadget/issues/203
+
+> - [PATCH v2 02/11] bloom: core Bloom filter implementation for changed paths
+> 
+>   In my opinion this patch could be split into three individual pieces,
+>   though one might think it is not worth it.
+> 
+
+I have gone back and forth on doing this. I like most of the core Bloom filter
+computations being isolated in one patch/commit. But based on the rest of your
+review, it seems like you are leaning heavily on having this split out. 
+So, I will take a proper stab at doing it for v3. 
+
+> - [PATCH v2 07/11] commit-graph: write Bloom filters to commit graph file
+> 
+>   This commit includes the documentation of the two new chunks of
+>   commit-graph file format.
+> 
+>   I wonder if the 9th patch in this series, namely
+>   commit-graph: add --changed-paths option to write subcommand
+>   should not precede this commit.  Otherwise we have this new code but
+>   no way of testing it.  On the other hand it makes it easier to
+>   review.  On the gripping hand, you can't really test that writing
+>   works without the ability to parse Bloom filter data out of
+>   commit-graph file... which is the next commit.
+> 
+
+Getting complete test coverage within a single patch would require 2 or 3 of 
+these patches to be combined. This would lead to a large patch that would be 
+much more difficult to review.
+ 
+My tests in the patches following this one run git commands. Hence the tests 
+get introduced when the command line is ready to use all the new code. 
+
+The current ordering of patches works better than adding the --changed-paths 
+option before the logic that computes and writes. Otherwise the option will not 
+be doing what it is supposed to do in the patch it was introduced in.
+
+> - [PATCH v2 08/11] commit-graph: reuse existing Bloom filters during write
+> 
+>   This implements reading Bloom filters data from commit-graph file.
+>   Is it a good split?  I think it makes it easier to review the single
+>   patch, but itt also makes them less standalone.
+> 
+
+All the logic upto this point works just fine without the ability to read and 
+parse precomputed bloom filters. This patch is an enhancement and it also 
+separates out the reading and writing logic. Reusing existing bloom filters 
+during write is the simplest interatcion that involves reading from the commit
+graph file, and builds the foundation to make the `git log` improvements. 
+Hence, it warrants its own patch and review. 
+
+> - [PATCH v2 10/11] revision.c: use Bloom filters to speed up path based revision walks
+> 
+>   This is quite a big and involved patch, which in my opinion could be
+>   split in two or three parts:
+> 
+>   a. Add a bare bones implementation, like in v2
+> 
+>   This limits amount of testing we can do; the only thing we can really
+>   test is that we get the same results with and without Bloom filters.
+> 
+>   b.1. Add trace2 Bloom filter statistics
+>   b.2. Use said trace2 statistics to test use of Bloom filters
+> 
+
+Sure. I will look into doing this split as well for v3. 
+
+> 
+> Feel free to disagree with those ideas.
+> 
+> Best,
+
+Thanks for taking the time for reviewing this series so thoroughly! 
+It is greatly appreciated! 
+
+Cheers,
+Garima Singh
+
