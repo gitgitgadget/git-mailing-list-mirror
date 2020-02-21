@@ -2,208 +2,205 @@ Return-Path: <SRS0=3Brp=4J=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B4BD6C11D00
-	for <git@archiver.kernel.org>; Fri, 21 Feb 2020 00:52:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 83D61C11D00
+	for <git@archiver.kernel.org>; Fri, 21 Feb 2020 01:08:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5B9B7206EF
-	for <git@archiver.kernel.org>; Fri, 21 Feb 2020 00:52:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 47B78206E2
+	for <git@archiver.kernel.org>; Fri, 21 Feb 2020 01:08:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=microsoft.com header.i=@microsoft.com header.b="QuVBTF2R"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pQ1+FUv1"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729500AbgBUAww (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Feb 2020 19:52:52 -0500
-Received: from mail-mw2nam10on2102.outbound.protection.outlook.com ([40.107.94.102]:25313
-        "EHLO NAM10-MW2-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1729365AbgBUAww (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Feb 2020 19:52:52 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Dq4fWAOl/x4thDcSABdMSbYHbo3COM6dSJd6CQ7LQiCwQ0AvNjUXUd7BkOXc/8RA1tWLjDdbLzq07UwaM3DZoqoRHNso2KdHykoGKWhy701+GvUWY4CRYh/iy5NHy0eiGcFpD+6Ys0cDjLphTfZSily9TtvqN84A5D5GmTHlV8F/5JuHrjorrQ7whTWUnw+hvC02oCHdVS/Nl/oP18deDAttmNuVTqDBm2hSG6ngAIrNF8dsdpxILIvWmoZXKYTkzR08GlT2bCmbznDwLJv/HFGy+ImNQydyKbo50+8gX6Ewx+nK50m9+sdMGF84lZ/lcC8bqYZQpa2xU4NQqDdHKg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=0iNsQ9IfxTsWhh9LuK/bgGUZUf4k3qtxCVTyITSWnck=;
- b=R/RPxWr/ep5t9Gbf/hduztDDOsNwdW7Qby+tjpXNpDdnplnK3s5gLTinfOGYijpAcIGae5CeAAHzuizs5y1sPsNF9MfQ9lZiKKCljASXv72+h3I5aEEEsOzHve1iJY/DD3cho+JkIjVyM/4+QWYpzAo4+LMTlAawa0uKA+8+P7NBh6mAAIUnGBx+6vX6ymRFgM05SZ92yrnfQjo4SazVrVTyYz6MmAxiVogmdVsSZpYeP67C3UVgb7aMq1HaiiOZv616prh61wX88GelHWYoVMoACE2lKSEtN3UXALrNExMHt6nkR013CHukWZ/tXnaYS4qD6PnebX+2xxZQZf3iEA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=microsoft.com; dmarc=pass action=none
- header.from=microsoft.com; dkim=pass header.d=microsoft.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=0iNsQ9IfxTsWhh9LuK/bgGUZUf4k3qtxCVTyITSWnck=;
- b=QuVBTF2RcO+fuhmjsuCgZQDWOZKzJoHPcGVW085GqECj+SkMfMP1ZFqzX8f/i4KmCcN6wivG41Xkk1E5s4eFsHwjlEs9WAeIbqPisZjRj5p/C6zf0jguRXh9aeMpt+UIDGYc+fHDfGnolW7aVKU3VKoXWOQj7osZTn+v/gqF0Q8=
-Received: from BL0PR2101MB1089.namprd21.prod.outlook.com (52.132.24.23) by
- BL0PR2101MB0995.namprd21.prod.outlook.com (52.132.23.157) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2772.5; Fri, 21 Feb 2020 00:52:41 +0000
-Received: from BL0PR2101MB1089.namprd21.prod.outlook.com
- ([fe80::fc40:896b:a454:8afe]) by BL0PR2101MB1089.namprd21.prod.outlook.com
- ([fe80::fc40:896b:a454:8afe%3]) with mapi id 15.20.2772.002; Fri, 21 Feb 2020
- 00:52:41 +0000
-From:   Adam Milazzo <Adam.Milazzo@microsoft.com>
-To:     Elijah Newren <newren@gmail.com>
-CC:     Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: BUG: git clean -d cannot remove files from read-only directories
-Thread-Topic: BUG: git clean -d cannot remove files from read-only directories
-Thread-Index: AdXoSRS8iVe/eRtDQm6EtkdaC0sZvg==
-Date:   Fri, 21 Feb 2020 00:52:41 +0000
-Message-ID: <BL0PR2101MB1089AA571A3277AEF4798B5D80120@BL0PR2101MB1089.namprd21.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=True;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Owner=admilazz@microsoft.com;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2020-02-21T00:52:39.3895374Z;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=General;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Application=Microsoft Azure
- Information Protection;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ActionId=d6b674dc-5b7c-49fd-bb94-d8ff4eb05abd;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Extended_MSFT_Method=Automatic
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=Adam.Milazzo@microsoft.com; 
-x-originating-ip: [131.107.147.187]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-ht: Tenant
-x-ms-office365-filtering-correlation-id: bf43ab86-0d96-41c0-7b9d-08d7b6685b38
-x-ms-traffictypediagnostic: BL0PR2101MB0995:
-x-microsoft-antispam-prvs: <BL0PR2101MB0995803D9037EF15C875D18980120@BL0PR2101MB0995.namprd21.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:10000;
-x-forefront-prvs: 0320B28BE1
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(4636009)(346002)(366004)(136003)(39860400002)(396003)(376002)(189003)(199004)(26005)(81166006)(81156014)(4326008)(6506007)(71200400001)(186003)(9686003)(86362001)(7696005)(8990500004)(33656002)(5660300002)(8676002)(8936002)(10290500003)(52536014)(64756008)(66556008)(66446008)(66476007)(66946007)(316002)(76116006)(55016002)(54906003)(478600001)(2906002)(6916009);DIR:OUT;SFP:1102;SCL:1;SRVR:BL0PR2101MB0995;H:BL0PR2101MB1089.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
-received-spf: None (protection.outlook.com: microsoft.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: oeGUEpXq7fxw0qKBqjRLoX3kuf0SSZLQWkQUrFTly5pllGNU1jcrt4Zxf+avX1/I3qwkf5EQHIl6LHXpJ6IR5n9/s/d2pxjmwYim/Bx/WQnK2GzPFhgy8XXbyfSP7KCYmrDvrJml0QF3yQamv+8chWblRublSvJtl9lx1we0SdSiTrChr7J4gLVnxjxv4j7+jBjvkQJe1ZdvFpx60Vfvw57Cd0iOmcew0Gq4a7S7Z8FZtD6W+6oQM4bVpIStyHV3ZYQWuhLkNtixd1bbL5cVmVztaNi7Dc/1J26zWJHO6PPtA/yHC12h81xTpSv2+t0MkubKCaQqNnEOnUoaZA8BlfWMzF7meBTfCBJHizOCHIjEBwCIjESTEeGl1bfjGzAKb+Flp8Cj8xVsnvtr0mqbJvBhnEcqR+8UnzWAPd7Smt3rZNdc00FIbz1pk/KwrZTh
-x-ms-exchange-antispam-messagedata: etx4yRFtMHK92I0w4xduE5qbfhD+Ls9soi6sHX8rqoiqlY+4hVJaDqFL4OtnTXio7loMcJeDj3LRIAF/IfvMl9oWVaW7sYidx8+vvSlGXNLXkYnMj+SnQdUbH5IraZSpQo52xDeRT+AmQuOoawhCtg==
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        id S1729508AbgBUBIi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Feb 2020 20:08:38 -0500
+Received: from mail-oi1-f177.google.com ([209.85.167.177]:39702 "EHLO
+        mail-oi1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729419AbgBUBIh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Feb 2020 20:08:37 -0500
+Received: by mail-oi1-f177.google.com with SMTP id z2so386145oih.6
+        for <git@vger.kernel.org>; Thu, 20 Feb 2020 17:08:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=BQC2nxtEti2jJedWgQ5CQSP6W28XuQ391HnhHA9Ydt0=;
+        b=pQ1+FUv1uV4KWugQs2WLRwXkuOx+lxL/gHcRhrB4cmedKJfpiZioeATg29XqoR2hEq
+         YNPu3/8xNtDJS7kNRIo35ibIrr6shV9Yy/5w+jW2+wNurEvkQxMOPAudhn8KpsgSOwFI
+         2OYmAasDC/jCMw9UwDFN8zJ7sfEL6X81dLhtqPMeFec0wwRZmrWlyfyo0gm4yM84IomH
+         CClEurA/9qJnYwf5w9VKsA+XK4wq+V771mzuAwsFGD4ZEsHoh6nKKHhqPSwfPdy/aip5
+         Low7iou7XlMJe0q/Sjz6qCMVX/bFVXrRMUOBkymJgG+3NjuyAAQYW6DkkocCnpU7NdEM
+         b2/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=BQC2nxtEti2jJedWgQ5CQSP6W28XuQ391HnhHA9Ydt0=;
+        b=QRKvU3vCoWjs03bt5CLW1hZHBQ1kdXKFkgz2lbYev93Vcfc77dI6HjUOlj26nWf7yZ
+         io6KFw0XZweKpvh5KP0YvFHyV0vGh5z+aqPt+qP1UW9F7afWSEM/veUes5bOhqW2vV+R
+         RtV8fAos/Fu5nC7gOZV1p66t2ccI4tApQHh4gJlvPwifPfpfVxl94tVP6yR0gfyjH9hU
+         mp05b1MMTmILfYqTa+lUrNtRcKysOHKdN1T15f+bFoxYBe8DLIgjzIB12CxVL9r8Q7jT
+         9IhQdCxVKBdHZE5peMwPvk0+9tsgJRmP6MRYBNhnEsa3I4uN/GRx+nyUlkTJYeXTYMXM
+         xqlw==
+X-Gm-Message-State: APjAAAXCsBn6ahhRqr7hSLRgSYmGH9Zocakq4RFRWHRf7lfgL4+kgMkD
+        WjJUmQ11fzxm362T08gpm+jgOKzD1kXUIigxyvc=
+X-Google-Smtp-Source: APXvYqxhJl97hoxolcInZSPdkvpZOX/ffAg1nIxSkn8v8qqIcZTa63293RhNMlvdBgZT9xo+Iz/F35WSyUYcrWFKW+A=
+X-Received: by 2002:aca:a9c3:: with SMTP id s186mr8945oie.31.1582247316557;
+ Thu, 20 Feb 2020 17:08:36 -0800 (PST)
 MIME-Version: 1.0
-X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: bf43ab86-0d96-41c0-7b9d-08d7b6685b38
-X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Feb 2020 00:52:41.8277
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: XZKEELn98xJw3TwajqGPq0HAPm7iwxar0S0lDkG8A5Aq3DulVxD5nnEWtTK5aHNaLVNbcESWRoUz/REzzGCEIw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR2101MB0995
+References: <BL0PR2101MB1089AA571A3277AEF4798B5D80120@BL0PR2101MB1089.namprd21.prod.outlook.com>
+In-Reply-To: <BL0PR2101MB1089AA571A3277AEF4798B5D80120@BL0PR2101MB1089.namprd21.prod.outlook.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 20 Feb 2020 17:08:25 -0800
+Message-ID: <CABPp-BHJeAfj0=OWLeU8UuXtAu1-cCCLs4O_rLqiDHxGbMEhAQ@mail.gmail.com>
+Subject: Re: BUG: git clean -d cannot remove files from read-only directories
+To:     Adam Milazzo <Adam.Milazzo@microsoft.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-VGhlIGZyYWdtZW50aW5nIGFuZCBkdXBsaWNhdGlvbiBvZiB0aGlzIGRpc2N1c3Npb24gdmlhIGVt
-YWlsIGlzIHVuZm9ydHVuYXRlLCBidXQgSSdtIG5vdCBzdXJlIHdoYXQgY2FuIGJlIGRvbmUgYWJv
-dXQgdGhhdC4NCg0KPiBZZWFoLCBhcmd1aW5nIHRvIGNoYW5nZSBleGlzdGluZyBiZWhhdmlvciAo
-YXMgeW91IHN0YXJ0ZWQgd2l0aCBieSBsYWJlbGxpbmcgdGhlIHRocmVhZCB3aXRoICJCVUciKSB3
-aWxsIHByb2JhYmx5IGdldCB5b3UgYSBsb3Qgb2YgcHVzaGJhY2ssIGJ1dCBsZXQgbWUgYWRkcmVz
-cyB5b3VyIG5ldyBhbmdsZSBvZiBzdWdnZXN0aW5nIGEgbmV3IG9wdGlvbi4uLg0KDQpTb3JyeSBp
-ZiB0aGUgc3ViamVjdCBwcmVmaXggYW5ub3llZCBwZW9wbGUsIGJ1dCBJIHdhc24ndCB0cnlpbmcg
-dG8uIFRoZXJlJ3Mgbm8gdGVtcGxhdGUgdGhhdCBJIGNvdWxkIGZpbmQgZm9yIGJ1ZyByZXBvcnRz
-Li4uIHNvcnJ5LCBmZWF0dXJlIHN1Z2dlc3Rpb25zLiA6LSkNCg0KSSBhcHByZWNpYXRlIHlvdXIg
-cmVzcG9uZGluZyB0byBteSBhcmd1bWVudHMgaGVyZSBhbmQgeW91IG1ha2Ugc29tZSBnb29kIG9i
-amVjdGlvbnMuIEknbSBub3Qgc3VyZSBhdCB0aGlzIHBvaW50IHRoYXQgdGhleSdyZSBpbnN1cGVy
-YWJsZSwgYnV0IGxldCBtZSB0cnkgdG8gcmVzcG9uZC4NCg0KPiBMZXQncyBzYXkgd2UgZGlkIGlt
-cGxlbWVudCBhIG5ldyBmbGFnIHRoYXQgc2FpZCB3ZSBzaG91bGQgb3ZlcnJpZGUgc3RhbmRhcmQg
-cGVybWlzc2lvbnMuIEluIHN1Y2ggYSBjYXNlLCBzaG91bGRuJ3QgQUNMcyBhbHNvIGJlIG92ZXJy
-aWRkZW4/DQoNCk1heWJlLCBhbmQgcHJvYmFibHkgaWRlYWxseS4gSSBzdXBwb3NlIGl0IGRlcGVu
-ZHMgaW4gcGFydCBvbiB0aGUgZGlmZmljdWx0eSBvZiBpbXBsZW1lbnRhdGlvbi4gSSBkb24ndCBr
-bm93IGhvdyBvdGhlciB0b29scywgbGlrZSByc3luYyAod2hpY2ggaGFzIG5vIHByb2JsZW0gZGVs
-ZXRpbmcgZmlsZXMgZnJvbSByZWFkLW9ubHkgZGlyZWN0b3JpZXMpLCBoYW5kbGUgQUNMcy4gQnV0
-IEkgd291bGQgc2F5IHRoYXQgaWYgcnN5bmMgY2FuIGRvIGl0IHRoZW4gR2l0IGNhbiBkbyBpdC4N
-Cg0KPiBDYW4gd2UgaGFuZGxlIHRoYXQgaW4gYW55IHNlbWktcG9ydGFibGUgZmFzaGlvbj8gQXNz
-dW1pbmcgd2UgZG8gYXR0ZW1wdCB0byBvdmVycmlkZSBBQ0xzLCBkbyB3ZSBkZXN0cm95IHBvcnRh
-YmlsaXR5IG9mIGdpdD8NCg0KSSBkb24ndCBrbm93LiBJIGtub3cgdGhlcmUgYXJlIFBPU0lYIEFD
-THMsIGJ1dCBJJ2QgYmUgc3VycHJpc2VkIGlmIGV2ZW4gdGhlIFBPU0lYIGxheWVyIG9uIFdpbmRv
-d3MgaW1wbGVtZW50cyB0aGVtLCBmb3IgZXhhbXBsZS4gSSd2ZSBuZXZlciB1c2VkIGEgVW5peC1s
-aWtlIHN5c3RlbSB3aXRoIEFDTHMuIEknZCBiZSB0ZW1wdGVkIHRvIHNheSBhZ2FpbiAiZG8gd2hh
-dCByc3luYyBkb2VzIiwgYnV0IEkgZG9uJ3QgYWN0dWFsbHkga25vdyB3aGF0IHRoYXQgaXMgYW5k
-IGRvbid0IGhhdmUgYW4gZWFzeSB3YXkgdG8gdGVzdCBpdCBvdXQuIEkgdGhpbmsgVW5peC1saWtl
-IHN5c3RlbXMgd2l0aCBBQ0xzIGFyZSB2ZXJ5IHJhcmUsIG11Y2ggbGVzcyB0aGFuIDElIG9mIGlu
-c3RhbGxhdGlvbnMsIGJ1dCBvZiBjb3Vyc2UgV2luZG93cyBpcyBBQ0wtYmFzZWQuDQoNCkxldCBt
-ZSB0dXJuIHlvdXIgcXVlc3Rpb25zIGFyb3VuZC4gR2l0IGtub3dzIGFib3V0LCB0cmFja3MsIGFu
-ZCBzdG9yZXMgc3RhbmRhcmQgVW5peCBmaWxlIHBlcm1pc3Npb25zLiBJdCBtYW5pcHVsYXRlcyB0
-aGVtIGFuZCBjYXJlcyBhYm91dCB0aGVtLiBXaGF0IGFib3V0IEFDTHM/IERvZXMgR2l0IGFwcGx5
-IHRoZSBzYW1lIHZlcnNpb25pbmcgdG8gQUNMcyBhcyBpdCBkb2VzIHRvIGZpbGVzPyBJZiB0aGUg
-YW5zd2VyIGlzICJubyIsIGFzIEkgZXhwZWN0LCBkb2Vzbid0IHRoYXQgbWVhbiBHaXQncyBwb3J0
-YWJpbGl0eSBpcyBhbHJlYWR5ICJkZXN0cm95ZWQiLCBvciBub25leGlzdGVudD8gQW5kIHRoYXQg
-dGhlcmVmb3JlIGl0J3Mgd3JvbmcgZm9yIEdpdCB0byBldmVuIHRyeSB0byBtYWludGFpbiBVbml4
-IGZpbGUgcGVybWlzc2lvbnMgc2luY2UgdGhleSBkb24ndCBhcHBseSB0byBhbGwgb3BlcmF0aW5n
-IHN5c3RlbXM/IEkgY291bGQgcHV0IGl0IGFub3RoZXIgd2F5OiBzaW5jZSBHaXQga25vd3MgYW5k
-IGNhcmVzIGFib3V0IGFuZCBhbHJlYWR5IG1hbmlwdWxhdGVzIFVuaXggZmlsZSBwZXJtaXNzaW9u
-cyBidXQgKHByZXN1bWFibHkpIG5vdCBBQ0xzLCBpdCBpcyBub3QgaW5jb25zaXN0ZW50IHdpdGgg
-dGhlIGN1cnJlbnQgZGVzaWduIHRvIGNvbnRpbnVlIGRvaW5nIGV4YWN0bHkgdGhhdCAtIHN1cHBv
-cnRpbmcgVW5peCBwZXJtaXNzaW9ucyBidXQgbm90IEFDTHMgLSBpbiBuZXcgZmVhdHVyZXMuDQoN
-Cj4gSWYgd2UgZG9uJ3QgdHJ5IHRvIG92ZXJydWxlIEFDTHMsIGRvZXNuJ3QgdGhhdCBkZWZlYXQg
-eW91ciB3aG9sZSBhcmd1bWVudCB0aGF0ICJnaXQgY2xlYW4iICh3aXRoIHZhcmlvdXMgbGV2ZWxz
-IG9mIGZvcmNpbmcpIGlzIGFib3V0IHRyeWluZyB0byBkbyBhcyBtdWNoIGFzIHBvc3NpYmxlIHRv
-IHB1dCB0aGUgcmVwb3NpdG9yeSBpbiBhIGNsZWFuIHN0YXRlPw0KDQpJIHRoaW5rIHRoZSBkaXNj
-dXNzaW9uIG9mICJ3b3VsZCBpdCBiZSBhIGdvb2QgZmVhdHVyZT8iIGlzIGZhaXJseSBpbmRlcGVu
-ZGVudCBmcm9tIHRoZSBxdWVzdGlvbiBvZiAiaXMgaXQgZWFzeSB0byBpbXBsZW1lbnQ/Ii4gVGhl
-IHF1ZXN0aW9uIG9mIHdoYXQgImdpdCBjbGVhbiIgaXMgYWJvdXQgaXMgc2VwYXJhdGUgZnJvbSB0
-aGUgcXVlc3Rpb24gb2Ygd2hhdCBsaW1pdGF0aW9ucyB3ZSBtaWdodCBoYXZlIGR1ZSB0byBpbXBs
-ZW1lbnRhdGlvbiBkaWZmaWN1bHRpZXMuIFlvdSd2ZSBwcm9iYWJseSBzZWVuIHRoZSAiS25vd24g
-bGltaXRhdGlvbnMiIHNlY3Rpb25zIG9mIG1hbnkgbWFuIHBhZ2VzLiBJZiB5b3UgY2FuIHNvbHZl
-IDkwJSBvZiBhIHByb2JsZW0gd2l0aCAxMCUgb2YgdGhlIGVmZm9ydCwgaXQncyB1c3VhbGx5IHJl
-YXNvbmFibGUgdG8gZG8gc28uIEkuZS4gImRvbid0IGxldCBwZXJmZWN0aW9uIGJlIHRoZSBlbmVt
-eSBvZiBnb29kIiBhbmQgYWxsIHRoYXQuIEFuZCBJIHN1c3BlY3QgZXhwbGljaXQgQUNMIHN1cHBv
-cnQgaXMgbWlzc2luZyBmcm9tIEdpdCBnZW5lcmFsbHksIHNvIGhhdmluZyBhbm90aGVyIGZlYXR1
-cmUgd2l0aG91dCBleHBsaWNpdCBBQ0wgc3VwcG9ydCBpcyBub3QgYSBzaG93c3RvcHBlci4NCg0K
-PiB3aGF0IGlmIHdlIGF0dGVtcHQgdG8gb3ZlcnJpZGUgdGhlIHBlcm1pc3Npb25zIGJ5IG1hcmtp
-bmcgZGlyZWN0b3JpZXMgYXMgd3JpdGFibGUsIGJ1dCBmaW5kIG91dCB0aGUgdXNlciBpc24ndCB0
-aGUgb3duZXIgb2YgdGhlIGRpcmVjdG9yeSBhbmQgdGh1cyBjYW4ndCBjaGFuZ2UgaXRzIHBlcm1p
-c3Npb25zPw0KDQpXZWxsLCB0aGVuIHlvdSBmYWlsLiBJZiB0aGUgdXNlciBpc24ndCB0aGUgb3du
-ZXIgb2YgdGhlIHRoaW5nIGJlaW5nIGRlbGV0ZWQsIHRoYXQncyBhIGRpZmZlcmVudCBiYWxsZ2Ft
-ZS4NCg0KPiBEbyB3ZSB0cnkgaGFyZGVyIGJ5IGF0dGVtcHRpbmcgdG8gaW52b2tlIGNobW9kIHVu
-ZGVyIHN1ZG8gdG8gc2VlIGlmIHdlIGNhbiBvdmVycmlkZSB0aGUgcGVybWlzc2lvbnM/DQoNCkNl
-cnRhaW5seSBub3QuIDotKSAgVGhlIHVzZXIgY2FuIHN1ZG8gZ2l0IGlmIHRoZXkgaGF2ZSBwZXJt
-aXNzaW9uIHRvIGRvIHN1Y2ggYSB0aGluZy4NCg0KPiBBdCB3aGF0IHBvaW50IGRvIHdlIGdpdmUg
-dXA/IFdoYXQncyB0aGUgY2xlYXIgbGluZS4uLmFuZCB3aHkgZG9lcyB0aGF0IGxpbmUgbm90IGp1
-c3QgZ2V0IGRyYXduIGF0IG5vdCBjaGFuZ2luZyBwZXJtaXNzaW9ucyBhdCBhbGw/DQoNCkkgd291
-bGQgc2F5IHRoYXQgZmlyc3QgaXQgc2hvdWxkIGJlIGRldGVybWluZWQgd2hldGhlciB0aGUgZmVh
-dHVyZSBpcyB1c2VmdWwuIElmIG5vdCwgdGhlbiB0aGUgbGluZSBzaG91bGQgZ2V0IGRyYXduIGF0
-IG5vdCBjaGFuZ2luZyBwZXJtaXNzaW9ucy4gQnV0IGlmIGl0IHdvdWxkIGJlIHVzZWZ1bCwgdGhl
-biB0aGUgbGluZSBzaG91bGQgYmUgaW5pdGlhbGx5IGRyYXduIGF0IHdoZXJldmVyIGdpdmVzIHRo
-ZSBtb3N0ICJiYW5nIGZvciB0aGUgYnVjayIsIHRoZSA4MC8yMCBjYXNlLCBldGMuIElmIGl0IHR1
-cm5zIG91dCB0aGF0IGl0J3MgYW4gdW5yZWFzb25hYmxlIGVmZm9ydCBldmVuIHRvIGdldCBhIG1p
-bmltYWxseSB1c2VmdWwgaW1wbGVtZW50YXRpb24sIHRoZW4gdGhlIHN0YW5jZSBvZiB0aGUgR2l0
-IHRlYW0gc2hvdWxkIGJlICJJdCdkIGJlIG5pY2UgdG8gaGF2ZSwgYnV0IGlmIHlvdSB3YW50IGl0
-IHlvdSdsbCBoYXZlIHRvIHdyaXRlIGl0IHlvdXJzZWxmIGFuZCBzZW5kIHVzIGEgcGF0Y2guIiBX
-aGljaCBpcywgSSB0aGluaywgaG93IG1vcmUgZXNvdGVyaWMgZmVhdHVyZXMgbGlrZSBBQ0xzIHNo
-b3VsZCBiZSBoYW5kbGVkLCBpZiB0aGV5IGFyZSB0byBiZSBoYW5kbGVkIGF0IGFsbC4NCg0KVG8g
-YmUgc3BlY2lmaWMsIEkgcHJvcG9zZSB0aGF0IGlmIHRoZSB1bmxpbmsgb3Igcm1kaXIgc3lzdGVt
-IGNhbGwgcmV0dXJucyBFUEVSTSwgYW5kIHlvdSBhcmUgZ29pbmcgdG8gZGVsZXRlIHRoZSBwYXJl
-bnQgZGlyZWN0b3J5IGFueXdheSwgdGhlbiB5b3Ugc3RhdCB0aGUgcGFyZW50IGRpcmVjdG9yeSwg
-c2VlIGlmIGl0J3MgbWlzc2luZyB3cml0ZSBwZXJtaXNzaW9ucywgYW5kIGlmIHNvLCB0cnkgdG8g
-Y2htb2QgdSt3IGFuZCByZXRyeSB0aGUgZGVsZXRpb24gb2YgdGhlIGNoaWxkLiBBbmQgaWYgYW55
-IG9mIHRob3NlIHN0ZXBzIGZhaWwsIHlvdSBwcmludCBhbiBlcnJvciBtZXNzYWdlIGV4YWN0bHkg
-bGlrZSB0b2RheS4gQWx0ZXJuYXRlbHksIGFuZCBwcmVmZXJhYmx5LCB5b3UgZG8gaXQgZXZlbiBp
-ZiB5b3Ugd29uJ3QgZGVsZXRlIHRoZSBwYXJlbnQgZGlyZWN0b3J5LCBidXQgaW4gdGhhdCBjYXNl
-IHlvdSBoYXZlIHRvIHB1dCB0aGUgcGVybWlzc2lvbnMgYmFjayB3aGVuIHlvdSdyZSBkb25lLiBJ
-IHRoaW5rIGJvdGggb2YgdGhvc2UgYXJlIHNpbXBsZSB0byBpbXBsZW1lbnQsIGJ1dCBJIGRvbid0
-IGtub3cgYWJvdXQgR2l0J3MgaW1wbGVtZW50YXRpb24uDQoNCj4gSGVyZSB5b3UndmUgY2hhbmdl
-ZCB0aGUgZ29hbHBvc3RzIHNsaWdodGx5LiAgSSBkaWRuJ3QgY29tcGFyZSAiZ2l0IGNsZWFuIiB0
-byAicm0iLCBJIGNvbXBhcmVkICJnaXQgY2xlYW4gLWZkIiB0byAicm0gLXJmIiBvbiB1bnRyYWNr
-ZWQgZGlyZWN0b3JpZXMuDQoNClRydWUsIGJ1dCBJIG9ubHkgcmVhbGl6ZWQgdGhhdCBhZnRlciBz
-ZW5kaW5nIHRoZSBlbWFpbC4NCg0KPiBJbiBvdGhlciB3b3JkcywgImdpdCBjbGVhbiAtZmQiIGF2
-b2lkcyBicmluZ2luZyB0aGUgcmVwb3NpdG9yeSBiYWNrIHRvIGEgcHJpc3RpbmUgc3RhdGUgaW4g
-YSBjZXJ0YWluIGNpcmN1bXN0YW5jZTsgaXQncyBhY3R1YWxseSBtb3JlIGNhdXRpb3VzIHRoYW4g
-cm0uDQoNCldoaWNoIGlzIHRoZSBtYWluIHRyb3VibGUgd2l0aCBpdC4gSXQncyB2ZXJ5IGRpZmZp
-Y3VsdCB0byBrbm93IGV4YWN0bHkgd2hhdCBpdCdzIGdvaW5nIHRvIHdhbnQgdG8gZGVsZXRlLCBo
-ZW5jZSB0aGUgZGlmZmljdWx0eSBvZiBmaXhpbmcgdGhlIHByb2JsZW0gbXlzZWxmICh3aGVyZSBt
-eXNlbGYgaXMgYSBzY3JpcHQgaW52b2tpbmcgImdpdCBjbGVhbiIpIHdpdGggYW55IGtpbmQgb2Yg
-d29ya2Fyb3VuZCBvdXRzaWRlIEdpdCwgYW5kIGhlbmNlIG15IHJlcXVlc3QgZm9yIGl0IHRvIGJl
-IGhhbmRsZWQgaW5zaWRlIEdpdC4NCg0KQnV0IEkgY29tZSBiYWNrIHRvIHJzeW5jLCB3aGljaCBJ
-IHRoaW5rIGlzIHBlcmhhcHMgc3Bpcml0dWFsbHkgY2xvc2VyIHRvICJnaXQgY2xlYW4iIHRoYW4g
-cm0gaXMuIEl0IGhhcyBubyBwcm9ibGVtIHN5bmNpbmcgZmlsZXMgZXZlbiBpZiBpdCBoYXMgdG8g
-dHdpZGRsZSBzb21lIHBlcm1pc3Npb24gYml0cyB0byBkbyBpdC4gQW5kIHRoYXQncyBjb252ZW5p
-ZW50Lg0K
+On Thu, Feb 20, 2020 at 4:52 PM Adam Milazzo <Adam.Milazzo@microsoft.com> w=
+rote:
+>
+> The fragmenting and duplication of this discussion via email is unfortuna=
+te, but I'm not sure what can be done about that.
+>
+> > Yeah, arguing to change existing behavior (as you started with by label=
+ling the thread with "BUG") will probably get you a lot of pushback, but le=
+t me address your new angle of suggesting a new option...
+>
+> Sorry if the subject prefix annoyed people, but I wasn't trying to. There=
+'s no template that I could find for bug reports... sorry, feature suggesti=
+ons. :-)
+>
+> I appreciate your responding to my arguments here and you make some good =
+objections. I'm not sure at this point that they're insuperable, but let me=
+ try to respond.
+>
+> > Let's say we did implement a new flag that said we should override stan=
+dard permissions. In such a case, shouldn't ACLs also be overridden?
+>
+> Maybe, and probably ideally. I suppose it depends in part on the difficul=
+ty of implementation. I don't know how other tools, like rsync (which has n=
+o problem deleting files from read-only directories), handle ACLs. But I wo=
+uld say that if rsync can do it then Git can do it.
+>
+> > Can we handle that in any semi-portable fashion? Assuming we do attempt=
+ to override ACLs, do we destroy portability of git?
+>
+> I don't know. I know there are POSIX ACLs, but I'd be surprised if even t=
+he POSIX layer on Windows implements them, for example. I've never used a U=
+nix-like system with ACLs. I'd be tempted to say again "do what rsync does"=
+, but I don't actually know what that is and don't have an easy way to test=
+ it out. I think Unix-like systems with ACLs are very rare, much less than =
+1% of installations, but of course Windows is ACL-based.
+
+Yeah, I know almost nothing about ACLs so I don't know the answer to
+the questions either...
+
+> Let me turn your questions around. Git knows about, tracks, and stores st=
+andard Unix file permissions. It manipulates them and cares about them. Wha=
+t about ACLs? Does Git apply the same versioning to ACLs as it does to file=
+s? If the answer is "no", as I expect, doesn't that mean Git's portability =
+is already "destroyed", or nonexistent? And that therefore it's wrong for G=
+it to even try to maintain Unix file permissions since they don't apply to =
+all operating systems? I could put it another way: since Git knows and care=
+s about and already manipulates Unix file permissions but (presumably) not =
+ACLs, it is not inconsistent with the current design to continue doing exac=
+tly that - supporting Unix permissions but not ACLs - in new features.
+
+Hehe, but you left an opening for your turn around to be turned
+around...  Git does not actually track standard Unix file permissions.
+It _only_ tracks the executable bit (and not a separate one for user &
+group & other, but just an overall is-executable or not).  Of
+particular note for this discussion is that it does not track the
+writable bit.  So, wouldn't it be in line with the way Git already
+behaves to not touch the writable permission?  :-)
+
+> > If we don't try to overrule ACLs, doesn't that defeat your whole argume=
+nt that "git clean" (with various levels of forcing) is about trying to do =
+as much as possible to put the repository in a clean state?
+>
+> I think the discussion of "would it be a good feature?" is fairly indepen=
+dent from the question of "is it easy to implement?". The question of what =
+"git clean" is about is separate from the question of what limitations we m=
+ight have due to implementation difficulties. You've probably seen the "Kno=
+wn limitations" sections of many man pages. If you can solve 90% of a probl=
+em with 10% of the effort, it's usually reasonable to do so. I.e. "don't le=
+t perfection be the enemy of good" and all that. And I suspect explicit ACL=
+ support is missing from Git generally, so having another feature without e=
+xplicit ACL support is not a showstopper.
+
+Ok, fair point.
+
+> > what if we attempt to override the permissions by marking directories a=
+s writable, but find out the user isn't the owner of the directory and thus=
+ can't change its permissions?
+>
+> Well, then you fail. If the user isn't the owner of the thing being delet=
+ed, that's a different ballgame.
+>
+> > Do we try harder by attempting to invoke chmod under sudo to see if we =
+can override the permissions?
+>
+> Certainly not. :-)  The user can sudo git if they have permission to do s=
+uch a thing.
+>
+> > At what point do we give up? What's the clear line...and why does that =
+line not just get drawn at not changing permissions at all?
+>
+> I would say that first it should be determined whether the feature is use=
+ful. If not, then the line should get drawn at not changing permissions. Bu=
+t if it would be useful, then the line should be initially drawn at whereve=
+r gives the most "bang for the buck", the 80/20 case, etc. If it turns out =
+that it's an unreasonable effort even to get a minimally useful implementat=
+ion, then the stance of the Git team should be "It'd be nice to have, but i=
+f you want it you'll have to write it yourself and send us a patch." Which =
+is, I think, how more esoteric features like ACLs should be handled, if the=
+y are to be handled at all.
+>
+> To be specific, I propose that if the unlink or rmdir system call returns=
+ EPERM, and you are going to delete the parent directory anyway, then you s=
+tat the parent directory, see if it's missing write permissions, and if so,=
+ try to chmod u+w and retry the deletion of the child. And if any of those =
+steps fail, you print an error message exactly like today. Alternately, and=
+ preferably, you do it even if you won't delete the parent directory, but i=
+n that case you have to put the permissions back when you're done. I think =
+both of those are simple to implement, but I don't know about Git's impleme=
+ntation.
+
+This is some good food for thought, especially the bit about "[if] you
+are going to delete the parent directory anwyay".  Hmm...
+
+
+> > Here you've changed the goalposts slightly.  I didn't compare "git clea=
+n" to "rm", I compared "git clean -fd" to "rm -rf" on untracked directories=
+.
+>
+> True, but I only realized that after sending the email.
+>
+> > In other words, "git clean -fd" avoids bringing the repository back to =
+a pristine state in a certain circumstance; it's actually more cautious tha=
+n rm.
+>
+> Which is the main trouble with it. It's very difficult to know exactly wh=
+at it's going to want to delete, hence the difficulty of fixing the problem=
+ myself (where myself is a script invoking "git clean") with any kind of wo=
+rkaround outside Git, and hence my request for it to be handled inside Git.
+>
+> But I come back to rsync, which I think is perhaps spiritually closer to =
+"git clean" than rm is. It has no problem syncing files even if it has to t=
+widdle some permission bits to do it. And that's convenient.
+
+Yeah, the comparison to rsync is interesting.  I do worry a bit about
+what can of worms it opens and whether we really want to do all this
+work just to avoid a simple toplevel recursive chmod from the user,
+but you do raise some interesting points.
