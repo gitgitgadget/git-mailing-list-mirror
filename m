@@ -2,96 +2,114 @@ Return-Path: <SRS0=3Brp=4J=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 66DCAC35646
-	for <git@archiver.kernel.org>; Fri, 21 Feb 2020 18:33:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 42C33C35669
+	for <git@archiver.kernel.org>; Fri, 21 Feb 2020 20:15:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 33E812071E
-	for <git@archiver.kernel.org>; Fri, 21 Feb 2020 18:33:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1097A208C4
+	for <git@archiver.kernel.org>; Fri, 21 Feb 2020 20:15:23 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KGZnLLpb"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qW1Q+Fph"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726946AbgBUSdZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Feb 2020 13:33:25 -0500
-Received: from mail-lj1-f181.google.com ([209.85.208.181]:40860 "EHLO
-        mail-lj1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726066AbgBUSdZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Feb 2020 13:33:25 -0500
-Received: by mail-lj1-f181.google.com with SMTP id n18so3190385ljo.7
-        for <git@vger.kernel.org>; Fri, 21 Feb 2020 10:33:24 -0800 (PST)
+        id S1726707AbgBUUPU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Feb 2020 15:15:20 -0500
+Received: from mail-io1-f66.google.com ([209.85.166.66]:46908 "EHLO
+        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726443AbgBUUPU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Feb 2020 15:15:20 -0500
+Received: by mail-io1-f66.google.com with SMTP id t26so3666451ioi.13
+        for <git@vger.kernel.org>; Fri, 21 Feb 2020 12:15:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=uKRL3IK4Rmt+hgfWPF/LeL92FULcRnNuaX9t8cXUuq8=;
-        b=KGZnLLpbi2c6gwKG965MEXMizpcHqX0HtpYXu5LPB+pHquVnkBEl78Venf1gwOS4Sx
-         bEv/SXi1k8WgCyTvSs+HaEPEJyLq7+heq71PlWvv7MTMiTBX3E5GhKJljoHfi3WutODo
-         JL+cAm1Bw4DoSLiA40yTXqzNbtt5Yrw54MbEy+tXThrzrUOb9V50RFgvrwo9mLQ0vUQc
-         me/xdM25JlZaN+FqOIRNHC9AIbfa6Um1HXHcYzgStvHS/50GseM45XM50/lQVBqc/uK9
-         SbyWJoD2MkUjscQlS0Zb20LYbamu1vJ0MULrjs2cLfaAYMtIxxOmb8VVmrytQwelsUtF
-         iN4A==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=h2zE7y/UhfgabbXzQi7d3yesmhnCOhx39eqTLEHjzh8=;
+        b=qW1Q+FphvN109SCcGIZO5Y2LRd0I60LrQTcd9dCcI6djgGcpumxDU64bfSCrKRtOsx
+         B6PjLSmGz+nHXlrzRHhtN0iod2oHvkpYsIKLSr2XAo6KB9lwQCvJJvHJrcrwDlJKvHIw
+         dIRXTgBhee4lA1tNWC4Ar4rzNuzcawrdBROdlf7GVYjUlg1rEMblrnQHmHHvBmUk9KxK
+         7eUmRVYTCWr85M8wYtJg+c+ZwtIzhA1rP5mkUr9fX+UV6QPs8K/eU28Mjw6FEQBzIP0Z
+         lln8Pq0WU2bukzvO99NRWTXiQ6AnnxonSpbFIdI6X8dmrzf0nXD5EEKV6Yra17WwFZqq
+         Bgkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=uKRL3IK4Rmt+hgfWPF/LeL92FULcRnNuaX9t8cXUuq8=;
-        b=rSbwBjWG2S8iadf/z35qbNdUzTHlK6hjyD+gT/BoZPue9R2bjfqyrRu73bu+R6zXLn
-         ZbrEKIJxeE2sqjccDJHL2q7TnGNH+WLbDttNVUBw50oOl+8mDc4AQastYKfsrNUKy/sE
-         6xmK45t0+ffSfJ9LzseFccOLJgh/Ops3ukYXHAsfoO2pDDU1vNgsM2dc+I7uXnkkJXwp
-         X/mYNYFQq0d0m4UetHpGxGGXXP9L41jpMZJd9sXpVCa07OOZ5SsEgXZSP6Hrqg/NsIJz
-         JUMp/ooR3Hqr5UZ8YbvxXiFO74po2kh9YbiLBwei4AHMRXENhVPjEFJlAdTzjz9jTctk
-         to4A==
-X-Gm-Message-State: APjAAAWyobtjX5DuyVdDHOzQFLNRz9Y38ldzTJ9AY5o9hNGAUextiCIF
-        SvPzNWLc8cq0zkApoSG46WgQGQqIf8pMCsizpLoo/eQB
-X-Google-Smtp-Source: APXvYqxS5DIewfMbSBiuYIXZfylIIrA19r68WgBdP/XdiKDxtrn7YPBBGotuQ8S6LTz6PhqH2Ir9Gicmq36+M2wo+rw=
-X-Received: by 2002:a2e:96c6:: with SMTP id d6mr4276733ljj.4.1582310002753;
- Fri, 21 Feb 2020 10:33:22 -0800 (PST)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=h2zE7y/UhfgabbXzQi7d3yesmhnCOhx39eqTLEHjzh8=;
+        b=m1lg9xnvguHEL+s43ZbFFWLnSehuHUPIcB44DEhq3ixG03Pligoe6q0ZhE0s4bDZKW
+         IcpKYV8q4Zx6aEX4voMAWApO3xg2n3U1EXKFof/LCdqC8YEmTLQdxDLT3YljrVqcgwzd
+         278wLikuzHMWlU+aJuaFY9WcskIcMWEWNjyctmo1Lg+OW9Qfzn4lq2/8p4PeY0Ywl6hn
+         s+eqoQUGlZW060aKkjrjDyV82wwAXeZN/rxrkly8gB+m1wsF2TjwL6fNGO2RPpT3hZfr
+         ZdLSeF+ywzJLkeTIcJr+UI3n+FsPabR8B5WhkAoUgsq20o4g1/OB2ERuOUo+iprGPBJ0
+         H1VA==
+X-Gm-Message-State: APjAAAWOaLSVjtp3iz4mUr6vQBvAKXHR+GS42br0nu9oElz/qRNz5+IO
+        9/97LpoZNK3PgXuMgfQYJyotCwauKGpFLES81EQ=
+X-Google-Smtp-Source: APXvYqwkUMsVrAgiPfxeFGxNN6rcUackYEnI6KN2F5eO2RQvdgXVHoYE2KPif+o/lb9E+nXifCVy4VMWu9ALB4xbX6U=
+X-Received: by 2002:a5d:9d11:: with SMTP id j17mr1458729ioj.83.1582316119674;
+ Fri, 21 Feb 2020 12:15:19 -0800 (PST)
 MIME-Version: 1.0
-From:   Zachary Santer <zsanter@gmail.com>
-Date:   Fri, 21 Feb 2020 13:33:10 -0500
-Message-ID: <CABkLJUKaMwT+_AeUo+gdMF5ELEfZzxRqJ_dDhUpdXp2dGeE=8Q@mail.gmail.com>
-Subject: Feature request: ability to pass merge strategy options to 'git
- checkout --merge'
-To:     git@vger.kernel.org
+References: <20200220214647.451064-1-kolyshkin@gmail.com> <CAHd-oW61vuuvs25iOkLJ--Wv39ZXFF87_-pV=vX=oTibRinn5Q@mail.gmail.com>
+In-Reply-To: <CAHd-oW61vuuvs25iOkLJ--Wv39ZXFF87_-pV=vX=oTibRinn5Q@mail.gmail.com>
+From:   Kirill Kolyshkin <kolyshkin@gmail.com>
+Date:   Fri, 21 Feb 2020 12:15:08 -0800
+Message-ID: <CAGmPdrwDUzk7iHYOrjPNrCJkhuJT==v5L-d_hY5gXxMLf+gFDQ@mail.gmail.com>
+Subject: Re: [PATCH] completion: add diff --color-moved[-ws]
+To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Cc:     git <git@vger.kernel.org>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Perhaps using a command like:
-git checkout --merge=3D"-s recursive -Xpatience -Xignore-all-space"
-[<tree-ish>] [--] <pathspec>=E2=80=A6
-for instance.
+On Thu, 20 Feb 2020 at 15:30, Matheus Tavares Bernardino
+<matheus.bernardino@usp.br> wrote:
+>
+> On Thu, Feb 20, 2020 at 6:47 PM Kir Kolyshkin <kolyshkin@gmail.com> wrote:
+> >
+> > These options are available since git v2.15, but somehow
+> > eluded from the completion script.
+> >
+> > Signed-off-by: Kir Kolyshkin <kolyshkin@gmail.com>
+> > ---
+> >  contrib/completion/git-completion.bash | 15 +++++++++++++++
+> >  1 file changed, 15 insertions(+)
+> >
+> > diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> > index 1aac5a56c0..43cb6a312d 100644
+> > --- a/contrib/completion/git-completion.bash
+> > +++ b/contrib/completion/git-completion.bash
+> > @@ -1487,9 +1487,16 @@ __git_diff_algorithms="myers minimal patience histogram"
+> >
+> >  __git_diff_submodule_formats="diff log short"
+> >
+> > +__git_color_moved_opts="no default plain blocks zebra dimmed-zebra"
+> > +
+> > +__git_color_moved_ws_opts="no ignore-space-at-eol ignore-all-space
+> > +                       allow-indentation-change"
+>
+> I think "ignore-space-change" is missing in the above list. Besides
+> that, the patch LGTM.
 
-I'm merging two long-lived branches that I had no hand in developing.
-I used the following command to get started:
-git merge -s recursive -Xpatience -Xignore-all-space --no-commit <other bra=
-nch>
+Thanks for catching this, I'll send v2.
 
-I need to be able to quickly ensure that it is not the case that both
-branches implement the same behavior in different sections of the same
-file. In the case of a file that merged without conflicts, I've been
-doing the following, in order to use my merge tool:
-git checkout --merge <file>
-git mergetool <file>
-git add <file>
+>
+> As a side-note: when we have an option with an already filled value,
+> e.g. `--color-moved-ws=allow-identation-change,`, although it accepts
+> more values as a comma separated list, pressing <tab><tab> won't
+> suggest others. But I think the helper functions in
+> git-completion.bash don't provide an easy way to do that right now
 
-This allows me to quickly look over what each side of the merge added.
-However, it's also creating merge conflicts where there were none
-resulting from the original merge.
+That's right -- as much as I want to make --key=val[,val ...] work,
+there is no (easy?) way to do that :(
 
-On the other hand, it would be more efficient from the user's
-perspective to be allowed to run mergetool on a file without merge
-conflicts from the get-go.
-
-Still, this would undoubtedly be a useful feature in use cases besides my o=
-wn.
-
-Thank you,
-Zachary Santer
+> (and there might even be a bug in bash-completion involving this [1]).
+> So, I think the patch is good as it is (just adding the missing item
+> to that list) :)
+>
+> [1]: https://github.com/scop/bash-completion/issues/240
