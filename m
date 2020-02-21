@@ -2,101 +2,125 @@ Return-Path: <SRS0=3Brp=4J=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 90A03C11D00
-	for <git@archiver.kernel.org>; Fri, 21 Feb 2020 01:48:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9DB02C11D00
+	for <git@archiver.kernel.org>; Fri, 21 Feb 2020 02:05:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 530C424656
-	for <git@archiver.kernel.org>; Fri, 21 Feb 2020 01:48:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4DFBD208C4
+	for <git@archiver.kernel.org>; Fri, 21 Feb 2020 02:05:22 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="pTFrwlwj"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="PNkFgccE"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729449AbgBUBso (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Feb 2020 20:48:44 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63607 "EHLO
+        id S1729527AbgBUCFV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Feb 2020 21:05:21 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58598 "EHLO
         pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728992AbgBUBso (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Feb 2020 20:48:44 -0500
+        with ESMTP id S1728992AbgBUCFV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Feb 2020 21:05:21 -0500
 Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1A4A448F48;
-        Thu, 20 Feb 2020 20:48:42 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0CB0049001;
+        Thu, 20 Feb 2020 21:05:18 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=C2qqNKn+mptulSHCw0munIivn7o=; b=pTFrwl
-        wjUzs8OdbxwzlpDj18a2zjPwfqdoPlg9KEx32pAgx+webZ4j10zZup0GDqwZSYqJ
-        WPqMMndmd+xRGpEog3uQ6afo52vHqr7M6wMv8XBHSfG4dIwgrj5RA0g3ke+QszR/
-        uGU3R5+Bcm1SfmYFtXoTtP/4S06EhP4P1sR7c=
+        :content-type; s=sasl; bh=KqdgH7LbBwhQb4LtjdlyBc0EbyY=; b=PNkFgc
+        cEbBIG32jL++awALLLSrdb7xi5iIK4+Kj7mO1HZJXI2VFaXFdUmqRZcR6Hz7lSsX
+        BuZqsdo2gNtgOufEdPyudqujxSVSSGV6tARBtq7feqWPDpBwHbFU0nFZTOiCwRho
+        F8PbEQlQ7pB1TgKACn2T/Anwe2noeynm/7dh0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=megHrP51KlcEgxID2Wviufz0rEEw6IZY
-        nhva5GPL856T0RZZL71pRlmnAUvjge880NoiDM7Z3fiMKySQ2Zh4cgOh2is15TP9
-        3egpxL6zJnVzBNWaOG2/kt1r7GqpMhiw8a999/54wsZLkYDpCM/obIFTGqV9klFd
-        qsreLSLj7cM=
+        :content-type; q=dns; s=sasl; b=jYf+g+T519Ov5AGcB/sGDu7w8YqE2Yvt
+        x5zFjmkyCXD6p8ye+mvjhJIN3gWplm3gZTCKsCFO/zTc2+lR8ASRICzAqtmf8Xds
+        BSsmddTqmxjwuexs+7ZpclKxnUbuSvxIbZXvfT0EBWin4jx1JFB9cNSeCuQtuP5u
+        89cfzWfmkNs=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id F344D48F47;
-        Thu, 20 Feb 2020 20:48:41 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E63E348FFF;
+        Thu, 20 Feb 2020 21:05:17 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4D47248F46;
-        Thu, 20 Feb 2020 20:48:41 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 39AC548FFE;
+        Thu, 20 Feb 2020 21:05:17 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Adam Milazzo <Adam.Milazzo@microsoft.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [EXTERNAL] Re: BUG: git clean -d cannot remove files from read-only directories
-References: <BL0PR2101MB108917C204868FA653C2948680130@BL0PR2101MB1089.namprd21.prod.outlook.com>
-        <CABPp-BE8t+M5A8BpkYzs-WkoKDTCR_4jiT-vqwpLriuxhx46eQ@mail.gmail.com>
-        <BL0PR2101MB1089E3CE7738BB70B65C17B680130@BL0PR2101MB1089.namprd21.prod.outlook.com>
-        <CABPp-BFwNMTRUUonbt3Di8yWDjyF7n2cNQVoLDfHEsk3RVEchQ@mail.gmail.com>
-Date:   Thu, 20 Feb 2020 17:48:40 -0800
-In-Reply-To: <CABPp-BFwNMTRUUonbt3Di8yWDjyF7n2cNQVoLDfHEsk3RVEchQ@mail.gmail.com>
-        (Elijah Newren's message of "Thu, 20 Feb 2020 15:13:33 -0800")
-Message-ID: <xmqq36b490cn.fsf@gitster-ct.c.googlers.com>
+To:     Matheus Tavares <matheus.bernardino@usp.br>
+Cc:     git@vger.kernel.org, peff@peff.net, rhi@pengutronix.de
+Subject: Re: [PATCH] describe: output tag's ref instead of embedded name
+References: <xmqqftf49862.fsf@gitster-ct.c.googlers.com>
+        <20200221013357.26795-1-matheus.bernardino@usp.br>
+Date:   Thu, 20 Feb 2020 18:05:15 -0800
+In-Reply-To: <20200221013357.26795-1-matheus.bernardino@usp.br> (Matheus
+        Tavares's message of "Thu, 20 Feb 2020 22:33:57 -0300")
+Message-ID: <xmqqsgj47l0k.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 495D31E6-544C-11EA-B78B-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 9AFAED7A-544E-11EA-975B-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+Matheus Tavares <matheus.bernardino@usp.br> writes:
 
-> should be and what it should do.  Your "put the repository back to a
-> pristine state" isn't enough to really go on from an implementation.
+>> > Another case that came to my mind is when the user runs `git describe
+>> > --abrev=0 HEAD` and v1.0-bob points to HEAD~. In this case, v1.0 will
+>> > be displayed without suffix,...
+>>
+>> In this case, v1.0-1- is followed by the full object name, I think.
+>
+> I might be doing something wrong, but this is how I tried to test this:...
 
-Yeah, where does this "pristine state" come from?  Do we need to fix
-the "git clean" documentation to reduce such a confusion (I didn't
-check to see if the current text is prone to be misunderstood as
-such yet).  "git clean" is to remove crufts, isn't it?  The
-definition of "cruft" being untracked junk that are marked
-expendable (aka "ignored")?  And it is not "remove crurfts no matter
-what".
+I only tried the commit exactly at the tag "describe --abbrev=0 v1.0-bob^0";
+you're right---the "abbrev" option strips the suffix in a separate codepath.
 
-> angle from my previous response in what you've addressed here.  Let's
-> say we did implement a new flag that said we should override standard
-> permissions.  In such a case, shouldn't ACLs also be overridden?  ...
-> what point do we give up?  What's the clear line...and why does that
-> line not just get drawn at not changing permissions at all?
+> Then we cannot directly use the output. I think we can fix this forcing the long
+> output for this case as well, which can be done with:
 
-Yup.  Elsewhere in the thread you gave "rm -fr" not removing an
-unwritable subdirectory, and that shows where others before us drew
-the line that has been accepted by the end users.
+Thanks for a quick fix on top.
 
-> I'm sympathetic to "golang does a dumb thing I don't like" (the exact
-> situation you hilight has bothered me before too), but it's not clear
-> at all to me where or how git might help you cope with that.  To me,
-> golang did a dumb and you have to manually undo the dumb.  If you want
-> something smarter on the git side instead of the golang side, all the
-> stuff I mentioned above are things that would need to be addressed in
-> any possible solution that I'm just not seeing.
+ builtin/describe.c  |  2 +-
+ t/t6120-describe.sh | 12 ++++++++++++
+ 2 files changed, 13 insertions(+), 1 deletion(-)
 
-Amen.
+diff --git a/builtin/describe.c b/builtin/describe.c
+index 5e8484f654..f71bddff4a 100644
+--- a/builtin/describe.c
++++ b/builtin/describe.c
+@@ -452,7 +452,7 @@ static void describe_commit(struct object_id *oid, struct strbuf *dst)
+ 	}
+ 
+ 	append_name(all_matches[0].name, dst);
+-	if (abbrev)
++	if (all_matches[0].name->misnamed || abbrev)
+ 		append_suffix(all_matches[0].depth, &cmit->object.oid, dst);
+ 	if (suffix)
+ 		strbuf_addstr(dst, suffix);
+diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
+index 16a261c45d..8f35f18c3f 100755
+--- a/t/t6120-describe.sh
++++ b/t/t6120-describe.sh
+@@ -144,6 +144,18 @@ test_expect_success 'misnamed annotated tag forces long output' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'abbrev=0 will not break misplaced tag (1)' '
++	description=$(git describe --abbrev=0 Q^0) &&
++	expr "$description" : "A-0-g[0-9a-f]*$"
++'
++
++test_expect_success 'abbrev=0 will not break misplaced tag (2)' '
++	description=$(git describe --abbrev=0 c^0) &&
++	expr "$description" : "A-1-g[0-9a-f]*$"
++'
++
++exit
++
+ test_expect_success 'rename tag Q back to A' '
+ 	mv .git/refs/tags/Q .git/refs/tags/A
+ '
