@@ -2,106 +2,124 @@ Return-Path: <SRS0=3Brp=4J=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A2BFC35646
-	for <git@archiver.kernel.org>; Fri, 21 Feb 2020 16:04:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 31490C35646
+	for <git@archiver.kernel.org>; Fri, 21 Feb 2020 16:26:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 4E1552067D
-	for <git@archiver.kernel.org>; Fri, 21 Feb 2020 16:04:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 044E424650
+	for <git@archiver.kernel.org>; Fri, 21 Feb 2020 16:26:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BJuTotI/"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="smXKQwus"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728668AbgBUQEA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Feb 2020 11:04:00 -0500
-Received: from mail-ed1-f45.google.com ([209.85.208.45]:36360 "EHLO
-        mail-ed1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728130AbgBUQEA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Feb 2020 11:04:00 -0500
-Received: by mail-ed1-f45.google.com with SMTP id j17so2976653edp.3
-        for <git@vger.kernel.org>; Fri, 21 Feb 2020 08:03:59 -0800 (PST)
+        id S1726700AbgBUQ0W (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Feb 2020 11:26:22 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:35814 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725947AbgBUQ0W (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Feb 2020 11:26:22 -0500
+Received: by mail-wr1-f66.google.com with SMTP id w12so2723815wrt.2
+        for <git@vger.kernel.org>; Fri, 21 Feb 2020 08:26:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=mqVuFoanZJ4thEYdUPULG6HtTpADOfEL4eR7NzIul0E=;
-        b=BJuTotI/nlv3shIq+yweHlzaHazeLaUz9V1w2/f7Dkva/nNKZN728xAbbOIHq0ej1v
-         2fPROPDDsMh451QQFi40qGq+VCtoPIlLerSPgIK2GUcc5dEI6ahJGYVbdS435BoMPjDY
-         ttqp+17G9M4UFv+sriOcIZHha0U3S4whlyIH+zTHAPA74HheTwyQ19FJ4kDYLDoDMGg3
-         SSCN+MBGXB9j+Gq2DPc+0boa+QLnQoHXmbl6/N9IR/cUg0/kowOsWXVACUN11ffUpLfj
-         UNh5U0xE7+AjEJGCqbMlATY4UDy23f6Gg9aL9iNlFYqrcjSt/Wc9AY1VRt+DIY4o8HQ5
-         cZVA==
+        h=reply-to:subject:to:references:from:cc:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=+MZ47YkY4Wm/Wo4dTIyHbk6WMb5/+0NKYf9OfRZy0t0=;
+        b=smXKQwusMYFQ90bXQkmPmKAx//wwGoA3AckLX8LOJJujv4CBcSoQa24t3fpc6W2tMj
+         2pSx0x2GhormjoVN7VG3tdorTPPCTxd/rreZ5+0EJylZ/gLjujLRXdxS3NWuGz/RYoWp
+         foUWkWHgSJvGCWWk6fW3D1SeUhuI97w22z8lqvB1GtdLtI7kBDa4fpA0ku323GeGwU5j
+         W4O0ZHkMODrltsWuCC0bls4CaxrA9zJX5uJQWL/vAQRUQnp4pMN6kzF273ODMR997fRu
+         Y/PT7wQODQZSJg65uNaxxZxyeWQmYmEBwiPhLlfosGJBP4LIouG/sMNVdJI8X8l6Uib+
+         UMjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=mqVuFoanZJ4thEYdUPULG6HtTpADOfEL4eR7NzIul0E=;
-        b=Rs0gK9uacVfBaapKpGERUOTiT1/NlR2WHXgBhEyRKwqKICwSfxE0ndcdqRRP0+6teu
-         AdXFe+9nTxdw0lay8Zo5xS83zytg2bDX1XqKmbPXl/W3KyxeCQsInXCG6qSR0Fm9CQAW
-         /VIH98CaFuoP+4++rscj6Owr8G5J0/uJzdd47dZli1h8/gija9b575dqyVYW30jGh/a3
-         RhNt5FCW4q8lWSpOhbsExFLQR9rDddgESibbI2tfW1ReywkmydpvO29Uqv5eEt6E6VFy
-         H5PBDXFJjR8DeVBAtv/mL9evYrWYnl12EdEBv9EgoCFMnpxa1MLxEX0t/AfwyvCzWjVv
-         J8NA==
-X-Gm-Message-State: APjAAAUXmPCf5vNL5l7BL13hFe7ekhxzErI2t1Y05uHHJ0251N80aTsw
-        DavWuc47UEgHPkoWv+j0qheWqtPk4ymoQI0V73U=
-X-Google-Smtp-Source: APXvYqwYQ/DgEJu0blLq/NtMEBgSY1koIB8K+5XX/zHO/nWzyH32jyBsxOXRXuwD56OCw/a3A/yYMBQf6Sb+NC0zJvU=
-X-Received: by 2002:a05:6402:513:: with SMTP id m19mr34514674edv.387.1582301038636;
- Fri, 21 Feb 2020 08:03:58 -0800 (PST)
+        h=x-gm-message-state:reply-to:subject:to:references:from:cc
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=+MZ47YkY4Wm/Wo4dTIyHbk6WMb5/+0NKYf9OfRZy0t0=;
+        b=RZ42GRY0bkiVjL34jwOT8Ka4jVRZK75m+r6jTlGu0UF5OiQ++Pj3Rrn9T3nFaw+iey
+         ip99bZeM/of1taLBZ6GM3S+Galy+mouCA7halIEZ58xZvgv7xSD6eDsc1MJwIV+9Zuuk
+         iHhR7dvxlTZl6rEo+SfRtpzLtHJ3J26WjaKkGGGIV+1aYJwxwicsVI+q5ANxp7UiFCaZ
+         uLDmEWJNLVNnslganbEMtgyi5rUSsvIbkKmL62MQcWLsoU2ZrU+zIiuDo7mMYrWf8X8x
+         pefV+/dk2to0f04OL6jP5nn04ne/S2ez7q5KGarjw+PeExfKLZ6SkVKFupFFI9V95uo7
+         C/Ng==
+X-Gm-Message-State: APjAAAWq7HMwLFAEhYei6kYFuzwTsGzk7coZofTtSduEbnDnX8KqPMf7
+        6utXtoUPeOVptWaVUURDInI=
+X-Google-Smtp-Source: APXvYqzzO4kKc2q0chaTT3xf+ItBRi90ajLDom4NfkHPH+nk2eh8ZFUaOs7hpRyQG9fwMM7ooOq1Gg==
+X-Received: by 2002:adf:f802:: with SMTP id s2mr52451323wrp.201.1582302380053;
+        Fri, 21 Feb 2020 08:26:20 -0800 (PST)
+Received: from [192.168.1.240] (85.25.198.146.dyn.plus.net. [146.198.25.85])
+        by smtp.gmail.com with ESMTPSA id n13sm4536918wmd.21.2020.02.21.08.26.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 21 Feb 2020 08:26:19 -0800 (PST)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: What's cooking in git.git (Feb 2020, #04; Mon, 17)
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqq36b8lvdl.fsf@gitster-ct.c.googlers.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Cc:     Elijah Newren <newren@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Message-ID: <e9984c53-7266-c438-87f5-7f5474e3adce@gmail.com>
+Date:   Fri, 21 Feb 2020 16:26:18 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
 MIME-Version: 1.0
-References: <20200122053455.GA51054@coredump.intra.peff.net>
- <CAP8UFD1-cswU0gSX3a2KqiExhYgY_qMZ6Sz7FHdxs7mrb_hh-w@mail.gmail.com>
- <CAP8UFD2_qmB1q9vhz=BJo3XG4jnLWDPhCVVb4gAh_pfKoGnZJQ@mail.gmail.com>
- <20200204163716.GA7308@coredump.intra.peff.net> <CAP8UFD3UewcZ3oid_SiUYuFEO49JTzaSigHDTP8OPs2yh6s6zA@mail.gmail.com>
- <CACg5j25_098i=rU++OB=YSbAFjCQdgUX7gP6D-9yo6F_A_yn0w@mail.gmail.com>
-In-Reply-To: <CACg5j25_098i=rU++OB=YSbAFjCQdgUX7gP6D-9yo6F_A_yn0w@mail.gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Fri, 21 Feb 2020 17:03:47 +0100
-Message-ID: <CAP8UFD1QbOK9g2oAhfTm2npoNF9Ay_HiAfFai9rJwZzc73cBbw@mail.gmail.com>
-Subject: Re: GSoC and Outreachy Summer 2020?
-To:     Heba Waly <heba.waly@gmail.com>
-Cc:     Jeff King <peff@peff.net>, git <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <xmqq36b8lvdl.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Heba,
+On 17/02/2020 22:08, Junio C Hamano wrote:
+> Here are the topics that have been cooking.  Commits prefixed with
+> '-' are only in 'pu' (proposed updates) while commits prefixed with
+> '+' are in 'next'.  The ones marked with '.' do not appear in any of
+> the integration branches, but I am still holding onto them.
+> 
+> Accumulated fixes on the 'master' front have been flushed to 'maint'
+> and a new maintenance release 2.25.1 has been tagged.
+> [...]
+> [Stalled]
+> 
+> * pw/advise-rebase-skip (2019-12-06) 9 commits
+>   - rebase -i: leave CHERRY_PICK_HEAD when there are conflicts
+>   - rebase: fix advice when a fixup creates an empty commit
+>   - commit: give correct advice for empty commit during a rebase
+>   - commit: encapsulate determine_whence() for sequencer
+>   - commit: use enum value for multiple cherry-picks
+>   - sequencer: write CHERRY_PICK_HEAD for reword and edit
+>   - cherry-pick: check commit error messages
+>   - cherry-pick: add test for `--skip` advice in `git commit`
+>   - t3404: use test_cmp_rev
+> 
+>   The mechanism to prevent "git commit" from making an empty commit
+>   or amending during an interrupted cherry-pick was broken during the
+>   rewrite of "git rebase" in C, which has been corrected.
+> 
+>   What's the status of this one?
+>   The tip two are still RFC.
 
-On Fri, Feb 21, 2020 at 2:44 PM Heba Waly <heba.waly@gmail.com> wrote:
->
-> On Sun, Feb 16, 2020 at 11:39 PM Christian Couder
-> <christian.couder@gmail.com> wrote:
-> >
-> > For some time I have been thinking about trying to get more former
-> > GSoC students and Outreachy interns helping us with mentoring.
->
-> Hi Christian,
->
-> I'd be happy to co-mentor an Outreachy intern with an experienced
-> mentor, hope I'm not too late.
+The tip "rebase -i: leave CHERRY_PICK_HEAD when there are conflicts" 
+needs reworking and can be dropped (cf 
+<7e1b92f5-48df-e202-ebcc-5b15987a7d63@gmail.com>). The other RFC patch 
+"rebase: fix advice when a fixup creates an empty commit" [1] could do 
+with someone commenting on it (I've Cc'd dscho and Elijah). I think the 
+messages in it could be improved, but if the idea of different messages 
+for fixups that make a commit empty is not popular then the rest of the 
+series can be simplified by dropping some earlier patches including 
+patch 6 which you had some doubts about. (I tired to address those 
+<141f95b0-cae0-06f6-2c29-618dc22ae000@gmail.com> but I don't know if I 
+convinced you)
 
-Thank you for your interest in co-mentoring! It's very much appreciated!
+Best Wishes
 
-I don't think you are late. It seems that February 25 at 4pm UTC is
-the deadline for project submission.
+Phillip
 
-> If so, please guide me on the steps required to get involved.
-
-Earlier in this thread Dscho (Johannes Schindelin) said he would be ok
-to mentor someone for Outreachy, so I think, if he is still
-interested, he would be the best person to guide you on the steps
-required to get involved, and perhaps he could co-mentor with you.
-
-I am planning to mentor a GSoC student this Summer, not an Outreachy
-intern, and I think it would simplify things for me if I am not
-involved in both programs. But let's see what Dscho says.
-
-Best,
-Christian.
+[1] 
+https://lore.kernel.org/git/20191206160614.631724-9-phillip.wood123@gmail.com/
