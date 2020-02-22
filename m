@@ -8,93 +8,139 @@ X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B742C35671
-	for <git@archiver.kernel.org>; Sat, 22 Feb 2020 18:51:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6178EC35671
+	for <git@archiver.kernel.org>; Sat, 22 Feb 2020 18:51:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5B571206ED
-	for <git@archiver.kernel.org>; Sat, 22 Feb 2020 18:51:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 409F9206ED
+	for <git@archiver.kernel.org>; Sat, 22 Feb 2020 18:51:27 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="Xskm5Nbw"
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="knRBb80/"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726859AbgBVSvV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 22 Feb 2020 13:51:21 -0500
-Received: from mout.web.de ([212.227.15.14]:37891 "EHLO mout.web.de"
+        id S1726880AbgBVSvY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 22 Feb 2020 13:51:24 -0500
+Received: from mout.web.de ([212.227.15.14]:34531 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726550AbgBVSvV (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 Feb 2020 13:51:21 -0500
+        id S1726550AbgBVSvY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 Feb 2020 13:51:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1582397476;
-        bh=hPrzISv+zXGeDAcszNcmDep0KtF0SKOwfja6JkjA1qE=;
-        h=X-UI-Sender-Class:To:Cc:From:Subject:Date;
-        b=Xskm5NbwiQrjFXEkWSWDmQXSNSxfb/y9qDEXvb6AfpeExTHpDrlUdJLcXRFEvWEXB
-         v1wmCUxz5JQG7t2IRhk08M7k6vDAnn8dq0qWBCHNvLbrNWRw94XyN2m1tjfsGsCWpp
-         kK/xzg3S30tdTJHfvMt+cwGVWPRbFfrsejwKVbu4=
+        s=dbaedf251592; t=1582397479;
+        bh=EAFKJ539zq0g/L/8WSR6UYDLdgFnriWzSMyj4CaDeTw=;
+        h=X-UI-Sender-Class:To:From:Subject:Cc:Date;
+        b=knRBb80/dS64IJt7I4yiUCQWwXmYak2XBXW/fPRBmxcHCQt2X6BUKUjBWnjtM+J03
+         sXEV3E7TgIbY/WzjqAOGZ3Tl+EJHggEkK+tszIJKsx84oMwV8Lx3GusakzPmju6L0q
+         L+Myz6dK2lvKsJi9evvDXuzvQ2IvlScOtVwVHwuw=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
 Received: from [192.168.178.26] ([79.203.21.89]) by smtp.web.de (mrweb003
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0Lz3CK-1jRatQ19ea-014EmE; Sat, 22
- Feb 2020 19:51:16 +0100
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MTyEL-1iwOwA2IsL-00QnJv; Sat, 22
+ Feb 2020 19:51:19 +0100
 To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] quote: use isalnum() to check for alphanumeric characters
-Message-ID: <0157c714-2d9b-7896-f5dc-232d82a46625@web.de>
-Date:   Sat, 22 Feb 2020 19:51:13 +0100
+Subject: [PATCH] use strpbrk(3) to search for characters from a given set
+Cc:     Junio C Hamano <gitster@pobox.com>
+Message-ID: <4140dade-d999-a74a-1f8e-06eedb84ed20@web.de>
+Date:   Sat, 22 Feb 2020 19:51:19 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.4.2
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:L0dnK1/GB7tEhBgAON1/wXJxaKE2twAJ6Dpi+BSEGG7TEWERZ9t
- D+Q3RCP2eAlZuhifShWp4lcSEkUbduSZ3L0JUeUhZiJmPY2KYGQJ4WGGOfF61Tweq9pZ7v+
- rNYIZ00VcXtaNxWKxAQaN+0tJw4L52g9nq+H9S+YQoesJT65qDiv1JLEhqFLJKCpCMUGbGj
- kgWXeDJVRhbJ3jAhNGGJQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:jVOqsUmeLZU=:qJuj3RPxr+hUPD2VKyYBIS
- IzHJeJ0Vz3Wy8oKdeiBWkWbf2e4ChtRc3JqDOvruFOfRalMF+AX5KxEPqYiIm8QLh87Q4ljzo
- VQ0YK+WJUyUgqoEub9+XzGHwI+sc70swFjl5Qa8VI/tDbv5Z+vDzdh1tlxCZCilplzsAsfUKM
- znRN6S35bxRwolO5ZkOEkZkfLpfN7zj6Zfn2vZNiePUE7j2589ioGWWvLg/V9JjiQOJU8Am8P
- oms3HRN84rUvSG1LWq3ayOAkJtoICILqQ83P3QRW+SGtRyFhVVfSDVNq5/VBVqYK311zluRhz
- +mRawXspSecUwcNtUm5CIIh+ioR8lIgCWTXwCWY9gHy9DfbZLrbXLcVhWKIJaG7fV7gQYUKmM
- DFGZDzEsaVi56TUkMPAXPcUrINda+97mKYJWcjFJtiQoOGRANFL1Bq7ysmLgioyuaHx3SsQL8
- /jeMKUeM/2DcT8iQdd6XDuLHHDONXG3+tuJGCK/L5pZSskBT+0RhPgqsVYVifPOS6nrF00+yY
- LvzOxdECTeNqeuhHYG1gOMU7BfGZYGG0WdIBHmKWbyBTGaY7vXbBFDJfnS3NA8gdgnLKI39LB
- OB1m7LHZERVDrAEOkuUk+HjEyLSGHwFxjiH7f2hZcYV5cXsuZUcOD+jW+3+sAteZO4GYVpQYz
- hPdIeLa4H5svSuQWoG6wVJ8MSOh7jmxxDtvKwZKc/4AnSZ0Qge+Ppy+G7B+CF7GF/as5+T4ED
- KB/q5dQYX0kC1KsHzsrCEYTdAOTsAZtcnO+tU3rGI+lG3znihuaXoe8cPjL7Kw4GcVjHTaOcD
- Jfa2+2YodiZh8k7MrCqwcp5I8C4h9BIDNTHaXzsEcha4fJAN4QYFSVDLVy51SIzNtYeVjYOvy
- 5KMOLa7CTyUA/gAUGKofO7x9hYc87fz7lr+fwbyK8po7n9kV1kl+Dc/XWtRwKrFRb0DGnRf5N
- A2xVrZXASmlSfTyN3pk9TwrWmQ9zQerV81p9NcP++msbK7OGHggwP2/KP7Kx9YGwRyQZdlEYA
- yfmiO3M4WPVq64cQMDxWJhwn+7SwY/gouy3z7oOo5OHfg19ZfZrLpArWmXKk706dOKRIscDy2
- VQfRLT5dTUvOX66oRBH0frjuBkmv/8vCOiGiZ6hxroh+6FVapZjBYeKXT0MYcgbWy33vNY82T
- 5eum0JrBOWTljkaS3O1gSslpmOgT2FJTqXeE7Q25aYpjWFW4cEsQV8LmKPid0hgbSBMXNk7Dd
- 0ozpXqIxL4yonhmzI
+X-Provags-ID: V03:K1:MbiiU0eY46kOkf2swYFYHFZ6BNSuNCLr5xQt/64aavO0BRX0twX
+ fyuhOyRbQhiZBOniolXh/wEvawg0a5mCjuqY5ftNjfHEnMLPWALFilBhbylj+KCVECZt0uj
+ V10Rz8Eqg97Rvi7BaOWXxyL4Pp5CbRn0RI0bDYIk5VaqmJlYcEM1+yusfB+LkBkgim8iy9c
+ vh91cpFA/cg+T9JkaMs8g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:jJIHXNXc948=:52Ri1wQ0JcwLHIMegBEPHf
+ PQPr4nV63XFRwJlUti/p3KJNAq8c0IiPJtSX+soEETB2/YLYkub2YvWjk9A5KbONj0Ee7S+FJ
+ hgeNiM1kZnY9TY2kiIjv348GPYxnI7osA/cHxAvrFojfbUsZ521eKcTNCwWC5/7X8LVT3rdHz
+ AbzeUvfNj9u8htMFPeBQdSv7/Drbe/Ga9w2ZZWkVcMDtzRJUNTXi6vj8MzulEIPjbbqyXpRux
+ 33VRHLifRlYz32ug+0QU+zWX/zlInQAlkktk852NXhVOs5KElPE+XB2gTyzRL0PwrBf4alw+Q
+ 8o3x0uTPXwDyhDw6dsTCZu5fL2m9o5+MpRJPn0wnUPFn4E4pTwEUOOpHmGz9IZNRo8GjQVE9B
+ 8oCKdMxlRTyhGevabJYcdhI9Gaf8UAGdBPfRtI91lZr+0zckBjHLE0t5N38hY3eVpt/XcJHXM
+ idqMLvUBTSlCr0kMtIKXKCcxwhLRIAk+vLbMV6W/6zzCFgnIUBfTMlO6VBdENzR1MYtm6oCx0
+ j8IrpyoGiKARmLJNUaHiFFf2Zl+gHDX3KwQdysYhWXwfYWei2wLro4G63YxOUHph5BV+USQ9b
+ +iB1IAyI7MsKA1ku/sBZOtVEUgScFu1z7FqhzQ6bcBnGamWeUcqr8oc9B8wkKDnvazS4hWx/7
+ 60V8YVu9k3Bu8GlBvlp/M4GC+CqxpDxT4JNLkVKpF5VLyEAi4kYnUAeg9Ox5is8Ssn+elgeb/
+ v46w7rEMq/N6GCG+i/GtAMFuY4O/H72t6qWTrmNha2rvW4w+EQSASd6arkJVbU2HWN79wVF38
+ /kdWXgWfQfLljY8AImxHCM30KLS8ecTK6qszcYiW1AX7r11n5guMizTVPd+7pyKWJiznfo6f8
+ bdKgLORj/1uWg+blBu1XxzMFhPDO5Vh42iZDJkHAXPcLrVaZ3W7WD+MjSV1pLa1Qsm6QGJqvu
+ yetSVT59Wsz8U7HXStfG0VBE5c7RLyKXOfJ+gcACXeBGdGvJ3uzX0IliQkRwkCy4N8WBNleX3
+ kTJbGHM7vcReLnrDpxexuRvtEgs+IUFHX7GHRj7yEk80FC1yIK7RwotM9HoEtIixLjLykV2y+
+ wSY/fx2LSoOXQp83yXAtWbzKBf8A+pJPDMhwH/CiI9tZdPnBJArFVYIxkrZL3U5fGrJNTwxrx
+ OnSVLw1o+NdG1XSJxdWec6cmqB5ytleNChb+GSOjmqydKCW2RhgsFSxPuM4PCWbVVRdtAmCMY
+ 1ZtMSxkkvsfHKxYpC
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-isalnum(c) is equivalent to isalpha(c) || isdigit(c), so use the
-former instead.  The result is shorter, simpler and slightly more
-efficient.
+We can check if certain characters are present in a string by calling
+strchr(3) on each of them, or we can pass them all to a single
+strpbrk(3) call.  The latter is shorter, less repetitive and slightly
+more efficient, so let's do that instead.
 
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
- quote.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ builtin/show-branch.c              | 2 +-
+ compat/mingw.c                     | 2 +-
+ mailinfo.c                         | 3 +--
+ t/helper/test-windows-named-pipe.c | 2 +-
+ 4 files changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/quote.c b/quote.c
-index 24a58ba454..bcc0dbc50d 100644
-=2D-- a/quote.c
-+++ b/quote.c
-@@ -55,7 +55,7 @@ void sq_quote_buf_pretty(struct strbuf *dst, const char =
-*src)
+diff --git a/builtin/show-branch.c b/builtin/show-branch.c
+index 35d7f51c23..8c90cbb18f 100644
+=2D-- a/builtin/show-branch.c
++++ b/builtin/show-branch.c
+@@ -536,7 +536,7 @@ static void append_one_rev(const char *av)
+ 		append_ref(av, &revkey, 0);
+ 		return;
  	}
+-	if (strchr(av, '*') || strchr(av, '?') || strchr(av, '[')) {
++	if (strpbrk(av, "*?[")) {
+ 		/* glob style match */
+ 		int saved_matches =3D ref_name_cnt;
 
- 	for (p =3D src; *p; p++) {
--		if (!isalpha(*p) && !isdigit(*p) && !strchr(ok_punct, *p)) {
-+		if (!isalnum(*p) && !strchr(ok_punct, *p)) {
- 			sq_quote_buf(dst, src);
- 			return;
- 		}
+diff --git a/compat/mingw.c b/compat/mingw.c
+index b5230149db..d14065d60e 100644
+=2D-- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -1245,7 +1245,7 @@ static char *path_lookup(const char *cmd, int exe_on=
+ly)
+ 	int len =3D strlen(cmd);
+ 	int isexe =3D len >=3D 4 && !strcasecmp(cmd+len-4, ".exe");
+
+-	if (strchr(cmd, '/') || strchr(cmd, '\\'))
++	if (strpbrk(cmd, "/\\"))
+ 		return xstrdup(cmd);
+
+ 	path =3D mingw_getenv("PATH");
+diff --git a/mailinfo.c b/mailinfo.c
+index cf92255515..742fa376ab 100644
+=2D-- a/mailinfo.c
++++ b/mailinfo.c
+@@ -19,8 +19,7 @@ static void cleanup_space(struct strbuf *sb)
+ static void get_sane_name(struct strbuf *out, struct strbuf *name, struct=
+ strbuf *email)
+ {
+ 	struct strbuf *src =3D name;
+-	if (name->len < 3 || 60 < name->len || strchr(name->buf, '@') ||
+-		strchr(name->buf, '<') || strchr(name->buf, '>'))
++	if (name->len < 3 || 60 < name->len || strpbrk(name->buf, "@<>"))
+ 		src =3D email;
+ 	else if (name =3D=3D out)
+ 		return;
+diff --git a/t/helper/test-windows-named-pipe.c b/t/helper/test-windows-na=
+med-pipe.c
+index b4b752b01a..ae52183e63 100644
+=2D-- a/t/helper/test-windows-named-pipe.c
++++ b/t/helper/test-windows-named-pipe.c
+@@ -19,7 +19,7 @@ int cmd__windows_named_pipe(int argc, const char **argv)
+ 	if (argc < 2)
+ 		goto print_usage;
+ 	filename =3D argv[1];
+-	if (strchr(filename, '/') || strchr(filename, '\\'))
++	if (strpbrk(filename, "/\\"))
+ 		goto print_usage;
+ 	strbuf_addf(&pathname, "//./pipe/%s", filename);
+
 =2D-
 2.25.1
