@@ -7,115 +7,142 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 324F5C35669
-	for <git@archiver.kernel.org>; Sat, 22 Feb 2020 03:03:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C7B0EC35641
+	for <git@archiver.kernel.org>; Sat, 22 Feb 2020 03:11:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id EDF37206E2
-	for <git@archiver.kernel.org>; Sat, 22 Feb 2020 03:03:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 85B1620722
+	for <git@archiver.kernel.org>; Sat, 22 Feb 2020 03:11:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YpluPchz"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ndZ7RRjw"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728032AbgBVDDM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Feb 2020 22:03:12 -0500
-Received: from mail-ot1-f66.google.com ([209.85.210.66]:32890 "EHLO
-        mail-ot1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726802AbgBVDDM (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Feb 2020 22:03:12 -0500
-Received: by mail-ot1-f66.google.com with SMTP id w6so3946085otk.0
-        for <git@vger.kernel.org>; Fri, 21 Feb 2020 19:03:12 -0800 (PST)
+        id S1727145AbgBVDLS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Feb 2020 22:11:18 -0500
+Received: from mail-oi1-f196.google.com ([209.85.167.196]:43471 "EHLO
+        mail-oi1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726032AbgBVDLS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Feb 2020 22:11:18 -0500
+Received: by mail-oi1-f196.google.com with SMTP id p125so3661609oif.10
+        for <git@vger.kernel.org>; Fri, 21 Feb 2020 19:11:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=a1WK1rP0IIeWr/BJdJ/UTl33KsmBQDurIb/QwB197bY=;
-        b=YpluPchzHrS0ZlpStRZLjA4HXRJQkkkzu8R3PxgIkpzC16+htBwzdP2RXfBulCvWho
-         +SEzkQTB0NZ6PGnzOddpHXsrt24+eWByoR5FN9paAsdXDQD3svB56+w0XtBh6gLxRfBT
-         rQCSR4PZte/GhYRHNAYTtQu4OOHv6tPGbVkfI6xPOlIhhtU+F4WCifflXGT/7w+z+eff
-         bmgSTANqn2PodchOI4yOJXfkJsOlCV1B7SCx91dAYLnQLRWVJXR7cPODT2dkLT2qUNT9
-         Ff1bXidAdpGu79kOepCfX/23iUvOFfGJ0J5D+zVVzAbxGp8BAaCpy4ynnfPOiiabXlBy
-         RwSw==
+        bh=raJPgZeIsS4NHdAuTf2PUb4NyzSKw39o5XXzW/q7KGE=;
+        b=ndZ7RRjwiKF66rLo8rwQ41zI2AvreKLqno8ijUCmNlPiaiA/XxHFXbsRHeZwNWLjMj
+         I5VYRzpf+5hdT2GqddkT6hrqMpZmWLVqJeCbAsiVNxa9Ys1AOxY7DIceLoUdl/5T9mdO
+         maNltWaCSjdyiGlp4eIoztufdQUbjytuOngSiR8YJL11CT3GO+XJYrcN0zRS53bQsRFK
+         KDIV3SOenphOa3U+QBTX/Fgw5a4fH/Yszma5OKX4L9yVWOpIvl059BbE4wyY5lOQsaRm
+         kTSxqjpWqG9eXmrQJyk+hOf9ku/xexaQE2d5KZx4YOK8TvJuJoeDa0jbLWguFeemZ8s3
+         VUaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=a1WK1rP0IIeWr/BJdJ/UTl33KsmBQDurIb/QwB197bY=;
-        b=I+fHBIemtMTlq8CARaFV45WPmLkvXUjZhrGQPeLMWVI18NHOPz4T2jmF3q634ztZs6
-         ptoxqYe2HB1v9NAk26HKFVDriJjAeP3Ls2LIxZXyvR8iLkNrqEFAgV+WxhrF3GaSd71p
-         PTApfA6nuWsoMQ92hnncNJIePFC8/6YHwmcRyZWL4FokXiigD9WF+OwG+o5O67R2fh3Q
-         XYkGilmoMOx0HOPCH8Nhn9QQMbv+CVHgi/iiwpVM6QcZrpbX58M19pQGFSmkSUsPg97c
-         JJb/JLhlkJbiFaGt2toZrH0QVGVPLC0IKBzHTtQrHy/E7tEwbM25FgES25WdH6OycNY6
-         iGDA==
-X-Gm-Message-State: APjAAAVuLlpp2MSeGcflsLqSMnCUdg+CpUyviKhb6ra281Lua31loj2l
-        wt+ui2D/EKegNF5oCsZ9FZXyYJYWR+TxhG5Jeqld7g==
-X-Google-Smtp-Source: APXvYqxHnCrIkZ5pMASvKhRwNn0+PvS0UK+quWgsmvBiVODEG8kIQIUe1tQlEEIN5WrP7yEw0Th+MyETD1WEOP3wXj8=
-X-Received: by 2002:a05:6830:13ca:: with SMTP id e10mr31482479otq.267.1582340591664;
- Fri, 21 Feb 2020 19:03:11 -0800 (PST)
+        bh=raJPgZeIsS4NHdAuTf2PUb4NyzSKw39o5XXzW/q7KGE=;
+        b=b0N30gvkc4Mv/bHZPn8hdaTW6nnKSiOjXmOtLHzo/tmI0UYqC95cPBD4nTkk+vFWb5
+         h3SdGM2rW8SfrN6TH3nAvia8gPSOACSCLyRX+IImDlowz9c+cWxlKWlAFpSa63KD6I0S
+         WNC8ejwIBJ2gDEWU9eFE9+oOdwffv8SK5OzML6wjjmwip8zit09gQah9YgCimlJBaU/J
+         iec2+19LHu66TcJxQAudXjz22S3emmvpOvh9EWDT7ztqwHj7NFDi2+m0jWIN3HK//b2B
+         UrDAQ0RTaDVdFQZZeFQyGyLTgwCChA5+md8FyerHQDmWE4LvuIHz30JCFIhq9j9DUAwI
+         /6mw==
+X-Gm-Message-State: APjAAAWwwkNrmXeSfdb2PFUInslO2xWPWVLh0BFYlsafGg8MydNcFbFN
+        4f8oPEbGsQyGp7tmC0PkrFtAv6yHYHqHoWIJmP8=
+X-Google-Smtp-Source: APXvYqyvfxPkQPpj8OhrGaiAK1OcJ2DW8WL1gRXYX/aKD0Nb3JN8jBR3hmbIZc14nqlFZacIZ+A5o4bumETuUYRIGaQ=
+X-Received: by 2002:aca:5588:: with SMTP id j130mr4548960oib.122.1582341076219;
+ Fri, 21 Feb 2020 19:11:16 -0800 (PST)
 MIME-Version: 1.0
-References: <xmqq36b8lvdl.fsf@gitster-ct.c.googlers.com> <e9984c53-7266-c438-87f5-7f5474e3adce@gmail.com>
-In-Reply-To: <e9984c53-7266-c438-87f5-7f5474e3adce@gmail.com>
+References: <xmqq36b8lvdl.fsf@gitster-ct.c.googlers.com> <CABPp-BEFQs4LL0uwkZSpXb_wxo7Wk-gEQSsv-=4B5ja5H1xXTg@mail.gmail.com>
+In-Reply-To: <CABPp-BEFQs4LL0uwkZSpXb_wxo7Wk-gEQSsv-=4B5ja5H1xXTg@mail.gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 21 Feb 2020 19:03:04 -0800
-Message-ID: <CABPp-BE_ktNmDB43N_qijzYzhXvsK8Fi7TJQ7goHu+MzGvdpBQ@mail.gmail.com>
+Date:   Fri, 21 Feb 2020 19:11:05 -0800
+Message-ID: <CABPp-BEnt4C_7XyxQKxk4aga=JjM9fXCE-7SFp7azO_v5-pQYw@mail.gmail.com>
 Subject: Re: What's cooking in git.git (Feb 2020, #04; Mon, 17)
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 21, 2020 at 8:26 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
+On Mon, Feb 17, 2020 at 7:30 PM Elijah Newren <newren@gmail.com> wrote:
 >
-> On 17/02/2020 22:08, Junio C Hamano wrote:
-> > Here are the topics that have been cooking.  Commits prefixed with
-> > '-' are only in 'pu' (proposed updates) while commits prefixed with
-> > '+' are in 'next'.  The ones marked with '.' do not appear in any of
-> > the integration branches, but I am still holding onto them.
-> >
-> > Accumulated fixes on the 'master' front have been flushed to 'maint'
-> > and a new maintenance release 2.25.1 has been tagged.
-> > [...]
-> > [Stalled]
-> >
-> > * pw/advise-rebase-skip (2019-12-06) 9 commits
-> >   - rebase -i: leave CHERRY_PICK_HEAD when there are conflicts
-> >   - rebase: fix advice when a fixup creates an empty commit
-> >   - commit: give correct advice for empty commit during a rebase
-> >   - commit: encapsulate determine_whence() for sequencer
-> >   - commit: use enum value for multiple cherry-picks
-> >   - sequencer: write CHERRY_PICK_HEAD for reword and edit
-> >   - cherry-pick: check commit error messages
-> >   - cherry-pick: add test for `--skip` advice in `git commit`
-> >   - t3404: use test_cmp_rev
-> >
-> >   The mechanism to prevent "git commit" from making an empty commit
-> >   or amending during an interrupted cherry-pick was broken during the
-> >   rewrite of "git rebase" in C, which has been corrected.
-> >
-> >   What's the status of this one?
-> >   The tip two are still RFC.
+> On Mon, Feb 17, 2020 at 2:09 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> The tip "rebase -i: leave CHERRY_PICK_HEAD when there are conflicts"
-> needs reworking and can be dropped (cf
-> <7e1b92f5-48df-e202-ebcc-5b15987a7d63@gmail.com>). The other RFC patch
-> "rebase: fix advice when a fixup creates an empty commit" [1] could do
-> with someone commenting on it (I've Cc'd dscho and Elijah). I think the
+> > * en/fill-directory-exponential (2020-01-31) 6 commits
+> >  - t7063: blindly accept diffs
+> >  - dir: replace exponential algorithm with a linear one
+> >  - dir: refactor treat_directory to clarify control flow
+> >  - dir: fix confusion based on variable tense
+> >  - dir: fix broken comment
+> >  - dir: consolidate treat_path() and treat_one_path()
+> >
+> >  The directory traversal code had redundant recursive calls which
+> >  made its performance characteristics exponential wrt the depth of
+> >  the tree, which was corrected.
+> >
+> >  Still RFC?
+> >  cf. <pull.700.v2.git.git.1580495486.gitgitgadget@gmail.com>
+> >  cf. <CABPp-BF0SO92wxY-dM14Vxv6BGA5=T=CicdwbiaZ7c9w6-j2jQ@mail.gmail.com>
+>
+> Yes, sorry.  I was hoping someone familiar with untracked-cache (or
+> even just the index format) could comment and provide some pointers,
+> but it looks like that won't be happening.  I'll try to dig in this
+> week to figure out what to do there.
 
-I'll try to take a look early to middle of next week.
+After some digging around, at least part of the final patch is wrong,
+and it points to me having somehow broken something with the untracked
+cache in the earlier patches.  (t7063.8 sets up a test where dthree/
+and dtwo/ should both be shown as untracked directories by 'git status
+--porcelain' but are not.  'git ls-files -o --directory', in contrast,
+will show them as untracked.)  I probably won't have time to work on
+these until after the Git Merge conference, but I will clearly need to
+find and fix the bugs before this series progresses.  Feel free to
+drop this series in the meantime if it's easier for you.
 
-> messages in it could be improved, but if the idea of different messages
-> for fixups that make a commit empty is not popular then the rest of the
-> series can be simplified by dropping some earlier patches including
-> patch 6 which you had some doubts about. (I tired to address those
-> <141f95b0-cae0-06f6-2c29-618dc22ae000@gmail.com> but I don't know if I
-> convinced you)
+
+> > * en/rebase-backend (2020-02-16) 20 commits
+> >  - rebase: rename the two primary rebase backends
+> >  - rebase: change the default backend from "am" to "merge"
+> >  - rebase: make the backend configurable via config setting
+> >  - rebase tests: repeat some tests using the merge backend instead of am
+> >  - rebase tests: mark tests specific to the am-backend with --am
+> >  - rebase: drop '-i' from the reflog for interactive-based rebases
+> >  - git-prompt: change the prompt for interactive-based rebases
+> >  - rebase: add an --am option
+> >  - rebase: move incompatibility checks between backend options a bit earlier
+> >  - git-rebase.txt: add more details about behavioral differences of backends
+> >  - rebase: allow more types of rebases to fast-forward
+> >  - t3432: make these tests work with either am or merge backends
+> >  - rebase: fix handling of restrict_revision
+> >  - rebase: make sure to pass along the quiet flag to the sequencer
+> >  - rebase, sequencer: remove the broken GIT_QUIET handling
+> >  - t3406: simplify an already simple test
+> >  - rebase (interactive-backend): fix handling of commits that become empty
+> >  - rebase (interactive-backend): make --keep-empty the default
+> >  - t3404: directly test the behavior of interest
+> >  - git-rebase.txt: update description of --allow-empty-message
+> >
+> >  "git rebase" has learned to use the sequencer backend by default,
+> >  while allowing "--am" option to go back to the traditional "am"
+> >  backend.
+> >
+> >  The last step may be rushing things a bit and may want to be
+> >  taken separately.
+> >  cf. <pull.679.v5.git.git.1581802602.gitgitgadget@gmail.com>
+
+In contrast, this whole series I think is complete and ready to merge
+down.  Both Phillip and Dscho have commented that they agree with the
+direction of the final patch, Phillip has reviewed multiple rounds and
+sounds happy with it, and most of this series already spent some time
+in 'next' during the 2.25 cycle.
+
+> Thanks.  I'm curious, though, what you mean by this last bit -- was it
+> just a reflection of my request for folks to comment on whether the
+> last patch was wanted?
 >
-> Best Wishes
->
-> Phillip
->
-> [1]
-> https://lore.kernel.org/git/20191206160614.631724-9-phillip.wood123@gmail.com/
+> In my view, taking the last patch separately does not make sense; it
+> should either be dropped entirely or taken close to the same time as
+> the series...[snip]...if we're going to change the backend names, it'd
+> be better to do it sooner (while the cost is negligible) rather than
+> later.
