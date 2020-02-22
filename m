@@ -2,69 +2,118 @@ Return-Path: <SRS0=hy0J=4K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 81B07C35671
-	for <git@archiver.kernel.org>; Sat, 22 Feb 2020 07:20:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E27CDC35671
+	for <git@archiver.kernel.org>; Sat, 22 Feb 2020 16:47:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D80D2208C3
-	for <git@archiver.kernel.org>; Sat, 22 Feb 2020 07:20:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AF636206EF
+	for <git@archiver.kernel.org>; Sat, 22 Feb 2020 16:47:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=zom.bi header.i=@zom.bi header.b="fyCLZQqV"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="MNtLyMIJ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726992AbgBVHUw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 22 Feb 2020 02:20:52 -0500
-Received: from zom.bi ([78.46.176.20]:59642 "EHLO mx.zom.bi"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726689AbgBVHUw (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 Feb 2020 02:20:52 -0500
-X-Greylist: delayed 428 seconds by postgrey-1.27 at vger.kernel.org; Sat, 22 Feb 2020 02:20:51 EST
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=zom.bi; s=dkim;
-        t=1582355622; bh=prE7FO99mHxI2Tixdv4PT0jupOn2GitqgDIudSDe58s=;
-        h=From:To:Cc:Subject:Date:From;
-        b=fyCLZQqVfgaF6CMBeFrMk+IguDZKZt6TukUKkJzDblDxiL5S/CKIourUbV0tEG/tt
-         ZBMsvkwjqgRswxhfcAUAcqg4KTCW6b9P3cJTzjY0NIpaa8aggtVXXSky67iaop93y6
-         5DX0LCZsztQxsYHKg61b6E++5D0mTPGEUyBwxRxs=
-From:   Rasmus Jonsson <wasmus@zom.bi>
-To:     git@vger.kernel.org
-Cc:     Rasmus Jonsson <wasmus@zom.bi>
-Subject: [GSoC][PATCH 0/1] Introduction & microproject
-Date:   Sat, 22 Feb 2020 08:13:34 +0100
-Message-Id: <20200222071335.27292-1-wasmus@zom.bi>
+        id S1726719AbgBVQru (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 22 Feb 2020 11:47:50 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52827 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726044AbgBVQru (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 Feb 2020 11:47:50 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C88C441420;
+        Sat, 22 Feb 2020 11:47:44 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=LNxCxaxoBq8GoYZ1/Zou1+4zlZg=; b=MNtLyM
+        IJoit3rKPzrSFJW+aB/ecUubmOuqYLuHtxZYFyy03o7f8ru9IRomZ7THh9HmxAfo
+        aNUM70NaPfEzDCfTS1JoQMYXcsSOhcdXZWdU26B8fNWOnZcHFFJ86nW4H1wdOoPT
+        vpNWAK3SzgJlcPu6yAdm+Pfsimk6g0ywi++sw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=a0imr6P38nx8jDf+qqoisZhWDY9znICH
+        h7Hy0hoNqt25t/lRJ3HEj3galo8dljqxm+0s2bPoH0nYLISI2HBV/jKQeCjFdeK4
+        oTtO3oTTqJl6UXieLFLDL0xAHY9yVGZ3FOv5j9Do9fc0gzVTqUMlhAylFLVZEVoR
+        iGXkH3rY8ps=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BF7F74141F;
+        Sat, 22 Feb 2020 11:47:44 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2E6FF4141E;
+        Sat, 22 Feb 2020 11:47:44 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc:     git@vger.kernel.org
+Subject: Re: Getting clean diff data from git-mailinfo
+References: <20200221171312.xyzsrvebuwiw6pgj@chatter.i7.local>
+Date:   Sat, 22 Feb 2020 08:47:42 -0800
+In-Reply-To: <20200221171312.xyzsrvebuwiw6pgj@chatter.i7.local> (Konstantin
+        Ryabitsev's message of "Fri, 21 Feb 2020 12:14:01 -0500")
+Message-ID: <xmqqk14e7emp.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0C3C2DE2-5593-11EA-8B43-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Good morning, 
+Konstantin Ryabitsev <konstantin@linuxfoundation.org> writes:
 
-I intend to apply to git for this year's Google Summer of Code. I am a
-Computer Science student at Gothenburg University working toward a 
-master's degree. Last year I completed GSoC with LibreOffice [1].
+> Is there a git-native command to further clean up the "patch" file to 
+> get just diff contents (i.e. as returned by "git diff" after this patch 
+> is applied)?
 
-Working on git appeals to me due to its widespread usage and the number
-of people who will benefit from my contributions.
+There isn't one, as Git did not need one ;-)
 
-I read the introductory material, picked a microproject, looked at
-previous commits and produced the patch below.
+The "git am" toolchain is tasked to take a reasonably formatted
+e-mailed patch generated by tools other people use.  When fed a
+piece of e-mail, after it was split out of a mailbox by the "git
+mailsplit" program, the "git mailinfo" program is asked to
 
-It appears that some of the listed project ideas[2] are "taken" or at
-least being looked at, so I'm also looking at issues on GitGitGadget with
-the label possible-gsoc-project.
+ (1) gather metainfo for author identity
+ (2) gather commit log message material
+ (3) collect the input for "git apply"
 
-Regards, 
-Rasmus
+The e-mail header is parsed for (1) and the first line of (2), and
+then the e-mail body is scanned to find the boundary between (2) and
+(3), and this is done in order to avoid cruft at the end of (2) as
+much as possible, because (2) is something a human user has to clean
+up while applying, as opposed to (3) that is mechanically processed.
+For that, the line between (2) and (3) is drawn:
 
-Rasmus Jonsson (1):
-  t1050: clean up checks for file existence
+ (a) at "---\n" line, for output by "git format-patch";
 
- t/t1050-large.sh | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ (b) at "Index: " line, that often comes from CVS repository;
 
--- 
-2.20.1
+ (c) at "diff -" line, that can catch handmade patch e-mail using
+     GNU and BSD diff.
 
+And that is why we throw the diffstat and commentary to maintainer
+that are written after the "---\n" line but before the diff in (3).
+
+Now, if "git apply" were less smart and required a pure diff without
+anything else wround it as its input, then we may have had split (3)
+into three pieces:
+
+ (3a) material before the pure diff (e.g. diffstat, etc.)
+ (3b) pure diff
+ (3c) trailing junk (e.g. base-commit info, e-mail signature, etc.)
+
+But "git apply" was designed to be usable on the whole of plain text
+e-mail, roughly as a "GNU diff" replacement, it does not require (3a)
+and (3c) cleansed out from its input.
+
+So, because there is no such need so far, there is no tool in the
+Git toolbox to split (3) into three pieces.
+
+You're welcome to write one, but the current toolset does not need
+it.
+
+Thanks.
