@@ -7,44 +7,44 @@ X-Spam-Status: No, score=-9.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 186EBC35673
-	for <git@archiver.kernel.org>; Sat, 22 Feb 2020 20:18:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AF1F8C35676
+	for <git@archiver.kernel.org>; Sat, 22 Feb 2020 20:18:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id DBD15208C3
-	for <git@archiver.kernel.org>; Sat, 22 Feb 2020 20:18:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7E601206ED
+	for <git@archiver.kernel.org>; Sat, 22 Feb 2020 20:18:24 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="kGCyizla"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="it36VQN2"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727126AbgBVUST (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 22 Feb 2020 15:18:19 -0500
+        id S1726892AbgBVUSX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 22 Feb 2020 15:18:23 -0500
 Received: from injection.crustytoothpaste.net ([192.241.140.119]:39086 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727074AbgBVUSM (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 22 Feb 2020 15:18:12 -0500
+        by vger.kernel.org with ESMTP id S1726955AbgBVUSR (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 22 Feb 2020 15:18:17 -0500
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 755FB6079A
-        for <git@vger.kernel.org>; Sat, 22 Feb 2020 20:18:10 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id A0C1E60D02
+        for <git@vger.kernel.org>; Sat, 22 Feb 2020 20:18:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1582402690;
-        bh=wmY3O8hcSosFsUom+jgrl41pnP5z1Yq9FNQuZ3ebhU8=;
+        s=default; t=1582402692;
+        bh=yNXCyUOS/gm9ckTlRze/qC+hL8ZAMuVkWTdnc5fe3T4=;
         h=From:To:Subject:Date:In-Reply-To:References:From:Reply-To:Subject:
          Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:
          References:Content-Type:Content-Disposition;
-        b=kGCyizlaKe3C29oXqLFZWZNEoZVBEkpym2jTuV5vEzgxXg3BAjhucpX39LbI2tN1I
-         yPOiwEiil7ZbCArSB/W1n5ucDsqtpmwlT1ekUPen+Cii2r8jrtwoKM2/uWXffhj8+T
-         HAQdZYgGPMnd0D5DgO7kvQViUzfah0RNQgn/BoYwFJNMfpLBWerCq7wW2mtuNO9CAx
-         NJLjKsMZr55SGmMx4doNxS2krPI/2tk5TctsSRqgSuFeId8i2zVb0qs1pigrExjHCu
-         5HmJgKkAXV3uQeVVUhro4ImJ0p/7Y/CtY74Iqs9/xPS4Rd7ouwD95im/mCplDKILCE
-         D8wvmKdUf8J8LKx70qBUMVY16sw2FFzhI0KlzpWcjDIi+zZIUKKY2VdnaGCUa11VaY
-         LgZNcxEow3UfBAdWb8pCqEziqi7tZ1EbOhbHST5+X6ZhYP1pj2FfCC5Rs4/uSgeRtg
-         8ocha90fN1PWHGNTzxMFIdJdi4vdLhO2kMwAUkfTQZhdZVV/T3k
+        b=it36VQN2Qwwj0osIPPydHvO/AYgNBX8kP+gxRsHh/XByiKcZDR7UhFyzQ422oSKR5
+         nbA0Tc+rRswGF4h8v2UF84YSaEnd6qNk6xU7b00Vo67LzUjqlujjnysKw9I6tOtexL
+         Uo6ziD+285V7NlJnfvq4w5tRzcomL8ASoG8cR0P28+8dCylcS6NdLaRo4wBovW3p1i
+         oE3VqnLWZigOrTc2AF5m8qTRUikFR2/Sqo4CIvUSU7n2b/blhat5m1DJvpMri64UG/
+         4W0GMIuyNcctBiFp+z7kuIRdcK6nmeRCkl2pdPFSzXMM4Dlpy3uNREjMMDowMOGqq0
+         lZ1WqFNO7612eaagz6d3GbHIsXF+NM6wKEXpD4IKsOjQ5Hb7Pcbut4cNJ9md4LmZr9
+         1qai5nEVHSMguz91C8Hy/T4K5vVB1mI7FLKJh18Jcmpn2yhOlPrXnuyP3OoRHiBXKO
+         PG3pXNUB/W/5cpXMHtoHRR/IzeYg4a4g7y5iYsj3TdYgtd+lugK
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
-Subject: [PATCH v2 18/24] gpg-interface: improve interface for parsing tags
-Date:   Sat, 22 Feb 2020 20:17:43 +0000
-Message-Id: <20200222201749.937983-19-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 24/24] fast-import: add options for rewriting submodules
+Date:   Sat, 22 Feb 2020 20:17:49 +0000
+Message-Id: <20200222201749.937983-25-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.25.1.481.gfbce0eb801
 In-Reply-To: <20200222201749.937983-1-sandals@crustytoothpaste.net>
 References: <20200222201749.937983-1-sandals@crustytoothpaste.net>
@@ -55,387 +55,405 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We have a function which parses a buffer with a signature at the end,
-parse_signature, and this function is used for signed tags.  However,
-the transition plan has SHA-256 tags using a header, which is a
-materially different syntax.  The current interface is not suitable for
-parsing such tags.
+When converting a repository using submodules from one hash algorithm to
+another, it is necessary to rewrite the submodules from the old
+algorithm to the new algorithm, since only references to submodules, not
+their contents, are written to the fast-export stream. Without rewriting
+the submodules, fast-import fails with an "Invalid dataref" error when
+encountering a submodule in another algorithm.
 
-Adjust the parse_signature interface to store the parsed data in two
-strbufs and turn the existing function into parse_signed_buffer.  The
-latter is still used in places where we want to strip off the signature
-in a SHA-1 tag or in places where we know we always have a signed
-buffer, such as push certs.
+Add a pair of options, --rewrite-submodules-from and
+--rewrite-submodules-to, that take a list of marks produced by
+fast-export and fast-import, respectively, when processing the
+submodule. Use these marks to map the submodule commits from the old
+algorithm to the new algorithm.
 
-Adjust all the callers to deal with this new interface.
+We read marks into two corresponding struct mark_set objects and then
+perform a mapping from the old to the new using a hash table. This lets
+us reuse the same mark parsing code that is used elsewhere and allows us
+to efficiently read and match marks based on their ID, since mark files
+need not be sorted.
+
+Note that because we're using a khash table for the object IDs, and this
+table copies values of struct object_id instead of taking references to
+them, it's necessary to zero the struct object_id values that we use to
+insert and look up in the table. Otherwise, we would end up with SHA-1
+values that don't match because of whatever stack garbage might be left
+in the unused area.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/fmt-merge-msg.c | 26 ++++++++++++++++++--------
- builtin/receive-pack.c  |  4 ++--
- builtin/tag.c           | 16 ++++++++++++----
- commit.c                |  9 ++++++---
- gpg-interface.c         | 13 ++++++++++++-
- gpg-interface.h         |  9 ++++++++-
- log-tree.c              | 14 ++++++++------
- ref-filter.c            | 18 ++++++++++++++----
- tag.c                   | 15 ++++++++-------
- 9 files changed, 88 insertions(+), 36 deletions(-)
+ Documentation/git-fast-import.txt |  20 ++++++
+ fast-import.c                     | 112 ++++++++++++++++++++++++++++--
+ t/t9300-fast-import.sh            | 109 +++++++++++++++++++++++++++++
+ 3 files changed, 236 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
-index 05a92c59d8..29f647e2d9 100644
---- a/builtin/fmt-merge-msg.c
-+++ b/builtin/fmt-merge-msg.c
-@@ -472,6 +472,7 @@ static void fmt_tag_signature(struct strbuf *tagbuf,
- 			      const char *buf,
- 			      unsigned long len)
- {
+diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
+index 7889f95940..77c6b3d001 100644
+--- a/Documentation/git-fast-import.txt
++++ b/Documentation/git-fast-import.txt
+@@ -122,6 +122,26 @@ Locations of Marks Files
+ Relative and non-relative marks may be combined by interweaving
+ --(no-)-relative-marks with the --(import|export)-marks= options.
+ 
++Submodule Rewriting
++~~~~~~~~~~~~~~~~~~~
 +
- 	const char *tag_body = strstr(buf, "\n\n");
- 	if (tag_body) {
- 		tag_body += 2;
-@@ -492,24 +493,31 @@ static void fmt_merge_msg_sigs(struct strbuf *out)
- 	for (i = 0; i < origins.nr; i++) {
- 		struct object_id *oid = origins.items[i].util;
- 		enum object_type type;
--		unsigned long size, len;
--		char *buf = read_object_file(oid, &type, &size);
-+		unsigned long size;
-+		char *buf = read_object_file(oid, &type, &size), *orig = buf;
- 		struct signature_check sigc = { 0 };
-+		struct strbuf payload = STRBUF_INIT;
-+		struct strbuf signature = STRBUF_INIT;
- 		struct strbuf sig = STRBUF_INIT;
-+		size_t len = size;
- 
- 		if (!buf || type != OBJ_TAG)
- 			goto next;
--		len = parse_signature(buf, size);
--
--		if (size == len)
--			; /* merely annotated */
--		else if (!check_signature(buf, len, buf + len, size - len,
-+		if (!parse_signature(buf, size, &payload, &signature))
-+			len = size; /* merely annotated */
-+		else if (!check_signature(payload.buf, payload.len,
-+					  signature.buf, signature.len,
- 					  &sigc)) {
- 			strbuf_addstr(&sig, sigc.gpg_output);
- 			signature_check_clear(&sigc);
- 		} else
- 			strbuf_addstr(&sig, "gpg verification failed.\n");
- 
-+		if (payload.len) {
-+			buf = payload.buf;
-+			len = payload.len;
-+		}
++--rewrite-submodules-from=<name>:<file>::
++--rewrite-submodules-to=<name>:<file>::
++  Rewrite the object IDs for the submodule specified by <name> from the values
++	used in the from <file> to those used in the to <file>. The from marks should
++	have been created by `git fast-export`, and the to marks should have been
++	created by `git fast-import` when importing that same submodule.
+++
++<name> may be any arbitrary string not containing a colon character, but the
++same value must be used with both options when specifying corresponding marks.
++Multiple submodules may be specified with different values for <name>. It is an
++error not to use these options in corresponding pairs.
+++
++These options are primarily useful when converting a repository from one hash
++algorithm to another; without them, fast-import will fail if it encounters a
++submodule because it has no way of writing the object ID into the new hash
++algorithm.
 +
- 		if (!tag_number++) {
- 			fmt_tag_signature(&tagbuf, &sig, buf, len);
- 			first_tag = i;
-@@ -531,8 +539,10 @@ static void fmt_merge_msg_sigs(struct strbuf *out)
- 			fmt_tag_signature(&tagbuf, &sig, buf, len);
- 		}
- 		strbuf_release(&sig);
-+		strbuf_release(&payload);
-+		strbuf_release(&signature);
- 	next:
--		free(buf);
-+		free(orig);
- 	}
- 	if (tagbuf.len) {
- 		strbuf_addch(out, '\n');
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 411e0b4d99..4c814c1963 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -636,7 +636,7 @@ static void prepare_push_cert_sha1(struct child_process *proc)
+ Performance and Compression Tuning
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  
- 		memset(&sigcheck, '\0', sizeof(sigcheck));
+diff --git a/fast-import.c b/fast-import.c
+index 6711f71ba7..202dda11a6 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -18,6 +18,7 @@
+ #include "object-store.h"
+ #include "mem-pool.h"
+ #include "commit-reach.h"
++#include "khash.h"
  
--		bogs = parse_signature(push_cert.buf, push_cert.len);
-+		bogs = parse_signed_buffer(push_cert.buf, push_cert.len);
- 		check_signature(push_cert.buf, bogs, push_cert.buf + bogs,
- 				push_cert.len - bogs, &sigcheck);
+ #define PACK_ID_BITS 16
+ #define MAX_PACK_ID ((1<<PACK_ID_BITS)-1)
+@@ -53,6 +54,7 @@ struct object_entry_pool {
  
-@@ -1568,7 +1568,7 @@ static void queue_commands_from_cert(struct command **tail,
- 		die("malformed push certificate %.*s", 100, push_cert->buf);
- 	else
- 		boc += 2;
--	eoc = push_cert->buf + parse_signature(push_cert->buf, push_cert->len);
-+	eoc = push_cert->buf + parse_signed_buffer(push_cert->buf, push_cert->len);
+ struct mark_set {
+ 	union {
++		struct object_id *oids[1024];
+ 		struct object_entry *marked[1024];
+ 		struct mark_set *sets[1024];
+ 	} data;
+@@ -225,6 +227,11 @@ static int allow_unsafe_features;
+ /* Signal handling */
+ static volatile sig_atomic_t checkpoint_requested;
  
- 	while (boc < eoc) {
- 		const char *eol = memchr(boc, '\n', eoc - boc);
-diff --git a/builtin/tag.c b/builtin/tag.c
-index e0a4c25382..6b95c6a2ea 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -174,11 +174,17 @@ static void write_tag_body(int fd, const struct object_id *oid)
- {
- 	unsigned long size;
- 	enum object_type type;
--	char *buf, *sp;
-+	char *buf, *sp, *orig;
-+	struct strbuf payload = STRBUF_INIT;
-+	struct strbuf signature = STRBUF_INIT;
++/* Submodule marks */
++static struct string_list sub_marks_from = STRING_LIST_INIT_DUP;
++static struct string_list sub_marks_to = STRING_LIST_INIT_DUP;
++static kh_oid_map_t *sub_oid_map;
++
+ /* Where to write output of cat-blob commands */
+ static int cat_blob_fd = STDOUT_FILENO;
  
--	buf = read_object_file(oid, &type, &size);
-+	orig = buf = read_object_file(oid, &type, &size);
- 	if (!buf)
- 		return;
-+	if (parse_signature(buf, size, &payload, &signature)) {
-+		buf = payload.buf;
-+		size = payload.len;
-+	}
- 	/* skip header */
- 	sp = strstr(buf, "\n\n");
- 
-@@ -187,9 +193,11 @@ static void write_tag_body(int fd, const struct object_id *oid)
- 		return;
- 	}
- 	sp += 2; /* skip the 2 LFs */
--	write_or_die(fd, sp, parse_signature(sp, buf + size - sp));
-+	write_or_die(fd, sp, buf + size - sp);
- 
--	free(buf);
-+	free(orig);
-+	strbuf_release(&payload);
-+	strbuf_release(&signature);
+@@ -1731,6 +1738,11 @@ static void insert_object_entry(struct mark_set *s, struct object_id *oid, uintm
+ 	insert_mark(s, mark, e);
  }
  
- static int build_tag_object(struct strbuf *buf, int sign, struct object_id *result)
-diff --git a/commit.c b/commit.c
-index 534e14f22a..d39ce5076d 100644
---- a/commit.c
-+++ b/commit.c
-@@ -1097,8 +1097,10 @@ static void handle_signed_tag(struct commit *parent, struct commit_extra_header
- 	struct merge_remote_desc *desc;
- 	struct commit_extra_header *mergetag;
- 	char *buf;
--	unsigned long size, len;
-+	unsigned long size;
- 	enum object_type type;
-+	struct strbuf payload = STRBUF_INIT;
-+	struct strbuf signature = STRBUF_INIT;
- 
- 	desc = merge_remote_util(parent);
- 	if (!desc || !desc->obj)
-@@ -1106,8 +1108,7 @@ static void handle_signed_tag(struct commit *parent, struct commit_extra_header
- 	buf = read_object_file(&desc->obj->oid, &type, &size);
- 	if (!buf || type != OBJ_TAG)
- 		goto free_return;
--	len = parse_signature(buf, size);
--	if (size == len)
-+	if (!parse_signature(buf, size, &payload, &signature))
- 		goto free_return;
- 	/*
- 	 * We could verify this signature and either omit the tag when
-@@ -1126,6 +1127,8 @@ static void handle_signed_tag(struct commit *parent, struct commit_extra_header
- 
- 	**tail = mergetag;
- 	*tail = &mergetag->next;
-+	strbuf_release(&payload);
-+	strbuf_release(&signature);
- 	return;
- 
- free_return:
-diff --git a/gpg-interface.c b/gpg-interface.c
-index 2d538bcd6e..b25f5c21d8 100644
---- a/gpg-interface.c
-+++ b/gpg-interface.c
-@@ -345,7 +345,7 @@ void print_signature_buffer(const struct signature_check *sigc, unsigned flags)
- 		fputs(output, stderr);
- }
- 
--size_t parse_signature(const char *buf, size_t size)
-+size_t parse_signed_buffer(const char *buf, size_t size)
- {
- 	size_t len = 0;
- 	size_t match = size;
-@@ -361,6 +361,17 @@ size_t parse_signature(const char *buf, size_t size)
- 	return match;
- }
- 
-+int parse_signature(const char *buf, size_t size, struct strbuf *payload, struct strbuf *signature)
++static void insert_oid_entry(struct mark_set *s, struct object_id *oid, uintmax_t mark)
 +{
-+	size_t match = parse_signed_buffer(buf, size);
-+	if (match != size) {
-+		strbuf_add(payload, buf, match);
-+		strbuf_add(signature, buf + match, size - match);
-+		return 1;
++	insert_mark(s, mark, xmemdupz(oid, sizeof(*oid)));
++}
++
+ static void read_mark_file(struct mark_set *s, FILE *f, mark_set_inserter_t inserter)
+ {
+ 	char line[512];
+@@ -1739,13 +1751,17 @@ static void read_mark_file(struct mark_set *s, FILE *f, mark_set_inserter_t inse
+ 		char *end;
+ 		struct object_id oid;
+ 
++		/* Ensure SHA-1 objects are padded with zeros. */
++		memset(oid.hash, 0, sizeof(oid.hash));
++
+ 		end = strchr(line, '\n');
+ 		if (line[0] != ':' || !end)
+ 			die("corrupt mark line: %s", line);
+ 		*end = 0;
+ 		mark = strtoumax(line + 1, &end, 10);
+ 		if (!mark || end == line + 1
+-			|| *end != ' ' || get_oid_hex(end + 1, &oid))
++			|| *end != ' '
++			|| get_oid_hex_any(end + 1, &oid) == GIT_HASH_UNKNOWN)
+ 			die("corrupt mark line: %s", line);
+ 		inserter(s, &oid, mark);
+ 	}
+@@ -2146,6 +2162,30 @@ static uintmax_t change_note_fanout(struct tree_entry *root,
+ 	return do_change_note_fanout(root, root, hex_oid, 0, path, 0, fanout);
+ }
+ 
++static int parse_mapped_oid_hex(const char *hex, struct object_id *oid, const char **end)
++{
++	int algo;
++	khiter_t it;
++
++	/* Make SHA-1 object IDs have all-zero padding. */
++	memset(oid->hash, 0, sizeof(oid->hash));
++
++	algo = parse_oid_hex_any(hex, oid, end);
++	if (algo == GIT_HASH_UNKNOWN)
++		return -1;
++
++	it = kh_get_oid_map(sub_oid_map, *oid);
++	/* No such object? */
++	if (it == kh_end(sub_oid_map)) {
++		/* If we're using the same algorithm, pass it through. */
++		if (hash_algos[algo].format_id == the_hash_algo->format_id)
++			return 0;
++		return -1;
 +	}
++	oidcpy(oid, kh_value(sub_oid_map, it));
 +	return 0;
 +}
 +
- void set_signing_key(const char *key)
- {
- 	free(configured_signing_key);
-diff --git a/gpg-interface.h b/gpg-interface.h
-index f4e9b4f371..80567e4894 100644
---- a/gpg-interface.h
-+++ b/gpg-interface.h
-@@ -37,13 +37,20 @@ struct signature_check {
- 
- void signature_check_clear(struct signature_check *sigc);
- 
-+/*
-+ * Look at a GPG signed tag object.  If such a signature exists, store it in
-+ * signature and the signed content in payload.  Return 1 if a signature was
-+ * found, and 0 otherwise.
-+ */
-+int parse_signature(const char *buf, size_t size, struct strbuf *payload, struct strbuf *signature);
-+
  /*
-  * Look at GPG signed content (e.g. a signed tag object), whose
-  * payload is followed by a detached signature on it.  Return the
-  * offset where the embedded detached signature begins, or the end of
-  * the data when there is no such signature.
-  */
--size_t parse_signature(const char *buf, size_t size);
-+size_t parse_signed_buffer(const char *buf, size_t size);
- 
- /*
-  * Create a detached signature for the contents of "buffer" and append
-diff --git a/log-tree.c b/log-tree.c
-index cae38dcc66..75bd61a531 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -499,7 +499,9 @@ static int show_one_mergetag(struct commit *commit,
- 	struct strbuf verify_message;
- 	struct signature_check sigc = { 0 };
- 	int status, nth;
--	size_t payload_size, gpg_message_offset;
-+	size_t gpg_message_offset;
-+	struct strbuf payload = STRBUF_INIT;
-+	struct strbuf signature = STRBUF_INIT;
- 
- 	hash_object_file(the_hash_algo, extra->value, extra->len,
- 			 type_name(OBJ_TAG), &oid);
-@@ -523,13 +525,11 @@ static int show_one_mergetag(struct commit *commit,
- 			    "parent #%d, tagged '%s'\n", nth + 1, tag->tag);
- 	gpg_message_offset = verify_message.len;
- 
--	payload_size = parse_signature(extra->value, extra->len);
- 	status = -1;
--	if (extra->len > payload_size) {
-+	if (parse_signature(extra->value, extra->len, &payload, &signature)) {
- 		/* could have a good signature */
--		if (!check_signature(extra->value, payload_size,
--				     extra->value + payload_size,
--				     extra->len - payload_size, &sigc)) {
-+		if (!check_signature(payload.buf, payload.len,
-+				     signature.buf, signature.len, &sigc)) {
- 			strbuf_addstr(&verify_message, sigc.gpg_output);
- 			signature_check_clear(&sigc);
- 			status = 0; /* good */
-@@ -540,6 +540,8 @@ static int show_one_mergetag(struct commit *commit,
- 
- 	show_sig_lines(opt, status, verify_message.buf);
- 	strbuf_release(&verify_message);
-+	strbuf_release(&payload);
-+	strbuf_release(&signature);
- 	return 0;
+  * Given a pointer into a string, parse a mark reference:
+  *
+@@ -2232,7 +2272,7 @@ static void file_change_m(const char *p, struct branch *b)
+ 		inline_data = 1;
+ 		oe = NULL; /* not used with inline_data, but makes gcc happy */
+ 	} else {
+-		if (parse_oid_hex(p, &oid, &p))
++		if (parse_mapped_oid_hex(p, &oid, &p))
+ 			die("Invalid dataref: %s", command_buf.buf);
+ 		oe = find_object(&oid);
+ 		if (*p++ != ' ')
+@@ -2406,7 +2446,7 @@ static void note_change_n(const char *p, struct branch *b, unsigned char *old_fa
+ 		inline_data = 1;
+ 		oe = NULL; /* not used with inline_data, but makes gcc happy */
+ 	} else {
+-		if (parse_oid_hex(p, &oid, &p))
++		if (parse_mapped_oid_hex(p, &oid, &p))
+ 			die("Invalid dataref: %s", command_buf.buf);
+ 		oe = find_object(&oid);
+ 		if (*p++ != ' ')
+@@ -2941,7 +2981,7 @@ static void parse_cat_blob(const char *p)
+ 			die("Unknown mark: %s", command_buf.buf);
+ 		oidcpy(&oid, &oe->idx.oid);
+ 	} else {
+-		if (parse_oid_hex(p, &oid, &p))
++		if (parse_mapped_oid_hex(p, &oid, &p))
+ 			die("Invalid dataref: %s", command_buf.buf);
+ 		if (*p)
+ 			die("Garbage after SHA1: %s", command_buf.buf);
+@@ -3005,6 +3045,42 @@ static struct object_entry *dereference(struct object_entry *oe,
+ 	return find_object(oid);
  }
  
-diff --git a/ref-filter.c b/ref-filter.c
-index 6867e33648..212f1165bb 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -1161,7 +1161,13 @@ static void find_subpos(const char *buf,
- 			unsigned long *nonsiglen,
- 			const char **sig, unsigned long *siglen)
++static void insert_mapped_mark(uintmax_t mark, void *object, void *cbp)
++{
++	struct object_id *fromoid = object;
++	struct object_id *tooid = find_mark(cbp, mark);
++	int ret;
++	khiter_t it;
++
++	it = kh_put_oid_map(sub_oid_map, *fromoid, &ret);
++	/* We've already seen this object. */
++	if (ret == 0)
++		return;
++	kh_value(sub_oid_map, it) = tooid;
++}
++
++static void build_mark_map_one(struct mark_set *from, struct mark_set *to)
++{
++	for_each_mark(from, 0, insert_mapped_mark, to);
++}
++
++static void build_mark_map(struct string_list *from, struct string_list *to)
++{
++	struct string_list_item *fromp, *top;
++
++	sub_oid_map = kh_init_oid_map();
++
++	for_each_string_list_item(fromp, from) {
++		top = string_list_lookup(to, fromp->string);
++		if (!fromp->util) {
++			die(_("Missing from marks for submodule '%s'"), fromp->string);
++		} else if (!top || !top->util) {
++			die(_("Missing to marks for submodule '%s'"), fromp->string);
++		}
++		build_mark_map_one(fromp->util, top->util);
++	}
++}
++
+ static struct object_entry *parse_treeish_dataref(const char **p)
  {
-+	struct strbuf payload = STRBUF_INIT;
-+	struct strbuf signature = STRBUF_INIT;
- 	const char *eol;
-+	const char *end = buf + strlen(buf);
-+	const char *sigstart;
-+
-+
- 	/* skip past header until we hit empty line */
- 	while (*buf && *buf != '\n') {
- 		eol = strchrnul(buf, '\n');
-@@ -1174,13 +1180,14 @@ static void find_subpos(const char *buf,
- 		buf++;
- 
- 	/* parse signature first; we might not even have a subject line */
--	*sig = buf + parse_signature(buf, strlen(buf));
--	*siglen = strlen(*sig);
-+	parse_signature(buf, end - buf, &payload, &signature);
-+	*sig = strbuf_detach(&signature, siglen);
-+	sigstart = buf + parse_signed_buffer(buf, strlen(buf));
- 
- 	/* subject is first non-empty line */
- 	*sub = buf;
- 	/* subject goes to first empty line */
--	while (buf < *sig && *buf && *buf != '\n') {
-+	while (buf < sigstart && *buf && *buf != '\n') {
- 		eol = strchrnul(buf, '\n');
- 		if (*eol)
- 			eol++;
-@@ -1196,7 +1203,7 @@ static void find_subpos(const char *buf,
- 		buf++;
- 	*body = buf;
- 	*bodylen = strlen(buf);
--	*nonsiglen = *sig - buf;
-+	*nonsiglen = sigstart - buf;
+ 	struct object_id oid;
+@@ -3016,7 +3092,7 @@ static struct object_entry *parse_treeish_dataref(const char **p)
+ 			die("Unknown mark: %s", command_buf.buf);
+ 		oidcpy(&oid, &e->idx.oid);
+ 	} else {	/* <sha1> */
+-		if (parse_oid_hex(*p, &oid, p))
++		if (parse_mapped_oid_hex(*p, &oid, p))
+ 			die("Invalid dataref: %s", command_buf.buf);
+ 		e = find_object(&oid);
+ 		if (*(*p)++ != ' ')
+@@ -3222,6 +3298,26 @@ static void option_export_pack_edges(const char *edges)
+ 	pack_edges = xfopen(edges, "a");
  }
  
- /*
-@@ -1234,6 +1241,7 @@ static void grab_sub_body_contents(struct atom_value *val, int deref, void *buf)
- 		struct used_atom *atom = &used_atom[i];
- 		const char *name = atom->name;
- 		struct atom_value *v = &val[i];
++static void option_rewrite_submodules(const char *arg, struct string_list *list)
++{
++	struct mark_set *ms;
++	FILE *fp;
++	char *s = xstrdup(arg);
++	char *f = strchr(s, ':');
++	if (!f)
++		die(_("Expected format name:filename for submodule rewrite option"));
++	*f = '\0';
++	f++;
++	ms = xcalloc(1, sizeof(*ms));
++	string_list_insert(list, s)->util = ms;
 +
- 		if (!!deref != (*name == '*'))
- 			continue;
- 		if (deref)
-@@ -1273,6 +1281,8 @@ static void grab_sub_body_contents(struct atom_value *val, int deref, void *buf)
- 			v->s = strbuf_detach(&s, NULL);
- 		} else if (atom->u.contents.option == C_BARE)
- 			v->s = xstrdup(subpos);
++	fp = fopen(f, "r");
++	if (!fp)
++		die_errno("cannot read '%s'", f);
++	read_mark_file(ms, fp, insert_oid_entry);
++	fclose(fp);
++}
 +
-+		free((void *)sigpos);
- 	}
- }
- 
-diff --git a/tag.c b/tag.c
-index 71b544467e..5d04506d10 100644
---- a/tag.c
-+++ b/tag.c
-@@ -13,26 +13,27 @@ const char *tag_type = "tag";
- static int run_gpg_verify(const char *buf, unsigned long size, unsigned flags)
+ static int parse_one_option(const char *option)
  {
- 	struct signature_check sigc;
--	size_t payload_size;
-+	struct strbuf payload = STRBUF_INIT;
-+	struct strbuf signature = STRBUF_INIT;
- 	int ret;
- 
- 	memset(&sigc, 0, sizeof(sigc));
- 
--	payload_size = parse_signature(buf, size);
--
--	if (size == payload_size) {
-+	if (!parse_signature(buf, size, &payload, &signature)) {
- 		if (flags & GPG_VERIFY_VERBOSE)
--			write_in_full(1, buf, payload_size);
-+			write_in_full(1, buf, size);
- 		return error("no signature found");
- 	}
- 
--	ret = check_signature(buf, payload_size, buf + payload_size,
--				size - payload_size, &sigc);
-+	ret = check_signature(payload.buf, payload.len, signature.buf,
-+				signature.len, &sigc);
- 
- 	if (!(flags & GPG_VERIFY_OMIT_STATUS))
- 		print_signature_buffer(&sigc, flags);
- 
- 	signature_check_clear(&sigc);
-+	strbuf_release(&payload);
-+	strbuf_release(&signature);
- 	return ret;
+ 	if (skip_prefix(option, "max-pack-size=", &option)) {
+@@ -3284,6 +3380,11 @@ static int parse_one_feature(const char *feature, int from_stream)
+ 		option_export_marks(arg);
+ 	} else if (!strcmp(feature, "alias")) {
+ 		; /* Don't die - this feature is supported */
++	} else if (skip_prefix(feature, "rewrite-submodules-to=", &arg)) {
++		option_rewrite_submodules(arg, &sub_marks_to);
++	} else if (skip_prefix(feature, "rewrite-submodules-from=", &arg)) {
++		option_rewrite_submodules(arg, &sub_marks_from);
++	} else if (skip_prefix(feature, "rewrite-submodules-from=", &arg)) {
+ 	} else if (!strcmp(feature, "get-mark")) {
+ 		; /* Don't die - this feature is supported */
+ 	} else if (!strcmp(feature, "cat-blob")) {
+@@ -3389,6 +3490,7 @@ static void parse_argv(void)
+ 	seen_data_command = 1;
+ 	if (import_marks_file)
+ 		read_marks();
++	build_mark_map(&sub_marks_from, &sub_marks_to);
  }
  
+ int cmd_main(int argc, const char **argv)
+diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
+index ae9950a9c2..22c6c27763 100755
+--- a/t/t9300-fast-import.sh
++++ b/t/t9300-fast-import.sh
+@@ -3382,4 +3382,113 @@ test_expect_success 'X: handling encoding' '
+ 	git log -1 --format=%B encoding | grep $(printf "\317\200")
+ '
+ 
++###
++### series Y (submodules and hash algorithms)
++###
++
++cat >Y-sub-input <<\Y_INPUT_END
++blob
++mark :1
++data 4
++foo
++
++reset refs/heads/master
++commit refs/heads/master
++mark :2
++author Full Name <user@company.tld> 1000000000 +0100
++committer Full Name <user@company.tld> 1000000000 +0100
++data 24
++Test submodule commit 1
++M 100644 :1 file
++
++blob
++mark :3
++data 8
++foo
++bar
++
++commit refs/heads/master
++mark :4
++author Full Name <user@company.tld> 1000000001 +0100
++committer Full Name <user@company.tld> 1000000001 +0100
++data 24
++Test submodule commit 2
++from :2
++M 100644 :3 file
++Y_INPUT_END
++
++# Note that the submodule object IDs are intentionally not translated.
++cat >Y-main-input <<\Y_INPUT_END
++blob
++mark :1
++data 4
++foo
++
++reset refs/heads/master
++commit refs/heads/master
++mark :2
++author Full Name <user@company.tld> 2000000000 +0100
++committer Full Name <user@company.tld> 2000000000 +0100
++data 14
++Test commit 1
++M 100644 :1 file
++
++blob
++mark :3
++data 73
++[submodule "sub1"]
++	path = sub1
++	url = https://void.example.com/main.git
++
++commit refs/heads/master
++mark :4
++author Full Name <user@company.tld> 2000000001 +0100
++committer Full Name <user@company.tld> 2000000001 +0100
++data 14
++Test commit 2
++from :2
++M 100644 :3 .gitmodules
++M 160000 0712c5be7cf681388e355ef47525aaf23aee1a6d sub1
++
++blob
++mark :5
++data 8
++foo
++bar
++
++commit refs/heads/master
++mark :6
++author Full Name <user@company.tld> 2000000002 +0100
++committer Full Name <user@company.tld> 2000000002 +0100
++data 14
++Test commit 3
++from :4
++M 100644 :5 file
++M 160000 ff729f5e62f72c0c3978207d9a80e5f3a65f14d7 sub1
++Y_INPUT_END
++
++cat >Y-marks <<\Y_INPUT_END
++:2 0712c5be7cf681388e355ef47525aaf23aee1a6d
++:4 ff729f5e62f72c0c3978207d9a80e5f3a65f14d7
++Y_INPUT_END
++
++test_expect_success 'Y: setup' '
++	test_oid_cache <<-EOF
++	Ymaster sha1:9afed2f9161ddf416c0a1863b8b0725b00070504
++	Ymaster sha256:c0a1010da1df187b2e287654793df01b464bd6f8e3f17fc1481a7dadf84caee3
++	EOF
++'
++
++test_expect_success 'Y: rewrite submodules' '
++	git init main1 &&
++	(
++		cd main1 &&
++		git init sub2 &&
++		git -C sub2 fast-import --export-marks=../sub2-marks <../Y-sub-input &&
++		git fast-import --rewrite-submodules-from=sub:../Y-marks \
++			--rewrite-submodules-to=sub:sub2-marks <../Y-main-input &&
++		test "$(git rev-parse master)" = "$(test_oid Ymaster)"
++	)
++'
++
+ test_done
