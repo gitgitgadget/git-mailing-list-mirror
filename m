@@ -7,44 +7,44 @@ X-Spam-Status: No, score=-9.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 08741C35674
-	for <git@archiver.kernel.org>; Sat, 22 Feb 2020 20:18:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 29688C35666
+	for <git@archiver.kernel.org>; Sat, 22 Feb 2020 20:18:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D641E206ED
-	for <git@archiver.kernel.org>; Sat, 22 Feb 2020 20:18:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E650E206ED
+	for <git@archiver.kernel.org>; Sat, 22 Feb 2020 20:18:15 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="f5Yobt3S"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="XudF2o6Z"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726981AbgBVUSI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 22 Feb 2020 15:18:08 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:39082 "EHLO
+        id S1727096AbgBVUSO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 22 Feb 2020 15:18:14 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:39080 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726730AbgBVUSG (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 22 Feb 2020 15:18:06 -0500
+        by vger.kernel.org with ESMTP id S1726955AbgBVUSI (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 22 Feb 2020 15:18:08 -0500
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 06DA7609D3
-        for <git@vger.kernel.org>; Sat, 22 Feb 2020 20:18:05 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 8327C6079A
+        for <git@vger.kernel.org>; Sat, 22 Feb 2020 20:18:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1582402686;
-        bh=JhFw1kr1hRK5pA2YM24867jb+2LzRJ5VsXh5VtRYvDA=;
+        s=default; t=1582402687;
+        bh=9EEePANQ2c24SEBMWwUKldhh+6sYn65TqetuuT6CHk0=;
         h=From:To:Subject:Date:In-Reply-To:References:From:Reply-To:Subject:
          Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:
          References:Content-Type:Content-Disposition;
-        b=f5Yobt3SKJduk84ItWlt+Yfpkw1rS9TjDw2+yOLBhw/qI784rKk146okfQvuomGtM
-         TfuSs3qOppeAwMNcy1mwFoQse8a5fi+4qWe/+UXOa3IxNXFOYY65n5h4ivdw7JpasK
-         tSGkN/sXJPuiXKBAYsNpJ/YrHuKthwW1QlgbB1Rcl52CB/UHrAP8Jg/iX4PfMIot9R
-         Bq1mXutyJ29lvE5MPctIzzbg6B4N2JltDcIs/LgYYKgSspfAnxXN8+KovVqZhM3ivB
-         vuOCprHVWQnFfZq3mAD2wyymBiViE7AMp18MI69oG4LTv+WdMSQ+ZJH6CiYB0G8+hI
-         pd0fFTDQTpIoGzp0XLGxfz3VyO6I5tCHCvqTyEBa2voZ7xjs2lyU1eQLbdXrjYzoSp
-         mlLnq0sUQUPcn6p9z54rtlovzdZYO9nincnU9qiD9zTlTtdSEQvpdeaRs3KzVpkiHo
-         ONge9kj67tBwl1pqAxGClqKwSmUwwegEg1iFd1Eh9aUKllr/gwD
+        b=XudF2o6ZvzJ1V8/jZCdvFezCntIlQE4bSGkupHVX2e919YV1tykyaJPfm7Naa0wEE
+         aMva4Y8VzjAm0pf+/ZRUPorgIEFR0m0Wh9l3zPtcHfb6ltlCrkEJjyvkSgJvUynn6+
+         TEVP3OkQ3BNKWUKLV/nlDVjYsget3ex7Ky1CqHxa4tXHr9rgcVLYMelxC2al19GOph
+         aYC4nKgKBR4oNT5pRTW/5R0cNzwZTVfmoAYMbvGVmA9TacIBu+I8ICRtfyvVGS8tTp
+         EfPHWuyQ8N9mMWRZZass4gv/osCSN3W9LzzQkA1INgsCqGT182D+5Fzzc21sIqJ/qh
+         BbVjKqphb3TAE3LnAfZsfIbtuKd1Kiq7DWloXYQSNs7G4pZa4SgeA8s8mO2kLS3Ieo
+         YCUkXtH/Q2aBOzfFhPp8E3jV5kqujjdW1qcQrxD6DxAx5OqiFDyR+TKlGuocbwRzd2
+         QLaFC3vyKc+sAEKOyM8lX59nOiS0mIqkxxCt0V3k63KbB5IjUIC
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
-Subject: [PATCH v2 06/24] t: use hash-specific lookup tables to define test constants
-Date:   Sat, 22 Feb 2020 20:17:31 +0000
-Message-Id: <20200222201749.937983-7-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 10/24] t/helper: initialize repository if necessary
+Date:   Sat, 22 Feb 2020 20:17:35 +0000
+Message-Id: <20200222201749.937983-11-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.25.1.481.gfbce0eb801
 In-Reply-To: <20200222201749.937983-1-sandals@crustytoothpaste.net>
 References: <20200222201749.937983-1-sandals@crustytoothpaste.net>
@@ -55,66 +55,32 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the future, we'll allow developers to run the testsuite with a hash
-algorithm of their choice.  To make this easier, compute the fixed
-constants using test_oid. Move the constant initialization down below
-the point where test-lib-functions.sh is loaded so the functions are
-defined.
+The repository helper is used in t5318 to read commit graphs whether
+we're in a repository or not. However, without a repository, we have no
+way to properly initialize the hash algorithm, meaning that the file is
+misread.
 
-Note that we don't provide a value for the OID_REGEX value directly
-because writing a large number of instances of "[0-9a-f]" in the
-oid-info files is unwieldy and there isn't a way to compute it based on
-those values. Instead, compute it based on ZERO_OID.
+Fix this by calling setup_git_directory_gently, which will read the
+environment variable the testsuite sets to ensure that the correct hash
+algorithm is set.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/test-lib.sh | 29 ++++++++++++++---------------
- 1 file changed, 14 insertions(+), 15 deletions(-)
+ t/helper/test-repository.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 0ea1e5a05e..9fe390bd5a 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -494,21 +494,6 @@ case $(echo $GIT_TRACE |tr "[A-Z]" "[a-z]") in
- 	;;
- esac
+diff --git a/t/helper/test-repository.c b/t/helper/test-repository.c
+index f7f8618445..ecc768e4cb 100644
+--- a/t/helper/test-repository.c
++++ b/t/helper/test-repository.c
+@@ -75,6 +75,10 @@ static void test_get_commit_tree_in_graph(const char *gitdir,
  
--# Convenience
--#
--# A regexp to match 5, 35 and 40 hexdigits
--_x05='[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]'
--_x35="$_x05$_x05$_x05$_x05$_x05$_x05$_x05"
--_x40="$_x35$_x05"
--
--# Zero SHA-1
--_z40=0000000000000000000000000000000000000000
--
--OID_REGEX="$_x40"
--ZERO_OID=$_z40
--EMPTY_TREE=4b825dc642cb6eb9a060e54bf8d69288fbee4904
--EMPTY_BLOB=e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
--
- # Line feed
- LF='
- '
-@@ -1383,6 +1368,20 @@ then
- 	fi
- fi
- 
-+# Convenience
-+# A regexp to match 5, 35 and 40 hexdigits
-+_x05='[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]'
-+_x35="$_x05$_x05$_x05$_x05$_x05$_x05$_x05"
-+_x40="$_x35$_x05"
+ int cmd__repository(int argc, const char **argv)
+ {
++	int nongit_ok = 0;
 +
-+test_oid_init
++	setup_git_directory_gently(&nongit_ok);
 +
-+ZERO_OID=$(test_oid zero)
-+OID_REGEX=$(echo $ZERO_OID | sed -e 's/0/[0-9a-f]/g')
-+EMPTY_TREE=$(test_oid empty_tree)
-+EMPTY_BLOB=$(test_oid empty_blob)
-+_z40=$ZERO_OID
-+
- # Provide an implementation of the 'yes' utility; the upper bound
- # limit is there to help Windows that cannot stop this loop from
- # wasting cycles when the downstream stops reading, so do not be
+ 	if (argc < 2)
+ 		die("must have at least 2 arguments");
+ 	if (!strcmp(argv[1], "parse_commit_in_graph")) {
