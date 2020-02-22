@@ -6,102 +6,79 @@ X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2420DC35666
-	for <git@archiver.kernel.org>; Sat, 22 Feb 2020 16:56:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B1156C35671
+	for <git@archiver.kernel.org>; Sat, 22 Feb 2020 17:12:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id C1CAD206E2
-	for <git@archiver.kernel.org>; Sat, 22 Feb 2020 16:56:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 50C1320702
+	for <git@archiver.kernel.org>; Sat, 22 Feb 2020 17:12:28 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="VB9zZXa3"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="eONmXr30"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726766AbgBVQ4P (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 22 Feb 2020 11:56:15 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:52768 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726688AbgBVQ4P (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 Feb 2020 11:56:15 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7658FB9FB5;
-        Sat, 22 Feb 2020 11:56:13 -0500 (EST)
+        id S1726603AbgBVRM0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 22 Feb 2020 12:12:26 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:52001 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726310AbgBVRM0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 Feb 2020 12:12:26 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6E2D9BDC40;
+        Sat, 22 Feb 2020 12:12:24 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Amy5KNYKryt8ZDHRjVCBXFVj7fw=; b=VB9zZX
-        a3SlNb6gTl/GSjtx24rxrmabh5gxw5NYRq448ek3c3d42YVBV8FexK46xFHBgiD4
-        brXvfkI6ksEh9y5d1RffoAPIULB4s1W5abhxf6CmPcZYawV096EcBTDBiX5POyAZ
-        IlFqwaQ6h2XW3NPgSSCxv4u8uT7tto+QA5Wx8=
+        :content-type; s=sasl; bh=7rbVpTPuihsc1K3aRbVywLFT9Yk=; b=eONmXr
+        30p7sfLg02KrdEbgr9a3LuJ5cGkkv8iFJiL0yiBjdj4M4/ODPfqH9zxODqyzFeCe
+        ipaE10GXXqHAgN/aImL3QmkbxuTP2D5cS/iOlyEHFwMUU9M4oTc1IvAj0fRoYUBw
+        wKXmXZXOeJfr5eCnFn3cLxXj0YM6PplcesfPQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Vf9L85/Lf8b9NqSfc6RGpL+FLehOHs0g
-        Nmnzop3lh6Oi7QHzubHFR1sSRSyzcCyK92V/IFZkFgiX3bJWj+GrOA76Rso+FGXi
-        F0ShW6OpMsjD5shtc7FQWkOLmN7quQrYw04Ckw7QS0IT0yAAS8UakhLujBvcFUA0
-        9BkqMXmO8mg=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6E4DAB9FB4;
-        Sat, 22 Feb 2020 11:56:13 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=ridQTZSU2GXPlAsRuJNUhKANSRjoX06M
+        vgNsRmpH2Yu3sRQlr3nq2uUVmUDoe/qb69SY9/jdBOEOAToxfUdDbdSMrxX+rlk/
+        nSMGbp92Xn+rCDNiVJCUhtfGLQogTn3Mpa25kPGW0z6eGPAymDkMyor4xjWoDIlq
+        nxdewXgEUqw=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6666DBDC3F;
+        Sat, 22 Feb 2020 12:12:24 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 906E0B9FB1;
-        Sat, 22 Feb 2020 11:56:10 -0500 (EST)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9363EBDC3E;
+        Sat, 22 Feb 2020 12:12:21 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc:     git@vger.kernel.org
-Subject: Re: Getting clean diff data from git-mailinfo
-References: <20200221171312.xyzsrvebuwiw6pgj@chatter.i7.local>
-        <xmqqk14e7emp.fsf@gitster-ct.c.googlers.com>
-Date:   Sat, 22 Feb 2020 08:56:08 -0800
-In-Reply-To: <xmqqk14e7emp.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Sat, 22 Feb 2020 08:47:42 -0800")
-Message-ID: <xmqqftf27e8n.fsf@gitster-ct.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Anthony Sottile <asottile@umich.edu>, git@vger.kernel.org
+Subject: Re: [PATCH] run-command.c: ensure signaled hook scripts are waited upon
+References: <20200221060636.4507-1-asottile@umich.edu>
+        <20200221063954.GJ1280313@coredump.intra.peff.net>
+Date:   Sat, 22 Feb 2020 09:12:19 -0800
+In-Reply-To: <20200221063954.GJ1280313@coredump.intra.peff.net> (Jeff King's
+        message of "Fri, 21 Feb 2020 01:39:54 -0500")
+Message-ID: <xmqqblpq7dho.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 3A12F308-5594-11EA-9588-B0405B776F7B-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 7CD78A4E-5596-11EA-BC15-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> ... then we may have had split (3) into three pieces:
->
->  (3a) material before the pure diff (e.g. diffstat, etc.)
->  (3b) pure diff
->  (3c) trailing junk (e.g. base-commit info, e-mail signature, etc.)
-> ...
-> So, because there is no such need so far, there is no tool in the
-> Git toolbox to split (3) into three pieces.
->
-> You're welcome to write one, but the current toolset does not need
-> it.
+> If we assume that most people would prefer this "wait until the hook has
+> died" behavior, I think this shouldn't have any unwanted secondary
+> effects. I'm on the fence on whether it's what most people would want or
+> not (I guess most people don't care either way, because their scripts
+> don't ignore SIGINT).
 
-Writing something that reads (3), discarding lines before the first
-"diff --git", counting lines that appear on "@@ ... @@" line while
-copying it to the output, repeating the process when you see
-something other than "diff --git" (i.e. beginning of the patch for
-the next path) or "@@ ... @@" (i.e. another hunk in the patch for
-the current path), and discarding the rest may be trivial.
+Yeah, and imagining why they deliberately ignore INT (i.e. "because
+I want this hook not be interrupted and run to its completion") does
+not help guess if they want git to wait for hook's completion or
+just go ahead and die of its own signal death.  We could timeout the
+waiting and kill such a child forcibly, and that may avoid these
+hook script that ignore INT to hang around, but I do not know if
+that is desirable.
 
-But in practice, people edit their diff [*1*], forgetting the line
-counts on the "@@ ... @@" lines, and it helps the maintainer to have
-the whole (3), not only (3b), in a single file to recover from such
-a broken patch submission.
-
-So adding another tool to produce (3b) only is fine, but an attempt
-to get rid of (3) and to claim that (3b) replaces the need for (3)
-is highly discouraged.
-
-Thanks.
-
-
-[Footnote]
-
-*1* Even when people edit without changing the line numbers (imagine
-    a typofix on a '+' line), I saw that "patch" mode of Emacs broke
-    the line count on "@@ ...@@" line of the last hunk when the
-    patch ends with certain patterns.
 
