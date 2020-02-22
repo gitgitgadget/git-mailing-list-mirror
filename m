@@ -7,44 +7,44 @@ X-Spam-Status: No, score=-9.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D6BEC35671
-	for <git@archiver.kernel.org>; Sat, 22 Feb 2020 20:18:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2EDA9C35666
+	for <git@archiver.kernel.org>; Sat, 22 Feb 2020 20:18:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 661D8206ED
-	for <git@archiver.kernel.org>; Sat, 22 Feb 2020 20:18:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 030A5206ED
+	for <git@archiver.kernel.org>; Sat, 22 Feb 2020 20:18:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="A2pgtBac"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="f7rvxvm+"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726928AbgBVUSG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 22 Feb 2020 15:18:06 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:39076 "EHLO
+        id S1727002AbgBVUSI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 22 Feb 2020 15:18:08 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:39084 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726845AbgBVUSG (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 22 Feb 2020 15:18:06 -0500
+        by vger.kernel.org with ESMTP id S1726845AbgBVUSI (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 22 Feb 2020 15:18:08 -0500
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id E6B176079C
-        for <git@vger.kernel.org>; Sat, 22 Feb 2020 20:18:04 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 5CFBE6079B
+        for <git@vger.kernel.org>; Sat, 22 Feb 2020 20:18:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1582402685;
-        bh=Jyzh/+8JdSqCyzClFXmXxxmIe0I6aIhQg/LvFgoCr3E=;
+        s=default; t=1582402686;
+        bh=B7jZ7OcAT1p+IaD8zAaRDzP9f1o69d30rknV3o2Vajo=;
         h=From:To:Subject:Date:In-Reply-To:References:From:Reply-To:Subject:
          Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:
          References:Content-Type:Content-Disposition;
-        b=A2pgtBacQdQcOt0k0FRtMC80dK2iYVBlArx767vtKSEyyYGcRHiOQQUIntAg/MCfH
-         9nDVWRRf/cCR+t2lZH4LiVWAKj8fATNvE2gAez291cXWY60UhxKX54Z6H5vrFhyx6a
-         I7XbHWdzsGWh2QAGkYkKar2AzUGZd8oSR7RoGLqHtFwAPcItJ33g6GLOxxrw1cUPv8
-         XmVSTpQhhnHEbNdQQ3U19PYgVKWlN57c7ak/TzH+xm2ZX2ybN6th7Akux6RcOzM1sj
-         V7/h56sP46rTqIDntBoiFWZN8FGi8zWrjLEdtRBUgHsv5Mk+hvYvuzYhydCMxLlOtX
-         NJ2JfuoX1OFLVy49wdIkgza2q/Ln2Wz/9wuvAJP3eDDD9wTWGhn6sTu0a3nYPnh2xG
-         SXC9x5E2GiNlWsz0XDua1OG9Dzq6411rq68rVn10RYYcIymlHV2NIuIiZDEcPgtIVP
-         EVfWzq4LXahul9TcpV17CzY5QsU/vjQwjM/ELmh+UwEfH0ZRh5i
+        b=f7rvxvm+o5zoG0WuVxMapnsxtA83McVKvtrkrDMi3nHDehXGuksrpRpY2bJxILF8v
+         RG6o0dRh9drnrUqEf2BXXecSpi+TQsDyGrKk7T13arMYSOht5J0h9OaNSIklyA0m5M
+         fUXsPm1okXLNqeaSsDY5nd14UCWukU9RS9VGKlgCAONj6uL3NunjmQCgps74KVxF6C
+         13t95BQZu8MD1Pm4kcIV2nunRed0eDBKwxrcXwJMxc5Xp6F2EHBaQ7VaRbHxXQ638m
+         pwhfBCd0dHOB4onnPWLFIl9JNWHByFvgt+pFl5XaR0T6YPae1CXTAMX78Ml4NKXRKX
+         nqDC7+N4R5mIy9jtjLCZxvVlsfSHPqd4eBu8nyzpxYYFdvJEPA0S8s7xMHh7mGKz15
+         wKrl9lFBI+AqbSMD0wp1KFoJyjnGdxGzx9Jhx1BNEf78j/Ss24f9gzMUQMexKvBRry
+         x043xnC+4pBjTpvSGufXWf1BMqYGDUJvND0DHS24HiAaVdePkpw
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
-Subject: [PATCH v2 03/24] hex: introduce parsing variants taking hash algorithms
-Date:   Sat, 22 Feb 2020 20:17:28 +0000
-Message-Id: <20200222201749.937983-4-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 07/24] t6300: abstract away SHA-1-specific constants
+Date:   Sat, 22 Feb 2020 20:17:32 +0000
+Message-Id: <20200222201749.937983-8-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.25.1.481.gfbce0eb801
 In-Reply-To: <20200222201749.937983-1-sandals@crustytoothpaste.net>
 References: <20200222201749.937983-1-sandals@crustytoothpaste.net>
@@ -55,101 +55,75 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Introduce variants of get_oid_hex and parse_oid_hex that parse an
-arbitrary hash algorithm, implementing internal functions to avoid
-duplication.  These functions can be used in the transport code to parse
-refs properly.
+Adjust the test so that it computes variables for object IDs instead of
+using hard-coded hashes.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- cache.h |  7 +++++++
- hex.c   | 35 +++++++++++++++++++++++++++--------
- 2 files changed, 34 insertions(+), 8 deletions(-)
+ t/t6300-for-each-ref.sh | 25 ++++++++++++++++---------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index 37c899b53f..4c9c21a11d 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1481,6 +1481,9 @@ int set_disambiguate_hint_config(const char *var, const char *value);
- int get_sha1_hex(const char *hex, unsigned char *sha1);
- int get_oid_hex(const char *hex, struct object_id *sha1);
- 
-+/* Like get_oid_hex, but for an arbitrary hash algorithm. */
-+int get_oid_hex_algop(const char *hex, struct object_id *oid, const struct git_hash_algo *algop);
-+
- /*
-  * Read `len` pairs of hexadecimal digits from `hex` and write the
-  * values to `binary` as `len` bytes. Return 0 on success, or -1 if
-@@ -1516,6 +1519,10 @@ char *oid_to_hex(const struct object_id *oid);						/* same static buffer */
-  */
- int parse_oid_hex(const char *hex, struct object_id *oid, const char **end);
- 
-+/* Like parse_oid_hex, but for an arbitrary hash algorithm. */
-+int parse_oid_hex_algop(const char *hex, struct object_id *oid, const char **end,
-+			const struct git_hash_algo *algo);
-+
- /*
-  * This reads short-hand syntax that not only evaluates to a commit
-  * object name, but also can act as if the end user spelled the name
-diff --git a/hex.c b/hex.c
-index fd7f00c43f..10e24dc2e4 100644
---- a/hex.c
-+++ b/hex.c
-@@ -47,30 +47,49 @@ int hex_to_bytes(unsigned char *binary, const char *hex, size_t len)
- 	return 0;
+diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+index 9c910ce746..2406b93d35 100755
+--- a/t/t6300-for-each-ref.sh
++++ b/t/t6300-for-each-ref.sh
+@@ -20,6 +20,10 @@ setdate_and_increment () {
  }
  
--int get_sha1_hex(const char *hex, unsigned char *sha1)
-+static int get_hash_hex_algop(const char *hex, unsigned char *hash,
-+			      const struct git_hash_algo *algop)
- {
- 	int i;
--	for (i = 0; i < the_hash_algo->rawsz; i++) {
-+	for (i = 0; i < algop->rawsz; i++) {
- 		int val = hex2chr(hex);
- 		if (val < 0)
- 			return -1;
--		*sha1++ = val;
-+		*hash++ = val;
- 		hex += 2;
- 	}
- 	return 0;
+ test_expect_success setup '
++	test_oid_cache <<-EOF &&
++	disklen sha1:138
++	disklen sha256:154
++	EOF
+ 	setdate_and_increment &&
+ 	echo "Using $datestamp" > one &&
+ 	git add one &&
+@@ -50,6 +54,9 @@ test_atom() {
+ 	"
  }
  
-+int get_sha1_hex(const char *hex, unsigned char *sha1)
-+{
-+	return get_hash_hex_algop(hex, sha1, the_hash_algo);
-+}
++hexlen=$(test_oid hexsz)
++disklen=$(test_oid disklen)
 +
-+int get_oid_hex_algop(const char *hex, struct object_id *oid,
-+		      const struct git_hash_algo *algop)
-+{
-+	return get_hash_hex_algop(hex, oid->hash, algop);
-+}
-+
- int get_oid_hex(const char *hex, struct object_id *oid)
- {
--	return get_sha1_hex(hex, oid->hash);
-+	return get_oid_hex_algop(hex, oid, the_hash_algo);
-+}
-+
-+int parse_oid_hex_algop(const char *hex, struct object_id *oid,
-+			const char **end,
-+			const struct git_hash_algo *algop)
-+{
-+	int ret = get_hash_hex_algop(hex, oid->hash, algop);
-+	if (!ret)
-+		*end = hex + algop->hexsz;
-+	return ret;
- }
- 
- int parse_oid_hex(const char *hex, struct object_id *oid, const char **end)
- {
--	int ret = get_oid_hex(hex, oid);
--	if (!ret)
--		*end = hex + the_hash_algo->hexsz;
--	return ret;
-+	return parse_oid_hex_algop(hex, oid, end, the_hash_algo);
- }
- 
- char *hash_to_hex_algop_r(char *buffer, const unsigned char *hash,
+ test_atom head refname refs/heads/master
+ test_atom head refname: refs/heads/master
+ test_atom head refname:short master
+@@ -82,9 +89,9 @@ test_atom head push:rstrip=-1 refs
+ test_atom head push:strip=1 remotes/myfork/master
+ test_atom head push:strip=-1 master
+ test_atom head objecttype commit
+-test_atom head objectsize 171
+-test_atom head objectsize:disk 138
+-test_atom head deltabase 0000000000000000000000000000000000000000
++test_atom head objectsize $((131 + hexlen))
++test_atom head objectsize:disk $disklen
++test_atom head deltabase $ZERO_OID
+ test_atom head objectname $(git rev-parse refs/heads/master)
+ test_atom head objectname:short $(git rev-parse --short refs/heads/master)
+ test_atom head objectname:short=1 $(git rev-parse --short=1 refs/heads/master)
+@@ -125,11 +132,11 @@ test_atom tag refname:short testtag
+ test_atom tag upstream ''
+ test_atom tag push ''
+ test_atom tag objecttype tag
+-test_atom tag objectsize 154
+-test_atom tag objectsize:disk 138
+-test_atom tag '*objectsize:disk' 138
+-test_atom tag deltabase 0000000000000000000000000000000000000000
+-test_atom tag '*deltabase' 0000000000000000000000000000000000000000
++test_atom tag objectsize $((114 + hexlen))
++test_atom tag objectsize:disk $disklen
++test_atom tag '*objectsize:disk' $disklen
++test_atom tag deltabase $ZERO_OID
++test_atom tag '*deltabase' $ZERO_OID
+ test_atom tag objectname $(git rev-parse refs/tags/testtag)
+ test_atom tag objectname:short $(git rev-parse --short refs/tags/testtag)
+ test_atom head objectname:short=1 $(git rev-parse --short=1 refs/heads/master)
+@@ -139,7 +146,7 @@ test_atom tag parent ''
+ test_atom tag numparent ''
+ test_atom tag object $(git rev-parse refs/tags/testtag^0)
+ test_atom tag type 'commit'
+-test_atom tag '*objectname' 'ea122842f48be4afb2d1fc6a4b96c05885ab7463'
++test_atom tag '*objectname' $(git rev-parse refs/tags/testtag^{})
+ test_atom tag '*objecttype' 'commit'
+ test_atom tag author ''
+ test_atom tag authorname ''
