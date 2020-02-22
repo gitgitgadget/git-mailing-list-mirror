@@ -7,44 +7,44 @@ X-Spam-Status: No, score=-9.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 20704C35666
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D7C80C35674
 	for <git@archiver.kernel.org>; Sat, 22 Feb 2020 20:18:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id EA54B206ED
-	for <git@archiver.kernel.org>; Sat, 22 Feb 2020 20:18:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AD6B9206ED
+	for <git@archiver.kernel.org>; Sat, 22 Feb 2020 20:18:26 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="BNxhboYy"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="GpG6ACaD"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727102AbgBVUSQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 22 Feb 2020 15:18:16 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:39092 "EHLO
+        id S1726975AbgBVUSI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 22 Feb 2020 15:18:08 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:39078 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727004AbgBVUSM (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 22 Feb 2020 15:18:12 -0500
+        by vger.kernel.org with ESMTP id S1726701AbgBVUSG (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 22 Feb 2020 15:18:06 -0500
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 8BF8C6079B
-        for <git@vger.kernel.org>; Sat, 22 Feb 2020 20:18:11 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 4AD68609CF
+        for <git@vger.kernel.org>; Sat, 22 Feb 2020 20:18:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1582402691;
-        bh=0tMGIfCMy8exMJJxkDf0EmyjqQy4fuFMPseY7orttRA=;
+        s=default; t=1582402685;
+        bh=pbkrr+zpuYkTNaZDFek8q56kXI4wbCmAsY2GK3L6G9g=;
         h=From:To:Subject:Date:In-Reply-To:References:From:Reply-To:Subject:
          Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:
          References:Content-Type:Content-Disposition;
-        b=BNxhboYywBDGw+SHPhyPIZFJM3VzKHgOtihjvGw+1oVuZ6VtLwSAgOhv88QqE8QTy
-         IjvEjajss8GfvEGpayQpjZUmhJX5wX6Di2/F6D/RKU/YQ0R1XbMf++ozOm1lFXd6UB
-         x3weBrXT/uZBty0lcVgALqJ8wM+sj26iQo5xNJHQgIdUMv29+JmQLZBz/P+xc7hlC5
-         WcuK4tfUme7dIHjdOAmqpdgCmpU4qKN3Z4o5Is2mq9uq7cR6XVv+r2CgKifq8f5EWj
-         81sTKiOEtz5ZyzPNdO4WaeFeiOrH3RNzI1GqPeU1+H17IIBD4q1s1EqmXaKklK7CVw
-         eZVm5xxU1dZ330SaxNqYbwBoM8awM3/5YvZxA4F3Il6F9Kc5U6y5LAm4jRJAT6ZHbt
-         flBN7WAnd4fXBYRXlZt7HGZXeLfzPNNMuRlsos6GwA+WhVvYkltyt86NZDwHomNfkQ
-         4B7jPa5KGxsjd3XzH9EKdbQQwIkcAcmrHbuNVMxvEeQsAkoI1ho
+        b=GpG6ACaDrFqVOjMpdHCfqGVJiSO79bdvrghlcvsDtFA12SrTzGnVYuqoq8mTc87j6
+         Cdd9HP/WHprpkA6skAJO5EWVdJxRQaP6LBJu3HRwFdxyDqcsli+c4KGFGXyhZHASfn
+         /CGAbeNwvz1Yz7xEkoPfLQKhyrVLnDHbHjOeU5pVgFBi4B1bu4htv2UYAG4QyfXG66
+         BTij9TxK4YVW36g9n63ptUW57Md1Ptw1ChGAolMMwq+8mKeR5Jq16V22tMOFM8+iSI
+         37my/jwjcX4AgofO+So+kE93dX5NpxoXTQY0AZt+74wcNkR390ZeRp7u764pt+wotW
+         YdonxO7Zl5p4XNoU30LjgpIe8kIVnCyvgRIjmX4fXQwQz2rVC4E0NBmcmeZ5DTg58p
+         Wetyu2hbPscP6PTCjpDfi/0AhzgWHwsmDMBWM7T+d7uoKG9Ey/PfxHPo7hbR1QzNs8
+         t4onhwb/dwNi+dIL2Zsf+3YXm12n3xGDiP+v+Kh1iu5ErAJKuPU
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
-Subject: [PATCH v2 21/24] fast-import: add helper function for inserting mark object entries
-Date:   Sat, 22 Feb 2020 20:17:46 +0000
-Message-Id: <20200222201749.937983-22-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 04/24] hex: add functions to parse hex object IDs in any algorithm
+Date:   Sat, 22 Feb 2020 20:17:29 +0000
+Message-Id: <20200222201749.937983-5-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.25.1.481.gfbce0eb801
 In-Reply-To: <20200222201749.937983-1-sandals@crustytoothpaste.net>
 References: <20200222201749.937983-1-sandals@crustytoothpaste.net>
@@ -55,88 +55,79 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently, everything we want to insert into a mark set is an object
-entry. However, in the future, we will want to insert objects of other
-types. Teach read_mark_file to take a function pointer which helps us
-insert the object we want into our mark set.
+There are some places where we need to parse a hex object ID in any
+algorithm without knowing beforehand which algorithm is in use. An
+example is when parsing fast-import marks.
+
+Add a get_oid_hex_any to parse an object ID and return the algorithm it
+belongs to, and additionally add parse_oid_hex_any which is the
+equivalent change for parse_oid_hex. If the object is not parseable, we
+return GIT_HASH_UNKNOWN.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- fast-import.c | 37 ++++++++++++++++++++++---------------
- 1 file changed, 22 insertions(+), 15 deletions(-)
+ cache.h | 10 ++++++++++
+ hex.c   | 22 ++++++++++++++++++++++
+ 2 files changed, 32 insertions(+)
 
-diff --git a/fast-import.c b/fast-import.c
-index b9ecd89699..3ce4a04473 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -131,6 +131,8 @@ struct recent_command {
- 	char *buf;
- };
+diff --git a/cache.h b/cache.h
+index 4c9c21a11d..158d7ccfd8 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1523,6 +1523,16 @@ int parse_oid_hex(const char *hex, struct object_id *oid, const char **end);
+ int parse_oid_hex_algop(const char *hex, struct object_id *oid, const char **end,
+ 			const struct git_hash_algo *algo);
  
-+typedef void (*mark_set_inserter_t)(struct mark_set *s, struct object_id *oid, uintmax_t mark);
 +
- /* Configured limits on output */
- static unsigned long max_depth = 50;
- static off_t max_packsize;
-@@ -1711,14 +1713,30 @@ static void dump_marks(void)
- 	}
++/*
++ * These functions work like get_oid_hex and parse_oid_hex, but they will parse
++ * a hex value for any algorithm. The algorithm is detected based on the length
++ * and the algorithm in use is returned. If this is not a hex object ID in any
++ * algorithm, returns GIT_HASH_UNKNOWN.
++ */
++int get_oid_hex_any(const char *hex, struct object_id *oid);
++int parse_oid_hex_any(const char *hex, struct object_id *oid, const char **end);
++
+ /*
+  * This reads short-hand syntax that not only evaluates to a commit
+  * object name, but also can act as if the end user spelled the name
+diff --git a/hex.c b/hex.c
+index 10e24dc2e4..da51e64929 100644
+--- a/hex.c
++++ b/hex.c
+@@ -72,6 +72,20 @@ int get_oid_hex_algop(const char *hex, struct object_id *oid,
+ 	return get_hash_hex_algop(hex, oid->hash, algop);
  }
  
--static void read_mark_file(struct mark_set *s, FILE *f)
-+static void insert_object_entry(struct mark_set *s, struct object_id *oid, uintmax_t mark)
++/*
++ * NOTE: This function relies on hash algorithms being in order from shortest
++ * length to longest length.
++ */
++int get_oid_hex_any(const char *hex, struct object_id *oid)
 +{
-+	struct object_entry *e;
-+	e = find_object(oid);
-+	if (!e) {
-+		enum object_type type = oid_object_info(the_repository,
-+							oid, NULL);
-+		if (type < 0)
-+			die("object not found: %s", oid_to_hex(oid));
-+		e = insert_object(oid);
-+		e->type = type;
-+		e->pack_id = MAX_PACK_ID;
-+		e->idx.offset = 1; /* just not zero! */
++	int i;
++	for (i = GIT_HASH_NALGOS - 1; i > 0; i--) {
++		if (!get_hash_hex_algop(hex, oid->hash, &hash_algos[i]))
++			return i;
 +	}
-+	insert_mark(s, mark, e);
++	return GIT_HASH_UNKNOWN;
 +}
 +
-+static void read_mark_file(struct mark_set *s, FILE *f, mark_set_inserter_t inserter)
+ int get_oid_hex(const char *hex, struct object_id *oid)
  {
- 	char line[512];
- 	while (fgets(line, sizeof(line), f)) {
- 		uintmax_t mark;
- 		char *end;
- 		struct object_id oid;
--		struct object_entry *e;
- 
- 		end = strchr(line, '\n');
- 		if (line[0] != ':' || !end)
-@@ -1728,18 +1746,7 @@ static void read_mark_file(struct mark_set *s, FILE *f)
- 		if (!mark || end == line + 1
- 			|| *end != ' ' || get_oid_hex(end + 1, &oid))
- 			die("corrupt mark line: %s", line);
--		e = find_object(&oid);
--		if (!e) {
--			enum object_type type = oid_object_info(the_repository,
--								&oid, NULL);
--			if (type < 0)
--				die("object not found: %s", oid_to_hex(&oid));
--			e = insert_object(&oid);
--			e->type = type;
--			e->pack_id = MAX_PACK_ID;
--			e->idx.offset = 1; /* just not zero! */
--		}
--		insert_mark(s, mark, e);
-+		inserter(s, &oid, mark);
- 	}
+ 	return get_oid_hex_algop(hex, oid, the_hash_algo);
+@@ -87,6 +101,14 @@ int parse_oid_hex_algop(const char *hex, struct object_id *oid,
+ 	return ret;
  }
  
-@@ -1752,7 +1759,7 @@ static void read_marks(void)
- 		goto done; /* Marks file does not exist */
- 	else
- 		die_errno("cannot read '%s'", import_marks_file);
--	read_mark_file(marks, f);
-+	read_mark_file(marks, f, insert_object_entry);
- 	fclose(f);
- done:
- 	import_marks_file_done = 1;
++int parse_oid_hex_any(const char *hex, struct object_id *oid, const char **end)
++{
++	int ret = get_oid_hex_any(hex, oid);
++	if (ret)
++		*end = hex + hash_algos[ret].hexsz;
++	return ret;
++}
++
+ int parse_oid_hex(const char *hex, struct object_id *oid, const char **end)
+ {
+ 	return parse_oid_hex_algop(hex, oid, end, the_hash_algo);
