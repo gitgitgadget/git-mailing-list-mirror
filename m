@@ -2,139 +2,99 @@ Return-Path: <SRS0=hy0J=4K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DE946C35666
-	for <git@archiver.kernel.org>; Sat, 22 Feb 2020 18:03:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B742C35671
+	for <git@archiver.kernel.org>; Sat, 22 Feb 2020 18:51:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A6466206ED
-	for <git@archiver.kernel.org>; Sat, 22 Feb 2020 18:03:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5B571206ED
+	for <git@archiver.kernel.org>; Sat, 22 Feb 2020 18:51:23 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="oyKtAZMN"
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="Xskm5Nbw"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726713AbgBVSDZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 22 Feb 2020 13:03:25 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:38978 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726310AbgBVSDZ (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 22 Feb 2020 13:03:25 -0500
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 119D26079A;
-        Sat, 22 Feb 2020 18:03:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1582394604;
-        bh=Uq3tRzZfDmRLHw2+72/KwhAKIu250DAb2Z6SX5oNxEg=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=oyKtAZMNng8gBxy53eQpnIicq4BAy6TFS9YJwchOsXnuAeF+7iN7KfgaJSai3biya
-         qJmBxGU3XvXfDidB6y8UvP+suO51ktNvGQ5WcZVIIa1GpGCqfkOwa4JU1cs6XS+fCy
-         qHmXTAr7ynZouqL1OvJJN7+CTEoN8Q2+ZFJTmAoSgR+XGLOms1kRstru2TRKE2R77R
-         OefjcXtmM2Fw+N4ibpEJVhktRlhYUCSne/wXZpSw0QIAZfYcvGcYyNQp3b6hbH9UUD
-         CB3ZcozMel3dJSylEYiLb9Wf950jNylYK5MUwrljjCo4WMUvjYni0VktZ9Z+B6u+Tg
-         Mi7IhT63hGG2qiSV7rChJWO7McnvrD5SueOYMNp83Qwyv21ic/NpZ8LLBQ57iB+4Mi
-         hU4Z4ryknk3nEFTF+eakhutIr7VjwPU5V870JiKwEnk0VLfvcSRgGvzhpBFTAf38aq
-         6vAKi1WUVm/3TLYQYYowcvF4FnhRWJUOxVnsGNeH/rocmQzuIYc
-Date:   Sat, 22 Feb 2020 18:03:17 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Rasmus Jonsson <wasmus@zom.bi>, git@vger.kernel.org
-Subject: Re: [GSoC][PATCH 1/1] t1050: clean up checks for file existence
-Message-ID: <20200222180317.GF6462@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>, Rasmus Jonsson <wasmus@zom.bi>,
-        git@vger.kernel.org
-References: <20200222071335.27292-1-wasmus@zom.bi>
- <20200222071335.27292-2-wasmus@zom.bi>
- <xmqqtv3i5xhx.fsf@gitster-ct.c.googlers.com>
+        id S1726859AbgBVSvV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 22 Feb 2020 13:51:21 -0500
+Received: from mout.web.de ([212.227.15.14]:37891 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726550AbgBVSvV (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 Feb 2020 13:51:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1582397476;
+        bh=hPrzISv+zXGeDAcszNcmDep0KtF0SKOwfja6JkjA1qE=;
+        h=X-UI-Sender-Class:To:Cc:From:Subject:Date;
+        b=Xskm5NbwiQrjFXEkWSWDmQXSNSxfb/y9qDEXvb6AfpeExTHpDrlUdJLcXRFEvWEXB
+         v1wmCUxz5JQG7t2IRhk08M7k6vDAnn8dq0qWBCHNvLbrNWRw94XyN2m1tjfsGsCWpp
+         kK/xzg3S30tdTJHfvMt+cwGVWPRbFfrsejwKVbu4=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.26] ([79.203.21.89]) by smtp.web.de (mrweb003
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0Lz3CK-1jRatQ19ea-014EmE; Sat, 22
+ Feb 2020 19:51:16 +0100
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] quote: use isalnum() to check for alphanumeric characters
+Message-ID: <0157c714-2d9b-7896-f5dc-232d82a46625@web.de>
+Date:   Sat, 22 Feb 2020 19:51:13 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.2
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="OFj+1YLvsEfSXdCH"
-Content-Disposition: inline
-In-Reply-To: <xmqqtv3i5xhx.fsf@gitster-ct.c.googlers.com>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.4.0-4-amd64)
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:L0dnK1/GB7tEhBgAON1/wXJxaKE2twAJ6Dpi+BSEGG7TEWERZ9t
+ D+Q3RCP2eAlZuhifShWp4lcSEkUbduSZ3L0JUeUhZiJmPY2KYGQJ4WGGOfF61Tweq9pZ7v+
+ rNYIZ00VcXtaNxWKxAQaN+0tJw4L52g9nq+H9S+YQoesJT65qDiv1JLEhqFLJKCpCMUGbGj
+ kgWXeDJVRhbJ3jAhNGGJQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:jVOqsUmeLZU=:qJuj3RPxr+hUPD2VKyYBIS
+ IzHJeJ0Vz3Wy8oKdeiBWkWbf2e4ChtRc3JqDOvruFOfRalMF+AX5KxEPqYiIm8QLh87Q4ljzo
+ VQ0YK+WJUyUgqoEub9+XzGHwI+sc70swFjl5Qa8VI/tDbv5Z+vDzdh1tlxCZCilplzsAsfUKM
+ znRN6S35bxRwolO5ZkOEkZkfLpfN7zj6Zfn2vZNiePUE7j2589ioGWWvLg/V9JjiQOJU8Am8P
+ oms3HRN84rUvSG1LWq3ayOAkJtoICILqQ83P3QRW+SGtRyFhVVfSDVNq5/VBVqYK311zluRhz
+ +mRawXspSecUwcNtUm5CIIh+ioR8lIgCWTXwCWY9gHy9DfbZLrbXLcVhWKIJaG7fV7gQYUKmM
+ DFGZDzEsaVi56TUkMPAXPcUrINda+97mKYJWcjFJtiQoOGRANFL1Bq7ysmLgioyuaHx3SsQL8
+ /jeMKUeM/2DcT8iQdd6XDuLHHDONXG3+tuJGCK/L5pZSskBT+0RhPgqsVYVifPOS6nrF00+yY
+ LvzOxdECTeNqeuhHYG1gOMU7BfGZYGG0WdIBHmKWbyBTGaY7vXbBFDJfnS3NA8gdgnLKI39LB
+ OB1m7LHZERVDrAEOkuUk+HjEyLSGHwFxjiH7f2hZcYV5cXsuZUcOD+jW+3+sAteZO4GYVpQYz
+ hPdIeLa4H5svSuQWoG6wVJ8MSOh7jmxxDtvKwZKc/4AnSZ0Qge+Ppy+G7B+CF7GF/as5+T4ED
+ KB/q5dQYX0kC1KsHzsrCEYTdAOTsAZtcnO+tU3rGI+lG3znihuaXoe8cPjL7Kw4GcVjHTaOcD
+ Jfa2+2YodiZh8k7MrCqwcp5I8C4h9BIDNTHaXzsEcha4fJAN4QYFSVDLVy51SIzNtYeVjYOvy
+ 5KMOLa7CTyUA/gAUGKofO7x9hYc87fz7lr+fwbyK8po7n9kV1kl+Dc/XWtRwKrFRb0DGnRf5N
+ A2xVrZXASmlSfTyN3pk9TwrWmQ9zQerV81p9NcP++msbK7OGHggwP2/KP7Kx9YGwRyQZdlEYA
+ yfmiO3M4WPVq64cQMDxWJhwn+7SwY/gouy3z7oOo5OHfg19ZfZrLpArWmXKk706dOKRIscDy2
+ VQfRLT5dTUvOX66oRBH0frjuBkmv/8vCOiGiZ6hxroh+6FVapZjBYeKXT0MYcgbWy33vNY82T
+ 5eum0JrBOWTljkaS3O1gSslpmOgT2FJTqXeE7Q25aYpjWFW4cEsQV8LmKPid0hgbSBMXNk7Dd
+ 0ozpXqIxL4yonhmzI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+isalnum(c) is equivalent to isalpha(c) || isdigit(c), so use the
+former instead.  The result is shorter, simpler and slightly more
+efficient.
 
---OFj+1YLvsEfSXdCH
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ quote.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-On 2020-02-22 at 17:43:06, Junio C Hamano wrote:
-> > @@ -65,7 +66,7 @@ test_expect_success 'add a large file or two' '
-> >  	test $cnt =3D 2 &&
-> >  	for l in .git/objects/??/??????????????????????????????????????
->=20
-> It is totally an unrelated tangent, but brian, are the lines of this
-> kind on your radar?  The object names in SHA-256 world would not be
-> caught with the pattern right?  The fix probably belongs to next to
-> where OID_REGEX is defined in test-lib.sh (this is a glob and not a
-> regex, though).  Perhaps the original should have been written like
->=20
-> 	# somewhere in test-lib.sh
-> 	HEXGLOB=3D'[0-9a-f]'
-> 	HEXGLOB38=3D$HEXGLOB$HEXGLOB$HEXGLOB$HEXGLOB$HEXGLOB$HEXGLOB ;# 6
-> 	HEXGLOB38=3D$HEXGLOB38$HEXGLOB38$HEXGLOB38$HEXGLOB38$HEXGLOB38$HEXGLOB38=
- ;# 36
-> 	HEXGLOB38=3D$HEXGLOB$HEXGLOB$HEXGLOB38
->=20
-> 	OBJFANOUTGLOB=3D$HEXGLOB$HEXGLOB
-> 	OBJFILEGLOB=3D$HEXGLOB38
->=20
-> 	...
->=20
-> 	for l in .git/objects/$OBJFANOUTGLOB/$OBJFILEGLOB
->=20
-> and then SHA-256 series would just update OBJFANOUTGLOB and
-> OBJFILEGLOB patterns, or something like that?
+diff --git a/quote.c b/quote.c
+index 24a58ba454..bcc0dbc50d 100644
+=2D-- a/quote.c
++++ b/quote.c
+@@ -55,7 +55,7 @@ void sq_quote_buf_pretty(struct strbuf *dst, const char =
+*src)
+ 	}
 
-I actually just saw that particular file the other day, but had not yet
-written a patch.  I think we could write a pattern for that which would
-be useful.
-
-We do have test_oid_to_path, which takes an object ID and inserts a
-slash after the first two characters, so we could do something like
-this:
-
-  for l in .git/objects/$(test_oid_to_path $ZERO_OID | sed -e 's/0/[0-9a-f]=
-/g')
-
-That's not very readable, though.  I'll try to find something a little
-better, or hide it somewhere behind a variable in the test setup code
-with a comment.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---OFj+1YLvsEfSXdCH
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.19 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl5RbOUACgkQv1NdgR9S
-9ovKfw/7BG+pk+665hr04YPD2qQa0mBhBEMmK9azyjxRy5YM4s+cSI4fnFepfFqD
-LHZH1CG1+5ChGTG7vnq68E/5iQ14Xr1A1AEiwTneQC7mxebL8hOradVK3B8F9jdg
-2WUUFUvVWK1pRem0waGUtUFzT1v5THeK54gJroiETW57Vx+eFCESvCwfI+Lj6oYE
-XH211BD3K/D8k1DYBACb+wTw+VWTW3dqbAjHee2Oq9u5JdaHRxdnQXoc7S31wM++
-3WHZe1H701fc2cRnBIP+UfJPtcrT8deBoeh+MekJjEdd4YzYYKOqoOvj+2lqgEjM
-i9X2K0zf1o5QQL8bzxTLHHhyazxmGFMcMZz0rvR8bHAA33OW49TCINSZFpE4TEyj
-w9CTpcbE8zQtHuAQA3y8maLt7td/ZZ8N+6K0NTGK1pbN4sZoEakZaUBJUEzGkSi4
-Nt/hdcc5LAlIpHvzwDDxY0OWmhm/hoIb9fdAHfbbDiFK5BIaVLFlonFpIZkpTw5s
-lHNpcUWaPUhKm4nzitcUoczK4AxzRDVUxBggj0JGmVJ/7I+Z2xhF/dfyL0cEljuG
-wUI8rWyo78kw/zkLvAxxyHvfEQ1I5ElEKrjGDAf1+zh+FwyP11PxUEGQNrzM6Z1H
-W1rEOVG24GGJWEC0y3WDmI2+4GH24QDpFBcIBoXTiJe4IlAacIw=
-=rQuZ
------END PGP SIGNATURE-----
-
---OFj+1YLvsEfSXdCH--
+ 	for (p =3D src; *p; p++) {
+-		if (!isalpha(*p) && !isdigit(*p) && !strchr(ok_punct, *p)) {
++		if (!isalnum(*p) && !strchr(ok_punct, *p)) {
+ 			sq_quote_buf(dst, src);
+ 			return;
+ 		}
+=2D-
+2.25.1
