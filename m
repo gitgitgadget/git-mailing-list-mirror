@@ -7,44 +7,44 @@ X-Spam-Status: No, score=-9.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9458DC35666
-	for <git@archiver.kernel.org>; Sat, 22 Feb 2020 20:18:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D7A1CC35674
+	for <git@archiver.kernel.org>; Sat, 22 Feb 2020 20:18:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6553120707
-	for <git@archiver.kernel.org>; Sat, 22 Feb 2020 20:18:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A489020702
+	for <git@archiver.kernel.org>; Sat, 22 Feb 2020 20:18:22 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="ytKuUvir"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="pJjpRSAB"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727128AbgBVUST (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 22 Feb 2020 15:18:19 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:39084 "EHLO
+        id S1727124AbgBVUSS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 22 Feb 2020 15:18:18 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:39080 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726845AbgBVUSK (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 22 Feb 2020 15:18:10 -0500
+        by vger.kernel.org with ESMTP id S1727069AbgBVUSL (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 22 Feb 2020 15:18:11 -0500
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id A6035609CF
-        for <git@vger.kernel.org>; Sat, 22 Feb 2020 20:18:08 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 1B13160CF2
+        for <git@vger.kernel.org>; Sat, 22 Feb 2020 20:18:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1582402688;
-        bh=6uio+d3QXWKXcMv9s2bfm8cDR0vB66lxcbecR11CQoY=;
+        s=default; t=1582402690;
+        bh=djvK4ApocES9qSOPoQa2oWaCdk4P5tmyZq1wPjNeHMc=;
         h=From:To:Subject:Date:In-Reply-To:References:From:Reply-To:Subject:
          Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:
          References:Content-Type:Content-Disposition;
-        b=ytKuUvirJzaFUH4b7xrO7YBzLdih+eTb+pH6iFHHLwkMB0DUrYfExZ33Bb4Uew2S4
-         NMoDrLoUCRGIPaVel7QeyqlLL/ZkNjsOCMMYPCrimrJjXMNp7eqLVDweQNUnMewYHb
-         z0g1iIQBfulXw6V8QcQAng6a+EWTAOLwTG79eYh40LSE8In6zr47sZIbPu9ocDnlJZ
-         svHpxzSHqjcjLp19UWxCTUbRdens4wlJP8KSMnml+jz7YNA0IYDvtPymWsLTzkKZ+s
-         yrABSlJ4PN7ETxkhqve/EXm7xFqIyZdx5AM5z6hEgQzHrmH/D83Z7UjrPKc3yTtz1F
-         xN/lzCulZjdpSBfLYex6Xkbcda23zrZIFauGBUCm7cYpaAUmA3uu0OUdGyGSu8Bbgz
-         h1H0ijV0YmN8RfN59yfoRxnH7VzS2s2GefqBUZ+2clYIq34N4QO3j4Nl/Ku966VnjM
-         hJN59e/mFyA458UQVKTKp32yeqEmOVOruFWcvakE6qnHsB2ThU6
+        b=pJjpRSABV6FEuXDCDC+BESsmLxVZWLQTzW7fLrRjYEQSYNHPIfirP6MDkrA9jRSgl
+         LyoPBZ1hdtZbWA141JdjsqDy5FltpTuvR47mWi6Ta6TM7yVX/lxAXAe5M3txSus1hf
+         KAcL0elKImOtpugxrK2RZMl2L6LNKg+s7rSCYOG/wtujf5PRY2Z1Dmp8RWWZ7XOD/F
+         mOFs1HrHp8LttqOgp2ipIzSRXzQY1x9Niki+9eIGCU5Mt7VypjTL/SoJApiaQIaCKw
+         G3LicbkpaqVtO7pkCR/P4X8k3u27UCWeQdWS2SpK6fTZnEwY3pBe+ME17E8fOxoCUO
+         ow28vZiDi49YyXltn65vQYDyoDYA0q8+raMSvvHCML3/bBHjmz/A4WYdlc/5N0d19o
+         01VX8BQXQv6/szM3oYqqow03w4lEDQ1mYOQD/Jxydqe4wJwSb0sMDsMSv2zmCrxnoz
+         kpz+ae5WkSc3L+HSDMjNnH6Vn1bMfvh4nqnVD7W2P/zjyEw7qC9
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
-Subject: [PATCH v2 13/24] builtin/init-db: allow specifying hash algorithm on command line
-Date:   Sat, 22 Feb 2020 20:17:38 +0000
-Message-Id: <20200222201749.937983-14-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 17/24] commit: use expected signature header for SHA-256
+Date:   Sat, 22 Feb 2020 20:17:42 +0000
+Message-Id: <20200222201749.937983-18-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.25.1.481.gfbce0eb801
 In-Reply-To: <20200222201749.937983-1-sandals@crustytoothpaste.net>
 References: <20200222201749.937983-1-sandals@crustytoothpaste.net>
@@ -55,199 +55,195 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Allow the user to specify the hash algorithm on the command line by
-using the --object-format option to git init.  Validate that the user is
-not attempting to reinitialize a repository with a different hash
-algorithm.  Ensure that if we are writing a non-SHA-1 repository that we
-set the repository version to 1 and write the objectFormat extension.
+The transition plan anticipates that we will allow signatures using
+multiple algorithms in a single commit. In order to do so, we need to
+use a different header per algorithm so that it will be obvious over
+which data to compute the signature.
 
-Restrict this option to work only when ENABLE_SHA256 is set until the
-codebase is in a situation to fully support this.
+The transition plan specifies that we should use "gpgsig-sha256", so
+wire up the commit code such that it can write and parse the current
+algorithm, and it can remove the headers for any algorithm when creating
+a new commit. Add tests to ensure that we write using the right header
+and that git fsck doesn't reject these commits.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- Documentation/git-init.txt |  7 ++++-
- builtin/clone.c            |  2 +-
- builtin/init-db.c          | 52 +++++++++++++++++++++++++++++++++-----
- cache.h                    |  3 ++-
- 4 files changed, 55 insertions(+), 9 deletions(-)
+ builtin/commit.c         |  2 +-
+ commit.c                 | 30 +++++++++++++++++++++++-------
+ sequencer.c              |  2 +-
+ t/t1450-fsck.sh          | 24 ++++++++++++++++++++++++
+ t/t7510-signed-commit.sh | 16 +++++++++++++---
+ 5 files changed, 62 insertions(+), 12 deletions(-)
 
-diff --git a/Documentation/git-init.txt b/Documentation/git-init.txt
-index 32880aafb0..adc6adfd38 100644
---- a/Documentation/git-init.txt
-+++ b/Documentation/git-init.txt
-@@ -10,7 +10,7 @@ SYNOPSIS
- --------
- [verse]
- 'git init' [-q | --quiet] [--bare] [--template=<template_directory>]
--	  [--separate-git-dir <git dir>]
-+	  [--separate-git-dir <git dir>] [--object-format=<format]
- 	  [--shared[=<permissions>]] [directory]
- 
- 
-@@ -48,6 +48,11 @@ Only print error and warning messages; all other output will be suppressed.
- Create a bare repository. If `GIT_DIR` environment is not set, it is set to the
- current working directory.
- 
-+--object-format=<format>::
-+
-+Specify the given object format (hash algorithm) for the repository.  The valid
-+values are 'sha1' and (if enabled) 'sha256'.  'sha1' is the default.
-+
- --template=<template_directory>::
- 
- Specify the directory from which templates will be used.  (See the "TEMPLATE
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 4f6150c55c..961996a110 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -1097,7 +1097,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 		}
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 7ba33a3bec..798d362a2e 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1659,7 +1659,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
  	}
  
--	init_db(git_dir, real_git_dir, option_template, INIT_DB_QUIET);
-+	init_db(git_dir, real_git_dir, option_template, GIT_HASH_UNKNOWN, INIT_DB_QUIET);
- 
- 	if (real_git_dir)
- 		git_dir = real_git_dir;
-diff --git a/builtin/init-db.c b/builtin/init-db.c
-index b11f07064d..d05552f0ae 100644
---- a/builtin/init-db.c
-+++ b/builtin/init-db.c
-@@ -177,7 +177,8 @@ static int needs_work_tree_config(const char *git_dir, const char *work_tree)
+ 	if (amend) {
+-		const char *exclude_gpgsig[2] = { "gpgsig", NULL };
++		const char *exclude_gpgsig[3] = { "gpgsig", "gpgsig-sha256", NULL };
+ 		extra = read_commit_extra_headers(current_head, exclude_gpgsig);
+ 	} else {
+ 		struct commit_extra_header **tail = &extra;
+diff --git a/commit.c b/commit.c
+index a6cfa41a4e..534e14f22a 100644
+--- a/commit.c
++++ b/commit.c
+@@ -961,14 +961,22 @@ struct commit *get_fork_point(const char *refname, struct commit *commit)
+ 	return ret;
  }
  
- static int create_default_files(const char *template_path,
--				const char *original_git_dir)
-+				const char *original_git_dir,
-+				const struct repository_format *fmt)
+-static const char gpg_sig_header[] = "gpgsig";
+-static const int gpg_sig_header_len = sizeof(gpg_sig_header) - 1;
++/*
++ * Indexed by hash algorithm identifier.
++ */
++static const char *gpg_sig_headers[] = {
++	NULL,
++	"gpgsig",
++	"gpgsig-sha256",
++};
+ 
+ static int do_sign_commit(struct strbuf *buf, const char *keyid)
  {
- 	struct stat st1;
- 	struct strbuf buf = STRBUF_INIT;
-@@ -187,6 +188,7 @@ static int create_default_files(const char *template_path,
- 	int reinit;
- 	int filemode;
- 	struct strbuf err = STRBUF_INIT;
-+	int repo_version = GIT_REPO_VERSION;
+ 	struct strbuf sig = STRBUF_INIT;
+ 	int inspos, copypos;
+ 	const char *eoh;
++	const char *gpg_sig_header = gpg_sig_headers[hash_algo_by_ptr(the_hash_algo)];
++	int gpg_sig_header_len = strlen(gpg_sig_header);
  
- 	/* Just look for `init.templatedir` */
- 	init_db_template_dir = NULL; /* re-set in case it was set before */
-@@ -244,11 +246,23 @@ static int create_default_files(const char *template_path,
- 			exit(1);
- 	}
+ 	/* find the end of the header */
+ 	eoh = strstr(buf->buf, "\n\n");
+@@ -1010,6 +1018,8 @@ int parse_signed_commit(const struct commit *commit,
+ 	const char *buffer = get_commit_buffer(commit, &size);
+ 	int in_signature, saw_signature = -1;
+ 	const char *line, *tail;
++	const char *gpg_sig_header = gpg_sig_headers[hash_algo_by_ptr(the_hash_algo)];
++	int gpg_sig_header_len = strlen(gpg_sig_header);
  
-+#ifndef ENABLE_SHA256
-+	if (fmt->hash_algo != GIT_HASH_SHA1)
-+		die(_("The hash algorithm %s is not supported in this build."), hash_algos[fmt->hash_algo].name);
-+#endif
+ 	line = buffer;
+ 	tail = buffer + size;
+@@ -1056,11 +1066,17 @@ int remove_signature(struct strbuf *buf)
+ 
+ 		if (in_signature && line[0] == ' ')
+ 			sig_end = next;
+-		else if (starts_with(line, gpg_sig_header) &&
+-			 line[gpg_sig_header_len] == ' ') {
+-			sig_start = line;
+-			sig_end = next;
+-			in_signature = 1;
++		else if (starts_with(line, "gpgsig")) {
++			int i;
++			for (i = 1; i < GIT_HASH_NALGOS; i++) {
++				const char *p;
++				if (skip_prefix(line, gpg_sig_headers[i], &p) &&
++				    *p == ' ') {
++					sig_start = line;
++					sig_end = next;
++					in_signature = 1;
++				}
++			}
+ 		} else {
+ 			if (*line == '\n')
+ 				/* dump the whole remainder of the buffer */
+diff --git a/sequencer.c b/sequencer.c
+index ba90a513b9..cbd920afb2 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -1321,7 +1321,7 @@ static int try_to_commit(struct repository *r,
+ 		return -1;
+ 
+ 	if (flags & AMEND_MSG) {
+-		const char *exclude_gpgsig[] = { "gpgsig", NULL };
++		const char *exclude_gpgsig[] = { "gpgsig", "gpgsig-sha256", NULL };
+ 		const char *out_enc = get_commit_output_encoding();
+ 		const char *message = logmsg_reencode(current_head, NULL,
+ 						      out_enc);
+diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+index 02478bc4ec..70a8307154 100755
+--- a/t/t1450-fsck.sh
++++ b/t/t1450-fsck.sh
+@@ -133,6 +133,30 @@ test_expect_success 'other worktree HEAD link pointing at a funny place' '
+ 	test_i18ngrep "worktrees/other/HEAD points to something strange" out
+ '
+ 
++test_expect_success 'commit with multiple signatures is okay' '
++	git cat-file commit HEAD >basis &&
++	cat >sigs <<-EOF &&
++	gpgsig -----BEGIN PGP SIGNATURE-----
++	  VGhpcyBpcyBub3QgcmVhbGx5IGEgc2lnbmF0dXJlLg==
++	  -----END PGP SIGNATURE-----
++	gpgsig-sha256 -----BEGIN PGP SIGNATURE-----
++	  VGhpcyBpcyBub3QgcmVhbGx5IGEgc2lnbmF0dXJlLg==
++	  -----END PGP SIGNATURE-----
++	EOF
++	sed -e "/^committer/q" basis >okay &&
++	cat sigs >>okay &&
++	echo >>okay &&
++	sed -e "1,/^$/d" basis >>okay &&
++	cat okay &&
++	new=$(git hash-object -t commit -w --stdin <okay) &&
++	test_when_finished "remove_object $new" &&
++	git update-ref refs/heads/bogus "$new" &&
++	test_when_finished "git update-ref -d refs/heads/bogus" &&
++	git fsck 2>out &&
++	cat out &&
++	! grep "commit $new" out
++'
 +
-+	if (fmt->hash_algo != GIT_HASH_SHA1)
-+		repo_version = GIT_REPO_VERSION_READ;
+ test_expect_success 'email without @ is okay' '
+ 	git cat-file commit HEAD >basis &&
+ 	sed "s/@/AT/" basis >okay &&
+diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
+index 0c06d22a00..6baaa1ad91 100755
+--- a/t/t7510-signed-commit.sh
++++ b/t/t7510-signed-commit.sh
+@@ -6,6 +6,11 @@ GNUPGHOME_NOT_USED=$GNUPGHOME
+ . "$TEST_DIRECTORY/lib-gpg.sh"
+ 
+ test_expect_success GPG 'create signed commits' '
++	test_oid_cache <<-\EOF &&
++	header sha1:gpgsig
++	header sha256:gpgsig-sha256
++	EOF
 +
- 	/* This forces creation of new config file */
- 	xsnprintf(repo_version_string, sizeof(repo_version_string),
--		  "%d", GIT_REPO_VERSION);
-+		  "%d", repo_version);
- 	git_config_set("core.repositoryformatversion", repo_version_string);
+ 	test_when_finished "test_unconfig commit.gpgsign" &&
  
-+	if (fmt->hash_algo != GIT_HASH_SHA1)
-+		git_config_set("extensions.objectformat",
-+			       hash_algos[fmt->hash_algo].name);
+ 	echo 1 >file && git add file &&
+@@ -155,6 +160,11 @@ test_expect_success GPG 'verify signatures with --raw' '
+ 	)
+ '
+ 
++test_expect_success GPG 'proper header is used for hash algorithm' '
++	git cat-file commit fourth-signed >output &&
++	grep "^$(test_oid header) -----BEGIN PGP SIGNATURE-----" output
++'
 +
- 	/* Check filemode trustability */
- 	path = git_path_buf(&buf, "config");
- 	filemode = TEST_FILEMODE;
-@@ -340,12 +354,26 @@ static void separate_git_dir(const char *git_dir, const char *git_link)
- 	write_file(git_link, "gitdir: %s", git_dir);
- }
- 
-+static void validate_hash_algorithm(struct repository_format *repo_fmt, int hash)
-+{
-+	/*
-+	 * If we already have an initialized repo, don't allow the user to
-+	 * specify a different algorithm, as that could cause corruption.
-+	 * Otherwise, if the user has specified one on the command line, use it.
-+	 */
-+	if (repo_fmt->version >= 0 && hash != GIT_HASH_UNKNOWN && hash != repo_fmt->hash_algo)
-+		die(_("attempt to reinitialize repository with different hash"));
-+	else if (hash != GIT_HASH_UNKNOWN)
-+		repo_fmt->hash_algo = hash;
-+}
-+
- int init_db(const char *git_dir, const char *real_git_dir,
--	    const char *template_dir, unsigned int flags)
-+	    const char *template_dir, int hash, unsigned int flags)
- {
- 	int reinit;
- 	int exist_ok = flags & INIT_DB_EXIST_OK;
- 	char *original_git_dir = real_pathdup(git_dir, 1);
-+	struct repository_format repo_fmt = REPOSITORY_FORMAT_INIT;
- 
- 	if (real_git_dir) {
- 		struct stat st;
-@@ -378,9 +406,11 @@ int init_db(const char *git_dir, const char *real_git_dir,
- 	 * config file, so this will not fail.  What we are catching
- 	 * is an attempt to reinitialize new repository with an old tool.
- 	 */
--	check_repository_format(NULL);
-+	check_repository_format(&repo_fmt);
- 
--	reinit = create_default_files(template_dir, original_git_dir);
-+	validate_hash_algorithm(&repo_fmt, hash);
-+
-+	reinit = create_default_files(template_dir, original_git_dir, &repo_fmt);
- 
- 	create_object_directory();
- 
-@@ -482,6 +512,8 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
- 	const char *work_tree;
- 	const char *template_dir = NULL;
- 	unsigned int flags = 0;
-+	const char *object_format = NULL;
-+	int hash_algo = GIT_HASH_UNKNOWN;
- 	const struct option init_db_options[] = {
- 		OPT_STRING(0, "template", &template_dir, N_("template-directory"),
- 				N_("directory from which templates will be used")),
-@@ -494,6 +526,8 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
- 		OPT_BIT('q', "quiet", &flags, N_("be quiet"), INIT_DB_QUIET),
- 		OPT_STRING(0, "separate-git-dir", &real_git_dir, N_("gitdir"),
- 			   N_("separate git dir from working tree")),
-+		OPT_STRING(0, "object-format", &object_format, N_("hash"),
-+			   N_("specify the hash algorithm to use")),
- 		OPT_END()
- 	};
- 
-@@ -546,6 +580,12 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
- 		free(cwd);
- 	}
- 
-+	if (object_format) {
-+		hash_algo = hash_algo_by_name(object_format);
-+		if (hash_algo == GIT_HASH_UNKNOWN)
-+			die(_("unknown hash algorithm '%s'"), object_format);
-+	}
-+
- 	if (init_shared_repository != -1)
- 		set_shared_repository(init_shared_repository);
- 
-@@ -597,5 +637,5 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
- 	UNLEAK(work_tree);
- 
- 	flags |= INIT_DB_EXIST_OK;
--	return init_db(git_dir, real_git_dir, template_dir, flags);
-+	return init_db(git_dir, real_git_dir, template_dir, hash_algo, flags);
- }
-diff --git a/cache.h b/cache.h
-index 29ee02a8d4..7a47e023ba 100644
---- a/cache.h
-+++ b/cache.h
-@@ -627,7 +627,8 @@ int path_inside_repo(const char *prefix, const char *path);
- #define INIT_DB_EXIST_OK 0x0002
- 
- int init_db(const char *git_dir, const char *real_git_dir,
--	    const char *template_dir, unsigned int flags);
-+	    const char *template_dir, int hash_algo,
-+	    unsigned int flags);
- 
- void sanitize_stdfds(void);
- int daemonize(void);
+ test_expect_success GPG 'show signed commit with signature' '
+ 	git show -s initial >commit &&
+ 	git show -s --show-signature initial >show &&
+@@ -162,7 +172,7 @@ test_expect_success GPG 'show signed commit with signature' '
+ 	git cat-file commit initial >cat &&
+ 	grep -v -e "gpg: " -e "Warning: " show >show.commit &&
+ 	grep -e "gpg: " -e "Warning: " show >show.gpg &&
+-	grep -v "^ " cat | grep -v "^gpgsig " >cat.commit &&
++	grep -v "^ " cat | grep -v "^$(test_oid header) " >cat.commit &&
+ 	test_cmp show.commit commit &&
+ 	test_cmp show.gpg verify.2 &&
+ 	test_cmp cat.commit verify.1
+@@ -299,10 +309,10 @@ test_expect_success GPG 'check config gpg.format values' '
+ test_expect_success GPG 'detect fudged commit with double signature' '
+ 	sed -e "/gpgsig/,/END PGP/d" forged1 >double-base &&
+ 	sed -n -e "/gpgsig/,/END PGP/p" forged1 | \
+-		sed -e "s/^gpgsig//;s/^ //" | gpg --dearmor >double-sig1.sig &&
++		sed -e "s/^$(test_oid header)//;s/^ //" | gpg --dearmor >double-sig1.sig &&
+ 	gpg -o double-sig2.sig -u 29472784 --detach-sign double-base &&
+ 	cat double-sig1.sig double-sig2.sig | gpg --enarmor >double-combined.asc &&
+-	sed -e "s/^\(-.*\)ARMORED FILE/\1SIGNATURE/;1s/^/gpgsig /;2,\$s/^/ /" \
++	sed -e "s/^\(-.*\)ARMORED FILE/\1SIGNATURE/;1s/^/$(test_oid header) /;2,\$s/^/ /" \
+ 		double-combined.asc > double-gpgsig &&
+ 	sed -e "/committer/r double-gpgsig" double-base >double-commit &&
+ 	git hash-object -w -t commit double-commit >double-commit.commit &&
