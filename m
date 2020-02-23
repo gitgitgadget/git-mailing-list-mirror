@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 11FA8C35673
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BAEF2C35675
 	for <git@archiver.kernel.org>; Sun, 23 Feb 2020 18:57:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id DBC52206E2
-	for <git@archiver.kernel.org>; Sun, 23 Feb 2020 18:57:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8A2EA206E2
+	for <git@archiver.kernel.org>; Sun, 23 Feb 2020 18:57:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IHNfmYCo"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Bo/61Ba0"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727084AbgBWS5Q (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1727103AbgBWS5Q (ORCPT <rfc822;git@archiver.kernel.org>);
         Sun, 23 Feb 2020 13:57:16 -0500
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:37447 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726208AbgBWS5P (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Feb 2020 13:57:15 -0500
-Received: by mail-ed1-f66.google.com with SMTP id t7so9311652edr.4
-        for <git@vger.kernel.org>; Sun, 23 Feb 2020 10:57:14 -0800 (PST)
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:37447 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726302AbgBWS5Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Feb 2020 13:57:16 -0500
+Received: by mail-ed1-f65.google.com with SMTP id t7so9311675edr.4
+        for <git@vger.kernel.org>; Sun, 23 Feb 2020 10:57:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=jnmhxW1Y3p4Z8GCr3INi92MATkecvv9LWbRXgPg/Hss=;
-        b=IHNfmYCoireALD5PkyUcEDbzaxjdvMHY2sZkNbFsLjwQkc/V2HrbweMtEMVFql6PKK
-         XosAsRUJ1XiLIf7tBanK8U+LSzH3NyZ0EX8BbvwKofN1XCGEpN0c39Z0ad6SD2K604tO
-         KMTziQnTX3Pz812jkiGv0ClCZ0EeDAoVDnUabwc0xhK/8YvGWMhcG9v25suDPzInZA0w
-         H6J2WYg7KBnmbgl211c/y+O20omamTeqIMZgdfSVO23h9+8zO4CD9w3sXDItDxYquD8G
-         sDKxDOKXZeIIT7yFBZuzXlTmbDoRu8oWHdx5wWVvs2X86/fRHHsnF0jSL5hEjUhJaTMZ
-         /Seg==
+        bh=TebvOUWx8MVA5vPsDI9dJthC7gWOn0ef3JCGs/8wZDc=;
+        b=Bo/61Ba0TrL9aeme8WRnAFvK/qza2g5n5Ua+XPY57j4JymFgnPqtd2vg55NVINAV71
+         AZOJCSnWxaIIU3FWLv8N1GzdJguv63KlKioDnTEc77RO2yMEE4vbOLuGjP36OXbwmVuX
+         8812p6Py1dBwzfBNOEIpw5Vj9Wrbrvdbn0d6LOwLno0IKsVf2GAKkso8fqfjecZGrDUJ
+         s1yfjBhZBUuCHtMhsWfsSqaGd2P8UA3OhYNbRSJ9Kv52A8v3SLaEp2GIwU0JAIPKzCOg
+         CNYX6Lz4471ksVhLjeZwYH/5M+YlXGA+Sc4ltLm/Goc5ON63CSpwxsPseJqNNOk00Kur
+         PDQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=jnmhxW1Y3p4Z8GCr3INi92MATkecvv9LWbRXgPg/Hss=;
-        b=Y9bTez9vNTNY5h8Qx/ig4dixvbrDyLYN2QWR6yHgJxpxVJSLwJW4NHmK5qsSYxhJUB
-         E9Pf/fr9wcM+EoCZ5FZ95Y1l4QBYhy0U8pvsD2ww0XNcGAYuSkNiGx3C0ZazEz2MvVSX
-         JOb7W0E+LS9OrilHsvsIR+M3nXrb6TrgKJHnQGrowe5nSGNXbfX3OB/LM3dIATWhQMX4
-         KPO66OZcVOAl/z+d5XxUvJoD6I1vslvimCL7MPKt8vH9ZpZzFmenZIyhnvEpt2h0CVsc
-         utIKItDA/K71S4jZcdQCdCZqNHfMuSZOe0bI45P+8IivO82+YTrjsKefKMkO+UG2sG/k
-         3lTQ==
-X-Gm-Message-State: APjAAAVYessCCdZdfznOCZJb5mD0q19mdjz56xYI7adRMwqpQFB+Vs/S
-        Ii4yN3WrecewKyJcag+81uJb/zI0
-X-Google-Smtp-Source: APXvYqzUp7HDjMYS04yWXyc14itBw1ElDQ3bRLQsHfBdtD1DpGS4tNntxCDh3p3XId5p1lpzh5s3RQ==
-X-Received: by 2002:a50:eb04:: with SMTP id y4mr42041695edp.170.1582484233962;
-        Sun, 23 Feb 2020 10:57:13 -0800 (PST)
+        bh=TebvOUWx8MVA5vPsDI9dJthC7gWOn0ef3JCGs/8wZDc=;
+        b=N3f/d6xIVcYDqQaBeF0ChsJO7i+UZB45V+gQaelMQ5kzmZTtOwXZnGS+GQSgaS8KS1
+         1q+Z8qUhYXtCsEPBIudNG+ICUZTWJV9lm/OPAqFhN6JdEblf3T4scFmQWvSv0MWiswQL
+         b/dQB6l01qdWd/FzzOYNLIwM4EsArg35QCGCtGctgJUYmhEVzTw6dRsSuLVraFjAB7Xd
+         xvKmFK3gAUEwmOi//AWknDp8k1uOL4m1DDWq19UVHgyECT2/l1yA6QeY2rt+Nw2UT4i6
+         +VFREsu8wdaoLlMBe8/+B8kc1rTqo5Y60M2UKwUSmEuVcpG2ber0vslaLsS+fupMVWiw
+         Jijw==
+X-Gm-Message-State: APjAAAVf9RRnc8ZwsBMdD9eNUYZJZ3yFUpLrwTJ8ckZzH5MKoPLPF3V3
+        tSrHSdl0tyOkptK7T44fsk5c2Mrn
+X-Google-Smtp-Source: APXvYqxcOnYPB6HvRBHEUsD4i7UfsGuBHomf3BsCGBGyM84wsa9pcK+2GFYLd9muRwM8EZVNSQRXNg==
+X-Received: by 2002:aa7:d716:: with SMTP id t22mr42942132edq.77.1582484234666;
+        Sun, 23 Feb 2020 10:57:14 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id cb8sm657083ejb.42.2020.02.23.10.57.13
+        by smtp.gmail.com with ESMTPSA id f10sm837203eds.31.2020.02.23.10.57.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 23 Feb 2020 10:57:13 -0800 (PST)
-Message-Id: <ae749310f067c43429741987cd9f47c1ae4ceb3f.1582484231.git.gitgitgadget@gmail.com>
+        Sun, 23 Feb 2020 10:57:14 -0800 (PST)
+Message-Id: <d21a590d6c23f231c54b731b737c363b83660f79.1582484231.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.535.v3.git.1582484231.gitgitgadget@gmail.com>
 References: <pull.535.v2.git.1582410908.gitgitgadget@gmail.com>
         <pull.535.v3.git.1582484231.gitgitgadget@gmail.com>
 From:   "Hariom Verma via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 23 Feb 2020 18:57:09 +0000
-Subject: [PATCH v3 2/3] t5509: use a bare repository for test push target
+Date:   Sun, 23 Feb 2020 18:57:10 +0000
+Subject: [PATCH v3 3/3] receive.denyCurrentBranch: respect all worktrees
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,35 +76,175 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Hariom Verma <hariom18599@gmail.com>
 
-`receive.denyCurrentBranch` currently has a bug where it allows pushing
-into non-bare repository using namespaces as long as it does not have any
-commits. This would cause t5509 to fail once that bug is fixed because it
-pushes into an unborn current branch.
+The receive.denyCurrentBranch config option controls what happens if
+you push to a branch that is checked out into a non-bare repository.
+By default, it rejects it. It can be disabled via `ignore` or `warn`.
+Another yet trickier option is `updateInstead`.
 
-In t5509, no operations are performed inside `pushee`, as it is only a
-target for `git push` and `git ls-remote` calls. Therefore it does not
-need to have a worktree. So, it is safe to change `pushee` to a bare
-repository.
+However, this setting was forgotten when the git worktree command was
+introduced: only the main worktree's current branch is respected.
+
+With this change, all worktrees are respected.
+
+That change also leads to revealing another bug,
+i.e. `receive.denyCurrentBranch = true` was ignored when pushing into a
+non-bare repository's unborn current branch using ref namespaces. As
+`is_ref_checked_out()` returns 0 which means `receive-pack` does not get
+into conditional statement to switch `deny_current_branch` accordingly
+(ignore, warn, refuse, unconfigured, updateInstead).
+
+receive.denyCurrentBranch uses the function `refs_resolve_ref_unsafe()`
+(called via `resolve_refdup()`) to resolve the symbolic ref HEAD, but
+that function fails when HEAD does not point at a valid commit.
+As we replace the call to `refs_resolve_ref_unsafe()` with
+`find_shared_symref()`, which has no problem finding the worktree for a
+given branch even if it is unborn yet, this bug is fixed at the same
+time: receive.denyCurrentBranch now also handles worktrees with unborn
+branches as intended even while using ref namespaces.
 
 Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Hariom Verma <hariom18599@gmail.com>
 ---
- t/t5509-fetch-push-namespaces.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ builtin/receive-pack.c           | 37 +++++++++++++++++---------------
+ t/t5509-fetch-push-namespaces.sh | 11 ++++++++++
+ t/t5516-fetch-push.sh            | 11 ++++++++++
+ 3 files changed, 42 insertions(+), 17 deletions(-)
 
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 411e0b4d999..b5ca3123b78 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -27,6 +27,7 @@
+ #include "object-store.h"
+ #include "protocol.h"
+ #include "commit-reach.h"
++#include "worktree.h"
+ 
+ static const char * const receive_pack_usage[] = {
+ 	N_("git receive-pack <git-dir>"),
+@@ -816,16 +817,6 @@ static int run_update_hook(struct command *cmd)
+ 	return finish_command(&proc);
+ }
+ 
+-static int is_ref_checked_out(const char *ref)
+-{
+-	if (is_bare_repository())
+-		return 0;
+-
+-	if (!head_name)
+-		return 0;
+-	return !strcmp(head_name, ref);
+-}
+-
+ static char *refuse_unconfigured_deny_msg =
+ 	N_("By default, updating the current branch in a non-bare repository\n"
+ 	   "is denied, because it will make the index and work tree inconsistent\n"
+@@ -997,16 +988,27 @@ static const char *push_to_checkout(unsigned char *hash,
+ 		return NULL;
+ }
+ 
+-static const char *update_worktree(unsigned char *sha1)
++static const char *update_worktree(unsigned char *sha1, const struct worktree *worktree)
+ {
+-	const char *retval;
+-	const char *work_tree = git_work_tree_cfg ? git_work_tree_cfg : "..";
++	const char *retval, *work_tree, *git_dir = NULL;
+ 	struct argv_array env = ARGV_ARRAY_INIT;
+ 
++	if (worktree && worktree->path)
++		work_tree = worktree->path;
++	else if (git_work_tree_cfg)
++		work_tree = git_work_tree_cfg;
++	else
++		work_tree = "..";
++
+ 	if (is_bare_repository())
+ 		return "denyCurrentBranch = updateInstead needs a worktree";
++	
++	if (worktree)
++		git_dir = get_worktree_git_dir(worktree);
++	if (!git_dir)
++		git_dir = get_git_dir();
+ 
+-	argv_array_pushf(&env, "GIT_DIR=%s", absolute_path(get_git_dir()));
++	argv_array_pushf(&env, "GIT_DIR=%s", absolute_path(git_dir));
+ 
+ 	if (!find_hook(push_to_checkout_hook))
+ 		retval = push_to_deploy(sha1, &env, work_tree);
+@@ -1026,6 +1028,7 @@ static const char *update(struct command *cmd, struct shallow_info *si)
+ 	struct object_id *old_oid = &cmd->old_oid;
+ 	struct object_id *new_oid = &cmd->new_oid;
+ 	int do_update_worktree = 0;
++	const struct worktree *worktree = is_bare_repository() ? NULL : find_shared_symref("HEAD", name);
+ 
+ 	/* only refs/... are allowed */
+ 	if (!starts_with(name, "refs/") || check_refname_format(name + 5, 0)) {
+@@ -1037,7 +1040,7 @@ static const char *update(struct command *cmd, struct shallow_info *si)
+ 	free(namespaced_name);
+ 	namespaced_name = strbuf_detach(&namespaced_name_buf, NULL);
+ 
+-	if (is_ref_checked_out(namespaced_name)) {
++	if (worktree) {
+ 		switch (deny_current_branch) {
+ 		case DENY_IGNORE:
+ 			break;
+@@ -1069,7 +1072,7 @@ static const char *update(struct command *cmd, struct shallow_info *si)
+ 			return "deletion prohibited";
+ 		}
+ 
+-		if (head_name && !strcmp(namespaced_name, head_name)) {
++		if (worktree || (head_name && !strcmp(namespaced_name, head_name))) {
+ 			switch (deny_delete_current) {
+ 			case DENY_IGNORE:
+ 				break;
+@@ -1118,7 +1121,7 @@ static const char *update(struct command *cmd, struct shallow_info *si)
+ 	}
+ 
+ 	if (do_update_worktree) {
+-		ret = update_worktree(new_oid->hash);
++		ret = update_worktree(new_oid->hash, find_shared_symref("HEAD", name));
+ 		if (ret)
+ 			return ret;
+ 	}
 diff --git a/t/t5509-fetch-push-namespaces.sh b/t/t5509-fetch-push-namespaces.sh
-index 75cbfcc392c..e3975bd21de 100755
+index e3975bd21de..a67f792adf4 100755
 --- a/t/t5509-fetch-push-namespaces.sh
 +++ b/t/t5509-fetch-push-namespaces.sh
-@@ -20,7 +20,7 @@ test_expect_success setup '
- 	) &&
- 	commit0=$(cd original && git rev-parse HEAD^) &&
- 	commit1=$(cd original && git rev-parse HEAD) &&
--	git init pushee &&
-+	git init --bare pushee &&
- 	git init puller
+@@ -152,4 +152,15 @@ test_expect_success 'clone chooses correct HEAD (v2)' '
+ 	test_cmp expect actual
  '
  
++test_expect_success 'denyCurrentBranch and unborn branch with ref namespace' '
++	(
++		cd original &&
++		git init unborn &&
++		git remote add unborn-namespaced "ext::git --namespace=namespace %s unborn" &&
++		test_must_fail git push unborn-namespaced HEAD:master &&
++		git -C unborn config receive.denyCurrentBranch updateInstead &&
++		git push unborn-namespaced HEAD:master
++	)
++'
++
+ test_done
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index c81ca360ac4..49982b0fd90 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -1712,4 +1712,15 @@ test_expect_success 'updateInstead with push-to-checkout hook' '
+ 	)
+ '
+ 
++test_expect_success 'denyCurrentBranch and worktrees' '
++	git worktree add new-wt &&
++	git clone . cloned &&
++	test_commit -C cloned first &&
++	test_config receive.denyCurrentBranch refuse &&
++	test_must_fail git -C cloned push origin HEAD:new-wt &&
++	test_config receive.denyCurrentBranch updateInstead &&
++	git -C cloned push origin HEAD:new-wt &&
++	test_must_fail git -C cloned push --delete origin new-wt
++'
++
+ test_done
 -- 
 gitgitgadget
-
