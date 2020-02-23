@@ -2,69 +2,36 @@ Return-Path: <SRS0=MMY4=4L=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F609C35671
-	for <git@archiver.kernel.org>; Sun, 23 Feb 2020 10:15:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 517C4C35666
+	for <git@archiver.kernel.org>; Sun, 23 Feb 2020 12:58:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 66B89208C3
-	for <git@archiver.kernel.org>; Sun, 23 Feb 2020 10:15:11 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Lk/6ANJF"
+	by mail.kernel.org (Postfix) with ESMTP id 2FB03206E0
+	for <git@archiver.kernel.org>; Sun, 23 Feb 2020 12:58:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726822AbgBWKPI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 23 Feb 2020 05:15:08 -0500
-Received: from mail-yw1-f68.google.com ([209.85.161.68]:38532 "EHLO
-        mail-yw1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725980AbgBWKPH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Feb 2020 05:15:07 -0500
-Received: by mail-yw1-f68.google.com with SMTP id 10so3852522ywv.5
-        for <git@vger.kernel.org>; Sun, 23 Feb 2020 02:15:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=OT/T5yCIWZOcuyJFRVOF1MSij16ttYqNK1TDhGSGqY0=;
-        b=Lk/6ANJF0uroyoV8kcqtSj4yAzPBxBMIXf4QMxAk1+AH8XuvKfR5nYdFhArYBPDmXS
-         L68kYCyRaWZrDs4GX85A8Ba6kIkDJ97wp9eN5XPDf/6gu2DZmSiX9fD/nRQ42RMjG0Fb
-         K8wzKuEEeREWBG7U3mPczseDM8HxLNxbMScsIF5KTgc+ydp3G8ErD98zPdK3Jc9ySp3e
-         +kpIkse1DAixAgFvqSUjh9PjA+D27HGToLhtJXsj3vGCUiRhWKEGgI0pnE+5PwVevOB3
-         vvMx1EivkvGfFYSimIPF9kQdKeE6elwtHQ3cstE+NnBVrcygeT+5ynxrbCLnKTzg+wYw
-         1Oyg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
-         :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=OT/T5yCIWZOcuyJFRVOF1MSij16ttYqNK1TDhGSGqY0=;
-        b=b+wYTYV99pNIDGLYyfJrnVejyraUkb2YY0aDAFmfJR8BbExdJYm3WXcwhCg6fDXZec
-         N+GFn90FIl7wc+WYKvHNyBPxolafLdK2EM5Zv8HrN1eZs3v2nXPpvK7l1nlkJMe20qRV
-         5CUHAQZMLZcS5An8s/caMfbzbuOgBt/nQsYUChRCFonZyP7uxnn10KSzGUYprEvfyN6q
-         ASJwx4hsDllOXLENT8uZPAESGsEV8faZA8A+pHBkCgEQ/7vPg3Cb0FMWjygpbU2xbHvC
-         l4tUucpqabPx8X5kq2JjwFC9cok6XpTzrAMLkVDFQSfwkbt2IZisin6RJqFQjzH0M6XH
-         TijA==
-X-Gm-Message-State: APjAAAWRNrtG80tO3r8lD92lW/qcFdk5MaR88Oiq5Qdq2T94RYiEayvm
-        IRKaQ/MbLscRS4I+m5xt/3JokNu3
-X-Google-Smtp-Source: APXvYqxyekm4zZ3L8FGiVWgz3OubSpBirL+jlLMXX9uOxxHkil/4H7UpZKPqGip9nMNyTaNm7K1MSA==
-X-Received: by 2002:a0d:d8cb:: with SMTP id a194mr35033263ywe.472.1582452906169;
-        Sun, 23 Feb 2020 02:15:06 -0800 (PST)
-Received: from localhost.localdomain (user-12l2dpj.cable.mindspring.com. [69.81.55.51])
-        by smtp.gmail.com with ESMTPSA id j11sm3621767ywg.37.2020.02.23.02.15.04
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 23 Feb 2020 02:15:05 -0800 (PST)
-From:   Eric Sunshine <sunshine@sunshineco.com>
+        id S1727296AbgBWM56 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 23 Feb 2020 07:57:58 -0500
+Received: from hermes.apache.org ([207.244.88.153]:62089 "HELO mail.apache.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726592AbgBWM55 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Feb 2020 07:57:57 -0500
+X-Greylist: delayed 399 seconds by postgrey-1.27 at vger.kernel.org; Sun, 23 Feb 2020 07:57:57 EST
+Received: (qmail 33520 invoked by uid 99); 23 Feb 2020 12:51:17 -0000
+Received: from Unknown (HELO mailrelay1-lw-us.apache.org) (10.10.3.159)
+    by apache.org (qpsmtpd/0.29) with ESMTP; Sun, 23 Feb 2020 12:51:17 +0000
+Received: from serre.fritz.box (p54A2654B.dip0.t-ipconnect.de [84.162.101.75])
+        by mailrelay1-lw-us.apache.org (ASF Mail Server at mailrelay1-lw-us.apache.org) with ESMTPA id 7E2842234;
+        Sun, 23 Feb 2020 12:51:16 +0000 (UTC)
+From:   Benno Evers <benno@bmevers.de>
 To:     git@vger.kernel.org
-Cc:     Mike Hommey <mh@glandium.org>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 2/2] rebase: refuse to switch to branch already checked out elsewhere
-Date:   Sun, 23 Feb 2020 05:14:07 -0500
-Message-Id: <20200223101407.77036-3-sunshine@sunshineco.com>
-X-Mailer: git-send-email 2.25.1.526.gf05a752211
-In-Reply-To: <20200223101407.77036-1-sunshine@sunshineco.com>
-References: <20200220002932.5jws6qpnivlvxckw@glandium.org>
- <20200223101407.77036-1-sunshine@sunshineco.com>
+Cc:     spearce@spearce.org, Benno Evers <benno@bmevers.de>
+Subject: [PATCH] describe: dont abort too early when searching tags
+Date:   Sun, 23 Feb 2020 13:51:02 +0100
+Message-Id: <20200223125102.6697-1-benno@bmevers.de>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -72,65 +39,140 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The invocation "git rebase <upstream> <branch>" switches to <branch>
-before performing the rebase operation. However, unlike git-switch,
-git-checkout, and git-worktree which all refuse to switch to a branch
-that is already checked out in some other worktree, git-rebase switches
-to <branch> unconditionally. Curb this careless behavior by making
-git-rebase also refuse to switch to a branch checked out elsewhere.
+When searching the commit graph for tag candidates, `git-describe`
+will stop as soon as there is only one active branch left and
+it already found an annotated tag as a candidate.
 
-Reported-by: Mike Hommey <mh@glandium.org>
-Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+This works well as long as all branches eventually connect back
+to a common root, but if the tags are found across branches
+with no common ancestor
+
+                  B
+                  o----.
+                        \
+          o-----o---o----x
+          A
+
+it can happen that the search on one branch terminates prematurely
+because a tag was found on another, independent branch. This scenario
+isn't quite as obscure as it sounds, since cloning with a limited
+depth often introduces many independent "dead ends" into the commit
+graph.
+
+The help text of `git-describe` states pretty clearly that when
+describing a commit D, the number appended to the emitted tag X should
+correspond to the number of commits found by `git log X..D`.
+
+Thus, this commit modifies the stopping condition to only abort
+the search when only one branch is left to search *and* all current
+best candidates are descendants from that branch.
+
+Signed-off-by: Benno Evers <benno@bmevers.de>
 ---
- builtin/rebase.c  |  5 +++--
- t/t3400-rebase.sh | 18 ++++++++++++++++++
- 2 files changed, 21 insertions(+), 2 deletions(-)
+We originally found this issue in one of our internal CI jobs,
+which relied on `git-describe` to assign filenames to the generated
+artifacts.
+---
+ builtin/describe.c  | 22 +++++++++++++++----
+ t/t6120-describe.sh | 53 ++++++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 70 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 6154ad8fa5..41b9372c0b 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -1945,10 +1945,11 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		/* Is it a local branch? */
- 		strbuf_reset(&buf);
- 		strbuf_addf(&buf, "refs/heads/%s", branch_name);
--		if (!read_ref(buf.buf, &options.orig_head))
-+		if (!read_ref(buf.buf, &options.orig_head)) {
-+			die_if_checked_out(buf.buf, 1);
- 			options.head_name = xstrdup(buf.buf);
- 		/* If not is it a valid ref (branch or commit)? */
--		else if (!get_oid(branch_name, &options.orig_head))
-+		} else if (!get_oid(branch_name, &options.orig_head))
- 			options.head_name = NULL;
- 		else
- 			die(_("fatal: no such branch/commit '%s'"),
-diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
-index 6e746dca00..9aa5268a06 100755
---- a/t/t3400-rebase.sh
-+++ b/t/t3400-rebase.sh
-@@ -377,4 +377,22 @@ test_expect_success 'rebase -c rebase.useBuiltin=false warning' '
- 	test_must_be_empty err
+diff --git a/builtin/describe.c b/builtin/describe.c
+index b6df81d8d0..420f4c6401 100644
+--- a/builtin/describe.c
++++ b/builtin/describe.c
+@@ -376,11 +376,25 @@ static void describe_commit(struct object_id *oid, struct strbuf *dst)
+ 			if (!(c->object.flags & t->flag_within))
+ 				t->depth++;
+ 		}
++		/* Stop if last remaining path already covered by best candidate(s) */
+ 		if (annotated_cnt && !list) {
+-			if (debug)
+-				fprintf(stderr, _("finished search at %s\n"),
+-					oid_to_hex(&c->object.oid));
+-			break;
++			int best_depth = INT_MAX;
++			unsigned best_within = 0;
++			for (cur_match = 0; cur_match < match_cnt; cur_match++) {
++				struct possible_tag *t = &all_matches[cur_match];
++				if (t->depth < best_depth) {
++					best_depth = t->depth;
++					best_within = t->flag_within;
++				} else if (t->depth == best_depth) {
++					best_within |= t->flag_within;
++				}
++			}
++			if ((c->object.flags & best_within) == best_within) {
++				if (debug)
++					fprintf(stderr, _("finished search at %s\n"),
++						oid_to_hex(&c->object.oid));
++				break;
++			}
+ 		}
+ 		while (parents) {
+ 			struct commit *p = parents->item;
+diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
+index 09c50f3f04..d8cc08258e 100755
+--- a/t/t6120-describe.sh
++++ b/t/t6120-describe.sh
+@@ -479,4 +479,55 @@ test_expect_success 'name-rev covers all conditions while looking at parents' '
+ 	)
  '
  
-+test_expect_success 'switch to branch checked out here' '
-+	git checkout master &&
-+	git rebase master master
+-test_done
++#               B
++#               o
++#                \
++#  o-----o---o----x
++#        A
++#
++test_expect_success 'describe commits with disjoint bases' '
++	git init disjoint1 &&
++	(
++		cd disjoint1 &&
++
++		echo o >> file && git add file && git commit -m o &&
++		echo A >> file && git add file && git commit -m A &&
++		git tag A -a -m A &&
++		echo o >> file && git add file && git commit -m o &&
++
++		git checkout --orphan branch && rm file &&
++		echo B > file2 && git add file2 && git commit -m B &&
++		git tag B -a -m B &&
++		git merge --no-ff --allow-unrelated-histories master -m x &&
++
++		check_describe "A-3-*" HEAD
++	)
 +'
 +
-+test_expect_success 'switch to branch not checked out' '
-+	git checkout master &&
-+	git branch other &&
-+	git rebase master other
++#           B
++#   o---o---o------------.
++#                         \
++#                  o---o---x
++#                  A
++#
++test_expect_success 'describe commits with disjoint bases 2' '
++	git init disjoint2 &&
++	(
++		cd disjoint2 &&
++
++		echo A >> file && git add file && GIT_COMMITTER_DATE="2020-01-01 18:00" git commit -m A &&
++		git tag A -a -m A &&
++		echo o >> file && git add file && GIT_COMMITTER_DATE="2020-01-01 18:01" git commit -m o &&
++
++		git checkout --orphan branch &&
++		echo o >> file2 && git add file2 && GIT_COMMITTER_DATE="2020-01-01 15:00" git commit -m o &&
++		echo o >> file2 && git add file2 && GIT_COMMITTER_DATE="2020-01-01 15:01" git commit -m o &&
++		echo B >> file2 && git add file2 && GIT_COMMITTER_DATE="2020-01-01 15:02" git commit -m B &&
++		git tag B -a -m B &&
++		git merge --no-ff --allow-unrelated-histories master -m x &&
++
++		check_describe "B-3-*" HEAD
++	)
 +'
 +
-+test_expect_success 'refuse to switch to branch checked out elsewhere' '
-+	git checkout master &&
-+	git worktree add wt &&
-+	test_must_fail git -C wt rebase master master 2>err &&
-+	test_i18ngrep "already checked out" err
-+'
-+
- test_done
++test_done
+\ No newline at end of file
 -- 
-2.25.1.526.gf05a752211
+2.20.1
 
