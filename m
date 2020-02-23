@@ -2,92 +2,113 @@ Return-Path: <SRS0=MMY4=4L=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EA0FBC35670
-	for <git@archiver.kernel.org>; Sun, 23 Feb 2020 09:14:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 84FEAC35670
+	for <git@archiver.kernel.org>; Sun, 23 Feb 2020 10:15:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 9C174206ED
-	for <git@archiver.kernel.org>; Sun, 23 Feb 2020 09:14:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 46461208C3
+	for <git@archiver.kernel.org>; Sun, 23 Feb 2020 10:15:08 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hUXBcXLY"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Aa5cev1/"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726334AbgBWJOJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 23 Feb 2020 04:14:09 -0500
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:33978 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725980AbgBWJOJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Feb 2020 04:14:09 -0500
-Received: by mail-pf1-f195.google.com with SMTP id i6so3696948pfc.1
-        for <git@vger.kernel.org>; Sun, 23 Feb 2020 01:14:09 -0800 (PST)
+        id S1726661AbgBWKPG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 23 Feb 2020 05:15:06 -0500
+Received: from mail-yw1-f44.google.com ([209.85.161.44]:37125 "EHLO
+        mail-yw1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725980AbgBWKPG (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Feb 2020 05:15:06 -0500
+Received: by mail-yw1-f44.google.com with SMTP id l5so3852253ywd.4
+        for <git@vger.kernel.org>; Sun, 23 Feb 2020 02:15:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=gjrvOSdVO6K2bodpvK0OjE4pBLBuiUSCcLVInkOaoR0=;
-        b=hUXBcXLY6h90i+XuJrxVt4teCntjmX4SxiBMqOcudW4ej2zkGbmyRkT8CXC1lRe9J2
-         32rrbd7jZqf3gSv72ftr7M0a0qUIgZMHuey4w3KA+hlNw4c7gJbAyRlnOAz1FWJ8iZrG
-         C9H+cuc0mnsChRrchRLvKuJ/fsyKldsZz0FVBQlkwMHUXsxQeVirrdqhN8sMR+F2Zb0P
-         ADpFirRc9t6rRHjDwfPM1mTxyAWM18ug5GnlDe2KLdsFecZ6OGwv9/rV+lqH8W5DYlcN
-         9s+h/VN5e7uh80Tj3JOhYVHgD9iZj6I3v+72sJD5tIuzPDGI3xMatdSnF+l+NWKyGwgS
-         TI0g==
+        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=U/WDZK+zVSB2YGwKLpDvMxT/bEyjh7Bx4tnDu44Nsps=;
+        b=Aa5cev1/LKorZ/h+s3QqgWVFCpNbX1qn3q9/GbSuhL/GZhC03bGoI06vL6BofJsWrJ
+         fvZoXot2Zq6rudkJmbYSU2n9MFi2fc4soRuIQ1WZluSqjcCtJ+PDGOj2SUA4t7FQ2SWo
+         kbr/CdruwoBcqoKOXnzFT1pcPlavDzyMiKtHuUD43EQ4HKTOqCIEZQHcpbNqydYd3feU
+         iugDkVP9+LdHfT3Dsjn+9TCqNxu+VHfaZJva/JjhndzIt3Reskocvz2lZ6TiqQPXmKOG
+         t4XVJEIZbbPkkbIBlo0ZbKZIRxtpc6+f+UuTuKxMs2FBRpsy1sgz9KXtRKmFmHu+ND0Q
+         lbrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=gjrvOSdVO6K2bodpvK0OjE4pBLBuiUSCcLVInkOaoR0=;
-        b=CTIWKG5rCfiO6Csc+NDSUsVlOmsdSfWs+j/kso71fio5i83FUHk8+7vcVmzKplVz3u
-         6CdglvWL43TBGsCCb69/oUQVv4f8FQlJhSG+pv0pRNfKnK9a7NL65mAd8UJRm6arFS7U
-         Mtp0kaB2ZQGTnQUg2jE1R5jzOV+kQT/DEeXgUYcoV1gjt920URU3eR6CV8S2wPUmv4Z+
-         gS5tzLkvEo5Iq4tk70vL4qoF2dVFDZ6FtUXxHkSH33kZzVOi3UuXLsekdnGYxkZ+qqp8
-         7XgvxZ74xY2FS1POR+pfoWdxaWCSIx6ifplJ4wXVDfjqx70gSeV9yEfJZFoRFIXkufPh
-         r+4w==
-X-Gm-Message-State: APjAAAU+yi1zlxR9+1BSzA3EQbRtcv2rLH1TrwIAAlhDPCiqQM9EYW9D
-        v7zVNto84kqutYKCX+CZqa3UYFma48zlC3mKy40=
-X-Google-Smtp-Source: APXvYqw/bzmZZfEi5NtNhYXhpFNTcgYxS4QpZBnmq/h+huwW4fRyNd1atxOoxKJBYUFlCxRWpU+Fktaqo9Y4LIqQtmE=
-X-Received: by 2002:a62:e112:: with SMTP id q18mr23623788pfh.88.1582449249016;
- Sun, 23 Feb 2020 01:14:09 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+         :in-reply-to:references:mime-version:content-transfer-encoding;
+        bh=U/WDZK+zVSB2YGwKLpDvMxT/bEyjh7Bx4tnDu44Nsps=;
+        b=blSN8FP73xVCfgsxmNVXrZo1t+PAxJqAK8dgHmPlHjjesKR+XkiCy1WSDNR9jwIU1W
+         TLbv7pizZ8U6RBQgxrekFasV+SVymVV2Mdr+D3464joSAyDYDWKwxavIaOi2EH6ilE6A
+         wDLrAcJO8x317WdqcCVTkJouMx9ejgt2CRRvQ/uIRq7zB7vwIMIc8rm+vKG7GLiqQDky
+         1VP72vMDAKdL0+67Z3g75tgyyUa/wurgFLu3q3PBntD09a7vtQhCIcGLPGOMgVrdCccd
+         JjbAMj7dWxv9mLbWMqYrS3tfXOnAWkcWHXFMimoQKctHKbdRTHt8yD4ZNKx1mPEv45RJ
+         MDWQ==
+X-Gm-Message-State: APjAAAUPYOEsO8HBdlPXtN1LrvOsLkZbea3ZRFbG/L4JEfUZdPcfwQAz
+        Mk5n72LrRs48ulMgWI2VC4ZOXp3o
+X-Google-Smtp-Source: APXvYqyZBm5CKl6scULov29lptPSwM5NvGBHLHZ7oXDwkSk/FsOfRAmW9ic0YWXRHeukks/sEOmPjg==
+X-Received: by 2002:a0d:c245:: with SMTP id e66mr21805549ywd.32.1582452904870;
+        Sun, 23 Feb 2020 02:15:04 -0800 (PST)
+Received: from localhost.localdomain (user-12l2dpj.cable.mindspring.com. [69.81.55.51])
+        by smtp.gmail.com with ESMTPSA id j11sm3621767ywg.37.2020.02.23.02.15.03
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 23 Feb 2020 02:15:04 -0800 (PST)
+From:   Eric Sunshine <sunshine@sunshineco.com>
+To:     git@vger.kernel.org
+Cc:     Mike Hommey <mh@glandium.org>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH 1/2] t3400: make test clean up after itself
+Date:   Sun, 23 Feb 2020 05:14:06 -0500
+Message-Id: <20200223101407.77036-2-sunshine@sunshineco.com>
+X-Mailer: git-send-email 2.25.1.526.gf05a752211
+In-Reply-To: <20200223101407.77036-1-sunshine@sunshineco.com>
+References: <20200220002932.5jws6qpnivlvxckw@glandium.org>
+ <20200223101407.77036-1-sunshine@sunshineco.com>
 MIME-Version: 1.0
-References: <0157c714-2d9b-7896-f5dc-232d82a46625@web.de>
-In-Reply-To: <0157c714-2d9b-7896-f5dc-232d82a46625@web.de>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Sun, 23 Feb 2020 10:13:57 +0100
-Message-ID: <CAN0heSr+S6FTVrjfa9ZQipyKjv611-DCLZpQPjJUm+T4sMM47w@mail.gmail.com>
-Subject: Re: [PATCH] quote: use isalnum() to check for alphanumeric characters
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, 22 Feb 2020 at 19:53, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
->
-> isalnum(c) is equivalent to isalpha(c) || isdigit(c), so use the
-> former instead.  The result is shorter, simpler and slightly more
-> efficient.
+This test intentionally creates a file which causes rebase to fail, thus
+it is important that this file be deleted before subsequent tests are
+run which are not expecting such a failure. In the past, the common way
+to ensure cleanup (regardless of whether the test succeeded or failed)
+was either for the next test to perform the previous test's cleanup as
+its first step or to do the cleanup at global scope outside of any
+tests. With the introduction of 'test_when_finished', however, tests can
+be responsible for their own cleanup. Therefore, update this test to
+clean up after itself.
 
-From git-compat-util.h I can see that the claim about equivalence is
-correct. And the efficiency claim, too. And agreed on "shorter and
-simpler".
+A bit of history: This 'rm' invocation was moved from within the body of
+the following test to global scope by bffd750adf (rebase: improve error
+message when upstream argument is missing, 2010-05-31), which postdates,
+by about a month, introduction of 'test_when_finished' in 3bf7886705
+(test-lib: Let tests specify commands to be run at end of test,
+2010-05-02).
+---
+ t/t3400-rebase.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> --- a/quote.c
-> +++ b/quote.c
-> @@ -55,7 +55,7 @@ void sq_quote_buf_pretty(struct strbuf *dst, const char=
- *src)
->         }
->
->         for (p =3D src; *p; p++) {
-> -               if (!isalpha(*p) && !isdigit(*p) && !strchr(ok_punct, *p)=
-) {
-> +               if (!isalnum(*p) && !strchr(ok_punct, *p)) {
+diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
+index 221b35f2df..6e746dca00 100755
+--- a/t/t3400-rebase.sh
++++ b/t/t3400-rebase.sh
+@@ -143,11 +143,11 @@ test_expect_success 'setup: recover' '
+ 
+ test_expect_success 'Show verbose error when HEAD could not be detached' '
+ 	>B &&
++	test_when_finished "rm -f B" &&
+ 	test_must_fail git rebase topic 2>output.err >output.out &&
+ 	test_i18ngrep "The following untracked working tree files would be overwritten by checkout:" output.err &&
+ 	test_i18ngrep B output.err
+ '
+-rm -f B
+ 
+ test_expect_success 'fail when upstream arg is missing and not on branch' '
+ 	git checkout topic &&
+-- 
+2.25.1.526.gf05a752211
 
-I failed to identify any similar constructs. Looks good to me.
-
-Martin
