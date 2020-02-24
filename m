@@ -6,71 +6,59 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B676CC35641
-	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 04:47:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E96BC35641
+	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 04:52:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8BA0720675
-	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 04:47:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EE8D920656
+	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 04:52:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727262AbgBXErd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 23 Feb 2020 23:47:33 -0500
-Received: from cloud.peff.net ([104.130.231.41]:52372 "HELO cloud.peff.net"
+        id S1727244AbgBXEwP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 23 Feb 2020 23:52:15 -0500
+Received: from cloud.peff.net ([104.130.231.41]:52390 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727186AbgBXErd (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Feb 2020 23:47:33 -0500
-Received: (qmail 5303 invoked by uid 109); 24 Feb 2020 04:47:33 -0000
+        id S1727186AbgBXEwO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Feb 2020 23:52:14 -0500
+Received: (qmail 5327 invoked by uid 109); 24 Feb 2020 04:52:15 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 24 Feb 2020 04:47:33 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 24 Feb 2020 04:52:15 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 7075 invoked by uid 111); 24 Feb 2020 04:56:38 -0000
+Received: (qmail 7114 invoked by uid 111); 24 Feb 2020 05:01:19 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 23 Feb 2020 23:56:38 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 24 Feb 2020 00:01:19 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Sun, 23 Feb 2020 23:47:32 -0500
+Date:   Sun, 23 Feb 2020 23:52:13 -0500
 From:   Jeff King <peff@peff.net>
 To:     Mike Hommey <mh@glandium.org>
 Cc:     git@vger.kernel.org, gitster@pobox.com
 Subject: Re: [PATCH] Remove non-SHA1dc sha1 implementations
-Message-ID: <20200224044732.GK1018190@coredump.intra.peff.net>
+Message-ID: <20200224045213.GA1574706@coredump.intra.peff.net>
 References: <xmqqk14rtonu.fsf@gitster-ct.c.googlers.com>
  <20200223223758.120941-1-mh@glandium.org>
+ <20200224044732.GK1018190@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20200223223758.120941-1-mh@glandium.org>
+In-Reply-To: <20200224044732.GK1018190@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 24, 2020 at 07:37:58AM +0900, Mike Hommey wrote:
+On Sun, Feb 23, 2020 at 11:47:32PM -0500, Jeff King wrote:
 
-> It is 2020, and with the weakening of SHA1 security-wise, there doesn't
-> seem to be a reason to support anything else than SHA1dc, with collision
-> detection.
+> One thing that compels me is the recent report that we still build with
+> common crypto by default on macOS, which was definitely _not_ intended.
+> That's a bug that can be fixed, but it wouldn't have happened in the
+> first place if we only supported sha1dc.
 
-One possible reason is that they're way faster than sha1dc (block-sha1
-maybe only a little, but openssl's sha1 is over twice as fast).
+I just noticed you were the original reporter there, too. So I guess it
+compelled you, too. ;)
 
-To be clear, I think the slowdown is worth the extra safety, but:
-
- - do we still want to care about people who prefer to make the tradeoff
-   differently?
-
- - when we first switched the default to sha1dc, the idea was raised of
-   continuing to use a faster implementation for non-security checksums
-   (e.g., the checksums at the end of packfiles, index files, etc). I
-   don't think anybody ever implemented that, but it's not a terrible
-   idea. OTOH, if nobody noticed the bottleneck enough to care, maybe
-   it's not worth worrying about.
-
-I'm not convinced the answer to those questions is "yes", but I think
-it's worth at least raising them (and arguing against them in the commit
-message).
-
-One thing that compels me is the recent report that we still build with
-common crypto by default on macOS, which was definitely _not_ intended.
-That's a bug that can be fixed, but it wouldn't have happened in the
-first place if we only supported sha1dc.
+If we do want to keep the other implementations around, another thing
+that might be worth doing is to teach t0013 to complain when the
+collision-detecting sha1 is not in use (i.e., rather than auto-skipping
+when built without DC_SHA1, require the user to set a special
+NO_REALLY_I_CHOOSE_NOT_TO_USE_DC_SHA1_AND_AM_AWARE_OF_THE_IMPLICATIONS
+variable). That would provide a cross-check on the build flags.
 
 -Peff
