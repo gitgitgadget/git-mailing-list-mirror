@@ -2,99 +2,113 @@ Return-Path: <SRS0=prLJ=4M=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1DA62C35673
-	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 01:42:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D14EC35673
+	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 02:00:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id EFE3820675
-	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 01:42:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D62CF20727
+	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 02:00:38 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="p0g7tcT4"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727205AbgBXBmp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 23 Feb 2020 20:42:45 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:40453 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727170AbgBXBmp (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Feb 2020 20:42:45 -0500
-Received: by mail-wr1-f68.google.com with SMTP id t3so8421705wru.7
-        for <git@vger.kernel.org>; Sun, 23 Feb 2020 17:42:44 -0800 (PST)
+        id S1727190AbgBXCAh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 23 Feb 2020 21:00:37 -0500
+Received: from mail-yw1-f66.google.com ([209.85.161.66]:47006 "EHLO
+        mail-yw1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727151AbgBXCAh (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Feb 2020 21:00:37 -0500
+Received: by mail-yw1-f66.google.com with SMTP id z141so4530898ywd.13
+        for <git@vger.kernel.org>; Sun, 23 Feb 2020 18:00:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=QmpCCvbJQZedLLo/CxzybPwPJ/6HtZqvQSA75gwwtm0=;
+        b=p0g7tcT409fHZbTsygDpZpcynXmUN/0ZMvdlqL4SJzcEHYfdSfO7JFBADY31CkMqwy
+         tOAlc+rAVxaayPAGUswZBX2mg1JG1z2s4e0O0xg64PSFHLx36/z2+S5i5chQ3h35+8cs
+         K1ijQWwFKhp4hvI7xuiFq73gJsaJspSY0t5L/yMW9m3xzoCmetVr3EeV3zhaixjIsM9l
+         dLAmE1S2jrcy1Gclm9xaLM2BND6SSEGWOaXJNJKftFsM1dBVpqExJmXCDhy6kFqmxiif
+         0MormFqHrJmcid7qI7O6rSx5J63OhwWd9OxMOiua6yF+ANr77B0DO/hij7wIuxtC6sF1
+         R++A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=UjSp3lcB8wJG6coUi9ZA4sY5V3NTPvmuMOJwpZg6ReE=;
-        b=cyvBITPQMUkBRi93P1p9OLrYsVrruVnlQPfHWtQrv6ZmdYhaGwK8ZdtCkCWUlxIH50
-         wuFVKDpa//up0JzcQLNQMAvTQxagPmNUii+XZN4UbtJsg3ybtFxsXAL6a53nT+gtiihs
-         7+ySfrk8n57VgR5lgkkdThjO21M2mbHmj04irePRDNyH3rMGEhcA4u/O0A1PDjuupoWp
-         GjaC2di4BFQPgDeS+SR9Zwg2Y9M2KuGbuQKOp6nEuoURykDi53YyrfoJbM7KUyRuq582
-         LLGyEy0bYNLKNzIBmutAYDDUlJCqlVP5cMwZZ2mEPWYqCSHvqEz7aJpp/EBgcHaa8XpD
-         P9qA==
-X-Gm-Message-State: APjAAAUGihRUavtcuYibyEP+iJrEtv0YDP2I40Ea193BOGXDNo18X8qR
-        9EU1/aBFDtL8OrK4hwVYJmxgR23UwXVZoQjgj3qomitI
-X-Google-Smtp-Source: APXvYqzkW/VseMknGFXpkGaUbOXU11Fual7/b5kJ0KcPHvzitXI1I1YCEfsG5d9+95jrSZ0SzCITN0c8XStKAwB85NA=
-X-Received: by 2002:a5d:5752:: with SMTP id q18mr65955747wrw.277.1582508563464;
- Sun, 23 Feb 2020 17:42:43 -0800 (PST)
-MIME-Version: 1.0
-References: <pull.535.v2.git.1582410908.gitgitgadget@gmail.com>
- <pull.535.v3.git.1582484231.gitgitgadget@gmail.com> <8718facbc951614f19407afa6ca8d6110507483d.1582484231.git.gitgitgadget@gmail.com>
-In-Reply-To: <8718facbc951614f19407afa6ca8d6110507483d.1582484231.git.gitgitgadget@gmail.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+         :mime-version:content-transfer-encoding;
+        bh=QmpCCvbJQZedLLo/CxzybPwPJ/6HtZqvQSA75gwwtm0=;
+        b=Wwf49H9LJDw58OJJkPpqJjpAtWqajfvAsTQh5NZieprrJC6zBDJYcXIbtOqq+Zto6P
+         OTJ4w40vl0mS+WBbztMCMqOob1WsU6Lcegx79r+Cgk7brTSPRlgFhis/KScek/yIGoIw
+         owd/ggoxUiRpJYGLVpB1qig6bo5ggWitqQ/MWudXTWmHbiUhQArkpr2TfFzpwGFRVuI4
+         f7h3FxklQD0LTixD5qk+L+2J764XpdVcho2RElGU3eod9sHTrGDh2GhotybFKsv0WZyy
+         ISSyWzHmiS1l6I1GeB1qb4NjaOApN7xtvUqK8BnG2THKE/+Ccxnfo9JUKgcOJKUEN9SO
+         9JMQ==
+X-Gm-Message-State: APjAAAVab0VTQhuJMfmTzZcSa/u9FYoTAe1roJwSbYwKGS4VTrjoSgRu
+        4GvWCct1fGFaxTAQ2M4cIAXpSKsa
+X-Google-Smtp-Source: APXvYqyBvdgMHQPOHlJ1/RXWZJm6lNI4G3LyNN6BE0j6OQkRaIZe+NPDKGjbcyMfr/ebCG1n9GQmBA==
+X-Received: by 2002:a81:2e57:: with SMTP id u84mr38344759ywu.98.1582509635438;
+        Sun, 23 Feb 2020 18:00:35 -0800 (PST)
+Received: from localhost.localdomain (user-12l2dpj.cable.mindspring.com. [69.81.55.51])
+        by smtp.gmail.com with ESMTPSA id d13sm4817555ywj.91.2020.02.23.18.00.34
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 23 Feb 2020 18:00:34 -0800 (PST)
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 23 Feb 2020 20:42:32 -0500
-Message-ID: <CAPig+cTh-uu-obh9aeDOV9ptbVwRmkujgucbu9ei1Qa3qSNG_A@mail.gmail.com>
-Subject: Re: [PATCH v3 1/3] get_main_worktree(): allow it to be called in the
- Git directory
-To:     Hariom Verma via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Hariom Verma <hariom18599@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH] worktree: drop unused code from get_main_worktree()
+Date:   Sun, 23 Feb 2020 20:59:35 -0500
+Message-Id: <20200224015935.19190-1-sunshine@sunshineco.com>
+X-Mailer: git-send-email 2.25.1.526.gf05a752211
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Feb 23, 2020 at 1:57 PM Hariom Verma via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-> get_main_worktree(): allow it to be called in the Git directory
+This code has been unused since fa099d2322 (worktree.c: kill parse_ref()
+in favor of refs_resolve_ref_unsafe(), 2017-04-24), so drop it.
 
-This title is a bit too generic; it fails to explain what this patch
-is really fixing. Perhaps:
+Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+---
 
-    get_main_worktree: correctly normalize worktree path when in .git dir
+Just something I noticed while reviewing a patch[1] on the mailing list.
 
-or something.
+[1]: https://lore.kernel.org/git/8718facbc951614f19407afa6ca8d6110507483d.1582484231.git.gitgitgadget@gmail.com/
 
-> When called in the Git directory of a non-bare repository, this function
-> would not return the directory of the main worktree, but of the Git
-> directory instead.
+ worktree.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-"Git directory" is imprecise. As a reader, I can't tell if this means
-the main worktree into which the project is checked out or the `.git`
-directory itself. Please write it instead as "`.git` directory".
+diff --git a/worktree.c b/worktree.c
+index 5b4793caa3..33c2655534 100644
+--- a/worktree.c
++++ b/worktree.c
+@@ -47,15 +47,12 @@ static void add_head_info(struct worktree *wt)
+ static struct worktree *get_main_worktree(void)
+ {
+ 	struct worktree *worktree = NULL;
+-	struct strbuf path = STRBUF_INIT;
+ 	struct strbuf worktree_path = STRBUF_INIT;
+ 
+ 	strbuf_add_absolute_path(&worktree_path, get_git_common_dir());
+ 	if (!strbuf_strip_suffix(&worktree_path, "/.git"))
+ 		strbuf_strip_suffix(&worktree_path, "/.");
+ 
+-	strbuf_addf(&path, "%s/HEAD", get_git_common_dir());
+-
+ 	worktree = xcalloc(1, sizeof(*worktree));
+ 	worktree->path = strbuf_detach(&worktree_path, NULL);
+ 	/*
+@@ -69,7 +66,6 @@ static struct worktree *get_main_worktree(void)
+ 		is_bare_repository();
+ 	add_head_info(worktree);
+ 
+-	strbuf_release(&path);
+ 	strbuf_release(&worktree_path);
+ 	return worktree;
+ }
+-- 
+2.25.1.526.gf05a752211
 
-> The reason: when the Git directory is the current working directory, the
-> absolute path of the common directory will be reported with a trailing
-> `/.git/.`, which the code of `get_main_worktree()` does not handle
-> correctly.
->
-> Signed-off-by: Hariom Verma <hariom18599@gmail.com>
-> ---
-> diff --git a/worktree.c b/worktree.c
-> @@ -51,6 +51,7 @@ static struct worktree *get_main_worktree(void)
->         strbuf_add_absolute_path(&worktree_path, get_git_common_dir());
-> +       strbuf_strip_suffix(&worktree_path, "/.");
->         if (!strbuf_strip_suffix(&worktree_path, "/.git"))
->                 strbuf_strip_suffix(&worktree_path, "/.");
-
-This change makes the code unnecessarily confusing and effectively
-turns the final line into dead code. I would much rather see the three
-cases spelled out explicitly, perhaps like this:
-
-    if (!strbuf_strip_suffix(&worktree_path, "/.git/.") && /* in .git dir */
-        !strbuf_strip_suffix(&worktree_path, "/.git/")) /* in worktree */
-            strbuf_strip_suffix(&worktree_path, "/."); /* in bare repo */
-
-Also, please add a test to ensure that this behavior doesn't regress
-in the future. You can probably test it via the "git worktree list"
-command, so perhaps add the test to t/t2402-worktree-list.sh.
