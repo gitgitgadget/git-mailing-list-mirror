@@ -2,107 +2,73 @@ Return-Path: <SRS0=prLJ=4M=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 941CCC11D2F
-	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 18:06:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 08F55C11D2F
+	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 18:12:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 57B6920726
-	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 18:06:04 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="IDlvXfs2"
+	by mail.kernel.org (Postfix) with ESMTP id DD44B2084E
+	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 18:12:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727501AbgBXSGD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Feb 2020 13:06:03 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:64692 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726208AbgBXSGD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Feb 2020 13:06:03 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 21FB4C8F09;
-        Mon, 24 Feb 2020 13:06:01 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=5h395PdB3zaDJtZipEBxJtdpgIk=; b=IDlvXf
-        s2GD5Pd+olFPYHKtzb/pSMb6oN6jJi3RGTLtsrMFvsISPjtfqX+UgB2pyPuqlkzs
-        K43x7h9vw0qN7KOl1101z4LJqITeI0zt5OhoVF8ahqj84LdbiAfrCLqX4rKibbZi
-        2Up8I2X6nUogGmInQ63qNECwRG+iLutK5uei0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=cG/F56RPSRtCh9TcQfdfTq3T4aVr4Q0y
-        n1rEoVOounLwrDNPn4xwQwDmhuQ0BODH5Rqip/NYM1pRU09FMezHFQ6yG4G6YYmn
-        iYDFl1SZBc4erj1Xd26hTov9yHcuO+/T+F8Vc7i+p0IOFme6V2H1hyPrWQtupmQC
-        mlNPj6ytNl8=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0C00BC8F08;
-        Mon, 24 Feb 2020 13:06:01 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 22BD2C8F04;
-        Mon, 24 Feb 2020 13:05:58 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     <git@vger.kernel.org>
-Subject: Re: [PATCH v2 10/24] t/helper: initialize repository if necessary
+        id S1727489AbgBXSMG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Feb 2020 13:12:06 -0500
+Received: from cloud.peff.net ([104.130.231.41]:52838 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726208AbgBXSMF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Feb 2020 13:12:05 -0500
+Received: (qmail 8557 invoked by uid 109); 24 Feb 2020 18:12:05 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 24 Feb 2020 18:12:05 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 11474 invoked by uid 111); 24 Feb 2020 18:21:10 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 24 Feb 2020 13:21:10 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 24 Feb 2020 13:12:04 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v2 07/24] t6300: abstract away SHA-1-specific constants
+Message-ID: <20200224181204.GA2130083@coredump.intra.peff.net>
 References: <20200222201749.937983-1-sandals@crustytoothpaste.net>
-        <20200222201749.937983-11-sandals@crustytoothpaste.net>
-Date:   Mon, 24 Feb 2020 10:05:55 -0800
-In-Reply-To: <20200222201749.937983-11-sandals@crustytoothpaste.net> (brian
-        m. carlson's message of "Sat, 22 Feb 2020 20:17:35 +0000")
-Message-ID: <xmqqo8tnrhbw.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+ <20200222201749.937983-8-sandals@crustytoothpaste.net>
+ <xmqqsgizrhjv.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4EE056B6-5730-11EA-98AD-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqsgizrhjv.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+On Mon, Feb 24, 2020 at 10:01:08AM -0800, Junio C Hamano wrote:
 
-> The repository helper is used in t5318 to read commit graphs whether
-> we're in a repository or not. However, without a repository, we have no
-> way to properly initialize the hash algorithm, meaning that the file is
-> misread.
->
-> Fix this by calling setup_git_directory_gently, which will read the
-> environment variable the testsuite sets to ensure that the correct hash
-> algorithm is set.
->
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> ---
->  t/helper/test-repository.c | 4 ++++
->  1 file changed, 4 insertions(+)
->
-> diff --git a/t/helper/test-repository.c b/t/helper/test-repository.c
-> index f7f8618445..ecc768e4cb 100644
-> --- a/t/helper/test-repository.c
-> +++ b/t/helper/test-repository.c
-> @@ -75,6 +75,10 @@ static void test_get_commit_tree_in_graph(const char *gitdir,
->  
->  int cmd__repository(int argc, const char **argv)
->  {
-> +	int nongit_ok = 0;
-> +
-> +	setup_git_directory_gently(&nongit_ok);
+> > -test_atom head objectsize 171
+> > -test_atom head objectsize:disk 138
+> > -test_atom head deltabase 0000000000000000000000000000000000000000
+> > +test_atom head objectsize $((131 + hexlen))
+> 
+> 171 == 131 + 40 and that is because we are looking at the initial
+> commit, whose contents has a single object name (i.e. its tree).
 
-No need to initialize nongit_ok to any specific value before calling
-setup_git_directory_gently() and I personally find this initialization
-unhelpful to new readers, as it misleadingly hints the setup process
-may be affected by the value passed in by the value in nongit_ok,
-when in reality the variable is purely used as outout-only (the
-first thing the function does is to clear it).
+I wonder if it would be more readable to just pipe "cat-file" through
+"wc -c", rather than hard-coding. Then there's no magic number at all.
 
-Was it necessary to work around a compiler warning or something?
+> > +test_atom head objectsize:disk $disklen
 
->  	if (argc < 2)
->  		die("must have at least 2 arguments");
->  	if (!strcmp(argv[1], "parse_commit_in_graph")) {
+Likewise for $disklen, if it's a loose object we could just get the
+information from the filesystem. That would stop us caring about the
+hash, _and_ it would make us robust to random changes in the zlib
+compression.
+
+I'm not sure if we also check packed objects. If so, you can compute the
+size from the output of show-index, which gives the offsets of each
+object. That's also how Git does it internally, though, so I'm not sure
+if that is getting too close to just testing nothing (but IMHO the thing
+we're really covering here is the format routines).
+
+-Peff
