@@ -2,109 +2,119 @@ Return-Path: <SRS0=prLJ=4M=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.9 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1,
+	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 34F4CC35671
-	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 14:10:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F4AEC11D2F
+	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 15:09:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0940B20836
-	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 14:10:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4293620828
+	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 15:09:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="jyeGHhNQ"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="k8aTXd90"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727495AbgBXOKR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Feb 2020 09:10:17 -0500
-Received: from mail1.protonmail.ch ([185.70.40.18]:58904 "EHLO
-        mail1.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727451AbgBXOKR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Feb 2020 09:10:17 -0500
-Date:   Mon, 24 Feb 2020 14:10:07 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me; s=proton;
-        t=1582553414; bh=xzW9UHpKSOLAHn/tKTSYotGhS0JyjP7j91spiwccJhg=;
-        h=Date:To:From:Reply-To:Subject:In-Reply-To:References:Feedback-ID:
-         From;
-        b=jyeGHhNQqa64flaovJoPJSRTn83MrSoGzJDTNKMt19kqFQp5cQbRo22nDYDq5Q5UQ
-         dVIgr+LKZlgsfWkzltQDqVoEEytaKQIpd0DDyiKbT40gi1SAq0KN9q4Dhih8GirTS2
-         9AQ6QoY1KBTosU/3BAIkU2PzHqFKgjkJOdKS0xXnZsVguEsy3c0kz99TSVv70IlFae
-         yzXBQeThc7KnPO6MDiUovSv8TEoGyZ/sHYHuAcabzP36N18WNKD159ha0qOz9q7bTT
-         15udIAOeSc0hCeD3Rjy37zbC39ZOuSFpCIR87l7kiX//8fCs23rU7KCWJXopUmeGmQ
-         i1gOL6M57AN4g==
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-From:   Robin Moussu <moussu.robin@pm.me>
-Reply-To: Robin Moussu <moussu.robin@pm.me>
-Subject: Inconsistancy with `git rebase --preserve-merges`
-Message-ID: <tmm3ViXf1QO5dCCNgDCHCHSZeUKUfiYvNoI9RMvdLlnOLk0oUt_w2SKgYu3LPh6no-wHhq1gXbVlBKgLcnGCR5HaTgWMx5se9KmJOKITUHk=@pm.me>
-In-Reply-To: <v9k9hyJjfgQYYIczd9NqrjSdyOyxwqEB0iWyQ_TZCnobCZZoZ8_v6WB4KcWyW5xxRPdDUyEqEYfXylOnGI57CtK9KegMgp_0bz_5RrIIhHY=@pm.me>
-References: <v9k9hyJjfgQYYIczd9NqrjSdyOyxwqEB0iWyQ_TZCnobCZZoZ8_v6WB4KcWyW5xxRPdDUyEqEYfXylOnGI57CtK9KegMgp_0bz_5RrIIhHY=@pm.me>
-Feedback-ID: aDYrvZs6ibdj6QB6JtxRZ8AYBE8j1aX0UyUHN-MWnUOIKikRaDGhDP0rVqj8L64iRq3eEkXGqTYyWi8xkVrR9w==:Ext:ProtonMail
+        id S1727521AbgBXPJu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Feb 2020 10:09:50 -0500
+Received: from mail-qk1-f195.google.com ([209.85.222.195]:42920 "EHLO
+        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727299AbgBXPJt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Feb 2020 10:09:49 -0500
+Received: by mail-qk1-f195.google.com with SMTP id o28so8920415qkj.9
+        for <git@vger.kernel.org>; Mon, 24 Feb 2020 07:09:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=ds90v8Pysx1JBbugv7KB7tbgQXT4HK/AzXP5q2k8pO8=;
+        b=k8aTXd90toZeQNJPzBD87SENEmbQ1At/Bspa7KbgowgGcXQTH3kT5z2HtCLRohlDJD
+         AsRMyASbp+0AuD80xivDHPXxKz2bc21bBpIIZeBS0zmfoIN2aJwWhzHlAnmowq+dms7y
+         E61uMRHO9KWSMbO5IoNFFyemb/Nj835gXeLkHwc4Af9AnfDK9fGmjI4quKIRQTZs+nf1
+         gdPrWXP4vhskn02KYu4Ve1rdSID7htYUWSB4Se4Z4Zr7V7HeqpMKB5V7TF9OcwjBpCC2
+         rzG0slrSj/xKKCDKnlnzZ018/fvMX/JBbQPzS8jZLuwHlpsjVgjm8UEA9mmSPgSGCNcy
+         JEog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=ds90v8Pysx1JBbugv7KB7tbgQXT4HK/AzXP5q2k8pO8=;
+        b=aC7zncreJFxInxbXRGPt7NIYGmbvKmjoRaxf5nTIdqjl7VZEeY1KBpmUKjQTmQXJD4
+         g0n+OdFd1ENuKEW4Cc3q6T+KovuTjXdZOtblqA2+xFA210MU8usSBFn4veuTN09a7/0f
+         YFnPFOplteGAwi5ENNbRVcWwTl6NgZqiKDoOfYXr2eXDvHXdE9z9h1A2GOvwZtO8AJUH
+         mGp+5Pd5g7peWWkC1xhWeW/HrcrSyRys9V6lBhqPZxqDjzaMp5v+hl2hUf4uT2STUC/D
+         8Ft330VcR8UWpTWGqzAcgEl3zM9PjGYKlNhVEV3ceKmp2nu6W4pHp26psQPhP6LXQkeO
+         nCag==
+X-Gm-Message-State: APjAAAXWpd7LKAsiLZxgWX5byMRvL9JHGNPj0X7sp3DX0xGrpSAAoumW
+        L4A52VyGtCLG97ndTPzWMJpJxQ==
+X-Google-Smtp-Source: APXvYqzIHIhKzZhITw7ob2IJbbgCGiEFTobwmUkITUQJs99aXNGvxNFAy9l5eSNi+M2Fm3B+cpl4pw==
+X-Received: by 2002:a37:9f92:: with SMTP id i140mr3905566qke.353.1582556987164;
+        Mon, 24 Feb 2020 07:09:47 -0800 (PST)
+Received: from ?IPv6:2620:0:1004:a:6e2b:60f7:b51b:3b04? ([2620:0:1004:a:6e2b:60f7:b51b:3b04])
+        by smtp.gmail.com with ESMTPSA id t55sm6346882qte.24.2020.02.24.07.09.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 24 Feb 2020 07:09:46 -0800 (PST)
+Subject: Re: [PATCH] blame: provide type of fingerprints pointer
+To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        Git Mailing List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>
+References: <22735441-50e1-5f00-ba12-539b3e9e4916@web.de>
+From:   Barret Rhoden <brho@google.com>
+Message-ID: <ddaa7ab8-c07b-7718-815f-12ff048a89f7@google.com>
+Date:   Mon, 24 Feb 2020 10:09:45 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <22735441-50e1-5f00-ba12-539b3e9e4916@web.de>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi. I noticed that the position of the `--preserve-merges` option of
-`git rebase` is significant (I think it shouldn't).
+On 2/23/20 11:56 AM, René Scharfe wrote:
+> The fingerprints member of struct blame_origin is a void pointer that is
+> only ever used to reference objects of type struct fingerprint.  Declare
+> its type to allow the compiler to do type checks.  We can keep its type
+> opaque in blame.h, though -- only functions in blame.c need to know the
+> actual definition of struct fingerprint.
 
-The following snippet doesn't preserve the merges:
-```
-$ git rebase --preserve-merges -i 412f07a~
-pick 412f07a Work on dev branch
-pick c6efccd Work on master branch
-pick 71c8c37 Some work after the merge
-```
+Reviewed-by: Barret Rhoden <brho@google.com>
 
-Whereas this one does what I expect:
-```
-$ git rebase -i 412f07a~ --preserve-merges
-pick 412f07a Work on dev branch
-pick 616064c Merge branch 'master' into dev
-pick 71c8c37 Some work after the merge
-```
+Thanks.
 
-For reference:
-```
-$ git log --graph --oneline
-* 71c8c37      (HEAD -> dev) Some work after the merge
-*   616064c    Merge branch 'master' into dev
-|\
-| *   c6efccd  Work on master branch
-| *   ... (more work on master)
-* |   412f07a  Work on dev branch
-* |   ... (more work on dev)
-|/
-* 4ee50cb Common ancestor
-```
-
-Step to reproduce:
-```
-mkdir temp
-cd temp
-git init
-git commit --allow-empty -m 'Common ancestor'
-git checkout -b dev
-git commit --allow-empty -m 'Work on dev branch'
-git tag some_commit
-git checkout master
-git commit --allow-empty -m 'Work on master branch'
-git checkout dev
-git merge master -m 'Merge branch 'master' into dev'
-git commit --allow-empty -m 'Some work after the merge'
-```
-Then you will see that
-    git rebase -i some_commit --preserve-merges
-and
-    git rebase --preserve-merges  -i some_commit
-don't have the same output.
-
-I am using git version 2.21.1 on Fedora 30.
-
-Robin.
-
-
-
+> 
+> Signed-off-by: René Scharfe <l.s.r@web.de>
+> ---
+>   blame.h | 4 +++-
+>   1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/blame.h b/blame.h
+> index 4a9e1270b0..089b181ff2 100644
+> --- a/blame.h
+> +++ b/blame.h
+> @@ -16,6 +16,8 @@
+>   #define BLAME_DEFAULT_MOVE_SCORE	20
+>   #define BLAME_DEFAULT_COPY_SCORE	40
+> 
+> +struct fingerprint;
+> +
+>   /*
+>    * One blob in a commit that is being suspected
+>    */
+> @@ -52,7 +54,7 @@ struct blame_origin {
+>   	struct blame_entry *suspects;
+>   	mmfile_t file;
+>   	int num_lines;
+> -	void *fingerprints;
+> +	struct fingerprint *fingerprints;
+>   	struct object_id blob_oid;
+>   	unsigned short mode;
+>   	/* guilty gets set when shipping any suspects to the final
+> --
+> 2.25.1
+> 
 
