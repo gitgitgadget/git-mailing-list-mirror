@@ -6,33 +6,32 @@ X-Spam-Status: No, score=-6.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DCBD3C35669
-	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 04:37:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 060EEC35641
+	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 04:37:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id BA7EC20661
-	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 04:37:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D4D3820661
+	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 04:37:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727253AbgBXEhc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 23 Feb 2020 23:37:32 -0500
-Received: from cloud.peff.net ([104.130.231.41]:52352 "HELO cloud.peff.net"
+        id S1727257AbgBXEh4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 23 Feb 2020 23:37:56 -0500
+Received: from cloud.peff.net ([104.130.231.41]:52360 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727186AbgBXEhc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Feb 2020 23:37:32 -0500
-Received: (qmail 5249 invoked by uid 109); 24 Feb 2020 04:37:32 -0000
+        id S1727186AbgBXEhz (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Feb 2020 23:37:55 -0500
+Received: (qmail 5258 invoked by uid 109); 24 Feb 2020 04:37:56 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 24 Feb 2020 04:37:32 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 24 Feb 2020 04:37:56 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 7003 invoked by uid 111); 24 Feb 2020 04:46:37 -0000
+Received: (qmail 7021 invoked by uid 111); 24 Feb 2020 04:47:00 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 23 Feb 2020 23:46:37 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 23 Feb 2020 23:47:00 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Sun, 23 Feb 2020 23:37:31 -0500
+Date:   Sun, 23 Feb 2020 23:37:54 -0500
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
 Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH 09/10] packed_object_info(): use object_id internally for
- delta base
-Message-ID: <20200224043731.GI1018190@coredump.intra.peff.net>
+Subject: [PATCH 10/10] packfile: drop nth_packed_object_sha1()
+Message-ID: <20200224043754.GJ1018190@coredump.intra.peff.net>
 References: <20200224042625.GA1015553@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -43,88 +42,89 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The previous commit changed the public interface of packed_object_info()
-to return a struct object_id rather than a bare hash. That enables us to
-convert our internal helper, as well. We can use nth_packed_object_id()
-directly for OFS_DELTA, but we'll still have to use oidread() to pull
-the hash for a REF_DELTA out of the packfile.
+Once upon a time, nth_packed_object_sha1() was the primary way to get
+the oid of a packfile's index position. But these days we have the more
+type-safe nth_packed_object_id() wrapper, and all callers have been
+converted.
 
-There should be no additional cost, since we're copying directly into
-the object_id the caller provided us (just as we did before; it's just
-happening now via nth_packed_object_id()).
+Let's drop the "sha1" version (turning the safer wrapper into a single
+function) so that nobody is tempted to introduce new callers.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- packfile.c | 32 +++++++++++++++-----------------
- 1 file changed, 15 insertions(+), 17 deletions(-)
+ packfile.c | 23 +++++++----------------
+ packfile.h | 12 +++---------
+ 2 files changed, 10 insertions(+), 25 deletions(-)
 
 diff --git a/packfile.c b/packfile.c
-index ec7349bb86..90cb5a05ac 100644
+index 90cb5a05ac..f4e752996d 100644
 --- a/packfile.c
 +++ b/packfile.c
-@@ -1225,30 +1225,32 @@ off_t get_delta_base(struct packed_git *p,
-  * the final object lookup), but more expensive for OFS deltas (we
-  * have to load the revidx to convert the offset back into a sha1).
-  */
--static const unsigned char *get_delta_base_sha1(struct packed_git *p,
--						struct pack_window **w_curs,
--						off_t curpos,
--						enum object_type type,
--						off_t delta_obj_offset)
-+static int get_delta_base_oid(struct packed_git *p,
-+			      struct pack_window **w_curs,
-+			      off_t curpos,
-+			      struct object_id *oid,
-+			      enum object_type type,
-+			      off_t delta_obj_offset)
- {
- 	if (type == OBJ_REF_DELTA) {
- 		unsigned char *base = use_pack(p, w_curs, curpos, NULL);
--		return base;
-+		oidread(oid, base);
-+		return 0;
- 	} else if (type == OBJ_OFS_DELTA) {
- 		struct revindex_entry *revidx;
- 		off_t base_offset = get_delta_base(p, w_curs, &curpos,
- 						   type, delta_obj_offset);
- 
- 		if (!base_offset)
--			return NULL;
-+			return -1;
- 
- 		revidx = find_pack_revindex(p, base_offset);
- 		if (!revidx)
--			return NULL;
-+			return -1;
- 
--		return nth_packed_object_sha1(p, revidx->nr);
-+		return nth_packed_object_id(oid, p, revidx->nr);
- 	} else
--		return NULL;
-+		return -1;
+@@ -1867,35 +1867,26 @@ int bsearch_pack(const struct object_id *oid, const struct packed_git *p, uint32
+ 			    index_lookup, index_lookup_width, result);
  }
  
- static int retry_bad_packed_offset(struct repository *r,
-@@ -1558,16 +1560,12 @@ int packed_object_info(struct repository *r, struct packed_git *p,
- 
- 	if (oi->delta_base_oid) {
- 		if (type == OBJ_OFS_DELTA || type == OBJ_REF_DELTA) {
--			const unsigned char *base;
--
--			base = get_delta_base_sha1(p, &w_curs, curpos,
--						   type, obj_offset);
--			if (!base) {
-+			if (get_delta_base_oid(p, &w_curs, curpos,
-+					       oi->delta_base_oid,
-+					       type, obj_offset) < 0) {
- 				type = OBJ_BAD;
- 				goto out;
- 			}
--
--			hashcpy(oi->delta_base_oid->hash, base);
- 		} else
- 			oidclr(oi->delta_base_oid);
+-const unsigned char *nth_packed_object_sha1(struct packed_git *p,
+-					    uint32_t n)
++int nth_packed_object_id(struct object_id *oid,
++			 struct packed_git *p,
++			 uint32_t n)
+ {
+ 	const unsigned char *index = p->index_data;
+ 	const unsigned int hashsz = the_hash_algo->rawsz;
+ 	if (!index) {
+ 		if (open_pack_index(p))
+-			return NULL;
++			return -1;
+ 		index = p->index_data;
  	}
+ 	if (n >= p->num_objects)
+-		return NULL;
++		return -1;
+ 	index += 4 * 256;
+ 	if (p->index_version == 1) {
+-		return index + (hashsz + 4) * n + 4;
++		oidread(oid, index + (hashsz + 4) * n + 4);
+ 	} else {
+ 		index += 8;
+-		return index + hashsz * n;
++		oidread(oid, index + hashsz * n);
+ 	}
+-}
+-
+-int nth_packed_object_id(struct object_id *oid,
+-			 struct packed_git *p,
+-			 uint32_t n)
+-{
+-	const unsigned char *hash = nth_packed_object_sha1(p, n);
+-	if (!hash)
+-		return -1;
+-	hashcpy(oid->hash, hash);
+ 	return 0;
+ }
+ 
+diff --git a/packfile.h b/packfile.h
+index 95b83ba25b..240aa73b95 100644
+--- a/packfile.h
++++ b/packfile.h
+@@ -121,15 +121,9 @@ void check_pack_index_ptr(const struct packed_git *p, const void *ptr);
+ int bsearch_pack(const struct object_id *oid, const struct packed_git *p, uint32_t *result);
+ 
+ /*
+- * Return the SHA-1 of the nth object within the specified packfile.
+- * Open the index if it is not already open.  The return value points
+- * at the SHA-1 within the mmapped index.  Return NULL if there is an
+- * error.
+- */
+-const unsigned char *nth_packed_object_sha1(struct packed_git *, uint32_t n);
+-/*
+- * Like nth_packed_object_sha1, but write the data into the object specified by
+- * the the first argument.  Returns 0 on success, negative otherwise.
++ * Write the oid of the nth object within the specified packfile into the first
++ * parameter. Open the index if it is not already open.  Returns 0 on success,
++ * negative otherwise.
+  */
+ int nth_packed_object_id(struct object_id *, struct packed_git *, uint32_t n);
+ 
 -- 
 2.25.1.823.g95c5488cf7
-
