@@ -2,61 +2,62 @@ Return-Path: <SRS0=prLJ=4M=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-8.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B892BC38BF9
-	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 21:45:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E75F8C38BFA
+	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 21:51:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7EC8A21556
-	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 21:45:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AB6A220CC7
+	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 21:51:54 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZSreLOvI"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BATBcOyC"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727689AbgBXVpF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Feb 2020 16:45:05 -0500
-Received: from mail-qt1-f193.google.com ([209.85.160.193]:36482 "EHLO
-        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726980AbgBXVpF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Feb 2020 16:45:05 -0500
-Received: by mail-qt1-f193.google.com with SMTP id t13so7644457qto.3
-        for <git@vger.kernel.org>; Mon, 24 Feb 2020 13:45:04 -0800 (PST)
+        id S1727950AbgBXVvx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Feb 2020 16:51:53 -0500
+Received: from mail-qk1-f194.google.com ([209.85.222.194]:33715 "EHLO
+        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726980AbgBXVvx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Feb 2020 16:51:53 -0500
+Received: by mail-qk1-f194.google.com with SMTP id h4so10155092qkm.0
+        for <git@vger.kernel.org>; Mon, 24 Feb 2020 13:51:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=pxT+rY9WknY30CnuXCkv+W5oXVyV3SzdQawbzS/FkTY=;
-        b=ZSreLOvIgJ9a5D1ZZxoR+qZI7ZzXJ66Ln3kqMocAYlyefGq0tp7rxREMcgyka91aJe
-         Pl/krnOzP9ZM9dBxPq9w5lB8YCzdCjfTSXN932umOoi/8rMwI0gNTNdbYYm5TE/8ouOY
-         dz7C03Y4N/rfHDa1gozCyaLBmtKP6Dy7Gba+JfeEftW9MwkNDJmjUFsV7Gp5pGvfnbiI
-         kFmOvmNDtR5Npig5sM833Fk+59tZN1GcBY38jVGYkNYg8DbJPgNgdTGKswIMsWuyWHUg
-         XaW7v2qVh0rh/Xcq9YTQHRU6l74iT4ve6+F549BTTunPa/X0uiaXvtj77WodZzfUgk4t
-         Ag4A==
+        bh=DklSjgHVwhgRcDb70O2qZC+oA6+ppuEFGq/NuFWrheE=;
+        b=BATBcOyCo7/eMUqHZWkG0D9WvFC83GeuWn3j+XV6l+5gNgM6S6zEsWS36mpNEKv9E8
+         ZY4bQ2pIWpmEGiiLuM5m2UoP2bRiNOlbgc+hzAXjtpOk/AfsKpgMIq1UOGACevkP5qAi
+         jSDSw9hGfbXqPFoXjY0hxbNg+Zlr0erUxcwyUvzQE0fTDpXScxUhJoYBJvcm/i/gkTiw
+         QHCahYUu9GLh13uOf3epcShprzHzf4NwO9r1SW/ZtgMbAseOHJ+0IwFrdUZV4ApDD2cY
+         eKL5ETNGG3iIzpK/+6fi+ijKaN6m+EPnhWeCRTLr9uPbNOEFUi94/TnjBbJsW8qqujVb
+         gAAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=pxT+rY9WknY30CnuXCkv+W5oXVyV3SzdQawbzS/FkTY=;
-        b=emTMrkDAEposMSDuNUxC41JBiMK/Au/Zau8kY6JfXBQRqUkn+2ReFwCj2AWO2cdrAP
-         Nh6+JN/4qD30CKQg/u2+qhptBiI8t2AY548n9kpxux+4Q6pXP6whJJXvsSlb7+XqYZ68
-         qV+zg48My+GwDK7Ris/qe92WnxoqdQeQQf/nq/ENL7Y0VsWE7N6NKvfAbtJDmbHH4pUr
-         TvWVz55Mpm03iYd/RHaAx7Lh+RbPDekKoAWxJ6szT2kzjpERFcxbbJQ8nHhs96S9IpaW
-         sKe7LmBNxwQ5RQ4a65FmbeFSvdpt3zFpQoaf7IgBRI0OqbAdccwX5fU7od0oqoSne+6N
-         WM0A==
-X-Gm-Message-State: APjAAAU+50BE+AFthnf1jsDk3XUtiw3kpXNpL5LzRaYFjidQ1SWeupXo
-        RxzLcwgGUJD7+rkaCE1OmNk=
-X-Google-Smtp-Source: APXvYqw9mBaN8+jNiqYFEC5Yu44WcfzZmojJodG+ihaOA00fdZVNUfYmFidNIK5wiNFa6QpuPH65ww==
-X-Received: by 2002:ac8:65da:: with SMTP id t26mr50387213qto.5.1582580703944;
-        Mon, 24 Feb 2020 13:45:03 -0800 (PST)
+        bh=DklSjgHVwhgRcDb70O2qZC+oA6+ppuEFGq/NuFWrheE=;
+        b=f631oH13XbCus9EJhbmJlw3N/wA9x3H//9gbKG3kymdHx5AngaqrNH6FmDq22kQKRn
+         EvjgQyf3/XGSoQDdlFiF/50sFiHFtad66HQGN+0gqWQT7acZNFkghmdTs8Kh+LeXi4fk
+         H9yBknj434bXGkp2Bj41A0KN9RTf4wXFbTBB+JJO2tsbD9MfawDxtl2kUMbLt+nZtgwP
+         s0EDtg5cqeUBvHmArywa+GR6C1yhdkbs+cXu+AA65eI5PmIyvtNdJLYETV9IjpDuzLDO
+         4bLMmOz2Fi7nl3NdqAR6IEzH/JidnqVmi13basVlmZhj0Dh6GCc/CcmUXFdk/hfXei8h
+         kADA==
+X-Gm-Message-State: APjAAAUUz19ruPlSajVU12Q4UiwjSwii39ATS8BWtV85eNiwztSH2qM4
+        Y9+Ko/QsETp9MN17xF0R+Rs=
+X-Google-Smtp-Source: APXvYqxQo1ZvdqMRq//+zYCMuNFxf50eIJyIKccIFhQeyse6nQ+qFM5L8MLN/Q/wTd3SUpIxIY40Ew==
+X-Received: by 2002:a37:6e06:: with SMTP id j6mr15757673qkc.171.1582581112253;
+        Mon, 24 Feb 2020 13:51:52 -0800 (PST)
 Received: from ?IPv6:2001:4898:6808:13f:68d1:9775:6b44:857a? ([2001:4898:a800:1010:1a08:9775:6b44:857a])
-        by smtp.gmail.com with ESMTPSA id x23sm3048956qki.124.2020.02.24.13.45.02
+        by smtp.gmail.com with ESMTPSA id h12sm6609770qtn.56.2020.02.24.13.51.51
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 24 Feb 2020 13:45:03 -0800 (PST)
-Subject: Re: [PATCH v2 08/11] commit-graph: reuse existing Bloom filters
- during write.
+        Mon, 24 Feb 2020 13:51:51 -0800 (PST)
+Subject: Re: [PATCH v2 09/11] commit-graph: add --changed-paths option to
+ write subcommand
 To:     Jakub Narebski <jnareb@gmail.com>,
         Garima Singh via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
@@ -70,15 +71,15 @@ Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
         Garima Singh <garima.singh@microsoft.com>
 References: <pull.497.git.1576879520.gitgitgadget@gmail.com>
  <pull.497.v2.git.1580943390.gitgitgadget@gmail.com>
- <b20c8d2b2096bf10fe1a5f37a5181c57873a9676.1580943390.git.gitgitgadget@gmail.com>
- <86r1ypf62y.fsf@gmail.com>
+ <3d7ee0c96955dc15c87d04982d8cdec8b62750b2.1580943390.git.gitgitgadget@gmail.com>
+ <86y2sxdmw9.fsf@gmail.com>
 From:   Garima Singh <garimasigit@gmail.com>
-Message-ID: <2ca9f6ab-41c4-37d2-7681-8f973204d6a2@gmail.com>
-Date:   Mon, 24 Feb 2020 16:45:00 -0500
+Message-ID: <56150788-c477-5526-2d6d-e9325ccb4da6@gmail.com>
+Date:   Mon, 24 Feb 2020 16:51:48 -0500
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
  Thunderbird/68.5.0
 MIME-Version: 1.0
-In-Reply-To: <86r1ypf62y.fsf@gmail.com>
+In-Reply-To: <86y2sxdmw9.fsf@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -89,128 +90,110 @@ X-Mailing-List: git@vger.kernel.org
 
 
 
-On 2/20/2020 1:48 PM, Jakub Narebski wrote:
+On 2/20/2020 3:28 PM, Jakub Narebski wrote:
 > "Garima Singh via GitGitGadget" <gitgitgadget@gmail.com> writes:
 > 
 >> From: Garima Singh <garima.singh@microsoft.com>
 >>
->> Read previously computed Bloom filters from the commit-graph file if
->> possible to avoid recomputing during commit-graph write.
+>> Add --changed-paths option to git commit-graph write. This option will
+>> allow users to compute information about the paths that have changed
+>> between a commit and its first parent, and write it into the commit graph
+>> file. If the option is passed to the write subcommand we set the
+>> COMMIT_GRAPH_WRITE_BLOOM_FILTERS flag and pass it down to the
+>> commit-graph logic.
 > 
-> All right, what is written makes sense for this point in patch series.
-> 
-> But it my opinion it is more important to state that this commit adds
-> "parsing" of the Bloom filter data from commit-graph file.  This means
-> that it needs to be calculated only once, then stored in commit-graph,
-> ready to be re-used.
+> In the manpage you write that this operation (computing Bloom filters)
+> can take a while on large repositories.  Could you perhaps provide some
+> numbers: how much longer does it take to write commit-graph file with
+> and without '--changed-paths' for example for Linux kernel, or some
+> other large repository?  Thanks in advance.
 > 
 
-Good point. Incorporated in v3.
+Yes. Will include numbers as appropriate in v3. 
 
 >>
->> See Documentation/technical/commit-graph-format for the format in which
->> the Bloom filter information is written to the commit graph file.
+>> Helped-by: Derrick Stolee <dstolee@microsoft.com>
+>> Signed-off-by: Garima Singh <garima.singh@microsoft.com>
+>> ---
+>>  Documentation/git-commit-graph.txt | 5 +++++
+>>  builtin/commit-graph.c             | 9 +++++++--
+>>  2 files changed, 12 insertions(+), 2 deletions(-)
+> 
+> What is missing is some sanity tests: that bloom index and bloom data
+> chunks are not present without '--changed-paths', and that they are
+> added with '--changed-paths'.
+> 
+> If possible, maybe also check in a separate test that the size of
+> bloom_index chunk agrees with the number of commits in the commit graph.
+> 
+> 
+> Also, we can now add those tests I have wrote about in my review of
+> previous patch, that is:
+> 
+> 1. If you write commit-graph with --changed-paths, and either add some
+>    commits later or exclude some commits from the commit graph, then:
+> 
+>    a.) commit(s) in commit-graph have Bloom filter
+>    b.) commit(s) not in commit-graph do not have Bloom filter
+> 
+> 2. If you write commit-graph without --changed-paths as base layer,
+>    and then write next layer with --changed-paths and --split, then:
+> 
+>    a.) commit(s) in top layer have Bloom filter(s)
+>    b.) commit(s) in bottom layer don't have Bloom filter(s)
+> 
+
+I will see what more can be done here. 
+
 >>
->> To read Bloom filter for a given commit with lexicographic position
->> 'i' we need to:
->> 1. Read BIDX[i] which essentially gives us the starting index in BDAT for
->>    filter of commit i+1. It is essentially the index past the end
->>    of the filter of commit i. It is called end_index in the code.
->>
->> 2. For i>0, read BIDX[i-1] which will give us the starting index in BDAT
->>    for filter of commit i. It is called the start_index in the code.
->>    For the first commit, where i = 0, Bloom filter data starts at the
->>    beginning, just past the header in the BDAT chunk. Hence, start_index
->>    will be 0.
->>
->> 3. The length of the filter will be end_index - start_index, because
->>    BIDX[i] gives the cumulative 8-byte words including the ith
->>    commit's filter.
->>
->> We toggle whether Bloom filters should be recomputed based on the
->> compute_if_null flag.
+>> diff --git a/Documentation/git-commit-graph.txt b/Documentation/git-commit-graph.txt
+>> index bcd85c1976..907d703b30 100644
+>> --- a/Documentation/git-commit-graph.txt
+>> +++ b/Documentation/git-commit-graph.txt
+>> @@ -54,6 +54,11 @@ or `--stdin-packs`.)
+>>  With the `--append` option, include all commits that are present in the
+>>  existing commit-graph file.
+>>  +
+>> +With the `--changed-paths` option, compute and write information about the
+>> +paths changed between a commit and it's first parent. This operation can
+>> +take a while on large repositories. It provides significant performance gains
+>> +for getting history of a directory or a file with `git log -- <path>`.
+>> ++
 > 
-> Nitpick: the flag (the parameter) is called compute_if_not_present, not
-> compute_if_null.
-> 
-Oops. Fixed in v3. 
-
->> +
->> +	end_index = get_be32(g->chunk_bloom_indexes + 4 * lex_pos);
->> +
->> +	if (lex_pos)
-> 
-> Wouldn't it be better to be more explicit, and write
-> 
->   +	if (lex_pos > 0)
-> 
+> Should we write about limitation that the topmost layer in the split
+> commit graph needs to be written with '--changed-paths' for Git to use
+> this information?  Or perhaps we should try (in the future) to remove
+> this limitation??
 > 
 
-Sure. 
-
->> +		start_index = get_be32(g->chunk_bloom_indexes + 4 * (lex_pos - 1));
->> +	else
->> +		start_index = 0;
-> 
-> All right, here we find start_index and end_index.
-> 
-> It might be good idea to at least assert() that start_index <= end_index,
-> though that should not happen (that is why I propose for this check to
-> be compiled on only for debug builds).
-> 
-
-I will look into this. Thanks! 
-
-
->> @@ -1304,7 +1304,7 @@ static void compute_bloom_filters(struct write_commit_graph_context *ctx)
+Given that this information is going to be used best effort, it would be 
+superfluous to describe every case and conditional that decides whether 
+this information is being used.
+>> @@ -143,6 +146,8 @@ static int graph_write(int argc, const char **argv)
+>>  		flags |= COMMIT_GRAPH_WRITE_SPLIT;
+>>  	if (opts.progress)
+>>  		flags |= COMMIT_GRAPH_WRITE_PROGRESS;
+>> +	if (opts.enable_changed_paths)
+>> +		flags |= COMMIT_GRAPH_WRITE_BLOOM_FILTERS;
 >>  
->>  	for (i = 0; i < ctx->commits.nr; i++) {
->>  		struct commit *c = sorted_by_pos[i];
->> -		struct bloom_filter *filter = get_bloom_filter(ctx->r, c);
->> +		struct bloom_filter *filter = get_bloom_filter(ctx->r, c, 1);
->>  		ctx->total_bloom_filter_data_size += sizeof(uint64_t) * filter->len;
->>  		display_progress(progress, i + 1);
->>  	}
->> @@ -2314,6 +2314,7 @@ void free_commit_graph(struct commit_graph *g)
->>  		g->data = NULL;
->>  		close(g->graph_fd);
->>  	}
->> +	free(g->bloom_filter_settings);
->>  	free(g->filename);
->>  	free(g);
+>>  	read_replace_refs = 0;
 > 
-> Shouldn't this fixup be added to earlier commit?
+> All right.  This actually turns on calculation Bloom filters for changed
+> paths, thanks to
+> 
+>  	ctx->changed_paths = flags & COMMIT_GRAPH_WRITE_BLOOM_FILTERS ? 1 : 0;
+> 
+> that was added by the "[PATCH v2 04/11] commit-graph: compute Bloom
+> filters for changed paths" patch.
+> 
+> Though... should this enabling be split into two separate patches like
+> this?
 > 
 
-Yes. 
+The idea is that in 4/11 We compute only if the flag is set. 
+And between that patch and this one: we prepare the foundational code 
+that is now ready for that flag to be set via an opt-in by the user. 
 
->>  }
->> diff --git a/t/helper/test-bloom.c b/t/helper/test-bloom.c
->> index 331957011b..9b4be97f75 100644
->> --- a/t/helper/test-bloom.c
->> +++ b/t/helper/test-bloom.c
->> @@ -47,7 +47,7 @@ static void get_bloom_filter_for_commit(const struct object_id *commit_oid)
->>  	struct bloom_filter *filter;
->>  	setup_git_directory();
->>  	c = lookup_commit(the_repository, commit_oid);
->> -	filter = get_bloom_filter(the_repository, c);
->> +	filter = get_bloom_filter(the_repository, c, 1);
->>  	print_bloom_filter(filter);
->>  }
 > 
-> I would like to see some tests, but that needs to wait for patch that
-> adds --changed-paths option to the 'write' subcommand.
-> 
-> Things to be tested:
-> 1. That after reading commit-graph with Bloom filter:
->    - that commit(s) in commit-graph have Bloom filter
->    - that commits outside commit-graph do not have Bloom filter
-> 2. That incremental commit-graph feature works:
->    - for commits in deeper layer that have Bloom filter chunks
->    - for commits in deeper layer that do not have Bloom filter chunks
-> 
-
-Included in later commits. 
-
 > Best,
 > 
