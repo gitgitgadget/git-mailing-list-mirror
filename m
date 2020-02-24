@@ -6,138 +6,124 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D1F28C35641
-	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 03:43:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 859C4C35641
+	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 03:59:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A54BF20836
-	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 03:43:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4AB9E20675
+	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 03:59:29 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="xeWdQZI6"
+	dkim=pass (1024-bit key) header.d=webssup.com header.i=@webssup.com header.b="hA/8rLqz"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727226AbgBXDnI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 23 Feb 2020 22:43:08 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:40052 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727177AbgBXDnI (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 23 Feb 2020 22:43:08 -0500
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 3A0026048E;
-        Mon, 24 Feb 2020 03:43:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1582515786;
-        bh=IjPq9acNMpFmvYOWTJBEKVdIwPG4ouswUhCO02Ghsak=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=xeWdQZI627uLgnlRAVa35jxAunJvNK/Kf5FtE6lLrg3gfyheuRXJYn6HS4MpqC+8r
-         tF4l3RCTO9xyCkbDTsWEmbg0yhVq2EezQ9DeVvwk77yLt1J0RMSynABmik6AeT1zds
-         OXYLWo41JUFPL8sUlt9c7v8A1HC8R9TQSp9/6PFz2msABK4zg47TGZkt2BAXFFNKC8
-         m2qsBNYpe9lwyJyPAxryz5is90dtTH6/IUfjLg60P7arMEMNXjUYrV3jxXoiga4mF1
-         KsJvhm5yK+Sa6yvSRgChowH9cKbaHtctfIMaKnrYBvd/wmzgYumnDQ1EXeQ9Fxs3QD
-         wMqEw2SnNtha1gNN2HykgdLRJu0NF/+byyG3P5zfxQnL64rGks+qfiJsH6xNdI7Vve
-         XcHHdRi/aPWlFpYKlMdfk7N8LNPcRZIpoCPbAHGxtdvfxXi25DWqmXCmkqKvA/nWvw
-         CKo+MD/v+lEVM35tb809XC+gnMcl8vUZc1LuJbiO1TO/ez8QdVx
-Date:   Mon, 24 Feb 2020 03:42:59 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jeff King <peff@peff.net>
-Cc:     Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org
-Subject: Re: [PATCH v2 01/24] builtin/pack-objects: make hash agnostic
-Message-ID: <20200224034259.GG6462@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>,
-        Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org
-References: <20200222201749.937983-1-sandals@crustytoothpaste.net>
- <20200222201749.937983-2-sandals@crustytoothpaste.net>
- <20200223215759.GC564691@coredump.intra.peff.net>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="wj9ZLJVQDRFjGSdK"
-Content-Disposition: inline
-In-Reply-To: <20200223215759.GC564691@coredump.intra.peff.net>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.4.0-4-amd64)
+        id S1727227AbgBXD72 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 23 Feb 2020 22:59:28 -0500
+Received: from mail-pj1-f41.google.com ([209.85.216.41]:34035 "EHLO
+        mail-pj1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727221AbgBXD72 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Feb 2020 22:59:28 -0500
+Received: by mail-pj1-f41.google.com with SMTP id f2so3578135pjq.1
+        for <git@vger.kernel.org>; Sun, 23 Feb 2020 19:59:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=webssup.com; s=google;
+        h=from:mime-version:subject:date:references:to:in-reply-to:message-id
+         :content-transfer-encoding;
+        bh=nhFZcq5jaCdeTI9cvaeUuj65MI6YnSLBaR57bvLS4vg=;
+        b=hA/8rLqzwjyGRVVr5fTr/FEa53fhOe8ZDyB4VGRnCdIib8OiDz+zSL2nRqRGMN4Tfh
+         iJzOlAcF+C7wlDIycwer8oO8NXpHAJAgPaoOhMQNjpBRhVOQckE+BrlbZP8nr/yiWiti
+         UR3KImU3vs7oRbiSw0xjayR0tE8HMk1lmg7Xk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:mime-version:subject:date:references:to
+         :in-reply-to:message-id:content-transfer-encoding;
+        bh=nhFZcq5jaCdeTI9cvaeUuj65MI6YnSLBaR57bvLS4vg=;
+        b=gpwJPHp0+3LlhDrYS+EqYL9Gt2jlIrA/9dPefd48haiyAHhJl4kmbU4i6GN4qgZWm/
+         LDz79U7bxFRXRVLaRMxPUn8N5GmmM67SsJBgoqPMvx5cNK6LAlsE4u3AEbY7mt/iF+tG
+         +92zQHwrXv1h9Hj7HXQ/fAO7J863SrRnaAIaQ9UsSZ8NOsGdzZvQ6MekTYboFDJt46lW
+         92HaSdFR49ruRY3UldcBhrWUSc9vncy11SEc42nxHYLi1fzduvIBsUMmLCOZLya1DZLY
+         Oaum3mnGRaRmd8mT8Ebo2J3WRCqhJbAVgFN70RE4XWgK47YRuvKO8tabniDbPjTrovVy
+         hbKg==
+X-Gm-Message-State: APjAAAVRT9qobc4LaabRtP2IiLRsS8bJdLQf3aSaeCj6vn4KeH9TzdLW
+        VAhhHDEIelBtTAwG4qgk2pWzelARYePPHSz9UwhPTkOfVJtVB97hZ3DDepMc0JjJAiYTEL91GdS
+        xgrjl+0OtTA==
+X-Google-Smtp-Source: APXvYqxpYJG1gm3BZRuGFTGn95nhmOZOKRjVPUdaAndVKIDypbMkYfY2oZqnsLg8ZDmpyBZCfoiDzw==
+X-Received: by 2002:a17:90a:1b42:: with SMTP id q60mr17256824pjq.108.1582516767422;
+        Sun, 23 Feb 2020 19:59:27 -0800 (PST)
+Received: from [10.102.0.108] (061244206222.ctinets.com. [61.244.206.222])
+        by smtp.gmail.com with ESMTPSA id iq22sm10496892pjb.9.2020.02.23.19.59.26
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 23 Feb 2020 19:59:26 -0800 (PST)
+From:   On Luk <on.luk@webssup.com>
+Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.60.0.2.5\))
+Subject: Dropbox do not sync particular files after using git push
+Date:   Mon, 24 Feb 2020 11:59:25 +0800
+References: <EC87F304-78E6-40C4-840C-45F118902079@webssup.com>
+ <16B44F67-E85E-4D87-A8EC-18ED1B35DB41@webssup.com>
+ <9A165840-280C-43C4-B92B-3349E07AC0B1@webssup.com>
+ <C8290530-F064-47CD-8FA0-F42CFBF777D9@webssup.com>
+To:     git@vger.kernel.org
+In-Reply-To: <C8290530-F064-47CD-8FA0-F42CFBF777D9@webssup.com>
+Message-Id: <A07B2628-8AEB-4520-8C60-16BE607B3022@webssup.com>
+X-Mailer: Apple Mail (2.3608.60.0.2.5)
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Sir/Madam,
 
---wj9ZLJVQDRFjGSdK
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I tried to report this issue to dropbox technical team, but they replied th=
+at the issue was not caused by Dropbox, so I try to report to your team as =
+a bug report below:
 
-On 2020-02-23 at 21:57:59, Jeff King wrote:
-> On Sat, Feb 22, 2020 at 08:17:26PM +0000, brian m. carlson wrote:
->=20
-> > Avoid hard-coding a hash size, instead preferring to use the_hash_algo.
-> > [...]
-> > -			hashwrite(out, base_sha1, 20);
-> > +			hashwrite(out, base_sha1, the_hash_algo->rawsz);
->=20
-> Yeah, looks obviously correct (and I think this is new from the
-> pack-reuse patches of mine that Christian sent recently).
+Everytime I used git to push commit to my remote repo located in my dropbox=
+, some files stuck in syncing status and can=E2=80=99t be able to sync to d=
+ropbox. To get those files be synced, I need to do one of the follow steps =
+everytime by manually:
 
-I believe it is, which is why I CC'd you on it.
+1.	Drag and drop back the file to dropbox using the finder.
+OR
+2.	Click Pause and resume syncing in dropbox desktop manager.
+OR
+3.	Restart Dropbox.
 
-> The name "base_sha1" is clearly not great either. It could be changed
-> trivially, but the real sin is that it comes from
-> nth_packed_object_sha1(). It could be replaced with
-> nth_packed_object_oid() at the cost of an extra hash copy, which isn't
-> too bad.
+To make it clear, I prepared a screen recording to show the issue that I am=
+ facing.
 
-I probably should send a series getting rid of the rest of the "sha1"
-places in our code, because there are a lot of them, but I just haven't
-gotten around to it yet.  And yeah, as you mentioned, there are still a
-lot of places using nth_packed_object_sha1.
+www.dropbox.com/s/ivn7qytk0u67v6n/Screen%20Recording%202020-01-03%20at%2012=
+.21.21%20PM.mov?dl=3D0
 
-> It would be nice to get rid of that function entirely. In most cases,
-> it's either free to do so (we end up copying the result into an oid
-> anyway) or we pay for one extra hashcpy (out of the mmap into a local
-> struct). But the one in pack-check.c:verify_packfile() is tricky; we
-> store a pointer per object into the index mmap, and we'd have to switch
-> to storing an oid per object. Given that the code isn't commonly run
-> (and other operations like _generating_ the index in the first place are
-> clearly OK with the extra memory hit), I think I'd be OK with that in
-> the name of cleanliness.
+This issue only appear after I switch to use my new computer running as mac=
+OS 10.15, everything works fine in my old computer running as macOS 10.13.6=
+.
 
-Yeah, that's why I hadn't switched it out earlier.
+p.s: git version 2.24.1
 
-> I think it would also be correct to cast the mmap'd bytes to a "struct
-> object_id" given that the struct contains the hash bytes as the first
-> member. I worry a little that we'd get no compiler warning of the
-> breakage if that assumption changes, but it also seems unlikely to do
-> so.
+BRs,
 
-In the future, struct object_id will get a new member (an algorithm
-value), but I think it's fine to make the assumption that the hash bytes
-are first.
+On
 --=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
 
---wj9ZLJVQDRFjGSdK
-Content-Type: application/pgp-signature; name="signature.asc"
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.19 (GNU/Linux)
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl5TRkMACgkQv1NdgR9S
-9oueug//SjTtST1rjVo2hEaI0siv0Xm+wtlek7wuE8qW6Woazw2ftMubWj3i27lK
-GuAH9yY3+S9DJ1yZRHTL2KlPNo/mfbs8m8IX/Pkm4c6LkPCUuzLKReIonBlMa1bs
-jcuPvkfN+rVCOt/AimPZJj9ZU2yGBjIGPNAGY4WAgrUiGdmRrNGfmYmEkImlzNxO
-ZBqpXpC/IRurggNTzfLp2+uzZIY4vCydZO9dZIrSaaXFy/1rPVuON1qcMwJIgFb+
-KdPNRkS/IPC/G5dBEt8uhm9aAsKsMP9E7Vbbdhj8ukCfwJmnLsfUZzK7NjYmuFPG
-ZpsvcbodKstmozvlz52t/+nqArw/yHqno7lPyKVjQH/PNzcQFjYtqghfysacoAIk
-g/lw+bnZm6980Z5wxWQjL0TIxWbtn/YIcUrb3PKsLBNlWw0/UhnAdvQ6B4MkDFHq
-F+dCzZ3PwBK7YqMFxeBMEd1O8U9A8++DnzAtFsroA8BTJeNKtTkvPohOzBOOrGbg
-9L7OWx+Q4Vr3Y6Tph7e7OfmA3EdxmvZdiMKntAtK9oEDmwISfBNYHTGqzGXiQirW
-KbX89WjHc8atuVKErpN88GN4z2cC9m0nHnITW/ozBBWQHwXmhK9Ir8nX2DdOrNDg
-zBrwzU8tXa0TuiNFEOaWO4c8MEjjQf+JIz0q5mgK/JnX/A5ur7E=
-=Mm+9
------END PGP SIGNATURE-----
 
---wj9ZLJVQDRFjGSdK--
+
+
+
+
+
+
+The information in this electronic mail ("e-mail") message is for=20
+the use of the named recipient(s) only and may be confidential.=C2=A0The=20
+information may be protected by privilege, work product immunity or other=
+=20
+applicable law. If you are not the intended=C2=A0recipient(s), the retentio=
+n,=20
+dissemination, distribution or copying of this e-mail message is strictly=
+=20
+prohibited. If you receive this=C2=A0e-mail message in error, please notify=
+ me=20
+immediately by replying to the message and thereafter, delete all copies on=
+=20
+your=C2=A0system and destroy any hard copies.=C2=A0
