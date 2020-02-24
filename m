@@ -6,32 +6,32 @@ X-Spam-Status: No, score=-6.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8A9CC35669
-	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 04:31:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 777E9C35669
+	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 04:32:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7AB5E20675
-	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 04:31:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 51AEA20658
+	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 04:32:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727221AbgBXEbX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 23 Feb 2020 23:31:23 -0500
-Received: from cloud.peff.net ([104.130.231.41]:52312 "HELO cloud.peff.net"
+        id S1727228AbgBXEc2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 23 Feb 2020 23:32:28 -0500
+Received: from cloud.peff.net ([104.130.231.41]:52320 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727186AbgBXEbX (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Feb 2020 23:31:23 -0500
-Received: (qmail 5198 invoked by uid 109); 24 Feb 2020 04:31:23 -0000
+        id S1727189AbgBXEc2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Feb 2020 23:32:28 -0500
+Received: (qmail 5207 invoked by uid 109); 24 Feb 2020 04:32:28 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 24 Feb 2020 04:31:23 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 24 Feb 2020 04:32:28 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6910 invoked by uid 111); 24 Feb 2020 04:40:28 -0000
+Received: (qmail 6928 invoked by uid 111); 24 Feb 2020 04:41:33 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 23 Feb 2020 23:40:28 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 23 Feb 2020 23:41:33 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Sun, 23 Feb 2020 23:31:22 -0500
+Date:   Sun, 23 Feb 2020 23:32:27 -0500
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
 Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH 04/10] pack-objects: use object_id struct in pack-reuse code
-Message-ID: <20200224043122.GD1018190@coredump.intra.peff.net>
+Subject: [PATCH 05/10] pack-bitmap: use object_id when loading on-disk bitmaps
+Message-ID: <20200224043227.GE1018190@coredump.intra.peff.net>
 References: <20200224042625.GA1015553@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -42,51 +42,83 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When the pack-reuse code is dumping an OFS_DELTA entry to a client that
-doesn't support it, we re-write it as a REF_DELTA. To do so, we use
-nth_packed_object_sha1() to get the oid, but that function is soon going
-away in favor of the more type-safe nth_packed_object_id(). Let's switch
-now in preparation.
+A pack bitmap file contains the index position of the commit for each
+bitmap, which we then translate into an object id via
+nth_packed_object_sha1(). In preparation for that function going away,
+we can switch to the more type-safe nth_packed_object_id().
 
-Note that this does incur an extra hash copy (from the pack idx mmap to
-the object_id and then to the output, rather than straight from mmap to
-the output). But this is not worth worrying about. It's probably not
-measurable even when it triggers, and this is fallback code that we
-expect to trigger very rarely (since everybody supports OFS_DELTA these
-days anyway).
+Note that even though the result ends up in an object_id this does incur
+an extra copy of the hash (into our temporary object_id, and then into
+the final malloc'd stored_bitmap struct). This shouldn't make any
+measurable difference. If it did, we could avoid this copy _and_ the
+copy of the rest of the items by allocating the stored_bitmap struct
+beforehand and reading directly into it from the bitmap file. Or better
+still, if this is a bottleneck, we could introduce an on-disk index to
+the bitmap file so we don't have to read every single entry to use just
+one of them. So it's not worth worrying about micro-optimizing out this
+one hash copy.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-If you haven't read brian's series, yes, that ugly bare 20 should be
-the_hash_algo->rawsz.
+ pack-bitmap.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
- builtin/pack-objects.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
-
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 44f44fcb1a..73fca2cb17 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -872,14 +872,15 @@ static void write_reused_pack_one(size_t pos, struct hashfile *out,
- 		/* Convert to REF_DELTA if we must... */
- 		if (!allow_ofs_delta) {
- 			int base_pos = find_revindex_position(reuse_packfile, base_offset);
--			const unsigned char *base_sha1 =
--				nth_packed_object_sha1(reuse_packfile,
--						       reuse_packfile->revindex[base_pos].nr);
-+			struct object_id base_oid;
-+
-+			nth_packed_object_id(&base_oid, reuse_packfile,
-+					     reuse_packfile->revindex[base_pos].nr);
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index c81d323329..1a067885a1 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -169,7 +169,7 @@ static int load_bitmap_header(struct bitmap_index *index)
  
- 			len = encode_in_pack_object_header(header, sizeof(header),
- 							   OBJ_REF_DELTA, size);
- 			hashwrite(out, header, len);
--			hashwrite(out, base_sha1, 20);
-+			hashwrite(out, base_oid.hash, 20);
- 			copy_pack_data(out, reuse_packfile, w_curs, cur, next - cur);
- 			return;
+ static struct stored_bitmap *store_bitmap(struct bitmap_index *index,
+ 					  struct ewah_bitmap *root,
+-					  const unsigned char *hash,
++					  const struct object_id *oid,
+ 					  struct stored_bitmap *xor_with,
+ 					  int flags)
+ {
+@@ -181,15 +181,15 @@ static struct stored_bitmap *store_bitmap(struct bitmap_index *index,
+ 	stored->root = root;
+ 	stored->xor = xor_with;
+ 	stored->flags = flags;
+-	oidread(&stored->oid, hash);
++	oidcpy(&stored->oid, oid);
+ 
+ 	hash_pos = kh_put_oid_map(index->bitmaps, stored->oid, &ret);
+ 
+ 	/* a 0 return code means the insertion succeeded with no changes,
+ 	 * because the SHA1 already existed on the map. this is bad, there
+ 	 * shouldn't be duplicated commits in the index */
+ 	if (ret == 0) {
+-		error("Duplicate entry in bitmap index: %s", hash_to_hex(hash));
++		error("Duplicate entry in bitmap index: %s", oid_to_hex(oid));
+ 		return NULL;
+ 	}
+ 
+@@ -221,13 +221,13 @@ static int load_bitmap_entries_v1(struct bitmap_index *index)
+ 		struct ewah_bitmap *bitmap = NULL;
+ 		struct stored_bitmap *xor_bitmap = NULL;
+ 		uint32_t commit_idx_pos;
+-		const unsigned char *sha1;
++		struct object_id oid;
+ 
+ 		commit_idx_pos = read_be32(index->map, &index->map_pos);
+ 		xor_offset = read_u8(index->map, &index->map_pos);
+ 		flags = read_u8(index->map, &index->map_pos);
+ 
+-		sha1 = nth_packed_object_sha1(index->pack, commit_idx_pos);
++		nth_packed_object_id(&oid, index->pack, commit_idx_pos);
+ 
+ 		bitmap = read_bitmap_1(index);
+ 		if (!bitmap)
+@@ -244,7 +244,7 @@ static int load_bitmap_entries_v1(struct bitmap_index *index)
  		}
+ 
+ 		recent_bitmaps[i % MAX_XOR_OFFSET] = store_bitmap(
+-			index, bitmap, sha1, xor_bitmap, flags);
++			index, bitmap, &oid, xor_bitmap, flags);
+ 	}
+ 
+ 	return 0;
 -- 
 2.25.1.823.g95c5488cf7
 
