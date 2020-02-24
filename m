@@ -2,76 +2,155 @@ Return-Path: <SRS0=prLJ=4M=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6ADDFC35679
-	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 08:39:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B6E63C35679
+	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 09:12:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 25AF920661
-	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 08:39:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7FCFB20828
+	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 09:12:54 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=booking.com header.i=@booking.com header.b="qpp/IrFx"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IWK50XbM"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727283AbgBXIjm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Feb 2020 03:39:42 -0500
-Received: from mailout-101-r1.booking.com ([37.10.31.1]:54352 "EHLO
-        mailout-101-r1.booking.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727168AbgBXIjm (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 24 Feb 2020 03:39:42 -0500
-X-Greylist: delayed 369 seconds by postgrey-1.27 at vger.kernel.org; Mon, 24 Feb 2020 03:39:41 EST
+        id S1728044AbgBXJKA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Feb 2020 04:10:00 -0500
+Received: from mail-yw1-f65.google.com ([209.85.161.65]:41545 "EHLO
+        mail-yw1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728031AbgBXJJ7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Feb 2020 04:09:59 -0500
+Received: by mail-yw1-f65.google.com with SMTP id l22so4890777ywc.8
+        for <git@vger.kernel.org>; Mon, 24 Feb 2020 01:09:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=9ULdO9o2/eahToGb/73glhTnwAFb3IpEjKHGZeffytQ=;
+        b=IWK50XbMJe8XtMpYeRiixP7S0cJCtGJmADliNVOTso0uKt0CuvJ1BMmGBBYum5H8YK
+         dR9qoeQpquP5t6UUci9RGP+kw0AF/s4fn/RaCsAWicFxIqgcp79AtSePwOcq2Gg6fIDg
+         O/KmD4fgGziMEoOZn4VjFoBXEwdFxnOt3bHs2BSpPIlMTQIfD20wK8IDpwPYPYDIUYAy
+         HMaCrFxq9h7FhVHZA2E6NVdxrM+fzX5S+Yv7ayCGIaHcQxaFO2S8SmSM6rZs7voKgw1E
+         oNRaVkxaASxwRbXsgsD2kDTkZWti7gfJFpcC1pSKl8cqMSAamHCjPaSA4r9UAEsChugG
+         /+rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:content-transfer-encoding:mime-version:date
-         :subject:message-id:to;
-        bh=BmPo7+9eXRXPyiZtst0kjKyynZ/10BFDBKWkR1CqMhY=;
-        b=hxQ44lnhx1yNXQeQ7TpjHxzMN46hmbYUUkaWsc2wD+IbeHQ2GMUJFV5GJrNU9P/k3E
-         1N6pkb4rtVZKoolPJvfEdlLjdLLzsSobLtPPoyQQwuFNuYN/nibABL64Rc9TWOEU4+Ut
-         QcVYfv53jjXR6K+HkQZaq++go6uCMsoXQxqb8XkQemtU1r6YBdrraLSc9e2NFS/iTw9U
-         8QgPHE6o7HghPtPEJebkh0bQy1qd4ruye+7I0+kpX04o2ppW9D59UdAl+XgAfBx9hNor
-         4e/QtrHVH5Lii5JjaE3JJqwK31lmn2PEGsD+ZEjUZ4ZCMnfMqakt6ziR/aE5pgJ0+aNH
-         TPxA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=booking.com; s=bk;
-        t=1582533211; bh=BmPo7+9eXRXPyiZtst0kjKyynZ/10BFDBKWkR1CqMhY=;
-        h=From:Content-Type:Mime-Version:Date:Subject:Message-Id:To:From;
-        b=qpp/IrFxLyXGiMN+VZqyAFHsg/NddLKZ9TTV/MK+/LHgeAaxODVl/nDNcE7+xyjrx
-         hZtn43LrdB5RnpCZ86883+FCL5K/VLhARGruTqiNUNA7/AQnIZHZKi+V+7qWb3BUwW
-         MIZkuovj3hp2TEtR7pD0Vi553/bugH78iym/Gvd4=
-X-Gm-Message-State: APjAAAWh7pttufmvf4jo6M3WPWJKfeBqHxYWyUztar3lpgjEQHOh6Uqr
-        8Z37e/6UdRxSWeXyj3eFYYeT9NLuiboqAAPHQn7zkIZbbTj2uXvRuV50Z+6S0kHbcOEoGg8VITC
-        6r9vS42dd4T/ySbIJQ13/MNo=
-X-Received: by 2002:a5d:66ca:: with SMTP id k10mr14058370wrw.194.1582533210904;
-        Mon, 24 Feb 2020 00:33:30 -0800 (PST)
-X-Google-Smtp-Source: APXvYqwi2WXK8eH27sMXhZIvHvaoJfvjpxGlRZvhv5Yp7VL94cfpsACGvURHv8AAq4MZtoqUShrRQw==
-X-Received: by 2002:a5d:66ca:: with SMTP id k10mr14058356wrw.194.1582533210719;
-        Mon, 24 Feb 2020 00:33:30 -0800 (PST)
-From:   Son Luong Ngoc <son.luong@booking.com>
-Content-Type: text/plain;
-        charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.60.0.2.5\))
-Date:   Mon, 24 Feb 2020 09:33:31 +0100
-Subject: Git Rebase: test failing with GIT_TEST_STASH_USE_BUILTIN=false
-Message-Id: <61922A39-13DC-4B17-94FC-7F67DF308347@booking.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+         :in-reply-to:references:mime-version:content-transfer-encoding;
+        bh=9ULdO9o2/eahToGb/73glhTnwAFb3IpEjKHGZeffytQ=;
+        b=Vd46cosREqN9iaqcpc0dKh9Gyge/8jPIpzxxuRUl9o21G1V+MfRj+WHqrq6tEbYV/J
+         /HmRXbPXO6KNa9teoNvRu5mW6QUxMDIoJMLcPeCYVj3njvu+WbD6VzDCgG4RupfTFSwy
+         cMR4QUKOb/A2i6FTfAmgtw7220X2TesDu3tkHPfDuZdiuM1q9UokhUuR4RurGMIo8h7U
+         Y9j2KpzDBZ3B7GcYFuudAuQDaGlfWKYcelVq7khfxtJN6MCldTLJ9ONkiyi/VUOPJxhG
+         62y1yfWOSWTSb5k/j/K8N+N+YHJ+zS2moMxEMHhzq5FVUhlL9gf1ojA0zLoWxFT629h1
+         YhnQ==
+X-Gm-Message-State: APjAAAUKTrqh9jJTRRFDhHQhQJr55m/GJO7vfT2erPNFxmSHUr9mqsEq
+        YJiSQ4TxBfZNGUAj/5R4516ZHgjc
+X-Google-Smtp-Source: APXvYqyMd0iVICJ/SB9uWRZ6rcyxwdeYt4yrLgz1u+uRnj35V6K71iEAzHtgVXOc0QGFT5TPOu5i/A==
+X-Received: by 2002:a81:5056:: with SMTP id e83mr38656229ywb.414.1582535397287;
+        Mon, 24 Feb 2020 01:09:57 -0800 (PST)
+Received: from localhost.localdomain (user-12l2dpj.cable.mindspring.com. [69.81.55.51])
+        by smtp.gmail.com with ESMTPSA id g29sm5045988ywk.31.2020.02.24.01.09.56
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 24 Feb 2020 01:09:56 -0800 (PST)
+From:   Eric Sunshine <sunshine@sunshineco.com>
 To:     git@vger.kernel.org
-X-Mailer: Apple Mail (2.3608.60.0.2.5)
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Cameron Gunnin <cameron.gunnin@synopsys.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH 2/3] worktree: add utility to find worktree by pathname
+Date:   Mon, 24 Feb 2020 04:08:47 -0500
+Message-Id: <20200224090848.54321-3-sunshine@sunshineco.com>
+X-Mailer: git-send-email 2.25.1.526.gf05a752211
+In-Reply-To: <20200224090848.54321-1-sunshine@sunshineco.com>
+References: <CAPig+cQh8hxeoVjLHDKhAcZVQPpPT5v0AUY8gsL9=qfJ7z-L2A@mail.gmail.com>
+ <20200224090848.54321-1-sunshine@sunshineco.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey git folks,
+find_worktree() employs heuristics to match user provided input -- which
+may be a pathname or some sort of shorthand -- with an actual worktree.
+Although this convenience allows a user to identify a worktree with
+minimal typing, the black-box nature of these heuristics makes it
+potentially difficult for callers which already know the exact path of a
+worktree to be confident that the correct worktree will be returned for
+any specific pathname (particularly a relative one), especially as the
+heuristics are enhanced and updated.
 
-I have been trying to build git from source and noticing that some tests =
-have been failing since 2.25 with the flag =
-"GIT_TEST_STASH_USE_BUILTIN=3Dfalse"
+Therefore, add a companion function, find_worktree_by_path(), which
+deterministically identifies a worktree strictly by pathname with no
+interpretation and no magic matching.
 
-I think in 2.25 t3903.103 started to fail (rebase related) and current =
-master t3904 may be failing also.
+Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+---
+ worktree.c | 16 ++++++++++------
+ worktree.h |  6 ++++++
+ 2 files changed, 16 insertions(+), 6 deletions(-)
 
-Is "GIT_TEST_STASH_USE_BUILTIN=3Dfalse" is still being tested with or =
-are we totally deprecating this flag?
+diff --git a/worktree.c b/worktree.c
+index 5b4793caa3..43c6685d4e 100644
+--- a/worktree.c
++++ b/worktree.c
+@@ -215,7 +215,6 @@ struct worktree *find_worktree(struct worktree **list,
+ 			       const char *arg)
+ {
+ 	struct worktree *wt;
+-	char *path;
+ 	char *to_free = NULL;
+ 
+ 	if ((wt = find_worktree_by_suffix(list, arg)))
+@@ -223,11 +222,17 @@ struct worktree *find_worktree(struct worktree **list,
+ 
+ 	if (prefix)
+ 		arg = to_free = prefix_filename(prefix, arg);
+-	path = real_pathdup(arg, 0);
+-	if (!path) {
+-		free(to_free);
++	wt = find_worktree_by_path(list, arg);
++	free(to_free);
++	return wt;
++}
++
++struct worktree *find_worktree_by_path(struct worktree **list, const char *p)
++{
++	char *path = real_pathdup(p, 0);
++
++	if (!path)
+ 		return NULL;
+-	}
+ 	for (; *list; list++) {
+ 		const char *wt_path = real_path_if_valid((*list)->path);
+ 
+@@ -235,7 +240,6 @@ struct worktree *find_worktree(struct worktree **list,
+ 			break;
+ 	}
+ 	free(path);
+-	free(to_free);
+ 	return *list;
+ }
+ 
+diff --git a/worktree.h b/worktree.h
+index b8a851b92b..d242a6e71c 100644
+--- a/worktree.h
++++ b/worktree.h
+@@ -61,6 +61,12 @@ struct worktree *find_worktree(struct worktree **list,
+ 			       const char *prefix,
+ 			       const char *arg);
+ 
++/*
++ * Return the worktree corresponding to `path`, or NULL if no such worktree
++ * exists.
++ */
++struct worktree *find_worktree_by_path(struct worktree **, const char *path);
++
+ /*
+  * Return true if the given worktree is the main one.
+  */
+-- 
+2.25.1.526.gf05a752211
 
-Cheers,
-Son Luong.=
