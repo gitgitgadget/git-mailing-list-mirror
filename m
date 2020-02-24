@@ -6,33 +6,32 @@ X-Spam-Status: No, score=-6.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CDC3C35641
-	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 04:30:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A8A9CC35669
+	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 04:31:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id DD2A120658
-	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 04:30:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7AB5E20675
+	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 04:31:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727236AbgBXEaJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 23 Feb 2020 23:30:09 -0500
-Received: from cloud.peff.net ([104.130.231.41]:52304 "HELO cloud.peff.net"
+        id S1727221AbgBXEbX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 23 Feb 2020 23:31:23 -0500
+Received: from cloud.peff.net ([104.130.231.41]:52312 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727189AbgBXEaJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Feb 2020 23:30:09 -0500
-Received: (qmail 5189 invoked by uid 109); 24 Feb 2020 04:30:09 -0000
+        id S1727186AbgBXEbX (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Feb 2020 23:31:23 -0500
+Received: (qmail 5198 invoked by uid 109); 24 Feb 2020 04:31:23 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 24 Feb 2020 04:30:09 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 24 Feb 2020 04:31:23 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6891 invoked by uid 111); 24 Feb 2020 04:39:13 -0000
+Received: (qmail 6910 invoked by uid 111); 24 Feb 2020 04:40:28 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 23 Feb 2020 23:39:13 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 23 Feb 2020 23:40:28 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Sun, 23 Feb 2020 23:30:07 -0500
+Date:   Sun, 23 Feb 2020 23:31:22 -0500
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
 Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH 03/10] pack-objects: convert oe_set_delta_ext() to use
- object_id
-Message-ID: <20200224043007.GC1018190@coredump.intra.peff.net>
+Subject: [PATCH 04/10] pack-objects: use object_id struct in pack-reuse code
+Message-ID: <20200224043122.GD1018190@coredump.intra.peff.net>
 References: <20200224042625.GA1015553@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -43,64 +42,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We already store an object_id internally, and now our sole caller also
-has one. Let's stop passing around the internal hash array, which adds a
-bit of type safety.
+When the pack-reuse code is dumping an OFS_DELTA entry to a client that
+doesn't support it, we re-write it as a REF_DELTA. To do so, we use
+nth_packed_object_sha1() to get the oid, but that function is soon going
+away in favor of the more type-safe nth_packed_object_id(). Let's switch
+now in preparation.
+
+Note that this does incur an extra hash copy (from the pack idx mmap to
+the object_id and then to the output, rather than straight from mmap to
+the output). But this is not worth worrying about. It's probably not
+measurable even when it triggers, and this is fallback code that we
+expect to trigger very rarely (since everybody supports OFS_DELTA these
+days anyway).
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/pack-objects.c | 2 +-
- pack-objects.c         | 4 ++--
- pack-objects.h         | 2 +-
- 3 files changed, 4 insertions(+), 4 deletions(-)
+If you haven't read brian's series, yes, that ugly bare 20 should be
+the_hash_algo->rawsz.
+
+ builtin/pack-objects.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
 diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 8692ab3fe6..44f44fcb1a 100644
+index 44f44fcb1a..73fca2cb17 100644
 --- a/builtin/pack-objects.c
 +++ b/builtin/pack-objects.c
-@@ -1756,7 +1756,7 @@ static void check_object(struct object_entry *entry)
- 				entry->delta_sibling_idx = base_entry->delta_child_idx;
- 				SET_DELTA_CHILD(base_entry, entry);
- 			} else {
--				SET_DELTA_EXT(entry, base_ref.hash);
-+				SET_DELTA_EXT(entry, &base_ref);
- 			}
+@@ -872,14 +872,15 @@ static void write_reused_pack_one(size_t pos, struct hashfile *out,
+ 		/* Convert to REF_DELTA if we must... */
+ 		if (!allow_ofs_delta) {
+ 			int base_pos = find_revindex_position(reuse_packfile, base_offset);
+-			const unsigned char *base_sha1 =
+-				nth_packed_object_sha1(reuse_packfile,
+-						       reuse_packfile->revindex[base_pos].nr);
++			struct object_id base_oid;
++
++			nth_packed_object_id(&base_oid, reuse_packfile,
++					     reuse_packfile->revindex[base_pos].nr);
  
- 			unuse_pack(&w_curs);
-diff --git a/pack-objects.c b/pack-objects.c
-index 5e5a3c62d9..f2a433885a 100644
---- a/pack-objects.c
-+++ b/pack-objects.c
-@@ -203,14 +203,14 @@ struct object_entry *packlist_alloc(struct packing_data *pdata,
- 
- void oe_set_delta_ext(struct packing_data *pdata,
- 		      struct object_entry *delta,
--		      const unsigned char *sha1)
-+		      const struct object_id *oid)
- {
- 	struct object_entry *base;
- 
- 	ALLOC_GROW(pdata->ext_bases, pdata->nr_ext + 1, pdata->alloc_ext);
- 	base = &pdata->ext_bases[pdata->nr_ext++];
- 	memset(base, 0, sizeof(*base));
--	hashcpy(base->idx.oid.hash, sha1);
-+	oidcpy(&base->idx.oid, oid);
- 
- 	/* These flags mark that we are not part of the actual pack output. */
- 	base->preferred_base = 1;
-diff --git a/pack-objects.h b/pack-objects.h
-index d3975e079b..9d88e3e518 100644
---- a/pack-objects.h
-+++ b/pack-objects.h
-@@ -292,7 +292,7 @@ static inline void oe_set_delta(struct packing_data *pack,
- 
- void oe_set_delta_ext(struct packing_data *pack,
- 		      struct object_entry *e,
--		      const unsigned char *sha1);
-+		      const struct object_id *oid);
- 
- static inline struct object_entry *oe_delta_child(
- 		const struct packing_data *pack,
+ 			len = encode_in_pack_object_header(header, sizeof(header),
+ 							   OBJ_REF_DELTA, size);
+ 			hashwrite(out, header, len);
+-			hashwrite(out, base_sha1, 20);
++			hashwrite(out, base_oid.hash, 20);
+ 			copy_pack_data(out, reuse_packfile, w_curs, cur, next - cur);
+ 			return;
+ 		}
 -- 
 2.25.1.823.g95c5488cf7
 
