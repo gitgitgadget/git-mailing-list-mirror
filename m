@@ -2,107 +2,76 @@ Return-Path: <SRS0=prLJ=4M=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 44D5DC35679
-	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 07:30:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6ADDFC35679
+	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 08:39:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1625520578
-	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 07:30:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 25AF920661
+	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 08:39:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UsVE8XOD"
+	dkim=pass (1024-bit key) header.d=booking.com header.i=@booking.com header.b="qpp/IrFx"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726536AbgBXHax (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Feb 2020 02:30:53 -0500
-Received: from mail-ed1-f54.google.com ([209.85.208.54]:41204 "EHLO
-        mail-ed1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725792AbgBXHax (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Feb 2020 02:30:53 -0500
-Received: by mail-ed1-f54.google.com with SMTP id c26so10732475eds.8
-        for <git@vger.kernel.org>; Sun, 23 Feb 2020 23:30:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=VcV9D0VHSu2k9d3anro6DWjNUtaxysg2zCQchU5c0wY=;
-        b=UsVE8XOD5OWRtHw71ziHLswexcegtSj52d4GZetv7ENVM49tmkQ6cFY2TZsZiofNU/
-         EaMt/xettZYXcQVCC0KBOXEuDW4iJSAxDJFm+A9MTMgwnV63R9yLIA9QQnM3XrAL/CBy
-         8dc6MfCOhOXHjydRb5zaydPc23CPVAHR7ltMAKvMO5KdjT162Zu75iNQJ8Mg+wi6G6DF
-         5SbPR6bAbw6EvGHKnZs9OH4wT6JnvvVtm5Q4bp3K/kXS+BfxvbMJ1nBOlG88XLMW60uw
-         wcWkmW+VsSJoxsu4RZo7bfA2TC4li7T7xXW5b2oT9rS4bg4jWY13lD/3NHN5mv+dsJzG
-         VZ1Q==
+        id S1727283AbgBXIjm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Feb 2020 03:39:42 -0500
+Received: from mailout-101-r1.booking.com ([37.10.31.1]:54352 "EHLO
+        mailout-101-r1.booking.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727168AbgBXIjm (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 24 Feb 2020 03:39:42 -0500
+X-Greylist: delayed 369 seconds by postgrey-1.27 at vger.kernel.org; Mon, 24 Feb 2020 03:39:41 EST
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=VcV9D0VHSu2k9d3anro6DWjNUtaxysg2zCQchU5c0wY=;
-        b=LV4Ob6j0lnVdUmfLrt19L7BsTPLlKMz9+h+UMQ/mlD0rQeWZJNmAfl/Aqb66e1zK1g
-         e+hvvpFPvdmGD52DaJgCXFOAjHoOUlhID2BF4VZCLznWKEMJNYfFFxpdqV5j246AJWPB
-         C3e1NRd/zFBEInZd7p/gm01cH6CQG7PE1tMS1n+Exj6LZtT2Td9rCOEATruPjwHhGhlP
-         KPpnz6/CACGSfx2CJAbCAu78DisI9qad81gXI0WjKst46SpjFYwxBROCrU/kWBJ1dyao
-         kFM4Tk0B1oQrHhNC9+QlIQYVci5M3CxHyRLSG21d2gd4a8a9ACzhLHWwVi+U7ArPIlSc
-         K51Q==
-X-Gm-Message-State: APjAAAU53nEXdlQm/8bRjk8+Fv3NQ3bsW08dUc8E9NNt2N3gHrf7bsMc
-        opzzjkveN7v64uU9uFtTy6NurTYlUh9OYbIQSkw=
-X-Google-Smtp-Source: APXvYqwyFnhJ3wZ/YmatYS4PLOA7Y+pSGi4yUUgC4/FuLGWF9iTMNuUYF0CE5XpKtAoalPy+8pcNi0HJm3R6rwst+cc=
-X-Received: by 2002:a05:6402:3088:: with SMTP id de8mr26233158edb.87.1582529450814;
- Sun, 23 Feb 2020 23:30:50 -0800 (PST)
-MIME-Version: 1.0
-References: <20200122053455.GA51054@coredump.intra.peff.net>
- <CAP8UFD1-cswU0gSX3a2KqiExhYgY_qMZ6Sz7FHdxs7mrb_hh-w@mail.gmail.com>
- <CAP8UFD2_qmB1q9vhz=BJo3XG4jnLWDPhCVVb4gAh_pfKoGnZJQ@mail.gmail.com>
- <20200204163716.GA7308@coredump.intra.peff.net> <CAP8UFD3UewcZ3oid_SiUYuFEO49JTzaSigHDTP8OPs2yh6s6zA@mail.gmail.com>
- <CACg5j25_098i=rU++OB=YSbAFjCQdgUX7gP6D-9yo6F_A_yn0w@mail.gmail.com>
- <CAP8UFD1QbOK9g2oAhfTm2npoNF9Ay_HiAfFai9rJwZzc73cBbw@mail.gmail.com>
- <20200221183003.GA9786@coredump.intra.peff.net> <CACg5j24mH0LRHXbhgf16f+7KqOnrsh7BRovh8mR6AzHG=y5gFA@mail.gmail.com>
-In-Reply-To: <CACg5j24mH0LRHXbhgf16f+7KqOnrsh7BRovh8mR6AzHG=y5gFA@mail.gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 24 Feb 2020 08:30:39 +0100
-Message-ID: <CAP8UFD0DgRd1MZTyLUw2giBCfuS2syivSvRadrBjE0276vjtNA@mail.gmail.com>
-Subject: Re: GSoC and Outreachy Summer 2020?
-To:     Heba Waly <heba.waly@gmail.com>
-Cc:     Jeff King <peff@peff.net>, git <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:content-transfer-encoding:mime-version:date
+         :subject:message-id:to;
+        bh=BmPo7+9eXRXPyiZtst0kjKyynZ/10BFDBKWkR1CqMhY=;
+        b=hxQ44lnhx1yNXQeQ7TpjHxzMN46hmbYUUkaWsc2wD+IbeHQ2GMUJFV5GJrNU9P/k3E
+         1N6pkb4rtVZKoolPJvfEdlLjdLLzsSobLtPPoyQQwuFNuYN/nibABL64Rc9TWOEU4+Ut
+         QcVYfv53jjXR6K+HkQZaq++go6uCMsoXQxqb8XkQemtU1r6YBdrraLSc9e2NFS/iTw9U
+         8QgPHE6o7HghPtPEJebkh0bQy1qd4ruye+7I0+kpX04o2ppW9D59UdAl+XgAfBx9hNor
+         4e/QtrHVH5Lii5JjaE3JJqwK31lmn2PEGsD+ZEjUZ4ZCMnfMqakt6ziR/aE5pgJ0+aNH
+         TPxA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=booking.com; s=bk;
+        t=1582533211; bh=BmPo7+9eXRXPyiZtst0kjKyynZ/10BFDBKWkR1CqMhY=;
+        h=From:Content-Type:Mime-Version:Date:Subject:Message-Id:To:From;
+        b=qpp/IrFxLyXGiMN+VZqyAFHsg/NddLKZ9TTV/MK+/LHgeAaxODVl/nDNcE7+xyjrx
+         hZtn43LrdB5RnpCZ86883+FCL5K/VLhARGruTqiNUNA7/AQnIZHZKi+V+7qWb3BUwW
+         MIZkuovj3hp2TEtR7pD0Vi553/bugH78iym/Gvd4=
+X-Gm-Message-State: APjAAAWh7pttufmvf4jo6M3WPWJKfeBqHxYWyUztar3lpgjEQHOh6Uqr
+        8Z37e/6UdRxSWeXyj3eFYYeT9NLuiboqAAPHQn7zkIZbbTj2uXvRuV50Z+6S0kHbcOEoGg8VITC
+        6r9vS42dd4T/ySbIJQ13/MNo=
+X-Received: by 2002:a5d:66ca:: with SMTP id k10mr14058370wrw.194.1582533210904;
+        Mon, 24 Feb 2020 00:33:30 -0800 (PST)
+X-Google-Smtp-Source: APXvYqwi2WXK8eH27sMXhZIvHvaoJfvjpxGlRZvhv5Yp7VL94cfpsACGvURHv8AAq4MZtoqUShrRQw==
+X-Received: by 2002:a5d:66ca:: with SMTP id k10mr14058356wrw.194.1582533210719;
+        Mon, 24 Feb 2020 00:33:30 -0800 (PST)
+From:   Son Luong Ngoc <son.luong@booking.com>
+Content-Type: text/plain;
+        charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.60.0.2.5\))
+Date:   Mon, 24 Feb 2020 09:33:31 +0100
+Subject: Git Rebase: test failing with GIT_TEST_STASH_USE_BUILTIN=false
+Message-Id: <61922A39-13DC-4B17-94FC-7F67DF308347@booking.com>
+To:     git@vger.kernel.org
+X-Mailer: Apple Mail (2.3608.60.0.2.5)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Heba,
+Hey git folks,
 
-On Sat, Feb 22, 2020 at 8:20 AM Heba Waly <heba.waly@gmail.com> wrote:
->
-> On Sat, Feb 22, 2020 at 7:30 AM Jeff King <peff@peff.net> wrote:
-> >
-> > On Fri, Feb 21, 2020 at 05:03:47PM +0100, Christian Couder wrote:
-> >
-> > > > I'd be happy to co-mentor an Outreachy intern with an experienced
-> > > > mentor, hope I'm not too late.
-> > >
-> > > Thank you for your interest in co-mentoring! It's very much appreciated!
-> > >
-> > > I don't think you are late. It seems that February 25 at 4pm UTC is
-> > > the deadline for project submission.
-> >
-> > I think it is too late. That's the deadline for mentor project
-> > submission, but the signup for orgs was Feb 18th.
->
-> You're right, but they mentioned on the website that Feb 18th is for
-> new communities who haven't participated before. I double checked with
-> the Outreachy organizers and they can still add Git if there's funding
-> and a mentor is interested.
->
-> I'm happy to help and co-mentor on any of the two programs.
+I have been trying to build git from source and noticing that some tests =
+have been failing since 2.25 with the flag =
+"GIT_TEST_STASH_USE_BUILTIN=3Dfalse"
 
-Great! Hopefully someone (perhaps Dscho) will be willing to co-mentor
-an Outreachy intern with you, otherwise I will be happy to co-mentor a
-GSoC student with you.
+I think in 2.25 t3903.103 started to fail (rebase related) and current =
+master t3904 may be failing also.
 
-Thanks,
-Christian.
+Is "GIT_TEST_STASH_USE_BUILTIN=3Dfalse" is still being tested with or =
+are we totally deprecating this flag?
+
+Cheers,
+Son Luong.=
