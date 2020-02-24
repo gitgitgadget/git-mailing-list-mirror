@@ -2,198 +2,133 @@ Return-Path: <SRS0=prLJ=4M=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-13.2 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E75F8C38BFA
-	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 21:51:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 14EB4C38BF9
+	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 22:04:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id AB6A220CC7
-	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 21:51:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D64B720CC7
+	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 22:04:22 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BATBcOyC"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Sw3C5cRo"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727950AbgBXVvx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Feb 2020 16:51:53 -0500
-Received: from mail-qk1-f194.google.com ([209.85.222.194]:33715 "EHLO
-        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726980AbgBXVvx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Feb 2020 16:51:53 -0500
-Received: by mail-qk1-f194.google.com with SMTP id h4so10155092qkm.0
-        for <git@vger.kernel.org>; Mon, 24 Feb 2020 13:51:52 -0800 (PST)
+        id S1727841AbgBXWEW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Feb 2020 17:04:22 -0500
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:45260 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727421AbgBXWEV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Feb 2020 17:04:21 -0500
+Received: by mail-pf1-f195.google.com with SMTP id 2so6031125pfg.12
+        for <git@vger.kernel.org>; Mon, 24 Feb 2020 14:04:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=DklSjgHVwhgRcDb70O2qZC+oA6+ppuEFGq/NuFWrheE=;
-        b=BATBcOyCo7/eMUqHZWkG0D9WvFC83GeuWn3j+XV6l+5gNgM6S6zEsWS36mpNEKv9E8
-         ZY4bQ2pIWpmEGiiLuM5m2UoP2bRiNOlbgc+hzAXjtpOk/AfsKpgMIq1UOGACevkP5qAi
-         jSDSw9hGfbXqPFoXjY0hxbNg+Zlr0erUxcwyUvzQE0fTDpXScxUhJoYBJvcm/i/gkTiw
-         QHCahYUu9GLh13uOf3epcShprzHzf4NwO9r1SW/ZtgMbAseOHJ+0IwFrdUZV4ApDD2cY
-         eKL5ETNGG3iIzpK/+6fi+ijKaN6m+EPnhWeCRTLr9uPbNOEFUi94/TnjBbJsW8qqujVb
-         gAAA==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=hGVDRPwTauv6VbvUYoepGs7y8/zUNVZ8coe1JyRube0=;
+        b=Sw3C5cRoUrDKRCsPYz9eSfQ2GnRMgY2ZojfsCEx8RegY5aAPwTfY2eG2K8T5MbRyZz
+         Lwq69fzKiJwAd5SHKY9x+OWaNEZy1ltZ7vLcNhZ060PcSGGhOUA+7ZN+0z49fRPfb7aP
+         o7ScbgqN4GVdgLfONcaD7qVRNonTxqZYocjA6nWwIjx1HSUJt6rJzCmnBzLYa67iO/be
+         NXEkZ2fl0Z1u5gWbHzbD8yMDBz/ElQuw9eXgrI0il016FiHGAyangMSsP7rJkOv6pYVa
+         2qtxjlBOq4+SBgTKNLK9k6Ocf04kRB7Fi1b/LaPJ++0lSGRBuay5IxEuDIiKmlPsnKKc
+         DPqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=DklSjgHVwhgRcDb70O2qZC+oA6+ppuEFGq/NuFWrheE=;
-        b=f631oH13XbCus9EJhbmJlw3N/wA9x3H//9gbKG3kymdHx5AngaqrNH6FmDq22kQKRn
-         EvjgQyf3/XGSoQDdlFiF/50sFiHFtad66HQGN+0gqWQT7acZNFkghmdTs8Kh+LeXi4fk
-         H9yBknj434bXGkp2Bj41A0KN9RTf4wXFbTBB+JJO2tsbD9MfawDxtl2kUMbLt+nZtgwP
-         s0EDtg5cqeUBvHmArywa+GR6C1yhdkbs+cXu+AA65eI5PmIyvtNdJLYETV9IjpDuzLDO
-         4bLMmOz2Fi7nl3NdqAR6IEzH/JidnqVmi13basVlmZhj0Dh6GCc/CcmUXFdk/hfXei8h
-         kADA==
-X-Gm-Message-State: APjAAAUUz19ruPlSajVU12Q4UiwjSwii39ATS8BWtV85eNiwztSH2qM4
-        Y9+Ko/QsETp9MN17xF0R+Rs=
-X-Google-Smtp-Source: APXvYqxQo1ZvdqMRq//+zYCMuNFxf50eIJyIKccIFhQeyse6nQ+qFM5L8MLN/Q/wTd3SUpIxIY40Ew==
-X-Received: by 2002:a37:6e06:: with SMTP id j6mr15757673qkc.171.1582581112253;
-        Mon, 24 Feb 2020 13:51:52 -0800 (PST)
-Received: from ?IPv6:2001:4898:6808:13f:68d1:9775:6b44:857a? ([2001:4898:a800:1010:1a08:9775:6b44:857a])
-        by smtp.gmail.com with ESMTPSA id h12sm6609770qtn.56.2020.02.24.13.51.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 24 Feb 2020 13:51:51 -0800 (PST)
-Subject: Re: [PATCH v2 09/11] commit-graph: add --changed-paths option to
- write subcommand
-To:     Jakub Narebski <jnareb@gmail.com>,
-        Garima Singh via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
-        Christian Couder <christian.couder@gmail.com>,
-        Emily Shaffer <emilyshaffer@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Garima Singh <garima.singh@microsoft.com>
-References: <pull.497.git.1576879520.gitgitgadget@gmail.com>
- <pull.497.v2.git.1580943390.gitgitgadget@gmail.com>
- <3d7ee0c96955dc15c87d04982d8cdec8b62750b2.1580943390.git.gitgitgadget@gmail.com>
- <86y2sxdmw9.fsf@gmail.com>
-From:   Garima Singh <garimasigit@gmail.com>
-Message-ID: <56150788-c477-5526-2d6d-e9325ccb4da6@gmail.com>
-Date:   Mon, 24 Feb 2020 16:51:48 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=hGVDRPwTauv6VbvUYoepGs7y8/zUNVZ8coe1JyRube0=;
+        b=lYweWCyLVbgQPZV+aoB8f2vTbpF6ki/vEsQRomJ0dSeG/x9Yc8aOJjEfABRW4sL2KA
+         A8vXSdVV2EzAoRnWYAu3jDVI4OOAZmufxdtPKEjh+p4MqXZ7d3qLdMYZi996pZ+jmI38
+         Lv7iIfDjOKz27LLf5qikybwjErRJTEmsjhaL+4kjSSuIVb2sQNUFBpzQc8oi9KhX1HCQ
+         JHVmS6L1cP91E8bK6Tw3tr9Kds2afDtq9FVFGw0szIkUUUpHhh5EKymCQEdegE21W8A8
+         bCDJMikJ9JGnE3wcMWyMxyF8Exb5PzMSM7seimsLp4hh4i+myq5aHs2uH1/0F/wqXnK1
+         2kAw==
+X-Gm-Message-State: APjAAAVwcF+CpHcLVkfwrSgUrnxRs143HV02zulRPJx3InXUnsqbLISV
+        Cu+m6iJ1qlj5wRydi1G9g8Fcig==
+X-Google-Smtp-Source: APXvYqy9B2JUflsgNZzcRoAgcpMiFdRTUJGxdkcP72rSh55imHaY7LpW2f6Od2EpNX9KG2gGVg2b1Q==
+X-Received: by 2002:a63:8f5c:: with SMTP id r28mr54717170pgn.351.1582581860754;
+        Mon, 24 Feb 2020 14:04:20 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
+        by smtp.gmail.com with ESMTPSA id p21sm13886436pfn.103.2020.02.24.14.04.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 24 Feb 2020 14:04:20 -0800 (PST)
+Date:   Mon, 24 Feb 2020 14:04:15 -0800
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Heba Waly via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Heba Waly <heba.waly@gmail.com>
+Subject: Re: [PATCH v4 1/3] advice: extract vadvise() from advise()
+Message-ID: <20200224220415.GA255447@google.com>
+References: <pull.548.v3.git.1582144442.gitgitgadget@gmail.com>
+ <pull.548.v4.git.1582557199.gitgitgadget@gmail.com>
+ <f668d9b7ca04da1d8adf0a146b48a46559471501.1582557199.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <86y2sxdmw9.fsf@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <f668d9b7ca04da1d8adf0a146b48a46559471501.1582557199.git.gitgitgadget@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, Feb 24, 2020 at 03:13:16PM +0000, Heba Waly via GitGitGadget wrote:
+> From: Heba Waly <heba.waly@gmail.com>
+> 
+> In preparation for a new advice method, extract a version of advise()
+> that uses an explict 'va_list' parameter. Call it from advise() for a
+> functionally equivalent version.
+> 
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> Signed-off-by: Heba Waly <heba.waly@gmail.com>
 
+This seems very straightforward and now appears to be in the right
+commit order.
 
-On 2/20/2020 3:28 PM, Jakub Narebski wrote:
-> "Garima Singh via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> From: Garima Singh <garima.singh@microsoft.com>
->>
->> Add --changed-paths option to git commit-graph write. This option will
->> allow users to compute information about the paths that have changed
->> between a commit and its first parent, and write it into the commit graph
->> file. If the option is passed to the write subcommand we set the
->> COMMIT_GRAPH_WRITE_BLOOM_FILTERS flag and pass it down to the
->> commit-graph logic.
-> 
-> In the manpage you write that this operation (computing Bloom filters)
-> can take a while on large repositories.  Could you perhaps provide some
-> numbers: how much longer does it take to write commit-graph file with
-> and without '--changed-paths' for example for Linux kernel, or some
-> other large repository?  Thanks in advance.
-> 
+Reviewed-by: Emily Shaffer <emilyshaffer@google.com>
 
-Yes. Will include numbers as appropriate in v3. 
-
->>
->> Helped-by: Derrick Stolee <dstolee@microsoft.com>
->> Signed-off-by: Garima Singh <garima.singh@microsoft.com>
->> ---
->>  Documentation/git-commit-graph.txt | 5 +++++
->>  builtin/commit-graph.c             | 9 +++++++--
->>  2 files changed, 12 insertions(+), 2 deletions(-)
+> ---
+>  advice.c | 13 +++++++++----
+>  1 file changed, 9 insertions(+), 4 deletions(-)
 > 
-> What is missing is some sanity tests: that bloom index and bloom data
-> chunks are not present without '--changed-paths', and that they are
-> added with '--changed-paths'.
-> 
-> If possible, maybe also check in a separate test that the size of
-> bloom_index chunk agrees with the number of commits in the commit graph.
-> 
-> 
-> Also, we can now add those tests I have wrote about in my review of
-> previous patch, that is:
-> 
-> 1. If you write commit-graph with --changed-paths, and either add some
->    commits later or exclude some commits from the commit graph, then:
-> 
->    a.) commit(s) in commit-graph have Bloom filter
->    b.) commit(s) not in commit-graph do not have Bloom filter
-> 
-> 2. If you write commit-graph without --changed-paths as base layer,
->    and then write next layer with --changed-paths and --split, then:
-> 
->    a.) commit(s) in top layer have Bloom filter(s)
->    b.) commit(s) in bottom layer don't have Bloom filter(s)
-> 
-
-I will see what more can be done here. 
-
->>
->> diff --git a/Documentation/git-commit-graph.txt b/Documentation/git-commit-graph.txt
->> index bcd85c1976..907d703b30 100644
->> --- a/Documentation/git-commit-graph.txt
->> +++ b/Documentation/git-commit-graph.txt
->> @@ -54,6 +54,11 @@ or `--stdin-packs`.)
->>  With the `--append` option, include all commits that are present in the
->>  existing commit-graph file.
->>  +
->> +With the `--changed-paths` option, compute and write information about the
->> +paths changed between a commit and it's first parent. This operation can
->> +take a while on large repositories. It provides significant performance gains
->> +for getting history of a directory or a file with `git log -- <path>`.
->> ++
-> 
-> Should we write about limitation that the topmost layer in the split
-> commit graph needs to be written with '--changed-paths' for Git to use
-> this information?  Or perhaps we should try (in the future) to remove
-> this limitation??
-> 
-
-Given that this information is going to be used best effort, it would be 
-superfluous to describe every case and conditional that decides whether 
-this information is being used.
->> @@ -143,6 +146,8 @@ static int graph_write(int argc, const char **argv)
->>  		flags |= COMMIT_GRAPH_WRITE_SPLIT;
->>  	if (opts.progress)
->>  		flags |= COMMIT_GRAPH_WRITE_PROGRESS;
->> +	if (opts.enable_changed_paths)
->> +		flags |= COMMIT_GRAPH_WRITE_BLOOM_FILTERS;
->>  
->>  	read_replace_refs = 0;
-> 
-> All right.  This actually turns on calculation Bloom filters for changed
-> paths, thanks to
-> 
->  	ctx->changed_paths = flags & COMMIT_GRAPH_WRITE_BLOOM_FILTERS ? 1 : 0;
-> 
-> that was added by the "[PATCH v2 04/11] commit-graph: compute Bloom
-> filters for changed paths" patch.
-> 
-> Though... should this enabling be split into two separate patches like
-> this?
-> 
-
-The idea is that in 4/11 We compute only if the flag is set. 
-And between that patch and this one: we prepare the foundational code 
-that is now ready for that flag to be set via an opt-in by the user. 
-
-> 
-> Best,
+> diff --git a/advice.c b/advice.c
+> index 249c60dcf32..fd836332dad 100644
+> --- a/advice.c
+> +++ b/advice.c
+> @@ -96,15 +96,12 @@ static struct {
+>  	{ "pushNonFastForward", &advice_push_update_rejected }
+>  };
+>  
+> -void advise(const char *advice, ...)
+> +static void vadvise(const char *advice, va_list params)
+>  {
+>  	struct strbuf buf = STRBUF_INIT;
+> -	va_list params;
+>  	const char *cp, *np;
+>  
+> -	va_start(params, advice);
+>  	strbuf_vaddf(&buf, advice, params);
+> -	va_end(params);
+>  
+>  	for (cp = buf.buf; *cp; cp = np) {
+>  		np = strchrnul(cp, '\n');
+> @@ -118,6 +115,14 @@ void advise(const char *advice, ...)
+>  	strbuf_release(&buf);
+>  }
+>  
+> +void advise(const char *advice, ...)
+> +{
+> +	va_list params;
+> +	va_start(params, advice);
+> +	vadvise(advice, params);
+> +	va_end(params);
+> +}
+> +
+>  int git_default_advice_config(const char *var, const char *value)
+>  {
+>  	const char *k, *slot_name;
+> -- 
+> gitgitgadget
 > 
