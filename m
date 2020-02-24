@@ -2,113 +2,122 @@ Return-Path: <SRS0=prLJ=4M=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D14EC35673
-	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 02:00:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B2154C35673
+	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 02:56:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D62CF20727
-	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 02:00:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 717F820656
+	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 02:56:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="p0g7tcT4"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="APvO4L/W"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727190AbgBXCAh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 23 Feb 2020 21:00:37 -0500
-Received: from mail-yw1-f66.google.com ([209.85.161.66]:47006 "EHLO
-        mail-yw1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727151AbgBXCAh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Feb 2020 21:00:37 -0500
-Received: by mail-yw1-f66.google.com with SMTP id z141so4530898ywd.13
-        for <git@vger.kernel.org>; Sun, 23 Feb 2020 18:00:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=QmpCCvbJQZedLLo/CxzybPwPJ/6HtZqvQSA75gwwtm0=;
-        b=p0g7tcT409fHZbTsygDpZpcynXmUN/0ZMvdlqL4SJzcEHYfdSfO7JFBADY31CkMqwy
-         tOAlc+rAVxaayPAGUswZBX2mg1JG1z2s4e0O0xg64PSFHLx36/z2+S5i5chQ3h35+8cs
-         K1ijQWwFKhp4hvI7xuiFq73gJsaJspSY0t5L/yMW9m3xzoCmetVr3EeV3zhaixjIsM9l
-         dLAmE1S2jrcy1Gclm9xaLM2BND6SSEGWOaXJNJKftFsM1dBVpqExJmXCDhy6kFqmxiif
-         0MormFqHrJmcid7qI7O6rSx5J63OhwWd9OxMOiua6yF+ANr77B0DO/hij7wIuxtC6sF1
-         R++A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
-         :mime-version:content-transfer-encoding;
-        bh=QmpCCvbJQZedLLo/CxzybPwPJ/6HtZqvQSA75gwwtm0=;
-        b=Wwf49H9LJDw58OJJkPpqJjpAtWqajfvAsTQh5NZieprrJC6zBDJYcXIbtOqq+Zto6P
-         OTJ4w40vl0mS+WBbztMCMqOob1WsU6Lcegx79r+Cgk7brTSPRlgFhis/KScek/yIGoIw
-         owd/ggoxUiRpJYGLVpB1qig6bo5ggWitqQ/MWudXTWmHbiUhQArkpr2TfFzpwGFRVuI4
-         f7h3FxklQD0LTixD5qk+L+2J764XpdVcho2RElGU3eod9sHTrGDh2GhotybFKsv0WZyy
-         ISSyWzHmiS1l6I1GeB1qb4NjaOApN7xtvUqK8BnG2THKE/+Ccxnfo9JUKgcOJKUEN9SO
-         9JMQ==
-X-Gm-Message-State: APjAAAVab0VTQhuJMfmTzZcSa/u9FYoTAe1roJwSbYwKGS4VTrjoSgRu
-        4GvWCct1fGFaxTAQ2M4cIAXpSKsa
-X-Google-Smtp-Source: APXvYqyBvdgMHQPOHlJ1/RXWZJm6lNI4G3LyNN6BE0j6OQkRaIZe+NPDKGjbcyMfr/ebCG1n9GQmBA==
-X-Received: by 2002:a81:2e57:: with SMTP id u84mr38344759ywu.98.1582509635438;
-        Sun, 23 Feb 2020 18:00:35 -0800 (PST)
-Received: from localhost.localdomain (user-12l2dpj.cable.mindspring.com. [69.81.55.51])
-        by smtp.gmail.com with ESMTPSA id d13sm4817555ywj.91.2020.02.23.18.00.34
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 23 Feb 2020 18:00:34 -0800 (PST)
-From:   Eric Sunshine <sunshine@sunshineco.com>
-To:     git@vger.kernel.org
-Cc:     Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH] worktree: drop unused code from get_main_worktree()
-Date:   Sun, 23 Feb 2020 20:59:35 -0500
-Message-Id: <20200224015935.19190-1-sunshine@sunshineco.com>
-X-Mailer: git-send-email 2.25.1.526.gf05a752211
+        id S1727169AbgBXC4A (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 23 Feb 2020 21:56:00 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:61051 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727158AbgBXC4A (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Feb 2020 21:56:00 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 68062C7A5C;
+        Sun, 23 Feb 2020 21:55:58 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=xYH4fKutOcs7eZpRheLvCTlwvVY=; b=APvO4L
+        /WHqLhciHjoeWD2iW/tVbsWSrLKLV6LC/EDf7VnyU8i0g+CbvmF/QuU9yVOaTPnr
+        m75bC4i7HKLvjWzOp/BA9xa6WF3rjGX2wdbTDZJjX+OdruVvbDn9vkxsddkZ8hgE
+        3DnqtdyQ9sJlAfs6D+bf/6+uWZ8VVy1KxOhPc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=CqtrQeaK3q+eUapLsEOgqRha6TdU8BRP
+        corRzIuTaP21MWUKN3FKkzChRc8Hl7t/T2uvbLFcXzmgGZDABdVUSjy0Xkrg7Xba
+        HPI4cyBrfgiQZBjEG59zkvemyvSZEZbcwxZaHol4vKxaaHoNYI0JEmmtPVn5Oi2z
+        TkixBzzfkCo=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5F3E4C7A5B;
+        Sun, 23 Feb 2020 21:55:58 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 836B4C7A5A;
+        Sun, 23 Feb 2020 21:55:55 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v7 06/15] bugreport: add compiler info
+References: <20200214015343.201946-1-emilyshaffer@google.com>
+        <20200214015343.201946-7-emilyshaffer@google.com>
+        <nycvar.QRO.7.76.6.2002191521140.46@tvgsbejvaqbjf.bet>
+        <20200219224547.GC26221@google.com>
+        <nycvar.QRO.7.76.6.2002202306390.46@tvgsbejvaqbjf.bet>
+        <20200220233323.GI2447@google.com>
+        <nycvar.QRO.7.76.6.2002211621470.46@tvgsbejvaqbjf.bet>
+        <20200222000438.GL2447@google.com>
+Date:   Sun, 23 Feb 2020 18:55:53 -0800
+In-Reply-To: <20200222000438.GL2447@google.com> (Emily Shaffer's message of
+        "Fri, 21 Feb 2020 16:04:38 -0800")
+Message-ID: <xmqq7e0csngm.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2D2FCD6E-56B1-11EA-9FF5-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This code has been unused since fa099d2322 (worktree.c: kill parse_ref()
-in favor of refs_resolve_ref_unsafe(), 2017-04-24), so drop it.
+Emily Shaffer <emilyshaffer@google.com> writes:
 
-Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
----
+>> > Sorry, but I'm not comfortable sending code I can't check for myself
+>> > (and already muscle-memoried into my format-patch/send-email workflow).
+>> > If you send a scissors I can roll it into the series with your SOB.
+>> 
+>> But you can check it yourself! I worked _really_ hard on that Azure
+>> Pipeline backing the PR builds at https://github.com/git/git. _REALLY_
+>> hard. You might just as well reap the benefits so that I did not spend all
+>> of that time and sweat and stress in vain...
+>
+> I thought a bit about this. From your Github-using point of view, "just
+> check my Pipeline" sounds like "just look at one more thing". From my
+> format-patch using point of view, "just check my Pipeline" sounds like
+> "ugh, I have to add this remote again... I don't have a fork already?
+> How do I make that? Or is my fork just 6 months behind? How do I open a
+> PR again? Yeesh."
 
-Just something I noticed while reviewing a patch[1] on the mailing list.
+Sorry, but this is how a typical conversation between two techies who
+are more intelligent than good for their social skills ;-)  Each side
+is not extending its hand enough to reach the other side, expecting
+that what s/he knows should be obvious to the others.
 
-[1]: https://lore.kernel.org/git/8718facbc951614f19407afa6ca8d6110507483d.1582484231.git.gitgitgadget@gmail.com/
+Dscho may be frustrated for you not being aware of what he worked
+on, but "I worked really hard" is much less useful thing for others,
+who may benefit from what he worked hard on, to hear, than "here is
+one pager that tells you how to use it".  Quite honestly, reading
+the above exchange from the sidelines, it is not clear to me if it
+is a part of, or a completely separate from, the service offered by
+GGG from the end-users' point of view.
 
- worktree.c | 4 ----
- 1 file changed, 4 deletions(-)
+Can some of you come up with a one-pager to cover the following (and
+related but not listed) areas, that can be added as an appendix to
+Documentation/SubmittingPatches?  It does not have to cover the
+common stuff like style guidelines, writing good log messages, need
+for test coverage, choice of fork point, etc.  "Now you have a patch
+or a series of patches, but you obviously do not have direct and
+personal access to all the platforms Git supports.  But there are
+servies to help you test them on the more common ones."
 
-diff --git a/worktree.c b/worktree.c
-index 5b4793caa3..33c2655534 100644
---- a/worktree.c
-+++ b/worktree.c
-@@ -47,15 +47,12 @@ static void add_head_info(struct worktree *wt)
- static struct worktree *get_main_worktree(void)
- {
- 	struct worktree *worktree = NULL;
--	struct strbuf path = STRBUF_INIT;
- 	struct strbuf worktree_path = STRBUF_INIT;
- 
- 	strbuf_add_absolute_path(&worktree_path, get_git_common_dir());
- 	if (!strbuf_strip_suffix(&worktree_path, "/.git"))
- 		strbuf_strip_suffix(&worktree_path, "/.");
- 
--	strbuf_addf(&path, "%s/HEAD", get_git_common_dir());
--
- 	worktree = xcalloc(1, sizeof(*worktree));
- 	worktree->path = strbuf_detach(&worktree_path, NULL);
- 	/*
-@@ -69,7 +66,6 @@ static struct worktree *get_main_worktree(void)
- 		is_bare_repository();
- 	add_head_info(worktree);
- 
--	strbuf_release(&path);
- 	strbuf_release(&worktree_path);
- 	return worktree;
- }
--- 
-2.25.1.526.gf05a752211
+ - How to cause TravisCI to run our test suite with your
+   modification.
 
+ - How to trigger the same on Azure Pipeline PR builds.
+
+There may be others.
+
+Thanks.
