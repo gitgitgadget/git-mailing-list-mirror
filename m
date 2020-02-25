@@ -1,106 +1,124 @@
-Return-Path: <SRS0=prLJ=4M=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=m/64=4N=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9DB3DC35DEB
-	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 23:51:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 18A7CC35DEA
+	for <git@archiver.kernel.org>; Tue, 25 Feb 2020 00:05:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 67310218AC
-	for <git@archiver.kernel.org>; Mon, 24 Feb 2020 23:51:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CF1682072D
+	for <git@archiver.kernel.org>; Tue, 25 Feb 2020 00:05:14 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lOHyoecG"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="BrynKWwv"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728206AbgBXXv0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Feb 2020 18:51:26 -0500
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:46443 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727081AbgBXXv0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Feb 2020 18:51:26 -0500
-Received: by mail-ed1-f68.google.com with SMTP id p14so14011535edy.13
-        for <git@vger.kernel.org>; Mon, 24 Feb 2020 15:51:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=mjOBApPraqXX+BerGtlcbAC1j+nYc0MW34y2NPRG8/Y=;
-        b=lOHyoecGMte3roUMsEvZlR7l5joiUT9XxH+77BfWTDpQtvmAkPqq2N67moSi7QCECE
-         UyUeinP4MCVbKuEOxNm/i9e/1tbJpxq/+oo/2UtUu5EUl63+Rw9H1sBu8BLm/u2NjfTu
-         YIvFfQgJUIZOuLLXmvD7wE2on2JwNYwceYc46L9zLZnYl2W4rmzmZFI+yxuQNQeZrcsf
-         /qzMUIXpfI3tyOK/epe636qe2tFGnA83OBbXgzkIM4PqCkYXlgw4MosQRw1BuYeZo9dJ
-         FTuw5NtBa0M6m/7BMLA2z/yCx/R1L2zoxpKNS78qJrmM8/vmPwIJUMiSr/GhlT7eEtzs
-         n9+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=mjOBApPraqXX+BerGtlcbAC1j+nYc0MW34y2NPRG8/Y=;
-        b=JZ1DXbepWcmE0OKcRKpJVykd5AJxJ+8dOHWgyLWcJsTMrzf/FsqQVhXCBAh2qmIDY8
-         JvgAA6kJe9EzAyjNYYhSFp7rVfv8G6BvPbg6SoS3+umt/YmJByLMzon2dLMB2p+qtXI7
-         BLB+JR3RSP+p7qsVLbHscKte0umptpctCOYSPbVEu3RiXtcbV3Lg74SABC/mIRxVWhQU
-         FAEC0/H6DwE6e7dZxs2hqx39ncNFBmbJP22Ve4+6V8QTdojXF3Fq5UXsf9GFP6s4Ev0v
-         /aX0+YAHihIqOo8xLWxJhcj+9psdQK+DRFsEM5zxB1VU3J/ZgzFp+nsKyf/4jYTjuyiE
-         OTTQ==
-X-Gm-Message-State: APjAAAX9sFRm8ugP3AHtIiapk2MKYNMpLo1Thk0ZiYoycvoWETMoX72k
-        sBuOL8KcS2IeigffJroqCxmVgH+sEaiT2e/Th/I=
-X-Google-Smtp-Source: APXvYqzkJNmLAa/ERfZcUS333jjKNfA067iv8vUGyPVKDkyske2KblnaGtXJFKD7fXn6DYsmXz/igpWoqAwEWBYm0VY=
-X-Received: by 2002:a50:8f66:: with SMTP id 93mr48006780edy.33.1582588284733;
- Mon, 24 Feb 2020 15:51:24 -0800 (PST)
+        id S1728308AbgBYAFO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Feb 2020 19:05:14 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:40694 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727976AbgBYAFN (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 24 Feb 2020 19:05:13 -0500
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 1EF9260797;
+        Tue, 25 Feb 2020 00:05:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1582589112;
+        bh=m1kT145U80jsaidBEBZY56HkNNiawg/SO+gNY7dGMyk=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=BrynKWwv8YP6+dKns0mn21IYS++m/ioVzZh/GOhBKciG2jOSCN9MzVi3nyuzAo0WC
+         +/CdhYfvhk7CUxHRikAxHR1v0Ogym8M3dq+0gcvjsfo5iKupUCYQk+6ZlmJFgPoahq
+         KhLCSXpuWPG5jtisCN2qG6sVSkmILLsgdqiA7jGGmXq0++lQ8o2ipfZ3PSBH2B2beE
+         DPqwGfetGcoiBgHikky/CdJ3rIXdCMYZcUXcrvWhAqtN5285FOyBgHPBEhKqK39yrq
+         pHXwT0+3ukT0raFZjjpi/7xarh/UZYKpjXf6zesZdrGT5pnOkrJJzL5LUvUHieeRFL
+         OUDsC1Y6Arju0QrsWU0kJq9EnerembATW40j9sn6UU4kHbW4K2YiTD4XMWRtpeBYu4
+         z+F2oB0L/mEuyw6QiIpdnrFuM+zlM1pEMHS24lI1Zb+dtKB2Af9uwkKTDEzLcnRlII
+         VFcpVufehIndHwq8ARX1k7JTxJkh7RVYyk6DsiA+SAGl5cFRACS
+Date:   Tue, 25 Feb 2020 00:05:05 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 10/24] t/helper: initialize repository if necessary
+Message-ID: <20200225000505.GH6462@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <20200222201749.937983-1-sandals@crustytoothpaste.net>
+ <20200222201749.937983-11-sandals@crustytoothpaste.net>
+ <xmqqo8tnrhbw.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-References: <pull.548.v3.git.1582144442.gitgitgadget@gmail.com>
- <pull.548.v4.git.1582557199.gitgitgadget@gmail.com> <04c3e5760f60cf394af66bfdb4fe1d561a093567.1582557199.git.gitgitgadget@gmail.com>
- <xmqqftezod3n.fsf@gitster-ct.c.googlers.com> <CAPig+cRWEnQL2Pye=20M0cjHsAFPvLVFWpOv_JM-Gm0hXZUS7w@mail.gmail.com>
-In-Reply-To: <CAPig+cRWEnQL2Pye=20M0cjHsAFPvLVFWpOv_JM-Gm0hXZUS7w@mail.gmail.com>
-From:   Heba Waly <heba.waly@gmail.com>
-Date:   Tue, 25 Feb 2020 12:51:13 +1300
-Message-ID: <CACg5j27MmFgo5vLse2RroRPUaaOh_nH2cWpvLKZhuFmQFw939A@mail.gmail.com>
-Subject: Re: [PATCH v4 2/3] advice: revamp advise API
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Heba Waly via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="6b3yLyRKT1M6kiA0"
+Content-Disposition: inline
+In-Reply-To: <xmqqo8tnrhbw.fsf@gitster-ct.c.googlers.com>
+X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
+ 5.4.0-4-amd64)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 25, 2020 at 11:11 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
->
-> On Mon, Feb 24, 2020 at 5:05 PM Junio C Hamano <gitster@pobox.com> wrote:
-> > "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> > > +test_expect_success 'advise should be printed when config variable is unset' '
-> > > +     test-tool advise "This is a piece of advice" 2>actual &&
-> > > +     test_i18ncmp expected actual
-> > > +'
-> >
-> >  - Prepare the expected output inside test_expect_success block that
-> >    uses it.
-> >  - There should be no SP between a redirection operator and the
-> >    filename.
-> >  - Here-doc that does not use parameter expansion should use a
-> >    quoted EOF marker.
-> >  - The file that gets compared with "actual" is by convention called
-> >    "expect", not "expected".
-> >
-> > test_expect_success 'advise should be printed when config variable is unset' '
->
-> Also, s/advise/advice/ in the test title.
->
-> >         cat >expect <<-\EOF &&
-> >         hint: ...
-> >         hint: ...
-> >         EOF
-> >         test-tool advise "This is a piece of advice" 2>actual &&
-> >         test_i18ncmp expected actual
-> > '
->
-> s/expected/expect/
 
-Noted, thank you.
+--6b3yLyRKT1M6kiA0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Heba
+On 2020-02-24 at 18:05:55, Junio C Hamano wrote:
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+> > diff --git a/t/helper/test-repository.c b/t/helper/test-repository.c
+> > index f7f8618445..ecc768e4cb 100644
+> > --- a/t/helper/test-repository.c
+> > +++ b/t/helper/test-repository.c
+> > @@ -75,6 +75,10 @@ static void test_get_commit_tree_in_graph(const char=
+ *gitdir,
+> > =20
+> >  int cmd__repository(int argc, const char **argv)
+> >  {
+> > +	int nongit_ok =3D 0;
+> > +
+> > +	setup_git_directory_gently(&nongit_ok);
+>=20
+> No need to initialize nongit_ok to any specific value before calling
+> setup_git_directory_gently() and I personally find this initialization
+> unhelpful to new readers, as it misleadingly hints the setup process
+> may be affected by the value passed in by the value in nongit_ok,
+> when in reality the variable is purely used as outout-only (the
+> first thing the function does is to clear it).
+>=20
+> Was it necessary to work around a compiler warning or something?
+
+I don't recall, but since this seems to be the only place we do that, I
+assume it's not, and I'll just drop it.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--6b3yLyRKT1M6kiA0
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.19 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl5UZLEACgkQv1NdgR9S
+9ovwLhAAyZLWa6yIjAVsrztrs/dEjtgMg5IhHpI9ChxwwaVjIJRDsGYKa38cfn4s
+mHcG3WLxAOjbOgaByNmZJKJZ8ev72hX+Z3A+1QPbQzGA6hyF0mSdedQnTJPOwI/B
+AEm3NcAm141JaFN8J1Q4Rh9ksklslTc9kREwVMehp8TQ5kj+gz8hljebV5klvsv5
+VIcm/2slZ7SyfZOXyj2CYubQI4qCLxRpKS3d4ZuH+3DdycmVrkmVK5/gKS0LctLQ
+Gx4RV2ArixldH77B6ASYocYmMlwslNZuIa9tcKk8ghlKtWRpA6jtG9L7tJzVqlfa
+eG+3pT9KcvDO5AJgc0qSuC4J2m5g1EMi2JqKED+NEMGaPKVcyViz98TamdQtpgi4
+Pe7X+gGi+qLlKBwTZEf621uEKPIedmrwEx6tgVnihmqJlfHExXQHnKdhlJjRx9dU
+yppeXmEUQNrYZslMHr+2Gb3xRnMmppnpytsGQfRRK7C4cU4Yv0Ea35kSlFi9t9QP
+F3azzSN1rxbBwe3Ze5UqYG14rDMZGjl66Ji8m8txN2eO0xNe6X1clpHsbGcm7ZKU
+0sm0XvvtJdYV/tc1vHRsmaqS3uKuB/6isnHcaSqTN4RNyjxkejHc1jNNCkdWohkP
+PM42G+Afq05aB5n6rtG+ciTDtwCrBoGstYWZPp/p6Ec1hMtuDPQ=
+=/Tb4
+-----END PGP SIGNATURE-----
+
+--6b3yLyRKT1M6kiA0--
