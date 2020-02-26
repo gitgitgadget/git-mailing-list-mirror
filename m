@@ -6,65 +6,71 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9861DC4BA24
-	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 18:38:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C5B00C4BA24
+	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 18:40:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6ADEE20732
-	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 18:38:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 90C1324672
+	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 18:40:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727068AbgBZSiv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Feb 2020 13:38:51 -0500
-Received: from cloud.peff.net ([104.130.231.41]:55220 "HELO cloud.peff.net"
+        id S1727105AbgBZSkj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Feb 2020 13:40:39 -0500
+Received: from cloud.peff.net ([104.130.231.41]:55236 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726789AbgBZSiu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Feb 2020 13:38:50 -0500
-Received: (qmail 20937 invoked by uid 109); 26 Feb 2020 18:38:50 -0000
+        id S1726998AbgBZSkj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Feb 2020 13:40:39 -0500
+Received: (qmail 20964 invoked by uid 109); 26 Feb 2020 18:40:39 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 26 Feb 2020 18:38:50 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 26 Feb 2020 18:40:39 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28003 invoked by uid 111); 26 Feb 2020 18:47:57 -0000
+Received: (qmail 28031 invoked by uid 111); 26 Feb 2020 18:49:46 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 26 Feb 2020 13:47:57 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 26 Feb 2020 13:49:46 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Wed, 26 Feb 2020 13:38:49 -0500
+Date:   Wed, 26 Feb 2020 13:40:38 -0500
 From:   Jeff King <peff@peff.net>
-To:     Heba Waly <heba.waly@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Christian Couder <christian.couder@gmail.com>,
-        git <git@vger.kernel.org>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: GSoC and Outreachy Summer 2020?
-Message-ID: <20200226183849.GA23188@coredump.intra.peff.net>
-References: <CACg5j25_098i=rU++OB=YSbAFjCQdgUX7gP6D-9yo6F_A_yn0w@mail.gmail.com>
- <CAP8UFD1QbOK9g2oAhfTm2npoNF9Ay_HiAfFai9rJwZzc73cBbw@mail.gmail.com>
- <20200221183003.GA9786@coredump.intra.peff.net>
- <CACg5j24mH0LRHXbhgf16f+7KqOnrsh7BRovh8mR6AzHG=y5gFA@mail.gmail.com>
- <20200223214433.GA564650@coredump.intra.peff.net>
- <nycvar.QRO.7.76.6.2002241648000.46@tvgsbejvaqbjf.bet>
- <20200225202014.GA2773363@coredump.intra.peff.net>
- <CACg5j25qmYivZdW_=dfun-ZP5m3Zx8dcYEkf24xDhVc7xmqwig@mail.gmail.com>
- <20200226014228.GA2913263@coredump.intra.peff.net>
- <CACg5j26XTA4Z5pnBKWJiF6-dxTA7LJ3ZsxSi1ZvHbK4qZ9jhTg@mail.gmail.com>
+To:     Chris Jerdonek <chris.jerdonek@gmail.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Subject: Re: create reflog for reflog-less ref
+Message-ID: <20200226184038.GB23188@coredump.intra.peff.net>
+References: <CAOTb1wc2uMSyc7DMau2cWrWtk=_Z94+CCovORj1dGCrwgJhL=w@mail.gmail.com>
+ <20200226023909.GC7911@camp.crustytoothpaste.net>
+ <20200226034731.GA2915944@coredump.intra.peff.net>
+ <CAOTb1wfWtFsy415k+goRiuLUiVBqtizmmoyxqFdy7xsRhjnBww@mail.gmail.com>
+ <20200226094716.GA14546@coredump.intra.peff.net>
+ <CAOTb1weTWOsHkbGqmj8mJ-KpkoiteHBDYDxe-j2E0yf3DccjjQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CACg5j26XTA4Z5pnBKWJiF6-dxTA7LJ3ZsxSi1ZvHbK4qZ9jhTg@mail.gmail.com>
+In-Reply-To: <CAOTb1weTWOsHkbGqmj8mJ-KpkoiteHBDYDxe-j2E0yf3DccjjQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 26, 2020 at 11:17:26PM +1300, Heba Waly wrote:
+On Wed, Feb 26, 2020 at 02:21:59AM -0800, Chris Jerdonek wrote:
 
-> > > I think I'll co-mentor with Christian then :)
-> > >
-> > Just to be clear: you mean on GSoC, or trying to get something together
-> > for Outreachy?
+> > The "touch" trick I showed would work for that, but it's not going to be
+> > portable going forward. I don't think it would be a bad idea to have
+> > some way of triggering a "noop" reflog update via update-ref, where we
+> > either create the reflog as empty, or insert a pointless entry going
+> > from the current sha1 to itself. But AFAIK that doesn't exist right now.
 > 
-> GSoC.
+> Thanks. By the way, this functionality does already seem to exist for ref HEAD:
+> 
+> $ git update-ref -m my-message HEAD HEAD
+> $ git reflog HEAD
+> 3ccacdc (HEAD -> master) HEAD@{0}: my-message
+> ...
+> 
+> I don't know why it would work for HEAD though and what's different
+> about the mechanism. I thought it might be because it's a symbolic
+> ref, but it didn't work for other symbolic refs when I tried (even
+> ones that already had a reflog).
 
-Thanks! I just wanted to make sure I didn't need to keep pursuing
-funding for this Outreachy round.
+I suspect that wasn't really intentional, but just a by-product of the
+way we treat HEAD's reflog specially (when we update any other ref, if
+HEAD points to it, we'll update the HEAD reflog, too). But I could be
+wrong (you'd have to dig in the commit history around that code).
 
 -Peff
