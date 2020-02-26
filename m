@@ -2,113 +2,88 @@ Return-Path: <SRS0=QAHC=4O=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CC657C4BA21
-	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 20:28:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3576C4BA24
+	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 20:29:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 98B2E2072D
-	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 20:28:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6BCB42072D
+	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 20:29:18 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R8JgCFVG"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="vovJEsoU"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727350AbgBZU2d (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Feb 2020 15:28:33 -0500
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:46556 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727310AbgBZU2d (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Feb 2020 15:28:33 -0500
-Received: by mail-ed1-f67.google.com with SMTP id p14so337774edy.13
-        for <git@vger.kernel.org>; Wed, 26 Feb 2020 12:28:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ZW//2y1a7w4CKCDNqlvjhPeyNaf95Ae53uD9f8sF81A=;
-        b=R8JgCFVGjhJWBL5/rSgG/3dQD5JznFuZr4PLv2fxYeP4I202taDobCfWZKSGIiJFfX
-         nrC/+f3cTMzrzbIEzowfEkSdqUjeakGtm7Lsk093sv/PSW12rGm2i1ki/OB0EVEJRnYS
-         2XIj1p+eNL2rcAeOwV31k4T/x+XEcLwzhIOeL4jx9ApP8BDT9TpjJyWq9epv7pat3JLU
-         RI9EdganFsET8lUodSdm1qb/zHjRI5pYdmF1HKqbKfcEb949AQ6vvLgOCPxvB6H8PQg5
-         TKB62rEWNtsV/P5GM6HtGNXRzWp8NXb2VtiWjAFLG4ejD92r1yQLih976wSBmtsvbZIg
-         z2RA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ZW//2y1a7w4CKCDNqlvjhPeyNaf95Ae53uD9f8sF81A=;
-        b=L/dUoTpFL3iCIPUb3jNKHRXVcyJ3nJKDkGpMgD9q49X6bKkVdGoCtynYr+s5B11rWe
-         e1mCkHmYqa3gE1afDc6BXBF9UGMKhILOb5cRXX1bPLtnk1T0WVGRSuoVARusJfoi9wbt
-         2EPM3gMq5HfvI5c076au5egEd4ewVf3gftVKVrBHtalCPs5UZ99DWUQ5JW0U7tF7Q2eY
-         Nsdqt+scz9fOkpiJ1mbCYUKZvjgLf14EC0MS4cqljVn8+cREdmH06g2PWLax9o954mfz
-         d6C7+m3yrJO6mW+FISinOSePQm40YmnRGwPz/1pIYOXTQcEee6P2Yuo2bzXXzs6q2d6o
-         q/7A==
-X-Gm-Message-State: APjAAAUiQMwXr3NNSsckSLaNSm8LVCBCfz0HTXHTFDLz8J4SRZdi4bBG
-        IaAYVFjTcpIuzQaUrmfjzUJ1dFYGuTJpeTMYS84=
-X-Google-Smtp-Source: APXvYqyzMHcI0o/V3AtvSXAnsKgVHUNWWtnNS3iqkeIYo9q+WD2DiqHqwwhDsfFSSMdiOmPJfXL37DAICjQM82dtLfI=
-X-Received: by 2002:a17:906:1956:: with SMTP id b22mr502213eje.276.1582748911808;
- Wed, 26 Feb 2020 12:28:31 -0800 (PST)
+        id S1727348AbgBZU3R (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Feb 2020 15:29:17 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53662 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727289AbgBZU3R (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Feb 2020 15:29:17 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6B75758FF8;
+        Wed, 26 Feb 2020 15:29:15 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ff4S0v5BEj6N0arRM2lXQL+rGRY=; b=vovJEs
+        oUj19zrSbbqICCaf9HQcewAyHZJSk/dS0VPgc/paVjdo0ckKbyEbYvpQSGSZ27+E
+        JQknPyseMPAG7wPqK0A0RM7Ew7UGU4+vRGiXjWK+ZZRY1lgBfQ7sbaqN4ZmAFi9o
+        KOEqHRsYyXuDqYm+X7NKSEiNRpAQoqxb/iFEE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=hXRfjPbndHmau6U8Mt1J2K6zvvEnoyot
+        ZX4ZDi6hBEoreN/7CipbCJ9IqSEk3NlJZccBnDj4feLORlU3cyvvEWMp3ai5VY4r
+        u03wNCpHkW8E45F+5NOLzHk0fCHD6UMF8DiOvSxpSriFd5ecDGHkMB0q1N/CTP35
+        GBH2SLyH8Bw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 640B758FF7;
+        Wed, 26 Feb 2020 15:29:15 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C50D758FF6;
+        Wed, 26 Feb 2020 15:29:14 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Andrei Rybak <rybak.a.v@gmail.com>,
+        Greg Anders <greg@gpanders.com>, git@vger.kernel.org
+Subject: Re: git-shell default working directory
+References: <20200226004830.oxd5562v7qqspnkk@Kepler>
+        <241ea912-44b2-96fa-6f9a-3f04d5386b05@gmail.com>
+        <20200226201121.GA287048@coredump.intra.peff.net>
+Date:   Wed, 26 Feb 2020 12:29:13 -0800
+In-Reply-To: <20200226201121.GA287048@coredump.intra.peff.net> (Jeff King's
+        message of "Wed, 26 Feb 2020 15:11:21 -0500")
+Message-ID: <xmqqeeuhhz3a.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.548.v4.git.1582557199.gitgitgadget@gmail.com>
- <pull.548.v5.git.1582628141.gitgitgadget@gmail.com> <b7f10d060a41c1ef3d25e4c07be3747c7902b997.1582628141.git.gitgitgadget@gmail.com>
- <xmqqsgiymupf.fsf@gitster-ct.c.googlers.com> <CACg5j27SfWsj2t_z8zxOvjc6MSot2yMi1J+R4HJinFhHgTpveg@mail.gmail.com>
- <xmqqy2sql405.fsf@gitster-ct.c.googlers.com> <CACg5j25EdX2fPHpAq3TEhaJPiQg4dA52soOyCMm17wg_O-c4Ng@mail.gmail.com>
- <xmqq8skqkq35.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqq8skqkq35.fsf@gitster-ct.c.googlers.com>
-From:   Heba Waly <heba.waly@gmail.com>
-Date:   Thu, 27 Feb 2020 09:28:20 +1300
-Message-ID: <CACg5j24F=rU1EKPpq-TnMOUNLZqT3HTJZXuCXORVtPPa=hK-Cg@mail.gmail.com>
-Subject: Re: [PATCH v5 2/3] advice: revamp advise API
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Heba Waly via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: A7B672FA-58D6-11EA-A0F6-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 26, 2020 at 4:03 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Heba Waly <heba.waly@gmail.com> writes:
->
-> > I'm not against this approach as well, but as I mentioned above, we
-> > need a list of keys to be returned by list_config_advices(), that's
-> > why defining the constant strings will not be sufficient in our case.
->
-> Sorry, but I do not get it.
->
-> Either you use enum or a bunch of variables of type const char [],
-> "list all of them" would need an array whose elements are all of
-> them, so
->
->         const char ADVICE_FOO[] = "advice.foo";
->         const char ADVICE_BAR[] = "advice.bar";
->         ...
->
->         static const char *all_advice_type[] = {
->                 ADVICE_FOO, ADVICE_BAR, ...
->         };
->
->         void for_each_advice_type(int (*fn)(const char *name))
->         {
->                 int i;
->                 for (i = 0; i < ARRAY_SIZE(all_advice_type); i++)
->                         fn(all_advice_type[i]);
->         }
->
-> would be sufficient, and I do not think it takes any more effort to
-> create and manage than using an array indexed with the enum, no?
->
+Jeff King <peff@peff.net> writes:
 
-hmm, you're right, I just personally prefer having related variables
-collected in one data structure (whenever possible) like a list (or
-enum in this case) rather than defining each independently as a const
-variable. On the other hand, I understand that you'd prefer to skip
-the extra step of converting the enum to string.
-hmmm ok, I'll change the enum and send a new version soon.
+> On Wed, Feb 26, 2020 at 10:10:05AM +0100, Andrei Rybak wrote:
+>
+>> > I've not yet found a way to get this to work without keeping the
+>> > repositories in the git user's home folder.
+>> 
+>> Disclaimer: I'm not at all familiar with git server setup. Would it make sense
+>> to change git user home directory to be the required dedicated directory?
+>
+> Yeah, that's what I would suggest. git-shell does explicitly cd to
+> $HOME, so any chdir you do before then will be lost (though you could
+> perhaps just set $HOME in ~/.ssh/rc).
 
-Thanks,
-Heba
+I didn't suggest it because the original request did not sound like
+building a dedicated machine that is used only to push into without
+interactive shell access.  If $HOME is moved to such a git centric
+place, that would make it almost impossible to use the account for
+shell interactive access, I would imagine, and if that is acceptable,
+perhaps something like gitolite would fit the bill better?
