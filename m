@@ -2,79 +2,138 @@ Return-Path: <SRS0=QAHC=4O=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BFE80C4BA0B
-	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 09:47:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 00032C4BA0B
+	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 10:16:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8E17D24673
-	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 09:47:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C70B120838
+	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 10:16:11 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZFvZx5x8"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728129AbgBZJrS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Feb 2020 04:47:18 -0500
-Received: from cloud.peff.net ([104.130.231.41]:54736 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727724AbgBZJrR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Feb 2020 04:47:17 -0500
-Received: (qmail 18857 invoked by uid 109); 26 Feb 2020 09:47:17 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 26 Feb 2020 09:47:17 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 24216 invoked by uid 111); 26 Feb 2020 09:56:24 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 26 Feb 2020 04:56:24 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 26 Feb 2020 04:47:16 -0500
-From:   Jeff King <peff@peff.net>
-To:     Chris Jerdonek <chris.jerdonek@gmail.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-Subject: Re: create reflog for reflog-less ref
-Message-ID: <20200226094716.GA14546@coredump.intra.peff.net>
-References: <CAOTb1wc2uMSyc7DMau2cWrWtk=_Z94+CCovORj1dGCrwgJhL=w@mail.gmail.com>
- <20200226023909.GC7911@camp.crustytoothpaste.net>
- <20200226034731.GA2915944@coredump.intra.peff.net>
- <CAOTb1wfWtFsy415k+goRiuLUiVBqtizmmoyxqFdy7xsRhjnBww@mail.gmail.com>
+        id S1727109AbgBZKQK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Feb 2020 05:16:10 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:37620 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726425AbgBZKQK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Feb 2020 05:16:10 -0500
+Received: by mail-wm1-f66.google.com with SMTP id a141so1585365wme.2
+        for <git@vger.kernel.org>; Wed, 26 Feb 2020 02:16:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=UIytmC7GTXrVPhI65c5jfqi3j18nq3mt6BWslGwoi34=;
+        b=ZFvZx5x8fpcd3kJOf7PNUSfiCCfE5WRTLx7Q3CjqpdQwlWX7mca5yxut2hAmyY2ZMj
+         +4nfSMSjuaXoJbok5f10Y5YwG0U3cnOa0t16XO0ClDlihTcFD7f31kc3Z1PmHneZyciB
+         1Db6nB4mlU1mVUz1f3wFoRxddcxp7tX9a/AL5LaIvGqpBgzHFFJrNLdOL6oElIdietX4
+         tqfc18Z5eaLWQlZwsyQjuXJgVrOuPE5W3+vdXiIZpLi3HlsVf0rCNlkYxuE2FG+YpNtk
+         2g2lMtHnY6XCzAo/+lc+dGUdHsJ3Ra+qjD/iDzdh79HJufU/obLgo7OPUOBqWmuBEsCp
+         7zqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=UIytmC7GTXrVPhI65c5jfqi3j18nq3mt6BWslGwoi34=;
+        b=lp50yt7FXpgttbYcsnPduzkOgi6bFP1au/ra2E8c3kKLVPnrxfneJ2X/PaeYArQkFi
+         HF53RaGM04qrJGaylIpREuCSQx6zjD+MXi3ij0n0H5UsMh/gZI9I0Lnv2aC0EyCDh4et
+         8zN1LKEBkE+IcXNkp/3KNXZzBSGcznfd15I5z4DxhbbV9fUpjx7AipUpMjFFcoh83Ubk
+         sXYy9KFhfAxy9xqp/YjmVT/Y3/fZUx1wsOA9tPXVhNwGfx3CJ+Q7Q6wXqYJZQAP5Kuwi
+         Jyz5dfycYsNtGxZ01ASe7ERPxxnmjuWs1H+x3X2tPRSqyIEBvY+dFmjg4j2Z4DFVqY1Q
+         TaZQ==
+X-Gm-Message-State: APjAAAUtOm4jxpA0Rq5f8s6knaf/AJ3fLZLOtihDP8mIKgkW+tjk1fnD
+        i3cZApY2ex8qYD7EzsPPsTNLHpiP
+X-Google-Smtp-Source: APXvYqxtTlbwGmdLG8PM5YCAV+JEcowWEwACcD+HLEEgtk6Qtrh1WjRgNlW/v2lAO6vNuJugebjTIw==
+X-Received: by 2002:a7b:c119:: with SMTP id w25mr4760934wmi.116.1582712166861;
+        Wed, 26 Feb 2020 02:16:06 -0800 (PST)
+Received: from localhost.localdomain ([139.47.115.4])
+        by smtp.gmail.com with ESMTPSA id t3sm2577081wrx.38.2020.02.26.02.16.05
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 26 Feb 2020 02:16:06 -0800 (PST)
+From:   Miriam Rubio <mirucam@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Miriam Rubio <mirucam@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH 01/10] bisect--helper: introduce new `write_in_file()` function
+Date:   Wed, 26 Feb 2020 11:14:20 +0100
+Message-Id: <20200226101429.81327-2-mirucam@gmail.com>
+X-Mailer: git-send-email 2.25.0
+In-Reply-To: <20200226101429.81327-1-mirucam@gmail.com>
+References: <20200226101429.81327-1-mirucam@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAOTb1wfWtFsy415k+goRiuLUiVBqtizmmoyxqFdy7xsRhjnBww@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 25, 2020 at 11:18:39PM -0800, Chris Jerdonek wrote:
+Let's refactor code adding a new `write_in_file()` function
+that opens a file for writing a message and closes it.
 
-> Thanks for the suggestions both of you. I didn't know about "always."
-> It looks like it was added in 2.12.0:
-> https://github.com/git/git/blob/master/Documentation/RelNotes/2.12.0.txt#L129
-> 
-> After experimenting a bit more, I seem to be finding that--
-> 
-> * The "one-shot" `-c core.logAllRefUpdates=always` approach only seems
-> to work with git-update-ref if you're *changing* the SHA with
-> update-ref, and
-> * Passing `--create-reflog` also seems to work like the one-shot
-> config approach (again, as long as you're changing the SHA).
-> 
-> I feel like these options are still wanting.. If you want to add a
-> missing reflog without changing the ref, these approaches still seem
-> to require you to temporarily change it to something different (as did
-> the delete-create approach I stated in my first email). It would be
-> nice to be able to create (or append to) the reflog without having to
-> change where the ref is pointing. Or maybe I'm missing a variation
-> that will do this..
+This removes some duplicated code and makes the code simpler,
+clearer and easier to understand.
 
-No, I don't think there is a variation that will do that. You'd have to
-wait for the next update.
+Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Signed-off-by: Miriam Rubio <mirucam@gmail.com>
+---
+ builtin/bisect--helper.c | 22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
 
-The "touch" trick I showed would work for that, but it's not going to be
-portable going forward. I don't think it would be a bad idea to have
-some way of triggering a "noop" reflog update via update-ref, where we
-either create the reflog as empty, or insert a pointless entry going
-from the current sha1 to itself. But AFAIK that doesn't exist right now.
+diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+index c1c40b516d..ee1be630da 100644
+--- a/builtin/bisect--helper.c
++++ b/builtin/bisect--helper.c
+@@ -74,6 +74,19 @@ static int one_of(const char *term, ...)
+ 	return res;
+ }
+ 
++static int write_in_file(const char *filepath, const char *content, int append)
++{
++	FILE *fp = NULL;
++	const char *mode = append ? "a" : "w";
++
++	fp = fopen(filepath, mode);
++	if (!fp)
++		return error_errno(_("could not open the file '%s'"), filepath);
++	if (!fprintf(fp, "%s\n", content))
++		return error_errno(_("could not write in file '%s'"), filepath);
++	return fclose(fp);
++}
++
+ static int check_term_format(const char *term, const char *orig_term)
+ {
+ 	int res;
+@@ -104,7 +117,7 @@ static int check_term_format(const char *term, const char *orig_term)
+ 
+ static int write_terms(const char *bad, const char *good)
+ {
+-	FILE *fp = NULL;
++	char *content = xstrfmt("%s\n%s", bad, good);
+ 	int res;
+ 
+ 	if (!strcmp(bad, good))
+@@ -113,12 +126,9 @@ static int write_terms(const char *bad, const char *good)
+ 	if (check_term_format(bad, "bad") || check_term_format(good, "good"))
+ 		return -1;
+ 
+-	fp = fopen(git_path_bisect_terms(), "w");
+-	if (!fp)
+-		return error_errno(_("could not open the file BISECT_TERMS"));
++	res = write_in_file(git_path_bisect_terms(), content, 0);
++	free(content);
+ 
+-	res = fprintf(fp, "%s\n%s\n", bad, good);
+-	res |= fclose(fp);
+ 	return (res < 0) ? -1 : 0;
+ }
+ 
+-- 
+2.25.0
 
--Peff
