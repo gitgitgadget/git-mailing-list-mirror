@@ -2,71 +2,127 @@ Return-Path: <SRS0=QAHC=4O=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C33EC4BA09
-	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 01:42:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B9A45C4BA09
+	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 02:23:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5E04E2082F
-	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 01:42:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7BC222082F
+	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 02:23:39 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="MzXZKvdA"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729874AbgBZBm3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Feb 2020 20:42:29 -0500
-Received: from cloud.peff.net ([104.130.231.41]:54408 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1729403AbgBZBm3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Feb 2020 20:42:29 -0500
-Received: (qmail 16628 invoked by uid 109); 26 Feb 2020 01:42:29 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 26 Feb 2020 01:42:29 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 22099 invoked by uid 111); 26 Feb 2020 01:51:35 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 25 Feb 2020 20:51:35 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 25 Feb 2020 20:42:28 -0500
-From:   Jeff King <peff@peff.net>
-To:     Heba Waly <heba.waly@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Christian Couder <christian.couder@gmail.com>,
-        git <git@vger.kernel.org>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: GSoC and Outreachy Summer 2020?
-Message-ID: <20200226014228.GA2913263@coredump.intra.peff.net>
-References: <20200204163716.GA7308@coredump.intra.peff.net>
- <CAP8UFD3UewcZ3oid_SiUYuFEO49JTzaSigHDTP8OPs2yh6s6zA@mail.gmail.com>
- <CACg5j25_098i=rU++OB=YSbAFjCQdgUX7gP6D-9yo6F_A_yn0w@mail.gmail.com>
- <CAP8UFD1QbOK9g2oAhfTm2npoNF9Ay_HiAfFai9rJwZzc73cBbw@mail.gmail.com>
- <20200221183003.GA9786@coredump.intra.peff.net>
- <CACg5j24mH0LRHXbhgf16f+7KqOnrsh7BRovh8mR6AzHG=y5gFA@mail.gmail.com>
- <20200223214433.GA564650@coredump.intra.peff.net>
- <nycvar.QRO.7.76.6.2002241648000.46@tvgsbejvaqbjf.bet>
- <20200225202014.GA2773363@coredump.intra.peff.net>
- <CACg5j25qmYivZdW_=dfun-ZP5m3Zx8dcYEkf24xDhVc7xmqwig@mail.gmail.com>
+        id S1729501AbgBZCXi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Feb 2020 21:23:38 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:41520 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1729395AbgBZCXi (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 25 Feb 2020 21:23:38 -0500
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id D630860791;
+        Wed, 26 Feb 2020 02:23:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1582683817;
+        bh=RMTeWjrH7kFuXMpKPA3N+f6FjT7ol5DGOzaoF3azVjw=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=MzXZKvdAkmgoboZpCd63AmjovhI2ZvPlNiSlu6THURxsSiNq3CBkPay/P1gOrlkam
+         RbBmCdrwQNHK2CTh1umnRJ84naW81cmORM73bDc839NwYsJJ0QfV8w831g9HWwfT/y
+         Dh/KTKcDUnoV0zxBxCPB9mJeXugOkCL0Mkbni6eIMoHPtX5Q1EWhXZ7a2w9zssKrgb
+         DYiMZtzx0WYDkzG0qIf4syaSBckA2e2+f6b1ij0xV7PJ0sDTiiZeZJUwGSClwvXKgh
+         pi0liABvZ8BHRYumbn+PjlS50c58NqHrKSIUcfYOSSl4eRU0fdAS+uhezRPe/H8iX3
+         JwTtM8qoc0HvHPnxxFzBk6MY8QI2watYSD6zBQivBk/wXMzOFqdLotkvQLNrP99mbu
+         Un37i37EUSNtaNKv0s6fL/0hbqZQmfJ4JjnplzyXFIYL3dPvBrqfHiMXvaqsrs37jI
+         XIYD4ls2UbUg3nMoGRqPHPSRDLKEx7bdIGJqatZ0iu0B8dNs4J2
+Date:   Wed, 26 Feb 2020 02:23:32 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 18/24] gpg-interface: improve interface for parsing
+ tags
+Message-ID: <20200226022332.GB7911@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+References: <20200222201749.937983-1-sandals@crustytoothpaste.net>
+ <20200222201749.937983-19-sandals@crustytoothpaste.net>
+ <nycvar.QRO.7.76.6.2002251127320.46@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="wq9mPyueHGvFACwf"
 Content-Disposition: inline
-In-Reply-To: <CACg5j25qmYivZdW_=dfun-ZP5m3Zx8dcYEkf24xDhVc7xmqwig@mail.gmail.com>
+In-Reply-To: <nycvar.QRO.7.76.6.2002251127320.46@tvgsbejvaqbjf.bet>
+X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
+ 5.4.0-4-amd64)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 26, 2020 at 01:55:46PM +1300, Heba Waly wrote:
 
-> > On Mon, Feb 24, 2020 at 04:48:41PM +0100, Johannes Schindelin wrote:
-> > >
-> > > I would be willing to co-mentor, but I have no good project lined up, so
-> > > it feels a bit rushed to me. Maybe take it easy and apply this fall?
+--wq9mPyueHGvFACwf
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On 2020-02-25 at 10:29:26, Johannes Schindelin wrote:
+> Hi brian,
+>=20
+> On Sat, 22 Feb 2020, brian m. carlson wrote:
+>=20
+> > diff --git a/ref-filter.c b/ref-filter.c
+> > index 6867e33648..212f1165bb 100644
+> > --- a/ref-filter.c
+> > +++ b/ref-filter.c
+> > @@ -1161,7 +1161,13 @@ static void find_subpos(const char *buf,
+> >  			unsigned long *nonsiglen,
+> >  			const char **sig, unsigned long *siglen)
+> >  {
+> > +	struct strbuf payload =3D STRBUF_INIT;
+> > +	struct strbuf signature =3D STRBUF_INIT;
+> >  	const char *eol;
+> > +	const char *end =3D buf + strlen(buf);
+> > +	const char *sigstart;
+> > +
+> > +
+> >  	/* skip past header until we hit empty line */
+> >  	while (*buf && *buf !=3D '\n') {
+> >  		eol =3D strchrnul(buf, '\n');
+> > @@ -1174,13 +1180,14 @@ static void find_subpos(const char *buf,
+> >  		buf++;
 > >
-> > I think that makes sense in this case.
-> 
-> I think I'll co-mentor with Christian then :)
->
-Just to be clear: you mean on GSoC, or trying to get something together
-for Outreachy?
+> >  	/* parse signature first; we might not even have a subject line */
+> > -	*sig =3D buf + parse_signature(buf, strlen(buf));
+> > -	*siglen =3D strlen(*sig);
+> > +	parse_signature(buf, end - buf, &payload, &signature);
+> > +	*sig =3D strbuf_detach(&signature, siglen);
+>=20
+> While I like the spirit of this patch, it makes the Windows build fail. I
+> put this on top of Git for Windows' `shears/pu` branch to fix it (maybe
+> you could adopt a variation of it?):
 
--Peff
+I'm happy to squash this in.  Sorry for the breakage, and thanks for
+catching this.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--wq9mPyueHGvFACwf
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.19 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXlXWpAAKCRB8DEliiIei
+gV9bAQCy81xYlvaPWFgvoD58MuhMvYqjWiNIe+VglDECBDWymQEAthyyCwNleA59
+x0gEGuGiCDCxCVHi5ZgqOGQPZ6OTgAg=
+=zaMT
+-----END PGP SIGNATURE-----
+
+--wq9mPyueHGvFACwf--
