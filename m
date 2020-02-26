@@ -2,1207 +2,1978 @@ Return-Path: <SRS0=QAHC=4O=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-11.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3AC18C4BA0B
-	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 08:49:58 +0000 (UTC)
-Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id DE521206E6
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 271BCC4BA0A
 	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 08:49:57 +0000 (UTC)
+Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
+	by mail.kernel.org (Postfix) with ESMTP id BF38E24653
+	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 08:49:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B5Aj7bYv"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FEfNCFWC"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727191AbgBZIt5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Feb 2020 03:49:57 -0500
-Received: from mail-ed1-f41.google.com ([209.85.208.41]:36494 "EHLO
-        mail-ed1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726787AbgBZIt4 (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1727107AbgBZIt4 (ORCPT <rfc822;git@archiver.kernel.org>);
         Wed, 26 Feb 2020 03:49:56 -0500
-Received: by mail-ed1-f41.google.com with SMTP id j17so2805328edp.3
-        for <git@vger.kernel.org>; Wed, 26 Feb 2020 00:49:54 -0800 (PST)
+Received: from mail-ed1-f42.google.com ([209.85.208.42]:44982 "EHLO
+        mail-ed1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725872AbgBZItz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Feb 2020 03:49:55 -0500
+Received: by mail-ed1-f42.google.com with SMTP id g19so2750126eds.11
+        for <git@vger.kernel.org>; Wed, 26 Feb 2020 00:49:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=SihTHykcjy5u3qL56dAedX770ziGTt4tKk5o1MzIYhI=;
-        b=B5Aj7bYvu0JnmjIr/QPZFMRMAXSZxx7X9MwXtNKqlzVytIZWd/5gZG0y59r7DW6q8K
-         ZfULPp5a3rpdtJ2DH6cArWTV1WmrQheCSBCfOzyELJGnTT+nMmVFsqPs7tJflg3XLykl
-         40cC3SZOi0SDf5HPLnGFGTrSVkOHCQ0IRaGFxH5cXp0J5og3vyxrFyIw502uroXXxRd+
-         d/vcR8HYNWmJwABxg6E3r/PwgRHmtgRiUTGVQDYmeE3y6WAPOnwT/G7UxTelo+TBeaQ1
-         utZRFrcHQL3JLvo/sEQVrAvMI741FtvBgZhlbp+WaUqMBSZdSOxN0NJmATJcUFJ1t8Kk
-         bBoQ==
+        bh=cqC/B53pMbMMHzmgoi5W0A3xpIjHcGDxi0AZHR06U7A=;
+        b=FEfNCFWCRhQt2F5ludfQQ0gxyv/H0/SILeHXaOWC7n9qx29rduX2owkRCwQNJsPCW7
+         sgrijpgGNkpprmTsSK9BSvSDHtlHHLuHvSucafwRw6+/32vMCOG5mXCP9d8ZzA7VfZSj
+         ykLg269ZqJ6xeN4g4SuTk+/S8yG4Tm67P9ZokwJrovfar+bZPS4uW1dysr7wqHXKhhJj
+         Q3gXx8rdCzDDclb/YW+ourNhE4xk3QVRClESN1wFeFZrHDtgJwtFchf44OZgAWmKwM5T
+         CaJMB2wSCKu/ouMBC3vkssKzGPxq23Spvt+Ekculft1Ioj8xDr/BxnUKT5sfmSc7QAmc
+         dMqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=SihTHykcjy5u3qL56dAedX770ziGTt4tKk5o1MzIYhI=;
-        b=a2308MLhxg83yepWW8jZQrpZySxXyTnoI8Ez9ZcZAHZaeNkrKY1cJB8ZptjE9A2aA4
-         OJZNqz5jXCqiVecN+i8PnGcAVEctG71qjKXFw4DXBZwUFAYnG9M64D0sGLFitu3JvEHe
-         KK+XY9789NvV360iIkX9joFOVKc8If4uZZ7rMBWR8PwX7j5LtPBxJKiQE+k4qP901Z2h
-         EvN9QsdlyR8RSFXDhCPZkgbkpDGox+BeCzPOUyJx1W48Z1iIgzw2ti98HlyBmgFkB0Hq
-         uJy/BjMRF3VNLFT2406KQ0EhTga2xesZqfdrJwem56D16UnJ48+6cxqxpVr7FsBTTyV/
-         yarg==
-X-Gm-Message-State: APjAAAXiW4TUAUnbHsvNSpZeGVZ+8wfSQYGCp7naTpcfuUYDprtVWaKG
-        qYSfrG1CI7HoeYHDgOvRN0JI8KfS
-X-Google-Smtp-Source: APXvYqzdEzeiurIIR+vMYY8mf3hCXVDGc7tmYzylXk+M2MobDjHibjrr7YB9vY5XLr0t3YmdsH/wwQ==
-X-Received: by 2002:a50:ee14:: with SMTP id g20mr3475038eds.10.1582706991764;
-        Wed, 26 Feb 2020 00:49:51 -0800 (PST)
+        bh=cqC/B53pMbMMHzmgoi5W0A3xpIjHcGDxi0AZHR06U7A=;
+        b=qwpGzwIJCa9y26e1X0MdvFHnvpgGaFpTV/ujSckQi+IdDc0R5ygsDy7fCR+tBE3U5B
+         fxZ7lM0exLkF4/CfiIKDli6UUeyE7IQkeUKTc4kCjck114DHIlGRyUp6EFP8w+3fVGdD
+         QVVTUh/ELBwe/psCkj+EQMEv/LhDj8bJ49VxTrwlfwW+GzY/xjnkMvHEuoUZF0m2NP5J
+         DqplLN03eZK5MOHGgNa0jkLiZrVrAFsv7p86vw+71deBwzGJDO3Nw6th53+sa2NkngdA
+         9uBbtbteYV+VpoDgxRSp7QjZv87RKVyrabZnY6hURk7djIe59q1zciQP8YmzSSqeWGUa
+         O1lQ==
+X-Gm-Message-State: APjAAAXyXRPs10aAmzCu+v44kUstqFbGfz4kye3eABRyozGlvSWz2ytP
+        yuf6Y0m8FZil/2ApnnNBsEfwqKnb
+X-Google-Smtp-Source: APXvYqz/cczg0tDuU6LddnifLgD9pTkzuR6zyvQ1I3MuviMJtQ3JixB6K2wrecMLd6l0UvDzSsVOxw==
+X-Received: by 2002:a17:906:9603:: with SMTP id s3mr3446527ejx.116.1582706988600;
+        Wed, 26 Feb 2020 00:49:48 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f10sm57145eds.31.2020.02.26.00.49.50
+        by smtp.gmail.com with ESMTPSA id l1sm52736edf.43.2020.02.26.00.49.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Feb 2020 00:49:51 -0800 (PST)
-Message-Id: <aae2681498317792dcfdd4d3b1017be68214a2ba.1582706986.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.539.v7.git.1582706986.gitgitgadget@gmail.com>
+        Wed, 26 Feb 2020 00:49:47 -0800 (PST)
+Message-Id: <pull.539.v7.git.1582706986.gitgitgadget@gmail.com>
+In-Reply-To: <pull.539.v6.git.1582015420.gitgitgadget@gmail.com>
 References: <pull.539.v6.git.1582015420.gitgitgadget@gmail.com>
-        <pull.539.v7.git.1582706986.gitgitgadget@gmail.com>
-From:   "Jonathan Nieder via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 26 Feb 2020 08:49:44 +0000
-Subject: [PATCH v7 4/6] reftable: file format documentation
+From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 26 Feb 2020 08:49:40 +0000
+Subject: [PATCH v7 0/6] Reftable support git-core
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Han-Wen Nienhuys <hanwenn@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jonathan Nieder <jrnieder@gmail.com>
+This adds the reftable library, and hooks it up as a ref backend.
 
-Shawn Pearce explains:
+Feedback wanted:
 
-Some repositories contain a lot of references (e.g. android at 866k,
-rails at 31k). The reftable format provides:
+ * spots marked with XXX in the Git source code.
+   
+   
+ * what is a good test strategy? Could we have a CI flavor where we flip the
+   default to reftable, and see how it fares?
+   
+   
 
-- Near constant time lookup for any single reference, even when the
-  repository is cold and not in process or kernel cache.
-- Near constant time verification a SHA-1 is referred to by at least
-  one reference (for allow-tip-sha1-in-want).
-- Efficient lookup of an entire namespace, such as `refs/tags/`.
-- Support atomic push `O(size_of_update)` operations.
-- Combine reflog storage with ref storage.
+v7
 
-This file format spec was originally written in July, 2017 by Shawn
-Pearce.  Some refinements since then were made by Shawn and by Han-Wen
-Nienhuys based on experiences implementing and experimenting with the
-format.  (All of this was in the context of our work at Google and
-Google is happy to contribute the result to the Git project.)
+ * support SHA256 as version 2 of the format.
 
-Imported from JGit[1]'s current version (c217d33ff,
-"Documentation/technical/reftable: improve repo layout", 2020-02-04)
-of Documentation/technical/reftable.md and converted to asciidoc by
-running
+v8
 
-  pandoc -t asciidoc -f markdown reftable.md >reftable.txt
+ * propagate errors to git.
+ * discard empty tables in the stack. 
+ * one very basic test (t0031.sh)
 
-using pandoc 2.2.1.  The result required the following additional
-minor changes:
+v9
 
-- removed the [TOC] directive to add a table of contents, since
-  asciidoc does not support it
-- replaced git-scm.com/docs links with linkgit: directives that link
-  to other pages within Git's documentation
+ * Added spec as technical doc.
+ * Use 4-byte hash ID as API. Storage format for SHA256 is still pending
+   discussion.
 
-[1] https://eclipse.googlesource.com/jgit/jgit
+Han-Wen Nienhuys (5):
+  refs.h: clarify reflog iteration order
+  create .git/refs in files-backend.c
+  refs: document how ref_iterator_advance_fn should handle symrefs
+  Add reftable library
+  Reftable support for git-core
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- Documentation/Makefile               |    1 +
- Documentation/technical/reftable.txt | 1067 ++++++++++++++++++++++++++
- 2 files changed, 1068 insertions(+)
+Jonathan Nieder (1):
+  reftable: file format documentation
+
+ Documentation/Makefile                        |    1 +
+ Documentation/technical/reftable.txt          | 1067 ++++++++++++++++
+ .../technical/repository-version.txt          |    7 +
+ Makefile                                      |   24 +-
+ builtin/clone.c                               |    4 +-
+ builtin/init-db.c                             |   57 +-
+ cache.h                                       |    4 +-
+ refs.c                                        |   20 +-
+ refs.h                                        |    8 +-
+ refs/files-backend.c                          |    6 +
+ refs/refs-internal.h                          |    6 +
+ refs/reftable-backend.c                       | 1015 +++++++++++++++
+ reftable/LICENSE                              |   31 +
+ reftable/README.md                            |   11 +
+ reftable/VERSION                              |    5 +
+ reftable/basics.c                             |  160 +++
+ reftable/basics.h                             |   30 +
+ reftable/block.c                              |  413 ++++++
+ reftable/block.h                              |   71 ++
+ reftable/blocksource.h                        |   20 +
+ reftable/bytes.c                              |    0
+ reftable/config.h                             |    1 +
+ reftable/constants.h                          |   25 +
+ reftable/dump.c                               |   97 ++
+ reftable/file.c                               |   97 ++
+ reftable/iter.c                               |  229 ++++
+ reftable/iter.h                               |   56 +
+ reftable/merged.c                             |  290 +++++
+ reftable/merged.h                             |   34 +
+ reftable/pq.c                                 |  114 ++
+ reftable/pq.h                                 |   34 +
+ reftable/reader.c                             |  720 +++++++++++
+ reftable/reader.h                             |   52 +
+ reftable/record.c                             | 1119 +++++++++++++++++
+ reftable/record.h                             |   79 ++
+ reftable/reftable.h                           |  409 ++++++
+ reftable/slice.c                              |  199 +++
+ reftable/slice.h                              |   39 +
+ reftable/stack.c                              | 1007 +++++++++++++++
+ reftable/stack.h                              |   40 +
+ reftable/system.h                             |   53 +
+ reftable/tree.c                               |   66 +
+ reftable/tree.h                               |   24 +
+ reftable/update.sh                            |   13 +
+ reftable/writer.c                             |  637 ++++++++++
+ reftable/writer.h                             |   45 +
+ reftable/zlib-compat.c                        |   92 ++
+ repository.c                                  |    2 +
+ repository.h                                  |    3 +
+ setup.c                                       |   12 +-
+ t/t0031-reftable.sh                           |   31 +
+ 51 files changed, 8547 insertions(+), 32 deletions(-)
  create mode 100644 Documentation/technical/reftable.txt
+ create mode 100644 refs/reftable-backend.c
+ create mode 100644 reftable/LICENSE
+ create mode 100644 reftable/README.md
+ create mode 100644 reftable/VERSION
+ create mode 100644 reftable/basics.c
+ create mode 100644 reftable/basics.h
+ create mode 100644 reftable/block.c
+ create mode 100644 reftable/block.h
+ create mode 100644 reftable/blocksource.h
+ create mode 100644 reftable/bytes.c
+ create mode 100644 reftable/config.h
+ create mode 100644 reftable/constants.h
+ create mode 100644 reftable/dump.c
+ create mode 100644 reftable/file.c
+ create mode 100644 reftable/iter.c
+ create mode 100644 reftable/iter.h
+ create mode 100644 reftable/merged.c
+ create mode 100644 reftable/merged.h
+ create mode 100644 reftable/pq.c
+ create mode 100644 reftable/pq.h
+ create mode 100644 reftable/reader.c
+ create mode 100644 reftable/reader.h
+ create mode 100644 reftable/record.c
+ create mode 100644 reftable/record.h
+ create mode 100644 reftable/reftable.h
+ create mode 100644 reftable/slice.c
+ create mode 100644 reftable/slice.h
+ create mode 100644 reftable/stack.c
+ create mode 100644 reftable/stack.h
+ create mode 100644 reftable/system.h
+ create mode 100644 reftable/tree.c
+ create mode 100644 reftable/tree.h
+ create mode 100644 reftable/update.sh
+ create mode 100644 reftable/writer.c
+ create mode 100644 reftable/writer.h
+ create mode 100644 reftable/zlib-compat.c
+ create mode 100755 t/t0031-reftable.sh
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 8fe829cc1b8..3aab9b8d61a 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -92,6 +92,7 @@ TECH_DOCS += technical/protocol-capabilities
- TECH_DOCS += technical/protocol-common
- TECH_DOCS += technical/protocol-v2
- TECH_DOCS += technical/racy-git
-+TECH_DOCS += technical/reftable
- TECH_DOCS += technical/send-pack-pipeline
- TECH_DOCS += technical/shallow
- TECH_DOCS += technical/signature-format
-diff --git a/Documentation/technical/reftable.txt b/Documentation/technical/reftable.txt
-new file mode 100644
-index 00000000000..9fa4657d9ff
---- /dev/null
-+++ b/Documentation/technical/reftable.txt
-@@ -0,0 +1,1067 @@
-+reftable
-+--------
-+
-+Overview
-+~~~~~~~~
-+
-+Problem statement
-+^^^^^^^^^^^^^^^^^
-+
-+Some repositories contain a lot of references (e.g. android at 866k,
-+rails at 31k). The existing packed-refs format takes up a lot of space
-+(e.g. 62M), and does not scale with additional references. Lookup of a
-+single reference requires linearly scanning the file.
-+
-+Atomic pushes modifying multiple references require copying the entire
-+packed-refs file, which can be a considerable amount of data moved
-+(e.g. 62M in, 62M out) for even small transactions (2 refs modified).
-+
-+Repositories with many loose references occupy a large number of disk
-+blocks from the local file system, as each reference is its own file
-+storing 41 bytes (and another file for the corresponding reflog). This
-+negatively affects the number of inodes available when a large number of
-+repositories are stored on the same filesystem. Readers can be penalized
-+due to the larger number of syscalls required to traverse and read the
-+`$GIT_DIR/refs` directory.
-+
-+Objectives
-+^^^^^^^^^^
-+
-+* Near constant time lookup for any single reference, even when the
-+repository is cold and not in process or kernel cache.
-+* Near constant time verification if a SHA-1 is referred to by at least
-+one reference (for allow-tip-sha1-in-want).
-+* Efficient lookup of an entire namespace, such as `refs/tags/`.
-+* Support atomic push with `O(size_of_update)` operations.
-+* Combine reflog storage with ref storage for small transactions.
-+* Separate reflog storage for base refs and historical logs.
-+
-+Description
-+^^^^^^^^^^^
-+
-+A reftable file is a portable binary file format customized for
-+reference storage. References are sorted, enabling linear scans, binary
-+search lookup, and range scans.
-+
-+Storage in the file is organized into variable sized blocks. Prefix
-+compression is used within a single block to reduce disk space. Block
-+size and alignment is tunable by the writer.
-+
-+Performance
-+^^^^^^^^^^^
-+
-+Space used, packed-refs vs. reftable:
-+
-+[cols=",>,>,>,>,>",options="header",]
-+|===============================================================
-+|repository |packed-refs |reftable |% original |avg ref |avg obj
-+|android |62.2 M |36.1 M |58.0% |33 bytes |5 bytes
-+|rails |1.8 M |1.1 M |57.7% |29 bytes |4 bytes
-+|git |78.7 K |48.1 K |61.0% |50 bytes |4 bytes
-+|git (heads) |332 b |269 b |81.0% |33 bytes |0 bytes
-+|===============================================================
-+
-+Scan (read 866k refs), by reference name lookup (single ref from 866k
-+refs), and by SHA-1 lookup (refs with that SHA-1, from 866k refs):
-+
-+[cols=",>,>,>,>",options="header",]
-+|=========================================================
-+|format |cache |scan |by name |by SHA-1
-+|packed-refs |cold |402 ms |409,660.1 usec |412,535.8 usec
-+|packed-refs |hot | |6,844.6 usec |20,110.1 usec
-+|reftable |cold |112 ms |33.9 usec |323.2 usec
-+|reftable |hot | |20.2 usec |320.8 usec
-+|=========================================================
-+
-+Space used for 149,932 log entries for 43,061 refs, reflog vs. reftable:
-+
-+[cols=",>,>",options="header",]
-+|================================
-+|format |size |avg entry
-+|$GIT_DIR/logs |173 M |1209 bytes
-+|reftable |5 M |37 bytes
-+|================================
-+
-+Details
-+~~~~~~~
-+
-+Peeling
-+^^^^^^^
-+
-+References stored in a reftable are peeled, a record for an annotated
-+(or signed) tag records both the tag object, and the object it refers
-+to.
-+
-+Reference name encoding
-+^^^^^^^^^^^^^^^^^^^^^^^
-+
-+Reference names are an uninterpreted sequence of bytes that must pass
-+linkgit:git-check-ref-format[1] as a valid reference name.
-+
-+Key unicity
-+^^^^^^^^^^^
-+
-+Each entry must have a unique key; repeated keys are disallowed.
-+
-+Network byte order
-+^^^^^^^^^^^^^^^^^^
-+
-+All multi-byte, fixed width fields are in network byte order.
-+
-+Ordering
-+^^^^^^^^
-+
-+Blocks are lexicographically ordered by their first reference.
-+
-+Directory/file conflicts
-+^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+The reftable format accepts both `refs/heads/foo` and
-+`refs/heads/foo/bar` as distinct references.
-+
-+This property is useful for retaining log records in reftable, but may
-+confuse versions of Git using `$GIT_DIR/refs` directory tree to maintain
-+references. Users of reftable may choose to continue to reject `foo` and
-+`foo/bar` type conflicts to prevent problems for peers.
-+
-+File format
-+~~~~~~~~~~~
-+
-+Structure
-+^^^^^^^^^
-+
-+A reftable file has the following high-level structure:
-+
-+....
-+first_block {
-+  header
-+  first_ref_block
-+}
-+ref_block*
-+ref_index*
-+obj_block*
-+obj_index*
-+log_block*
-+log_index*
-+footer
-+....
-+
-+A log-only file omits the `ref_block`, `ref_index`, `obj_block` and
-+`obj_index` sections, containing only the file header and log block:
-+
-+....
-+first_block {
-+  header
-+}
-+log_block*
-+log_index*
-+footer
-+....
-+
-+in a log-only file the first log block immediately follows the file
-+header, without padding to block alignment.
-+
-+Block size
-+^^^^^^^^^^
-+
-+The file’s block size is arbitrarily determined by the writer, and does
-+not have to be a power of 2. The block size must be larger than the
-+longest reference name or log entry used in the repository, as
-+references cannot span blocks.
-+
-+Powers of two that are friendly to the virtual memory system or
-+filesystem (such as 4k or 8k) are recommended. Larger sizes (64k) can
-+yield better compression, with a possible increased cost incurred by
-+readers during access.
-+
-+The largest block size is `16777215` bytes (15.99 MiB).
-+
-+Block alignment
-+^^^^^^^^^^^^^^^
-+
-+Writers may choose to align blocks at multiples of the block size by
-+including `padding` filled with NUL bytes at the end of a block to round
-+out to the chosen alignment. When alignment is used, writers must
-+specify the alignment with the file header’s `block_size` field.
-+
-+Block alignment is not required by the file format. Unaligned files must
-+set `block_size = 0` in the file header, and omit `padding`. Unaligned
-+files with more than one ref block must include the link:#Ref-index[ref
-+index] to support fast lookup. Readers must be able to read both aligned
-+and non-aligned files.
-+
-+Very small files (e.g. 1 only ref block) may omit `padding` and the ref
-+index to reduce total file size.
-+
-+Header
-+^^^^^^
-+
-+A 24-byte header appears at the beginning of the file:
-+
-+....
-+'REFT'
-+uint8( version_number = 1 )
-+uint24( block_size )
-+uint64( min_update_index )
-+uint64( max_update_index )
-+....
-+
-+Aligned files must specify `block_size` to configure readers with the
-+expected block alignment. Unaligned files must set `block_size = 0`.
-+
-+The `min_update_index` and `max_update_index` describe bounds for the
-+`update_index` field of all log records in this file. When reftables are
-+used in a stack for link:#Update-transactions[transactions], these
-+fields can order the files such that the prior file’s
-+`max_update_index + 1` is the next file’s `min_update_index`.
-+
-+First ref block
-+^^^^^^^^^^^^^^^
-+
-+The first ref block shares the same block as the file header, and is 24
-+bytes smaller than all other blocks in the file. The first block
-+immediately begins after the file header, at position 24.
-+
-+If the first block is a log block (a log-only file), its block header
-+begins immediately at position 24.
-+
-+Ref block format
-+^^^^^^^^^^^^^^^^
-+
-+A ref block is written as:
-+
-+....
-+'r'
-+uint24( block_len )
-+ref_record+
-+uint24( restart_offset )+
-+uint16( restart_count )
-+
-+padding?
-+....
-+
-+Blocks begin with `block_type = 'r'` and a 3-byte `block_len` which
-+encodes the number of bytes in the block up to, but not including the
-+optional `padding`. This is always less than or equal to the file’s
-+block size. In the first ref block, `block_len` includes 24 bytes for
-+the file header.
-+
-+The 2-byte `restart_count` stores the number of entries in the
-+`restart_offset` list, which must not be empty. Readers can use
-+`restart_count` to binary search between restarts before starting a
-+linear scan.
-+
-+Exactly `restart_count` 3-byte `restart_offset` values precedes the
-+`restart_count`. Offsets are relative to the start of the block and
-+refer to the first byte of any `ref_record` whose name has not been
-+prefix compressed. Entries in the `restart_offset` list must be sorted,
-+ascending. Readers can start linear scans from any of these records.
-+
-+A variable number of `ref_record` fill the middle of the block,
-+describing reference names and values. The format is described below.
-+
-+As the first ref block shares the first file block with the file header,
-+all `restart_offset` in the first block are relative to the start of the
-+file (position 0), and include the file header. This forces the first
-+`restart_offset` to be `28`.
-+
-+ref record
-+++++++++++
-+
-+A `ref_record` describes a single reference, storing both the name and
-+its value(s). Records are formatted as:
-+
-+....
-+varint( prefix_length )
-+varint( (suffix_length << 3) | value_type )
-+suffix
-+varint( update_index_delta )
-+value?
-+....
-+
-+The `prefix_length` field specifies how many leading bytes of the prior
-+reference record’s name should be copied to obtain this reference’s
-+name. This must be 0 for the first reference in any block, and also must
-+be 0 for any `ref_record` whose offset is listed in the `restart_offset`
-+table at the end of the block.
-+
-+Recovering a reference name from any `ref_record` is a simple concat:
-+
-+....
-+this_name = prior_name[0..prefix_length] + suffix
-+....
-+
-+The `suffix_length` value provides the number of bytes available in
-+`suffix` to copy from `suffix` to complete the reference name.
-+
-+The `update_index` that last modified the reference can be obtained by
-+adding `update_index_delta` to the `min_update_index` from the file
-+header: `min_update_index + update_index_delta`.
-+
-+The `value` follows. Its format is determined by `value_type`, one of
-+the following:
-+
-+* `0x0`: deletion; no value data (see transactions, below)
-+* `0x1`: one 20-byte object id; value of the ref
-+* `0x2`: two 20-byte object ids; value of the ref, peeled target
-+* `0x3`: symbolic reference: `varint( target_len ) target`
-+
-+Symbolic references use `0x3`, followed by the complete name of the
-+reference target. No compression is applied to the target name.
-+
-+Types `0x4..0x7` are reserved for future use.
-+
-+Ref index
-+^^^^^^^^^
-+
-+The ref index stores the name of the last reference from every ref block
-+in the file, enabling reduced disk seeks for lookups. Any reference can
-+be found by searching the index, identifying the containing block, and
-+searching within that block.
-+
-+The index may be organized into a multi-level index, where the 1st level
-+index block points to additional ref index blocks (2nd level), which may
-+in turn point to either additional index blocks (e.g. 3rd level) or ref
-+blocks (leaf level). Disk reads required to access a ref go up with
-+higher index levels. Multi-level indexes may be required to ensure no
-+single index block exceeds the file format’s max block size of
-+`16777215` bytes (15.99 MiB). To acheive constant O(1) disk seeks for
-+lookups the index must be a single level, which is permitted to exceed
-+the file’s configured block size, but not the format’s max block size of
-+15.99 MiB.
-+
-+If present, the ref index block(s) appears after the last ref block.
-+
-+If there are at least 4 ref blocks, a ref index block should be written
-+to improve lookup times. Cold reads using the index require 2 disk reads
-+(read index, read block), and binary searching < 4 blocks also requires
-+<= 2 reads. Omitting the index block from smaller files saves space.
-+
-+If the file is unaligned and contains more than one ref block, the ref
-+index must be written.
-+
-+Index block format:
-+
-+....
-+'i'
-+uint24( block_len )
-+index_record+
-+uint24( restart_offset )+
-+uint16( restart_count )
-+
-+padding?
-+....
-+
-+The index blocks begin with `block_type = 'i'` and a 3-byte `block_len`
-+which encodes the number of bytes in the block, up to but not including
-+the optional `padding`.
-+
-+The `restart_offset` and `restart_count` fields are identical in format,
-+meaning and usage as in ref blocks.
-+
-+To reduce the number of reads required for random access in very large
-+files the index block may be larger than other blocks. However, readers
-+must hold the entire index in memory to benefit from this, so it’s a
-+time-space tradeoff in both file size and reader memory.
-+
-+Increasing the file’s block size decreases the index size. Alternatively
-+a multi-level index may be used, keeping index blocks within the file’s
-+block size, but increasing the number of blocks that need to be
-+accessed.
-+
-+index record
-+++++++++++++
-+
-+An index record describes the last entry in another block. Index records
-+are written as:
-+
-+....
-+varint( prefix_length )
-+varint( (suffix_length << 3) | 0 )
-+suffix
-+varint( block_position )
-+....
-+
-+Index records use prefix compression exactly like `ref_record`.
-+
-+Index records store `block_position` after the suffix, specifying the
-+absolute position in bytes (from the start of the file) of the block
-+that ends with this reference. Readers can seek to `block_position` to
-+begin reading the block header.
-+
-+Readers must examine the block header at `block_position` to determine
-+if the next block is another level index block, or the leaf-level ref
-+block.
-+
-+Reading the index
-++++++++++++++++++
-+
-+Readers loading the ref index must first read the footer (below) to
-+obtain `ref_index_position`. If not present, the position will be 0. The
-+`ref_index_position` is for the 1st level root of the ref index.
-+
-+Obj block format
-+^^^^^^^^^^^^^^^^
-+
-+Object blocks are optional. Writers may choose to omit object blocks,
-+especially if readers will not use the SHA-1 to ref mapping.
-+
-+Object blocks use unique, abbreviated 2-20 byte SHA-1 keys, mapping to
-+ref blocks containing references pointing to that object directly, or as
-+the peeled value of an annotated tag. Like ref blocks, object blocks use
-+the file’s standard block size. The abbrevation length is available in
-+the footer as `obj_id_len`.
-+
-+To save space in small files, object blocks may be omitted if the ref
-+index is not present, as brute force search will only need to read a few
-+ref blocks. When missing, readers should brute force a linear search of
-+all references to lookup by SHA-1.
-+
-+An object block is written as:
-+
-+....
-+'o'
-+uint24( block_len )
-+obj_record+
-+uint24( restart_offset )+
-+uint16( restart_count )
-+
-+padding?
-+....
-+
-+Fields are identical to ref block. Binary search using the restart table
-+works the same as in reference blocks.
-+
-+Because object identifiers are abbreviated by writers to the shortest
-+unique abbreviation within the reftable, obj key lengths are variable
-+between 2 and 20 bytes. Readers must compare only for common prefix
-+match within an obj block or obj index.
-+
-+obj record
-+++++++++++
-+
-+An `obj_record` describes a single object abbreviation, and the blocks
-+containing references using that unique abbreviation:
-+
-+....
-+varint( prefix_length )
-+varint( (suffix_length << 3) | cnt_3 )
-+suffix
-+varint( cnt_large )?
-+varint( position_delta )*
-+....
-+
-+Like in reference blocks, abbreviations are prefix compressed within an
-+obj block. On large reftables with many unique objects, higher block
-+sizes (64k), and higher restart interval (128), a `prefix_length` of 2
-+or 3 and `suffix_length` of 3 may be common in obj records (unique
-+abbreviation of 5-6 raw bytes, 10-12 hex digits).
-+
-+Each record contains `position_count` number of positions for matching
-+ref blocks. For 1-7 positions the count is stored in `cnt_3`. When
-+`cnt_3 = 0` the actual count follows in a varint, `cnt_large`.
-+
-+The use of `cnt_3` bets most objects are pointed to by only a single
-+reference, some may be pointed to by a couple of references, and very
-+few (if any) are pointed to by more than 7 references.
-+
-+A special case exists when `cnt_3 = 0` and `cnt_large = 0`: there are no
-+`position_delta`, but at least one reference starts with this
-+abbreviation. A reader that needs exact reference names must scan all
-+references to find which specific references have the desired object.
-+Writers should use this format when the `position_delta` list would have
-+overflowed the file’s block size due to a high number of references
-+pointing to the same object.
-+
-+The first `position_delta` is the position from the start of the file.
-+Additional `position_delta` entries are sorted ascending and relative to
-+the prior entry, e.g. a reader would perform:
-+
-+....
-+pos = position_delta[0]
-+prior = pos
-+for (j = 1; j < position_count; j++) {
-+  pos = prior + position_delta[j]
-+  prior = pos
-+}
-+....
-+
-+With a position in hand, a reader must linearly scan the ref block,
-+starting from the first `ref_record`, testing each reference’s SHA-1s
-+(for `value_type = 0x1` or `0x2`) for full equality. Faster searching by
-+SHA-1 within a single ref block is not supported by the reftable format.
-+Smaller block sizes reduce the number of candidates this step must
-+consider.
-+
-+Obj index
-+^^^^^^^^^
-+
-+The obj index stores the abbreviation from the last entry for every obj
-+block in the file, enabling reduced disk seeks for all lookups. It is
-+formatted exactly the same as the ref index, but refers to obj blocks.
-+
-+The obj index should be present if obj blocks are present, as obj blocks
-+should only be written in larger files.
-+
-+Readers loading the obj index must first read the footer (below) to
-+obtain `obj_index_position`. If not present, the position will be 0.
-+
-+Log block format
-+^^^^^^^^^^^^^^^^
-+
-+Unlike ref and obj blocks, log blocks are always unaligned.
-+
-+Log blocks are variable in size, and do not match the `block_size`
-+specified in the file header or footer. Writers should choose an
-+appropriate buffer size to prepare a log block for deflation, such as
-+`2 * block_size`.
-+
-+A log block is written as:
-+
-+....
-+'g'
-+uint24( block_len )
-+zlib_deflate {
-+  log_record+
-+  uint24( restart_offset )+
-+  uint16( restart_count )
-+}
-+....
-+
-+Log blocks look similar to ref blocks, except `block_type = 'g'`.
-+
-+The 4-byte block header is followed by the deflated block contents using
-+zlib deflate. The `block_len` in the header is the inflated size
-+(including 4-byte block header), and should be used by readers to
-+preallocate the inflation output buffer. A log block’s `block_len` may
-+exceed the file’s block size.
-+
-+Offsets within the log block (e.g. `restart_offset`) still include the
-+4-byte header. Readers may prefer prefixing the inflation output buffer
-+with the 4-byte header.
-+
-+Within the deflate container, a variable number of `log_record` describe
-+reference changes. The log record format is described below. See ref
-+block format (above) for a description of `restart_offset` and
-+`restart_count`.
-+
-+Because log blocks have no alignment or padding between blocks, readers
-+must keep track of the bytes consumed by the inflater to know where the
-+next log block begins.
-+
-+log record
-+++++++++++
-+
-+Log record keys are structured as:
-+
-+....
-+ref_name '\0' reverse_int64( update_index )
-+....
-+
-+where `update_index` is the unique transaction identifier. The
-+`update_index` field must be unique within the scope of a `ref_name`.
-+See the update transactions section below for further details.
-+
-+The `reverse_int64` function inverses the value so lexographical
-+ordering the network byte order encoding sorts the more recent records
-+with higher `update_index` values first:
-+
-+....
-+reverse_int64(int64 t) {
-+  return 0xffffffffffffffff - t;
-+}
-+....
-+
-+Log records have a similar starting structure to ref and index records,
-+utilizing the same prefix compression scheme applied to the log record
-+key described above.
-+
-+....
-+    varint( prefix_length )
-+    varint( (suffix_length << 3) | log_type )
-+    suffix
-+    log_data {
-+      old_id
-+      new_id
-+      varint( name_length    )  name
-+      varint( email_length   )  email
-+      varint( time_seconds )
-+      sint16( tz_offset )
-+      varint( message_length )  message
-+    }?
-+....
-+
-+Log record entries use `log_type` to indicate what follows:
-+
-+* `0x0`: deletion; no log data.
-+* `0x1`: standard git reflog data using `log_data` above.
-+
-+The `log_type = 0x0` is mostly useful for `git stash drop`, removing an
-+entry from the reflog of `refs/stash` in a transaction file (below),
-+without needing to rewrite larger files. Readers reading a stack of
-+reflogs must treat this as a deletion.
-+
-+For `log_type = 0x1`, the `log_data` section follows
-+linkgit:git-update-ref[1] logging and includes:
-+
-+* two 20-byte SHA-1s (old id, new id)
-+* varint string of committer’s name
-+* varint string of committer’s email
-+* varint time in seconds since epoch (Jan 1, 1970)
-+* 2-byte timezone offset in minutes (signed)
-+* varint string of message
-+
-+`tz_offset` is the absolute number of minutes from GMT the committer was
-+at the time of the update. For example `GMT-0800` is encoded in reftable
-+as `sint16(-480)` and `GMT+0230` is `sint16(150)`.
-+
-+The committer email does not contain `<` or `>`, it’s the value normally
-+found between the `<>` in a git commit object header.
-+
-+The `message_length` may be 0, in which case there was no message
-+supplied for the update.
-+
-+Contrary to traditional reflog (which is a file), renames are encoded as
-+a combination of ref deletion and ref creation.
-+
-+Reading the log
-++++++++++++++++
-+
-+Readers accessing the log must first read the footer (below) to
-+determine the `log_position`. The first block of the log begins at
-+`log_position` bytes since the start of the file. The `log_position` is
-+not block aligned.
-+
-+Importing logs
-+++++++++++++++
-+
-+When importing from `$GIT_DIR/logs` writers should globally order all
-+log records roughly by timestamp while preserving file order, and assign
-+unique, increasing `update_index` values for each log line. Newer log
-+records get higher `update_index` values.
-+
-+Although an import may write only a single reftable file, the reftable
-+file must span many unique `update_index`, as each log line requires its
-+own `update_index` to preserve semantics.
-+
-+Log index
-+^^^^^^^^^
-+
-+The log index stores the log key
-+(`refname \0 reverse_int64(update_index)`) for the last log record of
-+every log block in the file, supporting bounded-time lookup.
-+
-+A log index block must be written if 2 or more log blocks are written to
-+the file. If present, the log index appears after the last log block.
-+There is no padding used to align the log index to block alignment.
-+
-+Log index format is identical to ref index, except the keys are 9 bytes
-+longer to include `'\0'` and the 8-byte `reverse_int64(update_index)`.
-+Records use `block_position` to refer to the start of a log block.
-+
-+Reading the index
-++++++++++++++++++
-+
-+Readers loading the log index must first read the footer (below) to
-+obtain `log_index_position`. If not present, the position will be 0.
-+
-+Footer
-+^^^^^^
-+
-+After the last block of the file, a file footer is written. It begins
-+like the file header, but is extended with additional data.
-+
-+A 68-byte footer appears at the end:
-+
-+....
-+    'REFT'
-+    uint8( version_number = 1 )
-+    uint24( block_size )
-+    uint64( min_update_index )
-+    uint64( max_update_index )
-+
-+    uint64( ref_index_position )
-+    uint64( (obj_position << 5) | obj_id_len )
-+    uint64( obj_index_position )
-+
-+    uint64( log_position )
-+    uint64( log_index_position )
-+
-+    uint32( CRC-32 of above )
-+....
-+
-+If a section is missing (e.g. ref index) the corresponding position
-+field (e.g. `ref_index_position`) will be 0.
-+
-+* `obj_position`: byte position for the first obj block.
-+* `obj_id_len`: number of bytes used to abbreviate object identifiers in
-+obj blocks.
-+* `log_position`: byte position for the first log block.
-+* `ref_index_position`: byte position for the start of the ref index.
-+* `obj_index_position`: byte position for the start of the obj index.
-+* `log_index_position`: byte position for the start of the log index.
-+
-+Reading the footer
-+++++++++++++++++++
-+
-+Readers must seek to `file_length - 68` to access the footer. A trusted
-+external source (such as `stat(2)`) is necessary to obtain
-+`file_length`. When reading the footer, readers must verify:
-+
-+* 4-byte magic is correct
-+* 1-byte version number is recognized
-+* 4-byte CRC-32 matches the other 64 bytes (including magic, and
-+version)
-+
-+Once verified, the other fields of the footer can be accessed.
-+
-+Varint encoding
-+^^^^^^^^^^^^^^^
-+
-+Varint encoding is identical to the ofs-delta encoding method used
-+within pack files.
-+
-+Decoder works such as:
-+
-+....
-+val = buf[ptr] & 0x7f
-+while (buf[ptr] & 0x80) {
-+  ptr++
-+  val = ((val + 1) << 7) | (buf[ptr] & 0x7f)
-+}
-+....
-+
-+Binary search
-+^^^^^^^^^^^^^
-+
-+Binary search within a block is supported by the `restart_offset` fields
-+at the end of the block. Readers can binary search through the restart
-+table to locate between which two restart points the sought reference or
-+key should appear.
-+
-+Each record identified by a `restart_offset` stores the complete key in
-+the `suffix` field of the record, making the compare operation during
-+binary search straightforward.
-+
-+Once a restart point lexicographically before the sought reference has
-+been identified, readers can linearly scan through the following record
-+entries to locate the sought record, terminating if the current record
-+sorts after (and therefore the sought key is not present).
-+
-+Restart point selection
-++++++++++++++++++++++++
-+
-+Writers determine the restart points at file creation. The process is
-+arbitrary, but every 16 or 64 records is recommended. Every 16 may be
-+more suitable for smaller block sizes (4k or 8k), every 64 for larger
-+block sizes (64k).
-+
-+More frequent restart points reduces prefix compression and increases
-+space consumed by the restart table, both of which increase file size.
-+
-+Less frequent restart points makes prefix compression more effective,
-+decreasing overall file size, with increased penalities for readers
-+walking through more records after the binary search step.
-+
-+A maximum of `65535` restart points per block is supported.
-+
-+Considerations
-+~~~~~~~~~~~~~~
-+
-+Lightweight refs dominate
-+^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+The reftable format assumes the vast majority of references are single
-+SHA-1 valued with common prefixes, such as Gerrit Code Review’s
-+`refs/changes/` namespace, GitHub’s `refs/pulls/` namespace, or many
-+lightweight tags in the `refs/tags/` namespace.
-+
-+Annotated tags storing the peeled object cost an additional 20 bytes per
-+reference.
-+
-+Low overhead
-+^^^^^^^^^^^^
-+
-+A reftable with very few references (e.g. git.git with 5 heads) is 269
-+bytes for reftable, vs. 332 bytes for packed-refs. This supports
-+reftable scaling down for transaction logs (below).
-+
-+Block size
-+^^^^^^^^^^
-+
-+For a Gerrit Code Review type repository with many change refs, larger
-+block sizes (64 KiB) and less frequent restart points (every 64) yield
-+better compression due to more references within the block compressing
-+against the prior reference.
-+
-+Larger block sizes reduce the index size, as the reftable will require
-+fewer blocks to store the same number of references.
-+
-+Minimal disk seeks
-+^^^^^^^^^^^^^^^^^^
-+
-+Assuming the index block has been loaded into memory, binary searching
-+for any single reference requires exactly 1 disk seek to load the
-+containing block.
-+
-+Scans and lookups dominate
-+^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+Scanning all references and lookup by name (or namespace such as
-+`refs/heads/`) are the most common activities performed on repositories.
-+SHA-1s are stored directly with references to optimize this use case.
-+
-+Logs are infrequently read
-+^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+Logs are infrequently accessed, but can be large. Deflating log blocks
-+saves disk space, with some increased penalty at read time.
-+
-+Logs are stored in an isolated section from refs, reducing the burden on
-+reference readers that want to ignore logs. Further, historical logs can
-+be isolated into log-only files.
-+
-+Logs are read backwards
-+^^^^^^^^^^^^^^^^^^^^^^^
-+
-+Logs are frequently accessed backwards (most recent N records for master
-+to answer `master@{4}`), so log records are grouped by reference, and
-+sorted descending by update index.
-+
-+Repository format
-+~~~~~~~~~~~~~~~~~
-+
-+Version 1
-+^^^^^^^^^
-+
-+A repository must set its `$GIT_DIR/config` to configure reftable:
-+
-+....
-+[core]
-+    repositoryformatversion = 1
-+[extensions]
-+    refStorage = reftable
-+....
-+
-+Layout
-+^^^^^^
-+
-+A collection of reftable files are stored in the `$GIT_DIR/reftable/`
-+directory:
-+
-+....
-+00000001-00000001.log
-+00000002-00000002.ref
-+00000003-00000003.ref
-+....
-+
-+where reftable files are named by a unique name such as produced by the
-+function `${min_update_index}-${max_update_index}.ref`.
-+
-+Log-only files use the `.log` extension, while ref-only and mixed ref
-+and log files use `.ref`. extension.
-+
-+The stack ordering file is `$GIT_DIR/reftable/tables.list` and lists the
-+current files, one per line, in order, from oldest (base) to newest
-+(most recent):
-+
-+....
-+$ cat .git/reftable/tables.list
-+00000001-00000001.log
-+00000002-00000002.ref
-+00000003-00000003.ref
-+....
-+
-+Readers must read `$GIT_DIR/reftable/tables.list` to determine which
-+files are relevant right now, and search through the stack in reverse
-+order (last reftable is examined first).
-+
-+Reftable files not listed in `tables.list` may be new (and about to be
-+added to the stack by the active writer), or ancient and ready to be
-+pruned.
-+
-+Backward compatibility
-+^^^^^^^^^^^^^^^^^^^^^^
-+
-+Older clients should continue to recognize the directory as a git
-+repository so they don’t look for an enclosing repository in parent
-+directories. To this end, a reftable-enabled repository must contain the
-+following dummy files
-+
-+* `.git/HEAD`, a regular file containing `ref: refs/heads/.invalid`.
-+* `.git/refs/`, a directory
-+* `.git/refs/heads`, a regular file
-+
-+Readers
-+^^^^^^^
-+
-+Readers can obtain a consistent snapshot of the reference space by
-+following:
-+
-+1.  Open and read the `tables.list` file.
-+2.  Open each of the reftable files that it mentions.
-+3.  If any of the files is missing, goto 1.
-+4.  Read from the now-open files as long as necessary.
-+
-+Update transactions
-+^^^^^^^^^^^^^^^^^^^
-+
-+Although reftables are immutable, mutations are supported by writing a
-+new reftable and atomically appending it to the stack:
-+
-+1.  Acquire `tables.list.lock`.
-+2.  Read `tables.list` to determine current reftables.
-+3.  Select `update_index` to be most recent file’s
-+`max_update_index + 1`.
-+4.  Prepare temp reftable `tmp_XXXXXX`, including log entries.
-+5.  Rename `tmp_XXXXXX` to `${update_index}-${update_index}.ref`.
-+6.  Copy `tables.list` to `tables.list.lock`, appending file from (5).
-+7.  Rename `tables.list.lock` to `tables.list`.
-+
-+During step 4 the new file’s `min_update_index` and `max_update_index`
-+are both set to the `update_index` selected by step 3. All log records
-+for the transaction use the same `update_index` in their keys. This
-+enables later correlation of which references were updated by the same
-+transaction.
-+
-+Because a single `tables.list.lock` file is used to manage locking, the
-+repository is single-threaded for writers. Writers may have to busy-spin
-+(with backoff) around creating `tables.list.lock`, for up to an
-+acceptable wait period, aborting if the repository is too busy to
-+mutate. Application servers wrapped around repositories (e.g. Gerrit
-+Code Review) can layer their own lock/wait queue to improve fairness to
-+writers.
-+
-+Reference deletions
-+^^^^^^^^^^^^^^^^^^^
-+
-+Deletion of any reference can be explicitly stored by setting the `type`
-+to `0x0` and omitting the `value` field of the `ref_record`. This serves
-+as a tombstone, overriding any assertions about the existence of the
-+reference from earlier files in the stack.
-+
-+Compaction
-+^^^^^^^^^^
-+
-+A partial stack of reftables can be compacted by merging references
-+using a straightforward merge join across reftables, selecting the most
-+recent value for output, and omitting deleted references that do not
-+appear in remaining, lower reftables.
-+
-+A compacted reftable should set its `min_update_index` to the smallest
-+of the input files’ `min_update_index`, and its `max_update_index`
-+likewise to the largest input `max_update_index`.
-+
-+For sake of illustration, assume the stack currently consists of
-+reftable files (from oldest to newest): A, B, C, and D. The compactor is
-+going to compact B and C, leaving A and D alone.
-+
-+1.  Obtain lock `tables.list.lock` and read the `tables.list` file.
-+2.  Obtain locks `B.lock` and `C.lock`. Ownership of these locks
-+prevents other processes from trying to compact these files.
-+3.  Release `tables.list.lock`.
-+4.  Compact `B` and `C` into a temp file
-+`${min_update_index}-${max_update_index}_XXXXXX`.
-+5.  Reacquire lock `tables.list.lock`.
-+6.  Verify that `B` and `C` are still in the stack, in that order. This
-+should always be the case, assuming that other processes are adhering to
-+the locking protocol.
-+7.  Rename `${min_update_index}-${max_update_index}_XXXXXX` to
-+`${min_update_index}-${max_update_index}.ref`.
-+8.  Write the new stack to `tables.list.lock`, replacing `B` and `C`
-+with the file from (4).
-+9.  Rename `tables.list.lock` to `tables.list`.
-+10. Delete `B` and `C`, perhaps after a short sleep to avoid forcing
-+readers to backtrack.
-+
-+This strategy permits compactions to proceed independently of updates.
-+
-+Each reftable (compacted or not) is uniquely identified by its name, so
-+open reftables can be cached by their name.
-+
-+Alternatives considered
-+~~~~~~~~~~~~~~~~~~~~~~~
-+
-+bzip packed-refs
-+^^^^^^^^^^^^^^^^
-+
-+`bzip2` can significantly shrink a large packed-refs file (e.g. 62 MiB
-+compresses to 23 MiB, 37%). However the bzip format does not support
-+random access to a single reference. Readers must inflate and discard
-+while performing a linear scan.
-+
-+Breaking packed-refs into chunks (individually compressing each chunk)
-+would reduce the amount of data a reader must inflate, but still leaves
-+the problem of indexing chunks to support readers efficiently locating
-+the correct chunk.
-+
-+Given the compression achieved by reftable’s encoding, it does not seem
-+necessary to add the complexity of bzip/gzip/zlib.
-+
-+Michael Haggerty’s alternate format
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+Michael Haggerty proposed
-+https://public-inbox.org/git/CAMy9T_HCnyc1g8XWOOWhe7nN0aEFyyBskV2aOMb_fe+wGvEJ7A@mail.gmail.com/[an
-+alternate] format to reftable on the Git mailing list. This format uses
-+smaller chunks, without the restart table, and avoids block alignment
-+with padding. Reflog entries immediately follow each ref, and are thus
-+interleaved between refs.
-+
-+Performance testing indicates reftable is faster for lookups (51%
-+faster, 11.2 usec vs. 5.4 usec), although reftable produces a slightly
-+larger file (+ ~3.2%, 28.3M vs 29.2M):
-+
-+[cols=">,>,>,>",options="header",]
-+|=====================================
-+|format |size |seek cold |seek hot
-+|mh-alt |28.3 M |23.4 usec |11.2 usec
-+|reftable |29.2 M |19.9 usec |5.4 usec
-+|=====================================
-+
-+JGit Ketch RefTree
-+^^^^^^^^^^^^^^^^^^
-+
-+https://dev.eclipse.org/mhonarc/lists/jgit-dev/msg03073.html[JGit Ketch]
-+proposed
-+https://public-inbox.org/git/CAJo=hJvnAPNAdDcAAwAvU9C4RVeQdoS3Ev9WTguHx4fD0V_nOg@mail.gmail.com/[RefTree],
-+an encoding of references inside Git tree objects stored as part of the
-+repository’s object database.
-+
-+The RefTree format adds additional load on the object database storage
-+layer (more loose objects, more objects in packs), and relies heavily on
-+the packer’s delta compression to save space. Namespaces which are flat
-+(e.g. thousands of tags in refs/tags) initially create very large loose
-+objects, and so RefTree does not address the problem of copying many
-+references to modify a handful.
-+
-+Flat namespaces are not efficiently searchable in RefTree, as tree
-+objects in canonical formatting cannot be binary searched. This fails
-+the need to handle a large number of references in a single namespace,
-+such as GitHub’s `refs/pulls`, or a project with many tags.
-+
-+LMDB
-+^^^^
-+
-+David Turner proposed
-+https://public-inbox.org/git/1455772670-21142-26-git-send-email-dturner@twopensource.com/[using
-+LMDB], as LMDB is lightweight (64k of runtime code) and GPL-compatible
-+license.
-+
-+A downside of LMDB is its reliance on a single C implementation. This
-+makes embedding inside JGit (a popular reimplemenation of Git)
-+difficult, and hoisting onto virtual storage (for JGit DFS) virtually
-+impossible.
-+
-+A common format that can be supported by all major Git implementations
-+(git-core, JGit, libgit2) is strongly preferred.
-+
-+Future
-+~~~~~~
-+
-+Longer hashes
-+^^^^^^^^^^^^^
-+
-+Version will bump (e.g. 2) to indicate `value` uses a different object
-+id length other than 20. The length could be stored in an expanded file
-+header, or hardcoded as part of the version.
+
+base-commit: 51ebf55b9309824346a6589c9f3b130c6f371b8f
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-539%2Fhanwen%2Freftable-v7
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-539/hanwen/reftable-v7
+Pull-Request: https://github.com/gitgitgadget/git/pull/539
+
+Range-diff vs v6:
+
+ 1:  e4b0773becd = 1:  b1e44bc431e refs.h: clarify reflog iteration order
+ 2:  c25b6c601dc = 2:  b68488a095e create .git/refs in files-backend.c
+ 3:  e132e0f4e00 ! 3:  da538ef7421 refs: document how ref_iterator_advance_fn should handle symrefs
+     @@ -13,8 +13,8 @@
+       
+      +/*
+      + * backend-specific implementation of ref_iterator_advance.
+     -+ * For symrefs, the function should set REF_ISSYMREF, and it should also dereference
+     -+ * the symref to provide the OID referent.
+     ++ * For symrefs, the function should set REF_ISSYMREF, and it should also
+     ++ * dereference the symref to provide the OID referent.
+      + */
+       typedef int ref_iterator_advance_fn(struct ref_iterator *ref_iterator);
+       
+ -:  ----------- > 4:  aae26814983 reftable: file format documentation
+ 4:  fe29a9db399 ! 5:  30ed43a4fdb Add reftable library
+     @@ -2,19 +2,11 @@
+      
+          Add reftable library
+      
+     -    Reftable is a new format for storing the ref database. It provides the
+     -    following benefits:
+     -
+     -     * Simple and fast atomic ref transactions, including multiple refs and reflogs.
+     -     * Compact storage of ref data.
+     -     * Fast look ups of ref data.
+     -     * Case-sensitive ref names on Windows/OSX, regardless of file system
+     -     * Eliminates file/directory conflicts in ref names
+     +    Reftable is a format for storing the ref database. Its rationale and
+     +    specification is in the preceding commit.
+      
+          Further context and motivation can be found in background reading:
+      
+     -    * Spec: https://github.com/eclipse/jgit/blob/master/Documentation/technical/reftable.md
+     -
+          * Original discussion on JGit-dev:  https://www.eclipse.org/lists/jgit-dev/msg03389.html
+      
+          * First design discussion on git@vger: https://public-inbox.org/git/CAJo=hJtTp2eA3z9wW9cHo-nA7kK40vVThqh6inXpbCcqfdMP9g@mail.gmail.com/
+     @@ -80,15 +72,7 @@
+      +
+      +To update the library, do:
+      +
+     -+   ((cd reftable-repo && git fetch origin && git checkout origin/master ) ||
+     -+    git clone https://github.com/google/reftable reftable-repo) && \
+     -+   cp reftable-repo/c/*.[ch] reftable/ && \
+     -+   cp reftable-repo/LICENSE reftable/ &&
+     -+   git --git-dir reftable-repo/.git show --no-patch origin/master \
+     -+    > reftable/VERSION && \
+     -+   sed -i~ 's|if REFTABLE_IN_GITCORE|if 1 /* REFTABLE_IN_GITCORE */|' reftable/system.h
+     -+   rm reftable/*_test.c reftable/test_framework.*
+     -+   git add reftable/*.[ch]
+     ++   sh reftable/update.sh
+      +
+      +Bugfixes should be accompanied by a test and applied to upstream project at
+      +https://github.com/google/reftable.
+     @@ -98,17 +82,11 @@
+       --- /dev/null
+       +++ b/reftable/VERSION
+      @@
+     -+commit 42aa04f301a682197f0698867b9771b78ce4fdaf
+     ++commit ccce3b3eb763e79b23a3b4677d65ecceb4155ba3
+      +Author: Han-Wen Nienhuys <hanwen@google.com>
+     -+Date:   Mon Feb 17 16:05:22 2020 +0100
+     -+
+     -+    C: simplify system and config header handling
+     -+    
+     -+    reftable.h only depends on <stdint.h>
+     -+    
+     -+    system.h is only included from .c files. The git-core specific code is
+     -+    guarded by a #if REFTABLE_IN_GITCORE, which we'll edit with a sed
+     -+    script on the git-core side.
+     ++Date:   Tue Feb 25 20:42:29 2020 +0100
+     ++
+     ++    C: rephrase the hash ID API in terms of a uint32_t
+      
+       diff --git a/reftable/basics.c b/reftable/basics.c
+       new file mode 100644
+     @@ -127,61 +105,23 @@
+      +
+      +#include "system.h"
+      +
+     -+void put_u24(byte *out, uint32_t i)
+     ++void put_be24(byte *out, uint32_t i)
+      +{
+      +	out[0] = (byte)((i >> 16) & 0xff);
+      +	out[1] = (byte)((i >> 8) & 0xff);
+      +	out[2] = (byte)((i)&0xff);
+      +}
+      +
+     -+uint32_t get_u24(byte *in)
+     ++uint32_t get_be24(byte *in)
+      +{
+      +	return (uint32_t)(in[0]) << 16 | (uint32_t)(in[1]) << 8 |
+      +	       (uint32_t)(in[2]);
+      +}
+      +
+     -+void put_u32(byte *out, uint32_t i)
+     ++void put_be16(uint8_t *out, uint16_t i)
+      +{
+     -+	out[0] = (byte)((i >> 24) & 0xff);
+     -+	out[1] = (byte)((i >> 16) & 0xff);
+     -+	out[2] = (byte)((i >> 8) & 0xff);
+     -+	out[3] = (byte)((i)&0xff);
+     -+}
+     -+
+     -+uint32_t get_u32(byte *in)
+     -+{
+     -+	return (uint32_t)(in[0]) << 24 | (uint32_t)(in[1]) << 16 |
+     -+	       (uint32_t)(in[2]) << 8 | (uint32_t)(in[3]);
+     -+}
+     -+
+     -+void put_u64(byte *out, uint64_t v)
+     -+{
+     -+	int i = 0;
+     -+	for (i = sizeof(uint64_t); i--;) {
+     -+		out[i] = (byte)(v & 0xff);
+     -+		v >>= 8;
+     -+	}
+     -+}
+     -+
+     -+uint64_t get_u64(byte *out)
+     -+{
+     -+	uint64_t v = 0;
+     -+	int i = 0;
+     -+	for (i = 0; i < sizeof(uint64_t); i++) {
+     -+		v = (v << 8) | (byte)(out[i] & 0xff);
+     -+	}
+     -+	return v;
+     -+}
+     -+
+     -+void put_u16(byte *out, uint16_t i)
+     -+{
+     -+	out[0] = (byte)((i >> 8) & 0xff);
+     -+	out[1] = (byte)((i)&0xff);
+     -+}
+     -+
+     -+uint16_t get_u16(byte *in)
+     -+{
+     -+	return (uint32_t)(in[0]) << 8 | (uint32_t)(in[1]);
+     ++	out[0] = (uint8_t)((i >> 8) & 0xff);
+     ++	out[1] = (uint8_t)((i)&0xff);
+      +}
+      +
+      +/*
+     @@ -234,7 +174,9 @@
+      +int names_length(char **names)
+      +{
+      +	int len = 0;
+     -+	for (char **p = names; *p; p++) {
+     ++	char **p = names;
+     ++	while (*p) {
+     ++		p++;
+      +		len++;
+      +	}
+      +	return len;
+     @@ -262,7 +204,7 @@
+      +				names = realloc(names,
+      +						names_cap * sizeof(char *));
+      +			}
+     -+			names[names_len++] = strdup(p);
+     ++			names[names_len++] = xstrdup(p);
+      +		}
+      +		p = next + 1;
+      +	}
+     @@ -335,17 +277,10 @@
+      +#define true 1
+      +#define false 0
+      +
+     -+void put_u24(byte *out, uint32_t i);
+     -+uint32_t get_u24(byte *in);
+     -+
+     -+uint64_t get_u64(byte *in);
+     -+void put_u64(byte *out, uint64_t i);
+     ++void put_be24(byte *out, uint32_t i);
+     ++uint32_t get_be24(byte *in);
+     ++void put_be16(uint8_t *out, uint16_t i);
+      +
+     -+void put_u32(byte *out, uint32_t i);
+     -+uint32_t get_u32(byte *in);
+     -+
+     -+void put_u16(byte *out, uint16_t i);
+     -+uint16_t get_u16(byte *in);
+      +int binsearch(int sz, int (*f)(int k, void *args), void *args);
+      +
+      +void free_names(char **a);
+     @@ -403,7 +338,7 @@
+      +   success */
+      +int block_writer_add(struct block_writer *w, struct record rec)
+      +{
+     -+	struct slice empty = {};
+     ++	struct slice empty = { 0 };
+      +	struct slice last = w->entries % w->restart_interval == 0 ? empty :
+      +								    w->last_key;
+      +	struct slice out = {
+     @@ -414,7 +349,7 @@
+      +	struct slice start = out;
+      +
+      +	bool restart = false;
+     -+	struct slice key = {};
+     ++	struct slice key = { 0 };
+      +	int n = 0;
+      +
+      +	record_key(rec, &key);
+     @@ -480,17 +415,17 @@
+      +{
+      +	int i = 0;
+      +	for (i = 0; i < w->restart_len; i++) {
+     -+		put_u24(w->buf + w->next, w->restarts[i]);
+     ++		put_be24(w->buf + w->next, w->restarts[i]);
+      +		w->next += 3;
+      +	}
+      +
+     -+	put_u16(w->buf + w->next, w->restart_len);
+     ++	put_be16(w->buf + w->next, w->restart_len);
+      +	w->next += 2;
+     -+	put_u24(w->buf + 1 + w->header_off, w->next);
+     ++	put_be24(w->buf + 1 + w->header_off, w->next);
+      +
+      +	if (block_writer_type(w) == BLOCK_TYPE_LOG) {
+      +		int block_header_skip = 4 + w->header_off;
+     -+		struct slice compressed = {};
+     ++		struct slice compressed = { 0 };
+      +		int zresult = 0;
+      +		uLongf src_len = w->next - block_header_skip;
+      +		slice_resize(&compressed, src_len);
+     @@ -531,14 +466,14 @@
+      +{
+      +	uint32_t full_block_size = table_block_size;
+      +	byte typ = block->data[header_off];
+     -+	uint32_t sz = get_u24(block->data + header_off + 1);
+     ++	uint32_t sz = get_be24(block->data + header_off + 1);
+      +
+      +	if (!is_block_type(typ)) {
+      +		return FORMAT_ERROR;
+      +	}
+      +
+      +	if (typ == BLOCK_TYPE_LOG) {
+     -+		struct slice uncompressed = {};
+     ++		struct slice uncompressed = { 0 };
+      +		int block_header_skip = 4 + header_off;
+      +		uLongf dst_len = sz - block_header_skip;
+      +		uLongf src_len = block->len - block_header_skip;
+     @@ -570,7 +505,7 @@
+      +	}
+      +
+      +	{
+     -+		uint16_t restart_count = get_u16(block->data + sz - 2);
+     ++		uint16_t restart_count = get_be16(block->data + sz - 2);
+      +		uint32_t restart_start = sz - 2 - 3 * restart_count;
+      +
+      +		byte *restart_bytes = block->data + restart_start;
+     @@ -593,7 +528,7 @@
+      +
+      +static uint32_t block_reader_restart_offset(struct block_reader *br, int i)
+      +{
+     -+	return get_u24(br->restart_bytes + 3 * i);
+     ++	return get_be24(br->restart_bytes + 3 * i);
+      +}
+      +
+      +void block_reader_start(struct block_reader *br, struct block_iter *it)
+     @@ -604,9 +539,9 @@
+      +}
+      +
+      +struct restart_find_args {
+     ++	int error;
+      +	struct slice key;
+      +	struct block_reader *r;
+     -+	int error;
+      +};
+      +
+      +static int restart_key_less(int idx, void *args)
+     @@ -620,8 +555,8 @@
+      +
+      +	/* the restart key is verbatim in the block, so this could avoid the
+      +	   alloc for decoding the key */
+     -+	struct slice rkey = {};
+     -+	struct slice last_key = {};
+     ++	struct slice rkey = { 0 };
+     ++	struct slice last_key = { 0 };
+      +	byte unused_extra;
+      +	int n = decode_key(&rkey, &unused_extra, last_key, in);
+      +	if (n < 0) {
+     @@ -656,7 +591,7 @@
+      +			.len = it->br->block_len - it->next_off,
+      +		};
+      +		struct slice start = in;
+     -+		struct slice key = {};
+     ++		struct slice key = { 0 };
+      +		byte extra;
+      +		int n = decode_key(&key, &extra, it->last_key, in);
+      +		if (n < 0) {
+     @@ -681,7 +616,7 @@
+      +
+      +int block_reader_first_key(struct block_reader *br, struct slice *key)
+      +{
+     -+	struct slice empty = {};
+     ++	struct slice empty = { 0 };
+      +	int off = br->header_off + 4;
+      +	struct slice in = {
+      +		.buf = br->block.data + off,
+     @@ -729,10 +664,10 @@
+      +
+      +	{
+      +		struct record rec = new_record(block_reader_type(br));
+     -+		struct slice key = {};
+     ++		struct slice key = { 0 };
+      +		int result = 0;
+      +		int err = 0;
+     -+		struct block_iter next = {};
+     ++		struct block_iter next = { 0 };
+      +		while (true) {
+      +			block_iter_copy_from(&next, it);
+      +
+     @@ -830,9 +765,9 @@
+      +};
+      +
+      +struct block_iter {
+     ++	uint32_t next_off;
+      +	struct block_reader *br;
+      +	struct slice last_key;
+     -+	uint32_t next_off;
+      +};
+      +
+      +int block_reader_init(struct block_reader *br, struct block *bl,
+     @@ -937,7 +872,7 @@
+      +
+      +static int dump_table(const char *tablename)
+      +{
+     -+	struct block_source src = {};
+     ++	struct block_source src = { 0 };
+      +	int err = block_source_from_file(&src, tablename);
+      +	if (err < 0) {
+      +		return err;
+     @@ -950,13 +885,13 @@
+      +	}
+      +
+      +	{
+     -+		struct iterator it = {};
+     ++		struct iterator it = { 0 };
+      +		err = reader_seek_ref(r, &it, "");
+      +		if (err < 0) {
+      +			return err;
+      +		}
+      +
+     -+		struct ref_record ref = {};
+     ++		struct ref_record ref = { 0 };
+      +		while (1) {
+      +			err = iterator_next_ref(it, &ref);
+      +			if (err > 0) {
+     @@ -972,12 +907,12 @@
+      +	}
+      +
+      +	{
+     -+		struct iterator it = {};
+     ++		struct iterator it = { 0 };
+      +		err = reader_seek_log(r, &it, "");
+      +		if (err < 0) {
+      +			return err;
+      +		}
+     -+		struct log_record log = {};
+     ++		struct log_record log = { 0 };
+      +		while (1) {
+      +			err = iterator_next_log(it, &log);
+      +			if (err > 0) {
+     @@ -1001,7 +936,7 @@
+      +	while ((opt = getopt(argc, argv, "t:")) != -1) {
+      +		switch (opt) {
+      +		case 't':
+     -+			table = strdup(optarg);
+     ++			table = xstrdup(optarg);
+      +			break;
+      +		case '?':
+      +			printf("usage: %s [-table tablefile]\n", argv[0]);
+     @@ -1091,7 +1026,7 @@
+      +
+      +int block_source_from_file(struct block_source *bs, const char *name)
+      +{
+     -+	struct stat st = {};
+     ++	struct stat st = { 0 };
+      +	int err = 0;
+      +	int fd = open(name, O_RDONLY);
+      +	if (fd < 0) {
+     @@ -1188,14 +1123,14 @@
+      +
+      +int iterator_next_ref(struct iterator it, struct ref_record *ref)
+      +{
+     -+	struct record rec = {};
+     ++	struct record rec = { 0 };
+      +	record_from_ref(&rec, ref);
+      +	return iterator_next(it, rec);
+      +}
+      +
+      +int iterator_next_log(struct iterator it, struct log_record *log)
+      +{
+     -+	struct record rec = {};
+     ++	struct record rec = { 0 };
+      +	record_from_log(&rec, log);
+      +	return iterator_next(it, rec);
+      +}
+     @@ -1221,7 +1156,7 @@
+      +		}
+      +
+      +		if (fri->double_check) {
+     -+			struct iterator it = {};
+     ++			struct iterator it = { 0 };
+      +
+      +			int err = reader_seek_ref(fri->r, &it, ref->ref_name);
+      +			if (err == 0) {
+     @@ -1389,9 +1324,9 @@
+      +bool iterator_is_null(struct iterator it);
+      +
+      +struct filtering_ref_iterator {
+     ++	bool double_check;
+      +	struct reader *r;
+      +	struct slice oid;
+     -+	bool double_check;
+      +	struct iterator it;
+      +};
+      +
+     @@ -1511,7 +1446,7 @@
+      +
+      +static int merged_iter_next(struct merged_iter *mi, struct record rec)
+      +{
+     -+	struct slice entry_key = {};
+     ++	struct slice entry_key = { 0 };
+      +	struct pq_entry entry = merged_iter_pqueue_remove(&mi->pq);
+      +	int err = merged_iter_advance_subiter(mi, entry.index);
+      +	if (err < 0) {
+     @@ -1521,7 +1456,7 @@
+      +	record_key(entry.rec, &entry_key);
+      +	while (!merged_iter_pqueue_is_empty(mi->pq)) {
+      +		struct pq_entry top = merged_iter_pqueue_top(mi->pq);
+     -+		struct slice k = {};
+     ++		struct slice k = { 0 };
+      +		int err = 0, cmp = 0;
+      +
+      +		record_key(top.rec, &k);
+     @@ -1542,7 +1477,7 @@
+      +		free(record_yield(&top.rec));
+      +	}
+      +
+     -+	record_copy_from(rec, entry.rec, mi->hash_size);
+     ++	record_copy_from(rec, entry.rec, hash_size(mi->hash_id));
+      +	record_clear(entry.rec);
+      +	free(record_yield(&entry.rec));
+      +	free(slice_yield(&entry_key));
+     @@ -1572,14 +1507,14 @@
+      +}
+      +
+      +int new_merged_table(struct merged_table **dest, struct reader **stack, int n,
+     -+		     int hash_size)
+     ++		     uint32_t hash_id)
+      +{
+      +	uint64_t last_max = 0;
+      +	uint64_t first_min = 0;
+      +	int i = 0;
+      +	for (i = 0; i < n; i++) {
+      +		struct reader *r = stack[i];
+     -+		if (reader_hash_size(r) != hash_size) {
+     ++		if (r->hash_id != hash_id) {
+      +			return FORMAT_ERROR;
+      +		}
+      +		if (i > 0 && last_max >= reader_min_update_index(r)) {
+     @@ -1598,7 +1533,7 @@
+      +			.stack_len = n,
+      +			.min = first_min,
+      +			.max = last_max,
+     -+			.hash_size = hash_size,
+     ++			.hash_id = hash_id,
+      +		};
+      +
+      +		*dest = calloc(sizeof(struct merged_table), 1);
+     @@ -1650,7 +1585,7 @@
+      +	struct merged_iter merged = {
+      +		.stack = iters,
+      +		.typ = record_type(rec),
+     -+		.hash_size = mt->hash_size,
+     ++		.hash_id = mt->hash_id,
+      +	};
+      +	int n = 0;
+      +	int err = 0;
+     @@ -1693,7 +1628,7 @@
+      +	struct ref_record ref = {
+      +		.ref_name = (char *)name,
+      +	};
+     -+	struct record rec = {};
+     ++	struct record rec = { 0 };
+      +	record_from_ref(&rec, &ref);
+      +	return merged_table_seek_record(mt, it, rec);
+      +}
+     @@ -1705,7 +1640,7 @@
+      +		.ref_name = (char *)name,
+      +		.update_index = update_index,
+      +	};
+     -+	struct record rec = {};
+     ++	struct record rec = { 0 };
+      +	record_from_log(&rec, &log);
+      +	return merged_table_seek_record(mt, it, rec);
+      +}
+     @@ -1739,7 +1674,7 @@
+      +struct merged_table {
+      +	struct reader **stack;
+      +	int stack_len;
+     -+	int hash_size;
+     ++	uint32_t hash_id;
+      +
+      +	uint64_t min;
+      +	uint64_t max;
+     @@ -1747,7 +1682,7 @@
+      +
+      +struct merged_iter {
+      +	struct iterator *stack;
+     -+	int hash_size;
+     ++	uint32_t hash_id;
+      +	int stack_len;
+      +	byte typ;
+      +	struct merged_iter_pqueue pq;
+     @@ -1776,8 +1711,8 @@
+      +
+      +int pq_less(struct pq_entry a, struct pq_entry b)
+      +{
+     -+	struct slice ak = {};
+     -+	struct slice bk = {};
+     ++	struct slice ak = { 0 };
+     ++	struct slice bk = { 0 };
+      +	int cmp = 0;
+      +	record_key(a.rec, &ak);
+      +	record_key(b.rec, &bk);
+     @@ -1896,8 +1831,8 @@
+      +#include "record.h"
+      +
+      +struct pq_entry {
+     -+	struct record rec;
+      +	int index;
+     ++	struct record rec;
+      +};
+      +
+      +int pq_less(struct pq_entry a, struct pq_entry b);
+     @@ -2005,9 +1940,9 @@
+      +	block_source_return_block(r->source, p);
+      +}
+      +
+     -+int reader_hash_size(struct reader *r)
+     ++uint32_t reader_hash_id(struct reader *r)
+      +{
+     -+	return r->hash_size;
+     ++	return r->hash_id;
+      +}
+      +
+      +const char *reader_name(struct reader *r)
+     @@ -2030,11 +1965,12 @@
+      +		goto exit;
+      +	}
+      +
+     -+	r->hash_size = SHA1_SIZE;
+     ++	r->hash_id = SHA1_ID;
+      +	{
+      +		byte version = *f++;
+      +		if (version == 2) {
+     -+			r->hash_size = SHA256_SIZE;
+     ++			/* DO NOT SUBMIT.  Not yet in the standard. */
+     ++			r->hash_id = SHA256_ID;
+      +			version = 1;
+      +		}
+      +		if (version != 1) {
+     @@ -2043,33 +1979,33 @@
+      +		}
+      +	}
+      +
+     -+	r->block_size = get_u24(f);
+     ++	r->block_size = get_be24(f);
+      +
+      +	f += 3;
+     -+	r->min_update_index = get_u64(f);
+     ++	r->min_update_index = get_be64(f);
+      +	f += 8;
+     -+	r->max_update_index = get_u64(f);
+     ++	r->max_update_index = get_be64(f);
+      +	f += 8;
+      +
+     -+	r->ref_offsets.index_offset = get_u64(f);
+     ++	r->ref_offsets.index_offset = get_be64(f);
+      +	f += 8;
+      +
+     -+	r->obj_offsets.offset = get_u64(f);
+     ++	r->obj_offsets.offset = get_be64(f);
+      +	f += 8;
+      +
+      +	r->object_id_len = r->obj_offsets.offset & ((1 << 5) - 1);
+      +	r->obj_offsets.offset >>= 5;
+      +
+     -+	r->obj_offsets.index_offset = get_u64(f);
+     ++	r->obj_offsets.index_offset = get_be64(f);
+      +	f += 8;
+     -+	r->log_offsets.offset = get_u64(f);
+     ++	r->log_offsets.offset = get_be64(f);
+      +	f += 8;
+     -+	r->log_offsets.index_offset = get_u64(f);
+     ++	r->log_offsets.index_offset = get_be64(f);
+      +	f += 8;
+      +
+      +	{
+      +		uint32_t computed_crc = crc32(0, footer, f - footer);
+     -+		uint32_t file_crc = get_u32(f);
+     ++		uint32_t file_crc = get_be32(f);
+      +		f += 4;
+      +		if (computed_crc != file_crc) {
+      +			err = FORMAT_ERROR;
+     @@ -2092,15 +2028,15 @@
+      +
+      +int init_reader(struct reader *r, struct block_source source, const char *name)
+      +{
+     -+	struct block footer = {};
+     -+	struct block header = {};
+     ++	struct block footer = { 0 };
+     ++	struct block header = { 0 };
+      +	int err = 0;
+      +
+      +	memset(r, 0, sizeof(struct reader));
+      +	r->size = block_source_size(source) - FOOTER_SIZE;
+      +	r->source = source;
+     -+	r->name = strdup(name);
+     -+	r->hash_size = 0;
+     ++	r->name = xstrdup(name);
+     ++	r->hash_id = 0;
+      +
+      +	err = block_source_read_block(source, &footer, r->size, FOOTER_SIZE);
+      +	if (err != FOOTER_SIZE) {
+     @@ -2173,7 +2109,7 @@
+      +
+      +	*typ = data[0];
+      +	if (is_block_type(*typ)) {
+     -+		result = get_u24(data + 1);
+     ++		result = get_be24(data + 1);
+      +	}
+      +	return result;
+      +}
+     @@ -2183,7 +2119,7 @@
+      +{
+      +	int32_t guess_block_size = r->block_size ? r->block_size :
+      +						   DEFAULT_BLOCK_SIZE;
+     -+	struct block block = {};
+     ++	struct block block = { 0 };
+      +	byte block_typ = 0;
+      +	int err = 0;
+      +	uint32_t header_off = next_off ? 0 : HEADER_SIZE;
+     @@ -2217,14 +2153,14 @@
+      +	}
+      +
+      +	return block_reader_init(br, &block, header_off, r->block_size,
+     -+				 r->hash_size);
+     ++				 hash_size(r->hash_id));
+      +}
+      +
+      +static int table_iter_next_block(struct table_iter *dest,
+      +				 struct table_iter *src)
+      +{
+      +	uint64_t next_block_off = src->block_off + src->bi.br->full_block_size;
+     -+	struct block_reader br = {};
+     ++	struct block_reader br = { 0 };
+      +	int err = 0;
+      +
+      +	dest->r = src->r;
+     @@ -2257,7 +2193,7 @@
+      +	}
+      +
+      +	while (true) {
+     -+		struct table_iter next = {};
+     ++		struct table_iter next = { 0 };
+      +		int err = 0;
+      +		if (ti->finished) {
+      +			return 1;
+     @@ -2307,7 +2243,7 @@
+      +static int reader_table_iter_at(struct reader *r, struct table_iter *ti,
+      +				uint64_t off, byte typ)
+      +{
+     -+	struct block_reader br = {};
+     ++	struct block_reader br = { 0 };
+      +	struct block_reader *brp = NULL;
+      +
+      +	int err = reader_init_block_reader(r, &br, off, typ);
+     @@ -2344,9 +2280,9 @@
+      +			      struct record want)
+      +{
+      +	struct record rec = new_record(record_type(want));
+     -+	struct slice want_key = {};
+     -+	struct slice got_key = {};
+     -+	struct table_iter next = {};
+     ++	struct slice want_key = { 0 };
+     ++	struct slice got_key = { 0 };
+     ++	struct table_iter next = { 0 };
+      +	int err = -1;
+      +	record_key(want, &want_key);
+      +
+     @@ -2394,12 +2330,12 @@
+      +static int reader_seek_indexed(struct reader *r, struct iterator *it,
+      +			       struct record rec)
+      +{
+     -+	struct index_record want_index = {};
+     -+	struct record want_index_rec = {};
+     -+	struct index_record index_result = {};
+     -+	struct record index_result_rec = {};
+     -+	struct table_iter index_iter = {};
+     -+	struct table_iter next = {};
+     ++	struct index_record want_index = { 0 };
+     ++	struct record want_index_rec = { 0 };
+     ++	struct index_record index_result = { 0 };
+     ++	struct record index_result_rec = { 0 };
+     ++	struct table_iter index_iter = { 0 };
+     ++	struct table_iter next = { 0 };
+      +	int err = 0;
+      +
+      +	record_key(rec, &want_index.last_key);
+     @@ -2461,7 +2397,7 @@
+      +{
+      +	struct reader_offsets *offs = reader_offsets_for(r, record_type(rec));
+      +	uint64_t idx = offs->index_offset;
+     -+	struct table_iter ti = {};
+     ++	struct table_iter ti = { 0 };
+      +	int err = 0;
+      +	if (idx > 0) {
+      +		return reader_seek_indexed(r, it, rec);
+     @@ -2503,7 +2439,7 @@
+      +	struct ref_record ref = {
+      +		.ref_name = (char *)name,
+      +	};
+     -+	struct record rec = {};
+     ++	struct record rec = { 0 };
+      +	record_from_ref(&rec, &ref);
+      +	return reader_seek(r, it, rec);
+      +}
+     @@ -2515,7 +2451,7 @@
+      +		.ref_name = (char *)name,
+      +		.update_index = update_index,
+      +	};
+     -+	struct record rec = {};
+     ++	struct record rec = { 0 };
+      +	record_from_log(&rec, &log);
+      +	return reader_seek(r, it, rec);
+      +}
+     @@ -2557,10 +2493,10 @@
+      +		.hash_prefix = oid,
+      +		.hash_prefix_len = r->object_id_len,
+      +	};
+     -+	struct record want_rec = {};
+     -+	struct iterator oit = {};
+     -+	struct obj_record got = {};
+     -+	struct record got_rec = {};
+     ++	struct record want_rec = { 0 };
+     ++	struct iterator oit = { 0 };
+     ++	struct obj_record got = { 0 };
+     ++	struct record got_rec = { 0 };
+      +	int err = 0;
+      +
+      +	record_from_obj(&want_rec, &want);
+     @@ -2585,7 +2521,8 @@
+      +
+      +	{
+      +		struct indexed_table_ref_iter *itr = NULL;
+     -+		err = new_indexed_table_ref_iter(&itr, r, oid, r->hash_size,
+     ++		err = new_indexed_table_ref_iter(&itr, r, oid,
+     ++						 hash_size(r->hash_id),
+      +						 got.offsets, got.offset_len);
+      +		if (err < 0) {
+      +			record_clear(got_rec);
+     @@ -2675,9 +2612,9 @@
+      +};
+      +
+      +struct reader {
+     -+	struct block_source source;
+      +	char *name;
+     -+	int hash_size;
+     ++	struct block_source source;
+     ++	uint32_t hash_id;
+      +	uint64_t size;
+      +	uint32_t block_size;
+      +	uint64_t min_update_index;
+     @@ -2755,7 +2692,7 @@
+      +
+      +int put_var_int(struct slice dest, uint64_t val)
+      +{
+     -+	byte buf[10] = {};
+     ++	byte buf[10] = { 0 };
+      +	int i = 9;
+      +	buf[i] = (byte)(val & 0x7f);
+      +	i--;
+     @@ -2868,11 +2805,11 @@
+      +	   fields. */
+      +	ref_record_clear(ref);
+      +	if (src->ref_name != NULL) {
+     -+		ref->ref_name = strdup(src->ref_name);
+     ++		ref->ref_name = xstrdup(src->ref_name);
+      +	}
+      +
+      +	if (src->target != NULL) {
+     -+		ref->target = strdup(src->target);
+     ++		ref->target = xstrdup(src->target);
+      +	}
+      +
+      +	if (src->target_value != NULL) {
+     @@ -2910,7 +2847,7 @@
+      +
+      +void ref_record_print(struct ref_record *ref, int hash_size)
+      +{
+     -+	char hex[SHA256_SIZE + 1] = {};
+     ++	char hex[SHA256_SIZE + 1] = { 0 };
+      +
+      +	printf("ref{%s(%" PRIu64 ") ", ref->ref_name, ref->update_index);
+      +	if (ref->value != NULL) {
+     @@ -3066,7 +3003,7 @@
+      +		in.len -= hash_size;
+      +		break;
+      +	case 3: {
+     -+		struct slice dest = {};
+     ++		struct slice dest = { 0 };
+      +		int n = decode_string(&dest, in);
+      +		if (n < 0) {
+      +			return -1;
+     @@ -3302,7 +3239,7 @@
+      +
+      +void log_record_print(struct log_record *log, int hash_size)
+      +{
+     -+	char hex[SHA256_SIZE + 1] = {};
+     ++	char hex[SHA256_SIZE + 1] = { 0 };
+      +
+      +	printf("log{%s(%" PRIu64 ") %s <%s> %" PRIu64 " %04d\n", log->ref_name,
+      +	       log->update_index, log->name, log->email, log->time,
+     @@ -3326,7 +3263,7 @@
+      +	slice_resize(dest, len + 9);
+      +	memcpy(dest->buf, rec->ref_name, len + 1);
+      +	ts = (~ts) - rec->update_index;
+     -+	put_u64(dest->buf + 1 + len, ts);
+     ++	put_be64(dest->buf + 1 + len, ts);
+      +}
+      +
+      +static void log_record_copy_from(void *rec, const void *src_rec, int hash_size)
+     @@ -3335,10 +3272,10 @@
+      +	const struct log_record *src = (const struct log_record *)src_rec;
+      +
+      +	*dst = *src;
+     -+	dst->ref_name = strdup(dst->ref_name);
+     -+	dst->email = strdup(dst->email);
+     -+	dst->name = strdup(dst->name);
+     -+	dst->message = strdup(dst->message);
+     ++	dst->ref_name = xstrdup(dst->ref_name);
+     ++	dst->email = xstrdup(dst->email);
+     ++	dst->name = xstrdup(dst->name);
+     ++	dst->message = xstrdup(dst->message);
+      +	if (dst->new_hash != NULL) {
+      +		dst->new_hash = malloc(hash_size);
+      +		memcpy(dst->new_hash, src->new_hash, hash_size);
+     @@ -3371,7 +3308,7 @@
+      +	return 1;
+      +}
+      +
+     -+static byte zero[SHA256_SIZE] = {};
+     ++static byte zero[SHA256_SIZE] = { 0 };
+      +
+      +static int log_record_encode(const void *rec, struct slice s, int hash_size)
+      +{
+     @@ -3421,7 +3358,7 @@
+      +		return -1;
+      +	}
+      +
+     -+	put_u16(s.buf, r->tz_offset);
+     ++	put_be16(s.buf, r->tz_offset);
+      +	s.buf += 2;
+      +	s.len -= 2;
+      +
+     @@ -3442,7 +3379,7 @@
+      +	struct log_record *r = (struct log_record *)rec;
+      +	uint64_t max = 0;
+      +	uint64_t ts = 0;
+     -+	struct slice dest = {};
+     ++	struct slice dest = { 0 };
+      +	int n;
+      +
+      +	if (key.len <= 9 || key.buf[key.len - 9] != 0) {
+     @@ -3451,7 +3388,7 @@
+      +
+      +	r->ref_name = realloc(r->ref_name, key.len - 8);
+      +	memcpy(r->ref_name, key.buf, key.len - 8);
+     -+	ts = get_u64(key.buf + key.len - 8);
+     ++	ts = get_be64(key.buf + key.len - 8);
+      +
+      +	r->update_index = (~max) - ts;
+      +
+     @@ -3503,7 +3440,7 @@
+      +		goto error;
+      +	}
+      +
+     -+	r->tz_offset = get_u16(in.buf);
+     ++	r->tz_offset = get_be16(in.buf);
+      +	in.buf += 2;
+      +	in.len -= 2;
+      +
+     @@ -3810,6 +3747,18 @@
+      +{
+      +	/* XXX */
+      +	return false;
+     ++}
+     ++
+     ++int hash_size(uint32_t id)
+     ++{
+     ++	switch (id) {
+     ++	case 0:
+     ++	case SHA1_ID:
+     ++		return SHA1_SIZE;
+     ++	case SHA256_ID:
+     ++		return SHA256_SIZE;
+     ++	}
+     ++	abort();
+      +}
+      
+       diff --git a/reftable/record.h b/reftable/record.h
+     @@ -3842,7 +3791,7 @@
+      +	void (*clear)(void *rec);
+      +};
+      +
+     -+/* record is a generic wrapper for differnt types of records. */
+     ++/* record is a generic wrapper for different types of records. */
+      +struct record {
+      +	void *data;
+      +	struct record_vtable *ops;
+     @@ -3863,8 +3812,8 @@
+      +	       struct slice in);
+      +
+      +struct index_record {
+     -+	struct slice last_key;
+      +	uint64_t offset;
+     ++	struct slice last_key;
+      +};
+      +
+      +struct obj_record {
+     @@ -3965,9 +3914,10 @@
+      +	/* how often to write complete keys in each block. */
+      +	int restart_interval;
+      +
+     -+	/* width of the hash. Should be 20 for SHA1 or 32 for SHA256. Defaults
+     -+	 * to SHA1 if unset */
+     -+	int hash_size;
+     ++	/* 4-byte identifier ("sha1", "s256") of the hash.
+     ++	 * Defaults to SHA1 if unset
+     ++	 */
+     ++	uint32_t hash_id;
+      +};
+      +
+      +/* ref_record holds a ref database entry target_value */
+     @@ -4102,6 +4052,9 @@
+      +/* Decompression error */
+      +#define ZLIB_ERROR -7
+      +
+     ++/* Wrote a table without blocks. */
+     ++#define EMPTY_TABLE_ERROR -8
+     ++
+      +const char *error_str(int err);
+      +
+      +/* new_writer creates a new writer */
+     @@ -4162,10 +4115,10 @@
+      +   struct reader *r = NULL;
+      +   int err = new_reader(&r, src, "filename");
+      +   if (err < 0) { ... }
+     -+   struct iterator it = {};
+     ++   struct iterator it  = {0};
+      +   err = reader_seek_ref(r, &it, "refs/heads/master");
+      +   if (err < 0) { ... }
+     -+   struct ref_record ref = {};
+     ++   struct ref_record ref  = {0};
+      +   while (1) {
+      +     err = iterator_next_ref(it, &ref);
+      +     if (err > 0) {
+     @@ -4181,8 +4134,8 @@
+      + */
+      +int reader_seek_ref(struct reader *r, struct iterator *it, const char *name);
+      +
+     -+/* returns the hash size used in this table. */
+     -+int reader_hash_size(struct reader *r);
+     ++/* returns the hash ID used in this table. */
+     ++uint32_t reader_hash_id(struct reader *r);
+      +
+      +/* seek to logs for the given name, older than update_index. */
+      +int reader_seek_log_at(struct reader *r, struct iterator *it, const char *name,
+     @@ -4211,10 +4164,10 @@
+      +   array.
+      +*/
+      +int new_merged_table(struct merged_table **dest, struct reader **stack, int n,
+     -+		     int hash_size);
+     ++		     uint32_t hash_id);
+      +
+     -+/* returns the hash size used in this merged table. */
+     -+int merged_hash_size(struct merged_table *mt);
+     ++/* returns the hash id used in this merged table. */
+     ++uint32_t merged_hash_id(struct merged_table *mt);
+      +
+      +/* returns an iterator positioned just before 'name' */
+      +int merged_table_seek_ref(struct merged_table *mt, struct iterator *it,
+     @@ -4403,7 +4356,7 @@
+      +/* return a newly malloced string for this slice */
+      +char *slice_to_string(struct slice in)
+      +{
+     -+	struct slice s = {};
+     ++	struct slice s = { 0 };
+      +	slice_resize(&s, in.len + 1);
+      +	s.buf[in.len] = 0;
+      +	memcpy(s.buf, in.buf, in.len);
+     @@ -4585,8 +4538,8 @@
+      +	struct stack *p = calloc(sizeof(struct stack), 1);
+      +	int err = 0;
+      +	*dest = NULL;
+     -+	p->list_file = strdup(list_file);
+     -+	p->reftable_dir = strdup(dir);
+     ++	p->list_file = xstrdup(list_file);
+     ++	p->reftable_dir = xstrdup(dir);
+      +	p->config = config;
+      +
+      +	err = stack_reload(p);
+     @@ -4690,7 +4643,7 @@
+      +	int new_tables_len = 0;
+      +	struct merged_table *new_merged = NULL;
+      +
+     -+	struct slice table_path = {};
+     ++	struct slice table_path = { 0 };
+      +
+      +	while (*names) {
+      +		struct reader *rd = NULL;
+     @@ -4708,7 +4661,7 @@
+      +		}
+      +
+      +		if (rd == NULL) {
+     -+			struct block_source src = {};
+     ++			struct block_source src = { 0 };
+      +			slice_set_string(&table_path, st->reftable_dir);
+      +			slice_append_string(&table_path, "/");
+      +			slice_append_string(&table_path, name);
+     @@ -4730,7 +4683,7 @@
+      +
+      +	/* success! */
+      +	err = new_merged_table(&new_merged, new_tables, new_tables_len,
+     -+			       st->config.hash_size);
+     ++			       st->config.hash_id);
+      +	if (err < 0) {
+      +		goto exit;
+      +	}
+     @@ -4780,7 +4733,7 @@
+      +
+      +static int stack_reload_maybe_reuse(struct stack *st, bool reuse_open)
+      +{
+     -+	struct timeval deadline = {};
+     ++	struct timeval deadline = { 0 };
+      +	int err = gettimeofday(&deadline, NULL);
+      +	int64_t delay = 0;
+      +	int tries = 0;
+     @@ -4792,7 +4745,7 @@
+      +	while (true) {
+      +		char **names = NULL;
+      +		char **names_after = NULL;
+     -+		struct timeval now = {};
+     ++		struct timeval now = { 0 };
+      +		int err = gettimeofday(&now, NULL);
+      +		if (err < 0) {
+      +			return err;
+     @@ -4904,11 +4857,11 @@
+      +int stack_try_add(struct stack *st,
+      +		  int (*write_table)(struct writer *wr, void *arg), void *arg)
+      +{
+     -+	struct slice lock_name = {};
+     -+	struct slice temp_tab_name = {};
+     -+	struct slice tab_name = {};
+     -+	struct slice next_name = {};
+     -+	struct slice table_list = {};
+     ++	struct slice lock_name = { 0 };
+     ++	struct slice temp_tab_name = { 0 };
+     ++	struct slice tab_name = { 0 };
+     ++	struct slice next_name = { 0 };
+     ++	struct slice table_list = { 0 };
+      +	struct writer *wr = NULL;
+      +	int err = 0;
+      +	int tab_fd = 0;
+     @@ -4962,6 +4915,10 @@
+      +	}
+      +
+      +	err = writer_close(wr);
+     ++	if (err == EMPTY_TABLE_ERROR) {
+     ++		err = 0;
+     ++		goto exit;
+     ++	}
+      +	if (err < 0) {
+      +		goto exit;
+      +	}
+     @@ -5062,7 +5019,7 @@
+      +				struct slice *temp_tab,
+      +				struct log_expiry_config *config)
+      +{
+     -+	struct slice next_name = {};
+     ++	struct slice next_name = { 0 };
+      +	int tab_fd = -1;
+      +	struct writer *wr = NULL;
+      +	int err = 0;
+     @@ -5113,9 +5070,9 @@
+      +		calloc(sizeof(struct reader *), last - first + 1);
+      +	struct merged_table *mt = NULL;
+      +	int err = 0;
+     -+	struct iterator it = {};
+     -+	struct ref_record ref = {};
+     -+	struct log_record log = {};
+     ++	struct iterator it = { 0 };
+     ++	struct ref_record ref = { 0 };
+     ++	struct log_record log = { 0 };
+      +
+      +	int i = 0, j = 0;
+      +	for (i = first, j = 0; i <= last; i++) {
+     @@ -5126,7 +5083,7 @@
+      +	writer_set_limits(wr, st->merged->stack[first]->min_update_index,
+      +			  st->merged->stack[last]->max_update_index);
+      +
+     -+	err = new_merged_table(&mt, subtabs, subtabs_len, st->config.hash_size);
+     ++	err = new_merged_table(&mt, subtabs, subtabs_len, st->config.hash_id);
+      +	if (err < 0) {
+      +		free(subtabs);
+      +		goto exit;
+     @@ -5207,11 +5164,11 @@
+      +static int stack_compact_range(struct stack *st, int first, int last,
+      +			       struct log_expiry_config *expiry)
+      +{
+     -+	struct slice temp_tab_name = {};
+     -+	struct slice new_table_name = {};
+     -+	struct slice lock_file_name = {};
+     -+	struct slice ref_list_contents = {};
+     -+	struct slice new_table_path = {};
+     ++	struct slice temp_tab_name = { 0 };
+     ++	struct slice new_table_name = { 0 };
+     ++	struct slice lock_file_name = { 0 };
+     ++	struct slice ref_list_contents = { 0 };
+     ++	struct slice new_table_path = { 0 };
+      +	int err = 0;
+      +	bool have_lock = false;
+      +	int lock_file_fd = 0;
+     @@ -5220,6 +5177,7 @@
+      +	char **subtable_locks = calloc(sizeof(char *), compact_count + 1);
+      +	int i = 0;
+      +	int j = 0;
+     ++	bool is_empty_table = false;
+      +
+      +	if (first > last || (expiry == NULL && first == last)) {
+      +		err = 0;
+     @@ -5248,8 +5206,8 @@
+      +	}
+      +
+      +	for (i = first, j = 0; i <= last; i++) {
+     -+		struct slice subtab_name = {};
+     -+		struct slice subtab_lock = {};
+     ++		struct slice subtab_name = { 0 };
+     ++		struct slice subtab_lock = { 0 };
+      +		slice_set_string(&subtab_name, st->reftable_dir);
+      +		slice_append_string(&subtab_name, "/");
+      +		slice_append_string(&subtab_name,
+     @@ -5288,6 +5246,12 @@
+      +	have_lock = false;
+      +
+      +	err = stack_compact_locked(st, first, last, &temp_tab_name, expiry);
+     ++	/* Compaction + tombstones can create an empty table out of non-empty
+     ++	 * tables. */
+     ++	is_empty_table = (err == EMPTY_TABLE_ERROR);
+     ++	if (is_empty_table) {
+     ++		err = 0;
+     ++	}
+      +	if (err < 0) {
+      +		goto exit;
+      +	}
+     @@ -5313,10 +5277,12 @@
+      +
+      +	slice_append(&new_table_path, new_table_name);
+      +
+     -+	err = rename(slice_as_string(&temp_tab_name),
+     -+		     slice_as_string(&new_table_path));
+     -+	if (err < 0) {
+     -+		goto exit;
+     ++	if (!is_empty_table) {
+     ++		err = rename(slice_as_string(&temp_tab_name),
+     ++			     slice_as_string(&new_table_path));
+     ++		if (err < 0) {
+     ++			goto exit;
+     ++		}
+      +	}
+      +
+      +	for (i = 0; i < first; i++) {
+     @@ -5324,8 +5290,10 @@
+      +				    st->merged->stack[i]->name);
+      +		slice_append_string(&ref_list_contents, "\n");
+      +	}
+     -+	slice_append(&ref_list_contents, new_table_name);
+     -+	slice_append_string(&ref_list_contents, "\n");
+     ++	if (!is_empty_table) {
+     ++		slice_append(&ref_list_contents, new_table_name);
+     ++		slice_append_string(&ref_list_contents, "\n");
+     ++	}
+      +	for (i = last + 1; i < st->merged->stack_len; i++) {
+      +		slice_append_string(&ref_list_contents,
+      +				    st->merged->stack[i]->name);
+     @@ -5351,18 +5319,26 @@
+      +	}
+      +	have_lock = false;
+      +
+     -+	for (char **p = delete_on_success; *p; p++) {
+     -+		if (strcmp(*p, slice_as_string(&new_table_path))) {
+     -+			unlink(*p);
+     ++	{
+     ++		char **p = delete_on_success;
+     ++		while (*p) {
+     ++			if (strcmp(*p, slice_as_string(&new_table_path))) {
+     ++				unlink(*p);
+     ++			}
+     ++			p++;
+      +		}
+      +	}
+      +
+      +	err = stack_reload_maybe_reuse(st, first < last);
+      +exit:
+     -+	for (char **p = subtable_locks; *p; p++) {
+     -+		unlink(*p);
+     -+	}
+      +	free_names(delete_on_success);
+     ++	{
+     ++		char **p = subtable_locks;
+     ++		while (*p) {
+     ++			unlink(*p);
+     ++			p++;
+     ++		}
+     ++	}
+      +	free_names(subtable_locks);
+      +	if (lock_file_fd > 0) {
+      +		close(lock_file_fd);
+     @@ -5413,7 +5389,7 @@
+      +{
+      +	struct segment *segs = calloc(sizeof(struct segment), n);
+      +	int next = 0;
+     -+	struct segment cur = {};
+     ++	struct segment cur = { 0 };
+      +	int i = 0;
+      +	for (i = 0; i < n; i++) {
+      +		int log = fastlog2(sizes[i]);
+     @@ -5501,7 +5477,7 @@
+      +int stack_read_ref(struct stack *st, const char *refname,
+      +		   struct ref_record *ref)
+      +{
+     -+	struct iterator it = {};
+     ++	struct iterator it = { 0 };
+      +	struct merged_table *mt = stack_merged_table(st);
+      +	int err = merged_table_seek_ref(mt, &it, refname);
+      +	if (err) {
+     @@ -5526,7 +5502,7 @@
+      +int stack_read_log(struct stack *st, const char *refname,
+      +		   struct log_record *log)
+      +{
+     -+	struct iterator it = {};
+     ++	struct iterator it = { 0 };
+      +	struct merged_table *mt = stack_merged_table(st);
+      +	int err = merged_table_seek_log(mt, &it, refname);
+      +	if (err) {
+     @@ -5631,31 +5607,25 @@
+      +#include <unistd.h>
+      +#include <zlib.h>
+      +
+     -+#define ARRAY_SIZE(a) sizeof((a)) / sizeof((a)[0])
+     -+#define FREE_AND_NULL(x)    \
+     -+	do {                \
+     -+		free(x);    \
+     -+		(x) = NULL; \
+     -+	} while (0)
+     -+#define QSORT(arr, n, cmp) qsort(arr, n, sizeof(arr[0]), cmp)
+     -+#define SWAP(a, b)                              \
+     -+	{                                       \
+     -+		char tmp[sizeof(a)];            \
+     -+		assert(sizeof(a) == sizeof(b)); \
+     -+		memcpy(&tmp[0], &a, sizeof(a)); \
+     -+		memcpy(&a, &b, sizeof(a));      \
+     -+		memcpy(&b, &tmp[0], sizeof(a)); \
+     -+	}
+     ++#include "compat.h"
+     ++
+      +#endif /* REFTABLE_IN_GITCORE */
+      +
+     ++#define SHA1_ID 0x73686131
+     ++#define SHA256_ID 0x73323536
+     ++#define SHA1_SIZE 20
+     ++#define SHA256_SIZE 32
+     ++
+      +typedef uint8_t byte;
+      +typedef int bool;
+      +
+     ++/* This is uncompress2, which is only available in zlib as of 2017.
+     ++ *
+     ++ * TODO: in git-core, this should fallback to uncompress2 if it is available.
+     ++ */
+      +int uncompress_return_consumed(Bytef *dest, uLongf *destLen,
+      +			       const Bytef *source, uLong *sourceLen);
+     -+
+     -+#define SHA1_SIZE 20
+     -+#define SHA256_SIZE 32
+     ++int hash_size(uint32_t id);
+      +
+      +#endif
+      
+     @@ -5761,6 +5731,25 @@
+      +
+      +#endif
+      
+     + diff --git a/reftable/update.sh b/reftable/update.sh
+     + new file mode 100644
+     + --- /dev/null
+     + +++ b/reftable/update.sh
+     +@@
+     ++#!/bin/sh
+     ++
+     ++set -eux
+     ++
+     ++((cd reftable-repo && git fetch origin && git checkout origin/master ) ||
+     ++git clone https://github.com/google/reftable reftable-repo) && \
+     ++cp reftable-repo/c/*.[ch] reftable/ && \
+     ++cp reftable-repo/LICENSE reftable/ &&
+     ++git --git-dir reftable-repo/.git show --no-patch origin/master \
+     ++> reftable/VERSION && \
+     ++sed -i~ 's|if REFTABLE_IN_GITCORE|if 1 /* REFTABLE_IN_GITCORE */|' reftable/system.h
+     ++rm reftable/*_test.c reftable/test_framework.* reftable/compat.*
+     ++git add reftable/*.[ch]
+     +
+       diff --git a/reftable/writer.c b/reftable/writer.c
+       new file mode 100644
+       --- /dev/null
+     @@ -5831,8 +5820,8 @@
+      +		opts->restart_interval = 16;
+      +	}
+      +
+     -+	if (opts->hash_size == 0) {
+     -+		opts->hash_size = SHA1_SIZE;
+     ++	if (opts->hash_id == 0) {
+     ++		opts->hash_id = SHA1_ID;
+      +	}
+      +	if (opts->block_size == 0) {
+      +		opts->block_size = DEFAULT_BLOCK_SIZE;
+     @@ -5842,11 +5831,14 @@
+      +static int writer_write_header(struct writer *w, byte *dest)
+      +{
+      +	memcpy((char *)dest, "REFT", 4);
+     -+	dest[4] = (w->hash_size == SHA1_SIZE) ? 1 : 2; /* version */
+      +
+     -+	put_u24(dest + 5, w->opts.block_size);
+     -+	put_u64(dest + 8, w->min_update_index);
+     -+	put_u64(dest + 16, w->max_update_index);
+     ++	/* DO NOT SUBMIT.  This has not been encoded in the standard yet. */
+     ++	dest[4] = (hash_size(w->opts.hash_id) == SHA1_SIZE) ? 1 : 2; /* version
+     ++								      */
+     ++
+     ++	put_be24(dest + 5, w->opts.block_size);
+     ++	put_be64(dest + 8, w->min_update_index);
+     ++	put_be64(dest + 16, w->max_update_index);
+      +	return 24;
+      +}
+      +
+     @@ -5858,7 +5850,8 @@
+      +	}
+      +
+      +	block_writer_init(&w->block_writer_data, typ, w->block,
+     -+			  w->opts.block_size, block_start, w->hash_size);
+     ++			  w->opts.block_size, block_start,
+     ++			  hash_size(w->opts.hash_id));
+      +	w->block_writer = &w->block_writer_data;
+      +	w->block_writer->restart_interval = w->opts.restart_interval;
+      +}
+     @@ -5872,7 +5865,6 @@
+      +		/* TODO - error return? */
+      +		abort();
+      +	}
+     -+	wp->hash_size = opts->hash_size;
+      +	wp->block = calloc(opts->block_size, 1);
+      +	wp->write = writer_func;
+      +	wp->write_arg = writer_arg;
+     @@ -5941,7 +5933,7 @@
+      +static int writer_add_record(struct writer *w, struct record rec)
+      +{
+      +	int result = -1;
+     -+	struct slice key = {};
+     ++	struct slice key = { 0 };
+      +	int err = 0;
+      +	record_key(rec, &key);
+      +	if (slice_compare(w->last_key, key) >= 0) {
+     @@ -5981,7 +5973,7 @@
+      +
+      +int writer_add_ref(struct writer *w, struct ref_record *ref)
+      +{
+     -+	struct record rec = {};
+     ++	struct record rec = { 0 };
+      +	struct ref_record copy = *ref;
+      +	int err = 0;
+      +
+     @@ -6003,7 +5995,7 @@
+      +	if (!w->opts.skip_index_objects && ref->value != NULL) {
+      +		struct slice h = {
+      +			.buf = ref->value,
+     -+			.len = w->hash_size,
+     ++			.len = hash_size(w->opts.hash_id),
+      +		};
+      +
+      +		writer_index_hash(w, h);
+     @@ -6011,7 +6003,7 @@
+      +	if (!w->opts.skip_index_objects && ref->target_value != NULL) {
+      +		struct slice h = {
+      +			.buf = ref->target_value,
+     -+			.len = w->hash_size,
+     ++			.len = hash_size(w->opts.hash_id),
+      +		};
+      +		writer_index_hash(w, h);
+      +	}
+     @@ -6047,7 +6039,7 @@
+      +	w->pending_padding = 0;
+      +
+      +	{
+     -+		struct record rec = {};
+     ++		struct record rec = { 0 };
+      +		int err;
+      +		record_from_log(&rec, log);
+      +		err = writer_add_record(w, rec);
+     @@ -6094,7 +6086,7 @@
+      +		w->index_len = 0;
+      +		w->index_cap = 0;
+      +		for (i = 0; i < idx_len; i++) {
+     -+			struct record rec = {};
+     ++			struct record rec = { 0 };
+      +			record_from_index(&rec, idx + i);
+      +			if (block_writer_add(w->block_writer, rec) == 0) {
+      +				continue;
+     @@ -6172,7 +6164,7 @@
+      +		.offsets = entry->offsets,
+      +		.offset_len = entry->offset_len,
+      +	};
+     -+	struct record rec = {};
+     ++	struct record rec = { 0 };
+      +	if (arg->err < 0) {
+      +		goto exit;
+      +	}
+     @@ -6214,7 +6206,7 @@
+      +static int writer_dump_object_index(struct writer *w)
+      +{
+      +	struct write_record_arg closure = { .w = w };
+     -+	struct common_prefix_arg common = {};
+     ++	struct common_prefix_arg common = { 0 };
+      +	if (w->obj_index_tree != NULL) {
+      +		infix_walk(w->obj_index_tree, &update_common, &common);
+      +	}
+     @@ -6271,39 +6263,43 @@
+      +
+      +	int err = writer_finish_public_section(w);
+      +	if (err != 0) {
+     -+		return err;
+     ++		goto exit;
+      +	}
+      +
+      +	writer_write_header(w, footer);
+      +	p += 24;
+     -+	put_u64(p, w->stats.ref_stats.index_offset);
+     ++	put_be64(p, w->stats.ref_stats.index_offset);
+      +	p += 8;
+     -+	put_u64(p, (w->stats.obj_stats.offset) << 5 | w->stats.object_id_len);
+     ++	put_be64(p, (w->stats.obj_stats.offset) << 5 | w->stats.object_id_len);
+      +	p += 8;
+     -+	put_u64(p, w->stats.obj_stats.index_offset);
+     ++	put_be64(p, w->stats.obj_stats.index_offset);
+      +	p += 8;
+      +
+     -+	put_u64(p, w->stats.log_stats.offset);
+     ++	put_be64(p, w->stats.log_stats.offset);
+      +	p += 8;
+     -+	put_u64(p, w->stats.log_stats.index_offset);
+     ++	put_be64(p, w->stats.log_stats.index_offset);
+      +	p += 8;
+      +
+     -+	put_u32(p, crc32(0, footer, p - footer));
+     ++	put_be32(p, crc32(0, footer, p - footer));
+      +	p += 4;
+      +	w->pending_padding = 0;
+      +
+     -+	{
+     -+		int n = padded_write(w, footer, sizeof(footer), 0);
+     -+		if (n < 0) {
+     -+			return n;
+     -+		}
+     ++	err = padded_write(w, footer, sizeof(footer), 0);
+     ++	if (err < 0) {
+     ++		goto exit;
+     ++	}
+     ++
+     ++	if (w->stats.log_stats.entries + w->stats.ref_stats.entries == 0) {
+     ++		err = EMPTY_TABLE_ERROR;
+     ++		goto exit;
+      +	}
+      +
+     ++exit:
+      +	/* free up memory. */
+      +	block_writer_clear(&w->block_writer_data);
+      +	writer_clear_index(w);
+      +	free(slice_yield(&w->last_key));
+     -+	return 0;
+     ++	return err;
+      +}
+      +
+      +void writer_clear_index(struct writer *w)
+     @@ -6348,7 +6344,7 @@
+      +	if (debug) {
+      +		fprintf(stderr, "block %c off %" PRIu64 " sz %d (%d)\n", typ,
+      +			w->next, raw_bytes,
+     -+			get_u24(w->block + w->block_writer->header_off + 1));
+     ++			get_be24(w->block + w->block_writer->header_off + 1));
+      +	}
+      +
+      +	if (w->next == 0) {
+     @@ -6423,7 +6419,6 @@
+      +	int (*write)(void *, byte *, int);
+      +	void *write_arg;
+      +	int pending_padding;
+     -+	int hash_size;
+      +	struct slice last_key;
+      +
+      +	uint64_t next;
+ 5:  8d95ab52f75 ! 6:  a622d8066c7 Reftable support for git-core
+     @@ -9,32 +9,7 @@
+           * Resolve spots marked with XXX
+           * Test strategy?
+      
+     -    Example use:
+     -
+     -      $ ~/vc/git/git init --reftable
+     -      warning: templates not found in /usr/local/google/home/hanwen/share/git-core/templates
+     -      Initialized empty Git repository in /tmp/qz/.git/
+     -      $ echo q > a
+     -      $ ~/vc/git/git add a
+     -      $ ~/vc/git/git commit -mx
+     -      fatal: not a git repository (or any of the parent directories): .git
+     -      [master (root-commit) 373d969] x
+     -       1 file changed, 1 insertion(+)
+     -       create mode 100644 a
+     -      $ ~/vc/git/git show-ref
+     -      373d96972fca9b63595740bba3898a762778ba20 HEAD
+     -      373d96972fca9b63595740bba3898a762778ba20 refs/heads/master
+     -      $ ls -l .git/reftable/
+     -      total 12
+     -      -rw------- 1 hanwen primarygroup  126 Jan 23 20:08 000000000001-000000000001.ref
+     -      -rw------- 1 hanwen primarygroup 4277 Jan 23 20:08 000000000002-000000000002.ref
+     -      $ go run ~/vc/reftable/cmd/dump.go  -table /tmp/qz/.git/reftable/000000000002-000000000002.ref
+     -      ** DEBUG **
+     -      name /tmp/qz/.git/reftable/000000000002-000000000002.ref, sz 4209: 'r' reftable.readerOffsets{Present:true, Offset:0x0, IndexOffset:0x0}, 'o' reftable.readerOffsets{Present:false, Offset:0x0, IndexOffset:0x0} 'g' reftable.readerOffsets{Present:true, Offset:0x1000, IndexOffset:0x0}
+     -      ** REFS **
+     -      reftable.RefRecord{RefName:"refs/heads/master", UpdateIndex:0x2, Value:[]uint8{0x37, 0x3d, 0x96, 0x97, 0x2f, 0xca, 0x9b, 0x63, 0x59, 0x57, 0x40, 0xbb, 0xa3, 0x89, 0x8a, 0x76, 0x27, 0x78, 0xba, 0x20}, TargetValue:[]uint8(nil), Target:""}
+     -      ** LOGS **
+     -      reftable.LogRecord{RefName:"HEAD", UpdateIndex:0x2, New:[]uint8{0x37, 0x3d, 0x96, 0x97, 0x2f, 0xca, 0x9b, 0x63, 0x59, 0x57, 0x40, 0xbb, 0xa3, 0x89, 0x8a, 0x76, 0x27, 0x78, 0xba, 0x20}, Old:[]uint8{0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0}, Name:"Han-Wen Nienhuys", Email:"hanwen@google.com", Time:0x5e29ef27, TZOffset:100, Message:"commit (initial): x\n"}
+     +    Example use: see t/t0031-reftable.sh
+      
+          Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+          Co-authored-by: Jeff King <peff@peff.net>
+     @@ -463,7 +438,7 @@ $^
+      +	struct ref_store *ref_store = (struct ref_store *)refs;
+      +	struct write_options cfg = {
+      +		.block_size = 4096,
+     -+		.hash_size = the_hash_algo->rawsz,
+     ++		.hash_id = the_hash_algo->format_id,
+      +	};
+      +	struct strbuf sb = STRBUF_INIT;
+      +
+     @@ -610,11 +585,13 @@ $^
+      +	struct reftable_iterator *ri = xcalloc(1, sizeof(*ri));
+      +	struct merged_table *mt = NULL;
+      +
+     -+	mt = stack_merged_table(refs->stack);
+     -+	ri->err = refs->err;
+     -+	if (ri->err == 0) {
+     ++	if (refs->err < 0) {
+     ++		ri->err = refs->err;
+     ++	} else {
+     ++		mt = stack_merged_table(refs->stack);
+      +		ri->err = merged_table_seek_ref(mt, &ri->iter, prefix);
+      +	}
+     ++
+      +	base_ref_iterator_init(&ri->base, &reftable_ref_iterator_vtable, 1);
+      +	ri->base.oid = &ri->oid;
+      +	ri->flags = flags;
+     @@ -739,7 +716,12 @@ $^
+      +{
+      +	struct reftable_ref_store *refs =
+      +		(struct reftable_ref_store *)ref_store;
+     -+	int err = stack_add(refs->stack, &write_transaction_table, transaction);
+     ++	int err = 0;
+     ++	if (refs->err < 0) {
+     ++		return refs->err;
+     ++	}
+     ++
+     ++	err = stack_add(refs->stack, &write_transaction_table, transaction);
+      +	if (err < 0) {
+      +		strbuf_addf(errmsg, "reftable: transaction failure %s",
+      +			    error_str(err));
+     @@ -819,6 +801,10 @@ $^
+      +		.logmsg = msg,
+      +		.flags = flags,
+      +	};
+     ++	if (refs->err < 0) {
+     ++		return refs->err;
+     ++	}
+     ++
+      +	return stack_add(refs->stack, &write_delete_refs_table, &arg);
+      +}
+      +
+     @@ -826,6 +812,9 @@ $^
+      +{
+      +	struct reftable_ref_store *refs =
+      +		(struct reftable_ref_store *)ref_store;
+     ++	if (refs->err < 0) {
+     ++		return refs->err;
+     ++	}
+      +	return stack_compact_all(refs->stack, NULL);
+      +}
+      +
+     @@ -896,6 +885,9 @@ $^
+      +					       .refname = refname,
+      +					       .target = target,
+      +					       .logmsg = logmsg };
+     ++	if (refs->err < 0) {
+     ++		return refs->err;
+     ++	}
+      +	return stack_add(refs->stack, &write_create_symref_table, &arg);
+      +}
+      +
+     @@ -912,6 +904,7 @@ $^
+      +	uint64_t ts = stack_next_update_index(arg->stack);
+      +	struct ref_record ref = {};
+      +	int err = stack_read_ref(arg->stack, arg->oldname, &ref);
+     ++
+      +	if (err) {
+      +		goto exit;
+      +	}
+     @@ -987,6 +980,10 @@ $^
+      +		.newname = newrefname,
+      +		.logmsg = logmsg,
+      +	};
+     ++	if (refs->err < 0) {
+     ++		return refs->err;
+     ++	}
+     ++
+      +	return stack_add(refs->stack, &write_rename_table, &arg);
+      +}
+      +
+     @@ -1083,10 +1080,16 @@ $^
+      +	struct iterator it = {};
+      +	struct reftable_ref_store *refs =
+      +		(struct reftable_ref_store *)ref_store;
+     -+	struct merged_table *mt = stack_merged_table(refs->stack);
+     -+	int err = merged_table_seek_log(mt, &it, refname);
+     ++	struct merged_table *mt = NULL;
+     ++	int err = 0;
+      +	struct log_record log = {};
+      +
+     ++	if (refs->err < 0) {
+     ++		return refs->err;
+     ++	}
+     ++
+     ++	mt = stack_merged_table(refs->stack);
+     ++	err = merged_table_seek_log(mt, &it, refname);
+      +	while (err == 0) {
+      +		err = iterator_next_log(it, &log);
+      +		if (err != 0) {
+     @@ -1133,12 +1136,17 @@ $^
+      +	struct iterator it = {};
+      +	struct reftable_ref_store *refs =
+      +		(struct reftable_ref_store *)ref_store;
+     -+	struct merged_table *mt = stack_merged_table(refs->stack);
+     -+	int err = merged_table_seek_log(mt, &it, refname);
+     -+
+     ++	struct merged_table *mt = NULL;
+      +	struct log_record *logs = NULL;
+      +	int cap = 0;
+      +	int len = 0;
+     ++	int err = 0;
+     ++
+     ++	if (refs->err < 0) {
+     ++		return refs->err;
+     ++	}
+     ++	mt = stack_merged_table(refs->stack);
+     ++	err = merged_table_seek_log(mt, &it, refname);
+      +
+      +	while (err == 0) {
+      +		struct log_record log = {};
+     @@ -1280,13 +1288,19 @@ $^
+      +	*/
+      +	struct reftable_ref_store *refs =
+      +		(struct reftable_ref_store *)ref_store;
+     -+	struct merged_table *mt = stack_merged_table(refs->stack);
+     ++	struct merged_table *mt = NULL;
+      +	struct reflog_expiry_arg arg = {
+      +		.refs = refs,
+      +	};
+      +	struct log_record log = {};
+      +	struct iterator it = {};
+     -+	int err = merged_table_seek_log(mt, &it, refname);
+     ++	int err = 0;
+     ++	if (refs->err < 0) {
+     ++		return refs->err;
+     ++	}
+     ++
+     ++	mt = stack_merged_table(refs->stack);
+     ++	err = merged_table_seek_log(mt, &it, refname);
+      +	if (err < 0) {
+      +		return err;
+      +	}
+     @@ -1326,7 +1340,12 @@ $^
+      +	struct reftable_ref_store *refs =
+      +		(struct reftable_ref_store *)ref_store;
+      +	struct ref_record ref = {};
+     -+	int err = stack_read_ref(refs->stack, refname, &ref);
+     ++	int err = 0;
+     ++	if (refs->err < 0) {
+     ++		return refs->err;
+     ++	}
+     ++
+     ++	err = stack_read_ref(refs->stack, refname, &ref);
+      +	if (err) {
+      +		goto exit;
+      +	}
+     @@ -1436,3 +1455,40 @@ $^
+       	}
+       
+       	strbuf_release(&dir);
+     +
+     + diff --git a/t/t0031-reftable.sh b/t/t0031-reftable.sh
+     + new file mode 100755
+     + --- /dev/null
+     + +++ b/t/t0031-reftable.sh
+     +@@
+     ++#!/bin/sh
+     ++#
+     ++# Copyright (c) 2020 Google LLC
+     ++#
+     ++
+     ++test_description='reftable basics'
+     ++
+     ++. ./test-lib.sh
+     ++
+     ++test_expect_success 'basic operation of reftable storage' '
+     ++        git init --ref-storage=reftable repo &&
+     ++        cd repo &&
+     ++        echo "hello" > world.txt &&
+     ++        git add world.txt &&
+     ++        git commit -m "first post" &&
+     ++        printf "HEAD\nrefs/heads/master\n" > want &&
+     ++        git show-ref | cut -f2 -d" " > got &&
+     ++        test_cmp got want &&
+     ++        for count in $(test_seq 1 10); do
+     ++                echo "hello" >> world.txt
+     ++                git commit -m "number ${count}" world.txt
+     ++        done &&
+     ++        git gc &&
+     ++        nfiles=$(ls -1 .git/reftable | wc -l | tr -d "[ \t]" ) &&
+     ++        test "${nfiles}" = "2" &&
+     ++        git reflog refs/heads/master > output &&
+     ++        grep "commit (initial): first post" output &&
+     ++        grep "commit: number 10" output
+     ++'
+     ++
+     ++test_done
+
 -- 
 gitgitgadget
-
