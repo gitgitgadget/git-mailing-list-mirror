@@ -2,114 +2,107 @@ Return-Path: <SRS0=QAHC=4O=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.4 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BBC57C4BA24
-	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 21:31:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B5DDC4BA2B
+	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 21:32:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8BCDD24653
-	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 21:31:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1E5302072D
+	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 21:32:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="mMndv15C"
+	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="cBS3BF+Y"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727584AbgBZVbq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Feb 2020 16:31:46 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59815 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727503AbgBZVbq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Feb 2020 16:31:46 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B9A5659648;
-        Wed, 26 Feb 2020 16:31:41 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=54TouMLWwWPbOVE8Q3EeD+/pSc4=; b=mMndv1
-        5CVLW3qjFq6O+pq6b9r+7+9Awi6ZUYSVccRVMxHqTEgvHyxec79bpptL+Rk7GcBd
-        LmN8p7C6W9Ll8t17cEyDptwAyw/0ddApMFORmEfglJ/3PGTkNwRJJcyzWi/okKZX
-        dadUv+Rd1u3IwFT9e3sqbX9T81JgOS74XpWQI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=rEEae+wuZGt15d5YHk2SOKmaNH46aNVB
-        W/yYlmpaR/Xwu6TVxYGCiCoyme7HxWYxX+i9g4cVC8UPwr4zTS/DChLpA8HUKrMR
-        yBJUD+5MufL/APdJ4j9KHzDTJLnRsXjbKLyJgPMZEoRXCtlhiI7Fk6pxf9W7wdfk
-        wU6GD2gifLU=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B108959647;
-        Wed, 26 Feb 2020 16:31:41 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id F0DDD59646;
-        Wed, 26 Feb 2020 16:31:39 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: [PATCH v7 6/6] Reftable support for git-core
-References: <pull.539.v6.git.1582015420.gitgitgadget@gmail.com>
-        <pull.539.v7.git.1582706986.gitgitgadget@gmail.com>
-        <a622d8066c7fe27accc5101c3341c30bf706dae1.1582706986.git.gitgitgadget@gmail.com>
-Date:   Wed, 26 Feb 2020 13:31:38 -0800
-In-Reply-To: <a622d8066c7fe27accc5101c3341c30bf706dae1.1582706986.git.gitgitgadget@gmail.com>
-        (Han-Wen Nienhuys via GitGitGadget's message of "Wed, 26 Feb 2020
-        08:49:46 +0000")
-Message-ID: <xmqqwo89ghmt.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1727591AbgBZVcS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Feb 2020 16:32:18 -0500
+Received: from userp2120.oracle.com ([156.151.31.85]:59718 "EHLO
+        userp2120.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727503AbgBZVcR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Feb 2020 16:32:17 -0500
+Received: from pps.filterd (userp2120.oracle.com [127.0.0.1])
+        by userp2120.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 01QLMiSY077105;
+        Wed, 26 Feb 2020 21:32:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=subject : to : cc :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=corp-2020-01-29;
+ bh=QWiDAhEncHdEkQstd/xCqUSEt9lGMHQApIwCaRQ2t2o=;
+ b=cBS3BF+YJa+lkerxyw1Ag++Bu3rt34dZpi9sSG1X+1gkXzi7UcByW2H2JcudYwcC015G
+ bD6HfyrkWTb6YiYZKXLS/Qh76fI2BzHAiUIF+yZBV63/Gf6uq+lFGg7yKNIgGUMwH1DW
+ KgfKaHUcMVAGuslW0hHKcPOOPLQ5E04PgRfkj/CqlC6Pmh1CXYL1kUphnVak4aCqGCJV
+ jywONVN6HDHV9Bw9iE4VcDwu9NVClB4r5P05EpFbwhQM8MlpJ8OCPMmq9t6ObYQ+P/H6
+ r0NveXQKyjTs5T+CQ3bdGlyoIDaaYJCkFwKo66IAcmTLfYfNwLiomVbLsTwLgqWPSeJX uA== 
+Received: from aserp3020.oracle.com (aserp3020.oracle.com [141.146.126.70])
+        by userp2120.oracle.com with ESMTP id 2ydct36gqc-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Wed, 26 Feb 2020 21:32:13 +0000
+Received: from pps.filterd (aserp3020.oracle.com [127.0.0.1])
+        by aserp3020.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 01QLMHMe007137;
+        Wed, 26 Feb 2020 21:32:13 GMT
+Received: from aserv0122.oracle.com (aserv0122.oracle.com [141.146.126.236])
+        by aserp3020.oracle.com with ESMTP id 2ydcs6b3fp-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Wed, 26 Feb 2020 21:32:12 +0000
+Received: from abhmp0010.oracle.com (abhmp0010.oracle.com [141.146.116.16])
+        by aserv0122.oracle.com (8.14.4/8.14.4) with ESMTP id 01QLWCgK003761;
+        Wed, 26 Feb 2020 21:32:12 GMT
+Received: from [10.175.32.145] (/10.175.32.145)
+        by default (Oracle Beehive Gateway v4.0)
+        with ESMTP ; Wed, 26 Feb 2020 13:32:12 -0800
+Subject: Re: Making GitGitGadget conversion lossless
+To:     Junio C Hamano <gitster@pobox.com>,
+        Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc:     git@vger.kernel.org
+References: <20200226200929.z4aej74ohbkgcdza@chatter.i7.local>
+ <xmqq5zfthxlw.fsf@gitster-ct.c.googlers.com>
+From:   Vegard Nossum <vegard.nossum@oracle.com>
+Message-ID: <51155ef5-e301-2f5d-263e-184b9ab0979d@oracle.com>
+Date:   Wed, 26 Feb 2020 22:32:09 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 6003BF68-58DF-11EA-AF13-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+In-Reply-To: <xmqq5zfthxlw.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9543 signatures=668685
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0 bulkscore=0 phishscore=0
+ mlxlogscore=999 spamscore=0 suspectscore=0 mlxscore=0 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2001150001
+ definitions=main-2002260126
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9543 signatures=668685
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 lowpriorityscore=0 bulkscore=0
+ impostorscore=0 spamscore=0 priorityscore=1501 malwarescore=0 adultscore=0
+ phishscore=0 mlxlogscore=999 mlxscore=0 suspectscore=0 clxscore=1011
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2001150001
+ definitions=main-2002260126
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On 2/26/20 10:01 PM, Junio C Hamano wrote:
+> As I said already, I do not think that the desire to get the
+> bit-for-bit identical commit is compatible with the idea to discuss
+> e-mailed patches---the pieces of patch e-mail will become "you may
+> look at them, you may apply them, but it is no use to comment on
+> them to get them improved".  So, I dunno.
 
->  int init_db(const char *git_dir, const char *real_git_dir,
-> -	    const char *template_dir, unsigned int flags)
-> +	    const char *template_dir, const char *ref_storage_format,
-> +	    unsigned int flags)
->  {
+For me, at least, the goal was to be able to store previous patch
+submissions in git (even if it is not merged into the main tree) so
+that you can use git and all its tools (diff, log, blame, grep, notes,
+etc.) to browse previous versions and browse discussions _and_ use the
+SHA1 as a stable identifier for a specific submission.
 
-This change, and Brian's SHA-256 work, obviously will introduce a
-conflict as the other side wants to add an extra parameter to choose
-from different hash algorhtims.
+The point of having the stable identifier is so that the submitter can
+take comments into account and resubmit their patchset while still
+keeping a (stable, universal, unambiguous) reference to their previous
+submission.
 
-I wonder if we should rather add a single pointer to a struct that
-can hold various initialization options as an extra parameter.  That
-way, each topic can add and manage its own new member in the struct.
+I don't see the incompatibility at all. The whole point was that the
+current email workflow used by Linux and git (that includes discussion,
+feedback, and revision) _does not need to change_.
 
->  static int create_default_files(const char *template_path,
-> -				const char *original_git_dir)
-> +				const char *original_git_dir,
-> +				const char *ref_storage_format, int flags)
 
-Pretty much the same story here, too.  The other side aims to be
-more generic and passes a "struct repository_format *" as an extra
-parameter.  I think the repository-format structure needs to have
-what ref backend is in use, so instead of passing only the string
-like this patch, we can use the appropriate member from the struct?
-
-Please try to apply this series to 'master', and try to merge the
-result with the tip of 'pu', to see if there are other areas that a
-better coordination between you and Brian would help moving these
-two topics together and work well with each other.
-
-I am not sure how quickly Brian's SHA-256 work solidifies enough to
-build on top of, but if it is a good option to build on top of the
-topic, that may save some work from this topic, too, as the
-mechanism to choose something (i.e. hash algorithm for Brian's
-topic, ref backend for this topic) fundamental to the repository at
-runtime and at initialization time needs similar supporting
-infrastructure, such as changes in "[12/24] setup: allow
-check_repository_format to read repository format", and "[13/24]
-builtin/init-db: allow specifying hash algorithm on command line"
-of that series.
-
-Thanks.
+Vegard
