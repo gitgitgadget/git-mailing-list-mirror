@@ -2,93 +2,73 @@ Return-Path: <SRS0=QAHC=4O=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 67CAFC4BA21
-	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 20:13:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 909C8C4BA21
+	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 20:21:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3725624656
-	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 20:13:40 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="d5WF2kD/"
+	by mail.kernel.org (Postfix) with ESMTP id 6375021D7E
+	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 20:21:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727465AbgBZUNj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Feb 2020 15:13:39 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:55527 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727444AbgBZUNj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Feb 2020 15:13:39 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2ED37AC118;
-        Wed, 26 Feb 2020 15:13:37 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Dj/n5relzG4iQJx4gST49uZeng8=; b=d5WF2k
-        D/yLKZlQ+Bp02Y2RzqpgAeNmqbZR1NpGRud36g0P/x+pTqZNbbQEpBjJI9F7AkQu
-        tYnLEaB5tNrID5wyYA7IdiRHeFufAqFEShC/CoD0uC8pqRJ3FcuBqtfOdG96OYkV
-        g61PqosWKVyo5OcnHteP3VpxDSXYo/SI7dp2g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=B3btGljYXakS35kh7wzMVB+aBMPhbFwn
-        1LVnNL67XpFDCLNs5/MQk+Zpo+JCFvs3K+ysw046VsMmfxzMwLwpHOAcojuFdCeR
-        m0AoL8WPiYVZr0VlYFnKIzg6qR0hVXHWv5T8yVRNCYWoLrG/5KQVkOXvD5lvqy+n
-        QoEokVNzu7c=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 251F3AC117;
-        Wed, 26 Feb 2020 15:13:37 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 3BC12AC116;
-        Wed, 26 Feb 2020 15:13:34 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     benno@bmevers.de
-Cc:     git@vger.kernel.org, spearce@spearce.org
-Subject: Re: [PATCH v2] describe: dont abort too early when searching tags
-References: <20200226174853.27404-1-benno@bmevers.de>
-Date:   Wed, 26 Feb 2020 12:13:31 -0800
-In-Reply-To: <20200226174853.27404-1-benno@bmevers.de> (benno@bmevers.de's
-        message of "Wed, 26 Feb 2020 18:48:53 +0100")
-Message-ID: <xmqqmu95hztg.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1727301AbgBZUU7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Feb 2020 15:20:59 -0500
+Received: from mail-il1-f193.google.com ([209.85.166.193]:43554 "EHLO
+        mail-il1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727240AbgBZUU7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Feb 2020 15:20:59 -0500
+Received: by mail-il1-f193.google.com with SMTP id p78so271855ilb.10
+        for <git@vger.kernel.org>; Wed, 26 Feb 2020 12:20:57 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=6tt2pePyJr4D81HmyODPLFRSLXQJwsTS6C3vwgUvK6U=;
+        b=Fw5sklS57Hch8rVBQdyi8Q/4ZOBsTqBdOllkrSk5Dtf1NPOrHHt3dfJ/dvUXllxkNF
+         ntNO1za4EHKKrxHcCv90Kpx+68+LBoZVoHrKi3xbPcYWbFNl2Y4CKZROASwH/r8EJ9Xl
+         ptjeTLK1SGpJIkRaZ8tivr/1m4AoSNFTvePSaVqV1xSmm7nvA83U+BcLleqHFK1X1lsr
+         A93amb7wuVJixajmbUnPBKoghMG5LUPaqFSquiz0Njj8RzwUJN/B3PuA4JBgG+RqQdPh
+         5nyAAbu9dTHjDrxYEwPYfUCniCo6zTO76/fpervImlXNy8w6BzJB7+EoyK0Rng0EnUH+
+         cLJg==
+X-Gm-Message-State: APjAAAX9BlGUH1rFXgf97GaBgcwMfZaRJA9f0kHBfEk9W7ntCCmPeZBX
+        nSljo8zLXKNSCmfd8wzLD0kJ7HRpeZn/y8EUFpIben8w
+X-Google-Smtp-Source: APXvYqwukIKjL5lALpuukMs5KZYXdHxfqooOfkhINPJ8R1H9NkdymDmEOM9Z1Tt13Nd4Wgnvf8oruo+GIWOYNyzkNXA=
+X-Received: by 2002:a92:4448:: with SMTP id a8mr480951ilm.256.1582748456821;
+ Wed, 26 Feb 2020 12:20:56 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 77183F54-58D4-11EA-A476-B0405B776F7B-77302942!pb-smtp20.pobox.com
+References: <pull.714.git.git.1582747775.gitgitgadget@gmail.com> <9900cacbfefb46610114702e6d48d8020f3f2866.1582747775.git.gitgitgadget@gmail.com>
+In-Reply-To: <9900cacbfefb46610114702e6d48d8020f3f2866.1582747775.git.gitgitgadget@gmail.com>
+From:   Ed Maste <emaste@freebsd.org>
+Date:   Wed, 26 Feb 2020 15:20:44 -0500
+Message-ID: <CAPyFy2ArnEFe33GFLsbcOEV37DZ=VJpF-Sckn-V_tJUrToir=w@mail.gmail.com>
+Subject: Re: [PATCH 1/3] t/lib-httpd: avoid using BSD's sed
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git mailing list <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-benno@bmevers.de writes:
-
-> Thus, this commit modifies the stopping condition to only abort
-> the search when only one branch is left to search *and* all current
-> best candidates are descendants from that branch.
+On Wed, 26 Feb 2020 at 15:09, Johannes Schindelin via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
 >
-> For repositories with a single root, this condition is always
-> true: When the search is reduced to a single active branch, the
-> current commit must be an ancestor of *all* tag candidates. This
-> means that in the common case, this change will have no negative
-> performance impact since the same number of commits as before will
-> be traversed.
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
 >
-> Signed-off-by: Benno Evers <benno@bmevers.de>
-> ---
-> Changes since v1:
+> Among other differences relative to GNU sed, BSD sed always ends its
+> output with a trailing newline, even if the input did not have such a
+> trailing newline.
 >
->   * Added a paragraph that discusses performance impact to the commit
->     message.
-> ...
-> +'
-> +
-> +test_done
-> \ No newline at end of file
+> Surprisingly, this makes three httpd-based tests fail on macOS: t5616,
+> t5702 and t5703. ("Surprisingly" because those tests have been around
+> for some time, but apparently nobody runs them on macOS with a working
+> Apache2 setup.)
 
-I'll fix this while queuing.
+Hmm, this is interesting - all tests (that are executed) are passing
+on FreeBSD, in CI.
 
-Thanks for an update.
+I tried on FreeBSD and do not see a trailing newline added; I'm not
+sure how sed behaves on other BSDs. However, you probably want to
+refer to macOS sed rather than BSD sed in the commit.
