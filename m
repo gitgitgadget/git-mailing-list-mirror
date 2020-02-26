@@ -2,134 +2,84 @@ Return-Path: <SRS0=QAHC=4O=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.5 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C30AC4BA13
-	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 16:13:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B9DF9C4BA15
+	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 16:29:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 402B02084E
-	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 16:13:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8041B2084E
+	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 16:29:40 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="EnTcOBzH"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="mMAmJzrI"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727193AbgBZQNF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Feb 2020 11:13:05 -0500
-Received: from mout.gmx.net ([212.227.17.22]:54787 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726278AbgBZQNF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Feb 2020 11:13:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1582733582;
-        bh=5Xd82y0ScK7m5VOEGXF/uxbneiHKMHLvItKH4BY/Nm0=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=EnTcOBzHrF5c9RQgliuC14Wu95oeGuWnp/2gnAfTWeGAGpLsp3t/vthxzV0B4sOJw
-         1HSUXk97szH3TUIk+K0ekPxWte728jH2ChrhOLwtk7EbkHhzNvt2uFXFuwEIU1N5de
-         2z5wMzsmh62GyLWyE5Bao2upd5GZsqTBPO/6txrs=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.86]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MwfWU-1jLkGq0kH4-00y79j; Wed, 26
- Feb 2020 17:13:02 +0100
-Date:   Wed, 26 Feb 2020 17:13:00 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Emily Shaffer <emilyshaffer@google.com>
-cc:     git@vger.kernel.org,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Subject: Re: [PATCH v8 09/15] bugreport: generate config safelist based on
- docs
-In-Reply-To: <20200220015858.181086-10-emilyshaffer@google.com>
-Message-ID: <nycvar.QRO.7.76.6.2002261649550.46@tvgsbejvaqbjf.bet>
-References: <20200220015858.181086-1-emilyshaffer@google.com> <20200220015858.181086-10-emilyshaffer@google.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727489AbgBZQ3j (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Feb 2020 11:29:39 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:65387 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726148AbgBZQ3j (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Feb 2020 11:29:39 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 61AC7B7811;
+        Wed, 26 Feb 2020 11:29:37 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=dveuu+WWIGIwCx9Tq0vM+Fh5rrY=; b=mMAmJz
+        rIIujxPfL1aXU9QJJeXRvo0BPWw4dlxSi4h7GEE0EzmeOZfQo/Gg+Cl9SGoxh1U6
+        RHxvxa+Bo/nBb/fTRlneV/8TVp4Z2dIxaaFARfdVlIl0ku8KOQvHo9rtUJQToPot
+        WBdOv8epK20AB6EyuH1z3AS9QYAmfC2Bd+83o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ZJTLqmSpGvLVniK9Odk6gCkvLjyIti3s
+        0v+wPm6QpYWDXpqNUJF0wLbvyb5Z7qQq9h/CEXclJTviZJYlwub3U0g83/o8HRR7
+        4RdF0rHGFzHsgEuUS5TnM+dfnTa3IZS8MvO1516F+v0GljbE1tVi4fB1SnhhRpjm
+        gH9WHkrQZh8=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5A8CBB7810;
+        Wed, 26 Feb 2020 11:29:37 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 87D38B780A;
+        Wed, 26 Feb 2020 11:29:34 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>
+Subject: Re: What's cooking in git.git (Feb 2020, #05; Tue, 25)
+References: <xmqqo8tml1lv.fsf@gitster-ct.c.googlers.com>
+        <CAPig+cR3H2qvCddWuWPNex=K-x0FyzKehpbOiv7W-s_4EAW1bQ@mail.gmail.com>
+Date:   Wed, 26 Feb 2020 08:29:32 -0800
+In-Reply-To: <CAPig+cR3H2qvCddWuWPNex=K-x0FyzKehpbOiv7W-s_4EAW1bQ@mail.gmail.com>
+        (Eric Sunshine's message of "Wed, 26 Feb 2020 01:54:01 -0500")
+Message-ID: <xmqqzhd5jor7.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:ixm1KYleVG4ElxT3wnC6vAZTCi0A7UgCrsF1mADEuDQkpGfBn8V
- NJSSXEBaquYLeymEBCn/B4c5hwQkRRfUo5AohbnnDwyPJbGlspbC5IUYiU1XoLdBlMt7lHQ
- AzK72pw3x6/7tEp9a55qsw8UA/aZXtbhYmukvW3Wcom2KkYBr1fRuZ8HXgm/m9qnx8ynawN
- uiZ7eNJwJUMO7V+H/dOqA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:ni6McXWoFLQ=:uNY7jKL/NLcVBEPAQpKrIo
- OiDlwKkOB20ASGuna0zY5TJnZuhmy3HM6U3IbtZrhJoO/q07OjGnG+dA431n/uYyAbqTgswNv
- 0zIj/PdXboNgDykhwJQOGWKkR5fuWPOnzKRW8EWj6Tfq2sKRr0PIQF21eFKX9PH1IxeItVFNi
- FYwq+n1qn6DVM/nAM14iHNtuvT5RCVrVhUCgt0bF3GXMWaSinFvu5cLgdw9JivtB47+L6EywT
- DJXeGMQmWQKjbLDu9FLN19d46fYcn9TmeSLY67XCoZfw9jC+fbpCn4hEmKV67o/8GIKTchO44
- D02XWU5sgmth1Dwp6JtrZheP7UxE2eXAslgitBZWGA2QW0lClkcUb9ex7WI6/O5CWpJZdTVom
- 5v/r5uVhQ75MG9zLOLUKLWgcpKCj6VHaGHhB45BCFHig7nx35dNbuWDksRjEjf4DrWicEZvTu
- ukGaYjLJuJ4BzAGKdtRR2z6aAgIJv90MKO4iMQ3ni7ThV6qw1IZB0fDcaQAtQn1VdS8MUKdOB
- IXVcoCKUwHMLY/IpSLqMBi/BIstBnbH1RPrFOdDwjtVM+lc6PK1JfzwuB8qvF7Kd+N9KXJ7P4
- rQnX9VJ8FarcNnqRJRacm20Am9BaaBlBOd3JiJSbDrhbRXNqKVMFYcvPaC1YmPrEI5/HdSnLE
- UrIKtWMQUEjKqoqD9ORAfJ/JgmcbYLBKWiBIArROyZrhn7CQXGEXpC0Ja5lErY8mWe9umFqO7
- B/v/kIHVa4tl6pm8MInh+EVIcAp8SJfvxrsdldvICymQ8z5fHHzFi+agfGwHq82KyQ5n2AZaS
- NlqbaPv/tsMSvbWLZewMzxqxl9ceBZohrhhXbhlFuPzsFp3WHe5PaPQf9XHRO9IhTDD+PKyjn
- 32EkF8PCMzYviiAQxaMxpxd8w7FEZNSEK6zf6IBnsxJOvfpVurepM4++0yg7TD2gRBVAC/rnI
- jAn6fwdFlKedFQuutbNeKvbT0hLySCFAjriYSVcjZ9lyytfzdDXcuCe5xwtFk0bkfMdSADbvE
- yRultKYwqCgxriGrKhvLltjxhZx4t25HfwaVbUk24wAFyKcg84QyXF/5v9O/kBVkon/cvWXEH
- O1ifQRc/nV6++TqAOE39y3XoH1LYbB1h8Psed2iD0UfRrx9gbbrnkQ8kBlPi/trPcsEt8/6ID
- bd9Zdvs8eRTPW3qJo9L2PiJiyjhJIUUaj8OysX+ZGl5Qq8H/nFD11TBJqQLFjsbSRGuNHcWvT
- 7It+duqjuAhPJR71Q
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2C6A6712-58B5-11EA-9AF6-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Emily,
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-On Wed, 19 Feb 2020, Emily Shaffer wrote:
-
-> diff --git a/Makefile b/Makefile
-> index 9e6705061d..6bdd3b9337 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -818,6 +818,7 @@ VCSSVN_LIB =3D vcs-svn/lib.a
+> On Tue, Feb 25, 2020 at 5:54 PM Junio C Hamano <gitster@pobox.com> wrote:
+>> * es/worktree-avoid-duplication-fix (2020-02-24) 3 commits
+>>  (merged to 'next' on 2020-02-25 at 74c612837a)
+>> + worktree: don't allow "add" validation to be fooled by suffix matching
+>> + worktree: add utility to find worktree by pathname
+>> + worktree: improve find_worktree() documentation
+>> ...
+> The description of the patch series could perhaps be a bit clearer.
+> How about this instead?
 >
->  GENERATED_H +=3D config-list.h
->  GENERATED_H +=3D command-list.h
-> +GENERATED_H +=3D bugreport-config-safelist.h
->
->  LIB_H :=3D $(sort $(patsubst ./%,%,$(shell git ls-files '*.h' ':!t/' ':=
-!Documentation/' 2>/dev/null || \
->  	$(FIND) . \
+>     In rare cases "git worktree add <path>" could think that <path>
+>     was already a registered worktree even when it wasn't and refuse
+>     to add the new worktree. This has been corrected.
 
-In order to pretend that we actually care about developers on Windows,
-let's squash this in?
-
-=2D- snipsnap --
-Subject: [PATCH] fixup??? bugreport: generate config safelist based on doc=
-s
-
-The Visual Studio build is a special beast: as we cannot assume the
-presence of any Unix tools on Windows, we have to commit all of the
-files generated via shell scripts.
-
-These two generated header files are no exception.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-=2D--
- config.mak.uname | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
-
-diff --git a/config.mak.uname b/config.mak.uname
-index 6d58d22cd5a..f1f36e43e47 100644
-=2D-- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -788,8 +788,10 @@ vcxproj:
- 	git add -f git/LinkOrCopyBuiltins.targets git-remote-http/LinkOrCopyRemo=
-teHttp.targets
-
- 	# Add command-list.h
--	$(MAKE) MSVC=3D1 SKIP_VCPKG=3D1 prefix=3D/mingw64 command-list.h
--	git add -f command-list.h
-+	$(MAKE) MSVC=3D1 SKIP_VCPKG=3D1 prefix=3D/mingw64 command-list.h \
-+		config-list.h bugreport-config-safelist.h
-+	git add -f command-list.h \
-+	 	config-list.h bugreport-config-safelist.h
-
- 	# Add scripts
- 	rm -f perl/perl.mak
-=2D-
-2.25.1.windows.1
-
+Perfect.  Thanks.  I wish there were more contributors/topic owners
+like you ;-)
