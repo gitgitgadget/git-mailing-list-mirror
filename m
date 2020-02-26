@@ -2,107 +2,79 @@ Return-Path: <SRS0=QAHC=4O=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 48E7BC4BA0B
-	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 09:10:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BFE80C4BA0B
+	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 09:47:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 17D362084E
-	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 09:10:13 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GIK3Esv0"
+	by mail.kernel.org (Postfix) with ESMTP id 8E17D24673
+	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 09:47:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727711AbgBZJKK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Feb 2020 04:10:10 -0500
-Received: from mail-lf1-f43.google.com ([209.85.167.43]:32782 "EHLO
-        mail-lf1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726425AbgBZJKK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Feb 2020 04:10:10 -0500
-Received: by mail-lf1-f43.google.com with SMTP id n25so1411804lfl.0
-        for <git@vger.kernel.org>; Wed, 26 Feb 2020 01:10:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-transfer-encoding:content-language;
-        bh=gw0DZe/y+ebjhPSWahEfyx8+75/atvS8LOD4cCmrnL4=;
-        b=GIK3Esv0D64/kyKtPvL8SRcyAQMLdasZAK5sM9F/TnVjwUfRwh33KWDBhaOtOpY27V
-         tts42VgYPJoiAPSMh0FKtHv8oadEyKD5MH69exDJ6lKSjgYpxRnxNrPTZDTpLjPikPki
-         qcPTte35P94bzt7cnZ1DPRJ8jsR4Nyqqn8iK52NzrM5DazPicCMlXAhIFhG/8A7dYUBP
-         sDWClGFSvb0yW0kYkchdUbCOtz2+23dToR8I0BuvqCxgZOAk4LgGeA+0qLXRC0u0tb0A
-         FlB1zcFPXPbMzOJM0pVahcXD1JiwoYGIjEcF6ORy7g+6ZHyqZqs45LeX4W8Xt6gZIkro
-         qRKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=gw0DZe/y+ebjhPSWahEfyx8+75/atvS8LOD4cCmrnL4=;
-        b=FL9nsnqrsiZGQxPXcQZaywkpoqzc38V1Q1xk0NJ7B98avee5OOo+E8wQEcOWYx3WD7
-         f4OID7IVN/S97eEENGbId5yY9R3Lseoc5x/sXvuhrsDilbHCn4/3+IkhxFVGZAeriNYC
-         Quh77FTtQBeudu3vikywNBPhCc+MAZCiwSyrEQJyiZk9Mqo/rQXB6056wt312a7tJz/h
-         OWjB9cyC3MVIeJV/pVYyIDiTwMiIgIpbwpIIpL8P9xMcIVzai5733Ps6ezMXr8+C4cQk
-         QWrZHe2T+QjT/C8oQWPbqIKWIiqJRTNdYeQg/9xF8wHju8jxC8VWgMDKWkCOUR6Eo9nS
-         CLGw==
-X-Gm-Message-State: APjAAAWGMjkds3dDBLeqam5sSIaIfCROgdVmvGml3lXOQBzcwqq2Uca3
-        /HJi8neZBXcnIGqVET0rcDsxMrg2
-X-Google-Smtp-Source: APXvYqyes117MlZHgLIlF14Yy9H9UHnOLRZ97Duv93v/fiVXa5WNU24MaFfOTTg/S1+6A02+6kZXDg==
-X-Received: by 2002:a19:48cf:: with SMTP id v198mr1893322lfa.68.1582708207942;
-        Wed, 26 Feb 2020 01:10:07 -0800 (PST)
-Received: from [192.168.221.164] ([185.79.217.61])
-        by smtp.gmail.com with ESMTPSA id w9sm772542ljh.106.2020.02.26.01.10.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 26 Feb 2020 01:10:07 -0800 (PST)
-Subject: Re: git-shell default working directory
-To:     Greg Anders <greg@gpanders.com>, git@vger.kernel.org
-References: <20200226004830.oxd5562v7qqspnkk@Kepler>
-From:   Andrei Rybak <rybak.a.v@gmail.com>
-Message-ID: <241ea912-44b2-96fa-6f9a-3f04d5386b05@gmail.com>
-Date:   Wed, 26 Feb 2020 10:10:05 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
+        id S1728129AbgBZJrS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Feb 2020 04:47:18 -0500
+Received: from cloud.peff.net ([104.130.231.41]:54736 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727724AbgBZJrR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Feb 2020 04:47:17 -0500
+Received: (qmail 18857 invoked by uid 109); 26 Feb 2020 09:47:17 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 26 Feb 2020 09:47:17 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 24216 invoked by uid 111); 26 Feb 2020 09:56:24 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 26 Feb 2020 04:56:24 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 26 Feb 2020 04:47:16 -0500
+From:   Jeff King <peff@peff.net>
+To:     Chris Jerdonek <chris.jerdonek@gmail.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Subject: Re: create reflog for reflog-less ref
+Message-ID: <20200226094716.GA14546@coredump.intra.peff.net>
+References: <CAOTb1wc2uMSyc7DMau2cWrWtk=_Z94+CCovORj1dGCrwgJhL=w@mail.gmail.com>
+ <20200226023909.GC7911@camp.crustytoothpaste.net>
+ <20200226034731.GA2915944@coredump.intra.peff.net>
+ <CAOTb1wfWtFsy415k+goRiuLUiVBqtizmmoyxqFdy7xsRhjnBww@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20200226004830.oxd5562v7qqspnkk@Kepler>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Disposition: inline
+In-Reply-To: <CAOTb1wfWtFsy415k+goRiuLUiVBqtizmmoyxqFdy7xsRhjnBww@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2020-02-26 01:48, Greg Anders wrote:
-> Hello,
+On Tue, Feb 25, 2020 at 11:18:39PM -0800, Chris Jerdonek wrote:
 
-Hi Greg,
+> Thanks for the suggestions both of you. I didn't know about "always."
+> It looks like it was added in 2.12.0:
+> https://github.com/git/git/blob/master/Documentation/RelNotes/2.12.0.txt#L129
+> 
+> After experimenting a bit more, I seem to be finding that--
+> 
+> * The "one-shot" `-c core.logAllRefUpdates=always` approach only seems
+> to work with git-update-ref if you're *changing* the SHA with
+> update-ref, and
+> * Passing `--create-reflog` also seems to work like the one-shot
+> config approach (again, as long as you're changing the SHA).
+> 
+> I feel like these options are still wanting.. If you want to add a
+> missing reflog without changing the ref, these approaches still seem
+> to require you to temporarily change it to something different (as did
+> the delete-create approach I stated in my first email). It would be
+> nice to be able to create (or append to) the reflog without having to
+> change where the ref is pointing. Or maybe I'm missing a variation
+> that will do this..
 
-> I'm working on standing up a self-hosted git server. I'd like to keep my
-> repositories under a dedicated directory, i.e. /srv/git, but I'd also
-> like to be able to clone a repository using a simple syntax:
->
-> git clone git@myserver:repo.git
->
-> as opposed to
->
-> git clone git@myserver:/srv/git/repo.git
->
-> I've not yet found a way to get this to work without keeping the
-> repositories in the git user's home folder.
+No, I don't think there is a variation that will do that. You'd have to
+wait for the next update.
 
-Disclaimer: I'm not at all familiar with git server setup. Would it make sense
-to change git user home directory to be the required dedicated directory?
+The "touch" trick I showed would work for that, but it's not going to be
+portable going forward. I don't think it would be a bad idea to have
+some way of triggering a "noop" reflog update via update-ref, where we
+either create the reflog as empty, or insert a pointless entry going
+from the current sha1 to itself. But AFAIK that doesn't exist right now.
 
-> I've tried using a ~/.ssh/rc
-> file to chdir into /srv/git and I've tried using the `command=`
-> parameter in the authorized_keys file; however, both of these fail
-> because `cd` is not recognized as a valid command by git-shell.
->
-> I suppose I could create symlinks from the repositories in /srv/git into
-> /home/git, but I'm wondering if there's a cleaner way to do this?
->
-> Thanks,
->
-> Greg 
-
+-Peff
