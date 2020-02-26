@@ -2,92 +2,71 @@ Return-Path: <SRS0=QAHC=4O=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 29D7AC4BA09
-	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 01:07:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C33EC4BA09
+	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 01:42:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id E0A6620732
-	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 01:07:47 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cWS71efZ"
+	by mail.kernel.org (Postfix) with ESMTP id 5E04E2082F
+	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 01:42:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729659AbgBZBHr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Feb 2020 20:07:47 -0500
-Received: from mail-qt1-f172.google.com ([209.85.160.172]:40169 "EHLO
-        mail-qt1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729170AbgBZBHq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Feb 2020 20:07:46 -0500
-Received: by mail-qt1-f172.google.com with SMTP id v25so1085162qto.7
-        for <git@vger.kernel.org>; Tue, 25 Feb 2020 17:07:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=BBeRUTIHM1Ct4JnRt+sWBWEfq8H/jRhuH1yKiPd3AaA=;
-        b=cWS71efZvJfS+wZuorQ+S1dBRckpbHm81TOH4jmR6RlQylFUqNsccsGn4Lh0KSFoND
-         I0rTXjoDXd/ESYBPKqSkpTJGJvBeSAIyK7tHe+I4LlYIDPDV4f5kd7stDyuMLo6rz31y
-         av4slmg74kHFOdOJC17Uc5amVFTeiDhwYWGIQHUV325w2bw1FKsj/1kRHen3UfYM0JTF
-         quK8wCHMhdN0wxvrw+5KFGX8+z/+snXZ4QddJ058Vs3X7pbLCXmlzNvBYo434WT6UKmU
-         RoVwcRVyBTzglDqr62JLDv6Pup2ZyK5ZIrkg0030FXz+etlu4HDXvLrogfSpPrn7ok4s
-         P0Kw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=BBeRUTIHM1Ct4JnRt+sWBWEfq8H/jRhuH1yKiPd3AaA=;
-        b=r/dBquim09OZc+63YGUoeo3TZvZpv/j1+4nZce1BxhmSwuWEglXA80nWjAoyYZ4AfM
-         bSZL2MmyHFgERx8twIA4Pkr8wTU7+lt4MUo6UHqZ777z+uxvad5YiVss+wDi4TRljzpY
-         lJRdPVjjlt1Fv6P3TceDVGPjfM5cez7jk29IghAG/jKtaZpA91UrVV6K9+dXChLh9ub6
-         hgrvSLieyCceiRBswpJiUlCrKLZMqs/1wKHDUmx9QrhdVjn+b2AB8AAqygBHZlHKSLqh
-         a+gGvTV2SG1oB8VmuSk+nP0VFqcSF4/mYDgA+q5kbaV2c/UKBJsY1EypF8UmiF1ksu6b
-         wjzQ==
-X-Gm-Message-State: APjAAAVL6Pqs6kyfESkSjTErXO6iVHkMX/Y8BCeS0sZMTGoW1yG3NUgG
-        yItAqyG9YXgcdupYLnxhMEGssnXbc69FBlPGX4B97UgB
-X-Google-Smtp-Source: APXvYqwyeBplT2byk2Gh0MFwAq8JtgQ1OjzEAOlFnUlhVYLo9/SgyOP1xM39IsIbumMciYQTG8vWoEyOGzXthINxsaU=
-X-Received: by 2002:ac8:42d7:: with SMTP id g23mr1899907qtm.206.1582679265671;
- Tue, 25 Feb 2020 17:07:45 -0800 (PST)
+        id S1729874AbgBZBm3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Feb 2020 20:42:29 -0500
+Received: from cloud.peff.net ([104.130.231.41]:54408 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1729403AbgBZBm3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Feb 2020 20:42:29 -0500
+Received: (qmail 16628 invoked by uid 109); 26 Feb 2020 01:42:29 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 26 Feb 2020 01:42:29 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 22099 invoked by uid 111); 26 Feb 2020 01:51:35 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 25 Feb 2020 20:51:35 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 25 Feb 2020 20:42:28 -0500
+From:   Jeff King <peff@peff.net>
+To:     Heba Waly <heba.waly@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Christian Couder <christian.couder@gmail.com>,
+        git <git@vger.kernel.org>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: GSoC and Outreachy Summer 2020?
+Message-ID: <20200226014228.GA2913263@coredump.intra.peff.net>
+References: <20200204163716.GA7308@coredump.intra.peff.net>
+ <CAP8UFD3UewcZ3oid_SiUYuFEO49JTzaSigHDTP8OPs2yh6s6zA@mail.gmail.com>
+ <CACg5j25_098i=rU++OB=YSbAFjCQdgUX7gP6D-9yo6F_A_yn0w@mail.gmail.com>
+ <CAP8UFD1QbOK9g2oAhfTm2npoNF9Ay_HiAfFai9rJwZzc73cBbw@mail.gmail.com>
+ <20200221183003.GA9786@coredump.intra.peff.net>
+ <CACg5j24mH0LRHXbhgf16f+7KqOnrsh7BRovh8mR6AzHG=y5gFA@mail.gmail.com>
+ <20200223214433.GA564650@coredump.intra.peff.net>
+ <nycvar.QRO.7.76.6.2002241648000.46@tvgsbejvaqbjf.bet>
+ <20200225202014.GA2773363@coredump.intra.peff.net>
+ <CACg5j25qmYivZdW_=dfun-ZP5m3Zx8dcYEkf24xDhVc7xmqwig@mail.gmail.com>
 MIME-Version: 1.0
-From:   Chris Jerdonek <chris.jerdonek@gmail.com>
-Date:   Tue, 25 Feb 2020 17:07:35 -0800
-Message-ID: <CAOTb1wc2uMSyc7DMau2cWrWtk=_Z94+CCovORj1dGCrwgJhL=w@mail.gmail.com>
-Subject: create reflog for reflog-less ref
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CACg5j25qmYivZdW_=dfun-ZP5m3Zx8dcYEkf24xDhVc7xmqwig@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Wed, Feb 26, 2020 at 01:55:46PM +1300, Heba Waly wrote:
 
-I wanted to ask on this list if there are any supported ways to create
-a reflog for an existing ref that doesn't already have a reflog.
+> > On Mon, Feb 24, 2020 at 04:48:41PM +0100, Johannes Schindelin wrote:
+> > >
+> > > I would be willing to co-mentor, but I have no good project lined up, so
+> > > it feels a bit rushed to me. Maybe take it easy and apply this fall?
+> >
+> > I think that makes sense in this case.
+> 
+> I think I'll co-mentor with Christian then :)
+>
+Just to be clear: you mean on GSoC, or trying to get something together
+for Outreachy?
 
-This is more likely to come up for refs not in the standard set (i.e.
-HEAD, branches and remote-tracking branches), since reflogs aren't
-created by default for those refs.
-
-The only workaround I could think of is using git-update-ref to delete
-the ref, and then immediately recreate it using the `--create-reflog`
-option (if that option is needed), e.g.:
-
-$ git update-ref -d refs/foo/bar
-$ git update-ref -m "my message" --create-reflog refs/foo/bar <SHA>
-
-This seems hacky though because it forces you to pass through a state
-where the ref no longer exists. It also requires you to get the ref's
-SHA first.
-
-This Stack Overflow reply from 2016 suggests the idea of using `git
-update-ref -m MSG REF REF` to add lines to an existing reflog:
-https://stackoverflow.com/questions/36770141/can-i-add-a-line-to-the-reflog/36778898#36778898
-But it doesn't seem to work to create a reflog (and only seemed to
-work for me in limited circumstances otherwise, like adding to HEAD's
-reflog). (I tried with version 2.25.0.)
-
-Any thoughts?
-
-Thanks,
---Chris
+-Peff
