@@ -7,61 +7,60 @@ X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A649C4BA0E
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F13EC4BA0A
 	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 08:49:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 2938324653
-	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 08:49:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E38D6206E6
+	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 08:49:53 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KlZtIyL/"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QHuhrmTF"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726936AbgBZItx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Feb 2020 03:49:53 -0500
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:36062 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726764AbgBZItw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Feb 2020 03:49:52 -0500
-Received: by mail-ed1-f66.google.com with SMTP id j17so2805162edp.3
-        for <git@vger.kernel.org>; Wed, 26 Feb 2020 00:49:51 -0800 (PST)
+        id S1726679AbgBZItv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Feb 2020 03:49:51 -0500
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:37847 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725872AbgBZItv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Feb 2020 03:49:51 -0500
+Received: by mail-ed1-f65.google.com with SMTP id t7so2799776edr.4
+        for <git@vger.kernel.org>; Wed, 26 Feb 2020 00:49:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=4D690/NLx/9daAF2hWG5tCfDYzmNZsPcuZnuRxKSdQk=;
-        b=KlZtIyL/AdlOkvcfUSPnRLdypcpHIfKk6p+HppfXV78O6CyDBElgOu8mwv6rSny0u8
-         GKnlARj5lBBoFIiPtR9igYIWTKSRnh2VLhBUwv1aqXiR4wYrA5ICR9bHpRHpdN0NZqpg
-         BqBiZWOLmenpQTJo8gzlcqeNwaYYq7L1Ut/1Dnrgo+1iqwKGFubkX8mgdJsiG+MCZiJO
-         RFm7cm31NClcy4r3QmLOK9BgGtZVb87IU9y/XK5K7uTTtRKzaHx+mZrHqOYanVh/Se32
-         hZkpmqHvAOF5eBUDd3EhHfqmq38SZbOBevHWE017tZ0bCAilr8LRe2s0EzpgxVsDVHYU
-         2PXQ==
+        bh=NfPWVYm5oJnAy6N3ND7qYx88WtkIig5hT6uesdXdV6c=;
+        b=QHuhrmTFrQ884Sw/bdjOL8YJLE7cKCyRDpueat0kw29RPoPRskGC8ZVDOnRCMNBn89
+         kfl2hNbIHMDF9m/Zg46ILlV4Y5CfExJtMAfhJSkKDBubXH2S4zDlTOFYbpSSy/vcKe4U
+         m+HakXKnzPpXLKcW1dHOMAOeKnK02EZysoG5ebh+uZzvzIFW64hqxOk7NHilfXphMTA9
+         oR2o5wsOkZzKtP5Q2KIg3Ed+ipEmIW0qdLSFblxsMv6iv1bL7jK2VtG1BwncyE7Yy2TI
+         dTQ0VgHRu9qE9fIsScMqbL16z/yh7SBw9Ba3Wj5IrmeZHzQOiDn0KDaIvaFCISYOG05H
+         8hoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=4D690/NLx/9daAF2hWG5tCfDYzmNZsPcuZnuRxKSdQk=;
-        b=JSz2KbfxxRufqP2TZ2sa7nIjM7wKNfWZZqQHREPA998akE4FRx+tgd+24uFz0Cqu7J
-         2EleFe6fEQYfGjGRO6Ug6NMwNRABEp1aDZBw8zV/lXzOVE6rV//sPd8VcfF+a8/Ezgm/
-         EJDB8DVKWq7giVGCIdBQE8Jb2twIiG/dYkKG2Lbb+gPpv8Eo3bjM5PQLlvvIP50+4ED7
-         GNVOvK2ZXfKhoQIdxvIFi7InX7Mb6ev5ZDtJ5d1mI5aBDFJacc1sOX6BIgTpUr9srQey
-         hPcMiRzphSL3aOB/txhodN7c2Y9YwubA+rdMXE/cIYgQq7qbxQE2MdNW+yLf2IDApIFh
-         6z8Q==
-X-Gm-Message-State: APjAAAUya60SHp9w1NVJcU/zoZgYHH+yGHZ3BxKoD2LldHG0yReVW+Ih
-        2U5up7Qspuap8/G6oZo2jFFPPzZP
-X-Google-Smtp-Source: APXvYqx885BIwm7x80yJbqfx80DmEUqeGDQ0dJlyzXAEnxjIYbecHI0C44fbUH/XdyUsDO4J3inF1w==
-X-Received: by 2002:aa7:dad2:: with SMTP id x18mr3110402eds.384.1582706990820;
-        Wed, 26 Feb 2020 00:49:50 -0800 (PST)
+        bh=NfPWVYm5oJnAy6N3ND7qYx88WtkIig5hT6uesdXdV6c=;
+        b=X0Tilm0sLRB61rQGS7lK3Sh8nSzMMxGomO6cjkTbC6qv59ZavO3HmlpH0uLLwfMmD2
+         ooXz8Jgl0ALuDWEKfhlICfEEOrF4HOvRaE0wAaJHmv4agdaAnrbapIdtnOAqGKwv+3WK
+         weubiiNMw1RU+Zyy8pXkDf7HgRxONQ8PzRfxKgdi1srlGFinax9aOCb8p1dAPzRLJNgk
+         9I/1gLE565ienGpt5eWHmbeTnnkCtCVfPIxp44HFpNzrj6zG1WvGkmfpfGjS8ZIAtxQF
+         yYass/SI13sJdgVB8fHwBe72uVg0lagL6rphqV15aIh7S0SvNH0Fk87U6rD6FdcBMxlo
+         c0Iw==
+X-Gm-Message-State: APjAAAUr7QVv8gWPci0VWUVoDjvGH8K+ND20sQHuIKQBsnDyFUnNfZy5
+        g8Rg0Pa9cUxXP038jcW3/OnZ0rVK
+X-Google-Smtp-Source: APXvYqxG7w944afpLosWVcOiU0ZagHijS5P/zAGThBDJnRfaYafTAEkBfymOwCERmJpfjtc19xQA1A==
+X-Received: by 2002:aa7:c68f:: with SMTP id n15mr3574720edq.112.1582706989282;
+        Wed, 26 Feb 2020 00:49:49 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i4sm59537edq.45.2020.02.26.00.49.50
+        by smtp.gmail.com with ESMTPSA id be18sm57012edb.19.2020.02.26.00.49.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Feb 2020 00:49:50 -0800 (PST)
-Message-Id: <da538ef7421a71adfb65e7a9b916070875c6cda4.1582706986.git.gitgitgadget@gmail.com>
+        Wed, 26 Feb 2020 00:49:48 -0800 (PST)
+Message-Id: <b1e44bc431e93f201dd2071f8acfc8ca8c77a271.1582706986.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.539.v7.git.1582706986.gitgitgadget@gmail.com>
 References: <pull.539.v6.git.1582015420.gitgitgadget@gmail.com>
         <pull.539.v7.git.1582706986.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 26 Feb 2020 08:49:43 +0000
-Subject: [PATCH v7 3/6] refs: document how ref_iterator_advance_fn should
- handle symrefs
+Date:   Wed, 26 Feb 2020 08:49:41 +0000
+Subject: [PATCH v7 1/6] refs.h: clarify reflog iteration order
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,25 +77,36 @@ From: Han-Wen Nienhuys <hanwen@google.com>
 
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- refs/refs-internal.h | 5 +++++
- 1 file changed, 5 insertions(+)
+ refs.h | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index ff2436c0fb7..3490aac3a40 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -438,6 +438,11 @@ void base_ref_iterator_free(struct ref_iterator *iter);
+diff --git a/refs.h b/refs.h
+index 545029c6d80..87c9ec921b9 100644
+--- a/refs.h
++++ b/refs.h
+@@ -444,18 +444,21 @@ int delete_refs(const char *msg, struct string_list *refnames,
+ int refs_delete_reflog(struct ref_store *refs, const char *refname);
+ int delete_reflog(const char *refname);
  
- /* Virtual function declarations for ref_iterators: */
+-/* iterate over reflog entries */
++/* Iterate over reflog entries. */
+ typedef int each_reflog_ent_fn(
+ 		struct object_id *old_oid, struct object_id *new_oid,
+ 		const char *committer, timestamp_t timestamp,
+ 		int tz, const char *msg, void *cb_data);
  
-+/*
-+ * backend-specific implementation of ref_iterator_advance.
-+ * For symrefs, the function should set REF_ISSYMREF, and it should also
-+ * dereference the symref to provide the OID referent.
-+ */
- typedef int ref_iterator_advance_fn(struct ref_iterator *ref_iterator);
++/* Iterate in over reflog entries, oldest entry first. */
+ int refs_for_each_reflog_ent(struct ref_store *refs, const char *refname,
+ 			     each_reflog_ent_fn fn, void *cb_data);
+ int refs_for_each_reflog_ent_reverse(struct ref_store *refs,
+ 				     const char *refname,
+ 				     each_reflog_ent_fn fn,
+ 				     void *cb_data);
++
++/* Call a function for each reflog entry, oldest entry first. */
+ int for_each_reflog_ent(const char *refname, each_reflog_ent_fn fn, void *cb_data);
+ int for_each_reflog_ent_reverse(const char *refname, each_reflog_ent_fn fn, void *cb_data);
  
- typedef int ref_iterator_peel_fn(struct ref_iterator *ref_iterator,
 -- 
 gitgitgadget
 
