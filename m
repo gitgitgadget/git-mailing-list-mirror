@@ -2,126 +2,142 @@ Return-Path: <SRS0=QAHC=4O=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AD324C4BA13
-	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 17:23:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A486C4BA18
+	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 17:36:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 80F6820838
-	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 17:23:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4920424680
+	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 17:36:01 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jgV8/Flw"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="M9WWE7Wk"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726822AbgBZRXo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Feb 2020 12:23:44 -0500
-Received: from mail-wm1-f41.google.com ([209.85.128.41]:36462 "EHLO
-        mail-wm1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726589AbgBZRXn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Feb 2020 12:23:43 -0500
-Received: by mail-wm1-f41.google.com with SMTP id p17so97092wma.1
-        for <git@vger.kernel.org>; Wed, 26 Feb 2020 09:23:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=2MLWDjrjcl8afK6gO2C1+tT0WE7N21obAlMkG0Cim7U=;
-        b=jgV8/FlwPqZCeicYx4529bvS21kNvaUoQo5T9oDSdSAKzJKEQnBmMSHd6a7NfdQhfI
-         zHCw/MNNLm4MSynDPGTvKxQpeR1YQpPTTpI1Q1tI/vkxI2KCtym46xyT7h2l1w2Ogf4B
-         zFvRxBZUuKJgVwND74Aht1wMHJhSHPfZzuDcUihtdaGmjjPMHPAU0UiIwjXaJu0+2KDi
-         ranfgZHHKLcVL4x3p/oJ/5HGjmlXXO5RDOh7qfVIVnP5lxK+0kBteKWtJ2JAfwKVwML3
-         u3MO5GtnAoFuHh4KwIFpp7t7cia700Lx9MEIgTaS3hAzVyZoyuRliXbcb4pqzYDmWp9Q
-         J9Iw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=2MLWDjrjcl8afK6gO2C1+tT0WE7N21obAlMkG0Cim7U=;
-        b=XGGR74gDahz1URjOOUTmhHE//YykbumHc0udbUuD4HUpQRWI3UuWvn50rDVlAXsuZE
-         iiAKA4K8M7cgKSKCFeYYXyiuV5uA5xyuNvHZM2uy/yVkcwg3I5JBF4ZyKXHqpXuwYyhj
-         jjkX5tiJQvNwWPy2J/LePvq0xpb/8RadPXwqDINjxo0SczD3vqYoga/Jmu3wHhQZomye
-         kYic87CDYubNhhQlvSbXYvFMqaujUYhV0Ydgs7mmYd0qQjGp1Ui2jS0sODoaqbh5fCft
-         fQblL9ozKjMsTohiYnRbGkBQFtp9863jjgVpuA3lZd3YmzA2ud8w/9jUrZ/cVaSSwFlo
-         poXg==
-X-Gm-Message-State: APjAAAUOhuNU80bUJCHvpbrmPgl1muzBwC+fUjofSHKeDCFPubzUXToF
-        9mR/VZBipQja61PZj7NCSe4=
-X-Google-Smtp-Source: APXvYqwWwVx7C0RrhhcP7FCuI9rI9DyVnRl4EDPqxwhThz6X/gMCJlSPjQGEyU5jALEudrrSPE6DVQ==
-X-Received: by 2002:a05:600c:414e:: with SMTP id h14mr6503185wmm.179.1582737821114;
-        Wed, 26 Feb 2020 09:23:41 -0800 (PST)
-Received: from mithrim ([147.210.21.27])
-        by smtp.gmail.com with ESMTPSA id a13sm4078156wrp.93.2020.02.26.09.23.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Feb 2020 09:23:40 -0800 (PST)
-Date:   Wed, 26 Feb 2020 18:23:38 +0100
-From:   Damien Robert <damien.olivier.robert@gmail.com>
-To:     Philippe Blain <levraiphilippeblain@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Nested submodule status bug
-Message-ID: <20200226172338.unembhjhog36sqj7@mithrim>
-X-PGP-Key: http://www.normalesup.org/~robert/pro/files/Damien_Olivier_Robert.asc
-X-Start-Date: Wed, 26 Feb 2020 18:02:13 +0100
-References: <20200214224242.knmzkwx7ls4sote7@doriath>
- <0123F1ED-C421-4C1F-896B-E54C9D345A34@gmail.com>
+        id S1726906AbgBZRgA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Feb 2020 12:36:00 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55891 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726366AbgBZRf7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Feb 2020 12:35:59 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8D0A13933C;
+        Wed, 26 Feb 2020 12:35:58 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ut6D6JL1Xb+Ikk0IMXGcONrfA5E=; b=M9WWE7
+        Wks33owASqlK2s1ejcs9cg3OVU16ACLVGvzgBuc59pbTFM9MZqzD98pL7Ae8TLQO
+        Rrt/TtHVkk5CRBTu/pNdmzpbKSdTQ61g0JZ531Yq4j2QirrHgvoXKKhlccbHqIyD
+        Kp3/VPqnReLiryaNIE/QALUyOiTQa8/nJqj28=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Kl8fXTeu+2hqDbobDFCyYTd5k6KYScg4
+        NDLK+nlV/1xMF2eVlfK9WoTX6ewd2luFhojX4Ks5RRDTlfekaAjR+5Ns7rOughCs
+        x5j61LlMkfAP2AsqeBXC9JZU1FEnBTbm7VXO27zAfGXYhORA0KminNA62yCL6nDW
+        9emhJ++XJBk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8406B3933B;
+        Wed, 26 Feb 2020 12:35:58 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E29113933A;
+        Wed, 26 Feb 2020 12:35:57 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>
+Subject: Re: [PATCH v7 0/6] Reftable support git-core
+References: <pull.539.v6.git.1582015420.gitgitgadget@gmail.com>
+        <pull.539.v7.git.1582706986.gitgitgadget@gmail.com>
+Date:   Wed, 26 Feb 2020 09:35:56 -0800
+In-Reply-To: <pull.539.v7.git.1582706986.gitgitgadget@gmail.com> (Han-Wen
+        Nienhuys via GitGitGadget's message of "Wed, 26 Feb 2020 08:49:40
+        +0000")
+Message-ID: <xmqqk149jloj.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0123F1ED-C421-4C1F-896B-E54C9D345A34@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 72B0BE48-58BE-11EA-9B49-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear git developers,
+"Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-still about nested submodules, I stumbled upon the following very strange
-behaviour.
+> This adds the reftable library, and hooks it up as a ref backend.
 
-1) Make a baz submodule inside a bar submodule inside foo
-  mkdir foo; cd foo; git init
-  mkdir bar; cd bar; git init
-  mkdir baz; cd baz; git init
-  touch 1
-  git add 1
-  git commit -m 'first baz commit'
-  cd ..
-  git submodule add ./baz
-  git commit -m "Add baz submodule"
-  cd ..
-  git submodule add ./bar
-  git commit -m "Add bar submodule\n"
-  git submodule absorbgitdirs
-  cd bar
-  touch 2
+I do not see the promised .gitattributes addition; please add one
+early in the series, before the step in which you start adding files
+that want different whitespace rules, so that I do not have to apply
+with "git am --whitespace=nowarn".
 
-2) Now add the following alias:
-  subs="! git -C baz status"
+It is rather unfortunate that you included Jonathan's reftable doc
+patch in the series---it has separately been queued and merged
+already in 'next'.  I'll fork hn/reftable on top of the reftable doc
+topic of Jonathan's, while dropping the extra copy [4/6] in this
+series, to cope with this (an alternative would be to revert the one
+in 'next' and take this series as-is).
 
-3) And run it
-  git subs
+>  * spots marked with XXX in the Git source code.
 
-To get:
-~~~
-On branch master
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-	../2
+What follows is my notes while "git diff master...hn/reftable" and
+looking for those lines, except for the ones in the reftable
+implementation proper (for which you would be a better judge).
 
-nothing added to commit but untracked files present (use "git add" to track)
-~~~
+The init-db call in clone hardcodes DEFAULT_REF_STORAGE and that
+should be OK at least for now.  Eventually the code would want to
+read from the system-wide and the per-user configuration files to
+figure it out, but I do not think the config subsystem is prepared
+to read the configuration before making this call to init_db() right
+now---let's leave such a complication until after the basics is
+done.  After all, "git init && git add remote && git pull" can be
+used as a rough approximate for "git clone"; as long as "git init"
+can be told what backend to use, that would be sufficient to get us
+going.
 
+It sounds a bit too magical to convert the repository by running
+"git init" again on an already existing repository.  But a user who
+runs "git init" in an existing repository and asks to use settings
+that are different from what the repository uses from the command
+line cannot be expecting the command to error out when the settings
+do not match (i.e. as a mechanism to check the setting)---the only
+sensible way to interpret such an invocation is as a request to
+convert the existing repository.  Again, I do not think it is a huge
+loss to do without such an automatic conversion in the initial
+deployment.
 
-While when not launched as an alias, `git -C baz status` give the correct
-result:
-On branch master
-nothing to commit, working tree clean
+In refs.c, I am puzzled by the fact that a call to ref_store_init()
+in the get_submodule_ref_store() needs to pass DEFAULT_REF_STORAGE,
+or any format for that matter, at all.  Wouldn't the gitdir argument
+sufficient for ref_store_init() to learn what backend the repository
+uses?  IOW, I am not sure why the caller needs to pass the backend
+format.  
 
+The way r->ref_storage_format is used by get_main_ref_store(), at
+least when the field is set, looks a lot more sensible.  Would it be
+possible that get_submodule_ref_store() function would also want to
+have, not just a submodule as a mere "string", but an instance of a
+repository for that submodule?
 
-Note: I get the same bug when I use
-  subs="! sh -c 'cd baz; git status'"
-The bug is only there if absorbgitdirs is used. Also I have to be in an
-intermediate submodule.
+Speaking of the use of ref_store_init() and r->ref_storage_format in
+get_main_ref_store(), when is the storage_format field unspecified?
+Is there a chicken-and-egg problem around here?
 
-Best regards,
-Damien
+The same comments apply to the use of the default format in
+get_worktree_ref_store(), but do we foresee to "add" a worktree that
+uses one ref backend off of a repository that uses a different ref
+backend?  Even if we do, it probably makes sense to default to the
+same format as the primary worktree uses, I would think.  It is
+still unclear to me why ref_store_init() wants the format in the
+first place, though, given that it takes a path to the .git/
+directory (or its equivalent), and ref_store_init() should be able
+to figuire it out without being told.
+
+I think it is fine to define the textual name of the default ref
+storage in refs.h
+
+Thanks.
