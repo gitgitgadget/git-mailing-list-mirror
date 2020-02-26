@@ -2,85 +2,117 @@ Return-Path: <SRS0=QAHC=4O=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BC17C4BA0B
-	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 08:20:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 517BAC4BA0B
+	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 08:24:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 311A620714
-	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 08:20:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2075B21556
+	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 08:24:18 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sG90KjRY"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XVA4AAQn"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727461AbgBZIUv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Feb 2020 03:20:51 -0500
-Received: from mail-ed1-f45.google.com ([209.85.208.45]:46142 "EHLO
-        mail-ed1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727311AbgBZIUu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Feb 2020 03:20:50 -0500
-Received: by mail-ed1-f45.google.com with SMTP id p14so2636837edy.13
-        for <git@vger.kernel.org>; Wed, 26 Feb 2020 00:20:49 -0800 (PST)
+        id S1727466AbgBZIYR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Feb 2020 03:24:17 -0500
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:32910 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727311AbgBZIYR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Feb 2020 03:24:17 -0500
+Received: by mail-pf1-f195.google.com with SMTP id n7so1089859pfn.0
+        for <git@vger.kernel.org>; Wed, 26 Feb 2020 00:24:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=hTb8M7aI/MNx1rN6J2+v9oHylvIXYurTiGXYGydr8eE=;
-        b=sG90KjRYaDjZw33eoCFbBzWGrgUZjcXG6PNTPDp2vAo6N933CGfSldbcxbWx8k70Or
-         keQ67eSjHuY1kV5mlh9yWO9x7xEvTdkSv95SHBbtt7XLmvfQVsQCeNVTKWRMg2+qfmPY
-         pkAsEZi/K/tc3dHafJ4jGxyJORFsc+QKLbA9PpD/3QoFu7h2bxMqdyW41TbcLmpnT4fI
-         6ghiR6iPEeWrxMe1zu/b1NXi0dqnIWFWpGQ4hUBDF2cdvDuZPiHiusR9Qv1vqOJZRdnI
-         i374TuQw7ytFUks7fEAa+fUKKCywjgm6TKlo5MZjSLd8PMwQ0fdtYUW1KSWpuOAF3MaF
-         10Rg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=TJxjHRlNh1xhw+LRWZsk7PSlkJGk4U7qLi7I6l8lT7c=;
+        b=XVA4AAQnDJOnoBXPoE8rDXtPV2qJpxTn0ViKHGayWQVN41QZaUOK5v8NtChiGm/Uoi
+         7LFcq8lDpiPvPBm1GIn9ORpMYd4t1B7GblKY9T/xeVaTOYpawqPgyzIg1Gx8m9CAO1d1
+         d0uW4WHp/XX+7ECCPGtq4OV8q9j51u68fxUbnGexKVRxtN1Hlzln/2xHHPvOXGnqIPkd
+         GO0HpYviiO8xGOGRzqfom21sBha6474dgy1ozvsisXFUxvuGdw1pc+N8qjtO4o9XxFid
+         F1tnmbBeD0dd6MN74nmVMCfYAFBgKuU0bcfZST2onOJsLkUgpvpXXiU/YQR9QLuWgq3U
+         /24A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=hTb8M7aI/MNx1rN6J2+v9oHylvIXYurTiGXYGydr8eE=;
-        b=F7qPTIumCUpAhjajjJTNq5CAt0MKsHZ27JObvPwljS5XoBZ/i/SeRq5E2yzaxOYj6C
-         7SPUWxxg8hgLMFgIFcKG40sh85WT2K3+CYDh9rvOoMDOd33u4iMFvGk5vTu/NfpcqKq7
-         xZ+HBe2S95nwCqP3T28pWNo90ibt0XxgqegVx0K1SnjF/YgvMlmpVGsiYZgTotDX4BX9
-         y0IxqnqZ+x4Nh7oIYI9Pdnr//v3xUg3qGcM8ScjP97W0BsfLEb3sEr92Q6P1QHEEt52r
-         TSbuOzRllgQTVhWaZP3X6l2ZKrWiWfunULrqdA+vNUYDhhPUbC2MSDARf15NNQydYajY
-         1bkQ==
-X-Gm-Message-State: APjAAAVsxiPjO00Bg151PxDAU1GxqWqBrnXuQI8r8V9rqNQ5x/wtpHG+
-        w0YxNrs+hrz90Z4KRlkFbkKjwORn+W9bxQIDspA=
-X-Google-Smtp-Source: APXvYqybrU9wRl+RezSBmFrUhwVSq7vALMQwhDtLIyz5S932M4sm08gIEU+b08vwwwt+Gic/rDLU12Y9Mm15I81FlTM=
-X-Received: by 2002:a17:906:4e07:: with SMTP id z7mr3287230eju.201.1582705248914;
- Wed, 26 Feb 2020 00:20:48 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=TJxjHRlNh1xhw+LRWZsk7PSlkJGk4U7qLi7I6l8lT7c=;
+        b=afJjJfGwZfC7WVfC8tX8ZsJf4s/UQVMzaA3VYC6sF+o2oYTsp2mVsHeUmjJjT3BXkJ
+         KXp4CcEC6iEj0l1bJmIDL/O73p8mXYQ8yiRllEU+5iWAaPjwspPfGl75iPzt+ot+OkCz
+         PSlCBlqBCMaWh4nsji4FOhCcRjWug58X92wDFl5ip/+CmaObjpwho99KerLqJe+gsFlm
+         YrqP1JUz/HjlFzYoCHxgimHwg6cukZ41BIjlfUryezjxnOpwOWBpc/155Np9MKURJSI0
+         e7/p/KrMdMmhWAZNuzYd7yw4LcobowWW3qOtB3oBMVOhbZxqBHM/cEeqzBCjquDO4AYN
+         xzDw==
+X-Gm-Message-State: APjAAAUvdYd9BkTsPECfAQjv+v4+h7c6csexd4Lja0SdNygic34DKwEQ
+        ArXoAj0ErR0T9JwbLH8+fimj7ccPDLc=
+X-Google-Smtp-Source: APXvYqzXqHFFzbSq5NG6IXinjNzCtf7clDqG4dGIpYZNkW7ipYqGhts0eyVENC48C/++uOsNkGvy8w==
+X-Received: by 2002:aa7:9816:: with SMTP id e22mr3163191pfl.229.1582705455648;
+        Wed, 26 Feb 2020 00:24:15 -0800 (PST)
+Received: from f3 (ag119225.dynamic.ppp.asahi-net.or.jp. [157.107.119.225])
+        by smtp.gmail.com with ESMTPSA id m128sm1933658pfm.183.2020.02.26.00.24.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 26 Feb 2020 00:24:14 -0800 (PST)
+Date:   Wed, 26 Feb 2020 17:24:09 +0900
+From:   Benjamin Poirier <benjamin.poirier@gmail.com>
+To:     Jonathan Gilbert via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Jonathan Gilbert <rcq8n2xf3v@liamekaens.com>,
+        Pratyush Yadav <me@yadavpratyush.com>,
+        Jonathan Gilbert <JonathanG@iQmetrix.com>
+Subject: Re: [PATCH v7 2/3] git-gui: update status bar to track operations
+Message-ID: <20200226082409.GA2270319@f3>
+References: <pull.436.v6.git.1574929833.gitgitgadget@gmail.com>
+ <pull.436.v7.git.1575167313.gitgitgadget@gmail.com>
+ <8fe9dfc30771574344c1a2fc5cd8f21f1a617388.1575167313.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-References: <CANtBzp2-8D=FZ2Lgu2qpYbMoi_NK6-naj2_UG9=JDiwrxp=pow@mail.gmail.com>
-In-Reply-To: <CANtBzp2-8D=FZ2Lgu2qpYbMoi_NK6-naj2_UG9=JDiwrxp=pow@mail.gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Wed, 26 Feb 2020 09:20:37 +0100
-Message-ID: <CAP8UFD1Bid5+93TJsSX6azu43sYVBd05D6DS2Ma8mJfXRv36TQ@mail.gmail.com>
-Subject: Re: GSOC'20
-To:     Priyansh Gupta <guptapriyansh1907@gmail.com>
-Cc:     git <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <8fe9dfc30771574344c1a2fc5cd8f21f1a617388.1575167313.git.gitgitgadget@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Priyansh,
+On 2019/12/01 02:28 +0000, Jonathan Gilbert via GitGitGadget wrote:
+> From: Jonathan Gilbert <JonathanG@iQmetrix.com>
+> 
+> Update the status bar to track updates as individual "operations" that
+> can overlap. Update all call sites to interact with the new status bar
+> mechanism. Update initialization to explicitly clear status text,
+> since otherwise it may persist across future operations.
+> 
+> Signed-off-by: Jonathan Gilbert <JonathanG@iQmetrix.com>
+> ---
 
-On Mon, Feb 24, 2020 at 5:24 AM Priyansh Gupta
-<guptapriyansh1907@gmail.com> wrote:
->
-> Hi Christian,
-> I am Priyansh Gupta. I want to contribute to Git organization in this GSOC'2020.
-> I want to proceed with the second project i.e "Convert Scripts to Builtins" but I don't know how to proceed. I read something like a micro project for participation is compulsory, Can you please help me in proceeding further
+Hi Jonathan,
 
-Please take a look at:
+It appears that this change has caused a regression when using git-gui
+blame <file> -> right click on a source line -> "Show History Context"
 
-https://git.github.io/SoC-2020-Microprojects/
-https://git.github.io/SoC-2020-Ideas/
+There is an "Application Error" window that appears with the following
+details:
+can't read "::main_status": no such variable
+can't read "::main_status": no such variable
+    while executing
+"$::main_status  start  [mc "Starting %s... please wait..." "gitk"]"
+    (procedure "do_gitk" line 55)
+    invoked from within
+"do_gitk $cmdline"
+    (procedure "blame::_gitkcommit" line 47)
+    invoked from within
+"blame::_gitkcommit ::blame::__o1::__d"
+    invoked from within
+".ctxm invoke active"
+    ("uplevel" body line 1)
+    invoked from within
+"uplevel #0 [list $w invoke active]"
+    (procedure "tk::MenuInvoke" line 50)
+    invoked from within
+"tk::MenuInvoke .ctxm 1"
+    (command bound to event)
 
-Best,
-Christian.
+The rest of the functionality seems unaffected but it's pretty annoying
+to have to dismiss this message each time.
+
+Can you please look into it?
