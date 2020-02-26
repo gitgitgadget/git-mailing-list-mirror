@@ -2,188 +2,115 @@ Return-Path: <SRS0=QAHC=4O=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 97E7BC4BA18
-	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 17:50:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6491DC4BA1E
+	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 17:54:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 76D9F20801
-	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 17:50:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 30E2E206E6
+	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 17:54:43 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="WVFREmiX"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726971AbgBZRuW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Feb 2020 12:50:22 -0500
-Received: from hermes.apache.org ([207.244.88.153]:21842 "HELO mail.apache.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726787AbgBZRuW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Feb 2020 12:50:22 -0500
-Received: (qmail 42524 invoked by uid 99); 26 Feb 2020 17:50:21 -0000
-Received: from Unknown (HELO mailrelay1-lw-us.apache.org) (10.10.3.159)
-    by apache.org (qpsmtpd/0.29) with ESMTP; Wed, 26 Feb 2020 17:50:21 +0000
-Received: from localhost.localdomain (unknown [212.12.60.67])
-        by mailrelay1-lw-us.apache.org (ASF Mail Server at mailrelay1-lw-us.apache.org) with ESMTPA id 7E6272234;
-        Wed, 26 Feb 2020 17:50:20 +0000 (UTC)
-From:   benno@bmevers.de
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, spearce@spearce.org,
-        Benno Evers <benno@bmevers.de>
-Subject: [PATCH v2] describe: dont abort too early when searching tags
-Date:   Wed, 26 Feb 2020 18:48:53 +0100
-Message-Id: <20200226174853.27404-1-benno@bmevers.de>
-X-Mailer: git-send-email 2.20.1
+        id S1727107AbgBZRym (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Feb 2020 12:54:42 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:51560 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726979AbgBZRym (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Feb 2020 12:54:42 -0500
+Received: by mail-wm1-f67.google.com with SMTP id t23so219500wmi.1
+        for <git@vger.kernel.org>; Wed, 26 Feb 2020 09:54:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=sqADA8o5cBfFIyqfoGStHPDJqBJpkAGPPbsyfHqmeFE=;
+        b=WVFREmiXi5WGVaLXCDkjf8iuTWztC43ey8jKQKTQsmY/wCApoBPdHgPEuzp2zsQzD4
+         ZfRvlbTUSvrAJk68Qm0zadKujPEyv3WfoBpSqmXA/6inwXOWaF1mA4N24YVzatO/IWgV
+         HqCefbvA4bT7VizEMFR/Hm6vR1XJl7t3b2t2IKwVwbGPugoHOioqBvZQ9KvI6BIDQBPt
+         DbfzV3o89/ytwUnq3i7/Lus7NZoSw+jCtvDYxuzVtYnHrbWg2+MhdVm6Z7R0TJ2a8RZB
+         iMUVa9tU6Iz2BeNJTHNHlZkswqmf5ZD0WP+c6SN8FA4PObEMOvPsVKqNad8VAFjHuAs4
+         1vhA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=sqADA8o5cBfFIyqfoGStHPDJqBJpkAGPPbsyfHqmeFE=;
+        b=T1JOplQJUjN88TBe6a+wSDO6TVwVLSPhaQidokIL8ETXUAAy2az/Aa5x58HdFqs9Hx
+         YodsbMB+0ZNeze7ZVIsTB0ehsqQlTLL9FmhTI9QJOH2oCBQCdkzyjewTwYt+y90oHNbR
+         ER+7DQfGRwa6cXX+Va4VWlkZryPhyj2D3fXFH70gFurzeMfotF/uCZSXJQrG5mjXsPzb
+         qt1aigGECo3TRx+GmyM3+q3q3v/0fdtXATj3d9dx9w4u1fcpz2ynsxusQndiJZLbZIGr
+         c27H+lD0meSh1SOO9Fie0uOpJCZUzXiIMyZDNxGQcAJ+TFf7pR7ZWCfN5OTqvVNGad43
+         NRhA==
+X-Gm-Message-State: APjAAAUVzkSHpPsD5WoiIst+swrKyX5MhTakZNnZniHpVHRj4zXvQsnV
+        iDekG+fmh01q0BqgVgMkf2v+bbIGdoqgNWuAI7KUSw==
+X-Google-Smtp-Source: APXvYqxHLXMVqE0kqFFzxTt/zNyoEhP62pRoNBjwTDqGhYKo2Kgh9qTbeaInRTKLTeRv/Vv/dDwDO2hYpZ8YUiBt+uM=
+X-Received: by 2002:a05:600c:145:: with SMTP id w5mr18910wmm.157.1582739679618;
+ Wed, 26 Feb 2020 09:54:39 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <pull.539.v5.git.1581344060.gitgitgadget@gmail.com>
+ <pull.539.v6.git.1582015420.gitgitgadget@gmail.com> <20200221064026.GA11129@google.com>
+ <CAFQ2z_NQn9O3kFmHk8Cr31FY66ToU4bUdE=asHUfN++zBG+SPw@mail.gmail.com> <20200226174117.GA103006@google.com>
+In-Reply-To: <20200226174117.GA103006@google.com>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Wed, 26 Feb 2020 18:54:28 +0100
+Message-ID: <CAFQ2z_P036Dr+m96k7KzT0korrBXCtj7HpyZV3TNEWbz6OG0Rg@mail.gmail.com>
+Subject: Re: [PATCH v6 0/5] Reftable support git-core
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git <git@vger.kernel.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        Josh Steadmon <steadmon@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Benno Evers <benno@bmevers.de>
+On Wed, Feb 26, 2020 at 6:41 PM Jonathan Nieder <jrnieder@gmail.com> wrote:
+>
+> (+Josh Steadmon, fuzz testing specialist)
+> Han-Wen Nienhuys wrote:
+>
+> > You have convinced me that we should go with the 4-byte identifier.
+> >
+> > How about setting version=3D2 and extending the header by 4 bytes (whic=
+h hold
+> > the 4-byte identifier). The footer would also be increased in size.
+>
+> SGTM.
+>
+> > BTW, could we document that a reftable consisting of just a footer is a
+> > valid table too?
+>
+> Yes, SGTM as well.
+>
+> Do you have sample reftables collected somewhere that you use for
+> testing?  Asking since that would help us set up some fuzz tests. :)
 
-When searching the commit graph for tag candidates, `git-describe`
-will stop as soon as there is only one active branch left and
-it already found an annotated tag as a candidate.
+No, but the library is standalone, so writing fuzz tests should be
+easy. The C code is essentially a copy of the Go code, so you could
+start fuzzing there. I believe it is really easy to setup fuzzing in
+Go, and we could generate a corpus starting there.
 
-This works well as long as all branches eventually connect back
-to a common root, but if the tags are found across branches
-with no common ancestor
+On a related note,  I should write interoperation tests that pass
+tables back and forth between, JGit, C and Go, but I'm currently
+focusing on getting the code ready for git-core.
 
-                  B
-                  o----.
-                        \
-          o-----o---o----x
-          A
+--=20
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
 
-it can happen that the search on one branch terminates prematurely
-because a tag was found on another, independent branch. This scenario
-isn't quite as obscure as it sounds, since cloning with a limited
-depth often introduces many independent "dead ends" into the commit
-graph.
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
 
-The help text of `git-describe` states pretty clearly that when
-describing a commit D, the number appended to the emitted tag X should
-correspond to the number of commits found by `git log X..D`.
+Registergericht und -nummer: Hamburg, HRB 86891
 
-Thus, this commit modifies the stopping condition to only abort
-the search when only one branch is left to search *and* all current
-best candidates are descendants from that branch.
+Sitz der Gesellschaft: Hamburg
 
-For repositories with a single root, this condition is always
-true: When the search is reduced to a single active branch, the
-current commit must be an ancestor of *all* tag candidates. This
-means that in the common case, this change will have no negative
-performance impact since the same number of commits as before will
-be traversed.
-
-Signed-off-by: Benno Evers <benno@bmevers.de>
----
-Changes since v1:
-
-  * Added a paragraph that discusses performance impact to the commit
-    message.
-
-
- builtin/describe.c  | 22 +++++++++++++++----
- t/t6120-describe.sh | 53 ++++++++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 70 insertions(+), 5 deletions(-)
-
-diff --git a/builtin/describe.c b/builtin/describe.c
-index b6df81d8d0..420f4c6401 100644
---- a/builtin/describe.c
-+++ b/builtin/describe.c
-@@ -376,11 +376,25 @@ static void describe_commit(struct object_id *oid, struct strbuf *dst)
- 			if (!(c->object.flags & t->flag_within))
- 				t->depth++;
- 		}
-+		/* Stop if last remaining path already covered by best candidate(s) */
- 		if (annotated_cnt && !list) {
--			if (debug)
--				fprintf(stderr, _("finished search at %s\n"),
--					oid_to_hex(&c->object.oid));
--			break;
-+			int best_depth = INT_MAX;
-+			unsigned best_within = 0;
-+			for (cur_match = 0; cur_match < match_cnt; cur_match++) {
-+				struct possible_tag *t = &all_matches[cur_match];
-+				if (t->depth < best_depth) {
-+					best_depth = t->depth;
-+					best_within = t->flag_within;
-+				} else if (t->depth == best_depth) {
-+					best_within |= t->flag_within;
-+				}
-+			}
-+			if ((c->object.flags & best_within) == best_within) {
-+				if (debug)
-+					fprintf(stderr, _("finished search at %s\n"),
-+						oid_to_hex(&c->object.oid));
-+				break;
-+			}
- 		}
- 		while (parents) {
- 			struct commit *p = parents->item;
-diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
-index 09c50f3f04..d8cc08258e 100755
---- a/t/t6120-describe.sh
-+++ b/t/t6120-describe.sh
-@@ -479,4 +479,55 @@ test_expect_success 'name-rev covers all conditions while looking at parents' '
- 	)
- '
- 
--test_done
-+#               B
-+#               o
-+#                \
-+#  o-----o---o----x
-+#        A
-+#
-+test_expect_success 'describe commits with disjoint bases' '
-+	git init disjoint1 &&
-+	(
-+		cd disjoint1 &&
-+
-+		echo o >> file && git add file && git commit -m o &&
-+		echo A >> file && git add file && git commit -m A &&
-+		git tag A -a -m A &&
-+		echo o >> file && git add file && git commit -m o &&
-+
-+		git checkout --orphan branch && rm file &&
-+		echo B > file2 && git add file2 && git commit -m B &&
-+		git tag B -a -m B &&
-+		git merge --no-ff --allow-unrelated-histories master -m x &&
-+
-+		check_describe "A-3-*" HEAD
-+	)
-+'
-+
-+#           B
-+#   o---o---o------------.
-+#                         \
-+#                  o---o---x
-+#                  A
-+#
-+test_expect_success 'describe commits with disjoint bases 2' '
-+	git init disjoint2 &&
-+	(
-+		cd disjoint2 &&
-+
-+		echo A >> file && git add file && GIT_COMMITTER_DATE="2020-01-01 18:00" git commit -m A &&
-+		git tag A -a -m A &&
-+		echo o >> file && git add file && GIT_COMMITTER_DATE="2020-01-01 18:01" git commit -m o &&
-+
-+		git checkout --orphan branch &&
-+		echo o >> file2 && git add file2 && GIT_COMMITTER_DATE="2020-01-01 15:00" git commit -m o &&
-+		echo o >> file2 && git add file2 && GIT_COMMITTER_DATE="2020-01-01 15:01" git commit -m o &&
-+		echo B >> file2 && git add file2 && GIT_COMMITTER_DATE="2020-01-01 15:02" git commit -m B &&
-+		git tag B -a -m B &&
-+		git merge --no-ff --allow-unrelated-histories master -m x &&
-+
-+		check_describe "B-3-*" HEAD
-+	)
-+'
-+
-+test_done
-\ No newline at end of file
--- 
-2.20.1
-
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
