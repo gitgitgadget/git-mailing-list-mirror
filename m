@@ -2,62 +2,58 @@ Return-Path: <SRS0=QAHC=4O=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B9A45C4BA09
-	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 02:23:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D84D5C4BA06
+	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 02:39:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7BC222082F
-	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 02:23:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A9E1924670
+	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 02:39:16 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="MzXZKvdA"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="mkbWZvTq"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729501AbgBZCXi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Feb 2020 21:23:38 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:41520 "EHLO
+        id S1729702AbgBZCjP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Feb 2020 21:39:15 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:41528 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729395AbgBZCXi (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 25 Feb 2020 21:23:38 -0500
+        by vger.kernel.org with ESMTP id S1727880AbgBZCjP (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 25 Feb 2020 21:39:15 -0500
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id D630860791;
-        Wed, 26 Feb 2020 02:23:36 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id A51BF60791;
+        Wed, 26 Feb 2020 02:39:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1582683817;
-        bh=RMTeWjrH7kFuXMpKPA3N+f6FjT7ol5DGOzaoF3azVjw=;
+        s=default; t=1582684753;
+        bh=r8b3OSIFe2R2dgNzbOKb9GTm6JV6ZL7ERGX91q289Cw=;
         h=Date:From:To:Cc:Subject:References:Content-Type:
          Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
          Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
          Content-Type:Content-Disposition;
-        b=MzXZKvdAkmgoboZpCd63AmjovhI2ZvPlNiSlu6THURxsSiNq3CBkPay/P1gOrlkam
-         RbBmCdrwQNHK2CTh1umnRJ84naW81cmORM73bDc839NwYsJJ0QfV8w831g9HWwfT/y
-         Dh/KTKcDUnoV0zxBxCPB9mJeXugOkCL0Mkbni6eIMoHPtX5Q1EWhXZ7a2w9zssKrgb
-         DYiMZtzx0WYDkzG0qIf4syaSBckA2e2+f6b1ij0xV7PJ0sDTiiZeZJUwGSClwvXKgh
-         pi0liABvZ8BHRYumbn+PjlS50c58NqHrKSIUcfYOSSl4eRU0fdAS+uhezRPe/H8iX3
-         JwTtM8qoc0HvHPnxxFzBk6MY8QI2watYSD6zBQivBk/wXMzOFqdLotkvQLNrP99mbu
-         Un37i37EUSNtaNKv0s6fL/0hbqZQmfJ4JjnplzyXFIYL3dPvBrqfHiMXvaqsrs37jI
-         XIYD4ls2UbUg3nMoGRqPHPSRDLKEx7bdIGJqatZ0iu0B8dNs4J2
-Date:   Wed, 26 Feb 2020 02:23:32 +0000
+        b=mkbWZvTqChrYqw1UwYJk1B5TyJR5+YaDqlcC1N6zKR/z1mmO29uIm7jBmoGxkVwyO
+         ltUKLiPuwlXyoUtQVW8Y3WSHnMdKXj8Xj7ziZAQfbTMwzm2hW6iaDXXTJ9xJMl4zcS
+         diRG6C8JMbFRHVKKP04V5mVpW3s4cU1Zi2soyZckdRY4VLX2dhaHGdzsZDyfVcRiQt
+         TsmzlwA/1FX+aNz7nEH5HvAtiWBFtizcHFfCCZ9cxOu38Hai2lcHGsZWmTnW8f+D2Z
+         /mzKGzZLpWOLh333KZtKMQdShNUSQ80xaHJR8nqlo/2dZjvFJYoBwIM/Ywl5NIYmw6
+         u/TIDNB//qcUpt0Gc5kS1coSgfISM1BTWnkEUKqxAbArzYkamknCjZVWmSEX02IdEu
+         k6uez3Dawl+itKTOFv9MedjWNPAhHgbN8wbTHvd852csr7JWwHEVx2yGWWn9XuRwhy
+         zGSPz3fsArFeYUtzN+UuRNn8tDYH6leZWgESXmkD8q6RhEvReXq
+Date:   Wed, 26 Feb 2020 02:39:09 +0000
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To:     Chris Jerdonek <chris.jerdonek@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 18/24] gpg-interface: improve interface for parsing
- tags
-Message-ID: <20200226022332.GB7911@camp.crustytoothpaste.net>
+Subject: Re: create reflog for reflog-less ref
+Message-ID: <20200226023909.GC7911@camp.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org
-References: <20200222201749.937983-1-sandals@crustytoothpaste.net>
- <20200222201749.937983-19-sandals@crustytoothpaste.net>
- <nycvar.QRO.7.76.6.2002251127320.46@tvgsbejvaqbjf.bet>
+        Chris Jerdonek <chris.jerdonek@gmail.com>, git@vger.kernel.org
+References: <CAOTb1wc2uMSyc7DMau2cWrWtk=_Z94+CCovORj1dGCrwgJhL=w@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="wq9mPyueHGvFACwf"
+        protocol="application/pgp-signature"; boundary="oJ71EGRlYNjSvfq7"
 Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.2002251127320.46@tvgsbejvaqbjf.bet>
+In-Reply-To: <CAOTb1wc2uMSyc7DMau2cWrWtk=_Z94+CCovORj1dGCrwgJhL=w@mail.gmail.com>
 X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
  5.4.0-4-amd64)
 Sender: git-owner@vger.kernel.org
@@ -66,63 +62,62 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---wq9mPyueHGvFACwf
+--oJ71EGRlYNjSvfq7
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On 2020-02-25 at 10:29:26, Johannes Schindelin wrote:
-> Hi brian,
+On 2020-02-26 at 01:07:35, Chris Jerdonek wrote:
+> Hi,
 >=20
-> On Sat, 22 Feb 2020, brian m. carlson wrote:
+> I wanted to ask on this list if there are any supported ways to create
+> a reflog for an existing ref that doesn't already have a reflog.
 >=20
-> > diff --git a/ref-filter.c b/ref-filter.c
-> > index 6867e33648..212f1165bb 100644
-> > --- a/ref-filter.c
-> > +++ b/ref-filter.c
-> > @@ -1161,7 +1161,13 @@ static void find_subpos(const char *buf,
-> >  			unsigned long *nonsiglen,
-> >  			const char **sig, unsigned long *siglen)
-> >  {
-> > +	struct strbuf payload =3D STRBUF_INIT;
-> > +	struct strbuf signature =3D STRBUF_INIT;
-> >  	const char *eol;
-> > +	const char *end =3D buf + strlen(buf);
-> > +	const char *sigstart;
-> > +
-> > +
-> >  	/* skip past header until we hit empty line */
-> >  	while (*buf && *buf !=3D '\n') {
-> >  		eol =3D strchrnul(buf, '\n');
-> > @@ -1174,13 +1180,14 @@ static void find_subpos(const char *buf,
-> >  		buf++;
-> >
-> >  	/* parse signature first; we might not even have a subject line */
-> > -	*sig =3D buf + parse_signature(buf, strlen(buf));
-> > -	*siglen =3D strlen(*sig);
-> > +	parse_signature(buf, end - buf, &payload, &signature);
-> > +	*sig =3D strbuf_detach(&signature, siglen);
+> This is more likely to come up for refs not in the standard set (i.e.
+> HEAD, branches and remote-tracking branches), since reflogs aren't
+> created by default for those refs.
 >=20
-> While I like the spirit of this patch, it makes the Windows build fail. I
-> put this on top of Git for Windows' `shears/pu` branch to fix it (maybe
-> you could adopt a variation of it?):
+> The only workaround I could think of is using git-update-ref to delete
+> the ref, and then immediately recreate it using the `--create-reflog`
+> option (if that option is needed), e.g.:
+>=20
+> $ git update-ref -d refs/foo/bar
+> $ git update-ref -m "my message" --create-reflog refs/foo/bar <SHA>
+>=20
+> This seems hacky though because it forces you to pass through a state
+> where the ref no longer exists. It also requires you to get the ref's
+> SHA first.
+>=20
+> This Stack Overflow reply from 2016 suggests the idea of using `git
+> update-ref -m MSG REF REF` to add lines to an existing reflog:
+> https://stackoverflow.com/questions/36770141/can-i-add-a-line-to-the-refl=
+og/36778898#36778898
+> But it doesn't seem to work to create a reflog (and only seemed to
+> work for me in limited circumstances otherwise, like adding to HEAD's
+> reflog). (I tried with version 2.25.0.)
 
-I'm happy to squash this in.  Sorry for the breakage, and thanks for
-catching this.
+There is the option core.logAllRefUpdates, which has the value "always"
+in more modern versions of Git.  The documentation says,
+
+  If [the option is set to always, then a missing reflog is
+  automatically created for any ref under refs/.
+
+Now, that assumes that you want reflogs for all your refs, but there's
+really not much downside to having a reflog and not using it.
 --=20
 brian m. carlson: Houston, Texas, US
 OpenPGP: https://keybase.io/bk2204
 
---wq9mPyueHGvFACwf
+--oJ71EGRlYNjSvfq7
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.2.19 (GNU/Linux)
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXlXWpAAKCRB8DEliiIei
-gV9bAQCy81xYlvaPWFgvoD58MuhMvYqjWiNIe+VglDECBDWymQEAthyyCwNleA59
-x0gEGuGiCDCxCVHi5ZgqOGQPZ6OTgAg=
-=zaMT
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXlXaTAAKCRB8DEliiIei
+gXuRAQDxLoJf4m1CMtEmLYiB6rw3XffV8ByekyC5CO9bwodCQQEA+qW+aVoWzBJ0
+tzCAELjm7tiWTG6x6Qo6WfaGuHkpbA4=
+=sX2i
 -----END PGP SIGNATURE-----
 
---wq9mPyueHGvFACwf--
+--oJ71EGRlYNjSvfq7--
