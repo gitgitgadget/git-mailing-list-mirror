@@ -7,198 +7,131 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 60BDFC4BA06
-	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 00:03:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C8F9C4BA06
+	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 00:37:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 29AC221D7E
-	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 00:03:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3A6F32072D
+	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 00:37:50 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h2Qi6Aab"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hphm5O0E"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729090AbgBZADp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Feb 2020 19:03:45 -0500
-Received: from mail-ot1-f51.google.com ([209.85.210.51]:32800 "EHLO
-        mail-ot1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727135AbgBZADo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Feb 2020 19:03:44 -0500
-Received: by mail-ot1-f51.google.com with SMTP id w6so1328871otk.0
-        for <git@vger.kernel.org>; Tue, 25 Feb 2020 16:03:43 -0800 (PST)
+        id S1729065AbgBZAht (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Feb 2020 19:37:49 -0500
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:46302 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728756AbgBZAht (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Feb 2020 19:37:49 -0500
+Received: by mail-ed1-f66.google.com with SMTP id p14so1529451edy.13
+        for <git@vger.kernel.org>; Tue, 25 Feb 2020 16:37:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc
-         :content-transfer-encoding;
-        bh=DwND3Fb976El/zMRZlKQLfaaLYC7IC9oTQtBIbg+pw0=;
-        b=h2Qi6AabjAT/s6w+YlEHhcpMQH2bATgYp3GM+3ZDQXIG37mhWZNGSyAjk4WgY7Uv+l
-         /ILknXRriS4GLLwxifWZhgU04uRmavP0QUqUDtXmlXcfSBtFA3wZsMzSZ+vzay4VFXsv
-         EYuQR9WQw9ENVp3p8edwZg5AtFz/OyUj2XMhqh/3dEFKCzoWBcdKmSWPUGBTxiVqog52
-         YpbGXZMFJ1BtY/E/yn4lKgWVwS98JEB67jkvh6MNxhhrf+0NPXpEL5YqOBjbz3OfXH6j
-         JZcYbZfJxVFUL7orjFuLa12Uiu0GBmDb+Zwkb9Docj77hE7j9lhMSw1uty3I9aS1BlM0
-         spOA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ued94sAe25jLviRr06fisUF/LLj418CpSDTIEWdKscQ=;
+        b=Hphm5O0EhOmvk+x3yHOaYL+GEh/rCqbs0dOcr+VqaTymj5IS92nLnAVcT1XDEd9BM3
+         Z7gQOtvfzawKr/9rGzpjTT4MTahD2pEbEoMS7EU1DKoxonrKpwddrEJh2O2h+AXslWPf
+         3YeCDuMA8dH/i/ntr9v2b81/V5v10z/ATFLehKyeQyXUu4oclSK5d2B3z2uO653wmqw2
+         m5ma3uBBctWI1QlFkwbg6qrwxJaCP8GbpPIYuYVWHKXz8MxyF8jG/SLAXKKtlF2NBU3n
+         DeFc/sotyvGqR1mkSeuGj3rdPhjXYD5xqGBWNvhUiiCdtS5ZYR9wECiXzciQmP4rY16W
+         ksvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
-         :content-transfer-encoding;
-        bh=DwND3Fb976El/zMRZlKQLfaaLYC7IC9oTQtBIbg+pw0=;
-        b=RoXcwZ2/R87645qAlzK8RSYFK/Ir/GgMZoIkMDzOrkb6uwK45Z8Rvk5yCHJHusmjpM
-         Gruibi7BQ672rnyQ+bXTXUbTxCxpi2sTrs/buww9aHMf5g2jTXCFqzbGnPJBTg0Dp1v5
-         g4SDt2kW3cfvUJStnIkcAaOBS3A45bQw20h/4iMsIQqtD7hQd8E0v+tneZbJFVP/rj/n
-         /fn1J/hjsAXnFj7zLXqE87uL3pFhYdHUyNK78474UkE4Uw8FfMkX14ihvrAPbdN4Ki6P
-         PNkm20kZ8m8cp4BcVbVccK2QOyfqccYCpc565L/NtD5/Qd8GRy7yQHn1SKgSCFGAXSLs
-         za+A==
-X-Gm-Message-State: APjAAAXmoo9NxKPBeC6wasQaBuelQhls0+UnQ8ZKapxrvA4nXU05bA0l
-        KqcPUmXFeOMZH7F5AKQnDDEl+F2WvALrc31Y/u7rMqVHHS8FNw==
-X-Google-Smtp-Source: APXvYqyCbTOSvZHqMQuNOmBvWcGuWCWtfDLsuQPvNoUxiQKz8Eg+R8f2jp4/cCNQP4iEZTAtwLj5RPRWOPP0jZoZWuo=
-X-Received: by 2002:a9d:7f11:: with SMTP id j17mr932345otq.281.1582675422867;
- Tue, 25 Feb 2020 16:03:42 -0800 (PST)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ued94sAe25jLviRr06fisUF/LLj418CpSDTIEWdKscQ=;
+        b=FSPNa5fuP3s9vh9bMm9fs8SFTmzxJd5xV/OLm1QvwIHQXA12IE87cxSVTrvMciJfLT
+         hCMbIWYZyWWF5v0KOe/V2gAVjbCO6fBUdLwdy71VwPzQuh+DG92rmYuHs5EbVoh9pXV2
+         A9owEKT6vBFI5UsH+iqqQO+9ueoP5B8+DvRizGMaOT6iWsWjf/6jCxskAaHt1Pl3OY+R
+         0JLHwzxSULZj69Ei3IJiwDs8d/yqs+KBEKmNikweeaGFoAUddp2HKDQIypIJkbqULtec
+         bM3RWSuIy1PLojwVgYCFcdmDCmyi6cv7BXUlIebbTqji0Zbbt93jeGNXcL0igxBFcmqu
+         2wEQ==
+X-Gm-Message-State: APjAAAXKsgEPy67kdvVoUbYOCJMgL+A/S2m4U7oSnQqEIxkkp712khZ4
+        2HhVrcRDnOPe9fvppLXb8ik4vWK+t7VKm9kGYl0=
+X-Google-Smtp-Source: APXvYqx8lxu7kTeUYKtk9w/+s4WxGpvhpZb0pYu/+XhpXoeww7WAGr7qR2hH7T8IXD2zrR2yFeudhCcdvrYRX7RTjSY=
+X-Received: by 2002:a50:8f66:: with SMTP id 93mr1525512edy.33.1582677467647;
+ Tue, 25 Feb 2020 16:37:47 -0800 (PST)
 MIME-Version: 1.0
-From:   Hariom verma <hariom18599@gmail.com>
-Date:   Wed, 26 Feb 2020 05:33:31 +0530
-Message-ID: <CA+CkUQ9Pnta8Ut9ZaeKLSPn_EyQwh=Wgm1eiSWirghgtcWZqoA@mail.gmail.com>
-Subject: [GSoC][RFC][PROPOSAL v1] Unify ref-filter formats with other --pretty formats
-To:     git <git@vger.kernel.org>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        johannes.schindelin@gmx.de,
-        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
-        peff@peff.net, Hariom Verma <hariom18599@gmail.com>
+References: <pull.548.v4.git.1582557199.gitgitgadget@gmail.com>
+ <pull.548.v5.git.1582628141.gitgitgadget@gmail.com> <b7f10d060a41c1ef3d25e4c07be3747c7902b997.1582628141.git.gitgitgadget@gmail.com>
+ <xmqqsgiymupf.fsf@gitster-ct.c.googlers.com> <CACg5j27SfWsj2t_z8zxOvjc6MSot2yMi1J+R4HJinFhHgTpveg@mail.gmail.com>
+ <xmqqy2sql405.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqy2sql405.fsf@gitster-ct.c.googlers.com>
+From:   Heba Waly <heba.waly@gmail.com>
+Date:   Wed, 26 Feb 2020 13:37:36 +1300
+Message-ID: <CACg5j25EdX2fPHpAq3TEhaJPiQg4dA52soOyCMm17wg_O-c4Ng@mail.gmail.com>
+Subject: Re: [PATCH v5 2/3] advice: revamp advise API
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Heba Waly via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Here is the initial version of my proposal. I would really love to
-have comments on it.
-Also, how should I manage the project timeline?
+On Wed, Feb 26, 2020 at 11:02 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Heba Waly <heba.waly@gmail.com> writes:
+>
+> > I wasn't very happy about having to keep the list of config keys in
+> > memory, but that was a good enough solution for now.
+>
+> If you force your programmers to specify the advice_type as a small
+> integer, and the setting is stored in the config as string keys,
+> somebody MUST have a table to convert from one to the other.  So I
+> am not sure if it is even sensible to feel unhappy about having to
+> have a list in the first place.  Are we looking for some kind of
+> miracles ;-)?
+>
 
-Project title says some past GSoC and Outreachy Interns had worked on this.
-I would also like to be redirected there. So I can learn from there
-work as well.
+The reason I had to add the list of keys wasn't the enums, but because
+it's needed by list_config_advices() which returns all the advice
+config variables names. This is used when the user runs `git help
+--config`.
+And as a result, I added the enum to utilize it in accessing the list
+and avoid hard coded strings in functions calls.
+
+> On the other hand, it does bother my sense of aesthetics a lot it
+> our code forces our programmers to give a small integer to us, only
+> so that we convert that integer to a string and use the string to
+> look up a value in a hashtable, every time the program wants a
+> lookup.  Performance-wise, that's not a huge downside.  It just rubs
+> my sense of code hygiene the wrong way.
+>
+> Especially when the primary way for our programmers to specify which
+> advice they are talking about is by passing an integer, and if we
+> need to have a table indexed by that integer in the program anyway.
+>
+> We could instead do something like:
+>
+>     /* advice.h */
+>     #ifndef _ADVICE_H_
+>     #define _ADVICE_H_ 1
+>     extern const char ADVICE_ADD_EMBEDDED_REPO[];
+>     extern const char ADVICE_AM_WORK_DIR[];
+>     ...
+>     #endif
+>
+>     /* advice.c */
+>     const char ADVICE_ADD_EMBEDDED_REPO[] = "advice.addEmbeddedRepo";
+>     const char ADVICE_ADD_AM_WORK_DIR[] = "advice.amWorkDir";
+>     ...
+>
+> and the callers can still do
+>
+>     advise_if_enabled(ADVICE_NESTED_TAG,
+>                       _(message_advice_nested_tag), tag, object_ref);
+>
+> with the benefit of compiler catching a silly typo, without having
+> to have any "enum-to-string" table while letting the config API
+> layer do any caching transparently.  As these calls will never be
+> placed in a performance critical codepath, that might be more
+> appropriate.
+>
+
+I'm not against this approach as well, but as I mentioned above, we
+need a list of keys to be returned by list_config_advices(), that's
+why defining the constant strings will not be sufficient in our case.
 
 Thanks,
-Hariom
-
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-View on Docs: https://docs.google.com/document/d/15GPvle6S0iNg430aJx-gMrXvs=
-gnzTlFNFhyP-K6Zmtw/edit?usp=3Dsharing
-
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-**Unify ref-filter formats with other --pretty formats**
-
-Name  :  Hariom Verma
-Major  :  Computer Science and Engineering
-Mobile no.  : <<mob_no>>
-Email  : <<email>>
-Time Zone  : IST (UTC +05:30)
-
-## About me
-I am a Computer Science undergraduate at Shri G S Institute of
-Technology & Science, Indore, India. I am passionate about software
-freedom and open source communities. I've been writing in C, C++,
-Python & Dart for almost 3 years, and contributed to some projects
-which can be seen on Github.
-
-I=E2=80=99m contributing to Git since Oct 2019 and would love to be a membe=
-r
-of such a versatile community.
-
-### Contact:
-IRC: harry-hov (on #git-devel@freenode)
-GitHub: harry-hov
-Linkedin: https://www.linkedin.com/in/harry-hov/
-
-## Me & Git
-My contributions have helped me understand the review and patch
-submission process in a batter way. Also, I now feel a bit more
-comfortable with Git=E2=80=99s codebase.
-
-Commit
-Status
--------------------
-receive.denyCurrentBranch: respect all worktrees[1]
-Status: next
-
-t5509: use a bare repository for test push target[2]
-Status: next
-
-get_main_worktree(): allow it to be called in the Git directory[3]
-Status: next
-
-git-compat-util.h: drop the `PRIuMAX` and other fallback definitions[4]
-Status: Merged to master
-
-builtin/blame.c: constants into bit shift format[5]
-Status: Merged to Master
-
-## Proposed Project
-
-### Abstract
-Git has an old problem of duplicated implementations of some logic.
-For example, Git had at least 4 different implementations to format
-command output for different commands. The foremost aim of this
-project is to simplify codebase by getting rid of duplication of a
-similar logic and, as a result, simplify adding new functionality.
-The current task is to reuse ref-filter formatting logic in pretty to
-minimize code duplication and to have one unified interface to extract
-all needed data from the object and to print it properly.
-
-### Plan
-As Thomas Gummerer suggested[6] I=E2=80=99ll start by first looking at what
-actually needed to be replaced (for example by studying the PRETTY
-FORMATS section in 'man git-log', what which verbs you can use in the
-ref-filter ('man git-for-each-ref') to achieve the same thing.
-Then I=E2=80=99ll research how one format is implemented in 'pretty.c', and
-see how a similar thing using the ref-filter is implemented in
-'ref-filter.c'.
-e.g. the "%(objectname:short) %(contents:subject)" (this is missing
-coloring, but just to get you the idea) is similar to
-'--pretty=3Doneline'.  Now one can try to find how 'oneline' is
-implemented in 'pretty.c', and could translate that to use the
-'ref-filter' API.
-
-### Potential Problem
-The biggest challenge is to maintain backward compatibility while
-using reuse ref-filter formatting logic in pretty. One can't just
-delete some commands, rewrite them and change their interface.
-Also, bugs could get introduced.
-
-## Availability
-My exams will end on 30 April. I might travel home after that. So, I
-can start actively writing code for this project after 3 May. My
-college resumes on 15 July. I can easily devote 45-50 hours a week
-until my college reopens and 35-40 hours per week after that. I'm also
-free on the weekends and I intend to complete most of the work before
-my college reopens. Other than this project, I have no commitments for
-this summer. I will also periodically post my status through blogs.
-
-## Post GSoC
-As I said, I would love to be a member of Git=E2=80=99s community. So, I
-intend to keep contributing even after the GSoC period ends.
-
-## Experience with Open Souce (Optional)
--> Organized many Git workshops for newcomers with HackSocIndore[7].
-HackSocIndore is a group of developers that organizes Hackathons,
-Workshops & Technical Events. I=E2=80=99m the core team member at HackSoc.
--> Mentor, Kharagpur Winter of Code (KWoC)[8]
-Kharagpur Winter of Code is a 5-week long online program for students
-who are new to Open Source Development.
-
-
-[1]:https://public-inbox.org/git/d21a590d6c23f231c54b731b737c363b83660f79.1=
-582484231.git.gitgitgadget@gmail.com/
-[2]:https://public-inbox.org/git/ae749310f067c43429741987cd9f47c1ae4ceb3f.1=
-582484231.git.gitgitgadget@gmail.com/
-[3]:https://public-inbox.org/git/8718facbc951614f19407afa6ca8d6110507483d.1=
-582484231.git.gitgitgadget@gmail.com/
-[4]:https://public-inbox.org/git/177deddcf83c2550c0db536a7a6942ba69a92fa5.1=
-574600963.git.gitgitgadget@gmail.com/
-[5]:https://public-inbox.org/git/838478a185322572ed4747eb484b678a8e2d7ac6.1=
-571334411.git.gitgitgadget@gmail.com/
-[6]:https://public-inbox.org/git/20190331184930.GV32487@hank.intra.tgummere=
-r.com/
-[7]:https://www.hacksoc.in
-[8]:https://kwoc.kossiitkgp.org
+Heba
