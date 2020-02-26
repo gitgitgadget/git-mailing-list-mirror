@@ -8,53 +8,53 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A121C4BA0E
-	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 10:16:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AA2F8C4BA10
+	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 10:16:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 50CDD24656
-	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 10:16:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 80CE2222C2
+	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 10:16:18 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tKk1EXHx"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mAmmZLVi"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727894AbgBZKQP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Feb 2020 05:16:15 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:55760 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727451AbgBZKQN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Feb 2020 05:16:13 -0500
-Received: by mail-wm1-f67.google.com with SMTP id q9so2299551wmj.5
-        for <git@vger.kernel.org>; Wed, 26 Feb 2020 02:16:12 -0800 (PST)
+        id S1727905AbgBZKQR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Feb 2020 05:16:17 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:39869 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727686AbgBZKQQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Feb 2020 05:16:16 -0500
+Received: by mail-wm1-f66.google.com with SMTP id c84so2369862wme.4
+        for <git@vger.kernel.org>; Wed, 26 Feb 2020 02:16:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Pm2riwuEDG2cRwskss3EXJBA8dK9c4i6zEALvYUar9E=;
-        b=tKk1EXHxewM68MRkqcq5fmCFLkNWmUQjyiruqmSmNez/tCsDKBR3gvFeegk/pI25pK
-         /p+F0nAt5PMbFjqcI+NfL133AzKGVML/sItDea2pz7F/4PUqFvJBSxD63M0jGjjIvmvF
-         h5tjddyMxwmoc86F6u79mRhNTB7Qm/i8SgRYwGDTadNFSyQDXOChzQA4TNUlGFBLPhfk
-         BK7hntKGhwNESaVfraguGuAu23sAMimY2SBkuWdbm45dQJ65kQrQrhW2XXnL1hple8GH
-         eSy0wsfHwP/ElV8gaIPQJr6R1XTceRsMhdk4h9ecLPFxTTx87FNRd+hmMe9w8XRAFsnv
-         9xog==
+        bh=CVB4seLHVfIiwJJD9XnKMYBGthqGVKE6zCwSyWAb6AU=;
+        b=mAmmZLVikO8hJmakaUQL54qO2Ye7UqAmty/VmtiKKHtq1Uj9tnNKjM9FvGtU18ETOs
+         IeUrsuyiHe7BLvQ6uI1RS3OhvfYE0bfo4/z1KW/nGVoKdk88MZfxt2LH1u7dhyYFMvS9
+         dWtiwR/jfrk+cgGe2DX4Yqv72W/NK23C4fQNhDWLkPMudAFxiwXTME4Tf3fsll2A2oHH
+         QRena32hAR6GKH98Z3ULvqub1S/+ORm5gLd+AXCVUxmfhLnz5qBqRtbzXoABB1UWAzAz
+         YGelN3/O3u5EMyV2tIvgSlPHYSMLc/sPhigRoson3fKCQEOfgQf1hBL4EtV6VE1XRBDI
+         +Qjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Pm2riwuEDG2cRwskss3EXJBA8dK9c4i6zEALvYUar9E=;
-        b=Li2NzdGfTDhNSpNPJ6I47cR1yrvFqx2+p1vHTagS9ewZOXsOYHEKMW9mlet4kOyiRj
-         XBusiPseilaXY9SXbMk+g5ZOBJBgFk270QZ06QbgW25vDBsTb0RSrwmdgQUZXQUulH8h
-         5Cz33oqxjU+CFFstPtrrEthAo6+i+f6YQ1g2ypATBzNssD9qcGW9F1VANgtfXCbCgCNr
-         6d6xToH3tsX10K6Rvd5uWcPiKF9ijdG2vjE/5L/2MNiogUUjUyXNzQDAyPZ6Kb6bijeh
-         F4RbEZcgRIE2CFVS27cAp1xVpmSgaQdZGXkSuTHutyur4xYdhpi4oNMNDRnUXCUitOt0
-         0Deg==
-X-Gm-Message-State: APjAAAXJMy0IOiJQpen1eXLgAcpYIWMTGU3TgjTKDcIoC3Tbx5OcQbb+
-        LFfXpQshCa+bsD4IBsn0V/+dwU81
-X-Google-Smtp-Source: APXvYqw5o3SRXkBJaDewm+hQCvzjmrTjPaRbueiu2+MzjEpVz89qwgoiYdeM2oLU6wL54lUNLm694w==
-X-Received: by 2002:a1c:1f51:: with SMTP id f78mr4668445wmf.60.1582712170871;
-        Wed, 26 Feb 2020 02:16:10 -0800 (PST)
+        bh=CVB4seLHVfIiwJJD9XnKMYBGthqGVKE6zCwSyWAb6AU=;
+        b=KJ8juQ8E76IrFvYD0Y82nExIBi2Bep/RJPvTqEGPMLPeBbbljBsXr2fzIjSg/9GKgN
+         gdL4aOuhwCDgXW6JYfVkwn3PDCMc7c2kRxIx2Drmx9MfH7pXyilD/VecvYJ+Pz93XOey
+         wCRUIiN5K7/9Bu7RjhjEPBz8LyH3er9lZrCA/OqtLiZIirrSgLYYXKHRr7znaQIge7mm
+         PsRZArA1V4JA9C4F9kMtkhVWKRhGk+YU9JlN7j0YINTOtODgQzobWI8kRQTUuBoz7v4b
+         9kY7vrxPwEvcYWVyF576IF5ffjqLTrVDANSYv1WByFcWB7tXLtjsthbRXgiu+Zgvycqd
+         wIeQ==
+X-Gm-Message-State: APjAAAV8tb9YqK7AyVrJVTT9pLzYYc2Iq4CELbMmBaIoQX8+wXN6NalR
+        ZXzqYTsg5xmpXINlThfpq7AAjViY
+X-Google-Smtp-Source: APXvYqyltwQV2tRDGA9BMVopA2O9lGka4KSh1PVMhzxu9H/YFAGmmfmfOzWhQk63LXGGj8MBHKhFiw==
+X-Received: by 2002:a1c:67c3:: with SMTP id b186mr4665946wmc.36.1582712172548;
+        Wed, 26 Feb 2020 02:16:12 -0800 (PST)
 Received: from localhost.localdomain ([139.47.115.4])
-        by smtp.gmail.com with ESMTPSA id t3sm2577081wrx.38.2020.02.26.02.16.09
+        by smtp.gmail.com with ESMTPSA id t3sm2577081wrx.38.2020.02.26.02.16.11
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 26 Feb 2020 02:16:10 -0800 (PST)
+        Wed, 26 Feb 2020 02:16:11 -0800 (PST)
 From:   Miriam Rubio <mirucam@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Pranit Bauva <pranit.bauva@gmail.com>,
@@ -62,9 +62,9 @@ Cc:     Pranit Bauva <pranit.bauva@gmail.com>,
         Christian Couder <chriscool@tuxfamily.org>,
         Tanushree Tumane <tanushreetumane@gmail.com>,
         Miriam Rubio <mirucam@gmail.com>
-Subject: [PATCH 04/10] bisect--helper: retire `--bisect-clean-state` subcommand
-Date:   Wed, 26 Feb 2020 11:14:23 +0100
-Message-Id: <20200226101429.81327-5-mirucam@gmail.com>
+Subject: [PATCH 05/10] bisect--helper: retire `--next-all` subcommand
+Date:   Wed, 26 Feb 2020 11:14:24 +0100
+Message-Id: <20200226101429.81327-6-mirucam@gmail.com>
 X-Mailer: git-send-email 2.25.0
 In-Reply-To: <20200226101429.81327-1-mirucam@gmail.com>
 References: <20200226101429.81327-1-mirucam@gmail.com>
@@ -77,10 +77,9 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Pranit Bauva <pranit.bauva@gmail.com>
 
-The `--bisect-clean-state` subcommand is no longer used from the
-git-bisect.sh shell script. Instead the function
-`bisect_clean_state()` is directly called from the C
-implementation.
+The `--next-all` subcommand is no longer used from the git-bisect.sh
+shell script. Instead the function `bisect_next_all()` is called from
+the C implementation of `bisect_next()`.
 
 Mentored-by: Lars Schneider <larsxschneider@gmail.com>
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
@@ -88,49 +87,50 @@ Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
 Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
 Signed-off-by: Miriam Rubio <mirucam@gmail.com>
 ---
- builtin/bisect--helper.c | 8 --------
- 1 file changed, 8 deletions(-)
+ builtin/bisect--helper.c | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
 diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index e75e7a0837..1792751179 100644
+index 1792751179..c3bb936a40 100644
 --- a/builtin/bisect--helper.c
 +++ b/builtin/bisect--helper.c
-@@ -22,7 +22,6 @@ static GIT_PATH_FUNC(git_path_bisect_names, "BISECT_NAMES")
+@@ -20,7 +20,6 @@ static GIT_PATH_FUNC(git_path_head_name, "head-name")
+ static GIT_PATH_FUNC(git_path_bisect_names, "BISECT_NAMES")
+ 
  static const char * const git_bisect_helper_usage[] = {
- 	N_("git bisect--helper --next-all [--no-checkout]"),
+-	N_("git bisect--helper --next-all [--no-checkout]"),
  	N_("git bisect--helper --write-terms <bad_term> <good_term>"),
--	N_("git bisect--helper --bisect-clean-state"),
  	N_("git bisect--helper --bisect-reset [<commit>]"),
  	N_("git bisect--helper --bisect-write [--no-log] <state> <revision> <good_term> <bad_term>"),
- 	N_("git bisect--helper --bisect-check-and-set-terms <command> <good_term> <bad_term>"),
-@@ -810,7 +809,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+@@ -807,8 +806,7 @@ static enum bisect_error bisect_start(struct bisect_terms *terms, int no_checkou
+ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ {
  	enum {
- 		NEXT_ALL = 1,
- 		WRITE_TERMS,
--		BISECT_CLEAN_STATE,
+-		NEXT_ALL = 1,
+-		WRITE_TERMS,
++		WRITE_TERMS = 1,
  		CHECK_EXPECTED_REVS,
  		BISECT_RESET,
  		BISECT_WRITE,
-@@ -827,8 +825,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 			 N_("perform 'git bisect next'"), NEXT_ALL),
+@@ -821,8 +819,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 	} cmdmode = 0;
+ 	int no_checkout = 0, res = 0, nolog = 0;
+ 	struct option options[] = {
+-		OPT_CMDMODE(0, "next-all", &cmdmode,
+-			 N_("perform 'git bisect next'"), NEXT_ALL),
  		OPT_CMDMODE(0, "write-terms", &cmdmode,
  			 N_("write the terms to .git/BISECT_TERMS"), WRITE_TERMS),
--		OPT_CMDMODE(0, "bisect-clean-state", &cmdmode,
--			 N_("cleanup the bisection state"), BISECT_CLEAN_STATE),
  		OPT_CMDMODE(0, "check-expected-revs", &cmdmode,
- 			 N_("check for expected revs"), CHECK_EXPECTED_REVS),
- 		OPT_CMDMODE(0, "bisect-reset", &cmdmode,
-@@ -870,10 +866,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+@@ -859,9 +855,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 		usage_with_options(git_bisect_helper_usage, options);
+ 
+ 	switch (cmdmode) {
+-	case NEXT_ALL:
+-		res = bisect_next_all(the_repository, prefix, no_checkout);
+-		break;
+ 	case WRITE_TERMS:
  		if (argc != 2)
  			return error(_("--write-terms requires two arguments"));
- 		return write_terms(argv[0], argv[1]);
--	case BISECT_CLEAN_STATE:
--		if (argc != 0)
--			return error(_("--bisect-clean-state requires no arguments"));
--		return bisect_clean_state();
- 	case CHECK_EXPECTED_REVS:
- 		check_expected_revs(argv, argc);
- 		return 0;
 -- 
 2.25.0
 
