@@ -2,116 +2,83 @@ Return-Path: <SRS0=QAHC=4O=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A495EC4BA13
-	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 16:50:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B58EC4BA1D
+	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 16:59:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6193B2467D
-	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 16:50:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C878021556
+	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 16:59:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="QU8XXyad"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i7tsgUjw"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727503AbgBZQt4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Feb 2020 11:49:56 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:57384 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726980AbgBZQt4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Feb 2020 11:49:56 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 50412B7976;
-        Wed, 26 Feb 2020 11:49:54 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=nYPq1IxFLRniv29IBWB06KSA6UI=; b=QU8XXy
-        adAGcdvZqA2jlVAe2+1UKFpcQJqUDPHuVcFFi0icy7I8Ay5G2NlD6LhVJgLVAOhx
-        XNwXjeIN4QqLKnvwkqoUykPoB6w3hZyhFm5HjpMMmhfY90Z0BZv0Zge5ifnIugSF
-        LENbmAVoyxaBlRr+oy4E0AF6KjDybnFCzjcVE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=hX7BhSZZErN4Rky1yzAFHxpfEQUPH/XZ
-        cLn/Pv2+/Cj7yjB05TMaO4hyo7G5nMeBWidcDQDj7L+Ytb+w9tKLT5WQfMgj3KLJ
-        QmZWvYkjwhJUmR8qftaBEobYtm1YQe26hs3NsM8Ga8C2SecgHPykdWzm/DNOmfQX
-        f3zmnuteg50=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 488DEB7975;
-        Wed, 26 Feb 2020 11:49:54 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 6C619B7974;
-        Wed, 26 Feb 2020 11:49:51 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Subject: Re: [PATCH v8 09/15] bugreport: generate config safelist based on docs
-References: <20200220015858.181086-1-emilyshaffer@google.com>
-        <20200220015858.181086-10-emilyshaffer@google.com>
-        <nycvar.QRO.7.76.6.2002261649550.46@tvgsbejvaqbjf.bet>
-Date:   Wed, 26 Feb 2020 08:49:49 -0800
-In-Reply-To: <nycvar.QRO.7.76.6.2002261649550.46@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Wed, 26 Feb 2020 17:13:00 +0100 (CET)")
-Message-ID: <xmqqr1yhjnte.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1727941AbgBZQ7u (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Feb 2020 11:59:50 -0500
+Received: from mail-ot1-f44.google.com ([209.85.210.44]:44417 "EHLO
+        mail-ot1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727922AbgBZQ7t (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Feb 2020 11:59:49 -0500
+Received: by mail-ot1-f44.google.com with SMTP id h9so40140otj.11
+        for <git@vger.kernel.org>; Wed, 26 Feb 2020 08:59:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=bva5x2tvm8B9u5csZYW3oE3yHorr0diuN7n9tZLuQOs=;
+        b=i7tsgUjwL1ZAOFVzHPMo5Mfp8m6AaqmSfr+pnFFfRNDpeDOgU/5S2zlqLpyCYJcRE1
+         JKl6xhiittgNjUO7hodRPi5EaB7lYwbxNmnYz4S+mhSxr6Hu0u4zScesjjVcdFfdf5jp
+         +jfyV19CroKj+g9w8EmipNvaexdT+jrVhh4oOm5a98rGDWi3uBlstt21JNKdAXTyajG2
+         MGxZD8vqwCswB8nLsY+FKf74pi10pqc8INqJjb+irfllJVFMDQcBGBqotxXD+cx8pG0q
+         7Fxs/2t/bBSJ8sGSa9Fjs7375CmzCFbv0qagZLnPcDl2VKXDxbTUa9MLyI51s9Rhu85v
+         mSyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=bva5x2tvm8B9u5csZYW3oE3yHorr0diuN7n9tZLuQOs=;
+        b=snaI16bDysQxE3tN50r1OG+xRDCvM4RUcp7bEmASwPVZ+ujAc7KzlphIkaGSd3mokC
+         87SfoWUHTpiH/WdGlsuILYdcWuo2S9tCZVgSSI4QQlZxuv64+8hVwClFBtJawsZj7K5g
+         G6yQoUGlwBgD1yhemP2U18kcoQnwimUqDr2Ej26RE2Rvtab6HZxGwddhrP4KfFTqe1uh
+         sUujgGo1bfejuQCNMsqVHrnEyNvpLvB1R/zo55F6B4IosbiV5icYM7n5Rim8lKhCug+c
+         gXw5NDWO//u1jD5I3YoFlWXj4mb97U7+T4mNaorKzOisGI8LfcrzQac0CkgFnuFgkT78
+         SM7A==
+X-Gm-Message-State: APjAAAWBKdElaFQIUfYPEmfs8OCtJC+XDouiBlOhHNeADLV4+UW/Tpud
+        cHJ08SRZ/n//J5bUTYGyPG+57dYys9u0GNIgnnJtKep5rdGuVA==
+X-Google-Smtp-Source: APXvYqxD5Piz2xWAaayO0387uAcgmErt91lC3OhZ032p9SWkR/u2n6kMDMRpmYR/7wSGvkNRlCyX2VFGl9dGmKCmSX4=
+X-Received: by 2002:a9d:ecc:: with SMTP id 70mr3779590otj.182.1582736388518;
+ Wed, 26 Feb 2020 08:59:48 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 01BCE032-58B8-11EA-8F38-8D86F504CC47-77302942!pb-smtp21.pobox.com
+References: <CAHk66fszhTMWa14rpupbwDak=t4=svcHr=1CMBBSt8MQbEUqmQ@mail.gmail.com>
+In-Reply-To: <CAHk66fszhTMWa14rpupbwDak=t4=svcHr=1CMBBSt8MQbEUqmQ@mail.gmail.com>
+From:   Hariom verma <hariom18599@gmail.com>
+Date:   Wed, 26 Feb 2020 22:29:37 +0530
+Message-ID: <CA+CkUQ-QtJfRp_PcOUT37oOVnoBJFqaPPZk5JufZHBwWcSdAzw@mail.gmail.com>
+Subject: Re: [GSoC][RFC][PROPOSAL v1] Unify ref-filter formats with other
+ --pretty formats
+To:     Abhishek Kumar <abhishekkumar8222@gmail.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi Abhishek,
 
-> Subject: [PATCH] fixup??? bugreport: generate config safelist based on docs
+On Wed, Feb 26, 2020 at 1:00 PM Abhishek Kumar
+<abhishekkumar8222@gmail.com> wrote:
 >
-> The Visual Studio build is a special beast: as we cannot assume the
-> presence of any Unix tools on Windows, we have to commit all of the
-> files generated via shell scripts.
->
-> These two generated header files are no exception.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  config.mak.uname | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
->
-> diff --git a/config.mak.uname b/config.mak.uname
-> index 6d58d22cd5a..f1f36e43e47 100644
-> --- a/config.mak.uname
-> +++ b/config.mak.uname
-> @@ -788,8 +788,10 @@ vcxproj:
->  	git add -f git/LinkOrCopyBuiltins.targets git-remote-http/LinkOrCopyRemoteHttp.targets
->
->  	# Add command-list.h
-> -	$(MAKE) MSVC=1 SKIP_VCPKG=1 prefix=/mingw64 command-list.h
-> -	git add -f command-list.h
-> +	$(MAKE) MSVC=1 SKIP_VCPKG=1 prefix=/mingw64 command-list.h \
-> +		config-list.h bugreport-config-safelist.h
-> +	git add -f command-list.h \
-> +	 	config-list.h bugreport-config-safelist.h
+> Olga has worked on migrating the formatting logic from cat-file, log
+> and for-each-ref to ref-filter as a part of Outreachy 2017-18. Look up
+> her patches and proposal.
 
-Two important questions are 
+That is already on my to-do list. Still thanks though ;)
 
- - Is $(GENERATED_H) visible to you at this point in this makefile
-   snippet that is included from the main Makefile?
+> She, along with Christian and Thomas were the possible mentors for last year.
+> They are the best people to ask to learn from.
 
- - Currently the list of files listed on $(GENERATED_H) match what
-   you are building and adding here.  Is there a reason to believe
-   two would ever diverge?
-
-If the answers to the above are yes and no, there is an obvious
-futureproofing of the suggested patch, i.e.
-
--	$(MAKE) MSVC=1 SKIP_VCPKG=1 prefix=/mingw64 command-list.h
--	git add -f command-list.h
-+	$(MAKE) MSVC=1 SKIP_VCPKG=1 prefix=/mingw64 $(GENERATED_H)
-+	git add -f $(GENERATED_H)
-
+Regards
+Hariom
