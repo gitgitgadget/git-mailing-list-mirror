@@ -2,57 +2,93 @@ Return-Path: <SRS0=QAHC=4O=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B8E1C4BA24
-	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 20:11:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 67CAFC4BA21
+	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 20:13:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 16B8C21556
-	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 20:11:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3725624656
+	for <git@archiver.kernel.org>; Wed, 26 Feb 2020 20:13:40 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="d5WF2kD/"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727306AbgBZULX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Feb 2020 15:11:23 -0500
-Received: from cloud.peff.net ([104.130.231.41]:55406 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727240AbgBZULX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Feb 2020 15:11:23 -0500
-Received: (qmail 21458 invoked by uid 109); 26 Feb 2020 20:11:22 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 26 Feb 2020 20:11:22 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28902 invoked by uid 111); 26 Feb 2020 20:20:29 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 26 Feb 2020 15:20:29 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 26 Feb 2020 15:11:21 -0500
-From:   Jeff King <peff@peff.net>
-To:     Andrei Rybak <rybak.a.v@gmail.com>
-Cc:     Greg Anders <greg@gpanders.com>, git@vger.kernel.org
-Subject: Re: git-shell default working directory
-Message-ID: <20200226201121.GA287048@coredump.intra.peff.net>
-References: <20200226004830.oxd5562v7qqspnkk@Kepler>
- <241ea912-44b2-96fa-6f9a-3f04d5386b05@gmail.com>
+        id S1727465AbgBZUNj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Feb 2020 15:13:39 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:55527 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727444AbgBZUNj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Feb 2020 15:13:39 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2ED37AC118;
+        Wed, 26 Feb 2020 15:13:37 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Dj/n5relzG4iQJx4gST49uZeng8=; b=d5WF2k
+        D/yLKZlQ+Bp02Y2RzqpgAeNmqbZR1NpGRud36g0P/x+pTqZNbbQEpBjJI9F7AkQu
+        tYnLEaB5tNrID5wyYA7IdiRHeFufAqFEShC/CoD0uC8pqRJ3FcuBqtfOdG96OYkV
+        g61PqosWKVyo5OcnHteP3VpxDSXYo/SI7dp2g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=B3btGljYXakS35kh7wzMVB+aBMPhbFwn
+        1LVnNL67XpFDCLNs5/MQk+Zpo+JCFvs3K+ysw046VsMmfxzMwLwpHOAcojuFdCeR
+        m0AoL8WPiYVZr0VlYFnKIzg6qR0hVXHWv5T8yVRNCYWoLrG/5KQVkOXvD5lvqy+n
+        QoEokVNzu7c=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 251F3AC117;
+        Wed, 26 Feb 2020 15:13:37 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 3BC12AC116;
+        Wed, 26 Feb 2020 15:13:34 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     benno@bmevers.de
+Cc:     git@vger.kernel.org, spearce@spearce.org
+Subject: Re: [PATCH v2] describe: dont abort too early when searching tags
+References: <20200226174853.27404-1-benno@bmevers.de>
+Date:   Wed, 26 Feb 2020 12:13:31 -0800
+In-Reply-To: <20200226174853.27404-1-benno@bmevers.de> (benno@bmevers.de's
+        message of "Wed, 26 Feb 2020 18:48:53 +0100")
+Message-ID: <xmqqmu95hztg.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <241ea912-44b2-96fa-6f9a-3f04d5386b05@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 77183F54-58D4-11EA-A476-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 26, 2020 at 10:10:05AM +0100, Andrei Rybak wrote:
+benno@bmevers.de writes:
 
-> > I've not yet found a way to get this to work without keeping the
-> > repositories in the git user's home folder.
-> 
-> Disclaimer: I'm not at all familiar with git server setup. Would it make sense
-> to change git user home directory to be the required dedicated directory?
+> Thus, this commit modifies the stopping condition to only abort
+> the search when only one branch is left to search *and* all current
+> best candidates are descendants from that branch.
+>
+> For repositories with a single root, this condition is always
+> true: When the search is reduced to a single active branch, the
+> current commit must be an ancestor of *all* tag candidates. This
+> means that in the common case, this change will have no negative
+> performance impact since the same number of commits as before will
+> be traversed.
+>
+> Signed-off-by: Benno Evers <benno@bmevers.de>
+> ---
+> Changes since v1:
+>
+>   * Added a paragraph that discusses performance impact to the commit
+>     message.
+> ...
+> +'
+> +
+> +test_done
+> \ No newline at end of file
 
-Yeah, that's what I would suggest. git-shell does explicitly cd to
-$HOME, so any chdir you do before then will be lost (though you could
-perhaps just set $HOME in ~/.ssh/rc).
+I'll fix this while queuing.
 
--Peff
+Thanks for an update.
