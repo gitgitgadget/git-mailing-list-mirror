@@ -2,152 +2,143 @@ Return-Path: <SRS0=G+lC=4P=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C616C3F2C0
-	for <git@archiver.kernel.org>; Thu, 27 Feb 2020 21:04:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1386FC3F2C1
+	for <git@archiver.kernel.org>; Thu, 27 Feb 2020 21:15:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id C895024690
-	for <git@archiver.kernel.org>; Thu, 27 Feb 2020 21:04:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D84CD246A3
+	for <git@archiver.kernel.org>; Thu, 27 Feb 2020 21:15:49 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="FQcmR0m2"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="aQWSqLbf"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729710AbgB0VEs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Feb 2020 16:04:48 -0500
-Received: from mout.gmx.net ([212.227.17.21]:42505 "EHLO mout.gmx.net"
+        id S1729534AbgB0VPr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Feb 2020 16:15:47 -0500
+Received: from mout.gmx.net ([212.227.15.19]:49081 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726758AbgB0VEs (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Feb 2020 16:04:48 -0500
+        id S1726758AbgB0VPr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Feb 2020 16:15:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1582837475;
-        bh=ZiQGALxeLcwzaZotRWqtV8mw9Etd7/12dPK+MTVZ410=;
+        s=badeba3b8450; t=1582838137;
+        bh=yOBe2ZuS8ASyUUApDH4cM309s8Yhfp40V57krxXmNZg=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=FQcmR0m20Ob3vwu9YijRwztySBJX2LaA+jp6BXJqs55GwHzn+zPo2ECAsREOS9lF5
-         hmCAIXmbkSq1mK66cQr5DGLzD4G4NL/OEQ21KFzW24IRWM9NBfVLe+k5JdFVOMn4d6
-         bruac8dOVGIthwYvZBC/N3loCERSC9HF6foJkcQg=
+        b=aQWSqLbfS5ecfxk5hLZ9n7SR+5RG34E5KoixiPqYplucO5dxlgAas7HJ/y4iwey/w
+         Mjorbav/UBaxC+CorPltt8kgKCIi5Sw56LYJoWTpp4MBAusPG5zTplfDkUzHfQ5rj2
+         2XlwvGWowtEro8Z0qmHOqlKCbQNFI/8xFnSxo8qM=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.86]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mqs0X-1jlPud3TxB-00mrgq; Thu, 27
- Feb 2020 22:04:34 +0100
-Date:   Thu, 27 Feb 2020 22:04:34 +0100 (CET)
+Received: from [192.168.0.213] ([37.201.195.86]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mdeb5-1jh2Iz3zqD-00Zfs2; Thu, 27
+ Feb 2020 22:15:37 +0100
+Date:   Thu, 27 Feb 2020 22:15:36 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        lyle.ziegelmiller@gmail.com, git@vger.kernel.org
-Subject: Re: ! [remote rejected] master -> master (unpacker error)
-In-Reply-To: <20200218051956.GA1641086@coredump.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.2002272204150.46@tvgsbejvaqbjf.bet>
-References: <000001d5e4e3$91ffb0a0$b5ff11e0$@gmail.com> <20200216211604.GE6134@camp.crustytoothpaste.net> <20200218051956.GA1641086@coredump.intra.peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Alexandr Miloslavskiy via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
+        Erik Faye-Lund <kusmabite@gmail.com>,
+        Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v3] mingw: workaround for hangs when sending STDIN
+In-Reply-To: <xmqqy2szkfxr.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2002272215210.46@tvgsbejvaqbjf.bet>
+References: <pull.553.v2.git.1581956750001.gitgitgadget@gmail.com> <pull.553.v3.git.1581962486972.gitgitgadget@gmail.com> <xmqqy2szkfxr.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:zwnJiBXE8XZ3mSVhMYh178aC17ZcXIYzp5vxyrrYQjne2cAT1Ag
- 7QyypJaPA9CO8HPvQptFzbri7XzXoQ0YQraAlQUDp5nJkSFUNLmR0gX/5ChUm58UpFVC/nx
- YZmskXaeDOAFuYdC+/fO0yZojub5hjXCzSSvkYoWR4eGolnrPUtdKQMxwi1VGj6mpwV33d5
- 9oGniHxSr6L0ENhk4bL+g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:CI/hI7himho=:Pvu06maJjPXER7ju9E6c3l
- mhelf9rWmHWSDgubSha9vEUCW6ly3QOXTaGtCDewt9LPQtbTPMU8TwcX+lmh/k3jMSCb9HYph
- CZRo+D7BzQX1HvxVCesI6zJx/fvQ2IFC00VjJuibFZKnRfw1G2qkLihel9RBqr8Yklq7jacID
- btjwpR29V39Jp7BqWq8Imj2B13eGt0buI0jmu2/+RL853/JSTzrEK2C3u4wHs5mEhY5mZDlMN
- CenNUa5PfIL1VFxgTx22aq1teVXfGlE5RvioTfChyyEe8xFNdRIQ7P2kxu2B7pVnltBVW+e/z
- GdkMisuToYS3UReUNhRGl9k/iTHhZV+BVGqIvTqkGTJexLE0lN6nwKuq0BxgnqiHXIGAVxF8a
- mkiOb3phxo0A9aQCstprsETDE0EP3vAtLtJKlQ/dKuGVqJKgoA5UdQo7pW5QnD9KNpzhkXdfw
- W+wjoPnu+A+cCZGY7blLwFnfh5jCPR7YutZYLpBcqKn5fzDPgEW0D9RXvpN77rKMQ3z/OiVSn
- lsN23sV7wABrNmii1YtdxLRkm9ER64NObssKvr/3LN+mQmgLXEp8VqcqqG/6PopZALehyL7Bh
- G8Wtrv15t8R5OPRpaS5NAqsaI+zhePpBc5AnI14BZJVp420Q5ukvpFKP5sGFxMsiUs80fasKS
- 2mAwWnFb+fExFtm55CbVD2rN4JApijqBA73raF7gN87p9plOVJMbSxiCQ2i628ys2elz2k9Xw
- 59fI2IbnDPu7L8uiHSb/UZcDRui0yHvZpyYXsqo/+uaRoKjDZutrTZKKipLLmY0vSGRUw3JQN
- E1ktPgZ5ci6Rgdn5rePSNGbi5vg9AUIR3SqkccaaiuptHSmfJYZPhQHRluBOz48tO3JpouvxL
- ydQjmOfRuT1SRWVaGvEFqpix3hgnnsleymb+X4PDIjaEqwPg+g9s1l6oVK5+RyO6fp2/I6BH8
- BKM96eNRXpEBwF/IMx0FOp1yzEoAkEEuyg7XR+3wnY/L/3i6Tuc0L+l4ejrct3RVSJxGs9ui1
- SA6oPeWGoNtK2XUnaTbQOt9PK7WNev3U40UsIOR06a//TzktGAQ95Ht2dV8U0Rxj7vCHF8/ax
- 5vbS1r2DTCg1i2xXw/XS0WiR5wn50kKBR01AXCrv5ZbyO7YxYMV9iGrLltdKGfduBvYDyLiqF
- bzeVxtcIhljAKzUFn6SmbOw6g1JwSJs/YqPdwrJ8XAZwhSsET/qNFSB+T2QmmK2IscZRsN2EJ
- htUwQfPNn0byl1kWP
+X-Provags-ID: V03:K1:rAd/zDvYUJ04JLbmBCY5O5ERGhcbWDwfhg5bPHeoV+zlm40Bhrn
+ L7wBiVq4iDG6pe9xInux1MFmpDoK0avVFbK7c78oEbSk7ztVCtaOD/7uQRtaT/aiueGiKZE
+ sMXwTlW4J2wOOkuGY5w1GemWoPcp9c7AlnIRW8ws9gtoCiD3NW0KjluOH5B9R+b/da622Uq
+ Qtu75pwGuNNONwxyknNMw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:gUNvGgy1+VI=:g6Ac5jeWXHdOkCx0A/Q5gn
+ NauP8Ln1gRkx5lbUJFk1o2qyKFjkyg+0UXMH5A8Yf21FtHQNwLn7hUqegv+3MHe7D6kshFV9p
+ PTBvzS53Ms1rOZmZKxjerzVH9mWQMqt8rnWOdbVo/O5zgWNdtcmZ6bf1N7/ZR9O23icMLq5In
+ jSfsdaj/ZkzElVrZe7z9n6Xx97En7+lqq5ArYDbbLxWqMPu/UCz5ce1E7RY3q0sTGQ3nrF5RL
+ 2YOI1dlqcvW+SMPH03fH2MeFhCfoCLEyvKx9OzDSP9yBwITSrUj0ve+MAgxMQOpab2c2cghne
+ tS8g0HggLD7ld6q05CIZ3ylzBrafEQtxlqA5/zXT/8UPr19/Kv/HS/G2Ea78gOGk+o1I1cKKg
+ KNr8EM1fI1boXht+Vux+h85GCgBbItNm3Be8D20UHqUw1Ym6cG7RmMlJ8EV0RFE1A6lE3+pXQ
+ EiRIMEEV1ngrMoDoBDvTyoauYMV539RbcPrMMwoMm12+tVm8HdlM95uAi7kqBULiVpDf/MXUh
+ Osyhb/zPTC+axCeBEYhIHMH/ir+5QxmfM8S5pSidxHRy2UV4g7pl+LjjjcS1d5NSlMaSinxVU
+ YFD9EOpyieyt7Q/Iddk9Z8aPAscoS1TRl+Yxy//faoA3O+rjseBDPXaGsJDEpLsRQ5xT54/EB
+ rBvHiNInELrvCCJX04x2oRMaXxp9dplJE2Z+COf+3ymplb6HRm2FBmzeu9rgFewh+iI6c2R4o
+ TAXDGr+ZdkF7Q0T2TmVWAVwm/TIpcE40IJdSlb7IY+/givjcibsqUNDDk8ScxZr62RudZ24m1
+ fjqQODO8aSrFmyXc7P0+do0oTcAhkowZghfLfvd43kj/hoMNdLk7eaZOoA44avdtrxg5Sn3Ti
+ OoM3CjI91iuxgYp0lIBPqdYSsg/vlkILVLcR2+Ui7hsnOnhlEDTgXTUWRiUkF0zTl9BMrg3Nl
+ yT3kPAlNcOQMqBjOdPLrYZJA3Bh5pQXkVOUZ1Zd0VHcRMMJ//5UsNgDtkAp3U4qCuZku11oCk
+ sHasWUwAXUOvya8DAuX4zDdjuPfyGqrJflBJkTgdS0se3Mb9Bggour1y/wPoJAu5UcnqOEX8N
+ gK55B48LWdp4JxPw0MWH5EagRpwdnFqjXLG3QvFzi/4lgUENkZbzqtCRuAyPy/SPsquh+BRLK
+ Mgs19tyIptOAXx3MYXvQfPmgDpsNeVvbNYAAkS7ACB8iEtKpY5jd/sVnk7Rk/+hGvkH9utewm
+ yFzks2wmwQGdTBTAw
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+Hi Junio & Alex,
 
-On Tue, 18 Feb 2020, Jeff King wrote:
+On Tue, 18 Feb 2020, Junio C Hamano wrote:
 
-> On Sun, Feb 16, 2020 at 09:16:04PM +0000, brian m. carlson wrote:
+> "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
 >
-> > On 2020-02-16 at 16:10:12, lyle.ziegelmiller@gmail.com wrote:
-> > >
-> > > Any updates on this error I emailed a while back?
-> > >
-> > > lylez@LJZ-DELLPC ~/python
-> > > $ git push
-> > > Enumerating objects: 5, done.
-> > > Counting objects: 100% (5/5), done.
-> > > Delta compression using up to 4 threads
-> > > Compressing objects: 100% (2/2), done.
-> > > Writing objects: 100% (3/3), 279 bytes | 23.00 KiB/s, done.
-> > > Total 3 (delta 1), reused 0 (delta 0)
-> > > remote: fatal: not a git repository: '.'
+> > From: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 > >
-> > This error is telling you that Git doesn't think the remote location i=
-s
-> > a Git repository.  It could be because it really isn't one, or it coul=
-d
-> > be that the permissions are wrong.
-> >
-> > It could also be that the repository is mostly there but very slightly
-> > corrupt and therefore can't be detected as one.  For example, it could
-> > be missing its HEAD reference.
->
-> I think it's more subtle than that, though. If it wasn't a git
-> repository at all, then receive-pack would fail to start, and you'd get
-> something like this:
->
->   $ git push /foo/bar
->   fatal: '/foo/bar' does not appear to be a git repository
->   fatal: Could not read from remote repository.
->
->   Please make sure you have the correct access rights
->   and the repository exists.
->
-> The output above, plus the:
->
->   error: remote unpack failed: unpack-objects abnormal exit
->
-> makes it looks like receive-pack started just fine, but something about
-> the way it set up the environment made the child unpack-objects unhappy
-> when it tried to initialize its internal repo variables.
->
-> I have no clue what that "something" is, though. Windows and UNC paths
-> were mentioned elsewhere, which seem plausible. It mentions ".", so
-> presumably we've chdir()'d into the receiving repository and set
-> $GIT_DIR. Which I'd think rules out any weird interpretations of UNC
-> paths in $GIT_DIR.
+> > Explanation
+> > -----------
+> > The problem here is flawed `poll()` implementation. When it tries to
+> > see if pipe can be written without blocking, it eventually calls
+> > `NtQueryInformationFile()` and tests `WriteQuotaAvailable`. However,
+> > the meaning of quota was misunderstood. The value of quota is reduced
+> > when either some data was written to a pipe, *or* there is a pending
+> > read on the pipe. Therefore, if there is a pending read of size >=3D t=
+hen
 
-I thought that I remembered that it is not possible to `chdir()` into a
-UNC path. And it would seem that `cmd.exe` still cannot have a UNC path as
-a current directory.
+I usually try to refrain from grammar policing, but in this case, the typo
+"then" (instead of "than") threw me.
 
-But PowerShell can, and so does `git.exe`, apparently (I tested this using
-`wsl bash -lc "cd ~ && git.exe -C . version"`).
+Other than that, I think the patch is fine. At least it works as
+advertised in my hands.
 
-But I vividly remember that there used to be a problem even with
-`git.exe`, probably still is a problem on older Windows versions. That
-might be the problem here?
-
-Ciao,
+Thanks,
 Dscho
 
-> I'd expect that error if we did a chdir() internally to some other path
-> after setting up $GIT_DIR, but I don't know why we'd do that (I thought
-> at first that the quarantine code in receive-pack might be related, but
-> we don't ever chdir() into the quarantine dir; we just set up
-> GIT_OBJECT_DIRECTORY).
+> > the pipe's buffer size, poll() will think that pipe is not writable an=
+d
+> > will hang forever, usually that means deadlocking both pipe users.
+> > ...
+> > Chosen solution
+> > ---------------
+> > Make `poll()` always reply "writable" for write end of the pipe.
+> > Hopefully one day someone will find a way to implement it properly.
+> >
+> > Reproduction
+> > ------------
+> > printf "%8388608s" X >large_file.txt
+> > git stash push --include-untracked -- large_file.txt
+> >
+> > I have decided not to include this as test to avoid slowing down the
+> > test suite. I don't expect the specific problem to come back, and
+> > chances are that `git stash push` will be reworked to avoid sending th=
+e
+> > entire patch via STDIN.
+> >
+> > Signed-off-by: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.co=
+m>
+> > ---
 >
-> -Peff
+> Thanks for a detailed description.
+>
+> I notice that we saw no comments from Windows experts for these
+> three rounds.  Can somebody give an Ack (or nack) on it at least?
+>
+> I picked obvious "experts" in the output from
+>
+>     $ git shortlog --since=3D1.year --no-merges master compat/ming\* com=
+pat/win\*
+>
+> Thanks.
 >
