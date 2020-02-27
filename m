@@ -2,97 +2,93 @@ Return-Path: <SRS0=G+lC=4P=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E9CF7C4BA2D
-	for <git@archiver.kernel.org>; Thu, 27 Feb 2020 12:48:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CD45DC4BA24
+	for <git@archiver.kernel.org>; Thu, 27 Feb 2020 12:56:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 924B424695
-	for <git@archiver.kernel.org>; Thu, 27 Feb 2020 12:48:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9AB8124692
+	for <git@archiver.kernel.org>; Thu, 27 Feb 2020 12:56:33 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=pascalroeleven.nl header.i=@pascalroeleven.nl header.b="bIRzKynX"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="RkAGZlCs"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729067AbgB0Msa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Feb 2020 07:48:30 -0500
-Received: from web0081.zxcs.nl ([185.104.29.10]:56078 "EHLO web0081.zxcs.nl"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729033AbgB0Msa (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Feb 2020 07:48:30 -0500
-X-Greylist: delayed 3970 seconds by postgrey-1.27 at vger.kernel.org; Thu, 27 Feb 2020 07:48:30 EST
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=pascalroeleven.nl; s=x; h=Message-ID:Subject:To:From:Date:
-        Content-Transfer-Encoding:Content-Type:MIME-Version:Sender:Reply-To:Cc:
-        Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-        Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References:List-Id:
-        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-         bh=E2tdv6zpiJ5OUQFGxJOQ696gDZ5Czm8oAuEFiwBUS2c=; b=bIRzKynXrB8j8KyJ3vl+j1TRG
-        dw/FUtLuS7fhlU8aXoh5cVuhK2oXoO9S1GEVVJYQNpeupjhJlJdDH9WbA/g5mHZvt7U4D5jypecgh
-        h2nPI1fDWqzVfvqFtPaEcllwH8XtAP3oAuXwAVsQqQz9hYF7BiybYQR0MAi6FVvRlZ+Lp55tNStuE
-        iZYn8R7+mUM1nq3G16zVH2XahyZ2YiXw51Qw08pGyP/D7seujo4z6eOGyZXl/vsSemmhP4S2Zmzry
-        44WdXKD7JTWt8PgFUjTdnQQdO/xxDgpyYdoMQ+cWSgRAhkJsOIPYcLU3x8TsMTLlig/n+l7ewb/l7
-        le3Vgf0Mw==;
-Received: from spamrelay.zxcs.nl ([185.104.28.12]:44992 helo=mail-slave01.zxcs.nl)
-        by web0081.zxcs.nl with esmtp (Exim 4.92.3)
-        (envelope-from <dev@pascalroeleven.nl>)
-        id 1j7HYZ-000FIS-0m
-        for git@vger.kernel.org; Thu, 27 Feb 2020 12:42:19 +0100
+        id S1729089AbgB0M4c (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Feb 2020 07:56:32 -0500
+Received: from us-smtp-delivery-1.mimecast.com ([207.211.31.120]:24369 "EHLO
+        us-smtp-1.mimecast.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1729052AbgB0M4c (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Feb 2020 07:56:32 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1582808191;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=5gDZTj85s2+ShEwAm9EOu3sitIywVm85y8I8I4f9oRM=;
+        b=RkAGZlCsmJvEVrzfenwmcr9237BOL/6xTFGNBbNOHEHLkna/CLmLbsFnLAjEnn5imLXHUG
+        ka3uL10/v3aP326chuqqjxQeLVmz1m+3QPwUml2WCDrjMd1VPSzllchebdDEZQu0e9r7Oj
+        sThv3Cx986l87ytPJPrvg8j9eXixkVk=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-467-5FpnI1koNVK7pNGsjpqnYQ-1; Thu, 27 Feb 2020 07:56:25 -0500
+X-MC-Unique: 5FpnI1koNVK7pNGsjpqnYQ-1
+Received: by mail-wr1-f69.google.com with SMTP id l1so1285777wrt.4
+        for <git@vger.kernel.org>; Thu, 27 Feb 2020 04:56:25 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=5gDZTj85s2+ShEwAm9EOu3sitIywVm85y8I8I4f9oRM=;
+        b=R2x6Tac7xRO0vgwyzv/EeQ7B//rS9yYGDPFXuszH4UFLs9reV0VLTMhZLWxLuIXsPL
+         Au+xoBsdZ6f78Gx2HjIpiQsONiw4hX0mVM2sHHnoUFzwmhKbCXdiXra22lCUVWvAv1Ii
+         rwGpdAGgU4VuKcXpIJm+nflClNZ6qFLJXK3/ca661KAt3ubn+fpo//QafPE7qZ1fVGzY
+         iRic31weJ8dvDvbVpFrVDXAfZDiCZJ5Gx8Et2H+QKnQzahG7t5v1Cba6SJ9b/XygNHWE
+         Pr65IRLxU0vrs9iUdnBaNA5TsMmWiQKdW+d82+nTLTYhhCOZB7zbiijb6rEdch+6usE5
+         LFGQ==
+X-Gm-Message-State: APjAAAWPgO3IERKgj9XnsD8yeEcHPza5Cx56Jca1n9Otxqid+bE7HQsA
+        FrhiakqjSeNxNrQJWojkRfZpoldQ07DZPYEV1iNE+WKy4lAFL8x5DHKMLVOh3yjmGq6tro/Tqu/
+        /bSP8aA5YD2HTxMj42qFuzJF737Gh
+X-Received: by 2002:a05:6000:1252:: with SMTP id j18mr5076467wrx.103.1582808184107;
+        Thu, 27 Feb 2020 04:56:24 -0800 (PST)
+X-Google-Smtp-Source: APXvYqzbq8ynAkgHOmaz0jrLhWmSrEZvcKr0R1s7MxrXB2ljgJ/CgmHcFN4wy/GUYcaWpEKPVviwOEl68JjU4ye3iPI=
+X-Received: by 2002:a05:6000:1252:: with SMTP id j18mr5076450wrx.103.1582808183938;
+ Thu, 27 Feb 2020 04:56:23 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 27 Feb 2020 12:42:18 +0100
-From:   dev@pascalroeleven.nl
+From:   Ondrej Pohorelsky <opohorel@redhat.com>
+Date:   Thu, 27 Feb 2020 13:56:13 +0100
+Message-ID: <CA+B51BFFvn9puia8+kheeWkDfOQ7RYHTcGa74M5aeiTd8-QJXA@mail.gmail.com>
+Subject: git-core: try_to_follow_renames(): git killed by SIGSEGV
 To:     git@vger.kernel.org
-Subject: [PATCH 1/1] ls-remote: don't use '-h' for options
-User-Agent: Roundcube Webmail/1.4.2
-Message-ID: <b0397b3285eab3448a3fd5dd2c50abb9@pascalroeleven.nl>
-X-Sender: dev@pascalroeleven.nl
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The '-h' option for ls-remote will never be reached as the argument is
-already processed by the git wrapper before passed on to ls-remote.
-The ls-remote help text will therefore be displayed instead of the
-'--heads' option.
+Hi,
 
-Signed-off-by: Pascal Roeleven <dev@pascalroeleven.nl>
----
-  Documentation/git-ls-remote.txt | 1 -
-  builtin/ls-remote.c             | 2 +-
-  2 files changed, 1 insertion(+), 2 deletions(-)
+there is a SIGSEGV appearing in Fedora[0] with Git 2.24.1
 
-diff --git a/Documentation/git-ls-remote.txt 
-b/Documentation/git-ls-remote.txt
-index a2ea1fd..b5b7d7a 100644
---- a/Documentation/git-ls-remote.txt
-+++ b/Documentation/git-ls-remote.txt
-@@ -21,7 +21,6 @@ commit IDs.
+This bug started to appear after update to Git 2.24.1.
+Bug reporter said that Git crashed on him while running VS Code with
+Git Lens extension[1]
+I have tried to reproduce this bug with my own compiled Git with debug
+flags, but sadly SIGSEGV never appeared.
 
-  OPTIONS
-  -------
---h::
-  --heads::
-  -t::
-  --tags::
-diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
-index 6ef5195..85ce336 100644
---- a/builtin/ls-remote.c
-+++ b/builtin/ls-remote.c
-@@ -63,7 +63,7 @@ int cmd_ls_remote(int argc, const char **argv, const 
-char *prefix)
-  			   N_("path of git-upload-pack on the remote host"),
-  			   PARSE_OPT_HIDDEN },
-  		OPT_BIT('t', "tags", &flags, N_("limit to tags"), REF_TAGS),
--		OPT_BIT('h', "heads", &flags, N_("limit to heads"), REF_HEADS),
-+		OPT_BIT(0, "heads", &flags, N_("limit to heads"), REF_HEADS),
-  		OPT_BIT(0, "refs", &flags, N_("do not show peeled tags"), 
-REF_NORMAL),
-  		OPT_BOOL(0, "get-url", &get_url,
-  			 N_("take url.<base>.insteadOf into account")),
--- 
-2.20.1
+To me it seems like there is a problem in commit a2bb801f6a[2] which
+changes move_diff_queue() function. This function calls
+diff_tree_oid() that calls try_to_follow_renames(). In the last two
+functions there are no arguments checks.
+
+Best regards,
+Ond=C5=99ej Poho=C5=99elsk=C3=BD
+
+[0] https://retrace.fedoraproject.org/faf/problems/bthash/?bth=3D25aa7d7267=
+ab5de548ffca337115cb68f7b65105
+[1] https://bugzilla.redhat.com/show_bug.cgi?id=3D1791810
+[2] https://git.kernel.org/pub/scm/git/git.git/commit/?id=3Da2bb801f6a430f6=
+049e5c9729a8f3bf9097d9b34
 
