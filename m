@@ -2,127 +2,89 @@ Return-Path: <SRS0=G+lC=4P=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F1952C4BA2D
-	for <git@archiver.kernel.org>; Thu, 27 Feb 2020 13:25:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B0231C3F37E
+	for <git@archiver.kernel.org>; Thu, 27 Feb 2020 14:10:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id BC8CC2469D
-	for <git@archiver.kernel.org>; Thu, 27 Feb 2020 13:25:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8844C24656
+	for <git@archiver.kernel.org>; Thu, 27 Feb 2020 14:10:21 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="d2bnzZto"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=pascalroeleven.nl header.i=@pascalroeleven.nl header.b="XF4R3XXx"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729178AbgB0NZG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Feb 2020 08:25:06 -0500
-Received: from mout.gmx.net ([212.227.17.21]:44089 "EHLO mout.gmx.net"
+        id S2388524AbgB0OKU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Feb 2020 09:10:20 -0500
+Received: from web0081.zxcs.nl ([185.104.29.10]:56934 "EHLO web0081.zxcs.nl"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729056AbgB0NZF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Feb 2020 08:25:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1582809898;
-        bh=jkr4RoVTwMrCcCqpUqK4vh6ls5lTBTdjpLWXenT0jaI=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=d2bnzZtopkzzU/d7Q8k7kczrAXXuPmsWC0MMqssZOPTh1Fzcq0tRqyvNdbAmjdZV4
-         yzINT6LYVeFESHyc/13YSb26h51TXXqu5PMlyfthJKWkXcYP8rIYIuOnqNB1lThzBb
-         1ivux8z9pfslL0+bvbnubY10wZMK2og1YZ980vzc=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.86]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mg6dy-1jcXyh3SDW-00hbu9; Thu, 27
- Feb 2020 14:24:57 +0100
-Date:   Thu, 27 Feb 2020 14:24:56 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 18/24] gpg-interface: improve interface for parsing
- tags
-In-Reply-To: <20200226022332.GB7911@camp.crustytoothpaste.net>
-Message-ID: <nycvar.QRO.7.76.6.2002271423580.46@tvgsbejvaqbjf.bet>
-References: <20200222201749.937983-1-sandals@crustytoothpaste.net> <20200222201749.937983-19-sandals@crustytoothpaste.net> <nycvar.QRO.7.76.6.2002251127320.46@tvgsbejvaqbjf.bet> <20200226022332.GB7911@camp.crustytoothpaste.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S2388515AbgB0OKT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Feb 2020 09:10:19 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=pascalroeleven.nl; s=x; h=Message-ID:References:In-Reply-To:Subject:Cc:To:
+        From:Date:Content-Transfer-Encoding:Content-Type:MIME-Version:Sender:Reply-To
+        :Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+        Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=YOA7p65KlMwLqQZir3GEz5/dRGgGqMOHtrGxoXrzv0g=; b=XF4R3XXxWrxtKg8vFAaoNZhkf9
+        cp6xOMvWyohxyJnCUYUQlA+WJRr7WtClYqjIAv0fV0US8Zh90EDC5L8Eu78JW2tpbt5ag1wZjYaLZ
+        fgX5kCRoadxzcUnNplv4Dxy7/L8ds9/qykUJyQVrR+Q2C0+5Nkm9DGhO6CT7rkIgSmJUkSUoJiW9p
+        ILk6rlonRnOfkulNNJWzg6GIpI3wT7Xq7N2the4Su7f5AG1oIrt7wx/Ewkd2WKFkB9cq6joA2FKXZ
+        HbCdnAkeX5GNIA6J9ibPO6PJQOc75VGRsaJslF2kAGpKCQB7IkQYV/N/Qafe7emvXZAcgaLHR+hOn
+        Q9K2mSZw==;
+Received: from spamrelay.zxcs.nl ([185.104.28.12]:54742 helo=mail-slave01.zxcs.nl)
+        by web0081.zxcs.nl with esmtp (Exim 4.92.3)
+        (envelope-from <dev@pascalroeleven.nl>)
+        id 1j7Jrl-003dZY-Ft; Thu, 27 Feb 2020 15:10:17 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:+due9HLFRWIGGag+SC+hQOy9y+dMrz7ty6EO8YFqam/qXFL3Jy1
- T3KkIdgGCxyRLc+VbfOze5f5tv/t4WvLC1j4UsXGNY0bt94IYlD0R00Hk+u70Fru1AUR+uA
- PEeEhErQLCSjlVEYEFPINFPdzyvEJbbyIHLZS5MEQopsIHPJhzg9RhxKJsDXYc4p95LQo1w
- 8U9KYgoG7NoOgyJ0wTtPw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:oKVna1cE9GY=:eNOBtv62vHj0gVMwTUjqEl
- /tZrQxOi18995kmqJSdmEk4R/Vi+I8fLYjdTrVQmdAL7EQMIRUM1WoqWXnoAaku3u4ROKBUa0
- R1HDBZgooV4CLCG/l5TkQz5ScGScC0kBMoH79gS/7Qjx142Iw5O4DPrXHvIxN2soTqC1dq+OV
- dC7YANBXcWe600rLBL5CBBdOpdR9cZwzsRveWYNqPmMRohNBsAtfQIbWDzxChoIctf6vyDTB5
- qHfgE0R9Fj2i5KATC6DiagAFzti7srdCxw4FRHOLgHyjnIHX04kjjbb51tiXgLtAlBSRdV2tk
- ZKl4uT3KL38DMxaWerIpCMVo1j2kUDoSMT2SNBh/DPIF1pGpWcNUbbeAPyuMFd01Xr7GfOkYD
- MwSQLfPGpVrLzLUjgkizC2PhtIrA1+ii2IwWVt8lt+NFQnIUhbZ56KF/ueFK4JhA0hRU9bq7d
- JpHCFCiGQca/O5PV4RAJBiOTG+CPnnQFKhX+3iVGLyEsmFeHpuCkVZvvH/jIEbc3Fghu4K8Kz
- Zp4BZiSG3fMyQU2P8nab8oadxIvkGkDgq5TI0ah02mAA4rw4vJOyoU29CgACr/RSEIaaaCyMX
- TjxO2aFG+Tfu6YcFkci7KlLHrZ3lusBKecepYzqRqisKOz0/1gdkLpGcfZ2c9cNpFOC63xiHi
- +IKIoa7mhVU5SFQXDUxYrDdGj78J2uF2cV5OjU7n+CXUY6fSGDkbp+dsIGX05QxfgWJUk5eI7
- TVYO+RJULHXg/yzgsKQvbI07yec3ddpOzh6uATMxOQjrG945UMY1XHcW1nhriA5E4gEsvgMBd
- caa0k587wkojf2vsBelbPS3M2HcWsIw6xK3y4DEgI3nE+s4q+4Zc8opP9xI61jAdoSkTj6M95
- z5YlYCh3i2qz1fsHHhhMUn9STKlA9NvyYVDyy3kSFjBK+5dwSDptPOkgSLGaLk+997UOLC5Lr
- /ZgCKfj6L0L9PKN8CYWDlXApkiR2SlFW/5uLxyqWEYUdqfDf+iiznzsFpy8fVM/+DwFpw2mRE
- GLmP2UFmjlcKnVNJGJ/p3hhte3+VBDCqOXDoZrsROzf0c6f3Se0IA14f1Y6dyAHDb0V+pJtM6
- EFf8tSsKTyPQbALXf+VpxnkowHgXGtLVHvNiGcivF/OKVtvweQAYuAxHXSkpdPHBUjnLQefp0
- Q0oU4NDvIcNDAgZEPgVKEhW2+6BZy18NttwYigzVLRJSIwf3K+SG8FGI+NLrlY48UMEwbYFht
- gMJONKkckdvlw2xH8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 27 Feb 2020 15:10:17 +0100
+From:   Pascal Roeleven <dev@pascalroeleven.nl>
+To:     Danh Doan <congdanhqx@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 1/1] ls-remote: don't use '-h' for options
+In-Reply-To: <20200227130833.GA10339@danh.dev>
+References: <b0397b3285eab3448a3fd5dd2c50abb9@pascalroeleven.nl>
+ <20200227130833.GA10339@danh.dev>
+User-Agent: Roundcube Webmail/1.4.2
+Message-ID: <03985e4099e82f04709d5ea9ca2a56a6@pascalroeleven.nl>
+X-Sender: dev@pascalroeleven.nl
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi brian,
+On 2020-02-27 14:08, Danh Doan wrote:
+> On 2020-02-27 12:42:18+0100, dev@pascalroeleven.nl wrote:
+>> The '-h' option for ls-remote will never be reached as the argument is
+>> already processed by the git wrapper before passed on to ls-remote.
+>> The ls-remote help text will therefore be displayed instead of the
+>> '--heads' option.
+> 
+> No, git ls-remote still see '-h'
+> 
+> - 'git ls-remote -h' will show short help.
+> - 'git ls-remote -h <remote>' and 'git ls-remote --heads <remote>'
+>   will show the same output
+> 
+> See also:
+> https://lore.kernel.org/git/xmqqk1ztmkbn.fsf@gitster.mtv.corp.google.com/
+> 
+> xmqqk1ztmkbn.fsf@gitster.mtv.corp.google.com
 
-On Wed, 26 Feb 2020, brian m. carlson wrote:
+You are right, I didn't test with <remote>. Thanks for pointing me to 
+the old discussion.
 
-> On 2020-02-25 at 10:29:26, Johannes Schindelin wrote:
-> >
-> > On Sat, 22 Feb 2020, brian m. carlson wrote:
-> >
-> > > diff --git a/ref-filter.c b/ref-filter.c
-> > > index 6867e33648..212f1165bb 100644
-> > > --- a/ref-filter.c
-> > > +++ b/ref-filter.c
-> > > @@ -1161,7 +1161,13 @@ static void find_subpos(const char *buf,
-> > >  			unsigned long *nonsiglen,
-> > >  			const char **sig, unsigned long *siglen)
-> > >  {
-> > > +	struct strbuf payload =3D STRBUF_INIT;
-> > > +	struct strbuf signature =3D STRBUF_INIT;
-> > >  	const char *eol;
-> > > +	const char *end =3D buf + strlen(buf);
-> > > +	const char *sigstart;
-> > > +
-> > > +
-> > >  	/* skip past header until we hit empty line */
-> > >  	while (*buf && *buf !=3D '\n') {
-> > >  		eol =3D strchrnul(buf, '\n');
-> > > @@ -1174,13 +1180,14 @@ static void find_subpos(const char *buf,
-> > >  		buf++;
-> > >
-> > >  	/* parse signature first; we might not even have a subject line */
-> > > -	*sig =3D buf + parse_signature(buf, strlen(buf));
-> > > -	*siglen =3D strlen(*sig);
-> > > +	parse_signature(buf, end - buf, &payload, &signature);
-> > > +	*sig =3D strbuf_detach(&signature, siglen);
-> >
-> > While I like the spirit of this patch, it makes the Windows build fail=
-. I
-> > put this on top of Git for Windows' `shears/pu` branch to fix it (mayb=
-e
-> > you could adopt a variation of it?):
->
-> I'm happy to squash this in.  Sorry for the breakage, and thanks for
-> catching this.
+Because '--heads' can be used without a remote, and '-h' is advertised 
+as the shorthand equivalent, they should produce exactly the same 
+output. And they don't. The discussion aside if you should use '-h' for 
+anything at all except showing help, in my opinion if an option is 
+listed as an alias for another option, they should produce the same 
+result for all (or in this case the lack of) parameters.
 
-You're welcome, but credit for catching it should go to Azure Pipelines
-;-)
-
-To be honest, I am rather happy how these CI builds help us catch things
-already when they are in `pu`. _Quite_ happy.
-
-Ciao,
-Dscho
+In my case I looked into the documentation, used '-h' exactly as 
+described ('<refs>' is optional) and it didn't produce the output as 
+described. If you ask me, either the code or the documentation should be 
+changed.
