@@ -1,118 +1,128 @@
-Return-Path: <SRS0=G+lC=4P=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=f6GY=4Q=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.2 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1,
+	USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 75D6EC3F2CD
-	for <git@archiver.kernel.org>; Thu, 27 Feb 2020 23:54:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B7DDC3F2CD
+	for <git@archiver.kernel.org>; Fri, 28 Feb 2020 00:03:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 52AC4206A4
-	for <git@archiver.kernel.org>; Thu, 27 Feb 2020 23:54:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CCB242087F
+	for <git@archiver.kernel.org>; Fri, 28 Feb 2020 00:03:58 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="E1AqZEQX"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730009AbgB0Xyq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Feb 2020 18:54:46 -0500
-Received: from cloud.peff.net ([104.130.231.41]:56784 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1729849AbgB0Xyq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Feb 2020 18:54:46 -0500
-Received: (qmail 32618 invoked by uid 109); 27 Feb 2020 23:54:46 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 27 Feb 2020 23:54:46 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11950 invoked by uid 111); 28 Feb 2020 00:03:54 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 27 Feb 2020 19:03:54 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 27 Feb 2020 18:54:45 -0500
-From:   Jeff King <peff@peff.net>
-To:     Ralf Thielow via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Alban Gruin <alban.gruin@gmail.com>,
-        Ralf Thielow <ralf.thielow@gmail.com>
-Subject: [PATCH] config.mak.dev: re-enable -Wformat-zero-length
-Message-ID: <20200227235445.GA1371170@coredump.intra.peff.net>
-References: <pull.567.git.1582835130592.gitgitgadget@gmail.com>
+        id S1729959AbgB1AD6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Feb 2020 19:03:58 -0500
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:43612 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729930AbgB1AD5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Feb 2020 19:03:57 -0500
+Received: by mail-pg1-f193.google.com with SMTP id u12so510743pgb.10
+        for <git@vger.kernel.org>; Thu, 27 Feb 2020 16:03:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=V+FAN66pUleVyoVpKtS8WJciZqKGXFZTCS1u7QHQF5M=;
+        b=E1AqZEQXAsY1ly0eJ+L6RO/vGGis/wlhVL5iFfCbt/o5/AB3Rd90wokcNvl5bVmFPJ
+         iRwNAQTf7w0i4fD+exrZAURXbNHxwcaoGMs1KfO5mg9kqBJqlb6MTh4VgtLBCV1qUsI1
+         iwoD6BXw85XV0z7V/FDnEwHZt+6iXWn9IVZ1MkDj4Lb67ls57PbMVKXJhOuwkyTsyv6n
+         qW/6BdVlMos3UvFcUXg6oZT+8hYmY5eCgkIzjZSN7hr94/JGKgmyRcLp+okMi0EgJje6
+         Hyuiy8P7X1L4ajAn7q1EB3Naxk6iqZSEVs5eeV3/P1DuCvuEXRMhm2DK0a9zr4KkxeS2
+         LKMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to:user-agent;
+        bh=V+FAN66pUleVyoVpKtS8WJciZqKGXFZTCS1u7QHQF5M=;
+        b=ivnypmHEKqSUBhOyDAx6P2yynfhufIH+cggnK8QwJ/j4DrDIEZqnySvFho+6dLByV6
+         EUs6t/bwE36BaO9l8/zBqQBFFYJY2+ejwkHhEvpRCcPHpUvuWJZFIzllDT0Ob/qawJu2
+         dyiVnA6C2wloFdizsa32sx3bhle503O3PU5zuFjqb2B+bXxY3Qtn3kzQ/OUIE2Za8MBh
+         XqCfjQ0triIEOQ+zaEqhYUgYx7DR/q8SoKBergU4uapTUq6P7gxaUIIUd6xi8I/GWGta
+         Id7nitwP39G9ZhdwliWyMzYXuhl3MBQNIxq8zQxahUDl+EYYVZHelOnfMs2VwUupWb6a
+         ZvUw==
+X-Gm-Message-State: APjAAAX60ARShyYuvyS8GkT3+qlUYseYOY+gxLodHXkqAG9i3HzvAmBR
+        MKTokPTpfeIX0cgmsjp7LRfXVw==
+X-Google-Smtp-Source: APXvYqwqeadqf+xEJBH/GSTC41GfIHIFi0fTEpNz8ijK/uwOZXo+lk/rPrvyfQYW2oGDwjET31Nv2Q==
+X-Received: by 2002:a65:4c82:: with SMTP id m2mr1743118pgt.432.1582848236503;
+        Thu, 27 Feb 2020 16:03:56 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:200:ece8:7fe:c1f1:a20f])
+        by smtp.gmail.com with ESMTPSA id y1sm4629755pgs.74.2020.02.27.16.03.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Feb 2020 16:03:55 -0800 (PST)
+Date:   Thu, 27 Feb 2020 16:03:50 -0800
+From:   Josh Steadmon <steadmon@google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, stolee@gmail.com, peff@peff.net
+Subject: Re: [PATCH v2 0/7] Better threaded delta resolution in index-pack
+Message-ID: <20200228000350.GB12115@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        stolee@gmail.com, peff@peff.net
+References: <cover.1570663470.git.jonathantanmy@google.com>
+ <cover.1571343096.git.jonathantanmy@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <pull.567.git.1582835130592.gitgitgadget@gmail.com>
+In-Reply-To: <cover.1571343096.git.jonathantanmy@google.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 27, 2020 at 08:25:30PM +0000, Ralf Thielow via GitGitGadget wrote:
-
-> Fixes the following warnings:
+On 2019.10.17 13:17, Jonathan Tan wrote:
+> Thanks, Stolee and Peff, for taking a look at it. Here is a v2. It is
+> mostly unchanged, except for expanded commit messages and code comments.
 > 
-> rebase-interactive.c: In function ‘edit_todo_list’:
-> rebase-interactive.c:137:38: warning: zero-length gnu_printf format string [-Wformat-zero-length]
->     write_file(rebase_path_dropped(), "");
-> rebase-interactive.c:144:37: warning: zero-length gnu_printf format string [-Wformat-zero-length]
->    write_file(rebase_path_dropped(), "");
+> I've also added a documentation clarification that
+> core.deltaBaseCacheLimit is per-thread, appearing as the first patch in
+> this patch series.
+> 
+> From patch 3 (now patch 4):
+> 
+> > > +	int i;
+> > 
+> > Technically this probably ought to be a size_t as well, but I'm much
+> > more concerned about the allocation ones, where we might accidentally
+> > overflow and underallocate a buffer. Overflowing "i" would probably just
+> > lead to an error or bad result.
+> 
+> I believe this needs to be signed, since we're iterating in reverse
+> order, so I made it a ssize_t instead (note the extra "s" in front).
+> 
+> From patch 4 (now patch 5):
+> 
+> > > Whenever we make a struct base_data, immediately calculate its delta
+> > > children. This eliminates confusion as to when the
+> > > {ref,ofs}_{first,last} fields are initialized.
+> > 
+> > That _seems_ like a good idea, but I'm a little worried just because I
+> > don't entirely understand why it was being done lazily before. If you've
+> > puzzled all that out, it would be nice to make the argument in the
+> > commit message.
+> 
+> I've added an explanation in the commit message.
+> 
+> Jonathan Tan (7):
+>   Documentation: deltaBaseCacheLimit is per-thread
+>   index-pack: unify threaded and unthreaded code
+>   index-pack: remove redundant parameter
+>   index-pack: remove redundant child field
+>   index-pack: calculate {ref,ofs}_{first,last} early
+>   index-pack: make resolve_delta() assume base data
+>   index-pack: make quantum of work smaller
+> 
+>  Documentation/config/core.txt |   2 +-
+>  builtin/index-pack.c          | 446 ++++++++++++++++++----------------
+>  2 files changed, 242 insertions(+), 206 deletions(-)
 
-Thanks, I think this is worth doing.
-
-I had noticed them, too, but then they "went away" so I assumed they had
-already been fixed. It turns out that it's the difference between a
-build with and without the DEVELOPER Makefile knob set.
-
-I think we should do this on top:
-
--- >8 --
-Subject: [PATCH] config.mak.dev: re-enable -Wformat-zero-length
-
-We recently triggered some -Wformat-zero-length warnings in the code,
-but no developers noticed because we suppress that warning in builds
-with the DEVELOPER=1 Makefile knob set. But we _don't_ suppress them in
-a non-developer build (and they're part of -Wall). So even though
-non-developers probably aren't using -Werror, they see the annoying
-warnings when they build.
-
-We've had back and forth discussion over the years on whether this
-warning is useful or not. In most cases we've seen, it's not true that
-the call is a mistake, since we're using its side effects (like adding a
-newline status_printf_ln()) or writing an empty string to a destination
-which is handled by the function (as in write_file()). And so we end up
-working around it in the source by passing ("%s", "").
-
-There's more discussion in the subthread starting at:
-
-  https://lore.kernel.org/git/xmqqtwaod7ly.fsf@gitster.mtv.corp.google.com/
-
-The short of it is that we probably can't just disable the warning for
-everybody because of portability issues. And ignoring it for developers
-puts us in the situation we're in now, where non-dev builds are annoyed.
-
-Since the workaround is both rarely needed and fairly straight-forward,
-let's just commit to doing it as necessary, and re-enable the warning.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-I had totally forgotten about that thread until researching the history
-just now. There's another option there involving #pragma, but it was too
-gross for me to even suggest now as an alternative in the commit
-message. ;) I think this is the most practical improvement.
-
- config.mak.dev | 1 -
- 1 file changed, 1 deletion(-)
-
-diff --git a/config.mak.dev b/config.mak.dev
-index bf1f3fcdee..89b218d11a 100644
---- a/config.mak.dev
-+++ b/config.mak.dev
-@@ -9,7 +9,6 @@ endif
- DEVELOPER_CFLAGS += -Wall
- DEVELOPER_CFLAGS += -Wdeclaration-after-statement
- DEVELOPER_CFLAGS += -Wformat-security
--DEVELOPER_CFLAGS += -Wno-format-zero-length
- DEVELOPER_CFLAGS += -Wold-style-definition
- DEVELOPER_CFLAGS += -Woverflow
- DEVELOPER_CFLAGS += -Wpointer-arith
--- 
-2.25.1.911.g022f5304bc
-
+This series mostly looks good to me. There were a few parts I had
+trouble following or convincing myself were safe, so there could be some
+improvements with comments or more explicit commit messages, but no
+problems apart from that.
