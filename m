@@ -2,97 +2,106 @@ Return-Path: <SRS0=f6GY=4Q=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 342E6C3F2CD
-	for <git@archiver.kernel.org>; Fri, 28 Feb 2020 17:18:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 40DA2C3F2D3
+	for <git@archiver.kernel.org>; Fri, 28 Feb 2020 17:25:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id CC10E246AC
-	for <git@archiver.kernel.org>; Fri, 28 Feb 2020 17:18:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 175E824699
+	for <git@archiver.kernel.org>; Fri, 28 Feb 2020 17:25:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="TkB3hc7Z"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a+xRkm/5"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726063AbgB1RSF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Feb 2020 12:18:05 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:51586 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725730AbgB1RSF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Feb 2020 12:18:05 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 24C16C7C47;
-        Fri, 28 Feb 2020 12:18:05 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=H5zzFCG6/RPLrCVE4c2nc3dOFcg=; b=TkB3hc
-        7Z/6Yf19DO9xa7bTlmiCRxdmPCKy9yCkjBYfeDj7vLz22ix1ycqDMFgNmUvwE0cU
-        2UNBxge67PI3HckxaGncmjkl4UnWsZmrvA+KuRlq91Y5ch4FAUMBX+WUKL7NcH1A
-        8mZlOwEm682/f65nXPRDkSA9Vh0aRFXGBt2Wc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=xEg6boXXnDvktHe9OnpaMKBrrNgpD7BP
-        knnV7BejdX8lV3LrsSQ51lUzmVLskei1Bwe12AIS51YYoaQJiiOe5Q/GANMevT+e
-        l8Oq6zlSULMWQNIA+4MGQV7KdPJ4IejMgPOl3+CEZ8Jaa8UEaCKPlbTTOYO/KhDe
-        Jea+f1anl2U=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1C1C9C7C46;
-        Fri, 28 Feb 2020 12:18:05 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 35B83C7C44;
-        Fri, 28 Feb 2020 12:18:02 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Linus Torvalds <torvalds@linux-foundation.org>
-Cc:     Hans Jerry Illikainen <hji@dyntopia.com>,
-        Git List Mailing <git@vger.kernel.org>
-Subject: Re: Signed commit regression?
-References: <CAHk-=wgg8ctNmHbKjy-yYnz07L3m8=1et_q2FJHKM9mZKXzGAA@mail.gmail.com>
-        <CAHk-=whg3uip_N1EjLEzaZNMvS8v+5u2GGueE9Wm2xnY87D+-A@mail.gmail.com>
-Date:   Fri, 28 Feb 2020 09:17:58 -0800
-In-Reply-To: <CAHk-=whg3uip_N1EjLEzaZNMvS8v+5u2GGueE9Wm2xnY87D+-A@mail.gmail.com>
-        (Linus Torvalds's message of "Fri, 28 Feb 2020 08:47:23 -0800")
-Message-ID: <xmqqpndyeim1.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726970AbgB1RZ3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Feb 2020 12:25:29 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:45631 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726874AbgB1RZ2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Feb 2020 12:25:28 -0500
+Received: by mail-wr1-f66.google.com with SMTP id v2so3786801wrp.12
+        for <git@vger.kernel.org>; Fri, 28 Feb 2020 09:25:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=CpVKJbFMMjTb9cR0tK4potz8jjBtuE5DRxKqs606s34=;
+        b=a+xRkm/5idSQIfIFTEPf3w5JvyAJFtsk0LKx1Jbdr5nYz95FUUYCQj//ZqE93Ygeb7
+         K7R2egUF2rIDV3US6CbjVOSEGFumvHo5H5Q1X12rCo1YzWMcpDqBAG/dRHJhP4yXaM2o
+         OTqyoMWTq7r/BzCvUhDnmTBkJSzz5NUifSDUoAXSQkxMqlIyVVB3cew43sb1eKYw7SBp
+         TnftAFedjc/2/iiogAH2r0LMz8m/PJcZNkaw4BauDjy8Q8hRz2XdzRAJ5nMS/IrlzWHX
+         Y1UHCniA+IduZ4adt5Jia5SjV0uBVDOab6JOTFrYP8vnLaYbbce2PBpsfTpiqsqIg4db
+         0eeQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=CpVKJbFMMjTb9cR0tK4potz8jjBtuE5DRxKqs606s34=;
+        b=H6BlBk9g0gOwmXjGM6HvXvkGFnEPyJFbdsuOL+07NNIclY7pSOCzVMMSQSTDxS6ssW
+         vYxnCC32steidUsc/8IGl7Ufh7ZZ8kxx9AuyeLVcsXrQAEi/ofGriaz5Z+pFTzTD0QzS
+         q/bUrfs4qYcCZoHUpUS55ovejUKlN7z5+5xvWfCWti/QOKJ9F0pOfqN0JDfSYEqaU9JI
+         c5t+5OPo2ggAn7VQ62YD4hg61z0E8+wXPuekmQOlkcbwfM/SmdVRYHGSuwTozB8u2khg
+         fD48UB12kT8atiW11m7urt8u8P413KDgjz/rRApC/qROW5YVf2zhyhJPQYwAQ37NeP18
+         NcmA==
+X-Gm-Message-State: APjAAAX8Nh2u/X8VcEN2vEc2vTGevMJx4MM1UlJ4cMGtPX9r22E5gSUD
+        xiMmPS8Kg9W5tpt9T1o1ALA36wgdVExfvw==
+X-Google-Smtp-Source: APXvYqzL2G0Dm17I2Fp/3J8RQU0qq4fiRqJb3xc5iLzl2UyAzHMRVlk2Zm7NdwH2ocZ2YuJiSSBmzQ==
+X-Received: by 2002:a5d:668d:: with SMTP id l13mr5813453wru.107.1582910725726;
+        Fri, 28 Feb 2020 09:25:25 -0800 (PST)
+Received: from localhost.localdomain (87-231-246-247.rev.numericable.fr. [87.231.246.247])
+        by smtp.gmail.com with ESMTPSA id z2sm7376635wrq.95.2020.02.28.09.25.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 28 Feb 2020 09:25:24 -0800 (PST)
+From:   Damien Robert <damien.olivier.robert@gmail.com>
+X-Google-Original-From: Damien Robert <damien.olivier.robert+git@gmail.com>
+To:     git@vger.kernel.org, Jeff King <peff@peff.net>
+Cc:     Damien Robert <damien.olivier.robert+git@gmail.com>
+Subject: [PATCH 1/1] remote.c: fix handling of push:remote_ref
+Date:   Fri, 28 Feb 2020 18:24:55 +0100
+Message-Id: <20200228172455.1734888-1-damien.olivier.robert+git@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4657EE0C-5A4E-11EA-A764-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+To get the meaning of push:remoteref, ref-filter.c calls
+remote_ref_for_branch.
 
-> On Fri, Feb 28, 2020 at 8:44 AM Linus Torvalds
-> <torvalds@linux-foundation.org> wrote:
->>
->> I suspect it's due to this commit:
->>
->>   72b006f4bf ("gpg-interface: prefer check_signature() for GPG verification")
->>
->> but as mentioned I don't have the ability to really dig deeper right now.
->
-> Never mind - I did a mindless "just revert that and test", and it
-> indeed is that commit.
->
-> Please revert it in upstream git. The "No signature" message really is
-> horribly wrong. It's both technically entirely wrong, but it's wrong
-> from a UI standpoint too since you really need to show what the
-> missing key was.
+However remote_ref_for_branch only handles the case of a specified refspec.
+The other cases treated by branch_get_push_1 are the mirror case,
+PUSH_DEFAULT_{NOTHING,MATCHING,CURRENT,UPSTREAM,UNSPECIFIED,SIMPLE}.
 
-True---the messages that told you the missing piece of information
-with the original code came directly from gnupg, and the problematic
-change stopped showing that and replaced it with the generic (and
-wrong) "We tried to verify signature and it failed---it must be that
-the input did not have signature" message.
+In all these cases, either there is no push remote, or the remote_ref is
+branch->refname. So we can handle all these cases by returning
+branch->refname, provided that remote is not empty.
 
-It is in v2.25 already, so we'd need to revert it out of 'maint'; it
-seems to have a minimum fallout on a topic in flight, but it looks
-manageable.
+Signed-off-by: Damien Robert <damien.olivier.robert+git@gmail.com>
+---
+ remote.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-Thanks.
+diff --git a/remote.c b/remote.c
+index 593ce297ed..75e42b1e36 100644
+--- a/remote.c
++++ b/remote.c
+@@ -538,6 +538,11 @@ const char *remote_ref_for_branch(struct branch *branch, int for_push,
+ 					*explicit = 1;
+ 				return dst;
+ 			}
++			else if (remote) {
++				if (explicit)
++					*explicit = 1;
++				return branch->refname;
++			}
+ 		}
+ 	}
+ 	if (explicit)
+-- 
+Patched on top of v2.25.1-377-g2d2118b814 (git version 2.25.1)
+
