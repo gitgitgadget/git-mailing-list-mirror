@@ -2,113 +2,149 @@ Return-Path: <SRS0=f6GY=4Q=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2EAA8C3F2CD
-	for <git@archiver.kernel.org>; Fri, 28 Feb 2020 23:07:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E29E0C3F2D2
+	for <git@archiver.kernel.org>; Fri, 28 Feb 2020 23:16:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id F26AD2468D
-	for <git@archiver.kernel.org>; Fri, 28 Feb 2020 23:07:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8ADC1246A8
+	for <git@archiver.kernel.org>; Fri, 28 Feb 2020 23:16:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YbyTlfiv"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ka5t5T8W"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726418AbgB1XHU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Feb 2020 18:07:20 -0500
-Received: from mail-ot1-f44.google.com ([209.85.210.44]:41223 "EHLO
-        mail-ot1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726046AbgB1XHU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Feb 2020 18:07:20 -0500
-Received: by mail-ot1-f44.google.com with SMTP id v19so4162773ote.8
-        for <git@vger.kernel.org>; Fri, 28 Feb 2020 15:07:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=QAcPiiWpZeqk4q/e+FX+1y8Z6NP+LVGL7CQ1kM7EhIs=;
-        b=YbyTlfivMNqtaiAb83fDUBjpDddyPxrSzf4rcV0OzZKAMQW8dZ2d40KOaYVo4zv0s9
-         Huhix6AfpxBYDlYlNbmZhJTn9K3DoeLr5dcYAWTZQ8UsbrgwLV051Q10kZXpa5Qyeya0
-         QN0eIyLCxJf8uorvAfBuz0WEWVn/clKsB2DwryNak7V5y0get3uskrXrSJlLGuEDNJX/
-         hoFPntFZtCB5PxCJGNSVYdP1tjKVKFiqoIDXP0ThFup6SC1V94jCjDnM/b42mPELLbQy
-         3Ud+89yKAyNiBNBZN5mTtOTHCwSlt3dmj1H2sM1WAq6OqfpZouU20ShpIjh0qXY7pLHG
-         uc3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=QAcPiiWpZeqk4q/e+FX+1y8Z6NP+LVGL7CQ1kM7EhIs=;
-        b=r3ZcJqbcZu2zEgh+krbXUiWBgEzeqAuemrfnG6CdOcKZhngYBsK8dqLNLZ4pG1IamZ
-         sW+i6lEOKW9YsAfJyLLHrtTAuFlDenybCxKnlSKoqQ4MwWJmCtD3plrGitldWAZi8lXg
-         kFogJmw2zDx+8YgCpD5VKB0qEXXEPawSp8I9guOFqZf2WyzvWVIOncrXPh8LP5QRlAHw
-         +oL+zCwWqTCm4JYum5bP6QcBJhOHhHsjVgMgnpT4+E7ZQ0y3KunHia2BK0eptbm7uVYy
-         6ebUXSHeCbS3fMfDeRBiSmNvoutKcD/UUXcZTu9OrkN4fb7kpk3MTDGEIVUtKHg7MxCD
-         F8FA==
-X-Gm-Message-State: APjAAAVlwusuxMJ2YmCHPqcU4RJ+K/jtTplpMwvZS4QcBTSrdmc+OvHy
-        Iygt5ZlGhDDCV5EoR0dLMmyJWWelP50kjcq/KzM=
-X-Google-Smtp-Source: APXvYqwLvm6UrBw59zonOdI8GNmfzKIazD5wlBho4gJPxIdgsnpg4P/ropMS9/Y+JFVn/xQA/jlkd5IjG/iNxc04JwA=
-X-Received: by 2002:a9d:7c81:: with SMTP id q1mr5015232otn.112.1582931239137;
- Fri, 28 Feb 2020 15:07:19 -0800 (PST)
+        id S1726366AbgB1XQI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Feb 2020 18:16:08 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:61839 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725957AbgB1XQI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Feb 2020 18:16:08 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2BAA4AA60E;
+        Fri, 28 Feb 2020 18:16:06 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=PIEJr7f3EP4E69EFNmXqZKYm3vI=; b=Ka5t5T
+        8Wuqjdy2YPqJBZmZWhjLbx4jey3bpoDna/LK7agf/CZwSlOvWh2hQT3X73CkiIVZ
+        iO8gvJsipGawTnKyce6gwa4xnlVaJGCaaxcUxG6KyI/23SnGQHCH7/MnkZWkjzOB
+        VGNvC7hhNaEVx05eNjOoIcX0dY/f2xGy0p4kA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=d6rdQVE1VI0AN6WPrXD0S1eZSE0wsY8M
+        PD/wqLMMkm3uM/Szo/3Bpi7on8sLC1PoGD733JcB3GihG9LxDkgCxBkxb28up/Y6
+        k35j/7SPADrKyncINhZqyX+Sluf465XSHG3MDAAXhc4VDqPUjMIRkF245tRHREkN
+        hcu9RafQnBc=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 23805AA60D;
+        Fri, 28 Feb 2020 18:16:06 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 4C7E0AA608;
+        Fri, 28 Feb 2020 18:16:03 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Alex Henrie <alexhenrie24@gmail.com>
+Cc:     git@vger.kernel.org, rcdailey.lists@gmail.com, newren@gmail.com,
+        rsbecker@nexbridge.com, annulen@yandex.ru
+Subject: Re: [PATCH] pull: warn if the user didn't say whether to rebase or to merge
+References: <20200228215833.319691-1-alexhenrie24@gmail.com>
+Date:   Fri, 28 Feb 2020 15:16:01 -0800
+In-Reply-To: <20200228215833.319691-1-alexhenrie24@gmail.com> (Alex Henrie's
+        message of "Fri, 28 Feb 2020 14:58:33 -0700")
+Message-ID: <xmqqeeuecngu.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <xmqqimjqcoh0.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqimjqcoh0.fsf@gitster-ct.c.googlers.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 28 Feb 2020 15:07:08 -0800
-Message-ID: <CABPp-BEJiRyCznkrri-uTqggT60vkvqsU8dAvKz3B1PH6BB6tQ@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Feb 2020, #06; Fri, 28)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4A12A60E-5A80-11EA-9547-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 28, 2020 at 2:54 PM Junio C Hamano <gitster@pobox.com> wrote:
-> * en/merge-path-collision (2020-02-27) 1 commit
->  - merge-recursive: apply collision handling unification to recursive case
+Alex Henrie <alexhenrie24@gmail.com> writes:
+
+> Most Git users are contributors, not maintainers, and want to use
+> `git pull` to rebase their changes before sending a pull request to the
+> upstream project. However, novice Git users often forget to specify the
+> --rebase option when pulling, leading to an unwanted merge commit.
+
+The logic above looks somewhat twisted.  Even if most Git users were
+integrators who would not want "pull --rebase", everything you said
+after "However" still holds true.
+
+    Often novice Git users forget to say "pull --rebase" and ends up
+    with an unnecessary merge from upstream.  What they usually want
+    is either "pull --rebase" in the simpler cases, or "pull
+    --ff-only" to update the copy of main integration branches, and
+    rebase their work separately.  The pull.rebase configuration
+    variable exists to help them in the simpler cases, but there is
+    no mechanism to make these users aware of it.
+
+> To
+> avoid that situation, Git should require users to explicitly specify
+> whether their primary workflow is a contributor/rebasing workflow or a
+> maintainer/merging workflow.
+
+There is nothing Git "should" do.  There are things we wish Git did,
+and we give orders to the codebase to do so in our proposed log
+message.  Perhaps like:
+
+    Issue a warning message when no --[no-]rebase option from the
+    command line and no pull.rebase configuration variable is given.
+    This will inconvenience those who never want to "pull --rebase",
+    who haven't had to do anything special, but the cost of the
+    inconvenience is paid only once per user, which should be
+    reasonable cost to help number of new users.
+
+
+
 >
->  Handling of conflicting renames in merge-recursive have further
->  been made consistent with how existing codepaths try to mimick what
->  is done to add/add conflicts.
-
-s/mimick/mimic/?
-
-> * en/rebase-backend (2020-02-16) 20 commits
->   (merged to 'next' on 2020-02-22 at cae5eb0f18)
->  + rebase: rename the two primary rebase backends
->  + rebase: change the default backend from "am" to "merge"
->  + rebase: make the backend configurable via config setting
->  + rebase tests: repeat some tests using the merge backend instead of am
->  + rebase tests: mark tests specific to the am-backend with --am
->  + rebase: drop '-i' from the reflog for interactive-based rebases
->  + git-prompt: change the prompt for interactive-based rebases
->  + rebase: add an --am option
->  + rebase: move incompatibility checks between backend options a bit earlier
->  + git-rebase.txt: add more details about behavioral differences of backends
->  + rebase: allow more types of rebases to fast-forward
->  + t3432: make these tests work with either am or merge backends
->  + rebase: fix handling of restrict_revision
->  + rebase: make sure to pass along the quiet flag to the sequencer
->  + rebase, sequencer: remove the broken GIT_QUIET handling
->  + t3406: simplify an already simple test
->  + rebase (interactive-backend): fix handling of commits that become empty
->  + rebase (interactive-backend): make --keep-empty the default
->  + t3404: directly test the behavior of interest
->  + git-rebase.txt: update description of --allow-empty-message
+> Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
+> ---
+>  builtin/pull.c | 7 +++++++
+>  1 file changed, 7 insertions(+)
 >
->  "git rebase" has learned to use the sequencer backend by default,
->  while allowing "--am" option to go back to the traditional "am"
->  backend.
+> diff --git a/builtin/pull.c b/builtin/pull.c
+> index 3e624d1e00..8ec8e6f5d3 100644
+> --- a/builtin/pull.c
+> +++ b/builtin/pull.c
+> @@ -327,6 +327,13 @@ static enum rebase_type config_get_rebase(void)
+>  	if (!git_config_get_value("pull.rebase", &value))
+>  		return parse_config_rebase("pull.rebase", value, 1);
 
-We may need to reword this description due to the last patch in the
-series.  Also, the description misses the new rebase.backend
-configuration setting.  I'm not the best at wording these release
-notes, but something along the lines of:
+This helper function is called only when opt_rebase < 0 in the
+caller, which means there were no --[no-]rebase on the command line.
+That's why we called this function to learn what the configuration
+say.  So it is the right place to add the new check.
 
-"git rebase" has learned to use the merge backend by default, while
-allowing "--apply" option to go back to the traditional apply backend,
-or allowing an alternate default to be set via the new rebase.backend
-configuration variable.  This series also renames the backends from
-"interactive" (or "sequencer") to "merge" and from "am" to "apply".
+Luckily for us, the caller also made sure opt_ff is already set up
+by calling config_get_ff() first when there was no --ff related
+command line option ;-)
+
+>  
+> +	if (strcmp(opt_ff, "--ff-only") != 0) {
+
+Style.  Do not write "!= 0" in the condition.  Just
+
+	if (strcmp(opt_ff, "--ff-only")) {
+
+is enough.
+
+> +		warning(_("Pulling without specifying whether to rebase or to merge is discouraged\n"
+
+I briefly wondered if this wants to be an advice instead, but the
+way to squelch the message is already built into this codepath so
+there is no need to ;-)
+
+> +			"and will be disallowed in a future Git release.\n"
+> +			"Next time, run `git config pull.rebase (true|false)` first\n"
+> +			"or specify --rebase or --no-rebase on the command line.\n"));
+> +	}
+> +
+>  	return REBASE_FALSE;
+>  }
