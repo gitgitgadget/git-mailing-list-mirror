@@ -2,86 +2,66 @@ Return-Path: <SRS0=f6GY=4Q=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 545DCC3F2CD
-	for <git@archiver.kernel.org>; Fri, 28 Feb 2020 19:02:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 71659C3F2CD
+	for <git@archiver.kernel.org>; Fri, 28 Feb 2020 19:28:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 37E12246A2
-	for <git@archiver.kernel.org>; Fri, 28 Feb 2020 19:02:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 197762469F
+	for <git@archiver.kernel.org>; Fri, 28 Feb 2020 19:28:04 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=yandex.ru header.i=@yandex.ru header.b="TOA4Hj16"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726845AbgB1TCU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Feb 2020 14:02:20 -0500
-Received: from cloud.peff.net ([104.130.231.41]:57416 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726720AbgB1TCT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Feb 2020 14:02:19 -0500
-Received: (qmail 4734 invoked by uid 109); 28 Feb 2020 19:02:19 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 28 Feb 2020 19:02:19 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18686 invoked by uid 111); 28 Feb 2020 19:11:28 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 28 Feb 2020 14:11:28 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 28 Feb 2020 14:02:18 -0500
-From:   Jeff King <peff@peff.net>
-To:     Damien Robert <damien.olivier.robert@gmail.com>
-Cc:     Philippe Blain <levraiphilippeblain@gmail.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: GIT_DIR in aliases [Re: Spurious GIT_DIR set when in a worktree
- [was Re: Nested submodule status bug]
-Message-ID: <20200228190218.GC1408759@coredump.intra.peff.net>
-References: <20200214224242.knmzkwx7ls4sote7@doriath>
- <0123F1ED-C421-4C1F-896B-E54C9D345A34@gmail.com>
- <20200226172338.unembhjhog36sqj7@mithrim>
- <20200227100557.ydouc4n3jphzbits@feanor>
- <20200227104330.hp7zf2suquxsf6zw@feanor>
- <20200227155057.7idpa447ixo6sf6j@feanor>
+        id S1725886AbgB1T2D (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Feb 2020 14:28:03 -0500
+Received: from forward100j.mail.yandex.net ([5.45.198.240]:50002 "EHLO
+        forward100j.mail.yandex.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725730AbgB1T2C (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 28 Feb 2020 14:28:02 -0500
+X-Greylist: delayed 431 seconds by postgrey-1.27 at vger.kernel.org; Fri, 28 Feb 2020 14:28:01 EST
+Received: from mxback28o.mail.yandex.net (mxback28o.mail.yandex.net [IPv6:2a02:6b8:0:1a2d::79])
+        by forward100j.mail.yandex.net (Yandex) with ESMTP id EE08B50E00ED
+        for <git@vger.kernel.org>; Fri, 28 Feb 2020 22:20:47 +0300 (MSK)
+Received: from localhost (localhost [::1])
+        by mxback28o.mail.yandex.net (mxback/Yandex) with ESMTP id t4z77vEhOB-KlFKJSJX;
+        Fri, 28 Feb 2020 22:20:47 +0300
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1582917647;
+        bh=sSwhG8FQj7nBlMH66IPw6bbBOMFIcV5h/5L2eV030K0=;
+        h=Message-Id:Date:Subject:To:From;
+        b=TOA4Hj16myifiut1kYyZawE8o7E28lrVyPwviRjjSZQfy3aUKC5KK2LFo3vPDGz2S
+         esXmag1Vqy8dETiR7lv4w/id/VZYL0qwMNBTZZWru3whsv4BxtqNfT3wpuwvL2G6z3
+         SQOtWBlVaOxXImAkGupXr0Q2GDIPL1STcVyLRW1g=
+Authentication-Results: mxback28o.mail.yandex.net; dkim=pass header.i=@yandex.ru
+Received: by iva6-161d47f95e63.qloud-c.yandex.net with HTTP;
+        Fri, 28 Feb 2020 22:20:47 +0300
+From:   Konstantin Tokarev <annulen@yandex.ru>
+To:     git@vger.kernel.org
+Subject: `git log --full-diff --follow`: conflicting command line arguments
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200227155057.7idpa447ixo6sf6j@feanor>
+X-Mailer: Yamail [ http://yandex.ru ] 5.0
+Date:   Fri, 28 Feb 2020 22:20:47 +0300
+Message-Id: <1223101582917647@iva6-161d47f95e63.qloud-c.yandex.net>
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 27, 2020 at 04:50:57PM +0100, Damien Robert wrote:
+Hello,
 
-> So one might argue that the behaviour I observed is not a bug, but it is
-> still surprising for me (as a user), and maybe this could be stated more
-> clearly in the docs?
-> 
-> Furthermore there is a question of consistency. GIT_DIR will not always be set
-> before running a shell alias. Looking at `setup_discovered_git_dir`, it will
-> be set if we are in a bare dir, or core.worktree / WORK_TREE is set, or if
-> we have a gitfile.
+Combination of "--full-diff" and "--follow" in git log arguments causes following error with git 2.25.1:
 
-We were discussing the same issue recently with regards to hooks. See:
+fatal: --follow requires exactly one pathspec
 
-  https://lore.kernel.org/git/20200130102933.GE840531@coredump.intra.peff.net/
+This message is certainly misleading when git log is applied to a single pathspec. Bit it would be
+useful to make this combination valid and show full diffs for followed history of particular file
+(when -p option is also provided).
 
-and the responses. I think we could do better, but at the cost of
-breaking a relatively obscure git-clone feature.
+-- 
+Regards,
+Konstantin
 
-> The annoying side effect is that I cannot use as an alias a command that
-> iterate over submodules and run git commands inside them, because in this
-> alias GIT_DIR will be set sometimes, and sometimes not (a quick fix would be to
-> unset GIT_DIR in my alias).
-
-Yes, the recommended thing is to make sure GIT_DIR is unset if you're
-going to chdir around and expect auto-discovery of the repository to
-work.
-
-Note there are other variables you might want to unset, too, if you're
-switching repositories. Doing:
-
-  unset $(git rev-parse --local-env-vars)
-
-would cover the full list.
-
--Peff
