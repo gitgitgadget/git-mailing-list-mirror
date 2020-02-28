@@ -2,87 +2,78 @@ Return-Path: <SRS0=f6GY=4Q=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 15463C3F2CD
-	for <git@archiver.kernel.org>; Fri, 28 Feb 2020 17:36:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E8F3C3F2CD
+	for <git@archiver.kernel.org>; Fri, 28 Feb 2020 18:15:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D1202246A0
-	for <git@archiver.kernel.org>; Fri, 28 Feb 2020 17:36:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 77807246AE
+	for <git@archiver.kernel.org>; Fri, 28 Feb 2020 18:15:46 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=garantcoutu.com header.i=@garantcoutu.com header.b="e0l9Za9V"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HMKjrqKk"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726671AbgB1Rg0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Feb 2020 12:36:26 -0500
-Received: from mail-ot1-f52.google.com ([209.85.210.52]:43190 "EHLO
-        mail-ot1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725877AbgB1RgZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Feb 2020 12:36:25 -0500
-Received: by mail-ot1-f52.google.com with SMTP id j5so2422353otn.10
-        for <git@vger.kernel.org>; Fri, 28 Feb 2020 09:36:25 -0800 (PST)
+        id S1726277AbgB1SPp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Feb 2020 13:15:45 -0500
+Received: from mail-lj1-f172.google.com ([209.85.208.172]:35099 "EHLO
+        mail-lj1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725805AbgB1SPp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Feb 2020 13:15:45 -0500
+Received: by mail-lj1-f172.google.com with SMTP id a12so3270717ljj.2
+        for <git@vger.kernel.org>; Fri, 28 Feb 2020 10:15:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=garantcoutu.com; s=google;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=MHHjcMBLeAnJ8BuX+lhCcmfyoW4UCdYr+xX1XZCU2K8=;
-        b=e0l9Za9V1RC6zLUqbDFbn7V4d4z+/BJpCjOkNVP+URsi9JKGs6LTO4h8Fc6NNV7js/
-         Ba60UFFISqzvVuUAQv2TdXnk9NYf5DUiqezkwxLJsCkG7jexVsDoBR9WXREminoEJZxY
-         uhgsBqMShBZzIitY8p2g2np5Mv1+4PycaPW/0=
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:from:date:message-id:subject:to;
+        bh=YdJIyXTtNZnms9Hpwqz2Dk32sGkeox9K5G2yq9PvTQ8=;
+        b=HMKjrqKkg+ofznpO9Kmfllu9ScDYtiX+07QrvJ53VlKtwsAJuCfBNQWhk3tvf/aYHt
+         NX9DDo7HYnAmnBi+kzMHBgz1kxVqp6uUOqY2zNx/+WxsjuZTi+mqzl70IYwKV+8McIHH
+         QvglkdldTgGIIeDdaeGP4uYUkqkC3ym938oWWnMtfyybBEB02Nl5F9BFOt5Sn82pFgsC
+         w9El6kjG5nKoMpi1xi4NqwbGnKRKAXqrGjF/VyqASADePUBoEaSZusQ0IxOs5OubNCC+
+         53gZnwTM4gSQTBuXWbtTkwj7akXphz5ZQhazmtfnNytbl8NeUcfCVL29Q2oM7/SxB0XH
+         84Zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=MHHjcMBLeAnJ8BuX+lhCcmfyoW4UCdYr+xX1XZCU2K8=;
-        b=TapQZu2AbCvAtEZqca6tc+lZALVIDij9r3DiraLMHS+PL6DbO7tn27tR/R7Ycz/nRd
-         W2MrMkI3VCQEmilpGxr1nnMNyM2tSkKweNJvSFmiG4lf0ifntvbFG8fj4ybD33COll4g
-         j676DAuIl8VDHQaodkzys158HlNqzs4Z+a9O5th6wv1jrXvsSZpZqWQhccTNJUvKYIhg
-         piO0o2xPBiYRR4lQajhy1y4zpid6qUm9q7CBptijisA7J+YAo1xG9q6QtS5v2rNY3Pps
-         1j6qQe+RdzwQ0p01SS5z7zBscMhiuoe3Vo4LBUYzIWpg4dDYeSwlYwsjEu7ihENjyPYS
-         GGMA==
-X-Gm-Message-State: APjAAAV8PlVlX/n2yXKxXd+vXknaDamJUC/bCjXCpnXHlQPtgqRzL9oM
-        SDIS5kxgQMzRkzUXFuwx6D8PU8/sbhggFtuI3xefcE2+skM=
-X-Google-Smtp-Source: APXvYqwPwCoYU/4lrPY11BnbR26iz2IJ+z4ePSI6DkvRKPiIurDD8oPuU6TsMM3IlL91IuKlPYM0uALRF46EPtCoLXo=
-X-Received: by 2002:a05:6830:114f:: with SMTP id x15mr4104331otq.291.1582911384840;
- Fri, 28 Feb 2020 09:36:24 -0800 (PST)
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to;
+        bh=YdJIyXTtNZnms9Hpwqz2Dk32sGkeox9K5G2yq9PvTQ8=;
+        b=hC2274dGdvBOrNkTvli/nterfJTNN9/Jky2fJ0xy6yUuAGTEC4q1rJ1I9C8ib6QMhk
+         yLASGkNAa7i4lZJufdLFu4hFHpS8QH//g/9cM1I7hxY2gg0Ap9Bai6GP/JXOA0GowbfM
+         d5Vv46KlsYTj0Z1WWbgMj5ueMTCzPe9WnSeHxevU9WpgSoTcSR+xTMU2ajHxMDh+RUxI
+         802IcYEllMZVE/2M/uityrvx5esvj7Sf+i8rCbNYevptcRmrdgz/fD9dXg+blTWC0Kcf
+         EtJyeYyMF9uKH/jDsNpdHCnu3r9OVW8sDuXcp+ad+lNmh3VWkAkfwnRZDbh8GwkEomnC
+         kC+g==
+X-Gm-Message-State: ANhLgQ1PstB6dsIjzaYUCdLo2fe6tCQGyK9Hcp2C/6d6cJilCHvGgVt/
+        P3PCne1xUeFq8DJu9hnF4her+F479ljBP6wryJIdZA==
+X-Google-Smtp-Source: ADFU+vtR+AgCBJTntmnfCado1RZ//983e6b28hoXyzdUybEqlITgzwIfKlqToZlZIe+OdHTaIFfUQN6etl5L8SxKzN0=
+X-Received: by 2002:a2e:5451:: with SMTP id y17mr3845979ljd.27.1582913741717;
+ Fri, 28 Feb 2020 10:15:41 -0800 (PST)
 MIME-Version: 1.0
-From:   Blaise Garant <blaise@garantcoutu.com>
-Date:   Fri, 28 Feb 2020 12:36:14 -0500
-Message-ID: <CANXsDork=bL=SUodXDzkcnjpPALm53e++UkVkJFWxaZPMBK-SQ@mail.gmail.com>
-Subject: rebase --abort Unespected behavior
-To:     git@vger.kernel.org
+X-Google-Sender-Delegation: rcdailey@gmail.com
+From:   Robert Dailey <rcdailey.lists@gmail.com>
+Date:   Fri, 28 Feb 2020 12:15:29 -0600
+X-Google-Sender-Auth: SDNLGoo9bMdt8WTpFzYugxBVx80
+Message-ID: <CAHd499DC7pOB3kD7nAG79GrufKrV-8p4vSZ5ZEPQb5gdXrNakg@mail.gmail.com>
+Subject: Why does `pull.rebase` default to `false`?
+To:     Git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+This is more of a question of practicality. Literally all of the team
+and project workflows I've experienced have demanded that `git pull`
+actually perform a rebase of your local commits, as opposed to
+introducing a merge commit. This means setting `pull.rebase` to
+`true`. I can't think of a practical, day-to-day use case for wanting
+merge commits after a pull. Since the subject commits of the rebase
+are always local, there's no harm to anything upstream since they
+haven't been pushed yet.
 
-I don't know if this is a bug but it was unexpected for us. I
-accidentally added untracked files through a `git add .` while doing
-an interactive rebase and aborting the rebase deleted those files. Is
-this to be expected?
+I'm sure there are edge cases that explain why the default is `false`,
+but I'd argue that it is likely a case of the minority concerns
+becoming an inconvenience for the majority of users.
 
-To reproduce:
-mkdir test_folder
-cd test_folder
-git init
-touch first
-git add .
-git commit -m 'First'
-echo 1 >> first
-git add .
-git commit -m 'Second'
-echo 2 >> first
-git add .
-touch second
-git commit -m 'Third'
-git rebase -i HEAD~2 #set second to be edited
-git add .
-git status        #second should have staged
-git rebase --abort
-ls        #second has been deleted
-
-Not sure this is an expected behavior.
-Thanks
-Blaise Garant
+Thanks in advance for any enlightenment!
