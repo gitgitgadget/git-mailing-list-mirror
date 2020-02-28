@@ -2,67 +2,97 @@ Return-Path: <SRS0=f6GY=4Q=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 83B0AC3F2D2
-	for <git@archiver.kernel.org>; Fri, 28 Feb 2020 17:06:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 342E6C3F2CD
+	for <git@archiver.kernel.org>; Fri, 28 Feb 2020 17:18:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 61B1C2469F
-	for <git@archiver.kernel.org>; Fri, 28 Feb 2020 17:06:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CC10E246AC
+	for <git@archiver.kernel.org>; Fri, 28 Feb 2020 17:18:06 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="TkB3hc7Z"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726561AbgB1RGn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Feb 2020 12:06:43 -0500
-Received: from cloud.peff.net ([104.130.231.41]:57224 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725827AbgB1RGn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Feb 2020 12:06:43 -0500
-Received: (qmail 4208 invoked by uid 109); 28 Feb 2020 17:06:42 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 28 Feb 2020 17:06:42 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16938 invoked by uid 111); 28 Feb 2020 17:15:51 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 28 Feb 2020 12:15:51 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 28 Feb 2020 12:06:41 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Ralf Thielow via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Alban Gruin <alban.gruin@gmail.com>,
-        Ralf Thielow <ralf.thielow@gmail.com>
-Subject: Re: [PATCH] config.mak.dev: re-enable -Wformat-zero-length
-Message-ID: <20200228170641.GA1405401@coredump.intra.peff.net>
-References: <pull.567.git.1582835130592.gitgitgadget@gmail.com>
- <20200227235445.GA1371170@coredump.intra.peff.net>
- <xmqqtv3aek8o.fsf@gitster-ct.c.googlers.com>
+        id S1726063AbgB1RSF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Feb 2020 12:18:05 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:51586 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725730AbgB1RSF (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Feb 2020 12:18:05 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 24C16C7C47;
+        Fri, 28 Feb 2020 12:18:05 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=H5zzFCG6/RPLrCVE4c2nc3dOFcg=; b=TkB3hc
+        7Z/6Yf19DO9xa7bTlmiCRxdmPCKy9yCkjBYfeDj7vLz22ix1ycqDMFgNmUvwE0cU
+        2UNBxge67PI3HckxaGncmjkl4UnWsZmrvA+KuRlq91Y5ch4FAUMBX+WUKL7NcH1A
+        8mZlOwEm682/f65nXPRDkSA9Vh0aRFXGBt2Wc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=xEg6boXXnDvktHe9OnpaMKBrrNgpD7BP
+        knnV7BejdX8lV3LrsSQ51lUzmVLskei1Bwe12AIS51YYoaQJiiOe5Q/GANMevT+e
+        l8Oq6zlSULMWQNIA+4MGQV7KdPJ4IejMgPOl3+CEZ8Jaa8UEaCKPlbTTOYO/KhDe
+        Jea+f1anl2U=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1C1C9C7C46;
+        Fri, 28 Feb 2020 12:18:05 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 35B83C7C44;
+        Fri, 28 Feb 2020 12:18:02 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Linus Torvalds <torvalds@linux-foundation.org>
+Cc:     Hans Jerry Illikainen <hji@dyntopia.com>,
+        Git List Mailing <git@vger.kernel.org>
+Subject: Re: Signed commit regression?
+References: <CAHk-=wgg8ctNmHbKjy-yYnz07L3m8=1et_q2FJHKM9mZKXzGAA@mail.gmail.com>
+        <CAHk-=whg3uip_N1EjLEzaZNMvS8v+5u2GGueE9Wm2xnY87D+-A@mail.gmail.com>
+Date:   Fri, 28 Feb 2020 09:17:58 -0800
+In-Reply-To: <CAHk-=whg3uip_N1EjLEzaZNMvS8v+5u2GGueE9Wm2xnY87D+-A@mail.gmail.com>
+        (Linus Torvalds's message of "Fri, 28 Feb 2020 08:47:23 -0800")
+Message-ID: <xmqqpndyeim1.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqtv3aek8o.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4657EE0C-5A4E-11EA-A764-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 28, 2020 at 08:42:47AM -0800, Junio C Hamano wrote:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > The short of it is that we probably can't just disable the warning for
-> > everybody because of portability issues. And ignoring it for developers
-> > puts us in the situation we're in now, where non-dev builds are annoyed.
-> 
-> "git blame" unfortunately is very bad at poing at a commit that
-> removed something, so I do not offhand know how much it would help
-> readers who later wonder "oh, I am sure we had thing to disable
-> format-zero-length warning, and I want to learn the reason why we
-> dropped it", but thanks for writing this down.
+> On Fri, Feb 28, 2020 at 8:44 AM Linus Torvalds
+> <torvalds@linux-foundation.org> wrote:
+>>
+>> I suspect it's due to this commit:
+>>
+>>   72b006f4bf ("gpg-interface: prefer check_signature() for GPG verification")
+>>
+>> but as mentioned I don't have the ability to really dig deeper right now.
+>
+> Never mind - I did a mindless "just revert that and test", and it
+> indeed is that commit.
+>
+> Please revert it in upstream git. The "No signature" message really is
+> horribly wrong. It's both technically entirely wrong, but it's wrong
+> from a UI standpoint too since you really need to show what the
+> missing key was.
 
-I often turn to "git log -Sformat-zero" for this (and in fact that was
-very useful for the research I did yesterday). But of course you have to
-first _know_ about the warning and wonder "hey, didn't used ignore it?"
-for that to be useful.
+True---the messages that told you the missing piece of information
+with the original code came directly from gnupg, and the problematic
+change stopped showing that and replaced it with the generic (and
+wrong) "We tried to verify signature and it failed---it must be that
+the input did not have signature" message.
 
--Peff
+It is in v2.25 already, so we'd need to revert it out of 'maint'; it
+seems to have a minimum fallout on a topic in flight, but it looks
+manageable.
+
+Thanks.
