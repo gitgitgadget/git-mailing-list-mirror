@@ -2,101 +2,106 @@ Return-Path: <SRS0=f6GY=4Q=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B9E3BC3F2CD
-	for <git@archiver.kernel.org>; Fri, 28 Feb 2020 16:25:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4FA99C3F2CD
+	for <git@archiver.kernel.org>; Fri, 28 Feb 2020 16:42:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8D4672469C
-	for <git@archiver.kernel.org>; Fri, 28 Feb 2020 16:25:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 269A82468D
+	for <git@archiver.kernel.org>; Fri, 28 Feb 2020 16:42:55 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XKSitADD"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="JzhcX/vU"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726094AbgB1QZ5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Feb 2020 11:25:57 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:40080 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725796AbgB1QZ5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Feb 2020 11:25:57 -0500
-Received: by mail-wr1-f67.google.com with SMTP id r17so3606130wrj.7
-        for <git@vger.kernel.org>; Fri, 28 Feb 2020 08:25:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ZR2xErhven7ZjJqNePcOOgqppDzixgneOi+2/9fOWRc=;
-        b=XKSitADDro21aPRsq0scC7/xrilRKGEq2+UOLDrEpfEkV3CRfczYksuudqsX+jgLBp
-         YZRzkLFOW5j+bjP6W3kjaXWE6hOU03e45ukrLakJqkzwOe+e/XuX07tx20++hf3PhsD3
-         W3oy5Don4bkCa21Uuy1BrLUqR3kDqiesEmLJkwUCbX918+OJ1RJCU25HcPBDt7tZAWc9
-         bEkXV2sXSNQXafE69VdVPQS2SUGxHj7YSY9dAsPNQVSRHjW3fm2o0IN26elh+DMX3QBO
-         8Bmoq3NJzMUJRD7rO8L+SOSvvWCFigeKdkeP06yH59IfgnFxV2XWqlLvGE2kRmZwIKgH
-         sBpw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ZR2xErhven7ZjJqNePcOOgqppDzixgneOi+2/9fOWRc=;
-        b=Pl/EXDEWowEkXyVF+SFmRIPnMPwFC4BhW9XemjRF00gTRWx2fHmnHvOO4to+44NSRF
-         hfi733pdUcRLWdYmoUevz577ri/laf6ak6pmsbA6/w7wyNolclQMWOdfQSyUZBs5P77c
-         l3jCeKZKbK3lb5/hyrfz3zvB4MSZGCm30KMZcvzfvLQWAaJQ0gVBul4VcmnKuQZNV37Z
-         pUp99qK0wUd2Jit+dldRyjCxDinDwh9eEHKKIsQPLwuz6w4TlTPPykWvVn+i5EHSrFvq
-         VXPPeIZT6krE1n4g9n0NS9hfjcK4gs9oDt+fIfKWm4J9ViFX3rGwHJoOxCkkNQZpsKWm
-         Q/FA==
-X-Gm-Message-State: APjAAAVk8chRVV6z1R2ynYQ7f6OzQ/s1d7TY2v1BvQOEHkYbc2Ok93mN
-        ukMeo7Ssz+67EPAy6PK/II2MPpuQXRIxJA==
-X-Google-Smtp-Source: APXvYqwleuLeioPBmcBJ+RErbqvG1vRE7Ls5I2J2JLWoT/2bmbUa+3AJs5rr+ITyNH+S0g5+4Ei3zQ==
-X-Received: by 2002:adf:eb46:: with SMTP id u6mr5589242wrn.239.1582907154133;
-        Fri, 28 Feb 2020 08:25:54 -0800 (PST)
-Received: from localhost.localdomain (87-231-246-247.rev.numericable.fr. [87.231.246.247])
-        by smtp.gmail.com with ESMTPSA id a62sm2869230wmh.33.2020.02.28.08.25.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Feb 2020 08:25:53 -0800 (PST)
-From:   Damien Robert <damien.olivier.robert@gmail.com>
-X-Google-Original-From: Damien Robert <damien.olivier.robert+git@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Damien Robert <damien.olivier.robert+git@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        William Baker <William.Baker@microsoft.com>
-Subject: [PATCH 1/1] midx.c: fix an integer overflow
-Date:   Fri, 28 Feb 2020 17:24:49 +0100
-Message-Id: <20200228162450.1720795-1-damien.olivier.robert+git@gmail.com>
-X-Mailer: git-send-email 2.25.1
+        id S1726738AbgB1Qmy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Feb 2020 11:42:54 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:63398 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725876AbgB1Qmy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Feb 2020 11:42:54 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 33C29BCAF9;
+        Fri, 28 Feb 2020 11:42:52 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Enj1wovFbg46SV1vMPqwtyNNfAM=; b=JzhcX/
+        vUhkmxKL5WDzPnaWvqSa8kqGRgqQiXVPP6N2/FhIicDzZumbcjUaNBTV74IJ6ZVH
+        ZGeVFQlYtNL9N1oJLZFPGP2lQufjinGKNunZ5TfYtlbkWEgwx97XpGzMDfclug0L
+        Zd7sx+Q4dfeddD0scTokJEbFsA8UMHszxHbMI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=jGOeQTZgsSu1/kTnnQPwpkr7oJtHwyDc
+        +FZ71GQvhc8HYMP5m+uqDKAe7sW2oXn5Eyh4a2yKpS1/VCdlPFpC07J20EwtoQ8c
+        PUXL5Y82w+i0psFngAxYonMjkRsx0OnQLCHv9N4XX8GNuyAYHk55aSamfVzznyHD
+        RBPdMIYN3LE=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2C26BBCAF7;
+        Fri, 28 Feb 2020 11:42:52 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 49A29BCAF6;
+        Fri, 28 Feb 2020 11:42:49 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Ralf Thielow via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Alban Gruin <alban.gruin@gmail.com>,
+        Ralf Thielow <ralf.thielow@gmail.com>
+Subject: Re: [PATCH] config.mak.dev: re-enable -Wformat-zero-length
+References: <pull.567.git.1582835130592.gitgitgadget@gmail.com>
+        <20200227235445.GA1371170@coredump.intra.peff.net>
+Date:   Fri, 28 Feb 2020 08:42:47 -0800
+In-Reply-To: <20200227235445.GA1371170@coredump.intra.peff.net> (Jeff King's
+        message of "Thu, 27 Feb 2020 18:54:45 -0500")
+Message-ID: <xmqqtv3aek8o.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5AF25E56-5A49-11EA-A50C-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When verifying a midx index with 0 objects, the
-    m->num_objects - 1
-overflows to 4294967295.
+Jeff King <peff@peff.net> writes:
 
-Fix this.
+> The short of it is that we probably can't just disable the warning for
+> everybody because of portability issues. And ignoring it for developers
+> puts us in the situation we're in now, where non-dev builds are annoyed.
 
-Signed-off-by: Damien Robert <damien.olivier.robert+git@gmail.com>
----
- midx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+"git blame" unfortunately is very bad at poing at a commit that
+removed something, so I do not offhand know how much it would help
+readers who later wonder "oh, I am sure we had thing to disable
+format-zero-length warning, and I want to learn the reason why we
+dropped it", but thanks for writing this down.
 
-diff --git a/midx.c b/midx.c
-index 37ec28623a..6ffe013089 100644
---- a/midx.c
-+++ b/midx.c
-@@ -1127,7 +1127,7 @@ int verify_midx_file(struct repository *r, const char *object_dir, unsigned flag
- 	if (flags & MIDX_PROGRESS)
- 		progress = start_sparse_progress(_("Verifying OID order in multi-pack-index"),
- 						 m->num_objects - 1);
--	for (i = 0; i < m->num_objects - 1; i++) {
-+	for (i = 0; i + 1 < m->num_objects; i++) {
- 		struct object_id oid1, oid2;
- 
- 		nth_midxed_object_oid(&oid1, m, i);
--- 
-Patched on top of v2.25.1-379-gd22418c625 (git version 2.25.1)
-
+> Since the workaround is both rarely needed and fairly straight-forward,
+> let's just commit to doing it as necessary, and re-enable the warning.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> I had totally forgotten about that thread until researching the history
+> just now. There's another option there involving #pragma, but it was too
+> gross for me to even suggest now as an alternative in the commit
+> message. ;) I think this is the most practical improvement.
+>
+>  config.mak.dev | 1 -
+>  1 file changed, 1 deletion(-)
+>
+> diff --git a/config.mak.dev b/config.mak.dev
+> index bf1f3fcdee..89b218d11a 100644
+> --- a/config.mak.dev
+> +++ b/config.mak.dev
+> @@ -9,7 +9,6 @@ endif
+>  DEVELOPER_CFLAGS += -Wall
+>  DEVELOPER_CFLAGS += -Wdeclaration-after-statement
+>  DEVELOPER_CFLAGS += -Wformat-security
+> -DEVELOPER_CFLAGS += -Wno-format-zero-length
+>  DEVELOPER_CFLAGS += -Wold-style-definition
+>  DEVELOPER_CFLAGS += -Woverflow
+>  DEVELOPER_CFLAGS += -Wpointer-arith
