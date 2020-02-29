@@ -2,164 +2,135 @@ Return-Path: <SRS0=C4D3=4R=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-2.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CA67C3F2D3
-	for <git@archiver.kernel.org>; Sat, 29 Feb 2020 13:08:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 376DDC3F2C6
+	for <git@archiver.kernel.org>; Sat, 29 Feb 2020 14:28:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id E4A06246A2
-	for <git@archiver.kernel.org>; Sat, 29 Feb 2020 13:08:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 04AB22468A
+	for <git@archiver.kernel.org>; Sat, 29 Feb 2020 14:28:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aW/GhxAv"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H3tY+KuS"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726990AbgB2NIB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 29 Feb 2020 08:08:01 -0500
-Received: from mail-wm1-f53.google.com ([209.85.128.53]:54052 "EHLO
-        mail-wm1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726933AbgB2NIB (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Feb 2020 08:08:01 -0500
-Received: by mail-wm1-f53.google.com with SMTP id f15so6382621wml.3
-        for <git@vger.kernel.org>; Sat, 29 Feb 2020 05:08:00 -0800 (PST)
+        id S1727068AbgB2O2H (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 29 Feb 2020 09:28:07 -0500
+Received: from mail-wm1-f41.google.com ([209.85.128.41]:39300 "EHLO
+        mail-wm1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727000AbgB2O2G (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Feb 2020 09:28:06 -0500
+Received: by mail-wm1-f41.google.com with SMTP id c84so6391043wme.4
+        for <git@vger.kernel.org>; Sat, 29 Feb 2020 06:28:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=2OeFoo4vPFtYXQ5CfkqfbSK3/CLEdYstRlpiN/FzD64=;
-        b=aW/GhxAvQHgtkmQgKXLIJr94A4Ky/p2F+Anvj7mwnhLFltpSQrwU9RRkQVtw4vAT5R
-         XCrHkUHhvDo5Wgg8AbkLdQfZ0mW51rHiRV2EArT1N63OHDYNyuvn0E77wMFJzkH5kh5s
-         prXbZnGB2wBO1W7LwTkHK2x68zF3oGhNYp1fu9n4+sEJR4npcU1NdMqPL6kCczXUqgZf
-         SNPyChb/Ty4m1iVnC2H/Xd1pPU+/8rT403vIpneUX6SnDm7lNpaL+hSgJiYaMRxLTzoG
-         NG4anOMIDix2EXUVMajsE37b6xpXtlO8bf6xmbGsUfFWevg3PTJNxf9hMuQpx318/hKb
-         jVng==
+        h=reply-to:subject:to:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=ExLDbJ2/chXAd5nd18C67dhcGDDcmEklazGWraxjyBY=;
+        b=H3tY+KuSDjM84Fos1/Y/Yep4gIHlUfPLK0nvXBe/Y9Qbeo4WIC5Qc4T/a24gESjw8I
+         lVDzIC6jEIejVTPG8o9YvV9LswHyaDvXrr65fuOdY7yU/hbs5PDEFgBkVrrfvOGJuRu4
+         CKbotEKVDFzhsL9ggioBPmvFPiScCDCQQ0oGv8B8vXVTmpEJuiHRJlYvY+4/BPBYl1r7
+         7T/XgkqxC/SRrNWS3HoAuDRGvWheNC43zxDbYDPrrKx79BjDbCOHS6+uK2js4UrO1/PW
+         oEdDUKgtI31a9gy6p9c8wSMVuNUwfKkr0CuscExXxVZaH96Khs8dvKok5wz8M+wfvL7e
+         cx+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=2OeFoo4vPFtYXQ5CfkqfbSK3/CLEdYstRlpiN/FzD64=;
-        b=YuxsmYmrL61bGavZ/OKX83eF9FAWzbi1ulNaisESWuPQu01i0mKlKIPOBvK8kdu8DU
-         L2YyVR+yGQYnR7AcTIsvfInK7geT6BZf0fPYev/i6Z+WsgMtr+Fv5QqfZ23L31QCLTC1
-         6FHkOQIpu5lbc856rcMgartUla0vUlMvq4yAMpW4mi+zV0I4NgyArpIFgB5q67D4wOTO
-         9/B4kVkUrWx4AHzHplHilkgtwAcfg+lkQhlj+yG6ru3GbXPKQDlD4vy1scu3ur5X2/UF
-         6AN6TuMVtkIGYuahQH2Ij6YZchCyMGasE62ygUh2RpHr0MLd3hlrJ3qe39uGoPqWnHGo
-         UX6g==
-X-Gm-Message-State: APjAAAV1+/jG80Q/w3C2EvTO31MXjmLY7F7z7Q+I+EiFHrNHl0Wzt6mA
-        iz/rvF2vNjKSMlgx5ony7B0keKmP
-X-Google-Smtp-Source: APXvYqyLd+uNVMxE5r4N69K0CuiDnuWONvGuBpL3LD+Fb2NJ08uWbHRQZuP9foX6PbGdUeNL6awByw==
-X-Received: by 2002:a1c:791a:: with SMTP id l26mr10108220wme.58.1582981679229;
-        Sat, 29 Feb 2020 05:07:59 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o16sm1510726wrj.5.2020.02.29.05.07.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 29 Feb 2020 05:07:58 -0800 (PST)
-Message-Id: <pull.568.git.1582981677312.gitgitgadget@gmail.com>
-From:   "Harald van Dijk via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 29 Feb 2020 13:07:57 +0000
-Subject: [PATCH] show_one_mergetag: print non-parent in hex form.
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:reply-to:subject:to:references:from:message-id
+         :date:user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=ExLDbJ2/chXAd5nd18C67dhcGDDcmEklazGWraxjyBY=;
+        b=lRfG2YkLHJz5YLCkSARbSGFzdcN8RsGfamz3WU+JC1xwJjWgryuRZ/o98QsrQa1swS
+         /0UPnlyyazyfmIoig1fA2E1Y4D8uDsrfWZClkiQB8lfNa6Ymo/zqpOFd3EigaWK4ijAX
+         tZxXkoYzEEaoHb5w9n9y/WRlGZbGCK/5YaWpyGvVqzQCyvALjfLVmPPa5+vpZUh4jw4J
+         y3sAFMznvM1DYpF/2jp7fBK8bc/PBs8H1V37LJ8YqC/gTHHGhEWfNvuBcF4XkRLAVJA9
+         NQY+2iNbyEUa8H+nus1qHl/Qze8UrPx64p7odifSMbBgkoJUAHlClpJeDjD6muhho9FW
+         4PeA==
+X-Gm-Message-State: APjAAAXeb1iamVkTSkkqG6YkhcrQwSQRsy9imjpHW9bP6hvMwQ6fdkgK
+        AIdxCucI9EaHW8imNYliYC0SjNo5
+X-Google-Smtp-Source: APXvYqy8fh1VXC+juISY5+0IlIoA6UEnL0tiV9P4+RrKN4MIWT7CnW0CFs0n25sHAqvPW5woBLQH+Q==
+X-Received: by 2002:a7b:c847:: with SMTP id c7mr9716382wml.3.1582986484602;
+        Sat, 29 Feb 2020 06:28:04 -0800 (PST)
+Received: from [192.168.1.240] (85.25.198.146.dyn.plus.net. [146.198.25.85])
+        by smtp.gmail.com with ESMTPSA id i18sm14233037wrv.30.2020.02.29.06.28.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 29 Feb 2020 06:28:04 -0800 (PST)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: rebase --abort Unespected behavior
+To:     Blaise Garant <blaise@garantcoutu.com>, git@vger.kernel.org
+References: <CANXsDork=bL=SUodXDzkcnjpPALm53e++UkVkJFWxaZPMBK-SQ@mail.gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <13cdf33b-7ca2-c391-fddd-53bdbae7f0d3@gmail.com>
+Date:   Sat, 29 Feb 2020 14:28:03 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Harald van Dijk <harald@gigawatt.nl>,
-        Harald van Dijk <harald@gigawatt.nl>
+In-Reply-To: <CANXsDork=bL=SUodXDzkcnjpPALm53e++UkVkJFWxaZPMBK-SQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Harald van Dijk <harald@gigawatt.nl>
+Hi Blaise
 
-When a mergetag names a non-parent, which can occur after a shallow
-clone, its hash was previously printed as raw data. Print it in hex form
-instead.
+On 28/02/2020 17:36, Blaise Garant wrote:
+> Hello,
+> 
+> I don't know if this is a bug but it was unexpected for us. I
+> accidentally added untracked files through a `git add .` while doing
+> an interactive rebase and aborting the rebase deleted those files. Is
+> this to be expected?
 
-Signed-off-by: Harald van Dijk <harald@gigawatt.nl>
----
-    show_one_mergetag: print non-parent in hex form.
-    
-    When a mergetag names a non-parent, which can occur after a shallow
-    clone, its hash was previously printed as raw data. Print it in hex form
-    instead.
-    
-    Signed-off-by: Harald van Dijk harald@gigawatt.nl [harald@gigawatt.nl]
-    
-    Before, after a shallow clone of 
-    https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/:
-    
-    $ git show -s --show-signature
-    commit a2f0b878c3ca531a1706cb2a8b079cea3b17bafc (grafted, HEAD -> master, origin/master, origin/HEAD)
-    tag kbuild-fixes-v5.6-2 names a non-parent 꼋<CB>)/<B9><A5>u{^L<8A><B7>u^_A<B0><A1>^D<F8>
-    No signature
-    Author: Linus Torvalds <torvalds@linux-foundation.org>
-    Date:   Thu Feb 27 11:26:33 2020 -0800
-    [...]
-    
-    After:
-    
-    $ git show -s --show-signature
-    commit a2f0b878c3ca531a1706cb2a8b079cea3b17bafc (grafted, HEAD -> master, origin/master, origin/HEAD)
-    tag kbuild-fixes-v5.6-2 names a non-parent eabc8bcb292fb9a5757b0c8ab7751f41b0a104f8
-    No signature
-    Author: Linus Torvalds <torvalds@linux-foundation.org>
-    Date:   Thu Feb 27 11:26:33 2020 -0800
+I agree that this is surprising and undesirable but it's not unexpected 
+given the way --abort is implemented. 'rebase --abort' calls 'reset 
+--hard <branch we're rebasing>' so it will discard all the uncommitted 
+changes in the worktree and reset the worktree and index to the branch tip.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-568%2Fhvdijk%2Fmergetag-hex-form-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-568/hvdijk/mergetag-hex-form-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/568
+The tricky thing with your situation is that the files are tracked at 
+the point we call 'reset --hard' as they've been added to the index so 
+git feels free to discard them. Perhaps rather than calling 'reset 
+--hard' it would be better to use a custom callback with unpack_trees() 
+that errors out if there are any paths in the index that are not in 
+HEAD, the commit we just picked or the branch tip we're resetting to. If 
+we do that we should consider using the same thing for 
+'cherry-pick/merge/reset --abort' as well. --autostash potentially 
+complicates things as the file might be in the stash but not in the 
+other commits but lets not worry about that at the moment.
 
- log-tree.c     |  2 +-
- t/t4202-log.sh | 20 ++++++++++++++++++++
- 2 files changed, 21 insertions(+), 1 deletion(-)
+If your untracked files were ignored then I think 'git add .' would have 
+complained or just not added them, but 'git checkout' and 'git merge' 
+will happily overwrite ignored files so ignoring them is not always an 
+ideal solution.
 
-diff --git a/log-tree.c b/log-tree.c
-index cae38dcc662..2a2db96d5ec 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -517,7 +517,7 @@ static int show_one_mergetag(struct commit *commit,
- 			    "merged tag '%s'\n", tag->tag);
- 	else if ((nth = which_parent(&tag->tagged->oid, commit)) < 0)
- 		strbuf_addf(&verify_message, "tag %s names a non-parent %s\n",
--				    tag->tag, tag->tagged->oid.hash);
-+				    tag->tag, oid_to_hex(&tag->tagged->oid));
- 	else
- 		strbuf_addf(&verify_message,
- 			    "parent #%d, tagged '%s'\n", nth + 1, tag->tag);
-diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index 192347a3e1f..20cb436c433 100755
---- a/t/t4202-log.sh
-+++ b/t/t4202-log.sh
-@@ -1634,6 +1634,26 @@ test_expect_success GPG 'log --graph --show-signature for merged tag' '
- 	grep "^| | gpg: Good signature" actual
- '
- 
-+test_expect_success GPG 'log --graph --show-signature for merged tag in shallow clone' '
-+	test_when_finished "git reset --hard && git checkout master" &&
-+	git checkout -b plain-shallow master &&
-+	echo aaa >bar &&
-+	git add bar &&
-+	git commit -m bar_commit &&
-+	git checkout --detach master &&
-+	echo bbb >baz &&
-+	git add baz &&
-+	git commit -m baz_commit &&
-+	git tag -s -m signed_tag_msg signed_tag_shallow &&
-+	hash=$(git rev-parse HEAD) &&
-+	git checkout plain-shallow &&
-+	git merge --no-ff -m msg signed_tag_shallow &&
-+	git clone --depth 1 --no-local . shallow &&
-+	test_when_finished "rm -rf shallow" &&
-+	git -C shallow log --graph --show-signature -n1 plain-shallow >actual &&
-+	grep "tag signed_tag_shallow names a non-parent $hash" actual
-+'
-+
- test_expect_success GPGSM 'log --graph --show-signature for merged tag x509' '
- 	test_when_finished "git reset --hard && git checkout master" &&
- 	test_config gpg.format x509 &&
+Best Wishes
 
-base-commit: 2d2118b814c11f509e1aa76cb07110f7231668dc
--- 
-gitgitgadget
+Phillip
+
+
+> To reproduce:
+> mkdir test_folder
+> cd test_folder
+> git init
+> touch first
+> git add .
+> git commit -m 'First'
+> echo 1 >> first
+> git add .
+> git commit -m 'Second'
+> echo 2 >> first
+> git add .
+> touch second
+> git commit -m 'Third'
+> git rebase -i HEAD~2 #set second to be edited
+> git add .
+> git status        #second should have staged
+> git rebase --abort
+> ls        #second has been deleted
+> 
+> Not sure this is an expected behavior.
+> Thanks
+> Blaise Garant
+> 
