@@ -1,107 +1,140 @@
-Return-Path: <SRS0=f6GY=4Q=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=C4D3=4R=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.5 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DBFF3C3F2D2
-	for <git@archiver.kernel.org>; Fri, 28 Feb 2020 23:57:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 94382C3F2D2
+	for <git@archiver.kernel.org>; Sat, 29 Feb 2020 00:59:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B04882469F
-	for <git@archiver.kernel.org>; Fri, 28 Feb 2020 23:57:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 59ED72468D
+	for <git@archiver.kernel.org>; Sat, 29 Feb 2020 00:59:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="eEpFAgc+"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qbyj9d2l"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726695AbgB1X5P (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Feb 2020 18:57:15 -0500
-Received: from mout.gmx.net ([212.227.15.18]:45551 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726277AbgB1X5P (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Feb 2020 18:57:15 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1582934227;
-        bh=L73sIvrcsnNcrMqzPU8qdn2GCR3kBIVyLbFFALhxcxg=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=eEpFAgc+5hDlbYHK9Q8ufm+EB1vjZGnye0GpTJr29bZCt86IxDH1SydCk2VK/FN0M
-         M6NYw3Frs6h30T0UnZODZkF/kVzmrPfERONjzC+7wwDFo76hiZ3quoeCij1ureJWFw
-         12n/AtIsQ2oVlosd/CXwpwyF6E7r2QLP9RbTSslM=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.86]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MpUUw-1jkAT136yq-00pvcL; Sat, 29
- Feb 2020 00:57:07 +0100
-Date:   Sat, 29 Feb 2020 00:57:07 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Ed Maste <emaste@freebsd.org>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git mailing list <git@vger.kernel.org>
-Subject: CI/PR builds on FreeBSD, was Re: [PATCH 1/3] t/lib-httpd: avoid
- using BSD's sed
-In-Reply-To: <nycvar.QRO.7.76.6.2002272046060.46@tvgsbejvaqbjf.bet>
-Message-ID: <nycvar.QRO.7.76.6.2002290054540.11433@tvgsbejvaqbjf.bet>
-References: <pull.714.git.git.1582747775.gitgitgadget@gmail.com> <9900cacbfefb46610114702e6d48d8020f3f2866.1582747775.git.gitgitgadget@gmail.com> <CAPyFy2ArnEFe33GFLsbcOEV37DZ=VJpF-Sckn-V_tJUrToir=w@mail.gmail.com> <nycvar.QRO.7.76.6.2002271640320.46@tvgsbejvaqbjf.bet>
- <CAPyFy2BZoJAuugAbmgsrbzjM1pNu7o9Wzusz1qV7No8Hr+T4ww@mail.gmail.com> <nycvar.QRO.7.76.6.2002272046060.46@tvgsbejvaqbjf.bet>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726525AbgB2A7E (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Feb 2020 19:59:04 -0500
+Received: from mail-ed1-f51.google.com ([209.85.208.51]:34709 "EHLO
+        mail-ed1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726046AbgB2A7E (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Feb 2020 19:59:04 -0500
+Received: by mail-ed1-f51.google.com with SMTP id dm3so5554956edb.1
+        for <git@vger.kernel.org>; Fri, 28 Feb 2020 16:59:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=65ZYLV8Yewh3xipITwgLnU7ohHOr1NHDbWoa+x3SN6E=;
+        b=qbyj9d2lVY+uiMDrFgAlM20ovXhY0r9nR1zASa28WutY2MHm/sJ8RL+wNj7ReZOQhz
+         eiWt1qwAYP/1NTGkF+w8ytkBclJzbn4TPpDZb6OQDqSMPZPwwe0rBhEU3ScSpvZvm04j
+         0T29VEiAMv+ux9TIPAy8T7eU9rU0E7CQ4xM7o3u5gw/XHHlViHfXG9Eust+rsUtTzUyX
+         +SYd3y0wg0DkvRaMre2UDtJyAmXNBbeMZhHsDTvfwOtQHXWpuzk4PiPIYXbYG6Gv4UQR
+         KslXzDG8yBXFXMWnQ+LFGs2qfk1gn7lTp4Fs6cQbMdjAKK6yGIAiudIdUZcVGPAZtPD0
+         4CZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=65ZYLV8Yewh3xipITwgLnU7ohHOr1NHDbWoa+x3SN6E=;
+        b=dv8ReQ9k0iQB58yZCDzersIqsOgpTo2ovq/5TzlaKzE67ysWuK7emLTh49sJjc1rnu
+         lIVoK7kruBd5FsKXi+03RXO/2XpsaoP/o1SY67ZuFMrE9Q/WqeF2UjGoKjVdixXdaAN+
+         cMYYwfa6GKDx+Ospgb7Cc7FPpLC34rLf0zqUij6bDueEdPNY+mjbLLFeBH+O/sDl6P08
+         m0w1Mf1cLPXuKqfQMbE3LAKZhVn1BdHLkxuGOhhXIrqOPwBtbJHVNbYC1L0JVJIf25zT
+         LjQpvKUnEHBm4jE4btiOBQs3nlCKwiZ4LWGPKhKjtG51lLLZBaMPDTO/lPL9NPKsg8w/
+         aS1g==
+X-Gm-Message-State: APjAAAUHpSSYGlY34B6f3xlvLIeEkX24eykiLncm/lHjUswWB5yG6jCn
+        g1SF9gvEX3vu++dzn/iN4YyxC+ETHzB2fBUG/QQ=
+X-Google-Smtp-Source: APXvYqxxGFQXIHD6oLNQSi4qyu/rD0oYgL163IHOT/VM+w+BUKe6QEnUitPR5pgK/FBRFTjA0EvdycP3TEOpfS0QWy8=
+X-Received: by 2002:a17:906:edc7:: with SMTP id sb7mr6166110ejb.367.1582937942917;
+ Fri, 28 Feb 2020 16:59:02 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:fu1fh3VIt4ceZBOANSRMnooqn8bdP/NUYRVjw1pOWzSpQ0f+vHS
- ibjy8rJL/21A2cpDPj1imf9KCl0cgp+wmwgHKpsV2ewGXqAIlAEgNAkdPM+hZj9+SwKuzbn
- VQFcCIvwmOphLzhpEiMsQ7NoVy5xQjg/S+t+/x/NewClBdyuq7OKW2ufc2W7Mq8KemRra1c
- mNX19cxuUOoxU8Z5Yov7A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:DkRXdre1++0=:/HRYw4MTecqRS/OgJnH7Uy
- 4zEoqabGxTiR2Dl9cegsH1/wVOhqb93jyfDtXa4a3s0Ay+qBCCrGapdKbafrUPOlTclxXjbFC
- MRtb+Jh90GiD+VVgjyXD4duY7pHE2UD2vRo7pFwWqAHFvL62TsonQ2eLsrl+seXr8v/nH11Ac
- ytaw6PGRbHE09TcQZe0OaHxxmBdHBUM0TzD1YC187zyfjaGp8/SACXn3KKezC/Bdj3SDjpGPb
- sPLVOZMiZUKYlVx/aZnQahLzWnVCjgTDwC4yr0A8aX4sNIyBDbNwIVoFhu13upcIRsz5PXR5Z
- 51BxQHDBCXh/FEMXsP71nEv599awt0GnWY4r0ASLiqiv59DYf66ur8/fxfMi+DUtBTx5JkCLW
- Y5TO42JXwimrHZaQZhWJNvUHDDR6GfcXM4t6Fr5Nh5f2J/hFYGhtKIbIM4t63Z3qNar9jSIuy
- zpNqHgX9Xw8HqpEeaLlztE2hdRE+tXxj2qkBvpHnZ/5N1ZCkr9BnNUksLYYB6UP+5QNorGqBv
- hZFn+/1GhuIQ1qfaHSS0Qnb2pVWnmVtyJpKzgk9Nfy2jcCtKPIURdedC5m+mwls6YBDynhpDW
- KAU69bktoyEIqU3wSRjPHSqVoU5/PVvO9+hyNJwxxVPtSNY4f9saMuwcb8sEpuOKsVN2ynK1c
- zFpsQ+y+XRVJE0l1HjvKMmk4FjwDgfiHHWWxFwPSybZk4OZArlSru++9tZwpJ56/y8YfXxUe+
- /ein2K434pspA9TpZZvHs8Lyk7QOnHjlbNNa5x9nOtKfN+s4jcSKTO0g/zlqSYaJ0B7EyE3e0
- XtMyRPpqqpOJ4ytERxRPuPoffPz4r2emzbIyHg+Jxs+CJy1rqMGrtfgA+YWEVPOPXdoVZd4QW
- wB23aDgb34w6MoxDTtAC/E67GmSCx2tyZlCiIl0Dk4Kzwe4tJe/e/mrOvxyyra2jTJFCWwDSs
- CETyuFmH+tsoy5/l+hvOF7n4fxuoNcgpyGBOOv5opiuu2Yhfd/H+YPxJWnatbAAVi/8wl9etO
- yobLnuHqvSc12Cq0jxsmNj3U2kWtB3+QHiszeowKYmqoPs7V+YkRiDXjRsHom0TIWAKU2Su3r
- pE333VnFKN3bFfPv/nWxYfr7rjv/Cjw6D5C1HX/WKEFbUvunvDDOuY/5eq3pp941CgKUrHzkt
- u6fF1pjxH7QTaXtstN3UuG5JmGq0wADhE2cbJwVLH6gYBmY6u0uVgr7Ah36ars1Z1E46OAF1V
- bsP07T6y4txQQiHrW
-Content-Transfer-Encoding: quoted-printable
+References: <pull.548.v5.git.1582628141.gitgitgadget@gmail.com>
+ <pull.548.v6.git.1582778112.gitgitgadget@gmail.com> <176e38a841d1bbb138ae31b6db34fb597f9188b2.1582778112.git.gitgitgadget@gmail.com>
+ <xmqq7e07g3hr.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq7e07g3hr.fsf@gitster-ct.c.googlers.com>
+From:   Heba Waly <heba.waly@gmail.com>
+Date:   Sat, 29 Feb 2020 13:58:51 +1300
+Message-ID: <CACg5j25odrJXOt7o5QadSWBAyYnKbSOWKNOjRKCRXPcVjqyheQ@mail.gmail.com>
+Subject: Re: [PATCH v6 3/4] advice: revamp advise API
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Heba Waly via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ed,
-
-On Thu, 27 Feb 2020, Johannes Schindelin wrote:
-
-> On Thu, 27 Feb 2020, Ed Maste wrote:
+On Fri, Feb 28, 2020 at 9:49 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> > On Thu, 27 Feb 2020 at 10:40, Johannes Schindelin
-> > <Johannes.Schindelin@gmx.de> wrote:
-> >
-> > > Related, I saw that Cirrus CI offers FreeBSD builds, maybe you'd be
-> > > interested in supporting that out of the box in
-> > > https://github.com/git/git?
-> >
-> > Indeed - there is a .cirrus.yml in git now which builds and runs tests
-> > (on FreeBSD 12.1). I'll look into working with the GitHub organization
-> > owners for git and gitgitgadget to see about allowing Cirrus to access
-> > the repositories.
+> "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
-> Oy, I had forgotten that you worked on this. I enabled this in the git
-> and in the gitgitgadget orgs. The next pushes/PRs should benefit from
-> this.
+> > diff --git a/advice.c b/advice.c
+> > index 258cc9ba7af..8d9f2910663 100644
+> > --- a/advice.c
+> > +++ b/advice.c
+> > @@ -32,6 +32,40 @@ int advice_checkout_ambiguous_remote_branch_name = 1;
+> >  int advice_nested_tag = 1;
+> >  int advice_submodule_alternate_error_strategy_die = 1;
+> >
+> > +const char ADVICE_ADD_EMBEDDED_REPO[] = "advice.addEmbeddedRepo";
+> > +const char ADVICE_AM_WORK_DIR[] = "advice.amWorkDir";
+> > ...
+> > +static const char *advice_config_keys[] = {
+> > +     ADVICE_ADD_EMBEDDED_REPO,
+> > +     ADVICE_AM_WORK_DIR,
+> > ...
+> > +/*
+> > + * To add a new advice, you need to:
+> > + * Define a new const char array.
+> > + * Add a new entry to advice_config_keys list.
+> > + * Add the new config variable to Documentation/config/advice.txt.
+> > + * Call advise_if_enabled to print your advice.
+> > + */
+> > +extern const char ADVICE_ADD_EMBEDDED_REPO[];
+> > +extern const char ADVICE_AM_WORK_DIR[];
+> > ...
+>
+> Hmph.
+>
+> Even though I said that I would prefer it over the current one,
+> in that it allows the compilers to catch typo, and over the one
+> in v5 which uses enum, in that we do not have to go through
+> enum->string->hash conversion all the time, I have to say that I
+> am not very happy that we'd need to make a consistent change to
+> three separate places.
+>
 
-This works now. When you click on the green checkmarks (and the one red X)
-at https://github.com/git/git/branches/active, you will see the
-`freebsd_12` build.
+Unfortunately we'll have to make changes to three separate places
+until we implement a way to generate the documentation from the main
+list or vice versa, which we agreed in v2 not to do that now.
+https://lore.kernel.org/git/xmqqftfam5ux.fsf@gitster-ct.c.googlers.com/
 
-Ciao,
-Dscho
+> What's the ideal long-term outcome?  The reason why I suggested
+> during the v5 review an array of structure, a field in which can
+> be the .disabled field, was because it would allow us to later
+> extend the struct to help users.  Wouldn't it be nice if we can
+> do something like:
+>
+>     $ git advice --list "^fetch"
+>     fetchShowForcedUpdates      enabled
+>     $ git advice --list --verbose fetchShowForcedUpdates
+>     fetchShowForcedUpdates      enabled
+>         "git fetch" by default spends cycles to compute which
+>         branches were forcibly updated, but it can be turned off.
+>         To avoid mistaken sense of safety, however, a reminder
+>         message is issued instead when it is turned off.  The
+>         reminder can be turned off with this advice key.
+>
+> Such a future enhancement will become possible by assiciating a
+> help text for each advice key, and the data structure introduced
+> in <xmqqsgiymupf.fsf@gitster-ct.c.googlers.com> was meant to be
+> the beginning of it.
+
+Ok, you convinced me, will send a new version.
+
+Thanks,
+Heba
