@@ -2,139 +2,116 @@ Return-Path: <SRS0=C4D3=4R=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 94382C3F2D2
-	for <git@archiver.kernel.org>; Sat, 29 Feb 2020 00:59:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D884C3F2CD
+	for <git@archiver.kernel.org>; Sat, 29 Feb 2020 01:11:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 59ED72468D
-	for <git@archiver.kernel.org>; Sat, 29 Feb 2020 00:59:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1CA3924672
+	for <git@archiver.kernel.org>; Sat, 29 Feb 2020 01:11:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qbyj9d2l"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eocGvgXh"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726525AbgB2A7E (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Feb 2020 19:59:04 -0500
-Received: from mail-ed1-f51.google.com ([209.85.208.51]:34709 "EHLO
-        mail-ed1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726046AbgB2A7E (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Feb 2020 19:59:04 -0500
-Received: by mail-ed1-f51.google.com with SMTP id dm3so5554956edb.1
-        for <git@vger.kernel.org>; Fri, 28 Feb 2020 16:59:03 -0800 (PST)
+        id S1726674AbgB2BKy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Feb 2020 20:10:54 -0500
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:37359 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726046AbgB2BKx (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Feb 2020 20:10:53 -0500
+Received: by mail-pl1-f194.google.com with SMTP id q4so1900982pls.4
+        for <git@vger.kernel.org>; Fri, 28 Feb 2020 17:10:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=65ZYLV8Yewh3xipITwgLnU7ohHOr1NHDbWoa+x3SN6E=;
-        b=qbyj9d2lVY+uiMDrFgAlM20ovXhY0r9nR1zASa28WutY2MHm/sJ8RL+wNj7ReZOQhz
-         eiWt1qwAYP/1NTGkF+w8ytkBclJzbn4TPpDZb6OQDqSMPZPwwe0rBhEU3ScSpvZvm04j
-         0T29VEiAMv+ux9TIPAy8T7eU9rU0E7CQ4xM7o3u5gw/XHHlViHfXG9Eust+rsUtTzUyX
-         +SYd3y0wg0DkvRaMre2UDtJyAmXNBbeMZhHsDTvfwOtQHXWpuzk4PiPIYXbYG6Gv4UQR
-         KslXzDG8yBXFXMWnQ+LFGs2qfk1gn7lTp4Fs6cQbMdjAKK6yGIAiudIdUZcVGPAZtPD0
-         4CZg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=V9vyFZ9AOasmOv8XaQx1TebfX4hQ5a1ljxbG7UIhzIU=;
+        b=eocGvgXhdVARVKTheJElDChjX+ZToiY1/3cVIKGt+9JBKW052GpAFB4WQL49+OQzA4
+         YB5ufz+yTdJ3YRj2QFPPTJMfbzaKT1R/3MrjKnckRkNJ1yqfKnHlQglM+Ue5aa86EP+6
+         Y5U2Ka9H9BAPmF4c2L2mLff78MoI1R23SyWUi+OXoub2RSiirhvdt2bSKb8fgN+bEFSD
+         EzuVI9w6pRPfJLBM1/MhXU6rzYpJT2BGebvXNep6kq0ugzvwAepEqcEMX0FDuxj2Aff4
+         netB/611w76ov9hNXcwkgBkNQuLKnFzSSCc5Cmc27xTT6aw9H+lnLJKGZbtFrXJY4znj
+         67Fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=65ZYLV8Yewh3xipITwgLnU7ohHOr1NHDbWoa+x3SN6E=;
-        b=dv8ReQ9k0iQB58yZCDzersIqsOgpTo2ovq/5TzlaKzE67ysWuK7emLTh49sJjc1rnu
-         lIVoK7kruBd5FsKXi+03RXO/2XpsaoP/o1SY67ZuFMrE9Q/WqeF2UjGoKjVdixXdaAN+
-         cMYYwfa6GKDx+Ospgb7Cc7FPpLC34rLf0zqUij6bDueEdPNY+mjbLLFeBH+O/sDl6P08
-         m0w1Mf1cLPXuKqfQMbE3LAKZhVn1BdHLkxuGOhhXIrqOPwBtbJHVNbYC1L0JVJIf25zT
-         LjQpvKUnEHBm4jE4btiOBQs3nlCKwiZ4LWGPKhKjtG51lLLZBaMPDTO/lPL9NPKsg8w/
-         aS1g==
-X-Gm-Message-State: APjAAAUHpSSYGlY34B6f3xlvLIeEkX24eykiLncm/lHjUswWB5yG6jCn
-        g1SF9gvEX3vu++dzn/iN4YyxC+ETHzB2fBUG/QQ=
-X-Google-Smtp-Source: APXvYqxxGFQXIHD6oLNQSi4qyu/rD0oYgL163IHOT/VM+w+BUKe6QEnUitPR5pgK/FBRFTjA0EvdycP3TEOpfS0QWy8=
-X-Received: by 2002:a17:906:edc7:: with SMTP id sb7mr6166110ejb.367.1582937942917;
- Fri, 28 Feb 2020 16:59:02 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=V9vyFZ9AOasmOv8XaQx1TebfX4hQ5a1ljxbG7UIhzIU=;
+        b=F48iX0THPQms6e8ya8o+9dm8Wn7DCQ2io+7g8Mprlz2EeoK5Avjo1CRGD7Uwt1SW4X
+         A9zMvn3ZoV9xJKk/XCIl54ywFH3yMD79OmSo4B4TfSHc3oHUA0mIxQchorqrIYs9tw7W
+         rssMAOrwbLFV1SYQuk005xYyol3jG2N5hHXNWXh9lg/Dz6AoOsxPbeLvk6L1s07try0U
+         O99pgKPDXHfBym9TG+QrH1xFB6g9s7F+auB8XfBkNqrPh2YrB0AltXcOVF6t8qwoOjg7
+         JbQZuUheOZTqTwR6rY1Pf/nb/Q+a+SEyV7FpBhbjgEGXq9DPahFmXya609wl4K0alpg7
+         zdoQ==
+X-Gm-Message-State: APjAAAU3Y0qny09RzvLucsxNL64TCUBk2EqY1pFcNq0v5OUaHGEKH7EN
+        bBCXAGF2Wkq+rJKzGYUNZvKsQ7hs
+X-Google-Smtp-Source: APXvYqzVoWcLhQkEE7cbslMel6dvA1wqDC0GKGyUq/SMOtq47DVDm2xd4tGezDPkp+UU/SqWRdXccw==
+X-Received: by 2002:a17:902:ed14:: with SMTP id b20mr6746881pld.197.1582938650770;
+        Fri, 28 Feb 2020 17:10:50 -0800 (PST)
+Received: from viper.uconnect.utah.edu ([155.98.131.0])
+        by smtp.gmail.com with ESMTPSA id j8sm3596401pjb.4.2020.02.28.17.10.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 28 Feb 2020 17:10:49 -0800 (PST)
+From:   Alex Henrie <alexhenrie24@gmail.com>
+To:     git@vger.kernel.org, rcdailey.lists@gmail.com, newren@gmail.com,
+        rsbecker@nexbridge.com, gitster@pobox.com, annulen@yandex.ru
+Cc:     Alex Henrie <alexhenrie24@gmail.com>
+Subject: [PATCH v2] pull: warn if the user didn't say whether to rebase or to merge
+Date:   Fri, 28 Feb 2020 18:09:27 -0700
+Message-Id: <20200229010927.335119-1-alexhenrie24@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-References: <pull.548.v5.git.1582628141.gitgitgadget@gmail.com>
- <pull.548.v6.git.1582778112.gitgitgadget@gmail.com> <176e38a841d1bbb138ae31b6db34fb597f9188b2.1582778112.git.gitgitgadget@gmail.com>
- <xmqq7e07g3hr.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqq7e07g3hr.fsf@gitster-ct.c.googlers.com>
-From:   Heba Waly <heba.waly@gmail.com>
-Date:   Sat, 29 Feb 2020 13:58:51 +1300
-Message-ID: <CACg5j25odrJXOt7o5QadSWBAyYnKbSOWKNOjRKCRXPcVjqyheQ@mail.gmail.com>
-Subject: Re: [PATCH v6 3/4] advice: revamp advise API
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Heba Waly via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 28, 2020 at 9:49 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > diff --git a/advice.c b/advice.c
-> > index 258cc9ba7af..8d9f2910663 100644
-> > --- a/advice.c
-> > +++ b/advice.c
-> > @@ -32,6 +32,40 @@ int advice_checkout_ambiguous_remote_branch_name = 1;
-> >  int advice_nested_tag = 1;
-> >  int advice_submodule_alternate_error_strategy_die = 1;
-> >
-> > +const char ADVICE_ADD_EMBEDDED_REPO[] = "advice.addEmbeddedRepo";
-> > +const char ADVICE_AM_WORK_DIR[] = "advice.amWorkDir";
-> > ...
-> > +static const char *advice_config_keys[] = {
-> > +     ADVICE_ADD_EMBEDDED_REPO,
-> > +     ADVICE_AM_WORK_DIR,
-> > ...
-> > +/*
-> > + * To add a new advice, you need to:
-> > + * Define a new const char array.
-> > + * Add a new entry to advice_config_keys list.
-> > + * Add the new config variable to Documentation/config/advice.txt.
-> > + * Call advise_if_enabled to print your advice.
-> > + */
-> > +extern const char ADVICE_ADD_EMBEDDED_REPO[];
-> > +extern const char ADVICE_AM_WORK_DIR[];
-> > ...
->
-> Hmph.
->
-> Even though I said that I would prefer it over the current one,
-> in that it allows the compilers to catch typo, and over the one
-> in v5 which uses enum, in that we do not have to go through
-> enum->string->hash conversion all the time, I have to say that I
-> am not very happy that we'd need to make a consistent change to
-> three separate places.
->
+Often novice Git users forget to say "pull --rebase" and end up with an
+unnecessary merge from upstream. What they usually want is either "pull
+--rebase" in the simpler cases, or "pull --ff-only" to update the copy
+of main integration branches, and rebase their work separately. The
+pull.rebase configuration variable exists to help them in the simpler
+cases, but there is no mechanism to make these users aware of it.
 
-Unfortunately we'll have to make changes to three separate places
-until we implement a way to generate the documentation from the main
-list or vice versa, which we agreed in v2 not to do that now.
-https://lore.kernel.org/git/xmqqftfam5ux.fsf@gitster-ct.c.googlers.com/
+Issue a warning message when no --[no-]rebase option from the command
+line and no pull.rebase configuration variable is given. This will
+inconvenience those who never want to "pull --rebase", who haven't had
+to do anything special, but the cost of the inconvenience is paid only
+once per user, which should be a reasonable cost to help a number of new
+users.
 
-> What's the ideal long-term outcome?  The reason why I suggested
-> during the v5 review an array of structure, a field in which can
-> be the .disabled field, was because it would allow us to later
-> extend the struct to help users.  Wouldn't it be nice if we can
-> do something like:
->
->     $ git advice --list "^fetch"
->     fetchShowForcedUpdates      enabled
->     $ git advice --list --verbose fetchShowForcedUpdates
->     fetchShowForcedUpdates      enabled
->         "git fetch" by default spends cycles to compute which
->         branches were forcibly updated, but it can be turned off.
->         To avoid mistaken sense of safety, however, a reminder
->         message is issued instead when it is turned off.  The
->         reminder can be turned off with this advice key.
->
-> Such a future enhancement will become possible by assiciating a
-> help text for each advice key, and the data structure introduced
-> in <xmqqsgiymupf.fsf@gitster-ct.c.googlers.com> was meant to be
-> the beginning of it.
+Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
+---
+v2:
+- Use the commit message that Junio suggested
+- Drop "!= 0" from the if condition
+- Mention in the warning that --ff-only will also suppress the warning
+---
+ builtin/pull.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-Ok, you convinced me, will send a new version.
+diff --git a/builtin/pull.c b/builtin/pull.c
+index 3e624d1e00..96512a4b27 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -327,6 +327,13 @@ static enum rebase_type config_get_rebase(void)
+ 	if (!git_config_get_value("pull.rebase", &value))
+ 		return parse_config_rebase("pull.rebase", value, 1);
+ 
++	if (strcmp(opt_ff, "--ff-only")) {
++		warning(_("Pulling without specifying whether to rebase or to merge is discouraged\n"
++			"and will be disallowed in a future Git release.\n"
++			"Next time, run `git config pull.rebase (true|false)` first\n"
++			"or pass --rebase, --no-rebase, or --ff-only on the command line.\n"));
++	}
++
+ 	return REBASE_FALSE;
+ }
+ 
+-- 
+2.25.1
 
-Thanks,
-Heba
