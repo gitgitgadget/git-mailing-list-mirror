@@ -2,72 +2,116 @@ Return-Path: <SRS0=kadj=4S=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 29CC0C3F2CD
-	for <git@archiver.kernel.org>; Sun,  1 Mar 2020 01:16:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AAA9C3F2D3
+	for <git@archiver.kernel.org>; Sun,  1 Mar 2020 02:01:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 004A9214DB
-	for <git@archiver.kernel.org>; Sun,  1 Mar 2020 01:16:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4551724650
+	for <git@archiver.kernel.org>; Sun,  1 Mar 2020 02:01:31 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="NkaISwG7"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727205AbgCABQN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 29 Feb 2020 20:16:13 -0500
-Received: from mail-wr1-f52.google.com ([209.85.221.52]:34711 "EHLO
-        mail-wr1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726786AbgCABQM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Feb 2020 20:16:12 -0500
-Received: by mail-wr1-f52.google.com with SMTP id z15so8072628wrl.1
-        for <git@vger.kernel.org>; Sat, 29 Feb 2020 17:16:11 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=lzIzU8x2F0gI4pra4VJv1T2GJU3hYWl2q5ck1V9TNiY=;
-        b=U1VZu4rXWKfG1oAtcPMAzGRpwu1CcdDvZzqKJQEd2/rg0zYoSa3UHZEwVB+pW6o3zq
-         cQMxlRr9fm9+iIe2XN8qpdO7auXNCFMqLNLOos4PZ1BCHSKLbhf0hXjgb/u3CX/8pdcW
-         QY7OUrvwafpcQfP9zKAXsJRq39wUKbCfCUcvsZmuBUHe2AuKJkedd15AeIU3wRHoawj0
-         zTm3wZJRNBo6VvibC1wtJRtSAnT/R37YxzzKTjW5+Kk0SNRdZaBcR+dl6IXAat7bLh9A
-         714R/khfKHUxwANMvgLoW+4AAFzDDT+flxVtuSp19W8GerR1UzTdXAsBLh69Y7nwegmo
-         Im8g==
-X-Gm-Message-State: APjAAAV8k1bn7+Wi2VXZcBHDjUkY+rSk03/E3I6CMchsXibOwyCcuzRX
-        3V7kRVcqC1T2uZSyq+YChU9+NWaI78UahYnuT4U=
-X-Google-Smtp-Source: APXvYqz/OVI0LPR3JBm8AC+qh/24LXFkVLp9znD5/B+BI/6834fsUywGRuiqm0jEMKNfNb/pjWrckPQaEZqJ49zpq8I=
-X-Received: by 2002:a5d:424e:: with SMTP id s14mr13728259wrr.226.1583025371071;
- Sat, 29 Feb 2020 17:16:11 -0800 (PST)
+        id S1727308AbgCACB2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 29 Feb 2020 21:01:28 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:44334 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726786AbgCACB2 (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 29 Feb 2020 21:01:28 -0500
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 9E51B6048E;
+        Sun,  1 Mar 2020 02:01:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1583028087;
+        bh=HTeN9tskNZoi+L6ySNB/r4cNoF7G45FDZkB0i442sJw=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=NkaISwG7WNkIrPz8z83NmAjuc21RdkeXc/CobrNc5p9GTWxTk8bGSXjpYDoYjgDNa
+         +hAtnf7Y1VE0DFdTJ1l48i8ES3qTzY/Lm0oAtu8F58yWRB9lC80768eaPyBPRR43R1
+         RqPkvy4CPqE4nh+J2Ekv4byoqwzSM6zqyP7PJhXUgWPcaVzwa+JqeK69dvCd70eNej
+         Vn24EZ0zQ1Lzfrm6b+8KDaW/sqZLJTblhHbVWJ9Vc/CbCD2kkwKuhwAxluLVA2i9Bh
+         4qHvFMaEWyKkphY+Vk+KVaE5UkzQjfl+iYYCsApy2Um/o1EuQQ2Rtfra4i0uE+f+2b
+         cRwiwNAK9d7TBcPkrRHR8wcz4phfipWRq3hfLqCfc/VAGh8d7I8VF5h1vDAFC394X9
+         9aNcnJI38yTGM5ev1ehzXu6czDzR/HJof1BvCSBeD/FZDZBws6NX7dYhLQX70icWuq
+         RyMbdlwikls8WCDdf6EqUvlMNiHhTNxIR8x/6dDL8yG6SEwlmlq
+Date:   Sun, 1 Mar 2020 02:01:19 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Harald van Dijk via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Harald van Dijk <harald@gigawatt.nl>
+Subject: Re: [PATCH] show_one_mergetag: print non-parent in hex form.
+Message-ID: <20200301020119.GE9290@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Harald van Dijk via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Harald van Dijk <harald@gigawatt.nl>
+References: <pull.568.git.1582981677312.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-References: <xmqqimjqcoh0.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqimjqcoh0.fsf@gitster-ct.c.googlers.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sat, 29 Feb 2020 20:16:00 -0500
-Message-ID: <CAPig+cSZvVWbzKp6uEmPxZVgUQdzwgjjfz81PJRYdG+OQ__kdw@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Feb 2020, #06; Fri, 28)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="tmoQ0UElFV5VgXgH"
+Content-Disposition: inline
+In-Reply-To: <pull.568.git.1582981677312.gitgitgadget@gmail.com>
+X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
+ 5.4.0-4-amd64)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 28, 2020 at 5:54 PM Junio C Hamano <gitster@pobox.com> wrote:
-> * es/worktree-avoid-duplication-fix (2020-02-24) 3 commits
->   (merged to 'next' on 2020-02-25 at 74c612837a)
->  + worktree: don't allow "add" validation to be fooled by suffix matching
->  + worktree: add utility to find worktree by pathname
->  + worktree: improve find_worktree() documentation
->
->  "git worktree add" used to get confused that the director to be
->  used to add a new worktreey, when given as a relative path, is
->  different from an existing one.  This has been corrected.
 
-This description still has the problem with inserted text splitting
-the "y" off "directory". Did we want to go with the revised
-description suggested by [1]?
+--tmoQ0UElFV5VgXgH
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-    In rare cases "git worktree add <path>" could think that <path>
-    was already a registered worktree even when it wasn't and refuse
-    to add the new worktree. This has been corrected.
+On 2020-02-29 at 13:07:57, Harald van Dijk via GitGitGadget wrote:
+> From: Harald van Dijk <harald@gigawatt.nl>
+>=20
+> When a mergetag names a non-parent, which can occur after a shallow
+> clone, its hash was previously printed as raw data. Print it in hex form
+> instead.
 
-[1]: https://lore.kernel.org/git/CAPig+cR3H2qvCddWuWPNex=K-x0FyzKehpbOiv7W-s_4EAW1bQ@mail.gmail.com/
+Seems like a good idea.
+
+> +test_expect_success GPG 'log --graph --show-signature for merged tag in =
+shallow clone' '
+> +	test_when_finished "git reset --hard && git checkout master" &&
+> +	git checkout -b plain-shallow master &&
+> +	echo aaa >bar &&
+> +	git add bar &&
+> +	git commit -m bar_commit &&
+> +	git checkout --detach master &&
+> +	echo bbb >baz &&
+> +	git add baz &&
+> +	git commit -m baz_commit &&
+> +	git tag -s -m signed_tag_msg signed_tag_shallow &&
+> +	hash=3D$(git rev-parse HEAD) &&
+> +	git checkout plain-shallow &&
+> +	git merge --no-ff -m msg signed_tag_shallow &&
+> +	git clone --depth 1 --no-local . shallow &&
+> +	test_when_finished "rm -rf shallow" &&
+> +	git -C shallow log --graph --show-signature -n1 plain-shallow >actual &&
+> +	grep "tag signed_tag_shallow names a non-parent $hash" actual
+
+I appreciate you computing this value with git rev-parse.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--tmoQ0UElFV5VgXgH
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.19 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXlsXbgAKCRB8DEliiIei
+gZ0PAQCuHopz3NbTm5DCd7Rrl87Y9G/QIqxhXi5Ex/3eeLc+4gD/ZQBOwnY6v5DX
+h4FaApla9N5ydtyRxglkCYFSFc9SVwg=
+=+KTj
+-----END PGP SIGNATURE-----
+
+--tmoQ0UElFV5VgXgH--
