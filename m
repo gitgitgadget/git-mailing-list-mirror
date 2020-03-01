@@ -7,96 +7,89 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 98012C3F2CE
-	for <git@archiver.kernel.org>; Sun,  1 Mar 2020 02:08:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0312DC3F2CE
+	for <git@archiver.kernel.org>; Sun,  1 Mar 2020 03:28:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6B3D2222C4
-	for <git@archiver.kernel.org>; Sun,  1 Mar 2020 02:08:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C5E1720675
+	for <git@archiver.kernel.org>; Sun,  1 Mar 2020 03:28:14 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EtBOT9CK"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mLiWEXPh"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727330AbgCACIh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 29 Feb 2020 21:08:37 -0500
-Received: from mail-qt1-f173.google.com ([209.85.160.173]:44198 "EHLO
-        mail-qt1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727255AbgCACIh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Feb 2020 21:08:37 -0500
-Received: by mail-qt1-f173.google.com with SMTP id j23so4993596qtr.11
-        for <git@vger.kernel.org>; Sat, 29 Feb 2020 18:08:36 -0800 (PST)
+        id S1727335AbgCAD2K (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 29 Feb 2020 22:28:10 -0500
+Received: from mail-lj1-f194.google.com ([209.85.208.194]:38661 "EHLO
+        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727242AbgCAD2J (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Feb 2020 22:28:09 -0500
+Received: by mail-lj1-f194.google.com with SMTP id w1so7944942ljh.5
+        for <git@vger.kernel.org>; Sat, 29 Feb 2020 19:28:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=oYh4it47Al2LFp5Ddn7PRHCVjpqBueHO/+L8jkd4/Eo=;
-        b=EtBOT9CKxQa6KkxPtri2+xmAAKarjkWne0wo+QOqPgElxZc1QRtljPwGidLY86tdiH
-         er/6dVoCDC/HslPII8QbnvyvgYNgqTyQ8SC7wKVWyLydsMwePGtpr2JoN+ZPZXSUf3AE
-         XRMRVFS+aidnwlOXbnDsTJUZji14e/zYkrVXPN3mSBJjwckp73Fd0i26fefVLysqTFfE
-         C2hf2NtIMpuYhzp74lhBLOmUAwmlGK3gEzsTth5lsVJkfLMsB4dGGK71Tjk8fSXcbrVW
-         PUbGE9A/BGBQytKG70stWouASh/h6L2SjKiJ6sW2lrlnu47+Zvo3Ms0aIQcQK56Va23p
-         x/JQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=UcyIGOfKpzYo67BiEqadNUaidaPdZQbLQiREPq4kh7M=;
+        b=mLiWEXPhYCAY9w1Evgb/TRj2tzjK24SnofozsR8/urmSuorneOAcClPINfLHwabhZI
+         Lw+TLXoD3Qea41+lqPF69mdqhAemCjKDJucLF+q562bE5SY9PICcSoLAg/GqYAUE7Zc0
+         nAsp9WFcwcydqxUcISwQtfiTidZgcZJqg46f4Y//irB0SidYNFkipFx45sRQEfmqVmHe
+         LMhgINjUPLSabg7BZwADbRIfmMf8y9JL+rk7nB6wVikRbg9D/4r9CmvGJt0Ix3lDaXmg
+         RRNPE9GTaHJ+RrlO2m5X13EgegscEq2ZIsqAb6TJAuB6TrbLxcvZlcntUmxdoBBileaJ
+         XCLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=oYh4it47Al2LFp5Ddn7PRHCVjpqBueHO/+L8jkd4/Eo=;
-        b=HOrITS1Dep9D2G+En0i+a9/O+ozfG5yCoS1GIqZsSZWmCEHLJZeuJiIJlG7+Z8+ok9
-         b/38O0382+GcTOtOMFQG0o/xvEu3t076FYsvfjkYIXFXIH0Pw9+ohEZS0TexMooiZDD8
-         gGtIgxFPO++BtTO4ozDDSH+UC//ZVP+ECPMO/92s7eEZBsJ/Wty2b5+VRz49dfDewYr0
-         81dTJ1iruSk7y1DevNcrlw9b6bC9YLFzTyUTDycpMJtgwk+H0fUa3UR0rCd2cgMNdJhb
-         gKwgfuLfT69tBVYNYKp8CZPibkAJDwQtF/C1Q0KNFFKh/fxYNyzwF7Nl9krZwU0YCJBm
-         EklA==
-X-Gm-Message-State: ANhLgQ2v4nF9mT9GUcZU09SHD68h5ilyFLG6R5djWpYdeFxyEDB5TJPj
-        GpcxkEqnQKE5OTc2wsPiFrQJfp/kcijXf9dxkWmSGn7l
-X-Google-Smtp-Source: ADFU+vvc7i2QHpW//j1mFiDLH54dfTDWEpw/TqhNekRZz8lweBPF1sM74R31+v8yU0n6tdvDe+RSqSd6s5i+Zc07C10=
-X-Received: by 2002:ac8:4792:: with SMTP id k18mr487685qtq.192.1583028516047;
- Sat, 29 Feb 2020 18:08:36 -0800 (PST)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=UcyIGOfKpzYo67BiEqadNUaidaPdZQbLQiREPq4kh7M=;
+        b=EtBl+FoNnIihHfvS8GRFlZIxf6O/Bvh970eYMb/oJTiHsD3utAiebMkv4v8bHNi5AS
+         HX2xXGjwZxL+LPfxNbr79ri43ZYIo2YbSNsKR1BcpjxCdXER0N/oFhsPF76yEQ2xxOM0
+         fnMkIP9+dFEICEo9qaksBwImRv06778Li1miUPwFj9y6VmflvAWyBc+sDzfUk6YTcKbq
+         GLDomQn8b3n/1fljElBdrwOHtiJF3xlfi2nyFqwZerBH4bo9iAgudIVSNKBuPhcW2hBD
+         zaxbSQnQCgnvXRzvlUhThFVQFX67jTSdh13W10BVxNEEBr4SJoMOcl7Aabn+rcZQqzlV
+         XO+Q==
+X-Gm-Message-State: ANhLgQ2woKbM6R4CQL1J+NY1/hDfqUIeB+01QRE8QAvWiw/bSeudT2ye
+        LdyuizJwgn7+LVGG8qgGnWApUWPApcfTTH5AIYAqKA==
+X-Google-Smtp-Source: ADFU+vtxvbC6afPqfBjRwGOCGkYaLcHmPRqDxgsjwI3xasbKlJmXCvF3gtgEiV2JLhws2YME37AqdfvlO0O4RRRg+1g=
+X-Received: by 2002:a2e:9b95:: with SMTP id z21mr7566380lji.291.1583033287672;
+ Sat, 29 Feb 2020 19:28:07 -0800 (PST)
 MIME-Version: 1.0
-From:   Chris Jerdonek <chris.jerdonek@gmail.com>
-Date:   Sat, 29 Feb 2020 18:08:24 -0800
-Message-ID: <CAOTb1wcJyQchyGqTqY6B+j94Tw6Htp7tB4Bt-J7pyXBC7q-XCg@mail.gmail.com>
-Subject: feature suggestion: git symbolic-ref --create-reflog
-To:     git@vger.kernel.org
+References: <20200229212258.373891-1-alexhenrie24@gmail.com> <CABPp-BEewypPoDrWesk=6twgj2TMGFYdaYzdrg5p4K+mExHqeg@mail.gmail.com>
+In-Reply-To: <CABPp-BEewypPoDrWesk=6twgj2TMGFYdaYzdrg5p4K+mExHqeg@mail.gmail.com>
+From:   Alex Henrie <alexhenrie24@gmail.com>
+Date:   Sat, 29 Feb 2020 20:27:56 -0700
+Message-ID: <CAMMLpeS2Fq3Nj2QjvNT6i_+ceDHW-pUqTRUhmARWen-jWQfsJg@mail.gmail.com>
+Subject: Re: [PATCH v3] pull: warn if the user didn't say whether to rebase or
+ to merge
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Robert Dailey <rcdailey.lists@gmail.com>,
+        rsbecker@nexbridge.com, Junio C Hamano <gitster@pobox.com>,
+        Konstantin Tokarev <annulen@yandex.ru>,
+        Theodore Tso <tytso@mit.edu>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This email is to suggest the idea of adding a --create-reflog flag to
-git-symbolic-ref in the same way that git-update-ref has one.
+On Sat, Feb 29, 2020 at 4:31 PM Elijah Newren <newren@gmail.com> wrote:
+>
+> Ick; we don't need the warning to regurgitate large sections of the
+> manual, we only need to provide pointers and then they can look up the
+> details in their favorite way (google, stackoverflow, looking at the
+> actual manpage, etc.)  How about something more like
+>
+> > +               warning(_("Pulling without specifying how to reconcile divergent branches\n"
+> > +                       "is discouraged. You can squelch this message by setting pull.rebase,\n"
+> > +                       "or by passing any of --rebase, --no-rebase, or --ff-only\n"));
 
-(This suggestion relates to my previous email with subject "ambiguous
-git-reflog output for symbolic refs," which points out an issue with
-git-reflog for symbolic refs that don't have a reflog:
-https://public-inbox.org/git/CAOTb1wfXp+gXSwbG-CVgVE8E_5yzxQKwNKh_=3ECqTMvZFw7dQ@mail.gmail.com/T/#u
-)
+I intentionally made the message similar to the message you get when
+you try to commit without setting user.name or user.email. Providing
+the user with clear information on the spot is much more effective at
+getting them to do the right thing than expecting them to use Google
+or reread the man pages. We also want the user to understand that they
+only have to set pull.rebase or pull.ff once, whereas a command-line
+flag applies only to the current pull. Nevertheless, any warning
+message is better than no warning at all, so I would be happy to
+resubmit with your proposed text if there's consensus that a shorter
+message is better.
 
-To illustrate, if you create a symbolic ref in the standard set, it
-creates a reflog for the symbolic ref:
-
-$ git symbolic-ref -m create-symref refs/heads/my-new-symref refs/heads/master
-$ cat .git/logs/refs/heads/my-new-symref
-0000000000000000000000000000000000000000
-b2d80b44f20594470d9f3c2d16bbb83d71370e1e Chris Jerdonek
-<chris.jerdonek@gmail.com> 1583026811 -0800 create-symref
-
-But if you create one outside of the standard set, it doesn't (and
-there's no --create-reflog option like there is with git-update-ref):
-
-$ git symbolic-ref -m create-symref refs/foo/my-new-symref refs/heads/master
-$ cat .git/logs/refs/foo/my-new-symref
-cat: .git/logs/refs/foo/my-new-symref: No such file or directory
-
-I do notice that Jeff's "one-shot config" approach that he suggested
-in reply to an earlier email of mine [1] (with subject line "create
-reflog for reflog-less ref") provides a workaround in the absence of
-this option:
-
-$ git -c core.logAllRefUpdates=always symbolic-ref -m one-shot
-refs/foo/my-symref refs/heads/master
-$ cat .git/logs/refs/foo/my-symref
-0000000000000000000000000000000000000000
-b2d80b44f20594470d9f3c2d16bbb83d71370e1e Chris Jerdonek
-<chris.jerdonek@gmail.com> 1583027929 -0800 one-shot
-
---Chris
-
-[1]: https://public-inbox.org/git/CAOTb1wc2uMSyc7DMau2cWrWtk=_Z94+CCovORj1dGCrwgJhL=w@mail.gmail.com/
+-Alex
