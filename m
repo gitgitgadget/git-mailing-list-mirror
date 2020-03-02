@@ -3,96 +3,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1EB14C3F2D1
-	for <git@archiver.kernel.org>; Mon,  2 Mar 2020 14:10:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BB1E5C3F2CD
+	for <git@archiver.kernel.org>; Mon,  2 Mar 2020 16:45:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id E64122173E
-	for <git@archiver.kernel.org>; Mon,  2 Mar 2020 14:10:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7848521D56
+	for <git@archiver.kernel.org>; Mon,  2 Mar 2020 16:45:33 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ACXuIl4V"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="l7HllXII"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727072AbgCBOKb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Mar 2020 09:10:31 -0500
-Received: from mail-io1-f49.google.com ([209.85.166.49]:42387 "EHLO
-        mail-io1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726925AbgCBOKb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Mar 2020 09:10:31 -0500
-Received: by mail-io1-f49.google.com with SMTP id q128so3557274iof.9
-        for <git@vger.kernel.org>; Mon, 02 Mar 2020 06:10:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:reply-to:from:date:message-id
-         :subject:to;
-        bh=n0Gt4n0MuhJX1P+P742cuMoBZM/5ufXHLiyuKcPeU0Y=;
-        b=ACXuIl4VwfY9iO9wJ+OvSoj3Go5UU/nqQEh/ZnN/lACmCzUFoqqB51XmaShbS0XfbT
-         nqYB+Cf0674t2rEkrSYvlfMyGoxwKh+rn6nT1sFozoW9jHYdiAXgu/LM+ZGQbccor5Ll
-         iM8vylYDN1rFEhHm98dG1xKKOYPjHD9fZTjmtR7qO7KgiqQi0QqZwiIXWBE4YyfH5sys
-         PElUGbxBe9kIVjeAgCShaMH+bod7jx4ubflXU0Exj3mPHPnHPzRgqqxI8W0lW9kEQOJC
-         tIGggx7PxCUTi42yNcWsS95ZxK8JCpBVADt/vho3D8BPTvo1yJ1FRiWNpNl09HcKG1ki
-         uFNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:reply-to
-         :from:date:message-id:subject:to;
-        bh=n0Gt4n0MuhJX1P+P742cuMoBZM/5ufXHLiyuKcPeU0Y=;
-        b=iSXjPsiRBrwsNWegFbr6wASKYJTjN787ietmObvN74fIw+keVmYBzoWXSEtvJ8kdwC
-         6IADLDi2Z+oFty/Gr/hTAnw+u7HmRDhwVzOG7LNHzlT5rmuFQ1f1oiKINQVPfsFEDQFo
-         7rSXMqjiMvSYRZRFbZtvmWucNUKb9NyU3VPQhNtJjOLiI3SyTwR1v0FfQp27Cij4oCI+
-         Bd+7AANzrGG9gvuBnayOyt+N3e/KvUgYFPq74WyKC6HV6FI35DzUam3aVacIqgMS6Y9M
-         reuluNQqL1h7b/XSjlbNWh13pc63KFqxByPrv5Q4QE+alAgDGkLEDtJJxjnY30wj0g2e
-         S5cg==
-X-Gm-Message-State: ANhLgQ0mRrPUAJBkYVX3JaX5h5fHBI26gngSZPqPdG/NCaASvkDoXt0O
-        BzbIcseei9YMxBHqsJPK/f6C9VKiZHo2wpVjjNT1sRWc
-X-Google-Smtp-Source: ADFU+vvz+j871I+2+LM1YOHQ/4GaSydytQAqHJpYOEGgTRLEineSNrOAYYRhgy5DfG5Dj6YUGNFIAj7ya620Fln8Kn4=
-X-Received: by 2002:a5e:cb0a:: with SMTP id p10mr2442864iom.166.1583158229313;
- Mon, 02 Mar 2020 06:10:29 -0800 (PST)
+        id S1727268AbgCBQpb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 Mar 2020 11:45:31 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57784 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726451AbgCBQpb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Mar 2020 11:45:31 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2E8A15F231;
+        Mon,  2 Mar 2020 11:45:29 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=lDa0PH6HvdJvmJ9wa79sAbm2Obg=; b=l7HllX
+        IIJ7kcDn72MO3s45i+Qmy0Yu+r2YLmT6eEA/Inn0I+nMFERycIJUvaEf5CUkhxrx
+        VPUlOszxz1jj5X4vTBfa505N5IQSYW74XfAsgbHHHsMQ2KWNkH+1fBlleiUCqN0K
+        wPmQmG68MvNfOrAZ3yaNYKkcr2ZVOmxqPET2Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=oujn5NwRVXT1OrqifRfndgnGCuaWRxbX
+        CUt2PWsAfboj+E3KjJWZpa8VrdvkbKTZhCuuW1Dr3Wd/1HHqf6oHvhjmn0cQT3Ib
+        XCmgyDAHGYAaoVnzjgoWJql8g9D6KRQtbldfxrxfeXxQdSuxVvHgrSJfSmQHmIEQ
+        Hiv0qjjTVEs=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2612A5F230;
+        Mon,  2 Mar 2020 11:45:29 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7B5465F22F;
+        Mon,  2 Mar 2020 11:45:28 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: What's cooking in git.git (Feb 2020, #06; Fri, 28)
+References: <xmqqimjqcoh0.fsf@gitster-ct.c.googlers.com>
+        <CABPp-BEJiRyCznkrri-uTqggT60vkvqsU8dAvKz3B1PH6BB6tQ@mail.gmail.com>
+Date:   Mon, 02 Mar 2020 08:45:27 -0800
+In-Reply-To: <CABPp-BEJiRyCznkrri-uTqggT60vkvqsU8dAvKz3B1PH6BB6tQ@mail.gmail.com>
+        (Elijah Newren's message of "Fri, 28 Feb 2020 15:07:08 -0800")
+Message-ID: <xmqqsgiqbt94.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <CAH8yC8n+ta4BSAE4rEfhKxe3T9poVdc94HvSk=6PEA4YbmwVyA@mail.gmail.com>
-In-Reply-To: <CAH8yC8n+ta4BSAE4rEfhKxe3T9poVdc94HvSk=6PEA4YbmwVyA@mail.gmail.com>
-Reply-To: noloader@gmail.com
-From:   Jeffrey Walton <noloader@gmail.com>
-Date:   Mon, 2 Mar 2020 09:09:42 -0500
-Message-ID: <CAH8yC8km9k3sWKpjuj=69Y8SC=VHcDkBk=8O9RuCDOGtWGyqQQ@mail.gmail.com>
-Subject: Re: Commit signing and pinentry problems
-To:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 39142126-5CA5-11EA-81AD-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 20, 2019 at 7:41 AM Jeffrey Walton <noloader@gmail.com> wrote:
->
-> I'm having an annoying problem that I can't figure out. I hope Git has
-> a setting to fix it.
->
-> I have a desktop workstation where I sit at the keyboard about 1/3 of
-> the time. Git signing works as expected. About 2/3 of the time I SSH
-> into the machine. Git signing does not work when SSH'd in.
->
-> When Git signing fails over SSH an error looks like:
->
->    $ git commit -S log.h -m "Remove unneeded header"
->    error: gpg failed to sign the data
->    fatal: failed to write commit object
->
-> I just noticed this today (but it makes sense)...
->
->     - Go to desktop workstation, log in
->     - Go to remote machine, log in
->     - Sign at remote machine over SSH
->       - Desktop workstation will open GUI password prompt
->       - Remote machine sign operation will hang until GUI prompt times-out
->
-> The problem was reported to Ubuntu but no activity:
-> https://bugs.launchpad.net/ubuntu/+source/pinentry/+bug/1852696 .
->
-> Does anyone know how to use Git to work around pinentry brain-dead-ness?
+Elijah Newren <newren@gmail.com> writes:
 
-This fellow's answer fixed this problem: https://stackoverflow.com/a/53641081
+> configuration setting.  I'm not the best at wording these release
+> notes, but something along the lines of:
+>
+> "git rebase" has learned to use the merge backend by default, while
+> allowing "--apply" option to go back to the traditional apply backend,
+> or allowing an alternate default to be set via the new rebase.backend
+> configuration variable.  This series also renames the backends from
+> "interactive" (or "sequencer") to "merge" and from "am" to "apply".
 
-Jeff
+Thanks.  
+
+ "git rebase" has learned to use the merge backend (i.e. the
+ machinery that drives "rebase -i") by default, while allowing
+ "--apply" option to use the "apply" backend (e.g. the moral
+ equivalent of "format-patch piped to am").  The rebase.backend
+ configuration variable can be set to customize.
