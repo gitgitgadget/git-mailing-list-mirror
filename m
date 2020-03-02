@@ -2,90 +2,176 @@ Return-Path: <SRS0=ovBw=4T=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D774C3F2D1
-	for <git@archiver.kernel.org>; Mon,  2 Mar 2020 10:42:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 50AB6C3F2D2
+	for <git@archiver.kernel.org>; Mon,  2 Mar 2020 13:32:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 678162187F
-	for <git@archiver.kernel.org>; Mon,  2 Mar 2020 10:42:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 28949214DB
+	for <git@archiver.kernel.org>; Mon,  2 Mar 2020 13:32:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727450AbgCBKm2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Mar 2020 05:42:28 -0500
-Received: from mail.ledoian.cz ([80.211.161.108]:56730 "EHLO mail.ledoian.cz"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726654AbgCBKm1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Mar 2020 05:42:27 -0500
-X-Greylist: delayed 329 seconds by postgrey-1.27 at vger.kernel.org; Mon, 02 Mar 2020 05:42:27 EST
-Received: from [10.10.10.98] (guests.kam.mff.cuni.cz [195.113.17.144])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by mail.ledoian.cz (Postfix) with ESMTPSA id 18A7E7FF66
-        for <git@vger.kernel.org>; Mon,  2 Mar 2020 10:36:56 +0000 (GMT)
-To:     git@vger.kernel.org
-From:   Pavel Turinsky <pavel.turinsky@matfyz.cz>
-Subject: Updating linked working trees when receiving packs
-Message-ID: <d3524560-97cb-e36a-49f1-0c17e5be545c@matfyz.cz>
-Date:   Mon, 2 Mar 2020 11:36:54 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
+        id S1727734AbgCBNcS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 Mar 2020 08:32:18 -0500
+Received: from cloud.peff.net ([104.130.231.41]:58862 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727361AbgCBNcS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Mar 2020 08:32:18 -0500
+Received: (qmail 30067 invoked by uid 109); 2 Mar 2020 13:32:18 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 02 Mar 2020 13:32:18 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 3128 invoked by uid 111); 2 Mar 2020 13:41:29 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 02 Mar 2020 08:41:29 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 2 Mar 2020 08:32:17 -0500
+From:   Jeff King <peff@peff.net>
+To:     Damien Robert <damien.olivier.robert@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 1/1] remote.c: fix handling of push:remote_ref
+Message-ID: <20200302133217.GA1176622@coredump.intra.peff.net>
+References: <20200228172455.1734888-1-damien.olivier.robert+git@gmail.com>
+ <20200228182349.GA1408759@coredump.intra.peff.net>
+ <20200301220531.iuokzzdb5gruslrn@doriath>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+In-Reply-To: <20200301220531.iuokzzdb5gruslrn@doriath>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a question about interaction between
-receive.denyCurrentBranch=updateInstead and worktrees: in regular
-non-bare repository, using the configuration option mentioned above one
-can directly deploy code to the folder with the repository, and the
-manual for git-config seems to encourage that:
+[dropping J from cc, since my earlier email bounced]
 
-	Another option is "updateInstead" which will update the working
-	tree if pushing into the current branch. This option is intended
-	for synchronizing working directories when one side is not
-	easily accessible via interactive ssh (e.g. a live web site,
-	hence the requirement that the working directory be clean). This
-	mode also comes in handy when developing inside a VM to test and
-	fix code on different Operating Systems.
+On Sun, Mar 01, 2020 at 11:05:31PM +0100, Damien Robert wrote:
 
-This seems to work with regular checked-out repositories (or "main
-working tree", as I understand it). I tried using this with "linked"
-worktrees (created with "git worktree add /some/where some-branch"), it
-seems to misbehave: the history (git log) in the linked worktree is
-complete, but files are not changed, an "inverse" change gets staged
-instead. I am not sure this is not intentional, but it doesn't feel that
-way.
+> > Saying "*explicit = 1" here seems weird. Isn't the whole point that
+> > these modes _aren't_ explicit?
+> 
+> Well pushremote_for_branch also set explicit=1 if only remote.pushDefault
+> is set, so I followed suit.
 
-The use case for this would be having a testing and production version
-on the same server and deploying both by a single 'git push', saving
-disk space on the way (since the changes are not duplicated in two
-repositories). Of course, this problem is solvable by using receive
-hooks and updating the linked worktrees in them.
+Yeah, I think the useless "explicit" was a mistake back when the
+function was added. See the patch below.
 
-I understand that I have possibly tried to use a combination of features
-that is uncommon and maybe not tested well enough. I am considering
-helping with implementing that, but I don't orient well enough in the
-source code, nor have I read the contribution guidelines yet.
+> > It looks like our only caller will ignore our return value unless we say
+> > "explicit", though. I have to wonder what the point of that flag is,
+> > versus just returning NULL when we don't have anything to return.
+> 
+> I think you looked at the RR_REMOTE_NAME (ref-filter.c:1455), here the
+> situation is handled by RR_REMOTE_REF, where explicit is not used at all.
+> So we could remove it.
 
-Just for the record: The problem I wanted to solve is a bit different.
-I need to have the .git directory separate from a web deployment in
-order to be able to simultaneously run the web and have the source code
-available via a frontend (like Gitea). Since I do not need to have
-multiple branches deployed, I will try using the updateInstead option
-with a repository initialized with --separate-git-directory on a server
-(and if that won't work too, I will probably write another e-mail).
+We do look at it, but it's pointless to do so:
 
-Of course, all of the mentioned problems can be solved by having
-multiple remotes, but I was hoping to make workflows as simple as
-possible (from the user point of view) -- i.e. not having to remember to
-publish the source code.
+  $ git grep -hn -C4 remote_ref_for_branch origin:ref-filter.c
+  1461-	} else if (atom->u.remote_ref.option == RR_REMOTE_REF) {
+  1462-		int explicit;
+  1463-		const char *merge;
+  1464-
+  1465:		merge = remote_ref_for_branch(branch, atom->u.remote_ref.push,
+  1466-					      &explicit);
+  1467-		*s = xstrdup(explicit ? merge : "");
+  1468-	} else
+  1469-		BUG("unhandled RR_* enum");
 
-Regards,
-Pavel Turinský
+I think we probably ought to do this as a preparatory patch in your
+series.
+
+-- >8 --
+Subject: remote: drop "explicit" parameter from remote_ref_for_branch()
+
+Commit 9700fae5ee (for-each-ref: let upstream/push report the remote ref
+name, 2017-11-07) added a remote_ref_for_branch() helper, which is
+modeled after remote_for_branch(). This includes providing an "explicit"
+out-parameter that tells the caller whether the remote was configured by
+the user, or whether we picked a default name like "origin".
+
+But unlike remote names, there's no default case for the remote branch
+name. In any case where we don't set "explicit", we'd just an empty
+string anyway. Let's instead return NULL in this case, letting us
+simplify the function interface.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ ref-filter.c |  6 ++----
+ remote.c     | 11 ++---------
+ remote.h     |  3 +--
+ 3 files changed, 5 insertions(+), 15 deletions(-)
+
+diff --git a/ref-filter.c b/ref-filter.c
+index 6867e33648..9837700732 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -1459,12 +1459,10 @@ static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
+ 			remote_for_branch(branch, &explicit);
+ 		*s = xstrdup(explicit ? remote : "");
+ 	} else if (atom->u.remote_ref.option == RR_REMOTE_REF) {
+-		int explicit;
+ 		const char *merge;
+ 
+-		merge = remote_ref_for_branch(branch, atom->u.remote_ref.push,
+-					      &explicit);
+-		*s = xstrdup(explicit ? merge : "");
++		merge = remote_ref_for_branch(branch, atom->u.remote_ref.push);
++		*s = xstrdup(merge ? merge : "");
+ 	} else
+ 		BUG("unhandled RR_* enum");
+ }
+diff --git a/remote.c b/remote.c
+index 593ce297ed..c43196ec06 100644
+--- a/remote.c
++++ b/remote.c
+@@ -516,14 +516,11 @@ const char *pushremote_for_branch(struct branch *branch, int *explicit)
+ 	return remote_for_branch(branch, explicit);
+ }
+ 
+-const char *remote_ref_for_branch(struct branch *branch, int for_push,
+-				  int *explicit)
++const char *remote_ref_for_branch(struct branch *branch, int for_push)
+ {
+ 	if (branch) {
+ 		if (!for_push) {
+ 			if (branch->merge_nr) {
+-				if (explicit)
+-					*explicit = 1;
+ 				return branch->merge_name[0];
+ 			}
+ 		} else {
+@@ -534,15 +531,11 @@ const char *remote_ref_for_branch(struct branch *branch, int for_push,
+ 			if (remote && remote->push.nr &&
+ 			    (dst = apply_refspecs(&remote->push,
+ 						  branch->refname))) {
+-				if (explicit)
+-					*explicit = 1;
+ 				return dst;
+ 			}
+ 		}
+ 	}
+-	if (explicit)
+-		*explicit = 0;
+-	return "";
++	return NULL;
+ }
+ 
+ static struct remote *remote_get_1(const char *name,
+diff --git a/remote.h b/remote.h
+index b134cc21be..11d8719b58 100644
+--- a/remote.h
++++ b/remote.h
+@@ -261,8 +261,7 @@ struct branch {
+ struct branch *branch_get(const char *name);
+ const char *remote_for_branch(struct branch *branch, int *explicit);
+ const char *pushremote_for_branch(struct branch *branch, int *explicit);
+-const char *remote_ref_for_branch(struct branch *branch, int for_push,
+-				  int *explicit);
++const char *remote_ref_for_branch(struct branch *branch, int for_push);
+ 
+ /* returns true if the given branch has merge configuration given. */
+ int branch_has_merge_config(struct branch *branch);
+-- 
+2.25.1.947.ga5bc3d07fe
+
