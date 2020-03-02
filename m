@@ -2,137 +2,435 @@ Return-Path: <SRS0=ovBw=4T=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
+X-Spam-Status: No, score=-17.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
 	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 85FE4C3F2D1
-	for <git@archiver.kernel.org>; Mon,  2 Mar 2020 23:04:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 69F7FC3F2D7
+	for <git@archiver.kernel.org>; Mon,  2 Mar 2020 23:04:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 533AC21739
-	for <git@archiver.kernel.org>; Mon,  2 Mar 2020 23:04:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2AE9821739
+	for <git@archiver.kernel.org>; Mon,  2 Mar 2020 23:04:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="LP5rAqU3"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="MocbKugA"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726773AbgCBXEJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Mar 2020 18:04:09 -0500
-Received: from mail-pg1-f202.google.com ([209.85.215.202]:47397 "EHLO
-        mail-pg1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726728AbgCBXEI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Mar 2020 18:04:08 -0500
-Received: by mail-pg1-f202.google.com with SMTP id l15so827801pgk.14
-        for <git@vger.kernel.org>; Mon, 02 Mar 2020 15:04:08 -0800 (PST)
+        id S1726831AbgCBXEM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 Mar 2020 18:04:12 -0500
+Received: from mail-pl1-f201.google.com ([209.85.214.201]:57110 "EHLO
+        mail-pl1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726728AbgCBXEM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Mar 2020 18:04:12 -0500
+Received: by mail-pl1-f201.google.com with SMTP id m1so673838pll.23
+        for <git@vger.kernel.org>; Mon, 02 Mar 2020 15:04:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:subject:from:to:cc;
-        bh=R971yZ5aSyyBslOa3WzP1B5DuDP9bMK2dmycmv4pDb0=;
-        b=LP5rAqU3QRgz8gvlBhVOL/fwLCj8O837AXW/GSeFTRvLKzB6wL4IbLDXeMLzBMM9w5
-         3RK+CADpuGJZcSWBksUEltRsuJXr7FdZpUqMtkwwPJmlrdYHHP5Ls8n31u/mvnVOpA7p
-         IFUBssOcio3aQmRrGjuszrhHOQHlecnjwFoBWDcRZqIsT/Lh9ZqJllZaDn6Gs9y6vCi3
-         lz3TlIIVDChFYmWIxsKIfKAT2NkjJarnPlnpAMMvr2DLfZv49Z7ejsSBShHt9XJVKCfx
-         J6n7eQRCcIkA9IMJqjabSwL4qXd9xnhHWtTxyZPKrFFhnklSZejs1xloCFZALgzeq+a5
-         djwQ==
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=XOVEK94ibAWDiwcsIzDovjRx3yjjmSxllhzBsSKMAkg=;
+        b=MocbKugAETRWLbN9oVKGG2xKgqQ67UglDhv8HlPYae3MWi5W1aNPiM3ThoII5eOSPm
+         d6dterI6OpuH3n9YgOOEBUxSGJKacqPwWvYJTqQfaaCUV42xFsS8CfUn60xB50B929R/
+         r+wRhSCnGR2GuTZ8nN8hRnLILj0HI9a1he93WD8iK+eI1/SJTOVql6EZrFF2KuMBxKCf
+         KQHoO3Qpee2Wx94slSFwt122Ys3qKlqll0D4yKnuOQ1dHmfVX966FpwlpDNjePd27stT
+         JSNtlBQg3b0NK5US7vtpD2unnH51QN3X23H/+to+vN0n5D9I/4Kd17ejEAOOA7ZXVFpM
+         Yz+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version:subject
-         :from:to:cc;
-        bh=R971yZ5aSyyBslOa3WzP1B5DuDP9bMK2dmycmv4pDb0=;
-        b=Dcsf5bykbdKKKb5WxrxReAEYjobkhy1Bg0Dg1XrtP7HPsMI5KwuxqXMxieJQGeNmfV
-         mq2MWQqRwwaNAnBeP3GG+MrQXYi/uM/spMYN9ejFR4jnC/ARyG/h7UbaXqLzgUoXfBeA
-         KxtnDOeAzBpVcSab87Eks1ug6x/qx+YXiOhfgakAth7wWyVPhJDDtFnSZIv1BgD4KjfE
-         P7GqWELy2Bo46ZyKNIT9EigOefWqvoQ10LID/v4EA0rIEUF1eNSbPYZNG9Cd9d6Gupuz
-         YWSPLwEJP8RGY4lc2q11HFpdGPRVdLB6l9eMZ3/7+Lmx5Nqc/Uf/35pZsWMwgqLdS/PH
-         oxRA==
-X-Gm-Message-State: ANhLgQ3ZdTmDmcgHBGt0nP4Msi+29UffUxcrCNNqbmPbfQl9bP4O9MFl
-        hMQlf/Wm6/DpZUM/spCSLv86/xLuNnJWZYjKDbRkYtJFbCHJCXQg3IapH0NYBQ5PVpKsmX5dNOL
-        QmH2oHOh6Mt732p+InQQ1qWY/FsS3nNC+/c7p8c0FqGXzNM+p8oe+9wCemc0siOgHJSMuk+bs7A
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=XOVEK94ibAWDiwcsIzDovjRx3yjjmSxllhzBsSKMAkg=;
+        b=ZwpaImJFR12FGEqNi4kDF0HXcBy0X6aL0mNzSk8Psu3QAqjlZvarz06wED9XAEUp/s
+         zqs86rrpDoUX+0pfjcEAkgLliO9KOaWPxFJUiJYEoWv/QVmE/bqoz2sOarj6+9n7d9B1
+         Fi9gJUwNE77oo16dET6rA9ng9KUf+9lQaR1q9dD/RLRupKyF0zk9vrGO5NU+tJ0m4XAW
+         HbiiD7tmzlT3ePymR9Eka5pB6ygyHlZqqpfPkkAzmnJilAtrzXtGvQB1Q8NbeQuic0pS
+         1P6253o9zjCBSLAv4IpYPnLXw3bFEv1Ly4FAy9kMu7p0LQURcdcIcfA0qMGHOWAQb7XM
+         jP7Q==
+X-Gm-Message-State: ANhLgQ1FA0sAqlCpXh12VzJT2Eh9XW1Nmi7Ktj90kPN+IsZQ3CTQo0oS
+        mbf0jC8DBBLMJWTCz/FlQm8TAklnqvHpmTovyQhHIj7bxku5sg82WcrKwZZv732hQ1MJEotNHYc
+        tLYB+Awyl1hgOSF79F2Owsg5klzX4Hk0doofl7FD1xVvH8ag2boByB1kh+PLIp21p42kqPgi85Q
         ==
-X-Google-Smtp-Source: ADFU+vszBHSSrO8Q2269fyBljWIG5+Pg8isGde/nsr3l15sjoROPecOFi2zBm23xSXfaV1I04jXoNHRkAkxUA9I3LxM=
-X-Received: by 2002:a63:a707:: with SMTP id d7mr1095515pgf.390.1583190247266;
- Mon, 02 Mar 2020 15:04:07 -0800 (PST)
-Date:   Mon,  2 Mar 2020 15:03:55 -0800
-In-Reply-To: <20200220015858.181086-1-emilyshaffer@google.com>
-Message-Id: <20200302230400.107428-1-emilyshaffer@google.com>
+X-Google-Smtp-Source: ADFU+vsFsy4MdQCmY9rbC5SZQOiYc6rh13EkEo6w09+4Jn+y07W/+MXGjaKTo1tkmBpfTO+ATCIBq1L/GPYXz4+9CmI=
+X-Received: by 2002:a63:354b:: with SMTP id c72mr998402pga.99.1583190249949;
+ Mon, 02 Mar 2020 15:04:09 -0800 (PST)
+Date:   Mon,  2 Mar 2020 15:03:56 -0800
+In-Reply-To: <20200302230400.107428-1-emilyshaffer@google.com>
+Message-Id: <20200302230400.107428-2-emilyshaffer@google.com>
 Mime-Version: 1.0
+References: <20200302230400.107428-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.25.0.265.gbab2e86ba0-goog
-Subject: [PATCH v9 0/5] add git-bugreport tool
+Subject: [PATCH v9 1/5] help: move list_config_help to builtin/help
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
-Cc:     Emily Shaffer <emilyshaffer@google.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        "=?UTF-8?q?Martin=20=C3=85gren?=" <martin.agren@gmail.com>,
-        Aaron Schrab <aaron@schrab.com>,
-        Danh Doan <congdanhqx@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        "=?UTF-8?q?SZEDER=20G=C3=A1bor?=" <szeder.dev@gmail.com>,
-        Andreas Schwab <schwab@linux-m68k.org>
+Cc:     Emily Shaffer <emilyshaffer@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I did run this set through the Azure Pipelines CI [2] and hope that
-means it's platform-safe; if that's not the case, please let me know
-your concerns.
+Starting in 3ac68a93fd2, help.o began to depend on builtin/branch.o,
+builtin/clean.o, and builtin/config.o. This meant that help.o was
+unusable outside of the context of the main Git executable.
 
-For the relevant patches, I made the following changes since v8:
+To make help.o usable by other commands again, move list_config_help()
+into builtin/help.c (where it makes sense to assume other builtin libraries
+are present).
 
- - More portable strftime format
- - Use open() instead of fopen_for_writing() in order to specify O_CREAT
-   | O_EXCL | O_WRONLY.
- - Fix a use-after-free.
- - Add i18n/l10n macro all over the place; per [3] let's translate the
-   whole contents of the report, because it's easy to force to a
-   different language and we may not be the only ones reading reports
- - Use a lot less strbuf_complete_line() - when we're making library
-   calls, we have control over the format, so we do know whether it ends
-   in \n or not; let's not waste the time checking it.
- - Minor nit on uname header phrasing
- - Reword the structure of compat/compiler.h to separate libc and
-   compiler.
- - Add MSVC reporting in compat/compiler.h (thanks Dscho).
+When command-list.h is included but a member is not used, we start to
+hear a compiler warning. Since the config list is generated in a fairly
+different way than the command list, and since commands and config
+options are semantically different, move the config list into its own
+header and move the generator into its own script and build rule.
 
-Thanks all.
- - Emily
-
-[1]: https://lore.kernel.org/git/20200225235558.GG212281@google.com
-[2]: https://github.com/gitgitgadget/git/pull/566
-[3]: https://lore.kernel.org/git/xmqqimjukzzv.fsf@gitster-ct.c.googlers.com
-
-Emily Shaffer (5):
-  help: move list_config_help to builtin/help
-    Note that this patch is still required for this series because the
-    help library (for version/build info) is unusable without it.
-  bugreport: add tool to generate debugging info
-  bugreport: gather git version and build info
-  bugreport: add uname info
-  bugreport: add compiler info
-
- .gitignore                      |   2 +
- Documentation/git-bugreport.txt |  52 ++++++++++++
- Makefile                        |  18 +++-
- bugreport.c                     | 142 ++++++++++++++++++++++++++++++++
- builtin/help.c                  |  86 +++++++++++++++++++
- command-list.txt                |   1 +
- compat/compiler.h               |  38 +++++++++
- generate-cmdlist.sh             |  19 -----
- generate-configlist.sh          |  21 +++++
- help.c                          | 131 +++++++----------------------
- help.h                          |   2 +-
- strbuf.c                        |   4 +
- strbuf.h                        |   1 +
- t/t0091-bugreport.sh            |  61 ++++++++++++++
- 14 files changed, 452 insertions(+), 126 deletions(-)
- create mode 100644 Documentation/git-bugreport.txt
- create mode 100644 bugreport.c
- create mode 100644 compat/compiler.h
+Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+---
+ .gitignore             |  1 +
+ Makefile               | 13 +++++--
+ builtin/help.c         | 86 ++++++++++++++++++++++++++++++++++++++++++
+ generate-cmdlist.sh    | 19 ----------
+ generate-configlist.sh | 21 +++++++++++
+ help.c                 | 85 -----------------------------------------
+ help.h                 |  1 -
+ 7 files changed, 118 insertions(+), 108 deletions(-)
  create mode 100755 generate-configlist.sh
- create mode 100755 t/t0091-bugreport.sh
 
+diff --git a/.gitignore b/.gitignore
+index aebe7c0908..ea97de83f3 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -189,6 +189,7 @@
+ /gitweb/gitweb.cgi
+ /gitweb/static/gitweb.js
+ /gitweb/static/gitweb.min.*
++/config-list.h
+ /command-list.h
+ *.tar.gz
+ *.dsc
+diff --git a/Makefile b/Makefile
+index 6134104ae6..c552312d3f 100644
+--- a/Makefile
++++ b/Makefile
+@@ -815,6 +815,7 @@ LIB_FILE = libgit.a
+ XDIFF_LIB = xdiff/lib.a
+ VCSSVN_LIB = vcs-svn/lib.a
+ 
++GENERATED_H += config-list.h
+ GENERATED_H += command-list.h
+ 
+ LIB_H := $(sort $(patsubst ./%,%,$(shell git ls-files '*.h' ':!t/' ':!Documentation/' 2>/dev/null || \
+@@ -2132,7 +2133,7 @@ git$X: git.o GIT-LDFLAGS $(BUILTIN_OBJS) $(GITLIBS)
+ 
+ help.sp help.s help.o: command-list.h
+ 
+-builtin/help.sp builtin/help.s builtin/help.o: command-list.h GIT-PREFIX
++builtin/help.sp builtin/help.s builtin/help.o: config-list.h GIT-PREFIX
+ builtin/help.sp builtin/help.s builtin/help.o: EXTRA_CPPFLAGS = \
+ 	'-DGIT_HTML_PATH="$(htmldir_relative_SQ)"' \
+ 	'-DGIT_MAN_PATH="$(mandir_relative_SQ)"' \
+@@ -2152,6 +2153,12 @@ $(BUILT_INS): git$X
+ 	ln -s $< $@ 2>/dev/null || \
+ 	cp $< $@
+ 
++config-list.h: generate-configlist.sh
++
++config-list.h:
++	$(QUIET_GEN)$(SHELL_PATH) ./generate-configlist.sh \
++		>$@+ && mv $@+ $@
++
+ command-list.h: generate-cmdlist.sh command-list.txt
+ 
+ command-list.h: $(wildcard Documentation/git*.txt) Documentation/*config.txt Documentation/config/*.txt
+@@ -2785,7 +2792,7 @@ $(SP_OBJ): %.sp: %.c GIT-CFLAGS FORCE
+ .PHONY: sparse $(SP_OBJ)
+ sparse: $(SP_OBJ)
+ 
+-EXCEPT_HDRS := command-list.h unicode-width.h compat/% xdiff/%
++EXCEPT_HDRS := command-list.h config-list.h unicode-width.h compat/% xdiff/%
+ ifndef GCRYPT_SHA256
+ 	EXCEPT_HDRS += sha256/gcrypt.h
+ endif
+@@ -2807,7 +2814,7 @@ hdr-check: $(HCO)
+ style:
+ 	git clang-format --style file --diff --extensions c,h
+ 
+-check: command-list.h
++check: config-list.h command-list.h
+ 	@if sparse; \
+ 	then \
+ 		echo >&2 "Use 'make sparse' instead"; \
+diff --git a/builtin/help.c b/builtin/help.c
+index e5590d7787..1c5f2b9255 100644
+--- a/builtin/help.c
++++ b/builtin/help.c
+@@ -8,6 +8,7 @@
+ #include "parse-options.h"
+ #include "run-command.h"
+ #include "column.h"
++#include "config-list.h"
+ #include "help.h"
+ #include "alias.h"
+ 
+@@ -62,6 +63,91 @@ static const char * const builtin_help_usage[] = {
+ 	NULL
+ };
+ 
++struct slot_expansion {
++	const char *prefix;
++	const char *placeholder;
++	void (*fn)(struct string_list *list, const char *prefix);
++	int found;
++};
++
++static void list_config_help(int for_human)
++{
++	struct slot_expansion slot_expansions[] = {
++		{ "advice", "*", list_config_advices },
++		{ "color.branch", "<slot>", list_config_color_branch_slots },
++		{ "color.decorate", "<slot>", list_config_color_decorate_slots },
++		{ "color.diff", "<slot>", list_config_color_diff_slots },
++		{ "color.grep", "<slot>", list_config_color_grep_slots },
++		{ "color.interactive", "<slot>", list_config_color_interactive_slots },
++		{ "color.remote", "<slot>", list_config_color_sideband_slots },
++		{ "color.status", "<slot>", list_config_color_status_slots },
++		{ "fsck", "<msg-id>", list_config_fsck_msg_ids },
++		{ "receive.fsck", "<msg-id>", list_config_fsck_msg_ids },
++		{ NULL, NULL, NULL }
++	};
++	const char **p;
++	struct slot_expansion *e;
++	struct string_list keys = STRING_LIST_INIT_DUP;
++	int i;
++
++	for (p = config_name_list; *p; p++) {
++		const char *var = *p;
++		struct strbuf sb = STRBUF_INIT;
++
++		for (e = slot_expansions; e->prefix; e++) {
++
++			strbuf_reset(&sb);
++			strbuf_addf(&sb, "%s.%s", e->prefix, e->placeholder);
++			if (!strcasecmp(var, sb.buf)) {
++				e->fn(&keys, e->prefix);
++				e->found++;
++				break;
++			}
++		}
++		strbuf_release(&sb);
++		if (!e->prefix)
++			string_list_append(&keys, var);
++	}
++
++	for (e = slot_expansions; e->prefix; e++)
++		if (!e->found)
++			BUG("slot_expansion %s.%s is not used",
++			    e->prefix, e->placeholder);
++
++	string_list_sort(&keys);
++	for (i = 0; i < keys.nr; i++) {
++		const char *var = keys.items[i].string;
++		const char *wildcard, *tag, *cut;
++
++		if (for_human) {
++			puts(var);
++			continue;
++		}
++
++		wildcard = strchr(var, '*');
++		tag = strchr(var, '<');
++
++		if (!wildcard && !tag) {
++			puts(var);
++			continue;
++		}
++
++		if (wildcard && !tag)
++			cut = wildcard;
++		else if (!wildcard && tag)
++			cut = tag;
++		else
++			cut = wildcard < tag ? wildcard : tag;
++
++		/*
++		 * We may produce duplicates, but that's up to
++		 * git-completion.bash to handle
++		 */
++		printf("%.*s\n", (int)(cut - var), var);
++	}
++	string_list_clear(&keys, 0);
++}
++
+ static enum help_format parse_help_format(const char *format)
+ {
+ 	if (!strcmp(format, "man"))
+diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
+index 71158f7d8b..45fecf8bdf 100755
+--- a/generate-cmdlist.sh
++++ b/generate-cmdlist.sh
+@@ -76,23 +76,6 @@ print_command_list () {
+ 	echo "};"
+ }
+ 
+-print_config_list () {
+-	cat <<EOF
+-static const char *config_name_list[] = {
+-EOF
+-	grep -h '^[a-zA-Z].*\..*::$' Documentation/*config.txt Documentation/config/*.txt |
+-	sed '/deprecated/d; s/::$//; s/,  */\n/g' |
+-	sort |
+-	while read line
+-	do
+-		echo "	\"$line\","
+-	done
+-	cat <<EOF
+-	NULL,
+-};
+-EOF
+-}
+-
+ exclude_programs=
+ while test "--exclude-program" = "$1"
+ do
+@@ -113,5 +96,3 @@ echo
+ define_category_names "$1"
+ echo
+ print_command_list "$1"
+-echo
+-print_config_list
+diff --git a/generate-configlist.sh b/generate-configlist.sh
+new file mode 100755
+index 0000000000..8692fe5cf4
+--- /dev/null
++++ b/generate-configlist.sh
+@@ -0,0 +1,21 @@
++#!/bin/sh
++
++echo "/* Automatically generated by generate-configlist.sh */"
++echo
++
++print_config_list () {
++	cat <<EOF
++static const char *config_name_list[] = {
++EOF
++	grep -h '^[a-zA-Z].*\..*::$' Documentation/*config.txt Documentation/config/*.txt |
++	sed '/deprecated/d; s/::$//; s/,  */\n/g' |
++	sort |
++	sed 's/^.*$/	"&",/'
++	cat <<EOF
++	NULL,
++};
++EOF
++}
++
++echo
++print_config_list
+diff --git a/help.c b/help.c
+index cf67624a94..a21487db77 100644
+--- a/help.c
++++ b/help.c
+@@ -407,91 +407,6 @@ void list_common_guides_help(void)
+ 	putchar('\n');
+ }
+ 
+-struct slot_expansion {
+-	const char *prefix;
+-	const char *placeholder;
+-	void (*fn)(struct string_list *list, const char *prefix);
+-	int found;
+-};
+-
+-void list_config_help(int for_human)
+-{
+-	struct slot_expansion slot_expansions[] = {
+-		{ "advice", "*", list_config_advices },
+-		{ "color.branch", "<slot>", list_config_color_branch_slots },
+-		{ "color.decorate", "<slot>", list_config_color_decorate_slots },
+-		{ "color.diff", "<slot>", list_config_color_diff_slots },
+-		{ "color.grep", "<slot>", list_config_color_grep_slots },
+-		{ "color.interactive", "<slot>", list_config_color_interactive_slots },
+-		{ "color.remote", "<slot>", list_config_color_sideband_slots },
+-		{ "color.status", "<slot>", list_config_color_status_slots },
+-		{ "fsck", "<msg-id>", list_config_fsck_msg_ids },
+-		{ "receive.fsck", "<msg-id>", list_config_fsck_msg_ids },
+-		{ NULL, NULL, NULL }
+-	};
+-	const char **p;
+-	struct slot_expansion *e;
+-	struct string_list keys = STRING_LIST_INIT_DUP;
+-	int i;
+-
+-	for (p = config_name_list; *p; p++) {
+-		const char *var = *p;
+-		struct strbuf sb = STRBUF_INIT;
+-
+-		for (e = slot_expansions; e->prefix; e++) {
+-
+-			strbuf_reset(&sb);
+-			strbuf_addf(&sb, "%s.%s", e->prefix, e->placeholder);
+-			if (!strcasecmp(var, sb.buf)) {
+-				e->fn(&keys, e->prefix);
+-				e->found++;
+-				break;
+-			}
+-		}
+-		strbuf_release(&sb);
+-		if (!e->prefix)
+-			string_list_append(&keys, var);
+-	}
+-
+-	for (e = slot_expansions; e->prefix; e++)
+-		if (!e->found)
+-			BUG("slot_expansion %s.%s is not used",
+-			    e->prefix, e->placeholder);
+-
+-	string_list_sort(&keys);
+-	for (i = 0; i < keys.nr; i++) {
+-		const char *var = keys.items[i].string;
+-		const char *wildcard, *tag, *cut;
+-
+-		if (for_human) {
+-			puts(var);
+-			continue;
+-		}
+-
+-		wildcard = strchr(var, '*');
+-		tag = strchr(var, '<');
+-
+-		if (!wildcard && !tag) {
+-			puts(var);
+-			continue;
+-		}
+-
+-		if (wildcard && !tag)
+-			cut = wildcard;
+-		else if (!wildcard && tag)
+-			cut = tag;
+-		else
+-			cut = wildcard < tag ? wildcard : tag;
+-
+-		/*
+-		 * We may produce duplicates, but that's up to
+-		 * git-completion.bash to handle
+-		 */
+-		printf("%.*s\n", (int)(cut - var), var);
+-	}
+-	string_list_clear(&keys, 0);
+-}
+-
+ static int get_alias(const char *var, const char *value, void *data)
+ {
+ 	struct string_list *list = data;
+diff --git a/help.h b/help.h
+index 7a455beeb7..9071894e8c 100644
+--- a/help.h
++++ b/help.h
+@@ -22,7 +22,6 @@ static inline void mput_char(char c, unsigned int num)
+ void list_common_cmds_help(void);
+ void list_all_cmds_help(void);
+ void list_common_guides_help(void);
+-void list_config_help(int for_human);
+ 
+ void list_all_main_cmds(struct string_list *list);
+ void list_all_other_cmds(struct string_list *list);
 -- 
 2.25.0.265.gbab2e86ba0-goog
 
