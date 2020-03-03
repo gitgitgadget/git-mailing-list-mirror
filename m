@@ -2,97 +2,169 @@ Return-Path: <SRS0=wY2r=4U=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 45A03C3F2D1
-	for <git@archiver.kernel.org>; Tue,  3 Mar 2020 20:08:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DF4ECC3F2D1
+	for <git@archiver.kernel.org>; Tue,  3 Mar 2020 20:55:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 003B62073B
-	for <git@archiver.kernel.org>; Tue,  3 Mar 2020 20:08:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AC5FE20842
+	for <git@archiver.kernel.org>; Tue,  3 Mar 2020 20:55:53 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="lvwmmtRI"
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="nTENKaEP"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731482AbgCCUIv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Mar 2020 15:08:51 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:53073 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729860AbgCCUIu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Mar 2020 15:08:50 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id AACC8C6A02;
-        Tue,  3 Mar 2020 15:08:48 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=pWyOtGmkjHV0P3zg8K6rkut5QrQ=; b=lvwmmt
-        RIfWtgvHxaeBm2kFWP+4w+zkEe7D/xmS3CPRroEcHONuZf4zGvrddDADDgVXmTjv
-        l/DgYxlUzdcJeFFA8n4LXZBAPTS7Hz+0N++52u6iEHJQl67ShEk7Aft2PoWLw4kL
-        HGUpqW5y2P700Wa4mhIrSrq/tjfDgmnzIrojY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=N1yBuRM+l6cXAfoY345rfkHHbuqyrRVf
-        4WWGVWGofEDOMea7snYPL1wnm/JLo7m2LQY4k80ASdmP9LmbpereASN39NJIj/25
-        WpJRgoSNZIh0yGtz9geiba4it7oH0BiIcXcFNRke6Qveou5hVMHN9iMa8MgUGOdG
-        7EzVBtjdCEQ=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id A191DC6A01;
-        Tue,  3 Mar 2020 15:08:48 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C99EDC6A00;
-        Tue,  3 Mar 2020 15:08:45 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Bryan Turner <bturner@atlassian.com>,
-        Takuya N via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Users <git@vger.kernel.org>,
-        Takuya Noguchi <takninnovationresearch@gmail.com>
-Subject: Re: [PATCH] doc: use 'ref' instead of 'commit' for merge-base arguments
-References: <pull.719.git.git.1583220197856.gitgitgadget@gmail.com>
-        <CAGyf7-Ez1Fx-VUVmDWxRxLaZcU+Tu4kZ+F2+0uNKkx2oftjEJQ@mail.gmail.com>
-        <nycvar.QRO.7.76.6.2003031507500.46@tvgsbejvaqbjf.bet>
-        <xmqqd09ta4tn.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.2003032035510.46@tvgsbejvaqbjf.bet>
-Date:   Tue, 03 Mar 2020 12:08:43 -0800
-In-Reply-To: <nycvar.QRO.7.76.6.2003032035510.46@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Tue, 3 Mar 2020 20:38:19 +0100 (CET)")
-Message-ID: <xmqq5zfl8alw.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1731966AbgCCUzv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Mar 2020 15:55:51 -0500
+Received: from mout.web.de ([212.227.17.12]:56919 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1731339AbgCCUzv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Mar 2020 15:55:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1583268938;
+        bh=AZy8CSPY7geFhj+k5Zo43ydoal4kK93XPaDy1BkFDnU=;
+        h=X-UI-Sender-Class:To:Cc:From:Subject:Date;
+        b=nTENKaEPa1sSi1VHW+hO60RJvboQKBGqzQ6pFn6Diw0H+C63trGrNqM2QMVCZURI2
+         GHZjLYbeadaVJHL2kgT25C2yg04zQ6Ol2T33iOsuQfcfhvlf8EU7xQANQfTYxWklLr
+         k+8CNQnrlmyv1OIT8Qs79vxqDSm0mdBQZ8ttplrQ=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.26] ([79.203.21.89]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0Lrryk-1jVcM03BaY-013bZs; Tue, 03
+ Mar 2020 21:55:38 +0100
+X-Mozilla-News-Host: news://nntp.public-inbox.org:119
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Manish Devgan <manish.nsit8@gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH RESEND] remote-curl: show progress for fetches over dumb HTTP
+Message-ID: <e387d31d-afab-fe09-4e37-535a2650afca@web.de>
+Date:   Tue, 3 Mar 2020 21:55:34 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.5.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C9A9B8DC-5D8A-11EA-A093-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:NSdb9txwXsqPDrnitE5Ov8MqCClexfJuZHW22M7TSE2fWuDpt8b
+ lWBJRZQM0AoHhDls5F10u2p+6ffGoBokgoeURSr1kONDhBkBYbLhO83tDVWHCeuhjQkTOcD
+ PaQF7mqMHmyMpuwawaHcQydayCBBR77ojm/7fHz3hjsssbW9U83nDuc7ATrqoVQCgQIYtpE
+ i5fHfIwczOYmI5U7Ax7aA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:1B0Q8Dltspg=:YHZY0vaj7eUOTDtFMpPv6I
+ PS/6KpwnjtMZEuIWPnaUINPcfcqq3j+BA9pD2PggzUpBQhONigP64emL3G745ijP0EJfUx1lB
+ NERjWKlrWSgLBgzOR8zM03cmJddMknKJvv0i7Ve6nwgQNV0s54KSQkDPt3TWTmxBhiD9A/IU0
+ D6rN+hEH35mBjilCAbF25Ta66cUWvYK9R0tLlUgOz/3zuVhJLjmuPuJyFg89vE1gLtzxTTFKk
+ QM34wG5Xjz03eL88hrduVEX1dohWBtXmWkkeqXg2mHZBO1hrzRBUKMd5VRDKhN8XRpuSexwD0
+ I8QZ6AY9hm6v4JobVlKqU4vsDN/W8LWM8tJBTXvZ2KqjLxtMW4XQIkTKDn0/HdFVzayBxVG3e
+ syDErcRgXf0D3w7U/wj2rGTJHaj7JOhzq3LTJ7cX5tE5RimuNTehRV1Bj30yzX4F0tL9OZzTA
+ 5FjFAeY0HAVWTRukwqzcxZg4pPH0kiZBE8UL66wJk7rxc/Bq682Fai5KpBN74OFtU5OnpLO0Q
+ MDVkpMfqMm7Sk/DvVV//RaesVX+iS1k0aoRrJTZ5aKfTevZwUo74gavS+6qDMlm/euQmvZbnP
+ Zse8QgcoJziV2qDcw4JxpKTKuc/82JVztt5LzojHYfo+1wXea/tcCmA6YIdsuAqSeipWmXTGt
+ /r/KNXjKPXD0yqPELZG+huCROR2lAqeCaO5/hnHxWYmkCXEGi+gmUoBGuynOhawV1eUgcXdWq
+ qe9ybv4Ppcs4+sDRDFsWWj0g/cBFtAUuBhTcQy4nOM/9J+8FF/tQMSbauYHBnwN7WqAGzKlI+
+ xDAa80QOfv6M3CM3QBMvOuhd80uMO9QB+TwhZfIBMANHbF5oqDEY2rLpbwWutxyV6vQyxUoc2
+ 6u+mZpD/VsSZ8Iy33XyQaiT/BSr8kuLdnosXXlbXPkUTqUkM8hUHBGwEjb6feqygEmAxXgvxo
+ WGEFQ/ea9rUB45uDrJeFpsxqD640QkdbAo+XP65vhGCcjh1pTzKrc0PPf2ZhR5Tkfq9ojCvKK
+ pyo252JW8OtEbb9M1Gt+DEe3o/f0wFASdWtISWmhtesQK7PmwIxJIZX8Y0uqCOEZNngWcFxvT
+ RLSYIiuvcuKG4sZ2pXDgRI1FaviW+aVQQqIpEYtYnWjmUkEAtsjiu4BBn/uF+m4WWrn78psYx
+ kb8wHapcfPllUuZ18449E4FJIk/7eTDijoaL98VGtP0dJ/sMlqKRBm1r+orGsBNS0zEgE=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Fetching over dumb HTTP transport doesn't show any progress, even with
+the option --progress.  If the connection is slow or there is a lot of
+data to get then this can take a long time while the user is left to
+wonder if git got stuck.
 
->
-> We do not only want commit objects. It is totally legitimate to ask
->
-> 	git merge-base HEAD v2.25.0
->
-> (v2.25.0 is of course not a commit, it is a tag that _refers_ to a
-> commit.)
+We don't know the number of objects to fetch at the outset, but we can
+count the ones we got.  Show an open-ended progress indicator based on
+that number if the user asked for it.
 
-I meant to say (and was expecting those who know to know)
-committish, of course.
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+Original submission:
+https://lore.kernel.org/git/9ed26e7e-c19c-cdb2-0710-3b91bf31291b@web.de/
 
-> Earlier, we would probably have called this a "commit-ish", but since
-> users got so confused by this instance of Git Speak (is my interpretation
-> of the reason, at least), we tend to call them "revs" these days.
+ remote-curl.c |  1 +
+ walker.c      | 13 ++++++++++++-
+ walker.h      |  1 +
+ 3 files changed, 14 insertions(+), 1 deletion(-)
 
-I am not among that "we".  "rev" is an older and even more nerdy Git
-speak that was invented back when Linus was active, and as you can
-see, we used the word to mean not just commit or commit-ish, but
-anything that can be turned into an object name (you'd realize that
-you know it already, when you think about what 'rev' means in "git
-rev-parse").  The phrase *-ish came much later (I think I was among
-those who started it).
+diff --git a/remote-curl.c b/remote-curl.c
+index 8eb96152f5..e4cd321844 100644
+=2D-- a/remote-curl.c
++++ b/remote-curl.c
+@@ -1026,6 +1026,7 @@ static int fetch_dumb(int nr_heads, struct ref **to_=
+fetch)
 
+ 	walker =3D get_http_walker(url.buf);
+ 	walker->get_verbosely =3D options.verbosity >=3D 3;
++	walker->get_progress =3D options.progress;
+ 	walker->get_recover =3D 0;
+ 	ret =3D walker_fetch(walker, nr_heads, targets, NULL, NULL);
+ 	walker_free(walker);
+diff --git a/walker.c b/walker.c
+index bb010f7a2b..4984bf8b3d 100644
+=2D-- a/walker.c
++++ b/walker.c
+@@ -8,6 +8,7 @@
+ #include "tag.h"
+ #include "blob.h"
+ #include "refs.h"
++#include "progress.h"
+
+ static struct object_id current_commit_oid;
+
+@@ -162,6 +163,11 @@ static int process(struct walker *walker, struct obje=
+ct *obj)
+ static int loop(struct walker *walker)
+ {
+ 	struct object_list *elem;
++	struct progress *progress =3D NULL;
++	uint64_t nr =3D 0;
++
++	if (walker->get_progress)
++		progress =3D start_delayed_progress(_("Fetching objects"), 0);
+
+ 	while (process_queue) {
+ 		struct object *obj =3D process_queue->item;
+@@ -176,15 +182,20 @@ static int loop(struct walker *walker)
+ 		 */
+ 		if (! (obj->flags & TO_SCAN)) {
+ 			if (walker->fetch(walker, obj->oid.hash)) {
++				stop_progress(&progress);
+ 				report_missing(obj);
+ 				return -1;
+ 			}
+ 		}
+ 		if (!obj->type)
+ 			parse_object(the_repository, &obj->oid);
+-		if (process_object(walker, obj))
++		if (process_object(walker, obj)) {
++			stop_progress(&progress);
+ 			return -1;
++		}
++		display_progress(progress, ++nr);
+ 	}
++	stop_progress(&progress);
+ 	return 0;
+ }
+
+diff --git a/walker.h b/walker.h
+index 6d8ae00e5b..d40b016bab 100644
+=2D-- a/walker.h
++++ b/walker.h
+@@ -10,6 +10,7 @@ struct walker {
+ 	int (*fetch)(struct walker *, unsigned char *sha1);
+ 	void (*cleanup)(struct walker *);
+ 	int get_verbosely;
++	int get_progress;
+ 	int get_recover;
+
+ 	int corrupt_object_found;
+=2D-
+2.25.1
