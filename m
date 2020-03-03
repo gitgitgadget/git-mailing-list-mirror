@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 22FBAC3F2C6
-	for <git@archiver.kernel.org>; Tue,  3 Mar 2020 16:12:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FD12C3F2D1
+	for <git@archiver.kernel.org>; Tue,  3 Mar 2020 16:13:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id E3C1D2073D
-	for <git@archiver.kernel.org>; Tue,  3 Mar 2020 16:12:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4C51820863
+	for <git@archiver.kernel.org>; Tue,  3 Mar 2020 16:13:00 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fOSfVZ6n"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ITQV2xTo"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730108AbgCCQM4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Mar 2020 11:12:56 -0500
-Received: from mail-wr1-f51.google.com ([209.85.221.51]:43483 "EHLO
-        mail-wr1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729961AbgCCQM4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Mar 2020 11:12:56 -0500
-Received: by mail-wr1-f51.google.com with SMTP id h9so4110804wrr.10
-        for <git@vger.kernel.org>; Tue, 03 Mar 2020 08:12:55 -0800 (PST)
+        id S1730176AbgCCQM7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Mar 2020 11:12:59 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:33666 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729961AbgCCQM7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Mar 2020 11:12:59 -0500
+Received: by mail-wr1-f67.google.com with SMTP id x7so5120869wrr.0
+        for <git@vger.kernel.org>; Tue, 03 Mar 2020 08:12:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=EAYY6ARgeppcpZF+0aExYfXD5uYwd5GST0Afoh6sICY=;
-        b=fOSfVZ6nEe15sgTOzbZqgDJDWe3ZvAizdb3Cm8PXyLZLuIawOPDvxwSsIEYaYCFBnE
-         7fh8WrXwU3IJqd++LHUELuZwuvY+3F5LlKYFD2srX7QrMUA6259GKJ4W6+k9wuoSfPCn
-         ni4vSHEiRQYo9GkwHky7C28ZHalfrJkXdxRb/nK+hMbblSGTw/3pjhgteL+aE0fB6Kx2
-         RCY2qI68LE64/VL+cy537X1NrsvreND6zVK9qCEew1UoUactpj39egNosMLCosipuDf6
-         GnZTwf74XLg0Bb+jNsk4oD1UtBr2cfEuNZHGhQdAhi+LwakGpTrd6SBYxVdog6yXU79H
-         vDcQ==
+        bh=PP97p3oeJ+bQw4+ze0jb029iDypVaZayxDIXSCL3+f4=;
+        b=ITQV2xToTBcn1jcOsr1h1ugyu99ocI09f0IU2796ofBmZRRJV6ecyoWA03+4ON2JGG
+         sl3HlVk4XJIVH4GG1cpzkgoHPKLkB5Y7qFpvbyycA924o6LLugu+8XugNIza7xvLnHpI
+         1gkCCQNY/lEEvbCJ8GGWBi5rPjVhHjtHFKftNzzens/xLXOPMU4qcv5fizovobOxfR5P
+         gkjJ58TGa6M1GYasMbdz2yuyCxASjVhvjgL8Je3mdZ4aFrDYOrTebLebh599bLmIR625
+         nhhuDX4qiMmxYf0KtmNjVu7/tNnqe4ghhoqqia/Vro8OCKZWL6+nfN8PzFcRUTvvHboY
+         lb/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=EAYY6ARgeppcpZF+0aExYfXD5uYwd5GST0Afoh6sICY=;
-        b=aioGhtBYZCGERnFlrOboHr4RqxKkbOhjPMhjO7+6fqdvxQP2vTPW2Q9V40/7pglkmo
-         iOPVHULcBoEbSPZ8G4nhYz3KuAdwbf6LFxQV1sj5DQLqe/9q0/gT/RZYmcYesB0p7x/4
-         QUrh9mvRKpn3Cg07ROe3tZYv/NK2vqyWLuglYPCmMQVkNRoTjdpap3Zt3bG4toKQKQCC
-         nDhtDlwXrWgdDwta6/lB8hDxB2afZU5UWndxoK/daDyvDBljzEEcsJBBrI0n2ZzdZBLJ
-         gjYGuysMEROzwOAmHBrGXtLwhBNY/K857nh7PqQHOq3J4UKPlDi0c/MYSRD+4vHEbw1Q
-         sq7g==
-X-Gm-Message-State: ANhLgQ1gofi7fvalJydLDQpFEuOeKzvTVXwAHSz7frufY637YIQ7l1zK
-        VqeIzxtmQjgIVSCTaO/hUJ5BjZwn6q0=
-X-Google-Smtp-Source: ADFU+vspHRgyNdPK2VeJDju5wxtRUDBimBL00LtF1Rq63JQ4RkrXdolpjDH61GgoMPrvMNPXXlURRA==
-X-Received: by 2002:adf:a419:: with SMTP id d25mr6543822wra.210.1583251974413;
-        Tue, 03 Mar 2020 08:12:54 -0800 (PST)
+        bh=PP97p3oeJ+bQw4+ze0jb029iDypVaZayxDIXSCL3+f4=;
+        b=B8Wl/IDF2mHDkJfjP9PIh2eDV7QWn4ijIWblLywFN76zuQjjZXm+pPYIza8822m1Zu
+         lrLTKUYWkDYjEKT+Mm/jPVp5RHdh693u9U+MxqkM/KNhbpnMutOPdj4726wqZW0nqyGF
+         lqKMYRGwJQeeqN8QQSN4SGLGJ/5yAJM1TC5pBSFc7H1qedcL/v5/ioybaPxgHUKGCzsI
+         ha2Cw1OUlZ+CK2pcM2/E9nLgwh5tYrd4kUvQLK06VUqpAiOzpyWLVS1pllfHO8H9y1Fl
+         MSLwJW1Xg6h85sZtyBd20Putd4acrwl6y226waX33VFc1u2DShqeQke6I1Kcpiy0mPSG
+         tV6w==
+X-Gm-Message-State: ANhLgQ0kONXLBYJJCiicIsfrqcvLq8bhyEc6EZshaRiVze0S2KsG14+x
+        c3lODuBsB+28D6DscDsrkjTicaFaUHo=
+X-Google-Smtp-Source: ADFU+vsE/y8cxgDTM4Cc87rLQSQYFY+yTU4a5g4hbyJlz6MgBrYycv+F44xX66XuIfiM9TdN7gd2cw==
+X-Received: by 2002:adf:ecca:: with SMTP id s10mr6428948wro.255.1583251975909;
+        Tue, 03 Mar 2020 08:12:55 -0800 (PST)
 Received: from localhost.localdomain (87-231-246-247.rev.numericable.fr. [87.231.246.247])
-        by smtp.gmail.com with ESMTPSA id l8sm4847472wmj.2.2020.03.03.08.12.53
+        by smtp.gmail.com with ESMTPSA id l8sm4847472wmj.2.2020.03.03.08.12.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Mar 2020 08:12:53 -0800 (PST)
+        Tue, 03 Mar 2020 08:12:54 -0800 (PST)
 From:   Damien Robert <damien.olivier.robert@gmail.com>
 X-Google-Original-From: Damien Robert <damien.olivier.robert+git@gmail.com>
 To:     git@vger.kernel.org, Jeff King <peff@peff.net>
 Cc:     Damien Robert <damien.olivier.robert+git@gmail.com>
-Subject: [PATCH v2 1/2] remote: drop "explicit" parameter from remote_ref_for_branch()
-Date:   Tue,  3 Mar 2020 17:12:22 +0100
-Message-Id: <20200303161223.1870298-2-damien.olivier.robert+git@gmail.com>
+Subject: [PATCH v2 2/2] remote.c: fix handling of %(push:remoteref)
+Date:   Tue,  3 Mar 2020 17:12:23 +0100
+Message-Id: <20200303161223.1870298-3-damien.olivier.robert+git@gmail.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20200303161223.1870298-1-damien.olivier.robert+git@gmail.com>
 References: <20200302133217.GA1176622@coredump.intra.peff.net>
@@ -73,97 +73,209 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff King <peff@peff.net>
+Looking at the value of %(push:remoteref) only handles the case when an
+explicit push refspec is passed. But it does not handle the fallback
+cases of looking at the configuration value of `push.default`.
 
-Commit 9700fae5ee (for-each-ref: let upstream/push report the remote ref
-name, 2017-11-07) added a remote_ref_for_branch() helper, which is
-modeled after remote_for_branch(). This includes providing an "explicit"
-out-parameter that tells the caller whether the remote was configured by
-the user, or whether we picked a default name like "origin".
+In particular, doing something like
 
-But unlike remote names, there's no default case for the remote branch
-name. In any case where we don't set "explicit", we'd just an empty
-string anyway. Let's instead return NULL in this case, letting us
-simplify the function interface.
+    git config push.default current
+    git for-each-ref --format='%(push)'
+    git for-each-ref --format='%(push:remoteref)'
 
-Signed-off-by: Jeff King <peff@peff.net>
+prints a useful tracking ref for the first for-each-ref, but an empty
+string for the second.
+
+Since the intention of %(push:remoteref), from 9700fae5ee (for-each-ref:
+let upstream/push report the remote ref name) is to get exactly which
+branch `git push` will push to, even in the fallback cases, fix this.
+
+To get the meaning of %(push:remoteref), `ref-filter.c` calls
+`remote_ref_for_branch`. We simply add a new static helper function,
+`branch_get_push_remoteref` that follows the logic of
+`branch_get_push_1`, and call it from `remote_ref_for_branch`.
+
+We also update t/6300-for-each-ref.sh to handle all `push.default`
+strategies. This involves testing `push.default=simple` twice, once
+where there is a matching upstream branch and once when there is none.
+
 Signed-off-by: Damien Robert <damien.olivier.robert+git@gmail.com>
 ---
- ref-filter.c |  6 ++----
- remote.c     | 11 ++---------
- remote.h     |  3 +--
- 3 files changed, 5 insertions(+), 15 deletions(-)
+ remote.c                | 106 +++++++++++++++++++++++++++++++---------
+ t/t6300-for-each-ref.sh |  29 ++++++++++-
+ 2 files changed, 112 insertions(+), 23 deletions(-)
 
-diff --git a/ref-filter.c b/ref-filter.c
-index 6867e33648..9837700732 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -1459,12 +1459,10 @@ static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
- 			remote_for_branch(branch, &explicit);
- 		*s = xstrdup(explicit ? remote : "");
- 	} else if (atom->u.remote_ref.option == RR_REMOTE_REF) {
--		int explicit;
- 		const char *merge;
- 
--		merge = remote_ref_for_branch(branch, atom->u.remote_ref.push,
--					      &explicit);
--		*s = xstrdup(explicit ? merge : "");
-+		merge = remote_ref_for_branch(branch, atom->u.remote_ref.push);
-+		*s = xstrdup(merge ? merge : "");
- 	} else
- 		BUG("unhandled RR_* enum");
- }
 diff --git a/remote.c b/remote.c
-index 593ce297ed..c43196ec06 100644
+index c43196ec06..b3ce992d01 100644
 --- a/remote.c
 +++ b/remote.c
-@@ -516,14 +516,11 @@ const char *pushremote_for_branch(struct branch *branch, int *explicit)
+@@ -516,28 +516,6 @@ const char *pushremote_for_branch(struct branch *branch, int *explicit)
  	return remote_for_branch(branch, explicit);
  }
  
--const char *remote_ref_for_branch(struct branch *branch, int for_push,
--				  int *explicit)
-+const char *remote_ref_for_branch(struct branch *branch, int for_push)
+-const char *remote_ref_for_branch(struct branch *branch, int for_push)
+-{
+-	if (branch) {
+-		if (!for_push) {
+-			if (branch->merge_nr) {
+-				return branch->merge_name[0];
+-			}
+-		} else {
+-			const char *dst, *remote_name =
+-				pushremote_for_branch(branch, NULL);
+-			struct remote *remote = remote_get(remote_name);
+-
+-			if (remote && remote->push.nr &&
+-			    (dst = apply_refspecs(&remote->push,
+-						  branch->refname))) {
+-				return dst;
+-			}
+-		}
+-	}
+-	return NULL;
+-}
+-
+ static struct remote *remote_get_1(const char *name,
+ 				   const char *(*get_default)(struct branch *, int *))
  {
- 	if (branch) {
- 		if (!for_push) {
- 			if (branch->merge_nr) {
--				if (explicit)
--					*explicit = 1;
- 				return branch->merge_name[0];
- 			}
- 		} else {
-@@ -534,15 +531,11 @@ const char *remote_ref_for_branch(struct branch *branch, int for_push,
- 			if (remote && remote->push.nr &&
- 			    (dst = apply_refspecs(&remote->push,
- 						  branch->refname))) {
--				if (explicit)
--					*explicit = 1;
- 				return dst;
- 			}
- 		}
- 	}
--	if (explicit)
--		*explicit = 0;
--	return "";
-+	return NULL;
+@@ -1656,6 +1634,76 @@ static const char *tracking_for_push_dest(struct remote *remote,
+ 	return ret;
  }
  
- static struct remote *remote_get_1(const char *name,
-diff --git a/remote.h b/remote.h
-index b134cc21be..11d8719b58 100644
---- a/remote.h
-+++ b/remote.h
-@@ -261,8 +261,7 @@ struct branch {
- struct branch *branch_get(const char *name);
- const char *remote_for_branch(struct branch *branch, int *explicit);
- const char *pushremote_for_branch(struct branch *branch, int *explicit);
--const char *remote_ref_for_branch(struct branch *branch, int for_push,
--				  int *explicit);
-+const char *remote_ref_for_branch(struct branch *branch, int for_push);
++/**
++ * Return the local name of the remote tracking branch, as in
++ * %(push:remoteref), that corresponds to the ref we would push to given a
++ * bare `git push` while `branch` is checked out.
++ * See also branch_get_push_1 below.
++ */
++static const char *branch_get_push_remoteref(struct branch *branch)
++{
++	struct remote *remote;
++
++	remote = remote_get(pushremote_for_branch(branch, NULL));
++	if (!remote)
++		return NULL;
++
++	if (remote->push.nr) {
++		char *dst;
++
++		dst = apply_refspecs(&remote->push, branch->refname);
++		if (!dst)
++			return NULL;
++
++		return dst;
++	}
++
++	if (remote->mirror)
++		return branch->refname;
++
++	switch (push_default) {
++	case PUSH_DEFAULT_NOTHING:
++		return NULL;
++
++	case PUSH_DEFAULT_MATCHING:
++	case PUSH_DEFAULT_CURRENT:
++		return branch->refname;
++
++	case PUSH_DEFAULT_UPSTREAM:
++		{
++			if (!branch || !branch->merge ||
++			    !branch->merge[0] || !branch->merge[0]->dst)
++			return NULL;
++
++			return branch->merge[0]->src;
++		}
++
++	case PUSH_DEFAULT_UNSPECIFIED:
++	case PUSH_DEFAULT_SIMPLE:
++		{
++			const char *up, *cur;
++
++			up = branch_get_upstream(branch, NULL);
++			if (!up)
++				return NULL;
++			cur = tracking_for_push_dest(remote, branch->refname, NULL);
++			if (!cur)
++				return NULL;
++			if (strcmp(cur, up))
++				return NULL;
++
++			return branch->refname;
++		}
++	}
++
++	BUG("unhandled push situation");
++}
++
++/**
++ * Return the tracking branch, as in %(push), that corresponds to the ref we
++ * would push to given a bare `git push` while `branch` is checked out.
++ * See also branch_get_push_remoteref above.
++ */
+ static const char *branch_get_push_1(struct branch *branch, struct strbuf *err)
+ {
+ 	struct remote *remote;
+@@ -1735,6 +1783,20 @@ static int ignore_symref_update(const char *refname)
+ 	return (flag & REF_ISSYMREF);
+ }
  
- /* returns true if the given branch has merge configuration given. */
- int branch_has_merge_config(struct branch *branch);
++const char *remote_ref_for_branch(struct branch *branch, int for_push)
++{
++	if (branch) {
++		if (!for_push) {
++			if (branch->merge_nr) {
++				return branch->merge_name[0];
++			}
++		} else {
++			return branch_get_push_remoteref(branch);
++		}
++	}
++	return NULL;
++}
++
+ /*
+  * Create and return a list of (struct ref) consisting of copies of
+  * each remote_ref that matches refspec.  refspec must be a pattern.
+diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+index 9c910ce746..60e21834fd 100755
+--- a/t/t6300-for-each-ref.sh
++++ b/t/t6300-for-each-ref.sh
+@@ -874,7 +874,34 @@ test_expect_success ':remotename and :remoteref' '
+ 		actual="$(git for-each-ref \
+ 			--format="%(push:remotename),%(push:remoteref)" \
+ 			refs/heads/push-simple)" &&
+-		test from, = "$actual"
++		test from, = "$actual" &&
++		git config branch.push-simple.remote from &&
++		git config branch.push-simple.merge refs/heads/master &&
++		actual="$(git for-each-ref \
++			--format="%(push:remotename),%(push:remoteref)" \
++			refs/heads/push-simple)" &&
++		test from, = "$actual" &&
++		actual="$(git -c push.default=upstream for-each-ref \
++			--format="%(push:remotename),%(push:remoteref)" \
++			refs/heads/push-simple)" &&
++		test from,refs/heads/master = "$actual" &&
++		actual="$(git -c push.default=current for-each-ref \
++			--format="%(push:remotename),%(push:remoteref)" \
++			refs/heads/push-simple)" &&
++		test from,refs/heads/push-simple = "$actual" &&
++		actual="$(git -c push.default=matching for-each-ref \
++			--format="%(push:remotename),%(push:remoteref)" \
++			refs/heads/push-simple)" &&
++		test from,refs/heads/push-simple = "$actual" &&
++		actual="$(git -c push.default=nothing for-each-ref \
++			--format="%(push:remotename),%(push:remoteref)" \
++			refs/heads/push-simple)" &&
++		test from, = "$actual" &&
++		git config branch.push-simple.merge refs/heads/push-simple &&
++		actual="$(git for-each-ref \
++			--format="%(push:remotename),%(push:remoteref)" \
++			refs/heads/push-simple)" &&
++		test from,refs/heads/push-simple = "$actual"
+ 	)
+ '
+ 
 -- 
 Patched on top of v2.25.1-377-g2d2118b814 (git version 2.25.1)
 
