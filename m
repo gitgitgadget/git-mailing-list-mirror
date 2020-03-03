@@ -2,97 +2,179 @@ Return-Path: <SRS0=wY2r=4U=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 20873C3F2C6
-	for <git@archiver.kernel.org>; Tue,  3 Mar 2020 22:22:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 99BE1C3F2C6
+	for <git@archiver.kernel.org>; Tue,  3 Mar 2020 22:24:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id E1A0F20728
-	for <git@archiver.kernel.org>; Tue,  3 Mar 2020 22:22:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6922220870
+	for <git@archiver.kernel.org>; Tue,  3 Mar 2020 22:24:29 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="yJMxhzRs"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PdK4PKJG"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727459AbgCCWWe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Mar 2020 17:22:34 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:51430 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726766AbgCCWWd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Mar 2020 17:22:33 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id D0BABC77E1;
-        Tue,  3 Mar 2020 17:22:31 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=y3/rilfLF10JehWreQXCOIyH1RM=; b=yJMxhz
-        RszgHlIV00oPHg4FxhdLDlvEdepy4zCYfxt3aJFDd5hjQO1U+OFBWuPwr+Zyf+4v
-        6bLaD80YB2MR3POGogWFf5wBg4g1/L7LgKdaf8S/JCHmx6gR1zkW6BlUhNqYyHMx
-        Ac49dBIWIeUSZ02qnPeijoMw+IfLzR9OCBXkI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Va5bnBtcV5K4tMXJ0n0epNRBstzpD47F
-        GCfXccruTJ1WUwvkyG8WE1Bl/3057XXVESeZ9ykkMJeEp+prFRv64xRghEeln9yF
-        VdxJ2JaambNcyqRIocxwBpppAbPiJFY0dXClQ172W+Ik+DQZBERUR9/ImcgNG6mQ
-        HrOXgqRGhFc=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C885FC77E0;
-        Tue,  3 Mar 2020 17:22:31 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id F24B0C77DF;
-        Tue,  3 Mar 2020 17:22:28 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Damien Robert <damien.olivier.robert@gmail.com>,
-        git@vger.kernel.org,
-        Damien Robert <damien.olivier.robert+git@gmail.com>
-Subject: Re: [PATCH v2 1/2] remote: drop "explicit" parameter from remote_ref_for_branch()
+        id S1727870AbgCCWY2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Mar 2020 17:24:28 -0500
+Received: from mail-wr1-f50.google.com ([209.85.221.50]:43906 "EHLO
+        mail-wr1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727322AbgCCWY2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Mar 2020 17:24:28 -0500
+Received: by mail-wr1-f50.google.com with SMTP id h9so5518026wrr.10
+        for <git@vger.kernel.org>; Tue, 03 Mar 2020 14:24:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=GrhrvVYnoDREiPieTwDCjth2ZhrdYwe2y8iZd2bOSP4=;
+        b=PdK4PKJGV+sKTuj5ui8pooy+8eA3vTouUFHvTxLYPtU1vAeJp4JvL+8raEUnHjnH32
+         DfMANF8Vn9bVOYIqwp1NvQyAKHDNZafD9qbo9NLm2dTW95B7WZPzmD7+EPqUYWPKFm6a
+         Tjvz9YetuxHbT8GAKo9xdvn5wCuFIoyox9NeZ8f6vzmmZu/YfIAfLM5o9ZlkZ7VdILaD
+         pA1a6gAUyoIqX9g0p6Gndwc/nraAK+MGpQI4lbyloR1ERLjvZ2ABXtGjhMileAFSSLyl
+         LmUN6Qt+Xw0B9H3L4VIqabTXRYGqYrw3YvLHefTvC4dlcCFfR9j9J6w8XmuZdigSnEOt
+         f3Vg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=GrhrvVYnoDREiPieTwDCjth2ZhrdYwe2y8iZd2bOSP4=;
+        b=ol622GDt41zDdUtzHkkKNO+1a1QFpMNm/B8zvScXf2pLR66nzSOgnY1HFLOtAHbxav
+         8luBQJ+dcFacuAXr8WpKi6kzLOPQkgjBGRGH717LKbTsHyR8msi7w5Cxpat6x8EXnylm
+         dqyaUjw6rCCLkY/MCuMeq9o7fAkPt5odnfZ07PDV1EhE92jE4oDXrkYnZY9aOleUlfY+
+         Dp1Pdf3oJf8ChcWEdNx+CQ0UAJOCqa+RRIF8HYOQHmggeaXNdYQfd+icSbKFqrmgcbz+
+         4OhdCpjlRWPrOiqXdATDVo6Co2fH/xY3xgT971JYNWjvMmNldUuZiQQgk4hY9Ri+E4sw
+         is8w==
+X-Gm-Message-State: ANhLgQ2Yzu8k4fn5tqiQb+rjcJv2KspMJNd0T3BT1Hq4xVX5K1wvJNyw
+        CIF2duRAmddXI2GRJCu1HX6G6jMfOJg=
+X-Google-Smtp-Source: ADFU+vsioGiTIhZ4BqMFglaNs2rWakK2wjFiHo77AEEA4hExH/podApRjRySFhkDwAl0rS4UKEUSIQ==
+X-Received: by 2002:adf:de12:: with SMTP id b18mr186606wrm.268.1583274266021;
+        Tue, 03 Mar 2020 14:24:26 -0800 (PST)
+Received: from doriath (87-231-246-247.rev.numericable.fr. [87.231.246.247])
+        by smtp.gmail.com with ESMTPSA id c8sm9421908wrt.19.2020.03.03.14.24.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Mar 2020 14:24:25 -0800 (PST)
+Date:   Tue, 3 Mar 2020 23:24:23 +0100
+From:   Damien Robert <damien.olivier.robert@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 2/2] remote.c: fix handling of %(push:remoteref)
+Message-ID: <20200303222423.wfbjuuwp3263qesv@doriath>
+X-PGP-Key: http://www.normalesup.org/~robert/pro/files/Damien_Olivier_Robert.asc
+X-Start-Date: Tue, 03 Mar 2020 23:10:07 +0100
 References: <20200302133217.GA1176622@coredump.intra.peff.net>
-        <20200303161223.1870298-1-damien.olivier.robert+git@gmail.com>
-        <20200303161223.1870298-2-damien.olivier.robert+git@gmail.com>
-        <xmqqzhcx8gz8.fsf@gitster-ct.c.googlers.com>
-        <20200303211142.GA36275@coredump.intra.peff.net>
-Date:   Tue, 03 Mar 2020 14:22:26 -0800
-In-Reply-To: <20200303211142.GA36275@coredump.intra.peff.net> (Jeff King's
-        message of "Tue, 3 Mar 2020 13:11:42 -0800")
-Message-ID: <xmqqeeu96pul.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+ <20200303161223.1870298-1-damien.olivier.robert+git@gmail.com>
+ <20200303161223.1870298-3-damien.olivier.robert+git@gmail.com>
+ <xmqqtv358fkk.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 77D7BDB6-5D9D-11EA-B35C-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqtv358fkk.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+From Junio C Hamano, Tue 03 Mar 2020 at 10:21:31 (-0800) :
+> Mental note: this function was moved down, the main part of the
+> logic extracted to a new branch_get_push_remoteref() helper, which
+> in addition got extended.
 
-> On Tue, Mar 03, 2020 at 09:51:07AM -0800, Junio C Hamano wrote:
->
->> > But unlike remote names, there's no default case for the remote branch
->> > name.
->> 
->> Up to this point, it is well written and easy to read.  I think
->> "there is no case where a default name for the remoate branch is
->> used" would be even more easy to read.
->> 
->> In any case, if there is no case that default name, I understand
->> that explicit is always set to 1?
->> 
->> > In any case where we don't set "explicit", we'd just an empty
->> > string anyway.
->> 
->> Sorry, but I cannot parse this.  But earlier, you established that
->> there is no case that a default is used, so is there any case where
->> we don't set "explicit"?  I don't get it.
->
-> Maybe more clear:
-> ...
-> Yes, that looks fine to me.
+Exactly.
 
-Thanks for a clarification.
+> That's a fairly expensive way to write
+> 	if (remote->push.nr)
+> 		return apply_refspecs(&remote->push, branch->refname);
+> one-liner.
+
+You anticipated the question I asked afterwards :)
+
+> > +	case PUSH_DEFAULT_UPSTREAM:
+> > +		{
+> > +			if (!branch || !branch->merge ||
+> > +			    !branch->merge[0] || !branch->merge[0]->dst)
+> > +			return NULL;
+> > +
+> > +			return branch->merge[0]->src;
+> > +		}
+> 
+> This is strangely indented and somewhat unreadable.  Why isn't this
+> more like:
+
+Sorry I missed the indentation for the return NULL.
+ 
+> 	case PUSH_DEFAULT_UPSTREAM:
+> 		if (branch && branch->merge && branch->merge[0] &&
+> 		    branch->merge[0]->dst)
+> 			return branch->merge[0]->src;
+> 		break;
+> 
+> and have "return NULL" after the switch() statement before we leave
+> the function?
+
+We could, I agree this is more readable. If we return NULL after the
+switch, we need to put the
+> > +	BUG("unhandled push situation")
+in a default clause a you say.
+
+The reason I wrote the code as above is to be as close as possible to
+`branch_get_push_1`. If we make the changes you suggest, I'll probably need
+a preliminary patch to change `branch_get_push_1` accordingly.
+
+> > +	case PUSH_DEFAULT_UNSPECIFIED:
+> > +	case PUSH_DEFAULT_SIMPLE:
+> > +		{
+> > +			const char *up, *cur;
+> > +
+> > +			up = branch_get_upstream(branch, NULL);
+> > +			if (!up)
+> > +				return NULL;
+> > +			cur = tracking_for_push_dest(remote, branch->refname, NULL);
+> > +			if (!cur)
+> > +				return NULL;
+> > +			if (strcmp(cur, up))
+> > +				return NULL;
+> 
+> This is probably not all that performance critical, so
+> 			up = branch_get_upstream(branch, NULL);
+> 			current = tracking_for_push_dest(remote, branch->refname, NULL);
+> 			if (!up || !current || strcmp(current, up))
+> 				return NULL;
+> might be easier to follow.
+
+I don't mind but likewise in this case we should probably change
+branch_get_push_1 too.
+
+> By the way, I have a bit higher-level question.  
+> 
+> All of the above logic that decides what should happen in "git push"
+> MUST have existing code we already use to implement "git push", no?
+
+Yes.
+
+> Why do we need to reinvent it here, instead of reusing the existing
+> code?  Is it because the interface into the functions that implement
+> the existing logic is very different from what this function wants?
+
+Mostly yes. The logic of git push is to massage the refspecs directly, for
+instance:
+	case PUSH_DEFAULT_MATCHING:
+		refspec_append(&rs, ":");
+	case PUSH_DEFAULT_CURRENT:
+		...
+		strbuf_addf(&refspec, "%s:%s", branch->refname, branch->refname);
+	case PUSH_DEFAULT_UPSTREAM:
+		...
+		strbuf_addf(&refspec, "%s:%s", branch->refname, branch->merge[0]->src);
+
+And the error messages are also not the same, and to give a good error
+message we need to parse the different cases.
+
+It may be possible to refactorize all this, but not in an obvious way and
+it would be a lot more work than this patch series.
+
+-- 
+Damien Robert
+http://www.normalesup.org/~robert/pro
