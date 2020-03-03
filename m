@@ -2,120 +2,169 @@ Return-Path: <SRS0=wY2r=4U=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F5A4C3F2D1
-	for <git@archiver.kernel.org>; Tue,  3 Mar 2020 21:23:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 090D4C3F2C6
+	for <git@archiver.kernel.org>; Tue,  3 Mar 2020 21:41:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3D1F5208C3
-	for <git@archiver.kernel.org>; Tue,  3 Mar 2020 21:23:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C462220728
+	for <git@archiver.kernel.org>; Tue,  3 Mar 2020 21:41:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UZHKTXr8"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="E7xFBeA6"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732555AbgCCVXI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Mar 2020 16:23:08 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:42522 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732413AbgCCVXI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Mar 2020 16:23:08 -0500
-Received: by mail-wr1-f65.google.com with SMTP id z11so6276826wro.9
-        for <git@vger.kernel.org>; Tue, 03 Mar 2020 13:23:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=WThCEXtIn1Sq34CQkfX7cfqRoA4SSOUjTp2hB/cayGs=;
-        b=UZHKTXr8estNv2MShYXUI0Zttcc8EsOgWSp/ETIuMsLqK4jxf5j1K8231KO/TMZBxo
-         dJzbIELAdHax+v7duKLmscXS8Z4lb0a8tCdWORFoDHTBDH3awaHwOuCyqy3zmw3WLZ5T
-         u+PtTCmSCbGUjIEX3Mte/Xhq3lor4EYZmEWrITtg6ydtqRIab9vMYx4BZ7YddMiJRFnu
-         7MYqkko1+YjRF9qHNBCfZFZdoM+pBDdBzrkSjtNtRpuV4y4BM6Y8lfgntifajASJkhiF
-         Hg9ZUsg2nQiPPb2aOjQdlPHfs5qdR6qwGWh3fnvM7fb84OeDTDwP6+SgRDBSlUMF8oLN
-         TyTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=WThCEXtIn1Sq34CQkfX7cfqRoA4SSOUjTp2hB/cayGs=;
-        b=mVGqMwn7uqitDGxm1nLe+civSRbI6klqQakSN8tq4eNb42ifgLIYH6eslKi/dN7SYA
-         aMJldo4gqaNdixgz0pmNx7k5FSc7h2I0jYJv3Dl0Hf+u012l/KgGsGY5LrS6TB/L9ip7
-         P5o/nfZ/FflyWAqQRWU+7q8jTdyesvN7JKW79Z/+UT9NjTOySpBKSykNJxMGzjG5pXVG
-         fOhYAR4JCNB7LdrBP97oKs1BWnTxB4l5LqobU9H4YBLdYeuDq3sa/vh9MSP7FlX01kNF
-         /8NStCnemgkemX/AFR5+4ps1ZnLbgVH3Ey0mxH1NHpavF3AASm61FTVBuC5v9BQJcS6b
-         eoFw==
-X-Gm-Message-State: ANhLgQ0l8367YUX5wqUTLlAND3fYnMPZ0fw34sKRYQl3TP4MlmDNX2i9
-        xOVLs5D6fvHmg+fSjLQjVKw=
-X-Google-Smtp-Source: ADFU+vvo6vGZd13po/Eru19DuSeHDlHsz7tLDzbeRSP6kOvm38AzS/x00L7n72/+bgufTGb8+i+Teg==
-X-Received: by 2002:adf:e68b:: with SMTP id r11mr20897wrm.138.1583270584771;
-        Tue, 03 Mar 2020 13:23:04 -0800 (PST)
-Received: from doriath (87-231-246-247.rev.numericable.fr. [87.231.246.247])
-        by smtp.gmail.com with ESMTPSA id n11sm25322816wrq.40.2020.03.03.13.23.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Mar 2020 13:23:04 -0800 (PST)
-Date:   Tue, 3 Mar 2020 22:23:02 +0100
-From:   Damien Robert <damien.olivier.robert@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/2] doc: update the documentation of pack-objects and
- repack
-Message-ID: <20200303212302.znhumbjo7lywyhvh@doriath>
-X-PGP-Key: http://www.normalesup.org/~robert/pro/files/Damien_Olivier_Robert.asc
-X-Start-Date: Tue, 03 Mar 2020 21:59:15 +0100
-References: <20200228154357.1710521-1-damien.olivier.robert+git@gmail.com>
- <20200228154357.1710521-2-damien.olivier.robert+git@gmail.com>
- <xmqqk142bn5f.fsf@gitster-ct.c.googlers.com>
- <20200303174136.ess5lfxrsrt6qvdu@feanor>
- <xmqqa74x8e9k.fsf@gitster-ct.c.googlers.com>
+        id S1727993AbgCCVld (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Mar 2020 16:41:33 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59034 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726988AbgCCVld (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Mar 2020 16:41:33 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E092443154;
+        Tue,  3 Mar 2020 16:41:28 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=WXJ+ZTP7BPQu
+        DkYvgzLTDcGV1h0=; b=E7xFBeA6CPnh+TwyFKJh5JkVtDKIrrC4zkvDlPk6zi4Z
+        iCEa3hNoTEAJauV5ey5XKCDhlRoD4U+e+oAcmJkbVb+n/OD3v5ObYreQ5+COJeTf
+        C3dm9GOBSbS7FyJnrurw70wTyqDYZf9bf7PFptFx4i7A7itXlTcbfkw0hrhXmiI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=j1DEQv
+        NOhUz/8M+27erTxQByZSWD4SmmwB2K18Q7c4XGkjDKwsOXFmNiGAv//xBui78RgH
+        BQQp1uRAzw+LqlniLlljXmhwLOpf0e+dJyQzbi1QgxD+qa8RRC6isUMX4W2C73RS
+        XrcOn0qUOtXYDYO6hQPYSxjKvsS5m74plem3U=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D7E4943153;
+        Tue,  3 Mar 2020 16:41:28 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3D91743152;
+        Tue,  3 Mar 2020 16:41:28 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Manish Devgan <manish.nsit8@gmail.com>
+Subject: Re: [PATCH RESEND] remote-curl: show progress for fetches over dumb HTTP
+References: <e387d31d-afab-fe09-4e37-535a2650afca@web.de>
+Date:   Tue, 03 Mar 2020 13:41:26 -0800
+In-Reply-To: <e387d31d-afab-fe09-4e37-535a2650afca@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Tue, 3 Mar 2020 21:55:34 +0100")
+Message-ID: <xmqq1rq986bd.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqa74x8e9k.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: BD209C7C-5D97-11EA-AC6A-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From Junio C Hamano, Tue 03 Mar 2020 at 10:49:43 (-0800) :
-> Damien Robert <damien.olivier.robert@gmail.com> writes:
-> 
-> > The problem here is that
-> > `--keep-true-parents`, `--no-empty`, `--all`, `--reflog`, `--indexed-objects`,
-> > `--exclude-promisor-objects`
-> > are always passed and not driven by any options of `git repack`, so I
-> > did not know where else to put them.
-> 
-> Ah, I think I may have misread the patch, then.  Why do readers who
-> wanted to learn 'git repack' even need to see what the command does
-> under the hood, driving what other low-level commands by passing
-> what options, in the first place?  Such implementation details can
-> change without affecting end-users, no?
+Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 
-So do you suggest instead to remove all references to 'git-pack-objects'
-in 'git-repack'? As I explained in my previous email, if some options
-reference pack-objects, I think they should all do for consistency.
+> Fetching over dumb HTTP transport doesn't show any progress, even with
+> the option --progress.  If the connection is slow or there is a lot of
+> data to get then this can take a long time while the user is left to
+> wonder if git got stuck.
+>
+> We don't know the number of objects to fetch at the outset, but we can
+> count the ones we got.  Show an open-ended progress indicator based on
+> that number if the user asked for it.
+>
+> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+> ---
+> Original submission:
+> https://lore.kernel.org/git/9ed26e7e-c19c-cdb2-0710-3b91bf31291b@web.de=
+/
 
-I also think that the situation of git-repack is a bit special:
-first it is a very thin wrapper around git-pack-objects, so the
-implementation details are not really abstracted from git-pack-objects.
-Furthermore it is at an intermediate 'level' between a high level command
-like 'git gc' and a plumbing command like 'git pack-objects'. So the user
-interested in 'git repack' is probably interested in some low level
-details.
+Thanks.
 
-Now to give an exemple, the doc of git-repack states:
-    This command is used to combine all objects that do not currently
-    reside in a "pack", into a pack.
-This is a high level overview, but the user who knows a bit about Git
-internals may wonder what exactly 'all' entails: non local objects, kept
-objects, promisor objects, unreachable objects?
-Knowing that the default options passed are:
-`--keep-true-parents`, `--all`, `--reflog`, `--indexed-objects`, `--exclude-promisor-objects`
-answers this questions: it is essentially all objects except unreachable ones.
-Here I think that these technical details are more precise that whatever
-sentence I could come up with, but I am happy to hear suggestions :)
-
-I agree however that `--non-empty` is an implementation detail.
+>
+>  remote-curl.c |  1 +
+>  walker.c      | 13 ++++++++++++-
+>  walker.h      |  1 +
+>  3 files changed, 14 insertions(+), 1 deletion(-)
+>
+> diff --git a/remote-curl.c b/remote-curl.c
+> index 8eb96152f5..e4cd321844 100644
+> --- a/remote-curl.c
+> +++ b/remote-curl.c
+> @@ -1026,6 +1026,7 @@ static int fetch_dumb(int nr_heads, struct ref **=
+to_fetch)
+>
+>  	walker =3D get_http_walker(url.buf);
+>  	walker->get_verbosely =3D options.verbosity >=3D 3;
+> +	walker->get_progress =3D options.progress;
+>  	walker->get_recover =3D 0;
+>  	ret =3D walker_fetch(walker, nr_heads, targets, NULL, NULL);
+>  	walker_free(walker);
+> diff --git a/walker.c b/walker.c
+> index bb010f7a2b..4984bf8b3d 100644
+> --- a/walker.c
+> +++ b/walker.c
+> @@ -8,6 +8,7 @@
+>  #include "tag.h"
+>  #include "blob.h"
+>  #include "refs.h"
+> +#include "progress.h"
+>
+>  static struct object_id current_commit_oid;
+>
+> @@ -162,6 +163,11 @@ static int process(struct walker *walker, struct o=
+bject *obj)
+>  static int loop(struct walker *walker)
+>  {
+>  	struct object_list *elem;
+> +	struct progress *progress =3D NULL;
+> +	uint64_t nr =3D 0;
+> +
+> +	if (walker->get_progress)
+> +		progress =3D start_delayed_progress(_("Fetching objects"), 0);
+>
+>  	while (process_queue) {
+>  		struct object *obj =3D process_queue->item;
+> @@ -176,15 +182,20 @@ static int loop(struct walker *walker)
+>  		 */
+>  		if (! (obj->flags & TO_SCAN)) {
+>  			if (walker->fetch(walker, obj->oid.hash)) {
+> +				stop_progress(&progress);
+>  				report_missing(obj);
+>  				return -1;
+>  			}
+>  		}
+>  		if (!obj->type)
+>  			parse_object(the_repository, &obj->oid);
+> -		if (process_object(walker, obj))
+> +		if (process_object(walker, obj)) {
+> +			stop_progress(&progress);
+>  			return -1;
+> +		}
+> +		display_progress(progress, ++nr);
+>  	}
+> +	stop_progress(&progress);
+>  	return 0;
+>  }
+>
+> diff --git a/walker.h b/walker.h
+> index 6d8ae00e5b..d40b016bab 100644
+> --- a/walker.h
+> +++ b/walker.h
+> @@ -10,6 +10,7 @@ struct walker {
+>  	int (*fetch)(struct walker *, unsigned char *sha1);
+>  	void (*cleanup)(struct walker *);
+>  	int get_verbosely;
+> +	int get_progress;
+>  	int get_recover;
+>
+>  	int corrupt_object_found;
+> --
+> 2.25.1
