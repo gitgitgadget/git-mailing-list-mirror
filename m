@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D3DE6C3F2C6
-	for <git@archiver.kernel.org>; Tue,  3 Mar 2020 17:08:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 57E69C3F2D7
+	for <git@archiver.kernel.org>; Tue,  3 Mar 2020 17:08:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A90CA20842
-	for <git@archiver.kernel.org>; Tue,  3 Mar 2020 17:08:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2264820842
+	for <git@archiver.kernel.org>; Tue,  3 Mar 2020 17:08:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="usez8+T3"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NfKSNtUq"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729125AbgCCRIc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Mar 2020 12:08:32 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:46517 "EHLO
+        id S1730612AbgCCRId (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Mar 2020 12:08:33 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:43389 "EHLO
         mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729052AbgCCRIa (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Mar 2020 12:08:30 -0500
-Received: by mail-wr1-f65.google.com with SMTP id j7so5251199wrp.13
-        for <git@vger.kernel.org>; Tue, 03 Mar 2020 09:08:28 -0800 (PST)
+        with ESMTP id S1730598AbgCCRIc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Mar 2020 12:08:32 -0500
+Received: by mail-wr1-f65.google.com with SMTP id h9so4364344wrr.10
+        for <git@vger.kernel.org>; Tue, 03 Mar 2020 09:08:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=hDEDPwH7KXow9gsFIgMLxGthboCmgY0ch9POvjbe3ZE=;
-        b=usez8+T3mqVOLyocNggT4cOfeulAb0AA7SYpNjrwJnOI89gcdmuq75g9X4gK2T9cNO
-         CZZUnMLg5Tb++VAtYkH+sG7T8BgEg4YnXmbLsCYDwV+1EJDCCXLW4gs0a8x31BXV+1wx
-         sKyIwxfAcP3lBdNvjcgSeDEq9OYs9X1wUO1Jp9Ad2f0zpj0Cjp4XirhJu1OmYN6whWog
-         UL9wJra2wLgGv33LPyNNJIojQnPm2G7qKyyWFbjGsmwEQvZOAGCzCo62wS+FOS5rXMiK
-         8Ti0NfOJMii52D30YHmWy14yUAZEKSH4JM8p6ShsWTQWsg9TIDcjV8n7WByt4bLO1nye
-         xCkQ==
+        bh=3F1WhblCaq76I2GSsXi8kabBVtKiHkbEh1N2QDAk5Q4=;
+        b=NfKSNtUqEyuIBs+srZqyqDhY9n40QulfKIerCuWOkfi6Ut1dILmj7zTOLxfQYMdFYM
+         zskPkwsLsJOHEVV3TUkmz4xf2O+tHglfU0JNz0n/f4BFOO0YnXd1Vy9bv1nWXr+vTRQs
+         /U8DiFOSUixOjl+QnKciqpsjkLU1DBoT6yPUkTAsuSBPf++3DqYt7W5oeG4SqlW6zvY+
+         EVAusRMi8Q5/rj8GgO7ynX8/bh612/pD+JN/9Kd7Vx4e9yaNuQ0yFprbNHELtMz8Li3Y
+         t7inoy5WfbYJP1UypTw0quzXH1I0vtEmBdECJuFLgw0iFTJjpLA3cuLT6D5rETflEwXE
+         vvcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=hDEDPwH7KXow9gsFIgMLxGthboCmgY0ch9POvjbe3ZE=;
-        b=rUUD4Wiw7/N3UdWGU1T5Gn/+yGYvgFIY4YyrL+ftzZOOZD7kRp0QubP8XlUEij7a49
-         XeQRuCvkPdqHc2pCOZ+ZKBoPB+YCOva0HyRurOLYUdAwNw71qkAHY+WmaZq2vSPtGLVI
-         OndxM/AgSbXrqzGgcutlBMEMtGmWeVfyjFaENcP81+lPpPnxnG5bVYKBMRrxbxapaiez
-         Y+1f9y2AT4hNT2c0MTC0eNiZmvZh4oLyJH6BS3Xby8uTtJNVq59Go0sY8XTRx0pWgmDO
-         4wNTJY2ZkDnOrDJGYuFCgeNts7FTtKt9kppkTZOiEXwZ0zVzXgsno/lY28fEYBvQMPiN
-         Msuw==
-X-Gm-Message-State: ANhLgQ2S5k8bFEZVcZYUsrPBQDw/i151kEQKplXxdFn1ivxXZ8DcgKxh
-        8ysP+xrLg8Jyls0SEN/i+aB4UGEPpiI=
-X-Google-Smtp-Source: ADFU+vu834ED/k+sBGoy7GgYglTMoeUTPEUCPPi+C7uoJMNNQf+PKZrbv79y1/jOdz29Xa4nYNaEmQ==
-X-Received: by 2002:adf:fc07:: with SMTP id i7mr6928834wrr.158.1583255307889;
-        Tue, 03 Mar 2020 09:08:27 -0800 (PST)
+        bh=3F1WhblCaq76I2GSsXi8kabBVtKiHkbEh1N2QDAk5Q4=;
+        b=UqL5UXhbSMbsp+IcDYMmF7EfGsOym+6R9hAJ9VXV0nzABTLuS13iS29gb5zT0xlOYV
+         yTTmTJiO+Eg3Fw6Fsy9PsDgkyhmqjGkhdWP//HzK8PkA0YI07Ve/q2F8pKpidD2OQxmQ
+         XP7iPJMeRuS+p4SQNnG9qAgzBkGb71acMz8QNH5r/rRDINwuZbuOYP4xYMMy/dSpAKb0
+         +K0KfVSWKgTcnQn5C/012lWMdlp/YbEAlI5XFaUkzg9vde2XUiZf5350Yo7ZlSx7qGjw
+         RJIAOdaEFJjAxjeDAOagFQJMg46CcS+1whR3sOwH8q/USDT5YnYrVYWu8ULOKEFVUqHn
+         iiFw==
+X-Gm-Message-State: ANhLgQ20dFbFBN/5bE9imWwmydO9PhLxrgpDG/0HsKPHesILO1YdvD7N
+        IHw1W5oXr66ToFi3KK0JBc+kZiS3gi0=
+X-Google-Smtp-Source: ADFU+vs0rMYt3wmlS51iJ3whxVA+fWfnzN+3mMEdIq9+xCbY5AYarXsp4tJWmo57hTg+7bw0BC4NzQ==
+X-Received: by 2002:adf:f491:: with SMTP id l17mr6935953wro.149.1583255309186;
+        Tue, 03 Mar 2020 09:08:29 -0800 (PST)
 Received: from localhost.localdomain (87-231-246-247.rev.numericable.fr. [87.231.246.247])
-        by smtp.gmail.com with ESMTPSA id 16sm4746576wmi.0.2020.03.03.09.08.26
+        by smtp.gmail.com with ESMTPSA id 16sm4746576wmi.0.2020.03.03.09.08.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Mar 2020 09:08:26 -0800 (PST)
+        Tue, 03 Mar 2020 09:08:28 -0800 (PST)
 From:   Damien Robert <damien.olivier.robert@gmail.com>
 X-Google-Original-From: Damien Robert <damien.olivier.robert+git@gmail.com>
 To:     git@vger.kernel.org, Philippe Blain <levraiphilippeblain@gmail.com>
 Cc:     Damien Robert <damien.olivier.robert+git@gmail.com>
-Subject: [PATCH v2 4/5] doc: be more precise on (fetch|push).recurseSubmodules
-Date:   Tue,  3 Mar 2020 18:07:39 +0100
-Message-Id: <20200303170740.1879432-5-damien.olivier.robert+git@gmail.com>
+Subject: [PATCH v2 5/5] doc: --recurse-submodules only apply to active submodules
+Date:   Tue,  3 Mar 2020 18:07:40 +0100
+Message-Id: <20200303170740.1879432-6-damien.olivier.robert+git@gmail.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20200303170740.1879432-1-damien.olivier.robert+git@gmail.com>
 References: <20200228103558.1684937-1-damien.olivier.robert+git@gmail.com>
@@ -73,81 +73,105 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The default value also depends on the value of submodule.recurse.
-
-Also mention `fetch.recurseSubmodules` in fetch-options.txt. In
-git-push.txt, `push.recurseSubmodules` is implicitly mentioned (by
-explaining how to disable it), so no need to add it there.
-
-Lastly add a link to `git-fetch` in `git-pull.txt` to explain the
-meaning of `--recurse-submodules` there.
+The documentation refers to "initialized" or "populated" submodules,
+to explain which submodules are affected by '--recurse-submodules', but
+the real terminology here is 'active' submodules. Update the
+documentation accordingly.
 
 Signed-off-by: Damien Robert <damien.olivier.robert+git@gmail.com>
 ---
- Documentation/config/fetch.txt  | 6 ++++--
- Documentation/config/push.txt   | 3 +++
- Documentation/fetch-options.txt | 3 ++-
- Documentation/git-pull.txt      | 3 +--
- 4 files changed, 10 insertions(+), 5 deletions(-)
+ Documentation/fetch-options.txt | 6 +++---
+ Documentation/git-checkout.txt  | 2 +-
+ Documentation/git-grep.txt      | 2 +-
+ Documentation/git-pull.txt      | 2 +-
+ Documentation/git-read-tree.txt | 2 +-
+ Documentation/git-switch.txt    | 2 +-
+ 6 files changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/Documentation/config/fetch.txt b/Documentation/config/fetch.txt
-index f11940280f..8f716809f9 100644
---- a/Documentation/config/fetch.txt
-+++ b/Documentation/config/fetch.txt
-@@ -2,10 +2,12 @@ fetch.recurseSubmodules::
- 	This option can be either set to a boolean value or to 'on-demand'.
- 	Setting it to a boolean changes the behavior of fetch and pull to
- 	unconditionally recurse into submodules when set to true or to not
--	recurse at all when set to false. When set to 'on-demand' (the default
--	value), fetch and pull will only recurse into a populated submodule
-+	recurse at all when set to false. When set to 'on-demand', 
-+	fetch and pull will only recurse into a populated submodule
- 	when its superproject retrieves a commit that updates the submodule's
- 	reference.
-+	If not set, it fallbacks to the value of `submodule.recurse`, and
-+	if both are not set the default value is 'on-demand'.
- 
- fetch.fsckObjects::
- 	If it is set to true, git-fetch-pack will check all fetched
-diff --git a/Documentation/config/push.txt b/Documentation/config/push.txt
-index 54871f8213..2a5250cf5c 100644
---- a/Documentation/config/push.txt
-+++ b/Documentation/config/push.txt
-@@ -112,3 +112,6 @@ push.recurseSubmodules::
- 	is 'no' then default behavior of ignoring submodules when pushing
- 	is retained. You may override this configuration at time of push by
- 	specifying '--recurse-submodules=check|on-demand|no'.
-+	If not set, it fallbacks to the value of `submodule.recurse` (where
-+	a 'true' value means 'on-demand'), and if both are not set the
-+	default value is 'no'.
 diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
-index a115a1ae0e..58972b1a05 100644
+index 58972b1a05..ba33009253 100644
 --- a/Documentation/fetch-options.txt
 +++ b/Documentation/fetch-options.txt
-@@ -163,7 +163,8 @@ ifndef::git-pull[]
- 	value. Use 'on-demand' to only recurse into a populated submodule
+@@ -156,11 +156,11 @@ ifndef::git-pull[]
+ 
+ --recurse-submodules[=yes|on-demand|no]::
+ 	This option controls if and under what conditions new commits of
+-	populated submodules should be fetched too. It can be used as a
++	active submodules should be fetched too. It can be used as a
+ 	boolean option to completely disable recursion when set to 'no' or to
+-	unconditionally recurse into all populated submodules when set to
++	unconditionally recurse into all active submodules when set to
+ 	'yes', which is the default when this option is used without any
+-	value. Use 'on-demand' to only recurse into a populated submodule
++	value. Use 'on-demand' to only recurse into a active submodule
  	when the superproject retrieves a commit that updates the submodule's
  	reference to a commit that isn't already in the local submodule
--	clone.
-+	clone. By default this uses the fetch.recurseSubmodules value (see
-+	linkgit:git-config), and the default value is 'on-demand'.
+ 	clone. By default this uses the fetch.recurseSubmodules value (see
+diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
+index c8fb995fa7..3be0a28284 100644
+--- a/Documentation/git-checkout.txt
++++ b/Documentation/git-checkout.txt
+@@ -292,7 +292,7 @@ Note that this option uses the no overlay mode by default (see also
  
- -j::
- --jobs=<n>::
+ --recurse-submodules::
+ --no-recurse-submodules::
+-	Using `--recurse-submodules` will update the content of all initialized
++	Using `--recurse-submodules` will update the content of all active
+ 	submodules according to the commit recorded in the superproject. If
+ 	local modifications in a submodule would be overwritten the checkout
+ 	will fail unless `-f` is used. If nothing (or `--no-recurse-submodules`)
+diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+index ddb6acc025..cdf8e26b47 100644
+--- a/Documentation/git-grep.txt
++++ b/Documentation/git-grep.txt
+@@ -93,7 +93,7 @@ OPTIONS
+ 	with `--no-index`.
+ 
+ --recurse-submodules::
+-	Recursively search in each submodule that has been initialized and
++	Recursively search in each submodule that is active and
+ 	checked out in the repository.  When used in combination with the
+ 	<tree> option the prefix of all submodule output will be the name of
+ 	the parent project's <tree> object. This option has no effect
 diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
-index dfb901f8b8..47bc4a7061 100644
+index 47bc4a7061..2285f3729d 100644
 --- a/Documentation/git-pull.txt
 +++ b/Documentation/git-pull.txt
-@@ -86,8 +86,7 @@ OPTIONS
+@@ -85,7 +85,7 @@ OPTIONS
+ 	Pass --verbose to git-fetch and git-merge.
  
  --[no-]recurse-submodules[=yes|on-demand|no]::
- 	This option controls if new commits of all populated submodules should
--	be fetched and updated, too (see linkgit:git-config[1] and
--	linkgit:gitmodules[5]).
-+	be fetched and updated, too (see linkgit:git-fetch[1], linkgit:git-config[1] and linkgit:gitmodules[5]).
+-	This option controls if new commits of all populated submodules should
++	This option controls if new commits of all active submodules should
+ 	be fetched and updated, too (see linkgit:git-fetch[1], linkgit:git-config[1] and linkgit:gitmodules[5]).
  +
  If the checkout is done via rebase, local submodule commits are rebased as well.
- +
+diff --git a/Documentation/git-read-tree.txt b/Documentation/git-read-tree.txt
+index da33f84f33..aab6856341 100644
+--- a/Documentation/git-read-tree.txt
++++ b/Documentation/git-read-tree.txt
+@@ -116,7 +116,7 @@ OPTIONS
+ 	located in.
+ 
+ --[no-]recurse-submodules::
+-	Using --recurse-submodules will update the content of all initialized
++	Using --recurse-submodules will update the content of all active
+ 	submodules according to the commit recorded in the superproject by
+ 	calling read-tree recursively, also setting the submodules HEAD to be
+ 	detached at that commit.
+diff --git a/Documentation/git-switch.txt b/Documentation/git-switch.txt
+index 197900363b..337852d86b 100644
+--- a/Documentation/git-switch.txt
++++ b/Documentation/git-switch.txt
+@@ -181,7 +181,7 @@ name, the guessing is aborted.  You can explicitly give a name with
+ --recurse-submodules::
+ --no-recurse-submodules::
+ 	Using `--recurse-submodules` will update the content of all
+-	initialized submodules according to the commit recorded in the
++	active submodules according to the commit recorded in the
+ 	superproject. If nothing (or `--no-recurse-submodules`) is
+ 	used, the work trees of submodules will not be updated. Just
+ 	like linkgit:git-submodule[1], this will detach `HEAD` of the
 -- 
 Patched on top of v2.25.1-377-g2d2118b814 (git version 2.25.1)
 
