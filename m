@@ -2,94 +2,85 @@ Return-Path: <SRS0=wY2r=4U=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 85CEAC3F2CD
-	for <git@archiver.kernel.org>; Tue,  3 Mar 2020 14:16:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 82C4FC3F2C6
+	for <git@archiver.kernel.org>; Tue,  3 Mar 2020 14:18:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 55D852083E
-	for <git@archiver.kernel.org>; Tue,  3 Mar 2020 14:16:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 54F6120838
+	for <git@archiver.kernel.org>; Tue,  3 Mar 2020 14:18:15 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZskQgUym"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="QKqU3PCN"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728157AbgCCOQE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Mar 2020 09:16:04 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:51896 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727848AbgCCOQE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Mar 2020 09:16:04 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3F0CBC4751;
-        Tue,  3 Mar 2020 09:16:02 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=G9+S2O8veHKHvP9BZTqoNCa5Bps=; b=ZskQgU
-        ymh7mYY1o6xsd70dysHyTVBTgd2IYYVZwWLWRDK44J6t+Y4HRRSRKSy6v/yRZ/15
-        /8YMPBtYRNqvsMMDtFst0raJmpFrSo6WC7iICMD5xnLtG1xEwVMa08Xf1u8z5N29
-        mbQmhSGzpuYW5iAmGeV0GfhNlGRTK7jbPPPXQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=qzpjL0cRm+JP7fSkhRZeXNVYekmMyU4N
-        3qwOvPae+ykc4VxOwkaPwppR3U4TBptie437m55LvqqfTHp3XKDVZp3FhWYs7143
-        wXSVy2VjsuD3vlG8uXhPTrXvNbP5cCN5/u6OPlgg3qobtCi0QBQS+Ojl+Th4F213
-        LFqNZQs+muM=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 376EAC4750;
-        Tue,  3 Mar 2020 09:16:02 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 261EFC474D;
-        Tue,  3 Mar 2020 09:15:59 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Heba Waly <heba.waly@gmail.com>
-Subject: Re: [PATCH v7 3/4] advice: revamp advise API
-References: <pull.548.v6.git.1582778112.gitgitgadget@gmail.com>
-        <pull.548.v7.git.1583179320.gitgitgadget@gmail.com>
-        <a4673803eaf881f7caa25d97e432c0ff0d065060.1583179320.git.gitgitgadget@gmail.com>
-        <xmqqblpebhae.fsf@gitster-ct.c.googlers.com>
-Date:   Tue, 03 Mar 2020 06:15:57 -0800
-In-Reply-To: <xmqqblpebhae.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Mon, 02 Mar 2020 13:03:53 -0800")
-Message-ID: <xmqqlfoha5ia.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1728113AbgCCOSO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Mar 2020 09:18:14 -0500
+Received: from mout.gmx.net ([212.227.15.18]:51811 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727199AbgCCOSO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Mar 2020 09:18:14 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1583245091;
+        bh=vY/t39dGRfWhXyzMt4BesalAkpZ3OK7RIawBg6lKCPw=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=QKqU3PCNSVNTcEjVIMEziePcZW0cEemsIxYdbrdgg9YegdwD3eVVY1i5lrv0StkW0
+         ruQzdY3jaCh59njog2TqLZuPcf448pUUDFp2PGLKQXxXd0jURqFPM/No7oeo6f0HUO
+         E8lLjLFlDa5uo77JDR1bFeKNrAkJ67sbf44UjwDo=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from MININT-QA14EDB.fritz.box ([213.196.213.69]) by mail.gmx.com
+ (mrgmx005 [212.227.17.190]) with ESMTPSA (Nemesis) id
+ 1MiJZE-1jcQmj1zqI-00fTck; Tue, 03 Mar 2020 15:18:11 +0100
+Date:   Tue, 3 Mar 2020 15:18:10 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Emily Shaffer <emilyshaffer@google.com>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH v9 2/5] bugreport: add tool to generate debugging info
+In-Reply-To: <20200302230400.107428-3-emilyshaffer@google.com>
+Message-ID: <nycvar.QRO.7.76.6.2003031516501.46@tvgsbejvaqbjf.bet>
+References: <20200302230400.107428-1-emilyshaffer@google.com> <20200302230400.107428-3-emilyshaffer@google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8157EE72-5D59-11EA-AEEF-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:1DiDSSS3fFP7O6MB1TrkF/DFAi6Cj3ucefVt6KsFDm1xmmzml1F
+ 8KGq4jgYrzaF/XP50weE/UbK7URylCN2eOz5nHnHa98es68FV83nDIpZIfFJeOtUSK/ZhRb
+ 8AWzSl/vSjqmX1clM5oBOFYv2oDJ4dhomsUAYgulN4j7VCrdb2KA5c8VB9htOawqtNrE3Xj
+ pRiUQvG1VJb22z0BqS80g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:5beR1Q//SEo=:1OedKhxDGKbCS+LEL7+4Jq
+ L6tYkdV5UEDkjdCz8Rk5AJNYDNa4/VbxWlveG3G6hQDo5XB+4q3tRfTniiOkZNryFi9seNy3y
+ iYL383LkEUqf3Fk24fr3YCTkkfndXurnyNQX33LSzYKkq4dqi4KKVdnW6zezQKaL7goqt8mix
+ 0F6UYiI80owTvOXtDngJ/q5eASW9IiwuG8bjW6XKkRjPgI9SLKieHpwXjZ/sujbmu0CD2tawM
+ uqsUbL9pZOhq8vSB8oOeK6R1rVFo0XuoqBA/sf2u3nZX3kIjmyXghIMKB+t1PJ2BvHJV6/te9
+ ydo7xn9ghWOu3T4EujQlp4pQsXC0arX+dhr3FkZyGW2Q55u7hJclrR0VGYkLCuibayoZq2GcA
+ xG7Jil89yBMVB6ewppL2CDQ6mfvhDz3dZTytE8feoggPuW7UWcHKLjsvqkorCHts24nplbvvd
+ M35TVDBgphvo+ZB9JNc7IrWR6Ui1rzKtwy1E+rhBdNu3NL+1v72oF6A3hURpC9uFeKjLsLx5+
+ RWG+a4bx8KzTlfJuZMFOOtlA+Knam/ETcdzvxXhAEFtn6wMb0wflHzGr/IGNoQES1xq8Fw7iu
+ P/Upy03JtmNB4PmdUI9Hilc6BHlDBBbzovwXkMAoR4qjRiZCdRscK0GmHTvJQBOZsYhcsl+NW
+ D6ovZZpXv5//1lo7I/8HxdCN1w+PfsfQHdOELl6PK0N+VYOgqxM856zbrdEZfFCH9rSEEejH9
+ 1ICh4pPjZSCP3AxofalM88wZuU5xrt3XtRuO7sWNKyGsOqSb5jo6hlr8aivb7BuSf+XGLePuc
+ hJWdiwlTdtInVe7w/98P2Fw9Bf+PGXNR5NLj5iiCUQR0D+qrqoP9Uc/0EssTo6O+tWpvnVEVy
+ Lb1XKXBqxKc/u8WpmJj99fVMY/YgziJNJX7JU9qlxJWDcuwYSwSKz3jXwedF23k15yfNjNG6F
+ Nu5NRzC5NRgl12PsWwzCQ+Ryobia1bvwGXE8X7ZbAG8jPbOqQwfUBlweIXWp2GW6JKQvOj6Bc
+ vtUiWHRHARwzNay2mDPfK0kcUTlcWpSEF9l4BjwN0VqHM/rDkgTcrWgfTXAUaftDT/qeVx3wq
+ 7xEUqGWz2WopiZ9Rb7cqf6Lw6w2e0zQ4bt6yKK/s4W/6nFK1+LoUvBchrwifcdrIJvVGH+BzY
+ agq46c5CIMqUQddijgHM/03XiMsZBNWesmYTLddvm7K+YjbWd7zXWyudOO2on54KaisV6nvZk
+ bDqi300xzcIwMCuVc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi Emily,
 
-> "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
->> +static struct {
->> +	const char *key;
->> +	int enabled;
->> +} advice_setting[] = {
->> +	[ADVICE_ADD_EMBEDDED_REPO]			= { "addEmbeddedRepo", 1 },
->
-> It would be nicer to future developers to flip the polarity, as we
-> do not have to write 1 all over the place, especially if we plan to
-> extend the structure over time and to use designated initializers
-> for only certain fields...
+On Mon, 2 Mar 2020, Emily Shaffer wrote:
 
-Just to avoid needless churn, I think this does not matter in the
-longer term, so .enabled is OK as-is.  The reason I say so is
-because, even though renaming to .disabled to allow initializers to
-default it to 0 is nicer for those who write the initializers
-manually, and it especially is true when we have more fields in the
-struct (we may add descriptive text so that we can issue an on-line
-help, for example), but I expect that would happen much later than
-we start generating these parts of the source code in two places
-(the initializer for advice_setting[] and the advice_type enum) from
-a single source by mechanical process.  And the auto-generation will
-eliminate the burden of writing 1 manually.
+> +	char *option_suffix = "%F-%H%M";
+
+Unfortunately, this still is not an `strftime` format we can use on
+Windows. I still needed to fix that in the previously-mentioned manner to
+fix the test run on Windows.
+
+Thanks,
+Dscho
