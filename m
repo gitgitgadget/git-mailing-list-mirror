@@ -2,96 +2,103 @@ Return-Path: <SRS0=wY2r=4U=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D3C73C3F2D7
-	for <git@archiver.kernel.org>; Tue,  3 Mar 2020 22:46:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DE55C3F2C6
+	for <git@archiver.kernel.org>; Tue,  3 Mar 2020 22:48:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id AFEE9208C3
-	for <git@archiver.kernel.org>; Tue,  3 Mar 2020 22:46:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3F7FA2072A
+	for <git@archiver.kernel.org>; Tue,  3 Mar 2020 22:48:54 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="idtgTfog"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728072AbgCCWqf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Mar 2020 17:46:35 -0500
-Received: from p3plsmtpa09-04.prod.phx3.secureserver.net ([173.201.193.233]:47884
-        "EHLO p3plsmtpa09-04.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726766AbgCCWqf (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 3 Mar 2020 17:46:35 -0500
-X-Greylist: delayed 438 seconds by postgrey-1.27 at vger.kernel.org; Tue, 03 Mar 2020 17:46:35 EST
-Received: from jessie.Home ([80.220.91.246])
-        by :SMTPAUTH: with ESMTPSA
-        id 9GBxjJACfaXtR9GC3jp4pB; Tue, 03 Mar 2020 15:39:17 -0700
-X-CMAE-Analysis: v=2.3 cv=IYL5plia c=1 sm=1 tr=0
- a=yP90ucBkoKaMz4WYbbLXtQ==:117 a=yP90ucBkoKaMz4WYbbLXtQ==:17 a=xwstyAmMAAAA:8
- a=jZdU3pb_BEzyYBZ1ZXQA:9 a=LlgVSj9pQ0SBo81MGDdQ:22
-X-SECURESERVER-ACCT: max@max630.net
-From:   Max Kirillov <max@max630.net>
-To:     Paul Mackerras <paulus@ozlabs.org>, Markus Hitter <mah@jump-ing.de>
-Cc:     Max Kirillov <max@max630.net>, git@vger.kernel.org
-Subject: [PATCH] gitk: fix fatal error by dropping duplicated requests
-Date:   Wed,  4 Mar 2020 00:39:07 +0200
-Message-Id: <20200303223907.5308-1-max@max630.net>
-X-Mailer: git-send-email 2.19.0.1202.g68e1e8f04e
+        id S1727502AbgCCWsx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Mar 2020 17:48:53 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50640 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727274AbgCCWsx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Mar 2020 17:48:53 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 67A1E438A5;
+        Tue,  3 Mar 2020 17:48:51 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=OJq6wwwvbPxVyt4dtWfFmGqmxrQ=; b=idtgTf
+        ogWbZ94Vi5XNNw8BNVzhB4hdIO++mDGttMBvna568TKnZwbqeQwmgc77PaIU9e4S
+        qhv+l6fYUdI9WEGI5q5nzHEqrRsTWL5yidpxW1cJ8EawNQ26WtZkDCbYT+N+eb3X
+        RnJ+lWU4hsWHgPR8Q5tK/hnE2EszA6rCjjvfM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=VjJs5NaMCg9ZMtOAX8Du9er1qwxMUXMb
+        x1Y55KyugcjNfog3CiK8joVd+HNIvCWtTjYDcgebYWrLvc2MTaHsGX8dhBV9cpOT
+        SMLExDYZTqKTTt+pj//xDOXnqxh/m+PjKEAIsQCV8N0JCYnkywCNe7La42ectaA3
+        5i48yYM2eog=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 600EC438A4;
+        Tue,  3 Mar 2020 17:48:51 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C91DE438A3;
+        Tue,  3 Mar 2020 17:48:50 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Damien Robert <damien.olivier.robert@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 2/2] remote.c: fix handling of %(push:remoteref)
+References: <20200302133217.GA1176622@coredump.intra.peff.net>
+        <20200303161223.1870298-1-damien.olivier.robert+git@gmail.com>
+        <20200303161223.1870298-3-damien.olivier.robert+git@gmail.com>
+        <xmqqtv358fkk.fsf@gitster-ct.c.googlers.com>
+        <20200303222423.wfbjuuwp3263qesv@doriath>
+Date:   Tue, 03 Mar 2020 14:48:49 -0800
+In-Reply-To: <20200303222423.wfbjuuwp3263qesv@doriath> (Damien Robert's
+        message of "Tue, 3 Mar 2020 23:24:23 +0100")
+Message-ID: <xmqq5zfl6omm.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfBGKBG8O1qOcMo+oiyGuzz5pY3R164/Kgx5Z/r3VTJZsHGFNn6koLkRgUb0kn51bhn97QL1gADr8mDfbay+ksJzMZQDFtozFM6IouxCEQRkVYQ97xhs0
- o+4WhnvCllsTwOMCHdd+kegJcTSOpYFUAVe2nve87NgQZ4YssZqqio3voGAQoQzNaf4ZTkZ8cMV7onflDkf/+TzZ0ejbsZ9Dy8l7U1q14VLOD25nv6S6TRc4
+Content-Type: text/plain
+X-Pobox-Relay-ID: 26AFA832-5DA1-11EA-A8F0-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-During fast UI actions there may happen a fatal error message due to undefined
-$blobdifffd($ids). It happens because 2 same requests happen to be started.
-Then first one to complete wipes the $ids from blobdifffd, causing the second
-to fail. Then no diff is displayed in that gitk process anymore, so it has
-to be restarted. To reproduce one could fast click a big commit line twice, for
-example, but I believe it is not the only case.
+Damien Robert <damien.olivier.robert@gmail.com> writes:
 
-Fix by not starting a request if there is already one with the same $ids.
-It does not seem to cause any malfunctioning when triggered.
+>> By the way, I have a bit higher-level question.  
+>> 
+>> All of the above logic that decides what should happen in "git push"
+>> MUST have existing code we already use to implement "git push", no?
+>
+> Yes.
+>
+>> Why do we need to reinvent it here, instead of reusing the existing
+>> code?  Is it because the interface into the functions that implement
+>> the existing logic is very different from what this function wants?
+>
+> Mostly yes. The logic of git push is to massage the refspecs directly, for
+> instance:
+> 	case PUSH_DEFAULT_MATCHING:
+> 		refspec_append(&rs, ":");
+> 	case PUSH_DEFAULT_CURRENT:
+> 		...
+> 		strbuf_addf(&refspec, "%s:%s", branch->refname, branch->refname);
+> 	case PUSH_DEFAULT_UPSTREAM:
+> 		...
+> 		strbuf_addf(&refspec, "%s:%s", branch->refname, branch->merge[0]->src);
+>
+> And the error messages are also not the same, and to give a good error
+> message we need to parse the different cases.
+>
+> It may be possible to refactorize all this, but not in an obvious way and
+> it would be a lot more work than this patch series.
 
-Signed-off-by: Max Kirillov <max@max630.net>
----
- gitk | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+Yeah, in light of the analysis I agree it makes sense to take the
+approach of these two patches, at least for now.
 
-diff --git a/gitk b/gitk
-index da84e22dd4..3919ba85b1 100755
---- a/gitk
-+++ b/gitk
-@@ -8009,6 +8009,10 @@ proc getblobdiffs {ids} {
-     global limitdiffs vfilelimit curview
-     global git_version
- 
-+    if {[info exists blobdifffd($ids)]} {
-+	return
-+    }
-+
-     set textconv {}
-     if {[package vcompare $git_version "1.6.1"] >= 0} {
- 	set textconv "--textconv"
-@@ -9145,6 +9149,11 @@ proc do_cmp_commits {a b} {
- proc diffcommits {a b} {
-     global diffcontext diffids blobdifffd diffinhdr currdiffsubmod
- 
-+    set diffids [list commits $a $b]
-+    if {[info exists blobdifffd($diffids)]} {
-+	return
-+    }
-+
-     set tmpdir [gitknewtmpdir]
-     set fna [file join $tmpdir "commit-[string range $a 0 7]"]
-     set fnb [file join $tmpdir "commit-[string range $b 0 7]"]
-@@ -9161,7 +9170,6 @@ proc diffcommits {a b} {
- 	error_popup [mc "Error diffing commits: %s" $err]
- 	return
-     }
--    set diffids [list commits $a $b]
-     set blobdifffd($diffids) $fd
-     set diffinhdr 0
-     set currdiffsubmod ""
--- 
-2.19.0.1202.g68e1e8f04e
-
+Thanks.
