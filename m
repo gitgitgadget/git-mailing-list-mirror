@@ -2,146 +2,103 @@ Return-Path: <SRS0=wY2r=4U=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-22.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 73280C3F2D7
-	for <git@archiver.kernel.org>; Tue,  3 Mar 2020 04:05:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 024E2C3F2CD
+	for <git@archiver.kernel.org>; Tue,  3 Mar 2020 05:19:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 42A4F2465D
-	for <git@archiver.kernel.org>; Tue,  3 Mar 2020 04:05:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BF8D820CC7
+	for <git@archiver.kernel.org>; Tue,  3 Mar 2020 05:19:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ImTz7TgY"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jTCj98fY"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727331AbgCCEFN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Mar 2020 23:05:13 -0500
-Received: from mail-pl1-f202.google.com ([209.85.214.202]:54835 "EHLO
-        mail-pl1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726942AbgCCEFN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Mar 2020 23:05:13 -0500
-Received: by mail-pl1-f202.google.com with SMTP id s13so1073024plr.21
-        for <git@vger.kernel.org>; Mon, 02 Mar 2020 20:05:10 -0800 (PST)
+        id S1725840AbgCCFTB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Mar 2020 00:19:01 -0500
+Received: from mail-qk1-f196.google.com ([209.85.222.196]:45602 "EHLO
+        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725765AbgCCFTB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Mar 2020 00:19:01 -0500
+Received: by mail-qk1-f196.google.com with SMTP id z12so2182292qkg.12
+        for <git@vger.kernel.org>; Mon, 02 Mar 2020 21:19:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:subject:from:to:cc;
-        bh=eyqt565TJD1fzhKAvaHffcGa98xhIkR8cuRtr2Nwydw=;
-        b=ImTz7TgYXB4Sgt/t+gKLT0jKrSWT6nzj5IBqCtyAQ7iQ2F9N2xWuUWzT5RiUzTcE1U
-         kleB16MTcNvk3kbiiS08QN8rBuK1O9h3Qm8fwad3Q32bJfXIqdsEczwQag/l2QN8mFRf
-         TDtUfVJwTVkOMqRESUqt0AtUzTAVZy33JnntnX/+hE5rJhY8vYCWss498Ujimeqw+iqu
-         CA5RP9Phu96FnyrvkpByReLGg5SY0GLFIMCrfiXww8+RbYmSmSV5osF/a5x3HhJaJc8C
-         31OWf5+Apjl1Q8jO5bRQltq+hEnjyccEKDj5k1Iw4Z7K+ACbZL+EHh7Dfwg91UJysM/F
-         jy/Q==
+        d=gmail.com; s=20161025;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=slRrJ1H7XJg/eW9WAQpa+N2wReIIqWstUw6EaaKozmk=;
+        b=jTCj98fYiiaXob0aF0pL4kfJVir01Oy272946+aKT81BnVSQ5xAXwXMAtBClpoLwN7
+         2bjAkuBSeCnnST35H9+X6i6Q/gsXFsn8fF3NBHvQ9mCiaqU/uZb0BEb5jmliIt1+d75Q
+         i/UgHcUsM0rkkFWXQzcbg5IWWuspK6/oTKSFb/pHfGZx7TVgqd8U1CG/srmgftmUpvBJ
+         sA3qNadxn396OI+KC4vJqdjeI+PWVEF/Ex3Y0UFbOg3nMGcTsXskmL1UL2lZVEiFUXSC
+         haZGK3HVFXY+BF1Fu8C/Q/3H6oPzVi60con/PWhyZ6qfMTxTCRpuUBmEccRozvP3y/kp
+         LrDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version:subject
-         :from:to:cc;
-        bh=eyqt565TJD1fzhKAvaHffcGa98xhIkR8cuRtr2Nwydw=;
-        b=bIWGaoiFQn/fj0f31d6yU+2jBHqeH/8kFO0Zb7Vxeb/yGtyQExqXAEX1te3aq6fDIU
-         z8pTI1GuUlWF8g29VRtWcvCswIUsaVEAHtykbxQe19PAFAUEhgkCHBA1aCsVWUFQZVB8
-         POdDvZzAmnyfFj52L5FUJA31qO4uvvV2D1SfJFhYk92x4vgTbUko6UOjOvCaM+6xH7sP
-         9kK1UKUX9qesdoQiwIXbUGm0nK/iO2Mpuig9tGLxhBSHw8cwVXnZtCwJSg6Y7NljZVFM
-         zWIESLxh/cQw9J1Pa5Ziv0tA0Jipig0FxCuCCksurLr4gbG02Rc6VV89h68DRG3OaM3E
-         xHgw==
-X-Gm-Message-State: ANhLgQ36XHBTJjo+LKb8aSLSRgyn+qo0SOxcTHB9Z69BPLAuNuE9Bvjf
-        dx01reuAK8iSEgoqNtZQ27nG6DniVxHtgznoUOpPSq2dn1r7s7dBpvJ+HiHSQpcGJ5q/Lc3FQoY
-        Meg/RgrPKQIYLeeHVt13RbxVfAbcllS+zBHSCUjFC2+2+p/K1trFl18AUjbzxUHp2Iu+W+MuCBQ
-        ==
-X-Google-Smtp-Source: ADFU+vufqesmEmReKKNrhYGWZ52o4GkFM16YNwjO/K7USydvinaDci2ADGFmkutu3F1id7+Mab5dXtLDJOWzxOBj6Ak=
-X-Received: by 2002:a63:ed01:: with SMTP id d1mr2037443pgi.95.1583208310218;
- Mon, 02 Mar 2020 20:05:10 -0800 (PST)
-Date:   Mon,  2 Mar 2020 20:05:06 -0800
-In-Reply-To: <20200228195805.GA190372@google.com>
-Message-Id: <20200303040506.241376-1-emilyshaffer@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.25.0.265.gbab2e86ba0-goog
-Subject: [PATCH] prefix_path: show gitdir if worktree unavailable
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     git@vger.kernel.org
-Cc:     Emily Shaffer <emilyshaffer@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=slRrJ1H7XJg/eW9WAQpa+N2wReIIqWstUw6EaaKozmk=;
+        b=V6++eQNWZHOHBFS5+JWe50NMo+coG/pHWk87t3NXNyH8/MqUeXVaLXnxUuVpgZHNHL
+         WfByggVWnPRNQGBe4hAxBz1QXo5AVWH/CAxrkR8BC4LdeKShiY99P0uh9Tu3aqA5FPXS
+         7HK5P25gYIvTjcWRErnXQZd1VoD34LcCdglDN5i/syLiZgkxB2QAg/RnSBf7KLCh+M0T
+         ipHq/sbGBYabMXH1JDhgHQy4EuwG8h5Yy+H9RxAZw34M+PBKI22Wr0S6c6wUUq73dWij
+         M4C6zidCAUL5HKDMqgfNddZWcyKgCEqpHTYEJSTc7BBfVn6dzCE9ttEuAWz5xG5jnUYX
+         BFWA==
+X-Gm-Message-State: ANhLgQ2XAML9SnMMpnzsuGQUPDFGor1wYhdWwVdNUw+o7yaMwwJ9+T4M
+        Vt7HNgkCzxz7Qfms6z/x1IY=
+X-Google-Smtp-Source: ADFU+vsji2DrIRd0ANGj2zl6hcHM7/NUFkDxbwh525vXbWTTAjjol82Di1yhiXmYF+fQu7C0o7BwPw==
+X-Received: by 2002:a37:a750:: with SMTP id q77mr2323761qke.119.1583212740793;
+        Mon, 02 Mar 2020 21:19:00 -0800 (PST)
+Received: from [192.168.1.127] ([192.222.216.4])
+        by smtp.gmail.com with ESMTPSA id w21sm12422838qth.17.2020.03.02.21.18.59
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 02 Mar 2020 21:19:00 -0800 (PST)
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH 0/4] doc: --recurse-submodules
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+In-Reply-To: <20200228104449.o42twhy34fynalk4@feanor>
+Date:   Tue, 3 Mar 2020 00:18:57 -0500
+Cc:     git@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <FF79EA85-4A15-4B4B-B59E-657E0488D4C6@gmail.com>
+References: <20200228103558.1684937-1-damien.olivier.robert+git@gmail.com> <20200228104449.o42twhy34fynalk4@feanor>
+To:     Damien Robert <damien.olivier.robert@gmail.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If there is no worktree at present, we can still hint the user about
-Git's current directory by showing them the absolute path to the Git
-directory. Even though the Git directory doesn't make it as easy to
-locate the worktree in question, it can still help a user figure out
-what's going on while developing a script.
 
-This fixes a segmentation fault introduced in e0020b2f829.
+> Le 28 f=C3=A9vr. 2020 =C3=A0 05:44, Damien Robert =
+<damien.olivier.robert@gmail.com> a =C3=A9crit :
+>=20
+> Note that git-switch.txt states that
+> 	Using `--recurse-submodules` will update the content of all
+> 	initialized submodules according to the commit recorded in the
+> 	superproject.
+> but actually only 'active' submodules will be updated.
 
-Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
----
-This patch is built on top of es/outside-repo-errmsg-hints. I think it
-doesn't need to be, since that change is in master, though.
+Technically that=E2=80=99s true, but I=E2=80=99d say that in a "simple" =
+workflow (you clone a superproject then do
+`git submodule update --init`, then maybe set `submodule.recurse` to =
+true), then being active and=20
+being initialized are equivalent. So I don=E2=80=99t think it=E2=80=99s =
+that big of an issue.=20
 
-Sounds like there's a segfault in the wild:
-https://lore.kernel.org/git/20200228195805.GA190372@google.com
+In any case, if such a change is made, the doc for
+all commands that have the flag should be revised, as both "initialized" =
+(grep, checkout, switch, read-tree)
+and "populated" (fetch, pull) seems to be used currently.
 
-I figured since the error doesn't specify "this is the worktree" or
-"this is the gitdir" to the user, it didn't need more prettying when
-falling back to gitdir in this patch.
-
-It seems to me that if we are checking whether something is inside or
-outside of the repository, we definitely will get a good result from
-get_git_dir() - if there's no Git dir, then there's no repository to be
-in or out of.
-
-CI run here: https://github.com/gitgitgadget/git/pull/572/checks
-
- - Emily
-
- pathspec.c | 8 ++++++--
- setup.c    | 8 ++++++--
- 2 files changed, 12 insertions(+), 4 deletions(-)
-
-diff --git a/pathspec.c b/pathspec.c
-index 166d255642..8243e06eab 100644
---- a/pathspec.c
-+++ b/pathspec.c
-@@ -438,9 +438,13 @@ static void init_pathspec_item(struct pathspec_item *item, unsigned flags,
- 	} else {
- 		match = prefix_path_gently(prefix, prefixlen,
- 					   &prefixlen, copyfrom);
--		if (!match)
-+		if (!match) {
-+			const char *hint_path = get_git_work_tree();
-+			if (!hint_path)
-+				hint_path = get_git_dir();
- 			die(_("%s: '%s' is outside repository at '%s'"), elt,
--			    copyfrom, absolute_path(get_git_work_tree()));
-+			    copyfrom, absolute_path(hint_path));
-+		}
- 	}
- 
- 	item->match = match;
-diff --git a/setup.c b/setup.c
-index 17814a080b..f4897287f7 100644
---- a/setup.c
-+++ b/setup.c
-@@ -120,9 +120,13 @@ char *prefix_path_gently(const char *prefix, int len,
- char *prefix_path(const char *prefix, int len, const char *path)
- {
- 	char *r = prefix_path_gently(prefix, len, NULL, path);
--	if (!r)
-+	if (!r) {
-+		const char *hint_path = get_git_work_tree();
-+		if (!hint_path)
-+			hint_path = get_git_dir();
- 		die(_("'%s' is outside repository at '%s'"), path,
--		    absolute_path(get_git_work_tree()));
-+		    absolute_path(hint_path));
-+	}
- 	return r;
- }
- 
--- 
-2.25.0.265.gbab2e86ba0-goog
+>=20
+> Should I also update the doc? It is already stated in =
+`gitsubmodules(7)`
+> that only 'active' submodules are considered for recursion.
+>=20
+> --=20
+> Damien Robert
+> http://www.normalesup.org/~robert/pro
 
