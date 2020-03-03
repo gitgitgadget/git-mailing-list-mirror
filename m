@@ -2,87 +2,90 @@ Return-Path: <SRS0=wY2r=4U=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8190C3F2CD
-	for <git@archiver.kernel.org>; Tue,  3 Mar 2020 14:30:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 50845C3F2D1
+	for <git@archiver.kernel.org>; Tue,  3 Mar 2020 16:12:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7F6E120842
-	for <git@archiver.kernel.org>; Tue,  3 Mar 2020 14:30:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1B86920828
+	for <git@archiver.kernel.org>; Tue,  3 Mar 2020 16:12:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="BATEpPHM"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SnzVRGtk"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729427AbgCCOat (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Mar 2020 09:30:49 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51077 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727199AbgCCOat (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Mar 2020 09:30:49 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0E96B527CD;
-        Tue,  3 Mar 2020 09:30:47 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=yxqmEhTJdCxqV4P38JoJGZxNftE=; b=BATEpP
-        HMCpvLyA0I8ENiMS02TaFFqNVaPow94BCwoOkDOUo9i5UMyDdzUAI5+/VNss+Bn6
-        BrPRj7qHmuhzjRRWCp1g/3Ugy/Eu74GV7+HIFeW4ApP39UakkcXZwdJvXC7QE4iv
-        HL3vJ4vZiBgGmlc2IWf9DObzEZMG0dLz/emzo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=mk3VVkx9wm5g3eNemCV7xPJkhoHKvYHj
-        k1uEXWgS+WqHL0fGVvnDls7+2NPK0FwGzTIv+WN6V+fEZbNQPtQRdTyrhcuv1ToY
-        GgjpnJozCbYZFXb/coSpk1GZBy3hzUsKQtfSumr2CfrGVqr67ssnhHewlUrochHd
-        QUXra0CvASw=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 044E6527CC;
-        Tue,  3 Mar 2020 09:30:47 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 50DE5527CA;
-        Tue,  3 Mar 2020 09:30:46 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Bryan Turner <bturner@atlassian.com>,
-        Takuya N via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Users <git@vger.kernel.org>,
-        Takuya Noguchi <takninnovationresearch@gmail.com>
-Subject: Re: [PATCH] doc: use 'ref' instead of 'commit' for merge-base arguments
-References: <pull.719.git.git.1583220197856.gitgitgadget@gmail.com>
-        <CAGyf7-Ez1Fx-VUVmDWxRxLaZcU+Tu4kZ+F2+0uNKkx2oftjEJQ@mail.gmail.com>
-        <nycvar.QRO.7.76.6.2003031507500.46@tvgsbejvaqbjf.bet>
-Date:   Tue, 03 Mar 2020 06:30:44 -0800
-In-Reply-To: <nycvar.QRO.7.76.6.2003031507500.46@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Tue, 3 Mar 2020 15:08:08 +0100 (CET)")
-Message-ID: <xmqqd09ta4tn.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1730063AbgCCQMz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Mar 2020 11:12:55 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:40061 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726890AbgCCQMz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Mar 2020 11:12:55 -0500
+Received: by mail-wr1-f66.google.com with SMTP id r17so5078059wrj.7
+        for <git@vger.kernel.org>; Tue, 03 Mar 2020 08:12:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=VwKJWNeHOtL6QVhLs7VqgMeEYj6yg2UafvoXkcHjsqs=;
+        b=SnzVRGtkSaqCa0eN34pvUh9jeFKaCrWmFqmV2+IeUAH0aOs+obu8liswBHnAiURJRf
+         vFwiTHeuH6mHDseYSswlU5YkKFubvaJwlBx4t+UOeDFSoZEkILkKnNNYCMoa4W0NiRhV
+         IU8y9b66u3TENuwdxqGO0iUx6scXiY2OhR2SrQSGVQC5HLgnp294DompgmPH4xU1rM/5
+         0oAhqmW7jrYCs5YQZMhpSztyHubbBZDbiPa4+f+zE2Z0XooYUaIfL/aGueOuoFPWfhRE
+         Wi/tgmhDm3jgd4SyWmu+cEEPSS8ZlePsrnJN4B/JXNrtTe2DKFytKt27faFnqVa/pe6+
+         MxnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=VwKJWNeHOtL6QVhLs7VqgMeEYj6yg2UafvoXkcHjsqs=;
+        b=Asz3cjkEvHApdhQXmttv137ksrcmwX1+CIs3sYQrjTLIVcDO/sVI/8xmEbc+jWxA/8
+         5UM1otORl2j3Rb+f+ofBX7GcKhRgxcIZl3cTPPuVoqWa3+tRkCNVQJQxVaLTnoGySbFs
+         LhwvuN8l+ai8480hkrjJdMYn100KHSboL8d7fdR55tZfzTjCGBdSYuDoBGnQ1hRenvum
+         H+c5XOonOBZrJxKkOpRGSctFdboz+v01NFh8abaXRNOBQlU32JsSdbiVNpIwoRowVUgA
+         cJMMsPDUClt1pfIu3Eq60Ylydak6OuaYk/8jraGoakS9SXvTHyHd1eEQUa6lBNnER318
+         4Ezw==
+X-Gm-Message-State: ANhLgQ2q7rwbNlYUaBYBbztQH1DMV51Enkb5Skfo0CSqQpkKJxq+ukER
+        tdYkMoWDbPMT1qZjmEfDJVhAMmRIVeI=
+X-Google-Smtp-Source: ADFU+vtSdhsjg4TbytYGkqF24Q7BvGr4X1MXsbcu6V1MJ3o++S0j8y0+yjWUu879flZmIMAABQu+lg==
+X-Received: by 2002:adf:a312:: with SMTP id c18mr6484862wrb.77.1583251973630;
+        Tue, 03 Mar 2020 08:12:53 -0800 (PST)
+Received: from localhost.localdomain (87-231-246-247.rev.numericable.fr. [87.231.246.247])
+        by smtp.gmail.com with ESMTPSA id l8sm4847472wmj.2.2020.03.03.08.12.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Mar 2020 08:12:52 -0800 (PST)
+From:   Damien Robert <damien.olivier.robert@gmail.com>
+X-Google-Original-From: Damien Robert <damien.olivier.robert+git@gmail.com>
+To:     git@vger.kernel.org, Jeff King <peff@peff.net>
+Cc:     Damien Robert <damien.olivier.robert+git@gmail.com>
+Subject: [PATCH v2 0/2]
+Date:   Tue,  3 Mar 2020 17:12:21 +0100
+Message-Id: <20200303161223.1870298-1-damien.olivier.robert+git@gmail.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20200302133217.GA1176622@coredump.intra.peff.net>
+References: <20200302133217.GA1176622@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9224CD7C-5D5B-11EA-968F-C28CBED8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Here is the version 2. I incorporated Jeff's preliminary patch, and handled
+all push.default cases and added tests for them.
 
->> > The notation <commit> can be misunderstandable only for commit SHA1,
->> > but merge-base accepts any commit references. Like reflog, the name of
->> > arguments should be <ref> instead of <commit>.
->>
->> To me, this change goes too far in the opposite direction: Now it
->> sounds like the command only accepts refs, when it actually accepts
->> any "commit-ish"--i.e., anything that can be coerced to a commit.
->> ("git worktree" uses this term in its usage for "add", for example.)
->
-> Maybe we can go for `rev` instead of `ref`?
+Damien Robert (1):
+  remote.c: fix handling of %(push:remoteref)
 
-That's much better than 'ref', but I do not see why 'commit' is
-wrong in the first place.  There are many ways to name an object,
-and `rev` is an old colloquial way to say "object name".  Here,
-however, we want only commit objects, no?
+Jeff King (1):
+  remote: drop "explicit" parameter from remote_ref_for_branch()
+
+ ref-filter.c            |   6 +--
+ remote.c                | 113 +++++++++++++++++++++++++++++-----------
+ remote.h                |   3 +-
+ t/t6300-for-each-ref.sh |  29 ++++++++++-
+ 4 files changed, 115 insertions(+), 36 deletions(-)
+
+-- 
+Patched on top of v2.25.1-377-g2d2118b814 (git version 2.25.1)
+
