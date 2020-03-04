@@ -8,283 +8,118 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DD70C3F2D8
-	for <git@archiver.kernel.org>; Wed,  4 Mar 2020 11:34:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DAEE9C3F2D1
+	for <git@archiver.kernel.org>; Wed,  4 Mar 2020 11:34:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 23030214D8
-	for <git@archiver.kernel.org>; Wed,  4 Mar 2020 11:34:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B375B20848
+	for <git@archiver.kernel.org>; Wed,  4 Mar 2020 11:34:18 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S/qwBpmU"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R6JyQeDU"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387881AbgCDLeQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 Mar 2020 06:34:16 -0500
-Received: from mail-pl1-f173.google.com ([209.85.214.173]:33032 "EHLO
-        mail-pl1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387863AbgCDLeP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Mar 2020 06:34:15 -0500
-Received: by mail-pl1-f173.google.com with SMTP id ay11so919323plb.0
-        for <git@vger.kernel.org>; Wed, 04 Mar 2020 03:34:14 -0800 (PST)
+        id S2387897AbgCDLeS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Mar 2020 06:34:18 -0500
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:33404 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387774AbgCDLeR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Mar 2020 06:34:17 -0500
+Received: by mail-pg1-f193.google.com with SMTP id m5so884036pgg.0
+        for <git@vger.kernel.org>; Wed, 04 Mar 2020 03:34:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=a7C2Cyz9XOA6zcAEFLp48kmqzquplJwiHk3Qlq1IOig=;
-        b=S/qwBpmU/g8aq0hR6tqqYAyn8bKzBb7ZU0m6t+gLSw1KgYte/2+G8HNFadLECFMC6T
-         +qtD1uxtH9BAYzFmpOr5zRCM5SYqhvJEePgXFqHqENA/krQwtp2loggxWp1Fq7T6fntJ
-         t2V7d2LScmBob4o8TZlx2eKJTh5wuomK10Lowhemz6lv6ZdiS/TCYUJCDqTUQfuCmqrw
-         ZNZA1ojLR1USpJKpQxzqIuDEzCJEveNoyktA2yke4l/EBvGoILgfjiKNOjcasi+9tha4
-         Py5JWOw473ScFtBUGZ4vvZrLiAxB3AmQOpZjmTqjHfl38EcUvR9uDBaSwda6fEv2dqD5
-         BmgA==
+        bh=JggJxmPP5gHy87da6j0Fnf92VHvN+o3kRi3I6Nj2eWI=;
+        b=R6JyQeDUQBfx5IQzbgT8pBdm/2+DvL/SLyVJZa4Ty1QlFo+yfGOHy5w3KZ5mZCZhcX
+         lMlYOZ9KPhSmg8Deh41usGK2W4w4PQU7rJ6EonFQUupM3mMPlYlxYnKX8a2EoFGbCDDd
+         u1Iw/TTrupOLfceItgcEJwsM7wC+gDzSofghoRB45ls9eEQiDG28I8DpuTVmDIzuNS0L
+         0ZLyPThM7Y/0c6XsEoV6vqlfo/DvfwOV6cwH9u0Lb++SmEPRMDr+frkbpbDZil5KLJIz
+         PGos9gdw8/ff/oi7cjUYISkYqh02rXcHK8Fs5I7Te4rIef/dnYKA2Jcye8jVDqnyU3ue
+         YaOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=a7C2Cyz9XOA6zcAEFLp48kmqzquplJwiHk3Qlq1IOig=;
-        b=PKGapLc9inR/a4ht33q25ZyxKoXar/ej3+HF9DL1FyBzjNauevXYITvXOBblRFpu1P
-         U53zOcf3NDQOmLN435100e0i2ZkF7iUXTBV+BzhC4rSriC38FQZ9ZrYIomVoq8bnxWa6
-         jtQyZAWOf9V7U1uq7jnaU/s6WYdxZilBgoqAjDQCI3t/3Y24lOMfaX1rz89grVdD5jN1
-         //j3CqYLCmUaIB/0bW6j3pwJ0PlnOMXEXp1SH+MVssZAF5hiYlv/SBIaSst0AuWmLfOj
-         VosbNft6RxOOsYFtGiR7hQdj5jG7Ey/Ts2s+c81k4+Jj5NZ/cD834RmTXrLg0L+EkEbT
-         pFCQ==
-X-Gm-Message-State: ANhLgQ38BkRD82e5/VWXkplDqaEIuDdEmG8nsXPuAqWRheNXMyVSUsqs
-        4wevzleCvu8JjSjXGbHTF/wc8qnVr3Y3hg==
-X-Google-Smtp-Source: ADFU+vvzAlbz1EdE168SnY9vqk88/3AYAhXoYfBnwJLQolouSbHQbKsNd3bxHDo4OpiWPHJRNuJEEA==
-X-Received: by 2002:a17:902:444:: with SMTP id 62mr2451544ple.209.1583321652829;
-        Wed, 04 Mar 2020 03:34:12 -0800 (PST)
+        bh=JggJxmPP5gHy87da6j0Fnf92VHvN+o3kRi3I6Nj2eWI=;
+        b=kZF1El97ZwIsl8ddQ7VYoCcR+M9Wfn51eP8cAfjTwQ8/5lmEjSUPtCesCkuTfQxf7f
+         4ZJytif4s1dPBReArjQ2sBB+Qt3zsnSQyVBulF76a3lk7SY/hbqeaPwNz6QBln5WDsAX
+         oURa7GfruSMA1c1VCgmgzIr0mHlR/T+pqVwatLcIA7IrZAE733u5dV7UCU8PfOASojSB
+         yem2gKd+ChEp/0fLidTlChBJg+BvXFCruMIUm9KdpGeMGG5pHl2lCG9E3vTqEtFKKQ6k
+         m1tK7MnJnzXn/IajXYx4iXVGoSJmeZzpjy59AJrKKuTqrQ5TVQLNBgTm2UpmpV/bMNeg
+         62sw==
+X-Gm-Message-State: ANhLgQ0e7DOkrPQdmYtGeW1wKyH147FKqA8LhlmFqzPMZjj2H+N5hiY7
+        BKsXpw6wU+euRb2PsBTjXSuQoE25/OXaNQ==
+X-Google-Smtp-Source: ADFU+vsPXek8bBjbI0aReR4kstMwlUzPkqvxxDYT4Y7+KvMZRWRuUrGTSMOHbeob3Hus8pX3ucIbWQ==
+X-Received: by 2002:a63:c20e:: with SMTP id b14mr2118000pgd.394.1583321654976;
+        Wed, 04 Mar 2020 03:34:14 -0800 (PST)
 Received: from localhost.localdomain ([47.89.83.4])
-        by smtp.gmail.com with ESMTPSA id d77sm15350050pfd.109.2020.03.04.03.34.11
+        by smtp.gmail.com with ESMTPSA id d77sm15350050pfd.109.2020.03.04.03.34.13
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 04 Mar 2020 03:34:12 -0800 (PST)
+        Wed, 04 Mar 2020 03:34:14 -0800 (PST)
 From:   Jiang Xin <worldhello.net@gmail.com>
 X-Google-Original-From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 To:     Git List <git@vger.kernel.org>
 Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 4/7] receive-pack: read env from execute-commands output
-Date:   Wed,  4 Mar 2020 19:33:09 +0800
-Message-Id: <20200304113312.34229-5-zhiyou.jx@alibaba-inc.com>
+Subject: [PATCH 5/7] refs.c: refactor to reuse ref_is_hidden()
+Date:   Wed,  4 Mar 2020 19:33:10 +0800
+Message-Id: <20200304113312.34229-6-zhiyou.jx@alibaba-inc.com>
 X-Mailer: git-send-email 2.25.1.362.g51ebf55b93
 In-Reply-To: <20200304113312.34229-1-zhiyou.jx@alibaba-inc.com>
 References: <20200304113312.34229-1-zhiyou.jx@alibaba-inc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The “post-receive” hook may need the pull request ID generated by the
-“execute-commands” hook.  The results can be passed between hooks by
-environment variables.
-
-Each line of the message received from the standard output of the
-“execute-commands” in the key=value format is parsed as environment and
-these variables will be sent to environment of the “post-receive” hook.
+Add new function `ref_is_matched()` to reuse `ref_is_hidden()`. Test
+case t5512 covered this change.
 
 Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 ---
- builtin/receive-pack.c           | 42 +++++++++++++++--
- t/t5411-execute-commands-hook.sh | 79 ++++++++++++++++++++++++++++++++
- 2 files changed, 117 insertions(+), 4 deletions(-)
+ refs.c | 11 ++++++++---
+ refs.h |  1 +
+ 2 files changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 241b1d4cfc..fd2f3ba80a 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -85,6 +85,7 @@ static const char *nonce_status;
- static long nonce_stamp_slop;
- static timestamp_t nonce_stamp_slop_limit;
- static struct ref_transaction *transaction;
-+struct argv_array post_receive_env_array;
- 
- static enum {
- 	KEEPALIVE_NEVER = 0,
-@@ -678,7 +679,9 @@ struct receive_hook_feed_state {
- };
- 
- typedef int (*feed_fn)(void *, const char **, size_t *);
-+typedef void (*stdout_handler_fn)(int out);
- static int run_and_feed_hook(const char *hook_name, feed_fn feed,
-+			     stdout_handler_fn stdout_handler,
- 			     struct receive_hook_feed_state *feed_state)
- {
- 	struct child_process proc = CHILD_PROCESS_INIT;
-@@ -713,9 +716,15 @@ static int run_and_feed_hook(const char *hook_name, feed_fn feed,
- 
- 	proc.argv = argv;
- 	proc.in = -1;
--	proc.stdout_to_stderr = 1;
-+	if (stdout_handler)
-+		proc.out = -1;
-+	else
-+		proc.stdout_to_stderr = 1;
- 	proc.trace2_hook_name = hook_name;
- 
-+	if (!strcmp(hook_name, "post-receive") && post_receive_env_array.argc > 0)
-+		argv_array_pushv(&proc.env_array, post_receive_env_array.argv);
-+
- 	if (feed_state->push_options) {
- 		int i;
- 		for (i = 0; i < feed_state->push_options->nr; i++)
-@@ -760,6 +769,10 @@ static int run_and_feed_hook(const char *hook_name, feed_fn feed,
- 			break;
- 	}
- 	close(proc.in);
-+
-+	if (stdout_handler)
-+		stdout_handler(proc.out);
-+
- 	if (use_sideband)
- 		finish_async(&muxer);
- 
-@@ -817,7 +830,7 @@ static int run_receive_hook(struct command *commands,
- 		return 0;
- 	state.cmd = commands;
- 	state.push_options = push_options;
--	status = run_and_feed_hook(hook_name, feed_receive_hook, &state);
-+	status = run_and_feed_hook(hook_name, feed_receive_hook, NULL, &state);
- 	strbuf_release(&state.buf);
- 	return status;
- }
-@@ -868,11 +881,29 @@ static int run_execute_commands_pre_receive_hook(struct command *commands,
- 	state.cmd = commands;
- 	state.push_options = push_options;
- 	status = run_and_feed_hook("execute-commands--pre-receive",
--			feed_receive_hook, &state);
-+			feed_receive_hook, NULL, &state);
- 	strbuf_release(&state.buf);
- 	return status;
+diff --git a/refs.c b/refs.c
+index 1ab0bb54d3..229159ea1a 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1389,13 +1389,18 @@ int parse_hide_refs_config(const char *var, const char *value, const char *secti
  }
  
-+
-+static void prepare_post_receive_env(int in)
+ int ref_is_hidden(const char *refname, const char *refname_full)
 +{
-+	struct strbuf stdout_buf = STRBUF_INIT;
-+
-+	while (strbuf_getwholeline_fd(&stdout_buf, in, '\n') != EOF) {
-+		char *p = stdout_buf.buf + stdout_buf.len -1;
-+		if (*p =='\n')
-+			*p = '\0';
-+		p = strchr(stdout_buf.buf, '=');
-+		if (p == NULL)
-+			continue;
-+		argv_array_push(&post_receive_env_array, stdout_buf.buf);
-+		strbuf_reset(&stdout_buf);
-+	}
-+	strbuf_release(&stdout_buf);
++	return ref_is_matched(hide_refs, refname, refname_full);
 +}
 +
- static int run_execute_commands_hook(struct command *commands,
- 				     const struct string_list *push_options)
++int ref_is_matched(struct string_list *match_refs, const char *refname, const char *refname_full)
  {
-@@ -889,7 +920,8 @@ static int run_execute_commands_hook(struct command *commands,
+ 	int i;
+ 
+-	if (!hide_refs)
++	if (!match_refs)
  		return 0;
- 	state.cmd = commands;
- 	state.push_options = push_options;
--	status = run_and_feed_hook("execute-commands", feed_receive_hook, &state);
-+	status = run_and_feed_hook("execute-commands",
-+			feed_receive_hook, prepare_post_receive_env, &state);
- 	strbuf_release(&state.buf);
- 	return status;
- }
-@@ -2052,6 +2084,8 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
- 		OPT_END()
- 	};
+-	for (i = hide_refs->nr - 1; i >= 0; i--) {
+-		const char *match = hide_refs->items[i].string;
++	for (i = match_refs->nr - 1; i >= 0; i--) {
++		const char *match = match_refs->items[i].string;
+ 		const char *subject;
+ 		int neg = 0;
+ 		const char *p;
+diff --git a/refs.h b/refs.h
+index 545029c6d8..a2ea043f7f 100644
+--- a/refs.h
++++ b/refs.h
+@@ -739,6 +739,7 @@ int parse_hide_refs_config(const char *var, const char *value, const char *);
+  * parameter always points to the full ref name.
+  */
+ int ref_is_hidden(const char *, const char *);
++int ref_is_matched(struct string_list *, const char *, const char *);
  
-+	argv_array_init(&post_receive_env_array);
-+
- 	packet_trace_identity("receive-pack");
- 
- 	argc = parse_options(argc, argv, prefix, options, receive_pack_usage, 0);
-diff --git a/t/t5411-execute-commands-hook.sh b/t/t5411-execute-commands-hook.sh
-index 0bf14e702d..1907d0619d 100755
---- a/t/t5411-execute-commands-hook.sh
-+++ b/t/t5411-execute-commands-hook.sh
-@@ -454,4 +454,83 @@ test_expect_success "cannot push mixed references (declined)" '
- 	test_cmp expect actual
- '
- 
-+test_expect_success "new execute-commands and post-receive hooks (environments in output)" '
-+	## execute-commands hook
-+	mv $bare/hooks/execute-commands $bare/hooks/execute-commands.ok &&
-+	cat >$bare/hooks/execute-commands <<-EOF &&
-+	#!/bin/sh
-+
-+	printf >&2 "execute: execute-commands\n"
-+
-+	if test \$# -gt 0 && test "\$1" = "--pre-receive"
-+	then
-+		printf >&2 ">> pre-receive mode\n"
-+	else
-+		printf "GIT_VAR1=var1\n"
-+		printf "GIT_VAR2=var2\n"
-+		printf "AGIT_VAR1=foo\n"
-+		printf "AGIT_VAR2=bar\n"
-+	fi
-+
-+	while read old new ref
-+	do
-+		printf >&2 ">> old: \$old, new: \$new, ref: \$ref.\n"
-+	done
-+
-+	for k in GIT_VAR1 GIT_VAR2 AGIT_VAR1 AGIT_VAR2
-+	do
-+		if test -n "\$(eval echo \\"\\\$\$k\")"
-+		then
-+			printf >&2 ">> has env: \$k=\$(eval echo \\"\\\$\$k\").\n"
-+		fi
-+	done
-+	EOF
-+	chmod a+x $bare/hooks/execute-commands &&
-+
-+	## post-receive hook
-+	mv $bare/hooks/post-receive $bare/hooks/post-receive.ok &&
-+	cat >$bare/hooks/post-receive <<-EOF &&
-+	#!/bin/sh
-+
-+	printf >&2 "execute: post-receive hook\n"
-+
-+	while read old new ref
-+	do
-+		printf >&2 ">> old: \$old, new: \$new, ref: \$ref.\n"
-+	done
-+
-+	for k in GIT_VAR1 GIT_VAR2 AGIT_VAR1 AGIT_VAR2
-+	do
-+		if test -n "\$(eval echo \\"\\\$\$k\")"
-+		then
-+			printf >&2 ">> has env: \$k=\$(eval echo \\"\\\$\$k\").\n"
-+		fi
-+	done
-+	EOF
-+	chmod a+x $bare/hooks/post-receive
-+'
-+
-+test_expect_success "push and show environments" '
-+	(
-+		cd work &&
-+		git push origin \
-+			HEAD:refs/for/master/my/topic
-+	) >out 2>&1 &&
-+	grep "^remote:" out | sed -e "s/  *\$//g" >actual &&
-+	cat >expect <<-EOF &&
-+	remote: execute: execute-commands
-+	remote: >> pre-receive mode
-+	remote: >> old: 0000000000000000000000000000000000000000, new: ce858e653cdbf70f9955a39d73a44219e4b92e9e, ref: refs/for/master/my/topic.
-+	remote: execute: execute-commands
-+	remote: >> old: 0000000000000000000000000000000000000000, new: ce858e653cdbf70f9955a39d73a44219e4b92e9e, ref: refs/for/master/my/topic.
-+	remote: execute: post-receive hook
-+	remote: >> old: 0000000000000000000000000000000000000000, new: ce858e653cdbf70f9955a39d73a44219e4b92e9e, ref: refs/for/master/my/topic.
-+	remote: >> has env: GIT_VAR1=var1.
-+	remote: >> has env: GIT_VAR2=var2.
-+	remote: >> has env: AGIT_VAR1=foo.
-+	remote: >> has env: AGIT_VAR2=bar.
-+	EOF
-+	test_cmp expect actual
-+'
-+
- test_done
+ enum ref_type {
+ 	REF_TYPE_PER_WORKTREE,	  /* refs inside refs/ but not shared       */
 -- 
 2.25.1.362.g51ebf55b93
 
