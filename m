@@ -2,93 +2,241 @@ Return-Path: <SRS0=VPsx=4V=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	PI_IMPORTANCE_HIGH,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 65A67C3F2CE
-	for <git@archiver.kernel.org>; Wed,  4 Mar 2020 17:26:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 83E6AC3F2D1
+	for <git@archiver.kernel.org>; Wed,  4 Mar 2020 18:40:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 304FA2073B
-	for <git@archiver.kernel.org>; Wed,  4 Mar 2020 17:26:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5D0D421775
+	for <git@archiver.kernel.org>; Wed,  4 Mar 2020 18:40:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="b5+QxwL0"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j9A99Tut"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729965AbgCDR0G (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 Mar 2020 12:26:06 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:59284 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726561AbgCDR0G (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Mar 2020 12:26:06 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id BB72FA8274;
-        Wed,  4 Mar 2020 12:26:05 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=adbUVbxCS6mcfaa4yp1LdN0BII4=; b=b5+Qxw
-        L0saLp3n4scEySsfDpkKFU+MxwRZ+wd64S6zbpPB28dCt5IVF0/xEjYRkt1JGthc
-        Yv9yE/uFsSxwQ0Egu/qu/D81lIrxI51tOXaxiF90GlsVoOFWEGepCjMHMxpcCCIH
-        Dtg3D3oMHtOB5GRWHrfzmCE9Sl+QCB/GKZEkE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=hGFTIRzwILGIDmTuKs9ZHBuMMi/o+U+U
-        v2EZB6NsUxldkpMEUk7VK6CMeme0j/+keaWepijJnOEdkKZnodSAW+zNR6NT7vsG
-        GJyTEYUIaLX/RwouFQHJ7Be9ahbv0mlsCOPmRiKAvMrys7Eg0uaoK8oNmV05mMk5
-        3BcqyplpLqg=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B398AA8273;
-        Wed,  4 Mar 2020 12:26:05 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id DB61DA8271;
-        Wed,  4 Mar 2020 12:26:02 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Takuya N via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Takuya N <takninnovationresearch@gmail.com>
-Subject: Re: [PATCH v2] doc: use 'rev' instead of 'commit' for merge-base arguments
-References: <pull.719.git.git.1583220197856.gitgitgadget@gmail.com>
-        <pull.719.v2.git.git.1583325514607.gitgitgadget@gmail.com>
-        <xmqqd09s5atg.fsf@gitster-ct.c.googlers.com>
-Importance: high
-Date:   Wed, 04 Mar 2020 09:26:00 -0800
-In-Reply-To: <xmqqd09s5atg.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Wed, 04 Mar 2020 08:44:43 -0800")
-Message-ID: <xmqqzhcw3uc7.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1730268AbgCDSkK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Mar 2020 13:40:10 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:54914 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730004AbgCDSkK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Mar 2020 13:40:10 -0500
+Received: by mail-wm1-f68.google.com with SMTP id i9so3336460wml.4
+        for <git@vger.kernel.org>; Wed, 04 Mar 2020 10:40:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=WzT4gQZoRdV/E+5Gnfq36lDgD21vhs6b8KmGhqkLVVU=;
+        b=j9A99TutAChRoJyHkiWdlvES/gacnuwD52WlQaMZ4TO5b54SV3TaYZeHR0VwNelK2r
+         59h+JheS4k2W+NsYEzFZLamojut3hDvXokXz//tmFfXEFmB0lRbf/d6Mg361XlWGmeDJ
+         htv5QbPdqRIJ7FYbDQ0MNyvrvabzQ2fbgCUQ7FirwXiEStsstcfik1sknOXtXZSzsVM+
+         p1yOMlAxvw9LANgRCL0JzjU239Q9Hxp3xZedhcmAt7+jcXGoln006vo/FzLG6w29hLGf
+         1oOJAU3tIpJRcRdzbDOdpbibHVB7/Z/ZiVXk+LzNFDmsohRiAx6BXOUb0maMy7k3CtCj
+         TyxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=WzT4gQZoRdV/E+5Gnfq36lDgD21vhs6b8KmGhqkLVVU=;
+        b=krSXeEc9SBJxElb72/eOTU7BBOqvsH/hHAzPGoGAEZsxTcPNyb+LEqfxRJPptr7wIZ
+         J4ofJmWKc2gfQ2XeadaKAhIR1KvJN2m1AJkDSWu7cb362JH/V3OvnkIGjeARY6vrdM28
+         awsG9+GBurFV5dZu8NfFxbBoJ5/lRwOOTq8ETZl3wU1Sf9EQUOKCmmHSPvSTDBA68r8j
+         /SZEB8eoRIYkkqSjJ2VRPzZq/zJHx0vt5ixXOSu9nYapF5MHdTLUZ/ni1jDQZ/4lRv8n
+         G69kOKgS7EooMCcd3fp56/Pg+1fEiDuv7nIMY3uqrmiic6yX9dNFr1TUao+tg/nAtp+z
+         iajA==
+X-Gm-Message-State: ANhLgQ129qjoV64l1u7st27hxEyJ/TVSKIowE5lYfSyWaRki4BLOYOfN
+        Nq1kRBlHLs5JaexA452o8PPYEdIM
+X-Google-Smtp-Source: ADFU+vv4TRd9vJV6mVmeN0ow2xOXC8vVaUfeCFSRhGZ/m0z7cF8EMxxjcI+kyp3oHd0CkW0dmDMtgw==
+X-Received: by 2002:a05:600c:4108:: with SMTP id j8mr4816210wmi.188.1583347208412;
+        Wed, 04 Mar 2020 10:40:08 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id c26sm5307123wmb.8.2020.03.04.10.40.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Mar 2020 10:40:08 -0800 (PST)
+Message-Id: <e18b342819b445281732269def1912a044171bab.1583347206.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.559.v3.git.1583347206.gitgitgadget@gmail.com>
+References: <pull.559.v2.git.1582759438.gitgitgadget@gmail.com>
+        <pull.559.v3.git.1583347206.gitgitgadget@gmail.com>
+From:   "Jorge Lopez Silva via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 04 Mar 2020 18:40:05 +0000
+Subject: [PATCH v3 1/2] http: add client cert for HTTPS proxies.
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 38EA7364-5E3D-11EA-AF56-8D86F504CC47-77302942!pb-smtp21.pobox.com
+To:     git@vger.kernel.org
+Cc:     Jorge <JALopezSilva@gmail.com>,
+        Jorge Lopez Silva <jalopezsilva@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+From: Jorge Lopez Silva <jalopezsilva@gmail.com>
 
-> ... another important
-> point (i.e. when a command wants to take a commit but a user gives
-> it a tag that points at a commit, the command almost always accepts
-> the tag, finds the commit the tag points at, and uses that commit
-> instead of the tag ...
+Git currently supports performing connections to HTTPS proxies but we
+don't support doing mutual authentication with them (through TLS). This
+commit adds the necessary options to be able to send a client
+certificate to the HTTPS proxy.
 
-A side note I forgot to add.  A few commands take both commit and
-tag but want to do different things depending on the kind of object
-they get, and for them, <commit> and <commit-ish> should be used
-carefully in the documentation.
+A client certificate can provide an alternative way of authentication
+instead of using 'ProxyAuthorization' or other more common methods of
+authentication.  Libcurl supports this functionality already so changes
+are somewhat minimal. The feature is guarded by the first available
+libcurl version that supports these options.
 
-For example, "git cat-file commit v2.25.0" and "git cat-file tag v2.25.0"
-do two different things.  They should be described as
+4 configuration options are added and documented, cert, key, cert
+password protected and CA info. The CA info should be used to specify a
+different CA path to validate the HTTPS proxy cert.
 
-	$ git cat-file commit <commit-ish>
-	$ git cat-file tag <tag>
+Signed-off-by: Jorge Lopez Silva <jalopezsilva@gmail.com>
+---
+ Documentation/config/http.txt | 17 +++++++++
+ http.c                        | 67 ++++++++++++++++++++++++++++++++---
+ 2 files changed, 79 insertions(+), 5 deletions(-)
 
-"git merge <commit>" and "git merge <tag>" do different
-things, even though <tag> must be a <commit-ish>.
+diff --git a/Documentation/config/http.txt b/Documentation/config/http.txt
+index e806033aab8..7d398f9afba 100644
+--- a/Documentation/config/http.txt
++++ b/Documentation/config/http.txt
+@@ -29,6 +29,23 @@ http.proxyAuthMethod::
+ * `ntlm` - NTLM authentication (compare the --ntlm option of `curl(1)`)
+ --
+ 
++http.proxySSLCert::
++	The pathname of a file that stores a client certificate to use to authenticate
++	with an HTTPS proxy.
++
++http.proxySSLKey::
++	The pathname of a file that stores a private key to use to authenticate with
++	an HTTPS proxy.
++
++http.proxySSLCertPasswordProtected::
++	Enable Git's password prompt for the proxy SSL certificate.  Otherwise OpenSSL
++	will prompt the user, possibly many times, if the certificate or private key
++	is encrypted.
++
++http.proxySSLCAInfo::
++	Pathname to the file containing the certificate bundle that should be used to
++	verify the proxy with when using an HTTPS proxy.
++
+ http.emptyAuth::
+ 	Attempt authentication without seeking a username or password.  This
+ 	can be used to attempt GSS-Negotiate authentication without specifying
+diff --git a/http.c b/http.c
+index 00a0e507633..8d616b5d60e 100644
+--- a/http.c
++++ b/http.c
+@@ -86,6 +86,13 @@ static long curl_low_speed_time = -1;
+ static int curl_ftp_no_epsv;
+ static const char *curl_http_proxy;
+ static const char *http_proxy_authmethod;
++
++static const char *http_proxy_ssl_cert;
++static const char *http_proxy_ssl_key;
++static const char *http_proxy_ssl_ca_info;
++static struct credential proxy_cert_auth = CREDENTIAL_INIT;
++static int proxy_ssl_cert_password_required;
++
+ static struct {
+ 	const char *name;
+ 	long curlauth_param;
+@@ -365,6 +372,20 @@ static int http_options(const char *var, const char *value, void *cb)
+ 	if (!strcmp("http.proxyauthmethod", var))
+ 		return git_config_string(&http_proxy_authmethod, var, value);
+ 
++	if (!strcmp("http.proxysslcert", var))
++		return git_config_string(&http_proxy_ssl_cert, var, value);
++
++	if (!strcmp("http.proxysslkey", var))
++		return git_config_string(&http_proxy_ssl_key, var, value);
++
++	if (!strcmp("http.proxysslcainfo", var))
++		return git_config_string(&http_proxy_ssl_ca_info, var, value);
++
++	if (!strcmp("http.proxysslcertpasswordprotected", var)) {
++		proxy_ssl_cert_password_required = git_config_bool(var, value);
++		return 0;
++	}
++
+ 	if (!strcmp("http.cookiefile", var))
+ 		return git_config_pathname(&curl_cookie_file, var, value);
+ 	if (!strcmp("http.savecookies", var)) {
+@@ -565,6 +586,21 @@ static int has_cert_password(void)
+ 	return 1;
+ }
+ 
++#if LIBCURL_VERSION_NUM >= 0x073400
++static int has_proxy_cert_password(void)
++{
++	if (http_proxy_ssl_cert == NULL || proxy_ssl_cert_password_required != 1)
++		return 0;
++	if (!proxy_cert_auth.password) {
++		proxy_cert_auth.protocol = xstrdup("cert");
++		proxy_cert_auth.username = xstrdup("");
++		proxy_cert_auth.path = xstrdup(http_proxy_ssl_cert);
++		credential_fill(&proxy_cert_auth);
++	}
++	return 1;
++}
++#endif
++
+ #if LIBCURL_VERSION_NUM >= 0x071900
+ static void set_curl_keepalive(CURL *c)
+ {
+@@ -924,8 +960,14 @@ static CURL *get_curl_handle(void)
+ #if LIBCURL_VERSION_NUM >= 0x073400
+ 		curl_easy_setopt(result, CURLOPT_PROXY_CAINFO, NULL);
+ #endif
+-	} else if (ssl_cainfo != NULL)
+-		curl_easy_setopt(result, CURLOPT_CAINFO, ssl_cainfo);
++	} else if (ssl_cainfo != NULL || http_proxy_ssl_ca_info != NULL) {
++		if (ssl_cainfo != NULL)
++			curl_easy_setopt(result, CURLOPT_CAINFO, ssl_cainfo);
++#if LIBCURL_VERSION_NUM >= 0x073400
++		if (http_proxy_ssl_ca_info != NULL)
++			curl_easy_setopt(result, CURLOPT_PROXY_CAINFO, http_proxy_ssl_ca_info);
++#endif
++	}
+ 
+ 	if (curl_low_speed_limit > 0 && curl_low_speed_time > 0) {
+ 		curl_easy_setopt(result, CURLOPT_LOW_SPEED_LIMIT,
+@@ -1018,9 +1060,18 @@ static CURL *get_curl_handle(void)
+ 				CURLOPT_PROXYTYPE, CURLPROXY_SOCKS4);
+ #endif
+ #if LIBCURL_VERSION_NUM >= 0x073400
+-		else if (starts_with(curl_http_proxy, "https"))
+-			curl_easy_setopt(result,
+-				CURLOPT_PROXYTYPE, CURLPROXY_HTTPS);
++		else if (starts_with(curl_http_proxy, "https")) {
++			curl_easy_setopt(result, CURLOPT_PROXYTYPE, CURLPROXY_HTTPS);
++
++			if (http_proxy_ssl_cert)
++				curl_easy_setopt(result, CURLOPT_PROXY_SSLCERT, http_proxy_ssl_cert);
++
++			if (http_proxy_ssl_key)
++				curl_easy_setopt(result, CURLOPT_PROXY_SSLKEY, http_proxy_ssl_key);
++
++			if (has_proxy_cert_password())
++				curl_easy_setopt(result, CURLOPT_PROXY_KEYPASSWD, proxy_cert_auth.password);
++		}
+ #endif
+ 		if (strstr(curl_http_proxy, "://"))
+ 			credential_from_url(&proxy_auth, curl_http_proxy);
+@@ -1230,6 +1281,12 @@ void http_cleanup(void)
+ 	}
+ 	ssl_cert_password_required = 0;
+ 
++	if (proxy_cert_auth.password != NULL) {
++		memset(proxy_cert_auth.password, 0, strlen(proxy_cert_auth.password));
++		FREE_AND_NULL(proxy_cert_auth.password);
++	}
++	proxy_ssl_cert_password_required = 0;
++
+ 	FREE_AND_NULL(cached_accept_language);
+ }
+ 
+-- 
+gitgitgadget
 
-But most of the Git subcommands (including the "cat-file commit"
-case) peel a tag as needed, so these special cases are minority.
