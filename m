@@ -2,383 +2,119 @@ Return-Path: <SRS0=VPsx=4V=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BCA5C3F2CD
-	for <git@archiver.kernel.org>; Wed,  4 Mar 2020 11:34:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 55685C3F2CD
+	for <git@archiver.kernel.org>; Wed,  4 Mar 2020 11:47:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1CF6220848
-	for <git@archiver.kernel.org>; Wed,  4 Mar 2020 11:34:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2A68321741
+	for <git@archiver.kernel.org>; Wed,  4 Mar 2020 11:47:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ioHTwuOE"
+	dkim=pass (2048-bit key) header.d=dyntopia-com.20150623.gappssmtp.com header.i=@dyntopia-com.20150623.gappssmtp.com header.b="QUZIBKpq"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387921AbgCDLeW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 Mar 2020 06:34:22 -0500
-Received: from mail-pj1-f65.google.com ([209.85.216.65]:40081 "EHLO
-        mail-pj1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387774AbgCDLeV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Mar 2020 06:34:21 -0500
-Received: by mail-pj1-f65.google.com with SMTP id k36so817500pje.5
-        for <git@vger.kernel.org>; Wed, 04 Mar 2020 03:34:20 -0800 (PST)
+        id S1729333AbgCDLr3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Mar 2020 06:47:29 -0500
+Received: from mail-pj1-f66.google.com ([209.85.216.66]:54526 "EHLO
+        mail-pj1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729273AbgCDLr3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Mar 2020 06:47:29 -0500
+Received: by mail-pj1-f66.google.com with SMTP id np16so234375pjb.4
+        for <git@vger.kernel.org>; Wed, 04 Mar 2020 03:47:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=lM1ts5ETOcePpWiL4XDa+kz0IbYiuE07/kACZPWPmoM=;
-        b=ioHTwuOEjyQQ4LAZdnQCQAZeHOSTHYcoxBynsjKi3dUjjSqrKrZkhF5O5KOJiKRw+U
-         hdrgNHoyw45kmRmXKJzJxKalpjYdKCoy6r0Fbm5S/nu006ScPnfiNWvKE4iE2p5sJiJW
-         SVjFYrwQSf3Wo+q96M1rz80HepfBQuwqX9+jGq2oQf20tBlLO9QLcDZywu2BIrKRdP4W
-         gbOZjCEM3o1Pzu+02Qi9YGJG9LbXeCSYaXkxUd8UA7CxyouZ1ZWbb24uerZNaUt5Aku0
-         tV59LHJf9Qc5wFBrEACMHN6cdItfo2mDwdgrE4fKX9QSXXGhP2R/m7/tRxfkTL8vcfTG
-         +JmA==
+        d=dyntopia-com.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:in-reply-to:references:date:message-id
+         :mime-version;
+        bh=WDOJTQK5ck+8r4Zf3ZsVQV/latrxaL9EkVDF982sj4E=;
+        b=QUZIBKpq3nhgHY5PYB0LaCGR6VtaEb64C0Tj0m8ekISplWW4yNLqab3tLyQSujBxkX
+         7Igz/VeRrq4qeeArf8ewqGlQX306v54/kralHZDd4UMOTuO2BTKQdNY+ZeEXtAu/GNWe
+         uAaP4RxnOrzDXsXOjHzBge2fuxR+NBJNlFTpHImHfoS3xLvTgJYBwlbsslnaYstq0R/u
+         QW/A1vnGYK/73FbSawWUxmVvbDPJzp1rAWflgNMyyEWDxOk8FSMhitGr7S00z6widHy9
+         eLisF9VfLGt9oiQe6XggOkGk8lfsxN42PUGDXl4cmosn3qJuP41xh2QOWfrTiZelT3cH
+         zwGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=lM1ts5ETOcePpWiL4XDa+kz0IbYiuE07/kACZPWPmoM=;
-        b=Mjv64MEA8wZp9O9ykglxD5nB0zb3N1TCxw2o6g+tsZYJkq9aCoIRmyDLJskR3PXgSL
-         9ZQSOlTxUAsHYsXqkL1p8KP4Reco30PyUkSD/OOoks7ioiWGn/sjCtiHmgn3qDWVQso5
-         Jy8AhdBrMLdLJF2NqwG7rJnJvA1j6ylA75C6xFcvzWAoyAl9joXxKJ9fj/SfZjgqgGWF
-         oF/rqURrACmrOT6XHbtHG+3KafzUO7Hp1e6iltu4GEUxfFraT9JbYlksxXsrcIhylNdS
-         RDoknlNWn2Wwv24PpOP5byn9Du9PzuHeXeaYvMjSEeKarkmjNP0tV3uIeCBuMIQZ6KHN
-         uI6g==
-X-Gm-Message-State: ANhLgQ2re5Drv8ypipSwWbLhqWnZOZ3ccsC1NXngS4GpCgDa+GykiOr0
-        Lkbwzmr/QtcBmc/sMgTS401ef8hJyma2eg==
-X-Google-Smtp-Source: ADFU+vtdeOU9YPtCIPVIGNSXdTxffNngJwV4HuW57ovzv+3B19amUBwNFFqOWqvrPQBLBCiXZrCwVQ==
-X-Received: by 2002:a17:902:76cc:: with SMTP id j12mr2773246plt.129.1583321659458;
-        Wed, 04 Mar 2020 03:34:19 -0800 (PST)
-Received: from localhost.localdomain ([47.89.83.4])
-        by smtp.gmail.com with ESMTPSA id d77sm15350050pfd.109.2020.03.04.03.34.17
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 04 Mar 2020 03:34:18 -0800 (PST)
-From:   Jiang Xin <worldhello.net@gmail.com>
-X-Google-Original-From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-To:     Git List <git@vger.kernel.org>
-Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 7/7] hook: add document and example for "execute-commands" hook
-Date:   Wed,  4 Mar 2020 19:33:12 +0800
-Message-Id: <20200304113312.34229-8-zhiyou.jx@alibaba-inc.com>
-X-Mailer: git-send-email 2.25.1.362.g51ebf55b93
-In-Reply-To: <20200304113312.34229-1-zhiyou.jx@alibaba-inc.com>
-References: <20200304113312.34229-1-zhiyou.jx@alibaba-inc.com>
+        h=x-gm-message-state:from:to:cc:subject:in-reply-to:references:date
+         :message-id:mime-version;
+        bh=WDOJTQK5ck+8r4Zf3ZsVQV/latrxaL9EkVDF982sj4E=;
+        b=fGSWjfj4c7OFokic5zyWfVCVeKOrnqF4XiP7jNZAeaRJXDT4PMKyePfb7jgg2+KW48
+         mgdebOIPWuozxBFZdjrG/PDwKuIC78Avf2W2GxYPaecd7DVTDCYezpCfME3p/tQhsZPc
+         faE6eBzw46bpvZTVdt9Zor0H/If4e2upn6EKq6OswbqkBupAZGDHeI1JO52Qsteukc46
+         nFVxCRda/8lbvP8hrYP51ANMu3Pwj6E+MOx5upJBB15kNr3qQOXnupyZEMn9fUdVcM/9
+         brpvzurFpH7uNAK2kvfdQaIQzDXO2sXZQLZaB3eOxuB7UYWc/kfGZuHL5aq+N3U8kCxP
+         c/zg==
+X-Gm-Message-State: ANhLgQ09hicGf8O1Dw4QC2HFLiqjj0ELuH1sXUgtSg7bgkiWbh9PAlBq
+        1AHwNwK6KeRoWQ3z/B5ahQVIG59U7uQ=
+X-Google-Smtp-Source: ADFU+vtDUwOd2tC7oMvmi2Y3/iQrR5cqFa4525K1WxGcF0gE6QNPv5gBocDpPe3MnRyUp83zhdVNOw==
+X-Received: by 2002:a17:902:8bc8:: with SMTP id r8mr2681576plo.48.1583322447842;
+        Wed, 04 Mar 2020 03:47:27 -0800 (PST)
+Received: from localhost ([203.144.74.196])
+        by smtp.gmail.com with ESMTPSA id d22sm2658843pja.14.2020.03.04.03.47.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Mar 2020 03:47:27 -0800 (PST)
+From:   Hans Jerry Illikainen <hji@dyntopia.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
+        Git List Mailing <git@vger.kernel.org>
+Subject: Re: Signed commit regression?
+In-Reply-To: <xmqqlfomefj2.fsf@gitster-ct.c.googlers.com>
+References: <CAHk-=wgg8ctNmHbKjy-yYnz07L3m8=1et_q2FJHKM9mZKXzGAA@mail.gmail.com> <CAHk-=whg3uip_N1EjLEzaZNMvS8v+5u2GGueE9Wm2xnY87D+-A@mail.gmail.com> <xmqqpndyeim1.fsf@gitster-ct.c.googlers.com> <xmqqlfomefj2.fsf@gitster-ct.c.googlers.com>
+Date:   Wed, 04 Mar 2020 11:33:55 +0000
+Message-ID: <87zhcwxskc.hji@dyntopia.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
----
- Documentation/githooks.txt               |  43 ++++++++
- t/t5411-execute-commands-hook.sh         |  98 +++++++++++++++++
- templates/hooks--execute-commands.sample | 131 +++++++++++++++++++++++
- 3 files changed, 272 insertions(+)
- create mode 100755 templates/hooks--execute-commands.sample
+On Fri, Feb 28 2020, Junio C Hamano wrote:
+> I'd expect that there may be another round of attempt to update the
+> GPG interface.  Let's make sure we won't lose info given to the
+> end-users while doing so.
 
-diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index 3dccab5375..6c21ab6db2 100644
---- a/Documentation/githooks.txt
-+++ b/Documentation/githooks.txt
-@@ -58,6 +58,49 @@ the message file.
- The default 'applypatch-msg' hook, when enabled, runs the
- 'commit-msg' hook, if the latter is enabled.
- 
-+execute-commands--pre-receive
-+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-+This hook is invoked by linkgit:git-receive-pack[1] when it reacts to
-+special `git push` command.  Just before starting to execute the
-+external 'execute-commands' hook to make changes to the repository,
-+the 'execute-commands--pre-receive' hook is invoked.  This hook has
-+the same functionality as 'pre-receive' hook, while it only acts on
-+special commands which 'git-push' sends to 'git-receive-pack'.
-+The refnames of these spacial commands have special prefix (such as
-+"refs/for/") which matches what the `receive.executeCommandsHookRefs`
-+configuration variable defines.
-+
-+If this hook does not exist, will try to find the 'execute-commands'
-+hook, and run `execute-command --pre-receive` command to do some
-+checks.  Its exit status determines the success or failure of the
-+update.  If the hook exits with non-zero status, won't execute any of
-+the commands, no metter calling the internal `execute_commands`
-+function or calling the external "execute-commands" hook.
-+
-+This hook executes once for the receive operation, and gets the
-+information from its standard input.
-+See <<pre-receive,'pre-receive'>> for details.
-+
-+execute-commands
-+~~~~~~~~~~~~~~~~
-+This hook is invoked by linkgit:git-receive-pack[1] when it reacts to
-+special `git push` command.  According to refnames of the commands which
-+`git push` sends to 'git-receive-pack', the commands will be devided
-+into two groups by matching what the `receive.executeCommandsHookRefs`
-+configuration variable defines.  One group of the commands will execute
-+the internal `execute_commands` function to update the corresponding
-+refnames, and the other group of commands which have matching refnames
-+will execute this external 'execute-commands' hook to create pull
-+requests, etc.
-+
-+Its exit status only determines the success or failure of the group of
-+commands with special refnames, unless atomic push is in use.
-+
-+This hook executes once if there are any special commands with special
-+refnames.  There is no argument taken by this hook, and the push options
-+(if any) and command(s) will be fed to this book by its standard input.
-+See the <<pre-receive,'pre-receive'>> hook for the format of the input.
-+
- pre-applypatch
- ~~~~~~~~~~~~~~
- 
-diff --git a/t/t5411-execute-commands-hook.sh b/t/t5411-execute-commands-hook.sh
-index c8ee699773..6dd1560f9d 100755
---- a/t/t5411-execute-commands-hook.sh
-+++ b/t/t5411-execute-commands-hook.sh
-@@ -597,4 +597,102 @@ test_expect_success "push and show environments" '
- 	test_cmp expect actual
- '
- 
-+test_expect_success "execute-commands.sample: new execute-commands hook from templates/execute-commands.sample" '
-+	mv $bare/hooks/pre-receive $bare/hooks/pre-receive.fail &&
-+	mv $bare/hooks/pre-receive.ok $bare/hooks/pre-receive &&
-+	mv $bare/hooks/post-receive $bare/hooks/post-receive.env &&
-+	mv $bare/hooks/post-receive.ok $bare/hooks/post-receive &&
-+	mv $bare/hooks/execute-commands $bare/hooks/execute-commands.env &&
-+	cp ../../templates/hooks--execute-commands.sample $bare/hooks/execute-commands &&
-+	chmod a+x $bare/hooks/execute-commands
-+'
-+
-+test_expect_success "execute-commands.sample: show push result" '
-+	(
-+		cd work &&
-+		git push origin \
-+			HEAD:refs/for/a/b/c/my/topic
-+	) >out 2>&1 &&
-+	grep "^remote:" out | sed -e "s/  *\$//g" >actual &&
-+	cat >expect <<-EOF &&
-+	remote: 102939797ab91a4f201d131418d2c9d919dcdd2c
-+	remote: [execute-commands] *******************************************************
-+	remote: [execute-commands] * Pull request #12345678901 created/updated           *
-+	remote: [execute-commands] * URL: https://... ...                                *
-+	remote: [execute-commands] *******************************************************
-+	remote: execute: post-receive hook
-+	remote: >> old: 0000000000000000000000000000000000000000, new: ce858e653cdbf70f9955a39d73a44219e4b92e9e, ref: refs/for/a/b/c/my/topic.
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success "execute-commands.sample: show debug info" '
-+	(
-+		cd work &&
-+		git push -o debug=1 -o reviewers=user1,user2 \
-+			origin \
-+			HEAD:refs/for/a/b/c/my/topic
-+	) >out 2>&1 &&
-+	grep "^remote:" out | sed -e "s/  *\$//g" >actual &&
-+	cat >expect <<-EOF &&
-+	remote: [DEBUG] [execute-commands] push-option: AGIT_DEBUG=1
-+	remote: [DEBUG] [execute-commands] push-option: AGIT_REVIEWERS=user1,user2
-+	remote: [DEBUG] [execute-commands] command from stdin: 0000000000000000000000000000000000000000 ce858e653cdbf70f9955a39d73a44219e4b92e9e refs/for/a/b/c/my/topic
-+	remote: 102939797ab91a4f201d131418d2c9d919dcdd2c
-+	remote: [DEBUG] [execute-commands: pre-receive] check permissions...
-+	remote: [DEBUG] [execute-commands] push-option: AGIT_DEBUG=1
-+	remote: [DEBUG] [execute-commands] push-option: AGIT_REVIEWERS=user1,user2
-+	remote: [DEBUG] [execute-commands] command from stdin: 0000000000000000000000000000000000000000 ce858e653cdbf70f9955a39d73a44219e4b92e9e refs/for/a/b/c/my/topic
-+	remote: [DEBUG] [execute-commands] call API (AGIT_PR_TARGET=a/b/c, AGIT_PR_TOPIC=)...
-+	remote: [DEBUG] [execute-commands] parse API result, and get AGIT_PR_ID, etc.
-+	remote: [execute-commands] *******************************************************
-+	remote: [execute-commands] * Pull request #12345678901 created/updated           *
-+	remote: [execute-commands] * URL: https://... ...                                *
-+	remote: [execute-commands] *******************************************************
-+	remote: [DEBUG] [execute-commands] output kv pairs to stdout for git to parse.
-+	remote: execute: post-receive hook
-+	remote: >> old: 0000000000000000000000000000000000000000, new: ce858e653cdbf70f9955a39d73a44219e4b92e9e, ref: refs/for/a/b/c/my/topic.
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success "execute-commands.sample: fail to push refs/for/maint" '
-+	(
-+		cd work &&
-+		test_must_fail git push -o reviewers=user1,user2 \
-+			origin \
-+			HEAD:refs/for/maint/my/topic
-+	) >out 2>&1 &&
-+	grep "^remote:" out | sed -e "s/  *\$//g" >actual &&
-+	cat >expect <<-EOF &&
-+	remote: 102939797ab91a4f201d131418d2c9d919dcdd2c
-+	remote: [execute-commands: pre-receive] send pull request to maint branch is not allowed
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success "execute-commands.sample: fail to push non-exist branch" '
-+	(
-+		cd work &&
-+		test_must_fail git push -o reviewers=user1,user2 \
-+			origin \
-+			HEAD:refs/for/a/b/x/my/topic
-+	) >out 2>&1 &&
-+	grep "^remote:" out | sed -e "s/  *\$//g" >actual &&
-+	cat >expect <<-EOF &&
-+	remote: [execute-commands] cannot find target branch from ref: refs/for/a/b/x/my/topic
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success "show refs of the repository using git-show-ref" '
-+	git -C $bare show-ref >actual &&
-+	cat >expect <<-EOF &&
-+	102939797ab91a4f201d131418d2c9d919dcdd2c refs/heads/a/b/c
-+	102939797ab91a4f201d131418d2c9d919dcdd2c refs/heads/maint
-+	102939797ab91a4f201d131418d2c9d919dcdd2c refs/heads/master
-+	EOF
-+	test_cmp expect actual
-+'
-+
- test_done
-diff --git a/templates/hooks--execute-commands.sample b/templates/hooks--execute-commands.sample
-new file mode 100755
-index 0000000000..d061984bca
---- /dev/null
-+++ b/templates/hooks--execute-commands.sample
-@@ -0,0 +1,131 @@
-+#!/bin/sh
-+#
-+# This is an  example hook script, DO NOT use it on production service.
-+
-+debug() {
-+	case "$AGIT_DEBUG" in
-+	"yes" | "true" | "1")
-+		;;
-+	*)
-+		return
-+	esac
-+
-+	echo >&2 "[DEBUG] $@"
-+}
-+
-+# Parse push options
-+if test -n "$GIT_PUSH_OPTION_COUNT"
-+then
-+	i=0
-+	while test "$i" -lt "$GIT_PUSH_OPTION_COUNT"
-+	do
-+		eval "value=\$GIT_PUSH_OPTION_$i"
-+		i=$((i + 1))
-+
-+		k=$(echo ${value%=*} | tr [a-z] [A-Z])
-+		v=${value#*=}
-+		if test -n "$v" && test -n "$k"
-+		then
-+			k="AGIT_$k"
-+		else
-+			continue
-+		fi
-+		eval "$k=$v"
-+		debug "[execute-commands] push-option: $k=$v"
-+	done
-+fi
-+
-+# Read push commands.
-+count=0
-+while read old new refname
-+do
-+	debug "[execute-commands] command from stdin: $old $new $refname"
-+	count=$(( count + 1 ))
-+	# Only one special refname is allowed for each push
-+	if test $count -gt 1
-+	then
-+		echo >&2 "[execute-commands]: cannot handle more than one push commands"
-+		exit 1
-+	fi
-+
-+	# Parse refname, and set envrionment
-+	remains=
-+	if test "${refname#refs/for/}" != "$refname"
-+	then
-+		AGIT_PR_IS_DRAFT=false
-+		remains=${refname#refs/for/}
-+	elif test "${refname#refs/drafts/}" != "$refname"
-+	then
-+		AGIT_PR_IS_DRAFT=true
-+		remains=${refname#refs/drafts/}
-+	else
-+		echo >&2 "[execute-commands] unknown refname: $refname"
-+		exit 1
-+	fi
-+
-+	ref=
-+	found_ref=
-+	for i in $(echo $remains | tr "/" "\n")
-+	do
-+		if test -z "$ref"
-+		then
-+			ref=$i
-+		else
-+			ref=$ref/$i
-+		fi
-+		if git rev-parse --verify $ref -- 2>/dev/null
-+		then
-+			found_ref=yes
-+			break
-+		fi
-+	done
-+	if test -z "$found_ref"
-+	then
-+		echo >&2 "[execute-commands] cannot find target branch from ref: $refname"
-+		exit 1
-+	fi
-+	AGIT_PR_TARGET=$ref
-+	AGIT_PR_SOURCE=${remains#$ref/}
-+done
-+
-+if test -z "$AGIT_PR_TARGET"
-+then
-+	echo >&2 "[execute-commands] fail to parse refname, no target found"
-+	exit 1
-+fi
-+
-+# pre-receive mode, used to check permissions.
-+if test "$1" = "--pre-receive"
-+then
-+	debug "[execute-commands: pre-receive] check permissions..."
-+	if test "$AGIT_PR_TARGET" = "maint"
-+	then
-+		echo >&2 "[execute-commands: pre-receive] send pull request to maint branch is not allowed"
-+		exit 1
-+	fi
-+	exit 0
-+fi
-+
-+# Call API to generate code review.
-+debug "[execute-commands] call API (AGIT_PR_TARGET=$AGIT_PR_TARGET, AGIT_PR_TOPIC=$AGIT_PR_TOPIC)..."
-+
-+# Parse result of API.
-+debug "[execute-commands] parse API result, and get AGIT_PR_ID, etc."
-+AGIT_PR_ID="12345678901"
-+AGIT_PR_LOCAL_ID="23"
-+
-+# Show message.
-+if test -n "$AGIT_PR_ID"
-+then
-+	echo >&2 "[execute-commands] *******************************************************"
-+	echo >&2 "[execute-commands] * Pull request #$AGIT_PR_ID created/updated           *"
-+	echo >&2 "[execute-commands] * URL: https://... ...                                *"
-+	echo >&2 "[execute-commands] *******************************************************"
-+fi
-+
-+# Show envs to stdout, and will be exported as envs for "post-receive" hook.
-+debug "[execute-commands] output kv pairs to stdout for git to parse."
-+echo "AGIT_PR_ID=$AGIT_PR_ID"
-+echo "AGIT_PR_LOCAL_ID=$AGIT_PR_LOCAL_ID"
-+
-+exit 0
+The regression was introduced by this botched chunk in 72b006f4bf:
+
+@@ -521,18 +522,19 @@ static int show_one_mergetag(struct commit *commit,
+ 	gpg_message_offset = verify_message.len;
+
+ 	payload_size = parse_signature(extra->value, extra->len);
+ 	status = -1;
+ 	if (extra->len > payload_size) {
+ 		/* could have a good signature */
+-		if (!verify_signed_buffer(extra->value, payload_size,
+-					  extra->value + payload_size,
+-					  extra->len - payload_size,
+-					  &verify_message, NULL))
++		if (!check_signature(extra->value, payload_size,
++				     extra->value + payload_size,
++				     extra->len - payload_size, &sigc)) {
++			strbuf_addstr(&verify_message, sigc.gpg_output);
++			signature_check_clear(&sigc);
+ 			status = 0; /* good */
+-		else if (verify_message.len <= gpg_message_offset)
++		} else if (verify_message.len <= gpg_message_offset)
+ 			strbuf_addstr(&verify_message, "No signature\n");
+ 		/* otherwise we couldn't verify, which is shown as bad */
+ 	}
+
+There are two ridiculous bugs in my original patch:
+
+1. The output from GPG is only added to `verify_message' if a signature
+   verifies successfully.
+
+2. On verification failure, the "No signature" message is always added
+   to `verify_message'.  This is because, again, no output from GPG is
+   added to `verify_message' on failure, so its length will always equal
+   `gpg_message_offset' (see the initial assignment) when
+   `check_signature()' returns non-zero, sigh...
+
+Not sure of the proper way of fixing a reverted commit, but I'll send v1
+based on pu that includes regression tests.
+
+I'm sorry for my fuckup and the headache it caused!
+
 -- 
-2.25.1.362.g51ebf55b93
-
+hji
