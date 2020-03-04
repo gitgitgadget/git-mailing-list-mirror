@@ -2,152 +2,101 @@ Return-Path: <SRS0=VPsx=4V=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F18D3C3F2D1
-	for <git@archiver.kernel.org>; Wed,  4 Mar 2020 20:39:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 14A69C3F2CE
+	for <git@archiver.kernel.org>; Wed,  4 Mar 2020 20:41:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 97D3F21775
-	for <git@archiver.kernel.org>; Wed,  4 Mar 2020 20:39:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D05C1207FD
+	for <git@archiver.kernel.org>; Wed,  4 Mar 2020 20:41:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="eG0Ua8KX"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="hx5EiTIM"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729471AbgCDUj4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 Mar 2020 15:39:56 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52547 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726440AbgCDUj4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Mar 2020 15:39:56 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 022204B429;
-        Wed,  4 Mar 2020 15:39:53 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ALLMNY/3YXno28Z8NLyAjPWbP44=; b=eG0Ua8
-        KX/icxIp1QPyJRt8PGi6+J23XN7cvGXy2bUu7dt6J0UeD4cUViQRvTCtKZyswTCc
-        zxseFLkjh+itP9LCLyFfJvuSxy9c7dGekHtKvsr9sRzPGvPc+Tu4GBi5B7i99JEs
-        u0tDWUjIMKBZBmSM0ZNCt6D5D1OePVquQecWA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=mbVH3r+P2lHcSznyoWC7qmsqkG3sxzXH
-        6ZKG+fImcyiftWRzIlyoOD0dnv+r8AVQ+zVRAuNi6EmJeq0s2UYl1kGxIr/aoCUC
-        i7BHhsBmzm7v1LbAyy3JeKAdGRTBtmg9w0bqtvwKUEQrFlSYgLLBBX1kYAoP0Pd4
-        92YQXl6T8CY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id EDB694B428;
-        Wed,  4 Mar 2020 15:39:52 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5BFA44B427;
-        Wed,  4 Mar 2020 15:39:52 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jiang Xin <worldhello.net@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: Re: [PATCH 0/7] New execute-commands hook for centralized workflow
-References: <20200304113312.34229-1-zhiyou.jx@alibaba-inc.com>
-Date:   Wed, 04 Mar 2020 12:39:51 -0800
-In-Reply-To: <20200304113312.34229-1-zhiyou.jx@alibaba-inc.com> (Jiang Xin's
-        message of "Wed, 4 Mar 2020 19:33:05 +0800")
-Message-ID: <xmqqv9nj4zxk.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S2388026AbgCDUlH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Mar 2020 15:41:07 -0500
+Received: from mout.gmx.net ([212.227.15.15]:50855 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2387398AbgCDUlG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Mar 2020 15:41:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1583354460;
+        bh=Kuz450OgyLMHtawFAC7VMZWi/9zEKW8JMUmzBL9q2N8=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=hx5EiTIMW8cibk0J5K9ESodcYPOhlUhlip7acYCS48Sff/590UG8Iqcras2fia9aN
+         FtiIpB02df1ikrGtCupoZRyEzqLlim2PL9kwC0eeLE3mIGYbjquxqZdFJWDxyi08pj
+         EeNDx0fa0pkidaLfEUwr4gGMkABO5/op2cTppqK0=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from MININT-QA14EDB.fritz.box ([89.1.213.189]) by mail.gmx.com
+ (mrgmx005 [212.227.17.190]) with ESMTPSA (Nemesis) id
+ 1MrQEn-1jgTTH2zzD-00oURy; Wed, 04 Mar 2020 21:41:00 +0100
+Date:   Wed, 4 Mar 2020 21:40:54 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: hv/receive-denycurrent-everywhere, was Re: What's cooking in git.git
+ (Mar 2020, #01; Tue, 3)
+In-Reply-To: <xmqqimjl6pvn.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2003042139530.46@tvgsbejvaqbjf.bet>
+References: <xmqqimjl6pvn.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4CA04936-5E58-11EA-A13C-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:UCzhC5tM0lOfwi1Sni3HjyobXEmwPPL7ktvumYy9AW8RRnK68ck
+ EAkBkPJKtVVbBFTQVC4JX9Wam1NuFeCRG9OB/UkH+1jgFqtiWK4uRbwgwKIRG5WMutH+lYA
+ WZcde3xn8q8zCKL6ebr8qt/TozxN35DAcYb12b7WXZ8DMMAj2Eg99FGDch71yw8qzgqbiQU
+ KIk8JFoaC+VlcygYK8j3Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:7wPkBG9Pw30=:PZMBUOg7HWR8PhzRR5MFRh
+ k3bHXKQuFKqapwjBhheklB6FG9cGlHxUMJxYCAj/Vp09z/SANmzrqEFmddmqRdq3v+FkjZ169
+ CUH9bFJ3/hPXcNDurU2/kLH3gUeb6zvev3tNiKpla/7megJey7XLlEimStqsnzhR8pM2sY8+I
+ 487jmOrSCspgMIwLXq0HBQ0Alopkn6QdYY6iI76jnVttGNC+t1OvinU9gtD9kp/f+BQ74WyRr
+ OhKhwP7SvihJCypqZIttLgVRNWC4Sa2M0mHyQ0DPfmOywwQc/6MjbQsz7QxqfAeuD9ScUWvq1
+ 01rKB/+3K2S55gwOjmi0cyqJuiSEmpkrZaX76tuiINHKKXbYOzNKbAMFwSbQwIgoDYuLLyLZY
+ 7mHFMkxgff3zoksflyW22UmxLozLVUZWn6+CBQJGEkikb//O2Lu2OkeS4tVSiPV7w+7l8ip3x
+ IaIiyTPhY4tUrFlZZO6H8zjUk0Gd4Udu7jdFfAqyoaAtHsMccwbnrOz9Jmi3hB/gIIRXqmuKm
+ lFw5BBmddv8L2TxSjsKDnzV32G3L9mfR6blfe1Cc2Z6iKprL467vRgmCXyqwyol/Mze7x1FuJ
+ IU+uDCUcNlDKoKVnWwVBANGfU10bdC2yBERGlOAyiS3s+zUnhYMz6Yq6X0jzsA+f4C1EuoSks
+ opB2/9KdowuuBG+Iu3/2Opra0RLDI2zfQncrP1C7tSCXJCicHxDS18inROGx+YWO/vefQdLC4
+ vRgNS3elXzT/BqU+dDQIkMgkV1JzxtqAOcauX6NYBi9Nj8WkZf5lh+Rcwd1FbMSFTSXGKMuUP
+ j+ti5ySF5XN64SNnI9HgoEoE/fSkhBLs4+dFZ3IDGDFBtkBxd0kDRe31qG6o5jPzBteLQX8Rc
+ atF1CgKG/hqr63SeLYldyUS9ezTAaPAc+hx5ruJ4lrdUZSu5U27vpjC7GgPitt2Eno7HqLAo6
+ tqnkv0ssjpEtNptMvdQaSZlyiTCDY2SpsD9RTDyQDLV+7lOtZtCxWmfPmsXNkwlLCdaKqcxno
+ gGuqlnpDIVl79g93E856HkIXhX2oC4+AZnwGx+Lby4kAL0WVw4izhJaf3g1Y3SOd2ziQPlHQ/
+ IfKGSnw8cCHU+ism8CcPxQoinf5TWLV2SVXdc0qQunpiAsJj82MJf+Wy1XA+SB+L0l4xz7Htt
+ ayIoQ6qRoYaDelw+bKHKGEMISf1Xz5tsBffV/T6O5x8ltZ4SXZwwxzNPPr+QEEl3zE0gvmWbL
+ 4OuVY2zvnLEjInBAa
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jiang Xin <worldhello.net@gmail.com> writes:
+Hi Junio,
 
-> It would be more convenient to work in a centralized workflow like what
-> Gerrit provided for some cases.  For example, a read-only user may run
-> the following `git push` command to push commits to a special reference
-> to create a code review, instead of updating a reference directly.
+On Tue, 3 Mar 2020, Junio C Hamano wrote:
+
+> * hv/receive-denycurrent-everywhere (2020-02-24) 3 commits
+>   (merged to 'next' on 2020-02-25 at 84e35c4980)
+>  + receive.denyCurrentBranch: respect all worktrees
+>  + t5509: use a bare repository for test push target
+>  + get_main_worktree(): allow it to be called in the Git directory
 >
->     git push -o reviewers=user1,user2 \
->         -o oldoid=89c082363ac950d224a7259bfba3ccfbf4c560c4 \
->         origin \
->         HEAD:refs/for/<branch-name>/<session>
+>  "git push" should stop from updating a branch that is checked out
+>  when receive.denyCurrentBranch configuration is set, but it failed
+>  to pay attention to checkouts in secondary worktrees.  This has
+>  been corrected.
 >
-> The `<branch-name>` in the above example can be as simple as "master",
-> or a more complicated branch name like "foo/bar".  The `<session>` in
-> the above example command can be the local branch name of the clien-
-> side, such as "my/topic".
+>  Will merge to 'master'.
 >
-> To support this kind of workflow in CGit, add a filter and a new
-> handler.  The filter will check the prefix of the reference name, and
-> if the command has a special reference name, the filter will add a
-> specific tag (`exec_by_hook`) to the command.  Commands with this
-> specific tag will be executed by a new handler (an external hook named
-> "execute-commands") instead of the internal `execute_commands` function.
 
-I do not claim to be great at naming, but you are worse ;-)
+Could we make sure that
+https://lore.kernel.org/git/pull.570.git.1583305200143.gitgitgadget@gmail.=
+com
+is also integrated into this before it advances? It only adds a regression
+test case (which according to the PR build passes just fine).
 
- - Any hook is about executing command(s), so "execute-commands"
-   hook does not give any information to users.
-
- - IIUC, this is only about what happens when accepting a push and
-   is not called at any other time.  Naming your hook without
-   "receive" anywhere in its name would mean other people won't be
-   able to add hook that "executes" commands upon cues other than
-   receiving a push.
-
-I can guess why you chose that name, because I know there is a
-function called execute_commands() in "git receive-pack", but that
-is not somethhing you can expect your end users, who are not
-intimate to our codebase, to know.
-
-> We can use the external "execute-commands" hook to create pull requests
-> or send emails.
-
-You can create pull requests or send emails out of the post-receive
-hook, so that is not a convincing justification why we want a new
-hook.
-
-Now, I understand that Gerrit-style "notice a push to for/<target>,
-take over the whole operation that happens after receiving the pack
-data and do something entirely different, such as attempting to run
-a merge with refs/heads/<target> and update refs/heads/<target>
-instead, or fail the push if automerge fails" is not easy to arrange
-within the current "pre-receive" + "post-receive" framework (by the
-way, we should start considering to deprecate "update", and
-"post-update" hooks as these "*-receive" hooks were added to replace
-them, perhaps we should leave a #leftoverbits mark here).  And I
-think it is reasonable to add a new hook that takes over the whole
-flow in "git receive-pack" to do so.
-
-I just do not think "the execute-commands hook" is a good name for
-it.  Perhaps "divert-receive" (as it diverts large portion of what
-receive does) or something?  I dunno.
-
-How do Gerrit folks deal with the "we pushed to the server, so let's
-pretend to have turned around and fetched from the same server
-immediately after doing so" client-side hack, by the way?  
-
-A vanilla "git push" on the client side does not know a push to
-refs/for/master would result in an update to refs/heads/master on
-the server side, and it would not know the result of the munging
-done on the server side (whether it is to rebase what is received on
-top of 'master' or to merge it to 'master') anyway, the
-remote-tracking branch refs/remotes/origin/master on the client side
-would be left stale.  If we wanted to help them pretend to have
-fetched immediately after, I think we need to extend the protocol.
-Right now, after accepting "git push", the server end will say, for
-each proposed update for a ref, if the push updated successfully or
-not, but to support the "push to for/<target>, get heads/<target>
-updated" interaction, the reporting of the result (done in the
-report() function in builtin/receive-pack.c) needs to be able to say
-what ref (it may be a ref that "git push" did not think it pushed
-to) got updated to what value (it may be an object the client does
-not yet have---and we may have to actually turn around and fetch
-from them internally if we want to keep the illusion).
-
-
+Thanks,
+Dscho
