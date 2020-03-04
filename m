@@ -2,222 +2,86 @@ Return-Path: <SRS0=VPsx=4V=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E8EEC3F2D1
-	for <git@archiver.kernel.org>; Wed,  4 Mar 2020 12:38:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DF0EEC3F2CD
+	for <git@archiver.kernel.org>; Wed,  4 Mar 2020 12:43:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D28C52166E
-	for <git@archiver.kernel.org>; Wed,  4 Mar 2020 12:38:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 59E5B20848
+	for <git@archiver.kernel.org>; Wed,  4 Mar 2020 12:43:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g7sYRzYD"
+	dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b="PXV9kvX6";
+	dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b="PXV9kvX6"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729256AbgCDMih (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 Mar 2020 07:38:37 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:54590 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726440AbgCDMih (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Mar 2020 07:38:37 -0500
-Received: by mail-wm1-f65.google.com with SMTP id i9so1890265wml.4
-        for <git@vger.kernel.org>; Wed, 04 Mar 2020 04:38:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=tiYwo/CiXH7KPHDOgmALLtVgUOSxa+5saMe3rg2HtjA=;
-        b=g7sYRzYDfXok+0C84CfkgPUZ8RB8kUnlhT3meHcEzzJumijAy1JZovvEYZ/HJgsc1+
-         GGWmrHDOsBG3KG+AdXc6RRb1vAKRgtvN3uZSppj6QrQaqDwEpRHpQG1Z/cX0oibLcTPd
-         wwWuUhySSk7i7etdr1FdFyg/sLNaOm7dW7nOlFfFnbMGmt+GMb4ZJAL+joAYko70Sdfh
-         rYDtVftoQtJArOPQnqbUEl3EsHyqXEchyLfZoy20K4bHu5/M6SWRP9rGf+ZJv/FYKxcq
-         X0sFGvQVrTeA6bfGtrSDw4/kSZSkciPadj0z49HA40E50qhHVYTd5M3Zb+DtA1GHfLr1
-         kFkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=tiYwo/CiXH7KPHDOgmALLtVgUOSxa+5saMe3rg2HtjA=;
-        b=t0UXqh+UvQh/XT85mSuYYMUp3dX6Tx4zsE/GTe0Jh/yIXCY5M6eQJKuJWt/xOZWUP9
-         bkR/npmf+vxOH21EsDFDc1Di7v1PEEmQ2pYb14Lc1JKHh/hfcO4Grpn410/GoPiq9qf5
-         uroN/ocCNcoGJK0afNaZ2+l2peIr/ff5JVwat5w9tPjneZ9dI7sTnRhQ+cRbxZu/K/XD
-         pat/x+w4LjrTpZaYkjCc48py2oLgnYWaQO2LdO9ZWETsx89w99BAUXIAXBgZ8J79R5mk
-         19X8fSOKNJ23bI4zhdjkhWAOSbSoPTq5iEQqGtZAfVwP639NNwQXQgazujKIPBjVKO3a
-         wKEw==
-X-Gm-Message-State: ANhLgQ0S9PuCyReMeZ2I6lhrGkqtrHMpmENSVXO12DDhidhQxhFVLzHf
-        z/IFAJm6AITD0+HWR2iHGiTwwwIX
-X-Google-Smtp-Source: ADFU+vuznr9N1iMMxShciM3DFNozDqBwo2hbK+ww1X59q2ib2M9VGM6QkhfovWdgcrJloIbMVf268g==
-X-Received: by 2002:a7b:cb46:: with SMTP id v6mr3489497wmj.0.1583325515461;
-        Wed, 04 Mar 2020 04:38:35 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m25sm3821846wml.35.2020.03.04.04.38.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Mar 2020 04:38:35 -0800 (PST)
-Message-Id: <pull.719.v2.git.git.1583325514607.gitgitgadget@gmail.com>
-In-Reply-To: <pull.719.git.git.1583220197856.gitgitgadget@gmail.com>
-References: <pull.719.git.git.1583220197856.gitgitgadget@gmail.com>
-From:   "Takuya N via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 04 Mar 2020 12:38:34 +0000
-Subject: [PATCH v2] doc: use 'rev' instead of 'commit' for merge-base
- arguments
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S2388023AbgCDMnu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Mar 2020 07:43:50 -0500
+Received: from fallback21.m.smailru.net ([94.100.176.131]:56158 "EHLO
+        fallback21.mail.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728953AbgCDMnu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Mar 2020 07:43:50 -0500
+X-Greylist: delayed 4036 seconds by postgrey-1.27 at vger.kernel.org; Wed, 04 Mar 2020 07:43:49 EST
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru; s=mailru;
+        h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=YX2g/xOVnIOg4qrzoohH4COuqm/mrGNemxQnfQ93nqE=;
+        b=PXV9kvX6Ilidy0k+xnKUeRoyEhMsCSaxDDCFYG29vhE+83dgyV1lSP9Yd8+3LxiqHvxxvBnLpA72q0e/d2FT0osv6B79dJ04DCJYNGTVHBRFyXZYA4R8ir5Vvz0QP+ubIJJDHkIRrGRios/CP3l/OI/AaD21sCEv5u0B6DwGuOk=;
+Received: from [10.161.64.42] (port=44234 helo=smtp34.i.mail.ru)
+        by fallback21.m.smailru.net with esmtp (envelope-from <kostix@bswap.ru>)
+        id 1j9SKE-0000EG-LC
+        for git@vger.kernel.org; Wed, 04 Mar 2020 14:36:30 +0300
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru; s=mailru;
+        h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=YX2g/xOVnIOg4qrzoohH4COuqm/mrGNemxQnfQ93nqE=;
+        b=PXV9kvX6Ilidy0k+xnKUeRoyEhMsCSaxDDCFYG29vhE+83dgyV1lSP9Yd8+3LxiqHvxxvBnLpA72q0e/d2FT0osv6B79dJ04DCJYNGTVHBRFyXZYA4R8ir5Vvz0QP+ubIJJDHkIRrGRios/CP3l/OI/AaD21sCEv5u0B6DwGuOk=;
+Received: by smtp34.i.mail.ru with esmtpa (envelope-from <kostix@bswap.ru>)
+        id 1j9SKC-0002Bz-Tf; Wed, 04 Mar 2020 14:36:29 +0300
+Date:   Wed, 4 Mar 2020 14:36:28 +0300
+From:   Konstantin Khomoutov <kostix@bswap.ru>
+To:     =?utf-8?B?0KHQtdGA0LPQtdC5INCh0LXRgNCz0LXQtdCy?= 
+        <nevercu@yandex.ru>
+Cc:     git@vger.kernel.org
+Subject: Re: Question git
+Message-ID: <20200304113628.fwuw6jigur7pbway@carbon>
+References: <3982961582024793@vla1-a6eaa355d163.qloud-c.yandex.net>
+ <CABUeae8i-8VTw85XUaC_Lef_HFg5vuH6OkTsEjyu4iEZc7kuGQ@mail.gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Takuya N <takninnovationresearch@gmail.com>,
-        Takuya Noguchi <takninnovationresearch@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CABUeae8i-8VTw85XUaC_Lef_HFg5vuH6OkTsEjyu4iEZc7kuGQ@mail.gmail.com>
+User-Agent: NeoMutt/20180716
+X-7564579A: 646B95376F6C166E
+X-77F55803: 0A44E481635329DB0E1AA8A03B392317179C3E6C7981FFF2F94659E4BEF79E71DAF87D557D639D6E556F68EC540A4532C99CFDF78B9C49C50E4BF8CE38220F0C9042720C5EC0CC90A5740B32E62B4674
+X-7FA49CB5: 0D63561A33F958A5E50BEB99594D90A1CDF4985F3DFB17E019126C6223208CE48941B15DA834481FA18204E546F3947CEDCF5861DED71B2F389733CBF5DBD5E9C8A9BA7A39EFB7666BA297DBC24807EA117882F44604297287769387670735209ECD01F8117BC8BEA471835C12D1D977C4224003CC8364767815B9869FA544D8D32BA5DBAC0009BE9E8FC8737B5C224937E7452263E0972376E601842F6C81A12EF20D2F80756B5F012D6517FE479FCD76E601842F6C81A127C277FBC8AE2E8BA1EC3898FE79602D3AA81AA40904B5D99449624AB7ADAF37593B4A69AE7113BD725E5C173C3A84C30A3B31C63366F72535872C767BF85DA2F004C906525384306FED454B719173D6462275124DF8B9C9DE2850DD75B2526BE5BFE6E7EFDEDCD789D4C264860C145E
+X-D57D3AED: Y8kq8+OzVoxvgW9Op3aR8Fxwo7H2ZNxGP5qz8aO2mjTJzjHGC4ogvVuzB3zfVUBtENeZ6b5av1fnCBE34JUDkaJinJwwHx5ysVv9/YfT9uc/r0hGya2Jbw==
+X-Mailru-Internal-Actual: A:0.9435830591144
+X-Mailru-Sender: 641179478317D3F0421D0BEF39CFD13874DDF296FBAEE7120E4BF8CE38220F0C8F506C1E8DC51A2113BA5AC085B0DF3CFD8FF98A8691EE7BAAB64A3C2C77197FCA12F3F80FA6A2FFE7D80B0F635B57EC67EA787935ED9F1B
+X-Mras: Ok
+X-7564579A: EEAE043A70213CC8
+X-77F55803: 6AF0DA0BABFA9FDB7F9F52485CB584D7271FD7DF62800FDC07FF192248B0EB3E1452D4F2AE4FCC1EB95DE2AB90B3ADCC5EF0B7F5504288BC
+X-7FA49CB5: 0D63561A33F958A5D78194762B02E6E37819290C0B9C717097045A71E5D5FBA08941B15DA834481FA18204E546F3947CEDCF5861DED71B2F389733CBF5DBD5E9C8A9BA7A39EFB7666BA297DBC24807EA117882F44604297287769387670735209ECD01F8117BC8BEA471835C12D1D977C4224003CC8364767815B9869FA544D8D32BA5DBAC0009BE9E8FC8737B5C224937E7452263E0972376E601842F6C81A12EF20D2F80756B5F012D6517FE479FCD76E601842F6C81A127C277FBC8AE2E8B8FA608DA6CD568A33AA81AA40904B5D99449624AB7ADAF3726B9191E2D567F0E725E5C173C3A84C30A3B31C63366F72535872C767BF85DA2F004C906525384306FED454B719173D6462275124DF8B9C9DE2850DD75B2526BE5BFE6E7EFDEDCD789D4C264860C145E
+X-D57D3AED: Y8kq8+OzVoxvgW9Op3aR8Fxwo7H2ZNxGP5qz8aO2mjTJzjHGC4ogvVuzB3zfVUBtENeZ6b5av1fnCBE34JUDkaJinJwwHx5ysVv9/YfT9uc13AUx5FK7QQ==
+X-Mailru-MI: 800
+X-Mailru-Sender: A5480F10D64C90056DE2D996C7A19556A39A0C8F224D383D1452D4F2AE4FCC1EE6EFB8CE34922556FD27B1545737DED76F53C80213D1719CB3360D9C94DE366A1CC4A9B39F20364B73395D515EC5B64AAE208404248635DF
+X-Mras: Ok
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Takuya Noguchi <takninnovationresearch@gmail.com>
+On Tue, Feb 18, 2020 at 01:00:01PM +0100, Mateusz Loskot wrote:
 
-The notation <commit> can be misunderstandable only for commit SHA1,
-but merge-base accepts any commit references. Like rev-parse, the name
-of arguments should be <rev> instead of <commit>.
+> On Tue, 18 Feb 2020 at 12:26, Сергей Сергеев <nevercu@yandex.ru> wrote:
+> >
+> > Hello, I have a repo - WORK.git. There are some brunches.
+> > Сan i view all commits working repo and all branches at the same time?
+> 
+> https://git-scm.com/docs/git-log#Documentation/git-log.txt---all
+> 
+> I must say the --all name itself is clearer than its description
+> which makes use of Git lingo unnecessarily for such a simple option :-)
+> As a Git newbie, I'd have not linked option to getting log of all branches.
 
-Signed-off-by: Takuya Noguchi <takninnovationresearch@gmail.com>
----
-    doc: use 'rev' instead of 'commit' for merge-base arguments
-    
-    The notation can be misunderstandable only for commit SHA1, but
-    merge-base accepts any commit references. Like rev-parse, the name of
-    arguments should be instead of .
-    
-    Changes since v1:
-    
-     * Use rev instead of ref, not commit-ish which is less used than rev
-       through the document.
-    
-    Signed-off-by: Takuya Noguchi takninnovationresearch@gmail.com
-    [takninnovationresearch@gmail.com]
+Note that the stock gitk GUI frontend also supports the "--all"
+command-line option.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-719%2Ftnir%2Fmerge-base-supporting-refs-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-719/tnir/merge-base-supporting-refs-v2
-Pull-Request: https://github.com/git/git/pull/719
-
-Range-diff vs v1:
-
- 1:  9c83cf1c620 ! 1:  6e2157da4b1 doc: use 'ref' instead of 'commit' for merge-base arguments
-     @@ -1,10 +1,10 @@
-      Author: Takuya Noguchi <takninnovationresearch@gmail.com>
-      
-     -    doc: use 'ref' instead of 'commit' for merge-base arguments
-     +    doc: use 'rev' instead of 'commit' for merge-base arguments
-      
-          The notation <commit> can be misunderstandable only for commit SHA1,
-     -    but merge-base accepts any commit references. Like reflog, the name of
-     -    arguments should be <ref> instead of <commit>.
-     +    but merge-base accepts any commit references. Like rev-parse, the name
-     +    of arguments should be <rev> instead of <commit>.
-      
-          Signed-off-by: Takuya Noguchi <takninnovationresearch@gmail.com>
-      
-     @@ -20,11 +20,11 @@
-      -'git merge-base' --is-ancestor <commit> <commit>
-      -'git merge-base' --independent <commit>...
-      -'git merge-base' --fork-point <ref> [<commit>]
-     -+'git merge-base' [-a|--all] <ref> <ref>...
-     -+'git merge-base' [-a|--all] --octopus <ref>...
-     -+'git merge-base' --is-ancestor <ref> <ref>
-     -+'git merge-base' --independent <ref>...
-     -+'git merge-base' --fork-point <ref> [<ref>]
-     ++'git merge-base' [-a|--all] <rev> <rev>...
-     ++'git merge-base' [-a|--all] --octopus <rev>...
-     ++'git merge-base' --is-ancestor <rev> <rev>
-     ++'git merge-base' --independent <rev>...
-     ++'git merge-base' --fork-point <ref> [<rev>]
-       
-       DESCRIPTION
-       -----------
-     @@ -41,11 +41,11 @@
-      -	N_("git merge-base --independent <commit>..."),
-      -	N_("git merge-base --is-ancestor <commit> <commit>"),
-      -	N_("git merge-base --fork-point <ref> [<commit>]"),
-     -+	N_("git merge-base [-a | --all] <ref> <ref>..."),
-     -+	N_("git merge-base [-a | --all] --octopus <ref>..."),
-     -+	N_("git merge-base --independent <ref>..."),
-     -+	N_("git merge-base --is-ancestor <ref> <ref>"),
-     -+	N_("git merge-base --fork-point <ref1> [<ref2>]"),
-     ++	N_("git merge-base [-a | --all] <rev> <rev>..."),
-     ++	N_("git merge-base [-a | --all] --octopus <rev>..."),
-     ++	N_("git merge-base --independent <rev>..."),
-     ++	N_("git merge-base --is-ancestor <rev> <rev>"),
-     ++	N_("git merge-base --fork-point <ref> [<rev>]"),
-       	NULL
-       };
-       
-     @@ -54,7 +54,7 @@
-       			    N_("is the first one ancestor of the other?"), 'a'),
-       		OPT_CMDMODE(0, "fork-point", &cmdmode,
-      -			    N_("find where <commit> forked from reflog of <ref>"), 'f'),
-     -+			    N_("find where <ref2> forked from reflog of <ref1>"), 'f'),
-     ++			    N_("find where <rev> forked from reflog of <ref>"), 'f'),
-       		OPT_END()
-       	};
-       
-
-
- Documentation/git-merge-base.txt | 10 +++++-----
- builtin/merge-base.c             | 12 ++++++------
- 2 files changed, 11 insertions(+), 11 deletions(-)
-
-diff --git a/Documentation/git-merge-base.txt b/Documentation/git-merge-base.txt
-index 2d944e0851f..60438a00871 100644
---- a/Documentation/git-merge-base.txt
-+++ b/Documentation/git-merge-base.txt
-@@ -9,11 +9,11 @@ git-merge-base - Find as good common ancestors as possible for a merge
- SYNOPSIS
- --------
- [verse]
--'git merge-base' [-a|--all] <commit> <commit>...
--'git merge-base' [-a|--all] --octopus <commit>...
--'git merge-base' --is-ancestor <commit> <commit>
--'git merge-base' --independent <commit>...
--'git merge-base' --fork-point <ref> [<commit>]
-+'git merge-base' [-a|--all] <rev> <rev>...
-+'git merge-base' [-a|--all] --octopus <rev>...
-+'git merge-base' --is-ancestor <rev> <rev>
-+'git merge-base' --independent <rev>...
-+'git merge-base' --fork-point <ref> [<rev>]
- 
- DESCRIPTION
- -----------
-diff --git a/builtin/merge-base.c b/builtin/merge-base.c
-index e3f8da13b69..e03f2269e88 100644
---- a/builtin/merge-base.c
-+++ b/builtin/merge-base.c
-@@ -29,11 +29,11 @@ static int show_merge_base(struct commit **rev, int rev_nr, int show_all)
- }
- 
- static const char * const merge_base_usage[] = {
--	N_("git merge-base [-a | --all] <commit> <commit>..."),
--	N_("git merge-base [-a | --all] --octopus <commit>..."),
--	N_("git merge-base --independent <commit>..."),
--	N_("git merge-base --is-ancestor <commit> <commit>"),
--	N_("git merge-base --fork-point <ref> [<commit>]"),
-+	N_("git merge-base [-a | --all] <rev> <rev>..."),
-+	N_("git merge-base [-a | --all] --octopus <rev>..."),
-+	N_("git merge-base --independent <rev>..."),
-+	N_("git merge-base --is-ancestor <rev> <rev>"),
-+	N_("git merge-base --fork-point <ref> [<rev>]"),
- 	NULL
- };
- 
-@@ -158,7 +158,7 @@ int cmd_merge_base(int argc, const char **argv, const char *prefix)
- 		OPT_CMDMODE(0, "is-ancestor", &cmdmode,
- 			    N_("is the first one ancestor of the other?"), 'a'),
- 		OPT_CMDMODE(0, "fork-point", &cmdmode,
--			    N_("find where <commit> forked from reflog of <ref>"), 'f'),
-+			    N_("find where <rev> forked from reflog of <ref>"), 'f'),
- 		OPT_END()
- 	};
- 
-
-base-commit: 2f268890c2cd2f115424936bbee27f8269080e5e
--- 
-gitgitgadget
