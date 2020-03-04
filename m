@@ -2,141 +2,123 @@ Return-Path: <SRS0=VPsx=4V=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E29BCC3F2D1
-	for <git@archiver.kernel.org>; Wed,  4 Mar 2020 02:31:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C3640C3F2D1
+	for <git@archiver.kernel.org>; Wed,  4 Mar 2020 03:22:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B0D8620842
-	for <git@archiver.kernel.org>; Wed,  4 Mar 2020 02:31:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9438B20836
+	for <git@archiver.kernel.org>; Wed,  4 Mar 2020 03:22:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tCavJpnf"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cg1lU1oI"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387510AbgCDCbm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Mar 2020 21:31:42 -0500
-Received: from mail-io1-f67.google.com ([209.85.166.67]:33607 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387432AbgCDCbl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Mar 2020 21:31:41 -0500
-Received: by mail-io1-f67.google.com with SMTP id r15so721017iog.0
-        for <git@vger.kernel.org>; Tue, 03 Mar 2020 18:31:41 -0800 (PST)
+        id S2387560AbgCDDWt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Mar 2020 22:22:49 -0500
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:40142 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387400AbgCDDWt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Mar 2020 22:22:49 -0500
+Received: by mail-ed1-f68.google.com with SMTP id a13so515433edu.7
+        for <git@vger.kernel.org>; Tue, 03 Mar 2020 19:22:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=bk35kswXL0S0kqyUnu2oS3HrfL+suIiOItzQP6rDuIk=;
-        b=tCavJpnfFn5dGv+rfczQmX4CISQWM6CpIVhfaCPJ4ld/rj4K5JKDQxiBkSaC+V/Uvy
-         6btHLHiprgWY4G7mNt3wykxcQu+kpeqfGHtP0EdebZIo+81bZxl6mBDtBLn+2vKM4Hto
-         L0vZ/k+cjkqStFASshYhNr0YB/9aLVoO8lv3YRPeHN9IfR/UESe9P+Vv+GoBmqe/SB1v
-         bmgKmWejjR8SWyxtgBxU3pLIuhpSkq2OnGm6L3Rn3GCxGr659a3kyVCkn92HPtFUpu1P
-         7HC1Xm/TOsOSq5fWOin5laFbqrVv64FeSHgw9C235tByCbyfLK31q5RpkO6SQLVY08Yw
-         46HA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ud+jpEEjRbMJ7j4XkNYmMmg3JAFoNo9kZge0yaUEuPI=;
+        b=cg1lU1oI+yYZkgY+b0e0VoYVwmZiS245VWBr31EwS8X8OUs2Pd0fyUOX+FMkA+uoLi
+         f4MAZIhmBfCR55lAfvuB65aVnBeWpTA8w0i1/GUa2sfH8mw5CBibX3m7OKQvXwbXfEt7
+         Zvd1v0XI5TZwGf4xXmRccgPVGEyAcnvw5Ufes9bfswBPV5DV+/zedXBOY5BMznr0qz+m
+         FnahKA5c+HrlHHwTWz130kVSEL8n0oR0H3s700XZZw550Q3HzNo8W0Y1J+Ct5XLOV/7T
+         pywu9d6fqosCW8bSvVMDuMV+ViHBxc4eM988TSMATEdC/6euARw1cWBZTP6KpjaxxbkX
+         52lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=bk35kswXL0S0kqyUnu2oS3HrfL+suIiOItzQP6rDuIk=;
-        b=aavBcWzC/Xh6+MkiewTmcxByhOsyFmcav2YPSiP5CSAGc0Dkc+n2rDgaS4oWJmioOD
-         M1YRegtjTf1sVFlbd/EZyxQ4PkCDdWmZcM5gtrqsHUL1a11djD3ro/PL8VJV63eGcAHt
-         twmS9iAbErXvCr/eBraLtFFaZTVZGRXCodesqzlLOIplqdE4C0ymTkJT+PgVhoJHLuv/
-         ZTxNxfkftLpFnMGDwCoAAgqMKEA2hItM0AarYKIFWj/jCLSz07PzFFcAPVVb8TnTutAa
-         vdpYo8Oh6iSYkQfb4b0TE5p+W4ebqCL0aHJNXTMoCz/DOKE44QyY5nxjQyWdq5fgb2DG
-         Wz8w==
-X-Gm-Message-State: ANhLgQ2E9TNxiv+/ZR/QYXzr5V1ALdOZeOV5DWikmBq0aMinjle1nWVP
-        hYqkw1b58V5u9xHGbzIfcKTqBm5Z
-X-Google-Smtp-Source: ADFU+vu5IPhqcYCftoR7rOMoMVNhFdNo7vW2yTn/gV7N4MCnX+ADjUG+teQgSjcDTOJwfBOONx3jfw==
-X-Received: by 2002:a6b:6d13:: with SMTP id a19mr425239iod.117.1583289100718;
-        Tue, 03 Mar 2020 18:31:40 -0800 (PST)
-Received: from viper.801labs.org ([63.228.208.98])
-        by smtp.gmail.com with ESMTPSA id p18sm976812ilp.27.2020.03.03.18.31.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Mar 2020 18:31:39 -0800 (PST)
-From:   Alex Henrie <alexhenrie24@gmail.com>
-To:     git@vger.kernel.org, rcdailey.lists@gmail.com, newren@gmail.com,
-        rsbecker@nexbridge.com, gitster@pobox.com, annulen@yandex.ru,
-        tytso@mit.edu
-Cc:     Alex Henrie <alexhenrie24@gmail.com>
-Subject: [PATCH v4] pull: warn if the user didn't say whether to rebase or to merge
-Date:   Tue,  3 Mar 2020 19:29:31 -0700
-Message-Id: <20200304022931.2469455-1-alexhenrie24@gmail.com>
-X-Mailer: git-send-email 2.25.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ud+jpEEjRbMJ7j4XkNYmMmg3JAFoNo9kZge0yaUEuPI=;
+        b=mOuEFEicLM2OFqtddtRRvZhdGjSIv7Po+SBKqPJVPCn1krcrWkP7OOKcteuehY4XLE
+         zFigty6fXqEZcdlcSYU6EkaSWydVi3urEFYYK7ZYi7G5kZ2crYJpbI6rLpi/mzfNNNA1
+         bWm2JL6S224LyNivhleEbrJJhNElLotI8p9jty2iyVM/ZoCAo3GRUqs1stHFayzDCAkx
+         e1LEQY67m5U/9biCzVtl9UIOVOhmPrX7fR2Ib6xYgbDL+7OOoXIVQTg6CHZ20GEPq9s9
+         ucXM+DJBin0Qxn7ckoqUpC0Hi5PjN4fcwqTALRyBqlvPg0ejzbHXIKSqU7R7Dl4vQJoo
+         QhNg==
+X-Gm-Message-State: ANhLgQ06PG1W39md3IiJ9gVsahctLef3XJAwnFboy/skUS3w/9nQYvzM
+        u+dKUblY6Eav9+sdMR2BySbwlv7LzGHCaKIzY34=
+X-Google-Smtp-Source: ADFU+vuGOlCv6nNQwD1PKOU2NOM9vurhMttVsmkSIX3mWthHbV9QXt7u1AoHgQ5J/mB1TCnsULGJSMay15LHqyUwMjc=
+X-Received: by 2002:a17:906:7fc9:: with SMTP id r9mr718438ejs.77.1583292167628;
+ Tue, 03 Mar 2020 19:22:47 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <pull.548.v6.git.1582778112.gitgitgadget@gmail.com>
+ <pull.548.v7.git.1583179320.gitgitgadget@gmail.com> <a4673803eaf881f7caa25d97e432c0ff0d065060.1583179320.git.gitgitgadget@gmail.com>
+ <xmqqblpebhae.fsf@gitster-ct.c.googlers.com> <xmqqlfoha5ia.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqlfoha5ia.fsf@gitster-ct.c.googlers.com>
+From:   Heba Waly <heba.waly@gmail.com>
+Date:   Wed, 4 Mar 2020 16:22:36 +1300
+Message-ID: <CACg5j26fiJQJZ1CZy2AHWEiPmzJ+XsiA+Zfsp4Mc6MgP9i=Crg@mail.gmail.com>
+Subject: Re: [PATCH v7 3/4] advice: revamp advise API
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Heba Waly via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Often novice Git users forget to say "pull --rebase" and end up with an
-unnecessary merge from upstream. What they usually want is either "pull
---rebase" in the simpler cases, or "pull --ff-only" to update the copy
-of main integration branches, and rebase their work separately. The
-pull.rebase configuration variable exists to help them in the simpler
-cases, but there is no mechanism to make these users aware of it.
+On Wed, Mar 4, 2020 at 3:16 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+> > "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> >
+> >> +static struct {
+> >> +    const char *key;
+> >> +    int enabled;
+> >> +} advice_setting[] = {
+> >> +    [ADVICE_ADD_EMBEDDED_REPO]                      = { "addEmbeddedRepo", 1 },
+> >
+> > It would be nicer to future developers to flip the polarity, as we
+> > do not have to write 1 all over the place, especially if we plan to
+> > extend the structure over time and to use designated initializers
+> > for only certain fields...
+>
+> Just to avoid needless churn, I think this does not matter in the
+> longer term, so .enabled is OK as-is.  The reason I say so is
+> because, even though renaming to .disabled to allow initializers to
+> default it to 0 is nicer for those who write the initializers
+> manually, and it especially is true when we have more fields in the
+> struct (we may add descriptive text so that we can issue an on-line
+> help, for example), but I expect that would happen much later than
+> we start generating these parts of the source code in two places
+> (the initializer for advice_setting[] and the advice_type enum) from
+> a single source by mechanical process.  And the auto-generation will
+> eliminate the burden of writing 1 manually.
 
-Issue a warning message when no --[no-]rebase option from the command
-line and no pull.rebase configuration variable is given. This will
-inconvenience those who never want to "pull --rebase", who haven't had
-to do anything special, but the cost of the inconvenience is paid only
-once per user, which should be a reasonable cost to help a number of new
-users.
+Agree.
 
-Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
----
-v4:
-- Revise warning message based on Junio's feedback
-- Consistently wrap warning lines to 75 characters for easy viewing in
-PO files
-- Fix test failures
----
- builtin/pull.c          | 15 +++++++++++++++
- t/t5521-pull-options.sh |  3 ++-
- 2 files changed, 17 insertions(+), 1 deletion(-)
+> Turning this into "break;" would make it similar to the loop before
+> this one, and will allow other people to add more code after this
+> loop later.
 
-diff --git a/builtin/pull.c b/builtin/pull.c
-index 3e624d1e00..351b933c4d 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -327,6 +327,21 @@ static enum rebase_type config_get_rebase(void)
- 	if (!git_config_get_value("pull.rebase", &value))
- 		return parse_config_rebase("pull.rebase", value, 1);
- 
-+	if (!opt_ff || strcmp(opt_ff, "--ff-only")) {
-+		warning(_("Pulling without specifying how to reconcile divergent branches is\n"
-+			"discouraged. You can squelch this message by running one of the following\n"
-+			"commands sometime before your next pull:\n"
-+			"\n"
-+			"  git config pull.rebase false  # merge (the default strategy)\n"
-+			"  git config pull.rebase true   # rebase\n"
-+			"  git config pull.ff only       # fast-forward only\n"
-+			"\n"
-+			"You can replace \"git config\" with \"git config --global\" to set a default\n"
-+			"preference for all repositories. You can also pass --rebase, --no-rebase,\n"
-+			"or --ff-only on the command line to override the configured default per\n"
-+			"invocation.\n"));
-+	}
-+
- 	return REBASE_FALSE;
- }
- 
-diff --git a/t/t5521-pull-options.sh b/t/t5521-pull-options.sh
-index ccde8ba491..6e890ec936 100755
---- a/t/t5521-pull-options.sh
-+++ b/t/t5521-pull-options.sh
-@@ -8,7 +8,8 @@ test_expect_success 'setup' '
- 	mkdir parent &&
- 	(cd parent && git init &&
- 	 echo one >file && git add file &&
--	 git commit -m one)
-+	 git commit -m one) &&
-+	git config pull.rebase false
- '
- 
- test_expect_success 'git pull -q' '
--- 
-2.25.1
+The loop with break is redundant and will be removed in the next
+patch, but the rest of the loops in this function end with return
+which I think makes more sense assuming any new code/loop that will
+need to be added in the future is expected to handle a different
+configuration group.
 
+> > +     /*
+> > +       Any advice type can be used for testing, but NESTED_TAG was selected
+> > +       here and in t0018 where this command is being executed.
+> > +      */
+>
+> Style (will fix up locally).
+>
+> Thanks.  I think this is reasonable with or without the suggested
+> fixes.
+
+Great, thanks.
+
+Heba
