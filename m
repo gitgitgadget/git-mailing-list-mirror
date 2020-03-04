@@ -8,305 +8,283 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9770BC3F2D7
-	for <git@archiver.kernel.org>; Wed,  4 Mar 2020 11:34:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DD70C3F2D8
+	for <git@archiver.kernel.org>; Wed,  4 Mar 2020 11:34:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 67DD520848
-	for <git@archiver.kernel.org>; Wed,  4 Mar 2020 11:34:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 23030214D8
+	for <git@archiver.kernel.org>; Wed,  4 Mar 2020 11:34:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nVFURce7"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S/qwBpmU"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387879AbgCDLeO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 Mar 2020 06:34:14 -0500
-Received: from mail-pj1-f52.google.com ([209.85.216.52]:53558 "EHLO
-        mail-pj1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387799AbgCDLeO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Mar 2020 06:34:14 -0500
-Received: by mail-pj1-f52.google.com with SMTP id cx7so798318pjb.3
-        for <git@vger.kernel.org>; Wed, 04 Mar 2020 03:34:11 -0800 (PST)
+        id S2387881AbgCDLeQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Mar 2020 06:34:16 -0500
+Received: from mail-pl1-f173.google.com ([209.85.214.173]:33032 "EHLO
+        mail-pl1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387863AbgCDLeP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Mar 2020 06:34:15 -0500
+Received: by mail-pl1-f173.google.com with SMTP id ay11so919323plb.0
+        for <git@vger.kernel.org>; Wed, 04 Mar 2020 03:34:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Z75zcX+dqdDEaAW4aSZfQzpTDkbSJMbravljvhZkQYw=;
-        b=nVFURce7j2tKSn/4n9fQDb5GuvocPdpCvxzDmA+rPGzxDFWXunlgLdgn8ePDzsdUR/
-         qLYI5JNHVtln8o78FA7jMPKYYeGJ+bYJIkVoWENiHDVxQRUmcvR4bJh/c5HfRQkaG4F1
-         p2mSnzt1LMP4JckZYlEW+YEQKmZ+slo0ohLdDLJNnbn0blgvfp49M395GtrTFeedTTH2
-         KFite4ubg8yVT/OkgnP/sOWy7A4DYiGvDfy+b/tyM/ySXGAHYoy+ML5jAXZ2YQQG+IB0
-         lBpoZ8CJG+uTnWDwW5klYvm31hdX7YJEQyJVvcmfftJzt1MI3V/Ixm4gKpM2tISAWmAP
-         WhxQ==
+        bh=a7C2Cyz9XOA6zcAEFLp48kmqzquplJwiHk3Qlq1IOig=;
+        b=S/qwBpmU/g8aq0hR6tqqYAyn8bKzBb7ZU0m6t+gLSw1KgYte/2+G8HNFadLECFMC6T
+         +qtD1uxtH9BAYzFmpOr5zRCM5SYqhvJEePgXFqHqENA/krQwtp2loggxWp1Fq7T6fntJ
+         t2V7d2LScmBob4o8TZlx2eKJTh5wuomK10Lowhemz6lv6ZdiS/TCYUJCDqTUQfuCmqrw
+         ZNZA1ojLR1USpJKpQxzqIuDEzCJEveNoyktA2yke4l/EBvGoILgfjiKNOjcasi+9tha4
+         Py5JWOw473ScFtBUGZ4vvZrLiAxB3AmQOpZjmTqjHfl38EcUvR9uDBaSwda6fEv2dqD5
+         BmgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Z75zcX+dqdDEaAW4aSZfQzpTDkbSJMbravljvhZkQYw=;
-        b=JILPx4IJ/2+rxGvqT4Pf5clRnEvvvZUVVhh1HvT8DrRC0IvzyLinmJ7xnMKsszjjTR
-         ++Oy4HSIn9D2l0I5SJf+bydvfCIo1j3ikpAanWUfLlrobd4DNFS50sAscDiPsRTCoGZW
-         Ukjo5D9de+4guZ6keDyZSUT833qNdxfI/5l3F6vGmiA23+Ef9bwEkvfDlh56GP3QpAOJ
-         rubuUygmNifrFxi/rvZzFzeDzFi9Ofh2f5TG9d5a0AyFQjAcU/FlQezWjDcUmBBfUxEu
-         nwHFKgnYkCwmgxRuxDf9w5GWDp0as/4IFvdFDL/YfpW+vaicRQsRvAlEzOhqXLEfcuIX
-         wL6g==
-X-Gm-Message-State: ANhLgQ0FFgF0uwtBwg3S7PqQ6ZcO6RbYxG/KoNarUHcq6V7plw1DRYXs
-        r6Gk5c04WhfkYyPHthClJ66ifoMHxF7bTQ==
-X-Google-Smtp-Source: ADFU+vu/ETGr9QZ8j7VJJa8PPHZECoulO0X2pZz9sejtuivb1e29ekmzOUiWlIGM1TUzD/ozlCrpgQ==
-X-Received: by 2002:a17:902:8492:: with SMTP id c18mr2794751plo.147.1583321650767;
-        Wed, 04 Mar 2020 03:34:10 -0800 (PST)
+        bh=a7C2Cyz9XOA6zcAEFLp48kmqzquplJwiHk3Qlq1IOig=;
+        b=PKGapLc9inR/a4ht33q25ZyxKoXar/ej3+HF9DL1FyBzjNauevXYITvXOBblRFpu1P
+         U53zOcf3NDQOmLN435100e0i2ZkF7iUXTBV+BzhC4rSriC38FQZ9ZrYIomVoq8bnxWa6
+         jtQyZAWOf9V7U1uq7jnaU/s6WYdxZilBgoqAjDQCI3t/3Y24lOMfaX1rz89grVdD5jN1
+         //j3CqYLCmUaIB/0bW6j3pwJ0PlnOMXEXp1SH+MVssZAF5hiYlv/SBIaSst0AuWmLfOj
+         VosbNft6RxOOsYFtGiR7hQdj5jG7Ey/Ts2s+c81k4+Jj5NZ/cD834RmTXrLg0L+EkEbT
+         pFCQ==
+X-Gm-Message-State: ANhLgQ38BkRD82e5/VWXkplDqaEIuDdEmG8nsXPuAqWRheNXMyVSUsqs
+        4wevzleCvu8JjSjXGbHTF/wc8qnVr3Y3hg==
+X-Google-Smtp-Source: ADFU+vvzAlbz1EdE168SnY9vqk88/3AYAhXoYfBnwJLQolouSbHQbKsNd3bxHDo4OpiWPHJRNuJEEA==
+X-Received: by 2002:a17:902:444:: with SMTP id 62mr2451544ple.209.1583321652829;
+        Wed, 04 Mar 2020 03:34:12 -0800 (PST)
 Received: from localhost.localdomain ([47.89.83.4])
-        by smtp.gmail.com with ESMTPSA id d77sm15350050pfd.109.2020.03.04.03.34.09
+        by smtp.gmail.com with ESMTPSA id d77sm15350050pfd.109.2020.03.04.03.34.11
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 04 Mar 2020 03:34:10 -0800 (PST)
+        Wed, 04 Mar 2020 03:34:12 -0800 (PST)
 From:   Jiang Xin <worldhello.net@gmail.com>
 X-Google-Original-From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 To:     Git List <git@vger.kernel.org>
 Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 3/7] receive-pack: try `execute-commands --pre-receive`
-Date:   Wed,  4 Mar 2020 19:33:08 +0800
-Message-Id: <20200304113312.34229-4-zhiyou.jx@alibaba-inc.com>
+Subject: [PATCH 4/7] receive-pack: read env from execute-commands output
+Date:   Wed,  4 Mar 2020 19:33:09 +0800
+Message-Id: <20200304113312.34229-5-zhiyou.jx@alibaba-inc.com>
 X-Mailer: git-send-email 2.25.1.362.g51ebf55b93
 In-Reply-To: <20200304113312.34229-1-zhiyou.jx@alibaba-inc.com>
 References: <20200304113312.34229-1-zhiyou.jx@alibaba-inc.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-First we try to find the hook "execute-command--pre-receive" to check
-permissions for special commands.  If the hook does not exist, will try
-to find the hook "execute-commands" and run command `execute-commands
---pre-receive` instead.
+The “post-receive” hook may need the pull request ID generated by the
+“execute-commands” hook.  The results can be passed between hooks by
+environment variables.
+
+Each line of the message received from the standard output of the
+“execute-commands” in the key=value format is parsed as environment and
+these variables will be sent to environment of the “post-receive” hook.
 
 Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 ---
- builtin/receive-pack.c           | 30 ++++++++++----
- t/t5411-execute-commands-hook.sh | 68 +++++++++++++++++++++++---------
- 2 files changed, 71 insertions(+), 27 deletions(-)
+ builtin/receive-pack.c           | 42 +++++++++++++++--
+ t/t5411-execute-commands-hook.sh | 79 ++++++++++++++++++++++++++++++++
+ 2 files changed, 117 insertions(+), 4 deletions(-)
 
 diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index c97abfbcd3..241b1d4cfc 100644
+index 241b1d4cfc..fd2f3ba80a 100644
 --- a/builtin/receive-pack.c
 +++ b/builtin/receive-pack.c
-@@ -683,20 +683,34 @@ static int run_and_feed_hook(const char *hook_name, feed_fn feed,
+@@ -85,6 +85,7 @@ static const char *nonce_status;
+ static long nonce_stamp_slop;
+ static timestamp_t nonce_stamp_slop_limit;
+ static struct ref_transaction *transaction;
++struct argv_array post_receive_env_array;
+ 
+ static enum {
+ 	KEEPALIVE_NEVER = 0,
+@@ -678,7 +679,9 @@ struct receive_hook_feed_state {
+ };
+ 
+ typedef int (*feed_fn)(void *, const char **, size_t *);
++typedef void (*stdout_handler_fn)(int out);
+ static int run_and_feed_hook(const char *hook_name, feed_fn feed,
++			     stdout_handler_fn stdout_handler,
+ 			     struct receive_hook_feed_state *feed_state)
  {
  	struct child_process proc = CHILD_PROCESS_INIT;
- 	struct async muxer;
--	const char *argv[2];
-+	const char *argv[3];
- 	int code;
+@@ -713,9 +716,15 @@ static int run_and_feed_hook(const char *hook_name, feed_fn feed,
  
- 	argv[0] = find_hook(hook_name);
- 	if (!argv[0]) {
--		if (feed_state->hook_must_exist) {
--			rp_error("cannot to find hook '%s'", hook_name);
--			return 1;
--		} else
--			return 0;
-+		char *hook_helper;
-+		char *opt;
-+
-+		opt = strstr(hook_name, "--");
-+		if (opt) {
-+			hook_helper = xstrdup(hook_name);
-+			hook_helper[opt - hook_name] = '\0';
-+			argv[0] = find_hook(hook_helper);
-+			free(hook_helper);
-+		}
-+		if (!argv[0]) {
-+			if (feed_state->hook_must_exist) {
-+				rp_error("cannot to find hook '%s'", hook_name);
-+				return 1;
-+			} else
-+				return 0;
-+		}
-+		argv[1] = opt;
-+		argv[2] = NULL;
-+	} else {
-+		argv[1] = NULL;
- 	}
- 
--	argv[1] = NULL;
--
  	proc.argv = argv;
  	proc.in = -1;
- 	proc.stdout_to_stderr = 1;
+-	proc.stdout_to_stderr = 1;
++	if (stdout_handler)
++		proc.out = -1;
++	else
++		proc.stdout_to_stderr = 1;
+ 	proc.trace2_hook_name = hook_name;
+ 
++	if (!strcmp(hook_name, "post-receive") && post_receive_env_array.argc > 0)
++		argv_array_pushv(&proc.env_array, post_receive_env_array.argv);
++
+ 	if (feed_state->push_options) {
+ 		int i;
+ 		for (i = 0; i < feed_state->push_options->nr; i++)
+@@ -760,6 +769,10 @@ static int run_and_feed_hook(const char *hook_name, feed_fn feed,
+ 			break;
+ 	}
+ 	close(proc.in);
++
++	if (stdout_handler)
++		stdout_handler(proc.out);
++
+ 	if (use_sideband)
+ 		finish_async(&muxer);
+ 
+@@ -817,7 +830,7 @@ static int run_receive_hook(struct command *commands,
+ 		return 0;
+ 	state.cmd = commands;
+ 	state.push_options = push_options;
+-	status = run_and_feed_hook(hook_name, feed_receive_hook, &state);
++	status = run_and_feed_hook(hook_name, feed_receive_hook, NULL, &state);
+ 	strbuf_release(&state.buf);
+ 	return status;
+ }
+@@ -868,11 +881,29 @@ static int run_execute_commands_pre_receive_hook(struct command *commands,
+ 	state.cmd = commands;
+ 	state.push_options = push_options;
+ 	status = run_and_feed_hook("execute-commands--pre-receive",
+-			feed_receive_hook, &state);
++			feed_receive_hook, NULL, &state);
+ 	strbuf_release(&state.buf);
+ 	return status;
+ }
+ 
++
++static void prepare_post_receive_env(int in)
++{
++	struct strbuf stdout_buf = STRBUF_INIT;
++
++	while (strbuf_getwholeline_fd(&stdout_buf, in, '\n') != EOF) {
++		char *p = stdout_buf.buf + stdout_buf.len -1;
++		if (*p =='\n')
++			*p = '\0';
++		p = strchr(stdout_buf.buf, '=');
++		if (p == NULL)
++			continue;
++		argv_array_push(&post_receive_env_array, stdout_buf.buf);
++		strbuf_reset(&stdout_buf);
++	}
++	strbuf_release(&stdout_buf);
++}
++
+ static int run_execute_commands_hook(struct command *commands,
+ 				     const struct string_list *push_options)
+ {
+@@ -889,7 +920,8 @@ static int run_execute_commands_hook(struct command *commands,
+ 		return 0;
+ 	state.cmd = commands;
+ 	state.push_options = push_options;
+-	status = run_and_feed_hook("execute-commands", feed_receive_hook, &state);
++	status = run_and_feed_hook("execute-commands",
++			feed_receive_hook, prepare_post_receive_env, &state);
+ 	strbuf_release(&state.buf);
+ 	return status;
+ }
+@@ -2052,6 +2084,8 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
+ 		OPT_END()
+ 	};
+ 
++	argv_array_init(&post_receive_env_array);
++
+ 	packet_trace_identity("receive-pack");
+ 
+ 	argc = parse_options(argc, argv, prefix, options, receive_pack_usage, 0);
 diff --git a/t/t5411-execute-commands-hook.sh b/t/t5411-execute-commands-hook.sh
-index b6444ca047..0bf14e702d 100755
+index 0bf14e702d..1907d0619d 100755
 --- a/t/t5411-execute-commands-hook.sh
 +++ b/t/t5411-execute-commands-hook.sh
-@@ -64,6 +64,11 @@ test_expect_success "setup hooks" '
- 
- 	printf >&2 "execute: execute-commands\n"
- 
-+	if test \$# -gt 0 && test "\$1" = "--pre-receive"
-+	then
-+		printf >&2 ">> pre-receive mode\n"
-+	fi
-+
- 	while read old new ref
- 	do
- 		printf >&2 ">> old: \$old, new: \$new, ref: \$ref.\n"
-@@ -183,13 +188,15 @@ test_expect_success "add back the execute-commands hook" '
- '
- 
- test_expect_success "push one special ref: refs/for/a/b/c" '
-+	mv $bare/hooks/execute-commands--pre-receive $bare/hooks/execute-commands--pre-receive.ok &&
- 	(
- 		cd work &&
- 		git push origin HEAD:refs/for/a/b/c/my/topic
- 	) >out 2>&1 &&
- 	grep "^remote:" out | sed -e "s/  *\$//g" >actual &&
- 	cat >expect <<-EOF &&
--	remote: execute: execute-commands--pre-receive
-+	remote: execute: execute-commands
-+	remote: >> pre-receive mode
- 	remote: >> old: 0000000000000000000000000000000000000000, new: ce858e653cdbf70f9955a39d73a44219e4b92e9e, ref: refs/for/a/b/c/my/topic.
- 	remote: execute: execute-commands
- 	remote: >> old: 0000000000000000000000000000000000000000, new: ce858e653cdbf70f9955a39d73a44219e4b92e9e, ref: refs/for/a/b/c/my/topic.
-@@ -208,7 +215,8 @@ test_expect_success "push two special references" '
- 	) >out 2>&1 &&
- 	grep "^remote:" out | sed -e "s/  *\$//g" >actual &&
- 	cat >expect <<-EOF &&
--	remote: execute: execute-commands--pre-receive
-+	remote: execute: execute-commands
-+	remote: >> pre-receive mode
- 	remote: >> old: 0000000000000000000000000000000000000000, new: ce858e653cdbf70f9955a39d73a44219e4b92e9e, ref: refs/for/maint/my/topic.
- 	remote: >> old: 0000000000000000000000000000000000000000, new: ce858e653cdbf70f9955a39d73a44219e4b92e9e, ref: refs/for/a/b/c/my/topic.
- 	remote: execute: execute-commands
-@@ -228,13 +236,21 @@ test_expect_success "new execute-commands hook (fail with error)" '
- 
- 	printf >&2 "execute: execute-commands\n"
- 
-+	if test \$# -gt 0 && test "\$1" = "--pre-receive"
-+	then
-+		printf >&2 ">> pre-receive mode\n"
-+	fi
-+
- 	while read old new ref
- 	do
- 		printf >&2 ">> old: \$old, new: \$new, ref: \$ref.\n"
- 	done
- 
--	printf >&2 "fail to run execute-commands\n"
--	exit 1
-+	if test \$# -eq 0
-+	then
-+		printf >&2 "fail to run execute-commands\n"
-+		exit 1
-+	fi
- 	EOF
- 	chmod a+x $bare/hooks/execute-commands
- '
-@@ -248,7 +264,8 @@ test_expect_success "successfully push normal ref, and fail to push special refe
- 	) >out 2>&1 &&
- 	grep "^remote:" out | sed -e "s/  *\$//g" >actual &&
- 	cat >expect <<-EOF &&
--	remote: execute: execute-commands--pre-receive
-+	remote: execute: execute-commands
-+	remote: >> pre-receive mode
- 	remote: >> old: 0000000000000000000000000000000000000000, new: ce858e653cdbf70f9955a39d73a44219e4b92e9e, ref: refs/for/maint/my/topic.
- 	remote: execute: pre-receive hook
- 	remote: >> old: 102939797ab91a4f201d131418d2c9d919dcdd2c, new: ce858e653cdbf70f9955a39d73a44219e4b92e9e, ref: refs/heads/master.
-@@ -284,7 +301,8 @@ test_expect_success "all mixed refs are failed to push in atomic mode" '
- 	) >out 2>&1 &&
- 	grep "^remote:" out | sed -e "s/  *\$//g" >actual &&
- 	cat >expect <<-EOF &&
--	remote: execute: execute-commands--pre-receive
-+	remote: execute: execute-commands
-+	remote: >> pre-receive mode
- 	remote: >> old: 0000000000000000000000000000000000000000, new: ce858e653cdbf70f9955a39d73a44219e4b92e9e, ref: refs/for/maint/my/topic.
- 	remote: execute: pre-receive hook
- 	remote: >> old: 102939797ab91a4f201d131418d2c9d919dcdd2c, new: ce858e653cdbf70f9955a39d73a44219e4b92e9e, ref: refs/heads/master.
-@@ -309,7 +327,8 @@ test_expect_success "push mixed references successfully" '
- 	) >out 2>&1 &&
- 	grep "^remote:" out | sed -e "s/  *\$//g" >actual &&
- 	cat >expect <<-EOF &&
--	remote: execute: execute-commands--pre-receive
-+	remote: execute: execute-commands
-+	remote: >> pre-receive mode
- 	remote: >> old: 0000000000000000000000000000000000000000, new: ce858e653cdbf70f9955a39d73a44219e4b92e9e, ref: refs/for/maint/my/topic.
- 	remote: execute: pre-receive hook
- 	remote: >> old: 102939797ab91a4f201d131418d2c9d919dcdd2c, new: ce858e653cdbf70f9955a39d73a44219e4b92e9e, ref: refs/heads/master.
-@@ -336,22 +355,30 @@ test_expect_success "restore remote master branch" '
+@@ -454,4 +454,83 @@ test_expect_success "cannot push mixed references (declined)" '
  	test_cmp expect actual
  '
  
--test_expect_success "new execute-commands--pre-receive hook (declined version)" '
--	mv $bare/hooks/execute-commands--pre-receive $bare/hooks/execute-commands--pre-receive.ok &&
--	cat >$bare/hooks/execute-commands--pre-receive <<-EOF &&
-+test_expect_success "new execute-commands hook (pre-receive declined)" '
++test_expect_success "new execute-commands and post-receive hooks (environments in output)" '
++	## execute-commands hook
 +	mv $bare/hooks/execute-commands $bare/hooks/execute-commands.ok &&
 +	cat >$bare/hooks/execute-commands <<-EOF &&
- 	#!/bin/sh
- 
--	printf >&2 "execute: execute-commands--pre-receive\n"
++	#!/bin/sh
++
 +	printf >&2 "execute: execute-commands\n"
 +
 +	if test \$# -gt 0 && test "\$1" = "--pre-receive"
 +	then
 +		printf >&2 ">> pre-receive mode\n"
++	else
++		printf "GIT_VAR1=var1\n"
++		printf "GIT_VAR2=var2\n"
++		printf "AGIT_VAR1=foo\n"
++		printf "AGIT_VAR2=bar\n"
 +	fi
- 
- 	while read old new ref
- 	do
- 		printf >&2 ">> old: \$old, new: \$new, ref: \$ref.\n"
- 	done
- 
--	printf >&2 ">> ERROR: declined in execute-commands--pre-receive\n"
--	exit 1
-+	if test \$# -gt 0 && test "\$1" = "--pre-receive"
-+	then
-+		printf >&2 ">> ERROR: declined in execute-commands--pre-receive\n"
-+		exit 1
-+	fi
- 	EOF
--	chmod a+x $bare/hooks/execute-commands--pre-receive
-+	chmod a+x $bare/hooks/execute-commands
- '
- 
- test_expect_success "cannot push two special references (declined)" '
-@@ -363,7 +390,8 @@ test_expect_success "cannot push two special references (declined)" '
- 	) >out 2>&1 &&
- 	grep "^remote:" out | sed -e "s/  *\$//g" >actual &&
- 	cat >expect <<-EOF &&
--	remote: execute: execute-commands--pre-receive
++
++	while read old new ref
++	do
++		printf >&2 ">> old: \$old, new: \$new, ref: \$ref.\n"
++	done
++
++	for k in GIT_VAR1 GIT_VAR2 AGIT_VAR1 AGIT_VAR2
++	do
++		if test -n "\$(eval echo \\"\\\$\$k\")"
++		then
++			printf >&2 ">> has env: \$k=\$(eval echo \\"\\\$\$k\").\n"
++		fi
++	done
++	EOF
++	chmod a+x $bare/hooks/execute-commands &&
++
++	## post-receive hook
++	mv $bare/hooks/post-receive $bare/hooks/post-receive.ok &&
++	cat >$bare/hooks/post-receive <<-EOF &&
++	#!/bin/sh
++
++	printf >&2 "execute: post-receive hook\n"
++
++	while read old new ref
++	do
++		printf >&2 ">> old: \$old, new: \$new, ref: \$ref.\n"
++	done
++
++	for k in GIT_VAR1 GIT_VAR2 AGIT_VAR1 AGIT_VAR2
++	do
++		if test -n "\$(eval echo \\"\\\$\$k\")"
++		then
++			printf >&2 ">> has env: \$k=\$(eval echo \\"\\\$\$k\").\n"
++		fi
++	done
++	EOF
++	chmod a+x $bare/hooks/post-receive
++'
++
++test_expect_success "push and show environments" '
++	(
++		cd work &&
++		git push origin \
++			HEAD:refs/for/master/my/topic
++	) >out 2>&1 &&
++	grep "^remote:" out | sed -e "s/  *\$//g" >actual &&
++	cat >expect <<-EOF &&
 +	remote: execute: execute-commands
 +	remote: >> pre-receive mode
- 	remote: >> old: 0000000000000000000000000000000000000000, new: ce858e653cdbf70f9955a39d73a44219e4b92e9e, ref: refs/for/master/my/topic.
- 	remote: >> old: 0000000000000000000000000000000000000000, new: ce858e653cdbf70f9955a39d73a44219e4b92e9e, ref: refs/for/maint/my/topic.
- 	remote: >> ERROR: declined in execute-commands--pre-receive
-@@ -380,7 +408,8 @@ test_expect_success "cannot push mixed references (declined)" '
- 	) >out 2>&1 &&
- 	grep "^remote:" out | sed -e "s/  *\$//g" >actual &&
- 	cat >expect <<-EOF &&
--	remote: execute: execute-commands--pre-receive
++	remote: >> old: 0000000000000000000000000000000000000000, new: ce858e653cdbf70f9955a39d73a44219e4b92e9e, ref: refs/for/master/my/topic.
 +	remote: execute: execute-commands
-+	remote: >> pre-receive mode
- 	remote: >> old: 0000000000000000000000000000000000000000, new: ce858e653cdbf70f9955a39d73a44219e4b92e9e, ref: refs/for/master/my/topic.
- 	remote: >> ERROR: declined in execute-commands--pre-receive
- 	EOF
-@@ -388,8 +417,8 @@ test_expect_success "cannot push mixed references (declined)" '
- '
- 
- test_expect_success "new pre-receive hook (declined version)" '
--	mv $bare/hooks/execute-commands--pre-receive $bare/hooks/execute-commands--pre-receive.fail &&
--	mv $bare/hooks/execute-commands--pre-receive.ok $bare/hooks/execute-commands--pre-receive &&
-+	mv $bare/hooks/execute-commands $bare/hooks/execute-commands.fail &&
-+	mv $bare/hooks/execute-commands.ok $bare/hooks/execute-commands &&
- 	mv $bare/hooks/pre-receive $bare/hooks/pre-receive.ok &&
- 	cat >$bare/hooks/pre-receive <<-EOF &&
- 	#!/bin/sh
-@@ -415,7 +444,8 @@ test_expect_success "cannot push mixed references (declined)" '
- 	) >out 2>&1 &&
- 	grep "^remote:" out | sed -e "s/  *\$//g" >actual &&
- 	cat >expect <<-EOF &&
--	remote: execute: execute-commands--pre-receive
-+	remote: execute: execute-commands
-+	remote: >> pre-receive mode
- 	remote: >> old: 0000000000000000000000000000000000000000, new: ce858e653cdbf70f9955a39d73a44219e4b92e9e, ref: refs/for/master/my/topic.
- 	remote: execute: pre-receive hook
- 	remote: >> old: 102939797ab91a4f201d131418d2c9d919dcdd2c, new: ce858e653cdbf70f9955a39d73a44219e4b92e9e, ref: refs/heads/master.
++	remote: >> old: 0000000000000000000000000000000000000000, new: ce858e653cdbf70f9955a39d73a44219e4b92e9e, ref: refs/for/master/my/topic.
++	remote: execute: post-receive hook
++	remote: >> old: 0000000000000000000000000000000000000000, new: ce858e653cdbf70f9955a39d73a44219e4b92e9e, ref: refs/for/master/my/topic.
++	remote: >> has env: GIT_VAR1=var1.
++	remote: >> has env: GIT_VAR2=var2.
++	remote: >> has env: AGIT_VAR1=foo.
++	remote: >> has env: AGIT_VAR2=bar.
++	EOF
++	test_cmp expect actual
++'
++
+ test_done
 -- 
 2.25.1.362.g51ebf55b93
 
