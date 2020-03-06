@@ -2,89 +2,112 @@ Return-Path: <SRS0=QY2u=4X=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.3 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BDCEC10DCE
-	for <git@archiver.kernel.org>; Fri,  6 Mar 2020 18:58:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 20B0EC10DCE
+	for <git@archiver.kernel.org>; Fri,  6 Mar 2020 19:03:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id DD5EA20684
-	for <git@archiver.kernel.org>; Fri,  6 Mar 2020 18:58:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E3EE3206E6
+	for <git@archiver.kernel.org>; Fri,  6 Mar 2020 19:03:20 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="liOJAe31"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726533AbgCFS6H (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Mar 2020 13:58:07 -0500
-Received: from siwi.pair.com ([209.68.5.199]:39799 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726083AbgCFS6H (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Mar 2020 13:58:07 -0500
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 040703F486B;
-        Fri,  6 Mar 2020 13:58:06 -0500 (EST)
-Received: from [IPv6:2600:1012:b12d:1120:1e4:1191:77a1:c690] (unknown [IPv6:2600:1012:b12d:1120:1e4:1191:77a1:c690])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id ED35E3F484A;
-        Fri,  6 Mar 2020 13:58:04 -0500 (EST)
-Subject: Re: [PATCH v9 2/5] bugreport: add tool to generate debugging info
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
-References: <20200302230400.107428-1-emilyshaffer@google.com>
- <20200302230400.107428-3-emilyshaffer@google.com>
- <nycvar.QRO.7.76.6.2003042232340.46@tvgsbejvaqbjf.bet>
- <5aae34d7-ed76-0e71-d0c4-959deeb1b2ca@jeffhostetler.com>
- <xmqqr1y52w5y.fsf@gitster-ct.c.googlers.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <c3ab15b9-c143-2251-0e5d-a990e50a72ea@jeffhostetler.com>
-Date:   Fri, 6 Mar 2020 13:58:02 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:69.0) Gecko/20100101
- Thunderbird/69.0
+        id S1726237AbgCFTDT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Mar 2020 14:03:19 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:44494 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726083AbgCFTDT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Mar 2020 14:03:19 -0500
+Received: by mail-wr1-f68.google.com with SMTP id n7so3579819wrt.11
+        for <git@vger.kernel.org>; Fri, 06 Mar 2020 11:03:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=drmxDzlvGZu/zKmR4VbczSZF5RawGooti/+oH53kFgY=;
+        b=liOJAe31mQOTYUgrhlULOR3+9CF5U9wrV6wxVf0y9fEvWVSFHKwbEnFURZZm+uoDgh
+         7upORCStPlscujdfSrOpT3HV0jV0gEcyyvrTiznvgJy9RDCNsioY7W5x5tpgrs9DH7cQ
+         KKoCvKSd8ls0wVSSsx/pisWCV4lvFSMDwQR4mop/MLhKxZ5fNTcC0h98QrjXNI5nXx9t
+         EoPwlh12JefxpFiGVOUePLxE8iJRBJzW9LO89uhvPJRkC43ogjY3OD16lrnKKvon1LR6
+         s59a9fHW5mr7wc0BytCF0yJsDNKA7VafmO7l8gYmbeqKaHvPveVOjOkX60+LqPdK7O4w
+         trdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=drmxDzlvGZu/zKmR4VbczSZF5RawGooti/+oH53kFgY=;
+        b=TZf54PLQkwtgppuxoGLciQgf43UquGVjPHVvm6r2yl4o5kOYKl09VA+Oej95m3Bk/e
+         CDz1Ai/v2yFcxMnJ1P1aEsuWuqBUetsNVGCNC0ZXDnpXni06nRX/NmmdPEggbj6IYWwr
+         c1tTNMRtxz2lR8GZR5avnIBo4/yP86zZLZatKvf77pKYpTfSBcrtn6pcOBs65OS5NMku
+         zroPlaQl43hNl7t/PNivftJSjq36e2VvyKRlyGnT5aHGigFi8K2EfFTGd7YYjDSdfaDM
+         VV6PJ5hT7PF/3VuxVSxTQGZlJTf10e8nN+Qsuq1mPa7/Wl6LW1NbxJ4Bi2WYWeCj+vDS
+         BVwQ==
+X-Gm-Message-State: ANhLgQ17n51fCKBY/wvhyOn2alLJL6YNe8Ch36ha42+UQHaKq2z4Ej/Y
+        /T12XrIrtVAaBYU5pYNbKY4iRUqR
+X-Google-Smtp-Source: ADFU+vscWdHI8zP+RjBXO8F1XrkZy+hbcAMNZYim1lWXCrhCfvywtHxRC6lJ9wmy8bAJLyLAm3JD8Q==
+X-Received: by 2002:a5d:6884:: with SMTP id h4mr5291080wru.91.1583521397844;
+        Fri, 06 Mar 2020 11:03:17 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id m25sm14169760wml.35.2020.03.06.11.03.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 06 Mar 2020 11:03:17 -0800 (PST)
+Message-Id: <pull.575.git.1583521396.gitgitgadget@gmail.com>
+From:   "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 06 Mar 2020 19:03:12 +0000
+Subject: [PATCH 0/4] Fix bugs related to real_path()
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-In-Reply-To: <xmqqr1y52w5y.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+To:     git@vger.kernel.org
+Cc:     Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+The issue with `real_path()` seems to be long-standing, where multiple
+people solved parts of it over time. I'm adding another part here
+after I have discovered a crash related to it.
+
+Even with this step, there are still problems remaining:
+* `read_gitfile_gently()` still uses shared buffer.
+* `absolute_path()` was not removed.
+
+These issues remain because there're too many code references and I'd like
+to avoid submitting a single topic of a scary size.
+
+Alexandr Miloslavskiy (4):
+  set_git_dir: fix crash when used with real_path()
+  real_path: remove unsafe API
+  real_path_if_valid(): remove unsafe API
+  get_superproject_working_tree(): return strbuf
+
+ abspath.c                  | 18 +-----------------
+ builtin/clone.c            |  7 ++++++-
+ builtin/commit-graph.c     |  6 +++++-
+ builtin/init-db.c          |  4 ++--
+ builtin/rev-parse.c        | 12 ++++++++----
+ builtin/worktree.c         | 10 +++++++---
+ cache.h                    |  4 +---
+ editor.c                   | 11 +++++++++--
+ environment.c              | 18 ++++++++++++++++--
+ path.c                     |  4 ++--
+ setup.c                    | 37 ++++++++++++++++++++++++-------------
+ sha1-file.c                | 13 ++++---------
+ submodule.c                | 22 ++++++++++++----------
+ submodule.h                |  4 ++--
+ t/helper/test-path-utils.c |  6 +++++-
+ worktree.c                 | 13 ++++++++++---
+ 16 files changed, 114 insertions(+), 75 deletions(-)
 
 
-On 3/6/2020 1:08 PM, Junio C Hamano wrote:
-> Jeff Hostetler <git@jeffhostetler.com> writes:
-> 
->> Having this command be a stand-alone exe rather than a builtin allows
->> it to have a different linkage.  For example, you could include the
->> libcurl and other libraries that are only linked into the transports.
->> And then report version numbers for them if you wanted.
-> 
-> I actually do not think that is a good rationale.  Unless your
-> version of "git bugreport" links into the same binary as the
-> "transports", it still is possible that the version of cURL (for
-> example) "git bugreport" can learn internally from may not have
-> anything to do with the version of the library used by the
-> transports.
-> 
-> Of course, making "bugreport" a built-in, i.e. the same binary as
-> the non-transport part of Git, is not a solution for that issue,
-> either.  As Dscho suggested and recent rounds of "git bugreport"
-> implements, teaching the transport binaries an option to report
-> relevant pieces of information regarding the libraries they use, and
-> making "git bugreport" ask them, is a very good solution for that.
-> 
-> What makes it possible by making "git bugreport" stand-alone is for
-> it to link with libraries that the remainder of Git, including the
-> transports that link with libcurl, has no business linking with (a
-> library to obtain system details for diagnostic purposes, for
-> example).  Early versions of "git bugreport" may not link with
-> anything special, but making sure it starts and stays standalone
-> leaves it easier to do so _without_ having to worry about splitting
-> the code that started as a built-in out to make it independent later.
-> 
-> 
-
-Yeah, that makes sense.
-Thanks
-Jeff
+base-commit: 076cbdcd739aeb33c1be87b73aebae5e43d7bcc5
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-575%2FSyntevoAlex%2F%230205(git)_crash_real_path-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-575/SyntevoAlex/#0205(git)_crash_real_path-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/575
+-- 
+gitgitgadget
