@@ -2,91 +2,102 @@ Return-Path: <SRS0=QY2u=4X=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6AF8BC10DCE
-	for <git@archiver.kernel.org>; Fri,  6 Mar 2020 16:07:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2665AC10DCE
+	for <git@archiver.kernel.org>; Fri,  6 Mar 2020 16:40:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 351452073B
-	for <git@archiver.kernel.org>; Fri,  6 Mar 2020 16:07:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EA1882072A
+	for <git@archiver.kernel.org>; Fri,  6 Mar 2020 16:40:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="vt+7ilEh"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B71jKGub"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726860AbgCFQHL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Mar 2020 11:07:11 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:62322 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726462AbgCFQHL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Mar 2020 11:07:11 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3D765B0A50;
-        Fri,  6 Mar 2020 11:07:09 -0500 (EST)
-        (envelope-from tmz@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
-        :cc:subject:message-id:references:mime-version:content-type
-        :in-reply-to; s=sasl; bh=2+JzeJTVpkcZMSeT+Cy/4POabGA=; b=vt+7ilE
-        hFLbnzZbU0dUB6afke93g3bHBsDMM9CgmbB5G64TLkyuxEfBryOY7GeQMoj0gETp
-        TLxjxgo/OIWdSFIN2+mYXI1TsO+mronzoG1FSvS9BC3nNRsRaSRNRj5V3ytQGux2
-        KmsREJ98VInTLO/IsEIwo/EML6Cs6JVOajRU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
-        :subject:message-id:references:mime-version:content-type
-        :in-reply-to; q=dns; s=sasl; b=EpUAgTCWuffB0OlUvb8sQpYO+kv8XVRoV
-        JL1jsFs81qx82SR4MTWmIH+Vk0L2N3AK4GsNESVXoAl9nJQxxhCFI8bLgZuiHcrJ
-        s1n9DekmOBkedP1YfnW5hYIdO1u2Hi/VL39e/AKuOw6MFK6NSbdf3p581Irk0GTA
-        p+MuH3tMGk=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 34E7FB0A4F;
-        Fri,  6 Mar 2020 11:07:09 -0500 (EST)
-        (envelope-from tmz@pobox.com)
-Received: from pobox.com (unknown [71.254.198.29])
-        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id CE072B0A4D;
-        Fri,  6 Mar 2020 11:07:05 -0500 (EST)
-        (envelope-from tmz@pobox.com)
-Date:   Fri, 6 Mar 2020 11:07:03 -0500
-From:   Todd Zullinger <tmz@pobox.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-        git@vger.kernel.org, git-packagers@googlegroups.com
-Subject: Re: [ANNOUNCE] Git v2.26.0-rc0
-Message-ID: <20200306160703.GK13045@pobox.com>
-References: <xmqq5zfi4g0p.fsf@gitster-ct.c.googlers.com>
+        id S1726498AbgCFQkh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Mar 2020 11:40:37 -0500
+Received: from mail-pf1-f170.google.com ([209.85.210.170]:39120 "EHLO
+        mail-pf1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726269AbgCFQkh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Mar 2020 11:40:37 -0500
+Received: by mail-pf1-f170.google.com with SMTP id w65so816787pfb.6
+        for <git@vger.kernel.org>; Fri, 06 Mar 2020 08:40:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=4NP5xq8e+xu0xLRY1Sh/ugow7RlHzCCI+wCuWfnG6VY=;
+        b=B71jKGubVBEffPzsXFeRk7/vflNbZ6tKkknsrXfJIJP+P0eDQJRdJu1Q2Gk3SGlIQp
+         q0Cuq5lB0RU7DibTvz4/v6IwiFdJnF74L7LYJ3ekv1uYDIrd8QGqZghJmW3M06dRKXW/
+         2RLRGrBkod6vdN+BpCuGiZQNox4UGWB6UB0eYZAE6mFZCsoXeo0Ssd0AeKv9e0l5CrMJ
+         tb4Zb5aD9vI5P7Skkxn2Kp+lWvpDr3LmsqjGmYsLe7HYiwEGTXJVzfszz0NCfHWzQHYv
+         mfWVuETnPQts2d7LzMrEWA2fKrap9ElUcU4cdil+hcH9nDLPgxq8m1yQlKrd7r37JEJJ
+         mgCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=4NP5xq8e+xu0xLRY1Sh/ugow7RlHzCCI+wCuWfnG6VY=;
+        b=SiHWJmfO1MWErhcr3GO/5y5KjmRkL1ieVYcMhvU5MuVjOgSFoWQobcVM+3ec8sulN0
+         RjJe541okq91PLfz9debPb+MouIxx26E/zyj7SsJ7oKoaDbJC7SzhC+0vQHW6V2isj07
+         ifDkUUihIrTK9V8MgErc6S5RJnTWpUswIhlXcIR6Qx9MvMhcOlPeEzZDjCburC4Lqdmv
+         +khVT6NxqQnyhNl54ymGl385NAe942fNpOQGLF4pI56mXoEC5gB8U9dUxmivyb+THuhB
+         F1ccqGghtjie3w5qKsTmOhI3WRDAWjJlbvNJ8/8sc2FXDMXqLOb4h4Fz8/CEfmqkuz4P
+         GeQA==
+X-Gm-Message-State: ANhLgQ1rIoZhvM6ferwWwNLJbu/4WeqDTbiDwRk/+sYlAZ1BbWOheJ2d
+        N9KBMvieFSGTkDP19UQzqOP0L7Tt
+X-Google-Smtp-Source: ADFU+vsFY9gERpW3SGV8JyBjGznNKO7iczkvbjfRmEf80ps+dDVoFAwFr7a7SmQ2AZt5J6+WhrcUvw==
+X-Received: by 2002:a62:2fc2:: with SMTP id v185mr2018237pfv.192.1583512835494;
+        Fri, 06 Mar 2020 08:40:35 -0800 (PST)
+Received: from [100.70.86.73] ([12.129.159.194])
+        by smtp.gmail.com with ESMTPSA id x12sm26566380pfi.122.2020.03.06.08.40.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 06 Mar 2020 08:40:34 -0800 (PST)
+Subject: Re: Git Merge 2020 slides and reproducibility
+To:     Elijah Newren <newren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+References: <CABPp-BHk0TyxEgudMX_-zzpFsUPHCmRkvZezN_49J2ivi2-N+w@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <14db3e6f-6919-aa58-7084-e4404452820c@gmail.com>
+Date:   Fri, 6 Mar 2020 11:40:33 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:73.0) Gecko/20100101
+ Thunderbird/73.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq5zfi4g0p.fsf@gitster-ct.c.googlers.com>
-X-Pobox-Relay-ID: 86667682-5FC4-11EA-A256-B0405B776F7B-09356542!pb-smtp20.pobox.com
+In-Reply-To: <CABPp-BHk0TyxEgudMX_-zzpFsUPHCmRkvZezN_49J2ivi2-N+w@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-[-cc: linux-kernel@vger.kernel.org]
+On 3/6/2020 10:00 AM, Elijah Newren wrote:
+> Had a few different folks ask me at Git Merge about slides for my
+> talk.  I said I'd post them on github somewhere, but in case you were
+> one of the folks and have a hard time finding it...they are up at
+> https://github.com/newren/presentations/blob/pdfs/merge-performance/merge-performance-slides.pdf
 
-Junio C Hamano wrote:
-> An early preview release Git v2.26.0-rc0 is now available for
-> testing at the usual places.  It is comprised of 426 non-merge
-> commits since v2.25.0, contributed by 43 people, 7 of which are
-> new faces.
+Thanks! I guess I can post mine, too:
 
-I've built rc0 for Fedora and RHEL/CentOS across a decent
-variety of architectures without any issues.
+https://stolee.dev/docs/git-merge-2020.pdf
 
-One thing of note, which isn't new in rc0 nor is it a Git
-issue: with gcc-10 on s390x, diff.c is miscompiled when
-built with '-O2 -march=zEC12 -mtune=z13' options.  It's
-fixed in gcc's git, with thanks to Jakub Jelinek for the
-diagnosis, work-around, and patch.
+> and steps to reproduce the speedups I got can be found at
+> https://github.com/newren/git/blob/git-merge-2020-demo/README.md
+> (though be forewarned that the code is has lots of fixmes & ifdefs &
+> other problems, has awful commit messages, etc.; I will be cleaning it
+> up soon).
+> 
+> I know the "suggested" way to make this stuff available was on
+> Twitter, but I don't really have any much of any social media presence
+> (I can't even access the blog I once had) and don't want to make a
+> twitter account just for this.  (If someone else wants to repost my
+> slides, feel free.)
 
-A work-around is 's/-mtune=z13/-mtune=zEC12/' for the
-compiler flags.  Hopefully if anyone else runs into the
-issue, this will save some time.
+Done: https://twitter.com/stolee/status/1235968445637771265?s=20
 
-The gcc bug report is:
-https://gcc.gnu.org/bugzilla/show_bug.cgi?id=93908
-
--- 
-Todd
+Thanks!
+-Stolee
