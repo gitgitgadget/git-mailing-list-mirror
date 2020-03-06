@@ -2,100 +2,136 @@ Return-Path: <SRS0=QY2u=4X=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AEB76C10DCE
-	for <git@archiver.kernel.org>; Fri,  6 Mar 2020 18:08:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5BCDBC10DCE
+	for <git@archiver.kernel.org>; Fri,  6 Mar 2020 18:19:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5F4252067C
-	for <git@archiver.kernel.org>; Fri,  6 Mar 2020 18:08:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2B14020674
+	for <git@archiver.kernel.org>; Fri,  6 Mar 2020 18:19:24 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="W2FlnxEq"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Mn7wjee4"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726397AbgCFSIs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Mar 2020 13:08:48 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:55578 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726167AbgCFSIs (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Mar 2020 13:08:48 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 40364B1A0D;
-        Fri,  6 Mar 2020 13:08:46 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=0j76/WxqA4pvUIv1JxH8wIIry5g=; b=W2Flnx
-        Eq5iXbo8q8Fit+//KpjIN2ooAlprWuCH/vNCdeIaO4U+v2QFAOk+gpkWROqKrG5X
-        aX/H3fuG+0B9PM6ctbHhWarde+ivU4HcgCBRz37MiWdw1t/CXjr4azdkZdxOkAY6
-        IwNy8fNmqWkZduJH97VwvfH2Lbk4GkDB7fyyU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=QtshZq5wD2jv3rRjCurfFKs3xTHQI460
-        a+0MCbY/ESoQdizCDhl3Mm6J9ozNWdb/m4dpHsSNo+YOuv6OOQ5zHfj15+vgpCnu
-        v3PtV7fQ8zrOOW8WBhmHcfV96mSscAEr0SF3PA4ihH0lI3JPY5NNWOqtINKOzWp+
-        fV1CbHDPZAw=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 394CDB1A0B;
-        Fri,  6 Mar 2020 13:08:46 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 66F5AB1A09;
-        Fri,  6 Mar 2020 13:08:43 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH v9 2/5] bugreport: add tool to generate debugging info
-References: <20200302230400.107428-1-emilyshaffer@google.com>
-        <20200302230400.107428-3-emilyshaffer@google.com>
-        <nycvar.QRO.7.76.6.2003042232340.46@tvgsbejvaqbjf.bet>
-        <5aae34d7-ed76-0e71-d0c4-959deeb1b2ca@jeffhostetler.com>
-Date:   Fri, 06 Mar 2020 10:08:41 -0800
-In-Reply-To: <5aae34d7-ed76-0e71-d0c4-959deeb1b2ca@jeffhostetler.com> (Jeff
-        Hostetler's message of "Thu, 5 Mar 2020 18:34:39 -0500")
-Message-ID: <xmqqr1y52w5y.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726300AbgCFSTV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Mar 2020 13:19:21 -0500
+Received: from mail-io1-f68.google.com ([209.85.166.68]:33139 "EHLO
+        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726167AbgCFSTV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Mar 2020 13:19:21 -0500
+Received: by mail-io1-f68.google.com with SMTP id r15so3034168iog.0
+        for <git@vger.kernel.org>; Fri, 06 Mar 2020 10:19:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=djzFOQqQ5/OYX2wmOSfxFnFVvFhc5gUrl7eVhemVr8k=;
+        b=Mn7wjee4YhuI9ghwKvgCI1Zxu0lcgv4V7ykLJ2TKTWGlNpWjAV3AjlJsldvB9uXQSX
+         ymTe6EufLbTTNQA3a3usdaj6Vf5s1dL54sAN9b2mAv1jp+UbA1FT8atdwAK4CTuRoKT/
+         Kfez5cpi4eo5nhASiBEdK35Z0O23kyFCb7wZvz093gdplnbeCsE8nOlW4jDeZBMb9R9/
+         +iFEoPFDi5HNTObIB/YT/TAl4otxbpjRCKeCOEMA3skB+u+vGhz54v+tYr8ZLdWSyJ1Q
+         ZR+0Cy5rpTSbQ7qkBwfcgSrv0Uqrs9+eIkDG0vFIxfMo+QS+QJ059NgsaFI73mXpD+7t
+         bkyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=djzFOQqQ5/OYX2wmOSfxFnFVvFhc5gUrl7eVhemVr8k=;
+        b=tA31wBhbEcfo+6/wKlbfLFr7j7IMlIzurNcsjrUqDjDEYCupkCA0oCQrDx4Nj8KPrs
+         4g34lHiDVeMc8eOj/vqdmlVFeG9n4I/BzyxP0nBjZd1k3z+JlFdupsVQHfcS1y05cxJC
+         QeFXX6y7lIt4W8dPunIGL8j92GP9hVTwgRFX+LXpiMmbkD7ZDvUkfiRUJCU/g4TjgaEL
+         FbQWIDtHCLu5DHRfV9ZsktOgZlZSvjcbMLbcW0ZSEwLuIYfMWG50/QDefSh9GisKQUDm
+         x/uYbOkRtmm3OkKV+/8JZNKrVSgRZqFSMpUnuZQKcbnXcVoMnxNqC1zD1OKPbmzYMTTy
+         Sgjg==
+X-Gm-Message-State: ANhLgQ1Ue24kt/z0qwdsYlPyXRV5769eFCF0J+NOBNsuges+IxcwaaeD
+        4/IV3IFpBnt8gL218J8+FTQ0NYUN6oppBUpglnWWnA==
+X-Google-Smtp-Source: ADFU+vsKsVGngbTSbFCOKbJ8jAfeJ+QtZDgBWcI44LGx87oxg0ROdRc7uevr3EqnVQWHyya1vLQEidGOZ1b6yyXnkE4=
+X-Received: by 2002:a05:6602:1217:: with SMTP id y23mr4202547iot.34.1583518760457;
+ Fri, 06 Mar 2020 10:19:20 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 83EF094E-5FD5-11EA-BE3D-B0405B776F7B-77302942!pb-smtp20.pobox.com
+References: <20200226101429.81327-1-mirucam@gmail.com> <20200226101429.81327-3-mirucam@gmail.com>
+ <xmqqzhd5i1na.fsf@gitster-ct.c.googlers.com> <CAN7CjDDwgR=y8gyYmDzmuTW3AKvb1N=EdCtH-8Tr7T=b6cG5gQ@mail.gmail.com>
+ <xmqqwo88f0do.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqwo88f0do.fsf@gitster-ct.c.googlers.com>
+From:   "Miriam R." <mirucam@gmail.com>
+Date:   Fri, 6 Mar 2020 19:19:09 +0100
+Message-ID: <CAN7CjDCb3Bo-reyCZBxMuxX7ecCRLo6XaZHUE5fKGnQav9g_xQ@mail.gmail.com>
+Subject: Re: [PATCH 02/10] bisect--helper: reimplement `bisect_next` and
+ `bisect_auto_next` shell functions in C
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff Hostetler <git@jeffhostetler.com> writes:
+Hi Junio,
 
-> Having this command be a stand-alone exe rather than a builtin allows
-> it to have a different linkage.  For example, you could include the
-> libcurl and other libraries that are only linked into the transports.
-> And then report version numbers for them if you wanted.
+El jue., 27 feb. 2020 a las 17:41, Junio C Hamano
+(<gitster@pobox.com>) escribi=C3=B3:
+>
+> "Miriam R." <mirucam@gmail.com> writes:
+>
+> >> It would be surprising if this code were correct.  It may be that it
+> >> happens to (appear to) work because parents of the commit hasn't
+> >> been painted and calling the helper only clears the mark from the
+> >> commit (so we won't see repeated "painting down to the root commit")
+> >> in which case this might be an extremely expensive looking variant
+> >> of
+> >>
+> >>         commit->object.flags &=3D ~ALL_REV_FLAGS;
+> >>
+> >> that only confuses the readers.
+> >>
+> >> Even then, I think by clearing bits like SEEN from commit, it breaks
+> >> the revision traversal machinery---for example, doesn't this mean
+> >> that the commit we just processed can be re-visited by
+> >> get_revision() without deduping in a history with forks and merges?
+> >>
+> >> Has this been shown to any of your mentors before sending it to the
+> >> list?
+> >
+> > Adding clear_commit_marks() was a suggestion of a previous review of th=
+is patch:
+> > https://public-inbox.org/git/nycvar.QRO.7.76.6.2001301619340.46@tvgsbej=
+vaqbjf.bet/
+> >
+> > And of course, my mentor always reviews my patch series before sending.
+>
+> OK, I just didn't know how you and your mentors work.  Some leave
+> their door open for mentees and help them when asked but otherwise
+> act as an ordinary reviewer who somehow prioritises reviewing the
+> work by their mentees.  So your mentors may be a better source of
+> information why this piece of code, which I still do not know how it
+> could be correct, is supposed to work.  Good.
+>
+> After reading the above URL, I think you may have misread the
+> suggestion you were given.  Resetting using clear_commit_marks() may
+> be necessary, but you do so when you finished walking so that you
+> can do unrelated revision walk later.  For that, you clear the flag
+> bits after the while() loop that asks get_revision() to yield
+> commits are done, using the initial set of commits that you used to
+> start iteration.
+>
+> That is how bisect.c::check_ancestors() work, that is
+>
+>  - it initializes a rev_info 'revs' from an array of commit rev[]
+>
+>  - it lets bisect_common() use the 'revs', which is allowed to
+>    smudge the flag bits of commit objects.
+>
+>  - it uses clear_commit_marks_many() to clear the flags of the
+>    commits whose flag bits may have been smudged and their
+>    ancestors, recursively.  In order to use as the starting points,
+>    the original array of commit rev[] that started the revision
+>    traversal is used.
 
-I actually do not think that is a good rationale.  Unless your
-version of "git bugreport" links into the same binary as the
-"transports", it still is possible that the version of cURL (for
-example) "git bugreport" can learn internally from may not have
-anything to do with the version of the library used by the
-transports.  
+Thank you for your explanation.
 
-Of course, making "bugreport" a built-in, i.e. the same binary as
-the non-transport part of Git, is not a solution for that issue,
-either.  As Dscho suggested and recent rounds of "git bugreport"
-implements, teaching the transport binaries an option to report
-relevant pieces of information regarding the libraries they use, and
-making "git bugreport" ask them, is a very good solution for that.
-
-What makes it possible by making "git bugreport" stand-alone is for
-it to link with libraries that the remainder of Git, including the
-transports that link with libcurl, has no business linking with (a
-library to obtain system details for diagnostic purposes, for
-example).  Early versions of "git bugreport" may not link with
-anything special, but making sure it starts and stays standalone
-leaves it easier to do so _without_ having to worry about splitting
-the code that started as a built-in out to make it independent later.
-
-
+To my understanding, it looks like calling reset_revision_walk() after
+the while() loop should be enough. Am I right or am I missing
+something?
