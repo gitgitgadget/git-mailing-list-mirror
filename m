@@ -2,142 +2,108 @@ Return-Path: <SRS0=QY2u=4X=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EAECBC10DCE
-	for <git@archiver.kernel.org>; Fri,  6 Mar 2020 15:48:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E2A4FC10DCE
+	for <git@archiver.kernel.org>; Fri,  6 Mar 2020 16:03:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id C0BEE20726
-	for <git@archiver.kernel.org>; Fri,  6 Mar 2020 15:48:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AFF46208CD
+	for <git@archiver.kernel.org>; Fri,  6 Mar 2020 16:03:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KU80j47H"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Itskc+Cl"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726231AbgCFPsN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Mar 2020 10:48:13 -0500
-Received: from mail-oi1-f194.google.com ([209.85.167.194]:36885 "EHLO
-        mail-oi1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725873AbgCFPsN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Mar 2020 10:48:13 -0500
-Received: by mail-oi1-f194.google.com with SMTP id q65so2969668oif.4
-        for <git@vger.kernel.org>; Fri, 06 Mar 2020 07:48:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=FrPf/l58K4M7nPcL5nPmQwJN86gqVczsKhJaWdBIF9g=;
-        b=KU80j47HoA2AyU4JyON1l8iZ2h99vVnBfE2f5GhJInsJDDgxeijfGjB5pnrelfg6is
-         6OXfeVA9upnWn+K+v1l0kXA0FeoKrdjD618cq1zHhQQlpxtbre4hy8HePRoAW2r+aZKz
-         H5xu3hJdi9fS3jdUUlNpumedJ8uydMVHApYNhVGVmoBshnJs+7izd6JaXUwpzqQgSZ3I
-         uoqpWR6HKe7w2Ag7NaGHdRDrPChMJIuFllMTLnry/W6yl9Yc2GUxrReevqQaVZ9swvq0
-         ljKKQKoFGhhydUZtfQgYPlBi2S+DiTe+A2RPPABp8fvP0IEuId2oKz5cBN1LO5URYixV
-         wjsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=FrPf/l58K4M7nPcL5nPmQwJN86gqVczsKhJaWdBIF9g=;
-        b=jtRboZJCi19fxF15SdHax1x2+F/4GiJX+9+/kDy/hEFBePGjfZdmKIrPZgF61G5cpi
-         VuWePGJKagS0qqTYt2ib6NrbUevdAUSiKQXl852285W4ufzGnAxBOSO3OdPJfl34Wkdi
-         72d+3i8l4w8erZhIl5VuMXROg2aqzTZEbQgYrTM1lI9HJ8tFjtgFLwHAF0s0RtsfElXs
-         nW8HQQDda5kPhAFNqr1EOggANrTCXOsK75DAD8k8tX/mSZAHW0HvCl+DWqPmJatkc7XT
-         Jg0ZjQXeQxYl4MCrIkAeAnF8OpndFQYbjk34JpaGUq1IhQ043u0AzTeCEjVLOCuM1czE
-         uyLw==
-X-Gm-Message-State: ANhLgQ0EAeYCznvTzfYjq1KsX4Qc6MtI14q/+2RUbJjf8wHPawjBcn7A
-        pNwZrrIzC79WCXwcAM2RYjq6GOpRWgsTBgJIW1+7/WzG
-X-Google-Smtp-Source: ADFU+vujdV5e/aKwQyj23AjXhUvQgwq2hz3CxmOnjvdYWCL9XkX/RU1WTcULALUep6c7cC9xzaS/aI4jkF0b4Fz2Ntk=
-X-Received: by 2002:aca:130c:: with SMTP id e12mr3011721oii.122.1583509692137;
- Fri, 06 Mar 2020 07:48:12 -0800 (PST)
+        id S1726873AbgCFQDg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Mar 2020 11:03:36 -0500
+Received: from mout.gmx.net ([212.227.15.15]:58773 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725935AbgCFQDf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Mar 2020 11:03:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1583510613;
+        bh=/fzXg53fHqPn/k4JiAoBRhDfl+LZ7KRcrT/ie3Ga8mw=;
+        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+        b=Itskc+ClKTdf5IUH1/MyAo9c+l8hfutBQGhknAfO9boItr2DDCfZRlxOxyoWENbNO
+         gjz4DHOCHTJS7ASOKq/kW21l90sqGVvXxLOrJg8DclmtspQwpTZ1bP6pTmYcbi5Eko
+         UIil6GrPHQYAZ7W4Pk4wMl60G4XphOp5v6HRxRgA=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from fv-az773.lgwt1dslmtaudee0053yusaswh.bx.internal.cloudapp.net
+ ([20.185.220.64]) by mail.gmx.com (mrgmx004 [212.227.17.190]) with ESMTPSA
+ (Nemesis) id 1MqaxO-1jf8I125NQ-00mbw1; Fri, 06 Mar 2020 17:03:33 +0100
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
+        git-packagers@googlegroups.com
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [ANNOUNCE] Git for Windows 2.26.0-rc0
+Date:   Fri,  6 Mar 2020 16:03:30 +0000
+Message-Id: <20200306160330.6409-1-johannes.schindelin@gmx.de>
+X-Mailer: git-send-email 2.25.1
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-References: <61922A39-13DC-4B17-94FC-7F67DF308347@booking.com>
- <xmqq36ayob9a.fsf@gitster-ct.c.googlers.com> <20200302181832.GA1571684@cat>
- <20200302181924.GB1571684@cat> <xmqqy2si9z4x.fsf_-_@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqy2si9z4x.fsf_-_@gitster-ct.c.googlers.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 6 Mar 2020 07:48:01 -0800
-Message-ID: <CABPp-BGtez4qjbtFT1hQoREfcJPmk9MzjhY5eEq1QhXT23tFOw@mail.gmail.com>
-Subject: Re: non-regression bug in 'git merge' (really, xdiff/xmerge, I think)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Thomas Gummerer <t.gummerer@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Fcc:    Sent
+X-Provags-ID: V03:K1:RA33yurcti128ilAg/1dffgrDMmPil6DEcIwvhd4LFpMN9S/CQf
+ bZOQynztTuiwUzZ3StjQ+IHc0y8XJU/dI11jiWyxdmuVfb0khZnMrYkBLC0EWeWjmA/KISM
+ DfJgz24ncH7jfveNKdclalBAgTaQqu6KAs0buHBfO3YDgY+5g4tNDP+HFlBIjRspUGxKC4B
+ d4NiMvaZmLLpTOwPChkAQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:r/NSdFNTi8I=:/R1p5LgbiYOQyqeziohs5D
+ szEiEXlFzRIihix559ALzq8U63oEJTCC9+Pnt0r8r6pozyfaSQvrp1Zpn2HCoxY9yIyjIOpR0
+ uXEH/B1bcGpXOyTg4V9zc10XHOgRmrTNlf4f6PVcioh5LcjketEB+KVVQyedsCi6rPqYV24RP
+ jxWSAQXAT5BrfnKyE1d+e0FGBQEmbq7E+/XmpqFQH/GRKdRv438Qf9Sx22MMQeFWFzsGDC6kQ
+ UuScktzDZw+eTZmbSOE3DPvxbDJACMauSjVaa9CI6hUE/saH1hOUZoAIdKzYXiAtcZFBzXnNc
+ 2jMUANsSuaLAE0tQxRJvbXGBDxMCZpaKJUAitff892u8YJ//Zy37nExG0HMW+QLah5D3pewz1
+ r3Cpg1+FsAlvShpgCE82jJZI/izaDOJ2+pibUk2J8OoIwj+v/qXQKRFUziVhAdBZ6muivnC/G
+ g3OsXL2SEr8M4aqpv+9sUO93hGEBIXOrNpg9RW+f4F8FWwDMN+oytrsPiUyKALOcpfWHugveT
+ 4l2ePHKSa8F9kZCE0o9EbLN0wjLTLXjuIuXWwWxxX1mq5a0Kjssl3rcgMp8wfIO72jAVfVgMW
+ 7FHMhkmcSgkYYOzq17CxwEQWqxUUFir+a3v5afUy7M4dvYbP/ijhV1QKtpekFlsugU7tXUyA7
+ Ma9HiLEJ4gjsbOUBqOtcWe0zjbKiGM+7C/UNXbE7NHo4C8JXkBrahBCWqAn1pxB4u4La9x3b9
+ NUBR4mna8nXvSo/tdXm+RKn6/tdKP1JPz3kr/Qg5QB21miDpmHMDPfQqHI6fo+dCzAMuzV7sc
+ zCOCVFLfWKBmVdG+YXaxc9/jqPF3J28QRw6Uj+YeAoaokro+T/4hKAHmYQR2fA1IfGS+pfm/B
+ ttk61s7Lsx4zCjXXT0r+8a32BYxyUSsJAGQGaHABI0zMviK7UHtqi+DkgJuZkyuF/KGFDvgl5
+ zlq3922+k1ccqqOcxBcX90Isl2yOBjZRVnZhspsw5Yyq92EzGzdSCCXq4lJHyolYvAdvyKWZe
+ zBn21QZ0OHLcvxfCRidKIdYpVj/jm24rapAA4T7+uLO0F6aP83EzWwqj3DyzFG27s0chUs631
+ Y3A/8ixyyxZGLSyjz7FZDN4Bsuug+pRRpwY895J+pBN0kdzd4Hhokf4Zbe+NE7/kxT9KHtkIA
+ tST+u2wdQjpx7CFoFOj2YFfpVtS9GbQ2+xQsRR3JtVZepULJENzZSSQRWdlagFNcpc4TAgyUH
+ jHcClwdl3+BDOaqi6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 2, 2020 at 2:21 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Thomas Gummerer <t.gummerer@gmail.com> writes:
->
-> > diff --git a/Makefile b/Makefile
-> > index 9804a0758b..096c6d1fbb 100644
-> > --- a/Makefile
-> > +++ b/Makefile
-> > @@ -609,7 +609,6 @@ SCRIPT_SH += git-merge-one-file.sh
-> >  SCRIPT_SH += git-merge-resolve.sh
-> >  SCRIPT_SH += git-mergetool.sh
-> >  SCRIPT_SH += git-quiltimport.sh
-> > -SCRIPT_SH += git-legacy-stash.sh
-> >  SCRIPT_SH += git-request-pull.sh
-> >  SCRIPT_SH += git-submodule.sh
-> >  SCRIPT_SH += git-web--browse.sh
->
-> Merging this topic to 'pu', which has dl/merge-autostash topic
-> already merged, breaks the build and it is not fault of Thomas's
-> topic.  dl/merge-autostash has the following bit:
->
-> commit 4b981afaa03c00524f1d4986271a3f4cc119f4cd
-> Merge: 06928448f7 de4db86ff2
-> Author: Junio C Hamano <gitster@pobox.com>
-> Date:   Mon Mar 2 13:23:26 2020 -0800
->
->     Merge branch 'dl/merge-autostash' into pu
->
->     "git merge" learns the "--autostash" option.
->
->     * dl/merge-autostash:
->       ...
->       Makefile: alphabetically sort += lists
->
-> diff --git a/Makefile b/Makefile
-> index a5961113d8..c0793ac75b 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -604,12 +604,12 @@ unexport CDPATH
->  SCRIPT_SH += git-bisect.sh
->  SCRIPT_SH += git-difftool--helper.sh
->  SCRIPT_SH += git-filter-branch.sh
-> +SCRIPT_SH += git-legacy-stash.sh
->  SCRIPT_SH += git-merge-octopus.sh
->  SCRIPT_SH += git-merge-one-file.sh
->  SCRIPT_SH += git-merge-resolve.sh
->  SCRIPT_SH += git-mergetool.sh
->  SCRIPT_SH += git-quiltimport.sh
-> -SCRIPT_SH += git-legacy-stash.sh
->  SCRIPT_SH += git-request-pull.sh
->  SCRIPT_SH += git-submodule.sh
->  SCRIPT_SH += git-web--browse.sh
-> @@ -617,8 +617,8 @@ SCRIPT_SH += git-web--browse.sh
->
-> which makes it appear to the xmerge code that legacy-status that
-> used to exist in between quiltimport and request-pull has already
-> been removed.
->
-> As Thomas's above patch exactly wants to do that (i.e. we want to
-> remove legacy-stash between quiltimport and request-pull), the
-> xmerge code seems to think incorrectly that the requested change has
-> already been applied.  And as a result of that, there remains
-> legacy-stash between fliter-branch and merge-octopus, breaking the
-> build by having one unbuildable build target X-<.
+Dear Git users,
 
-Thanks for the heads up; I agree that it looks like an xdiff thing,
-and in particular it reminds me of
-https://lore.kernel.org/git/20190816184051.GB13894@sigill.intra.peff.net/
-and https://lore.kernel.org/git/CABPp-BHvJHpSJT7sdFwfNcPn_sOXwJi3=o14qjZS3M8Rzcxe2A@mail.gmail.com/
+I hereby announce that Git for Windows 2.26.0-rc0 is available from:
 
-I'm collecting these cases because I'd like to look into it at some
-point, though for now I'm more focused on merge-ort (my
-merge-recursive replacement).
+    https://github.com/git-for-windows/git/releases/tag/v2.26.0-rc0.windows.1
+
+Changes since Git for Windows v2.25.1 (February 19th 2020)
+
+New Features
+
+  * Comes with Git v2.26.0-rc0.
+  * Comes with cURL v7.69.0.
+  * Git for Windows' OpenSSH now can use USB security tokens (e.g.
+    Yubikeys).
+  * The native Windows HTTPS backend (Secure Channel) has learned to
+    work gracefully with Fiddler and corporate proxies.
+
+Bug Fixes
+
+  * Git for Windows can now clone into directories the current user can
+    write to, even if they lack permission to even read the parent
+    directory.
+
+Git-2.26.0-rc0-64-bit.exe | 5120d8570f49789439d82204a849d7b5b92c01e8abf0ef265d691b80180cb0c2
+Git-2.26.0-rc0-32-bit.exe | 8a60499e0f99f717d62af96c2a9e6d76a90b6042ea738b9dcad6c1f486332c92
+PortableGit-2.26.0-rc0-64-bit.7z.exe | bb0bbedfe49547391c5ed2c1c04d1f9b1efc6bad6ef6bd61a296e2cd36620881
+PortableGit-2.26.0-rc0-32-bit.7z.exe | b65de03991c1d31699e43f3016f4ab3ed73e1a72c661477989ff699fa654e6e5
+MinGit-2.26.0-rc0-64-bit.zip | 99d5a807d18feb823881ca06a1f619982c553c73aefd2859f9e7ac8479ddaf9e
+MinGit-2.26.0-rc0-32-bit.zip | 4581ff8f1e6ec23aea7650da6f27e13694c771200f23695d4a9102e6a008145a
+MinGit-2.26.0-rc0-busybox-64-bit.zip | 5a08abe581b27e8a4b1312cbb704cb07de48960452a7b98ecdbf8fc3b1fc289f
+MinGit-2.26.0-rc0-busybox-32-bit.zip | 637f994d86d4c9039b33b86854ab42f0b48ba55c7e3509d2fc772b9defed7ca4
+Git-2.26.0-rc0-64-bit.tar.bz2 | 1636cd2b65e8c335b1544f27f21d8ecf16dc4fb608836f7567d49a4f6d3ee02c
+Git-2.26.0-rc0-32-bit.tar.bz2 | f3f2979ba674d142bc5938416e6a692332eaa769804cc9cbb4ae04648ba61b6e
+
+Ciao,
+Johannes
