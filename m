@@ -8,59 +8,59 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E7AAC10DCE
-	for <git@archiver.kernel.org>; Sun,  8 Mar 2020 15:38:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CCECEC10F27
+	for <git@archiver.kernel.org>; Sun,  8 Mar 2020 15:38:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B79ED206D7
-	for <git@archiver.kernel.org>; Sun,  8 Mar 2020 15:38:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9DE862084E
+	for <git@archiver.kernel.org>; Sun,  8 Mar 2020 15:38:24 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="scG8Atcl"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YhNHsA5q"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726292AbgCHPiV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 8 Mar 2020 11:38:21 -0400
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:46197 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726260AbgCHPiV (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Mar 2020 11:38:21 -0400
-Received: by mail-pl1-f193.google.com with SMTP id w12so2955595pll.13
-        for <git@vger.kernel.org>; Sun, 08 Mar 2020 08:38:20 -0700 (PDT)
+        id S1726330AbgCHPiX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 8 Mar 2020 11:38:23 -0400
+Received: from mail-pj1-f65.google.com ([209.85.216.65]:40650 "EHLO
+        mail-pj1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726260AbgCHPiW (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Mar 2020 11:38:22 -0400
+Received: by mail-pj1-f65.google.com with SMTP id gv19so3301646pjb.5
+        for <git@vger.kernel.org>; Sun, 08 Mar 2020 08:38:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=AuSuczbp7OAbcM+VS15c2HS1KScBgkjTZzdeNHBKt2I=;
-        b=scG8AtclmBZIrH7hZF8q8GbehKbU9jYVYPK2Qwv7xqYLvHZ5/1kBisudjQkvpqMFpM
-         MdKUX8IitMW0tFmZn8PwBNBSzgCqhmDc0EZfdB/iEmMdKh/ERZlbjKwj9Se8mqGpRzhZ
-         vFeHJbVtboUlDF8SHchcZo4glHAztmm02uJPTnh7qs1I89vVpAQbPh4i3nwwDWhl/i+Q
-         QotDdoBDD7Xk/qCk0ZEiI7t4OSENp+gWUimNV3M0iOk63qm9g3Gli3JIkZu+JanfozPG
-         w1sqHg4ZrfdL9siKTdAkMKx/a7u1VqvovmQtc8nOyn5WOVSqZEpJmofrz6beERsC+m8u
-         2hww==
+        bh=QCRoykGyqvBYbGdGdBEY+MSzZ9WPPSm9L8vfS0EeIzg=;
+        b=YhNHsA5qZM8cGHaU8o97Aqb/BdCiMCVnR0QKnHCIftQFI9Ynb9mvgzHU1YJYrG75km
+         vt5rEse0cgYOg8TVCmuCuH+0387bzwK9RVuKiLu63AP3eWsApudrZQHM+qD7hPc97lw0
+         enH+uw71I3XfGZbZ89Fi+1cPcPuqlKwPO+ugppBPbwY53Jrg6EbWAi24Gm9col9hwQNs
+         O/v1O65mT22A0S4ji/63DADCRRDpIFPjmZIe9fqqzbfB7WRSw96dH3b1onlJ7y2Ph/yy
+         UhRvWaz8W8+0hb4soFcnzgzfY35T6ApDeDvhTuZfgpYD1YssZo6/hdxBPhUHgQAXo7M9
+         ynfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=AuSuczbp7OAbcM+VS15c2HS1KScBgkjTZzdeNHBKt2I=;
-        b=oSS8yatgBoh8M+KZCoKxUXgixsnSbK5OmdZmLFJW3BsbgM9a4D7MURy0YyG+iCI7pK
-         rM60oP/G272IA0bGCRbRk1FDIjbrZHATUl86//smBu0ckh1PwMPG/qEcqY/z6qDGXKry
-         5/SkgT/CayOdSEemNe5dTdgzZpK9HTLakuKHIaiC9+uCFzyqYhXo0oTZww4ZR1y7i0TX
-         ww+o/mLfZOh6HaSurYYi0a99MeR8x0RNXWAypzWiQVcgXXS5JcR/KN1nJSrA3U2x87Iu
-         FmUEVGK9ANIqVg06Nxt9IhwcmScgAMb91EqnXVs6SWJnGLC/djmJ2xNGAHmPpbwSA7dw
-         32Zg==
-X-Gm-Message-State: ANhLgQ2EKc1i7n92VXEUgGDHT4wY+xSOK3ghlxgJboPj0wv+bm02QcG/
-        aXkFU1PWAI92lCoJJecvbWQ=
-X-Google-Smtp-Source: ADFU+vuTny3inpH+BkBtHVluUYZAS2ilrT22+KyhZ38UFQUYJ9YagLJZk+0yZRYF7dYkaz9qoE73jA==
-X-Received: by 2002:a17:902:b604:: with SMTP id b4mr11803341pls.340.1583681900031;
-        Sun, 08 Mar 2020 08:38:20 -0700 (PDT)
+        bh=QCRoykGyqvBYbGdGdBEY+MSzZ9WPPSm9L8vfS0EeIzg=;
+        b=H3XIfbr/DgBpJ34zPy8fMbEM1l0NAKYUEsL4x3zR7nTkH3FIFD9xiWAmqqNT2kzFIT
+         DyilMFXTJGFKQ9UXpVZCNmyi/Vln9cx21lY9SNHF2LLi3AOA6gByzolF7ntLymGYvNy8
+         BPsoS3BNKnadFFDed5PEuE0dvDF/7JJo9nHR85HwMSael1I9SctFFUdXC3vIhkrEQUqB
+         DWP5CvA9V+2uA45BPG5WfaStP3Dwo+1KFZZrgHfAuqeMCsDgRCSj75CcgFAVKPHa6e6A
+         hy6WaAKdqqZaI5sNHCTV1CaPy473OQu8MB4SePtYs2FODGG1XSiuIYKwLFm++5THnLl8
+         jBfA==
+X-Gm-Message-State: ANhLgQ3+vxYXoK0kEbbxSQzma7gdFIZBZPYi3xfDLHvLVao1ZWY/jbjk
+        QBKsanZaPVoc4uEjUkTqO3w=
+X-Google-Smtp-Source: ADFU+vs+Nfi/FMrEeN/D3YzN9KZkiy+pWF3eWT76NzCyjB/GS9dK2LCXyMhlPtgqYc7qhV78k6QJLg==
+X-Received: by 2002:a17:90a:ab0a:: with SMTP id m10mr889552pjq.105.1583681901665;
+        Sun, 08 Mar 2020 08:38:21 -0700 (PDT)
 Received: from tigtog.localdomain.localdomain ([144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id a143sm18141508pfd.108.2020.03.08.08.38.19
+        by smtp.gmail.com with ESMTPSA id a143sm18141508pfd.108.2020.03.08.08.38.20
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 08 Mar 2020 08:38:19 -0700 (PDT)
+        Sun, 08 Mar 2020 08:38:21 -0700 (PDT)
 From:   Jiang Xin <worldhello.net@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
 Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: [PATCH v2 3/5] receive-pack: new config receive.procReceiveRefs
-Date:   Sun,  8 Mar 2020 11:38:14 -0400
-Message-Id: <20200308153816.4690-1-worldhello.net@gmail.com>
+Subject: [PATCH v2 5/5] hook: add document and example for "proc-receive" hook
+Date:   Sun,  8 Mar 2020 11:38:16 -0400
+Message-Id: <20200308153816.4690-3-worldhello.net@gmail.com>
 X-Mailer: git-send-email 2.26.0.rc0
 In-Reply-To: <CANYiYbE2V3bLfEgH-aRDv4Y5V+_BTZn-oUN7fOVpARm+_14BdQ@mail.gmail.com>
 References: <CANYiYbE2V3bLfEgH-aRDv4Y5V+_BTZn-oUN7fOVpARm+_14BdQ@mail.gmail.com>
@@ -73,330 +73,112 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 
-Add a new multi-valued config variable "receive.procReceiveRefs"
-for `receive-pack` command, like the follows:
-
-    git config --system --add receive.procReceiveRefs refs/for/
-    git config --system --add receive.procReceiveRefs refs/drafts/
-
-If the specific prefix strings match the reference names of the commands
-which are sent by git client to `receive-pack`, these commands will be
-executed by an external hook (named "proc-receive"), instead of the
-internal `execute_commands` function.
-
-For example, if it is set to "refs/for/", pushing to a reference such as
-"refs/for/master" will not create or update reference "refs/for/master",
-but may create or update a pull request directly by running the external
-hook.
-
 Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 ---
- Documentation/config/receive.txt |  14 +++
- builtin/receive-pack.c           |  49 ++++++--
- t/t5411-proc-receive-hook.sh     | 189 +++++++++++++++++++++++++++----
- 3 files changed, 220 insertions(+), 32 deletions(-)
+ Documentation/githooks.txt           |  22 +++++
+ t/t5411-proc-receive-hook.sh         |  71 ++++++++++++++++
+ templates/hooks--proc-receive.sample | 119 +++++++++++++++++++++++++++
+ 3 files changed, 212 insertions(+)
+ create mode 100755 templates/hooks--proc-receive.sample
 
-diff --git a/Documentation/config/receive.txt b/Documentation/config/receive.txt
-index 65f78aac37..0178f2d478 100644
---- a/Documentation/config/receive.txt
-+++ b/Documentation/config/receive.txt
-@@ -114,6 +114,20 @@ receive.hideRefs::
- 	An attempt to update or delete a hidden ref by `git push` is
- 	rejected.
+diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+index 3dccab5375..1af213bad8 100644
+--- a/Documentation/githooks.txt
++++ b/Documentation/githooks.txt
+@@ -333,6 +333,28 @@ The default 'update' hook, when enabled--and with
+ `hooks.allowunannotated` config option unset or set to false--prevents
+ unannotated tags to be pushed.
  
-+receive.procReceiveRefs::
-+	This is a multi-valued variable that defines reference prefixes
-+	to match the commands in `receive-pack`.  Commands matching the
-+	prefixes will be executed by an external hooks "proc-receive",
-+	instead of the internal `execute_commands` function.  If this
-+	variable is not defined, the "proc-receive" hook will never be
-+	used, and all commands will be executed by the internal
-+	`execute_commands` function.
++[[proc-receive]]
++proc-receive
++~~~~~~~~~~~~
++This hook is invoked by linkgit:git-receive-pack[1] when it reacts to
++special `git push` command.  According to refnames of the commands which
++`git push` sends to 'git-receive-pack', the commands will be devided
++into two groups by matching what the `receive.procReceiveRefs`
++configuration variable defines.  One group of the commands will execute
++the internal `execute_commands` function to update the corresponding
++refnames, and the other group of commands which have matching refnames
++will execute this 'proc-receive' hook to create pull requests, etc.
++If there is no `receive.procReceiveRefs` settings, this hook won't
++execute at all, and all commands are sent to the internal
++`execute_commands` function.
 +
-+	For example, if this variable is set to "refs/for/", pushing to
-+	reference such as "refs/for/master" will not create or update a
-+	reference named "refs/for/master", but may create or update a
-+	pull request directly by running an external hook.
++Its exit status only determines the success or failure of the group of
++commands with special refnames, unless atomic push is in use.
 +
- receive.updateServerInfo::
- 	If set to true, git-receive-pack will run git-update-server-info
- 	after receiving data from git-push and updating refs.
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 23d0c224d2..5aff682758 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -76,6 +76,7 @@ static struct object_id push_cert_oid;
- static struct signature_check sigcheck;
- static const char *push_cert_nonce;
- static const char *cert_nonce_seed;
-+static struct string_list proc_receive_refs;
- 
- static const char *NONCE_UNSOLICITED = "UNSOLICITED";
- static const char *NONCE_BAD = "BAD";
-@@ -228,6 +229,20 @@ static int receive_pack_config(const char *var, const char *value, void *cb)
- 		return 0;
- 	}
- 
-+	if (strcmp(var, "receive.procreceiverefs") == 0) {
-+		char *prefix;
-+		int len;
++This hook executes once for the receive operation.  It takes no
++arguments, but gets the same information as the
++<<pre-receive,'pre-receive'>> hook does on its standard input.
 +
-+		if (!value)
-+			return config_error_nonbool(var);
-+		prefix = xstrdup(value);
-+		len = strlen(prefix);
-+		while (len && prefix[len - 1] == '/')
-+			prefix[--len] = '\0';
-+		string_list_insert(&proc_receive_refs, prefix);
-+		return 0;
-+	}
-+
- 	return git_default_config(var, value, cb);
- }
- 
-@@ -1544,17 +1559,30 @@ static void execute_commands(struct command *commands,
- 	/* Try to find commands that have special prefix in their reference names,
- 	 * and mark them to run an external "proc-receive" hook later.
- 	 */
--	for (cmd = commands; cmd; cmd = cmd->next) {
--		if (!should_process_cmd(cmd))
--			continue;
-+	if (proc_receive_refs.nr > 0) {
-+		struct strbuf refname_full = STRBUF_INIT;
-+		size_t prefix_len;
- 
--		/* TODO: replace the fixed prefix by looking up git config variables. */
--		if (!strncmp(cmd->ref_name, "refs/for/", 9)) {
--			cmd->have_special_ref = 1;
--			have_special_ref = 1;
--		} else {
--			have_normal_ref = 1;
-+		strbuf_addstr(&refname_full, get_git_namespace());
-+		prefix_len = refname_full.len;
-+
-+		for (cmd = commands; cmd; cmd = cmd->next) {
-+			if (!should_process_cmd(cmd))
-+				continue;
-+
-+			strbuf_setlen(&refname_full, prefix_len);
-+			strbuf_addstr(&refname_full, cmd->ref_name);
-+			if (ref_is_matched(&proc_receive_refs, cmd->ref_name, refname_full.buf)) {
-+				cmd->have_special_ref = 1;
-+				have_special_ref = 1;
-+			} else {
-+				have_normal_ref = 1;
-+			}
- 		}
-+
-+		strbuf_release(&refname_full);
-+	} else {
-+		have_normal_ref = 1;
- 	}
- 
- 	if (run_receive_hook(commands, "pre-receive", 0, push_options)) {
-@@ -2011,6 +2039,8 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
- 		OPT_END()
- 	};
- 
-+	string_list_init(&proc_receive_refs, 0);
-+
- 	packet_trace_identity("receive-pack");
- 
- 	argc = parse_options(argc, argv, prefix, options, receive_pack_usage, 0);
-@@ -2126,5 +2156,6 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
- 	oid_array_clear(&shallow);
- 	oid_array_clear(&ref);
- 	free((void *)push_cert_nonce);
-+	string_list_clear(&proc_receive_refs, 0);
- 	return 0;
- }
+ [[post-receive]]
+ post-receive
+ ~~~~~~~~~~~~
 diff --git a/t/t5411-proc-receive-hook.sh b/t/t5411-proc-receive-hook.sh
-index 01f67965bf..e3bb421078 100755
+index 6f35867e85..caedd49f2e 100755
 --- a/t/t5411-proc-receive-hook.sh
 +++ b/t/t5411-proc-receive-hook.sh
-@@ -91,17 +91,77 @@ test_expect_success "(1) standard git-push command" '
- 	(
- 		cd work &&
- 		git update-ref HEAD $A &&
--		git push origin HEAD HEAD:maint HEAD:a/b/c 2>&1
-+		git push origin HEAD HEAD:maint 2>&1
- 	) >out &&
- 	grep "^remote:" out | sed -e "s/  *\$//g" >actual &&
- 	cat >expect <<-EOF &&
- 	remote: execute: pre-receive hook
- 	remote: >> old: $ZERO_OID, new: $A, ref: refs/heads/master.
- 	remote: >> old: $ZERO_OID, new: $A, ref: refs/heads/maint.
--	remote: >> old: $ZERO_OID, new: $A, ref: refs/heads/a/b/c.
- 	remote: execute: post-receive hook
- 	remote: >> old: $ZERO_OID, new: $A, ref: refs/heads/master.
- 	remote: >> old: $ZERO_OID, new: $A, ref: refs/heads/maint.
-+	EOF
-+	test_cmp expect actual &&
-+	(
-+		cd $bare &&
-+		git show-ref
-+	) >actual &&
-+	cat >expect <<-EOF &&
-+	$A refs/heads/maint
-+	$A refs/heads/master
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success "(1) push one special ref (create one)" '
-+	(
-+		cd work &&
-+		git update-ref HEAD $B &&
-+		git push origin HEAD:refs/for/master/my/topic
-+	) >out 2>&1 &&
-+	grep "^remote:" out | sed -e "s/  *\$//g" >actual &&
-+	cat >expect <<-EOF &&
-+	remote: execute: pre-receive hook
-+	remote: >> old: $ZERO_OID, new: $B, ref: refs/for/master/my/topic.
-+	remote: execute: post-receive hook
-+	remote: >> old: $ZERO_OID, new: $B, ref: refs/for/master/my/topic.
-+	EOF
-+	test_cmp expect actual &&
-+	(
-+		cd $bare &&
-+		git show-ref
-+	) >actual &&
-+	cat >expect <<-EOF &&
-+	$B refs/for/master/my/topic
-+	$A refs/heads/maint
-+	$A refs/heads/master
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success "(1) cleanup" '
-+	(
-+		cd $bare &&
-+		git update-ref -d refs/for/master/my/topic
-+	)
-+'
-+
-+test_expect_success "(2) add config to turn on proc-receive" '
-+	git -C $bare config --add receive.procReceiveRefs refs/for/
-+'
-+
-+test_expect_success "(2) standard git-push command" '
-+	(
-+		cd work &&
-+		git update-ref HEAD $A &&
-+		git push origin HEAD:a/b/c 2>&1
-+	) >out &&
-+	grep "^remote:" out | sed -e "s/  *\$//g" >actual &&
-+	cat >expect <<-EOF &&
-+	remote: execute: pre-receive hook
-+	remote: >> old: $ZERO_OID, new: $A, ref: refs/heads/a/b/c.
-+	remote: execute: post-receive hook
- 	remote: >> old: $ZERO_OID, new: $A, ref: refs/heads/a/b/c.
- 	EOF
- 	test_cmp expect actual &&
-@@ -117,7 +177,7 @@ test_expect_success "(1) standard git-push command" '
+@@ -757,4 +757,75 @@ test_expect_success "(7) push one special ref (show environments)" '
  	test_cmp expect actual
  '
  
--test_expect_success "(1) push one special ref" '
-+test_expect_success "(2) push one special ref" '
- 	(
- 		cd work &&
- 		git update-ref HEAD $B &&
-@@ -145,9 +205,10 @@ test_expect_success "(1) push one special ref" '
- 	test_cmp expect actual
- '
- 
--test_expect_success "(1) push both a normal and a special refs" '
-+test_expect_success "(2) push both a normal and a special refs" '
- 	(
- 		cd work &&
-+		git update-ref HEAD $B &&
- 		git push origin \
- 			HEAD:refs/for/maint/my/topic \
- 			HEAD:refs/heads/master
-@@ -176,7 +237,7 @@ test_expect_success "(1) push both a normal and a special refs" '
- 	test_cmp expect actual
- '
- 
--test_expect_success "(1) cleanup" '
-+test_expect_success "(2) cleanup" '
- 	(
- 		cd $bare &&
- 		git update-ref refs/heads/master $A $B &&
-@@ -190,11 +251,93 @@ test_expect_success "(1) cleanup" '
- 	test_cmp expect actual
- '
- 
--test_expect_success "(2) remove proc-receive hook" '
-+test_expect_success "(2) push two special references (one is not registered)" '
++test_expect_success "(8) install proc-receive from proc-receive.sample" '
++	mv $bare/hooks/pre-receive $bare/hooks/pre-receive.ok &&
++	mv $bare/hooks/post-receive $bare/hooks/post-receive.env &&
++	mv $bare/hooks/proc-receive $bare/hooks/proc-receive.env &&
++	cp ../../templates/hooks--proc-receive.sample $bare/hooks/proc-receive &&
++	chmod a+x $bare/hooks/proc-receive
++'
++
++test_expect_success "(8) proc-receive.sample: show push result" '
 +	(
 +		cd work &&
 +		git push origin \
-+			HEAD:refs/for/maint/my/topic \
-+			HEAD:refs/drafts/maint/my/topic
++			HEAD:refs/for/a/b/c/my/topic
 +	) >out 2>&1 &&
 +	grep "^remote:" out | sed -e "s/  *\$//g" >actual &&
 +	cat >expect <<-EOF &&
-+	remote: execute: pre-receive hook
-+	remote: >> old: $ZERO_OID, new: $B, ref: refs/for/maint/my/topic.
-+	remote: >> old: $ZERO_OID, new: $B, ref: refs/drafts/maint/my/topic.
-+	remote: execute: proc-receive hook
-+	remote: >> old: $ZERO_OID, new: $B, ref: refs/for/maint/my/topic.
-+	remote: execute: post-receive hook
-+	remote: >> old: $ZERO_OID, new: $B, ref: refs/for/maint/my/topic.
-+	remote: >> old: $ZERO_OID, new: $B, ref: refs/drafts/maint/my/topic.
-+	EOF
-+	test_cmp expect actual &&
-+	(
-+		cd $bare &&
-+		git show-ref
-+	) >actual &&
-+	cat >expect <<-EOF &&
-+	$B refs/drafts/maint/my/topic
-+	$A refs/heads/a/b/c
-+	$A refs/heads/maint
-+	$A refs/heads/master
++	remote: [proc-receive] *******************************************************
++	remote: [proc-receive] * Pull request #12345678901 created/updated           *
++	remote: [proc-receive] * URL: https://... ...                                *
++	remote: [proc-receive] *******************************************************
 +	EOF
 +	test_cmp expect actual
 +'
 +
-+test_expect_success "(2) cleanup" '
-+	(
-+		cd $bare &&
-+		git update-ref -d refs/drafts/maint/my/topic &&
-+		git show-ref
-+	) >actual &&
-+	cat >expect <<-EOF &&
-+	$A refs/heads/a/b/c
-+	$A refs/heads/maint
-+	$A refs/heads/master
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success "(2) register new ref prefix" '
-+	git -C $bare config --add receive.procReceiveRefs refs/drafts/
-+'
-+
-+test_expect_success "(2) push to two special references (all registered)" '
++test_expect_success "(8) proc-receive.sample: show debug info" '
 +	(
 +		cd work &&
-+		git push origin \
-+			HEAD:refs/for/master/my/topic \
-+			HEAD:refs/drafts/maint/my/topic
++		git push -o debug=1 -o reviewers=user1,user2 \
++			origin \
++			HEAD:refs/for/a/b/c/my/topic
 +	) >out 2>&1 &&
 +	grep "^remote:" out | sed -e "s/  *\$//g" >actual &&
 +	cat >expect <<-EOF &&
-+	remote: execute: pre-receive hook
-+	remote: >> old: $ZERO_OID, new: $B, ref: refs/for/master/my/topic.
-+	remote: >> old: $ZERO_OID, new: $B, ref: refs/drafts/maint/my/topic.
-+	remote: execute: proc-receive hook
-+	remote: >> old: $ZERO_OID, new: $B, ref: refs/for/master/my/topic.
-+	remote: >> old: $ZERO_OID, new: $B, ref: refs/drafts/maint/my/topic.
-+	remote: execute: post-receive hook
-+	remote: >> old: $ZERO_OID, new: $B, ref: refs/for/master/my/topic.
-+	remote: >> old: $ZERO_OID, new: $B, ref: refs/drafts/maint/my/topic.
++	remote: [DEBUG] [proc-receive] push-option: AGIT_DEBUG=1
++	remote: [DEBUG] [proc-receive] push-option: AGIT_REVIEWERS=user1,user2
++	remote: [DEBUG] [proc-receive] command from stdin: $ZERO_OID $B refs/for/a/b/c/my/topic
++	remote: [DEBUG] [proc-receive] call API (AGIT_PR_TARGET=a/b/c, AGIT_PR_TOPIC=)...
++	remote: [DEBUG] [proc-receive] parse API result, and get AGIT_PR_ID, etc.
++	remote: [proc-receive] *******************************************************
++	remote: [proc-receive] * Pull request #12345678901 created/updated           *
++	remote: [proc-receive] * URL: https://... ...                                *
++	remote: [proc-receive] *******************************************************
++	remote: [DEBUG] [proc-receive] output kv pairs to stdout for git to parse.
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success "(8) proc-receive.sample: fail to push non-exist branch" '
++	(
++		cd work &&
++		test_must_fail git push -o reviewers=user1,user2 \
++			origin \
++			HEAD:refs/for/a/b/x/my/topic
++	) >out 2>&1 &&
++	grep "^remote:" out | sed -e "s/  *\$//g" >actual &&
++	cat >expect <<-EOF &&
++	remote: [proc-receive] cannot find target branch from ref: refs/for/a/b/x/my/topic
 +	EOF
 +	test_cmp expect actual &&
 +	(
@@ -411,156 +193,132 @@ index 01f67965bf..e3bb421078 100755
 +	test_cmp expect actual
 +'
 +
-+test_expect_success "(3) remove proc-receive hook" '
- 	mv $bare/hooks/proc-receive $bare/hooks/proc-receive.ok
- '
- 
--test_expect_success "(2) standard git-push command" '
-+test_expect_success "(3) standard git-push command" '
- 	(
- 		cd work &&
- 		git update-ref HEAD $B &&
-@@ -220,7 +363,7 @@ test_expect_success "(2) standard git-push command" '
- 	test_cmp expect actual
- '
- 
--test_expect_success "(2) cleanup" '
-+test_expect_success "(3) cleanup" '
- 	(
- 		cd $bare &&
- 		git update-ref refs/heads/master $A $B &&
-@@ -234,7 +377,7 @@ test_expect_success "(2) cleanup" '
- 	test_cmp expect actual
- '
- 
--test_expect_success "(2) push one special ref (failed)" '
-+test_expect_success "(3) push one special ref (failed)" '
- 	(
- 		cd work &&
- 		git update-ref HEAD $B &&
-@@ -249,7 +392,7 @@ test_expect_success "(2) push one special ref (failed)" '
- 	test_cmp expect actual
- '
- 
--test_expect_success "(2) push both a normal and a special refs (one failed)" '
-+test_expect_success "(3) push both a normal and a special refs (one failed)" '
- 	(
- 		cd work &&
- 		git update-ref HEAD $B &&
-@@ -279,7 +422,7 @@ test_expect_success "(2) push both a normal and a special refs (one failed)" '
- 	test_cmp expect actual
- '
- 
--test_expect_success "(2) cleanup" '
-+test_expect_success "(3) cleanup" '
- 	(
- 		cd $bare &&
- 		git update-ref refs/heads/master $A $B &&
-@@ -293,7 +436,7 @@ test_expect_success "(2) cleanup" '
- 	test_cmp expect actual
- '
- 
--test_expect_success "(2) atomic push both a normal and a special refs (failed)" '
-+test_expect_success "(3) atomic push both a normal and a special refs (failed)" '
- 	(
- 		cd work &&
- 		git update-ref HEAD $B &&
-@@ -321,7 +464,7 @@ test_expect_success "(2) atomic push both a normal and a special refs (failed)"
- 	test_cmp expect actual
- '
- 
--test_expect_success "(3) new proc-receive hook (return error)" '
-+test_expect_success "(4) new proc-receive hook (return error)" '
- 	cat >$bare/hooks/proc-receive <<-EOF &&
- 	#!/bin/sh
- 
-@@ -338,7 +481,7 @@ test_expect_success "(3) new proc-receive hook (return error)" '
- 	chmod a+x $bare/hooks/proc-receive
- '
- 
--test_expect_success "(3) standard git-push command" '
-+test_expect_success "(4) standard git-push command" '
- 	(
- 		cd work &&
- 		git update-ref HEAD $B &&
-@@ -364,7 +507,7 @@ test_expect_success "(3) standard git-push command" '
- 	test_cmp expect actual
- '
- 
--test_expect_success "(3) cleanup" '
-+test_expect_success "(4) cleanup" '
- 	(
- 		cd $bare &&
- 		git update-ref refs/heads/master $A $B &&
-@@ -378,7 +521,7 @@ test_expect_success "(3) cleanup" '
- 	test_cmp expect actual
- '
- 
--test_expect_success "(3) push both a normal and a special refs (one failed)" '
-+test_expect_success "(4) push both a normal and a special refs (one failed)" '
- 	(
- 		cd work &&
- 		git update-ref HEAD $B &&
-@@ -410,7 +553,7 @@ test_expect_success "(3) push both a normal and a special refs (one failed)" '
- 	test_cmp expect actual
- '
- 
--test_expect_success "(3) cleanup" '
-+test_expect_success "(4) cleanup" '
- 	(
- 		cd $bare &&
- 		git update-ref refs/heads/master $A $B &&
-@@ -424,7 +567,7 @@ test_expect_success "(3) cleanup" '
- 	test_cmp expect actual
- '
- 
--test_expect_success "(3) atomic push a normal and a special refs (failed)" '
-+test_expect_success "(4) atomic push a normal and a special refs (failed)" '
- 	(
- 		cd work &&
- 		git update-ref HEAD $B &&
-@@ -454,12 +597,12 @@ test_expect_success "(3) atomic push a normal and a special refs (failed)" '
- 	test_cmp expect actual
- '
- 
--test_expect_success "(4) restore proc-receive hook" '
-+test_expect_success "(5) restore proc-receive hook" '
- 	mv $bare/hooks/proc-receive $bare/hooks/proc-receive.fail &&
- 	mv $bare/hooks/proc-receive.ok $bare/hooks/proc-receive
- '
- 
--test_expect_success "(4) push two special references" '
-+test_expect_success "(5) push two special references" '
- 	(
- 		cd work &&
- 		git update-ref HEAD $B &&
-@@ -492,7 +635,7 @@ test_expect_success "(4) push two special references" '
- 	test_cmp expect actual
- '
- 
--test_expect_success "(5) new pre-receive hook hook (return error)" '
-+test_expect_success "(6) new pre-receive hook hook (return error)" '
- 	mv $bare/hooks/pre-receive $bare/hooks/pre-receive.ok &&
- 	cat >$bare/hooks/pre-receive <<-EOF &&
- 	#!/bin/sh
-@@ -510,7 +653,7 @@ test_expect_success "(5) new pre-receive hook hook (return error)" '
- 	chmod a+x $bare/hooks/pre-receive
- '
- 
--test_expect_success "(5) push two special references (declined)" '
-+test_expect_success "(6) push two special references (declined)" '
- 	(
- 		cd work &&
- 		test_must_fail git push origin \
-@@ -527,7 +670,7 @@ test_expect_success "(5) push two special references (declined)" '
- 	test_cmp expect actual
- '
- 
--test_expect_success "(5) push both a normal and a special refs (declined)" '
-+test_expect_success "(6) push both a normal and a special refs (declined)" '
- 	(
- 		cd work &&
- 		test_must_fail git push origin \
+ test_done
+diff --git a/templates/hooks--proc-receive.sample b/templates/hooks--proc-receive.sample
+new file mode 100755
+index 0000000000..31fa85ffe1
+--- /dev/null
++++ b/templates/hooks--proc-receive.sample
+@@ -0,0 +1,119 @@
++#!/bin/sh
++#
++# This is an  example hook script, DO NOT use it on production service.
++
++debug() {
++	case "$AGIT_DEBUG" in
++	"yes" | "true" | "1")
++		;;
++	*)
++		return
++	esac
++
++	echo >&2 "[DEBUG] $@"
++}
++
++# Parse push options
++if test -n "$GIT_PUSH_OPTION_COUNT"
++then
++	i=0
++	while test "$i" -lt "$GIT_PUSH_OPTION_COUNT"
++	do
++		eval "value=\$GIT_PUSH_OPTION_$i"
++		i=$((i + 1))
++
++		k=$(echo ${value%=*} | tr [a-z] [A-Z])
++		v=${value#*=}
++		if test -n "$v" && test -n "$k"
++		then
++			k="AGIT_$k"
++		else
++			continue
++		fi
++		eval "$k=$v"
++		debug "[proc-receive] push-option: $k=$v"
++	done
++fi
++
++# Read push commands.
++count=0
++while read old new refname
++do
++	debug "[proc-receive] command from stdin: $old $new $refname"
++	count=$(( count + 1 ))
++	# Only one special refname is allowed for each push
++	if test $count -gt 1
++	then
++		echo >&2 "[proc-receive]: cannot handle more than one push commands"
++		exit 1
++	fi
++
++	# Parse refname, and set envrionment
++	remains=
++	if test "${refname#refs/for/}" != "$refname"
++	then
++		AGIT_PR_IS_DRAFT=false
++		remains=${refname#refs/for/}
++	elif test "${refname#refs/drafts/}" != "$refname"
++	then
++		AGIT_PR_IS_DRAFT=true
++		remains=${refname#refs/drafts/}
++	else
++		echo >&2 "[proc-receive] unknown refname: $refname"
++		exit 1
++	fi
++
++	ref=
++	found_ref=
++	for i in $(echo $remains | tr "/" "\n")
++	do
++		if test -z "$ref"
++		then
++			ref=$i
++		else
++			ref=$ref/$i
++		fi
++		if git rev-parse --verify $ref -- 2>/dev/null
++		then
++			found_ref=yes
++			break
++		fi
++	done
++	if test -z "$found_ref"
++	then
++		echo >&2 "[proc-receive] cannot find target branch from ref: $refname"
++		exit 1
++	fi
++	AGIT_PR_TARGET=$ref
++	AGIT_PR_SOURCE=${remains#$ref/}
++done
++
++if test -z "$AGIT_PR_TARGET"
++then
++	echo >&2 "[proc-receive] fail to parse refname, no target found"
++	exit 1
++fi
++
++# Call API to generate code review.
++debug "[proc-receive] call API (AGIT_PR_TARGET=$AGIT_PR_TARGET, AGIT_PR_TOPIC=$AGIT_PR_TOPIC)..."
++
++# Parse result of API.
++debug "[proc-receive] parse API result, and get AGIT_PR_ID, etc."
++AGIT_PR_ID="12345678901"
++AGIT_PR_LOCAL_ID="23"
++
++# Show message.
++if test -n "$AGIT_PR_ID"
++then
++	echo >&2 "[proc-receive] *******************************************************"
++	echo >&2 "[proc-receive] * Pull request #$AGIT_PR_ID created/updated           *"
++	echo >&2 "[proc-receive] * URL: https://... ...                                *"
++	echo >&2 "[proc-receive] *******************************************************"
++fi
++
++# Show envs to stdout, and will be exported as envs for "post-receive" hook.
++debug "[proc-receive] output kv pairs to stdout for git to parse."
++echo "AGIT_PR_ID=$AGIT_PR_ID"
++echo "AGIT_PR_LOCAL_ID=$AGIT_PR_LOCAL_ID"
++
++exit 0
 -- 
 2.26.0.rc0.5.gb02b988a14.dirty
 
