@@ -7,59 +7,59 @@ X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 44E0CC10F28
-	for <git@archiver.kernel.org>; Sun,  8 Mar 2020 18:29:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6ACCC10F27
+	for <git@archiver.kernel.org>; Sun,  8 Mar 2020 18:29:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 23FC4206D7
-	for <git@archiver.kernel.org>; Sun,  8 Mar 2020 18:29:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7D07E206D7
+	for <git@archiver.kernel.org>; Sun,  8 Mar 2020 18:29:53 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W9QgQfh1"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SyZOU5u+"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726383AbgCHS3v (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 8 Mar 2020 14:29:51 -0400
-Received: from mail-ed1-f54.google.com ([209.85.208.54]:35274 "EHLO
-        mail-ed1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726352AbgCHS3v (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Mar 2020 14:29:51 -0400
-Received: by mail-ed1-f54.google.com with SMTP id a20so3373564edj.2
-        for <git@vger.kernel.org>; Sun, 08 Mar 2020 11:29:47 -0700 (PDT)
+        id S1726368AbgCHS3u (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 8 Mar 2020 14:29:50 -0400
+Received: from mail-ed1-f45.google.com ([209.85.208.45]:39230 "EHLO
+        mail-ed1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726279AbgCHS3u (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Mar 2020 14:29:50 -0400
+Received: by mail-ed1-f45.google.com with SMTP id m13so9311929edb.6
+        for <git@vger.kernel.org>; Sun, 08 Mar 2020 11:29:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=+ol3DQ+KSmcnUwbt0YpAil/3FYpjvsPQWJam877y+Ko=;
-        b=W9QgQfh16LTJSMGADDo0iqsaXPRKkNHzNKtb6Z7LkfraA4BM5shaV2kPZo1/rBl8nG
-         hevEetXlsPX4egUwEUepmDEpiS/YGQst5TH9VC3RalbDK+D0M5S4AAgbZaWX54E/v0NH
-         1PCTpezMN3Ky74jD0/l0HsmT6IgN70nPQElkdgEKayXYr2bJqCCHm2aurXVs6PA+2KHO
-         zBnaxqRh63ofF8KIIIKsYsCtNCWG80x8w6GhJrzhUMQfLbNDNFkx9YcsqmR372aecSUO
-         l3I9p3RWbp9Rqc3YAnyQ6+/7HWy3NRHz1y168xtlCfaP6u0rti7UyFWImAwnNYzRxf9C
-         AZ8g==
+        bh=V9X8YkwHYzBVUHpxH8mIsbywL7koUIJXVt5dKJwvDWw=;
+        b=SyZOU5u+IKjRtoOCZPshXUyoFaUaGWTM365TGmeLmY2x/nzrcOMLDkA3J5RPj2ze9S
+         kD2XbhIN+DIm2J/CjViFY18ZAREYvvwrCjK+uRdl7RXFeKc238oD1ReIdbu2P/32bLVK
+         GmEHYeqtQVrvf8yeQ8XHZxgv8lOaX/cKxYBoKdC9okwq8OdIVZaoTSBdnvnk4ijJBvuv
+         nnz/un2cW/2chXr7/L337iZL9KHkqWO4/MAyLRnkN83LGJZQsgL3n3zHAh2yhQwEDlqt
+         lk8IOJY2g54r+cypzJ71yd8LygtevuwhE/9m6VJ2HpYrNKk9bYuTuTl7Z+1TKRxKXgpm
+         L6ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=+ol3DQ+KSmcnUwbt0YpAil/3FYpjvsPQWJam877y+Ko=;
-        b=jvSJQNpB5EVp5KLm7qcHN11TKInGM5pB0lieVmdkMBHRQAzxeYxGettWZ3Igpv0+QN
-         fOthFK0zL434Mp3FsfJoWsVjWwhahUSQOrcvosnKdp5s3YoVv00DdY4vW9mv7vL6D2ZG
-         rzRc9Pnm0S46Pdp5jwbk1twT5YgoMGPghGnOjHORX2XPQ33twhTbEjNW6QFThHsNnD5B
-         KAwljl+IKZydR8aPDGb/20I5UBYqPDzRIp4pVM9SgsqTF3zDbJARDNBdeVlEUkKjuig2
-         ZEAEY+QMCZVEvLkx6e0JBudg927kM1AGPAEQx5PBP2XljZQkARr6hHLbRDJWpq4gaWgO
-         aOGA==
-X-Gm-Message-State: ANhLgQ0CG/t5KD474QeNx+mAJmxRqfnTVHmwglexLcre/C+DLfUuHLsJ
-        wRq829JffbtUqghetDp1RHO9o3Of
-X-Google-Smtp-Source: ADFU+vsx8n0z6r6FXfW8x2y4NHhtY/zz5QFI5Z+hgfrMpYaMGFsPHFGYEOkpaIGQ9GulH1a7jcoZtQ==
-X-Received: by 2002:a05:6402:1b0e:: with SMTP id by14mr13803508edb.209.1583692187054;
+        bh=V9X8YkwHYzBVUHpxH8mIsbywL7koUIJXVt5dKJwvDWw=;
+        b=AtKtxqxBhurysWSl9nC/qk3fUv0d9YP5GVrXvsamlGACQTjLNaDtgauqNUyerNpmwC
+         oDsNiypHXtGTCNgCujqHXApc/q0ZYyR3aTGWR02fFmxjSlxOv4P7EwI0xVQD6RRWOlII
+         omIhviqkDeQm2m02IrqqWCpiz7t5h6qSBW90XJ/VL7AEGwbMAnVNE3B/DWOBbfAFE0yl
+         9vPWCZ0Z6WsL/AMe0brNocN9DGbSDmZFfZ7IqzmsJBhyph39PvzVez8OSCLggr8xsqHt
+         nshZ2BJUpAEsUoZFuIiPMkBunH9R+Ym74UWJFPRl3X3MeKZSJnCnt/mEF2/TIbiCYwG7
+         4Wxg==
+X-Gm-Message-State: ANhLgQ3jNGF4Ey9VpzFjWd/pfOrvoA+ILp5bNam1oYe2vtp4O/bXLNAO
+        x9+zbkLRwR85qxe4RJ9GACYBxbHK
+X-Google-Smtp-Source: ADFU+vsjBCEVOCAX7gfaekDgz7esawo+uJhQMmDNEcfwtUgcyEVzkaHSwW3NvXlWX+B9Bgs2DEmnUg==
+X-Received: by 2002:aa7:dccd:: with SMTP id w13mr9673706edu.201.1583692187957;
         Sun, 08 Mar 2020 11:29:47 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c13sm397188edf.36.2020.03.08.11.29.46
+        by smtp.gmail.com with ESMTPSA id a7sm1478728ejs.33.2020.03.08.11.29.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 08 Mar 2020 11:29:46 -0700 (PDT)
-Message-Id: <b25211380355f7f95113b42734df0bb8b2b9e78f.1583692184.git.gitgitgadget@gmail.com>
+        Sun, 08 Mar 2020 11:29:47 -0700 (PDT)
+Message-Id: <c68bc2b37889bb2394dfd618cd3f03c1a7d85280.1583692184.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.576.git.1583692184.gitgitgadget@gmail.com>
 References: <pull.576.git.1583692184.gitgitgadget@gmail.com>
 From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 08 Mar 2020 18:29:42 +0000
-Subject: [PATCH 1/3] t: add lib-crlf-messages.sh for messages containing CRLF
+Date:   Sun, 08 Mar 2020 18:29:43 +0000
+Subject: [PATCH 2/3] ref-filter: teach the API to correctly handle CRLF
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,111 +80,174 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Philippe Blain <levraiphilippeblain@gmail.com>
 
-A following commit will fix a bug in the ref-filter API that causes
-commit and tag messages containing CRLF to be incorrectly parsed and
-displayed.
+The ref-filter API does not correctly handle commit or tag messages that
+use CRLF as the line terminator. Such messages can be created with the
+`--verbatim` option of `git commit` and `git tag`, or by using `git
+commit-tree` directly.
 
-Add a test library (t/lib-crlf-messages.sh) that creates refs with such
-commit messages, so that we can easily test that this bug does not
-appear in other commands in the future.
+This impacts the output of `git branch -v`, and `git branch`, `git
+tag` and `git for-each-ref` when used with a `--format` argument
+containing the atoms `%(contents:subject)` or `%(contents:body)`.
 
-The function test_crlf_subject_body_and_contents can be used to test
-that the `--format` option of `branch`, `tag`, `for-each-ref` and
-`log` correctly displays the subject, body and raw body of commits and
-tag messages.
+Fix this bug in ref-filter by improving the logic in `copy_subject` and
+`find_subpos`.
 
-The commits are created using `commit-tree` such that the current branch
-in the test repository is not affected when `test_create_crlf_refs` is
-called in a test. This is to done so that the CRLF tests can be inserted
-anywhere in a test script where it makes sense to do so, without having
-to potentially modify further test that depend on output that would be
-modified if the current branch gained new commits.
+Add tests for `branch`, `tag` and `for-each-ref` using
+lib-crlf-messages.sh. The 'make commits' test at the beginning of
+t3203-branch-output.sh needs to be modified since it did not use
+`test_tick` and thus the commit hashes were not reproducible. For
+simplicity, use `test_commit` as the content and name of the files
+created in this setup test are irrelevant to the rest of the test
+script.
 
 Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
 ---
- t/lib-crlf-messages.sh | 73 ++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 73 insertions(+)
- create mode 100644 t/lib-crlf-messages.sh
+ ref-filter.c             | 19 +++++++++++++++++--
+ t/t3203-branch-output.sh | 26 +++++++++++++++++++++-----
+ t/t6300-for-each-ref.sh  |  5 +++++
+ t/t7004-tag.sh           |  7 +++++++
+ 4 files changed, 50 insertions(+), 7 deletions(-)
 
-diff --git a/t/lib-crlf-messages.sh b/t/lib-crlf-messages.sh
-new file mode 100644
-index 00000000000..64d2ad12019
---- /dev/null
-+++ b/t/lib-crlf-messages.sh
-@@ -0,0 +1,73 @@
-+# Setup refs with commit and tag messages containing CRLF
+diff --git a/ref-filter.c b/ref-filter.c
+index 79bb5206783..537cc4de42c 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -1050,10 +1050,18 @@ static char *copy_subject(const char *buf, unsigned long len)
+ {
+ 	char *r = xmemdupz(buf, len);
+ 	int i;
++	struct strbuf sb = STRBUF_INIT;
+ 
+-	for (i = 0; i < len; i++)
++	strbuf_attach(&sb, r, len, len + 1);
++	for (i = 0; i < sb.len; i++) {
+ 		if (r[i] == '\n')
+ 			r[i] = ' ';
++		if (r[i] == '\r') {
++			strbuf_remove(&sb, i, 1);
++			i -= 1;
++		}
++	}
++	strbuf_detach(&sb, NULL);
+ 
+ 	return r;
+ }
+@@ -1184,15 +1192,22 @@ static void find_subpos(const char *buf,
+ 		eol = strchrnul(buf, '\n');
+ 		if (*eol)
+ 			eol++;
++		/*  protect against messages that might contain \r\n */
++		if (*eol == '\r')
++			eol++;
+ 		buf = eol;
+ 	}
+ 	*sublen = buf - *sub;
+ 	/* drop trailing newline, if present */
+ 	if (*sublen && (*sub)[*sublen - 1] == '\n')
+ 		*sublen -= 1;
++	/*  protect against commit messages that might contain \r\n */
++	else if (*sublen && (*sub)[*sublen - 1] == '\r')
++		*sublen -= 3; /* drop '\r\n\r' */
+ 
+ 	/* skip any empty lines */
+-	while (*buf == '\n')
++	/* and protect against commit messages that might contain \r\n */
++	while (*buf == '\n' || *buf == '\r')
+ 		buf++;
+ 	*body = buf;
+ 	*bodylen = strlen(buf);
+diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
+index 71818b90f00..1235089619c 100755
+--- a/t/t3203-branch-output.sh
++++ b/t/t3203-branch-output.sh
+@@ -3,13 +3,11 @@
+ test_description='git branch display tests'
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-terminal.sh
++. "$TEST_DIRECTORY"/lib-crlf-messages.sh
+ 
+ test_expect_success 'make commits' '
+-	echo content >file &&
+-	git add file &&
+-	git commit -m one &&
+-	echo content >>file &&
+-	git commit -a -m two
++	test_commit one &&
++	test_commit two
+ '
+ 
+ test_expect_success 'make branches' '
+@@ -95,6 +93,24 @@ test_expect_success 'git branch --ignore-case --list -v pattern shows branch sum
+ 	awk "{print \$NF}" <tmp >actual &&
+ 	test_cmp expect actual
+ '
++test_create_crlf_refs
 +
-+create_crlf_ref () {
-+	message="$1" &&
-+	subject="$2" &&
-+	body="$3" &&
-+	branch="$4" &&
-+	printf "${message}" >.crlf-message-${branch}.txt &&
-+	printf "${subject}" >.crlf-subject-${branch}.txt &&
-+	printf "${body}" >.crlf-body-${branch}.txt &&
-+    test_tick &&
-+	hash=$(git commit-tree HEAD^{tree} -p HEAD -F .crlf-message-${branch}.txt) &&
-+	git branch ${branch} ${hash} &&
-+	git tag tag-${branch} ${branch} -F .crlf-message-${branch}.txt --cleanup=verbatim
-+}
++test_expect_success 'git branch -v works with CRLF input' '
++	cat >expect <<-EOF &&
++	  branch-one                     139b20d two
++	  branch-two                     d79ce16 one
++	  crlf                           2113b0e Subject first line
++	  crlf-empty-lines-after-subject 0a9530d Subject first line
++	  crlf-two-line-subject          f9ded1f Subject first line Subject second line
++	* master                         139b20d two
++	EOF
++	git branch -v >actual &&
++	test_cmp expect actual
++'
 +
-+create_crlf_refs () {
-+	message="Subject first line\r\n\r\nBody first line\r\nBody second line\r\n" &&
-+	body="Body first line\r\nBody second line\r\n" &&
-+	subject="Subject first line" &&
-+	create_crlf_ref "${message}" "${subject}" "${body}" "crlf" &&
-+	message="Subject first line\r\n\r\n\r\nBody first line\r\nBody second line\r\n" &&
-+	create_crlf_ref "${message}" "${subject}" "${body}" "crlf-empty-lines-after-subject" &&
-+	message="Subject first line\r\nSubject second line\r\n\r\nBody first line\r\nBody second line\r\n" &&
-+	subject="Subject first line Subject second line" &&
-+	create_crlf_ref "${message}" "${subject}" "${body}" "crlf-two-line-subject"
-+}
++test_crlf_subject_body_and_contents branch --list crlf*
 +
-+test_create_crlf_refs () {
-+	test_expect_success 'setup refs with CRLF commit messages' '
-+		create_crlf_refs
-+	'
-+}
++test_cleanup_crlf_refs
+ 
+ test_expect_success 'git branch -v pattern does not show branch summaries' '
+ 	test_must_fail git branch -v branch*
+diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+index 9c910ce7467..467924de3df 100755
+--- a/t/t6300-for-each-ref.sh
++++ b/t/t6300-for-each-ref.sh
+@@ -8,6 +8,7 @@ test_description='for-each-ref test'
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-gpg.sh
+ . "$TEST_DIRECTORY"/lib-terminal.sh
++. "$TEST_DIRECTORY"/lib-crlf-messages.sh
+ 
+ # Mon Jul 3 23:18:43 2006 +0000
+ datestamp=1151968723
+@@ -888,4 +889,8 @@ test_expect_success 'for-each-ref --ignore-case ignores case' '
+ 	test_cmp expect actual
+ '
+ 
++test_create_crlf_refs
 +
-+cleanup_crlf_refs () {
-+	for branch in crlf crlf-empty-lines-after-subject crlf-two-line-subject; do
-+		git branch -D ${branch} &&
-+		git tag -d tag-${branch} &&
-+		rm .crlf-message-${branch}.txt &&
-+		rm .crlf-subject-${branch}.txt &&
-+		rm .crlf-body-${branch}.txt
-+	done
-+}
++test_crlf_subject_body_and_contents for-each-ref refs/heads/crlf*
 +
-+test_cleanup_crlf_refs () {
-+	test_expect_success 'clenup refs with CRLF commit messages' '
-+		cleanup_crlf_refs
-+	'
-+}
+ test_done
+diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+index 6db92bd3ba6..25f465f34ea 100755
+--- a/t/t7004-tag.sh
++++ b/t/t7004-tag.sh
+@@ -10,6 +10,7 @@ Tests for operations with tags.'
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-gpg.sh
+ . "$TEST_DIRECTORY"/lib-terminal.sh
++. "$TEST_DIRECTORY"/lib-crlf-messages.sh
+ 
+ # creating and listing lightweight tags:
+ 
+@@ -1969,6 +1970,12 @@ test_expect_success '--format should list tags as per format given' '
+ 	test_cmp expect actual
+ '
+ 
++test_create_crlf_refs
 +
-+test_crlf_subject_body_and_contents() {
-+	command_and_args="$@" &&
-+	command=$1 &&
-+	if [ ${command} = "branch" ] || [ ${command} = "for-each-ref" ] || [ ${command} = "tag" ]; then
-+		atoms="(contents:subject) (contents:body) (contents)"
-+	elif [ ${command} = "log" ]; then
-+		atoms="s b B"
-+	fi &&
-+	files="subject body message" &&
-+	while  [ -n "${atoms}" ]; do
-+		set ${atoms} && atom=$1 && shift && atoms="$*" &&
-+		set ${files} &&	file=$1 && shift && files="$*" &&
-+		test_expect_success "${command}: --format='%${atom}' works with CRLF input" "
-+			rm -f expect &&
-+			for ref in crlf crlf-empty-lines-after-subject crlf-two-line-subject; do
-+				cat .crlf-${file}-\"\${ref}\".txt >>expect &&
-+				printf \"\n\" >>expect
-+			done &&
-+			git $command_and_args --format=\"%${atom}\" >actual &&
-+			test_cmp expect actual
-+		"
-+	done
-+}
++test_crlf_subject_body_and_contents tag --list tag-crlf*
++
++test_cleanup_crlf_refs
++
+ test_expect_success "set up color tests" '
+ 	echo "<RED>v1.0<RESET>" >expect.color &&
+ 	echo "v1.0" >expect.bare &&
 -- 
 gitgitgadget
 
