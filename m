@@ -7,52 +7,56 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DE71BC10DCE
-	for <git@archiver.kernel.org>; Sun,  8 Mar 2020 19:17:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B53DC10DCE
+	for <git@archiver.kernel.org>; Sun,  8 Mar 2020 21:38:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B36D9206D5
-	for <git@archiver.kernel.org>; Sun,  8 Mar 2020 19:17:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C5E5220684
+	for <git@archiver.kernel.org>; Sun,  8 Mar 2020 21:38:15 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nJkj4sUh"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e+682SmJ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726332AbgCHTR6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 8 Mar 2020 15:17:58 -0400
-Received: from mail-vs1-f48.google.com ([209.85.217.48]:44995 "EHLO
-        mail-vs1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726292AbgCHTR6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Mar 2020 15:17:58 -0400
-Received: by mail-vs1-f48.google.com with SMTP id u24so4708347vso.11
-        for <git@vger.kernel.org>; Sun, 08 Mar 2020 12:17:57 -0700 (PDT)
+        id S1726383AbgCHViP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 8 Mar 2020 17:38:15 -0400
+Received: from mail-ua1-f42.google.com ([209.85.222.42]:45903 "EHLO
+        mail-ua1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726346AbgCHViO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Mar 2020 17:38:14 -0400
+Received: by mail-ua1-f42.google.com with SMTP id q17so2597794uao.12
+        for <git@vger.kernel.org>; Sun, 08 Mar 2020 14:38:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=59grH3iyN0bQeIn9psiLb+NmzKbvIZ4G80oCUE3EHrk=;
-        b=nJkj4sUhlab+3ccjeUCYUHXwEv6nQg29g/Kd/HSytipokssFaf0W5D1Pcc7YrUrm7i
-         HXl04tYFELjbMFPobp3iyADibWb27OkpvMyLTGrq55tiXto8why+1I2YpsEfeEFT8ivV
-         fs8ZcoyAKIiosY4Hy/sxDl4OzdfqyVEPmEUf5lC76+B0ixA6vTeILVli//FLMPZAU9s5
-         IqgvlfrE5j7yoShFs8Hb3NuPrPmMEgcP0Q8dF1sLTlSq84DnzlR5odm7h23gdVKGlR7z
-         V1lqD2HoSGYGVHVAVQ92LEL7SrqndwRilKx9fadjaIKxY2zVnLzhF1NEwS1SiEILDnKN
-         b5xA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=mHBq2DQdoOLeDF3kop0lrw720NyiLOvtoWfXAEMGiLY=;
+        b=e+682SmJw86QyB0EcHTYj+jHCdGfYH50pTsNNu0CW84/a6Ww614w0F/2lVtLRh0bs7
+         DAogJDjCQFzLJrCIjFsjnrSdthTzHaW5wffcvuKWl6HEAoAXFl3pVnf/u+YhbexV5jCh
+         odFdJud/BZ0m6m0m6kuVNXnYPZCXQgTKG14zKGEoKxYORD5A7nR0kPoDgdLuSwYsBJUO
+         4qOksOXFOC4m2NYWYucYY7U8b2qYYgQMRy/OOgeXkEbNmmHI+/f4jKmYUJPoaVyzXEaF
+         joMFaGqynQK7QiEEtYb6Zkcd7TvbuhU9Y5lzbYMimzfJvsmxnBPaOxrjBPlDZ+DXANxZ
+         LlMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=59grH3iyN0bQeIn9psiLb+NmzKbvIZ4G80oCUE3EHrk=;
-        b=f6krhNdewB29yXRf027KfpGdxN0s1jEg+Xh/6Qi8z27H2u3XYdMMSRpJjIW572Dubv
-         CFShmPvg5/OaEAm98x1+hUuJ4IavEdAtWTSHeycazvatvfn7Uhinh3ko5thN5Kpe51Y3
-         XE2DRaVj6fwItasfYfw7PU0ohgbSGQbgEq2vTnVn4Rggin6gvXPSZsawmQoDC5yTcQd0
-         2F3x6aYYonIxbERPsVMSQ3h64k5MAnFQOh/ZfyM0xVp7uDiQgM5Dn1luUqw9rMSQnwNz
-         AghjBrqO/kFgCD+aqUgVfOYEq8zUPEGIMG+GKvWJKMu8PgIZGXuRwxN0O6b/t4sGDVnP
-         WV2Q==
-X-Gm-Message-State: ANhLgQ2a8BnTyzeHPqx3uBtXYAPdbIdibtTMy2T3aP7JmidGaSdHudv2
-        flZJfv25CA/NXu4paNkTJFrwy8VGNh5EqGm9zj5rgLjO
-X-Google-Smtp-Source: ADFU+vvsKe0qZKMP4VJN3jeRGhv/Fsl4bVKrLbl6irUOIpf0mziUgb4mFhnoDtSqgf6SHQ5/4SlwThn1CnwfxKLUawk=
-X-Received: by 2002:a67:e98e:: with SMTP id b14mr8219448vso.106.1583695077205;
- Sun, 08 Mar 2020 12:17:57 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=mHBq2DQdoOLeDF3kop0lrw720NyiLOvtoWfXAEMGiLY=;
+        b=HmACkMpBioeEv+NbWVI9/vbpx/+/vysYi32OzcfJfIacYbibGoSmonlgNnDN8oet8D
+         qpdCjZwn0uKqbvX6JlV1ge6EsxZOiwLM+KrE1B3lyyyYgFsdkAb8QDp5n0fG84JxOdtm
+         56ZcW9Q+BxiMikKPc5JtI5lPwCW+uFD5Bn/MSkFY+oFFTH7XfSwdcsTZ6ozMb5CxxXBw
+         i+s3qXZx/WBo26+yRkgw/c2lTQBz7ca64imkcU56rW0YUMpJ785G8iqDRKgK242vhjSV
+         LIpXUoOJ3Go6RQvRQN2JBtsdn22ubz45OmOZBTmshUyd6PS8kYrJUNf7ZXPF1HEp93b3
+         UuZA==
+X-Gm-Message-State: ANhLgQ3HtGuRsQG6jRgq7+6Lvudtj3J7C+uidJvS7BeI5ghoZscWbkXV
+        PCBCei2cUE5RV1Sb2ZPckXBJDHvc0DmB87lGGuiv7cih
+X-Google-Smtp-Source: ADFU+vsgbYjoxYh14kmiMXqwuzOA+27rre4UNKyHRwxyKNmZ87gwz+hQYPYJA127AhmATJZflst9xn3SwbaWEMj/Pao=
+X-Received: by 2002:ab0:c06:: with SMTP id a6mr6865624uak.119.1583703493287;
+ Sun, 08 Mar 2020 14:38:13 -0700 (PDT)
 MIME-Version: 1.0
-From:   =?UTF-8?B?5aSp5Yeg?= <muzimuzhi@gmail.com>
-Date:   Mon, 9 Mar 2020 03:17:46 +0800
-Message-ID: <CAEg0tHTMHD1+3QaSe3Z+ymRKvOkbHnVqv-Xp2xhOT56SoHTmwA@mail.gmail.com>
-Subject: Documented option "--deepen" is unknown to git-pull
+References: <CACDhn-QHqGFhZw+3K61v+Qtmm5y35nARWJaBkZ_YyZevJu8HBQ@mail.gmail.com>
+In-Reply-To: <CACDhn-QHqGFhZw+3K61v+Qtmm5y35nARWJaBkZ_YyZevJu8HBQ@mail.gmail.com>
+From:   =?UTF-8?B?0JDQu9C10LrRgdCw0L3QtNGAINCi0YDQtdGC0YzRj9C6?= 
+        <alextretyak2@gmail.com>
+Date:   Mon, 9 Mar 2020 07:37:56 +1000
+Message-ID: <CACDhn-R6ZKvgMxJdxP7NpsAViY97PfC7aM8xTJgaQK_GLJRyvQ@mail.gmail.com>
+Subject: Re: Feature request: number of added and deleted lines for UTF-16 files
 To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
@@ -60,21 +64,11 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Option "--deepen" is documented in online doc of git-pull, Sec.
-_Options related to fetching_, see
-    https://git-scm.com/docs/git-pull#Documentation/git-pull.txt---deepenltdepthgt
-But executing "git pull --deepen=100 origin master" returns
-    error: unknown option `deepen'
+Some source files in MSVC (e.g. resource.h) are encoded in UTF-16 (LE)
+with Byte Order Mark (i.e. signature: FF FE for little-endian and FE
+FF for big-endian), and `git diff --numstat` shows `-` in place of
+number of added/removed lines, e.g.:
+-       -       clientapp/resource.h
 
-More tests show option "--deepen" is known to git-fetch but not
-git-pull, although the doc of git-pull says
-    git pull runs git fetch with the given parameters and calls git
-    merge to merge the retrieved branch heads into the current branch.
-    https://git-scm.com/docs/git-pull#_description
-which suggests that every valid option of "git fetch" would also valid
-for "git pull".
-
-Is this a documentation or an implementation problem? (I use git v2.25.1.)
-
-
-muzimuzhi
+Can you auto detect UTF-16 by reading first 2 bytes of the file, and
+correctly show number of lines added/removed?
