@@ -2,272 +2,96 @@ Return-Path: <SRS0=m/qT=4Z=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D15BC3F2C6
-	for <git@archiver.kernel.org>; Sun,  8 Mar 2020 15:38:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E588AC10F28
+	for <git@archiver.kernel.org>; Sun,  8 Mar 2020 15:53:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 4582F206D7
-	for <git@archiver.kernel.org>; Sun,  8 Mar 2020 15:38:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B273020866
+	for <git@archiver.kernel.org>; Sun,  8 Mar 2020 15:53:08 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EQsf3s5F"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P8iebFO3"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726318AbgCHPiW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 8 Mar 2020 11:38:22 -0400
-Received: from mail-pf1-f182.google.com ([209.85.210.182]:43741 "EHLO
-        mail-pf1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726271AbgCHPiW (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Mar 2020 11:38:22 -0400
-Received: by mail-pf1-f182.google.com with SMTP id c144so3657366pfb.10
-        for <git@vger.kernel.org>; Sun, 08 Mar 2020 08:38:21 -0700 (PDT)
+        id S1726330AbgCHPxH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 8 Mar 2020 11:53:07 -0400
+Received: from mail-lf1-f44.google.com ([209.85.167.44]:34734 "EHLO
+        mail-lf1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726289AbgCHPxH (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Mar 2020 11:53:07 -0400
+Received: by mail-lf1-f44.google.com with SMTP id w27so5636746lfc.1
+        for <git@vger.kernel.org>; Sun, 08 Mar 2020 08:53:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=vc5YaSnlEaNjsL7hECj+viFsVC6sdb8TgOzX+JmXC3I=;
-        b=EQsf3s5FOEmsHeCEOO/zKGga2XbYUqv/A9vpvqjnhy2JT2sAcVwBENjByVE1mQVCkH
-         Fhs1kKzZPW+mg8NRAvqudpY2fXw5fdFZ4qzPub+EGzmx8PQh5+0Uz8WVUx4x7Gvo86Ru
-         aEa++073XKmZQV+SMJSSA34K6clNjLX317fbVhwiWMhM/yqFttHFAIBdvGGkuLoLO2MH
-         0KyXs2JsUKwiYR4iqc4guE9hkC4dRr4gsqu/wTP82kFPQp06wadqyRAzSjfCbXuq3tXt
-         vQ+A3TIv8A2mOlLBrCgCDIlQ8M4MZtsyHlXWz4ffXziSbybppWJnoyGPzlbVptqK7kVh
-         jNZg==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=X48Sh6YzldZx7csV3HAXFqJTgt/tQgKm7cTUEbDbsuI=;
+        b=P8iebFO3Nz6wPhuNv2J2tjMiCkwMT4MIKzzRa4fkENRNwHL0dvgOel0e+OMzGarR7S
+         qgk6urC1ryO/540xZx4x6e6aFRxFGTK4F7KE6r1ZuG5q7sNOQ5VNNXZkzHTSaIAYxV92
+         +YqoK0qZBfmQO4F1ZG9+peTzDVMUWAoq9Myf4W2kdN2gXGcA+Talf+dBCyBgNeYdJokU
+         qJFqJf2W9WO9DXqGoTib7Lnhr6cJFV+idiBJsAZnHhw0v6wSc+iTbmIjKYewz0cxbU8T
+         hj1qrCpQsgL9NqHP6ykITRyE1TXUW77KmUILlVYihRHGtw+iJSg+PkWnXMByt2GDNurq
+         8U5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=vc5YaSnlEaNjsL7hECj+viFsVC6sdb8TgOzX+JmXC3I=;
-        b=fE5X7pi9Jc0dS/2ZpkBCJrSaXQMu6F+QvDzsu3HacPD0W66Phc77wAi/YvW5Y8s1ue
-         P974xNeMRLzi8QZQ3zCi2YedP/YFqcGREpa5d6ARjQQ+jmkvZ8wQjQhSDcCuDSw/lq9d
-         IIwVlteO+dSs7b87OPV8QFFHfEaxyak1Wz2+Z+TjBqPSf52kY7k/HP1XElzJtWmpYYK4
-         M5xNMX8LdWdr7yD6F66+XI1X2KWYo0gF0zFBIZIUyJrxjeShrSnDHHMEjxsfgHk4GI1J
-         Mfn6sNz+x6KgIJhAcModxoylB6zbZMMRH6oV4uRwF83ol/kImdP4bPwIbzPilBs2WalV
-         BT5A==
-X-Gm-Message-State: ANhLgQ3Dg5gTbVFdBYiQDBLd/qIzw/RMuqECbA0rnHKOWBAJb5sUwUP1
-        UlpUDGiY6NEbSAQvBhnlup776ieXwZOBTw==
-X-Google-Smtp-Source: ADFU+vvAN/04bz/XpeV1J2dcYwbwa+o7jDlPiGRwOxiUOE8jikrlltIGYswqdeZqwTyLR4v07izGxQ==
-X-Received: by 2002:a62:2ad1:: with SMTP id q200mr13290217pfq.123.1583681900757;
-        Sun, 08 Mar 2020 08:38:20 -0700 (PDT)
-Received: from tigtog.localdomain.localdomain ([144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id a143sm18141508pfd.108.2020.03.08.08.38.20
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 08 Mar 2020 08:38:20 -0700 (PDT)
-From:   Jiang Xin <worldhello.net@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: [PATCH v2 4/5] receive-pack: read env from proc-receive output
-Date:   Sun,  8 Mar 2020 11:38:15 -0400
-Message-Id: <20200308153816.4690-2-worldhello.net@gmail.com>
-X-Mailer: git-send-email 2.26.0.rc0
-In-Reply-To: <CANYiYbE2V3bLfEgH-aRDv4Y5V+_BTZn-oUN7fOVpARm+_14BdQ@mail.gmail.com>
-References: <CANYiYbE2V3bLfEgH-aRDv4Y5V+_BTZn-oUN7fOVpARm+_14BdQ@mail.gmail.com>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=X48Sh6YzldZx7csV3HAXFqJTgt/tQgKm7cTUEbDbsuI=;
+        b=XKSowhbAaGjLAAXXMO29P38LiMRVS4ghF6wREg9i34uQ234rYZX4Y55fJhdeK1Rrw7
+         +gD5sfzDlkWbyxVyYFBrbgkG3D07RJxCmN8Q2qhkrv9YPcNZA1wK5PAGSSOxEgvwJfQL
+         wwdNP95UuaYrwnlrpdO+q71tBnA+nQAMzK2DerREc4oTXJH00mF+yH335RDdTkpLAQ7c
+         Y4g1R3OE2sI1IHJySldbjgzke4bwmEuUY5FETy88xJsKxGCtgV0GNiuQCcTmcIal0hsr
+         Q/yTK6+F3ngR6wPDffW8kC2ObDlJfBIZ5aladwr9aTWLmVQykS4j5WvD/yBikJAxTeXC
+         hvOQ==
+X-Gm-Message-State: ANhLgQ1zx70orf48/m0qT8k7FjNLgWAfRnALgWpQ/cUC5f2HUAgAb55O
+        so0AM+tQqRxLxgSSNHFH5V73CV5QblfvJeHt4SoJU+g+psg=
+X-Google-Smtp-Source: ADFU+vt+kjS/4zRBW49E8SiJLTgbJASIjv7FbBaAXxXKxw4SgQZJbQKnelxSvCkqQSOT3k7GKy4cecZPQSH5ErWm9vY=
+X-Received: by 2002:ac2:5b47:: with SMTP id i7mr7118715lfp.181.1583682783843;
+ Sun, 08 Mar 2020 08:53:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+From:   Birger Skogeng Pedersen <birger.sp@gmail.com>
+Date:   Sun, 8 Mar 2020 16:52:53 +0100
+Message-ID: <CAGr--=L9nEfX1c6DnaqQHqNMh9Ci=q=dMZLE_gpgyoneBcJ_Kw@mail.gmail.com>
+Subject: gui: error "missing close bracket" when doing a reset
+To:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Hi,
 
-The “post-receive” hook may need the pull request ID generated by the
-“proc-receive” hook.  The results can be passed between hooks by
-environment variables.
+The last couple of times I've done a reset in git-gui
+(Branch->Reset...->Yes), the repo is reset but I get an error message.
+The message header says "Error: missing close-bracket". Error message
+is as follows:
 
-Each line of the message received from the standard output of the
-“proc-receive” hook in the key=value format is parsed as environment and
-these variables will be sent to environment of the “post-receive” hook.
+missing close-bracket
+missing close-bracket
+    while executing
+"set status_bar_operation ["
+    invoked from within
+"if {[ask_popup $op_question] eq {yes}} {
+        set fd [git_read --stderr read-tree --reset -u -v HEAD]
+        fconfigure $fd -blocking 0 -translation binary
+        ..."
+    (procedure "merge::reset_hard" line 28)
+    invoked from within
+"merge::reset_hard"
+    invoked from within
+".#mbar.#mbar#branch invoke active"
+    ("uplevel" body line 1)
+    invoked from within
+"uplevel #0 [list $w invoke active]"
+    (procedure "tk::MenuInvoke" line 50)
+    invoked from within
+"tk::MenuInvoke .#mbar.#mbar#branch 1"
+    (command bound to event)
 
-Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
----
- builtin/receive-pack.c       | 38 ++++++++++++++++++--
- t/t5411-proc-receive-hook.sh | 70 ++++++++++++++++++++++++++++++++++++
- 2 files changed, 105 insertions(+), 3 deletions(-)
+(end of error message)
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 5aff682758..d854952410 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -87,6 +87,7 @@ static const char *nonce_status;
- static long nonce_stamp_slop;
- static timestamp_t nonce_stamp_slop_limit;
- static struct ref_transaction *transaction;
-+struct argv_array post_receive_env_array;
- 
- static enum {
- 	KEEPALIVE_NEVER = 0,
-@@ -694,7 +695,9 @@ struct receive_hook_feed_state {
- };
- 
- typedef int (*feed_fn)(void *, const char **, size_t *);
-+typedef void (*stdout_handler_fn)(int out);
- static int run_and_feed_hook(const char *hook_name, feed_fn feed,
-+			     stdout_handler_fn stdout_handler,
- 			     struct receive_hook_feed_state *feed_state)
- {
- 	struct child_process proc = CHILD_PROCESS_INIT;
-@@ -716,9 +719,15 @@ static int run_and_feed_hook(const char *hook_name, feed_fn feed,
- 
- 	proc.argv = argv;
- 	proc.in = -1;
--	proc.stdout_to_stderr = 1;
-+	if (stdout_handler)
-+		proc.out = -1;
-+	else
-+		proc.stdout_to_stderr = 1;
- 	proc.trace2_hook_name = hook_name;
- 
-+	if (!strcmp(hook_name, "post-receive") && post_receive_env_array.argc > 0)
-+		argv_array_pushv(&proc.env_array, post_receive_env_array.argv);
-+
- 	if (feed_state->push_options) {
- 		int i;
- 		for (i = 0; i < feed_state->push_options->nr; i++)
-@@ -763,6 +772,10 @@ static int run_and_feed_hook(const char *hook_name, feed_fn feed,
- 			break;
- 	}
- 	close(proc.in);
-+
-+	if (stdout_handler)
-+		stdout_handler(proc.out);
-+
- 	if (use_sideband)
- 		finish_async(&muxer);
- 
-@@ -819,7 +832,7 @@ static int run_receive_hook(struct command *commands,
- 		return 0;
- 	state.cmd = commands;
- 	state.push_options = push_options;
--	status = run_and_feed_hook(hook_name, feed_receive_hook, &state);
-+	status = run_and_feed_hook(hook_name, feed_receive_hook, NULL, &state);
- 	strbuf_release(&state.buf);
- 	return status;
- }
-@@ -853,6 +866,23 @@ static int run_update_hook(struct command *cmd)
- 	return finish_command(&proc);
- }
- 
-+static void prepare_post_receive_env(int in)
-+{
-+	struct strbuf stdout_buf = STRBUF_INIT;
-+
-+	while (strbuf_getwholeline_fd(&stdout_buf, in, '\n') != EOF) {
-+		char *p = stdout_buf.buf + stdout_buf.len -1;
-+		if (*p =='\n')
-+			*p = '\0';
-+		p = strchr(stdout_buf.buf, '=');
-+		if (p == NULL)
-+			continue;
-+		argv_array_push(&post_receive_env_array, stdout_buf.buf);
-+		strbuf_reset(&stdout_buf);
-+	}
-+	strbuf_release(&stdout_buf);
-+}
-+
- static int run_proc_receive_hook(struct command *commands,
- 				 const struct string_list *push_options)
- {
-@@ -869,7 +899,8 @@ static int run_proc_receive_hook(struct command *commands,
- 		return 0;
- 	state.cmd = commands;
- 	state.push_options = push_options;
--	status = run_and_feed_hook("proc-receive", feed_receive_hook, &state);
-+	status = run_and_feed_hook("proc-receive",
-+			feed_receive_hook, prepare_post_receive_env, &state);
- 	strbuf_release(&state.buf);
- 	return status;
- }
-@@ -2040,6 +2071,7 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
- 	};
- 
- 	string_list_init(&proc_receive_refs, 0);
-+	argv_array_init(&post_receive_env_array);
- 
- 	packet_trace_identity("receive-pack");
- 
-diff --git a/t/t5411-proc-receive-hook.sh b/t/t5411-proc-receive-hook.sh
-index e3bb421078..6f35867e85 100755
---- a/t/t5411-proc-receive-hook.sh
-+++ b/t/t5411-proc-receive-hook.sh
-@@ -687,4 +687,74 @@ test_expect_success "(6) push both a normal and a special refs (declined)" '
- 	test_cmp expect actual
- '
- 
-+test_expect_success "(7) restore pre-receive hook" '
-+	mv $bare/hooks/pre-receive $bare/hooks/pre-receive.fail &&
-+	mv $bare/hooks/pre-receive.ok $bare/hooks/pre-receive
-+'
-+
-+test_expect_success "(7) new proc-receive and post-receive hooks (pass environment variables)" '
-+	## proc-receive hook
-+	mv $bare/hooks/proc-receive $bare/hooks/proc-receive.ok &&
-+	cat >$bare/hooks/proc-receive <<-EOF &&
-+	#!/bin/sh
-+
-+	printf >&2 "execute: proc-receive hook\n"
-+
-+	while read old new ref
-+	do
-+		printf >&2 ">> old: \$old, new: \$new, ref: \$ref.\n"
-+	done
-+
-+	printf "GIT_VAR1=var1\n"
-+	printf "GIT_VAR2=var2\n"
-+	printf "AGIT_VAR1=foo\n"
-+	printf "AGIT_VAR2=bar\n"
-+	EOF
-+	chmod a+x $bare/hooks/proc-receive &&
-+
-+	## post-receive hook
-+	mv $bare/hooks/post-receive $bare/hooks/post-receive.ok &&
-+	cat >$bare/hooks/post-receive <<-EOF &&
-+	#!/bin/sh
-+
-+	printf >&2 "execute: post-receive hook\n"
-+
-+	while read old new ref
-+	do
-+		printf >&2 ">> old: \$old, new: \$new, ref: \$ref.\n"
-+	done
-+
-+	for k in GIT_VAR1 GIT_VAR2 AGIT_VAR1 AGIT_VAR2
-+	do
-+		if test -n "\$(eval echo \\"\\\$\$k\")"
-+		then
-+			printf >&2 ">> has env: \$k=\$(eval echo \\"\\\$\$k\").\n"
-+		fi
-+	done
-+	EOF
-+	chmod a+x $bare/hooks/post-receive
-+'
-+
-+test_expect_success "(7) push one special ref (show environments)" '
-+	(
-+		cd work &&
-+		git push origin \
-+			HEAD:refs/for/master/my/topic
-+	) >out 2>&1 &&
-+	grep "^remote:" out | sed -e "s/  *\$//g" >actual &&
-+	cat >expect <<-EOF &&
-+	remote: execute: pre-receive hook
-+	remote: >> old: $ZERO_OID, new: $B, ref: refs/for/master/my/topic.
-+	remote: execute: proc-receive hook
-+	remote: >> old: $ZERO_OID, new: $B, ref: refs/for/master/my/topic.
-+	remote: execute: post-receive hook
-+	remote: >> old: $ZERO_OID, new: $B, ref: refs/for/master/my/topic.
-+	remote: >> has env: GIT_VAR1=var1.
-+	remote: >> has env: GIT_VAR2=var2.
-+	remote: >> has env: AGIT_VAR1=foo.
-+	remote: >> has env: AGIT_VAR2=bar.
-+	EOF
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-2.26.0.rc0.5.gb02b988a14.dirty
+Does anyone else experience the same issue?
 
+Best regards,
+Birger
