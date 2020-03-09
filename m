@@ -2,98 +2,122 @@ Return-Path: <SRS0=lsTH=42=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 89EDFC10F27
-	for <git@archiver.kernel.org>; Mon,  9 Mar 2020 18:35:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 625DEC10F25
+	for <git@archiver.kernel.org>; Mon,  9 Mar 2020 19:17:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 54DF4208C3
-	for <git@archiver.kernel.org>; Mon,  9 Mar 2020 18:35:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 319D320848
+	for <git@archiver.kernel.org>; Mon,  9 Mar 2020 19:17:16 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="iNinUYLx"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="HDMIcVN2"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727446AbgCISff (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Mar 2020 14:35:35 -0400
-Received: from mout.web.de ([212.227.15.3]:53377 "EHLO mout.web.de"
+        id S1726156AbgCITRN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Mar 2020 15:17:13 -0400
+Received: from mout.gmx.net ([212.227.15.19]:55553 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727323AbgCISff (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Mar 2020 14:35:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1583778933;
-        bh=4mnW0bjSvFZ6fp5wMabBQtmv5NfXqFPd9bN3/gnKjDo=;
-        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=iNinUYLxT6RhmPJROLRy/+kTl8AvXA8Rx/WRLWNrOUNnxsIeu9DjSrTuyzow+fmQM
-         EOxemY18TUvpEK9G8ge5U2eJUNgnkyqpG3lo7u/MkEKdIC/Kf9HFG1SV2/KktpUAC/
-         UVtktHR5GYliHWhLG1TnZsV3HNk6dPtWBJCGoB+4=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb003
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0Ljahc-1jmcsX0qa0-00bbU3; Mon, 09
- Mar 2020 19:35:33 +0100
-Date:   Mon, 9 Mar 2020 19:35:32 +0100
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     =?utf-8?B?0JDQu9C10LrRgdCw0L3QtNGAINCi0YDQtdGC0YzRj9C6?= 
-        <alextretyak2@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Feature request: number of added and deleted lines for UTF-16
- files
-Message-ID: <20200309183532.lsh74dxjlxdqhdox@tb-raspi4>
-References: <CACDhn-QHqGFhZw+3K61v+Qtmm5y35nARWJaBkZ_YyZevJu8HBQ@mail.gmail.com>
- <CACDhn-R6ZKvgMxJdxP7NpsAViY97PfC7aM8xTJgaQK_GLJRyvQ@mail.gmail.com>
+        id S1725992AbgCITRN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Mar 2020 15:17:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1583781426;
+        bh=B3Qw4karKByDEc0hQoUKZlJhxFR3oDvqekK1dZs8hQI=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=HDMIcVN2jBrTKT11etANAXuHOxbJEq63dHhKT83q0/cpzGL7t44WIN+PqTnbCXBW+
+         a5sxoF1GHuoFYpnKY6nqnMdS1wY5AFh4G7ULX/SO6jEwlRzQqV4ezJ4nPILmkHG/jn
+         oFRffCNB+uwhHt/FAUtqLk3I4iJLanmaDwGHCicQ=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from MININT-QA14EDB.fritz.box ([89.1.212.209]) by mail.gmx.com
+ (mrgmx005 [212.227.17.190]) with ESMTPSA (Nemesis) id
+ 1MeU4s-1jjLCn3xye-00aTKo; Mon, 09 Mar 2020 20:17:06 +0100
+Date:   Mon, 9 Mar 2020 20:17:04 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Jeff Hostetler <git@jeffhostetler.com>,
+        Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH v9 2/5] bugreport: add tool to generate debugging info
+In-Reply-To: <xmqqr1y11sn7.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2003092013090.46@tvgsbejvaqbjf.bet>
+References: <20200302230400.107428-1-emilyshaffer@google.com> <20200302230400.107428-3-emilyshaffer@google.com> <nycvar.QRO.7.76.6.2003042232340.46@tvgsbejvaqbjf.bet> <5aae34d7-ed76-0e71-d0c4-959deeb1b2ca@jeffhostetler.com> <xmqqr1y52w5y.fsf@gitster-ct.c.googlers.com>
+ <nycvar.QRO.7.76.6.2003082319260.46@tvgsbejvaqbjf.bet> <xmqqr1y11sn7.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:4scnhEWOe0T9E7z2GhS9FOAkK3q9W0Pu9+xQHKaiFVpZUCdMdHf
+ K1jyKma25nfJsWBcqjF/OmMsi8obfuAqNgsmwqlmteDH7ztdNiKFTD9oBo4PyfHOIttg4e8
+ pPlGZ3EUovl+3JAglVdZo+ZLm/QH548HkkjvqLt1l8YCI0x77efdCNohm46otsMox5JERRs
+ DwwbaTfqDejMuqSDxntyg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:GT89nN9vVCI=:IGm7x8kV6jwzUXwegET5Lu
+ SvT02C65R7AFUbvUILiAjmQ6U5++nwrn/v36J9wl+h6NYgP31L9Sr4e/MDJYPc3Nbuj9lPXVQ
+ wmsQ7LJeG8/F54TVvXSKB4F1pCBqAdNQ5JmmNSKBHw+iA2zysU9unWzHuXKZywELsrxtqKQmb
+ rDDCZfV2wrk6Lk8T8TGYX2bJCFVw93Hqn6gAtWDtzHe/PRD/v/0jx0ryhZY6WNMjJo/Tuu9g+
+ GQ9cFgH/nVurZssu8AWjJ7NFouIbb+VkHojcOtrIqjjOHouDgDTc/ENQxqYKVRaVEy2cDHNOk
+ 9XPEA4xTYXgX0rXDo2dNhXFSajtpcAEOnuJon7K62EgWxPQSjYL+ROW8szpPFZm/DOwfswNbb
+ aZBq8sKZ43IrlSXHp1LyX/iDLnoSjAhU7Gqf+W7U9VxgxafpLbM+L6lAtqtm7aHqoZLLmDIWm
+ m4/EruSYanRIQljofMcuSOc/gptoRnknVmhgqQQT9WWDTl7qxBnXlTFO6At3dkzqRVkyOJ3jg
+ anCSkF6YTdG0JRgRALKVCJsfwUizPkWPghJHBi2oB35r5bVnEQTs5jcaijnABsCH9GTIH5QcG
+ TPFAzQIdlP6sbGrbzFxJKl7uTPPp9+ThOkyGXnqz2MaA0tFl8+8BdcljP+W9bU1M0CnQSLLCZ
+ 7Uj/KN2eBwVGTHfg5pLsXYmXLfkCIA7yFK5+LgxuQHoW99kAU+bL1bNrGl2ozqpipFNFjbBN7
+ obGx75mTUhAXo37Whlqc3BYMgKRwTz/j4BfacrNFXh366VWG1Wy+GY3xUe52m3ewQ/oAPGwEp
+ 0SJeTjL/5DYL8D4654PpT85WQwQTKg1T1go0cx3RwfINjeNNd88vg1hYbMZ55374H/UK+8IMc
+ 0vvKlxhVe92ZSq5ZWw1CCO34KtDq9S7K0QGFQwboZe9bZd0T/aKxPJHXaLS3S8g90k24nAu1E
+ X1iuWposyU64PCKgZQvypplUvlv6f6N5U/BobGzwHlsJrZhEcawf++MmIFiJTNsnXKgAPaUpf
+ 0ULxkfunBp9brW17f5wLa4OhmG9GVdi6krVeFMwop+lVKjm71lT9S142NMLEWIFidd0GoLdcG
+ phhTzcGb/CFrR5qgCrJ9pCSvCpy6y0ZL+F3Ak37KQaAUeBL/f8FC/VC+9BoD5npe9OzmD113U
+ fPM/FPn8sOy99Wsabo3wAVMDeBrrcnZXu4I0Mf/qrxsupuSWHLfOqC2qFcDWZ+8LskbQkzMV4
+ AN2IKka02BI3AHeN/
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <CACDhn-R6ZKvgMxJdxP7NpsAViY97PfC7aM8xTJgaQK_GLJRyvQ@mail.gmail.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-Provags-ID: V03:K1:5FGyn5sN8Fm9V3sIk+wutIn0/U0wmpQGVoYvy6NdvNWzGWMYNbZ
- GZr5pc8O0lvA81sKFEXXca7dy7wySSNkxWbRVfIjHvfPSvMRKfMcd/YtUOofxlJcJ3xf3a9
- WsMNtXY+hoXypzymqCL1YnEG+DAlNnJW2V4HbYJSj8dC/7wPkAtBWG2IB7q4/qAo6BdJoBV
- icBqf08LnbmzokhchmTGQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:FcvBZaifcB0=:Kn5X/3kcDJtdxsrstQ+Rqa
- 4PMbNojR/jT/NRxsbHf+h5IkLSuZPqHMJ/fzWETtKsqFamVLZzyMf6KTRhcgW7hbhfa1G5uZe
- ykvBqFWWSoFIsuwiaN8C9Fg6oYaCZ1yW18X6Oz7SltpCHU536WCzkWowGsvXhgkf4t1PUpdr4
- 5SlDel08+EPmyerU4yO5CoZtNDqwurMo1zBzdCzuYr3nh6anoM070fx6kUbnS2mcrhD7SJc2w
- 8OokFw61k49h4EiZOFqxWf2mugXDLOroKjsaGhsi39yh7pbqpS5kOmfokCmawPw8YVEDPxcut
- sNzzN4LRwgDOyU9C5dap8RiiQdphbyG6EWtwZU/ai3b5K8xysL0nfct2CuO9l2D76Z1i5O+qP
- MJ4JMjO/8wcs6svZviBr4qPcr4XdJrqNgW0A6kLQvzLRyehHqh5ku+LAyZJrdO27zhOAVXEk5
- pIdcw72QFLB8F0aFltSmcDmrRqoEdR+/I1lxRWMTy96zofGrkUXOJ3Ldc68AktzcfT3f31wDB
- S3xLVitPcW4/uARE+Z/ln28Ctby1FQQN3I82EMI03tIZTkQ/BtK93zLK7YNKlilngHwSirEed
- Us7TfksbocLbp+jRx0eYhmhU6OD7Tf2jemRxwlbA8Q75EBvLlFCOVTiDnC73bJxmsGfgJw49B
- 7zxftGMAnPC3p3qIZugA4wNW6sAXLDjp3j+hnhpJ6mJNlzW7liB3x7/5XLsTVNRwjI2dGdqLd
- ol6+t1XQ4Qowaw4IRgwttjC8XBlqWho80A01D5JXncj2vTa3kfb0Y0g3czJbAUFCEVHmX59Fp
- TctdHBJP2HvM/pEzGikXgQOD+u9F4OtLd7UGSsqU/H+LO0/oqo2q/erW9es1jWqSW06gEnw3K
- 92ZZNnjLX0YAnqGUugEBDuImO3yUD5qIaIyl8WBtGm/EwDi93B+AZdjcwokZiGoBS5ce9K27s
- kK7I09gnY/LoUvs436KKCxVb7C8M91LxaQXyt+/KEfYHqc244V8rodoMW+N252kD7OdEU6bsl
- B7vSgY0mzbclfCGRdan503NN8aiz5EysViSxFoPAmmPTHMLlUDi3Nl+nGSXe+EbcKgrGijrRm
- JxveRuRwnK0hpEypquGeV4Tj/hJRljgY9wkJXdMcOVg5eun4StpIj4UFUJnw1d8YVxOO1hyp5
- 1qA+j117O/ijuUw1XjtfIyL+U648zI/dsMKcHsltYbKY51ix7vYPZJl8JbsJOMzIinNr4w3Vf
- WBuN+TbRUJtfEx4Y8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 09, 2020 at 07:37:56AM +1000, =D0=90=D0=BB=D0=B5=D0=BA=D1=81=
-=D0=B0=D0=BD=D0=B4=D1=80 =D0=A2=D1=80=D0=B5=D1=82=D1=8C=D1=8F=D0=BA wrote:
-> Some source files in MSVC (e.g. resource.h) are encoded in UTF-16 (LE)
-> with Byte Order Mark (i.e. signature: FF FE for little-endian and FE
-> FF for big-endian), and `git diff --numstat` shows `-` in place of
-> number of added/removed lines, e.g.:
-> -       -       clientapp/resource.h
+Hi Junio,
+
+On Mon, 9 Mar 2020, Junio C Hamano wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 >
-> Can you auto detect UTF-16 by reading first 2 bytes of the file, and
-> correctly show number of lines added/removed?
+> > On Fri, 6 Mar 2020, Junio C Hamano wrote:
+> >
+> >> What makes it possible by making "git bugreport" stand-alone is for
+> >> it to link with libraries that the remainder of Git, including the
+> >> transports that link with libcurl, has no business linking with (a
+> >> library to obtain system details for diagnostic purposes, for
+> >> example).
+> >
+> > That would, however, make `git-bugreport` more fragile than `git`, i.e=
+.
+> > the former might fail to launch under more circumstances than the latt=
+er.
+>
+> That's a bug.  You can go fix it when it happens.
 
-There is an attribute "working-tree-encoding" that can be used to
-have the files in "UTF-16LE-BOM" (in your case) in your working tree
-and in UTF-8 inside the repo.
-This will allow commands like "git diff" to display added/deleted lines
-in UTF-8.
+Heh... yeah, that would be a bug, and the user would not be able to report
+it via `git bugreport`...
 
-More details may be found here:
-https://git-scm.com/docs/gitattributes
+Which is the whole point of my complaint.
 
-I hope that helps
+Isn't it obvious that we should not have an independent `git-bugreport` by
+now? With a stand-alone `git-bugreport`, we might
+
+- fail to load the .so files under more circumstances than `git` would
+  (since we link to `libgit.a`, we cannot have a subset of dependencies,
+  only a superset, or the same),
+
+- launch a stale `git-bugreport` from a completely different Git,
+
+- make users angry for wasting 3MB of their diskspace for `git-bugreport`
+  when only a dozen kilobyte would suffice.
+
+On the other hand, if we make `git-bugreport` a built-in, I cannot see any
+downsides.
+
+For me, therefore, having it as a built-in is a clear win. What am I
+missing?
+
+Ciao,
+Dscho
