@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CCA26C18E5B
-	for <git@archiver.kernel.org>; Tue, 10 Mar 2020 13:17:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DCF72C18E5B
+	for <git@archiver.kernel.org>; Tue, 10 Mar 2020 13:17:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A4F4924692
-	for <git@archiver.kernel.org>; Tue, 10 Mar 2020 13:17:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ACD2720873
+	for <git@archiver.kernel.org>; Tue, 10 Mar 2020 13:17:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CHM3kvSv"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jCLJA74K"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731447AbgCJNLg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Mar 2020 09:11:36 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:34833 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731430AbgCJNLf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Mar 2020 09:11:35 -0400
-Received: by mail-wr1-f67.google.com with SMTP id r7so15835248wro.2
-        for <git@vger.kernel.org>; Tue, 10 Mar 2020 06:11:32 -0700 (PDT)
+        id S1731435AbgCJNLd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Mar 2020 09:11:33 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:38620 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731425AbgCJNLc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Mar 2020 09:11:32 -0400
+Received: by mail-wm1-f68.google.com with SMTP id n2so1287164wmc.3
+        for <git@vger.kernel.org>; Tue, 10 Mar 2020 06:11:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=XTU2wfaaH8f7sxDLfC++czLuzfn0gJFeR4c4RRnX2Eg=;
-        b=CHM3kvSvmj5/nFQxoB/QEPpXr9YnkyfXizNAavNwyf1ElHmxiAetFcISreghm/AGaq
-         imxjzVr21ZB545GuTaT9mPhczmjt362el24yhNrfwFAbvJSkadKwVOBkLkyMiQ8Gs3Jd
-         Jn/PbUrXbIvwfOa9NzgOp3ZBh1a5GnZM5ESLJ4ktRvKrHNWUgv/fsW+yahA0z9nSXsud
-         g3H9CxP14XN5AX3KEGLr/9pJ4p090Jsmyt3YHveijR9rfSvuNdVGrkqqwYqaIa3luMTX
-         +U5m3XMbhyq/NIOq9z5KiMKB91KTykKu7mD1tNsVDRb78oZDOcqGmqMQVKbnZME0wU0L
-         V6cA==
+        bh=0Mjzsh71QKQicvKes1AlKy0nsmsEetH3MrEAXj28LcI=;
+        b=jCLJA74KoYL1vs7i+RTOUlAGSjHwy7m6zoPPikuGTozjl4m/xBc+HOWcrIiwpXJZf/
+         r32ThKa5+jd3c5oqnPnaoteVtUXW1inoUi2P8QpY/0Pd/vCYKdYHRCSZmIkAa1RaAaYs
+         7ccOC0cQo1K49xGPjDVTwH39aSJ7hT3qVwUkv++PJ1bnJh4Fm+aYzTK8H4XKq8d8FDWh
+         4U8CyPkV4oABwViKZUFxkVkSlj4xW382xzbHnn2CEkin7Gmfy3MTTI8uur41oucAnWKC
+         xddnwYVSQJ9QvwbFfKuJ5aq0ekBvn71EwR5tXNaRirgzS9GeJiRFh6HAp4XgTecb4V02
+         iPQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=XTU2wfaaH8f7sxDLfC++czLuzfn0gJFeR4c4RRnX2Eg=;
-        b=MMX3eXNjAmFV3c5s4Jhp7xYD5CMvsCyIClFfoePRAnytV5A/jHFe0M1gZWHb+rUYUe
-         bV55vx7l/BUx0j5q/yiNqUCRwxrGagp6tjYe0RX5XQwPr7GtzGssqK3gxQS39s2rfkVy
-         8iFr1Zm/Vjo8Zmmax8cv6tYNe2zZ6jhrXjtwCWu4Lu9mMkEoEO1UvHPHnJC3lAjWnXBU
-         Xf08D6bTQ4/QpQ/SMrsaz4htH+HFD6hYcjT8Wa0UjsW46Ij4DJdgU5hkTnfm9N31VjGl
-         tSpMWZluWHaLwkVxYsOLemiOVxRaIGFBvt2eMJZmoRp/KMmxODo0Ke9AggmG3pIlac9q
-         1JAg==
-X-Gm-Message-State: ANhLgQ1wEZK6n6NiqGwTbtspzDdZG+C0KRONDas6B4WX9xcmoFMBO1gJ
-        YsjucdGz3Oix20qcIFtx0RKGJj9u
-X-Google-Smtp-Source: ADFU+vvpTpd/Qn5QJQ3U3WnUcf1VQAtkOnFsiO+VM01zZtP7RFZuw56srvWTZ13ucGsjCrsciPxnKA==
-X-Received: by 2002:a5d:69cc:: with SMTP id s12mr14131141wrw.20.1583845891261;
-        Tue, 10 Mar 2020 06:11:31 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b12sm39482879wro.66.2020.03.10.06.11.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=0Mjzsh71QKQicvKes1AlKy0nsmsEetH3MrEAXj28LcI=;
+        b=TDefMJ9Kd/bE4lqqiruCzzAHGH6EmOEKNFlkr0JhJslqn7H+l84pfsWsice2CEWeqV
+         izHVx6YBQdH6WrY78NGeX3HViXvxM0mZ19+dDOrx4KcqLYiC3U2VeJ5t1v7w2s3i0l6H
+         +hCInbkr0TqOn7mrb+L8nF6hRl/m3r640B1NvUlMcbfbf+2U2TDX3B4X+T6tAq2WMiD2
+         5lgqZkSrhQNuOP33WTfbBC7bIxYpbz7erPd+2+/0JUNsRGVwMYzHtG3wNq+/B6/OXcw1
+         k1wWLcZpO0AhTzZwWSF51/9LLV7Y/CunKyGK930fjQf0SfkaZXxbj941YaQMoeEWxXKx
+         z18w==
+X-Gm-Message-State: ANhLgQ1uxNizeZK5Fu48ShJqoAkwV8fumhhPefbUOhywMgvI+xXNeuWG
+        J/s9N/bO4V/kMYbGQrwf3MklR27k
+X-Google-Smtp-Source: ADFU+vtn5KOTCkwdzhPmYNUsGxyTtz4khbiRPvq5nAWQYVzWJmm4Gwt4negI1/ZEu3242josRdXI2A==
+X-Received: by 2002:a1c:23ca:: with SMTP id j193mr2175767wmj.111.1583845890231;
         Tue, 10 Mar 2020 06:11:30 -0700 (PDT)
-Message-Id: <41950069a169c68e7e6d93f1a7d80166cb3a4689.1583845884.git.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id c72sm3944697wme.35.2020.03.10.06.11.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Mar 2020 06:11:29 -0700 (PDT)
+Message-Id: <a49176386710de97bfe92defd92b7861ef7242fb.1583845884.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.575.v2.git.1583845884.gitgitgadget@gmail.com>
 References: <pull.575.git.1583521396.gitgitgadget@gmail.com>
         <pull.575.v2.git.1583845884.gitgitgadget@gmail.com>
 From:   "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 10 Mar 2020 13:11:24 +0000
-Subject: [PATCH v2 4/4] get_superproject_working_tree(): return strbuf
+Date:   Tue, 10 Mar 2020 13:11:23 +0000
+Subject: [PATCH v2 3/4] real_path_if_valid(): remove unsafe API
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,106 +77,147 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 
-Together with the previous commits, this commit fully fixes the problem
-of using shared buffer for `real_path()` in `get_superproject_working_tree()`.
+This commit continues the work started with previous commit.
 
 Signed-off-by: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 ---
- builtin/rev-parse.c |  7 ++++---
- submodule.c         | 17 ++++++++---------
- submodule.h         |  4 ++--
- 3 files changed, 14 insertions(+), 14 deletions(-)
+ abspath.c   | 10 ----------
+ cache.h     |  1 -
+ setup.c     |  2 +-
+ sha1-file.c | 13 ++++---------
+ submodule.c |  7 ++++---
+ worktree.c  |  7 +++++--
+ 6 files changed, 14 insertions(+), 26 deletions(-)
 
-diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-index 06ca7175ac7..06056434ed1 100644
---- a/builtin/rev-parse.c
-+++ b/builtin/rev-parse.c
-@@ -808,9 +808,10 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
- 				continue;
- 			}
- 			if (!strcmp(arg, "--show-superproject-working-tree")) {
--				const char *superproject = get_superproject_working_tree();
--				if (superproject)
--					puts(superproject);
-+				struct strbuf superproject = STRBUF_INIT;
-+				if (get_superproject_working_tree(&superproject))
-+					puts(superproject.buf);
-+				strbuf_release(&superproject);
- 				continue;
- 			}
- 			if (!strcmp(arg, "--show-prefix")) {
-diff --git a/submodule.c b/submodule.c
-index 215c62580fc..c3aadf3fff8 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -2168,14 +2168,13 @@ void absorb_git_dir_into_superproject(const char *path,
- 	}
+diff --git a/abspath.c b/abspath.c
+index d34026bfeb8..6f15a418bb6 100644
+--- a/abspath.c
++++ b/abspath.c
+@@ -202,16 +202,6 @@ char *strbuf_realpath(struct strbuf *resolved, const char *path,
+ 	return retval;
  }
  
--const char *get_superproject_working_tree(void)
-+int get_superproject_working_tree(struct strbuf *buf)
- {
+-/*
+- * Resolve `path` into an absolute, cleaned-up path. The return value
+- * comes from a shared buffer.
+- */
+-const char *real_path_if_valid(const char *path)
+-{
 -	static struct strbuf realpath = STRBUF_INIT;
+-	return strbuf_realpath(&realpath, path, 0);
+-}
+-
+ char *real_pathdup(const char *path, int die_on_error)
+ {
+ 	struct strbuf realpath = STRBUF_INIT;
+diff --git a/cache.h b/cache.h
+index f6937793ec2..aa3f5ce718a 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1314,7 +1314,6 @@ static inline int is_absolute_path(const char *path)
+ int is_directory(const char *);
+ char *strbuf_realpath(struct strbuf *resolved, const char *path,
+ 		      int die_on_error);
+-const char *real_path_if_valid(const char *path);
+ char *real_pathdup(const char *path, int die_on_error);
+ const char *absolute_path(const char *path);
+ char *absolute_pathdup(const char *path);
+diff --git a/setup.c b/setup.c
+index 1ae3f203016..9e8fa46bc78 100644
+--- a/setup.c
++++ b/setup.c
+@@ -886,7 +886,7 @@ static dev_t get_device_or_die(const char *path, const char *prefix, int prefix_
+ 
+ /*
+  * A "string_list_each_func_t" function that canonicalizes an entry
+- * from GIT_CEILING_DIRECTORIES using real_path_if_valid(), or
++ * from GIT_CEILING_DIRECTORIES using real_pathdup(), or
+  * discards it if unusable.  The presence of an empty entry in
+  * GIT_CEILING_DIRECTORIES turns off canonicalization for all
+  * subsequent entries.
+diff --git a/sha1-file.c b/sha1-file.c
+index 616886799e5..f2b24654895 100644
+--- a/sha1-file.c
++++ b/sha1-file.c
+@@ -676,20 +676,15 @@ void add_to_alternates_memory(const char *reference)
+ char *compute_alternate_path(const char *path, struct strbuf *err)
+ {
+ 	char *ref_git = NULL;
+-	const char *repo, *ref_git_s;
++	const char *repo;
+ 	int seen_error = 0;
+ 
+-	ref_git_s = real_path_if_valid(path);
+-	if (!ref_git_s) {
++	ref_git = real_pathdup(path, 0);
++	if (!ref_git) {
+ 		seen_error = 1;
+ 		strbuf_addf(err, _("path '%s' does not exist"), path);
+ 		goto out;
+-	} else
+-		/*
+-		 * Beware: read_gitfile(), real_path() and mkpath()
+-		 * return static buffer
+-		 */
+-		ref_git = xstrdup(ref_git_s);
++	}
+ 
+ 	repo = read_gitfile(ref_git);
+ 	if (!repo)
+diff --git a/submodule.c b/submodule.c
+index bad7a788c06..215c62580fc 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -2173,7 +2173,7 @@ const char *get_superproject_working_tree(void)
+ 	static struct strbuf realpath = STRBUF_INIT;
  	struct child_process cp = CHILD_PROCESS_INIT;
  	struct strbuf sb = STRBUF_INIT;
- 	struct strbuf one_up = STRBUF_INIT;
+-	const char *one_up = real_path_if_valid("../");
++	struct strbuf one_up = STRBUF_INIT;
  	const char *cwd = xgetcwd();
--	const char *ret = NULL;
-+	int ret = 0;
+ 	const char *ret = NULL;
  	const char *subpath;
- 	int code;
- 	ssize_t len;
-@@ -2186,10 +2185,10 @@ const char *get_superproject_working_tree(void)
- 		 * We might have a superproject, but it is harder
- 		 * to determine.
+@@ -2188,10 +2188,11 @@ const char *get_superproject_working_tree(void)
  		 */
--		return NULL;
-+		return 0;
+ 		return NULL;
  
- 	if (!strbuf_realpath(&one_up, "../", 0))
--		return NULL;
-+		return 0;
+-	if (!one_up)
++	if (!strbuf_realpath(&one_up, "../", 0))
+ 		return NULL;
  
- 	subpath = relative_path(cwd, one_up.buf, &sb);
- 	strbuf_release(&one_up);
-@@ -2233,8 +2232,8 @@ const char *get_superproject_working_tree(void)
- 		super_wt = xstrdup(cwd);
- 		super_wt[cwd_len - super_sub_len] = '\0';
+-	subpath = relative_path(cwd, one_up, &sb);
++	subpath = relative_path(cwd, one_up.buf, &sb);
++	strbuf_release(&one_up);
  
--		strbuf_realpath(&realpath, super_wt, 1);
--		ret = realpath.buf;
-+		strbuf_realpath(buf, super_wt, 1);
-+		ret = 1;
- 		free(super_wt);
+ 	prepare_submodule_repo_env(&cp.env_array);
+ 	argv_array_pop(&cp.env_array);
+diff --git a/worktree.c b/worktree.c
+index e7bbf716f6b..543472f0c7b 100644
+--- a/worktree.c
++++ b/worktree.c
+@@ -226,17 +226,20 @@ struct worktree *find_worktree(struct worktree **list,
+ 
+ struct worktree *find_worktree_by_path(struct worktree **list, const char *p)
+ {
++	struct strbuf wt_path = STRBUF_INIT;
+ 	char *path = real_pathdup(p, 0);
+ 
+ 	if (!path)
+ 		return NULL;
+ 	for (; *list; list++) {
+-		const char *wt_path = real_path_if_valid((*list)->path);
++		if (!strbuf_realpath(&wt_path, (*list)->path, 0))
++			continue;
+ 
+-		if (wt_path && !fspathcmp(path, wt_path))
++		if (!fspathcmp(path, wt_path.buf))
+ 			break;
  	}
- 	strbuf_release(&sb);
-@@ -2243,10 +2242,10 @@ const char *get_superproject_working_tree(void)
+ 	free(path);
++	strbuf_release(&wt_path);
+ 	return *list;
+ }
  
- 	if (code == 128)
- 		/* '../' is not a git repository */
--		return NULL;
-+		return 0;
- 	if (code == 0 && len == 0)
- 		/* There is an unrelated git repository at '../' */
--		return NULL;
-+		return 0;
- 	if (code)
- 		die(_("ls-tree returned unexpected return code %d"), code);
- 
-diff --git a/submodule.h b/submodule.h
-index c81ec1a9b6c..4dad649f942 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -152,8 +152,8 @@ void absorb_git_dir_into_superproject(const char *path,
- /*
-  * Return the absolute path of the working tree of the superproject, which this
-  * project is a submodule of. If this repository is not a submodule of
-- * another repository, return NULL.
-+ * another repository, return 0.
-  */
--const char *get_superproject_working_tree(void);
-+int get_superproject_working_tree(struct strbuf *buf);
- 
- #endif
 -- 
 gitgitgadget
+
