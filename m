@@ -2,157 +2,184 @@ Return-Path: <SRS0=Lnee=43=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B6ACC10F27
-	for <git@archiver.kernel.org>; Tue, 10 Mar 2020 17:40:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9057EC10F27
+	for <git@archiver.kernel.org>; Tue, 10 Mar 2020 17:51:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7AB6020675
-	for <git@archiver.kernel.org>; Tue, 10 Mar 2020 17:40:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 42DE120727
+	for <git@archiver.kernel.org>; Tue, 10 Mar 2020 17:51:03 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="oO3tjGvr"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726445AbgCJRkS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Mar 2020 13:40:18 -0400
-Received: from cloud.peff.net ([104.130.231.41]:35504 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726380AbgCJRkS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Mar 2020 13:40:18 -0400
-Received: (qmail 24934 invoked by uid 109); 10 Mar 2020 17:40:18 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 10 Mar 2020 17:40:18 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 13296 invoked by uid 111); 10 Mar 2020 17:49:37 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 10 Mar 2020 13:49:37 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 10 Mar 2020 13:40:17 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Elijah Newren <newren@gmail.com>, git@vger.kernel.org
-Subject: Re: [ANNOUNCE] Git v2.26.0-rc1
-Message-ID: <20200310174017.GA549010@coredump.intra.peff.net>
-References: <xmqqo8t4z29k.fsf@gitster-ct.c.googlers.com>
+        id S1726520AbgCJRvC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Mar 2020 13:51:02 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:64465 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726283AbgCJRvB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Mar 2020 13:51:01 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9E254B33D2;
+        Tue, 10 Mar 2020 13:50:55 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=AQ5SFHjyz1uMBhPOl1nH4r+MUl4=; b=oO3tjG
+        vr1/5N4e8EK5fnORE36/EdfWmg4TDDikFy3mFNojQr2XBQAqWLNCYucix55iHFiZ
+        v9vvquLL8CFYnaZAwRjESr9jATghASy+rvvPupKWit4WmPjfqCPfTQMGCUIRmjoI
+        /g0q0GKC3zXmjWLbGrioyY7i4UDhf8v7hgcSw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=orae5Piy040w45UrB/weB+fnRE+78rK/
+        brfyuwmmEprZ4VAeSmZDRXEiqOCMytzlK0yXwqaOLJUTo/yA+3RYQg5mD8YGsm5l
+        /HhpPVJ5PCZr72TAdakryGcRVRQUZ5jx++hj6ih2fP8q5/sLsT/3zaXPJJ2ebX2Q
+        Ensfbj+FX+Y=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 959B3B33D1;
+        Tue, 10 Mar 2020 13:50:55 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id CFD4AB33D0;
+        Tue, 10 Mar 2020 13:50:52 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Michael J Gruber <git@grubix.eu>,
+        Matthieu Moy <git@matthieu-moy.fr>,
+        John Keeping <john@keeping.me.uk>,
+        Karthik Nayak <karthik.188@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Alex Henrie <alexhenrie24@gmail.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>
+Subject: Re: [PATCH v2 2/3] ref-filter: fix the API to correctly handle CRLF
+References: <pull.576.git.1583692184.gitgitgadget@gmail.com>
+        <pull.576.v2.git.1583807093.gitgitgadget@gmail.com>
+        <aab1f45ba976d088a8c68573a21ed2458915d6a6.1583807093.git.gitgitgadget@gmail.com>
+Date:   Tue, 10 Mar 2020 10:50:51 -0700
+In-Reply-To: <aab1f45ba976d088a8c68573a21ed2458915d6a6.1583807093.git.gitgitgadget@gmail.com>
+        (Philippe Blain via GitGitGadget's message of "Tue, 10 Mar 2020
+        02:24:52 +0000")
+Message-ID: <xmqqk13sjdz8.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqo8t4z29k.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: AF7A2466-62F7-11EA-9F78-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 10, 2020 at 07:57:11AM -0700, Junio C Hamano wrote:
+"Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
->  * "git rebase" has learned to use the merge backend (i.e. the
->    machinery that drives "rebase -i") by default, while allowing
->    "--apply" option to use the "apply" backend (e.g. the moral
->    equivalent of "format-patch piped to am").  The rebase.backend
->    configuration variable can be set to customize.
+> From: Philippe Blain <levraiphilippeblain@gmail.com>
+>
+> The ref-filter API does not correctly handle commit or tag messages that
+> ...
 
-I noticed a few behavior changes that I think are related to this
-switch. I'm not sure to what degree we'd consider these a problem
-(though the second I think may be an existing bug in the merge backend
-that's just getting more attention), but it seems like the time to raise
-the issue is now, before the release. :)
+(I won't repeat myself here; see 0/3)
 
-The first change is that we'll now open an editor when continuing a
-conflicted rebase. You can see it by running this:
+> Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+> ---
+>  ref-filter.c             | 19 +++++++++++++++++--
+>  t/t3203-branch-output.sh | 26 +++++++++++++++++++++-----
+>  t/t6300-for-each-ref.sh  |  5 +++++
+>  t/t7004-tag.sh           |  7 +++++++
+>  4 files changed, 50 insertions(+), 7 deletions(-)
+>
+> diff --git a/ref-filter.c b/ref-filter.c
+> index 79bb5206783..537cc4de42c 100644
+> --- a/ref-filter.c
+> +++ b/ref-filter.c
+> @@ -1050,10 +1050,18 @@ static char *copy_subject(const char *buf, unsigned long len)
+>  {
+>  	char *r = xmemdupz(buf, len);
+>  	int i;
+> +	struct strbuf sb = STRBUF_INIT;
+>  
+> -	for (i = 0; i < len; i++)
+> +	strbuf_attach(&sb, r, len, len + 1);
+> +	for (i = 0; i < sb.len; i++) {
+>  		if (r[i] == '\n')
+>  			r[i] = ' ';
+> +		if (r[i] == '\r') {
+> +			strbuf_remove(&sb, i, 1);
+> +			i -= 1;
+> +		}
+> +	}
+> +	strbuf_detach(&sb, NULL);
+>  	return r;
+>  }
 
-  for backend in apply merge; do
-    echo "==> Running with rebase.backend=$backend"
-  
-    # new repo
-    rm -rf repo
-    git init -q repo
-    cd repo
-  
-    # create two conflicting branches
-    echo base >base && git add base && git commit -qm base
-    echo master >file && git add file && git commit -qm master
-    git checkout -q -b side HEAD^
-    echo side >file && git add file && git commit -qm side
-  
-    # rebase on master, hit the conflict, then resolve it
-    git -c rebase.backend=$backend rebase master
-    echo resolved >file
-    git add file
-  
-    # continue the rebase, noting whether we used the editor
-    GIT_EDITOR='echo >&2 running editor on:' git rebase --continue
-  done
+So, the chosen solution is to only remove CR and do so only in the
+first paragraph.  Even if the second and subsequent paragraphs use
+CRLF line endings, those CRs are retained.  Also, a lone CR in the
+first paragraph that is not part of CRLF end-of-line marker is lost,
+but other control characters like "\a" are retained.  That sounds
+like an almost "minimum" change but not quite.
 
-We won't run the editor the "apply" backend, but do for "merge".  I'm
-not sure how big a deal this is. It bit me because I have a script which
-runs rebase in a "while read" shell loop, with stdin coming from a pipe
-feeding the loop. It auto-continues when rerere is able to fix up the
-conflicts, but the editor complains about stdin not being a tty and
-dies.
+The way strbuf is used in the implementation is a bit curious and
+risky.  Currently we do not realloc to shrink a strbuf, but when we
+start doing so, this code would break because you are relying on the
+fact that just before calling strbuf_detach(), sb.buf happens to be
+still the same as r.
 
-I'd imagine that's a pretty rare situation, and it was easy enough to
-fix up. But I wonder if we should be more careful about making sure the
-behavior is more identical. On the other hand, I imagine this is the way
-the merge backend has always behaved, so it would be a change in
-behavior for people who had been using it already. I guess the _most_
-compatible thing would be a merge-that-behaves-more-like-apply backend,
-but I'm not sure if we want to support that forever.
+As the point of the function is "we want to return a copy of what is
+in buf[0..len] but the input is a (possibly multi-line) paragraph,
+and we want a single line 'title', so replace end-of-line with a
+SP", a minimal translation that is more faithful to the intended
+meaning of the function would be:
 
-The second thing I noticed is more clearly a bug, I think. If we have a
-patch that is skipped because it was already applied, we get stuck in
-"cherry-picking" mode. Try:
+	static char *copy_subject(const char *buf, unsigned long len)
+	{
+		struct strbuf sb = STRBUF_INIT;
 
-  for backend in apply merge; do
-    echo "==> Running with rebase.backend=$backend"
-  
-    # new repo
-    rm -rf repo
-    git init -q repo
-    cd repo
-  
-    echo base >file && git add file && git commit -qm base
-    # do this in two steps so we don't match patch-id
-    echo one >file && git commit -qam master-1
-    echo two >file && git commit -qam master-2
-  
-    git checkout -q -b side HEAD~2
-    echo two >file && git commit -qam side
-  
-    # start a rebase, which should realize that the patch is a noop
-    git -c rebase.backend=$backend rebase master
-  
-    # see what state "status" reports us in
-    git status
-  done
+		for (i = 0; i < len; i++) {
+                	if (buf[i] == '\r' &&
+			    i + 1 < len && buf[i + 1] == '\n')
+                            continue; /* ignore CR in CRLF */
 
-For the "apply" case, I get:
+			if (buf[i] == '\n')
+				strbuf_addch(&sb, ' ');
+			else
+				strbuf_addch(&sb, buf[i]);
+		}
+                return strbuf_detach(&sb, NULL);
+	}
 
-  ==> Running with rebase.backend=apply
-  First, rewinding head to replay your work on top of it...
-  Applying: side
-  Using index info to reconstruct a base tree...
-  M	file
-  Falling back to patching base and 3-way merge...
-  No changes -- Patch already applied.
-  On branch side
-  nothing to commit, working tree clean
+perhaps?  This retains CR in the middle if exists just like BEL in
+the middle of the line, and uses strbuf in a safe way, I think.
 
-So we complete the rebase, and git-status shows nothing. But for the
-merge backend:
+> @@ -1184,15 +1192,22 @@ static void find_subpos(const char *buf,
+>  		eol = strchrnul(buf, '\n');
+>  		if (*eol)
+>  			eol++;
+> +		/*  protect against messages that might contain \r\n */
+> +		if (*eol == '\r')
+> +			eol++;
 
-  ==> Running with rebase.backend=merge
-  dropping f8b25a2cd2a3a0e64d820efe2fcbae81dec98616 side -- patch contents already upstream
-  Successfully rebased and updated refs/heads/side.
-  On branch side
-  You are currently cherry-picking commit f8b25a2.
-  
-  nothing to commit, working tree clean
+This is quite convoluted.  You found a LF and then are hoping to see
+if the byte after LF is CR (i.e. you are looking for LFCR, not
+CRLF).
 
-Oops. If I "git rebase --continue" from there, I get "No rebase in
-progress?". Doing "git cherry-pick --skip" clears it. I guess the issue
-is the continued presence of .git/CHERRY_PICK_HEAD.
+>  		buf = eol;
+>  	}
+>  	*sublen = buf - *sub;
+>  	/* drop trailing newline, if present */
+>  	if (*sublen && (*sub)[*sublen - 1] == '\n')
+>  		*sublen -= 1;
+> +	/*  protect against commit messages that might contain \r\n */
+> +	else if (*sublen && (*sub)[*sublen - 1] == '\r')
+> +		*sublen -= 3; /* drop '\r\n\r' */
 
-As you can see from the output above (and the earlier snippet, if you
-run it), there are also a bunch of minor stderr output changes. I think
-these probably aren't worth caring about.
-
--Peff
+Yeek.  To find CR-LF-CR-LF, you look for CR-LF-CR?  You only checked
+that the previous byte is NOT LF (because you are in else-if, so the
+previous if must have failed) and you have at least one previous byte
+that is CR.  What gives us OK that *sublen is sufficiently long that
+we can safely subtract 3 from it (we only checked that it is not 0;
+who says it is 3 or more in this code???) and the two bytes before
+the CR we are looking at here are CRLF???
