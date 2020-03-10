@@ -2,203 +2,191 @@ Return-Path: <SRS0=Lnee=43=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C86B2C18E5B
-	for <git@archiver.kernel.org>; Tue, 10 Mar 2020 13:18:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 590A6C10F27
+	for <git@archiver.kernel.org>; Tue, 10 Mar 2020 14:23:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 985D220873
-	for <git@archiver.kernel.org>; Tue, 10 Mar 2020 13:18:01 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HpyUx+p9"
+	by mail.kernel.org (Postfix) with ESMTP id 2E609222C3
+	for <git@archiver.kernel.org>; Tue, 10 Mar 2020 14:23:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731544AbgCJNSB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Mar 2020 09:18:01 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:42619 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731417AbgCJNL2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Mar 2020 09:11:28 -0400
-Received: by mail-wr1-f67.google.com with SMTP id v11so15775708wrm.9
-        for <git@vger.kernel.org>; Tue, 10 Mar 2020 06:11:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=VWW8FfBCCnjTtpZa/h3PDT4exuGP8tqt9pB6XFp3cJ8=;
-        b=HpyUx+p9gYY6qAZXmDz47WbzEnO1K/twTCD55HAzlO+sX3tqEjBFbI6mDr17SaezV8
-         YorqtjCH7em4wTaBgPPkYtDpRTcoYuC8klstqeq8UHG/G23Y6Y5kSyCmT7FEIhxvRa/s
-         2HWQ2ZhsMl3Y2DeM64rMYIYgSgfWZJa3nwaj7lfmdSg22Ldz71Njw270uPiVSiNr7WLW
-         nu4QSMH0dUn51IB43ahr+xtPqd0leozKWmaTW2QQEWR6hymJtSQ6cx0Mn7rkshwYyYYT
-         sqynfDUKQPqwAOFwsmECjEzELOkR6tCc4SAgJwnCCBycwR4DXMhOtf+DmjTEHZXa2IyL
-         7lnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=VWW8FfBCCnjTtpZa/h3PDT4exuGP8tqt9pB6XFp3cJ8=;
-        b=DZiqaQlAxS+teNO6gJXDbISCy9r+JiEOpEu6yTHoQe9Vzk6vwz3/j6zh+3q+8O7jeh
-         cEs27pqYoeX0uVTcmshlT7vL3n2xy0yFwCb29lkUYN1od6DNHDOsISpiKNTQRM4XXWMc
-         YhTyPg9pKShrLV0+QobSbSFy3reW8ZwjxCh38vbxWMmtPUHl517YfbQdXxs1bBYPwfwN
-         0p894VMGcu56Lhwz88btl3LKshSG88FtHkB1RBo340uCkRvGnm7rXyJTMHmUDtVeZJmC
-         GfHa3hcAQP9fwmfpr/OggPAIyLPf5AwEXqbmut//gTaGJmganuMpYkqxP86jn45jdTsg
-         F/PA==
-X-Gm-Message-State: ANhLgQ1c0nzlm8QTTUpEMRIMTv6//d1KBfU0bPGFHPMN9WO/cpUj2qsx
-        PJxaXkmkJNLFhmxh3fY6fB3SduXN
-X-Google-Smtp-Source: ADFU+vtdiKqWRY6+hR0u+qJMiNXIUmF+xiSke8g9bOGRLNVHBFQ71fUJrRJpCuC9qmTur9NI8gPxiA==
-X-Received: by 2002:adf:de84:: with SMTP id w4mr20821568wrl.350.1583845886652;
-        Tue, 10 Mar 2020 06:11:26 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y3sm28912666wrm.46.2020.03.10.06.11.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Mar 2020 06:11:25 -0700 (PDT)
-Message-Id: <pull.575.v2.git.1583845884.gitgitgadget@gmail.com>
-In-Reply-To: <pull.575.git.1583521396.gitgitgadget@gmail.com>
-References: <pull.575.git.1583521396.gitgitgadget@gmail.com>
-From:   "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 10 Mar 2020 13:11:20 +0000
-Subject: [PATCH v2 0/4] Fix bugs related to real_path()
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1726899AbgCJOXk convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Tue, 10 Mar 2020 10:23:40 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:41427 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726273AbgCJOXj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Mar 2020 10:23:39 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 02AENXV6062926
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Tue, 10 Mar 2020 10:23:34 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "=?UTF-8?Q?'SZEDER_G=C3=A1bor'?=" <szeder.dev@gmail.com>
+Cc:     <git@vger.kernel.org>
+References: <010b01d5ee87$09be74d0$1d3b5e70$@nexbridge.com> <20200310110008.GA3122@szeder.dev>
+In-Reply-To: <20200310110008.GA3122@szeder.dev>
+Subject: RE: [Breakage] t0410 - subtests report unable to remove non-existent file.
+Date:   Tue, 10 Mar 2020 10:23:26 -0400
+Message-ID: <010b01d5f6e7$79dd4440$6d97ccc0$@nexbridge.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQJ/UBngYX6OnNnd+Z5jrW9SBATD0QD+EjEOpuc8iSA=
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Changes since V1
--------------------
-1) Removed `strbuf_realpath()` that weren't needed
-2) Code style in declaration of `get_superproject_working_tree()`
+On March 10, 2020 7:00 AM, SZEDER Gábor wrote:
+> On Fri, Feb 28, 2020 at 05:32:57PM -0500, Randall S. Becker wrote:
+> > Starting at t0410, subtest 5 (missing ref object, but promised, passes
+> > fsck), on the NonStop L-series platform, we are seeing errors like the
+> > following:
+> >
+> > not ok 5 - missing ref object, but promised, passes fsck #
+> > #               rm -rf repo &&
+> > #               test_create_repo repo &&
+> > #               test_commit -C repo my_commit &&
+> > #
+> > #               A=$(git -C repo commit-tree -m a HEAD^{tree}) &&
+> > #
+> > #               # Reference $A only from ref
+> > #               git -C repo branch my_branch "$A" &&
+> > #               promise_and_delete "$A" &&
+> > #
+> > #               git -C repo config core.repositoryformatversion 1 &&
+> > #               git -C repo config extensions.partialclone "arbitrary
+> > string" &&
+> > #               git -C repo fsck
+> > #
+> >
+> > With verbose output as follows:
+> 
+> Try to run tests with '-x' tracing enabled for additional info about what's
+> going on, and thus potentially additional clues about what might go wrong.
+> 
+> > Initialized empty Git repository in /home/ituglib/randall/git/t/trash
+> > directory.t0410-partial-clone/repo/.git/
+> > [master (root-commit) 9df77b9] my_commit
+> >  Author: A U Thor <author@example.com>
+> >  1 file changed, 1 insertion(+)
+> >  create mode 100644 my_commit.t
+> > Enumerating objects: 1, done.
+> > Counting objects: 100% (1/1), done.
+> > Writing objects: 100% (1/1), done.
+> > Total 1 (delta 0), reused 0 (delta 0)
+> > a391e3e0447189aa0050c8f206462a1b0530a34a
+> > rm: cannot remove
+> > 'repo/.git/objects/a3/91e3e0447189aa0050c8f206462a1b0530a34a': No
+> such
+> > file or directory
+> 
+> So this failing 'rm' happens inside the 'promise_and_delete' helper function,
+> which does  the following, simplified a bit for the purpose of this discussion:
+> 
+>   promise_and_delete () {
+>           HASH=$(git -C repo rev-parse "$1") &&
+>           <...>
+>           git -C repo rev-parse my_annotated_tag | pack_as_from_promisor &&
+>           <...>
+>           delete_object repo "$HASH"
+>   }
+> 
+> The failing 'rm' is in the 'delete_object_repo' helper function.
+> The 'pack_as_from_promisor' does the following:
+> 
+>   pack_as_from_promisor () {
+>           HASH=$(git -C repo pack-objects .git/objects/pack/pack) &&
+>           >repo/.git/objects/pack/pack-$HASH.promisor &&
+>           echo $HASH
+>   }
+> 
+> Notice that both 'promise_and_delete' and 'pack_as_from_promisor' set the
+> $HASH variable.  This is usually not an issue, because
+> 'pack_as_from_promisor' is invoked in a pipe, and thus most shells execute it
+> in a subshell environment.
+> 
+> However, apparently 'ksh' doesn't run this helper function in a subshell
+> environment, and the value set in 'pack_as_from_promisor'
+> overwrites the value set in its caller, thus 'promise_and_delete' ends up
+> trying to delete a non-existing object (it's the SHA1 of a packfile).
+> 
+> See the trimmed/annotated '-x' output with 'ksh' from t0410.5:
+> 
+>   + promise_and_delete 383670739c2f993999f3c10911ac5cb5c6591523
+>   + git -C repo rev-parse 383670739c2f993999f3c10911ac5cb5c6591523
+> # Setting $HASH in 'promise_and_delete':
+>   + HASH=383670739c2f993999f3c10911ac5cb5c6591523
+>   + git -C repo tag -a -m message my_annotated_tag
+> 383670739c2f993999f3c10911ac5cb5c6591523
+>   + pack_as_from_promisor
+>   + git -C repo rev-parse my_annotated_tag
+>   + git -C repo pack-objects .git/objects/pack/pack
+>   Enumerating objects: 1, done.
+>   Counting objects: 100% (1/1), done.
+>   Writing objects: 100% (1/1), done.
+>   Total 1 (delta 0), reused 0 (delta 0)
+> # Setting $HASH in 'pack_as_from_promisor', and overwriting its value # in
+> the caller:
+>   + HASH=a391e3e0447189aa0050c8f206462a1b0530a34a
+>   + 1> repo/.git/objects/pack/pack-
+> a391e3e0447189aa0050c8f206462a1b0530a34a.promisor
+>   + echo a391e3e0447189aa0050c8f206462a1b0530a34a
+>   a391e3e0447189aa0050c8f206462a1b0530a34a
+>   + git -C repo tag -d my_annotated_tag
+>   + 1> /dev/null
+> # Using the new value in the caller:
+>   + delete_object repo a391e3e0447189aa0050c8f206462a1b0530a34a
+>   + sed -e 's|^..|&/|'
+>   + echo a391e3e0447189aa0050c8f206462a1b0530a34a
+>   + rm repo/.git/objects/a3/91e3e0447189aa0050c8f206462a1b0530a34a
+>   rm: cannot remove
+> 'repo/.git/objects/a3/91e3e0447189aa0050c8f206462a1b0530a34a': No
+> such file or directory
+> 
+> Note, however, that 'ksh' is not utterly wrong in doing so, because POSIX
+> does allow this behavior: POSIX 2.12 Shell Execution Environment, the last
+> paragraph of the section:
+> 
+>   "each command of a multi-command pipeline is in a subshell
+>    environment; as an extension, however, any or all commands in a
+>    pipeline may be executed in the current environment."
+> 
+> 
+> https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.ht
+> ml#tag_18_12
+> 
+> So apparently 'ksh' implements this extension.
+> 
+> The trivial fix would be to mark $HASH as 'local' in both helper functions, but
+> this would not help 'ksh', of course, as it doesn't support 'local'.  However,
+> since we use more and more 'local's in our testsuite, 'ksh' might be
+> considered a lost cause anyway.
+> 
+> Or we could rename these HASH variables to something more specific to
+> prevent this name collision, e.g. PACK_HASH in 'pack_as_from_promisor'.
+> 
+> Note that there are tests in t0410 that set and use the $HASH variable
+> outside of these helper function, and, worse, there is a test that uses the
+> $HASH variable set in the previous test.  Luckily, none of those tests use
+> 'promise_and_delete' or 'pack_as_from_promisor'.
 
-Original description
--------------------
-The issue with `real_path()` seems to be long-standing, where multiple
-people solved parts of it over time. I'm adding another part here
-after I have discovered a crash related to it.
+I think we are going to consider ksh a lost cause. We have to move to bash because the ksh implementation does not support a large enough environment to run all of the tests, so are now running with:
 
-Even with this step, there are still problems remaining:
-* `read_gitfile_gently()` still uses shared buffer.
-* `absolute_path()` was not removed.
+make SHELL=/usr/coreutils/bin/bash
 
-These issues remain because there're too many code references and I'd like
-to avoid submitting a single topic of a scary size.
+t0410 passes using bash so we'll stick with that rather than trying to patch ksh that won't run properly inside make as of 2.25.0 (we hit the environment size limit).
 
-Alexandr Miloslavskiy (4):
-  set_git_dir: fix crash when used with real_path()
-  real_path: remove unsafe API
-  real_path_if_valid(): remove unsafe API
-  get_superproject_working_tree(): return strbuf
+Thanks for the response.
 
- abspath.c                  | 18 +-----------------
- builtin/clone.c            |  6 +++++-
- builtin/commit-graph.c     |  5 ++++-
- builtin/init-db.c          |  4 ++--
- builtin/rev-parse.c        | 12 ++++++++----
- builtin/worktree.c         |  9 ++++++---
- cache.h                    |  4 +---
- editor.c                   | 11 +++++++++--
- environment.c              | 18 ++++++++++++++++--
- path.c                     |  4 ++--
- setup.c                    | 35 ++++++++++++++++++++++-------------
- sha1-file.c                | 13 ++++---------
- submodule.c                | 22 ++++++++++++----------
- submodule.h                |  4 ++--
- t/helper/test-path-utils.c |  5 ++++-
- worktree.c                 | 12 +++++++++---
- 16 files changed, 107 insertions(+), 75 deletions(-)
+Regards,
+Randall
 
-
-base-commit: 076cbdcd739aeb33c1be87b73aebae5e43d7bcc5
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-575%2FSyntevoAlex%2F%230205(git)_crash_real_path-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-575/SyntevoAlex/#0205(git)_crash_real_path-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/575
-
-Range-diff vs v1:
-
- 1:  f7afcb4cc83 = 1:  f7afcb4cc83 set_git_dir: fix crash when used with real_path()
- 2:  039d3d36866 ! 2:  29e7133dcd9 real_path: remove unsafe API
-     @@ -64,7 +64,6 @@
-       			die_errno(_("failed to unlink '%s'"), dest->buf);
-       		if (!option_no_hardlinks) {
-      -			if (!link(real_path(src->buf), dest->buf))
-     -+			strbuf_reset(&realpath);
-      +			strbuf_realpath(&realpath, src->buf, 1);
-      +			if (!link(realpath.buf, dest->buf))
-       				continue;
-     @@ -92,7 +91,6 @@
-       	prepare_alt_odb(r);
-       	for (odb = r->objects->odb; odb; odb = odb->next) {
-      -		if (!strcmp(obj_dir_real, real_path(odb->path)))
-     -+		strbuf_reset(&odb_path_real);
-      +		strbuf_realpath(&odb_path_real, odb->path, 1);
-      +		if (!strcmp(obj_dir_real, odb_path_real.buf))
-       			break;
-     @@ -139,7 +137,6 @@
-      -	write_file(sb.buf, "%s", real_path(sb_git.buf));
-      +	strbuf_realpath(&realpath, sb_git.buf, 1);
-      +	write_file(sb.buf, "%s", realpath.buf);
-     -+	strbuf_reset(&realpath);
-      +	strbuf_realpath(&realpath, get_git_common_dir(), 1);
-       	write_file(sb_git.buf, "gitdir: %s/worktrees/%s",
-      -		   real_path(get_git_common_dir()), name);
-     @@ -261,7 +258,6 @@
-       		if (*path == '/') {
-       			*path = '\0';
-      -			if (fspathcmp(real_path(path0), work_tree) == 0) {
-     -+			strbuf_reset(&realpath);
-      +			strbuf_realpath(&realpath, path0, 1);
-      +			if (fspathcmp(realpath.buf, work_tree) == 0) {
-       				memmove(path0, path + 1, len - (path - path0));
-     @@ -274,7 +270,6 @@
-       
-       	/* check whole path */
-      -	if (fspathcmp(real_path(path0), work_tree) == 0) {
-     -+	strbuf_reset(&realpath);
-      +	strbuf_realpath(&realpath, path0, 1);
-      +	if (fspathcmp(realpath.buf, work_tree) == 0) {
-       		*path0 = '\0';
-     @@ -338,7 +333,6 @@
-      +		struct strbuf realpath = STRBUF_INIT;
-       		while (argc > 2) {
-      -			puts(real_path(argv[2]));
-     -+			strbuf_reset(&realpath);
-      +			strbuf_realpath(&realpath, argv[2], 1);
-      +			puts(realpath.buf);
-       			argc--;
- 3:  59af49ad9f6 ! 3:  a4917638671 real_path_if_valid(): remove unsafe API
-     @@ -122,7 +122,6 @@
-       		return NULL;
-       	for (; *list; list++) {
-      -		const char *wt_path = real_path_if_valid((*list)->path);
-     -+		strbuf_reset(&wt_path);
-      +		if (!strbuf_realpath(&wt_path, (*list)->path, 0))
-      +			continue;
-       
- 4:  2eeefda3d41 ! 4:  41950069a16 get_superproject_working_tree(): return strbuf
-     @@ -33,7 +33,7 @@
-       }
-       
-      -const char *get_superproject_working_tree(void)
-     -+int get_superproject_working_tree(struct strbuf* buf)
-     ++int get_superproject_working_tree(struct strbuf *buf)
-       {
-      -	static struct strbuf realpath = STRBUF_INIT;
-       	struct child_process cp = CHILD_PROCESS_INIT;
-     @@ -94,6 +94,6 @@
-      + * another repository, return 0.
-        */
-      -const char *get_superproject_working_tree(void);
-     -+int get_superproject_working_tree(struct strbuf* buf);
-     ++int get_superproject_working_tree(struct strbuf *buf);
-       
-       #endif
-
--- 
-gitgitgadget
