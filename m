@@ -2,145 +2,102 @@ Return-Path: <SRS0=Lnee=43=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.9 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D5890C10F27
-	for <git@archiver.kernel.org>; Tue, 10 Mar 2020 12:08:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 315E4C10F27
+	for <git@archiver.kernel.org>; Tue, 10 Mar 2020 12:17:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A700B2467D
-	for <git@archiver.kernel.org>; Tue, 10 Mar 2020 12:08:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 039622468E
+	for <git@archiver.kernel.org>; Tue, 10 Mar 2020 12:17:49 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="GI3loZRX"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Tt/Q6cb6"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726290AbgCJMIN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Mar 2020 08:08:13 -0400
-Received: from us-smtp-delivery-1.mimecast.com ([207.211.31.120]:33507 "EHLO
-        us-smtp-1.mimecast.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1726211AbgCJMIN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Mar 2020 08:08:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1583842091;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=j43gIQt9w7Ewcl0alstkJBMRKdvqYsENhwKqwYBOILc=;
-        b=GI3loZRXLATnxQFul/8p9AFx9RmvW2vAbfUWimbvavrCXqmjh2PD9POBOnJ16UHApIEq6k
-        n3N0mykXWeafF9zjTg9Sh/QrYQP2HcH79ouCE4TTiPbQYdCZ0yrinvDEQ2/F54PyIXR9SD
-        lHYc7fBpx2/Z75Gn15wgvfHCEV8JoQU=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-35-92RcNcq4M_Kz-8FefwFp3Q-1; Tue, 10 Mar 2020 08:08:07 -0400
-X-MC-Unique: 92RcNcq4M_Kz-8FefwFp3Q-1
-Received: by mail-wm1-f70.google.com with SMTP id z26so270116wmk.1
-        for <git@vger.kernel.org>; Tue, 10 Mar 2020 05:08:07 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=j43gIQt9w7Ewcl0alstkJBMRKdvqYsENhwKqwYBOILc=;
-        b=I7pCcqE1FUA5sxP/i2qYSLJb7XYEHVPXNpn1FSk3YmpiLV42zb4i90KG9eIlJEjm92
-         EY/nLl0EbAM8m8iH6aj19UNrhKio1Ulv7q6shVXuZLRKrYRgIDzbCmgx96v69pz0qGY8
-         tclyH0Fj75n23/yv1zo+qJqQGIbw+NOWNCvh3telrRFCmTs9ll/MFiIcfcqdLNdzbzZN
-         i77loi5WCLj18F8p5Re6a69TgEV7w+lVBKl5f/h6OjkP6Dk+Qwvl7SXST4T+Lf/e2fOM
-         rb6z0jrBFV4o0A882JJ4FgbbmuzYesZXryGcUAZTI41y1yICd+/LckIhSQ62b9dttoUp
-         D5AQ==
-X-Gm-Message-State: ANhLgQ2yk6EncwzGM+4X0FKsIsFJDtbapsvT9OFglq+rTMo73NYu4gUB
-        58QBth3h0hxuUwgR/h4S5haLUmnFGg1Ro/4Gb5Wc9fWJLTseLv+MKLh11/4eI0tnyOK4AAaOLG9
-        /7zZGfoMyQlxFmDMyIq85rfcrBe+w
-X-Received: by 2002:a7b:ce92:: with SMTP id q18mr1905898wmj.147.1583842086306;
-        Tue, 10 Mar 2020 05:08:06 -0700 (PDT)
-X-Google-Smtp-Source: ADFU+vtioodeSMVHCyIXae2C4x8KKB4NXSzHBMLIeZHx5Qj0ZqkUnbQHvWiEY7nQZ3oOLIR0jrpUH0NbA4e3npa38hw=
-X-Received: by 2002:a7b:ce92:: with SMTP id q18mr1905875wmj.147.1583842086084;
- Tue, 10 Mar 2020 05:08:06 -0700 (PDT)
+        id S1726283AbgCJMRr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Mar 2020 08:17:47 -0400
+Received: from mout.gmx.net ([212.227.15.19]:34779 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726211AbgCJMRr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Mar 2020 08:17:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1583842663;
+        bh=ZMWC0sSu/yYhW1gmEYqym39L8W//VCYOviNwwPG3Vbg=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Tt/Q6cb6ESRkxv/jOSKGmQC2Qd1we5ViBKjy3zwctpGz5iRDKVAeVT/cjLcwsz/yI
+         X9KqcEa5PfM5BK1/Y6fP1TLwjJ8Vur8LMDeT7Ley2TRGMFqsEozFGgVDNmHL8rB800
+         qMv77Plkhu1ZnxeuG9HjbWTXVjTz9lebum2Mb4f8=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from MININT-QA14EDB.fritz.box ([89.1.212.209]) by mail.gmx.com
+ (mrgmx005 [212.227.17.190]) with ESMTPSA (Nemesis) id
+ 1MNKm0-1j0Bkz0qpm-00Os0L; Tue, 10 Mar 2020 13:17:43 +0100
+Date:   Tue, 10 Mar 2020 13:17:28 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jonathan Tan <jonathantanmy@google.com>
+cc:     git@vger.kernel.org, stolee@gmail.com, git@jeffhostetler.com
+Subject: Re: [PATCH] rebase --merge: optionally skip upstreamed commits
+In-Reply-To: <20200309205523.121319-1-jonathantanmy@google.com>
+Message-ID: <nycvar.QRO.7.76.6.2003101315100.46@tvgsbejvaqbjf.bet>
+References: <20200309205523.121319-1-jonathantanmy@google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <CA+B51BFFvn9puia8+kheeWkDfOQ7RYHTcGa74M5aeiTd8-QJXA@mail.gmail.com>
- <3c722d21-ee57-7d20-81fb-0399f02f1bc7@syntevo.com>
-In-Reply-To: <3c722d21-ee57-7d20-81fb-0399f02f1bc7@syntevo.com>
-From:   Ondrej Pohorelsky <opohorel@redhat.com>
-Date:   Tue, 10 Mar 2020 13:07:55 +0100
-Message-ID: <CA+B51BErxp0Nzcc=1Ress4tbDmKYmcCqUyC-fmD+8O8KdaZLZQ@mail.gmail.com>
-Subject: Re: git-core: try_to_follow_renames(): git killed by SIGSEGV
-To:     Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
-Cc:     git@vger.kernel.org,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:ShvonHOuqppWpV4l7YCmhsBFlvTbEwxf9ib0LaMS3vkZyozhsmK
+ Rmg6yQ58YXgd5rnt1dNjI5xvkZTBD58NY5AlyKnhDB6ffuSTGow/jKM/SeThrGA+Iv+4AHE
+ i3P6aHcyOy3DONMc8PD3Js7pcfkP/pD6XTMfnXLTSpyGOcEZlNBJeB2v+XcMij2JqJ3rvJB
+ xRvOLT/Y9fdTaffiSaEFw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:BJqajae/nkk=:PVCSN2fiD952nQO55um8wa
+ UUR4X+P1u8uDaKUISrkOlzQ0z9BhY8R6TIpIGSBamA/VBZ1tTUlc8fMJZE33BswOKppdx70RX
+ Nklz+8uqrwzBpNbM0GdWe1IPvhn7cDNOpZQ/+qjrq/DhYKVMIVvGUwoPXV2gje+Lxsoefj6/I
+ PlsmeiQsgRaTEo0UKePkkkslIaoP7xFL9aVfIODx2lvMP1D5w93Tb0N/BmBUiaYr4i1D++8Pj
+ LGWJ0BbzE40yfZqEX5U3s8Fwxs4LIEsTA1klX3Ej3I1sRmjt5jjSffneBlXB9zlhSebQm//Sm
+ FLKQpOsa/CIx0WoGUnI6Xxq8Nltj9AzhiEpNe2qmVM6AAKXLCizWpf010Jr5on6LWbQPQSM0v
+ vjFdD1wSMt9JyvG6zhu6Uk03IBlHAQd+IJcPnq6xQmEHo+oGS47bG1Z8J0+E/lmucTJPkzEM+
+ rnuYDEvhUq6zsgRziGHNw357H0/dv0JXGlS/oYhMlXbdAsyHukZxEjNsjUWAoJ69RM9Z/+hmp
+ 6/1EZeIjpdopAbYNruZD/Z55UDmy045amZ3yYw4Ch9nJS7Ja7OyQJZ5RojgWlTKJkp0c+PxYX
+ NLtKBqpzWcsjN4mMEKsuQda+2/A+po/XfcE7PV1rKjHyJXoBrzMew/3Ho6bu0Yfneaq3RAnXP
+ 8ResYGm1xkl5rYbCGYBdgFAho8m9ndO3/RgZsIWyP3io5aalZpfikP8B7pfn1J9f9qS6VVeda
+ npaGcEU25rplvoQV2bzACtwcUYLa7OC+bGuJ93MitVThI1ai9MbAO+Ld9y1qndv/pE7K9ZTU5
+ m4DQXu3ozT4ENOcc28Ea1d4tuOLkIlq0bzey/mz5tRRH5GHONhx4JQH/lfyFSg3Z+JaEUbROP
+ w3vwdBtOqOt0BRbeh6j2GBh4WPk3o/cUjoKIMCQxcSnkD6Xg5DkxWz1jey01aUIfeXzPLLVoE
+ ZC3j9XAI8rhWJdoS2HwpD9UkNFPCI3tX2WXqEHeDKyCzimIgG9Qw9yw8VqIorT+cfGXbcZJp4
+ JUrxogalHSEa4tcQK8mJXfsBpnHgBz5YEffMxxyC50r7za1XN6QQiiN2VmmJvRWm0lR2ofOXU
+ ek6LJJjcT8WhYr4sH+d/FwpFdii/KdKnhjOjs5SAqpO27kqlXKGjE8uP2IIcrkFv8SHC5EoBw
+ 9LIAf3+h3FscIq/Vn4qUZgq/umfE4MF08X1znQE5YiJJm4ve2ausx+INqCrrQDJCuLVcfNy/U
+ jZ3DwLRfH4VqCx41c
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thank you for your further analyzation and explanation.
+Hi Jonathan,
 
-I would love to make a patch for this bug, but sadly
-I'm not fully aware of what is going on in this functions
-and how they are affecting other git functionality.
+On Mon, 9 Mar 2020, Jonathan Tan wrote:
 
-I hope @szeder can look into this bug and provide more explanation
-as he knows this code best.
+> When rebasing against an upstream that has had many commits since the
+> original branch was created:
+>
+>  O -- O -- ... -- O -- O (upstream)
+>   \
+>    -- O (my-dev-branch)
+>
+> because "git rebase" attempts to exclude commits that are duplicates of
+> upstream ones, it must read the contents of every novel upstream commit,
+> in addition to the tip of the upstream and the merge base. This can be a
+> significant performance hit, especially in a partial clone, wherein a
+> read of an object may end up being a fetch.
+>
+> Add a flag to "git rebase" to allow suppression of this feature. This
+> flag only works when using the "merge" backend.
 
-Best regards,
-Ond=C5=99ej Poho=C5=99elsk=C3=BD
+I wonder whether we can make this a bit more user-friendly by defaulting
+to `--right-only` if there are no promised objects in the symmetric range,
+and if there _are_ promised objects, to skip `--right-only`, possibly with
+an advice that we did that and how to force it to download the promised
+objects?
 
-On Fri, Mar 6, 2020 at 3:58 PM Alexandr Miloslavskiy
-<alexandr.miloslavskiy@syntevo.com> wrote:
->
-> Since I like studying crashes and noone else replied, I decided to have
-> a look.
->
-> The problem is easy to reproduce with this (replace 1.c with any file):
->    git log --follow -L 1,1:1.c -- 1.c
->
-> It occurs because `opt->pathspec.items` gets cleaned here:
->      clear_pathspec
->      queue_diffs
->          /* must look at the full tree diff to detect renames */
->          clear_pathspec(&opt->pathspec);
->          DIFF_QUEUE_CLEAR(&diff_queued_diff);
->      process_ranges_ordinary_commit
->      process_ranges_arbitrary_commit
->      line_log_filter
->      prepare_revision_walk
->      cmd_log_walk
->      cmd_log
->
-> And on next iteration it crashes in 'try_to_follow_renames' on this line:
->      diff_opts.single_follow =3D opt->pathspec.items[0].match;
->
-> I think that bug comes from commit:
->      a2bb801f by SZEDER G=C3=A1bor, 2019-08-21 13:04:24
->      line-log: avoid unnecessary full tree diffs
->
-> @szeder could you please look into that?
->
-> On 27.02.2020 13:56, Ondrej Pohorelsky wrote:
-> > Hi,
-> >
-> > there is a SIGSEGV appearing in Fedora[0] with Git 2.24.1
-> >
-> > This bug started to appear after update to Git 2.24.1.
-> > Bug reporter said that Git crashed on him while running VS Code with
-> > Git Lens extension[1]
-> > I have tried to reproduce this bug with my own compiled Git with debug
-> > flags, but sadly SIGSEGV never appeared.
-> >
-> > To me it seems like there is a problem in commit a2bb801f6a[2] which
-> > changes move_diff_queue() function. This function calls
-> > diff_tree_oid() that calls try_to_follow_renames(). In the last two
-> > functions there are no arguments checks.
-> >
-> > Best regards,
-> > Ond=C5=99ej Poho=C5=99elsk=C3=BD
-> >
-> > [0] https://retrace.fedoraproject.org/faf/problems/bthash/?bth=3D25aa7d=
-7267ab5de548ffca337115cb68f7b65105
-> > [1] https://bugzilla.redhat.com/show_bug.cgi?id=3D1791810
-> > [2] https://git.kernel.org/pub/scm/git/git.git/commit/?id=3Da2bb801f6a4=
-30f6049e5c9729a8f3bf9097d9b34
-> >
->
-
+Ciao,
+Dscho
