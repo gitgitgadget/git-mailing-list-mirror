@@ -2,205 +2,144 @@ Return-Path: <SRS0=Lnee=43=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5AE02C10F27
-	for <git@archiver.kernel.org>; Tue, 10 Mar 2020 17:24:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 414BDC10F27
+	for <git@archiver.kernel.org>; Tue, 10 Mar 2020 17:30:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id DFD2B222C3
-	for <git@archiver.kernel.org>; Tue, 10 Mar 2020 17:24:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E1B6C21927
+	for <git@archiver.kernel.org>; Tue, 10 Mar 2020 17:30:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Vs0TgRMy"
+	dkim=pass (1024-bit key) header.d=yandex.ru header.i=@yandex.ru header.b="TFYX6xGs"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726504AbgCJRYs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Mar 2020 13:24:48 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:62624 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726315AbgCJRYr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Mar 2020 13:24:47 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1B1BAB308E;
-        Tue, 10 Mar 2020 13:24:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=pXE8SmZqqUE9jefy7zGmzXuQ9Y8=; b=Vs0TgR
-        MyjkPUT1qDQQHJYEzbq/kOb0UySJ2ZQq3m0hASqJBtgYEfMlVjOKDPa3IcA2egVI
-        6riHHTkpLmN7WOw8KyM/8fJYP1xZQ1XMe8G3AB+bNmqzegd7w1npiRfDeef7g6i2
-        fva1X+9B4Xl57zxqEaJm9+L/nhqokc5NsrivE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=CEtM/xl3VgHR347E92HOTqiSOJRbyOjd
-        SgblowH8xQjlgMjOyEVnx+4rpNqOE0G1mZmcEIFzrCgNH19mp3/TsNQc71rIbRb2
-        +gPNeBhGg1QbdYcq30y/+s5hGDQy/+vfOIfEu6s+W2Ou9D7QPLA2TibLsJo1ILvE
-        V7yZsGSJUj4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 129F4B308D;
-        Tue, 10 Mar 2020 13:24:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 42A09B308A;
-        Tue, 10 Mar 2020 13:24:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Michael J Gruber <git@grubix.eu>,
-        Matthieu Moy <git@matthieu-moy.fr>,
-        John Keeping <john@keeping.me.uk>,
-        Karthik Nayak <karthik.188@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Alex Henrie <alexhenrie24@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
-Subject: Re: [PATCH v2 0/3] Teach ref-filter API to correctly handle CRLF in messages
-References: <pull.576.git.1583692184.gitgitgadget@gmail.com>
-        <pull.576.v2.git.1583807093.gitgitgadget@gmail.com>
-Date:   Tue, 10 Mar 2020 10:24:34 -0700
-In-Reply-To: <pull.576.v2.git.1583807093.gitgitgadget@gmail.com> (Philippe
-        Blain via GitGitGadget's message of "Tue, 10 Mar 2020 02:24:50 +0000")
-Message-ID: <xmqqo8t4jf71.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726647AbgCJRaL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Mar 2020 13:30:11 -0400
+Received: from forward501o.mail.yandex.net ([37.140.190.203]:46837 "EHLO
+        forward501o.mail.yandex.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726269AbgCJRaK (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 10 Mar 2020 13:30:10 -0400
+Received: from mxback7q.mail.yandex.net (mxback7q.mail.yandex.net [IPv6:2a02:6b8:c0e:41:0:640:cbbf:d618])
+        by forward501o.mail.yandex.net (Yandex) with ESMTP id 04C2D1E80177;
+        Tue, 10 Mar 2020 20:30:06 +0300 (MSK)
+Received: from localhost (localhost [::1])
+        by mxback7q.mail.yandex.net (mxback/Yandex) with ESMTP id tanIq8KrIg-U54G03Bv;
+        Tue, 10 Mar 2020 20:30:05 +0300
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1583861405;
+        bh=ShV3pvf5Ws4yvVbn3Vdlqq6W8AObJX/r+3p81kaRh2Y=;
+        h=Message-Id:Cc:Subject:In-Reply-To:Date:References:To:From;
+        b=TFYX6xGsGZh9qTpU34FDtRLASYCdL8dHNPtZibrv8tn8jCGZ7WEJ2ow+QYwEQSnQp
+         8fcytV+OJw+sXwmXH1iy+WwgL2hAkUF3JV+qljr2ezxccXo6P4fobLqAz/IL7FYSKK
+         Ibi1JxgZb6kyTOJnRRxTjD5UihHjTHfsXTsZr0WU=
+Authentication-Results: mxback7q.mail.yandex.net; dkim=pass header.i=@yandex.ru
+Received: by vla5-c5051da8689e.qloud-c.yandex.net with HTTP;
+        Tue, 10 Mar 2020 20:30:05 +0300
+From:   Konstantin Tokarev <annulen@yandex.ru>
+To:     =?utf-8?B?U1pFREVSIEfDoWJvcg==?= <szeder.dev@gmail.com>,
+        Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
+Cc:     Ondrej Pohorelsky <opohorel@redhat.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+In-Reply-To: <20200310165723.GB3122@szeder.dev>
+References: <CA+B51BFFvn9puia8+kheeWkDfOQ7RYHTcGa74M5aeiTd8-QJXA@mail.gmail.com>
+         <3c722d21-ee57-7d20-81fb-0399f02f1bc7@syntevo.com> <20200310165723.GB3122@szeder.dev>
+Subject: Re: git-core: try_to_follow_renames(): git killed by SIGSEGV
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 03C3830E-62F4-11EA-B43B-B0405B776F7B-77302942!pb-smtp20.pobox.com
+X-Mailer: Yamail [ http://yandex.ru ] 5.0
+Date:   Tue, 10 Mar 2020 20:30:05 +0300
+Message-Id: <347951583861239@vla5-dcf36e533bf7.qloud-c.yandex.net>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> The function find_subpos in ref-filter.c looks for two consecutive '\n' to
-> find the end of the subject line, a sequence which is absent in messages
-> using CRLF. This results in the whole message being parsed as the subject
-> line (%(contents:subject)), and the body of the message (%(contents:body))
-> being empty.
 
-To be honest, I suspect that it is not a bug in the parser that
-parsed out %(contents:subject), but a user error that left the log
-message in CRLF endings ;-).
-
-So "correctly handle CRLF" is probably a tad unfair to those who
-wrote the current ref-filter code; a description that is more fair
-to them is probably along the lines of "handle malformed log
-messages more gracefully", I would think.
-
-> Moreover, in copy_subject, '\n' is replaced by space, but '\r' is untouched,
-> resulting in the escape sequence '^M' being output verbatim in most terminal
-> emulators:
+10.03.2020, 19:57, "SZEDER Gábor" <szeder.dev@gmail.com>:
+> On Fri, Mar 06, 2020 at 03:44:34PM +0100, Alexandr Miloslavskiy wrote:
+>>  Since I like studying crashes and noone else replied, I decided to have a
+>>  look.
+>>
+>>  The problem is easy to reproduce with this (replace 1.c with any file):
+>>    git log --follow -L 1,1:1.c -- 1.c
 >
-> $ git branch --verbose
-> * crlf    2113b0e Subject first line^M ^M Body first line^M Body second line
+> Don't do this. In particular:
 >
-> This bug is a regression for git branch --verbose, which bisects down to
-> 949af06 (branch: use ref-filter printing APIs, 2017-01-10).
+>   - Don't use line-level log with a pathspec, because the
+>     documentation of 'git log -L' explicitly told you not to do so
+>     ("You may not give any pathspec limiters."). This should have
+>     errored out since the beginning, but, unfortunately, has never
+>     been enforced.
+>
+>   - Don't use '-L' with '--follow'. On one hand, line-level log on
+>     its own already follows file renames, even multiple files at once,
+>     there is no need for an additional '--follow' (which can only
+>     follow one file). OTOH, you shouldn't be able to use '-L' and
+>     '--follow' together, because the former forbids a pathspec, while
+>     the latter requires one.
+>
+> In any case, '--follow' has always been an ugly hack on top of the
+> revision walking machinery, while line-level log is a rather poorly
+> integrated bolt-on. They simply weren't designed to work together, as
+> evidenced by their contradicting requirements about the pathspec.
 
-I am not sure where you want to go with this.  Whether it is shown
-in the ^X notation (and some terminals even reverse color to
-highlight them), or it is shown literally (i.e. causing the next
-byte to overwrite the same line starting from the left-edge), you
-would be annoyed either way, no?  I suspect that the latter would
-annoy you even more.  Isn't what "most terminal emulators" do,
-i.e. to show it in the ^X notation instead of emitting it literally,
-a good thing?  IOW, "resulting in ..." is not correctly telling us
-what you think is wrong---you don't have to blame terminals.
+This kind of explains issue with --follow and --full-diff which I've reported
+recently and got completely ignored.
 
-It is not limited to CR, and is not limited to control characters at
-the end of the lines, no?  If you had "\a" (or "\r") in the middle
-of the title, either the current or the old code would ring a bell
-(or cause the next character to appear at the end of the same line)
-or when piped to "less" you'd see "^G" (or "^M") in the liddle of
-the line.
-
-The old code used pretty.c::pretty_print_commit() mechanism;
-pretty.c::format_subject() uses pretty.c::is_blank_line() to trim
-whitespaces at the right end while trying to notice where the first
-paragraph break is, so any whitespace at the end of first paragraph
-break is removed, and each end of line got replaced by a SP, but it
-did not do anything special to control characters in the middle of
-the lines (and it didn't do anything to the control characters in
-the middle of the line, either).  So while the old code happened to
-cleanse CR at the end of the lines, it wasn't doing enough.
-
-I think fixing _that_ is (and should be) outside the scope of this
-series, of course.
-
->  2:  c68bc2b3788 ! 2:  aab1f45ba97 ref-filter: teach the API to correctly handle CRLF
->      @@ -1,26 +1,49 @@
->       Author: Philippe Blain <levraiphilippeblain@gmail.com>
->       
->      -    ref-filter: teach the API to correctly handle CRLF
->      +    ref-filter: fix the API to correctly handle CRLF
-
-API is not changed (i.e. the callers do not have to do anything
-special); only the implementation.
-
-	ref-filter: handle CR at the end of the lines more gracefully
-
-perhaps?
-
->           The ref-filter API does not correctly handle commit or tag messages that
->           use CRLF as the line terminator. Such messages can be created with the
->           `--verbatim` option of `git commit` and `git tag`, or by using `git
->           commit-tree` directly.
->       
->      +    This impacts the output `git branch`, `git tag` and `git for-each-ref`
->      +    when used with a `--format` argument containing the atoms
->      +    `%(contents:subject)` or `%(contents:body)`, as well as the output of
->      +    `git branch --verbose`, which uses `%(contents:subject)` internally.
-
-In other words...
-
-	When a commit or a tag object uses CRLF line endings, the
-	ref-filter machinery does not identify the end of the first
-	paragraph as intended by the writer, because it only looks
-	for two consecutive LFs and CR-LF-CR-LF does not look like a
-	blank line that separates paragraphs to it.  "git branch",
-	"git tag" and "git for-each-ref" all rely on the messages
-	split correctly into "%(contents:subject)" and
-	"%(contents:body)" placeholders and ends up showing
-	everything as the subject.
-
-Now based on what I hinted in the far-above part, there can be two
-valid solutions here.
-
- * recognize CRLF as a valid line ending, but still retain ^M in the
-   message.  The replacement for "%(contents:subject)" would still
-   end with "^M", and we add LF to it, which makes the resulting
-   output end with CRLF and all is well.  This will keep "\a" and
-   "\r" in the middle of the line in the output.
-
- * strip CR and any control character other than LF from everywhere.
-   This will cleanse "\a" and "\r" in the middle of, or anywhere on,
-   the line, so that "%(contents:subject)", "%(contents:body)" and
-   "%(contents)" all are "clean".
-
-I am not offhand sure which one is better (I haven't read the patch
-to see which one you chose to implement).
-
->      +    The function find_subpos in ref-filter.c looks for two consecutive '\n'
->      +    to find the end of the subject line, a sequence which is absent in
->      +    messages using CRLF. This results in the whole message being parsed as
->      +    the subject line (`%(contents:subject)`), and the body of the message
->      +    (`%(contents:body)`)  being empty.
+Are there any plans to integrate --follow better with other tools?
 
 
+>
+>>  It occurs because `opt->pathspec.items` gets cleaned here:
+>>      clear_pathspec
+>>      queue_diffs
+>>          /* must look at the full tree diff to detect renames */
+>>          clear_pathspec(&opt->pathspec);
+>>          DIFF_QUEUE_CLEAR(&diff_queued_diff);
+>>      process_ranges_ordinary_commit
+>>      process_ranges_arbitrary_commit
+>>      line_log_filter
+>>      prepare_revision_walk
+>>      cmd_log_walk
+>>      cmd_log
+>>
+>>  And on next iteration it crashes in 'try_to_follow_renames' on this line:
+>>      diff_opts.single_follow = opt->pathspec.items[0].match;
+>>
+>>  I think that bug comes from commit:
+>>      a2bb801f by SZEDER Gábor, 2019-08-21 13:04:24
+>>      line-log: avoid unnecessary full tree diffs
+>>
+>>  @szeder could you please look into that?
+>>
+>>  On 27.02.2020 13:56, Ondrej Pohorelsky wrote:
+>>  >Hi,
+>>  >
+>>  >there is a SIGSEGV appearing in Fedora[0] with Git 2.24.1
+>>  >
+>>  >This bug started to appear after update to Git 2.24.1.
+>>  >Bug reporter said that Git crashed on him while running VS Code with
+>>  >Git Lens extension[1]
+>>  >I have tried to reproduce this bug with my own compiled Git with debug
+>>  >flags, but sadly SIGSEGV never appeared.
+>>  >
+>>  >To me it seems like there is a problem in commit a2bb801f6a[2] which
+>>  >changes move_diff_queue() function. This function calls
+>>  >diff_tree_oid() that calls try_to_follow_renames(). In the last two
+>>  >functions there are no arguments checks.
+>>  >
+>>  >Best regards,
+>>  >Ondřej Pohořelský
+>>  >
+>>  >[0] https://retrace.fedoraproject.org/faf/problems/bthash/?bth=25aa7d7267ab5de548ffca337115cb68f7b65105
+>>  >[1] https://bugzilla.redhat.com/show_bug.cgi?id=1791810
+>>  >[2] https://git.kernel.org/pub/scm/git/git.git/commit/?id=a2bb801f6a430f6049e5c9729a8f3bf9097d9b34
+>>  >
 
->      +    Moreover, in copy_subject, '\n' is replaced by space, but '\r' is
->      +    untouched, resulting in the escape sequence '^M' being output verbatim
->      +    in most terminal emulators:
->      ...
->      +    This bug is a regression for `git branch --verbose`, which
->      +    bisects down to 949af0684c (branch: use ref-filter printing APIs,
->      +    2017-01-10).
->      +
->      +    Fix this bug in ref-filter by hardening the logic in `copy_subject` and
->      +    `find_subpos` to correctly parse messages containing CRFL.
+-- 
+Regards,
+Konstantin
 
-The above few lines may need revising (based on what I said to the
-cover); --- even if they don't, CRFL here needs to become CRLF ;-)
-
-Thanks for working on this.
