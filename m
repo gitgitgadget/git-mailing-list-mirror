@@ -2,121 +2,108 @@ Return-Path: <SRS0=Lnee=43=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 08E2CC18E5B
-	for <git@archiver.kernel.org>; Tue, 10 Mar 2020 18:37:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D732C10F27
+	for <git@archiver.kernel.org>; Tue, 10 Mar 2020 18:41:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id C1E222253D
-	for <git@archiver.kernel.org>; Tue, 10 Mar 2020 18:37:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 176082253D
+	for <git@archiver.kernel.org>; Tue, 10 Mar 2020 18:41:18 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Etjbm+mu"
+	dkim=pass (1024-bit key) header.d=purestorage.com header.i=@purestorage.com header.b="P6OQsTzK"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726415AbgCJShs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Mar 2020 14:37:48 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54664 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726283AbgCJShr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Mar 2020 14:37:47 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id BEDA75AEE3;
-        Tue, 10 Mar 2020 14:37:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=6LejrJ8Fg0KZ2LS3pfAWqdyUgCg=; b=Etjbm+
-        muPydh3YRtLw83cnCcOURFZoDsVmGR03YRDjCnRBHfs2N2GgrgTipgdv/fyYlfOw
-        w4bMNkDJfVQlVrZGhmaqiuBH5OkaeVIAgGErZp+9xyY78HaDwu3o784gauCjrq0x
-        VOOXisrlzOi4/6DKcHovJONiACIVCZQT5DIeE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=PgVbzGGQEScTjeDTcOZQLaFUuZuL1Cth
-        nbR7lMQHxjRJ7PeQ0u2ns+1sKSqgv326lQbJZrmBSUo5GwSM1fx/xe0ZuMQof4Uf
-        x5s7Dbo/0K+n1s6s0nxox5QQOILN6CjiK3P6kWX1cqucwyhfXKJcXVkijhFjUJy0
-        hAfUBYQr9aA=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B5D625AEE2;
-        Tue, 10 Mar 2020 14:37:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3A0BA5AEE1;
-        Tue, 10 Mar 2020 14:37:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Jeff Hostetler <git@jeffhostetler.com>,
-        Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH v9 2/5] bugreport: add tool to generate debugging info
-References: <20200302230400.107428-1-emilyshaffer@google.com>
-        <20200302230400.107428-3-emilyshaffer@google.com>
-        <nycvar.QRO.7.76.6.2003042232340.46@tvgsbejvaqbjf.bet>
-        <5aae34d7-ed76-0e71-d0c4-959deeb1b2ca@jeffhostetler.com>
-        <xmqqr1y52w5y.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.2003082319260.46@tvgsbejvaqbjf.bet>
-        <xmqqr1y11sn7.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.2003092013090.46@tvgsbejvaqbjf.bet>
-        <xmqq36ah1fao.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.2003101239000.46@tvgsbejvaqbjf.bet>
-Date:   Tue, 10 Mar 2020 11:37:44 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.2003101239000.46@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Tue, 10 Mar 2020 12:42:03 +0100 (CET)")
-Message-ID: <xmqq36agjbt3.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1727181AbgCJSlR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Mar 2020 14:41:17 -0400
+Received: from mail-pj1-f47.google.com ([209.85.216.47]:39786 "EHLO
+        mail-pj1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727138AbgCJSlQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Mar 2020 14:41:16 -0400
+Received: by mail-pj1-f47.google.com with SMTP id d8so806105pje.4
+        for <git@vger.kernel.org>; Tue, 10 Mar 2020 11:41:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=purestorage.com; s=google;
+        h=date:from:to:subject:message-id:mime-version:content-disposition
+         :content-transfer-encoding;
+        bh=tGjwsnl7GC0dSI7OCyuf2IwGhW1Jl2oRpBUDLEHFjDM=;
+        b=P6OQsTzK+zIBpdsIYBhimmDW/QwhwcLluO9g1HLCp9z3NIyLvS1EfzNcy4BNB4Scn0
+         VjnPttf1XEiFIdxgWSdJqyBHIgBRQyh5Nmp3hPVlrnvwjQ4MMtBWr5avuGHPISq4Bdkp
+         /zcy4PBHcEiCHLMo43hF8XKEtGxjBjNSkD7+I=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition:content-transfer-encoding;
+        bh=tGjwsnl7GC0dSI7OCyuf2IwGhW1Jl2oRpBUDLEHFjDM=;
+        b=oa1d1kngdfSTXlqYb0Os1DeMecaOwb7vrAcJDIJbOblEBW1Jy51QgcF2igzhRz7P+f
+         F/Y7pyEYkaN1XhMFws/VSqEqxzk19jq3iKkY2Tjq7EcxmpVF4kIPLu0m4NsexflvMgXG
+         Y9pgluY1Z3h1wr4ITdf6fAVLwN0s9R29pXu9GD76sWbTGsZ/DCN3fq6DYbuF/axl3SbK
+         qSJ9IK8bQaZkUcTKnEwS2e7vlp0LRDVjHOS78IYLpQPn+HNt+N1yPcGPY12MnFYKhHkZ
+         Ad6CNJjGjNGXBqdq7c3F7w/5TH5s+kFFEt4DXMTVFS8n3cCPM/n+lrccIzlc3Dk79kSC
+         mhyA==
+X-Gm-Message-State: ANhLgQ3WWQqJcwlLQdmdAJ9uPkXxIoBC8lUGkQ+KCPygKwpxXOsFs4o7
+        xO79FPjB3klbNy2Z68bZkcWbSBJiJw1iVW6Qn/vjrbITbNgw/ws788T2mUDdDYBkmtLih4djC8G
+        h7E/K8T3BpGYWYNSEofeuqWQ58D0si5P1dfKXS+XU+Fp3utVDsr5s36wqVwDTchGn
+X-Google-Smtp-Source: ADFU+vsXbF+/5CXbT7dzqDmJ5kiSqnPoBsQouTSrHpmcoToRcAqmgqBmuwesl5NdL8580uoL9IumWg==
+X-Received: by 2002:a17:902:8a8f:: with SMTP id p15mr17924169plo.45.1583865674970;
+        Tue, 10 Mar 2020 11:41:14 -0700 (PDT)
+Received: from cork ([64.84.68.252])
+        by smtp.gmail.com with ESMTPSA id f8sm48192976pfn.2.2020.03.10.11.41.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Mar 2020 11:41:14 -0700 (PDT)
+Date:   Tue, 10 Mar 2020 11:41:11 -0700
+From:   =?iso-8859-1?Q?J=F6rn?= Engel <joern@purestorage.com>
+To:     git@vger.kernel.org
+Subject: new file mode 160000
+Message-ID: <20200310184111.GD1443@cork>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3BCAC37A-62FE-11EA-B41C-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Something weird happened to us and I have no idea how to reproduce it.
+A developer managed to create a git commit with the following content:
 
->> The right sense of relative importance between efficiently running
->> the rest of Git by not bloting the main binary and making sure not
->> to ship Git that does not run unless "git bugreport" runs (which
->> makes sure that "bugreport" runs) is what you are missing, I
->> suspect.
->
-> By that reasoning, `git bugreport` should not be included in core Git.
+diff --git a/foo b/foo
+new file mode 160000
+index 000000000000..b7e7816c1266
+--- /dev/null
++++ b/foo
+@@ -0,0 +1 @@
++one line of content
 
-The world does not have to be black-or-white.  "git bugreport" that
-covers mainstream platforms in widely-used configurations may be
-only an 80% solution, but that is better than nothing at all.
+File name and content obfuscated, the rest is verbatim from the git
+commit.
 
->> Another thing is that you are giving "git bugreport" too much weight
->> and too little credit to inexperienced users, by assuming that we
->> will never hear from them when "bugreport" is incapable to run for
->> them.  They will report, with or without "git bugreport", and the
->> more important thing you seem to be missing is that after the
->> initial contact it would become an interactive process---there is
->> no reason to prioritize to ensure that the initial contact has
->> everything that is needed to diagnose any issue without further
->> interaction.  "With my build, even 'bugreport' dumps core." is
->> perfectly good place to start.
->>
->> Besides, wouldn't the ones on platforms, on which "git bugreport"
->> may have trouble running, i.e. the ones on minority and exotic
->> platforms, tend to be self sufficient and capable (both diagnosing
->> the issue for themselves, and reaching out to us as appropriate)
->> ones in practice (e.g. I have NonStop folks in mind)?
->
-> Yes, I can agree that inexperienced users will not give up and keep
-> up the conversation until they see their problems fixed.
+Now, file mode 160000 doesn't make sense to me.  It doesn't correspond
+to any known file type and I cannot explain how this commit was created
+in the first place.  But whatever the mechanism, the git client should
+have refused it.
 
-Inexperienced users won't be on minority platforms for which we do
-not have enough resource to get "git bugreport" to run adequetly in
-the first place.  Even if those on minority platforms whose userbase
-are all technically incapable ones, if they do not help us help
-them, what can "git bugreport" can do, and more importantly, how
-would it make a difference between "bugreport" being a built-in vs a
-standalone?
+Next, the commit was pushed to our git server, which happily accepted
+it.  Again, I would argue that the git server should have refused the
+push.
 
-At this point, I'd have to say that your quibbling does not deserve
-a serious response and it would be better use of my time to
-disengage from this thread.
+Finally, others including myself pulled and checked out a branch with
+this commit.  On checkout, an empty directory is being created and
+caused various mayhem.  I get:
+	error: 'foo' does not have a commit checked out
+	fatal: updating files failed
 
+Not sure what the correct solution would be here.  An empty directory is
+a bad idea, but I cannot think of any "correct" way to handle things
+once the bad commit is in the tree.
+
+In case it matters, my client is: git version 2.25.0
+
+Jörn
+
+--
+So, one might well ask, if Congress and the White House, Republicans
+and Democrats, liberals and conservatives, all now agree on reform,
+how meaningful can the reform be?
+-- David Cole
