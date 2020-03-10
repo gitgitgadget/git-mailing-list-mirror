@@ -2,251 +2,166 @@ Return-Path: <SRS0=Lnee=43=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 67B53C10DCE
-	for <git@archiver.kernel.org>; Tue, 10 Mar 2020 03:54:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 440FCC10DCE
+	for <git@archiver.kernel.org>; Tue, 10 Mar 2020 06:03:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 35F8A208E4
-	for <git@archiver.kernel.org>; Tue, 10 Mar 2020 03:54:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1BD4E2467C
+	for <git@archiver.kernel.org>; Tue, 10 Mar 2020 06:03:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kHaCN5NJ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HbW6QS3F"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726283AbgCJDyl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Mar 2020 23:54:41 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:38054 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726211AbgCJDyl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Mar 2020 23:54:41 -0400
-Received: by mail-io1-f66.google.com with SMTP id s24so11404188iog.5
-        for <git@vger.kernel.org>; Mon, 09 Mar 2020 20:54:41 -0700 (PDT)
+        id S1726283AbgCJGDf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Mar 2020 02:03:35 -0400
+Received: from mail-yw1-f65.google.com ([209.85.161.65]:42888 "EHLO
+        mail-yw1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726100AbgCJGDf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Mar 2020 02:03:35 -0400
+Received: by mail-yw1-f65.google.com with SMTP id v138so12632841ywa.9
+        for <git@vger.kernel.org>; Mon, 09 Mar 2020 23:03:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=qbLKhBORPaTs/o0qR0ko9/l7uQVTCqzyWfjYBFKe6rM=;
-        b=kHaCN5NJ6t5VzUlTKDz7ML2DPRcWZogvYopbQd3GZi+6YYIt2+GnYfzcL9E6r3+11I
-         9Mz+7WnW0sfbk8ONREIEjmLKGQfG85J1OPv+kdZvZbKn8Q8Pik8gvCumMidz+3igwSR/
-         pg4nxipJIRyV6yBzwVHt5Plc+hDgPOoE2ASI/lZ5kyh7n+EJyIFypdVkXIZc3qTg/D9s
-         Qmnd6VtG9JowkhGiJOFhZIwJvHmZtXi27FkkRLYQNQdqKvRW9KL6s7rOa/occDVqviXw
-         c2raBoj78ejpodGa0QpXkN++mdl1IBxiW0PyZV1VydiI3Nk/NCuMR7jE5rDFwY9JG8zr
-         OZgQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=LxlEtfgB9OXfnSwSGmc4iU6xvGJ2O04W8HsCd0+plKE=;
+        b=HbW6QS3FMB3hN6kFqEVZdRitAfJIQv9UheDHgrHS95vIeQFb2G0nx/Gq+tra8WKFep
+         +u4OuoGvU0LN8EOHcaO5jH+aeTDaEAF7hPwTLY7YLKYHhZCUgyV1NhzBoZHlZO9ls/kc
+         48LrZ2ioVBdX9BuT+OsRCowVJLeSj1pFytYgsylxLaV3vL2taiSJxR4l79TaZaiRagYW
+         ua9ZKLXUNSZqrwrc9cZURR7DW3TnhHA5NI6HSHBIzGrjSlmllMCKN/PZxBH58fBOMjDS
+         n6+fzYWBevpFfa5WobM+WcINBweW3g/Wha/X7psSu8WGuQPWKJsG8xFrioHdVWFJWmC2
+         +NbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=qbLKhBORPaTs/o0qR0ko9/l7uQVTCqzyWfjYBFKe6rM=;
-        b=CF/szQeUSPdJL1q4m6POPCnGSP0VoC0hDZ6YiuOj2YLs53mehqQwwq8CtobhLJfLkO
-         qCmRjx6WBAaPLecw36Ne4OZ+6HxvA4ja5aPLQWh+yg73qK0tbaP5BusC6K7/W0FskFap
-         SG80Lx0h8Gzh2kli5sjpAmaZVTysEWyEFOVZR8I4RnztPRcDPcjJBhPxna+znfEqkPv2
-         Xug+GSY5CibPLJvo8ox1XEAoK0MTku4tqOSTpuyAQWFAThsTq4l0WuP94Qqcx2Uu0+sW
-         fz8K16f0hMVbt8rYMWe8hivx/nEwz77fJabEPUfTWRADX2ewcU/pdd+v786X9kDRg84N
-         DmaQ==
-X-Gm-Message-State: ANhLgQ0ye7ZRr4cj4QKZG8wVeltDWpPhVgbZrVytZ66oHCdShTGhO2Oy
-        vnHKw+Nu14tx9ZyploSVEEHvIj90aFk=
-X-Google-Smtp-Source: ADFU+vt85ZJwPop3/hjvj6JBFn+yQ6h1rYQLuDoXYDZr4tyiePGEC7QDgDieMKwIsNWSMTeDL+xxeA==
-X-Received: by 2002:a02:2713:: with SMTP id g19mr9579162jaa.28.1583812480091;
-        Mon, 09 Mar 2020 20:54:40 -0700 (PDT)
-Received: from viper.med.utah.edu ([2601:681:4100:375e:c6b3:1ff:fed3:9881])
-        by smtp.gmail.com with ESMTPSA id y10sm7764565ily.26.2020.03.09.20.54.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Mar 2020 20:54:39 -0700 (PDT)
-From:   Alex Henrie <alexhenrie24@gmail.com>
-To:     git@vger.kernel.org, rcdailey.lists@gmail.com, newren@gmail.com,
-        rsbecker@nexbridge.com, gitster@pobox.com, annulen@yandex.ru,
-        tytso@mit.edu
-Cc:     Alex Henrie <alexhenrie24@gmail.com>
-Subject: [PATCH v5] pull: warn if the user didn't say whether to rebase or to merge
-Date:   Mon,  9 Mar 2020 21:54:20 -0600
-Message-Id: <20200310035420.1658876-1-alexhenrie24@gmail.com>
-X-Mailer: git-send-email 2.25.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=LxlEtfgB9OXfnSwSGmc4iU6xvGJ2O04W8HsCd0+plKE=;
+        b=gT5SYPXGZpHYxuvJDZr1ax1GoF5SsCLCISmY4MgqedwlThFVmrafuwjk2e2Hu3uKgp
+         kAP2T1wD+HRlhHyvdDwSV9jyJAg6GSN8OAoTkU6n2QC/AA78EYT3sfMPraGpRUY9s4WN
+         K8VWVP+1GqZBlAHmrhWP1c8QsKy22EMclEwplQtKxOLd51Ckx9Il+f7Meay5sekkSLW/
+         yqscd2M/M7MY+b6vPPEXeqjyCWHwp8tw4rRn9ZBApnBCdaQNRzW8fbvD4FCgRmmMq0CT
+         j8QHbdZpzvA3QhB2dQ8Y5YAXwNBAfUe7aKdBx+AxeaGVZH6paEKIyXGTyyZHYk8UUNjH
+         HQDA==
+X-Gm-Message-State: ANhLgQ0+pVlZYlg8067WdWm3+hkuT8NoUNcT+LnLjW3zExUTJl9I7Tz/
+        unobR9gJOs4iYpzkh2/7nEeir5AXiXIORzdACHSQGTLEF2Xr4w==
+X-Google-Smtp-Source: ADFU+vv7Lp710kqVPAhfvHp5/IuxoCfEZLy5ZXBwZoWIb/OSRa0pr0dHJ6mHoLGduUi4Evgg84yGoQP6WDCCDxbaYmQ=
+X-Received: by 2002:a0d:f582:: with SMTP id e124mr17926560ywf.238.1583820214092;
+ Mon, 09 Mar 2020 23:03:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CANYiYbE2V3bLfEgH-aRDv4Y5V+_BTZn-oUN7fOVpARm+_14BdQ@mail.gmail.com>
+ <20200308145631.64040-2-zhiyou.jx@alibaba-inc.com> <xmqq7dzt1mhi.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq7dzt1mhi.fsf@gitster-ct.c.googlers.com>
+From:   Jiang Xin <worldhello.net@gmail.com>
+Date:   Tue, 10 Mar 2020 14:03:22 +0800
+Message-ID: <CANYiYbHvqLX_OozgAXJ8MbuLipqUdj4CpbExe0oiCcyUyb=Osw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/5] receive-pack: add new proc-receive hook
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Often novice Git users forget to say "pull --rebase" and end up with an
-unnecessary merge from upstream. What they usually want is either "pull
---rebase" in the simpler cases, or "pull --ff-only" to update the copy
-of main integration branches, and rebase their work separately. The
-pull.rebase configuration variable exists to help them in the simpler
-cases, but there is no mechanism to make these users aware of it.
+Junio C Hamano <gitster@pobox.com> =E4=BA=8E2020=E5=B9=B43=E6=9C=8810=E6=97=
+=A5=E5=91=A8=E4=BA=8C =E4=B8=8A=E5=8D=881:12=E5=86=99=E9=81=93=EF=BC=9A
+> Why do you even need "must-exist" in the first place?  In other
+> parts of Git, when a hook does not exist, processing by that missing
+> hook is simply not done.  Why does it have to cause an error?
+>
+> If there is a reasonable answer to the above question, then the
+> concept that hooks can be marked as "must exist -- otherwise it is
+> an error" would be independently useful and the support for that
+> concept should be split out as a separate step before this one, I
+> would think.
+>
+> Also, I am not sure why you have to have one single "special" ref
+> hierarchy to be handled by the hook.  Why not feed everything and
+> let the hook decide?
+>
+> I would have expected a design more along the lines of "if the hook
+> exists, then feed all the refs to the hook, let the hook do whatever
+> it wants and report what it did back to the receive-pack process, so
+> that the client side can learn what got accepted and what got
+> rejected (and possibly other things that may require protocol
+> extension later)".  One of the possible things the hook can report
+> may be "I did not do anything for this ref, please do whatever you
+> normally do".  That way, you do not need to introduce "there are two
+> classes of refs, normal and special"---that becomes an unused and
+> unnecessary concept.  For whichever ref the hook considers "normal",
+> it can use the mechanism to say "I want you to do the normal thing".
+> And when it sees refs/for/ prefix (or whatever is considered
+> "special" at the hook's discretion), it can do whatever it wants,
+> and report "OK, I ate it" or "No, I reject it" (which are only the
+> two things that can be returned back to the client within the
+> current protocol, IIUC).  We may later want to extend the mechanism
+> to allow richer response by the hook at the same time to extend the
+> on-the-wire protocol and then it may become possible for the hook to
+> take a push to refs/for/master, update refs/heads/master to the
+> commit (or to some other commit), and report "OK, I accepted it and
+> also updated refs/heads/master to this other commit".
 
-Issue a warning message when no --[no-]rebase option from the command
-line and no pull.rebase configuration variable is given. This will
-inconvenience those who never want to "pull --rebase", who haven't had
-to do anything special, but the cost of the inconvenience is paid only
-once per user, which should be a reasonable cost to help a number of new
-users.
+In patch 3/5, I add a new config variable "receive.procReceiveRefs"
+for developers to choose whether all of the commands or only a part of
+them should pipe to the "proc-receive" hook. For example, a developer
+may set the config variable on the server like this:
 
-Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
----
-v5:
-- Supress warning when --quiet is given
-- Ensure that pull option tests still test what they're supposed to test
-- Add tests for the new warning
----
- builtin/pull.c               | 16 +++++++++++++++
- t/t5521-pull-options.sh      | 22 ++++++++++-----------
- t/t7601-merge-pull-config.sh | 38 ++++++++++++++++++++++++++++++++++++
- 3 files changed, 65 insertions(+), 11 deletions(-)
+    git config --system --add receive.procReceiveRefs refs/
 
-diff --git a/builtin/pull.c b/builtin/pull.c
-index 3e624d1e00..e42665b681 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -327,6 +327,22 @@ static enum rebase_type config_get_rebase(void)
- 	if (!git_config_get_value("pull.rebase", &value))
- 		return parse_config_rebase("pull.rebase", value, 1);
- 
-+	if (opt_verbosity >= 0 &&
-+	    (!opt_ff || strcmp(opt_ff, "--ff-only"))) {
-+		warning(_("Pulling without specifying how to reconcile divergent branches is\n"
-+			"discouraged. You can squelch this message by running one of the following\n"
-+			"commands sometime before your next pull:\n"
-+			"\n"
-+			"  git config pull.rebase false  # merge (the default strategy)\n"
-+			"  git config pull.rebase true   # rebase\n"
-+			"  git config pull.ff only       # fast-forward only\n"
-+			"\n"
-+			"You can replace \"git config\" with \"git config --global\" to set a default\n"
-+			"preference for all repositories. You can also pass --rebase, --no-rebase,\n"
-+			"or --ff-only on the command line to override the configured default per\n"
-+			"invocation.\n"));
-+	}
-+
- 	return REBASE_FALSE;
- }
- 
-diff --git a/t/t5521-pull-options.sh b/t/t5521-pull-options.sh
-index ccde8ba491..159afa7ac8 100755
---- a/t/t5521-pull-options.sh
-+++ b/t/t5521-pull-options.sh
-@@ -11,10 +11,10 @@ test_expect_success 'setup' '
- 	 git commit -m one)
- '
- 
--test_expect_success 'git pull -q' '
-+test_expect_success 'git pull -q --no-rebase' '
- 	mkdir clonedq &&
- 	(cd clonedq && git init &&
--	git pull -q "../parent" >out 2>err &&
-+	git pull -q --no-rebase "../parent" >out 2>err &&
- 	test_must_be_empty err &&
- 	test_must_be_empty out)
- '
-@@ -30,10 +30,10 @@ test_expect_success 'git pull -q --rebase' '
- 	test_must_be_empty out)
- '
- 
--test_expect_success 'git pull' '
-+test_expect_success 'git pull --no-rebase' '
- 	mkdir cloned &&
- 	(cd cloned && git init &&
--	git pull "../parent" >out 2>err &&
-+	git pull --no-rebase "../parent" >out 2>err &&
- 	test -s err &&
- 	test_must_be_empty out)
- '
-@@ -46,10 +46,10 @@ test_expect_success 'git pull --rebase' '
- 	test_must_be_empty out)
- '
- 
--test_expect_success 'git pull -v' '
-+test_expect_success 'git pull -v --no-rebase' '
- 	mkdir clonedv &&
- 	(cd clonedv && git init &&
--	git pull -v "../parent" >out 2>err &&
-+	git pull -v --no-rebase "../parent" >out 2>err &&
- 	test -s err &&
- 	test_must_be_empty out)
- '
-@@ -62,25 +62,25 @@ test_expect_success 'git pull -v --rebase' '
- 	test_must_be_empty out)
- '
- 
--test_expect_success 'git pull -v -q' '
-+test_expect_success 'git pull -v -q --no-rebase' '
- 	mkdir clonedvq &&
- 	(cd clonedvq && git init &&
--	git pull -v -q "../parent" >out 2>err &&
-+	git pull -v -q --no-rebase "../parent" >out 2>err &&
- 	test_must_be_empty out &&
- 	test_must_be_empty err)
- '
- 
--test_expect_success 'git pull -q -v' '
-+test_expect_success 'git pull -q -v --no-rebase' '
- 	mkdir clonedqv &&
- 	(cd clonedqv && git init &&
--	git pull -q -v "../parent" >out 2>err &&
-+	git pull -q -v --no-rebase "../parent" >out 2>err &&
- 	test_must_be_empty out &&
- 	test -s err)
- '
- test_expect_success 'git pull --cleanup errors early on invalid argument' '
- 	mkdir clonedcleanup &&
- 	(cd clonedcleanup && git init &&
--	test_must_fail git pull --cleanup invalid "../parent" >out 2>err &&
-+	test_must_fail git pull --no-rebase --cleanup invalid "../parent" >out 2>err &&
- 	test_must_be_empty out &&
- 	test -s err)
- '
-diff --git a/t/t7601-merge-pull-config.sh b/t/t7601-merge-pull-config.sh
-index c6c44ec570..0f97828cd0 100755
---- a/t/t7601-merge-pull-config.sh
-+++ b/t/t7601-merge-pull-config.sh
-@@ -27,6 +27,44 @@ test_expect_success 'setup' '
- 	git tag c3
- '
- 
-+test_expect_success 'pull.rebase not set' '
-+	git reset --hard c0 &&
-+	git pull . c1 2>err &&
-+	test_i18ngrep "Pulling without specifying how to reconcile" err
-+'
-+
-+test_expect_success 'pull.rebase not set and pull.ff=false' '
-+	git reset --hard c0 &&
-+	test_config pull.ff false &&
-+	git pull . c1 2>err &&
-+	test_i18ngrep "Pulling without specifying how to reconcile" err
-+'
-+
-+test_expect_success 'pull.rebase not set and pull.ff=only' '
-+	git reset --hard c0 &&
-+	test_config pull.ff only &&
-+	git pull . c1 2>err &&
-+	test_i18ngrep ! "Pulling without specifying how to reconcile" err
-+'
-+
-+test_expect_success 'pull.rebase not set and --rebase given' '
-+	git reset --hard c0 &&
-+	git pull --rebase . c1 2>err &&
-+	test_i18ngrep ! "Pulling without specifying how to reconcile" err
-+'
-+
-+test_expect_success 'pull.rebase not set and --no-rebase given' '
-+	git reset --hard c0 &&
-+	git pull --no-rebase . c1 2>err &&
-+	test_i18ngrep ! "Pulling without specifying how to reconcile" err
-+'
-+
-+test_expect_success 'pull.rebase not set and --ff-only given' '
-+	git reset --hard c0 &&
-+	git pull --ff-only . c1 2>err &&
-+	test_i18ngrep ! "Pulling without specifying how to reconcile" err
-+'
-+
- test_expect_success 'merge c1 with c2' '
- 	git reset --hard c1 &&
- 	test -f c0.c &&
--- 
-2.25.1
+Then all commands will pipe to the "proc-receive" hook.
 
+Think there may be thousands of commands in the initial stage for
+setting up a new repository, and all of the commands are "normal"
+(creating branches or tags). If the "proc-receive" hook has to handle
+all of the "normal" commands by piping these commands to a "git
+update-ref --stdin" process, or pass these commands back to
+"receive-pack" by a new protocol, this will greatly impact the
+performance. I think it's better to let the developer to choose by
+using a config variable like "receive.procReceiveRefs".
+
+Patch 4/5 (receive-pack: read env from proc-receive output) is
+unnecessary, and extend the on-the-wire protocol is a good idea. The
+protocol may using pkt-line format, and negotiation between
+receive-pack (S) and the hook (H) like this:
+
+    S: PKT-LINE(version=3D1\0side-band-64k ...)  # I'm not sure it is
+necessary for the capabilities for all controllable server side
+softwares.
+    S: flush-pkt
+    H: PKT-LINE(version=3D1\0side-band-64k ...)
+    H: flush-pkt
+    S: PKT-LINE(old-oid new-oid ref)
+    S: ... ...
+    S: flush-pkt
+    S: PKT-LINE(push-option)
+    S: ... ...
+    S: flush-pkt
+    H: PKT-LINE( sideband< progress... > )
+    H: ... ...
+    H: PKT-LINE(old-oid new-oid ref OK) # OK, I ate it
+    H: PKT-LINE(old-oid new-oid ref error-msg...) # NO, I reject it
+    H: PKT-LINE(old-oid new-oid ref)  # Back to receive-pack to handle it
+    H: ... ...
+    H: flush-pkt
+
+After piping the "special" commands to the "proc-receive" hook,
+receive-pack should discard the "special" commands, and add the
+commands back from the output of the "proc-receive" hook. Then
+"receive-pack" will continue to execute the internal
+"execute_commands" function for the unexecuted commands.
+
+In order to have performance similar to the vanilla receive-pack, it
+is necessary to keep the config variable and the concept of "normal"
+and "special" references. If the config variable
+"receive.procReceiveRefs" is defined on the server, but the
+"proc-receive" hook does not exist, it's better give an error instead
+of fall back to the internal "execute_commands" function or doing
+nothing.
+
+--
+Jiang Xin
