@@ -2,102 +2,181 @@ Return-Path: <SRS0=Lnee=43=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 315E4C10F27
-	for <git@archiver.kernel.org>; Tue, 10 Mar 2020 12:17:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CCA26C18E5B
+	for <git@archiver.kernel.org>; Tue, 10 Mar 2020 13:17:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 039622468E
-	for <git@archiver.kernel.org>; Tue, 10 Mar 2020 12:17:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A4F4924692
+	for <git@archiver.kernel.org>; Tue, 10 Mar 2020 13:17:32 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Tt/Q6cb6"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CHM3kvSv"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726283AbgCJMRr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Mar 2020 08:17:47 -0400
-Received: from mout.gmx.net ([212.227.15.19]:34779 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726211AbgCJMRr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Mar 2020 08:17:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1583842663;
-        bh=ZMWC0sSu/yYhW1gmEYqym39L8W//VCYOviNwwPG3Vbg=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Tt/Q6cb6ESRkxv/jOSKGmQC2Qd1we5ViBKjy3zwctpGz5iRDKVAeVT/cjLcwsz/yI
-         X9KqcEa5PfM5BK1/Y6fP1TLwjJ8Vur8LMDeT7Ley2TRGMFqsEozFGgVDNmHL8rB800
-         qMv77Plkhu1ZnxeuG9HjbWTXVjTz9lebum2Mb4f8=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from MININT-QA14EDB.fritz.box ([89.1.212.209]) by mail.gmx.com
- (mrgmx005 [212.227.17.190]) with ESMTPSA (Nemesis) id
- 1MNKm0-1j0Bkz0qpm-00Os0L; Tue, 10 Mar 2020 13:17:43 +0100
-Date:   Tue, 10 Mar 2020 13:17:28 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jonathan Tan <jonathantanmy@google.com>
-cc:     git@vger.kernel.org, stolee@gmail.com, git@jeffhostetler.com
-Subject: Re: [PATCH] rebase --merge: optionally skip upstreamed commits
-In-Reply-To: <20200309205523.121319-1-jonathantanmy@google.com>
-Message-ID: <nycvar.QRO.7.76.6.2003101315100.46@tvgsbejvaqbjf.bet>
-References: <20200309205523.121319-1-jonathantanmy@google.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1731447AbgCJNLg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Mar 2020 09:11:36 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:34833 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731430AbgCJNLf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Mar 2020 09:11:35 -0400
+Received: by mail-wr1-f67.google.com with SMTP id r7so15835248wro.2
+        for <git@vger.kernel.org>; Tue, 10 Mar 2020 06:11:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=XTU2wfaaH8f7sxDLfC++czLuzfn0gJFeR4c4RRnX2Eg=;
+        b=CHM3kvSvmj5/nFQxoB/QEPpXr9YnkyfXizNAavNwyf1ElHmxiAetFcISreghm/AGaq
+         imxjzVr21ZB545GuTaT9mPhczmjt362el24yhNrfwFAbvJSkadKwVOBkLkyMiQ8Gs3Jd
+         Jn/PbUrXbIvwfOa9NzgOp3ZBh1a5GnZM5ESLJ4ktRvKrHNWUgv/fsW+yahA0z9nSXsud
+         g3H9CxP14XN5AX3KEGLr/9pJ4p090Jsmyt3YHveijR9rfSvuNdVGrkqqwYqaIa3luMTX
+         +U5m3XMbhyq/NIOq9z5KiMKB91KTykKu7mD1tNsVDRb78oZDOcqGmqMQVKbnZME0wU0L
+         V6cA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=XTU2wfaaH8f7sxDLfC++czLuzfn0gJFeR4c4RRnX2Eg=;
+        b=MMX3eXNjAmFV3c5s4Jhp7xYD5CMvsCyIClFfoePRAnytV5A/jHFe0M1gZWHb+rUYUe
+         bV55vx7l/BUx0j5q/yiNqUCRwxrGagp6tjYe0RX5XQwPr7GtzGssqK3gxQS39s2rfkVy
+         8iFr1Zm/Vjo8Zmmax8cv6tYNe2zZ6jhrXjtwCWu4Lu9mMkEoEO1UvHPHnJC3lAjWnXBU
+         Xf08D6bTQ4/QpQ/SMrsaz4htH+HFD6hYcjT8Wa0UjsW46Ij4DJdgU5hkTnfm9N31VjGl
+         tSpMWZluWHaLwkVxYsOLemiOVxRaIGFBvt2eMJZmoRp/KMmxODo0Ke9AggmG3pIlac9q
+         1JAg==
+X-Gm-Message-State: ANhLgQ1wEZK6n6NiqGwTbtspzDdZG+C0KRONDas6B4WX9xcmoFMBO1gJ
+        YsjucdGz3Oix20qcIFtx0RKGJj9u
+X-Google-Smtp-Source: ADFU+vvpTpd/Qn5QJQ3U3WnUcf1VQAtkOnFsiO+VM01zZtP7RFZuw56srvWTZ13ucGsjCrsciPxnKA==
+X-Received: by 2002:a5d:69cc:: with SMTP id s12mr14131141wrw.20.1583845891261;
+        Tue, 10 Mar 2020 06:11:31 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id b12sm39482879wro.66.2020.03.10.06.11.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Mar 2020 06:11:30 -0700 (PDT)
+Message-Id: <41950069a169c68e7e6d93f1a7d80166cb3a4689.1583845884.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.575.v2.git.1583845884.gitgitgadget@gmail.com>
+References: <pull.575.git.1583521396.gitgitgadget@gmail.com>
+        <pull.575.v2.git.1583845884.gitgitgadget@gmail.com>
+From:   "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 10 Mar 2020 13:11:24 +0000
+Subject: [PATCH v2 4/4] get_superproject_working_tree(): return strbuf
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:ShvonHOuqppWpV4l7YCmhsBFlvTbEwxf9ib0LaMS3vkZyozhsmK
- Rmg6yQ58YXgd5rnt1dNjI5xvkZTBD58NY5AlyKnhDB6ffuSTGow/jKM/SeThrGA+Iv+4AHE
- i3P6aHcyOy3DONMc8PD3Js7pcfkP/pD6XTMfnXLTSpyGOcEZlNBJeB2v+XcMij2JqJ3rvJB
- xRvOLT/Y9fdTaffiSaEFw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:BJqajae/nkk=:PVCSN2fiD952nQO55um8wa
- UUR4X+P1u8uDaKUISrkOlzQ0z9BhY8R6TIpIGSBamA/VBZ1tTUlc8fMJZE33BswOKppdx70RX
- Nklz+8uqrwzBpNbM0GdWe1IPvhn7cDNOpZQ/+qjrq/DhYKVMIVvGUwoPXV2gje+Lxsoefj6/I
- PlsmeiQsgRaTEo0UKePkkkslIaoP7xFL9aVfIODx2lvMP1D5w93Tb0N/BmBUiaYr4i1D++8Pj
- LGWJ0BbzE40yfZqEX5U3s8Fwxs4LIEsTA1klX3Ej3I1sRmjt5jjSffneBlXB9zlhSebQm//Sm
- FLKQpOsa/CIx0WoGUnI6Xxq8Nltj9AzhiEpNe2qmVM6AAKXLCizWpf010Jr5on6LWbQPQSM0v
- vjFdD1wSMt9JyvG6zhu6Uk03IBlHAQd+IJcPnq6xQmEHo+oGS47bG1Z8J0+E/lmucTJPkzEM+
- rnuYDEvhUq6zsgRziGHNw357H0/dv0JXGlS/oYhMlXbdAsyHukZxEjNsjUWAoJ69RM9Z/+hmp
- 6/1EZeIjpdopAbYNruZD/Z55UDmy045amZ3yYw4Ch9nJS7Ja7OyQJZ5RojgWlTKJkp0c+PxYX
- NLtKBqpzWcsjN4mMEKsuQda+2/A+po/XfcE7PV1rKjHyJXoBrzMew/3Ho6bu0Yfneaq3RAnXP
- 8ResYGm1xkl5rYbCGYBdgFAho8m9ndO3/RgZsIWyP3io5aalZpfikP8B7pfn1J9f9qS6VVeda
- npaGcEU25rplvoQV2bzACtwcUYLa7OC+bGuJ93MitVThI1ai9MbAO+Ld9y1qndv/pE7K9ZTU5
- m4DQXu3ozT4ENOcc28Ea1d4tuOLkIlq0bzey/mz5tRRH5GHONhx4JQH/lfyFSg3Z+JaEUbROP
- w3vwdBtOqOt0BRbeh6j2GBh4WPk3o/cUjoKIMCQxcSnkD6Xg5DkxWz1jey01aUIfeXzPLLVoE
- ZC3j9XAI8rhWJdoS2HwpD9UkNFPCI3tX2WXqEHeDKyCzimIgG9Qw9yw8VqIorT+cfGXbcZJp4
- JUrxogalHSEa4tcQK8mJXfsBpnHgBz5YEffMxxyC50r7za1XN6QQiiN2VmmJvRWm0lR2ofOXU
- ek6LJJjcT8WhYr4sH+d/FwpFdii/KdKnhjOjs5SAqpO27kqlXKGjE8uP2IIcrkFv8SHC5EoBw
- 9LIAf3+h3FscIq/Vn4qUZgq/umfE4MF08X1znQE5YiJJm4ve2ausx+INqCrrQDJCuLVcfNy/U
- jZ3DwLRfH4VqCx41c
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>,
+        Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jonathan,
+From: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 
-On Mon, 9 Mar 2020, Jonathan Tan wrote:
+Together with the previous commits, this commit fully fixes the problem
+of using shared buffer for `real_path()` in `get_superproject_working_tree()`.
 
-> When rebasing against an upstream that has had many commits since the
-> original branch was created:
->
->  O -- O -- ... -- O -- O (upstream)
->   \
->    -- O (my-dev-branch)
->
-> because "git rebase" attempts to exclude commits that are duplicates of
-> upstream ones, it must read the contents of every novel upstream commit,
-> in addition to the tip of the upstream and the merge base. This can be a
-> significant performance hit, especially in a partial clone, wherein a
-> read of an object may end up being a fetch.
->
-> Add a flag to "git rebase" to allow suppression of this feature. This
-> flag only works when using the "merge" backend.
+Signed-off-by: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
+---
+ builtin/rev-parse.c |  7 ++++---
+ submodule.c         | 17 ++++++++---------
+ submodule.h         |  4 ++--
+ 3 files changed, 14 insertions(+), 14 deletions(-)
 
-I wonder whether we can make this a bit more user-friendly by defaulting
-to `--right-only` if there are no promised objects in the symmetric range,
-and if there _are_ promised objects, to skip `--right-only`, possibly with
-an advice that we did that and how to force it to download the promised
-objects?
-
-Ciao,
-Dscho
+diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
+index 06ca7175ac7..06056434ed1 100644
+--- a/builtin/rev-parse.c
++++ b/builtin/rev-parse.c
+@@ -808,9 +808,10 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+ 				continue;
+ 			}
+ 			if (!strcmp(arg, "--show-superproject-working-tree")) {
+-				const char *superproject = get_superproject_working_tree();
+-				if (superproject)
+-					puts(superproject);
++				struct strbuf superproject = STRBUF_INIT;
++				if (get_superproject_working_tree(&superproject))
++					puts(superproject.buf);
++				strbuf_release(&superproject);
+ 				continue;
+ 			}
+ 			if (!strcmp(arg, "--show-prefix")) {
+diff --git a/submodule.c b/submodule.c
+index 215c62580fc..c3aadf3fff8 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -2168,14 +2168,13 @@ void absorb_git_dir_into_superproject(const char *path,
+ 	}
+ }
+ 
+-const char *get_superproject_working_tree(void)
++int get_superproject_working_tree(struct strbuf *buf)
+ {
+-	static struct strbuf realpath = STRBUF_INIT;
+ 	struct child_process cp = CHILD_PROCESS_INIT;
+ 	struct strbuf sb = STRBUF_INIT;
+ 	struct strbuf one_up = STRBUF_INIT;
+ 	const char *cwd = xgetcwd();
+-	const char *ret = NULL;
++	int ret = 0;
+ 	const char *subpath;
+ 	int code;
+ 	ssize_t len;
+@@ -2186,10 +2185,10 @@ const char *get_superproject_working_tree(void)
+ 		 * We might have a superproject, but it is harder
+ 		 * to determine.
+ 		 */
+-		return NULL;
++		return 0;
+ 
+ 	if (!strbuf_realpath(&one_up, "../", 0))
+-		return NULL;
++		return 0;
+ 
+ 	subpath = relative_path(cwd, one_up.buf, &sb);
+ 	strbuf_release(&one_up);
+@@ -2233,8 +2232,8 @@ const char *get_superproject_working_tree(void)
+ 		super_wt = xstrdup(cwd);
+ 		super_wt[cwd_len - super_sub_len] = '\0';
+ 
+-		strbuf_realpath(&realpath, super_wt, 1);
+-		ret = realpath.buf;
++		strbuf_realpath(buf, super_wt, 1);
++		ret = 1;
+ 		free(super_wt);
+ 	}
+ 	strbuf_release(&sb);
+@@ -2243,10 +2242,10 @@ const char *get_superproject_working_tree(void)
+ 
+ 	if (code == 128)
+ 		/* '../' is not a git repository */
+-		return NULL;
++		return 0;
+ 	if (code == 0 && len == 0)
+ 		/* There is an unrelated git repository at '../' */
+-		return NULL;
++		return 0;
+ 	if (code)
+ 		die(_("ls-tree returned unexpected return code %d"), code);
+ 
+diff --git a/submodule.h b/submodule.h
+index c81ec1a9b6c..4dad649f942 100644
+--- a/submodule.h
++++ b/submodule.h
+@@ -152,8 +152,8 @@ void absorb_git_dir_into_superproject(const char *path,
+ /*
+  * Return the absolute path of the working tree of the superproject, which this
+  * project is a submodule of. If this repository is not a submodule of
+- * another repository, return NULL.
++ * another repository, return 0.
+  */
+-const char *get_superproject_working_tree(void);
++int get_superproject_working_tree(struct strbuf *buf);
+ 
+ #endif
+-- 
+gitgitgadget
