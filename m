@@ -2,377 +2,120 @@ Return-Path: <SRS0=Lnee=43=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.2 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 65CABC10F25
-	for <git@archiver.kernel.org>; Tue, 10 Mar 2020 02:17:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 08786C10F25
+	for <git@archiver.kernel.org>; Tue, 10 Mar 2020 02:19:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 237FE2146E
-	for <git@archiver.kernel.org>; Tue, 10 Mar 2020 02:17:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D08B52146E
+	for <git@archiver.kernel.org>; Tue, 10 Mar 2020 02:19:28 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="pokH1f6k"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bVX8DLwI"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726462AbgCJCRI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Mar 2020 22:17:08 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:43329 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726156AbgCJCRH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Mar 2020 22:17:07 -0400
-Received: by mail-pl1-f196.google.com with SMTP id f8so4779908plt.10
-        for <git@vger.kernel.org>; Mon, 09 Mar 2020 19:17:06 -0700 (PDT)
+        id S1726641AbgCJCT1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Mar 2020 22:19:27 -0400
+Received: from mail-qk1-f195.google.com ([209.85.222.195]:40374 "EHLO
+        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725845AbgCJCT1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Mar 2020 22:19:27 -0400
+Received: by mail-qk1-f195.google.com with SMTP id m2so11348326qka.7
+        for <git@vger.kernel.org>; Mon, 09 Mar 2020 19:19:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=BvoeEcAgVFb77ccsAZ+yz/k7PLWUXgYv4eVkXhMph04=;
-        b=pokH1f6kOx0jXTFo2JBhKtwkq9J0fGxku2esfQcf5gnri6lkAM0Xq4g/asoEHqLfXm
-         qFc9886b1iyJ35/Y2w2Q+yK+5LUVj27/Ae+Mthjd2yKDietuPkhSEiwCCXCvzMzN3ofm
-         9f8Cvo8GYh8H14TDsZgaAVOXrmsdpy8fOTJ1MnEuQmVdIOzlhDQh7qkf4D6+/7tsWM1o
-         ybpv9lI/hhmweKn9cxwmPOainFNKzJAixrI9+8Ew4fSoRXfPIqfiZPncBXo3LSdWQ+hm
-         GfXn6rCsKZyC2qFfVm1Lhw0xBXNV9S6LXUD/Z/HwZ4C8WUZUNISyCqOoPkqyjITTahbV
-         krYw==
+        d=gmail.com; s=20161025;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=rPRNcsRljC2emdL9+y8hjw/VbA1dsWzBRdwB61UlDgw=;
+        b=bVX8DLwIS8+pCOCzN0W0Fso3YmnnYJba0d+bMky84pv1WV5erEp5pPE3NUxGffmxS9
+         7eJ6Qh2dDxSkJ/6LIIaPhEre17D2q88H0rWzaNC05t/0ET+JDQBxzOmXZghFciw7RlNE
+         9QaV1PGiQMkp7bDh80dD5zFPQmrlfeaS622NVxOM62j0y7wbaVx7pxR2jA/5HWU0yCLz
+         klAXq61nXlAGPfCoUORrgg34f8GjR/SUb9bd77GTMX53yLU/kskfglbgK4KSrbW2WNKs
+         alxekQ/WuwHoZ+inGKm/9h2u8LBTjAywqFfjQHCk+wi8Pe/BAq32NXiWRb57Z1Wr7wy1
+         FO1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=BvoeEcAgVFb77ccsAZ+yz/k7PLWUXgYv4eVkXhMph04=;
-        b=JIuVwsXvIwUrOJvVSa0kAiYEyBBecWt9g0dc+xBBoaszWl5tgEjJYug7U0oS62Jfvu
-         Kzya9ozc1g6c88XYVm2b5YQnOhRxNbZDPWt2sXdtTPKtBKKwU+S2nkcpMT+EGnpParPQ
-         OfbB3JhTANlYfiHiWLf8ExXA86qF8ss3FgS6V7v5e4U8lLqLMewJmEjD59ItMuz2WYCr
-         hB+PHrrcBC3UZThQCeszUrblYCrG8IIfEfZM3DOUijGCisz7DC2uzJnFvPG5yY/MnPrz
-         L4ual4W3eNvZjRZ0auQRcQRC5FV637Pw3seGBSNO24JV/hnza9bwlHnbcprkJeLOnucj
-         rwbA==
-X-Gm-Message-State: ANhLgQ03C4n0anPFddOyl0s8Oz1psuu3oOQVlmF0dO4RkxQggkiRGl6l
-        qs6jcX0ck9xF0Lef1DKGDsqQRArWAKc=
-X-Google-Smtp-Source: ADFU+vt/FxcJqYViK7vZvgVB0fYl9PlYjftHsn5BbPzTXeJthWTbHbZHIYmHsxIFS4qkPuupJ7jyhA==
-X-Received: by 2002:a62:7c90:: with SMTP id x138mr19398241pfc.5.1583806216726;
-        Mon, 09 Mar 2020 19:10:16 -0700 (PDT)
-Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id r24sm20700842pfg.61.2020.03.09.19.10.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Mar 2020 19:10:16 -0700 (PDT)
-Date:   Mon, 9 Mar 2020 20:10:15 -0600
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, stolee@gmail.com, git@jeffhostetler.com
-Subject: Re: [PATCH] rebase --merge: optionally skip upstreamed commits
-Message-ID: <20200310021015.GC42010@syl.local>
-References: <20200309205523.121319-1-jonathantanmy@google.com>
-MIME-Version: 1.0
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=rPRNcsRljC2emdL9+y8hjw/VbA1dsWzBRdwB61UlDgw=;
+        b=aou6R3GIinha31rtUA2uRLyqGYHuQMK9UTQWnf08WunGjy8r8MgzqTbMVv4QADYp8i
+         xT3MLEprgyeTTV8cMSgHtn2XOpVcnoPlTP/AlUnMpH+0yQOvkhivShbBUifUrhr0ndM0
+         z7k0WK3ZSkScQ15R30NBN/IpVu5etOZyDOIRaast8dFP7usNAiJf9adt5TX47gITx6cG
+         WRvjfxQzy/L/ywiFMs85bsjxwtfc7zOYAGgwTCXN614XLaOHol7E+jDbN3sr0MGKQ/qq
+         zqls/MonSxtun8+DX1P7gDN7tUC9YMQ7ZWqYeVxfWSiv04CUzkAvdzfu5NIySmkFWQ7O
+         NPKw==
+X-Gm-Message-State: ANhLgQ3EatBIIzyEQhsiyd9XoKDecZHQK10TRd5uc9126GWyuqERQr0j
+        W93sC5laUC1bUWcMIAo/hSqkDsC/0sA=
+X-Google-Smtp-Source: ADFU+vv8GFehblAe9+vHL/BleanXkfSTwatrXCZ1KlOj8OY5QcYQ+h4sdpFbHi1kPYnRxpybNHV63w==
+X-Received: by 2002:a05:620a:14b9:: with SMTP id x25mr5606635qkj.386.1583806764902;
+        Mon, 09 Mar 2020 19:19:24 -0700 (PDT)
+Received: from [192.168.1.127] ([192.222.216.4])
+        by smtp.gmail.com with ESMTPSA id e2sm23354705qkb.112.2020.03.09.19.19.23
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 09 Mar 2020 19:19:24 -0700 (PDT)
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200309205523.121319-1-jonathantanmy@google.com>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH 0/3] Teach ref-filter API to correctly handle CRLF in messages
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+In-Reply-To: <xmqqimjd1rx2.fsf@gitster-ct.c.googlers.com>
+Date:   Mon, 9 Mar 2020 22:19:20 -0400
+Cc:     Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Michael J Gruber <git@grubix.eu>,
+        Matthieu Moy <git@matthieu-moy.fr>,
+        John Keeping <john@keeping.me.uk>,
+        Karthik Nayak <karthik.188@gmail.com>,
+        Jeff King <peff@peff.net>, Alex Henrie <alexhenrie24@gmail.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <63755050-10A5-4A46-9BB3-8207E055692C@gmail.com>
+References: <pull.576.git.1583692184.gitgitgadget@gmail.com> <xmqqimjd1rx2.fsf@gitster-ct.c.googlers.com>
+To:     Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jonathan,
+Hi Junio,
 
-This patch makes good sense to me. I left a few notes below, but they
-are relatively minor, and this seems to be all in a good direction.
+> Le 9 mars 2020 =C3=A0 11:14, Junio C Hamano <gitster@pobox.com> a =
+=C3=A9crit :
+>=20
+> "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>=20
+>> The ref-filter API does not correctly handle commit or tag messages =
+that use
+>> CRLF as the line terminator. Such messages can be created with =
+the--verbatim=20
+>> option of git commit and git tag, or by using git commit-tree =
+directly.
+>>=20
+>> This impacts the output of git branch -v, and git branch, git tag and =
+git
+>> for-each-ref when used with a --format argument containing the atoms=20=
 
-As a (somewhat) interesting aside, this feature would be useful to me
-outside of partial clones, since I often have this workflow in my local
-development wherein 'git rebase' spends quite a bit of time comparing
-patches on my branch to everything new upstream.
+>> %(contents:subject) or %(contents:body).
+>=20
+> What is missing from the above is the definition of "correct".
+> Without saying what you consider in the current behaviour is
+> "incorrect" and why, the first sentence does not give the right
+> information to readers.
 
-On Mon, Mar 09, 2020 at 01:55:23PM -0700, Jonathan Tan wrote:
-> When rebasing against an upstream that has had many commits since the
-> original branch was created:
->
->  O -- O -- ... -- O -- O (upstream)
->   \
->    -- O (my-dev-branch)
->
-> because "git rebase" attempts to exclude commits that are duplicates of
-> upstream ones, it must read the contents of every novel upstream commit,
-> in addition to the tip of the upstream and the merge base.
+You are right, I'll send a v2 shortly with an updated cover letter and =
+commit message.
 
-This sentence is a little confusing if you skip over the graph, since it
-reads: "When rebasing against an because ... because ...". It may be
-clearer if you swap the order of the last two clauses to instead be:
+> Let me speculate why "such messages" are created by end users using
+> the --verbatim option.  They probably have unusual message that
+> needs to have whitespaces and characters that are stripped without
+> the option at the end of the lines in the message, and they
+> explicitly ask Git not to lose them with the option.  Perhaps CR may
+> be among those that they want to retain.
 
-  it must read the contents of every novel upstream commit, in addition to
-  the tip of the upstream and the merge base, because "git rebase"
-  attempts to exclude commits that are duplicates of upstream ones.
+That's possible. In my case what made me discover the bug is our old =
+version of GitLab at work,
+in which messages for merge commit created using the web UI contain CRLF =
+[1].
 
-> This can be a significant performance hit, especially in a partial
-> clone, wherein a read of an object may end up being a fetch.
->
-> Add a flag to "git rebase" to allow suppression of this feature. This
-> flag only works when using the "merge" backend.
->
-> This flag changes the behavior of sequencer_make_script(), called from
-> do_interactive_rebase() <- run_rebase_interactive() <-
-> run_specific_rebase() <- cmd_rebase(). With this flag, limit_list()
-> (indirectly called from sequencer_make_script() through
-> prepare_revision_walk()) will no longer call cherry_pick_list(), and
-> thus PATCHSAME is no longer set. Refraining from setting PATCHSAME both
-> means that the intermediate commits in upstream are no longer read (as
-> shown by the test) and means that no PATCHSAME-caused skipping of
-> commits is done by sequencer_make_script(), either directly or through
-> make_script_with_merges().
+[1] https://gitlab.com/gitlab-org/gitlab-foss/-/issues/31671
 
-This all sounds good to me.
 
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> ---
-> More improvements for partial clone, but this is a benefit for
-> non-partial-clone as well, hence the way I wrote the commit message (not
-> focusing too much on partial clone) and the documentation.
->
-> I've chosen --skip-already-present and --no-skip-already-present to
-> reuse the language already existing in the documentation and to avoid a
-> double negative (e.g. --avoid-checking-if-already-present and
-> --no-avoid-checking-if-already-present) but this causes some clumsiness
-> in the documentation and in the code. Any suggestions for the name are
-> welcome.
->
-> I've only implemented this for the "merge" backend since I think that
-> there is an effort to migrate "rebase" to use the "merge" backend by
-> default, and also because "merge" uses diff internally which already has
-> the (per-commit) blob batch prefetching.
-
-This also makes sense to me.
-
-> ---
->  Documentation/git-rebase.txt | 12 +++++-
->  builtin/rebase.c             | 10 ++++-
->  sequencer.c                  |  3 +-
->  sequencer.h                  |  2 +-
->  t/t3402-rebase-merge.sh      | 77 ++++++++++++++++++++++++++++++++++++
->  5 files changed, 100 insertions(+), 4 deletions(-)
->
-> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-> index 0c4f038dd6..f73a82b4a9 100644
-> --- a/Documentation/git-rebase.txt
-> +++ b/Documentation/git-rebase.txt
-> @@ -318,6 +318,15 @@ See also INCOMPATIBLE OPTIONS below.
->  +
->  See also INCOMPATIBLE OPTIONS below.
->
-> +--skip-already-present::
-> +--no-skip-already-present::
-> +	Skip commits that are already present in the new upstream.
-> +	This is the default.
-
-I believe that you mean '--skip-already-present' is the default, here,
-but the placement makes it ambiguous, since it is in a paragraph with a
-header that contains both the positive and negated version of this flag.
-
-Maybe this could changed to: s/This/--skip-already-present/'.
-
-> ++
-> +If the skip-if-already-present feature is unnecessary or undesired,
-> +`--no-skip-already-present` may improve performance since it avoids
-> +the need to read the contents of every commit in the new upstream.
-> +
->  --rerere-autoupdate::
->  --no-rerere-autoupdate::
->  	Allow the rerere mechanism to update the index with the
-> @@ -866,7 +875,8 @@ Only works if the changes (patch IDs based on the diff contents) on
->  'subsystem' did.
->
->  In that case, the fix is easy because 'git rebase' knows to skip
-> -changes that are already present in the new upstream.  So if you say
-> +changes that are already present in the new upstream (unless
-> +`--no-skip-already-present` is given). So if you say
-
-Extremely minor nit: there is a whitespace change on this line where the
-original has two spaces between the '.' and 'So', and the new version
-has only one.
-
->  (assuming you're on 'topic')
->  ------------
->      $ git rebase subsystem
-> diff --git a/builtin/rebase.c b/builtin/rebase.c
-> index 6154ad8fa5..943211e5bb 100644
-> --- a/builtin/rebase.c
-> +++ b/builtin/rebase.c
-> @@ -88,13 +88,15 @@ struct rebase_options {
->  	struct strbuf git_format_patch_opt;
->  	int reschedule_failed_exec;
->  	int use_legacy_rebase;
-> +	int skip_already_present;
->  };
->
->  #define REBASE_OPTIONS_INIT {			  	\
->  		.type = REBASE_UNSPECIFIED,	  	\
->  		.flags = REBASE_NO_QUIET, 		\
->  		.git_am_opts = ARGV_ARRAY_INIT,		\
-> -		.git_format_patch_opt = STRBUF_INIT	\
-> +		.git_format_patch_opt = STRBUF_INIT,	\
-> +		.skip_already_present =	1		\
->  	}
->
->  static struct replay_opts get_replay_opts(const struct rebase_options *opts)
-> @@ -373,6 +375,7 @@ static int run_rebase_interactive(struct rebase_options *opts,
->  	flags |= opts->rebase_cousins > 0 ? TODO_LIST_REBASE_COUSINS : 0;
->  	flags |= opts->root_with_onto ? TODO_LIST_ROOT_WITH_ONTO : 0;
->  	flags |= command == ACTION_SHORTEN_OIDS ? TODO_LIST_SHORTEN_IDS : 0;
-> +	flags |= opts->skip_already_present ? TODO_LIST_SKIP_ALREADY_PRESENT : 0;
->
->  	switch (command) {
->  	case ACTION_NONE: {
-> @@ -1507,6 +1510,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->  		OPT_BOOL(0, "reschedule-failed-exec",
->  			 &reschedule_failed_exec,
->  			 N_("automatically re-schedule any `exec` that fails")),
-> +		OPT_BOOL(0, "skip-already-present", &options.skip_already_present,
-> +			 N_("skip changes that are already present in the new upstream")),
-
-I scratched my head a little bit about why we weren't using OPT_BIT and
-&flags directly here, but it matches the pattern in the surrounding, so
-I think that 'OPT_BOOL' and target '&options.skip_already_present' here.
-
->  		OPT_END(),
->  	};
->  	int i;
-> @@ -1840,6 +1845,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->  			      "interactive or merge options"));
->  	}
->
-> +	if (!options.skip_already_present && !is_interactive(&options))
-> +		die(_("--no-skip-already-present does not work with the 'am' backend"));
-> +
->  	if (options.signoff) {
->  		if (options.type == REBASE_PRESERVE_MERGES)
->  			die("cannot combine '--signoff' with "
-> diff --git a/sequencer.c b/sequencer.c
-> index ba90a513b9..752580c017 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -4797,12 +4797,13 @@ int sequencer_make_script(struct repository *r, struct strbuf *out, int argc,
->  	int keep_empty = flags & TODO_LIST_KEEP_EMPTY;
->  	const char *insn = flags & TODO_LIST_ABBREVIATE_CMDS ? "p" : "pick";
->  	int rebase_merges = flags & TODO_LIST_REBASE_MERGES;
-> +	int skip_already_present = !!(flags & TODO_LIST_SKIP_ALREADY_PRESENT);
->
->  	repo_init_revisions(r, &revs, NULL);
->  	revs.verbose_header = 1;
->  	if (!rebase_merges)
->  		revs.max_parents = 1;
-> -	revs.cherry_mark = 1;
-> +	revs.cherry_mark = skip_already_present;
-
-:-). All of that plumbing just to poke at this variable. Looks good to
-me.
-
->  	revs.limited = 1;
->  	revs.reverse = 1;
->  	revs.right_only = 1;
-> diff --git a/sequencer.h b/sequencer.h
-> index 393571e89a..39bb12f624 100644
-> --- a/sequencer.h
-> +++ b/sequencer.h
-> @@ -149,7 +149,7 @@ int sequencer_remove_state(struct replay_opts *opts);
->   * `--onto`, we do not want to re-generate the root commits.
->   */
->  #define TODO_LIST_ROOT_WITH_ONTO (1U << 6)
-> -
-> +#define TODO_LIST_SKIP_ALREADY_PRESENT (1U << 7)
-
-This was another spot that I thought could maybe be turned into an enum,
-but it's clearly not the fault of your patch, and could easily be turned
-into #leftoverbits.
-
->  int sequencer_make_script(struct repository *r, struct strbuf *out, int argc,
->  			  const char **argv, unsigned flags);
-> diff --git a/t/t3402-rebase-merge.sh b/t/t3402-rebase-merge.sh
-> index a1ec501a87..9b52739a10 100755
-> --- a/t/t3402-rebase-merge.sh
-> +++ b/t/t3402-rebase-merge.sh
-> @@ -162,4 +162,81 @@ test_expect_success 'rebase --skip works with two conflicts in a row' '
->  	git rebase --skip
->  '
->
-> +test_expect_success '--no-skip-already-present' '
-> +	git init repo &&
-> +
-> +	# O(1-10) -- O(1-11) -- O(0-10) master
-> +	#        \
-> +	#         -- O(1-11) -- O(1-12) otherbranch
-> +
-> +	printf "Line %d\n" $(test_seq 1 10) >repo/file.txt &&
-> +	git -C repo add file.txt &&
-> +	git -C repo commit -m "base commit" &&
-> +
-> +	printf "Line %d\n" $(test_seq 1 11) >repo/file.txt &&
-> +	git -C repo commit -a -m "add 11" &&
-> +
-> +	printf "Line %d\n" $(test_seq 0 10) >repo/file.txt &&
-> +	git -C repo commit -a -m "add 0 delete 11" &&
-> +
-> +	git -C repo checkout -b otherbranch HEAD^^ &&
-> +	printf "Line %d\n" $(test_seq 1 11) >repo/file.txt &&
-> +	git -C repo commit -a -m "add 11 in another branch" &&
-> +
-> +	printf "Line %d\n" $(test_seq 1 12) >repo/file.txt &&
-> +	git -C repo commit -a -m "add 12 in another branch" &&
-> +
-> +	# Regular rebase fails, because the 1-11 commit is deduplicated
-> +	test_must_fail git -C repo rebase --merge master 2> err &&
-> +	test_i18ngrep "error: could not apply.*add 12 in another branch" err &&
-> +	git -C repo rebase --abort &&
-> +
-> +	# With --no-skip-already-present, it works
-> +	git -C repo rebase --merge --no-skip-already-present master
-> +'
-> +
-> +test_expect_success '--no-skip-already-present refrains from reading unneeded blobs' '
-> +	git init server &&
-> +
-> +	# O(1-10) -- O(1-11) -- O(1-12) master
-> +	#        \
-> +	#         -- O(0-10) otherbranch
-> +
-> +	printf "Line %d\n" $(test_seq 1 10) >server/file.txt &&
-> +	git -C server add file.txt &&
-> +	git -C server commit -m "merge base" &&
-> +
-> +	printf "Line %d\n" $(test_seq 1 11) >server/file.txt &&
-> +	git -C server commit -a -m "add 11" &&
-> +
-> +	printf "Line %d\n" $(test_seq 1 12) >server/file.txt &&
-> +	git -C server commit -a -m "add 12" &&
-> +
-> +	git -C server checkout -b otherbranch HEAD^^ &&
-> +	printf "Line %d\n" $(test_seq 0 10) >server/file.txt &&
-> +	git -C server commit -a -m "add 0" &&
-> +
-> +	test_config -C server uploadpack.allowfilter 1 &&
-> +	test_config -C server uploadpack.allowanysha1inwant 1 &&
-> +
-> +	git clone --filter=blob:none "file://$(pwd)/server" client &&
-> +	git -C client checkout origin/master &&
-> +	git -C client checkout origin/otherbranch &&
-> +
-> +	# Sanity check to ensure that the blobs from the merge base and "add
-> +	# 11" are missing
-> +	git -C client rev-list --objects --all --missing=print >missing_list &&
-> +	MERGE_BASE_BLOB=$(git -C server rev-parse master^^:file.txt) &&
-> +	ADD_11_BLOB=$(git -C server rev-parse master^:file.txt) &&
-> +	grep "\\?$MERGE_BASE_BLOB" missing_list &&
-> +	grep "\\?$ADD_11_BLOB" missing_list &&
-> +
-> +	git -C client rebase --merge --no-skip-already-present origin/master &&
-> +
-> +	# The blob from the merge base had to be fetched, but not "add 11"
-> +	git -C client rev-list --objects --all --missing=print >missing_list &&
-> +	! grep "\\?$MERGE_BASE_BLOB" missing_list &&
-> +	grep "\\?$ADD_11_BLOB" missing_list
-> +'
-> +
->  test_done
-> --
-> 2.25.1.481.gfbce0eb801-goog
-
-The tests look good to me. Thanks for working on this!
-
-Thanks,
-Taylor
