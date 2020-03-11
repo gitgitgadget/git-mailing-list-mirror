@@ -2,90 +2,84 @@ Return-Path: <SRS0=DQ4e=44=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 09643C4CECE
-	for <git@archiver.kernel.org>; Wed, 11 Mar 2020 19:10:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F54BC0044D
+	for <git@archiver.kernel.org>; Wed, 11 Mar 2020 19:10:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id E5BE72074A
-	for <git@archiver.kernel.org>; Wed, 11 Mar 2020 19:10:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 05A4E20736
+	for <git@archiver.kernel.org>; Wed, 11 Mar 2020 19:10:55 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ybr8YEnV"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731040AbgCKTKX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Mar 2020 15:10:23 -0400
-Received: from cloud.peff.net ([104.130.231.41]:36696 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1731030AbgCKTKX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Mar 2020 15:10:23 -0400
-Received: (qmail 3430 invoked by uid 109); 11 Mar 2020 19:10:23 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 11 Mar 2020 19:10:23 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 22162 invoked by uid 111); 11 Mar 2020 19:19:44 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 11 Mar 2020 15:19:44 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 11 Mar 2020 15:10:21 -0400
-From:   Jeff King <peff@peff.net>
-To:     Robert Dailey <rcdailey.lists@gmail.com>
-Cc:     Git <git@vger.kernel.org>
-Subject: Re: Using push.default with push.remote.push
-Message-ID: <20200311191021.GA27978@coredump.intra.peff.net>
-References: <CAHd499BhLe0xF_k2ASV=ZuM7LVvxui_cxzB9UrJ2MDCyyNUmtw@mail.gmail.com>
- <20200311162517.GA27893@coredump.intra.peff.net>
- <CAHd499AGQ5k7ON+YY84b6LY1sh9MOw8fsrE2shOibujX1iKeiQ@mail.gmail.com>
+        id S1731058AbgCKTKx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Mar 2020 15:10:53 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61944 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731051AbgCKTKw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Mar 2020 15:10:52 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A67FE4750C;
+        Wed, 11 Mar 2020 15:10:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=2+cLfMjcOGj2PbB9LYJP/0698OU=; b=ybr8YE
+        nVSL+LCaQN3SxOTu4fPsfn1ojxSqNSbLAm89eS70N8cwHAZbZfJm14e0BGb33i7F
+        caTrJowayYZwGF7zFGOtXMjVtQJEXzSnGWWmZ9uTxbyi/F6+RcPps6YBEEZHmrpy
+        cEIBUrcmpss139n23oZ2pTlmwZ+tohD4QY/Iw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=BxsktFNytVi9gZPKEoy6JN8cGAp9cB3b
+        3lj8Nmhb/wusXeT/KuvAHkzOi0LVPVgDzFz6HxFFts8wgsyFYDkNNI+woyowp6sz
+        35pT+2q1/iz/4Cx//szbCT03xQezgTBwr+NdJqS8X2u8nLc+oBhIEuGnjesX+gkD
+        JU9XyYWfnfU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9EFDE4750B;
+        Wed, 11 Mar 2020 15:10:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2DC024750A;
+        Wed, 11 Mar 2020 15:10:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v2 2/2] git-rebase.txt: highlight backend differences with commit rewording
+References: <pull.722.git.git.1583903621.gitgitgadget@gmail.com>
+        <pull.722.v2.git.git.1583940623.gitgitgadget@gmail.com>
+        <6d51cff41d9ee312a0d9ae3308546284ead1d4c6.1583940623.git.gitgitgadget@gmail.com>
+        <20200311163643.GD27893@coredump.intra.peff.net>
+Date:   Wed, 11 Mar 2020 12:10:49 -0700
+In-Reply-To: <20200311163643.GD27893@coredump.intra.peff.net> (Jeff King's
+        message of "Wed, 11 Mar 2020 12:36:43 -0400")
+Message-ID: <xmqqk13qhfly.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAHd499AGQ5k7ON+YY84b6LY1sh9MOw8fsrE2shOibujX1iKeiQ@mail.gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0553366E-63CC-11EA-BE5C-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 11, 2020 at 11:56:05AM -0500, Robert Dailey wrote:
+Jeff King <peff@peff.net> writes:
 
-> > Then when would remote.*.push with a wildcard ever do anything?
-> 
-> Maybe this is where a potential disconnect is, but I've always viewed
-> the wildcard refspec as a mapping, rather than an all-inclusive "Push
-> all the things". In other words, I view it as more of a structural
-> guide than a behavioral one. I recognize I probably have this wrong,
-> but it probably speaks to how some users view it, or at least, some
-> valid use cases to have more of a structural mechanism to map branches
-> to remote repositories, with `git push --all` being a supplement to
-> say "Push all branches using this mapping".
+> Thanks. With the earlier bug fix and this documentation change, I'm OK
+> with keeping the merge-backend transition in v2.26.0. This change
+> _might_ cause problems in somebody's script, but that will be true
+> whether it comes in 2.26 or 2.27, and I think it's clear this is the end
+> state we want to get to eventually.
 
-I see. So you really want "push the current branch by default, but using
-this refspec to map the names". That doesn't exist right now, but it
-seems like it would be a reasonable thing to have.
+I am OK either way, so let's take these two, plus the "don't i18n
+the literals that must be given as option values" patch from Jiang,
+and discard the "let's delay the inevitable to buy some time" patch.
 
-Bringing in your other reply:
-
-> I think `branch.*.pushRef` in this case is not enough. It implies that
-> for every branch I want to be mapped in this way, I'd have to manually
-> specify this config. Rather, I think a `remote.*.pushRef` would be
-> more appropriate, so that it would automatically set the
-> `branch.*.pushRef` version as needed, so I only set up the mapping
-> once.
-
-Yes, my suggestion would require per-branch config. And something like
-remote.*.pushRef makes sense to me as the implementation for what we
-were discussing above. I think you'd want the name to somehow indicate
-that it's a mapping to be used when pushing a ref, and not the
-definitive "this is what we will push" directive.
-
-I don't think it would make sense to use with something like "upstream"
-in push.default, because that's mapping the name already. So possibly it
-should be restricted to "current". I suppose it would also make sense
-with "matching". There the current remote.*.push _mostly_ does the same
-thing, but with one subtle exception that it pushes everything that
-matches the left-hand side of the refspec, not just ones that exist on
-the right-hand side.
-
-So I dunno. I could see it as being limited to "current", or being
-applied as it makes sense for each individual push.default. I'll leave
-that to whoever decides to work on the feature. :)
-
--Peff
+I merged the last one locally to 'next' already but I haven't pushed
+the result out, so it is still possible to back out ;-)
