@@ -2,122 +2,206 @@ Return-Path: <SRS0=DQ4e=44=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A7E0EC10F27
-	for <git@archiver.kernel.org>; Wed, 11 Mar 2020 05:13:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 25356C10F25
+	for <git@archiver.kernel.org>; Wed, 11 Mar 2020 05:25:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7EE40208C4
-	for <git@archiver.kernel.org>; Wed, 11 Mar 2020 05:13:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E312221655
+	for <git@archiver.kernel.org>; Wed, 11 Mar 2020 05:25:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gkkvWWks"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mc1Nd90b"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726832AbgCKFNt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Mar 2020 01:13:49 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:37155 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726812AbgCKFNs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Mar 2020 01:13:48 -0400
-Received: by mail-wr1-f68.google.com with SMTP id 6so908563wre.4
-        for <git@vger.kernel.org>; Tue, 10 Mar 2020 22:13:45 -0700 (PDT)
+        id S1726160AbgCKFZ5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Mar 2020 01:25:57 -0400
+Received: from mail-ot1-f65.google.com ([209.85.210.65]:42929 "EHLO
+        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725813AbgCKFZ4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Mar 2020 01:25:56 -0400
+Received: by mail-ot1-f65.google.com with SMTP id 66so677728otd.9
+        for <git@vger.kernel.org>; Tue, 10 Mar 2020 22:25:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=cqrZm8Vvb0fGSVpl1B/b18OJcUhKsxw2q15GVnGgkkE=;
-        b=gkkvWWksrkFiTaptVhBBeU47WxgbQJCE5Cvjr7mx7YmGVF5OmC14CT3ttBzfd7sNUD
-         F32MLVcACfoI3mU6Bp9eys9z38oiOXqTobcOm27Y6TBrwfKxsRMJx1IaBY6i3KlALwJL
-         DxrZUebP5bAVJUYKIqmHOkRtP4/MY5BXd6IHQx1Jj0fKFAKx9oJkoTMQCHdTntqhnwkU
-         q9fl3H/ETHKAo0yInhC+98wydWDMxZmDyFNx8HkGb2/Nbkx+Gd+hWaWqtDTBeQCs+hPF
-         fvavT8nu6waXFAYdi0+FwDPb4z30epjoSvLDHteSnQRDV1e6Wv5gp1iQn7huLVElOBh9
-         eWuA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=J/vhXN8RqdRD4qlve93GTIa4qs/W0yplxjlsMQHiE9g=;
+        b=mc1Nd90bXovNHxqjnV7gErigfWqAk7v8U3eFDE3ETJSsbZXw5MjoiArzCJRIeykq1b
+         VyR7Lgj9aWpmTe9+8UhBv1DaOG3q/yAKo8mtrAPWCjPpKdgy31oLUrRdcHUo8yx9VRIN
+         C0fz1jahP6QI5D5HAKOA24N5jLtCzAEeszz11XybsLsjg2NfxzqCufpfO2hCgXWg9fjL
+         5m2bgbwvkxU9lCieGSQFZ9EMBReqSHtByop5BMD1ToHY3mNKlxXWlKe3/CW1J+8NMwlK
+         BA9z5CYEAZuPq6jbCnkOIruaaZ5mofZNIyr3yj607Qf3HXCVK0aYBXX7NancL+DxbFaP
+         NXuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=cqrZm8Vvb0fGSVpl1B/b18OJcUhKsxw2q15GVnGgkkE=;
-        b=RJVvHBfh/cGQ9DeE8lHoxewBt6N5RHlWZIvNt+K8vF090+l8Bk8GoJCNoJE/BnTKxP
-         3z7kLuLul4RtZ+826t8HLJJu2qjR4QoZrpFbEhH0nRem+Dj1tz+TCXppnksFG0nf1fPy
-         +VsuKxAhebEAA4YjlHyU98LyBTu8dy2ogTZ2/ddxosQEu3oEuPZgr6FM2/91xX+om4FN
-         439NtMSPeGOGa4DWnlbtfxDwf5H4O3Wja8LWq25s41mYPKdsvWmDXB+BqGUjF8lmJCH5
-         yJgQDxllTiXPpVlv2E2nAmzeWBrawGJb/H7zSx4rnAMVPEczKKIhS3m6o8UegjffhFL/
-         sl8w==
-X-Gm-Message-State: ANhLgQ0L18QYhxPNVN3P0juB/u2IrxhlVTU6TKQFDAeUb5vqHzcXV5Fa
-        BjgjEZ0S5QFEdeYbpe2TA2GSqxAp
-X-Google-Smtp-Source: ADFU+vvDwf4SR0r72cYfMvJMrl6EbFBNarNaqGCZd3uxvCPD/kxrpuIM3Sny/46/JFOjNh8vfCmZcA==
-X-Received: by 2002:adf:8bda:: with SMTP id w26mr1980177wra.126.1583903624612;
-        Tue, 10 Mar 2020 22:13:44 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d18sm6371649wrq.22.2020.03.10.22.13.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Mar 2020 22:13:44 -0700 (PDT)
-Message-Id: <12932b847ef9d6c60ed338f68d4a32706d68891d.1583903621.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.722.git.git.1583903621.gitgitgadget@gmail.com>
-References: <pull.722.git.git.1583903621.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 11 Mar 2020 05:13:41 +0000
-Subject: [PATCH 2/2] git-rebase.txt: highlight backend differences with commit
- rewording
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=J/vhXN8RqdRD4qlve93GTIa4qs/W0yplxjlsMQHiE9g=;
+        b=uOG1GmAorIDHj4c90pDX0bUcL+3tgnskVV0wZ7tA3H7MWqk+57lcUwD7hfQRJGxYmh
+         UAhP4rVvpD5NqNAobD6gNVj0rkIU9SLwEL0c2HNB1xugnPUHrm69F+f5lIimQ0pqX5/b
+         kvtwa0OsHWO0MPKOgTvxi2/rNfzYUX2YSeAUHintGW2GgSkIN+lMz89tak26R5Kp5e/D
+         MsTXpczEaoDpWXnB8KiKhdKbs9nX8ggnVI3ueXCighRV8JvZrnYdggh2ovoxAHAlFkt0
+         MWh781L98p3FC8KO7/+eTIhcnKl3qpIW8y8SqMJpd5tCgaU23Mc61fRU0M6UDBhwUjYp
+         +9Tg==
+X-Gm-Message-State: ANhLgQ2lpbZdWSvXmo1Q1v0EdndrWixxe05RpPrqzLCRzrV39cOKqiIW
+        c2HFJHWbhJGTcOQWwk8TMNnq6bO0naDHinBUQqCsoJ7x
+X-Google-Smtp-Source: ADFU+vtQDXVyXJOUKy4mKeo1TMQFlodkXNsR1Hxd1BFDeOcupUjT317fNpfRxvyVw91jR4ukCmkAw793ORVu2nxR07M=
+X-Received: by 2002:a9d:5cc8:: with SMTP id r8mr1003833oti.345.1583904355486;
+ Tue, 10 Mar 2020 22:25:55 -0700 (PDT)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Phillip Wood <phillip.wood123@gmail.com>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
+References: <xmqqo8t4z29k.fsf@gitster-ct.c.googlers.com> <20200310174017.GA549010@coredump.intra.peff.net>
+In-Reply-To: <20200310174017.GA549010@coredump.intra.peff.net>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 10 Mar 2020 22:25:44 -0700
+Message-ID: <CABPp-BE7zkVmsm5nO49F2e=KxmvafAXvU+Gy8qHQ9Cnsoe8qUQ@mail.gmail.com>
+Subject: Re: [ANNOUNCE] Git v2.26.0-rc1
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+On Tue, Mar 10, 2020 at 10:40 AM Jeff King <peff@peff.net> wrote:
+>
+> On Tue, Mar 10, 2020 at 07:57:11AM -0700, Junio C Hamano wrote:
+>
+> >  * "git rebase" has learned to use the merge backend (i.e. the
+> >    machinery that drives "rebase -i") by default, while allowing
+> >    "--apply" option to use the "apply" backend (e.g. the moral
+> >    equivalent of "format-patch piped to am").  The rebase.backend
+> >    configuration variable can be set to customize.
+>
+> I noticed a few behavior changes that I think are related to this
+> switch. I'm not sure to what degree we'd consider these a problem
+> (though the second I think may be an existing bug in the merge backend
+> that's just getting more attention), but it seems like the time to raise
+> the issue is now, before the release. :)
+>
+> The first change is that we'll now open an editor when continuing a
+> conflicted rebase. You can see it by running this:
+>
+>   for backend in apply merge; do
+>     echo "==> Running with rebase.backend=$backend"
+>
+>     # new repo
+>     rm -rf repo
+>     git init -q repo
+>     cd repo
+>
+>     # create two conflicting branches
+>     echo base >base && git add base && git commit -qm base
+>     echo master >file && git add file && git commit -qm master
+>     git checkout -q -b side HEAD^
+>     echo side >file && git add file && git commit -qm side
+>
+>     # rebase on master, hit the conflict, then resolve it
+>     git -c rebase.backend=$backend rebase master
+>     echo resolved >file
+>     git add file
+>
+>     # continue the rebase, noting whether we used the editor
+>     GIT_EDITOR='echo >&2 running editor on:' git rebase --continue
+>   done
+>
+> We won't run the editor the "apply" backend, but do for "merge".  I'm
+> not sure how big a deal this is. It bit me because I have a script which
+> runs rebase in a "while read" shell loop, with stdin coming from a pipe
+> feeding the loop. It auto-continues when rerere is able to fix up the
+> conflicts, but the editor complains about stdin not being a tty and
+> dies.
+>
+> I'd imagine that's a pretty rare situation, and it was easy enough to
+> fix up. But I wonder if we should be more careful about making sure the
+> behavior is more identical. On the other hand, I imagine this is the way
+> the merge backend has always behaved, so it would be a change in
+> behavior for people who had been using it already. I guess the _most_
+> compatible thing would be a merge-that-behaves-more-like-apply backend,
+> but I'm not sure if we want to support that forever.
 
-As noted by Junio:
-    Back when "git am" was written, it was not considered a bug that the
-    "git am --resolved" option did not offer the user a chance to update
-    the log message to match the adjustment of the code the user made,
-    but honestly, I'd have to say that it is a bug in "git am" in that
-    over time it wasn't adjusted to the new world order where we
-    encourage users to describe what they did when the automation
-    hiccuped by opening an editor.  These days, even when automation
-    worked well (e.g. a clean auto-merge with "git merge"), we open an
-    editor.  The world has changed, and so should the expectations.
+This behavior did not always exist with the merge backend, it began
+with commit 68aa495b59 ("rebase: implement --merge via the interactive
+machinery", 2018-12-11).  Before that, there was not too much in
+sequencer.c or its predecessors for non-interactive rebases, so I
+wouldn't give much weight to historical precedent for how the merge
+backend behaves here.
 
-Junio also suggested providing a workaround such as allowing --no-edit
-together with git rebase --continue, but that should probably be done in
-a patch after the git-2.26.0 release.  For now, just document the known
-difference in the Behavioral Differences section.
+However, as Junio argues elsewhere in this thread, the apply backend
+should probably be the one that is considered to be buggy here.
+Although fixing the apply backend is probably best, and adding an
+escape hatch such as --no-edit as Junio suggests for the merge backend
+makes sense, given where we are in the 2.26 cycle, I only sent off a
+patch to document this difference for now.
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- Documentation/git-rebase.txt | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+> The second thing I noticed is more clearly a bug, I think. If we have a
+> patch that is skipped because it was already applied, we get stuck in
+> "cherry-picking" mode. Try:
+>
+>   for backend in apply merge; do
+>     echo "==> Running with rebase.backend=$backend"
+>
+>     # new repo
+>     rm -rf repo
+>     git init -q repo
+>     cd repo
+>
+>     echo base >file && git add file && git commit -qm base
+>     # do this in two steps so we don't match patch-id
+>     echo one >file && git commit -qam master-1
+>     echo two >file && git commit -qam master-2
+>
+>     git checkout -q -b side HEAD~2
+>     echo two >file && git commit -qam side
+>
+>     # start a rebase, which should realize that the patch is a noop
+>     git -c rebase.backend=$backend rebase master
+>
+>     # see what state "status" reports us in
+>     git status
+>   done
+>
+> For the "apply" case, I get:
+>
+>   ==> Running with rebase.backend=apply
+>   First, rewinding head to replay your work on top of it...
+>   Applying: side
+>   Using index info to reconstruct a base tree...
+>   M     file
+>   Falling back to patching base and 3-way merge...
+>   No changes -- Patch already applied.
+>   On branch side
+>   nothing to commit, working tree clean
+>
+> So we complete the rebase, and git-status shows nothing. But for the
+> merge backend:
+>
+>   ==> Running with rebase.backend=merge
+>   dropping f8b25a2cd2a3a0e64d820efe2fcbae81dec98616 side -- patch contents already upstream
+>   Successfully rebased and updated refs/heads/side.
+>   On branch side
+>   You are currently cherry-picking commit f8b25a2.
+>
+>   nothing to commit, working tree clean
+>
+> Oops. If I "git rebase --continue" from there, I get "No rebase in
+> progress?". Doing "git cherry-pick --skip" clears it. I guess the issue
+> is the continued presence of .git/CHERRY_PICK_HEAD.
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index 8c1f4b82680..f7a6033607f 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -699,6 +699,16 @@ suffer from the same shortcoming.  (See
- https://lore.kernel.org/git/20200207132152.GC2868@szeder.dev/ for
- details.)
- 
-+Commit Rewording
-+~~~~~~~~~~~~~~~~
-+
-+When a conflict occurs while rebasing, rebase stops and asks the user
-+to resolve.  Since the user may need to make notable changes while
-+resolving conflicts, after conflicts are resolved and the user has run
-+`git rebase --continue`, the rebase should open an editor and ask the
-+user to update the commit message.  The merge backend does this, while
-+the apply backend blindly applies the original commit message.
-+
- Miscellaneous differences
- ~~~~~~~~~~~~~~~~~~~~~~~~~
- 
--- 
-gitgitgadget
+Yes, definitely a bug, and new as of "the eighth batch for
+git-2.26.0", a few days before 2.26.0-rc0.  I found a one-liner fix.
+
+> As you can see from the output above (and the earlier snippet, if you
+> run it), there are also a bunch of minor stderr output changes. I think
+> these probably aren't worth caring about.
+
+Agreed; also, these output differences are already documented in
+"Behavioral Differences" of the git-rebase manpage.
+
+
+Thanks for the careful reports; new series up at
+https://lore.kernel.org/git/pull.722.git.git.1583903621.gitgitgadget@gmail.com/
+to address the issues raised.
