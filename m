@@ -2,93 +2,109 @@ Return-Path: <SRS0=DQ4e=44=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D04D5C0044D
-	for <git@archiver.kernel.org>; Wed, 11 Mar 2020 18:39:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B0ABCC0044D
+	for <git@archiver.kernel.org>; Wed, 11 Mar 2020 18:56:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8360920736
-	for <git@archiver.kernel.org>; Wed, 11 Mar 2020 18:39:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7983620737
+	for <git@archiver.kernel.org>; Wed, 11 Mar 2020 18:56:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="pv4wT0gK"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C1rsh5ir"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730828AbgCKSjO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Mar 2020 14:39:14 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:50931 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730734AbgCKSjO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Mar 2020 14:39:14 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id AEE61BCBF6;
-        Wed, 11 Mar 2020 14:39:12 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=5DapUKQ0mCkYVegd/6k/0SirUA0=; b=pv4wT0
-        gKZXUyksaU8LEeHG98+bL9BgdyfNc1JmOQLrS3c+dToV3wgOemlf+YO1gUco2PVh
-        zOcCATVbzhL3EWnPJS4eRM8UbsXb6+5OGvMTDMoExNNpZsF6XwaK1pq0gj6roNNf
-        UXD/7yDPxE12T7q/XbHwmPgsiVlbpQqQt66MU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=qyZvn7aMJmk+LYIy7vZYYmqThf+zbgfJ
-        MYvfecWN6agTChz7YXc+lYvHufuDYM9a+jy47vr1PSYyawONWCdvC9HIGhtRLRtH
-        ud8P3BNGwThpHsN/KoeWbnZSaEBVNoiTB+riIYAHibAVf0DSi4bMXHfmqAjZnDcs
-        jkpWdMNQjho=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id A685EBCBF5;
-        Wed, 11 Mar 2020 14:39:12 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 01491BCBF3;
-        Wed, 11 Mar 2020 14:39:09 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jiang Xin <worldhello.net@gmail.com>
-Cc:     Elijah Newren <newren@gmail.com>, Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] i18n: unmark a message in rebase.c
-References: <20200311065527.7669-1-worldhello.net@gmail.com>
-Date:   Wed, 11 Mar 2020 11:39:08 -0700
-In-Reply-To: <20200311065527.7669-1-worldhello.net@gmail.com> (Jiang Xin's
-        message of "Wed, 11 Mar 2020 14:55:27 +0800")
-Message-ID: <xmqqsgiehh2r.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1730780AbgCKS4z (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Mar 2020 14:56:55 -0400
+Received: from mail-lj1-f175.google.com ([209.85.208.175]:44606 "EHLO
+        mail-lj1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730734AbgCKS4z (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Mar 2020 14:56:55 -0400
+Received: by mail-lj1-f175.google.com with SMTP id a10so3526268ljp.11
+        for <git@vger.kernel.org>; Wed, 11 Mar 2020 11:56:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=HVDt1VG+RWmyQ/Dz1ww03un/AulJuTRMMHCE/MUqlN4=;
+        b=C1rsh5iranQI0LSZYDRRGU3FcSjehbB//0OoK1YuvXU9zkRDRS1+tb/F4v4vNDNb14
+         JKyQNBr10vkXrCDy8f4RjylwBgp5zVrKzP2HEVgizLPOIJ4THsFKCjaNZ7xtE33Mx5YO
+         rtOEMLahHd9FtYyobDrWffmabqaOZqzFB1+JB6hiPB30U+oZ+9ytyzvx8VTxaCQZfMzi
+         nD7SB3l88Fqq1u3O//c8nLUKPTHJJdmFlRURhKUVgBZ9BnzOjWjVCnrXyfEME8EFV/be
+         WyNw8LralJR4anabYjTwfmxE/LLdjk7ngLhIelyBLmj5T7x5syGq6jN6EmV8ZkFxkeoH
+         Zizw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=HVDt1VG+RWmyQ/Dz1ww03un/AulJuTRMMHCE/MUqlN4=;
+        b=OmHMBcdzWNecujznOUmU8TIKCjn2pHvqsIivmJgQ934Y1pneHONZFtZJNTSLz82pcM
+         UDEX5/3yhCcVLyLFWdbjMvYrUnbyj9tw46xi2KJz7D60ODOHGucux/ABmq0WHSQYxSC3
+         VQ3XriZ2fKpcvFCaeZ/gyvDGgylEK9BmMxJ+vgK9lvKQSePGCdgBx5eptGRB8qIaLCyt
+         37coY0tPXJJTudCDG6RTgIplNdaSsmppL65J64/WKX8+8SpLB2Wweaz/8H8RFm1eGqLP
+         yZuYeB/isbveY93/aHs/9UHiAusCeOZzFAa/t3VffOtV4Q8WsLxjF+L+DBxOfbBHhw92
+         MSyg==
+X-Gm-Message-State: ANhLgQ1H5f0XweRRUZOMYZjCgTig93u2YFRCe5BezTlVt5OGDZYIBJTc
+        KgwdwvjHmyxpxe9o7jr8rv4LJ8o9cZKvSLt/jTKMw1whabGVrw==
+X-Google-Smtp-Source: ADFU+vvKv/dTnXZbKeHcm9UoagVuaNKRGHhoS13i31eAAW6zZSulTvXUpyvHKGrXNtpwifpWXe9eN61CdemXzchxkf4=
+X-Received: by 2002:a2e:804b:: with SMTP id p11mr2952877ljg.50.1583953012958;
+ Wed, 11 Mar 2020 11:56:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 98BA0E78-63C7-11EA-9494-B0405B776F7B-77302942!pb-smtp20.pobox.com
+References: <CAGa6KtSgGOLVjHdubwRW=Bvnjnp2PoP7jJ5_NxNWGFLrVYT9SA@mail.gmail.com>
+ <2001043.V3P9HlvaID@mfick-lnx>
+In-Reply-To: <2001043.V3P9HlvaID@mfick-lnx>
+From:   Christos Pappas <chrispappas99@gmail.com>
+Date:   Wed, 11 Mar 2020 20:56:44 +0200
+Message-ID: <CAGa6KtQ2dQWPWxbk2MH8QJxemM8QD_O=B3aYzsP5AH-sN-7PSw@mail.gmail.com>
+Subject: Re: [Feature request] Give non-unique names to commits for grouping
+To:     Martin Fick <mfick@codeaurora.org>
+Cc:     git@vger.kernel.org, annulen@yandex.ru
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jiang Xin <worldhello.net@gmail.com> writes:
+Thank you for your answers.
 
-> Commit v2.25.0-4-ge98c4269c8 (rebase (interactive-backend): fix handling
-> of commits that become empty, 2020-02-15) marked "{drop,keep,ask}" for
-> translation, but this message should not be changed.
+From what I can deduce, both of your suggestions require that the
+commit messages(or notes) must have some special text for which we can
+search for, which is hacky and would be different on every repository.
 
-Thanks.
+What I am suggesting is something like, labels on GitHub, hashtags on
+Social-Media, or Tags in News sites. It's a well known concept so it
+will be easy to understand and use.
 
+We could initially create the concept of marks/labels/{another name}
+('tags' is already in use by another git command) and then
+incrementally enhance the git commands to use this functionality (like
+the example I gave above, with git blame).
+
+
+=CE=A3=CF=84=CE=B9=CF=82 =CE=A4=CE=B5=CF=84, 11 =CE=9C=CE=B1=CF=81 2020 =CF=
+=83=CF=84=CE=B9=CF=82 6:00 =CE=BC.=CE=BC., =CE=BF/=CE=B7 Martin Fick
+<mfick@codeaurora.org> =CE=AD=CE=B3=CF=81=CE=B1=CF=88=CE=B5:
 >
-> Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
-> ---
->  builtin/rebase.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> On Wednesday, March 11, 2020 1:16:09 AM MDT Christos Pappas wrote:
+> > I suggest that we should have the option to mark each commit with a
+> > category name, that is not necessarily unique (like 'tags') so we
+> > could have commit groups.
+> > For example we could:
+> > git mark {commit_id} {name}
+> >
+> > Then we could give special functionality to some commands based on
+> > those "marks".
+> > For example if we had marked a few commits with the name 'fix_typo'
+> > git log --mark fix_typo. Show all the commits marked with 'fix_typo'
+> > git blame --mark fix_typo Run git blame but ignore commits with 'fix_ty=
+po'
 >
-> diff --git a/builtin/rebase.c b/builtin/rebase.c
-> index cb7aeae597..bff53d5d16 100644
-> --- a/builtin/rebase.c
-> +++ b/builtin/rebase.c
-> @@ -1543,7 +1543,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->  				 "ignoring them"),
->  			      REBASE_PRESERVE_MERGES, PARSE_OPT_HIDDEN),
->  		OPT_RERERE_AUTOUPDATE(&options.allow_rerere_autoupdate),
-> -		OPT_CALLBACK_F(0, "empty", &options, N_("{drop,keep,ask}"),
-> +		OPT_CALLBACK_F(0, "empty", &options, "{drop,keep,ask}",
->  			       N_("how to handle commits that become empty"),
->  			       PARSE_OPT_NONEG, parse_opt_empty),
->  		{ OPTION_CALLBACK, 'k', "keep-empty", &options, NULL,
+> Perhaps git notes could be used to do something like this?
+>
+> -Martin
+>
+> --
+> The Qualcomm Innovation Center, Inc. is a member of Code
+> Aurora Forum, hosted by The Linux Foundation
