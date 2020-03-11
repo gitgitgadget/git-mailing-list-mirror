@@ -2,102 +2,153 @@ Return-Path: <SRS0=DQ4e=44=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
-	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A917C0044D
-	for <git@archiver.kernel.org>; Wed, 11 Mar 2020 17:01:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AFA2EC4CEC0
+	for <git@archiver.kernel.org>; Wed, 11 Mar 2020 17:16:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A88C320737
-	for <git@archiver.kernel.org>; Wed, 11 Mar 2020 17:01:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 22C3420736
+	for <git@archiver.kernel.org>; Wed, 11 Mar 2020 17:16:29 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LtJLX1/K"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Vgf1G+F9"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730198AbgCKRBY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Mar 2020 13:01:24 -0400
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:41313 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730040AbgCKRBX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Mar 2020 13:01:23 -0400
-Received: by mail-lj1-f196.google.com with SMTP id o10so3146443ljc.8
-        for <git@vger.kernel.org>; Wed, 11 Mar 2020 10:01:20 -0700 (PDT)
+        id S1730519AbgCKRQ2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Mar 2020 13:16:28 -0400
+Received: from mail-ot1-f68.google.com ([209.85.210.68]:37227 "EHLO
+        mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730516AbgCKRQ1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Mar 2020 13:16:27 -0400
+Received: by mail-ot1-f68.google.com with SMTP id b3so2832982otp.4
+        for <git@vger.kernel.org>; Wed, 11 Mar 2020 10:16:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:sender:from:date:message-id
-         :subject:to:cc;
-        bh=OpjHLnkbfDzpjI/W2FT19AqRrYODRAJriqaJdGq64OM=;
-        b=LtJLX1/KDq99xiGshN9JO9GNtZavpyaH2WsiqXCBVA2+EWKC9kD//ta8jmwnR5RUmp
-         +VE2mhTq2BTErVwj+nuwkxA+mwkFbk6peGzqwL3rB/2FIU2nyPTogJ0gtmXOvmpy4EmD
-         FxaE7lNxnIJKA33JkH3m4bHqw8BcVohxaQ2biYtLZhNwzeAV1O+yGNJRNKYgGgFcN1FG
-         JS1AAdbfdSzMqErnJ/9x6ndZeEnTLGsmwoEJE2HC0qvWBAUCk9K/xZ9uijhAyRS50/uk
-         cRyOkcHSQTxHt84vyrIpe0vNj6M/LgYRDoWaK7BrPly8uxMxruWbDu8JGFwFM5XtJwLd
-         ewYg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=I+PpGku5YRI3F34qr431hh0dxZJoUl8418y3q5G0Bpo=;
+        b=Vgf1G+F94pMHzBhc9L/nko7jYxz/e4dsSOirdUk0eqYN5D05UeS7bhVd0kL0KNAjYO
+         yk4OUyRMOHNPkUAMceQbRVSC3x7sx6DxgR/RsLK2vKmr8NvTeKqwLSCEQ0sPaKsdFBkF
+         lpIUnhk0AVc2slnc64AqRUt+SaUpSl7eymQQcT0J1mmvOKVpRaKFWE/deMXZQjk2xL2v
+         AHm4yaPXRkfJKAKycgeycgcV55xp54S2vXz3cee9v0ELHM7w40oZZ94doac1FkCofwbO
+         osYbO6Hl6lFiM0VsbDR1IH96LfOPV/kBx/88xBI6zMD8nyFr5oIGIsGy9n/cqdvCX19Z
+         2uzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:sender:from
-         :date:message-id:subject:to:cc;
-        bh=OpjHLnkbfDzpjI/W2FT19AqRrYODRAJriqaJdGq64OM=;
-        b=HuUeZ038+61jIRM51SH6gsq0VLeo6a382uc9SMRqmRPbxgUrwfiWYxlOZZHQDiFi0H
-         +agBsydbfXmbr3JPmVWTRZ++nOjKHH4oJkdr8x65zjgoxWrdhv7lKUCUx1wjifuS7Mna
-         y5JnSxnpIhFsuV3dI9obecfZKkz7lfbGuI4Lc5DFz6T0Y3uz2EZwBOPnoKs/+dnLv0qv
-         BcgxTZFdImGM7UDxCSLMOAhZNU0QoK3AViStQG+Ev9DPRXmwCpO19UCunRF+lRDEo6m4
-         0gc3Z7tfyT3cloD1Qfr3ZlLJ2P2/OslgZ1wF2A3d6fXz2709BIMMcPIOGDh7Jsg/xSzE
-         tN2g==
-X-Gm-Message-State: ANhLgQ0M7HFAVnghzVtHmg19MyAxCGy3CnDNrJhxwlau4qB/sqHiulyb
-        cK3IsPYriHpp3oNfhCybXIpdJUwJ+aXz6h3gNP4=
-X-Google-Smtp-Source: ADFU+vsZkFUK2+mJngWIT91uAmPLRlgewsST0Qi7oDVkUckTshD/zQUqOBhzByDY5KbMof24PeX5WFMKHmvNHu1Dv48=
-X-Received: by 2002:a2e:854e:: with SMTP id u14mr2658273ljj.27.1583946080180;
- Wed, 11 Mar 2020 10:01:20 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=I+PpGku5YRI3F34qr431hh0dxZJoUl8418y3q5G0Bpo=;
+        b=H9x5w2m/JwdE3+GmppBTQPzJ3pmEZZq1/joAs9Dxu1xLc/psgjjtnYxiQzcBBQWR+7
+         WIFix+mxPiDiqYlIr1M+srrAe4SXOzeDuI+TslUlsPUcHjbBu1CWpAUrW1sWfrcPjbzz
+         imTeIOHVsxcs9eAgpYtGT2HCLlCEcYn7QCHtDJaHLcCwjtWczo+verMhzXuUNjVrsws+
+         3UFLlbFtp5WUrWIG1SmmARMlKNtxvhkUb/sQjFq2CZR78qYe7p+/ehpAn6/CGQzgDvCf
+         HFZ54UhYwoSMYlNfkzgbhAXstZmAujtHsJMQcvWj5OwSWaBtV5KzvNrpoiE932AVjwxz
+         x5LA==
+X-Gm-Message-State: ANhLgQ04bGgjHDTZ51oHgelYvIbYehYxwkRHPBfBRvQ3Y/1HhcKjak0F
+        grnMo8iUR+9jpH3I6+P0h9nhpgm6WDfbxF/ziM8=
+X-Google-Smtp-Source: ADFU+vuSRsF2pXHxgg28IfWJBbr1qo/eLxDZ5gSt2yCA7VgMTYmoD/nqcVIAZ+vhhpZqEkMlSy9RCKWQfU6/yz8AkWY=
+X-Received: by 2002:a9d:6457:: with SMTP id m23mr3207963otl.162.1583946985705;
+ Wed, 11 Mar 2020 10:16:25 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAHd499BhLe0xF_k2ASV=ZuM7LVvxui_cxzB9UrJ2MDCyyNUmtw@mail.gmail.com>
- <20200311162517.GA27893@coredump.intra.peff.net> <CAHd499AGQ5k7ON+YY84b6LY1sh9MOw8fsrE2shOibujX1iKeiQ@mail.gmail.com>
-In-Reply-To: <CAHd499AGQ5k7ON+YY84b6LY1sh9MOw8fsrE2shOibujX1iKeiQ@mail.gmail.com>
-X-Google-Sender-Delegation: rcdailey@gmail.com
-From:   Robert Dailey <rcdailey.lists@gmail.com>
-Date:   Wed, 11 Mar 2020 12:01:09 -0500
-X-Google-Sender-Auth: JXYG2WKbNCNPTOb3_i7-1fv0qy4
-Message-ID: <CAHd499Dbqa9jZ0bLTiayy+S6c1si1wOYddA1SDUz22g-Jp-TQg@mail.gmail.com>
-Subject: Re: Using push.default with push.remote.push
+References: <pull.722.git.git.1583903621.gitgitgadget@gmail.com>
+ <pull.722.v2.git.git.1583940623.gitgitgadget@gmail.com> <84b89d7843527d7b1f3e00f122dc1e82f1ced381.1583940623.git.gitgitgadget@gmail.com>
+ <20200311163454.GC27893@coredump.intra.peff.net>
+In-Reply-To: <20200311163454.GC27893@coredump.intra.peff.net>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 11 Mar 2020 10:16:22 -0700
+Message-ID: <CABPp-BFtspDhSherYyhH-Aw=oPLzCiGfbMUiLPB0n1rnzV3k0Q@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] sequencer: clear state upon dropping a
+ become-empty commit
 To:     Jeff King <peff@peff.net>
-Cc:     Git <git@vger.kernel.org>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 11, 2020 at 11:56 AM Robert Dailey <rcdailey.lists@gmail.com> wrote:
+On Wed, Mar 11, 2020 at 9:34 AM Jeff King <peff@peff.net> wrote:
 >
-> On Wed, Mar 11, 2020 at 11:25 AM Jeff King <peff@peff.net> wrote:
-> > > The current behavior seems to be working as designed, but not as
-> > > desired. The first push command pushes *all* branches under
-> > > `refs/heads/*`, instead of just the current branch as it normally
-> > > would via `push.default` setting. It sort of feels like if a resolved,
-> > > explicitly defined `push.<remote>.push` config is found *and* it
-> > > includes wildcards, the `push.default` setting should still be
-> > > respected.
+> On Wed, Mar 11, 2020 at 03:30:22PM +0000, Elijah Newren via GitGitGadget wrote:
+>
+> > From: Elijah Newren <newren@gmail.com>
 > >
-> > Then when would remote.*.push with a wildcard ever do anything?
+> > In commit e98c4269c8 ("rebase (interactive-backend): fix handling of
+> > commits that become empty", 2020-02-15), the merge backend was changed
+> > to drop commits that did not start empty but became so after being
+> > applied (because their changes were a subset of what was already
+> > upstream).  This new code path did not need to go through the process of
+> > creating a commit, since we were dropping the commit instead.
+> > Unfortunately, this also means we bypassed the clearing of the
+> > CHERRY_PICK_HEAD and MERGE_MSG files, which if there were no further
+> > commits to cherry-pick would mean that the rebase would end but assume
+> > there was still an operation in progress.  Ensure that we clear such
+> > state files when we decide to drop the commit.
 >
-> Maybe this is where a potential disconnect is, but I've always viewed
-> the wildcard refspec as a mapping, rather than an all-inclusive "Push
-> all the things". In other words, I view it as more of a structural
-> guide than a behavioral one. I recognize I probably have this wrong,
-> but it probably speaks to how some users view it, or at least, some
-> valid use cases to have more of a structural mechanism to map branches
-> to remote repositories, with `git push --all` being a supplement to
-> say "Push all branches using this mapping".
+> Thanks, I can confirm this fixes my case (which is not surprising, as it
+> is the same as your new test). The patch looks good. Two minor comments
+> below, but I doubt there is anything to act on.
+>
+> > diff --git a/sequencer.c b/sequencer.c
+> > index 7477b15422a..e528225e787 100644
+> > --- a/sequencer.c
+> > +++ b/sequencer.c
+> > @@ -1957,6 +1957,8 @@ static int do_pick_commit(struct repository *r,
+> >               flags |= ALLOW_EMPTY;
+> >       } else if (allow == 2) {
+> >               drop_commit = 1;
+> > +             unlink(git_path_cherry_pick_head(r));
+> > +             unlink(git_path_merge_msg(r));
+> >               fprintf(stderr,
+> >                       _("dropping %s %s -- patch contents already upstream\n"),
+> >                       oid_to_hex(&commit->object.oid), msg.subject);
+>
+> It feels like the set of paths to be cleaned up would probably exist
+> elsewhere in a helper function for cleaning up real cherry-picks. But
+> I'll defer to your expertise there, as I don't know the sequencer code
+> very well.
 
-Also, apologies, I forgot to include a response to your first reply to my OP:
+Yeah, I was looking for something like that but instead found the
+unlink() directives for cleaning up various state files scattered
+throughout the code.  I think sequencer.c is in need of some cleaning
+up; the slow transition from "do what shell does, now work both with
+an external shell and some pieces built in, now move slightly more
+towards being built-in" seems to have left a lot of artifacts around
+and made it a bit unwieldy.
 
-I think `branch.*.pushRef` in this case is not enough. It implies that
-for every branch I want to be mapped in this way, I'd have to manually
-specify this config. Rather, I think a `remote.*.pushRef` would be
-more appropriate, so that it would automatically set the
-`branch.*.pushRef` version as needed, so I only set up the mapping
-once.
+As another anecdote along these lines, I really wanted to do my demo
+of an in-memory rebase with the existing builtin/rebase.c and
+sequencer.c but it was too much effort even for just a demo to rip out
+the unwanted parts, so I did my in-memory rebase demo in a completely
+different file (https://github.com/newren/git/blob/git-merge-2020-demo/builtin/fast-rebase.c)
 
-It could also be I don't fully understand your recommendation, so
-apologies of that's the case.
+I'm not sure deferring to my expertise with sequencer.c makes sense,
+since you have about twice as many commits to sequencer.c as me.  But
+I was deferring to Phillip and he commented on my v1 and seemed happy
+(other than my missing handling of MERGE_MSG).
+
+> > +test_expect_success 'rebase --merge does not leave state laying around' '
+> > +     git checkout -B testing localmods~2 &&
+> > +     git rebase --merge upstream &&
+> > +
+> > +     test_path_is_missing .git/CHERRY_PICK_HEAD &&
+> > +     test_path_is_missing .git/MERGE_MSG
+> > +'
+>
+> This could check the output of git-status to avoid poking around in the
+> .git directory itself. But I doubt that the exact filenames are going to
+> change, and parsing the output of status is its own problem (I don't
+> think we give this "state" info in a machine-readable way).
+
+Yeah, it's not clear to me what's best either.  When I was testing my
+changes locally I was checking status output.  However, after creating
+the fix and deciding to add a regression test, I switched to checking
+for the existence of those files basically for the reasons you
+mention, despite knowing I'm only testing for certain state files
+rather than testing that git in general doesn't think it's still in
+the middle of some operation.
