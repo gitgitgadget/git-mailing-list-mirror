@@ -2,137 +2,90 @@ Return-Path: <SRS0=DQ4e=44=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5701FC0044D
-	for <git@archiver.kernel.org>; Wed, 11 Mar 2020 19:04:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 09643C4CECE
+	for <git@archiver.kernel.org>; Wed, 11 Mar 2020 19:10:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 2EC3520739
-	for <git@archiver.kernel.org>; Wed, 11 Mar 2020 19:04:01 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="rHQdNunb"
+	by mail.kernel.org (Postfix) with ESMTP id E5BE72074A
+	for <git@archiver.kernel.org>; Wed, 11 Mar 2020 19:10:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730852AbgCKTD7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Mar 2020 15:03:59 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:56564 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730805AbgCKTD7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Mar 2020 15:03:59 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 30792BCF0D;
-        Wed, 11 Mar 2020 15:03:57 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=ZVI6d3ab/VD7
-        lpP7cKudxC7U0gM=; b=rHQdNunblUX4EXpnZrx5pckwttZ2V4KYdcJQbr2sbpXD
-        bo8Du5bwXC35FTo9SrAtNfFBpDwlKP/HZsT58PuPyBkKjHL/CxKLFPeC/tiINlE0
-        k5XoUXdHgdQOraV+5BytDYqcp+zR+01W83A1ggAXPbm44ETtAZaBnrJOrTEE/Zk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=k6lmSf
-        zwNBV9ibpDiap0FDGxRy/Qp+zALPSCbXd1v5zmOhRm8TW8JDia96T/hqT0SqGkb0
-        8eYcYsAz6fIYRMK7fhrFZJ+AmTYjf19vMdPS0L5fsX49vUzEECO0K8u+DiWjcWD1
-        lQ8GNO8ERui/ISyEvFZ559VnxYhDC6vcEVOzc=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 288CDBCF0C;
-        Wed, 11 Mar 2020 15:03:57 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 5944FBCF09;
-        Wed, 11 Mar 2020 15:03:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jakub Narebski <jnareb@gmail.com>
-Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
-Subject: Re: [RFC] Possible idea for GSoC 2020
-References: <86mu8o8dsf.fsf@gmail.com>
-Date:   Wed, 11 Mar 2020 12:03:52 -0700
-In-Reply-To: <86mu8o8dsf.fsf@gmail.com> (Jakub Narebski's message of "Tue, 10
-        Mar 2020 15:50:24 +0100")
-Message-ID: <xmqqo8t2hfxj.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1731040AbgCKTKX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Mar 2020 15:10:23 -0400
+Received: from cloud.peff.net ([104.130.231.41]:36696 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1731030AbgCKTKX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Mar 2020 15:10:23 -0400
+Received: (qmail 3430 invoked by uid 109); 11 Mar 2020 19:10:23 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 11 Mar 2020 19:10:23 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 22162 invoked by uid 111); 11 Mar 2020 19:19:44 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 11 Mar 2020 15:19:44 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 11 Mar 2020 15:10:21 -0400
+From:   Jeff King <peff@peff.net>
+To:     Robert Dailey <rcdailey.lists@gmail.com>
+Cc:     Git <git@vger.kernel.org>
+Subject: Re: Using push.default with push.remote.push
+Message-ID: <20200311191021.GA27978@coredump.intra.peff.net>
+References: <CAHd499BhLe0xF_k2ASV=ZuM7LVvxui_cxzB9UrJ2MDCyyNUmtw@mail.gmail.com>
+ <20200311162517.GA27893@coredump.intra.peff.net>
+ <CAHd499AGQ5k7ON+YY84b6LY1sh9MOw8fsrE2shOibujX1iKeiQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 0D79F50E-63CB-11EA-8072-B0405B776F7B-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <CAHd499AGQ5k7ON+YY84b6LY1sh9MOw8fsrE2shOibujX1iKeiQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jakub Narebski <jnareb@gmail.com> writes:
+On Wed, Mar 11, 2020 at 11:56:05AM -0500, Robert Dailey wrote:
 
-> A few questions:
-> - is it too late to propose a new project idea for GSoC 2020?
-> - is it too difficult of a project for GSoC?
-> ...
-> ### Graph labelling for speeding up git commands
->
->  - Language: C
->  - Difficulty: hard / difficult
->  - Possible mentors: Jakub Nar=C4=99bski
+> > Then when would remote.*.push with a wildcard ever do anything?
+> 
+> Maybe this is where a potential disconnect is, but I've always viewed
+> the wildcard refspec as a mapping, rather than an all-inclusive "Push
+> all the things". In other words, I view it as more of a structural
+> guide than a behavioral one. I recognize I probably have this wrong,
+> but it probably speaks to how some users view it, or at least, some
+> valid use cases to have more of a structural mechanism to map branches
+> to remote repositories, with `git push --all` being a supplement to
+> say "Push all branches using this mapping".
 
-I am not running the GSoC or participating in it in any way other
-than just being a reviewer-maintainer of the project, but I would
-appreciate a well-thought-out write-up very much.
+I see. So you really want "push the current branch by default, but using
+this refspec to map the names". That doesn't exist right now, but it
+seems like it would be a reasonable thing to have.
 
-> Git uses various clever methods for making operations on very large
-> repositories faster, from bitmap indices for git-fetch[1], to generatio=
-n
-> numbers (also known as topological levels) in the commit-graph file for
-> commit graph traversal operations like `git log --graph`[2].
->
-> One possible improvement that can make Git even faster is using min-pos=
-t
-> intervals labelling.  The basis of this labelling is post-visit order o=
-f
-> a depth-first search traversal tree of a commit graph, let's call it
-> 'post(v)'.
->
-> If for each commit 'v' we would compute and store in the commit-graph
-> file two numbers: 'post(v)' and the minimum of 'post(u)' for all commit=
-s
-> reachable from 'v', let's call the latter 'min_graph(v)', then the
-> following condition is true:
->
->   if 'v' can reach 'u', then min_graph(v) <=3D post(u) <=3D post(v)
->
-> If for each commit 'v' we would compute and store in the commit-graph
-> file two numbers: 'post(v)' and the minimum of 'post(u)' for commits
-> that were visited during the part of depth-first search that started
-> from 'v' (which is the minimum of post-order number for subtree of a
-> spanning tree that starts at 'v').  Let's call the later 'min_tree(v)'.
-> Then the following condition is true:
->
->   if min_tree(v) <=3D post(u) <=3D post(v), then 'v' can reach 'u'
->
-> The task would be to implement computing such labelling (or a more
-> involved variant of it[3][4]), storing it in commit-graph file, and
-> using it for speeding up git commands (starting from a single chosen
-> command) such as:
->
->  - git merge-base --is-ancestor A B
->  - git branch --contains A
->  - git tag --contains A
->  - git branch --merged A
->  - git tag --merged A
->  - git merge-base --all A B
->  - git log --topo-sort
->
-> References:
->
-> 1. <http://githubengineering.com/counting-objects/>
-> 2. <https://devblogs.microsoft.com/devops/supercharging-the-git-commit-=
-graph-iii-generations/>
-> 3. <https://arxiv.org/abs/1404.4465>
-> 4. <https://github.com/steps/Ferrari>
->
-> See also discussion in:
->
-> <https://public-inbox.org/git/86tvl0zhos.fsf@gmail.com/t/>
+Bringing in your other reply:
+
+> I think `branch.*.pushRef` in this case is not enough. It implies that
+> for every branch I want to be mapped in this way, I'd have to manually
+> specify this config. Rather, I think a `remote.*.pushRef` would be
+> more appropriate, so that it would automatically set the
+> `branch.*.pushRef` version as needed, so I only set up the mapping
+> once.
+
+Yes, my suggestion would require per-branch config. And something like
+remote.*.pushRef makes sense to me as the implementation for what we
+were discussing above. I think you'd want the name to somehow indicate
+that it's a mapping to be used when pushing a ref, and not the
+definitive "this is what we will push" directive.
+
+I don't think it would make sense to use with something like "upstream"
+in push.default, because that's mapping the name already. So possibly it
+should be restricted to "current". I suppose it would also make sense
+with "matching". There the current remote.*.push _mostly_ does the same
+thing, but with one subtle exception that it pushes everything that
+matches the left-hand side of the refspec, not just ones that exist on
+the right-hand side.
+
+So I dunno. I could see it as being limited to "current", or being
+applied as it makes sense for each individual push.default. I'll leave
+that to whoever decides to work on the feature. :)
+
+-Peff
