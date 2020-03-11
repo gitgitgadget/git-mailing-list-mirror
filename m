@@ -1,85 +1,79 @@
-Return-Path: <SRS0=DQ4e=44=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F54BC0044D
-	for <git@archiver.kernel.org>; Wed, 11 Mar 2020 19:10:54 +0000 (UTC)
+X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_NONE
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 05A4E20736
-	for <git@archiver.kernel.org>; Wed, 11 Mar 2020 19:10:55 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ybr8YEnV"
+	by archive.lwn.net (Postfix) with ESMTP id E37387D910
+	for <lwn-git@archive.lwn.net>; Wed, 11 Mar 2020 16:00:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731058AbgCKTKx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Mar 2020 15:10:53 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61944 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731051AbgCKTKw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Mar 2020 15:10:52 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A67FE4750C;
-        Wed, 11 Mar 2020 15:10:50 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=2+cLfMjcOGj2PbB9LYJP/0698OU=; b=ybr8YE
-        nVSL+LCaQN3SxOTu4fPsfn1ojxSqNSbLAm89eS70N8cwHAZbZfJm14e0BGb33i7F
-        caTrJowayYZwGF7zFGOtXMjVtQJEXzSnGWWmZ9uTxbyi/F6+RcPps6YBEEZHmrpy
-        cEIBUrcmpss139n23oZ2pTlmwZ+tohD4QY/Iw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=BxsktFNytVi9gZPKEoy6JN8cGAp9cB3b
-        3lj8Nmhb/wusXeT/KuvAHkzOi0LVPVgDzFz6HxFFts8wgsyFYDkNNI+woyowp6sz
-        35pT+2q1/iz/4Cx//szbCT03xQezgTBwr+NdJqS8X2u8nLc+oBhIEuGnjesX+gkD
-        JU9XyYWfnfU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9EFDE4750B;
-        Wed, 11 Mar 2020 15:10:50 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
+        id S1729991AbgCKQAS (ORCPT <rfc822;lwn-git@archive.lwn.net>);
+        Wed, 11 Mar 2020 12:00:18 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:47864 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1729841AbgCKQAS (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 11 Mar 2020 12:00:18 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1583942418; h=Content-Type: Content-Transfer-Encoding:
+ MIME-Version: References: In-Reply-To: Message-ID: Date: Subject: Cc:
+ To: From: Sender; bh=tzI1QJVktGdYnw7yFraT5Nq+MPJHuc6YShC5yPSzoGM=; b=ITSO6lRD+o45yPa8Mr8rr3RnkZij5Wx/Tb4VW1m1VB7wffQsU4IGEn+wmk5pP6JdHe7Vm8f1
+ +wcH+iSP0BfSPGHfSwlURuvTeMBaRWuf3zycpJCXmGGelgyLF7qj/EMFu2GupcZ6pg1ilgLO
+ 6mWAjkj5trK5arrPTCPyfyqO8WE=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyJjNzk3NCIsICJnaXRAdmdlci5rZXJuZWwub3JnIiwgImJlOWU0YSJd
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e690b06.7f2241b958f0-smtp-out-n03;
+ Wed, 11 Mar 2020 16:00:06 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 9A438C433D2; Wed, 11 Mar 2020 16:00:04 +0000 (UTC)
+Received: from mfick-lnx.localnet (i-global254.qualcomm.com [199.106.103.254])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2DC024750A;
-        Wed, 11 Mar 2020 15:10:50 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v2 2/2] git-rebase.txt: highlight backend differences with commit rewording
-References: <pull.722.git.git.1583903621.gitgitgadget@gmail.com>
-        <pull.722.v2.git.git.1583940623.gitgitgadget@gmail.com>
-        <6d51cff41d9ee312a0d9ae3308546284ead1d4c6.1583940623.git.gitgitgadget@gmail.com>
-        <20200311163643.GD27893@coredump.intra.peff.net>
-Date:   Wed, 11 Mar 2020 12:10:49 -0700
-In-Reply-To: <20200311163643.GD27893@coredump.intra.peff.net> (Jeff King's
-        message of "Wed, 11 Mar 2020 12:36:43 -0400")
-Message-ID: <xmqqk13qhfly.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        (Authenticated sender: mfick)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 53E1EC433CB;
+        Wed, 11 Mar 2020 16:00:04 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 53E1EC433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mfick@codeaurora.org
+From:   Martin Fick <mfick@codeaurora.org>
+To:     Christos Pappas <chrispappas99@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [Feature request] Give non-unique names to commits for grouping
+Date:   Wed, 11 Mar 2020 10:00:03 -0600
+Message-ID: <2001043.V3P9HlvaID@mfick-lnx>
+User-Agent: KMail/5.1.3 (Linux/4.4.0-154-generic; KDE/5.18.0; x86_64; ; )
+In-Reply-To: <CAGa6KtSgGOLVjHdubwRW=Bvnjnp2PoP7jJ5_NxNWGFLrVYT9SA@mail.gmail.com>
+References: <CAGa6KtSgGOLVjHdubwRW=Bvnjnp2PoP7jJ5_NxNWGFLrVYT9SA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 0553366E-63CC-11EA-BE5C-C28CBED8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://archive.lwn.net:8080/git/2001043.V3P9HlvaID@mfick-lnx/>
+List-Archive: <http://archive.lwn.net:8080/git/>
+List-Post: <mailto:git@vger.kernel.org>
 
-Jeff King <peff@peff.net> writes:
+On Wednesday, March 11, 2020 1:16:09 AM MDT Christos Pappas wrote:
+> I suggest that we should have the option to mark each commit with a
+> category name, that is not necessarily unique (like 'tags') so we
+> could have commit groups.
+> For example we could:
+> git mark {commit_id} {name}
+> 
+> Then we could give special functionality to some commands based on
+> those "marks".
+> For example if we had marked a few commits with the name 'fix_typo'
+> git log --mark fix_typo. Show all the commits marked with 'fix_typo'
+> git blame --mark fix_typo Run git blame but ignore commits with 'fix_typo'
 
-> Thanks. With the earlier bug fix and this documentation change, I'm OK
-> with keeping the merge-backend transition in v2.26.0. This change
-> _might_ cause problems in somebody's script, but that will be true
-> whether it comes in 2.26 or 2.27, and I think it's clear this is the end
-> state we want to get to eventually.
+Perhaps git notes could be used to do something like this?
 
-I am OK either way, so let's take these two, plus the "don't i18n
-the literals that must be given as option values" patch from Jiang,
-and discard the "let's delay the inevitable to buy some time" patch.
+-Martin
 
-I merged the last one locally to 'next' already but I haven't pushed
-the result out, so it is still possible to back out ;-)
+-- 
+The Qualcomm Innovation Center, Inc. is a member of Code 
+Aurora Forum, hosted by The Linux Foundation
