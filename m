@@ -2,143 +2,78 @@ Return-Path: <SRS0=DQ4e=44=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E383CC2BB1D
-	for <git@archiver.kernel.org>; Wed, 11 Mar 2020 18:06:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B65AC2BB1D
+	for <git@archiver.kernel.org>; Wed, 11 Mar 2020 18:35:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7F8C9206E9
-	for <git@archiver.kernel.org>; Wed, 11 Mar 2020 18:06:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9DCF3206E9
+	for <git@archiver.kernel.org>; Wed, 11 Mar 2020 18:35:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rRbv//jx"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="FMFGULAG"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730573AbgCKSGd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Mar 2020 14:06:33 -0400
-Received: from mail-pf1-f178.google.com ([209.85.210.178]:44464 "EHLO
-        mail-pf1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730468AbgCKSGd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Mar 2020 14:06:33 -0400
-Received: by mail-pf1-f178.google.com with SMTP id b72so1758401pfb.11
-        for <git@vger.kernel.org>; Wed, 11 Mar 2020 11:06:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id;
-        bh=TMKqffFXWYRltdTGAeF5dC39hDcpbymfQb1WdtaJ5Jc=;
-        b=rRbv//jxnsxAjDPryFvBaqH30m+BR/ivJX5lNn5IH2h7A4R/DXYFsdbd4YbtLZn2Q3
-         V1KEy/oSPgIFD7+2Lk9KEyt/H4x3CxM+fpeL36kG9iDm3m8r23wJbNdNYnZOLvAslGN2
-         wKJZHDuh9TT1czGFLPwBW38WB4oBuMYXN1J49jOJwFZlo4bY5doOQOwUI7JuPyojAWJd
-         oEaKgvd9bHIoYw2P6XqOhonp9AEIfVKz4h0ygwzdSFcPpxx4+j1EDtT0vOZ354sx1btg
-         FNKaOxs+6xaIr4SQe/ILZLLEuOCOuhwJjMro//lOsGRNqXVCzmp0nnXGeFPCiRJZdQ1g
-         6ctg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id;
-        bh=TMKqffFXWYRltdTGAeF5dC39hDcpbymfQb1WdtaJ5Jc=;
-        b=Ja/abRuLrVPBjtiL42vhDP0+y9HEFjYrk8p6uX5b2wPjtcuLoRhoTjetFU1767a3a+
-         ouM8uSG/AtknIdDVtGZMQYvDmOAUNgfQoArNg/w3paP1Ti03KzjoilIIKMhdpX0Ma84J
-         iXzWGW5RBBmVXf2RqQAHnFpSs6AR9kDyS0kiu2tQTmaHIOTX61m22i00lGoyXTERZyH4
-         w2FIIJcejLsLqwmGsw2Maad0SVuiwAIn4zE3CCZEjfIAVqRPPge3uNwNbZQP6j1jm1x5
-         xANp/gujJTHRmpK8tZ5e9DIvIrAz5c+kDGx/C+P22nm+r5hG7ReR8AciTuh8t6jr0fYN
-         3Nzg==
-X-Gm-Message-State: ANhLgQ0BeWQw9P7L14uln63SDtpwCqbKzl7gi2Xnc2JXVEClNTP4HLlA
-        fTIzymBZD15lS/PDGBYwEngvEPdXlfQ=
-X-Google-Smtp-Source: ADFU+vv4KpbHZS0QgP1uIc4kUf7bUnYyoUWCrAMpkG7NCsFZuWL2vsdtUlScSPnO5aQzgsHY2gzXHw==
-X-Received: by 2002:a63:8b41:: with SMTP id j62mr3834507pge.18.1583949992015;
-        Wed, 11 Mar 2020 11:06:32 -0700 (PDT)
-Received: from localhost.localdomain ([157.47.170.215])
-        by smtp.gmail.com with ESMTPSA id u5sm30720120pfb.153.2020.03.11.11.06.30
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Mar 2020 11:06:31 -0700 (PDT)
-From:   Shubham Verma <shubhunic@gmail.com>
-To:     git@vger.kernel.org
-Subject: [GSOC] [PATCH] replace test -f with test_path_is_file
-Date:   Wed, 11 Mar 2020 23:36:25 +0530
-Message-Id: <20200311180625.4643-1-shubhunic@gmail.com>
-X-Mailer: git-send-email 2.17.1
+        id S1730905AbgCKSft (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Mar 2020 14:35:49 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:53849 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730641AbgCKSft (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Mar 2020 14:35:49 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 55108BCBC2;
+        Wed, 11 Mar 2020 14:35:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=yxm2liXGlPUaWTCbYRxCgoy3e8A=; b=FMFGUL
+        AG6Pg3/6ory0XQOJWAlVgEcK1lKnwYmQFTk/10+WHATmHllAk57+WEgdeQPDmXR6
+        qNofSiQ0YSc3ILIrYz37EhmpX02wd5nc+LfgMh9HNoY8MVo6tsE3+PswT12UsrvF
+        nPnb2iCDqQ4zw3U2d34tsbeSmxd+LziKKZeq8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=poE+XYEkKnezbi/wUiHtzlM3g3UJtU3K
+        O4JH/JT3f89e09Bzc3YDfrsD/NdCVazZ5zTq573PegseQEOFDSpXc84QWuAM8UDS
+        MUhu+VnCW4uJ2PiuWu6mh6392K9pL/GVy7jUG5dyCaJDOuwlspO+ma1JZM/mxaZh
+        gQDnSoGPb5w=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4EF51BCBC1;
+        Wed, 11 Mar 2020 14:35:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 95C3ABCBC0;
+        Wed, 11 Mar 2020 14:35:46 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Andreas Schwab <schwab@linux-m68k.org>
+Cc:     =?utf-8?Q?J=C3=B6rn?= Engel <joern@purestorage.com>,
+        git@vger.kernel.org
+Subject: Re: new file mode 160000
+References: <20200310184111.GD1443@cork> <87lfo8m3fu.fsf@igel.home>
+        <xmqqo8t4hu0n.fsf@gitster.c.googlers.com> <87h7ywm0p2.fsf@igel.home>
+Date:   Wed, 11 Mar 2020 11:35:44 -0700
+In-Reply-To: <87h7ywm0p2.fsf@igel.home> (Andreas Schwab's message of "Tue, 10
+        Mar 2020 21:09:29 +0100")
+Message-ID: <xmqq1rpyivsv.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1F7F449C-63C7-11EA-A5D3-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Although `test -f` has the same functionality as test_path_is_file(), in the case where test_path_is_file() fails, we get much better
-debugging information.
+Andreas Schwab <schwab@linux-m68k.org> writes:
 
-Replace `test -f` with test_path_is_file() so that future developers will have a better experience debugging these test cases.
----
- t/t9801-git-p4-branch.sh | 38 +++++++++++++++++++-------------------
- 1 file changed, 19 insertions(+), 19 deletions(-)
+>>> 0160000 is S_IFLNK in MiNT
+>>> <https://github.com/freemint/freemint/blob/master/sys/mint/stat.h>.
+>>
+>> Yeek.  That sounds like a ticking time-bomb.
+>
+> configure can detect that (NEEDS_MODE_TRANSLATION).
 
-diff --git a/t/t9801-git-p4-branch.sh b/t/t9801-git-p4-branch.sh
-index 67ff2711f5..214c2a183d 100755
---- a/t/t9801-git-p4-branch.sh
-+++ b/t/t9801-git-p4-branch.sh
-@@ -200,19 +200,19 @@ test_expect_success 'git p4 clone simple branches' '
- 		git p4 clone --dest=. --detect-branches //depot@all &&
- 		git log --all --graph --decorate --stat &&
- 		git reset --hard p4/depot/branch1 &&
--		test -f file1 &&
--		test -f file2 &&
--		test -f file3 &&
-+		test_path_is_file file1 &&
-+		test_path_is_file file2 &&
-+		test_path_is_file file3 &&
- 		grep update file2 &&
- 		git reset --hard p4/depot/branch2 &&
--		test -f file1 &&
--		test -f file2 &&
-+		test_path_is_file file1 &&
-+		test_path_is_file file2 &&
- 		test ! -f file3 &&
- 		! grep update file2 &&
- 		git reset --hard p4/depot/branch3 &&
--		test -f file1 &&
--		test -f file2 &&
--		test -f file3 &&
-+		test_path_is_file file1 &&
-+		test_path_is_file file2 &&
-+		test_path_is_file file3 &&
- 		grep update file2 &&
- 		cd "$cli" &&
- 		cd branch1 &&
-@@ -603,22 +603,22 @@ test_expect_success 'git p4 clone simple branches with base folder on server sid
- 		git p4 clone --dest=. --use-client-spec  --detect-branches //depot@all &&
- 		git log --all --graph --decorate --stat &&
- 		git reset --hard p4/depot/branch1 &&
--		test -f file1 &&
--		test -f file2 &&
--		test -f file3 &&
--		test -f sub_file1 &&
-+		test_path_is_file file1 &&
-+		test_path_is_file file2 &&
-+		test_path_is_file file3 &&
-+		test_path_is_file sub_file1 &&
- 		grep update file2 &&
- 		git reset --hard p4/depot/branch2 &&
--		test -f file1 &&
--		test -f file2 &&
-+		test_path_is_file file1 &&
-+		test_path_is_file file2 &&
- 		test ! -f file3 &&
--		test -f sub_file1 &&
-+		test_path_is_file sub_file1 &&
- 		! grep update file2 &&
- 		git reset --hard p4/depot/branch3 &&
--		test -f file1 &&
--		test -f file2 &&
--		test -f file3 &&
--		test -f sub_file1 &&
-+		test_path_is_file file1 &&
-+		test_path_is_file file2 &&
-+		test_path_is_file file3 &&
-+		test_path_is_file sub_file1 &&
- 		grep update file2 &&
- 		cd "$cli" &&
- 		cd branch1 &&
--- 
-2.17.1
-
+Thanks--I totally forgot about that one.
