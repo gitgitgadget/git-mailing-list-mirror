@@ -1,129 +1,122 @@
-Return-Path: <SRS0=DQ4e=44=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 73808C0044D
-	for <git@archiver.kernel.org>; Wed, 11 Mar 2020 19:24:42 +0000 (UTC)
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6008620663
-	for <git@archiver.kernel.org>; Wed, 11 Mar 2020 19:24:43 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S1Kb9B/2"
+	by archive.lwn.net (Postfix) with ESMTP id 22B237D918
+	for <lwn-git@archive.lwn.net>; Wed, 11 Mar 2020 15:30:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731071AbgCKTYl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Mar 2020 15:24:41 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:34314 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730858AbgCKTYl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Mar 2020 15:24:41 -0400
-Received: by mail-wr1-f67.google.com with SMTP id z15so4174605wrl.1
-        for <git@vger.kernel.org>; Wed, 11 Mar 2020 12:24:38 -0700 (PDT)
+        id S1729927AbgCKPaa (ORCPT <rfc822;lwn-git@archive.lwn.net>);
+        Wed, 11 Mar 2020 11:30:30 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:33685 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729521AbgCKPa2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Mar 2020 11:30:28 -0400
+Received: by mail-ed1-f68.google.com with SMTP id z65so3417041ede.0
+        for <git@vger.kernel.org>; Wed, 11 Mar 2020 08:30:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=6vTi6LjwsEFavrFuE2agIPI4DaZQagBm+xpVBuZOoSM=;
-        b=S1Kb9B/2N/gx/G0jYgaPs9Mv8E6Gh3OBPtmB4jTmI3wTjcQNGAGYWzSa41tbeMZ9fW
-         k8py1rz8PXfZSJJj9foDsBvcWSrFSeO9a3p6+ke4Nvjcq1KNHCpSWqfRT8K0eJ31s948
-         f9DpUCUsala19/tVhFlWqB3lrNoLMHwnSfBnAk4yLwM4MCIcTRGUCPVc2GlyxOxJ4MO/
-         NSl5UUtItgWfhllxRS0hMZ32p/X4Fc8Q/Xy2z1v5zCoBCHXR5v26b90NjHoLFL+kRrv7
-         o532U45sUEF087Kyqxiy2wj1c5i4/bFmFcNhCRR1Nkh5W0RpVhpkSe5oIMYxmcHot71H
-         VOPQ==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=cqrZm8Vvb0fGSVpl1B/b18OJcUhKsxw2q15GVnGgkkE=;
+        b=anwlg6UiP//ZNqNf6+n/0QEJ3uJNV5j4cPG6qX6ZWip0UNi0fO5WIqn0BOn0CmkndT
+         3ZGs7uqJ9QX2+j1QmMXYIcqNSQhmbYM7OoPwmmPeKp/+Ou9qg5eYAsoOJMOCEmOKBc1F
+         sE3GBTM5pjemeaOcB30XCQBQBUUppwwe3idFuuWs0KQKwZeE7SBILjlZ8kQT0hMII5oL
+         y0EPbSPyXg92tcNp93OTl1MQct3YbC455DXDXNd9mhiLrTeqblxxpRvgZscKAtsNzYgC
+         5w5tLxoSwkZd4qbXTcQ17ujZ7CGcj0v5C8lYiJAJDVmZf0cun+zhWuGHmc572k1E9UG9
+         J33g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=6vTi6LjwsEFavrFuE2agIPI4DaZQagBm+xpVBuZOoSM=;
-        b=Ai6DdMMW1JkS49x3W2W6QAp+W72+Wt456kui/chlNg8EbmSVIIOGeaZh7lQxZTyFue
-         j6MxEzvNqA9KBpNGkcqaA9xYJxw8BoZRdl0W9Cp6TIZFx/vG9tFol0wVmMSpiPTnOGyx
-         1pJMXx+xrlMRDBt1LCXKUGXFMmDEgVJ+I2ZMSjJMjCalQHUuG8sYmlwd7AIsCPBDnQpm
-         udVLQ5fs09td0VJR7NIVfLeVf9j1VJrd0akIWkozOI4fklwSSxqgBBY4jJQNIqn4TG2F
-         9E7J44EvGlXiubfeQbRZUihwpYniJZ+WUqgYg5U9P0S1l3yNpVPoWyKQf37qLWgavtSz
-         x2kw==
-X-Gm-Message-State: ANhLgQ0hQKttUM4lh1ltv9bJNWV8KEZswVUohKI1RRzxtqBPGLsR/boz
-        VMxRup3MdmbosMbzJlBGmoEsKJ2Q
-X-Google-Smtp-Source: ADFU+vulMntMX5gDMCc0T0tqTAWl/F2tPvw+zD8reDSeAzHySCI/vt2y+NVjjvbbx/haL1+j3ohjAQ==
-X-Received: by 2002:adf:ed04:: with SMTP id a4mr5837760wro.76.1583954677719;
-        Wed, 11 Mar 2020 12:24:37 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=cqrZm8Vvb0fGSVpl1B/b18OJcUhKsxw2q15GVnGgkkE=;
+        b=V90AC68qrTWa0CV+W4VKbfeo1/b+aMxY67T3EjExJo3NpRWb3WahRY4puaAjo5wetQ
+         53YuvowiG10Wkm0pBR4r1RBwp0IDAeFGx0AAE78rZUvknDtRf0rdkTdrwTfOFbNehQJc
+         IJUE5GhM/JpbluvYZi5rvd83XP0Q9CJMJfYYDOyX1cls3srOdTwM7kEN9C0ePoPdsxvh
+         OXGLYPo9/CHkCJ4z1QjhmBhpiPHNtyTbwxTxBpSwPjhM9IMAecZnb0plj3iDsJC6w9e7
+         PidtFtH1B+kw/kRvGAVOtIsokOEJi5d9z2ls/iwQQuG4WJCW/LP+ftHqgCEkko7U2ra0
+         S57Q==
+X-Gm-Message-State: ANhLgQ2dsJB6W3rRHl66X6brYnXzyFReE5/FkHJmksTYbvZmc1Y/6l31
+        pXOm4rnhrSn0JlAV4kXGhLR27Jh8
+X-Google-Smtp-Source: ADFU+vuluDKVDWO2/402DndUS2lgh4YGoCPZe9AbrBKPx6w1EflKofDslhV/Kg9Mql1bBoWXgPzIzw==
+X-Received: by 2002:a50:f297:: with SMTP id f23mr3261110edm.347.1583940626918;
+        Wed, 11 Mar 2020 08:30:26 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l64sm9640336wmf.30.2020.03.11.12.24.37
+        by smtp.gmail.com with ESMTPSA id h61sm4484582edd.49.2020.03.11.08.30.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Mar 2020 12:24:37 -0700 (PDT)
-Message-Id: <pull.578.git.1583954676691.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 11 Mar 2020 19:24:36 +0000
-Subject: [PATCH] git-gui--askpass: coerce answers to UTF-8 on Windows
+        Wed, 11 Mar 2020 08:30:26 -0700 (PDT)
+Message-Id: <6d51cff41d9ee312a0d9ae3308546284ead1d4c6.1583940623.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.722.v2.git.git.1583940623.gitgitgadget@gmail.com>
+References: <pull.722.git.git.1583903621.gitgitgadget@gmail.com>
+        <pull.722.v2.git.git.1583940623.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 11 Mar 2020 15:30:23 +0000
+Subject: [PATCH v2 2/2] git-rebase.txt: highlight backend differences with
+ commit rewording
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Pratyush Yadav <me@yadavpratyush.com>,
-        Luke Bonanomi <lbonanomi@gmail.com>
+Cc:     Phillip Wood <phillip.wood123@gmail.com>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>,
+        Elijah Newren <newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://archive.lwn.net:8080/git/6d51cff41d9ee312a0d9ae3308546284ead1d4c6.1583940623.git.gitgitgadget@gmail.com/>
+List-Archive: <http://archive.lwn.net:8080/git/>
+List-Post: <mailto:git@vger.kernel.org>
 
-From: Luke Bonanomi <lbonanomi@gmail.com>
+From: Elijah Newren <newren@gmail.com>
 
-This addresses the issue where Git for Windows asks the user for a
-password, no credential helper is available, and then Git fails to pick
-up non-ASCII characters from the Git GUI helper.
+As noted by Junio:
+    Back when "git am" was written, it was not considered a bug that the
+    "git am --resolved" option did not offer the user a chance to update
+    the log message to match the adjustment of the code the user made,
+    but honestly, I'd have to say that it is a bug in "git am" in that
+    over time it wasn't adjusted to the new world order where we
+    encourage users to describe what they did when the automation
+    hiccuped by opening an editor.  These days, even when automation
+    worked well (e.g. a clean auto-merge with "git merge"), we open an
+    editor.  The world has changed, and so should the expectations.
 
-This can be verified e.g. via
+Junio also suggested providing a workaround such as allowing --no-edit
+together with git rebase --continue, but that should probably be done in
+a patch after the git-2.26.0 release.  For now, just document the known
+difference in the Behavioral Differences section.
 
-	echo host=http://abc.com |
-	git -c credential.helper= credential fill
-
-and then pasting some umlauts.
-
-The underlying reason is that Git for Windows tries to communicate using
-the UTF-8 encoding no matter what the actual current code page is. So
-let's indulge Git for Windows and do use that encoding.
-
-This fixes https://github.com/git-for-windows/git/issues/2215
-
-Signed-off-by: Luke Bonanomi <lbonanomi@gmail.com>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
-    Fix git-gui--askpass on Windows
-    
-    Windows has this odd thing where there is an active code page (somewhat
-    like LC_CTYPE) and there is no real UTF-8 code page. So we need to help 
-    git-gui--askpass along a bit to be of use when asking for credentials.
+ Documentation/git-rebase.txt | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-578%2Fdscho%2Fgit-gui--askpass-utf-8-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-578/dscho/git-gui--askpass-utf-8-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/578
-
- git-gui--askpass | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/git-gui--askpass b/git-gui--askpass
-index 4277f30c411..b0704e6d91e 100755
---- a/git-gui--askpass
-+++ b/git-gui--askpass
-@@ -56,6 +56,11 @@ proc finish {} {
- 		}
- 	}
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index 8c1f4b82680..f7a6033607f 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -699,6 +699,16 @@ suffer from the same shortcoming.  (See
+ https://lore.kernel.org/git/20200207132152.GC2868@szeder.dev/ for
+ details.)
  
-+	# On Windows, force the encoding to UTF-8: it is what `git.exe` expects
-+		if {$::tcl_platform(platform) eq {windows}} {
-+		set ::answer [encoding convertto utf-8 $::answer]
-+	}
++Commit Rewording
++~~~~~~~~~~~~~~~~
 +
- 	puts $::answer
- 	set ::rc 0
- }
-
-base-commit: 63a58457e094c9c9bbf562b872009d32f1f88133
++When a conflict occurs while rebasing, rebase stops and asks the user
++to resolve.  Since the user may need to make notable changes while
++resolving conflicts, after conflicts are resolved and the user has run
++`git rebase --continue`, the rebase should open an editor and ask the
++user to update the commit message.  The merge backend does this, while
++the apply backend blindly applies the original commit message.
++
+ Miscellaneous differences
+ ~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
 -- 
 gitgitgadget
