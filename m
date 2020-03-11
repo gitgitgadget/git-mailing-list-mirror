@@ -7,104 +7,127 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B0ABCC0044D
-	for <git@archiver.kernel.org>; Wed, 11 Mar 2020 18:56:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 272D3C0044D
+	for <git@archiver.kernel.org>; Wed, 11 Mar 2020 18:58:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7983620737
-	for <git@archiver.kernel.org>; Wed, 11 Mar 2020 18:56:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F2123206BE
+	for <git@archiver.kernel.org>; Wed, 11 Mar 2020 18:58:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C1rsh5ir"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HLUNNL+M"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730780AbgCKS4z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Mar 2020 14:56:55 -0400
-Received: from mail-lj1-f175.google.com ([209.85.208.175]:44606 "EHLO
-        mail-lj1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730734AbgCKS4z (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Mar 2020 14:56:55 -0400
-Received: by mail-lj1-f175.google.com with SMTP id a10so3526268ljp.11
-        for <git@vger.kernel.org>; Wed, 11 Mar 2020 11:56:53 -0700 (PDT)
+        id S1730943AbgCKS6z (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Mar 2020 14:58:55 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:33830 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730734AbgCKS6y (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Mar 2020 14:58:54 -0400
+Received: by mail-ed1-f68.google.com with SMTP id i24so324928eds.1
+        for <git@vger.kernel.org>; Wed, 11 Mar 2020 11:58:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=HVDt1VG+RWmyQ/Dz1ww03un/AulJuTRMMHCE/MUqlN4=;
-        b=C1rsh5iranQI0LSZYDRRGU3FcSjehbB//0OoK1YuvXU9zkRDRS1+tb/F4v4vNDNb14
-         JKyQNBr10vkXrCDy8f4RjylwBgp5zVrKzP2HEVgizLPOIJ4THsFKCjaNZ7xtE33Mx5YO
-         rtOEMLahHd9FtYyobDrWffmabqaOZqzFB1+JB6hiPB30U+oZ+9ytyzvx8VTxaCQZfMzi
-         nD7SB3l88Fqq1u3O//c8nLUKPTHJJdmFlRURhKUVgBZ9BnzOjWjVCnrXyfEME8EFV/be
-         WyNw8LralJR4anabYjTwfmxE/LLdjk7ngLhIelyBLmj5T7x5syGq6jN6EmV8ZkFxkeoH
-         Zizw==
+         :cc;
+        bh=ycHcjslfySP1r+IhxOOlniYH5HgQa2tFJAUxV+/CrVU=;
+        b=HLUNNL+MYeWOPiQhUkW5/ekZ0SBuit7W2sSZku2jR282VokCgd8E/ZAkXk0hwV2hWC
+         w0rZVTWwdHE45uLIQf8DybWfN8baY5D1xgT3NaBtVUT1CIwaNbQV0SzJj5Wv8yItze5A
+         QacyhK6KCBnLITX+BxXUeyYh9alWXtUS6zb949x9w1dEn47jI5x8usu4sDnWbWjnLTl6
+         wLvoWP11jFb8qqS41MdwoIXgRxQSiUrwwWiDJpzDg+vZb/KlN4ugaW2/YzoFg1r5iIQ5
+         2A9o8vtBU1NQZU3HrSQ/3948TL4XqCOWCpsvQtlVvJTaWeuZDNkklKSpQTQx+zrw0NwX
+         TiSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=HVDt1VG+RWmyQ/Dz1ww03un/AulJuTRMMHCE/MUqlN4=;
-        b=OmHMBcdzWNecujznOUmU8TIKCjn2pHvqsIivmJgQ934Y1pneHONZFtZJNTSLz82pcM
-         UDEX5/3yhCcVLyLFWdbjMvYrUnbyj9tw46xi2KJz7D60ODOHGucux/ABmq0WHSQYxSC3
-         VQ3XriZ2fKpcvFCaeZ/gyvDGgylEK9BmMxJ+vgK9lvKQSePGCdgBx5eptGRB8qIaLCyt
-         37coY0tPXJJTudCDG6RTgIplNdaSsmppL65J64/WKX8+8SpLB2Wweaz/8H8RFm1eGqLP
-         yZuYeB/isbveY93/aHs/9UHiAusCeOZzFAa/t3VffOtV4Q8WsLxjF+L+DBxOfbBHhw92
-         MSyg==
-X-Gm-Message-State: ANhLgQ1H5f0XweRRUZOMYZjCgTig93u2YFRCe5BezTlVt5OGDZYIBJTc
-        KgwdwvjHmyxpxe9o7jr8rv4LJ8o9cZKvSLt/jTKMw1whabGVrw==
-X-Google-Smtp-Source: ADFU+vvKv/dTnXZbKeHcm9UoagVuaNKRGHhoS13i31eAAW6zZSulTvXUpyvHKGrXNtpwifpWXe9eN61CdemXzchxkf4=
-X-Received: by 2002:a2e:804b:: with SMTP id p11mr2952877ljg.50.1583953012958;
- Wed, 11 Mar 2020 11:56:52 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=ycHcjslfySP1r+IhxOOlniYH5HgQa2tFJAUxV+/CrVU=;
+        b=WFMipsUGEzGvPHRWSU1adE0d/4PTtUjOxW6ipZz+PhGxv3sRwb16zO8dQ3jyK1cOL/
+         APrIqyy2ImlMJD+e8VM8iuWHyjw5Rhm7oXZqY0CxjNmcJUvN3DLYDS7n2ZOmnz3ZuGwP
+         PG48FjpNwbXPhUb4QM7hwhhspA4FBEhLk0YYEGChGJp48cMwxgEAdRSHbzxbTRFVt2DY
+         CNs0SVmCajAl/JG1FEm0OON/It3PEHw5COb+VDiFdBYT8413NncprzaVT7avBV5DU4Au
+         8+/16bpeL1c92Ga0SUAyUZkOIGldSDrmwBj8lbj56BZ/B2eCH2PwQNyVhHufnaC/U2sD
+         2srw==
+X-Gm-Message-State: ANhLgQ0bP7VrkmmKxCnMdzxPTfbTPv9MsG4WzEpq4sWZ9WEImKuUBO3/
+        Eu0CJq0/uCeXFKVUw+17hJeRlKhV8Dne2AZlLC8=
+X-Google-Smtp-Source: ADFU+vuwXLhvzl9qcCxQe9pGY1gEfhVKD/2ULM6/Hrf6g574hDfMEdtPzpmTAQCz/Qvnh5Cc7Y43Zlrka8+Ov9UgYqE=
+X-Received: by 2002:a50:c01c:: with SMTP id r28mr3233115edb.87.1583953131711;
+ Wed, 11 Mar 2020 11:58:51 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAGa6KtSgGOLVjHdubwRW=Bvnjnp2PoP7jJ5_NxNWGFLrVYT9SA@mail.gmail.com>
- <2001043.V3P9HlvaID@mfick-lnx>
-In-Reply-To: <2001043.V3P9HlvaID@mfick-lnx>
-From:   Christos Pappas <chrispappas99@gmail.com>
-Date:   Wed, 11 Mar 2020 20:56:44 +0200
-Message-ID: <CAGa6KtQ2dQWPWxbk2MH8QJxemM8QD_O=B3aYzsP5AH-sN-7PSw@mail.gmail.com>
-Subject: Re: [Feature request] Give non-unique names to commits for grouping
-To:     Martin Fick <mfick@codeaurora.org>
-Cc:     git@vger.kernel.org, annulen@yandex.ru
+References: <20200226101429.81327-1-mirucam@gmail.com> <20200226101429.81327-3-mirucam@gmail.com>
+ <xmqqzhd5i1na.fsf@gitster-ct.c.googlers.com> <CAN7CjDDwgR=y8gyYmDzmuTW3AKvb1N=EdCtH-8Tr7T=b6cG5gQ@mail.gmail.com>
+ <xmqqwo88f0do.fsf@gitster-ct.c.googlers.com> <CAN7CjDCb3Bo-reyCZBxMuxX7ecCRLo6XaZHUE5fKGnQav9g_xQ@mail.gmail.com>
+ <xmqqimjh2tjq.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqimjh2tjq.fsf@gitster-ct.c.googlers.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Wed, 11 Mar 2020 19:58:40 +0100
+Message-ID: <CAP8UFD2G-xhmRTNmicoA7vfRyttVSCU9Giribs6xykvkDZ0_8w@mail.gmail.com>
+Subject: Re: [PATCH 02/10] bisect--helper: reimplement `bisect_next` and
+ `bisect_auto_next` shell functions in C
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "Miriam R." <mirucam@gmail.com>, git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thank you for your answers.
-
-From what I can deduce, both of your suggestions require that the
-commit messages(or notes) must have some special text for which we can
-search for, which is hacky and would be different on every repository.
-
-What I am suggesting is something like, labels on GitHub, hashtags on
-Social-Media, or Tags in News sites. It's a well known concept so it
-will be easy to understand and use.
-
-We could initially create the concept of marks/labels/{another name}
-('tags' is already in use by another git command) and then
-incrementally enhance the git commands to use this functionality (like
-the example I gave above, with git blame).
-
-
-=CE=A3=CF=84=CE=B9=CF=82 =CE=A4=CE=B5=CF=84, 11 =CE=9C=CE=B1=CF=81 2020 =CF=
-=83=CF=84=CE=B9=CF=82 6:00 =CE=BC.=CE=BC., =CE=BF/=CE=B7 Martin Fick
-<mfick@codeaurora.org> =CE=AD=CE=B3=CF=81=CE=B1=CF=88=CE=B5:
+On Fri, Mar 6, 2020 at 8:06 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> On Wednesday, March 11, 2020 1:16:09 AM MDT Christos Pappas wrote:
-> > I suggest that we should have the option to mark each commit with a
-> > category name, that is not necessarily unique (like 'tags') so we
-> > could have commit groups.
-> > For example we could:
-> > git mark {commit_id} {name}
-> >
-> > Then we could give special functionality to some commands based on
-> > those "marks".
-> > For example if we had marked a few commits with the name 'fix_typo'
-> > git log --mark fix_typo. Show all the commits marked with 'fix_typo'
-> > git blame --mark fix_typo Run git blame but ignore commits with 'fix_ty=
-po'
+> "Miriam R." <mirucam@gmail.com> writes:
 >
-> Perhaps git notes could be used to do something like this?
+> > To my understanding, it looks like calling reset_revision_walk() after
+> > the while() loop should be enough. Am I right or am I missing
+> > something?
 >
-> -Martin
+> I suspect that reset_revision_walk() may be too-big a hammer, as it
+> clears everything, regardless of the reason why the flag bits were
+> set.  On the other hand, the clearly strategy that uses
+> clear_commit_marks() is to clear only the flag bits that were set
+> during the previous revision walk from only the commits that were
+> walked during the previous revision walk.
 >
-> --
-> The Qualcomm Innovation Center, Inc. is a member of Code
-> Aurora Forum, hosted by The Linux Foundation
+> I offhand do not know what flag bits on what objects that were not
+> involved in the previous revision walk are still necessary at the
+> point of the call made by the caller (that's a question for your
+> mentors who volunteered their expertise on the program in question),
+> so if there isn't any, reset_revision_walk() may be an easy way out.
+> I just do not know if it clears too much to break the code that
+> comes after the function returns.
+
+process_skipped_commits(), the function that does this revision walk,
+is called by bisect_skipped_commits() to print the possible first bad
+commits when there are only skipped commits left to test and we
+therefore cannot bisect more. This can be seen in bisect_next() which
+does basically the following:
+
+bisect_next()
+{
+       ...
+
+       /* Perform all bisection computation, display and checkout */
+       res = bisect_next_all(the_repository, prefix, no_checkout);
+
+       if (res == BISECT_INTERNAL_SUCCESS_1ST_BAD_FOUND) {
+               ...
+       } else if (res == BISECT_ONLY_SKIPPED_LEFT) {
+               res = bisect_skipped_commits(terms);
+               return res ? res : BISECT_ONLY_SKIPPED_LEFT;
+       }
+       return res;
+}
+
+BISECT_ONLY_SKIPPED_LEFT is an error code (-2) so bisect_next() will
+always return an error in this case.
+
+This means that the revision walk in process_skipped_commits() is very
+likely to be the last revision walk performed by the command. So my
+opinion is that not clearing anything at the end of that revision walk
+is fine.
+
+If we are worried about what could happen one day, when people might
+be interested in actually doing another revision walk after this one,
+then as we don't know what they will want to do and might be
+interested in, cleaning everything with reset_revision_walk() might be
+the safest thing to do and is probably cheap enough that it's ok to
+use it right now.
+
+Thanks for your review,
+Christian.
