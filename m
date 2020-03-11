@@ -2,109 +2,111 @@ Return-Path: <SRS0=DQ4e=44=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+X-Spam-Status: No, score=-7.4 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E4D7AC10F29
-	for <git@archiver.kernel.org>; Wed, 11 Mar 2020 07:32:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AD687C10F25
+	for <git@archiver.kernel.org>; Wed, 11 Mar 2020 07:35:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id BA357208C4
-	for <git@archiver.kernel.org>; Wed, 11 Mar 2020 07:32:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 80DD9208C4
+	for <git@archiver.kernel.org>; Wed, 11 Mar 2020 07:35:41 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fto3iOma"
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="o4FkWUeu"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726934AbgCKHcP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Mar 2020 03:32:15 -0400
-Received: from mail-pg1-f177.google.com ([209.85.215.177]:45484 "EHLO
-        mail-pg1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726160AbgCKHcP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Mar 2020 03:32:15 -0400
-Received: by mail-pg1-f177.google.com with SMTP id m15so688188pgv.12
-        for <git@vger.kernel.org>; Wed, 11 Mar 2020 00:32:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=xjmYI3w1XshYa6gRU0tU2xXHScbfWAYMfZrd7YJc8v4=;
-        b=fto3iOmaXlFaM/bi8d6Fa1naMmOzBe2SsGrtkDwJL/Z0VqNGu+a/6tF9UO9fieKhM6
-         xLxDhTf820bS797ZCmDjigpVF/apRQXZExeVr1FPJzjT6zl2EcpBRPcpuo1FvXiRMtzF
-         2hn45TTjsLQpXW/BPDiNGyz/O4k6+ohILfbTb6uREd2oNG2854/Kqm5MnSlEIrD2C1mb
-         0hh67V7h7p4WnuXjKsm+ejQZ13ElN43fem+NRrpJaOlw0oeijgcnWTUDlhBvo03heQNd
-         1Zxn65efvuSYzhOv03sxrDGs/67kB4gr2DATMQOpM2S48MVPwecJo7zzpg9/5HJFi8fa
-         0p+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=xjmYI3w1XshYa6gRU0tU2xXHScbfWAYMfZrd7YJc8v4=;
-        b=tRDBHEHzNi6sN3O3QoE343ZDLJj3Q+N52UDvlUuaosOXvM8IrJrmFiAqcwgidyTXo3
-         MWl6mUbBucxRaCpRKm2JYrESzmcBPOflvoVSe3Z+Lz1ilaTrtp6ZwedLamXPozZlGxNt
-         aj+GRr5zrMxzpxr/7eAqSGLso2yvaXmC3rB850nGHMmhEZjvEVgTkS3OEhiReTOW3yg2
-         FFY2nm7PN5TDhGg3WNi5GkJ2FlILi536JlxC5I09cKo5nT+/arX81ESll9jbQt6dFOJ2
-         TYss5pHYuQSwHLPjLY3yGvWTifluyGW6ZrHIDenvhWI8zyMtJkh6RlgAZinDURjM4R69
-         uB3w==
-X-Gm-Message-State: ANhLgQ2CQRa3jOp0uFwX64jrV+ArJ0Waq+9W7lNasPQubT9WG3NJYcRg
-        Re4dN51JJlj4fa0EXyUrVi+rkoCRPTEwxswo
-X-Google-Smtp-Source: ADFU+vvMHwmmoS1qs0q5s/YdJyX7W63m9U0wjrEzpUD96frcv1KJoQFxjrEh0kjusZ6LyA//gM4JKw==
-X-Received: by 2002:a63:c445:: with SMTP id m5mr1538886pgg.194.1583911934052;
-        Wed, 11 Mar 2020 00:32:14 -0700 (PDT)
-Received: from localhost.localdomain ([47.89.83.3])
-        by smtp.gmail.com with ESMTPSA id j15sm17801993pfn.86.2020.03.11.00.32.08
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 11 Mar 2020 00:32:13 -0700 (PDT)
-From:   Jiang Xin <worldhello.net@gmail.com>
-X-Google-Original-From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-To:     Git List <git@vger.kernel.org>,
-        Alexander Shopov <ash@kambanaria.org>,
-        Jordi Mas <jmas@softcatala.org>,
-        =?UTF-8?q?Matthias=20R=C3=BCster?= <matthias.ruester@gmail.com>,
-        Jimmy Angelakos <vyruss@hellug.gr>,
-        =?UTF-8?q?Christopher=20D=C3=ADaz?= 
-        <christopher.diaz.riv@gmail.com>,
-        =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
-        Alessandro Menti <alessandro.menti@alessandromenti.it>,
-        Gwan-gyeong Mun <elongbug@gmail.com>,
-        Vasco Almeida <vascomalmeida@sapo.pt>,
-        Dimitriy Ryazantcev <DJm00n@mail.ru>,
-        Peter Krefting <peter@softwolves.pp.se>,
-        Emir SARI <bitigchi@me.com>,
-        =?UTF-8?q?Tr=E1=BA=A7n=20Ng=E1=BB=8Dc=20Qu=C3=A2n?= 
-        <vnwildman@gmail.com>, Jiang Xin <worldhello.net@gmail.com>,
-        Yi-Jyun Pan <pan93412@gmail.com>
-Subject: [L10N] Kickoff for Git 2.26.0 round #2
-Date:   Wed, 11 Mar 2020 15:32:00 +0800
-Message-Id: <20200311073200.21160-1-zhiyou.jx@alibaba-inc.com>
-X-Mailer: git-send-email 2.26.0.rc0.1.g67b07ef6f6
+        id S1728150AbgCKHfk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Mar 2020 03:35:40 -0400
+Received: from lelv0143.ext.ti.com ([198.47.23.248]:38864 "EHLO
+        lelv0143.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726472AbgCKHfk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Mar 2020 03:35:40 -0400
+Received: from lelv0265.itg.ti.com ([10.180.67.224])
+        by lelv0143.ext.ti.com (8.15.2/8.15.2) with ESMTP id 02B7Zc7J060077;
+        Wed, 11 Mar 2020 02:35:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+        s=ti-com-17Q1; t=1583912139;
+        bh=KKk06n13LWpPxYhCxXmsr7f7PFG7xRzorRZ7feMKG8Y=;
+        h=Date:From:To:CC:Subject:References:In-Reply-To;
+        b=o4FkWUeuDFKWK3ck5IWsdRaBOeeM/0KSQ6zclT4O4t67iVNxljhngfOabbWn5r4nn
+         3XuYa/0mZRxi7JL4N8U0Xaq0VzVV4U0MjgR1kzVvUKNziS4Z+XNAbLnAulQFA4+WTI
+         mT6K/4J80DZFh4hict5UDf4Zk+r7URN81fGi4KF4=
+Received: from DFLE113.ent.ti.com (dfle113.ent.ti.com [10.64.6.34])
+        by lelv0265.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 02B7ZcNR038082
+        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
+        Wed, 11 Mar 2020 02:35:38 -0500
+Received: from DFLE101.ent.ti.com (10.64.6.22) by DFLE113.ent.ti.com
+ (10.64.6.34) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1847.3; Wed, 11
+ Mar 2020 02:35:38 -0500
+Received: from lelv0326.itg.ti.com (10.180.67.84) by DFLE101.ent.ti.com
+ (10.64.6.22) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1847.3 via
+ Frontend Transport; Wed, 11 Mar 2020 02:35:38 -0500
+Received: from localhost (ileax41-snat.itg.ti.com [10.172.224.153])
+        by lelv0326.itg.ti.com (8.15.2/8.15.2) with ESMTP id 02B7Zbol081383;
+        Wed, 11 Mar 2020 02:35:38 -0500
+Date:   Wed, 11 Mar 2020 13:05:37 +0530
+From:   Pratyush Yadav <p.yadav@ti.com>
+To:     Birger Skogeng Pedersen <birger.sp@gmail.com>
+CC:     Git List <git@vger.kernel.org>
+Subject: Re: gui: error "missing close bracket" when doing a reset
+Message-ID: <20200311073535.nwde2ujbsrslmggo@ti.com>
+References: <CAGr--=L9nEfX1c6DnaqQHqNMh9Ci=q=dMZLE_gpgyoneBcJ_Kw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <CAGr--=L9nEfX1c6DnaqQHqNMh9Ci=q=dMZLE_gpgyoneBcJ_Kw@mail.gmail.com>
+User-Agent: NeoMutt/20171215
+X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jiang Xin <worldhello.net@gmail.com>
+On 08/03/20 04:52PM, Birger Skogeng Pedersen wrote:
+> Hi,
+> 
+> The last couple of times I've done a reset in git-gui
+> (Branch->Reset...->Yes), the repo is reset but I get an error message.
+> The message header says "Error: missing close-bracket". Error message
+> is as follows:
+> 
+> missing close-bracket
+> missing close-bracket
+>     while executing
+> "set status_bar_operation ["
+>     invoked from within
+> "if {[ask_popup $op_question] eq {yes}} {
+>         set fd [git_read --stderr read-tree --reset -u -v HEAD]
+>         fconfigure $fd -blocking 0 -translation binary
+>         ..."
+>     (procedure "merge::reset_hard" line 28)
+>     invoked from within
+> "merge::reset_hard"
+>     invoked from within
+> ".#mbar.#mbar#branch invoke active"
+>     ("uplevel" body line 1)
+>     invoked from within
+> "uplevel #0 [list $w invoke active]"
+>     (procedure "tk::MenuInvoke" line 50)
+>     invoked from within
+> "tk::MenuInvoke .#mbar.#mbar#branch 1"
+>     (command bound to event)
+> 
+> (end of error message)
+> 
+> Does anyone else experience the same issue?
 
-Hi
+I fixed a similar issue in 6b9919c (git-gui: add missing close bracket, 
+2020-02-17). Do you have that commit applied? You can pull it from [0].
 
-Git v2.26.0-rc1 has been released, and it's time to start new round of git l10n.
-This time there are 7 updated messages need to be translated since last
-update:
+If you still have this problem even with the commit applied, let me know 
+and I'll take a look after I get off from $DAYJOB.
 
-    l10n: git.pot: v2.26.0 round 2 (7 new, 2 removed)
-    
-    Generate po/git.pot from v2.26.0-rc1 for git v2.26.0 l10n round 2.
-    
-    Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+[0] https://github.com/prati0100/git-gui.git
 
-You can get it from the usual place:
-
-    https://github.com/git-l10n/git-po/
-
-As how to update your XX.po and help to translate Git, please see
-"Updating a XX.po file" and other sections in "po/README" file.
-
---
-Jiang Xin
+-- 
+Regards,
+Pratyush Yadav
+Texas Instruments India
