@@ -2,132 +2,137 @@ Return-Path: <SRS0=DQ4e=44=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 272D3C0044D
-	for <git@archiver.kernel.org>; Wed, 11 Mar 2020 18:58:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5701FC0044D
+	for <git@archiver.kernel.org>; Wed, 11 Mar 2020 19:04:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id F2123206BE
-	for <git@archiver.kernel.org>; Wed, 11 Mar 2020 18:58:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2EC3520739
+	for <git@archiver.kernel.org>; Wed, 11 Mar 2020 19:04:01 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HLUNNL+M"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="rHQdNunb"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730943AbgCKS6z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Mar 2020 14:58:55 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:33830 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730734AbgCKS6y (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Mar 2020 14:58:54 -0400
-Received: by mail-ed1-f68.google.com with SMTP id i24so324928eds.1
-        for <git@vger.kernel.org>; Wed, 11 Mar 2020 11:58:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ycHcjslfySP1r+IhxOOlniYH5HgQa2tFJAUxV+/CrVU=;
-        b=HLUNNL+MYeWOPiQhUkW5/ekZ0SBuit7W2sSZku2jR282VokCgd8E/ZAkXk0hwV2hWC
-         w0rZVTWwdHE45uLIQf8DybWfN8baY5D1xgT3NaBtVUT1CIwaNbQV0SzJj5Wv8yItze5A
-         QacyhK6KCBnLITX+BxXUeyYh9alWXtUS6zb949x9w1dEn47jI5x8usu4sDnWbWjnLTl6
-         wLvoWP11jFb8qqS41MdwoIXgRxQSiUrwwWiDJpzDg+vZb/KlN4ugaW2/YzoFg1r5iIQ5
-         2A9o8vtBU1NQZU3HrSQ/3948TL4XqCOWCpsvQtlVvJTaWeuZDNkklKSpQTQx+zrw0NwX
-         TiSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ycHcjslfySP1r+IhxOOlniYH5HgQa2tFJAUxV+/CrVU=;
-        b=WFMipsUGEzGvPHRWSU1adE0d/4PTtUjOxW6ipZz+PhGxv3sRwb16zO8dQ3jyK1cOL/
-         APrIqyy2ImlMJD+e8VM8iuWHyjw5Rhm7oXZqY0CxjNmcJUvN3DLYDS7n2ZOmnz3ZuGwP
-         PG48FjpNwbXPhUb4QM7hwhhspA4FBEhLk0YYEGChGJp48cMwxgEAdRSHbzxbTRFVt2DY
-         CNs0SVmCajAl/JG1FEm0OON/It3PEHw5COb+VDiFdBYT8413NncprzaVT7avBV5DU4Au
-         8+/16bpeL1c92Ga0SUAyUZkOIGldSDrmwBj8lbj56BZ/B2eCH2PwQNyVhHufnaC/U2sD
-         2srw==
-X-Gm-Message-State: ANhLgQ0bP7VrkmmKxCnMdzxPTfbTPv9MsG4WzEpq4sWZ9WEImKuUBO3/
-        Eu0CJq0/uCeXFKVUw+17hJeRlKhV8Dne2AZlLC8=
-X-Google-Smtp-Source: ADFU+vuwXLhvzl9qcCxQe9pGY1gEfhVKD/2ULM6/Hrf6g574hDfMEdtPzpmTAQCz/Qvnh5Cc7Y43Zlrka8+Ov9UgYqE=
-X-Received: by 2002:a50:c01c:: with SMTP id r28mr3233115edb.87.1583953131711;
- Wed, 11 Mar 2020 11:58:51 -0700 (PDT)
+        id S1730852AbgCKTD7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Mar 2020 15:03:59 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:56564 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730805AbgCKTD7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Mar 2020 15:03:59 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 30792BCF0D;
+        Wed, 11 Mar 2020 15:03:57 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=ZVI6d3ab/VD7
+        lpP7cKudxC7U0gM=; b=rHQdNunblUX4EXpnZrx5pckwttZ2V4KYdcJQbr2sbpXD
+        bo8Du5bwXC35FTo9SrAtNfFBpDwlKP/HZsT58PuPyBkKjHL/CxKLFPeC/tiINlE0
+        k5XoUXdHgdQOraV+5BytDYqcp+zR+01W83A1ggAXPbm44ETtAZaBnrJOrTEE/Zk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=k6lmSf
+        zwNBV9ibpDiap0FDGxRy/Qp+zALPSCbXd1v5zmOhRm8TW8JDia96T/hqT0SqGkb0
+        8eYcYsAz6fIYRMK7fhrFZJ+AmTYjf19vMdPS0L5fsX49vUzEECO0K8u+DiWjcWD1
+        lQ8GNO8ERui/ISyEvFZ559VnxYhDC6vcEVOzc=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 288CDBCF0C;
+        Wed, 11 Mar 2020 15:03:57 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 5944FBCF09;
+        Wed, 11 Mar 2020 15:03:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jakub Narebski <jnareb@gmail.com>
+Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
+Subject: Re: [RFC] Possible idea for GSoC 2020
+References: <86mu8o8dsf.fsf@gmail.com>
+Date:   Wed, 11 Mar 2020 12:03:52 -0700
+In-Reply-To: <86mu8o8dsf.fsf@gmail.com> (Jakub Narebski's message of "Tue, 10
+        Mar 2020 15:50:24 +0100")
+Message-ID: <xmqqo8t2hfxj.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <20200226101429.81327-1-mirucam@gmail.com> <20200226101429.81327-3-mirucam@gmail.com>
- <xmqqzhd5i1na.fsf@gitster-ct.c.googlers.com> <CAN7CjDDwgR=y8gyYmDzmuTW3AKvb1N=EdCtH-8Tr7T=b6cG5gQ@mail.gmail.com>
- <xmqqwo88f0do.fsf@gitster-ct.c.googlers.com> <CAN7CjDCb3Bo-reyCZBxMuxX7ecCRLo6XaZHUE5fKGnQav9g_xQ@mail.gmail.com>
- <xmqqimjh2tjq.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqimjh2tjq.fsf@gitster-ct.c.googlers.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Wed, 11 Mar 2020 19:58:40 +0100
-Message-ID: <CAP8UFD2G-xhmRTNmicoA7vfRyttVSCU9Giribs6xykvkDZ0_8w@mail.gmail.com>
-Subject: Re: [PATCH 02/10] bisect--helper: reimplement `bisect_next` and
- `bisect_auto_next` shell functions in C
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "Miriam R." <mirucam@gmail.com>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 0D79F50E-63CB-11EA-8072-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 6, 2020 at 8:06 PM Junio C Hamano <gitster@pobox.com> wrote:
+Jakub Narebski <jnareb@gmail.com> writes:
+
+> A few questions:
+> - is it too late to propose a new project idea for GSoC 2020?
+> - is it too difficult of a project for GSoC?
+> ...
+> ### Graph labelling for speeding up git commands
 >
-> "Miriam R." <mirucam@gmail.com> writes:
+>  - Language: C
+>  - Difficulty: hard / difficult
+>  - Possible mentors: Jakub Nar=C4=99bski
+
+I am not running the GSoC or participating in it in any way other
+than just being a reviewer-maintainer of the project, but I would
+appreciate a well-thought-out write-up very much.
+
+> Git uses various clever methods for making operations on very large
+> repositories faster, from bitmap indices for git-fetch[1], to generatio=
+n
+> numbers (also known as topological levels) in the commit-graph file for
+> commit graph traversal operations like `git log --graph`[2].
 >
-> > To my understanding, it looks like calling reset_revision_walk() after
-> > the while() loop should be enough. Am I right or am I missing
-> > something?
+> One possible improvement that can make Git even faster is using min-pos=
+t
+> intervals labelling.  The basis of this labelling is post-visit order o=
+f
+> a depth-first search traversal tree of a commit graph, let's call it
+> 'post(v)'.
 >
-> I suspect that reset_revision_walk() may be too-big a hammer, as it
-> clears everything, regardless of the reason why the flag bits were
-> set.  On the other hand, the clearly strategy that uses
-> clear_commit_marks() is to clear only the flag bits that were set
-> during the previous revision walk from only the commits that were
-> walked during the previous revision walk.
+> If for each commit 'v' we would compute and store in the commit-graph
+> file two numbers: 'post(v)' and the minimum of 'post(u)' for all commit=
+s
+> reachable from 'v', let's call the latter 'min_graph(v)', then the
+> following condition is true:
 >
-> I offhand do not know what flag bits on what objects that were not
-> involved in the previous revision walk are still necessary at the
-> point of the call made by the caller (that's a question for your
-> mentors who volunteered their expertise on the program in question),
-> so if there isn't any, reset_revision_walk() may be an easy way out.
-> I just do not know if it clears too much to break the code that
-> comes after the function returns.
-
-process_skipped_commits(), the function that does this revision walk,
-is called by bisect_skipped_commits() to print the possible first bad
-commits when there are only skipped commits left to test and we
-therefore cannot bisect more. This can be seen in bisect_next() which
-does basically the following:
-
-bisect_next()
-{
-       ...
-
-       /* Perform all bisection computation, display and checkout */
-       res = bisect_next_all(the_repository, prefix, no_checkout);
-
-       if (res == BISECT_INTERNAL_SUCCESS_1ST_BAD_FOUND) {
-               ...
-       } else if (res == BISECT_ONLY_SKIPPED_LEFT) {
-               res = bisect_skipped_commits(terms);
-               return res ? res : BISECT_ONLY_SKIPPED_LEFT;
-       }
-       return res;
-}
-
-BISECT_ONLY_SKIPPED_LEFT is an error code (-2) so bisect_next() will
-always return an error in this case.
-
-This means that the revision walk in process_skipped_commits() is very
-likely to be the last revision walk performed by the command. So my
-opinion is that not clearing anything at the end of that revision walk
-is fine.
-
-If we are worried about what could happen one day, when people might
-be interested in actually doing another revision walk after this one,
-then as we don't know what they will want to do and might be
-interested in, cleaning everything with reset_revision_walk() might be
-the safest thing to do and is probably cheap enough that it's ok to
-use it right now.
-
-Thanks for your review,
-Christian.
+>   if 'v' can reach 'u', then min_graph(v) <=3D post(u) <=3D post(v)
+>
+> If for each commit 'v' we would compute and store in the commit-graph
+> file two numbers: 'post(v)' and the minimum of 'post(u)' for commits
+> that were visited during the part of depth-first search that started
+> from 'v' (which is the minimum of post-order number for subtree of a
+> spanning tree that starts at 'v').  Let's call the later 'min_tree(v)'.
+> Then the following condition is true:
+>
+>   if min_tree(v) <=3D post(u) <=3D post(v), then 'v' can reach 'u'
+>
+> The task would be to implement computing such labelling (or a more
+> involved variant of it[3][4]), storing it in commit-graph file, and
+> using it for speeding up git commands (starting from a single chosen
+> command) such as:
+>
+>  - git merge-base --is-ancestor A B
+>  - git branch --contains A
+>  - git tag --contains A
+>  - git branch --merged A
+>  - git tag --merged A
+>  - git merge-base --all A B
+>  - git log --topo-sort
+>
+> References:
+>
+> 1. <http://githubengineering.com/counting-objects/>
+> 2. <https://devblogs.microsoft.com/devops/supercharging-the-git-commit-=
+graph-iii-generations/>
+> 3. <https://arxiv.org/abs/1404.4465>
+> 4. <https://github.com/steps/Ferrari>
+>
+> See also discussion in:
+>
+> <https://public-inbox.org/git/86tvl0zhos.fsf@gmail.com/t/>
