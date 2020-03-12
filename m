@@ -2,106 +2,113 @@ Return-Path: <SRS0=YYoh=45=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 95141C10DCE
-	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 18:00:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 90F3EC10DCE
+	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 18:04:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6BF9B20663
-	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 18:00:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1584036017;
-	bh=zewtajEBRIxcID6lS46kYzXOdQBhAR9sgM2JHYlGdbs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=xuDJ60qVHDgRFCrUPexT2gIGG2s6WnK8cvZ0gLCZyclHGvud26P/SRQICS3TC6+GA
-	 Ac8F1oEqw/8zX4uY9peAHws35CaRt0wkkQX0YRDbhEUVy/NUSl8jbPq3jWf7xlwOc+
-	 wJZr2PYboF+kJZPKOTC8BvLM9Luxsq2HiESSTsYI=
+	by mail.kernel.org (Postfix) with ESMTP id 6435F206F1
+	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 18:04:32 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="h8q2Mtwd"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726442AbgCLSAQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Mar 2020 14:00:16 -0400
-Received: from mail-qk1-f195.google.com ([209.85.222.195]:43434 "EHLO
-        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726371AbgCLSAQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Mar 2020 14:00:16 -0400
-Received: by mail-qk1-f195.google.com with SMTP id x1so2900758qkx.10
-        for <git@vger.kernel.org>; Thu, 12 Mar 2020 11:00:16 -0700 (PDT)
+        id S1726675AbgCLSEb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Mar 2020 14:04:31 -0400
+Received: from mail-qt1-f202.google.com ([209.85.160.202]:55816 "EHLO
+        mail-qt1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726546AbgCLSEb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Mar 2020 14:04:31 -0400
+Received: by mail-qt1-f202.google.com with SMTP id o10so4509573qtk.22
+        for <git@vger.kernel.org>; Thu, 12 Mar 2020 11:04:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=TAHWC5kjvuQl7yMOwTfP81BzeEfLv5WrNgDBBmZ2K4Q=;
-        b=bRnYypm3UBfLz2vWViuMBpopmmr5D5VtTzWe2fpRiwMU55nDR8C8aEPoSgcS0SwMHs
-         6flbfH2e6lm4B3JYXmizMDbTxRpp4xQPBaZEUCitvh6beYiMG/VSvpTzD34+GVFPPDYU
-         l3HGtg95AmOcOpfd+ea0pBVwys1NmxsNTsz+4=
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=5iENwvyP7RaH61n5VzBcFe1Dxx4HsaHMoOMCo0xEIbs=;
+        b=h8q2Mtwdn88bCgcZMNKaicXP2+eIiUAfVegnuuDbp5OP84aprgaOXbFEJ9z2lPzK/3
+         JTcLh1b7+og0KeZFBlPZFi35romGJZI86/0Q0cx7YGjSyBZhabqYLv0/U3M6YWxGMpn6
+         rMj+cLsg4W4BsL7vRpHwZfXMP0ccYGQLT5fbrCwZ9E3c92hy49phlaTAKFYl2mEf2z6n
+         tFA0Lgx1egtyXspOR/mSadqIdNE6wgWbSPsFgU601IMqvE0ZIRp71kmkhPVeAZY5PQlA
+         DNiFcTO+tXq4lQD4rPwTF0MCTLtFRUvNw2WRXArqUwZ7EeKy3+nsBGPknDuNQW8173bZ
+         i/KA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to;
-        bh=TAHWC5kjvuQl7yMOwTfP81BzeEfLv5WrNgDBBmZ2K4Q=;
-        b=gxModKF5WsLVWLRTzNN948WMtrsqc+LNOKH10Q09BJcEBRKGsGIuG+ohqcbBLtPOdt
-         KgAzuctPyPHCSgO5qbdDIYDn6o6TZgbjZPZKBm2tnXX0+ri11rHPp5PYK0DjT69GG1nG
-         3pea0MzjGdV5ORbw1R1+OqD9mVTyeGoA+dwrUl/SYjqUeu2EI74Pp0ZndRVKplIdu+QW
-         ZW5KjEQnZS2ozfbatiALQ9XPzt2eatm4PssKONLLL4CGH1Okzx2nurHOPDiC1effiOFc
-         EE+1pPooh9FCC4K2OCo6Isf2d3Ah0CBv+RbGvsyPhYvS0boX9+Xfu7IMXCi0fCyL9xYw
-         asww==
-X-Gm-Message-State: ANhLgQ2ybdMKsSMoMhENittzC3qMN4qMBVqtyCgH1+l11nx89IijBSqg
-        qauDtmlDqcTCVW20gNaXHvJNOHs3h1sNFQ==
-X-Google-Smtp-Source: ADFU+vu9wm9gnVOiO80Pm/KDE6z/iP+LnndK0cJv0PeNRG0KWwMpLdTti1zdDJm0CtJvF0l95qDV4w==
-X-Received: by 2002:a05:620a:11b3:: with SMTP id c19mr9270872qkk.296.1584036015196;
-        Thu, 12 Mar 2020 11:00:15 -0700 (PDT)
-Received: from chatter.i7.local (107-179-243-71.cpe.teksavvy.com. [107.179.243.71])
-        by smtp.gmail.com with ESMTPSA id m126sm6522820qkb.55.2020.03.12.11.00.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Mar 2020 11:00:14 -0700 (PDT)
-Date:   Thu, 12 Mar 2020 14:00:12 -0400
-From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Emily Shaffer <emilyshaffer@google.com>,
-        James Ramsay <james@jramsay.com.au>, git@vger.kernel.org
-Subject: Re: [TOPIC 16/17] =?utf-8?B?4oCcSSB3YW50IGEgcmV2aWV3ZXLigJ0=?=
-Message-ID: <20200312180012.bgjls4esndkg3iqf@chatter.i7.local>
-Mail-Followup-To: Jonathan Nieder <jrnieder@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        James Ramsay <james@jramsay.com.au>, git@vger.kernel.org
-References: <AC2EB721-2979-43FD-922D-C5076A57F24B@jramsay.com.au>
- <6DAC1E49-9CA0-4074-867E-F22CD26C9FEB@jramsay.com.au>
- <20200312133127.GK212281@google.com>
- <20200312173134.bpflnl6n3w6mywlg@chatter.i7.local>
- <20200312174212.GA120942@google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200312174212.GA120942@google.com>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=5iENwvyP7RaH61n5VzBcFe1Dxx4HsaHMoOMCo0xEIbs=;
+        b=K8ajDdTZUDWGRoR2bZvJf8nXwQs6HQ/wbfXZGcjm3n6guMaYtYzj1BURF5blOVHap6
+         gq8FQBm3/yqHc12V7AKxak7x5LnIQRW66GcY0nKabS210+qq5f1+7tO4XoA/Ze7gyuHm
+         efjMeau8sYzLQkAo4boXDJKyaes+pm8DNf7XRd7WZ0++uS7j5xCRfiCrd9AZryMk5kEb
+         qK14f5cqXWHKPKY9IzlafT7Rxl9iVaahuUqHwkcpIVGigD/HnXqASyviwy4KXZWsDL9Q
+         8B7GbRIoW+RqhkRBPejck7nAaK6aqPUv5Rq7jvq+ttDZSMpjwfrgJqHnJfeZ3XbZmpSA
+         /oiQ==
+X-Gm-Message-State: ANhLgQ3+f74zs587H/aJM9KWJ361T0UjpfO4kCY13mf5plglZyA1lEth
+        ViT2FsNg00oo5ZdzzTWWA2V6UVNrIrlsqGCTLSoa
+X-Google-Smtp-Source: ADFU+vvQUujyX4HU5vjSuiO7sKPr8oYw7gni1kn7ifL0r10JZ503i/5OsHB7ZQdpmeelRQsSmHv4Y3LAXGMfmqkRygpd
+X-Received: by 2002:ac8:4548:: with SMTP id z8mr8870723qtn.188.1584036269784;
+ Thu, 12 Mar 2020 11:04:29 -0700 (PDT)
+Date:   Thu, 12 Mar 2020 11:04:27 -0700
+In-Reply-To: <20200310225641.96556-1-jonathantanmy@google.com>
+Message-Id: <20200312180427.192096-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <20200310225641.96556-1-jonathantanmy@google.com>
+X-Mailer: git-send-email 2.25.1.481.gfbce0eb801-goog
+Subject: Re: [PATCH] rebase --merge: optionally skip upstreamed commits
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     jonathantanmy@google.com
+Cc:     newren@gmail.com, git@vger.kernel.org, stolee@gmail.com,
+        git@jeffhostetler.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 12, 2020 at 10:42:12AM -0700, Jonathan Nieder wrote:
-> >> We've actually got a meeting with some Patchwork folks today - if
-> >> anybody has a burning need they want filled via Patchwork, just say so,
-> >> and we'll try to ask.
-> >
-> > Just to highlight this -- a long while ago someone asked me to set up a
-> > patchwork instance for Git, but I believe they never used it:
-> >
-> > https://patchwork.kernel.org/project/git/list/
+> > Does this suggest that the cherry-pick detection is suboptimal and
+> > needs to be improved?  When rebasing, it is typical that you are just
+> > rebasing a small number of patches compared to how many exist
+> > upstream.  As such, any upstream patch modifying files outside the set
+> > of files modified on the rebased side is known to not be PATCHSAME
+> > without looking at those new files.
 > 
-> That was me.  In fact, we are using it, but mostly read-only (similar
-> to lore patchwork) so far.  I'm hoping we can learn more about how to
-> automatically close reviews when a patch has landed, assign delegates
-> to reviews, set up bundles, etc and write some docs so it becomes
-> useful to more people.
+> That's true - and this would drastically reduce the fetches necessary in
+> partial clone, perhaps enough that we no longer need this check.
+> 
+> In the absence of partial clone, this also might improve performance
+> sufficiently, such that we no longer need my new option. (Or it might
+> not.)
 
-FYI, I can set it up with git-patchwork-bot, which does some of the 
-above. You can read more here:
+I took a further look at this. patch-ids.c and its caller
+(cherry_pick_list() in revision.c) implement duplicate checking by first
+generating full diff outputs for the commits in the shorter side,
+putting them in a hashmap keyed by the SHA-1 of the diff output (and
+values being the commit itself), and then generating full diff outputs
+for the commits in the longer side and checking them against the
+hashmap. When processing the shorter side, we could also generate
+filename-only diffs and put their hashes into a hashset; so when
+processing the longer side, we could generate the filename-only diff
+first (without reading any blobs) and checking them against our new
+hashset, and only if it appears in our new hashset, then do we generate
+the full diff (thus reading blobs).
 
-https://korg.wiki.kernel.org/userdoc/patchwork#adding_patchwork-bot_integration
+One issue with this is unpredictability to the user (since which blobs
+get read depend on which side is longer), but that seems resolvable by
+not doing any length checks but always reading the blobs on the right
+side (that is, the non-upstream side).
 
-If that's something you would like to see, please send a request per 
-that doc.
-
--K
+So I would say that yes, the cherry-pick detection is suboptimal and
+could be improved. So the question is...what to do with my patch? An
+argument could be made that my patch should be dropped because an
+improvement in cherry-pick detection would eliminate the need for the
+option I'm introducing in my patch, but after some thought, I think that
+this option will still be useful even with cherry-pick detection. If we
+move in a direction where not only blobs but also trees (or even
+commits) are omitted, we'll definitely want this new option. And even if
+a user is not using partial clone at all, I think it is still useful to
+suppress both the filtering of commits (e.g. when upstream has a commit
+then revert, it would be reasonable to cherry-pick the same commit on
+top) and reduce disk reads (although I don't know if this will be the
+case in practice).
