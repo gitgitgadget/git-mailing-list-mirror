@@ -2,106 +2,121 @@ Return-Path: <SRS0=YYoh=45=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-5.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 158DBC10DCE
-	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 20:37:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EB64C10DCE
+	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 20:43:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id E7D952067C
-	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 20:37:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1E2E4206CD
+	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 20:43:07 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="PMOFmSCN"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727015AbgCLUhU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Mar 2020 16:37:20 -0400
-Received: from cloud.peff.net ([104.130.231.41]:38260 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725268AbgCLUhU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Mar 2020 16:37:20 -0400
-Received: (qmail 14092 invoked by uid 109); 12 Mar 2020 20:37:20 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 12 Mar 2020 20:37:20 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 1718 invoked by uid 111); 12 Mar 2020 20:46:43 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 12 Mar 2020 16:46:43 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 12 Mar 2020 16:37:18 -0400
-From:   Jeff King <peff@peff.net>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Denton Liu <liu.denton@gmail.com>,
-        Pavel Roskin <plroskin@gmail.com>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v5 20/20] rebase: rename the two primary rebase backends
-Message-ID: <20200312203718.GA870787@coredump.intra.peff.net>
-References: <pull.679.v4.git.git.1579155273.gitgitgadget@gmail.com>
- <pull.679.v5.git.git.1581802602.gitgitgadget@gmail.com>
- <ad8339aebf28ec84c22ed59cef06614d204adb55.1581802602.git.gitgitgadget@gmail.com>
- <20200312151318.GM212281@google.com>
- <CABPp-BHyNvxQZ5q=9WXXESTPmxFe4fAiE5roGeV2H+XJ_cpDmg@mail.gmail.com>
- <xmqqftedfkvy.fsf@gitster.c.googlers.com>
- <CABPp-BGvqUEDoj6_mUAsSVeS8+h5ruCFcMTENtf5LY2XWKVj-g@mail.gmail.com>
+        id S1727079AbgCLUnG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Mar 2020 16:43:06 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:60186 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725268AbgCLUnF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Mar 2020 16:43:05 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 793BACE55C;
+        Thu, 12 Mar 2020 16:43:03 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=GuDW6YeqqYLx0W7WpJT1xOlOYn8=; b=PMOFmS
+        CNf55RLSK5ACg4U7jdRFzdkIYlN5W3n5iKluSCzFLY9frA52z+LW8fAXLBceDMXq
+        pb6xwvO/542TA3+XpWKS4ipeWPbP6NruB06W/2CyqBQdfkINp5vAkaIOBxO1fpwD
+        1jVc/J5Nmp95ljo3Z5yGMo5RZMjfwXTom29as=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=huLq0Mm2h0N4RJr39cMHDTbFzO62uaZt
+        u2N9pq4qciKeEOmNRsBeQ3qjno2VQ8+0Q4r9GM2dVYCPngN5eaPapB/BGJ+t1cec
+        bLEPFwBX7AzVByCuve1O4j+lz40Ry/bfd7e1ZYzq7CpuH+dcRuX0/8hkpIVTFEf/
+        38sRdsPtITY=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2F60ECE55A;
+        Thu, 12 Mar 2020 16:43:03 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 6AB2CCE556;
+        Thu, 12 Mar 2020 16:43:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, jonathantanmy@google.com, me@ttaylorr.com,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH] connected.c: reprepare packs for corner cases
+References: <pull.579.git.1584027403779.gitgitgadget@gmail.com>
+Date:   Thu, 12 Mar 2020 13:42:58 -0700
+In-Reply-To: <pull.579.git.1584027403779.gitgitgadget@gmail.com> (Derrick
+        Stolee via GitGitGadget's message of "Thu, 12 Mar 2020 15:36:43
+        +0000")
+Message-ID: <xmqqzhcle23x.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CABPp-BGvqUEDoj6_mUAsSVeS8+h5ruCFcMTENtf5LY2XWKVj-g@mail.gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1006416A-64A2-11EA-8FDB-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 12, 2020 at 12:29:45PM -0700, Elijah Newren wrote:
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> First, note that this particular breakage would have occurred
-> regardless of the default setting, because the problem was that they
-> setting rebase.backend to an unrecognized value, not that we used a
-> different backend than they were used to.
+> From: Derrick Stolee <dstolee@microsoft.com>
+>
+> While updating the microsoft/git fork on top of v2.26.0-rc0 and
+> consuming that build into Scalar, I noticed a corner case bug around
+> partial clone.
+>
+> The "scalar clone" command can create a Git repository with the
+> proper config for using partial clone with the "blob:none" filter.
+> Instead of calling "git clone", it runs "git init" then sets a few
+> more config values before running "git fetch".
+>
+> In our builds on v2.26.0-rc0, we noticed that our "git fetch"
+> command was failing with
+>
+>   error: https://github.com/microsoft/scalar did not send all necessary objects
+>
+> This does not happen if you copy the config file from a repository
+> created by "git clone --filter=blob:none <url>", but it does happen
+> when adding the config option "core.logAllRefUpdates = true".
+>
+> By debugging, I was able to see that the loop inside
+> check_connnected() that checks if all refs are contained in
+> promisor packs actually did not have any packfiles in the packed_git
+> list.
+> I'm not sure what corner-case issues caused this config option to
+> prevent the reprepare_packed_git() from being called at the proper
+> spot during the fetch operation. Even worse, I have failed to create
+> a test case to prevent a regression.
+>
+> Placing a reprepare_packed_git() call inside chck_connected() before
+> looping through the packed_git list seems like the safest way to
+> avoid this issue in the future.
 
-If I understand correctly, it was also a setting that never worked in
-any released version of Git. It was magic that was only ever in 'next'.
+Hmmm.  I am not sure if I am convinced that check_connected() is the
+best place to do this.  Do we know the place that adds a new pack to
+the repository, yet forgets to add it to the packed-git list, that
+caused the failure you were observing?  Doing this change, without
+describing the answer to the question in the log message, makes it
+smell rather like a random hack than a designed solution to me.
 
-As annoying as it is to experience breakage, I'm not _too_ sympathetic
-to this case, because that is part of the cost of running the bleeding
-edge of 'next' or even 'master'. I.e., I think we have to make a cutoff
-_somewhere_ to say "this is something that made it to the general
-public, and therefore we can't break backwards compatibility" to keep
-our sanity during development. And it seems like tagged releases are a
-pretty good cutoff to me.
+If lazy fetching of objects happen in multiple fetches before a
+single check_connected() sweeps them to check for connectivity, then
+perhaps the lazy fetching codepath needs to remember the fact that
+it added a new pack that is still not known to the packed-git list
+(or just add it immediately, without having to scan at all), and
+check_connected() would need to rescan only when there is at least
+one such new pack?  That way, you do not have to penalize normal
+callers of check_connected() that do not use lazy fetches at all,
+right?
 
-Though in this particular case, I don't mind too much just leaving "am"
-as an alias for "apply" (it was actually the first thing I tried when
-writing my earlier emails, but I'm probably not a representative user
-there). Putting that in a release, though, may mean supporting it
-forever. :)
-
->    - We had multiple complaints this cycle about rebase.backend=apply
-> merging things incorrectly with the only workaround being to use the
-> merge backend[3,4]
->    - The rebase-backend topic wasn't merged down to master until less
-> than a week before -rc0.  (For a variety of reasons.)  A big change
-> like this probably would have been better to merge down earlier in
-> some cycle.
-
-It did feel a bit quick to me, hitting near the end of the cycle. We've
-had the apply backend as the default for a decade, so even if there are
-problems with it, they're known issues. So I don't think there's a
-particular hurry. I'm not entirely convinced that cooking it longer
-during the next cycle will turn up a lot of new data (I did find a few
-issues, but the real test is the long-tail of weird use cases that we
-won't see until an actual release). But it probably doesn't hurt much to
-take it slow; it just delays a few bug-fixes (which people can still get
-by setting a config option).
-
-I guess like your email I'm going back and forth between the two
-options. I think that means it probably doesn't matter _too_ much either
-way.
-
--Peff
+Thanks.
