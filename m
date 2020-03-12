@@ -2,171 +2,552 @@ Return-Path: <SRS0=YYoh=45=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F56FC0044D
-	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 00:39:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 89EF7C0044D
+	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 01:15:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1D2CF20753
-	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 00:39:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 82228206F7
+	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 01:15:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="iSGBmYfU"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CC1MJ9f8"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387507AbgCLAjS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Mar 2020 20:39:18 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:51964 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2387488AbgCLAjS (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 11 Mar 2020 20:39:18 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id BD0FB60478;
-        Thu, 12 Mar 2020 00:39:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1583973557;
-        bh=RjK44o52ZEFAfdtlQz1R3LVsadWZsYCkK1rCsyN0jYI=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=iSGBmYfUGxtosnrLV7FdZMj6Q1jw/OF7Lr40CGDtLea817OiaqPsBLGgvFfPyitV2
-         ppu0XMabOWe2l+keRHKZX3Mgg2DuZyjhn6+eaxUUE2ln5Of19PGA3XypQD4oVHUS6I
-         d6iisntQnJp0/hXP1DIfP5jU2iJTBPPy+xNbLeCsaVh2CtY4LFopDR1qvp4YdIYKwL
-         gQSpOfT5RlPXdTzwxdOTqGfV0Jay5raxxHOJ5VLsAgankTlIgnKKkgL0fapW0hE1Sv
-         51c3m5p3H5FOji4cpJtkgvZDaLAhFjbDdp82Qg/B+pQISkteq33gRYREZjXVL5WE6L
-         +PjBCFXITmdK0zXkmdVjNNyTWez6q9x8RD9yDbhCY4/yun85KpmkvL7ua3IaZ7+1Qj
-         9qiBpa87XTmZBW/NH5uxgzDAHONBHXkvpdKyAbye+9s8rVkCxoOYNurJ/2Tj6r4ncc
-         yHvl0Yxft18Vi00ETuJavBg/9IcDRI+AiGzD348OiGpf6/D7ebp
-Date:   Thu, 12 Mar 2020 00:39:06 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH 2/8] convert: permit passing additional metadata to
- filter processes
-Message-ID: <20200312003906.GC6198@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Taylor Blau <me@ttaylorr.com>
-References: <20200310182046.748959-1-sandals@crustytoothpaste.net>
- <20200310182046.748959-3-sandals@crustytoothpaste.net>
- <xmqq1rpyhbjd.fsf@gitster.c.googlers.com>
+        id S2387518AbgCLBPd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Mar 2020 21:15:33 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:38863 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387404AbgCLBPd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Mar 2020 21:15:33 -0400
+Received: by mail-ed1-f66.google.com with SMTP id h5so5321192edn.5
+        for <git@vger.kernel.org>; Wed, 11 Mar 2020 18:15:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=XfinFnlQ+CXHcIGAWtVWTe7KlbwqzgvqwOLRzDCgIfM=;
+        b=CC1MJ9f8yggC7imFCGQyYaZtFTsQ7QD9xthWcetMjfPWnHRzGNplEu23hqgvvygjXH
+         HFrWDv9ZaMTSKwaWweQ+Z/K9TkJQKnIhNCwUBmN8bbxpMdtqalME+eZ/5Ecrr066Iaab
+         o5J2GlTY4xJr7UnAYFxwc/0tygElFD+xWg9QCNww2z9+WvJrw3ryINrjOllbfVSixXxu
+         BYWhDJdlndA11tkflRBB0O70ZZV/prEapHwI7zdQjwOI5Q39bWmR2qodAau/zXyQXCT8
+         dC2Bk8DhZF8HBjAjS+A/x571FqhVO58nCIfkW+q4gizGxU2QbCPy05oDqhGlKKtJLBmm
+         hECQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=XfinFnlQ+CXHcIGAWtVWTe7KlbwqzgvqwOLRzDCgIfM=;
+        b=t6O9Ru1OlxJiS2441bNyRafIDYDUc/bDIVLt5G2ga3205wMGNawortlmKp4C4+9BAZ
+         HwxYnOL4eT81PmiKdBHOuiLwR51NwmNBHJpicNXAlrKQkXiDE9V8VfLNSqgdwFLQ1ROV
+         xeulziQhiuyTVAgw5MTn/36LZIVSPNZP9W+imEt8ZGx370C3Q1zBIkySN3c/w2Xxau+x
+         ZSUYEZRKkv2AUeYA+p9YR1e1AQr9CbY83NNHztaYI1FR6sR9xRzSNGHcLMMrfHRl0VCw
+         TSZx045DsDd7UKDIqfwlw6cJ1LqQeJ9ynN3DaguBZItcIp8oSiayhNIwgp1Qt3vAL7LY
+         V2sg==
+X-Gm-Message-State: ANhLgQ3sja07fq1gyDdMjq93ocaeiXqvLPgZLHPV6Y1CVhNeBX7/JHVz
+        Eom/rk/EaXgkGeZ6e+p2y67G4anVzQqMfPF5vL8=
+X-Google-Smtp-Source: ADFU+vsgCY3VfrSs+rqJwiC6TFsI9CTpCa+YtctuVezCXhRr8a9TDGkB59ploRNH6uBhQ0ssyVSbuu01E2c3G4R3pSk=
+X-Received: by 2002:a17:906:f49:: with SMTP id h9mr4848877ejj.6.1583975729597;
+ Wed, 11 Mar 2020 18:15:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="iFRdW5/EC4oqxDHL"
-Content-Disposition: inline
-In-Reply-To: <xmqq1rpyhbjd.fsf@gitster.c.googlers.com>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.4.0-4-amd64)
+References: <CAHk66fsEjanKPtUhVnDMmU2JCL7MK+MzYbGdCAuCh00DOwgEYg@mail.gmail.com>
+In-Reply-To: <CAHk66fsEjanKPtUhVnDMmU2JCL7MK+MzYbGdCAuCh00DOwgEYg@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Thu, 12 Mar 2020 02:15:18 +0100
+Message-ID: <CAP8UFD0Zi4n3gqC5Nii3LmxF4i+ZHx1fmUn1LdKwZZw+bgsWSQ@mail.gmail.com>
+Subject: Re: [GSoC][RFC] Convert mergetool to builtin
+To:     Abhishek Kumar <abhishekkumar8222@gmail.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi,
 
---iFRdW5/EC4oqxDHL
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Sun, Mar 8, 2020 at 6:32 PM Abhishek Kumar
+<abhishekkumar8222@gmail.com> wrote:
+>
+> I am Abhishek Kumar and I want to work on converting mergetool to a builtin as
+> my GSoC project. I would love to have your comments on the proposal, the
+> approach I have opted for. There are some questions I had while writing at the
+> end of proposal too.
 
-On 2020-03-11 at 20:38:46, Junio C Hamano wrote:
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->=20
-> > From: "brian m. carlson" <bk2204@github.com>
->=20
-> Do you want this name/address associated to your contributions?  I
-> am asking because to me you have always been "that toothpaste guy" ;-)
+Thanks for your proposal!
 
-Yes, this is something I wrote as part of my job.  I mostly work on
-non-Git things there, but occasionally I do some Git work, and I attach
-a work email to commits I do at work and a personal email to things I do
-outside of work.  This is so for licensing reasons: I have the ability
-to grant libgit2 or other folks permission to use stuff I wrote on
-personal time, but I would need to ask first for things written on
-GitHub's time, and I am really terrible at remembering why I wrote what
-code.
+> # Convert mergetool to builtin
+>
+> ## Synopsis
+>
+> A few subcommands of git are in the form of shell and Perl scripts. This causes
+> problems in production code - in particular, on multiple platforms.
+>
+> This project rewrites git mergetool in C to improve its performance and
+> portability. It would also lay the groundwork for the subsequent conversion of
+> mergetool--lib.
 
-There's already a .mailmap entry that maps everything to the same person.
+There are other reasons why we convert shell scripts to C.
 
-You should continue to see most of my contributions come from my
-personal address, since most of what I contribute to Git is just for
-fun.
+> ## About git mergetool
+>
+> Git mergetool runs merge conflict resolution tools to resolve merge conflicts.
+> Internally, it is implemented as two scripts - `git-mergetool.sh` and
+> `git-mergetool--lib.sh`.
+>
+> `git-mergetool.sh` is the driver script and does the following:
+> - Parse options.
+> - Get merge tool name from configuration.
+> - List unmerged files.
+> - Identify the type of conflict.
+> - Resolve deleted, submodule, and symlink conflicts.
+> - Pass normal file conflicts to `git-mergetool--lib.sh`.
 
-> The "filter" you talk about is the clean/smudge kind of thing that
-> works on individual blobs, and the series is about giving a bit more
-> information than the raw contents to be filtered.  I am assuming
-> that I got at least that part correctly.
+Nice description.
 
-You have indeed.
+> `git-mergetool--lib.sh` stores common functions shared by `git-mergetool.sh`
+> and `git-difftool--helper.sh` and does the following:
+> - List all conflict resolution tools.
+> - Set up tools.
+> - Validate conflict resolution in case of untrustable tools.
+> - Run the merge/diff tool.
 
-> Now, a few questions.
->=20
-> Is "refname" "refs/heads/branch? when I run "git checkout branch" or
-> "git checkout branch -- Makefile"?  Is "treeish" the same as the
-> output from "rev-parse branch^{commit}" in such a case?
+Nice too.
 
-Yes, we'll get something like the following:
+> ## Goal
+>
+> At over 1700 lines of code, conversion of the mergetool-related scripts is
+> impossible over a summer of code project.
+>
+> The goal of this project is to rewrite `git-mergetool.sh` in C. Normal merge
+> conflicts would still be resolved through `git-mergetool--lib.sh` (a strategy
+> adopted by difftool as well). I hope future SoC/Outreachy students pick up on
+> this idea and rewrite the other two scripts.
 
-  command=3Dsmudge
-  ref=3Drefs/heads/master
-  treeish=3D16f09066000e3328fb2d5c54beb55fc25c1af15c
-  blob=3Dc8e324426dccfcfebad5c33c8ffb97d5a2b54a67
-  can-delay=3D1
-  pathname=3Dtest99.bin
+If you start talking about the number of lines of code, it would be
+logical to also give the number for each script, not just the total.
 
-The treeish is, in this case, git rev-parse refs/heads/master^{commit}.
-It will always be the commit unless we have no commit, in which case it
-will be the tree.
+> ## Benefits to the community
+>
+> ### Better performance
+>
+> Subcommands written in shell scripts are slower than builtins. Shell scripts are
+> inherently slower than binaries and shell scripts invoke git's porcelain
+> commands, which do not have access to git's internal API. For each such call,
+> git would re-read configuration files, repository index, etc. Such repetition
+> is inefficient.
+>
+> As noted in Hannes's patch, git-mergetool _spawns an enormous number of
+> processes_ [1]. The test suite spawns over 12,000 processes and 2,000 non-git
+> commands.
+>
+> Partial conversion for difftool improved performance by 4.3x for Linux and 1.2x
+> for windows [2]. We can expect similar gains for mergetool as well.
 
-> Assuming they are, what refname and treeish does my filter see, when
-> the user did these things?
->=20
->     git checkout origin/master
->     git checkout v1.2.3
->     git checkout v1.2.3~4
+Ok.
 
-We get no ref for these, because HEAD doesn't (well, won't) point to
-anything other than a branch, and a treeish pointing to a commit, plus a
-blob and a pathname for each individual blob.
+> Improvements differ due to the overhead from shelling out to helper script.
+> A complete conversion would avoid the overhead and show even more significant
+> improvements for both systems.
+>
+> [1]: https://lore.kernel.org/git/cover.1560152205.git.j6t@kdbg.org/
+> [2]: https://lore.kernel.org/git/8ab75685f718cfeb571409830ae3c6ee14ac5158.1484857756.git.johannes.schindelin@gmx.de/
+>
+> ### Portablity
+>
+> Shell scripts often rely on POSIX utilities. They are not necessarily available
+> natively on all platforms or might have some differences. On non-POSIX platforms
+> (like windows), utilities need to be included along with an emulation layer. C
+> offers improved portability.
 
-I tried to emulate the "read HEAD" behavior as much as possible for
-refnames, but if people would like a ref in these cases, I can do that.
+Maybe "Windows" instead of "windows".
 
-> As a writer of a filter, do I get different clues when I am munging
-> Documentation/Makefile and t/Makefile, when the user does
->=20
->     git checkout master -- Makefile Documentation/Makefile
->=20
-> i.e. grab these two files out of the tree of the commit at the tip
-> of the master branch?
->=20
-> Or do I just learn what the "refname" (presumably "refs/heads/master"?)
-> and treeish (presumably "rev-parse master^{commit}") and I cannot
-> tell where in that tree hierarchy the contents come from?
+> ### Conversion of mergetool--lib
+>
+> As mentioned earlier, conversion of the mergetool-related scripts has to be
+> spread over 2-3 SoC or similar projects due to the size of scripts involved.
+> Conversion of mergetool would set up most of the plumbing required for
+> mergetool--lib and makes the subsequent conversion possible.
 
-We already pass the pathname when processing a file; this is guaranteed.
+I wonder if it would be better to convert git-mergetool--lib.sh first
+and then git-difftool--helper.sh and git-mergetool.sh that are using
+it.
 
-I clearly need to update the commit message to explain this better for
-future readers, since you should not have to ask questions about what
-output the series provides, so I'll do that when I reroll.  I'll see if
-anyone else has any feedback, and then do that.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+> On a broader (_and possibly ambitious_) note, I would be happy to co-mentor
+> any student who takes up the conversion process. It would be gratifying to see
+> our collective efforts finish a mammoth task.
 
---iFRdW5/EC4oqxDHL
-Content-Type: application/pgp-signature; name="signature.asc"
+Great!
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.19 (GNU/Linux)
+> ## Related Work
+>
+> Back in 2016, Johannes worked on a remarkably similar "project" - converting
+> `git-difftool.sh` into a builtin [3].
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXmmEqgAKCRB8DEliiIei
-gVu7APsGCk4DvWyFBkL8qdngQg45NbxC329Y/MC6OtZPhwPICQD/a/SqeVahQvnI
-svXVnAdpqCzPXIJGWKhSaWNRG26A1AM=
-=OUP0
------END PGP SIGNATURE-----
+What can be learned from this?
 
---iFRdW5/EC4oqxDHL--
+> There have been similar SoC/Outreachy projects converting other scripts:
+> - bisect--helper by and Miriam Rubio.
+> - Interactive rebase by Alban Gruin and Pratik Karki [4], [5].
+>
+> and others.
+>
+> [3]: https://lore.kernel.org/git/cover.1479834051.git.johannes.schindelin@gmx.de/
+> [4]: https://github.com/prertik/GSoC2018/
+> [5]: https://github.com/agrn/gsoc2016
+>
+> ## Overview
+>
+> _This section is an oversimplified primer on how mergetool works internally._
+>
+> git-mergetool runs conflict resolution tools to resolve merge conflicts.
+>
+> In a merge conflict, the following files are involved:
+> - Local: The 'ours' side of the conflict i.e., current HEAD.
+> - Remote: The 'theirs' side of the conflict i.e., branch merging into HEAD.
+> - Base: The common ancestor of both branches.
+>
+> Merge conflicts are of four types - Symbolic link conflict, deleted file
+> conflict, submodule conflict, and file conflict.
+>
+> First three type of conflict occurs when either local or remote is a symlink,
+> deleted file or part of a submodule.
+>
+> Checking out the appropriate version of the file from the index resolves
+> symlink conflicts.
+>
+> Deleted file conflicts are resolved by either adding file back to index or
+> removing it from the working tree and index.
+>
+> Submodule conflicts are somewhat involved. Assuming the user wants to keep
+> local file:
+>
+> ```
+> if the local file exists in current directory
+>   - If local is in submodule mode, stage the submodule.
+>   - If remote is in submodule mode, check out the file from the index with
+> stage 2.
+> else:
+>   - If local file exists in a subdirectory, add it to index.
+>   - If local file does not exist, force remove it from the index.
+> ```
+>
+> There is a similar flow if the user wants to keep the remote file.
+>
+> File conflicts arise when competing changes are made to the same line of a file.
+> Git merge's strategies cannot solve them, and they must be resolved manually.
+>
+> Mergetool relies on external tools like vimdiff, kdiff, meld to resolve
+> conflicts. Mergetool decides the external tool in the following precedence:
+> - Parameter passed
+> - Configuration
+> - Iterating over defaults
+>
+> `get_merge_tool` decides the external tool. This function is used by
+> both mergetool--lib and difftool--helper.
+
+Isn't this function defined in git-mergetool--lib.sh and used by
+git-mergetool.sh?
+
+> The return code of the external tool is usually not trusted. Depending on
+> whether we trust return code or not, the script prompts the user to re-affirm
+> whether the merge was successful.
+>
+> The main function of mergetool iterates over the unmerged files (in given order
+> if passed) - identifying the type of conflict and calls the appropriate function
+> to resolve.
+
+Nice explanation.
+
+> ## Plan
+>
+> Similar to the conversion of difftool, I plan to create a builtin that shells
+> out to a helper script. Once mergetool--lib is converted, we can retire the
+> helper script and conversion would be complete.
+
+So you plan to create a builtin that would shell out to git-mergetool--lib.sh?
+
+Could you be clearer about what the conversion of difftool did and how
+you plan to imitate that?
+
+> I realize this is unlike most conversions, where the script calls the builtin,
+> and features are incrementally transferred.
+
+Yeah, so it's good to properly justify what you are planning to do by
+explaining what the conversion of difftool did and how what you plan
+to do will be similar.
+
+> My choice is motivated by the fact that the child process cannot set variables
+> for their parent. mergetool makes extensible use of setting variables to share
+> them between functions.
+>
+> For example - If I implement `git mergetool--helper --tmpdir-init` to replace
+> `mergetool_tmpdir_init` [6], I cannot set `$MERGETOOL_TMPDIR`. One possible
+> workaround (which does not account for "returning" multiple variables) is to
+> print out results and capture it in the script. But it seems too hacky to me.
+>
+> [6]: https://github.com/git/git/blob/076cbdcd739aeb33c1be87b73aebae5e43d7bcc5/git-mergetool.sh#L41
+
+Is it the reason why the conversion of difftool was done in a similar
+way as what you are planning?
+
+> I plan to break down the implementation into following smaller steps:
+>
+> 1. Community bonding period (April 27 - May 18)
+> - Study mergetool in greater detail.
+> - Read up on builtin, run-command and other git internals.
+> - Understand the test suite.
+>
+> 2. Create a skeleton builtin (May 18 - May 21)
+> - Rename git-mergetool.sh to git-legacy-mergetool.sh
+> - Add a configuration variable mergetool.useBuiltin
+> - Add a builtin which executes the legacy-mergetool unless mergetool.useBuiltin
+>   is true
+
+Is it how the conversion of difftool was done?
+
+> 3. Implement scaffolding (May 21 - May 31)
+> - Convert `main` except assigning mergetool
+> - Around 100 lines
+>
+> 4. Implement shared functions (June 1 - June 7)
+> - Convert `mergetool_tmpdir_init`
+> - Convert `cleanup_temp_files`
+> - Convert `describe_file`
+> - Convert `checkout_staged_file`
+> - Around 80 lines
+>
+> 5. Teach builtin to resolve symlink conflict (June 7 - June 20)
+> - Convert `merge_file`
+> - Convert `resolve_symlink_merge`
+> - Around 150 lines
+
+Ok.
+
+> I noticed a possible bug in `resolve_symlink_merge`. The original file is
+> backed up regardless of the configuration settings. Is that intended
+> behavior? [7]
+>
+> [7]: https://github.com/git/git/blob/076cbdcd739aeb33c1be87b73aebae5e43d7bcc5/git-mergetool.sh#L92
+>
+> --> June 15 - June 19: Phase 1 evaluation
+>
+> 6. Teach builtin to resolve deleted file conflict (June 20 - June 27)
+> - Convert `resolve_deleted_merge`
+> - Around 70 lines
+>
+> 7. Teach builtin to resolve submodule conflict (June 27 - July 10)
+> - Convert `stage_submodule`
+> - Convert `resolve_submodule_merge`
+> - Around 125 lines
+>
+> The implementation of `resolve_submodule_merge` seems repetitive. It might be
+> possible to streamline both cases using flags and swapping variables [8].
+>
+> [8]: https://github.com/git/git/blob/076cbdcd739aeb33c1be87b73aebae5e43d7bcc5/git-mergetool.sh#L154
+>
+> --> July 13 - July 17: Phase 2 evaluation
+>
+> 8. Teach builtin to assign merge tool (July 10 - July 15)
+> - Convert `get_configured_merge_tool` from mergetool--lib
+> - Around 50 lines
+
+Ok, so at this point you start to convert git-mergetool--lib.sh. Where
+is the converted code going to be? Does git-difftool--helper.sh needs
+what you will convert?
+
+> Since the builtin would execute the helper script for each file conflict,
+> querying config every time would be inefficient.
+>
+> --> My college begins from July 20
+>
+> 9. Teach builtin to shell out for file conflict (July 15 - July 31)
+> - Write a minimal mergetool--helper.sh (similar to difftool--helper.sh)
+> - Call the helper script from the builtin
+> - Retire the legacy script.
+
+Which legacy script?
+
+> This helper script would:
+> - Call `guess_merge_tool` from mergetool--lib.sh if mergetool has not been set
+> - Call `run_merge_tool`
+>
+> The builtin would take care of backup and clean-ups.
+>
+> 10. Teach builtin to not trust exit code (August 1 - August 10)
+> - Convert `trust_exit_code`, `run_merge_cmd`, `check_unchanged` from
+>   mergetool--lib
+> - Around 50 lines.
+>
+> 11. Wrap up (August 10 - August 17):
+> - Submit final patches.
+> - Compare the performance of script and builtin.
+> - Write a blog summary of the experience.
+
+If you want to write a blog, you might as well use it to regularly
+update people about what's going on in your GSoC.
+
+> I have slowed down the speed of conversion in the latter half of the project to
+> act as a buffer in case of unexpected problems. I might need a week or two to
+> ensure all tests pass after teaching builtin to shell out for file conflict.
+>
+> If everything goes well, I could work on converting mergetool specific functions
+> from `mergetool--lib.sh` - `get_merge_tool_cmd`, `list_merge_tool_candidates`
+> and others.
+
+Ok.
+
+> I plan to send out patches in the same order. I find that maintaining a
+> long-running integration branch is more manageable than smaller patchsets.
+> Smaller, multiple patchsets would suffer from constant rebase and push.
+>
+> After a "reasonable" break, I am going to look into the conversion of
+> difftool--helper.
+>
+> _Pack bitmap support for libgit2_ and _Replace object loading/writing layer by
+> libgit2_, two of 2014 project ideas were also interesting - although I didn't
+> look into their current status.
+
+I don't think we accept libgit2 projects anymore these days.
+
+> ## Potential Problems
+>
+> ### Introduction of new bugs
+>
+> Rewriting code always has the possibility of introducing new bugs. The test
+> suite groups together all types of conflicts together. Therefore the test suite
+> would be ineffective until all types are implemented.
+
+So are you planning to improve the test suite so that it can check all
+types of conflict?
+
+> While straightforward bugs would be caught by the test suite, the project might
+> end up with subtle bugs and unspecified behavior.
+>
+> The choice of using mergetool.useBuiltin comes in handy here. We could release
+> early preview versions and fix any bug reports we get. Once confident in the
+> builtin, we could ship it by default.
+
+Ok. I guess that's what the conversion of difftool did.
+
+> ### Performance
+>
+> _Make the common case fast_.
+>
+> When it comes to mergetool, the typical case is overwhelmingly file conflicts.
+> Until mergetool--lib is converted, builtin would execute helper script which
+> would in turn source mergetool--lib and call `run_merge_tool`.
+>
+> This is more work than the script version - which would just source
+> mergetool--lib  and call `run_merge_tool`.
+>
+> On the other hand, the other three cases are undoubtedly faster - since they
+> would be entirely in C.
+>
+> It would be hard to predict whether performance, as perceived by users, would
+> improve and by how much. Builtin would likely perform better for a constant
+> number (_K_) of file conflicts and worse when there are more than K file
+> conflicts.
+>
+> However, the inclusion of difftool gives me hope - since both difftool and
+> mergetool suffer from identical penalties.
+>
+> I _might_ be worrying over microseconds of performance here ;).
+
+Yeah :-)
+
+> ## Contributions
+>
+> [Microproject] Consolidate test_cmp_graph logic
+> -----
+> Log graph comparison logic is duplicated many times. This patch consolidates
+> comparision and sanitization logic in lib-log-graph.
+
+Maybe "comparison" and "sanitation".
+
+> Status: Merged
+>
+> Patch: https://lore.kernel.org/git/20200216134750.18947-1-abhishekkumar8222@gmail.com/
+
+A link to the commit in GitHub (or GitLab) would be nice.
+
+> I have also reviewed patches and discussed queries with other contributors:
+> - https://lore.kernel.org/git/CAHk66fskrfcJ0YFDhfimVBTJZB4um7r=GdQuM8heJdZtF8D7UQ@mail.gmail.com/
+> - https://lore.kernel.org/git/CAHk66fvt-1RaLK8E7SDpocWM9OMAcA-gP5hjHq6r5N_FbATNgA@mail.gmail.com/
+> - https://github.com/git/git/pull/647#issuecomment-591978405
+>
+> and others.
+
+Nice!
+
+> ## About Me
+>
+> I am Abhishek Kumar, a second-year CSE student at National Institute of
+> Technology Karnataka, India. I have a blog where I talk about my interests -
+> programming, fiction, and literature [9].
+>
+> I primarily work with C/C++ and Ruby on Rails. I am a member of my institute's
+> Open Source Club and student-built University Management System, _IRIS_. I have
+> some experience of mentoring - Creating their code style guide and being an
+> active reviewer [10].
+>
+> [9]: https://abhishekkumar2718.github.io/
+>
+> [10]: https://iris.nitk.ac.in/about_us
+
+Nice.
+
+> ## Availablity
+>
+> The official GSoC coding period runs from April 27 to August 17.
+>
+> My college ends on May 4 and starts for the next session on July 20.
+>
+> During the break, I can easily commit to 40 hours a week and have no prior
+> commitments. After college begins, I can commit to around 25-30 hours.
+>
+> I will be sure to update the community in case of any changes.
+>
+> ## Post GSoC
+>
+> I would love to keep contributing to git after the GSoC period ends. There's so
+> much to learn from the community.
+>
+> Hannes's comment on checks as a penalty that should be paid only by constant
+> strbufs was a perspective I had not considered [11].
+>
+> Interacting with Kyagi made me rethink the justifications _emphasizing commit
+> messages_. I was at my wit's end, which makes me appreciate my patient mentors
+> more and want to give back to the community.
+>
+> [11]: https://lore.kernel.org/git/467c035f-c7cd-01e1-e64c-2c915610de01@kdbg.org/
+>
+> ## Contact Information
+>
+> | Name      | Abhishek Kumar                             |
+> | Major     | Computer Science And Engineering           |
+> | Institute | National Institute Of Technology Karnataka |
+> | E-mail    | abhishekkumar8222@gmail.com                |
+> | Github    | abhishekkumar2718                          |
+> | Timezone  | UTC+5:30 (IST)                             |
+>
+> Thank you for taking the time to review my proposal!
+
+Thanks for you proposal!
+
+> 1. I would be converting around 650 lines. Is the scope of my project adequate?
+
+I think so.
+
+> 2. Were the sections of my proposal relevant and helpful?
+
+Yes, but see the questions and comments I left.
+
+> 3. Are there some relevant discussions/resources that I might have missed?
+
+I don't think so, but I think you could take more advantage of what
+you have already found.
+
+Best,
+Christian.
