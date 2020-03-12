@@ -7,83 +7,123 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AA30DC1975A
-	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 21:59:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 394D7C10DCE
+	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 22:06:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7B7F120724
-	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 21:59:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0CDDB206CD
+	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 22:06:27 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gJYt3x+M"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BX43fPJb"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726752AbgCLV7P (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Mar 2020 17:59:15 -0400
-Received: from mail-ed1-f51.google.com ([209.85.208.51]:42914 "EHLO
-        mail-ed1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726513AbgCLV7P (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Mar 2020 17:59:15 -0400
-Received: by mail-ed1-f51.google.com with SMTP id n18so9409173edw.9
-        for <git@vger.kernel.org>; Thu, 12 Mar 2020 14:59:14 -0700 (PDT)
+        id S1726674AbgCLWG0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Mar 2020 18:06:26 -0400
+Received: from mail-ot1-f66.google.com ([209.85.210.66]:45460 "EHLO
+        mail-ot1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726514AbgCLWGZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Mar 2020 18:06:25 -0400
+Received: by mail-ot1-f66.google.com with SMTP id e9so802897otr.12
+        for <git@vger.kernel.org>; Thu, 12 Mar 2020 15:06:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=/Xy0VZ2arqqaQdJfN4rfe/emCp4zwLCz6nW4Rxba20E=;
-        b=gJYt3x+MoWT3qIdjwMzg5fdpbPOOboj4OAU1mIROwVhHZEo/Z5NuT00xJ5Z+yHtjvP
-         hkeJU0A7CVIHQhdk/BK1juNZ8H873bYoSUHTbxko4QuXEXPQiJCEWybGRXJEorKSVN8I
-         +yAWMw8G7Ph8Hh4rL6WyvU2cGyhhmWTiNlEqRdZhTyv8BXQvoRODKD3X3VU+jgUKbUeR
-         VPeL9r4LRYPA9XcLo4UuCEhYT7EoLf9YlFqNHGguD3fESA4qwl65Gg9Rub31/T/ypKpr
-         NxTM14kvrlmcWfpoDEx4E6HTJ6hT8w1TI9u0zUEypj/viR2gCV/y35fpBThH0vbVOJ4M
-         KVwg==
+        bh=IpREGZLXjJnxxq/6yqXD0/SV+94rl6883IqKHzdvXzM=;
+        b=BX43fPJbH78rTOyMGpEbdMfXuNU70+ZH1BIyWA7dHcI6P53NaU9nFsskt1SP9qXaDF
+         yWixWBT1xsxC56FmeAvwX7z5ERekmMCE+nBtUUQOShGF/AHcRv4GX1Pwt2/J/B/jowEw
+         8jBzmSQe0VffWRYG08DN6SXyqMWrW5pBGv0EtLLM2CohevYwtKKpsuPIqLVSGPCwuRhB
+         HQ7gJPjainJQmW73Sxbh1EQB9lCIDru6KxteEy+yWWTVOQepLSUyGdt6Edmkx6BBu/yC
+         iqrARVQKlROxlYyd/Rh1I2Gwau/pjcdavfoVRshmN0weZuzoSsVT3BqsCArxaPr5zgUF
+         uY5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=/Xy0VZ2arqqaQdJfN4rfe/emCp4zwLCz6nW4Rxba20E=;
-        b=Gw3xxGnTZf2xi7Bok+E8myE8ZgntmAgYSjyn6+eN/1LCkchgmLitViKRHyTzFE/yaw
-         /TKVA6w7nfM7ppCCn/0xvicGqY5O1045famZ5uAEBONaNNRM5dN7YuiieQT7tKoxTnyV
-         Rc6aVVtfjQ2MrOrDNO5eEyLj5L7J2K8LOYPx5RE8NeRH0XCNg40A1Bgx0nRoaE9IfK4j
-         FLKRF3S84WKyE/8ukuoGk56Mi5eCw8uu436dNhj/J9UADpfQv1nsrDvVcVcszxuo4o1+
-         2L++mr9U66Fdb+Qs+tP//uD2LK3koqDdBG/LQ64w3kr9QuTFFjTmP8Vun3jD6AUMn+c0
-         xa1Q==
-X-Gm-Message-State: ANhLgQ0GzD3isq7shacgyZzQfumxtP83TARQ868lbJ85QWAQdQTLna23
-        Wj4CsUeYd0D5DOQDp04uGMQy5ombXo7bmxhlqAF3RMJr
-X-Google-Smtp-Source: ADFU+vt1LcrRWUG4sNTMpqdxY6nLJfLycOtTX3XiwIrXm23V2faL9woLmCZKieNb+w3R/h2ZyM+U6Ole4NwN3y4thxg=
-X-Received: by 2002:a05:6402:38c:: with SMTP id o12mr10304015edv.273.1584050353584;
- Thu, 12 Mar 2020 14:59:13 -0700 (PDT)
+        bh=IpREGZLXjJnxxq/6yqXD0/SV+94rl6883IqKHzdvXzM=;
+        b=rSceJJSkKFY+hePIe9bqJ0W4S+jTG1c9aTm0YxzCnCJ1Fren8wWLLvqm0Bz7lGKdcC
+         Wgo50DigHgrzLfNEPxb9p+Fdm0ciYzMcMT+6fJa7eTc4qDfLNMWq2bRQjdrqfI14zo2z
+         A/dr3/Z+9n8a70Kw71LcRhwZv3uZxHaVxg3E5sx+RjWszOv3HPyPYfPcW+k9Cq6JKlHb
+         o9zvqvBaQK7WnUmqarUfCxgKbSllbB50fOOq1JwsdotK1wwNwJnOdQtncZXIEndjLC1M
+         Q0zOUaQY7zYEX073edwcvm/upYfHrf4Es65u4398c0ZIT0yBrksm+XHVJ6usDBzYH/lh
+         sP8g==
+X-Gm-Message-State: ANhLgQ1Rh+g6Yk7uI5RMhSyv43bYT5rnIV0mxDa7q/0WvIgOZsww1uMD
+        O140XTtcaDgpXAYcUqeFKHlD/qv3UyC4m74EHbRk/A==
+X-Google-Smtp-Source: ADFU+vstXcWBfXM899o1chUzddlAkYb9wv3TPhISaHirbk2uvAeM2UTnJ/rzLfgRmpRnm5qk+eSMiSyihihCT1xIGE4=
+X-Received: by 2002:a05:6830:1ad4:: with SMTP id r20mr386678otc.316.1584050785043;
+ Thu, 12 Mar 2020 15:06:25 -0700 (PDT)
 MIME-Version: 1.0
-References: <5981c317-4b39-de15-810b-a781aa79189d@gmail.com>
- <20200312170714.180996-1-jonathantanmy@google.com> <20200312175151.GB120942@google.com>
- <CAP8UFD0+fyz=S_VN=EzPOOxNSNkge0uB84kEqQD_mudsFtR8Lg@mail.gmail.com>
-In-Reply-To: <CAP8UFD0+fyz=S_VN=EzPOOxNSNkge0uB84kEqQD_mudsFtR8Lg@mail.gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Thu, 12 Mar 2020 22:59:02 +0100
-Message-ID: <CAP8UFD1LibB=BBhhAvVENCrZy52vUMDNnY04Hvkh=OJtzhQpNw@mail.gmail.com>
-Subject: Re: [Question] Is extensions.partialClone defunct?
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Derrick Stolee <stolee@gmail.com>, git <git@vger.kernel.org>,
-        Taylor Blau <me@ttaylorr.com>
+References: <pull.679.v4.git.git.1579155273.gitgitgadget@gmail.com>
+ <pull.679.v5.git.git.1581802602.gitgitgadget@gmail.com> <ad8339aebf28ec84c22ed59cef06614d204adb55.1581802602.git.gitgitgadget@gmail.com>
+ <20200312151318.GM212281@google.com> <CABPp-BHyNvxQZ5q=9WXXESTPmxFe4fAiE5roGeV2H+XJ_cpDmg@mail.gmail.com>
+ <xmqqftedfkvy.fsf@gitster.c.googlers.com> <CABPp-BGvqUEDoj6_mUAsSVeS8+h5ruCFcMTENtf5LY2XWKVj-g@mail.gmail.com>
+ <20200312203718.GA870787@coredump.intra.peff.net> <xmqqo8t1e01r.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqo8t1e01r.fsf@gitster.c.googlers.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 12 Mar 2020 15:06:14 -0700
+Message-ID: <CABPp-BGQ0anV7P19PF6NgosF4psQ=TQp=8B6dt2U+ENE2Ubjew@mail.gmail.com>
+Subject: Re: [PATCH v5 20/20] rebase: rename the two primary rebase backends
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Emily Shaffer <emilyshaffer@google.com>,
+        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Denton Liu <liu.denton@gmail.com>,
+        Pavel Roskin <plroskin@gmail.com>,
+        Alban Gruin <alban.gruin@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 12, 2020 at 10:54 PM Christian Couder
-<christian.couder@gmail.com> wrote:
+On Thu, Mar 12, 2020 at 2:27 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> On Thu, Mar 12, 2020 at 6:51 PM Jonathan Nieder <jrnieder@gmail.com> wrote:
-> >
-> > Jonathan Tan wrote:
-> > > Derrick Stolee wrote:
-> >
-> > >> but it appears that we rely on the "remote.<name>.promisor = true"
-> > >> setting instead of this extension.
-> > >
-> > > Hmm...besides giving the name of the promisor remote, the
-> > > extensions.partialClone setting is there to prevent old versions of Git
-> > > (that do not know this extension) from manipulating the repo.
+> Jeff King <peff@peff.net> writes:
 >
-> That could be true of "remote.<name>.promisor = true".
+> > Though in this particular case, I don't mind too much just leaving "am"
+> > as an alias for "apply" (it was actually the first thing I tried when
+> > writing my earlier emails, but I'm probably not a representative user
+> > there). Putting that in a release, though, may mean supporting it
+> > forever. :)
+>
+> Yeah, I agree that what used to exist only in 'next' and we chose to
+> remove it before it its 'master', does not deserve to be supported
+> forever.  So let's scrap the "am is taken as a synonym for apply".
+> It would not help the old version taken from 'next' grok a new
+> configuration file that uses "apply" anyway ;-)
+>
+> > I guess like your email I'm going back and forth between the two
+> > options. I think that means it probably doesn't matter _too_ much either
+> > way.
+>
+> OK, let's avoid screwing it up even further by doing no more damage
+> than merging just the three fix-ups we discussed recently.
+>
+> The fact that jrnieder runs 'next'+patches for his $DAYJOB users
+> makes me hope that there may be other organizations that do the
+> same, and cooking in 'next' would mean somthing, though.
+>
+> We may want to think of a way to strongly encourage those who are in
+> charge of choosing and maintaining the versions of Git that is used
+> in their organization, whose operation depends on the healthy future
+> versions of Git, to run 'next' or at least 'master', to stay ahead
+> of the released versions.  Some education and advocacy is needed?
 
-I mean for future versions, not for old versions.
+I agree, it's super cool that Emily and Jonathan distribute 'next' to
+their users at Google and provide us lots of early feedback.  I wish
+we had something similar; currently, the only control I have is
+requesting that some documentation file that includes a recommended
+minimum git version be bumped to something newer, and I usually need
+to provide a reason (I can't just say, "It's the newest release").
+Other than that, developers install whatever version of git they like,
+possibly unaware of what's in that documentation file.
+
+In fact, not having a way to control git versions is leading to
+discussions of spending my time to not only fix issues in git (e.g.
+the read-tree -mu HEAD problems with sparse-checkout) but also writing
+some separate program that does that piece independent of git so that
+we can work with a variety of git versions.  Such a pain...does anyone
+know how to educate me to advocate to the company that we come up with
+some more controlled git version?
