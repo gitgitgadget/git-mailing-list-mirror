@@ -7,77 +7,158 @@ X-Spam-Status: No, score=-8.2 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1,
 	USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E365DC10DCE
-	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 13:31:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FF19C10DCE
+	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 14:16:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A8725206E9
-	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 13:31:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 450FA20650
+	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 14:16:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="VJYPNoYi"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="XZMENi5d"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727210AbgCLNbe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Mar 2020 09:31:34 -0400
-Received: from mail-pg1-f178.google.com ([209.85.215.178]:34232 "EHLO
-        mail-pg1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725978AbgCLNbe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Mar 2020 09:31:34 -0400
-Received: by mail-pg1-f178.google.com with SMTP id t3so3099798pgn.1
-        for <git@vger.kernel.org>; Thu, 12 Mar 2020 06:31:33 -0700 (PDT)
+        id S1727390AbgCLOQg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Mar 2020 10:16:36 -0400
+Received: from mail-pj1-f54.google.com ([209.85.216.54]:54173 "EHLO
+        mail-pj1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727123AbgCLOQf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Mar 2020 10:16:35 -0400
+Received: by mail-pj1-f54.google.com with SMTP id l36so2612512pjb.3
+        for <git@vger.kernel.org>; Thu, 12 Mar 2020 07:16:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=nwyn+uvrQSVwFFU037C0/iV1nwL5hGxVBzt/oyn7eUg=;
-        b=VJYPNoYi8Z+ZppJ7IHOI2oKuE9AHuCTN/67zGG1F1/5uRSWtszeTuPNYGl2HgQN5CJ
-         zXCzVrG+AH7Kb+Yk1i0FW+/yhZy4+uTE2nSjelyvYRamXl6qJk1Lz8B50MnnrhRvq+De
-         6cSjx59farFOZr1tj5LYJzezndbPgzxot0jyOQ27Qo9nSfjOORprF5N7DSBoyssaMiVD
-         O/YdVTCyibOLOWtcOD9iQqVV2JmPNUscwFIzROMxVZsmQFHKCYGFPoqu5oQZmPNl+30s
-         Q+9TQVqzhQxeNCZC0ImvEIqQw8MgmW5y35z6TtAlqSF0ugyQsPf+HRKoTR07mdv/gIo/
-         0QnQ==
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=mdAwImHEEEv7ZygSsut68csF1xXtLVnQnFWC2VB5QC8=;
+        b=XZMENi5d9eZeyU/apBdtgiGXXqH+FgTBd1xkjXEasy8W3xoX/FAHyekkzsfN6VM1Qx
+         Li896OKmJxA1gm3e6Zon7BQmYfUmXefb3cJHRI2bO0DEolADDswaMQUX+anwm4UsAVSI
+         AEWXu0Q3G5Gp9gViOxvbUfBvKdOQTB4PbmOQ2RJ51RXlT4cUa0oe7wYRPIvxUSUYGgMJ
+         xP3CFF6l4UsonhHOdRmRM1jcMLlM8EbqMVVb79ewK1r6ch6rqJ97MM+MWgXZhMbSZRK9
+         YRW5fFXmmN/FTeSrazCL7sDm5ZUCGnPiDx3cYOlcbxzo4w30wCOVTcy2BbiEcCbkRwCO
+         +24w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=nwyn+uvrQSVwFFU037C0/iV1nwL5hGxVBzt/oyn7eUg=;
-        b=ujFI+dfex113vbcMcYRrUEuQnOvzzitZJRuy3t331QJlgydzFHtUs9QaZB3Nx0IKFf
-         TOyCqTavlf6S/1fWas5AkUihbPifrPuzjK1p6hmMiGCurtc/EkUQAXU5i7GoRuSjNx2y
-         U2Iw497fTljDznG1YG320WoleR8OOhBq3Pa1TLeAw3FWc9WqNBI+GWPQdct8mo7uqJKM
-         xYQ1GbdqBW92WDCWshTuo9gpFwLi/xMC0xlFcQVSYE4W9QrwtuD4DZz0iSuSvl1JYjg2
-         stomUFmwo9S5ljWppAqAKxF9i2WZGJL97FWOoUk6TNH7QRKXteWwayIlRs3IlKddhfHy
-         nj8g==
-X-Gm-Message-State: ANhLgQ2ZiycLMli3YIeTB/Wl5JHqUE1B9kZ3gT36pn5Bzl7UFdQsoEqp
-        TgdaDRJOLADx4RqVC7cv3SczlD5p0NCh1w==
-X-Google-Smtp-Source: ADFU+vs1YcXg7G/KvYWl6UxQ0XujDFSQtqHPqO9/8cmPQ+ydxLElIyY2kbbtGtRkYKTmE/PKZ0etLg==
-X-Received: by 2002:a63:1e57:: with SMTP id p23mr8016622pgm.316.1584019893004;
-        Thu, 12 Mar 2020 06:31:33 -0700 (PDT)
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=mdAwImHEEEv7ZygSsut68csF1xXtLVnQnFWC2VB5QC8=;
+        b=enmpqT4U+LhCL9SasExwj234SU7X2LpqtXQ1EAPv4/eMwVxxcX4xF6nLnIzfjJZCON
+         AupZIXXPjS9lFuOzyM31NXDuuxRMBac/g8ZiLj6v9Ntnj8GpBFdn2mo296oMW6U75T5g
+         umQy2igI91dfPs+f55IICMsl47/P9gbmk5z5/wTiE/Rs4QKTMPWls5MR9GJb0dIqbyZ/
+         LP+VRbY7pG+fgSQFRWhItQqxJZk9WHB73vSYRyCx8Zg79iI1g/P5XzInsHC7qaptL0hH
+         fpDwPMyiANZc6jCFpj/e6d4bhKQyGZwPJ6Ky9FYpui3PNBrbpO7KrRWhQdevUuzXzKCx
+         AGbA==
+X-Gm-Message-State: ANhLgQ22Q+mjukwvxQFKGd1Snvk1gfB2weKw2fC0iWetOsK4fasn7Xrg
+        Z+sNNnG7H+/fCSis0Mz+AEHJ4hMHk0hYTQ==
+X-Google-Smtp-Source: ADFU+vvQVjiryUv0g88gvW2PNDLR0z3zWisxtGIrcE0ys5OB4J9fEE0o8YFeutdLJn6i/ZB6dOxE4A==
+X-Received: by 2002:a17:90b:3711:: with SMTP id mg17mr2921238pjb.73.1584022593586;
+        Thu, 12 Mar 2020 07:16:33 -0700 (PDT)
 Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
-        by smtp.gmail.com with ESMTPSA id f17sm42267432pge.48.2020.03.12.06.31.31
+        by smtp.gmail.com with ESMTPSA id f8sm54811817pfn.2.2020.03.12.07.16.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Mar 2020 06:31:32 -0700 (PDT)
-Date:   Thu, 12 Mar 2020 06:31:27 -0700
+        Thu, 12 Mar 2020 07:16:32 -0700 (PDT)
+Date:   Thu, 12 Mar 2020 07:16:28 -0700
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     James Ramsay <james@jramsay.com.au>
 Cc:     git@vger.kernel.org
-Subject: Re: [TOPIC 16/17] =?utf-8?B?4oCcSSB3YW50?=
- =?utf-8?Q?_a_reviewer=E2=80=9D?=
-Message-ID: <20200312133127.GK212281@google.com>
+Subject: Re: [TOPIC 2/17] Hooks in the future
+Message-ID: <20200312141628.GL212281@google.com>
 References: <AC2EB721-2979-43FD-922D-C5076A57F24B@jramsay.com.au>
- <6DAC1E49-9CA0-4074-867E-F22CD26C9FEB@jramsay.com.au>
+ <0D7F1872-7614-46D6-BB55-6FEAA79F1FE6@jramsay.com.au>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <6DAC1E49-9CA0-4074-867E-F22CD26C9FEB@jramsay.com.au>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <0D7F1872-7614-46D6-BB55-6FEAA79F1FE6@jramsay.com.au>
 User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 12, 2020 at 03:14:25PM +1100, James Ramsay wrote:
-> 5. Jonathan N: patchwork exists, need to learn how to use it :)
+On Thu, Mar 12, 2020 at 02:56:53PM +1100, James Ramsay wrote:
+> 1. Emily: hooks in the config file. Sent a read only patch, but didn’t get
+> much traction. Add a new header in the config file, then have prefix number
+> so that security scan could be configured at system level that would run
+> last, and then hook could also be configured at the project level.
+> 
+> 2. Peff: Having hooks in the config would be nice. But don’t do it at
+> `hooks.prereceive`, but use a subconfig like `hooks.prereceive.command` so
+> it’s possible to add options later on.
+> 
+> 3. Brian: sometimes the need to overridden, ordering works for me. For Git
+> LFS it would be helpful to have a pre-push hook for LFS, and a different one
+> for something else. Want flexibility about finding and discovering hooks.
+> 
+> 4. Emily: if you want to specify a hook that is in the work tree, then it
+> has to be configured after cloning.
+> 
+> 5. Jonathan: It’s better to start with something low complexity as long as
+> it can be extended/changed later. If there's room to tweak it over time then
+> I'm not too worried about the initial version being perfect — we can make
+> mistakes and learn from them. A challenge will be how hooks interact.
+> Analogy to the challenges of stacked union filesystems and security modules
+> in Linux. Analogy to sequence number allocation for unit scripts
+> 
+> 6. CB: Declare dependencies instead of a sequence number? In theory
+> independent hooks can also run in parallel.
+> 
+> 7. Peff: Maybe that’s something to not worry about from the start. Like, how
+> many hooks do you expect to run anyway.
+> 
+> 8. Christian: At booking.com they use a lot of hooks, and they also sent
+> patches to the mailing list to improve that.
+> 
+> 9. Emily: In-tree hooks?
+> 
+> 10. Brian: You can do `git cat-file <ref> | sh` to run a hook.
+> 
+> 11. Brandon: Is it possible to globally to disable all hooks locally? It
+> might be a security concern. Or is it something we might want to add?
+> 
+> 12. Peff: No it’s not.
 
-We've actually got a meeting with some Patchwork folks today - if
-anybody has a burning need they want filled via Patchwork, just say so,
-and we'll try to ask.
+Thanks for the notes, James.
+
+I came away with the understanding that we want the config hook to look
+something like this (barring misunderstanding of config file syntax,
+plus or minus naming quibbles):
+
+[hook "/path/to/executable.sh"]
+	event = pre-commit
+
+The idea being that by using a subsection, we can extend the format
+later much more easily, but by starting simply, we can start using it
+and see what we need or don't want. We can use config order to begin
+with.
+
+This means that we could do something like this:
+
+[hook "/path/to/executable.sh"]
+	event = pre-commit
+	order = 123
+	mustSucceed = false
+	parallelizable = true
+
+etc, etc as needed.
+
+But I wonder if we also want to be able to do something like this:
+
+[hook "/etc/git-secrets/git-secrets"]
+	event = pre-commit
+	event = prepare-commit-msg
+	...
+
+I guess the point is that we can choose to allow this, or not. I could
+see there being some trouble if you wanted the execution order to work
+differently (e.g. run it first for pre-commit but last for
+prepare-commit-msg)...
+
+I think, though, that something like
+hook.pre-commit."path/to/executable.sh" won't work. It doesn't seem like
+multiple subsections are OK in config syntax, as far as I can see. I'd
+be interested to know I'm wrong :)
+
+Will try and get some work on this soon, but honestly my hope is to get
+bugreport squared away first.
 
  - Emily
