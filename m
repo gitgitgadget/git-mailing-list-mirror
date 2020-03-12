@@ -6,65 +6,65 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B7B0C10DCE
-	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 04:02:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E452C10DCE
+	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 04:02:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 33CB22071C
-	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 04:02:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 54F5820724
+	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 04:02:54 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="key not found in DNS" (0-bit key) header.d=jramsay.com.au header.i=@jramsay.com.au header.b="TUBpYpiX";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="itWgXyGq"
+	dkim=fail reason="key not found in DNS" (0-bit key) header.d=jramsay.com.au header.i=@jramsay.com.au header.b="MxPm7kAs";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SiuUk3eG"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726534AbgCLEB7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Mar 2020 00:01:59 -0400
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:49575 "EHLO
+        id S1727033AbgCLECx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Mar 2020 00:02:53 -0400
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:57479 "EHLO
         out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725980AbgCLEB7 (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 12 Mar 2020 00:01:59 -0400
+        by vger.kernel.org with ESMTP id S1725980AbgCLECx (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 12 Mar 2020 00:02:53 -0400
 Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
-        by mailout.nyi.internal (Postfix) with ESMTP id 3FEDB21F82
-        for <git@vger.kernel.org>; Thu, 12 Mar 2020 00:01:58 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute7.internal (MEProxy); Thu, 12 Mar 2020 00:01:58 -0400
+        by mailout.nyi.internal (Postfix) with ESMTP id 168EB21FA7
+        for <git@vger.kernel.org>; Thu, 12 Mar 2020 00:02:52 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute7.internal (MEProxy); Thu, 12 Mar 2020 00:02:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jramsay.com.au;
          h=from:to:subject:date:message-id:in-reply-to:references
         :mime-version:content-type:content-transfer-encoding; s=mesmtp;
-         bh=Te4UXHgC9dIPInzEB7ZOlNx4FU8RT0X/quSr+3cOFGU=; b=TUBpYpiXP557
-        e9BWpcgTPTcgu7q/Pk/JfO6c3MohtLc31aqCVYcqDXFXtpmOB6n8Mgn5v7Oz9PKh
-        G8drXPGK/3zjcNuU513WpbyTa0YfKhw5FGrOwwgLpMLfsIxmhRjw4kGpRs7XqXB1
-        uWjWD+ngR9LWNbxWnC/r9e45vgUD49s=
+         bh=WxTHbiev3t0qzyEj3Q81AEMRo0deiRrCnFCCB+q5FeM=; b=MxPm7kAs1B1c
+        jWA4EVW5U5jM1RTEemhrqKdLoE/qU1AWvaHg1vKAByZ8ba1oTwAN3bhxwZPHLzrk
+        xsceQJnUHXgJ4jmZE0OAnf/O3KSxAwR6ewFtl1Hmx1F3F3OBvB4H/j/n+/sI+Trl
+        bBxU0+KwMe3E6PXvPo7xuBOdUDpU2Ao=
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=content-transfer-encoding:content-type
         :date:from:in-reply-to:message-id:mime-version:references
         :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm2; bh=Te4UXHgC9dIPInzEB7ZOlNx4FU8RT0X/quSr+3cOF
-        GU=; b=itWgXyGq6ZTnbBHivACa/T83NIzhO6Wc8Ozq9dpxiDQkWmkgw11PsjCj5
-        48Qhb5BM3qUii/D4MXEHFgJQa5nt0fLiHOSEZON5EXuUcudHOvsD2Nfqs5a2UEVl
-        Tn8HwiKCsuX+t0ZAFdZkL3H6dwgDLhNt8sPN2AVgmigAoHANmgkNx9rj6/sip21I
-        q8EO2X4OTNXvadGEnRh2GJ+6w4Hl0MC+yUmoj26QmbPVDsVD3a7OHr5fuWgm4w/A
-        4ZcfNrvCaLbEiI2Wb5mB8LnK79ibmHFhdpIZDFA62kN+rSaQnEiaJWm2H3e26ALG
-        663HJEoc63STxFq1cNDZAuVPeHwuQ==
-X-ME-Sender: <xms:NrRpXvvXR4xLXywj9gGwLZEjrXwC65icrQkxW4Y8zfY97vmOZCEhsg>
+        :x-sasl-enc; s=fm2; bh=WxTHbiev3t0qzyEj3Q81AEMRo0deiRrCnFCCB+q5F
+        eM=; b=SiuUk3eGXQOTRmfOaD0nHDCQI0I3yoZEyItbY+SOirpAjR+EuBMAGJDsS
+        xH6RGYez1jlmosefw2IlsEvs7oT/lt7v4XU8xCyDvyC9DpG0DTIVVHLCrEZQ5tcl
+        njHHb1pmxVDDaeDghQS4TVgEzbXpvpcxpxi0pWuhbsggUsIv/a1qztAIy8lpcT1Y
+        cVDLzrz4Cd1LSv05KZqSISoM6fckX7wXqdTmU2gCcww2hI7ZUt4uLW1M30LSgrQc
+        z8hJ+Y0xkV5w/TYVNAR8Bor+UpTbnO4DSiYbzAe0WsU2tTxaKaZj9gsL0YjgYA8x
+        2dTSAJhVeiQAN9rldlTbocEoC2xsg==
+X-ME-Sender: <xms:a7RpXl4bKi1QAW4zpr9aNOkBaCxjmsHImxB4UX3X7KupxlnTNIlAJQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedugedruddvgedgjeekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffokfgjfhggtgfgsehtke
     hmtdertdejnecuhfhrohhmpedflfgrmhgvshcutfgrmhhsrgihfdcuoehjrghmvghssehj
     rhgrmhhsrgihrdgtohhmrdgruheqnecukfhppeduvddurddvtddtrdeirdduuddtnecuve
-    hluhhsthgvrhfuihiivgepvdenucfrrghrrghmpehmrghilhhfrhhomhepjhgrmhgvshes
+    hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepjhgrmhgvshes
     jhhrrghmshgrhidrtghomhdrrghu
-X-ME-Proxy: <xmx:NrRpXuv9fm5GLi_UpUIcJYRs0pjlucVzPvM-kjKrJemQ5knZfZOwaQ>
-    <xmx:NrRpXsGCJfq99kSyIwE9mPk2OlBpfr06I7N6HA440_ns0iVHRkkROQ>
-    <xmx:NrRpXhPlQhR-Dz-l8_b0X0Ye1lf79xPy_vURu6cd6-f0Hgf2krL5ww>
-    <xmx:NrRpXl5otja4iP9kt2UAn-PUItgLKonntyDqnOAUCDH6Dyq3O99yaw>
+X-ME-Proxy: <xmx:a7RpXsVQbXvh7FcknA2o6tg3Sgl7il_A39UsvqYq13uJd9NgdOVAsw>
+    <xmx:a7RpXsCvTl7tYIOuAHYDEosIWbK-ND-tJZJaVg989gNrnlJzzPoCxw>
+    <xmx:a7RpXj5oUuYkHqCAVPGn6SsBMIdqZmlw28YF767OeWtzKODjOWBYaQ>
+    <xmx:bLRpXkYG-32BrduFXpu1Zim8-Rkwh4BMNlMaRuHg8C5-4zvubR6Pzw>
 Received: from [192.168.1.38] (121-200-6-110.79c806.syd.nbn.aussiebb.net [121.200.6.110])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 62B153061363
-        for <git@vger.kernel.org>; Thu, 12 Mar 2020 00:01:57 -0400 (EDT)
+        by mail.messagingengine.com (Postfix) with ESMTPA id 6A568328005E
+        for <git@vger.kernel.org>; Thu, 12 Mar 2020 00:02:51 -0400 (EDT)
 From:   "James Ramsay" <james@jramsay.com.au>
 To:     git@vger.kernel.org
-Subject: [TOPIC 6/17] GC strategies
-Date:   Thu, 12 Mar 2020 15:01:54 +1100
+Subject: [TOPIC 7/17] Background operations/maintenance
+Date:   Thu, 12 Mar 2020 15:02:48 +1100
 X-Mailer: MailMate (1.13.1r5671)
-Message-ID: <B459AEB1-BF77-44C9-B06A-4B96C2E22287@jramsay.com.au>
+Message-ID: <35FDF767-CE0C-4C51-88A8-12965CD2D4FF@jramsay.com.au>
 In-Reply-To: <AC2EB721-2979-43FD-922D-C5076A57F24B@jramsay.com.au>
 References: <AC2EB721-2979-43FD-922D-C5076A57F24B@jramsay.com.au>
 MIME-Version: 1.0
@@ -75,41 +75,33 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-1. Jonathan N: Git has a flexible packfile format. Compared to CVS where 
-things are stored as deltas against the next revision of the same file. 
-GC can be a huge operation if it’s not done regularly. "git gc" makes 
-one huge pack. Better amortized behavior to have multiple packs with 
-exponentially increasing size and combine them when needed (Martin 
-Dick's exproll).
+1. Stolee: Are we interested in having a background process doing 
+things?
 
-2. Jonathan N: There are also unreachable objects to take care about. GC 
-can/should delete them. But at the same time someone else might be 
-creating history that still needs those objects. To give objects a grace 
-period, we turn the unused objects into loose objects and look at the 
-creation time. But alternatively there’s the proposal to move these 
-unreachable objects into a packfile for all these objects. But this can 
-be a problem for older git clients, because they might not know the pack 
-is garbage and might move objects across packs. See the hash function 
-transition doc for details.
+2. Emily: There are a lot of different ways to do this. Even only 
+looking at Linux there are different ways.
 
-3. Terry: JGit has these unreachable garbage packs
+3. Stolee: Without looking at how? What background operations would we 
+like to have?
 
-4. Peff: You want to solve this loose objects explosion problem?
+4. Emily: Is it a good candidate for `git undo`? To keep track of what 
+the user was doing and to make it possible to roll back?
 
-5. Peff: what if you reference an object in the garbage pack from an 
-object in a non-garbage pack?
+5. Brian: It can run into scalability issues. Also there might be repos 
+on my disk that never change and don’t need background processing. At 
+GitHub we do maintenance based on the number of pushes.
 
-6. Jonathan N: At GC time the object from the garbage pack is copied to 
-a non-garbage pack. Basically rescue it from the garbage. It only saves 
-the referenced objects, not the whole garbage pack.
+6. Stolee: Kind of maintenance will differ from client and server, 
+interests are different. For Scalar we have this one process looking at 
+all repos and will do operations on them.
 
-7. Jonathan N: It has been running in production for >2 years.
+7. Peff: On server-side you’ll have millions of repos and even one 
+process looking at all processes have impact on the system. Most hosting 
+providers already have services taking care of this, so I think this 
+feature is only interesting for client-side.
 
-8. Peff: There are so many non-atomic operations that can happen. And 
-races can happen.
+8. Brian: We should be careful. For example I’m constantly creating 
+test repos in /tmp.
 
-9. Jonathan N: If you find races, please comment on the JGit change that 
-describes the algorithm. Happens-before relation and grace period.
-
-10. `git gc --prune-now` should no longer create loose objects first, 
-before just deleting them.
+9. Stolee: Thanks for the input, we’ll do research and come back to 
+this.
