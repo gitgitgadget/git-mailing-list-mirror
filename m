@@ -2,113 +2,89 @@ Return-Path: <SRS0=YYoh=45=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=no
-	autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 90F3EC10DCE
-	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 18:04:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EF81C10DCE
+	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 18:06:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6435F206F1
-	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 18:04:32 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="h8q2Mtwd"
+	by mail.kernel.org (Postfix) with ESMTP id 282FF20716
+	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 18:06:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1584036415;
+	bh=PBrCXYfbckkavdpk6gStlsMfPSJTRjpGxM/KEAGVSlE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
+	b=FzGNQLIMPc0/Iug7K9RI64UADaeHZnMIp2IvrRoHOesTRELFUTZ5rZMrA0DnZIJRL
+	 dkFKVbMXMlGiAUZMARy6kniKyrugqLyXYRp/PywbPd2i5T/QoP+v1ZNkHAtn6QMAY7
+	 EO5HDwcS3pfEyC6PDPGpmFwybTkNte5tLjLOAZkY=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726675AbgCLSEb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Mar 2020 14:04:31 -0400
-Received: from mail-qt1-f202.google.com ([209.85.160.202]:55816 "EHLO
-        mail-qt1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726546AbgCLSEb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Mar 2020 14:04:31 -0400
-Received: by mail-qt1-f202.google.com with SMTP id o10so4509573qtk.22
-        for <git@vger.kernel.org>; Thu, 12 Mar 2020 11:04:30 -0700 (PDT)
+        id S1726554AbgCLSGy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Mar 2020 14:06:54 -0400
+Received: from mail-qk1-f177.google.com ([209.85.222.177]:47042 "EHLO
+        mail-qk1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726414AbgCLSGy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Mar 2020 14:06:54 -0400
+Received: by mail-qk1-f177.google.com with SMTP id f28so7760640qkk.13
+        for <git@vger.kernel.org>; Thu, 12 Mar 2020 11:06:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=5iENwvyP7RaH61n5VzBcFe1Dxx4HsaHMoOMCo0xEIbs=;
-        b=h8q2Mtwdn88bCgcZMNKaicXP2+eIiUAfVegnuuDbp5OP84aprgaOXbFEJ9z2lPzK/3
-         JTcLh1b7+og0KeZFBlPZFi35romGJZI86/0Q0cx7YGjSyBZhabqYLv0/U3M6YWxGMpn6
-         rMj+cLsg4W4BsL7vRpHwZfXMP0ccYGQLT5fbrCwZ9E3c92hy49phlaTAKFYl2mEf2z6n
-         tFA0Lgx1egtyXspOR/mSadqIdNE6wgWbSPsFgU601IMqvE0ZIRp71kmkhPVeAZY5PQlA
-         DNiFcTO+tXq4lQD4rPwTF0MCTLtFRUvNw2WRXArqUwZ7EeKy3+nsBGPknDuNQW8173bZ
-         i/KA==
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=eZIbx8hwle18njBnIWJtc9Oh4S0jQVmUo5sJdNJJr5E=;
+        b=a4TkbcH2d54s7Imv/dAYar1Y+3aNqpCOU1S9iQrjzYIYx83xCQUryHK42yVA+MKSZ+
+         ibBuCuY9KTc+eY8SQ7mb4nsJAoYzCTh1EjPxztJtLoOtltm9PkMsRiIRrc+deLYL+hts
+         3VIO5FmVVbWE8ZGvhqeGsuV6Tt0pZF2VAca/s=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=5iENwvyP7RaH61n5VzBcFe1Dxx4HsaHMoOMCo0xEIbs=;
-        b=K8ajDdTZUDWGRoR2bZvJf8nXwQs6HQ/wbfXZGcjm3n6guMaYtYzj1BURF5blOVHap6
-         gq8FQBm3/yqHc12V7AKxak7x5LnIQRW66GcY0nKabS210+qq5f1+7tO4XoA/Ze7gyuHm
-         efjMeau8sYzLQkAo4boXDJKyaes+pm8DNf7XRd7WZ0++uS7j5xCRfiCrd9AZryMk5kEb
-         qK14f5cqXWHKPKY9IzlafT7Rxl9iVaahuUqHwkcpIVGigD/HnXqASyviwy4KXZWsDL9Q
-         8B7GbRIoW+RqhkRBPejck7nAaK6aqPUv5Rq7jvq+ttDZSMpjwfrgJqHnJfeZ3XbZmpSA
-         /oiQ==
-X-Gm-Message-State: ANhLgQ3+f74zs587H/aJM9KWJ361T0UjpfO4kCY13mf5plglZyA1lEth
-        ViT2FsNg00oo5ZdzzTWWA2V6UVNrIrlsqGCTLSoa
-X-Google-Smtp-Source: ADFU+vvQUujyX4HU5vjSuiO7sKPr8oYw7gni1kn7ifL0r10JZ503i/5OsHB7ZQdpmeelRQsSmHv4Y3LAXGMfmqkRygpd
-X-Received: by 2002:ac8:4548:: with SMTP id z8mr8870723qtn.188.1584036269784;
- Thu, 12 Mar 2020 11:04:29 -0700 (PDT)
-Date:   Thu, 12 Mar 2020 11:04:27 -0700
-In-Reply-To: <20200310225641.96556-1-jonathantanmy@google.com>
-Message-Id: <20200312180427.192096-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20200310225641.96556-1-jonathantanmy@google.com>
-X-Mailer: git-send-email 2.25.1.481.gfbce0eb801-goog
-Subject: Re: [PATCH] rebase --merge: optionally skip upstreamed commits
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     jonathantanmy@google.com
-Cc:     newren@gmail.com, git@vger.kernel.org, stolee@gmail.com,
-        git@jeffhostetler.com
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to;
+        bh=eZIbx8hwle18njBnIWJtc9Oh4S0jQVmUo5sJdNJJr5E=;
+        b=YCgR39KtzdBzOXsRNNM8fvKbI1o67veJBC/K42KfttWdTNLbbQw5ZTrcehTmCkogm/
+         uG9Oiay1w+nLg8lI+lWmqMaHSMHDQumnUlUYJjfzT1g2gD3JbkXhJq6HrFYTyFYRbLJd
+         qhsBx3VKN5GbzS5uNTHK1v3A2HspxzCRNGUHfOQRQxBYNkraM4/VZU/mnFb98YksIfd9
+         2p7A3MZQNsbsvGC7TYwyRD653rlmObZn71wsyEVEU0+sVcDS9gzbDv71eyuCnyziPE94
+         Ir7jvX3yD00tKRxxqEuteqY0IZ7Q2u8ctnAi+C8SPOmRQB46nqE28TLUc18baQ7Fm82C
+         RCCw==
+X-Gm-Message-State: ANhLgQ2xLlFBURLpdMILJOlnfwrXH0rkyLmiPAoEpfq7g9LtU3UpBCEm
+        dtnpfL18W/Sy6p8fuKCzUZBBynloqZwi6Q==
+X-Google-Smtp-Source: ADFU+vur2Aq02LYR8+LYa9XAUIAf2adJLjxaVGa5jDvP+2omXrfn665hv5XcjqDbroj056BQtRw3aQ==
+X-Received: by 2002:a37:2fc3:: with SMTP id v186mr9059944qkh.311.1584036413310;
+        Thu, 12 Mar 2020 11:06:53 -0700 (PDT)
+Received: from chatter.i7.local (107-179-243-71.cpe.teksavvy.com. [107.179.243.71])
+        by smtp.gmail.com with ESMTPSA id z11sm10073054qti.23.2020.03.12.11.06.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 12 Mar 2020 11:06:52 -0700 (PDT)
+Date:   Thu, 12 Mar 2020 14:06:51 -0400
+From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To:     James Ramsay <james@jramsay.com.au>
+Cc:     git@vger.kernel.org
+Subject: Re: [TOPIC 3/17] Obliterate
+Message-ID: <20200312180651.yonj6wzuatur25w6@chatter.i7.local>
+Mail-Followup-To: James Ramsay <james@jramsay.com.au>, git@vger.kernel.org
+References: <AC2EB721-2979-43FD-922D-C5076A57F24B@jramsay.com.au>
+ <5B2FEA46-A12F-4DE7-A184-E8856EF66248@jramsay.com.au>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <5B2FEA46-A12F-4DE7-A184-E8856EF66248@jramsay.com.au>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> > Does this suggest that the cherry-pick detection is suboptimal and
-> > needs to be improved?  When rebasing, it is typical that you are just
-> > rebasing a small number of patches compared to how many exist
-> > upstream.  As such, any upstream patch modifying files outside the set
-> > of files modified on the rebased side is known to not be PATCHSAME
-> > without looking at those new files.
+On Thu, Mar 12, 2020 at 02:57:24PM +1100, James Ramsay wrote:
+> 8. Jeff H: can we introduce a new type of object -- a "revoked blob" if you
+> will that burns the original one but also holds the original SHA in the ODB
+> ??
 > 
-> That's true - and this would drastically reduce the fetches necessary in
-> partial clone, perhaps enough that we no longer need this check.
-> 
-> In the absence of partial clone, this also might improve performance
-> sufficiently, such that we no longer need my new option. (Or it might
-> not.)
+> 9. Peff: what would this mean for signatures? New opportunity to forge
+> signatures.
 
-I took a further look at this. patch-ids.c and its caller
-(cherry_pick_list() in revision.c) implement duplicate checking by first
-generating full diff outputs for the commits in the shorter side,
-putting them in a hashmap keyed by the SHA-1 of the diff output (and
-values being the commit itself), and then generating full diff outputs
-for the commits in the longer side and checking them against the
-hashmap. When processing the shorter side, we could also generate
-filename-only diffs and put their hashes into a hashset; so when
-processing the longer side, we could generate the filename-only diff
-first (without reading any blobs) and checking them against our new
-hashset, and only if it appears in our new hashset, then do we generate
-the full diff (thus reading blobs).
+Easy, you just quickly find a collision for that blob's sha1 and put 
+that in place of the offending original. ;)
 
-One issue with this is unpredictability to the user (since which blobs
-get read depend on which side is longer), but that seems resolvable by
-not doing any length checks but always reading the blobs on the right
-side (that is, the non-upstream side).
+(Fully tongue-in-cheek.)
 
-So I would say that yes, the cherry-pick detection is suboptimal and
-could be improved. So the question is...what to do with my patch? An
-argument could be made that my patch should be dropped because an
-improvement in cherry-pick detection would eliminate the need for the
-option I'm introducing in my patch, but after some thought, I think that
-this option will still be useful even with cherry-pick detection. If we
-move in a direction where not only blobs but also trees (or even
-commits) are omitted, we'll definitely want this new option. And even if
-a user is not using partial clone at all, I think it is still useful to
-suppress both the filtering of commits (e.g. when upstream has a commit
-then revert, it would be reasonable to cherry-pick the same commit on
-top) and reduce disk reads (although I don't know if this will be the
-case in practice).
+-K
