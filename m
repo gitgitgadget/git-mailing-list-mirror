@@ -2,109 +2,210 @@ Return-Path: <SRS0=YYoh=45=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-19.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
-	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B0D4AC10DCE
-	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 16:47:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9EA05C10DCE
+	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 16:48:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7F3C6206F1
-	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 16:47:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6B4CB2071B
+	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 16:48:14 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ct5QNDK1"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pANWB38q"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726364AbgCLQrI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Mar 2020 12:47:08 -0400
-Received: from mail-oi1-f202.google.com ([209.85.167.202]:44350 "EHLO
-        mail-oi1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726099AbgCLQrI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Mar 2020 12:47:08 -0400
-Received: by mail-oi1-f202.google.com with SMTP id y82so3453675oig.11
-        for <git@vger.kernel.org>; Thu, 12 Mar 2020 09:47:08 -0700 (PDT)
+        id S1726377AbgCLQsN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Mar 2020 12:48:13 -0400
+Received: from mail-oi1-f193.google.com ([209.85.167.193]:46096 "EHLO
+        mail-oi1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726099AbgCLQsN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Mar 2020 12:48:13 -0400
+Received: by mail-oi1-f193.google.com with SMTP id a22so6123674oid.13
+        for <git@vger.kernel.org>; Thu, 12 Mar 2020 09:48:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=GpqYwRFFA4QhP55FNPH4NhqKBr3KKrM7vrEMO6pXyos=;
-        b=ct5QNDK1YIDayK5XUakSGLSYsgSKzJaZA26zDJxX9nF8Kcqwtzi4nDluKGcCJiAiH5
-         Oc0VOvyIPlFw/d5qkyjcEIKl4il6Q/9EiSj2j+nlhjOqf30lbhPbEMns3lG6uCr+14qY
-         iRXkahUUB0FAIc2UgEjuqaf0cFX1OVEvODbvEXTpiZAX8vtnorpgv+GFCMKTKXcqw2Nz
-         qm9xyeeCPxXm5z2kBAS17wGT1utZNvEf3Lgbg2e4dt7/REJJ2PSv4eCk42IYhdXVf0Dk
-         9iahWc+gbrb0DknhsD/pvSCnri+M4Bf/wrGLMqIl7cJAEx2h+nOF2FWxJxqGPfcI3A65
-         1dKg==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=5iGAjvisRCamgIQ5eMuD5xQHbiII9WjWQ0RhBaNv0t0=;
+        b=pANWB38q3aBgUEYXG678rTeCH81drbyI0MuTmuLhWqdyerpj5nsA1l/j/OMlcZPHcG
+         8qnmy6kEgFPNxi9P4nDw5NyiqTP3LudCJToe+E/BM25R/T0iQikDQAkIYUo+ConNTVfn
+         9TWmxHvHdiM15EoTvV5LheL+v0Qij7EPsftKXYcGNvlw1jaeO2VLz7r/EdspgwSa7/fe
+         RurPMF3kSdhFEnAvEv8dN1doz/M6YQj8HJcGfm8XwozVbVVpR845jYv8iFBwGOb9+UeI
+         k1O7KuDzST4W2m9Z83o3b9AciIXD2SSV5uPaMkHfLs/FbnYEoBOKCujmAfRyjgJtnGk0
+         SFTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=GpqYwRFFA4QhP55FNPH4NhqKBr3KKrM7vrEMO6pXyos=;
-        b=TPyz5kltoCFOfbsgKeBAXH5z4gldS/txnnjDgt/cx7ls4GV9N0AA0z8FU2++lnIrND
-         SYw4LKeMvROkukNsWkFkamVp6mJLfn/nkEPEgxT6elixp+VtcUS8O/FMNF7u97SybjOf
-         f6w/VOHdXWoI32t6gav7XpUd2OgQsPNrd06yYQs/1G4/821k7czGuV3QOdOI+JSl/5My
-         eFAmjy8utekiT/3K7sOGsvSC53gV0oC3U0cuC3rwzuGZj+rYbT13NS8i9kjeIw6ezIzT
-         Fm3wPJ5dOoROlM+0cLqhYaLhpvmj4qN09HS5BeiIZzA64YoXfWutSs0Fs27eIfhK8cQS
-         /lYw==
-X-Gm-Message-State: ANhLgQ2MePyI3KMLGbPUuZ9Jmx2h7jvtFDJZPSv/f2HeaKRLuutX2jB5
-        qVJgNG37gzqkHO+D0G5ObwUsiUBAeUBhPEEBRtGD
-X-Google-Smtp-Source: ADFU+vvBHTPzoHPVZa0CijxcVE0dxvTrb8zMYl4eXqr0c8fTqiavp/JAT1pakUiNMktlrJb8leWvgD4fsRaU6d4ET0cV
-X-Received: by 2002:a17:90b:316:: with SMTP id ay22mr5096362pjb.18.1584031182471;
- Thu, 12 Mar 2020 09:39:42 -0700 (PDT)
-Date:   Thu, 12 Mar 2020 09:39:39 -0700
-In-Reply-To: <pull.579.git.1584027403779.gitgitgadget@gmail.com>
-Message-Id: <20200312163939.176298-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <pull.579.git.1584027403779.gitgitgadget@gmail.com>
-X-Mailer: git-send-email 2.25.1.481.gfbce0eb801-goog
-Subject: Re: [PATCH] connected.c: reprepare packs for corner cases
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     gitgitgadget@gmail.com
-Cc:     git@vger.kernel.org, jonathantanmy@google.com, me@ttaylorr.com,
-        dstolee@microsoft.com
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=5iGAjvisRCamgIQ5eMuD5xQHbiII9WjWQ0RhBaNv0t0=;
+        b=bquyCq98SbDdB9dZrYtsMBQMv/wpCwq+Hsi70RBBiLgpnxcQzyt3BJl3FpDoZolkS6
+         D1G4l538M+UqdZKdMQC2rKZD4aMghkoF7dkR3FS1i3+YrW+o1bwE9JrTrzOH25jqVOvf
+         8DqZzlkSZFlUBV8i0oHcgOlg++uz2iVckwvwS8B0hy5wsfOALaP8i5JHmmw4Otxh92sZ
+         8zWddCSXKd9UIDTCJv6HhfUkd592QGy0+w9Aup9AC7jdLd5JY/zHmSuMYMEmf793uDqJ
+         1EqMx0CmAp96x+JzlQ3BVLaDeKZ4Oy/xyUSN+b4lO4Qk+lut9SsBMg8b6VAd+KtdzVus
+         QGZA==
+X-Gm-Message-State: ANhLgQ0Dqlp8FFiC8tVnRYU1xopoQJuPHqfG9VyOE8PmXuTx++JP0K5d
+        kADwNnlp3Vk6BHBJLErQcvYvNWThg79zbDvMtFUdKg==
+X-Google-Smtp-Source: ADFU+vvfK01TSQ1ukY6WDGnGSDdXhtrshNQvWkRRf7038fazfmaUZsMjOTeRmoeIWx7GbqtqQNL0ix0+XrjDdcs+/Fc=
+X-Received: by 2002:a54:4416:: with SMTP id k22mr1774253oiw.167.1584031692098;
+ Thu, 12 Mar 2020 09:48:12 -0700 (PDT)
+MIME-Version: 1.0
+References: <pull.716.git.git.1582762465.gitgitgadget@gmail.com>
+ <26d0c34cd1d4a54dab28d0c9c2242336244e8a3c.1582762465.git.gitgitgadget@gmail.com>
+ <20200312132032.GD3122@szeder.dev>
+In-Reply-To: <20200312132032.GD3122@szeder.dev>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 12 Mar 2020 09:48:01 -0700
+Message-ID: <CABPp-BEa7pvqgH+EytGPp2AO5nBmEgW0+7HnjK-e3MqrBnthnA@mail.gmail.com>
+Subject: Re: [PATCH 4/5] t6022, t6046: test expected behavior instead of
+ testing a proxy for it
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Placing a reprepare_packed_git() call inside chck_connected() before
-> looping through the packed_git list seems like the safest way to
-> avoid this issue in the future. While reprepare_packed_git() does
-> another scan of the pack directory, it is not terribly expensive as
-> long as we do not run it in a loop. We check connectivity only a
-> few times per command, so this will not have a meaningful performance
-> impact. In exchange, we get extra safety around this check.
+On Thu, Mar 12, 2020 at 6:20 AM SZEDER G=C3=A1bor <szeder.dev@gmail.com> wr=
+ote:
+>
+> On Thu, Feb 27, 2020 at 12:14:23AM +0000, Elijah Newren via GitGitGadget =
+wrote:
+> > From: Elijah Newren <newren@gmail.com>
+> >
+> > In t6022, we were testing for file being overwritten (or not) based on
+> > an output message instead of checking for the file being overwritten.
+> > Since we can check for the file being overwritten via mtime updates,
+> > check that instead.
+> >
+> > In t6046, we were largely checking for both the expected behavior and a
+> > proxy for it, which is unnecessary.  The calls to test-tool also were a
+> > bit cryptic.  Make them a little clearer.
+> >
+> > Signed-off-by: Elijah Newren <newren@gmail.com>
+> > ---
+> >  t/t6022-merge-rename.sh                | 15 ++++-
+> >  t/t6046-merge-skip-unneeded-updates.sh | 89 +++++++++++++++++---------
+> >  2 files changed, 70 insertions(+), 34 deletions(-)
+> >
+> > diff --git a/t/t6022-merge-rename.sh b/t/t6022-merge-rename.sh
+> > index 6f196aaf276..d97cf48495b 100755
+> > --- a/t/t6022-merge-rename.sh
+> > +++ b/t/t6022-merge-rename.sh
+> > @@ -242,12 +242,23 @@ test_expect_success 'merge of identical changes i=
+n a renamed file' '
+> >       rm -f A M N &&
+> >       git reset --hard &&
+> >       git checkout change+rename &&
+> > +
+> > +     test-tool chmtime =3D31337 B &&
+> > +     test-tool chmtime --get B >old-mtime &&
+>
+> Nit: I think it's possible to change the mtime and print it in a
+> single invocation with:
+>
+>   test-tool chmtime --get =3D1234 file
 
-This also means that check_connected() now does the equivalent of
-reprepare_packed_git() in both its branches (the rev-list one, which
-spawns a new process and thus rereads the pack directory, and the fast
-one). This will at least help callers to reason about its behavior more
-simply, so it sounds like a good change to me.
+Oh, cool.
 
->     I included how I found this (integrating v2.26.0-rc0 into Scalar), but I
->     am able to reproduce it on my Linux machine using real fetches from
->     github.com. I'm not sure why I was unable to reproduce the issue in test
->     cases using the file:// URLs or the HTTP tests.
+> >       GIT_MERGE_VERBOSITY=3D3 git merge change >out &&
+>
+> Nit: The output of 'git merge' is still redirected to a file, but ...
+>
+> > -     test_i18ngrep "^Skipped B" out &&
+>
+> ... the only command looking at the output is now removed.
 
-If you remember how to reproduce it using real fetches from github.com,
-could you give us reproduction steps?
+Indeed.
 
-Thanks for attempting to reproduce it in a test script.
+> > +     test-tool chmtime --get B >new-mtime &&
+> > +     test_cmp old-mtime new-mtime &&
+> > +
+> >       git reset --hard HEAD^ &&
+> >       git checkout change &&
+> > +
+> > +     test-tool chmtime =3D-1 M &&
+> > +     test-tool chmtime --get M >old-mtime &&
+> >       GIT_MERGE_VERBOSITY=3D3 git merge change+rename >out &&
+> > -     test_i18ngrep ! "^Skipped B" out
+>
+> Likewise.
+>
+> > +     test-tool chmtime --get B >new-mtime &&
+> > +     test $(cat old-mtime) -lt $(cat new-mtime)
+>
+> I saw this test fail today in one of my custom CI builds:
+>
+>   +git checkout change
+>   Switched to branch 'change'
+>   +test-tool chmtime =3D-1 M
+>   +test-tool chmtime --get M
+>   +GIT_MERGE_VERBOSITY=3D3 git merge change+rename
+>   +test-tool chmtime --get B
+>   +cat old-mtime
+>   +cat new-mtime
+>   +test 1583967731 -lt 1583967731
+>   error: last command exited with $?=3D1
+>   not ok 12 - merge of identical changes in a renamed file
+>
+> The contents of 'out', i.e. the output of the 'git merge' command
+> before the failure is:
+>
+>   Auto-merging B
+>   Merge made by the 'recursive' strategy.
+>    A =3D> B | 0
+>    1 file changed, 0 insertions(+), 0 deletions(-)
+>    rename A =3D> B (100%)
+>
+> This is a rare failure, this is the first time I saw it, and to make
+> things worse, this one time it happened on big-endian and with all the
+> GIT_TEST_* knobs enabled.
+>
+>   https://travis-ci.org/github/szeder/git-cooking-topics-for-travis-ci/jo=
+bs/661294571#L4020
 
-> diff --git a/connected.c b/connected.c
-> index 7e9bd1bc622..ac52b07b474 100644
-> --- a/connected.c
-> +++ b/connected.c
-> @@ -61,7 +61,11 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
->  		 * object is a promisor object. Instead, just make sure we
->  		 * received, in a promisor packfile, the objects pointed to by
->  		 * each wanted ref.
-> +		 *
-> +		 * Before checking for promisor packs, be sure we have the
-> +		 * latest pack-files loaded into memory.
->  		 */
-> +		reprepare_packed_git(the_repository);
->  		do {
->  			struct packed_git *p;
+This is very troubling.  The workflow is basically:
+  - Manually set the mtime to a file to something old (I happened to
+pick 1 second before now, but picking something from 1970 would have
+been fine too).
+  - Run a merge which is known to need to overwrite the file.  Your
+output ("Auto-merging B") suggests that we should have been in such a
+case.
+  - Verify that the file was actually updated as expected.  Since the
+OS is supposed to update the mtime when it writes the file, it should
+have set it to something recent, i.e. something *different* than what
+it had before.
 
-The code itself looks good to me.
+So, now I'm left wondering how the mtime possibly could have been not
+updated.  Maybe the file wasn't actually written?  (But if so, why
+didn't other people see the failure?  Or your stress runs not see it?)
+ Or maybe it was written but all file contents and metadata were
+delayed in writing to disk such that a subsequent command still sees
+the old file??  Or maybe it was written but the mtime update was
+delayed and the test was able to check it in that intermediate
+state???  Or perhaps the mtime check before the merge raced with the
+setting of the mtime backwards and got the mtime before it was
+rewound????
+
+I don't have a plausible scenario under which any of these should be
+possible; I'm at a loss.
+
+> I've been running './t6022-merge-rename.sh --stress -r 1,12' both with
+> and without all the GIT_TEST_* knobs for a few hundred repetitions,
+> but couldn't trigger the failure yet...
+
+I'm not sure if that makes me feel better or worse.
+
+> I wonder whether comparing the mtimes with '-le' instead of '-lt' is
+> acceptable in this test case, but don't have enough insight to form an
+> opinion.  Note that this patch added a few similar mtime comparisons
+> to t6046 below, and they might be prone to the same issue as well.
+
+-le would not be acceptable; if we were to do that we may as well
+throw away the test.  The test exists to check that the file contents
+were actually written, which I was assuming could be verified by an
+mtime update of what otherwise used to be an "old" file.
