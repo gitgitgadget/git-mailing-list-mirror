@@ -7,101 +7,111 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AA058C10DCE
-	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 21:41:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 67004C10DCE
+	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 21:54:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7C86720637
-	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 21:41:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 302BC206FA
+	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 21:54:45 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L0L8UNVe"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YMzYzAK7"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726594AbgCLVl3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Mar 2020 17:41:29 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:35552 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726491AbgCLVl3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Mar 2020 17:41:29 -0400
-Received: by mail-wr1-f66.google.com with SMTP id d5so9149892wrc.2
-        for <git@vger.kernel.org>; Thu, 12 Mar 2020 14:41:26 -0700 (PDT)
+        id S1726528AbgCLVyn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Mar 2020 17:54:43 -0400
+Received: from mail-ed1-f41.google.com ([209.85.208.41]:38440 "EHLO
+        mail-ed1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726246AbgCLVyn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Mar 2020 17:54:43 -0400
+Received: by mail-ed1-f41.google.com with SMTP id h5so9422836edn.5
+        for <git@vger.kernel.org>; Thu, 12 Mar 2020 14:54:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=14YBRDzrjCLo7HEIaihvr/jG5G0ssG+XLQG6NQaffJc=;
-        b=L0L8UNVeZS3zK1KnW7VyEdiRXH/32y9x0QQyZQBnqxAarOK2ibjCyldaNcuFGLHe8g
-         S6g5xQru7TsL9snk7ECTe+PmIBTJuzlG3RAlJQgIPOoV/P7HJPmWD7RkBjMxsqz12aAS
-         LaCmYWNATr7goPJLYwTuSu8nzf+umTd3Z9R+CsG261RB8JTdYKxIjZJXB8TQSpvTLb/q
-         9nl2DRvU3HP+y/aviYKzWp73t3YMq3DHuh08A08ImBridTyVE/2sFnoF1E+iDcRU4JIQ
-         3hrHszFd0CdCtDyhonM6pifVjaGBhRyfh0pK41UOdFHDrGLQgcYKV0QytpIngasiuLLS
-         W1KQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=/kPcaQa1Yiew8G3RzgE4XrrzQ6dv1Lp7XS0A57o56UM=;
+        b=YMzYzAK7hHIPzumKmajVdRrvejwOpiGuMQIFRne/uHjVWTUNKJxSoEYhBcIsbugbRs
+         Y8/sG2U8ywi/5ZpomynucWxe9dlV8M7/+owNR5oIFMF+WquvdHAG0wrdBw4a6JhgCPz5
+         HkRLGKn8TCJMc7Skh+nAUriPdDY4rAkBwHxVnrvfziKG/ZSa+4op12CRrxL/wrqybrcj
+         RXq0GDT//eSoKJG61CIkbXaVnRnma0aifPXG5J/BNhoCp+6KW9EbODqxUU97YRdVZdVp
+         s21P00vC4khBRk24zx0/u4Fse7g5V1svYkpgi3xrXpSTwExezwyjgjjse4GA0nDAkcHt
+         miOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=14YBRDzrjCLo7HEIaihvr/jG5G0ssG+XLQG6NQaffJc=;
-        b=IybjNTmz8/x0hqmohRIxcGxw7LpmEUhTJjwg9vB4SecaUaWBwfzo0xpc4Kp49CRj4V
-         ok4tPEdDaxOX6H2n59Uk+ymGOItbDlXzywMJpYX2Bir0ONvg9R8/8YOZWoUsHmYKTqKV
-         z44A1TNl3+OxzFmThIPz3d48mHYa3c3BkEy3dtNhpdTodQa+mLj5kmAKKWbJ26MjHY0o
-         kkMHqi0cXcDJWCKHzzvuJiSDIACbOc91/gPw9rDW/M4s1OTWLoMDhgNMe6SVPx20WPPk
-         ilbaZmZnXiMQ+E6X5lXg2o+SI7J+L0KCab71FCEzjDCfaPYPLHFDfaYUZtUtJnHIwFGw
-         FUKw==
-X-Gm-Message-State: ANhLgQ29SLO+RRJkZvA1K3yHpR9jea4Uwg20OhKOZ82CC1gFYg+HWplU
-        Cbv4/GpYHv7VBIL5CvjpOqs=
-X-Google-Smtp-Source: ADFU+vuKePoRkpt6od7PVP31fMgScXfUKn0u6Y3OKlSzKwLVA54S0ahPBgoXIlf9tdswcpkSJXFFMg==
-X-Received: by 2002:adf:f545:: with SMTP id j5mr13023231wrp.295.1584049285720;
-        Thu, 12 Mar 2020 14:41:25 -0700 (PDT)
-Received: from doriath (87-231-246-247.rev.numericable.fr. [87.231.246.247])
-        by smtp.gmail.com with ESMTPSA id 9sm14292992wmx.32.2020.03.12.14.41.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Mar 2020 14:41:24 -0700 (PDT)
-Date:   Thu, 12 Mar 2020 22:41:23 +0100
-From:   Damien Robert <damien.olivier.robert@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        William Baker <William.Baker@microsoft.com>
-Subject: Re: [PATCH v2 1/1] midx.c: fix an integer overflow
-Message-ID: <20200312214123.sqja3fvuiaaspxwp@doriath>
-X-PGP-Key: http://www.normalesup.org/~robert/pro/files/Damien_Olivier_Robert.asc
-X-Start-Date: Thu, 12 Mar 2020 22:31:40 +0100
-References: <20200228162450.1720795-1-damien.olivier.robert+git@gmail.com>
- <20200312173520.2401776-1-damien.olivier.robert+git@gmail.com>
- <a538c497-a79d-43be-3d00-c7a619acc4e6@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=/kPcaQa1Yiew8G3RzgE4XrrzQ6dv1Lp7XS0A57o56UM=;
+        b=DgWSk6lCEsmHEaQuWajKlbCps8USmH9j1bKyswaGG6lEgsQ9+uUGCG3dCtYLRIEYn0
+         plPSbMDGkYSUN3XtSy4h5C/mRklTvpD+J83U3Rwg0Nk/ChubcLoxi9wCOS+W613ppUyu
+         16w2c+7m4M26Naq+yJLtwaSFmXl/KBjJVrHEBtV5DYhC1PrPtf7Iv6CKqZMGM5sMghJR
+         NLNBkadTcjmbg8LUxb+okmhJ+O8k5sSKnUMwAXy7IHcaXLip2QsJ25FEqw13zCivzmba
+         iLQEcwFN6RLrkFQztp+vgxYjuU9qJRUAVxgig5PSQdVP3Q5PUWsGuPEFov2Pcekea3WM
+         6hVA==
+X-Gm-Message-State: ANhLgQ343Faho6oQT3XQGHCPUbEXaLvB73o62/lB4nm5oJdElINiiflT
+        DAhOVGOsj+9KtDv+ETO2IxZAcWZkaNFxPd3fes4=
+X-Google-Smtp-Source: ADFU+vvHarbIUoKC6VoZZ8v7SKdclmA2/0u7vLp7AnoYkN4XfPnM2w6afRDIcWdS599Tgnb7SGzWXsUzYnfwk5i+0y8=
+X-Received: by 2002:a50:f70c:: with SMTP id g12mr10311995edn.142.1584050080856;
+ Thu, 12 Mar 2020 14:54:40 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <a538c497-a79d-43be-3d00-c7a619acc4e6@gmail.com>
+References: <5981c317-4b39-de15-810b-a781aa79189d@gmail.com>
+ <20200312170714.180996-1-jonathantanmy@google.com> <20200312175151.GB120942@google.com>
+In-Reply-To: <20200312175151.GB120942@google.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Thu, 12 Mar 2020 22:54:29 +0100
+Message-ID: <CAP8UFD0+fyz=S_VN=EzPOOxNSNkge0uB84kEqQD_mudsFtR8Lg@mail.gmail.com>
+Subject: Re: [Question] Is extensions.partialClone defunct?
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        Derrick Stolee <stolee@gmail.com>, git <git@vger.kernel.org>,
+        Taylor Blau <me@ttaylorr.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From Derrick Stolee, Thu 12 Mar 2020 at 14:28:11 (-0400) :
-> I _think_ the t/tXXXX directories are used for this kind of data storage,
-> so you could generate an empty multi-pack-index from an older version of
-> Git then store it there.
+On Thu, Mar 12, 2020 at 6:51 PM Jonathan Nieder <jrnieder@gmail.com> wrote:
+>
+> Jonathan Tan wrote:
+> > Derrick Stolee wrote:
+>
+> >> but it appears that we rely on the "remote.<name>.promisor = true"
+> >> setting instead of this extension.
+> >
+> > Hmm...besides giving the name of the promisor remote, the
+> > extensions.partialClone setting is there to prevent old versions of Git
+> > (that do not know this extension) from manipulating the repo.
 
-Yes I anticipated that and have one available on hand :)
-It weights 1116 characters.
+That could be true of "remote.<name>.promisor = true".
 
-> > -	if (flags & MIDX_PROGRESS)
-> > -		progress = start_sparse_progress(_("Verifying OID order in multi-pack-index"),
-> > -						 m->num_objects - 1);
-> > -	for (i = 0; i < m->num_objects - 1; i++) {
-> > -		struct object_id oid1, oid2;
-> > +	if (m->num_objects == 0)
-> > +		midx_report(_("Warning: the midx contains no oid."));
-> 
-> Should this "Warning: " be here? The other calls to midx_report() do not have such prefix.
+> Yes, so the lack of setting is a bug.
+>
+> Christian, what would your prefered way be to fix this?  Should
+> extensions.partialclone specify a particular "default" promisor
+> remote, or should we use a new repository extension for multiple
+> promisors?
 
-Right, I agree it should not.
+My opinion has always been that "extensions.partialClone = <remote>"
+is a mistake as it is inherently making difficult to have many
+promisor remotes.
 
-> Also, it may be valuable to return from this block so you do not need to put the block below in a tabbed block, reducing the complexity of this patch.
+It is also not clear what a default should be. Should it be the last
+promisor remote that is tried when all the others couldn't provide all
+the needed objects? Or should it be the first one that is tried? And
+what if the order should be different when pushing and when fetching?
 
-Agreed: we don't want to run the other checks anyway if we don't have any
-objects.
+I think it is much clearer to have an order (that could be different
+when pushing and fetching) in which promisor remotes are tried.
 
-That'll be for v3 once I get advice on what to do for tests.
+So I'd rather obsolete "extensions.partialClone = <remote>" and to
+find other ways.
+
+> [...]
+> > I cloned and indeed it is as Stolee describes. Git still works as
+> > expected if I remove "promisor = true" and add
+> > "[extensions]\npartialclone=origin", so at least extensions.partialClone
+> > is still supported, even if not written by default.
+
+Yeah, I didn't remove support for it. Maybe we could have
+"[extensions]\npartialclone=<bool>" though that feels messy, or maybe
+we could have another extension alltogether like
+"[extensions]\npromisorremotes=<bool>" and over time obsolete
+"extensions.partialClone" altogether. I prefer the later.
