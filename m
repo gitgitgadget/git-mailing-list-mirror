@@ -2,93 +2,90 @@ Return-Path: <SRS0=YYoh=45=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B0A3EC10DCE
-	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 18:10:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B6ADBC10DCE
+	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 18:24:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8B7DD20724
-	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 18:10:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 83F912072F
+	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 18:24:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="XuwSTua6"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pQxiUhV1"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726546AbgCLSKQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Mar 2020 14:10:16 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63553 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726414AbgCLSKQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Mar 2020 14:10:16 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0431A4FEFE;
-        Thu, 12 Mar 2020 14:10:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=0PHAdcE+fww8Vl9N6Y2y8FP/dLM=; b=XuwSTu
-        a6hRZ7s6oTYaoSF+JoJ34yU0F0zaYj4Fld0YqhZL8osq+BW4VBXWMFel2823hIcz
-        f4gV93K0Ys8hIRQN2SGVSA7GStu8/3nZz0I9328+JjTkzODg3VNqzU1Py8QHBM+6
-        rpwDz1HcFN0QLMFDNQlKS7zi4sDV+lyoyehac=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=LEJulZjtskCEl7jihBRZGOE0TCwSWyg+
-        r7xMO/d6gP6sT+U3tC1pHaxlWbgevavQt5MgfB+ZJTomM3SoDkX1kDCs2CBLAnfu
-        Yd3UhIsgt9muMd9E7X1qfgcaEqRKmW8CMc8ucTkwq8baEuI7CUKacsRDh39ilng2
-        1bqPRa+1TdY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id F03284FEFD;
-        Thu, 12 Mar 2020 14:10:13 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7987C4FEFC;
-        Thu, 12 Mar 2020 14:10:13 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, stolee@gmail.com,
-        git@vger.kernel.org, me@ttaylorr.com, christian.couder@gmail.com
-Subject: Re: [Question] Is extensions.partialClone defunct?
-References: <5981c317-4b39-de15-810b-a781aa79189d@gmail.com>
-        <20200312170714.180996-1-jonathantanmy@google.com>
-        <20200312175151.GB120942@google.com>
-Date:   Thu, 12 Mar 2020 11:10:12 -0700
-In-Reply-To: <20200312175151.GB120942@google.com> (Jonathan Nieder's message
-        of "Thu, 12 Mar 2020 10:51:51 -0700")
-Message-ID: <xmqqsgidfnqz.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726681AbgCLSYw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Mar 2020 14:24:52 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:39931 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726569AbgCLSYv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Mar 2020 14:24:51 -0400
+Received: by mail-wm1-f68.google.com with SMTP id f7so7480703wml.4
+        for <git@vger.kernel.org>; Thu, 12 Mar 2020 11:24:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:date:to:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=UNhyBe0pBInGsMvOIeGPkRDotqmNFalgoHgk+oY5MOk=;
+        b=pQxiUhV1pL+z7ZNfWa57sg62ORK6409UpM5wtwu86glOakosk/KAWqg83P1VVP+qvy
+         F4lhg/BZmoZzLdl8KKq1Bq44KT+HyAWleqSdbQlcEnRl7Gzb1egukxCL44D5Tz3IxBTF
+         +WPnItT6z/gcH/MhcoDFIb2DNk4pPNTl/HH/9Pu/RNrPwR+w0npCU3fF01J76xpvIxOI
+         V97cfT9dYGwOsNVRe6Z/OCUIoU6I5QN/cMmWIZN9VMJPFRNu9YGecgNTmMT36+shKh+0
+         /e0mhqbdL/MC3bEs6Enbdu3jVRcJ3wcxOaovupRd8IpNwFvZhggapInemg7LI/G+LT7z
+         SmUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:date:to:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=UNhyBe0pBInGsMvOIeGPkRDotqmNFalgoHgk+oY5MOk=;
+        b=Ng+5lwgmNlnmMEvvboJAHIzlkrn5nW/CjGstXKbzojHOeCTXwtRLgZzkvfFineZqkG
+         dqEqs9TSvGRuZlEgZ5cw4nWT8DS0TtdfUPwls0yo6ar7h2LwLrLFr5EZa0+9LZM4+WSF
+         j2fTnqkCkdTXKAxZ2YUIHk4e5ZVpA2ibIxZ2ppO7p3smj8quDX9FAZ5WmdGvDv86lxZi
+         dmdB4m7+tZmr4uP1SnVjxmw3D4H35/gZ1Gzx9hC0t2UGFWn5PQYl+oYYYFcdZm6N0qNG
+         Gt2+Z3bhZKZHh90PkF6XqrBOu8spqNMlRjOZyYqkzxDcsdWOePKURRzmRlZZAnhBwPci
+         GF4A==
+X-Gm-Message-State: ANhLgQ0F0A4UBSiaypi8YFqiTAviiVichmQSoCRyo8+hrhLuEwNnD66b
+        6VT6BrhjqXnBFjD4QgrVUv0=
+X-Google-Smtp-Source: ADFU+vsJhaS+AhhY/zkb7XsELcMLpLTtnuCoXdYxEchFDZfa0yksP/CTIGjWN/OUDDqUGzKErJCMRA==
+X-Received: by 2002:a1c:6385:: with SMTP id x127mr5907164wmb.141.1584037489831;
+        Thu, 12 Mar 2020 11:24:49 -0700 (PDT)
+Received: from feanor (87-231-246-247.rev.numericable.fr. [87.231.246.247])
+        by smtp.gmail.com with ESMTPSA id w22sm13708390wmk.34.2020.03.12.11.24.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 12 Mar 2020 11:24:48 -0700 (PDT)
+From:   Damien Robert <damien.olivier.robert@gmail.com>
+X-Google-Original-From: Damien Robert <damien.olivier.robert+git@gmail.com>
+Date:   Thu, 12 Mar 2020 19:24:46 +0100
+To:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        William Baker <William.Baker@microsoft.com>
+Subject: Re: [PATCH v2 1/1] midx.c: fix an integer overflow
+Message-ID: <20200312182446.6zqjtudkptsvr6uh@feanor>
+X-PGP-Key: http://www.normalesup.org/~robert/pro/files/Damien_Olivier_Robert.asc
+X-Start-Date: Thu, 12 Mar 2020 19:23:52 +0100
+References: <20200228162450.1720795-1-damien.olivier.robert+git@gmail.com>
+ <20200312173520.2401776-1-damien.olivier.robert+git@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B81A61EE-648C-11EA-8E59-C28CBED8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200312173520.2401776-1-damien.olivier.robert+git@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+From Damien Robert, Thu 12 Mar 2020 at 18:35:20 (+0100) :
+> When verifying a midx index with 0 objects, the
+>     m->num_objects - 1
+> overflows to 4294967295.
+> 
+> Fix this both by checking that the midx contains at least one oid,
+> and also that we don't write any midx when there is no packfiles.
 
->> Hmm...besides giving the name of the promisor remote, the
->> extensions.partialClone setting is there to prevent old versions of Git
->> (that do not know this extension) from manipulating the repo.
->
-> Yes, so the lack of setting is a bug.
->
-> Christian, what would your prefered way be to fix this?  Should
-> extensions.partialclone specify a particular "default" promisor
-> remote, or should we use a new repository extension for multiple
-> promisors?
-
-It would depend on how well versions of Git that supported one
-promisor with extensions.partialClone works with a repository
-initialized with Christian's multi promisors when the extension
-points at only a single promisor.  Is having other/secondary
-promisors meant merely to be performance thing, or would the
-repository be broken if these promisors are down because some
-objects are never available from the "origin" or the primary
-promisor remote?  If the former, using a "default" promisor with
-extensions.partialClone would be sufficient and be preferred as we
-do not end up wasting a new extension, but if the latter, we would
-need to prevent Git that is capable of single-promisor from touching
-the multi-promisor repository with a new extension.
+I forgot to add: previously I was wondering about a warning when in 'write'
+when we only index one pack file, but this could make sense in the case of
+a 'midx repack'. So I only warn if there is no objects.
