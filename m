@@ -6,65 +6,65 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 99785C10DCE
-	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 04:09:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B674AC10DCE
+	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 04:11:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7BE8A206F7
-	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 04:09:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9439D206F7
+	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 04:11:41 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="key not found in DNS" (0-bit key) header.d=jramsay.com.au header.i=@jramsay.com.au header.b="dmiSWUkU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="1JNbDTTx"
+	dkim=fail reason="key not found in DNS" (0-bit key) header.d=jramsay.com.au header.i=@jramsay.com.au header.b="qwP3/0wX";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GLW5qgfA"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727033AbgCLEJl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Mar 2020 00:09:41 -0400
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:51305 "EHLO
+        id S1731644AbgCLELk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Mar 2020 00:11:40 -0400
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:60519 "EHLO
         out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725980AbgCLEJl (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 12 Mar 2020 00:09:41 -0400
+        by vger.kernel.org with ESMTP id S1726023AbgCLELk (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 12 Mar 2020 00:11:40 -0400
 Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
-        by mailout.nyi.internal (Postfix) with ESMTP id 5BB1521F5A
-        for <git@vger.kernel.org>; Thu, 12 Mar 2020 00:09:40 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute7.internal (MEProxy); Thu, 12 Mar 2020 00:09:40 -0400
+        by mailout.nyi.internal (Postfix) with ESMTP id 4B75F220CA
+        for <git@vger.kernel.org>; Thu, 12 Mar 2020 00:11:39 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute7.internal (MEProxy); Thu, 12 Mar 2020 00:11:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jramsay.com.au;
          h=from:to:subject:date:message-id:in-reply-to:references
         :mime-version:content-type:content-transfer-encoding; s=mesmtp;
-         bh=tH9pR5VONzoaTq8OSl9I2Y8uECKyagNjFI0hN0ZR9Qo=; b=dmiSWUkUp1Vc
-        3VLkGjcXszfRW/T/b2PibDfcv30n7joy9PGZOYRMehzlPQro/VM0deN0BASJalpb
-        FfPFxxJdHQM+DolphvbjTO4jaWLT/F5EFu2sQIRo/NXzhJPKHG1dvkWYoUgUdK69
-        Zm+UmAayRQeDHbNlrZK/1D0GVVS7Ag0=
+         bh=atETnhpz6BGlKskEM5mfp0yr2fBBQ6O9u7w8DkrQyIk=; b=qwP3/0wXxIrN
+        eZdPI3ZDDLzV6mTx+je1t1n08SixPD0pDRDFIjCyBHpdHngS7Wv2QPV5mhDOXReW
+        6euOGj8+UoHtFw6uRE9JfNVeauvv6g9yKQeTaOe0hLmnCkPdw1IuG60NNQ48LHDC
+        Ah7JUOxoJYysFi6BgVXi6X63Y3MRFM0=
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=content-transfer-encoding:content-type
         :date:from:in-reply-to:message-id:mime-version:references
         :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm2; bh=tH9pR5VONzoaTq8OSl9I2Y8uECKyagNjFI0hN0ZR9
-        Qo=; b=1JNbDTTx73M6/6VS93yba7/WK3kHf64nkBh9+YB/bgprtJRP9Vo85rAc/
-        pgGpOJeQT9wcewW5+9+iUpTw9i+oTkYdVv3ante1g28oC5EQy/eR0Ey7Ham3mjsB
-        1LreIjdL6ABRincqe4HqsjRW6ogtuve9MI7B4KIkS1mBPIQIzqRX5n7b7vLzSXZh
-        8UNavGWufYhmDnySt25s9domkRXEQn4L2C8ZD1CQS3le/LD84zxOG/BJ8w4CsHXm
-        oioy+yvM4pnAQ28GNYWXQ3bYfheOoKr7mb/bvBXUpDnNB57djbjNgEGX7qaxJja1
-        R1wA+4HqIsRwlKAjzvZJTkwnSNghg==
-X-ME-Sender: <xms:BLZpXpZQ_bdRgOqGFCrF91ACoLU8D5AFZOyP695LW-DURvDqKojBXA>
+        :x-sasl-enc; s=fm2; bh=atETnhpz6BGlKskEM5mfp0yr2fBBQ6O9u7w8DkrQy
+        Ik=; b=GLW5qgfA0jpH43rmS+tm7e10Y66/SECjgrEprYfD3G1bnlgTbLi4d0tLQ
+        owvjgcNkyJZv7Nq+8t5kO8NhILayfgaHm/r353IaGbLB1j265ppD6TezLWwh8rgV
+        8hKezDX93DuJx3yI+SNTOS3IOx5tUHCpOlukbhYLicao0Y6fWsLZoyfFOYjHUGa6
+        MqQ9WgBFn/6S1/6iG1HP4of3wFb9lSb3rNcQr1ACTjpVOaQuPBSjT107anpM6hL3
+        E0SZpwGCoaKiS0VAjSD5kHTOfcw/TTVYSYoNyfnrFk0po2wgkY9uvtb7HCcOJxa7
+        KVTv2zvOL/FT0ehu9miWBQvim6IyA==
+X-ME-Sender: <xms:e7ZpXncCqCnPmF5FwzBd6n5Y_ed6jv3IuIvIo3GpW6VQ9HocbpX6ew>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedugedruddvgedgjeelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffokfgjfhggtgfgsehtke
     hmtdertdejnecuhfhrohhmpedflfgrmhgvshcutfgrmhhsrgihfdcuoehjrghmvghssehj
     rhgrmhhsrgihrdgtohhmrdgruheqnecukfhppeduvddurddvtddtrdeirdduuddtnecuve
-    hluhhsthgvrhfuihiivgepvdenucfrrghrrghmpehmrghilhhfrhhomhepjhgrmhgvshes
+    hluhhsthgvrhfuihiivgepfeenucfrrghrrghmpehmrghilhhfrhhomhepjhgrmhgvshes
     jhhrrghmshgrhidrtghomhdrrghu
-X-ME-Proxy: <xmx:BLZpXrYkZr2hozIMwcciStqzlGbF74NornIYzjj2F1SJVsAM6fTxpw>
-    <xmx:BLZpXil4CeS18ttu4LFV1n-dNSDqtnI3ktKToiHWoz2F6JCb4VHnqw>
-    <xmx:BLZpXlQREu1T4aTfElVl0k1-q_clMnUyroHWp1rPOK61nsyAkP-DYg>
-    <xmx:BLZpXjrM1cs4JtnXvfnDNVxZ3RBGM0_b66tdRYw2ruCP-UlqU5jdrQ>
+X-ME-Proxy: <xmx:e7ZpXixWJ9pUbt04yUW-mvdz-AO_SF-0EDH43IV1_u_TAhK5km446g>
+    <xmx:e7ZpXqHADOdYI6qUnLg1BSN9rDWxjM7QpnuUXxy0-x8XZgA3qStbXg>
+    <xmx:e7ZpXp3ocOetWGP-toyHl9c5H17kRzmZuw6Kv-TtAFa7b5KXAY2Lug>
+    <xmx:e7ZpXh9PQK7QxxIsa5fNNlBsrOwYO1T5nWzahyi_V1gAdHcL7nLDUQ>
 Received: from [192.168.1.38] (121-200-6-110.79c806.syd.nbn.aussiebb.net [121.200.6.110])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 9C2C13060F09
-        for <git@vger.kernel.org>; Thu, 12 Mar 2020 00:09:39 -0400 (EDT)
+        by mail.messagingengine.com (Postfix) with ESMTPA id 463EE328005E
+        for <git@vger.kernel.org>; Thu, 12 Mar 2020 00:11:38 -0400 (EDT)
 From:   "James Ramsay" <james@jramsay.com.au>
 To:     git@vger.kernel.org
-Subject: [TOPIC 13/17] Cross implementation test suite
-Date:   Thu, 12 Mar 2020 15:09:36 +1100
+Subject: [TOPIC 14/17] Aspects of merge-ort: cool, or crimes against humanity?
+Date:   Thu, 12 Mar 2020 15:11:35 +1100
 X-Mailer: MailMate (1.13.1r5671)
-Message-ID: <66774F5B-E37F-4676-9274-0066EC38CC48@jramsay.com.au>
+Message-ID: <84A85206-F4A7-4F36-A302-C3986D6AFF91@jramsay.com.au>
 In-Reply-To: <AC2EB721-2979-43FD-922D-C5076A57F24B@jramsay.com.au>
 References: <AC2EB721-2979-43FD-922D-C5076A57F24B@jramsay.com.au>
 MIME-Version: 1.0
@@ -75,31 +75,102 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-1. Carlos: some aspects are under specified, or work in very specific 
-ways, but need agreement of correct behaviour. For example implementing 
-a command line tool that will have expectations, or expected repo state 
-so another tool can generate the right output. For example libgit2 
-keeping up with ignore rules. How does JGit handle this?
+1. Elijah: ORT stands for Ostensibly Recursive’s Twin. As a merge 
+strategy, just like you can call ‘git merge -s recursive’ you can 
+call ‘git merge -s ort’.  Git’s option parsing doesn’t require 
+the space after the ‘-s’.
 
-2. Jonathan N: JGit has some tests of matching behavior which I do not 
-like. Invokes git-grep, generate patterns and compare output. Having 
-non-deterministic tests is not great. I like the idea of table driven 
-tests, common data, but different manifestations of how you test those 
-things.
+2. Major question is about performance & possible layering violations. 
+Merge recursive calls unpacks trees to walks trees, then needs to get 
+all file and directory names and so walks the trees on the right again, 
+and then the trees on the left again. Then diff needs to walk sets of 
+trees twice, and then insert_stage_data() does a bunch more narrow tree 
+walks for rename detection. Lots of tree walking. Replaced that with two 
+tree walks.
 
-3. Patrick: config formatted tests, need to write drivers for other 
-projects. Stopped because writing all the tests in this format was not 
-fun. Basics work though. Spoke to Peff 2 years ago, likely easy to write 
-drivers for Git.
+3. Using traverse_trees() instead of unpack_trees(), and avoid the index 
+entirely (not even touching or creating cache_entry’s), and building 
+up information as I need. I’m not calling diffcore_std(), but instead 
+directly calling diffcore_rename(). Is this horrifying? Or is it 
+justified by the performance gains?
 
-4. Peff: already replaced tests with table driven, and prefer that. 
-There are table driven tests for attribute matching.
+4. Peff: both, some of it sounds like an improvement, but maybe there 
+were hidden benefits previously.
 
-5. Brian: valuable for LFS. Know attribute matching is not up to spec. 
-Could benefit from the tests to help identify gaps. We are MIT licensed, 
-so we can’t just drop them in, but we could import them in CI.
+5. Elijah: I write to a tree before I do anything.
 
-6. Peff: make whatever is in Git as authority, add tables, and then 
-these can be used by other projects.
+6. Peff: I like that. Seems like a clean up to me. We have written 
+libgit2-like code for merging server-side
 
-7. Jonathan N: example is diff tests
+7. Elijah: I’ve been adding tests for the past few years, more to add, 
+feel good about it.
+
+8. Jonathan N: If you are using a lower-layer thing, I would not say 
+you’re not doing anything you shouldn’t. But if you docs say you 
+should not to use diffcore_rename(), you can update the docs to say that 
+it’s fine to use it.
+
+9. Elijah: three places directly write tree objects. All have different 
+data structures they are writing from. Should I pull them out? But then 
+my data structure was also different, so I’d have a fourth.
+
+10. Peff: not worried because trees are simple. Worried about policy 
+logic. Can’t write a tree entry with a double slash. Want this to be 
+enforced everywhere, but no idea how hard that would be to implement. 
+Not about lines of code, but consistency of policy. Fearful that only 
+one place does it.
+
+11. Elijah: I know merge-ort checks this, but it’s not nearby, so it 
+could change.
+
+12. Peff: as bad as it is to round trip through the index, it may bypass 
+quality checks, which you will need to manually implement.
+
+13. Elijah: usability side, with the tree I’ve created, I could have 
+.git/AUTOMERGE. I have an old tree, a new tree, and a checkout can get 
+me there. Fixed a whole bunch of bugs for sparsity and submodules.
+
+14. Elijah: If we use this to on-the-fly remerge as part of git-log in 
+order to compare the merge commit to what the automatic merging would 
+have done, where/how should we write objects as we go?
+
+15. Jonathan N: can end up with proliferation of packs, would be nice to 
+have similar to fast import and have in memory store. Dream not to have 
+loose files written ever.
+
+16. Peff: I like your dream. But fast import packs are bad. We assume 
+that packs are good, and thus need to use GC aggressively. This 
+increases pollution of that problem. I know about objects, but not 
+written to disc, risk that you can write objects that are broken, but 
+git doesn’t know because git thinks it has the object but it’s only 
+in memory. Log is conceptually a read operation, but this would create 
+the need for writes.
+
+17. Elijah: you could write into a temporary directory. Worried about 
+`gc --auto` in the middle of my operation. If I write to a temp pack I 
+could potentially avoid it.
+
+18. Elijah: large files. Rename detection might not work efficiently OR 
+correctly for sufficiently large files (binary or not). Limited bucket 
+size means that completely different files treated as renames when both 
+are over 8MB. Should big files just not be compared?
+
+19. Peff: maybe we should fix the hash…
+
+20. Elijah: present situation is broken, maybe we can cheat in the short 
+term, and avoid fixing?
+
+21. Peff: seems more correct for now, but we’d need to document
+
+22. Elijah: checkout --overwrite-ignore flag. Should merge have the same 
+flag.
+
+23. Jonathan N: gitignore original use case was build outputs which can 
+be regenerate. But then some people want to ignore `.hg` which is much 
+more precious.
+
+24. Peff: we can plumb it through later to other commands
+
+25. Brian: CI doesn’t really care. Moving between branches it would 
+complain. For checkout and merge it makes sense to support just 
+destroying.
