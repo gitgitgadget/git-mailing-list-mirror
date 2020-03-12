@@ -2,178 +2,284 @@ Return-Path: <SRS0=YYoh=45=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 99ED6C10DCE
-	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 16:33:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F41A8C10DCE
+	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 16:46:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5D717206FA
-	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 16:33:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BE2C9206F1
+	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 16:46:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Jh2fzicS"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jxIHEgJb"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727450AbgCLQdP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Mar 2020 12:33:15 -0400
-Received: from mail-oi1-f195.google.com ([209.85.167.195]:40215 "EHLO
-        mail-oi1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727233AbgCLQdP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Mar 2020 12:33:15 -0400
-Received: by mail-oi1-f195.google.com with SMTP id y71so6087175oia.7
-        for <git@vger.kernel.org>; Thu, 12 Mar 2020 09:33:14 -0700 (PDT)
+        id S1726362AbgCLQqd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Mar 2020 12:46:33 -0400
+Received: from mail-wm1-f54.google.com ([209.85.128.54]:36004 "EHLO
+        mail-wm1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726194AbgCLQqd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Mar 2020 12:46:33 -0400
+Received: by mail-wm1-f54.google.com with SMTP id g62so7136550wme.1
+        for <git@vger.kernel.org>; Thu, 12 Mar 2020 09:46:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=GVFfeW/BAIK3C/hyXJKMAh1Orake+dO76ocGO1WBI2Y=;
-        b=Jh2fzicSIzkCVpvyoavqaEAv8fZ2DbLeGf2Jrq/HT0aogKOaHCUFVlW/ug1ldX/lsE
-         kFQK6C6GZ38Vf5GaxftXJv7/b8fwR3o7T2MiBTY90m6iWsK4TKGmgxdJowk22ZObR/0X
-         ut58zAED6vscYIouxuKnnr6jmDVTu8TpZY8FM3ONIQx+tB+2vW+2+XjHfZZMOPqizu4W
-         v9Y/3/skSpXYjMT7wYdXwU86rmd1S+IMlTpHar5XLs9suWfUdoAHaENfRerJYo+IHmlT
-         CG6+JbNrawaQ0Lo5Rfl+1FiuSianfT01xCzao0UbgFhnYZkVmZpPukT0dQiXpd6pqfn8
-         r0yw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=KRbGA+QuyLs/3T+Zy1cfvFbalnXEZ1e7HMbG7X3zUKI=;
+        b=jxIHEgJb91xz2ww9rPchgvzlkZWWe/pOvl52zxNbSqhX1Lah0kPqzBpcjBwfeoXoL4
+         2FlBl++uIi6QKCIScwgUmLbldf3Jj0e8W6BP9uJTS+D9foSVs9YVbGRmDiDJb7aBaXNX
+         mLNVZWq00rMw9SUyf25cqm6CKDx7XMCX72bIYhvC7/ig8TQzxyH5RZsZ+EojrufUhy65
+         xm84Kir9DO6aD6gsUOJj1Ul/OOme0q2IqVALx3eLPpgtSIQvk5q/MdPaJGobo7SMywza
+         tmrvHgHhKsoxuVH9CFCMNnUO/vhAiLoOwYVCJ+RDSGEDGjdx7vgx2lTlQlmPmfpqqwnz
+         xyMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=GVFfeW/BAIK3C/hyXJKMAh1Orake+dO76ocGO1WBI2Y=;
-        b=aecUWCIUcLolqsQjDBcYQflbHnuQDgZPs8anfPF4tppcmoW3pX32GjRWG4NQvdcBvB
-         hEjwjNINUOMzwFdbZucUh3syiyQfciTvyWIZEByr6IwbkTEDvscQMjzUjMSlgt7Fcdp/
-         nrhAGkOWe2qoGZWCnPf5CQWZsWVNUFiN9TxZaVMvNHWPpbewaJfK+p2mVTvdb2hSPcR2
-         fBG9ncfNLGLnVNTqBDGx79vtOZ19jfCzYCwclBsWTUqT3+qzKN8xqo2rmgDyo1OccgOa
-         oujOJjK7Yo7Ed6tZ1AvVMgZ+Ul8lydjb/j1zWpNtNKaEqhU7OGAmO6BaxdYn7y5Q+YdZ
-         kW6Q==
-X-Gm-Message-State: ANhLgQ2u5Sw7JxqxCsZpTmxsO4iKbD3ubrI/0uRjJUQvJYxMRGMRwHkX
-        q/P8pdwYZLBT6fH0aCgX9ZbQ8mEv7GkO0hDJkeTfSwbu
-X-Google-Smtp-Source: ADFU+vvaodPCIpenPwaIL6jjacjsA1dyOTh/YQ+f9CPSS6x1CvJTNW929fhdNpsWcBOlgx2j4BIYPU7tbcCGA/xbFi0=
-X-Received: by 2002:aca:dc45:: with SMTP id t66mr3318201oig.39.1584030793634;
- Thu, 12 Mar 2020 09:33:13 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=KRbGA+QuyLs/3T+Zy1cfvFbalnXEZ1e7HMbG7X3zUKI=;
+        b=OKi+goTf675ZRU4lttWMjfUU6u5BE/VFz4PgZ3uK5kKByLd+OXh1AKOnDK7859N2TZ
+         0QAf9u/b0Pf4YoImnbzvTkiiH+6NzjW7yqZdwn5KOfZ1GD2I2b9l4rEF2JuBtdjuccL7
+         QMbqdUUiiQ2ByoB0OSaH9LvnYCqZOvDpmkaHKsVH8J8CE4BnMYAiLG5FF7FNYtygRf7M
+         touf8T7EPSLiMpNkWncGbkaPhxGyz3ezpUAt2nZrKO1aFrK8jI7woBoVDZzmHr8WLxYZ
+         W+gqKuT3DlYNrkcSDyXaYVELmDLoV2BCGd/v47GaUohEYuVZl1YAmqSSHyBlpFlHw/Ml
+         N5FQ==
+X-Gm-Message-State: ANhLgQ1G1In1twdwY0ifEBJA359Sx4aVN49BMVYFq1Qq55kBc0Vc5RnL
+        SBhWgCh5O2svMa2ffq5aSiD3Ql2Q1iM=
+X-Google-Smtp-Source: ADFU+vu01BI9BnXR2K4UwStO6ip4w7d2fd5Z6H+BtVqZZpvtmqQ4SqD9/h2vQFYUrM8pI0NhBDEL0Q==
+X-Received: by 2002:a1c:1b51:: with SMTP id b78mr5725005wmb.8.1584031589779;
+        Thu, 12 Mar 2020 09:46:29 -0700 (PDT)
+Received: from localhost.localdomain (87-231-246-247.rev.numericable.fr. [87.231.246.247])
+        by smtp.gmail.com with ESMTPSA id s15sm56728446wrr.45.2020.03.12.09.46.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 12 Mar 2020 09:46:28 -0700 (PDT)
+From:   Damien Robert <damien.olivier.robert@gmail.com>
+X-Google-Original-From: Damien Robert <damien.olivier.robert+git@gmail.com>
+To:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Damien Robert <damien.olivier.robert+git@gmail.com>
+Subject: [PATCH v3 1/1] remote.c: fix handling of %(push:remoteref)
+Date:   Thu, 12 Mar 2020 17:45:58 +0100
+Message-Id: <20200312164558.2388589-1-damien.olivier.robert+git@gmail.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20200303161223.1870298-3-damien.olivier.robert+git@gmail.com>
+References: <20200303161223.1870298-3-damien.olivier.robert+git@gmail.com>
 MIME-Version: 1.0
-References: <pull.679.v4.git.git.1579155273.gitgitgadget@gmail.com>
- <pull.679.v5.git.git.1581802602.gitgitgadget@gmail.com> <ad8339aebf28ec84c22ed59cef06614d204adb55.1581802602.git.gitgitgadget@gmail.com>
- <20200312151318.GM212281@google.com>
-In-Reply-To: <20200312151318.GM212281@google.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 12 Mar 2020 09:33:02 -0700
-Message-ID: <CABPp-BHyNvxQZ5q=9WXXESTPmxFe4fAiE5roGeV2H+XJ_cpDmg@mail.gmail.com>
-Subject: Re: [PATCH v5 20/20] rebase: rename the two primary rebase backends
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Denton Liu <liu.denton@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Pavel Roskin <plroskin@gmail.com>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 12, 2020 at 8:13 AM Emily Shaffer <emilyshaffer@google.com> wrote:
->
-> On Sat, Feb 15, 2020 at 09:36:41PM +0000, Elijah Newren via GitGitGadget wrote:
-> > From: Elijah Newren <newren@gmail.com>
-> >
-> > Two related changes, with separate rationale for each:
-> >
-> > Rename the 'interactive' backend to 'merge' because:
-> >   * 'interactive' as a name caused confusion; this backend has been used
-> >     for many kinds of non-interactive rebases, and will probably be used
-> >     in the future for more non-interactive rebases than interactive ones
-> >     given that we are making it the default.
-> >   * 'interactive' is not the underlying strategy; merging is.
-> >   * the directory where state is stored is not called
-> >     .git/rebase-interactive but .git/rebase-merge.
-> >
-> > Rename the 'am' backend to 'apply' because:
-> >   * Few users are familiar with git-am as a reference point.
-> >   * Related to the above, the name 'am' makes sentences in the
-> >     documentation harder for users to read and comprehend (they may read
-> >     it as the verb from "I am"); avoiding this difficult places a large
-> >     burden on anyone writing documentation about this backend to be very
-> >     careful with quoting and sentence structure and often forces
-> >     annoying redundancy to try to avoid such problems.
-> >   * Users stumble over pronunciation ("am" as in "I am a person not a
-> >     backend" or "am" as in "the first and thirteenth letters in the
-> >     alphabet in order are "A-M"); this may drive confusion when one user
-> >     tries to explain to another what they are doing.
-> >   * While "am" is the tool driving this backend, the tool driving git-am
-> >     is git-apply, and since we are driving towards lower-level tools
-> >     for the naming of the merge backend we may as well do so here too.
-> >   * The directory where state is stored has never been called
-> >     .git/rebase-am, it was always called .git/rebase-apply.
-> >
-> > For all the reasons listed above:
-> >   * Modify the documentation to refer to the backends with the new names
-> >   * Provide a brief note in the documentation connecting the new names
-> >     to the old names in case users run across the old names anywhere
-> >     (e.g. in old release notes or older versions of the documentation)
-> >   * Change the (new) --am command line flag to --apply
-> >   * Rename some enums, variables, and functions to reinforce the new
-> >     backend names for us as well.
-> >
-> > Signed-off-by: Elijah Newren <newren@gmail.com>
->
-> Hi,
->
-> This broke quite a few upstream users for us today when we rolled out a
-> next with this patch added on top. To shim around the post-commit hook
-> issue, we had set a system config for all our users to use
-> merge.backend=am; the machinery is pretty intolerant to a wrongly
-> configured backend name (die() rather than a warning and fallback).
->
-> Would it make more sense to deal with an unrecognized backend by falling
-> back to the default backend, instead?
->
-> >       if (options.type == REBASE_UNSPECIFIED) {
-> >               if (!strcmp(options.default_backend, "merge"))
-> > -                     imply_interactive(&options, "--merge");
-> > -             else if (!strcmp(options.default_backend, "am"))
-> > -                     options.type = REBASE_AM;
-> > +                     imply_merge(&options, "--merge");
-> > +             else if (!strcmp(options.default_backend, "apply"))
-> > +                     options.type = REBASE_APPLY;
-> >               else
-> >                       die(_("Unknown rebase backend: %s"),
-> >                           options.default_backend);
->
-> At the very least, can this die() explain that it found that string in
-> the config so the user can have a guess as to how to fix it?
->
-> (I realize the complained code is from earlier in the series, but this
-> patch - renaming something that used to be valid without a fallback -
-> invalidated our configs, highlighting the problem for us. So I'm
-> replying here instead.)
+Looking at the value of %(push:remoteref) only handles the case when an
+explicit push refspec is passed. But it does not handle the fallback
+cases of looking at the configuration value of `push.default`.
 
-Sorry for the pain.  The earlier part of the series had only ever made
-it to next, and was reverted there, and thus, in my thinking, in the
-new cycle no one would have ever seen the intermediate state.  (Oops,
-I forgot about cases where people tried out next towards the end of
-last cycle before it was reverted and decided to set config based upon
-it.)
+In particular, doing something like
 
-I'm a little worried about ignoring the setting and just picking one;
-if the setting has been marked and they set it to e.g. "appply" (one
-too many p's), then does it really make sense to just show a warning
-but continue using the backend they didn't want, especially since they
-may miss the warning among the rest of the output?  I'd rather go the
-route of improving the message, perhaps:
-        _("Unknown rebase.backend config setting: %s")
-Would that work for you?
+    git config push.default current
+    git for-each-ref --format='%(push)'
+    git for-each-ref --format='%(push:remoteref)'
 
-Also, I thought that you and Jonathan were going to be changing the
-post-commit hook handling[1][2].  Does this mean that you've punted on
-that, and I need to make some kind of change here to get you to switch
-over?
+prints a useful tracking ref for the first for-each-ref, but an empty
+string for the second.
 
-Elijah
+Since the intention of %(push:remoteref), from 9700fae5ee (for-each-ref:
+let upstream/push report the remote ref name) is to get exactly which
+branch `git push` will push to, even in the fallback cases, fix this.
 
-[1] https://lore.kernel.org/git/pull.679.v4.git.git.1579155273.gitgitgadget@gmail.com/
-[2] https://lore.kernel.org/git/CABPp-BHONuRyt8VJqRuoCF2rGYZ5EhH9KJXQZ3NO69rYwA5J3g@mail.gmail.com/
+To get the meaning of %(push:remoteref), `ref-filter.c` calls
+`remote_ref_for_branch`. We simply add a new static helper function,
+`branch_get_push_remoteref` that follows the logic of
+`branch_get_push_1`, and call it from `remote_ref_for_branch`.
+
+We also update t/6300-for-each-ref.sh to handle all `push.default`
+strategies. This involves testing `push.default=simple` twice, once
+where there is a matching upstream branch and once when there is none.
+
+Signed-off-by: Damien Robert <damien.olivier.robert+git@gmail.com>
+---
+
+I ended up following most of Junio's suggestion, except having a
+    default: BUG(...)
+and returning NULL at the end of the case.
+
+I prefer to return explicitly in each case statement rather than use break
+to fallback at the end of the case.
+
+I said I would also update branch_get_push1 to be as similar as possible to
+branch_get_push_remoteref, but because of the error handling of the latter,
+it would makes the syntax a bit weird, so I did not touch it.
+
+I am still a bit annoyed that I cannot call branch_get_push_remoteref from
+branch_get_push1 because of the PUSH_DEFAULT_UPSTREAM case, but this can
+wait and we will need to work with the code duplication meanwhile.
+
+ remote.c                | 94 +++++++++++++++++++++++++++++++----------
+ t/t6300-for-each-ref.sh | 29 ++++++++++++-
+ 2 files changed, 100 insertions(+), 23 deletions(-)
+
+diff --git a/remote.c b/remote.c
+index c43196ec06..352ea240cd 100644
+--- a/remote.c
++++ b/remote.c
+@@ -516,28 +516,6 @@ const char *pushremote_for_branch(struct branch *branch, int *explicit)
+ 	return remote_for_branch(branch, explicit);
+ }
+ 
+-const char *remote_ref_for_branch(struct branch *branch, int for_push)
+-{
+-	if (branch) {
+-		if (!for_push) {
+-			if (branch->merge_nr) {
+-				return branch->merge_name[0];
+-			}
+-		} else {
+-			const char *dst, *remote_name =
+-				pushremote_for_branch(branch, NULL);
+-			struct remote *remote = remote_get(remote_name);
+-
+-			if (remote && remote->push.nr &&
+-			    (dst = apply_refspecs(&remote->push,
+-						  branch->refname))) {
+-				return dst;
+-			}
+-		}
+-	}
+-	return NULL;
+-}
+-
+ static struct remote *remote_get_1(const char *name,
+ 				   const char *(*get_default)(struct branch *, int *))
+ {
+@@ -1656,6 +1634,64 @@ static const char *tracking_for_push_dest(struct remote *remote,
+ 	return ret;
+ }
+ 
++/**
++ * Return the local name of the remote tracking branch, as in
++ * %(push:remoteref), that corresponds to the ref we would push to given a
++ * bare `git push` while `branch` is checked out.
++ * See also branch_get_push_1 below.
++ */
++static const char *branch_get_push_remoteref(struct branch *branch)
++{
++	struct remote *remote;
++
++	remote = remote_get(pushremote_for_branch(branch, NULL));
++	if (!remote)
++		return NULL;
++
++	if (remote->push.nr) {
++		return apply_refspecs(&remote->push, branch->refname);
++	}
++
++	if (remote->mirror)
++		return branch->refname;
++
++	switch (push_default) {
++	case PUSH_DEFAULT_NOTHING:
++		return NULL;
++
++	case PUSH_DEFAULT_MATCHING:
++	case PUSH_DEFAULT_CURRENT:
++		return branch->refname;
++
++	case PUSH_DEFAULT_UPSTREAM:
++		if (branch && branch->merge && branch->merge[0] &&
++		    branch->merge[0]->dst)
++			return branch->merge[0]->src;
++		else
++			return NULL;
++
++	case PUSH_DEFAULT_UNSPECIFIED:
++	case PUSH_DEFAULT_SIMPLE:
++		{
++			const char *up, *cur;
++
++			up = branch_get_upstream(branch, NULL);
++			cur = tracking_for_push_dest(remote, branch->refname, NULL);
++			if (up && cur && !strcmp(cur, up))
++				return branch->refname;
++			else
++				return NULL;
++
++		}
++	}
++	BUG("unhandled push situation");
++}
++
++/**
++ * Return the tracking branch, as in %(push), that corresponds to the ref we
++ * would push to given a bare `git push` while `branch` is checked out.
++ * See also branch_get_push_remoteref above.
++ */
+ static const char *branch_get_push_1(struct branch *branch, struct strbuf *err)
+ {
+ 	struct remote *remote;
+@@ -1735,6 +1771,20 @@ static int ignore_symref_update(const char *refname)
+ 	return (flag & REF_ISSYMREF);
+ }
+ 
++const char *remote_ref_for_branch(struct branch *branch, int for_push)
++{
++	if (branch) {
++		if (!for_push) {
++			if (branch->merge_nr) {
++				return branch->merge_name[0];
++			}
++		} else {
++			return branch_get_push_remoteref(branch);
++		}
++	}
++	return NULL;
++}
++
+ /*
+  * Create and return a list of (struct ref) consisting of copies of
+  * each remote_ref that matches refspec.  refspec must be a pattern.
+diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+index 9c910ce746..60e21834fd 100755
+--- a/t/t6300-for-each-ref.sh
++++ b/t/t6300-for-each-ref.sh
+@@ -874,7 +874,34 @@ test_expect_success ':remotename and :remoteref' '
+ 		actual="$(git for-each-ref \
+ 			--format="%(push:remotename),%(push:remoteref)" \
+ 			refs/heads/push-simple)" &&
+-		test from, = "$actual"
++		test from, = "$actual" &&
++		git config branch.push-simple.remote from &&
++		git config branch.push-simple.merge refs/heads/master &&
++		actual="$(git for-each-ref \
++			--format="%(push:remotename),%(push:remoteref)" \
++			refs/heads/push-simple)" &&
++		test from, = "$actual" &&
++		actual="$(git -c push.default=upstream for-each-ref \
++			--format="%(push:remotename),%(push:remoteref)" \
++			refs/heads/push-simple)" &&
++		test from,refs/heads/master = "$actual" &&
++		actual="$(git -c push.default=current for-each-ref \
++			--format="%(push:remotename),%(push:remoteref)" \
++			refs/heads/push-simple)" &&
++		test from,refs/heads/push-simple = "$actual" &&
++		actual="$(git -c push.default=matching for-each-ref \
++			--format="%(push:remotename),%(push:remoteref)" \
++			refs/heads/push-simple)" &&
++		test from,refs/heads/push-simple = "$actual" &&
++		actual="$(git -c push.default=nothing for-each-ref \
++			--format="%(push:remotename),%(push:remoteref)" \
++			refs/heads/push-simple)" &&
++		test from, = "$actual" &&
++		git config branch.push-simple.merge refs/heads/push-simple &&
++		actual="$(git for-each-ref \
++			--format="%(push:remotename),%(push:remoteref)" \
++			refs/heads/push-simple)" &&
++		test from,refs/heads/push-simple = "$actual"
+ 	)
+ '
+ 
+-- 
+Patched on top of v2.26.0-rc1-6-ga56d361f66 (git version 2.25.1)
+
