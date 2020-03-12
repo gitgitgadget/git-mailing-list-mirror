@@ -1,142 +1,163 @@
-Return-Path: <SRS0=DQ4e=44=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=YYoh=45=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A5381C0044D
-	for <git@archiver.kernel.org>; Wed, 11 Mar 2020 22:06:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DC36CC0044D
+	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 00:03:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 9B3B2206E7
-	for <git@archiver.kernel.org>; Wed, 11 Mar 2020 22:06:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D8A312074D
+	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 00:03:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="vlYBrGZg"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="h8r2bYPT"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729823AbgCKWG3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Mar 2020 18:06:29 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56863 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729506AbgCKWG3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Mar 2020 18:06:29 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BE3CF4896E;
-        Wed, 11 Mar 2020 18:06:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=vlmR8bye30ar
-        5fA5SeABPtX7h6U=; b=vlYBrGZg/jPlfwajSN6jjKkd+tgvKDalaVrnlYzqfZ0i
-        zG0b75/C2ZeFxI79FKZR/1kyZNKMS02Ro/J4jncHv3pjrb3FPza+VXXFksxTSCgE
-        ePnhYG+NYox/WVgshnakSMJSHZr+r7/YaIfLYk+J7s3Mck5mUEcc7HBfYkZQGRY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=vfCJpO
-        rP3EvE65zvdEGLmYqxz9hzlip6bchyZa4GWsE59ZD4NEEVLLFgjGRspdUbExhHRx
-        0wKmjO/4jk6qzxXrceUsmZ2cVgWdApWu/q8cwbYlCq5d1DifU2DgeYy59qbP4tL5
-        nO4Dl9A/+lZzAA9JGj2VE6wauYm5IyHBEATio=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B4C364896D;
-        Wed, 11 Mar 2020 18:06:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1731506AbgCLADX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Mar 2020 20:03:23 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:51940 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726194AbgCLADX (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 11 Mar 2020 20:03:23 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3B3284896C;
-        Wed, 11 Mar 2020 18:06:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>
-Cc:     "'Git'" <git@vger.kernel.org>
-Subject: Re: [Test] t1901 - sparse checkout file when lock is taken fails (subtest 19)
-References: <011401d5f6e9$de7eea50$9b7cbef0$@nexbridge.com>
-Date:   Wed, 11 Mar 2020 15:06:25 -0700
-In-Reply-To: <011401d5f6e9$de7eea50$9b7cbef0$@nexbridge.com> (Randall
-        S. Becker's message of "Tue, 10 Mar 2020 10:40:34 -0400")
-Message-ID: <xmqqwo7qfswu.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 2553C6077C;
+        Thu, 12 Mar 2020 00:03:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1583971402;
+        bh=aB5ZTZxDxhnpfvKmXRLEoWEyQJooqUqaYf8JpHZN78E=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=h8r2bYPTfbF7iyzkQxi9JIWI0OPcuDHJfshidigkwtaorTWGSLalaIO7ZCZz25BPa
+         4DXKzUI3OmJ/6RAg8FeNgk/SW0ltoxgQ4EP1b3/m4YLanP5H36HfkBgQiWweeUfocD
+         oN5yFIvkoq6ke8ytQkKArV1kxcN3evhw1RAQwVB+QOX7IJdaaqt75dyhGDKcMwofjY
+         h4lpIJxERaigMh8/MuHgVw1pbxFYJNaOHey7NPO8pXJLt0yE0eUPegQ0U2sTglVMbC
+         aujoT1nw71oJwDJCgaK7sCco4s7O2Fjrl12MjSb7pCpDWKddSTnTzsGL+ZRVLf/wXZ
+         xEAUshRl92l1CqOV00ntBZBNL1KV8XoRjb78QA80mfsSMvud402htLfZJ+AV/PjJX3
+         JoCVlh1/aDuXsBxtZjSpE1fiCWebIJy8ZYdiHF9jfLUfWOWpnbbTbbmZbIo+fFDtwx
+         o0E3FRXEr4nrW/SkWjaNpcuZCOVBAHDOWBFksI77l4bWsISAJe3
+Date:   Thu, 12 Mar 2020 00:03:16 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>, git@vger.kernel.org
+Subject: Re: [Breakage] t0410 - subtests report unable to remove non-existent
+ file.
+Message-ID: <20200312000316.GB6198@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>, git@vger.kernel.org
+References: <010b01d5ee87$09be74d0$1d3b5e70$@nexbridge.com>
+ <20200310110008.GA3122@szeder.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 8D4D9506-63E4-11EA-8172-C28CBED8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="KFztAG8eRSV9hGtP"
+Content-Disposition: inline
+In-Reply-To: <20200310110008.GA3122@szeder.dev>
+X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
+ 5.4.0-4-amd64)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Randall S. Becker" <rsbecker@nexbridge.com> writes:
 
-> This situation still occurs at 2.26.0-rc0. As above, this results from =
-a
-> text compare to a platform-specific message that should not be used. To=
- hack
-> around it, a possible fix (which I don't like) could be as follows:
+--KFztAG8eRSV9hGtP
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Martin's fix 4605a730 (t1091: don't grep for `strerror()` string,
-2020-03-08) was merged to 'next' on the 9th and then down to
-'master' today, and will be in the final (unless there is some
-issues with it, which I do not think will be the case).
+On 2020-03-10 at 11:00:08, SZEDER G=C3=A1bor wrote:
+> Note, however, that 'ksh' is not utterly wrong in doing so, because
+> POSIX does allow this behavior: POSIX 2.12 Shell Execution Environment,
+> the last paragraph of the section:
+>=20
+>   "each command of a multi-command pipeline is in a subshell
+>    environment; as an extension, however, any or all commands in a
+>    pipeline may be executed in the current environment."
+>=20
+>    https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.h=
+tml#tag_18_12
+>=20
+> So apparently 'ksh' implements this extension.
 
-Thanks.
+In my experience, trying to fix this is not productive in our test
+suite.  zsh does the same thing and many of our tests fail with it for
+that reason.  In the zsh case, I sent a patch to make it not do that
+when emulating sh.  It got lost on their list, but I'll resend it.
 
--- >8 --
-From: Martin =C3=85gren <martin.agren@gmail.com>
-Subject: [PATCH] t1091: don't grep for `strerror()` string
+There are many, many other pieces of software that are broken in such a
+case, such that trying to use zsh (or any other shell that does this) as
+/bin/sh (or a POSIX sh) will result in widespread breakage.  My goal in
+fixing zsh is that it's a candidate for /bin/sh in macOS Catalina, and
+I'd like to avoid users seeing breakage if they run in that
+configuration.
 
-We grep for "File exists" in stderr of the failing `git sparse-checkout`
-to make sure that it failed for the right reason. We expect the string
-to show up there since we call `strerror(errno)` in
-`unable_to_lock_message()` in lockfile.c.
+My reading of the allowance for this as an extension is that zsh and ksh
+can do this when invoked as zsh or ksh, but they cannot when invoked as
+sh, because in that mode they are supposed to strictly conform to POSIX.
+POSIX states the following:
 
-On the NonStop platform, this fails because the error string is "File
-already exists", which doesn't match our grepping.
+  Non-standard extensions, when used, may change the behavior of
+  utilities, functions, or facilities defined by POSIX.1-2017. The
+  conformance document shall define an environment in which an
+  application can be run with the behavior specified by POSIX.1-2017.
 
-See 9042140097 ("test-dir-iterator: do not assume errno values",
-2019-07-30) for a somewhat similar fix. There, we patched a test helper,
-which meant we had access to `errno` and could investigate it better in
-the test helper instead of just outputting the numerical value and
-evaluating it in the test script. The current situation is different,
-since (short of modifying the lockfile machinery, e.g., to be more
-verbose) we don't have more than the output from `strerror()` available.
+> The trivial fix would be to mark $HASH as 'local' in both helper
+> functions, but this would not help 'ksh', of course, as it doesn't
+> support 'local'.  However, since we use more and more 'local's in our
+> testsuite, 'ksh' might be considered a lost cause anyway.
 
-Except we do: We prefix `strerror(errno)` with `_("Unable to create
-'%s.lock': ")`. Let's grep for that part instead. It verifies that we
-were indeed unable to create the lock file. (If that fails for some
-other reason than the file existing, we really really should expect
-other tests to fail as well.)
+If this is the AT&T ksh, then yeah, it's a lost cause.  It's possible to
+emulate local with typeset, but that only works in ksh-style functions,
+not POSIX-style functions.  It also has the issue we were discussing
+above.
 
-An alternative fix would be to loosen the expression a bit and grep for
-"File.* exists" instead. There would be no guarantee that some other
-implementation couldn't come up with another error string, That is, that
-could be the first move in an endless game of whack-a-mole. Of course,
-it could also take us from "99" to "100" percent of the platforms and
-we'd never have this problem again. But since we have another way of
-addressing this, let's not even try the "loosen it up a bit" strategy.
+pdksh and mksh both do the right thing with local and the last item in a
+pipeline, and both are suitable for a POSIX (or Debian) /bin/sh.  I
+believe OpenBSD's ksh is also fine, since it is also used as /bin/sh
+there and it does support local.
 
-Reported-by: Randall S. Becker <rsbecker@nexbridge.com>
-Signed-off-by: Martin =C3=85gren <martin.agren@gmail.com>
-Acked-by: Derrick Stolee <dstolee@microsoft.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/t1091-sparse-checkout-builtin.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I should point out that Debian has a reasonably restricted set of
+requirements[0] on /bin/sh that allow a wide variety of shells to be
+used, and which we may want to consider:
 
-diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout=
--builtin.sh
-index b4c9c32a03..44a91205d6 100755
---- a/t/t1091-sparse-checkout-builtin.sh
-+++ b/t/t1091-sparse-checkout-builtin.sh
-@@ -305,7 +305,7 @@ test_expect_success 'fail when lock is taken' '
- 	test_when_finished rm -rf repo/.git/info/sparse-checkout.lock &&
- 	touch repo/.git/info/sparse-checkout.lock &&
- 	test_must_fail git -C repo sparse-checkout set deep 2>err &&
--	test_i18ngrep "File exists" err
-+	test_i18ngrep "Unable to create .*\.lock" err
- '
-=20
- test_expect_success '.gitignore should not warn about cone mode' '
+* /bin/sh must implement the POSIX.1-2017 shell command language.
+* echo -n, if implemented as shell built-in, must not generate a
+  newline.
+* test must support -o and -a.
+* local to create a scoped variable must be supported, including
+  multiple variables and included assignments.
+* kill -N where N is an integer must be supported with certain signal
+  numbers.
+* trap must work with certain numeric signals.
+
+The latter two are already required by the XSI extension to POSIX.  I
+personally don't see the utility in the second or third, and the first
+is supported in almost every modern shell anyway (possibly with the
+exception of command -v).
+
+Of course, ksh is not included in the set of supported shells for the
+two reasons outlined above.
+
+[0] https://www.debian.org/doc/debian-policy/ch-files.html#scripts
 --=20
-2.26.0-rc1-6-ga56d361f66
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
+--KFztAG8eRSV9hGtP
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.19 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXml8RAAKCRB8DEliiIei
+gcTIAQDkUzuZKGdL8UH7zNXbCY8rzKdk7eScT2Ftk3Pn67cVsQD+IC0fJ2uOyGQY
+nQc9IQzLK/wqUjrs5geX1uWAbosU+gY=
+=Cd4w
+-----END PGP SIGNATURE-----
+
+--KFztAG8eRSV9hGtP--
