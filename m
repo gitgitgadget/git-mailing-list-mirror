@@ -7,130 +7,98 @@ X-Spam-Status: No, score=-0.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 349F5C10DCE
-	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 23:30:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 34276C10DCE
+	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 23:35:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 080EE206B1
-	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 23:30:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 033C320716
+	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 23:35:08 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QQ9PtRAS"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KogQt4sX"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726877AbgCLXao (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Mar 2020 19:30:44 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:39896 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726710AbgCLXan (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Mar 2020 19:30:43 -0400
-Received: by mail-pf1-f196.google.com with SMTP id w65so4037759pfb.6
-        for <git@vger.kernel.org>; Thu, 12 Mar 2020 16:30:43 -0700 (PDT)
+        id S1726710AbgCLXfH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Mar 2020 19:35:07 -0400
+Received: from mail-pf1-f172.google.com ([209.85.210.172]:33895 "EHLO
+        mail-pf1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726513AbgCLXfH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Mar 2020 19:35:07 -0400
+Received: by mail-pf1-f172.google.com with SMTP id 23so4064710pfj.1
+        for <git@vger.kernel.org>; Thu, 12 Mar 2020 16:35:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=/UE1mImM77zCfJpPWTFCkav5q7cC5gf8jIv2UOdu1bU=;
-        b=QQ9PtRAS2u8maL7liXfsPbnQVnJ7RFa9s+97mb5cBS96Yu3/I6XY6DssO0aHOn9D5T
-         AWYrb/wSnFxxlfzHSFpWNQ7IiNHLYMnU/t57iIYDYG0WzvEHulwf9QktkHpDYm/M8sTe
-         +CGSMg6rqm/YMZ2c5AxqNd3jT05k77SrkY0hdQinSBbomJXHmz9yB+jYVPvuZox1Ms9+
-         rI7+q/UsEkeifzrFQ1usvT/KMLogLJqvhTw14vxfVFqhwO1VBJ5hV79PZPIeT4xrOJ8R
-         vVbtKebt5zBfCswlLU46XlN68HcmIMyH6vnhGNdnASSPa3UVdqpmfwh5rUTcXTYf4Bft
-         nrVw==
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=SOUF3JaIhrWADHWEhpjPChQRZ0FXuCF0t3WYpP+z17w=;
+        b=KogQt4sXRNDEuYasdyNrfJn8IiSVVTj/X5Ea3paTt4TcRAZevw8pI7vyXUjKWbo54e
+         07xmTk3utI4zTSjnQnCm2T3W0w+ldEfmfD3VpYh1swWVaqU9j734BovvKgDcfzWXlgsL
+         8ZBCkar0WJJYIxnP0g4Aabe3ltJ/KaztL0tbYGNHJLuooyejS9OjZOysp1+NSJrbjGy7
+         L7S3wQdpCVFptxwPdosWFYNyFNxAqchoHZfvrVqh+me6/XYXJLjx916wSLERSmLtzCsO
+         RqkaONipTvylEKTj7iJsKN0B5zgXiNMPdyusaD1dyha3ZzurzhQ5KCCEsCB5ItiO86on
+         16qQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=/UE1mImM77zCfJpPWTFCkav5q7cC5gf8jIv2UOdu1bU=;
-        b=mQ1k14Y5b+QvhY9d/AjZ/bWwYYkzkT1YoqDDvxNdxp7fsRqV49Kh27Zn0Cu4cKBEsy
-         0BXHD3HvsnWB9JZr2z5cUGNmOWpn5TdkZip5UWuf2WTjm1bLqlfow043f5QQ87fSELwL
-         gAui3aqofx2fHW9XUAz/aJwbLUm5stS3N2B54hmJT5Dbok1Ho6n1QyxPwunvTyro+FsU
-         z4bmM9nQaiwm5hfMcaMzo8AayXcjFC0CIjcEu5/ciVCfB+GNTcJVczigURWokGwa3EHl
-         fF+jMtvkdRIRkvCrZsI4vXLZ4CV2eshTrMmZHp/VeEujUe7YyhXwtaQ5CVcnsaGyMfkG
-         fslg==
-X-Gm-Message-State: ANhLgQ2SiDh4VmLO6cZHi/zh1wfPSWC0jE97iPSxG5UAxV/NEnQep0a7
-        E5+ZeL+ZjapJzlVNlAuQ1Cg=
-X-Google-Smtp-Source: ADFU+vvMJcn9ZRAMYUDPPemvIBuqyRIAoG2DpOL795OjveFKuGobcZXF0paCakRNYNC9ctE+Dvk9nw==
-X-Received: by 2002:a63:3f81:: with SMTP id m123mr10418782pga.335.1584055842638;
-        Thu, 12 Mar 2020 16:30:42 -0700 (PDT)
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=SOUF3JaIhrWADHWEhpjPChQRZ0FXuCF0t3WYpP+z17w=;
+        b=GKO5fw84h/DFLmjALY499V5CZE1D2vkSQTJUw39UDuSPTKoAwK3aTedKeoAYGOImzC
+         GOIH8/HtMl2qCkIshp64Z9E0TmIrmDLYopWaMthfb6PWtflb2NGegNyKngyUevf3GM+F
+         zzVKn1hBFZeN5gwXOPKnom1hvCSsveh1LuAduVBpiYFt+dZcIBgAI5JMBglQHJ+TnmdP
+         ovboV0oIfbEE6nPxcOODOAOK+jBh4N4WM7xAyzq+nnqXgzwONp+qJIl4J3JD46WjbDaz
+         1nSGMwrIHs6/zcwDjfrRPiECQgntkOodi3xKfxy8tz9Oc0eRJ2eYIx17C6ofHT+0JGWu
+         F2kw==
+X-Gm-Message-State: ANhLgQ1tNwR8+hye4VWrsZcl4PTKo05ZPCIluPo+8XrQmB/l2nUps8J4
+        pRFF+5NDlA0Z4Tz9qkQe8VU=
+X-Google-Smtp-Source: ADFU+vtphAjE3ys8dZ0vwd5cLnG2oArh4d1CrY6X3kt9vBiKu6QKCwYBKPSKXAEQ0gNLut0u2jp6vA==
+X-Received: by 2002:a63:a741:: with SMTP id w1mr10352383pgo.131.1584056106269;
+        Thu, 12 Mar 2020 16:35:06 -0700 (PDT)
 Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
-        by smtp.gmail.com with ESMTPSA id 4sm58921560pfn.90.2020.03.12.16.30.41
+        by smtp.gmail.com with ESMTPSA id w16sm12350766pfj.79.2020.03.12.16.35.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Mar 2020 16:30:41 -0700 (PDT)
-Date:   Thu, 12 Mar 2020 16:30:40 -0700
+        Thu, 12 Mar 2020 16:35:05 -0700 (PDT)
+Date:   Thu, 12 Mar 2020 16:35:04 -0700
 From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Denton Liu <liu.denton@gmail.com>,
-        Pavel Roskin <plroskin@gmail.com>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH v5 20/20] rebase: rename the two primary rebase backends
-Message-ID: <20200312233040.GG120942@google.com>
-References: <pull.679.v4.git.git.1579155273.gitgitgadget@gmail.com>
- <pull.679.v5.git.git.1581802602.gitgitgadget@gmail.com>
- <ad8339aebf28ec84c22ed59cef06614d204adb55.1581802602.git.gitgitgadget@gmail.com>
- <20200312151318.GM212281@google.com>
- <CABPp-BHyNvxQZ5q=9WXXESTPmxFe4fAiE5roGeV2H+XJ_cpDmg@mail.gmail.com>
- <xmqqftedfkvy.fsf@gitster.c.googlers.com>
- <CABPp-BGvqUEDoj6_mUAsSVeS8+h5ruCFcMTENtf5LY2XWKVj-g@mail.gmail.com>
- <20200312203718.GA870787@coredump.intra.peff.net>
- <xmqqo8t1e01r.fsf@gitster.c.googlers.com>
+To:     =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Emily Shaffer <emilyshaffer@google.com>
+Subject: Re: Regression in v2.26.0-rc0 and Magit
+Message-ID: <20200312233504.GH120942@google.com>
+References: <3091652.KAqcNXvZJ4@cayenne>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqo8t1e01r.fsf@gitster.c.googlers.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <3091652.KAqcNXvZJ4@cayenne>
 User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
+Hi,
 
->           So let's scrap the "am is taken as a synonym for apply".
-> It would not help the old version taken from 'next' grok a new
-> configuration file that uses "apply" anyway ;-)
+Jean-Noël AVILA wrote:
 
-Agreed.  For 2.26.0, I'm happy with either
+> When trying the latest rc with magit, I found that git segfaults
+> under Magit with auto-revert enabled. The message in emacs is
+>
+> Error in post-command-hook (magit-auto-revert-mode-check-buffers):
+> (wrong-type-argument number-or-marker-p "Segmentation Fault")
+>
+> I was able to bisect the issue to commit
+> e0020b2f82910f50bc697d86aff70c3796fbdc41 but unfortunately, it seems
+> difficult to print the exact command from magit.
 
-- what we currently have, where it defaults to 'merge', or
-- the more conservative approach where it supports 'merge' but defaults
-  to 'apply'
+Thanks for reporting.  This is fixed by
 
-Accepting multiple values for forward compatibility is an optional
-cherry on top: I would like us to eventually get there, but I don't
-mind if it doesn't make 2.26.0, and it's probably better to give a
-change like that some cooking time.  (Although I won't complain if it
-does make 2.26.0. ;-))
+ commit e6c57b49eb63e77ccf72215229744c4beaf04204 (es/outside-repo-errmsg-hints)
+ Author: Emily Shaffer <emilyshaffer@google.com>
+ Date:   Mon Mar 2 20:05:06 2020 -0800
 
-[...]
-> We may want to think of a way to strongly encourage those who are in
-> charge of choosing and maintaining the versions of Git that is used
-> in their organization, whose operation depends on the healthy future
-> versions of Git, to run 'next' or at least 'master', to stay ahead
-> of the released versions.  Some education and advocacy is needed?
+    prefix_path: show gitdir if worktree unavailable
 
-It's possible we should write up some best practices somewhere in
-Documentation/ about how to make running "next" go smoothly:
-
-- have a responsive infrastructure team.  Pay attention to changes
-  landing upstream and have the infra team test before the rest of
-  your user population :)
-
-- if you have a large user population, use gradual rollouts so that a
-  subset of users can find problematic changes before they affect
-  everyone
-
-- fast rollbacks
-
-- telemetry to catch regressions (in latency, for example) when people
-  are too shy to report them
-
-We can also advertise places, such as Debian experimental, that people
-can get snapshots without maintaining them themselves.
+Junio, can you fast-track that fix to "master"?  Emily, can you add a
+test?
 
 Thanks,
 Jonathan
