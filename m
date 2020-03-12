@@ -2,92 +2,88 @@ Return-Path: <SRS0=YYoh=45=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 859E3C10DCE
-	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 19:07:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 12504C10DCE
+	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 19:08:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5EB92206F1
-	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 19:07:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B44F3206F1
+	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 19:08:24 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="V206q07I"
+	dkim=pass (1024-bit key) header.d=yandex.ru header.i=@yandex.ru header.b="PC7rjjYX"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726695AbgCLTH2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Mar 2020 15:07:28 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56651 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725268AbgCLTH2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Mar 2020 15:07:28 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 11239505F7;
-        Thu, 12 Mar 2020 15:07:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=pQSTGWjALFXzM9ZN/iJ5UilPeO4=; b=V206q0
-        7IjJfdGkanifDM12srp4OS+zBNcsqMSTezpPMincT1M0fIRXdwp8WDP0X6FqpFYu
-        3twIA6nGKTDloSlEHt+PuVnegJG0OlTGNS5ePT32G8iIEqQCJKFw5wZ7wnkCt8eP
-        4NQQaI/Hekq6j4yWWXVk8s3gqAsdaXM7w6Qv8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=mKa1cN3d5bgRhpcbAgG1FSaYY19atPjc
-        y3nzTp5aIa5HBv5ECGLp0I7GnOdZQBA1dZHZGtKxpkWqXNjI1BKFeIzMzo6jrGUe
-        CpXMFURkzO5dTV7xQlNc9VVqQKfislfNEN8NoGmzuLJHl0hweGeZ7JZiH1f4Xc6R
-        7QcHtnV6gRY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 06762505F6;
-        Thu, 12 Mar 2020 15:07:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 835C1505F5;
-        Thu, 12 Mar 2020 15:07:25 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Emily Shaffer <emilyshaffer@google.com>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Denton Liu <liu.denton@gmail.com>,
-        Pavel Roskin <plroskin@gmail.com>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v5 20/20] rebase: rename the two primary rebase backends
-References: <pull.679.v4.git.git.1579155273.gitgitgadget@gmail.com>
-        <pull.679.v5.git.git.1581802602.gitgitgadget@gmail.com>
-        <ad8339aebf28ec84c22ed59cef06614d204adb55.1581802602.git.gitgitgadget@gmail.com>
-        <20200312151318.GM212281@google.com>
-        <CABPp-BHyNvxQZ5q=9WXXESTPmxFe4fAiE5roGeV2H+XJ_cpDmg@mail.gmail.com>
-Date:   Thu, 12 Mar 2020 12:07:25 -0700
-In-Reply-To: <CABPp-BHyNvxQZ5q=9WXXESTPmxFe4fAiE5roGeV2H+XJ_cpDmg@mail.gmail.com>
-        (Elijah Newren's message of "Thu, 12 Mar 2020 09:33:02 -0700")
-Message-ID: <xmqqk13pfl3m.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726763AbgCLTIX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Mar 2020 15:08:23 -0400
+Received: from forward500o.mail.yandex.net ([37.140.190.195]:60770 "EHLO
+        forward500o.mail.yandex.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725268AbgCLTIX (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 12 Mar 2020 15:08:23 -0400
+Received: from mxback25o.mail.yandex.net (mxback25o.mail.yandex.net [IPv6:2a02:6b8:0:1a2d::76])
+        by forward500o.mail.yandex.net (Yandex) with ESMTP id A6B4E604FA;
+        Thu, 12 Mar 2020 22:08:20 +0300 (MSK)
+Received: from localhost (localhost [::1])
+        by mxback25o.mail.yandex.net (mxback/Yandex) with ESMTP id Ju64gjFeLJ-8KGC3kTS;
+        Thu, 12 Mar 2020 22:08:20 +0300
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1584040100;
+        bh=g8mCBkhEC5UyNLVTmXZ0Hf4o/cCKcJ3HtvxlHCX0Cfk=;
+        h=Message-Id:Cc:Subject:In-Reply-To:Date:References:To:From;
+        b=PC7rjjYXDRW6Jb2gpYhy7xhe1DldgZbM34qXR1DtBBeU9YuRRlIMdokLe6HyXOy7K
+         izU8wKNshv9sngeJitoI9A1Wht+QyM1BWcrMbIUQo9uOa2rVYotGiljAIuzH0krXUc
+         secU8JTE2ebnM9Sm4NcJU3tov53UGdWqHMIlF0Uw=
+Authentication-Results: mxback25o.mail.yandex.net; dkim=pass header.i=@yandex.ru
+Received: by myt4-e9a2cc77875c.qloud-c.yandex.net with HTTP;
+        Thu, 12 Mar 2020 22:08:20 +0300
+From:   Konstantin Tokarev <annulen@yandex.ru>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+In-Reply-To: <xmqqo8t1flin.fsf@gitster.c.googlers.com>
+References: <558831584024173@sas1-438a02fc058e.qloud-c.yandex.net> <xmqqo8t1flin.fsf@gitster.c.googlers.com>
+Subject: Re: [Feature request] "Hooks" for git log
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B5C2A9B2-6494-11EA-A3BB-C28CBED8090B-77302942!pb-smtp1.pobox.com
+X-Mailer: Yamail [ http://yandex.ru ] 5.0
+Date:   Thu, 12 Mar 2020 22:08:20 +0300
+Message-Id: <79741584039971@myt6-4d759d962265.qloud-c.yandex.net>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
 
-> I'm a little worried about ignoring the setting and just picking one;
 
-I am more than a little worried, too.  I think erroring out is
-warranted in this case for exactly the reason you gave here.
+12.03.2020, 21:58, "Junio C Hamano" <gitster@pobox.com>:
+> Konstantin Tokarev <annulen@yandex.ru> writes:
+>
+>>  I think it would be very useful if git log provided new option named e.g.
+>>  --hook or --script, which would take script path as an argument.
+>>  git log would follow it's normal way of operation, applying other filtering
+>>  options it was given, however intstead of printing info on commit that
+>>  matches filters, it invokes script with commit hash as an argument.
+>>  Script can do whatever it needs with hash, including any git operations,
+>>  can print commit info to log if needed, or print something else, or keep
+>>  silence. If script returns non-zero, parent git log command terminates,
+>>  otherwise it continues.
+>
+> You do not need a hook for that, no?
+>
+>  $ git log --format='%H' ...your other options here... |
+>    while read commit
+>    do
+>         ... your "hook" that checks the $commit to see if
+>         ... it is "interesting" and shows or discard or whatever
+>         ... it does comes here
+>    done
 
-> if the setting has been marked and they set it to e.g. "appply" (one
-> too many p's), then does it really make sense to just show a warning
-> but continue using the backend they didn't want, especially since they
-> may miss the warning among the rest of the output?  I'd rather go the
-> route of improving the message, perhaps:
->         _("Unknown rebase.backend config setting: %s")
+When pager is in use, git log loads commits lazily when you scroll down.
+I find this feature rather crucial for working with any long history, and
+I don't see how to achieve this with pipe.
+
+
+-- 
+Regards,
+Konstantin
 
