@@ -2,210 +2,104 @@ Return-Path: <SRS0=YYoh=45=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9EA05C10DCE
-	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 16:48:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BA653C1975A
+	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 17:07:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6B4CB2071B
-	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 16:48:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 882D7206F1
+	for <git@archiver.kernel.org>; Thu, 12 Mar 2020 17:07:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pANWB38q"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="pDjc6Zba"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726377AbgCLQsN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Mar 2020 12:48:13 -0400
-Received: from mail-oi1-f193.google.com ([209.85.167.193]:46096 "EHLO
-        mail-oi1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726099AbgCLQsN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Mar 2020 12:48:13 -0400
-Received: by mail-oi1-f193.google.com with SMTP id a22so6123674oid.13
-        for <git@vger.kernel.org>; Thu, 12 Mar 2020 09:48:12 -0700 (PDT)
+        id S1726548AbgCLRHW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Mar 2020 13:07:22 -0400
+Received: from mail-vk1-f201.google.com ([209.85.221.201]:35276 "EHLO
+        mail-vk1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726085AbgCLRHW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Mar 2020 13:07:22 -0400
+Received: by mail-vk1-f201.google.com with SMTP id g131so2589170vke.2
+        for <git@vger.kernel.org>; Thu, 12 Mar 2020 10:07:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=5iGAjvisRCamgIQ5eMuD5xQHbiII9WjWQ0RhBaNv0t0=;
-        b=pANWB38q3aBgUEYXG678rTeCH81drbyI0MuTmuLhWqdyerpj5nsA1l/j/OMlcZPHcG
-         8qnmy6kEgFPNxi9P4nDw5NyiqTP3LudCJToe+E/BM25R/T0iQikDQAkIYUo+ConNTVfn
-         9TWmxHvHdiM15EoTvV5LheL+v0Qij7EPsftKXYcGNvlw1jaeO2VLz7r/EdspgwSa7/fe
-         RurPMF3kSdhFEnAvEv8dN1doz/M6YQj8HJcGfm8XwozVbVVpR845jYv8iFBwGOb9+UeI
-         k1O7KuDzST4W2m9Z83o3b9AciIXD2SSV5uPaMkHfLs/FbnYEoBOKCujmAfRyjgJtnGk0
-         SFTA==
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=4Gh44twcqFlNe/0sChu2haFG8fbqQB6AZMV8jzl5occ=;
+        b=pDjc6ZbaAwUOk2QytUPYaWaZXAsIohzXWiHYZZlyeQ2dXAGpt6bZWo8HWM8hSwOsqV
+         Ud9wslTHIxekhM9YClyVCgsrK0zWhDyZFhtVu+uisqnVOEFfHaGgS1JDCZT7DwncxEyG
+         5M4Eo6rO4NiLLtQvxpUPTagRB0jRZhHGDSWgRIm2BfGpbPxc+jP36CtzC+h1DUmaqClK
+         ReNGZBvLaBAUd0hPtYE499eZQdFT3mFf1dt8Fc8sUIZugh+ETpMflHAsWVyWVBxbNTw7
+         G/sXVw4/VO5V9sOtksWlkhnyrf/WjCTzvpNbF03ItVTgCTTgv7qHneEmuwga5iiuDa6j
+         YrOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=5iGAjvisRCamgIQ5eMuD5xQHbiII9WjWQ0RhBaNv0t0=;
-        b=bquyCq98SbDdB9dZrYtsMBQMv/wpCwq+Hsi70RBBiLgpnxcQzyt3BJl3FpDoZolkS6
-         D1G4l538M+UqdZKdMQC2rKZD4aMghkoF7dkR3FS1i3+YrW+o1bwE9JrTrzOH25jqVOvf
-         8DqZzlkSZFlUBV8i0oHcgOlg++uz2iVckwvwS8B0hy5wsfOALaP8i5JHmmw4Otxh92sZ
-         8zWddCSXKd9UIDTCJv6HhfUkd592QGy0+w9Aup9AC7jdLd5JY/zHmSuMYMEmf793uDqJ
-         1EqMx0CmAp96x+JzlQ3BVLaDeKZ4Oy/xyUSN+b4lO4Qk+lut9SsBMg8b6VAd+KtdzVus
-         QGZA==
-X-Gm-Message-State: ANhLgQ0Dqlp8FFiC8tVnRYU1xopoQJuPHqfG9VyOE8PmXuTx++JP0K5d
-        kADwNnlp3Vk6BHBJLErQcvYvNWThg79zbDvMtFUdKg==
-X-Google-Smtp-Source: ADFU+vvfK01TSQ1ukY6WDGnGSDdXhtrshNQvWkRRf7038fazfmaUZsMjOTeRmoeIWx7GbqtqQNL0ix0+XrjDdcs+/Fc=
-X-Received: by 2002:a54:4416:: with SMTP id k22mr1774253oiw.167.1584031692098;
- Thu, 12 Mar 2020 09:48:12 -0700 (PDT)
-MIME-Version: 1.0
-References: <pull.716.git.git.1582762465.gitgitgadget@gmail.com>
- <26d0c34cd1d4a54dab28d0c9c2242336244e8a3c.1582762465.git.gitgitgadget@gmail.com>
- <20200312132032.GD3122@szeder.dev>
-In-Reply-To: <20200312132032.GD3122@szeder.dev>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 12 Mar 2020 09:48:01 -0700
-Message-ID: <CABPp-BEa7pvqgH+EytGPp2AO5nBmEgW0+7HnjK-e3MqrBnthnA@mail.gmail.com>
-Subject: Re: [PATCH 4/5] t6022, t6046: test expected behavior instead of
- testing a proxy for it
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=4Gh44twcqFlNe/0sChu2haFG8fbqQB6AZMV8jzl5occ=;
+        b=qVdYaoXjwpt5t6nsHvdZYQrrozijWS2m57LIhiIiDDs/07xKnmPmJBL1Kjri6uYeAP
+         fZbR7XQKJq4p5tVeY5cYd6i69VAJnt8AteF3OtjhzEltIrR+vps8UreFPfcDiEP13JD1
+         GXtfYVBqAa9bhAHjRtc0PLAu6VBdWZS4XqCgSleB9n7F5w8SkGLMEzRF9FWxpnDWfVh1
+         /aFFCKWr/G6r3F46yqUrDOOcv87RItjXpkw8O6UZrSIsseUwqtojpApXk/qIIUlJaQin
+         doHgyRD4p7DYrp/P4s2kVmgvg6dlxiJaFstV2nJ6tEOmV9hwP2u2AP1WWzKS0GKlnoNK
+         JBQg==
+X-Gm-Message-State: ANhLgQ1pva6oEqaIlVd4KvU8cN+WzCZLWuLRvujARO8APBAgK/gp5RRR
+        dbLsv5secjMQEr+c5COOVyFzdOabf4mAxissIgZL
+X-Google-Smtp-Source: ADFU+vsflb0rz7yjFumk2cV8q0V/acvXDbDTmYSoVCCUA/WPrjbrOUdsSAP4u83iKmfNr1hnOMEJpYGEMqoBcIyR3t9d
+X-Received: by 2002:a1f:9948:: with SMTP id b69mr6095878vke.13.1584032839636;
+ Thu, 12 Mar 2020 10:07:19 -0700 (PDT)
+Date:   Thu, 12 Mar 2020 10:07:14 -0700
+In-Reply-To: <5981c317-4b39-de15-810b-a781aa79189d@gmail.com>
+Message-Id: <20200312170714.180996-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <5981c317-4b39-de15-810b-a781aa79189d@gmail.com>
+X-Mailer: git-send-email 2.25.1.481.gfbce0eb801-goog
+Subject: Re: [Question] Is extensions.partialClone defunct?
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     stolee@gmail.com
+Cc:     git@vger.kernel.org, jonathantanmy@google.com, me@ttaylorr.com,
+        christian.couder@gmail.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 12, 2020 at 6:20 AM SZEDER G=C3=A1bor <szeder.dev@gmail.com> wr=
-ote:
->
-> On Thu, Feb 27, 2020 at 12:14:23AM +0000, Elijah Newren via GitGitGadget =
-wrote:
-> > From: Elijah Newren <newren@gmail.com>
-> >
-> > In t6022, we were testing for file being overwritten (or not) based on
-> > an output message instead of checking for the file being overwritten.
-> > Since we can check for the file being overwritten via mtime updates,
-> > check that instead.
-> >
-> > In t6046, we were largely checking for both the expected behavior and a
-> > proxy for it, which is unnecessary.  The calls to test-tool also were a
-> > bit cryptic.  Make them a little clearer.
-> >
-> > Signed-off-by: Elijah Newren <newren@gmail.com>
-> > ---
-> >  t/t6022-merge-rename.sh                | 15 ++++-
-> >  t/t6046-merge-skip-unneeded-updates.sh | 89 +++++++++++++++++---------
-> >  2 files changed, 70 insertions(+), 34 deletions(-)
-> >
-> > diff --git a/t/t6022-merge-rename.sh b/t/t6022-merge-rename.sh
-> > index 6f196aaf276..d97cf48495b 100755
-> > --- a/t/t6022-merge-rename.sh
-> > +++ b/t/t6022-merge-rename.sh
-> > @@ -242,12 +242,23 @@ test_expect_success 'merge of identical changes i=
-n a renamed file' '
-> >       rm -f A M N &&
-> >       git reset --hard &&
-> >       git checkout change+rename &&
-> > +
-> > +     test-tool chmtime =3D31337 B &&
-> > +     test-tool chmtime --get B >old-mtime &&
->
-> Nit: I think it's possible to change the mtime and print it in a
-> single invocation with:
->
->   test-tool chmtime --get =3D1234 file
+> I was looking into an issue around partial clone in v2.26.0-rc1, but found several references in the code and documentation to "extensions.partialClone".
 
-Oh, cool.
+[snip]
 
-> >       GIT_MERGE_VERBOSITY=3D3 git merge change >out &&
->
-> Nit: The output of 'git merge' is still redirected to a file, but ...
->
-> > -     test_i18ngrep "^Skipped B" out &&
->
-> ... the only command looking at the output is now removed.
+> but it appears that we rely on the "remote.<name>.promisor = true" setting instead of this extension.
 
-Indeed.
+Hmm...besides giving the name of the promisor remote, the
+extensions.partialClone setting is there to prevent old versions of Git
+(that do not know this extension) from manipulating the repo.
 
-> > +     test-tool chmtime --get B >new-mtime &&
-> > +     test_cmp old-mtime new-mtime &&
-> > +
-> >       git reset --hard HEAD^ &&
-> >       git checkout change &&
-> > +
-> > +     test-tool chmtime =3D-1 M &&
-> > +     test-tool chmtime --get M >old-mtime &&
-> >       GIT_MERGE_VERBOSITY=3D3 git merge change+rename >out &&
-> > -     test_i18ngrep ! "^Skipped B" out
->
-> Likewise.
->
-> > +     test-tool chmtime --get B >new-mtime &&
-> > +     test $(cat old-mtime) -lt $(cat new-mtime)
->
-> I saw this test fail today in one of my custom CI builds:
->
->   +git checkout change
->   Switched to branch 'change'
->   +test-tool chmtime =3D-1 M
->   +test-tool chmtime --get M
->   +GIT_MERGE_VERBOSITY=3D3 git merge change+rename
->   +test-tool chmtime --get B
->   +cat old-mtime
->   +cat new-mtime
->   +test 1583967731 -lt 1583967731
->   error: last command exited with $?=3D1
->   not ok 12 - merge of identical changes in a renamed file
->
-> The contents of 'out', i.e. the output of the 'git merge' command
-> before the failure is:
->
->   Auto-merging B
->   Merge made by the 'recursive' strategy.
->    A =3D> B | 0
->    1 file changed, 0 insertions(+), 0 deletions(-)
->    rename A =3D> B (100%)
->
-> This is a rare failure, this is the first time I saw it, and to make
-> things worse, this one time it happened on big-endian and with all the
-> GIT_TEST_* knobs enabled.
->
->   https://travis-ci.org/github/szeder/git-cooking-topics-for-travis-ci/jo=
-bs/661294571#L4020
+> Indeed, if we run `git clone --filter=blob:none <url>" the resulting .git/config file is as follows:
+> 
+> [core]
+>         repositoryformatversion = 1
+>         filemode = false
+>         bare = false
+>         logallrefupdates = true
+>         symlinks = false
+>         ignorecase = true
+> [remote "origin"]
+>         url = <url>
+>         fetch = +refs/heads/*:refs/remotes/origin/*
+>         promisor = true
+>         partialclonefilter = blob:none
+> [branch "master"]
+>         remote = origin
+>         merge = refs/heads/master
 
-This is very troubling.  The workflow is basically:
-  - Manually set the mtime to a file to something old (I happened to
-pick 1 second before now, but picking something from 1970 would have
-been fine too).
-  - Run a merge which is known to need to overwrite the file.  Your
-output ("Auto-merging B") suggests that we should have been in such a
-case.
-  - Verify that the file was actually updated as expected.  Since the
-OS is supposed to update the mtime when it writes the file, it should
-have set it to something recent, i.e. something *different* than what
-it had before.
+I cloned and indeed it is as Stolee describes. Git still works as
+expected if I remove "promisor = true" and add
+"[extensions]\npartialclone=origin", so at least extensions.partialClone
+is still supported, even if not written by default.
 
-So, now I'm left wondering how the mtime possibly could have been not
-updated.  Maybe the file wasn't actually written?  (But if so, why
-didn't other people see the failure?  Or your stress runs not see it?)
- Or maybe it was written but all file contents and metadata were
-delayed in writing to disk such that a subsequent command still sees
-the old file??  Or maybe it was written but the mtime update was
-delayed and the test was able to check it in that intermediate
-state???  Or perhaps the mtime check before the merge raced with the
-setting of the mtime backwards and got the mtime before it was
-rewound????
+> So, I thought I would put this up on the list to point out the inconsistency, in case someone with more context has thoughts on the correct way forward here.
 
-I don't have a plausible scenario under which any of these should be
-possible; I'm at a loss.
-
-> I've been running './t6022-merge-rename.sh --stress -r 1,12' both with
-> and without all the GIT_TEST_* knobs for a few hundred repetitions,
-> but couldn't trigger the failure yet...
-
-I'm not sure if that makes me feel better or worse.
-
-> I wonder whether comparing the mtimes with '-le' instead of '-lt' is
-> acceptable in this test case, but don't have enough insight to form an
-> opinion.  Note that this patch added a few similar mtime comparisons
-> to t6046 below, and they might be prone to the same issue as well.
-
--le would not be acceptable; if we were to do that we may as well
-throw away the test.  The test exists to check that the file contents
-were actually written, which I was assuming could be verified by an
-mtime update of what otherwise used to be an "old" file.
+Thanks for bringing this up.
