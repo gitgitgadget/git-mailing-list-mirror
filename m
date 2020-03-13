@@ -2,150 +2,87 @@ Return-Path: <SRS0=VWjS=46=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 85B17C10DCE
-	for <git@archiver.kernel.org>; Fri, 13 Mar 2020 17:30:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C9EC7C2BB1D
+	for <git@archiver.kernel.org>; Fri, 13 Mar 2020 17:31:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5BC67206E9
-	for <git@archiver.kernel.org>; Fri, 13 Mar 2020 17:30:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 97243206E9
+	for <git@archiver.kernel.org>; Fri, 13 Mar 2020 17:31:49 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WyfDSp8c"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jngxfctI"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726801AbgCMRad (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Mar 2020 13:30:33 -0400
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:45757 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726446AbgCMRad (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Mar 2020 13:30:33 -0400
-Received: by mail-lj1-f196.google.com with SMTP id e18so11419754ljn.12
-        for <git@vger.kernel.org>; Fri, 13 Mar 2020 10:30:32 -0700 (PDT)
+        id S1726534AbgCMRbs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Mar 2020 13:31:48 -0400
+Received: from mail-lf1-f53.google.com ([209.85.167.53]:33677 "EHLO
+        mail-lf1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726442AbgCMRbs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Mar 2020 13:31:48 -0400
+Received: by mail-lf1-f53.google.com with SMTP id c20so8578531lfb.0
+        for <git@vger.kernel.org>; Fri, 13 Mar 2020 10:31:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:from:date:message-id:subject:to:cc;
-        bh=R7MGmWFPaoj/bPR7zj6/h9M+g/TfgcClM0lt38r4u2w=;
-        b=WyfDSp8cKynO7uOJOIGqS83lr3uTbNN0rgtdNqBOl6e29J7XInWsvGPUKVCFkMVUgj
-         Cuuu+XN1m7OiOItUVW5ZnAwoef9pO7mGd7hbtTtgID8GEgpGkFG5PgJbRIC+ahihbS48
-         TIhKfzmCZdLpZHlZX6lu+WKoRR3JAZsAyfXHfoIC09Me/XswHPN6OBY0a7LM41DlZmX2
-         +9fOVS7pbHI/TsB8Hv5KgHE1amIl2M6n63On0rSg49EKO0F2b+ef/SURi5YwnhTKnXCi
-         7warvTnXRR3r4se0HdWCHMleronZkuSuXi5/3uaTxzCHab4Y3ciChFqZrvs9zTUZ2K4M
-         QZiA==
+        bh=JQxWu4UYv9Gr1LNzkiOp+LyJCJRoobUH0l8I/bq8yrQ=;
+        b=jngxfctIYOQ3yYDKCmV0kgYX9yvIUqbr56VeGyp/cGdurljJ0x9gIp7XAV7a1T6rD3
+         +ZMwdJPzru6hrEWwvq+sXh8BXkd4fMjWLXIYzZtbgxn4L0UDxoH6LnieclhrMZhi5yc9
+         efhC/+seK2aU6ATzuGw/2mCn/T4kk1bptSWUPCgX/GyU6KO1XJU+UKuFcVl+Pqy1yfBe
+         8+xDacW6yGiTp6TIgArp9ZZxLRC2h1Jt8OUbvlLXXNrpycbpIvBDLTlAFrI/e0VYD6gV
+         LRDVvIIf5pO0lzny5370fb1CGUdxq8uR5rpoUlWya+1xV/vJsbHDsxjbLYNlZzG9q7QG
+         Wb2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=R7MGmWFPaoj/bPR7zj6/h9M+g/TfgcClM0lt38r4u2w=;
-        b=BDWgGHX/kTAZRrsUs28CZcVdTNfhA/j9x0wnTInNSg3go1d33WssVpGngMKzjxQgk2
-         nZmKymLF4B5xcZX2jlqrwn4EiOX99AHGiQM8DOnMscc2qIa6ZBZlKi1JB7slIin9lgm0
-         311615AR2zqa+nGTZ4WVLQKOqhD1vwNBzJWPQ/ZPrlejbsV7RefRi2onaZ4oX2qRwQeB
-         VmwuB9Qpos9k1z/bpip840l7hOp3uReZZS7u0rounZQZhBirkQ3j2tzFJhWshWRTsuKZ
-         6FGp7DcjoJGDXziy0pa5EQCTbS3lb6XIZGtHBFhHIzUJwHsuBvxxvE+g9GJKCAxaYuUT
-         GQFw==
-X-Gm-Message-State: ANhLgQ0nb+YSZ33IJ9avE+mIoZ8aYcOdGRRzJ5Gg4rK9kR9bah/V//3j
-        BVAJ1F/8qIn8WZPCJZ0lzZ27m9KKv0ELHc84cZpJgLq8
-X-Google-Smtp-Source: ADFU+vt82gALVyI8EeMuB+V59gMsGex4/GYog8CRPbgA5RkB2uzs/ZuYOK8rt4HXqzy2kaxa/Djrq4MH5c3kDDWz77k=
-X-Received: by 2002:a2e:88d9:: with SMTP id a25mr8226610ljk.267.1584120631441;
- Fri, 13 Mar 2020 10:30:31 -0700 (PDT)
+        bh=JQxWu4UYv9Gr1LNzkiOp+LyJCJRoobUH0l8I/bq8yrQ=;
+        b=W1N2rEm3xarUV1/EpDFuQ8BRsJLWB0XXhN7nHhQvndkdOH4B4h8v0iGBalYWOfX2fJ
+         ti25V9qALCUEV3LbVFLT28Y9fSNLH+4ucVcH3U6cUeEpt4m1iQvZm26Ed8mohJbGG8PA
+         ly8hddYhf2zAZmmg2vWaFpRLbxYcRg/BaNhGakQwl+mR1tkt3jzHcmoxpSPogqYckNgj
+         J1l9mgymad1nAXbpdcKDMZryl5RgkSvgW4ICuStateF9QLUPoxqBGf8XNpJLoeWtMDTe
+         4F0S8ieSCEyEfeEpX2KPMmr8Lbddt7fThdqTxhbjnxTgSHw4fEZ7fMjbOqEkuRpxcE3m
+         coNw==
+X-Gm-Message-State: ANhLgQ3bp0Vr2Mdrrif7dq6d/MTgmcuz+RYgQwC2kQly7jEqw052OVL9
+        gMoiANMyOPHT+zz5C1ejAazBIWWSEe+i6VZBpmw=
+X-Google-Smtp-Source: ADFU+vsjvCI5RXE7cnKSSi8ty8cQrgEoUCDEE6UxUaMUrPqHmyveRVU5pd5l1P0Ncox+RTrSa1xeiSthf0vwkmxru1k=
+X-Received: by 2002:ac2:4565:: with SMTP id k5mr9062480lfm.8.1584120706027;
+ Fri, 13 Mar 2020 10:31:46 -0700 (PDT)
 MIME-Version: 1.0
 From:   Abhishek Kumar <abhishekkumar8222@gmail.com>
 Date:   Fri, 13 Mar 2020 23:00:00 +0530
-Message-ID: <CAHk66ftWBYF3d_L0-__BP5mKNxBioj57y44yhyqGrtK3TZTjSg@mail.gmail.com>
-Subject: Re: [RFC PATCH] Make rev-parse -q and --is-* quiet
-To:     erlend-a@innova.no
-Cc:     git@vger.kernel.org
+Message-ID: <CAHk66fvQw+6oQ3dnxJ8Ud8wrZrsm5hdnsekon7OK+y8-AM84zQ@mail.gmail.com>
+Subject: Re: [RFC] Possible idea for GSoC 2020
+To:     jnareb@gmail.com
+Cc:     christian.couder@gmail.com, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> If rev-parse is called with both -q and an --is-* option, the result is
-> provided as the return code of the command, iso. printed to stdout.
->
-> This simplifies using these queries in shell scripts:
-> git rev-parse --is-bare-repository && do_stuff
-> git rev-parse --is-shallow-repository && do_stuff
->
-> Signed-off-by: Erlend E. Aasland <erlend.aasland@innova.no>
-> ---
-> builtin/rev-parse.c | 25 ++++++++++++++++---------
-> 1 file changed, 16 insertions(+), 9 deletions(-)
->
-> diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-> index 7a00da8203..5a8b404ec7 100644
-> --- a/builtin/rev-parse.c
-> +++ b/builtin/rev-parse.c
-> @@ -874,24 +874,31 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
->                 continue;
->             }
->             if (!strcmp(arg, "--is-inside-git-dir")) {
-> -                printf("%s\n", is_inside_git_dir() ? "true"
-> -                        : "false");
-> +                int is_set = is_inside_git_dir();
+Jakub Narebski <jnareb@gmail.com> writes:
 
-Avoid declaration after statement. Move is_set to the beginning of
-cmd_rev_parse().
+> I have prepared slides for "Graph operations in Git version control
+> system" (PDF), mainly describing what was already done to improve their
+> performance, but they also include a few thoughts about the future (like
+> additional graph reachability labelings)... unfortunately the slides are
+> in Polish, not in English.
 
-Also, be more specific than "is_set". A variable like "is_inside" would
-be more appropriate.
+> If there is interest, I could translate them, and put the result
+> somewhere accessible.
 
-> +                if (quiet)
-> +                    return is_set ? 0 : 1;
+I was going through resources and drafting up a proposal. The slides would be
+a great help.
 
-Returning prematurely might be a bad idea. If there are more options after
-"--is-inside-git-dir", they will be not executed. You can maybe rewrite this as:
+Could you please translate them, if it's not too much trouble?
 
-```
-             if (!strcmp(arg, "--is-inside-git-dir")) {
-                is_set = is_inside_git_dir();
-                if (!quiet)
-                        printf("%s\n", is_set ? "true"
-                            : "false");
-                 continue;
-             }
-```
-And then return the value at the end of function, replacing '0' with !is_set.
+> Or I could try to make this information into blog post -- this topic
+> would really gain from using images (like Derrick Stolee series of
+> articles on commit-graph).
 
-Same comment for other blocks.
-
-
->             if (!strcmp(arg, "--is-inside-work-tree")) {
-> -                printf("%s\n", is_inside_work_tree() ? "true"
-> -                        : "false");
-> +                int is_set = is_inside_work_tree();
-> +                if (quiet)
-> +                    return is_set ? 0 : 1;
-> +                printf("%s\n", is_set ? "true" : "false");
->                 continue;
->             }
->             if (!strcmp(arg, "--is-bare-repository")) {
-> -                printf("%s\n", is_bare_repository() ? "true"
-> -                        : "false");
-> +                int is_set = is_bare_repository();
-> +                if (quiet)
-> +                    return is_set ? 0 : 1;
-> +                printf("%s\n", is_set ? "true" : "false");
->                 continue;
->             }
->             if (!strcmp(arg, "--is-shallow-repository")) {
-> -                printf("%s\n",
-> -                        is_repository_shallow(the_repository) ? "true"
-> -                        : "false");
-> +                int is_set = is_repository_shallow(the_repository);
-> +                if (quiet)
-> +                    return is_set ? 0 : 1;
-> +                printf("%s\n", is_set ? "true" : "false");
->                 continue;
->            }
->            if (!strcmp(arg, "--shared-index-path")) {
-> --
-> 2.25.1
-
-I am wondering if we should stop the script from running if both quiet
-and --is-* options are passed.
+Yes, thank you very much. Derrick's articles have been very useful so far.
+I would be glad to help you out in any way that I can.
 
 Regards
 Abhishek
