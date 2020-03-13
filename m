@@ -2,132 +2,292 @@ Return-Path: <SRS0=VWjS=46=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-11.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 737AAC2BB1D
-	for <git@archiver.kernel.org>; Fri, 13 Mar 2020 18:27:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 43F41C10DCE
+	for <git@archiver.kernel.org>; Fri, 13 Mar 2020 18:58:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1A96F2072C
-	for <git@archiver.kernel.org>; Fri, 13 Mar 2020 18:27:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 02FF0206B7
+	for <git@archiver.kernel.org>; Fri, 13 Mar 2020 18:58:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="N9JZAGS8"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Kw1S+4BB"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726605AbgCMS1f (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Mar 2020 14:27:35 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:58182 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726303AbgCMS1f (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Mar 2020 14:27:35 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id E8907AE811;
-        Fri, 13 Mar 2020 14:27:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=G/nBfoxtkoiU51CNQkTtVqKS4g0=; b=N9JZAG
-        S84AQXHBfK+kqLgZXQ+AWRSaxC4bKJ5fX7M6Q1TGPf5bW0dtnw3DKzzSL4kUUtpr
-        HvkGNtXlZfcoyBCJP//vJukZ34h0dRrMPpMUX9JXT9gcp/raEvJw5BZX/8ObYcB1
-        iZAUObPqqyDT6vFweVc8uPGoIGFkDbEghZshU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=tdY7lE6G19Qd++S64WUXVSL5lcpxf17b
-        YFgLQgSGpXSSUgaPDhZj99KoE9q4ULAvO04qNQEf7nkYGhJ3R8UsYTWw8bw8VZ1U
-        1Pu6PpyJCN65iW5AZpux4Hr6uNvJZuwAF1GB7KLFeFvp/MalWRp73Un53bRMv6ks
-        3nI9JwfRJ80=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C3C27AE810;
-        Fri, 13 Mar 2020 14:27:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 04F36AE804;
-        Fri, 13 Mar 2020 14:27:27 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>,
-        git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>
-Subject: Re: Regression in v2.26.0-rc0 and Magit
-References: <3091652.KAqcNXvZJ4@cayenne> <20200312233504.GH120942@google.com>
-        <xmqqk13pdsw1.fsf@gitster.c.googlers.com>
-Date:   Fri, 13 Mar 2020 11:27:26 -0700
-In-Reply-To: <xmqqk13pdsw1.fsf@gitster.c.googlers.com> (Junio C. Hamano's
-        message of "Thu, 12 Mar 2020 17:02:06 -0700")
-Message-ID: <xmqq36accdpt.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726853AbgCMS6A (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Mar 2020 14:58:00 -0400
+Received: from mail-ed1-f48.google.com ([209.85.208.48]:43337 "EHLO
+        mail-ed1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726620AbgCMS57 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Mar 2020 14:57:59 -0400
+Received: by mail-ed1-f48.google.com with SMTP id dc19so13139379edb.10
+        for <git@vger.kernel.org>; Fri, 13 Mar 2020 11:57:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:mime-version:content-transfer-encoding
+         :fcc:to:cc;
+        bh=Am04WPJjyJtmlDeMJFrR4fszhsx69L+MbA9XlyhsJCA=;
+        b=Kw1S+4BBXeFpe7qzz/tunehX+r1l9MEkk1PzSc2+KUxG6H0WwzCm/WjPghDipVUYXM
+         hqlxfU0NADUmWzmFm2/Rqv69hczMZuwRYK4q6BbXZy2Axk5kYUMK+/JdsKHhefz7+rzy
+         e1fgbLpK1brcJxjGwQdUVwCgyZbyxZy+0a51BFJQ89U1xvREF79BVwj3uO+76Dwd09W7
+         ln/6W67nNO8zO8u39SkP+VYeYQCXQMA9A7pIhxdkaY2kNyKeqysuOu1PRHv2tcb6237S
+         vH/LrKrHjH3u5vV8gMln9+HgiOP40ctaXyCp2vu/JJMBu6wn56zJT8Z60IWjYAm3yTPO
+         jOMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=Am04WPJjyJtmlDeMJFrR4fszhsx69L+MbA9XlyhsJCA=;
+        b=O9WlTNUcirjjzCWb/i1xIMDfSNmJZQOJX5YKgaGNqo5MprJLjECxcLSSROONixOScy
+         Mz4aOf24DUn0vMfOKfBCcmUS/Jq6MllvpEnHUQC5P7UaoXFFDEpXbJmAw+G2htK7qeV5
+         J0mDGk7a460f/Qxs6/Ll8m6kDdJZb11S3C+Ylg+4NtMVCHHrxCXww6xRUhjcWK5f3ATT
+         1LGDmHtWI6zgLAfkqwV7BVZPCYCdOzSSdwr7IlobcYwtDfxqYJhCyqqy1QlL2+YcNc/5
+         TvsP9DC5LZddBbmPvU7pIHLQwEVkY2zqku+y1vNKExqJeu7ATGCCKnTJfMUiNetCtP2q
+         CGgA==
+X-Gm-Message-State: ANhLgQ0u8MiMr7WOUJIM9ixY6hR7VMfLiAWejX6HlnhVnNcvi3zn/qLQ
+        3HMAFpSARqEpmIuWMgKRJ301JCgq
+X-Google-Smtp-Source: ADFU+vv700c0uLqRLbjj73th1cnDtqgGUlamZqtVN1HatVr2uIy8UgIhLONRHX+XbTk45tiqWep1RA==
+X-Received: by 2002:a05:6402:b12:: with SMTP id bm18mr15186446edb.74.1584125876832;
+        Fri, 13 Mar 2020 11:57:56 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id k11sm782456ejr.92.2020.03.13.11.57.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 Mar 2020 11:57:56 -0700 (PDT)
+Message-Id: <pull.725.git.git.1584125875550.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 13 Mar 2020 18:57:55 +0000
+Subject: [PATCH] t6022, t6046: fix flaky files-are-updated checks
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4B235466-6558-11EA-8B11-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+To:     git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>, Elijah Newren <newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+From: Elijah Newren <newren@gmail.com>
 
-> Jonathan Nieder <jrnieder@gmail.com> writes:
->
->> Junio, can you fast-track that fix to "master"?  Emily, can you add a
->> test?
->
-> Thanks, indeed it has been waiting for tests.  We have a few more
-> business days before -rc2, so...
->
-> * es/outside-repo-errmsg-hints (2020-03-03) 1 commit
->  - prefix_path: show gitdir if worktree unavailable
->
->  An earlier update to show the location of working tree in the error
->  message did not consider the possibility that a git command may be
->  run in a bare repository, which has been corrected.
->
->  May want a test or two.
+Several tests wanted to verify that files were actually modified by a
+merge, which it would do by checking that the mtime was updated.  In
+order to avoid problems with the merge completing so fast that the mtime
+at the beginning and end of the operation was the same, these tests
+would first set the mtime of a file to something "old".  This "old"
+value was usually determined as current system clock minus one second,
+truncated to the nearest integer.  Unfortunately, it appears the system
+clock and filesystem clock are different and comparing across the two
+runs into race problems resulting in flaky tests.
 
-If nobody complains in the coming 4 hours or so, I'll squash this in
-to e6c57b49 ("prefix_path: show gitdir if worktree unavailable",
-2020-03-02) and mark the topic as "ready for 'next'".
+From https://stackoverflow.com/questions/14392975/timestamp-accuracy-on-ext4-sub-millsecond:
 
-Thanks.
+    date will call the gettimeofday system call which will always return
+    the most accurate time available based on the cached kernel time,
+    adjusted by the CPU cycle time if available to give nanosecond
+    resolution. The timestamps stored in the file system however, are
+    only based on the cached kernel time. ie The time calculated at the
+    last timer interrupt.
 
- t/t6136-pathspec-in-bare.sh | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+and from https://apenwarr.ca/log/20181113:
 
-diff --git a/t/t6136-pathspec-in-bare.sh b/t/t6136-pathspec-in-bare.sh
-new file mode 100755
-index 0000000000..d9e03132b7
---- /dev/null
-+++ b/t/t6136-pathspec-in-bare.sh
-@@ -0,0 +1,30 @@
-+#!/bin/sh
-+
-+test_description='diagnosing out-of-scope pathspec'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup a bare and non-bare repository' '
-+	test_commit file1 &&
-+	git clone --bare . bare
-+'
-+
-+test_expect_success 'log and ls-files in a bare repository' '
-+	(
-+		cd bare &&
-+		test_must_fail git log -- .. &&
-+		test_must_fail git ls-files -- ..
-+	) >out 2>err &&
-+	test_i18ngrep "outside repository" err
-+'
-+
-+test_expect_success 'log and ls-files in .git directory' '
-+	(
-+		cd .git &&
-+		test_must_fail git log -- .. &&
-+		test_must_fail git ls-files -- ..
-+	) >out 2>err &&
-+	test_i18ngrep "outside repository" err
-+'
-+
-+test_done
+    Does mtime get set to >= the current time?
+
+    No, this depends on clock granularity. For example, gettimeofday()
+    can return times in microseconds on my system, but ext4 rounds
+    timestamps down to the previous ~10ms (but not exactly 10ms)
+    increment, with the surprising result that a newly-created file is
+    almost always created in the past:
+
+      $ python -c "
+      import os, time
+      t0 = time.time()
+      open('testfile', 'w').close()
+      print os.stat('testfile').st_mtime - t0
+      "
+
+      -0.00234484672546
+
+So, instead of trying to compare across what are effectively two
+different clocks, just avoid using the system clock.  Any new updates to
+files have to give an mtime at least as big as what is already in the
+file, so define "old" as one second before the mtime found in the file
+before the merge starts.
+
+Also, clarify in one test where we check the mtime of different files
+that it really was intentional.  I totally forgot the reasons for that
+and assumed it was a bug when asked.
+
+Reported-by: SZEDER Gábor <szeder.dev@gmail.com>
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+    t6022, t6046: fix flaky files-are-updated checks
+    
+    Who knew that the system clock and the filesystem clock were apparently
+    different things, causing mtime comparisons to be flaky?
+    
+    Definitely not me. Fix the flaky tests that SZEDER reported and helped
+    track down the cause of.
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-725%2Fnewren%2Ftest-cleanup-more-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-725/newren/test-cleanup-more-v1
+Pull-Request: https://github.com/git/git/pull/725
+
+ t/t6022-merge-rename.sh                | 19 ++++++++++---------
+ t/t6046-merge-skip-unneeded-updates.sh | 21 +++++++--------------
+ 2 files changed, 17 insertions(+), 23 deletions(-)
+
+diff --git a/t/t6022-merge-rename.sh b/t/t6022-merge-rename.sh
+index d97cf48495b..23d51c55c8b 100755
+--- a/t/t6022-merge-rename.sh
++++ b/t/t6022-merge-rename.sh
+@@ -243,8 +243,7 @@ test_expect_success 'merge of identical changes in a renamed file' '
+ 	git reset --hard &&
+ 	git checkout change+rename &&
+ 
+-	test-tool chmtime =31337 B &&
+-	test-tool chmtime --get B >old-mtime &&
++	test-tool chmtime --get -1 B >old-mtime &&
+ 	GIT_MERGE_VERBOSITY=3 git merge change >out &&
+ 
+ 	test-tool chmtime --get B >new-mtime &&
+@@ -253,10 +252,12 @@ test_expect_success 'merge of identical changes in a renamed file' '
+ 	git reset --hard HEAD^ &&
+ 	git checkout change &&
+ 
+-	test-tool chmtime =-1 M &&
+-	test-tool chmtime --get M >old-mtime &&
++	# A will be renamed to B; we check mtimes and file presence
++	test_path_is_missing B &&
++	test-tool chmtime --get -1 A >old-mtime &&
+ 	GIT_MERGE_VERBOSITY=3 git merge change+rename >out &&
+ 
++	test_path_is_missing A &&
+ 	test-tool chmtime --get B >new-mtime &&
+ 	test $(cat old-mtime) -lt $(cat new-mtime)
+ '
+@@ -645,7 +646,7 @@ test_expect_success 'setup avoid unnecessary update, normal rename' '
+ 
+ test_expect_success 'avoid unnecessary update, normal rename' '
+ 	git checkout -q avoid-unnecessary-update-1^0 &&
+-	test-tool chmtime --get =1000000000 rename >expect &&
++	test-tool chmtime --get -1 rename >expect &&
+ 	git merge merge-branch-1 &&
+ 	test-tool chmtime --get rename >actual &&
+ 	test_cmp expect actual # "rename" should have stayed intact
+@@ -677,7 +678,7 @@ test_expect_success 'setup to test avoiding unnecessary update, with D/F conflic
+ 
+ test_expect_success 'avoid unnecessary update, with D/F conflict' '
+ 	git checkout -q avoid-unnecessary-update-2^0 &&
+-	test-tool chmtime --get =1000000000 df >expect &&
++	test-tool chmtime --get -1 df >expect &&
+ 	git merge merge-branch-2 &&
+ 	test-tool chmtime --get df >actual &&
+ 	test_cmp expect actual # "df" should have stayed intact
+@@ -708,7 +709,7 @@ test_expect_success 'setup avoid unnecessary update, dir->(file,nothing)' '
+ 
+ test_expect_success 'avoid unnecessary update, dir->(file,nothing)' '
+ 	git checkout -q master^0 &&
+-	test-tool chmtime --get =1000000000 df >expect &&
++	test-tool chmtime --get -1 df >expect &&
+ 	git merge side &&
+ 	test-tool chmtime --get df >actual &&
+ 	test_cmp expect actual # "df" should have stayed intact
+@@ -737,7 +738,7 @@ test_expect_success 'setup avoid unnecessary update, modify/delete' '
+ 
+ test_expect_success 'avoid unnecessary update, modify/delete' '
+ 	git checkout -q master^0 &&
+-	test-tool chmtime --get =1000000000 file >expect &&
++	test-tool chmtime --get -1 file >expect &&
+ 	test_must_fail git merge side &&
+ 	test-tool chmtime --get file >actual &&
+ 	test_cmp expect actual # "file" should have stayed intact
+@@ -765,7 +766,7 @@ test_expect_success 'setup avoid unnecessary update, rename/add-dest' '
+ 
+ test_expect_success 'avoid unnecessary update, rename/add-dest' '
+ 	git checkout -q master^0 &&
+-	test-tool chmtime --get =1000000000 newfile >expect &&
++	test-tool chmtime --get -1 newfile >expect &&
+ 	git merge side &&
+ 	test-tool chmtime --get newfile >actual &&
+ 	test_cmp expect actual # "file" should have stayed intact
+diff --git a/t/t6046-merge-skip-unneeded-updates.sh b/t/t6046-merge-skip-unneeded-updates.sh
+index 962030ecdb6..c7d0abb4ca3 100755
+--- a/t/t6046-merge-skip-unneeded-updates.sh
++++ b/t/t6046-merge-skip-unneeded-updates.sh
+@@ -71,8 +71,7 @@ test_expect_success '1a-L: Modify(A)/Modify(B), change on B subset of A' '
+ 
+ 		git checkout A^0 &&
+ 
+-		test-tool chmtime =-1 b &&
+-		test-tool chmtime --get b >old-mtime &&
++		test-tool chmtime --get -1 b >old-mtime &&
+ 
+ 		GIT_MERGE_VERBOSITY=3 git merge -s recursive B^0 >out 2>err &&
+ 
+@@ -102,8 +101,7 @@ test_expect_success '1a-R: Modify(A)/Modify(B), change on B subset of A' '
+ 
+ 		git checkout B^0 &&
+ 
+-		test-tool chmtime =-1 b &&
+-		test-tool chmtime --get b >old-mtime &&
++		test-tool chmtime --get -1 b >old-mtime &&
+ 		GIT_MERGE_VERBOSITY=3 git merge -s recursive A^0 >out 2>err &&
+ 
+ 		# Make sure b WAS updated
+@@ -198,8 +196,7 @@ test_expect_success '2a-R: Modify/rename, merge into rename side' '
+ 
+ 		git checkout B^0 &&
+ 
+-		test-tool chmtime =-1 c &&
+-		test-tool chmtime --get c >old-mtime &&
++		test-tool chmtime --get -1 c >old-mtime &&
+ 		GIT_MERGE_VERBOSITY=3 git merge -s recursive A^0 >out 2>err &&
+ 
+ 		# Make sure c WAS updated
+@@ -266,8 +263,7 @@ test_expect_success '2b-L: Rename+Mod(A)/Mod(B), B mods subset of A' '
+ 
+ 		git checkout A^0 &&
+ 
+-		test-tool chmtime =-1 c &&
+-		test-tool chmtime --get c >old-mtime &&
++		test-tool chmtime --get -1 c >old-mtime &&
+ 		GIT_MERGE_VERBOSITY=3 git merge -s recursive B^0 >out 2>err &&
+ 
+ 		test_must_be_empty err &&
+@@ -373,8 +369,7 @@ test_expect_success '2c: Modify b & add c VS rename b->c' '
+ 
+ 		git checkout A^0 &&
+ 
+-		test-tool chmtime =-1 c &&
+-		test-tool chmtime --get c >old-mtime &&
++		test-tool chmtime --get -1 c >old-mtime &&
+ 		GIT_MERGE_VERBOSITY=3 &&
+ 		export GIT_MERGE_VERBOSITY &&
+ 		test_must_fail git merge -s recursive B^0 >out 2>err &&
+@@ -679,8 +674,7 @@ test_expect_failure '4a: Change on A, change on B subset of A, dirty mods presen
+ 		git checkout A^0 &&
+ 		echo "File rewritten" >b &&
+ 
+-		test-tool chmtime =-1 b &&
+-		test-tool chmtime --get b >old-mtime &&
++		test-tool chmtime --get -1 b >old-mtime &&
+ 
+ 		GIT_MERGE_VERBOSITY=3 git merge -s recursive B^0 >out 2>err &&
+ 
+@@ -747,8 +741,7 @@ test_expect_success '4b: Rename+Mod(A)/Mod(B), change on B subset of A, dirty mo
+ 		git checkout A^0 &&
+ 		echo "File rewritten" >c &&
+ 
+-		test-tool chmtime =-1 c &&
+-		test-tool chmtime --get c >old-mtime &&
++		test-tool chmtime --get -1 c >old-mtime &&
+ 
+ 		GIT_MERGE_VERBOSITY=3 git merge -s recursive B^0 >out 2>err &&
+ 
+
+base-commit: 30e9940356dc67959877f4b2417da33ebdefbb79
+-- 
+gitgitgadget
