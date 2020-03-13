@@ -8,63 +8,66 @@ X-Spam-Status: No, score=-11.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E154FC10DCE
-	for <git@archiver.kernel.org>; Fri, 13 Mar 2020 21:09:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 068ADC10DCE
+	for <git@archiver.kernel.org>; Fri, 13 Mar 2020 21:12:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A8DBF20753
-	for <git@archiver.kernel.org>; Fri, 13 Mar 2020 21:09:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C511120752
+	for <git@archiver.kernel.org>; Fri, 13 Mar 2020 21:12:01 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XuCoMivY"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZAj3abOF"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726620AbgCMVJH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Mar 2020 17:09:07 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:40193 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726480AbgCMVJG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Mar 2020 17:09:06 -0400
-Received: by mail-wr1-f65.google.com with SMTP id f3so6848936wrw.7
-        for <git@vger.kernel.org>; Fri, 13 Mar 2020 14:09:04 -0700 (PDT)
+        id S1726637AbgCMVMA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Mar 2020 17:12:00 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:55546 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726480AbgCMVMA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Mar 2020 17:12:00 -0400
+Received: by mail-wm1-f67.google.com with SMTP id 6so11409041wmi.5
+        for <git@vger.kernel.org>; Fri, 13 Mar 2020 14:11:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=NiNrG755Z0k8x688hvzUUy9DhNJOI0zucQPu/+Gu8aw=;
-        b=XuCoMivYQDnllzEXhOcVDAPjJJBrYN8S2nN8zb8LJAgLXTdSc9JqhdrEjtC6+K3msJ
-         AOp84WrXpRAT0sRp5NMVL85Wsz5gO/7o7HxZjR9QUUDnCo0JAOclkC23r4lVr66e6PyR
-         EVMVIvCDGX4tgqZ2Mp8hyAX6q/7bsGZXCTH9noRDZP2VmefPXh/xARrgI6EnDwb/AgdV
-         DSSQ4kHzDE4sThfFtlx0Wzxy9rGap3unKWSp3d53fdvz779iQgZkiZeKK3FReMzS/RvM
-         7mtDzkS7oOiDtNpgXCG5YUx/vxBYjJPfA5oaqxHeRnO3ub/ARPoMOpmwzpoaRzVP/Kbd
-         UeBw==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=IfbViSfHUbjndNelIz7CSz9Guueddt8SxbOis6WrLbQ=;
+        b=ZAj3abOFY9jQE1f+r7LrhJn3fRXz+chTa2HA77JGPWqremm/TZcHbj5VR94YPoacLD
+         jszHwSE4fFiOpoSATR08DNw6/10DPl58OCA4Lca5Ug3YgYbMIsGgDLcM2KXAyRVhlBKx
+         n2sIM/3DTDXbEq4zxiv27OCCRLYgFnq1ZYCQ2SVK2R6uqTNtupm+nyelTfR0xipfg75X
+         cvjNgZpFoSeCDAOn1AkyCpl4PeHtTe3tdPwlpUJ18joJYH2XHh2sXjgJgwlkOBcrGGW9
+         NSqilYWmcRGxVPOEen8drlfI/2ZpMwVc65u11D/2J+6RafoiXjuHQ5RB1ZgLNJdoU92F
+         +RVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=NiNrG755Z0k8x688hvzUUy9DhNJOI0zucQPu/+Gu8aw=;
-        b=DzA00XYNHXwndIYEsOwe1Tbg0MnqtH4zDv13CPBzjnSxbd4zST7UuGvy1eoemet9Wq
-         GHGCqoz08kB1JfPV+CYT711X7z0hQfnMIDHTZCnEeydmviIFbiaI1GAvLLWfqC2SO1Qj
-         YfD9jBMjlTUltossI4g1zvyZxoQ9tY96GOPvznyAThFKT5d7hGClm4cxC4a8M6T9jJKY
-         tKvUXW8zg3u6zgZv+Zo/Z5rYutTWZVUJfP8y7epX3GsBfUcbw9cXRGcBuZxCaIdF03wY
-         pTgL6+rk5Q2v1zF3grkiEVyLKfvfiFhDdpw+CFa49IFUcXNxACn5gqe+3RDK0EadR1lp
-         V2sg==
-X-Gm-Message-State: ANhLgQ1g3WkJI98odUN8oDyQTtr0ggpkkSd3GjzhN49WWyzUTOcOpdAR
-        n/9iqnwZFSyOfFeisUh/kg1fatYr
-X-Google-Smtp-Source: ADFU+vtZ/IfZPOS+fCpAQgsoQjV1bFW/Qsw8p1wc1W58F4u6VLRcLlcg/D72QYPx6N66zQbpd7R8uQ==
-X-Received: by 2002:adf:e78e:: with SMTP id n14mr2508033wrm.363.1584133743752;
-        Fri, 13 Mar 2020 14:09:03 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=IfbViSfHUbjndNelIz7CSz9Guueddt8SxbOis6WrLbQ=;
+        b=FAoa2HmEAuW1xmPeQB2TG3vGrNlF+U5yEsqFfAzkC/2ISNNQDj2W/vOd5RY/Hvb2OM
+         Xy4jnmQFkM8nZKc2DaQMQRMy50jK69/nVAsip3cA9u7y3BWOkKl0M926W2eegy7un9jS
+         CsdLy/Ws2nVQ3VnkgETaHdYCt8SteYxW+Eg145Zd2nNW82ip6gXGE0aJnxAOT3CcGmqc
+         vsZslG1qjbR/8+GQ6LPlI2PwlB8GE9gxvhYwbuz8NbimyyQO+M9e1wDx894G/DwM1pHy
+         CyTngTH0jKReRt3R7RNiXppDgbiEQoSQUUi7UrjA1G1SKa7GQI/hZ0xMGRI8TwTYubnT
+         wrsw==
+X-Gm-Message-State: ANhLgQ1iuhlNsaFU+S/F4y92+U5DorHODDWg4vQFVCvcDfab1yqb/qWh
+        SZRyR99CUC3jPmiaDKxMpBDipr7C
+X-Google-Smtp-Source: ADFU+vvc5Jp9ccn1YplvDbvKmJ4RAuMlyIsG07M1B4m+pGdB9kNNhhvenyVtP2DjZTbFm83JM/kdGg==
+X-Received: by 2002:a7b:c08a:: with SMTP id r10mr12391921wmh.130.1584133916644;
+        Fri, 13 Mar 2020 14:11:56 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 138sm13381352wmb.21.2020.03.13.14.09.02
+        by smtp.gmail.com with ESMTPSA id u7sm10184939wme.43.2020.03.13.14.11.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Mar 2020 14:09:03 -0700 (PDT)
-Message-Id: <pull.581.git.1584133742475.gitgitgadget@gmail.com>
+        Fri, 13 Mar 2020 14:11:56 -0700 (PDT)
+Message-Id: <pull.579.v2.git.1584133915654.gitgitgadget@gmail.com>
+In-Reply-To: <pull.579.git.1584027403779.gitgitgadget@gmail.com>
+References: <pull.579.git.1584027403779.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 13 Mar 2020 21:09:02 +0000
-Subject: [PATCH] clone: use --quiet when stderr is not a terminal
+Date:   Fri, 13 Mar 2020 21:11:55 +0000
+Subject: [PATCH v2] connected.c: reprepare packs for corner cases
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Derrick Stolee <dstolee@microsoft.com>,
+Cc:     jonathantanmy@google.com, me@ttaylorr.com, peff@peff.net,
+        Derrick Stolee <dstolee@microsoft.com>,
         Derrick Stolee <dstolee@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -73,126 +76,138 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-"git clone" is used by many build systems to download Git code before
-running a build. The output of these systems is usually color-coded to
-separate stdout and stderr output, which highlights anything over stderr
-as an error or warning. Most build systems use "--quiet" when cloning to
-avoid adding progress noise to these outputs, but occasionally users
-create their own scripts that call "git clone" and forget the --quiet
-option.
+While updating the microsoft/git fork on top of v2.26.0-rc0 and
+consuming that build into Scalar, I noticed a corner case bug around
+partial clone.
 
-Just such a user voiced a complaint that "git clone" was showing "error
-messages" in bright red. The messages were progress indicators for
-"Updating files".
+The "scalar clone" command can create a Git repository with the
+proper config for using partial clone with the "blob:none" filter.
+Instead of calling "git clone", it runs "git init" then sets a few
+more config values before running "git fetch".
 
-To save users from this confusion, let's default to --quiet when stderr
-is not a terminal window.
+In our builds on v2.26.0-rc0, we noticed that our "git fetch"
+command was failing with
 
-To test that this works, use the GIT_PROGRESS_DELAY environment variable
-to enforce that all progress indicators appear immediately, and check
-that a redirected stderr has no output. We also need to update some
-tests that inspect stderr after a "git clone" or "git submodule update"
-command. It is easy to update the clone tests with the --verbose option,
-while we can remove the clone output from the expected output of the
-submodule test.
+  error: https://github.com/microsoft/scalar did not send all necessary objects
 
+This does not happen if you copy the config file from a repository
+created by "git clone --filter=blob:none <url>", but it does happen
+when adding the config option "core.logAllRefUpdates = true".
+
+By debugging, I was able to see that the loop inside
+check_connnected() that checks if all refs are contained in
+promisor packs actually did not have any packfiles in the packed_git
+list.
+
+I'm not sure what corner-case issues caused this config option to
+prevent the reprepare_packed_git() from being called at the proper
+spot during the fetch operation. This approach requires a situation
+where we use the remote helper process, which makes it difficult to
+test.
+
+It is possible to place a reprepare_packed_git() call in the fetch code
+closer to where we receive a pack, but that leaves an opening for a
+later change to re-introduce this problem. Further, a concurrent repack
+operation could replace the pack-file list we already loaded into
+memory, causing this issue in an even harder to reproduce scenario.
+
+It is really the responsibility of anyone looping through the list of
+pack-files for a certain object to fall back to reprepare_packed_git()
+on a fail-to-find. The loop in check_connected() does not have this
+fallback, leading to this bug.
+
+We _could_ try looping through the packs and only reprepare the packs
+after a miss, but that change is more involved and has little value.
+Since this case is isolated to the case when
+opt->check_refs_are_promisor_objects_only is true, we are confident that
+we are verifying the refs after downloading new data. This implies that
+calling reprepare_packed_git() in advance is not a huge cost compared to
+the rest of the operations already made.
+
+Helped-by: Jeff King <peff@peff.net>
+Helped-by: Junio Hamano <gitster@pobox.com>
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
-    clone: use --quiet when stderr is not a terminal
+    connected.c: reprepare packs for corner cases
     
-    I think this is generally how we are intending Git builtins to work.
-    There was a complaint recently about my proposed addition of progress to
-    'git read-tree', but that was because scripts would suddenly get noisy
-    if they were not expecting it. This is the opposite: we will make 'git
-    clone' quieter.
+    I included how I found this (integrating v2.26.0-rc0 into Scalar), but I
+    am able to reproduce it on my Linux machine using real fetches from
+    github.com. I'm not sure why I was unable to reproduce the issue in test
+    cases using the file:// URLs or the HTTP tests.
     
-    Thanks, -Stolee
+    Update in V2: I've updated the commit message to discuss the options
+    presented on-list, but also provide why I'm keeping the code unchanged
+    in light of that discussion.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-581%2Fderrickstolee%2Fclone-quiet-default-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-581/derrickstolee/clone-quiet-default-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/581
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-579%2Fderrickstolee%2Ffetch-reprepare-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-579/derrickstolee/fetch-reprepare-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/579
 
- builtin/clone.c             | 3 +++
- t/t5550-http-fetch-dumb.sh  | 2 +-
- t/t5601-clone.sh            | 7 ++++++-
- t/t7406-submodule-update.sh | 8 --------
- 4 files changed, 10 insertions(+), 10 deletions(-)
+Range-diff vs v1:
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 1ad26f4d8c8..a2e6905f0ef 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -957,6 +957,9 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 1:  cde7aa20ca8 ! 1:  696a51bd5a0 connected.c: reprepare packs for corner cases
+     @@ -27,17 +27,31 @@
+      
+          I'm not sure what corner-case issues caused this config option to
+          prevent the reprepare_packed_git() from being called at the proper
+     -    spot during the fetch operation. Even worse, I have failed to create
+     -    a test case to prevent a regression.
+     +    spot during the fetch operation. This approach requires a situation
+     +    where we use the remote helper process, which makes it difficult to
+     +    test.
+      
+     -    Placing a reprepare_packed_git() call inside chck_connected() before
+     -    looping through the packed_git list seems like the safest way to
+     -    avoid this issue in the future. While reprepare_packed_git() does
+     -    another scan of the pack directory, it is not terribly expensive as
+     -    long as we do not run it in a loop. We check connectivity only a
+     -    few times per command, so this will not have a meaningful performance
+     -    impact. In exchange, we get extra safety around this check.
+     +    It is possible to place a reprepare_packed_git() call in the fetch code
+     +    closer to where we receive a pack, but that leaves an opening for a
+     +    later change to re-introduce this problem. Further, a concurrent repack
+     +    operation could replace the pack-file list we already loaded into
+     +    memory, causing this issue in an even harder to reproduce scenario.
+      
+     +    It is really the responsibility of anyone looping through the list of
+     +    pack-files for a certain object to fall back to reprepare_packed_git()
+     +    on a fail-to-find. The loop in check_connected() does not have this
+     +    fallback, leading to this bug.
+     +
+     +    We _could_ try looping through the packs and only reprepare the packs
+     +    after a miss, but that change is more involved and has little value.
+     +    Since this case is isolated to the case when
+     +    opt->check_refs_are_promisor_objects_only is true, we are confident that
+     +    we are verifying the refs after downloading new data. This implies that
+     +    calling reprepare_packed_git() in advance is not a huge cost compared to
+     +    the rest of the operations already made.
+     +
+     +    Helped-by: Jeff King <peff@peff.net>
+     +    Helped-by: Junio Hamano <gitster@pobox.com>
+          Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+      
+       diff --git a/connected.c b/connected.c
+
+
+ connected.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/connected.c b/connected.c
+index 7e9bd1bc622..ac52b07b474 100644
+--- a/connected.c
++++ b/connected.c
+@@ -61,7 +61,11 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
+ 		 * object is a promisor object. Instead, just make sure we
+ 		 * received, in a promisor packfile, the objects pointed to by
+ 		 * each wanted ref.
++		 *
++		 * Before checking for promisor packs, be sure we have the
++		 * latest pack-files loaded into memory.
+ 		 */
++		reprepare_packed_git(the_repository);
+ 		do {
+ 			struct packed_git *p;
  
- 	struct argv_array ref_prefixes = ARGV_ARRAY_INIT;
- 
-+	if (!isatty(2))
-+		option_verbosity = -1;
-+
- 	packet_trace_identity("clone");
- 	argc = parse_options(argc, argv, prefix, builtin_clone_options,
- 			     builtin_clone_usage, 0);
-diff --git a/t/t5550-http-fetch-dumb.sh b/t/t5550-http-fetch-dumb.sh
-index b811d89cfd6..c0bdcafa304 100755
---- a/t/t5550-http-fetch-dumb.sh
-+++ b/t/t5550-http-fetch-dumb.sh
-@@ -332,7 +332,7 @@ test_expect_success 'redirects can be forbidden/allowed' '
- 	test_must_fail git -c http.followRedirects=false \
- 		clone $HTTPD_URL/dumb-redir/repo.git dumb-redir &&
- 	git -c http.followRedirects=true \
--		clone $HTTPD_URL/dumb-redir/repo.git dumb-redir 2>stderr
-+		clone --verbose $HTTPD_URL/dumb-redir/repo.git dumb-redir 2>stderr
- '
- 
- test_expect_success 'redirects are reported to stderr' '
-diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index 84ea2a3eb70..2902a201977 100755
---- a/t/t5601-clone.sh
-+++ b/t/t5601-clone.sh
-@@ -39,7 +39,7 @@ test_expect_success 'clone with excess parameters (2)' '
- 
- test_expect_success C_LOCALE_OUTPUT 'output from clone' '
- 	rm -fr dst &&
--	git clone -n "file://$(pwd)/src" dst >output 2>&1 &&
-+	git clone --verbose -n "file://$(pwd)/src" dst >output 2>&1 &&
- 	test $(grep Clon output | wc -l) = 1
- '
- 
-@@ -297,6 +297,11 @@ test_expect_success 'clone from original with relative alternate' '
- 	grep /src/\\.git/objects target-10/objects/info/alternates
- '
- 
-+test_expect_success 'clone quietly without terminal' '
-+	GIT_PROGRESS_DELAY=0 git clone src progress 2>err &&
-+	test_must_be_empty err
-+'
-+
- test_expect_success 'clone checking out a tag' '
- 	git clone --branch=some-tag src dst.tag &&
- 	GIT_DIR=src/.git git rev-parse some-tag >expected &&
-diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-index 4fb447a143e..ebf08e3a77a 100755
---- a/t/t7406-submodule-update.sh
-+++ b/t/t7406-submodule-update.sh
-@@ -115,18 +115,10 @@ Submodule path '../super/submodule': checked out '$submodulesha1'
- EOF
- 
- cat <<EOF >expect2
--Cloning into '$pwd/recursivesuper/super/merging'...
--Cloning into '$pwd/recursivesuper/super/none'...
--Cloning into '$pwd/recursivesuper/super/rebasing'...
--Cloning into '$pwd/recursivesuper/super/submodule'...
- Submodule 'merging' ($pwd/merging) registered for path '../super/merging'
- Submodule 'none' ($pwd/none) registered for path '../super/none'
- Submodule 'rebasing' ($pwd/rebasing) registered for path '../super/rebasing'
- Submodule 'submodule' ($pwd/submodule) registered for path '../super/submodule'
--done.
--done.
--done.
--done.
- EOF
- 
- test_expect_success 'submodule update --init --recursive from subdirectory' '
 
 base-commit: b4374e96c84ed9394fed363973eb540da308ed4f
 -- 
