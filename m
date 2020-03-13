@@ -2,81 +2,76 @@ Return-Path: <SRS0=VWjS=46=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,FSL_HELO_FAKE,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 64334C10DCE
-	for <git@archiver.kernel.org>; Fri, 13 Mar 2020 19:02:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A009C10DCE
+	for <git@archiver.kernel.org>; Fri, 13 Mar 2020 19:07:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 2FE94206B7
-	for <git@archiver.kernel.org>; Fri, 13 Mar 2020 19:02:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A5B90206B7
+	for <git@archiver.kernel.org>; Fri, 13 Mar 2020 19:07:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pE7U55lk"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="S3NmWF2P"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727210AbgCMTCR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Mar 2020 15:02:17 -0400
-Received: from mail-pg1-f180.google.com ([209.85.215.180]:40383 "EHLO
-        mail-pg1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726297AbgCMTCR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Mar 2020 15:02:17 -0400
-Received: by mail-pg1-f180.google.com with SMTP id t24so5502156pgj.7
-        for <git@vger.kernel.org>; Fri, 13 Mar 2020 12:02:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=cNR8jZ2RYd2hrj4D8qw0YbIDnQFp3OYu2Z7MyfXmdq4=;
-        b=pE7U55lkS35GFTonAJdsgUAA6Su9bfrpVxdh6oSn2Molq7PXLKocYkNfyM+eCc27jR
-         JokAW0ZL0TzF4Lwu3K4ehX1LzUKDEZ/HZfPdr3lHpqFSOzQQ3V5muXMc2n+PpUVrNlos
-         fpBD2sfkWpuSkaB9HXZDwFPRaZ8pbwH3709eL/DqoX6dHi0tbVLzXLO0FLv0h99ZPSRQ
-         YwIaRHxL6sb9kXOhaTfWXUI8iYOvDT7LOWi4JSNziC2ft7WTkMUbNdo2gGjDTybBNkNV
-         ufdgFgi0iT/+ELbJPsDNHoffnr6LC7f5Ha9mI2N3y2aapfZ8ZnwwdoMnW45nM6/VoMQE
-         GK4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=cNR8jZ2RYd2hrj4D8qw0YbIDnQFp3OYu2Z7MyfXmdq4=;
-        b=VxFjSVkIf5NZcWIfU/1yQW3bUz0mB3bdHSyaQwiIVTKFgcFPFWErj5RrNS025jDqEi
-         aaHKMXJZWcOINYrru5lLs3b+PlkRX9mpN//wnQapqn/aricL5W9NVSS0wcHqa76WuZEM
-         qZCvuCEdS8cQGXDgnfQfXKNKtZBzrEb9ldFG5ne55iYJNcQ5W8BQxzj1lqK8gWyBRXNq
-         OMu/axtVxZdRyyRhXdtsd6efAKqt1OW/VrN8lrbinZLeO6LV2nNJjQ+pouUpKtKZWbc+
-         0nzptDhqKbBDCEtMqd4kchIw9kMmn1EBX0I7gudYBNMfCQYYxjQGaTPwp6O0rMx5RoTu
-         XSpQ==
-X-Gm-Message-State: ANhLgQ0iWBEjTowUz5y13Qktt2rfHQbBi1fwFYMi0FEa9lh2S7kIaqNR
-        bS8jPfV4/RcQLtIWzHJ/G9I+AiKP
-X-Google-Smtp-Source: ADFU+vuwwWDWf8Uxst4XZShaaNssRhoLV8pDGKollaA2lGEFRMmHxklruwOHYNQb+OGu07fTIsymxA==
-X-Received: by 2002:a62:3888:: with SMTP id f130mr12264838pfa.141.1584126136039;
-        Fri, 13 Mar 2020 12:02:16 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
-        by smtp.gmail.com with ESMTPSA id q26sm3161861pff.63.2020.03.13.12.02.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Mar 2020 12:02:13 -0700 (PDT)
-Date:   Fri, 13 Mar 2020 12:02:11 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
+        id S1726637AbgCMTHv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Mar 2020 15:07:51 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60955 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726297AbgCMTHv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Mar 2020 15:07:51 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 17D42454A4;
+        Fri, 13 Mar 2020 15:07:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=xoq0vSBjhoIkeBEPFgDnZM+EQ3Y=; b=S3NmWF
+        2PcipOm5puQ0vxPojosry2fp75YR7Woi5bG2Zi9wSPAw5HtY6LLWDavRE9DiWvWS
+        KzgEN7TxJE3U+7xgPmEpetveZ62Oiqvx2u7Eqtd1w8reG+xYVLhUuFYoEMRIHjcz
+        E8ME9nDxIZ7n0OiX8/8hGe9xe4cuHGJVjkDvA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=eRadGY1isiyP5HPEzVhwzqv82bxa9UwD
+        39/8BXE0ASALN3PXcXckIfh+2bY9l61Mm6Ab3Vf25/i2bkznidibsO+vrgygTNZk
+        laV33VQ88XvYNWikI6YfP9WP5CxteNaEjie1vxW+/EiuLuXPjKqCCV+000iuKkxU
+        siaKMrBFq+s=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 10044454A3;
+        Fri, 13 Mar 2020 15:07:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 81B19454A2;
+        Fri, 13 Mar 2020 15:07:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>
 Cc:     =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>,
-        git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>
+        git@vger.kernel.org
 Subject: Re: Regression in v2.26.0-rc0 and Magit
-Message-ID: <20200313190211.GA178103@google.com>
-References: <3091652.KAqcNXvZJ4@cayenne>
- <20200312233504.GH120942@google.com>
- <xmqqk13pdsw1.fsf@gitster.c.googlers.com>
- <xmqq36accdpt.fsf@gitster.c.googlers.com>
+References: <3091652.KAqcNXvZJ4@cayenne> <20200312233504.GH120942@google.com>
+        <xmqqk13pdsw1.fsf@gitster.c.googlers.com>
+        <xmqq36accdpt.fsf@gitster.c.googlers.com>
+Date:   Fri, 13 Mar 2020 12:07:49 -0700
+In-Reply-To: <xmqq36accdpt.fsf@gitster.c.googlers.com> (Junio C. Hamano's
+        message of "Fri, 13 Mar 2020 11:27:26 -0700")
+Message-ID: <xmqqy2s4axa2.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq36accdpt.fsf@gitster.c.googlers.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+Content-Type: text/plain
+X-Pobox-Relay-ID: EF116482-655D-11EA-BC4E-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
+> Junio C Hamano <gitster@pobox.com> writes:
+> ...
 > If nobody complains in the coming 4 hours or so, I'll squash this in
 > to e6c57b49 ("prefix_path: show gitdir if worktree unavailable",
 > 2020-03-02) and mark the topic as "ready for 'next'".
@@ -85,8 +80,36 @@ Junio C Hamano wrote:
 >
 >  t/t6136-pathspec-in-bare.sh | 30 ++++++++++++++++++++++++++++++
 >  1 file changed, 30 insertions(+)
+> ...
+> +test_expect_success 'log and ls-files in .git directory' '
+> +	(
+> +		cd .git &&
+> +		test_must_fail git log -- .. &&
+> +		test_must_fail git ls-files -- ..
+> +	) >out 2>err &&
+> +	test_i18ngrep "outside repository" err
+> +'
+> +
+> +test_done
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+This is outside the scope of fixing the regression e0020b2f
+("prefix_path: show gitdir when arg is outside repo", 2020-02-14)
+brought in, but I wonder if this last piece should even fail in the
+first place.
 
-Emily's out of office today, so this is well timed.  Thanks for tying
-that loose end.
+If you give "." instead of ".." to these commands, they behave as if
+we did so from the top-level of the working tree, i.e. these are
+equivalent:
+
+    git -C .git ls-files -- .
+    git -C .git/info/ ls-files -- .
+    git ls-files -- .
+
+which somehow does not sound quite right, but that is how tools
+written in the past 15 years expect and is hard to change?
+
+That does not still explain why Magit (which is sufficiently mature)
+is expecting "cd .git && ls-files .." to show the entire working
+tree, though.
+
+
