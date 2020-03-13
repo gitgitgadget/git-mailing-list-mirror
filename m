@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DF620C4CECE
-	for <git@archiver.kernel.org>; Fri, 13 Mar 2020 12:23:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5EFC7C2BB1D
+	for <git@archiver.kernel.org>; Fri, 13 Mar 2020 12:23:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id AA8CA20746
-	for <git@archiver.kernel.org>; Fri, 13 Mar 2020 12:23:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2B20F20746
+	for <git@archiver.kernel.org>; Fri, 13 Mar 2020 12:23:48 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dePLiHQC"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XZajg8df"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726674AbgCMMXo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Mar 2020 08:23:44 -0400
-Received: from mail-pl1-f172.google.com ([209.85.214.172]:37265 "EHLO
-        mail-pl1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726495AbgCMMXo (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Mar 2020 08:23:44 -0400
-Received: by mail-pl1-f172.google.com with SMTP id f16so4198823plj.4
-        for <git@vger.kernel.org>; Fri, 13 Mar 2020 05:23:42 -0700 (PDT)
+        id S1726718AbgCMMXr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Mar 2020 08:23:47 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:44772 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726495AbgCMMXr (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Mar 2020 08:23:47 -0400
+Received: by mail-pf1-f194.google.com with SMTP id b72so5135037pfb.11
+        for <git@vger.kernel.org>; Fri, 13 Mar 2020 05:23:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=xgoW0Gi3MEdhHptU4qsN60lX7ZW0zkclbNP8S5BC6CY=;
-        b=dePLiHQC+EKmTz5HetP/ZkE8fIivvXkf3y6tTLlfqdBsDxR06Zh+DWQSKKcNsaj95b
-         Oue9QXr6nzU3s85VUnuHNeBqpkcwITDYUGGwepvOJVjsb9RGh8zk6jelZZeyhNV7AQAm
-         fSGY9qmYECV41LINBNPoE0nx54QvS06xj+j9g9qO8YHAlvJpZ++GK27PXDp7pkELshwv
-         /1wffoQz+CvMnkUGOLih3Uojv8AkWYh/Ma2fshCDWId0K8o5I3pbU9eqQP/ZwIxawm23
-         vcJLDWgDfrD9S/OFazDje3RnV18l3y4GS4MtJT8zSZmuKo2lR5RrhFOMw+srLMiav2TU
-         E2Ig==
+        bh=ekPZz8iOLJx4/6kv+ASWoRDXpr4PcLjcUGJbkcLghXg=;
+        b=XZajg8dfF4aD7Wsy7ZKUw6Pcr/smVi6cZiooptZy9x58d9SEEadkT67LoMWHLpw+E6
+         BwXA+C4iuEgZ/4ECvLYm/VsWoj4GfCEYw7fG2kXPXdPYezqqUllhU4zJ4lq1N0HtVAT/
+         5XfzKRUpaFbtKlrsdA5codMhn/lgjt4zUP/Y5D4HeiRkYmTFP1C9KWU02B9mO0U1ssrf
+         DlcVA5sLERGw9KfNKYQzma5idgT8UFXVehAc/9HExqvAEeYep8KunsoG1OmD1CurrnjS
+         yMhaQLCScUu+HG8Gqdg15R+oU1iMwcYSGhEf22NL1rr7amKB38XA93TueN3ev9MfHUx7
+         h9Ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=xgoW0Gi3MEdhHptU4qsN60lX7ZW0zkclbNP8S5BC6CY=;
-        b=YmVTzictcaV4TO4zgg8xvaXKT5+d3LcgpT9cFsyXCpE8f3I+8wxYCvJY95xqmWfATP
-         NHgzK5VQ1Zk2UiStDOtuXZ4izFCQjrwm0eSqdfk+5LMgojxhxIBKSwuvZSZiGMJ12anU
-         8G8NlB+wNJhdwRAU1nLnUZk3XlwqnEbP9GmWtqRJ7qTbsMRFF8kg2NY1DXzJJh3K2FxJ
-         4r6iSKmIycasws6Z/S9OxMH0hfIioLslj7qGzfGpjsbxHadgz1YCAiwEu7A1+lmg3XWE
-         Fx6o/ppGKzgcHeXdCymVkDUSDwmKfWRpftdY51OECdJftuJ6IEPO6JTzog7gWSmH2zqF
-         a7jQ==
-X-Gm-Message-State: ANhLgQ2ugSXkKBOeva1faigMazNu/uWE9eMPpDCQGByHb5zLcVOfAdyK
-        niGcDy+DXebMLMf/adoT9po=
-X-Google-Smtp-Source: ADFU+vsMtfK6w4ghAv9ue6Rf/DfudgVGc44r4tedJZnfAEZtsjGLOxgAFWDplGHc0soQ/y0lX67JUQ==
-X-Received: by 2002:a17:902:6ac2:: with SMTP id i2mr12725830plt.221.1584102221617;
-        Fri, 13 Mar 2020 05:23:41 -0700 (PDT)
+        bh=ekPZz8iOLJx4/6kv+ASWoRDXpr4PcLjcUGJbkcLghXg=;
+        b=RaG/3d9Jo4svohBHPVWqKeFGUmCVEtPkoHZaoxnXu6s3sJfOYvs74tNfS+1/Iy60Ov
+         +kwPckpjF8bBx7IlGz5PTwmLGwjCA3rrgYHOtrqrgMyMyOr6dZInyrclTJw9Td0iar52
+         MHJOs7REb6HqWSvzZRoQukcvhWJdN135lvRNQw5WlfVPTEZfyA87qo304I6abYhDWLK9
+         gWyk4CQyBuKAEWx53WyUqtJLfYqjlhHA5yRGg939qLTv2Ks0wkwfpDtd9BPm+HT3HL7X
+         qtVPJWbgnERP3Z184gHfGddcZWyxHA2WG3eqjwA/ouXj6PEm/u6nUlsC1jpnXsISgLSd
+         mAQA==
+X-Gm-Message-State: ANhLgQ2CxeosphRo4whr61LE5DVVsruvvnrJkFrVAs0UlxTydGMPcmij
+        r2X6LfTrRG/N8wT0VIsaosI=
+X-Google-Smtp-Source: ADFU+vvf0xJ2j+wjXNK4Rc6DGbDhy0AA27ZMYcYSY4Fgrpi5Hihv2MU0EfC9g6OkIy3Zsf9x/YSA/A==
+X-Received: by 2002:a63:87c1:: with SMTP id i184mr12414348pge.287.1584102225901;
+        Fri, 13 Mar 2020 05:23:45 -0700 (PDT)
 Received: from localhost.localdomain ([47.89.83.4])
-        by smtp.gmail.com with ESMTPSA id 134sm5346690pfy.27.2020.03.13.05.23.40
+        by smtp.gmail.com with ESMTPSA id 134sm5346690pfy.27.2020.03.13.05.23.44
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 13 Mar 2020 05:23:41 -0700 (PDT)
+        Fri, 13 Mar 2020 05:23:45 -0700 (PDT)
 From:   Jiang Xin <worldhello.net@gmail.com>
 X-Google-Original-From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
 Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: [PATCH v3 2/4] receive-pack: refactor report for proc-receive
-Date:   Fri, 13 Mar 2020 20:23:16 +0800
-Message-Id: <20200313122318.78000-3-zhiyou.jx@alibaba-inc.com>
+Subject: [PATCH v3 4/4] receive-pack: new config receive.procReceiveRefs
+Date:   Fri, 13 Mar 2020 20:23:18 +0800
+Message-Id: <20200313122318.78000-5-zhiyou.jx@alibaba-inc.com>
 X-Mailer: git-send-email 2.26.0.rc1.5.gca1e965b06
 In-Reply-To: <CANYiYbHvqLX_OozgAXJ8MbuLipqUdj4CpbExe0oiCcyUyb=Osw@mail.gmail.com>
 References: <CANYiYbHvqLX_OozgAXJ8MbuLipqUdj4CpbExe0oiCcyUyb=Osw@mail.gmail.com>
@@ -72,153 +72,142 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The "proc-receive" may update one or more references, and will send its
-result one by one in pkt-line format.  Each line of the result has four
-fields and one optional message field, as "<old-oid> <new-oid> <ref>
-<status> [<message>]".  See the following example:
+Add a new multi-valued config variable "receive.procReceiveRefs"
+for `receive-pack` command, like the follows:
 
-    # OK, run this command successfully.
-    PKT-LINE(old-oid new-oid ref ok)
+    git config --system --add receive.procReceiveRefs refs/for/
+    git config --system --add receive.procReceiveRefs refs/drafts/
 
-    # NO, I reject it.
-    PKT-LINE(old-oid new-oid ref ng reason)
+If the specific prefix strings match the reference names of the commands
+which are sent by git client to `receive-pack`, these commands will be
+executed by an external hook (named "proc-receive"), instead of the
+internal `execute_commands` function.
 
-    # OK, but use an alternate reference.
-    PKT-LINE(old-oid new-oid ref ok ref:alt-ref)
-
-    # It will fallthrough to receive-pack to execute.
-    PKT-LINE(old-oid new-oid ref ft)
-
-The first three fields have the same foramt as a command.
-
-The forth field has a two-letter status code.  Available status code:
-
-* ok: The command runs successfully.  If the optional message has a
-  prefix "ref:", the hook has created/updated an alternate reference
-  instead.
-
-* ng: Fail to run the command. Error message is in the optional message
-  field.
-
-* ft: Will fallthrough to receive-pack to execute.
+For example, if it is set to "refs/for/", pushing to a reference such as
+"refs/for/master" will not create or update reference "refs/for/master",
+but may create or update a pull request directly by running the external
+hook.
 
 Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 ---
- builtin/receive-pack.c | 21 ++++++++++++++++-----
- transport.c            | 33 ++++++++++++++++++++++++---------
- 2 files changed, 40 insertions(+), 14 deletions(-)
+ Documentation/config/receive.txt | 14 +++++++++
+ builtin/receive-pack.c           | 49 ++++++++++++++++++++++++++------
+ 2 files changed, 54 insertions(+), 9 deletions(-)
 
+diff --git a/Documentation/config/receive.txt b/Documentation/config/receive.txt
+index 65f78aac37..0178f2d478 100644
+--- a/Documentation/config/receive.txt
++++ b/Documentation/config/receive.txt
+@@ -114,6 +114,20 @@ receive.hideRefs::
+ 	An attempt to update or delete a hidden ref by `git push` is
+ 	rejected.
+ 
++receive.procReceiveRefs::
++	This is a multi-valued variable that defines reference prefixes
++	to match the commands in `receive-pack`.  Commands matching the
++	prefixes will be executed by an external hooks "proc-receive",
++	instead of the internal `execute_commands` function.  If this
++	variable is not defined, the "proc-receive" hook will never be
++	used, and all commands will be executed by the internal
++	`execute_commands` function.
++
++	For example, if this variable is set to "refs/for/", pushing to
++	reference such as "refs/for/master" will not create or update a
++	reference named "refs/for/master", but may create or update a
++	pull request directly by running an external hook.
++
+ receive.updateServerInfo::
+ 	If set to true, git-receive-pack will run git-update-server-info
+ 	after receiving data from git-push and updating refs.
 diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 8cda2b9cf7..23f1ae3795 100644
+index 23f1ae3795..2b796e654d 100644
 --- a/builtin/receive-pack.c
 +++ b/builtin/receive-pack.c
-@@ -311,6 +311,7 @@ static void write_head_info(void)
- struct command {
- 	struct command *next;
- 	const char *error_string;
-+	const char *extra_string;
- 	unsigned int skip_update:1,
- 		     did_not_exist:1,
- 		     have_special_ref:1;
-@@ -868,7 +869,12 @@ static int read_proc_receive_result(struct packet_reader *reader,
- 			else
- 				cmd->error_string = "failed";
- 			code = 1;
--		} else if (strcmp("ok", status)) {
-+		} else if (!strcmp("ok", status)) {
-+			cmd->extra_string = xstrdup_or_null(msg);
-+		} else if (!strcmp("ft", status)) {
-+			/* Unset "have_special_ref" field, will execute by "receive-pack" */
-+			cmd->have_special_ref = 0;
-+		} else {
- 			rp_warning("unknown proc-receive status '%s' for '%s'",
- 				   status, reader->line);
- 			cmd->error_string = "bad status";
-@@ -2133,12 +2139,17 @@ static void report(struct command *commands, const char *unpack_status)
- 	packet_buf_write(&buf, "unpack %s\n",
- 			 unpack_status ? unpack_status : "ok");
- 	for (cmd = commands; cmd; cmd = cmd->next) {
--		if (!cmd->error_string)
--			packet_buf_write(&buf, "ok %s\n",
--					 cmd->ref_name);
--		else
-+		if (!cmd->error_string) {
-+			if (!cmd->extra_string)
-+				packet_buf_write(&buf, "ok %s\n",
-+						 cmd->ref_name);
-+			else
-+				packet_buf_write(&buf, "ok %s%c%s\n",
-+						 cmd->ref_name, ' ', cmd->extra_string);
-+		} else {
- 			packet_buf_write(&buf, "ng %s %s\n",
- 					 cmd->ref_name, cmd->error_string);
-+		}
- 	}
- 	packet_buf_flush(&buf);
+@@ -76,6 +76,7 @@ static struct object_id push_cert_oid;
+ static struct signature_check sigcheck;
+ static const char *push_cert_nonce;
+ static const char *cert_nonce_seed;
++static struct string_list proc_receive_refs;
  
-diff --git a/transport.c b/transport.c
-index 1fdc7dac1a..a4f2a5cc6f 100644
---- a/transport.c
-+++ b/transport.c
-@@ -463,11 +463,17 @@ static void print_ref_status(char flag, const char *summary,
- 			     struct ref *to, struct ref *from, const char *msg,
- 			     int porcelain, int summary_width)
- {
-+	char *to_name = to->name;
+ static const char *NONCE_UNSOLICITED = "UNSOLICITED";
+ static const char *NONCE_BAD = "BAD";
+@@ -228,6 +229,20 @@ static int receive_pack_config(const char *var, const char *value, void *cb)
+ 		return 0;
+ 	}
+ 
++	if (strcmp(var, "receive.procreceiverefs") == 0) {
++		char *prefix;
++		int len;
 +
-+	if (to->remote_status) {
-+		if (!strncmp("ref:", to->remote_status, 4))
-+			to_name = to->remote_status + 4;
++		if (!value)
++			return config_error_nonbool(var);
++		prefix = xstrdup(value);
++		len = strlen(prefix);
++		while (len && prefix[len - 1] == '/')
++			prefix[--len] = '\0';
++		string_list_insert(&proc_receive_refs, prefix);
++		return 0;
 +	}
- 	if (porcelain) {
- 		if (from)
--			fprintf(stdout, "%c\t%s:%s\t", flag, from->name, to->name);
-+			fprintf(stdout, "%c\t%s:%s\t", flag, from->name, to_name);
- 		else
--			fprintf(stdout, "%c\t:%s\t", flag, to->name);
-+			fprintf(stdout, "%c\t:%s\t", flag, to_name);
- 		if (msg)
- 			fprintf(stdout, "%s (%s)\n", summary, msg);
- 		else
-@@ -481,9 +487,9 @@ static void print_ref_status(char flag, const char *summary,
- 		fprintf(stderr, " %s%c %-*s%s ", red, flag, summary_width,
- 			summary, reset);
- 		if (from)
--			fprintf(stderr, "%s -> %s", prettify_refname(from->name), prettify_refname(to->name));
-+			fprintf(stderr, "%s -> %s", prettify_refname(from->name), prettify_refname(to_name));
- 		else
--			fputs(prettify_refname(to->name), stderr);
-+			fputs(prettify_refname(to_name), stderr);
- 		if (msg) {
- 			fputs(" (", stderr);
- 			fputs(msg, stderr);
-@@ -498,12 +504,21 @@ static void print_ok_ref_status(struct ref *ref, int porcelain, int summary_widt
- 	if (ref->deletion)
- 		print_ref_status('-', "[deleted]", ref, NULL, NULL,
- 				 porcelain, summary_width);
--	else if (is_null_oid(&ref->old_oid))
-+	else if (is_null_oid(&ref->old_oid)) {
-+		char *refname, *summary;
-+		if (ref->remote_status && !strncmp(ref->remote_status, "ref:", 4))
-+			refname = ref->remote_status + 4;
-+		else
-+			refname = ref->name;
-+		if (starts_with(refname, "refs/tags/"))
-+		       summary = "[new tag]";
-+		else if (starts_with(refname, "refs/heads/"))
-+		       summary = "[new branch]";
-+		else
-+		       summary = "[new reference]";
- 		print_ref_status('*',
--			(starts_with(ref->name, "refs/tags/") ? "[new tag]" :
--			"[new branch]"),
--			ref, ref->peer_ref, NULL, porcelain, summary_width);
--	else {
-+			summary, ref, ref->peer_ref, NULL, porcelain, summary_width);
++
+ 	return git_default_config(var, value, cb);
+ }
+ 
+@@ -1713,17 +1728,30 @@ static void execute_commands(struct command **orig_commands,
+ 	/* Try to find commands that have special prefix in their reference names,
+ 	 * and mark them to run an external "proc-receive" hook later.
+ 	 */
+-	for (cmd = commands; cmd; cmd = cmd->next) {
+-		if (!should_process_cmd(cmd))
+-			continue;
++	if (proc_receive_refs.nr > 0) {
++		struct strbuf refname_full = STRBUF_INIT;
++		size_t prefix_len;
+ 
+-		/* TODO: replace the fixed prefix by looking up git config variables. */
+-		if (!strncmp(cmd->ref_name, "refs/for/", 9)) {
+-			cmd->have_special_ref = 1;
+-			have_special_ref = 1;
+-		} else {
+-			have_normal_ref = 1;
++		strbuf_addstr(&refname_full, get_git_namespace());
++		prefix_len = refname_full.len;
++
++		for (cmd = commands; cmd; cmd = cmd->next) {
++			if (!should_process_cmd(cmd))
++				continue;
++
++			strbuf_setlen(&refname_full, prefix_len);
++			strbuf_addstr(&refname_full, cmd->ref_name);
++			if (ref_is_matched(&proc_receive_refs, cmd->ref_name, refname_full.buf)) {
++				cmd->have_special_ref = 1;
++				have_special_ref = 1;
++			} else {
++				have_normal_ref = 1;
++			}
+ 		}
++
++		strbuf_release(&refname_full);
 +	} else {
- 		struct strbuf quickref = STRBUF_INIT;
- 		char type;
- 		const char *msg;
++		have_normal_ref = 1;
+ 	}
+ 
+ 	if (run_receive_hook(commands, "pre-receive", 0, push_options)) {
+@@ -2187,6 +2215,8 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
+ 		OPT_END()
+ 	};
+ 
++	string_list_init(&proc_receive_refs, 0);
++
+ 	packet_trace_identity("receive-pack");
+ 
+ 	argc = parse_options(argc, argv, prefix, options, receive_pack_usage, 0);
+@@ -2302,5 +2332,6 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
+ 	oid_array_clear(&shallow);
+ 	oid_array_clear(&ref);
+ 	free((void *)push_cert_nonce);
++	string_list_clear(&proc_receive_refs, 0);
+ 	return 0;
+ }
 -- 
 2.26.0.rc1.5.gca1e965b06
 
