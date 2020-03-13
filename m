@@ -2,77 +2,77 @@ Return-Path: <SRS0=VWjS=46=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F9C9C10DCE
-	for <git@archiver.kernel.org>; Fri, 13 Mar 2020 02:34:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5532C4CECE
+	for <git@archiver.kernel.org>; Fri, 13 Mar 2020 09:36:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 4F37C206F1
-	for <git@archiver.kernel.org>; Fri, 13 Mar 2020 02:34:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7BB7F20746
+	for <git@archiver.kernel.org>; Fri, 13 Mar 2020 09:36:45 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dvw7/d2M"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726328AbgCMCe2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Mar 2020 22:34:28 -0400
-Received: from cloud.peff.net ([104.130.231.41]:38650 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726246AbgCMCe2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Mar 2020 22:34:28 -0400
-Received: (qmail 17003 invoked by uid 109); 13 Mar 2020 02:34:28 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 13 Mar 2020 02:34:28 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3878 invoked by uid 111); 13 Mar 2020 02:43:52 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 12 Mar 2020 22:43:52 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 12 Mar 2020 22:34:27 -0400
-From:   Jeff King <peff@peff.net>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, jonathantanmy@google.com, me@ttaylorr.com,
-        Derrick Stolee <dstolee@microsoft.com>, git@jeffhostetler.com
-Subject: Re: [PATCH] connected.c: reprepare packs for corner cases
-Message-ID: <20200313023427.GB900007@coredump.intra.peff.net>
-References: <pull.579.git.1584027403779.gitgitgadget@gmail.com>
- <xmqqzhcle23x.fsf@gitster.c.googlers.com>
- <20200312211638.GA872402@coredump.intra.peff.net>
- <20200312212613.GB872402@coredump.intra.peff.net>
- <7378a863-7e2a-455e-4635-e07938ef3381@gmail.com>
- <20200313023034.GA900007@coredump.intra.peff.net>
+        id S1726483AbgCMJgn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Mar 2020 05:36:43 -0400
+Received: from mail-qk1-f170.google.com ([209.85.222.170]:45948 "EHLO
+        mail-qk1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726393AbgCMJgn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Mar 2020 05:36:43 -0400
+Received: by mail-qk1-f170.google.com with SMTP id c145so11331503qke.12
+        for <git@vger.kernel.org>; Fri, 13 Mar 2020 02:36:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=1pA1ALutWAn0zcnFxGEbsZ4F4BidIQhqk9CUUvyaSXY=;
+        b=dvw7/d2MG7cw3mUK359qEtNIoqtHCpZCUT5cOp/bJnRbaXd44zPhc9QGpTzUuh9jSI
+         5Oe1LX3Z6tuXACvA+2cYHqPRlaAeSERlBborHbYt3hpv7yiTOfkpe5qiyc19PY2Vvx/Q
+         r5qa8VVjPbi2GqX7P/hvkKfEdnSe4gLcs04+DGz3iKltUF+f9RvkfU3oSdV6zrX6DUYM
+         Ie0Kz0MLYCnAu10HhxdHnLfKDu8h4koUgrh3tFH58Ai0czun7Lv1+y5GEyxQQkTbgI/t
+         UfyGnXfIpW1wJlWsJ5vTmZcM3PrMH78Mbooa+2kPSk1CTMZObiO2alemmbIOA/XBQhbt
+         qhKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:content-transfer-encoding;
+        bh=1pA1ALutWAn0zcnFxGEbsZ4F4BidIQhqk9CUUvyaSXY=;
+        b=dXuApsAzZt0A2waki1Wew9Icb0aV8B2CRJT1nTmxcWU4kRsGQ4kCxZ2vvP1fP5Tm70
+         mP4xM7uUwYaOUuLU9hRe3s0FnkKmGe2NCCviY+RGbon8gB8eCcM/PYBZ7yBPnExX3XmS
+         91aE0DJjPeU2fuw2f30GRtRFGN8s5Avyl1lWcaEoq/7oNItTXC21IJRv0EvPzq/iiBOE
+         etBAd0VPxZqvm4oo4mCCbyTGY6my86CGgTXyKPLoanPVJzq/hN/T+UcJhAuNBvLwuuuB
+         WtD/hhcD+DnXx7L+Bz2sOx6hGYVlOb74MwP8jD+mjqWmYQ9e1CUpe6HqhRZo5fq0dwRR
+         UJEw==
+X-Gm-Message-State: ANhLgQ05Yg5iOgHVSoo5STZGztNkwdt1WLy2gLLLMaQ9VbWyq83gKBKN
+        KNxWgKGpMWmZKc15kYe8si6yyu+8e9IFvv9aw4GhJssGQmI=
+X-Google-Smtp-Source: ADFU+vu8VKTzG8v2PsPNTDe287jetcrlHh9NbuGAbAbDEEvRUHHfDVgSuETKRBpgMuEDoXcRxMlbeJZ650f7dTeBz28=
+X-Received: by 2002:a37:5685:: with SMTP id k127mr11639754qkb.481.1584092201784;
+ Fri, 13 Mar 2020 02:36:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200313023034.GA900007@coredump.intra.peff.net>
+References: <CACTq9vt0c+yX9hp5m84dQ7Y4qWk-RrP=zQ2s4PnNRC1ytGbOmw@mail.gmail.com>
+ <CACTq9vuZO_wHhzBKsm=SOTcyXq3e=ur4NmNG9B-g=p5OXMuCNg@mail.gmail.com>
+In-Reply-To: <CACTq9vuZO_wHhzBKsm=SOTcyXq3e=ur4NmNG9B-g=p5OXMuCNg@mail.gmail.com>
+From:   =?UTF-8?B?SnVhbiBKb3PDqSBMw7NwZXogVmlsbGFy?= <jjoselvill@gmail.com>
+Date:   Fri, 13 Mar 2020 10:36:30 +0100
+Message-ID: <CACTq9vvv+_cEv3Epk3tku47qogH0b8oUtVWUEt=tX5UGzxQZ6g@mail.gmail.com>
+Subject: Re: Feature Request: git config for stash -u
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 12, 2020 at 10:30:34PM -0400, Jeff King wrote:
+Hello!
 
-> So that would actually argue that your patch is putting it in the right
-> place. It's _not_ fetch's responsibility to reprepare_packed_git(). It's
-> the loop in check_connected() that is skipping the usual reprepare
-> logic, and shouldn't.
-> 
-> And one fix (which you did) is to just preemptively reprepare right
-> above that loop. Some other solutions are:
+I was wondering if a git configuration could be made for including by
+default untracked files to git stash, so every time it runs it is like
+it had the -u flag appended. For example: stash.includeUntracked
 
-I know I've now suggested that your patch is both wrong and right. :)
+Thanks for your attention!
 
-Just to be clear, at this point I think I'd be OK with either solution.
-
-If it's going into check_connected(), the commit message should argue
-that the loop there is at fault for not doing the usual fallback, and a
-single explicit reprepare() is cheap enough to cover the case we care
-about (and that we don't have to worry about racing with somebody else
-repacking because the point of that flag is that we're in a brand new
-repo).
-
-Repreparing earlier in the transport-helper code _could_ still protect
-against other similar loops, which is an argument for putting it there.
-But I'd be inclined to say those other loops should be corrected.
-
--Peff
+Regards
+Juan Jos=C3=A9 L=C3=B3pez Villar
