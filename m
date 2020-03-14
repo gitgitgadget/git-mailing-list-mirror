@@ -2,141 +2,106 @@ Return-Path: <SRS0=FHek=5A=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.0 required=3.0 tests=DATE_IN_PAST_12_24,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EBD4BC10DCE
-	for <git@archiver.kernel.org>; Sun, 15 Mar 2020 04:04:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 26C73C10DCE
+	for <git@archiver.kernel.org>; Sun, 15 Mar 2020 04:25:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id BC8AB206E9
-	for <git@archiver.kernel.org>; Sun, 15 Mar 2020 04:04:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E697820722
+	for <git@archiver.kernel.org>; Sun, 15 Mar 2020 04:25:53 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sPInhYi/"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fSE+5tz6"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726082AbgCOEEx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 15 Mar 2020 00:04:53 -0400
-Received: from mail-ed1-f47.google.com ([209.85.208.47]:43080 "EHLO
-        mail-ed1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725788AbgCOEEx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 15 Mar 2020 00:04:53 -0400
-Received: by mail-ed1-f47.google.com with SMTP id dc19so17496556edb.10
-        for <git@vger.kernel.org>; Sat, 14 Mar 2020 21:04:49 -0700 (PDT)
+        id S1726278AbgCOEZv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 15 Mar 2020 00:25:51 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:37199 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725995AbgCOEZv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 15 Mar 2020 00:25:51 -0400
+Received: by mail-wr1-f68.google.com with SMTP id 6so17054678wre.4
+        for <git@vger.kernel.org>; Sat, 14 Mar 2020 21:25:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=vq3GE2CxFzN+ChD+G0lBAa6u2/ZujpCUMiYX4kXh6Wo=;
-        b=sPInhYi/zMEN8dc0/QzpKRSHK1rIWdWz91AKbxgduMrmEbYONAy9BSeG5XMNrhfi1N
-         jTbZ5bG+KhUpkRwbjn2S/UN7DHeqp/KPV2TwjcH4ONuyctrx+bp+9v9buSgBuIrAGZpb
-         Va2pSTNGojsymrssm4U6ExeZOpBOcvlCQzwjvhH+wW1uTrNg8P2Llx4h4DCorFXugEl5
-         Op1SYRqegC0xpkai402cxLfcWwp3KtQJsf/ePjHYG1o8W1WMdYbeWQDwBuW91z6IkB36
-         Ypobj8V91Mutb+LTWI7EoQ8cHlj6TJEfMGS3PaUrN0gfqsnkoTj3xSotRB6AmPhQoFnP
-         eiyw==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=pNTZUDjJPBSKm8DnqvbjiMFhIXpHTgA3IEGTERjokJ4=;
+        b=fSE+5tz6rtk2NKwAR39b5YZ4uPIs4fXzQFbmADjVsAknKUtcrGBatnVwQeJ+ZwX176
+         2L7cOpJKV4kmaQUSJkIBcNA8A7xE0Sf0oBo9LbuLXNy/2IkYsLbrq7QI84H9GZ9MORPm
+         VV7T7HDa+uF/Bl3Uen99ikjaOCf1wjNjLZ1JHn0EofbOXuqjPiN0OiK7VudnrWtRGoZ7
+         WSIQs/gQwYQWcF340qrFjD48rRSgv2G8VweEADlplLYSop+0hnaUugX3CgUWGD5FUbJZ
+         QbW4icDoQL5tanyoWeXkKPQlIVKgRvbFLxzHfFqJHRCIpHeqnoor5G4huKqw5INx2nJh
+         wceA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=vq3GE2CxFzN+ChD+G0lBAa6u2/ZujpCUMiYX4kXh6Wo=;
-        b=k4y05lDv/Gg7LvrTGdxJ8PoWeMu272xsXTpGMP1KcR8t9d1r7Y4LEp1xdORU7sgtRz
-         q+Zx/fOeIczLtjUAink8MIPF5A+sXII048ZXvdSubNoZORR8LRGHmmuUMCEZs1RePSMy
-         rH/V3v23vT5axGNItkAh4KMZ2nX5O9hAIlRtwsBLBhLlJSEYSLGXSQ7pXvDnMkpN5aDq
-         k+1oIupa0p3bGR5XZDE8lSTGA9bbe7fHZtgTBmB4jecX2yxmUQ2lwphw8vzfEkx+K4Qc
-         2J24xZGzcHNkuqrAw+lq98egeRqxMf8qvEnXFYmd5PSN4N5mjD3kZ+Vf8qjjJ9lrJOtA
-         95zw==
-X-Gm-Message-State: ANhLgQ1j4k7HRzKZ2xTLENu3cdvHcmJugxYQISg/T154TFeTQR+FisoF
-        VW/rtznebnvWnz2ZXVubfPUxWqbWM2UowZ3ZOUCzr9aYqkE=
-X-Google-Smtp-Source: ADFU+vtNVTT0kBYl+ZYjyni8OeCAJpylVEbiEbBBjpyCBjQkusHvzST8Tc1yw69dOYo1QQx8ce+WeGyZcUp0V7QmJB4=
-X-Received: by 2002:a05:6402:38c:: with SMTP id o12mr17502214edv.273.1584168246409;
- Fri, 13 Mar 2020 23:44:06 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=pNTZUDjJPBSKm8DnqvbjiMFhIXpHTgA3IEGTERjokJ4=;
+        b=eqmvssnkDeh01WQme4zJYa1NvoEGL02JqptzE4K/9VS1hA94Bt1UNVNdodr+2iUjNw
+         pKVcz8ikU7THOgGTDeo1H6yRjjP4SSySubYTXrOprBxEnBKydsn75lQhWLCdR6JmWMP7
+         S1y0yC95z53jgqR3QfqHRKhDg0QpHnvXIpKCC/JmoZH7bESsKdswniwJMiJIG8Fn43na
+         b7SBM1Q64i8TECBR5239I2dQrZdRaWUclXpqwDXnlIOu3+hAw/iidBjhQZIWZ2A+Cc+R
+         5/+/IN2O1EYHes/GKXZafoAM63nrjoJhQMcooeZSXW2fRJHCRxMZN6V7OQIc4EJ324JS
+         vDcg==
+X-Gm-Message-State: ANhLgQ3AWouFTpqIod7Z3oENAg59K8LUj98UYMowB2k0oRn3en4j8OU7
+        Y84VSil4ozSUZIM2yak7P5XADyju
+X-Google-Smtp-Source: ADFU+vsJImX/OezvZGW1bGU8Ks9wne1GZIdWBPVtn4EM/aZLRyRyg/DsUD/Ok4OVy5VKQ1RVu0ssmw==
+X-Received: by 2002:a17:906:b888:: with SMTP id hb8mr14478082ejb.166.1584169896299;
+        Sat, 14 Mar 2020 00:11:36 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id aq2sm1702998ejc.9.2020.03.14.00.11.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 14 Mar 2020 00:11:35 -0700 (PDT)
+Message-Id: <b07fdab55aae88cf30d9be41b81414c0664e5c31.1584169893.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.726.git.git.1584169893.gitgitgadget@gmail.com>
+References: <pull.726.git.git.1584169893.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sat, 14 Mar 2020 07:11:28 +0000
+Subject: [PATCH 2/7] t1091: make some tests a little more defensive against
+ failures
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <5981c317-4b39-de15-810b-a781aa79189d@gmail.com>
- <20200312170714.180996-1-jonathantanmy@google.com> <20200312175151.GB120942@google.com>
- <CAP8UFD0+fyz=S_VN=EzPOOxNSNkge0uB84kEqQD_mudsFtR8Lg@mail.gmail.com> <20200312230931.GF120942@google.com>
-In-Reply-To: <20200312230931.GF120942@google.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sat, 14 Mar 2020 07:43:55 +0100
-Message-ID: <CAP8UFD1ouu1EkJjGYuzJahZNX+QW-XyEPD-2Vfp8jMYNuVYkAA@mail.gmail.com>
-Subject: Re: [Question] Is extensions.partialClone defunct?
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Derrick Stolee <stolee@gmail.com>, git <git@vger.kernel.org>,
-        Taylor Blau <me@ttaylorr.com>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Derrick Stolee <dstolee@microsoft.com>,
+        Elijah Newren <newren@gmail.com>,
+        Elijah Newren <newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+From: Elijah Newren <newren@gmail.com>
 
-On Fri, Mar 13, 2020 at 12:09 AM Jonathan Nieder <jrnieder@gmail.com> wrote:
->
-> Christian Couder wrote:
-> >> Jonathan Tan wrote:
->
-> >>> Hmm...besides giving the name of the promisor remote, the
-> >>> extensions.partialClone setting is there to prevent old versions of Git
-> >>> (that do not know this extension) from manipulating the repo.
-> >
-> > That could be true of "remote.<name>.promisor = true".
->
-> To be clear, Jonathan is referring to a specific feature of the
-> extensions.* settings.  See
-> Documentation/technical/repository-version.txt for details:
->
->   2. If a version-1 repository specifies any `extensions.*` keys that
->      the running git has not implemented, the operation MUST NOT
->      proceed. Similarly, if the value of any known key is not understood
->      by the implementation, the operation MUST NOT proceed.
->
-> No other config key has that property.
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ t/t1091-sparse-checkout-builtin.sh | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Yeah, right. I was very tired and it was late when I replied, so I was confused.
+diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
+index 44a91205d60..8607a8e6d1a 100755
+--- a/t/t1091-sparse-checkout-builtin.sh
++++ b/t/t1091-sparse-checkout-builtin.sh
+@@ -278,6 +278,7 @@ test_expect_success 'cone mode: add parent path' '
+ '
+ 
+ test_expect_success 'revert to old sparse-checkout on bad update' '
++	test_when_finished git -C repo sparse-checkout disable &&
+ 	test_when_finished git -C repo reset --hard &&
+ 	git -C repo sparse-checkout set deep &&
+ 	echo update >repo/deep/deeper2/a &&
+@@ -328,6 +329,7 @@ test_expect_success 'sparse-checkout (init|set|disable) fails with dirty status'
+ '
+ 
+ test_expect_success 'cone mode: set with core.ignoreCase=true' '
++	rm repo/.git/info/sparse-checkout &&
+ 	git -C repo sparse-checkout init --cone &&
+ 	git -C repo -c core.ignoreCase=true sparse-checkout set folder1 &&
+ 	cat >expect <<-\EOF &&
+-- 
+gitgitgadget
 
-> > On Thu, Mar 12, 2020 at 6:51 PM Jonathan Nieder <jrnieder@gmail.com> wrote:
->
-> >> Christian, what would your prefered way be to fix this?  Should
-> >> extensions.partialclone specify a particular "default" promisor
-> >> remote, or should we use a new repository extension for multiple
-> >> promisors?
-> [...]
-> > So I'd rather obsolete "extensions.partialClone = <remote>" and to
-> > find other ways.
->
-> I *think* that means "new repository extension".
-
-Yeah.
-
-> That suggests something like
->
->         [extensions]
->                 multiplePromisors = true
-
-Yeah, I think I suggested "[extensions]\npromisorremotes=<bool>" but
-"multiplePromisors" is probably better.
-
-> >                                                              or maybe
-> > we could have another extension alltogether like
-> > "[extensions]\npromisorremotes=<bool>" and over time obsolete
-> > "extensions.partialClone" altogether. I prefer the later.
->
-> I think we're going to have to continue to support
-> extensions.partialClone=<remote> for a long time anyway (breaking the
-> ability to work with existing repositories is expensive), so I'm
-> reasonably comfortable with multiplePromisors being a separate
-> extension.  Some faraway day, we can introduce
-> "repositoryFormatVersion = 2" that mandates support for these
-> extensions by default, allowing us to clean up and simplify.
-
-Yeah, I agree.
-
-> I can start writing a proposed patch to send this evening or tomorrow.
-
-That would be very much appreciated! Thanks!
-
-> This behavior has been around for a few releases so it would want to
-> cook until the 2.27 cycle.
-
-Yeah, and partial clone is experimental, so I think it's ok.
