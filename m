@@ -2,156 +2,156 @@ Return-Path: <SRS0=FHek=5A=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-2.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 91AC9C10DCE
-	for <git@archiver.kernel.org>; Sun, 15 Mar 2020 10:58:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D8892C10DCE
+	for <git@archiver.kernel.org>; Sun, 15 Mar 2020 12:20:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 62EEB206E9
-	for <git@archiver.kernel.org>; Sun, 15 Mar 2020 10:58:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 97F9A20578
+	for <git@archiver.kernel.org>; Sun, 15 Mar 2020 12:20:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mfTptY1e"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ejlf5Doh"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728321AbgCOK6J (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 15 Mar 2020 06:58:09 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:51150 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728234AbgCOK6J (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 15 Mar 2020 06:58:09 -0400
-Received: by mail-wm1-f68.google.com with SMTP id a5so14500089wmb.0
-        for <git@vger.kernel.org>; Sun, 15 Mar 2020 03:58:06 -0700 (PDT)
+        id S1728472AbgCOMU3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 15 Mar 2020 08:20:29 -0400
+Received: from mail-qk1-f193.google.com ([209.85.222.193]:43053 "EHLO
+        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728467AbgCOMU2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 15 Mar 2020 08:20:28 -0400
+Received: by mail-qk1-f193.google.com with SMTP id x18so1074952qki.10
+        for <git@vger.kernel.org>; Sun, 15 Mar 2020 05:20:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=3X7mdTjY1vFF4Ve852iC3EJvFaWIge/z8ox6G7GMk9o=;
-        b=mfTptY1eMD3RY5yvUHqwlA3tvvb38DUdL0kkT0ijBm5DcGUQZS+dnflUMBQ476ZT8e
-         VAzL8AltrInaPqnIk2rwEhihyMyVIHa3CdDRJsWEndFX51ffAmy7iaFqLo/gbO+I3Jfu
-         0x/4VFX9l5RHAhvSZA/MWPmdj68I8pUzttYRmWBhXfyWqibfS4bBHndrFYtIyVZuGSxN
-         mwi/ztWK4ziNQRLi33IlpUKvNuq4+tEw8uu8sXC3JkyBbHOgM1in/KCfD5KTBnaEiK5U
-         SxNEO2p4BdPEjM2UzQZnBW/PV1o2FCMkmPUYqsrjHanBNbIYWJkQVh5fy/rbHgdGDyJ3
-         cqzw==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=8CKGpcahL3yvKsKmtI5RVrswri3mlS/deSFu/h7cgRM=;
+        b=Ejlf5DohdjmDOER3b9NRKX9lkX7hfoXdkGE0yr6Eyjxb/1QNjvwiglqbzetd9ysBEQ
+         Zrro4xqKj6v49Ou6EjncxU9n4Yydwy2r3x8Kz8IAbiy/INBWF0avQdiyDN6nL5TJ8AmL
+         EHl9ARVf/lW0HvlEAHVANnDCU55czvarOYRZOf6mN4LNrpHr8Hn0SOx0VPUsTIGI8VxE
+         /q8IKCGbsH08fqJC6v6hAPjHFFrcW0rdoztjjC1cjIg08uxv/Pn5Gzp/9hHP2de1HsDH
+         xNW0a6MtK3PeZXzXBBGt1h+Bw/jnUVUmCoj7oW4hLzg9lxwGPZV20xjXbNSTnAWG8+SR
+         HbXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=3X7mdTjY1vFF4Ve852iC3EJvFaWIge/z8ox6G7GMk9o=;
-        b=RosadCMAQYs5PWxBC0Lq0Lb/Be1frfR3YWiqGKe04D7jJHddYVBw3rvCvJF0SGuYHL
-         pD6LXxCnLtLQnjJu9ZopHOV6dB09f7EQq/1scMYlrQVCl2EXzzq65bFQ1SXD5htxDFDo
-         dEikoDg727oz/bGonQ+9r1gQuFsmy2ZTy8QUPu2IKSGGSxIG0Ztai9Xxvsa86d6LljMa
-         PX4o23jNVmAV+ZnoSYLiFwAAAqh2+3PhZG7nOmw6Wg3M3ikBgu3ng89y/LaHbw4Mn8D2
-         Jyu4vf7zzG1vqOg1wrgdDurfCYUiQ7b2xA89bwl05ORpsDTjcFSnZgk8tCUEDWUO2Q1m
-         uyAg==
-X-Gm-Message-State: ANhLgQ0dalqdTr58tX97QuENb/Q6mbfSZmRfCsvhgj8cdbh6PdEXEK9E
-        rR0FrvfISZfI31dVO8wCPZg=
-X-Google-Smtp-Source: ADFU+vuSydfq0xyei1ZGpA+YwicuVTIxt3qCM+vYs3nL8IKyrpTRaIXpZW/5pOdAecwmL03cXFvvBw==
-X-Received: by 2002:a1c:8108:: with SMTP id c8mr21385450wmd.50.1584269885961;
-        Sun, 15 Mar 2020 03:58:05 -0700 (PDT)
-Received: from szeder.dev (94-21-29-150.pool.digikabel.hu. [94.21.29.150])
-        by smtp.gmail.com with ESMTPSA id n6sm14209997wmn.13.2020.03.15.03.58.05
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 15 Mar 2020 03:58:05 -0700 (PDT)
-Date:   Sun, 15 Mar 2020 11:58:03 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>,
-        git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>
-Subject: Re: Regression in v2.26.0-rc0 and Magit
-Message-ID: <20200315105803.GJ3122@szeder.dev>
-References: <3091652.KAqcNXvZJ4@cayenne>
- <20200312233504.GH120942@google.com>
- <xmqqk13pdsw1.fsf@gitster.c.googlers.com>
- <xmqq36accdpt.fsf@gitster.c.googlers.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=8CKGpcahL3yvKsKmtI5RVrswri3mlS/deSFu/h7cgRM=;
+        b=QFpKK5EyyGFJzN094c30s6g90hoZDLlXbRt2D3xAoWXubifFW7ihokHSFw1dasjTcr
+         aqlVU0cA7DOIQsfSVCeZiTZgAv8IF71tMwI63jNx76sE+nzsstb9L/LY7Qw3Wl+kaJKo
+         7ggqefYkbOf5pbL8gRsQDGkqkKOd+9iZ1gJRgutFuIr2jmhaJXRh02niMyul+bNTMHdj
+         CHE/RtWJ6EwmhHkzKdiCS9gKLLhBKeacuiqPESjw7graT+2sbtg/rWSVZUAbllQjqF0k
+         +2n+rZ5CBE0kND0g4CiUFjkJhAxxIdpZJPxsNMvB9tx9mR/LGrETn6Qy3epjfYOTppy9
+         YO5w==
+X-Gm-Message-State: ANhLgQ2ZlBm6bv5daNoNtiUq002479UtIgjSGRLld8fwbXO89DJ3bFq2
+        RMFafE7VB8lbupUiS5OXFyM=
+X-Google-Smtp-Source: ADFU+vtj0Z6WouxmVcbEfcCi2AehedQe72WQz/RzbLE4h3tdFUeF0pcAUD3BykbrXswu6ezqmaQSkw==
+X-Received: by 2002:a37:67c1:: with SMTP id b184mr9231120qkc.307.1584274827050;
+        Sun, 15 Mar 2020 05:20:27 -0700 (PDT)
+Received: from [192.168.1.76] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id f16sm6791176qtk.61.2020.03.15.05.20.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 15 Mar 2020 05:20:26 -0700 (PDT)
+Subject: Re: [PATCH] clone: use --quiet when stderr is not a terminal
+To:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>
+References: <pull.581.git.1584133742475.gitgitgadget@gmail.com>
+ <xmqqh7yqc16w.fsf@gitster.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <a044478f-ca04-3475-90de-0332e80f552d@gmail.com>
+Date:   Sun, 15 Mar 2020 08:20:22 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:74.0) Gecko/20100101
+ Thunderbird/74.0
 MIME-Version: 1.0
+In-Reply-To: <xmqqh7yqc16w.fsf@gitster.c.googlers.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq36accdpt.fsf@gitster.c.googlers.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 13, 2020 at 11:27:26AM -0700, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > Jonathan Nieder <jrnieder@gmail.com> writes:
-> >
-> >> Junio, can you fast-track that fix to "master"?  Emily, can you add a
-> >> test?
-> >
-> > Thanks, indeed it has been waiting for tests.  We have a few more
-> > business days before -rc2, so...
-> >
-> > * es/outside-repo-errmsg-hints (2020-03-03) 1 commit
-> >  - prefix_path: show gitdir if worktree unavailable
-> >
-> >  An earlier update to show the location of working tree in the error
-> >  message did not consider the possibility that a git command may be
-> >  run in a bare repository, which has been corrected.
-> >
-> >  May want a test or two.
-> 
-> If nobody complains in the coming 4 hours or so, I'll squash this in
-> to e6c57b49 ("prefix_path: show gitdir if worktree unavailable",
-> 2020-03-02) and mark the topic as "ready for 'next'".
-> 
-> Thanks.
-> 
->  t/t6136-pathspec-in-bare.sh | 30 ++++++++++++++++++++++++++++++
->  1 file changed, 30 insertions(+)
-> 
-> diff --git a/t/t6136-pathspec-in-bare.sh b/t/t6136-pathspec-in-bare.sh
-> new file mode 100755
-> index 0000000000..d9e03132b7
-> --- /dev/null
-> +++ b/t/t6136-pathspec-in-bare.sh
-> @@ -0,0 +1,30 @@
-> +#!/bin/sh
-> +
-> +test_description='diagnosing out-of-scope pathspec'
-> +
-> +. ./test-lib.sh
-> +
-> +test_expect_success 'setup a bare and non-bare repository' '
-> +	test_commit file1 &&
-> +	git clone --bare . bare
-> +'
-> +
-> +test_expect_success 'log and ls-files in a bare repository' '
-> +	(
-> +		cd bare &&
-> +		test_must_fail git log -- .. &&
-> +		test_must_fail git ls-files -- ..
-> +	) >out 2>err &&
-> +	test_i18ngrep "outside repository" err
 
-I think it would be better to write this test as:
 
-  (
-        cd bare &&
-        test_must_fail git log -- .. 2>err &&
-	test_i18ngrep "outside repository" err &&
-        test_must_fail git ls-files -- .. 2>err &&
-	test_i18ngrep "outside repository" err
-  )
+On 3/14/2020 1:10 PM, Junio C Hamano wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> From: Derrick Stolee <dstolee@microsoft.com>
+>>
+>> "git clone" is used by many build systems to download Git code before
+>> running a build. The output of these systems is usually color-coded to
+>> separate stdout and stderr output, which highlights anything over stderr
+>> as an error or warning. Most build systems use "--quiet" when cloning to
+>> avoid adding progress noise to these outputs, but occasionally users
+>> create their own scripts that call "git clone" and forget the --quiet
+>> option.
+>>
+>> Just such a user voiced a complaint that "git clone" was showing "error
+>> messages" in bright red. The messages were progress indicators for
+>> "Updating files".
+>>
+>> To save users from this confusion, let's default to --quiet when stderr
+>> is not a terminal window.
+> 
+> This is the kind of behaviour change that makes me (and probably
+> others who have been with the project long enough) to say "it is
+> certain that some other users and tools are relying on the current
+> behaviour and their expectation, when explained, would look just as
+> sensible, if not more, than 'any output to the standard error stream
+> is an error', which is the justfication given for this change."
+>
+> I would not be surprised if a GUI program is counting the bytes
+> coming to the progress output to show the equivalent with bits on
+> the screen, for example.  They would say "Git has always given
+> progress output to the standard error stream.  We, as any other
+> sensible folks, know that they are not errors and won't give a
+> misleading and alarming messages in red.  We could change our
+> program to pass --progress but why should we be the one who are
+> forced to do such a change", and I do not have *any* excuse I find
+> sensible enough to give them.
 
-because this way we make sure that both commands fail with the error
-we expect.
+You are absolutely right. Tools should do the right thing, and users
+creating their own scripts should understand the output of the
+commands they are calling.
 
-> +'
-> +
-> +test_expect_success 'log and ls-files in .git directory' '
-> +	(
-> +		cd .git &&
-> +		test_must_fail git log -- .. &&
-> +		test_must_fail git ls-files -- ..
-> +	) >out 2>err &&
-> +	test_i18ngrep "outside repository" err
-> +'
-> +
-> +test_done
+And I was coming back to this thread shortly after waking up since
+I realized why the test fallout was bigger than I anticipated: this
+change shouldn't enable "--quiet" but instead "--no-progress". The
+loss of messages like "Cloning from ..." is actually a problematic
+behavior change.
+
+I'll send a v2 using "--no-progress" instead.
+
+> I do not mind queuing this (or any similar backward compatibility
+> breaking changes) and merging it down to 'next', but if we were plan
+> to have it in a tagged release, I'd prefer to keep it in 'next' for
+> at least a few releases before doing so, and under three conditions:
+> major organizations and those who build tools around Git promise me
+> that they adopt 'next' for their developers and users early, and
+> that they actively measure and report potential damages before it is
+> advanced to 'master', and that they won't let their users complain
+> after it hits a tagged release.
+
+I understand that this is low-priority. This idea of adapting "next"
+early is interesting to me. It is likely difficult to deploy that
+branch to CI/CD systems, but I have been thinking of ways to
+automate our integration process in microsoft/git (and Scalar and
+VFS for Git) so we find the behavior changes and pain points a lot
+sooner. I'll see what I can do on this front in the coming weeks.
+
+> If the world and userbase were like today back when "clone" learned
+> the --quiet option and showing the progress meter 15 years ago, I
+> suspect that we may have chosen this way from the beginning, though.
+
+I appreciate your perspective here. I will not be upset if this
+change is rejected due to backward compatibility concerns. It's
+tricky to update the user experience around these well-established
+features like "clone".
+
+Thanks,
+-Stolee
