@@ -2,89 +2,113 @@ Return-Path: <SRS0=FHek=5A=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 30108C0044D
-	for <git@archiver.kernel.org>; Sun, 15 Mar 2020 01:54:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F47FC0044D
+	for <git@archiver.kernel.org>; Sun, 15 Mar 2020 01:55:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id EE6EA206D5
-	for <git@archiver.kernel.org>; Sun, 15 Mar 2020 01:54:13 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Bz1CxS0I"
+	by mail.kernel.org (Postfix) with ESMTP id 1582D2071B
+	for <git@archiver.kernel.org>; Sun, 15 Mar 2020 01:55:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727577AbgCOByM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 14 Mar 2020 21:54:12 -0400
-Received: from mail-il1-f174.google.com ([209.85.166.174]:33554 "EHLO
-        mail-il1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727519AbgCOByM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Mar 2020 21:54:12 -0400
-Received: by mail-il1-f174.google.com with SMTP id k29so13092253ilg.0
-        for <git@vger.kernel.org>; Sat, 14 Mar 2020 18:54:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=fKxKiMjpAj0dkdqET483Lvi8Rx9MSGj3uMe484JDWyM=;
-        b=Bz1CxS0IyMwY0OCMgA59/eelemjFbWysMFgo0WHd6Ulcxb9HIysETEE6stqw9F1JoO
-         pqtk9KKvDWPcEPvmsoDh1qU+e2rUBwJc2s4A8AUM0pNvYT9OYaj/VMhRxbirfjgKDDQ7
-         fK2b9WzSMgBlx4ncNPT59Y6Vu8kWFeIFifY83rOsCXmYUA60xD1fQOL37XqlNEN3Cg3Q
-         db2TpbFHgUN4eiRywU7pMDQQEE21QlzyD+D/uni03yXAqp96Vnjxw+vWMW/lz7HhSok9
-         LLnq9JV+WAhGdshELFGykqKUPyfwIz16rsIFfimhvEgRHXDX6qA8eBLhn8QpzFi9GMYg
-         ohSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=fKxKiMjpAj0dkdqET483Lvi8Rx9MSGj3uMe484JDWyM=;
-        b=q55Olv9Guaek2Z0uI/KocjXkiiC7yiZKYzAfM1lgdBpl7HfX2TJu9EvHDT443N999b
-         s0kJBrESqv5ykeReclXn09xBF9e8UDOL5iMTzFMeAhsYqOkeIg9WYqMIc+e9QN7yGFso
-         Iqyi+g4T1KZItSDmu2/ADQX1P2hXEU2VG7WgpfeZuJevr6roVIm3r+7I1VB893bSgXY0
-         DEb4uPfVio5WSnhj3YVWvZ+ZG5no1nIKRZxZBEs9uDtd2pECHC0OPhECCSBJekce1AE1
-         DS2Msb/gQjz9MURPwjXvz8RoVcvGB+HviYedYebTWdeDJFDT3LzsoWx/YECuUNFvHDQc
-         KvjA==
-X-Gm-Message-State: ANhLgQ1/KEiQqTwoN2W1P6+f/AKmFJJzVBJTeR3836E4ZUmQReJL5F9f
-        MDkz2vgu4K7wD2Sq4L1Wwp7Wv/8giZaCGm4S2vBaBJXb
-X-Google-Smtp-Source: ADFU+vu1ZQYOw7a28ioW0LswVTh6bSlKRSTuhVa99tvT7MGsdXqWjc9Ey/NjO5iZguFqgb3QK0i+/oH+PDZAofYUFG8=
-X-Received: by 2002:a05:6e02:be7:: with SMTP id d7mr21477849ilu.238.1584237251417;
- Sat, 14 Mar 2020 18:54:11 -0700 (PDT)
+        id S1727542AbgCOBzA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 14 Mar 2020 21:55:00 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:58352 "EHLO dcvr.yhbt.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727317AbgCOBy7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Mar 2020 21:54:59 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+        by dcvr.yhbt.net (Postfix) with ESMTP id DAEB11F619;
+        Sun, 15 Mar 2020 00:36:54 +0000 (UTC)
+Date:   Sun, 15 Mar 2020 00:36:54 +0000
+From:   Eric Wong <e@yhbt.net>
+To:     Jeff King <peff@peff.net>
+Cc:     James Ramsay <james@jramsay.com.au>, git@vger.kernel.org,
+        meta@public-inbox.org
+Subject: inbox indexing wishlist =?utf-8?B?W3dhczog?=
+ =?utf-8?B?W1RPUElDIDE2LzE3XSDigJxJIHdhbnQgYSByZXZpZXdlcuKAnV0=?=
+Message-ID: <20200315003654.GA711@dcvr>
+References: <AC2EB721-2979-43FD-922D-C5076A57F24B@jramsay.com.au>
+ <6DAC1E49-9CA0-4074-867E-F22CD26C9FEB@jramsay.com.au>
+ <20200313212531.GA22502@dcvr>
+ <20200314172715.GA1178875@coredump.intra.peff.net>
 MIME-Version: 1.0
-Reply-To: noloader@gmail.com
-From:   Jeffrey Walton <noloader@gmail.com>
-Date:   Sat, 14 Mar 2020 21:54:00 -0400
-Message-ID: <CAH8yC8=FZrDmHBSk=GFZd08Ovk4zffyB7KEOoyUpAPLYi_xUeA@mail.gmail.com>
-Subject: Why am I on Master instead of my branch
-To:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200314172715.GA1178875@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I'm trying to test some changes I made on a branch on some other
-machines. The changes were committed and pushed. However, after a
-checkout and pull on the other machines the changes were missing.
+Jeff King <peff@peff.net> wrote:
+> On Fri, Mar 13, 2020 at 09:25:31PM +0000, Eric Wong wrote:
+> 
+> > > 6. Peff: this is all possible on the mailing list. I see things that look
+> > > interesting, and have a to do folder. If someone replies, I’ll take it off
+> > > the list. Once a week go through all the items. I like the book club idea,
+> > > instead of it being ad hoc, or by me, a group of a few people review the
+> > > list in the queue. You might want to use a separate tool, like IRC, but it
+> > > would be good to have it bring it back to the mailing list as a summary.
+> > > Public inbox could be better, but someone needs to write it. Maybe nerd
+> > > snipe Eric?
+> > 
+> > What now? :o
+> > 
+> > There's a lot of things it could be better at, but a more
+> > concrete idea of what you want would help.
+> 
+> short answer: searching for threads that only one person participated in
 
-When I do a 'git branch' I am on master for some reason:
++Cc meta@public-inbox.org
 
-$ git branch
-  cmake-inno-setup-COVERAGE
-  config-guess
-  declarations
-* master
+OK, something I've thought of doing anyways in the past...
 
-However, I have never switched back to master:
+> The discussion here was around people finding useful things to do on the
+> list: triaging or fixing bugs, responding to questions, etc. And I said
+> my mechanism for doing that was to hold interesting-looking but
+> not-yet-responded-to mails in my git-list inbox, treating it like a todo
+> list, and then eventually:
+> 
+>   1. I sweep through and spend time on each one.
+> 
+>   2. I see that somebody else responded, and I drop it from my queue.
+> 
+>   3. It ages out and I figure that it must not have been that important
+>      (I do this less individually, and more by occasionally declaring
+>      bankruptcy).
+> 
+> That's easy for me because I use mutt, and I basically keep my own list
+> archive anyway. But it would probably be possible to use an existing
+> archive and just search for "threads with only one author from the last
+> 7 days". And people could sweep through that[1].
+> 
+> You already allow date-based searches, so it would really just be adding
+> the "thread has only one author" search. It's conceptually simple, but
+> it might be hard to index (because of course it may change as messages
+> are added to the archive, though any updates are bounded to the set of
+> threads the new messages are in).
 
-$ history | grep git | grep -E 'master|cmake'
-...
-2630  git checkout cmake-inno-setup-COVERAGE
- 2631  git fetch upstream cmake-inno-setup-COVERAGE
- 2632  git checkout cmake-inno-setup-COVERAGE
- 2634  git checkout cmake-inno-setup-COVERAGE
- 2635  git branch cmake-inno-setup-COVERAGE
- 2757  git diff upstream/master
- 2766  history | grep git | grep -E 'master|cmake'
-<end of history>
+Exactly on being conceptually simple but requiring some deeper
+changes to the way indexing works.  I'll have to think about it
+a bit, but it should be doable without being too intrusive,
+invasive or expensive for existing users.
 
-How am I on master when I checked out cmake-inno-setup-COVERAGE?
+> But to be clear, I don't think you have any obligation here. I just
+> wondered if it might be interesting enough that you would implement it
+> for fun. :) As far as I'm concerned, if you never implemented another
+> feature for public-inbox, what you've done already has been a great
+> service to the community.
+
+Thanks.  I'll keep that index change in mind and it should be
+doable if I remain alive and society doesn't collapse...
+
+> [1] The obvious thing this lacks compared to my workflow is a way to
+>     mark threads as "seen" or "not interesting". But that implies
+>     per-user storage.
+
+Yeah, that would be part of the local tools bit I've been
+thinking about (user labels such as "important", "seen",
+"replied", "new", "ignore", ... flags).
