@@ -2,208 +2,87 @@ Return-Path: <SRS0=FHek=5A=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D650C18E5B
-	for <git@archiver.kernel.org>; Sun, 15 Mar 2020 18:57:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EF1F4C10DCE
+	for <git@archiver.kernel.org>; Sun, 15 Mar 2020 19:30:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 316D3206BE
-	for <git@archiver.kernel.org>; Sun, 15 Mar 2020 18:57:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8B5DC20575
+	for <git@archiver.kernel.org>; Sun, 15 Mar 2020 19:30:57 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="SvNJDs82"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728753AbgCOS5r (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 15 Mar 2020 14:57:47 -0400
-Received: from smtp.hosts.co.uk ([85.233.160.19]:14926 "EHLO smtp.hosts.co.uk"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728508AbgCOS5r (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 15 Mar 2020 14:57:47 -0400
-Received: from [92.30.123.115] (helo=[192.168.1.36])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1jDYSG-0008Ya-52; Sun, 15 Mar 2020 18:57:46 +0000
-Subject: Re: [RFC] Possible idea for GSoC 2020
-To:     Jakub Narebski <jnareb@gmail.com>
-Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Heba Waly <heba.waly@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Abhishek Kumar <abhishekkumar8222@gmail.com>
-References: <86mu8o8dsf.fsf@gmail.com>
- <66dc369f-cd83-e39c-1310-32a9c003d114@iee.email> <86ftec2ui8.fsf@gmail.com>
-From:   Philip Oakley <philipoakley@iee.email>
-Message-ID: <076acb45-5360-6ee4-7c65-907488300ef3@iee.email>
-Date:   Sun, 15 Mar 2020 18:57:34 +0000
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.6.0
+        id S1728797AbgCOTay (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 15 Mar 2020 15:30:54 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:56197 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727495AbgCOTay (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 15 Mar 2020 15:30:54 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3FC6BC4882;
+        Sun, 15 Mar 2020 15:30:52 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=K86q8Pi+oIhD
+        wg3bLVNsWUPmpBs=; b=SvNJDs82ZoKf8ps2si3FFmkDpjesXmb294xr3t0ER1Ex
+        93UXaswBL48U1TR7kckZsF7yesUFiOVPzUANcK5p7N8VD766gunOt1o5paQba9qI
+        1QluAdvT4H2kkv76/p5wTJ5AIoanSbjoUp5PWhjVW8nyrMyJIPdreqJW2NapEiU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=U+qhrh
+        SMDhqUDL6L6FgCR2wtrCRP0lUiglcYZjgal+yobP/h2N1jy1hVByei5ZoHrLFwEB
+        uVYezTXrexznjee+hVwv829f/3a5Y+5Qi3NrppbJRuQTLJaSyFLqHl0GrR1dXY1y
+        YvSkcthZrNGXd/I6GAXRsT9c9FVjMokRdVeEM=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 375BFC4881;
+        Sun, 15 Mar 2020 15:30:52 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 7EEEAC487E;
+        Sun, 15 Mar 2020 15:30:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH 5/8] builtin/clone: compute checkout metadata for clones
+References: <20200310182046.748959-1-sandals@crustytoothpaste.net>
+        <20200310182046.748959-6-sandals@crustytoothpaste.net>
+        <20200315103929.GH3122@szeder.dev>
+Date:   Sun, 15 Mar 2020 12:30:47 -0700
+In-Reply-To: <20200315103929.GH3122@szeder.dev> ("SZEDER =?utf-8?Q?G=C3=A1?=
+ =?utf-8?Q?bor=22's?= message of
+        "Sun, 15 Mar 2020 11:39:29 +0100")
+Message-ID: <xmqqo8sxa00o.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <86ftec2ui8.fsf@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
+X-Pobox-Relay-ID: 79D58FEE-66F3-11EA-AE1A-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jakub,
-some comments on potential misreading by being over-pedantic...
+SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
 
-added Abhishek for GSoC comments
-
-On 13/03/2020 14:34, Jakub Narebski wrote:
-> Hello Philip,
+> On Tue, Mar 10, 2020 at 06:20:43PM +0000, brian m. carlson wrote:
+>> diff --git a/builtin/clone.c b/builtin/clone.c
+>> index 1ad26f4d8c..00e5427ef1 100644
+>> --- a/builtin/clone.c
+>> +++ b/builtin/clone.c
+>> @@ -780,11 +780,12 @@ static int checkout(int submodule_progress)
+>>  	if (!strcmp(head, "HEAD")) {
+>>  		if (advice_detached_head)
+>>  			detach_advice(oid_to_hex(&oid));
+>> +		free(head);
+>> +		head =3D NULL;
 >
-> Philip Oakley <philipoakley@iee.email> writes:
->> On 10/03/2020 14:50, Jakub Narebski wrote:
-> [...]
->>> ### Graph labelling for speeding up git commands
->>>
->>>  - Language: C
->>>  - Difficulty: hard / difficult
->>>  - Possible mentors: Jakub Narębski
->>>
->>> Git uses various clever methods for making operations on very large
->>> repositories faster, from bitmap indices for git-fetch[1], to generation
->>> numbers (also known as topological levels) in the commit-graph file for
->>> commit graph traversal operations like `git log --graph`[2].
->>>
->>> One possible improvement that can make Git even faster is using min-post
->>> intervals labelling.  The basis of this labelling is post-visit order of
->>> a depth-first search traversal tree of a commit graph, let's call it
->>> 'post(v)'.
-So post(v) is the (increasing) number for the visited commits, starting
-with 1 at the initial branch tip (not root!), as the graph is traversed,
-depth first, with backtracking to the most recent commit that still has
-unvisited parents when either the root commit, or an already visited
-commit is found. (phew, that took a lot of words;-)
+> Coccinelle suggests to use FREE_AND_NULL(head) instead.
 
-e.g. (with 'a' as a branch tip)
-
-a - b - c - d - e - f - g
-         \m/     \w - x/         (m spans c-d;  w-x spans e-g)
-
-potential orderings, based on alternate parental choices.
-abcdefgwxm
-abcdewxgfm
-abcmdefgwx
-abcmdewxgf
-
-All 4 orderings are equally valid implementations.(?)
->> This, the post(v) number, may need a bit more explanation for those not
->> familiar with graph theory terminology, so that they can get up to speed
->> easily about the method, and it's (hopeful) simplicity.
-> All right, I see that it might be not clear for someone who is not
-> familiar with graph theory terminology.  The post(v) order is the order
-> you encounter commits, assuming that you mark commit 'v' as visited
-> after all its parents have been visited.
-
-The 'all' can be misunderstood as meaning 'skip' a commit if it has
-multiple parents, until the last visit. I don't think that's what is
-meant. (or is it?)
-
->
-> The positive-cut labeling works also for pre(v) order, where we number
-> commits from top, starting from heads, marking commit 'v' as visited
-> before any of its parents (you just need to switch from min-post to
-> pre-max interval).
-I'm not sure I understood that. Is this the same as my comment above.
-
->
->>  It isn't clear to me if it is a count along a single string-of-pearls
->> between two branch - merge points, or depth from origin, or whether it
->> can span large chunks of the DAG? Ref 3. has the same problem of
->> starting from an assumed level of knowledge and understanding that may
->> put of non-academics (I'm thinking that the proposed method is this
->> PReaCH [3]).
-> The basic method is something simpler, common to all those methods.
-> It is described as
-> - method from "3.3 Pruning Based on DFS Numbering" in PReaCH[3] paper
->   (only one of full intervals from Figure 3 there), with modifications
-> - method from "Interval Indexing" paragraph in "I. Introduction"
->   in FERRARI[4] paper, but using only a single interval (strict or
->   approximate)
-> - Fig. 4 Min-Post Labeling, in "GRAIL: A Scalable Index for Reachability
->   Queries in Very Large Graphs" (2012) paper
-> - "3.4.1 Positive-Cut Filter" subsubsection in "3.4 Optimizations"
->   in FELINE paper i.e. "Reachability Queries in Very Large Graphs:
->   A Fast Refined Online Search Approach" (2014)
->
->> It's my understanding that 'v' is usually 1...n in the literature, but
->> in reality it just means 'unique label' (and ultimately able to be
->> indexed in a data table). In Git we use the object id as the unique
->> label, so the 1..n is just an abstraction/convenience. The other problem
->> that can happen is if the terminologies of Git doesn't quite match those
->> of the descriptions, such as which end is 'root', or being 'mutually
->> reachable' in a directed acyclic graph.
-> Yes, when reading various graph papers, I need to translate 'root',
-> 'leaf', 'child' from graph-theory terminology to git terminology.
->
-> But 'v' being a node (a commit in a commit graph of revisions) is not
-> one of them.
-I'd agree that 'node' is ok, it's just the available values for 'v' that
-can be presumptuous.
-(i.e. the academics already labelling v->1..n, that often just happens
-to be the order they end up with:: `Given <type of graph> with nodes
-1..n, then <some assertions based on n>` The PReaCH paper does that.)
-
-Plus our DAGs are, in a sense, backward (only children know who their
-parents are!), so all the counting levels feel wrong (we count edges
-from the wrong end)
->
->> The Wikipedia article on contraction hierarchies [6] did give some
->> useful clues for more lay readers.
-> Ooops.  Actually in my opinion Reachability Contraction Hierarchies
-> (RCH) reachability index from PReaCH[3] paper would not work for Git, as
-> it assumes bidirectional BFS search.
->
-> I have cited PReaCH[3] paper for its Pruning Based on DFS Numbering
-> ideas.
->
->>> If for each commit 'v' we would compute and store in the commit-graph
->>> file two numbers: 'post(v)' and the minimum of 'post(u)' for all commits
->>> reachable from 'v', let's call the latter 'min_graph(v)', then the
->>> following condition is true:
->>>
->>>   if 'v' can reach 'u', then min_graph(v) <= post(u) <= post(v)
->>>
->>> If for each commit 'v' we would compute and store in the commit-graph
->>> file two numbers: 'post(v)' and the minimum of 'post(u)' for commits
->>> that were visited during the part of depth-first search that started
->>> from 'v' (which is the minimum of post-order number for subtree of a
->>> spanning tree that starts at 'v').  Let's call the later 'min_tree(v)'.
->>> Then the following condition is true:
->>>
->>>   if min_tree(v) <= post(u) <= post(v), then 'v' can reach 'u'
->>>
->>> The task would be to implement computing such labelling (or a more
->>> involved variant of it[3][4]), storing it in commit-graph file, and
->>> using it for speeding up git commands (starting from a single chosen
->>> command) such as:
->>>
->>>  - git merge-base --is-ancestor A B
->>>  - git branch --contains A
->>>  - git tag --contains A
->>>  - git branch --merged A
->>>  - git tag --merged A
->>>  - git merge-base --all A B
->>>  - git log --topo-sort
->>>
->>> References:
->>>
->>> 1. <http://githubengineering.com/counting-objects/>
->>> 2. <https://devblogs.microsoft.com/devops/supercharging-the-git-commit-graph-iii-generations/>
->>> 3. <https://arxiv.org/abs/1404.4465>
->>> 4. <https://github.com/steps/Ferrari>
->>>
->>> See also discussion in:
->>>
->>> <https://public-inbox.org/git/86tvl0zhos.fsf@gmail.com/t/>  [5]
->> [6] https://en.wikipedia.org/wiki/Contraction_hierarchies
->>
->> [I've been off-list for 2+ ,months, so still catching up]
-> Best,
-Thanks for the feedback
-Philip
+Thanks; squashed to update 'pu'.
