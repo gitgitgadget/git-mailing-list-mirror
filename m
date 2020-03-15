@@ -2,187 +2,98 @@ Return-Path: <SRS0=FHek=5A=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 33EFAC10DCE
-	for <git@archiver.kernel.org>; Sun, 15 Mar 2020 23:34:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CB5AC10DCE
+	for <git@archiver.kernel.org>; Sun, 15 Mar 2020 23:59:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id E4CFC205ED
-	for <git@archiver.kernel.org>; Sun, 15 Mar 2020 23:34:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0E28A2051A
+	for <git@archiver.kernel.org>; Sun, 15 Mar 2020 23:59:55 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="T7eVMQBt"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZYyFaCgn"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728869AbgCOXen (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 15 Mar 2020 19:34:43 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62125 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728789AbgCOXen (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 15 Mar 2020 19:34:43 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id CAE4150CDA;
-        Sun, 15 Mar 2020 19:34:35 -0400 (EDT)
+        id S1729078AbgCOX7x (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 15 Mar 2020 19:59:53 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:61362 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729023AbgCOX7w (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 15 Mar 2020 19:59:52 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5FA62C71AE;
+        Sun, 15 Mar 2020 19:59:52 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=AKWR7VN3yeVi5k2puufmmFnrlJU=; b=T7eVMQ
-        Bt2oKQjeI5iQiSz4gbLjeE9IonOlOrQ9GeFmqexHDh7pKmkbQh0X3Oia67HvmGKO
-        Kv2d2eOdOw+YtwPrruGFAHo5XzUPETX82bH1f9s8p5RNMf7Nv8I259sSEMN1IEmB
-        BXU8+EO95DNuH4/GqlbukyAlQBU4yvrx5fU7s=
+        :content-type; s=sasl; bh=4vS6HGYNn8kWjoF0rDT4IrLpe8k=; b=ZYyFaC
+        gn+ZT3qkDhPkR2OObyBXEPxZJc2dp5/qSALrq01xZN6kXLFvwA6736Aemh8iXnm8
+        UTQZcbw/+ZNGHcOvZvD/qNuIxvw2mrAxuT7jt5xiF2/GNACfUtfeKmTapqzoOzAL
+        V7U4dbD92Od6BmfI0XWV6HDwyJDpBXbYRfGIQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=QPVBnuYcyDZUOL2diylNhdW66RVvyVAU
-        s9PIbR7oo1T5V49s4TzOACvv50o7SpUb1NHzpobJUrzxHIrtnMrKYSuhh60HByBl
-        h6nN9PT6KOIHm3rt0GQmLCOxaRwKXexUAKqCkNodJL+WkuDv/JTYSkyKh4u0MzaT
-        CQYrJLni7cs=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C398B50CD9;
-        Sun, 15 Mar 2020 19:34:35 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=TDoRUVdWmFn5z+LvFLAYSMbOjgnl1JP9
+        7RQl3PddgoXMboVyZ1unMbBCm3KsMNr+RBR3zz/Xfp5FVC/D38oetAse5isb13cm
+        JJRTcKdFn9BVu2/xSkwfeQgVieDvYIdd7k5XkKQdUlLrqzTjx9F3d2wgS0Zo2FsY
+        kugbMBID+xU=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 56DEBC71AD;
+        Sun, 15 Mar 2020 19:59:52 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4D69250CD8;
-        Sun, 15 Mar 2020 19:34:35 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A3161C71AC;
+        Sun, 15 Mar 2020 19:59:49 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     <git@vger.kernel.org>, Emily Shaffer <emilyshaffer@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/1] docs: add a FAQ
-References: <20200315223923.170371-1-sandals@crustytoothpaste.net>
-        <20200315223923.170371-2-sandals@crustytoothpaste.net>
-Date:   Sun, 15 Mar 2020 16:34:34 -0700
-In-Reply-To: <20200315223923.170371-2-sandals@crustytoothpaste.net> (brian
-        m. carlson's message of "Sun, 15 Mar 2020 22:39:23 +0000")
-Message-ID: <xmqqa74h9oqd.fsf@gitster.c.googlers.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [RFC] Universal progress option (was Re: [PATCH] clone: use --quiet when stderr is not a terminal)
+References: <pull.581.git.1584133742475.gitgitgadget@gmail.com>
+        <xmqqh7yqc16w.fsf@gitster.c.googlers.com>
+        <a044478f-ca04-3475-90de-0332e80f552d@gmail.com>
+        <310a176a-1b30-a479-638e-33a51fb2c896@gmail.com>
+        <xmqqk13l9zmf.fsf@gitster.c.googlers.com>
+Date:   Sun, 15 Mar 2020 16:59:48 -0700
+In-Reply-To: <xmqqk13l9zmf.fsf@gitster.c.googlers.com> (Junio C. Hamano's
+        message of "Sun, 15 Mar 2020 12:39:20 -0700")
+Message-ID: <xmqq5zf59nkb.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 877D2E5A-6715-11EA-9D85-C28CBED8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 0E1CF000-6719-11EA-B4D9-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Note that the long lines for certain questions are required, since
-> Asciidoctor does not permit broken lines there.
+> If the parser that kicks in before the commands do their own parsing
+> needs to know that much to correctly understand "--progress" anyway,
+> wouldn't the same amount of effort would allow us to teach these
+> individual commands to understand "--progress" and pass it correctly
+> down to the underlying helpers?
+>
+> So, "git clone --no-progress" that lets checkout progress may be a
+> bug worth fixing, but I do not think a global switch is a good way
+> forward.
 
-I didn't see "long lines", but was puzzled by a few lines with
-ununiform indentation.
+You can sort-of work it around by introducing "--[no-]progress" that
+is taken as an option to the "git" command, just like "--[no-]pager"
+is, to work around the issue above.  But I have a feeling that you
+did not like the resulting UI, which is totally backward incompatible
+and break users' existing scripts and habits.
 
-> +Configuration
-> +-------------
-> +
-> +[[user-name]]
-> +What should I put in `user.name`?::
-> +  You should put your personal name; that is, the name that other humans call
-> +	you.  This will be the name portion that is stored in every commit you make.
+The resulting UI built around "git --[no-]progress subcmd" may feel
+much nicer, and I suspect that it would be something we would have
+picked, if we had today's experience back when we started adding
+progress display to individual subcommands.
 
-Shouldn't the first line "You should put ..." be indented to the
-same level as the second line, like the entry for http-postbuffer we
-see below?
-
-> ++
-> +This configuration doesn't have any effect on authenticating to remote
-> +services; for that, see `credential.username` in linkgit:git-config[1].
-> +
-> +[[http-postbuffer]]
-> +What does `http.postBuffer` really do?::
-> +	This option changes the size of the buffer that Git uses when pushing data to
-> +	a remote over HTTP or HTTPS.  If the data is larger than this size, libcurl,
-> ...
-
-> +[[http-credentials-environment]]
-> +How do I read a password or token from an environment variable?::
-> +  The `credential.helper` configuration option can also take an arbitrary shell
-
-Likewise.
-
-> +[[multiple-accounts-http]]
-> +How do I use multiple accounts with the same hosting provider using HTTP?::
-> +  Usually the easiest way to distinguish between these accounts is to use the
-
-Likewise.
-
-> +Most hosting providers use a single SSH account for pushing; that is, all users
-> +push to the `git` account (e.g., `git@git.example.org`).  If that's the case for
-> +your provider, you can set up multiple aliases in SSH to make it clear which key
-> +pair to use.  For example, you could write something like the following,
-> +substituting the proper private key file:
-> ++
-> +----
-> +# This is the account for author on git.example.org.
-> +Host example_author
-> +   HostName git.example.org
-> +	 User git
-
-Here, shouldn't HostName entry be indented the same way as User and
-other entries for this "Host" entry?
-
-> +	 # This is the key pair registered for author with git.example.org.
-> +	 IdentityFile ~/.ssh/id_author
-> +	 IdentitiesOnly yes
-> +# This is the committer for author on git.example.org.
-> +Host example_committer
-> +   HostName git.example.org
-
-Likewise.
-
-> +Common Issues
-> +-------------
-> +
-> +[[last-commit-amend]]
-> +I've made a mistake in the last commit.  How do I change it?::
-> +	You can make the appropriate change to your working tree, run `git add <file>`
-> +	to stage it, and then `git commit --amend`.  Your change will be included in
-> +	the commit, and you'll be prompted to edit the commit message again; if you
-> +	don't want to edit it, you can use the `--no-edit` option to `git commit` in
-> +	addition, or just save and quit when your editor opens.
-
-When the undesired part of the last change was "I added a junk
-file", then instead of `git add`, `git rm [--cached]` would become
-necessary.
-
-I personally would prefer to say "if you want to use the original
-commit message verbatim" instead of "you do not want to edit", but
-it may be just me.  I just find the document to give more positive
-attitude if it avoids phrasing end-users' wishes in terms of what
-they do not want to do.
-
-> +[[undo-previous-change]]
-> +I've made a change with a bug and it's been included in the main branch.  How should I undo it?::
-> +	The usual way to deal with this is to use `git revert`.  This preserves the
-> +	history that the original change was made and was a valuable contribution, but
-> +	also introduces a new commit that undoes those changes because the original
-> +	had a problem.  The commit message of the revert indicates the commit which
-> +	was reverted and can be edited to include an explanation as to why the revert
-> +	was made.
-
-Can we phrase "and can be edited" in a bit more opinionated way?
-The users are encouraged to describe why and that is why we open an
-editor by default for them to do so.
-
-> +[[ignore-tracked-files]]
-> +How do I ignore changes to a tracked file?::
-> +  Git doesn't provide a way to do this.  The reason is that if Git needs to
-> +	overwrite this file, such as during a checkout, it doesn't know whether the
-
-Indentation.
-
-> +----
-> +# By default, guess.
-> +*			text=auto
-> +# Mark all C files as text.
-> +*.c		text
-> +# Mark all JPEG files as binary.
-> +*.jpg	binary
-> +----
-
-The first entry text=auto is indented more deeply than others.  Intended?
-
-Thanks.
+As long as a clear transition path can be drawn, I do not
+necessarily object to such a direction that (1) introduces the
+global level "git --[no-]progress $subcmd" option, and (2)
+deprecates and eventually removes the "--progress" option at the
+subcommand level.
