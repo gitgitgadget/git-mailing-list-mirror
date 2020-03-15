@@ -2,251 +2,90 @@ Return-Path: <SRS0=FHek=5A=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B3433C10DCE
-	for <git@archiver.kernel.org>; Sun, 15 Mar 2020 21:14:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FC2CC10DCE
+	for <git@archiver.kernel.org>; Sun, 15 Mar 2020 22:45:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 690A920663
-	for <git@archiver.kernel.org>; Sun, 15 Mar 2020 21:14:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5F967205ED
+	for <git@archiver.kernel.org>; Sun, 15 Mar 2020 22:45:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qm/rIUdZ"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="B9uvg/EF"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729175AbgCOVOr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 15 Mar 2020 17:14:47 -0400
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:43132 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729166AbgCOVOr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 15 Mar 2020 17:14:47 -0400
-Received: by mail-lj1-f196.google.com with SMTP id r7so16365203ljp.10
-        for <git@vger.kernel.org>; Sun, 15 Mar 2020 14:14:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=xuSVi26sJiNTwDu/nfQSEUpF/iqN10rLo9rLaFGWRGM=;
-        b=Qm/rIUdZKOXrpZH4IIHnak8cXBVh9UweqGZ3yiE8zmZ/CjIyTRCrvechYWHySLVI6L
-         IngfgmxFyhA10ScXj2+PrOmHjw0xWrfmtGR7SLsj2Xo3HgrUamAIrAC2oEeRQQpFiz5B
-         MdIMEVwT4nXfd/5wXO+irme4dqpEUlqybZhbs1mnjbBUYkx0S+2Uszih7hAGvSesWl99
-         eQkXGAW2KA/TqxK3lkpSQiRpYregPg9y9R1pgToMQCuI69DurVG0wSroCb3DFUEdQJaP
-         zzsIry86k6FsZuNHzamGtPjN4fYLx+5Mk/0n+2rKcrgrqBzLRTX19BFd2xs7x/1XHHQy
-         g1wQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version:content-transfer-encoding;
-        bh=xuSVi26sJiNTwDu/nfQSEUpF/iqN10rLo9rLaFGWRGM=;
-        b=RYl/qtS+cLvygPgkedmhcBD75pz+MibmnILtCsHRY+4ujgswj0GtkS+8dGP2ug+E9J
-         yFiZiFuKARsMUnCwT2wDRUnLIgQv97yznxj1I/8bz8zVk4cXuy8CWWg3Mn6n/arXrp6b
-         /TtN7ZDLDjzY7SVmoYOYKV6jD6s/eVo2t5QmrDCIp8KrH1bFrkuowc7ELHAKI/TYXr3x
-         c5aoWXt6Q0ze7fqwa66Zhrjn1BfA9x+uLeIAiMeMFGn8e/evuvwp3cFaH0RkOO8i+aNj
-         +V3B8GpwjUC8tAA0CMP2N2U6Cam/P5nEnQKfXURSSZnT15WXF6zJSovU3OZUOt2iSf8X
-         Q7jw==
-X-Gm-Message-State: ANhLgQ2lIyHFLnvcNbsfO/JJvrtobWDjohnLPLbKlldvlox64iTDvzKR
-        q5ec69ZLZnnFDz7P0IG7Q5O5e2kXYCD6iA==
-X-Google-Smtp-Source: ADFU+vszuLlVMqhZvJTFXuDV6n4PszD0hYM55+1uz+eJ1AhtQDKtJeOe+XvkIazA4EHpjah6ALriIQ==
-X-Received: by 2002:a2e:b16c:: with SMTP id a12mr7263161ljm.83.1584306883987;
-        Sun, 15 Mar 2020 14:14:43 -0700 (PDT)
-Received: from Laptop-Acer-Aspire-F15 (host-89-229-7-83.dynamic.mm.pl. [89.229.7.83])
-        by smtp.gmail.com with ESMTPSA id o25sm6216493lfi.2.2020.03.15.14.14.42
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 15 Mar 2020 14:14:43 -0700 (PDT)
-From:   Jakub Narebski <jnareb@gmail.com>
-To:     Philip Oakley <philipoakley@iee.email>
-Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Heba Waly <heba.waly@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Abhishek Kumar <abhishekkumar8222@gmail.com>
-Subject: Re: [RFC] Possible idea for GSoC 2020
-References: <86mu8o8dsf.fsf@gmail.com>
-        <66dc369f-cd83-e39c-1310-32a9c003d114@iee.email>
-        <86ftec2ui8.fsf@gmail.com>
-        <076acb45-5360-6ee4-7c65-907488300ef3@iee.email>
-Date:   Sun, 15 Mar 2020 22:14:40 +0100
-In-Reply-To: <076acb45-5360-6ee4-7c65-907488300ef3@iee.email> (Philip Oakley's
-        message of "Sun, 15 Mar 2020 18:57:34 +0000")
-Message-ID: <86k13l722n.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
+        id S1729295AbgCOWpE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 15 Mar 2020 18:45:04 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:54722 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1729288AbgCOWpE (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 15 Mar 2020 18:45:04 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 15B2060478;
+        Sun, 15 Mar 2020 22:45:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1584312303;
+        bh=Zcxt7K7vsY0RghHl/ljSrW+pwfgaxQ9R27djYvGSpvs=;
+        h=From:To:Cc:Subject:Date:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=B9uvg/EFEJH5/W0EnVV77PmoPD2pe8kRa3P+AuQPogWqtKd8iTGZCZ8vNdRmMmFQ9
+         bhnoiwVi4QvMGdu/ykBXlo6KHqcMewpGR7RMkOxY2A1YJwp8ek8EQiFEWuAqDYL9nO
+         fPqbeNSBMA64ykqTmsuRL4YN877goyFXtP1MFwT0AcVeHmlGIE5n1QJB5YuekX3KA0
+         9E3Iy5Luw6wg0lmsUaZOJdteUpo1wj4f4/s7cm+cwDJYxqmUjp94xOCK8BK1AGPzjd
+         ZSkrwhrEIiOYv/2WVsJoUF1MmcP2MWG59VzM3MCOrnRUQC8cEzapQTwyQm8N560ZIK
+         +Ii6eAv24c1CbsVcFXqTKIsoJ+UmoOnb1FtG/y8KZLgY5YvF24BKN4kmrzGPFaENri
+         CnMnYSYC7ZimGlJiqV6j5csCBtKfsVyjImbhO0mQnimyVN2BTV+R42MGUuaHnGdCvG
+         3WyqSUnTa/sSkaeQT9C07tPTut5qAnLNGw5bTOp6XbeEIql1bLA
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     <git@vger.kernel.org>
+Cc:     Emily Shaffer <emilyshaffer@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH 0/1] FAQ for common user questions
+Date:   Sun, 15 Mar 2020 22:39:22 +0000
+Message-Id: <20200315223923.170371-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.25.1.481.gfbce0eb801
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello, Philip
+Git is an enormously flexible and power piece of software, but many
+people find it confusing and hard to use.  Over the time I've been
+contributing, I've noticed a lot of the same questions keep coming up
+over and over.  Some of these questions are well answered by existing
+documentation, but people have trouble finding it.  Others are not
+answered, and still others are questions about integrating with common
+tools and hosting platforms.
 
-Thank you for your continued interest in this topic.
+To help people find and discover this documentation, let's provide a FAQ
+that covers common issues.  A lot of these issues are things I've seen
+asked on Stack Overflow or elsewhere and we'd be doing everyone a
+service if we included some stock answers in one place in our
+documentation.
 
-Philip Oakley <philipoakley@iee.email> writes:
-> On 13/03/2020 14:34, Jakub Narebski wrote:
->> Philip Oakley <philipoakley@iee.email> writes:
->>> On 10/03/2020 14:50, Jakub Narebski wrote:
->> [...]
->>>> ### Graph labelling for speeding up git commands
->>>>
->>>>  - Language: C
->>>>  - Difficulty: hard / difficult
->>>>  - Possible mentors: Jakub Nar=C4=99bski
->>>>
->>>> Git uses various clever methods for making operations on very large
->>>> repositories faster, from bitmap indices for git-fetch[1], to generati=
-on
->>>> numbers (also known as topological levels) in the commit-graph file for
->>>> commit graph traversal operations like `git log --graph`[2].
->>>>
->>>> One possible improvement that can make Git even faster is using min-po=
-st
->>>> intervals labelling.  The basis of this labelling is post-visit order =
-of
->>>> a depth-first search traversal tree of a commit graph, let's call it
->>>> 'post(v)'.
->
-> So post(v) is the (increasing) number for the visited commits, starting
-> with 1 at the initial branch tip (not root!), as the graph is traversed,
-> depth first, with backtracking to the most recent commit that still has
-> unvisited parents when either the root commit, or an already visited
-> commit is found. (phew, that took a lot of words;-)
+The FAQ is designed to be conversational, approachable, and geared
+towards a competent novice user.  However, it also addresses questions
+that I've seen from technically advanced colleagues.  I've tried to make
+it address common questions about integrations with other tools, such as
+CI systems and hosting platforms, without mentioning any specific tool
+by name.  This keeps us neutral on particular tools, but recognizes that
+these tools are a common part of people's development experiences.
 
-No, if we start at branch tip (source node), and number in the order of
-visiting during DFS traversal, with node numbered _before_ its out
-neighbours (parents in Git terms), that would be pre(v) numbering.
+I definitely think we'll add more questions as we go along, but this
+seems like a reasonable start for now.  I'd love feedback about the
+phrasing of questions or answers, anything I've missed, and anything
+that might be technically inaccurate, especially about Windows.
 
-For post(v) you number nodes (commits) in the order of backtracking,
-that is with 1 at some parentless root commit, not 1 at some branch
-tip.  This can be done e.g. during computing of generation numbers.
+brian m. carlson (1):
+  docs: add a FAQ
 
-An example of such post(v) labeling can be found on slides 57-58/64 and
-59/64 in v1.1 version of my slides:
-  https://drive.google.com/open?id=3D1psMBVfcRHcZeJ7AewGpdoymrEfFVdXoK
+ Documentation/Makefile   |   1 +
+ Documentation/gitfaq.txt | 330 +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 331 insertions(+)
+ create mode 100644 Documentation/gitfaq.txt
 
-> e.g. (with 'a' as a branch tip)
->
-> a - b - c - d - e - f - g
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 \m/=C2=A0=C2=A0=C2=A0=C2=
-=A0 \w - x/=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (m spans c-d;=
-=C2=A0 w-x spans e-g)
-
-We usually order commits left-to-right, or bottom-to-top, with most
-recent commits and branch tips respectively on the far right, or on the
-top.  This is the reverse notation.
-
-> potential orderings, based on alternate parental choices.
->
-> abcdefgwxm
-> abcdewxgfm
-> abcmdefgwx
-> abcmdewxgf
->
-> All 4 orderings are equally valid implementations.(?)
-
-Yes, this is true.  There are various heuristics to select the best
-ordering, but as most of those require additional work to be done
-upfront (e.g. computing in-degrees, or topological sort, or generation
-numbers i.e. topological levels), we can start with simple rule: walk
-the graph in parents order.
-
->>> This, the post(v) number, may need a bit more explanation for those not
->>> familiar with graph theory terminology, so that they can get up to speed
->>> easily about the method, and it's (hopeful) simplicity.
->>>
->> All right, I see that it might be not clear for someone who is not
->> familiar with graph theory terminology.  The post(v) order is the order
->> you encounter commits, assuming that you mark commit 'v' as visited
->> after all its parents have been visited.
->
-> The 'all' can be misunderstood as meaning 'skip' a commit if it has
-> multiple parents, until the last visit. I don't think that's what is
-> meant. (or is it?)
-
-During the depth-first search (DFS) traversal of the commit graph we
-walk all reachable commits.  What I meant here is that the node (commit)
-gets it post(v) number only after all of its parents have been visited,
-and we backtracked to this commit.
-
-Again, I will refer to the frame 59/64 in v1.1 version of my slides:
-  https://drive.google.com/open?id=3D1psMBVfcRHcZeJ7AewGpdoymrEfFVdXoK
-
->>
->> The positive-cut labeling works also for pre(v) order, where we number
->> commits from top, starting from heads, marking commit 'v' as visited
->> before any of its parents (you just need to switch from min-post to
->> pre-max interval).
->>
-> I'm not sure I understood that. Is this the same as my comment above.
-
-What I wanted to say here, is that if you label commits with pre(v)
-number, that is number them in the order of visiting, commit before its
-parents, then we can use pre-max interval instead.  The interval would
-be [pre(v), max_{p \in parents(v)} pre(p)], and the positive-cut filter
-would work the same: if one interval is contained in the other, then
-there is path from one commit to the other.
-
->>> =C2=A0It isn't clear to me if it is a count along a single string-of-pe=
-arls
->>> between two branch - merge points, or depth from origin, or whether it
->>> can span large chunks of the DAG? Ref 3. has the same problem of
->>> starting from an assumed level of knowledge and understanding that may
->>> put of non-academics (I'm thinking that the proposed method is this
->>> PReaCH [3]).
->>
->> The basic method is something simpler, common to all those methods.
->> It is described as
->> - method from "3.3 Pruning Based on DFS Numbering" in PReaCH[3] paper
->>   (only one of full intervals from Figure 3 there), with modifications
->> - method from "Interval Indexing" paragraph in "I. Introduction"
->>   in FERRARI[4] paper, but using only a single interval (strict or
->>   approximate)
->> - Fig. 4 Min-Post Labeling, in "GRAIL: A Scalable Index for Reachability
->>   Queries in Very Large Graphs" (2012) paper
->> - "3.4.1 Positive-Cut Filter" subsubsection in "3.4 Optimizations"
->>   in FELINE paper i.e. "Reachability Queries in Very Large Graphs:
->>   A Fast Refined Online Search Approach" (2014)
->>
->>> It's my understanding that 'v' is usually 1...n in the literature, but
->>> in reality it just means 'unique label' (and ultimately able to be
->>> indexed in a data table). In Git we use the object id as the unique
->>> label, so the 1..n is just an abstraction/convenience. The other problem
->>> that can happen is if the terminologies of Git doesn't quite match those
->>> of the descriptions, such as which end is 'root', or being 'mutually
->>> reachable' in a directed acyclic graph.
->>
->> Yes, when reading various graph papers, I need to translate 'root',
->> 'leaf', 'child' from graph-theory terminology to git terminology.
->>
->> But 'v' being a node (a commit in a commit graph of revisions) is not
->> one of them.
->
-> I'd agree that 'node' is ok, it's just the available values for 'v' that
-> can be presumptuous.
-> (i.e. the academics already labelling v->1..n, that often just happens
-> to be the order they end up with:: `Given <type of graph> with nodes
-> 1..n, then <some assertions based on n>` The PReaCH paper does that.)
-
-No, in academics paper usually define graph as a set of vertices V and
-set of edges E.  Numbering vertices (nodes) is something extra.
-
-> Plus our DAGs are, in a sense, backward (only children know who their
-> parents are!), so all the counting levels feel wrong (we count edges
-> from the wrong end)
-
-No, our DAGs are not backward, only our terminology is different.
-On the other hand we cannot assume that we can get reverse graph
-easily (many graph reachability algorithms do assume that).
-
-  graph theory        |  git documentation     |  meaning
-  ------------------------------------------------------------------
-  roots               |  branch tips, heads    |  no incoming edges
-  leaves              |  root commits          |  no outgoing edges
-  children            |  parents               |  [out] neighbours
-
-Best,
---=20
-Jakub Nar=C4=99bski
