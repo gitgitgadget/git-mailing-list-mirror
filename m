@@ -2,167 +2,160 @@ Return-Path: <SRS0=FHek=5A=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C9885C10DCE
-	for <git@archiver.kernel.org>; Sun, 15 Mar 2020 16:24:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 321C9C10DCE
+	for <git@archiver.kernel.org>; Sun, 15 Mar 2020 16:37:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8B1AD20637
-	for <git@archiver.kernel.org>; Sun, 15 Mar 2020 16:24:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C507C205ED
+	for <git@archiver.kernel.org>; Sun, 15 Mar 2020 16:37:22 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B/LaCkdk"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="SjFVwLBH"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728708AbgCOQYZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 15 Mar 2020 12:24:25 -0400
-Received: from mail-qk1-f195.google.com ([209.85.222.195]:41052 "EHLO
-        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728628AbgCOQYZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 15 Mar 2020 12:24:25 -0400
-Received: by mail-qk1-f195.google.com with SMTP id s11so10536824qks.8
-        for <git@vger.kernel.org>; Sun, 15 Mar 2020 09:24:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=6EaLdCKYQ7m/dLZ+Z5rJAHfp7rmBZ4iHV4S/Z+0tRXk=;
-        b=B/LaCkdk5J7zvCcbfZyeH6fuBPv+pYG/zLky9SEsizWwCbqshbPdnaKmigT/cTCEEW
-         nvAGu1/A8Sj1s1W6Ps9yjg+bEH8AwNbKPPOQNzkNYJMr9VWsEeW1EOBAiZlJDGDm4PT8
-         qfnXuvEzrd25fD+tsQyhkcLO/eq3FP2WXCFTX3G8cGrlmd6BIPABySGVWy3BLiOijM2r
-         JkmTGBq26RrmjL92eNlbOFH5lamz4NICpooXDlDP3EHmWwuMM/8UQWE1DPOAaD6BZ+5S
-         HYrkAUcj8DuexlkQ+Ljw3sXTOkbgCOSDl5/11JwASmSm4xsKH15GAHrwCY81WU9NbQbu
-         FrEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=6EaLdCKYQ7m/dLZ+Z5rJAHfp7rmBZ4iHV4S/Z+0tRXk=;
-        b=H6Fqc+TyRYScxnjN+5m/fPMzPxFizGtl2SS5tyUHM41QXo2fkOzzkxgtPpqCP/dfb6
-         HF8IQwOL18MOE2zYJVyDWrWBVimE36PvtTJafKbI+1WL6Kimg1VPxgcXJ8gOyIRvt1qn
-         4O2eB3dMDGVEMa729nxafdKDGD+ecK/Kv0JpLLLw//DQNvNiAEiwOMoNEEc5FUtjNMWD
-         Fk7mNqloiJ0piaY5fdr9Pg77zQR4ALR2jPsddGkJWXCeHE0UbJdyejYCxiTxI0sN3wxq
-         WH+gmOCLWZG+gAl4DoVxN6ZFkWvQiTWcWg7LSlwmQTaoX9LRZMK3F4LJYiNkCq5wC4DC
-         /ang==
-X-Gm-Message-State: ANhLgQ3wY4e9VKWAGELzZImoh/A7QceobbejRiUBBHFr/Wj/JSkVSbk9
-        xQXYyOyflKbtCjaQKxOX8dUceLXhH/Y=
-X-Google-Smtp-Source: ADFU+vshGiVW8zCTdJe2W1QygLzGneCvOlr/nik1CT0MDalLODDSz9G7mHuLD7YqS75n6cZVVCxSAw==
-X-Received: by 2002:a37:a90a:: with SMTP id s10mr10359045qke.90.1584289463794;
-        Sun, 15 Mar 2020 09:24:23 -0700 (PDT)
-Received: from [192.168.1.83] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id j50sm4041071qta.42.2020.03.15.09.24.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 15 Mar 2020 09:24:23 -0700 (PDT)
-Subject: Re: [PATCH 7/7] sparse-checkout: provide a new update subcommand
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Derrick Stolee <dstolee@microsoft.com>,
-        Elijah Newren <newren@gmail.com>
-References: <pull.726.git.git.1584169893.gitgitgadget@gmail.com>
- <650db6863426ae2b324ba717f898247f44279cb8.1584169893.git.gitgitgadget@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <ee9e8bc6-252f-8ac5-e769-26302f3eb1eb@gmail.com>
-Date:   Sun, 15 Mar 2020 12:24:22 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:74.0) Gecko/20100101
- Thunderbird/74.0
+        id S1728935AbgCOQf3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 15 Mar 2020 12:35:29 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64655 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728692AbgCOQf3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 15 Mar 2020 12:35:29 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5D68F40E49;
+        Sun, 15 Mar 2020 12:35:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=vvB39hkM5V0S
+        XNONzjJzuIJWe/k=; b=SjFVwLBHzwUhVm0zkdy04h69nB99Nw+boRMFUGfYKJmP
+        xcZ2KdOhkZm5Bjbo1EEaN5S3Qj6WOT4gCOis6DvwiiTrqsMb4M+g7VJ6B0x0/tdF
+        hkG3PaISoKO4khQHRdAuF+Xj0DqloDqxCS6ScLOakm9L+2XORXY1BcNnQ4esJ2s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=oxpcY5
+        RF43ifNZZmRJSYCQ2kR8zGODgJbmqiyHeHaKM9NL09BzHLlEqjSO4qTa9zE8ncDv
+        6rw3i9//0M8wEX8347TPv6qbzCiNchJqedjM/8a/BD9+8K77OSINr0L4kywr1cKN
+        t6wh8LKoDnE/U1/rRqiKvqwOYcgJxA161PiQI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 515D340E48;
+        Sun, 15 Mar 2020 12:35:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id CE1B940E46;
+        Sun, 15 Mar 2020 12:35:23 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>,
+        git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>
+Subject: Re: Regression in v2.26.0-rc0 and Magit
+References: <3091652.KAqcNXvZJ4@cayenne> <20200312233504.GH120942@google.com>
+        <xmqqk13pdsw1.fsf@gitster.c.googlers.com>
+        <xmqq36accdpt.fsf@gitster.c.googlers.com>
+        <20200315105803.GJ3122@szeder.dev>
+Date:   Sun, 15 Mar 2020 09:35:23 -0700
+In-Reply-To: <20200315105803.GJ3122@szeder.dev> ("SZEDER =?utf-8?Q?G=C3=A1?=
+ =?utf-8?Q?bor=22's?= message of
+        "Sun, 15 Mar 2020 11:58:03 +0100")
+Message-ID: <xmqq4kupbmpg.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <650db6863426ae2b324ba717f898247f44279cb8.1584169893.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+X-Pobox-Relay-ID: F80B2C2A-66DA-11EA-B92E-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/14/2020 3:11 AM, Elijah Newren via GitGitGadget wrote:
-> From: Elijah Newren <newren@gmail.com>
-> 
-> If commands like merge or rebase materialize files as part of their work,
-> or a previous sparse-checkout command failed to update individual files
-> due to dirty changes, users may want a command to simply 'reapply' the
-> sparsity rules.  Provide one.
+SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
 
-I was actually thinking "refresh" would be a better name, but also you
-use "reapply" which is good, too. I'm concerned that "update" may imply
-that the sparse-checkout patterns can change, but you really mean to
-re-do the work from a previous "git sparse-checkout (set|add)".
+>> +test_expect_success 'log and ls-files in a bare repository' '
+>> +	(
+>> +		cd bare &&
+>> +		test_must_fail git log -- .. &&
+>> +		test_must_fail git ls-files -- ..
+>> +	) >out 2>err &&
+>> +	test_i18ngrep "outside repository" err
+>
+> I think it would be better to write this test as:
+>
+>   (
+>         cd bare &&
+>         test_must_fail git log -- .. 2>err &&
+> 	test_i18ngrep "outside repository" err &&
+>         test_must_fail git ls-files -- .. 2>err &&
+> 	test_i18ngrep "outside repository" err
+>   )
+>
+> because this way we make sure that both commands fail with the error
+> we expect.
 
-I also thought of "reset" but that would be a confusing overload.
+True.  Otherwise one may fail expectedly, and the other one may fail
+in an unexpected but still clean way.  Thanks for carefully reading.
 
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->  Documentation/git-sparse-checkout.txt | 10 ++++++++++
->  builtin/sparse-checkout.c             | 10 +++++++++-
->  2 files changed, 19 insertions(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/git-sparse-checkout.txt b/Documentation/git-sparse-checkout.txt
-> index c0342e53938..27f4392489f 100644
-> --- a/Documentation/git-sparse-checkout.txt
-> +++ b/Documentation/git-sparse-checkout.txt
-> @@ -70,6 +70,16 @@ C-style quoted strings.
->  	`core.sparseCheckoutCone` is enabled, the given patterns are interpreted
->  	as directory names as in the 'set' subcommand.
->  
-> +'update'::
-> +	Update the sparseness of paths in the working tree based on the
-> +	existing patterns.  Commands like merge or rebase can materialize
-> +	paths to do their work (e.g. in order to show you a conflict), and
-> +	other sparse-checkout commands might fail to sparsify an individual
-> +	file (e.g. because it has unstaged changes or conflicts).  In such
-> +	cases, it can make sense to run `git sparse-checkout update` later
-> +	after cleaning up affected paths (e.g. resolving conflicts, undoing
-> +	or committing changes, etc.).
-> +
->  'disable'::
->  	Disable the `core.sparseCheckout` config setting, and restore the
->  	working directory to include all files. Leaves the sparse-checkout
-> diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
-> index 5d3ec2e6be9..2ae21011dfd 100644
-> --- a/builtin/sparse-checkout.c
-> +++ b/builtin/sparse-checkout.c
-> @@ -18,7 +18,7 @@
->  static const char *empty_base = "";
->  
->  static char const * const builtin_sparse_checkout_usage[] = {
-> -	N_("git sparse-checkout (init|list|set|add|disable) <options>"),
-> +	N_("git sparse-checkout (init|list|set|add|update|disable) <options>"),
->  	NULL
->  };
->  
-> @@ -552,6 +552,12 @@ static int sparse_checkout_set(int argc, const char **argv, const char *prefix,
->  	return modify_pattern_list(argc, argv, m);
->  }
->  
-> +static int sparse_checkout_update(int argc, const char **argv)
-> +{
-> +	repo_read_index(the_repository);
-> +	return update_working_directory(NULL);
-> +}
-> +
+We could also split it into two separate tests, but I think it would
+be an overkill.  The primary point of using must-fail is to ensure
+that the command does not segfault, so in a sense, checking what is
+in err is somewhat, but not completely, a redundant thing to do.
 
-Short and sweet! I suppose my earlier comment about whether
-repo_read_index() was necessary is answered here. Perhaps it
-should be part of update_working_directory()? (And pass a
-repository pointer to it?)
+About checking redundantly, as we grab the standard output, we can
+also make sure that it contains nothing, because we expect that the
+failure happens way before the command is set up to compute what
+they are asked to produce.
 
->  static int sparse_checkout_disable(int argc, const char **argv)
->  {
->  	struct pattern_list pl;
-> @@ -601,6 +607,8 @@ int cmd_sparse_checkout(int argc, const char **argv, const char *prefix)
->  			return sparse_checkout_set(argc, argv, prefix, REPLACE);
->  		if (!strcmp(argv[0], "add"))
->  			return sparse_checkout_set(argc, argv, prefix, ADD);
-> +		if (!strcmp(argv[0], "update"))
-> +			return sparse_checkout_update(argc, argv);
->  		if (!strcmp(argv[0], "disable"))
->  			return sparse_checkout_disable(argc, argv);
->  	}
+Below, I follow your suggestion to keep the log/ls-files pair in a
+single test, as I think splitting it into two is an overkill, but I
+kept the "truly bare repository" case and the "non-bare repository,
+but we stepped into $GIT_DIR ourselves" case separate, and that is
+deliberate.  We might want to rethink the behaviour in the latter
+case.
 
-Thanks,
--Stolee
-
-
+diff --git a/t/t6136-pathspec-in-bare.sh b/t/t6136-pathspec-in-bare.sh
+new file mode 100755
+index 0000000000..b117251366
+--- /dev/null
++++ b/t/t6136-pathspec-in-bare.sh
+@@ -0,0 +1,38 @@
++#!/bin/sh
++
++test_description=3D'diagnosing out-of-scope pathspec'
++
++. ./test-lib.sh
++
++test_expect_success 'setup a bare and non-bare repository' '
++	test_commit file1 &&
++	git clone --bare . bare
++'
++
++test_expect_success 'log and ls-files in a bare repository' '
++	(
++		cd bare &&
++		test_must_fail git log -- .. >out 2>err &&
++		test_must_be_empty out &&
++		test_i18ngrep "outside repository" err &&
++
++		test_must_fail git ls-files -- .. >out 2>err &&
++		test_must_be_empty out &&
++		test_i18ngrep "outside repository" err
++	)
++'
++
++test_expect_success 'log and ls-files in .git directory' '
++	(
++		cd .git &&
++		test_must_fail git log -- .. >out 2>err &&
++		test_must_be_empty out &&
++		test_i18ngrep "outside repository" err &&
++
++		test_must_fail git ls-files -- .. >out 2>err &&
++		test_must_be_empty out &&
++		test_i18ngrep "outside repository" err
++	)
++'
++
++test_done
