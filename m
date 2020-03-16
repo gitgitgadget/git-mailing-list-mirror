@@ -7,58 +7,58 @@ X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 57128C0044D
-	for <git@archiver.kernel.org>; Mon, 16 Mar 2020 17:02:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 67A02C0044D
+	for <git@archiver.kernel.org>; Mon, 16 Mar 2020 17:05:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 16B5F2051A
-	for <git@archiver.kernel.org>; Mon, 16 Mar 2020 17:02:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 386152051A
+	for <git@archiver.kernel.org>; Mon, 16 Mar 2020 17:05:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fP0X0eR/"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XCCEoa5l"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732169AbgCPRCk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Mar 2020 13:02:40 -0400
-Received: from mail-oi1-f195.google.com ([209.85.167.195]:33091 "EHLO
-        mail-oi1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731703AbgCPRCk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Mar 2020 13:02:40 -0400
-Received: by mail-oi1-f195.google.com with SMTP id r7so18601414oij.0
-        for <git@vger.kernel.org>; Mon, 16 Mar 2020 10:02:38 -0700 (PDT)
+        id S1732082AbgCPRFu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Mar 2020 13:05:50 -0400
+Received: from mail-ot1-f66.google.com ([209.85.210.66]:36616 "EHLO
+        mail-ot1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732008AbgCPRFu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Mar 2020 13:05:50 -0400
+Received: by mail-ot1-f66.google.com with SMTP id 39so3186934otu.3
+        for <git@vger.kernel.org>; Mon, 16 Mar 2020 10:05:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=PipT9+YOEkMWBDg7DFZ6tmbxPuigA397H+9Xf/VAJ2Q=;
-        b=fP0X0eR/2KQr/poSX/vQ1E+2Y8pTH7hrMPjMHFdYoJWIgrJ7dy2PpyGD+I3jMXuoeY
-         Sa2MFG0DXASMk6c+QoYrqhKw19klTPu9pLaXtl7jvvhKM29uDfOmNidaz2x+RtaCP63z
-         MD6lMPV+I0Va4QtOGCug3wHp2wMbGP+l2I2OyCN9SP0hr3eflsE3FdJvEpAjmQvfzmQE
-         11KdXdtV0ui0uGMyjeZX6GrBF/I5e09tS/rnBJ7XH2n0CpxvGwaM7zUpgIPqHPhT6NrB
-         qEmyVyavPncRankcmacF6yO9NO31Oudt4MYqr5xy6WBNPo18eHAWe5ynDQugwDtzHuDj
-         /Bvw==
+        bh=yvyTVHG5Ww6j3bZL5ZGgFpLX2M6L39QWBXm+BdYmtXQ=;
+        b=XCCEoa5lFpIgLZFWoHnxcwtLM136IiEfwjccL1WPM+IpUbQlrrOEv5QT53qMaTEVF/
+         ryKjet3ypzc7E5S/qjJx5OX43kvEejYq8BNwJBkdyPwXOYXMJ8g2zSbmkp2cSKjCDTh2
+         nwPK8jdp1mxcLuf0JyOGL9dd8iX8mhsDAViZnEKOmp/wOwuk+C3vlqjD01ifA43DJ2Ae
+         GQnlrWNUUEocn/XTtzANlpV6VKT3y9B8y1Lnu3ZqXuTCYWPr6UwZ60kK/soCyE6rHVUy
+         gG90AfwiD3WbvdtOvXB+noieNC15fzj/I7HWGfFvN3jLeuQFB/EWTzK8vpW5lW1gjWy2
+         VB5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=PipT9+YOEkMWBDg7DFZ6tmbxPuigA397H+9Xf/VAJ2Q=;
-        b=abmMhodmCS5n7mrOxjuVbtdVI9OSwzSLDqK7YjMM3LMAq1GAed2NGnwUYueiA7o1yU
-         LSXSr8LUCb1Asx5/+dmfdR6gcur0/TPhEb9p33SCq8kGfKWDvM7trPT24C80Av7g2z8v
-         +EJZehpDuoMNTwmzQm+ypIxjMKZG5hhKZ9+wpLJ6XrWeYyNIyg4oeJgSrrFVIO/qAZPr
-         MO8lLLQoKRylAblRfMTZ5ddg0R8udxO+KghyPDGcaVrBs/U0DKm7wcVwbgzOzlfD/biM
-         +k0E4me9XknXsMW3aWilGCsUNTS+tdD06Uqqo+qBSn2Pb325yiGsb+qvpctHu8PCzjyl
-         cpgg==
-X-Gm-Message-State: ANhLgQ1g6FWMiEPd/tXORP0+b/xoGjkvIJxGE9Jtb6OjAeMGb2cbEK/a
-        48GxIzZnWMuqGcW4AERuYBhzW7bQK07D+RF2ODpZ5g==
-X-Google-Smtp-Source: ADFU+vvURymVIpcoVp6VnwrZKvgdX0JGXWqbdQDaHdGzrn2zYkJ6vrhyyxYa1GGkIfj9LsM1zfaPaFcAZfexeKQ9ZI0=
-X-Received: by 2002:aca:d9c1:: with SMTP id q184mr393113oig.6.1584378158147;
- Mon, 16 Mar 2020 10:02:38 -0700 (PDT)
+        bh=yvyTVHG5Ww6j3bZL5ZGgFpLX2M6L39QWBXm+BdYmtXQ=;
+        b=kTHasz2kr66Dpp709Uo15UB0Av9ClyOV68atxioSsNN7L75f/iLOZ3f4bBHXVFKvHq
+         0sfZGv9kHBdoR85rGAancEnaj8YxvhL/BvXAu0c7X6FejyuW2tVOaNXsYh1TYGyIDAM4
+         Xm8PPRCD+RtjVV6VL4nHHraMmjq+6eI23lVc53bqPWyVu6Aqi6yofijgelN1VxJqNEUi
+         GBBPg0VTKoT13n5v5lpKSJPGWKMLZvbNVTJcmcV68dAOK3JBwMLZks3C+T1fCDn0A+Ze
+         fmJOiF92y3dfIrfCl74lLrJvWkJ0kOU8OjNZeT0gHQpLSJ6lvxiRK5dJUzmY0sT+aAiB
+         RgTg==
+X-Gm-Message-State: ANhLgQ2FWRMP+0WAmQp+2tX2inc4s9TmRpo0h2fnRflFSIlZmaQep8M0
+        FMnxmVQf0fcrxcuukPCnPeBrfZu6wxW7e5I1hEc=
+X-Google-Smtp-Source: ADFU+vvUQ2vZmICAWsr9isXYiPzIncK26sM3r2FtY+VmuDauNJ41sJLFbVnGCYcfQsxWV8GhVFhtS4BA94KRxLFOoSk=
+X-Received: by 2002:a05:6830:1ad4:: with SMTP id r20mr221726otc.316.1584378348671;
+ Mon, 16 Mar 2020 10:05:48 -0700 (PDT)
 MIME-Version: 1.0
 References: <pull.726.git.git.1584169893.gitgitgadget@gmail.com>
- <892933752c638a9ed938e046e466dd1e927058a6.1584169893.git.gitgitgadget@gmail.com>
- <1c83fb68-519a-88f2-77b9-ab443ed6b4cf@gmail.com>
-In-Reply-To: <1c83fb68-519a-88f2-77b9-ab443ed6b4cf@gmail.com>
+ <650db6863426ae2b324ba717f898247f44279cb8.1584169893.git.gitgitgadget@gmail.com>
+ <ee9e8bc6-252f-8ac5-e769-26302f3eb1eb@gmail.com>
+In-Reply-To: <ee9e8bc6-252f-8ac5-e769-26302f3eb1eb@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 16 Mar 2020 10:02:26 -0700
-Message-ID: <CABPp-BEPCpN=gW=LC7JBbJNmqhYxEhQJi6ycV21zhmuFAta3gw@mail.gmail.com>
-Subject: Re: [PATCH 6/7] sparse-checkout: use new update_sparsity() function
+Date:   Mon, 16 Mar 2020 10:05:37 -0700
+Message-ID: <CABPp-BE=VdSAfAWR_2KivXbGOYknhJ=4sbRjVPAS+URNgjLFPQ@mail.gmail.com>
+Subject: Re: [PATCH 7/7] sparse-checkout: provide a new update subcommand
 To:     Derrick Stolee <stolee@gmail.com>
 Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
@@ -69,211 +69,96 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Mar 15, 2020 at 9:19 AM Derrick Stolee <stolee@gmail.com> wrote:
+On Sun, Mar 15, 2020 at 9:24 AM Derrick Stolee <stolee@gmail.com> wrote:
 >
 > On 3/14/2020 3:11 AM, Elijah Newren via GitGitGadget wrote:
 > > From: Elijah Newren <newren@gmail.com>
 > >
-> > Remove the equivalent of 'git read-tree -mu HEAD' in the sparse-checkout
-> > codepaths for setting the SKIP_WORKTREE bits and instead use the new
-> > update_sparsity() function.
-> >
+> > If commands like merge or rebase materialize files as part of their work,
+> > or a previous sparse-checkout command failed to update individual files
+> > due to dirty changes, users may want a command to simply 'reapply' the
+> > sparsity rules.  Provide one.
+>
+> I was actually thinking "refresh" would be a better name, but also you
+> use "reapply" which is good, too. I'm concerned that "update" may imply
+> that the sparse-checkout patterns can change, but you really mean to
+> re-do the work from a previous "git sparse-checkout (set|add)".
+>
+> I also thought of "reset" but that would be a confusing overload.
+
+Makes sense; I'll switch it over to "reapply".
+
 > > Signed-off-by: Elijah Newren <newren@gmail.com>
 > > ---
-> >  builtin/sparse-checkout.c          | 39 +++++++-----------------------
-> >  t/t1091-sparse-checkout-builtin.sh | 32 +++++++++++++++++-------
-> >  2 files changed, 32 insertions(+), 39 deletions(-)
+> >  Documentation/git-sparse-checkout.txt | 10 ++++++++++
+> >  builtin/sparse-checkout.c             | 10 +++++++++-
+> >  2 files changed, 19 insertions(+), 1 deletion(-)
 > >
+> > diff --git a/Documentation/git-sparse-checkout.txt b/Documentation/git-sparse-checkout.txt
+> > index c0342e53938..27f4392489f 100644
+> > --- a/Documentation/git-sparse-checkout.txt
+> > +++ b/Documentation/git-sparse-checkout.txt
+> > @@ -70,6 +70,16 @@ C-style quoted strings.
+> >       `core.sparseCheckoutCone` is enabled, the given patterns are interpreted
+> >       as directory names as in the 'set' subcommand.
+> >
+> > +'update'::
+> > +     Update the sparseness of paths in the working tree based on the
+> > +     existing patterns.  Commands like merge or rebase can materialize
+> > +     paths to do their work (e.g. in order to show you a conflict), and
+> > +     other sparse-checkout commands might fail to sparsify an individual
+> > +     file (e.g. because it has unstaged changes or conflicts).  In such
+> > +     cases, it can make sense to run `git sparse-checkout update` later
+> > +     after cleaning up affected paths (e.g. resolving conflicts, undoing
+> > +     or committing changes, etc.).
+> > +
+> >  'disable'::
+> >       Disable the `core.sparseCheckout` config setting, and restore the
+> >       working directory to include all files. Leaves the sparse-checkout
 > > diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
-> > index 740da4b6d54..5d3ec2e6be9 100644
+> > index 5d3ec2e6be9..2ae21011dfd 100644
 > > --- a/builtin/sparse-checkout.c
 > > +++ b/builtin/sparse-checkout.c
-> > @@ -97,47 +97,32 @@ static int update_working_directory(struct pattern_list *pl)
-> >       int result = 0;
-> >       struct unpack_trees_options o;
-> >       struct lock_file lock_file = LOCK_INIT;
-> > -     struct object_id oid;
-> > -     struct tree *tree;
-> > -     struct tree_desc t;
-> >       struct repository *r = the_repository;
+> > @@ -18,7 +18,7 @@
+> >  static const char *empty_base = "";
 > >
-> > -     if (repo_read_index_unmerged(r))
-> > -             die(_("you need to resolve your current index first"));
-> > -
-> > -     if (get_oid("HEAD", &oid))
-> > -             return 0;
-> > -
-> > -     tree = parse_tree_indirect(&oid);
-> > -     parse_tree(tree);
-> > -     init_tree_desc(&t, tree->buffer, tree->size);
-> > -
-> >       memset(&o, 0, sizeof(o));
-> >       o.verbose_update = isatty(2);
-> > -     o.merge = 1;
-> >       o.update = 1;
-> > -     o.fn = oneway_merge;
+> >  static char const * const builtin_sparse_checkout_usage[] = {
+> > -     N_("git sparse-checkout (init|list|set|add|disable) <options>"),
+> > +     N_("git sparse-checkout (init|list|set|add|update|disable) <options>"),
+> >       NULL
+> >  };
+> >
+> > @@ -552,6 +552,12 @@ static int sparse_checkout_set(int argc, const char **argv, const char *prefix,
+> >       return modify_pattern_list(argc, argv, m);
+> >  }
+> >
+> > +static int sparse_checkout_update(int argc, const char **argv)
+> > +{
+> > +     repo_read_index(the_repository);
+> > +     return update_working_directory(NULL);
+> > +}
+> > +
 >
-> I'm glad this is getting much simpler.
->
-> >       o.head_idx = -1;
-> >       o.src_index = r->index;
-> >       o.dst_index = r->index;
-> >       o.skip_sparse_checkout = 0;
-> >       o.pl = pl;
-> > -     o.keep_pattern_list = !!pl;
->
-> I'm making a mental note to see if this is necessary or not. I'm
-> guessing that update_sparsity() expects a pattern list as input and
-> will never free it, so this option is useless.
+> Short and sweet! I suppose my earlier comment about whether
+> repo_read_index() was necessary is answered here. Perhaps it
+> should be part of update_working_directory()? (And pass a
+> repository pointer to it?)
 
-Yes, although your comment made me realize that I've got a memory leak
-if we pass o->pl==NULL to update_sparsity(), which happens whenever we
-pass NULL to update_working_directory().  I should fix that.
+Good question.  Is there a chance we want to make
+update_working_directory() available to other areas of git outside of
+sparse-checkout.c?  If so, potentially re-reading the index might not
+be friendly, but if sparse-checkout.c is going to remain the only
+caller then it probably makes sense to move it inside.
 
-> > -     resolve_undo_clear_index(r->index);
-> >       setup_work_tree();
-> >
-> > -     cache_tree_free(&r->index->cache_tree);
-> > -
-> >       repo_hold_locked_index(r, &lock_file, LOCK_DIE_ON_ERROR);
-> >
-> > -     core_apply_sparse_checkout = 1;
-> > -     result = unpack_trees(1, &t, &o);
-> > +     result = update_sparsity(&o);
-> >
-> > -     if (!result) {
-> > -             prime_cache_tree(r, r->index, tree);
-> > +     if (result == 1)
-> I wonder if it is appropriate to return an enum in update_sparsity()
-> so this statement is clearer out-of-context. For example, I'm looking
-> at this patch before looking closely at the update_sparsity() patch
-> so I know how it will be used before I check its implementation.
-
-Yes, that'd be better.
-
-> > +             /*
-> > +              * We don't do any special handling of warnings from untracked
-> > +              * files in the way or dirty entries that can't be removed.
-> > +              */
-> > +             result = 0;
-> > +     if (!result)
-> >               write_locked_index(r->index, &lock_file, COMMIT_LOCK);
-> > -     } else
-> > +     else
-> >               rollback_lock_file(&lock_file);
-> >
-> >       return result;
-> > @@ -304,8 +289,6 @@ static int sparse_checkout_init(int argc, const char **argv)
-> >       };
-> >
-> >       repo_read_index(the_repository);
-> > -     require_clean_work_tree(the_repository,
-> > -                             N_("initialize sparse-checkout"), NULL, 1, 0);
-> >
-> >       argc = parse_options(argc, argv, NULL,
-> >                            builtin_sparse_checkout_init_options,
-> > @@ -560,8 +543,6 @@ static int sparse_checkout_set(int argc, const char **argv, const char *prefix,
-> >       };
-> >
-> >       repo_read_index(the_repository);
-> > -     require_clean_work_tree(the_repository,
-> > -                             N_("set sparse-checkout patterns"), NULL, 1, 0);
-> >
-> >       argc = parse_options(argc, argv, prefix,
-> >                            builtin_sparse_checkout_set_options,
-> > @@ -577,8 +558,6 @@ static int sparse_checkout_disable(int argc, const char **argv)
-> >       struct strbuf match_all = STRBUF_INIT;
-> >
-> >       repo_read_index(the_repository);
-> > -     require_clean_work_tree(the_repository,
-> > -                             N_("disable sparse-checkout"), NULL, 1, 0);
->
-> In the three hunks above, do we still need repo_read_index()?
->
-> >       memset(&pl, 0, sizeof(pl));
-> >       hashmap_init(&pl.recursive_hashmap, pl_hashmap_cmp, NULL, 0);
-> > diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
-> > index 8607a8e6d1a..0d93d3983e0 100755
-> > --- a/t/t1091-sparse-checkout-builtin.sh
-> > +++ b/t/t1091-sparse-checkout-builtin.sh
-> > @@ -277,16 +277,23 @@ test_expect_success 'cone mode: add parent path' '
-> >       check_files repo a deep folder1
-> >  '
-> >
-> > -test_expect_success 'revert to old sparse-checkout on bad update' '
-> > +test_expect_success 'not-up-to-date does not block rest of sparsification' '
-> >       test_when_finished git -C repo sparse-checkout disable &&
-> >       test_when_finished git -C repo reset --hard &&
-> >       git -C repo sparse-checkout set deep &&
-> > +
-> >       echo update >repo/deep/deeper2/a &&
-> >       cp repo/.git/info/sparse-checkout expect &&
-> > -     test_must_fail git -C repo sparse-checkout set deep/deeper1 2>err &&
-> > -     test_i18ngrep "cannot set sparse-checkout patterns" err &&
-> > -     test_cmp repo/.git/info/sparse-checkout expect &&
-> > -     check_files repo/deep a deeper1 deeper2
-> > +     test_write_lines "!/deep/*/" "/deep/deeper1/" >>expect &&
-> > +
-> > +     git -C repo sparse-checkout set deep/deeper1 2>err &&
-> > +
-> > +     test_i18ngrep "Cannot update sparse checkout" err &&
-> > +     test_cmp expect repo/.git/info/sparse-checkout &&
-> > +     check_files repo/deep a deeper1 deeper2 &&
-> > +     check_files repo/deep/deeper1 a deepest &&
-> > +     check_files repo/deep/deeper1/deepest a &&
-> > +     check_files repo/deep/deeper2 a
-> >  '
-> >
-> >  test_expect_success 'revert to old sparse-checkout on empty update' '
-> > @@ -316,12 +323,19 @@ test_expect_success '.gitignore should not warn about cone mode' '
-> >       test_i18ngrep ! "disabling cone patterns" err
-> >  '
-> >
-> > -test_expect_success 'sparse-checkout (init|set|disable) fails with dirty status' '
-> > +test_expect_success 'sparse-checkout (init|set|disable) warns with dirty status' '
-> >       git clone repo dirty &&
-> >       echo dirty >dirty/folder1/a &&
-> > -     test_must_fail git -C dirty sparse-checkout init &&
-> > -     test_must_fail git -C dirty sparse-checkout set /folder2/* /deep/deeper1/* &&
-> > -     test_must_fail git -C dirty sparse-checkout disable &&
-> > +
-> > +     git -C dirty sparse-checkout init 2>err &&
-> > +     test_i18ngrep "warning.*Cannot update sparse checkout" err &&
-> > +
-> > +     git -C dirty sparse-checkout set /folder2/* /deep/deeper1/* &&
-> > +     test_i18ngrep "warning.*Cannot update sparse checkout" err &&
-> > +
-> > +     git -C dirty sparse-checkout disable &&
-> > +     test_i18ngrep "warning.*Cannot update sparse checkout" err &&
-> > +
-> >       git -C dirty reset --hard &&
-> >       git -C dirty sparse-checkout init &&
-> >       git -C dirty sparse-checkout set /folder2/* /deep/deeper1/* &&
->
-> I like that the test changes here are limited to updating existing
-> tests. You mentioned adding more tests, which I would also like, but
-> those can come in a follow-up patch that is dedicated to all the fun
-> situations we can get into, and how we should respond.
->
-> Here are a few that I've tested manually:
->
-> 1. Start: no sparse-checkout
->   a. Get into rebase conflict in a directory.
->   b. "git sparse-checkout init --cone"
->   c. See that the file is on-disk with conflict markers.
->   d. Resolve conflict and "git add"
->   e. "git sparse-checkout set <dir-without-conflict>"
->   f. Sparse-checkout is set as expected, file is not on disk, but still staged.
->   g. "git rebase --continue" succeeds.
->
-> 2. Start: sparse-checkout set to "dir1"
->   a. Get into merge conflict in "dir2"
->   b. Resolve conflict, "git add"
->   c. "git sparse-checkout update" (available after next patch)
->   d. dir1 gone, dir1/file staged.
->   e. git merge --continue succeeds
->
-> Those are the really big ones to me, but I'm sure we will find others.
-> I'm really happy that this is working as we expect.
-
-Thanks for taking a look.
+> >  static int sparse_checkout_disable(int argc, const char **argv)
+> >  {
+> >       struct pattern_list pl;
+> > @@ -601,6 +607,8 @@ int cmd_sparse_checkout(int argc, const char **argv, const char *prefix)
+> >                       return sparse_checkout_set(argc, argv, prefix, REPLACE);
+> >               if (!strcmp(argv[0], "add"))
+> >                       return sparse_checkout_set(argc, argv, prefix, ADD);
+> > +             if (!strcmp(argv[0], "update"))
+> > +                     return sparse_checkout_update(argc, argv);
+> >               if (!strcmp(argv[0], "disable"))
+> >                       return sparse_checkout_disable(argc, argv);
+> >       }
