@@ -7,62 +7,60 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 70445C0044D
-	for <git@archiver.kernel.org>; Mon, 16 Mar 2020 03:48:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CB28C18E5B
+	for <git@archiver.kernel.org>; Mon, 16 Mar 2020 03:48:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 4351920409
-	for <git@archiver.kernel.org>; Mon, 16 Mar 2020 03:48:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 04EA620409
+	for <git@archiver.kernel.org>; Mon, 16 Mar 2020 03:48:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="VeSVoqpZ"
+	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="wpnl64cz"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729522AbgCPDr6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 15 Mar 2020 23:47:58 -0400
-Received: from mail-qt1-f195.google.com ([209.85.160.195]:46655 "EHLO
-        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729387AbgCPDr6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 15 Mar 2020 23:47:58 -0400
-Received: by mail-qt1-f195.google.com with SMTP id t13so12989616qtn.13
-        for <git@vger.kernel.org>; Sun, 15 Mar 2020 20:47:57 -0700 (PDT)
+        id S1729531AbgCPDsF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 15 Mar 2020 23:48:05 -0400
+Received: from mail-qt1-f196.google.com ([209.85.160.196]:41072 "EHLO
+        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729387AbgCPDsE (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 15 Mar 2020 23:48:04 -0400
+Received: by mail-qt1-f196.google.com with SMTP id i26so3269195qtq.8
+        for <git@vger.kernel.org>; Sun, 15 Mar 2020 20:48:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp-br.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=UguOCU7m/Cd9jOpvZD/QE+LtXnPFHqxGwiVU2viIxoY=;
-        b=VeSVoqpZOmDjLxq0aksoYc6hNgbvEJH39dDxUOOm8/Q3yOawStI0J/JrgLGI2XrnqP
-         KFExjqi46mFN3AaaxvPxRdXpiql+8FZMC6QNsCeh4tDvkgmFb1OqisnfAY/ts3/8n/Bm
-         DZEIUOtDVEzg0/6K68PDRMjyujgEWALUoMQ5Csjr1kcGHj78rs13TMzX+mvw9Ni/w2Pi
-         jAXcbVX9RZnS6Loyeuw5hqx0Pk0p7s+HroEX5/01iQnE5omAFA9yn10GrhGdRYF/Ohvo
-         tPkg5FwhQoywFJwYPIGqRS3yGinNdInYhy9KivOaz7z2BxmFf9ZwxjHCaKRBp2M5U2J8
-         1pXw==
+        bh=y2vFCs5R9V9zY3OofOIGwWE+KiVZ9VbNR7yiVb/qlMk=;
+        b=wpnl64czmxY+gPGImh/TUURdg8TUqo9Z5hYdsJYCjcfletns+7JmI/LOsnaf+st8nY
+         V70SehY2MPlL4JlgWnbOD5OG0yKLZe7yy1L5WUVu6xNTliQ3B5Iw2OsqFzR+WIwFHQ7d
+         a4uEX15qT+IujHWpiETImJr0JAub3LtPRtzszLkpo4iaaIIJDrvlTD1R3/ZMD4LCm0n4
+         Zg6g0Ou77YLuf9p57o/vREbuF63ZeolaleF4CXgdhmtPeQDM3BooOTSviXZif+dYwP0i
+         vJ/xLNIwpeNSymOp5Qk42twjKRAGUSzrI/jBBFyK4DEw5f4ULvlRVx5FGNCyb2Ui7Nwf
+         iTLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=UguOCU7m/Cd9jOpvZD/QE+LtXnPFHqxGwiVU2viIxoY=;
-        b=HqDC0NGGliw4nbJ+pG7f5NPOKoa9Y7yMnU9liBEc02mQZ/ShvYixmrp5nqexK/zNnL
-         gj39qf1Icq42jfxsWLhIwtwbR5o0EuDOuZUcDOz8Wgvygsugvrq+qDYap4AgsWYCA1TU
-         yz2wUl/qrOMKiJntbG6jIzh/hCVca0PlcWKt8FWoe6Zy8gifgLQoPk+JdE8JsR83KjCI
-         VTqlrAd4TthCOx6ypfRn1ainoSi0XsikoSZ13sEeLNl5mpLIbdqUmLgfeyGbSVdemY6m
-         keYv23YzFdJQREyphXAirI+BvIMRtOJSAfcglS/53+oRVTVjklS3MOxcaVNe08oubq5s
-         F+DA==
-X-Gm-Message-State: ANhLgQ3cerp5Er9s5a/L6c4s2kadooCFLLFeN0bV7N4G/Pm1r4K4IvIm
-        7LjdVF/vIV16LuGgPhDdayvgRuYXG3E=
-X-Google-Smtp-Source: ADFU+vuy4gFZ2TmFfUvrIbTlq2Ey3KOtBNFi7ovu5wAYy+IjmsDa8GCmfnD6qpFOtgBg3CI1K6SCWw==
-X-Received: by 2002:ac8:111a:: with SMTP id c26mr3461584qtj.249.1584330476711;
-        Sun, 15 Mar 2020 20:47:56 -0700 (PDT)
+        bh=y2vFCs5R9V9zY3OofOIGwWE+KiVZ9VbNR7yiVb/qlMk=;
+        b=MTVzrAvcRGtIlFWIxJkONDlErMVBDLbSVZcnnMdv8fn8/DpHjcoic+19bQMSgGXeai
+         j6oifTeSPHfoKQ1nhpXzcbSDix6ZRBTFZOk3aNYSXzveFZ54wgvcHyGRnDYnzsdRd42J
+         IhQ3c8086qTqaTdYm4795eq4UwTbo7sHQI+cHz6hu2bUxVbRcENbUeOHuD5WQ/jPf1zd
+         noGiqYTtvMSYn78vJGfm5LagfffaJvZ3HSqRbUkxnJNGBPJDXZj4yE8cCDv7SzxMA6uk
+         G2dqL/an3IT8M4IXLO5K3T18LI7KrajQfajpHw9l2emvHDVQL4uwhb10RFmu4Rq3HD9Z
+         rzkg==
+X-Gm-Message-State: ANhLgQ3PsH5DVr4dv0Q5GVhhts58hKewzsOGs0c85+ejRLY4PYZUqCKy
+        dRWSIjtm2mxqRvr/aXfK/QW6YVpZtJg=
+X-Google-Smtp-Source: ADFU+vsSxDKyKaVWwACYXXY3h5lDxXFmNLMLmP8mTVaDpw+QPndb7JjDBtdCjRezJUSph1h7kRiTXw==
+X-Received: by 2002:ac8:6957:: with SMTP id n23mr23543998qtr.79.1584330482834;
+        Sun, 15 Mar 2020 20:48:02 -0700 (PDT)
 Received: from mango.spo.virtua.com.br ([2804:14c:81:942d::1])
-        by smtp.gmail.com with ESMTPSA id r3sm3705930qkd.3.2020.03.15.20.47.54
+        by smtp.gmail.com with ESMTPSA id r3sm3705930qkd.3.2020.03.15.20.48.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 15 Mar 2020 20:47:56 -0700 (PDT)
+        Sun, 15 Mar 2020 20:48:02 -0700 (PDT)
 From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, Brandon Williams <bwilliams.eng@gmail.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, Patryk Obara <patryk.obara@gmail.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH 1/2] dir: fix outdated comment on add_patterns()
-Date:   Mon, 16 Mar 2020 00:47:26 -0300
-Message-Id: <9de4c8cdee441be7d9bbef2a961a8ed7d423f448.1584329834.git.matheus.bernardino@usp.br>
+Cc:     gitster@pobox.com, =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
+        Jeff King <peff@peff.net>
+Subject: [PATCH 2/2] dir: improve naming of oid_stat fields in two structs
+Date:   Mon, 16 Mar 2020 00:47:27 -0300
+Message-Id: <6fee28469e49d501e5184162bc820350f60cc3de.1584329834.git.matheus.bernardino@usp.br>
 X-Mailer: git-send-email 2.25.0
 In-Reply-To: <cover.1584329834.git.matheus.bernardino@usp.br>
 References: <cover.1584329834.git.matheus.bernardino@usp.br>
@@ -73,43 +71,145 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In 4b33e60 ("dir: convert struct sha1_stat to use object_id",
-2018-01-28), the struct sha1_stat was converted to oid_stat. In this
-process, add_patterns() also learned to use the new struct definition.
-However, the comments in this function still refer to "ss" (i.e. the old
-sha1_stat). Update that.
+Both "struct untracked_cache" and "struct dir_struct" contain fields of
+the type "struct oid_stat". The latter used to be called "sha1_stat"
+before 4b33e60 ("dir: convert struct sha1_stat to use object_id",
+2018-01-28). Although this struct was renamed, the previously
+mentioned fields are still named in the format "ss_*", which refers to
+the old "sha1_stat". Since this might be confusing, rename those fields
+as "st_*", referring to "stat", instead.
 
 Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
 ---
- dir.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+
+Note: I choosed to use "st_*", as naming, for simplicity, and to keep
+the code lines small. But should we use a more verbose "oidst_*" format,
+instead, to avoid confusions with "struct stat"?
+
+ dir.c                                | 28 ++++++++++++++--------------
+ dir.h                                |  8 ++++----
+ t/helper/test-dump-untracked-cache.c |  4 ++--
+ 3 files changed, 20 insertions(+), 20 deletions(-)
 
 diff --git a/dir.c b/dir.c
-index 0ffb1b3302..ab2e5b8717 100644
+index ab2e5b8717..e678c8184c 100644
 --- a/dir.c
 +++ b/dir.c
-@@ -1015,9 +1015,10 @@ static int add_patterns_from_buffer(char *buf, size_t size,
-  * an index if 'istate' is non-null), parse it and store the
-  * exclude rules in "pl".
-  *
-- * If "ss" is not NULL, compute SHA-1 of the exclude file and fill
-+ * If oid_stat is not NULL, compute OID of the exclude file and fill
-  * stat data from disk (only valid if add_patterns returns zero). If
-- * ss_valid is non-zero, "ss" must contain good value as input.
-+ * oid_stat->valid is non-zero, oid_stat must contain good value as
-+ * input.
-  */
- static int add_patterns(const char *fname, const char *base, int baselen,
- 			struct pattern_list *pl, struct index_state *istate,
-@@ -1065,7 +1066,7 @@ static int add_patterns(const char *fname, const char *base, int baselen,
- 			int pos;
- 			if (oid_stat->valid &&
- 			    !match_stat_data_racy(istate, &oid_stat->stat, &st))
--				; /* no content change, ss->sha1 still good */
-+				; /* no content change, oid_stat->oid still good */
- 			else if (istate &&
- 				 (pos = index_name_pos(istate, fname, strlen(fname))) >= 0 &&
- 				 !ce_stage(istate->cache[pos]) &&
+@@ -2613,15 +2613,15 @@ static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *d
+ 
+ 	/* Validate $GIT_DIR/info/exclude and core.excludesfile */
+ 	root = dir->untracked->root;
+-	if (!oideq(&dir->ss_info_exclude.oid,
+-		   &dir->untracked->ss_info_exclude.oid)) {
++	if (!oideq(&dir->st_info_exclude.oid,
++		   &dir->untracked->st_info_exclude.oid)) {
+ 		invalidate_gitignore(dir->untracked, root);
+-		dir->untracked->ss_info_exclude = dir->ss_info_exclude;
++		dir->untracked->st_info_exclude = dir->st_info_exclude;
+ 	}
+-	if (!oideq(&dir->ss_excludes_file.oid,
+-		   &dir->untracked->ss_excludes_file.oid)) {
++	if (!oideq(&dir->st_excludes_file.oid,
++		   &dir->untracked->st_excludes_file.oid)) {
+ 		invalidate_gitignore(dir->untracked, root);
+-		dir->untracked->ss_excludes_file = dir->ss_excludes_file;
++		dir->untracked->st_excludes_file = dir->st_excludes_file;
+ 	}
+ 
+ 	/* Make sure this directory is not dropped out at saving phase */
+@@ -2884,14 +2884,14 @@ void setup_standard_excludes(struct dir_struct *dir)
+ 		excludes_file = xdg_config_home("ignore");
+ 	if (excludes_file && !access_or_warn(excludes_file, R_OK, 0))
+ 		add_patterns_from_file_1(dir, excludes_file,
+-					 dir->untracked ? &dir->ss_excludes_file : NULL);
++					 dir->untracked ? &dir->st_excludes_file : NULL);
+ 
+ 	/* per repository user preference */
+ 	if (startup_info->have_repository) {
+ 		const char *path = git_path_info_exclude();
+ 		if (!access_or_warn(path, R_OK, 0))
+ 			add_patterns_from_file_1(dir, path,
+-						 dir->untracked ? &dir->ss_info_exclude : NULL);
++						 dir->untracked ? &dir->st_info_exclude : NULL);
+ 	}
+ }
+ 
+@@ -3037,8 +3037,8 @@ void write_untracked_extension(struct strbuf *out, struct untracked_cache *untra
+ 	const unsigned hashsz = the_hash_algo->rawsz;
+ 
+ 	ouc = xcalloc(1, sizeof(*ouc));
+-	stat_data_to_disk(&ouc->info_exclude_stat, &untracked->ss_info_exclude.stat);
+-	stat_data_to_disk(&ouc->excludes_file_stat, &untracked->ss_excludes_file.stat);
++	stat_data_to_disk(&ouc->info_exclude_stat, &untracked->st_info_exclude.stat);
++	stat_data_to_disk(&ouc->excludes_file_stat, &untracked->st_excludes_file.stat);
+ 	ouc->dir_flags = htonl(untracked->dir_flags);
+ 
+ 	varint_len = encode_varint(untracked->ident.len, varbuf);
+@@ -3046,8 +3046,8 @@ void write_untracked_extension(struct strbuf *out, struct untracked_cache *untra
+ 	strbuf_addbuf(out, &untracked->ident);
+ 
+ 	strbuf_add(out, ouc, sizeof(*ouc));
+-	strbuf_add(out, untracked->ss_info_exclude.oid.hash, hashsz);
+-	strbuf_add(out, untracked->ss_excludes_file.oid.hash, hashsz);
++	strbuf_add(out, untracked->st_info_exclude.oid.hash, hashsz);
++	strbuf_add(out, untracked->st_excludes_file.oid.hash, hashsz);
+ 	strbuf_add(out, untracked->exclude_per_dir, strlen(untracked->exclude_per_dir) + 1);
+ 	FREE_AND_NULL(ouc);
+ 
+@@ -3250,10 +3250,10 @@ struct untracked_cache *read_untracked_extension(const void *data, unsigned long
+ 	uc = xcalloc(1, sizeof(*uc));
+ 	strbuf_init(&uc->ident, ident_len);
+ 	strbuf_add(&uc->ident, ident, ident_len);
+-	load_oid_stat(&uc->ss_info_exclude,
++	load_oid_stat(&uc->st_info_exclude,
+ 		      next + ouc_offset(info_exclude_stat),
+ 		      next + offset);
+-	load_oid_stat(&uc->ss_excludes_file,
++	load_oid_stat(&uc->st_excludes_file,
+ 		      next + ouc_offset(excludes_file_stat),
+ 		      next + offset + hashsz);
+ 	uc->dir_flags = get_be32(next + ouc_offset(dir_flags));
+diff --git a/dir.h b/dir.h
+index 5855c065a6..4d30816271 100644
+--- a/dir.h
++++ b/dir.h
+@@ -186,8 +186,8 @@ struct untracked_cache_dir {
+ };
+ 
+ struct untracked_cache {
+-	struct oid_stat ss_info_exclude;
+-	struct oid_stat ss_excludes_file;
++	struct oid_stat st_info_exclude;
++	struct oid_stat st_excludes_file;
+ 	const char *exclude_per_dir;
+ 	struct strbuf ident;
+ 	/*
+@@ -334,8 +334,8 @@ struct dir_struct {
+ 
+ 	/* Enable untracked file cache if set */
+ 	struct untracked_cache *untracked;
+-	struct oid_stat ss_info_exclude;
+-	struct oid_stat ss_excludes_file;
++	struct oid_stat st_info_exclude;
++	struct oid_stat st_excludes_file;
+ 	unsigned unmanaged_exclude_files;
+ };
+ 
+diff --git a/t/helper/test-dump-untracked-cache.c b/t/helper/test-dump-untracked-cache.c
+index cf0f2c7228..71a47e974b 100644
+--- a/t/helper/test-dump-untracked-cache.c
++++ b/t/helper/test-dump-untracked-cache.c
+@@ -56,8 +56,8 @@ int cmd__dump_untracked_cache(int ac, const char **av)
+ 		printf("no untracked cache\n");
+ 		return 0;
+ 	}
+-	printf("info/exclude %s\n", oid_to_hex(&uc->ss_info_exclude.oid));
+-	printf("core.excludesfile %s\n", oid_to_hex(&uc->ss_excludes_file.oid));
++	printf("info/exclude %s\n", oid_to_hex(&uc->st_info_exclude.oid));
++	printf("core.excludesfile %s\n", oid_to_hex(&uc->st_excludes_file.oid));
+ 	printf("exclude_per_dir %s\n", uc->exclude_per_dir);
+ 	printf("flags %08x\n", uc->dir_flags);
+ 	if (uc->root)
 -- 
 2.25.0
 
