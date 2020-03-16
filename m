@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-14.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A359FC5ACC1
-	for <git@archiver.kernel.org>; Mon, 16 Mar 2020 18:06:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4350C5ACC0
+	for <git@archiver.kernel.org>; Mon, 16 Mar 2020 18:06:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6BA9220719
-	for <git@archiver.kernel.org>; Mon, 16 Mar 2020 18:06:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9C8D22073C
+	for <git@archiver.kernel.org>; Mon, 16 Mar 2020 18:06:01 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="UHWR0Nmp"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Btn01PfL"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732305AbgCPSF7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1732297AbgCPSF7 (ORCPT <rfc822;git@archiver.kernel.org>);
         Mon, 16 Mar 2020 14:05:59 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:55318 "EHLO
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:55320 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1732275AbgCPSF5 (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 16 Mar 2020 14:05:57 -0400
+        by vger.kernel.org with ESMTP id S1732285AbgCPSF6 (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 16 Mar 2020 14:05:58 -0400
 Received: from camp.crustytoothpaste.net (castro.crustytoothpaste.net [75.10.60.170])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 03605609CF;
-        Mon, 16 Mar 2020 18:05:54 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id A12B46088E;
+        Mon, 16 Mar 2020 18:05:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1584381955;
-        bh=9e5iPvlcyLMt5Qh6oDBPWCxhMDImQt+GMtt6+m6Lunw=;
+        s=default; t=1584381956;
+        bh=2hs4fKA4b4MLmUAktnDpzwKLklgU9Um0NMxFlSgWcb8=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=UHWR0NmpVHwMDo49qzz3PapvzD1FMKhAxJAap8fOjsY8Mfrz0CI38J+WPDPMogqVf
-         TEIU5pi+7z/m64B5oVQnqMF+TZFQuN2YqX+EUGFvPhdNmrY3FdhkgvjMCxawssI8Rj
-         SWVWv6IG4ji2lQgwoI0s/pZ3ffk2Spwr+CNHNd/DUboLpGwdtUeA1olA9z+lVC3OFo
-         zxJ7PX3useIS4f6y3iOjI/vmQTV2cxOm2V8csoAkChJCAh7jXCAH2nNC8xlcWjk605
-         wM9yJZ/rt0KCukyY4jAfWaYbum6N1iAU550LN1KaopJQu/VeDEDtl1VzBBmYgEik76
-         F8PzL4XQEls7dqR50ig1N2sRi4khVtYYXO5WipgWeh8nSHlTY2WQ2MfNBcwgjwqR03
-         0004hZEbNykUdMe/9pYyzLLEBzktZK+bCLGykDrD8U6BDkQTc+UTwzI5HPNRR0GTVO
-         ayd/1VQgbARfptSiI2Y4V9tNakb5kJVkgH/NQx9kC76sPJ9AuJa
+        b=Btn01PfLtxguAm+qVMFzW9UhFIc1QSvVPfoHy5XYWMypkZMO4f4Tl9iiAabx31CA5
+         EAt9ox1kdn3mCmyxFM9EkDzK6y3ZXx+qZiBw3OzdUL2Yq+wA2kcI4sT6j6U5u6Y3xG
+         rc1YcPGpmUAavaCgb1WZ7BZJYJqHx9u71yh7UhCzqNkD17JKHuzvGwHymkdjsYK+rw
+         a+Xa2PzvTPfWhqDTeFgN8VhoJFTv3uXeA7iUvF3+hZQIb0cWh9akGj8cWLpw6QsmZ/
+         oBnXUewRm5MI1Gn7yc9Jw5zf2ezeYZ+pf3hGLQycqfnRfW0L/NuEe6Hd7Q/1H9QEXS
+         GyXoM6EuVIzLPhsd8Omp8+sQ39BMRAEEZohkYWiT+EU2XeanC5wO/kunLjE3oUq237
+         uA16/dZCsnqxoIbuAI0R70QGpeK0y857q+vFCcRUcW3vAK3INGsSEZP2BXkIMpVuR3
+         lUq+xxjhWzVzLi2XqgwcgFEyp/8OwnlyO3+zTjuZqldkATLZQvY
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v2 4/8] builtin/checkout: compute checkout metadata for checkouts
-Date:   Mon, 16 Mar 2020 18:05:04 +0000
-Message-Id: <20200316180508.367809-5-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 8/8] t0021: test filter metadata for additional cases
+Date:   Mon, 16 Mar 2020 18:05:08 +0000
+Message-Id: <20200316180508.367809-9-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.25.1.481.gfbce0eb801
 In-Reply-To: <20200316180508.367809-1-sandals@crustytoothpaste.net>
 References: <20200316180508.367809-1-sandals@crustytoothpaste.net>
@@ -58,320 +58,70 @@ X-Mailing-List: git@vger.kernel.org
 
 From: "brian m. carlson" <bk2204@github.com>
 
-Provide commit metadata for checkout code paths that use unpack_trees
-and friends.  When we're checking out a commit, use the commit
-information, but don't provide commit information if we're checking out
-from the index, since there need not be any particular commit associated
-with the index, and even if there is one, we can't know what it is.
+Check that we get the expected data when performing a merges or
+generating archives.  Note that we don't expect a ref for merges,
+because we won't be checking out any particular ref, but instead a tree
+of the merged data.  For archives, however, we expect a ref as normal if
+we have one.
 
 Signed-off-by: brian m. carlson <bk2204@github.com>
 ---
- builtin/checkout.c      | 18 +++++++---
- merge.c                 |  1 +
- t/t0021-conversion.sh   | 78 ++++++++++++++++++++++++++---------------
- t/t0021/rot13-filter.pl |  2 +-
- unpack-trees.c          |  1 +
- unpack-trees.h          |  1 +
- 6 files changed, 68 insertions(+), 33 deletions(-)
+ t/t0021-conversion.sh | 45 +++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 45 insertions(+)
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 1bdb70d3dd..8bc94d392b 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -604,7 +604,8 @@ static void describe_detached_head(const char *msg, struct commit *commit)
- }
- 
- static int reset_tree(struct tree *tree, const struct checkout_opts *o,
--		      int worktree, int *writeout_error)
-+		      int worktree, int *writeout_error,
-+		      struct branch_info *info)
- {
- 	struct unpack_trees_options opts;
- 	struct tree_desc tree_desc;
-@@ -619,6 +620,11 @@ static int reset_tree(struct tree *tree, const struct checkout_opts *o,
- 	opts.verbose_update = o->show_progress;
- 	opts.src_index = &the_index;
- 	opts.dst_index = &the_index;
-+	init_checkout_metadata(&opts.meta, info->refname,
-+			       info->commit ? &info->commit->object.oid :
-+			       is_null_oid(&info->oid) ? &tree->object.oid :
-+			       &info->oid,
-+			       NULL);
- 	parse_tree(tree);
- 	init_tree_desc(&tree_desc, tree->buffer, tree->size);
- 	switch (unpack_trees(1, &tree_desc, &opts)) {
-@@ -677,7 +683,7 @@ static int merge_working_tree(const struct checkout_opts *opts,
- 	} else
- 		new_tree = get_commit_tree(new_branch_info->commit);
- 	if (opts->discard_changes) {
--		ret = reset_tree(new_tree, opts, 1, writeout_error);
-+		ret = reset_tree(new_tree, opts, 1, writeout_error, new_branch_info);
- 		if (ret)
- 			return ret;
- 	} else {
-@@ -706,6 +712,10 @@ static int merge_working_tree(const struct checkout_opts *opts,
- 		topts.quiet = opts->merge && old_branch_info->commit;
- 		topts.verbose_update = opts->show_progress;
- 		topts.fn = twoway_merge;
-+		init_checkout_metadata(&topts.meta, new_branch_info->refname,
-+				       new_branch_info->commit ?
-+				       &new_branch_info->commit->object.oid :
-+				       &new_branch_info->oid, NULL);
- 		if (opts->overwrite_ignore) {
- 			topts.dir = xcalloc(1, sizeof(*topts.dir));
- 			topts.dir->flags |= DIR_SHOW_IGNORED;
-@@ -776,7 +786,7 @@ static int merge_working_tree(const struct checkout_opts *opts,
- 
- 			ret = reset_tree(new_tree,
- 					 opts, 1,
--					 writeout_error);
-+					 writeout_error, new_branch_info);
- 			if (ret)
- 				return ret;
- 			o.ancestor = old_branch_info->name;
-@@ -796,7 +806,7 @@ static int merge_working_tree(const struct checkout_opts *opts,
- 				exit(128);
- 			ret = reset_tree(new_tree,
- 					 opts, 0,
--					 writeout_error);
-+					 writeout_error, new_branch_info);
- 			strbuf_release(&o.obuf);
- 			strbuf_release(&old_commit_shortname);
- 			if (ret)
-diff --git a/merge.c b/merge.c
-index 7c1d756c3f..aa36de2f64 100644
---- a/merge.c
-+++ b/merge.c
-@@ -94,6 +94,7 @@ int checkout_fast_forward(struct repository *r,
- 	opts.verbose_update = 1;
- 	opts.merge = 1;
- 	opts.fn = twoway_merge;
-+	init_checkout_metadata(&opts.meta, NULL, remote, NULL);
- 	setup_unpack_trees_porcelain(&opts, "merge");
- 
- 	if (unpack_trees(nr_trees, t, &opts)) {
 diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
-index dc664da551..4b8d6a74a7 100755
+index a026fd46b4..4bfffa9c31 100755
 --- a/t/t0021-conversion.sh
 +++ b/t/t0021-conversion.sh
-@@ -364,6 +364,10 @@ test_expect_success PERL 'required process filter should filter data' '
- 		S=$(file_size test.r) &&
- 		S2=$(file_size test2.r) &&
- 		S3=$(file_size "testsubdir/test3 '\''sq'\'',\$x=.r") &&
-+		M=$(git hash-object test.r) &&
-+		M2=$(git hash-object test2.r) &&
-+		M3=$(git hash-object "testsubdir/test3 '\''sq'\'',\$x=.r") &&
-+		EMPTY=$(git hash-object /dev/null) &&
- 
- 		filter_git add . &&
- 		cat >expected.log <<-EOF &&
-@@ -378,14 +382,15 @@ test_expect_success PERL 'required process filter should filter data' '
- 		test_cmp_count expected.log debug.log &&
- 
- 		git commit -m "test commit 2" &&
-+		META="ref=refs/heads/master treeish=$(git rev-parse --verify master)" &&
- 		rm -f test2.r "testsubdir/test3 '\''sq'\'',\$x=.r" &&
- 
- 		filter_git checkout --quiet --no-progress . &&
- 		cat >expected.log <<-EOF &&
- 			START
- 			init handshake complete
--			IN: smudge test2.r $S2 [OK] -- OUT: $S2 . [OK]
--			IN: smudge testsubdir/test3 '\''sq'\'',\$x=.r $S3 [OK] -- OUT: $S3 . [OK]
-+			IN: smudge test2.r blob=$M2 $S2 [OK] -- OUT: $S2 . [OK]
-+			IN: smudge testsubdir/test3 '\''sq'\'',\$x=.r blob=$M3 $S3 [OK] -- OUT: $S3 . [OK]
+@@ -488,6 +488,51 @@ test_expect_success PERL 'required process filter should filter data for various
+ 			IN: smudge testsubdir/test3 '\''sq'\'',\$x=.r $META blob=$M3 $S3 [OK] -- OUT: $S3 . [OK]
  			STOP
  		EOF
- 		test_cmp_exclude_clean expected.log debug.log &&
-@@ -406,10 +411,10 @@ test_expect_success PERL 'required process filter should filter data' '
- 		cat >expected.log <<-EOF &&
- 			START
- 			init handshake complete
--			IN: smudge test.r $S [OK] -- OUT: $S . [OK]
--			IN: smudge test2.r $S2 [OK] -- OUT: $S2 . [OK]
--			IN: smudge test4-empty.r 0 [OK] -- OUT: 0  [OK]
--			IN: smudge testsubdir/test3 '\''sq'\'',\$x=.r $S3 [OK] -- OUT: $S3 . [OK]
++		test_cmp_exclude_clean expected.log debug.log &&
++
++		git checkout -b merge empty-branch &&
++		git branch -f master $MASTER2 &&
++		filter_git merge master &&
++		META="treeish=$MASTER2" &&
++		cat >expected.log <<-EOF &&
++			START
++			init handshake complete
 +			IN: smudge test.r $META blob=$M $S [OK] -- OUT: $S . [OK]
 +			IN: smudge test2.r $META blob=$M2 $S2 [OK] -- OUT: $S2 . [OK]
 +			IN: smudge test4-empty.r $META blob=$EMPTY 0 [OK] -- OUT: 0  [OK]
++			IN: smudge test5.r $META blob=$M $S [OK] -- OUT: $S . [OK]
 +			IN: smudge testsubdir/test3 '\''sq'\'',\$x=.r $META blob=$M3 $S3 [OK] -- OUT: $S3 . [OK]
- 			STOP
- 		EOF
- 		test_cmp_exclude_clean expected.log debug.log &&
-@@ -519,17 +524,22 @@ test_expect_success PERL 'required process filter should process multiple packet
- 		EOF
- 		test_cmp_count expected.log debug.log &&
- 
--		rm -f *.file &&
-+		M1="blob=$(git hash-object 1pkt_1__.file)" &&
-+		M2="blob=$(git hash-object 2pkt_1+1.file)" &&
-+		M3="blob=$(git hash-object 2pkt_2-1.file)" &&
-+		M4="blob=$(git hash-object 2pkt_2__.file)" &&
-+		M5="blob=$(git hash-object 3pkt_2+1.file)" &&
-+		rm -f *.file debug.log &&
- 
- 		filter_git checkout --quiet --no-progress -- *.file &&
- 		cat >expected.log <<-EOF &&
- 			START
- 			init handshake complete
--			IN: smudge 1pkt_1__.file $(($S    )) [OK] -- OUT: $(($S    )) . [OK]
--			IN: smudge 2pkt_1+1.file $(($S  +1)) [OK] -- OUT: $(($S  +1)) .. [OK]
--			IN: smudge 2pkt_2-1.file $(($S*2-1)) [OK] -- OUT: $(($S*2-1)) .. [OK]
--			IN: smudge 2pkt_2__.file $(($S*2  )) [OK] -- OUT: $(($S*2  )) .. [OK]
--			IN: smudge 3pkt_2+1.file $(($S*2+1)) [OK] -- OUT: $(($S*2+1)) ... [OK]
-+			IN: smudge 1pkt_1__.file $M1 $(($S    )) [OK] -- OUT: $(($S    )) . [OK]
-+			IN: smudge 2pkt_1+1.file $M2 $(($S  +1)) [OK] -- OUT: $(($S  +1)) .. [OK]
-+			IN: smudge 2pkt_2-1.file $M3 $(($S*2-1)) [OK] -- OUT: $(($S*2-1)) .. [OK]
-+			IN: smudge 2pkt_2__.file $M4 $(($S*2  )) [OK] -- OUT: $(($S*2  )) .. [OK]
-+			IN: smudge 3pkt_2+1.file $M5 $(($S*2+1)) [OK] -- OUT: $(($S*2+1)) ... [OK]
- 			STOP
- 		EOF
- 		test_cmp_exclude_clean expected.log debug.log &&
-@@ -578,6 +588,10 @@ test_expect_success PERL 'process filter should restart after unexpected write f
- 		S=$(file_size test.r) &&
- 		S2=$(file_size test2.r) &&
- 		SF=$(file_size smudge-write-fail.r) &&
-+		M=$(git hash-object test.r) &&
-+		M2=$(git hash-object test2.r) &&
-+		MF=$(git hash-object smudge-write-fail.r) &&
-+		rm -f debug.log &&
- 
- 		git add . &&
- 		rm -f *.r &&
-@@ -591,11 +605,11 @@ test_expect_success PERL 'process filter should restart after unexpected write f
- 		cat >expected.log <<-EOF &&
- 			START
- 			init handshake complete
--			IN: smudge smudge-write-fail.r $SF [OK] -- [WRITE FAIL]
-+			IN: smudge smudge-write-fail.r blob=$MF $SF [OK] -- [WRITE FAIL]
- 			START
- 			init handshake complete
--			IN: smudge test.r $S [OK] -- OUT: $S . [OK]
--			IN: smudge test2.r $S2 [OK] -- OUT: $S2 . [OK]
-+			IN: smudge test.r blob=$M $S [OK] -- OUT: $S . [OK]
-+			IN: smudge test2.r blob=$M2 $S2 [OK] -- OUT: $S2 . [OK]
- 			STOP
- 		EOF
- 		test_cmp_exclude_clean expected.log debug.log &&
-@@ -629,6 +643,10 @@ test_expect_success PERL 'process filter should not be restarted if it signals a
- 		S=$(file_size test.r) &&
- 		S2=$(file_size test2.r) &&
- 		SE=$(file_size error.r) &&
-+		M=$(git hash-object test.r) &&
-+		M2=$(git hash-object test2.r) &&
-+		ME=$(git hash-object error.r) &&
-+		rm -f debug.log &&
- 
- 		git add . &&
- 		rm -f *.r &&
-@@ -637,9 +655,9 @@ test_expect_success PERL 'process filter should not be restarted if it signals a
- 		cat >expected.log <<-EOF &&
- 			START
- 			init handshake complete
--			IN: smudge error.r $SE [OK] -- [ERROR]
--			IN: smudge test.r $S [OK] -- OUT: $S . [OK]
--			IN: smudge test2.r $S2 [OK] -- OUT: $S2 . [OK]
-+			IN: smudge error.r blob=$ME $SE [OK] -- [ERROR]
-+			IN: smudge test.r blob=$M $S [OK] -- OUT: $S . [OK]
-+			IN: smudge test2.r blob=$M2 $S2 [OK] -- OUT: $S2 . [OK]
- 			STOP
- 		EOF
- 		test_cmp_exclude_clean expected.log debug.log &&
-@@ -665,18 +683,21 @@ test_expect_success PERL 'process filter abort stops processing of all further f
- 		echo "error this blob and all future blobs" >abort.o &&
- 		cp abort.o abort.r &&
- 
-+		M="blob=$(git hash-object abort.r)" &&
-+		rm -f debug.log &&
- 		SA=$(file_size abort.r) &&
- 
- 		git add . &&
- 		rm -f *.r &&
- 
++			STOP
++		EOF
++		test_cmp_exclude_clean expected.log debug.log &&
 +
- 		# Note: This test assumes that Git filters files in alphabetical
- 		# order ("abort.r" before "test.r").
- 		filter_git checkout --quiet --no-progress . &&
- 		cat >expected.log <<-EOF &&
- 			START
- 			init handshake complete
--			IN: smudge abort.r $SA [OK] -- [ABORT]
-+			IN: smudge abort.r $M $SA [OK] -- [ABORT]
- 			STOP
- 		EOF
- 		test_cmp_exclude_clean expected.log debug.log &&
-@@ -727,27 +748,28 @@ test_expect_success PERL 'delayed checkout in process filter' '
- 	) &&
- 
- 	S=$(file_size "$TEST_ROOT/test.o") &&
-+	M="blob=$(git -C repo rev-parse --verify master:test.a)" &&
- 	cat >a.exp <<-EOF &&
- 		START
- 		init handshake complete
--		IN: smudge test.a $S [OK] -- OUT: $S . [OK]
--		IN: smudge test-delay10.a $S [OK] -- [DELAYED]
--		IN: smudge test-delay11.a $S [OK] -- [DELAYED]
--		IN: smudge test-delay20.a $S [OK] -- [DELAYED]
-+		IN: smudge test.a $M $S [OK] -- OUT: $S . [OK]
-+		IN: smudge test-delay10.a $M $S [OK] -- [DELAYED]
-+		IN: smudge test-delay11.a $M $S [OK] -- [DELAYED]
-+		IN: smudge test-delay20.a $M $S [OK] -- [DELAYED]
- 		IN: list_available_blobs test-delay10.a test-delay11.a [OK]
--		IN: smudge test-delay10.a 0 [OK] -- OUT: $S . [OK]
--		IN: smudge test-delay11.a 0 [OK] -- OUT: $S . [OK]
-+		IN: smudge test-delay10.a $M 0 [OK] -- OUT: $S . [OK]
-+		IN: smudge test-delay11.a $M 0 [OK] -- OUT: $S . [OK]
- 		IN: list_available_blobs test-delay20.a [OK]
--		IN: smudge test-delay20.a 0 [OK] -- OUT: $S . [OK]
-+		IN: smudge test-delay20.a $M 0 [OK] -- OUT: $S . [OK]
- 		IN: list_available_blobs [OK]
- 		STOP
- 	EOF
- 	cat >b.exp <<-EOF &&
- 		START
- 		init handshake complete
--		IN: smudge test-delay10.b $S [OK] -- [DELAYED]
-+		IN: smudge test-delay10.b $M $S [OK] -- [DELAYED]
- 		IN: list_available_blobs test-delay10.b [OK]
--		IN: smudge test-delay10.b 0 [OK] -- OUT: $S . [OK]
-+		IN: smudge test-delay10.b $M 0 [OK] -- OUT: $S . [OK]
- 		IN: list_available_blobs [OK]
- 		STOP
- 	EOF
-diff --git a/t/t0021/rot13-filter.pl b/t/t0021/rot13-filter.pl
-index c43cf433cf..cd32a82da5 100644
---- a/t/t0021/rot13-filter.pl
-+++ b/t/t0021/rot13-filter.pl
-@@ -136,7 +136,7 @@ sub rot13 {
- 					$DELAY{$pathname}{"requested"} = 1;
- 				}
- 			} elsif ($buffer =~ /^(ref|treeish|blob)=/) {
--				# Do nothing.
-+				print $debug " $buffer";
- 			} else {
- 				# In general, filters need to be graceful about
- 				# new metadata, since it's documented that we
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 1ecdab3304..3aba5da6b6 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -371,6 +371,7 @@ static int check_updates(struct unpack_trees_options *o)
- 	state.quiet = 1;
- 	state.refresh_cache = 1;
- 	state.istate = index;
-+	clone_checkout_metadata(&state.meta, &o->meta, NULL);
- 
- 	if (!o->update || o->dry_run) {
- 		remove_marked_cache_entries(index, 0);
-diff --git a/unpack-trees.h b/unpack-trees.h
-index ae1557fb80..ad41b45a71 100644
---- a/unpack-trees.h
-+++ b/unpack-trees.h
-@@ -85,6 +85,7 @@ struct unpack_trees_options {
- 	struct index_state result;
- 
- 	struct pattern_list *pl; /* for internal use */
-+	struct checkout_metadata meta;
- };
- 
- int unpack_trees(unsigned n, struct tree_desc *t,
++		filter_git archive master >/dev/null &&
++		META="ref=refs/heads/master treeish=$MASTER2" &&
++		cat >expected.log <<-EOF &&
++			START
++			init handshake complete
++			IN: smudge test.r $META blob=$M $S [OK] -- OUT: $S . [OK]
++			IN: smudge test2.r $META blob=$M2 $S2 [OK] -- OUT: $S2 . [OK]
++			IN: smudge test4-empty.r $META blob=$EMPTY 0 [OK] -- OUT: 0  [OK]
++			IN: smudge test5.r $META blob=$M $S [OK] -- OUT: $S . [OK]
++			IN: smudge testsubdir/test3 '\''sq'\'',\$x=.r $META blob=$M3 $S3 [OK] -- OUT: $S3 . [OK]
++			STOP
++		EOF
++		test_cmp_exclude_clean expected.log debug.log &&
++
++		TREE="$(git rev-parse $MASTER2^{tree})" &&
++		filter_git archive $TREE >/dev/null &&
++		META="treeish=$TREE" &&
++		cat >expected.log <<-EOF &&
++			START
++			init handshake complete
++			IN: smudge test.r $META blob=$M $S [OK] -- OUT: $S . [OK]
++			IN: smudge test2.r $META blob=$M2 $S2 [OK] -- OUT: $S2 . [OK]
++			IN: smudge test4-empty.r $META blob=$EMPTY 0 [OK] -- OUT: 0  [OK]
++			IN: smudge test5.r $META blob=$M $S [OK] -- OUT: $S . [OK]
++			IN: smudge testsubdir/test3 '\''sq'\'',\$x=.r $META blob=$M3 $S3 [OK] -- OUT: $S3 . [OK]
++			STOP
++		EOF
+ 		test_cmp_exclude_clean expected.log debug.log
+ 	)
+ '
