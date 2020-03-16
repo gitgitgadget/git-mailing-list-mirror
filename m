@@ -2,50 +2,53 @@ Return-Path: <SRS0=/LSK=5B=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-14.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A18FEC3F2CE
-	for <git@archiver.kernel.org>; Mon, 16 Mar 2020 18:05:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 03B45C2BB1D
+	for <git@archiver.kernel.org>; Mon, 16 Mar 2020 18:05:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7A5182071C
+	by mail.kernel.org (Postfix) with ESMTP id C84A42071C
 	for <git@archiver.kernel.org>; Mon, 16 Mar 2020 18:05:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="PWN11dMu"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="H6YFKjdQ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732273AbgCPSFz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Mar 2020 14:05:55 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:55302 "EHLO
+        id S1732295AbgCPSF6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Mar 2020 14:05:58 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:55330 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1730437AbgCPSFz (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 16 Mar 2020 14:05:55 -0400
+        by vger.kernel.org with ESMTP id S1732280AbgCPSF5 (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 16 Mar 2020 14:05:57 -0400
 Received: from camp.crustytoothpaste.net (castro.crustytoothpaste.net [75.10.60.170])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 436B760797;
-        Mon, 16 Mar 2020 18:05:53 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 3E41A60CF9;
+        Mon, 16 Mar 2020 18:05:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1584381953;
-        bh=uVpb6S0cZccCnUjNtATsIOgVJmktZCI4rTCyS1VjSKA=;
-        h=From:To:Cc:Subject:Date:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=PWN11dMuGpx4FdjcJTgeBKQ1lHds285LqmjgsaSFD39ADk68eEZsVFprolk1Kvfp6
-         mbEsmHELa2nszqg6BNfmGDmMzNJTVYH3UtV8QT/L1jG4vMZXF/XDztSq15JMFaZY7K
-         Qf9TWiuJ5FD8tu9xj+YCBuCj5VNv9oQD+mX3evxfFV74++bbrd2F6S/IGOYghlU7QE
-         U71be2yxvKmwF714rM6jdtSpi9aWDDddzwcfLBdWD6mpzfPvRHvOpI1tMuy5HBiwYF
-         4kUeP7stZC9hzzYmT3g5tEMdG7O940jDAqhMu5I3YFtBgYpu7FRuDnvviLsiu2dFwa
-         WPj3Ouf//83NEkmblKyhTDUsy6Ny4T7oFxZhMriswINZEoC3yHMUjJkD9v25Uq+lz4
-         hHxVHReaRHBDooNDlXQrlWeFu4lhLPasfIQJv5T/eAgrW+CXqNnefwGgFSbPTIunaH
-         wYBjSaRDSirxFTn0cE94CoQ16Vuends99Lrn8g+LJvta+AhM956
+        s=default; t=1584381956;
+        bh=THBqTLEH+ENJiBGtkyMZdeQIst+gXGjD8SbhOOCYMnA=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
+         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
+         In-Reply-To:References:Content-Type:Content-Disposition;
+        b=H6YFKjdQYHSX7rKjRs8tonDaoqtGaTlkRfInVGj4if2tUklkXN3UXAMNJA4L3krwu
+         s9S1uxxVz2L/viUIBt/vurTcXwUVZZOo6EQ9/g/2GTDeffcAl2erReQ47ywJzEzgHs
+         ewpXlspGvYR3W04MKkndr9hk/op7bGDZm3BvV6eUnhHcAEmGxWxqu4E5bf7oirfJDn
+         QyvqcYxDHHrh61XdyBZwmfHw2xOttxHOcitYxNByaZ/AyPJJqZXIm6BMTpRrUGWOv7
+         4B2Bh0jOLNFIZKHFi0rAkrpl4LzxvplZ2p+8tPTg6MnzQc9iQ4oGqVXVu+OTyNlgMk
+         mh6HO8iT/g21UeQfucL+NKXk/km7D+fUZzczP8tY3Gi29CWvJ31PZokaj6D26Krsrb
+         s0brfsRZBspuLHEn4q/JqiJ4wn7OX/4jPJTBemqMW+DyCW+pIiexkYnkMBQPl/Z1We
+         Lhila+g//Sk6kP7WflasM6nN73eAK/K0ijSq2R4+lOEJB1b6Mr8
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v2 0/8] Additional metadata for filter processes
-Date:   Mon, 16 Mar 2020 18:05:00 +0000
-Message-Id: <20200316180508.367809-1-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 7/8] builtin/reset: compute checkout metadata for reset
+Date:   Mon, 16 Mar 2020 18:05:07 +0000
+Message-Id: <20200316180508.367809-8-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.25.1.481.gfbce0eb801
+In-Reply-To: <20200316180508.367809-1-sandals@crustytoothpaste.net>
+References: <20200316180508.367809-1-sandals@crustytoothpaste.net>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -53,178 +56,109 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Smudge and clean filters are currently provided with one particular
-piece of data: the pathname of the file being smudged.  While this is
-helpful, there are a variety of situations where people would like to
-have more data.  This series introduces additional data for these
-filters.
+From: "brian m. carlson" <bk2204@github.com>
 
-I decided that there is indeed value to providing the full ref when
-using git checkout, so an invocation that uses a tag will now pass that
-tag along.  It's easy for filters that don't want this data to simply
-ignore it, but significantly harder to recover if it's not provided.
+Pass the commit, and if we have it, the ref to the filters when we
+perform a checkout.  This should only be the case when we invoke git
+reset --hard; the metadata will be unused otherwise.
 
-One thing I should mention here that may seem obvious: this metadata
-only appears for smudge filters.  We obviously cannot know the blob when
-data is being cleaned, and the ref, commit, and tree are already known
-at that point (because one is using "git add" or an equivalent), so the
-filter can simply do a git rev-parse if it's curious.
+Signed-off-by: brian m. carlson <bk2204@github.com>
+---
+ builtin/reset.c       | 16 +++++++++++++---
+ t/t0021-conversion.sh | 32 +++++++++++++++++++++++++++++++-
+ 2 files changed, 44 insertions(+), 4 deletions(-)
 
-Changes from v1:
-* Add support for arbitrary refs to checkout.
-* Use FREE_AND_NULL where appropriate.
-* Improve commit message to explain expected result and data as well as
-  rationale.
-
-brian m. carlson (8):
-  builtin/checkout: pass branch info down to checkout_worktree
-  convert: permit passing additional metadata to filter processes
-  convert: provide additional metadata to filters
-  builtin/checkout: compute checkout metadata for checkouts
-  builtin/clone: compute checkout metadata for clones
-  builtin/rebase: compute checkout metadata for rebases
-  builtin/reset: compute checkout metadata for reset
-  t0021: test filter metadata for additional cases
-
- apply.c                 |   2 +-
- archive.c               |  13 ++-
- archive.h               |   1 +
- builtin/cat-file.c      |   5 +-
- builtin/checkout.c      |  64 +++++++++----
- builtin/clone.c         |   5 +-
- builtin/rebase.c        |   1 +
- builtin/reset.c         |  16 +++-
- cache.h                 |   1 +
- convert.c               |  66 ++++++++++++--
- convert.h               |  29 +++++-
- diff.c                  |   5 +-
- entry.c                 |   7 +-
- merge-recursive.c       |   2 +-
- merge.c                 |   1 +
- sequencer.c             |   1 +
- t/t0021-conversion.sh   | 198 ++++++++++++++++++++++++++++++++++------
- t/t0021/rot13-filter.pl |   6 ++
- unpack-trees.c          |   1 +
- unpack-trees.h          |   1 +
- 20 files changed, 350 insertions(+), 75 deletions(-)
-
-Range-diff against v1:
-1:  93111f0c13 = 1:  77b064093c builtin/checkout: pass branch info down to checkout_worktree
-2:  7e3675fc33 ! 2:  d910bf619c convert: permit passing additional metadata to filter processes
-    @@ Commit message
-         pass this information in all cases, such as when renormalizing or when
-         we're performing diffs, since it doesn't make sense in those cases.
-     
-    -    This series wires up the code to print this information, but doesn't
-    +    The data we currently get from the filter process looks like the
-    +    following:
-    +
-    +      command=smudge
-    +      pathname=git.c
-    +      0000
-    +
-    +    With this change, we'll get data more like this:
-    +
-    +      command=smudge
-    +      pathname=git.c
-    +      refname=refs/tags/v2.25.1
-    +      treeish=c522f061d551c9bb8684a7c3859b2ece4499b56b
-    +      blob=7be7ad34bd053884ec48923706e70c81719a8660
-    +      0000
-    +
-    +    There are a couple things to note about this approach.  For operations
-    +    like checkout, treeish will always be a commit, since we cannot check
-    +    out individual trees, but for other operations, like archive, we can end
-    +    up operating on only a particular tree, so we'll provide only a tree as
-    +    the treeish.  Similar comments apply for refname, since there are a
-    +    variety of cases in which we won't have a ref.
-    +
-    +    This commit wires up the code to print this information, but doesn't
-         pass any of it at this point.  In a future commit, we'll have various
-         code paths pass the actual useful data down.
-     
-3:  ed056a4516 ! 3:  ab2730d9a3 convert: provide additional metadata to filters
-    @@ builtin/cat-file.c: static int filter_object(const char *path, unsigned mode,
-      			*buf = strbuf_detach(&strbuf, NULL);
-     
-      ## builtin/checkout.c ##
-    +@@ builtin/checkout.c: struct branch_info {
-    + 	const char *name; /* The short name used */
-    + 	const char *path; /* The full name of a real branch */
-    + 	struct commit *commit; /* The named commit */
-    ++	char *refname; /* The full name of the ref being checked out. */
-    ++	struct object_id oid; /* The object ID of the commit being checked out. */
-    + 	/*
-    + 	 * if not null the branch is detached because it's already
-    + 	 * checked out in this checkout
-     @@ builtin/checkout.c: static int checkout_worktree(const struct checkout_opts *opts,
-      	state.refresh_cache = 1;
-      	state.istate = &the_index;
-      
-    -+	init_checkout_metadata(&state.meta, info->path,
-    -+			       info->commit ? &info->commit->object.oid : NULL,
-    ++	init_checkout_metadata(&state.meta, info->refname,
-    ++			       info->commit ? &info->commit->object.oid : &info->oid,
-     +			       NULL);
-     +
-      	enable_delayed_checkout(&state);
-      	for (pos = 0; pos < active_nr; pos++) {
-      		struct cache_entry *ce = active_cache[pos];
-    +@@ builtin/checkout.c: static void setup_branch_path(struct branch_info *branch)
-    + {
-    + 	struct strbuf buf = STRBUF_INIT;
-    + 
-    ++	/*
-    ++	 * If this is a ref, resolve it; otherwise, look up the OID for our
-    ++	 * expression.  Failure here is okay.
-    ++	 */
-    ++	if (!dwim_ref(branch->name, strlen(branch->name), &branch->oid, &branch->refname))
-    ++		repo_get_oid_committish(the_repository, branch->name, &branch->oid);
-    ++
-    + 	strbuf_branchname(&buf, branch->name, INTERPRET_BRANCH_LOCAL);
-    + 	if (strcmp(buf.buf, branch->name))
-    + 		branch->name = xstrdup(buf.buf);
-     
-      ## cache.h ##
-     @@ cache.h: struct checkout {
-4:  676b08a650 ! 4:  3630b2279b builtin/checkout: compute checkout metadata for checkouts
-    @@ builtin/checkout.c: static int reset_tree(struct tree *tree, const struct checko
-      	opts.verbose_update = o->show_progress;
-      	opts.src_index = &the_index;
-      	opts.dst_index = &the_index;
-    -+	init_checkout_metadata(&opts.meta, info->path,
-    ++	init_checkout_metadata(&opts.meta, info->refname,
-     +			       info->commit ? &info->commit->object.oid :
-    -+			       &tree->object.oid,
-    ++			       is_null_oid(&info->oid) ? &tree->object.oid :
-    ++			       &info->oid,
-     +			       NULL);
-      	parse_tree(tree);
-      	init_tree_desc(&tree_desc, tree->buffer, tree->size);
-    @@ builtin/checkout.c: static int merge_working_tree(const struct checkout_opts *op
-      		topts.quiet = opts->merge && old_branch_info->commit;
-      		topts.verbose_update = opts->show_progress;
-      		topts.fn = twoway_merge;
-    -+		init_checkout_metadata(&topts.meta, new_branch_info->path,
-    ++		init_checkout_metadata(&topts.meta, new_branch_info->refname,
-     +				       new_branch_info->commit ?
-     +				       &new_branch_info->commit->object.oid :
-    -+				       NULL, NULL);
-    ++				       &new_branch_info->oid, NULL);
-      		if (opts->overwrite_ignore) {
-      			topts.dir = xcalloc(1, sizeof(*topts.dir));
-      			topts.dir->flags |= DIR_SHOW_IGNORED;
-5:  853af8380c ! 5:  79168566bc builtin/clone: compute checkout metadata for clones
-    @@ builtin/clone.c: static int checkout(int submodule_progress)
-      	if (!strcmp(head, "HEAD")) {
-      		if (advice_detached_head)
-      			detach_advice(oid_to_hex(&oid));
-    -+		free(head);
-    -+		head = NULL;
-    ++		FREE_AND_NULL(head);
-      	} else {
-      		if (!starts_with(head, "refs/heads/"))
-      			die(_("HEAD not found below refs/heads!"));
-6:  22f2d41884 = 6:  af8e2af64b builtin/rebase: compute checkout metadata for rebases
-7:  b789b6db7e = 7:  c0afbd1da2 builtin/reset: compute checkout metadata for reset
-8:  b3aaf17a16 = 8:  32da1229ed t0021: test filter metadata for additional cases
+diff --git a/builtin/reset.c b/builtin/reset.c
+index 18228c312e..4c634111bd 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -46,7 +46,7 @@ static inline int is_merge(void)
+ 	return !access(git_path_merge_head(the_repository), F_OK);
+ }
+ 
+-static int reset_index(const struct object_id *oid, int reset_type, int quiet)
++static int reset_index(const char *ref, const struct object_id *oid, int reset_type, int quiet)
+ {
+ 	int i, nr = 0;
+ 	struct tree_desc desc[2];
+@@ -60,6 +60,7 @@ static int reset_index(const struct object_id *oid, int reset_type, int quiet)
+ 	opts.dst_index = &the_index;
+ 	opts.fn = oneway_merge;
+ 	opts.merge = 1;
++	init_checkout_metadata(&opts.meta, ref, oid, NULL);
+ 	if (!quiet)
+ 		opts.verbose_update = 1;
+ 	switch (reset_type) {
+@@ -418,11 +419,20 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 				}
+ 			}
+ 		} else {
+-			int err = reset_index(&oid, reset_type, quiet);
++			struct object_id dummy;
++			char *ref = NULL;
++			int err;
++
++			dwim_ref(rev, strlen(rev), &dummy, &ref);
++			if (ref && !starts_with(ref, "refs/"))
++				ref = NULL;
++
++			err = reset_index(ref, &oid, reset_type, quiet);
+ 			if (reset_type == KEEP && !err)
+-				err = reset_index(&oid, MIXED, quiet);
++				err = reset_index(ref, &oid, MIXED, quiet);
+ 			if (err)
+ 				die(_("Could not reset index file to revision '%s'."), rev);
++			free(ref);
+ 		}
+ 
+ 		if (write_locked_index(&the_index, &lock, COMMIT_LOCK))
+diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
+index 3efb0dad20..a026fd46b4 100755
+--- a/t/t0021-conversion.sh
++++ b/t/t0021-conversion.sh
+@@ -447,7 +447,8 @@ test_expect_success PERL 'required process filter should filter data for various
+ 		git commit -m "test commit 3" &&
+ 		git checkout empty-branch &&
+ 		filter_git rebase --onto empty-branch master^^ master &&
+-		META="ref=refs/heads/master treeish=$(git rev-parse --verify master)" &&
++		MASTER2=$(git rev-parse --verify master) &&
++		META="ref=refs/heads/master treeish=$MASTER2" &&
+ 		cat >expected.log <<-EOF &&
+ 			START
+ 			init handshake complete
+@@ -458,6 +459,35 @@ test_expect_success PERL 'required process filter should filter data for various
+ 			IN: smudge testsubdir/test3 '\''sq'\'',\$x=.r $META blob=$M3 $S3 [OK] -- OUT: $S3 . [OK]
+ 			STOP
+ 		EOF
++		test_cmp_exclude_clean expected.log debug.log &&
++
++		git reset --hard empty-branch &&
++		filter_git reset --hard $MASTER &&
++		META="treeish=$MASTER" &&
++		cat >expected.log <<-EOF &&
++			START
++			init handshake complete
++			IN: smudge test.r $META blob=$M $S [OK] -- OUT: $S . [OK]
++			IN: smudge test2.r $META blob=$M2 $S2 [OK] -- OUT: $S2 . [OK]
++			IN: smudge test4-empty.r $META blob=$EMPTY 0 [OK] -- OUT: 0  [OK]
++			IN: smudge testsubdir/test3 '\''sq'\'',\$x=.r $META blob=$M3 $S3 [OK] -- OUT: $S3 . [OK]
++			STOP
++		EOF
++		test_cmp_exclude_clean expected.log debug.log &&
++
++		git branch old-master $MASTER &&
++		git reset --hard empty-branch &&
++		filter_git reset --hard old-master &&
++		META="ref=refs/heads/old-master treeish=$MASTER" &&
++		cat >expected.log <<-EOF &&
++			START
++			init handshake complete
++			IN: smudge test.r $META blob=$M $S [OK] -- OUT: $S . [OK]
++			IN: smudge test2.r $META blob=$M2 $S2 [OK] -- OUT: $S2 . [OK]
++			IN: smudge test4-empty.r $META blob=$EMPTY 0 [OK] -- OUT: 0  [OK]
++			IN: smudge testsubdir/test3 '\''sq'\'',\$x=.r $META blob=$M3 $S3 [OK] -- OUT: $S3 . [OK]
++			STOP
++		EOF
+ 		test_cmp_exclude_clean expected.log debug.log
+ 	)
+ '
