@@ -7,73 +7,74 @@ X-Spam-Status: No, score=-2.4 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 09949C2BB1D
-	for <git@archiver.kernel.org>; Tue, 17 Mar 2020 11:49:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0414CC2BB1D
+	for <git@archiver.kernel.org>; Tue, 17 Mar 2020 12:25:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D33062073C
-	for <git@archiver.kernel.org>; Tue, 17 Mar 2020 11:49:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CE995206EC
+	for <git@archiver.kernel.org>; Tue, 17 Mar 2020 12:25:24 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S9sP2ykr"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HODLEG//"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726669AbgCQLtM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Mar 2020 07:49:12 -0400
-Received: from mail-ot1-f46.google.com ([209.85.210.46]:41351 "EHLO
-        mail-ot1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726552AbgCQLtL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Mar 2020 07:49:11 -0400
-Received: by mail-ot1-f46.google.com with SMTP id s15so21281383otq.8
-        for <git@vger.kernel.org>; Tue, 17 Mar 2020 04:49:11 -0700 (PDT)
+        id S1726476AbgCQMZX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Mar 2020 08:25:23 -0400
+Received: from mail-pf1-f180.google.com ([209.85.210.180]:41273 "EHLO
+        mail-pf1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725957AbgCQMZX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Mar 2020 08:25:23 -0400
+Received: by mail-pf1-f180.google.com with SMTP id z65so11861519pfz.8
+        for <git@vger.kernel.org>; Tue, 17 Mar 2020 05:25:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=ReJvJcQzwLyXvZXTKHpSMEb26Djwg/K4/v10MWvJMJ8=;
-        b=S9sP2ykrgmkV1dDdFreyXlZUx9fMPAGll9wyyKF89jMsz8YnyIcA78UqK8RP7M56YJ
-         967u0fvFkHN0J1Vkn/RzQxRvhrvWHfblrKEnF9EL+UtuUHVYMuzKmTAw2I0sMjBotYxE
-         wACrS6rzezu79pVq2DuNzkK3NL4W+GPkP1VfTkDo+U865bh56ydSV7a5rdcT2L6F4tow
-         yDMl18alGixgIt6ipWgy8uWu3rYfAM2QK1yWfoP3SwVO9Mva3Auo4/rNH2faufpwe8hH
-         shqWQZNjF7wMiQ8Kzodvg4uSg2bfHybxu+LhJsMQlrWNIrCqr/qZdDVO+iCn3KYlCEpB
-         DNMQ==
+        bh=wJS9z5nLWMVfxVNY8ue4FUvM3prTe+G+2Zjdfs1oUkw=;
+        b=HODLEG//BdPerhCLW1RhX/YjsXczuM+kIZfYUJLo1eMDiSEXFqvwD0aXUyoJ505m91
+         ukE3OOMJS/KTjg+y88E48ZhhFpODVk0d0ErOnlmp8e7DTjkPAe1bPMVqNu+e3cHf3kzt
+         uOalIGX1CjHE7mAvx2uMADaRz3EwCEzxpHnMfP1eDYlU6kpYr1JBW+NTxKm08GHnfPIo
+         mZZI9pHRcXpNDvOJ9k0QcZof6XafFg7QtVO6BR/hZfzdJcRRqX0+aYrkzuG7FqmSKXfN
+         jJjUw3KLrU398/CnzQxRfYNxWnmNMRrFFpPKpna69HZt/11c6nKZBTBpE8IWYHh33wi4
+         qqLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=ReJvJcQzwLyXvZXTKHpSMEb26Djwg/K4/v10MWvJMJ8=;
-        b=HseQpheXEsggXOUbynYdRiohlCxL02Hdthl9JxLKYmNPlJdSSMDSprEGwPWgu3l77K
-         jOcOpDPPGBCnDLGUt7Q0IiqEDrTrKTdIy00GrDemziseDR+kwwFEdCRnWpCOArD6lIZQ
-         s2a+loxyOPUU0kA2RXaTSWHvTjz+Sh82OEh/ZfeBc6vVOv5XKn8U0jO4H8Gbqw/B424v
-         fu1Ha+hpT7LKl1kTMfZH0frCci2mCUaVJw7x+CrpV52+p32kgaPZE008mNVhp0UcnLiN
-         QjqcTx81kX1kiL9yu71HNAgu/Tph7nKlc3n7UjqpEiJpP4D9NmAok27vp4N283imsbRb
-         RPQQ==
-X-Gm-Message-State: ANhLgQ3mj7/qBz1FVzfd4cpAS3T1djB8bVgDaRmty2BoALXTzTql4BqK
-        Xx5QhW2kQgybQLFoy4VdJdQ=
-X-Google-Smtp-Source: ADFU+vsYQMl7KUOV8bsBydM5QEUK6ccfTaLlxAQ3gXXA6lBJAydt7aD8k4DU32gTqP+OKQNlVSF9Ug==
-X-Received: by 2002:a05:6830:456:: with SMTP id d22mr3203091otc.138.1584445751009;
-        Tue, 17 Mar 2020 04:49:11 -0700 (PDT)
-Received: from [192.168.1.83] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id c21sm973727oiy.11.2020.03.17.04.49.09
+        bh=wJS9z5nLWMVfxVNY8ue4FUvM3prTe+G+2Zjdfs1oUkw=;
+        b=fw6zCzhc/sl1qk8TC7wo6X0FZ7UgcDgzJw0n5KIOrLGtckLvbNtkFViDY3YEJuTbTX
+         C2gBJ8P3GsGwYsl5WxG8rUd26s6B/UIZitYObz+NEltQho1J9nu+taBQm9MPYcYMEKvq
+         NpgPQSRNEYosA+M7kAz1tjZYIYZBDhBTHjeu5w5nUDppMTgGZxZAhWvORDrEzvHfte3c
+         KbOCWJyVFwqVb7xw6FCFElHyCsnq6Tq/C/BEcuKdLqfyMp0rfv36HGJtBToniG4/6+TQ
+         zB6yZcpq3VR249409DM3PDc0S+FdK7LdHx8P59MmlQdATprj8wlYq/5Bw0Xk5mCFQ3f9
+         rnQA==
+X-Gm-Message-State: ANhLgQ2AOvra6qVyWu19huvKhQ9oKmmfmhc/6ZgWPZqDq7X6aBgSD0+4
+        hroSdj3/r2KHrj7xKTL6pbk=
+X-Google-Smtp-Source: ADFU+vsMwuF67SeesDFNdRK+HmGTYxJSNb2e9rYtSyj9qSlJtzvRXVUa57nnrREtzHogY61QyFr3BA==
+X-Received: by 2002:aa7:94a5:: with SMTP id a5mr5024318pfl.67.1584447922220;
+        Tue, 17 Mar 2020 05:25:22 -0700 (PDT)
+Received: from [192.168.43.191] ([223.181.211.23])
+        by smtp.gmail.com with ESMTPSA id g5sm3131671pfo.192.2020.03.17.05.25.17
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 17 Mar 2020 04:49:10 -0700 (PDT)
+        Tue, 17 Mar 2020 05:25:21 -0700 (PDT)
 Subject: Re: [RFC] Possible idea for GSoC 2020
-To:     Christian Couder <christian.couder@gmail.com>,
-        Jakub Narebski <jnareb@gmail.com>
-Cc:     git <git@vger.kernel.org>, Heba Waly <heba.waly@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
+To:     Jakub Narebski <jnareb@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Heba Waly <heba.waly@gmail.com>,
         Jonathan Tan <jonathantanmy@google.com>,
         Emily Shaffer <emilyshaffer@google.com>,
         Abhishek Kumar <abhishekkumar8222@gmail.com>
 References: <86mu8o8dsf.fsf@gmail.com>
- <7d6a84c7-6b16-c2a9-11a1-3397422064d1@gmail.com> <86d09b7jx6.fsf@gmail.com>
- <CAP8UFD3BeS8bj8OGKJmVyKeDTCvqhCpBxLhTwuQ3zffejQkj7g@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <d1572a9f-e665-f417-c6ee-28bc8d88d60c@gmail.com>
-Date:   Tue, 17 Mar 2020 07:49:07 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:75.0) Gecko/20100101
- Thunderbird/75.0
+ <xmqqo8t2hfxj.fsf@gitster.c.googlers.com> <86tv2s34lo.fsf@gmail.com>
+ <86zhch7kyz.fsf@gmail.com>
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Message-ID: <d1a4998d-039f-65da-f18b-12ec714ec532@gmail.com>
+Date:   Tue, 17 Mar 2020 17:54:27 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.5.0
 MIME-Version: 1.0
-In-Reply-To: <CAP8UFD3BeS8bj8OGKJmVyKeDTCvqhCpBxLhTwuQ3zffejQkj7g@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <86zhch7kyz.fsf@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
@@ -81,27 +82,39 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/17/2020 3:24 AM, Christian Couder wrote:
-> On Tue, Mar 17, 2020 at 4:13 AM Jakub Narebski <jnareb@gmail.com> wrote:
-> It could be part of your research project though, to check if that
-> approach is better or good enough compared to what you suggest in the
-> current version of your project.
-> 
->> Would you agree, Stolee, to be a _possible_ mentor or co-mentor for
->> "Generation number v2" project?
-> 
-> At this point I think it might be best if you are both willing to
-> co-mentor a "moonshot" / research project to find what is the best way
-> forward by bench-marking the different approaches that you both
-> suggest for different commands/use cases.
- 
-If a student wants to take this on with the full expectation that they
-will mostly be doing research and gathering data which _might_ result
-in an acceptable patch, then I could co-mentor.
+Hi Jakub,
 
-With that expectation in mind, this project becomes closer to an REU
-(Research Experience for Undergraduates) than a software engineering
-internship. Are we sure that fits into GSoC?
+On 15-03-2020 19:56, Jakub Narebski wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+>>
+>> I have prepared slides for "Graph operations in Git version control
+>> system" (PDF), mainly describing what was already done to improve their
+>> performance, but they also include a few thoughts about the future (like
+>> additional graph reachability labelings)... unfortunately the slides are
+>> in Polish, not in English.
+>>
+>> If there is interest, I could translate them, and put the result
+>> somewhere accessible.
+> 
+> Here it is, traanslated into English, but otherwise almost exactly as I
+> have presented it on December 2019.  Those slides includes much of
+> introductory information, so one would be interested probably in few
+> last slides (the "Future work" section).
+> 
+>    https://drive.google.com/file/d/1psMBVfcRHcZeJ7AewGpdoymrEfFVdXoK/view?usp=sharing
+> 
+> I will be extending those slides with more information about interval
+> labeling, and then I will update the file, and I can post it also on
+> SlideShare (or other site, if one can recommend it).
+>
 
-Thanks,
--Stolee
+Just wanted to note that Speaker deck[1] is a nice alternative to 
+SlideShare. I've not uploaded slides to it but have seen people sharing 
+slides using Speaker deck. I find the user interface to be more neat and 
+minimalistic than SlideShare. FWIW, their mobile interface a lot better 
+than the SlideShare's interface.
+
+[1]: https://speakerdeck.com/
+
+-- 
+Sivaraam
