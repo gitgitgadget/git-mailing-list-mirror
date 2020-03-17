@@ -2,80 +2,73 @@ Return-Path: <SRS0=62NG=5C=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E09AC1975A
-	for <git@archiver.kernel.org>; Tue, 17 Mar 2020 21:11:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 78819C1975A
+	for <git@archiver.kernel.org>; Tue, 17 Mar 2020 22:05:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 527B820738
-	for <git@archiver.kernel.org>; Tue, 17 Mar 2020 21:11:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0E6BC20714
+	for <git@archiver.kernel.org>; Tue, 17 Mar 2020 22:05:20 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="NAffsdcf"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726733AbgCQVLz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Mar 2020 17:11:55 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:51303 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726680AbgCQVLz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Mar 2020 17:11:55 -0400
-Received: by mail-wm1-f67.google.com with SMTP id a132so896764wme.1
-        for <git@vger.kernel.org>; Tue, 17 Mar 2020 14:11:54 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=37DjID8Th0sQ0OJRveFgYnDz97qjws3vtM3oq2S93IA=;
-        b=sO9ra2gfTz8yd0sogTQM1NFIv6kyLNDbZCLdq1dAF2YrnjyhuvYIPeBdlBjNIhKR4+
-         bFM7nEt96DzJvqfRtYb/EbGTGtuxk21mzY5snLr8CgXSYh6e7IgmHWX5yv03t149THmv
-         sqZDPmFWbzu1/0+fr2yZxKVbp93oUdnG9Q0B1H+aP+Ie16TSsKH/JP84Fld/YkfokFGB
-         KhPiI/U+a5nb88A1SVaou3nGKGq5t0EA2wwYMOKjliaj8JJA4i6j1UBoPFBeO5G6bliz
-         /5p/6q8ApXEdfJd1YnfkSCOspJ0rA2TTM+M+DHtPFZTLfA67oYmFmTcLlm3PydDFWuqI
-         WKnQ==
-X-Gm-Message-State: ANhLgQ0rzJiLmKtRLk5HfQQue95KruiY5pnGJ/e2YF4R4FfOU3/u34qz
-        +WY7qKiqQmU1ulsPMaMnRqmIBDdEVrEKrbArws6Memnp
-X-Google-Smtp-Source: ADFU+vvWYUHWGDg/SWC8d3AdxgfMVpE8RwThmt7nFwiKab9SnpvjqG29sHtFnR3yl58Ez6+0wNgxps84nb7TyXBcyGY=
-X-Received: by 2002:a1c:5401:: with SMTP id i1mr902974wmb.177.1584479513419;
- Tue, 17 Mar 2020 14:11:53 -0700 (PDT)
+        id S1727050AbgCQWFT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Mar 2020 18:05:19 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:51469 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726954AbgCQWFT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Mar 2020 18:05:19 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9C2CAC5E66;
+        Tue, 17 Mar 2020 18:05:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=McOIgh2zAwmh+CJqFwoRyJRtwPE=; b=NAffsd
+        cfYJPAAi0x9uzhWqi4uuHMsriQB82IfniiYhZ3PUC0R0OsJ74vFrLPuNlGT2ewMr
+        08H71LRC38+kCqTMD6wV6zh8qV07tSda2DBoSV6T1LSKacZV4RWtDw1iqEYxzcN0
+        FSsaOJQQiFocd+7kCR5qVH98uVFjLzuZEDMLs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=yeYSs+FO/9J5NtWhVuRmmorPEVc5Q5S1
+        167UlCoPfhiXNVxE6kMNRh5POQEoQISPAjOvhez1v+AwpNpUkHx1ZI4pr25lNANh
+        Su9FZd0cAgTBgNAJ7oxl3dlwa1HQ2Ms6LPXO1DUmPjSkI7EqzBfTJMiryvrMwys5
+        CHQIHtIm48g=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 94CE8C5E65;
+        Tue, 17 Mar 2020 18:05:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C625BC5E60;
+        Tue, 17 Mar 2020 18:05:15 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Beat Bolli <dev+git@drbeat.li>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] unicode: update the width tables to Unicode 13.0
+References: <20200317153605.1177454-1-dev+git@drbeat.li>
+Date:   Tue, 17 Mar 2020 15:05:13 -0700
+In-Reply-To: <20200317153605.1177454-1-dev+git@drbeat.li> (Beat Bolli's
+        message of "Tue, 17 Mar 2020 16:36:05 +0100")
+Message-ID: <xmqq4kumiqna.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <CAP8UFD0wJo4onz0_Vw4-bcX1h61=J=ZiKfM-fMXLj4B9q0aveg@mail.gmail.com>
- <cover.1584477196.git.me@ttaylorr.com> <888d9484cf4130e90f451134c236a290a6c5e18d.1584477196.git.me@ttaylorr.com>
-In-Reply-To: <888d9484cf4130e90f451134c236a290a6c5e18d.1584477196.git.me@ttaylorr.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 17 Mar 2020 17:11:42 -0400
-Message-ID: <CAPig+cRgnqmwCCjFV32K_ysawHBkJN_y6=Do_oKXjjpy0BSvUQ@mail.gmail.com>
-Subject: Re: [RFC PATCH 2/2] upload-pack.c: allow banning certain object filter(s)
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Jeff King <peff@peff.net>, james@jramsay.com.au
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 61CCF1F4-689B-11EA-B950-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 17, 2020 at 4:40 PM Taylor Blau <me@ttaylorr.com> wrote:
-> NB: this introduces an unfortunate possibility that attempt to write the
-> ERR sideband will cause a SIGPIPE. This can be prevented by some of
-> SZEDZER's previous work, but it is silenced in 't' for now.
+Beat Bolli <dev+git@drbeat.li> writes:
 
-s/SZEDZER/SZEDER/
+> Now that Unicode 13.0 has been announced[0], update the character
+> width tables to the new version.
+>
+> [0] https://home.unicode.org/announcing-the-unicode-standard-version-13-0/
 
-> diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
-> @@ -235,6 +235,29 @@ test_expect_success 'implicitly construct combine: filter with repeated flags' '
-> +test_expect_success 'upload-pack fails banned object filters' '
-> +       # Ensure that configuration keys are normalized by capitalizing
-> +       # "blob:None" below:
-> +       test_config -C srv.bare uploadpack.filter.blob:None.allow false &&
-
-I found the wording of the comment more confusing than clarifying.
-Perhaps rewriting it like this could help:
-
-    Test case-insensitivity by intentional use of "blob:None" rather than
-    "blob:none".
-
-or something.
-
-> +       test_must_fail ok=sigpipe git clone --no-checkout --filter.blob:none \
-> +               "file://$(pwd)/srv.bare" pc3
-> +'
+Thanks.
