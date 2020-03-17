@@ -2,134 +2,96 @@ Return-Path: <SRS0=62NG=5C=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A6247C1975A
-	for <git@archiver.kernel.org>; Tue, 17 Mar 2020 18:41:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6EB94C1975A
+	for <git@archiver.kernel.org>; Tue, 17 Mar 2020 18:58:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 854DD20714
-	for <git@archiver.kernel.org>; Tue, 17 Mar 2020 18:41:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4104520724
+	for <git@archiver.kernel.org>; Tue, 17 Mar 2020 18:58:30 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="eMcju8KU"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726491AbgCQSlZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Mar 2020 14:41:25 -0400
-Received: from cloud.peff.net ([104.130.231.41]:42040 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726294AbgCQSlZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Mar 2020 14:41:25 -0400
-Received: (qmail 4127 invoked by uid 109); 17 Mar 2020 18:41:25 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 17 Mar 2020 18:41:25 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 8980 invoked by uid 111); 17 Mar 2020 18:51:00 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 17 Mar 2020 14:51:00 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 17 Mar 2020 14:41:24 -0400
-From:   Jeff King <peff@peff.net>
-To:     Bryan Turner <bturner@atlassian.com>
-Cc:     Derrick Stolee <stolee@gmail.com>, Andreas Krey <a.krey@gmx.de>,
-        Git Users <git@vger.kernel.org>
-Subject: Re: Avoid race condition between fetch and repack/gc?
-Message-ID: <20200317184124.GA17006@coredump.intra.peff.net>
-References: <20200316082348.GA26581@inner.h.apk.li>
- <759f4b3b-28a7-c002-ae51-5991bf9ad211@gmail.com>
- <20200316172729.GA1072073@coredump.intra.peff.net>
- <CAGyf7-HQH7hjuYSmOYeOEvZBWkUzjU4M8Wr50FNPYgG4NZ=5UA@mail.gmail.com>
+        id S1726476AbgCQS63 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Mar 2020 14:58:29 -0400
+Received: from mail-qk1-f172.google.com ([209.85.222.172]:38959 "EHLO
+        mail-qk1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726294AbgCQS63 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Mar 2020 14:58:29 -0400
+Received: by mail-qk1-f172.google.com with SMTP id t17so12673358qkm.6
+        for <git@vger.kernel.org>; Tue, 17 Mar 2020 11:58:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=usp-br.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=qkM4K3dKVTjPnzNpOIBaE08BArP3tEsngykgy6NkJCk=;
+        b=eMcju8KUoFpFfvAJlycqL0Hg/qkMy3ZXmdQQG17NCKavRfdB7wzxP6NpwuNIDYYdqQ
+         C2szlYyGeyBUyFgPEpwyy4/BYN8sLFSWGkl4FEuPtJ7zsHpaaPKt9u9dzvwh8kRnBnC/
+         2eA2fgsThElauStmHQzoZ7OoFjuhsovBcs6mEzjYBNniQaKLh14YFEpdyrAWyRdqFg7U
+         /5jYXikxIqkLlTyqiWS923uTJt7hoAPTdUYRhGRU0TJWhDVhdBep2hi5JnqhWSIuBnX8
+         4U/BDtzlbiDfL3oSjfKyjCQogGfBaNxTJQZgdRIRtO8TZiipFsGZgZzcpMjh3pOhv3tD
+         B8MQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=qkM4K3dKVTjPnzNpOIBaE08BArP3tEsngykgy6NkJCk=;
+        b=avqhr4SdaRqySaSqr3XNPyg4uiG9JSpQwXzf7MSUAXnXauovkH22h0uXTFSzITfz7j
+         ZwDrU5h1Rwa8rWyBKlcP2dITBb30LEndkRckTg9wKCZa42Qh8wNWrgmvibtfi13LEJUO
+         lhv+ka5/TqB655cxXX0bIlgSF2JexdRwX6zSUB3dRtm2VH8pismJjzyk7ls83p2qKWOx
+         gXy0HmdJi5FI5cmwSrxJrjDRuIw9wNiCc7bZCIUzSCfSFSmKCrwpbyjRoyaundeTZ5g1
+         YruRsXkqLM9qcvXUjvtr8DAec2X87gHIikVZ/2zctF5HHUlcNXEBdVYFTsLyELF1iCKf
+         kNPQ==
+X-Gm-Message-State: ANhLgQ2tISmv/Jnku9ieIjkn4yrd/pzKqPKJTJsCWpif0yLRYB/YB9fr
+        psgTXmjNGAM/TqwtQI2b1rsO6oSMsC4=
+X-Google-Smtp-Source: ADFU+vtwcQ8tby/MO0lp9R6L8KL47BkkbWP9ropMCbJLaCd8JYRPGP/fTMtsN0NhfeXlKrZZFkglEA==
+X-Received: by 2002:ae9:c011:: with SMTP id u17mr372900qkk.92.1584471507279;
+        Tue, 17 Mar 2020 11:58:27 -0700 (PDT)
+Received: from mango.spo.virtua.com.br ([2804:14c:81:942d::2])
+        by smtp.gmail.com with ESMTPSA id n190sm2414707qkb.93.2020.03.17.11.58.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 Mar 2020 11:58:26 -0700 (PDT)
+From:   Matheus Tavares <matheus.bernardino@usp.br>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, dreamer.tan@gmail.com, peff@peff.net
+Subject: [PATCH v2 0/3] dir: update outdated field names and comments about oid_stat
+Date:   Tue, 17 Mar 2020 15:57:42 -0300
+Message-Id: <cover.1584471137.git.matheus.bernardino@usp.br>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <cover.1584329834.git.matheus.bernardino@usp.br>
+References: <cover.1584329834.git.matheus.bernardino@usp.br>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAGyf7-HQH7hjuYSmOYeOEvZBWkUzjU4M8Wr50FNPYgG4NZ=5UA@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 16, 2020 at 04:40:13PM -0700, Bryan Turner wrote:
+In 4b33e60 ("dir: convert struct sha1_stat to use object_id",
+2018-01-28), we renamed "struct sha1_stat" to "struct oid_stat".
+However, there are still some comments and struct field names which
+refer to the old sha1_stat. The patches in this series update those
+places.
 
-> On Mon, Mar 16, 2020 at 10:27 AM Jeff King <peff@peff.net> wrote:
-> >
-> >   - you don't use config like core.packedGitLimit that encourages Git to
-> >     drop mmap'd windows. On 64-bit systems, this doesn't help at all (we
-> >     have plenty of address space, and since the maps are read-only, the
-> >     OS is free to drop the clean pages if there's memory pressure). On
-> >     32-bit systems, it's a necessity (and I'd expect a 32-bit server to
-> >     run into this issue a lot for large repositories).
-> 
-> I could be wrong, but I'm going to _guess_ from the :7999 in the
-> example output that the repository is hosted with Bitbucket Server.
-> Assuming my guess is correct, Bitbucket Server _does_ set
-> "core.packedgitlimit=256m" (and "core.packedgitwindowsize=32m", for
-> what it's worth).
+Changes since v1:
+- Renamed "ss_info_exclude" and "ss_excludes_file" to
+  "info_exclude_validity" and "excludes_file_validity", as suggested
+  by Junio.
+- Added patch 3, addressing outdated comments' updates on dir.h, as
+  suggested by Patryk.
 
-Thanks for letting me know. That would definitely explain the behavior
-Andreas is seeing.
+Matheus Tavares (3):
+  dir: fix outdated comment on add_patterns()
+  dir: improve naming of oid_stat fields in two structs
+  dir: update outdated comments about untracked cache
 
-> Those settings are applied specifically because
-> we've found they _do_ impact Git's overall memory usage when serving
-> clones in particular, which is important for cases where the system is
-> serving dozens (or hundreds) of concurrent clones.
+ dir.c                                | 44 ++++++++++++++++------------
+ dir.h                                | 15 +++++-----
+ t/helper/test-dump-untracked-cache.c |  5 ++--
+ 3 files changed, 37 insertions(+), 27 deletions(-)
 
-I do think there's an open question here, but it's also really easy to
-be misled by common metrics. If we imagine a repo with a 512MB packfile
-and two scenarios:
+-- 
+2.25.1
 
-  - Git mmap's the whole packfile at once, and accesses pages within
-    that mmap
-
-  - Git mmap's no more than 256MB at once, shifting its window around as
-    necessary
-
-and then we get a bunch of clones. Then I'd expect to see:
-
-  - virtual memory size for those Git processes will be higher. But much
-    of that will be shared pages with each other. Measuring something
-    like Proportional Set Size (PSS) yields a more useful number.
-
-  - the Resident Set Size (RSS) of those processes will also be higher,
-    because the OS may be leaving pages in the mmap resident. However,
-    in my experience this is often a sign that there _isn't_ memory
-    pressure on the system. Because if there was, then infrequently used
-    pages would be dropped by the OS (and they should be among the first
-    to go, as they're by definition clean pages. Though they do
-    presumably compete with other read-only disk cache).
-
-Or another way to think about it: the mmap patterns don't change the
-working set patterns of Git. They just change what the OS knows, and
-possibly how it reacts. And that's the "open question" for me: does the
-operating system react significantly differently under memory pressure
-for a big mmap with infrequently accessed pages than it would for a
-series of smaller maps. I don't know the answer. Our servers are all
-Linux, and we've tended to just trust that the operating system's
-page-level decisions are sensible.
-
-But I don't have any real numbers to support that. We stopped using
-core.packedGitLimit in 2012 (because of this issue), and everything has
-been good enough since to not bother looking into it more. Memory
-pressure for us is usually from actual heap usage (e.g., pack-objects
-has a high per-object cost plus delta window size times max object
-size).
-
-> Of course, we don't always do a great job of re-testing
-> once-beneficial settings later, which means sometimes they end up
-> being based on outdated observations. Perhaps we should prioritize
-> some additional testing here, especially on 64-bit systems. (We've
-> been setting "core.packedgitlimit" since back when Bitbucket Server
-> was called Stash and supported Git 1.7.6 on the server.)
-
-It sounds like you don't have any recent numbers, either. :)
-
-> That said, though, you note "core.packedgitlimit" is necessary on
-> 32-bit servers and, unfortunately, we do still support Bitbucket
-> Server on 32-bit OSes. Maybe we should investigate applying (or not)
-> the flags depending on the platform. Sadly, that's not necessarily
-> simple to do since just because the _OS_ is 64-bit doesn't mean _Git_
-> is; it's pretty trivial to run 32-bit Git on 64-bit Windows, for
-> example.
-
-The default for core.packedGitLimit is already 256MB on 32-bit builds of
-Git (based on sizeof(void *), so truly on the build and not the OS). So
-if you just left it unset, it would do what you want.
-
--Peff
