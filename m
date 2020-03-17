@@ -2,401 +2,214 @@ Return-Path: <SRS0=62NG=5C=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F095C10F29
-	for <git@archiver.kernel.org>; Tue, 17 Mar 2020 04:45:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 95FFCC10F29
+	for <git@archiver.kernel.org>; Tue, 17 Mar 2020 07:24:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 4ACB520658
-	for <git@archiver.kernel.org>; Tue, 17 Mar 2020 04:45:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5587A20674
+	for <git@archiver.kernel.org>; Tue, 17 Mar 2020 07:24:40 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WqGXi6NF"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N8XNbQFn"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726707AbgCQEpX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Mar 2020 00:45:23 -0400
-Received: from mail-oi1-f195.google.com ([209.85.167.195]:36861 "EHLO
-        mail-oi1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725536AbgCQEpW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Mar 2020 00:45:22 -0400
-Received: by mail-oi1-f195.google.com with SMTP id k18so20421160oib.3
-        for <git@vger.kernel.org>; Mon, 16 Mar 2020 21:45:22 -0700 (PDT)
+        id S1725794AbgCQHYj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Mar 2020 03:24:39 -0400
+Received: from mail-ed1-f44.google.com ([209.85.208.44]:34391 "EHLO
+        mail-ed1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725730AbgCQHYi (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Mar 2020 03:24:38 -0400
+Received: by mail-ed1-f44.google.com with SMTP id i24so21254936eds.1
+        for <git@vger.kernel.org>; Tue, 17 Mar 2020 00:24:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=Wuq2paxvWL4xv+P4477K6C1bfyh2yI63KvdRtSg968k=;
-        b=WqGXi6NFFpng8hoP2W/Rn3U1dOiqEA5abMAzncOQZOH/j7Qk8PLwmZL7XTEbIGMMYz
-         AfHtZyZofKEa09baAAtMb+lzY04/o5r6/KGEWYrd/jeMNzg06S/Mf0Gu3T/995ieQLgW
-         qobzdy2RytMwo993z8G2pWQVCx/q5R5Ko5I1x3fSFfw4lZ9iZf0qG6nfpvuepNISxYgE
-         H9OrEGWRT0XQpQklFycr14+DtplnuCYj+pxgl2Nr0SI1M9U015sDkHtKjqxJ8Fpzyv3U
-         hduSMMZFxPExcYvEP3QVsojo61phNRhf3BrJYLuW5bp+tq4Fl8pHUre+CGm7gV+WeVMF
-         ZkCA==
+        bh=EAs7Yox9YtyGM4Q+8C+ThGmr0gaucRYwXgVR/FNrzVo=;
+        b=N8XNbQFn4gEqV0Zb+rfA8k6FYuIJY8QjWql/imkL3M55TlJ/qX1ufPoisOtaI63Onf
+         gMpW3f9Mf3Gwk0q1PVP7aUKLkE3skD5EpMjWkKh7hUOw0kXceAEehSbMPr4NPGXcGdk4
+         riws6DsUAMFipVd3rXZmYERuAl6Z7Jmw1eie/FxBWcfj9beSgFMYW68TwatLtHlfh2BC
+         3uHdFBDQ+PD6GcOeLbac3YvDa8Xmivf0m8emx2npkz082hKxTmgcoDMUyldMdL5C7QAy
+         YIF50XIYWY4JHo3RqUuWee13N+BIqNMd4hJ//Otv/8e1kGCFDFDRsxXWettrEe5oDy2t
+         OVQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=Wuq2paxvWL4xv+P4477K6C1bfyh2yI63KvdRtSg968k=;
-        b=qvP24PML777wQwucnt3Hs1UUrSkTYUP8ibqGVHAPLP1cxiHHxq7/IU3rM4FkK14Non
-         ho9qW4W1tmIhbepvYAbuRVAvxhoal3Z9IOG4b1Fnk5T6fpDx2ncqbiIfRf1JqM6MQoEw
-         oo+MUoXjqMFHBL6AkrzvWjQCLf2XiepHXTYqB+8L6ZJblSW6cNwjOw6X8wyxcWvyqrR4
-         c2PxNPRZlNBRa27E/r6rzh9vHPIbK828VxJTMxFfKJLesHhQcc0/Ltc8tI3YDHddiGcj
-         5yTB10zwekBJJgWZTc86T2LVImKVu/bwwLbBXhsoY+5yKKlrhnyHeBdv+Jh8dYcpzGyV
-         tVtA==
-X-Gm-Message-State: ANhLgQ3rMx4iHBO7Rt3qOufyAiaRKUU+SuOxB3bP+90kTOBSD0pt9fLu
-        cKqB78MtXB3Ovpt4JoAaEQphWfu2u2mregAFTWw=
-X-Google-Smtp-Source: ADFU+vv8PbAemDxNPp4KqzYqo0JARVN3Td7kXiMs8Jk5wZHGTE5hEbeUFNInD/VMEt6jXVuLkjdFt98jxEyKhFmccbU=
-X-Received: by 2002:a54:4416:: with SMTP id k22mr2225859oiw.167.1584420321522;
- Mon, 16 Mar 2020 21:45:21 -0700 (PDT)
+        bh=EAs7Yox9YtyGM4Q+8C+ThGmr0gaucRYwXgVR/FNrzVo=;
+        b=X7A323CyiQqusrDpcfBOJ7bD39X3ZDipNWnudqmb0S0Q9bBsrOuYZ6EbXIgwuEMCCg
+         b6csmCblMduRn8QSSatdRyQm9cIK8kVehLH9RRaPq1WbBENFwunGbS54dvGn16Sy4SeR
+         fvawyGAmLIW3C3DbHBsGTIuErZAedks2fyJBeybax21y89jVUYsEUoGbhMv1PI/yPDxR
+         3oDrY4rWfkNKoobR8Dd29LSw8rGqpnG9JiOa2cS45AxGSnK9Cy6EFZLdNARlYb6513JS
+         6xDNgqXBrN50Bl4eUsWAsoHzUx6XwAoPOslcO04lGwWESrJMxa3R4iifhR89daYmR6a9
+         vpkg==
+X-Gm-Message-State: ANhLgQ3EhpuxEHTfzrovcMOL16goqOARIfI7BqhsxRkrgW+4Z24xexKO
+        iBiCN8t9yU3gCl2FIBjTG5HJhMxaSEJfvLMGt+KZWkX4Tng=
+X-Google-Smtp-Source: ADFU+vsToayiGXeeSVFXodKO6EyCwHaklz6LFpkZ2Do5jN39+uCS+UDTcGlnuyD2cW37trLdnaaYLmhHQoDqoyQoi2o=
+X-Received: by 2002:a17:906:3502:: with SMTP id r2mr2761270eja.67.1584429873951;
+ Tue, 17 Mar 2020 00:24:33 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.679.v4.git.git.1579155273.gitgitgadget@gmail.com>
- <pull.679.v5.git.git.1581802602.gitgitgadget@gmail.com> <ad8339aebf28ec84c22ed59cef06614d204adb55.1581802602.git.gitgitgadget@gmail.com>
- <20200312151318.GM212281@google.com> <CABPp-BHyNvxQZ5q=9WXXESTPmxFe4fAiE5roGeV2H+XJ_cpDmg@mail.gmail.com>
- <20200312175548.GC120942@google.com> <CABPp-BFLwpa019Prd3nf7s4BY2jWp8utOvJD9pzHcbg66b8fWw@mail.gmail.com>
- <20200312184621.GD120942@google.com> <CABPp-BHSAbJzWEsPSTM5Q6MPdmu4VSuOx-=6-MJkHUovg3_1=g@mail.gmail.com>
- <20200317025808.GB31380@google.com>
-In-Reply-To: <20200317025808.GB31380@google.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 16 Mar 2020 21:45:10 -0700
-Message-ID: <CABPp-BGvatgaTkorJEErvYbVvci2b5AQgCH6Q0z81426tKZ04A@mail.gmail.com>
-Subject: Re: [PATCH v5 20/20] rebase: rename the two primary rebase backends
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Emily Shaffer <emilyshaffer@google.com>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Denton Liu <liu.denton@gmail.com>,
+References: <86mu8o8dsf.fsf@gmail.com> <7d6a84c7-6b16-c2a9-11a1-3397422064d1@gmail.com>
+ <86d09b7jx6.fsf@gmail.com>
+In-Reply-To: <86d09b7jx6.fsf@gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Tue, 17 Mar 2020 08:24:22 +0100
+Message-ID: <CAP8UFD3BeS8bj8OGKJmVyKeDTCvqhCpBxLhTwuQ3zffejQkj7g@mail.gmail.com>
+Subject: Re: [RFC] Possible idea for GSoC 2020
+To:     Jakub Narebski <jnareb@gmail.com>
+Cc:     Derrick Stolee <stolee@gmail.com>, git <git@vger.kernel.org>,
+        Heba Waly <heba.waly@gmail.com>,
         Junio C Hamano <gitster@pobox.com>,
-        Pavel Roskin <plroskin@gmail.com>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+        Jonathan Tan <jonathantanmy@google.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Abhishek Kumar <abhishekkumar8222@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jonathan,
+On Tue, Mar 17, 2020 at 4:13 AM Jakub Narebski <jnareb@gmail.com> wrote:
 
-On Mon, Mar 16, 2020 at 7:58 PM Jonathan Nieder <jrnieder@gmail.com> wrote:
+[...]
+
+> >> ### Graph labelling for speeding up git commands
+
+[...]
+
+> > We already have the second inequality (f(u) <= f(v)) where the function
+> > 'f' is the generation of v. The success of this approach over generation
+> > numbers relies entirely on how often the inequality min_graph(v) <= post(u)
+> > fails when gen(u) <= gen(v) holds.
 >
-> Hi,
+> True.  It may turn out that additional negative-cut filters do not bring
+> enough performance improvements over topological levels or corrected
+> commit date (or monotonically increasing corrected commit date) to be
+> worth it.
 >
-> Elijah Newren wrote:
-> > On Thu, Mar 12, 2020 at 11:46 AM Jonathan Nieder <jrnieder@gmail.com> wrote:
+> I think they can help in wide commit graphs (many concurrently developed
+> branches with many commits and few merges), and when there is orphan
+> branch (like 'todo' in the git.git, or 'gh-pages' for storing
+> per-project GitHub Pages) that is somehow entangled in query.
 >
-> >> Sorry for the lack of clarity.  I mean allowing
+> >> If for each commit 'v' we would compute and store in the commit-graph
+> >> file two numbers: 'post(v)' and the minimum of 'post(u)' for commits
+> >> that were visited during the part of depth-first search that started
+> >> from 'v' (which is the minimum of post-order number for subtree of a
+> >> spanning tree that starts at 'v').  Let's call the later 'min_tree(v)'.
+> >> Then the following condition is true:
 > >>
-> >>         [rebase]
-> >>                 backend = am
-> >>                 backend = apply
-> >>                 backend = futuristic
-> >>
-> >> with behavior
-> >>
-> >> - on "git" that understands am but not apply or futuristic, use the am
-> >>   backend
-> >> - on "git" that understands apply but not am or futuristic, use the
-> >>   apply backend
-> >> - on "git" that understands apply and futuristic, use the futuristic
-> >>   backend
-> >>
-> >> That way, a single config file is usable on all three versions of Git.
+> >>   if min_tree(v) <= post(u) <= post(v), then 'v' can reach 'u'
 > >
-> > Ah, gotcha, that makes sense though we'd need to make the thing
-> > multi-valued which is a bit late for 2.26.  But we could at least
-> > extend the logic in that way for 2.27.
+> > How many places in Git do we ask "can v reach u?" and how many would
+> > return immediately without needing a walk in this new approach? My
+> > guess is that we will have a very narrow window where this query
+> > returns a positive result.
 >
-> Here's a patch implementing that.  I'm not convinced it's worth the
-> complexity, mostly because I'm not convinced that rebase is going to
-> have to select between additional new backends in the future.  But if
-> you think it will, then I think this would be a reasonable thing to do
-> (maybe even without the documentation part of the patch).
+> As I wrote below, such positive-cut filter would be directly helpful in
+> performing the following commands:
 >
-> Thoughts?
+>  - `git merge-base --is-ancestor`
+>  - `git branch --contains`
+>  - `git tag --contains`
+>  - `git branch --merged`
+>  - `git tag --merged`
+>
+> It would be also useful for tag autofollow in git-fetch; is is N-to-M
+> equivalent to 1-to-N / N-to-1 `--contains` queries.
+>
+> I am quite sure that positive-cut filter would make `--ancestry-path`
+> walk faster.
+>
+> I think, but I am not sure, that positive-cut filter can make parts of
+> topological sort and merge base algorithms at least a tiny bit faster.
 
-Thanks for investigating what's involved.  If there will be new rebase
-backends, then this does look like nice future proofing to me.  As for
-whether there will be...
+Is there an easy way to check that it would provide significant
+performance improvements at least in some cases? Can we ask the
+student to do that at the beginning of the GSoC?
 
-Personally, I would rather decrease the number of backends than
-increase, and if it was up to just me, I'd like to drive the number of
-backends to one and then keep it there.  But it feels hard to know for
-sure.
+> > I believe we discussed this concept briefly when planning "generation
+> > number v2" and the main concern I have with this plan is that the
+> > values are not stable. The value of post(v) and min_tree(v) depend
+> > on the entire graph as a whole, not just what is reachable from v
+> > (and preferably only the parents of v).
+> >
+> > Before starting to implement this, I would consider how such labels
+> > could be computed across incremental commit-graph boundaries. That is,
+> > if I'm only adding a layer of commits to the commit-graph without
+> > modifying the existing layers of the commit-graph chain, can I still
+> > compute values with these properties? How expensive is it? Do I need
+> > to walk the entire reachable set of commits?
+>
+> I think it would be possible to compute post(v) and min_tree(v) using
+> incremental updates, and to make it compatibile with incremental
+> commit-graph format (with the commit-graph chain).  But I have not
+> proven it.
 
-> Thanks,
-> Jonathan
->
-> -- >8 --
-> Subject: rebase: allow specifying unrecognized rebase.backend with a fallback
->
-> In 8295ed690bf (rebase: make the backend configurable via config
-> setting, 2020-02-15), Git learned a new rebase.backend setting that
-> can be used to specify which implementation should be used for
-> non-interactive rebases: "am" (now called "apply"), which uses "git
-> am", or "merge", which uses the three-way merge machinery.
->
-> Most likely those are the only two backends that rebase will ever need
-> to learn, so this level of configurability would be sufficient.  At
-> some point the "apply" backend would be retired, and the setting would
-> be removed altogether.
->
-> Suppose, though, that rebase learns another backend --- e.g. "faster".
-> In that case, a user might set configuration to request it:
->
->         [rebase]
->                 backend = faster
->
-> If their configuration is shared between multiple versions of Git
-> (think "home directory on NFS shared between machines"), this would
-> produce errors when read by older versions of Git:
->
->         fatal: Unknown rebase backend: faster
->
-> On the other hand, if we ignore unrecognized rebase backend settings,
-> then Git would fail to realize that
->
->         [rebase]
->                 backend = appply
->
-> is a typo, producing a confusing user experience.  Let's do something
-> in between: when a rebase backend setting is unrecognized, fall back
-> to the last earlier recognized value, but if no value was recognized,
-> print an error message allowing the user to catch their typo.
->
-> Reported-by: Emily Shaffer <emilyshaffer@google.com>
-> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-> ---
->  Documentation/config/rebase.txt |  5 ++
->  builtin/rebase.c                | 52 +++++++++++++++---
->  t/t3435-rebase-backend.sh       | 97 +++++++++++++++++++++++++++++++++
->  3 files changed, 146 insertions(+), 8 deletions(-)
->  create mode 100755 t/t3435-rebase-backend.sh
->
-> diff --git a/Documentation/config/rebase.txt b/Documentation/config/rebase.txt
-> index 7f7a07d22f8..c92adbdcc69 100644
-> --- a/Documentation/config/rebase.txt
-> +++ b/Documentation/config/rebase.txt
-> @@ -10,6 +10,11 @@ rebase.backend::
->         'apply' or 'merge'.  In the future, if the merge backend gains
->         all remaining capabilities of the apply backend, this setting
->         may become unused.
-> ++
-> +If set multiple times, the last value corresponding to a recognized
-> +backend is used. This is for forward compatibility, as it allows
-> +specifying a rebase backend that Git does not know about yet along
-> +with a backend known today as a fallback.
->
->  rebase.stat::
->         Whether to show a diffstat of what changed upstream since the last
-> diff --git a/builtin/rebase.c b/builtin/rebase.c
-> index ffa467aad52..5b0fab9741f 100644
-> --- a/builtin/rebase.c
-> +++ b/builtin/rebase.c
-> @@ -56,10 +56,18 @@ enum empty_type {
->         EMPTY_ASK
->  };
->
-> +enum rebase_backend {
-> +       BACKEND_UNSPECIFIED = 0,
-> +       BACKEND_UNRECOGNIZED,
-> +       BACKEND_APPLY,
-> +       BACKEND_MERGE,
-> +};
-> +
->  struct rebase_options {
->         enum rebase_type type;
->         enum empty_type empty;
-> -       const char *default_backend;
-> +       enum rebase_backend configured_backend;
-> +       const char *last_specified_backend;
->         const char *state_dir;
->         struct commit *upstream;
->         const char *upstream_name;
-> @@ -100,7 +108,6 @@ struct rebase_options {
->  #define REBASE_OPTIONS_INIT {                          \
->                 .type = REBASE_UNSPECIFIED,             \
->                 .empty = EMPTY_UNSPECIFIED,             \
-> -               .default_backend = "merge",             \
->                 .flags = REBASE_NO_QUIET,               \
->                 .git_am_opts = ARGV_ARRAY_INIT,         \
->                 .git_format_patch_opt = STRBUF_INIT     \
-> @@ -1224,6 +1231,15 @@ static int run_specific_rebase(struct rebase_options *opts, enum action action)
->         return status ? -1 : 0;
->  }
->
-> +static enum rebase_backend parse_rebase_backend(const char *value)
-> +{
-> +       if (!strcmp(value, "apply"))
-> +               return BACKEND_APPLY;
-> +       if (!strcmp(value, "merge"))
-> +               return BACKEND_MERGE;
-> +       return BACKEND_UNRECOGNIZED;
-> +}
-> +
->  static int rebase_config(const char *var, const char *value, void *data)
->  {
->         struct rebase_options *opts = data;
-> @@ -1264,7 +1280,18 @@ static int rebase_config(const char *var, const char *value, void *data)
->         }
->
->         if (!strcmp(var, "rebase.backend")) {
-> -               return git_config_string(&opts->default_backend, var, value);
-> +               enum rebase_backend val;
-> +               if (!value)
-> +                       return config_error_nonbool(var);
-> +               val = parse_rebase_backend(value);
-> +               if (opts->configured_backend == BACKEND_UNSPECIFIED)
-> +                       opts->configured_backend = val;
-> +               else if (val == BACKEND_UNRECOGNIZED)
-> +                       ; /* Unrecognized rebase backend. Ignore it. */
-> +               else
-> +                       opts->configured_backend = val;
-> +               opts->last_specified_backend = value;
-> +               return 0;
->         }
->
->         return git_default_config(var, value, data);
-> @@ -1903,14 +1930,23 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->                 }
->         }
->
-> +       if (options.configured_backend == BACKEND_UNRECOGNIZED)
-> +               die(_("unknown rebase backend: %s"),
-> +                   options.last_specified_backend);
-> +
->         if (options.type == REBASE_UNSPECIFIED) {
-> -               if (!strcmp(options.default_backend, "merge"))
-> +               switch (options.configured_backend) {
-> +               case BACKEND_UNSPECIFIED:
-> +               case BACKEND_MERGE:
->                         imply_merge(&options, "--merge");
-> -               else if (!strcmp(options.default_backend, "apply"))
-> +                       break;
-> +               case BACKEND_APPLY:
->                         options.type = REBASE_APPLY;
-> -               else
-> -                       die(_("Unknown rebase backend: %s"),
-> -                           options.default_backend);
-> +                       break;
-> +               default:
-> +                       BUG("unexpected backend %d",
-> +                           (int) options.configured_backend);
-> +               }
->         }
->
->         switch (options.type) {
-> diff --git a/t/t3435-rebase-backend.sh b/t/t3435-rebase-backend.sh
-> new file mode 100755
-> index 00000000000..8b9ba6f1894
-> --- /dev/null
-> +++ b/t/t3435-rebase-backend.sh
-> @@ -0,0 +1,97 @@
-> +#!/bin/sh
-> +
-> +test_description='rebase.backend tests
-> +
-> +Checks of config parsing for the [rebase] backend setting.  We detect
-> +which backend was used by checking which directory was created to hold
-> +state.'
-> +
-> +. ./test-lib.sh
-> +
-> +# usage: test_backend_choice <expectation> <command>
-> +#
-> +# Tests that the chosen backend for rebase command <command>
-> +# is <expectation> ("merge" or "apply").
-> +test_backend_choice () {
-> +       expect=$1 &&
-> +       shift &&
-> +
-> +       test_must_fail git "$@" master topic &&
-> +       case $expect in
-> +       apply)
-> +               test_path_is_dir .git/rebase-apply &&
-> +               test_path_is_missing .git/rebase-merge
-> +               ;;
-> +       merge)
-> +               test_path_is_dir .git/rebase-merge &&
-> +               test_path_is_missing .git/rebase-apply
-> +               ;;
-> +       *)
-> +               error "unrecognized expectation $expect"
-> +       esac
-> +}
-> +
-> +test_expect_success 'setup' '
-> +       test_commit base &&
-> +       test_commit sidea conflict.txt myway &&
-> +       git checkout -b topic base &&
-> +       test_commit sideb conflict.txt thehighway
-> +'
-> +
-> +test_expect_success '--apply uses apply backend' '
-> +       test_when_finished "git rebase --abort" &&
-> +       test_backend_choice apply rebase --apply
-> +'
-> +
-> +test_expect_success '--merge uses merge backend' '
-> +       test_when_finished "git rebase --abort" &&
-> +       test_backend_choice merge rebase --merge
-> +'
-> +
-> +test_expect_success 'default to merge backend' '
-> +       test_when_finished "git rebase --abort" &&
-> +       test_backend_choice merge rebase
-> +'
-> +
-> +test_expect_success 'config overrides default' '
-> +       test_when_finished "git rebase --abort" &&
-> +       test_backend_choice apply -c rebase.backend=apply rebase
-> +'
-> +
-> +test_expect_success 'option overrides config' '
-> +       test_when_finished "git rebase --abort" &&
-> +       test_backend_choice merge -c rebase.backend=apply rebase --merge
-> +'
-> +
-> +test_expect_success 'last config value wins' '
-> +       test_when_finished "git rebase --abort" &&
-> +       test_backend_choice merge \
-> +               -c rebase.backend=apply \
-> +               -c rebase.backend=merge \
-> +               rebase
-> +'
-> +
-> +test_expect_success 'last config value wins' '
-> +       test_when_finished "git rebase --abort" &&
-> +       test_backend_choice merge \
-> +               -c rebase.backend=apply \
-> +               -c rebase.backend=merge \
-> +               rebase
-> +'
+Would it be difficult to prove? What would be required? And again can
+we ask the student to do that at the beginning of the GSoC?
 
-Um, copy-and-paste-and-forget-to-edit?  This test is identical to the
-one above it and thus is not useful; I think you meant to flip the
-order of config options and flip the result (and maybe give a slightly
-different test name to it)?
+[...]
 
-> +
-> +test_expect_success 'misspelled backend without fallback is diagnosed' '
-> +       test_must_fail \
-> +               git -c rebase.backend=appply rebase master topic 2>message &&
-> +       test_i18ngrep "unknown rebase backend" message &&
-> +       grep appply message
-> +'
-> +
-> +test_expect_success 'forward compatibility by skipping unrecognized values' '
-> +       test_when_finished "git rebase --abort" &&
-> +       test_backend_choice apply \
-> +               -c rebase.backend=apply \
-> +               -c rebase.backend=futuristic \
-> +               rebase
-> +'
-> +
-> +test_done
+> > The point of generation number v2 [1] was to allow moving to "exact"
+> > algorithms for things like merge-base where we still use commit time
+> > as a heuristic, and could be wrong because of special data shapes.
+> > We don't use generation number in these examples because using only
+> > generation number can lead to a large increase in number of commits
+> > walked. The example we saw in the Linux kernel repository was a bug
+> > fix created on top of a very old commit, so there was a commit of
+> > low generation with very high commit-date that caused extra walking.
+> > (See [2] for a detailed description of the data shape.)
+> >
+> > My _prediction_ is that the two-dimensional system will be more
+> > complicated to write and use, and will not have any measurable
+> > difference. I'd be happy to be wrong, but I also would not send
+> > anyone down this direction only to find out I'm right and that
+> > effort was wasted.
+>
+> That might be a problem.
+>
+> This is a bit of a "moonshot" / research project, moreso than others.
+> Though it would be still valuable, in my opionion, even if the code
+> wouldn't ultimately get merged and added into Git.
 
-Didn't spot anything other than that one test issue in looking over things.
+I agree that it feels like a "moonshot" / research project.
+
+> > My recommendation is that a GSoC student update the
+> > generation number to "v2" based on the definition you made in [1].
+> > That proposal is also more likely to be effective in Git because
+> > it makes use of extra heuristic information (commit date) to
+> > assist the types of algorithms we care about.
+> >
+> > In that case, the "difficult" part is moving the "generation"
+> > member of struct commit into a slab before making it a 64-bit
+> > value. (This is likely necessary for your plan, anyway.) Updating
+> > the generation number to v2 is relatively straight-forward after
+> > that, as someone can follow all places that reference or compute
+> > generation numbers and apply a diff
+>
+> Good idea!  Though I am not sure if it is not too late to add it to the
+> https://git.github.io/SoC-2020-Ideas/ as the self imposed deadline of
+> March 16 (where students can start submitting proposals to GSoC) has
+> just passed.  Christian, what do you think?
+
+Would that be a different project idea or part of your "Graph labeling
+for speeding up git commands" project idea?
+
+I am very reluctant to add new project ideas at that time. I don't
+think student will have time to properly research it and get it
+reviewed.
+
+It could be part of your research project though, to check if that
+approach is better or good enough compared to what you suggest in the
+current version of your project.
+
+> Would you agree, Stolee, to be a _possible_ mentor or co-mentor for
+> "Generation number v2" project?
+
+At this point I think it might be best if you are both willing to
+co-mentor a "moonshot" / research project to find what is the best way
+forward by bench-marking the different approaches that you both
+suggest for different commands/use cases.
