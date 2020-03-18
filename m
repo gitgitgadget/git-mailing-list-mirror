@@ -2,126 +2,88 @@ Return-Path: <SRS0=hWrV=5D=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D610C5ACD6
-	for <git@archiver.kernel.org>; Wed, 18 Mar 2020 14:22:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B77BAC10DCE
+	for <git@archiver.kernel.org>; Wed, 18 Mar 2020 14:43:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0419F20774
-	for <git@archiver.kernel.org>; Wed, 18 Mar 2020 14:22:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8525520775
+	for <git@archiver.kernel.org>; Wed, 18 Mar 2020 14:43:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BJNs2UOO"
+	dkim=pass (2048-bit key) header.d=lastline-com.20150623.gappssmtp.com header.i=@lastline-com.20150623.gappssmtp.com header.b="ZHaffo7v"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727049AbgCROWD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Mar 2020 10:22:03 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:42789 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726623AbgCROWC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Mar 2020 10:22:02 -0400
-Received: by mail-pl1-f196.google.com with SMTP id t3so11244675plz.9
-        for <git@vger.kernel.org>; Wed, 18 Mar 2020 07:22:02 -0700 (PDT)
+        id S1727020AbgCROnI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Mar 2020 10:43:08 -0400
+Received: from mail-qk1-f177.google.com ([209.85.222.177]:37358 "EHLO
+        mail-qk1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726975AbgCROnH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Mar 2020 10:43:07 -0400
+Received: by mail-qk1-f177.google.com with SMTP id z25so34190352qkj.4
+        for <git@vger.kernel.org>; Wed, 18 Mar 2020 07:43:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Cnd6Z7i0upgzHfOo7Qn+M47oUSHtXohKw20e6+5TQUs=;
-        b=BJNs2UOOt/qLn2UW0h+IqaCn2B1yn83HOgTAroQTlaM8/5kmUSoen+ybUPRDdZ39C7
-         HuNLDr6EEK16/D0UXKZVD5GGLCczw/jSq09y/IhHGDCBFCPaF3VeLhvBPL25CsFOyqOM
-         MTaXlI3vh1l+3E3cPI8LwH3eaIH6QKqGR7NJXtw7IRQsTa9jP2OdQQTI3yRpwWhAsYIW
-         4Q3RPX3rPJKTCxM4ge5rznzl4ns9sBFaxWgVVgMGXkvpzQwdz6yOXQIb60UXTX3+zzrq
-         g30M3DUnyGtPic+YgxhgyCL3WesNAWp1x9SgOoRlhvLdbnXrel5pkWBTJi2a6O24/tL6
-         WoRQ==
+        d=lastline-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=GJAHydofpYHMeI1Twts7HfgivN+e2Vifhi7FNClfWo8=;
+        b=ZHaffo7vVPHeMDXEe5+un4ES3Vlnn6N7S0qrdI9fSgp8QkHrURHCndeJfuFjli7RSW
+         O8a4BTXSdwRJAMg/gfRuvBp01gywNMwyLj4aZy/IhetNeihNm0sTx+at+TLtuFAI6osd
+         Nw+7svHub2YMZ97btK40d0rOnrl/DmcsRRFKkqFPIQ3/Sj4yrdDU73+aGzAy+iHr+pmz
+         fwu2zeYJYL9MyFWqlez3ECq+1Yku5IqT943WGyL/Ahn4SbwltCKhoe+ji0Rxf99rOVeK
+         4dDKsyWdb+KZH7DcfMtmoU4BRArnYCLsl/81pjB1nzvPijanAabA674y9htbNJO16ToQ
+         601w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Cnd6Z7i0upgzHfOo7Qn+M47oUSHtXohKw20e6+5TQUs=;
-        b=X3jUm6kll/REj7zx74NqDhvWnkyxMDN0rIVWKr+A2vFCcaI/9egDbpQjLJpLL/W/LD
-         Kndw8SV9iTBUeY/YT+C6vsbX+WOw6qtZeLK4h0TaJu12gPI0p4CDXGJqfKpy1/31y8Y5
-         1krPr1eeyZitbHHHTKcwIujbSIsAJF+eyklBkQCauxF2JPQzpKfUI4xDWVHdhCp9SuRV
-         4ZKNEgRcuKL+8k4zIe5pz3p0K+8ac+vCTSygJnre58EFApgvnPKQ25r874x9efdbp8I1
-         IxCzyT6M8buePz+zmQBZgCZiH/x+g4F53BJbBbvDXfF+HpMObqhUF8flEpHi3oM4xRg8
-         dg3A==
-X-Gm-Message-State: ANhLgQ2CfOxwml5ZMRNB/Ogr0YtQ/Mer8qgkxhWRc6PL0A4kulE/s3bb
-        mzhw6BO0N09PBW8/njpV0tZE6RVjuy7VTg==
-X-Google-Smtp-Source: ADFU+vtckw0kVo3x/Z2gxU/4BkPo3F1Z++bqqXrGkTDfgqFqnyZMoML/H3DkTScZcxxPv/gwd28Liw==
-X-Received: by 2002:a17:902:8492:: with SMTP id c18mr4254403plo.147.1584541321028;
-        Wed, 18 Mar 2020 07:22:01 -0700 (PDT)
-Received: from konoha.iitr.ac.in ([103.37.201.173])
-        by smtp.gmail.com with ESMTPSA id q123sm4004948pfb.54.2020.03.18.07.21.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Mar 2020 07:22:00 -0700 (PDT)
-From:   Shourya Shukla <shouryashukla.oo@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Shourya Shukla <shouryashukla.oo@gmail.com>
-Subject: [PATCH v2 1/1] submodule--helper.c: Rename 'cb_foreach' to 'foreach_cb'
-Date:   Wed, 18 Mar 2020 19:50:24 +0530
-Message-Id: <20200318142024.16681-2-shouryashukla.oo@gmail.com>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200318142024.16681-1-shouryashukla.oo@gmail.com>
-References: <20200318095842.27679-1-shouryashukla.oo@gmail.com>
- <20200318142024.16681-1-shouryashukla.oo@gmail.com>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=GJAHydofpYHMeI1Twts7HfgivN+e2Vifhi7FNClfWo8=;
+        b=Hog1kIqbMvliwLn/iF7s0PApdqprebY4Js1QSMrrFqdj7/cPPkOh6knwu+U3MSwTJt
+         5LI8xKgJZOqkSrmdN8FEfre1eeH4tq7HSMqUhfAvGlX0gtQSal+KwOpd+zjY2hPnWhno
+         fayB31sOjqL+B2SRKBFW1o4XnN7wsKZaqXaWLTcf9xALzihUms10W4DQZpWi/OZRqSEG
+         fY0+tJX5G7G1/643hEMd+lyg1KRFZ9NN7wdzlo+ES0r96K8z/papbxD8jPR90SFJawnb
+         FF6N1r1W2jgq33fFf3zITlUhwgfs8gM2vvMv3BPwyTqXp3p/W8k3Z2hdebxbF198QtYb
+         SSJg==
+X-Gm-Message-State: ANhLgQ09WVJyqq8DBwGo/xbWKRQ3XlVS9AzqI0lGjyHrgA5PZED4mjrd
+        HJCn2YuA2W+A+ggUQVh+R1MplQ80eG33GHdlGqPOjLeRJTM=
+X-Google-Smtp-Source: ADFU+vt2Cd+KOgW2gqT6jJkAwpjDOBAjv8ybsv9isHPegmqnoIJdkR5NkZDGErhWUV11jAGzCrAhyYttMTSKKnAoTXs=
+X-Received: by 2002:a37:8101:: with SMTP id c1mr4290302qkd.236.1584542586277;
+ Wed, 18 Mar 2020 07:43:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From:   Andrea Wyss <awyss@lastline.com>
+Date:   Wed, 18 Mar 2020 07:42:55 -0700
+Message-ID: <CAB8VZwTXVXHOf_WuU9goDaJRCdTnKeeQfL4hYn2PNQjhbYR9=Q@mail.gmail.com>
+Subject: GIT bug: "amend param is not available to pre-commit hook"
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In 'submodule--helper.c', the structures and macros for callbacks belonging
-to any subcommand are named in the format: 'subcommand_cb' and 'SUBCOMMAND_CB_INIT'
-respectively.
+Issue
+amend param is not available to pre-commit hook.
 
-This was an exception for the subcommand 'foreach' of the command
-'submodule'. Rename the aforementioned structures and macros:
-'struct cb_foreach' to 'struct foreach_cb' and 'CB_FOREACH_INIT'
-to 'FOREACH_CB_INIT'.
+Problem
+Cannot write a pre-commit hook that stops amending a commit that is
+present in other branches.
 
-Signed-off-by: Shourya Shukla <shouryashukla.oo@gmail.com>
----
- builtin/submodule--helper.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+Steps to Reproduce (git version 2.21.1 on macOS 10.15.3)
+1. In the pre-commit hook:
+   echo "DEBUG 0='$0' 1='$1'"
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 86a608eec1..1a4b391c88 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -444,19 +444,19 @@ static void for_each_listed_submodule(const struct module_list *list,
- 		fn(list->entries[i], cb_data);
- }
- 
--struct cb_foreach {
-+struct foreach_cb {
- 	int argc;
- 	const char **argv;
- 	const char *prefix;
- 	int quiet;
- 	int recursive;
- };
--#define CB_FOREACH_INIT { 0 }
-+#define FOREACH_CB_INIT { 0 }
- 
- static void runcommand_in_submodule_cb(const struct cache_entry *list_item,
- 				       void *cb_data)
- {
--	struct cb_foreach *info = cb_data;
-+	struct foreach_cb *info = cb_data;
- 	const char *path = list_item->name;
- 	const struct object_id *ce_oid = &list_item->oid;
- 
-@@ -557,7 +557,7 @@ static void runcommand_in_submodule_cb(const struct cache_entry *list_item,
- 
- static int module_foreach(int argc, const char **argv, const char *prefix)
- {
--	struct cb_foreach info = CB_FOREACH_INIT;
-+	struct foreach_cb info = FOREACH_CB_INIT;
- 	struct pathspec pathspec;
- 	struct module_list list = MODULE_LIST_INIT;
- 
--- 
-2.20.1
+2. run:
+   git commit --amend
 
+Result
+   DEBUG 0='.git/hooks/pre-commit' 1=''
+
+Expected Result
+   DEBUG 0='.git/hooks/pre-commit' 1='--amend'
+
+Please, let me know if you need other information.
+I'm looking forward for a fix or workaround.
+
+Thank you,
+
+Andrea Wyss
+Sr Frontend Architect
+www.lastline.com
