@@ -2,99 +2,85 @@ Return-Path: <SRS0=hWrV=5D=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F189C4332B
-	for <git@archiver.kernel.org>; Wed, 18 Mar 2020 22:39:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C4BBC4332D
+	for <git@archiver.kernel.org>; Wed, 18 Mar 2020 22:41:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 54C8620772
-	for <git@archiver.kernel.org>; Wed, 18 Mar 2020 22:39:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 207332076C
+	for <git@archiver.kernel.org>; Wed, 18 Mar 2020 22:41:56 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="nseAT+CX"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727137AbgCRWjE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Mar 2020 18:39:04 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:39486 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726623AbgCRWjE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Mar 2020 18:39:04 -0400
-Received: by mail-wm1-f65.google.com with SMTP id f7so9482wml.4
-        for <git@vger.kernel.org>; Wed, 18 Mar 2020 15:39:01 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=q+BuZ3bf0qS0IlwCiRIHfhmuQxsITahrGdYQ+MqsW6U=;
-        b=J257L3lPeuICBrdhHTM/Zgd0ea0xCDAzf6g4+1G1pZK6Uz9o14RNMiqaZNDMiOsjdy
-         fM4b4A42hRzSWuikioSFA3GSmCTqEPfmH/9/fPacf/31N+od+7AMbHy53LS1JoluDzve
-         DvEFV5osINU5CbGKHcIJd7TGZOl+mEVLd66QQOrryObZsK/AeSMdI2yRZep8x+HFLsFA
-         GDUgU+CNRPQ6b+neB9q0F3nnNKKWG81ueewA6uJh5wZJEDgut47XU7DPofl6YRMJcLyI
-         AvCVB6mDeOYzSjq6FXeZ8YXRoK6Rw5risQvD2sByCyzmriECljM25bvG06yY7GxrB5op
-         NYjA==
-X-Gm-Message-State: ANhLgQ3Itia7TcxI2nqKhE3XbyF6WEGJrIwfDupApj5FNtHSFKr4+h2f
-        u0Jwvh3siw9DGN+NYf/Rg6hiPTbl/iiSmRqhd4o=
-X-Google-Smtp-Source: ADFU+vu9l4UwLs2PLJ6FOCGI7GLOSCcpkX34UwkM92m6t3JhjJovVEZz4EJ25sXhdUeTwNiU1Y3kuYVqAiaSSjnzSvw=
-X-Received: by 2002:a7b:c08a:: with SMTP id r10mr7372748wmh.130.1584571140932;
- Wed, 18 Mar 2020 15:39:00 -0700 (PDT)
-MIME-Version: 1.0
+        id S1726817AbgCRWlz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Mar 2020 18:41:55 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60737 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726647AbgCRWlz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Mar 2020 18:41:55 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BB5803E6C5;
+        Wed, 18 Mar 2020 18:41:52 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=MIN9hO0m68HWjy+HTii4VFqf8g8=; b=nseAT+
+        CXCgiYu2piflsoi/mgu7Zhp2pNHUW7wrNnWY06f27jvUFBTk4DW/oStt2XjjOC3M
+        gUo5q7dm8UTY3fft9dj2ndgXI8nM8MhadcjaJavzc3mLQH0rXg4HH4t1yGhrmH6F
+        U6W4yFDD/ueddYT9ej4YdqCnz4neIgT4XliZ8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=GjzlawtUW91v5bF5qYbpK9MwTO07Mndt
+        3rDPiiYn1U9ovNvbVpvAuRFCvP5fRgIotoVN4UlVeeUhFpUfPtlxz6E9iwKls+TF
+        Am6WoumOarzlzhYQh29oIH+Ljx7hNYkIVsGRcYn2mRYUBu5JSGpc7/K+wZRikUrK
+        cjs3Zw3+dS0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B3C423E6C4;
+        Wed, 18 Mar 2020 18:41:52 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3FEC73E6C3;
+        Wed, 18 Mar 2020 18:41:52 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        christian.couder@gmail.com, james@jramsay.com.au
+Subject: Re: [RFC PATCH 0/2] upload-pack.c: limit allowed filter choices
 References: <CAP8UFD0wJo4onz0_Vw4-bcX1h61=J=ZiKfM-fMXLj4B9q0aveg@mail.gmail.com>
- <cover.1584477196.git.me@ttaylorr.com> <c75806d011b04f2ad7efbbec01613a2d0b1f570b.1584477196.git.me@ttaylorr.com>
- <CAPig+cTVtv+uzzpoZ-BT=F=srdt1ewvgeBAAr9R+OUCYSov65A@mail.gmail.com> <20200318100327.GA1227946@coredump.intra.peff.net>
-In-Reply-To: <20200318100327.GA1227946@coredump.intra.peff.net>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 18 Mar 2020 18:38:49 -0400
-Message-ID: <CAPig+cTWb55K70v1MahHbTi12F5Zi6stKc1vjY2=9jSvEm7jww@mail.gmail.com>
-Subject: Re: [RFC PATCH 1/2] list_objects_filter_options: introduce 'list_object_filter_config_name'
-To:     Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>, Git List <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        james@jramsay.com.au
-Content-Type: text/plain; charset="UTF-8"
+        <cover.1584477196.git.me@ttaylorr.com>
+        <20200318101825.GB1227946@coredump.intra.peff.net>
+        <20200318212818.GE31397@syl.local>
+Date:   Wed, 18 Mar 2020 15:41:51 -0700
+In-Reply-To: <20200318212818.GE31397@syl.local> (Taylor Blau's message of
+        "Wed, 18 Mar 2020 15:28:18 -0600")
+Message-ID: <xmqq4kulffps.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: A966F7E8-6969-11EA-AD11-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 18, 2020 at 6:03 AM Jeff King <peff@peff.net> wrote:
-> On Tue, Mar 17, 2020 at 04:53:44PM -0400, Eric Sunshine wrote:
-> > > +       case LOFC__COUNT:
-> > > +               /*
-> > > +                * Include these to catch all enumerated values, but
-> > > +                * break to treat them as a bug. Any new values of this
-> > > +                * enum will cause a compiler error, as desired.
-> > > +                */
-> >
-> > In general, people will see a warning, not an error, unless they
-> > specifically use -Werror (or such) to turn the warning into an error,
-> > so this statement is misleading. Also, while some compilers may
-> > complain, others may not. So, although the comment claims that we will
-> > notice an unhandled enum constant at compile-time, that isn't
-> > necessarily the case.
->
-> Yes, but that's the best we can do, isn't it?
+Taylor Blau <me@ttaylorr.com> writes:
 
-To be clear, I wasn't questioning the code structure at all. I was
-specifically referring to the comment talking about "error" when it
-should say "warning" or "possible warning".
+>> We tried equals, like:
+>>
+>>   uploadpack.filter=blob:none.allow
+>>
+>> but there's an interesting side effect. Doing:
+>>
+>>   git -c uploadpack.filter=blob:none.allow=true upload-pack ...
+>>
+>> doesn't work, because the "-c" parser ends the key at the first "=". As
+>> it should, because otherwise we'd get confused by an "=" in a value.
+>> This is a failing of the "-c" syntax; it can't represent values with
+>> "=". 
 
-Moreover, normally, we use comments to highlight something in the code
-which is not obvious or straightforward, so I was questioning whether
-this comment is even helpful since the code seems reasonably clear.
-And...
-
-> But we can't just remove the default case. Even though enums don't
-> generally take on other values, it's legal for them to do so. So we do
-> want to make sure we BUG() in that instance.
->
-> This is awkward to solve in the general case[1]. But because we're
-> returning in each case arm here, it's easy to just put the BUG() after
-> the switch. Anything that didn't return is unhandled, and we get the
-> best of both: -Wswitch warnings when we need to add a new filter type,
-> and a BUG() in the off chance that we see an unexpected value.
->
-> So...I dunno. Worth it as a general technique?
-
-...if this is or will become an idiom we want in this codebase, then
-it would be silly to write an explanatory comment every place we
-employ it. Instead, a document such as CodingGuidelines would likely
-be a better fit for such knowledge.
+s/value/key/ I presume ;-)
