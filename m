@@ -2,163 +2,181 @@ Return-Path: <SRS0=hWrV=5D=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.2 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C0BC4C4332D
-	for <git@archiver.kernel.org>; Wed, 18 Mar 2020 21:20:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 98355C4332B
+	for <git@archiver.kernel.org>; Wed, 18 Mar 2020 21:28:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 96E9520772
-	for <git@archiver.kernel.org>; Wed, 18 Mar 2020 21:20:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5F53420777
+	for <git@archiver.kernel.org>; Wed, 18 Mar 2020 21:28:26 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="pBsssAxR"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="O9s+AFdG"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727044AbgCRVUO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Mar 2020 17:20:14 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:44420 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726596AbgCRVUO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Mar 2020 17:20:14 -0400
-Received: by mail-pl1-f196.google.com with SMTP id h11so46886plr.11
-        for <git@vger.kernel.org>; Wed, 18 Mar 2020 14:20:13 -0700 (PDT)
+        id S1727049AbgCRV2X (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Mar 2020 17:28:23 -0400
+Received: from mail-pj1-f68.google.com ([209.85.216.68]:40370 "EHLO
+        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726733AbgCRV2X (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Mar 2020 17:28:23 -0400
+Received: by mail-pj1-f68.google.com with SMTP id bo3so1759486pjb.5
+        for <git@vger.kernel.org>; Wed, 18 Mar 2020 14:28:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=lHtvZHoHLMek/6xkhG69AFlRsdbOwVunBn8hLu5qRno=;
-        b=pBsssAxRZmHUHAOi7TFFvrUQx1tKlvySj9WJM4bANKLLbGf0vgNB6xsaVMj+liX8KU
-         4Tmeiv1XGu9h9a0lF69Wkmog5LkN+7AMp5QXSEJgrt5ympd9NEEoxPK7wGPK8F/esrRp
-         KsFQ+XqrElMcwc1hA+3/C/KyVqzMAUFh7Oy+q7uj/QO9M56tURoifBYhGakdbcuG415v
-         86XFbIsiQJkhI1OGPijamxkJjuzkMOZn0Oa9GhvF1C0zjjWBtr6GwM2Yj7TyZ4r2uNRe
-         LWHjXxZ0XUERhE13kmyYEhF8EPf4nQPDPa9FOWaB5XFoiHZqGlNrrb8XB6FddzK0v2bw
-         TCMg==
+        bh=/tZ0s0cXZSPBf0ieJui8DN5LBal1zO9XQNEglkx5PaM=;
+        b=O9s+AFdGNerpUIbHWo/ZQ/v6oOs9gb9bmPeQtuy7mBWIxmmrSlTWpAjq+B1Qxesqyg
+         /ZyIzShRukZDBLDU/DmiETVLkKqlb7UVWW946sJh7rXB6q7WJkCNLsvIcRp13O/acKN1
+         1Lj8MvI/vKnepQyqKCfZNb7hiDR4lkfz47q74IylkN+9qa7rV92OTN19HGyGILvD2FZd
+         TEyJwsLoC40RthrBFmO9KjdIu/ayHc6yvYZYjgQzAnm9E1292H9QM/A+JG0V4zWQQw55
+         zMsZQ+cjURi99/nH1UqH3Sk0Xe+1bVMXubBvCqIPKC3UWVUremK5AMFCSO2fjKZ/Qt1M
+         og9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=lHtvZHoHLMek/6xkhG69AFlRsdbOwVunBn8hLu5qRno=;
-        b=nYC7uO25EaaIr86hQZugQhHPvqt4ks4JdM1p1kqP49UedN5G+8eQojPAGCt1nTXkcn
-         d6Td6asPd3I1hZhTqBbBcIs625pCequk1umfDckOGcwWfZnhXR+x1/0FEON9PpUmaom/
-         8Ks4zGX2S4HOtBJciideOz731dMNUd/8+TbzD4rfK6fiAI31zh6bTbcc6E+npRtjbMvQ
-         5epYLhYb8ORoufFjAH4eF5SBYK78u0YjtEVWTX4H1W9zZ1c4VYINYHmOCoQT+m1dk479
-         dCVClR5gcGqpGSMU8cOZkz0wHvPGs8tEK4/FjZKrBkszMpAA2L3oSUndqqw0/ogwOMe+
-         VMQw==
-X-Gm-Message-State: ANhLgQ1wx7e23dXI0Uh/2dhZP4iT11BV7eOlkjGj1z6UEP0CZLleGqED
-        8S5ImLi4GXvdl5DRIdNijLFDxQ==
-X-Google-Smtp-Source: ADFU+vvxac+fcESzENLdNb2q7GsIgl/+n1E24D+2x5twIInaVfYhqLxtuVHJ71Ri4pn3DzVI62vtbw==
-X-Received: by 2002:a17:902:9a08:: with SMTP id v8mr187104plp.192.1584566412441;
-        Wed, 18 Mar 2020 14:20:12 -0700 (PDT)
+        bh=/tZ0s0cXZSPBf0ieJui8DN5LBal1zO9XQNEglkx5PaM=;
+        b=Oe3I9CTkHPPcPmv2LrT30Juy6fTx+gJ5WTZTNe+RlMTcvJNNMqz44uv5c3WHlz7NQN
+         Fm/k6IL1ZGfXU5wgywiWEApicytt8KZW2Fc/MCDL68FzXhU2ldX9ColofavATxS9cUOt
+         q129syvbBH7JPeK1S7eno70JxDQodt87QR1vfQTWVeS6wDltcNcPEnu+sRWv4GZUWJ4G
+         LIVAcCsym7dTTA4aORQ/JfytoGMhTxjzav/mHCBoD5tl3ngojHJhV/iTR3rC9RU0sx/s
+         0opjVmjBwp6L/Knwx9sLfMd/ZXczt2f5yhDdv79aWl5DsKhfnwfLHZU7D5YRCLNJxx09
+         9/KA==
+X-Gm-Message-State: ANhLgQ18vSLEcOyDlh/s4Oi6lR3HWNpugYVwosp5NzOy33a6syuJ6/Cr
+        uo2oexoqUvj2Zwk2cb+cyorA9A==
+X-Google-Smtp-Source: ADFU+vvIjFwNCa4CaAhu2xK4JBToSN2FaVY40ZCweKYR4tDsi7BefUKhgOHFvxmO0DwaxBgoxW6Dhw==
+X-Received: by 2002:a17:902:8f8a:: with SMTP id z10mr6387plo.169.1584566899934;
+        Wed, 18 Mar 2020 14:28:19 -0700 (PDT)
 Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id y9sm3136623pjj.17.2020.03.18.14.20.11
+        by smtp.gmail.com with ESMTPSA id w31sm41221pgl.84.2020.03.18.14.28.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Mar 2020 14:20:11 -0700 (PDT)
-Date:   Wed, 18 Mar 2020 15:20:11 -0600
+        Wed, 18 Mar 2020 14:28:19 -0700 (PDT)
+Date:   Wed, 18 Mar 2020 15:28:18 -0600
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Philip Oakley <philipoakley@iee.email>
+To:     Jeff King <peff@peff.net>
 Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        christian.couder@gmail.com, peff@peff.net, james@jramsay.com.au
-Subject: Re: [RFC PATCH 2/2] upload-pack.c: allow banning certain object
- filter(s)
-Message-ID: <20200318212011.GD31397@syl.local>
+        christian.couder@gmail.com, james@jramsay.com.au
+Subject: Re: [RFC PATCH 0/2] upload-pack.c: limit allowed filter choices
+Message-ID: <20200318212818.GE31397@syl.local>
 References: <CAP8UFD0wJo4onz0_Vw4-bcX1h61=J=ZiKfM-fMXLj4B9q0aveg@mail.gmail.com>
  <cover.1584477196.git.me@ttaylorr.com>
- <888d9484cf4130e90f451134c236a290a6c5e18d.1584477196.git.me@ttaylorr.com>
- <13dd0152-b20a-51e1-5940-5e4b67242e9b@iee.email>
+ <20200318101825.GB1227946@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <13dd0152-b20a-51e1-5940-5e4b67242e9b@iee.email>
+In-Reply-To: <20200318101825.GB1227946@coredump.intra.peff.net>
 User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Philip,
-
-On Wed, Mar 18, 2020 at 11:18:16AM +0000, Philip Oakley wrote:
-> Hi
-> On 17/03/2020 20:39, Taylor Blau wrote:
-> > Git clients may ask the server for a partial set of objects, where the
-> > set of objects being requested is refined by one or more object filters.
-> > Server administrators can configure 'git upload-pack' to allow or ban
-> > these filters by setting the 'uploadpack.allowFilter' variable to
-> > 'true' or 'false', respectively.
-> >
-> > However, administrators using bitmaps may wish to allow certain kinds of
-> > object filters, but ban others. Specifically, they may wish to allow
-> > object filters that can be optimized by the use of bitmaps, while
-> > rejecting other object filters which aren't and represent a perceived
-> > performance degradation (as well as an increased load factor on the
-> > server).
-> >
-> > Allow configuring 'git upload-pack' to support object filters on a
-> > case-by-case basis by introducing a new configuration variable and
-> > section:
-> >
-> >   - 'uploadpack.filter.allow'
-> >
-> >   - 'uploadpack.filter.<kind>.allow'
-> >
-> > where '<kind>' may be one of 'blob:none', 'blob:limit', 'tree:depth',
-> > and so on. The additional '.' between 'filter' and '<kind>' is part of
-> > the sub-section.
-> >
-> > Setting the second configuration variable for any valid value of
-> > '<kind>' explicitly allows or disallows restricting that kind of object
-> > filter.
-> >
-> > If a client requests the object filter <kind> and the respective
-> > configuration value is not set, 'git upload-pack' will default to the
-> > value of 'uploadpack.filter.allow', which itself defaults to 'true' to
-> > maintain backwards compatibility. Note that this differs from
-> > 'uploadpack.allowfilter', which controls whether or not the 'filter'
-> > capability is advertised.
-> >
-> > NB: this introduces an unfortunate possibility that attempt to write the
-> > ERR sideband will cause a SIGPIPE. This can be prevented by some of
-> > SZEDZER's previous work, but it is silenced in 't' for now.
-> > ---
-> >  Documentation/config/uploadpack.txt | 12 ++++++
-> >  t/t5616-partial-clone.sh            | 23 ++++++++++
-> >  upload-pack.c                       | 67 +++++++++++++++++++++++++++++
-> >  3 files changed, 102 insertions(+)
-> >
-> > diff --git a/Documentation/config/uploadpack.txt b/Documentation/config/uploadpack.txt
-> > index ed1c835695..6213bd619c 100644
-> > --- a/Documentation/config/uploadpack.txt
-> > +++ b/Documentation/config/uploadpack.txt
-> > @@ -57,6 +57,18 @@ uploadpack.allowFilter::
-> >  	If this option is set, `upload-pack` will support partial
-> >  	clone and partial fetch object filtering.
-> >
-> > +uploadpack.filter.allow::
-> > +	Provides a default value for unspecified object filters (see: the
-> > +	below configuration variable).
-> > +	Defaults to `true`.
-> > +
-> > +uploadpack.filter.<filter>.allow::
-> > +	Explicitly allow or ban the object filter corresponding to `<filter>`,
-> > +	where `<filter>` may be one of: `blob:none`, `blob:limit`, `tree:depth`,
-> > +	`sparse:oid`, or `combine`. If using combined filters, both `combine`
-> > +	and all of the nested filter kinds must be allowed.
+On Wed, Mar 18, 2020 at 06:18:25AM -0400, Jeff King wrote:
+> On Tue, Mar 17, 2020 at 02:39:05PM -0600, Taylor Blau wrote:
 >
-> Doesn't the man page at least need the part from the commit message "The
-> additional '.' between 'filter' and '<kind>' is part of
-> the sub-section." as it's not a common mechanism (other comments not
-> withstanding)
+> > Hi Christian,
+> >
+> > Of course, I would be happy to send along our patches. They are included
+> > in the series below, and correspond roughly to what we are running at
+> > GitHub. (For us, there have been a few more clean-ups and additional
+> > patches, but I squashed them into 2/2 below).
+> >
+> > The approach is roughly that we have:
+> >
+> >   - 'uploadpack.filter.allow' -> specifying the default for unspecified
+> >     filter choices, itself defaulting to true in order to maintain
+> >     backwards compatibility, and
+> >
+> >   - 'uploadpack.filter.<filter>.allow' -> specifying whether or not each
+> >     filter kind is allowed or not. (Originally this was given as 'git
+> >     config uploadpack.filter=blob:none.allow true', but this '=' is
+> >     ambiguous to configuration given over '-c', which itself uses an '='
+> >     to separate keys from values.)
+>
+> One thing that's a little ugly here is the embedded dot in the
+> subsection (i.e., "filter.<filter>"). It makes it look like a four-level
+> key, but really there is no such thing in Git.  But everything else we
+> tried was even uglier.
+>
+> I think we want to declare a real subsection for each filter and not
+> just "uploadpack.filter.<filter>". That gives us room to expand to other
+> config options besides "allow" later on if we need to.
+>
+> We don't want to claim "uploadpack.allow" and "uploadpack.<filter>.allow";
+> that's too generic.
+>
+> Likewise "filter.allow" is too generic.
 
-Thanks, you're certainly right. I wrote the man pages back when the
-configuration was spelled:
+I wonder. A multi-valued 'uploadpack.filter.allow' *might* solve some
+problems, but the more I turn it over in my head, the more that I think
+that it's creating more headaches for us than it's removing.
 
-  $ git config uploadpack.filter=blob:none.allow true
+On the pro's side, is that we could have this be a multi-valued key
+where each value is the name of an allowed filter. I guess that would
+solve the subsection-naming problem, but it is admittedly generic, not
+to mention the fact that we already *use* this key to specify a default
+value for missing 'uploadpack.filter.<filter>.allow' values. For that
+reason, it seems like a non-starter to me.
 
-But now that there is the extra '.', it's worth calling out here, too.
-I'll make sure that this is addressed based on the outcome of the
-discussion below when these patches hit non-RFC status.
+> We could do "uploadpackfilter.allow" and "uploadpackfilter.<filter>.allow",
+> but that's both ugly _and_ separates these options from the rest of
+> uploadpack.*.
+>
+> We could use a character besides ".", which would reduce confusion. But
+> what? Using colon is kind of ugly, because it's already syntactically
+> significant in filter names, and you get:
+>
+>   uploadpack.filter:blob:none.allow
+>
+> We tried equals, like:
+>
+>   uploadpack.filter=blob:none.allow
+>
+> but there's an interesting side effect. Doing:
+>
+>   git -c uploadpack.filter=blob:none.allow=true upload-pack ...
+>
+> doesn't work, because the "-c" parser ends the key at the first "=". As
+> it should, because otherwise we'd get confused by an "=" in a value.
+> This is a failing of the "-c" syntax; it can't represent values with
+> "=". Fixing it would be awkward, and I've never seen it come up in
+> practice outside of this (you _could_ have a branch with a funny name
+> and try to do "git -c branch.my=funny=branch.remote=origin" or
+> something, but the lack of bug reports suggests nobody is that
+> masochistic).
 
-> Philip
+Thanks for adding some more detail to this decision.
+
+Another thing we could do is just simply use a different character. It
+may be a little odd, but it keeps the filter-related variables in their
+own sub-section, allowing us to add more configuration sub-variables in
+the future. I guess that calling it something like:
+
+  $ git config uploadpack.filter@blob:none.allow <true|false>
+
+is a little strange (i.e., why '@' over '#'? There's certainly no
+precedent here that I can think of...), but maybe it is slightly
+less-weird than a pseudo-four-level key.
+
+> So...maybe the extra dot is the last bad thing?
+>
+> > I noted in the second patch that there is the unfortunate possibility of
+> > encountering a SIGPIPE when trying to write the ERR sideband back to a
+> > client who requested a non-supported filter. Peff and I have had some
+> > discussion off-list about resurrecting SZEDZER's work which makes room
+> > in the buffer by reading one packet back from the client when the server
+> > encounters a SIGPIPE. It is for this reason that I am marking the series
+> > as 'RFC'.
+>
+> For reference, the patch I was thinking of was this:
+>
+>   https://lore.kernel.org/git/20190830121005.GI8571@szeder.dev/
+
+Thanks.
+
+> -Peff
 
 Thanks,
 Taylor
