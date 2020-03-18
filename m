@@ -2,132 +2,96 @@ Return-Path: <SRS0=hWrV=5D=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 08548C4332B
-	for <git@archiver.kernel.org>; Wed, 18 Mar 2020 20:52:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A386C4332B
+	for <git@archiver.kernel.org>; Wed, 18 Mar 2020 21:05:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id CF05D20775
-	for <git@archiver.kernel.org>; Wed, 18 Mar 2020 20:52:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 422CB20775
+	for <git@archiver.kernel.org>; Wed, 18 Mar 2020 21:05:45 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="au0WFe2n"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="ZbfCbJug"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726776AbgCRUwu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Mar 2020 16:52:50 -0400
-Received: from mail-wr1-f43.google.com ([209.85.221.43]:33250 "EHLO
-        mail-wr1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726747AbgCRUwu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Mar 2020 16:52:50 -0400
-Received: by mail-wr1-f43.google.com with SMTP id a25so225174wrd.0
-        for <git@vger.kernel.org>; Wed, 18 Mar 2020 13:52:49 -0700 (PDT)
+        id S1727969AbgCRVFm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Mar 2020 17:05:42 -0400
+Received: from mail-pj1-f65.google.com ([209.85.216.65]:51098 "EHLO
+        mail-pj1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727616AbgCRVFl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Mar 2020 17:05:41 -0400
+Received: by mail-pj1-f65.google.com with SMTP id v13so1884586pjb.0
+        for <git@vger.kernel.org>; Wed, 18 Mar 2020 14:05:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=m5gIhfsrlBQuavdwGp8IMn/ZwCOiS2SCQsYCIX8/3hM=;
-        b=au0WFe2nBOJvmfePf+HR4Vs5Xhnykw+/my0rLLq3sYEng+ouQEGJOuevIoVB/ZeJX9
-         KAhN1cp1EMBYQVodyrxMH9CgXNRK6g9LwZovf+uj8eDDHX0K3lDkETtXLorTNRWmFjc8
-         /X5qFUUijuHZVdTOYRei5ApsogzXA4MIN2OOAVRxLJcrJRLFsuh/1XhBZmOHQNUbkEOH
-         hvkNVA2yA8YpFkQ+g2dPtzjFdO3pg0617mq0qfsRIKnEyvvZrV1/V17vsa4fKBxbINh3
-         QKTh+pKS7buVGR22raX3wJ6Y3+66lGGga2v4iZoCqpoRANCsvik+iCYBrHbuVPZ0QRkc
-         izjA==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=PXNL5X2qKOSP7WMjyUfC7ZMq0nOejKdXY7WIMmi+WVI=;
+        b=ZbfCbJugGXrX3rswCzV/1EpBOB4IcLdVnm6yzHGlaPdsBe7w47Is9wM8+uSTQOM4E4
+         tfQJvWFW3J/5MK1oQnve/GofKpamCJSMbpIQcJ+6MecMfdxDBCNfeeUa+1prnac08JcJ
+         Xm7c7vVrqiO7+KVvPhS5u7NXNzVmppx0sjwc2Gck90Q3MjERQ/7XqSvcHuviftSefrdU
+         Oy8j6u3kYVTqaBkkDyKYjMCGeo3NeRECC6sChN1hwuUVkPUE5RHPJKMmdz53uDQUtcu4
+         WaLzFjDMNijc5QSBze/I6ITYhGnFN6JxDcl2e31TP4iNgJ8swlAw07KAqPU/Ub3cHd9F
+         LBjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=m5gIhfsrlBQuavdwGp8IMn/ZwCOiS2SCQsYCIX8/3hM=;
-        b=CZ6ABd3Ypg7I6dit2oFneqoPM6vAt+x7NQC5fApvJXnZodOSXAw1mX6vOYvKR37v8m
-         Js2IXuh8mx4nQfjHiw1lOSNGI0oV32hD3pc1o8WlJUjmDtTem4bW1svDPHSnusLymlCN
-         WN6sx8Ukfh33mNmRSkF0C67d/bijiR4LWQaN+981xSnPy1P1p5ibUZEWFQXvR8KzbkXX
-         KEylO3vIj9umSGJQ4LBeZx2662CV5WO8fG18Hbc3PsLcpwnoJC/RVMCSL280lTM1mzWl
-         ZWvjIJWs4iz5tyYGYH3RgmTXSIKIxugyQkRl9we4Hj98NT0Yz3rx9U60RCB6DolkD0Pk
-         3TvQ==
-X-Gm-Message-State: ANhLgQ2Y+HLtsdo+EHiU14nM0eqBV1+unIew4C3nCp5VMWXqnqRI0P++
-        kXUfDCVDEDhY6iRpy38rdYfK6YBI++0=
-X-Google-Smtp-Source: ADFU+vu442B5Q7+6UlDeViWWOz1JMjA3DOgjvhrpEOF9HunamgUshUHtU3bYGBykx1Cu8rCZSarzdQ==
-X-Received: by 2002:adf:84c2:: with SMTP id 60mr7671663wrg.399.1584564768315;
-        Wed, 18 Mar 2020 13:52:48 -0700 (PDT)
-Received: from ?IPv6:2a02:a210:ca2:9c00:299a:790d:ef4b:8b42? ([2a02:a210:ca2:9c00:299a:790d:ef4b:8b42])
-        by smtp.gmail.com with ESMTPSA id w11sm12460wrv.86.2020.03.18.13.52.47
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 18 Mar 2020 13:52:47 -0700 (PDT)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.60.0.2.5\))
-Subject: Re: Broken Git-diff on master
-From:   Son Luong Ngoc <sluongng@gmail.com>
-In-Reply-To: <20BFEDB4-738A-4DD7-9316-8DE73999C633@gmail.com>
-Date:   Wed, 18 Mar 2020 21:52:46 +0100
-Cc:     Junio C Hamano <gitster@pobox.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <D9C96648-26E1-46AE-AD79-123754371B30@gmail.com>
-References: <20BFEDB4-738A-4DD7-9316-8DE73999C633@gmail.com>
-To:     git@vger.kernel.org
-X-Mailer: Apple Mail (2.3608.60.0.2.5)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=PXNL5X2qKOSP7WMjyUfC7ZMq0nOejKdXY7WIMmi+WVI=;
+        b=Pc3uLNhBq+zp4Jbc19vVBuTGjychMzQDBKd9HujTUfOgfv2WtMXHkmcn/SqpPeHkx+
+         xXxsCJP2gDz8WiEkwGvtnA1A268TeoZkQloAsm0Dd2qc+fN3K3eVg8OFGafx9tJlXV4g
+         koq14uMzSYLTDjhgpCO/ZThJu3J07uDP3R4JG4FZGHLaGlARGxsTfiiWzJkxv7JJefMK
+         sO+IGj/cGiPBrAOBy/b5y6pogQRw4g0jO3s04EwuXsu8D/fjVXAiNaoRgYTqGvv6qlXN
+         ZpIdbiG1Z6Rc0lWZd/w4xCnwg2Qy7t+VD7ixeReGLpiXphKeDJlohqH/Yut1oVHH4VT4
+         8qkA==
+X-Gm-Message-State: ANhLgQ2o0fDek6VqXK+ab7k4endqnMZTDLQDLbeNhsXzHHFHxjYvm2bR
+        sMLncyNOY4W5NZgO9pTcMNY5MPgZN4M=
+X-Google-Smtp-Source: ADFU+vsp8/PxXF6nmOuUjIp/plr5xJuhNJQrwtQNcHyqSQjVXxCsDpaS+A8/78lqzA206KYEMOHjRA==
+X-Received: by 2002:a17:902:e981:: with SMTP id f1mr5818448plb.103.1584565540105;
+        Wed, 18 Mar 2020 14:05:40 -0700 (PDT)
+Received: from localhost ([8.44.146.30])
+        by smtp.gmail.com with ESMTPSA id y18sm7148538pfe.19.2020.03.18.14.05.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Mar 2020 14:05:39 -0700 (PDT)
+Date:   Wed, 18 Mar 2020 15:05:38 -0600
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, Git List <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Jeff King <peff@peff.net>, james@jramsay.com.au
+Subject: Re: [RFC PATCH 1/2] list_objects_filter_options: introduce
+ 'list_object_filter_config_name'
+Message-ID: <20200318210538.GA31397@syl.local>
+References: <CAP8UFD0wJo4onz0_Vw4-bcX1h61=J=ZiKfM-fMXLj4B9q0aveg@mail.gmail.com>
+ <cover.1584477196.git.me@ttaylorr.com>
+ <c75806d011b04f2ad7efbbec01613a2d0b1f570b.1584477196.git.me@ttaylorr.com>
+ <CAPig+cTVtv+uzzpoZ-BT=F=srdt1ewvgeBAAr9R+OUCYSov65A@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAPig+cTVtv+uzzpoZ-BT=F=srdt1ewvgeBAAr9R+OUCYSov65A@mail.gmail.com>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ah, how embarrassing, I forgot about --no-index.
-Please ignore, sorry for the noise :(
+Hi Eric,
 
-> On Mar 18, 2020, at 21:41, Son Luong Ngoc <sluongng@gmail.com> wrote:
->=20
-> Hey folks,
->=20
-> I am testing out the latest changes in master =
-be8661a3286c67a5d4088f4226cbd7f8b76544b0 and observe the following
->=20
->> mkdir test
->> cd test
->> echo a > a
->> echo b > b
->> git diff a b | cat
-> diff --git a/a b/b
-> index 7898192..6178079 100644
-> --- a/a
-> +++ b/b
-> @@ -1 +1 @@
-> -a
-> +b
->> git init
->> git diff a b | cat
->> GIT_TRACE2_PERF=3D1 git diff a b | cat
-> 21:38:36.615653 common-main.c:48             | d0 | main               =
-      | version      |     |           |           |              | =
-2.26.0.rc2.27.gbe8661a328
-> 21:38:36.616258 common-main.c:49             | d0 | main               =
-      | start        |     |  0.004075 |           |              | git =
-diff a b
-> 21:38:36.616307 git.c:440                    | d0 | main               =
-      | cmd_name     |     |           |           |              | diff =
-(diff)
-> 21:38:36.616696 repository.c:130             | d0 | main               =
-      | def_repo     | r1  |           |           |              | =
-worktree:/Users/sluongngoc/work/some-dir/test
-> 21:38:36.617589 read-cache.c:2303            | d0 | main               =
-      | region_enter | r1  |  0.005408 |           | index        | =
-label:do_read_index .git/index
-> 21:38:36.617615 read-cache.c:2308            | d0 | main               =
-      | region_leave | r1  |  0.005435 |  0.000027 | index        | =
-label:do_read_index .git/index
-> 21:38:36.617656 git.c:674                    | d0 | main               =
-      | exit         |     |  0.005476 |           |              | =
-code:0
-> 21:38:36.617668 trace2/tr2_tgt_perf.c:213    | d0 | main               =
-      | atexit       |     |  0.005489 |           |              | =
-code:0
->=20
->> git version
-> git version 2.26.0.rc2.27.gbe8661a328
->=20
-> I think git-diff is broken. Hope that this get address before 2.26.0 =
-come out.
->=20
-> Cheers,
-> Son Luong.
+On Tue, Mar 17, 2020 at 04:53:44PM -0400, Eric Sunshine wrote:
+> On Tue, Mar 17, 2020 at 4:40 PM Taylor Blau <me@ttaylorr.com> wrote:
+> > In a subsequent commit, we will add configuration options that are
+> > specific to each kind of object filter, in which case it is handy to
+> > have a function that translates between 'enum
+> > list_objects_filter_choice' and an appropriate configuration-friendly
+> > string.
+> > ---
+>
+> Missing sign-off (but perhaps that's intentional since this is RFC).
 
+Yes, the missing sign-off (in this patch as well as 2/2) is intentional,
+since this is an RFC. Sorry for not calling this out more clearly in my
+cover.
+
+Thanks,
+Taylor
