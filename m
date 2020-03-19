@@ -2,139 +2,183 @@ Return-Path: <SRS0=WCE0=5E=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CEC9C4332B
-	for <git@archiver.kernel.org>; Thu, 19 Mar 2020 03:19:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E905C4332D
+	for <git@archiver.kernel.org>; Thu, 19 Mar 2020 03:59:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0C22620768
-	for <git@archiver.kernel.org>; Thu, 19 Mar 2020 03:19:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 59A4020753
+	for <git@archiver.kernel.org>; Thu, 19 Mar 2020 03:59:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GSMx2eyp"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TTXKm4Ko"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726726AbgCSDTo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Mar 2020 23:19:44 -0400
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:41552 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726596AbgCSDTo (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Mar 2020 23:19:44 -0400
-Received: by mail-pl1-f193.google.com with SMTP id t16so407162plr.8
-        for <git@vger.kernel.org>; Wed, 18 Mar 2020 20:19:43 -0700 (PDT)
+        id S1726777AbgCSD7H (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Mar 2020 23:59:07 -0400
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:39880 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726623AbgCSD7G (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Mar 2020 23:59:06 -0400
+Received: by mail-pl1-f195.google.com with SMTP id m1so459607pll.6
+        for <git@vger.kernel.org>; Wed, 18 Mar 2020 20:59:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=MkgKKY9+ugWNCFPoL7ONZPPPIRfAhP7lgDa5ShuY3QQ=;
-        b=GSMx2eypfb5i8BZPQOPdNkWy9iCQYBXMemaVsMIdgVvHP5JcH/m1THMf7DVTa83yLa
-         5qy5iZHrHLa6EwJ5s4F1tfHEiTBx5FbbRQ3eSAd3kT+KgD7qGEX+c1uEiSeKSSNJdkMM
-         VRfFX8hRuxt9rQL6Xq80J3jX2CNlVUcdTYvi8p6e1gcyeGOCsb5vwTGLYVhKlMeA4+8/
-         1DuTI2waEI8zkRc4ONepLo8L8VMiccEZCSuloP0CPkR7JrKj4jMqCCtJbJP8I/nxPnD1
-         KzdCJnaLVnowkpOskedeVqpOZFzzw5YESIwR+MP32AHoq2elP7BhshBopr0icTfzFKym
-         hf4A==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=bwoJod4U/j6ovJ8aF2y2Zan9KzxL61gkTGRNmNLOmlw=;
+        b=TTXKm4KoI9z9+W7Sw51I/KG8eTB8J6kWIh7LNIY8xLbwxy7kB6hV+MZE3dd25BqrBG
+         m88rj6uGcQD7BvEE9wqfOrrOpkDLyyH3KS0xe984xb357EbZV/zrtqw0o/hEe9TauUYd
+         Zv9qFIU7Pha13In3n1IQMrnh51bf8kaR2Ysw8GIZojojt+XyN+Am/WQEVPXE7CQem/j5
+         YdXPj1y9zImopLOFZnSwUHqRV5wt4rTe16CZP4t4meFUcgDAHMG4r4laHf0vt5/SLBqA
+         0n2NMnTYG6WfLdjttHVGJPfG6sNilmHCw3UM3rfDDEWB+ls4wDE3kCHavGa4xqbqWePF
+         mjCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=MkgKKY9+ugWNCFPoL7ONZPPPIRfAhP7lgDa5ShuY3QQ=;
-        b=AFr5kztTh/jjj/YKkqdzc+mcr2UJz9DTqMMPOIltl4fmo5ELXZQrNanJ0WeipT96/8
-         Nt5AHlRy5ceYzOZ6jqtQUxNfTGO8uhUyoDYRsKGC8orvX4i9WiyA+szS4mYc4IMwOpm+
-         AblEpdRSuGxbCF7naVY1Uh2tT3G9E4FpwKHEsm+K3FGFcf+ZjCuCRHlLEDBL0bTXHVAW
-         W8NEFT8X9bPgZ8uXPvHG2zoKZuEiFci6zr6Ft3iNKY6nIazdTbdPU1XIfabyqe5kTtmQ
-         x4ly/x5Vw0QhBYd6KnI16el/sfX6nt8OeaPcBlY0r3lvh2TKoxFI9sG4kuTdUuwBXVcH
-         cp4w==
-X-Gm-Message-State: ANhLgQ3MCa2TIJKKHGVDfRDn9D2e+67QjODVolDn9OmYUek6pDeknHFp
-        EaCEMODzGcXUXvygV5ZOaniD9O/w
-X-Google-Smtp-Source: ADFU+vvfyl9qJ5jscHqvJYdiNQnYQZDCj8uW65jZtQyRl/QUvFTWOhWxjLi1rpK73W+lq9mM+tQ0sA==
-X-Received: by 2002:a17:90a:2:: with SMTP id 2mr1587973pja.16.1584587983387;
-        Wed, 18 Mar 2020 20:19:43 -0700 (PDT)
-Received: from localhost ([2402:800:6375:fbd2:7e82:2a61:6f4a:cfb4])
-        by smtp.gmail.com with ESMTPSA id s12sm421804pgi.38.2020.03.18.20.19.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Mar 2020 20:19:42 -0700 (PDT)
-Date:   Thu, 19 Mar 2020 10:19:40 +0700
-From:   Danh Doan <congdanhqx@gmail.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>
-Subject: Re: [PATCH 1/3] configure: respect --without-curl flags
-Message-ID: <20200319031940.GD29808@danh.dev>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=bwoJod4U/j6ovJ8aF2y2Zan9KzxL61gkTGRNmNLOmlw=;
+        b=DEnnze8HkcMSuhHJHbV5C2fUkIrrzxqcBuFOpiF2d9tk0UO4Jnvu5QN8QMGcy1UhaL
+         b7vzQuoU1EOtujNuCvS7nXQQnmsWgyatB11UiraB4zWzfDnoycHr/wZBPtGHKuNnggMi
+         U2zgfefW6++dvnSDio39IPlQto6j7HwrsFA9OCNL5/1blnIctNFhZkbqH/Jl5c8rR7NN
+         c31y5f4lLdP/Gn7EX+NUc3Yw9bQGj+WWtg2oqkUIEVarSWJ21igh4Hkb5Q+H3R9m6cpr
+         866Ox5AKe/aX4p0R+id32xBboX2qH8wlfthBbyLjNTwP44xE580l9GWIJvL+w4VikcDx
+         UXnQ==
+X-Gm-Message-State: ANhLgQ3R+dxW3HYaDdzF4O4/4kRRkuzDqGdKduGvMHtktxgPZBoAD+HG
+        RPtatHQgDH3w0NqlpXRJcwdbDq8O
+X-Google-Smtp-Source: ADFU+vvvL/L2wagZmd4oeuwXDy+b5fCtaERp0GOS5l0OeN2/N3YChHP9DZDef8LhEPzc6CkyRBLIOw==
+X-Received: by 2002:a17:902:5a44:: with SMTP id f4mr1570050plm.306.1584590345024;
+        Wed, 18 Mar 2020 20:59:05 -0700 (PDT)
+Received: from localhost.localdomain ([2402:800:6375:fbd2:7e82:2a61:6f4a:cfb4])
+        by smtp.gmail.com with ESMTPSA id u6sm506604pgj.7.2020.03.18.20.59.02
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 18 Mar 2020 20:59:04 -0700 (PDT)
+From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>, sandals@crustytoothpaste.net,
+        sunshine@sunshineco.com
+Subject: [PATCH v2 0/3] configure: respect --without-<package> flags
+Date:   Thu, 19 Mar 2020 10:58:54 +0700
+Message-Id: <cover.1584589859.git.congdanhqx@gmail.com>
+X-Mailer: git-send-email 2.26.0.rc2.234.g969ad452ca
+In-Reply-To: <cover.1584516715.git.congdanhqx@gmail.com>
 References: <cover.1584516715.git.congdanhqx@gmail.com>
- <c1c007190683d7ab49e854a66a4832b5ace72b51.1584516715.git.congdanhqx@gmail.com>
- <CAPig+cSqu7-2eTj9S4nMn+MUmXye92idH=XYiDEewpyf4zhpJA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPig+cSqu7-2eTj9S4nMn+MUmXye92idH=XYiDEewpyf4zhpJA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2020-03-18 11:51:34-0400, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Wed, Mar 18, 2020 at 3:38 AM Đoàn Trần Công Danh
-> <congdanhqx@gmail.com> wrote:
-> > diff --git a/configure.ac b/configure.ac
-> > @@ -592,6 +592,9 @@ fi
-> >  # Define NO_CURL if you do not have libcurl installed.  git-http-pull and
-> >  # git-http-push are not built, and you cannot use http:// and https://
-> >  # transports.
-> >
-> > +# Respect --without-curl
-> > +if test "x$NO_CURL" != "xYesPlease"; then
-> > ...
-> >  if test -z "$NO_CURL"; then
-> 
-> I realize that GIT_PARSE_WITH() will either clear NO_CURL or set it to
-> literal "YesPlease", but the comment(s) in this file describing
-> NO_CURL say only to _define_ it to build without curl support. So, I'm
-> wondering if it would make more sense to take a looser view about the
-> value of NO_CURL. The existing check of NO_CURL doesn't bother looking
-> for a specific value, but instead just tests whether it has a value or
-> not. Perhaps the new check can be modeled after that one.
-> 
-> Also, I think you can reduce the scope of this change quite a bit by
-> merely wrapping the AC_CHECK_LIB() invocation. So, either:
-> 
->     ...
->     if test -z "$NO_CURL"; then
->     GIT_STASH_FLAGS($CURLDIR)
-> 
->     AC_CHECK_LIB([curl], [curl_global_init],
->     [NO_CURL=],
->     [NO_CURL=YesPlease])
-> 
->     GIT_UNSTASH_FLAGS($CURLDIR)
->     fi
-> 
->     GIT_CONF_SUBST([NO_CURL])
->     ...
-> 
-> or even:
-> 
->     ...
->     if test -z "$NO_CURL"; then
->     AC_CHECK_LIB([curl], [curl_global_init],
->     [NO_CURL=],
->     [NO_CURL=YesPlease])
->     fi
->     ...
-> 
-> Same comments applies to the other patches, as well.
+Current git's configure script allow --without-<package>,
+it rightfully set NO_<PACKAGE> in the beginning of the configure script,
+but overwrite them with autodetect later.
 
-I've re-checked the configure.ac code.
+Respect them now.
 
-We've already use:
+Change from v1:
+- Simply check if NO_<PACKAGE> is empty or not instead of explicitly
+  check for YesPlease
+- --without-openssl will ignore libcrypto all-together and fallback
+  into DC_SHA1
 
-	test -z "$NO_ICONV"
+Đoàn Trần Công Danh (3):
+  configure: respect --without-curl flag
+  configure: respect --without-expat flag
+  configure: respect --without-openssl flag
 
-I think rewrite like your suggestion would be better choice, and
-it'll be consistence with the current code.
+ configure.ac | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-I'll send a reroll after checking what should be done with NO_OPENSSL.
-
+Interdiff against v1:
+diff --git a/configure.ac b/configure.ac
+index 20a11e1f32..807bb8bc5a 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -542,17 +542,18 @@ AC_MSG_NOTICE([CHECKS for libraries])
+ 
+ GIT_STASH_FLAGS($OPENSSLDIR)
+ 
++if test -z "$NO_OPENSSL"; then
+ AC_CHECK_LIB([crypto], [SHA1_Init],
+ [NEEDS_SSL_WITH_CRYPTO=],
+-[
+-if "x$NO_OPENSSL" = xYesPlease; then
+-	AC_MSG_ERROR([Disabled OpenSSL is required for SHA1])
++[AC_CHECK_LIB([ssl], [SHA1_Init],
++ [NEEDS_SSL_WITH_CRYPTO=YesPlease NO_OPENSSL=],
++ [NEEDS_SSL_WITH_CRYPTO=          NO_OPENSSL=YesPlease])])
+ else
+-	AC_CHECK_LIB([ssl], [SHA1_Init],
+-	[NEEDS_SSL_WITH_CRYPTO=YesPlease NO_OPENSSL=],
+-	[NEEDS_SSL_WITH_CRYPTO=          NO_OPENSSL=YesPlease])
++	# Fallback to DC SHA1
++	NEEDS_SSL_WITH_CRYPTO=
++	DC_SHA1=YesPlease
++	GIT_CONF_SUBST([DC_SHA1])
+ fi
+-])
+ 
+ GIT_UNSTASH_FLAGS($OPENSSLDIR)
+ 
+@@ -598,17 +599,19 @@ fi
+ # git-http-push are not built, and you cannot use http:// and https://
+ # transports.
+ 
+-# Respect --without-curl
+-if test "x$NO_CURL" != "xYesPlease"; then
+-
+ GIT_STASH_FLAGS($CURLDIR)
+ 
++# Respect --without-curl
++if test -z "$NO_CURL"; then
+ AC_CHECK_LIB([curl], [curl_global_init],
+ [NO_CURL=],
+ [NO_CURL=YesPlease])
++fi
+ 
+ GIT_UNSTASH_FLAGS($CURLDIR)
+ 
++GIT_CONF_SUBST([NO_CURL])
++
+ if test -z "$NO_CURL"; then
+ 
+ AC_CHECK_PROG([CURL_CONFIG], [curl-config],
+@@ -629,27 +632,22 @@ fi
+ 
+ fi
+ 
+-fi
+-
+-GIT_CONF_SUBST([NO_CURL])
+ 
+ #
+ # Define NO_EXPAT if you do not have expat installed.  git-http-push is
+ # not built, and you cannot push using http:// and https:// transports.
+ 
+-# Respect --without-expat
+-if test "x$NO_EXPAT" != xYesPlease; then
+-
+ GIT_STASH_FLAGS($EXPATDIR)
+ 
++# Respect --without-expat
++if test -z "$NO_EXPAT"; then
+ AC_CHECK_LIB([expat], [XML_ParserCreate],
+ [NO_EXPAT=],
+ [NO_EXPAT=YesPlease])
++fi
+ 
+ GIT_UNSTASH_FLAGS($EXPATDIR)
+ 
+-fi
+-
+ GIT_CONF_SUBST([NO_EXPAT])
+ 
+ #
 -- 
-Danh
+2.26.0.rc2.234.g969ad452ca
+
