@@ -2,101 +2,128 @@ Return-Path: <SRS0=WCE0=5E=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-14.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 90D1CC43332
-	for <git@archiver.kernel.org>; Thu, 19 Mar 2020 17:34:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C773C4332B
+	for <git@archiver.kernel.org>; Thu, 19 Mar 2020 17:44:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 65C2B207FC
-	for <git@archiver.kernel.org>; Thu, 19 Mar 2020 17:34:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3BFAD2072D
+	for <git@archiver.kernel.org>; Thu, 19 Mar 2020 17:44:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gZr0Lf1M"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="VT/1bO8+"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728188AbgCSReV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Mar 2020 13:34:21 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:43106 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728096AbgCSReU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Mar 2020 13:34:20 -0400
-Received: by mail-pf1-f195.google.com with SMTP id f206so1781735pfa.10
-        for <git@vger.kernel.org>; Thu, 19 Mar 2020 10:34:20 -0700 (PDT)
+        id S1728377AbgCSRoq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Mar 2020 13:44:46 -0400
+Received: from mail-pf1-f201.google.com ([209.85.210.201]:33659 "EHLO
+        mail-pf1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728383AbgCSRoq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Mar 2020 13:44:46 -0400
+Received: by mail-pf1-f201.google.com with SMTP id o5so2326328pfp.0
+        for <git@vger.kernel.org>; Thu, 19 Mar 2020 10:44:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=7iu7YVw3Zo2BDYTeFg0xiBGmvqHPB/CJ1oaJ0Qffzxk=;
-        b=gZr0Lf1MPLIoGdcKgCVDqL/QeKTeDrmO2Vc1p+jAUVEtt05GKAxL6M+M8a1bUwLouC
-         3ubpEdKMaupO6dIUEwiAc+9PqjCfxl7XaH8ZjRwvCy1pkv3CyKH7EUYOWXa0rGbcZusR
-         xG66OzjlqNYLmP3+yo0QowwLaUp6uF4nnhqwDOoeAF7l3fxJSu0TtcUIDnHPU4Pagxy3
-         OtuiZpJ9cDZzEykgaODZauv7O3SsqzY0J+uny7ujBxhkRE6a2LDbne6Xmwng5gReNa6G
-         wBKK+Hezy5WhB/dOL+7ijr7r7rndPCXFQOdgZMgqes4gFSX3w5I3WyioFthJXvgq82JC
-         qA+A==
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=Aw0xblq4BURIKkKM1vvIoCHmuZeSHkoqslaiaMkPmbg=;
+        b=VT/1bO8+RacjLxrKiP0ap3J11kV0N3LwOXn3JQYrVDJSEniUrxGAhpKrPGzhGfWMfm
+         dcLq79aOHrpkG+99Ki5gDfRdsa3Ymaj5fs1uXbiKIOYxBtOuxSNCHmqlGCa0Pe3OxwVB
+         0/L/ulr67TbNZxQHs+d8fMI4QABc5FiD8eusZfWaD4yvoYiyPpU1rSilYu8la5itQPGK
+         eJIiZmIL+f74yPmzhEuo2TozEpzc/Pc+4X08I1iK49dByWprTTIvgBWyVjm2E1X5G4tl
+         HneATwdSuqx0FaM8tjH07h2hC24GZiWYTyusWzrVEcmt6wOkThrr7JGcoctM4+rJkCgN
+         RG/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=7iu7YVw3Zo2BDYTeFg0xiBGmvqHPB/CJ1oaJ0Qffzxk=;
-        b=FPFxE/AIVOaJoOWcCSHGyg3+yHhEGe1L0LBnfleJmfPV14bBvcaAzdMdxEM7WabCG1
-         /8mNzfXwCtlZEsG1usORHc1cU4w/dAdhwxwfLFcGcMFqL1PfnTa3cXs9rAqop4RrT0cY
-         MyfUdqncX9SjO+ZCqAh4DL7EcSF/p2vVL6diu6UwNeZd7HsOSVUC7Wcd+zWE1Fgvr/L4
-         G4YVUQ1wXRLMi5CnDYm5/HcZCDUs+Qc8p31VBRON2hUTJnJXYTwU9UmgCSEjdB98fnnw
-         98bP1k+0ULtWhdaURyxysq4wvfBS4DZkDdcoSzLN38wyBXPMgnsY2E/HYIdgyAV6Kgo7
-         PlEQ==
-X-Gm-Message-State: ANhLgQ3wRgUD3EUCIpoVmd9WbBomuqW32O8XXz4zqbq/7RetsbV0dq8M
-        mKENI6cKpTF9ycb/j2IRYYajRQiR
-X-Google-Smtp-Source: ADFU+vvpTEO/aFc6KjDWXqpttXaMrSxTTx3goSGE0SDCUkEkwX/J4SHVbBjedhuA4TbAJki+y5rp7A==
-X-Received: by 2002:a62:16d2:: with SMTP id 201mr4842738pfw.295.1584639259458;
-        Thu, 19 Mar 2020 10:34:19 -0700 (PDT)
-Received: from [192.168.206.100] ([223.182.205.212])
-        by smtp.gmail.com with ESMTPSA id k3sm2875060pgh.34.2020.03.19.10.34.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 19 Mar 2020 10:34:18 -0700 (PDT)
-Subject: Re: [GSoC][PATCH 2/2] t4131: use helper function to replace test -f
- <path>
-To:     Shourya Shukla <shouryashukla.oo@gmail.com>,
-        harshitjain1371999@gmail.com
-Cc:     git@vger.kernel.org
-References: <20200319132957.17813-3-harshitjain1371999@gmail.com>
- <20200319164234.4441-1-shouryashukla.oo@gmail.com>
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Message-ID: <555da203-0740-3d79-15cf-83c5a8d5dbae@gmail.com>
-Date:   Thu, 19 Mar 2020 23:03:24 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
-MIME-Version: 1.0
-In-Reply-To: <20200319164234.4441-1-shouryashukla.oo@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=Aw0xblq4BURIKkKM1vvIoCHmuZeSHkoqslaiaMkPmbg=;
+        b=ZjIVtboz0YG+dIFDhT2aF/u9Vh39rhSWpSLLqajwyiuttbpIuwXvdO/KWzSkK6Y0+G
+         QlevqssZ8e7N0/95qq3wc9AriNTc/joWNKpTkN3D2WB8495SabZ4sABA/nsFIpx88UJ4
+         ST6VjQUngk6qIdAeYZ0fa+AxjerdNLnvHkA7wdSwyrkXY0eZ8eQQiTReIA9dqPoizzHK
+         EzosgM91cvSTFY1mAwLLGtIIJb21bSX34P/rlDSO9oRe0+8drxjmKPGtTdv6NSWSeSD/
+         VZOOsIS4M9tQ5Juqro/a8nLCGEFVQ6+cQ7uHMwu5YU+yZk7OTdWv2OfZJ8fP7bM+PEcm
+         D4Lg==
+X-Gm-Message-State: ANhLgQ3Qkwc/lcy2yjeAko8rX1LrGDp4dW2mhxcvqtXjiJe7bklCK5SV
+        jyFtQt1h2hbYMjmUk0AfkZnyu079gtZG6CiaEAL0iPL7/OSTDiPjGoxldXnUegcRDvgC3Qn+TMm
+        f0Mg4K9gbSet8iZZl37dXrkTiZvOKRaJevJqy7JwFT2AM85wsahF7sye4vGKW8SczVx57fzhf+b
+        C7
+X-Google-Smtp-Source: ADFU+vsIMZ5EbcZgFL97EcPSCo3oWUjf0vhehmkkYqQ72BAEdMeJQIuhX0LluRrVMrRjoE1O78gHwaE/Bj9Anxq5yG9c
+X-Received: by 2002:a17:90a:208:: with SMTP id c8mr4956509pjc.153.1584639883755;
+ Thu, 19 Mar 2020 10:44:43 -0700 (PDT)
+Date:   Thu, 19 Mar 2020 10:44:39 -0700
+Message-Id: <20200319174439.230969-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.25.1.696.g5e7596f4ac-goog
+Subject: [RFC PATCH] fetch-pack: lazy fetch using tree:0
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, peff@peff.net
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 19-03-2020 22:12, Shourya Shukla wrote:
-> Hello Harshit,
-> 
->> Replace 'test -f' with the helper function 'test_path_is_file' as the helper function improves the code readability and also gives better error messages.
-> 
-> Again the same thing, you may follow what I stated before regarding commit messages.
-> 
-> The commit title can be of the form:
-> 
-> t4131: use helpers to replace test -f <path>
-> 
-> <<commit description>>
-> 
+Support for partial clones with filtered trees was added in bc5975d24f
+("list-objects-filter: implement filter tree:0", 2018-10-07), but
+whenever a lazy fetch of a tree is done, besides the tree itself, some
+other objects that it references are also fetched.
 
-Just curious, isn't the commit title already like that in this patch? 
-The subject does read:
+The "blob:none" filter was added to lazy fetches in 4c7f9567ea
+("fetch-pack: exclude blobs when lazy-fetching trees", 2018-10-04) to
+restrict blobs from being fetched, but it didn't restrict trees.
+("tree:0", which would restrict all trees as well, wasn't added then
+because "tree:0" was itself new and may not have been supported by Git
+servers, as you can see from the dates of the commits.)
 
-   [GSoC][PATCH 2/2] t4131: use helper function to replace test -f <path>"
+Now that "tree:0" has been supported in Git for a while, teach lazy
+fetches to use "tree:0" instead of "blob:none".
 
-What am I missing?
+(An alternative to doing this is to teach Git a new filter that only
+returns exactly the objects requested, no more - but "tree:0" already
+does that for us for now, hence this patch. If we were to support
+filtering of commits in partial clones later, I think that specifying a
+depth will work to restrict the commits returned, so we won't need an
+additional filter anyway.)
+---
+This looks like a good change to me - in particular, it makes Git align
+with the (in my opinion, reasonable) mental model that when we lazily
+fetch something, we only fetch that thing. Some issues that I can think
+about:
 
+ - Some hosts like GitHub support some partial clone filters, but not
+   "tree:0".
+ - I haven't figured out the performance implications yet. If we want a
+   tree, I think that we typically will want some of its subtrees, but
+   not all.
+
+Any thoughts?
+---
+ fetch-pack.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 1734a573b0..655ec5d4a3 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -1747,14 +1747,14 @@ struct ref *fetch_pack(struct fetch_pack_args *args,
+ 		/*
+ 		 * The protocol does not support requesting that only the
+ 		 * wanted objects be sent, so approximate this by setting a
+-		 * "blob:none" filter if no filter is already set. This works
+-		 * for all object types: note that wanted blobs will still be
++		 * "tree:0" filter if no filter is already set. This works
++		 * for all object types: note that wanted blobs and trees will still be
+ 		 * sent because they are directly specified as a "want".
+ 		 *
+ 		 * NEEDSWORK: Add an option in the protocol to request that
+ 		 * only the wanted objects be sent, and implement it.
+ 		 */
+-		parse_list_objects_filter(&args->filter_options, "blob:none");
++		parse_list_objects_filter(&args->filter_options, "tree:0");
+ 	}
+ 
+ 	if (version != protocol_v2 && !ref) {
 -- 
-Sivaraam
+2.25.1.696.g5e7596f4ac-goog
+
