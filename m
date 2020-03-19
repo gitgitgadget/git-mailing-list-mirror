@@ -2,74 +2,90 @@ Return-Path: <SRS0=WCE0=5E=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-10.8 required=3.0
+	tests=HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 282D2C4332D
-	for <git@archiver.kernel.org>; Thu, 19 Mar 2020 16:14:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 52335C4332D
+	for <git@archiver.kernel.org>; Thu, 19 Mar 2020 16:15:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 06AC520775
-	for <git@archiver.kernel.org>; Thu, 19 Mar 2020 16:14:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2EAEC2072C
+	for <git@archiver.kernel.org>; Thu, 19 Mar 2020 16:15:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727715AbgCSQOW convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Thu, 19 Mar 2020 12:14:22 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:41350 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727462AbgCSQOW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Mar 2020 12:14:22 -0400
-Received: by mail-wr1-f65.google.com with SMTP id h9so3782781wrc.8
-        for <git@vger.kernel.org>; Thu, 19 Mar 2020 09:14:21 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Ms5HTRBPJXz7pX9DRsqZCOGALMYAkiiGTo+Zsu68tZE=;
-        b=MuzsSsaQcgyoL3LABvs+cBPl31ohLGDCOSTX7bKonfdjBTS34TulRxfyVX5vrrrB9d
-         I67/4I9vvZufTHJhkrkZbidYtliDRO02j5u+f4s4pDhJSS5yF2JTNCAF+1ZhE0M4VJAJ
-         RGS/NjVMZsAGbUEh6TM5ow1R5b9tjrpxqQ6h7Ogl/S9GkcFWqTL6dKM7gVPdIxiwSztN
-         EzDTX9kH4NPBZc5kNmbxbJQzRzKG6TaUpmzhzfPdcoWHiPDHz3vfq1rXdSKVQgh7rUbx
-         8rfA2BLw4VHjxMH+L0Wv7r5HFHu2OumtHnVKbzFyulAQiZx7NoLWKWhEezQ7j8zTnCO9
-         HLaA==
-X-Gm-Message-State: ANhLgQ1M1CQcvemi2jfUxrojXSFTSnzR+OhiAK0Vi5TsOm526ae+XIkm
-        ZtjBPeaI3vJC8QfzFv6bfmQBKvnBqguotcF1JyU=
-X-Google-Smtp-Source: ADFU+vtXHXVUz1qgirxkxOxSPCrlotGKkrmsDD/06xIQPUj74tBLNpChW8a5IQil0bF1cwzC9J8/xelgn41huEU+Q4o=
-X-Received: by 2002:a5d:444b:: with SMTP id x11mr5495545wrr.226.1584634460356;
- Thu, 19 Mar 2020 09:14:20 -0700 (PDT)
+        id S1727955AbgCSQPU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Mar 2020 12:15:20 -0400
+Received: from relay7-d.mail.gandi.net ([217.70.183.200]:56423 "EHLO
+        relay7-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727829AbgCSQPU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Mar 2020 12:15:20 -0400
+X-Originating-IP: 103.227.96.119
+Received: from localhost (unknown [103.227.96.119])
+        (Authenticated sender: me@yadavpratyush.com)
+        by relay7-d.mail.gandi.net (Postfix) with ESMTPSA id C18E520003;
+        Thu, 19 Mar 2020 16:15:17 +0000 (UTC)
+Date:   Thu, 19 Mar 2020 21:45:15 +0530
+From:   Pratyush Yadav <me@yadavpratyush.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: [GIT PULL] git-gui pull request
+Message-ID: <20200319161515.ol64anhjoi6r44de@yadavpratyush.com>
 MIME-Version: 1.0
-References: <cover.1584625896.git.congdanhqx@gmail.com> <7e184d97df8c673b0edfb6223c82385579777b19.1584625896.git.congdanhqx@gmail.com>
- <20200319160211.GC3513282@coredump.intra.peff.net>
-In-Reply-To: <20200319160211.GC3513282@coredump.intra.peff.net>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 19 Mar 2020 12:14:09 -0400
-Message-ID: <CAPig+cSZvhb4H54QZ=m+A+WF5vg6h014cn5JxiB5N4Om-m2tbw@mail.gmail.com>
-Subject: Re: [PATCH 2/6] test-lib-functions: test_cmp: eval $GIT_TEST_CMP
-To:     Jeff King <peff@peff.net>
-Cc:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 19, 2020 at 12:02 PM Jeff King <peff@peff.net> wrote:
-> On Thu, Mar 19, 2020 at 09:00:03PM +0700, Đoàn Trần Công Danh wrote:
-> > > test_cmp:1: command not found: diff -u
-> >
-> > Using `eval` to unquote $GIT_TEST_CMP as same as precedence in `git_editor`.
->
-> I do worry that this whitespace splitting behavior could bite us in
-> other scripts. Curiously, my version of busybox (1.30.1) doesn't seem to
-> have any problem with it, though.
+Hi Junio,
 
-I had the same reaction upon reading the patch. It's not just other
-scripts in which the problem might manifest, but a change to the value
-of some variable which is used as a command invocation. Providing a
-"fix" for this one particular case may help get past test a failure on
-Alpine under busybox, but it is not a good general solution. (Some
-sort of helper function which smooths away differences like this --
-say git_indirect_cmd() or something -- which can be used wherever a
-$VARIABLE is invoked as a command might be a better approach, but I
-haven't really thought it through.)
+Please pull the changes in git-gui for the Git v2.26.0 release.
+
+Regards,
+Pratyush Yadav
+
+---
+The following changes since commit 0d2116c6441079a5a1091e4cf152fd9d5fa9811b:
+
+  Merge branch 'zs/open-current-file' (2020-01-05 02:38:03 +0530)
+
+are available in the Git repository at:
+
+  https://github.com/prati0100/git-gui.git
+
+for you to fetch changes up to a5728022e07c53e5ac91db0960870518e243b7c1:
+
+  Merge branch 'py/remove-tcloo' (2020-03-19 21:29:19 +0530)
+
+----------------------------------------------------------------
+Christian Stimming (3):
+      git-gui: update pot template and German translation to current source code
+      git-gui: extend translation glossary template with more terms
+      git-gui: update German translation
+
+Luke Bonanomi (1):
+      git-gui--askpass: coerce answers to UTF-8 on Windows
+
+Pratyush Yadav (9):
+      Merge branch 'cs/german-translation'
+      git-gui: add missing close bracket
+      Merge branch 'py/missing-bracket'
+      git-gui: fix error popup when doing blame -> "Show History Context"
+      Merge branch 'py/blame-status-error'
+      Merge branch 'js/askpass-coerce-utf8'
+      git-gui: reduce Tcl version requirement from 8.6 to 8.5
+      git-gui: create a new namespace for chord script evaluation
+      Merge branch 'py/remove-tcloo'
+
+ git-gui--askpass                 |    5 +
+ git-gui.sh                       |   14 +-
+ lib/chord.tcl                    |   56 +-
+ lib/index.tcl                    |   10 +-
+ lib/merge.tcl                    |    2 +-
+ po/de.po                         | 3622 ++++++++++++++++++++------------------
+ po/git-gui.pot                   | 2526 ++++++++++++++------------
+ po/glossary/de.po                |  315 +++-
+ po/glossary/git-gui-glossary.pot |  250 ++-
+ po/glossary/git-gui-glossary.txt |  101 +-
+ 10 files changed, 3981 insertions(+), 2920 deletions(-)
