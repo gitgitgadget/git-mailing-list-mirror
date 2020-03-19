@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A7E72C43332
-	for <git@archiver.kernel.org>; Thu, 19 Mar 2020 03:59:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AE69CC4332B
+	for <git@archiver.kernel.org>; Thu, 19 Mar 2020 03:59:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7F29320722
-	for <git@archiver.kernel.org>; Thu, 19 Mar 2020 03:59:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8527520757
+	for <git@archiver.kernel.org>; Thu, 19 Mar 2020 03:59:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WyJ4uLdf"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CX9CSId6"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726991AbgCSD7K (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Mar 2020 23:59:10 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:44659 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726838AbgCSD7K (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Mar 2020 23:59:10 -0400
-Received: by mail-pf1-f195.google.com with SMTP id b72so653793pfb.11
-        for <git@vger.kernel.org>; Wed, 18 Mar 2020 20:59:09 -0700 (PDT)
+        id S1726964AbgCSD7I (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Mar 2020 23:59:08 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:36576 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726838AbgCSD7I (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Mar 2020 23:59:08 -0400
+Received: by mail-pg1-f194.google.com with SMTP id z72so498060pgz.3
+        for <git@vger.kernel.org>; Wed, 18 Mar 2020 20:59:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=xF7llzGdvXkSNWCDUKglJML1OkfF5FEdnEK+pv5u9+Y=;
-        b=WyJ4uLdfiLKakA/AMj2ogjExh5VRurgOI/vam1nWek4334LX+QoKQPypJPc5ouHEHh
-         Mwv9dj7SjInzcMLZlNnPJY0ANAecnDcEPOBjBLbOnW3A5VGmy2HVmKSgXXg7SiBG/q48
-         fOQGdXeGjmMi90wC2wNKbqMCZlOwGerJFfOvpLq9WHSibh1PO+rwy5aS5kord6X1U9/a
-         Gc2ZUL6dOiu901kz7xLt23oNKaV7csV/tYgxq2jYcwck6cmavefzQehB/PLend4+t6/a
-         9FEHV/ULd8n+SMudYcaBM9kG96usgZ4nX8kJEyYXM3KM2wqLVPI2wXxUqv9Diu9BIWMo
-         LU0A==
+        bh=qlvzk8lPlAK9QdYuNMQQIHMd8phXFYUooHuXr372k+E=;
+        b=CX9CSId6+pRt5UKinG00gu84iPz9HjNdFfjuwI+tGfnTLtZwglubIvpmlTZu9guzTW
+         8AVwu3EVCaicSKYpVDYyMOOXyy3QD30KEdmJV9dNszJ8zegiSMMpCe/2MEvNN4Idshew
+         A4cxEwdIenDwa0e3bUarRwDwjcqnUzwEC/ki/H9c9tPqjwpY7WmvsKE8YzhurHIjVL5w
+         FJla4T6nV/i9W/M4gnovCSsMKbx3fobynCcc1NFeXKgnW9DuzxLReJ98PzxRVrDn/oWB
+         oR4IrF0daZNNDV+/ZvCODVwJqMqpK3U//jfCU2IQn9HqIPWUHbOkc6IYkCDfUfHINgGi
+         cUiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=xF7llzGdvXkSNWCDUKglJML1OkfF5FEdnEK+pv5u9+Y=;
-        b=kVHshGr0n7zFYr874QuzEdhsX+i4MI9CoQAoeqIoZV7H7wpQ33Dvuwdod0PqC3bDP7
-         0KVLB82PcwuneYi7vKY0O2LUFBpIsJkDKevY3ORr076Tvuc/ADyBMYhzETffWWkduQ3E
-         4NxiJ1CpmWVvZ5tWF6++GyZGPj754V+eyR1i/BxlWXXdakVqqC+d7AuVaCuNU3MhFYwC
-         T+JSjBRp/sZ+XmOLjgTBN0p1502oh5AQSuQnvR+t0FezeNSuAWYwY1nYgeYGVt9ljXqP
-         i6VksMWJMpo2ABVkF6siBKekL2z4R58xhNDKXUgEueGGHjW+8653JINBL8yMZH0voDUr
-         qfig==
-X-Gm-Message-State: ANhLgQ2HvDILiYDlyjiXBjwVwqgDkSjZ867BejVyAyWQ/PYeQGFSP7Ct
-        UM4tv4W5LpdGXIwtucWL8DCjPb1f
-X-Google-Smtp-Source: ADFU+vv1eSAkEaYZFY5+vzYBnRRlNfrf8Iz0CBHaKOaK34GDX0NKZLQsoJ1vUnkpXSqogMmjoMAxkg==
-X-Received: by 2002:a63:64c6:: with SMTP id y189mr1210270pgb.176.1584590348898;
-        Wed, 18 Mar 2020 20:59:08 -0700 (PDT)
+        bh=qlvzk8lPlAK9QdYuNMQQIHMd8phXFYUooHuXr372k+E=;
+        b=Mo294C3a+iAWIx3Lvo834LAiJ07V+pvr16qMkiqUR8TpjIVjS8MaviWxKZTWp8gFQ5
+         b9zt49CrVpZJpOXeCixOOJM4djCUMFAiwh24BRW0TWtbU9mJKpvb3xatisevPgqvMxHH
+         sBxidBEuiDw7uyIM9spal24iubdBwXFWC4r/0EqnwOIWKphCHqEKPfZCRWgd9cgyOq0i
+         msfhw10FidyPFUPi2YKMAQy5+PVod52oixt3auqK/4x7o9MbfZY9FKUe9n/E54+QCmez
+         1py51GmYkUDPFIcs698RoQ9dRRnuO3UrVqKQD5LHvXH8jGfGvycsPZux6+kcGVQbwHAj
+         1SEg==
+X-Gm-Message-State: ANhLgQ2gz87IwWOhQE9/k3ULtHcxquXGt/HauxMpED4ehWuvged+FJQr
+        HiIshBSSt22aWgIA9uNInfRx/0ve
+X-Google-Smtp-Source: ADFU+vutLRLbXKjsblWyQ8p4lNtbVEpybHwr1jAfr3wYTpxRqKK7T41hlZPrp2uwKDHeKQ7TrokHPQ==
+X-Received: by 2002:a63:fd0f:: with SMTP id d15mr1222966pgh.26.1584590347011;
+        Wed, 18 Mar 2020 20:59:07 -0700 (PDT)
 Received: from localhost.localdomain ([2402:800:6375:fbd2:7e82:2a61:6f4a:cfb4])
-        by smtp.gmail.com with ESMTPSA id u6sm506604pgj.7.2020.03.18.20.59.07
+        by smtp.gmail.com with ESMTPSA id u6sm506604pgj.7.2020.03.18.20.59.05
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 18 Mar 2020 20:59:08 -0700 (PDT)
+        Wed, 18 Mar 2020 20:59:06 -0700 (PDT)
 From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>, sandals@crustytoothpaste.net,
         sunshine@sunshineco.com
-Subject: [PATCH v2 2/3] configure: respect --without-expat flag
-Date:   Thu, 19 Mar 2020 10:58:56 +0700
-Message-Id: <0dc2f0a7c56eb36479bf8793d7562490dec8ba0d.1584589859.git.congdanhqx@gmail.com>
+Subject: [PATCH v2 1/3] configure: respect --without-curl flag
+Date:   Thu, 19 Mar 2020 10:58:55 +0700
+Message-Id: <e55a1258d5b42c9e761116d02e3bf365e5ee9b4a.1584589859.git.congdanhqx@gmail.com>
 X-Mailer: git-send-email 2.26.0.rc2.234.g969ad452ca
 In-Reply-To: <cover.1584589859.git.congdanhqx@gmail.com>
 References: <cover.1584516715.git.congdanhqx@gmail.com> <cover.1584589859.git.congdanhqx@gmail.com>
@@ -81,21 +81,21 @@ Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
  1 file changed, 3 insertions(+)
 
 diff --git a/configure.ac b/configure.ac
-index 5a73a592e1..896996e177 100644
+index 66aedb9288..5a73a592e1 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -632,9 +632,12 @@ fi
+@@ -594,9 +594,12 @@ fi
  
- GIT_STASH_FLAGS($EXPATDIR)
+ GIT_STASH_FLAGS($CURLDIR)
  
-+# Respect --without-expat
-+if test -z "$NO_EXPAT"; then
- AC_CHECK_LIB([expat], [XML_ParserCreate],
- [NO_EXPAT=],
- [NO_EXPAT=YesPlease])
++# Respect --without-curl
++if test -z "$NO_CURL"; then
+ AC_CHECK_LIB([curl], [curl_global_init],
+ [NO_CURL=],
+ [NO_CURL=YesPlease])
 +fi
  
- GIT_UNSTASH_FLAGS($EXPATDIR)
+ GIT_UNSTASH_FLAGS($CURLDIR)
  
 -- 
 2.26.0.rc2.234.g969ad452ca
