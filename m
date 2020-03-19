@@ -2,168 +2,139 @@ Return-Path: <SRS0=WCE0=5E=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 25A7FC4332D
-	for <git@archiver.kernel.org>; Thu, 19 Mar 2020 01:58:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CEC9C4332B
+	for <git@archiver.kernel.org>; Thu, 19 Mar 2020 03:19:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id E2C6920767
-	for <git@archiver.kernel.org>; Thu, 19 Mar 2020 01:58:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0C22620768
+	for <git@archiver.kernel.org>; Thu, 19 Mar 2020 03:19:49 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S29MirXq"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GSMx2eyp"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726980AbgCSB6k (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Mar 2020 21:58:40 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:53306 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726596AbgCSB6j (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Mar 2020 21:58:39 -0400
-Received: by mail-wm1-f68.google.com with SMTP id 25so322521wmk.3
-        for <git@vger.kernel.org>; Wed, 18 Mar 2020 18:58:37 -0700 (PDT)
+        id S1726726AbgCSDTo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Mar 2020 23:19:44 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:41552 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726596AbgCSDTo (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Mar 2020 23:19:44 -0400
+Received: by mail-pl1-f193.google.com with SMTP id t16so407162plr.8
+        for <git@vger.kernel.org>; Wed, 18 Mar 2020 20:19:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=cbgsqqljpK2Wc136cd4jqB2iQLNfDjdENjl0d7Z66GY=;
-        b=S29MirXqbNlYLYlprKsSUb9JbRgFFsoxWUJEmk2Z0e5CD0aiCY9XFOmw5PXVcun75V
-         nUPSB4EF+jwmBJEuKWoMJakOvkcNBuKHNyt5guB6/Ae3hUw4PnrhubW4j0U3ScPp5eh3
-         dy9N9rCwE1OH52tsQ43AXOonGpZ9XQcuwZilDM78XvFyPjbgjmuprEXs5+s9onEVM0LT
-         9zQRE3Z9KBvsiPRD6TWTu37bFXQOA/XW2lhtvrNqgifiKbk1o6tea4IB3TX6fEIxNLJI
-         Jd4D8/3CETm5Po2ba+UPLPqX4eeCHuJGEr0LYqoridfsBwUdNFVesWfcOCpFm10OGnZA
-         37hA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=MkgKKY9+ugWNCFPoL7ONZPPPIRfAhP7lgDa5ShuY3QQ=;
+        b=GSMx2eypfb5i8BZPQOPdNkWy9iCQYBXMemaVsMIdgVvHP5JcH/m1THMf7DVTa83yLa
+         5qy5iZHrHLa6EwJ5s4F1tfHEiTBx5FbbRQ3eSAd3kT+KgD7qGEX+c1uEiSeKSSNJdkMM
+         VRfFX8hRuxt9rQL6Xq80J3jX2CNlVUcdTYvi8p6e1gcyeGOCsb5vwTGLYVhKlMeA4+8/
+         1DuTI2waEI8zkRc4ONepLo8L8VMiccEZCSuloP0CPkR7JrKj4jMqCCtJbJP8I/nxPnD1
+         KzdCJnaLVnowkpOskedeVqpOZFzzw5YESIwR+MP32AHoq2elP7BhshBopr0icTfzFKym
+         hf4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=cbgsqqljpK2Wc136cd4jqB2iQLNfDjdENjl0d7Z66GY=;
-        b=lGfGIZDjx8otFZIC6+x6aTb6MUzl6xbvkc/jYzgJNSV6RTqjvVin0kL94UqhBSO5PM
-         JmEh9du2KoBiE73i7yCk1na5ZqusdBhBxjD1Fr6ChD8WW1NYEkwuj9/J7ImGtFWdyFUH
-         avB9RRk/SCJCkpPjGdpruw9CXxsUQ1GRXHNYoHmshJwNhsfULhuHM0TLEjQMvXljPJIV
-         B2T1BkhSAqlgIhI9+tWYfQn68gnSMKBV/UXFpbzD5ngvuTbVqUgX7i7OQb4UdT4CEDDW
-         KQBIrleezOnqTCnbo+W1PA3gqSmjzy+X6F0ijeUMlGcQdvx9TaoqHmebeJH5oIE4qsKI
-         S7yg==
-X-Gm-Message-State: ANhLgQ3UrZarAzhXbkCDGnB0QypKatj2azdtY9tRnam080htTCIs+jkr
-        ZUv0mY/QoKHyptVlKnPUogcBK3OI
-X-Google-Smtp-Source: ADFU+vuxuhYAMLiPwH6s/FvJvSRzjE6zs0cxyjxHwtghkD16GMyE/yDwOVHc6HrKFLlC2XxE6+gXHw==
-X-Received: by 2002:a1c:208a:: with SMTP id g132mr695723wmg.44.1584583112190;
-        Wed, 18 Mar 2020 18:58:32 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y200sm964191wmc.20.2020.03.18.18.58.31
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=MkgKKY9+ugWNCFPoL7ONZPPPIRfAhP7lgDa5ShuY3QQ=;
+        b=AFr5kztTh/jjj/YKkqdzc+mcr2UJz9DTqMMPOIltl4fmo5ELXZQrNanJ0WeipT96/8
+         Nt5AHlRy5ceYzOZ6jqtQUxNfTGO8uhUyoDYRsKGC8orvX4i9WiyA+szS4mYc4IMwOpm+
+         AblEpdRSuGxbCF7naVY1Uh2tT3G9E4FpwKHEsm+K3FGFcf+ZjCuCRHlLEDBL0bTXHVAW
+         W8NEFT8X9bPgZ8uXPvHG2zoKZuEiFci6zr6Ft3iNKY6nIazdTbdPU1XIfabyqe5kTtmQ
+         x4ly/x5Vw0QhBYd6KnI16el/sfX6nt8OeaPcBlY0r3lvh2TKoxFI9sG4kuTdUuwBXVcH
+         cp4w==
+X-Gm-Message-State: ANhLgQ3MCa2TIJKKHGVDfRDn9D2e+67QjODVolDn9OmYUek6pDeknHFp
+        EaCEMODzGcXUXvygV5ZOaniD9O/w
+X-Google-Smtp-Source: ADFU+vvfyl9qJ5jscHqvJYdiNQnYQZDCj8uW65jZtQyRl/QUvFTWOhWxjLi1rpK73W+lq9mM+tQ0sA==
+X-Received: by 2002:a17:90a:2:: with SMTP id 2mr1587973pja.16.1584587983387;
+        Wed, 18 Mar 2020 20:19:43 -0700 (PDT)
+Received: from localhost ([2402:800:6375:fbd2:7e82:2a61:6f4a:cfb4])
+        by smtp.gmail.com with ESMTPSA id s12sm421804pgi.38.2020.03.18.20.19.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Mar 2020 18:58:31 -0700 (PDT)
-Message-Id: <pull.585.git.1584583110914.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 19 Mar 2020 01:58:30 +0000
-Subject: [PATCH] config: set pack.useSparse=true by default
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Wed, 18 Mar 2020 20:19:42 -0700 (PDT)
+Date:   Thu, 19 Mar 2020 10:19:40 +0700
+From:   Danh Doan <congdanhqx@gmail.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>
+Subject: Re: [PATCH 1/3] configure: respect --without-curl flags
+Message-ID: <20200319031940.GD29808@danh.dev>
+References: <cover.1584516715.git.congdanhqx@gmail.com>
+ <c1c007190683d7ab49e854a66a4832b5ace72b51.1584516715.git.congdanhqx@gmail.com>
+ <CAPig+cSqu7-2eTj9S4nMn+MUmXye92idH=XYiDEewpyf4zhpJA@mail.gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     me@ttaylorr.com, jrnieder@gmail.com,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAPig+cSqu7-2eTj9S4nMn+MUmXye92idH=XYiDEewpyf4zhpJA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+On 2020-03-18 11:51:34-0400, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Wed, Mar 18, 2020 at 3:38 AM Đoàn Trần Công Danh
+> <congdanhqx@gmail.com> wrote:
+> > diff --git a/configure.ac b/configure.ac
+> > @@ -592,6 +592,9 @@ fi
+> >  # Define NO_CURL if you do not have libcurl installed.  git-http-pull and
+> >  # git-http-push are not built, and you cannot use http:// and https://
+> >  # transports.
+> >
+> > +# Respect --without-curl
+> > +if test "x$NO_CURL" != "xYesPlease"; then
+> > ...
+> >  if test -z "$NO_CURL"; then
+> 
+> I realize that GIT_PARSE_WITH() will either clear NO_CURL or set it to
+> literal "YesPlease", but the comment(s) in this file describing
+> NO_CURL say only to _define_ it to build without curl support. So, I'm
+> wondering if it would make more sense to take a looser view about the
+> value of NO_CURL. The existing check of NO_CURL doesn't bother looking
+> for a specific value, but instead just tests whether it has a value or
+> not. Perhaps the new check can be modeled after that one.
+> 
+> Also, I think you can reduce the scope of this change quite a bit by
+> merely wrapping the AC_CHECK_LIB() invocation. So, either:
+> 
+>     ...
+>     if test -z "$NO_CURL"; then
+>     GIT_STASH_FLAGS($CURLDIR)
+> 
+>     AC_CHECK_LIB([curl], [curl_global_init],
+>     [NO_CURL=],
+>     [NO_CURL=YesPlease])
+> 
+>     GIT_UNSTASH_FLAGS($CURLDIR)
+>     fi
+> 
+>     GIT_CONF_SUBST([NO_CURL])
+>     ...
+> 
+> or even:
+> 
+>     ...
+>     if test -z "$NO_CURL"; then
+>     AC_CHECK_LIB([curl], [curl_global_init],
+>     [NO_CURL=],
+>     [NO_CURL=YesPlease])
+>     fi
+>     ...
+> 
+> Same comments applies to the other patches, as well.
 
-The pack.useSparse config option was introduced by 3d036eb0
-(pack-objects: create pack.useSparse setting, 2019-01-19) and was
-first available in v2.21.0. When enabled, the pack-objects process
-during 'git push' will use a sparse tree walk when deciding which
-trees and blobs to send to the remote. The algorithm was introduced
-by d5d2e93 (revision: implement sparse algorithm, 2019-01-16) and
-has been in production use by VFS for Git since around that time.
-The features.experimental config option also enabled pack.useSparse,
-so hopefully that has also increased exposure.
+I've re-checked the configure.ac code.
 
-It is worth noting that pack.useSparse has a possibility of
-sending more objects across a push, but requires a special
-arrangement of exact _copies_ across directories. There is a test
-in t5322-pack-objects-sparse.sh that demonstrates this possibility.
+We've already use:
 
-Since the downside is unlikely but the upside is significant, set
-the default value of pack.useSparse to true. Remove it from the
-set of options implied by features.experimental.
+	test -z "$NO_ICONV"
 
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
-    config: set pack.useSparse=true by default
-    
-    Here is a small patch to convert pack.useSparse to true by default. It's
-    been released for over a year, so the feature is quite stable. I'm
-    submitting this now to allow it to cook for a while during the next
-    release cycle.
-    
-    Thanks, -Stolee
+I think rewrite like your suggestion would be better choice, and
+it'll be consistence with the current code.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-585%2Fderrickstolee%2Fpack-use-sparse-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-585/derrickstolee/pack-use-sparse-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/585
+I'll send a reroll after checking what should be done with NO_OPENSSL.
 
- Documentation/config/feature.txt | 3 ---
- Documentation/config/pack.txt    | 4 ++--
- repo-settings.c                  | 3 ++-
- 3 files changed, 4 insertions(+), 6 deletions(-)
-
-diff --git a/Documentation/config/feature.txt b/Documentation/config/feature.txt
-index 875f8c8a66f..4e3a5c0cebc 100644
---- a/Documentation/config/feature.txt
-+++ b/Documentation/config/feature.txt
-@@ -12,9 +12,6 @@ feature.experimental::
- 	setting if you are interested in providing feedback on experimental
- 	features. The new default values are:
- +
--* `pack.useSparse=true` uses a new algorithm when constructing a pack-file
--which can improve `git push` performance in repos with many files.
--+
- * `fetch.negotiationAlgorithm=skipping` may improve fetch negotiation times by
- skipping more commits at a time, reducing the number of round trips.
- +
-diff --git a/Documentation/config/pack.txt b/Documentation/config/pack.txt
-index 0dac5805816..837f1b16792 100644
---- a/Documentation/config/pack.txt
-+++ b/Documentation/config/pack.txt
-@@ -119,8 +119,8 @@ pack.useSparse::
- 	objects. This can have significant performance benefits when
- 	computing a pack to send a small change. However, it is possible
- 	that extra objects are added to the pack-file if the included
--	commits contain certain types of direct renames. Default is `false`
--	unless `feature.experimental` is enabled.
-+	commits contain certain types of direct renames. Default is
-+	`true`.
- 
- pack.writeBitmaps (deprecated)::
- 	This is a deprecated synonym for `repack.writeBitmaps`.
-diff --git a/repo-settings.c b/repo-settings.c
-index a703e407a3f..dc6817daa95 100644
---- a/repo-settings.c
-+++ b/repo-settings.c
-@@ -45,6 +45,8 @@ void prepare_repo_settings(struct repository *r)
- 
- 	if (!repo_config_get_bool(r, "pack.usesparse", &value))
- 		r->settings.pack_use_sparse = value;
-+	UPDATE_DEFAULT_BOOL(r->settings.pack_use_sparse, 1);
-+
- 	if (!repo_config_get_bool(r, "feature.manyfiles", &value) && value) {
- 		UPDATE_DEFAULT_BOOL(r->settings.index_version, 4);
- 		UPDATE_DEFAULT_BOOL(r->settings.core_untracked_cache, UNTRACKED_CACHE_WRITE);
-@@ -52,7 +54,6 @@ void prepare_repo_settings(struct repository *r)
- 	if (!repo_config_get_bool(r, "fetch.writecommitgraph", &value))
- 		r->settings.fetch_write_commit_graph = value;
- 	if (!repo_config_get_bool(r, "feature.experimental", &value) && value) {
--		UPDATE_DEFAULT_BOOL(r->settings.pack_use_sparse, 1);
- 		UPDATE_DEFAULT_BOOL(r->settings.fetch_negotiation_algorithm, FETCH_NEGOTIATION_SKIPPING);
- 		UPDATE_DEFAULT_BOOL(r->settings.fetch_write_commit_graph, 1);
- 	}
-
-base-commit: 6c85aac65fb455af85745130ce35ddae4678db84
 -- 
-gitgitgadget
+Danh
