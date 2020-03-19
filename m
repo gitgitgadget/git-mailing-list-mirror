@@ -5,64 +5,64 @@ X-Spam-Level:
 X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 941D5C4332B
-	for <git@archiver.kernel.org>; Thu, 19 Mar 2020 14:00:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 60F5FC4332D
+	for <git@archiver.kernel.org>; Thu, 19 Mar 2020 14:00:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6732120BED
-	for <git@archiver.kernel.org>; Thu, 19 Mar 2020 14:00:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3A3A5208E4
+	for <git@archiver.kernel.org>; Thu, 19 Mar 2020 14:00:59 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VADRsFC2"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WhfBwN7J"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727597AbgCSOA4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Mar 2020 10:00:56 -0400
-Received: from mail-pf1-f169.google.com ([209.85.210.169]:43219 "EHLO
-        mail-pf1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727252AbgCSOA4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Mar 2020 10:00:56 -0400
-Received: by mail-pf1-f169.google.com with SMTP id f206so1474498pfa.10
-        for <git@vger.kernel.org>; Thu, 19 Mar 2020 07:00:54 -0700 (PDT)
+        id S1727600AbgCSOA6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Mar 2020 10:00:58 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:41277 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727252AbgCSOA6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Mar 2020 10:00:58 -0400
+Received: by mail-pg1-f196.google.com with SMTP id b1so1322515pgm.8
+        for <git@vger.kernel.org>; Thu, 19 Mar 2020 07:00:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=hqptoaUnN/UoX4vfWkvi5uegCaJ6856xTvW857QZx0w=;
-        b=VADRsFC2PHxV7zCCzwfp9T3Op9CqiypeOmr+7Lk3AEdQ2AycYfM8lcBBQIufsFyKbQ
-         iTXcyH3D6ObYlUMroXClOfNJhqW+SUjH+VfXfF6o62h/Clc6IT8aQngHXmZoISGqYAwz
-         kV9cbB3JiZJSRSMnKjqLoclHK1wDx2XzgZqtYmpDoMeLKuqY95DH9WXSOqu0+Hud2mdA
-         ZE/FykuSdSpLzELlhlzHUAZO293pglSPn52c8fiIqgHF6MTci/CDcxz3EOf/bRE5n6DG
-         rYIziP57mTYo3Q5ERJ2YLCYVzyBDIZXmTXnkgTBpYn82Pe4AVB3OF+bO7hysik13RA36
-         kZaw==
+        bh=k3KX9/oCcAXEyD+tqSwWrIjc05hRql0ltEu5j1M3TPw=;
+        b=WhfBwN7J18XFY8G/BsbhO2ajxXPr769BQnwsJhSv1hlB2+bxNNxY84nPNLU7Pv1X8P
+         7tqi7ggpi5JzdXL70swHWvv849ZOzrMIh0ovvVli2Nnf8rcxR515kJmh+0Cp1njofGiL
+         JHJBKV7ClTLLcJR1DIxSVu30mBKv762Ops1g0EEgz0hjqclpchZVm45/GR4YFGurCsrc
+         oSX9loIswxlA5Znt3uVCJZI+YfTExRlu9MrBEn8hlno2n7IgCob5uE+MoaRTPjsNuzDK
+         3KYsUTrtuwxQt+TQny4OohBFkIQcfOcTZ+t7kgpWYcFECXA4iViy2ovX+RNgU7CNIVWO
+         vdMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=hqptoaUnN/UoX4vfWkvi5uegCaJ6856xTvW857QZx0w=;
-        b=OTnlwbXqoqvC1f4uyFKW8NT2ccmsfSzrukLIZiiMeCtEB6xph1BwItwOi4iI0EcH8i
-         yR6jJXRYkbq0u4yl4CQoKN6a9v2sQlp2S3pGnInPOBS8vC3nqyv/1rX+xu4SnYLLvlBX
-         CTSYf54HdB2Kw8B7RFOuxiZwbC6aJHPK2dzu5ZiHfQVo1yg0wdVGNgN5q7k1JYjKurQ6
-         Fb+h5rQTkTRKSu2TeP8ud0iskDlWc3cWJU2qjnQNKpGTtY2qPuyiod/RRrVU/DOs0p1p
-         jCdOezTpa6RADdzwpcwFpzLBigVP8E/gBogB/SIIcPkt9taCWW2woahyJHZKmiMLuFPn
-         1fHw==
-X-Gm-Message-State: ANhLgQ2AaDEL0tIV4XU2TBcJHc3bsph0eKYNUmXNPM1yu77ejHHKGNUg
-        GJ7PNs8J/vxTNnH4RI3M9vsXKPzh
-X-Google-Smtp-Source: ADFU+vt454j2goxuvfKfvyh7q3+I0AMfVsxNul8TCymeRaga42d6PtPXRRVdbrm+jYrf2obC3QiO5Q==
-X-Received: by 2002:a62:e803:: with SMTP id c3mr4155435pfi.31.1584626453551;
-        Thu, 19 Mar 2020 07:00:53 -0700 (PDT)
+        bh=k3KX9/oCcAXEyD+tqSwWrIjc05hRql0ltEu5j1M3TPw=;
+        b=iv6Hauni14+ZBwlNusyBTl9JmK6B5hJru5xNq1hWUbmyRdWKiLrSR3QB4QsLrRHM2x
+         4pcVbT3dLBtOhnMkNKbZwR4eB41O92wZCQl+6cNrmpN1NH27ElJnal42rjbIHeT9xcF+
+         RbDah1qC0+oK9aFO1RwoF9RyjrGzK+n7uy+UAi0Rjp3qI5NdTRaomvllWS/IllfVAXWG
+         +sSGPVpwZmluwok1cIGvrr9bk3Z1Z0umZYca2076wOGbmE4kRKtQ6YRt+PrNAN9wzIpj
+         H+jdxo4dEGqmqgmj7LNegEbqCk1irfeVXfzc5bR5DVNeR7WSzcYR54qAivMLB6LVvgnl
+         FdYw==
+X-Gm-Message-State: ANhLgQ2DYBHlZJFM1alA4MBVHfMuERlxHinXc5eK+tbLZ/ZfD8J8xVqS
+        pJa7eoLru5ZLT1a0CjHsxSR+nH3x
+X-Google-Smtp-Source: ADFU+vuFOgI857lbZuqUH2j4dlOQEehPbPxGTTjbL7C11JYVrMB+m3kQJHVYqcAEYJcZJk180vhjvA==
+X-Received: by 2002:aa7:8650:: with SMTP id a16mr4323217pfo.35.1584626456176;
+        Thu, 19 Mar 2020 07:00:56 -0700 (PDT)
 Received: from localhost.localdomain ([2402:800:6375:576b:56ff:d97c:a505:3e0c])
-        by smtp.gmail.com with ESMTPSA id 189sm2654005pfg.170.2020.03.19.07.00.51
+        by smtp.gmail.com with ESMTPSA id 189sm2654005pfg.170.2020.03.19.07.00.53
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 19 Mar 2020 07:00:52 -0700 (PDT)
+        Thu, 19 Mar 2020 07:00:54 -0700 (PDT)
 From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>
-Subject: [PATCH 5/6] t7063: use POSIX find(1) syntax
-Date:   Thu, 19 Mar 2020 21:00:06 +0700
-Message-Id: <215801b02aceeed1e0f6313679c567a914ad5dd8.1584625896.git.congdanhqx@gmail.com>
+Subject: [PATCH 6/6] t4124: fix test for non-compliance diff
+Date:   Thu, 19 Mar 2020 21:00:07 +0700
+Message-Id: <285c6830c5182cb602d4fe559525083f69a158e9.1584625896.git.congdanhqx@gmail.com>
 X-Mailer: git-send-email 2.26.0.rc2.234.g969ad452ca
 In-Reply-To: <cover.1584625896.git.congdanhqx@gmail.com>
 References: <cover.1584625896.git.congdanhqx@gmail.com>
@@ -74,33 +74,39 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since commit 6b7728db81, (t7063: work around FreeBSD's lazy mtime
-update feature, 2016-08-03), we started to use ls as a trick to update
-directory's mtime.
+POSIX's diff(1) requires output in normal diff format.
+However, busybox's diff's output is written in unified format.
 
-However, `-ls` flag isn't required by POSIX's find(1), and
-busybox(1) doesn't implement it.
+POSIX requires no option for normal-diff format.
 
-Use an equivalence `-exec ls -dils {} +` instead.
+A hint in test-lib-functions::test_cmp said `diff -u` isn't available
+everywhere.
+
+Workaround this problem by assuming `diff(1)` output is unified
+if we couldn't make anything from normal-diff format.
 
 Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
 ---
- t/t7063-status-untracked-cache.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t4124-apply-ws-rule.sh | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/t/t7063-status-untracked-cache.sh b/t/t7063-status-untracked-cache.sh
-index 190ae149cf..c2731d445a 100755
---- a/t/t7063-status-untracked-cache.sh
-+++ b/t/t7063-status-untracked-cache.sh
-@@ -18,7 +18,7 @@ GIT_FORCE_UNTRACKED_CACHE=true
- export GIT_FORCE_UNTRACKED_CACHE
+diff --git a/t/t4124-apply-ws-rule.sh b/t/t4124-apply-ws-rule.sh
+index 971a5a7512..2a54ce96b5 100755
+--- a/t/t4124-apply-ws-rule.sh
++++ b/t/t4124-apply-ws-rule.sh
+@@ -52,6 +52,12 @@ test_fix () {
  
- sync_mtime () {
--	find . -type d -ls >/dev/null
-+	find . -type d -exec ls -dils {} + >/dev/null
- }
+ 	# find touched lines
+ 	$DIFF file target | sed -n -e "s/^> //p" >fixed
++	if ! test -s fixed; then
++		$DIFF file target |
++		grep '^+' |
++		grep -v '^+++' |
++		sed -e "s/+//" >fixed
++	fi
  
- avoid_racy() {
+ 	# the changed lines are all expected to change
+ 	fixed_cnt=$(wc -l <fixed)
 -- 
 2.26.0.rc2.234.g969ad452ca
 
