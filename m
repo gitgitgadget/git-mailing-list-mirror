@@ -2,50 +2,51 @@ Return-Path: <SRS0=WCE0=5E=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 636E2C4332B
-	for <git@archiver.kernel.org>; Thu, 19 Mar 2020 15:22:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 802EAC4332D
+	for <git@archiver.kernel.org>; Thu, 19 Mar 2020 15:25:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 375B82072D
-	for <git@archiver.kernel.org>; Thu, 19 Mar 2020 15:22:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6168820B1F
+	for <git@archiver.kernel.org>; Thu, 19 Mar 2020 15:25:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727842AbgCSPWU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Mar 2020 11:22:20 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:35986 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727395AbgCSPWU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Mar 2020 11:22:20 -0400
-Received: by mail-wm1-f66.google.com with SMTP id g62so2760215wme.1
-        for <git@vger.kernel.org>; Thu, 19 Mar 2020 08:22:17 -0700 (PDT)
+        id S1727862AbgCSPZr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Mar 2020 11:25:47 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:34773 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727483AbgCSPZq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Mar 2020 11:25:46 -0400
+Received: by mail-wm1-f68.google.com with SMTP id 26so822257wmk.1
+        for <git@vger.kernel.org>; Thu, 19 Mar 2020 08:25:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=2kWauxPW/VEdX8qGruqLPoTFSEu7KHrMsov+rLFlhzk=;
-        b=pkHVowXJBu/Q/JwXSq5THOm6fHmkXPcSZB+cCgit0XrBL8oh+63RCqc9LtkrjnmUrD
-         EZVytih1UzXDMOFg91Z7n0WbWvo08178UNf+Djd635+TfHZRLJL5Jmk8pKcnvAVXB1Ls
-         HFHTs62ex0D85mmJOAzB8WtOkDxiUWCTZj1KzJcnE6PRkj4dMU3RpFru9HKQVfR6ZNn/
-         F4fBi0fsR2eFlkxV3v77a5/dfx8JD4XGt1VaWkYybI6wYxogmwPlcr/XmEcN/7WDuIPE
-         yM3rcjw/IGv8EV6oF9l3lEqVW179dT6XzKv9Zm2AfdJ2njkfb45d7zBjMFDHffAmBwkz
-         UvwA==
-X-Gm-Message-State: ANhLgQ2F2aMGYSPFBJJEkfj0bCovzW7DBYFvBHiL3glVTPw78KlkzErf
-        qkobDYAx0rCZkyA6peR1mpX3/DWzfdev28iGmvESHW8V
-X-Google-Smtp-Source: ADFU+vtoMuneILMjh8lNAxaSurR46xsuHUlr7tGEPNHkZUKYioUfl0Dwz5ThwYtf1Zabrnmx+ag3YFVwwwhNGZHvjWQ=
-X-Received: by 2002:a1c:a78a:: with SMTP id q132mr4389300wme.107.1584631336784;
- Thu, 19 Mar 2020 08:22:16 -0700 (PDT)
+        bh=yZWVHFMH6vhNAOd5aH798oO5nhOw8rJgLruet5/vm+E=;
+        b=XF58/GpQcPUbFURhqidxFX0rxa/LfHqufaqJA6RnW2ODEywAthb0BUHsYm0xu0xgM8
+         oMyVqWZ/69PXmoZEauz+LBf+DN51YYfFOECYOVDxYVphW5aZ5M2e6BjeiSDSm/ASY1ir
+         LMGQl33T9QnVxEYjSvGQFWLYwmzVTd19lxUwmLmB2GUgfyeUNpwZIZS7OfMmb0sVFPRG
+         0naPBdRdTUI2sVHRnMvt+TRpgM6ykPGsCrot1fOT0K7lKft9vbaECW4OHPfy1x16uO9A
+         mjv5473VcqKU/Cdf6ysQzExZUulZ2zH+1BxSgW2Gn1aOUkfndvP8aUpkj624Pbq2iAK7
+         68cw==
+X-Gm-Message-State: ANhLgQ0go7kV6eFmZq6tff6j5djhX0d+jS/ohOAJ5DO5olLlvb4Z++hg
+        BxL7saO4HF/stlsqCoMvIyLz2m6z12JtBh438jaRlQ==
+X-Google-Smtp-Source: ADFU+vuMgJIukrdwDm4+RQObg4vrFuEuKHJuJoZ1Sgq0CL4mI3NdCwQMSnGHtjBCLwsSPs3MrpmUq0+MHJTfCEkxbLI=
+X-Received: by 2002:a1c:6a08:: with SMTP id f8mr4301021wmc.53.1584631545343;
+ Thu, 19 Mar 2020 08:25:45 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200314224159.14174-1-me@yadavpratyush.com> <20200317132921.7222-1-me@yadavpratyush.com>
-In-Reply-To: <20200317132921.7222-1-me@yadavpratyush.com>
+References: <20200314224159.14174-1-me@yadavpratyush.com> <CAPig+cRXD_bjUL6=daEAx7VnAy_nw9bao6rLK9xwTCYJSk48Qw@mail.gmail.com>
+ <xmqqwo7k8fnk.fsf@gitster.c.googlers.com> <20200317124902.fitwgrrm6jtv24ec@yadavpratyush.com>
+In-Reply-To: <20200317124902.fitwgrrm6jtv24ec@yadavpratyush.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 19 Mar 2020 11:22:05 -0400
-Message-ID: <CAPig+cQ0YJB25fFaKV2URz39zdS8BwMwwB-a6VJzekkQRLEHpw@mail.gmail.com>
-Subject: Re: [PATCH v2 0/2] git-gui: reduce Tcl version requirement from 8.6
+Date:   Thu, 19 Mar 2020 11:25:34 -0400
+Message-ID: <CAPig+cRQRD1njsGenUWg-73NF6=krPcDUtZsHNf+jT+0j5JJWQ@mail.gmail.com>
+Subject: Re: [PATCH v1 0/2] git-gui: reduce Tcl version requirement from 8.6
  to 8.5
 To:     Pratyush Yadav <me@yadavpratyush.com>
-Cc:     Git List <git@vger.kernel.org>,
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
         Jonathan Gilbert <JonathanG@iqmetrix.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
@@ -53,21 +54,19 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 17, 2020 at 9:29 AM Pratyush Yadav <me@yadavpratyush.com> wrote:
-> Some MacOS distributions ship with Tcl 8.5. This means we can't use
-> TclOO. So, use our homegrown class.tcl instead.
+On Tue, Mar 17, 2020 at 8:49 AM Pratyush Yadav <me@yadavpratyush.com> wrote:
+> On 16/03/20 08:48AM, Junio C Hamano wrote:
+> > I'll pull git-gui updates when Pratyush tells me to, which would
+> > happen before the final (scheduled on 22nd).  I'll trust git-gui
+> > maintainer's decision to include these changes in it, or to cook
+> > longer to wait for the 2.27 cycle. [...]
 >
-> Changes in v2:
-> - Add a note _after_ checking if the user agreed to the deletion.
->   Otherwise, if the user denies, two "zombie" notes are left lying
->   around which will never be activated. This means that the chord won't
->   complete and the index won't be unlocked, leading to git-gui becoming
->   frozen.
+> Honestly, I'd like to cook it a bit longer but the reality is that very
+> few people, if any, actually track and test my tree. Most people
+> actually discover bugs when the changes hit a new Git release.
 
-Thanks. I did some light testing on Mac OS. This re-roll seems to
-address the reported problems[1] and allows the new "delete unstaged
-file" feature to work on older Tcl. As a fix for the Git 2.25
-regression which resulted in git-gui being unable to launch on Mac OS,
-this path series seems "good to go".
-
-[1]: https://github.com/prati0100/git-gui/issues/26
+Yep, that's the big issue. I track Junio's "next" branch pretty
+closely but don't track the git-gui repository at all, so it wasn't
+until Junio pulled from you, and after I pulled from Junio, that I
+noticed the problem. So, in the longer run, asking Junio to pull more
+often -- and earlier -- may be a good way forward.
