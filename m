@@ -2,97 +2,81 @@ Return-Path: <SRS0=WCE0=5E=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A1CDDC4332B
-	for <git@archiver.kernel.org>; Thu, 19 Mar 2020 20:18:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B17D4C4332D
+	for <git@archiver.kernel.org>; Thu, 19 Mar 2020 21:33:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5CE66206D7
-	for <git@archiver.kernel.org>; Thu, 19 Mar 2020 20:18:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5FB9F2076F
+	for <git@archiver.kernel.org>; Thu, 19 Mar 2020 21:33:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E9rYaN9X"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="r2nvpsu4"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726895AbgCSUSX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Mar 2020 16:18:23 -0400
-Received: from mail-lj1-f194.google.com ([209.85.208.194]:40207 "EHLO
-        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726366AbgCSUSX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Mar 2020 16:18:23 -0400
-Received: by mail-lj1-f194.google.com with SMTP id 19so4006769ljj.7
-        for <git@vger.kernel.org>; Thu, 19 Mar 2020 13:18:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=BuJvD9yVOTyqgJe65z5rhJv/WxHwgMBOZ3ospB2BDwY=;
-        b=E9rYaN9X4fwsrVEqfT8PXYLTOUc41Sog7NFWgwMGvrI8czmpTxJMvdEC1goMdkQaWE
-         EF4IqOE9XXCzBHHDrw2Par/NVtPbVqrB2+hkK6XO1SwqxFEO1nGPU6CfzWeSimZKvEwk
-         bMl5HxM7pGrpCTLMvRUM1bWbEwu0i/cHL7qGkfg20iX6QDN1/dljkEG48K0TlnZw45fc
-         tobqHe3QdYXVuzPGvPHiW2d1TrjWAa9ux/XYLCoT9vv3NWNu4MHVu2vHPkuZMHcoVT82
-         pN3wtwcSvppjaa/nt1NSKu5tXSrqxexrFsg4+vPZrIkKWUUSD7i6pRpVqYIVZt5zb5L3
-         kzig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=BuJvD9yVOTyqgJe65z5rhJv/WxHwgMBOZ3ospB2BDwY=;
-        b=gMNtWg6g+XmLOS06l5QgoD1R3DJSWWLz1X+ywSXW4BegeuCtYt6xmlG2fPfvrFTWgb
-         0OXViDshcJ+BvUxBb6cTDidAnf/EPxBeZRlU7WiML+u11vhSg1hl7bD9YEQgwHXdCV1x
-         eig0P9Z6y5qFTU03rga7m6wtyaQoZS6Y5VBKnC8y8vtPrKAAG4chDh7YU5BeNqXQGJww
-         kmbU2QS4p3Il2jzV343HSYD8t+uJ7b4fFMfiMlSH09dq1E34LeSY44ppmoI11K76YXo/
-         b1wGo2zaZXwnqFyFN0AW5bHQnPUGHE8EZPKNHmKtV94bq12oKm2bRWKcyivJkwA4uorV
-         xJrw==
-X-Gm-Message-State: ANhLgQ0tvFDpBemZmVPh0DVCci3ZSgfjiI05/RcUb4nRKRG0/vd+hkwh
-        IvvNonKXK8hr1W8mV5XY9hVYN20frINYSQVt924=
-X-Google-Smtp-Source: ADFU+vv+jXyOuEUyebT0hbkH3EFB9Esbanf4CqW2D/rRqZfbJjTui3Ah6l5+BYaaow11PeF4H9vUcOAhwVoCRU9dFkc=
-X-Received: by 2002:a05:651c:1b5:: with SMTP id c21mr3244249ljn.174.1584649101306;
- Thu, 19 Mar 2020 13:18:21 -0700 (PDT)
+        id S1726777AbgCSVds (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Mar 2020 17:33:48 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:65474 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726619AbgCSVds (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Mar 2020 17:33:48 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 467E8B0D9E;
+        Thu, 19 Mar 2020 17:33:46 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Y0kZZGtxBDUVU19vH/7bHTJfcrQ=; b=r2nvps
+        u4ORoot+J1WY/Gac/+3B48NToGx46yowhhLmjvN3rbGTsoONlU2/bNXFIr/U59mL
+        jpBSeCwHyoo00wIP/CH2wx5jae8Drsm+OG1tiUEB+ts97FJ9uWpVOgASAl/xg1y1
+        eRY7tP0Qb675/mH4ZXP23wkGEYF5vRmGCWSXg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Ajwyegy9yUGQvaI6jsozWiaRufgqwDRx
+        W+Wd/K+VWBZtleJ25BA9xcTmfnUSYE6hlwE6LuMgdCdqEnKSlTFsIXH224qF+bqr
+        eBDzGojephbEchLvC+4rCGiMQvW8U4LLZQpOoc9WRx3Qc0F+iKw5H1ILN5oEMKZh
+        HemhVH3P6s0=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3ECB0B0D9D;
+        Thu, 19 Mar 2020 17:33:46 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 8B169B0D9B;
+        Thu, 19 Mar 2020 17:33:43 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Shourya Shukla <shouryashukla.oo@gmail.com>
+Cc:     chriscool@tuxfamily.org, git@vger.kernel.org, jnareb@gmail.com,
+        johannes.schindelin@gmx.de, newren@gmail.com, peff@peff.net
+Subject: Re: RFC][Feature] submodule
+References: <xmqqh7ylfnqi.fsf@gitster.c.googlers.com>
+        <20200319171626.5723-1-shouryashukla.oo@gmail.com>
+Date:   Thu, 19 Mar 2020 14:33:41 -0700
+In-Reply-To: <20200319171626.5723-1-shouryashukla.oo@gmail.com> (Shourya
+        Shukla's message of "Thu, 19 Mar 2020 22:46:26 +0530")
+Message-ID: <xmqqh7ykdo7e.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <20200319132957.17813-3-harshitjain1371999@gmail.com>
- <20200319164234.4441-1-shouryashukla.oo@gmail.com> <555da203-0740-3d79-15cf-83c5a8d5dbae@gmail.com>
-In-Reply-To: <555da203-0740-3d79-15cf-83c5a8d5dbae@gmail.com>
-From:   Harshit Jain <harshitjain1371999@gmail.com>
-Date:   Fri, 20 Mar 2020 01:48:09 +0530
-Message-ID: <CACuU+s-0VQgDOhdoc66FRFunHLdKGUu55NAwL95LcHNEK8J6Vw@mail.gmail.com>
-Subject: Re: [GSoC][PATCH 2/2] t4131: use helper function to replace test -f <path>
-To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc:     Shourya Shukla <shouryashukla.oo@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4EC38FA2-6A29-11EA-BFF4-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 19, 2020 at 11:04 PM Kaartic Sivaraam
-<kaartic.sivaraam@gmail.com> wrote:
->
-> On 19-03-2020 22:12, Shourya Shukla wrote:
-> > Hello Harshit,
-> >
-> >> Replace 'test -f' with the helper function 'test_path_is_file' as the helper function improves the code readability and also gives better error messages.
-> >
-> > Again the same thing, you may follow what I stated before regarding commit messages.
-> >
-> > The commit title can be of the form:
-> >
-> > t4131: use helpers to replace test -f <path>
-> >
-> > <<commit description>>
-> >
->
-> Just curious, isn't the commit title already like that in this patch?
-> The subject does read:
->
->    [GSoC][PATCH 2/2] t4131: use helper function to replace test -f <path>"
->
-> What am I missing?
->
+Shourya Shukla <shouryashukla.oo@gmail.com> writes:
 
-Hey Shourya,
-Can you please clarify, I am also a bit confused.
+> Also, what do you think may become a problem for large projects in
+> here?
 
-Regards,
-Harshit Jain
+Perhaps
+
+    "We want submodule A and B's sub(sub)*modules all the way down
+    to the leaf submodule, but directory C houses many submodules,
+    among which only one can be active, and we want C/X and its
+    sub(sub)*modules all the way down to the leaf but not C/Y nor
+    C/Z or any other C/<anything>."
+
+and similar requests along the line.
