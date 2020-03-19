@@ -2,91 +2,95 @@ Return-Path: <SRS0=WCE0=5E=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 330D2C4332D
-	for <git@archiver.kernel.org>; Thu, 19 Mar 2020 17:15:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 54EF0C4332D
+	for <git@archiver.kernel.org>; Thu, 19 Mar 2020 17:16:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0F8BC2070A
-	for <git@archiver.kernel.org>; Thu, 19 Mar 2020 17:15:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2855C207FC
+	for <git@archiver.kernel.org>; Thu, 19 Mar 2020 17:16:37 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wd2Pmt97"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727381AbgCSRPE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Mar 2020 13:15:04 -0400
-Received: from cloud.peff.net ([104.130.231.41]:44160 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726912AbgCSRPD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Mar 2020 13:15:03 -0400
-Received: (qmail 26365 invoked by uid 109); 19 Mar 2020 17:15:03 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 19 Mar 2020 17:15:03 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 29213 invoked by uid 111); 19 Mar 2020 17:24:43 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 19 Mar 2020 13:24:43 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 19 Mar 2020 13:15:02 -0400
-From:   Jeff King <peff@peff.net>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, Git List <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        james@jramsay.com.au
-Subject: Re: [RFC PATCH 1/2] list_objects_filter_options: introduce
- 'list_object_filter_config_name'
-Message-ID: <20200319171502.GD4075823@coredump.intra.peff.net>
-References: <CAP8UFD0wJo4onz0_Vw4-bcX1h61=J=ZiKfM-fMXLj4B9q0aveg@mail.gmail.com>
- <cover.1584477196.git.me@ttaylorr.com>
- <c75806d011b04f2ad7efbbec01613a2d0b1f570b.1584477196.git.me@ttaylorr.com>
- <CAPig+cTVtv+uzzpoZ-BT=F=srdt1ewvgeBAAr9R+OUCYSov65A@mail.gmail.com>
- <20200318100327.GA1227946@coredump.intra.peff.net>
- <CAPig+cTWb55K70v1MahHbTi12F5Zi6stKc1vjY2=9jSvEm7jww@mail.gmail.com>
+        id S1728478AbgCSRQg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Mar 2020 13:16:36 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:33176 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726912AbgCSRQf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Mar 2020 13:16:35 -0400
+Received: by mail-pl1-f193.google.com with SMTP id g18so1342441plq.0
+        for <git@vger.kernel.org>; Thu, 19 Mar 2020 10:16:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=4HZ6tppwYg8I1h+CJXaFJIGvD/ByEZ9SAU5YrMFupkY=;
+        b=Wd2Pmt97c8KJFPT9zowa/s8BPOE/GAxkv+7f4Ezz7Kh913Oq9sdi+Ym5UexHMfp5YK
+         Ac+iuTxQQPRmxtVOIDEQXvq44706n8usprTuCR7Fmgytjt+d5cb4Dl3eNhoBm3s4dL8j
+         R44G0qSMBRwZmzcpUv0Ssjw5y594DJSo9RT/Be/dztRRX08UA4JK/NZf8hrQG031D8jh
+         5hPqLNePRX7ak+pcYJsz+LXcF+V2TXpRZwwDD7dzj98st5+g1AltMjKYTv9FjK5mpvH1
+         f6aLEc2yyW6l3GHYNPMuRwmFh9eQyrip7PMYnWWO4aPls9cAsKBDPR1LOPI4CCk4r5I+
+         MSLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=4HZ6tppwYg8I1h+CJXaFJIGvD/ByEZ9SAU5YrMFupkY=;
+        b=V9d/9rX3gp9yVklVpXRrYr0awMCRDmv2gid6uxZS1vqOVlOYqQRBlnf7COJR0UOUz2
+         X3EBmL+7OZ4ER+Zqyz6CVKy2BMgpWlDhzMsFvP40m+pd1YPtOt2XS8IYbjsr3nd9pKXl
+         oxhScuwHW8PVwprsBALhrzJqyjAEW91YhH47mSvA8h3UkEsQnzDzwCbEBxTPL9iLO0+D
+         9iviwPFNgCHGdTY5HxwBsxM2qTyfU41qu2feYhErtoIlO0GS1v2xF8GnefLprOHLjN0D
+         G/xeEQIhFh9EiibHapOlGZYlAsoD/klHkJyAlgR/vNc0Odo2XjGLJUMFz7/alUYuQsvE
+         9mZQ==
+X-Gm-Message-State: ANhLgQ3aUK6QDD4iqdcM7EtBrVJMfztLvlR2FiWLU55lcauv0tENZHeZ
+        wBuQw0XpmlaMVfoMmX57Ww4=
+X-Google-Smtp-Source: ADFU+vtNpbvQU203u6nubcOniRQ6XmCqLhUm7csckJcf8cDcQeTPJbTH/UiIoSZeh7LGQfWmKDj0ZQ==
+X-Received: by 2002:a17:902:aa04:: with SMTP id be4mr4501687plb.41.1584638194586;
+        Thu, 19 Mar 2020 10:16:34 -0700 (PDT)
+Received: from konoha.iitr.ac.in ([103.37.201.177])
+        by smtp.gmail.com with ESMTPSA id 8sm3132888pfv.65.2020.03.19.10.16.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 Mar 2020 10:16:33 -0700 (PDT)
+From:   Shourya Shukla <shouryashukla.oo@gmail.com>
+To:     gitster@pobox.com
+Cc:     chriscool@tuxfamily.org, git@vger.kernel.org, jnareb@gmail.com,
+        johannes.schindelin@gmx.de, newren@gmail.com, peff@peff.net,
+        Shourya Shukla <shouryashukla.oo@gmail.com>
+Subject: Re: Re: RFC][Feature] submodule
+Date:   Thu, 19 Mar 2020 22:46:26 +0530
+Message-Id: <20200319171626.5723-1-shouryashukla.oo@gmail.com>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <xmqqh7ylfnqi.fsf@gitster.c.googlers.com>
+References: <xmqqh7ylfnqi.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAPig+cTWb55K70v1MahHbTi12F5Zi6stKc1vjY2=9jSvEm7jww@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 18, 2020 at 06:38:49PM -0400, Eric Sunshine wrote:
+Hello Junio,
 
-> To be clear, I wasn't questioning the code structure at all. I was
-> specifically referring to the comment talking about "error" when it
-> should say "warning" or "possible warning".
-> 
-> Moreover, normally, we use comments to highlight something in the code
-> which is not obvious or straightforward, so I was questioning whether
-> this comment is even helpful since the code seems reasonably clear.
-> And...
+> If "git submodule summary --recursive" errors out with today's code,
+> no sane user would be using it for any useful purpose, so I would
+> think it is OK to add such a feature.
 
-OK, I agree with all that. :)
+Sure thing! I will try to plan some makeshift implementation.
 
-> ...if this is or will become an idiom we want in this codebase, then
-> it would be silly to write an explanatory comment every place we
-> employ it. Instead, a document such as CodingGuidelines would likely
-> be a better fit for such knowledge.
+> If it makes a usable UI for large projects that you can only choose
+> between "include no subsubmodules" (i.e. with --no-recursive) or
+> "include all sub(sub)*modules" (i.e. with --recursive) is another
+> matter, though.
 
-Yeah, that makes sense. If we do use this technique, though, we'll have
-to explicitly list "case" lines for the enum values which are meant to
-break out to the BUG(). And there it _is_ worth commenting on "yes, we
-know about this value but it is not handled here because...". Which is
-what you asked for in your original message. :)
+I think discussing this idea may be a good approach right now? What
+you are saying for large projects does provoke thought though..
+Also, what do you think may become a problem for large projects in
+here?
 
-Something like:
+Thank you so much for the feedback BTW :)
 
-  switch (c) {
-  case LOFC_BLOB_NONE:
-	return "blob:none":
-  ..etc...
-  case LOFC__COUNT:
-	/* not a real filter type; just a marker for counting the number */
-	break;
-  case LOFC_DISABLED:
-	/* we have no name for "no filter at all" */
-	break;
-  }
-  BUG(...);
-
--Peff
+Regards,
+Shourya Shukla
