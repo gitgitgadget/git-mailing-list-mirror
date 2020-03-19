@@ -3,81 +3,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 046B3C4332B
-	for <git@archiver.kernel.org>; Thu, 19 Mar 2020 00:09:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F979C4332B
+	for <git@archiver.kernel.org>; Thu, 19 Mar 2020 00:17:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id CA1BD20719
-	for <git@archiver.kernel.org>; Thu, 19 Mar 2020 00:09:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0B5472076F
+	for <git@archiver.kernel.org>; Thu, 19 Mar 2020 00:17:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="iWgZ4jUc"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EVQid3RE"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726943AbgCSAJF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Mar 2020 20:09:05 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56639 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726596AbgCSAJF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Mar 2020 20:09:05 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D4E8640263;
-        Wed, 18 Mar 2020 20:09:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=/8bdMqqrdpUJLRQ0coBcU/k/0gM=; b=iWgZ4j
-        Uc5sEB2QAzuthTgcF6bc+f312OnSZe6mNsLXfZgLOiAVmGLLbu8Hw3BQ9kThsekC
-        g7B7kskjipXZXjeveEAVj11LWhcpiEGCSSwEcWycSSgKLif4q60Wo3kip84M0nL6
-        WFe9j96XF1MQlECfxosHeQNqQdsmQtkyg+OOU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=BqFqkziY/PHBTu+vcjg7MuJJrd4JE4dN
-        Uq0sQKDblI2eU/+54M8n2/MdG5rrfmdE2zy3TYj3Wz0fhPTgzktMRrCgKS5oGy0T
-        LbWOYZ3lzew5aw8ssTTb4pvL0KsKYjYxvCZzkOFciS8ocRHwVZ33gTtJfSOXCv0+
-        rsc9jiejriE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id CA56240262;
-        Wed, 18 Mar 2020 20:09:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E8CF34025F;
-        Wed, 18 Mar 2020 20:09:01 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/1] docs: add a FAQ
-References: <20200315223923.170371-1-sandals@crustytoothpaste.net>
-        <20200315223923.170371-2-sandals@crustytoothpaste.net>
-        <20200318230030.GA45325@google.com>
-Date:   Wed, 18 Mar 2020 17:09:00 -0700
-In-Reply-To: <20200318230030.GA45325@google.com> (Emily Shaffer's message of
-        "Wed, 18 Mar 2020 16:00:30 -0700")
-Message-ID: <xmqqo8stdx43.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726856AbgCSARf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Mar 2020 20:17:35 -0400
+Received: from mail-ot1-f68.google.com ([209.85.210.68]:34073 "EHLO
+        mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726596AbgCSARf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Mar 2020 20:17:35 -0400
+Received: by mail-ot1-f68.google.com with SMTP id j16so633944otl.1
+        for <git@vger.kernel.org>; Wed, 18 Mar 2020 17:17:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=JdsWZrr3+5fCpQJ8mHKHy6bd5BfJDknuzkJMPJAozOU=;
+        b=EVQid3REPM3uzhmhMHbAGNXukqIRoN0SRiaS+OjAXdQ5DDLNpQiwrXl1/0T+nO/+V4
+         mpej/23HZqSFw1OCPosH7qa1bbONI5Ou+YQlNS7bq23qCHQX7x5wgHh8WnKAqzjfHTIh
+         CjSzZcXBsPJH1s4wbpbPWDrgWGypYB+TSq6sAXgrRAnMv7qsYorhPvok7uR+CnepqW3m
+         LEXT8bh6UYKGdW4h1EU7neywbINKnTy6e37JwPCtY2hnUaqlygGCfeIGWlAKNx60BxBe
+         dCjrkLUuE7zhoawHZsU0f/VqrIdxowQfH2SeX0emeBVyVxgNka11j3BxeIhx4xwFpgqh
+         PB+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=JdsWZrr3+5fCpQJ8mHKHy6bd5BfJDknuzkJMPJAozOU=;
+        b=D3mKfBSFOEvV9NlpZstRNSUqggKUPeN2LlWYriMYpGFJvfuGpAMoKUDLtlHq3khAGz
+         +Uk2SLqfHqO2LZgFbsWZvp7v9gMut5qDPEU7Ihvj6+Z1j81ggZY7ZNeoJP8QoDVllhSC
+         Lq1Yq4vUSC1mvRu857H7I+4lZLgk9MGnTtWd25IlNYPxYyEO2zj2hquszD35+yaLFQc2
+         41qOBWDr9bSY9A8VaxW5lRfTf6puVH2oVc0WJ3Q4HdwaUkQ3ZBZyqYAYD85zBYplH4SH
+         uhbuAxp54RvXX7KfzjtCwNDF0vgqkACpJHl1p9G20WwdcYNjFPEaWd6rN4RRsAEywgF3
+         JxVA==
+X-Gm-Message-State: ANhLgQ2tucqj2+Rdvf2bawGx5G/HMBSsH8UyYCkQPNilurPaMFRNy4Iw
+        9ZiMQRPfQMAbWRvSMa47P7ogLm0ZL87WNLdZ8Fs=
+X-Google-Smtp-Source: ADFU+vt+2eWn+Jy3afavznyvs4v5llGItJorH2k1hSVCFn7d7o1ZxTpLgio1FqRLPYwHnLi95m/XeCRn6PfE3DAWAGE=
+X-Received: by 2002:a9d:6457:: with SMTP id m23mr239629otl.162.1584577054520;
+ Wed, 18 Mar 2020 17:17:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D699C36A-6975-11EA-BB7A-C28CBED8090B-77302942!pb-smtp1.pobox.com
+References: <xmqqpnd9fql0.fsf@gitster.c.googlers.com> <20200318192821.43808-1-jonathantanmy@google.com>
+ <xmqqd099fnfm.fsf@gitster.c.googlers.com> <CABPp-BGSvT9zu1xjHUPHBQ3jEktZ56O=m6VNH2v0E-RcfBN_tw@mail.gmail.com>
+ <xmqqsgi5dygn.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqsgi5dygn.fsf@gitster.c.googlers.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 18 Mar 2020 17:17:23 -0700
+Message-ID: <CABPp-BHM7_+QcpnQe1H4RGz7MmvS07r2Ks+aVzV61DGwYAPvAg@mail.gmail.com>
+Subject: Re: [PATCH v2] rebase --merge: optionally skip upstreamed commits
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Taylor Blau <me@ttaylorr.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emily Shaffer <emilyshaffer@google.com> writes:
+On Wed, Mar 18, 2020 at 4:39 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Elijah Newren <newren@gmail.com> writes:
+>
+> > 4) Jonathan provided some good examples of cases where the
+> > --keep-cherry-pick behavior isn't just slow, but leads to actually
+> > wrong answers (a revert followed by an un-revert).
+>
+> That one cuts both ways, doesn't it?  If your change that upstream
+> once thought was good (and got accepted) turned out to be bad and
+> they reverted, you do not want to blindly reapply it to break the
+> codebase again, and with the "drop duplicate" logic, it would lead
+> to a wrong answer silently.
+>
+> So from correctness point of view, I do not think you can make any
+> argument either way.
 
-> Not really on topic for this particular paragraph, but there are a lot
-> of instances of "Some people ..." - in general, would it be less
-> combative to say something like "It's tempting to..." or "It might seem
-> like a good idea to..."? That way it feels less like "there are people
-> who do X and they are wrong" and more like "X might seem like a good
-> idea but it isn't". Or to put it another way, let's attack the bad idea,
-> not the people who suggest it.
-
-Thanks for a perspective; I personally did not find that "Some
-people do X" accuses them of doing it wrong, but you certainly
-have a point.
+Good point.  Thanks, that helps.
