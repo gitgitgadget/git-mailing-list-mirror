@@ -2,65 +2,68 @@ Return-Path: <SRS0=WCE0=5E=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 41420C4332B
-	for <git@archiver.kernel.org>; Thu, 19 Mar 2020 23:47:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 81FF1C4332B
+	for <git@archiver.kernel.org>; Thu, 19 Mar 2020 23:47:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id F2C8220740
-	for <git@archiver.kernel.org>; Thu, 19 Mar 2020 23:47:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 50F3120740
+	for <git@archiver.kernel.org>; Thu, 19 Mar 2020 23:47:41 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aa+TID+O"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZH0QO49U"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726987AbgCSXre (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Mar 2020 19:47:34 -0400
-Received: from mail-pj1-f66.google.com ([209.85.216.66]:52783 "EHLO
-        mail-pj1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726663AbgCSXre (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Mar 2020 19:47:34 -0400
-Received: by mail-pj1-f66.google.com with SMTP id ng8so1699119pjb.2
-        for <git@vger.kernel.org>; Thu, 19 Mar 2020 16:47:33 -0700 (PDT)
+        id S1727102AbgCSXrk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Mar 2020 19:47:40 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:40099 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726663AbgCSXrk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Mar 2020 19:47:40 -0400
+Received: by mail-pg1-f196.google.com with SMTP id t24so2127970pgj.7
+        for <git@vger.kernel.org>; Thu, 19 Mar 2020 16:47:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=IhvwaPNCF8PqXO8VXVqavfdlzYuD5DrBLWVJpYaQUJE=;
-        b=aa+TID+O0Bbdg6OzGNOgb+zPEFoRG8+7lwI7RIMt3vyYwlgL70jSYYjjoX8L9cIYI7
-         IDWImJBaNqLC3uEIbLqFOopEg7ioPS9ogDNPbKBdH0aod0K0FHlCpXuLP46jYDgUe4bL
-         0f8iqSH5LDT+oBXd/AufjTvgqzyhFL5XU/hBP2HaftjoCsfd7hize9ljiWnyN+4UXiGO
-         MF4fy3Air6aFNP4bu6gbVPdjrazKPsEDcod1VieVZXtzfwxKs/WZaSxB4MBfx6eOZjgT
-         0WrRI42gIXbcMSoV+bPvAdwHr1XKSM96oEeuAHXzK2W6U3qAOjsweFdHim0vbbtj/e39
-         2XDA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=YxE7CWBNI6pSwHR+dfi0OI+LlqyUW0wQgSxiiVi/vbg=;
+        b=ZH0QO49UkJH1TeeNaqR2etP7RqCOiaNsiO+jX7PdntXn7b8rtqB47VPOD8z9pBSqO2
+         65L4WW6GqGO+lFg7dPzea6HZQ7HQxMYypD+iuHLsnqvBanWza096B4vn7xxhs4rmUHsZ
+         25fedMCv2UR3FM/04z4I9QEiKTPBohADc4oxQ61sGFRf7Aup4Kns2/zb0i16g6OXKNja
+         H22NMQ5NDF5k3ElvFH3WeC5Zf73U5V1v93i3CwhRtWmHJ15jZamwS25RdK5u6wMabYv2
+         GxyWzla/ZZLbv8Ds4kVLfB3FtLAskf2gu1l2o4AtUQrKfpcRu3o0DMa9ixU93K8+oTqv
+         +J5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=IhvwaPNCF8PqXO8VXVqavfdlzYuD5DrBLWVJpYaQUJE=;
-        b=En9Ekp5zAiJcH42Hwz0Q1IlFnN7nZ89HIhWGcLMZ4QLSYrCCyLGVtkbUU/vh6TUq4w
-         5voVt9Nvat2zo8eqkxaTwnslrxm/8qA3rJo2hH8Q/YVlfn2Eg3rSVoKmKWaBQxfMU1hl
-         SwBfLzgSM8dH+BW1zLEylqha8N0pV62SdVEsM9HmRVSsq+wv07O4LI7TK24uiLbRvQuN
-         A89x5CdvcoxbqdIM1yE7vpkmpAv/smFgTCK+uJd6A2+QGDsIbCZoYQut/DfPjm7sbnDL
-         +dD1H/+XKHGufHIM9SM6Hsu8qqLrPD8zCwDFIXgOZibSLnOC5rMxEMYe/rK2SJQNrTNo
-         6Kkw==
-X-Gm-Message-State: ANhLgQ1umj7srMeyJPqfpOVpxqyK5LEb6OEgHv+sPVDyDLolOnv8ZszL
-        5T+ykUfkOI6IMdjWxwqFx0wvp7RNdpY=
-X-Google-Smtp-Source: ADFU+vtY8GGyL+583pQL7eiAUoNtVvryMa25DO6aijfbyTklskTfGTTz1IwnWiioTmEi/ccMAhOh+w==
-X-Received: by 2002:a17:90a:fe08:: with SMTP id ck8mr6539973pjb.56.1584661652793;
-        Thu, 19 Mar 2020 16:47:32 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=YxE7CWBNI6pSwHR+dfi0OI+LlqyUW0wQgSxiiVi/vbg=;
+        b=qkq3o+luqol6lYqcaBrexBjw6xAv7CFtSWfOTkOnBn+2u9yp4jYEortw/9FWs7JKm+
+         fI8UoHqR3iVattwoPepzFnt2qi2ymZ2ZUoprMUkqi9012tGhFC0fZQoxdOGdmP2sanUx
+         /KZgVpSBAeT6GZjfnTQHeBWpngCDhX5zu75iLNjgxGZ9BX8ENWxLGBbps9akl8Ur70mO
+         xqY9iEm1tfAKPJAt9rJqBfkispDLSVxDr6CkRE+6abY966UEKD53iZHemnZ7mqiKRlwb
+         t6iIQo5d68f7BMCVIBxKW84uPQLRwwe87MjVCa7sPo+yifR8dp+Hb1wu0rgHjJ47RjQ4
+         /QMQ==
+X-Gm-Message-State: ANhLgQ0evWdtMCiUatFy125R5a3ETY42haMCxoGtZPO7/smOu5mKNuoB
+        GL40KCGNKYsS1kdmIE0FNiL95jegeWkKGg==
+X-Google-Smtp-Source: ADFU+vtP/S8T4+FKY7ikjMxANW/5fVl63SLThNDfsO22DC3Vi0xHdmh4JPA9S1H240HgiEUwF4wCLQ==
+X-Received: by 2002:a62:55c7:: with SMTP id j190mr6476550pfb.65.1584661658534;
+        Thu, 19 Mar 2020 16:47:38 -0700 (PDT)
 Received: from localhost.localdomain ([36.77.94.225])
-        by smtp.gmail.com with ESMTPSA id i126sm3347187pfc.105.2020.03.19.16.47.30
+        by smtp.gmail.com with ESMTPSA id i126sm3347187pfc.105.2020.03.19.16.47.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Mar 2020 16:47:32 -0700 (PDT)
+        Thu, 19 Mar 2020 16:47:37 -0700 (PDT)
 From:   Adrian Wijaya <adrianwijaya100@gmail.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, Adrian Wijaya <adrianwijaya100@gmail.com>
-Subject: [GSOC][PATCH 1/2] t1300: replace "test -f" into "test_path_is_file"
-Date:   Fri, 20 Mar 2020 06:47:22 +0700
-Message-Id: <20200319234723.6504-1-adrianwijaya100@gmail.com>
+Subject: [GSOC][PATCH 2/2] t1300: replace "test -f" into "test_path_is_file"
+Date:   Fri, 20 Mar 2020 06:47:23 +0700
+Message-Id: <20200319234723.6504-2-adrianwijaya100@gmail.com>
 X-Mailer: git-send-email 2.26.0.rc1.11.g30e9940356
+In-Reply-To: <20200319234723.6504-1-adrianwijaya100@gmail.com>
+References: <20200319234723.6504-1-adrianwijaya100@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -68,16 +71,32 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear all,
+Replace "test -f" into "test_path_is_file" to give more verbose
+test output.
 
-In this year, I intend to apply in git for GSoC 2020. This is actually my 
-first contribution to the git community. I am a sophomore Computer Science 
-student at University of Indonesia.
+Signed-off-by: Adrian Wijaya <adrianwijaya100@gmail.com>
+---
+ t/t1300-config.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-In this patch, I have replaced 'test -f' into 'test_path_is_file' function 
-(can be found in test-lib-functions).
+diff --git a/t/t1300-config.sh b/t/t1300-config.sh
+index 97ebfe1f9d..d74554fc09 100755
+--- a/t/t1300-config.sh
++++ b/t/t1300-config.sh
+@@ -1020,11 +1020,11 @@ test_expect_success SYMLINKS 'symlinked configuration' '
+ 	ln -s notyet myconfig &&
+ 	git config --file=myconfig test.frotz nitfol &&
+ 	test -h myconfig &&
+-	test -f notyet &&
++	test_path_is_file notyet &&
+ 	test "z$(git config --file=notyet test.frotz)" = znitfol &&
+ 	git config --file=myconfig test.xyzzy rezrov &&
+ 	test -h myconfig &&
+-	test -f notyet &&
++	test_path_is_file notyet &&
+ 	cat >expect <<-\EOF &&
+ 	nitfol
+ 	rezrov
+-- 
+2.26.0.rc1.11.g30e9940356
 
-Suggestions and advice are very welcome. 
-
-Regards,
-Adrian Wijaya
