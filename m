@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C445C4332B
-	for <git@archiver.kernel.org>; Fri, 20 Mar 2020 13:09:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 268F1C4332B
+	for <git@archiver.kernel.org>; Fri, 20 Mar 2020 13:09:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0082120754
-	for <git@archiver.kernel.org>; Fri, 20 Mar 2020 13:09:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EB9AC2070A
+	for <git@archiver.kernel.org>; Fri, 20 Mar 2020 13:09:27 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LG1dF/NX"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WEbpNv7+"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727103AbgCTNJW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Mar 2020 09:09:22 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:46906 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726954AbgCTNJV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Mar 2020 09:09:21 -0400
-Received: by mail-pf1-f193.google.com with SMTP id c19so3189311pfo.13
-        for <git@vger.kernel.org>; Fri, 20 Mar 2020 06:09:19 -0700 (PDT)
+        id S1727117AbgCTNJ1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Mar 2020 09:09:27 -0400
+Received: from mail-pj1-f45.google.com ([209.85.216.45]:35447 "EHLO
+        mail-pj1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726954AbgCTNJ1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Mar 2020 09:09:27 -0400
+Received: by mail-pj1-f45.google.com with SMTP id j20so2441947pjz.0
+        for <git@vger.kernel.org>; Fri, 20 Mar 2020 06:09:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=l4aidziF31TrdeCaNrPWgAtlgpK7W5N/bHTar4sbR24=;
-        b=LG1dF/NXKQUvrJFKxq8ox7uDS3ecATnhgT4hGDPM7KC+KE2Q2RPX8NM19HynCABxnX
-         XA2WlwXIYyULS21qStY3TkiGYYtyFqrbfVge8Li2mfFeNXkXjzwfI9sia9VWekT9/8w+
-         jjYhIbWxQ8B/6EWhvDW3yPmC+PhqXdHKIKwd3Q27gKgR341ys2z8f38nH7n94XMUb4Js
-         8+YzlGeOa8ZXXu0+x2IqUQtcxe6aIszH5jjOIOyeclYD2jk8r2/I+TX46DH/MWJUjNcv
-         vJzoA9bjQHSMPGcFw46PTy8irqxZKu1t7QVCR1DXSJjWaJlrO1Fc+ujokUBXUAA/gdT1
-         doAw==
+        bh=rxwl/aCDnjx0wQl1ATRzJWSp1LfYerWUEOOo7KjlGKA=;
+        b=WEbpNv7+gw/IDQsi42KhbEfgJjHltpaaU2BscbLI5PAvGt/lu5D39inHZtJzv085pM
+         Oh3BtyAA4mTfE34K9DS7cNXOdbm67/KxgzDpxRD+Pm5xjkI2jmJvk9RQe6qGhwTBlIH0
+         AZnmLsqZzPKFmMcksAmY2CTPBgWvCtrtUZkA0mugoXN41+GCbl+eJ1fphrdz1+7lxKi4
+         VVUpAAKf5Iir0s8CY8QGTGqlp7+9sa2TilNdqQ4m83c7yLGGIQDWelk1AgIhlRmVsVed
+         2PDQUU410rbYSdZIBckUUhw5IRK9gaEHDDuMPdUzpPRG5L4x5dc1mLjwIo1AHaVQEO9D
+         unFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=l4aidziF31TrdeCaNrPWgAtlgpK7W5N/bHTar4sbR24=;
-        b=qInVZ5kC3m7OwBlemlK1ELkElSpiYxHlxl8RFZv0wCEv2Kk5DxXDrn9uJKIpr9lS/E
-         LNGwH6Pr1+lBqOkjjp/K5gOwpLjXJRE+kvXXzaGFUVtQMUpqyT+zYzQwSO9rjcZsXQMk
-         l/9ZPv5T9LCi6pWk/itDhdKj4j7R8t+cfvqtaLYe6vEsaUwg7VvQooQLewqTf/7TLvAx
-         V4FT6tjPznrsUpY9uEBxIVuFo2XHUVHMhGPODVakD3nlpKKEADeZim8oIH+uP+iVT1+L
-         HDRglhKp4u9ukG7GiN07XL9UwKeA8LF9+8B/r5XRU8p5rfneoaWar22kVqODt0IWS2Kj
-         MMqA==
-X-Gm-Message-State: ANhLgQ3Ou8jNjW3zUO9WEF9etWJ+HyV09IWHOylh9VJ/GSyOrwrF2Dxs
-        CG4AaRp4DY9FwXO7P7Doiz8=
-X-Google-Smtp-Source: ADFU+vsKcytZ+1jLLzoD7k/TGUMOJkxAa0VZmkjQy2us1flUbYQkigkSnOLv7soc3MgYodvpMJHhHQ==
-X-Received: by 2002:a63:e551:: with SMTP id z17mr8476945pgj.21.1584709758747;
-        Fri, 20 Mar 2020 06:09:18 -0700 (PDT)
+        bh=rxwl/aCDnjx0wQl1ATRzJWSp1LfYerWUEOOo7KjlGKA=;
+        b=UPHazcZLT3IMF2p8glmIxzLRbe59PCLtSfahn0vV7SM/y+CMtVL3kTSB9nG4mkAs4t
+         AxqxiSYs7azhnViUPWi7B01foISIUZXIXuyeyC96sSKi6ADatzDhRcajfy72brnzyvT+
+         HYnLDA1HIsbDMNrElEfT1I+QySdN/T+3VSELNZxUfE35A11DA1bIsMBhU245jRBJ21Nt
+         tAWTvZ3FcLwgggZ5uDELEBPLHNPrb3Pi6JTrMXg2RS1DD+SRoTJBBr3AhadBfayTBv52
+         SiOo6jDZ+edqslVZkFWEvC6Lt8t9Af6o+n3rNE1IXCo4mJYiqgwfrk2mnP53zOqM1yNy
+         sRJA==
+X-Gm-Message-State: ANhLgQ14SvG+vs9urpty8sllEZ8mhp1Ao7/Jika2o5GgkP6NmR/gdhjN
+        ooxdHZetYam3Y0bQ8HFCfpo=
+X-Google-Smtp-Source: ADFU+vvpIuPUdsyDI/BY1L3NJdhaLU4uCvfJ/0FnwJchZf6Mu78uhCnvrRRkPq33mCLfmeMeMjndFw==
+X-Received: by 2002:a17:90a:37ea:: with SMTP id v97mr9625664pjb.26.1584709764584;
+        Fri, 20 Mar 2020 06:09:24 -0700 (PDT)
 Received: from localhost.localdomain ([2409:4052:817:5e21:ec32:affe:2929:752d])
-        by smtp.gmail.com with ESMTPSA id l7sm5433176pff.204.2020.03.20.06.09.15
+        by smtp.gmail.com with ESMTPSA id l7sm5433176pff.204.2020.03.20.06.09.21
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 20 Mar 2020 06:09:17 -0700 (PDT)
+        Fri, 20 Mar 2020 06:09:24 -0700 (PDT)
 From:   Harshit Jain <harshitjain1371999@gmail.com>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, harshitjain1371999@gmail.com,
         shouryashukla.oo@gmail.com
-Subject: [PATCH 1/2] t4131: modernize style
-Date:   Fri, 20 Mar 2020 18:38:44 +0530
-Message-Id: <20200320130845.23257-2-harshitjain1371999@gmail.com>
+Subject: [PATCH 2/2] t4131: use helper function to replace 'test -f'
+Date:   Fri, 20 Mar 2020 18:38:45 +0530
+Message-Id: <20200320130845.23257-3-harshitjain1371999@gmail.com>
 X-Mailer: git-send-email 2.26.0.rc2
 In-Reply-To: <20200320130845.23257-1-harshitjain1371999@gmail.com>
 References: <xmqq1rpodn25.fsf@gitster.c.googlers.com>
@@ -73,43 +73,28 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The tests in t4131 leave a space character between the redirection operator
-and the file i.e. the redirection target which does not conform to the
-modern coding style.
-
-Fix them.
+Replace 'test -f' with the helper function 'test_path_is_file' as the
+helper function improves the code readability and also gives better
+error messages.
 
 Signed-off-by: Harshit Jain <harshitjain1371999@gmail.com>
 ---
- t/t4131-apply-fake-ancestor.sh | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ t/t4131-apply-fake-ancestor.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/t/t4131-apply-fake-ancestor.sh b/t/t4131-apply-fake-ancestor.sh
-index b1361ce546..828d1a355b 100755
+index 828d1a355b..21ee359632 100755
 --- a/t/t4131-apply-fake-ancestor.sh
 +++ b/t/t4131-apply-fake-ancestor.sh
-@@ -17,8 +17,8 @@ test_expect_success 'setup' '
- 
- test_expect_success 'apply --build-fake-ancestor' '
- 	git checkout 2 &&
--	echo "A" > 1.t &&
--	git diff > 1.patch &&
-+	echo "A" >1.t &&
-+	git diff >1.patch &&
- 	git reset --hard &&
- 	git checkout 1 &&
- 	git apply --build-fake-ancestor 1.ancestor 1.patch
-@@ -26,8 +26,8 @@ test_expect_success 'apply --build-fake-ancestor' '
- 
- test_expect_success 'apply --build-fake-ancestor in a subdirectory' '
- 	git checkout 3 &&
--	echo "C" > sub/3.t &&
--	git diff > 3.patch &&
-+	echo "C" >sub/3.t &&
-+	git diff >3.patch &&
- 	git reset --hard &&
- 	git checkout 4 &&
+@@ -33,7 +33,7 @@ test_expect_success 'apply --build-fake-ancestor in a subdirectory' '
  	(
+ 		cd sub &&
+ 		git apply --build-fake-ancestor 3.ancestor ../3.patch &&
+-		test -f 3.ancestor
++		test_path_is_file 3.ancestor
+ 	) &&
+ 	git apply --build-fake-ancestor 3.ancestor 3.patch &&
+ 	test_cmp sub/3.ancestor 3.ancestor
 -- 
 2.26.0.rc2
 
