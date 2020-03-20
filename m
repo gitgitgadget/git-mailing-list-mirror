@@ -2,114 +2,137 @@ Return-Path: <SRS0=v+yc=5F=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0301AC4332B
-	for <git@archiver.kernel.org>; Fri, 20 Mar 2020 21:15:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A4737C4332D
+	for <git@archiver.kernel.org>; Fri, 20 Mar 2020 21:21:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id C188D20767
-	for <git@archiver.kernel.org>; Fri, 20 Mar 2020 21:14:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 467AA20724
+	for <git@archiver.kernel.org>; Fri, 20 Mar 2020 21:21:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j39p3oES"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="TpM6Ny0w"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727118AbgCTVO6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Mar 2020 17:14:58 -0400
-Received: from mail-qk1-f195.google.com ([209.85.222.195]:35629 "EHLO
-        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726974AbgCTVO6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Mar 2020 17:14:58 -0400
-Received: by mail-qk1-f195.google.com with SMTP id d8so8622414qka.2
-        for <git@vger.kernel.org>; Fri, 20 Mar 2020 14:14:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=asw+cs5xqga6oeVwiofZyiRktErFqet3Jhg2tJJ6yVI=;
-        b=j39p3oESUfDM/xsyB0WfZda0DcNe5AmQdyJ1sqYmEcqirDSnCg/EAyPwqYwUjvWUyG
-         b6o2XvvFw58DXSCgZrSoftEtIBPgWqSToB/6AOekY20qVFls0JH9hB1G1je9Pwepod2C
-         pra1oCY8pqgzG7mDq+DDCSKgw9nDHoIsmz09pcwuc3IpBoIvZBVWy+OyAL3g0/FjOYuB
-         OJSzodDFx0HeaRPVYq5fNAwBdqU5zsjKzWFdzmyqOpbEpyLzdxPq1SmxqMzI4lsm9tjC
-         ibP1D7zFBrh6Lr1lN+6GaKgKsPXQNKkMKCW88cgoDo89o6ybCIewU5osiLQ360mitn0y
-         aw9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=asw+cs5xqga6oeVwiofZyiRktErFqet3Jhg2tJJ6yVI=;
-        b=nbhQrX+G1qNnv3O49PflPqMG4Sg6nMwBmP0VUQOw4GOnxg0J0cBp2KuveSztJu8xdo
-         PZWrO8D8UgmsVE3I1Fv3CclFPZl02wToAXeDjC6DkolrbM12Qx/yqS07nUdPMpezPRkp
-         ZIG+R+VWyfjwXOpbCUzXV4opGCgbnNgUNJCIv5JONOQ2Fv8y3ctLYw9JywGqZ8csGsG/
-         5t5qLq5Uahy3d1qUkkUBL5HUpr6ojX66TQr2XLpD/aJIm4wsooR1+FSH4fhHZw9ERtBk
-         3peGKc4DueK11umw9UCCXlfa/LdlMGPF8Osy6nPWUzrDerxFWE8cINHhLUGrl3aydiHA
-         EYjw==
-X-Gm-Message-State: ANhLgQ3ZZvJ2aPDfwiBJzpzPqW6oLhXu8z/dMlQVGdyIiFQBHwnRROHi
-        i6AILfQJemtYRHYE6N0XiMw=
-X-Google-Smtp-Source: ADFU+vsNnRSSJK1USxBfQHCRMDisb0lggP01Ihs3vhqwjzqEWgIkAgEaAUa1IV+mT2EjNmtAJPwbgw==
-X-Received: by 2002:a37:e40d:: with SMTP id y13mr10178329qkf.39.1584738897232;
-        Fri, 20 Mar 2020 14:14:57 -0700 (PDT)
-Received: from [192.168.1.76] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id r29sm5873356qtj.76.2020.03.20.14.14.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 20 Mar 2020 14:14:56 -0700 (PDT)
-Subject: Re: [PATCH v2] config: set pack.useSparse=true by default
-To:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, me@ttaylorr.com, jrnieder@gmail.com,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.585.git.1584583110914.gitgitgadget@gmail.com>
- <pull.585.v2.git.1584707247753.gitgitgadget@gmail.com>
- <xmqqmu8abvuf.fsf@gitster.c.googlers.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <e35c1bc5-7569-defc-2cee-e47039506521@gmail.com>
-Date:   Fri, 20 Mar 2020 17:14:56 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:75.0) Gecko/20100101
- Thunderbird/75.0
+        id S1726913AbgCTVVi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Mar 2020 17:21:38 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:54964 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726851AbgCTVVi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Mar 2020 17:21:38 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4D41AC80F2;
+        Fri, 20 Mar 2020 17:21:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=G8P/rge1M/Ou/M3xQ4eUIKkFnms=; b=TpM6Ny
+        0wqQTlxH3Y/Ga7ewudce9FeiI4Pv/M3SLK6ENlKc9t/efLmL861UmzwcoJD+33HA
+        yviOcXLPo4uq3hu+JaP0di8Q1MzTx0a7HLIHSmcB6fcmbpBTeRExUuk1QuyUZB9w
+        7aclLszqoYn+VLcYrp3JCFR27uEIalXgH7Skc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=DzUtVQKrhiT0xeisrLO1LS5jzKywxXc2
+        yMUS70sXeidOtcMSfQEC6D6x6BHJD01k3JPSBbQ4PlqOGuAFoUnDoQgz1ZzZl5PN
+        eIoqo5f2fwa5XqrEC1p9vf7AuIptyn1D3SYkRhB1cg6E9q+qdDzbB8XA8RvPd/Di
+        OntkJ4qaiGs=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 45AC2C80F1;
+        Fri, 20 Mar 2020 17:21:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 88F33C80EF;
+        Fri, 20 Mar 2020 17:21:30 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Josh Steadmon <steadmon@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] trace2: teach Git to log environment variables
+References: <0f5607a4242cc7b61ad36d0782c9d1250c4d4d7d.1584737973.git.steadmon@google.com>
+Date:   Fri, 20 Mar 2020 14:21:28 -0700
+In-Reply-To: <0f5607a4242cc7b61ad36d0782c9d1250c4d4d7d.1584737973.git.steadmon@google.com>
+        (Josh Steadmon's message of "Fri, 20 Mar 2020 14:06:15 -0700")
+Message-ID: <xmqqimiybu3r.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqmu8abvuf.fsf@gitster.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: C444E164-6AF0-11EA-9122-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/20/2020 4:43 PM, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->>     Here is a small patch to convert pack.useSparse to true by default. It's
->>     been released for over a year, so the feature is quite stable.
-> 
-> I would not say anything more than "its' been released for over a
-> year, so the feature is known not to cause problems when it is not
-> enabled (in other words, we coded our if/else correctly)", unless
-> some telemetry tells us that significant number of users with widely
-> differing use patterns have enabled it and are not seeing much
-> negative effect.  And we can tell if it is stable only if we flip
-> the default.
+Josh Steadmon <steadmon@google.com> writes:
 
-True. I've done my best to advertise the feature but have heard very
-little from users about it outside of our "captive audience" in the
-Windows OS team. I've also been using it myself (as part of
-features.experimental) on all of my machines, but that's hardly a
-vote for rigorous use in strange patterns.
+> +trace2.envVars::
+> +	A comma-separated list of "important" environment variables that should
+> +	be recorded in the trace2 output.  For example,
+> +	`GIT_HTTP_USER_AGENT,GIT_CONFIG` would cause the trace2 output to
+> +	contain events listing the overrides for HTTP user agent and the
+> +	location of the Git configuration file (assuming any are set).  May be
+> +	overriden by the `GIT_TRACE2_ENV_VARS` environment variable.  Unset by
+> +	default.
 
->> I'm submitting this now to allow it to cook for a while during the
->> next release cycle.
-> 
-> I agree that it is about time to see if flipping of default would be
-> a good move for users whose usage patterns are unlike VFS for Git by
-> cooking a change like this in 'next', definitely at least a cycle
-> but possible a bit more, and it is a good idea to have it at the
-> beginning of the next cycle.  Very much appreciated.
+In other words, by default nothing is logged?
 
-I'm happy to let you decide when this has cooked long enough. If
-you feel that more than one cycle is needed, then absolutely let's
-be cautious here.
+>  		trace2_cmd_alias(alias_command, new_argv);
+>  		trace2_cmd_list_config();
+> +		trace2_cmd_list_env_vars();
 
-Thanks,
--Stolee
+OK, so we treat the settings of configuration variables and
+environment variables pretty much the same.  Both affect how git
+behaves for the end-users, and even though they are physically
+different mechanisms, philosophically the reason they are worth
+logging are the same for these two categories.
+
+> @@ -439,6 +441,7 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv)
+>  	trace_argv_printf(argv, "trace: built-in: git");
+>  	trace2_cmd_name(p->cmd);
+>  	trace2_cmd_list_config();
+> +	trace2_cmd_list_env_vars();
+
+Likewise.  That is why these two appear together.
+
+>  			trace2_cmd_name(cmds[i].name);
+>  			trace2_cmd_list_config();
+> +			trace2_cmd_list_env_vars();
+
+And here.
+
+> diff --git a/trace2/tr2_sysenv.c b/trace2/tr2_sysenv.c
+> index 3c3792eca2..a380dcf910 100644
+> --- a/trace2/tr2_sysenv.c
+> +++ b/trace2/tr2_sysenv.c
+> @@ -29,6 +29,8 @@ struct tr2_sysenv_entry {
+>  static struct tr2_sysenv_entry tr2_sysenv_settings[] = {
+>  	[TR2_SYSENV_CFG_PARAM]     = { "GIT_TRACE2_CONFIG_PARAMS",
+>  				       "trace2.configparams" },
+> +	[TR2_SYSENV_ENV_VARS]      = { "GIT_TRACE2_ENV_VARS",
+> +				       "trace2.envvars" },
+>  
+>  	[TR2_SYSENV_DST_DEBUG]     = { "GIT_TRACE2_DST_DEBUG",
+>  				       "trace2.destinationdebug" },
+
+In this array, similar things are grouped together and groups are
+separated by a blank line in between.  As the new ENV_VARS are
+treated pretty much the same way as CFG_PARAM, it is thrown in the
+same group, instead of becoming a group on its own.  Makes sense.
+
+
+> diff --git a/trace2/tr2_sysenv.h b/trace2/tr2_sysenv.h
+> index d4364a7b85..3292ee15bc 100644
+> --- a/trace2/tr2_sysenv.h
+> +++ b/trace2/tr2_sysenv.h
+> @@ -11,6 +11,7 @@
+>   */
+>  enum tr2_sysenv_variable {
+>  	TR2_SYSENV_CFG_PARAM = 0,
+> +	TR2_SYSENV_ENV_VARS,
+>  
+>  	TR2_SYSENV_DST_DEBUG,
+
+Likewise.
+
+Thanks.
