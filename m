@@ -2,167 +2,91 @@ Return-Path: <SRS0=v+yc=5F=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 22F6DC4332B
-	for <git@archiver.kernel.org>; Fri, 20 Mar 2020 20:38:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D2C2BC4332B
+	for <git@archiver.kernel.org>; Fri, 20 Mar 2020 20:43:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id E1A1420739
-	for <git@archiver.kernel.org>; Fri, 20 Mar 2020 20:38:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 76EB520724
+	for <git@archiver.kernel.org>; Fri, 20 Mar 2020 20:43:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="INfJ7k7u"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="TFtNjQO6"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727213AbgCTUia (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Mar 2020 16:38:30 -0400
-Received: from mail-oi1-f196.google.com ([209.85.167.196]:38280 "EHLO
-        mail-oi1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727175AbgCTUi3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Mar 2020 16:38:29 -0400
-Received: by mail-oi1-f196.google.com with SMTP id k21so7971069oij.5
-        for <git@vger.kernel.org>; Fri, 20 Mar 2020 13:38:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=lptAwG1jvg0mbVOGwHdfmBXf7dqWcE2x2ocYSBC11y4=;
-        b=INfJ7k7uaFe6+Fw4BqJvmavegQgnr5MSLmdA1Pt+RZSqEvHg9Fl0RoUxT7PBqv/79n
-         u46bK+xAon2Ra+UtPuuRKPxxdESunC5uvJU+3UEaYK5skWp9B4UnkRZr8EUINGtFEpY0
-         FRwDGWrHmY7q6ZXtzyz+T4fAzbH1zEIMdHeq+lrHfUPe+nRritEy5iwNPdMT9skivvTw
-         tzvKShW3Z/nk8zEDFw/lcpYGtcFSTcgsAOoMtjT5iKaUm3O6ofz+FzvQXw4+X6H+KXcT
-         y8hWX/Z3Os+FvtXoZq5fZSkmSnce1H/Hf4/gA5q7oBA0ZsyXADrOkG6MOBas5yiZFntk
-         z3Ew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=lptAwG1jvg0mbVOGwHdfmBXf7dqWcE2x2ocYSBC11y4=;
-        b=VXlRlam7CrjO+7hO/rJhGAd1L5L41G+sjoc3Kwy7H1Dcxn931KhmC+SMpUp2VdRb26
-         tjLVGQwNx77InZVN86E9k077pGPs67rTt5UNyCw5qLXOwhHtyfqX2xVqdeDNy3UaND4j
-         wjL4hrfnLWaHKedkShb662PWicplqH8LWHnhzeHA/qmq4ygDBgH5QzFaU7a/LLMNhFFn
-         O45RK5nI+CLnp1RsJF5LtahBCnlaXAUgZ5b9lH57c0zZJcDArUK2QNADV0QYhEVx6m/F
-         ieR0EkC+Dv3A+ctjizOlUykVjT1dk3tcjHswe7dXn3yiB+OzZ1imouUkFiZT/WbgK/a4
-         qzRw==
-X-Gm-Message-State: ANhLgQ2Zc0MmOYOtl5xS9LM7xh6/bGkRxe5Dx2aDutiz1DigeQnDbzWQ
-        D6FfOcDOmTDM0CRMgoZ+QkVMSkneDHE=
-X-Google-Smtp-Source: ADFU+vuA/o+D11OdAcEIN7OAMKdJhprCh8y1hCO2RgIkFpb6ShJ1Klha/ITrcxxEmODfhIzAGS+bqQ==
-X-Received: by 2002:aca:3c56:: with SMTP id j83mr8377854oia.52.1584736708851;
-        Fri, 20 Mar 2020 13:38:28 -0700 (PDT)
-Received: from [192.168.1.76] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id q6sm2271787otm.13.2020.03.20.13.38.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 20 Mar 2020 13:38:27 -0700 (PDT)
-Subject: Re: [PATCH 1/2] partial-clone: set default filter with --partial
-To:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, me@ttaylorr.com, jonathantanmy@google.com,
-        christian.couder@gmail.com, git@jeffhostetler.com,
+        id S1726925AbgCTUn5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Mar 2020 16:43:57 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:57272 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726855AbgCTUn5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Mar 2020 16:43:57 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id E01B8C7763;
+        Fri, 20 Mar 2020 16:43:56 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=NGkquJEHWPexc77o3MdM+qFYnCY=; b=TFtNjQ
+        O6REVLd6xiMTBckT+/H0250v18qLulH6BF2GXbJxDhgofu1OO3SjCVEOzUClRjWp
+        gSj3kY/jSnfiyF8cEMoSOyHmlMUEVyva0/7C//SRbXyChMsTb4p9dqdXxoSrFgk5
+        zumwGpFmraNOwXv1GSxIEk+3TGF6s42aQ/e2U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=sof9R2YCjVanrKiT6qZodKU/i5//W2TY
+        oJ7KJU4i2IHo9m0bU1vOCINv42sVUvq689gZCjDiheYodEH1TpSQfeOIwNzcA5Yi
+        TvzTEPzQxZU0vj8zn9JXMLGh6iVuGHSqrp5amEYddTlromHa2B+4TWR3nrNX1Spx
+        fBtfMn/wi5Y=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id D841BC7762;
+        Fri, 20 Mar 2020 16:43:56 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 26DDCC7760;
+        Fri, 20 Mar 2020 16:43:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, me@ttaylorr.com, jrnieder@gmail.com,
         Derrick Stolee <dstolee@microsoft.com>
-References: <pull.586.git.1584638887.gitgitgadget@gmail.com>
- <6f340d9aadf71d394ad320ad162f1d140b632f2c.1584638887.git.gitgitgadget@gmail.com>
- <xmqqr1xmbwn1.fsf@gitster.c.googlers.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <2a75325b-ea50-a6f6-87dc-12184e706ac2@gmail.com>
-Date:   Fri, 20 Mar 2020 16:38:27 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:75.0) Gecko/20100101
- Thunderbird/75.0
+Subject: Re: [PATCH v2] config: set pack.useSparse=true by default
+References: <pull.585.git.1584583110914.gitgitgadget@gmail.com>
+        <pull.585.v2.git.1584707247753.gitgitgadget@gmail.com>
+Date:   Fri, 20 Mar 2020 13:43:52 -0700
+In-Reply-To: <pull.585.v2.git.1584707247753.gitgitgadget@gmail.com> (Derrick
+        Stolee via GitGitGadget's message of "Fri, 20 Mar 2020 12:27:27
+        +0000")
+Message-ID: <xmqqmu8abvuf.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqr1xmbwn1.fsf@gitster.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 83597048-6AEB-11EA-AD72-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
+>     Here is a small patch to convert pack.useSparse to true by default. It's
+>     been released for over a year, so the feature is quite stable.
 
-On 3/20/2020 4:26 PM, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
->> index 256bcfbdfe6..a71716ef75e 100644
->> --- a/list-objects-filter-options.c
->> +++ b/list-objects-filter-options.c
->> @@ -270,6 +270,24 @@ int opt_parse_list_objects_filter(const struct option *opt,
->>  	return 0;
->>  }
->>  
->> +int opt_set_blob_none_filter(const struct option *opt,
->> +			     const char *arg, int unset)
-> 
-> Isn't the convention to use "opt_parse_" for canned parse-options
-> callbacks?
+I would not say anything more than "its' been released for over a
+year, so the feature is known not to cause problems when it is not
+enabled (in other words, we coded our if/else correctly)", unless
+some telemetry tells us that significant number of users with widely
+differing use patterns have enabled it and are not seeing much
+negative effect.  And we can tell if it is stable only if we flip
+the default.
 
-I can do that.
+> I'm submitting this now to allow it to cook for a while during the
+> next release cycle.
 
->> +{
->> +	struct strbuf filter_arg = STRBUF_INIT;
->> +	struct list_objects_filter_options *filter_options = opt->value;
->> +	
->> +	if (unset || !arg || !strcmp(arg, "0")) {
->> +		parse_list_objects_filter(filter_options, "blob:none");
->> +		return 0;
-> 
-> If "--no-partial" were allowed, it should be usable to countermand
-> "--partial" earlier on the command line or perhaps configured
-> default.  But the above (especially the "unset ||" part) makes
-> "--no-partial" a synonym to "--filter=blob:none", no?
+I agree that it is about time to see if flipping of default would be
+a good move for users whose usage patterns are unlike VFS for Git by
+cooking a change like this in 'next', definitely at least a cycle
+but possible a bit more, and it is a good idea to have it at the
+beginning of the next cycle.  Very much appreciated.
 
-I should have been more careful about the use of "unset" (which
-would never be true with the current option parsing).
-
->> +	}
->> +	
->> +	strbuf_addf(&filter_arg, "blob:limit=%s", arg);
->> +	parse_list_objects_filter(filter_options, filter_arg.buf);
->> +	strbuf_release(&filter_arg);
-> 
-> I would have expected the body of the function to read more like
-> this:
-> 
-> 	if (unset) {
->         	... clear filter_options stored in opt->value ...
-> 	} else {
-> 		struct strbuf filter_arg = STRBUF_INIT;
-> 		if (!arg)
-> 			strbuf_addstr(&filter_arg, "blob:none");
-> 		else
-> 			strbuf_addf(&filter_arg, "blob:limit=%s", arg);
-> 		parse_list_objects_filter(filter_options, filter_arg.buf);
-> 		strbuf_release(&filter_arg);
-> 	}
-
-This is a better organization and I will use it.
-
-> Specifically, I find it unsatisifying to see the "0" optimization at
-> this level.  Shouldn't it be done in parse_list_objects_filter() to
-> parse "blob:limit=<num>" and after realizing <num> is zero, pretend
-> as if it got "blob:none" to optimize?  That way, people can even say
-> "--partial=0k" and get it interpreted as "--filter=blob:none", right?
-
-I suppose it would be worth checking the recent server-side improvements
-to see if they translate a limit=0k to a "size 0" and then ignore the
-size check and simply remove all blobs.
-
->>  #define OPT_PARSE_LIST_OBJECTS_FILTER(fo) \
->>  	{ OPTION_CALLBACK, 0, CL_ARG__FILTER, fo, N_("args"), \
->>  	  N_("object filtering"), 0, \
->> -	  opt_parse_list_objects_filter }
->> +	  opt_parse_list_objects_filter }, \
->> +	{ OPTION_CALLBACK, 0, CL_ARG__PARTIAL, fo, N_("size"), \
->> +	  N_("partial clone with blob filter"), \
->> +	  PARSE_OPT_OPTARG | PARSE_OPT_NONEG , opt_set_blob_none_filter }
-> 
-> PARSE_OPT_NONEG means "--no-partial" is forbidden and the callback
-> won't see unset==1 at all, right?
-
-You're right. I'm being inconsistent. Your reasons above point to a
-good reason to have --no-partial available.
-
-Thanks,
--Stolee
+Thanks.
