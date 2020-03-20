@@ -2,96 +2,132 @@ Return-Path: <SRS0=v+yc=5F=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DE45EC4332B
-	for <git@archiver.kernel.org>; Fri, 20 Mar 2020 00:28:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3EB75C4332D
+	for <git@archiver.kernel.org>; Fri, 20 Mar 2020 00:34:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id AF16020740
-	for <git@archiver.kernel.org>; Fri, 20 Mar 2020 00:28:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0366120753
+	for <git@archiver.kernel.org>; Fri, 20 Mar 2020 00:34:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="EeNdZxRC"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kREDDVqU"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727256AbgCTA2R (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Mar 2020 20:28:17 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:63397 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726726AbgCTA2R (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Mar 2020 20:28:17 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6C4AFACAA6;
-        Thu, 19 Mar 2020 20:28:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=C+s902/8kjpogRPx/5goD/EJdjA=; b=EeNdZx
-        RCcdfPDaSp/uPI/5knzn5GAWmHQpxDL4ZD+IBgwmt0tFAqMTpro+FjwEPfP13TVZ
-        JEZp1G/isrXN35EVBptIDDGaUipOmogKCOH9e5/FvYRnsP1mATl6SlkBjaCwbhGm
-        AOdVRq18Xpr7YhkaorbEiRbHg/DWr4E3wuB+U=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=GAzhJQ34AaUktcyqtmgfttdiObTZ6DdL
-        uXI8f+d08UhIy2dtAqc8kvrh/7UdJ6moCyeW2WDSgA6if4BZbUXJ0UBY3zp8e/Iy
-        4U9Blt6g1UIoPJW2BlXVrO/R8dfO/WovqHpaR3uwqBKD4BaCtbbCa/vTnK8GDFZ/
-        Yzj2VPfDXf8=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 63FC8ACAA5;
-        Thu, 19 Mar 2020 20:28:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id AC6BCACAA1;
-        Thu, 19 Mar 2020 20:28:12 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v9 2/5] bugreport: add tool to generate debugging info
-References: <20200302230400.107428-1-emilyshaffer@google.com>
-        <20200302230400.107428-3-emilyshaffer@google.com>
-        <nycvar.QRO.7.76.6.2003042232340.46@tvgsbejvaqbjf.bet>
-        <20200319213902.GB45325@google.com>
-Date:   Thu, 19 Mar 2020 17:28:11 -0700
-In-Reply-To: <20200319213902.GB45325@google.com> (Emily Shaffer's message of
-        "Thu, 19 Mar 2020 14:39:02 -0700")
-Message-ID: <xmqqd097dg4k.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726785AbgCTAeF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Mar 2020 20:34:05 -0400
+Received: from mail-ot1-f67.google.com ([209.85.210.67]:47088 "EHLO
+        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725787AbgCTAeE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Mar 2020 20:34:04 -0400
+Received: by mail-ot1-f67.google.com with SMTP id 111so4383608oth.13
+        for <git@vger.kernel.org>; Thu, 19 Mar 2020 17:34:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=+dURAKiDJcQylvsoY838nbe/48fXB/TIiEsANXfv/oM=;
+        b=kREDDVqUdJqTwEm6FCt2qyru2NEhdCWyaASVGbyM9fWXPcqwcS6AcM9/TZKt4jRrVS
+         Hxb7P4OJw780rC4vpHpBfPDJKcmEaDrDp5NQxHUQr36AZFZ16xg1IV9Yj3UiSy1c6BB+
+         rpMNHcLASq+aiW6qmZFHAxtq1pkgz2PhaK3Tx1ACkjjIlP5dTq4VCCcnbn0G32GCj5Gk
+         5Aga28iAzV+Ef1JOfZ88EZEtCUDnbplazsJX/7T7F6ESMqqoivmwv6LIdq+aRUhAQph6
+         W1V50rLdTqAR6f8gqEVZ2yDzoV7eGzTh81b/Ax1ThgeQIuy/AABmWoUQJzS/b+6hWiVD
+         cYOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=+dURAKiDJcQylvsoY838nbe/48fXB/TIiEsANXfv/oM=;
+        b=B9TS4p8RpPd3mXcAxEcbt0M3+9EfHFaFcfgvv/GwlJ2j3JMPqoIBAZ2KGBxHD+zqXN
+         ruJnlvpIMaEeyA2RXdFq59AyfMfk+BZBnSeFX0BChF41fs77oMVNTZhprH/Qubl650XB
+         hVTZYN5+QAvXua3JurBM23RLKlM8a3BloJgFyLKdrjG7F6LK0bcJrzBf2VWSJwAAUDG2
+         OLC+LoCPKQbMC/UfpYbo/8taLVvs5pC+xmAvtd/Ii1VCu7SDPUEvfmoBIMEabjubhPMy
+         0piMiTBnJCjDU+ilJXw+M1RKokduTraq7aH9Xjnk/JHCApYTjOfgPCHQ1lcjpUCswJNW
+         egxQ==
+X-Gm-Message-State: ANhLgQ1u8z0zqoaaAWK8QL6cpbn0hoe+1QZrLwtM+xpLcYuk2K1PN4+8
+        oy3sINNVzdz0mjyJowbfwD0TkERZByk=
+X-Google-Smtp-Source: ADFU+vtYVLC0eQo5cPRthbtRV35UrVHtxRMfDYg/ELf3B55wrTiYrW1+tXBN49lPcaRfnEEpsvTsyA==
+X-Received: by 2002:a05:6830:118d:: with SMTP id u13mr4392943otq.41.1584664443818;
+        Thu, 19 Mar 2020 17:34:03 -0700 (PDT)
+Received: from [192.168.1.83] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id t206sm1410103oib.7.2020.03.19.17.34.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 19 Mar 2020 17:34:03 -0700 (PDT)
+Subject: Re: [PATCH] config: set pack.useSparse=true by default
+To:     Jonathan Nieder <jrnieder@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, me@ttaylorr.com,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.585.git.1584583110914.gitgitgadget@gmail.com>
+ <20200319231332.GB129493@google.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <7986b9d0-34cb-5a60-484d-ba268dad146a@gmail.com>
+Date:   Thu, 19 Mar 2020 20:34:02 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:75.0) Gecko/20100101
+ Thunderbird/75.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: AEDAA980-6A41-11EA-B33C-8D86F504CC47-77302942!pb-smtp21.pobox.com
+In-Reply-To: <20200319231332.GB129493@google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emily Shaffer <emilyshaffer@google.com> writes:
+On 3/19/2020 7:13 PM, Jonathan Nieder wrote:
+> Hi,
+> 
+> Derrick Stolee wrote:
+> 
+>> The pack.useSparse config option was introduced by 3d036eb0
+>> (pack-objects: create pack.useSparse setting, 2019-01-19) and was
+>> first available in v2.21.0. When enabled, the pack-objects process
+>> during 'git push' will use a sparse tree walk when deciding which
+>> trees and blobs to send to the remote. The algorithm was introduced
+>> by d5d2e93 (revision: implement sparse algorithm, 2019-01-16) and
+>> has been in production use by VFS for Git since around that time.
+>> The features.experimental config option also enabled pack.useSparse,
+>> so hopefully that has also increased exposure.
+>>
+>> It is worth noting that pack.useSparse has a possibility of
+>> sending more objects across a push, but requires a special
+>> arrangement of exact _copies_ across directories. There is a test
+>> in t5322-pack-objects-sparse.sh that demonstrates this possibility.
+>>
+>> Since the downside is unlikely but the upside is significant, set
+>> the default value of pack.useSparse to true. Remove it from the
+>> set of options implied by features.experimental.
+>>
+>> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+>> ---
+>>  Documentation/config/feature.txt | 3 ---
+>>  Documentation/config/pack.txt    | 4 ++--
+>>  repo-settings.c                  | 3 ++-
+>>  3 files changed, 4 insertions(+), 6 deletions(-)
+> 
+> Makes sense.  Thanks for writing it.
+> 
+> Should this have a test?
 
-> Builtin:
-> + Don't have to call out-of-process to identify 'git version --build-options'
-> + Better assurance that we aren't shipping a broken bugreport alongside a new
->   version
-> - Binary bloat, possible startup time hit
-> ? Libraries will behave identically to where the user is seeing issues
->   (This point is a possible pro but also a possible con; see similar point in
->   standalone list)
+I suppose the test that demonstrates the difference in algorithm
+in t5322-pack-objects-sparse.sh could be adjusted to drop the
+explicit config setting, which would demonstrate that the config
+option is being set correctly.
 
- - Makes it hard to pull in libraries that "bugreport" alone will
-   want to use in the future without negatively impacting the rest
-   of Git.
+While looking at that test, I see that we use --[no-]sparse
+explicitly everywhere to avoid conflicts with the GIT_TEST_*
+variable that enables the algorithm. This leads to two things
+I will do in v2 that I did not do here:
 
->  - Time to editor for 'git bugreport' with the same setup as previous
+1. Update the docs for "git pack-objects" because it doesn't
+   reference that --no-sparse is an option. Point out that the
+   new default is --sparse.
 
-This is something we absolutely should totally ignore.  Even if the
-bulitin version takes 1 sec to spawn an editor while a standalone
-one took only 0.1 sec, if other criteria you listed that are more
-important favours the builtin solution, we should pick it.
+2. Remove GIT_TEST_PACK_SPARSE which was used to test this sparse
+   algorithm throughout the test suite.
 
-In any case, I think we've wasted enough time on this.  Let's see a
-minimum working version that won't break/affect the rest of Git and
-ship it standalone.
-
-Thanks.
+Thanks,
+-Stolee
