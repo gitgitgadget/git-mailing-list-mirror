@@ -7,116 +7,115 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D014C4332D
-	for <git@archiver.kernel.org>; Fri, 20 Mar 2020 01:35:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 36AADC55193
+	for <git@archiver.kernel.org>; Fri, 20 Mar 2020 01:41:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 2E84A20739
-	for <git@archiver.kernel.org>; Fri, 20 Mar 2020 01:35:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 09FF620772
+	for <git@archiver.kernel.org>; Fri, 20 Mar 2020 01:41:50 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WWQsKHFi"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gN+LnNcK"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727159AbgCTBfa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Mar 2020 21:35:30 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:38749 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726867AbgCTBf3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Mar 2020 21:35:29 -0400
-Received: by mail-pg1-f195.google.com with SMTP id x7so2251078pgh.5
-        for <git@vger.kernel.org>; Thu, 19 Mar 2020 18:35:29 -0700 (PDT)
+        id S1727592AbgCTBlr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Mar 2020 21:41:47 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:36518 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727509AbgCTBlp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Mar 2020 21:41:45 -0400
+Received: by mail-pf1-f194.google.com with SMTP id i13so2416475pfe.3
+        for <git@vger.kernel.org>; Thu, 19 Mar 2020 18:41:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=98k10VVx6pwtE4NdCgDG5UDarNGMhcxRZn1dApq8CvM=;
-        b=WWQsKHFi55ssRs6V4b6hAEzmiCBFj7tpIraZS8kStLaZU51rOhCoQSL/jQwOXjFEdJ
-         SCahDKVCiacalWqDslYr9Fs+1L++ms/Z98aF1PtsM9/rOddVyhn3V32ulZjcaGL8MkGl
-         J0fCQrNL82u4vF4I53/LLSIe+N7rpbKohSK9jl6SZIz9AHIUa+lft2xZxBZSfS44qgBF
-         qZdjzDD7icSuCsuOJjLXoFbGHy691DK/uR/Ff2uNVEkmIP47KGi2TnvTsL1QFF0rUe3u
-         ZNRzMTN1s/bBmVM4he+yrIw4IJVYNC40fBgeK3wlvSm2XzCm+uQStM9HpNgHQqSbkZAt
-         WuEw==
+        bh=Z4e2lpJRnKKKktCpaQ40yOlZCnbWc8gw0IDDf07aLQo=;
+        b=gN+LnNcKO5QlfqgK8Epn1Z2SklHCJID1uRKCwf23Z29/trb5BDGGHYxdGhfO+Kmw3+
+         CGDOF3qnXwCqYlugrU9EAg4AF2z9ieTAGmiw2+60HVA/TPe2T1OBxe2GVwAQuwYqCLW/
+         6XxVv6AhAc1Du8lkMvfa6mkZTv+glEh3JztS/h/R8yDWyyF8aE24ZvaZC8JnUvDkc0IP
+         xcyRDVAOk7F9bA5cRGktfKrigJyfUASM5fi9wUwH3T3JuVhiCIgkMoFN8ZTAZyUXNRS9
+         XVEdyqRn93JNgYrSxszB2iByAWvSwPC48CF0FwBsaLbO6QyrMVcxK62SOF14UEdjIIyI
+         kR9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to;
-        bh=98k10VVx6pwtE4NdCgDG5UDarNGMhcxRZn1dApq8CvM=;
-        b=EYX7zyd4o1ndjxvbz41JbU1y3rwxhAZfjBBVw4wpUbXENOYrYIvi31Ozl4HH2yg2E3
-         Rk3c0/Z/RlR4Fk7Lo/bAmtpL1DaYSuHTKkSzu4f/Zy81ywkzwZ8etuxRDJr1j99fLew/
-         x1TDlATdO1KJOjlUgRSTFXuhR0wAiOQndzZXtrrs5lulqqUGQ+MPtIMJZdxD6GHDjWDW
-         xCRCq17lIQ2/JIoF5rKVKZM5wo/SiSmxz+SLDNJy2IykAZXrsYmr/QGUFkSkVJzoYf8q
-         QkenH/+H0LPj3DlspV11YhDN0y1Ek2bxIOGRbo8h6UlASJZ+OdtFzYfufEWPJgGw6OlY
-         wMsg==
-X-Gm-Message-State: ANhLgQ2OKjrGIwFTjYNdyLgvm8Ziyr6A9FUdNMVAnc9Zn1FSWEAbC/2P
-        4XC3/OAo6t+x7Fy/8vLtmUo=
-X-Google-Smtp-Source: ADFU+vtLUtKVLlGaHqEUT6Qu1UPjN/2ackMtdpPrNtIh2zVu/+KblCExw+EB+leho6F94ob51oQygw==
-X-Received: by 2002:a63:30c4:: with SMTP id w187mr6442012pgw.239.1584668128998;
-        Thu, 19 Mar 2020 18:35:28 -0700 (PDT)
+        bh=Z4e2lpJRnKKKktCpaQ40yOlZCnbWc8gw0IDDf07aLQo=;
+        b=nCGt27VRBZk09MBWuxlmhW4QH63qiI6wZdZKSVswHdiK/BDqe9NPo+XFt6L+agbk9N
+         nqWDn18bylXWuAijK+vEn5oZVyOTELRxOg/txL8Ou6YQsbz4szN9ZyyfMXuxCCb0knSF
+         F8Oxodnd74ux0f96XvElrG84Dp1hG+oEfLHo5j7SFGs8Q+NttVX9rhDTo37O2WiSZXOR
+         Zff9eMizgyZzzYmcwmOwu+k6otukoTDSqF2aWCCgvIc4DQyGikd+kD0dy02RMNX2eavk
+         5lf2zNeQ+Xt8eog6wX0bAhhpiBq+h7enxcfxttrYl+A0BeUntXmvr4fC7MtpcoBVFR0L
+         bwZw==
+X-Gm-Message-State: ANhLgQ2fA+MvG0Xoi+TMVWGeG7cfvVy9cbjsIoTw9dAJrevKq2eggOMA
+        aKoNeqcXIIquY9tDmziufto=
+X-Google-Smtp-Source: ADFU+vuE0ERziYQcIu5XWBu1qlsfvvf+IHe//nrHFTNt8ltfpYe7dWPdjlMjRcRaC01YgbOKbo/01Q==
+X-Received: by 2002:a62:1a03:: with SMTP id a3mr7068428pfa.171.1584668504908;
+        Thu, 19 Mar 2020 18:41:44 -0700 (PDT)
 Received: from localhost ([2402:800:6375:576b:56ff:d97c:a505:3e0c])
-        by smtp.gmail.com with ESMTPSA id d7sm3703776pfr.17.2020.03.19.18.35.27
+        by smtp.gmail.com with ESMTPSA id c190sm3561891pfa.66.2020.03.19.18.41.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Mar 2020 18:35:28 -0700 (PDT)
-Date:   Fri, 20 Mar 2020 08:35:26 +0700
+        Thu, 19 Mar 2020 18:41:44 -0700 (PDT)
+Date:   Fri, 20 Mar 2020 08:41:42 +0700
 From:   Danh Doan <congdanhqx@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>, Jeff King <peff@peff.net>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [PATCH 1/6] t4061: use POSIX compliance regex(7)
-Message-ID: <20200320013526.GE1858@danh.dev>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: [PATCH 5/6] t7063: use POSIX find(1) syntax
+Message-ID: <20200320014142.GF1858@danh.dev>
 References: <cover.1584625896.git.congdanhqx@gmail.com>
- <c45d6383173d8d3e73cdcdd6e993d3259d519a68.1584625896.git.congdanhqx@gmail.com>
- <20200319155307.GB3513282@coredump.intra.peff.net>
- <CAPig+cRzHtGu2KfjoO4DaPWzDrJOhEQGkgo2Fm7egUPM9m7Vyw@mail.gmail.com>
- <xmqqwo7gc8aq.fsf@gitster.c.googlers.com>
+ <215801b02aceeed1e0f6313679c567a914ad5dd8.1584625896.git.congdanhqx@gmail.com>
+ <20200319161200.GF3513282@coredump.intra.peff.net>
+ <xmqqsgi4c7o6.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqwo7gc8aq.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqsgi4c7o6.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2020-03-19 15:02:37-0700, Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
+On 2020-03-19 15:16:09-0700, Junio C Hamano <gitster@pobox.com> wrote:
+> Jeff King <peff@peff.net> writes:
 > 
-> > On Thu, Mar 19, 2020 at 11:53 AM Jeff King <peff@peff.net> wrote:
-> >> On Thu, Mar 19, 2020 at 09:00:02PM +0700, Đoàn Trần Công Danh wrote:
-> >> > Fix it by using literal `+` instead.
-> >>
-> >> This makes sense, I think. It could hurt a sed which is expected ERE and
-> >> needs the "+" escaped, but I think such a sed would be wrong (and I
-> >> imagine would break things elsewhere).
+> > On Thu, Mar 19, 2020 at 09:00:06PM +0700, Đoàn Trần Công Danh wrote:
 > >
-> > I had the same thought and considered suggesting a character class:
+> >> Since commit 6b7728db81, (t7063: work around FreeBSD's lazy mtime
+> >> update feature, 2016-08-03), we started to use ls as a trick to update
+> >> directory's mtime.
+> >> 
+> >> However, `-ls` flag isn't required by POSIX's find(1), and
+> >> busybox(1) doesn't implement it.
+> >> 
+> >> Use an equivalence `-exec ls -dils {} +` instead.
 > >
-> >     sed -n -e "1,4d" -e "s/^[+]//p" <"$1" >.tmp-1
+> > Makes sense. I wonder if we need all of "-dils", but it's not clear to
+
+From the original commit message, I think whichever flags that call
+stat(2) would be do it. It's `-d` (to check is_directory), and `-i`
+for inode number.
+
+This make make wonder, will it be enough to just use:
+
+	find . -type d >/dev/null
+
+> > me which syscalls actually trigger the FreeBSD lazy-update behavior. I
+> > guess probably it's stat()ing the directory, so "ls -ld" would be
+> > sufficient (and that's implied by the examples in 6b7728db81).
 > >
-> > to make it painfully obvious that "+" is not special in the
-> > expression. But then I thought better of it -- for the same reason as
-> > you (to wit: such a 'sed' would be wrong) -- and decided against
-> > saying anything.
+> > But I doubt the extra options would create a portability problem, so I
+> > think it's fine either way.
 > 
-> I have only one thing that needs fixing, which is s/compliance/compliant/;
-> on the title.  Other than that, it looks good.
+> Thanks.  I too wondered if -dils is really needed (POSIX of course
+> have all of them, but we have to deal with non-POSIX systems, too,
+> and I am not sure how things like "-i" works there).
+
+I think "-i" asks for stat(2) to get inode number,
+which will ask FreeBSD sync mtime.
 > 
-> Having said that, I would have done the [+] thing if I were doing
-> this patch myself.  As long as we see no "wrong" sed that is broken
-> by this change, I am OK with it, though.
+> s/equivalence/equivalent/; perhaps?
 
-Well, `[+]` thing was my first version for this change,
-but I change in to this version afterward.
-
-However, your comment in a later patch:
-
-> IOW, I do not have trouble changing the test so that it works with
-> noncompliant "diff".  But then in the same series, I would prefer to
-> see the existing test keeps working with a possibly noncompliant
-> "sed" implementation that has been working well with the tests.
-
-changed my mind.
-
-I will use `[+]` here in the reroll.
+Will do, I've never correctly used -ence and -ent pairs of words.
 
 -- 
 Danh
