@@ -1,4 +1,4 @@
-Return-Path: <SRS0=WCE0=5E=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=v+yc=5F=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
@@ -6,214 +6,512 @@ X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92EBBC4332B
-	for <git@archiver.kernel.org>; Thu, 19 Mar 2020 23:49:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4271AC4332B
+	for <git@archiver.kernel.org>; Fri, 20 Mar 2020 00:16:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 59FAC20740
-	for <git@archiver.kernel.org>; Thu, 19 Mar 2020 23:49:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D5A6F20754
+	for <git@archiver.kernel.org>; Fri, 20 Mar 2020 00:16:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="mSzMDgo+"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="lLhqL6EA"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727108AbgCSXtl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Mar 2020 19:49:41 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:57636 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726663AbgCSXtl (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 19 Mar 2020 19:49:41 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S1727228AbgCTAQK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Mar 2020 20:16:10 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63994 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725787AbgCTAQJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Mar 2020 20:16:09 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A0EC257A08;
+        Thu, 19 Mar 2020 20:16:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+        :subject:date:message-id:mime-version:content-type; s=sasl; bh=Y
+        ITTzLdbLmeOHyn44lzddx+CXec=; b=lLhqL6EABooCdSz+UkqOIDbArtL3ATGJh
+        BrrXMplNFPtaCfmF0/pR8SdzDD885uAy3H8BjHpC2bKE3wxd1KM3/RXf5Fl0y3kF
+        PRnqxkYgZenKt9fUvVqEDEh8G0P6su1nHT5u7H13e1WZdOQyHaj4Owbyr5fzqIXP
+        sBbKxmieus=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+        :date:message-id:mime-version:content-type; q=dns; s=sasl; b=I7n
+        CSrMR7nNEoWuVdrRVvYvpgxwRg4MDVxfReP0RnXBUUsrbI2VQrdtZKwz7bTPD5wc
+        fz6sCar3UuGf/SXr6wEgdtyWo3pvP3RcLpCSPJZxt8/SAQggQP4SkdXlhnTcfXof
+        B3N9CSteS8pKsqyKtBlMd2RYd41/L8SMJnaFjJ5Q=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 963C557A07;
+        Thu, 19 Mar 2020 20:16:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 4CB276077C;
-        Thu, 19 Mar 2020 23:49:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1584661779;
-        bh=FNvPga+JmqAlSkmRZyAxirDrMlVr46QsTtA/vFeJ9Is=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=mSzMDgo+4j7xzV1UpXIKwOY1WQhJ04bBINI3j1kRjj9s+JOGlF81J4QX3iMtE+Ym8
-         bqACYeb52V342r1RZe41TuXjEu1xaErVpf/DGYk2lUcWxUmM15Qd2C1LEkE0VsltgY
-         kH1mhqVsAo/gfko2ZcFDsBiC8mT5V9HccG7AO3wNijttVin39ozCGrpp+c75CiSQ/k
-         ij/jT/8aJyBf+Jsm0euEphi2mjl8xeCzosZEOeNBcRs+KCCguermWbnsD6xWqaFAvQ
-         2MDAlzJpnZIR4/2FngcZunhYdq/ZSyry2jn11AmXgb5K7+VVhKGcDVRYYsC2YuuIXT
-         eL7ucRW5Pbl6BcwuVXrlHzw4hyXT04Gnk3wz+tZgcaVsFW3hL/fefCQEL7aB1/cYj7
-         BixvnimsqzPSB8hHXH6Mt80iU9zdkjBtPco+Mp3GVApXpJD1KgX6O8zj3E4estyYg3
-         x6WKFzoFg7M72O3qbUck+WrsYRpXJhtbet1NcUKgHlbL/UihMCO
-Date:   Thu, 19 Mar 2020 23:49:34 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/1] docs: add a FAQ
-Message-ID: <20200319234934.GF366567@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <20200315223923.170371-1-sandals@crustytoothpaste.net>
- <20200315223923.170371-2-sandals@crustytoothpaste.net>
- <20200318230030.GA45325@google.com>
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D34E257A02;
+        Thu, 19 Mar 2020 20:16:01 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Subject: What's cooking in git.git (Mar 2020, #06; Thu, 19)
+X-master-at: 98cedd0233ee88e69711f79d1126b6bd772ff5bd
+X-next-at: 2932bb562d7cf4321a6f7aaf0cd78ba2178da59b
+Date:   Thu, 19 Mar 2020 17:16:00 -0700
+Message-ID: <xmqqh7yjdgov.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="Ls2Gy6y7jbHLe9Od"
-Content-Disposition: inline
-In-Reply-To: <20200318230030.GA45325@google.com>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.4.0-4-amd64)
+Content-Type: text/plain
+X-Pobox-Relay-ID: FB3E1098-6A3F-11EA-9DD6-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Here are the topics that have been cooking.  Commits prefixed with
+'-' are only in 'pu' (proposed updates) while commits prefixed with
+'+' are in 'next'.  The ones marked with '.' do not appear in any of
+the integration branches, but I am still holding onto them.
 
---Ls2Gy6y7jbHLe9Od
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Git 2.26-rc2 has been tagged.  Many fixes accumulated on the
+'master' front have been flushed to 'maint' and has been tagged
+as Git 2.25.2.  'git-gui' has been updated from the maintainer tree
+in preparation for the upcoming release.
 
-On 2020-03-18 at 23:00:30, Emily Shaffer wrote:
-> On Sun, Mar 15, 2020 at 10:39:23PM +0000, brian m. carlson wrote:
-> > Git is an enormously flexible and powerful piece of software.  However,
-> > it can be intimidating for many users and there are a set of common
-> > questions that users often ask.  While we already have some new user
-> > documentation, it's worth adding a FAQ to address common questions that
-> > users often have.  Even though some of this is addressed elsewhere in
-> > the documentation, experience has shown that it is difficult for users
-> > to find, so a centralized location is helpful.
->=20
-> It's true that some of it is duplicated; if we're worried about the info
-> getting out of sync, we might be able to do something like
-> Documentation/config so we're pulling in a single piece of text to both
-> places.
+You can find the changes described here in the integration branches
+of the repositories listed at
 
-I'm not worried about this, since most of it has been this way for a
-long time.
+    http://git-blame.blogspot.com/p/git-public-repositories.html
 
-> > +[[user-name]]
-> > +What should I put in `user.name`?::
-> > +  You should put your personal name; that is, the name that other huma=
-ns call
-> > +	you.  This will be the name portion that is stored in every commit yo=
-u make.
->=20
-> I like the direction but I think it is still a little unclear. Other
-> humans call me Emily, but I want to put "Emily Shaffer" in my user.name.
-> I wonder how we can suggest full name in a way that's as universal as
-> "the name that other humans call you"? I think I got around to this
-> point by using examples when covering the SOB in MyFirstContribution, so
-> I don't have a good answer off the top of my head.
+--------------------------------------------------
+[New Topics]
 
-Yeah, this is tricky, since in many contexts the phrase "full name"
-implies using the entirety of every part of your name, and most people
-with middle names don't put them in the "user.name" entry.  Yet we want
-it to be appropriate for people across a wide variety of cultures.
+* jc/config-tar (2020-03-18) 1 commit
+  (merged to 'next' on 2020-03-19 at aa6216fd1a)
+ + separate tar.* config to its own source file
 
-Maybe we should say something like this:
+ Improve the structure of the documentation source a bit.
 
-  You should put your personal name, generally a form using a given name
-  and family name.  This will be the name portion that is stored in
-  every commit you make.
+ Will cook in 'next'.
 
-Many cultures have a given name and a family name of some sort.  If we
-wanted to provide an example, we could use Junio:
 
-  For example, the current maintainer of Git uses "Junio C Hamano".
+* jt/rebase-allow-duplicate (2020-03-18) 1 commit
+ - rebase --merge: optionally skip upstreamed commits
 
-> > +[[http-postbuffer]]
-> > +What does `http.postBuffer` really do?::
-> > +	This option changes the size of the buffer that Git uses when pushing=
- data to
-> > +	a remote over HTTP or HTTPS.  If the data is larger than this size, l=
-ibcurl,
-> > +	which handles the HTTP support for Git, will use chunked transfer enc=
-oding
-> > +	since it isn't known ahead of time what the size of the pushed data w=
-ill be.
-> > ++
-> > +Leaving this value at the default size is fine unless you know that ei=
-ther the
-> > +remote server or a proxy in the middle doesn't support HTTP/1.1 (which
-> > +introduced the chunked transfer encoding) or is known to be broken wit=
-h chunked
-> > +data.  People often suggest this as a solution for generic push proble=
-ms, but
-> > +since almost every server and proxy supports at least HTTP/1.1, raisin=
-g this
-> > +value usually doesn't solve most push problems.  A server or proxy tha=
-t didn't
->=20
-> This might be burying the lede a little for someone frantically skimming
-> for an answer. If I was really spinning my wheels I might read "People
-> often suggest this as a solution for generic push problems" and go try
-> it. Is "People often (erroneously) suggest this ..." too verbose?
 
-No, I think that's a good answer.
+* ss/submodule-foreach-cb (2020-03-18) 1 commit
+ - submodule--helper.c: Rename 'cb_foreach' to 'foreach_cb'
 
-> > +If you want to configure a general editor for most programs which need=
- one, you
-> > +can edit your shell configuration (e.g., `~/.bashrc` or `~/.zshenv`) t=
-o contain
-> > +a line setting the `EDITOR` or `VISUAL` environment variable to an app=
-ropriate
-> > +value.  For example, if you preferred the editor `nano`, then you coul=
-d write
-> > +the following:
-> > ++
-> > +----
-> > +export VISUAL=3Dnano
-> > +----
->=20
-> I'll swallow my pride as a Vim user here and say that I think 'nano' is
-> a good choice to reference directly here; it seems to fit right into the
-> experience level this particular Q is targeting. Nice.
+ Code clean-up.
 
-I'm also a Vim user, but I took this idea from Debian, which uses the
-options nano, nano-tiny, and vi (in that order) for its sensible-editor
-utility if the user hasn't specified an editor any other way.  In any
-event, the user can extrapolate from the example if nano isn't to their
-tastes.
+ Will merge to 'next'.
 
-> > +[[ignore-tracked-files]]
-> > +How do I ignore changes to a tracked file?::
-> > +  Git doesn't provide a way to do this.  The reason is that if Git nee=
-ds to
-> > +	overwrite this file, such as during a checkout, it doesn't know wheth=
-er the
-> > +	changes to the file are precious and should be kept, or whether they =
-are
-> > +	irrelevant and can safely be destroyed.  Therefore, it has to take th=
-e safe
-> > +	route and always preserve them.
-> > ++
-> > +Some people are tempted to use certain features of `git update-index`,=
- namely
-> > +the assume-unchanged and skip-worktree bits, but these don't work prop=
-erly for
-> > +this purpose and shouldn't be used this way.
->=20
-> Not really on topic for this particular paragraph, but there are a lot
-> of instances of "Some people ..." - in general, would it be less
-> combative to say something like "It's tempting to..." or "It might seem
-> like a good idea to..."? That way it feels less like "there are people
-> who do X and they are wrong" and more like "X might seem like a good
-> idea but it isn't". Or to put it another way, let's attack the bad idea,
-> not the people who suggest it.
+--------------------------------------------------
+[Stalled]
 
-Sure, I think that's a good idea.  Thanks for the suggestion.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+* dl/merge-autostash (2020-01-13) 17 commits
+ - pull: pass --autostash to merge
+ - t5520: make test_pull_autostash() accept expect_parent_num
+ - merge: teach --autostash option
+ - sequencer: unlink autostash in apply_autostash()
+ - sequencer: extract perform_autostash() from rebase
+ - rebase: generify create_autostash()
+ - rebase: extract create_autostash()
+ - reset: extract reset_head() from rebase
+ - rebase: generify reset_head()
+ - rebase: use apply_autostash() from sequencer.c
+ - sequencer: make apply_rebase() accept a path
+ - rebase: use read_oneliner()
+ - sequencer: make read_oneliner() extern
+ - sequencer: configurably warn on non-existent files
+ - sequencer: use file strbuf for read_oneliner()
+ - t7600: use test_write_lines()
+ - Makefile: alphabetically sort += lists
 
---Ls2Gy6y7jbHLe9Od
-Content-Type: application/pgp-signature; name="signature.asc"
+ "git merge" learns the "--autostash" option.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.19 (GNU/Linux)
+ Expecting a reroll.
+ cf. <20200123042906.GA29009@generichostname>
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXnQFDAAKCRB8DEliiIei
-gRtsAQCEVKlH6QJHzPg5ExNckyOPXbYdMx99mDcqR6f3IQo37gEAvuXj5/F7eI7a
-jwNiHcA6O9HYd74bDlSVX+4BZRC9TQw=
-=OHHA
------END PGP SIGNATURE-----
 
---Ls2Gy6y7jbHLe9Od--
+* bk/p4-pre-edit-changelist (2020-02-14) 7 commits
+ - git-p4: add RCS keyword status message
+ - git-p4: add p4 submit hooks
+ - git-p4: restructure code in submit
+ - git-p4: add --no-verify option
+ - git-p4: add p4-pre-submit exit text
+ - git-p4: create new function run_git_hook
+ - git-p4: rewrite prompt to be Windows compatible
+
+ "git p4" learned four new hooks and also "--no-verify" option to
+ bypass them (and the existing "p4-pre-submit" hook).
+
+ Waiting for response to RFH from Windows/Python folks.
+ cf. <pull.698.v6.git.git.1581691486.gitgitgadget@gmail.com>
+
+
+* en/fill-directory-exponential (2020-01-31) 6 commits
+ - t7063: blindly accept diffs
+ - dir: replace exponential algorithm with a linear one
+ - dir: refactor treat_directory to clarify control flow
+ - dir: fix confusion based on variable tense
+ - dir: fix broken comment
+ - dir: consolidate treat_path() and treat_one_path()
+
+ The directory traversal code had redundant recursive calls which
+ made its performance characteristics exponential with respect to
+ the depth of the tree, which was corrected.
+
+ Expecting an update.
+ cf. <CABPp-BEnt4C_7XyxQKxk4aga=JjM9fXCE-7SFp7azO_v5-pQYw@mail.gmail.com>
+ cf. <pull.700.v2.git.git.1580495486.gitgitgadget@gmail.com>
+ cf. <CABPp-BF0SO92wxY-dM14Vxv6BGA5=T=CicdwbiaZ7c9w6-j2jQ@mail.gmail.com>
+
+
+* vn/reset-deleted-ita (2019-07-26) 1 commit
+ - reset: unstage empty deleted ita files
+
+ "git reset HEAD [<pathspec>]" did not reset an empty file that was
+ added with the intent-to-add bit.
+
+ Expecting a reroll.
+
+
+* mk/use-size-t-in-zlib (2018-10-15) 1 commit
+ - zlib.c: use size_t for size
+
+ The wrapper to call into zlib followed our long tradition to use
+ "unsigned long" for sizes of regions in memory, which have been
+ updated to use "size_t".
+
+--------------------------------------------------
+[Cooking]
+
+* sg/commit-slab-clarify-peek (2020-03-10) 1 commit
+  (merged to 'next' on 2020-03-11 at 0496b26f23)
+ + commit-slab: clarify slabname##_peek()'s return value
+
+ In-code comment update.
+
+ Will cook in 'next'.
+
+
+* rs/doc-passthru-fetch-options (2020-03-11) 1 commit
+  (merged to 'next' on 2020-03-12 at f08dab7228)
+ + pull: document more passthru options
+
+ Doc update.
+
+ Will cook in 'next'.
+
+
+* bc/filter-process (2020-03-16) 8 commits
+  (merged to 'next' on 2020-03-17 at 2cd9dbf794)
+ + t0021: test filter metadata for additional cases
+ + builtin/reset: compute checkout metadata for reset
+ + builtin/rebase: compute checkout metadata for rebases
+ + builtin/clone: compute checkout metadata for clones
+ + builtin/checkout: compute checkout metadata for checkouts
+ + convert: provide additional metadata to filters
+ + convert: permit passing additional metadata to filter processes
+ + builtin/checkout: pass branch info down to checkout_worktree
+
+ Provide more information (e.g. the object of the tree-ish in which
+ the blob being converted appears, in addition to its path, which
+ has already been given) to smudge/clean conversion filters.
+
+ Will cook in 'next'.
+
+
+* bc/faq (2020-03-15) 1 commit
+ - docs: add a FAQ
+
+ Doc update.
+
+
+* ds/check-connected-reprepare-packed-git (2020-03-15) 1 commit
+  (merged to 'next' on 2020-03-16 at 609a322030)
+ + connected.c: reprepare packs for corner cases
+
+ Corner case "git fetch" fix.
+
+ Will cook in 'next'.
+
+
+* en/oidset-uninclude-hashmap (2020-03-15) 1 commit
+  (merged to 'next' on 2020-03-16 at a79879866d)
+ + oidset: remove unnecessary include
+
+ Code clean-up.
+
+ Will cook in 'next'.
+
+
+* jc/log-no-mailmap (2020-03-16) 3 commits
+ - log: give --[no-]use-mailmap a more sensible synonym --[no-]mailmap
+ - clone: reorder --recursive/--recurse-submodules
+ - parse-options: teach "git cmd -h" to show alias as alias
+
+ "git log" learns "--[no-]mailmap" as a synonym to "--[no-]use-mailmap"
+
+
+* yz/p4-py3 (2020-03-10) 14 commits
+  (merged to 'next' on 2020-03-11 at 01ca57c2b2)
+ + ci: use python3 in linux-gcc and osx-gcc and python2 elsewhere
+ + git-p4: use python3's input() everywhere
+ + git-p4: simplify regex pattern generation for parsing diff-tree
+ + git-p4: use dict.items() iteration for python3 compatibility
+ + git-p4: use functools.reduce instead of reduce
+ + git-p4: fix freezing while waiting for fast-import progress
+ + git-p4: use marshal format version 2 when sending to p4
+ + git-p4: open .gitp4-usercache.txt in text mode
+ + git-p4: convert path to unicode before processing them
+ + git-p4: encode/decode communication with git for python3
+ + git-p4: encode/decode communication with p4 for python3
+ + git-p4: remove string type aliasing
+ + git-p4: change the expansion test from basestring to list
+ + git-p4: make python2.7 the oldest supported version
+
+ Update "git p4" to work with Python 3.
+
+ Will cook in 'next'.
+
+
+* hi/gpg-prefer-check-signature (2020-03-15) 2 commits
+  (merged to 'next' on 2020-03-17 at 2def2d9a7e)
+ + gpg-interface: prefer check_signature() for GPG verification
+ + t: increase test coverage of signature verification output
+
+ The code to interface with GnuPG has been refactored.
+
+ Will cook in 'next'.
+
+
+* jc/maintain-doc (2020-03-09) 1 commit
+  (merged to 'next' on 2020-03-09 at 7f1a754f60)
+ + update how-to-maintain-git
+
+ Doc update.
+
+ Will cook in 'next'.
+
+
+* am/real-path-fix (2020-03-10) 4 commits
+  (merged to 'next' on 2020-03-11 at 1f843820a7)
+ + get_superproject_working_tree(): return strbuf
+ + real_path_if_valid(): remove unsafe API
+ + real_path: remove unsafe API
+ + set_git_dir: fix crash when used with real_path()
+
+ The real_path() convenience function can easily be misused; with a
+ bit of code refactoring in the callers' side, its use has been
+ eliminated.
+
+ Will cook in 'next'.
+
+
+* tb/commit-graph-split-merge (2020-03-05) 3 commits
+  (merged to 'next' on 2020-03-09 at f3aa7bb305)
+ + builtin/commit-graph.c: support '--input=none'
+ + builtin/commit-graph.c: introduce '--input=<source>'
+ + builtin/commit-graph.c: support '--split[=<strategy>]'
+
+ The code to write out the commit-graph has been taught a few
+ options to control if the resulting graph chains should be merged
+ or a single new incremental graph is created.
+
+ Will cook in 'next'.
+
+
+* ah/force-pull-rebase-configuration (2020-03-10) 1 commit
+  (merged to 'next' on 2020-03-11 at c79dbbaf9c)
+ + pull: warn if the user didn't say whether to rebase or to merge
+
+ "git pull" learned to warn when no pull.rebase configuration
+ exists, and neither --[no-]rebase nor --ff-only is given (which
+ would result a merge).
+
+ Will cook in 'next'.
+
+
+* tg/retire-scripted-stash (2020-03-05) 2 commits
+  (merged to 'next' on 2020-03-05 at 8e82eb9dec)
+ + stash: remove the stash.useBuiltin setting
+ + stash: get git_stash_config at the top level
+
+ "git stash" has kept an escape hatch to use the scripted version
+ for a few releases, which got stale.  It has been removed.
+
+ Will cook in 'next'.
+ cf. <20200306172913.GF1571684@cat>
+
+
+* js/https-proxy-config (2020-03-05) 2 commits
+  (merged to 'next' on 2020-03-09 at 8a06f8501d)
+ + http: add environment variable support for HTTPS proxies
+ + http: add client cert support for HTTPS proxies
+
+ A handful of options to configure SSL when talking to proxies have
+ been added.
+
+ Will cook in 'next'.
+
+
+* pw/advise-rebase-skip (2019-12-06) 7 commits
+  (merged to 'next' on 2020-03-11 at 80386de756)
+ + commit: give correct advice for empty commit during a rebase
+ + commit: encapsulate determine_whence() for sequencer
+ + commit: use enum value for multiple cherry-picks
+ + sequencer: write CHERRY_PICK_HEAD for reword and edit
+ + cherry-pick: check commit error messages
+ + cherry-pick: add test for `--skip` advice in `git commit`
+ + t3404: use test_cmp_rev
+
+ The mechanism to prevent "git commit" from making an empty commit
+ or amending during an interrupted cherry-pick was broken during the
+ rewrite of "git rebase" in C, which has been corrected.
+
+ Will cook in 'next'.
+ cf. <xmqq7e0e7d9z.fsf@gitster-ct.c.googlers.com>
+
+
+* at/rebase-fork-point-regression-fix (2020-02-11) 1 commit
+  (merged to 'next' on 2020-03-02 at a1a84d37a7)
+ + rebase: --fork-point regression fix
+
+ The "--fork-point" mode of "git rebase" regressed when the command
+ was rewritten in C back in 2.20 era, which has been corrected.
+
+ Will cook in 'next'.
+
+
+* jc/describe-misnamed-annotated-tag (2020-02-20) 1 commit
+  (merged to 'next' on 2020-03-02 at b4e2ca6a46)
+ + describe: force long format for a name based on a mislocated tag
+
+ When "git describe C" finds an annotated tag with tagname A to be
+ the best name to explain commit C, and the tag is stored in a
+ "wrong" place in the refs/tags hierarchy, e.g. refs/tags/B, the
+ command gave a warning message but used A (not B) to describe C.
+ If C is exactly at the tag, the describe output would be "A", but
+ "git rev-parse A^0" would not be equal as "git rev-parse C^0".  The
+ behavior of the command has been changed to use the "long" form
+ i.e. A-0-gOBJECTNAME, which is correctly interpreted by rev-parse.
+
+ Will cook in 'next'.
+
+
+* pb/recurse-submodules-fix (2020-02-19) 6 commits
+  (merged to 'next' on 2020-03-17 at b46922ddd1)
+ + t/lib-submodule-update: add test removing nested submodules
+ + unpack-trees: check for missing submodule directory in merged_entry
+ + unpack-trees: remove outdated description for verify_clean_submodule
+ + t/lib-submodule-update: move a test to the right section
+ + t/lib-submodule-update: remove outdated test description
+ + t7112: remove mention of KNOWN_FAILURE_SUBMODULE_RECURSIVE_NESTED
+
+ Fix "git checkout --recurse-submodules" of a nested submodule
+ hierarchy.
+
+ Will cook in 'next'.
+
+
+* bc/sha-256-part-1-of-4 (2020-02-28) 22 commits
+  (merged to 'next' on 2020-03-17 at 436c4e64a7)
+ + fast-import: add options for rewriting submodules
+ + fast-import: add a generic function to iterate over marks
+ + fast-import: make find_marks work on any mark set
+ + fast-import: add helper function for inserting mark object entries
+ + fast-import: permit reading multiple marks files
+ + commit: use expected signature header for SHA-256
+ + worktree: allow repository version 1
+ + init-db: move writing repo version into a function
+ + builtin/init-db: add environment variable for new repo hash
+ + builtin/init-db: allow specifying hash algorithm on command line
+ + setup: allow check_repository_format to read repository format
+ + t/helper: make repository tests hash independent
+ + t/helper: initialize repository if necessary
+ + t/helper/test-dump-split-index: initialize git repository
+ + t6300: make hash algorithm independent
+ + t6300: abstract away SHA-1-specific constants
+ + t: use hash-specific lookup tables to define test constants
+ + repository: require a build flag to use SHA-256
+ + hex: add functions to parse hex object IDs in any algorithm
+ + hex: introduce parsing variants taking hash algorithms
+ + hash: implement and use a context cloning function
+ + builtin/pack-objects: make hash agnostic
+
+ SHA-256 transition continues.
+
+ Will cook in 'next'.
+
+
+* hw/advise-ng (2020-03-05) 4 commits
+  (merged to 'next' on 2020-03-09 at ea9e5a1fa3)
+ + tag: use new advice API to check visibility
+ + advice: revamp advise API
+ + advice: change "setupStreamFailure" to "setUpstreamFailure"
+ + advice: extract vadvise() from advise()
+
+ Revamping of the advise API to allow more systematic enumeration of
+ advice knobs in the future.
+
+ Will cook in 'next'.
+
+
+* hn/reftable (2020-02-26) 6 commits
+ . Reftable support for git-core
+ . Add reftable library
+ . reftable: file format documentation
+ . refs: document how ref_iterator_advance_fn should handle symrefs
+ . create .git/refs in files-backend.c
+ . refs.h: clarify reflog iteration order
+
+ A new refs backend "reftable" to replace the traditional
+ combination of packed-refs files and one-file-per-ref loose refs
+ has been implemented and integrated for improved performance and
+ atomicity.
+
+ Temporarily ejected as this unfortunately conflicts with the
+ SHA-256 topic.
+
+
+* es/bugreport (2020-03-06) 6 commits
+ - SQUASH???
+ - bugreport: add compiler info
+ - bugreport: add uname info
+ - bugreport: gather git version and build info
+ - bugreport: add tool to generate debugging info
+ - help: move list_config_help to builtin/help
+
+ The "bugreport" tool.
+
+ As the scope of the topic got trimmed, hopefully these early parts
+ can be polished quickly enough to be merged down.
+
+
+* gs/commit-graph-path-filter (2020-02-12) 12 commits
+ - (bytesex breakage band-aid)
+ - commit-graph: add GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS test flag
+ - revision.c: use Bloom filters to speed up path based revision walks
+ - commit-graph: add --changed-paths option to write subcommand
+ - commit-graph: reuse existing Bloom filters during write.
+ - commit-graph: write Bloom filters to commit graph file
+ - commit-graph: examine commits by generation number
+ - commit-graph: examine changed-path objects in pack order
+ - commit-graph: compute Bloom filters for changed paths
+ - diff: halt tree-diff early after max_changes
+ - bloom: core Bloom filter implementation for changed paths
+ - commit-graph: use MAX_NUM_CHUNKS
+
+ Introduce an extension to the commit-graph to make it efficient to
+ check for the paths that were modified at each commit using Bloom
+ filters.
+
+ Will be rerolled with bytesex fixes squashed in.
+ Breakage due to byte-order dependency reported.
+
+--------------------------------------------------
+[Discarded]
+
+* jc/rebase-backend-keep-old-default (2020-03-10) 1 commit
+ . rebase: do not switch the default to 'merge' just yet
+
+ The "merge" backend of "git rebase" still has a few bugs and
+ unexpected behaviour that need to be ironed out before it becomes
+ the default.  Let's switch the default back to the "apply" backend
+ for now.
+
