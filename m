@@ -3,113 +3,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 373D3C4332B
-	for <git@archiver.kernel.org>; Fri, 20 Mar 2020 17:14:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 33FA3C4332D
+	for <git@archiver.kernel.org>; Fri, 20 Mar 2020 17:43:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0BF6620739
-	for <git@archiver.kernel.org>; Fri, 20 Mar 2020 17:14:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E724020777
+	for <git@archiver.kernel.org>; Fri, 20 Mar 2020 17:43:32 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gyef4lam"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="CkcnzBI5"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727005AbgCTROY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Mar 2020 13:14:24 -0400
-Received: from mail-lj1-f176.google.com ([209.85.208.176]:43962 "EHLO
-        mail-lj1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726801AbgCTROY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Mar 2020 13:14:24 -0400
-Received: by mail-lj1-f176.google.com with SMTP id u15so6961324lji.10
-        for <git@vger.kernel.org>; Fri, 20 Mar 2020 10:14:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=WJY180/C3LrNM0fnzoBm6ofJngAjsfeabncC+Rr7TSY=;
-        b=gyef4lamHOTJuCE7N7ApqW1rFa2xXJDN/g1/FXNMYVg0UnLVJErdGyelsngSpPw/RZ
-         PrSP7wUg+CCNEwIW8Yrv153M6kLDnLCU0G5NqkdYY969Zc+ILnih6JzGq5uPuciJdQ6E
-         GYLdIjyvaOrXErSPvzXvOk2ZYS2QTkxF7QjcAuRmtqb3MimUk+zssfsOjexBku/86A2S
-         ZkmMYCuFgeUDP7ICOhRITg2TcIVwzphOeAesTTxkTpgzGGbQAD0316s1peF9vBieGFNn
-         uIXIDxqIeeUX0Vr0cvqJr8ORm3yXfjJJZLGz2GUBZ5nMA2BQetzwZeGBO7GUucgk6kBz
-         aJXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=WJY180/C3LrNM0fnzoBm6ofJngAjsfeabncC+Rr7TSY=;
-        b=DmX5XJ4K/5FMoH9G2BUHImIfgqWZtCkeA7LQbFVmY6ded3xaxGZwKMarCpNTBMh7LF
-         /6RwPzS/ymoMnkAswXRB3YE4lx38XogT1sz2bE/myBa421zmZme0TmxKupaT2MZGqz7Z
-         mZMxzR7hKJHJ3H1DWHhYlnYjqkxKnHV2fGRsrRc7yDOLxlef32qyqAeG8ro9zW6aVVhx
-         0rBC9orUMoAAZNkV4ButdGKjItrbSyAdUf7FF7BXsA87WlH08bYQw1LB/cjPrDps+gs6
-         HDi6nZ7PiJsF2iSuvHkCSqRmZG0a2gyWtVdzELA4vJokwRXeKN5KqpBMOHv3oY+ff9QB
-         6/Jg==
-X-Gm-Message-State: ANhLgQ0czF/baofyYOxDHBM5kSR1spr5Cxo2FRflUMT15rnfHdS+joRR
-        cGv5nDSJX5QgSorWRfVs4pM/VpJrM17JHgmHsISIpgDE+Ko=
-X-Google-Smtp-Source: ADFU+vtz0Uo9j2u+uCAmwP4tUXSt0a610DyPNtfcTGvYU5sxspGUvbHQ/bYKQUbl3EfnHFm9zxllVzK6XThlFdjH4k8=
-X-Received: by 2002:a2e:98da:: with SMTP id s26mr6249819ljj.155.1584724461970;
- Fri, 20 Mar 2020 10:14:21 -0700 (PDT)
+        id S1727305AbgCTRn3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Mar 2020 13:43:29 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57182 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726983AbgCTRn3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Mar 2020 13:43:29 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D303D597EC;
+        Fri, 20 Mar 2020 13:43:27 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=DSgoj56TpwNbdosVHkZA0z0YIMA=; b=CkcnzB
+        I5dt0+z8xzqnCiIWcDEh8H3dauNaletG5xWLwdH7Iq+KBPpkMCCpHdmSh+qnaV6R
+        haSSJjYdY7M2rGY+G3K9/0gL5TS59Zziq4Qm3s5w5OyX8GDk7IJWxi50P39bg9/J
+        uyup1SlLgd60qgWAXqc+STxe7OaAPgXg89PgI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ifs7itwGMhYPOHvEqLSSjT7Ht1JDRsvN
+        Cm5NE8eILvxB19Dz5yUfNlqYk/VBMsNl+PkRBnakiSzQhiIzMP5/CIHGwEC3QryF
+        V+e3pfbN9G2RBGnICqPgnLGF+CHC92xTaE2lYOK17mcbhkwb4RjPbx9LnuQNLMVY
+        A/Uak6GbWRM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CA9B9597EB;
+        Fri, 20 Mar 2020 13:43:27 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4A037597EA;
+        Fri, 20 Mar 2020 13:43:27 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v9 2/5] bugreport: add tool to generate debugging info
+References: <20200302230400.107428-1-emilyshaffer@google.com>
+        <20200302230400.107428-3-emilyshaffer@google.com>
+        <nycvar.QRO.7.76.6.2003042232340.46@tvgsbejvaqbjf.bet>
+        <20200319213902.GB45325@google.com>
+Date:   Fri, 20 Mar 2020 10:43:25 -0700
+In-Reply-To: <20200319213902.GB45325@google.com> (Emily Shaffer's message of
+        "Thu, 19 Mar 2020 14:39:02 -0700")
+Message-ID: <xmqq8sjudirm.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <20200320130845.23257-2-harshitjain1371999@gmail.com> <20200320155604.7854-1-shouryashukla.oo@gmail.com>
-In-Reply-To: <20200320155604.7854-1-shouryashukla.oo@gmail.com>
-From:   Harshit Jain <harshitjain1371999@gmail.com>
-Date:   Fri, 20 Mar 2020 22:44:09 +0530
-Message-ID: <CACuU+s-s2zMJq5xymyTz45AVyT0gL1sgcpk3rUcA-Bp-D+F=2g@mail.gmail.com>
-Subject: Re: Re: [GSoC][Patch]
-To:     Shourya Shukla <shouryashukla.oo@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4E0A480E-6AD2-11EA-96C3-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Shourya,
+Emily Shaffer <emilyshaffer@google.com> writes:
 
-On Fri, Mar 20, 2020 at 9:26 PM Shourya Shukla
-<shouryashukla.oo@gmail.com> wrote:
->
-> Hello Harshit,
->
-> > The tests in t4131 leave a space character between the redirection operator
-> > and the file i.e. the redirection target which does not conform to the
-> > modern coding style.
->
-> > Fix them.
->
-> I think something like,
->
-> The tests in t4131 were written a long time ago and hence contain style violations
-> such as an extra space between the redirection operator(>) and the redirection target.
-> Update it to match the latest CodingGuidelines.
->
-> may be better.
->
+> This is the kind of stuff I really wanted to get straightened out by
+> sending the smaller changeset, so I'm glad to be having this
+> conversation (again, and hopefully for the last time).
 
-Please see the comment made by Junio Hamano, pasted below:
+I actually have a suspicion that "git bugreport" that is spawned via
+"git" wrapper is a bad idea (in other words, /usr/bin/git-bug that
+is totally standalone may be better).
 
-"written a long time ago" does not have much value by itself (it
-does serve as a backstory to explain a half of why it does not use
-the more modern style, though).  "have a few style violations." is
-almost meaningless (otherwise, you would not be doing a "modernize
-style" patch in the first place ;-).
+The thing is, anything launched by "git" as its subcommand (be it
+standalone or builtin) sees an environment already modified by
+"git", so inspecting say "$PATH" from "git bugreport" (be it
+standalone or builtin) does not show what the end-user, who may be
+having trouble, actually has.  The mangling of $PATH alone happens
+to be simple and (we may think) we can easily reverse without losing
+bits, but there would probably other differences that we think is so
+subtle and insignificant, right now in this discussion without
+having actual end-user who is having trouble in front of us, that
+having "git" layer in between may hide from us.
 
-I myself also agree with the above comment and hence, wrote the commit message
-accordingly. What do you think?
+Having "git-bug" a totally separate tool, that does not even go
+through git.c::cmd_main(), would also allow (and force) us to treat
+"git" just like any system component on the end-users' system whose
+versions and configurations may affect the use of "git" by the end
+user.  The tool, instead of relying on git_version_string[] that is
+determined at the compile time, would ask "git version" just like
+the end-users would when asked by us "what version of git do you
+run?"  It also means that "git-bug" can be updated at different
+cadence and the mismatch of versions between it and "git" does not
+matter at all.
 
-> Also, when you deliver a newer version of the patch, i.e., version 2 in your case,
-> you have a [PATCH v2 1/n] as the subject, so that people know that it is the v2 and
-> hence avoid confusion.
->
-> If you are using 'git format-patch' to formulate your mails, you can do:
->
-> 'git format-patch -v2 <..>' to get a v2 based mail.
->
+Having said all that, after suggesting to make the tool even more
+distant from the remainder of the binary, quite honestly, I do not
+even want to see us wasting any more time on builtin/standalone at
+this point, and instead would like to see reports from the end-users
+produced by a lets-start-small version of the tool and measure how
+having the tool actually helps.
 
-Oh nice, didn't know about this. I will keep this in mind for future
-patch submissions.
-Should I do this for the current patch as well?
-
-Regards,
-Harshit Jain
+Thanks.
