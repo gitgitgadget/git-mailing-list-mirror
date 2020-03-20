@@ -2,132 +2,172 @@ Return-Path: <SRS0=v+yc=5F=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3EB75C4332D
-	for <git@archiver.kernel.org>; Fri, 20 Mar 2020 00:34:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C1C2FC4332B
+	for <git@archiver.kernel.org>; Fri, 20 Mar 2020 00:37:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0366120753
-	for <git@archiver.kernel.org>; Fri, 20 Mar 2020 00:34:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8927320714
+	for <git@archiver.kernel.org>; Fri, 20 Mar 2020 00:37:22 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kREDDVqU"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mgzoSfwj"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726785AbgCTAeF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Mar 2020 20:34:05 -0400
-Received: from mail-ot1-f67.google.com ([209.85.210.67]:47088 "EHLO
-        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725787AbgCTAeE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Mar 2020 20:34:04 -0400
-Received: by mail-ot1-f67.google.com with SMTP id 111so4383608oth.13
-        for <git@vger.kernel.org>; Thu, 19 Mar 2020 17:34:04 -0700 (PDT)
+        id S1726827AbgCTAhT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Mar 2020 20:37:19 -0400
+Received: from mail-pj1-f68.google.com ([209.85.216.68]:54801 "EHLO
+        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725787AbgCTAhT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Mar 2020 20:37:19 -0400
+Received: by mail-pj1-f68.google.com with SMTP id np9so1739761pjb.4
+        for <git@vger.kernel.org>; Thu, 19 Mar 2020 17:37:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=+dURAKiDJcQylvsoY838nbe/48fXB/TIiEsANXfv/oM=;
-        b=kREDDVqUdJqTwEm6FCt2qyru2NEhdCWyaASVGbyM9fWXPcqwcS6AcM9/TZKt4jRrVS
-         Hxb7P4OJw780rC4vpHpBfPDJKcmEaDrDp5NQxHUQr36AZFZ16xg1IV9Yj3UiSy1c6BB+
-         rpMNHcLASq+aiW6qmZFHAxtq1pkgz2PhaK3Tx1ACkjjIlP5dTq4VCCcnbn0G32GCj5Gk
-         5Aga28iAzV+Ef1JOfZ88EZEtCUDnbplazsJX/7T7F6ESMqqoivmwv6LIdq+aRUhAQph6
-         W1V50rLdTqAR6f8gqEVZ2yDzoV7eGzTh81b/Ax1ThgeQIuy/AABmWoUQJzS/b+6hWiVD
-         cYOg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=ki5PD54HhQezZ5Konhy5isORWe6ldKxP2Cfi/KOR84c=;
+        b=mgzoSfwj8a8IHkhrNkSV2g/hL6V5AbczJA4tO5pWrXsJfuTUkuBEYPtVqB3mD/ipju
+         fB5yUFfhTMaWwRBMeFRc7boJ/E9LBSVRzdCybjpsCMYewAf5tag0OI1FORKdo9/3l5JZ
+         NJ1hyIxDJfPTZoecDjW7SN5xxq1iqYQOyckIjntcBRaeyYr0Fw+HwTGmbWDQB/djJkao
+         Wz2IT+09FVyirVZQyXbJufDRgG1BUcejxjEZJHVNE/egZV1wC/n6mHBxx/sZzRNvjb7X
+         47fJvRPyrrrF61devwHR4c/B4mpRHYqnmRPlSugJ1woBdjudCitjxk4IpOa0sTjIxvtH
+         L2GQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=+dURAKiDJcQylvsoY838nbe/48fXB/TIiEsANXfv/oM=;
-        b=B9TS4p8RpPd3mXcAxEcbt0M3+9EfHFaFcfgvv/GwlJ2j3JMPqoIBAZ2KGBxHD+zqXN
-         ruJnlvpIMaEeyA2RXdFq59AyfMfk+BZBnSeFX0BChF41fs77oMVNTZhprH/Qubl650XB
-         hVTZYN5+QAvXua3JurBM23RLKlM8a3BloJgFyLKdrjG7F6LK0bcJrzBf2VWSJwAAUDG2
-         OLC+LoCPKQbMC/UfpYbo/8taLVvs5pC+xmAvtd/Ii1VCu7SDPUEvfmoBIMEabjubhPMy
-         0piMiTBnJCjDU+ilJXw+M1RKokduTraq7aH9Xjnk/JHCApYTjOfgPCHQ1lcjpUCswJNW
-         egxQ==
-X-Gm-Message-State: ANhLgQ1u8z0zqoaaAWK8QL6cpbn0hoe+1QZrLwtM+xpLcYuk2K1PN4+8
-        oy3sINNVzdz0mjyJowbfwD0TkERZByk=
-X-Google-Smtp-Source: ADFU+vtYVLC0eQo5cPRthbtRV35UrVHtxRMfDYg/ELf3B55wrTiYrW1+tXBN49lPcaRfnEEpsvTsyA==
-X-Received: by 2002:a05:6830:118d:: with SMTP id u13mr4392943otq.41.1584664443818;
-        Thu, 19 Mar 2020 17:34:03 -0700 (PDT)
-Received: from [192.168.1.83] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id t206sm1410103oib.7.2020.03.19.17.34.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 19 Mar 2020 17:34:03 -0700 (PDT)
-Subject: Re: [PATCH] config: set pack.useSparse=true by default
-To:     Jonathan Nieder <jrnieder@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, me@ttaylorr.com,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.585.git.1584583110914.gitgitgadget@gmail.com>
- <20200319231332.GB129493@google.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <7986b9d0-34cb-5a60-484d-ba268dad146a@gmail.com>
-Date:   Thu, 19 Mar 2020 20:34:02 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:75.0) Gecko/20100101
- Thunderbird/75.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=ki5PD54HhQezZ5Konhy5isORWe6ldKxP2Cfi/KOR84c=;
+        b=QcubaQaA4edBObMTf6FQ/IqXaNFWfNenMxi0VcMaTM66E3Z+GGCByUwGtFomLsTE13
+         h4UaNLQf/QKJkub4xMUejgsS9HoAQnazEnL4iXQHJ5gPZCjuM43EMkUrfF2cCECC27DA
+         ZFhJXH1USGhJWKvudIJjEfq8+/6XuHHD8Ar/0JJdmDUTZYkf3qQPZ4HS9bfMtHnyBGF1
+         h6/0DjOjcX0S8tN+MseHEwjuuebABOyO1byYiip7NfGviH4T5K/XhN1G2WxGirAf50M7
+         LTzpSDt50gVxGHeX/6a4sYfsLybN8Z05KHDok7ViNC7O9xI8tG4QEFxCVDK1+DkuJVo/
+         VaHg==
+X-Gm-Message-State: ANhLgQ3pd/VKHAAvNmcIeApFP2sE14/7+oZVhKSiqyyhOlPL3cUSlwL5
+        x0NnzdlvbMVV24irCczmxPOy/F2y
+X-Google-Smtp-Source: ADFU+vv4/KsH9tKxgVHke9PIwIVQ8cJcIo0BA5toTVUW3K45BeVR8l5Sq7S2sxINIRjRIHbBj52xuA==
+X-Received: by 2002:a17:902:ac85:: with SMTP id h5mr5852095plr.76.1584664637848;
+        Thu, 19 Mar 2020 17:37:17 -0700 (PDT)
+Received: from localhost ([2402:800:6375:576b:56ff:d97c:a505:3e0c])
+        by smtp.gmail.com with ESMTPSA id c9sm2903562pjr.47.2020.03.19.17.37.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 Mar 2020 17:37:17 -0700 (PDT)
+Date:   Fri, 20 Mar 2020 07:37:15 +0700
+From:   Danh Doan <congdanhqx@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 0/6] fix test failure with busybox
+Message-ID: <20200320003715.GA1858@danh.dev>
+References: <cover.1584625896.git.congdanhqx@gmail.com>
+ <20200319155136.GA3513282@coredump.intra.peff.net>
 MIME-Version: 1.0
-In-Reply-To: <20200319231332.GB129493@google.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200319155136.GA3513282@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/19/2020 7:13 PM, Jonathan Nieder wrote:
-> Hi,
+On 2020-03-19 11:51:36-0400, Jeff King <peff@peff.net> wrote:
+> On Thu, Mar 19, 2020 at 09:00:01PM +0700, Đoàn Trần Công Danh wrote:
 > 
-> Derrick Stolee wrote:
+> > Despite some non-compiance from busybox's sh(1), grep(1), diff(1),
+> > Alpine Linux is still a popular choice for container these days.
+> > 
+> > Fix false-positive failure in testsuite when run in Alpine Linux.
+> > 
+> > t5703.{4,5,6,7} is still failing.
+> > Despite git pack-objects behaves correctly,
+> > upload-pack.c works incorrectly on this platform.
+> > 
+> > I haven't dig deeper, yet.
 > 
->> The pack.useSparse config option was introduced by 3d036eb0
->> (pack-objects: create pack.useSparse setting, 2019-01-19) and was
->> first available in v2.21.0. When enabled, the pack-objects process
->> during 'git push' will use a sparse tree walk when deciding which
->> trees and blobs to send to the remote. The algorithm was introduced
->> by d5d2e93 (revision: implement sparse algorithm, 2019-01-16) and
->> has been in production use by VFS for Git since around that time.
->> The features.experimental config option also enabled pack.useSparse,
->> so hopefully that has also increased exposure.
->>
->> It is worth noting that pack.useSparse has a possibility of
->> sending more objects across a push, but requires a special
->> arrangement of exact _copies_ across directories. There is a test
->> in t5322-pack-objects-sparse.sh that demonstrates this possibility.
->>
->> Since the downside is unlikely but the upside is significant, set
->> the default value of pack.useSparse to true. Remove it from the
->> set of options implied by features.experimental.
->>
->> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
->> ---
->>  Documentation/config/feature.txt | 3 ---
->>  Documentation/config/pack.txt    | 4 ++--
->>  repo-settings.c                  | 3 ++-
->>  3 files changed, 4 insertions(+), 6 deletions(-)
+> I was able to reproduce the problems on Debian (with busybox installed)
+> with:
 > 
-> Makes sense.  Thanks for writing it.
+>   mkdir /tmp/bb
+>   (cd /tmp/bb
+>    bb=$(which busybox)
+>    for i in $($bb --list); do
+>      ln -s $bb $i
+>    done)
+>   PATH=/tmp/bb:$PATH make test TEST_SHELL_PATH=/tmp/bb/sh
 > 
-> Should this have a test?
+> The issue in t5703 is the sed call in get_actual_commits(). It's trying
+> to cut off the early (text) part of the file, and pass through the
+> binary goo of the packfile. Presumably busybox's sed isn't binary-clean.
 
-I suppose the test that demonstrates the difference in algorithm
-in t5322-pack-objects-sparse.sh could be adjusted to drop the
-explicit config setting, which would demonstrate that the config
-option is being set correctly.
+I've checked, busybox's sed think every input is text file,
+and in POSIX, every line in every text file must be terminated by
+<newline>.
 
-While looking at that test, I see that we use --[no-]sparse
-explicitly everywhere to avoid conflicts with the GIT_TEST_*
-variable that enables the algorithm. This leads to two things
-I will do in v2 that I did not do here:
+Thus, busybox's sed append a <newline> after `0000` marker, render the
+pack file invalid.
 
-1. Update the docs for "git pack-objects" because it doesn't
-   reference that --no-sparse is an option. Point out that the
-   new default is --sparse.
+> Our usual strategy here would be to switch to perl, which is more
+> predictable about binary bytes.
 
-2. Remove GIT_TEST_PACK_SPARSE which was used to test this sparse
-   algorithm throughout the test suite.
+Perl works fine here.
 
-Thanks,
--Stolee
+> We're also feeding this into a test-tool helper. It's possible that
+> helper could be made smart enough to replace both this sed invocation
+> and the one in get_actual_refs().
+
+I looked into this direction, I guess you meant something like this:
+
+-------------8<--------------
+diff --git a/t/helper/test-pkt-line.c b/t/helper/test-pkt-line.c
+index 282d536384..1d62143dbc 100644
+--- a/t/helper/test-pkt-line.c
++++ b/t/helper/test-pkt-line.c
+@@ -1,6 +1,7 @@
+ #include "cache.h"
+ #include "test-tool.h"
+ #include "pkt-line.h"
++#include "strbuf.h"
+ 
+ static void pack_line(const char *line)
+ {
+@@ -53,6 +54,13 @@ static void unpack(void)
+ static void unpack_sideband(void)
+ {
+ 	struct packet_reader reader;
++	struct strbuf buf = STRBUF_INIT;
++
++	while (strbuf_getline(&buf, stdin) == 0)
++		if (strstr(buf.buf, "packfile"))
++		    break;
++	strbuf_release(&buf);
++
+ 	packet_reader_init(&reader, 0, NULL, 0,
+ 			   PACKET_READ_GENTLE_ON_EOF |
+ 			   PACKET_READ_CHOMP_NEWLINE);
+diff --git a/t/t5703-upload-pack-ref-in-want.sh b/t/t5703-upload-pack-ref-in-want.sh
+index 7fba3063bf..a34460f7d8 100755
+--- a/t/t5703-upload-pack-ref-in-want.sh
++++ b/t/t5703-upload-pack-ref-in-want.sh
+@@ -13,10 +13,7 @@ get_actual_refs () {
+ }
+ 
+ get_actual_commits () {
+-	sed -n -e '/packfile/,/0000/{
+-		/packfile/d
+-		p
+-		}' <out | test-tool pkt-line unpack-sideband >o.pack &&
++	test-tool pkt-line unpack-sideband <out >o.pack &&
+ 	git index-pack o.pack &&
+ 	git verify-pack -v o.idx >objs &&
+ 	grep commit objs | cut -d" " -f1 | sort >actual_commits
+----------------------->8-------------------
+
+But, this doesn't work. as `packet_reader_read` reads directly from fd 0.
+
+I think perl should be good for now.
+
+-- 
+Danh
