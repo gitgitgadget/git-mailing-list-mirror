@@ -8,60 +8,62 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DE5AEC4332B
-	for <git@archiver.kernel.org>; Fri, 20 Mar 2020 15:58:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 22A54C4332B
+	for <git@archiver.kernel.org>; Fri, 20 Mar 2020 16:07:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id AD50B20709
-	for <git@archiver.kernel.org>; Fri, 20 Mar 2020 15:58:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E43AB20739
+	for <git@archiver.kernel.org>; Fri, 20 Mar 2020 16:07:42 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cg289qDO"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WE86zSkY"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727107AbgCTP6g (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Mar 2020 11:58:36 -0400
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:40327 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726144AbgCTP6g (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Mar 2020 11:58:36 -0400
-Received: by mail-pl1-f194.google.com with SMTP id h11so2660318plk.7
-        for <git@vger.kernel.org>; Fri, 20 Mar 2020 08:58:36 -0700 (PDT)
+        id S1727285AbgCTQHk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Mar 2020 12:07:40 -0400
+Received: from mail-pj1-f66.google.com ([209.85.216.66]:33309 "EHLO
+        mail-pj1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726801AbgCTQHk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Mar 2020 12:07:40 -0400
+Received: by mail-pj1-f66.google.com with SMTP id dw20so3596307pjb.0
+        for <git@vger.kernel.org>; Fri, 20 Mar 2020 09:07:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
         bh=Rb90CEL7GnK/biLzkp/7BYx18kNqWygy/aYZ+8q25iY=;
-        b=cg289qDOibQuBNoF1bR9RN5Ng1AqWgSjLhdIWgUbs3EPdELXWvbNWR1A2rWHpz57eE
-         1TBZGBc9dmTG0EM9kGHkIpY6DoPo7em8EYuceCSmtYnpvlKVj+r0g5MvwFtb7RnYPStZ
-         NAMBmwRl9MFBObVxH3gyZVB93hHzlaAJedfKiMN790cneKl9iFKT/H6aK4N0bhBR01GE
-         IrZr9UTfAQV1MkqSqx7NA3EQJg2IvoMDBYWVOh1gYlHdc0cvssPE2DkBuNR7If5M7bDY
-         Lo7AvoeP6wVhSIjaQiDhtxZqnuaDoTD5SCnCi8Nyy4L3i4accb07fJljOoUJj2wSGYyI
-         JJHw==
+        b=WE86zSkYCPBrQ50b0XPXYCUszKzsWUzOl8Y00w8MjUwpk6c0xyXGn3P3WWNcIxj8kY
+         EOfzzUoF75UtUazTo3idT7KXzRIaJUFzZD1CfOnZYJ7tikcZujoGr/bokps+O3tWRUSo
+         OS6ayYODu2gGF+v7Nr6BKz2xpJVVDZ6h3fdv2dI5txUUWl0hSWowOIceo0+OIKLxrTl0
+         KUGsS4EB4ZFLt1YAAk+X9Ns2eGbdw6yeM5PVnHmn1FInUWmqdOZuiYCuPnK61t38xAah
+         d6yB5eBifv77jAX2buHBORG8xM2STn5EUSNxN+89UhVpThpfMoW1w6MeCnfbDv2gSciY
+         NjwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
         bh=Rb90CEL7GnK/biLzkp/7BYx18kNqWygy/aYZ+8q25iY=;
-        b=jC9+/qQN0fdbY/qx9VtSMkt/Ub+BSTt6YPle0l0QROBgohQCce6ZbNKH0B9KKu22Su
-         yabueBNr987KZ9yamnPZolu4KKLNQ450bFMjGGA60+wruETgUF/S3DvJkcXBKQ0VZeFu
-         CSyeZNWyJ4RPQ9W0GdUHIby1SxFeJgqGu7oLnh1PhTa27C7+skcdwk283QQAt+ZDgZBZ
-         arpbhvS/E3ALnPTwWAti905ZFkF5XD0fqWwPalhlMy8FNnl8fN7LYg68AomJF3wpS4A5
-         4y/GN8GLs6CMO5xGfnOwLcvb8p/1roPWMUQou7acl5ulXPyS413a7aZNNkcsyoSD/8zu
-         cz9A==
-X-Gm-Message-State: ANhLgQ3q/b+YM1XNFQ8JWOaw3gAcDt83QvKpc5zr0UonQg/+5TvBYiSg
-        ZTwAEwG4CVeFaLFMED04ASMusBJEasP8Gw==
-X-Google-Smtp-Source: ADFU+vt7Jg5r0mWvu1VX1AUx3pI9xBUyLuCvESOgxJEY5btYneGVJEP14VhPDzYk/OnwdUgOsNcNqQ==
-X-Received: by 2002:a17:90a:e7c8:: with SMTP id kb8mr10057265pjb.79.1584719915008;
-        Fri, 20 Mar 2020 08:58:35 -0700 (PDT)
+        b=k4fL8XH7B9pHD3lzzvYD2Q2uKdxAP4xrRrcYcEAEzEJn+0rTRh1/t+oD4UGMcQ6QXf
+         L2AMsFlIFBmww9AZ7Ahz/EUOSJ3fHsuLKQNVVk8pRl2Extjs2Z6SXP3Ihos1j4lkQvOV
+         PjMFnR9N7Mpeg9XTox/vKheBO1WN7bT6KA6Ce8hJkjQJxMH1i96VzMEtxXvh2EMn5IPQ
+         PUXHzb8v3sYv/3WsrSt89vONADztDCobdZgtz9jOozqjyGPbJ5mGX9tSDlB/ziEbLZkr
+         ZXraLAvTJNF8Ac1OHnhH8ySl3tFPeOkVJi2Yp0zf51V4buLRXimT1AQZRXYMSl9TExcT
+         Warg==
+X-Gm-Message-State: ANhLgQ0vhtUPh8kQQBNzfOPLjSLEBE3YKbUCVrNLY//c5UWUNBdIfuDP
+        ZKVpcvt+odAR/PElAJA1Bykk3oXOxwpOLA==
+X-Google-Smtp-Source: ADFU+vvwZMg08npTqxEM5YW43CKoPJ9UHwNy0zYUAe1qvLkzxM9UZIrzsjsyquxhogd2R7DbJwHKcQ==
+X-Received: by 2002:a17:90a:c715:: with SMTP id o21mr10632860pjt.160.1584720458587;
+        Fri, 20 Mar 2020 09:07:38 -0700 (PDT)
 Received: from localhost.localdomain ([36.77.94.225])
-        by smtp.gmail.com with ESMTPSA id i187sm5879792pfg.33.2020.03.20.08.58.32
+        by smtp.gmail.com with ESMTPSA id g81sm5928783pfb.188.2020.03.20.09.07.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Mar 2020 08:58:34 -0700 (PDT)
+        Fri, 20 Mar 2020 09:07:37 -0700 (PDT)
 From:   Adrian Wijaya <adrianwijaya100@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Adrian Wijaya <adrianwijaya100@gmail.com>
+Cc:     peff@peff.net, Adrian Wijaya <adrianwijaya100@gmail.com>
 Subject: [GSOC][PATCH v2] t1300: convert "test -f" with "test_path_is_file"
-Date:   Fri, 20 Mar 2020 22:56:51 +0700
-Message-Id: <20200320155651.14796-1-adrianwijaya100@gmail.com>
+Date:   Fri, 20 Mar 2020 23:07:23 +0700
+Message-Id: <20200320160723.15190-1-adrianwijaya100@gmail.com>
 X-Mailer: git-send-email 2.26.0.rc1.11.g30e9940356
+In-Reply-To: <CA+0Uiy-gtdn07=QOx3JcOH-zhMz5yAKOW6=9mNc8Zi+RdfWGyQ@mail.gmail.com>
+References: <CA+0Uiy-gtdn07=QOx3JcOH-zhMz5yAKOW6=9mNc8Zi+RdfWGyQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
