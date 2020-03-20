@@ -2,74 +2,106 @@ Return-Path: <SRS0=v+yc=5F=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CD24FC4332B
-	for <git@archiver.kernel.org>; Fri, 20 Mar 2020 05:41:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C2675C4332B
+	for <git@archiver.kernel.org>; Fri, 20 Mar 2020 05:52:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 9B47020773
-	for <git@archiver.kernel.org>; Fri, 20 Mar 2020 05:41:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9DC792072D
+	for <git@archiver.kernel.org>; Fri, 20 Mar 2020 05:52:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726946AbgCTFlD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Mar 2020 01:41:03 -0400
-Received: from cloud.peff.net ([104.130.231.41]:44750 "HELO cloud.peff.net"
+        id S1726584AbgCTFw0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Mar 2020 01:52:26 -0400
+Received: from cloud.peff.net ([104.130.231.41]:44760 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726030AbgCTFlD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Mar 2020 01:41:03 -0400
-Received: (qmail 31015 invoked by uid 109); 20 Mar 2020 05:41:03 -0000
+        id S1726030AbgCTFw0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Mar 2020 01:52:26 -0400
+Received: (qmail 31065 invoked by uid 109); 20 Mar 2020 05:52:26 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 20 Mar 2020 05:41:03 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 20 Mar 2020 05:52:26 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3053 invoked by uid 111); 20 Mar 2020 05:50:43 -0000
+Received: (qmail 3137 invoked by uid 111); 20 Mar 2020 06:02:06 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 20 Mar 2020 01:50:43 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 20 Mar 2020 02:02:06 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Fri, 20 Mar 2020 01:41:01 -0400
+Date:   Fri, 20 Mar 2020 01:52:25 -0400
 From:   Jeff King <peff@peff.net>
-To:     Timothee Cour <timothee.cour2@gmail.com>
-Cc:     Eric Wong <e@yhbt.net>, git@vger.kernel.org
-Subject: Re: git makes it impossible to ignore or override global gitconfig,
- needs `GITCONFIGFILE`
-Message-ID: <20200320054101.GF499858@coredump.intra.peff.net>
-References: <CANri+Ey71QbWxNH+RhMfYuUSDEpYtv28ushUhK8Tt0xWUAU9iw@mail.gmail.com>
- <20200319064407.GA26408@dcvr>
- <20200319165149.GA4074934@coredump.intra.peff.net>
- <CANri+EzrP0TeHTfjhsf=LZkwkEZU7fSRnnKN9NLga7CNow9F0Q@mail.gmail.com>
+To:     Adrian Wijaya <adrianwijaya100@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [GSOC][PATCH 2/2] t1300: replace "test -f" into
+ "test_path_is_file"
+Message-ID: <20200320055225.GG499858@coredump.intra.peff.net>
+References: <20200319234723.6504-1-adrianwijaya100@gmail.com>
+ <20200319234723.6504-2-adrianwijaya100@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CANri+EzrP0TeHTfjhsf=LZkwkEZU7fSRnnKN9NLga7CNow9F0Q@mail.gmail.com>
+In-Reply-To: <20200319234723.6504-2-adrianwijaya100@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 19, 2020 at 07:28:58PM -0700, Timothee Cour wrote:
+On Fri, Mar 20, 2020 at 06:47:23AM +0700, Adrian Wijaya wrote:
 
-> * require passing commands (eg `git -c`) is not good either; it'd
-> require updating scripts that rely on git (this could be arbitrarily
-> complex, sometimes impossible if you just have a binary and no source
-> code access)
+> [...]
 
-Well, yes, that's why I suggested setting $GIT_CONFIG_PARAMETERS
-directly. :)
+Thanks, and welcome to the Git community. The patch looks pretty good to
+me. A few minor nits:
 
-That said, I don't have any real opposition to an environment variable
-to override the user-level config location, if somebody wants to work up
-a patch. A few preliminary thoughts:
+> Subject: Re: [GSOC][PATCH 2/2] t1300: replace "test -f" into "test_path_is_file"
 
- - there are several levels of config file, so it probably should be
-   called GIT_GLOBAL_CONFIG or something to make it clear that it
-   matches "config --global" (and not system or repo-level config)
+The subject says 2/2, but I think there is only one patch. :) Looks like
+you used send-email; the --cover-letter option is probably what you
+wanted to generate the first message. Though for a single-patch series,
+I'd generally suggest just sending one email total, and putting any
+comments below the "---" line (which would then not be included in the
+commit message).
 
- - we'll read user-level config from multiple sources currently:
-   ~/.gitconfig and the xdg config dir. Presumably this would override
-   them rather than add to them to be of any use.
+The general form of the subject line looks good, and follows our
+conventions.
 
- - I wondered for a moment if such a variable would need to be added to
-   local_repo_env[] to get cleared when moving between repos. But as a
-   user-level thing, it should be outside that.
+I'd suggest s/into/with/ in the subject line as a minor English fixup.
+We'd often assume the maintainer will just fix up something small like
+that while applying (or if he doesn't, that it's not too big a deal).
+But since the point of the microproject is to get comfortable with the
+patch submission process, maybe it would be good practice for you to fix
+it up yourself (using "commit --amend" or "rebase -i") and re-send (try
+git-send-email's "-v" option).
+
+> Replace "test -f" into "test_path_is_file" to give more verbose
+> test output.
+
+Same s/into/with/ here, too (or perhaps s/Replace/Convert/).
+
+Maybe worth saying "to give more verbose test output on failure", though
+now I am really nit-picking (sorry, you avoided so many of the usual
+first-time-patch pitfalls I have to stretch :) ).
+
+> Signed-off-by: Adrian Wijaya <adrianwijaya100@gmail.com>
+> ---
+
+You remembered your signoff. Good.
+
+> diff --git a/t/t1300-config.sh b/t/t1300-config.sh
+> index 97ebfe1f9d..d74554fc09 100755
+> --- a/t/t1300-config.sh
+> +++ b/t/t1300-config.sh
+> @@ -1020,11 +1020,11 @@ test_expect_success SYMLINKS 'symlinked configuration' '
+>  	ln -s notyet myconfig &&
+>  	git config --file=myconfig test.frotz nitfol &&
+>  	test -h myconfig &&
+> -	test -f notyet &&
+> +	test_path_is_file notyet &&
+
+And the patch itself looks obviously correct.
+
+The "test -h" in the context sticks out now, but we don't have a
+test_path_is_symlink(). I think adding it goes beyond the scope of this
+patch, and beyond what's needed for a microproject. But if you or
+anybody wants to add it (modeled after test_path_is_file), it seems like
+a reasonable thing for us to have.
 
 -Peff
