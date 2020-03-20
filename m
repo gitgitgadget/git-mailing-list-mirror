@@ -2,153 +2,113 @@ Return-Path: <SRS0=v+yc=5F=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 89BD1C4332B
-	for <git@archiver.kernel.org>; Fri, 20 Mar 2020 15:23:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 45446C4332B
+	for <git@archiver.kernel.org>; Fri, 20 Mar 2020 15:36:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5C82720777
-	for <git@archiver.kernel.org>; Fri, 20 Mar 2020 15:23:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F0E292070A
+	for <git@archiver.kernel.org>; Fri, 20 Mar 2020 15:36:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UOO6XAkt"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="IoIIOWeo"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727430AbgCTPXM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Mar 2020 11:23:12 -0400
-Received: from mail-lj1-f194.google.com ([209.85.208.194]:39817 "EHLO
-        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727191AbgCTPXL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Mar 2020 11:23:11 -0400
-Received: by mail-lj1-f194.google.com with SMTP id a2so6828625ljk.6
-        for <git@vger.kernel.org>; Fri, 20 Mar 2020 08:23:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=nmps89H8Xm4/14Xs0tbxRscxK2woypE9rZiXB2MfJrk=;
-        b=UOO6XAktvZb6l7+FmdUbsoQlks16IrInMeIBChN51bz3A1lj6jyCqhCx6h3B+b9P5w
-         iXEU2uRH9cb9VdPRUt9pp37fByKKii3/3Ce8K15SVSn6ROZKAOkdfzsqxHo62QDwdPH5
-         Ib15+utaIoFUdRyLaBlhJWbpwnwttxSKsqM3Ymnk4LBs498SV/th1rhaQ2fTzhG2Uo0p
-         Z3D73tfacJVPy7SkJ5YA7CRvjhKvOyO+mw1moIwnpu9Z3h8U7pUUB5yE+Cg002rZPcOU
-         LbeO0eynNmiQDkuqzoeBjeRONuhaRBkJ5aRckUy7giWiwcKbuJS6LkqrueopI+2INA+n
-         Nqpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=nmps89H8Xm4/14Xs0tbxRscxK2woypE9rZiXB2MfJrk=;
-        b=BSX5JjDo/4o9oU1aMmmPkFOYG9rgFPPYpSeFzIqUw3sddlOH0Jgqpz5fFVsb9RczB7
-         kFqvPkl+V2aZjkVLiFn8YR/Fiz8Or3htPc/l3jKZh8KxqRZem8fCyzr0UmomexpPpZ6J
-         2NyE/OeL2E/H5OsKY9MMXJwMqJSpzrNMDWxXtFexH3G5ds5mpSanMNkJxz2+DziEQzhU
-         AAe5+4OWUFZablqKzppPhI5gmlnEkIUklMdnZD7kAEB3CWpxP8OMqGfvCzk9Rrq2HT1U
-         PaLUcQ5L81yLcDft6aySXlWJ+5XtEiE6fUTPBGh8QhEh/L03wBLVH/UoA/hByax0kkV+
-         x5eg==
-X-Gm-Message-State: ANhLgQ008o7CmRo7zkd6rs6ZVG3lFEHHE+mSlhQ+wUtuNYWjZ6WiqLpa
-        DasHqom2+zE1H2rJxQQ5eUuMfBYBbSmwEdGXGzPgD6gZYyY6Sw==
-X-Google-Smtp-Source: ADFU+vtp5D0RafvDKr2VlZZndtBz7BrJTrCTU6kIMDJSdyXZ5omg9/Xt3zNxOXJWFeYWiTTlZ477brPIC8zEBfYAedc=
-X-Received: by 2002:a2e:a312:: with SMTP id l18mr5770414lje.229.1584717788319;
- Fri, 20 Mar 2020 08:23:08 -0700 (PDT)
+        id S1727517AbgCTPgH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Mar 2020 11:36:07 -0400
+Received: from mout.gmx.net ([212.227.15.19]:36891 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726144AbgCTPgG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Mar 2020 11:36:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1584718559;
+        bh=gMcDqKmCBq57Acwktv89Z+IA+oE+jRqt8c8acSwdFzM=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=IoIIOWeoAsO5RANcNEPLPhezJdzKzHT605nWdZWQkGn/aRw28LZjBbPeudLTn0tvj
+         DT/i1P6VmxFrw6feomEMahIM+mqau4KCWpGxCPEcQcXxFQmnnwdgULkCsqibnyah5L
+         ipjB+G8ZvT1B4B03sdx+7eKgPAtUm5VR+Dcqy2Q8=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from MININT-QA14EDB.fritz.box ([89.1.214.160]) by mail.gmx.com
+ (mrgmx005 [212.227.17.190]) with ESMTPSA (Nemesis) id
+ 1MxUnz-1jUoIY2D73-00xvi0; Fri, 20 Mar 2020 16:35:59 +0100
+Date:   Fri, 20 Mar 2020 16:35:45 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH v9 2/5] bugreport: add tool to generate debugging info
+In-Reply-To: <xmqqd097dg4k.fsf@gitster.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2003201633560.46@tvgsbejvaqbjf.bet>
+References: <20200302230400.107428-1-emilyshaffer@google.com> <20200302230400.107428-3-emilyshaffer@google.com> <nycvar.QRO.7.76.6.2003042232340.46@tvgsbejvaqbjf.bet> <20200319213902.GB45325@google.com> <xmqqd097dg4k.fsf@gitster.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <20200319234723.6504-1-adrianwijaya100@gmail.com>
- <20200319234723.6504-2-adrianwijaya100@gmail.com> <20200320055225.GG499858@coredump.intra.peff.net>
-In-Reply-To: <20200320055225.GG499858@coredump.intra.peff.net>
-From:   adrian wijaya <adrianwijaya100@gmail.com>
-Date:   Fri, 20 Mar 2020 22:22:56 +0700
-Message-ID: <CA+0Uiy-EkT1BHSgL4R783Qh=c4-W_FZwB=LwnQG7OLx92YN=ww@mail.gmail.com>
-Subject: Re: [GSOC][PATCH 2/2] t1300: replace "test -f" into "test_path_is_file"
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:O5nUMJpX13n8DGGcyF8YGm1ziav0knFcxhFsrQ4YS1o+UVmEFjn
+ P+9u2DhUch7VhkrJNu3JEdWFKI8bWQVcsR2oRYgo180uGhmCEZKXTy021iXycAOs6zE/l3Q
+ 5gObUAofvJHUdZbucsNF178OZ93r195fYeHtnJhTaBCrHPTttQANylcw3tAUQFhfKuGetU5
+ 2lZch9kvup4uSrQUM2g0w==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:/nhB9QUB2u0=:V9b6BV3g/5sEWofjzel8dG
+ GTYCMYNBSa5IDJK6EfoKFNWVO0YWAFJGLki41ffmWlxzSe2CQ4Is8PX0rUXPiqxKTAqEDjO+z
+ BRY1wRrduvvkF0bZzXkI67rpERvYePAWSI2sax6yXa0TJhgSc43gc0o+9dibaisyPT4YTXqa0
+ 5S3B3XoKeH9c8n5qzeG1kNtegmcGAU51SruRj3RqeWWMT34HM2R41/g0J1giwaeU6EZLJeLT+
+ vVarZq6H69vPTpInmLiBLujIFnc3hMi9JhtDLISnCyRfxDu+QEvP4PaJ9jFwynp+ZrS74ImSB
+ u+Ju/tvScwV+j9GwckWwgk1gQipkxSrr0zVcjvIqrssO2T9pePRSDAhr3A/Rftjy4P/Env6WF
+ iu1TmuIA2XroeLagZb8374tj5hkWHAW+PO0ErQNh9jZQMG9JpE9EUpnPZBbocOWV8mDQVz4vD
+ 0bHalTsnMi/uWA3EumWuSbgxK6nd/2u4sDCuIGnna863SfvgzU3XAyoj92UtF2TKxRoFQ4RTY
+ V4S6wIar4Ob084CPprR27WcMJ2UCXYR2965I+2YCwZVcFIHfFeXSoNcRjelQiIofA2PIBn/cH
+ vQx+nXanlWAuYlZgbz5jd9I6yyyHWpHlRInUUZvlExu8/v/RATgIUgB3G4OMJ69p17ptWQe/H
+ 9i2Cy0HM46xAsf40NZmt4fBHIKvLu39ijB1bFikzBhicIqiUnoSNK0WTTfMu9eMNDIQskhXup
+ zy8p5GqRReeQ4OKzYk4HkUP+scDMsE8TowZ+L/fK2f/N1XmZb8iUJjedILvhN6bQQcvynB71S
+ ZWx4ZF1vA25yRfEhkT3cyNFXG7tD8VNHKmoOQoZHmSRa9lunOrGJhrxlTtqD3lmfl+wxDFN90
+ BuENiF0DI+36OXZt63H9PexbqFymFuP9OAWwWWxlmrE2g97nJyVROdO/YOafdTICyHzCOgGr9
+ afLT8jP1WQcreaIeFqdy3fB6d79Ufm2A9Y1tIuiGvkI506l4z/nrfaiuqpDeMrOrcdZcPEEmO
+ N3+VP1lfe5jzAv3Rms/efQYNXsMrmq4RFxQNFBxNwIMjqBBKE21V25os0/pHL6gz2ons8Z0CJ
+ EAI6r0z8s7Wild9mT6+0Uq+0Wr6MzMRxBEL+yINki4TAv2Saupu3X7d8EKsayLIZL7htZectx
+ DQbBRL3c2dqx+aup7fEwXVCPghu1Tghb6FCHkrgdMI4tWciK6ScjfwuyH6lqXdO2RDwVhKwlg
+ QLnQ56uNqfTkAmySw
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 20, 2020 at 12:52 PM Jeff King <peff@peff.net> wrote:
->
-> On Fri, Mar 20, 2020 at 06:47:23AM +0700, Adrian Wijaya wrote:
->
-> > [...]
->
-> Thanks, and welcome to the Git community. The patch looks pretty good to
-> me. A few minor nits:
->
-> > Subject: Re: [GSOC][PATCH 2/2] t1300: replace "test -f" into "test_path_is_file"
->
-> The subject says 2/2, but I think there is only one patch. :) Looks like
-> you used send-email; the --cover-letter option is probably what you
-> wanted to generate the first message. Though for a single-patch series,
+On Thu, 19 Mar 2020, Junio C Hamano wrote:
 
-Thanks for letting me know. Hmm, looks like I didn't get to see that part
-when I looked at the documentation.
+> Emily Shaffer <emilyshaffer@google.com> writes:
+>
+> > Builtin:
+> > + Don't have to call out-of-process to identify 'git version --build-o=
+ptions'
+> > + Better assurance that we aren't shipping a broken bugreport alongsid=
+e a new
+> >   version
+> > - Binary bloat, possible startup time hit
+> > ? Libraries will behave identically to where the user is seeing issues
+> >   (This point is a possible pro but also a possible con; see similar p=
+oint in
+> >   standalone list)
+>
+>  - Makes it hard to pull in libraries that "bugreport" alone will
+>    want to use in the future without negatively impacting the rest
+>    of Git.
 
-> I'd generally suggest just sending one email total, and putting any
-> comments below the "---" line (which would then not be included in the
-> commit message).
+And of course we should never do that, lest `git bugreport` won't even
+load because of it while `git` would.
 
-Got it.
+So even in the purely speculative scenario that we _wanted_ to add more
+libraries (which we don't, why should we?), we wouldn't actually do it.
 
+> >  - Time to editor for 'git bugreport' with the same setup as previous
 >
-> The general form of the subject line looks good, and follows our
-> conventions.
+> This is something we absolutely should totally ignore.  Even if the
+> bulitin version takes 1 sec to spawn an editor while a standalone
+> one took only 0.1 sec, if other criteria you listed that are more
+> important favours the builtin solution, we should pick it.
 >
-> I'd suggest s/into/with/ in the subject line as a minor English fixup.
-> We'd often assume the maintainer will just fix up something small like
-> that while applying (or if he doesn't, that it's not too big a deal).
-> But since the point of the microproject is to get comfortable with the
-> patch submission process, maybe it would be good practice for you to fix
-> it up yourself (using "commit --amend" or "rebase -i") and re-send (try
-> git-send-email's "-v" option).
->
-> > Replace "test -f" into "test_path_is_file" to give more verbose
-> > test output.
->
-> Same s/into/with/ here, too (or perhaps s/Replace/Convert/).
->
+> In any case, I think we've wasted enough time on this.  Let's see a
+> minimum working version that won't break/affect the rest of Git and
+> ship it standalone.
 
-Sounds good. I will make a second version of this patch.
-
->
-> Maybe worth saying "to give more verbose test output on failure", though
-> now I am really nit-picking (sorry, you avoided so many of the usual
-> first-time-patch pitfalls I have to stretch :) ).
->
-
-No worries. Actually, I can learn something that will be useful for my next
-contribution.
-
->
-> > Signed-off-by: Adrian Wijaya <adrianwijaya100@gmail.com>
-> > ---
->
-> You remembered your signoff. Good.
->
-> > diff --git a/t/t1300-config.sh b/t/t1300-config.sh
-> > index 97ebfe1f9d..d74554fc09 100755
-> > --- a/t/t1300-config.sh
-> > +++ b/t/t1300-config.sh
-> > @@ -1020,11 +1020,11 @@ test_expect_success SYMLINKS 'symlinked configuration' '
-> >       ln -s notyet myconfig &&
-> >       git config --file=myconfig test.frotz nitfol &&
-> >       test -h myconfig &&
-> > -     test -f notyet &&
-> > +     test_path_is_file notyet &&
->
-> And the patch itself looks obviously correct.
-
-Thanks :)
-
->
-> The "test -h" in the context sticks out now, but we don't have a
-> test_path_is_symlink(). I think adding it goes beyond the scope of this
-> patch, and beyond what's needed for a microproject. But if you or
-> anybody wants to add it (modeled after test_path_is_file), it seems like
-> a reasonable thing for us to have.
->
-> -Peff
-
-
-Never thought of that. I think I will make a feature request about it when
-I have enough time.
+I still disagree with that, but it seems that no amount of arguments will
+convince Junio, and he's dead set on the standalone version.
