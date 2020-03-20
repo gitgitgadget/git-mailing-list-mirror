@@ -4,90 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 99BE3C4332B
-	for <git@archiver.kernel.org>; Fri, 20 Mar 2020 22:47:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F22B6C4332B
+	for <git@archiver.kernel.org>; Fri, 20 Mar 2020 22:51:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 78D9120409
-	for <git@archiver.kernel.org>; Fri, 20 Mar 2020 22:47:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D313720714
+	for <git@archiver.kernel.org>; Fri, 20 Mar 2020 22:51:24 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ownr595R"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="mtskwrYk"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727511AbgCTWr2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Mar 2020 18:47:28 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50753 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726666AbgCTWr1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Mar 2020 18:47:27 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5CDF85E62C;
-        Fri, 20 Mar 2020 18:47:26 -0400 (EDT)
+        id S1727467AbgCTWvY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Mar 2020 18:51:24 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50248 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726666AbgCTWvX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Mar 2020 18:51:23 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4686F4D865;
+        Fri, 20 Mar 2020 18:51:21 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=T7+zZ6IgHRJU7yafV5Ggnnjc5Cs=; b=ownr59
-        5RUWTjsVxrSMdFs9rSfZ+6YPDZjcLJyGgWNQo0d9YDGf52j97fwCS0XHDUjzmsqf
-        nJawEufFNpKHG1eFGRN5LX7jW2avWHQh+P19cAMx4erHVjv8dqaPlCCtobIh9ifx
-        5bgXBKl25lkR8PYni+ewxvcsbDNZinUvpqSOs=
+        :content-type; s=sasl; bh=mUvhcvdvbJm7OCHdXz8Zzte1P3c=; b=mtskwr
+        YkzGH1X+eYwlznK5r60XNyAZhfgPnCSKpQzxioPZ0TnpYcK81eHWkWUGZuL2+mF3
+        XilcsZw0E3BR2m9yk/RhTTV8XjuG8KpIfIAptbUMP4yQDFxdyZGK+9c15XY4PR5q
+        d/YLAUAdgX7kbphFpEKlMzGK+0PLZeXqJ2kMg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=TiHVQRrycrzOPyxV06q/nPZbSNYXDgo6
-        ezGCItC3t3OyMXGYVGbq17+kUxPA510fkJGtNTHSOX5e6LmV24KSssjL7mxpcPIH
-        mINBL3th4cNwlMZnESVbt2v5bnBZSeuuyvBpWDW6fmlDY0tI5CmsUvaPZoAcIXWF
-        RREq3gtdg9g=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5509E5E62B;
-        Fri, 20 Mar 2020 18:47:26 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=ulmR5KXQytdyI8Ilqq2AzHWZcpBvRLdv
+        TFrZ0zojKieXyyMeFR0Se45XP7OH1pAXISHWNA7/RNyg+1SfLn1+xzI4e4zYJqbI
+        WKoJqS3H37OzhF5yS/FQxUP3v42Q4lvxpJNB0a+VhrFUb8vhUc45xKkSpXjqFkl2
+        7VVnV4ejRUc=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3E3494D864;
+        Fri, 20 Mar 2020 18:51:21 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D01755E628;
-        Fri, 20 Mar 2020 18:47:25 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B93A94D862;
+        Fri, 20 Mar 2020 18:51:20 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH v9 2/5] bugreport: add tool to generate debugging info
-References: <20200302230400.107428-1-emilyshaffer@google.com>
-        <20200302230400.107428-3-emilyshaffer@google.com>
-        <nycvar.QRO.7.76.6.2003042232340.46@tvgsbejvaqbjf.bet>
-        <20200319213902.GB45325@google.com>
-        <xmqq8sjudirm.fsf@gitster.c.googlers.com>
-        <nycvar.QRO.7.76.6.2003202336390.46@tvgsbejvaqbjf.bet>
-Date:   Fri, 20 Mar 2020 15:47:24 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.2003202336390.46@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Fri, 20 Mar 2020 23:38:12 +0100 (CET)")
-Message-ID: <xmqq7dzebq4j.fsf@gitster.c.googlers.com>
+To:     George Spelvin <lkml@SDF.ORG>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: Feature request: rebase -i inside of rebase -i
+References: <20200320223015.GA19579@SDF.ORG>
+Date:   Fri, 20 Mar 2020 15:51:20 -0700
+In-Reply-To: <20200320223015.GA19579@SDF.ORG> (George Spelvin's message of
+        "Fri, 20 Mar 2020 22:30:15 +0000")
+Message-ID: <xmqq36a2bpxz.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: C51033BC-6AFC-11EA-A70D-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 511384B8-6AFD-11EA-B00A-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+George Spelvin <lkml@SDF.ORG> writes:
 
->> I actually have a suspicion that "git bugreport" that is spawned via
->> "git" wrapper is a bad idea (in other words, /usr/bin/git-bug that
->> is totally standalone may be better).
+> I'm cleaning up a patch series for submission, and came across a fixup in
+> patch #4/20 that belongs in #2/20.
 >
-> The obvious downside of `/usr/bin/git-bug`, of course, is that it has no
-> way to provide accurate data regarding, say, the cURL version in use.
+> Unfortunately, I can't go back two patches to apply the fix until I get to 
+> the end of the current rebase, then go back down to clean it up. :-(
+>
+> Thinking about it, I realized that a rebase in a rebase is a perfectly 
+> well defined operation.  *If* you don't bother setting a new abort point 
+> (it's not a fully nested transaction), *and* require that the tree be 
+> clean (no stashing allowed; create a WIP commit instead), it's just a 
+> matter of putting some commits back on the front of the todo-list and 
+> checking out the old version.
 
-Sorry, but I do not see what's new in your argument this time.
-
-I thought we've already established that the best solution for the
-"accurate data regarding, say, the cURL version in use" is to use
-your earlier idea, i.e. give an interface to git-remote-curl so that
-"git bugreport" can ask it such details, because "git bugreport"
-that is known by git.c::cmd_main(), whether it is builtin or
-standalone, is *NOT* linked to the transport anyway.
-
-And the same interface can be used by an independent "git-bug", or
-even by the end user who is sitting at a terminal when asked by git
-developers "what version of curl library does your build link
-with?".
+I thought that "git rebase -i" allows the todo file (i.e. list of
+steps still to be performed) to be edited before continuing; would
+your use case be supported by using that?
