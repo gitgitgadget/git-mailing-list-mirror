@@ -2,97 +2,122 @@ Return-Path: <SRS0=NBeB=5G=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_SBL,URIBL_SBL_A autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DA9DDC4332D
-	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 18:55:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C89DC4332B
+	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 18:57:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id AFCE82076E
-	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 18:55:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C225C20637
+	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 18:57:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="sOQvoTu+"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="AmJMPuwU"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727262AbgCUSzm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 21 Mar 2020 14:55:42 -0400
-Received: from mail-lj1-f195.google.com ([209.85.208.195]:44419 "EHLO
-        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727015AbgCUSzm (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Mar 2020 14:55:42 -0400
-Received: by mail-lj1-f195.google.com with SMTP id w4so10076250lji.11
-        for <git@vger.kernel.org>; Sat, 21 Mar 2020 11:55:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp-br.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=cTcH/HkEk/6PYeS+tRhbYg35lLvO0KORyMvR6k0evqQ=;
-        b=sOQvoTu+iNjau/t8i7nAUVFio6EoOGd/Ikjajho5VVnPYUxCvgwJAVbdsUhMJI6KSY
-         wP9IcBcDS+lg5gcXsPRZutyZFU8OlVxuJjvFp308GDIZgI2LyITUkTV2mT0F8BmDvUkj
-         s8MtoUro0oBJp+8Lkj58MbsXQhOhjy1d7Ty9rA3W5L9Zr/h5tNhvNVnVurcA9oPVH1W4
-         ZtHfK192kY+LV6WBnEbFFR0NvkkiHGdb52U4nujwYD7OJYLz2HFmJwmzK9cX7wLh/RFn
-         FKC4KOjBvk5ZBtArNcVzpNI27Hc5JRxdWEYPtoi7VUlDU8yLHchinTlHo8jkeJH8nPer
-         0bAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=cTcH/HkEk/6PYeS+tRhbYg35lLvO0KORyMvR6k0evqQ=;
-        b=HmNwbY3ssTHT3LGnI9FaBARMlfAoGG1K/BciFWB/PgQVR7uy3oTGjJBNxc/peJC2PF
-         VuubplnjouGZpRp8kXTnQBV7yz8ymFB+4KQErHB7W4AyaIQLSXwor0PAYXp9bFM025yg
-         P1DCRvD0icr8O7KSSr2iFp8iirhAUd2AneMsCmscTA1HYbSZoGoteJXOP/3/EF3/+9Kh
-         ZOLlyJ+gbuQV4ir8Eb8PDECoxKM4cN0KtoyS7YyNr2mWL9z493VU4HOF9kyy1iTKTxS+
-         3crIWSNeR11IY92NkTKfRjN7UzhsRElQx6Py7AnBBUlL90Q0eawxEiZtX56XL/rx4lkh
-         7Dyg==
-X-Gm-Message-State: ANhLgQ3MKWvBy7aJPqy1ybizjyQY0Pxqa8eRoXkNMg6oHyKEWioA+fLh
-        FIx+15QRYXvyrrhiiO7T/Tgvh4DtGkIiQvbEpgUIvQ==
-X-Google-Smtp-Source: ADFU+vvPgRTAsSjoi5NucM5d1m8GcRruYpWhpXXdmvA1FnVwN2wV+umxbIboDjYJ4N5m2Ky1LQMTz+YsF3UGWFj3YYM=
-X-Received: by 2002:a2e:964e:: with SMTP id z14mr9374365ljh.44.1584816938715;
- Sat, 21 Mar 2020 11:55:38 -0700 (PDT)
-MIME-Version: 1.0
-References: <48c28683412e3e0803d4c7189a6d66daddcdc580.1584759277.git.matheus.bernardino@usp.br>
- <2a54d866-c40e-da5e-4c0c-6bfcb56eb8f7@kdbg.org>
-In-Reply-To: <2a54d866-c40e-da5e-4c0c-6bfcb56eb8f7@kdbg.org>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Sat, 21 Mar 2020 15:55:27 -0300
-Message-ID: <CAHd-oW73xp2=XcFr1F57fo2UtAyuZ2aeXVSc_A50bYKKVN7fJw@mail.gmail.com>
-Subject: Re: [PATCH] test-lib: allow short options to be stacked
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        id S1727699AbgCUS5j (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 21 Mar 2020 14:57:39 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:50688 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727015AbgCUS5i (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Mar 2020 14:57:38 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8BC89A9D52;
+        Sat, 21 Mar 2020 14:57:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=/YWbvIbx5bRhIBzlVMxM6euBdLQ=; b=AmJMPu
+        wUrrT1UyGAbYaSiA87m8KihWXxlphsoja6iQGKXycPVf72+TwMevza6T9qt/ewtG
+        wvydT4NvxLBbQA+MijFlPUJ51RlaZG8PknnCnyITumnLZSgCc7c997ON8i/nMOVq
+        g5Z9xe1cuCejM94l+qVW1SdlXq6ISkvEbMfI0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=OveDTRtcmBQWnLBbnX6vh8K27qIpb6aq
+        ianjjuZ4AE6HyQ/1fG2a3x6GHfPS0luNXo/kTv/WT1DuqEyRpILj7s1zvmzZEYVj
+        7tRcX3A9Kpmd4ai7aw6ZUHEnyJHEg4Td+JMaqmPID8Z8FcP7itnJXCSD/u2+K2Iw
+        KXIdTjWZFzY=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 83CF9A9D51;
+        Sat, 21 Mar 2020 14:57:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B5FBDA9D4E;
+        Sat, 21 Mar 2020 14:57:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Matheus Tavares <matheus.bernardino@usp.br>, git@vger.kernel.org,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH] test-lib: allow short options to be stacked
+References: <48c28683412e3e0803d4c7189a6d66daddcdc580.1584759277.git.matheus.bernardino@usp.br>
+        <20200321062611.GA1441446@coredump.intra.peff.net>
+Date:   Sat, 21 Mar 2020 11:57:32 -0700
+In-Reply-To: <20200321062611.GA1441446@coredump.intra.peff.net> (Jeff King's
+        message of "Sat, 21 Mar 2020 02:26:11 -0400")
+Message-ID: <xmqqblopa63n.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: D2BD00EA-6BA5-11EA-8083-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Mar 21, 2020 at 5:55 AM Johannes Sixt <j6t@kdbg.org> wrote:
->
-> Am 21.03.20 um 04:07 schrieb Matheus Tavares:
-> >
-> > +for opt
-> > +do
-> > +     if test -n "$store_arg_to"
-> > +     then
-> > +             eval $store_arg_to=\$opt
-> > +             store_arg_to=
-> > +             prev_opt=
-> > +             continue
-> > +     fi
-> > +
-> > +     case "$opt" in
-> > +     --*)
->
-> Can we please have a case arm for -? here:
->
->         --* | -?)
->
-> so that we do not pay the price of many sub-processes when options are
-> _not_ stacked?
+Jeff King <peff@peff.net> writes:
 
-Makes sense, thanks. However, using Peff's suggestion[1] for the
-character iteration already eliminates the need for extra processes.
-So it will cover this case as well.
+> I wondered if we could do this without the extra process. This works:
+>
+>   opt=${opt#-}
+>   while test -n "$opt"
+>   do
+> 	extra=${opt#?}
+> 	this=${opt%$extra}
+> 	opt=$extra
+> 	parse_option "-$this"
+>   done
+>
+> It's a little convoluted. I'm not sure if saving a process per unbundled
+> short option is worth it.
 
-[1]: https://lore.kernel.org/git/20200321062611.GA1441446@coredump.intra.peff.net/
+I was wondering if I should suggest something similar to the above
+when I wrote my response.  Yours actually does not look as bad as
+what mine would have been ;-)
+
+> What happens to bundled short options with arguments? I think "-r" is
+> the only one. We don't allow "stuck" short options like "-r5", so we
+> don't have to worry about feeding non-option bits to parse_option(). It
+> looks like we'd only examine $store_arg_to outside of the short-option
+> loop, so we'd treat:
+>
+>   ./t1234-foo.sh -vrix 5
+>
+> the same as:
+>
+>   ./t1234-foo.sh -v -r 5 -i -x
+>
+> which seems reasonable. But:
+>
+>   ./t1234-foo.sh -rr 5 6
+>
+> would get garbled.
+
+And also we declare we will never add any option that takes an
+argument with this patch?  ... Ah, no, it is just store_arg_to is
+taking a short-cut assuming the current lack of bundled options.
+
+OK, so yeah, I am not sure if this half-way "solution" is worth it.
+It is just the test scripts, sure, that we have this strange
+limitation that "-rr 5 6" is not parsed correctly (i.e. "do not use
+the bundled form if -r is involved" is something developers can live
+with), but then it is just the test scripts so "do not use the
+bundled form at al" is not too bad, either.  It is just one less
+thing for developers to remember, compared to having to remember
+"you can, but except for this special case".
+
+So, I dunno.
+
+Thanks.
