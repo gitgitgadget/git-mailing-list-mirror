@@ -7,61 +7,60 @@ X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 506BFC4332D
-	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 18:00:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 67185C4332B
+	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 18:00:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1F0E720663
-	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 18:00:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3447C20663
+	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 18:00:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fvSkiuES"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YimGAotP"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727987AbgCUSA2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 21 Mar 2020 14:00:28 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:40483 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727939AbgCUSA0 (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1727959AbgCUSA0 (ORCPT <rfc822;git@archiver.kernel.org>);
         Sat, 21 Mar 2020 14:00:26 -0400
-Received: by mail-ed1-f68.google.com with SMTP id w26so4785073edu.7
-        for <git@vger.kernel.org>; Sat, 21 Mar 2020 11:00:24 -0700 (PDT)
+Received: from mail-ed1-f54.google.com ([209.85.208.54]:41655 "EHLO
+        mail-ed1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727915AbgCUSAX (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Mar 2020 14:00:23 -0400
+Received: by mail-ed1-f54.google.com with SMTP id v6so11122739edw.8
+        for <git@vger.kernel.org>; Sat, 21 Mar 2020 11:00:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=bmN3sd17HaFUpvR96N6/ugb3XtLrD8Rkn7fgln3YO5E=;
-        b=fvSkiuESyOpq0ZXHPEP/bnt9aPDFEAVIAwItmINB95x38JmHbc7QQjJNfNtP39BKZi
-         47qdmXGivbMOJJIBxbdHhCnamU0N0jbe3G/SmSkYRO6O5bK4O5R7dhPRI8l9Me6ad1A/
-         4/JO5hLXbmFHnOMR+QwFR0t69Tff2kvTUTvZZMSQA840SabgP2xlwqJ+O3i0Yj4almyD
-         AW4Me4Bs53QoNM3OG9lHTBfMGZSopnjANqBM/YZIAHgrdSOK/K9DkjOb8hX9kWfExqaQ
-         TjWWzRVBqYW/Dc29FuDzW6higbAOI1Cp3r9STSWJdywqDB/SAci8zKgD5dHkYhdye3aq
-         HNsw==
+        bh=mtzYCeU2Mt3TAgbEj/oCZWxq8i4BGOZaBdSZOkj32kQ=;
+        b=YimGAotPGi27/iCSdK9ZWPTUovEGNq/Wt3bHyqXDjc2JbwYsCIZae0XHR5xxzSyWVm
+         JF8qJBw1daYRU2NoD+qMpyfsWqlofqASDtSt0HHXGtmWR0nSyes1aooWI91NrMGi7akt
+         xzEeL//Qt9Cz+K0JmB/MJjGJqIcNyUfbvPttnt2kU8tjGO8VTw+My4OuaxtqQ/b1OBmh
+         VZMuF0/oTZOwGMpoWX0HPOuXI0rLD/xra02DmQGb1HVQHtdSFWVcUIobkPhI7pUgSWiu
+         L1f/vHAvTRNi6uFyJ7o+5dk88gFpeOZB7lEYznQlEeuhZCeFI9dYzQn2iXuhTgBDAUhR
+         JkYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=bmN3sd17HaFUpvR96N6/ugb3XtLrD8Rkn7fgln3YO5E=;
-        b=kcPj6Z5vSjEJ8BdB9hZ7Rjx9Zj3UfYKnVuDi258Ys1o6xoWg2c+/lGdorefg5jqJIb
-         Y3xzSAA4ubs4NRFnCvi/G0ISvdhYpQKNWFMix30c8iX9HPzqUenaY+GM7HPesxOkW96R
-         siFPIfxP2Z7BjpioUCaeFIWa0zH8CH+/2CSoCYh1rcoMKUN5U1mMDgwvPugs4n6up5ei
-         MNk+JhqHUAIf/kw8L0vc5BEgx8qgrQXEyirbOlbMR55jHsAb7ria1mm46FPBLuccIl7j
-         ehCttA7g+grvSWlgXwbCoJT+Z+nyjJ6Rbk6tkCu1Ygo2wrUH4MY+31QPsIy/txzAQqEN
-         nRVA==
-X-Gm-Message-State: ANhLgQ0peLquMn61yqCpwHF4dFRcxou0GkAwosC55/VlfLuxryOm4KJq
-        h4hwCh8A21V556A8wthRaWZzQ4E/
-X-Google-Smtp-Source: ADFU+vuWuf9IZgOOddKt+YbWbXTvwg5mAl8V3i6yyabsC7h3l3HpzIjeheywRzH3zEntUgciq7snuw==
-X-Received: by 2002:a05:6402:2cd:: with SMTP id b13mr13813714edx.68.1584813623205;
-        Sat, 21 Mar 2020 11:00:23 -0700 (PDT)
+        bh=mtzYCeU2Mt3TAgbEj/oCZWxq8i4BGOZaBdSZOkj32kQ=;
+        b=cipqu5lmC3RjvDytO3gFnn+7yiW0HVAjGZfR+T4G4rJceHkwzDT5tzzizAeRPXdNLq
+         L1F0QoWssP7trp1vprMxmlzNIIExc57YYhoM5xfU7aG4M+q4L1WiK/58V/a9dImJAupB
+         Aj6hD3wxskSo2F3gMDV0ohKt4PLkjpZYzpb0uuFx7uEyC3ewIUY7JjuVHTMW9g0fyGCo
+         cjNmb1i5md0yM5BDf9l0tUbJ/ynurm7NvakfsG4266z9RwElRq7glIHfgKt0lAcUal7Y
+         v9f9MUYYcbw2Mve5yLGHoU6XNwNz0n2ntQWzzNA9sOpx3S5uGmDxwxe0ty2bjXIIBi2/
+         UixA==
+X-Gm-Message-State: ANhLgQ2fV+gpXP+JKKW3EAMRtJ+kLC0Bg1r+lNwQJzu7p/KZLsYrezeW
+        fPflNZ4jsZAoRCZD6mdE2p4BpqV4
+X-Google-Smtp-Source: ADFU+vs4CSrjrrhVv90NCL4sHcKJMvh3RNOo7Xl/smkw4H/uWz2h/fjUvApF/08/T0jiIZLyQIMz+g==
+X-Received: by 2002:a50:cd5a:: with SMTP id d26mr14416590edj.65.1584813620742;
+        Sat, 21 Mar 2020 11:00:20 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 94sm626653eda.7.2020.03.21.11.00.22
+        by smtp.gmail.com with ESMTPSA id g19sm600398ejr.65.2020.03.21.11.00.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 Mar 2020 11:00:22 -0700 (PDT)
-Message-Id: <fa997a1c72f8ff15a6487475679ad9d20a9d3a0e.1584813609.git.gitgitgadget@gmail.com>
+        Sat, 21 Mar 2020 11:00:20 -0700 (PDT)
+Message-Id: <57679c8e292ceb58cea2b5b7d893d5f47e1e2de0.1584813609.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.726.v2.git.git.1584813609.gitgitgadget@gmail.com>
 References: <pull.726.git.git.1584169893.gitgitgadget@gmail.com>
         <pull.726.v2.git.git.1584813609.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 21 Mar 2020 18:00:08 +0000
-Subject: [PATCH v2 17/18] unpack-trees: failure to set SKIP_WORKTREE bits
- always just a warning
+Date:   Sat, 21 Mar 2020 18:00:05 +0000
+Subject: [PATCH v2 14/18] unpack-trees: split display_error_msgs() into two
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,169 +76,187 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Setting and clearing of the SKIP_WORKTREE bit is not only done when
-users run 'sparse-checkout'; other commands such as 'checkout' also run
-through unpack_trees() which has logic for handling this special bit.
-As such, we need to consider how they handle special cases.  A couple
-comparison points should help explain the rationale for changing how
-unpack_trees() handles these bits:
+display_error_msgs() is never called to show messages of both ERROR_*
+and WARNING_* types at the same time; it is instead called multiple
+times, separately for each type.  Since we want to display these types
+differently, make two slightly different versions of this function.
 
-    Ignoring sparse checkouts for a moment, if you are switching
-    branches and have dirty changes, it is only considered an error that
-    will prevent the branch switching from being successful if the dirty
-    file happens to be one of the paths with different contents.
-
-    SKIP_WORKTREE has always been considered advisory; for example, if
-    rebase or merge need or even want to materialize a path as part of
-    their work, they have always been allowed to do so regardless of the
-    SKIP_WORKTREE setting.  This has been used for unmerged paths, but
-    it was often used for paths it wasn't needed just because it made
-    the code simpler.  It was a best-effort consideration, and when it
-    materialized paths contrary to the SKIP_WORKTREE setting, it was
-    never required to even print a warning message.
-
-In the past if you trying to run e.g. 'git checkout' and:
-  1) you had a path that was materialized and had some dirty changes
-  2) the path was listed in $GITDIR/info/sparse-checkout
-  3) this path did not different between the current and target branches
-then despite the comparison points above, the inability to set
-SKIP_WORKTREE was treated as a *hard* error that would abort the
-checkout operation.  This is completely inconsistent with how
-SKIP_WORKTREE is handled elsewhere, and rather annoying for users as
-leaving the paths materialized in the working copy (with a simple
-warning) should present no problem at all.
-
-Downgrade any errors from inability to toggle the SKIP_WORKTREE bit to a
-warning and allow the operations to continue.
+A subsequent commit will further modify unpack_trees() and how it calls
+the new display_warning_msgs().
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- t/t1011-read-tree-sparse-checkout.sh | 11 +++++-----
- t/t2018-checkout-branch.sh           | 22 ++++++++++++++++++++
- unpack-trees.c                       | 31 ++++++++++++++--------------
- 3 files changed, 43 insertions(+), 21 deletions(-)
+ t/t1091-sparse-checkout-builtin.sh |  6 ++--
+ unpack-trees.c                     | 50 +++++++++++++++++++++++++-----
+ unpack-trees.h                     |  8 +++--
+ 3 files changed, 50 insertions(+), 14 deletions(-)
 
-diff --git a/t/t1011-read-tree-sparse-checkout.sh b/t/t1011-read-tree-sparse-checkout.sh
-index eb44bafb593..63223e13bd1 100755
---- a/t/t1011-read-tree-sparse-checkout.sh
-+++ b/t/t1011-read-tree-sparse-checkout.sh
-@@ -233,18 +233,19 @@ test_expect_success 'read-tree --reset removes outside worktree' '
- 	test_must_be_empty result
- '
+diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
+index 93c650ac038..0d93d3983e0 100755
+--- a/t/t1091-sparse-checkout-builtin.sh
++++ b/t/t1091-sparse-checkout-builtin.sh
+@@ -328,13 +328,13 @@ test_expect_success 'sparse-checkout (init|set|disable) warns with dirty status'
+ 	echo dirty >dirty/folder1/a &&
  
--test_expect_success 'print errors when failed to update worktree' '
-+test_expect_success 'print warnings when some worktree updates disabled' '
- 	echo sub >.git/info/sparse-checkout &&
- 	git checkout -f init &&
- 	mkdir sub &&
- 	touch sub/added sub/addedtoo &&
--	test_must_fail git checkout top 2>actual &&
-+	# Use -q to suppress "Previous HEAD position" and "Head is now at" msgs
-+	git checkout -q top 2>actual &&
- 	cat >expected <<\EOF &&
--error: The following untracked working tree files would be overwritten by checkout:
-+warning: The following paths were already present and thus not updated despite sparse patterns:
- 	sub/added
- 	sub/addedtoo
--Please move or remove them before you switch branches.
--Aborting
-+
-+After fixing the above paths, you may want to run `git sparse-checkout reapply`.
- EOF
- 	test_i18ncmp expected actual
- '
-diff --git a/t/t2018-checkout-branch.sh b/t/t2018-checkout-branch.sh
-index bbca7ef8da6..21583154d8e 100755
---- a/t/t2018-checkout-branch.sh
-+++ b/t/t2018-checkout-branch.sh
-@@ -238,4 +238,26 @@ test_expect_success 'checkout -b after clone --no-checkout does a checkout of HE
- 	test_path_is_file dest/a.t
- '
+ 	git -C dirty sparse-checkout init 2>err &&
+-	test_i18ngrep "error.*Cannot update sparse checkout" err &&
++	test_i18ngrep "warning.*Cannot update sparse checkout" err &&
  
-+test_expect_success 'checkout -b to a new branch preserves mergeable changes despite sparse-checkout' '
-+	test_when_finished "
-+		git reset --hard &&
-+		git checkout branch1-scratch &&
-+		test_might_fail git branch -D branch3 &&
-+		git config core.sparseCheckout false &&
-+		rm .git/info/sparse-checkout" &&
-+
-+	test_commit file2 &&
-+
-+	echo stuff >>file1 &&
-+	echo file2 >.git/info/sparse-checkout &&
-+	git config core.sparseCheckout true &&
-+
-+	CURHEAD=$(git rev-parse HEAD) &&
-+	do_checkout branch3 $CURHEAD &&
-+
-+	echo file1 >expect &&
-+	git diff --name-only >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
+ 	git -C dirty sparse-checkout set /folder2/* /deep/deeper1/* &&
+-	test_i18ngrep "error.*Cannot update sparse checkout" err &&
++	test_i18ngrep "warning.*Cannot update sparse checkout" err &&
+ 
+ 	git -C dirty sparse-checkout disable &&
+-	test_i18ngrep "error.*Cannot update sparse checkout" err &&
++	test_i18ngrep "warning.*Cannot update sparse checkout" err &&
+ 
+ 	git -C dirty reset --hard &&
+ 	git -C dirty sparse-checkout init &&
 diff --git a/unpack-trees.c b/unpack-trees.c
-index 298241a5e0e..cab2177c951 100644
+index 0554842580b..9ee04992ac6 100644
 --- a/unpack-trees.c
 +++ b/unpack-trees.c
-@@ -1701,23 +1701,15 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
- 			 * correct CE_NEW_SKIP_WORKTREE
- 			 */
- 			if (ce->ce_flags & CE_ADDED &&
--			    verify_absent(ce, ERROR_WOULD_LOSE_UNTRACKED_OVERWRITTEN, o)) {
--				if (!o->show_all_errors)
--					goto return_failed;
--				ret = -1;
--			}
-+			    verify_absent(ce, WARNING_SPARSE_ORPHANED_NOT_OVERWRITTEN, o))
-+				ret = 1;
+@@ -24,7 +24,7 @@
+  * situation better.  See how "git checkout" and "git merge" replaces
+  * them using setup_unpack_trees_porcelain(), for example.
+  */
+-static const char *unpack_plumbing_errors[NB_UNPACK_TREES_ERROR_TYPES] = {
++static const char *unpack_plumbing_errors[NB_UNPACK_TREES_WARNING_TYPES] = {
+ 	/* ERROR_WOULD_OVERWRITE */
+ 	"Entry '%s' would be overwritten by merge. Cannot merge.",
+ 
+@@ -46,6 +46,9 @@ static const char *unpack_plumbing_errors[NB_UNPACK_TREES_ERROR_TYPES] = {
+ 	/* ERROR_WOULD_LOSE_SUBMODULE */
+ 	"Submodule '%s' cannot checkout new HEAD.",
+ 
++	/* NB_UNPACK_TREES_ERROR_TYPES; just a meta value */
++	"",
 +
-+			if (apply_sparse_checkout(&o->result, ce, o))
-+				ret = 1;
+ 	/* WARNING_SPARSE_NOT_UPTODATE_FILE */
+ 	"Entry '%s' not uptodate. Cannot update sparse checkout.",
  
--			if (apply_sparse_checkout(&o->result, ce, o)) {
--				if (!o->show_all_errors)
--					goto return_failed;
--				ret = -1;
--			}
- 			if (!ce_skip_worktree(ce))
- 				empty_worktree = 0;
--
+@@ -222,7 +225,7 @@ static int add_rejected_path(struct unpack_trees_options *o,
+ 
+ 	/*
+ 	 * Otherwise, insert in a list for future display by
+-	 * display_error_msgs()
++	 * display_(error|warning)_msgs()
+ 	 */
+ 	string_list_append(&o->unpack_rejects[e], path);
+ 	return -1;
+@@ -233,13 +236,16 @@ static int add_rejected_path(struct unpack_trees_options *o,
+  */
+ static void display_error_msgs(struct unpack_trees_options *o)
+ {
+-	int e, i;
+-	int something_displayed = 0;
++	int e;
++	unsigned error_displayed = 0;
+ 	for (e = 0; e < NB_UNPACK_TREES_ERROR_TYPES; e++) {
+ 		struct string_list *rejects = &o->unpack_rejects[e];
++
+ 		if (rejects->nr > 0) {
++			int i;
+ 			struct strbuf path = STRBUF_INIT;
+-			something_displayed = 1;
++
++			error_displayed = 1;
+ 			for (i = 0; i < rejects->nr; i++)
+ 				strbuf_addf(&path, "\t%s\n", rejects->items[i].string);
+ 			error(ERRORMSG(o, e), super_prefixed(path.buf));
+@@ -247,10 +253,36 @@ static void display_error_msgs(struct unpack_trees_options *o)
  		}
--		if (ret < 0)
--			goto return_failed;
- 		/*
- 		 * Sparse checkout is meant to narrow down checkout area
- 		 * but it does not make sense to narrow down to empty working
-@@ -1728,6 +1720,15 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
- 			ret = unpack_failed(o, "Sparse checkout leaves no entry on working directory");
- 			goto done;
- 		}
-+		if (ret == 1) {
-+			/*
-+			 * Inability to sparsify or de-sparsify individual
-+			 * paths is not an error, but just a warning.
-+			 */
-+			if (o->show_all_errors)
-+				display_warning_msgs(o);
-+			ret = 0;
-+		}
+ 		string_list_clear(rejects, 0);
  	}
+-	if (something_displayed)
++	if (error_displayed)
+ 		fprintf(stderr, _("Aborting\n"));
+ }
  
- 	ret = check_updates(o, &o->result) ? (-2) : 0;
-@@ -1759,10 +1760,8 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
++/*
++ * display all the warning messages stored in a nice way
++ */
++static void display_warning_msgs(struct unpack_trees_options *o)
++{
++	int e;
++	unsigned warning_displayed = 0;
++	for (e = NB_UNPACK_TREES_ERROR_TYPES+1;
++	     e < NB_UNPACK_TREES_WARNING_TYPES; e++) {
++		struct string_list *rejects = &o->unpack_rejects[e];
++
++		if (rejects->nr > 0) {
++			int i;
++			struct strbuf path = STRBUF_INIT;
++
++			warning_displayed = 1;
++			for (i = 0; i < rejects->nr; i++)
++				strbuf_addf(&path, "\t%s\n", rejects->items[i].string);
++			warning(ERRORMSG(o, e), super_prefixed(path.buf));
++			strbuf_release(&path);
++		}
++		string_list_clear(rejects, 0);
++	}
++	if (warning_displayed)
++		fprintf(stderr, _("After fixing the above paths, you may want to run `git sparse-checkout reapply`.\n"));
++}
+ static int check_submodule_move_head(const struct cache_entry *ce,
+ 				     const char *old_id,
+ 				     const char *new_id,
+@@ -1705,8 +1737,10 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
  	return ret;
  
  return_failed:
--	if (o->show_all_errors) {
-+	if (o->show_all_errors)
+-	if (o->show_all_errors)
++	if (o->show_all_errors) {
  		display_error_msgs(o);
--		display_warning_msgs(o);
--	}
++		display_warning_msgs(o);
++	}
  	mark_all_ce_unused(o->src_index);
  	ret = unpack_failed(o, NULL);
  	if (o->exiting_early)
+@@ -1784,7 +1818,7 @@ enum update_sparsity_result update_sparsity(struct unpack_trees_options *o)
+ 		ret = UPDATE_SPARSITY_WORKTREE_UPDATE_FAILURES;
+ 
+ done:
+-	display_error_msgs(o);
++	display_warning_msgs(o);
+ 	o->show_all_errors = old_show_all_errors;
+ 	if (free_pattern_list)
+ 		clear_pattern_list(&pl);
+diff --git a/unpack-trees.h b/unpack-trees.h
+index 3c6452fe9e5..d91c65ae453 100644
+--- a/unpack-trees.h
++++ b/unpack-trees.h
+@@ -24,10 +24,12 @@ enum unpack_trees_error_types {
+ 	ERROR_BIND_OVERLAP,
+ 	ERROR_WOULD_LOSE_SUBMODULE,
+ 
++	NB_UNPACK_TREES_ERROR_TYPES,
++
+ 	WARNING_SPARSE_NOT_UPTODATE_FILE,
+ 	WARNING_SPARSE_ORPHANED_NOT_OVERWRITTEN,
+ 
+-	NB_UNPACK_TREES_ERROR_TYPES,
++	NB_UNPACK_TREES_WARNING_TYPES,
+ };
+ 
+ enum update_sparsity_result {
+@@ -73,13 +75,13 @@ struct unpack_trees_options {
+ 	struct dir_struct *dir;
+ 	struct pathspec *pathspec;
+ 	merge_fn_t fn;
+-	const char *msgs[NB_UNPACK_TREES_ERROR_TYPES];
++	const char *msgs[NB_UNPACK_TREES_WARNING_TYPES];
+ 	struct argv_array msgs_to_free;
+ 	/*
+ 	 * Store error messages in an array, each case
+ 	 * corresponding to a error message type
+ 	 */
+-	struct string_list unpack_rejects[NB_UNPACK_TREES_ERROR_TYPES];
++	struct string_list unpack_rejects[NB_UNPACK_TREES_WARNING_TYPES];
+ 
+ 	int head_idx;
+ 	int merge_size;
 -- 
 gitgitgadget
 
