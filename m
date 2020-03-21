@@ -7,61 +7,61 @@ X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A2985C54FCE
-	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 18:00:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EEF4FC43332
+	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 18:00:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7A57B20663
-	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 18:00:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BD25520663
+	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 18:00:32 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hwc1bBXM"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AVaBnbAv"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728014AbgCUSAe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 21 Mar 2020 14:00:34 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:40463 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727817AbgCUSAR (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Mar 2020 14:00:17 -0400
-Received: by mail-ed1-f66.google.com with SMTP id w26so4784687edu.7
-        for <git@vger.kernel.org>; Sat, 21 Mar 2020 11:00:16 -0700 (PDT)
+        id S1727951AbgCUSA0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 21 Mar 2020 14:00:26 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:45986 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727927AbgCUSAY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Mar 2020 14:00:24 -0400
+Received: by mail-ed1-f67.google.com with SMTP id u59so11091130edc.12
+        for <git@vger.kernel.org>; Sat, 21 Mar 2020 11:00:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=ZXHzj8F9/88N7Ll9ROZJb2YfW9vEw6moimkoWXGdYoA=;
-        b=hwc1bBXMsvhwQb2mAfRwbR+0z8uzLWRvMyqXqykwvnF0PA8HV+OtlO+i6BajP9eSg8
-         N6iWHDoNOztFedxXfmFxkhJNd9V0+KCXZQrJ4/sC84jEcNCu975VlyBlbnfA0iOsPy3/
-         Bnn7iQevVsfAdteH/DdIcOdLJRm67Jmti9nGDMiGbdHbwFerOK/YZ8Bi9n2H2sHGyITA
-         oen0AZh9f4WF272daoZl4qZefKRhW51dMEw4JFpdalqNaT5Xf+P70LREyNU54lk6+ik8
-         v+JpgP9R0QLa61ofrMCHEwWklZXGvlud1/+7lWyF6m2q62+7opKOWjIhgl7j1aHArcJI
-         H55w==
+        bh=6+Ph8fPeEj1mOiCZYJEJURNIzieULKQ0K58PWR+HQn4=;
+        b=AVaBnbAvj8o0eLxa/iR+EwCiCFO6VJb8frqdE2DZ4HLDmMpXD1UGwwtF+XlJmvfsM4
+         ZCJljiZaj/+xjZpz4WPhPZ5pFo4SMs8lTYjVrsElDYQLqYOjPzWQRWxmVpaf6BZmaA6b
+         5iER6Rlaesl51MyMi/xcbP8uU3IgcjyH/cMP3ZHtBzOqraOfJllfUnSrl4uDxjvXHrvD
+         JadSvBgXdRptu2Y6Ll2HYGUVFy9SJiA8MMQnE8wgXvfr5SdAFhZqQ7gGvYbKAh9YqZTP
+         X2mlDCnIGAxE6xd3avL8596dXUPQXBZm/CXkTdu1RQT84PW9W9Xs8yMIyO4wJH9OPnIk
+         aXWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ZXHzj8F9/88N7Ll9ROZJb2YfW9vEw6moimkoWXGdYoA=;
-        b=VNDeiVz4SCwAFskFOy7U3aF1hiHSmbu0ei4VLvSCYmity7DBkwxbGDQYOCGGDzh1a5
-         Bjgrap1XnMJzMAZPRHH7RoATYJI3clJTJV/vIDFq/SPY9gcd5ne8/U8IAMW8qrxAo8Qn
-         7DkI3eO596XfvwnmlDijn6zu0bNYluBHObmoKMPYr0RD24DbeDimoPLDBRpDwZ0UBdoI
-         t+6MNQRD45u2YKk6DACSoljkl+yPYttOjx89uEl2Xh1b6g7+7s1gDl1DBgzls+LAs4VL
-         pcoaMCeP4Ryu3hXmplOhrnqxyTySi1uBC4sUIlQ/bmtm7bpmdqJPqzbNRKekqrmYTh9N
-         87bg==
-X-Gm-Message-State: ANhLgQ1O5HlupI3nnZGWfxHGmYPx6aeihsKqzrM3FDdic0z9+GkyYQV2
-        oJwE/g5+bXjoZ6YAJ++vmO/OfX4R
-X-Google-Smtp-Source: ADFU+vuq2vV9FY9PMp4zSvRZ+cZEfYeuQ8OlW+NMWROOEaLzoGoyIC4yP76FMv/53h1Glf52mETkNA==
-X-Received: by 2002:a17:906:86d5:: with SMTP id j21mr13581134ejy.230.1584813615235;
-        Sat, 21 Mar 2020 11:00:15 -0700 (PDT)
+        bh=6+Ph8fPeEj1mOiCZYJEJURNIzieULKQ0K58PWR+HQn4=;
+        b=jpcoz7tpPzfNxVuIIJKE0HPfdtSzqy/rJX8SFqn3uVzNT0mRJNW5qZelQ4RARQFByR
+         6sVEhM9BlQ9j+J8dQEg/8L0idW/R3ljTFoxh6Rm/Mo99alWRZIftsyH1HsfEHuM/Pq1H
+         J5RSl03L7o3sou4E+f8anmj5CDVtWtE4Nxorr8cDnWUmeIOTLYf0ACcUxt2DOnsqTk81
+         Y9pKuG35/1iRFHZNNH4uRA2vUwlcGMKU6r6vVsVmFmiDV6SPqIZQ0SLjxNj5pt4sMGqZ
+         WAi0ANJUt4nEGZDuHhn4yubG7OuFAi7Pmb/9HSpggtm1uqHeFvU6c/GmEw5NsiiJhbAC
+         pkpA==
+X-Gm-Message-State: ANhLgQ0oCwViNZc4e24kdPDHiFm2acDBYHYYBxJuayrCBt5+c0fz5BKC
+        RE+XroYguG11WYtbLSfsQplMyqTm
+X-Google-Smtp-Source: ADFU+vsI94UBxkvMFmaJphvKCb1PDmGDMXIXzYcgO6LPLkfVo0pCr9xkc5PHZU93eS68r0r32ThJzQ==
+X-Received: by 2002:a17:906:fc01:: with SMTP id ov1mr13602703ejb.65.1584813622260;
+        Sat, 21 Mar 2020 11:00:22 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k9sm633798edl.35.2020.03.21.11.00.14
+        by smtp.gmail.com with ESMTPSA id b20sm646700edt.93.2020.03.21.11.00.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 Mar 2020 11:00:14 -0700 (PDT)
-Message-Id: <3d2531ca8187ac6929f1c3b293682706e6da668d.1584813609.git.gitgitgadget@gmail.com>
+        Sat, 21 Mar 2020 11:00:21 -0700 (PDT)
+Message-Id: <f664a6dcbb3c3369aa7b94386894da1d437e3295.1584813609.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.726.v2.git.git.1584813609.gitgitgadget@gmail.com>
 References: <pull.726.git.git.1584169893.gitgitgadget@gmail.com>
         <pull.726.v2.git.git.1584813609.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 21 Mar 2020 17:59:58 +0000
-Subject: [PATCH v2 07/18] unpack-trees: do not mark a dirty path with
- SKIP_WORKTREE
+Date:   Sat, 21 Mar 2020 18:00:07 +0000
+Subject: [PATCH v2 16/18] unpack-trees: provide warnings on sparse updates for
+ unmerged paths too
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,41 +77,127 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-If a path is dirty, removing from the working tree risks losing data.
-As such, we want to make sure any such path is not marked with
-SKIP_WORKTREE.  While the current callers of this code detect this case
-and re-populate with a previous set of sparsity patterns, we want to
-allow some paths to be marked with SKIP_WORKTREE while others are left
-unmarked without it being considered an error.  The reason this
-shouldn't be considered an error is that SKIP_WORKTREE has always been
-an advisory-only setting; merge and rebase for example were free to
-materialize paths and clear the SKIP_WORKTREE bit in order to accomplish
-their work even though they kept the SKIP_WORKTREE bit set for other
-paths.  Leaving dirty working files in the working tree is thus a
-natural extension of what we have already been doing.
+When sparse-checkout runs to update the list of sparsity patterns, it
+gives warnings if it can't remove paths from the working tree because
+those files have dirty changes.  Add a similar warning for unmerged
+paths as well.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- unpack-trees.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ t/t1091-sparse-checkout-builtin.sh | 24 ++++++++++++++++++++++++
+ unpack-trees.c                     | 30 ++++++++++++++++++++++++++++++
+ unpack-trees.h                     |  1 +
+ 3 files changed, 55 insertions(+)
 
+diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
+index 11eb567f3fb..39093bcd5ec 100755
+--- a/t/t1091-sparse-checkout-builtin.sh
++++ b/t/t1091-sparse-checkout-builtin.sh
+@@ -342,6 +342,30 @@ test_expect_success 'sparse-checkout (init|set|disable) warns with dirty status'
+ 	git -C dirty sparse-checkout disable
+ '
+ 
++test_expect_success 'sparse-checkout (init|set|disable) warns with unmerged status' '
++	git clone repo unmerged &&
++
++	cat >input <<-EOF &&
++	0 0000000000000000000000000000000000000000	folder1/a
++	100644 $(git -C unmerged rev-parse HEAD:folder1/a) 1	folder1/a
++	EOF
++	git -C unmerged update-index --index-info <input &&
++
++	git -C unmerged sparse-checkout init 2>err &&
++	test_i18ngrep "warning.*The following paths are unmerged" err &&
++
++	git -C unmerged sparse-checkout set /folder2/* /deep/deeper1/* &&
++	test_i18ngrep "warning.*The following paths are unmerged" err &&
++
++	git -C unmerged sparse-checkout disable &&
++	test_i18ngrep "warning.*The following paths are unmerged" err &&
++
++	git -C unmerged reset --hard &&
++	git -C unmerged sparse-checkout init &&
++	git -C unmerged sparse-checkout set /folder2/* /deep/deeper1/* &&
++	git -C unmerged sparse-checkout disable
++'
++
+ test_expect_success 'cone mode: set with core.ignoreCase=true' '
+ 	rm repo/.git/info/sparse-checkout &&
+ 	git -C repo sparse-checkout init --cone &&
 diff --git a/unpack-trees.c b/unpack-trees.c
-index dde50047a82..e8e794880ab 100644
+index 7c24933016b..298241a5e0e 100644
 --- a/unpack-trees.c
 +++ b/unpack-trees.c
-@@ -500,8 +500,11 @@ static int apply_sparse_checkout(struct index_state *istate,
- 		 * also stat info may have lost after merged_entry() so calling
- 		 * verify_uptodate() again may fail
- 		 */
--		if (!(ce->ce_flags & CE_UPDATE) && verify_uptodate_sparse(ce, o))
-+		if (!(ce->ce_flags & CE_UPDATE) &&
-+		    verify_uptodate_sparse(ce, o)) {
-+			ce->ce_flags &= ~CE_SKIP_WORKTREE;
- 			return -1;
+@@ -52,6 +52,9 @@ static const char *unpack_plumbing_errors[NB_UNPACK_TREES_WARNING_TYPES] = {
+ 	/* WARNING_SPARSE_NOT_UPTODATE_FILE */
+ 	"Path '%s' not uptodate; will not remove from working tree.",
+ 
++	/* WARNING_SPARSE_UNMERGED_FILE */
++	"Path '%s' unmerged; will not remove from working tree.",
++
+ 	/* WARNING_SPARSE_ORPHANED_NOT_OVERWRITTEN */
+ 	"Path '%s' already present; will not overwrite with sparse update.",
+ };
+@@ -173,6 +176,8 @@ void setup_unpack_trees_porcelain(struct unpack_trees_options *opts,
+ 
+ 	msgs[WARNING_SPARSE_NOT_UPTODATE_FILE] =
+ 		_("The following paths are not up to date and were left despite sparse patterns:\n%s");
++	msgs[WARNING_SPARSE_UNMERGED_FILE] =
++		_("The following paths are unmerged and were left despite sparse patterns:\n%s");
+ 	msgs[WARNING_SPARSE_ORPHANED_NOT_OVERWRITTEN] =
+ 		_("The following paths were already present and thus not updated despite sparse patterns:\n%s");
+ 
+@@ -548,6 +553,23 @@ static int apply_sparse_checkout(struct index_state *istate,
+ 	return 0;
+ }
+ 
++static int warn_conflicted_path(struct index_state *istate,
++				int i,
++				struct unpack_trees_options *o)
++{
++	char *conflicting_path = istate->cache[i]->name;
++	int count = 0;
++
++	add_rejected_path(o, WARNING_SPARSE_UNMERGED_FILE, conflicting_path);
++
++	/* Find out how many higher stage entries at same path */
++	while (++count < istate->cache_nr &&
++	       !strcmp(conflicting_path,
++		       istate->cache[i+count]->name))
++		/* do nothing */;
++	return count;
++}
++
+ static inline int call_unpack_fn(const struct cache_entry * const *src,
+ 				 struct unpack_trees_options *o)
+ {
+@@ -1793,6 +1815,14 @@ enum update_sparsity_result update_sparsity(struct unpack_trees_options *o)
+ 	for (i = 0; i < o->src_index->cache_nr; i++) {
+ 		struct cache_entry *ce = o->src_index->cache[i];
+ 
++
++		if (ce_stage(ce)) {
++			/* -1 because for loop will increment by 1 */
++			i += warn_conflicted_path(o->src_index, i, o) - 1;
++			ret = UPDATE_SPARSITY_WARNINGS;
++			continue;
 +		}
- 		ce->ce_flags |= CE_WT_REMOVE;
- 		ce->ce_flags &= ~CE_UPDATE;
- 	}
++
+ 		if (apply_sparse_checkout(o->src_index, ce, o))
+ 			ret = UPDATE_SPARSITY_WARNINGS;
+ 
+diff --git a/unpack-trees.h b/unpack-trees.h
+index d91c65ae453..f970fd6c2f4 100644
+--- a/unpack-trees.h
++++ b/unpack-trees.h
+@@ -27,6 +27,7 @@ enum unpack_trees_error_types {
+ 	NB_UNPACK_TREES_ERROR_TYPES,
+ 
+ 	WARNING_SPARSE_NOT_UPTODATE_FILE,
++	WARNING_SPARSE_UNMERGED_FILE,
+ 	WARNING_SPARSE_ORPHANED_NOT_OVERWRITTEN,
+ 
+ 	NB_UNPACK_TREES_WARNING_TYPES,
 -- 
 gitgitgadget
 
