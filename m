@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 75A66C4332B
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FA8FC43332
 	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 18:00:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 4D77E2076E
+	by mail.kernel.org (Postfix) with ESMTP id 784AA20777
 	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 18:00:16 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SAToLCzL"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CWs8JOJz"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727754AbgCUSAP (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1727788AbgCUSAQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 21 Mar 2020 14:00:16 -0400
+Received: from mail-ed1-f43.google.com ([209.85.208.43]:45390 "EHLO
+        mail-ed1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726646AbgCUSAP (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 21 Mar 2020 14:00:15 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:35351 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727610AbgCUSAO (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Mar 2020 14:00:14 -0400
-Received: by mail-ed1-f67.google.com with SMTP id a20so11164113edj.2
-        for <git@vger.kernel.org>; Sat, 21 Mar 2020 11:00:13 -0700 (PDT)
+Received: by mail-ed1-f43.google.com with SMTP id u59so11090595edc.12
+        for <git@vger.kernel.org>; Sat, 21 Mar 2020 11:00:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=tFjWYQ6TxRb0kG9aPWL9ULeisxhgKFroJ3GFDS2mMCQ=;
-        b=SAToLCzLF6xEtJX0LKKAyUH4m0DG32DA5IFuhbhnVfMunVjlDYW2vlZkS0wwaxPSnB
-         TgUIbfIomaZlsZoLkZUP2/5K3kuahITKViA6uw8IouVCw8+Zi5XEwKuJxkNGzsvc3xzo
-         /L4mFCFPlNkxA5gpv0yweDB1ZsIVDkt1mk4N8vne/x/h3WbSpqCOS7zSGSr6AlnZCOY5
-         rLsYQeISbQKPSdIjj5Psr4Eg03nsS9eeQEIlkOiIaD4izZ5mMc4ThmVYBxjkyI+ElM9w
-         6GezqNtvGeYgojniIOeN8tJ9nD4vVKzVucH7KDx1a0/ZPeJEzfV6UYNlShmeiVPZqwpl
-         tNDw==
+        bh=Zwz9fp8GDmEutq5JqvT/Jch8IMQfRIsjqwWjfm7JQM0=;
+        b=CWs8JOJzgppZRNQVj+xLeRTLP24mF2zkMF2Z+zWnB5MXeeyOyztuCwy1PKe8rmrMsn
+         Fanc6QJ0/qaGxHPhrcR4tViu5biQO/RSuFE896UnJXOo63/HXD9xAiRYN/GgyAu3kbpd
+         ZKMHLytFolbsab55hrW4CYYDICedidOC+QsoKsqLvORzRI7RcKOJoYmID7tB9rQyf8Mr
+         Y+XdWSJkEqTy7WlfjeoImBd7DOn/G7Lo9Bv974+U1ap2WPxC5iIK8QMwSBcsD89IWqrS
+         7fK2AO1Qb9QK7UOGtNKPqi4tAzKLusW9XH9WczA2RkPo+hoOQ+lx9SsdAx9fyo5fRTyX
+         LbZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=tFjWYQ6TxRb0kG9aPWL9ULeisxhgKFroJ3GFDS2mMCQ=;
-        b=NnCS3gB/jeA0Qrc63DDSr0M39+v8pchZkv3MHjUN6RgtHDN5+mCzZC9RB3NBBIXMLu
-         g0O0Ket8Yqis5GwJzpFmnjinpceJlcBgnsygo2pZlYoZ4LYhby2mbYQVCMTYHo88vKwh
-         kMGgSYh2HaInnfgnMLkte97npHe/UNkiA/q4H5c//buvA1jTaM3lxcbVJ8fYrb6/gyP9
-         qC4FsTDk/ar6yARKWShvEouQxvSj6PtjKawS9UGDWfi2krdZmr3K+nYIZvKntN/zVbWH
-         BUX1HSgVdevImIbd6pFbYKuCDudRQl6g29guc8qxKqcTivrty4bMDb+iYsn+qwxdQKGO
-         ASaw==
-X-Gm-Message-State: ANhLgQ1+zolzne7SiH9R451QwiRbbQHQER2G6g1zyQvQCxaOmHflMZtf
-        C+ge7p562/KFHCduNhzYEwkNgIU2
-X-Google-Smtp-Source: ADFU+vvr6d/W++boKmvQIXfwHVKnlZMeGRuv0909EH10yyvpXaSgQ7OkwZosEjZ0ZranyA3oZ7QCUA==
-X-Received: by 2002:a05:6402:899:: with SMTP id e25mr14054718edy.134.1584813612545;
-        Sat, 21 Mar 2020 11:00:12 -0700 (PDT)
+        bh=Zwz9fp8GDmEutq5JqvT/Jch8IMQfRIsjqwWjfm7JQM0=;
+        b=PjRbAX8YZDDupLtCMIi3UFr6mnaa0BghSVKfsGh3RI3frTzI7oB379J47lrF/KZI7G
+         KtPxFKsNJff54hNZe75gnu2H4yjuX9IPRSr1cadXlwo8I6net6idCPqn/1KfVR7Ap42E
+         IuYoaGTRl7f/VRO/SE4KzEh2lbLPY5kLTCeSPXO0H5PLeJC2sOgUqgLqaMhg526P/g+2
+         RaI7nJHEHftWl+EIGYvQeUBA2FFmXYJZKRyUBvUaY+IeGIANILAXgjzbBFvQYL8Cg0Xn
+         lxF6MSf/+6qln1cB13+oJ/syDmW1ojQJjiRVwgxxedSD1lai6eWf1AAp7hUcZU0crgVX
+         Cozw==
+X-Gm-Message-State: ANhLgQ28ksCn4HcqC47wFVxfoy7zl43G7yHpcieQ6nHLPXFab9XJDLjX
+        ruV5LwjENwdYNoWP1VAFevsvFDrb
+X-Google-Smtp-Source: ADFU+vuy/RJJ3VNyctslz4/+tg3Xk3o7j+3IFenGPRTMzELT8gvuXzCDyM86653zRHb4EJmHmuXDtw==
+X-Received: by 2002:a17:906:3fd4:: with SMTP id k20mr13267973ejj.51.1584813611804;
+        Sat, 21 Mar 2020 11:00:11 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v5sm691448edt.43.2020.03.21.11.00.11
+        by smtp.gmail.com with ESMTPSA id e26sm600277ejh.32.2020.03.21.11.00.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 Mar 2020 11:00:12 -0700 (PDT)
-Message-Id: <739b52393fe595f11df557c28ef9f8aea60eca01.1584813609.git.gitgitgadget@gmail.com>
+        Sat, 21 Mar 2020 11:00:11 -0700 (PDT)
+Message-Id: <e6beb1c5810391274676e4ed0cac78e7e02b804b.1584813609.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.726.v2.git.git.1584813609.gitgitgadget@gmail.com>
 References: <pull.726.git.git.1584169893.gitgitgadget@gmail.com>
         <pull.726.v2.git.git.1584813609.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 21 Mar 2020 17:59:54 +0000
-Subject: [PATCH v2 03/18] unpack-trees: simplify verify_absent_sparse()
+Date:   Sat, 21 Mar 2020 17:59:53 +0000
+Subject: [PATCH v2 02/18] unpack-trees: remove unused error type
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,46 +76,63 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-verify_absent_sparse() was introduced in commit 08402b0409
-("merge-recursive: distinguish "removed" and "overwritten" messages",
-2010-08-11), and has always had exactly one caller which always passes
-error_type == ERROR_WOULD_LOSE_UNTRACKED_OVERWRITTEN.  This function
-then checks whether error_type is this value, and if so, sets it instead
-to ERROR_WOULD_LOSE_ORPHANED_OVERWRITTEN.  It has been nearly a decade
-and no other caller has been created, and no other value has ever been
-passed, so just pass the expected value to begin with.
+commit 08402b0409 ("merge-recursive: distinguish "removed" and
+"overwritten" messages", 2010-08-11) split
+    ERROR_WOULD_LOSE_UNTRACKED
+into both
+    ERROR_WOULD_LOSE_UNTRACKED_OVERWRITTEN
+    ERROR_WOULD_LOSE_UNTRACKED_REMOVED
+and also split
+    ERROR_WOULD_LOSE_ORPHANED
+into both
+    ERROR_WOULD_LOSE_ORPHANED_OVERWRITTEN
+    ERROR_WOULD_LOSE_ORPHANED_REMOVED
+
+However, despite the split only three of these four types were used.
+ERROR_WOULD_LOSE_ORPHANED_REMOVED was not put into use when it was
+introduced and nothing else has used it in the intervening decade
+either.  Remove it.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- unpack-trees.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ unpack-trees.c | 4 ----
+ unpack-trees.h | 1 -
+ 2 files changed, 5 deletions(-)
 
 diff --git a/unpack-trees.c b/unpack-trees.c
-index f72a7a21f9c..3af2e126abf 100644
+index 0d0eec0221e..f72a7a21f9c 100644
 --- a/unpack-trees.c
 +++ b/unpack-trees.c
-@@ -506,7 +506,7 @@ static int apply_sparse_checkout(struct index_state *istate,
- 		ce->ce_flags &= ~CE_UPDATE;
- 	}
- 	if (was_skip_worktree && !ce_skip_worktree(ce)) {
--		if (verify_absent_sparse(ce, ERROR_WOULD_LOSE_UNTRACKED_OVERWRITTEN, o))
-+		if (verify_absent_sparse(ce, ERROR_WOULD_LOSE_ORPHANED_OVERWRITTEN, o))
- 			return -1;
- 		ce->ce_flags |= CE_UPDATE;
- 	}
-@@ -2026,11 +2026,7 @@ static int verify_absent_sparse(const struct cache_entry *ce,
- 				enum unpack_trees_error_types error_type,
- 				struct unpack_trees_options *o)
- {
--	enum unpack_trees_error_types orphaned_error = error_type;
--	if (orphaned_error == ERROR_WOULD_LOSE_UNTRACKED_OVERWRITTEN)
--		orphaned_error = ERROR_WOULD_LOSE_ORPHANED_OVERWRITTEN;
--
--	return verify_absent_1(ce, orphaned_error, o);
-+	return verify_absent_1(ce, error_type, o);
- }
+@@ -49,8 +49,6 @@ static const char *unpack_plumbing_errors[NB_UNPACK_TREES_ERROR_TYPES] = {
+ 	/* ERROR_WOULD_LOSE_ORPHANED_OVERWRITTEN */
+ 	"Working tree file '%s' would be overwritten by sparse checkout update.",
  
- static int merged_entry(const struct cache_entry *ce,
+-	/* ERROR_WOULD_LOSE_ORPHANED_REMOVED */
+-	"Working tree file '%s' would be removed by sparse checkout update.",
+ 
+ 	/* ERROR_WOULD_LOSE_SUBMODULE */
+ 	"Submodule '%s' cannot checkout new HEAD.",
+@@ -172,8 +170,6 @@ void setup_unpack_trees_porcelain(struct unpack_trees_options *opts,
+ 		_("Cannot update sparse checkout: the following entries are not up to date:\n%s");
+ 	msgs[ERROR_WOULD_LOSE_ORPHANED_OVERWRITTEN] =
+ 		_("The following working tree files would be overwritten by sparse checkout update:\n%s");
+-	msgs[ERROR_WOULD_LOSE_ORPHANED_REMOVED] =
+-		_("The following working tree files would be removed by sparse checkout update:\n%s");
+ 	msgs[ERROR_WOULD_LOSE_SUBMODULE] =
+ 		_("Cannot update submodule:\n%s");
+ 
+diff --git a/unpack-trees.h b/unpack-trees.h
+index ae1557fb804..6d7c7b6c2e0 100644
+--- a/unpack-trees.h
++++ b/unpack-trees.h
+@@ -24,7 +24,6 @@ enum unpack_trees_error_types {
+ 	ERROR_BIND_OVERLAP,
+ 	ERROR_SPARSE_NOT_UPTODATE_FILE,
+ 	ERROR_WOULD_LOSE_ORPHANED_OVERWRITTEN,
+-	ERROR_WOULD_LOSE_ORPHANED_REMOVED,
+ 	ERROR_WOULD_LOSE_SUBMODULE,
+ 	NB_UNPACK_TREES_ERROR_TYPES
+ };
 -- 
 gitgitgadget
 
