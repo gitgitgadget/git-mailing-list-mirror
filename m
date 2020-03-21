@@ -3,78 +3,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 926FAC4332B
-	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 22:36:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B30C4C4332D
+	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 22:37:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6221E20754
-	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 22:36:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7D10A20754
+	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 22:37:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="UjViY03G"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ctOcR5+r"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728113AbgCUWgG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 21 Mar 2020 18:36:06 -0400
-Received: from mail-lf1-f53.google.com ([209.85.167.53]:34444 "EHLO
-        mail-lf1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727700AbgCUWgG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Mar 2020 18:36:06 -0400
-Received: by mail-lf1-f53.google.com with SMTP id i1so6621975lfo.1
-        for <git@vger.kernel.org>; Sat, 21 Mar 2020 15:36:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp-br.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=IWri25mHJEPnrlYM3VJ2mriG0nf/HTk7FLX9gYSsMMA=;
-        b=UjViY03G++wPn/CurJ0sCx1ZJfB/ppfLzR0f5cVwWNjUzFXou4awHZb3ZjMdtUejEC
-         mibIKCGVUjiVEDlhYzP/WIx0jkaFrq4BV2O1b29UP8r/IspAf3WcZJg7fUDZPoq8GkD2
-         lFk4I5Ho23KlFeo7QkNP8Z5CaJELBX+VyVY90NmTYWeJEx+uGznXgeZsKkT3vj3Mf75Z
-         stkh3xFXxDWI3zsGlvthAgSvOOMqk6MWk53SReOdyU0uszrh4GTjEZcdy2UMPmja3ERg
-         b3HbzIItyCDO+GsZ8oGEhBYwjGAbUrdQQItyLWi+jL6rPjrUaMrEls203yl22TauXgB5
-         L2VQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=IWri25mHJEPnrlYM3VJ2mriG0nf/HTk7FLX9gYSsMMA=;
-        b=iO6iqRoiZwohaOQRKhOtezdCJKyxKlCRGCXGITPNq4s44J4jre1bY2DKbh9+sjQlGu
-         tAEJy49iAnCN0ZoLddF9/IGB/ZoDb497gNNlIMlfBTA6VrNLSifKOw1O3t4EdJXSyj3M
-         mHwtxMrncTj40+Y05rGzIg23IqGeUxFhzrPxu81ifIs37Q1dpPOZ5j5bnlcIguInGgqE
-         qAUgD+AJkzdSzN79VUBZjs4/8Ghmu4gthnbkDUNcyvXnISOzvrBfiRQ3lhPakLZJ5lML
-         mAGMM0y0N5kdMFfF4DWwh2sGLb+6gjIQUnKiG3dQ0Wnk8KCs+7ZTg4YjkZ/DMHtgJ1zE
-         tfGQ==
-X-Gm-Message-State: ANhLgQ1mbHZmTs0URHX7i1uZZuyMEhSALR8GQK7z+8sHKmINC4lYK8Xb
-        oB4bzx9saF0dbZGGnV+NYW/7t15MPKMKiIGmIpvcuQ==
-X-Google-Smtp-Source: ADFU+vtVDSjo7c2lDnQyt1vpk58z2Ew1BhowmpYmQT1w5hWm75X1mUcZS0PIiFNu513dWgdGWHNfC7goXS+i9csDUT8=
-X-Received: by 2002:a19:ccd3:: with SMTP id c202mr5052528lfg.103.1584830164540;
- Sat, 21 Mar 2020 15:36:04 -0700 (PDT)
+        id S1728026AbgCUWhK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 21 Mar 2020 18:37:10 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50678 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727039AbgCUWhK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Mar 2020 18:37:10 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1628C62AA2;
+        Sat, 21 Mar 2020 18:37:05 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=HxMS4HNoDd6wxWtBFickoWlMeh8=; b=ctOcR5
+        +r5lozJlAX3WrYpuH4lrraMWLS8jv3MiSEnUP7zwbZvcdl5N5Yqh2UcbuizUovsK
+        apqNnzu56nbMAkpKfUBax4baczNAd0Zq+h+4KKvSQ2naBFOWs3KhlbV2n0/snl8H
+        m3MJwOXPLO4ci0wAUqvQ+kYKK6RPG+1cxetCQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=RaxZZDNd/4b77VBJmLaAt9UO9hUd7JTn
+        6cM1eMYAfuNYaBWTEKhAgAuYLxvSZ1Y7GzhM23y/nT3NSBFqtusPrkhWS7txrX+m
+        JlxUbkDz4xUwYnGPGM387Tm/EAaNy7Y2+sD5n3TP/7CdJpIdXxWOQqlNc6k4g48/
+        88XNDNhb1/M=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0B4D162AA1;
+        Sat, 21 Mar 2020 18:37:05 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5648462A9F;
+        Sat, 21 Mar 2020 18:37:04 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Parth Gala <parthpgala@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, chriscool@tuxfamily.org
+Subject: Re: [GSoC Project RFC] "git log --oneline" improvements
+References: <28aee28c-8e8d-763a-66c7-d365025e56a2@gmail.com>
+        <xmqqwo7ea99z.fsf@gitster.c.googlers.com>
+        <a67e0d2e-5bcd-8ac7-648e-51c1dc0f72ef@gmail.com>
+Date:   Sat, 21 Mar 2020 15:37:03 -0700
+In-Reply-To: <a67e0d2e-5bcd-8ac7-648e-51c1dc0f72ef@gmail.com> (Parth Gala's
+        message of "Sun, 22 Mar 2020 03:35:14 +0530")
+Message-ID: <xmqqh7yh8hdc.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <xmqqlfnt8k47.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqlfnt8k47.fsf@gitster.c.googlers.com>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Sat, 21 Mar 2020 19:35:53 -0300
-Message-ID: <CAHd-oW7B+Q+hGfAkbu8PYjhQ+-81u9L-swk-iHzasHuJOh5GLA@mail.gmail.com>
-Subject: Re: macOS builds having trouble at travis-ci.org?
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7D09A378-6BC4-11EA-AAD1-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Mar 21, 2020 at 6:38 PM Junio C Hamano <gitster@pobox.com> wrote:
+Parth Gala <parthpgala@gmail.com> writes:
+
+>>>    |   === 2015-09-04 ===
+>>>    | * 27ea6f85 10:46 jch (tag: v2.5.2) Git 2.5.2
+>>>    * 74b67638 10:36 jch (tag: v2.4.9) Git 2.4.9
+>>>                         ..........
+>>>    * ecad27cf 10:32 jch (tag: v2.3.9) Git 2.3.9
+>>>
+>>> So these are the two main formats to be enhanced along with as many options
+>>> of log as possible. What are your views on this ?
+>>>
+>> Making the "--oneline" format to consume more than one line for a
+>> commit is probably not what we want anyway.
 >
-> Starting sometime yeserday, it appears that macOS builds of our
-> branches at travis-ci.org are having trouble in an undiagnosable
-> way.  All you see on their webpage is a helpful message "An error
-> occurred while generating the build script." and nothing else.
+> For this format can we build a new option say `--time` or `--log-time`(duh!)
 
-It might be a problem at the travis-ci infrastructure. They reported
-an issue with macOS builds failing two days ago[1]. The issue is
-marked as solved, but there are still some reports[2] from people
-getting the same error message we are experiencing in git.git.
+Making such an option orthogonal to the base formats (i.e.
+"--decorate" is usable with "--pretty=short", "--pretty=fuller",
+"--oneline", etc.---note that this is not meant to be exhaustive)
+would be a good idea.  I do not think of any reason why your
+"--group-by-same-date" cannot be combined with some of these formats.
 
-[1]: https://www.traviscistatus.com/incidents/9861dc7dtsb0
-[2]: https://twitter.com/traviscistatus/status/1240759726905815040
+It is reasonable to combine it with "--format="%h %s", for that
+matter, because the "--group-by-same-date" is not about showing any
+particular commit but inserting something that does *not* belong to
+any particular commit in between.  Just like "--graph" can be
+combined with many formats, showing group separators in between the
+stream of commits would mix well with any format, I would say.
+
+By using the idea Peff shown, before starting to emit one commit (in
+any format), you would show a single line of "== YYYY-MM-DD ==" if
+the commit is from a date different from the one that was shown
+last.  It would naturally extend to "--group-by-same-month", etc.,
+so you'd want to be prepared for such future.  Your patch does *not*
+have to implement such variations like grouping by month, season or
+year.  But a developer with a good taste would prepare the code in
+such a way that is easy to modify to extend the support for such
+variations by future developers.
+
+Also remember there are two timestamps, and depending on the use
+case, people want to see author dates or committer dates.
+
+Thanks.
