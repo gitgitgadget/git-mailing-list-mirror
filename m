@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EF1AFC4332E
-	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 09:22:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F96BC54EEB
+	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 09:22:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B3A882070A
-	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 09:22:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 297752070A
+	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 09:22:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jxky0aZZ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZnPi2qxV"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727387AbgCUJW1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 21 Mar 2020 05:22:27 -0400
-Received: from mail-qv1-f65.google.com ([209.85.219.65]:37753 "EHLO
-        mail-qv1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727290AbgCUJW1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Mar 2020 05:22:27 -0400
-Received: by mail-qv1-f65.google.com with SMTP id n1so4460933qvz.4
-        for <git@vger.kernel.org>; Sat, 21 Mar 2020 02:22:25 -0700 (PDT)
+        id S1727438AbgCUJW3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 21 Mar 2020 05:22:29 -0400
+Received: from mail-qk1-f195.google.com ([209.85.222.195]:41294 "EHLO
+        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727110AbgCUJW2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Mar 2020 05:22:28 -0400
+Received: by mail-qk1-f195.google.com with SMTP id q188so4508765qke.8
+        for <git@vger.kernel.org>; Sat, 21 Mar 2020 02:22:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=YvtwJLP5tteu5dpCHs0ngn7N49g0vhrSuG1WRaxIPBk=;
-        b=jxky0aZZgTk7OMfJDi/1r0wCZIV6kvXxridI+Z0u5sasniqoIQ8uhogvL4w2Yxsi0N
-         GW7J2sYPnCiXnQdsyyZqiQyxXhwkCSpRH1D/C+LaxlMjGgqgsvin6Bwmg1daaFMXVBtA
-         cgv0oALaqYUJHkBuomlOqrtTSVWGZvudVZwyqknjfd1Zg/D0g/xUDQ8yndhUj36u9Vla
-         cr43WspDUlLRxXU+dy4tHO/gKckt27TkicwtAZoqZvPoH/crwlDsDld5ANbl8MnyYf+z
-         WBm8K74J8WDiSGrn+0lk8uaVPc3rY5fXtXu5ar3Fih/LiphbFsh6N3SBYJ9+7P0xdCEP
-         E0Cw==
+        bh=bpp2JCFebKJpkKs8nki9F4yxZSl7gSPjlkoH1MU/e6w=;
+        b=ZnPi2qxVwsaCVdzPq53LwhN31ebkO0EUMKGvzBDcmL+ylLo133b24OFSmocpyhctXu
+         Suevfsi1dmLkH2I1z7s1Zn6XXvVFzPYRkwFbL3FbmXDcZUYvF6DoCipwdnnZFWOs1E8Z
+         N8Ikifqfz93nl+PItcLNedLsf5Y6ZaPkNQw5PZrhcRDF27i0qr+k3CUKSMmJ2lld3JHV
+         q8PNDPT39IvjqNNztmRMIuqrEaeJErXzrexf1wDcUEWNqTXa3BVcXNVUY54c1DnzpulX
+         +Bft0zHqopa4Oa63Zegusl8K5C8XA1Clm4+2gOErN44ScbSjh/+jEB4ywVyJSLZbP+Pa
+         LVwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=YvtwJLP5tteu5dpCHs0ngn7N49g0vhrSuG1WRaxIPBk=;
-        b=SZsxldqGRpKnkSjYCDjMlaJZeXFIgdwmyDvYl8pFgwQohARHQApfI2ygl/nl3mLITI
-         zBhiG5nQFNuWywqwG0K/BShbGaS7IsevPRql/ng16J19NJIDKKVsRz8BWwlm+sWpejhb
-         Q0KWkyrK0Z1n7rUWUD9anYMkezvX1z+se6sITRWHNBbKYoBBMrWBo43nXC91FKdnuhIB
-         WPfrf2sy1aucGtHdoyYotWHHF3lSZWzkRLlaWP2CzJStL793KwXz8dXK7d5TVzBRJjGg
-         o429vAdu+EoFy4dvIpOpO3jG8HZUcXKk7SQ6yHBG/O+YdKY+QSvsInh6Qao647jWE9LR
-         L0lA==
-X-Gm-Message-State: ANhLgQ0FZsbh/ahylthKJ8bO50Af2VFtsLeauPglbO5n4N2E9krr9SVg
-        ntG3wQpC6DHfJ6Hx8Evtafu0/uk3
-X-Google-Smtp-Source: ADFU+vvfqUGCMcYeF+yIA3+SsFBuFFvzxC3+XQTf1lZdZOK77AYe4EOnigZxjsHjxqeNu+UVn3LzRA==
-X-Received: by 2002:a05:6214:68f:: with SMTP id r15mr11824750qvz.96.1584782545191;
-        Sat, 21 Mar 2020 02:22:25 -0700 (PDT)
+        bh=bpp2JCFebKJpkKs8nki9F4yxZSl7gSPjlkoH1MU/e6w=;
+        b=WYxuRYgsOT4V2I3+4Z/R3tzeykF9Raj4+TM7AfsHspIHqoXxAhkUS85wYhoECIujHM
+         dIJtJtbEpf42odiN4oZpQzmKIocmfkKS25NzvKOOrB+gun7M4j7d20GTjKWdbDGdxpCi
+         AJYdqXJosjb5mD0dO0lj0lToDcp4WlYTKcaP8Q62TorwcPmMWtHf5X4UbYgpisWujfUK
+         kOT4yXAHEVpU+QqiW0Oj0RtS7kx0EHzpFw/MyocbP4rqQxf6zdebNMno5vMXVJTfeegP
+         SHZyfDjkLySIykLIArhTE4HJGxFbjFb9RgKMsGl0z6mQUW/GbphR054MBNJprZlY0sw+
+         mumQ==
+X-Gm-Message-State: ANhLgQ1zw1UgjY+AohlQVkMSLuJGkhBpILbdgzobjSeJLup2wKBptXu+
+        HVAY5YjcRUXxr5XqcusCN8vrMl84
+X-Google-Smtp-Source: ADFU+vvDQQ5IqD75XIGA4JlB1hD5AOApU+J7B8aL49Be14cGgxQL1irhZEhUpl//540G4yPZgYzoMw==
+X-Received: by 2002:a37:6d3:: with SMTP id 202mr12136265qkg.267.1584782546546;
+        Sat, 21 Mar 2020 02:22:26 -0700 (PDT)
 Received: from archbookpro.lan ([199.249.110.29])
-        by smtp.gmail.com with ESMTPSA id z23sm6579890qkg.21.2020.03.21.02.22.24
+        by smtp.gmail.com with ESMTPSA id z23sm6579890qkg.21.2020.03.21.02.22.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 Mar 2020 02:22:24 -0700 (PDT)
+        Sat, 21 Mar 2020 02:22:26 -0700 (PDT)
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Alban Gruin <alban.gruin@gmail.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v3 09/19] rebase: use apply_autostash() from sequencer.c
-Date:   Sat, 21 Mar 2020 05:21:28 -0400
-Message-Id: <03bdaeebc993058bf14a0d196f5a1a68800e538e.1584782450.git.liu.denton@gmail.com>
+Subject: [PATCH v3 10/19] rebase: generify reset_head()
+Date:   Sat, 21 Mar 2020 05:21:29 -0400
+Message-Id: <c35c5bdb8c52033ab2c7c369cf5db27880d6a56d.1584782450.git.liu.denton@gmail.com>
 X-Mailer: git-send-email 2.25.0.114.g5b0ca878e0
 In-Reply-To: <cover.1584782450.git.liu.denton@gmail.com>
 References: <cover.1577185374.git.liu.denton@gmail.com> <cover.1584782450.git.liu.denton@gmail.com>
@@ -74,126 +74,204 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The apply_autostash() function in builtin/rebase.c is similar enough to
-the apply_autostash() function in sequencer.c that they are almost
-interchangeable. Make the sequencer.c version extern and use it in
-rebase.
-
-The rebase version was introduced in 6defce2b02 (builtin rebase: support
-`--autostash` option, 2018-09-04) as part of the shell to C conversion.
-It opted to duplicate the function because, at the time, there was
-another in-progress project converting interactive rebase from shell to
-C as well and they did not want to clash with them by refactoring
-sequencer.c version of apply_autostash(). Since both efforts are long
-done, we can freely combine them together now.
+In the future, we plan on lib-ifying reset_head() so we need it to
+be more generic. Make it more generic by making it accept a
+`struct repository` argument instead of implicitly using the non-repo
+functions. Also, make it accept a `const char *default_reflog_action`
+argument so that the default action of "rebase" isn't hardcoded in.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- builtin/rebase.c | 49 ++----------------------------------------------
- sequencer.c      |  2 +-
- sequencer.h      |  2 ++
- 3 files changed, 5 insertions(+), 48 deletions(-)
+ builtin/rebase.c | 64 ++++++++++++++++++++++++++++--------------------
+ 1 file changed, 37 insertions(+), 27 deletions(-)
 
 diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 1146463099..ceb115247a 100644
+index ceb115247a..52eb45b6c4 100644
 --- a/builtin/rebase.c
 +++ b/builtin/rebase.c
-@@ -712,51 +712,6 @@ static int rebase_write_basic_state(struct rebase_options *opts)
- 	return 0;
- }
+@@ -28,6 +28,8 @@
+ #include "sequencer.h"
+ #include "rebase-interactive.h"
  
--static int apply_autostash(struct rebase_options *opts)
--{
--	const char *path = state_dir_path("autostash", opts);
--	struct strbuf autostash = STRBUF_INIT;
--	struct child_process stash_apply = CHILD_PROCESS_INIT;
--
--	if (!file_exists(path))
--		return 0;
--
--	if (!read_oneliner(&autostash, path, READ_ONELINER_WARN_NON_EXISTENCE))
--		return error(_("Could not read '%s'"), path);
--	/* Ensure that the hash is not mistaken for a number */
--	strbuf_addstr(&autostash, "^0");
--	argv_array_pushl(&stash_apply.args,
--			 "stash", "apply", autostash.buf, NULL);
--	stash_apply.git_cmd = 1;
--	stash_apply.no_stderr = stash_apply.no_stdout =
--		stash_apply.no_stdin = 1;
--	if (!run_command(&stash_apply))
--		printf(_("Applied autostash.\n"));
--	else {
--		struct argv_array args = ARGV_ARRAY_INIT;
--		int res = 0;
--
--		argv_array_pushl(&args,
--				 "stash", "store", "-m", "autostash", "-q",
--				 autostash.buf, NULL);
--		if (run_command_v_opt(args.argv, RUN_GIT_CMD))
--			res = error(_("Cannot store %s"), autostash.buf);
--		argv_array_clear(&args);
--		strbuf_release(&autostash);
--		if (res)
--			return res;
--
--		fprintf(stderr,
--			_("Applying autostash resulted in conflicts.\n"
--			  "Your changes are safe in the stash.\n"
--			  "You can run \"git stash pop\" or \"git stash drop\" "
--			  "at any time.\n"));
--	}
--
--	strbuf_release(&autostash);
--	return 0;
--}
--
- static int finish_rebase(struct rebase_options *opts)
- {
- 	struct strbuf dir = STRBUF_INIT;
-@@ -764,7 +719,7 @@ static int finish_rebase(struct rebase_options *opts)
- 	int ret = 0;
- 
- 	delete_ref(NULL, "REBASE_HEAD", NULL, REF_NO_DEREF);
--	apply_autostash(opts);
-+	apply_autostash(state_dir_path("autostash", opts));
- 	close_object_store(the_repository->objects);
- 	/*
- 	 * We ignore errors in 'gc --auto', since the
-@@ -1209,7 +1164,7 @@ static int run_specific_rebase(struct rebase_options *opts, enum action action)
- 	} else if (status == 2) {
- 		struct strbuf dir = STRBUF_INIT;
- 
--		apply_autostash(opts);
-+		apply_autostash(state_dir_path("autostash", opts));
- 		strbuf_addstr(&dir, opts->state_dir);
- 		remove_dir_recursively(&dir, 0);
- 		strbuf_release(&dir);
-diff --git a/sequencer.c b/sequencer.c
-index ad40a8b3fc..b52668f8de 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -3655,7 +3655,7 @@ static enum todo_command peek_command(struct todo_list *todo_list, int offset)
- 	return -1;
- }
- 
--static int apply_autostash(const char *path)
-+int apply_autostash(const char *path)
- {
- 	struct strbuf stash_sha1 = STRBUF_INIT;
- 	struct child_process child = CHILD_PROCESS_INIT;
-diff --git a/sequencer.h b/sequencer.h
-index 5c9662a60a..bab910f012 100644
---- a/sequencer.h
-+++ b/sequencer.h
-@@ -191,6 +191,8 @@ void commit_post_rewrite(struct repository *r,
- 			 const struct commit *current_head,
- 			 const struct object_id *new_head);
- 
-+int apply_autostash(const char *path);
++#define DEFAULT_REFLOG_ACTION "rebase"
 +
- #define SUMMARY_INITIAL_COMMIT   (1 << 0)
- #define SUMMARY_SHOW_AUTHOR_DATE (1 << 1)
- void print_commit_summary(struct repository *repo,
+ static char const * const builtin_rebase_usage[] = {
+ 	N_("git rebase [-i] [options] [--exec <cmd>] "
+ 		"[--onto <newbase> | --keep-base] [<upstream> [<branch>]]"),
+@@ -772,9 +774,10 @@ static void add_var(struct strbuf *buf, const char *name, const char *value)
+ #define RESET_HEAD_REFS_ONLY (1<<3)
+ #define RESET_ORIG_HEAD (1<<4)
+ 
+-static int reset_head(struct object_id *oid, const char *action,
++static int reset_head(struct repository *r, struct object_id *oid, const char *action,
+ 		      const char *switch_to_branch, unsigned flags,
+-		      const char *reflog_orig_head, const char *reflog_head)
++		      const char *reflog_orig_head, const char *reflog_head,
++		      const char *default_reflog_action)
+ {
+ 	unsigned detach_head = flags & RESET_HEAD_DETACH;
+ 	unsigned reset_hard = flags & RESET_HEAD_HARD;
+@@ -796,7 +799,7 @@ static int reset_head(struct object_id *oid, const char *action,
+ 	if (switch_to_branch && !starts_with(switch_to_branch, "refs/"))
+ 		BUG("Not a fully qualified branch: '%s'", switch_to_branch);
+ 
+-	if (!refs_only && hold_locked_index(&lock, LOCK_REPORT_ON_ERROR) < 0) {
++	if (!refs_only && repo_hold_locked_index(r, &lock, LOCK_REPORT_ON_ERROR) < 0) {
+ 		ret = -1;
+ 		goto leave_reset_head;
+ 	}
+@@ -815,26 +818,26 @@ static int reset_head(struct object_id *oid, const char *action,
+ 	memset(&unpack_tree_opts, 0, sizeof(unpack_tree_opts));
+ 	setup_unpack_trees_porcelain(&unpack_tree_opts, action);
+ 	unpack_tree_opts.head_idx = 1;
+-	unpack_tree_opts.src_index = the_repository->index;
+-	unpack_tree_opts.dst_index = the_repository->index;
++	unpack_tree_opts.src_index = r->index;
++	unpack_tree_opts.dst_index = r->index;
+ 	unpack_tree_opts.fn = reset_hard ? oneway_merge : twoway_merge;
+ 	unpack_tree_opts.update = 1;
+ 	unpack_tree_opts.merge = 1;
+ 	if (!detach_head)
+ 		unpack_tree_opts.reset = 1;
+ 
+-	if (repo_read_index_unmerged(the_repository) < 0) {
++	if (repo_read_index_unmerged(r) < 0) {
+ 		ret = error(_("could not read index"));
+ 		goto leave_reset_head;
+ 	}
+ 
+-	if (!reset_hard && !fill_tree_descriptor(the_repository, &desc[nr++], &head_oid)) {
++	if (!reset_hard && !fill_tree_descriptor(r, &desc[nr++], &head_oid)) {
+ 		ret = error(_("failed to find tree of %s"),
+ 			    oid_to_hex(&head_oid));
+ 		goto leave_reset_head;
+ 	}
+ 
+-	if (!fill_tree_descriptor(the_repository, &desc[nr++], oid)) {
++	if (!fill_tree_descriptor(r, &desc[nr++], oid)) {
+ 		ret = error(_("failed to find tree of %s"), oid_to_hex(oid));
+ 		goto leave_reset_head;
+ 	}
+@@ -845,16 +848,16 @@ static int reset_head(struct object_id *oid, const char *action,
+ 	}
+ 
+ 	tree = parse_tree_indirect(oid);
+-	prime_cache_tree(the_repository, the_repository->index, tree);
++	prime_cache_tree(r, r->index, tree);
+ 
+-	if (write_locked_index(the_repository->index, &lock, COMMIT_LOCK) < 0) {
++	if (write_locked_index(r->index, &lock, COMMIT_LOCK) < 0) {
+ 		ret = error(_("could not write index"));
+ 		goto leave_reset_head;
+ 	}
+ 
+ reset_head_refs:
+ 	reflog_action = getenv(GIT_REFLOG_ACTION_ENVIRONMENT);
+-	strbuf_addf(&msg, "%s: ", reflog_action ? reflog_action : "rebase");
++	strbuf_addf(&msg, "%s: ", reflog_action ? reflog_action : default_reflog_action);
+ 	prefix_len = msg.len;
+ 
+ 	if (update_orig_head) {
+@@ -916,8 +919,10 @@ static int move_to_original_branch(struct rebase_options *opts)
+ 		    opts->head_name, oid_to_hex(&opts->onto->object.oid));
+ 	strbuf_addf(&head_reflog, "rebase finished: returning to %s",
+ 		    opts->head_name);
+-	ret = reset_head(NULL, "", opts->head_name, RESET_HEAD_REFS_ONLY,
+-			 orig_head_reflog.buf, head_reflog.buf);
++	ret = reset_head(the_repository, NULL, "", opts->head_name,
++			 RESET_HEAD_REFS_ONLY,
++			 orig_head_reflog.buf, head_reflog.buf,
++			 DEFAULT_REFLOG_ACTION);
+ 
+ 	strbuf_release(&orig_head_reflog);
+ 	strbuf_release(&head_reflog);
+@@ -1005,8 +1010,9 @@ static int run_am(struct rebase_options *opts)
+ 		free(rebased_patches);
+ 		argv_array_clear(&am.args);
+ 
+-		reset_head(&opts->orig_head, "checkout", opts->head_name, 0,
+-			   "HEAD", NULL);
++		reset_head(the_repository, &opts->orig_head, "checkout",
++			   opts->head_name, 0,
++			   "HEAD", NULL, DEFAULT_REFLOG_ACTION);
+ 		error(_("\ngit encountered an error while preparing the "
+ 			"patches to replay\n"
+ 			"these revisions:\n"
+@@ -1661,8 +1667,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		rerere_clear(the_repository, &merge_rr);
+ 		string_list_clear(&merge_rr, 1);
+ 
+-		if (reset_head(NULL, "reset", NULL, RESET_HEAD_HARD,
+-			       NULL, NULL) < 0)
++		if (reset_head(the_repository, NULL, "reset", NULL, RESET_HEAD_HARD,
++			       NULL, NULL, DEFAULT_REFLOG_ACTION) < 0)
+ 			die(_("could not discard worktree changes"));
+ 		remove_branch_state(the_repository, 0);
+ 		if (read_basic_state(&options))
+@@ -1679,9 +1685,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 
+ 		if (read_basic_state(&options))
+ 			exit(1);
+-		if (reset_head(&options.orig_head, "reset",
++		if (reset_head(the_repository, &options.orig_head, "reset",
+ 			       options.head_name, RESET_HEAD_HARD,
+-			       NULL, NULL) < 0)
++			       NULL, NULL, DEFAULT_REFLOG_ACTION) < 0)
+ 			die(_("could not move back to %s"),
+ 			    oid_to_hex(&options.orig_head));
+ 		remove_branch_state(the_repository, 0);
+@@ -2073,8 +2079,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 				    options.state_dir);
+ 			write_file(autostash, "%s", oid_to_hex(&oid));
+ 			printf(_("Created autostash: %s\n"), buf.buf);
+-			if (reset_head(NULL, "reset --hard",
+-				       NULL, RESET_HEAD_HARD, NULL, NULL) < 0)
++			if (reset_head(the_repository, NULL, "reset --hard",
++				       NULL, RESET_HEAD_HARD, NULL, NULL,
++				       DEFAULT_REFLOG_ACTION) < 0)
+ 				die(_("could not reset --hard"));
+ 
+ 			if (discard_index(the_repository->index) < 0 ||
+@@ -2114,10 +2121,12 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 				strbuf_addf(&buf, "%s: checkout %s",
+ 					    getenv(GIT_REFLOG_ACTION_ENVIRONMENT),
+ 					    options.switch_to);
+-				if (reset_head(&options.orig_head, "checkout",
++				if (reset_head(the_repository,
++					       &options.orig_head, "checkout",
+ 					       options.head_name,
+ 					       RESET_HEAD_RUN_POST_CHECKOUT_HOOK,
+-					       NULL, buf.buf) < 0) {
++					       NULL, buf.buf,
++					       DEFAULT_REFLOG_ACTION) < 0) {
+ 					ret = !!error(_("could not switch to "
+ 							"%s"),
+ 						      options.switch_to);
+@@ -2189,10 +2198,10 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 
+ 	strbuf_addf(&msg, "%s: checkout %s",
+ 		    getenv(GIT_REFLOG_ACTION_ENVIRONMENT), options.onto_name);
+-	if (reset_head(&options.onto->object.oid, "checkout", NULL,
++	if (reset_head(the_repository, &options.onto->object.oid, "checkout", NULL,
+ 		       RESET_HEAD_DETACH | RESET_ORIG_HEAD |
+ 		       RESET_HEAD_RUN_POST_CHECKOUT_HOOK,
+-		       NULL, msg.buf))
++		       NULL, msg.buf, DEFAULT_REFLOG_ACTION))
+ 		die(_("Could not detach HEAD"));
+ 	strbuf_release(&msg);
+ 
+@@ -2207,8 +2216,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		strbuf_addf(&msg, "rebase finished: %s onto %s",
+ 			options.head_name ? options.head_name : "detached HEAD",
+ 			oid_to_hex(&options.onto->object.oid));
+-		reset_head(NULL, "Fast-forwarded", options.head_name,
+-			   RESET_HEAD_REFS_ONLY, "HEAD", msg.buf);
++		reset_head(the_repository, NULL, "Fast-forwarded", options.head_name,
++			   RESET_HEAD_REFS_ONLY, "HEAD", msg.buf,
++			   DEFAULT_REFLOG_ACTION);
+ 		strbuf_release(&msg);
+ 		ret = !!finish_rebase(&options);
+ 		goto cleanup;
 -- 
 2.25.0.114.g5b0ca878e0
 
