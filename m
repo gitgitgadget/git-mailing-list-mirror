@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DED7BC4332B
-	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 09:22:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 12785C43332
+	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 09:22:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A77752070A
+	by mail.kernel.org (Postfix) with ESMTP id D5CBC20753
 	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 09:22:23 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="romVce3g"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EL+BWaXA"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727104AbgCUJWR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 21 Mar 2020 05:22:17 -0400
-Received: from mail-qv1-f66.google.com ([209.85.219.66]:35931 "EHLO
-        mail-qv1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726345AbgCUJWR (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Mar 2020 05:22:17 -0400
-Received: by mail-qv1-f66.google.com with SMTP id z13so4473351qvw.3
-        for <git@vger.kernel.org>; Sat, 21 Mar 2020 02:22:16 -0700 (PDT)
+        id S1727124AbgCUJWT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 21 Mar 2020 05:22:19 -0400
+Received: from mail-qk1-f193.google.com ([209.85.222.193]:38434 "EHLO
+        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726345AbgCUJWT (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Mar 2020 05:22:19 -0400
+Received: by mail-qk1-f193.google.com with SMTP id h14so9831342qke.5
+        for <git@vger.kernel.org>; Sat, 21 Mar 2020 02:22:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=nsep9eFqDJqK599AyBuyguj4crSxZCp/l2148748kJg=;
-        b=romVce3gpiObfyo6Bs/87Kmn1IUdl9I+iplWAp2+cbssVCs88Je2zbt9i9ZWT58dyb
-         DU1xshGxyhZAPOThr+ewaM0DdSAniR6/CzDKsiaj+aRQA+Wh4NLzYsDyMypqff49mOYE
-         Y2W9X8EB+UPUsa8k/lfsNwsJ9DGAUsbMwqSiNI5jEs/kfzwoSgz7wTsD0488ZzY1ScnY
-         7/kWHMVWonmqv4qrkPyAjYS7ux0Esi7RjGU0ErwPUSzUwiVrNmIJ9KnY/CALuoPnEiHg
-         uJu0YeDdIZueBeaJmqhnpkw/Uqh3cLoihR46PWFdMxjKm9/9abhhAM+bAGZeD7nydPEl
-         0+7Q==
+        bh=OT4Sx+tSiVsN/fSK9K4GX5MlFsY2JuB7NQZzi5CNb34=;
+        b=EL+BWaXAhAVT5SPGQThXD12r1GACwTD8Ae8KyF+Ak4sL8gvd7CW1Fzu5b+2Dyb8ti8
+         I5tE6IXMzZ3d2CNpxQqlu8yvdRx4mGfwQBFBL8hCGGJxSMGy7DGWjuctpjyVKJ+VsP3U
+         r3khGNl9JaL5QYJo/yZLwNV1O8C4p9Lc8iggJRTKBYfwQ7wyrdK6fF7zrABjllpNQq7v
+         CJ3yrZF8Q80FWT+gWJ82GcqznxBFQ6vNFNf5i1wjo8vsgPOriDAKI65ERgDuNDuZoGix
+         eQS1nmopxc1C5/6+g9osF6WZQ/JDH557JdDynVqc1rgeXNEVcSB6mEyMgMofEjcxp9jc
+         jR+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=nsep9eFqDJqK599AyBuyguj4crSxZCp/l2148748kJg=;
-        b=Jb4weo2lGmR2mC2FUQ/dZFrPDmIRX+JCdfQZqMldHS+BNxmKYhnDODOM26Tmpts+o9
-         +VZ7VDTEaP3lT9yqugEGwvynDwA7ZC+N0+Meoe724EjJIhi8KBSZ8yGBVlMPu+lqDcGW
-         TAtKU45C/wPUnWNLrB4Z38wuV8F1t4SW0ZT7s80de9K2npxxRWG5yEkfqTJqVkvPrZwu
-         LYKzZWQZuRjZGPBx0sf3plKEK64qQuAaFExTB4SCiQ8myMyrXt6siYDbdybcRKYQHAhl
-         OJX9WRX/j8nW2uKebuK+g1T63EJpBUi2FfA4d5HgVRJ/hoQJzSioagDkcHWfg5aY1BgG
-         UGtw==
-X-Gm-Message-State: ANhLgQ0/1zD5h5IbfGDaDjuLJXS5xzJunfim6n/ndVMTv4WSL+dwNrCp
-        xZhFQbIs1sHQ5sUyOuzxDoSGBRbl
-X-Google-Smtp-Source: ADFU+vsKzBfrRdPXUyX4viK6cl/y1icN7A0VrJ4rghOu8p+3a9pomuzahj4rvpc+KNCMTHiL45zGyg==
-X-Received: by 2002:ad4:4364:: with SMTP id u4mr11677961qvt.58.1584782535933;
-        Sat, 21 Mar 2020 02:22:15 -0700 (PDT)
+        bh=OT4Sx+tSiVsN/fSK9K4GX5MlFsY2JuB7NQZzi5CNb34=;
+        b=IXAO2TMhr+SfRMRXMm3W8pyiEoUKrmWVxhyVg3S3EjNg8VC1Aw/PdBNTd82sNyluuU
+         PvIaplg2WceMP310UdYaZXdXTNLS7KF5K1Jkc0gSdSBiXwFXhu7iXK3zblNuVb+x6hcV
+         8B3ubG5+4wCbfeaY4uzzx/QFhxANxyDZkWyGdJPMBRIy9rF/jA6Dk+jfyLhhmJa2oRxI
+         h8B/H/QLOgxERnuSEHK0wUnD7DAUavNKirjBYp04HWzfcfgxjqodwWr2DySx6/Rc5R7X
+         NlHe1Waf+ANmq5b/pgbtvmtWy+6YhHFShLsLTioczO/+tQ2yDWfIB41T7o2OJRw/XCjH
+         /prw==
+X-Gm-Message-State: ANhLgQ3TsiPbGL4KhD8r+s+H3jGp3Heaptn2JdgnyKWcG/SGgGJQM10j
+        xL8NeJljMLBptD/oKdM7VXITQ7Lr
+X-Google-Smtp-Source: ADFU+vtmMfUBq6ExaTHZiM5cbXP04CuUeDADQkDJezyPVlYVdFL8YZS0jgMx/Yuu+rD4eZHbPau4cA==
+X-Received: by 2002:a37:9dc9:: with SMTP id g192mr12273918qke.50.1584782537358;
+        Sat, 21 Mar 2020 02:22:17 -0700 (PDT)
 Received: from archbookpro.lan ([199.249.110.29])
-        by smtp.gmail.com with ESMTPSA id z23sm6579890qkg.21.2020.03.21.02.22.10
+        by smtp.gmail.com with ESMTPSA id z23sm6579890qkg.21.2020.03.21.02.22.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 Mar 2020 02:22:15 -0700 (PDT)
+        Sat, 21 Mar 2020 02:22:16 -0700 (PDT)
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Alban Gruin <alban.gruin@gmail.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v3 03/19] sequencer: use file strbuf for read_oneliner()
-Date:   Sat, 21 Mar 2020 05:21:22 -0400
-Message-Id: <7c37777f07191c8ac1d26300f9465b90758550b2.1584782450.git.liu.denton@gmail.com>
+Subject: [PATCH v3 04/19] sequencer: make read_oneliner() accept flags
+Date:   Sat, 21 Mar 2020 05:21:23 -0400
+Message-Id: <4f9708682877f4d3689781009dc2695b913eff29.1584782450.git.liu.denton@gmail.com>
 X-Mailer: git-send-email 2.25.0.114.g5b0ca878e0
 In-Reply-To: <cover.1584782450.git.liu.denton@gmail.com>
 References: <cover.1577185374.git.liu.denton@gmail.com> <cover.1584782450.git.liu.denton@gmail.com>
@@ -74,66 +74,116 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the original read_oneliner logic, we duplicated the logic for
-strbuf_trim_trailing_newline() with one exception: instead of preventing
-buffer accesses below index 0, it would prevent buffer accesses below
-index `orig_len`. Although this is correct, it isn't worth having the
-duplicated logic around.
+In a future commit, we will need read_oneliner() to accept flags other
+than just `skip_if_empty`. Instead of having an argument for each flag,
+teach read_oneliner() to accept the bitfield `flags` instead. For now,
+only recognize the `READ_ONELINER_SKIP_IF_EMPTY` flag. More flags will
+be added in a future commit.
 
-Add a second strbuf to which files are read and run
-strbuf_trim_trailing_newline() directly on this strbuf then concatenate
-this strbuf with the argument strbuf at the end of the function. The
-function's external behaviour is unchanged.
+The result of this is that parallel topics which introduce invocations
+of read_oneliner() will still be compatible with this new function
+signature since, instead of passing 1 or 0 for `skip_if_empty`, they'll
+be passing 1 or 0 to `flags`, which gives equivalent behavior.
+
+Mechanically fix up invocations of read_oneliner() with the following
+spatch
+
+	@@
+	expression a, b;
+	@@
+	  read_oneliner(a, b,
+	- 1
+	+ READ_ONELINER_SKIP_IF_EMPTY
+	  )
+
+and manually break up long lines in the result.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- sequencer.c | 24 +++++++++++++-----------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+ sequencer.c | 21 ++++++++++++++-------
+ 1 file changed, 14 insertions(+), 7 deletions(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index e528225e78..c49fe76fe6 100644
+index c49fe76fe6..abb2a21e9d 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -431,26 +431,28 @@ static int write_message(const void *buf, size_t len, const char *filename,
- static int read_oneliner(struct strbuf *buf,
- 	const char *path, int skip_if_empty)
- {
--	int orig_len = buf->len;
-+	int ret = 0;
-+	struct strbuf file_buf = STRBUF_INIT;
- 
- 	if (!file_exists(path))
- 		return 0;
- 
--	if (strbuf_read_file(buf, path, 0) < 0) {
-+	if (strbuf_read_file(&file_buf, path, 0) < 0) {
- 		warning_errno(_("could not read '%s'"), path);
--		return 0;
-+		goto done;
- 	}
- 
--	if (buf->len > orig_len && buf->buf[buf->len - 1] == '\n') {
--		if (--buf->len > orig_len && buf->buf[buf->len - 1] == '\r')
--			--buf->len;
--		buf->buf[buf->len] = '\0';
--	}
-+	strbuf_trim_trailing_newline(&file_buf);
- 
--	if (skip_if_empty && buf->len == orig_len)
--		return 0;
-+	if (skip_if_empty && !file_buf.len)
-+		goto done;
- 
--	return 1;
-+	strbuf_addbuf(buf, &file_buf);
-+	ret = 1;
-+
-+done:
-+	strbuf_release(&file_buf);
-+	return ret;
+@@ -419,6 +419,8 @@ static int write_message(const void *buf, size_t len, const char *filename,
+ 	return 0;
  }
  
- static struct tree *empty_tree(struct repository *r)
++#define READ_ONELINER_SKIP_IF_EMPTY (1 << 0)
++
+ /*
+  * Reads a file that was presumably written by a shell script, i.e. with an
+  * end-of-line marker that needs to be stripped.
+@@ -429,7 +431,7 @@ static int write_message(const void *buf, size_t len, const char *filename,
+  * Returns 1 if the file was read, 0 if it could not be read or does not exist.
+  */
+ static int read_oneliner(struct strbuf *buf,
+-	const char *path, int skip_if_empty)
++	const char *path, unsigned flags)
+ {
+ 	int ret = 0;
+ 	struct strbuf file_buf = STRBUF_INIT;
+@@ -444,7 +446,7 @@ static int read_oneliner(struct strbuf *buf,
+ 
+ 	strbuf_trim_trailing_newline(&file_buf);
+ 
+-	if (skip_if_empty && !file_buf.len)
++	if ((flags & READ_ONELINER_SKIP_IF_EMPTY) && !file_buf.len)
+ 		goto done;
+ 
+ 	strbuf_addbuf(buf, &file_buf);
+@@ -2488,7 +2490,8 @@ static int read_populate_opts(struct replay_opts *opts)
+ 	if (is_rebase_i(opts)) {
+ 		struct strbuf buf = STRBUF_INIT;
+ 
+-		if (read_oneliner(&buf, rebase_path_gpg_sign_opt(), 1)) {
++		if (read_oneliner(&buf, rebase_path_gpg_sign_opt(),
++				  READ_ONELINER_SKIP_IF_EMPTY)) {
+ 			if (!starts_with(buf.buf, "-S"))
+ 				strbuf_reset(&buf);
+ 			else {
+@@ -2498,7 +2501,8 @@ static int read_populate_opts(struct replay_opts *opts)
+ 			strbuf_reset(&buf);
+ 		}
+ 
+-		if (read_oneliner(&buf, rebase_path_allow_rerere_autoupdate(), 1)) {
++		if (read_oneliner(&buf, rebase_path_allow_rerere_autoupdate(),
++				  READ_ONELINER_SKIP_IF_EMPTY)) {
+ 			if (!strcmp(buf.buf, "--rerere-autoupdate"))
+ 				opts->allow_rerere_auto = RERERE_AUTOUPDATE;
+ 			else if (!strcmp(buf.buf, "--no-rerere-autoupdate"))
+@@ -2530,7 +2534,8 @@ static int read_populate_opts(struct replay_opts *opts)
+ 		strbuf_release(&buf);
+ 
+ 		if (read_oneliner(&opts->current_fixups,
+-				  rebase_path_current_fixups(), 1)) {
++				  rebase_path_current_fixups(),
++				  READ_ONELINER_SKIP_IF_EMPTY)) {
+ 			const char *p = opts->current_fixups.buf;
+ 			opts->current_fixup_count = 1;
+ 			while ((p = strchr(p, '\n'))) {
+@@ -3667,7 +3672,8 @@ static int apply_autostash(struct replay_opts *opts)
+ 	struct child_process child = CHILD_PROCESS_INIT;
+ 	int ret = 0;
+ 
+-	if (!read_oneliner(&stash_sha1, rebase_path_autostash(), 1)) {
++	if (!read_oneliner(&stash_sha1, rebase_path_autostash(),
++			   READ_ONELINER_SKIP_IF_EMPTY)) {
+ 		strbuf_release(&stash_sha1);
+ 		return 0;
+ 	}
+@@ -4291,7 +4297,8 @@ int sequencer_continue(struct repository *r, struct replay_opts *opts)
+ 		struct strbuf buf = STRBUF_INIT;
+ 		struct object_id oid;
+ 
+-		if (read_oneliner(&buf, rebase_path_stopped_sha(), 1) &&
++		if (read_oneliner(&buf, rebase_path_stopped_sha(),
++				  READ_ONELINER_SKIP_IF_EMPTY) &&
+ 		    !get_oid_committish(buf.buf, &oid))
+ 			record_in_rewritten(&oid, peek_command(&todo_list, 0));
+ 		strbuf_release(&buf);
 -- 
 2.25.0.114.g5b0ca878e0
 
