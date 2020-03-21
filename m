@@ -2,262 +2,92 @@ Return-Path: <SRS0=NBeB=5G=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 42A64C4332B
-	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 03:07:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D89DC4332B
+	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 03:44:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D71B620709
-	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 03:07:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 45A19206F9
+	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 03:44:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="fKYfuYft"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="cl1K1xME"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727061AbgCUDHZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Mar 2020 23:07:25 -0400
-Received: from mail-qk1-f173.google.com ([209.85.222.173]:40953 "EHLO
-        mail-qk1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726840AbgCUDHZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Mar 2020 23:07:25 -0400
-Received: by mail-qk1-f173.google.com with SMTP id l25so4494721qki.7
-        for <git@vger.kernel.org>; Fri, 20 Mar 2020 20:07:22 -0700 (PDT)
+        id S1727865AbgCUDoV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Mar 2020 23:44:21 -0400
+Received: from mail-pj1-f67.google.com ([209.85.216.67]:56246 "EHLO
+        mail-pj1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727046AbgCUDoV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Mar 2020 23:44:21 -0400
+Received: by mail-pj1-f67.google.com with SMTP id mj6so3358850pjb.5
+        for <git@vger.kernel.org>; Fri, 20 Mar 2020 20:44:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp-br.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=H3bNIVsE7MbgDcihWqo7i12B208h6l/wbN0uz21w/Yw=;
-        b=fKYfuYfteb1ywNkr+Mq79GF/H622LSp1tfHXSvroQ+Gagdefk0VPjhQGxEdaO5Ta+Q
-         pFVVMAiQx+JBkP1Vaimlt9F/0nDkFa7Vl/6k9L/uajdpz5hO51Wxda90EOXF2HcL8w6E
-         BzMsEy9oWtk+HDhfDezu8WvucpA75pKaspD4nvIEIZTf9raDjkEgkTAlldt7Qohz5ird
-         G7tbt5Zij0Oc/6AkR6HE8m3B5nrXWVOhduOyRU9/7zgiSpg52atyFspNYAtxMLEodeLe
-         /NgPikxgKUmtPucnqgMrN03vOP6fAQDu4oLS0KRXtU0XWq9MQ35eQeHgCfUKE6/mlFhR
-         BdWw==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=KrMcN3q3cnoS3AmQt+Iu/lFE5gQxr9GGdvL+xuYpqHI=;
+        b=cl1K1xMERr7sGMAKBWMc+Frv5wPODMBGn1AUQ5mrLyxTtrY7l5BsJ7RNGns+cV1mZk
+         0+HjLDJI7qnhY+HNge0EeeyhXTByhJwo0t+O3OKFHMfFZrS5evFVwXZNKrGfcS8cgCBW
+         lPRyfeNMrAljdPLPgVhNiGShTIyqoJobadlKeyN1E+wsmuX+mavRvQ3MCd19MFwYquOP
+         1Zd2ka1ERiQ95EOEi5Dxd60WCTFgB8lrL+o9p38NMcnJ39GRpDuv3KjRVww/RiVxhGx9
+         pQmcHvHNX9D88P9afq1xTLQylV+pv9dplf9gElzZR4BHISUCUGRqa52T7K2NYW6eeDc1
+         tx2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=H3bNIVsE7MbgDcihWqo7i12B208h6l/wbN0uz21w/Yw=;
-        b=BehmyEBwF3xdWMCKCwRwCyjzcr1nE4zMPBKn/oCEM1Ed307SQZqdkG32LkqjI2Ucmd
-         er+ge8lwrrrLx3PR1E/qyidjd6/FaIvsJ+NeUWRoW2TziVoNKuIAVGMoWKBWIx0PWeZH
-         qw/13FzRposIGM033IjZi7RNiysqigWwGff7wYM7vhQDBrdikN+jBfY/bqAHr6SqOxeS
-         Tyk5mUiivAGAIuJ0HiNm5jhh23pAhyvN7z3m/+TyrT52TMBuRGv5qPrGZfYZncCLK2EN
-         pg8d3Z0YbymEAP8IIulctlbc6mBVoQLGK2H0sNG5muDpw6nqxpbVZ+TIey9l3JmoE1IW
-         hEqw==
-X-Gm-Message-State: ANhLgQ3LZgmIRe/B7e8mMzXpuwhkY92ZwwViVFowkBD55cqNZkZlODBL
-        7EL6FlDRWb2hDuSTQhcV6YQdQ6A0NiE=
-X-Google-Smtp-Source: ADFU+vs0Kb6juDTU5gDz8E6BNu+ElCNOixsFZoFgvQz2nq/TLekZRVqQj0VqtKVJu/KKdNwh/foTIw==
-X-Received: by 2002:a37:a89:: with SMTP id 131mr256185qkk.137.1584760041422;
-        Fri, 20 Mar 2020 20:07:21 -0700 (PDT)
-Received: from mango.spo.virtua.com.br ([2804:14c:81:942d::3])
-        by smtp.gmail.com with ESMTPSA id f13sm6200772qti.47.2020.03.20.20.07.18
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=KrMcN3q3cnoS3AmQt+Iu/lFE5gQxr9GGdvL+xuYpqHI=;
+        b=rWbNwiFNgYe3plnFKku2k/ErEq9xMroDKUcqEEr/xvWw443EnU4HtIqfZNNUEeJQf3
+         bfKKxkHBD/beQ2DAu6pz5I+FiQ2A0vYZ+3h6UBs0kFYeylx6Qz4TkQ6UiWTTotaeR4xF
+         lclGz/kZrPnOc8IEuIWQiH50ZTLUOFbL6oeJZsAHflcI43O49DxJ2Pxu3tTeXjZAFVcF
+         XKqEAijplBMf2lLevMlow4ZXIbryhdi/DoHxBATc8PSCjPLcf/cFvv9Y3R9r9I9Y8RnZ
+         HoMH06tHyC5t+lmR8qAqaGNsuljFteaVwiwuChMfa5Eh2nxUWV/DfGDNtsSH0iwbSq3e
+         XGLg==
+X-Gm-Message-State: ANhLgQ3A3qd+MBMGrbqs0U/A1pdFSg7cfbXJ4kcS8YEWSvxAKhC5Oaf5
+        MY6EiuuZpiv+KxTB1uHEHboOJHVHGwU=
+X-Google-Smtp-Source: ADFU+vsXbo5tFQ8IYHY8oQLJntBRFblU9fRJH1miKhFdH2uBKpIy1Y0wRIeqAsX8exk+OEv7GPLu0Q==
+X-Received: by 2002:a17:902:22e:: with SMTP id 43mr11077255plc.119.1584762259092;
+        Fri, 20 Mar 2020 20:44:19 -0700 (PDT)
+Received: from localhost ([8.44.146.30])
+        by smtp.gmail.com with ESMTPSA id h95sm5989411pjb.46.2020.03.20.20.44.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Mar 2020 20:07:20 -0700 (PDT)
-From:   Matheus Tavares <matheus.bernardino@usp.br>
+        Fri, 20 Mar 2020 20:44:18 -0700 (PDT)
+Date:   Fri, 20 Mar 2020 21:44:16 -0600
+From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
-Cc:     gitster@pobox.com,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] test-lib: allow short options to be stacked
-Date:   Sat, 21 Mar 2020 00:07:05 -0300
-Message-Id: <48c28683412e3e0803d4c7189a6d66daddcdc580.1584759277.git.matheus.bernardino@usp.br>
-X-Mailer: git-send-email 2.25.1
+Cc:     peff@peff.net, dstolee@microsoft.com
+Subject: [PATCH 0/1] commit-graph: avoid unnecessary tag deference when
+ merging
+Message-ID: <cover.1584762087.git.me@ttaylorr.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When debugging a test (or a set of tests), it's common to execute it
-with some combination of short options, such as:
+Hi,
 
-	$ ./txxx-testname.sh -d -x -i
+Here's a patch that Peff and I were kicking around from a couple of
+months ago when we were investigating deploying commit-graphs at GitHub.
+Particularly, we were looking into why merging two commit-graphs after a
+write with '--split' took as much time as we were seeing in our
+infrastructure.
 
-In cases like this, CLIs usually allow the short options to be stacked
-in a single argument, for convenience and agility. Let's add this
-feature to test-lib, allowing the above command to be run as:
+This patch avoids an unnecessary tag dereference in
+'merge_commit_graph()', which can improve the running time of a
+commit-graph write by around ~7.4% on average.
 
-	$ ./txxx-testname.sh -dxi
-	(or any other permutation, e.g. '-ixd')
+Thanks in advance for your review.
 
-Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
----
- t/README      |  3 ++-
- t/test-lib.sh | 46 ++++++++++++++++++++++++++++++++--------------
- 2 files changed, 34 insertions(+), 15 deletions(-)
+Taylor Blau (1):
+  commit-graph.c: avoid unnecessary tag dereference when merging
 
-diff --git a/t/README b/t/README
-index 9afd61e3ca..c3cf8f617b 100644
---- a/t/README
-+++ b/t/README
-@@ -69,7 +69,8 @@ You can also run each test individually from command line, like this:
- 
- You can pass --verbose (or -v), --debug (or -d), and --immediate
- (or -i) command line argument to the test, or by setting GIT_TEST_OPTS
--appropriately before running "make".
-+appropriately before running "make". Short options can be stacked, i.e.
-+'-d -v' is the same as '-dv'.
- 
- -v::
- --verbose::
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 0ea1e5a05e..14363010d2 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -72,119 +72,137 @@ then
- 	if test -n "$GIT_TEST_INSTALLED"
- 	then
- 		echo >&2 "error: there is no working Git at '$GIT_TEST_INSTALLED'"
- 	else
- 		echo >&2 'error: you do not seem to have built git yet.'
- 	fi
- 	exit 1
- fi
- 
--# Parse options while taking care to leave $@ intact, so we will still
--# have all the original command line options when executing the test
--# script again for '--tee' and '--verbose-log' below.
--store_arg_to=
--prev_opt=
--for opt
--do
--	if test -n "$store_arg_to"
--	then
--		eval $store_arg_to=\$opt
--		store_arg_to=
--		prev_opt=
--		continue
--	fi
-+parse_option () {
-+	local opt="$@"
- 
- 	case "$opt" in
- 	-d|--d|--de|--deb|--debu|--debug)
- 		debug=t ;;
- 	-i|--i|--im|--imm|--imme|--immed|--immedi|--immedia|--immediat|--immediate)
- 		immediate=t ;;
- 	-l|--l|--lo|--lon|--long|--long-|--long-t|--long-te|--long-tes|--long-test|--long-tests)
- 		GIT_TEST_LONG=t; export GIT_TEST_LONG ;;
- 	-r)
- 		store_arg_to=run_list
- 		;;
- 	--run=*)
- 		run_list=${opt#--*=} ;;
- 	-h|--h|--he|--hel|--help)
- 		help=t ;;
- 	-v|--v|--ve|--ver|--verb|--verbo|--verbos|--verbose)
- 		verbose=t ;;
- 	--verbose-only=*)
- 		verbose_only=${opt#--*=}
- 		;;
- 	-q|--q|--qu|--qui|--quie|--quiet)
- 		# Ignore --quiet under a TAP::Harness. Saying how many tests
- 		# passed without the ok/not ok details is always an error.
- 		test -z "$HARNESS_ACTIVE" && quiet=t ;;
- 	--with-dashes)
- 		with_dashes=t ;;
- 	--no-bin-wrappers)
- 		no_bin_wrappers=t ;;
- 	--no-color)
- 		color= ;;
- 	--va|--val|--valg|--valgr|--valgri|--valgrin|--valgrind)
- 		valgrind=memcheck
- 		tee=t
- 		;;
- 	--valgrind=*)
- 		valgrind=${opt#--*=}
- 		tee=t
- 		;;
- 	--valgrind-only=*)
- 		valgrind_only=${opt#--*=}
- 		tee=t
- 		;;
- 	--tee)
- 		tee=t ;;
- 	--root=*)
- 		root=${opt#--*=} ;;
- 	--chain-lint)
- 		GIT_TEST_CHAIN_LINT=1 ;;
- 	--no-chain-lint)
- 		GIT_TEST_CHAIN_LINT=0 ;;
- 	-x)
- 		trace=t ;;
- 	-V|--verbose-log)
- 		verbose_log=t
- 		tee=t
- 		;;
- 	--write-junit-xml)
- 		write_junit_xml=t
- 		;;
- 	--stress)
- 		stress=t ;;
- 	--stress=*)
- 		echo "error: --stress does not accept an argument: '$opt'" >&2
- 		echo "did you mean --stress-jobs=${opt#*=} or --stress-limit=${opt#*=}?" >&2
- 		exit 1
- 		;;
- 	--stress-jobs=*)
- 		stress=t;
- 		stress=${opt#--*=}
- 		case "$stress" in
- 		*[!0-9]*|0*|"")
- 			echo "error: --stress-jobs=<N> requires the number of jobs to run" >&2
- 			exit 1
- 			;;
- 		*)	# Good.
- 			;;
- 		esac
- 		;;
- 	--stress-limit=*)
- 		stress=t;
- 		stress_limit=${opt#--*=}
- 		case "$stress_limit" in
- 		*[!0-9]*|0*|"")
- 			echo "error: --stress-limit=<N> requires the number of repetitions" >&2
- 			exit 1
- 			;;
- 		*)	# Good.
- 			;;
- 		esac
- 		;;
- 	*)
- 		echo "error: unknown test option '$opt'" >&2; exit 1 ;;
- 	esac
-+}
-+
-+# Parse options while taking care to leave $@ intact, so we will still
-+# have all the original command line options when executing the test
-+# script again for '--tee' and '--verbose-log' below.
-+store_arg_to=
-+prev_opt=
-+for opt
-+do
-+	if test -n "$store_arg_to"
-+	then
-+		eval $store_arg_to=\$opt
-+		store_arg_to=
-+		prev_opt=
-+		continue
-+	fi
-+
-+	case "$opt" in
-+	--*)
-+		parse_option "$opt" ;;
-+	-?*)
-+		# stacked short options must be fed separately to parse_option
-+		for c in $(echo "${opt#-}" | sed 's/./& /g')
-+		do
-+			parse_option "-$c"
-+		done
-+		;;
-+	*)
-+		echo "error: unknown test option '$opt'" >&2; exit 1 ;;
-+	esac
- 
- 	prev_opt=$opt
- done
--- 
-2.25.1
+ commit-graph.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
+--
+2.26.0.rc2.311.g8e52d2684b
