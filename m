@@ -7,61 +7,61 @@ X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E6039C4332B
-	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 18:00:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AC9D1C4332D
+	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 18:00:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B99FA2076E
-	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 18:00:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 78F9E2078A
+	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 18:00:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HICHKEIt"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="q0kL0jW5"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727841AbgCUSAR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 21 Mar 2020 14:00:17 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:46251 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727761AbgCUSAQ (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1727883AbgCUSAS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 21 Mar 2020 14:00:18 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:44366 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727610AbgCUSAQ (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 21 Mar 2020 14:00:16 -0400
-Received: by mail-ed1-f66.google.com with SMTP id cf14so1922818edb.13
+Received: by mail-ed1-f68.google.com with SMTP id z3so11085256edq.11
         for <git@vger.kernel.org>; Sat, 21 Mar 2020 11:00:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=ja2imtO7F6ErC0w/uEQNVFpx8uzMl67k57jEKpbuYXI=;
-        b=HICHKEIt4frFe9k4O69c8VK85injd8WKjHif3vdDPu0CHhabRDwjgJ98130JDNf0Rb
-         zFzvkvP+thoC+ftTaaGVaJLiMzLilPFbBogQinDcQQVaSahZ6s6WjREc2W1BbrIHDIic
-         8aerjwKkAK/Zm7Da7srG2eI1NOPIRouD5kE6e+zr8A3mQuawxuOAHtDm7A4P6cFKSPgG
-         ayEqBY4Q/CiefPGCsxRKSBTIxf7PMuW/snSSCCBOg6tao3qlEeEb2n8u9M0gJwQ7ghOu
-         Iaf8Qyh9f34ufnCSNVWk/wki3QnRvITzlocoLebMZXLbHPMM9+/PNJNCgSitFcYgb+cN
-         i3tA==
+        bh=pNTZUDjJPBSKm8DnqvbjiMFhIXpHTgA3IEGTERjokJ4=;
+        b=q0kL0jW5Jc7x9BYyGjFF5IWPv0wbbWxvYUz7xteu1iTftzyng9cY1fuHgrgoybB58S
+         OzFAKrqdbk+hCiROLfMqzcVpQ8gYUD5l3SgGDxtK+9Mo2OhIYfk5jKpftD5illXF7zOY
+         7X3779R0gGGVKjQNq/bszoGQB603k/4X9sXQzpcvE7wIFDQDT+iKdY1qpnXgegAB2lJi
+         PV2T5MNepGsPcfm4SrQPQk5kTbu6+T2BdBPHl96VAy8SJx51XG4lsiMQCU3ho2tXh7zz
+         HW8kjolztXlRWNXmmocYtl8pUBTWJonDwchfIDntF/18Ep/fseqruuiZsuhoOlkEU1a7
+         2mBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ja2imtO7F6ErC0w/uEQNVFpx8uzMl67k57jEKpbuYXI=;
-        b=bPoYcXKzZiCxi+jGTm0QbiOjqt+6+vuTneUBlto474u/Ik/WcvLLzrttA4fWUR9N4Y
-         EcUeD5A5puwL8O5haJWgonup6aN49QMoC/KliEtqu7UPSkMF6IhZvcn7XZgHoXLaG5p9
-         B9pGuiQbanEC4tJ4powvUsHU8bxz0ekmys1pQeqzmm6/jKzeat/XBfGlJVxlw+xsJnBj
-         ABZz9sa599dZ16prHp11WH95kpT0YFazIsESIYs5EZZQTJgqM8ra6pll/C5seUc1a+Ca
-         E9r9Bne55LnZkskfAzY+Cq/+0JUVa+2WyarvdolCQCu9kHACVJ11/svkY2pW/iwizpWv
-         tGvw==
-X-Gm-Message-State: ANhLgQ0YNgg1bmyUHxM8pORdulRqcoyfECl21aJ837XGOVVqt5+rBv8K
-        GxcrnGA00c+JRk1iAPBeFUFY/Gf0
-X-Google-Smtp-Source: ADFU+vtXHEvp0O7eF0dpEdfznBpZuxlRy3utGtAPakJ1YfEpmF11LTIoTgw4YIUvqNyL9O0wEZ6J1A==
-X-Received: by 2002:a50:fc93:: with SMTP id f19mr14059288edq.72.1584813614612;
-        Sat, 21 Mar 2020 11:00:14 -0700 (PDT)
+        bh=pNTZUDjJPBSKm8DnqvbjiMFhIXpHTgA3IEGTERjokJ4=;
+        b=AgH9OINKWwM0trfdY8aCkyML01bUN/y22CbAnB8DeMfTVYi8ztJVyvfSo8GN5rrZw3
+         VLTcjtAACVdI7zl65sbEUkgBEpKXbQbfbrokuTB++WQlz+8gdxthxqUJiT5WvkyyP/Cf
+         b7aJ98wYvl8jJK3EMdQDH3PZi16/Li+p3fWl9GnBPgD46s/tqhl7+KGMCCydiXMnN7mQ
+         otcnr2OP9xuWrk/e/I+Nk0L0HVcLIPonXtne2vRkw4t+yc1gOxuhxqRh9MKV2V7kyIdH
+         BT/7Kf7yNskz+Kv5/7xDoS2VMuVGgNNYvyKcwumniH0FScW+3qVwZb7OCxqVe6xSXxXM
+         iUMg==
+X-Gm-Message-State: ANhLgQ14JdG+ZlWnpPfCDhP0uHcI0l+ivRLnNXDefijHOF+HkowUM/SW
+        CpcAzdhgdLLCLtIY1KMWHSNMbDi7
+X-Google-Smtp-Source: ADFU+vsJKBf84yyfcsOoObty6a0EjACi98YaUeigMT6QvKaeh0w1aS/EPvPED68b/Sfa1lCbgWo6bQ==
+X-Received: by 2002:a17:906:a882:: with SMTP id ha2mr13708539ejb.139.1584813613948;
+        Sat, 21 Mar 2020 11:00:13 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l16sm165531edv.71.2020.03.21.11.00.14
+        by smtp.gmail.com with ESMTPSA id g24sm657514edu.0.2020.03.21.11.00.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 Mar 2020 11:00:14 -0700 (PDT)
-Message-Id: <5fea19f0136a849c70f18591d88abae8cee99841.1584813609.git.gitgitgadget@gmail.com>
+        Sat, 21 Mar 2020 11:00:13 -0700 (PDT)
+Message-Id: <5cbab2a7a560cd1a2459d63d34d19e5abd265f9a.1584813609.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.726.v2.git.git.1584813609.gitgitgadget@gmail.com>
 References: <pull.726.git.git.1584169893.gitgitgadget@gmail.com>
         <pull.726.v2.git.git.1584813609.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 21 Mar 2020 17:59:57 +0000
-Subject: [PATCH v2 06/18] unpack-trees: allow check_updates() to work on a
- different index
+Date:   Sat, 21 Mar 2020 17:59:56 +0000
+Subject: [PATCH v2 05/18] t1091: make some tests a little more defensive
+ against failures
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,43 +77,31 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-check_updates() previously assumed it was working on o->result.  We want
-to use this function in combination with a different index_state, so
-take the intended index_state as a parameter.
-
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- unpack-trees.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ t/t1091-sparse-checkout-builtin.sh | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/unpack-trees.c b/unpack-trees.c
-index d2863fa0310..dde50047a82 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -353,12 +353,12 @@ static void report_collided_checkout(struct index_state *index)
- 	string_list_clear(&list, 0);
- }
+diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
+index 44a91205d60..8607a8e6d1a 100755
+--- a/t/t1091-sparse-checkout-builtin.sh
++++ b/t/t1091-sparse-checkout-builtin.sh
+@@ -278,6 +278,7 @@ test_expect_success 'cone mode: add parent path' '
+ '
  
--static int check_updates(struct unpack_trees_options *o)
-+static int check_updates(struct unpack_trees_options *o,
-+			 struct index_state *index)
- {
- 	unsigned cnt = 0;
- 	int errs = 0;
- 	struct progress *progress;
--	struct index_state *index = &o->result;
- 	struct checkout state = CHECKOUT_INIT;
- 	int i;
+ test_expect_success 'revert to old sparse-checkout on bad update' '
++	test_when_finished git -C repo sparse-checkout disable &&
+ 	test_when_finished git -C repo reset --hard &&
+ 	git -C repo sparse-checkout set deep &&
+ 	echo update >repo/deep/deeper2/a &&
+@@ -328,6 +329,7 @@ test_expect_success 'sparse-checkout (init|set|disable) fails with dirty status'
+ '
  
-@@ -1665,7 +1665,7 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
- 		}
- 	}
- 
--	ret = check_updates(o) ? (-2) : 0;
-+	ret = check_updates(o, &o->result) ? (-2) : 0;
- 	if (o->dst_index) {
- 		move_index_extensions(&o->result, o->src_index);
- 		if (!ret) {
+ test_expect_success 'cone mode: set with core.ignoreCase=true' '
++	rm repo/.git/info/sparse-checkout &&
+ 	git -C repo sparse-checkout init --cone &&
+ 	git -C repo -c core.ignoreCase=true sparse-checkout set folder1 &&
+ 	cat >expect <<-\EOF &&
 -- 
 gitgitgadget
 
