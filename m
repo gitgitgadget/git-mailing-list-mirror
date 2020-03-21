@@ -2,89 +2,112 @@ Return-Path: <SRS0=NBeB=5G=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FD54C4332B
-	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 18:35:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DD60BC4332B
+	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 18:50:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1134F20775
-	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 18:35:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AAB3A20637
+	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 18:50:54 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tvKj7BQu"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="UWJThtCL"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727631AbgCUSfy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 21 Mar 2020 14:35:54 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:38875 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727015AbgCUSfx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Mar 2020 14:35:53 -0400
-Received: by mail-pf1-f193.google.com with SMTP id z25so807063pfa.5
-        for <git@vger.kernel.org>; Sat, 21 Mar 2020 11:35:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=1GDjsU4TCBoO6IsVYiABTm5B0F8REj+jQBvMeymTSEQ=;
-        b=tvKj7BQu2AcPNKX8Bf96cqBqhxts6bHh0eFUlKRdbd5OmoFQ68/rHIz4lXXvNX2JDc
-         hsjfa4ShYGMAl6Fep+pMBaenuN0E4Eyq6d9cF5/mBX08CnhQ9QFAVMa4FsDQQIxvokxb
-         UqWu4BChTDKpkuRM4sJTQA8t1bde8/iY+wrErMDDRwq8gk0Y1+8HeoxipDKLcd7jpvAc
-         HUWHYCBz4cRM9Y438J0CQ5vIhbFfXK5D0q4l6gsuKRTzKH3smjMaT5juHuqm+dW/49Mb
-         lBbOy5wNaIH7ve2P6t96Hzzz12aLXBn7AaElmOtzGJAUSZRrMxQfnOF4ufz5a/Zhik3j
-         c0Bg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=1GDjsU4TCBoO6IsVYiABTm5B0F8REj+jQBvMeymTSEQ=;
-        b=blmM9KxZqyetnnhPnJAAW8hxnYRwUSocqXQLbNbC1cxexXAWKDSfV/EljCNEVsKImQ
-         Kf4ga+gk/Ycnc5znDg0XNY0WlTmYMEenLD4GahbFFJzdlXfvMCfXISJWGBim1no7MFqd
-         0k/r/Hy7AKFTkVwA9uuCb9JKa6CY0KIzXtEyT5pI0jgXwq/s2tWblyJ+3+oOFJjz9bjg
-         xdoX1kp6evSRMz4cdoTWjeNxmMfXVEtlkNwXK1g0kt2SOsf0wdpB+YrI1EcU4QL7kqsc
-         mNFKsIGDC4hT2eEbtxfmFQhMzx3A4Igzzxg/aLW3ijPDdftfaWRbbu865u6SaFGX7I7G
-         v1gQ==
-X-Gm-Message-State: ANhLgQ1P7OZQtlcZe6lLWMMaAW9l2GlAwEhhDsf66WvyqYhuaj6czpHq
-        C8bjgjg7QPAjxfwcS2dJGtmhhCKqrQc=
-X-Google-Smtp-Source: ADFU+vvHFYG2Kp/GYBa4rj+oIGdSNFleUCUALKL5tQrWiXnK7DZh1ZJm8p9WkjkkRAz7PdVFmee0Iw==
-X-Received: by 2002:a63:5864:: with SMTP id i36mr15291197pgm.426.1584815752390;
-        Sat, 21 Mar 2020 11:35:52 -0700 (PDT)
-Received: from konoha ([103.37.201.176])
-        by smtp.gmail.com with ESMTPSA id f3sm7784587pgg.46.2020.03.21.11.35.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 Mar 2020 11:35:51 -0700 (PDT)
-Date:   Sun, 22 Mar 2020 00:05:45 +0530
-From:   Shourya Shukla <shouryashukla.oo@gmail.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net, jnareb@gmail.com,
-        christian.couder@gmail.com
-Subject: [RFC]rev-parse: rev-parse.h does not exist for rev-parse.c
-Message-ID: <20200321183545.GA17453@konoha>
+        id S1727749AbgCUSux (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 21 Mar 2020 14:50:53 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:60304 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727296AbgCUSux (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Mar 2020 14:50:53 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 921DABE12E;
+        Sat, 21 Mar 2020 14:50:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=UdQjh3w6OAg3hcbecVQPgS/LtHc=; b=UWJTht
+        CLhF2JDOEr1xES1MXEPmD9qFBVq93FDWloohFg8PnfemKtBxsl6jTw+vV2/qQvoM
+        gH10Fr9iGUAdty08O2ivur6izQ1t0eWdR9KprAJRy+Xy78S9dj/ISIS3eJDNpgsV
+        fkCGN8LMlHKtErP5ldagwWyc/DeV7Z7S1pPBM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=sJkGqLH1s2fAV5jhpkUa/ODk/TbAf+96
+        rrIqufMcaZ9kAZkOPZ8YBaxM2s/JmOjyJ1zbMxjNe64vQofxS2tAnCwy854PuFzB
+        wLqaLhJZnnXXWc/BM1nKESoLIdb90+wEAEYrPc6Rzw/gwXcuzz4CQtP3q0UP8J/k
+        HcVeeQqZges=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 89D24BE12D;
+        Sat, 21 Mar 2020 14:50:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D434ABE128;
+        Sat, 21 Mar 2020 14:50:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        dstolee@microsoft.com
+Subject: Re: [PATCH 1/1] commit-graph.c: avoid unnecessary tag dereference when merging
+References: <cover.1584762087.git.me@ttaylorr.com>
+        <4c79a9ea909ebff8c0987bcf95692da92e79bda4.1584762087.git.me@ttaylorr.com>
+        <20200321050025.GA1438317@coredump.intra.peff.net>
+        <20200321061141.GA30636@syl.local>
+        <20200321070333.GB1441446@coredump.intra.peff.net>
+Date:   Sat, 21 Mar 2020 11:50:47 -0700
+In-Reply-To: <20200321070333.GB1441446@coredump.intra.peff.net> (Jeff King's
+        message of "Sat, 21 Mar 2020 03:03:33 -0400")
+Message-ID: <xmqqfte1a6ew.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain
+X-Pobox-Relay-ID: E169C21E-6BA4-11EA-85E9-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello all,
+Jeff King <peff@peff.net> writes:
 
-I was writing the C code for the summary subcommand of 'git submodule'
-when I came across this:
+> So we weren't actually reading all of the commits even under the old
+> code. We were just going into deref_tag(), seeing that the object is
+> already parsed, and then quickly returning when we see that we already
+> have an OBJ_COMMIT. I suspect most of your timing differences are mostly
+> noise.
 
-I need to use 'git rev-parse' in the main frontend module_status()
-function. Now, instead of creating a string for the 'git rev-parse'
-using 'argv_array_pushl()', I thought maybe I could call 'rev-parse.h'
-and use the 'cmd_rev_parse()' function directly.
+Noise that contributes largely to ~7% fluctuation?  That sounds big.
 
-The 'rev-parse.h' file does not exist, only its .c counterpart does. Is
-there any reason for this? Would you advise creating a 'rev-parse.h'
-file?
+> I guess --input=stdin-commits is a good way to simulate that. Try this
+> (assuming there's already a split-graph file with all of the commits in
+> it):
+>
+>   git rev-parse HEAD >input
+>   time git commit-graph write --input=stdin-commits --split=merge-all <input
+> ...
+> A more realistic case would probably be feeding a new small pack to
+> --input=stdin-packs.
 
-Thank you so much in advance for the help and comments :)
+Makes sense.
 
-Regards,
-Shourya Shukla
+> At any rate, I think there is a demonstrable speedup there. But
+> moreover, I'm pretty sure this existing code is not doing what it
+> expects:
+>
+>   /* only add commits if they still exist in the repo */
+>   result = lookup_commit_reference_gently(ctx->r, &oid, 1);
+>
+> That won't look at the object database at all if the commit is already
+> marked as parsed. And that parsing might have come from the commit graph
+> itself, as our earlier attempts showed. So switching to a real
+> has_object_file() call is an important _correctness_ fix, even leaving
+> aside the speed improvements.
+
+True. has_object_file() asks the question without even
+lookup-replace flag set, so it would try to see if the object is
+truly there (modulo the "pretended" ones are declared to exist via
+the cached-object mechanism).
+
+Do we need to worry about INFO_QUICK and SKIP_FETCH_OBJECT in this
+codepath, by the way?
