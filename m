@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 12785C43332
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 376D9C4332E
 	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 09:22:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D5CBC20753
-	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 09:22:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0D3D42070A
+	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 09:22:24 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EL+BWaXA"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WjSdCeQG"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727124AbgCUJWT (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1727132AbgCUJWU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 21 Mar 2020 05:22:20 -0400
+Received: from mail-qv1-f66.google.com ([209.85.219.66]:44323 "EHLO
+        mail-qv1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727110AbgCUJWT (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 21 Mar 2020 05:22:19 -0400
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:38434 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726345AbgCUJWT (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Mar 2020 05:22:19 -0400
-Received: by mail-qk1-f193.google.com with SMTP id h14so9831342qke.5
-        for <git@vger.kernel.org>; Sat, 21 Mar 2020 02:22:18 -0700 (PDT)
+Received: by mail-qv1-f66.google.com with SMTP id w5so4435630qvp.11
+        for <git@vger.kernel.org>; Sat, 21 Mar 2020 02:22:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=OT4Sx+tSiVsN/fSK9K4GX5MlFsY2JuB7NQZzi5CNb34=;
-        b=EL+BWaXAhAVT5SPGQThXD12r1GACwTD8Ae8KyF+Ak4sL8gvd7CW1Fzu5b+2Dyb8ti8
-         I5tE6IXMzZ3d2CNpxQqlu8yvdRx4mGfwQBFBL8hCGGJxSMGy7DGWjuctpjyVKJ+VsP3U
-         r3khGNl9JaL5QYJo/yZLwNV1O8C4p9Lc8iggJRTKBYfwQ7wyrdK6fF7zrABjllpNQq7v
-         CJ3yrZF8Q80FWT+gWJ82GcqznxBFQ6vNFNf5i1wjo8vsgPOriDAKI65ERgDuNDuZoGix
-         eQS1nmopxc1C5/6+g9osF6WZQ/JDH557JdDynVqc1rgeXNEVcSB6mEyMgMofEjcxp9jc
-         jR+w==
+        bh=+p/9uW24LgcQGfFEnY3l1C8SMQVOQeOo85lsYeBd//A=;
+        b=WjSdCeQGNHiHslA2O5O/qPFMRSVvQDM20wTK+vUzFVbFFjhKOWZsLWrU8QnalSyohv
+         KrAhlaDbOoHqeYHtngIaCYaN52o1sumfaCeAFYLC/1pJNh9yCpWJx/TcQRxhIluCnDNS
+         gIN8NkH42qBBtVazMhplHYP1SgWZwv4HXy6WMjIreN5fcnxdDdGLPKj6Cu2AN6hnNKvw
+         3nzxKlL4wiCvhEV7MrVwc7bQbazgYQA2wwnmNDKOdBm4IzNaq9/EcfYruf7xRGaGePPS
+         gK7X5HXCX6lU2/3yqJkhn6zhyo8+8wtzL0zKOWSNC12p5tBv+m/JDEHsVQwbVQAtxI9V
+         Fkhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=OT4Sx+tSiVsN/fSK9K4GX5MlFsY2JuB7NQZzi5CNb34=;
-        b=IXAO2TMhr+SfRMRXMm3W8pyiEoUKrmWVxhyVg3S3EjNg8VC1Aw/PdBNTd82sNyluuU
-         PvIaplg2WceMP310UdYaZXdXTNLS7KF5K1Jkc0gSdSBiXwFXhu7iXK3zblNuVb+x6hcV
-         8B3ubG5+4wCbfeaY4uzzx/QFhxANxyDZkWyGdJPMBRIy9rF/jA6Dk+jfyLhhmJa2oRxI
-         h8B/H/QLOgxERnuSEHK0wUnD7DAUavNKirjBYp04HWzfcfgxjqodwWr2DySx6/Rc5R7X
-         NlHe1Waf+ANmq5b/pgbtvmtWy+6YhHFShLsLTioczO/+tQ2yDWfIB41T7o2OJRw/XCjH
-         /prw==
-X-Gm-Message-State: ANhLgQ3TsiPbGL4KhD8r+s+H3jGp3Heaptn2JdgnyKWcG/SGgGJQM10j
-        xL8NeJljMLBptD/oKdM7VXITQ7Lr
-X-Google-Smtp-Source: ADFU+vtmMfUBq6ExaTHZiM5cbXP04CuUeDADQkDJezyPVlYVdFL8YZS0jgMx/Yuu+rD4eZHbPau4cA==
-X-Received: by 2002:a37:9dc9:: with SMTP id g192mr12273918qke.50.1584782537358;
-        Sat, 21 Mar 2020 02:22:17 -0700 (PDT)
+        bh=+p/9uW24LgcQGfFEnY3l1C8SMQVOQeOo85lsYeBd//A=;
+        b=aDmuOWLfdAdgBEutTC/Or1dedl2YbcyBT/gTl8bBs+oHQHpyCI9Us0DZOmkouuf0JF
+         AJIvimUxhOUleeIYqr1/wGH/Vc5a18QDdEQ2fKycw2+/7JXFfnq8KXBYx2rCl2D/2dQ2
+         myUV3RMtCltvLraqZS2qn2BHoXLVKPO3Btvo2MofXgc9lRpmVFG5yRVMJ6KyzAr2ASLx
+         hLRmoijXMedqRHBzQBUIKkFU95apmAslHjK2splicnEkPLsvAGbt3A8Kb5MV393WnDLI
+         6ycL2OlRPwHadMOa4e5WRjs1S7HAbTNN8zAkDqq+y/2dXJVajf0l11sm9XmNg9tgo0qz
+         la/g==
+X-Gm-Message-State: ANhLgQ3nu0fwHTMwnwPc9t9EcUF0uLOZ7vcZejVRjB2QhKDbi2bzQtOg
+        TrG6cEnNsJfRyofESiYdOzlm2B4R
+X-Google-Smtp-Source: ADFU+vvX/nAvL8HgwwcnOZSy7bH454E94AfEqL1A6HdcCBVvbFzNlwn24IRllxeFbeUfFm3yCIRYTg==
+X-Received: by 2002:ad4:58c2:: with SMTP id dh2mr11882982qvb.242.1584782538485;
+        Sat, 21 Mar 2020 02:22:18 -0700 (PDT)
 Received: from archbookpro.lan ([199.249.110.29])
-        by smtp.gmail.com with ESMTPSA id z23sm6579890qkg.21.2020.03.21.02.22.16
+        by smtp.gmail.com with ESMTPSA id z23sm6579890qkg.21.2020.03.21.02.22.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 Mar 2020 02:22:16 -0700 (PDT)
+        Sat, 21 Mar 2020 02:22:17 -0700 (PDT)
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Alban Gruin <alban.gruin@gmail.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v3 04/19] sequencer: make read_oneliner() accept flags
-Date:   Sat, 21 Mar 2020 05:21:23 -0400
-Message-Id: <4f9708682877f4d3689781009dc2695b913eff29.1584782450.git.liu.denton@gmail.com>
+Subject: [PATCH v3 05/19] sequencer: configurably warn on non-existent files
+Date:   Sat, 21 Mar 2020 05:21:24 -0400
+Message-Id: <e42f4bdd4d763be4062f12fa6f1481849e87a0ad.1584782450.git.liu.denton@gmail.com>
 X-Mailer: git-send-email 2.25.0.114.g5b0ca878e0
 In-Reply-To: <cover.1584782450.git.liu.denton@gmail.com>
 References: <cover.1577185374.git.liu.denton@gmail.com> <cover.1584782450.git.liu.denton@gmail.com>
@@ -74,116 +74,39 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a future commit, we will need read_oneliner() to accept flags other
-than just `skip_if_empty`. Instead of having an argument for each flag,
-teach read_oneliner() to accept the bitfield `flags` instead. For now,
-only recognize the `READ_ONELINER_SKIP_IF_EMPTY` flag. More flags will
-be added in a future commit.
-
-The result of this is that parallel topics which introduce invocations
-of read_oneliner() will still be compatible with this new function
-signature since, instead of passing 1 or 0 for `skip_if_empty`, they'll
-be passing 1 or 0 to `flags`, which gives equivalent behavior.
-
-Mechanically fix up invocations of read_oneliner() with the following
-spatch
-
-	@@
-	expression a, b;
-	@@
-	  read_oneliner(a, b,
-	- 1
-	+ READ_ONELINER_SKIP_IF_EMPTY
-	  )
-
-and manually break up long lines in the result.
+In the future, we plan on externing read_oneliner(). Future users of
+read_oneliner() will want the ability to output warnings in the event
+that the `path` doesn't exist. Introduce the
+`READ_ONELINER_WARN_NON_EXISTENCE` flag which, if active, would issue a
+warning when a file doesn't exist by skipping the `!file_exists()` check
+and letting `strbuf_read_file()` handle that case.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- sequencer.c | 21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ sequencer.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index c49fe76fe6..abb2a21e9d 100644
+index abb2a21e9d..92e8d38290 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -419,6 +419,8 @@ static int write_message(const void *buf, size_t len, const char *filename,
- 	return 0;
+@@ -420,6 +420,7 @@ static int write_message(const void *buf, size_t len, const char *filename,
  }
  
-+#define READ_ONELINER_SKIP_IF_EMPTY (1 << 0)
-+
+ #define READ_ONELINER_SKIP_IF_EMPTY (1 << 0)
++#define READ_ONELINER_WARN_NON_EXISTENCE (1 << 1)
+ 
  /*
   * Reads a file that was presumably written by a shell script, i.e. with an
-  * end-of-line marker that needs to be stripped.
-@@ -429,7 +431,7 @@ static int write_message(const void *buf, size_t len, const char *filename,
-  * Returns 1 if the file was read, 0 if it could not be read or does not exist.
-  */
- static int read_oneliner(struct strbuf *buf,
--	const char *path, int skip_if_empty)
-+	const char *path, unsigned flags)
- {
+@@ -436,7 +437,7 @@ static int read_oneliner(struct strbuf *buf,
  	int ret = 0;
  	struct strbuf file_buf = STRBUF_INIT;
-@@ -444,7 +446,7 @@ static int read_oneliner(struct strbuf *buf,
  
- 	strbuf_trim_trailing_newline(&file_buf);
- 
--	if (skip_if_empty && !file_buf.len)
-+	if ((flags & READ_ONELINER_SKIP_IF_EMPTY) && !file_buf.len)
- 		goto done;
- 
- 	strbuf_addbuf(buf, &file_buf);
-@@ -2488,7 +2490,8 @@ static int read_populate_opts(struct replay_opts *opts)
- 	if (is_rebase_i(opts)) {
- 		struct strbuf buf = STRBUF_INIT;
- 
--		if (read_oneliner(&buf, rebase_path_gpg_sign_opt(), 1)) {
-+		if (read_oneliner(&buf, rebase_path_gpg_sign_opt(),
-+				  READ_ONELINER_SKIP_IF_EMPTY)) {
- 			if (!starts_with(buf.buf, "-S"))
- 				strbuf_reset(&buf);
- 			else {
-@@ -2498,7 +2501,8 @@ static int read_populate_opts(struct replay_opts *opts)
- 			strbuf_reset(&buf);
- 		}
- 
--		if (read_oneliner(&buf, rebase_path_allow_rerere_autoupdate(), 1)) {
-+		if (read_oneliner(&buf, rebase_path_allow_rerere_autoupdate(),
-+				  READ_ONELINER_SKIP_IF_EMPTY)) {
- 			if (!strcmp(buf.buf, "--rerere-autoupdate"))
- 				opts->allow_rerere_auto = RERERE_AUTOUPDATE;
- 			else if (!strcmp(buf.buf, "--no-rerere-autoupdate"))
-@@ -2530,7 +2534,8 @@ static int read_populate_opts(struct replay_opts *opts)
- 		strbuf_release(&buf);
- 
- 		if (read_oneliner(&opts->current_fixups,
--				  rebase_path_current_fixups(), 1)) {
-+				  rebase_path_current_fixups(),
-+				  READ_ONELINER_SKIP_IF_EMPTY)) {
- 			const char *p = opts->current_fixups.buf;
- 			opts->current_fixup_count = 1;
- 			while ((p = strchr(p, '\n'))) {
-@@ -3667,7 +3672,8 @@ static int apply_autostash(struct replay_opts *opts)
- 	struct child_process child = CHILD_PROCESS_INIT;
- 	int ret = 0;
- 
--	if (!read_oneliner(&stash_sha1, rebase_path_autostash(), 1)) {
-+	if (!read_oneliner(&stash_sha1, rebase_path_autostash(),
-+			   READ_ONELINER_SKIP_IF_EMPTY)) {
- 		strbuf_release(&stash_sha1);
+-	if (!file_exists(path))
++	if (!(flags & READ_ONELINER_WARN_NON_EXISTENCE) && !file_exists(path))
  		return 0;
- 	}
-@@ -4291,7 +4297,8 @@ int sequencer_continue(struct repository *r, struct replay_opts *opts)
- 		struct strbuf buf = STRBUF_INIT;
- 		struct object_id oid;
  
--		if (read_oneliner(&buf, rebase_path_stopped_sha(), 1) &&
-+		if (read_oneliner(&buf, rebase_path_stopped_sha(),
-+				  READ_ONELINER_SKIP_IF_EMPTY) &&
- 		    !get_oid_committish(buf.buf, &oid))
- 			record_in_rewritten(&oid, peek_command(&todo_list, 0));
- 		strbuf_release(&buf);
+ 	if (strbuf_read_file(&file_buf, path, 0) < 0) {
 -- 
 2.25.0.114.g5b0ca878e0
 
