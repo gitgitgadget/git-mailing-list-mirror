@@ -8,63 +8,64 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8042EC4332E
-	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 16:14:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 70FA4C4332D
+	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 16:14:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 4FA2E20757
-	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 16:14:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4491520757
+	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 16:14:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S9tIKjXy"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H7BvfG/T"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727646AbgCUQN7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 21 Mar 2020 12:13:59 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:36421 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727232AbgCUQN6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Mar 2020 12:13:58 -0400
-Received: by mail-wr1-f66.google.com with SMTP id 31so5201481wrs.3
-        for <git@vger.kernel.org>; Sat, 21 Mar 2020 09:13:57 -0700 (PDT)
+        id S1727700AbgCUQOF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 21 Mar 2020 12:14:05 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:43121 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727664AbgCUQOD (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Mar 2020 12:14:03 -0400
+Received: by mail-wr1-f65.google.com with SMTP id b2so11184769wrj.10
+        for <git@vger.kernel.org>; Sat, 21 Mar 2020 09:14:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=BfIqeXydPmqmTJOYACyhK1s4kc+Xn+s619UoxOmuALI=;
-        b=S9tIKjXy2JYNP6z9HFhhe8OfMQ/WOJLnIXLchBxmEpHNQI4Cm/9JFK4QtiMTuM48ri
-         ca8KbvSW/S9CAkwrmlpg08MGQOd+0CZuB+VSMhkhpVUvOxhrlZ7T1gHkjpj3JX04HoXc
-         hh9zMoO0tJpSCop0mGQO+LYUv67qAmoCjwuIqxLI/yKNaCtNmuD3zJLMpld9qsGr0K0V
-         NbcjbmMBj9fije7smVOtq6KwH06U8TQmjTZbntPSexLHRjtvthnE+dasbiFq93BwoHUL
-         +bKimLhMHbQHJTlmBW5DaReXhNOI6ezQYmNvgFJGfIM1s4RjvxUI7QxHrD1CNrNsiOVh
-         GO0A==
+        bh=twYGXXJepqFNADUAJI94HOwQKJkYuQPF9Hhrv9JgPBk=;
+        b=H7BvfG/TyEtR1J6zCDMfC9Avv6f/keljGJuT314GkR0S1bFTqMT0sWFIZGAi8vROhg
+         /8OP5tYt4QTBZvboi98HVYyTr+LaqVYonO010SPLDqip/l2mdihAuEn31Id1+Td8iUJK
+         cOhRmbrIpc02YuIt2Mei7djiZganCzppskXzZ47vkUNRyuIUXtuJYDxNazKlg0Pm0Fbq
+         dYP3lhx48k/N/esmAZMHUzg4BjC5T+fQ8+se/ELVBXFBB567dgCDufmc5CYnEEcizxJn
+         w+q/mvj13ewjXhZXhXdLCihJqEJubIW+Mi1U2YJhSpeHwpeGv0fGgpRFw0BOUTFhfCAX
+         8IWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=BfIqeXydPmqmTJOYACyhK1s4kc+Xn+s619UoxOmuALI=;
-        b=nFZwaZbszXbz6NOZ9hNpEDyn3C03le5Xe4J02Dr6j5gIyuLKZUtbWaD6tgBEweMM+e
-         cjtIh8i/Sp2T8DkUI8Efb/XNg2X9ivJKFftAnmJta6sZD0Edf3B+7tfu0rtjvEV4bhvL
-         pzCH5wmsub+hFe5NebsJjdUyaYLjcnZ0A6UwdZSZ40RYpbnvUo/W0PyS0dxveKt5Y3fE
-         YMtAd55vWiAxrzFrbf9gDEaNX5YEoIuvOT/zBbCgs6IuKSfxO+r5kzBVZBCwOcyKhooL
-         nad0BufjkxHB46qe34/uqdYrzcfGAcNW+mNuHWjZTKS3yc26LGk43RqPKkwthI4XovN7
-         EK7w==
-X-Gm-Message-State: ANhLgQ2xjI83mKxlCT21msM4H5RZA+9aTM3id3mAFLqxT2DghyaHOS/z
-        VMf08CrN2muHlaRHqGKaEi1NLrtB
-X-Google-Smtp-Source: ADFU+vsccbv+YwGH62fz71Q3WF5gvZpY0gNoPWJ6vhZDrFBNQKpj/dZ5HHrbAtuqoY5m5dlSDJfxpw==
-X-Received: by 2002:adf:f58f:: with SMTP id f15mr18949485wro.16.1584807236179;
-        Sat, 21 Mar 2020 09:13:56 -0700 (PDT)
+        bh=twYGXXJepqFNADUAJI94HOwQKJkYuQPF9Hhrv9JgPBk=;
+        b=RoYd0Kr+Z/eRShgXKRRchYcEHXPmm6QzArCbeGYmV7Mew74c0jqvqqU290sDGduX/o
+         QFB6zaG6KAq4C2aNsuwvUjdZNz5VKQG9U56Ydie2yikJlBri9n/OxR2DO2RUXSv+iN9/
+         feKfOXJnlunRsPllF6Q/02BB7mS+wxoSxwlhBiQJdfct4+mpNs4KTJwCbicAMhuBJgcH
+         APWmIipdvSnnB9vCMx+XinoGHcdd5RFc7IBCtngxULYwIlQPA3XGQzftaTd84BQGRCDv
+         +/JQAYQL1HPqDuh30JAwfs0eRFMYMEuk+m1QnGUrFN/H8JdUtuTm7otsvp26DzopyF4s
+         gxRg==
+X-Gm-Message-State: ANhLgQ3XK2hBvn+pUIzSvaJwodqz1BnK/In4wVO8T1ol1hii7qzlGOTx
+        6xQISjVCHEfwh+b2gHaf3h1BRxlhKi0=
+X-Google-Smtp-Source: ADFU+vvY6ETii5/tXsppc++MvcoENENuUHqCPogWFNKJJUvU8GmAeASe1niHz6Pg9I/Y/MmiW2VHDQ==
+X-Received: by 2002:adf:a285:: with SMTP id s5mr19081410wra.118.1584807241725;
+        Sat, 21 Mar 2020 09:14:01 -0700 (PDT)
 Received: from localhost.localdomain ([139.47.115.4])
-        by smtp.gmail.com with ESMTPSA id f22sm13992285wmf.2.2020.03.21.09.13.55
+        by smtp.gmail.com with ESMTPSA id f22sm13992285wmf.2.2020.03.21.09.14.00
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 21 Mar 2020 09:13:55 -0700 (PDT)
+        Sat, 21 Mar 2020 09:14:01 -0700 (PDT)
 From:   Miriam Rubio <mirucam@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Pranit Bauva <pranit.bauva@gmail.com>,
         Lars Schneider <larsxschneider@gmail.com>,
         Christian Couder <chriscool@tuxfamily.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Tanushree Tumane <tanushreetumane@gmail.com>,
         Miriam Rubio <mirucam@gmail.com>
-Subject: [PATCH v2 06/11] bisect--helper: retire `--next-all` subcommand
-Date:   Sat, 21 Mar 2020 17:10:15 +0100
-Message-Id: <20200321161020.22817-7-mirucam@gmail.com>
+Subject: [PATCH v2 10/11] bisect--helper: retire `--write-terms` subcommand
+Date:   Sat, 21 Mar 2020 17:10:19 +0100
+Message-Id: <20200321161020.22817-11-mirucam@gmail.com>
 X-Mailer: git-send-email 2.25.0
 In-Reply-To: <20200321161020.22817-1-mirucam@gmail.com>
 References: <20200321161020.22817-1-mirucam@gmail.com>
@@ -77,60 +78,63 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Pranit Bauva <pranit.bauva@gmail.com>
 
-The `--next-all` subcommand is no longer used from the git-bisect.sh
-shell script. Instead the function `bisect_next_all()` is called from
-the C implementation of `bisect_next()`.
+The `--write-terms` subcommand is no longer used from the
+git-bisect.sh shell script. Instead the function `write_terms()`
+is called from the C implementation of `set_terms()` and
+`bisect_start()`.
 
 Mentored-by: Lars Schneider <larsxschneider@gmail.com>
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
 Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
 Signed-off-by: Miriam Rubio <mirucam@gmail.com>
 ---
- builtin/bisect--helper.c | 9 +--------
- 1 file changed, 1 insertion(+), 8 deletions(-)
+ builtin/bisect--helper.c | 10 +---------
+ 1 file changed, 1 insertion(+), 9 deletions(-)
 
 diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index 0534adf216..086ab8e46b 100644
+index 2b1d918497..8fdefb611b 100644
 --- a/builtin/bisect--helper.c
 +++ b/builtin/bisect--helper.c
 @@ -20,7 +20,6 @@ static GIT_PATH_FUNC(git_path_head_name, "head-name")
  static GIT_PATH_FUNC(git_path_bisect_names, "BISECT_NAMES")
  
  static const char * const git_bisect_helper_usage[] = {
--	N_("git bisect--helper --next-all [--no-checkout]"),
- 	N_("git bisect--helper --write-terms <bad_term> <good_term>"),
+-	N_("git bisect--helper --write-terms <bad_term> <good_term>"),
  	N_("git bisect--helper --bisect-reset [<commit>]"),
  	N_("git bisect--helper --bisect-write [--no-log] <state> <revision> <good_term> <bad_term>"),
-@@ -806,8 +805,7 @@ static enum bisect_error bisect_start(struct bisect_terms *terms, int no_checkou
+ 	N_("git bisect--helper --bisect-check-and-set-terms <command> <good_term> <bad_term>"),
+@@ -895,8 +894,7 @@ static enum bisect_error bisect_state(struct bisect_terms *terms, const char **a
  int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
  {
  	enum {
--		NEXT_ALL = 1,
--		WRITE_TERMS,
-+		WRITE_TERMS = 1,
- 		CHECK_EXPECTED_REVS,
- 		BISECT_RESET,
+-		WRITE_TERMS = 1,
+-		BISECT_RESET,
++		BISECT_RESET = 1,
  		BISECT_WRITE,
-@@ -820,8 +818,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 		CHECK_AND_SET_TERMS,
+ 		BISECT_NEXT_CHECK,
+@@ -909,8 +907,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
  	} cmdmode = 0;
  	int no_checkout = 0, res = 0, nolog = 0;
  	struct option options[] = {
--		OPT_CMDMODE(0, "next-all", &cmdmode,
--			 N_("perform 'git bisect next'"), NEXT_ALL),
- 		OPT_CMDMODE(0, "write-terms", &cmdmode,
- 			 N_("write the terms to .git/BISECT_TERMS"), WRITE_TERMS),
- 		OPT_CMDMODE(0, "check-expected-revs", &cmdmode,
-@@ -858,9 +854,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+-		OPT_CMDMODE(0, "write-terms", &cmdmode,
+-			 N_("write the terms to .git/BISECT_TERMS"), WRITE_TERMS),
+ 		OPT_CMDMODE(0, "bisect-reset", &cmdmode,
+ 			 N_("reset the bisection state"), BISECT_RESET),
+ 		OPT_CMDMODE(0, "bisect-write", &cmdmode,
+@@ -947,10 +943,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
  		usage_with_options(git_bisect_helper_usage, options);
  
  	switch (cmdmode) {
--	case NEXT_ALL:
--		res = bisect_next_all(the_repository, prefix, no_checkout);
--		break;
- 	case WRITE_TERMS:
- 		if (argc != 2)
- 			return error(_("--write-terms requires two arguments"));
+-	case WRITE_TERMS:
+-		if (argc != 2)
+-			return error(_("--write-terms requires two arguments"));
+-		return write_terms(argv[0], argv[1]);
+ 	case BISECT_RESET:
+ 		if (argc > 1)
+ 			return error(_("--bisect-reset requires either no argument or a commit"));
 -- 
 2.25.0
 
