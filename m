@@ -2,65 +2,68 @@ Return-Path: <SRS0=NBeB=5G=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7222AC4332B
-	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 10:29:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5311DC4332E
+	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 10:29:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 336562072C
-	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 10:29:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1E5312072C
+	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 10:29:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cw039LWR"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KgoARGAK"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727821AbgCUK3e (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 21 Mar 2020 06:29:34 -0400
-Received: from mail-qt1-f169.google.com ([209.85.160.169]:45446 "EHLO
-        mail-qt1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726607AbgCUK3d (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Mar 2020 06:29:33 -0400
-Received: by mail-qt1-f169.google.com with SMTP id z8so7327072qto.12
-        for <git@vger.kernel.org>; Sat, 21 Mar 2020 03:29:33 -0700 (PDT)
+        id S1728137AbgCUK3h (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 21 Mar 2020 06:29:37 -0400
+Received: from mail-qv1-f65.google.com ([209.85.219.65]:33457 "EHLO
+        mail-qv1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726607AbgCUK3g (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Mar 2020 06:29:36 -0400
+Received: by mail-qv1-f65.google.com with SMTP id p19so1916891qve.0
+        for <git@vger.kernel.org>; Sat, 21 Mar 2020 03:29:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:mime-version
+        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=QzB6/HJuYK5r8TEpEKxzD/KKVkrA+rLtJBe3VcWCVmw=;
-        b=cw039LWRK0sjoP6ietTtISLsg5sG0P7tiv9f8Qr4CfIcJQnVbGRu0/KAVwn88m9RDl
-         st0U0CA4CXOfL7LfypY93z0VJ0WljW7LPFFa4BDJr3bINRbPzvoqRYeUbPjo2apgNFzl
-         WWH4LaNrP99S0wyZWmL2q+Veu7vAKtKMp2QooM4Dx8Mm7xcTaSBbfkAJ1QgBv8XXd4+e
-         LJZXNEnSzNoO4dQ4ghjtYUUQgo0ikp5M60FSJyXGIAPiuFFQAf7bcj+WhhyPif00ejoT
-         PFAeSOi4jUHncByhMa1kt34sNJfZaVfpnTXqMOAPFpcWiy35Jv9CwvPijXVBT9sqmNkl
-         +dUg==
+        bh=SO5w18ftfIUcIhWz5MgbVXfxUfiZy1feenWBEC5pwvs=;
+        b=KgoARGAKcrfY2nMoUFwQtQoJNixfqezMEw2pSlzVlX9x9QIhpiOMIFtMz+m4/BflDw
+         JV4sbSkVjYvoh73/FLD8P+G2hyZ8sSfatYnhXSwFR3TSmzIbiOQbTG1A2qOaP/aFIb6e
+         6rZuiu32Q6Z5L0IjzpUeW3o4iXwFUvnhdIL3aAguz7KsR0JDWaHccseBqJnMzzv2I1vZ
+         fdBUjYMo+KD/Vi12aLLXhTVf1FgyRj6mvEsyD7atoRpaII5NRfHUDChdSFdECKDm/Zt3
+         fBbweY8Se47zGhdZ8Fk4MmfodvFs++2/4BQ9oCz2r44PqjZ5u+/lDQUPyjbXi+NjZuWP
+         bYtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=QzB6/HJuYK5r8TEpEKxzD/KKVkrA+rLtJBe3VcWCVmw=;
-        b=SPSdHrHJktm/UaIu+GeLGUncT7EuaEq+zDwvOK/5qMuMXO1wLC/22qY7Cl/X8RncVS
-         CSlSUskfCfoAWi7YrdIls2nQFRLAm8wvGJ2C91eUnoMEcedAZMrRziKBogi6MoX1ekZF
-         NTyMmz09V+K+stOP6VE07bUXJalby9wEUGUSR6RnePCHKSq6bhtm+i1vFuOtt55M1IkK
-         YzFx1oMiMyW9RKIFzAyHCnqX+yvCHW64FavWNUJj8YUrWY6sXHx1BJfx0qvC2wGwTGQi
-         b5Sd8D1k2SInjpYtNP/HpnoyhipMyn47phNDlRqEMKBXCLLG+cgP+bHzQ7NV6a0SF/pu
-         QmDQ==
-X-Gm-Message-State: ANhLgQ3LnO5HNpaanPrazqmnhaInM3z/MnbLuoWdBFWAN8OUz0tEMZYO
-        ulwomQUd4fQ3ENaEmzIZiNPe19/3
-X-Google-Smtp-Source: ADFU+vsZMBY9iwdXtNp0WLCmJX9d/YayzP1Ndol436hPVjudaD0E56k6uK/Yha5IBzx+mS4+81qYqw==
-X-Received: by 2002:ac8:32f2:: with SMTP id a47mr13040685qtb.62.1584786572455;
-        Sat, 21 Mar 2020 03:29:32 -0700 (PDT)
+        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=SO5w18ftfIUcIhWz5MgbVXfxUfiZy1feenWBEC5pwvs=;
+        b=F8CR+HEXP39uJpwSRci1ypxEqCCZh3H+O/Q7mlMcsDbO8T6LWA9K1+2q/iIh1p/WH7
+         9YaNktmESB/4Ih5evAMFPVYrAOC1HePTqC4s5qQdQ3014fwdF8yFMgkYc3GpANUJtwYw
+         hI4yDRGDqp/mEL9cqF3yGnBQFlIZSiR4qKMrOCUFaBFYvowGkj9EUsiZxHSI0HJZC/o8
+         OhlGnLxzcyT1N+a3G9R1tEvSY2kHlARZNne408gnyWZVX/DR4Q5Ud95MZIGgyMx1Slf3
+         56SHdCN20kxdsectwVaQhbEPy8k/Dcclj6D4w9QYRJUAE/PFGdvFL4e8QFyU6BE7RbsJ
+         LhyQ==
+X-Gm-Message-State: ANhLgQ2yuKNowLtBBsat2IWHNbXCWRKTjLlfiEypRVr02bK6UggeDoVO
+        QTfhpQf+syupFkWCxXeRLOXkRp4I
+X-Google-Smtp-Source: ADFU+vueOkpuIzdZ6dpqlv/tbwAo0VoqZiGLYyKN44az34raD8Ivy6u4ZeQBzMi/ODd2FiHGn3qbmg==
+X-Received: by 2002:ad4:556e:: with SMTP id w14mr12730773qvy.144.1584786574814;
+        Sat, 21 Mar 2020 03:29:34 -0700 (PDT)
 Received: from archbookpro.lan ([199.249.110.29])
-        by smtp.gmail.com with ESMTPSA id m92sm7101517qtd.94.2020.03.21.03.29.30
+        by smtp.gmail.com with ESMTPSA id m92sm7101517qtd.94.2020.03.21.03.29.34
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 Mar 2020 03:29:31 -0700 (PDT)
+        Sat, 21 Mar 2020 03:29:34 -0700 (PDT)
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
-Subject: [PATCH 0/2] Lib-ify functions in builtin.h
-Date:   Sat, 21 Mar 2020 06:29:21 -0400
-Message-Id: <cover.1584786523.git.liu.denton@gmail.com>
+Subject: [PATCH 2/2] Lib-ify prune-packed
+Date:   Sat, 21 Mar 2020 06:29:23 -0400
+Message-Id: <249dbb9420598fcc08fb041f0bb4dd089cdd5c31.1584786523.git.liu.denton@gmail.com>
 X-Mailer: git-send-email 2.25.0.114.g5b0ca878e0
+In-Reply-To: <cover.1584786523.git.liu.denton@gmail.com>
+References: <cover.1584786523.git.liu.denton@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -68,29 +71,203 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In builtin.h, there exist a couple of functions that are very lib-ish.
-Extract these functions into their own files which should make more
-organizational sense.
+In builtin.h, there exists the distinctly lib-ish function
+prune_packed_objects(). Extract this function into prune-packed.c so that
+related definitions can exist clearly in their own header file.
 
-Denton Liu (2):
-  Lib-ify fmt-merge-msg
-  Lib-ify prune-packed
+While we're at it, clean up #includes that are unused.
 
- Makefile                |   2 +
- builtin.h               |  16 -
- builtin/fmt-merge-msg.c | 655 +---------------------------------------
- builtin/prune-packed.c  |  44 +--
- builtin/prune.c         |   1 +
- builtin/repack.c        |   1 +
- fmt-merge-msg.c         | 653 +++++++++++++++++++++++++++++++++++++++
- fmt-merge-msg.h         |  13 +
- prune-packed.c          |  43 +++
- prune-packed.h          |   9 +
- 10 files changed, 724 insertions(+), 713 deletions(-)
- create mode 100644 fmt-merge-msg.c
+This patch is best viewed with --color-moved.
+
+Signed-off-by: Denton Liu <liu.denton@gmail.com>
+---
+ Makefile               |  1 +
+ builtin.h              |  5 -----
+ builtin/prune-packed.c | 44 +-----------------------------------------
+ builtin/prune.c        |  1 +
+ builtin/repack.c       |  1 +
+ prune-packed.c         | 43 +++++++++++++++++++++++++++++++++++++++++
+ prune-packed.h         |  9 +++++++++
+ 7 files changed, 56 insertions(+), 48 deletions(-)
  create mode 100644 prune-packed.c
  create mode 100644 prune-packed.h
 
+diff --git a/Makefile b/Makefile
+index 04e3cc179e..608afd58b1 100644
+--- a/Makefile
++++ b/Makefile
+@@ -952,6 +952,7 @@ LIB_OBJS += progress.o
+ LIB_OBJS += promisor-remote.o
+ LIB_OBJS += prompt.o
+ LIB_OBJS += protocol.o
++LIB_OBJS += prune-packed.o
+ LIB_OBJS += quote.o
+ LIB_OBJS += range-diff.o
+ LIB_OBJS += reachable.o
+diff --git a/builtin.h b/builtin.h
+index 6101d98661..a5ae15bfe5 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -97,11 +97,6 @@
+ extern const char git_usage_string[];
+ extern const char git_more_info_string[];
+ 
+-#define PRUNE_PACKED_DRY_RUN 01
+-#define PRUNE_PACKED_VERBOSE 02
+-
+-void prune_packed_objects(int);
+-
+ /**
+  * If a built-in has DELAY_PAGER_CONFIG set, the built-in should call this early
+  * when it wishes to respect the `pager.foo`-config. The `cmd` is the name of
+diff --git a/builtin/prune-packed.c b/builtin/prune-packed.c
+index 48c5e78e33..b7b9281a8c 100644
+--- a/builtin/prune-packed.c
++++ b/builtin/prune-packed.c
+@@ -1,54 +1,12 @@
+ #include "builtin.h"
+-#include "cache.h"
+-#include "progress.h"
+ #include "parse-options.h"
+-#include "packfile.h"
+-#include "object-store.h"
++#include "prune-packed.h"
+ 
+ static const char * const prune_packed_usage[] = {
+ 	N_("git prune-packed [-n | --dry-run] [-q | --quiet]"),
+ 	NULL
+ };
+ 
+-static struct progress *progress;
+-
+-static int prune_subdir(unsigned int nr, const char *path, void *data)
+-{
+-	int *opts = data;
+-	display_progress(progress, nr + 1);
+-	if (!(*opts & PRUNE_PACKED_DRY_RUN))
+-		rmdir(path);
+-	return 0;
+-}
+-
+-static int prune_object(const struct object_id *oid, const char *path,
+-			 void *data)
+-{
+-	int *opts = data;
+-
+-	if (!has_object_pack(oid))
+-		return 0;
+-
+-	if (*opts & PRUNE_PACKED_DRY_RUN)
+-		printf("rm -f %s\n", path);
+-	else
+-		unlink_or_warn(path);
+-	return 0;
+-}
+-
+-void prune_packed_objects(int opts)
+-{
+-	if (opts & PRUNE_PACKED_VERBOSE)
+-		progress = start_delayed_progress(_("Removing duplicate objects"), 256);
+-
+-	for_each_loose_file_in_objdir(get_object_directory(),
+-				      prune_object, NULL, prune_subdir, &opts);
+-
+-	/* Ensure we show 100% before finishing progress */
+-	display_progress(progress, 256);
+-	stop_progress(&progress);
+-}
+-
+ int cmd_prune_packed(int argc, const char **argv, const char *prefix)
+ {
+ 	int opts = isatty(2) ? PRUNE_PACKED_VERBOSE : 0;
+diff --git a/builtin/prune.c b/builtin/prune.c
+index 2b76872ad2..fd9acc7222 100644
+--- a/builtin/prune.c
++++ b/builtin/prune.c
+@@ -6,6 +6,7 @@
+ #include "reachable.h"
+ #include "parse-options.h"
+ #include "progress.h"
++#include "prune-packed.h"
+ #include "object-store.h"
+ 
+ static const char * const prune_usage[] = {
+diff --git a/builtin/repack.c b/builtin/repack.c
+index 0781763b06..1b686ee9ce 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -10,6 +10,7 @@
+ #include "argv-array.h"
+ #include "midx.h"
+ #include "packfile.h"
++#include "prune-packed.h"
+ #include "object-store.h"
+ #include "promisor-remote.h"
+ 
+diff --git a/prune-packed.c b/prune-packed.c
+new file mode 100644
+index 0000000000..261520b472
+--- /dev/null
++++ b/prune-packed.c
+@@ -0,0 +1,43 @@
++#include "object-store.h"
++#include "packfile.h"
++#include "progress.h"
++#include "prune-packed.h"
++
++static struct progress *progress;
++
++static int prune_subdir(unsigned int nr, const char *path, void *data)
++{
++	int *opts = data;
++	display_progress(progress, nr + 1);
++	if (!(*opts & PRUNE_PACKED_DRY_RUN))
++		rmdir(path);
++	return 0;
++}
++
++static int prune_object(const struct object_id *oid, const char *path,
++			 void *data)
++{
++	int *opts = data;
++
++	if (!has_object_pack(oid))
++		return 0;
++
++	if (*opts & PRUNE_PACKED_DRY_RUN)
++		printf("rm -f %s\n", path);
++	else
++		unlink_or_warn(path);
++	return 0;
++}
++
++void prune_packed_objects(int opts)
++{
++	if (opts & PRUNE_PACKED_VERBOSE)
++		progress = start_delayed_progress(_("Removing duplicate objects"), 256);
++
++	for_each_loose_file_in_objdir(get_object_directory(),
++				      prune_object, NULL, prune_subdir, &opts);
++
++	/* Ensure we show 100% before finishing progress */
++	display_progress(progress, 256);
++	stop_progress(&progress);
++}
+diff --git a/prune-packed.h b/prune-packed.h
+new file mode 100644
+index 0000000000..936fa9df23
+--- /dev/null
++++ b/prune-packed.h
+@@ -0,0 +1,9 @@
++#ifndef PRUNE_PACKED_H
++#define PRUNE_PACKED_H
++
++#define PRUNE_PACKED_DRY_RUN 01
++#define PRUNE_PACKED_VERBOSE 02
++
++void prune_packed_objects(int);
++
++#endif
 -- 
 2.25.0.114.g5b0ca878e0
 
