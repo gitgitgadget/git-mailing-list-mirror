@@ -3,107 +3,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A7EE6C4332D
-	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 22:43:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A542C4332B
+	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 22:55:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6F75720754
-	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 22:43:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1524520754
+	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 22:55:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="uoNd68n/"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="W+iAlc8E"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728044AbgCUWnD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 21 Mar 2020 18:43:03 -0400
-Received: from mail-lj1-f182.google.com ([209.85.208.182]:35558 "EHLO
-        mail-lj1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726859AbgCUWnD (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Mar 2020 18:43:03 -0400
-Received: by mail-lj1-f182.google.com with SMTP id u12so10512291ljo.2
-        for <git@vger.kernel.org>; Sat, 21 Mar 2020 15:43:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp-br.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=jfqICplvYYdba9RwjaAI/eYsUKpR4I9W0Lar0/LoI3M=;
-        b=uoNd68n/u4zKuyXIMXdmh7mnZcf4YXWtKYnd3ANTwLm6v2mC87jq8j3uUYr4nflYKX
-         loyEZPpfTQ/zjbF42T136FjWxk1dEX6lL7I/IhHdGJn0ZMB5l8Oc7DLQsU8Hyx7XKOMp
-         HVfFtyerG1nSkqBRyLHAH8H41aj8W5mOqho8QzJFhNCOaGKm24JvwXwEm9c3jP1i5X2G
-         fzue+BL6LT0OdcRotaN5yTQXVaRKehKkXzpxt9Ps2GH5RVKspru+ksHM+OWEzOOyyGVY
-         +yIknIBLu/HKNTHkWzHeejt8UfqcXtBrMKBHWcHc64e+L4iggzM5T0StfxZc90OTbGat
-         HDPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=jfqICplvYYdba9RwjaAI/eYsUKpR4I9W0Lar0/LoI3M=;
-        b=nmxQh9GIiqHJKbMLbbMdDgeUUAkQrvihJZ78J1l0AFD8RUf4lMtfiHGbUado8hvGBe
-         qrgply/SXSIg9pDf2xt0n7L8VUjr/ePo9TkZVg10h8/Fov9VxQYkejxpe/p1jIaDwwE1
-         oIQ6AvmOPg0b78WDdj2unwuqW3J7fni/ckwDKe0e8QvRhy3ZRwyvHWgjW7WKrPsa+l/g
-         88Us7edg/JfVyvLfVU8XTLadBeYgSbsSo91POeQBf3Hm9ljdoSBxzMCfYy1kNLSqN25Q
-         MVllj0mNldo5/5BzPzrmrJeWq8KpiN6oVOZ1sY3ZYwMCxxucps6V4ZwaXF9FxcTZZKOG
-         M7XQ==
-X-Gm-Message-State: ANhLgQ1LWg/og7mCcG1/+uhFKbG7hx+20I5HEKuwLrkdSRkEmulF8Y8X
-        AOhi7weXUecqCOLeO/TyUqaWJ8l+Io3aP6x7LUwMIg==
-X-Google-Smtp-Source: ADFU+vv0TpZ/jwiBKBSOkkt5wRK1tagHrjYLGKLJUrJ9G8VMGlShEdeOIA0HQRqYQ8pbI+drUi23bnfSSrPNqQjqTrI=
-X-Received: by 2002:a05:651c:228:: with SMTP id z8mr9788432ljn.71.1584830580986;
- Sat, 21 Mar 2020 15:43:00 -0700 (PDT)
+        id S1728016AbgCUWzE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 21 Mar 2020 18:55:04 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54450 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726755AbgCUWzD (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Mar 2020 18:55:03 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7164154A71;
+        Sat, 21 Mar 2020 18:55:01 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=N+BIMeJqsfrz7wQHzXUWppI2fQk=; b=W+iAlc
+        8Ej5rnlOo1EkAuSzz1/wq9dKIfdaZ5dSdABBh/qyd8LGspT7MhOzHALHnlxd3doB
+        hNSgqkyHKyoZNb6HM74bnV2s/utWS8OHJnkUNbfzpAEZC5McsE4zLxZbR7LmQTgU
+        MQen3o/Is1D4xbSEkW7xEsyJNrQTS91bvRT9g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=yiVeZ2ykEbpJ6T27zWEfX8KegFJE51B/
+        LeY6qR/at782Ly9EvT+cKETqr2rToc/Cw/QD/v847ujLXbHwoDSTRqG4QeyL6dYO
+        2czVY25wrg9ATw9a+SCYxyNHlUmPUgMfF19YbvX3yzRsDnW/m0OUZoSelqR/J434
+        qWy17pyf1cw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E71F554A6F;
+        Sat, 21 Mar 2020 18:55:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 129CA54A6E;
+        Sat, 21 Mar 2020 18:55:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Cc:     git <git@vger.kernel.org>
+Subject: Re: macOS builds having trouble at travis-ci.org?
+References: <xmqqlfnt8k47.fsf@gitster.c.googlers.com>
+        <CAHd-oW7B+Q+hGfAkbu8PYjhQ+-81u9L-swk-iHzasHuJOh5GLA@mail.gmail.com>
+Date:   Sat, 21 Mar 2020 15:54:59 -0700
+In-Reply-To: <CAHd-oW7B+Q+hGfAkbu8PYjhQ+-81u9L-swk-iHzasHuJOh5GLA@mail.gmail.com>
+        (Matheus Tavares Bernardino's message of "Sat, 21 Mar 2020 19:35:53
+        -0300")
+Message-ID: <xmqqd0958gjg.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <48c28683412e3e0803d4c7189a6d66daddcdc580.1584759277.git.matheus.bernardino@usp.br>
- <7a6a8197dcd58e8690892d03cb904dd1eec5d7c1.1584818457.git.matheus.bernardino@usp.br>
- <xmqqtv2h8oac.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqtv2h8oac.fsf@gitster.c.googlers.com>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Sat, 21 Mar 2020 19:42:49 -0300
-Message-ID: <CAHd-oW6V4cTpf4L-usGYEOMrn_VOY7ajMpBeLzfs_NTyi8pbxg@mail.gmail.com>
-Subject: Re: [PATCH v2] test-lib: allow short options to be bundled
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: FE375FF6-6BC6-11EA-BEA3-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Mar 21, 2020 at 5:07 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Matheus Tavares <matheus.bernardino@usp.br> writes:
->
-> > +opt_required_arg=
-> > +# $1: option string
-> > +# $2: name of the var where the arg will be stored
-> > +mark_option_requires_arg ()
-> > +{
->
-> "{" on the same line, just like you did for parse_option below.
+Matheus Tavares Bernardino <matheus.bernardino@usp.br> writes:
 
-Thanks. Will fix.
-
-> > +     if test -n "$opt_required_arg"
-> >       then
-> > +             echo "error: options that require args cannot be bundled" \
-> > +                     "together: '$opt_required_arg' and '$1'" >&2
-> > +             exit 1
-> >       fi
-> > +     opt_required_arg=$1
-> > +     store_arg_to=$2
-> > +}
-> > +
-> > +parse_option () {
-> > +     local opt="$1"
-> > ...
-> > +     case "$opt" in
-> > +     --*)
-> > +             parse_option "$opt" ;;
+> On Sat, Mar 21, 2020 at 6:38 PM Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> Starting sometime yeserday, it appears that macOS builds of our
+>> branches at travis-ci.org are having trouble in an undiagnosable
+>> way.  All you see on their webpage is a helpful message "An error
+>> occurred while generating the build script." and nothing else.
 >
-> I think J6t's suggestion to the previous round still has merit here.
+> It might be a problem at the travis-ci infrastructure. They reported
+> an issue with macOS builds failing two days ago[1]. The issue is
+> marked as solved, but there are still some reports[2] from people
+> getting the same error message we are experiencing in git.git.
+>
+> [1]: https://www.traviscistatus.com/incidents/9861dc7dtsb0
+> [2]: https://twitter.com/traviscistatus/status/1240759726905815040
 
-Yeah, I agree with your last reply that it makes the codeflow clearer.
-I'll wait a bit to see if anyone else has other comments about this
-iteration and then send v3 with both changes.
+I knew we have folks who have wider antennae on these things than I
+do ;-)
 
-Thanks.
+Thanks.  This means that we can just wait to see what happens at
+least fo now ;-)
+
+
