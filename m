@@ -7,61 +7,60 @@ X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D9BCC4332B
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C796BC54EEB
 	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 18:00:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D90A520777
-	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 18:00:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A087F20663
+	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 18:00:28 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B/vYy+Ke"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="r6hvKYek"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727972AbgCUSA1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1727980AbgCUSA1 (ORCPT <rfc822;git@archiver.kernel.org>);
         Sat, 21 Mar 2020 14:00:27 -0400
-Received: from mail-ed1-f52.google.com ([209.85.208.52]:33301 "EHLO
-        mail-ed1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727916AbgCUSAX (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Mar 2020 14:00:23 -0400
-Received: by mail-ed1-f52.google.com with SMTP id z65so11175280ede.0
-        for <git@vger.kernel.org>; Sat, 21 Mar 2020 11:00:22 -0700 (PDT)
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:43452 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727944AbgCUSAZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Mar 2020 14:00:25 -0400
+Received: by mail-ed1-f68.google.com with SMTP id n25so10182421eds.10
+        for <git@vger.kernel.org>; Sat, 21 Mar 2020 11:00:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=M+bkCOiGrLNAdoq4wyvFYkIGgvPCiozC9xG3Hu1yz3I=;
-        b=B/vYy+KelW5iLejYPdKy5inbUsNLwfGDTckof4gEKpmSM1Adw9JCodYqufi/9pEqhY
-         0BaNqZ7dE3C3Xxckl3/llgPtb26laIK2l+FVhxpxaec/N/pdX3lIEGyEup2eLvIDF7Z/
-         aIEUPc8p6u0bV2SPYskbMZFuNV7siVWVYbo89qoKL8xZxw9Glp5SOGJtEROch1enzbgm
-         ED9374CF+4yY/uJeDl6O9Y6ugcLFFRd0zNmcXCFWDSBqRYFLN1OYg1ZVIrmmu4Y5DxqG
-         RyvVQ/PvYKR8DPRcYKlihKUlnyxKWrlY80lbAvp+zLiLWYdl1S7SaeJAP4gRSwH0Dyge
-         On/A==
+        bh=o2Imms6Msy/F5vNlk+068THcMm4jKlXyRIVB5aLRE6c=;
+        b=r6hvKYek4QUi2maYOQZwJVEbf7ow2SAvJaGkM09qC6fSaw+dtuVWRXd8ymr3Uny8HY
+         i/cFSMgsvO+zf9fu4DZPn6ZfMNT01Zvm/YOPuuWSjc05RI2I/T1kWit82O01t8aTHBap
+         F3AVoNtqm8IelryRpD4pW0Gw7hkfRUNFjpQNGZjocicL8AeJsHIhqpTUwmoAf1Pkm037
+         4wnI8AO3Wo1UGnmshJncDyEOU8ojZMafpG9HdYsXpaTV28q9o2nTUHqH2U4MM5+u8Yc2
+         EG1NvMzzIM91KjPK/00/HiQGuH8yk3Iv5djF7GOE0WRYmsoR8C1DST3qSaLWoET9ZTHD
+         HlJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=M+bkCOiGrLNAdoq4wyvFYkIGgvPCiozC9xG3Hu1yz3I=;
-        b=tY4fK6GsPmpXCKZIfukTYQ6cx5WKvNKeeAxjFATnXp2uKp3xx7k9sbnFmIIxOEmWdB
-         +1PTa5ymI5K/CnjedIinKypmUH312hj42XPJw0xhJ0IOux6mDV4JQHRmMNXk3DrD2ZA4
-         +LiBELJRQzqqRkVXlWye7/a8SXcRDEVGl6KZRHxnlWV45G/RCv/myJI0EkllVQx6ovMS
-         b1mAoapFGgA8NkTYz79lRo7A4Q1qQxkWc/z/RIeegpFXDNKNHNFN/wpaZwKLOyZ+7z2o
-         E55+ULOBfHGOCIeNaW8Tc/MhpNWAk1HxgIXLheM+MSBlb1exr6/AanGnt2gJtXuqE5R/
-         920A==
-X-Gm-Message-State: ANhLgQ1Kq64baL7+MOORhKa9mgpqoPBXOKzSsmniNddYbPFs4eK6O20h
-        Urlm8KN/N3uPmtg5b+h1Yv9aHqP/
-X-Google-Smtp-Source: ADFU+vu5SjpRUL7ponKQu0HmfdUR6JZfTFKnmQnd8fw1M2hcjG0uXNzUj318Tb5yrKQ8j6Zie6J6Cg==
-X-Received: by 2002:a17:906:3b0e:: with SMTP id g14mr2777886ejf.289.1584813621533;
-        Sat, 21 Mar 2020 11:00:21 -0700 (PDT)
+        bh=o2Imms6Msy/F5vNlk+068THcMm4jKlXyRIVB5aLRE6c=;
+        b=ia2mCQLgB2OtSc6KEEUQ1KETzZBhotyjBK2FLgxfa0U3daTaY4ehXh3q1OlrJhMC/v
+         AY5KLr5Qex8a7tzjqzT5ZwreyHCt1hbsn7S9fo/Z4VF0n1rHemn/eVldyFAflz2vW/aM
+         TGnsf1n/9LaqVULm/Dp+rMZnEgI7LYAURu84l7OB81vpyou/dOD5GFk3WNuLHRqsK9P+
+         LmkykpiRTsa+/K7ohau+XjetjWiatB5BHy6ySkqSAHdJzJkcAMw9TpCwPNVQaOz9fUfj
+         AM5RuVIDfk2un4tAW9SOiBsl3K09FAj8mdg2ApXCTXdcpQ5Y2KIgHsVQMalUUctxYg+e
+         vRPQ==
+X-Gm-Message-State: ANhLgQ13TfjhdMQ70HyOIjoWUdo7CMVTmSt8f24W3483ZVAtYqDNaK/z
+        COcjJO3KGJgHDSvSjQ2DrWWXSvD3
+X-Google-Smtp-Source: ADFU+vseksuQBfb2VOSFm46ImnSJXLpqDSNjJwgky0AQ98julNWvUBPczdmGlC67Xu0JJz/S9CqPZA==
+X-Received: by 2002:a05:6402:b04:: with SMTP id bm4mr2804206edb.328.1584813623870;
+        Sat, 21 Mar 2020 11:00:23 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z11sm661681edp.58.2020.03.21.11.00.20
+        by smtp.gmail.com with ESMTPSA id z16sm627152edm.52.2020.03.21.11.00.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 Mar 2020 11:00:21 -0700 (PDT)
-Message-Id: <02a8e01f35b7864dbeccd76e2969397b1a84d29a.1584813609.git.gitgitgadget@gmail.com>
+        Sat, 21 Mar 2020 11:00:23 -0700 (PDT)
+Message-Id: <5730f7d250a2025ae62edaf8779ff39bfbaa5ad6.1584813609.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.726.v2.git.git.1584813609.gitgitgadget@gmail.com>
 References: <pull.726.git.git.1584169893.gitgitgadget@gmail.com>
         <pull.726.v2.git.git.1584813609.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 21 Mar 2020 18:00:06 +0000
-Subject: [PATCH v2 15/18] unpack-trees: make sparse path messages sound like
- warnings
+Date:   Sat, 21 Mar 2020 18:00:09 +0000
+Subject: [PATCH v2 18/18] sparse-checkout: provide a new reapply subcommand
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,76 +76,72 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-The messages for problems with sparse paths are phrased as errors that
-cause the operation to abort, even though we are not making the
-operation abort.  Reword the messages to make sense in their new
-context.
+If commands like merge or rebase materialize files as part of their work,
+or a previous sparse-checkout command failed to update individual files
+due to dirty changes, users may want a command to simply 'reapply' the
+sparsity rules.  Provide one.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- t/t1091-sparse-checkout-builtin.sh | 8 ++++----
- unpack-trees.c                     | 8 ++++----
- 2 files changed, 8 insertions(+), 8 deletions(-)
+ Documentation/git-sparse-checkout.txt | 10 ++++++++++
+ builtin/sparse-checkout.c             | 10 +++++++++-
+ 2 files changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
-index 0d93d3983e0..11eb567f3fb 100755
---- a/t/t1091-sparse-checkout-builtin.sh
-+++ b/t/t1091-sparse-checkout-builtin.sh
-@@ -288,7 +288,7 @@ test_expect_success 'not-up-to-date does not block rest of sparsification' '
+diff --git a/Documentation/git-sparse-checkout.txt b/Documentation/git-sparse-checkout.txt
+index c0342e53938..1a3ace60820 100644
+--- a/Documentation/git-sparse-checkout.txt
++++ b/Documentation/git-sparse-checkout.txt
+@@ -70,6 +70,16 @@ C-style quoted strings.
+ 	`core.sparseCheckoutCone` is enabled, the given patterns are interpreted
+ 	as directory names as in the 'set' subcommand.
  
- 	git -C repo sparse-checkout set deep/deeper1 2>err &&
++'reapply::
++	Reapply the sparsity pattern rules to paths in the working tree.
++	Commands like merge or rebase can materialize paths to do their
++	work (e.g. in order to show you a conflict), and other
++	sparse-checkout commands might fail to sparsify an individual file
++	(e.g. because it has unstaged changes or conflicts).  In such
++	cases, it can make sense to run `git sparse-checkout reapply` later
++	after cleaning up affected paths (e.g. resolving conflicts, undoing
++	or committing changes, etc.).
++
+ 'disable'::
+ 	Disable the `core.sparseCheckout` config setting, and restore the
+ 	working directory to include all files. Leaves the sparse-checkout
+diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
+index aa81199f85d..95d08824172 100644
+--- a/builtin/sparse-checkout.c
++++ b/builtin/sparse-checkout.c
+@@ -18,7 +18,7 @@
+ static const char *empty_base = "";
  
--	test_i18ngrep "Cannot update sparse checkout" err &&
-+	test_i18ngrep "The following paths are not up to date" err &&
- 	test_cmp expect repo/.git/info/sparse-checkout &&
- 	check_files repo/deep a deeper1 deeper2 &&
- 	check_files repo/deep/deeper1 a deepest &&
-@@ -328,13 +328,13 @@ test_expect_success 'sparse-checkout (init|set|disable) warns with dirty status'
- 	echo dirty >dirty/folder1/a &&
- 
- 	git -C dirty sparse-checkout init 2>err &&
--	test_i18ngrep "warning.*Cannot update sparse checkout" err &&
-+	test_i18ngrep "warning.*The following paths are not up to date" err &&
- 
- 	git -C dirty sparse-checkout set /folder2/* /deep/deeper1/* &&
--	test_i18ngrep "warning.*Cannot update sparse checkout" err &&
-+	test_i18ngrep "warning.*The following paths are not up to date" err &&
- 
- 	git -C dirty sparse-checkout disable &&
--	test_i18ngrep "warning.*Cannot update sparse checkout" err &&
-+	test_i18ngrep "warning.*The following paths are not up to date" err &&
- 
- 	git -C dirty reset --hard &&
- 	git -C dirty sparse-checkout init &&
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 9ee04992ac6..7c24933016b 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -50,10 +50,10 @@ static const char *unpack_plumbing_errors[NB_UNPACK_TREES_WARNING_TYPES] = {
- 	"",
- 
- 	/* WARNING_SPARSE_NOT_UPTODATE_FILE */
--	"Entry '%s' not uptodate. Cannot update sparse checkout.",
-+	"Path '%s' not uptodate; will not remove from working tree.",
- 
- 	/* WARNING_SPARSE_ORPHANED_NOT_OVERWRITTEN */
--	"Working tree file '%s' would be overwritten by sparse checkout update.",
-+	"Path '%s' already present; will not overwrite with sparse update.",
+ static char const * const builtin_sparse_checkout_usage[] = {
+-	N_("git sparse-checkout (init|list|set|add|disable) <options>"),
++	N_("git sparse-checkout (init|list|set|add|reapply|disable) <options>"),
+ 	NULL
  };
  
- #define ERRORMSG(o,type) \
-@@ -172,9 +172,9 @@ void setup_unpack_trees_porcelain(struct unpack_trees_options *opts,
- 		_("Cannot update submodule:\n%s");
+@@ -554,6 +554,12 @@ static int sparse_checkout_set(int argc, const char **argv, const char *prefix,
+ 	return modify_pattern_list(argc, argv, m);
+ }
  
- 	msgs[WARNING_SPARSE_NOT_UPTODATE_FILE] =
--		_("Cannot update sparse checkout: the following entries are not up to date:\n%s");
-+		_("The following paths are not up to date and were left despite sparse patterns:\n%s");
- 	msgs[WARNING_SPARSE_ORPHANED_NOT_OVERWRITTEN] =
--		_("The following working tree files would be overwritten by sparse checkout update:\n%s");
-+		_("The following paths were already present and thus not updated despite sparse patterns:\n%s");
- 
- 	opts->show_all_errors = 1;
- 	/* rejected paths may not have a static buffer */
++static int sparse_checkout_reapply(int argc, const char **argv)
++{
++	repo_read_index(the_repository);
++	return update_working_directory(NULL);
++}
++
+ static int sparse_checkout_disable(int argc, const char **argv)
+ {
+ 	struct pattern_list pl;
+@@ -603,6 +609,8 @@ int cmd_sparse_checkout(int argc, const char **argv, const char *prefix)
+ 			return sparse_checkout_set(argc, argv, prefix, REPLACE);
+ 		if (!strcmp(argv[0], "add"))
+ 			return sparse_checkout_set(argc, argv, prefix, ADD);
++		if (!strcmp(argv[0], "reapply"))
++			return sparse_checkout_reapply(argc, argv);
+ 		if (!strcmp(argv[0], "disable"))
+ 			return sparse_checkout_disable(argc, argv);
+ 	}
 -- 
 gitgitgadget
-
