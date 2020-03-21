@@ -2,109 +2,103 @@ Return-Path: <SRS0=NBeB=5G=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 30828C4332D
-	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 11:43:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E7D11C43333
+	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 16:13:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0473C20724
-	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 11:43:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BDE6C20780
+	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 16:13:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TmGSNShu"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Rz1YURw6"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727032AbgCULnD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 21 Mar 2020 07:43:03 -0400
-Received: from mail-ed1-f51.google.com ([209.85.208.51]:36111 "EHLO
-        mail-ed1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726192AbgCULnD (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Mar 2020 07:43:03 -0400
-Received: by mail-ed1-f51.google.com with SMTP id b18so10382676edu.3
-        for <git@vger.kernel.org>; Sat, 21 Mar 2020 04:43:02 -0700 (PDT)
+        id S1727575AbgCUQNv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 21 Mar 2020 12:13:51 -0400
+Received: from mail-wm1-f43.google.com ([209.85.128.43]:35913 "EHLO
+        mail-wm1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727428AbgCUQNv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Mar 2020 12:13:51 -0400
+Received: by mail-wm1-f43.google.com with SMTP id g62so9733164wme.1
+        for <git@vger.kernel.org>; Sat, 21 Mar 2020 09:13:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=aZeoJoIMrXm0FM170Om2fdyrUp328SGY1TyBLRO0HVM=;
-        b=TmGSNShu4b6ugw63UvMmJQ4ARIyYPQvSJj5wiir+dSnZW4s1VrODJLwAAE9RMZBrf+
-         i0AhROflLUBuyB0NWrJ0eEzDkQpSQsLkc7u/pAPSgv/wkRyA52YIqilfoa5Ry4nbPoeA
-         qBI+9lYAnRPldaT+4848955rRkCpNF0rCjWeQzzsDh+SW0kz1okTVMRErpxne5qfe1j5
-         BKvYujU0Wbm78s1o5rm6wBrL+rIFoIRnFS47Dqc0btjpf079rgUGYcI8yt14Tu4uF6Fp
-         TGmi3w1WJfQsTAqBLUSFpvQ043qXYiV7vczbhk+XrVwSzw8l1Qc6xxXMLS4ySDBR8e6Y
-         XANg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=sdkHF8lh+qwdbM8cbKEFv0XdX0T47/SeTon9vn04qlY=;
+        b=Rz1YURw60nBqAryF+pTnEFGWyjFnCLSGdEcLxKqLgb6oKHev4PHj5z4xJH/BBy6Y0W
+         d4cVy8eLWB/sH/shsl1DyO9H/ZMjFDKxsCKE6P/vQgFLmGhjfAe01RbRsawlSAypEtio
+         ScOaaj0En09KepJn1VkcfHtnNk7yG29+PJsl942o8/BWlaClJwoJkNGF2GJmAmB+8UfK
+         8T+p/v11wJapDLi9OjbX1VPzD0rTbAohCQ3toXlgt4+NIliq18zkBIdZe90TxIGGt5kH
+         ADeio/EMeCOZXwpsL3To/pmkuKHW4RLZC40cl4j7QpoCDsLNqCWVOYSvqMoJOZquGtfx
+         AGIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=aZeoJoIMrXm0FM170Om2fdyrUp328SGY1TyBLRO0HVM=;
-        b=QIfU+Qfvoq/7wo+x6go6Fzxn0DKPSwx7jLQZB0RYC4cQUTmS37M4uOYAEvM9dVT7O3
-         c3dCZK9t75cKerbGz33tzJMm8hLqsUAVub99Ik60t/pUpc4Y27Sn+pQUUOT2aMSQr367
-         uCQxwK7cgteZwyfkFLBcg8uuUGxXMcINQzu+uVaAY/53s1HgETOD3CjZbsDyh+32p0iS
-         DIDc2xwglviIPIDPuAbqqYA7w27XbNVWrPbN9ANm34dtMLkf5hfFkKwSVoY2C/p2oLea
-         U18DGtpwiMBwYpP4FDAnQjItfhJ+U8uwk86ov5kDHxRQb+KNjaBs9yAREEOrajVJ/mcy
-         arGQ==
-X-Gm-Message-State: ANhLgQ1t/e34SboIiou4nAsMyZtTUwVL2uHXC6AMV5PYc+YAiwBoLBrv
-        4tSwMTPX9GowVSQTSMRmvuQkB94LubvuTW8dQ17aHU+D9uc=
-X-Google-Smtp-Source: ADFU+vuUl0DcoUhom+XdhlR4Xqh6W9W2qcrHYO9Iz0HyV/38f1ExTXeVKNRiH723IFtzEv95OPn2tueHy527aXBtvn4=
-X-Received: by 2002:a17:906:614a:: with SMTP id p10mr3161927ejl.88.1584790981393;
- Sat, 21 Mar 2020 04:43:01 -0700 (PDT)
-MIME-Version: 1.0
-From:   =?UTF-8?Q?Andr=C3=A1s_Kucsma?= <andras.kucsma@gmail.com>
-Date:   Sat, 21 Mar 2020 12:42:50 +0100
-Message-ID: <CANPdQv+tCnfy_csM8EwuqAYBtgkJ3RhRvo+ALbzO=BcZA7qJtg@mail.gmail.com>
-Subject: GIT_ASKPASS absolute path detection bug on Windows
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=sdkHF8lh+qwdbM8cbKEFv0XdX0T47/SeTon9vn04qlY=;
+        b=HySOyXApG/YrP1Y/uNS5V9xL+utHsKCHmb+UOe0OZX9EMjbFsQ2CeHfdbIsT5Kc1iM
+         3uXJkCnwa3mxUDUFPYdYTBsc4oqGy3eHgI2hJ1vHiGKl39TwC3uFMlFq5obEk+B7/nBp
+         7MvJRvH5WKZxg7cpb/WsiGIGLR7huLuGl093cxhhQXe4P95Cdo4vSdugipbQev4lA4tS
+         49JAVMxl39Eg/0uWz08ZI8WzKZIXFB+nGPndwbW663nMnPY2xyJuUOP6hgToctr/RtAo
+         vsl2zd4mF1bLZE8SgR1lg+OiF/oOugAHMT0oXbPG7CnVNDRKQHRc9UShVs2GXOlovvgZ
+         c2AA==
+X-Gm-Message-State: ANhLgQ1TZKKSRf+fsgeOuhOJktYjSbd7hwEluFDCo3W5h05byk4BD7sA
+        A2ktoPecBYccd2+lAHaJFpVMGdlg
+X-Google-Smtp-Source: ADFU+vtgto8p2SEvngYWdn2kQmjXifdSA9gD/5Uf0GCFTOnUclgC6HE2lo3/gKChBqxKfGtNF8MOag==
+X-Received: by 2002:a1c:2701:: with SMTP id n1mr17159004wmn.180.1584807229618;
+        Sat, 21 Mar 2020 09:13:49 -0700 (PDT)
+Received: from localhost.localdomain ([139.47.115.4])
+        by smtp.gmail.com with ESMTPSA id f22sm13992285wmf.2.2020.03.21.09.13.48
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 21 Mar 2020 09:13:49 -0700 (PDT)
+From:   Miriam Rubio <mirucam@gmail.com>
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Miriam Rubio <mirucam@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH v2 01/11] bisect--helper: fix `cmd_*()` function switch default return
+Date:   Sat, 21 Mar 2020 17:10:10 +0100
+Message-Id: <20200321161020.22817-2-mirucam@gmail.com>
+X-Mailer: git-send-email 2.25.0
+In-Reply-To: <20200321161020.22817-1-mirucam@gmail.com>
+References: <20200321161020.22817-1-mirucam@gmail.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi All,
+In a `cmd_*()` function, return `error()` cannot be used
+because that translates to `-1` and `cmd_*()` functions need
+to return exit codes.
 
-I believe to have found an issue regarding properly executing the
-GIT_ASKPASS binary. I'm using Windows Server 2019, with git 2.21.0
-installed using cygwin.
+Let's fix switch default return.
 
-## To reproduce:
+Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Signed-off-by: Miriam Rubio <mirucam@gmail.com>
+---
+ builtin/bisect--helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Assume you have the askpass binary at C:\askpass.bat. In CMD the
-following commands reproduce the issue:
+diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+index c1c40b516d..1f81cff1d8 100644
+--- a/builtin/bisect--helper.c
++++ b/builtin/bisect--helper.c
+@@ -711,7 +711,7 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 		res = bisect_start(&terms, no_checkout, argv, argc);
+ 		break;
+ 	default:
+-		return error("BUG: unknown subcommand '%d'", cmdmode);
++		res = error(_("BUG: unknown subcommand."));
+ 	}
+ 	free_terms(&terms);
+ 
+-- 
+2.25.0
 
-C:\> set GIT_ASKPASS=C:\askpass.bat
-C:\> git clone https://<private_repository>.git
-Cloning into '<private_repository>'...
-error: cannot run C:\askpass.bat: No such file or directory
-[... proceeds to interactively ask for username and password ...]
-
-On the other hand, if we change the GIT_ASKPASS environment variable
-slightly, so that there is a forward slash (/) instead of a backslash
-(\), things work as expected:
-
-C:\> set GIT_ASKPASS=C:/askpass.bat
-C:\> git clone https://<private_repository>.git
-Cloning into '<private_repository>'...
-[... success ...]
-
-## Some context:
-
-The source of the problem, is that if git doesn't find a forward slash
-anywhere in the path, it assumes it is not a real path and has to look
-for the binary using the PATH environment variable. See in
-prepare_cmd():
-https://github.com/git/git/blob/98cedd0233e/run-command.c#L429-L439
-
-You can see that the "cannot run" error message is printed here, just
-after prepare_cmd() returned -1:
-https://github.com/git/git/blob/98cedd0233e/run-command.c#L749-L753
-
-I believe this was introduced in late 2018 around git v2.19.2,
-although I did not actually bisect the issue:
-https://github.com/git/git/commit/321fd823897#diff-7577a5178f8cdc0f719e580577889f04R401-R415
-
-
-I hope I'm sharing this bug at the right forum. Please direct me to
-the proper place if not.
-
-Thank you,
-Andras
