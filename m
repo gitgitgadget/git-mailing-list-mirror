@@ -6,126 +6,77 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7580AC4332B
-	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 20:07:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8809BC4332D
+	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 20:11:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 47E1220777
-	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 20:07:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4A7FF2077D
+	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 20:11:33 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="jfCz6s5y"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="TlUgHey7"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727958AbgCUUHq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 21 Mar 2020 16:07:46 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:56894 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726366AbgCUUHq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Mar 2020 16:07:46 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 49660BF540;
-        Sat, 21 Mar 2020 16:07:44 -0400 (EDT)
+        id S1728070AbgCUULc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 21 Mar 2020 16:11:32 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60577 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726777AbgCUULc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Mar 2020 16:11:32 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CEF1151ED3;
+        Sat, 21 Mar 2020 16:11:29 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=s7+kY39S5Q4v06O0m1XiKxFEz4k=; b=jfCz6s
-        5yEsJ7vIxScP3IL+EzepdCTFTYNarP7Dve+YcWia28dFvFskXL9R3rwX1ACA4S9J
-        GhNgBM+WJyNH9pCMd61dyhIG0kHup6NH6cd2Fgcmvoi//4zJ+8/uhqjvauiz0j1P
-        AffI2QM7k0EPuHTuOVfHtKBAiTWv5H76Y8QWM=
+        :content-type; s=sasl; bh=JAsyIs3QTahIc/hGh4lYxYwJHlY=; b=TlUgHe
+        y79kd7N+C0Ywt+z6SDJ3F+7yJYp/pz8UFtoMkqldWvc67BQY9aMJ0nBTl0uWSisK
+        wR1HJ1UaySJz9Lz3EuUkKLuzn4K4bHvn6aOWaeHh9GMXJd8HPRxQ74KwI7bJxgXv
+        BrVZ/vEKibBxM2VTYwdzNFwiXv4ezG2d47LcE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=RzbJ2ZtSz6KLR6S4mRDaVBgH4GlWdmfY
-        5hs5LrAog67+6IZKz5Nc2IW38P/xXAGIkpCHIkAQZ5583byNB3WnrTrR1nPxG1Rl
-        dyd0dsJB7Sb1oaWyZbkPRiuTxXui0Wxub7tk1FaYh8Tu4Xe339TPSgWt6LXspAfr
-        WUDG1AxBMXU=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 406EEBF53F;
-        Sat, 21 Mar 2020 16:07:44 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=xrezRkCda89lc85wicx9+GcW6QEblfdD
+        j+bG+TZlhUUn22miieKmx5Pz7jEXeCgvO153s66CVD+uIQKlkLFUK6EM7n8sTX2S
+        xhvujNLycPDVonMqIx+eWtY2r7Hg0wNDsghdlscYNBtMBJ9BWLjv9VjHjMbrpg9Q
+        yyKxDPqCJyQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C685A51ED2;
+        Sat, 21 Mar 2020 16:11:29 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 86856BF53C;
-        Sat, 21 Mar 2020 16:07:41 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 53E2B51ECF;
+        Sat, 21 Mar 2020 16:11:29 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Matheus Tavares <matheus.bernardino@usp.br>
-Cc:     git@vger.kernel.org, szeder.dev@gmail.com,
-        Johannes.Schindelin@gmx.de, j6t@kdbg.org, peff@peff.net
-Subject: Re: [PATCH v2] test-lib: allow short options to be bundled
+To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Cc:     Johannes Sixt <j6t@kdbg.org>, git <git@vger.kernel.org>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] test-lib: allow short options to be stacked
 References: <48c28683412e3e0803d4c7189a6d66daddcdc580.1584759277.git.matheus.bernardino@usp.br>
-        <7a6a8197dcd58e8690892d03cb904dd1eec5d7c1.1584818457.git.matheus.bernardino@usp.br>
-Date:   Sat, 21 Mar 2020 13:07:39 -0700
-In-Reply-To: <7a6a8197dcd58e8690892d03cb904dd1eec5d7c1.1584818457.git.matheus.bernardino@usp.br>
-        (Matheus Tavares's message of "Sat, 21 Mar 2020 16:57:31 -0300")
-Message-ID: <xmqqtv2h8oac.fsf@gitster.c.googlers.com>
+        <2a54d866-c40e-da5e-4c0c-6bfcb56eb8f7@kdbg.org>
+        <CAHd-oW73xp2=XcFr1F57fo2UtAyuZ2aeXVSc_A50bYKKVN7fJw@mail.gmail.com>
+Date:   Sat, 21 Mar 2020 13:11:28 -0700
+In-Reply-To: <CAHd-oW73xp2=XcFr1F57fo2UtAyuZ2aeXVSc_A50bYKKVN7fJw@mail.gmail.com>
+        (Matheus Tavares Bernardino's message of "Sat, 21 Mar 2020 15:55:27
+        -0300")
+Message-ID: <xmqqpnd58o3z.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 9EC980B0-6BAF-11EA-BC48-8D86F504CC47-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 268FB974-6BB0-11EA-A42B-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Matheus Tavares <matheus.bernardino@usp.br> writes:
+Matheus Tavares Bernardino <matheus.bernardino@usp.br> writes:
 
-> - Added a check for bundles containing more than one "option that
->   requires args" (e.g. '-rr'), in which case we error-out. We could
->   interpret '-rr 1 2' as 'run tests 1 _and_ 2', but the unbundled
->   format, '-r 1 -r 2', is not currently interpreted like that (the last
->   just overrides the previous). So, for simplicity, let's only forbid
->   such bundles for now.
+> Makes sense, thanks. However, using Peff's suggestion[1] for the
+> character iteration already eliminates the need for extra processes.
 
-Makes sense.  I think this is the best we can do at this moment.
-
-> +opt_required_arg=
-> +# $1: option string
-> +# $2: name of the var where the arg will be stored
-> +mark_option_requires_arg ()
-> +{
-
-"{" on the same line, just like you did for parse_option below.
-
-> +	if test -n "$opt_required_arg"
->  	then
-> +		echo "error: options that require args cannot be bundled" \
-> +			"together: '$opt_required_arg' and '$1'" >&2
-> +		exit 1
->  	fi
-> +	opt_required_arg=$1
-> +	store_arg_to=$2
-> +}
-> +
-> +parse_option () {
-> +	local opt="$1"
-> ...
-> +	case "$opt" in
-> +	--*)
-> +		parse_option "$opt" ;;
-
-I think J6t's suggestion to the previous round still has merit here.
-
-> +	-?*)
-> +		# bundled short options must be fed separately to parse_option
-> +		opt=${opt#-}
-> +		while test -n "$opt"
-> +		do
-> +			extra=${opt#?}
-
-Take the rest of the string after stripping the first one in $extra ...
-
-> +			this=${opt%$extra}
-
-... and then strip that tail part from the end, which would give the
-first letter in $this.
-
-> +			opt=$extra
-
-And the next round will use the remainder after taking $this out
-of the bundled options from the front.
-
-Makes sense.
-
-> +			parse_option "-$this"
-> +		done
-
-Thanks
+Even without an extra process, having to strip "-", assign an empty
+string to $extra, and then strip that empty string from the tail to
+come up with a single letter in $this, all are consuming cycles.
+Even though these wasted cycles are now much smaller, having an arm
+that specifically catches unbundled case and avoid doing anything
+extra makes the codeflow clear, I would think.
