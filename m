@@ -8,64 +8,64 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 58848C4332E
-	for <git@archiver.kernel.org>; Sun, 22 Mar 2020 00:56:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 03072C4332E
+	for <git@archiver.kernel.org>; Sun, 22 Mar 2020 00:56:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 2702120754
-	for <git@archiver.kernel.org>; Sun, 22 Mar 2020 00:56:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C53E020754
+	for <git@archiver.kernel.org>; Sun, 22 Mar 2020 00:56:08 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CcZD9jEa"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b6/7gw9h"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728220AbgCVA4A (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 21 Mar 2020 20:56:00 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:36721 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727296AbgCVAz7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Mar 2020 20:55:59 -0400
-Received: by mail-pl1-f195.google.com with SMTP id g2so4241158plo.3
-        for <git@vger.kernel.org>; Sat, 21 Mar 2020 17:55:59 -0700 (PDT)
+        id S1728237AbgCVA4D (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 21 Mar 2020 20:56:03 -0400
+Received: from mail-pf1-f181.google.com ([209.85.210.181]:35403 "EHLO
+        mail-pf1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727296AbgCVA4C (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Mar 2020 20:56:02 -0400
+Received: by mail-pf1-f181.google.com with SMTP id u68so5509430pfb.2
+        for <git@vger.kernel.org>; Sat, 21 Mar 2020 17:56:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Rkd8uyUmh0bMHjbwE3grOKlvj01CNcl+MQc1EDP3wcM=;
-        b=CcZD9jEaif06juS8ey3DpQz6Xau8buFvfiOcNnTztqrY05Fq6qv1z3X8GbPf4KwUWF
-         2VCIfzv2K4zyc+SpGCSp8gywD/779pZJ/b/OHxB8Zxr5UK2Q0/9bXQjYb9sTRK+ybQum
-         2HkNMWk9pNIQhjR1U2NErBpRM7kHmeTgEbzSqnzDybGnNBnjyOn/3tbvxt5U/T4wb4ET
-         qV0L35/+oS4SSmgEDmaBUftHh+rMsUJqEyd0BroxUBlJm/9XSOh7bDdwPgv6AVrDicYu
-         n/UN5WMmxjNnCLeD2w0smz8lkiob5Hzab3S5DrytzRpOnzvbmmnkyB+WehKuyrb1w+s+
-         dvng==
+        bh=Vx9MM0np547+VJB1b/JbwD5ErtmMbJfcaQa/9CDZtKA=;
+        b=b6/7gw9hEcw5BmDxSeWVG/Vdz3DxaE+84E0FFWDKol4tHtlESr2N1QiXQW8hnitjJc
+         PSA+EUzg2K77yT8OFlo4ipNOD7etjplHtqKZcE5LeUAAYORfgnWtk4eNyGvAeAkQXodt
+         IvLAZSR9lFyF2Wma7t/OA0fDOaKOEpQnrQ37jem2Yk8RCxlq+8SRkQm1cO4BIOjt9znE
+         VqA4jjaA+TKEJNQ1k9rLzTO/gj99cS3Y5Km3eN9DF0b8OxB9shpgJNrfmrNhg2wOX2xg
+         lB5/kBch5eX3yTHa9lG48Nb8U2ApCgnlU4v4DLYyQZ1YZUpWYMG+FHeQwFxu/GskHKSM
+         vfaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Rkd8uyUmh0bMHjbwE3grOKlvj01CNcl+MQc1EDP3wcM=;
-        b=Cn3Th6cXqyE70YW2X7JsUIMBk5CdqizQZoovNc4GFikfbqvqcYccjtGi2zUxE05wtX
-         9g9XZFC/w1zSa3zOiIDq3+rL+iDwMqm5Ry/Ek0R821Nm3tUJXffRLBYR7VSIo0zk7LNm
-         Yh4norWUC2hOebOBV/fI3G4wu4KtDprWoTpYXBfuEENeaL7A6mpFfF9FB1xDxtpJ3ml5
-         g4bgWzQlAZMBiFhkiIh5NORyhrbRYlbFicx7ZCDJqwUlDWrVeCC1Pew0JrljNLInhCT4
-         ueCI/ObgKBXE9CmF70xZt2OqE7LKsVit3mkO1BWDiDNd6GyJi6EaTlqIWG+afqQ6c1GM
-         5YmQ==
-X-Gm-Message-State: ANhLgQ2Hyik3AYzEeoe1OOxdIM1hG3XwrjS3ZwNGAKDWoV/Ngv/DAQed
-        EDJuSdG+FCQ8f+oWdL5OKP0JCMGD
-X-Google-Smtp-Source: ADFU+vtAf5ZM93KwWm1uF/uC6imRWRmo52Nfj8CHo6inf88DR3dMoYeqNZnWYrmWt+Jf5LnFUahmSA==
-X-Received: by 2002:a17:90a:368f:: with SMTP id t15mr17982257pjb.23.1584838558590;
-        Sat, 21 Mar 2020 17:55:58 -0700 (PDT)
+        bh=Vx9MM0np547+VJB1b/JbwD5ErtmMbJfcaQa/9CDZtKA=;
+        b=hMPPQ9JYQvhPPr+jFD+L98PxgDrRj3XkM3Oo5G0dO9bvx6VDLCyX8xJLlQ9JYymKp+
+         BM95HfZ3efYSkrfa74X+YFvxF63/WC1dOGNikoZfIZTIEw0vlNK7z0hk8su1zXRpl7mW
+         gpwsU6MngJMT2Jv0xslnPnz/DQG8ja/Aj5PXGrVGpUp95yJGkrX4zPlqKyKgwIBZqI8F
+         hMiZ06y39OKYh7F8DhClmM4UAYlZCPkcGIqmE9G9itVdBK4mVMifSg5x543PTUdA5eVT
+         Ir0PeXPMtvujJO9Y5SoyKPSFB9yBG+gTRpEj+tkaaXpShCAyMbjvPMNhdPXm6AuOW0S5
+         h3Fg==
+X-Gm-Message-State: ANhLgQ2IoiV595TPsRInmhOb3MTCwAuKKN363ijnp/OYf8IKsbernQHa
+        hoWA4pczwZYIeHtW2yVmmjbTaYmx
+X-Google-Smtp-Source: ADFU+vsQVKCJSXcqEeOdv/B2RFK5SfP1gd9x3LYhqG13vsKYByz5AkNdWEIRyxBMD7AkMJ8uSVFV4Q==
+X-Received: by 2002:aa7:95ae:: with SMTP id a14mr16625000pfk.164.1584838560758;
+        Sat, 21 Mar 2020 17:56:00 -0700 (PDT)
 Received: from localhost.localdomain ([2402:800:6375:576b:56ff:d97c:a505:3e0c])
-        by smtp.gmail.com with ESMTPSA id r7sm9235641pfg.38.2020.03.21.17.55.57
+        by smtp.gmail.com with ESMTPSA id r7sm9235641pfg.38.2020.03.21.17.55.59
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 21 Mar 2020 17:55:58 -0700 (PDT)
+        Sat, 21 Mar 2020 17:56:00 -0700 (PDT)
 From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>
-Subject: [PATCH v2 1/6] t4061: use POSIX compliance regex(7)
-Date:   Sun, 22 Mar 2020 07:55:10 +0700
-Message-Id: <4830bd3aaf6cadc02c00732f8447646064a6ae3e.1584838133.git.congdanhqx@gmail.com>
+Subject: [PATCH v2 1/8] t4061: use POSIX compliant regex(7)
+Date:   Sun, 22 Mar 2020 07:55:11 +0700
+Message-Id: <288e343d09dd375bbb61ba97858f518b431d0b1d.1584838148.git.congdanhqx@gmail.com>
 X-Mailer: git-send-email 2.26.0.rc2.310.g2932bb562d
-In-Reply-To: <cover.1584838133.git.congdanhqx@gmail.com>
-References: <cover.1584838133.git.congdanhqx@gmail.com>
+In-Reply-To: <cover.1584838148.git.congdanhqx@gmail.com>
+References: <cover.1584838148.git.congdanhqx@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -86,7 +86,15 @@ https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap09.html#tag_09_
 
 This test is failing with busybox sed, the default sed of Alpine Linux
 
-Fix it by using literal `+` instead.
+We have 2 options here:
+
+- Using literal `+` because BRE will interpret it as-is, or
+- Using character class `[+]` to defend against a sed that expects ERE
+
+ERE-expected sed is theoretical at this point,
+but we haven't found it, yet.
+And, we may run into other problems with that sed.
+Let's go with first option and fix it later if that sed could be found.
 
 Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
 ---
