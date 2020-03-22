@@ -2,88 +2,144 @@ Return-Path: <SRS0=O1OI=5H=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-11.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 66E35C4332D
-	for <git@archiver.kernel.org>; Sun, 22 Mar 2020 08:14:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A8788C54EEB
+	for <git@archiver.kernel.org>; Sun, 22 Mar 2020 09:15:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 331DB20753
-	for <git@archiver.kernel.org>; Sun, 22 Mar 2020 08:14:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6F2B920777
+	for <git@archiver.kernel.org>; Sun, 22 Mar 2020 09:15:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XTSBQP6i"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="o4Y1WViF"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726728AbgCVIOZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 22 Mar 2020 04:14:25 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:39557 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725987AbgCVIOZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Mar 2020 04:14:25 -0400
-Received: by mail-wm1-f66.google.com with SMTP id a9so7844460wmj.4
-        for <git@vger.kernel.org>; Sun, 22 Mar 2020 01:14:23 -0700 (PDT)
+        id S1726827AbgCVJPv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 22 Mar 2020 05:15:51 -0400
+Received: from mail-ed1-f41.google.com ([209.85.208.41]:45549 "EHLO
+        mail-ed1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725987AbgCVJPu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Mar 2020 05:15:50 -0400
+Received: by mail-ed1-f41.google.com with SMTP id u59so12690122edc.12
+        for <git@vger.kernel.org>; Sun, 22 Mar 2020 02:15:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=STv5DTLbZScQtsSI/RfRaY2aj0Y4wBk+0zGdcDK1h80=;
-        b=XTSBQP6iR2y6DwWC0Z5fVsyRibyEyk16jVf25K0ZhMDueXFDwGe5T/NVSbDKJOLnYj
-         PfpYBn6eI4XM4/CNNktUlxKud2TaADLytwy8B1y2fao7QiyVKKfYH/NCfn0G2lxBwKca
-         ZzfDaY8DbEeXFOvxxbt8PPmHj8b0wH5uJwiBo/ORlLxJ0srHd0DqZjdvOOzf8DnY6Eth
-         r/u2sbDLoDUnTZZpcRlllGKvRUNK/+Owbp2wcoSVa2Vg4rqmSEBTeyBL4BjY5bxxPebo
-         Pjz1J/V48FHdJkwP6FlEuA4J6Ucq2lGIM4Gq+WCGNEEG+Q6i9Xcaim4YVbcFj1fhla8v
-         yMtg==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=M5SWJqNaQ0lbTbHcpbVZhDOm7oLaVUeKsxHqr6cb270=;
+        b=o4Y1WViFAJwIo/U+yEsAWzjijxxV9xweG+f9D1dMJ1C+FYlMx0KLPFttqMpoqoVJkC
+         R9EcrbJnmM8r0aJAiD72687/GTFTYcaE6J5B8F1M9yBD8LWKEFEDAEXAUyZ+LHhJJIBQ
+         wDaDXVef4xTKYJpV+pSuG2F42q68ofI5FNyS+u52Q8FIi8vPQRVweBsnnCOeHJ/eCNNN
+         BsPjg6CLjeodByLxfdJV0mnspxkdGiP03NNu3josArC43ph1Hw6G999K83MbUydTGik/
+         HFFbrCq9sT4t4CS+wl8qFj6mqv+0kIjo8ODJH4nyiv0hiopDBu5CaFeNs4erXjAHztjD
+         czhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=STv5DTLbZScQtsSI/RfRaY2aj0Y4wBk+0zGdcDK1h80=;
-        b=rZteM7+8V0ova5qQTxbw9bagAa5sRIjk2MCLf/4U6v/wjoUmr+Qx4IK3H8uhExAnJk
-         IIBjGKRMv8uNpKrfxDMOPezlNpaou05seCYHpOIxc2BM0DMoXyUYwGibycuMnU1f0nJM
-         lJLvovBQQUTm3fAZHtpNvfYjl0nyYJUQOwKzLCAaOGfpQaSspwESVSPNTW8RZhOJ7pl8
-         U4u7SFaQkHPA54E6XB74jM/vN5zmKscmLl2Bfe6QsOnm+E1kxtaEsr4wQrtgxlW+1242
-         YEKxS3wAqiBBZ+LyzEq82I4uJuzmaTHZRwUM4kWsCZHPyCFvv9MssTGnyCMO1p+Hx2Pf
-         bs6g==
-X-Gm-Message-State: ANhLgQ0eJLuhmegQpPgsEfBzE0OSMYHfn/xTLxTE+wXLm8ZMB0j7umuC
-        UJdLImUTvab2A646EhlZMNQ=
-X-Google-Smtp-Source: ADFU+vsVwxCYFmkrk4Bc9qOH/x0mWWLXpabe/3/6uttOh6drM0SFRxEKik2oDIch1uM8VOy4jGZT5Q==
-X-Received: by 2002:a1c:c257:: with SMTP id s84mr21153694wmf.9.1584864862970;
-        Sun, 22 Mar 2020 01:14:22 -0700 (PDT)
-Received: from szeder.dev (62-165-238-214.pool.digikabel.hu. [62.165.238.214])
-        by smtp.gmail.com with ESMTPSA id f14sm15680995wmb.3.2020.03.22.01.14.21
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 22 Mar 2020 01:14:22 -0700 (PDT)
-Date:   Sun, 22 Mar 2020 09:14:17 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Cc:     Jeff King <peff@peff.net>, git <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] test-lib: allow short options to be stacked
-Message-ID: <20200322081417.GA2224@szeder.dev>
-References: <48c28683412e3e0803d4c7189a6d66daddcdc580.1584759277.git.matheus.bernardino@usp.br>
- <20200321062611.GA1441446@coredump.intra.peff.net>
- <CAHd-oW4cGEwyge+BPRGiOsmMxr5ne9Ufk-BOM4EgG_i6qTxxMg@mail.gmail.com>
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=M5SWJqNaQ0lbTbHcpbVZhDOm7oLaVUeKsxHqr6cb270=;
+        b=E8j5pMNskzdZNuv1JjJ2YL+/1FWtr9CY+R2M95BzSnih7ToBjvaFydvkxSQfd7hj6B
+         ttWi+Afns5uTqNxYjnkNkoC3auQe1sJZ+5CCNDfSAD9+o8kuKHLA3O7m6YM6P0u+MpU7
+         nD0H6h8u0jmJL0BeUFyDYNQ2aBnkTveiXOTxUdONWKoCHL1Fu9SIlhq8789BgJDOzzX7
+         wki/8DaQNwRC2edLZRtrMJwaYjIRwZZ6qoE9ymekE+6b+TPlRpDTSjtRc2Sxx6VLwXnh
+         dHrJyD/T9zKZcboJWzLwcNg+q37GDFDWKgPw5fbMxJ5s6wgTfJBmlLqhutdmHFW/1lMc
+         6XzQ==
+X-Gm-Message-State: ANhLgQ1vAvv+EkNX0AkVqOalD6tbo+ZbqRPYGEe48MsYVaUs98hLrRfL
+        CUnlBHlCpub+T1JGdJuCTWMmdOjX
+X-Google-Smtp-Source: ADFU+vsC1gxCTu6KSWsY5qYpNJtlOnHw9wuIhNJyXDPb5xT7W5RUYkRXwVrBZKiwbvvI4Jb7JEP0zQ==
+X-Received: by 2002:a17:906:4d42:: with SMTP id b2mr3991888ejv.22.1584868548566;
+        Sun, 22 Mar 2020 02:15:48 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id v3sm638262eju.34.2020.03.22.02.15.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 22 Mar 2020 02:15:48 -0700 (PDT)
+Message-Id: <pull.736.git.git.1584868547682.gitgitgadget@gmail.com>
+From:   "Sheikh hamza via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sun, 22 Mar 2020 09:15:47 +0000
+Subject: [PATCH] bisect: remove root directory restriction for git bisect
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAHd-oW4cGEwyge+BPRGiOsmMxr5ne9Ufk-BOM4EgG_i6qTxxMg@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+To:     git@vger.kernel.org
+Cc:     Sheikh hamza <sheikhhamza012@gmail.com>,
+        sheikh hamza <sheikhhamza012@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Mar 21, 2020 at 03:50:55PM -0300, Matheus Tavares Bernardino wrote:
-> [1]: Someone that used '-rr 5 6' might have wanted the script to run
-> *both* tests 5 and 6. But I don't think we need to support that now,
-> since '-r 5 -r 6' doesn't do that as well (instead, the last value
-> overrides all previous ones).
+From: sheikh hamza <sheikhhamza012@gmail.com>
 
-Well, that '-r 5 -r 6' should be written as '-r 5,6', but it shouldn't
-be terribly difficult to concatenate the args of multiple '-r' options
-with a comma, I suppose.
+    according to the open issue #486 the git bisect
+    command should be able to run from inside any
+    subdirectory and in the same disscusion "dscho"
+    gave the directions and those directions lead me
+    the fix of adding SUBDIRECTORY_OK=Yes on L#34
+    before sourcing git-sh-setup that made it work as
+    in git-sh-setup there was a check on SUBDIRECTORY_OK
+    that prevents it to run in sub directories if it is not
+    set to "ok" as this file was also sourced in other commands
+    that are required to only run from root one of such scripts
+    is git-filter-branch
 
-But '-rr 5 6' just looks wrong.
+Signed-off-by: sheikh hamza <sheikhhamza012@gmail.com>
+---
+    bisect: remove root directory restriction for git bisect
+    
+    according to the open issue #486 the git bisect
+    command should be able to run from inside any
+    subdirectory and in the same disscusion "dscho"
+    gave the directions and those directions lead me
+    the fix of adding SUBDIRECTORY_OK=Yes on L#34
+    before sourcing git-sh-setup that made it work as
+    in git-sh-setup there was a check on SUBDIRECTORY_OK
+    that prevents it to run in sub directories if it is not
+    set to "ok" as this file was also sourced in other commands
+    that are required to only run from root one of such scripts
+    is git-filter-branch
 
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-736%2Fsheikhhamza012%2Fbisect_subdirectory_fix-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-736/sheikhhamza012/bisect_subdirectory_fix-v1
+Pull-Request: https://github.com/git/git/pull/736
+
+ git-bisect.sh            | 1 +
+ t/perf/bisect_regression | 6 ++----
+ 2 files changed, 3 insertions(+), 4 deletions(-)
+
+diff --git a/git-bisect.sh b/git-bisect.sh
+index efee12b8b1e..8c1da200e41 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -31,6 +31,7 @@ git bisect run <cmd>...
+ 
+ Please use "git help bisect" to get the full man page.'
+ 
++SUBDIRECTORY_OK=Yes
+ OPTIONS_SPEC=
+ . git-sh-setup
+ 
+diff --git a/t/perf/bisect_regression b/t/perf/bisect_regression
+index ce47e1662a9..d6b96f49e46 100755
+--- a/t/perf/bisect_regression
++++ b/t/perf/bisect_regression
+@@ -57,11 +57,9 @@ tmpdir=$(mktemp -d -t bisect_regression_XXXXXX) || die "Failed to create temp di
+ echo "$oldtime" >"$tmpdir/oldtime" || die "Failed to write to '$tmpdir/oldtime'"
+ echo "$newtime" >"$tmpdir/newtime" || die "Failed to write to '$tmpdir/newtime'"
+ 
+-# Bisecting must be performed from the top level directory (even with --no-checkout)
+-(
+-	toplevel_dir=$(git rev-parse --show-toplevel) || die "Failed to find top level directory"
+-	cd "$toplevel_dir" || die "Failed to cd into top level directory '$toplevel_dir'"
+ 
++(
++	 
+ 	git bisect start --no-checkout "$newrev" "$oldrev" || die "Failed to start bisecting"
+ 
+ 	git bisect run t/perf/bisect_run_script "$test_script" "$test_number" "$tmpdir"
+
+base-commit: 98cedd0233ee88e69711f79d1126b6bd772ff5bd
+-- 
+gitgitgadget
