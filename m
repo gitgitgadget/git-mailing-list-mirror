@@ -6,161 +6,111 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5ACCCC4332D
-	for <git@archiver.kernel.org>; Sun, 22 Mar 2020 05:36:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C93B4C4332D
+	for <git@archiver.kernel.org>; Sun, 22 Mar 2020 05:49:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 2BB7120722
-	for <git@archiver.kernel.org>; Sun, 22 Mar 2020 05:36:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A4BFA20753
+	for <git@archiver.kernel.org>; Sun, 22 Mar 2020 05:49:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726741AbgCVFgh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 22 Mar 2020 01:36:37 -0400
-Received: from cloud.peff.net ([104.130.231.41]:46782 "HELO cloud.peff.net"
+        id S1726561AbgCVFtS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 22 Mar 2020 01:49:18 -0400
+Received: from cloud.peff.net ([104.130.231.41]:46792 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725825AbgCVFgh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Mar 2020 01:36:37 -0400
-Received: (qmail 23344 invoked by uid 109); 22 Mar 2020 05:36:37 -0000
+        id S1725892AbgCVFtS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Mar 2020 01:49:18 -0400
+Received: (qmail 23532 invoked by uid 109); 22 Mar 2020 05:49:18 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 22 Mar 2020 05:36:36 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 22 Mar 2020 05:49:18 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 29677 invoked by uid 111); 22 Mar 2020 05:46:21 -0000
+Received: (qmail 29714 invoked by uid 111); 22 Mar 2020 05:59:02 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 22 Mar 2020 01:46:21 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 22 Mar 2020 01:59:02 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Sun, 22 Mar 2020 01:36:35 -0400
+Date:   Sun, 22 Mar 2020 01:49:16 -0400
 From:   Jeff King <peff@peff.net>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, dstolee@microsoft.com
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
+        git@vger.kernel.org, dstolee@microsoft.com
 Subject: Re: [PATCH 1/1] commit-graph.c: avoid unnecessary tag dereference
  when merging
-Message-ID: <20200322053635.GA578498@coredump.intra.peff.net>
+Message-ID: <20200322054916.GB578498@coredump.intra.peff.net>
 References: <cover.1584762087.git.me@ttaylorr.com>
  <4c79a9ea909ebff8c0987bcf95692da92e79bda4.1584762087.git.me@ttaylorr.com>
  <20200321050025.GA1438317@coredump.intra.peff.net>
  <20200321061141.GA30636@syl.local>
  <20200321070333.GB1441446@coredump.intra.peff.net>
- <20200321172716.GA39461@syl.local>
+ <xmqqfte1a6ew.fsf@gitster.c.googlers.com>
+ <a0de34e3-3f60-1838-dbaf-2ee3dddc7c89@gmail.com>
+ <20200322002005.GA48038@syl.local>
+ <1cb561fc-5bce-28f0-e5e1-886f590fba92@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20200321172716.GA39461@syl.local>
+In-Reply-To: <1cb561fc-5bce-28f0-e5e1-886f590fba92@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Mar 21, 2020 at 11:27:16AM -0600, Taylor Blau wrote:
+On Sat, Mar 21, 2020 at 08:23:13PM -0400, Derrick Stolee wrote:
 
-> > I'm not sure how to do that, though. Saying "--input=none" still puts
-> > all of those existing graphed objects into the list of oids to include.
-> > I think you'd need a case where you were legitimately only adding a few
-> > commits, but the merge rules say we need to create one big commit-graph
-> > file.
+> On 3/21/2020 8:20 PM, Taylor Blau wrote:
+> > On Sat, Mar 21, 2020 at 08:03:01PM -0400, Derrick Stolee wrote:
+> >> On 3/21/2020 2:50 PM, Junio C Hamano wrote:
+> >>> Do we need to worry about INFO_QUICK and SKIP_FETCH_OBJECT in this
+> >>> codepath, by the way?
+> >>
+> >> I was coming back to this thread to bring up these exact flags for
+> >> consideration. The good news is that in a partial clone with any
+> >> amount of filtering we will still have all reachable commits, which
+> >> are necessary for the commit-graph to make sense. The only ones that
+> >> would fail has_object_file() are ones removed by GC, but they may
+> >> still exist on the remote. So without SKIP_FETCH_OBJECT, we would
+> >> generate a network call even if the server has GC'd to remove the
+> >> commits. This gets particularly bad when the server returns all
+> >> reachable objects from that commit!
+> > 
+> > That makes sense. Do you think something like this should be applied?
+> > +       int flags = OBJECT_INFO_QUICK | OBJECT_INFO_SKIP_FETCH_OBJECT;
+> [...]
 > 
-> You have to be careful, since we're taking the reachability closure over
-> any commits that you do give. So, one thing you could do to ensure that
-> you have an actually small graph is to take something from the output of
-> 'git rev-list --max-parents=0 HEAD'.
+> Yes, I think this is the appropriate update. Thanks!
 
-I don't think you need to be that careful, though. In split-mode,
-close_reachable() will stop traversing when it finds a graphed commit.
-That's why using the tip of HEAD in my previous example worked.
+I'm not so sure.
 
-> To try and reproduce your results, I used '1da177e4c3', which is the
-> kernel's first commit in Git. If my interpretation of your setup is
-> faithful, it goes something like:
-> 
->   $ graphdir=.git/objects/info/commit-graphs
->   $ git rev-parse 1da177e4c3 |
->     git commit-graph write --split=no-merge --stdin-commits
->   $ cp -r "$graphdir{,.bak}"
-> 
->   $ best-of-five -p "rm -rf $graphdir && cp -r $graphdir{.bak,}" \
->     'git commit-graph write --split=merge-all'
+In a non-partial clone, when would expect QUICK to matter? If we find
+the object is missing, then either:
 
-My case is the opposite, isn't it? Here it looks like you've made a very
-_tiny_ commit-graph file (with one commit), and then you're going to end
-up adding in all of the new objects. I don't think it would be improved
-much by this patch (which makes me very confused by the numbers you got
-below).
+  - we are racing with repack, and we would benefit from double-checking
+    that the object really is gone
 
-I also don't think it's that interesting a real-world case.
+  - we used to have it (since it was mentioned in the graph file) but it
+    went away
 
-The more interesting one is where you do already have a big
-commit-graph, and want to add just a bit more to it. In the real world,
-that might look something like this:
+Using QUICK means we won't waste time double-checking in the second
+case. But it means we won't catch the first case, and we may generate a
+new graph file that omits the object. They're both optimizations, and I
+don't think we're impacting correctness[1], but it's not clear to me
+whether one is a win over the other. We don't generally expect objects
+we have to go away often.
 
-  # create a fake server repo
-  git clone --bare . dst.git
+Skipping fetching seems a little more straight-forward to me. If we had
+it in a graph file, presumably we had the actual object before, too. And
+either we're in the first case above (we really do have it and just need
+to double-check) in which case not saying QUICK would be enough. Or we
+intentionally got rid of it. In which case downloading it just to
+generate a cache is quite silly.
 
-  # imagine the server already has everything in a graph file
-  git -C dst.git commit-graph write --split=no-merge --reachable
-
-  # and now do a small push
-  git commit --allow-empty -m foo
-  git push dst.git
-
-  # the server might do an incremental immediately to cover the new
-  # objects; here we'll use --stdin-commits with the new data, but a
-  # real server might feed the new packfile. We'd probably just use
-  # regular --split here in practice, but let's imagine that we're
-  # starting to have a lot of graph files, and that triggers a desire to
-  # merge. We'll force that state with --split=merge-all.
-  git rev-list HEAD^..HEAD |
-  git -C dst.git commit-graph write --split=merge-all --stdin-commits
-
-Without your patch, that takes ~11s for me. With it, it takes ~2s.
-
-Another equally interesting case is if the per-push generation _doesn't_
-merge anything, and just creates a new, tiny graph file. And then later
-we want to do a real maintenance, merging them all done. I think that
-would be something like:
-
-  git -C dst.git commit-graph write --input=none --split=merge-all
-
-But that _isn't_ improved by your patch. For the simple reason that all
-of the commits will already have been parsed. The "--input=none" option
-isn't "no input"; it's actually "take all existing graphed objects as
-input" (i.e., it implies --append). So each of those objects will
-already have been examined in an earlier stage.
-
-> Where the last step is taking all commits listed in any pack, which is
-> cheap to iterate.
-
-I'm not sure it's all that cheap. It has to find the type of every
-object in every pack. And finding types involves walking delta chains.
-That's something like 7s on my machine for linux.git (compared to the 2s
-in which I can just merge down the existing graph files).
-
-> In the above setup, I get something like:
-> 
->   git version 2.26.0.rc2.221.ge327a58236
->   Attempt 1: 16.933
->   Attempt 2: 18.101
->   Attempt 3: 17.603
->   Attempt 4: 20.404
->   Attempt 5: 18.871
-> 
->   real	0m16.933s
->   user	0m16.440s
->   sys	0m0.472s
-> 
-> versus:
-> 
->   git version 2.26.0.rc2.222.g295e7905ee
->   Attempt 1: 5.34
->   Attempt 2: 4.623
->   Attempt 3: 5.263
->   Attempt 4: 5.268
->   Attempt 5: 5.606
-> 
->   real	0m4.623s
->   user	0m4.428s
->   sys	0m0.176s
-> 
-> which is a best-case savings of ~72.7%, and a savings of ~71.5%. That
-> seems much better.
-
-I'm still puzzled by this. In the setup you showed, hardly anything is
-graphed. But the change is only in the graph-merge code.
+So it seems like SKIP_FETCH_OBJECT but _not_ QUICK might be reasonable
+here.
 
 -Peff
+
+[1] I'm actually not quite sure about correctness here. It should be
+    fine to generate a graph file without any given commit; readers will
+    just have to load that commit the old-fashioned way. But at this
+    phase of "commit-graph write", I think we'll already have done the
+    close_reachable() check. What does it mean to throw away a commit at
+    this stage? If we're the parent of another commit, then it will have
+    trouble referring to us by a uint32_t. Will the actual writing phase
+    barf, or will we generate an invalid graph file?
