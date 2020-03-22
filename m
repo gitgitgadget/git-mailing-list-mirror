@@ -2,126 +2,136 @@ Return-Path: <SRS0=O1OI=5H=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FFE0C4332D
-	for <git@archiver.kernel.org>; Sun, 22 Mar 2020 00:23:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 03BB0C4332D
+	for <git@archiver.kernel.org>; Sun, 22 Mar 2020 00:37:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id E81AA20767
-	for <git@archiver.kernel.org>; Sun, 22 Mar 2020 00:23:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C804120767
+	for <git@archiver.kernel.org>; Sun, 22 Mar 2020 00:37:08 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DU7K6ddG"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jeTCfUEL"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728056AbgCVAXR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 21 Mar 2020 20:23:17 -0400
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:45176 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727296AbgCVAXQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Mar 2020 20:23:16 -0400
-Received: by mail-qk1-f193.google.com with SMTP id c145so11402852qke.12
-        for <git@vger.kernel.org>; Sat, 21 Mar 2020 17:23:15 -0700 (PDT)
+        id S1728222AbgCVAhH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 21 Mar 2020 20:37:07 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:45418 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727944AbgCVAhH (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Mar 2020 20:37:07 -0400
+Received: by mail-pf1-f193.google.com with SMTP id j10so5483100pfi.12
+        for <git@vger.kernel.org>; Sat, 21 Mar 2020 17:37:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=d/XZDWgSItfa3rKpP/heUQaVjHjgZTAhwmbkTypNjmw=;
-        b=DU7K6ddGGcHLBxEnLSshOeEpIzFmtcOJb4GkzdAn+HXyF4KYjF1wBqEVQ1zRbPPjI8
-         S2+6OUpiEZe8pxt/wyH0iXrXpmVe9CRgqaq4/vuwVNHAdlkIUZzDQ1KuQwfYJmsS2U0C
-         pzpBoKMHUIERyumlhg9FGXQxw+arJEDEHSzo40UNI5Gfh2M80YNcMi2LZXSxIIpI1sm4
-         DQ0NnuoRYhLRVAmImPe/7jbZ7gQt0mfTajrpUvPQnfgiehEGLCbWO3a3KM+120YvCHEX
-         mc7QVpFGnkjqxPktUI4NTEU4Vhobp31M/HVGSTSPGyq9TKi4t5MAXp5Ild31OAeqMLWI
-         MIsQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=ga/Al7FsBRFTmA/PccU/T2pA0sb4340aLL/25q0XbHQ=;
+        b=jeTCfUEL7j4pvffrtsgjYYEEZ8qtnrEzCS5EmUr6KpOjxvlmKpCeiHpkwZBNt6cHCU
+         VB6SR4GoAyzgv+/crSg51UpBZSyXmCTzmRBNbqcEnSjfmRTQlmZrdko24gc1Tzbdbhfi
+         vNAzDiPi2L8FNHdnaRMcvLpYz4OUpCs+KA6bU0vAUnYYVKRN52dP1tKf+d1weXYf36AU
+         00zyGn41Ufs4hLan3hpNddPS2GEOyTMhU/tbz+GLvmiW3Vid8NoGJdu23SGZRAQLNMTE
+         /872ucWsyY/0RqJtcZzq9AdV527hCNsCAzA5sNcd8qwtrp6zyfoR9i0JCRgO/HYzEZde
+         BShg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=d/XZDWgSItfa3rKpP/heUQaVjHjgZTAhwmbkTypNjmw=;
-        b=CpRZ4802h4j97tApn7WvqKgQ4gJtZnHnHE4gbRtF+BsuFM33tqGrKx8YlTgr14S2bK
-         JpwNradIvPr1gvyzHeDIHnBsGsvg8S/WFzNvpr923w7blTqySjuXKk+1yHPWCatucgWu
-         Q28wsv1kI1ecDMayKcjkPeVPsEBYP/Digi9PvEwhwPzcQAOX1KQ7cjwt+7YARUBHxDVc
-         Di8vN525YQFWPwdh3Va9aGNV84c5dpr8jDlGR356JW/yCnoqFE5sRejFt/884LEUtrpU
-         M8P02SHcm68tofTgQpn65cJsM12gqxNMVRXO4bOwFAQCv5LAdinG/8FSAWiPtYArOakT
-         7qzw==
-X-Gm-Message-State: ANhLgQ39V8Y9yzNVH7l67DCuMHlHwhmKe4Illf++wrp8CfkWlX0dt32L
-        1oE8Rbah9nIWY+wNuIPinio=
-X-Google-Smtp-Source: ADFU+vuoB9p05qSvY/5FxrzfMzRfaT4vDYJ9o6ncDbGiUiytMuk9ueY0ap9zv9bBw59G3PYPiYmjOg==
-X-Received: by 2002:a37:27cd:: with SMTP id n196mr15555066qkn.144.1584836595292;
-        Sat, 21 Mar 2020 17:23:15 -0700 (PDT)
-Received: from [192.168.1.83] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id x14sm358427qkj.66.2020.03.21.17.23.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 21 Mar 2020 17:23:14 -0700 (PDT)
-Subject: Re: [PATCH 1/1] commit-graph.c: avoid unnecessary tag dereference
- when merging
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        git@vger.kernel.org, dstolee@microsoft.com
-References: <cover.1584762087.git.me@ttaylorr.com>
- <4c79a9ea909ebff8c0987bcf95692da92e79bda4.1584762087.git.me@ttaylorr.com>
- <20200321050025.GA1438317@coredump.intra.peff.net>
- <20200321061141.GA30636@syl.local>
- <20200321070333.GB1441446@coredump.intra.peff.net>
- <xmqqfte1a6ew.fsf@gitster.c.googlers.com>
- <a0de34e3-3f60-1838-dbaf-2ee3dddc7c89@gmail.com>
- <20200322002005.GA48038@syl.local>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <1cb561fc-5bce-28f0-e5e1-886f590fba92@gmail.com>
-Date:   Sat, 21 Mar 2020 20:23:13 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:75.0) Gecko/20100101
- Thunderbird/75.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=ga/Al7FsBRFTmA/PccU/T2pA0sb4340aLL/25q0XbHQ=;
+        b=RE2K9vHwjkA71fcZVkz/RRd7Zy4TdidUSOISa35EjrxlqWoM4pFkekdZi9B5vz4S5U
+         JYrU20i19IT4WLj5VO/M1gKbeLfs8bd9Vr1aCwpCk6B1DzzhaU5SGbaYn6t0Xg0dGCLo
+         SQjUQTqwApxxiHvBx4yALBfbKFZ7bOxDr8iEOf5CzZEeo6aJBCjzU7k1VvcYhUeLATsg
+         96L/NFR55UIthRo1pHKSzLnYbN3cTYBCJf77Jgjdsrsxh4WvQ/fk1TcKrL0R83cj+Lpn
+         YFH2XgUcitEfaZJ0mdAtoEoi+xs5b7F6NUjl3xVh6SrT/kstoTK5dDZ0H6py5SwlAeWE
+         sg+A==
+X-Gm-Message-State: ANhLgQ1IhirvCfeDBYiyfoHKTkxkzjl6RZep5VlshbcVQkuVcKVOArzV
+        DKxMdAzFDcnWO4i9VUTsadg=
+X-Google-Smtp-Source: ADFU+vveaV8S0xGNpO1Ke162oYdjfkFckf60IB/9CCtvmt/0u9hWV484wm238mnwHrEx1J4ySIEqyw==
+X-Received: by 2002:a63:9210:: with SMTP id o16mr15985947pgd.442.1584837426352;
+        Sat, 21 Mar 2020 17:37:06 -0700 (PDT)
+Received: from localhost ([2402:800:6375:576b:56ff:d97c:a505:3e0c])
+        by smtp.gmail.com with ESMTPSA id w17sm9212185pfi.59.2020.03.21.17.37.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 21 Mar 2020 17:37:05 -0700 (PDT)
+Date:   Sun, 22 Mar 2020 07:37:03 +0700
+From:   Danh Doan <congdanhqx@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Ed Maste <emaste@freebsd.org>, Junio C Hamano <gitster@pobox.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 5/6] t7063: use POSIX find(1) syntax
+Message-ID: <20200322003703.GA11801@danh.dev>
+References: <cover.1584625896.git.congdanhqx@gmail.com>
+ <215801b02aceeed1e0f6313679c567a914ad5dd8.1584625896.git.congdanhqx@gmail.com>
+ <20200319161200.GF3513282@coredump.intra.peff.net>
+ <xmqqsgi4c7o6.fsf@gitster.c.googlers.com>
+ <20200320014142.GF1858@danh.dev>
+ <20200320053730.GE499858@coredump.intra.peff.net>
 MIME-Version: 1.0
-In-Reply-To: <20200322002005.GA48038@syl.local>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200320053730.GE499858@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/21/2020 8:20 PM, Taylor Blau wrote:
-> On Sat, Mar 21, 2020 at 08:03:01PM -0400, Derrick Stolee wrote:
->> On 3/21/2020 2:50 PM, Junio C Hamano wrote:
->>> Do we need to worry about INFO_QUICK and SKIP_FETCH_OBJECT in this
->>> codepath, by the way?
->>
->> I was coming back to this thread to bring up these exact flags for
->> consideration. The good news is that in a partial clone with any
->> amount of filtering we will still have all reachable commits, which
->> are necessary for the commit-graph to make sense. The only ones that
->> would fail has_object_file() are ones removed by GC, but they may
->> still exist on the remote. So without SKIP_FETCH_OBJECT, we would
->> generate a network call even if the server has GC'd to remove the
->> commits. This gets particularly bad when the server returns all
->> reachable objects from that commit!
+On 2020-03-20 01:37:30-0400, Jeff King <peff@peff.net> wrote:
+> On Fri, Mar 20, 2020 at 08:41:42AM +0700, Danh Doan wrote:
 > 
-> That makes sense. Do you think something like this should be applied?
+> > On 2020-03-19 15:16:09-0700, Junio C Hamano <gitster@pobox.com> wrote:
+> > > Jeff King <peff@peff.net> writes:
+> > > 
+> > > > On Thu, Mar 19, 2020 at 09:00:06PM +0700, Đoàn Trần Công Danh wrote:
+> > > >
+> > > >> Since commit 6b7728db81, (t7063: work around FreeBSD's lazy mtime
+> > > >> update feature, 2016-08-03), we started to use ls as a trick to update
+> > > >> directory's mtime.
+> > > >> 
+> > > >> However, `-ls` flag isn't required by POSIX's find(1), and
+> > > >> busybox(1) doesn't implement it.
+> > > >> 
+> > > >> Use an equivalence `-exec ls -dils {} +` instead.
+> > > >
+> > > > Makes sense. I wonder if we need all of "-dils", but it's not clear to
+> > 
+> > From the original commit message, I think whichever flags that call
+> > stat(2) would be do it. It's `-d` (to check is_directory), and `-i`
+> > for inode number.
+> > 
+> > This make make wonder, will it be enough to just use:
+> > 
+> > 	find . -type d >/dev/null
+> 
+> Perhaps we can get a friendly FreeBSD developer (cc'd) to run a quick
+> test for us.
+> 
+> Ed, the question is whether:
+> 
+> diff --git a/t/t7063-status-untracked-cache.sh b/t/t7063-status-untracked-cache.sh
+> index 190ae149cf..6791c6b95a 100755
+> --- a/t/t7063-status-untracked-cache.sh
+> +++ b/t/t7063-status-untracked-cache.sh
+> @@ -18,7 +18,7 @@ GIT_FORCE_UNTRACKED_CACHE=true
+>  export GIT_FORCE_UNTRACKED_CACHE
+>  
+>  sync_mtime () {
+> -	find . -type d -ls >/dev/null
+> +	find . -type d >/dev/null
+>  }
+>  
+>  avoid_racy() {
+> 
+> lets t7063 consistently pass on FreeBSD.
 
-Yes, I think this is the appropriate update. Thanks!
+I've tried myself with a FreeBSD VM which stays on top of an HDD,
+t7063 consistently pass for 1000 run.
 
-> diff --git a/commit-graph.c b/commit-graph.c
-> index c7cfadc786..0097318798 100644
-> --- a/commit-graph.c
-> +++ b/commit-graph.c
-> @@ -1594,6 +1594,7 @@ static void merge_commit_graph(struct write_commit_graph_context *ctx,
->  {
->         uint32_t i;
->         uint32_t offset = g->num_commits_in_base;
-> +       int flags = OBJECT_INFO_QUICK | OBJECT_INFO_SKIP_FETCH_OBJECT;
-> 
->         ALLOC_GROW(ctx->commits.list, ctx->commits.nr + g->num_commits, ctx->commits.alloc);
-> 
-> @@ -1606,7 +1607,7 @@ static void merge_commit_graph(struct write_commit_graph_context *ctx,
->                 load_oid_from_graph(g, i + offset, &oid);
-> 
->                 /* only add commits if they still exist in the repo */
-> -               if (repo_has_object_file(ctx->r, &oid)) {
-> +               if (repo_has_object_file_with_flags(ctx->r, &oid, flags)) {
->                         result = lookup_commit(ctx->r, &oid);
->                         if (repo_parse_commit(ctx->r, result))
->                                 result = NULL;
+I guess it should be fine
+
+I'll resend with this while waiting for Ed's response.
+
+-- 
+Danh
