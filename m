@@ -2,226 +2,161 @@ Return-Path: <SRS0=O1OI=5H=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
+X-Spam-Status: No, score=-7.2 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B6CDC54FCF
-	for <git@archiver.kernel.org>; Sun, 22 Mar 2020 15:59:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D4ADC4332B
+	for <git@archiver.kernel.org>; Sun, 22 Mar 2020 16:03:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id C2D6920724
-	for <git@archiver.kernel.org>; Sun, 22 Mar 2020 15:59:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4FC1D20724
+	for <git@archiver.kernel.org>; Sun, 22 Mar 2020 16:03:29 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="u4TkSDkd"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="Eoeqc9Au"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726816AbgCVP7Q (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 22 Mar 2020 11:59:16 -0400
-Received: from mail-qk1-f181.google.com ([209.85.222.181]:43841 "EHLO
-        mail-qk1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726797AbgCVP7P (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Mar 2020 11:59:15 -0400
-Received: by mail-qk1-f181.google.com with SMTP id o10so6900428qki.10
-        for <git@vger.kernel.org>; Sun, 22 Mar 2020 08:59:13 -0700 (PDT)
+        id S1726664AbgCVQD2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 22 Mar 2020 12:03:28 -0400
+Received: from mail-pj1-f65.google.com ([209.85.216.65]:34241 "EHLO
+        mail-pj1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725785AbgCVQD2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Mar 2020 12:03:28 -0400
+Received: by mail-pj1-f65.google.com with SMTP id q16so4904540pje.1
+        for <git@vger.kernel.org>; Sun, 22 Mar 2020 09:03:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp-br.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=xtlOzxVDpF03T3OBcU/HpiAl5ZkCRP0qTt/F3IQdUwU=;
-        b=u4TkSDkdCcGDeK9cOvKirqnvJMQ8c7Di2uiBk0DsEvhaAcC8PL14QbJXZVZXNRhBsK
-         brqKYyHRNDPcyi6c9B0XyLZddn5ovvC5ohSErG7zBscnsz8sz3mRChh3OW56sCuaxyBJ
-         jF8mp5qbT7Zwh1+lQTN31sS0GYflw5xjJk0WaFfvtfPqxmE1+veTUsRPaCm2ghbjigH9
-         2qOtc3jkigUhTXb+2k+Kthpmt7T7xD89Djw7xHRB16SGnzz86g783Q/ucM40hbX9ZEn7
-         /hAS3eC1LEfItiTx/fWVVcBvPxMB6u7dKOUBRFbhujJ9K4M9+gxXO2P9T7wWihw3jA6k
-         ytiQ==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=b0JZDBkrsZ/qGSrS/fRl1qQP+5APZ0pkOmpje94I9h8=;
+        b=Eoeqc9AumRfY5kHxdWwc2ApAirqWKD54DGwB+wHXiyU9lLV/eIS9RdIWE+/iI7iHFE
+         HSVc2hD0CmCa+bWMjkCsqd7dSYAAJFK2XCO9ZGwKGNBwloCcRN+sKz7TEbNFCiPw+T+K
+         MWD9z/lDnlIOaA1X0j2F4v2QfSiYb7gKS9QwUMDrbX89IP53Ok3rhBVuatmUm1NMTmgG
+         Q4keMy796hIcEhJxpsNIeufHqaa9L7eFg29Jx5sKsD6wkFk4c19MPk597N/rgJdu5QSP
+         0BLpG3+V81ZkcbiKwxRFMAQgfv3jkkq/TgYsCbHDI4VjCt3cwX6emdzLY6aTMsesE4D7
+         5U7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=xtlOzxVDpF03T3OBcU/HpiAl5ZkCRP0qTt/F3IQdUwU=;
-        b=f8w+vkxMweCFq/cjJSsdnd2rqR4bWxm/d44BgAfS+h17roRf0CbAgz2qaU7zX3pV40
-         TGj0lz8GjBwbfIlA3Lrpm6XAq7Si6rE8XptYkLyGyxqUC9/aeVoVl+Fbum3dbkCKBKci
-         2VDP6QccqLBEE8w3EZU/S/chL62H1koEeZvndKBC9sw8VxmDlT1NFIGuBo4f41xC1NHo
-         WElfUXfd9XvbVLTiBWCdXBtHRFjMIx6Agcw2vRl7i+JecwMS8wr3bsVMtMeC5Aqzeojf
-         Kkegd/TR9l7HIjtpfB/Kdt/jBC8aPyKATvXa8sq53MZmvmEBPV7ZZ14Db1JSHae6opms
-         SvcQ==
-X-Gm-Message-State: ANhLgQ3s6MyclT2rPIDKM3ifxzmm9dwYLFX9p5MxOP2S0Y9GfspgHSbx
-        UqDHM/r6KbAOMSibsmaEdKPW6g==
-X-Google-Smtp-Source: ADFU+vvAKJSmg17TTlnLKgprOAwI7Go3mZahtOyOgp52z87sBqDNhZGepoxZOCYibNnf3UUpB0wJjw==
-X-Received: by 2002:a37:a95:: with SMTP id 143mr2021723qkk.264.1584892753212;
-        Sun, 22 Mar 2020 08:59:13 -0700 (PDT)
-Received: from mango.spo.virtua.com.br ([2804:14c:81:942d::3])
-        by smtp.gmail.com with ESMTPSA id n21sm9627655qtn.17.2020.03.22.08.59.10
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=b0JZDBkrsZ/qGSrS/fRl1qQP+5APZ0pkOmpje94I9h8=;
+        b=PfvdK6knMVIpNPY0ERqYqJ8Bx8Ka+AkE8MzbiGkyST+06n78EfAc3rXgIAFpl3eNZd
+         ZAdWK0v05XVmJ5g9XyBgqWDhGwA++vExpkNgHmvBd+wLL4HatVP6IJgeXpitMdr2GaCX
+         Wba4awy6xcF1WaAvvM0v5FEMnLZ9yOMGaRKIbwOTOYffP1WYs+0GR9cb1KT98qzA9XDz
+         ldUr6jKzR6WGmquuDvNpa8xkJG+axAKtrLf2POtE1KadHeXZBhnCYDW9EOwcLsYASive
+         CaoaWv78o5//cD1PBQCSmAnPIoJ/v/9H5sQPIuzRBteqGZGg8O1bOU0uLs96d9KclVwZ
+         D/dg==
+X-Gm-Message-State: ANhLgQ3j+f7B0EeHtazoVOG4VCerNmwOOtb+dRxIKwiSqVNW6PSBKpdn
+        IXc6xAxQmqgFSbmu5shXrjiovZQfij4=
+X-Google-Smtp-Source: ADFU+vt9jredoHKJGJWuEjvPOitoruoywqS3RwE6T1eEbs+h9bbm6U+JWCf6zbHhir/btB+Yei6tig==
+X-Received: by 2002:a17:90a:9f44:: with SMTP id q4mr1905746pjv.41.1584893006386;
+        Sun, 22 Mar 2020 09:03:26 -0700 (PDT)
+Received: from localhost ([8.44.146.30])
+        by smtp.gmail.com with ESMTPSA id i137sm1734776pfe.217.2020.03.22.09.03.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 22 Mar 2020 08:59:12 -0700 (PDT)
-From:   Matheus Tavares <matheus.bernardino@usp.br>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de, j6t@kdbg.org,
-        peff@peff.net, szeder.dev@gmail.com
-Subject: [PATCH v3] test-lib: allow short options to be bundled
-Date:   Sun, 22 Mar 2020 12:58:57 -0300
-Message-Id: <cec4bbcc4270914a729a2c65d9c0efc4a45742ce.1584854619.git.matheus.bernardino@usp.br>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <7a6a8197dcd58e8690892d03cb904dd1eec5d7c1.1584818457.git.matheus.bernardino@usp.br>
-References: <7a6a8197dcd58e8690892d03cb904dd1eec5d7c1.1584818457.git.matheus.bernardino@usp.br>
+        Sun, 22 Mar 2020 09:03:25 -0700 (PDT)
+Date:   Sun, 22 Mar 2020 10:03:24 -0600
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, me@ttaylorr.com, jonathantanmy@google.com,
+        christian.couder@gmail.com, git@jeffhostetler.com,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 0/2] Slightly simplify partial clone user experience
+Message-ID: <20200322160324.GA53845@syl.local>
+References: <pull.586.git.1584638887.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <pull.586.git.1584638887.gitgitgadget@gmail.com>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When debugging a test (or a set of tests), it's common to execute it
-with some combination of short options, such as:
+On Thu, Mar 19, 2020 at 05:28:05PM +0000, Derrick Stolee via GitGitGadget wrote:
+> This was something discussed briefly at the contributor summit: users will
+> have a hard time remembering git clone --filter=blob:none <url>.
 
-	$ ./txxx-testname.sh -d -x -i
+I think that this is probably my fault :).
 
-In cases like this, CLIs usually allow the short options to be bundled
-in a single argument, for convenience and agility. Let's add this
-feature to test-lib, allowing the above command to be run as:
+I was saying at the contributor summit that I think I may have created
+more confusion than clarity when I was describing how to use partial
+clones in my last release blog post.
 
-	$ ./txxx-testname.sh -dxi
-	(or any other permutation, e.g. '-ixd')
+In that post, I introduced partial clones by asking and answering the
+following series of four questions.
 
-Note: Short options that require an argument can also be used in a
-bundle, in any position. So, for example, '-r 5 -x', '-xr 5' and '-rx 5'
-are all valid and equivalent. A special case would be having a bundle
-with more than one of such options. To keep things simple, this case is
-not allowed for now. This shouldn't be a major limitation, though, as
-the only short option that requires an argument today is '-r'. And
-concatenating '-r's as in '-rr 5 6' would probably not be very
-practical: its unbundled format would be '-r 5 -r 6', for which test-lib
-currently considers only the last argument. Therefore, if '-rr 5 6' were
-to be allowed, it would have the same effect as just typing '-r 6'.
+  1. What do you do when your repository is too large? Partial clones.
+  2. How do you only fetch down some of the objects? Object filters.
+  3. How do you restrict which parts of your working copy are populated?
+     Write to '.git/info/sparse-checkout'.
+  4. Simplify things even further by using 'git sparse-checkout' instead.
 
-Note: the test-lib currently doesn't support '-r5', as an alternative
-for '-r 5', so the former is not supported in bundles as well.
+I think that some of the criticism was along the lines of "you said that
+partial clones would be easy, but nothing in the steps 2-4 is
+straightforward".
 
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
----
+I think that things would have been much clearer if I said:
 
-Changes since v2:
-- Fixed style in mark_option_requires_arg(), moving "{" to the same line
-- In the main options parser loop, joined long options and unbundled
-  short options in the same case arm, as suggested by J6t. This provides
-  a clearer codeflow.
-- Summarized, in the commit message, the approach chosen on bundling
-  options that require args. Since this was an important point in the
-  last rounds, I thought it would be good to include our decisions (and
-  justification) in the commit body.
+  If your repository is too large to clone all at once, or has a
+  checkout footprint that is too big, you can issue a partial clone
+  against it by writing the following:
 
- t/README      |  3 ++-
- t/test-lib.sh | 61 +++++++++++++++++++++++++++++++++++++++------------
- 2 files changed, 49 insertions(+), 15 deletions(-)
+    $ git clone --filter=blob:none --sparse /path/to/your/repo
 
-diff --git a/t/README b/t/README
-index 9afd61e3ca..080bc59fc4 100644
---- a/t/README
-+++ b/t/README
-@@ -69,7 +69,8 @@ You can also run each test individually from command line, like this:
- 
- You can pass --verbose (or -v), --debug (or -d), and --immediate
- (or -i) command line argument to the test, or by setting GIT_TEST_OPTS
--appropriately before running "make".
-+appropriately before running "make". Short options can be bundled, i.e.
-+'-d -v' is the same as '-dv'.
- 
- -v::
- --verbose::
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 0ea1e5a05e..a6178e9fac 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -78,20 +78,23 @@ then
- 	exit 1
- fi
- 
--# Parse options while taking care to leave $@ intact, so we will still
--# have all the original command line options when executing the test
--# script again for '--tee' and '--verbose-log' below.
- store_arg_to=
--prev_opt=
--for opt
--do
--	if test -n "$store_arg_to"
-+opt_required_arg=
-+# $1: option string
-+# $2: name of the var where the arg will be stored
-+mark_option_requires_arg () {
-+	if test -n "$opt_required_arg"
- 	then
--		eval $store_arg_to=\$opt
--		store_arg_to=
--		prev_opt=
--		continue
-+		echo "error: options that require args cannot be bundled" \
-+			"together: '$opt_required_arg' and '$1'" >&2
-+		exit 1
- 	fi
-+	opt_required_arg=$1
-+	store_arg_to=$2
-+}
-+
-+parse_option () {
-+	local opt="$1"
- 
- 	case "$opt" in
- 	-d|--d|--de|--deb|--debu|--debug)
-@@ -101,7 +104,7 @@ do
- 	-l|--l|--lo|--lon|--long|--long-|--long-t|--long-te|--long-tes|--long-test|--long-tests)
- 		GIT_TEST_LONG=t; export GIT_TEST_LONG ;;
- 	-r)
--		store_arg_to=run_list
-+		mark_option_requires_arg "$opt" run_list
- 		;;
- 	--run=*)
- 		run_list=${opt#--*=} ;;
-@@ -185,12 +188,42 @@ do
- 	*)
- 		echo "error: unknown test option '$opt'" >&2; exit 1 ;;
- 	esac
-+}
-+
-+# Parse options while taking care to leave $@ intact, so we will still
-+# have all the original command line options when executing the test
-+# script again for '--tee' and '--verbose-log' later.
-+for opt
-+do
-+	if test -n "$store_arg_to"
-+	then
-+		eval $store_arg_to=\$opt
-+		store_arg_to=
-+		opt_required_arg=
-+		continue
-+	fi
- 
--	prev_opt=$opt
-+	case "$opt" in
-+	--*|-?)
-+		parse_option "$opt" ;;
-+	-?*)
-+		# bundled short options must be fed separately to parse_option
-+		opt=${opt#-}
-+		while test -n "$opt"
-+		do
-+			extra=${opt#?}
-+			this=${opt%$extra}
-+			opt=$extra
-+			parse_option "-$this"
-+		done
-+		;;
-+	*)
-+		echo "error: unknown test option '$opt'" >&2; exit 1 ;;
-+	esac
- done
- if test -n "$store_arg_to"
- then
--	echo "error: $prev_opt requires an argument" >&2
-+	echo "error: $opt_required_arg requires an argument" >&2
- 	exit 1
- fi
- 
--- 
-2.25.1
+> This series simply adds a --partial option that is equivalent to
+> --filter=blob:none, with the ability to specify a size using
+> --partial=<size> that is equivalent to --filter=blob:limit=<size>.
 
+I think that I have mixed feelings about this, too. On the one hand, it
+irrefutably makes the above incantation a lot easier to write out and
+remember. On the other hand, I worry about it locking in options that we
+don't want to keep around forever, like adding more filters, changing
+some rules about sparse checkout and so on.
+
+Maybe these concerns aren't well-founded, and that we're not likely to
+change either of those anytime soon. But, I'd rather be wrong and not be
+squatting '--partial[=<n>]' than not.
+
+> While going to the git clone documentation to add this option, I noticed
+> that there is no reference to the --filter option there, nor any discussion
+> of partial clone. I resolved the former.
+>
+> REQUEST FOR HELP: If anyone out there is looking for an opportunity to
+> contribute documentation, I feel there is a need to include a section in the
+> git clone documentation devoted to partial clone. Hopefully such a section
+> would include answers to these questions:
+>
+>  1. What is a partial clone?
+>  2. Why would I want a partial clone?
+>  3. How do I need to be careful when using a partial clone?
+>
+> I don't have time to write such a document right now, which is why I'm
+> asking for help if anyone is looking for a non-code way to contribute to the
+> project.
+
+This seems like a worthy goal outside of this series, and I would
+certainly love to have some more documentation in this area.
+
+> Thanks, -Stolee
+>
+> Derrick Stolee (2):
+>   partial-clone: set default filter with --partial
+>   clone: document --partial and --filter options
+>
+>  Documentation/git-clone.txt   | 15 ++++++++++++-
+>  list-objects-filter-options.c | 18 +++++++++++++++
+>  list-objects-filter-options.h |  8 ++++++-
+>  t/t5616-partial-clone.sh      | 42 ++++++++++++++++++++++++++---------
+>  4 files changed, 71 insertions(+), 12 deletions(-)
+>
+>
+> base-commit: 6c85aac65fb455af85745130ce35ddae4678db84
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-586%2Fderrickstolee%2Fpartial-clone-ux-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-586/derrickstolee/partial-clone-ux-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/586
+> --
+> gitgitgadget
+
+Thanks,
+Taylor
