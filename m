@@ -2,197 +2,162 @@ Return-Path: <SRS0=O1OI=5H=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E693C4332B
-	for <git@archiver.kernel.org>; Sun, 22 Mar 2020 19:51:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B6D0C4332B
+	for <git@archiver.kernel.org>; Sun, 22 Mar 2020 20:05:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 36D0120719
-	for <git@archiver.kernel.org>; Sun, 22 Mar 2020 19:51:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EFCDE20735
+	for <git@archiver.kernel.org>; Sun, 22 Mar 2020 20:05:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="exB/Jk1M"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mNvvhyU0"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726741AbgCVTuK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 22 Mar 2020 15:50:10 -0400
-Received: from mail-ed1-f54.google.com ([209.85.208.54]:44113 "EHLO
-        mail-ed1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726583AbgCVTuK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Mar 2020 15:50:10 -0400
-Received: by mail-ed1-f54.google.com with SMTP id z3so13876153edq.11
-        for <git@vger.kernel.org>; Sun, 22 Mar 2020 12:50:08 -0700 (PDT)
+        id S1726741AbgCVUFc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 22 Mar 2020 16:05:32 -0400
+Received: from mail-lj1-f194.google.com ([209.85.208.194]:45886 "EHLO
+        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726583AbgCVUFc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Mar 2020 16:05:32 -0400
+Received: by mail-lj1-f194.google.com with SMTP id t17so1535627ljc.12
+        for <git@vger.kernel.org>; Sun, 22 Mar 2020 13:05:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=/TCqx1vx+4dBVTIZi91U7HyiDIF7gAW5055PVGCPXW8=;
-        b=exB/Jk1MEtvoXjSfo3C8Xg6sebcX8r+MwkF8uSVeZva4cumW6N1kYM8n1VtM3ZMGYP
-         uJ1iJleFi9y19rG8eUen4Am+qIlE3CZ1mibYwWJMi2Q9cR5fMahSBVk2q8OT7LVJQ15g
-         9hSWxieT1rXDeryCvOmMOSRbynMOx12FgtQRZaqo1KNLsYTFM/SwcvxDtf0Bgz8zdhfi
-         UcjmnWMFaWxUPTh+kjTRDBAirXdDkfMS+H5C6swisHPu5TUJ34jORZqVy6ZJjt3lgCeG
-         0dyJ08Bm5ILBo5o836tuFYtXJYyZUP4F+bBBzi3YHpNybUCcb6enhS8YsEK4jBpP8Oy3
-         6Kxg==
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=LAqKxGLbyv5Oe6HCnL7hkde+T3TayBSFPU1gGFci3eg=;
+        b=mNvvhyU0jKPVJU2FMObMDVQM5jVeeTS+ysJM0oFoAKJXtNe3CFFRC/4WiGe/p3JfhP
+         WDuxhg86Y4rpWZBsQLXFDSonPTaRdYeQAYo7cXFo/r9hNRVFpHqz2+ka4baxOiUO4ztd
+         Rl+RImKRog3rift1oY92r0HRmj7YY1UZ/ViGiqf5flYWFabc+HCNgIsNO9ZOqqiTe588
+         P+9EQaaqJfe/VBGsPPKEpS6wMTYpCi/U1uo4pxLzDYwoQFWQm/BPxAQVPomtyYHg4EVQ
+         MzVAfuW5Fp9izsmrzyXB1SK5u9v95r0MTpBqYI4Lf1jQ58B2MS+ami8XqY6QeML2VpsN
+         G++Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=/TCqx1vx+4dBVTIZi91U7HyiDIF7gAW5055PVGCPXW8=;
-        b=L3hw07yfSz8ddIwIs/eX3Ebe+YbLop0gis8sWdq8WUXivbOo8YSM3m8OouDaWfgV0H
-         ieeZmkfPJhwyY0uTBticGNwnBH+gLgiBFTdAh5sZfqi6tcmxkYyXD1bnQ982WRpjsMBL
-         UhPoFOTsoY1noiD30ATDtXNohcSVF2ZMCWKodVXs6Ge60sbP+O7wrOsiiA7qseUd/eOw
-         /mfO8wYp2LaTP/aw3BD8ymwoUWTd6h2UsWHPqKK+yhkhDizWb9AXxEy72CX2hpCmMtHe
-         f78bBsAwNnMAiqaP+R6HbcmDYElT++VGG1KRdEMhhXskwS0zn32LaLTyO6gQAujWsfKg
-         uU/w==
-X-Gm-Message-State: ANhLgQ2T5YtnSADWBWEaklWFkYecdNACAqgsZaD+k6TuLc/16/unALBV
-        o1dVJQi0GwL7f+0u0uM4KKHwXu/x
-X-Google-Smtp-Source: ADFU+vtWVH++uyq1KyAkmj3U1/0ntWJxCqbKge8LCZrWSf9yZLd3+8oDbJ7hCTm4dCT4C0HIPWqm/A==
-X-Received: by 2002:a17:906:1993:: with SMTP id g19mr16213239ejd.264.1584906607714;
-        Sun, 22 Mar 2020 12:50:07 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f12sm203706edx.87.2020.03.22.12.50.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 22 Mar 2020 12:50:07 -0700 (PDT)
-Message-Id: <pull.586.v2.git.1584906606469.gitgitgadget@gmail.com>
-In-Reply-To: <pull.586.git.1584638887.gitgitgadget@gmail.com>
-References: <pull.586.git.1584638887.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 22 Mar 2020 19:50:06 +0000
-Subject: [PATCH v2] clone: document --filter options
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version:content-transfer-encoding;
+        bh=LAqKxGLbyv5Oe6HCnL7hkde+T3TayBSFPU1gGFci3eg=;
+        b=pQJAQf1gtLP5dcReB36gF0ir8kipOYAqsutEIFoHB5kSmugpIPQHoQ0JY+WfunQ0tJ
+         kvbbQGpupJ2wl/fFZbHNa3VS2l/qYDbHCaRt19mH0WSHgWYwIrV1jJzMmSSCP5du8iaJ
+         TGc55iwu3MTtZ+NWH2QB4ScR3vqTQJjfikyyDp1QFu6+HWZGzaHxlfaDGURbeIJo/w7v
+         78v2uyu5rGU7uCX3XBM0q4khvysuyw3w0IW3N+M1LsqWosAReEEJ5nS9ua/RFi1ZLteN
+         eoQft4cjSQz9itjD1HIG9rjj5HQYWFA3hZbjhP16dS4P2GBhDPWhyKRiG+XpoYy2T8iE
+         TpLw==
+X-Gm-Message-State: ANhLgQ2BeD1Kji7I6HilZTHlqVU07UMAsRmF0dKRRZqXRPnvQ1sPoBIB
+        KNvM0rm8D4OIB9NJqTtIu7M=
+X-Google-Smtp-Source: ADFU+vurO+D/NxDp/njSOfYHHeURqETjRe672hWJ1Xv+IMIvnw1ZJG0JT/QPv2HjOlT70a6AY7xSbQ==
+X-Received: by 2002:a2e:a554:: with SMTP id e20mr11225746ljn.88.1584907530203;
+        Sun, 22 Mar 2020 13:05:30 -0700 (PDT)
+Received: from Laptop-Acer-Aspire-F15 (host-89-229-7-83.dynamic.mm.pl. [89.229.7.83])
+        by smtp.gmail.com with ESMTPSA id f2sm5621503lfp.30.2020.03.22.13.05.28
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 22 Mar 2020 13:05:29 -0700 (PDT)
+From:   Jakub Narebski <jnareb@gmail.com>
+To:     Abhishek Kumar <abhishekkumar8222@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>
+Subject: Re: [RFC][GSoC] Implement Generation Number v2
+References: <20200322093526.GA4718@Abhishek-Arch>
+Date:   Sun, 22 Mar 2020 21:05:26 +0100
+In-Reply-To: <20200322093526.GA4718@Abhishek-Arch> (Abhishek Kumar's message
+        of "Sun, 22 Mar 2020 15:05:26 +0530")
+Message-ID: <86eetkrw8p.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     me@ttaylorr.com, jonathantanmy@google.com,
-        christian.couder@gmail.com, git@jeffhostetler.com,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+A few comments.
 
-It turns out that the "--filter=<filter-spec>" option is not
-documented anywhere in the "git clone" page, and instead is
-detailed carefully in "git rev-list" where it serves a
-different purpose.
+Abhishek Kumar <abhishekkumar8222@gmail.com> writes:
 
-Add a small bit about this option in the documentation. It
-would be worth some time to create a subsection in the "git clone"
-documentation about partial clone as a concept and how it can be
-a surprising experience. For example, "git checkout" will likely
-trigger a pack download.
+> Hello everyone,
+>
+> Following the discussions between Jakub and Stolee [16], it was decided t=
+hat
+> implementing "Corrected Commit Date With Strictly Monotonic Offset" [17] =
+was
+> more appropriate for a GSoC project.
+>
+> I would like to work on it. The proposal could still use some work but I
+> thought it would be best to get early feedback.
 
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
-    Slightly simplify partial clone user experience
-    
-    V2: Only update the documentation of --filter.
-    
-    Thanks, -Stolee
+Thank you for your interest in this idea.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-586%2Fderrickstolee%2Fpartial-clone-ux-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-586/derrickstolee/partial-clone-ux-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/586
+[...]
+> ### Corrected Commit Date With Strictly Monotonic Offset
+>
+> Jakub later proposed a modification to corrected commit date, _Corrected =
+Commit
+> Date with Strictly Monotonic Offset_ defined as follows [7]:
 
-Range-diff vs v1:
+I don't remember who originally proposed this idea, but it was not me.
+I have only given it the name you use.
 
- 1:  6f340d9aadf < -:  ----------- partial-clone: set default filter with --partial
- 2:  9baf4c8ba38 ! 1:  a55c2d975ab clone: document --partial and --filter options
-     @@ -1,16 +1,13 @@
-      Author: Derrick Stolee <dstolee@microsoft.com>
-      
-     -    clone: document --partial and --filter options
-     +    clone: document --filter options
-      
-     -    The previous change added the "--partial[=<size>]" option to
-     -    "git clone" equivalent to "--filter=blob:none" or
-     -    "--filter=blob:limit=<size>" but did not document that addition.
-     -    It turns out that the "--filter=<filter-spec>" option was not
-     +    It turns out that the "--filter=<filter-spec>" option is not
-          documented anywhere in the "git clone" page, and instead is
-          detailed carefully in "git rev-list" where it serves a
-          different purpose.
-      
-     -    Add a small bit about these options in the documentation. It
-     +    Add a small bit about this option in the documentation. It
-          would be worth some time to create a subsection in the "git clone"
-          documentation about partial clone as a concept and how it can be
-          a surprising experience. For example, "git checkout" will likely
-     @@ -27,7 +24,7 @@
-       	  [--recurse-submodules[=<pathspec>]] [--[no-]shallow-submodules]
-      -	  [--[no-]remote-submodules] [--jobs <n>] [--sparse] [--] <repository>
-      +	  [--[no-]remote-submodules] [--jobs <n>] [--sparse]
-     -+	  [--partial[=<size>]|--filter=<filter>] [--] <repository>
-     ++	  [--filter=<filter>] [--] <repository>
-       	  [<directory>]
-       
-       DESCRIPTION
-     @@ -35,17 +32,15 @@
-       	of the repository. The sparse-checkout file can be
-       	modified to grow the working directory as needed.
-       
-     -+--partial[=<size>]::
-      +--filter=<filter-spec>::
-      +	Use the partial clone feature and request that the server sends
-      +	a subset of reachable objects according to a given object filter.
-      +	When using `--filter`, the supplied `<filter-spec>` is used for
-     -+	the partial clone filter. When using `--partial` with no `<size>`,
-     -+	the `blob:none` filter is applied to filter all blobs. When using
-     -+	`--partial=<size>` the `blob:limit=<size>` filter is applied to
-     -+	filter all blobs with size larger than `<size>`. For more details
-     -+	on filter specifications, see the `--filter` option in
-     -+	linkgit:git-rev-list[1].
-     ++	the partial clone filter. For example, `--filter=blob:none` will
-     ++	filter out all blobs (file contents) until needed by Git. Also,
-     ++	`--filter=blob:limit=<size>` will filter out all blobs of size
-     ++	at least `<size>`. For more details on filter specifications, see
-     ++	the `--filter` option in linkgit:git-rev-list[1].
-      +
-       --mirror::
-       	Set up a mirror of the source repository.  This implies `--bare`.
+> For a commit C, let its _offset commit date_ (denoted by odate(C))
+> be a commit date plus some offset, i.e. odate(C) =3D date(C) + offset(C),
+> such that:
+>
+> 1. Offset commit date is greater than the maximum of the commit date of
+>    C and the offset commit dates of its parents.
+>
+>     If odate(A) < odate(B), then A cannot reach B.
+>
+> 2. The offset of a commit is one more than the maximum offset of a parent=
+, or
+>    more.
+>
+>     If offset(A) < offset(B), then A cannot reach B.
+>
+> Since the offset are strictly greater than the offset of a parent, the old
+> clients give correct values for the odate as well. `git commit-graph veri=
+fy`
+> would fail since the offsets are not generation numbers in all cases.
+>
+> This is an acceptable trade off because users can re-write the commit gra=
+ph
+> after verify fails.
 
+One thing to solve is find and implement a way to distinguish between
+commit-graph with generation number v1 (legacy), and commit-graph with
+generation number v2.
 
- Documentation/git-clone.txt | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+Unfortunately for the time being we cannot use commit-graph format
+version; the idea that was proposed on the mailing list (when we found
+about the bug in handling commit-graph versioning, during incremental
+commit-graph implementation), was to create and use metadata chunk or
+versioning chunk (the final version of incremental format do not use
+this mechanism).  This could be used by gen2 compatibile Git to
+distinguish between situation where old commit-graph file to be updated
+uses generation number v1, and when it uses v2.
 
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index bf24f1813ad..08d6045c4a8 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -15,7 +15,8 @@ SYNOPSIS
- 	  [--dissociate] [--separate-git-dir <git dir>]
- 	  [--depth <depth>] [--[no-]single-branch] [--no-tags]
- 	  [--recurse-submodules[=<pathspec>]] [--[no-]shallow-submodules]
--	  [--[no-]remote-submodules] [--jobs <n>] [--sparse] [--] <repository>
-+	  [--[no-]remote-submodules] [--jobs <n>] [--sparse]
-+	  [--filter=<filter>] [--] <repository>
- 	  [<directory>]
- 
- DESCRIPTION
-@@ -162,6 +163,16 @@ objects from the source repository into a pack in the cloned repository.
- 	of the repository. The sparse-checkout file can be
- 	modified to grow the working directory as needed.
- 
-+--filter=<filter-spec>::
-+	Use the partial clone feature and request that the server sends
-+	a subset of reachable objects according to a given object filter.
-+	When using `--filter`, the supplied `<filter-spec>` is used for
-+	the partial clone filter. For example, `--filter=blob:none` will
-+	filter out all blobs (file contents) until needed by Git. Also,
-+	`--filter=blob:limit=<size>` will filter out all blobs of size
-+	at least `<size>`. For more details on filter specifications, see
-+	the `--filter` option in linkgit:git-rev-list[1].
-+
- --mirror::
- 	Set up a mirror of the source repository.  This implies `--bare`.
- 	Compared to `--bare`, `--mirror` not only maps local branches of the
+If you have a better idea, please say so.
 
-base-commit: 6c85aac65fb455af85745130ce35ddae4678db84
--- 
-gitgitgadget
+[...]
+> ## Contributions
+>
+> [Microproject] Consolidate test_cmp_graph logic
+> -----
+> Log graph comparison logic is duplicated many times. This patch consolida=
+tes
+> comparison and sanitation logic in lib-log-graph.
+>
+> Status: Merged
+>
+> Patch: https://lore.kernel.org/git/20200216134750.18947-1-abhishekkumar82=
+22@gmail.com/
+>
+> Commit: https://github.com/git/git/commit/46703057c1a0f85e24c0144b38c226c=
+6a9ccb737
+
+Nice, this is related work.
+
+Best,
+--=20
+Jakub Nar=C4=99bski
