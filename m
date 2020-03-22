@@ -2,84 +2,81 @@ Return-Path: <SRS0=O1OI=5H=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E972C1975A
-	for <git@archiver.kernel.org>; Sun, 22 Mar 2020 23:40:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 81F73C1975A
+	for <git@archiver.kernel.org>; Sun, 22 Mar 2020 23:45:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 4218A2072E
-	for <git@archiver.kernel.org>; Sun, 22 Mar 2020 23:40:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4DCBF206C3
+	for <git@archiver.kernel.org>; Sun, 22 Mar 2020 23:45:43 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WfuFQt+4"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="DLO66QbH"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726880AbgCVXj7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 22 Mar 2020 19:39:59 -0400
-Received: from mail-vs1-f44.google.com ([209.85.217.44]:41863 "EHLO
-        mail-vs1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726832AbgCVXj7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Mar 2020 19:39:59 -0400
-Received: by mail-vs1-f44.google.com with SMTP id a63so7631996vsa.8
-        for <git@vger.kernel.org>; Sun, 22 Mar 2020 16:39:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=uUuu/uxY02wwmhnl9DOAjIEAXOJ98VCr+ic35WhzF4I=;
-        b=WfuFQt+4/4PXMZUW1c7fi2gFJmPFnamJNdoNUPTBiOR2HxNsSDzz5Lv8Y/g+vuB++E
-         LxVIBw/TnOMySvMZnseP7bfNamtqvVQEurBRrsSKQOWckO6rnkZddpILobfC+QsRYz91
-         B3uxCfUKkRAYM2o+ePZqawTpqAZ3J+g1ODTj5YOyNxOyIjo+s3wQX+x1onNeJKEfqVK+
-         KTkd1NIxx00LhEfkoj0L+4kZFoE49Byg3e992atj3zcQp3jc2nOljGAXcoWLelKV3hdx
-         DNXXKHOJtwvNxRalATduhjpDjEL+fpnSmnzp5qkSbKmZw+eYqNhRwbf8BY5m52aYYJGp
-         Divw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=uUuu/uxY02wwmhnl9DOAjIEAXOJ98VCr+ic35WhzF4I=;
-        b=U81rC/oU9k5glC1tguuccZeJnyqlBTcfcubWMvMXi/sty2ZMLoibh7cQxIQErhMxHI
-         4avSqy72JaUqbYJ728LxD0/LZLVF1zHgdosM2+MrZQBY0K86AX+D3+jyoHdRma0XP5pJ
-         F8E/qkhdGFFZ7aHuFqug3goUXDib3dFWjNZoUHDP34rYTwjEm38kSWG76/xOWPp05QlZ
-         TYLrAOBifboPZg4sORF78DMh8/5aGFNQzTKrJvFIcYz50GOCqWIRBZv039yJcNVQq9NR
-         Ur79R4KJxod4k1l3suv5qjxUxAkxd+r9jS8qecuc46vqBJHso9NTINIl0FLBhoFRZeZ9
-         TNlQ==
-X-Gm-Message-State: ANhLgQ0mTI1k/mCmyzT44xScYxC4SPpzK9AZU4Z04sy2+BzpLARbgfNb
-        AHGJCX8RcHPb45wpY3cqdUx9aLZm6WAOJNfVacz9o2wL9h8=
-X-Google-Smtp-Source: ADFU+vvcCPiX8Igd8yjS7oomYSHwx0uOLtWUjJqbTL/dF+HZYidI8Cc9rDhnC0zBaXMuSM6P80AuBtlbaUqHxnV1oWk=
-X-Received: by 2002:a67:4384:: with SMTP id q126mr13567563vsa.154.1584920398311;
- Sun, 22 Mar 2020 16:39:58 -0700 (PDT)
+        id S1726951AbgCVXpm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 22 Mar 2020 19:45:42 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:62280 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726872AbgCVXpm (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Mar 2020 19:45:42 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id C5ED5D778B;
+        Sun, 22 Mar 2020 19:45:41 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=s/ANg7IgVwv8og3F6w8bGbv3kBA=; b=DLO66Q
+        bHMm1QatRLeJAVSQuLBEPL6SYVHHOBwdN5JwGYOUhydgGWtFy58QJWE2lPNUA03/
+        p5ntmYBOGodk5ItoEG3sy6DQSvnB1vN4UFiYyiajlRAgeC7U78ufR1+Ot/mLGFP5
+        olFsKpA3PBrxHpQrszwwuQi7BDcLUwBOL8Xz0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=LxNYP6sS4PV7nvTmAUixuyVPrZSbBqlC
+        liGomBEeEyWvtJwVtfJMxdmY0UWhYL9WKpECi2apbqF5KGlqrDMKlsxCppvqNVby
+        iV1G1I5Ci/M0UgFT7GdcO+wqsnwO+7XskkRGNxdsF4dRFV2hRBl72OG+3XMlBXmG
+        B+aN+LGwReQ=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id BD5E3D778A;
+        Sun, 22 Mar 2020 19:45:41 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 072EED7787;
+        Sun, 22 Mar 2020 19:45:38 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Andrei Rybak <rybak.a.v@gmail.com>
+Cc:     git@vger.kernel.org, sunshine@sunshineco.com
+Subject: Re: [PATCH v2 2/2] t: fix whitespace around &&
+References: <20200315180902.13750-1-rybak.a.v@gmail.com>
+        <20200322211422.15129-1-rybak.a.v@gmail.com>
+        <20200322211422.15129-2-rybak.a.v@gmail.com>
+Date:   Sun, 22 Mar 2020 16:45:37 -0700
+In-Reply-To: <20200322211422.15129-2-rybak.a.v@gmail.com> (Andrei Rybak's
+        message of "Sun, 22 Mar 2020 22:14:22 +0100")
+Message-ID: <xmqqr1xk6jj2.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Sun, 22 Mar 2020 17:39:47 -0600
-Message-ID: <CAMP44s2XuXrgBztke50YgnZ1SQh6gvR6cdLz064xDDK3+s2CSA@mail.gmail.com>
-Subject: Regression in git ls-files, or bug in completion?
-To:     Git <git@vger.kernel.org>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3BFC3B7E-6C97-11EA-AA1A-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Andrei Rybak <rybak.a.v@gmail.com> writes:
 
-I noticed a possible regression caused by commit b9670c1f5e (dir: fix
-checks on common prefix directory).
+> Add missing spaces before '&&' and switch tabs around '&&' to spaces.
 
-What is supposed to be the output of this?
+The latter is especially appreciated---people just don't pay
+attention and it is much harder to spot with eyeballs than the
+former.
 
-  git init
-  mkdir simple-dir
-  touch simple-dir/empty
-  git -C simple-dir ls-files --other --directory
+> Also fix the space after redirection operator in t3701 while we're here.
 
-Before it was "empty", now it is "./".
+I started writing "hmm, doesn't it belong to the previous step" and
+then realized that this one is a bat between animals and birds ;-)
 
-This causes bash's completion to be botched; "git add simple-dir/"
-adds "simple-dir/./".
-
-Cheers.
-
--- 
-Felipe Contreras
+Thanks.
