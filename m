@@ -1,92 +1,100 @@
-Return-Path: <SRS0=NBeB=5G=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=O1OI=5H=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A542C4332B
-	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 22:55:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B2580C4332D
+	for <git@archiver.kernel.org>; Sun, 22 Mar 2020 00:05:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1524520754
-	for <git@archiver.kernel.org>; Sat, 21 Mar 2020 22:55:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 76EFB20767
+	for <git@archiver.kernel.org>; Sun, 22 Mar 2020 00:05:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="W+iAlc8E"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rtQtQ0bV"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728016AbgCUWzE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 21 Mar 2020 18:55:04 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54450 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726755AbgCUWzD (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Mar 2020 18:55:03 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7164154A71;
-        Sat, 21 Mar 2020 18:55:01 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=N+BIMeJqsfrz7wQHzXUWppI2fQk=; b=W+iAlc
-        8Ej5rnlOo1EkAuSzz1/wq9dKIfdaZ5dSdABBh/qyd8LGspT7MhOzHALHnlxd3doB
-        hNSgqkyHKyoZNb6HM74bnV2s/utWS8OHJnkUNbfzpAEZC5McsE4zLxZbR7LmQTgU
-        MQen3o/Is1D4xbSEkW7xEsyJNrQTS91bvRT9g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=yiVeZ2ykEbpJ6T27zWEfX8KegFJE51B/
-        LeY6qR/at782Ly9EvT+cKETqr2rToc/Cw/QD/v847ujLXbHwoDSTRqG4QeyL6dYO
-        2czVY25wrg9ATw9a+SCYxyNHlUmPUgMfF19YbvX3yzRsDnW/m0OUZoSelqR/J434
-        qWy17pyf1cw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E71F554A6F;
-        Sat, 21 Mar 2020 18:55:00 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 129CA54A6E;
-        Sat, 21 Mar 2020 18:55:00 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Cc:     git <git@vger.kernel.org>
-Subject: Re: macOS builds having trouble at travis-ci.org?
-References: <xmqqlfnt8k47.fsf@gitster.c.googlers.com>
-        <CAHd-oW7B+Q+hGfAkbu8PYjhQ+-81u9L-swk-iHzasHuJOh5GLA@mail.gmail.com>
-Date:   Sat, 21 Mar 2020 15:54:59 -0700
-In-Reply-To: <CAHd-oW7B+Q+hGfAkbu8PYjhQ+-81u9L-swk-iHzasHuJOh5GLA@mail.gmail.com>
-        (Matheus Tavares Bernardino's message of "Sat, 21 Mar 2020 19:35:53
-        -0300")
-Message-ID: <xmqqd0958gjg.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1727817AbgCVADF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 21 Mar 2020 20:03:05 -0400
+Received: from mail-qv1-f68.google.com ([209.85.219.68]:42750 "EHLO
+        mail-qv1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727296AbgCVADF (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Mar 2020 20:03:05 -0400
+Received: by mail-qv1-f68.google.com with SMTP id ca9so5240672qvb.9
+        for <git@vger.kernel.org>; Sat, 21 Mar 2020 17:03:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=uGcsOHHNuxh2t+8gTwcNieqM0O9paF6Z5nWefVVae5s=;
+        b=rtQtQ0bVterC52O7ynFZs43GX3oUNUd6LO8KPTfbJFNkHowYrBLcS8y2LbcecaR7xT
+         ybBINn1gCU9747RNBJ86P4bVHhln0KMqq1Fl5VwKtufAtIUHELh8d/g8+Fduzfm1tZud
+         LTY7ryxJm4tZDw7PuJaAAEMx0HxIPUh4OdlS/gBXa98/q6dqPGTYV94TksxPET/Ecs1E
+         kyg2SSbNhrjRxs0jSlOEU1dRnviePzk5DCM3w/xD8BzvKaBsyWgz0FE3HVEBjJryjICc
+         qLQI5VXe75exA2e7jIBzPyXi+HoCdVOGAu9pbheHsZVSVj2tEM1FoNZyS+O+FZ7rZsm3
+         Ac8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=uGcsOHHNuxh2t+8gTwcNieqM0O9paF6Z5nWefVVae5s=;
+        b=Sh03IMcWMTr3eXPVEi9O5F+PIpe613F8dDA7hOHDWJHOUPLfeU7QUd5WsiaHjaJKf0
+         WIyS8cpjxqvxtDVhgl7HfMIviaOFdRLxHLDZhnhXGXEPe3EYsCeaAXrI0iGOVfIkknJ8
+         wVGUQ9f4zdmzHFxnU8RpZbzKsmIFmUG76zjKluKXXdoZdL3o+Tu11U1KO+5QH0sssizo
+         ILzxeBFxnAjcBowo8nxknsOfyENzQcyUs3m90LwB54gVWAQDOqhNt0+1UJpvyvhAT+4P
+         IoPqK2oCCnJ0Ng1OIGexuIl2GWxcnUxJ5xCRpPMoxV1JLXzYAyUwsI4v5DTfsveLrPDs
+         8uvA==
+X-Gm-Message-State: ANhLgQ0hDS/b80+bf9rlyyB3ZC4oJwMS9p9MLdFn973rbFM8ukmzKy5P
+        GwNEoq94sfzbNvXQ69ghQNA=
+X-Google-Smtp-Source: ADFU+vs8wQumICG5745uoJ8xIScIrgVGdw35bAGBlIz6WAFyAgIbkmeYjzdfFi1P0C2KhNivyzjVTw==
+X-Received: by 2002:ad4:4766:: with SMTP id d6mr13938329qvx.136.1584835383891;
+        Sat, 21 Mar 2020 17:03:03 -0700 (PDT)
+Received: from [192.168.1.83] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id w21sm7624521qkf.60.2020.03.21.17.03.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 21 Mar 2020 17:03:03 -0700 (PDT)
+Subject: Re: [PATCH 1/1] commit-graph.c: avoid unnecessary tag dereference
+ when merging
+To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        dstolee@microsoft.com
+References: <cover.1584762087.git.me@ttaylorr.com>
+ <4c79a9ea909ebff8c0987bcf95692da92e79bda4.1584762087.git.me@ttaylorr.com>
+ <20200321050025.GA1438317@coredump.intra.peff.net>
+ <20200321061141.GA30636@syl.local>
+ <20200321070333.GB1441446@coredump.intra.peff.net>
+ <xmqqfte1a6ew.fsf@gitster.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <a0de34e3-3f60-1838-dbaf-2ee3dddc7c89@gmail.com>
+Date:   Sat, 21 Mar 2020 20:03:01 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:75.0) Gecko/20100101
+ Thunderbird/75.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: FE375FF6-6BC6-11EA-BEA3-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+In-Reply-To: <xmqqfte1a6ew.fsf@gitster.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Matheus Tavares Bernardino <matheus.bernardino@usp.br> writes:
+On 3/21/2020 2:50 PM, Junio C Hamano wrote:
+> Do we need to worry about INFO_QUICK and SKIP_FETCH_OBJECT in this
+> codepath, by the way?
 
-> On Sat, Mar 21, 2020 at 6:38 PM Junio C Hamano <gitster@pobox.com> wrote:
->>
->> Starting sometime yeserday, it appears that macOS builds of our
->> branches at travis-ci.org are having trouble in an undiagnosable
->> way.  All you see on their webpage is a helpful message "An error
->> occurred while generating the build script." and nothing else.
->
-> It might be a problem at the travis-ci infrastructure. They reported
-> an issue with macOS builds failing two days ago[1]. The issue is
-> marked as solved, but there are still some reports[2] from people
-> getting the same error message we are experiencing in git.git.
->
-> [1]: https://www.traviscistatus.com/incidents/9861dc7dtsb0
-> [2]: https://twitter.com/traviscistatus/status/1240759726905815040
+I was coming back to this thread to bring up these exact flags for
+consideration. The good news is that in a partial clone with any
+amount of filtering we will still have all reachable commits, which
+are necessary for the commit-graph to make sense. The only ones that
+would fail has_object_file() are ones removed by GC, but they may
+still exist on the remote. So without SKIP_FETCH_OBJECT, we would
+generate a network call even if the server has GC'd to remove the
+commits. This gets particularly bad when the server returns all
+reachable objects from that commit!
 
-I knew we have folks who have wider antennae on these things than I
-do ;-)
-
-Thanks.  This means that we can just wait to see what happens at
-least fo now ;-)
-
+Thanks,
+-Stolee
 
