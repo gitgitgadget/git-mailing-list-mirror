@@ -2,240 +2,88 @@ Return-Path: <SRS0=O1OI=5H=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B937C4332D
-	for <git@archiver.kernel.org>; Sun, 22 Mar 2020 07:51:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 66E35C4332D
+	for <git@archiver.kernel.org>; Sun, 22 Mar 2020 08:14:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 564A5206F8
-	for <git@archiver.kernel.org>; Sun, 22 Mar 2020 07:51:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 331DB20753
+	for <git@archiver.kernel.org>; Sun, 22 Mar 2020 08:14:26 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XTSBQP6i"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725987AbgCVHvm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 22 Mar 2020 03:51:42 -0400
-Received: from cloud.peff.net ([104.130.231.41]:46876 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725785AbgCVHvl (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Mar 2020 03:51:41 -0400
-Received: (qmail 25402 invoked by uid 109); 22 Mar 2020 07:51:40 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 22 Mar 2020 07:51:40 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30609 invoked by uid 111); 22 Mar 2020 08:01:26 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 22 Mar 2020 04:01:26 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Sun, 22 Mar 2020 03:51:40 -0400
-From:   Jeff King <peff@peff.net>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: [PATCH] t3419: drop EXPENSIVE tests
-Message-ID: <20200322075140.GA600888@coredump.intra.peff.net>
-References: <20200320213916.604658-1-sandals@crustytoothpaste.net>
+        id S1726728AbgCVIOZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 22 Mar 2020 04:14:25 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:39557 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725987AbgCVIOZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Mar 2020 04:14:25 -0400
+Received: by mail-wm1-f66.google.com with SMTP id a9so7844460wmj.4
+        for <git@vger.kernel.org>; Sun, 22 Mar 2020 01:14:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=STv5DTLbZScQtsSI/RfRaY2aj0Y4wBk+0zGdcDK1h80=;
+        b=XTSBQP6iR2y6DwWC0Z5fVsyRibyEyk16jVf25K0ZhMDueXFDwGe5T/NVSbDKJOLnYj
+         PfpYBn6eI4XM4/CNNktUlxKud2TaADLytwy8B1y2fao7QiyVKKfYH/NCfn0G2lxBwKca
+         ZzfDaY8DbEeXFOvxxbt8PPmHj8b0wH5uJwiBo/ORlLxJ0srHd0DqZjdvOOzf8DnY6Eth
+         r/u2sbDLoDUnTZZpcRlllGKvRUNK/+Owbp2wcoSVa2Vg4rqmSEBTeyBL4BjY5bxxPebo
+         Pjz1J/V48FHdJkwP6FlEuA4J6Ucq2lGIM4Gq+WCGNEEG+Q6i9Xcaim4YVbcFj1fhla8v
+         yMtg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=STv5DTLbZScQtsSI/RfRaY2aj0Y4wBk+0zGdcDK1h80=;
+        b=rZteM7+8V0ova5qQTxbw9bagAa5sRIjk2MCLf/4U6v/wjoUmr+Qx4IK3H8uhExAnJk
+         IIBjGKRMv8uNpKrfxDMOPezlNpaou05seCYHpOIxc2BM0DMoXyUYwGibycuMnU1f0nJM
+         lJLvovBQQUTm3fAZHtpNvfYjl0nyYJUQOwKzLCAaOGfpQaSspwESVSPNTW8RZhOJ7pl8
+         U4u7SFaQkHPA54E6XB74jM/vN5zmKscmLl2Bfe6QsOnm+E1kxtaEsr4wQrtgxlW+1242
+         YEKxS3wAqiBBZ+LyzEq82I4uJuzmaTHZRwUM4kWsCZHPyCFvv9MssTGnyCMO1p+Hx2Pf
+         bs6g==
+X-Gm-Message-State: ANhLgQ0eJLuhmegQpPgsEfBzE0OSMYHfn/xTLxTE+wXLm8ZMB0j7umuC
+        UJdLImUTvab2A646EhlZMNQ=
+X-Google-Smtp-Source: ADFU+vsVwxCYFmkrk4Bc9qOH/x0mWWLXpabe/3/6uttOh6drM0SFRxEKik2oDIch1uM8VOy4jGZT5Q==
+X-Received: by 2002:a1c:c257:: with SMTP id s84mr21153694wmf.9.1584864862970;
+        Sun, 22 Mar 2020 01:14:22 -0700 (PDT)
+Received: from szeder.dev (62-165-238-214.pool.digikabel.hu. [62.165.238.214])
+        by smtp.gmail.com with ESMTPSA id f14sm15680995wmb.3.2020.03.22.01.14.21
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 22 Mar 2020 01:14:22 -0700 (PDT)
+Date:   Sun, 22 Mar 2020 09:14:17 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Cc:     Jeff King <peff@peff.net>, git <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] test-lib: allow short options to be stacked
+Message-ID: <20200322081417.GA2224@szeder.dev>
+References: <48c28683412e3e0803d4c7189a6d66daddcdc580.1584759277.git.matheus.bernardino@usp.br>
+ <20200321062611.GA1441446@coredump.intra.peff.net>
+ <CAHd-oW4cGEwyge+BPRGiOsmMxr5ne9Ufk-BOM4EgG_i6qTxxMg@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20200320213916.604658-1-sandals@crustytoothpaste.net>
+In-Reply-To: <CAHd-oW4cGEwyge+BPRGiOsmMxr5ne9Ufk-BOM4EgG_i6qTxxMg@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 20, 2020 at 09:39:16PM +0000, brian m. carlson wrote:
+On Sat, Mar 21, 2020 at 03:50:55PM -0300, Matheus Tavares Bernardino wrote:
+> [1]: Someone that used '-rr 5 6' might have wanted the script to run
+> *both* tests 5 and 6. But I don't think we need to support that now,
+> since '-r 5 -r 6' doesn't do that as well (instead, the last value
+> overrides all previous ones).
 
-> I noticed this when I was working on another series and running the
-> testsuite with GIT_TEST_LONG=1.  We'll probably want to add this before
-> the release if possible.
-> 
-> It may also be desirable to have at least once CI run that runs this
-> way.  In my experience, it does not take substantially longer to run the
-> testsuite on a modern Linux system with this option enabled.
+Well, that '-r 5 -r 6' should be written as '-r 5,6', but it shouldn't
+be terribly difficult to concatenate the args of multiple '-r' options
+with a comma, I suppose.
 
-I do agree that anything marked with EXPENSIVE is practically useless if
-nobody is running it. In many cases these can be made much less
-expensive by being smarter about setup (e.g., using fast-import or
-test_commit_bulk to create commits rather than looping and creating many
-processes).
-
-This one in particular seems to add about 500ms, which isn't too bad.
-But I actually don't think it's doing anything useful. See below.
-
--- >8 --
-Subject: [PATCH] t3419: drop EXPENSIVE tests
-
-When t3419 was originally written, it was designed to run a smaller test
-for correctness, and then the same test with a larger number of patches
-for performance. But it seems unlikely the latter was helping us:
-
- - it was marked with EXPENSIVE, so hardly anybody ran it anyway
-
- - there's no indication that it was more likely to find bugs than the
-   smaller case (the commit message isn't very helpful, but the original
-   cover letter describes it as: "The first patch adds correctness and
-   (optional) performance tests".
-
- - the timing results are shown only via test_debug(). So also not run
-   unless the user says "-d", and then not provided in any
-   machine-readable form.
-
-If we're interested in performance regressions, a script in t/perf would
-be more appropriate. I didn't add one here, because it's not at all
-clear to me that what the script is timing is even all that interesting.
-
-Let's simplify the script by dropping the EXPENSIVE run. That in turn
-lets us drop the do_tests() wrapper, which lets us consistently use
-single-quotes for our test snippets. And we can drop the useless
-test_debug() timings, as well as their run() helper. And finally, while
-we're here, we can replace the count() helper with the standard
-test_seq().
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-Prepared on top of en/rebase-backend, since it textually conflicts
-otherwise. Best viewed with "diff -w" because of the re-indenting.
-
- t/t3419-rebase-patch-id.sh | 112 ++++++++++++++-----------------------
- 1 file changed, 41 insertions(+), 71 deletions(-)
-
-diff --git a/t/t3419-rebase-patch-id.sh b/t/t3419-rebase-patch-id.sh
-index e71560e614..3dc754b13a 100755
---- a/t/t3419-rebase-patch-id.sh
-+++ b/t/t3419-rebase-patch-id.sh
-@@ -4,15 +4,6 @@ test_description='git rebase - test patch id computation'
- 
- . ./test-lib.sh
- 
--count () {
--	i=0
--	while test $i -lt $1
--	do
--		echo "$i"
--		i=$(($i+1))
--	done
--}
--
- scramble () {
- 	i=0
- 	while read x
-@@ -26,75 +17,54 @@ scramble () {
- 	mv -f "$1.new" "$1"
- }
- 
--run () {
--	echo \$ "$@"
--	/usr/bin/time "$@" >/dev/null
--}
--
- test_expect_success 'setup' '
- 	git commit --allow-empty -m initial &&
- 	git tag root
- '
- 
--do_tests () {
--	nlines=$1 pr=${2-}
--
--	test_expect_success $pr "setup: $nlines lines" "
--		rm -f .gitattributes &&
--		git checkout -q -f master &&
--		git reset --hard root &&
--		count $nlines >file &&
--		git add file &&
--		git commit -q -m initial &&
--		git branch -f other &&
--
--		scramble file &&
--		git add file &&
--		git commit -q -m 'change big file' &&
--
--		git checkout -q other &&
--		: >newfile &&
--		git add newfile &&
--		git commit -q -m 'add small file' &&
--
--		git cherry-pick master >/dev/null 2>&1
--	"
--
--	test_debug "
--		run git diff master^\!
--	"
--
--	test_expect_success $pr 'setup attributes' "
--		echo 'file binary' >.gitattributes
--	"
--
--	test_debug "
--		run git format-patch --stdout master &&
--		run git format-patch --stdout --ignore-if-in-upstream master
--	"
-+test_expect_success 'setup: 500 lines' '
-+	rm -f .gitattributes &&
-+	git checkout -q -f master &&
-+	git reset --hard root &&
-+	test_seq 500 >file &&
-+	git add file &&
-+	git commit -q -m initial &&
-+	git branch -f other &&
-+
-+	scramble file &&
-+	git add file &&
-+	git commit -q -m "change big file" &&
-+
-+	git checkout -q other &&
-+	: >newfile &&
-+	git add newfile &&
-+	git commit -q -m "add small file" &&
-+
-+	git cherry-pick master >/dev/null 2>&1
-+'
- 
--	test_expect_success $pr 'detect upstream patch' '
--		git checkout -q master &&
--		scramble file &&
--		git add file &&
--		git commit -q -m "change big file again" &&
--		git checkout -q other^{} &&
--		git rebase master &&
--		test_must_fail test -n "$(git rev-list master...HEAD~)"
--	'
-+test_expect_success 'setup attributes' '
-+	echo "file binary" >.gitattributes
-+'
- 
--	test_expect_success $pr 'do not drop patch' '
--		git branch -f squashed master &&
--		git checkout -q -f squashed &&
--		git reset -q --soft HEAD~2 &&
--		git commit -q -m squashed &&
--		git checkout -q other^{} &&
--		test_must_fail git rebase squashed &&
--		git rebase --quit
--	'
--}
-+test_expect_success 'detect upstream patch' '
-+	git checkout -q master &&
-+	scramble file &&
-+	git add file &&
-+	git commit -q -m "change big file again" &&
-+	git checkout -q other^{} &&
-+	git rebase master &&
-+	test_must_fail test -n "$(git rev-list master...HEAD~)"
-+'
- 
--do_tests 500
--do_tests 50000 EXPENSIVE
-+test_expect_success 'do not drop patch' '
-+	git branch -f squashed master &&
-+	git checkout -q -f squashed &&
-+	git reset -q --soft HEAD~2 &&
-+	git commit -q -m squashed &&
-+	git checkout -q other^{} &&
-+	test_must_fail git rebase squashed &&
-+	git rebase --quit
-+'
- 
- test_done
--- 
-2.26.0.rc2.641.gac63ba406a
+But '-rr 5 6' just looks wrong.
 
