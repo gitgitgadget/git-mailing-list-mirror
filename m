@@ -2,118 +2,124 @@ Return-Path: <SRS0=O1OI=5H=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-2.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0006AC4332B
-	for <git@archiver.kernel.org>; Sun, 22 Mar 2020 16:15:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F3151C4332E
+	for <git@archiver.kernel.org>; Sun, 22 Mar 2020 16:45:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id C8A6420724
-	for <git@archiver.kernel.org>; Sun, 22 Mar 2020 16:15:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C33BE2072E
+	for <git@archiver.kernel.org>; Sun, 22 Mar 2020 16:45:33 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eqmn0vWW"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="toBrKzjy"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726913AbgCVQPo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 22 Mar 2020 12:15:44 -0400
-Received: from mail-oi1-f195.google.com ([209.85.167.195]:45328 "EHLO
-        mail-oi1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725970AbgCVQPo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Mar 2020 12:15:44 -0400
-Received: by mail-oi1-f195.google.com with SMTP id l22so1388984oii.12
-        for <git@vger.kernel.org>; Sun, 22 Mar 2020 09:15:43 -0700 (PDT)
+        id S1726897AbgCVQpc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 22 Mar 2020 12:45:32 -0400
+Received: from mail-qt1-f193.google.com ([209.85.160.193]:34264 "EHLO
+        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725881AbgCVQpc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Mar 2020 12:45:32 -0400
+Received: by mail-qt1-f193.google.com with SMTP id 10so9629433qtp.1
+        for <git@vger.kernel.org>; Sun, 22 Mar 2020 09:45:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=chiJ/X/7HeEvKFn4JIhXzzwh9uJt83uXWXYHMOrIn1I=;
-        b=eqmn0vWWy+9g2seBebNF+fnvH3xdB3+4t3AMk+y6zPhesin3aPHTpAPgAoC3HdcJno
-         eAgxgpJUjTlFf7VKnQECuer9OFgm6gIKoqnN0qbvv3uAnXsEMRdoz6lUXILah8EeBYk0
-         h3tl2lJu47/CWg+QKjI6C46Rdw9E9ILNdnIJofwP0oW/8DbMLBwIhaJiaY6Ni9o1mZ/N
-         NiVfbYfeY7bH2Lin+8hYpMlfuqH2jalIsWZ5Y+x/JOSHDwKcIToniDqdumwLHOZa/nD6
-         bQPu76ZKXQVWnJaHCAnbjOEXEzGWAyKE4vY5DYbJxTSgQxpVGDz75pzMeHOW4D/gsJEH
-         kgHw==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=lJFMbLMoyQHFLBCuoL+AdMeUFfQCuoSpLsF6wo5ACm8=;
+        b=toBrKzjyF9lQ59D3h7+KNSi9qasrHIC8sgU9KWDaYT1kNa38uFZ3zMeKkCQgGzqLpE
+         wcodZhiT+CGvXT2jL+6YfP4LAf7geGIz1euLoiFBuhGU/IMjO5yaP4r8k7ZGmmOVnmi3
+         qsPKiu5C7KZhUMJR0TNQw9r+EcVP58PuH8HjVA8iyC+/4suFCwsa5IEsr5Csd/IJSqE+
+         U8R5f8GfKbIxwZzReIrxIH37sdXHP5Gv7JOQSI/+0VAgMsfa3E/qmqiySZPXP455u+zv
+         dJJp+4riSI94AKE+X3uesRBdfSBCfKn5h4dRkNHg1R0PQxp8hg2jJLrNZhiTskVRU6Ee
+         hppQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=chiJ/X/7HeEvKFn4JIhXzzwh9uJt83uXWXYHMOrIn1I=;
-        b=m3KB/GBlhFjtxwzW9yOe473sQlBiYcm5QcptLd/igDERBHkmFOHWSsvRpibB23xQrA
-         FzmyXjtLOiMmhtGLZw5iwR/4qKYiwdyCyqsW4DRaaYjc+hA8bB5aj8uki44bc/nXbGBz
-         whgQ2bPxILwPCIP8mYadPcPYNN8sJnZQPWb3WUiBlagn/zqgYaW+xHO6MfNetpFVnrjC
-         6S7iz8uA8fkfqYYf77vB9kj5PANONwQ5D+c9KVylmBVIQlDXNjiEaFAeba8+yQGhc/9h
-         yvmAqa4GRdey8OoFh3EIVBLWtZQOvUcnMSN17Ev7pqkqjRgDf+rr78oUU3uH9VPLcJp0
-         lYwA==
-X-Gm-Message-State: ANhLgQ33dq/81rE8JTIAtWnmDz+FYls232WeyhbZ8WgFC+XjcczBqocv
-        G0jJXYN+jTBD6NukjJleiJxxgLNmyIjLbzpPZG+fiT8c
-X-Google-Smtp-Source: ADFU+vvC7QzrxLWtNFN1PTDcBHDAeHm0f71ut8rOnGV08Rq9JGW8XTi5u0Qa3hjoDZ/0PHOH2bFdlajZDtu9SdpsXT8=
-X-Received: by 2002:aca:ec16:: with SMTP id k22mr14398836oih.177.1584893743408;
- Sun, 22 Mar 2020 09:15:43 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=lJFMbLMoyQHFLBCuoL+AdMeUFfQCuoSpLsF6wo5ACm8=;
+        b=bCWcf+sDwB0gQUo7o2YHibZzoled5LGzExnUK0rNDKn2XBu06MC4UGs0B4hKWkPXC2
+         Grg16PdQuqYcN11Vll6JUf3fofkRpFaFZdB369k2lH6t7wLo3dB4N4iNkXsudIn97YNh
+         b3Tu7CBH2HdS4IBSj39Bl4fDQ0+/i34SANOlGK7K6PGeRpNQgITnDcvlWPTPvlBdLjgV
+         9jIqKUkVv0R/ou105GMBi8FGZXZcZ3if+eJnY17pl3hGR02PviPxgWSwyRtewwteC5qs
+         hyDB3vZv8Z86uDRkObQXCAxJ6IkIDEH4N/Lx5T0W/Wl60DzHCPsAmM8sz9IfwNZzlm2D
+         kyqA==
+X-Gm-Message-State: ANhLgQ0qdc3sYlVynCAdZ6ruPc2dUD/HlE7R5an16mnFJ6FV814ejvBy
+        JMVNMTEMruWHNONqS7E2+Ls=
+X-Google-Smtp-Source: ADFU+vuoQutoYxOkeT23xPq+QVDsMPoOim7Hyi2n/xpvnlX7N3AanJKnqnuqcIM5L2v09N8pEfsPGQ==
+X-Received: by 2002:ac8:4784:: with SMTP id k4mr13183494qtq.78.1584895531584;
+        Sun, 22 Mar 2020 09:45:31 -0700 (PDT)
+Received: from [192.168.1.83] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id r207sm8807380qke.136.2020.03.22.09.45.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 22 Mar 2020 09:45:31 -0700 (PDT)
+Subject: Re: [PATCH 0/2] Slightly simplify partial clone user experience
+To:     Christian Couder <christian.couder@gmail.com>,
+        Jeff King <peff@peff.net>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.586.git.1584638887.gitgitgadget@gmail.com>
+ <20200322095137.GB635598@coredump.intra.peff.net>
+ <CAP8UFD1mCXvcfUQxY4uMEPEjZp8+yPwu6SgTmZBEH6GR=8ixSA@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <5baf9f4c-9ce0-0384-1113-431038c2a646@gmail.com>
+Date:   Sun, 22 Mar 2020 12:45:29 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:75.0) Gecko/20100101
+ Thunderbird/75.0
 MIME-Version: 1.0
-References: <CAHMHMxW=muHe5qqndtdzR_md6KFQqwEonko-2gXC_q973JgB5w@mail.gmail.com>
- <xmqq8sjs8k3k.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqq8sjs8k3k.fsf@gitster.c.googlers.com>
-From:   =?UTF-8?B?zqPPhM6xz43Pgc6/z4Igzp3PhM6tzr3PhM6/z4I=?= 
-        <stdedos@gmail.com>
-Date:   Sun, 22 Mar 2020 18:15:06 +0200
-Message-ID: <CAHMHMxVKXsBRFt7L5BSFZmW02SvisQa-9g7ibn1Dd6cXh1Nefg@mail.gmail.com>
-Subject: Re: git stash push/save/create all return exit code 0, even if no
- object was created
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CAP8UFD1mCXvcfUQxY4uMEPEjZp8+yPwu6SgTmZBEH6GR=8ixSA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, 22 Mar 2020 at 17:50, Junio C Hamano <gitster@pobox.com> wrote:
->
-> This has been asked and answered recently at least twice, I think.
->
-> https://lore.kernel.org/git/01020169a7ad6af3-ad50e2d1-19fb-46eb-b397-759f8d579e8b-000000@eu-west-1.amazonses.com/
->
-> https://lore.kernel.org/git/CADZUK1cjvifbFYk9w6+vE95jgEBuwjoOi_1QfZHoPFBXuXHCCg@mail.gmail.com/
->
-> I think these previous ones wanted something more relevant to "git
-> stash", in the sense that they wanted to be able to
->
->         git stash
->         do some other things
->         do many other things
->         if earlier "git stash" produced an entry
->                 git stash pop
->
-> and the answer to that may be "use stash create upfront, save it
-> away yourself in a variable or something, then use that to restore"
+On 3/22/2020 6:58 AM, Christian Couder wrote:
+> On Sun, Mar 22, 2020 at 10:51 AM Jeff King <peff@peff.net> wrote:
+>>
+>> On Thu, Mar 19, 2020 at 05:28:05PM +0000, Derrick Stolee via GitGitGadget wrote:
+>>
+>>> This was something discussed briefly at the contributor summit: users will
+>>> have a hard time remembering git clone --filter=blob:none <url>. This series
+>>> simply adds a --partial option that is equivalent to --filter=blob:none,
+>>> with the ability to specify a size using --partial=<size> that is equivalent
+>>> to --filter=blob:limit=<size>.
+>>
+>> I have mixed feelings on this. I do like making things less arcane for
+>> users. But are we locking in a behavior for --partial that we might not
+>> want to live with forever? I.e., the current thinking for partial clones
+>> is to fetch no blobs at all, get all commits and trees, apply sparse
+>> filters, and then fault in the blobs we need. But imagine we later grow
+>> the ability to easily avoid fetching all of the trees. Would we regret
+>> having the simple name "--partial" taken?
+> 
+> I agree with that. Something like "--filter-blobs" for
+> "--filter=blob:none" and perhaps "--filter-blobs=<size>" for
+> "--filter=blob:limit=<size>" might be worth it though.
 
-I guess I was too much into my stuff, and couldn't think straight on
-how to search for this. Apologies, and thank you! :-)
+Thanks for the perspective on this. The --filter-blobs[=<size>] should
+be less likely to collide with an alternative definition of "partial".
 
-Maybe I find https://public-inbox.org/git/20190927230747.yjdeaen34nnpcchy@camp.crustytoothpaste.net/
-| grep -vP '^??' (or git-status-filtering equivalent; I'm in a rush to
-commit this e-mail) somehow useful in my case
+While we are thinking in this space, what if we had a "partial-clone"
+builtin? It could be a light wrapper around "git clone" where
 
-> But to me your use case does not look like it has much to "git
-> stash".  If a user wants to ask "is my working tree and the index
-> dirty (iow, have I made any changes)?", wouldn't "git status" be the
-> right tool for the job?  It even has an option to produce output
-> designed to be machine readable.
+  git partial-clone [--limit=<size>] [options] <url> [<dir>]
 
-I tried to minimize the message, and left that important part out. I
-am also part of the first case.
+would do the same thing as
 
-Then my fear/question remains:
-* Wouldn't it be safer if it was "securely" stored in `refs/stash`
-(i.e. `git stash push`) instead of `sha1="$(git stash create)"; echo
-"Created autostash: ${sha1}"`?
-  How is `rebase.autoStash = true` protected from "stuff" happening?
-  A tin-foil hat example that I'm thinking is terminal output lost for
-some reason and git rebase ancestor is killed -9.
-  Or is there is "not much" to protect against?
-* ... then `git stash` won't clean what it just stored. Is the
-solution to also run `git reset --hard` here?
---
-With regards,
-Ntentos Stavros
+  git clone --filter=blob:[none|limit=<size>] [options] <url> [<dir>]
+
+Just spit-balling here.
+
+In the meantime, I'll work to adjust my patches to only be the
+documentation of the --filter option.
+
+Thanks,
+-Stolee
