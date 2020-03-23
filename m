@@ -2,171 +2,125 @@ Return-Path: <SRS0=3T2S=5I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B4D6C4332B
-	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 14:11:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BDFAC54EEB
+	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 14:37:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id F0F512076E
-	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 14:11:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 157B920784
+	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 14:37:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="QVZNMAyQ"
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="jis70XYi"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728550AbgCWOLw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Mar 2020 10:11:52 -0400
-Received: from mout.gmx.net ([212.227.15.19]:56465 "EHLO mout.gmx.net"
+        id S1727117AbgCWOh5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Mar 2020 10:37:57 -0400
+Received: from mout.web.de ([212.227.15.4]:36067 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728378AbgCWOLw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Mar 2020 10:11:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1584972710;
-        bh=VUXYJd2cQQlipEtYwI0j25+tE2LYo+ON0jGNJTZLt44=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=QVZNMAyQRc6Q9HdCPIf2YbpW5PR4A7lfHIW+6EYs+iyG2fGhZDICOUC3jgyP14G5N
-         sQXTjnU5oQMrXWc1pcdrD+MeEkmnZoPgQhVYz23ezgVbkbgDAO0MKsWxLWu/6QJgFD
-         Y/UAnTnXua+wGjHNrz9PEEy3lwxVnoVCVRYl4Ih0=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from MININT-QA14EDB.fritz.box ([89.1.215.97]) by mail.gmx.com
- (mrgmx005 [212.227.17.190]) with ESMTPSA (Nemesis) id
- 1MfpOd-1jj8v90kK9-00gGJJ; Mon, 23 Mar 2020 15:11:50 +0100
-Date:   Mon, 23 Mar 2020 15:11:50 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C4=90o=C3=A0n_Tr=E1=BA=A7n_C=C3=B4ng_Danh?= 
-        <congdanhqx@gmail.com>
-cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 6/8] t7063: drop non-POSIX argument "-ls" from
- find(1)
-In-Reply-To: <59e3f73784b2a3bd9ccec87412e6178411c3708e.1584838148.git.congdanhqx@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2003231509150.46@tvgsbejvaqbjf.bet>
-References: <cover.1584838148.git.congdanhqx@gmail.com> <59e3f73784b2a3bd9ccec87412e6178411c3708e.1584838148.git.congdanhqx@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1725830AbgCWOh4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Mar 2020 10:37:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1584974274;
+        bh=asHPBli9XKmNvqI8Rt9solla30sVOgGV0NgcjNi+te8=;
+        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=jis70XYiSKhzwC0RhPm4tu6e3gB7j7J44zg8t7ayTlw4lHHEYUk+xRBSeKp+74Tlh
+         zugNxOdX2W7N1AjwflYYW5vBvng+LKzKyE7ZL3CNMs8kQmxkQvJnABo+Bjzuq/hKTc
+         CRtG5V6p4P6DRHhUzRBQDDPZgEwDFIsVtRN9q5ic=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb002
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MJlGW-1jHUfu2BKG-0018c1; Mon, 23
+ Mar 2020 15:37:54 +0100
+Date:   Mon, 23 Mar 2020 15:37:54 +0100
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2 6/8] t7063: drop non-POSIX argument "-ls" from find(1)
+Message-ID: <20200323143754.zagvr6xrz3x3nrpa@tb-raspi4>
+References: <cover.1584838148.git.congdanhqx@gmail.com>
+ <59e3f73784b2a3bd9ccec87412e6178411c3708e.1584838148.git.congdanhqx@gmail.com>
+ <nycvar.QRO.7.76.6.2003231509150.46@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1152249423-1584972711=:46"
-X-Provags-ID: V03:K1:Zsj+wrlr284BCooOsgN8CqMSpfAn7Wb3WtynhlaL/3U4VfvYyjH
- IESBlBc7Iets2K7feEkq7EzWDZEmuHXHY/rRtZ42MsWVgQ4KeJ7HTicR9M/mysZuPguSNqz
- epB5+G407wiD/+KauoIXD+Lg1yHniYMoPD2dT56yPqiaFEjI/5AOR6ALVwzWVkh28/Jl4iR
- s/Fg37/bvVC2lQWG+NpkQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:M1Xw8rv+454=:+pSqgyCe+OzDrueCLU4Vw/
- vJkZ3T0rc32OQwz/vYdzX11U26WvvFEzS+XEtsWnCIZuhruzKVMuZ7JGBdNU9T1DVgu5cWakV
- 79v/+5ngy2bxK+6duaza3MCnv7CWEHhm5Z8GxNpIB/RjKBAlb4HDmVUYYSCUm8QztQAJwvpJE
- eXsdaUo/i5QuVa78Z2A5hr7l4LSqqrCVn5Lg1SuvljPS/4MDc7G9X8J/yV9DUm4RLX8q/ZqP5
- O7xoXwyXxb18bevi9tj6RIKCYx1BDdxgUxRM8v6Dyu1HvogZTgLuySIhA+ELsUVbZfXe5bw97
- N48QNmfI/fK9mZF2cvFyzIrZrRuse9hLrngLYTBSosEPuRYQ4nmHbTmfkJCGJTJQpN/KgZDMQ
- CjmxPKy7lYMSWdDy+yRiCoc+V5OKzBg0vp+KlqWXMGVuQ7/lGbOsSfv4AfZoNiGhQ/rqe60Wp
- V0v6txACk/7qgCTEV4+RUgZaG4fCJH68APkCTr/C0xAzntF/QjDZdRaJpWHpsSBglMCVHQkAQ
- HjMB1pemPUdTJOwpSmrvK7seugF4z2gKMIHqLC0xgj+OF7i76IkPasbYXwTVoeGvQ/JGcS2Ds
- r6vLEwOmuUmstW484wsfOGwZom/pKVGFVJE+J+NH6NDSc0w+3P3j1oLA00qAlnHFQDZHmTCSP
- H7Lj4XCc1s6QnLZONl4VbqnZTk8E8Z0w6NeCSvtUxAjE12y+48QFMxNdqNLWgWJQtkuMr5tke
- m1ks7LAK6uecKwZQEtG4Weya9h3hnVCctoht1l2Gssw3SGqmtSw5gsYGEtKEqSpbgpd4oymc6
- 9wwt4fFR4kQOHJqH+Dhoid+u1bBjRzkOLUm9DQul/waFGBNMuTAjImnNfJk2w8MwoGzEDegHf
- l4YfeS3iOrxMwUNLgDN60L4fkDf1AVfh08EhsnmYVVYSvGXW9EF8AAhLIenkxIg+tXyKfEfLJ
- cppjJrOjRm2RMXUa16tlnPMyR4w7cYFbJjUdQ34x28SI5aY/xHgEhGlzlrmJVqIu3pE8cZxVI
- ztecD77secsHu0YaYFRNeSQE7aeYSsBA9KFQeLW8zitpiUfHo6MtW/u2CtvtUaUENdLq2FNtM
- zGj03a9214HVOLTvcA04UeTBWBXpRuyA4cMyF40bm7k55RmPsFZsp32FszBz/ODNb2/OaQOxj
- rbYTc2BmijxnDdGhzCUO2xojCboxesDwOEDM8CN9CPgIoZAeOWDTNnuFNtsUecok4dFAGIgEn
- X++5+loe4bQVNcMHd
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <nycvar.QRO.7.76.6.2003231509150.46@tvgsbejvaqbjf.bet>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-Provags-ID: V03:K1:vAEmzdi5wnbcZegQZ6QfZ/r9sjsQbmbkcMpD6VBSMnYCnElcJ6Q
+ 04By0EhRYriZ5+jXXue87jyigthBnjpihm6ah/86fR8P1ElV76brSGHJ6jFUwooOCyVSwVs
+ 9iT2arZMVAquyVHlGLl6aY1kMEhAKBAmWDkpn31f+Qe5UpwQz75eMH37anrfdblwey9fDsw
+ SuR9+myvAOctFSgHPA7CA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:QsIx5b2Y5pw=:2Bxhnz2R2HdlqEiQSnCw2b
+ u0jjFH8a6I6rxp3vpxhbla0XBQniYYRdtahLq3h3xoBWhLipy7n8VZpSToRg3qPDi1F+bQ7Jq
+ AAwro77gcRKbVetDQp2ZmiLSlRRzaLz/gEiGeSt7vuNyDbWIQIFAkiy3Tw61B68tB/0TsfOnz
+ W+NlgHTNejjKCA9OL3v1J+zod0cOM64wariEX47yqNPR/8bXNJdbI5OscV40CEo/t+BtWOj6E
+ L3+kn3jF9fPe5IEjeWHW5abT7p+LgFwneltbkww21at36wNu8BmZDNTFXUAkLqlgndjTxQW31
+ XDC+bYiMtI4RfGgPKBC1PILFOIGu6yiC+xcTZzKC8iIkRI5fQtytZu0w9Qe53Riuyz15KqOJJ
+ WDdI9DrD+67/zWtUQurXuVa8iSGHrpdeI5Yq/nSIpz9Pvt0C5hDrrvK1Wiw829+Q3zGNg2Y3E
+ dldkH2W/0pv2B89sEYn/1dnWXSS8jSfjgAtEwO6/JYRBOGGDUyo7i1TcU4iljhz/9U5zcxtHq
+ mXzwhLKONUF7wNsF/lVoRbMaqrZTlyt6G7ZVLoNycSVeEz8OyI0m3NWqTkmVB+/d7QVpLKtZu
+ vJCzkN2LCDWMIc9EGj8YANEfaTWCY2YlO/waSci61qGihqd5vcikYbAyDnF/UMmlGr/I1+sS5
+ vT0IlIFptk+3mmJOTUPCEWfXV1m5pko7GJPScEe9rS6UeDgk8Sk/ZPSWjjyMGyApn4QaxYi9G
+ nBv59WoQXHnXR/q63cKZPR9yp1vqKlJkIKVosYE3qTTXJWIPI2RVRQNu4fPeoMXZIAl55PImD
+ OqhaeEBuwm0dayvCTEg9wA+v/CTTN2VIU/9ulGfj3WGWADdPa33gQscPlUV2uwIj11j2eVpIS
+ iJ+Hi+AEbPUWb+LIBieieAtdsP2Fv0qIV6YiEr65l6aaGvxBip9s3cMAgleJszGoQvP2JUHPI
+ 01tycS/Gdjz+G2sa8ceMJMYTXZxx6zsb2e8Jo/tfzePcjpjGBg7x2dBChsMV3shWWxXxO9S2M
+ cU69AIImObTVr5a4Yio4Oyab26YdOTi2D3Yy5tcIVX6YTMlfxkAN9vR2w/tiClU9l4sv7nWc6
+ OnfHGdHUL6iq2yWrYdfP/f/vxnYqz2chsT1YF8o3FVvPB284+Fm+485R+kVvcg25nM2EXbdjT
+ 7E8iZ4bRHVsC+OcRS8qsKWYjgr4FCGM5ZecmY+PZiaofhkhMprLlh/YW/dkp0ZfCUnXqElycb
+ X/KvXbU/7aXq+yswt
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323328-1152249423-1584972711=:46
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-Hi,
-
-On Sun, 22 Mar 2020, =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh wrote:
-
-> Since commit 6b7728db81, (t7063: work around FreeBSD's lazy mtime
-> update feature, 2016-08-03), we started to use ls as a trick to update
-> directory's mtime.
+On Mon, Mar 23, 2020 at 03:11:50PM +0100, Johannes Schindelin wrote:
+> Hi,
 >
-> However, `-ls` flag isn't required by POSIX's find(1), and
-> busybox(1) doesn't implement it.
+> On Sun, 22 Mar 2020, =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh wrote:
 >
-> >From the original conversation, it seems like find(1) with "-type d"
-> could trigger enough "lstat(2)" to ask FreeBSD update mtime.
-
-This rationale  makes me uneasy: why did Duy add _both_ `-type d` *and*
-`-ls` if the former would have been enough?
-
-> Use only filter "-type d" for now.
+> > Since commit 6b7728db81, (t7063: work around FreeBSD's lazy mtime
+> > update feature, 2016-08-03), we started to use ls as a trick to update
+> > directory's mtime.
+> >
+> > However, `-ls` flag isn't required by POSIX's find(1), and
+> > busybox(1) doesn't implement it.
+> >
+> > >From the original conversation, it seems like find(1) with "-type d"
+> > could trigger enough "lstat(2)" to ask FreeBSD update mtime.
 >
-> Signed-off-by: =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh <congdanhqx@gm=
-ail.com>
-> ---
->  t/t7063-status-untracked-cache.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/t/t7063-status-untracked-cache.sh b/t/t7063-status-untracke=
-d-cache.sh
-> index 190ae149cf..6791c6b95a 100755
-> --- a/t/t7063-status-untracked-cache.sh
-> +++ b/t/t7063-status-untracked-cache.sh
-> @@ -18,7 +18,7 @@ GIT_FORCE_UNTRACKED_CACHE=3Dtrue
->  export GIT_FORCE_UNTRACKED_CACHE
->
->  sync_mtime () {
-> -	find . -type d -ls >/dev/null
-> +	find . -type d >/dev/null
+> This rationale  makes me uneasy: why did Duy add _both_ `-type d` *and*
+> `-ls` if the former would have been enough?
 
-A more conservative patch would be the following:
+man readdir on my Linux gives:
+[]
+DESCRIPTION
+       The  readdir() function returns a pointer to a dirent structure rep=
+resenting the next
+       directory entry in the directory stream pointed to by dirp.  It ret=
+urns
+       NULL on reaching the end of the directory stream or if an error occ=
+urred.
 
-=2D- snip --
-commit 1680a64fae24b1073dbf1b844889a9953823b7a2
-Author: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Date:   Wed Jul 19 22:13:16 2017 +0200
+       In the glibc implementation, the dirent structure is defined as fol=
+lows:
 
-    t7063: when running under BusyBox, avoid unsupported find option
+           struct dirent {
+               ino_t          d_ino;       /* Inode number */
+               off_t          d_off;       /* Not an offset; see below */
+               unsigned short d_reclen;    /* Length of this record */
+               unsigned char  d_type;      /* Type of file; not supported
+                                              by all filesystem types */
+               char           d_name[256]; /* Null-terminated filename */
+           };
 
-    BusyBox' find implementation does not understand the -ls option, so
-    let's not use it when we're running inside BusyBox.
+So we could imagine that `find` is clever enough to extract "-type d" alre=
+ady
+when calling readdir(), and the "good old" following stat() is not needed =
+here.
 
-    Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+So I would strongly agree with Dscho to keep the `ls`
 
-diff --git a/t/t7063-status-untracked-cache.sh
-b/t/t7063-status-untracked-cache.sh
-index 190ae149cf3c..ab7e8b5fea01 100755
-=2D-- a/t/t7063-status-untracked-cache.sh
-+++ b/t/t7063-status-untracked-cache.sh
-@@ -18,7 +18,12 @@ GIT_FORCE_UNTRACKED_CACHE=3Dtrue
- export GIT_FORCE_UNTRACKED_CACHE
-
- sync_mtime () {
--       find . -type d -ls >/dev/null
-+       if test_have_prereq BUSYBOX
-+       then
-+               find . -type d -print0 | xargs -0r ls -ld >/dev/null
-+       else
-+               find . -type d -ls >/dev/null
-+       fi
- }
-
- avoid_racy() {
-=2D- snap --
-
-I have this in Git for Windows' fork, although I have to admit that there
-is no CI set up to verify that this is all working as I expect it to.
-
-Ciao,
-Dscho
-
->  }
->
->  avoid_racy() {
-> --
-> 2.26.0.rc2.310.g2932bb562d
->
->
->
-
---8323328-1152249423-1584972711=:46--
+[snip]
