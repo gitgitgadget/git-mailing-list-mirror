@@ -2,166 +2,111 @@ Return-Path: <SRS0=3T2S=5I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
-	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BCC13C10DCE
-	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 21:44:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A4704C4332B
+	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 21:50:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 88E5020780
-	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 21:44:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7541520753
+	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 21:50:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="VI9Val5r"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="jF+36eAW"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727093AbgCWVoC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Mar 2020 17:44:02 -0400
-Received: from mail-qv1-f73.google.com ([209.85.219.73]:43189 "EHLO
-        mail-qv1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727107AbgCWVoA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Mar 2020 17:44:00 -0400
-Received: by mail-qv1-f73.google.com with SMTP id h12so6153794qvx.10
-        for <git@vger.kernel.org>; Mon, 23 Mar 2020 14:43:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=NM4VxWFJxVfID7wVIFcg2NA8ECmuRaM6FxbEcYtXvyk=;
-        b=VI9Val5rcazAVjukgZTBQVlWc5QRzC0LLTDmbYQnZYQtBzF2J7ZEBdZZp0ilgVZT64
-         9H+ko57IFLWNjCGkSwz8mdwhJJjK72mNA9Z6D1AvPFxL0CMylO77qqC9QPMdf7GZ6wD7
-         1QJF/myJv+X5GckYlTaMfyY8RXt+WYbfKC4p92Op6e2rEod4qMwtFWdOuXSFYp8u+cqb
-         bYHp2rx0KIdROGmlSzmhKC2yzfZulGzJFERJr8t5yIP0W5jAzXhru5Kp/ucEYxU7PMDt
-         nF7n4WuXRvrHFo221ocWdySJsjGXIWartVyMsfaxs7xGHVqotooryH+dImE49iL01rSs
-         3IgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=NM4VxWFJxVfID7wVIFcg2NA8ECmuRaM6FxbEcYtXvyk=;
-        b=sUpPSHmpDhUXlKt3N8e7W4S79qgSvAu33A2UnQJlh9tQiHJNZ6hc9cFrfrDeX/3DoY
-         ktHwUhUTgTz4nvAzY4n7yQ3GOuI3oo3KKqdafZWJcaXSUv3KlCjnTyVIJZYmA6Io+H+h
-         cZRnq8xg4D4EkIfewHqx558imbpxu07dtGI+K0KNu/xk8ahiEQ23WSoUDKLtQ7l2kyHc
-         FWZ+/khiQVPLwwzg3HOtCCGm2AsDeYc9iwQtsyGX7eWwHIvb5Pb8nCrFbSzB/4hWHBhv
-         I65gOpZG3ApIzb7YDCwZlksilkiythmcvREEfpezo3tsJ0QVZGOcc7ju75W7ktOlltst
-         lsNQ==
-X-Gm-Message-State: ANhLgQ2pqoZNtsf7SXvG+peu4tW2MgXV1JhhYux5UofzDFoxUTaguox7
-        BF3atlFwTYFeOclcvpcQp1vGsZEt92llTCQ2X1FfKe5pm6IrTx3FZrQp2PkCHxEEFUcxRoQ9bba
-        qByFVKftBfvH7S5Qgxs1vUbKdilUCqqVcbV8kKz0jr5XbcJGr/6P679E8IQ3BEta50R5r3aosSg
-        ==
-X-Google-Smtp-Source: ADFU+vu9b30XLqCyfcV9AaO7QIdDb3DhId9zO/AsHDHhBy2MDSTG393RkGdHly6bsH+F5ywiNEmOF/8l2xAQw9RvalI=
-X-Received: by 2002:a37:9ecc:: with SMTP id h195mr21285916qke.448.1584999839222;
- Mon, 23 Mar 2020 14:43:59 -0700 (PDT)
-Date:   Mon, 23 Mar 2020 14:43:40 -0700
-In-Reply-To: <20200323214340.182724-1-emilyshaffer@google.com>
-Message-Id: <20200323214340.182724-6-emilyshaffer@google.com>
-Mime-Version: 1.0
-References: <20200323214340.182724-1-emilyshaffer@google.com>
-X-Mailer: git-send-email 2.25.1.696.g5e7596f4ac-goog
-Subject: [PATCH v10 5/5] bugreport: add compiler info
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     git@vger.kernel.org
-Cc:     Emily Shaffer <emilyshaffer@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S1727040AbgCWVuT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Mar 2020 17:50:19 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62100 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725897AbgCWVuT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Mar 2020 17:50:19 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 48D5C57F0E;
+        Mon, 23 Mar 2020 17:50:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=UmdwPkHCz7/QSIRDSlu8YnOwtEY=; b=jF+36e
+        AWYsj2dW1ctdtfLjDvj2Q1hFqbr2bpVQA7r5KhYxDZ7L50PKNFxN+UsjNsvT70Cw
+        oHxsBUjuZLj5Uw5qlo6CkkaUIoUiDqnjJmdonMt3WhtAlBTEACv49ALV0h4NrN3F
+        c96cokImUn4/f6wiBLIPPb9U0J2jyzgQTkRB0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=lJW3cpO/ltYicp5OkmxSsEzV7lUQAbKz
+        gbQhkeasysEycaXTwWHtNEj2jsdYfOxhWJmXemYBeQuLee5V1XMUlcjpw/PHmNFh
+        PHT+jviaGhycKpkP73wiFPoTJZUWO+GC2pp7dKa34nO8dE+kQfrlQfBT654jXmYy
+        4LzcUVtQWmQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 41E7157F0C;
+        Mon, 23 Mar 2020 17:50:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C6B9657F0B;
+        Mon, 23 Mar 2020 17:50:17 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] import-tars: ignore the global PAX header
+In-Reply-To: <nycvar.QRO.7.76.6.2003232205580.46@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Mon, 23 Mar 2020 22:08:36 +0100 (CET)")
+References: <pull.577.git.1584968924555.gitgitgadget@gmail.com>
+        <fce519db-5ad4-270f-abcf-0e26549486cb@web.de>
+        <xmqqh7yf55q7.fsf@gitster.c.googlers.com>
+        <nycvar.QRO.7.76.6.2003232205580.46@tvgsbejvaqbjf.bet>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+Date:   Mon, 23 Mar 2020 14:50:17 -0700
+Message-ID: <xmqqtv2e3fmu.fsf@gitster.c.googlers.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 49084BF0-6D50-11EA-9BF2-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-To help pinpoint the source of a regression, it is useful to know some
-info about the compiler which the user's Git client was built with. By
-adding a generic get_compiler_info() in 'compat/' we can choose which
-relevant information to share per compiler; to get started, let's
-demonstrate the version of glibc if the user built with 'gcc'.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
----
- Documentation/git-bugreport.txt |  1 +
- bugreport.c                     |  6 ++++++
- compat/compiler.h               | 38 +++++++++++++++++++++++++++++++++
- 3 files changed, 45 insertions(+)
- create mode 100644 compat/compiler.h
+>> throws too much.  That would welcome their effort to enhance the
+>> importer, if they find it more useful to keep some other information
+>> found in global headers, without breaking the intent of this change.
+>
+> I don't think that we're throwing away anything because the PAX header is
+> intended to be a _header_, not a _file_, yet
+> `contrib/fast-import/import-tars.perl` currently treats PAX headers that
+> way.
 
-diff --git a/Documentation/git-bugreport.txt b/Documentation/git-bugreport.txt
-index 17b0d14e8d..643d1b2884 100644
---- a/Documentation/git-bugreport.txt
-+++ b/Documentation/git-bugreport.txt
-@@ -27,6 +27,7 @@ The following information is captured automatically:
- 
-  - 'git version --build-options'
-  - uname sysname, release, version, and machine strings
-+ - Compiler-specific info string
- 
- This tool is invoked via the typical Git setup process, which means that in some
- cases, it might not be able to launch - for example, if a relevant config file
-diff --git a/bugreport.c b/bugreport.c
-index 1a3172bcec..089b939a87 100644
---- a/bugreport.c
-+++ b/bugreport.c
-@@ -4,6 +4,7 @@
- #include "strbuf.h"
- #include "time.h"
- #include "help.h"
-+#include "compat/compiler.h"
- 
- static void get_system_info(struct strbuf *sys_info)
- {
-@@ -25,6 +26,11 @@ static void get_system_info(struct strbuf *sys_info)
- 			    uname_info.release,
- 			    uname_info.version,
- 			    uname_info.machine);
-+
-+	strbuf_addstr(sys_info, _("compiler info: "));
-+	get_compiler_info(sys_info);
-+	strbuf_addstr(sys_info, _("libc info: "));
-+	get_libc_info(sys_info);
- }
- 
- static const char * const bugreport_usage[] = {
-diff --git a/compat/compiler.h b/compat/compiler.h
-new file mode 100644
-index 0000000000..ce6a7f6de9
---- /dev/null
-+++ b/compat/compiler.h
-@@ -0,0 +1,38 @@
-+#ifndef COMPILER_H
-+#define COMPILER_H
-+
-+#include "git-compat-util.h"
-+#include "strbuf.h"
-+
-+#ifdef __GLIBC__
-+#include <gnu/libc-version.h>
-+#endif
-+
-+static inline void get_compiler_info(struct strbuf *info)
-+{
-+	int len = info->len;
-+#ifdef __GNUC__
-+	strbuf_addf(info, "gnuc: %d.%d\n", __GNUC__, __GNUC_MINOR__);
-+#endif
-+
-+#ifdef _MSC_VER
-+	strbuf_addf(info, "MSVC version: %s\n", _MSC_FULL_VER);
-+#endif
-+
-+	if (len == info->len)
-+		strbuf_addstr(info, _("no compiler information available\n"));
-+}
-+
-+static inline void get_libc_info(struct strbuf *info)
-+{
-+	int len = info->len;
-+
-+#ifdef __GLIBC__
-+	strbuf_addf(info, "glibc: %s\n", gnu_get_libc_version());
-+#endif
-+
-+	if (len == info->len)
-+		strbuf_addstr(info, _("no libc information available\n"));
-+}
-+
-+#endif /* COMPILER_H */
--- 
-2.25.1.696.g5e7596f4ac-goog
+What I meant (and wrote) was information contained within the
+header.  You could store such metadata (e.g. this tree came from
+this commit from the upstream project) in the commit object while
+importing, for example.
 
+As I wrote, I do not think we need to implement such feature right
+now.  I am just saying that we should make sure we are not
+unintendely discouraging future developers from doing so by giving
+an impression that we are claiming "a pax header is intended to be a
+header and has no interesting information---never look at it".  If
+we said "We discard the headers because it is the most expedient way
+and we currently have no use for them", that would make it clear
+that it is OK for them (the future ourselves developers) to extend
+the code not to lose the information, as long as they keep ignoring
+the prefix thing alone, if they want to follow the course set by
+this change.
+
+>> Having said all that, even before "git archive" existed, release
+>> tarballs by many projects had leading prefix so that a tarball
+>> extract would be made inside a versioned directory.  To truly help
+>> users of the importer, doesn't the logic to allow the user to say
+>> "please strip one leading level of directory from all the tarballs I
+>> feed you, as I know they are versioned directories" belong to the
+>> command line option of the importer?
+>
+> I guess nobody needed an explicit way to strip path prefixes yet, since
+> the implicit way works so well.
+
+Now you confused me.  If implicit way already works well, why are we
+adding this patch to make it implicitly ignore?
