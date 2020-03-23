@@ -2,96 +2,83 @@ Return-Path: <SRS0=3T2S=5I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D52CC4332E
-	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 19:22:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B9041C54FCE
+	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 19:25:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D4BA1206F8
-	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 19:22:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9162320753
+	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 19:25:29 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c2x3Y3yk"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="MFgmWmLk"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727646AbgCWTWb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Mar 2020 15:22:31 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:43612 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727570AbgCWTWb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Mar 2020 15:22:31 -0400
-Received: by mail-ed1-f66.google.com with SMTP id bd14so3801153edb.10
-        for <git@vger.kernel.org>; Mon, 23 Mar 2020 12:22:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=v5T9D1Mrp1IBlJZEeqf6cTQ8VYW171+IyKG+X+hH95A=;
-        b=c2x3Y3ykaKyfN7F7upGRvCyBLv2uTRdX1xVS4OB1+AaTMXEKFw8AOU51Qz4/i++ZFO
-         mDC2dC8D3YkMUjQadZ/CXizQcqur4ydQT3p8VgDjf2+YfUxFFlemvLva/wD9eKAvLLl4
-         9Y1nnVmV7OITwYTdxZyxTcOZ5yZv1gepupeenKGReG3ho2077xAHCEU5BKawPIHLWg23
-         7xtnnl7MebthAjAozKIQvTBYgL1x21OvPPp1Wwa4wxe0Sa+pTZ81BxgqZ1r2/hrWOcyj
-         HFxwOBNN+0ex6J+MGIF1pt6GtK8mDluoXMe07AP/mJ+O1cXDUfGzZnh4wSY0vXXtZO73
-         p7Gg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=v5T9D1Mrp1IBlJZEeqf6cTQ8VYW171+IyKG+X+hH95A=;
-        b=ME2+Wt5TOYWcpZsfPlbIQYxGO3qyQSof0kOXcfQkdH8/IwCbwXxZfpzYqgRQi3BBhC
-         v8EgvDMrQNSMDrcMhyU1kgKFCNZfJQG+HCgoWSXcMSikdwA9yuxf37KuuV977MUDuIEB
-         4lqhTPvKy84LgJ1fzG9RmHSMRAehwLqGQkqkCuFko5aOuglkShIKsxvUMVeTal91OfCz
-         psBWQBzds5mwmp8hp97Qexd3oLvEZ2AkQlgqNzHYPQY9odCEIhOzKdmX0etZNAgjx/8Q
-         RjsS84VZS9ojbrH22r7LJizNOe97mVKiHzk5l5EjiBMYxqPee8uxeidEHxL9TyJ91+zH
-         sTnA==
-X-Gm-Message-State: ANhLgQ3YGqqdrRxsBKzuNNIjbNm1CIFyfvudCpbw+CY+iTC9Lw81nvO+
-        cZjJNrHpALtCBFrLVmUP7BOT77Ivuf9pvFr5mmvrWrkPGZ8=
-X-Google-Smtp-Source: ADFU+vs1+lk40tM7O2sfo+gLkn7qxDR5LplZdRC00ios5Z1qAlu5SMJMhH0dIxTgbJoARQr8Uh4msd4iUYESSM6JdH8=
-X-Received: by 2002:a17:906:af57:: with SMTP id ly23mr6815128ejb.6.1584991347620;
- Mon, 23 Mar 2020 12:22:27 -0700 (PDT)
+        id S1727910AbgCWTZ2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Mar 2020 15:25:28 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:56668 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727675AbgCWTZ2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Mar 2020 15:25:28 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 02252B8534;
+        Mon, 23 Mar 2020 15:25:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=l4QlB+igqoZSIOISjYUkOnlirII=; b=MFgmWm
+        Lk2M8rIU0chqyeo6sPq+NP12m5f/WUI2tgTZsktb2Ty4beoQZXdY0foNkdFNszMd
+        u15H9w07qKazmBl6SX7gPJ90XPnInl5tLLFeHzealAPtjioaidN63XUd5It6QjnX
+        ASUDgxr/nK6H7OHKTyeY1BUQqeqaeOTKAo8o4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=fSkqtoK0sO66ivtDDiMVPa9pelm0XUby
+        nm7RbDbZvnkEs5G5HjVBvSp1oTI1sLnz7pE/ENOuCV1HpJ5Vsqo0kpNzsfd5HsS7
+        qY3rD+s/pR1ZsP904pqaVBoVHu2Ymx9SKFsnAeTCGX5cNXNaYXTkFndd4m4ZFB3q
+        nAGttBzblbc=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id EBFA7B8533;
+        Mon, 23 Mar 2020 15:25:25 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 381FCB8532;
+        Mon, 23 Mar 2020 15:25:23 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: What's cooking in git.git (Mar 2020, #07; Sun, 22)
+References: <xmqqh7yf7u6q.fsf@gitster.c.googlers.com>
+        <20200323191602.GC93624@syl.local>
+Date:   Mon, 23 Mar 2020 12:25:21 -0700
+In-Reply-To: <20200323191602.GC93624@syl.local> (Taylor Blau's message of
+        "Mon, 23 Mar 2020 13:16:02 -0600")
+Message-ID: <xmqq4kue6fha.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 23 Mar 2020 20:22:16 +0100
-Message-ID: <CAP8UFD31gx6TrifGwOKJL-uZLphqo--=zoqiZb5Y-QstQxTmPA@mail.gmail.com>
-Subject: Draft of Git Rev News edition 61
-To:     git <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Markus Jansen <mja@jansen-preisler.de>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jiang Xin <worldhello.net@gmail.com>,
-        Heba Waly <heba.waly@gmail.com>,
-        "Miriam R." <mirucam@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0AA7A554-6D3C-11EA-BCCC-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone!
+Taylor Blau <me@ttaylorr.com> writes:
 
-A draft of a new Git Rev News edition is available here:
+> I noticed that this has been cooking in 'next' for a few weeks now. Is
+> there anything you're looking for specifically before graduating this to
+> master?
 
-  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-61.md
+Yeah, I saw some mention about "--input=none does not mean there is
+no input" confusion in a separate discussion in the past few days
+[*1*], which may make us reconsider the proposed UI by this series,
+and it is a good time to do so when we rewind/rebuild 'next' after
+a release (i.e. "now").
 
-Everyone is welcome to contribute in any section either by editing the
-above page on GitHub and sending a pull request, or by commenting on
-this GitHub issue:
 
-  https://github.com/git/git.github.io/issues/417
+[Reference]
 
-You can also reply to this email.
-
-In general all kinds of contribution, for example proofreading,
-suggestions for articles or links, help on the issues in GitHub, and
-so on, are very much appreciated.
-
-I tried to cc everyone who appears in this edition, but maybe I missed
-some people, sorry about that.
-
-Jakub, Markus, Kaartic and me plan to publish this edition on Wednesday
-March 25th in the evening.
-
-Thanks,
-Christian.
+*1* https://lore.kernel.org/git/20200322110424.GC2224@szeder.dev/
