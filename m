@@ -2,98 +2,166 @@ Return-Path: <SRS0=3T2S=5I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BC25AC3F2CD
-	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 15:09:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B603DC3F2CD
+	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 15:11:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8C80920714
-	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 15:09:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 89FD82074D
+	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 15:11:54 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=economicmodeling-com.20150623.gappssmtp.com header.i=@economicmodeling-com.20150623.gappssmtp.com header.b="E6Do2pJH"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z1yi0NL7"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727031AbgCWPJw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Mar 2020 11:09:52 -0400
-Received: from mail-io1-f50.google.com ([209.85.166.50]:39187 "EHLO
-        mail-io1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726990AbgCWPJw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Mar 2020 11:09:52 -0400
-Received: by mail-io1-f50.google.com with SMTP id c19so14456454ioo.6
-        for <git@vger.kernel.org>; Mon, 23 Mar 2020 08:09:50 -0700 (PDT)
+        id S1727281AbgCWPLx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Mar 2020 11:11:53 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:44043 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727063AbgCWPLx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Mar 2020 11:11:53 -0400
+Received: by mail-pl1-f193.google.com with SMTP id h11so6015806plr.11
+        for <git@vger.kernel.org>; Mon, 23 Mar 2020 08:11:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=economicmodeling-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=E+Lc5KJqy36lxq23k7buMr77soLcS5Zz4BFWbJIKRzc=;
-        b=E6Do2pJH0vKLm2tMpnch49K7GcezvSd0piCy3I2P/3CyfVuuG+7vNp1MrWVvSWQtGp
-         1iQpgk55sQ+aqxqVsn4orfjYbVJTWL+D3C/DaBLbPuR/jsNphY9/Ze3aX4hXC1cjqVqm
-         lf6WkM2XyHZljRaodkOuhDE3C/4O1YzuHWxuy9xHr1U+WccNIXKa+PnJ0qKgMh4zK3lh
-         tqy/gB2LIobNwW24+4Eeohl56VLMbO8Ab4mjhkadqcGzF+JdJe01CrawDuvqkKWL20z4
-         6kPod8WlJo8+G0v/MD6WwzbTrnHI9rVQ1zU216slptsoOOo57AkJe7W9KLaZXJNpqrY2
-         PfiA==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=o84wRh3lWTQDQqpw7ipGBMVVjgWgA5R2BY3uniB6+uw=;
+        b=Z1yi0NL7xt4plSVYG6F0ck7+NzUH49q1UkpMYvXhsMQr+2breCy3LaWXv2CiUw+nOB
+         tCw8PCwL7n1mAYSfPYka1lhu8lwojxu8CCcjllNoib+8KxoEzEdQf7x5KaehE5nHtG/a
+         JOza+kMj1dFPxit70P603ihMFLNdfPHXjxsrbzH7AhY51i6uxV+3PvrIlg/ZPiOBbg2r
+         WeKHpmBzRsF3JPxL0rrvjm+py1yzfct5J2IjTcsf9ElAEmVuBK/JezVomiHl3aOMO8cx
+         E6HoSNxcz9vLokXxDmmuYTFZFlg08/lTQ60dWylOa+jSeMQwzGhrl32a0XV1OEFebviu
+         8b1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=E+Lc5KJqy36lxq23k7buMr77soLcS5Zz4BFWbJIKRzc=;
-        b=YdLimxsNlsO4xqhxgJ1EzxftjlCQ/OrDu5lpCJCTJmwdSsXwQjrhHlo75tKcNWhr0n
-         ixnK1KaulDVKkBFjLgQ5U0nBINCMoYfQc0wTXQOSuU+AWV0asrzjfsFSvjI+Yh9LJhAh
-         hBA15plhm0GdIee2Ug5rvwN586vXTBD1ds3ZDlMKi3VvDATE9tc+81+dwvAOYY+F+3Xi
-         xRQMj9Y3NbBiaebTQ/0hsCIH/pybnCaBq63sz/uWA2bPyQpVqv1Rt3m84+pHl+7CRh2s
-         1bod4vh4I5g0i5GLo8MUQj/hFgTVCWITk/WYKG52b7t3/utrm/hO4nhl1jAuVOsoiFY2
-         LRPQ==
-X-Gm-Message-State: ANhLgQ3t2hNvXbBPWjSlRAcpRyORkpAGnfFwqvTsFEK5/fCdsgLJmO02
-        jpE3HMoeafChTOE1HTHlCK3qq+LyEw3RS8UAv8MTDg==
-X-Google-Smtp-Source: ADFU+vvRbFbqI/mfvYHdNGcMLgHbmTmEj5C0dHqkdeyy5bYmIXgnD7XK9k7dEL46AUniEedYBzfaxHZoBQeT88GE0Do=
-X-Received: by 2002:a02:ce43:: with SMTP id y3mr6984396jar.34.1584976190286;
- Mon, 23 Mar 2020 08:09:50 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=o84wRh3lWTQDQqpw7ipGBMVVjgWgA5R2BY3uniB6+uw=;
+        b=umaOIQED14ezBUom1fR+oQjio76+H4qaTorgyv5WmIwxIRWZpyfNtzqnQGLzUNwqnN
+         aIMIgR6mooSNvju+z9AbcSnNpDtcoiYvxAOO8wUxxPqT/4zPycD7ShXvQLHwlJBBD7aI
+         jq2bej15AXWL3F84O3LJEz2F9XnX5TI5QQLGYoRPFMOSwL2TmJ8suWkLg8TaVwBlriMH
+         9S8qtVB3waZfghLPCAx6Ee40WZdfFSXR9xBqX+cmS/Lwb20nZWzJl7fcO3pQTZxYJTtZ
+         NRmbn3EVj8sPOPeb25PREa9vQcpug3TvCtvWKR/R0sqpkCA9qL7nBNAYCTSW5q62sVg6
+         us/w==
+X-Gm-Message-State: ANhLgQ06pyAIBtd+l2arWr9TgEt1nmWrqkKhkZb9LMDU4zk1Z5WfyciH
+        +HBq6FP2JpoKlMXxTowFGKU=
+X-Google-Smtp-Source: ADFU+vvot6scN3xBmaN8zlJAunfcQHu5DSXm9qeUzYJyq0oM9kmwWCsatG0JcOL5TFT5kjPBcIwLng==
+X-Received: by 2002:a17:90a:aa0c:: with SMTP id k12mr26534213pjq.193.1584976312176;
+        Mon, 23 Mar 2020 08:11:52 -0700 (PDT)
+Received: from localhost ([2402:800:6375:576b:56ff:d97c:a505:3e0c])
+        by smtp.gmail.com with ESMTPSA id u3sm13797625pfb.36.2020.03.23.08.11.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Mar 2020 08:11:51 -0700 (PDT)
+Date:   Mon, 23 Mar 2020 22:11:49 +0700
+From:   Danh Doan <congdanhqx@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 6/8] t7063: drop non-POSIX argument "-ls" from find(1)
+Message-ID: <20200323151149.GD11801@danh.dev>
+References: <cover.1584838148.git.congdanhqx@gmail.com>
+ <59e3f73784b2a3bd9ccec87412e6178411c3708e.1584838148.git.congdanhqx@gmail.com>
+ <nycvar.QRO.7.76.6.2003231509150.46@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-References: <CAAjm7Ga5JOJ2w=01o1-x-80HMGVaYQQy8SBBb-zJ6MOQAe4SxQ@mail.gmail.com>
- <20200323011117.GC6499@camp.crustytoothpaste.net>
-In-Reply-To: <20200323011117.GC6499@camp.crustytoothpaste.net>
-From:   Benjamin Shropshire <benjamin.shropshire@economicmodeling.com>
-Date:   Mon, 23 Mar 2020 08:09:39 -0700
-Message-ID: <CAAjm7GZXNXcGMp7p2f+UoDUWMPY+Z4aFHv35tynteVSKDf2Fqw@mail.gmail.com>
-Subject: Re: Relative url values in .gitmodules confusingly sensitive to clone
- via ssh vs https.
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Benjamin Shropshire <benjamin.shropshire@economicmodeling.com>,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <nycvar.QRO.7.76.6.2003231509150.46@tvgsbejvaqbjf.bet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-$ git --version
-git version 2.20.1
+On 2020-03-23 15:11:50+0100, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+> 
+> On Sun, 22 Mar 2020, Đoàn Trần Công Danh wrote:
+> 
+> > Since commit 6b7728db81, (t7063: work around FreeBSD's lazy mtime
+> > update feature, 2016-08-03), we started to use ls as a trick to update
+> > directory's mtime.
+> >
+> > However, `-ls` flag isn't required by POSIX's find(1), and
+> > busybox(1) doesn't implement it.
+> >
+> > >From the original conversation, it seems like find(1) with "-type d"
+> > could trigger enough "lstat(2)" to ask FreeBSD update mtime.
+> 
+> This rationale  makes me uneasy: why did Duy add _both_ `-type d` *and*
+> `-ls` if the former would have been enough?
+> 
+> > Use only filter "-type d" for now.
+> >
+> > Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
+> > ---
+> >  t/t7063-status-untracked-cache.sh | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/t/t7063-status-untracked-cache.sh b/t/t7063-status-untracked-cache.sh
+> > index 190ae149cf..6791c6b95a 100755
+> > --- a/t/t7063-status-untracked-cache.sh
+> > +++ b/t/t7063-status-untracked-cache.sh
+> > @@ -18,7 +18,7 @@ GIT_FORCE_UNTRACKED_CACHE=true
+> >  export GIT_FORCE_UNTRACKED_CACHE
+> >
+> >  sync_mtime () {
+> > -	find . -type d -ls >/dev/null
+> > +	find . -type d >/dev/null
+> 
+> A more conservative patch would be the following:
+> 
+> -- snip --
+> commit 1680a64fae24b1073dbf1b844889a9953823b7a2
+> Author: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> Date:   Wed Jul 19 22:13:16 2017 +0200
+> 
+>     t7063: when running under BusyBox, avoid unsupported find option
+> 
+>     BusyBox' find implementation does not understand the -ls option, so
+>     let's not use it when we're running inside BusyBox.
 
-On Sun, Mar 22, 2020 at 6:11 PM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
->
-> On 2020-03-17 at 18:34:09, Benjamin Shropshire wrote:
-> > From my perspective, this is a bug.
-> >
-> > If I clone a repo twice like this:
-> >
-> > git clone https://github.com/user/repo.git ./https
-> > git clone git@github.com:user/repo.git ./ssh
-> >
-> > And if it contains a .gitmodules like this:
-> >
-> > [submodule "x"]
-> >     path = xxx
-> >     url = ../../different-user/something.git
-> >
-> > When I `git submodule update --init --recursive` in each, only the
-> > HTTPS version works. the SSH version confusingly seems to try to find
-> > something at ~/different-user/something.git or some other path in the
-> > local file system.
->
-> What version of Git are you using?  This works fine for me on a recent
-> next.  In addition, I see we have tests for this in t0060, and adding an
-> additional case for this appears to pass.
-> --
-> brian m. carlson: Houston, Texas, US
-> OpenPGP: https://keybase.io/bk2204
+Yes, this patch is a conservative patch.
+In v1, I went with "-exec ls -dils {} +".
+
+And, Jeff worries about a lot of flags passed to ls may run into
+compatibility issue.
+
+> 
+>     Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> 
+> diff --git a/t/t7063-status-untracked-cache.sh
+> b/t/t7063-status-untracked-cache.sh
+> index 190ae149cf3c..ab7e8b5fea01 100755
+> --- a/t/t7063-status-untracked-cache.sh
+> +++ b/t/t7063-status-untracked-cache.sh
+> @@ -18,7 +18,12 @@ GIT_FORCE_UNTRACKED_CACHE=true
+>  export GIT_FORCE_UNTRACKED_CACHE
+> 
+>  sync_mtime () {
+> -       find . -type d -ls >/dev/null
+> +       if test_have_prereq BUSYBOX
+> +       then
+> +               find . -type d -print0 | xargs -0r ls -ld >/dev/null
+
+Can we just change back to what Duy proposed time ago:
+
+	find . -type d -exec ls -ld {} \;
+
+> +       else
+> +               find . -type d -ls >/dev/null
+> +       fi
+>  }
+> 
+>  avoid_racy() {
+> -- snap --
+> 
+> I have this in Git for Windows' fork, although I have to admit that there
+> is no CI set up to verify that this is all working as I expect it to.
+
+I'd find some time (later) to setup a Travis build with Alpine and VoidLinux,
+mainly for musl check.
+
+-- 
+Danh
