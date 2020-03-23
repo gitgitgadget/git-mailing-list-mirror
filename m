@@ -2,183 +2,287 @@ Return-Path: <SRS0=3T2S=5I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-20.9 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 94D2EC4332B
-	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 21:28:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BC8ADC4332B
+	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 21:29:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6199D2073E
-	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 21:28:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 851F92073E
+	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 21:29:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ciUGw5nP"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="gOmxt58Y"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727008AbgCWV2A (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Mar 2020 17:28:00 -0400
-Received: from mail-pj1-f66.google.com ([209.85.216.66]:52063 "EHLO
-        mail-pj1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726203AbgCWV2A (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Mar 2020 17:28:00 -0400
-Received: by mail-pj1-f66.google.com with SMTP id hg10so463458pjb.1
-        for <git@vger.kernel.org>; Mon, 23 Mar 2020 14:27:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=xI5FC179tDONoGFjPI38Ubh4jNd1ubBMDoHdV8dN06A=;
-        b=ciUGw5nPX4nqd34HIBlS7VmLYvqNHxydPIrB6yknI58jOXyDv1uHKwszuDqszNbQ+V
-         88VJKelxIHecqMBF5mUl61oKcDtKJtPbGH+1tBvT7FJUNdA9WGUQXUGZAdvr+taR576Y
-         4O+kdhDbg506So92PWzrVpusykYUOvE+zDqURsI7X//5q5l9v88jiVrSbEh0GbOjmKUT
-         qeUdfErpnsa6CFJqfLlsgt1SZXwrDoJUAPRSbi5bm7JTgPecYEasH4St/Fhsm8i2WtLP
-         Cj49jB3qbpL5wdG6QOMTYfIDo++MYtT9hUspbUMNvpz012evucQRXHdwE5WxcWco4kVz
-         LCzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=xI5FC179tDONoGFjPI38Ubh4jNd1ubBMDoHdV8dN06A=;
-        b=GbcEQapudnP3egF5yxAPiKgPn/PUYAgX7Jm1+NNvxSOuuNN3A+vnvNqFOqLz1T3Oil
-         tFu6NhdjkNwKnCMe7J/SConWiAUyAyTli7cYjQlx2h6vK1ElzFigbMhP7kwryPVnlQaT
-         d8Eyi1MoPGyxGbvkXI+UJrGwbuhjOvOl3RUDCaYtdbIbUSYYWzWaKyaO6h3gK9Nff9gi
-         ugQww3MSEQGpte1mkkrgwCWZq03uHEQ5sCbfbin1N/Ni5XYVr9eOJeqHmmprIwxGyreK
-         MVfnP2rtH/8edDSHRKy78FX5x3FO7vWzYveZud9/B6JQzm7P5BbSqGrSs6anq02iSsF/
-         z9Bw==
-X-Gm-Message-State: ANhLgQ1LiX52Wn3Hhoz58KtE3Uv900AmPLsV9nnSe96CBe33Wp2uh/Eo
-        SLvJN1bnWijvmuZsEIFfg0LvOVpKMorHiA==
-X-Google-Smtp-Source: ADFU+vuVeTPOTzfvtZpdjjgfPIjuGt029m8yKMC4+nhQs6jv85DOp8H4zprsmls3hrLr7jf8w0libg==
-X-Received: by 2002:a17:90a:db0e:: with SMTP id g14mr1358831pjv.186.1584998878983;
-        Mon, 23 Mar 2020 14:27:58 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
-        by smtp.gmail.com with ESMTPSA id 71sm14640743pfv.8.2020.03.23.14.27.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Mar 2020 14:27:57 -0700 (PDT)
-Date:   Mon, 23 Mar 2020 14:27:53 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v9 5/5] bugreport: add compiler info
-Message-ID: <20200323212753.GE45325@google.com>
-References: <20200302230400.107428-1-emilyshaffer@google.com>
- <20200302230400.107428-6-emilyshaffer@google.com>
- <nycvar.QRO.7.76.6.2003042236060.46@tvgsbejvaqbjf.bet>
+        id S1726971AbgCWV3F (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Mar 2020 17:29:05 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:57285 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726203AbgCWV3F (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Mar 2020 17:29:05 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6BB1FBDB02;
+        Mon, 23 Mar 2020 17:29:03 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=+/LIlVuKhLKYQD8+HCRRiQxA4tM=; b=gOmxt5
+        8YkISPNCaZoq28ryO+PmI8FOM60P7Ozpbpyr8yXUOWKrclZKZJy5KZGivYlv3gzN
+        hpLNuH8yb6+qj+FhbjSd7VimLWyzGI3RGh+Oi9Znw7NKx+tpWlDx3gvoALr1VkyP
+        qdrOrwKqUV1TWtBlZnV/l/TIpnATa9CAxALa8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Yg1yGOju+svqPaB/jYdY0k2nBocxWyKm
+        AkTxV+uQiT9pTfLPFIcS5wmJGr/wtIjEyv9/HqzUY9EhaYK8RvMRZ6M2MwsveF0j
+        TeLJBFTRydHeMATdoOfZQmPdTeEAxlZ09X4ciZaH5KXh5PaIboYHfB4f3Ue0OEKL
+        WL4QRshdiBI=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 64D73BDB01;
+        Mon, 23 Mar 2020 17:29:03 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9F4E4BDAFC;
+        Mon, 23 Mar 2020 17:29:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 2/2] tests(gpg): increase verbosity to allow debugging
+References: <pull.728.git.git.1584968990.gitgitgadget@gmail.com>
+        <dd26cb05a37a54d9d245823772d33fe0daab8ffa.1584968990.git.gitgitgadget@gmail.com>
+        <20200323173258.GA3977@coredump.intra.peff.net>
+        <20200323180445.GA31401@coredump.intra.peff.net>
+        <xmqq8sjq6fob.fsf@gitster.c.googlers.com>
+        <20200323201547.GA35429@coredump.intra.peff.net>
+Date:   Mon, 23 Mar 2020 14:28:58 -0700
+In-Reply-To: <20200323201547.GA35429@coredump.intra.peff.net> (Jeff King's
+        message of "Mon, 23 Mar 2020 16:15:47 -0400")
+Message-ID: <xmqqzhc63gmd.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.2003042236060.46@tvgsbejvaqbjf.bet>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4FCAD4A6-6D4D-11EA-AFA3-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 04, 2020 at 10:39:53PM +0100, Johannes Schindelin wrote:
-> Hi Emily,
-> 
-> On Mon, 2 Mar 2020, Emily Shaffer wrote:
-> 
-> > diff --git a/compat/compiler.h b/compat/compiler.h
-> > new file mode 100644
-> > index 0000000000..21f098e6a4
-> > --- /dev/null
-> > +++ b/compat/compiler.h
-> > @@ -0,0 +1,38 @@
-> > +#ifndef COMPILER_H
-> > +#define COMPILER_H
-> > +
-> > +#include "git-compat-util.h"
-> > +#include "strbuf.h"
-> > +
-> > +#ifdef __GLIBC__
-> > +#include <gnu/libc-version.h>
-> > +#endif
-> > +
-> > +static inline void get_compiler_info(struct strbuf *info)
-> > +{
-> > +	int len = info->len;
-> > +#ifdef __GNUC__
-> > +	strbuf_addf(info, "gnuc: %d.%d\n", __GNUC__, __GNUC_MINOR__);
-> > +#endif
-> > +
-> > +#ifdef _MSC_VER
-> > +	strbuf_addf(info, "MSVC version: %s\n", _MSC_FULL_VER);
-> 
-> I need this to fix a crash in the Visual Studio build's test run:
+Jeff King <peff@peff.net> writes:
 
-Hummm, is that not part of the GGG suite? I saw it pass (and then failed
-to include the updated patches with v9 with the changes you mentioned
-below).
+> Here's what I came up with that I think is suitable for applying (though
+> if you find the GNUPGHOME thing below too gross, I can rework it as
+> indicated):
 
-> 
-> -- snip --
-> Subject: [PATCH] fixup??? bugreport: add compiler info
-> 
-> As documented at
-> https://docs.microsoft.com/en-us/cpp/preprocessor/predefined-macros?view=vs-2019,
-> `_MSC_FULL_VER` is an integer, not a string. Therefore this fix is
-> needed to prevent a segmentation fault in the test t0091.1.
-> 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+I actually think it is perfectly fine to mkdir and set the
+environment even outside test_expect_success; that way, even
+GIT_SKIP_TESTS cannot omit the necessary initialization.  And as you
+said, leaving the environment pointing into the trash repository's
+working tree should be fine when we fail the GPG prereq.  We
+shouldn't be running GPG at all in such a case.
+
+> -- >8 --
+> Subject: [PATCH] t/lib-gpg: run setup code in test blocks
+>
+> The steps to check the GPG prereq and set up GNUPGHOME are run in the
+> main script, with stdout and stderr redirected. This avoids spewing
+> useless output when GPG isn't available. But it also means that there's
+> no easy way to see what did happen if you're using "-v" or "-x".
+>
+> Let's push this as much as possible into a lazy_prereq blocks, which
+> handle verbosity and tracing for us. There's one tricky thing here: part
+> of the setup involves setting $GNUPGHOME, but lazy_prereq blocks are
+> evaluated in a subshell in order to avoid accidental environment
+> contamination. Splitting the setup from the prereq is tricky; the prereq
+> is basically "did we successfully set things up".
+>
+> We could run all of the GPG prereq code in its own test_expect_success
+> block. But that gets awkward because we _don't_ want to report failure
+> if a command fails (we just want to not set the prereq).
+>
+> I've solved it here by pulling the GNUPGHOME setup into its own separate
+> setup step, that happens _before_ we check the prereq. That means we'd
+> set up the variable even if we don't have gpg, but that should be OK;
+> we'll be skipping any gpg tests in that case anyway. (If it's not, the
+> alternative is to put the big &&-chain into a separate function of "{}"
+> block).
+>
+> Now that the code is inside test blocks, we can take advantage of this
+> to use &&-chaining and early returns, and avoid indenting everything
+> inside a big case statement.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
 > ---
->  compat/compiler.h | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/compat/compiler.h b/compat/compiler.h
-> index ce6a7f6de9a..ac90fa051dd 100644
-> --- a/compat/compiler.h
-> +++ b/compat/compiler.h
-> @@ -16,7 +16,8 @@ static inline void get_compiler_info(struct strbuf *info)
->  #endif
-> 
->  #ifdef _MSC_VER
-> -	strbuf_addf(info, "MSVC version: %s\n", _MSC_FULL_VER);
-> +	strbuf_addf(info, "MSVC version: %02d.%02d.%05d\n",
-> +		    _MSC_VER / 100, _MSC_VER % 100, _MSC_FULL_VER % 100000);
->  #endif
-> 
->  	if (len == info->len)
-> -- snap --
-> 
-> Could you squash that in, please?
-> 
-> BTW the two issues I reported in the earlier round are still problems.
-> Could you squash my fixes, please? For your convenience, you can pluck all
-> four of them right off of
-> https://github.com/git-for-windows/git/commits/shears/pu
+> On top of Dscho's patch 1, since it uses $PWD/gpghome.
 
-Yes, I think these two issues earlier I have locally and thumbfingered
-running format-patch.
+Looking good.
 
-> 
-> Just replace the `???` by `!` and you can even use `git rebase
-> --autosquash`.
-> 
-> Ciao,
-> Dscho
-> 
-> 
-> > +#endif
-> > +
-> > +	if (len == info->len)
-> > +		strbuf_addf(info, _("no compiler information available\n"));
-> > +}
-> > +
-> > +static inline void get_libc_info(struct strbuf *info)
-> > +{
-> > +	int len = info->len;
-> > +
-> > +#ifdef __GLIBC__
-> > +	strbuf_addf(info, "glibc: %s\n", gnu_get_libc_version());
-> > +#endif
-> > +
-> > +	if (len == info->len)
-> > +		strbuf_addf(info, _("no libc information available\n"));
-> > +}
-> > +
-> > +#endif /* COMPILER_H */
-> > --
-> > 2.25.0.265.gbab2e86ba0-goog
-> >
-> >
+>  t/lib-gpg.sh | 145 +++++++++++++++++++++++++++------------------------
+>  1 file changed, 76 insertions(+), 69 deletions(-)
+>
+> diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
+> index 11b83b8c24..56153b3123 100755
+> --- a/t/lib-gpg.sh
+> +++ b/t/lib-gpg.sh
+> @@ -1,81 +1,88 @@
+>  #!/bin/sh
+>  
+> -gpg_version=$(gpg --version 2>&1)
+> -if test $? != 127
+> -then
+> +# This can't run as part of the lazy_prereq below because it has the side
+> +# effect of setting an environment variable.
+> +test_expect_success 'set up GNUPGHOME' '
+> +	mkdir ./gpghome &&
+> +	chmod 0700 ./gpghome &&
+> +	GNUPGHOME="$PWD/gpghome" &&
+> +	export GNUPGHOME
+> +'
+> +
+> +test_lazy_prereq GPG '
+> +	{
+> +		gpg_version=$(gpg --version)
+> +		test $? != 127
+> +	} &&
+> +
+>  	# As said here: http://www.gnupg.org/documentation/faqs.html#q6.19
+> -	# the gpg version 1.0.6 didn't parse trust packets correctly, so for
+> +	# the gpg version 1.0.6 did not parse trust packets correctly, so for
+>  	# that version, creation of signed tags using the generated key fails.
+>  	case "$gpg_version" in
+> -	'gpg (GnuPG) 1.0.6'*)
+> -		say "Your version of gpg (1.0.6) is too buggy for testing"
+> +		"gpg (GnuPG) 1.0.6"*)
+> +		echo >&2 "Your version of gpg (1.0.6) is too buggy for testing"
+> +		return 1
+>  		;;
+> -	*)
+> -		# Available key info:
+> -		# * Type DSA and Elgamal, size 2048 bits, no expiration date,
+> -		#   name and email: C O Mitter <committer@example.com>
+> -		# * Type RSA, size 2048 bits, no expiration date,
+> -		#   name and email: Eris Discordia <discord@example.net>
+> -		# No password given, to enable non-interactive operation.
+> -		# To generate new key:
+> -		#	gpg --homedir /tmp/gpghome --gen-key
+> -		# To write armored exported key to keyring:
+> -		#	gpg --homedir /tmp/gpghome --export-secret-keys \
+> -		#		--armor 0xDEADBEEF >> lib-gpg/keyring.gpg
+> -		#	gpg --homedir /tmp/gpghome --export \
+> -		#		--armor 0xDEADBEEF >> lib-gpg/keyring.gpg
+> -		# To export ownertrust:
+> -		#	gpg --homedir /tmp/gpghome --export-ownertrust \
+> -		#		> lib-gpg/ownertrust
+> -		mkdir ./gpghome &&
+> -		chmod 0700 ./gpghome &&
+> -		GNUPGHOME="$PWD/gpghome" &&
+> -		export GNUPGHOME &&
+> -		(gpgconf --kill gpg-agent >/dev/null 2>&1 || : ) &&
+> -		gpg --homedir "${GNUPGHOME}" 2>/dev/null --import \
+> -			"$TEST_DIRECTORY"/lib-gpg/keyring.gpg &&
+> -		gpg --homedir "${GNUPGHOME}" 2>/dev/null --import-ownertrust \
+> -			"$TEST_DIRECTORY"/lib-gpg/ownertrust &&
+> -		gpg --homedir "${GNUPGHOME}" </dev/null >/dev/null 2>&1 \
+> -			--sign -u committer@example.com &&
+> -		test_set_prereq GPG &&
+> -		# Available key info:
+> -		# * see t/lib-gpg/gpgsm-gen-key.in
+> -		# To generate new certificate:
+> -		#  * no passphrase
+> -		#	gpgsm --homedir /tmp/gpghome/ \
+> -		#		-o /tmp/gpgsm.crt.user \
+> -		#		--generate-key \
+> -		#		--batch t/lib-gpg/gpgsm-gen-key.in
+> -		# To import certificate:
+> -		#	gpgsm --homedir /tmp/gpghome/ \
+> -		#		--import /tmp/gpgsm.crt.user
+> -		# To export into a .p12 we can later import:
+> -		#	gpgsm --homedir /tmp/gpghome/ \
+> -		#		-o t/lib-gpg/gpgsm_cert.p12 \
+> -		#		--export-secret-key-p12 "committer@example.com"
+> -		echo | gpgsm --homedir "${GNUPGHOME}" 2>/dev/null \
+> -			--passphrase-fd 0 --pinentry-mode loopback \
+> -			--import "$TEST_DIRECTORY"/lib-gpg/gpgsm_cert.p12 &&
+> +	esac &&
+>  
+> -		gpgsm --homedir "${GNUPGHOME}" 2>/dev/null -K |
+> -		grep fingerprint: |
+> -		cut -d" " -f4 |
+> -		tr -d '\n' >"${GNUPGHOME}/trustlist.txt" &&
+> +	# Available key info:
+> +	# * Type DSA and Elgamal, size 2048 bits, no expiration date,
+> +	#   name and email: C O Mitter <committer@example.com>
+> +	# * Type RSA, size 2048 bits, no expiration date,
+> +	#   name and email: Eris Discordia <discord@example.net>
+> +	# No password given, to enable non-interactive operation.
+> +	# To generate new key:
+> +	#	gpg --homedir /tmp/gpghome --gen-key
+> +	# To write armored exported key to keyring:
+> +	#	gpg --homedir /tmp/gpghome --export-secret-keys \
+> +	#		--armor 0xDEADBEEF >> lib-gpg/keyring.gpg
+> +	#	gpg --homedir /tmp/gpghome --export \
+> +	#		--armor 0xDEADBEEF >> lib-gpg/keyring.gpg
+> +	# To export ownertrust:
+> +	#	gpg --homedir /tmp/gpghome --export-ownertrust \
+> +	#		> lib-gpg/ownertrust
+> +	(gpgconf --kill gpg-agent || : ) &&
+> +	gpg --homedir "${GNUPGHOME}" --import \
+> +		"$TEST_DIRECTORY"/lib-gpg/keyring.gpg &&
+> +	gpg --homedir "${GNUPGHOME}" --import-ownertrust \
+> +		"$TEST_DIRECTORY"/lib-gpg/ownertrust &&
+> +	gpg --homedir "${GNUPGHOME}" \
+> +		--sign -u committer@example.com >/dev/null
+> +'
+>  
+> -		echo " S relax" >>"${GNUPGHOME}/trustlist.txt" &&
+> -		echo hello | gpgsm --homedir "${GNUPGHOME}" >/dev/null \
+> -			-u committer@example.com -o /dev/null --sign - 2>&1 &&
+> -		test_set_prereq GPGSM
+> -		;;
+> -	esac
+> -fi
+> +test_have_prereq GPG &&
+> +test_lazy_prereq GPGSM '
+> +	# Available key info:
+> +	# * see t/lib-gpg/gpgsm-gen-key.in
+> +	# To generate new certificate:
+> +	#  * no passphrase
+> +	#	gpgsm --homedir /tmp/gpghome/ \
+> +	#		-o /tmp/gpgsm.crt.user \
+> +	#		--generate-key \
+> +	#		--batch t/lib-gpg/gpgsm-gen-key.in
+> +	# To import certificate:
+> +	#	gpgsm --homedir /tmp/gpghome/ \
+> +	#		--import /tmp/gpgsm.crt.user
+> +	# To export into a .p12 we can later import:
+> +	#	gpgsm --homedir /tmp/gpghome/ \
+> +	#		-o t/lib-gpg/gpgsm_cert.p12 \
+> +	#		--export-secret-key-p12 "committer@example.com"
+> +	echo | gpgsm --homedir "${GNUPGHOME}" \
+> +		--passphrase-fd 0 --pinentry-mode loopback \
+> +		--import "$TEST_DIRECTORY"/lib-gpg/gpgsm_cert.p12 &&
+> +	gpgsm --homedir "${GNUPGHOME}" -K |
+> +	grep fingerprint: |
+> +	cut -d" " -f4 |
+> +	tr -d "\\n" >"${GNUPGHOME}/trustlist.txt" &&
+> +	echo " S relax" >>"${GNUPGHOME}/trustlist.txt" &&
+> +	echo hello | gpgsm --homedir "${GNUPGHOME}" \
+> +		-u committer@example.com -o /dev/null --sign -
+> +'
+>  
+> -if test_have_prereq GPG &&
+> -    echo | gpg --homedir "${GNUPGHOME}" -b --rfc1991 >/dev/null 2>&1
+> -then
+> -	test_set_prereq RFC1991
+> -fi
+> +test_have_prereq GPG &&
+> +test_lazy_prereq RFC1991 '
+> +    echo | gpg --homedir "${GNUPGHOME}" -b --rfc1991
+> +'
+>  
+>  sanitize_pgp() {
+>  	perl -ne '
