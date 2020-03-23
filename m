@@ -2,122 +2,97 @@ Return-Path: <SRS0=3T2S=5I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.9 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1,USER_IN_DEF_DKIM_WL autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E6734C3F2CD
-	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 18:41:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D778C4332E
+	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 18:50:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B8AF620409
-	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 18:41:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E88DE20663
+	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 18:50:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k6s7QoFW"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Nd92pggo"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727364AbgCWSly (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Mar 2020 14:41:54 -0400
-Received: from mail-ot1-f41.google.com ([209.85.210.41]:34894 "EHLO
-        mail-ot1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727011AbgCWSlx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Mar 2020 14:41:53 -0400
-Received: by mail-ot1-f41.google.com with SMTP id k26so14523357otr.2
-        for <git@vger.kernel.org>; Mon, 23 Mar 2020 11:41:51 -0700 (PDT)
+        id S1727558AbgCWSua (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Mar 2020 14:50:30 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:40610 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727361AbgCWSu3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Mar 2020 14:50:29 -0400
+Received: by mail-pl1-f193.google.com with SMTP id h11so6288406plk.7
+        for <git@vger.kernel.org>; Mon, 23 Mar 2020 11:50:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=nKgVggNa7eplBXoVJBAi4jw2MsfcAVPerrDYzzDW6SY=;
-        b=k6s7QoFWGNrPgnVyvFf0mo5cGieI+QO1Iwy4CSb4Z+y1d8doKM0rf8dpfbpKIAX/Mc
-         7RVgcN67TetoGmlbWZYCG00c49agXerKNF+0bUQ26wl0hQUYQmssqXHXtq0HUgGcl7wI
-         ui2yulXHXdjr358JhD2quhtowhSLJewmcRaSoKXedUhj8IkREkNSUxAcWcyuzlQ6AuIZ
-         6ABq5UexvJyNB/wob9A+mId+uRWzbngE9g2oBwd9gqyhRe+WryYuPhCf07hWxRi176c0
-         1JXBRsJtxm0sJUC8flY/Hpw2ELUVPIKKy+fInm31rLvr6LTphnNRr07iyTpe8XrNw9hG
-         YewA==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=R0LwILojUFHfDnPICXJYjY7ZqunsMyeogNZOtQuSMFg=;
+        b=Nd92pggoH5fbtYajbo24pdnBRGWqVakrPlK2JryaAb59xvpRb1QtOJ5JLRaGJh7XoX
+         rtjJYCMl1Ekvou4y4toMwn3YhwSKqn1ZO97O/d9DudtRBIuhkChmedy9CQvbKviDlMn+
+         9vtrAknkTmsn/yHz5DyxtaMYAjZp/0a0kFkafXh2T6yk5HFEe6/DKhCA3fw69asxN0z4
+         8kQk3l46Ii0NnZ6IbNy2LsBMe2gfIpbDv43UOEK4Nc94++Kg9vEf0YgFWd/CCQvZ+F1W
+         aOGjmMe3i0nMmMhb+6fyY3D5c/Z2y6Eyt6f4gCX13MjEy+4Cf7+M4HUv40gRS4L2AHan
+         boAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=nKgVggNa7eplBXoVJBAi4jw2MsfcAVPerrDYzzDW6SY=;
-        b=ODO8MxvsC3YAR/PXG2eKV8pBCF7/42FZIrlKuYUu2qUtLqRJ3h14L2gJnb1Jg7EoQu
-         jeqo4CiQ0F5w4kXXWPDPxLbKHNSqKlx324RwpBN7hsbNnN/diHAKTXqerlhlP9D3iRuV
-         W+DelRGrjyLyvgxOdtO5GzxfKAZHXhjjMRl5S9n6uQhABMX2zHBL9n0jYugfc1ufok5r
-         /12IfomlpGRlxpgYKQldiQm00i0bFp2rrb2PRnTTArZP4h1cUVxB2nPdkyPUaaVgA+8o
-         RPnTRzil02YaJRNlKzIW1XTqwT+Zgck8oN2qfkIZdr5Xgm2PKl2W4xBPFl2TjNOEVTrI
-         RMxw==
-X-Gm-Message-State: ANhLgQ2G7DIFsvlCxIsEi5tgMnfR5wM2bBMGENMwp451kLnc29FPQev/
-        ODf3cgQcYHt9B0hiS06lbb+Fazzkrvs=
-X-Google-Smtp-Source: ADFU+vu9/YCCJwQIL0q75HguYOD7DzD0Us3dKZt+fjmS5V2rbt8s4lGIN2nOrJoyWhhTvSDehVX9yw==
-X-Received: by 2002:a05:6830:1ac1:: with SMTP id r1mr14723694otc.139.1584988910940;
-        Mon, 23 Mar 2020 11:41:50 -0700 (PDT)
-Received: from [192.168.1.83] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id 33sm5275642otn.50.2020.03.23.11.41.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Mar 2020 11:41:50 -0700 (PDT)
-Subject: Re: [PATCH v2 00/18] Sparse checkout improvements -- improved
- sparsity updating
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Derrick Stolee <dstolee@microsoft.com>,
-        Elijah Newren <newren@gmail.com>
-References: <pull.726.git.git.1584169893.gitgitgadget@gmail.com>
- <pull.726.v2.git.git.1584813609.gitgitgadget@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <1a58492d-4e09-c12b-ff53-2f2b9cb2e28b@gmail.com>
-Date:   Mon, 23 Mar 2020 14:41:49 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:75.0) Gecko/20100101
- Thunderbird/75.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=R0LwILojUFHfDnPICXJYjY7ZqunsMyeogNZOtQuSMFg=;
+        b=oREhCjzl64GeclXTw2x7Aj090+8RofqcTKozaW3PACZsFZBSAL9em6la2HdStTCzcc
+         U5On6PqKJwyn67zz3szrg6PpBMXJMfZiYn9lafV1gYIYdE9OGMNGppBIqL2Gzsx6+0aO
+         jE8gXLD4IZf/s9XxAB8/Zo8b4Y92qxU5+m+rLkfw02Rq2X3FKSMTIktxznSViC8HR1Aj
+         C3FZQqKCDi10qV46DQte9Nn/wnjnKz39F/NwtXSptUZewFfJZNwhJwKButJ/u2yseMvf
+         OY6ywkttso0fkBlJKtFGr50n1q10MkmeVQP24OT3PoMj92Q/29pYtuEmNSd/k0QOfGlF
+         KLiA==
+X-Gm-Message-State: ANhLgQ02zFOfgYUCpPVklmXA6Z64E6yMcGvjY6DDsBfLxGGmIRqYfVox
+        XA17OvW5J0ohXpVmg6UvbpzI/w==
+X-Google-Smtp-Source: ADFU+vsXGOeFIpqJL+wg5jjgV7c3N5hQd2Qs9hftlqPMXPZrh4Px1iW2CzHs2SO3/m26NcgKO+H6xg==
+X-Received: by 2002:a17:90a:252b:: with SMTP id j40mr767413pje.189.1584989428145;
+        Mon, 23 Mar 2020 11:50:28 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
+        by smtp.gmail.com with ESMTPSA id y131sm14207652pfb.78.2020.03.23.11.50.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Mar 2020 11:50:25 -0700 (PDT)
+Date:   Mon, 23 Mar 2020 11:50:21 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v9 2/5] bugreport: add tool to generate debugging info
+Message-ID: <20200323185021.GC45325@google.com>
+References: <20200302230400.107428-1-emilyshaffer@google.com>
+ <20200302230400.107428-3-emilyshaffer@google.com>
+ <nycvar.QRO.7.76.6.2003042232340.46@tvgsbejvaqbjf.bet>
+ <20200319213902.GB45325@google.com>
+ <nycvar.QRO.7.76.6.2003201636040.46@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-In-Reply-To: <pull.726.v2.git.git.1584813609.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.2003201636040.46@tvgsbejvaqbjf.bet>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/21/2020 1:59 PM, Elijah Newren via GitGitGadget wrote:
-> This series provides a replacement for the sparsity updating in
-> sparse-checkout that is based on the logic from git read-tree -mu HEAD. The
-> most important bit is patch 9 and its lengthy commit message explaining the
-> current state and rationale for most the series, though patches 16 and 17
-> have additional related directions and rationale for the series. Those three
-> patches are the most important to review.
+On Fri, Mar 20, 2020 at 04:42:36PM +0100, Johannes Schindelin wrote:
+> Hi Emily,
 > 
-> Changes since v1:
+> On Thu, 19 Mar 2020, Emily Shaffer wrote:
+> > I'll hold off on sharing my own preference until after we've got some
+> > benchmarking to look at, so I can understand the whole picture.
 > 
->  * addressed several cleanups highlighted by Stolee (and I picked 'reapply'
->    for the new subcommand name)
->  * added three new minor cleanup commits (patches 2-4)
->  * several new patches to adjust the warning messages to look like warnings
->    (patches 11-15)
->  * display warning messages when paths are unmerged (patch 16)
->  * also make checkout and other unpack_trees()-using commands not error out
->    when unable to set the SKIP_WORKTREE bit (patch 17)
+> Why? Why not strong-arm your preference? Junio and I are not shy doing the
+> same, and those are _your_ patches. Junio is clearly not interested in the
+> command at all, but you are clearly interested in it [*1*]. You should
+> have more than just the final say over this.
 
-I'm very happy with the updates in this version.
+We are different people, and we approach problems and disagreements
+differently. I am almost never the type to strong-arm my preference; I'd
+rather listen to other arguments and look at data, which is why I
+proposed the experiments I mentioned here. As for you and Junio not
+being shy, as you put it, I found most of the discussion offputting, and
+the tone used absolutely contributed to me finding other things to work
+on instead of coming back to this minefield sooner.
 
-> Also, the loop range in display_warning_msgs() in patch 14 might seem
-> slightly weird, but I felt adding another unpack_rejects array of some sort
-> and plumbing through an extra bit everywhere to notify the system which
-> unpack_rejects array to use would have been more invasive. Opinions either
-> way (or alternative approaches) welcome.
-> 
-> I was also curious if I should have squashed all the patches to adjust the
-> warning messages (patches 11-15, they adjust the messages to actually look
-> like warnings instead of errors), since they are individually kind of small,
-> but it looked like it'd be much easier to review if I were to split them
-> apart, so I did so.
-
-I found them very easy to review. I had the one comment that was my fault
-for not looking one patch ahead. In general, it was simple to see that you
-were doing good updates with good motivations.
-
-This is going to help the UX around sparse-checkout quite a bit!
-
-Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
-
--Stolee
-
+ - Emily
