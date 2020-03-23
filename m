@@ -2,163 +2,98 @@ Return-Path: <SRS0=3T2S=5I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6844CC3F2CD
-	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 15:04:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BC25AC3F2CD
+	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 15:09:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 34E38206C3
-	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 15:04:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8C80920714
+	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 15:09:53 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="McpCjDPb"
+	dkim=pass (2048-bit key) header.d=economicmodeling-com.20150623.gappssmtp.com header.i=@economicmodeling-com.20150623.gappssmtp.com header.b="E6Do2pJH"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727112AbgCWPEx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Mar 2020 11:04:53 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:41673 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726955AbgCWPEx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Mar 2020 11:04:53 -0400
-Received: by mail-pl1-f195.google.com with SMTP id t16so6013751plr.8
-        for <git@vger.kernel.org>; Mon, 23 Mar 2020 08:04:52 -0700 (PDT)
+        id S1727031AbgCWPJw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Mar 2020 11:09:52 -0400
+Received: from mail-io1-f50.google.com ([209.85.166.50]:39187 "EHLO
+        mail-io1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726990AbgCWPJw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Mar 2020 11:09:52 -0400
+Received: by mail-io1-f50.google.com with SMTP id c19so14456454ioo.6
+        for <git@vger.kernel.org>; Mon, 23 Mar 2020 08:09:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=uO/2ZMnEMwcQ8yDda+vL+O0Ws3tkGw8vfRGmUcSop7I=;
-        b=McpCjDPbGBkw1V6GV3r4dFST+0NyqZrNkDUx4/INXMUIHXZbV/+pXnOA1inhgSHoXz
-         F1Yd8nD+q+JQtKTtvLNIqqQmHY2lr+qKW//2tgOMKNsB72AcT/faymeKtEImERIMlIix
-         iQq4X2kiZVMtx93kWKVhZBeFTVWEMlU/vKfu4bEhewgwKK728QfcFcGeeyoH+SJCESS5
-         HOa1GXPqMwgzprMx8E7JAnfFMwZQMv5P4p7JMKcJenlBnZxxm/Em5irdV8zFOPzK+woC
-         PqBI21bKf84A/ho1qNN8lrSYHTOE2E8p4AmhRr+djtbsyEg8VmPVbL+2xZdMb/4f6Ta/
-         NQiA==
+        d=economicmodeling-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=E+Lc5KJqy36lxq23k7buMr77soLcS5Zz4BFWbJIKRzc=;
+        b=E6Do2pJH0vKLm2tMpnch49K7GcezvSd0piCy3I2P/3CyfVuuG+7vNp1MrWVvSWQtGp
+         1iQpgk55sQ+aqxqVsn4orfjYbVJTWL+D3C/DaBLbPuR/jsNphY9/Ze3aX4hXC1cjqVqm
+         lf6WkM2XyHZljRaodkOuhDE3C/4O1YzuHWxuy9xHr1U+WccNIXKa+PnJ0qKgMh4zK3lh
+         tqy/gB2LIobNwW24+4Eeohl56VLMbO8Ab4mjhkadqcGzF+JdJe01CrawDuvqkKWL20z4
+         6kPod8WlJo8+G0v/MD6WwzbTrnHI9rVQ1zU216slptsoOOo57AkJe7W9KLaZXJNpqrY2
+         PfiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=uO/2ZMnEMwcQ8yDda+vL+O0Ws3tkGw8vfRGmUcSop7I=;
-        b=E5/h8TCH69qouhiDiZcKKs8AroA+nUdB5avkBRIJiv54CIB5A7C5RxYkfpUGrgA0iw
-         aoZwJLBwgEKLUGInnn6G0pd4MpXxSpzwt4HsR79JGHQYip+d0EI56WAnU60x5nMr+cBP
-         9pCvMgcIvTUEJaBc4upw5PQsTLTn9L1meRh9d3kCB/9XhDJCcewdaWp4UAiqNitQTkMM
-         ijI1bxHWxyF+mlVsp9DCUskNvQTWJf/k7LHQqIFj2CVQKlT940+yaGIUxbGRuW+6Cy5I
-         rrF2Ye2i7VbAPRGv/d7f0N2Rix8j/g2f6mMFssqlh8aZ9PRjHenjl/WP80INqClKKULE
-         /xoA==
-X-Gm-Message-State: ANhLgQ29/3tpbSHmg/3/3T5Cbw2xH3qk4jJmV+y5QcfZ8ZipOWIquO/y
-        MKGgaazbNry4IKZ+cLby7BEZY1BE
-X-Google-Smtp-Source: ADFU+vumwjdPP2UdFFZZqM4S2OJo+nTKO/D3UOA7aeXbuqzOS/8qrsDo67uICMUrseUfqMsqPx76Yw==
-X-Received: by 2002:a17:90a:362a:: with SMTP id s39mr26398808pjb.28.1584975892054;
-        Mon, 23 Mar 2020 08:04:52 -0700 (PDT)
-Received: from localhost ([2402:800:6375:576b:56ff:d97c:a505:3e0c])
-        by smtp.gmail.com with ESMTPSA id z26sm11642187pgc.5.2020.03.23.08.04.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Mar 2020 08:04:51 -0700 (PDT)
-Date:   Mon, 23 Mar 2020 22:04:49 +0700
-From:   Danh Doan <congdanhqx@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 7/8] t4124: fix test for non-compliant diff(1)
-Message-ID: <20200323150449.GC11801@danh.dev>
-References: <cover.1584838148.git.congdanhqx@gmail.com>
- <10f39c3d30d13e9141f081f985a0620954cc7493.1584838148.git.congdanhqx@gmail.com>
- <nycvar.QRO.7.76.6.2003231456200.46@tvgsbejvaqbjf.bet>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=E+Lc5KJqy36lxq23k7buMr77soLcS5Zz4BFWbJIKRzc=;
+        b=YdLimxsNlsO4xqhxgJ1EzxftjlCQ/OrDu5lpCJCTJmwdSsXwQjrhHlo75tKcNWhr0n
+         ixnK1KaulDVKkBFjLgQ5U0nBINCMoYfQc0wTXQOSuU+AWV0asrzjfsFSvjI+Yh9LJhAh
+         hBA15plhm0GdIee2Ug5rvwN586vXTBD1ds3ZDlMKi3VvDATE9tc+81+dwvAOYY+F+3Xi
+         xRQMj9Y3NbBiaebTQ/0hsCIH/pybnCaBq63sz/uWA2bPyQpVqv1Rt3m84+pHl+7CRh2s
+         1bod4vh4I5g0i5GLo8MUQj/hFgTVCWITk/WYKG52b7t3/utrm/hO4nhl1jAuVOsoiFY2
+         LRPQ==
+X-Gm-Message-State: ANhLgQ3t2hNvXbBPWjSlRAcpRyORkpAGnfFwqvTsFEK5/fCdsgLJmO02
+        jpE3HMoeafChTOE1HTHlCK3qq+LyEw3RS8UAv8MTDg==
+X-Google-Smtp-Source: ADFU+vvRbFbqI/mfvYHdNGcMLgHbmTmEj5C0dHqkdeyy5bYmIXgnD7XK9k7dEL46AUniEedYBzfaxHZoBQeT88GE0Do=
+X-Received: by 2002:a02:ce43:: with SMTP id y3mr6984396jar.34.1584976190286;
+ Mon, 23 Mar 2020 08:09:50 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <nycvar.QRO.7.76.6.2003231456200.46@tvgsbejvaqbjf.bet>
+References: <CAAjm7Ga5JOJ2w=01o1-x-80HMGVaYQQy8SBBb-zJ6MOQAe4SxQ@mail.gmail.com>
+ <20200323011117.GC6499@camp.crustytoothpaste.net>
+In-Reply-To: <20200323011117.GC6499@camp.crustytoothpaste.net>
+From:   Benjamin Shropshire <benjamin.shropshire@economicmodeling.com>
+Date:   Mon, 23 Mar 2020 08:09:39 -0700
+Message-ID: <CAAjm7GZXNXcGMp7p2f+UoDUWMPY+Z4aFHv35tynteVSKDf2Fqw@mail.gmail.com>
+Subject: Re: Relative url values in .gitmodules confusingly sensitive to clone
+ via ssh vs https.
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Benjamin Shropshire <benjamin.shropshire@economicmodeling.com>,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2020-03-23 14:58:13+0100, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> Hi,
-> 
-> On Sun, 22 Mar 2020, Đoàn Trần Công Danh wrote:
-> 
-> > POSIX's diff(1) requires output in normal diff format.
-> > However, busybox's diff's output is written in unified format.
-> >
-> > POSIX requires no option for normal-diff format.
-> >
-> > A hint in test-lib-functions::test_cmp said `diff -u` isn't available
-> > everywhere.
-> >
-> > Workaround this problem by assuming `diff(1)` output is unified
-> > if we couldn't make anything from normal-diff format.
-> >
-> > Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
-> > ---
-> >  t/t4124-apply-ws-rule.sh | 6 ++++++
-> >  1 file changed, 6 insertions(+)
-> >
-> > diff --git a/t/t4124-apply-ws-rule.sh b/t/t4124-apply-ws-rule.sh
-> > index 971a5a7512..075b1912be 100755
-> > --- a/t/t4124-apply-ws-rule.sh
-> > +++ b/t/t4124-apply-ws-rule.sh
-> > @@ -52,6 +52,12 @@ test_fix () {
-> >
-> >  	# find touched lines
-> >  	$DIFF file target | sed -n -e "s/^> //p" >fixed
-> > +	# busybox's diff(1) output unified format
-> > +	if ! test -s fixed; then
-> > +		$DIFF file target |
-> > +		grep -v '^+++ target' |
-> > +		sed -e "/^+/s/+//" >fixed
-> > +	fi
-> 
-> In my patches (which are too unpolished to contribute, I have not found
-> time to clean them up in several years), I do this differently:
-> 
-> -- snip --
-> commit cb2f3a28dbf40b92d3d9ca0f3177cd5afb7c4196
-> Author: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> Date:   Wed Jul 5 22:21:57 2017 +0200
-> 
->     t4124: avoid using "normal" diff mode
-> 
->     Everybody and their dogs, cats and other pets settled on using unified
->     diffs. It is a really quaint holdover from a long-gone era that GNU diff
->     outputs "normal" diff by default.
-> 
->     Yet, t4124 relied on that mode.
-> 
->     This mode is so out of fashion in the meantime, though, that e.g.
->     BusyBox' diff decided not even to bother to support it. It only supports
->     unified diffs.
-> 
->     So let's just switch away from "normal" diffs and use unified diffs, as
->     we really are only interested in the `+` lines.
-> 
->     Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> 
-> diff --git a/t/t4124-apply-ws-rule.sh b/t/t4124-apply-ws-rule.sh
-> index 971a5a7512ac..133557b99333 100755
-> --- a/t/t4124-apply-ws-rule.sh
-> +++ b/t/t4124-apply-ws-rule.sh
-> @@ -51,7 +51,7 @@ test_fix () {
->         apply_patch --whitespace=fix || return 1
-> 
->         # find touched lines
-> -       $DIFF file target | sed -n -e "s/^> //p" >fixed
-> +       $DIFF -u file target | sed -n -e "3,\$s/^+//p" >fixed
-> 
->         # the changed lines are all expected to change
->         fixed_cnt=$(wc -l <fixed)
-> -- snap --
-> 
-> Food for thought?
+$ git --version
+git version 2.20.1
 
-A comment in test-lib-functions::test_cmp mentions that
-there _is_ a diff out there that doesn't understand "-u".
-I don't know which one is it.
-
-If we choose to use "diff -u" here, we've made a certain assumption,
-should we flip the switch in test_cmp, too?
-
--- 
-Danh
+On Sun, Mar 22, 2020 at 6:11 PM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+>
+> On 2020-03-17 at 18:34:09, Benjamin Shropshire wrote:
+> > From my perspective, this is a bug.
+> >
+> > If I clone a repo twice like this:
+> >
+> > git clone https://github.com/user/repo.git ./https
+> > git clone git@github.com:user/repo.git ./ssh
+> >
+> > And if it contains a .gitmodules like this:
+> >
+> > [submodule "x"]
+> >     path = xxx
+> >     url = ../../different-user/something.git
+> >
+> > When I `git submodule update --init --recursive` in each, only the
+> > HTTPS version works. the SSH version confusingly seems to try to find
+> > something at ~/different-user/something.git or some other path in the
+> > local file system.
+>
+> What version of Git are you using?  This works fine for me on a recent
+> next.  In addition, I see we have tests for this in t0060, and adding an
+> additional case for this appears to pass.
+> --
+> brian m. carlson: Houston, Texas, US
+> OpenPGP: https://keybase.io/bk2204
