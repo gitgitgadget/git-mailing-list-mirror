@@ -2,111 +2,108 @@ Return-Path: <SRS0=3T2S=5I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E8EEC4332B
-	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 23:11:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 727A0C4332B
+	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 23:13:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id E0B0120409
-	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 23:11:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3F59C20409
+	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 23:13:59 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="rLYOMROA"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="C9gQOQHO"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726204AbgCWXLC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Mar 2020 19:11:02 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63786 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725897AbgCWXLB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Mar 2020 19:11:01 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 89252484FD;
-        Mon, 23 Mar 2020 19:11:00 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=TUDNdwhInc9KE+nx56rR8onHWnQ=; b=rLYOMR
-        OApEoKYkLpwso/QPbnFGeYCcDmkCwFPiIxs9cjoB5QAjMRzAJwCGx/wC7r6JweIC
-        cj/S8wfQ7ZQfBE8i0j+cTB8e1Q2V+HPXjNH3/wfh1Yv014VZCCnINcwH7kRZ6QzI
-        w35gUkl872m2UWjTD0O4jtu5qGkyWm0GyXJsE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=EU/F81CAvGmeIpS7H4LW3HwXkyaw0kEs
-        O+v394YMh4i4/8udwOSi0kkcn1WIvxg+U4HX4nj/a7J8eMHIDPGoeWGJ/TzWY+tI
-        MzEpNykenSgQcwlqdhb3DgbAxIcG/VAGY+Hu4y5rBnoc126VbyVJqPNFmXzzYZQa
-        x1S/nn7mx2w=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6DD02484FC;
-        Mon, 23 Mar 2020 19:11:00 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1726956AbgCWXN6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Mar 2020 19:13:58 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:60442 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725990AbgCWXN5 (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 23 Mar 2020 19:13:57 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D39CB484FA;
-        Mon, 23 Mar 2020 19:10:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v10 5/5] bugreport: add compiler info
-References: <20200323214340.182724-1-emilyshaffer@google.com>
-        <20200323214340.182724-6-emilyshaffer@google.com>
-Date:   Mon, 23 Mar 2020 16:10:59 -0700
-In-Reply-To: <20200323214340.182724-6-emilyshaffer@google.com> (Emily
-        Shaffer's message of "Mon, 23 Mar 2020 14:43:40 -0700")
-Message-ID: <xmqqlfnq3bwc.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id E6F216077B;
+        Mon, 23 Mar 2020 23:13:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1585005237;
+        bh=MOn3p717lfEa86KxrwTTwSXTboEVwP8IIsHD68tWZ88=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=C9gQOQHOBuQ7m3ygUzdPOPkSIhA487lpwAmkHscNuvUc2UUQ0ZSaG5r4paE8ph7QK
+         pjV8XZOLdNeylXc0K4RPrz1BAf7mSp/uoEvnT9rNkPejaNskq/sixbOZE21at+s+Oo
+         qZiRlwkYGnC8bmhdxronHauyw+Us9hyu2pMyGBeLl7/nR3M+6G/wKVozZiuAbv7mY6
+         yzxAJBKKk2PwgYyrCOzGjeoovG7j1/u/LIGVqWylRY1z4Srb3e+UVcs0d8CiMDFjPB
+         +c3wyVzQHuudvtFIN44nWexRR4iJ5WNgenejL+qlCXq5WxgG/Efggi6gVI5GEaudMg
+         d+a/+2QNEtoMDiU+pmJPBym/LJ5V0FIqFfXBTZ46PajKUzhaDaX+Er068m3UfcLjFL
+         9PxiUulL8ljYFAuEg9N+1P9IVZVX8xweIVDyzYFtsIzIAEq2UwG+luI65LGj5R8Xck
+         1mSUY7XE8bgEc3QlyQhxqvOiwBQ/NqYTBY2J62OFV/yK65h3v6D
+Date:   Mon, 23 Mar 2020 23:13:51 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Jonathan Smalls <jon@smalls.rocks>
+Cc:     git@vger.kernel.org,
+        Torey Adler - NOAA Federal <torey.adler@noaa.gov>
+Subject: Re: git > 2.10.1 fails to update index on macOS 10.14.5
+Message-ID: <20200323231351.GD6499@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jonathan Smalls <jon@smalls.rocks>, git@vger.kernel.org,
+        Torey Adler - NOAA Federal <torey.adler@noaa.gov>
+References: <7b8b23f8-e12a-bde9-4b9e-ca8c908d1203@smalls.rocks>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8F1E79CE-6D5B-11EA-996D-C28CBED8090B-77302942!pb-smtp1.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="a2FkP9tdjPU2nyhF"
+Content-Disposition: inline
+In-Reply-To: <7b8b23f8-e12a-bde9-4b9e-ca8c908d1203@smalls.rocks>
+X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
+ 5.4.0-4-amd64)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emily Shaffer <emilyshaffer@google.com> writes:
 
-> +#ifdef _MSC_VER
-> +	strbuf_addf(info, "MSVC version: %s\n", _MSC_FULL_VER);
-> +#endif
+--a2FkP9tdjPU2nyhF
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-This part is a bit different from what Dscho suggested to be
-squashed (and I have had on top of v9 series).
+On 2020-03-23 at 14:37:30, Jonathan Smalls wrote:
+> After upgrading my work station, I found in git-2.22 that git would not
+> recognize any file changes until I ran  `git reset --hard`. I thought that
+> it was a problem with my own settings.
+> 	However I upgraded to git-2.25, and the problem actually got worse. In 2=
+=2E25
+> the index still failed to update, but `git reset --hard` no longer had any
+> effect.
 
-Below is a diff between (v9 + SQUASH???) and v10.  I think the
-change in the strftime format is a strict improvement.
+I have a bunch of colleagues who use the latest Git on macOS, so I
+expect it does work most of the time.  Let's see if we can figure out
+what's going on here.
 
-Thanks.
+What exactly do you mean by "doesn't recognize any file changes"?  Can
+you tell us what commands you ran and what you expected to see, and what
+you actually saw?  That information would be helpful for us to track
+down what might be happening.
 
- bugreport.c       | 2 +-
- compat/compiler.h | 3 +--
- 2 files changed, 2 insertions(+), 3 deletions(-)
+Also, are you using any specific workflow or tool that might be related?
+Are you using an editor integration or GUI, and if so, does this happen
+without that editor integration or GUI as well?
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-diff --git a/bugreport.c b/bugreport.c
-index 5073c901cd..089b939a87 100644
---- a/bugreport.c
-+++ b/bugreport.c
-@@ -73,7 +73,7 @@ int cmd_main(int argc, const char **argv)
- 	int report = -1;
- 	time_t now = time(NULL);
- 	char *option_output = NULL;
--	char *option_suffix = "%F-%H%M";
-+	char *option_suffix = "%Y-%m-%d-%H%M";
- 	int nongit_ok = 0;
- 	const char *prefix = NULL;
- 	const char *user_relative_path = NULL;
-diff --git a/compat/compiler.h b/compat/compiler.h
-index ac90fa051d..ce6a7f6de9 100644
---- a/compat/compiler.h
-+++ b/compat/compiler.h
-@@ -16,8 +16,7 @@ static inline void get_compiler_info(struct strbuf *info)
- #endif
- 
- #ifdef _MSC_VER
--	strbuf_addf(info, "MSVC version: %02d.%02d.%05d\n",
--		    _MSC_VER / 100, _MSC_VER % 100, _MSC_FULL_VER % 100000);
-+	strbuf_addf(info, "MSVC version: %s\n", _MSC_FULL_VER);
- #endif
- 
- 	if (len == info->len)
+--a2FkP9tdjPU2nyhF
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.19 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXnlCrwAKCRB8DEliiIei
+gZ4qAP47GXpKdj+oFY0c1qVnmGz9D3HyJKuma+VnkQtiiDhULgEA45+TwFRevUrU
+4+6ckVrFWnwMz4qbyPLE2TuF3Ui/Uww=
+=JIKs
+-----END PGP SIGNATURE-----
+
+--a2FkP9tdjPU2nyhF--
