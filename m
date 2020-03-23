@@ -2,83 +2,102 @@ Return-Path: <SRS0=3T2S=5I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B9041C54FCE
-	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 19:25:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D9568C4332E
+	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 19:31:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 9162320753
-	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 19:25:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B2E582073E
+	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 19:31:15 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="MFgmWmLk"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VgeXxI6L"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727910AbgCWTZ2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Mar 2020 15:25:28 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:56668 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727675AbgCWTZ2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Mar 2020 15:25:28 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 02252B8534;
-        Mon, 23 Mar 2020 15:25:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=l4QlB+igqoZSIOISjYUkOnlirII=; b=MFgmWm
-        Lk2M8rIU0chqyeo6sPq+NP12m5f/WUI2tgTZsktb2Ty4beoQZXdY0foNkdFNszMd
-        u15H9w07qKazmBl6SX7gPJ90XPnInl5tLLFeHzealAPtjioaidN63XUd5It6QjnX
-        ASUDgxr/nK6H7OHKTyeY1BUQqeqaeOTKAo8o4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=fSkqtoK0sO66ivtDDiMVPa9pelm0XUby
-        nm7RbDbZvnkEs5G5HjVBvSp1oTI1sLnz7pE/ENOuCV1HpJ5Vsqo0kpNzsfd5HsS7
-        qY3rD+s/pR1ZsP904pqaVBoVHu2Ymx9SKFsnAeTCGX5cNXNaYXTkFndd4m4ZFB3q
-        nAGttBzblbc=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id EBFA7B8533;
-        Mon, 23 Mar 2020 15:25:25 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 381FCB8532;
-        Mon, 23 Mar 2020 15:25:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: Re: What's cooking in git.git (Mar 2020, #07; Sun, 22)
-References: <xmqqh7yf7u6q.fsf@gitster.c.googlers.com>
-        <20200323191602.GC93624@syl.local>
-Date:   Mon, 23 Mar 2020 12:25:21 -0700
-In-Reply-To: <20200323191602.GC93624@syl.local> (Taylor Blau's message of
-        "Mon, 23 Mar 2020 13:16:02 -0600")
-Message-ID: <xmqq4kue6fha.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1727902AbgCWTbO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Mar 2020 15:31:14 -0400
+Received: from mail-ed1-f49.google.com ([209.85.208.49]:40380 "EHLO
+        mail-ed1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727895AbgCWTbO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Mar 2020 15:31:14 -0400
+Received: by mail-ed1-f49.google.com with SMTP id w26so11350614edu.7
+        for <git@vger.kernel.org>; Mon, 23 Mar 2020 12:31:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=+MytpzR0Ptco6lhW5ypgQc62YhMvyT9RlFOpOBvwqW0=;
+        b=VgeXxI6LzQb7DX0/uKd70cKMowww/39So2v0LBiAN2wvQ2thuJEWE8GVmpyPGOW9Up
+         iq2/RsX9NfIAEeAWP5wvpfEpVodDS+E8WFbP6dnSaNsX9PH21EVXSyKU0EYin4HaNoHp
+         UEtRcfdslQAxqZIgWN1FVZM5d7gBfvQFQw1GcOhK4eDIXFZqKom3OjIYmKU/MIqtMMc3
+         Gr+7Ne4SFENhZJHp1pY2SyR5uENX6dLMmElGM7NwcYXU+X3jdjeByKLhCBooywkbcmyI
+         TbQtTHlYEEE70YhMi84vJ3cbAJxF73jDW44rJqYWK/NZSfXTpeWkQvEpBaDOqzLBx5tg
+         i6eg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=+MytpzR0Ptco6lhW5ypgQc62YhMvyT9RlFOpOBvwqW0=;
+        b=V7TSHm8W4/xk2E8zIA7lab/Z44NJR/gqtHrjqClmc2wijHl7EfFPruUzvE9+Xc5WVB
+         to+xeS1IGVa1ojHAOMht0DibQKjJHRZvyJBEIeUjsg7O/QsVD00x1IJyQ2N7H9Ay3uai
+         ziyijKJsHYkvg2Z5HHRxGCgpg/p6EP9y2qfkRbawYm66F+nlLcPpt6FCbK2tcooiVj6X
+         ToLe+mLZsnMAoYCrSyzkoppwE70ekueExdycgAoCSO2NIz8ckmT6BUoBNRgLDgOLWVg2
+         1QYJl3wcWbBSSoRe9z8UhDQyZgAcyKsgb0iChVmT3wpCTiLzi4rett4PEB/mWuKCOUu5
+         ICIA==
+X-Gm-Message-State: ANhLgQ1VJXElH8CzHCYZUPZSWK13iL3OgDqtrFw9gcWqsbIXIBQcLScp
+        xx4KB+PZQHsW7NUCq0Px1BIKcLesnYhmxDHDmkk=
+X-Google-Smtp-Source: ADFU+vu+fVtqNkcJchOr4OTei3aPL/1tt61CuPl2IjwN4KAXAjHDSqyTRWMyWBfZMtUFz2WBOojOujTb0aDoqAv6yiM=
+X-Received: by 2002:aa7:d4d1:: with SMTP id t17mr3432346edr.362.1584991872240;
+ Mon, 23 Mar 2020 12:31:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 0AA7A554-6D3C-11EA-BCCC-B0405B776F7B-77302942!pb-smtp20.pobox.com
+References: <CAGNOEmugZDWpvAHsOzmm_Fqo_Vj5GcC--GfTg3JHPm701HjBXA@mail.gmail.com>
+ <CAP8UFD2bgzvc2K2Sj4HSeXo16kB8D8se=+=Y7gp6FN+4Y3C1BQ@mail.gmail.com>
+ <47a1db25-914a-2e59-c0a6-6d0ff77bc2aa@gmail.com> <d676674d-7ab5-b476-8dbb-2b3323db2c89@gmail.com>
+In-Reply-To: <d676674d-7ab5-b476-8dbb-2b3323db2c89@gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Mon, 23 Mar 2020 20:31:01 +0100
+Message-ID: <CAP8UFD3fAQyiXsO0w_uG6Oe8EfvkL6=ijUqHp4j8GD8A50Jo+g@mail.gmail.com>
+Subject: Re: [GSoC] Query regarding Microproject
+To:     Shanthanu <shanthanu.s.rai9@gmail.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
+On Sat, Mar 21, 2020 at 10:49 AM Shanthanu <shanthanu.s.rai9@gmail.com> wrote:
+>
+> I found the solution to my issue. The main error message I had got was
+>
+> > Expected FS format between '1' and '6'; found format '7' at
+> > {hidden}/git/perl/build/lib/Git/SVN.pm line 310.
+> After some online searches, I found out that file system format 7
+> was 'understood' by subversion 1.9 (Filesystem formats section in
+> https://svn.apache.org/repos/asf/subversion/trunk/subversion/libsvn_fs_fs/structure).
+> That's when I realized I was using version 1.9 of subversion.
+>
+> When I downgraded to subversion 1.8 (which understands file format 6),
+> all tests passed.
 
-> I noticed that this has been cooking in 'next' for a few weeks now. Is
-> there anything you're looking for specifically before graduating this to
-> master?
+Great!
 
-Yeah, I saw some mention about "--input=none does not mean there is
-no input" confusion in a separate discussion in the past few days
-[*1*], which may make us reconsider the proposed UI by this series,
-and it is a good time to do so when we rewind/rebuild 'next' after
-a release (i.e. "now").
+> So shouldn't the test file itself have mentioned (say as a comment at
+> the top
+> or in a separate README) that it was expecting subversion 1.8 or lesser on
+> the system? I am using Ubuntu 18.04 and by default the package manager
+> installs subversion 1.9.
 
+It would be better if the test could be fixed to work with subversion
+1.9. Otherwise the test could perhaps check the subversion version and
+run only if subversion is version 1.8 or lesser.
 
-[Reference]
+> This issue might also be present in other git-svn test files. (I haven't
+> checked
+> though, not sure how to run just git-svn tests)
 
-*1* https://lore.kernel.org/git/20200322110424.GC2224@szeder.dev/
+Maybe with something like:
+
+$ cd t
+$ prove --jobs 8 t91*-svn*.sh
