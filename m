@@ -8,67 +8,68 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 286BCC4332B
-	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 13:58:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B4D6C4332B
+	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 14:11:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id EA3232072D
-	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 13:58:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F0F512076E
+	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 14:11:53 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="V2Bgs3bc"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="QVZNMAyQ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728571AbgCWN6P (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Mar 2020 09:58:15 -0400
-Received: from mout.gmx.net ([212.227.15.18]:42437 "EHLO mout.gmx.net"
+        id S1728550AbgCWOLw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Mar 2020 10:11:52 -0400
+Received: from mout.gmx.net ([212.227.15.19]:56465 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728548AbgCWN6O (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Mar 2020 09:58:14 -0400
+        id S1728378AbgCWOLw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Mar 2020 10:11:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1584971892;
-        bh=yM7FRI+egCCkAlN+ykcTBYP6DKt6blwr0TaO1FnlPnk=;
+        s=badeba3b8450; t=1584972710;
+        bh=VUXYJd2cQQlipEtYwI0j25+tE2LYo+ON0jGNJTZLt44=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=V2Bgs3bcW/pTjq6MSrv42AmH6IizYbzdfQRkQhxqIsCJm7v+Pqc2CPpoixDJZy4Hp
-         YyKLBKhG9pup5xT3okmhiKDJlLm8GQyFIhw2SMGAylscToVM4JSGPXRprFw8HxDAji
-         Kzmdrt4LfUcvSV1FqmUdIWgjTaR/6nuoD5zZqPec=
+        b=QVZNMAyQRc6Q9HdCPIf2YbpW5PR4A7lfHIW+6EYs+iyG2fGhZDICOUC3jgyP14G5N
+         sQXTjnU5oQMrXWc1pcdrD+MeEkmnZoPgQhVYz23ezgVbkbgDAO0MKsWxLWu/6QJgFD
+         Y/UAnTnXua+wGjHNrz9PEEy3lwxVnoVCVRYl4Ih0=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from MININT-QA14EDB.fritz.box ([89.1.215.97]) by mail.gmx.com
- (mrgmx004 [212.227.17.190]) with ESMTPSA (Nemesis) id
- 1MdefD-1jpiTd34AT-00Zk4z; Mon, 23 Mar 2020 14:58:12 +0100
-Date:   Mon, 23 Mar 2020 14:58:13 +0100 (CET)
+ (mrgmx005 [212.227.17.190]) with ESMTPSA (Nemesis) id
+ 1MfpOd-1jj8v90kK9-00gGJJ; Mon, 23 Mar 2020 15:11:50 +0100
+Date:   Mon, 23 Mar 2020 15:11:50 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     =?UTF-8?Q?=C4=90o=C3=A0n_Tr=E1=BA=A7n_C=C3=B4ng_Danh?= 
         <congdanhqx@gmail.com>
 cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 7/8] t4124: fix test for non-compliant diff(1)
-In-Reply-To: <10f39c3d30d13e9141f081f985a0620954cc7493.1584838148.git.congdanhqx@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2003231456200.46@tvgsbejvaqbjf.bet>
-References: <cover.1584838148.git.congdanhqx@gmail.com> <10f39c3d30d13e9141f081f985a0620954cc7493.1584838148.git.congdanhqx@gmail.com>
+Subject: Re: [PATCH v2 6/8] t7063: drop non-POSIX argument "-ls" from
+ find(1)
+In-Reply-To: <59e3f73784b2a3bd9ccec87412e6178411c3708e.1584838148.git.congdanhqx@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2003231509150.46@tvgsbejvaqbjf.bet>
+References: <cover.1584838148.git.congdanhqx@gmail.com> <59e3f73784b2a3bd9ccec87412e6178411c3708e.1584838148.git.congdanhqx@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-290645346-1584971893=:46"
-X-Provags-ID: V03:K1:5PkHeT+s+MAqTgNBFE2APZS+WhfRSbVFwj3w5w1R5V0/9iau8h3
- jljoZEpjO+elmGqVDXJOkdK8QA22bbElDUJSX8gS/NKA4YGgQKBuGkRIyjD1HEpfILy5dFU
- Tnjg/HavQwvKQbigx2u6VG5pdNUPRfyXUxVVKf8aOkm0YquFHEOBsO5XijCszA4ay/2652P
- nyPLNKrcfPtvS0OXPIvWQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:fhmMatk+YYY=:QKdWejQV4ec/EBfB9R4/5x
- r/CSNzuhTEvkK6VVyAn5w8XrRQmjB4p+VqCSzcCI+KLilRK+9yYLI2w5u7SJv98ugIdwB3Kvb
- +UiM75SA5rPlAZMr1Xtuk4jkJ28qnXoynZ7vMtZ4rgvgUEc0o/nykmA3250krjm7Kge9ivDAL
- yKDY7ujxCFYFRqx77s3O1vUNA95EibvjcEX4Knrty5PV2GUOgz6BvKzGrqXUD7M2T6HJU2hVM
- 24idcO7MMkwLRGfsNPCxjNG3rO9I6c8LPt9HvCLZXBCcl0Ee0WLwUd87V/AcaHm4eS04fC7W6
- xua/waboXeS1zfSWp2VVAl8pG9RmUolGyZZeDMJD6FOAY93UrK20VNr9GiW3uFP+cr5kkj3hk
- ZwkR4G26/q59a77opnJ9NLO3aYEbmT7IzppRhCbRnRa524nU4Z39jqt1MtCnvR9OL1c7n2qmI
- Qkv3oE9TkteICW9yIY/wXuiIIg/XEF5xEB5DWSeKNEBn6hRbaTWljFT/YyOvRFwZT8XCO8phF
- dD9bpoKr5Iyvnf1H7DukLpTnSp4S3/9EozxVBrJVrL3neZE+rePZe2qGLBt+AX3YjjdvNvGqs
- 1wrJVxo1IOd+nBZO3Sgo07E9KXDmKfLBoilfJVPdUUoEnTa74D4O4KvE32gBJ7FtN7XuWuAJR
- s738m2CgL7qaHHf/zQCu4I3aJVEK2bt00vURZ+/5jEbVZZCS7f57wATtIXf/IfHRqOyCfidHr
- oKqGzX+l7f7nbY9BJArMD6nfyI9grwe9fWeKhzIKiS4JJWq2eB6EvaytCQevNC/IrlDivplra
- 05YWGxYmosWvAGcY0CJciw7VZfykxr9urYsnIeuug1KdqCm9UAFgC/N2WXDp/OqmjbOK1PvWh
- xuyBCR6noKL8dpeB8BvGjorQxrV62//+9lzPcGgn+q+QaOOEOI2/VZQCmCoGG2aAySja+qreE
- 953l6H6q9PF0HpnVSR20WEpUMrnBBSecR87ugM6pNVojl/5dQqfvRwbREJjzgn+0o38sVn1wo
- B5Vpp660tSQUIL8PlYQP8J5E2NgE2MffXfiDc3n7L8dEdraHcc1uKMGexZC+dSBvQV+FZJXcf
- 7AsosBhZR71kPofBy/5zv8O7ArfBmGiWHnsL3UbQBPCeNeMcmXwFyYj3sor91lZaWbPDZqPes
- Fwc3w8IvfarfeNMiEqXFDVRwYrD7UfZU5dnwQzuU1/1iU1El5asO8RKTLoM5XePESoKkcAfe5
- NxEl3J9s0yLRVgGX/
+Content-Type: multipart/mixed; boundary="8323328-1152249423-1584972711=:46"
+X-Provags-ID: V03:K1:Zsj+wrlr284BCooOsgN8CqMSpfAn7Wb3WtynhlaL/3U4VfvYyjH
+ IESBlBc7Iets2K7feEkq7EzWDZEmuHXHY/rRtZ42MsWVgQ4KeJ7HTicR9M/mysZuPguSNqz
+ epB5+G407wiD/+KauoIXD+Lg1yHniYMoPD2dT56yPqiaFEjI/5AOR6ALVwzWVkh28/Jl4iR
+ s/Fg37/bvVC2lQWG+NpkQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:M1Xw8rv+454=:+pSqgyCe+OzDrueCLU4Vw/
+ vJkZ3T0rc32OQwz/vYdzX11U26WvvFEzS+XEtsWnCIZuhruzKVMuZ7JGBdNU9T1DVgu5cWakV
+ 79v/+5ngy2bxK+6duaza3MCnv7CWEHhm5Z8GxNpIB/RjKBAlb4HDmVUYYSCUm8QztQAJwvpJE
+ eXsdaUo/i5QuVa78Z2A5hr7l4LSqqrCVn5Lg1SuvljPS/4MDc7G9X8J/yV9DUm4RLX8q/ZqP5
+ O7xoXwyXxb18bevi9tj6RIKCYx1BDdxgUxRM8v6Dyu1HvogZTgLuySIhA+ELsUVbZfXe5bw97
+ N48QNmfI/fK9mZF2cvFyzIrZrRuse9hLrngLYTBSosEPuRYQ4nmHbTmfkJCGJTJQpN/KgZDMQ
+ CjmxPKy7lYMSWdDy+yRiCoc+V5OKzBg0vp+KlqWXMGVuQ7/lGbOsSfv4AfZoNiGhQ/rqe60Wp
+ V0v6txACk/7qgCTEV4+RUgZaG4fCJH68APkCTr/C0xAzntF/QjDZdRaJpWHpsSBglMCVHQkAQ
+ HjMB1pemPUdTJOwpSmrvK7seugF4z2gKMIHqLC0xgj+OF7i76IkPasbYXwTVoeGvQ/JGcS2Ds
+ r6vLEwOmuUmstW484wsfOGwZom/pKVGFVJE+J+NH6NDSc0w+3P3j1oLA00qAlnHFQDZHmTCSP
+ H7Lj4XCc1s6QnLZONl4VbqnZTk8E8Z0w6NeCSvtUxAjE12y+48QFMxNdqNLWgWJQtkuMr5tke
+ m1ks7LAK6uecKwZQEtG4Weya9h3hnVCctoht1l2Gssw3SGqmtSw5gsYGEtKEqSpbgpd4oymc6
+ 9wwt4fFR4kQOHJqH+Dhoid+u1bBjRzkOLUm9DQul/waFGBNMuTAjImnNfJk2w8MwoGzEDegHf
+ l4YfeS3iOrxMwUNLgDN60L4fkDf1AVfh08EhsnmYVVYSvGXW9EF8AAhLIenkxIg+tXyKfEfLJ
+ cppjJrOjRm2RMXUa16tlnPMyR4w7cYFbJjUdQ34x28SI5aY/xHgEhGlzlrmJVqIu3pE8cZxVI
+ ztecD77secsHu0YaYFRNeSQE7aeYSsBA9KFQeLW8zitpiUfHo6MtW/u2CtvtUaUENdLq2FNtM
+ zGj03a9214HVOLTvcA04UeTBWBXpRuyA4cMyF40bm7k55RmPsFZsp32FszBz/ODNb2/OaQOxj
+ rbYTc2BmijxnDdGhzCUO2xojCboxesDwOEDM8CN9CPgIoZAeOWDTNnuFNtsUecok4dFAGIgEn
+ X++5+loe4bQVNcMHd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -77,7 +78,7 @@ X-Mailing-List: git@vger.kernel.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-290645346-1584971893=:46
+--8323328-1152249423-1584972711=:46
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
@@ -85,93 +86,87 @@ Hi,
 
 On Sun, 22 Mar 2020, =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh wrote:
 
-> POSIX's diff(1) requires output in normal diff format.
-> However, busybox's diff's output is written in unified format.
+> Since commit 6b7728db81, (t7063: work around FreeBSD's lazy mtime
+> update feature, 2016-08-03), we started to use ls as a trick to update
+> directory's mtime.
 >
-> POSIX requires no option for normal-diff format.
+> However, `-ls` flag isn't required by POSIX's find(1), and
+> busybox(1) doesn't implement it.
 >
-> A hint in test-lib-functions::test_cmp said `diff -u` isn't available
-> everywhere.
->
-> Workaround this problem by assuming `diff(1)` output is unified
-> if we couldn't make anything from normal-diff format.
+> >From the original conversation, it seems like find(1) with "-type d"
+> could trigger enough "lstat(2)" to ask FreeBSD update mtime.
+
+This rationale  makes me uneasy: why did Duy add _both_ `-type d` *and*
+`-ls` if the former would have been enough?
+
+> Use only filter "-type d" for now.
 >
 > Signed-off-by: =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh <congdanhqx@gm=
 ail.com>
 > ---
->  t/t4124-apply-ws-rule.sh | 6 ++++++
->  1 file changed, 6 insertions(+)
+>  t/t7063-status-untracked-cache.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> diff --git a/t/t4124-apply-ws-rule.sh b/t/t4124-apply-ws-rule.sh
-> index 971a5a7512..075b1912be 100755
-> --- a/t/t4124-apply-ws-rule.sh
-> +++ b/t/t4124-apply-ws-rule.sh
-> @@ -52,6 +52,12 @@ test_fix () {
+> diff --git a/t/t7063-status-untracked-cache.sh b/t/t7063-status-untracke=
+d-cache.sh
+> index 190ae149cf..6791c6b95a 100755
+> --- a/t/t7063-status-untracked-cache.sh
+> +++ b/t/t7063-status-untracked-cache.sh
+> @@ -18,7 +18,7 @@ GIT_FORCE_UNTRACKED_CACHE=3Dtrue
+>  export GIT_FORCE_UNTRACKED_CACHE
 >
->  	# find touched lines
->  	$DIFF file target | sed -n -e "s/^> //p" >fixed
-> +	# busybox's diff(1) output unified format
-> +	if ! test -s fixed; then
-> +		$DIFF file target |
-> +		grep -v '^+++ target' |
-> +		sed -e "/^+/s/+//" >fixed
-> +	fi
+>  sync_mtime () {
+> -	find . -type d -ls >/dev/null
+> +	find . -type d >/dev/null
 
-In my patches (which are too unpolished to contribute, I have not found
-time to clean them up in several years), I do this differently:
+A more conservative patch would be the following:
 
 =2D- snip --
-commit cb2f3a28dbf40b92d3d9ca0f3177cd5afb7c4196
+commit 1680a64fae24b1073dbf1b844889a9953823b7a2
 Author: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Date:   Wed Jul 5 22:21:57 2017 +0200
+Date:   Wed Jul 19 22:13:16 2017 +0200
 
-    t4124: avoid using "normal" diff mode
+    t7063: when running under BusyBox, avoid unsupported find option
 
-    Everybody and their dogs, cats and other pets settled on using unified
-    diffs. It is a really quaint holdover from a long-gone era that GNU di=
-ff
-    outputs "normal" diff by default.
-
-    Yet, t4124 relied on that mode.
-
-    This mode is so out of fashion in the meantime, though, that e.g.
-    BusyBox' diff decided not even to bother to support it. It only suppor=
-ts
-    unified diffs.
-
-    So let's just switch away from "normal" diffs and use unified diffs, a=
-s
-    we really are only interested in the `+` lines.
+    BusyBox' find implementation does not understand the -ls option, so
+    let's not use it when we're running inside BusyBox.
 
     Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-diff --git a/t/t4124-apply-ws-rule.sh b/t/t4124-apply-ws-rule.sh
-index 971a5a7512ac..133557b99333 100755
-=2D-- a/t/t4124-apply-ws-rule.sh
-+++ b/t/t4124-apply-ws-rule.sh
-@@ -51,7 +51,7 @@ test_fix () {
-        apply_patch --whitespace=3Dfix || return 1
+diff --git a/t/t7063-status-untracked-cache.sh
+b/t/t7063-status-untracked-cache.sh
+index 190ae149cf3c..ab7e8b5fea01 100755
+=2D-- a/t/t7063-status-untracked-cache.sh
++++ b/t/t7063-status-untracked-cache.sh
+@@ -18,7 +18,12 @@ GIT_FORCE_UNTRACKED_CACHE=3Dtrue
+ export GIT_FORCE_UNTRACKED_CACHE
 
-        # find touched lines
--       $DIFF file target | sed -n -e "s/^> //p" >fixed
-+       $DIFF -u file target | sed -n -e "3,\$s/^+//p" >fixed
+ sync_mtime () {
+-       find . -type d -ls >/dev/null
++       if test_have_prereq BUSYBOX
++       then
++               find . -type d -print0 | xargs -0r ls -ld >/dev/null
++       else
++               find . -type d -ls >/dev/null
++       fi
+ }
 
-        # the changed lines are all expected to change
-        fixed_cnt=3D$(wc -l <fixed)
+ avoid_racy() {
 =2D- snap --
 
-Food for thought?
+I have this in Git for Windows' fork, although I have to admit that there
+is no CI set up to verify that this is all working as I expect it to.
 
 Ciao,
 Dscho
 
+>  }
 >
->  	# the changed lines are all expected to change
->  	fixed_cnt=3D$(wc -l <fixed)
+>  avoid_racy() {
 > --
 > 2.26.0.rc2.310.g2932bb562d
 >
 >
 >
 
---8323328-290645346-1584971893=:46--
+--8323328-1152249423-1584972711=:46--
