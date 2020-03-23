@@ -2,101 +2,76 @@ Return-Path: <SRS0=3T2S=5I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A677C43331
-	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 20:17:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 57FE3C43331
+	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 20:18:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 39C392073C
-	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 20:17:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 04BA220663
+	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 20:18:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="AG3RxMyS"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="FqPB0bWe"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725899AbgCWURD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Mar 2020 16:17:03 -0400
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:36404 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725830AbgCWURD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Mar 2020 16:17:03 -0400
-Received: by mail-pg1-f193.google.com with SMTP id j29so901477pgl.3
-        for <git@vger.kernel.org>; Mon, 23 Mar 2020 13:17:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=hQNeL7cFA5w3oPJX4dECXwLVHnI24MGadUIUOb2oHrM=;
-        b=AG3RxMySlfyfhkGVltGPxXG/D4PFYxtsAu35byr2Qvk2agLqVPwqDQz9vbWXlgGVRP
-         rHHUcYVZCVhZcldYUIZgqZCJVFk7zZPJotyj1Rk13SSA2G2OcHgJ+DwOLBdoOwjo1UWV
-         OcvUkuoz/T6ixEsdG9pxVog8jb6EClV+54LtK6ovNGKizPApA7YEh1ZmhEgJYoVh/JwG
-         G8iSYHUxAnpJKTDrQbSOzjTZ3XaD1oL9qhdxbi5YHz3uxcdmjHB4BkMBeuf+muY2v2YU
-         j4koeuPYQE5YFVjSGhg9XkRJ4RK8oBkNep3q4jp+xOFueOZBcgASMryzrHV/g5DNxJvl
-         Aslw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=hQNeL7cFA5w3oPJX4dECXwLVHnI24MGadUIUOb2oHrM=;
-        b=kQG6K/7592q54e8TkyJr6EbkpGuMmFomn/qduoFbmQUn9SAY2IepytP71Zr5EqrYtF
-         onvz5jjomOxRMulzyiAbHxBkfPMZIF29sjpV0ZVBVx3lVtwhm7AaJyIK4zTrvjCdcutK
-         Ysu3tD/PcdinzSkMv8tGzFcJfyhR11miotQ2iZOkW8D/++3BSojK91vWh8iUFvmxSS2s
-         owooOi2i+TnhP0Y91TwXjRqNIKg6mMorxekyjG+ldcLf+XsVhlNOj5xIfnmLORj6IUry
-         EHs+I7vuhRuEqVyJAMlpXzIIgdAP9uYaw3KUzhgXH05SXeVaj39yEjJqB9wORH1qGP9F
-         kDhg==
-X-Gm-Message-State: ANhLgQ2kJ18r+dkFrh3b4Kmgm5ZEgVn1pSR9UFuF1/9P6Iz+S7+NGG+y
-        sa72sunwZfmU4sJhBXBCS68WOA==
-X-Google-Smtp-Source: ADFU+vulKxu0yG0XI4GroIfyL3LG6aN2SKvS6iJon+hevfoDVy83evqnIyNIz2poz8cWVf5gPPqY0Q==
-X-Received: by 2002:a62:fb06:: with SMTP id x6mr25543760pfm.149.1584994621663;
-        Mon, 23 Mar 2020 13:17:01 -0700 (PDT)
-Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id cq12sm407696pjb.7.2020.03.23.13.17.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Mar 2020 13:17:01 -0700 (PDT)
-Date:   Mon, 23 Mar 2020 14:17:00 -0600
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Subject: Re: What's cooking in git.git (Mar 2020, #07; Sun, 22)
-Message-ID: <20200323201700.GA98968@syl.local>
-References: <xmqqh7yf7u6q.fsf@gitster.c.googlers.com>
- <20200323191602.GC93624@syl.local>
- <xmqq4kue6fha.fsf@gitster.c.googlers.com>
+        id S1725866AbgCWUSS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Mar 2020 16:18:18 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:64336 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725830AbgCWUSR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Mar 2020 16:18:17 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id C9047B93FF;
+        Mon, 23 Mar 2020 16:18:15 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=t9W6kpaiuATqYIPNueGbSXSMfK4=; b=FqPB0b
+        WevCK/vli+e19cn0zXUXq+LMfUywciS8nM3o0fSpv/sI6c+z9P5+UTtGiz/Rb/VY
+        dltzf1TM4VbO8pebcF8rM7IQ5BYAbss0hE2gAIFODKTSSSxN7GjDnHnbGrqX3lc+
+        UDC0gaB96b3CBFvZ+exC5PYdDIIdNQ5AXVci8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ZEomJQi7NTCXB8BdJiQME6QOWg7Jzb82
+        3fbmCjHvy6eT49EcA459F+5Y7ahXfcOB6vFeH8oM7YxHHHbSjM38MeQo4RkI5oLe
+        gElsrdJwuldafAhPYhZSdsIC07bHojWjmuK7rWeVyScoS+o30EX8Uut6ZvQ/96I9
+        /mjHSngkC4o=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id C1360B93FE;
+        Mon, 23 Mar 2020 16:18:15 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 0EF9AB93FB;
+        Mon, 23 Mar 2020 16:18:12 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Matheus Tavares <matheus.bernardino@usp.br>
+Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de, j6t@kdbg.org,
+        peff@peff.net, szeder.dev@gmail.com
+Subject: Re: [PATCH v3] test-lib: allow short options to be bundled
+References: <7a6a8197dcd58e8690892d03cb904dd1eec5d7c1.1584818457.git.matheus.bernardino@usp.br>
+        <cec4bbcc4270914a729a2c65d9c0efc4a45742ce.1584854619.git.matheus.bernardino@usp.br>
+Date:   Mon, 23 Mar 2020 13:18:11 -0700
+In-Reply-To: <cec4bbcc4270914a729a2c65d9c0efc4a45742ce.1584854619.git.matheus.bernardino@usp.br>
+        (Matheus Tavares's message of "Sun, 22 Mar 2020 12:58:57 -0300")
+Message-ID: <xmqqv9mu4ygs.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq4kue6fha.fsf@gitster.c.googlers.com>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6C05E17E-6D43-11EA-81C5-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 23, 2020 at 12:25:21PM -0700, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
+Matheus Tavares <matheus.bernardino@usp.br> writes:
+
+> Helped-by: Jeff King <peff@peff.net>
+> Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
+> ---
 >
-> > I noticed that this has been cooking in 'next' for a few weeks now. Is
-> > there anything you're looking for specifically before graduating this to
-> > master?
->
-> Yeah, I saw some mention about "--input=none does not mean there is
-> no input" confusion in a separate discussion in the past few days
-> [*1*], which may make us reconsider the proposed UI by this series,
-> and it is a good time to do so when we rewind/rebuild 'next' after
-> a release (i.e. "now").
+> Changes since v2:
 
-Makes sense. I hadn't responded to that thread yet because I thought
-that it had already been discussed, but on second glance '--input=none'
-really isn't as clear as it could be.
-
-I posted [2], which I think should move things forward.
-
-> [Reference]
->
-> *1* https://lore.kernel.org/git/20200322110424.GC2224@szeder.dev/
-
-Thanks,
-Taylor
-
-[2]: https://lore.kernel.org/git/e0f42a2f3c0162a5d43bb2bce0f69264b59f92e9.1584994172.git.me@ttaylorr.com/
+Queued.  Thanks.
