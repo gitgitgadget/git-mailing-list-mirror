@@ -2,125 +2,63 @@ Return-Path: <SRS0=3T2S=5I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.3 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BDFAC54EEB
-	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 14:37:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 56DB1C3F2CD
+	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 14:53:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 157B920784
-	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 14:37:58 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="jis70XYi"
+	by mail.kernel.org (Postfix) with ESMTP id 2A55320753
+	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 14:53:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727117AbgCWOh5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Mar 2020 10:37:57 -0400
-Received: from mout.web.de ([212.227.15.4]:36067 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725830AbgCWOh4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Mar 2020 10:37:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1584974274;
-        bh=asHPBli9XKmNvqI8Rt9solla30sVOgGV0NgcjNi+te8=;
-        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=jis70XYiSKhzwC0RhPm4tu6e3gB7j7J44zg8t7ayTlw4lHHEYUk+xRBSeKp+74Tlh
-         zugNxOdX2W7N1AjwflYYW5vBvng+LKzKyE7ZL3CNMs8kQmxkQvJnABo+Bjzuq/hKTc
-         CRtG5V6p4P6DRHhUzRBQDDPZgEwDFIsVtRN9q5ic=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MJlGW-1jHUfu2BKG-0018c1; Mon, 23
- Mar 2020 15:37:54 +0100
-Date:   Mon, 23 Mar 2020 15:37:54 +0100
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH v2 6/8] t7063: drop non-POSIX argument "-ls" from find(1)
-Message-ID: <20200323143754.zagvr6xrz3x3nrpa@tb-raspi4>
-References: <cover.1584838148.git.congdanhqx@gmail.com>
- <59e3f73784b2a3bd9ccec87412e6178411c3708e.1584838148.git.congdanhqx@gmail.com>
- <nycvar.QRO.7.76.6.2003231509150.46@tvgsbejvaqbjf.bet>
+        id S1727005AbgCWOxq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Mar 2020 10:53:46 -0400
+Received: from sender4-of-o51.zoho.com ([136.143.188.51]:21177 "EHLO
+        sender4-of-o51.zoho.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725710AbgCWOxq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Mar 2020 10:53:46 -0400
+X-Greylist: delayed 905 seconds by postgrey-1.27 at vger.kernel.org; Mon, 23 Mar 2020 10:53:45 EDT
+ARC-Seal: i=1; a=rsa-sha256; t=1584974316; cv=none; 
+        d=zohomail.com; s=zohoarc; 
+        b=iPIazSw3k4urtd4eWggtNEOSfYh+sO0JkxpItQqxBf4fhuTFzCac6RpmJT4LI+x3oOGvnaXYZzwVAn/MtxPY2cd5GxEQAG9AhDO4NBJZiQTbW3Y37RJMRgfqNA2zlAFranQsFt8u7MGY/5N6xUNjxKbMXwMbXQEroG4ifhrNqS4=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+        t=1584974316; h=Content-Type:Content-Transfer-Encoding:Cc:Date:From:MIME-Version:Message-ID:Subject:To; 
+        bh=VOLf4XtCXd7p+Spen4K9MexEBeX0UMQAA9YgeJBnA90=; 
+        b=I67G1D0+JruNpOci3KC9ClGU7J5LAZuvVXL43T+VxJUZj6Q5+g8Ouw22czHTcMcoB5ibOcuoHxtJZ/VPoZo09zWJFmerjQkqrhUokVwt61LkZ5UH5yrD1QGP/VqrFP+0hzCq/Ih7YQQvgMoTVi6/yerkIaGCmn7DS2rPc0+v78w=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+        spf=pass  smtp.mailfrom=jon@smalls.rocks;
+        dmarc=pass header.from=<jon@smalls.rocks> header.from=<jon@smalls.rocks>
+Received: from Genusers-MBP.fios-router.home (pool-108-49-187-119.bstnma.fios.verizon.net [108.49.187.119]) by mx.zohomail.com
+        with SMTPS id 1584974314850554.8213101145143; Mon, 23 Mar 2020 07:38:34 -0700 (PDT)
+To:     git@vger.kernel.org
+From:   Jonathan Smalls <jon@smalls.rocks>
+Subject: git > 2.10.1 fails to update index on macOS 10.14.5
+Cc:     Torey Adler - NOAA Federal <torey.adler@noaa.gov>
+Message-ID: <7b8b23f8-e12a-bde9-4b9e-ca8c908d1203@smalls.rocks>
+Date:   Mon, 23 Mar 2020 10:37:30 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
+ Gecko/20100101 Thunderbird/68.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <nycvar.QRO.7.76.6.2003231509150.46@tvgsbejvaqbjf.bet>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-Provags-ID: V03:K1:vAEmzdi5wnbcZegQZ6QfZ/r9sjsQbmbkcMpD6VBSMnYCnElcJ6Q
- 04By0EhRYriZ5+jXXue87jyigthBnjpihm6ah/86fR8P1ElV76brSGHJ6jFUwooOCyVSwVs
- 9iT2arZMVAquyVHlGLl6aY1kMEhAKBAmWDkpn31f+Qe5UpwQz75eMH37anrfdblwey9fDsw
- SuR9+myvAOctFSgHPA7CA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:QsIx5b2Y5pw=:2Bxhnz2R2HdlqEiQSnCw2b
- u0jjFH8a6I6rxp3vpxhbla0XBQniYYRdtahLq3h3xoBWhLipy7n8VZpSToRg3qPDi1F+bQ7Jq
- AAwro77gcRKbVetDQp2ZmiLSlRRzaLz/gEiGeSt7vuNyDbWIQIFAkiy3Tw61B68tB/0TsfOnz
- W+NlgHTNejjKCA9OL3v1J+zod0cOM64wariEX47yqNPR/8bXNJdbI5OscV40CEo/t+BtWOj6E
- L3+kn3jF9fPe5IEjeWHW5abT7p+LgFwneltbkww21at36wNu8BmZDNTFXUAkLqlgndjTxQW31
- XDC+bYiMtI4RfGgPKBC1PILFOIGu6yiC+xcTZzKC8iIkRI5fQtytZu0w9Qe53Riuyz15KqOJJ
- WDdI9DrD+67/zWtUQurXuVa8iSGHrpdeI5Yq/nSIpz9Pvt0C5hDrrvK1Wiw829+Q3zGNg2Y3E
- dldkH2W/0pv2B89sEYn/1dnWXSS8jSfjgAtEwO6/JYRBOGGDUyo7i1TcU4iljhz/9U5zcxtHq
- mXzwhLKONUF7wNsF/lVoRbMaqrZTlyt6G7ZVLoNycSVeEz8OyI0m3NWqTkmVB+/d7QVpLKtZu
- vJCzkN2LCDWMIc9EGj8YANEfaTWCY2YlO/waSci61qGihqd5vcikYbAyDnF/UMmlGr/I1+sS5
- vT0IlIFptk+3mmJOTUPCEWfXV1m5pko7GJPScEe9rS6UeDgk8Sk/ZPSWjjyMGyApn4QaxYi9G
- nBv59WoQXHnXR/q63cKZPR9yp1vqKlJkIKVosYE3qTTXJWIPI2RVRQNu4fPeoMXZIAl55PImD
- OqhaeEBuwm0dayvCTEg9wA+v/CTTN2VIU/9ulGfj3WGWADdPa33gQscPlUV2uwIj11j2eVpIS
- iJ+Hi+AEbPUWb+LIBieieAtdsP2Fv0qIV6YiEr65l6aaGvxBip9s3cMAgleJszGoQvP2JUHPI
- 01tycS/Gdjz+G2sa8ceMJMYTXZxx6zsb2e8Jo/tfzePcjpjGBg7x2dBChsMV3shWWxXxO9S2M
- cU69AIImObTVr5a4Yio4Oyab26YdOTi2D3Yy5tcIVX6YTMlfxkAN9vR2w/tiClU9l4sv7nWc6
- OnfHGdHUL6iq2yWrYdfP/f/vxnYqz2chsT1YF8o3FVvPB284+Fm+485R+kVvcg25nM2EXbdjT
- 7E8iZ4bRHVsC+OcRS8qsKWYjgr4FCGM5ZecmY+PZiaofhkhMprLlh/YW/dkp0ZfCUnXqElycb
- X/KvXbU/7aXq+yswt
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-ZohoMailClient: External
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 23, 2020 at 03:11:50PM +0100, Johannes Schindelin wrote:
-> Hi,
->
-> On Sun, 22 Mar 2020, =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh wrote:
->
-> > Since commit 6b7728db81, (t7063: work around FreeBSD's lazy mtime
-> > update feature, 2016-08-03), we started to use ls as a trick to update
-> > directory's mtime.
-> >
-> > However, `-ls` flag isn't required by POSIX's find(1), and
-> > busybox(1) doesn't implement it.
-> >
-> > >From the original conversation, it seems like find(1) with "-type d"
-> > could trigger enough "lstat(2)" to ask FreeBSD update mtime.
->
-> This rationale  makes me uneasy: why did Duy add _both_ `-type d` *and*
-> `-ls` if the former would have been enough?
+After upgrading my work station, I found in git-2.22 that git would not 
+recognize any file changes until I ran  `git reset --hard`. I thought 
+that it was a problem with my own settings.
+	However I upgraded to git-2.25, and the problem actually got worse. In 
+2.25 the index still failed to update, but `git reset --hard` no longer 
+had any effect.
 
-man readdir on my Linux gives:
-[]
-DESCRIPTION
-       The  readdir() function returns a pointer to a dirent structure rep=
-resenting the next
-       directory entry in the directory stream pointed to by dirp.  It ret=
-urns
-       NULL on reaching the end of the directory stream or if an error occ=
-urred.
-
-       In the glibc implementation, the dirent structure is defined as fol=
-lows:
-
-           struct dirent {
-               ino_t          d_ino;       /* Inode number */
-               off_t          d_off;       /* Not an offset; see below */
-               unsigned short d_reclen;    /* Length of this record */
-               unsigned char  d_type;      /* Type of file; not supported
-                                              by all filesystem types */
-               char           d_name[256]; /* Null-terminated filename */
-           };
-
-So we could imagine that `find` is clever enough to extract "-type d" alre=
-ady
-when calling readdir(), and the "good old" following stat() is not needed =
-here.
-
-So I would strongly agree with Dscho to keep the `ls`
-
-[snip]
+I have not looked to find exactly where the breaking change was 
+introduced, but I have since downgraded to git-2.10.1 and now get the 
+expected behavior.
+-- 
+http://jon.smalls.rocks
+857 301 9231
