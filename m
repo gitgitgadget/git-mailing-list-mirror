@@ -2,219 +2,152 @@ Return-Path: <SRS0=3T2S=5I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BD3E4C3F2CD
-	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 18:13:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 10792C3F2CD
+	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 18:14:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8A4202072D
-	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 18:13:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DB8942072D
+	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 18:14:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ot8ZtQZt"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rCSvtQI1"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727196AbgCWSNg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Mar 2020 14:13:36 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:42888 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725880AbgCWSNg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Mar 2020 14:13:36 -0400
-Received: by mail-ed1-f66.google.com with SMTP id b21so17365039edy.9
-        for <git@vger.kernel.org>; Mon, 23 Mar 2020 11:13:34 -0700 (PDT)
+        id S1727358AbgCWSON (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Mar 2020 14:14:13 -0400
+Received: from mail-ot1-f66.google.com ([209.85.210.66]:37245 "EHLO
+        mail-ot1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725880AbgCWSOM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Mar 2020 14:14:12 -0400
+Received: by mail-ot1-f66.google.com with SMTP id i12so14406902otp.4
+        for <git@vger.kernel.org>; Mon, 23 Mar 2020 11:14:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=P73XtoWN4NcH+jyxXApjeVRI7XInRELE49ZfN2tJwrs=;
-        b=ot8ZtQZtYEAvgIZ7WGMtQheBDQ47CUoTMQUmSaMfLykQKItE1XFp+VwSo6MKt3kIEb
-         Vtzi6g2IWsr0hSq0//WZSA44O0YIE6uMQLmYuSyi1lt/wWbuPlMsjpykjrXEAmz7ACIZ
-         y8fo/Z3XwrqU7NdraGYElIPusxvHr4VJlPaC07r4aW/TZsYG14DiK7XmmJmhlXYGF4Er
-         hiYntdO4EvUAorbppk7QvRjJdTr5GMgC2ifiIORuk2XI7CiRgcJ2v/IOiSp6+ce/WkzZ
-         Vy8Dd0j1lPtcitbZfEGJZnZh5tOp0q9Xv86iwz5gxZqFtLr1/m0Pe+yaoRsAmd2CIiSY
-         katA==
+         :cc;
+        bh=wrwely10yFoKT2ZFpaXoAwBn+M8INfrpgEqmmu5v2cE=;
+        b=rCSvtQI1QJPZgxiTSPLvi8bLxk9fcvr8A6PUJDPlzSV41IykAZGtSAA2TPuVpkoa+T
+         GVWizV63QVv24V5iqEr2oq/S1a0LQhDrTKaKheVrsHc0ypXS8zhshvG0Ifvnwsy4X4IF
+         IjnKU0DRe4YGu2YzNeQGRSOde4spuyzHxSUbLA48ptF+MDBngBoR/pdQb+tqn7SkJ5ia
+         bAddPtVf7r87FnWQ4DMdSOkrZPqfWDerzZqxvroQ8JzV7lJUtItEHhZTfHqnSOObvm+6
+         cPjJUBd6hZaLbZ492DzhI66LR30a0y7ftKRdiaZRXSu6jGd5BRbGt1uyBbiaCLOdc2R6
+         qZRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=P73XtoWN4NcH+jyxXApjeVRI7XInRELE49ZfN2tJwrs=;
-        b=a1JthhUIO90EAYdyJSAL1s6oX8iW7rzOhyvn3WxhjhTpuJ/SZ42luR6dUUXyjbCOBH
-         mX/PH6xwOBhgvYgUBE8e8crj2/TmIakegdzJFI//gnberqiAkQ/xejvaMzRlgOgZoNlw
-         wySiXJ6Ts9RPsXsqfFeYtcELeK3Mt+yqLOlXBi7EF6hge47glmW+JvXRJ4Y5egyMphpG
-         /eBHn0AVaX9zTJV6X7qtDZTAbHOFnCVlEm+Pgk18Rcb+AOnYVSzhKmw/HEISN90SVOO8
-         QTEYOs4eSbO5GzpYacj6HA7dfqdpF7I03Lun0b728X7Q3OB0zGdsM7VyG3Bux+70W5cp
-         G5pA==
-X-Gm-Message-State: ANhLgQ33yCsbhIMUHJQJa2n73hWu7LRsfe/QyD7y1+GMQjywdnXNMbEM
-        M1zyoJJYru46U3gKQYXv2hVXnhZ0ozBJn3hGSGBkVwdn
-X-Google-Smtp-Source: ADFU+vsrLb11D6Fqh857rAht8C4/FtELQRm9WjjNs2wraWxLTzSQNz6cGlhNs8/0Y5FRSSV1m50/DQaUJsXo1A47MMg=
-X-Received: by 2002:a05:6402:2214:: with SMTP id cq20mr8196875edb.16.1584987213922;
- Mon, 23 Mar 2020 11:13:33 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=wrwely10yFoKT2ZFpaXoAwBn+M8INfrpgEqmmu5v2cE=;
+        b=bRf/GvEG2Yz964x9PcMXi5voJ2Uk3rEUuTS+pjWYaDF/xVuoVAVYSMAW3uk76rKwqh
+         2/lKBiYl9YTp0ablR82dJ0tXpBYTOMf/GTN9N52NYpyQoE1AFJE2hfqUBqJ8dkVC3YLs
+         EQZJzWKOOfdhH//Pavr0PdT8rwYhera0eZHXdHpaKnIIuhMtYQ+XAo7NJcziK4N8JLz/
+         Px/mrAY93Txa0g9uii/+WYye17bcd+bpFGK90gEiQvja8IovHCf881qX7oEBQ8TeiOwV
+         uhz8oCVEYV28xfU6XvWmWxCAVrRUCsaUjg5pfqQ872hLZhf5MUmsx8JWisMs9xn8c7l+
+         Xf2w==
+X-Gm-Message-State: ANhLgQ0W74Advgel6iYL8FPNVq+1d/FwnNKBoBmyP9YObUh10jKVYuO8
+        ht8CigFEnDcRnwbboDTJCpbr24sON9kANFE6ML0=
+X-Google-Smtp-Source: ADFU+vuuvA+scLcsfGd0GKYvQ2Eo/7PRLaKnjr+6TGZZKUiBoBPuhSZSJ0Tx/cZ7vjKzR3PVhfrpkvwDAC9Aay4iMXQ=
+X-Received: by 2002:a9d:6457:: with SMTP id m23mr19337170otl.162.1584987251593;
+ Mon, 23 Mar 2020 11:14:11 -0700 (PDT)
 MIME-Version: 1.0
-References: <CANPdQv+tCnfy_csM8EwuqAYBtgkJ3RhRvo+ALbzO=BcZA7qJtg@mail.gmail.com>
- <20200322073105.zh2tqycu2fgydf3e@tb-raspi4> <CANPdQvK4LRZ2b_K0QuWErxNcc2wpW0W4zvmj3HzKDnOvgBNHfw@mail.gmail.com>
- <20200323165821.xk2kdw6tw5e3yqsy@tb-raspi4>
-In-Reply-To: <20200323165821.xk2kdw6tw5e3yqsy@tb-raspi4>
-From:   =?UTF-8?Q?Andr=C3=A1s_Kucsma?= <andras.kucsma@gmail.com>
-Date:   Mon, 23 Mar 2020 19:13:22 +0100
-Message-ID: <CANPdQvJSKmJ104qNia9+Pnq0Tqi=pEMxAARpMYF40hbKiRh+Ww@mail.gmail.com>
-Subject: Re: GIT_ASKPASS absolute path detection bug on Windows
-To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     git@vger.kernel.org
+References: <pull.726.git.git.1584169893.gitgitgadget@gmail.com>
+ <pull.726.v2.git.git.1584813609.gitgitgadget@gmail.com> <27ed4a3f7a28c66d8185cb4c484e8b0af81b15c6.1584813609.git.gitgitgadget@gmail.com>
+ <45021041-eab4-6e0e-5966-11db06333ab2@gmail.com>
+In-Reply-To: <45021041-eab4-6e0e-5966-11db06333ab2@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 23 Mar 2020 11:14:00 -0700
+Message-ID: <CABPp-BH1BMZjLN91F5Ece6v30dw8RczrBY+9GnmPWCCdeH6Stg@mail.gmail.com>
+Subject: Re: [PATCH v2 10/18] sparse-checkout: use new update_sparsity() function
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <dstolee@microsoft.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks Torsten!
-I submitted it as https://github.com/gitgitgadget/git/pull/587
-I believe someone has to /allow me to be able to submit it.
+On Mon, Mar 23, 2020 at 11:07 AM Derrick Stolee <stolee@gmail.com> wrote:
+>
+> On 3/21/2020 2:00 PM, Elijah Newren via GitGitGadget wrote:
+> > From: Elijah Newren <newren@gmail.com>
+> >
+> > Remove the equivalent of 'git read-tree -mu HEAD' in the sparse-checkout
+> > codepaths for setting the SKIP_WORKTREE bits and instead use the new
+> > update_sparsity() function.
+> >
+> [snip]
+> > diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
+> > index 8607a8e6d1a..86ae422ff5c 100755
+> > --- a/t/t1091-sparse-checkout-builtin.sh
+> > +++ b/t/t1091-sparse-checkout-builtin.sh
+> > @@ -277,16 +277,23 @@ test_expect_success 'cone mode: add parent path' '
+> >       check_files repo a deep folder1
+> >  '
+> >
+> > -test_expect_success 'revert to old sparse-checkout on bad update' '
+> > +test_expect_success 'not-up-to-date does not block rest of sparsification' '
+> >       test_when_finished git -C repo sparse-checkout disable &&
+> >       test_when_finished git -C repo reset --hard &&
+> >       git -C repo sparse-checkout set deep &&
+> > +
+> >       echo update >repo/deep/deeper2/a &&
+> >       cp repo/.git/info/sparse-checkout expect &&
+> > -     test_must_fail git -C repo sparse-checkout set deep/deeper1 2>err &&
+> > -     test_i18ngrep "cannot set sparse-checkout patterns" err &&
+> > -     test_cmp repo/.git/info/sparse-checkout expect &&
+> > -     check_files repo/deep a deeper1 deeper2
+> > +     test_write_lines "!/deep/*/" "/deep/deeper1/" >>expect &&
+> > +
+> > +     git -C repo sparse-checkout set deep/deeper1 2>err &&
+> > +
+> > +     test_i18ngrep "Cannot update sparse checkout" err &&
+> > +     test_cmp expect repo/.git/info/sparse-checkout &&
+> > +     check_files repo/deep a deeper1 deeper2 &&
+> > +     check_files repo/deep/deeper1 a deepest &&
+> > +     check_files repo/deep/deeper1/deepest a &&
+> > +     check_files repo/deep/deeper2 a
+> >  '
+>
+> This demonstrates some of the value of using update_sparsity.
+> I expect some more specific tests are coming later in the
+> series.
+>
+> >  test_expect_success 'revert to old sparse-checkout on empty update' '
+> > @@ -316,12 +323,22 @@ test_expect_success '.gitignore should not warn about cone mode' '
+> >       test_i18ngrep ! "disabling cone patterns" err
+> >  '
+> >
+> > -test_expect_success 'sparse-checkout (init|set|disable) fails with dirty status' '
+> > +test_expect_success 'sparse-checkout (init|set|disable) warns with dirty status' '
+> >       git clone repo dirty &&
+> >       echo dirty >dirty/folder1/a &&
+> > -     test_must_fail git -C dirty sparse-checkout init &&
+> > -     test_must_fail git -C dirty sparse-checkout set /folder2/* /deep/deeper1/* &&
+> > -     test_must_fail git -C dirty sparse-checkout disable &&
+> > +
+> > +     git -C dirty sparse-checkout init 2>err &&
+> > +     test_i18ngrep "error" err &&
+> > +     test_i18ngrep "Cannot update sparse checkout" err &&
+> > +
+> > +     git -C dirty sparse-checkout set /folder2/* /deep/deeper1/* &&
+> > +     test_i18ngrep "error" err &&
+> > +     test_i18ngrep "Cannot update sparse checkout" err &&
+> > +
+> > +     git -C dirty sparse-checkout disable &&
+> > +     test_i18ngrep "error" err &&
+> > +     test_i18ngrep "Cannot update sparse checkout" err &&
+> > +
+>
+> Should the "error" messages we grep for be more specific? Are they
+> the same as the "Cannot update sparse checkout"?
 
+The two lines are checking for the same message, it's just that the
+error message is split across multiple lines and thus requires two
+greps.  The error messages are actually a bit of a mess, particularly
+when they are triggered for multiple paths.  That's something that
+subsequent commits will clean up.
 
-On Mon, Mar 23, 2020 at 5:58 PM Torsten B=C3=B6gershausen <tboegi@web.de> w=
-rote:
->
-> On Sun, Mar 22, 2020 at 12:44:33PM +0100, Andr=C3=A1s Kucsma wrote:
-> > On Sun, Mar 22, 2020 at 8:31 AM Torsten B=C3=B6gershausen <tboegi@web.d=
-e> wrote:
-> > >
-> > > On Sat, Mar 21, 2020 at 12:42:50PM +0100, Andr=C3=A1s Kucsma wrote:
-> > > > Hi All,
-> > > >
-> > > > I believe to have found an issue regarding properly executing the
-> > > > GIT_ASKPASS binary. I'm using Windows Server 2019, with git 2.21.0
-> > > > installed using cygwin.
-> > > >
-> > > > ## To reproduce:
-> > > >
-> > > > Assume you have the askpass binary at C:\askpass.bat. In CMD the
-> > > > following commands reproduce the issue:
-> > > >
-> > > > C:\> set GIT_ASKPASS=3DC:\askpass.bat
-> > > > C:\> git clone https://<private_repository>.git
-> > > > Cloning into '<private_repository>'...
-> > > > error: cannot run C:\askpass.bat: No such file or directory
-> > > > [... proceeds to interactively ask for username and password ...]
-> > > >
-> > > > On the other hand, if we change the GIT_ASKPASS environment variabl=
-e
-> > > > slightly, so that there is a forward slash (/) instead of a backsla=
-sh
-> > > > (\), things work as expected:
-> > > >
-> > > > C:\> set GIT_ASKPASS=3DC:/askpass.bat
-> > > > C:\> git clone https://<private_repository>.git
-> > > > Cloning into '<private_repository>'...
-> > > > [... success ...]
-> > > >
-> > > > ## Some context:
-> > > >
-> > > > The source of the problem, is that if git doesn't find a forward sl=
-ash
-> > > > anywhere in the path, it assumes it is not a real path and has to l=
-ook
-> > > > for the binary using the PATH environment variable. See in
-> > > > prepare_cmd():
-> > > > https://github.com/git/git/blob/98cedd0233e/run-command.c#L429-L439
-> > > >
-> > > > You can see that the "cannot run" error message is printed here, ju=
-st
-> > > > after prepare_cmd() returned -1:
-> > > > https://github.com/git/git/blob/98cedd0233e/run-command.c#L749-L753
-> > > >
-> > > > I believe this was introduced in late 2018 around git v2.19.2,
-> > > > although I did not actually bisect the issue:
-> > > > https://github.com/git/git/commit/321fd823897#diff-7577a5178f8cdc0f=
-719e580577889f04R401-R415
-> > > >
-> > > >
-> > > > I hope I'm sharing this bug at the right forum. Please direct me to
-> > > > the proper place if not.
-> > >
-> > > Yes, you came to the rigth place.
-> > > Thanks for the report and the detailed analysis.
-> > >
-> > > A quick fix, and a begin of a patch, could be to use
-> > > has_dos_drive_prefix() which will look for C: and will therefore even=
- work
-> > > with C:\
-> > >
-> > >         /*
-> > >          * If there are no '/' characters in the command then perform=
- a path
-> > >          * lookup and use the resolved path as the command to exec.  =
-If there
-> > >          * are '/' characters, we have exec attempt to invoke the com=
-mand
-> > >          * directly.
-> > >          */
-> > >         if ((!strchr(out->argv[1], '/')) ||
-> > >             (has_dos_drive_prefix(out->argv[1]))) {
-> > >                 char *program =3D locate_in_PATH(out->argv[1]);
-> > > []
-> > >
-> > > If you want to play around with the code a little bit, and send us a =
-"git diff",
-> > > we can convert that into a patch.
-> > >
-> > > Wellcome to the Git community.
-> > >
-> > > >
-> > > > Thank you,
-> > > > Andras
-> >
-> > Thanks Torsten!
-> >
-> > I believe it is not enough to test only for the drive specifier, as
-> > GIT_ASKPASS has to work with relative paths as well:
-> > C:\SomeDirectory> set GIT_ASKPASS=3D.\SomeOtherDirectory\askpass.bat
-> > C:\SomeDirectory> git clone https://<some_private_repository>.git
-> >
-> > My proposal patch is to take advantage of find_last_dir_sep function's
-> > OS specific directory separator knowledge.
-> > I posted the diff below, which is also available on github here:
-> > https://github.com/git/git/compare/maint...r0mai:fix-prepare_cmd-window=
-s-maint
-> >
-> > diff --git a/run-command.c b/run-command.c
-> > index f5e1149f9b..9fcc12ebf9 100644
-> > --- a/run-command.c
-> > +++ b/run-command.c
-> > @@ -421,12 +421,12 @@ static int prepare_cmd(struct argv_array *out,
-> > const struct child_process *cmd)
-> >      }
-> >
-> >      /*
-> > -     * If there are no '/' characters in the command then perform a pa=
-th
-> > -     * lookup and use the resolved path as the command to exec.  If th=
-ere
-> > -     * are '/' characters, we have exec attempt to invoke the command
-> > -     * directly.
-> > +     * If there are no dir separator characters in the command then pe=
-rform
-> > +     * a path lookup and use the resolved path as the command to exec.=
- If
-> > +     * there are dir separator characters, we have exec attempt to inv=
-oke
-> > +     * the command directly.
-> >       */
-> > -    if (!strchr(out->argv[1], '/')) {
-> > +    if (find_last_dir_sep(out->argv[1]) =3D=3D NULL) {
-> >          char *program =3D locate_in_PATH(out->argv[1]);
-> >          if (program) {
-> >              free((char *)out->argv[1]);
->
-> Andr=C3=A1s,
-> The patch looks good to me.
-> If you want, you can submit it here to the list,
-> either with git send-mail
->
-> or may be
->
-> https://gitgitgadget.github.io/
->
-> And please don't forget to sign-off the patch
+I can add a note about this to the commit message.
