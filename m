@@ -2,109 +2,154 @@ Return-Path: <SRS0=3T2S=5I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,MENTIONS_GIT_HOSTING,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C50A3C4332B
-	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 20:50:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3360BC4332B
+	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 20:56:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8781C20719
-	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 20:50:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EC32F20719
+	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 20:56:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Z34ac+rA"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="GI4jHS77"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727151AbgCWUuy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Mar 2020 16:50:54 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:51927 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725861AbgCWUuy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Mar 2020 16:50:54 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8E3B7BD0AC;
-        Mon, 23 Mar 2020 16:50:52 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=jVMonrdWLqVANyVOFn3JymBzABc=; b=Z34ac+
-        rAuJT6ZQvy6zxpMCNgpifR97P9bzbiXgrey8frFPYNRFai3p/uMXnpjN6OhqB8Mu
-        xDL4zRtwnOeTNibc445f0LphDCwi9XFlbqpbs5O8KVyy24bRfTXVyXRB3yrqMz/D
-        iPCBdVNuhZdAVqcywQUG1EhPwa/V5UQJ7mk28=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=QL8fy0oc99H6rG4TmyvA4Hje8i3koUCK
-        lvAh/7ImyxO5vB1PnvCSulYfx4s0avvmfaHtwfVc4dSeSz2cSSAN8g/tPf4d/pyv
-        E/q27J7StU6JoGTWZIsnvbKpySiuy7Wn3OkghuEMB1fiT/s+vu6U7NdO4fjlOsvy
-        Ts07huNsJNk=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 85F6EBD0AB;
-        Mon, 23 Mar 2020 16:50:52 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C7834BD0A6;
-        Mon, 23 Mar 2020 16:50:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Danh Doan <congdanhqx@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        id S1726067AbgCWU4M (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Mar 2020 16:56:12 -0400
+Received: from mout.gmx.net ([212.227.17.21]:57175 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725830AbgCWU4M (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Mar 2020 16:56:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1584996968;
+        bh=554nEp4LFlf5Tmdc5fn3Q3gEMf6iVP2Q7EyItRm7tjs=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=GI4jHS77kOsvtXE3DAIreojC3FwvrhqjgTdbS5lYehqJvTmi2FUANhWKb7IMiEnEs
+         90hmdNaqaaWwRqmX0ANqxMJB88DZTbpSsghdx082QMpMuUMZ/RXr7A/xzV9YSvNHOe
+         ear9IeEWYCI5gdoWXIlHaHifOvX64DXbUrNeuJ9I=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from MININT-QA14EDB.fritz.box ([89.1.215.97]) by mail.gmx.com
+ (mrgmx104 [212.227.17.168]) with ESMTPSA (Nemesis) id
+ 1MoO24-1jaPex3hLE-00oqVA; Mon, 23 Mar 2020 21:56:08 +0100
+Date:   Mon, 23 Mar 2020 21:56:07 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
-Subject: Re: [PATCH v2 7/8] t4124: fix test for non-compliant diff(1)
-References: <cover.1584838148.git.congdanhqx@gmail.com>
-        <10f39c3d30d13e9141f081f985a0620954cc7493.1584838148.git.congdanhqx@gmail.com>
-        <nycvar.QRO.7.76.6.2003231456200.46@tvgsbejvaqbjf.bet>
-        <20200323150449.GC11801@danh.dev>
-Date:   Mon, 23 Mar 2020 13:50:48 -0700
-In-Reply-To: <20200323150449.GC11801@danh.dev> (Danh Doan's message of "Mon,
-        23 Mar 2020 22:04:49 +0700")
-Message-ID: <xmqq8sjq4wyf.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+Subject: Re: [PATCH] tests(junit-xml): avoid invalid XML
+In-Reply-To: <xmqqlfnr5945.fsf@gitster.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2003232153350.46@tvgsbejvaqbjf.bet>
+References: <pull.732.git.git.1584967475669.gitgitgadget@gmail.com> <xmqqlfnr5945.fsf@gitster.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: FA57812C-6D47-11EA-8AA5-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:0JmtH915P7jeWDE0zkG9eQcDAiUj1xocWnZBHFoJD3nhhxu5DKg
+ cs7kVnBIcipzcfnPV+ZB2P8NWqb6Aqz0UlGdVYCMEe1NmCXaMsCMsk3syEN+cyO1/mi6zI1
+ Oi4k4FovWl8sEmQEQSe5AD66NBnAbVQmliNBg2Iae7ex5H2PEuHVTw1Re2VNnTXOAHcVWYX
+ 5n9VRzneCTM9lz/dwYKYg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:bCdsd4qURx4=:E0aR7tru8L99xP5vSNaTot
+ uCPZtMumLCxjN1V06CjGlHtz83s2lK10uxHmVMhBVfMWk4NCs60ahPWmkutCXY+w8eljlxCGI
+ PUPSglgzHFqRCA+JHo8mVZS1Xi7JPN7JhMY3OV8fa/zPsaM+dylQdEgFFeBWyjpwLC+hrv13M
+ f4BM2wocrRaaoadly9P5879mHxH1jg9gxUkVtXGNMR+pPQ84WbrwkVbVHgzgqQRz3xMxJMXWc
+ nP/MUk6lV9dOKwWrM9RZJ7N9OkcQQmYhdhd76q6eyrclQKP9sQ2d8vvBA672jVP6PWZeSSekU
+ NsgJLz1fXUQ5on/TyeBPbsm/vbGL4KxT5ca9qwlu+xiRSyZXPIYJv4qlJiA4jisJ9PyqiUmbI
+ vkxc6Yb0rzbPiocCrSKJjG/BSvhkpJ0h0hmaXVoAzQ1MlDeeE+B5YLBpPknqp3N1zjiDFGkiG
+ axrjREAAiDHs/G4qt05kVmuVGHVEKcwjHg+DbGpUIKvYM6ZWnOtjbVg0Nkjwzv0VYWLW9AiAW
+ AyVcpWy4kJSgbpovMLs9Zk0yDcupAe/u3NEz3ZGa9tc1uqXM8T/7h/wD7Aysn+vCZlZzOPqGO
+ sm1eVA4Ojm3a4CHGHF8H4/9I3b/WYixKgS3dS9IvAVh27Om8KAfQs5n3TPoZsGS+jAiPAsl/9
+ FxrQzIs8LS3KGnnBFX5GMbB2JGNNWrCfLZKPIEOeFvoiGPOnG0cpID4RUaZQiaIcOuk17nscp
+ aEDxDub7ySHQ3gs2DM52eczbNRh9b5gfCiZhtPTFAQLMsV5OvB9pC2jPlCtFp7RofW+3Ov6gt
+ lmqo7aUK99NW1XqOo3xjV129XSYn6JaH2A3mwzjMBOSotpLUoMj3Z6W0gmnkahyUYY2Jjk9ed
+ zdKpg4D+K99LWvwVAg/zPHqLiWwabiIK9+e3FBIbroHRAn1XdZzLInrm9MAFM1JHPyqN9065n
+ 3dC+ro1dYMJp+fmEY02gIPYgB08AwabuYIxvqxAkfkXlcDCsaKB2lJHHpqqnnn2eSi+fZWynx
+ 4GhzYWFb948jXDxhrSW6CKRXtBGTqvFJWvvTRzrO+oULbYWFbgVJbgryx358YX5q08tzuRqYF
+ f8hyqU/QuCdt9PYILQiLujHNC2YSmTGsQDY6I/MyQgRObjGqtv0oMoayF8ZiyGZU/MDIzjaet
+ 4HUyj1PycYtTiKkcFldR/Vqmv7KBZ2Qf5AF/1QrL9BY/Q6G2ZeB4SR/XBP1NnHW+3jCis3IM+
+ zQA4iEw+4DlR60EFD
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Danh Doan <congdanhqx@gmail.com> writes:
+Hi Junio,
 
-> A comment in test-lib-functions::test_cmp mentions that
-> there _is_ a diff out there that doesn't understand "-u".
+On Mon, 23 Mar 2020, Junio C Hamano wrote:
 
-That came from 82ebb0b6 (add test_cmp function for test scripts,
-2008-03-12).
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
+>
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > When a test case is run in a subshell, we finalize the JUnit-style XML
+> > when said subshell exits. But then we continue to write into that XML =
+as
+> > if nothing had happened.
+> >
+> > This leads to Azure Pipelines' Publish Test Results task complaining:
+> >
+> > 	Failed to read /home/vsts/work/1/s/t/out/TEST-t0000-basic.xml.
+> > 	Error : Unexpected end tag. Line 110, position 5.
+> >
+> > And indeed, the resulting XML is incorrect.
+> >
+> > Let's "re-open" the XML in such a case, i.e. remove the previously add=
+ed
+> > closing tags.
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >     Fix Azure Pipelines for t0000
+> >
+> >     When running t0000 in our Azure Pipeline, the "Publish Test Result=
+s"
+> >     step complains about an invalid JUnit-style XML, and it is correct=
+.
+> >     Let's fix that.
+>
+> Hmph, I have a vague recollection that I've seen this one, looked at
+> the patch and even understood the issue.  Did I then forget to apply
+> it back then?  If so, apologies for failing to do so before the
+> release.
 
-The change history at the end of the page:
+I suspect that you think of 076ee3e8a2a6 (tests: fix --write-junit-xml
+with subshells, 2020-02-12) which you indeed applied. This patch addresses
+a different issue that I had not noticed until two weeks ago. I
+purposefully held back on contributing it during the feature freeze phase.
 
-  https://pubs.opengroup.org/onlinepubs/9699919799/utilities/diff.html
+> Will queue.
 
-suggests that POSIX did not require "diff -u" until Issue 7, so it
-is not surprising that the lack of "diff -u" to cause test_cmp to
-fail was of real concern back in March 2008, as the application of
-the errata have been only an year and half old, according to:
+Thanks,
+Dscho
 
-  https://www.opengroup.org/austin/docs/austin_325.txt
-
-I vaguely recall that some open source projects only took the copied
-context diffs and not unified ones the last time I checked, but
-admittedly (1) that "last time" was a long time ago and (2) our
-popularity and the fact that we do not understand copied context
-[*1*] may have forced people to move away from "-c" and adopt "-u"
-at the same time.  
-
-So it might be OK to write off any system that does not understand
-"diff -u" as an unusable trash these days ;-)
-
-IOW, I think I am fine with assuming "diff -u" is available, like
-Dscho's patch does.
-
-Thanks.
-
-
-[Footnote]
-
-*1* It used to be my desire to teach "git apply" and "git diff" to
-    also work with copied context format, but procrastination made
-    it less and less relevant X-<.
+>
+> Thanks.
+>
+> > Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-=
+732%2Fdscho%2Fci-xml-error-v1
+> > Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-732=
+/dscho/ci-xml-error-v1
+> > Pull-Request: https://github.com/git/git/pull/732
+> >
+> >  t/test-lib.sh | 1 +
+> >  1 file changed, 1 insertion(+)
+> >
+> > diff --git a/t/test-lib.sh b/t/test-lib.sh
+> > index 0ea1e5a05ed..7f0c02c016b 100644
+> > --- a/t/test-lib.sh
+> > +++ b/t/test-lib.sh
+> > @@ -1085,6 +1085,7 @@ finalize_junit_xml () {
+> >  		junit_time=3D$(test-tool date getnanos $junit_suite_start)
+> >  		sed -e "s/\(<testsuite.*\) time=3D\"[^\"]*\"/\1/" \
+> >  			-e "s/<testsuite [^>]*/& time=3D\"$junit_time\"/" \
+> > +			-e '/^ *<\/testsuite/d' \
+> >  			<"$junit_xml_path" >"$junit_xml_path.new"
+> >  		mv "$junit_xml_path.new" "$junit_xml_path"
+> >
+> >
+> > base-commit: be8661a3286c67a5d4088f4226cbd7f8b76544b0
+>
+>
