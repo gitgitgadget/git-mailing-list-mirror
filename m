@@ -2,67 +2,117 @@ Return-Path: <SRS0=3T2S=5I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 75036C4332B
-	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 23:26:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E7E5EC4332B
+	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 23:54:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 35C7620714
-	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 23:26:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B17F720719
+	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 23:54:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ddCw0UIW"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Qf87PVDP"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727025AbgCWX0s (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Mar 2020 19:26:48 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:63396 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726982AbgCWX0s (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Mar 2020 19:26:48 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 26879BFAAA;
-        Mon, 23 Mar 2020 19:26:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-        :subject:date:message-id:mime-version:content-type; s=sasl; bh=1
-        F97N76gxng9lvoc5MgE7oGn5Tc=; b=ddCw0UIWskggDN1lRfq3mhGwIgLcYNMfX
-        UBlqSa8J4yAtKcDx2TG60VX4jcv3R+4VkKad8O8ZDWSaMJ0hKP0y8NCr5HQsd9FQ
-        F4JFOd7evSALia2FKKTPo3lqgq6ou8iqiL5efpQR69JGpjWPn3UsADLcow51sNNZ
-        g3NpTIDl2E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-        :date:message-id:mime-version:content-type; q=dns; s=sasl; b=lfL
-        /x4CTTXkO9zt+n4fnsuV6ZgstksABKsEJgi73nOrY2jH+QqTYJAV6crz1mOALi/q
-        vNKHPzJbd7e46DWdVXKDdPIzyh0Dsn59Ojh0rVKAh+C4HmJBQQ+6CdPnsgtMDtOA
-        hHnsfx94Ga9BN0FQDiLe5S8pzQ3dmCP9TD2PlUBk=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1DD02BFAA8;
-        Mon, 23 Mar 2020 19:26:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1727169AbgCWXyF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Mar 2020 19:54:05 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:60470 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726203AbgCWXyF (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 23 Mar 2020 19:54:05 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 468C1BFAA6;
-        Mon, 23 Mar 2020 19:26:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Subject: Season of Docs?
-Date:   Mon, 23 Mar 2020 16:26:41 -0700
-Message-ID: <xmqqh7ye3b66.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id B02336077C;
+        Mon, 23 Mar 2020 23:54:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1585007644;
+        bh=8wzgoLc4dQvlXKMa3EWYQM+Jehkx/yJZF+Kzl2pQfBo=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=Qf87PVDPMnpm3a/hMzVsELzMxSWbeRkZBRC0zAZ4TP/aZsgP11AxegBssNzA1nB+1
+         Z4NKrm26nAUxStuGZ/ArNr2ygQ+Z/uaUzB5uD+18cMmdqxEeJLmUhrtVga6gRXzgwh
+         W8DUL7b5uUfteLK4U/pw198W+HqYRgLPkB7LNOrDf2qvNscKwuBjMLodK+B9sJt6nR
+         3tyk50ZMiKD5kTFVdVTyyWl4jGqKg6AoXYsfCvrN1nfQrrAbFJmv3fuJ9oKREOaUAD
+         qFf/8mgwcnKwjXUAUt4WaxGaw0hNjSC1RZ/TbfLvOSYF1jm+oavhUduNgqcBjjVSIG
+         ayOlFvFB6xr2PDSk08GqSZoviwNfw5df89qTgxrDQFh/R6Pv+UJYX6Q7qvhArSkrP9
+         mrHdyLtIpBVS7bHB6SpdbDE5+NvwJKxs/wi0vq6nU2nbAbwUwWiG85bxSpXiZq910p
+         RckEzaWyd+WosoByEthSt4E1fph0bkj9vhNOoteGN67Emgw6pqm
+Date:   Mon, 23 Mar 2020 23:53:58 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Benjamin Shropshire <benjamin.shropshire@economicmodeling.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Relative url values in .gitmodules confusingly sensitive to
+ clone via ssh vs https.
+Message-ID: <20200323235358.GF6499@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Benjamin Shropshire <benjamin.shropshire@economicmodeling.com>,
+        git@vger.kernel.org
+References: <CAAjm7Ga5JOJ2w=01o1-x-80HMGVaYQQy8SBBb-zJ6MOQAe4SxQ@mail.gmail.com>
+ <20200323011117.GC6499@camp.crustytoothpaste.net>
+ <CAAjm7GZXNXcGMp7p2f+UoDUWMPY+Z4aFHv35tynteVSKDf2Fqw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C17176D6-6D5D-11EA-A9B5-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="MZf7D3rAEoQgPanC"
+Content-Disposition: inline
+In-Reply-To: <CAAjm7GZXNXcGMp7p2f+UoDUWMPY+Z4aFHv35tynteVSKDf2Fqw@mail.gmail.com>
+X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
+ 5.4.0-4-amd64)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a companion program to GSoC we might want to participate.
 
-  https://opensource.googleblog.com/2020/03/announcing-season-of-docs-2020.html
-  https://developers.google.com/season-of-docs/
+--MZf7D3rAEoQgPanC
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Many places in our docs clearly show that they were written by
-developers, which we may want to rectify.
+On 2020-03-23 at 15:09:39, Benjamin Shropshire wrote:
+> $ git --version
+> git version 2.20.1
+
+Hmmm, it looks like that version has the same test, t0060, which has
+this:
+
+  test_submodule_relative_url "(null)" "user@host:path/to/repo" "../subrepo=
+" "user@host:path/to/subrepo"
+  test_submodule_relative_url "(null)" "user@host:repo" "../subrepo" "user@=
+host:subrepo"
+  test_submodule_relative_url "(null)" "user@host:repo" "../../subrepo" ".:=
+subrepo"
+
+I have confirmed that your test case does work for me on the version of
+Git I mentioned above with the following repos:
+
+  bmc@castro:foo/foo.git
+  bmc@castro:bar/bar.git
+
+And foo.git having the following .gitmodules:
+
+  [submodule "bar.git"]
+          path =3D bar.git
+          url =3D ../../bar/bar.git
+
+It's puzzling to me that this isn't working for you on 2.20.1 but it
+works for me on a 2.26 prerelease, yet both versions have the same test.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--MZf7D3rAEoQgPanC
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.19 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXnlMFgAKCRB8DEliiIei
+gWGhAQC7vpi9IE+7hhRdQovOWzIYkNvboF4xq4KSxO2WT6waRAEA0jwGvzI/N/kb
+2hE4ayjBueynQFF492Fo/emCQcu6qw8=
+=/XyS
+-----END PGP SIGNATURE-----
+
+--MZf7D3rAEoQgPanC--
