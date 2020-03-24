@@ -2,150 +2,122 @@ Return-Path: <SRS0=kv1d=5J=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 56617C43331
-	for <git@archiver.kernel.org>; Tue, 24 Mar 2020 16:00:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DDCAC43331
+	for <git@archiver.kernel.org>; Tue, 24 Mar 2020 16:16:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 2739620774
-	for <git@archiver.kernel.org>; Tue, 24 Mar 2020 16:00:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5514020774
+	for <git@archiver.kernel.org>; Tue, 24 Mar 2020 16:16:53 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UqjHylZb"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N/EZgbUH"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727636AbgCXQA6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Mar 2020 12:00:58 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:42395 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727164AbgCXQA6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Mar 2020 12:00:58 -0400
-Received: by mail-pg1-f196.google.com with SMTP id h8so9216176pgs.9
-        for <git@vger.kernel.org>; Tue, 24 Mar 2020 09:00:57 -0700 (PDT)
+        id S1728706AbgCXQQw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Mar 2020 12:16:52 -0400
+Received: from mail-ot1-f67.google.com ([209.85.210.67]:34560 "EHLO
+        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727444AbgCXQQw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Mar 2020 12:16:52 -0400
+Received: by mail-ot1-f67.google.com with SMTP id j16so17589363otl.1
+        for <git@vger.kernel.org>; Tue, 24 Mar 2020 09:16:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ld6nJ+2BysYcXOhNZgaFNRNZqbac3YsF5QcaEiWSUDU=;
-        b=UqjHylZb3OioopHpd5aZjTQZXvQXAI95aKYBaR7U8UOR5Ufs3pf8NiO21BkXtpz3YT
-         MeQXQCHnVSoU2XFH8RmH6L9Psq8+/nGVUi2ZdkXzf3KOqZGv+zPjDNThcqC3izyEG+Bm
-         kqmROyCtttJbrD/7j1Q8cICnZBx+7ID3lmCzXoSb1NIVXnwGUgOR7pKTfNMQJ6niIEZN
-         gP5LZdX3/DpJC8ScwbmgSmil2zPyeEF61oa4+sIW0VLq7PheAgHxoF09iBx5luJQfGrN
-         CNSzyX9326f3t7i7FvTyDI6cohpRulZWSDw1jDkdk1Qc2+iVksSAnXxBgYKlN8tabI2T
-         UF9w==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=aLvMNL+AuZ6locqt39tmyvIp1igxcvbrFtwgBKKUpTU=;
+        b=N/EZgbUHfrIadJ3pHVp3aEzJczuN5nYGbzaicHDcMBoBfbc76KYCkc8fopBBeUGB22
+         1TNjeHv+arRzEjMzN3GkwSvOoVeatMm9dEkLvvzVM1TtMuiqd1m8ejR8YJlKBTSVfEWO
+         VRh+/AN9IeP2BmlcqJoqQWeZgl6bX+i7zqJlkrvQM0KUO0kSsa2ELBgF5F3J3ATKmZeP
+         DXzeBHUpRlXfIkMhIkoDkkc8krmEWUU1YPTz2EzTon/ftkmxlATun2hCL6VNYISAzOZb
+         4qp4I/4lg2eFrsyv4sSrRbskG5t0KYclNsh8PNGthsF+8tPY3swAZWSSTtTdVUFw6/6t
+         b9Zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ld6nJ+2BysYcXOhNZgaFNRNZqbac3YsF5QcaEiWSUDU=;
-        b=O7wFfB2RuH3ULCZeF94fe+HsZqFC9cSPS/RqGXtJDZx135nhi3evcTz/QvbPycvFvC
-         kSiBhKgZPBOZApgU9BN1/cVs/zWMZOV+lfGcoD2p8Cwo1XAczM6mwEKpcmPmihXz7/xO
-         7mYc/adTyNQpa5oN/VnScEN5HG77e7jW9WpyXuH4pYkVyeh1sPTvUdVrscQvoJaz8Sh/
-         5ShHyRWys1zKJnlva/OyfCn5vlWakFh7EcX9GeZiftJitNrhAS3KKcqJyTASvRJZTol5
-         h28OQnDyG/bzRfVPoYkrMj3ZrfhkFDsbTluC10C6UThCv95H0QxhrOIWB21jklBiGbyt
-         K9sw==
-X-Gm-Message-State: ANhLgQ1PRMCgKWiWgNL7jZl3r8OnBpP16Mz5NPEwqVVYnZr7EcEEEh0Z
-        4ALWKHObiJJXM1Jcnc7H2AbY+vpP
-X-Google-Smtp-Source: ADFU+vsnNVHYGniWldZqAEWmcjUjpe4+sszHOtDBVhkoyQtY3BCJhOuKxbflTaIN4BHyAEhfdn3oBw==
-X-Received: by 2002:a63:195a:: with SMTP id 26mr26067220pgz.400.1585065656632;
-        Tue, 24 Mar 2020 09:00:56 -0700 (PDT)
-Received: from localhost ([2620:10d:c090:400::5:e28f])
-        by smtp.gmail.com with ESMTPSA id 193sm9472182pfa.182.2020.03.24.09.00.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Mar 2020 09:00:55 -0700 (PDT)
-From:   Daniel Sommermann <dcsommer@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Stefan Beller <stefanbeller@gmail.com>
-Subject: [RFC PATCH] git-apply: Permit change of file mode when filename does not change
-Date:   Tue, 24 Mar 2020 09:00:54 -0700
-Message-Id: <20200324160054.1535824-1-dcsommer@gmail.com>
-X-Mailer: git-send-email 2.25.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=aLvMNL+AuZ6locqt39tmyvIp1igxcvbrFtwgBKKUpTU=;
+        b=U+1/GXd4az7KW5l3F6cinV3/bAqB7oIrjUYqZpKf9bicc1kNBIXFCmxruxATarn7Ft
+         b/eqMx/ik8ZXLszhT2rpoGUTz8zlYJYHw2AWstWL/LU1zT9sDxFYx/KXrktmtXbIn7Fu
+         wKrp7FhrTViTft+MZxjz0ONiJq4Xrd2Onn5a5yJzaUeChhJFZTMYCXXCc2n5Cb/DBfOt
+         YSRvC4hhsyN795Td2JOxRYVmbg4MLtQfuFn02cPAmkN5WBWnTiexX79MnT23PLn4THLu
+         4NColTsJH6pX5NHxN23WkgkJHmQCqKouHb1gUiaPK/fpRIf/Kud0917NnIhpUb1+MzYS
+         IIwA==
+X-Gm-Message-State: ANhLgQ3e/OumBmQajVIBl5KFzxoHkJETyicalYeD6rhR5gp5SFSDI7Ij
+        V2EdOrtVhLzjw8vRveQ8S2dXxBNlOCzCUle/Dok=
+X-Google-Smtp-Source: ADFU+vvqSY9DbHzn1WF1MJTeox/Vh+2XYT6sThuavnhHIa78fk2OdvCcWJvBdaDfMOhkbQK50OYMJNTjzLfAwtmarO8=
+X-Received: by 2002:a05:6830:2428:: with SMTP id k8mr2784557ots.345.1585066609318;
+ Tue, 24 Mar 2020 09:16:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <cover.1585027716.git.matheus.bernardino@usp.br>
+ <0b9b4c4b414a571877163667694afa3053bf8890.1585027716.git.matheus.bernardino@usp.br>
+ <CABPp-BHbrGGjV_22kwTERn19RaWk73_Y6tzWnjwO9u4isCRpVg@mail.gmail.com> <59c04216-8dd9-cbbf-a869-a65ed8ca6e0a@gmail.com>
+In-Reply-To: <59c04216-8dd9-cbbf-a869-a65ed8ca6e0a@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 24 Mar 2020 09:16:38 -0700
+Message-ID: <CABPp-BFf-A_a=_02gP_=kBFmQmpM8udFZyrq17Co_u+QWURFKw@mail.gmail.com>
+Subject: Re: [RFC PATCH 2/3] grep: honor sparse checkout patterns
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Matheus Tavares <matheus.bernardino@usp.br>,
+        Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Stefan Beller <stefanbeller@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The documentation for git's diff format does not expressly disallow
-changing the mode of a file without splitting it into a delete and
-create. Mercurial's `hg diff --git` in fact produces git diffs with such
-format. When applying such patches in Git, this assert can be hit. The check
-preventing this type of diff has been around since 2005 in
-3cca928d4aae691572ef9a73dcc29a04f66900a1.
+On Tue, Mar 24, 2020 at 8:12 AM Derrick Stolee <stolee@gmail.com> wrote:
+>
+> On 3/24/2020 3:15 AM, Elijah Newren wrote:
+> > Hi Matheus,
+> >
+> > On Mon, Mar 23, 2020 at 11:12 PM Matheus Tavares
+...
+> >> Something I'm not entirely sure in this patch is how we implement the
+> >> mechanism to honor sparsity for the `git grep <commit-ish>` case (which
+> >> is treated in the grep_tree() function). Currently, the patch looks for
+> >> an index entry that matches the path, and then checks its skip_worktree
+> >
+> > As you discuss below, checking the index is both wrong _and_ costly.
+>
+> I'm not sure why checking the index is _wrong_, but I agree about the
+> performance cost.
 
-Simply deleting the check that prevents changing the mode when not
-renaming allows such diffs to work out of the box, as the attached test
-case shows.
----
- apply.c                  | 18 ------------------
- t/t4115-apply-symlink.sh | 23 +++++++++++++++++++++++
- 2 files changed, 23 insertions(+), 18 deletions(-)
+Let's say there are two directories, dir1 and dir2.  Over time, there
+have existed a total of six files:
+   dir1/{a,b,c}
+   dir2/{d,e,f}
+At the current time, there are only four files in the index:
+   dir1/{a,b}
+   dir2/{d,e}
+And the user has done a `git sparse-checkout set dir2` and then at
+some point later run `git grep OTHERCOMMIT foobar`.  What happens?
 
-diff --git a/apply.c b/apply.c
-index bdc008fae2..1b9d315771 100644
---- a/apply.c
-+++ b/apply.c
-@@ -3950,24 +3950,6 @@ static int check_patch(struct apply_state *state, struct patch *patch)
- 		}
- 	}
- 
--	if (new_name && old_name) {
--		int same = !strcmp(old_name, new_name);
--		if (!patch->new_mode)
--			patch->new_mode = patch->old_mode;
--		if ((patch->old_mode ^ patch->new_mode) & S_IFMT) {
--			if (same)
--				return error(_("new mode (%o) of %s does not "
--					       "match old mode (%o)"),
--					patch->new_mode, new_name,
--					patch->old_mode);
--			else
--				return error(_("new mode (%o) of %s does not "
--					       "match old mode (%o) of %s"),
--					patch->new_mode, new_name,
--					patch->old_mode, old_name);
--		}
--	}
--
- 	if (!state->unsafe_paths && check_unsafe_path(patch))
- 		return -128;
- 
-diff --git a/t/t4115-apply-symlink.sh b/t/t4115-apply-symlink.sh
-index 872fcda6cb..593e6142b4 100755
---- a/t/t4115-apply-symlink.sh
-+++ b/t/t4115-apply-symlink.sh
-@@ -44,4 +44,27 @@ test_expect_success 'apply --index symlink patch' '
- 
- '
- 
-+cat >move_patch <<\EOF
-+diff --git a/file_to_be_link b/file_to_be_link
-+old mode 100644
-+new mode 120000
-+--- a/file_to_be_link
-++++ b/file_to_be_link
-+@@ -0,0 +1,1 @@
-++target
-+\ No newline at end of file
-+EOF
-+
-+test_expect_success 'apply file-to-symlink patch' '
-+
-+	git checkout -f master &&
-+	touch file_to_be_link &&
-+	git add file_to_be_link &&
-+	git commit -m initial &&
-+
-+	git apply move_patch &&
-+	test target = $(readlink file_to_be_link)
-+
-+'
-+
- test_done
--- 
-2.25.1
+Well, since we're in a sparse checkout, we should only search the
+relevant paths within OTHERCOMMIT for "foobar".  Let's say we attempt
+to figure out the "relevant paths" using the index.  We can tell that
+dir1/a and dir2/a are marked as SKIP_WORKTREE so we don't search them.
+dir1/c is untracked -- what do we do with it?  Include it?  Exclude
+it?  Carrying on with the other files, dir2/d and dir2/e are tracked
+and !SKIP_WORKTREE so we search them.  dir2/f is untracked -- what do
+we do with it?  Include it?  Exclude it?
 
+We're left without the necessary information to tell whether we should
+search OTHERCOMMIT's dir1/c and dir2/f if we consult the index.  Any
+decision we make is going to be wrong for one of the two paths.
+
+If we instead do not attempt to consult the index (which corresponds
+to a version close to HEAD) in order to ask questions about the
+completely different OTHERCOMMIT, but instead use the sparsity
+patterns to query whether those files/directories are interesting,
+then we get the right answer.  The index can only be consulted for the
+right answer in the case of --cached; in all other cases (including
+OTHERCOMMIT == HEAD), we should use the sparsity patterns.  In fact,
+we could also use the sparsity patterns in the case of --cached, it's
+just that for that one particular case consulting the index will also
+give the right answer.
