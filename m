@@ -7,105 +7,131 @@ X-Spam-Status: No, score=-0.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 601EAC10DCE
-	for <git@archiver.kernel.org>; Tue, 24 Mar 2020 22:26:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 77BAFC18E5B
+	for <git@archiver.kernel.org>; Tue, 24 Mar 2020 22:29:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 2E05F2080C
-	for <git@archiver.kernel.org>; Tue, 24 Mar 2020 22:26:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4ED672070A
+	for <git@archiver.kernel.org>; Tue, 24 Mar 2020 22:29:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="ISgxVrZF"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="LitRlcQ0"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728282AbgCXW0m (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Mar 2020 18:26:42 -0400
-Received: from mout.gmx.net ([212.227.17.21]:46267 "EHLO mout.gmx.net"
+        id S1728380AbgCXW3M (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Mar 2020 18:29:12 -0400
+Received: from mout.gmx.net ([212.227.17.22]:54531 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727747AbgCXW0m (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Mar 2020 18:26:42 -0400
+        id S1728227AbgCXW3L (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Mar 2020 18:29:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1585088796;
-        bh=/ofF2jbMFIS+oxaPyh2uaBGUNxNDqIwnkEXP6Qa2f4Y=;
+        s=badeba3b8450; t=1585088943;
+        bh=DJzg0W6cx2VawU7G9VwT/JIJyHJCPpi9GWuKEEo+Z4s=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=ISgxVrZFEP7QIYXmz0kRkVB3teX2xJplTvXAqfZ8ZOIp4i17iPqDPfI20uNcVSh20
-         7e4+Nw+kzJMTbMnu8udc6Zhv+9hAVQpphYW4fO6xiZkcLOyrw9mnxKYLVY82tCU/8h
-         pZpB6VbGm/XGkNzo9o5uEIwcoq3rZYlWz6bj9Ew4=
+        b=LitRlcQ0Xsh1Fc9i4YRMsVQWj7tmJYoPX57y03fghVvhZwTHAsnVgJ5i+XNzBipNz
+         AKDhiHXn3L9GFRgpGryc/63o4bhQJGM3XVQIrA49qheS14gxG9VKZk9dxOkEtJRt/p
+         Z5gJ9pxtyD8nmRkOpQ+g8HZehycSQGkhiSmohjwc=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from MININT-QA14EDB.fritz.box ([213.196.213.32]) by mail.gmx.com
  (mrgmx104 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 1MSt8Q-1iovIY1WrW-00UG27; Tue, 24 Mar 2020 23:26:36 +0100
-Date:   Tue, 24 Mar 2020 23:26:36 +0100 (CET)
+ 1MfYLQ-1jjL6d0ivQ-00g4Rp; Tue, 24 Mar 2020 23:29:03 +0100
+Date:   Tue, 24 Mar 2020 23:29:02 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 1/2] tests(gpg): allow the gpg-agent to start on
- Windows
-In-Reply-To: <xmqqh7yd1nbh.fsf@gitster.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.2003242326190.46@tvgsbejvaqbjf.bet>
-References: <pull.728.git.git.1584968990.gitgitgadget@gmail.com>        <287a21f1033b2a74420029c529ad4db956051a85.1584968990.git.gitgitgadget@gmail.com>        <xmqqd09355h7.fsf@gitster.c.googlers.com>        <nycvar.QRO.7.76.6.2003242043050.46@tvgsbejvaqbjf.bet>
- <xmqqh7yd1nbh.fsf@gitster.c.googlers.com>
+To:     Danh Doan <congdanhqx@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2 7/8] t4124: fix test for non-compliant diff(1)
+In-Reply-To: <20200324034025.GE11801@danh.dev>
+Message-ID: <nycvar.QRO.7.76.6.2003242328380.46@tvgsbejvaqbjf.bet>
+References: <cover.1584838148.git.congdanhqx@gmail.com> <10f39c3d30d13e9141f081f985a0620954cc7493.1584838148.git.congdanhqx@gmail.com> <nycvar.QRO.7.76.6.2003231456200.46@tvgsbejvaqbjf.bet> <20200323150449.GC11801@danh.dev> <xmqq8sjq4wyf.fsf@gitster.c.googlers.com>
+ <20200324034025.GE11801@danh.dev>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:l6XUpkSpv0j/thZ4kOTSSGcYzptA+V6u/ibO+lcUn182qMFTXiU
- JoLdffew1ZZ5nx+Ux76ZS95XZBh8EY9IpIB/9UQ6bKlZkmdjnLZXVUpczuPoWRGIP4NLLvJ
- Djk8v3bS8wi/AuxTyy/2WPr1Q7rWx96P0tNRCumUKQ4FvvnkL898jm+BMH2h4cTjRib6v3m
- DppwBsBZuIFmIe6DDSRwg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:JFF2cHuscwM=:sHrliNDQ2IjMX3qQMb9l2C
- 5rfX/Y+KFeaDWEP+gEqo50UjU3lJHoAtpqBKiyISGrzv3+HJqZQswZf8e6RNxjOBYLTF1uoWW
- lak3kBzauLhOh9lyvj9CnilJYMT8OfjelaQaYbvqeNXHhsfCM2NS4Ic4NCkOjlspZcwm6r8R9
- wQHLXoFoqbeF3rvK/+YoaIQfVvRU7ksbFBcIkyJ+bo1Jy9HNWgR5NAn3evRzyH5ANUyg+glai
- PKq+6kZ07ASf0fikqVQSsuhbrsq5Mp2Ee4Cb7r0YABnFpZfEgEbmhWXI5+gnUzNs9Znef5Vvb
- 4rPZh5bOthCMKw6kewtoE3OuXMK7iveiLu2v5410DfhELbanZydMUqwvx1+CWsfLY7WQ7gv3O
- HyeH6x+NykzzFynDvaNXo2jtPICIWdYddqNu3uI6NUJo8Fo7mKgyBU9EqfmrKC05do8A0IDdk
- MsubCD1DDn5KbBkvBkj0afQjMvCjsymxPlsoxmbp6Y3ZyruNYsLfrLsIlju0i6xA3Bm+TwC/6
- Kl7PmEjMMqazKdQ6ACgao6+iUJFruVakbA+HqCq8Je5wxyzYEoZCM4jYLuzuS5aLDUyb2EABl
- MvzScb20TPg1L4nS9jSe7xW3jTnpsNyE2+P+zcDRksbAwx3noATk6FcYDbXmaa560GGEXQajT
- 0Ogk/0JPWFYxawnZejBUz051OzO+08puXJoVfD4WuQHrQu4ZhxW3FYqyKJjwsSJZx139Vq+Mg
- dYNRDnDxK1zPgnXx9n0r4BkYC/AaD3BgprA9JG/OoqEPKoF5RSH6OHGtcxcGZy6Xy+NQ6KtBp
- ZLHPnugpjmhojcUknckgy/WVe520R8jrJYHPLGwhfLdZBYbJUk4pKNhZ54ADjJuvn1UkM+LIE
- +Jmd+MTircMj3aOzwB5Wt8pZvCYqTybYY/b44gBD4N0LiaEUQPDXgtrAsatpkLT4qg2vug06t
- zCYZYzP5uq4fjpizy9vtXM9lCuQBJ9jf8MHaPsfYwJOB17Ina3Zl+KaNs9lveid7FYf45yTJZ
- T7IGCCKgPxylqT0KYAsJm6I8V2HKq0F1Bo1FN+iApwKMtx5+P+NBWoLrOHtToeFqm7+WeQv3s
- y2jfXzjpZcwwWlz2O2KynxLq9mDEYpeSPvIBxi//ks49wpaFHiTjDemFwKVwjXNxfsu9OoHdP
- fyhfa59OOgDvDu6GwkXXcsB96Zfqd08eZTf2F+BbyEDDpJCA+0mYhT3bGUgz4sU+uYnNsOAGv
- emnoesH7SfZQr1Flr
+X-Provags-ID: V03:K1:5/KTGamerPs8ifzUj/6WuShX/3Tm0XA1YUKsQHnjqpXsNpOm2Qr
+ Xofa6lcOqR3ZuulcdL+cAzq08kxgkFQxshWTFw9qw16dx5tpq46J5wJfZEo4IipV84pK8OD
+ 7+fE5ofwRhXxmPBkzIgSGpAc5Nlej6Mat3cdW9RGaoesR5kj/JATxBO6liL/fiQcnKfoxyu
+ s2OiTpqnYKIx75pAhVh4A==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:r6qBCEk+sI4=:GcidY3hBIZLIa79esW9CTK
+ CTJE0I4ULoPjEZ33WsfBWc4bCjorL00KHYbdwZBrG/8Lba+Uafh4xBcgxDj2h4D8e/jegs/jq
+ 9NFfM/qa65zfCYsk/EkcFKsILaJVVd0Ririkfv5QLnz4yIwZOIaLaaqDis1vmZKsxSzqUn4Qp
+ N2jQeQsW3WqKFvY+uuswlIsMLK33elf6l+zBe8VB2UTt+mCbkHXUSLnYmtGnJx0CYH0TgXpZX
+ vpp6o+ggrdEdv1z4UqyQNe+TErIMUl/ct/o8daTZ7FpMpmEnvtDbNHGrsk0V6OH1AzZNSb4VS
+ SDdnjWFTSIsMEeVdxoogAzPItalkmCN8/TNxfw0GolAeWFqNn/gcoBcYChfKXRMTNzLKwCOdx
+ IzkQj4koJdhBshAF2HCvUUTcc7MoBvBJ6/N6SBkbRB6ZDRCOyT2saBTNyBohyoEeykGqExgy9
+ 1x5EHZQWzKr2FzA4Cxrst7DMPDTgUmJ5W/GX6aFThAO+tiqkz7bPU9Z9WogVtkVp/ddvYgIHg
+ 6hwvd4LAXLzh7WcTfUJ7jqcQkWdZ80VZd7g2FFQyMitgn6R9SHXl90uoiB8LDArYM36CEBH/f
+ NuGawpslSJCNrg73EmHztsnqRViopCoCq98+2eV+N3TapP8mwV6t2xTLigb6gwReOMdkXIl3T
+ Vv8QTlmHslcjFnPhxiBdJNigW0qFctRU0f0Zd1OW+u0HZDRZSjhqG62b3LAlqEBj5PU66fyFe
+ pJ/Imx/CRj6UuABuTGiwoM4fLBFPm1K2IMhkkGyYV1nGzA/LkgVMp/wJEwCToIDTKu8UhAJ2U
+ x4eM+d2qxjXLEnylrPSPFrYpj38GbJGsDtUuBbOdHzHO6zsSRarSSE3rlbXoTmx/LKX+U/aYL
+ +gctDKTYY3KjrtdhJMsl9tDFAuFwgBwLYEam84u+0kuyiNsfowwDFOSG/E/Snoi9Gq5w+2zQD
+ o4ZloPFjq4f8sU073wrmTs2O3orGz+p+/KXfSwNcpDR7sEDztPHqkRrIj15Ezthkb+YO329Sg
+ bSTnw1C/CppuCz0hnxV6tqAXZL251hPUJq0a4gU3gzHPwY/OPptEcmzJBzmUx8434111PVyWX
+ bwY0HaaJhd/E39uVWcGWzF1MiNZsGJJ7978aBgpkBRcxSZuJr4PR8smfJygPv+VAJpKv6hbUG
+ QNx4PWd7LrDiCT8c2QrPvv38nhqHY9j21r8uysfhZuDOotVEwjIcV2IfL3/z9K7LzyT4mLSje
+ hc1nCKQZ6WgfnJ9GI
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi,
 
-On Tue, 24 Mar 2020, Junio C Hamano wrote:
+On Tue, 24 Mar 2020, Danh Doan wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> On 2020-03-23 13:50:48-0700, Junio C Hamano <gitster@pobox.com> wrote:
+> > Danh Doan <congdanhqx@gmail.com> writes:
+> >
+> > > A comment in test-lib-functions::test_cmp mentions that
+> > > there _is_ a diff out there that doesn't understand "-u".
+> >
+> > That came from 82ebb0b6 (add test_cmp function for test scripts,
+> > 2008-03-12).
+> >
+> > The change history at the end of the page:
+> >
+> >   https://pubs.opengroup.org/onlinepubs/9699919799/utilities/diff.html
+> >
+> > suggests that POSIX did not require "diff -u" until Issue 7, so it
+> > is not surprising that the lack of "diff -u" to cause test_cmp to
+> > fail was of real concern back in March 2008, as the application of
+> > the errata have been only an year and half old, according to:
+> >
+> >   https://www.opengroup.org/austin/docs/austin_325.txt
+> >
+> > I vaguely recall that some open source projects only took the copied
+> > context diffs and not unified ones the last time I checked, but
+> > admittedly (1) that "last time" was a long time ago and (2) our
+> > popularity and the fact that we do not understand copied context
+> > [*1*] may have forced people to move away from "-c" and adopt "-u"
+> > at the same time.
+> >
+> > So it might be OK to write off any system that does not understand
+> > "diff -u" as an unusable trash these days ;-)
 >
-> > I fear that this distinction really is lost on anybody who does not ha=
-ve
-> > to deal with MSYS2 on Windows.
-> > ...
-> > In short: I am convinced that this is a subtlety in our test suite tha=
-t we
-> > cannot reasonably expect any contributors other than Windows-based one=
-s to
-> > get right, and I am fairly certain that we will just have to keep
-> > monitoring the CI/PR builds for similar issues and then help the
-> > contributors by suggesting the appropriate fixes.
+> From the setting in "config.mak.uname", it's likely those systems
+> don't understand "diff -u":
 >
-> IOW, this cannot be made an engineering problem and has to stay a
-> black art? ;-)
+> - Solaris 5.6, 5.7, 5.8, 5.9: both of them are un-supported version
+>   by their vendor
+> - AIX, only AIX 5.3 doesn't understand "-u",
+>   the end-of-support AIX 6.1's diff(1) understand "-u" (1)
+> - HP-UX: From what I can collect, HP-UX still conforms to UNIX-03, and
+>   its diff(1) doesn't understand "-u"
 >
-> That's somewhat sad, but I guess we have to live with it.
+> Hence, if we're going to drop support for system that doesn't
+> understand "diff -u", we're going to:
+> - remove support for those variables:
+>   + GIT_TEST_CMP_USE_COPIED_CONTEXT
+>   + GIT_TEST_CMP
+> - drop support for:
+>   + Solaris 5.{6,7,8,} and AIX 5.3, which will be fine
+>   + HP-UX: which needs to be discussed
+>
+> [1]: https://public.dhe.ibm.com/systems/power/docs/aix/61/aixcmds2_pdf.p=
+df page 133(143)
 
-I am afraid so.
+With this explanation, I totally agree that your patch is better than
+mine.
 
-Ciao,
+Thanks,
 Dscho
-
->
-> Thanks.
->
->
->
