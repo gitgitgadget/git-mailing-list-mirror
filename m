@@ -2,199 +2,170 @@ Return-Path: <SRS0=kv1d=5J=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 72993C4332B
-	for <git@archiver.kernel.org>; Tue, 24 Mar 2020 19:35:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C9C4BC43331
+	for <git@archiver.kernel.org>; Tue, 24 Mar 2020 19:55:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 4025720714
-	for <git@archiver.kernel.org>; Tue, 24 Mar 2020 19:35:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 96DA620753
+	for <git@archiver.kernel.org>; Tue, 24 Mar 2020 19:55:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="t4r/g3g5"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="bFB0Xeka"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725934AbgCXTft (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Mar 2020 15:35:49 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:45533 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725835AbgCXTft (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Mar 2020 15:35:49 -0400
-Received: by mail-ed1-f68.google.com with SMTP id u59so22096195edc.12
-        for <git@vger.kernel.org>; Tue, 24 Mar 2020 12:35:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=QmuEj7bclplbq20p6EMc5fENjrB7izHsLxV02dAymJY=;
-        b=t4r/g3g55VUISuzsesDerSP4OmKZM495oGBNGyGsZw78CbSdzmk/098a/JHNqPxwLJ
-         RX5wXQsThW6LR0E3raCHMO2K9nS0vlVmeFYuAeNvoqt13PEMJBOvy0kl+vi0h0JuFdm5
-         Y5ctycLWsyOOprp7JhcJxf+Zqt8UeVV3oMutb92i1lMwFUIEPhud6+NoI4ZIHatXCihq
-         QV08NYPR9LUv9b3KkUDgL+6nD/bk1P+XmrjOC71cYvzvhh9NfNNRXqXykdTRqaMZaHbM
-         gcusI4066bh3kGfyLbo/iOkrx1XSYrDQB7PxLj3sYTFJhXfIiY94HzmWyHt2vd949ASC
-         idbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=QmuEj7bclplbq20p6EMc5fENjrB7izHsLxV02dAymJY=;
-        b=AaekHIMlqR/ECZnlAZebUGPDaDqkut2EFjhpuDsu1YErhupKtRDiWiamh9eHUyqadI
-         GUILImfwyv32kNoby9LbpP8vFQ+IKJJJnZDtwSRm0m53kg5+6VGvHhnNVsUc4BzLWTue
-         ukXu0aDoyGuYaarLOvrq1r8JDMYrNr+FovP7cCWP3+fDi0U6ttj2BsJkU/sN+34S4Dts
-         0qHtv2I2CVAitF6n+LxIGPVJqYIepG4ldcIJZ/1AADGLjHqp1L45z3ZRwhdzS3Uqs/eT
-         vpnUgdKBWqVKOq7WJZQY+IvF0jjLejk0Doo47NtWFSFbd+8+IS9k3Cwuo0nv+u47ObMY
-         X4sg==
-X-Gm-Message-State: ANhLgQ0gxg41TVOHfrxIDTSHV0hiRWbpODsCvlPK3sbFmXfEh/YxkR2l
-        rA0SZEOYiq6UU5TNsjvi3p0OUNPo
-X-Google-Smtp-Source: ADFU+vu1cM9IfxEQ2vUsTT2ZvkH0z3eww8r+IYxVawhCZb4PQkQKSIkJMdzb+b0E9TijWWvUrPO0sQ==
-X-Received: by 2002:a50:d614:: with SMTP id x20mr29139319edi.186.1585078546510;
-        Tue, 24 Mar 2020 12:35:46 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id cq25sm517856edb.16.2020.03.24.12.35.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Mar 2020 12:35:45 -0700 (PDT)
-Message-Id: <pull.577.v2.git.1585078545448.gitgitgadget@gmail.com>
-In-Reply-To: <pull.577.git.1584968924555.gitgitgadget@gmail.com>
-References: <pull.577.git.1584968924555.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 24 Mar 2020 19:35:45 +0000
-Subject: [PATCH v2] import-tars: ignore the global PAX header
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1725953AbgCXTzK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Mar 2020 15:55:10 -0400
+Received: from mout.gmx.net ([212.227.17.22]:34795 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725866AbgCXTzK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Mar 2020 15:55:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1585079704;
+        bh=D/7ZbwVzuEo4VShHXZMLgKD5M/uphXujDgF6Q8RnSOM=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=bFB0XekaJGGFcIzIJM6RAPFJM6c877oxNByk+ztBbvuw/kWgrJEeAuwW54GPzoBkg
+         H9jp5EGhb+UJh5Y33SUhaUdwC4lxCPg0UyR8surCW58SxIdRpAWSd9vjdFCo3sRf1L
+         mBNx3HfyHJcTKDluXbSaQwuskt8TMe/DZOB6tkzg=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from MININT-QA14EDB.fritz.box ([213.196.213.32]) by mail.gmx.com
+ (mrgmx105 [212.227.17.168]) with ESMTPSA (Nemesis) id
+ 1MvK0X-1jYlzt1is5-00rHhA; Tue, 24 Mar 2020 20:55:04 +0100
+Date:   Tue, 24 Mar 2020 20:55:04 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 1/2] tests(gpg): allow the gpg-agent to start on
+ Windows
+In-Reply-To: <xmqqd09355h7.fsf@gitster.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2003242043050.46@tvgsbejvaqbjf.bet>
+References: <pull.728.git.git.1584968990.gitgitgadget@gmail.com> <287a21f1033b2a74420029c529ad4db956051a85.1584968990.git.gitgitgadget@gmail.com> <xmqqd09355h7.fsf@gitster.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:av9SJAboQPGOiieNdqNykYMekky/+NXvxetGQ23cfrHblIIVeRf
+ ODaDWrdgsVX7kq1hHptSVBqGjzb1jgNq+QKu8Dhl1LXBmcnfvTFpFTFzkfZaudgRmsLX4WQ
+ ZVaD7vt00EJLTzxPIv3eX+s/wNGzctWX+SrriBuxaDYTW+h0dQEEU1SDXLcGXPkEzoq/6bJ
+ Laeh9u/z71z9YVyCWf/5g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:jVVTMYEgbQk=:2kAJW8rSgUErvzJkqG9Mof
+ 95Tla7ryGbqLKChKBfXSJ39N/MqrDd/6KuOhEjUIhoykE2136qcJf1WnDjaxkVUC0+iCjHuLG
+ DGMX4KTFSYCBLV5qvD/XjlGnamq7oP8GmeR/DRThqPRAHsiKwL/0x+tpZa3VgounHqSNrPEpv
+ PjqfvYaYmaLxUvyfkUSkaAK8dQ/Bwu3BUA6O191rzlciRg2DO29u6YkiKee/DgnaXdG1PBLM8
+ 24lY7PVte/WJer6agJ2mbUeMeaOJBnSqnNZTJYU4JFbMc5Fur4YhQ8SpqNQaKnFb7PgRCw1KG
+ Nnrpfigm9mYGOoXmegUtXH5Hc4QuKsunJ47dEIPcBGJlTBuYHy4egjm7uxAREXgergDZo73oK
+ rbhiqex8qwEJJo4W7ZUKD+LCeBZ7IDu1SPMi2p3XSpCBpGtMz9uACIjrkHLDgje0OBG7Y91mz
+ eZqqYkrCu16Y+VpsQGPFAri5kUaWYeB8XZAxFQY/teI7FZM4HYqAacUZBafAdx/r2Who8ftjW
+ SUwlKofbGhsPMWDiZZe5NvcOfFnF+bQC7vrEKQTbRjsBdd8cJZYj+a5wlG1Ov6u5fXuazXdq7
+ MW5JF4rSdArXkwLZNFGxlS+taQe7VMld9iWq7HGPSeCnTPVNTTcYzDXS0hhmbgIKt/zJX4hXD
+ LB43s4pl4v0LzoXL7WiIr3LshmpK2KKZxfUpa1YTeKvPKZZyfKrWHC7ePoFVSt6GhSFMsS/TB
+ tebW9o+nxSYEYeSAdHd0Hb0aRMK4dcSl1uhK89fjPPb/C8OyD3CC5eIC6Eyl9UfgoMjmg+ErA
+ od/lv13RW7HDAY07huwWHR5j3Zw1Civ+uIaIxCwIgoeIVzmPfuQcM9rwcpuEmxhJi917Fcoqm
+ 0FwRKMfHOdw945JmCuoXu/IjueBqeStgwybfir964oP5JgE4M2SyjGpYp5gmB0X/zMqSCC51m
+ zmQKPJMmVsIf5VzqefK5zTKJuQGt8qDN37huJlHgTQ9a23Y9LESfSlNBv1NA5F0RXcExa5bvQ
+ lMBIBri5HfP0GYk3K5li4cBahz5b2WGL4QImnYx0iHshuQe2jW3I9Hj5lgC647OvaC47Xi2hS
+ omZvDNXYxLt1SxkChxy05/BJhiWFYS6eHZRSahYFM1QtfPPk4nR9UdoFb9ohjxbqEyXIAoJru
+ lTpWqg8GHtMzh5XeIxiuk7X9QQxlvyJ9SccsRBI5eF9X/H2N3CTIUwwz/BElWhwKk8tUjtsgR
+ Vgara/T5KAasFwrWB
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Hi Junio,
 
-The tar importer in `contrib/fast-import/import-tars.perl` has a very
-convenient feature: if _all_ paths stored in the imported `.tar` start
-with a common prefix, e.g. `git-2.26.0/` in the tar at
-https://github.com/git/git/archive/v2.26.0.tar.gz, then this prefix is
-stripped.
+On Mon, 23 Mar 2020, Junio C Hamano wrote:
 
-This feature makes a ton of sense because it is relatively common to
-import two or more revisions of the same project into Git, and obviously
-we don't want all files to live in a tree whose name changes from
-revision to revision.
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
+>
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > In Git for Windows' SDK, we use the MSYS2 version of OpenSSH, meaning
+> > that the `gpg-agent` will fail horribly when being passed a `--homedir=
+`
+> > that contains colons.
+> >
+> > Previously, we did pass the Windows version of the absolute path,
+> > though, which starts in the drive letter followed by, you guessed it, =
+a
+> > colon.
+> >
+> > Let's use the same trick found elsewhere in our test suite where `$PWD=
+`
+> > is used to refer to the pseudo-Unix path (which works only within the
+> > MSYS2 Bash/OpenSSH/Perl/etc, as opposed to `$(pwd)` which refers to th=
+e
+> > Windows path that `git.exe` understands, too).
+>
+> Makes sense.
+>
+> Do we have a short/concise instruction, e.g. "You should use $(pwd)
+> in most cases, but for such and such purposes use $PWD instead", in
+> t/README for test writers, who are not familiar with the distinction
+> between $(pwd) and $PWD, to help them decide which one to use in
+> what situation?  I see this kind of fix-ups from time to time, and
+> am wondering if there is a way to reduce the need for you or J6t to
+> spot and fix the new ones.
 
-Now, the problem with that feature is that it breaks down if there is a
-`pax_global_header` "file" located outside of said prefix, at the top of
-the tree. This is the case for `.tar` files generated by Git's very own
-`git archive` command: it inserts that header, and `git archive` allows
-specifying a common prefix (that the header does _not_ share with the
-other files contained in the archive) via `--prefix=my-project-1.0.0/`.
+I fear that this distinction really is lost on anybody who does not have
+to deal with MSYS2 on Windows.
 
-Let's just skip any global header when importing `.tar` files into Git.
+It is subtle enough a distinction, too: whenever Bash or Perl is
+concerned, we _might_ run into this issue. I say _might_ because _some_
+scripts actually handle Windows paths correctly, but others don't (testing
+for absolute paths by looking for a slash at the beginning would be an
+example, and it gets really hairy when you slap Windows paths at the end
+of `PATH`, separated by, you guessed it, a colon).
 
-Note: this global header might contain useful information. For example,
-in the output of `git archive`, it lists the original commit, which _is_
-useful information. A future improvement to the `import-tars.perl`
-script might be to include that information in the commit message, or do
-other things with the information (e.g. use `mtime` information
-contained in the global header as date of the commit). This patch does
-not prevent any future patch from making that happen, it only prevents
-the header from being treated as if it was a regular file.
+It gets even worse: you might think that you have to use `$(pwd)` when
+passing the path to `git.exe` (because it is a non-MSYS2 program). But you
+don't, in many cases. For example, when you call
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-    Ignore the global PAX header in import-tars.perl
-    
-    This problem came up in Pacman-related work, where PKGBUILD definitions
-    would reference the tarballs downloaded from GitHub, and patches would
-    be applied on top. To work on those patches efficiently (e.g. when an
-    upgrade to a new version of the project no longer lets those patches
-    apply), I need to be able to import those tarballs into playground
-    worktrees and work on them. I like to use 
-    contrib/fast-import/import-tars.perl for that purpose, but it really
-    needs to strip the prefix, otherwise it is too tedious to work with it.
-    
-    Changes since v1:
-    
-     * Mentioned the implicit prefix-stripping feature of import-tars.perl 
-       in the commit message; Without that context, it is really hard to
-       understand the motivation for this patch.
-     * Clarified in the commit message that this patch does not prevent any
-       future patches that would use the information contained in the global
-       header.
+	git config my.pwd "$PWD"
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-577%2Fdscho%2Fimport-tars-skip-pax-header-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-577/dscho/import-tars-skip-pax-header-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/577
+it totally works (because the MSYS2 runtime on top of which Bash runs will
+convert the parameters that are passed to a non-MSYS2 program when they
+look like paths).
 
-Range-diff vs v1:
+The problem solved by _this here_ patch is the opposite, of course: we are
+passing a Windows path (`$(pwd)` implicitly calls `$(pwd -W)` in our test
+suite on Windows) to an _MSYS2_ program: `gpg.exe`. And how would
+contributors whose main development platform isn't Windows be able to
+guess that `gpg.exe` is an MSYS2 program as opposed to, say, `tclsh.exe`
+which is a non-MSYS2 program? They wouldn't.
 
- 1:  718bde8f4a7 ! 1:  842dabe6128 import-tars: ignore the global PAX header
-     @@ -2,12 +2,34 @@
-      
-          import-tars: ignore the global PAX header
-      
-     -    Git's own `git archive` inserts that header, but it often gets into the
-     -    way of `import-tars.perl` e.g. when a prefix was specified (for example
-     -    via `--prefix=my-project-1.0.0/`, or when downloading a `.tar.gz` from
-     -    GitHub releases): this prefix _should_ be stripped.
-     +    The tar importer in `contrib/fast-import/import-tars.perl` has a very
-     +    convenient feature: if _all_ paths stored in the imported `.tar` start
-     +    with a common prefix, e.g. `git-2.26.0/` in the tar at
-     +    https://github.com/git/git/archive/v2.26.0.tar.gz, then this prefix is
-     +    stripped.
-      
-     -    Let's just skip it.
-     +    This feature makes a ton of sense because it is relatively common to
-     +    import two or more revisions of the same project into Git, and obviously
-     +    we don't want all files to live in a tree whose name changes from
-     +    revision to revision.
-     +
-     +    Now, the problem with that feature is that it breaks down if there is a
-     +    `pax_global_header` "file" located outside of said prefix, at the top of
-     +    the tree. This is the case for `.tar` files generated by Git's very own
-     +    `git archive` command: it inserts that header, and `git archive` allows
-     +    specifying a common prefix (that the header does _not_ share with the
-     +    other files contained in the archive) via `--prefix=my-project-1.0.0/`.
-     +
-     +    Let's just skip any global header when importing `.tar` files into Git.
-     +
-     +    Note: this global header might contain useful information. For example,
-     +    in the output of `git archive`, it lists the original commit, which _is_
-     +    useful information. A future improvement to the `import-tars.perl`
-     +    script might be to include that information in the commit message, or do
-     +    other things with the information (e.g. use `mtime` information
-     +    contained in the global header as date of the commit). This patch does
-     +    not prevent any future patch from making that happen, it only prevents
-     +    the header from being treated as if it was a regular file.
-      
-          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-      
+In short: I am convinced that this is a subtlety in our test suite that we
+cannot reasonably expect any contributors other than Windows-based ones to
+get right, and I am fairly certain that we will just have to keep
+monitoring the CI/PR builds for similar issues and then help the
+contributors by suggesting the appropriate fixes.
 
+Ciao,
+Dscho
 
- contrib/fast-import/import-tars.perl | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/contrib/fast-import/import-tars.perl b/contrib/fast-import/import-tars.perl
-index e800d9f5c9c..d50ce26d5d9 100755
---- a/contrib/fast-import/import-tars.perl
-+++ b/contrib/fast-import/import-tars.perl
-@@ -139,6 +139,8 @@
- 			print FI "\n";
- 		}
- 
-+		next if ($typeflag eq 'g'); # ignore global header
-+
- 		my $path;
- 		if ($prefix) {
- 			$path = "$prefix/$name";
-
-base-commit: b4374e96c84ed9394fed363973eb540da308ed4f
--- 
-gitgitgadget
+> Thanks.
+>
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >  t/lib-gpg.sh | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
+> > index 8d28652b729..11b83b8c24a 100755
+> > --- a/t/lib-gpg.sh
+> > +++ b/t/lib-gpg.sh
+> > @@ -29,7 +29,7 @@ then
+> >  		#		> lib-gpg/ownertrust
+> >  		mkdir ./gpghome &&
+> >  		chmod 0700 ./gpghome &&
+> > -		GNUPGHOME=3D"$(pwd)/gpghome" &&
+> > +		GNUPGHOME=3D"$PWD/gpghome" &&
+> >  		export GNUPGHOME &&
+> >  		(gpgconf --kill gpg-agent >/dev/null 2>&1 || : ) &&
+> >  		gpg --homedir "${GNUPGHOME}" 2>/dev/null --import \
+>
