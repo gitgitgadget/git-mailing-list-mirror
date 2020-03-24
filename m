@@ -2,235 +2,213 @@ Return-Path: <SRS0=kv1d=5J=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F6BCC54EEB
-	for <git@archiver.kernel.org>; Tue, 24 Mar 2020 09:08:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 82768C4332B
+	for <git@archiver.kernel.org>; Tue, 24 Mar 2020 09:24:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D9EF42080C
-	for <git@archiver.kernel.org>; Tue, 24 Mar 2020 09:08:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4DF6D208CA
+	for <git@archiver.kernel.org>; Tue, 24 Mar 2020 09:24:59 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hUG6YS9p"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pdjMtt3v"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727132AbgCXJIv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Mar 2020 05:08:51 -0400
-Received: from mail-ed1-f43.google.com ([209.85.208.43]:43070 "EHLO
-        mail-ed1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726462AbgCXJIv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Mar 2020 05:08:51 -0400
-Received: by mail-ed1-f43.google.com with SMTP id bd14so5984078edb.10
-        for <git@vger.kernel.org>; Tue, 24 Mar 2020 02:08:49 -0700 (PDT)
+        id S1727285AbgCXJY6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Mar 2020 05:24:58 -0400
+Received: from mail-lj1-f182.google.com ([209.85.208.182]:36540 "EHLO
+        mail-lj1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726166AbgCXJY6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Mar 2020 05:24:58 -0400
+Received: by mail-lj1-f182.google.com with SMTP id g12so17789786ljj.3
+        for <git@vger.kernel.org>; Tue, 24 Mar 2020 02:24:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=YoJSoxawLxJDX7WiXcrXkfPxruPblgcDru9Uu2PtoEg=;
-        b=hUG6YS9peOG9Ig/4EGNCPnZdlwNWj9xhJ8Lfg6hH4xoHbPfIdIOFPLzDd2ShpQJHN2
-         UuLbf7jw+N8ZMg9HkPeVl7fpoz2lnSF/YPFLCHUtjRGGgXESao2cvPGD8EdUyKOMzzu2
-         tMIDxwWYHC3R7ykBqZWy/AiNcxenKdtWsIGZCMTzq4QT2IS7jkX3qKP+HN2HL/TIlGZQ
-         al1b0jLXRKPyTPCKo5O4sBaMqcH9Y/gsPoVFpwhYJEvmB1tGjacr1zhOBuAZQB5Er9KP
-         9HhMPLk1uKb/CP1ABR7dWd1bWPAiZtJIUnno0tCGxdUPnUzOmmMPiMXQx1CZ3aWOQxPI
-         v5Zw==
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=pnGdav7+8ZhwGOtnWx2nU5uiqZgQEg04XnKeWtJ746A=;
+        b=pdjMtt3vuQ0vCjiklankGoEbM4REdtGsYeQzn4WOOOrjD8sa2twmU1a364wcBsXVlB
+         ePMbuNQYzcBwQeCSmP5puq4ycnE05V8uJJVSc8EeoxLO0ZdDiCWL4GRvASzvKFlnxlXQ
+         HZPeoJV26VfrYiFCSHUJQ4xLD6P3Oy59llpPDVMzy4O7TxUyED4Y8kuQ66J8MufAAXSV
+         EdS9c1IMBOAzmmVhNqfKXZ/9HORc6uAKxZ71ggqWjsljrSfOh7f9cM/eGhYzBjvaOxcl
+         doCUHXKE6+ojxlNvN9pKLrp/Gi7lJyrC53kSvUdABpmuXtDBUyjEqvOfm9YfQEJqdXn+
+         zCCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=YoJSoxawLxJDX7WiXcrXkfPxruPblgcDru9Uu2PtoEg=;
-        b=GBp7PGk6iw4b0pOVjoo1zWLC1HfcUs0AK9khD8LKThMV4A0CpoP7zjhTEFfA/UL6gW
-         gboaXxBj5k95nhaEhvlkyS2pSX0RofY3HiNAx7wfhYTuVPqcl9uiw16Am8NAvKYisE4m
-         EbM8KJDEB9BeBeQBe3ojtvlzK9MrXiFpTmIK/mbBunhbwlW+8J6B2OfL5XEdnHwR3gr6
-         HEpCt1S/fjPs6+cuMCdxC3i+kZiQMrGljwQS8iXOMJExPeSuyo2SdokrI1wUQOZ7HjfZ
-         YYRYF/2n7xgFzt2BbhfxgLvO/1ydHzzj1OTHIkHw7tdHhlIPkbLdzc03L1O+641sTSk5
-         Dbpw==
-X-Gm-Message-State: ANhLgQ0MpxhLyBIxvad4l1aewGwvy6bgBI/QyWu8uzHPGaxvlBNvUiKA
-        /7ZkEksuV3s+Vjh5ChCOiZHPgqKrLDewOoS7MIM=
-X-Google-Smtp-Source: ADFU+vsX2Yf3RXaEtNwN9snP3bKGKI9/Cghe+/IhJB5XyR23XwnwRCkqMxvYTzU2Q3UinrLWxIf/9X7/lbpWjoaikzg=
-X-Received: by 2002:a50:d744:: with SMTP id i4mr11364453edj.87.1585040928579;
- Tue, 24 Mar 2020 02:08:48 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version:content-transfer-encoding;
+        bh=pnGdav7+8ZhwGOtnWx2nU5uiqZgQEg04XnKeWtJ746A=;
+        b=IeaLmpXvc1nnK+rlcZD9VRrmiwATiW0xIfNvzKPxqS9oSUqDcr9kq+yDYjHBVcGQhK
+         mUPgGxWlLKx8Kkxs+eGwVqzkH0zsZWHbitkVczgO/Bthl/b4GHWZyXY7pyQ2ZaC6NeIo
+         Knay1cXcgiBi24SFCFS43JOOh/7O8HdCxfz2FhDIcHk+EkWVyVOtHpx/YevGwTfuDfOz
+         D31woz5MQc4sWp4SLQjfj+d+Cs/kxZPphIeu6+g3BKTQnxDl1S2vAYBD9ENePLiMihU9
+         Qb6NIkQy2AbZ+E4mKml4MpTnbZPNqrq6HR6EkhK4lumvcOmNN1nAEC3tMKOEleMCql71
+         ktRw==
+X-Gm-Message-State: ANhLgQ0GOJTOQOkKfO+ciPqqeZ3MqcOMXxusY27ZeBG/YfVpHL651oYK
+        gQeLGYmxyundsdMl9AfD0X0=
+X-Google-Smtp-Source: ADFU+vtJAtHz/GL1wZWb/uBuaRohcZQA2fT2JkQZsJAKdJpUcZTWuL/J8m0JZurYtRtD4subsmkJEQ==
+X-Received: by 2002:a2e:8652:: with SMTP id i18mr1584921ljj.265.1585041895126;
+        Tue, 24 Mar 2020 02:24:55 -0700 (PDT)
+Received: from Laptop-Acer-Aspire-F15 (host-89-229-7-83.dynamic.mm.pl. [89.229.7.83])
+        by smtp.gmail.com with ESMTPSA id b28sm6324773ljp.90.2020.03.24.02.24.54
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 24 Mar 2020 02:24:54 -0700 (PDT)
+From:   Jakub Narebski <jnareb@gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Abhishek Kumar <abhishekkumar8222@gmail.com>,
+        git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
+Subject: Re: [RFC][GSoC] Implement Generation Number v2
+References: <20200322093526.GA4718@Abhishek-Arch> <86eetkrw8p.fsf@gmail.com>
+        <20200323042517.GA1258@Abhishek-Arch>
+        <xmqq369z7i1b.fsf@gitster.c.googlers.com> <86mu87qj92.fsf@gmail.com>
+        <13995fbd-d645-56aa-b647-e9a51d00554e@gmail.com>
+Date:   Tue, 24 Mar 2020 10:24:52 +0100
+In-Reply-To: <13995fbd-d645-56aa-b647-e9a51d00554e@gmail.com> (Derrick
+        Stolee's message of "Mon, 23 Mar 2020 11:54:07 -0400")
+Message-ID: <86eetiqf4r.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
 MIME-Version: 1.0
-References: <20200323171554.5254-1-shouryashukla.oo@gmail.com>
-In-Reply-To: <20200323171554.5254-1-shouryashukla.oo@gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Tue, 24 Mar 2020 10:08:37 +0100
-Message-ID: <CAP8UFD3BMEqt1+gGgGPHdMQ+BzY6Q84rGcp2UNK=WLusYQuy4g@mail.gmail.com>
-Subject: Re: [GSoC][RFC][Proposal v4] Convert submodule to builtin
-To:     Shourya Shukla <shouryashukla.oo@gmail.com>
-Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Heba Waly <heba.waly@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-On Mon, Mar 23, 2020 at 6:16 PM Shourya Shukla
-<shouryashukla.oo@gmail.com> wrote:
-
-> Prathamesh implemented and improved the subcommands status[https://lore.k=
-ernel.org/git/20170713200538.25806-4-pc44800@gmail.com/], sync[https://lore=
-.kernel.org/git/20180114211529.6391-2-pc44800@gmail.com/], deinit[https://l=
-ore.kernel.org/git/20180114211529.6391-3-pc44800@gmail.com/] and some more.=
- The relevancy of this to my project is that some helper functions(located =
-in submodule.c) such as print_submodule_summary(),prepare_submodule_summary=
-(), etc. have been implemented beforehand. In the case of subcommand summar=
-y, use these functions, integrate them with the basic scaffolding(mentioned=
- in the table below) and implement the module_summary() frontend function.
-
-The last sentence above is not very clear to me. Do you mean "In the
-case of subcommand summary, I should use these functions, integrate
-them ..."? Or maybe  "In the case of subcommand summary, the things
-left to do are to use these functions, integrate them ..."?
-
-> He also ported various helper functions such as set_name_rev()[https://lo=
-re.kernel.org/git/20170619215025.10086-3-pc44800@gmail.com/]. He kept offer=
-ing improvements to his conversions till around January of 2018.
-
-Nice!
-
-> Stefan Beller finished the implementation of the subcommand init[https://=
-lore.kernel.org/git/1453418323-29587-1-git-send-email-sbeller@google.com/] =
-as well as laid its foundation[https://lore.kernel.org/git/1453255396-31942=
--3-git-send-email-sbeller@google.com/]. He implemented foreach[https://lore=
-.kernel.org/git/20180509002952.172347-5-sbeller@google.com/] and improved d=
-einit[https://lore.kernel.org/git/20180327232824.112539-1-sbeller@google.co=
-m/] & update[https://lore.kernel.org/git/1444960333-16003-6-git-send-email-=
-sbeller@google.com/] as well. He also ported various helper functions such =
-as resolve_relative_url()[https://lore.kernel.org/git/1460767813-25916-2-gi=
-t-send-email-sbeller@google.com/].
-
-Nice!
-
-> #### Current Status of the subcommand and future vision
+Derrick Stolee <stolee@gmail.com> writes:
+> On 3/23/2020 9:43 AM, Jakub Narebski wrote:
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>> Abhishek Kumar <abhishekkumar8222@gmail.com> writes:
+>>>> Jakub Nar=C4=99bski <jnareb@gmail.com> writes:
+>> [...]
+>> Proposed solutions are:
+>>  - metadata / versioning chunk,
+>>  - flag file: `.git/info/generation-number-v2`,
+>>  - new chunk for commit data: "CDA2".
+>>=20
+>> I would like to propose yet another solution: putting generation number
+>> v2 data in a separate chunk (and possibly keeping generation number v1
+>> in CDAT commit data chunk).  In this case we could even use ordinary
+>> corrected commit date as generation number v2 (storing offsets as 32-bit
+>> unsigned values), instead of backward-compatibile corrected commit date
+>> with monotonic offsets.
 >
-> The current status of the conversion as well as the direction I will take=
- for the conversion of the subcommands are as follows:
+> I agree that if we are creating a new (optional) chunk, then that gets
+> around our versioning issues and could store just the offsets to get
+> the "corrected commit date" option instead of the backwards-compatible on=
+e.
+> By including yet another version number at the beginning of that chunk,
+> we could present a way to update this "second reachability index chunk"
+> with things like your interval mechanism with very little cost.
+
+All this may be just a transitory phase, waiting until Git versions that
+fail hard on commit-graph format version change die out... then we will
+be able to use version number as intended (though it has the
+disadvantage of turning off commit-graph wholly for older Git versions).
+
+>> Each solution has its advantages and disadvantages.
+>>=20
+>>=20
+>> With the flag file, the problem is (as Junio noticed) that if file gets
+>> accidentally deleted, new Git would think incorrectly that commit-graph
+>> uses generation number v1... which while suboptimal should not be bad
+>> thanks to backward compatibility.  But I think the flag file should have
+>> some kind of checksum as its contents (perhaps simply a copy of
+>> commit-graph file checksum, or one checksum per file in chain with
+>> incremental commit-graph), so that it old Git rewrites commit-graph file
+>> leaving flag file present, new Git would notice this.
 >
->         add: pending conversion, full code needs to be written for the sa=
-me. Need to implement callback macros and structures, i.e. struct add_cb,
->              ADD_CB_INIT, as well as frontend function module_add(). Othe=
-r helper functions may be needed in the process as well. Compare with shell
->              script and try to =E2=80=9Ctranslate=E2=80=9D it into C. I g=
-uesstimate around 400-500 lines of code for this(including helper functions=
-).
+> I'm not a fan of the flag file idea. Optional chunks are a good way forwa=
+rd.
+> That _could_ mean the metadata chunk, whose length can grow in the future
+> if/when we add more fixed-width metadata values.
 
-Happy to see a guesstimation!
+So it looks like metadata / versioning chunk would be the best solution,
+isn't it?
 
->         set-branch: pending conversion, full code needs to be written for=
- the same. Need to implement macros and structures, i.e. struct setbranch,
->                     SETBRANCH_CB_INIT, as well as frontend function modul=
-e_setbranch(). Other helper functions(such as remote_submodule_branch() &
->                     get_default_remote() which are already implemented ma=
-y prove helpful later) may be needed in the process as well. Compare with s=
-hell
->                     script and try to =E2=80=9Ctranslate=E2=80=9D it into=
- C. This subcommand may take about 200 lines of C code to implement(includi=
-ng helper functions).
-
-As it looks like it requires less lines of code, do you think it might
-be better to do this one before the 'add' sub-command?
-
->         set-url: pending conversion, full code needs to be written for th=
-e same. Need to implement macros and structures, i.e. struct seturl,
->                  SETURL_CB_INIT, as well as frontend function module_setu=
-rl(). Other helper functions(such as remote_url() & resolve_resolve_url() w=
-hich
->                  are already implemented may prove helpful later) may be =
-needed in the process as well. Compare with shell script and try to =E2=80=
-=9Ctranslate=E2=80=9D it
->                  into C. It will have a similar implementation to set-bra=
-nch because they are =E2=80=9Csetter=E2=80=9D functions. This subcommand ma=
-y take about 200 lines
->                  of C code to implement(including helper functions).
+>> Metadata or versioning chunk cannot be deleted by mistake; if old Git
+>> copies unknown chunks to new updated commit-graph file instead of
+>> skipping them we would need to add some kind of checksum (similarly to
+>> the case for flag file).  The problem to be solved is what to do if some
+>> files in the chain of commit-graph files have v2 (and this chunk),
+>> and> some have v1 generation number (and do not have this chunk).
 >
->         summary: pending conversion, work in progress; callback structure=
-s, functions and macros have been created, also, basic scaffolding of the c=
-ommand
->                  is done, i.e., functions module_summary(), summary_submo=
-dule(), summary_submodule_cb(). As this is a prototype, some functions may =
-be scrapped
->                  or added later. Other functions to complement the subcom=
-mand have already been created; learn from Prathamesh's mistakes and implem=
-ent a better code.
->                  After discussions with Junio C Hamano[https://lore.kerne=
-l.org/git/20200318163234.21628-1-shouryashukla.oo@gmail.com/T/#ma3912b761b6=
-deda937691a19c1a070e5e9b34bd7],
->                  I intend to add a =E2=80=9C--recursive=E2=80=9D option a=
-s well for summary so as to obtain summaries of nested submodules as well.
->                  I estimate about 400 lines of code for this subcommand(e=
-xcluding the  =E2=80=9C--recursive=E2=80=9D option, yet including the helpe=
-r functions)
-
-Nice!
-
-> I aim to follow the same approach as Stefan and Prathamesh as mentioned a=
-bove.
-
-I am not sure that you talked much about their approach above.
-
-> Though, there is about a 3 year gap between their work and mine, the mode=
-l for porting seems to be consistent even if coding style may vary and migh=
-t even give out improvements over previous implementations.
-
-
-
-> #### Contribution process and interaction with the mentors
+> The incremental commit-graph format is newer than our previous tests
+> for generation number v2, which will be a big reason why that old code
+> cannot be immediately adapted here.
 >
-> I will keep committing changes on my GitHub fork[https://github.com/perip=
-eridip/git] and finally post a bundled patch on the Mailing List.
+> The simplest thing to do is usually right: if we try to write a
+> generation number version that doesn't match the current commit-graph,
+> then we need to flatten the entire chain into one layer and recompute
+> the values from scratch. While it is _technically_ possible to mix
+> the backwards-compatible corrected commit date with generation number
+> v1, it requires taking the "lowest version" when doing comparisons and
+> that may behave very strangely. Better to avoid that complication.
 
-By "bundled patch" do you mean a patch series?
+Right.
 
-> I will make sure to keep interacting with the community as well as the me=
-ntors regularly.    I aim to write weekly =E2=80=9Cprogress report=E2=80=9D=
- blogs, which I will post on my website as well as the List. Apart from tha=
-t, I will document anything new I learn as well as my journey in the GSoC p=
-rogram on my blogs and maybe as self-answered questions on StackOverflow wi=
-th the aim that they will help me as well as others in case of reference.
+>> About moving commit data with generation number v2 to "CDA2" chunk: if
+>> "CDAT" chunk is missing then (I think) old Git would simply not use
+>> commit-graph file at all; it may crash, but I don't think so.  If "CDAT"
+>> chunk has zero length... I don't know what would happen then, possibly
+>> also old Git would simply not use commit-graph data at all.
 >
+> CDAT is required as it contains more than just generation numbers. It
+> has the commit date, parent int-ids, and root tree oid. The generation
+> numbers _could_ be left as all zeroes, which is a special case for the
+> format before generation numbers were introduced, but it would be better
+> to have values there.
+
+I think (but I might be wrong) that the most expensive part of
+calculating generation numbers is actually walking the commits.  Because
+both generation number v1 (topological level) and generation number v2
+(corrected committerdate, with or without monotonic restriction on
+offsets) can be computed at the same time, during the same walk,
+possibly with negligible cost compared to computing single geneation
+number.
+
+But this should be perhaps benchmarked.
+
+>> Putting generation number v2 into separate chunk (which might be called
+>> "GEN2" or "OFFS"/"DOFF") has the disadvantage of increasing the on disk
+>> size of the commit graph, and possibly also increasing memory
+>> consumption (the latter depends on how it would be handled), but has the
+>> advantage of being fullly backward compatibile.  Old Git would simply
+>> use generation numbers v1 in "CDAT", new Git would use generation
+>> numbers v2 in "OFFS" -- combining commit creation date from "CDAT" and
+>> offset from "OFFS"), and there should be no problems with updating
+>> commit-graph file (either rewriting, or adding new commit-graph to the
+>> chain).
 >
-> #### Project Timeline
->
-> I have been studying the code of 'submodule.c', 'submodule--helper.c' and=
- 'git-submodule.sh'
-> since the submission of my microproject. After studying the codes, I trie=
-d to devise an effective
-> conversion strategy for 'submodule'. I noticed that 'submodule.c' contain=
-s various helper functions
-> for 'submodule--helper.c' whereas the latter houses the main "converted" =
-command as of now.
->
-> The subcommands =E2=80=98set-branch=E2=80=99 and =E2=80=98set-url=E2=80=
-=99 will provide easy conversion due to the vast array of helper functions =
-already available for them.
+> I share these concerns but also the locality of the data within the file.
+> As we parse commits, we need the parent and commit date information out
+> of the CDAT chunk anyway, so it is not difficult to grab the nearby
+> generation number. If we put that data further away in a separate chunk,
+> then it can be more expensive to flip between the CDAT chunk and the
+> GEN2 chunk.
 
-Nice that you found this!
+Right, I forgot about this issue, that Git is lazily parsing
+commit-graph data, so keeping all [possible] commit data close is a good
+idea from the performance point of view.
 
-> Hence, I have coupled them with other commands and tasks such as the conv=
-ersion of =E2=80=98add=E2=80=99 and improving CLI parsing.
+So it looks like metadata / versioning chunk would be the best solution
+to the backward-compatibility interoperability problem.
 
-Hmm.
+> In terms of your prototyping for performance checks, it may be good to
+> have a number of "GEN<X>" chunks so you can compute one commit-graph
+> that stores all of the candidate reachability indexes, then use one
+> of the chunks based on a config value or environment variable. I think
+> that would only be appropriate for testing if you are evaluating which
+> to build, so if you are focusing entirely on backwards-compatible
+> corrected commit date, this is not worth spending time on.
 
-> In spite of the easiness of the aforementioned conversions, I have decide=
-d to convert =E2=80=98summary=E2=80=99 first because of the large variety o=
-f resources available for it
+Right, but it looks like there is nobody taking new labelings for GSoC
+2020.
 
-It is not very clear which resources you are talking about.
+Good idea for prototyping, true.
 
-> as well as a direction of conversion available(as done by Prathamesh)
-
-Do you mean that he already sent patches or wrote commits in his repo
-about that?
-
-> which will aid me in learning from the mistakes committed before and thus=
- help me offer an even more improved version of the subcommand.
-
-Thanks,
-Christian.
+Best,
+--=20
+Jakub Nar=C4=99bski
