@@ -2,310 +2,153 @@ Return-Path: <SRS0=kv1d=5J=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-11.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,MENTIONS_GIT_HOSTING,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 08248C4332B
-	for <git@archiver.kernel.org>; Tue, 24 Mar 2020 12:07:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 68C5AC41621
+	for <git@archiver.kernel.org>; Tue, 24 Mar 2020 13:36:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id C8BBB2080C
-	for <git@archiver.kernel.org>; Tue, 24 Mar 2020 12:07:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 37878206F6
+	for <git@archiver.kernel.org>; Tue, 24 Mar 2020 13:36:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dSFrYa3Q"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="k6jCDFX2"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727425AbgCXMHM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Mar 2020 08:07:12 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:35556 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727238AbgCXMHL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Mar 2020 08:07:11 -0400
-Received: by mail-pf1-f196.google.com with SMTP id u68so9181657pfb.2
-        for <git@vger.kernel.org>; Tue, 24 Mar 2020 05:07:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:message-id:date:user-agent:mime-version
-         :content-transfer-encoding:content-language;
-        bh=tWT8zPL65dwbl74AvOufWIFAxm0ixy+zuMuqLkHc7no=;
-        b=dSFrYa3QEl2+yRAOfavdJoTECOEbuyEjwliB1fULXY1s6+7fQzlypX1JXBhRCODLHF
-         oYsEyMjTwrIWyWV7K6FftO6NlthjsbSE/d1Vt24dWRO3DMas3pPFAdJ5KxoFA4nQe8Be
-         jb5+kzpav6dLtvZR/2IwA2daSjnfYnca67sJnmg2+UAL/1UrapKFUrWjdyzn92MHxIKz
-         AsIwK1qndjMcSAPqiIQt06vL8pkHjKmuxoNDf0K8ZzQE1rZCyENnIX6y7/fut+zvRsxZ
-         8GRLDHvxqlCYZnBmF8oLbAQqeUy9EKGfIYcE60NBG6v8H9ePIrpYa+g1GAPEA5dUGYFQ
-         RDXg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:message-id:date:user-agent
-         :mime-version:content-transfer-encoding:content-language;
-        bh=tWT8zPL65dwbl74AvOufWIFAxm0ixy+zuMuqLkHc7no=;
-        b=iQKo9Qo+Xg3T/MKT9iBDry4VnDCCGlzXcpFPzKfcdlIkZBekEz2VNylIuUUbWBwinG
-         w8Lhl67f48vHlm+9yAbKwwbJf4upAL0DGhF6NLaGE8WtAHZKhDWa5rqEYg8Yu+UTjDvL
-         cRe1ZxjTxA/EBoivPHt8T1qGpahxjLVykRDJIQpx9COQffueOFjGKm9xB+hckk228pnx
-         DyQ9x48hU7Myc1ZryLfzuqKyZflIo9mR04ANYpF0aqNKKUy9c42/1kVVa8r++pEr0N7w
-         5e27VQUJXSlaeJ6jIo5cy7HpopdDBKpQk8znWZAwJd4TNTjwuVxTy7ChmpklLuxNT7lD
-         pdUg==
-X-Gm-Message-State: ANhLgQ0QQhPdcUCIp2b/BvIabeRN8Xe+/UIkXf0hM8UMQK/5jXeVxRbK
-        MNEBm7wM63kCjlmYN64MJGE=
-X-Google-Smtp-Source: ADFU+vtJqHQYBUbC39MFGV3kRTFCzoNvfZoJUpQGLzdxBGhDBovIJQJ7upcT7HG8S0c4FJtygRJUxA==
-X-Received: by 2002:a63:d658:: with SMTP id d24mr27596371pgj.340.1585051629296;
-        Tue, 24 Mar 2020 05:07:09 -0700 (PDT)
-Received: from [192.168.0.113] ([27.106.96.28])
-        by smtp.gmail.com with ESMTPSA id k70sm6973342pga.91.2020.03.24.05.07.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 24 Mar 2020 05:07:08 -0700 (PDT)
-From:   Parth Gala <parthpgala@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Johannes.Schindelin@gmx.de, christian.couder@gmail.com,
-        peff@peff.net, stolee@gmail.com, abhishekkumar8222@gmail.com,
-        t.gummerer@gmail.com, Junio C Hamano <gitster@pobox.com>
-Subject: [GSoC proposal] Improvements to git log
-Message-ID: <0e302559-77e5-9b84-9eeb-3e3ce1aa2c04@gmail.com>
-Date:   Tue, 24 Mar 2020 17:37:04 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.1
+        id S1727431AbgCXNgD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Mar 2020 09:36:03 -0400
+Received: from mout.gmx.net ([212.227.15.18]:54555 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726188AbgCXNgD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Mar 2020 09:36:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1585056956;
+        bh=xIr7fbY9MN3BiwOoC29Fwdw/n87ryQ3ypczCnhmrnLI=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=k6jCDFX2t6o95jggYAkPdS2uQEdirPLsTriTje/LRgj8gALlNKMyuI1shu+o9kQCl
+         xwYGw0VJ+oAu8UQ94Cj5+J2GhFXV+kq8Ip/cyexrDgLNLrHzJsLTMlWuJlSDFpBgfj
+         bufKBKB0dUO9Un6uO2pWtDWDSaZbwHGBZBFbeYgc=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from MININT-QA14EDB.fritz.box ([213.196.213.32]) by mail.gmx.com
+ (mrgmx005 [212.227.17.190]) with ESMTPSA (Nemesis) id
+ 1N49h5-1jQ3II3Wd7-0105Rh; Tue, 24 Mar 2020 14:35:55 +0100
+Date:   Tue, 24 Mar 2020 14:35:55 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] import-tars: ignore the global PAX header
+In-Reply-To: <20200323232520.GE6499@camp.crustytoothpaste.net>
+Message-ID: <nycvar.QRO.7.76.6.2003241433380.46@tvgsbejvaqbjf.bet>
+References: <pull.577.git.1584968924555.gitgitgadget@gmail.com> <20200323232520.GE6499@camp.crustytoothpaste.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:yywdxs3YtJ57vwKIYZd23Xh/M1/OwYUgab57ixnbNJwDgna8zsh
+ +YiJ/YA1AwfYmV6mM6/ha8Hk/kEdCysbaU8Nh95+N6lZUdno37Ntz0651P+1Npj7wLHVLRv
+ Vnkc/ki7k52oCt5D4MSIpKV6+yPa4CEZpcD4Weqwh57H1DIM5LrbM8W5x66Zo50eWbFImrz
+ oq3oQ7OiL1NLDisPTp9vQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:t28D63i4kbA=:LqC0cb8rpWJw0XFA+j/vjZ
+ m2sJwDnJAmSLFVdKB27peI67rHAi1ntMn0H+bba6cZkQ22gXu8LjyvyEHjBw+fGvCIyU6B9af
+ YfByDc3rZph62iJHRTbarIlzo4oipGn04vSwxV2dFRyml/ZE3Ac4/vtJqjzfKw+w0NhcHnMjK
+ 6PUFXATh+/VpuVQ0yu/Rf7WvpaNNQyY4UmLsAhjH/J87xmUAqjjPdgEZy9BWYh0NMBTnjFbTH
+ uXD4wcY3zBgniaink0gptxw2awdoXNnvmtH+Tquedkk2Jf8lSlUxlbpQN7IZ5bchybVjJCnZK
+ D64k/YxavVEixYaHwRmoAqvLY3Kp7qtfou+bHEBepZNEzrTTHlWCM7yH/iA6PyrFEHYVomYse
+ aMJPtnjFab9w1c/PyW9sF0IRz1vrnttAsZXT3G917EHgz592zfKQi1kKbdpX0hsm6i/mvEBZn
+ eJdvTF+UHkMAZ2WyPsv689pFRp2UCdIFjEtYWqH+7XC7spdx60hpoIEaZ/4P5FWDQSzw68BPA
+ OJYObmjracBgSZ1wr94ft7a6wUVc6hOlowXsjRRvcY8wVwR1r88eqFKntlhMHmGhTxlC+ow8K
+ +mViQBu39qAqr59nRrhoMRJtA5stdYus0H4lqtsL0EJ5DSYlscRVzFBQCKtY6VvVHONo5SPlW
+ +yidJ5+0RDe8ua3SjiDxbe3ttwVLJO4/fMZSRscKE9ju27PZ0ULjXx7R3D6bvs50W+mzvPf30
+ 3OuD1YDdYOWGrDmwNMI6Zd8ASALqRYCmROyFK2RmYJTIQigZYTYy+s02Ay2nIZA+2oypr3KZ2
+ dnO7wGrzAr2C4gu1ax5Wyr8XaK+dmKs7Eaucct7ozVB7XHuNycu4eMfjBUvXjUKj9xn6reCnL
+ WdY/UGZ58y/WHWQGmJIBdFF1sRN5eH1ZuiNvmu3U/1LXrrGoTRLvIvHIrT0tUtnMkM//kU/BD
+ g6IcfMDPCdNW3dAkUtZs2Fo95eE62Za2EPgtcx01m7ez1sO1V39IXj3DRbmSx1EAsSJRZvaVh
+ ez4GIfkVk4/Ukp3i4w7ovIIum0R8aDXODbHl8dJRoPvE0hHsYfrLzWAAxxINjz447Dw+vYxww
+ i7ebQs6zIBgzG9owGlcwc4sVggmsNi6WBvxeRDtseB93P+oX3LIXL98VwitOAjxzVTc6cufb/
+ 8oDP1YSfL4FzDbZnAa/Tvi5I5ZLAsuH9xdBD0+qYuJr6vI53s/uUhOZockPxl348pZGI6GeyC
+ IrrnquWk+L8t9PL5i
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello everyone,
-
-Thanks for taking the time out to read my GSoC proposal.
-I would love to receive feedback on this. One question I have is that
-how should I contact my mentor(Christian Coulder) in the period from
-April 4 - April 26 stated below, which will be akin to the community
-bonding period for me, ie do the conversations take place on the mailing
-list or personal emails or any other medium ?
-
-Google docs : https://docs.google.com/document/d/1H06V1sjE2i74NtXihiDNnApvx0iMemU2RotHt0SeDCI/edit?usp=sharing
--------------x--------------x----------------x--------------x---------------x----------
-Improvements to git log
-
-
-
-## Contact Information
-
-Name		:	Parth Gala
-Major		:	Electronics and Communications Engineering
-Email		:	parthpgala@gmail.com
-Mobile		:	+91-829-125-7343
-Github		:	ParthGala2k
-Linkedin	:	Parth Gala
-IRC		:	parth56
-Timezone	:	IST (UTC +0530)
-
-
-
-## Background
-
-Hello, my name is Parth Gala, I am a sophomore majoring in Electronics
-and Communications Engineering at Dwarkadas J. Sanghvi College of
-Engineering.I have been programming for a few years now and have been
-inquisitive to learn more about new things in the field of Computer
-Science. I am proficient in C/C++, Java and Shell script and try to run
-redundant tasks using scripts.
-
-
-
-## Work Environment
-
-I use Vim as my primary code editor and GDB as the debugger. I have been
-using Linux(Ubuntu 18.04) as my primary operating system for two years
-and was introduced to the world of open source about a year ago when I
-started to learn Git and Github and have gained sufficient familiarity
-with each of them.
-
-
-
-## Motivation
-
-I have been active in the git community since January this year. I was
-inspired to contribute open source since it is a great way to get
-started with making enterprise level software which is well documented
-and tested. Google Summer of Code is the best way to get kick started in
-that direction, and given I use git on a regular basis and would
-continue doing so, it would be a great experience contributing to it as
-well.
-
-
-## Previous Contributions
-
-Contributing to git helped me realize how high quality software is developed
-by first considering the design, adding unit tests and more importantly, about
-using git itself better to maintain a neat commit history and tracking newer
-changes.
-
-
-* Contributions to git
-
-
-GitGitGadget	https://github.com/gitgitgadget/git/pull/545
-Mailing list	https://lore.kernel.org/git/pull.545.git.1581535151.gitgitgadget@gmail.com/  
-Status		Yet to be merged
-
-GitGitGadget	https://github.com/gitgitgadget/git/pull/582
-Status		Being reviewed by Johannes Schindelin before submitting to mailing list
-
-
-
-## Project
-
-* Abstract
-
-`’git log’ is a frequently used command that displays commit history of
-the branch in various formats in order to make it easier to analyze the
-changes made to code over a course of time and using various flags that
-help you filter out only the commits that you need.
-
-I plan to add a new pretty format called 'concise' which would show the
-decorations(if any) on one line and the oneline commit message on the other
-line. This would overcome the first problem stated below.
-
-Another addition is the --log-day option which groups the commits by order
-of their dates and displays a line on top of each commit specifying their
-date only if it changes from the previous date displayed. This would be
-useful if one wants to only check what changes took place on a certain day
-and make it catchy to the eye to see which day a particular change was made.
-
-
-## Current Shortcomings
-
-Although there are various options in git log, still a few are missing that
-many users would like for example “git log --oneline” shows the decorations
-right after the commit hash but before the commit message causing the
-alignment of messages to be disturbed. This can be overcome by setting a
-custom format string to print the decorations after the message. Having the
-decorations at the end has its own disadvantages, say, you only need to
-check the status of a branch rather than its contents, then you would prefer
-to have the decorations right next to the shortened commit hash.
-
-Another desirable feature to have is a date line like ‘==YYYY-MM-DD==’ in the log
-output right over the commits wherever a date changes.
-
-
-
-## Goals
-
-1. Create a --pretty=concise format to deal with the first issue.
-2. Create a --log-day option to show date.
-
-
-## Timeline Tentative
-
-# April 4 - April 26
-
-Discuss the compatibility of --log-day option with all other log options
-and finalize its design so as to be easily extended or modified for
-similar future enhancements such as --log-month or --log-day[range],
---log-day[onward] options and whether the option asks for author date
-or the commiter date upon Junio's advice and do the same for
---pretty=concise.
-
-Also discussion of the stitching of these two
-options(output for when both are used together) shall be done in order
-to decide how the design should be done. At the same time go through as
-much of the relevant code in detail as possible for the said
-enhancements.
-
-I will be mostly unoccupied during this period and hope to
-complete largely all the ‘community bonding period’ work with my
-potential mentor Christian Coulder during this period itself.
-
-
-## Community Bonding Period : April 26 - May 16
-
-I will be having some submissions during the first few days of this
-period followed by my end semester exams which will start May 4 and end
-May 16. Since there are generous holidays between each paper, I intend
-to keep a check on my GSoC project and be in touch with Christian during
-this period for around 2 hours a day to depending on what needs to be
-discussed or finalized before the project starts.
-
-I also hope to finetune the project workflow and make timeline changes
-if necessary during this period.
-
-
-## Phase 1 : May 18 - June 13
-
-1. Complete the --pretty=concise format option.
-2. Add tests and documentation for the same.
-
-
-## Phase 2 : June 14 - July 28
-
-1. Work on the --log-time option.
-2. Add tests and documentation for the same.
-
-
-## Phase 3 : July 29 - August 10
-
-1. Stitch both commands for being used together.
-2. Update tests for both the previous phases.
-
-
-## Final Phase : August 10 - August 17
-
-1. Polish the patches to apply final touch-ups(if any)
-2. Update documentation.
-
-If there is any extra time left, I would like to discuss the viability and
-use of --log-month option with the community and add it to the entire package
-if many users on the mailing list would find that option useful to their
-workflow.
-
-I plan to communicate with my mentors in the form of PRs against my own
-fork of the project and also intend to keep the community updated with my
-progress in the form of weekly reports on the mailing list and inform everyone
-involved in case of any changes to the timeline.
-
-
-## Availability
-
-I will be done with my mid-sems by April 4 following which I will be
-largely unoccupied for 3 weeks until April 26 in which period I plan to
-complete my obligations for the community bonding period.
-
-My end sems will start May 4 upto May 16, so I will be relatively busy
-for a week before it, but due to generous holidays between I will be able
-to work upto 2 hours on my GSoC Project.
-
-My vacations will start May 17 upto the second week of July, so during this
-period I will be easily able to devote 45-50 hours a week. Even after my
-college resumes, I will be able to contribute around 40 hours a week to the
-project. Apart from this I have no other commitments or plans for the summers
-barring the odd weekend trek
-
-
-
-## Post GSoC
-
-I would love to learn from such a rich community of developers who have
-built a tool that a majority of the software world uses on a daily
-basis. Needless to say that only the lure of the new features would also
-be enough to bring me back to the community again and again but I will
-still contribute to the community in code and discussions post GSoC, and
-if possible be a co-mentor someday ?
-
-
-
-## Final Remarks
-
-I am a quick learner with a knack of not giving up on problems. I can
-have a go at it all day long and learn everything necessary to git(get)
-the job done. Selected or not I will continue to hustle and contribute
-to git and other open source projects that interest me and improve
-myself and the planet little by little everyday. After all that’s what
-open source is all about !
-
-
-
-----------x-------------x------------x------------x-------------x--------------x-------------
-
-
-
+Hi brian,
+
+On Mon, 23 Mar 2020, brian m. carlson wrote:
+
+> On 2020-03-23 at 13:08:44, Johannes Schindelin via GitGitGadget wrote:
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > Git's own `git archive` inserts that header, but it often gets into th=
+e
+> > way of `import-tars.perl` e.g. when a prefix was specified (for exampl=
+e
+> > via `--prefix=3Dmy-project-1.0.0/`, or when downloading a `.tar.gz` fr=
+om
+> > GitHub releases): this prefix _should_ be stripped.
+> >
+> > Let's just skip it.
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >     Ignore the global PAX header in import-tars.perl
+> >
+> >     This problem came up in Pacman-related work, where PKGBUILD defini=
+tions
+> >     would reference the tarballs downloaded from GitHub, and patches w=
+ould
+> >     be applied on top. To work on those patches efficiently (e.g. when=
+ an
+> >     upgrade to a new version of the project no longer lets those patch=
+es
+> >     apply), I need to be able to import those tarballs into playground
+> >     worktrees and work on them. I like to use
+> >     contrib/fast-import/import-tars.perl for that purpose, but it real=
+ly
+> >     needs to strip the prefix, otherwise it is too tedious to work wit=
+h it.
+> >
+> > Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-577%=
+2Fdscho%2Fimport-tars-skip-pax-header-v1
+> > Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-577/dsc=
+ho/import-tars-skip-pax-header-v1
+> > Pull-Request: https://github.com/gitgitgadget/git/pull/577
+> >
+> >  contrib/fast-import/import-tars.perl | 2 ++
+> >  1 file changed, 2 insertions(+)
+> >
+> > diff --git a/contrib/fast-import/import-tars.perl b/contrib/fast-impor=
+t/import-tars.perl
+> > index e800d9f5c9c..d50ce26d5d9 100755
+> > --- a/contrib/fast-import/import-tars.perl
+> > +++ b/contrib/fast-import/import-tars.perl
+> > @@ -139,6 +139,8 @@
+> >  			print FI "\n";
+> >  		}
+> >
+> > +		next if ($typeflag eq 'g'); # ignore global header
+> > +
+>
+> In general, it isn't safe to do this.  A pax global header contains
+> attributes that may live in a normal extended header at a lower
+> priority.  So it is valid, for example, to write an mtime field in the
+> global header that applies to the entire archive and overrides the
+> ustar header block (and is overridden by a normal extended header).
+>
+> I think we need a different solution for this case.
+
+I agree that we need a different solution for this case.
+
+At the same time, I would like to point out that I am trying to address a
+_different_ problem than "we're not using the information contained within
+the PAX global header": I want to prevent that header from polluting the
+top-level tree.
+
+For what it's worth, my patch does not prevent future patches from using
+the information contained within the global header :-)
+
+Thanks,
+Dscho
