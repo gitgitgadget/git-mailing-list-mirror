@@ -1,118 +1,91 @@
-Return-Path: <SRS0=3T2S=5I=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=kv1d=5J=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E7E5EC4332B
-	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 23:54:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C65A5C4332B
+	for <git@archiver.kernel.org>; Tue, 24 Mar 2020 00:09:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B17F720719
-	for <git@archiver.kernel.org>; Mon, 23 Mar 2020 23:54:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 86BDA20753
+	for <git@archiver.kernel.org>; Tue, 24 Mar 2020 00:09:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Qf87PVDP"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="zvkoKjOC"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727169AbgCWXyF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Mar 2020 19:54:05 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:60470 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726203AbgCWXyF (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 23 Mar 2020 19:54:05 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id B02336077C;
-        Mon, 23 Mar 2020 23:54:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1585007644;
-        bh=8wzgoLc4dQvlXKMa3EWYQM+Jehkx/yJZF+Kzl2pQfBo=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=Qf87PVDPMnpm3a/hMzVsELzMxSWbeRkZBRC0zAZ4TP/aZsgP11AxegBssNzA1nB+1
-         Z4NKrm26nAUxStuGZ/ArNr2ygQ+Z/uaUzB5uD+18cMmdqxEeJLmUhrtVga6gRXzgwh
-         W8DUL7b5uUfteLK4U/pw198W+HqYRgLPkB7LNOrDf2qvNscKwuBjMLodK+B9sJt6nR
-         3tyk50ZMiKD5kTFVdVTyyWl4jGqKg6AoXYsfCvrN1nfQrrAbFJmv3fuJ9oKREOaUAD
-         qFf/8mgwcnKwjXUAUt4WaxGaw0hNjSC1RZ/TbfLvOSYF1jm+oavhUduNgqcBjjVSIG
-         ayOlFvFB6xr2PDSk08GqSZoviwNfw5df89qTgxrDQFh/R6Pv+UJYX6Q7qvhArSkrP9
-         mrHdyLtIpBVS7bHB6SpdbDE5+NvwJKxs/wi0vq6nU2nbAbwUwWiG85bxSpXiZq910p
-         RckEzaWyd+WosoByEthSt4E1fph0bkj9vhNOoteGN67Emgw6pqm
-Date:   Mon, 23 Mar 2020 23:53:58 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Benjamin Shropshire <benjamin.shropshire@economicmodeling.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Relative url values in .gitmodules confusingly sensitive to
- clone via ssh vs https.
-Message-ID: <20200323235358.GF6499@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Benjamin Shropshire <benjamin.shropshire@economicmodeling.com>,
-        git@vger.kernel.org
-References: <CAAjm7Ga5JOJ2w=01o1-x-80HMGVaYQQy8SBBb-zJ6MOQAe4SxQ@mail.gmail.com>
- <20200323011117.GC6499@camp.crustytoothpaste.net>
- <CAAjm7GZXNXcGMp7p2f+UoDUWMPY+Z4aFHv35tynteVSKDf2Fqw@mail.gmail.com>
+        id S1727357AbgCXAJC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Mar 2020 20:09:02 -0400
+Received: from mail-pl1-f180.google.com ([209.85.214.180]:39140 "EHLO
+        mail-pl1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727290AbgCXAJC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Mar 2020 20:09:02 -0400
+Received: by mail-pl1-f180.google.com with SMTP id m1so6637391pll.6
+        for <git@vger.kernel.org>; Mon, 23 Mar 2020 17:09:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=8+BOhOHIzXW6oJDH8pgCTHivT5tTkAk+fA4U55FjIMQ=;
+        b=zvkoKjOCMYV2G40fib7/isj4BUaAXVah56ZhXiK4/nmNlcoIQSgukEKW8rNiSIjZ4S
+         En5CfO2kCnhmAtp3YyElWvsDjF82/k1q+1e1yRK8Ciem8S9euLvssU2aocS12Q4HMvNN
+         IS78PkCEjPeF1hdsqLrzxaqP1NByJTCrrFbip2+r59XDmVtnD6bnzJA+NlAOkCO6etYI
+         5WVQ4+NT6HqN8g1G/zMvujEGZqmkCpFzm73gkoZByr9PFSjQEzDbujn+v+sQ0AWGhXLz
+         i8MKvwHg5Z8bxbejTpNqc92e0aB2xowZDvic7TkoyDTnPdyf5/kL2x0NB1AQ/G/nZBfk
+         S/IQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=8+BOhOHIzXW6oJDH8pgCTHivT5tTkAk+fA4U55FjIMQ=;
+        b=KcjSEUMmpbK8Z1iOqQ0HK0x9l0OsAaoPAImQP1yje2+aDauREsTeGHAhhRUfz/2QCV
+         3HOOrp0JMsXMB7RPvXGTqlXs6HCVv9Ql31pxtlLU63IUxtvEBgzMRBsgdt99uOLKOari
+         VyrL1Z9rOqCw0QuG94A3DjyI8TOgEhFxxqYjs+1inV6MT3Od+gnXrADGzNEH57qYO3pC
+         p99TPk7xOcg52b3R/HfXtqFPbMu6vGq+HQa33/487JGnhGQwutYaVSVX1q1W0RccAMKw
+         du6MTG8XXZqsq27PpxsDGXSZqdgrtMw38+P0Y/1YuL9ESX2lBE1wDvDWklOo/x8a+1ue
+         wrQw==
+X-Gm-Message-State: ANhLgQ3xBCDXMdUa2PgtzQ5yKvEySfecki47qmSDzeh6Gfe3ayGMlmY+
+        /QM/b1wZA3WnUuig6z5d5FedWw==
+X-Google-Smtp-Source: ADFU+vtj2btXr3deekJ8o9wvpJOi4vtV9xbt2C+gDxFg3W6PZoGeFYbqzGZ7jD73icsMLTZUCfyITA==
+X-Received: by 2002:a17:902:a40e:: with SMTP id p14mr24290408plq.295.1585008540798;
+        Mon, 23 Mar 2020 17:09:00 -0700 (PDT)
+Received: from localhost ([8.44.146.30])
+        by smtp.gmail.com with ESMTPSA id o11sm13077305pgh.78.2020.03.23.17.08.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Mar 2020 17:09:00 -0700 (PDT)
+Date:   Mon, 23 Mar 2020 18:08:59 -0600
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, dstolee@microsoft.com
+Subject: Re: Season of Docs?
+Message-ID: <20200324000859.GA5514@syl.local>
+References: <xmqqh7ye3b66.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="MZf7D3rAEoQgPanC"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAAjm7GZXNXcGMp7p2f+UoDUWMPY+Z4aFHv35tynteVSKDf2Fqw@mail.gmail.com>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.4.0-4-amd64)
+In-Reply-To: <xmqqh7ye3b66.fsf@gitster.c.googlers.com>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Junio,
 
---MZf7D3rAEoQgPanC
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Mon, Mar 23, 2020 at 04:26:41PM -0700, Junio C Hamano wrote:
+> This is a companion program to GSoC we might want to participate.
+>
+>   https://opensource.googleblog.com/2020/03/announcing-season-of-docs-2020.html
+>   https://developers.google.com/season-of-docs/
+>
+> Many places in our docs clearly show that they were written by
+> developers, which we may want to rectify.
 
-On 2020-03-23 at 15:09:39, Benjamin Shropshire wrote:
-> $ git --version
-> git version 2.20.1
+This is a great idea, and I think it would be good for us to be
+involved. I know that Stolee wanted some help writing documentation
+about partial clones [1]. Maybe that would be a good project for this?
 
-Hmmm, it looks like that version has the same test, t0060, which has
-this:
+Thanks,
+Taylor
 
-  test_submodule_relative_url "(null)" "user@host:path/to/repo" "../subrepo=
-" "user@host:path/to/subrepo"
-  test_submodule_relative_url "(null)" "user@host:repo" "../subrepo" "user@=
-host:subrepo"
-  test_submodule_relative_url "(null)" "user@host:repo" "../../subrepo" ".:=
-subrepo"
-
-I have confirmed that your test case does work for me on the version of
-Git I mentioned above with the following repos:
-
-  bmc@castro:foo/foo.git
-  bmc@castro:bar/bar.git
-
-And foo.git having the following .gitmodules:
-
-  [submodule "bar.git"]
-          path =3D bar.git
-          url =3D ../../bar/bar.git
-
-It's puzzling to me that this isn't working for you on 2.20.1 but it
-works for me on a 2.26 prerelease, yet both versions have the same test.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---MZf7D3rAEoQgPanC
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.19 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXnlMFgAKCRB8DEliiIei
-gWGhAQC7vpi9IE+7hhRdQovOWzIYkNvboF4xq4KSxO2WT6waRAEA0jwGvzI/N/kb
-2hE4ayjBueynQFF492Fo/emCQcu6qw8=
-=/XyS
------END PGP SIGNATURE-----
-
---MZf7D3rAEoQgPanC--
+[1]: https://lore.kernel.org/git/pull.586.git.1584638887.gitgitgadget@gmail.com/
