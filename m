@@ -2,99 +2,100 @@ Return-Path: <SRS0=kv1d=5J=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.3 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D642BC43331
-	for <git@archiver.kernel.org>; Tue, 24 Mar 2020 01:15:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CF644C43331
+	for <git@archiver.kernel.org>; Tue, 24 Mar 2020 01:37:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A8C0C2070A
-	for <git@archiver.kernel.org>; Tue, 24 Mar 2020 01:15:57 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e4BMdhdH"
+	by mail.kernel.org (Postfix) with ESMTP id A654E20714
+	for <git@archiver.kernel.org>; Tue, 24 Mar 2020 01:37:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727067AbgCXBP5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Mar 2020 21:15:57 -0400
-Received: from mail-qt1-f176.google.com ([209.85.160.176]:43614 "EHLO
-        mail-qt1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727022AbgCXBP4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Mar 2020 21:15:56 -0400
-Received: by mail-qt1-f176.google.com with SMTP id a5so6493353qtw.10
-        for <git@vger.kernel.org>; Mon, 23 Mar 2020 18:15:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=r8AE7UfBZjypjuNnyWcivSk28dPrK5Cs+/CV2zP2FhM=;
-        b=e4BMdhdHWSbKh+Q4gsmSAwNjERzm/IvQiXLQSx8EI0mOqwuln4LtdMugoPEPz04S+g
-         EZKlLgfwWotM4FcGmNG+ev9GPsCTzhMzHMZ3SnBlxGAXFhf8qsnfsomGhGGhc5PTQU9M
-         FyVVc4JhAt1EZlkEitcRTfO/hTR57RdrmZTiBwyXo5svMdSXaO3xWgM0m9yfqOexKLwz
-         iIQcjdOPBPtXTjZo0hQKs2NJJXlhstenXsX8nKAmDiSkJCQPT55wtW44gUwlEb0qMAs/
-         QoIOQapVMwqJdJsKd/EGN5xmA95Nwv8qx8oWXfinDSrJkM+8lDF823u92cmhxHi+Dk0Q
-         ZTXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=r8AE7UfBZjypjuNnyWcivSk28dPrK5Cs+/CV2zP2FhM=;
-        b=G4MQHsC5aQhiGfFotL2QcAVKHH+JBKfAMRZDlshDMP7TRO/k8/ZtQjWhHX3P57QCk2
-         tqB1UCYB5C0of6+Si+0Rl/ugtxQy/flq8skUKAmfHvjsSPsJDraEGgDH5OUgyIgppShg
-         oo25Y/u3Ui8TwfAYWymmcc/29B30src4JfhW5z1beC6MVZT+ORt/8PHn6XRhyC5uJcPK
-         TNNo1oco2jT1zIi6h2Bn03xqz6WLvLm+jJxV5ilVvjFlVpQxMvp7JR7O4x2hEYcDmeys
-         VmiHEC7+pHYlmDokP/IJ8PoauQmU7K653DGzPu+efdO0EgJy7/Qjvic45z6Bxy2ReAG/
-         5BDA==
-X-Gm-Message-State: ANhLgQ06ma/WrbWmK/e375J2EmjP2ib/mHRNMvCuxppAzz+8NMxPUauf
-        BfTK3VyyFHJxVoHcB5Vn7zI=
-X-Google-Smtp-Source: ADFU+vuJnudpuovhYmGEGviOXZLT8DyMyD19/J4SlEODnOc21sgSZvbCIx6D/EeC4nVPBXtzzaZ8mg==
-X-Received: by 2002:ac8:4e94:: with SMTP id 20mr18929454qtp.314.1585012555378;
-        Mon, 23 Mar 2020 18:15:55 -0700 (PDT)
-Received: from [192.168.1.83] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id t123sm12089427qkc.81.2020.03.23.18.15.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Mar 2020 18:15:54 -0700 (PDT)
-Subject: Re: Season of Docs?
-To:     Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, dstolee@microsoft.com
-References: <xmqqh7ye3b66.fsf@gitster.c.googlers.com>
- <20200324000859.GA5514@syl.local>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <78623f61-ede6-9f55-5106-1f393b06738a@gmail.com>
-Date:   Mon, 23 Mar 2020 21:15:53 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:75.0) Gecko/20100101
- Thunderbird/75.0
+        id S1727101AbgCXBhg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Mar 2020 21:37:36 -0400
+Received: from sender4-of-o51.zoho.com ([136.143.188.51]:21117 "EHLO
+        sender4-of-o51.zoho.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727053AbgCXBhg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Mar 2020 21:37:36 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1585013846; cv=none; 
+        d=zohomail.com; s=zohoarc; 
+        b=SmZD2+ih+115X2Xpmi4m69fz1/T0uup9RcMbSBLBvCmd8bWtVk/qeZ8B7sB2J/PQVRGVnpSFZDCS6BKiJwzJdecwiuKiMpZdKbC1sry9snewwS7awIOubdqaZ5vIJUvDvjA+grik5mF4fzTs5O4yA0MOOSn8tsPmWs7JeS757QE=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+        t=1585013846; h=Content-Type:Content-Transfer-Encoding:Date:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:To; 
+        bh=tcB0Fi8pdkTlFe+ylOVh9R1MJUiq/wueg7V7Z2rFSO0=; 
+        b=jcxuPjQrQ5EK6SL3dacodWC0kHZpFTWnr91/ZcYLdQBtAD8d81Zl78eD3C9Aj7R1xM2GZqsKl7flpTqYiED9psIeVjEOvmx2i1uFxcdRo5JL81Kj7hEmSw2T7Thd3te39RN8uoopwJtvzjcOVi4FLczzUmL869aDbQRgXZ7DSZk=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+        spf=pass  smtp.mailfrom=jon@smalls.rocks;
+        dmarc=pass header.from=<jon@smalls.rocks> header.from=<jon@smalls.rocks>
+Received: from Genusers-MBP.fios-router.home (pool-108-49-187-119.bstnma.fios.verizon.net [108.49.187.119]) by mx.zohomail.com
+        with SMTPS id 1585013843625508.93594848753673; Mon, 23 Mar 2020 18:37:23 -0700 (PDT)
+Subject: Re: git > 2.10.1 fails to update index on macOS 10.14.5
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org,
+        Torey Adler - NOAA Federal <torey.adler@noaa.gov>
+References: <7b8b23f8-e12a-bde9-4b9e-ca8c908d1203@smalls.rocks>
+ <20200323231351.GD6499@camp.crustytoothpaste.net>
+From:   Jonathan Smalls <jon@smalls.rocks>
+Message-ID: <414a10db-18d4-0c19-eafe-fbb85811fffe@smalls.rocks>
+Date:   Mon, 23 Mar 2020 21:36:18 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
+ Gecko/20100101 Thunderbird/68.6.0
 MIME-Version: 1.0
-In-Reply-To: <20200324000859.GA5514@syl.local>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <20200323231351.GD6499@camp.crustytoothpaste.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
+X-ZohoMailClient: External
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/23/2020 8:08 PM, Taylor Blau wrote:
-> Hi Junio,
+
+
+On 3/23/20 19:13, brian m. carlson wrote:
+> What exactly do you mean by "doesn't recognize any file changes"?  Can
+> you tell us what commands you ran and what you expected to see, and what
+> you actually saw?  That information would be helpful for us to track
+> down what might be happening.
+
+In git-2.22:
+
+I would write a change to a file. Running `git status` would return that 
+the working directory was clean, and `git commit .` would show that 
+there were no changes to commit.
+	However I could target a specific file like `git commit test.txt`, and 
+git would successfully recognize the change, and write the commit. I 
+could also run `git reset --hard`, and that would update the index to 
+reflect the change that I had just written rather than resetting the 
+working directory to match the latest commit. If I ran `git reset 
+--hard` a second time, that command would reset the working directory.
+
+In normal operation, I would expect to `git status` to recognize a 
+change in a file once it had already been added to the index. I would 
+expect `git commit .` to commit all files in the current directory, and 
+subdirectories without having to specify their file names. I would 
+expect `git reset --hard` to revert the working directory to match the 
+latest commit the first time.
+
+In git-2.25
+
+I would write a change to a file. `git status` would continue to show 
+that the working directory was clean, but I was not longer able to 
+target a particular file to force a commit. `git reset --hard` had no 
+effect, and still showed that the working directory was clean without 
+resetting the working directory.
+	To successfully commit a file I would have to run `git rm --cached 
+test.txt` to target a file, and then `git add test.txt` for git to 
+update its index, and recognize the change.
+
+I would expect the same normal operation in git-2.25.
+
 > 
-> On Mon, Mar 23, 2020 at 04:26:41PM -0700, Junio C Hamano wrote:
->> This is a companion program to GSoC we might want to participate.
->>
->>   https://opensource.googleblog.com/2020/03/announcing-season-of-docs-2020.html
->>   https://developers.google.com/season-of-docs/
->>
->> Many places in our docs clearly show that they were written by
->> developers, which we may want to rectify.
-> 
-> This is a great idea, and I think it would be good for us to be
-> involved. I know that Stolee wanted some help writing documentation
-> about partial clones [1]. Maybe that would be a good project for this?
+> Also, are you using any specific workflow or tool that might be related?
+> Are you using an editor integration or GUI, and if so, does this happen
+> without that editor integration or GUI as well?
 
-I have a willing volunteer right now. Hopefully we will all see progress
-in this direction soon. If that doesn't pan out, then we can bring this
-up as a potential area.
-
-Thanks,
--Stolee
-
+I use git on the command line, so there should be no external 
+interference with its normal function.
