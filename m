@@ -7,114 +7,82 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8CAF0C43331
-	for <git@archiver.kernel.org>; Tue, 24 Mar 2020 19:08:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 34665C43331
+	for <git@archiver.kernel.org>; Tue, 24 Mar 2020 19:20:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5C6E020714
-	for <git@archiver.kernel.org>; Tue, 24 Mar 2020 19:08:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ECF152074D
+	for <git@archiver.kernel.org>; Tue, 24 Mar 2020 19:20:43 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YqwiPaLR"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="uiEHPHf+"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727806AbgCXTIE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Mar 2020 15:08:04 -0400
-Received: from mail-ot1-f66.google.com ([209.85.210.66]:36715 "EHLO
-        mail-ot1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727681AbgCXTIE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Mar 2020 15:08:04 -0400
-Received: by mail-ot1-f66.google.com with SMTP id l23so8057820otf.3
-        for <git@vger.kernel.org>; Tue, 24 Mar 2020 12:08:02 -0700 (PDT)
+        id S1726560AbgCXTUn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Mar 2020 15:20:43 -0400
+Received: from mail-wr1-f45.google.com ([209.85.221.45]:36644 "EHLO
+        mail-wr1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725835AbgCXTUm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Mar 2020 15:20:42 -0400
+Received: by mail-wr1-f45.google.com with SMTP id 31so16981726wrs.3
+        for <git@vger.kernel.org>; Tue, 24 Mar 2020 12:20:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=LSTgTCpZOqCQTdzXjpWmPry22W15HqJbTT59jtARv1Q=;
-        b=YqwiPaLRMfUzmiXVZPffESCV9HNLMO7CtoIpipkkJxAeCcHTYrwG8632R8gcduZ0X8
-         DmF885UvRG7SRpXGQB6s0dFut2FUSi7fV1qOwXLHei/dM8NH9G8j1kCBpmhSQA8BAgE0
-         M1EvDpZY0jAYI3OnaeWxfZY5KdjklC2YwCrvikoCBw8l+ygfjk7s4+xoZjyQUTdM2R0L
-         Zp37SNLkeLx5SPnfaw4filgYkRud127GT/QisJ6M+oLvtYOMPnWBcYdoD678Yj/yyB1+
-         TBwgOx9mQPpfq1CUeRYwPQLMcmCnkTXOFWbIt0tZ7wbH9LZLHhuvKOoPgy7eOakSM3lQ
-         NQQQ==
+        h=from:content-transfer-encoding:mime-version:subject:message-id:date
+         :to;
+        bh=ruMvJUIPS25OK+KiAhcBnElqsLIHqHNE3tuJWhsuVDA=;
+        b=uiEHPHf+1Bk3+KbWapunY8sv5y3XduH0IhMpJjPVi6Udm/tEsQF3UFVn2W+7zeZsO2
+         lkw7JVSDF50gCEhN92CsgPu4UNBB3LntAeMp1fT5mQVS6VO79QhaO1VnmsYXwrTarNeQ
+         BP9LJj3AtAxUg7t46pRbThVMXjoNmh2ykkjaDd4vdUMHNITzRSLbZyKz072y4BlbeS0i
+         1L1akTDVWZfiIaeWiFjuWcwRFGaRzDoIIb8Rr9ZHTtlcs4VYs32KBIVLOaugCTo5oIR6
+         RztR5rX6M6Akx+6B9NcwmLIXToUY84gz+rY+NwCJbzG8ZULBI+/53G8woGUnLB2S+EiS
+         WH7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=LSTgTCpZOqCQTdzXjpWmPry22W15HqJbTT59jtARv1Q=;
-        b=e+waSu1Tw1nFv7nszxHzXuPu1KOSmaApDCEF3I8PVSf9C7CWV9aIbukjoxD4T5q3rC
-         S42ocTNrZu+7RTcUTvCbNNMy/Q/V0RqVPWIOFYOZeZYjwkt4jeafwFDwN70enrhf0n6k
-         gMaFSeHGChKKcy4LO46jrYTetY3brXojta0fwy270GDYYodgvbDVvjKDmD0EIV0NNdHd
-         FthSjzTv7pWVdzYlQbSGpZ61Ut9PJy49Tc+z1VQg2SjI99P/Utr0J5vtfBIuUEXHi6b9
-         7CP1Sp6cj1WBa71eS3SPMq41TLof1ZLztljFNXP5wKNLkt28tOqw/dSMrUiww597f+37
-         mmBg==
-X-Gm-Message-State: ANhLgQ1/lDD5eMFXZFhMXsTRkCGjtYyjnwZXHhrKnFQ6OHY+bGCZWFZs
-        QrHJkWxTcKqfpGRp33MPaUf+s7oqo07BrIHHiE4=
-X-Google-Smtp-Source: ADFU+vueWgZ6M217+I/KLyUFld8dk8x1V5jCOQ+Cp0gzaFYfubSdFAaPKQnV3I38ZIvh+UVLZmYvdCJxmjw3SGvFSbQ=
-X-Received: by 2002:a05:6830:2428:: with SMTP id k8mr3408071ots.345.1585076881255;
- Tue, 24 Mar 2020 12:08:01 -0700 (PDT)
-MIME-Version: 1.0
-References: <cover.1585027716.git.matheus.bernardino@usp.br>
- <a76242ecfa69cf29995bd859305dc2ab1bc1a221.1585027716.git.matheus.bernardino@usp.br>
- <CABPp-BEbNCYk0pCuEDQ_ViB2=varJPBsVODxNvJs0EVRyBqjBg@mail.gmail.com> <xmqq7dz938sc.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqq7dz938sc.fsf@gitster.c.googlers.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 24 Mar 2020 12:07:49 -0700
-Message-ID: <CABPp-BHtfb4g3-EsiT_X-hCZYiDeDE0mbrV1ZUpOfWujRjAO3Q@mail.gmail.com>
-Subject: Re: [RFC PATCH 3/3] grep: add option to ignore sparsity patterns
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Matheus Tavares <matheus.bernardino@usp.br>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:content-transfer-encoding:mime-version
+         :subject:message-id:date:to;
+        bh=ruMvJUIPS25OK+KiAhcBnElqsLIHqHNE3tuJWhsuVDA=;
+        b=N3I88nCSz5jHrzYYBEAsGHAxW8mgYCtxFCm6onrD/q88pWlZELkZZKZ6t+ibBsBUMB
+         5ybqAdwvEzHuvRZVJnIFIvshNgHn59tdWcyNyppxIxg0FQU6B5Cv5MuA5Zy1HNvTTHYS
+         fkDthaGiaGQwZeq8Ofo84T0OD7/595tsEn4gD3uCkYBwEsBuSCGQpuAsijttG0YRpXTw
+         d0Dv8mcTRlptAkpOFCm8QPa2ljPD/g8CURgU30rhfZOPRzFrvRRzm/f/z5FlmHCDfNA3
+         ImtjCzMRTp6caUnkyFNmgFuymu1pKQY7tJ2DpFw0Ou5S/mtwC7AhRx39e3tbF/vSOQQy
+         DB4Q==
+X-Gm-Message-State: ANhLgQ3jrd8zlzpSrZY/Jj3nd3H4jwROMlE8PdMMC35VPVZeasqNjrTO
+        ojYrwzdSHWesARpwVrY8O4gwZ/xOYlc=
+X-Google-Smtp-Source: ADFU+vt0UI4ZiDpQPZFx4d3rMUHXSsOPx8bP5tRqbbBWWHrn5RXnTC0snNGO5eBZ0p7bUE8a9zWKDw==
+X-Received: by 2002:a05:6000:1109:: with SMTP id z9mr9876745wrw.237.1585077640789;
+        Tue, 24 Mar 2020 12:20:40 -0700 (PDT)
+Received: from ?IPv6:2a02:a451:bb78:1:1507:b7b7:10cb:873f? ([2a02:a451:bb78:1:1507:b7b7:10cb:873f])
+        by smtp.gmail.com with ESMTPSA id z12sm31421762wrt.27.2020.03.24.12.20.39
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 24 Mar 2020 12:20:39 -0700 (PDT)
+From:   Anton Mladenov <anton.g.mladenov@gmail.com>
+Content-Type: text/plain;
+        charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.60.0.2.5\))
+Subject: Wrong Version On The Website ?
+Message-Id: <D6C222C5-3949-43F3-A63C-24D58EAB6675@gmail.com>
+Date:   Tue, 24 Mar 2020 20:20:38 +0100
+To:     git@vger.kernel.org
+X-Mailer: Apple Mail (2.3608.60.0.2.5)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 24, 2020 at 11:30 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Elijah Newren <newren@gmail.com> writes:
->
-> > On Mon, Mar 23, 2020 at 11:13 PM Matheus Tavares
-> > <matheus.bernardino@usp.br> wrote:
-> >>
-> >> In the last commit, git-grep learned to honor sparsity patterns. For
-> >> some use cases, however, it may be desirable to search outside the
-> >> sparse checkout. So add the '--ignore-sparsity' option, which restores
-> >> the old behavior. Also add the grep.ignoreSparsity configuration, to
-> >> allow setting this behavior by default.
-> >
-> > Should `--ignore-sparsity` be a global git option rather than a
-> > grep-specific one?  Also, should grep.ignoreSparsity rather be
-> > core.ignoreSparsity or core.searchOutsideSparsePaths or something?
->
-> Great question.  I think "git diff" with various options would also
-> want to optionally be able to be confined within the sparse cone, or
-> checking the entire world by lazily fetching outside the sparsity.
->
-> > * grep, diff, log, shortlog, blame, bisect (and maybe others) all by
-> > default make use of the sparsity patterns to limit their output (but
-> > can all use whatever flag(s) are added here to search outside the
-> > sparsity pattern cones).  This helps users feel they are in a smaller
-> > repo and searching just their area of interest, and it avoids partial
-> > clones downloading blobs unnecessarily.  Nice for the user, and nice
-> > for the system.
->
-> I am not sure which one should be the default.  From historical
-> point of view that sparse stuff was done as an optimization to omit
-> initial work and lazily give the whole world, I may have slight
-> preference to the "we pretend that you have everything, just some
-> parts may be slower to come to you" world view to be the default,
-> with an option to limit the view to whatever sparsity you initially
-> set up.
+Hello Git team,
 
-It sounds like you are describing partial clone rather than sparse
-checkout?  Or perhaps you're trying to blur the distinction,
-suggesting the two should be used together, with the partial clone
-machinery learning to download history within the specified sparse
-cones?
+First of all, much respect for everything you do.
 
->  Regardless of the choice of the default, it would be a good
-> idea to make the subcommands consistently offer the same default and
-> allow the non-default views with the same UI.
+Second, hope you are safe and healthy.
 
-Agreed.
+Third, I think the version on your website is wrong.=20
+The version number atop the Release Notes link (where I found your =
+email) is newer than the one on the desktop screen below.
+I checked your Github and saw the latest is 2.26 but the link from the =
+screen image points to some other version. At least for Mac.
+
+Hope you can check that.
+
+Kind Regards,
+Anton=
