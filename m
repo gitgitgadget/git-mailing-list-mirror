@@ -2,109 +2,120 @@ Return-Path: <SRS0=kv1d=5J=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 02798C10DCE
-	for <git@archiver.kernel.org>; Tue, 24 Mar 2020 21:26:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 153D1C54EEB
+	for <git@archiver.kernel.org>; Tue, 24 Mar 2020 21:42:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id C3D0A2070A
-	for <git@archiver.kernel.org>; Tue, 24 Mar 2020 21:26:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D1D9420719
+	for <git@archiver.kernel.org>; Tue, 24 Mar 2020 21:42:15 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="JWsBcOAN"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="WV7sNMHN"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727747AbgCXV06 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Mar 2020 17:26:58 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54887 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726673AbgCXV05 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Mar 2020 17:26:57 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0CAC45AD9F;
-        Tue, 24 Mar 2020 17:26:55 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=kuzvFsX3h3nBDHUAHz9Me+F8VMg=; b=JWsBcO
-        ANfUp2i8xcXJxeozQ4sro49DLgp387YfAF8LsH4ehoTQ1EzbZZZlepMaCDBMqCHs
-        bv5HKa9iCFqr1Mg/sk6k/HqX2TiPrQYrjFCRhHo56ZYVg2cld5v9Qt0W33hdobg0
-        AyupIeBt5zuYG1P6p3vr2MUwbDZHw2N/ARHi8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ksY20SfxFJVeAL4ETiB7omMSkjaEpsZW
-        zIZRdfYUbmmT9CH6qWn6UtlFr5BDwwboNl5pbon8HF8wq1whC3RUscfz2Io6f7vF
-        bvqNS6Pcucar8bVladzwWX8czAfJElWz8ycMdOX2+cf+XbjkBprvfh+bMdM+8Qfk
-        HuCU3pjpr7Q=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 031295AD9E;
-        Tue, 24 Mar 2020 17:26:55 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8440A5AD9D;
-        Tue, 24 Mar 2020 17:26:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Matheus Tavares <matheus.bernardino@usp.br>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [RFC PATCH 1/3] doc: grep: unify info on configuration variables
-References: <cover.1585027716.git.matheus.bernardino@usp.br>
-        <7ba5caf10de75a2e0909318b04c62f5827a3fa56.1585027716.git.matheus.bernardino@usp.br>
-        <CABPp-BGzeL8O73bB82=+4RFvdAXTgofg6H_xgSEXG7Euj=47Bg@mail.gmail.com>
-Date:   Tue, 24 Mar 2020 14:26:54 -0700
-In-Reply-To: <CABPp-BGzeL8O73bB82=+4RFvdAXTgofg6H_xgSEXG7Euj=47Bg@mail.gmail.com>
-        (Elijah Newren's message of "Tue, 24 Mar 2020 00:57:41 -0700")
-Message-ID: <xmqq4kud1m1t.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1728306AbgCXVmN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Mar 2020 17:42:13 -0400
+Received: from mout.gmx.net ([212.227.15.19]:57299 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728094AbgCXVmI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Mar 2020 17:42:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1585086120;
+        bh=HQXI5rwS9+ByD0vcBDyu3R3cRRyPvZPVQhpw/TnQGdo=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=WV7sNMHN7+Z3VmRK14IUYWJFJNdMQh3ia/48OCgnkSwZuSEl7tI4RuDyCV2SPGtU9
+         7T6/FLrJ4aNF9z2YMy9XfBaSgDl5hYBqNxqbXDgNSIgDAZQCPIr8webmenwtCBU70Z
+         Zpy9gANMuVSl6JghMdfOLzHTkv7rqBBuF8jX5BM4=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from MININT-QA14EDB.fritz.box ([213.196.213.32]) by mail.gmx.com
+ (mrgmx005 [212.227.17.190]) with ESMTPSA (Nemesis) id
+ 1MjS9I-1jebCX3RQA-00kt0E; Tue, 24 Mar 2020 22:42:00 +0100
+Date:   Tue, 24 Mar 2020 22:41:58 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jeff King <peff@peff.net>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 2/2] tests(gpg): increase verbosity to allow debugging
+In-Reply-To: <20200323213109.GA44297@coredump.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.2003242239300.46@tvgsbejvaqbjf.bet>
+References: <pull.728.git.git.1584968990.gitgitgadget@gmail.com> <dd26cb05a37a54d9d245823772d33fe0daab8ffa.1584968990.git.gitgitgadget@gmail.com> <20200323173258.GA3977@coredump.intra.peff.net> <20200323180445.GA31401@coredump.intra.peff.net>
+ <xmqq8sjq6fob.fsf@gitster.c.googlers.com> <20200323201547.GA35429@coredump.intra.peff.net> <xmqqzhc63gmd.fsf@gitster.c.googlers.com> <20200323213109.GA44297@coredump.intra.peff.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2F076076-6E16-11EA-885F-C28CBED8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:Z1oJEwnT7S0/JDpwF3INzGcEQUEuK/ydSuNY7xXslhgD6aZsbdm
+ HxNNuMOg5rwyKKLKSCcasFSip4kET0i0dwlxZ82UvOs/qePyuKu/IjGqnFySECQNVD8KcqB
+ u5+ahVdxXVbEojnzYhT6Xbz8+66CQ9C5EKnD54UbtZlK7BORLJhUKyPRsukDLiCpQh2t9+r
+ gCu9H3AzvbZu7H7yBgR4Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:ggAOan7BHsA=:R/8kR89Xs8xleX5rGOAir9
+ +qvaVpvqfdj2WqTEtDVRubQ3koOuf3iQgM+/qq2smA62Kd8YNDSJwfJnjsFS95sr9q10+9V57
+ W1fuVdM+lX5XWnwb94dnLCAR7+fszaXxsLXgBCikTmg6WjzJSoShCuUubY60yXynbR98ISmD7
+ cz/DgAJcxnyscozwQh4YwcI96qpuJjNm+q5u9W86PikjsR0tKEBc9wDxmtXJEdbLNGbVHjkPm
+ TkyYrk74JJ4uJRFaA0yVC9ixXyLbf/Sl6TamLh88ZCZSE0gMLjuXzbu2Ev1RS9g0Iu9ErGvBP
+ 1KtOIAuqwXyo+JNI4g92qVOnZMF0v1OwEFXEdukKBHRrtLC9xyE3MoDrPCOUmplp5qH7Jszkg
+ BCcnrClZeE8kBX1rQKMSF7aoSsQh7Q4pAO6VVOLJ7GDTcUAuwNwZfYYKkpT4j86q4h2BvbeXY
+ mmFICash+mn0RMuhYkd8V5y0LsEu32ZmP0sakHXNg2830qbKsEW8ksbIpto8hZgYEH82JadGZ
+ k7M+70kQNDlRDCL9OyAjWZQ8IhCyiY/978McVQFUoZXQQpJMZE9skkMSzmVP14fcCOFKuoaFK
+ lgzZNL2m98zm8OUpwjo3uSI5XIyPnSYXU1RqjdWsHdWe1Q0NQclSshOYXVFu4pMCtxOvhlhRW
+ QdsjIoULKB1Oj3R4DFgguYhBqeyoAo4aZ/1gjrdHzhh9TEbW0jsNvNzF4+NwqrL6beGKxO4RL
+ 1aFQnl2adc0RI0pYUk9bDk/krOtBVtFM0UnICHRoxEGqzYNyUS8c4w0IIuCKxOEPbORPHM0bq
+ Onek2q2DzE64DP6aP8EcL4wvcOVlEyqgMSOaIHDR/EC5KTv4blqpE5EaP7jD0v5ASYr5YOstI
+ iwZ/1fZiU/gdBhmkRNAG+Pxzjj9NSvbmUHFVdJetDN6148y6cfn6xjP2mrgG9tJH2JPPW9zsX
+ ycZ8ApEdcg7yVQOqlp2dj655SpV6rxkgOF3bodFWfINqubXsL06pnZqtQbVSFsgsztkgEzlth
+ ZPwVKnGfiN4eGucLg6X3pU/cpgpAW50ADtI94ITWZrEEej90ukWWIGmHACILWnAp4CCVwdNTw
+ Z1JDzc3PbTbxNcUKPkfRn4bx7JJLCTGlqhulY5nm2wHrS6e6VxBRdqAZoKRSBzIVicR3MJB95
+ D/Iq6bAe5do9tJAAFCMjJwH7AMMBr3Q/o8cxtOM/cljNzHrtzLbUgVOG2GGL0DdUOHkwUeaT1
+ pZDDBACdI8C9N2PJm
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+Hi Peff,
 
->> diff --git a/Documentation/config/grep.txt b/Documentation/config/grep.txt
->> index 44abe45a7c..76689771aa 100644
->> --- a/Documentation/config/grep.txt
->> +++ b/Documentation/config/grep.txt
->> @@ -16,8 +16,11 @@ grep.extendedRegexp::
->> ...
->> +       Number of grep worker threads to use. See `--threads` in
->> +       linkgit:git-grep[1] for more information.
->> ...
->> diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
->> index ddb6acc025..97e25d7b1b 100644
->> --- a/Documentation/git-grep.txt
->> +++ b/Documentation/git-grep.txt
->> @@ -41,34 +41,7 @@ characters.  An empty string as search expression matches all lines.
->> ...
->> +include::config/grep.txt[]
->> ...
->>  --threads <num>::
->> -       Number of grep worker threads to use.
->> -       See `grep.threads` in 'CONFIGURATION' for more information.
->> +       Number of grep worker threads to use. If not provided (or set to
->> +       0), Git will use as many worker threads as the number of logical
->> +       cores available. The default value can also be set with the
->> +       `grep.threads` configuration (see linkgit:git-config[1]).
+On Mon, 23 Mar 2020, Jeff King wrote:
+
+> On Mon, Mar 23, 2020 at 02:28:58PM -0700, Junio C Hamano wrote:
 >
-> I'm possibly showing my ignorance here, but doesn't the
-> "include::config/grep.txt[]" you added above mean that the user
-> doesn't have to see an external manpage but can see the definition
-> earlier within this same manpage?
+> > Jeff King <peff@peff.net> writes:
+> >
+> > > Here's what I came up with that I think is suitable for applying (th=
+ough
+> > > if you find the GNUPGHOME thing below too gross, I can rework it as
+> > > indicated):
+> >
+> > I actually think it is perfectly fine to mkdir and set the
+> > environment even outside test_expect_success; that way, even
+> > GIT_SKIP_TESTS cannot omit the necessary initialization.  And as you
+> > said, leaving the environment pointing into the trash repository's
+> > working tree should be fine when we fail the GPG prereq.  We
+> > shouldn't be running GPG at all in such a case.
+>
+> I have a slight preference to do it in an expect_success block, because
+> then we'd notice the error more readily (and it gets the benefit
+> verbosity and tracing, too!).
+>
+> The thing I was more worried about is that it's technically a behavior
+> change to set up GNUPGHOME when we're not going to use it (as well as
+> create the directory). But I find it hard to imagine a test that would
+> be affected where my suggested solution wouldn't be "fix the test".
 
-I think so.  Also, the new reference "See `--threads` in git-grep"
-added to grep.threads to config/grep.txt would become somewhat
-redundant in the context of "git grep --help" (only "See --threads"
-is relevant when it appears in this same manual page).
+It is _half_ a change in behavior: in case that `gpg` was found, and does
+not have a known-bad version, we set up the environment variable, _even
+if_ the test-signing fails. In other words, we don't roll back the
+environment variable.
 
-Readers who finds the reference in "git config --help" still needs
-to see that --threads is an option to git-grep, though.
+As such, I figure that setting it globally _before_ even evaluating the
+prereq is okay.
+
+Therefore, it is relatively easy to turn this thing into a set of lazy
+prereqs, which is better, conceptually, I think. I am in the process of
+making it so.
+
+Ciao,
+Dscho
