@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ECE2FC54FCF
-	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 15:06:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CBAE7C1975A
+	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 15:07:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id C314420789
-	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 15:06:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 97C2520789
+	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 15:07:01 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gRBBuwYQ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="uIFImBvm"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727903AbgCYPG6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 Mar 2020 11:06:58 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:45856 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727501AbgCYPG6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Mar 2020 11:06:58 -0400
-Received: by mail-pf1-f193.google.com with SMTP id j10so1143738pfi.12
-        for <git@vger.kernel.org>; Wed, 25 Mar 2020 08:06:57 -0700 (PDT)
+        id S1727906AbgCYPHA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 Mar 2020 11:07:00 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:35063 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727501AbgCYPHA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Mar 2020 11:07:00 -0400
+Received: by mail-pf1-f196.google.com with SMTP id u68so1173560pfb.2
+        for <git@vger.kernel.org>; Wed, 25 Mar 2020 08:06:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=kmWIKRsliB6qei1iFgIOmQDpdqR2nj9u0F+OOavpSw4=;
-        b=gRBBuwYQMjmeETq2i1dlr2U6vDHNivx/rntWCn9RxHIEiGVxCZ6qEnyc0TsQnUeEPU
-         RshqJ746HcRgeE/1QCDpKkA48VDWqNpNJUqq6FwETFHOegGUxedKWZvGH6MfX4a2PjDE
-         8QtFxqHYl4roGWzbhtDngC59lHGyUG8eLA3j2g9snUuXNsDckdeTxkU+gELlSIAWhRNE
-         pGN7OKlUWB9wd5iYoUfUrt4gU1gHbJm0YX+oG9FYPO9hEwUA4uoDUW74izMpo06aTLpK
-         jXHoxjmpuZw2VyqPHdzLuv//7n1Qw+PoVUSRAUe0Mb28lhQumdRhesUDDe4pg9hvvRKG
-         NtvQ==
+        bh=Rk93iIFXLxxfBSCv6fjokclVhOQ1+eI0Uc28Ooz/j2M=;
+        b=uIFImBvmi3tVaEc+xkeVFAxdYAO0C2HNucgKP+m083JqvxgsWL1yC4MEOQEqrKP0N7
+         WqR9CiaeGVDBbDmk6iSLr8ND9rekJ4og1o+X9/g0BWzkYVKsSjXlzLFqHftg7BkPMtsE
+         wF5CfGZ5caD/52tSe2fRl8fBgzBq2/+mZd5yiMAw8UJUcHKkloMoSHJeUKtnAuyl3E0N
+         DNxHKUpCAbwTkRYEocGBS+WG0aNRS9vkgNCwzevF6Hlru/0/C/Q1NBEv2mfGu36RnT+7
+         a7DLk1nf/k95Q/CcZK7Jb8/QPrLQArOz/fVh1TPQCk/Ze/byAvYe1S0ntYkShkqerBIl
+         DN1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=kmWIKRsliB6qei1iFgIOmQDpdqR2nj9u0F+OOavpSw4=;
-        b=K3mea/13DQQ6DWQ7tTk0GfeFAtYSsEQoNN897TDKr7OVc/mTu3y7mh02D/z21l85aY
-         epQDgOylGH9Ttu41vlNrn2z3N82BIt96zmRXenb+AWX+O4VFUEVel/SqsrWzTOBGNf4J
-         Fe433ATbwfxo3GRzckeLS5sv8M3g596eAvAsvxYjohv+sO3SGvvSunqQn8Ewg/KKuazI
-         35ZtKLi2AJiedlO5eN7AiHUm6dccY/9xNtByamsJauNqcN83SPzb7gPWhAvRg6jU+YDt
-         iyCq4jhQPs0irB14dh7bdOvUf8M+js2yQ/HDBFqvMv2onVQdrKjHcq+FGz9pdiGkxmA7
-         tRow==
-X-Gm-Message-State: ANhLgQ0UfeHCrbodEnv3vx6k1VRVFmSe+Jle8ZeE5Kf8qJFg0FY5wkxP
-        ubtiN8AebqgnBNgAG08ix0fEPfZK
-X-Google-Smtp-Source: ADFU+vu+Nx1hT3Cjj/opA2X3f7JZuK+noXA+MXnqIuEbi1Lpt7QWU0a+HjwENS/6BGbhnIt9Guu4DQ==
-X-Received: by 2002:a62:502:: with SMTP id 2mr3920395pff.324.1585148816685;
-        Wed, 25 Mar 2020 08:06:56 -0700 (PDT)
+        bh=Rk93iIFXLxxfBSCv6fjokclVhOQ1+eI0Uc28Ooz/j2M=;
+        b=dIiWWbPdywPZNCFadh16lt2JGBbSAU3D3trEUfOj+JnIo7u46zbvbyG/VTzfYo+3Av
+         uhbwqxzWjqiUFht73+Vwi5SXc0OIoR642Y3NfztGGC97fDEO0C8rAx6Pm4VxuhOPswjy
+         CzYhTI3zoGtZedkBRJlBuJgMs3C7dGDg8PnWg8VnEfNjFxQ31c61revS/WcIayPISuOp
+         J22dTzOwZCxN5cg2btiSGRQ86kIK33tvz9nrBUhr+OuHKhY1+aPUJtilPJmrXZH1w7di
+         Xw5XbDPHMUlrSN/WDURP6TOb+3T7AOaFLIvOdk5do7n7cXPbPwN1FAb6lIbC3wMeqdwS
+         gQhg==
+X-Gm-Message-State: ANhLgQ0UL7bgsf/Zv4QrReJxzzzEQHEdbAoXD+6StXtu1x1FHuD5ZikD
+        ce7f03SlU5IUIPWklVydMb/R0SCa
+X-Google-Smtp-Source: ADFU+vtEFzpRh6TsICQf6egWl4yNwfblu2GRZzlnJIoxdKbngwX0vGQO7z7HH4d2Ar4kAAvatxIJfA==
+X-Received: by 2002:a65:6805:: with SMTP id l5mr3490868pgt.256.1585148818358;
+        Wed, 25 Mar 2020 08:06:58 -0700 (PDT)
 Received: from localhost.localdomain ([2402:800:6374:c347:544a:f0cc:8a21:fee3])
-        by smtp.gmail.com with ESMTPSA id f127sm18232538pfa.112.2020.03.25.08.06.55
+        by smtp.gmail.com with ESMTPSA id f127sm18232538pfa.112.2020.03.25.08.06.57
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 25 Mar 2020 08:06:56 -0700 (PDT)
+        Wed, 25 Mar 2020 08:06:57 -0700 (PDT)
 From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>
-Subject: [PATCH v3 2/8] test-lib-functions: test_cmp: eval $GIT_TEST_CMP
-Date:   Wed, 25 Mar 2020 22:06:15 +0700
-Message-Id: <691d9d47ba1495d68c9506cd6600267b38afdd85.1585148327.git.congdanhqx@gmail.com>
+Subject: [PATCH v3 3/8] t5003: drop the subshell in test_lazy_prereq
+Date:   Wed, 25 Mar 2020 22:06:16 +0700
+Message-Id: <759a589b83515cc7a676009d820e11fc36c5a0a2.1585148327.git.congdanhqx@gmail.com>
 X-Mailer: git-send-email 2.26.0.rc2.357.g1e1ba0441d
 In-Reply-To: <cover.1585148327.git.congdanhqx@gmail.com>
 References: <cover.1585148327.git.congdanhqx@gmail.com>
@@ -74,32 +74,34 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Shell recognises first non-assignment token as command name.
-With /bin/sh linked to either /bin/bash or /bin/dash,
-`cd t/perf && ./p0000-perf-lib-sanity.sh -d -i -v` reports:
+test_lazy_prereq will be evaluated in a throw-away directory.
 
-> test_cmp:1: command not found: diff -u
-
-Using `eval` to unquote $GIT_TEST_CMP as same as precedence in `git_editor`.
+Drop unnecessary subshell and mkdir.
 
 Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
 ---
- t/test-lib-functions.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t5003-archive-zip.sh | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 352c213d52..ab0e47ae17 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -905,7 +905,7 @@ test_expect_code () {
- # - not all diff versions understand "-u"
+diff --git a/t/t5003-archive-zip.sh b/t/t5003-archive-zip.sh
+index 106eddbd85..df1374a312 100755
+--- a/t/t5003-archive-zip.sh
++++ b/t/t5003-archive-zip.sh
+@@ -7,12 +7,8 @@ test_description='git archive --format=zip test'
+ SUBSTFORMAT=%H%n
  
- test_cmp() {
--	$GIT_TEST_CMP "$@"
-+	eval "$GIT_TEST_CMP" '"$@"'
- }
+ test_lazy_prereq UNZIP_SYMLINKS '
+-	(
+-		mkdir unzip-symlinks &&
+-		cd unzip-symlinks &&
+-		"$GIT_UNZIP" "$TEST_DIRECTORY"/t5003/infozip-symlinks.zip &&
+-		test -h symlink
+-	)
++	"$GIT_UNZIP" "$TEST_DIRECTORY"/t5003/infozip-symlinks.zip &&
++	test -h symlink
+ '
  
- # Check that the given config key has the expected value.
+ check_zip() {
 -- 
 2.26.0.rc2.357.g1e1ba0441d
 
