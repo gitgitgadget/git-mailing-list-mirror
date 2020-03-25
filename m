@@ -2,122 +2,109 @@ Return-Path: <SRS0=ys1m=5K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DEE75C43331
-	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 14:00:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1AC6DC43331
+	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 14:24:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B22C220722
-	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 14:00:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DFD5220836
+	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 14:24:28 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QY1zXYY2"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iUMNlkhV"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727594AbgCYOAy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 Mar 2020 10:00:54 -0400
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:45574 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727394AbgCYOAy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Mar 2020 10:00:54 -0400
-Received: by mail-pl1-f194.google.com with SMTP id b9so819850pls.12
-        for <git@vger.kernel.org>; Wed, 25 Mar 2020 07:00:53 -0700 (PDT)
+        id S1727604AbgCYOY0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 Mar 2020 10:24:26 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:40398 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727538AbgCYOY0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Mar 2020 10:24:26 -0400
+Received: by mail-pf1-f194.google.com with SMTP id l184so1106719pfl.7
+        for <git@vger.kernel.org>; Wed, 25 Mar 2020 07:24:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=mIaNb7kUWIwWJmNMhoILvIHxve67c8phtqrDnVGp/T0=;
-        b=QY1zXYY2FoVr8qq6qb/v+ZVkv2In0M7GR/4pT5feQoNdO7cvSetxvO77/S7vRCyhFp
-         2XrWPjN5YW9ScTSgzDiwnIzle2igW/uMHLmVRriE6sHRsdYWyYMXOMezEdPBzJMmIdZK
-         9Zyc+yb9rSzlmbSQCIDq38sLwma+IEGHv0LY5fyVxqeTThEzKZj+G6cLTuvpnuthEze4
-         qI+PxCc0TjMVXlhQXzIPgjs8UfafbVjIx1SN1vCJrWcxFv/1wGS5/xqZbV5bFhIR3hjc
-         NeWQNIFfJiKZUwsrUG6kx0tx2Ycg7y+CSRhPFDmU+NlLI20H9q0YtGkGjzC1m/kVwu8L
-         oZzA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=xY8DAFqRKYWLKVr1rhZW1zKZvL/P1TshPNIKJ5mz5l8=;
+        b=iUMNlkhVg/eUEfWu+yTp6QUYFwmYg+/AGxyVzo4IZuoHR7N/swfeMw7K7Cnde2dvCQ
+         DMhJR42MZuFAsLUr4mmDk9K95TKNNIqGz124siGVXQv1fhOit0EwfMwXYmhzbcZSarWv
+         B7gvyYlhkbbp7zhbH/Ls6gdv+4fwQYlMTTlLzBFhVXMA1QkjBFvJe0/VYzfa8+wcAicy
+         5VtdiVQ+2gz/JqvZqgPuRCzPEFB6eMD9Vh4M6jKqChNzKB7MCZ+vVnwXnWIcRW3BZPVw
+         i46i267mlG5Rv84M+8g4oejdh2t/vR3Vu8ex6XwZ1gF433U+Ehv50IzBBqfZgTaO/ILU
+         DNkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=mIaNb7kUWIwWJmNMhoILvIHxve67c8phtqrDnVGp/T0=;
-        b=S/mj4mnPIt7pK5zNX0qKRnUoTGOc1lVv+bT+PwQj6icba0x40m/DlQ3GMNcVCKut8c
-         s+CkO+1LIPG3AUWCzpmtukqhIXVoYZG6+/YFF/r1ztv0h5uZ78/TOiCeUkMcv5GqeRU1
-         HpITgi8lR4fFtY23KnO3obRCoyxKrMWj+PKUwMAqJE7pCf9bt0ducKzEBlui09sbrL/V
-         z3mpA7CZY3ZSjXVy/Tn2ysJzPWJinKAG36uaAH1fUPoz4V8wyqS7vtlTk22tu1XPCy88
-         lzZYBGswhWqbbwT9Wt+HmibqyhEYQ3WnQV0DDieZsY2ldXRXf1MYHBWWMO5TP/BOFsQS
-         VuTQ==
-X-Gm-Message-State: ANhLgQ0NzmB9oIFo3NTH1f3OOJA5EzfYTsgFsmeJBD3rsMInI4B/P9vy
-        64NP8mbIZFnu2eVTyZzNPQw=
-X-Google-Smtp-Source: ADFU+vv2rbEoZhngw6VHaQo7OsgEeKfLWVsAZxwa77UJPusE5wP2/ZMmH7XCS0Flu0xpaCPusfzQxA==
-X-Received: by 2002:a17:90a:c78b:: with SMTP id gn11mr3833301pjb.147.1585144853104;
-        Wed, 25 Mar 2020 07:00:53 -0700 (PDT)
-Received: from [192.168.2.6] ([43.247.159.138])
-        by smtp.gmail.com with ESMTPSA id 189sm18485573pfw.203.2020.03.25.07.00.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 25 Mar 2020 07:00:52 -0700 (PDT)
-Subject: Re: [PATCH v2] t9116: avoid using pipes
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git <git@vger.kernel.org>,
-        =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-References: <20200322124619.30853-1-shanthanu.s.rai9@gmail.com>
- <20200324093502.32394-1-shanthanu.s.rai9@gmail.com>
- <CAP8UFD2Uu-dPJcZB--T7k0tMuXc0iVeqnMUn3Y_x+3iaFf9xFQ@mail.gmail.com>
-From:   Shanthanu <shanthanu.s.rai9@gmail.com>
-Message-ID: <4b40a756-c32f-64ad-1e1d-4e31804d8295@gmail.com>
-Date:   Wed, 25 Mar 2020 19:30:45 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.1
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=xY8DAFqRKYWLKVr1rhZW1zKZvL/P1TshPNIKJ5mz5l8=;
+        b=by7yk30q25lB6QueplyH3V8ce5fvUHo/wDseqMvtVqWp4Mf3yr5V2V0+eUq9mWbwQP
+         4ziWs953c1dc6XZvhmgiBot7hVAMCPSNPTsoGbi4isHYVUcD5VPsW43DKlA7Gl75B66s
+         RLczi1gk8pxICwMP94Kmmvzj4UZAtvCsPmoeOfPnjG2Z62aHpcYsL6dOyQzmRDEFtZkl
+         aj4h8hZbbrO7S82D3OTgeFL9CBhOx7/Q4aqlbnjB/yZh9bPBSPelqhbmAkwVMtuIbZdf
+         RFWZxFlzuAw5PibmGEOeBQ0/X0su15P47NPDpU6e3XzjuyKqE6VUZ3S4Xa3OndJVnYN4
+         h6uw==
+X-Gm-Message-State: ANhLgQ2zyiwSN9KTuvbsL9M/aIlIaDJlD1B2JC7k+6CheB5445F6LsNU
+        X+uWj0XUIArda7CknvfDvLs=
+X-Google-Smtp-Source: ADFU+vumzN9TMKA0Bh2h2RMV7gkXWdFm62vex7xI1W9mWzszpwhk9MzPFHjMims+4Umh5XHg9e6jzQ==
+X-Received: by 2002:aa7:880c:: with SMTP id c12mr3472311pfo.77.1585146264387;
+        Wed, 25 Mar 2020 07:24:24 -0700 (PDT)
+Received: from localhost ([2402:800:6374:c347:544a:f0cc:8a21:fee3])
+        by smtp.gmail.com with ESMTPSA id u18sm18736101pfl.40.2020.03.25.07.24.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 25 Mar 2020 07:24:23 -0700 (PDT)
+Date:   Wed, 25 Mar 2020 21:24:21 +0700
+From:   Danh Doan <congdanhqx@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v2 7/8] t4124: fix test for non-compliant diff(1)
+Message-ID: <20200325142421.GA20898@danh.dev>
+References: <cover.1584838148.git.congdanhqx@gmail.com>
+ <10f39c3d30d13e9141f081f985a0620954cc7493.1584838148.git.congdanhqx@gmail.com>
+ <nycvar.QRO.7.76.6.2003231456200.46@tvgsbejvaqbjf.bet>
+ <20200323150449.GC11801@danh.dev>
+ <xmqq8sjq4wyf.fsf@gitster.c.googlers.com>
+ <20200324034025.GE11801@danh.dev>
+ <xmqqy2rp1tff.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-In-Reply-To: <CAP8UFD2Uu-dPJcZB--T7k0tMuXc0iVeqnMUn3Y_x+3iaFf9xFQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqy2rp1tff.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 2020-03-24 11:47:32-0700, Junio C Hamano <gitster@pobox.com> wrote:
+> Danh Doan <congdanhqx@gmail.com> writes:
+> 
+> > Hence, if we're going to drop support for system that doesn't
+> > understand "diff -u", we're going to:
+> > - remove support for those variables:
+> >   + GIT_TEST_CMP_USE_COPIED_CONTEXT
+> 
+> Folks who prefer "-c" even their platforms all are capable of "-u"
+> may miss this, but I think that is a very small minority, and they
+> would be OK (it is after all only needed when diagnosing test
+> failures of our test suite, and by definition, those who are working
+> to improve Git would know how to read "-u" output).
+> 
+> >   + GIT_TEST_CMP
+> 
+> I am not sure why you need to drop this one?  This is more about
+> switching between "diff" and "cmp", and there are reasons why folks
+> prefer latter especially when they are not debugging the tests.
 
-On 25/03/20 12:04 am, Christian Couder wrote:
-> On Tue, Mar 24, 2020 at 10:36 AM Shanthanu <shanthanu.s.rai9@gmail.com> wrote:
->> Commit c6f44e1da5 (t9813: avoid using pipes, 2017-01-04) recommends to
->> avoid using pipes, since the exit code of upstream in the pipe is
->> ignored. Hence, redirect the output to a file and parse that file.
->>
->> Commit de26f02db1 (t9001, t9116: avoid pipes, 2020-02-14) noted that
->> this also allows easy debugging in case the test fails, since the file
->> will be left on disk and can be manually inspected.
->>
->> Signed-off-by: Shanthanu <shanthanu.s.rai9@gmail.com>
-> We usually ask for a legal name in a format similar to "<Firstname>
-> <MaybeMiddleNameInitial> <Lastname>" where <MaybeMiddleNameInitial>
-> can be omitted. The name should also match what is in the "From:"
-> field of the emails you send.
-Okay, I will keep that in mind.
->> ---
->>  t/t9116-git-svn-log.sh | 53 +++++++++++++++++++++++++++++++-----------
->>  1 file changed, 39 insertions(+), 14 deletions(-)
->>
->> diff --git a/t/t9116-git-svn-log.sh b/t/t9116-git-svn-log.sh
->> index 0a9f1ef366..56d68e4aed 100755
->> --- a/t/t9116-git-svn-log.sh
->> +++ b/t/t9116-git-svn-log.sh
->> @@ -61,12 +61,16 @@ printf 'r1 \nr2 \nr4 \n' > expected-range-r1-r2-r4
->>
->>  test_expect_success 'test ascending revision range' "
->>         git reset --hard origin/trunk &&
->> -       git svn log -r 1:4 | grep '^r[0-9]' | cut -d'|' -f1 | test_cmp expected-range-r1-r2-r4 -
->> +       git svn log -r 1:4 >out &&
->> +       grep '^r[0-9]' out | cut -d'|' -f1 >actual &&
->> +       test_cmp expected-range-r1-r2-r4 actual
->>         "
-> It seems that the code that your patch changes is repeated a lot in
-> this test script. I wonder if it would be better to write a shell
-> function to avoid those repetitions.
+I was thinking it could simplify the test_cmp code.
+There was a problem which needs to be addressed by 2/8.
 
-Oh yeah, that would be better. I will add a function. Just clarifying,
-the function should run the git, grep, cut and test_cmp commands?
+Yes, people may prefer to use cmp(1) because cmp(1) should be faster
+than diff(1).
 
-Also, could you suggest an appropriate name for this function?
+Anyway, it seems like we've decided to keep using normal-diff because
+of HP-UX.
 
+-- 
+Danh
