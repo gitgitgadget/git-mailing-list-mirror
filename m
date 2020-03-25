@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EF54CC54FD0
-	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 15:07:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DFE08C54FCF
+	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 15:07:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id BA37920789
-	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 15:07:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B745120789
+	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 15:07:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Yp2+7d+D"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gnyYFsVH"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727909AbgCYPHC (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1727911AbgCYPHD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 Mar 2020 11:07:03 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:39166 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727721AbgCYPHC (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 25 Mar 2020 11:07:02 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:44171 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727501AbgCYPHB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Mar 2020 11:07:01 -0400
-Received: by mail-pf1-f193.google.com with SMTP id b72so1151470pfb.11
-        for <git@vger.kernel.org>; Wed, 25 Mar 2020 08:07:00 -0700 (PDT)
+Received: by mail-pf1-f196.google.com with SMTP id d25so1160339pfn.6
+        for <git@vger.kernel.org>; Wed, 25 Mar 2020 08:07:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=bzmrgtIs2YqbXFwWtL5PflOggHAysOA92TYruMqV9bM=;
-        b=Yp2+7d+DlV2agUcabgoJZY4AgHsKZGEcp75Prcvr1bjiOFEMOS1yfgiPBFvCJKXPqY
-         fEBE3tCq26vDuOat0fswn8eMq09XDPhSwOHRMG4F00+z2bzhIHH2RvZBpKvWRXmH8QLc
-         I+Ugk60yf4aDqeK8sMtBFYYiGK98R/ojd/4TC7vl5cri43xPbTiZtsx8paTp7GYrlHG1
-         emu25EeFLMyRx2SiS5pBy7UKscNsa4pDEs8waHby7yKUX9JfTU4en8USHYWgklTUgWue
-         zQmqksuyxL/Lxpq+PpxlHOwvG+3LPRteMgQwFWRCBdBylTAHa1tBdWEILgEJKpj/0a5J
-         9KIQ==
+        bh=igWZKJLHsdQCZWYAe97MD1rG+bYewy+UxY4h6xDz/cs=;
+        b=gnyYFsVHnGd8IfwuE0T5jipMk6SfsB5km/d9b2bV/6VNIaO9GKf2R9CHFv76PQTkEj
+         0ZxwR2uzqvW/k5nYVRpp+W3CW47oKI3N1JSsi1tehZEFu15XPWwHnvZnbNSkE+r62ejg
+         gafsPtSoeI0skBm3wEXUzhtVxybcZEXBN0aqTnkTS8gVuFaQZ7nTdqvttdkvV8M0/3tx
+         eQeMr25/lwdWqCC/nNh7/5TY0jWTXCDPvvdAiP9t3IyQkEqW0aO65Arwdrx1NNGek8vO
+         xwb+Yh/gC7ciZY45qIwAMqT4M7hWk6+FOUzi/zmnVH9YAqf1sU7iXBX0WvQjkZTOPYks
+         zUJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=bzmrgtIs2YqbXFwWtL5PflOggHAysOA92TYruMqV9bM=;
-        b=hXCmexGLnlXF8EirHW1zLz3oMMcm8LUPVd75Du2W5XsChu6Qiz848StBqJ3Oyg+wNm
-         /hwX9FfyTzlnjxdg3z+tzSphoEbOfoNvCIA8X56wVlzEfGYQkH3U4mAhRbQfJI+4tSDv
-         LcoFMQuHQVynXZyEev+g168DwXk7sy1HeJ8LZGRU5tkLdMrvrfZimOaRHB5YkjqvtdfS
-         g9P5jvYIbbe5STLdENEaXQGG1+L/iEGm+4A/qUsvt2PYfUBOV04jAYtZPZBe/LCpGyDQ
-         /DehRFyLqG+bDu50NffMg8SfaUsT1Ldi0yQtmAfyk3yEIoEr46jDlG1rQfUTHTqSj75h
-         eCFA==
-X-Gm-Message-State: ANhLgQ3jcSd0Py9p3FQqhWnYkjgK1UJKrWr2pYFiqNMydA0xeIy7Y3Hs
-        FlwcTu120Bv1HUE7ESeXRIvicfzL
-X-Google-Smtp-Source: ADFU+vu98gLbnMvbiuqMk9WJHVCqwTqVPCNYIWlr2h1gAokvHpKPw92Slq9WFyn6EqbuXIqURip6Qg==
-X-Received: by 2002:a62:d407:: with SMTP id a7mr3859818pfh.57.1585148819872;
-        Wed, 25 Mar 2020 08:06:59 -0700 (PDT)
+        bh=igWZKJLHsdQCZWYAe97MD1rG+bYewy+UxY4h6xDz/cs=;
+        b=Koa/4pkOL0dD2sHLgSJGbwbOCpnRa3yGFIpgnAeFXSQZFz6yOxl2vS/GXPoITxMfOH
+         MD0o3waOviA9Ler2fXpSvw80ucrfw1sG7kzWsQea4m6M5YNxgt1b5Qfuf4KUov5nJgvu
+         Lw5QDmdkaJzJUyEnVdHYwHGTedyF8lvuCNQj8XLzwBqPuAIGcsUeoENPqmGdfmxgz4jI
+         /Sm3QF980avjvhMuO1Z81K0EtWbmIu1xDoNvyzfadnv30qAAbm9vALoA6x9EIxaQ6p0g
+         py4fwRJyBbZ5NUEZRPs01n4ECudgb94CPyJqq1FGImpTAzwW4X3B9UMFhtCCxns9ne3Z
+         rUYQ==
+X-Gm-Message-State: ANhLgQ2LH9bKkD7nbediTdusrlMtptbYgjkJncf0iiuU265+/DhOlVtg
+        ugUDhXJyu53VTgY8YVYe1bMFt4Gk
+X-Google-Smtp-Source: ADFU+vvEiSFijC1kMVwswQCjjpwJGI+89z1UEUoT/CbMfHy3NUA0RsiDs1srpFQy+j02SUH5OyoDtA==
+X-Received: by 2002:a62:7b84:: with SMTP id w126mr3963873pfc.202.1585148821656;
+        Wed, 25 Mar 2020 08:07:01 -0700 (PDT)
 Received: from localhost.localdomain ([2402:800:6374:c347:544a:f0cc:8a21:fee3])
-        by smtp.gmail.com with ESMTPSA id f127sm18232538pfa.112.2020.03.25.08.06.58
+        by smtp.gmail.com with ESMTPSA id f127sm18232538pfa.112.2020.03.25.08.07.00
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 25 Mar 2020 08:06:59 -0700 (PDT)
+        Wed, 25 Mar 2020 08:07:00 -0700 (PDT)
 From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>
-Subject: [PATCH v3 4/8] t5003: skip conversion test if unzip -a is unavailable
-Date:   Wed, 25 Mar 2020 22:06:17 +0700
-Message-Id: <e5b09c290c1ff0fb0d7171927194e598e46daae2.1585148327.git.congdanhqx@gmail.com>
+Subject: [PATCH v3 5/8] t5616: use rev-parse instead to get HEAD's object_id
+Date:   Wed, 25 Mar 2020 22:06:18 +0700
+Message-Id: <1b8740018c411dec2813d03c34c56dfa5d1d8845.1585148327.git.congdanhqx@gmail.com>
 X-Mailer: git-send-email 2.26.0.rc2.357.g1e1ba0441d
 In-Reply-To: <cover.1585148327.git.congdanhqx@gmail.com>
 References: <cover.1585148327.git.congdanhqx@gmail.com>
@@ -74,70 +74,33 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Alpine Linux's default unzip(1) doesn't support `-a`.
+Only HEAD's object_id is necessary, rev-list is an overkill.
 
-Skip those tests on that platform.
+Despite POSIX requires grep(1) treat single pattern with <newline>
+as multiple patterns.
+busybox's grep(1) (as of v1.31.1) haven't implemented it yet.
+
+Use rev-parse to simplify the test and avoid busybox unimplemented
+features.
 
 Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
 ---
- t/t5003-archive-zip.sh | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ t/t5616-partial-clone.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t5003-archive-zip.sh b/t/t5003-archive-zip.sh
-index df1374a312..3b76d2eb65 100755
---- a/t/t5003-archive-zip.sh
-+++ b/t/t5003-archive-zip.sh
-@@ -11,6 +11,10 @@ test_lazy_prereq UNZIP_SYMLINKS '
- 	test -h symlink
+diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
+index 77bb91e976..09e640cae4 100755
+--- a/t/t5616-partial-clone.sh
++++ b/t/t5616-partial-clone.sh
+@@ -49,7 +49,7 @@ test_expect_success 'do partial clone 1' '
+ test_expect_success 'verify that .promisor file contains refs fetched' '
+ 	ls pc1/.git/objects/pack/pack-*.promisor >promisorlist &&
+ 	test_line_count = 1 promisorlist &&
+-	git -C srv.bare rev-list HEAD >headhash &&
++	git -C srv.bare rev-parse --verify HEAD >headhash &&
+ 	grep "$(cat headhash) HEAD" $(cat promisorlist) &&
+ 	grep "$(cat headhash) refs/heads/master" $(cat promisorlist)
  '
- 
-+test_lazy_prereq UNZIP_CONVERT '
-+	"$GIT_UNZIP" -a "$TEST_DIRECTORY"/t5003/infozip-symlinks.zip
-+'
-+
- check_zip() {
- 	zipfile=$1.zip
- 	listfile=$1.lst
-@@ -35,33 +39,33 @@ check_zip() {
- 	extracted=${dir_with_prefix}a
- 	original=a
- 
--	test_expect_success UNZIP " extract ZIP archive with EOL conversion" '
-+	test_expect_success UNZIP_CONVERT " extract ZIP archive with EOL conversion" '
- 		(mkdir $dir && cd $dir && "$GIT_UNZIP" -a ../$zipfile)
- 	'
- 
--	test_expect_success UNZIP " validate that text files are converted" "
-+	test_expect_success UNZIP_CONVERT " validate that text files are converted" "
- 		test_cmp_bin $extracted/text.cr $extracted/text.crlf &&
- 		test_cmp_bin $extracted/text.cr $extracted/text.lf
- 	"
- 
--	test_expect_success UNZIP " validate that binary files are unchanged" "
-+	test_expect_success UNZIP_CONVERT " validate that binary files are unchanged" "
- 		test_cmp_bin $original/binary.cr   $extracted/binary.cr &&
- 		test_cmp_bin $original/binary.crlf $extracted/binary.crlf &&
- 		test_cmp_bin $original/binary.lf   $extracted/binary.lf
- 	"
- 
--	test_expect_success UNZIP " validate that diff files are converted" "
-+	test_expect_success UNZIP_CONVERT " validate that diff files are converted" "
- 		test_cmp_bin $extracted/diff.cr $extracted/diff.crlf &&
- 		test_cmp_bin $extracted/diff.cr $extracted/diff.lf
- 	"
- 
--	test_expect_success UNZIP " validate that -diff files are unchanged" "
-+	test_expect_success UNZIP_CONVERT " validate that -diff files are unchanged" "
- 		test_cmp_bin $original/nodiff.cr   $extracted/nodiff.cr &&
- 		test_cmp_bin $original/nodiff.crlf $extracted/nodiff.crlf &&
- 		test_cmp_bin $original/nodiff.lf   $extracted/nodiff.lf
- 	"
- 
--	test_expect_success UNZIP " validate that custom diff is unchanged " "
-+	test_expect_success UNZIP_CONVERT " validate that custom diff is unchanged " "
- 		test_cmp_bin $original/custom.cr   $extracted/custom.cr &&
- 		test_cmp_bin $original/custom.crlf $extracted/custom.crlf &&
- 		test_cmp_bin $original/custom.lf   $extracted/custom.lf
 -- 
 2.26.0.rc2.357.g1e1ba0441d
 
