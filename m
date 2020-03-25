@@ -2,147 +2,181 @@ Return-Path: <SRS0=ys1m=5K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 20AE3C18E5B
-	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 09:04:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DB55AC43331
+	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 09:53:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0234C20663
-	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 09:04:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6180620772
+	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 09:53:28 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="o+PnE+gj";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CUlSsurU"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727280AbgCYJEa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 Mar 2020 05:04:30 -0400
-Received: from metis.ext.pengutronix.de ([85.220.165.71]:54787 "EHLO
-        metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727376AbgCYJEa (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Mar 2020 05:04:30 -0400
-Received: from pty.hi.pengutronix.de ([2001:67c:670:100:1d::c5])
-        by metis.ext.pengutronix.de with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1jH1xa-00076v-Vn; Wed, 25 Mar 2020 10:04:26 +0100
-Received: from ukl by pty.hi.pengutronix.de with local (Exim 4.89)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1jH1xa-0000Av-5C; Wed, 25 Mar 2020 10:04:26 +0100
-Date:   Wed, 25 Mar 2020 10:04:26 +0100
-From:   Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-        <u.kleine-koenig@pengutronix.de>
-To:     Jeff King <peff@peff.net>
-Cc:     Derrick Stolee <dstolee@microsoft.com>, git@vger.kernel.org,
-        oystwa@gmail.com, entwicklung@pengutronix.de
-Subject: git log behaves strange on non-monotonic commit dates [Was: Re: bug
- in git-log with funny merges]
-Message-ID: <20200325090426.3kd7o64vyb5mykmj@pengutronix.de>
-References: <20200324172949.yx7kketvkkl5lyvt@pengutronix.de>
- <20200325053039.GA651138@coredump.intra.peff.net>
+        id S1727265AbgCYJx0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 Mar 2020 05:53:26 -0400
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:44937 "EHLO
+        out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726154AbgCYJx0 (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 25 Mar 2020 05:53:26 -0400
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+        by mailout.nyi.internal (Postfix) with ESMTP id 3B45B5C0300;
+        Wed, 25 Mar 2020 05:53:24 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute3.internal (MEProxy); Wed, 25 Mar 2020 05:53:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
+        :from:to:cc:subject:message-id:mime-version:content-type; s=fm3;
+         bh=UmXbQyy2AD3tSZYbRI72I08IOagYL4VQfpRHpx3QOKI=; b=o+PnE+gj9Aqx
+        msoXlTkUxfUMobFiIAcNo0+ec6nSS3o1v/gKWzWGqVX3f9d+A7VK4thhZrmFgI8D
+        DItUk576gaOhfHKZmuHCd7fudZU2NzDdXSdcf3iRiZT0NugzyHMbldFiISXWv3fJ
+        moVfwzxy/2hNd7ibT/bc8vhc5bEhvWhc2Lm2+dKwxz36v0BHaAMKKPbixd0NjM7j
+        gFz7Czj/K2P7CRs4K6upQYp4E0gCEA94aycc8qs8bfmm/yKAdG69azYSRUOPkofK
+        B7kVBFVArKip5PDnkYO6SVhpQCTeYE0M/d52iHszpQieoD8617m4iRfvYUXRtbKc
+        gdDMfu1iNg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:message-id
+        :mime-version:subject:to:x-me-proxy:x-me-proxy:x-me-sender
+        :x-me-sender:x-sasl-enc; s=fm2; bh=UmXbQyy2AD3tSZYbRI72I08IOagYL
+        4VQfpRHpx3QOKI=; b=CUlSsurUQpZmghKw1uywUnc52af/vdv4O65KQ3DZtSK+o
+        hXe+stIP6Mv08GqpVDAopoQaCxBJf1rYsYNXG7lan/649dHnA7ZbCGjuB+2Bwdf3
+        vP1wd2jBLn18sXlPihUotyJQBN7JMrmxW4SpirUZCFq8S2hE7maAom7NJveW4Q8c
+        DOy6v5SnU4uGfS7nt01ylWmEzIcXS/ctopQQL5gIbyAY0MV0tjY9tdbH0CNItLPA
+        DCF2VZ52k7eTn3/+lMiZKw+7t96n0Lr69PJpI9Mzbu6+dgbmt+vGdMgk7l2NOLzL
+        /QhqZa8GpPtjxnlH2qgDroLuwZJUtmlD4JMtC3Cog==
+X-ME-Sender: <xms:Eyp7XikVZapVxl-HPwKwoHirZ5pzvOYPPton8aPaR1HzAN44UXJ2Tg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedugedrudehfedgtdekucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvffukfggtggusehgtderredttddvnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucfkphepjeejrddufedrud
+    ekhedrjedvnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhho
+    mhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:Eyp7XuHN_Q7XYTA2EU0Xz8H0e91rDH7TgdZ7M5ptinVtQ-6EGHB6iA>
+    <xmx:Eyp7Xrq7HxRw55w0QvxA4YgkYX7MCl0TSptoqebOi_SFH4UIlrX-_w>
+    <xmx:Eyp7Xq4To36zFZRfBbUiHuLSp1gvUL0L6cK3fjOWhPDJ_BoM-ur_xg>
+    <xmx:FCp7XhxPviYX-ffbQMLIBNUkGQ9xrhWmRcCcaJHNsDS3yVYUwpXfJQ>
+Received: from vm-mail.pks.im (x4d0db948.dyn.telefonica.de [77.13.185.72])
+        by mail.messagingengine.com (Postfix) with ESMTPA id 6ACBF3280063;
+        Wed, 25 Mar 2020 05:53:23 -0400 (EDT)
+Received: from localhost (ncase [10.192.0.11])
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 8b95ca36 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Wed, 25 Mar 2020 09:53:19 +0000 (UTC)
+Date:   Wed, 25 Mar 2020 10:53:20 +0100
+From:   Patrick Steinhardt <ps@pks.im>
+To:     git <git@vger.kernel.org>
+Cc:     Christian Couder <christian.couder@gmail.com>
+Subject: [PATCH 0/9] Support for transactions in `git-update-ref --stdin`
+Message-ID: <cover.1585129842.git.ps@pks.im>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="17pEHd4RhPHOinZp"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20200325053039.GA651138@coredump.intra.peff.net>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-SA-Exim-Connect-IP: 2001:67c:670:100:1d::c5
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello Jeff,
 
-I adapted the subject for the new evidences.
+--17pEHd4RhPHOinZp
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Mar 25, 2020 at 01:30:39AM -0400, Jeff King wrote:
-> On Tue, Mar 24, 2020 at 06:29:49PM +0100, Uwe Kleine-König wrote:
-> 
-> > So v5.4.27 is an ancestor of HEAD:
-> > 
-> > 	$ git merge-base --is-ancestor v5.4.27 @ && echo yes
-> > 	yes
-> > 
-> > But!:
-> > 
-> > 	$ git rev-list --count HEAD..v5.4.27
-> > 	3868
-> 
-> Yeah, this seems impossible. If v5.4.27 is an ancestor of HEAD, then
-> that rev-list result must be 0 commits. I'd trust merge-base over
-> rev-list's limiting, as the latter can be confused by clock skew.
-> 
-> And indeed, doing:
-> 
->   $ git log --graph --format='%h %cd' HEAD
-> 
-> does point to some weirdness:
-> 
->   [...]
->   * | | d1437a91a10e Tue Mar 24 17:53:00 2020 +0100
->   * | | 803aad81ca69 Mon Feb 3 21:24:56 2020 +0100
->   * | | 8a4579487b00 Thu Jan 30 11:58:13 2020 +0100
->   * | | 25a9309d7ded Thu Jan 30 11:54:28 2020 +0100
->   * | | e8f40385c55d Thu Jan 30 14:15:47 2020 +0100
->   * | | b95a62694eae Wed Sep 30 11:19:29 2015 +0200
->   * | | f5af38a6b7a1 Thu Sep 19 17:59:29 2019 +0200
->   * | | 14075cd0ce1b Tue Nov 17 21:20:00 2015 +0100
->   * | | 338647d2ab5c Wed Jul 13 10:41:40 2016 +0200
->   * | | b31f3c6fbc18 Mon Sep 23 15:59:16 2019 +0200
->   * | | 585e0cc08069 Sat Mar 21 08:12:00 2020 +0100
+Hi,
 
-> The commit dates are very out-of-order: we go back to January (and even
-> to 2015!) for commits that are built on top of ones from last Saturday.
+inspired by recent discussions about handling transactions in
+git-update-refs(1), this series implements proper transaction support in
+`git update-refs --stdin`. The goal is to have an all-or-nothing
+transaction where a user can queue multiple updates, verify that they
+can be committed, and then finally either commits or aborts the
+transaction. A typical session would look like the following:
 
-That's done because the linearisation of the patch stack (that is
-created for consumption by quilt) uses the original committer dates for
-reproducibility. hmm ...
+    # Start the transaction
+    > start
+    < start: ok
+    # Queue updates
+    > delete refs/heads/branch
+    > create refs/heads/another $OID1
+    # Prepare the transaction. git-update-ref will now try to allocate
+    # all locks and verify that references are at their expected values.
+    > prepare
+    < prepare: ok
+    # Commit the transaction. The user could also have said "abort" to
+    # roll back everything.
+    > commit
+    < commit: ok
 
-> So while looking for a common ancestor with v5.4.27 (which is from only
-> a few days ago), I think we'd stop walking if we're left only with
-> UNINTERESTING commits (which these are, being ancestors of HEAD) that
-> seem to be from long before the last interesting one.
-> 
-> There's a slop-counter which is supposed to skip over up to 5
-> out-of-order commits, but that's clearly not enough here. Curiously,
-> bumping it to 100k commits isn't enough for this case! I had to bump it
-> to a million (effectively disabling the optimization entirely):
-> 
-> diff --git a/revision.c b/revision.c
-> index 8136929e23..cf585f375e 100644
-> --- a/revision.c
-> +++ b/revision.c
-> @@ -1085,7 +1085,7 @@ static void cherry_pick_list(struct commit_list *list, struct rev_info *revs)
->  }
->  
->  /* How many extra uninteresting commits we want to see.. */
-> -#define SLOP 5
-> +#define SLOP 1000000
->  
->  static int still_interesting(struct commit_list *src, timestamp_t date, int slop,
->  			     struct commit **interesting_cache)
-> 
-> I guess this depth might have to do with some weird topology between
-> linux-stable and linux.git (or maybe just something with your merge, I
-> didn't look too closely).
+The series builds on the already existing transaction support in refs.c
+and exposes it to the user. The most important change that was required
+to support this was to convert `git-update-ref --stdin` to handle input
+linewise instead of trying to read it in full and only acting after
+stdin was closed.
 
-> But my takeaways are:
-> 
-> One, whatever is generating this history is wrong. Author dates can be
-> out of order (and it is perfectly reasonable to do so to represent
-> cherry-picked or rebased commits). But commit dates should generally be
-> monotonically increasing. If you're applying old patches, etc, you
-> should be using the old date for the author timestamp, but the current
-> time for the committer timestamp.
+The series is structured as follows:
 
-Yeah, will take that to the team to discuss how to improve our tool.
+    Patches 1-2: Preparatory patches which make sense as standalone
+                 patches.
 
-Thanks a lot for your analysis.
+    Patches 3-7: Preparatory patches that make it easier to convert to
+                 reading commands in a line-wise fashion. No functional
+                 changes are expected.
 
-Best regards
-Uwe
+    Patch 8: Conversion to read commands line-wise. No functional
+             changes are expected, except that Git builds up the transaction
+             while reading stdin instead of waiting for stdin to be closed
+             first.
 
--- 
-Pengutronix e.K.                           | Uwe Kleine-König            |
-Industrial Linux Solutions                 | https://www.pengutronix.de/ |
+    Patch 9: Implementation of transactional commands.
+
+All in all, the new transactional support will only be enabled if the
+user invokes any the new commands "start", "prepare", "commit" or
+"abort". In case he doesn't, no functional changes are expected.
+
+Patrick
+
+Patrick Steinhardt (9):
+  refs: fix segfault when aborting empty transaction
+  git-update-ref.txt: add missing word
+  strbuf: provide function to append whole lines
+  update-ref: organize commands in an array
+  update-ref: drop unused argument for `parse_refname`
+  update-ref: pass end pointer instead of strbuf
+  update-ref: move transaction handling into `update_refs_stdin()`
+  update-ref: read commands in a line-wise fashion
+  update-ref: implement interactive transaction handling
+
+ Documentation/git-update-ref.txt |  28 +++-
+ builtin/update-ref.c             | 255 ++++++++++++++++++++++---------
+ refs/files-backend.c             |  20 +--
+ strbuf.c                         |  10 ++
+ strbuf.h                         |   6 +
+ t/t1400-update-ref.sh            | 131 ++++++++++++++++
+ 6 files changed, 370 insertions(+), 80 deletions(-)
+
+--=20
+2.26.0
+
+
+--17pEHd4RhPHOinZp
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAl57Kg4ACgkQVbJhu7ck
+PpRoSRAArH2/7z3jo25SYH9Kv3quKEJrizZQHuCHrwGZ8J8YzA1LOnjaE+XaxdwT
+7hrPvC89x4igOaLJUe2UoiEB8hMvcDFLCF2bNccWjTg1lgBEjK5335qB2wdwztN5
+8JXxyo9I10LpjrEPMhD3QCsHpSL2l3Uf23MI0rHQuSn50sL27oHor6e2vfSHCCoF
+jgll1R9CFnIG0stb0HS1t7eL7iM7hvbf3wcE3+ZQnGxAnmyO7jn5QN38Qh2F+DCr
+s1CVHpDL4H0GyE+3ko85Pgcgeqp/ywzC7h5Nhd7DeUCrZHvjlP+uCXFGgnC5xvtl
+RAen7T5J8T5H/73zbeRBt1DEIYIt5uJdy4+Zwlu/X8t7VmBawTeNg8S1TNSxyueD
+Q+gobJRP5b3oG+iHvg7JhpJUMJVDDWN9kc2Kxn+8eTdmncgr6X31WQTd0XfHhq6d
+n9M4ga9cDtDNa8rT2RfUdW2MHQzLFWy4JM6Lt07XySaF4vGAiLSz6+6NlqmJ39XB
+3kyjsf2AVJU3DBvxRkJlwkop7VRvpJCTJFSOp+ms6nwDAFSTXKfIs/w1QjiuLb6l
+sxa7VW6JygCnyzC/F26j0Bieyep3/SeFNv7sUBE9iloJzHcVB121hRr9wqKyVRch
+YU8v2fWBr/2sXwEdgozm21I4TXH8FWhweF/wpCroD+H4zL2oz7Q=
+=cZi2
+-----END PGP SIGNATURE-----
+
+--17pEHd4RhPHOinZp--
