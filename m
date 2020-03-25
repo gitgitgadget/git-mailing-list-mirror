@@ -8,59 +8,59 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BBE73C54FD0
-	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 05:55:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 038F5C1975A
+	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 05:55:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 9313120714
-	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 05:55:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CD69620714
+	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 05:55:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MLe2sISw"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WTkyVvJa"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727320AbgCYFzY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 Mar 2020 01:55:24 -0400
-Received: from mail-qv1-f66.google.com ([209.85.219.66]:33217 "EHLO
-        mail-qv1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727279AbgCYFzV (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1727316AbgCYFzX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 Mar 2020 01:55:23 -0400
+Received: from mail-qk1-f196.google.com ([209.85.222.196]:38003 "EHLO
+        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727277AbgCYFzV (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 25 Mar 2020 01:55:21 -0400
-Received: by mail-qv1-f66.google.com with SMTP id p19so506307qve.0
-        for <git@vger.kernel.org>; Tue, 24 Mar 2020 22:55:21 -0700 (PDT)
+Received: by mail-qk1-f196.google.com with SMTP id h14so1462513qke.5
+        for <git@vger.kernel.org>; Tue, 24 Mar 2020 22:55:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=tEtbvB1EO46KaKpHKaeuDGO3cynmYi7A8aQBCxE63jU=;
-        b=MLe2sISw+jUPw/ew0uTWZaDYgyv73sqKW/Nfr7NvIns4cBqoxWLAJ8IBihaAsbHtrP
-         yL6boOL7e/c/XaCXtGC3Di3SVENVok1yx72rWaM81RFtn5UBUrtzGkpav/TwRlwCJaE8
-         V6GSdTqj+D1+VT7O+LRcWdjM1FygPrNFPdWEF2UarASLyTjghh8+d+kshic9fH+DoG9y
-         zmPSZF18bwQduRPy6dY4B2inYjMDrzKUSSgDY+dXK5P0/pgQ9yvLAPCZWn4KLwsMs3p1
-         Wy2T00818u1FiLxmeEbo+JTSdZDfcnJgi1KSMMtHOCeXC2WRkmKjilp3Ge8NoDnxjCqm
-         Rcaw==
+        bh=NeDa5CkTvwIL8TKIeIyXKu2s+ih1b5I0bD+BmpyqDok=;
+        b=WTkyVvJau6fiOoeaHBk4IpOgd+ieOoioELiz9tEbjrC6V5sTv6ZLncYaRWRZZmft/e
+         TZMg9/A/0M1lwtxCMrNkh+YkNTO2GvB4OMe2aD8Kp2x4OTfsfHG2rwybH/aNpFcOGRqW
+         YhTb6EuY1fKf+07gqQrAAFCIgbXMj3yJmhR4mhMKXMgAzJzYIiPI+u4PecODm6/de82Z
+         ItCkpfs5Vc8X56yFybM9NGrwfziLG8FvfsN3zIkG+t5OrCKWPl+afGdSrMd39B9EYwxS
+         5pfZpgfwp/eNZ2Czu48yE7zTjuYYF15Q/V0fAIxMwwMxnu/Y95+H+M7JxyLDkDtFZxZb
+         FmJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=tEtbvB1EO46KaKpHKaeuDGO3cynmYi7A8aQBCxE63jU=;
-        b=uHxD5ckgOfi1ZkdIZyhWzqwfVkvvrhKhPtF3hxLxrkPrQ9kyOntijIrAw0InEQIIjo
-         GaGpKnkPSm/1pf1+O4Di0nGuvz6mJNHuBU5DV3mlmYQ09JpZ3Hsx0q0jrecnM1WNnSVc
-         JfkdMQgM7M2+insT42Vm0ULOiCY8GHkJ853wUHZ8CUJ2gLe6FGFSb+sebehNaUsUPLMo
-         dyJ+OIH7lkDRDr/TlGnVAXKRWlmg5DsqnLxhrk9pHwF9uaiRgoJ4eMl/oMTXsOgE02gc
-         +TXx7Ye0lYbBmmn617dx85ij5tpvRWrbQplyMohm/AmnMZsMj65mY6soWYuPHdqkyZwt
-         2rSQ==
-X-Gm-Message-State: ANhLgQ0lQ+d8SmeI6RiYdNXChl/k60DL0yI6jJChgBl20LMu/HMEQ+VQ
-        5qVEcWVtmiwURBsQOeHokufU5f2g
-X-Google-Smtp-Source: ADFU+vtgoSO8GS2iVtm1aiZiAGh9AMil2Q9zQz77ZAirlaK4ISB/gdLUzUiWKDEmABfBNMvpl2w/MQ==
-X-Received: by 2002:a05:6214:56c:: with SMTP id cj12mr1657718qvb.29.1585115720515;
-        Tue, 24 Mar 2020 22:55:20 -0700 (PDT)
+        bh=NeDa5CkTvwIL8TKIeIyXKu2s+ih1b5I0bD+BmpyqDok=;
+        b=bF/N69dGfvYdRgicOIeAJsSBc46wBJuqk5EWnrchzcZmi1MseFdjyqRGAEWGKdif/R
+         +BrCSO4tFN/1xPvDUrF/TSKTPHqrfeb+YoYxCxoFNKDXwjQGdQSfL5D4rvdO5+7Y8eLN
+         DdICFT0kVRMEVqMD7ko1qqSwyxvr9JFe8pruoD0hXJSrsRV7eqOV6eh2F6A5toTbTK1h
+         PpLVbfBgDfb23gVFPqquwgoyJ8kMzbxIXZfJcaTSQeDc9R/+m2rqVSk4JvZp+ZEAajl1
+         vwkZee3LiIjstWRf6S9tSvtDzmQk/0Iw4fGqGN2AhmnQ0IAXxAyjXUlDjobDyoTKRRq9
+         VKSg==
+X-Gm-Message-State: ANhLgQ3K2TpT7Jx+qQlxg/rjkMAPN/nQhtjQfKMmWZx+fgruJ8Ix8F7T
+        AiLi0RMi1ObFMYpaprFFnKiSEbuy
+X-Google-Smtp-Source: ADFU+vuwZadCLPDw7VcrDa6cLve249RSd+BbpzA77wqcu1zozejNQ7JpWq+Ykrf+Fta8sXRntBYRDg==
+X-Received: by 2002:a37:bec5:: with SMTP id o188mr1401165qkf.165.1585115719668;
+        Tue, 24 Mar 2020 22:55:19 -0700 (PDT)
 Received: from archbookpro.lan ([199.249.110.29])
-        by smtp.gmail.com with ESMTPSA id k15sm17168712qta.74.2020.03.24.22.55.19
+        by smtp.gmail.com with ESMTPSA id k15sm17168712qta.74.2020.03.24.22.55.18
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 24 Mar 2020 22:55:19 -0700 (PDT)
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
-Subject: [PATCH 8/8] t5801: teach compare_refs() to accept !
-Date:   Wed, 25 Mar 2020 01:54:55 -0400
-Message-Id: <b51f97f6ae37e4b69b9651cbd60a480e5db3e72d.1585115341.git.liu.denton@gmail.com>
+Subject: [PATCH 7/8] t5612: stop losing return codes of git commands
+Date:   Wed, 25 Mar 2020 01:54:54 -0400
+Message-Id: <b490ccace0eb93b0f6d71f71e015afebcc9c9a51.1585115341.git.liu.denton@gmail.com>
 X-Mailer: git-send-email 2.25.0.114.g5b0ca878e0
 In-Reply-To: <cover.1585115341.git.liu.denton@gmail.com>
 References: <cover.1585115341.git.liu.denton@gmail.com>
@@ -71,51 +71,92 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Before, testing if two refs weren't equal with compare_refs() was done
-with `test_must_fail compare_refs`. This was wrong for two reasons.
-First, test_must_fail should only be used on git commands. Second,
-negating the error code is a little heavy-handed since in the case where
-one of the git invocations within compare_refs() fails, we will report
-success, even though it failed at an unexpected point.
-
-Teach compare_refs() to accept `!` as the first argument which would
-_only_ negate the test_cmp()'s return code.
+In a pipe, only the return code of the last command is used. Thus, all
+other commands will have their return codes masked. Rewrite pipes so
+that there are no git commands upstream so that their failure is
+reported.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t5801-remote-helpers.sh | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ t/t5612-clone-refspec.sh | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/t/t5801-remote-helpers.sh b/t/t5801-remote-helpers.sh
-index 121e5c6edb..0f04b6cddb 100755
---- a/t/t5801-remote-helpers.sh
-+++ b/t/t5801-remote-helpers.sh
-@@ -11,9 +11,15 @@ test_description='Test remote-helper import and export commands'
- PATH="$TEST_DIRECTORY/t5801:$PATH"
- 
- compare_refs() {
-+	fail= &&
-+	if test "x$1" = 'x!'
-+	then
-+		fail='!' &&
-+		shift
-+	fi &&
- 	git --git-dir="$1/.git" rev-parse --verify $2 >expect &&
- 	git --git-dir="$3/.git" rev-parse --verify $4 >actual &&
--	test_cmp expect actual
-+	eval $fail test_cmp expect actual
- }
- 
- test_expect_success 'setup repository' '
-@@ -189,7 +195,7 @@ test_expect_success GPG 'push signed tag' '
- 	git push origin signed-tag
+diff --git a/t/t5612-clone-refspec.sh b/t/t5612-clone-refspec.sh
+index 28373e715a..e3b436d8ae 100755
+--- a/t/t5612-clone-refspec.sh
++++ b/t/t5612-clone-refspec.sh
+@@ -71,9 +71,9 @@ test_expect_success 'by default all branches will be kept updated' '
+ 	(
+ 		cd dir_all &&
+ 		git fetch &&
+-		git for-each-ref refs/remotes/origin |
++		git for-each-ref refs/remotes/origin >refs &&
+ 		sed -e "/HEAD$/d" \
+-		    -e "s|/remotes/origin/|/heads/|" >../actual
++		    -e "s|/remotes/origin/|/heads/|" refs >../actual
  	) &&
- 	compare_refs local signed-tag^{} server signed-tag^{} &&
--	test_must_fail compare_refs local signed-tag server signed-tag
-+	compare_refs ! local signed-tag server signed-tag
- '
- 
- test_expect_success GPG 'push signed tag with signed-tags capability' '
+ 	# follow both master and side
+ 	git for-each-ref refs/heads >expect &&
+@@ -104,9 +104,9 @@ test_expect_success '--single-branch while HEAD pointing at master' '
+ 	(
+ 		cd dir_master &&
+ 		git fetch --force &&
+-		git for-each-ref refs/remotes/origin |
++		git for-each-ref refs/remotes/origin >refs &&
+ 		sed -e "/HEAD$/d" \
+-		    -e "s|/remotes/origin/|/heads/|" >../actual
++		    -e "s|/remotes/origin/|/heads/|" refs >../actual
+ 	) &&
+ 	# only follow master
+ 	git for-each-ref refs/heads/master >expect &&
+@@ -126,9 +126,9 @@ test_expect_success '--single-branch while HEAD pointing at master and --no-tags
+ 	(
+ 		cd dir_master_no_tags &&
+ 		git fetch &&
+-		git for-each-ref refs/remotes/origin |
++		git for-each-ref refs/remotes/origin >refs &&
+ 		sed -e "/HEAD$/d" \
+-		    -e "s|/remotes/origin/|/heads/|" >../actual
++		    -e "s|/remotes/origin/|/heads/|" refs >../actual
+ 	) &&
+ 	# only follow master
+ 	git for-each-ref refs/heads/master >expect &&
+@@ -156,9 +156,9 @@ test_expect_success '--single-branch while HEAD pointing at side' '
+ 	(
+ 		cd dir_side &&
+ 		git fetch &&
+-		git for-each-ref refs/remotes/origin |
++		git for-each-ref refs/remotes/origin >refs &&
+ 		sed -e "/HEAD$/d" \
+-		    -e "s|/remotes/origin/|/heads/|" >../actual
++		    -e "s|/remotes/origin/|/heads/|" refs >../actual
+ 	) &&
+ 	# only follow side
+ 	git for-each-ref refs/heads/side >expect &&
+@@ -169,9 +169,9 @@ test_expect_success '--single-branch with explicit --branch side' '
+ 	(
+ 		cd dir_side2 &&
+ 		git fetch &&
+-		git for-each-ref refs/remotes/origin |
++		git for-each-ref refs/remotes/origin >refs &&
+ 		sed -e "/HEAD$/d" \
+-		    -e "s|/remotes/origin/|/heads/|" >../actual
++		    -e "s|/remotes/origin/|/heads/|" refs >../actual
+ 	) &&
+ 	# only follow side
+ 	git for-each-ref refs/heads/side >expect &&
+@@ -223,9 +223,9 @@ test_expect_success '--single-branch with detached' '
+ 	(
+ 		cd dir_detached &&
+ 		git fetch &&
+-		git for-each-ref refs/remotes/origin |
++		git for-each-ref refs/remotes/origin >refs &&
+ 		sed -e "/HEAD$/d" \
+-		    -e "s|/remotes/origin/|/heads/|" >../actual
++		    -e "s|/remotes/origin/|/heads/|" refs >../actual
+ 	) &&
+ 	# nothing
+ 	test_must_be_empty actual
 -- 
 2.25.0.114.g5b0ca878e0
 
