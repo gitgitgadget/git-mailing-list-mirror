@@ -2,92 +2,141 @@ Return-Path: <SRS0=ys1m=5K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 81203C1975A
-	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 05:19:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0625BC1975A
+	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 05:30:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 4AE3B20719
-	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 05:19:34 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="HB37hd3y"
+	by mail.kernel.org (Postfix) with ESMTP id C5BE120774
+	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 05:30:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725911AbgCYFTc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 Mar 2020 01:19:32 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:65526 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725263AbgCYFTb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Mar 2020 01:19:31 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 26E56512A4;
-        Wed, 25 Mar 2020 01:19:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=zR4cSyxvQiyDDKLPo3c4oR4ap8Q=; b=HB37hd
-        3yOksk6XmowwSwuLenRmwWmdVG2MCBDDq4Hs5KxbxMJHu5xGzxiVUZHjp5pT506X
-        Vwvtl+jMjfknkMYH47FhacPErIMhYClKZ4wb3Vz++ChJDUbhVDQlWdLMcEu1vG5K
-        ln7x8dmnb2aiGMkCbRcgd8d5kHl0VwY+q0RNw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=UCK1RVzsjgl9z+UNhHpPROtWGsRZE7w4
-        Z8M6zasB+T6Pv0oaAhTFRXhb+WEu/FTnR8jo6U+BQpktw32Hb9sL7l6AGUsKEimQ
-        JshzJePg2G+BCzGhQtgswp3lM5xXQ4+y6xAmwYcS8UqJNNlx6wDSJq+dST42dgFP
-        XdPuxW+CFNU=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1E11D512A3;
-        Wed, 25 Mar 2020 01:19:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A01DD512A2;
-        Wed, 25 Mar 2020 01:19:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jiang Xin <worldhello.net@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-Subject: Re: [PATCH v4 0/5] New proc-receive hook for centralized workflow
-References: <20200313122318.78000-1-zhiyou.jx@alibaba-inc.com>
-        <20200322131815.11872-1-worldhello.net@gmail.com>
-Date:   Tue, 24 Mar 2020 22:19:29 -0700
-In-Reply-To: <20200322131815.11872-1-worldhello.net@gmail.com> (Jiang Xin's
-        message of "Sun, 22 Mar 2020 09:18:10 -0400")
-Message-ID: <xmqqftdxypsu.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1725878AbgCYFak (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 Mar 2020 01:30:40 -0400
+Received: from cloud.peff.net ([104.130.231.41]:50272 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725781AbgCYFak (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Mar 2020 01:30:40 -0400
+Received: (qmail 22917 invoked by uid 109); 25 Mar 2020 05:30:40 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 25 Mar 2020 05:30:40 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 32300 invoked by uid 111); 25 Mar 2020 05:40:31 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 25 Mar 2020 01:40:31 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 25 Mar 2020 01:30:39 -0400
+From:   Jeff King <peff@peff.net>
+To:     Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+Cc:     Derrick Stolee <dstolee@microsoft.com>, git@vger.kernel.org,
+        oystwa@gmail.com, entwicklung@pengutronix.de
+Subject: Re: bug in git-log with funny merges
+Message-ID: <20200325053039.GA651138@coredump.intra.peff.net>
+References: <20200324172949.yx7kketvkkl5lyvt@pengutronix.de>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3496F6B8-6E58-11EA-B413-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200324172949.yx7kketvkkl5lyvt@pengutronix.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jiang Xin <worldhello.net@gmail.com> writes:
+On Tue, Mar 24, 2020 at 06:29:49PM +0100, Uwe Kleine-König wrote:
 
-> Changes since v2 and v3:
->
-> * Implement a on-the-wire protocol, and add new test helper to test
->   the on-the-wire protocol. See patch 2/5.
->
-> * Refactor report() on both server and client side for reporting of
->   proc-receive. See patch 5/5.
->
->
-> Jiang Xin (5):
->   transport: not report a non-head push as a branch
->   receive-pack: add new proc-receive hook
->   refs.c: refactor to reuse ref_is_hidden()
->   receive-pack: new config receive.procReceiveRefs
->   receive-pack: refactor report for proc-receive
+> So v5.4.27 is an ancestor of HEAD:
+> 
+> 	$ git merge-base --is-ancestor v5.4.27 @ && echo yes
+> 	yes
+> 
+> But!:
+> 
+> 	$ git rev-list --count HEAD..v5.4.27
+> 	3868
 
-t5516 detects breakage of these patches that are queued directly on
-top of 2.26.
+Yeah, this seems impossible. If v5.4.27 is an ancestor of HEAD, then
+that rev-list result must be 0 commits. I'd trust merge-base over
+rev-list's limiting, as the latter can be confused by clock skew.
 
-The tip of 'pu' tonight includes this, and fails.
+And indeed, doing:
 
-E.g. https://travis-ci.org/github/git/git/builds/666579791
+  $ git log --graph --format='%h %cd' HEAD
 
-Thanks.
+does point to some weirdness:
+
+  [...]
+  * | | d1437a91a10e Tue Mar 24 17:53:00 2020 +0100
+  * | | 803aad81ca69 Mon Feb 3 21:24:56 2020 +0100
+  * | | 8a4579487b00 Thu Jan 30 11:58:13 2020 +0100
+  * | | 25a9309d7ded Thu Jan 30 11:54:28 2020 +0100
+  * | | e8f40385c55d Thu Jan 30 14:15:47 2020 +0100
+  * | | b95a62694eae Wed Sep 30 11:19:29 2015 +0200
+  * | | f5af38a6b7a1 Thu Sep 19 17:59:29 2019 +0200
+  * | | 14075cd0ce1b Tue Nov 17 21:20:00 2015 +0100
+  * | | 338647d2ab5c Wed Jul 13 10:41:40 2016 +0200
+  * | | b31f3c6fbc18 Mon Sep 23 15:59:16 2019 +0200
+  * | | 585e0cc08069 Sat Mar 21 08:12:00 2020 +0100
+
+The commit dates are very out-of-order: we go back to January (and even
+to 2015!) for commits that are built on top of ones from last Saturday.
+So while looking for a common ancestor with v5.4.27 (which is from only
+a few days ago), I think we'd stop walking if we're left only with
+UNINTERESTING commits (which these are, being ancestors of HEAD) that
+seem to be from long before the last interesting one.
+
+There's a slop-counter which is supposed to skip over up to 5
+out-of-order commits, but that's clearly not enough here. Curiously,
+bumping it to 100k commits isn't enough for this case! I had to bump it
+to a million (effectively disabling the optimization entirely):
+
+diff --git a/revision.c b/revision.c
+index 8136929e23..cf585f375e 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1085,7 +1085,7 @@ static void cherry_pick_list(struct commit_list *list, struct rev_info *revs)
+ }
+ 
+ /* How many extra uninteresting commits we want to see.. */
+-#define SLOP 5
++#define SLOP 1000000
+ 
+ static int still_interesting(struct commit_list *src, timestamp_t date, int slop,
+ 			     struct commit **interesting_cache)
+
+I guess this depth might have to do with some weird topology between
+linux-stable and linux.git (or maybe just something with your merge, I
+didn't look too closely).
+
+But my takeaways are:
+
+One, whatever is generating this history is wrong. Author dates can be
+out of order (and it is perfectly reasonable to do so to represent
+cherry-picked or rebased commits). But commit dates should generally be
+monotonically increasing. If you're applying old patches, etc, you
+should be using the old date for the author timestamp, but the current
+time for the committer timestamp.
+
+And two, the clock skew issue is known in Git, and is an accepted
+tradeoff for performance. E.g., "rev-list --count HEAD..v5.4.27" goes
+from 43ms to 7200ms when I bump the SLOP value.
+
+But the good news is that there's work towards correcting this. Instead
+of using commit timestamps as a proxy for graph generation numbers, the
+new commit-graph feature actually generates real generation numbers. So:
+
+  $ git commit-graph write --reachable
+  $ git rev-list --topo-order --count HEAD..v5.4.27
+  0
+
+which is the correct answer (and the rev-list runs even faster than the
+SLOP version). The slightly bad news is that I needed --topo-order to
+get that result. We're not yet using the generation numbers everywhere;
+the issue is that they can actually be slower than commit timestamps
+(timestamps, when they're accurate, have more resolution than generation
+numbers, so they let us order the breadth-first search better). There
+are plans to have the graph code use a "combined" number that stores
+both a generation (for accuracy) and a timestamp (for resolution).
+
+-Peff
