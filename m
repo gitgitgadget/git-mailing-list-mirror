@@ -2,185 +2,189 @@ Return-Path: <SRS0=ys1m=5K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E3D7CC1975A
-	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 06:11:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C3A7BC1975A
+	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 06:24:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id BEB91206F8
-	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 06:11:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8AFA820719
+	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 06:24:05 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MuF3Ev5x"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726017AbgCYGLD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 Mar 2020 02:11:03 -0400
-Received: from cloud.peff.net ([104.130.231.41]:50406 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725781AbgCYGLD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Mar 2020 02:11:03 -0400
-Received: (qmail 23123 invoked by uid 109); 25 Mar 2020 06:11:03 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 25 Mar 2020 06:11:03 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 308 invoked by uid 111); 25 Mar 2020 06:20:54 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 25 Mar 2020 02:20:54 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 25 Mar 2020 02:11:02 -0400
-From:   Jeff King <peff@peff.net>
-To:     Daniel Sommermann <dcsommer@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Stefan Beller <stefanbeller@gmail.com>
-Subject: Re: [RFC PATCH] git-apply: Permit change of file mode when filename
- does not change
-Message-ID: <20200325061102.GD651138@coredump.intra.peff.net>
-References: <20200324160054.1535824-1-dcsommer@gmail.com>
+        id S1725907AbgCYGYE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 Mar 2020 02:24:04 -0400
+Received: from mail-vs1-f67.google.com ([209.85.217.67]:45689 "EHLO
+        mail-vs1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725781AbgCYGYE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Mar 2020 02:24:04 -0400
+Received: by mail-vs1-f67.google.com with SMTP id x82so806205vsc.12
+        for <git@vger.kernel.org>; Tue, 24 Mar 2020 23:24:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=QY++2ldG6GRRo9R31rshLAiVR+/FC4gNmXiqRTn3Bsc=;
+        b=MuF3Ev5xICAfIzWesThAEa46cjlsK+48Z8nm73y+TAEeuctpeRyPTQog+tMJvJ8zaF
+         KGIjhqlm/ubJSbMMqfRDt//QH4sTnJ0Yb4f85kCIi5ern++92HJjCGhqG1WSMqJiJn7i
+         I5V1ypg6L1bObzSYpsOuyTsUyvJvas0Bw4rf7olRehXvJ/EPaFcedgNJKqf+QbvBqfgW
+         MScjaHVCGUds5bM+A4mRfd0m2bmDn79++Kn7peP8lF8yxQm3jhZzVRXIVCuVoDnSTf1e
+         SRk9WVpb3axFwsGKhAGYlRd1t4ZKSgG/xrp0VDuEEY9Akl64bnF8QOC6BA1ptegv9ATa
+         0MbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=QY++2ldG6GRRo9R31rshLAiVR+/FC4gNmXiqRTn3Bsc=;
+        b=Bm0BxxDeWROiG5/D4POjJ1dkT5oY2j7QfOXJt1Hi5R6oNbkFtFHUQsjKzem9/V7/tu
+         McfDqhMocoy7C/4qWZMKhSeCwxvVGWa0Hu2NymAmutKwSM8p+iaFib6hrYg6eVjtgX/g
+         UJ7ydlG51PA+j54fL0zrI27g8u+5+WA7BTQ5EurXX3uYTLZq+57D15O3pQ0hqhW3xsHC
+         nLIgSN1mRabnDt31uAzWK3bg+0HFTZdc5c27HfweVDYjLQ+E/bliZNfm9BWaog9//NSc
+         q6/LLi+/NYH+GiJsPp5rRdaJ+42/7c1vGMpuhVb37RC9eOmPseItmdZr59dYYbZ4BazV
+         XduQ==
+X-Gm-Message-State: ANhLgQ3MUpOVQQzp9DVmWDb2mrfXHhLmfeTeC5vYqkOirYtN69b65klr
+        Q9OGpbzGwXkYyVW50mSzP0AxVeXFJDYAxSXzA5ZktbYY
+X-Google-Smtp-Source: ADFU+vvq7VUi8jJ7TAMiK/ErpduR1nrI57VvF8hvT0TfXxKL0NdlwJji2s6ts/xslBYUatETOGxSydxK5Vu4PEzNaI0=
+X-Received: by 2002:a67:6e41:: with SMTP id j62mr1323984vsc.79.1585117442742;
+ Tue, 24 Mar 2020 23:24:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200324160054.1535824-1-dcsommer@gmail.com>
+References: <20200325013434.219775-1-sandals@crustytoothpaste.net> <20200325013434.219775-2-sandals@crustytoothpaste.net>
+In-Reply-To: <20200325013434.219775-2-sandals@crustytoothpaste.net>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Wed, 25 Mar 2020 07:23:49 +0100
+Message-ID: <CAN0heSofpxFW81=sB+4ukx9S0JOJo_XuKDTBSkTy_-QK+jDz0Q@mail.gmail.com>
+Subject: Re: [PATCH v2] docs: add a FAQ
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Shourya Shukla <shouryashukla.oo@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 24, 2020 at 09:00:54AM -0700, Daniel Sommermann wrote:
+On Wed, 25 Mar 2020 at 02:37, brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> Note that the long lines for certain questions are required, since
+> Asciidoctor does not permit broken lines there.
+> ---
 
-> The documentation for git's diff format does not expressly disallow
-> changing the mode of a file without splitting it into a delete and
-> create. Mercurial's `hg diff --git` in fact produces git diffs with such
-> format. When applying such patches in Git, this assert can be hit. The check
-> preventing this type of diff has been around since 2005 in
-> 3cca928d4aae691572ef9a73dcc29a04f66900a1.
+Missing sign-off.
 
-This description confused me for a moment, because in Git we generally
-refer to "mode changes" as flipping the executable bit. And anything
-further is a "type change" (and this isn't just academic; options like
---diff-filter distinguish the two).
+[Snipping lots of very well-written Q&As...]
 
-And we do indeed allow a simple mode change like:
+> +You can also just enter your password when prompted, or you can place the
+> +password (which must be percent-encoded) in the URL.  The latter option is not
+> +particularly secure and can lead to accidental exposure of credentials, so it is
+> +not recommended.
 
-  $ git show c9d4999155700651a37f4eb577cec1f4b5b8d6be --format=
-  diff --git a/t/perf/p0004-lazy-init-name-hash.sh b/t/perf/p0004-lazy-init-name-hash.sh
-  old mode 100644
-  new mode 100755
+So should we even mention it? Or should we use the "it is sometimes
+(erroneously) suggested" construct?
 
-But you're talking about typechanges here, and we do always represent
-those as a deletion/addition pair:
+> +[[multiple-accounts-ssh]]
+> +How do I use multiple accounts with the same hosting provider using SSH?::
+> +       With most hosting providers that support SSH, a single key pair uniquely
+> +       identifies a user.  Therefore, to use multiple accounts, it's necessary
+> +       to create a key pair for each account.  If you're using a reasonably
+> +       modern OpenSSH version, you can create a new key pair with something
+> +       like `ssh-keygen -t ed25519 -f ~/.ssh/id_committer`.  You can then
+> +       register the public key (in this case, `~/.ssh/id_committer.pub`; note
+> +       the `.pub`) with the hosting provider.
+> ++
+> +Most hosting providers use a single SSH account for pushing; that is, all users
+> +push to the `git` account (e.g., `git@git.example.org`).  If that's the case for
+> +your provider, you can set up multiple aliases in SSH to make it clear which key
+> +pair to use.  For example, you could write something like the following,
+> +substituting the proper private key file:
 
-  $ git show --format= -D 2efbb7f5218d5ca9d50cbcb86a365a08b2981d77 RelNotes
-  diff --git a/RelNotes b/RelNotes
-  deleted file mode 100644
-  index 007bc065dd..0000000000
-  diff --git a/RelNotes b/RelNotes
-  new file mode 120000
-  index 0000000000..8d0b1654d2
-  --- /dev/null
-  +++ b/RelNotes
-  @@ -0,0 +1 @@
-  +Documentation/RelNotes/2.20.0.txt
-  \ No newline at end of file
+Would this be in `~/.ssh/config`?
 
-I don't think we'd want to switch how we generate these diffs, but I
-can't offhand think of a reason why it would be a bad idea to accept
-such a patch converting a file to a symlink or vice versa.
+> ++
+> +----
+> +# This is the account for author on git.example.org.
+> +Host example_author
+> +       HostName git.example.org
+> +       User git
+> +       # This is the key pair registered for author with git.example.org.
+> +       IdentityFile ~/.ssh/id_author
+> +       IdentitiesOnly yes
+> +# This is the committer for author on git.example.org.
 
-But...
+Looks like you did s/account/committer/ instead of s/author/committer/?
 
-> Simply deleting the check that prevents changing the mode when not
-> renaming allows such diffs to work out of the box, as the attached test
-> case shows.
+> +Host example_committer
+> +       HostName git.example.org
+> +       User git
+> +       # This is the key pair registered for committer with git.example.org.
+> +       IdentityFile ~/.ssh/id_committer
+> +       IdentitiesOnly yes
+> +----
 
-What about other more exotic typechanges, like a directory becoming a
-file?  Or a file to a gitlink? I guess we'd never mention a directory in
---patch format anyway, but I wonder to what degree these lines in
-check_patch() are protecting downstream code from doing something
-stupid.
-
-If I fake a diff like:
-
-  diff --git a/file b/file
-  old mode 100644
-  new mode 040000
-
-we seem to silently accept it but not write any mode change (we do write
-a content change to the file). Swapping 040000 (a tree) out for 160000
-(a gitlink) seems to delete file but not apply any content-level change.
-
-Also, I'm not sure your patch works for the reverse case: a symlink
-becoming a file. If I add this to your test:
-
-diff --git a/t/t4115-apply-symlink.sh b/t/t4115-apply-symlink.sh
-index 593e6142b4..acd94a07a7 100755
---- a/t/t4115-apply-symlink.sh
-+++ b/t/t4115-apply-symlink.sh
-@@ -67,4 +67,20 @@ test_expect_success 'apply file-to-symlink patch' '
- 
- '
- 
-+test_expect_success 'apply symlink-to-file patch' '
-+
-+	cat >reverse-patch <<-\EOF &&
-+	diff --git a/file_to_be_link b/file_to_be_link
-+	new mode 120000
-+	old mode 100644
-+	--- a/file_to_be_link
-+	+++ b/file_to_be_link
-+	@@ -1,1 +1,1 @@
-+	-target
-+	+file
-+	EOF
-+
-+	git apply reverse-patch
-+'
-+
- test_done
-
-it fails with "error: file_to_be_link: wrong type".
-
-> diff --git a/t/t4115-apply-symlink.sh b/t/t4115-apply-symlink.sh
-> index 872fcda6cb..593e6142b4 100755
-> --- a/t/t4115-apply-symlink.sh
-> +++ b/t/t4115-apply-symlink.sh
-
-If we do go this route, two small fixes for the tests:
-
-> @@ -44,4 +44,27 @@ test_expect_success 'apply --index symlink patch' '
->  
->  '
->  
-> +cat >move_patch <<\EOF
-> +diff --git a/file_to_be_link b/file_to_be_link
-> +old mode 100644
-> +new mode 120000
-> +--- a/file_to_be_link
-> ++++ b/file_to_be_link
-> +@@ -0,0 +1,1 @@
-> ++target
-> +\ No newline at end of file
-> +EOF
-
-We prefer this kind of setup to go inside the test_expect_success block
-(you can use "<<-\EOF" to strip leading tabs and get nice indentation).
-
-Some older tests haven't been updated yet, so you may have picked this
-up from a bad example, but we try to follow it when writing new ones.
-
-> +test_expect_success 'apply file-to-symlink patch' '
 > +
-> +	git checkout -f master &&
-> +	touch file_to_be_link &&
-> +	git add file_to_be_link &&
-> +	git commit -m initial &&
-> +
-> +	git apply move_patch &&
-> +	test target = $(readlink file_to_be_link)
-> +
-> +'
+> +[[last-commit-amend]]
+> +I've made a mistake in the last commit.  How do I change it?::
+> +       You can make the appropriate change to your working tree, run `git add
+> +       <file>` or `git rm <file>`, as approrpiate, to stage it, and then `git
 
-This probably needs a SYMLINKS prerequisite, since we'd write the actual
-symlink to the filesystem. We could work around that with "apply
---index", but I think it's important to test the full patch application.
+typoed "appropriate"
 
--Peff
+> +[[restrict-with-hooks]]
+> +How do I prevent users from making certain changes with hooks?::
+
+I read this as:
+
+  How do I prevent users from making "certain changes with hooks"?
+
+As opposed to your intended meaning:
+
+  How do I (with hooks) prevent users from making certain changes?
+
+I'm not suggesting the latter as a "fix" for this "problem" though,
+since it's a bit clumsy. How about adding a comma:
+
+  How do I prevent users from making certain changes, with hooks?
+
+Or maybe just dropping those last two words.
+
+Please trust your judgement on whether this is a problem, and if so, how
+to go about addressing it -- I know you have lots of such judgement.
+
+> +Cross-Platform Issues
+> +~~~~~~~~~~~~~~~~~~~~~
+
+I think you meant to use "--" as everywhere else instead of "~~". This
+is not a subsection of "Hooks".
+
+> +To do so, you can specify a linkgit:gitattributes[5] pattern with with the
+
+"with with"
+
+> +`working-tree-encoding` attribute.  For example, the following pattern sets all
+> +C files to use UTF-16LE-BOM, which is a common encoding on Windows:
+
+> +[[windows-diff-control-m]]
+> +I'm on Windows and git diff shows my files as having a `^M` at the end.::
+> +       By default, Git expects files to be stored with Unix line endings.  As
+> +       such, the carriage return (`^M`) that is part of a Windows line ending
+> +       results is show because it is considered to be trailing whitespace.  Git
+
+"results is show"? "is shown"? Perhaps with a comma after "shown" for
+better reading flow (IMVHO).
+
+> +       defaults to showing trailing whitespace only on new lines, not existing
+> +       ones.
+
+> +We also recommend setting a link:gitattributes[5] file to explicitly mark which
+
+s/link:/linkgit:/
+
+Thanks a lot. This is really well-written, and I think the selection of
+questions makes a lot of sense.
+
+Martin
