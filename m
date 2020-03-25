@@ -8,58 +8,58 @@ X-Spam-Status: No, score=-17.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
 	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D186C43331
-	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 21:25:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 71D46C2D0E5
+	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 21:25:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0DAA520719
-	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 21:25:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3BD9B20719
+	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 21:25:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="dD+N26ol"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="NXT/XdyC"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727451AbgCYVZS (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1727461AbgCYVZT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 Mar 2020 17:25:19 -0400
+Received: from mail-pg1-f202.google.com ([209.85.215.202]:51469 "EHLO
+        mail-pg1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727406AbgCYVZS (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 25 Mar 2020 17:25:18 -0400
-Received: from mail-pl1-f201.google.com ([209.85.214.201]:52807 "EHLO
-        mail-pl1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727351AbgCYVZR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Mar 2020 17:25:17 -0400
-Received: by mail-pl1-f201.google.com with SMTP id 64so2627594plf.19
-        for <git@vger.kernel.org>; Wed, 25 Mar 2020 14:25:15 -0700 (PDT)
+Received: by mail-pg1-f202.google.com with SMTP id p13so2850916pgk.18
+        for <git@vger.kernel.org>; Wed, 25 Mar 2020 14:25:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=PhmXRUx9+MPX3S5MN7dOmnCyJOiiVybbgY+RF9h6I2U=;
-        b=dD+N26olgf3F0BztEJPD6V+6urM2e341YTYcSTnBiqcQ6vbmZvoYrbb5QgZ0AI+36X
-         hlS8EUzDtwNUcT8LggGulBNCnyHVIWT4ZgecY8rPAlpIYdWwMJoNJBWrWAN0Secyfphn
-         ObwUVt8yHQ21yiCg2JQLVrmsEamQ6E80rIAYF2ZrIQ2ybEIcMa28ZUf90DXKj3HIWWcE
-         BvvV8A7FqlbzXoShJIdWF0oTnkbrmqLcsHIebraSTkJdfMGy4oHy6Er1OdWkXaenEiRy
-         CuugwA/FPwMkkSN5ym4ULwQtlGbRNS6Q8cq6JM2NRG8Eiv4ryfYsfu8ZuAlDe716YyH8
-         Mo/A==
+        bh=a1gHsKgesXvZ6on9jZutni1fYrs6iLWNRYX08oB8HKA=;
+        b=NXT/XdyCqrhNoxfZS+e0g7u67WhBinIy87xA1N/zTrneRfDzm7BLnuE9xpCzMIdrXL
+         uvK9N+Q5xjDwwzs69mnzMAlxAz1qvxMl3LOjo5p334BjfqdS4qkGbipqUJL6k5F2N6vo
+         hMeBHtPITAkDQLh3rqSZ3srmXyLYqroDWwhubZt87bm1g91ICk6E39HBp3CiciaI4JJB
+         FEutwyu9dzm81kcQX3IQAZG2tgrVZiZhqymoG11AzjmL3RqxHa/2nIG3XGqxdxZ0wN/d
+         PsHxp5IZjWmMdMOxZd3RD10aKHt29cKWJ+UUxp8stDRP4aEYNiDioVgljfLgcvDd5yfL
+         dHng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=PhmXRUx9+MPX3S5MN7dOmnCyJOiiVybbgY+RF9h6I2U=;
-        b=XkXVDgmQXim9vlbPg2ivh+M2fcaA3L7CzaSJuFU7XnG7VnPrgYpgmqXCLe1/f+JzQr
-         Dn+qd91NUJBEbz/TpkJsFJ8qeVmZYwBsboD5hs+X35ZpP6iQDAXaSPuecKrCbIFlTU1I
-         /iLAIxGQ5KleLfCi9hbiVNZ3QrfnBwOQllmSxOH4wiFGkw4jDD5csCWU7eN8TTBAwzIL
-         mlzepyJFvLpk90eg6dmF1e2VGinM2z6AiYwGQQNWX48wq2orwoA2rUN2OhsXHXlTyc6D
-         ZgvhV7sHKS/IfMrDTTLnLtIkjja5HenKhW4ql8dgTLY0qBNKIQCe/MytwYsMI2nXZQgi
-         c6Zg==
-X-Gm-Message-State: ANhLgQ2fN1E3O0NLHhTUj6kbH2TN1BgPrbNUhbj8g2C+rCsFn+tsx/C1
-        K8jU2sf5pM+gBbLEP+QpeDb2RVDc4C92r7YWrLTXfRvlOi7SpYwfyrZ+1AcHRNKUX+yv3B8/c8A
-        CWiYquwJP/MMFWzQlfKACAKHeLjFrzggJcUIyEekYNIz0iGLnK8ee+LXwMduiMxpkIILVc23XZw
+        bh=a1gHsKgesXvZ6on9jZutni1fYrs6iLWNRYX08oB8HKA=;
+        b=i+ZGR5Jzy3+hzBIGtQICPPS2U2SlUzyjF06jRkv3zyKblS26rBaU7SNEtu44Y/uAjt
+         ripG2PoqSbN8PyNxPZKyHjn0RUko7jF4Q1FJ+HTdZhGdksQDGk1GwTZLNZqsSJzkz0sz
+         XiGMNOLKbkmtlsvJQQjIt0mtttCHAyWw30EvcvCHrTPw368lJIc+M8tm7gb+6duBVJfs
+         t4aZxg1rivLrvbYGJZoip0fYVdByGJgKwC3uW0YzIFpQpcog5CMdeIdNrZrS+PxDl663
+         jvCMoESsiCaAMkrKE9ls/uXydQfMC2T211WwSuQQGSBFLsdO/8Wud5qzhNUjzZ2buQLD
+         4wNA==
+X-Gm-Message-State: ANhLgQ0oeGCyw/wjo/Q9D71sxOa09O+6q1h4zePWYq0SHFlbCHQbdIIx
+        62h6iBspZgFcQvazwHBdCnwEGlT1/GX+OmIi55OSAr+BwGPuWu8awJOsPi0CmkT8foge2SrjEqF
+        t0uctcFAXpDNRehLgJFQ5fwIXGmSrjle/7t6FNIteFE2zRXEAwppmRJdhppk1da4AJWCOsc06UQ
         ==
-X-Google-Smtp-Source: ADFU+vvO3YLt62Xfjdf+V37PQGMiCucRbgicRWQTn8hexe3OpK/eM7pCN/N5tQC/gSwKyMHFusDhzh76lidM/u7o+C8=
-X-Received: by 2002:a17:90a:bf08:: with SMTP id c8mr6030076pjs.150.1585171514842;
- Wed, 25 Mar 2020 14:25:14 -0700 (PDT)
-Date:   Wed, 25 Mar 2020 14:24:56 -0700
+X-Google-Smtp-Source: ADFU+vuGJPmyMDj8AtlUPBmIiJ4oza/Qlj2rRES5LguDmL8PMrrfAJwQqi3CuvH6jupPICMHkns0MCzzH26j6JMUgis=
+X-Received: by 2002:a17:90a:a484:: with SMTP id z4mr5944141pjp.77.1585171517219;
+ Wed, 25 Mar 2020 14:25:17 -0700 (PDT)
+Date:   Wed, 25 Mar 2020 14:24:57 -0700
 In-Reply-To: <20200325212500.135046-1-emilyshaffer@google.com>
-Message-Id: <20200325212500.135046-2-emilyshaffer@google.com>
+Message-Id: <20200325212500.135046-3-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20200325212500.135046-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.25.1.696.g5e7596f4ac-goog
-Subject: [PATCH v11 1/5] help: move list_config_help to builtin/help
+Subject: [PATCH v11 2/5] bugreport: add tool to generate debugging info
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -69,369 +69,338 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Starting in 3ac68a93fd2, help.o began to depend on builtin/branch.o,
-builtin/clean.o, and builtin/config.o. This meant that help.o was
-unusable outside of the context of the main Git executable.
+Teach Git how to prompt the user for a good bug report: reproduction
+steps, expected behavior, and actual behavior. Later, Git can learn how
+to collect some diagnostic information from the repository.
 
-To make help.o usable by other commands again, move list_config_help()
-into builtin/help.c (where it makes sense to assume other builtin libraries
-are present).
+If users can send us a well-written bug report which contains diagnostic
+information we would otherwise need to ask the user for, we can reduce
+the number of question-and-answer round trips between the reporter and
+the Git contributor.
 
-When command-list.h is included but a member is not used, we start to
-hear a compiler warning. Since the config list is generated in a fairly
-different way than the command list, and since commands and config
-options are semantically different, move the config list into its own
-header and move the generator into its own script and build rule.
+Users may also wish to send a report like this to their local "Git
+expert" if they have put their repository into a state they are confused
+by.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
- .gitignore             |  1 +
- Makefile               | 13 +++++--
- builtin/help.c         | 86 ++++++++++++++++++++++++++++++++++++++++++
- generate-cmdlist.sh    | 19 ----------
- generate-configlist.sh | 21 +++++++++++
- help.c                 | 85 -----------------------------------------
- help.h                 |  1 -
- 7 files changed, 118 insertions(+), 108 deletions(-)
- create mode 100755 generate-configlist.sh
+ .gitignore                      |   1 +
+ Documentation/git-bugreport.txt |  46 ++++++++++++++
+ Makefile                        |   5 ++
+ bugreport.c                     | 105 ++++++++++++++++++++++++++++++++
+ command-list.txt                |   1 +
+ strbuf.c                        |   4 ++
+ strbuf.h                        |   1 +
+ t/t0091-bugreport.sh            |  61 +++++++++++++++++++
+ 8 files changed, 224 insertions(+)
+ create mode 100644 Documentation/git-bugreport.txt
+ create mode 100644 bugreport.c
+ create mode 100755 t/t0091-bugreport.sh
 
 diff --git a/.gitignore b/.gitignore
-index aebe7c0908..ea97de83f3 100644
+index ea97de83f3..d89bf9e11e 100644
 --- a/.gitignore
 +++ b/.gitignore
-@@ -189,6 +189,7 @@
- /gitweb/gitweb.cgi
- /gitweb/static/gitweb.js
- /gitweb/static/gitweb.min.*
-+/config-list.h
- /command-list.h
- *.tar.gz
- *.dsc
+@@ -25,6 +25,7 @@
+ /git-bisect--helper
+ /git-blame
+ /git-branch
++/git-bugreport
+ /git-bundle
+ /git-cat-file
+ /git-check-attr
+diff --git a/Documentation/git-bugreport.txt b/Documentation/git-bugreport.txt
+new file mode 100644
+index 0000000000..1f9fde5cde
+--- /dev/null
++++ b/Documentation/git-bugreport.txt
+@@ -0,0 +1,46 @@
++git-bugreport(1)
++================
++
++NAME
++----
++git-bugreport - Collect information for user to file a bug report
++
++SYNOPSIS
++--------
++[verse]
++'git bugreport' [(-o | --output-directory) <path>] [(-s | --suffix) <format>]
++
++DESCRIPTION
++-----------
++Captures information about the user's machine, Git client, and repository state,
++as well as a form requesting information about the behavior the user observed,
++into a single text file which the user can then share, for example to the Git
++mailing list, in order to report an observed bug.
++
++The following information is requested from the user:
++
++ - Reproduction steps
++ - Expected behavior
++ - Actual behavior
++
++This tool is invoked via the typical Git setup process, which means that in some
++cases, it might not be able to launch - for example, if a relevant config file
++is unreadable. In this kind of scenario, it may be helpful to manually gather
++the kind of information listed above when manually asking for help.
++
++OPTIONS
++-------
++-o <path>::
++--output-directory <path>::
++	Place the resulting bug report file in `<path>` instead of the root of
++	the Git repository.
++
++-s <format>::
++--suffix <format>::
++	Specify an alternate suffix for the bugreport name, to create a file
++	named 'git-bugreport-<formatted suffix>'. This should take the form of a
++	link:strftime[3] format string; the current local time will be used.
++
++GIT
++---
++Part of the linkgit:git[1] suite
 diff --git a/Makefile b/Makefile
-index 6134104ae6..c552312d3f 100644
+index c552312d3f..9e6705061d 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -815,6 +815,7 @@ LIB_FILE = libgit.a
- XDIFF_LIB = xdiff/lib.a
- VCSSVN_LIB = vcs-svn/lib.a
+@@ -681,6 +681,7 @@ EXTRA_PROGRAMS =
+ # ... and all the rest that could be moved out of bindir to gitexecdir
+ PROGRAMS += $(EXTRA_PROGRAMS)
  
-+GENERATED_H += config-list.h
- GENERATED_H += command-list.h
++PROGRAM_OBJS += bugreport.o
+ PROGRAM_OBJS += credential-store.o
+ PROGRAM_OBJS += daemon.o
+ PROGRAM_OBJS += fast-import.o
+@@ -2461,6 +2462,10 @@ endif
+ git-%$X: %.o GIT-LDFLAGS $(GITLIBS)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(LIBS)
  
- LIB_H := $(sort $(patsubst ./%,%,$(shell git ls-files '*.h' ':!t/' ':!Documentation/' 2>/dev/null || \
-@@ -2132,7 +2133,7 @@ git$X: git.o GIT-LDFLAGS $(BUILTIN_OBJS) $(GITLIBS)
- 
- help.sp help.s help.o: command-list.h
- 
--builtin/help.sp builtin/help.s builtin/help.o: command-list.h GIT-PREFIX
-+builtin/help.sp builtin/help.s builtin/help.o: config-list.h GIT-PREFIX
- builtin/help.sp builtin/help.s builtin/help.o: EXTRA_CPPFLAGS = \
- 	'-DGIT_HTML_PATH="$(htmldir_relative_SQ)"' \
- 	'-DGIT_MAN_PATH="$(mandir_relative_SQ)"' \
-@@ -2152,6 +2153,12 @@ $(BUILT_INS): git$X
- 	ln -s $< $@ 2>/dev/null || \
- 	cp $< $@
- 
-+config-list.h: generate-configlist.sh
++git-bugreport$X: bugreport.o GIT-LDFLAGS $(GITLIBS)
++	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
++		$(LIBS)
 +
-+config-list.h:
-+	$(QUIET_GEN)$(SHELL_PATH) ./generate-configlist.sh \
-+		>$@+ && mv $@+ $@
+ git-imap-send$X: imap-send.o $(IMAP_SEND_BUILDDEPS) GIT-LDFLAGS $(GITLIBS)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+ 		$(IMAP_SEND_LDFLAGS) $(LIBS)
+diff --git a/bugreport.c b/bugreport.c
+new file mode 100644
+index 0000000000..f6f53a5e8e
+--- /dev/null
++++ b/bugreport.c
+@@ -0,0 +1,105 @@
++#include "builtin.h"
++#include "parse-options.h"
++#include "stdio.h"
++#include "strbuf.h"
++#include "time.h"
 +
- command-list.h: generate-cmdlist.sh command-list.txt
- 
- command-list.h: $(wildcard Documentation/git*.txt) Documentation/*config.txt Documentation/config/*.txt
-@@ -2785,7 +2792,7 @@ $(SP_OBJ): %.sp: %.c GIT-CFLAGS FORCE
- .PHONY: sparse $(SP_OBJ)
- sparse: $(SP_OBJ)
- 
--EXCEPT_HDRS := command-list.h unicode-width.h compat/% xdiff/%
-+EXCEPT_HDRS := command-list.h config-list.h unicode-width.h compat/% xdiff/%
- ifndef GCRYPT_SHA256
- 	EXCEPT_HDRS += sha256/gcrypt.h
- endif
-@@ -2807,7 +2814,7 @@ hdr-check: $(HCO)
- style:
- 	git clang-format --style file --diff --extensions c,h
- 
--check: command-list.h
-+check: config-list.h command-list.h
- 	@if sparse; \
- 	then \
- 		echo >&2 "Use 'make sparse' instead"; \
-diff --git a/builtin/help.c b/builtin/help.c
-index e5590d7787..1c5f2b9255 100644
---- a/builtin/help.c
-+++ b/builtin/help.c
-@@ -8,6 +8,7 @@
- #include "parse-options.h"
- #include "run-command.h"
- #include "column.h"
-+#include "config-list.h"
- #include "help.h"
- #include "alias.h"
- 
-@@ -62,6 +63,91 @@ static const char * const builtin_help_usage[] = {
- 	NULL
- };
- 
-+struct slot_expansion {
-+	const char *prefix;
-+	const char *placeholder;
-+	void (*fn)(struct string_list *list, const char *prefix);
-+	int found;
++static const char * const bugreport_usage[] = {
++	N_("git bugreport [-o|--output-directory <file>] [-s|--suffix <format>]"),
++	NULL
 +};
 +
-+static void list_config_help(int for_human)
++static int get_bug_template(struct strbuf *template)
 +{
-+	struct slot_expansion slot_expansions[] = {
-+		{ "advice", "*", list_config_advices },
-+		{ "color.branch", "<slot>", list_config_color_branch_slots },
-+		{ "color.decorate", "<slot>", list_config_color_decorate_slots },
-+		{ "color.diff", "<slot>", list_config_color_diff_slots },
-+		{ "color.grep", "<slot>", list_config_color_grep_slots },
-+		{ "color.interactive", "<slot>", list_config_color_interactive_slots },
-+		{ "color.remote", "<slot>", list_config_color_sideband_slots },
-+		{ "color.status", "<slot>", list_config_color_status_slots },
-+		{ "fsck", "<msg-id>", list_config_fsck_msg_ids },
-+		{ "receive.fsck", "<msg-id>", list_config_fsck_msg_ids },
-+		{ NULL, NULL, NULL }
-+	};
-+	const char **p;
-+	struct slot_expansion *e;
-+	struct string_list keys = STRING_LIST_INIT_DUP;
-+	int i;
++	const char template_text[] = N_(
++"Thank you for filling out a Git bug report!\n"
++"Please answer the following questions to help us understand your issue.\n"
++"\n"
++"What did you do before the bug happened? (Steps to reproduce your issue)\n"
++"\n"
++"What did you expect to happen? (Expected behavior)\n"
++"\n"
++"What happened instead? (Actual behavior)\n"
++"\n"
++"What's different between what you expected and what actually happened?\n"
++"\n"
++"Anything else you want to add:\n"
++"\n"
++"Please review the rest of the bug report below.\n"
++"You can delete any lines you don't wish to share.\n");
 +
-+	for (p = config_name_list; *p; p++) {
-+		const char *var = *p;
-+		struct strbuf sb = STRBUF_INIT;
-+
-+		for (e = slot_expansions; e->prefix; e++) {
-+
-+			strbuf_reset(&sb);
-+			strbuf_addf(&sb, "%s.%s", e->prefix, e->placeholder);
-+			if (!strcasecmp(var, sb.buf)) {
-+				e->fn(&keys, e->prefix);
-+				e->found++;
-+				break;
-+			}
-+		}
-+		strbuf_release(&sb);
-+		if (!e->prefix)
-+			string_list_append(&keys, var);
-+	}
-+
-+	for (e = slot_expansions; e->prefix; e++)
-+		if (!e->found)
-+			BUG("slot_expansion %s.%s is not used",
-+			    e->prefix, e->placeholder);
-+
-+	string_list_sort(&keys);
-+	for (i = 0; i < keys.nr; i++) {
-+		const char *var = keys.items[i].string;
-+		const char *wildcard, *tag, *cut;
-+
-+		if (for_human) {
-+			puts(var);
-+			continue;
-+		}
-+
-+		wildcard = strchr(var, '*');
-+		tag = strchr(var, '<');
-+
-+		if (!wildcard && !tag) {
-+			puts(var);
-+			continue;
-+		}
-+
-+		if (wildcard && !tag)
-+			cut = wildcard;
-+		else if (!wildcard && tag)
-+			cut = tag;
-+		else
-+			cut = wildcard < tag ? wildcard : tag;
-+
-+		/*
-+		 * We may produce duplicates, but that's up to
-+		 * git-completion.bash to handle
-+		 */
-+		printf("%.*s\n", (int)(cut - var), var);
-+	}
-+	string_list_clear(&keys, 0);
++	strbuf_addstr(template, _(template_text));
++	return 0;
 +}
 +
- static enum help_format parse_help_format(const char *format)
- {
- 	if (!strcmp(format, "man"))
-diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
-index 71158f7d8b..45fecf8bdf 100755
---- a/generate-cmdlist.sh
-+++ b/generate-cmdlist.sh
-@@ -76,23 +76,6 @@ print_command_list () {
- 	echo "};"
++int cmd_main(int argc, const char **argv)
++{
++	struct strbuf buffer = STRBUF_INIT;
++	struct strbuf report_path = STRBUF_INIT;
++	int report = -1;
++	time_t now = time(NULL);
++	char *option_output = NULL;
++	char *option_suffix = "%Y-%m-%d-%H%M";
++	int nongit_ok = 0;
++	const char *prefix = NULL;
++	const char *user_relative_path = NULL;
++
++	const struct option bugreport_options[] = {
++		OPT_STRING('o', "output-directory", &option_output, N_("path"),
++			   N_("specify a destination for the bugreport file")),
++		OPT_STRING('s', "suffix", &option_suffix, N_("format"),
++			   N_("specify a strftime format suffix for the filename")),
++		OPT_END()
++	};
++
++	prefix = setup_git_directory_gently(&nongit_ok);
++
++	argc = parse_options(argc, argv, prefix, bugreport_options,
++			     bugreport_usage, 0);
++
++	/* Prepare the path to put the result */
++	strbuf_addstr(&report_path,
++		      prefix_filename(prefix,
++				      option_output ? option_output : ""));
++	strbuf_complete(&report_path, '/');
++
++	strbuf_addstr(&report_path, "git-bugreport-");
++	strbuf_addftime(&report_path, option_suffix, localtime(&now), 0, 0);
++	strbuf_addstr(&report_path, ".txt");
++
++	switch (safe_create_leading_directories(report_path.buf)) {
++	case SCLD_OK:
++	case SCLD_EXISTS:
++		break;
++	default:
++		die(_("could not create leading directories for '%s'"),
++		    report_path.buf);
++	}
++
++	/* Prepare the report contents */
++	get_bug_template(&buffer);
++
++	/* fopen doesn't offer us an O_EXCL alternative, except with glibc. */
++	report = open(report_path.buf, O_CREAT | O_EXCL | O_WRONLY, 0666);
++
++	if (report < 0) {
++		UNLEAK(report_path);
++		die(_("couldn't create a new file at '%s'"), report_path.buf);
++	}
++
++	strbuf_write_fd(&buffer, report);
++	close(report);
++
++	/*
++	 * We want to print the path relative to the user, but we still need the
++	 * path relative to us to give to the editor.
++	 */
++	if (!(prefix && skip_prefix(report_path.buf, prefix, &user_relative_path)))
++		user_relative_path = report_path.buf;
++	fprintf(stderr, _("Created new report at '%s'.\n"),
++		user_relative_path);
++
++	UNLEAK(buffer);
++	UNLEAK(report_path);
++	return !!launch_editor(report_path.buf, NULL, NULL);
++}
+diff --git a/command-list.txt b/command-list.txt
+index 2087894655..185e5e3f05 100644
+--- a/command-list.txt
++++ b/command-list.txt
+@@ -54,6 +54,7 @@ git-archive                             mainporcelain
+ git-bisect                              mainporcelain           info
+ git-blame                               ancillaryinterrogators          complete
+ git-branch                              mainporcelain           history
++git-bugreport                           ancillaryinterrogators
+ git-bundle                              mainporcelain
+ git-cat-file                            plumbinginterrogators
+ git-check-attr                          purehelpers
+diff --git a/strbuf.c b/strbuf.c
+index f19da55b07..f1d66c7848 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -539,6 +539,10 @@ ssize_t strbuf_write(struct strbuf *sb, FILE *f)
+ 	return sb->len ? fwrite(sb->buf, 1, sb->len, f) : 0;
  }
  
--print_config_list () {
--	cat <<EOF
--static const char *config_name_list[] = {
--EOF
--	grep -h '^[a-zA-Z].*\..*::$' Documentation/*config.txt Documentation/config/*.txt |
--	sed '/deprecated/d; s/::$//; s/,  */\n/g' |
--	sort |
--	while read line
--	do
--		echo "	\"$line\","
--	done
--	cat <<EOF
--	NULL,
--};
--EOF
--}
--
- exclude_programs=
- while test "--exclude-program" = "$1"
- do
-@@ -113,5 +96,3 @@ echo
- define_category_names "$1"
- echo
- print_command_list "$1"
--echo
--print_config_list
-diff --git a/generate-configlist.sh b/generate-configlist.sh
++ssize_t strbuf_write_fd(struct strbuf *sb, int fd)
++{
++	return sb->len ? write(fd, sb->buf, sb->len) : 0;
++}
+ 
+ #define STRBUF_MAXLINK (2*PATH_MAX)
+ 
+diff --git a/strbuf.h b/strbuf.h
+index aae7ac3a82..bbf6204de7 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -462,6 +462,7 @@ int strbuf_readlink(struct strbuf *sb, const char *path, size_t hint);
+  * NUL bytes.
+  */
+ ssize_t strbuf_write(struct strbuf *sb, FILE *stream);
++ssize_t strbuf_write_fd(struct strbuf *sb, int fd);
+ 
+ /**
+  * Read a line from a FILE *, overwriting the existing contents of
+diff --git a/t/t0091-bugreport.sh b/t/t0091-bugreport.sh
 new file mode 100755
-index 0000000000..8692fe5cf4
+index 0000000000..65f664fdac
 --- /dev/null
-+++ b/generate-configlist.sh
-@@ -0,0 +1,21 @@
++++ b/t/t0091-bugreport.sh
+@@ -0,0 +1,61 @@
 +#!/bin/sh
 +
-+echo "/* Automatically generated by generate-configlist.sh */"
-+echo
++test_description='git bugreport'
 +
-+print_config_list () {
-+	cat <<EOF
-+static const char *config_name_list[] = {
-+EOF
-+	grep -h '^[a-zA-Z].*\..*::$' Documentation/*config.txt Documentation/config/*.txt |
-+	sed '/deprecated/d; s/::$//; s/,  */\n/g' |
-+	sort |
-+	sed 's/^.*$/	"&",/'
-+	cat <<EOF
-+	NULL,
-+};
-+EOF
++. ./test-lib.sh
++
++# Headers "[System Info]" will be followed by a non-empty line if we put some
++# information there; we can make sure all our headers were followed by some
++# information to check if the command was successful.
++HEADER_PATTERN="^\[.*\]$"
++
++check_all_headers_populated () {
++	while read -r line
++	do
++		if test "$(grep "$HEADER_PATTERN" "$line")"
++		then
++			echo "$line"
++			read -r nextline
++			if test -z "$nextline"; then
++				return 1;
++			fi
++		fi
++	done
 +}
 +
-+echo
-+print_config_list
-diff --git a/help.c b/help.c
-index cf67624a94..a21487db77 100644
---- a/help.c
-+++ b/help.c
-@@ -407,91 +407,6 @@ void list_common_guides_help(void)
- 	putchar('\n');
- }
- 
--struct slot_expansion {
--	const char *prefix;
--	const char *placeholder;
--	void (*fn)(struct string_list *list, const char *prefix);
--	int found;
--};
--
--void list_config_help(int for_human)
--{
--	struct slot_expansion slot_expansions[] = {
--		{ "advice", "*", list_config_advices },
--		{ "color.branch", "<slot>", list_config_color_branch_slots },
--		{ "color.decorate", "<slot>", list_config_color_decorate_slots },
--		{ "color.diff", "<slot>", list_config_color_diff_slots },
--		{ "color.grep", "<slot>", list_config_color_grep_slots },
--		{ "color.interactive", "<slot>", list_config_color_interactive_slots },
--		{ "color.remote", "<slot>", list_config_color_sideband_slots },
--		{ "color.status", "<slot>", list_config_color_status_slots },
--		{ "fsck", "<msg-id>", list_config_fsck_msg_ids },
--		{ "receive.fsck", "<msg-id>", list_config_fsck_msg_ids },
--		{ NULL, NULL, NULL }
--	};
--	const char **p;
--	struct slot_expansion *e;
--	struct string_list keys = STRING_LIST_INIT_DUP;
--	int i;
--
--	for (p = config_name_list; *p; p++) {
--		const char *var = *p;
--		struct strbuf sb = STRBUF_INIT;
--
--		for (e = slot_expansions; e->prefix; e++) {
--
--			strbuf_reset(&sb);
--			strbuf_addf(&sb, "%s.%s", e->prefix, e->placeholder);
--			if (!strcasecmp(var, sb.buf)) {
--				e->fn(&keys, e->prefix);
--				e->found++;
--				break;
--			}
--		}
--		strbuf_release(&sb);
--		if (!e->prefix)
--			string_list_append(&keys, var);
--	}
--
--	for (e = slot_expansions; e->prefix; e++)
--		if (!e->found)
--			BUG("slot_expansion %s.%s is not used",
--			    e->prefix, e->placeholder);
--
--	string_list_sort(&keys);
--	for (i = 0; i < keys.nr; i++) {
--		const char *var = keys.items[i].string;
--		const char *wildcard, *tag, *cut;
--
--		if (for_human) {
--			puts(var);
--			continue;
--		}
--
--		wildcard = strchr(var, '*');
--		tag = strchr(var, '<');
--
--		if (!wildcard && !tag) {
--			puts(var);
--			continue;
--		}
--
--		if (wildcard && !tag)
--			cut = wildcard;
--		else if (!wildcard && tag)
--			cut = tag;
--		else
--			cut = wildcard < tag ? wildcard : tag;
--
--		/*
--		 * We may produce duplicates, but that's up to
--		 * git-completion.bash to handle
--		 */
--		printf("%.*s\n", (int)(cut - var), var);
--	}
--	string_list_clear(&keys, 0);
--}
--
- static int get_alias(const char *var, const char *value, void *data)
- {
- 	struct string_list *list = data;
-diff --git a/help.h b/help.h
-index 7a455beeb7..9071894e8c 100644
---- a/help.h
-+++ b/help.h
-@@ -22,7 +22,6 @@ static inline void mput_char(char c, unsigned int num)
- void list_common_cmds_help(void);
- void list_all_cmds_help(void);
- void list_common_guides_help(void);
--void list_config_help(int for_human);
- 
- void list_all_main_cmds(struct string_list *list);
- void list_all_other_cmds(struct string_list *list);
++test_expect_success 'creates a report with content in the right places' '
++	git bugreport -s check-headers &&
++	check_all_headers_populated <git-bugreport-check-headers.txt &&
++	test_when_finished rm git-bugreport-check-headers.txt
++'
++
++test_expect_success 'dies if file with same name as report already exists' '
++	>>git-bugreport-duplicate.txt &&
++	test_must_fail git bugreport --suffix duplicate &&
++	test_when_finished rm git-bugreport-duplicate.txt
++'
++
++test_expect_success '--output-directory puts the report in the provided dir' '
++	git bugreport -o foo/ &&
++	test_path_is_file foo/git-bugreport-* &&
++	test_when_finished rm -fr foo/
++'
++
++test_expect_success 'incorrect arguments abort with usage' '
++	test_must_fail git bugreport --false 2>output &&
++	test_i18ngrep usage output &&
++	test_path_is_missing git-bugreport-*
++'
++
++test_expect_success 'runs outside of a git dir' '
++	nongit git bugreport &&
++	test_when_finished rm non-repo/git-bugreport-*
++'
++
++test_expect_success 'can create leading directories outside of a git dir' '
++	nongit git bugreport -o foo/bar/baz &&
++	test_when_finished rm -fr foo/bar/baz
++'
++
++
++test_done
 -- 
 2.25.1.696.g5e7596f4ac-goog
 
