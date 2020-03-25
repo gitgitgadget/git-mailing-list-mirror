@@ -7,79 +7,75 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 496E2C43331
-	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 22:15:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E2311C43331
+	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 22:16:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0461D2070A
-	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 22:15:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 89BBF2070A
+	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 22:16:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dqQ7QRU+"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PUzwwHhK"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727389AbgCYWPl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 Mar 2020 18:15:41 -0400
-Received: from mail-wr1-f52.google.com ([209.85.221.52]:33978 "EHLO
-        mail-wr1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727358AbgCYWPl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Mar 2020 18:15:41 -0400
-Received: by mail-wr1-f52.google.com with SMTP id 65so5528275wrl.1
-        for <git@vger.kernel.org>; Wed, 25 Mar 2020 15:15:37 -0700 (PDT)
+        id S1727401AbgCYWQT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 Mar 2020 18:16:19 -0400
+Received: from mail-wm1-f52.google.com ([209.85.128.52]:51233 "EHLO
+        mail-wm1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727358AbgCYWQT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Mar 2020 18:16:19 -0400
+Received: by mail-wm1-f52.google.com with SMTP id c187so4544375wme.1
+        for <git@vger.kernel.org>; Wed, 25 Mar 2020 15:16:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:date:to:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=5dx9MfFHNrjTCQSj9pIsOPn1GfIUp5HT74qgO6lMRwU=;
-        b=dqQ7QRU+Z42skDMtmAIGRPaoqhQmJH8lukJ/G5oCE2LhsrO+fQhooQeNJwR+idvs/S
-         AOdF+GjXtlTuzRKW8mKyAu+It2xlywatmyHzAxtYxDEUiAk4uDYjZBWlRxbRkPojwmmA
-         RlwsuBlCJhCE2ZsSVqyQ/Kj8/FRlGRCVZqNorGRSMmXI6++WA3Q2NMZXs41z+6xGk03y
-         px5/hpeTfUfgxJP1ki6vdo9MU2hck1plb3vPL5X1Soy6SYH8nEnOf5aXMelbtDBXd35L
-         apaDgp41cC8hkX5DH4qqP+uzJcw3jr+NO/XrAb426ULp6U0dEzokiWemnRRWCMg9Vvcn
-         NefA==
+        bh=qhlEh+kfkSdrcOvtM4ES54YzML5GWa8WcABe9Xi/pgA=;
+        b=PUzwwHhKloeb6pek1KtW2UzCvbkCNaYAppZIyzqVmesvgj1vUVIC1QBKMEWVomD2gP
+         MqSK1HePp+ZOcE2RDpPTu1T0oyq+QxJgz56kzbQnkqjvflYw5jKWBHPo7wZMjoUXFYDQ
+         YyiRYmLrAm1Um7WP36r0FnBGtwtYniXUbn8aIcM1Z4g08FD3EO6dTGAyf0nK2h1dl+/k
+         4Q4VnqMMIsV/xgddI1QJPo4MaIups0CB5KN+CQtKXPUeDJJ5Vg0E4lCnVu6qtJfzflWe
+         NFjS63AtCu8YtR60IayQYznzcvlB9LirdFxJSRisu9Lm7SJCvml8fCtyj1Cx/Cmh0p26
+         5WbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:date:to:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=5dx9MfFHNrjTCQSj9pIsOPn1GfIUp5HT74qgO6lMRwU=;
-        b=hdbFGSn4fV4RmP/vPBb4IpaLSON3NYZrCNaJL47Dn5zST+QfMOSNeGsBsE+MslCjve
-         j1LsBpiWKi7UgoRH/JWZ1wVuFJCCmzHsLQOx76XnzryriyZal5wDUhSq3owPlUKiJ5BF
-         dETyBckhnOXIq5/jF7Zwqdd/99XPwpXrOGv3s/r96p7BmuZUVDZB/7O0p6osMuuPcYlu
-         jU07LIqcAOLDwSukfFOK/qtIqo2p+Un7E9IzP8O4EOdKBYY0M0tE1CFmn68Lqp/FarvU
-         MAhdARcNN5pFpf5MBvHNWAswmDInqTxlNXrrBWWMJr/xh4LKdWhMciKceWCHRUYV+yKG
-         ibyg==
-X-Gm-Message-State: ANhLgQ3W4CdQK7wI6LDOv1rld1ZN0dbx7XhqPjgw38CNycnyQc3G1gnl
-        ZIMe/Z6S8vcOOUpE+mcm1bE=
-X-Google-Smtp-Source: ADFU+vuF0ytsuwQaMKQxHXEOoxJGhxHht1uxuSvQeJS6wrez9T9IUgrwNIrCWIpt7jS9hHAScByiHA==
-X-Received: by 2002:adf:efc9:: with SMTP id i9mr5440326wrp.23.1585174531415;
-        Wed, 25 Mar 2020 15:15:31 -0700 (PDT)
+        bh=qhlEh+kfkSdrcOvtM4ES54YzML5GWa8WcABe9Xi/pgA=;
+        b=SQVaUgU9tpP0MkW+bx+1sjl02SuQgUVcs767zhCyEF5jCG+tb/JWIwAJ1zzSDNIwuP
+         sDh3/0QssPAqG1fnYO9KHrF/9rl7Lj4A/HMgFUi7p6pmBjoJA0BkIe+u5xyD1TElLy16
+         9p5v3xro+cbsPFRvZ/fewa5NCGOxVL1u/M7Iw5+jAVsKQXlYMdERIcQyG0bCh9U/vG/q
+         sHYXSQBYfIOpYAU25AkdY7gaf5akHtfo1E0HFXbgt5uy4AarzG0IVHsCX3eFV3xYhAEo
+         d6ibFGylbPDbhc28Vq531aE7BwRXhDEi8fFQEnIVDKlm7WdkFRlIs+kDT5Xw5ediWXzr
+         8BmA==
+X-Gm-Message-State: ANhLgQ0sbZtp7+Mi2mdooA3H4US0zfMLKNMUvyunjk5e5kGi5OOwliIh
+        PYbo09GYAhD2cu/oj2rsO2zRbkR8wPo=
+X-Google-Smtp-Source: ADFU+vsanj59iFejz3+iRjNoXkLUTiZZwsPHxGcay5QYWGbOufqjtAFvQMtHxg/3KtdrXhP88h+S6w==
+X-Received: by 2002:a1c:740f:: with SMTP id p15mr5579918wmc.98.1585174577257;
+        Wed, 25 Mar 2020 15:16:17 -0700 (PDT)
 Received: from doriath (87-231-246-247.rev.numericable.fr. [87.231.246.247])
-        by smtp.gmail.com with ESMTPSA id 23sm529103wmj.34.2020.03.25.15.15.29
+        by smtp.gmail.com with ESMTPSA id k126sm653741wme.4.2020.03.25.15.16.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Mar 2020 15:15:30 -0700 (PDT)
+        Wed, 25 Mar 2020 15:16:16 -0700 (PDT)
 From:   Damien Robert <damien.olivier.robert@gmail.com>
 X-Google-Original-From: Damien Robert <damien.olivier.robert+git@gmail.com>
-Date:   Wed, 25 Mar 2020 23:15:28 +0100
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH v2 0/3] Documentation of pack and repack
-Message-ID: <20200325221528.2cj5vb5vivjdmg74@doriath>
+Date:   Wed, 25 Mar 2020 23:16:14 +0100
+To:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 1/1] remote.c: fix handling of %(push:remoteref)
+Message-ID: <20200325221614.ekn56wamfgs4bwmq@doriath>
 X-PGP-Key: http://www.normalesup.org/~robert/pro/files/Damien_Olivier_Robert.asc
-X-Start-Date: Wed, 25 Mar 2020 23:14:15 +0100
-References: <20200228154357.1710521-2-damien.olivier.robert+git@gmail.com>
- <20200312170931.2392490-1-damien.olivier.robert+git@gmail.com>
+X-Start-Date: Wed, 25 Mar 2020 23:15:44 +0100
+References: <20200303161223.1870298-3-damien.olivier.robert+git@gmail.com>
+ <20200312164558.2388589-1-damien.olivier.robert+git@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200312170931.2392490-1-damien.olivier.robert+git@gmail.com>
+In-Reply-To: <20200312164558.2388589-1-damien.olivier.robert+git@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Just a friendly reminder about this series.
+Hi Junio,
 
-In particular, it would be nice to get a review on
->   doc: add a short explanation for git-repack options
-since I am not a native english speaker.
+IMHO this patch should be good to cook.
 
 Thanks!
-
--- 
-Damien
