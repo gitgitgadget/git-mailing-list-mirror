@@ -8,59 +8,59 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 636D7C54FD0
-	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 05:55:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8DBC0C1975A
+	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 05:55:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3A66320714
-	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 05:55:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6673120774
+	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 05:55:18 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U4YoYVaL"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c0t8m5iE"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726319AbgCYFzP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 Mar 2020 01:55:15 -0400
-Received: from mail-qv1-f47.google.com ([209.85.219.47]:40630 "EHLO
-        mail-qv1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726264AbgCYFzP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Mar 2020 01:55:15 -0400
-Received: by mail-qv1-f47.google.com with SMTP id cy12so485058qvb.7
-        for <git@vger.kernel.org>; Tue, 24 Mar 2020 22:55:14 -0700 (PDT)
+        id S1727253AbgCYFzR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 Mar 2020 01:55:17 -0400
+Received: from mail-qv1-f67.google.com ([209.85.219.67]:46781 "EHLO
+        mail-qv1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726658AbgCYFzR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Mar 2020 01:55:17 -0400
+Received: by mail-qv1-f67.google.com with SMTP id m2so468759qvu.13
+        for <git@vger.kernel.org>; Tue, 24 Mar 2020 22:55:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=r12iIEm0XSofXx3wqw9sbrMgiKngr/X8ryuhRvp0nSE=;
-        b=U4YoYVaLspLIhpfCUu05gbfNAPYdCz8w5jQu33yBYiDvfhSuszYvsMyd87MWJoCCvh
-         tVDBI7/v+r9wYn9qUKj5+kbnjmmY5RQ8QzBE/5pylRMzJshh66CGOlh6Fj8AHRBcma/f
-         QKtMH6SUqkdpkeLln/2eTSwzZKjmwC2zxSK+KQNxwYQuEzT4Id3/bhRbWuZZsFoJCVUo
-         Zw04olG84f5Yxs1R9lGQfho+hLeMviwMaew6GawnK5QURX/j/h2+IsChXAOr4U+0HY/w
-         gukx+fkr2lCSGbls3DdCIdVJn16A2GTbN/HYCPrJkqRp8F/24Idcxafol+I2MPzVx6Of
-         qxxA==
+        bh=i5YJcHss20tP7ZQ/brMc62KBT/ftaRdKhsrYV2CBJ6I=;
+        b=c0t8m5iEEisWSubSs6B/ueGeNcQVOiUNxzdkDYmL3ZfkijihxFaMGMxVDZr93qdnhS
+         gcNlD/P7nrZYo9oti/Vaa76Clp3oiNTzk6z9HrhaBsN4lhuXX/Jw6SO00MK22tiLPspc
+         cZXTLziuJ5hAPJSK+GI7LgULUdqa4KHtJ/gvQBGQt/OBnIjX/0Ms9O6bkTTp51CoHCqe
+         hE7Sp8Zy/bftYCxZowu3hmkM37O1LQPLSnpZmvwEd8hnMiiiSIq2f0tfgqecuOSXp4nD
+         eUTbg/Ki2IatwiHQwOdC6NXY+rJsj3lffu+fq43Z/7/F1DNVA1ojomE1msOXPyqJZ0G0
+         CCog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=r12iIEm0XSofXx3wqw9sbrMgiKngr/X8ryuhRvp0nSE=;
-        b=Zhkh59iNkogFksUlMtcL8hdAjMTUm4amME8P36aGc7Jbs02t8E0gmT/5wQ8naE3jbs
-         vin3fJltO6KSoX2gtVmBLGUGjBzALKKU7rcvymXZDpHa5hFNn0u7VoW40jPXHczMk+el
-         uZq3K9yXn/sUFOs8y/gNJ2sG8lK0cIAxHtHd680Qq7mqg2EePT6bUD7cvQJbKOgiO3MY
-         8+QqrbDGJd0FVXlP3Nkd8QgFQhKlQijKFMM1+aDSV6jLbe2b4KaNTZlIwcVXmPqsFlg7
-         zhSh94GXATqqCd2ce8cQRE6o0ErPyCO2tOdd1eEZc9bEIfnZX/nTI4ztTmjYKrumn9hU
-         pp5g==
-X-Gm-Message-State: ANhLgQ3p8T9DTC0FVNTfAfYMXWu5HxjEDmGig9niXC+RnztPmWr1XLld
-        er9bRUJm5kDxD9LmGusC8/UB2mnd
-X-Google-Smtp-Source: ADFU+vuKz380U2vs5Vl53zfx5vC65FPHSh4/sQLjOCO5uDVV9t1eaz4S8Jwy1lWu4siEvrDWxlwAgQ==
-X-Received: by 2002:ad4:4c82:: with SMTP id bs2mr1663072qvb.14.1585115713789;
-        Tue, 24 Mar 2020 22:55:13 -0700 (PDT)
+        bh=i5YJcHss20tP7ZQ/brMc62KBT/ftaRdKhsrYV2CBJ6I=;
+        b=lghv0FMp8vmAzUUYiIatX58lWipQb1KltN7ltiD6m4gWLuZJtfzbuM3FbhnQX/6OZr
+         KSdignRVLQHrfhsCD7+BejnkZNrTWCgJQHXoSDWYN2TTZNGZhXaQBNj1wep4YW9V7+b4
+         WwQE4N4hWlJ3q8qXyl7PUMvy/zM5QYZ4q4/7h2jR+93dDXiWbBoq+L2kl4k6kLFCHa2p
+         RJZgWURenzYf0K8R8JG5gMVoojCohm7ix7V1jB9v4QMnxfCXJ8FF8go/ZGU71+l0G7TG
+         d8JWx1Tiu0XIj59l1OKj7EEFN+PVw4OMSq4lHnq0hQkPBRygojOIIxPYGCY08Uz8Cv0L
+         o0Wg==
+X-Gm-Message-State: ANhLgQ2QAcBG2OBtBz2Yzq29Frt7FsMroE4AcDM4PxDOdN6fJzVXKFY7
+        ci3f1qt0k1nO1+WrVH6ITM28WMyF
+X-Google-Smtp-Source: ADFU+vvfdGuOcOZDqlxkYlx8/Q0fKj/VRiwsjZjCMUB42hN0CiaaBo2Z6GckMCWfHyiAd5588enSKg==
+X-Received: by 2002:ad4:46d4:: with SMTP id g20mr1634338qvw.179.1585115715753;
+        Tue, 24 Mar 2020 22:55:15 -0700 (PDT)
 Received: from archbookpro.lan ([199.249.110.29])
-        by smtp.gmail.com with ESMTPSA id k15sm17168712qta.74.2020.03.24.22.55.12
+        by smtp.gmail.com with ESMTPSA id k15sm17168712qta.74.2020.03.24.22.55.14
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Mar 2020 22:55:13 -0700 (PDT)
+        Tue, 24 Mar 2020 22:55:15 -0700 (PDT)
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
-Subject: [PATCH 1/8] t5512: don't use `test_must_fail test_cmp`
-Date:   Wed, 25 Mar 2020 01:54:48 -0400
-Message-Id: <3d7dc8428d1992d3bc2802f5c828e8d77fe4de3b.1585115341.git.liu.denton@gmail.com>
+Subject: [PATCH 3/8] t5512: stop losing return codes of git commands
+Date:   Wed, 25 Mar 2020 01:54:50 -0400
+Message-Id: <b3addeb98547783a31e2e2b876478a5dd96e04ec.1585115341.git.liu.denton@gmail.com>
 X-Mailer: git-send-email 2.25.0.114.g5b0ca878e0
 In-Reply-To: <cover.1585115341.git.liu.denton@gmail.com>
 References: <cover.1585115341.git.liu.denton@gmail.com>
@@ -71,29 +71,48 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The test_must_fail function should only be used for git commands since
-we should assume that external commands work sanely. Since test_cmp() just
-wraps an external command, replace `test_must_fail test_cmp` with
-`! test_cmp`.
+In a pipe, only the return code of the last command is used. Thus, all
+other commands will have their return codes masked. Rewrite pipes so
+that there are no git commands upstream so that their failure is
+reported.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t5512-ls-remote.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t5512-ls-remote.sh | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/t/t5512-ls-remote.sh b/t/t5512-ls-remote.sh
-index 04b35402c7..08b98f12b8 100755
+index 62d02152c7..fea64eb5c2 100755
 --- a/t/t5512-ls-remote.sh
 +++ b/t/t5512-ls-remote.sh
-@@ -92,7 +92,7 @@ test_expect_success 'use "origin" when no remote specified' '
+@@ -21,11 +21,11 @@ test_expect_success setup '
+ 	git tag mark1.1 &&
+ 	git tag mark1.2 &&
+ 	git tag mark1.10 &&
+-	git show-ref --tags -d | sed -e "s/ /	/" >expected.tag &&
+-	(
+-		echo "$(git rev-parse HEAD)	HEAD" &&
+-		git show-ref -d	| sed -e "s/ /	/"
+-	) >expected.all &&
++	git show-ref --tags -d >expected.tag.raw &&
++	sed -e "s/ /	/" expected.tag.raw >expected.tag &&
++	generate_references HEAD >expected.all &&
++	git show-ref -d	>refs &&
++	sed -e "s/ /	/" refs >>expected.all &&
  
- test_expect_success 'suppress "From <url>" with -q' '
- 	git ls-remote -q 2>actual_err &&
--	test_must_fail test_cmp exp_err actual_err
-+	! test_cmp exp_err actual_err
+ 	git remote add self "$(pwd)/.git"
  '
+@@ -173,8 +173,8 @@ do
+ 		test_config $configsection.hiderefs refs/tags &&
+ 		git ls-remote . >actual &&
+ 		test_unconfig $configsection.hiderefs &&
+-		git ls-remote . |
+-		sed -e "/	refs\/tags\//d" >expect &&
++		git ls-remote . >expect.raw &&
++		sed -e "/	refs\/tags\//d" expect.raw >expect &&
+ 		test_cmp expect actual
+ 	'
  
- test_expect_success 'use branch.<name>.remote if possible' '
 -- 
 2.25.0.114.g5b0ca878e0
 
