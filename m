@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DFE08C54FCF
-	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 15:07:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 37B37C54FCF
+	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 15:07:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B745120789
-	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 15:07:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 09306207FC
+	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 15:07:08 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gnyYFsVH"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aWwOUBbv"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727911AbgCYPHD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 Mar 2020 11:07:03 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:39166 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727721AbgCYPHC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Mar 2020 11:07:02 -0400
-Received: by mail-pf1-f196.google.com with SMTP id d25so1160339pfn.6
-        for <git@vger.kernel.org>; Wed, 25 Mar 2020 08:07:02 -0700 (PDT)
+        id S1727919AbgCYPHH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 Mar 2020 11:07:07 -0400
+Received: from mail-pj1-f68.google.com ([209.85.216.68]:36884 "EHLO
+        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727720AbgCYPHG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Mar 2020 11:07:06 -0400
+Received: by mail-pj1-f68.google.com with SMTP id o12so1119089pjs.2
+        for <git@vger.kernel.org>; Wed, 25 Mar 2020 08:07:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=igWZKJLHsdQCZWYAe97MD1rG+bYewy+UxY4h6xDz/cs=;
-        b=gnyYFsVHnGd8IfwuE0T5jipMk6SfsB5km/d9b2bV/6VNIaO9GKf2R9CHFv76PQTkEj
-         0ZxwR2uzqvW/k5nYVRpp+W3CW47oKI3N1JSsi1tehZEFu15XPWwHnvZnbNSkE+r62ejg
-         gafsPtSoeI0skBm3wEXUzhtVxybcZEXBN0aqTnkTS8gVuFaQZ7nTdqvttdkvV8M0/3tx
-         eQeMr25/lwdWqCC/nNh7/5TY0jWTXCDPvvdAiP9t3IyQkEqW0aO65Arwdrx1NNGek8vO
-         xwb+Yh/gC7ciZY45qIwAMqT4M7hWk6+FOUzi/zmnVH9YAqf1sU7iXBX0WvQjkZTOPYks
-         zUJA==
+        bh=t63/UhT/gtLGb/Ao3dygwoRGY5JKv05iSZs41QQOZMA=;
+        b=aWwOUBbv71QrDdSlCwEIp7u+003QdjaRqsJxxlgxmYtUKmBagGo4uRHh8OLWKFFaM/
+         3/76xzL458si/9qBQav01Ti2RFbuHPzJXVLwSAkD4rmwtrOdlqQiGQfM2dHle80GpsqF
+         1qbNbZgN3C+UzhqZ8lpQPRLGGtEY9qS8HG686EpsZlX3iCBQ4FetRWtjILXV3/N2NHsC
+         C1J+ug9lNzy08fMgi+QFDlemNWwPxVJoCTsAQacnBjGnct2OGvGc2M3BhgFqOVXp1Mk5
+         ApYHBbyJxbKIxUFaRrB05pqieXDSxm0SUQJNzxH8f1uBmmn885OIb9Fb9Svcir2TX+ML
+         P4Pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=igWZKJLHsdQCZWYAe97MD1rG+bYewy+UxY4h6xDz/cs=;
-        b=Koa/4pkOL0dD2sHLgSJGbwbOCpnRa3yGFIpgnAeFXSQZFz6yOxl2vS/GXPoITxMfOH
-         MD0o3waOviA9Ler2fXpSvw80ucrfw1sG7kzWsQea4m6M5YNxgt1b5Qfuf4KUov5nJgvu
-         Lw5QDmdkaJzJUyEnVdHYwHGTedyF8lvuCNQj8XLzwBqPuAIGcsUeoENPqmGdfmxgz4jI
-         /Sm3QF980avjvhMuO1Z81K0EtWbmIu1xDoNvyzfadnv30qAAbm9vALoA6x9EIxaQ6p0g
-         py4fwRJyBbZ5NUEZRPs01n4ECudgb94CPyJqq1FGImpTAzwW4X3B9UMFhtCCxns9ne3Z
-         rUYQ==
-X-Gm-Message-State: ANhLgQ2LH9bKkD7nbediTdusrlMtptbYgjkJncf0iiuU265+/DhOlVtg
-        ugUDhXJyu53VTgY8YVYe1bMFt4Gk
-X-Google-Smtp-Source: ADFU+vvEiSFijC1kMVwswQCjjpwJGI+89z1UEUoT/CbMfHy3NUA0RsiDs1srpFQy+j02SUH5OyoDtA==
-X-Received: by 2002:a62:7b84:: with SMTP id w126mr3963873pfc.202.1585148821656;
-        Wed, 25 Mar 2020 08:07:01 -0700 (PDT)
+        bh=t63/UhT/gtLGb/Ao3dygwoRGY5JKv05iSZs41QQOZMA=;
+        b=YSpsoHtRCEWX8y6oKz10gF9CCBc5dgVZf7VfBdA0GRuzt3RKpIV0uBwRcIX6k8h3gQ
+         WbccIA/nrE8Z5VqrHtzQkQLZ+e1GRNPfbhOTUOosZrBqOb46QeDJhLTL5F9hUuJuLCS4
+         JQblDUlmw0RpVcUsSFrkLKi3PmBSrhP0krmXHbkrDrCTT2prYAihB3WuVNV+sc8PdNUv
+         TGWfV5ZEAe5AlnK+y4pKmxO+Hbjf0Qf/kRe4ZWBHc0K436++Nc67wn8ewozorByUGBg/
+         KejD0q8xrBA1yDQx9p6AJbj3g09Bs5N35b/Ir1Uvr28drNq5rKyugSI2SaVeM+F7rl6k
+         sZLA==
+X-Gm-Message-State: ANhLgQ3LGfW9d3BADbc4qMYSTV0pIOvQj8RoHFJOuwpm8jU3QbwpNH+i
+        MAvKvIkstHzkY6fUM5TiJ3fDYS5f
+X-Google-Smtp-Source: ADFU+vs6OXFRVrPkQOkW0cEx+dciULS90sqs3b5vvlQvOeYgJXqBNdMRIAeIrD2aw/2O+e+5sLpmRQ==
+X-Received: by 2002:a17:902:8542:: with SMTP id d2mr3727126plo.200.1585148825190;
+        Wed, 25 Mar 2020 08:07:05 -0700 (PDT)
 Received: from localhost.localdomain ([2402:800:6374:c347:544a:f0cc:8a21:fee3])
-        by smtp.gmail.com with ESMTPSA id f127sm18232538pfa.112.2020.03.25.08.07.00
+        by smtp.gmail.com with ESMTPSA id f127sm18232538pfa.112.2020.03.25.08.07.03
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 25 Mar 2020 08:07:00 -0700 (PDT)
+        Wed, 25 Mar 2020 08:07:04 -0700 (PDT)
 From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>
-Subject: [PATCH v3 5/8] t5616: use rev-parse instead to get HEAD's object_id
-Date:   Wed, 25 Mar 2020 22:06:18 +0700
-Message-Id: <1b8740018c411dec2813d03c34c56dfa5d1d8845.1585148327.git.congdanhqx@gmail.com>
+Subject: [PATCH v3 7/8] t4124: fix test for non-compliant diff(1)
+Date:   Wed, 25 Mar 2020 22:06:20 +0700
+Message-Id: <0502171f0fc25a44e865b5a435906ef1096546c5.1585148327.git.congdanhqx@gmail.com>
 X-Mailer: git-send-email 2.26.0.rc2.357.g1e1ba0441d
 In-Reply-To: <cover.1585148327.git.congdanhqx@gmail.com>
 References: <cover.1585148327.git.congdanhqx@gmail.com>
@@ -74,33 +74,36 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Only HEAD's object_id is necessary, rev-list is an overkill.
+POSIX's diff(1) requires output in normal diff format.
+However, busybox's diff's output is written in unified format.
 
-Despite POSIX requires grep(1) treat single pattern with <newline>
-as multiple patterns.
-busybox's grep(1) (as of v1.31.1) haven't implemented it yet.
+HP-UX's diff(1) doesn't understand "-u" as of now.
 
-Use rev-parse to simplify the test and avoid busybox unimplemented
-features.
+Workaround this problem by checking "diff -u" output,
+if we couldn't make anything from normal-diff format.
 
 Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
 ---
- t/t5616-partial-clone.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t4124-apply-ws-rule.sh | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
-index 77bb91e976..09e640cae4 100755
---- a/t/t5616-partial-clone.sh
-+++ b/t/t5616-partial-clone.sh
-@@ -49,7 +49,7 @@ test_expect_success 'do partial clone 1' '
- test_expect_success 'verify that .promisor file contains refs fetched' '
- 	ls pc1/.git/objects/pack/pack-*.promisor >promisorlist &&
- 	test_line_count = 1 promisorlist &&
--	git -C srv.bare rev-list HEAD >headhash &&
-+	git -C srv.bare rev-parse --verify HEAD >headhash &&
- 	grep "$(cat headhash) HEAD" $(cat promisorlist) &&
- 	grep "$(cat headhash) refs/heads/master" $(cat promisorlist)
- '
+diff --git a/t/t4124-apply-ws-rule.sh b/t/t4124-apply-ws-rule.sh
+index 971a5a7512..691f82da9f 100755
+--- a/t/t4124-apply-ws-rule.sh
++++ b/t/t4124-apply-ws-rule.sh
+@@ -52,6 +52,12 @@ test_fix () {
+ 
+ 	# find touched lines
+ 	$DIFF file target | sed -n -e "s/^> //p" >fixed
++	# busybox's diff(1) doesn't output normal format
++	if ! test -s fixed; then
++		$DIFF -u file target |
++		grep -v '^+++ target' |
++		sed -e "/^+/s/+//" >fixed
++	fi
+ 
+ 	# the changed lines are all expected to change
+ 	fixed_cnt=$(wc -l <fixed)
 -- 
 2.26.0.rc2.357.g1e1ba0441d
 
