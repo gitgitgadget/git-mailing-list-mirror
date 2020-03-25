@@ -2,185 +2,162 @@ Return-Path: <SRS0=ys1m=5K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F3F0C1975A
-	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 15:05:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 933A6C54FCF
+	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 15:06:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 12FE021D82
-	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 15:05:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 61E3520789
+	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 15:06:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="guihFn4X"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="vF3Sr73w"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727803AbgCYPFU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 Mar 2020 11:05:20 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:60224 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726969AbgCYPFT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Mar 2020 11:05:19 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id E3318B34B8;
-        Wed, 25 Mar 2020 11:05:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=XAzv7X9j1fwd7XU/fMSP+WeXfY8=; b=guihFn
-        4XBeAIY/UAVDNYKldYQri7hRSgobML9MawJ530TQHBa87h4mN6WfmoL8iC2XMj/0
-        GnjNHyzAYHiGt8MPKQ9Kz6Dcyd+vuo0caizsvqHTJUPcgkr2GWlCjUhSLaYl7Dth
-        wivcGbTSXGMeovboOYQbbkHAV8VAUcfL0b79w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ChadAqJM4txgvsnz+mIop1qPbUNgHg/D
-        mizZmRNfPTrHqi42LZrsBY8AmAQZYLxpOwhY6LH5s0c1937GFrH1lQYQp4hMLFwX
-        N7A4tRj4A46592FxZglX4roa8cCWz2i1bK4/2j3qpHmFRCD47S147yekddPGaLum
-        cWDm4SlKwpg=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id DAF3CB34B7;
-        Wed, 25 Mar 2020 11:05:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 0C42FB34B2;
-        Wed, 25 Mar 2020 11:05:12 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jiang Xin <worldhello.net@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: Re: [PATCH 1/3] t5543: never report what we do not push
-References: <20200322131815.11872-3-worldhello.net@gmail.com>
-        <20200325143608.45141-2-zhiyou.jx@alibaba-inc.com>
-Date:   Wed, 25 Mar 2020 08:05:11 -0700
-In-Reply-To: <20200325143608.45141-2-zhiyou.jx@alibaba-inc.com> (Jiang Xin's
-        message of "Wed, 25 Mar 2020 22:36:06 +0800")
-Message-ID: <xmqqa744xyoo.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1727900AbgCYPGz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 Mar 2020 11:06:55 -0400
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:42722 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727501AbgCYPGz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Mar 2020 11:06:55 -0400
+Received: by mail-pl1-f195.google.com with SMTP id e1so891864plt.9
+        for <git@vger.kernel.org>; Wed, 25 Mar 2020 08:06:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=oEvX9Lbtvr1lUIslPmYIFe2mDLguYVsZ3JOkfSatbLA=;
+        b=vF3Sr73w45c3j7PQDt9rQLpM6UNUX0+1yeTYRkBKWuZrWKF/hERXY8eLTRjnFeDN2v
+         MXpargKibdGtQtqL3MosjNmVU1+kGAjbw7sz5V4OQpjvIGRBgH1r6urQ2ecsKy7Y7DFc
+         2cM7NntpwUOciyAU7VDeSLG+Z9NVBu0VtXTMdMtrLtB3ffsJPqQnuQxIPCtPqLQn9qRV
+         A8AGcQGoJLN+KShwNrj2ZTFE2N2NEcGBrQ3abEuhjCepB/qOcCNkZ10Nm25hVSR5ddmQ
+         AsWruK1RzkxWDGmiLo5WkbnIFeJBDhhjCokWRDmCb6PPPwf/5c64D6R5M4DktX8CYROs
+         my+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=oEvX9Lbtvr1lUIslPmYIFe2mDLguYVsZ3JOkfSatbLA=;
+        b=jCwcL/zHZCwH99NnBs4ep+5+/TZPt3E648I2baU0NBuDPkpf5SGSHcQJrkrXj0wxi7
+         57lZ55cWTpnapcZd4ojdZcIJKVSG9DmpRGVw0aZ5l0vBSY0UkimK6elb+/uKUfmNZSsy
+         ly29mHEbkknVLyOXAvYe7+MQ1ibUtSEgWN+Wl8AgUcTHlu/k/QZ+0BW4uLfWle3zTlvQ
+         NN05TXskbiQu0umXKiVFzHUsHAQNQFSHxqx1L4Jo9g9LsDhkBif7xN9YZdaUcytCYgMT
+         yiijGA8pWl+XHau0zOdBG03e9M0TAiUueJUp/nQJpw1vvQV8KmVK4OV5AjwTu6868yxO
+         A0Mw==
+X-Gm-Message-State: ANhLgQ0IAO9GxviN68vpS4vF2gNXBaYmnehH0hofZfDVMoz5XTA6RKzm
+        6LDiU8HQ4gVE/ilR/RkdGwVHv4Lptdw=
+X-Google-Smtp-Source: ADFU+vvpKGYBBXyrmle0ZJi1kDi2yw5Cdi/jqAjfkXRa/HRisCLTXEOPw07JvzL5IIN4fWHP9jBj7g==
+X-Received: by 2002:a17:902:8d92:: with SMTP id v18mr3730173plo.18.1585148813419;
+        Wed, 25 Mar 2020 08:06:53 -0700 (PDT)
+Received: from localhost.localdomain ([2402:800:6374:c347:544a:f0cc:8a21:fee3])
+        by smtp.gmail.com with ESMTPSA id f127sm18232538pfa.112.2020.03.25.08.06.50
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 25 Mar 2020 08:06:52 -0700 (PDT)
+From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v3 0/8] fix test failure with busybox
+Date:   Wed, 25 Mar 2020 22:06:13 +0700
+Message-Id: <cover.1585148327.git.congdanhqx@gmail.com>
+X-Mailer: git-send-email 2.26.0.rc2.357.g1e1ba0441d
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 0716C9D2-6EAA-11EA-A433-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jiang Xin <worldhello.net@gmail.com> writes:
+Despite non-compiance from busybox's sh(1), grep(1), diff(1), find(1)
+Alpine Linux is still a popular choice for container these days.
 
-> +format_git_output () {
+Fix false-positive failure in testsuite when run in Alpine Linux.
 
-Unless this helper is able to take any git output and massage,
-please describe what kind of git output it is meant to handle.
+Đoàn Trần Công Danh (8):
+  t4061: use POSIX compliant regex(7)
+  test-lib-functions: test_cmp: eval $GIT_TEST_CMP
+  t5003: drop the subshell in test_lazy_prereq
+  t5003: skip conversion test if unzip -a is unavailable
+  t5616: use rev-parse instead to get HEAD's object_id
+  t7063: drop non-POSIX argument "-ls" from find(1)
+  t4124: fix test for non-compliant diff(1)
+  t5703: feed raw data into test-tool unpack-sideband
 
-Also, "format" does not tell anything to the readers why it wants to
-transform its input or what its output is supposed to look like.  It
-does not help readers and future developers.
+ t/helper/test-pkt-line.c           |  2 +-
+ t/t4061-diff-indent.sh             |  2 +-
+ t/t4124-apply-ws-rule.sh           |  6 ++++++
+ t/t5003-archive-zip.sh             | 24 ++++++++++++------------
+ t/t5616-partial-clone.sh           |  2 +-
+ t/t5703-upload-pack-ref-in-want.sh |  5 +----
+ t/t7063-status-untracked-cache.sh  |  2 +-
+ t/test-lib-functions.sh            |  2 +-
+ 8 files changed, 24 insertions(+), 21 deletions(-)
 
-> +	awk '/^(To| !) / {print}' | \
-> +	sed \
-> +		-e "s/  *\$//g" \
-
-What's the point of /g?  You are anchoring the pattern (i.e. one or
-more SP) to the right end of the line, so it's not like it would
-transform "a  b c   " into "abc".  Also it would be sufficient to
-say "zero or more" and that would be shorter, I think.
-
-> +		-e "s/'/\"/g"
-
-It is unclear what this thing is for.  If the output from a git
-subcommand you are munging with the helper says <don't>, this will
-turn it into <don"t>, presumably before comparing it with the
-expected output you'd literally prepare in the test script.  Are the
-git subcommands whose output you are munging unstable and sometimes
-use single and sometimes use double quotes?  
-
-If not, if you used single quotes when preparing the expected
-output, wouldn't you be able to do without this?
-
-Is it because you'd have the code that prepares the expected output
-inside a sq pair (because it is in test_expect_thing), and it is
-cumbersome to write a literal single quote?  If that is the reason,
-that is understandable, but I think readers deserve some comments
-explaining why these transformations are done.  Please do not waste
-readers' time.
-
-It looks wasteful to pipe awk output to sed.  I wonder if something
-along the lines of
-
-	sed -ne "/^\(To\| !\) /{
-		s/ *\$//
-		s/'/\"/g
-		p
-	}"
-
-would do the same thing with a single tool.
-
-> +# References in upstream : master(1) one(1) foo(1)
-> +# References in workbench: master(2)        foo(1) two(2) bar(2)
-> +# Atomic push            : master(2)               two(2) bar(2)
-> +test_expect_failure 'atomic push reports (reject by update hook)' '
-> +	mk_repo_pair &&
-> +	(
-> +		cd workbench &&
-> +		# Keep constant output.
-> +		git config core.abbrev 7 &&
-
-This '7' is "use at least seven hexdigits", so it does not give any
-guarantee that your output will be stable.  Depending on chance,
-some objects may be shown using 8 or more---is our "munge output
-before comparison" helper prepared for such a case?
-
-> +		test_commit one &&
-> +		git branch foo &&
-> +		git push up master one foo &&
-> +		git tag -d one
-> +	) &&
-> +	(
-> +		mkdir -p upstream/.git/hooks &&
-> +		cat >upstream/.git/hooks/update <<-EOF &&
-> +		#!/bin/sh
-> +
-> +		if test "\$1" = "refs/heads/bar"
-> +		then
-> +			echo >2 "Pusing to branch bar is prohibited"
-
-Meant to redirect to the standard error stream, not a file "2"?
-
-> +			exit 1
-> +		fi
-> +		EOF
-> +		chmod a+x upstream/.git/hooks/update
-> +	) &&
-> +	(
-> +		cd workbench &&
-> +		test_commit two &&
-> +		git branch bar
-> +	) &&
-
-At this point, we have the refs described in the comment at the
-beginning (which is greatly appreciated---it hels understanding what
-is going on).
-
-> +	test_must_fail git -C workbench \
-> +		push --atomic up master two bar >out 2>&1 &&
-
-As "git push" does not auto-follow tags, what we push will be
-exactly these three refs.
-
-> +	format_git_output <out >actual &&
-> +	cat >expect <<-EOF &&
-> +	To ../upstream
-> +	 ! [remote rejected] master -> master (atomic push failure)
-> +	 ! [remote rejected] two -> two (atomic push failure)
-> +	 ! [remote rejected] bar -> bar (hook declined)
-> +	EOF
-
-And we expect them to be rejected, as 'bar' needs to stay constant
-there.  
-
-> +	test_cmp expect actual
-
-All makes sense.
+Range-diff against v2:
+1:  34f96548de = 1:  088905ab6f t4061: use POSIX compliant regex(7)
+2:  50f46986a6 = 2:  691d9d47ba test-lib-functions: test_cmp: eval $GIT_TEST_CMP
+3:  8719a07753 = 3:  759a589b83 t5003: drop the subshell in test_lazy_prereq
+4:  457eecaf9b = 4:  e5b09c290c t5003: skip conversion test if unzip -a is unavailable
+5:  d3bc855e17 = 5:  1b8740018c t5616: use rev-parse instead to get HEAD's object_id
+6:  64472ec3bc ! 6:  abb21b9e51 t7063: drop non-POSIX argument "-ls" from find(1)
+    @@ Commit message
+         However, `-ls` flag isn't required by POSIX's find(1), and
+         busybox(1) doesn't implement it.
+     
+    -    From the original conversation, it seems like find(1) with "-type d"
+    -    could trigger enough "lstat(2)" to ask FreeBSD update mtime.
+    -
+    -    Use only filter "-type d" for now.
+    +    Use "-exec ls -ld {} +" instead.
+     
+         Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
+     
+    @@ t/t7063-status-untracked-cache.sh: GIT_FORCE_UNTRACKED_CACHE=true
+      
+      sync_mtime () {
+     -	find . -type d -ls >/dev/null
+    -+	find . -type d >/dev/null
+    ++	find . -type d -exec ls -ld {} + >/dev/null
+      }
+      
+      avoid_racy() {
+7:  51df6dd12d ! 7:  0502171f0f t4124: fix test for non-compliant diff(1)
+    @@ Commit message
+         POSIX's diff(1) requires output in normal diff format.
+         However, busybox's diff's output is written in unified format.
+     
+    -    POSIX requires no option for normal-diff format.
+    +    HP-UX's diff(1) doesn't understand "-u" as of now.
+     
+    -    A hint in test-lib-functions::test_cmp said `diff -u` isn't available
+    -    everywhere.
+    -
+    -    Workaround this problem by assuming `diff(1)` output is unified
+    +    Workaround this problem by checking "diff -u" output,
+         if we couldn't make anything from normal-diff format.
+     
+         Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
+    @@ t/t4124-apply-ws-rule.sh: test_fix () {
+      
+      	# find touched lines
+      	$DIFF file target | sed -n -e "s/^> //p" >fixed
+    -+	# busybox's diff(1) output unified format
+    ++	# busybox's diff(1) doesn't output normal format
+     +	if ! test -s fixed; then
+    -+		$DIFF file target |
+    ++		$DIFF -u file target |
+     +		grep -v '^+++ target' |
+     +		sed -e "/^+/s/+//" >fixed
+     +	fi
+8:  843c7f66d9 = 8:  8689e03400 t5703: feed raw data into test-tool unpack-sideband
+-- 
+2.26.0.rc2.357.g1e1ba0441d
 
