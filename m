@@ -2,518 +2,232 @@ Return-Path: <SRS0=ys1m=5K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4287BC43331
-	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 09:54:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 52202C43331
+	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 11:03:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id E621F2078D
-	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 09:54:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1FE0620775
+	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 11:03:54 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gSGDDi9b";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FDOlhJif"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="LCqTRwzz"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727590AbgCYJyb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 Mar 2020 05:54:31 -0400
-Received: from out5-smtp.messagingengine.com ([66.111.4.29]:51105 "EHLO
-        out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726225AbgCYJya (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 25 Mar 2020 05:54:30 -0400
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.nyi.internal (Postfix) with ESMTP id A6DDB5C020A;
-        Wed, 25 Mar 2020 05:54:29 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Wed, 25 Mar 2020 05:54:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
-        :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm3; bh=Rn9ffNuhkdXVqVddTmAOF5KVbMn
-        sVFuOQBeok/ITJdk=; b=gSGDDi9bxQxhXbj1KHmXmwT9OkDt7YBf6D2IGUr0GWJ
-        j5cBljqtmYjkx0JHkGJpTcI375DNARbo6xP1F12/cV8P7q9Y0YE1X9ZpDHqHa6b0
-        rp4jPpk1B3rZdAIg3+pcoI0lClUdEWnHT1GclK2DG/2neif+R2KQsI44udyskDNr
-        o+PaflEfALpccw7eJXIe7GdWfMaBw6f/wdDsCRY1JOXjt4TKtPRQK6tnmoCKXPot
-        1gEXWzZjFOt2f4VJYiz2+9ScReb9IcGmnGZv19U0b/xRCNB2K3O101l8UcnnwhdI
-        7emnIdduWo26dAcukLyiD1MDnvdJBAnjGz2RHkQ+90w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=Rn9ffN
-        uhkdXVqVddTmAOF5KVbMnsVFuOQBeok/ITJdk=; b=FDOlhJifrE5f/1QE4/alyB
-        h4iImNJNRdLoukrUlpEU3GelsYbFgfSTmw+UTQx1m/aYVewM3UsuJCT587CjDsPt
-        dVllzx5r2Osedi1dLFE2fPGShNyEfQFoV4OAxwGd2AqsBkBTxCF2O9b9hwmI4Lih
-        SHxYbZJsfQ3VgdW0HD/Y/vagAGXFofPzSvAgj9fumT3f52uenonr1QLfszk5IQ9b
-        tnCAgbL0wiM+DddMvuoXiGRF/PS8pEqf37+rTX8TfcGlIdMDhF/qzw5vtwmDYmbZ
-        3ljGBJEqNOP/jjotMReDAfvAwCJgmpHogMeDUFrFEdDpDgf6nz8TY2VkOKzDhZyQ
-        ==
-X-ME-Sender: <xms:VSp7XrxNNHD3lbyGpjK29ghfOL4NG3uthP1reNa8NoIjIRAt254HkA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedugedrudehfedgtdekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucfkphepjeejrddufe
-    drudekhedrjedvnecuvehluhhsthgvrhfuihiivgepkeenucfrrghrrghmpehmrghilhhf
-    rhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:VSp7XlJpWtiXYhlnqe-GAhRr5TgEaBOtWWbS58PbMWGG42RDdAoftg>
-    <xmx:VSp7Xp_Adpdv0hNmB39vW-2foR3BI91XVRaHwu51QodQ6lj-NnpQJQ>
-    <xmx:VSp7XkAmnDaMOB3Q2T0tB9qOlFsxZLr3t8nst7i2iisnQyZvZZDoCQ>
-    <xmx:VSp7XlSbaQ91WNjZVnQImVJm2odXQM_KnxAjXyzLV2n8n0uPGOsztQ>
-Received: from vm-mail.pks.im (x4d0db948.dyn.telefonica.de [77.13.185.72])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 257DF3280063;
-        Wed, 25 Mar 2020 05:54:29 -0400 (EDT)
-Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 7293b864 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Wed, 25 Mar 2020 09:54:27 +0000 (UTC)
-Date:   Wed, 25 Mar 2020 10:54:29 +0100
-From:   Patrick Steinhardt <ps@pks.im>
-To:     git <git@vger.kernel.org>
-Cc:     Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH 9/9] update-ref: implement interactive transaction handling
-Message-ID: <88c0089bb50bca13efc79a1f8fd42b80286af949.1585129843.git.ps@pks.im>
-References: <cover.1585129842.git.ps@pks.im>
+        id S1726264AbgCYLDv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 Mar 2020 07:03:51 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:33272 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726043AbgCYLDv (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 25 Mar 2020 07:03:51 -0400
+Received: from camp.crustytoothpaste.net (castro.crustytoothpaste.net [75.10.60.170])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 8CFAD60478;
+        Wed, 25 Mar 2020 11:03:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1585134230;
+        bh=Dx08KIO07kNM0MDk+uhD+WwNfoPt2Ujm3Vz+ncYHiy4=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=LCqTRwzzShdGodZyrRFVurXnwBxWEaMxWil6hE8wKUSAwstnaIg4RKf4B6z49tPOc
+         +W0JtpUO3hRHQlFVZaJApuxhV02O6MxseMZKYTDSLzjVGlm0kkKHhOpwAbIZLo5yt0
+         Q6a++jgceclStJr/D6P60UmI0L81pOAKspnhEQOZk+dhU37G89EF9vuw/XmqyJBg7M
+         8+el8C+ynYyLF2G2IbqnDCveUkrslSAgbxKaECSS5ZAfGIC3rQ/e2VE8TOfJ5QEbTb
+         7IiQr2LFH0ZeYtT5dEvyzf9iLZGkfaHxvPcX68FvWA/vgCltQgjzB/nE3iUICjOaKV
+         AGAkJHH280oOWFrq+4EoFAm7nFtGIlhhvQSq5Dfq74dijFRGdR0DPStrkniXmzB5D/
+         moGeK5vnUo76ozHqQ70JIPirrQ1pHHU3F6WlBEwUuQvXj/pbtccptLlh8c/uMCG+k6
+         hGMbCense0Z38VIfzl4y3bEWFwiljPs5wb2b1toqqvppo9Cu+Rq
+Date:   Wed, 25 Mar 2020 11:03:28 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Shourya Shukla <shouryashukla.oo@gmail.com>
+Subject: Re: [PATCH v2] docs: add a FAQ
+Message-ID: <20200325110328.GK6499@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Shourya Shukla <shouryashukla.oo@gmail.com>
+References: <20200325013434.219775-1-sandals@crustytoothpaste.net>
+ <20200325013434.219775-2-sandals@crustytoothpaste.net>
+ <CAN0heSofpxFW81=sB+4ukx9S0JOJo_XuKDTBSkTy_-QK+jDz0Q@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="2oS5YaxWCcQjTEyO"
+        protocol="application/pgp-signature"; boundary="DozTQjXnjm3C9Xhk"
 Content-Disposition: inline
-In-Reply-To: <cover.1585129842.git.ps@pks.im>
+In-Reply-To: <CAN0heSofpxFW81=sB+4ukx9S0JOJo_XuKDTBSkTy_-QK+jDz0Q@mail.gmail.com>
+X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
+ 5.4.0-4-amd64)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---2oS5YaxWCcQjTEyO
-Content-Type: text/plain; charset=us-ascii
+--DozTQjXnjm3C9Xhk
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The git-update-ref(1) command can only handle queueing transactions
-right now via its "--stdin" parameter, but there is no way for users to
-handle the transaction itself in a more explicit way. E.g. in a
-replicated scenario, one may imagine a coordinator that spawns
-git-update-ref(1) for multiple repositories and only if all agree that
-an update is possible will the coordinator send a commit. Such a
-transactional session could look like
+On 2020-03-25 at 06:23:49, Martin =C3=85gren wrote:
+> On Wed, 25 Mar 2020 at 02:37, brian m. carlson
+> <sandals@crustytoothpaste.net> wrote:
+> > Note that the long lines for certain questions are required, since
+> > Asciidoctor does not permit broken lines there.
+> > ---
+>=20
+> Missing sign-off.
 
-    > start
-    < start: ok
-    > update refs/heads/master $OLD $NEW
-    > prepare
-    < prepare: ok
-    # All nodes have returned "ok"
-    > commit
-    < commit: ok
+Thanks, will fix.
 
-or
+> > +You can also just enter your password when prompted, or you can place =
+the
+> > +password (which must be percent-encoded) in the URL.  The latter optio=
+n is not
+> > +particularly secure and can lead to accidental exposure of credentials=
+, so it is
+> > +not recommended.
+>=20
+> So should we even mention it? Or should we use the "it is sometimes
+> (erroneously) suggested" construct?
 
-    > start
-    < start: ok
-    > create refs/heads/master $OLD $NEW
-    > prepare
-    < fatal: cannot lock ref 'refs/heads/master': reference already exists
-    # On all other nodes:
-    > abort
-    < abort: ok
+I'll rephrase this to make it a little more obvious that this is a bad
+idea.
 
-In order to allow for such transactional sessions, this commit
-introduces four new commands for git-update-ref(1), which matches those
-we have internally already with the exception of "start":
+> > +Most hosting providers use a single SSH account for pushing; that is, =
+all users
+> > +push to the `git` account (e.g., `git@git.example.org`).  If that's th=
+e case for
+> > +your provider, you can set up multiple aliases in SSH to make it clear=
+ which key
+> > +pair to use.  For example, you could write something like the followin=
+g,
+> > +substituting the proper private key file:
+>=20
+> Would this be in `~/.ssh/config`?
 
-    - start: start a new transaction
+Ah, yes, we should tell that to the user.
 
-    - prepare: prepare the transaction, that is try to lock all
-               references and verify their current value matches the
-               expected one
+> > ++
+> > +----
+> > +# This is the account for author on git.example.org.
+> > +Host example_author
+> > +       HostName git.example.org
+> > +       User git
+> > +       # This is the key pair registered for author with git.example.o=
+rg.
+> > +       IdentityFile ~/.ssh/id_author
+> > +       IdentitiesOnly yes
+> > +# This is the committer for author on git.example.org.
+>=20
+> Looks like you did s/account/committer/ instead of s/author/committer/?
 
-    - commit: explicitly commit a session, that is update references to
-              match their new expected state
+So I did.
 
-    - abort: abort a session and roll back all changes
+> > +
+> > +[[last-commit-amend]]
+> > +I've made a mistake in the last commit.  How do I change it?::
+> > +       You can make the appropriate change to your working tree, run `=
+git add
+> > +       <file>` or `git rm <file>`, as approrpiate, to stage it, and th=
+en `git
+>=20
+> typoed "appropriate"
 
-By design, git-update-ref(1) will commit as soon as standard input is
-being closed. While fine in a non-transactional world, it is definitely
-unexpected in a transactional world. Because of this, as soon as any of
-the new transactional commands is used, the default will change to
-aborting without an explicit "commit". To avoid a race between queueing
-updates and the first "prepare" that starts a transaction, the "start"
-command has been added to start an explicit transaction.
+Will fix.
 
-Add some tests to exercise this new functionality.
+> > +[[restrict-with-hooks]]
+> > +How do I prevent users from making certain changes with hooks?::
+>=20
+> I read this as:
+>=20
+>   How do I prevent users from making "certain changes with hooks"?
+>=20
+> As opposed to your intended meaning:
+>=20
+>   How do I (with hooks) prevent users from making certain changes?
+>=20
+> I'm not suggesting the latter as a "fix" for this "problem" though,
+> since it's a bit clumsy. How about adding a comma:
+>=20
+>   How do I prevent users from making certain changes, with hooks?
+>=20
+> Or maybe just dropping those last two words.
+>=20
+> Please trust your judgement on whether this is a problem, and if so, how
+> to go about addressing it -- I know you have lots of such judgement.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- Documentation/git-update-ref.txt |  26 ++++++
- builtin/update-ref.c             | 108 ++++++++++++++++++++++---
- t/t1400-update-ref.sh            | 131 +++++++++++++++++++++++++++++++
- 3 files changed, 256 insertions(+), 9 deletions(-)
+How about, "How do I use hooks to prevent users from making certain
+changes?"  That seems to both read smoothly and avoid the misplaced
+modifier.
 
-diff --git a/Documentation/git-update-ref.txt b/Documentation/git-update-re=
-f.txt
-index 9bd039ce08..3e737c2360 100644
---- a/Documentation/git-update-ref.txt
-+++ b/Documentation/git-update-ref.txt
-@@ -66,6 +66,10 @@ performs all modifications together.  Specify commands o=
-f the form:
- 	delete SP <ref> [SP <oldvalue>] LF
- 	verify SP <ref> [SP <oldvalue>] LF
- 	option SP <opt> LF
-+	start LF
-+	prepare LF
-+	commit LF
-+	abort LF
-=20
- With `--create-reflog`, update-ref will create a reflog for each ref
- even if one would not ordinarily be created.
-@@ -83,6 +87,10 @@ quoting:
- 	delete SP <ref> NUL [<oldvalue>] NUL
- 	verify SP <ref> NUL [<oldvalue>] NUL
- 	option SP <opt> NUL
-+	start NUL
-+	prepare NUL
-+	commit NUL
-+	abort NUL
-=20
- In this format, use 40 "0" to specify a zero value, and use the empty
- string to specify a missing value.
-@@ -114,6 +122,24 @@ option::
- 	The only valid option is `no-deref` to avoid dereferencing
- 	a symbolic ref.
-=20
-+start::
-+	Start a transaction. In contrast to a non-transactional session, a
-+	transaction will automatically abort if the session ends without an
-+	explicit commit.
-+
-+prepare::
-+	Prepare to commit the transaction. This will create lock files for all
-+	queued reference updates. If one reference could not be locked, the
-+	transaction will be aborted.
-+
-+commit::
-+	Commit all reference updates queued for the transaction, ending the
-+	transaction.
-+
-+abort::
-+	Abort the transaction, releasing all locks if the transaction is in
-+	prepared state.
-+
- If all <ref>s can be locked with matching <oldvalue>s
- simultaneously, all modifications are performed.  Otherwise, no
- modifications are performed.  Note that while each individual
-diff --git a/builtin/update-ref.c b/builtin/update-ref.c
-index f35e3ca5ae..6b870507e0 100644
---- a/builtin/update-ref.c
-+++ b/builtin/update-ref.c
-@@ -326,21 +326,80 @@ static void parse_cmd_option(struct ref_transaction *=
-transaction,
- 		die("option unknown: %s", next);
- }
-=20
-+static void parse_cmd_start(struct ref_transaction *transaction,
-+			    const char *next, const char *end)
-+{
-+	if (*next !=3D line_termination)
-+		die("start: extra input: %s", next);
-+	puts("start: ok");
-+}
-+
-+static void parse_cmd_prepare(struct ref_transaction *transaction,
-+			      const char *next, const char *end)
-+{
-+	struct strbuf error =3D STRBUF_INIT;
-+	if (*next !=3D line_termination)
-+		die("prepare: extra input: %s", next);
-+	if (ref_transaction_prepare(transaction, &error))
-+		die("prepare: %s", error.buf);
-+	puts("prepare: ok");
-+}
-+
-+static void parse_cmd_abort(struct ref_transaction *transaction,
-+			    const char *next, const char *end)
-+{
-+	struct strbuf error =3D STRBUF_INIT;
-+	if (*next !=3D line_termination)
-+		die("abort: extra input: %s", next);
-+	if (ref_transaction_abort(transaction, &error))
-+		die("abort: %s", error.buf);
-+	puts("abort: ok");
-+}
-+
-+static void parse_cmd_commit(struct ref_transaction *transaction,
-+			     const char *next, const char *end)
-+{
-+	struct strbuf error =3D STRBUF_INIT;
-+	if (*next !=3D line_termination)
-+		die("commit: extra input: %s", next);
-+	if (ref_transaction_commit(transaction, &error))
-+		die("commit: %s", error.buf);
-+	puts("commit: ok");
-+	ref_transaction_free(transaction);
-+}
-+
-+enum update_refs_state {
-+	/* Non-transactional state open for updates. */
-+	UPDATE_REFS_OPEN,
-+	/* A transaction has been started. */
-+	UPDATE_REFS_STARTED,
-+	/* References are locked and ready for commit */
-+	UPDATE_REFS_PREPARED,
-+	/* Transaction has been committed or closed. */
-+	UPDATE_REFS_CLOSED,
-+};
-+
- static const struct parse_cmd {
- 	const char *prefix;
- 	void (*fn)(struct ref_transaction *, const char *, const char *);
- 	unsigned extra_lines;
-+	enum update_refs_state state;
- } commands[] =3D {
--	{ "update", parse_cmd_update, 2 },
--	{ "create", parse_cmd_create, 1 },
--	{ "delete", parse_cmd_delete, 1 },
--	{ "verify", parse_cmd_verify, 1 },
--	{ "option", parse_cmd_option, 0 },
-+	{ "update",  parse_cmd_update,  2, UPDATE_REFS_OPEN },
-+	{ "create",  parse_cmd_create,  1, UPDATE_REFS_OPEN },
-+	{ "delete",  parse_cmd_delete,  1, UPDATE_REFS_OPEN },
-+	{ "verify",  parse_cmd_verify,  1, UPDATE_REFS_OPEN },
-+	{ "option",  parse_cmd_option,  0, UPDATE_REFS_OPEN },
-+	{ "start",   parse_cmd_start,   0, UPDATE_REFS_STARTED },
-+	{ "prepare", parse_cmd_prepare, 0, UPDATE_REFS_PREPARED },
-+	{ "abort",   parse_cmd_abort,   0, UPDATE_REFS_CLOSED },
-+	{ "commit",  parse_cmd_commit,  0, UPDATE_REFS_CLOSED },
- };
-=20
- static void update_refs_stdin(void)
- {
- 	struct strbuf input =3D STRBUF_INIT, err =3D STRBUF_INIT;
-+	enum update_refs_state state =3D UPDATE_REFS_OPEN;
- 	struct ref_transaction *transaction;
- 	int i, j;
-=20
-@@ -371,19 +430,50 @@ static void update_refs_stdin(void)
- 		    input.buf[strlen(cmd->prefix)] !=3D ' ')
- 			die("%s: no separator after command", cmd->prefix);
-=20
--		/* Read extra lines if NUL-terminated */
-+		/* Read extra lines if NUL-terminated, but let commands handle missing o=
-nes. */
- 		for (j =3D 0; line_termination =3D=3D '\0' && j < cmd->extra_lines; j++)
- 			if (strbuf_appendwholeline(&input, stdin, line_termination))
- 				break;
-=20
-+		switch (state) {
-+		case UPDATE_REFS_OPEN:
-+		case UPDATE_REFS_STARTED:
-+			/* Do not downgrade a transaction to a non-transaction. */
-+			if (cmd->state >=3D state)
-+				state =3D cmd->state;
-+			break;
-+		case UPDATE_REFS_PREPARED:
-+			if (cmd->state !=3D UPDATE_REFS_CLOSED)
-+				die("prepared transactions can only be closed");
-+			state =3D cmd->state;
-+			break;
-+		case UPDATE_REFS_CLOSED:
-+			die("transaction is closed");
-+			break;
-+		}
-+
- 		cmd->fn(transaction, input.buf + strlen(cmd->prefix),
- 			input.buf + input.len);
- 	}
-=20
--	if (ref_transaction_commit(transaction, &err))
--		die("%s", err.buf);
-+	switch (state) {
-+	case UPDATE_REFS_OPEN:
-+		/* Commit by default if no transaction was requested. */
-+		if (ref_transaction_commit(transaction, &err))
-+			die("%s", err.buf);
-+		ref_transaction_free(transaction);
-+		break;
-+	case UPDATE_REFS_STARTED:
-+	case UPDATE_REFS_PREPARED:
-+		/* If using a transaction, we want to abort it. */
-+		if (ref_transaction_abort(transaction, &err))
-+			die("%s", err.buf);
-+		break;
-+	case UPDATE_REFS_CLOSED:
-+		/* Otherwise no need to do anything, the transaction was closed already.=
- */
-+		break;
-+	}
-=20
--	ref_transaction_free(transaction);
- 	strbuf_release(&err);
- 	strbuf_release(&input);
- }
-diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
-index a6224ef65f..48d0d42afd 100755
---- a/t/t1400-update-ref.sh
-+++ b/t/t1400-update-ref.sh
-@@ -1404,4 +1404,135 @@ test_expect_success 'handle per-worktree refs in re=
-fs/bisect' '
- 	! test_cmp main-head worktree-head
- '
-=20
-+test_expect_success 'transaction handles empty commit' '
-+	cat >stdin <<-EOF &&
-+	start
-+	prepare
-+	commit
-+	EOF
-+	git update-ref --stdin <stdin >actual &&
-+	printf "%s: ok\n" start prepare commit >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'transaction handles empty commit with missing prepare=
-' '
-+	cat >stdin <<-EOF &&
-+	start
-+	commit
-+	EOF
-+	git update-ref --stdin <stdin >actual &&
-+	printf "%s: ok\n" start commit >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'transaction handles sole commit' '
-+	cat >stdin <<-EOF &&
-+	commit
-+	EOF
-+	git update-ref --stdin <stdin >actual &&
-+	printf "%s: ok\n" commit >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'transaction handles empty abort' '
-+	cat >stdin <<-EOF &&
-+	start
-+	prepare
-+	abort
-+	EOF
-+	git update-ref --stdin <stdin >actual &&
-+	printf "%s: ok\n" start prepare abort >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'transaction exits on multiple aborts' '
-+	cat >stdin <<-EOF &&
-+	abort
-+	abort
-+	EOF
-+	test_must_fail git update-ref --stdin <stdin >actual 2>err &&
-+	printf "%s: ok\n" abort >expect &&
-+	test_cmp expect actual &&
-+	grep "fatal: transaction is closed" err
-+'
-+
-+test_expect_success 'transaction exits on start after prepare' '
-+	cat >stdin <<-EOF &&
-+	prepare
-+	start
-+	EOF
-+	test_must_fail git update-ref --stdin <stdin 2>err >actual &&
-+	printf "%s: ok\n" prepare >expect &&
-+	test_cmp expect actual &&
-+	grep "fatal: prepared transactions can only be closed" err
-+'
-+
-+test_expect_success 'transaction handles empty abort with missing prepare'=
- '
-+	cat >stdin <<-EOF &&
-+	start
-+	abort
-+	EOF
-+	git update-ref --stdin <stdin >actual &&
-+	printf "%s: ok\n" start abort >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'transaction handles sole abort' '
-+	cat >stdin <<-EOF &&
-+	abort
-+	EOF
-+	git update-ref --stdin <stdin >actual &&
-+	printf "%s: ok\n" abort >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'transaction can handle commit' '
-+	cat >stdin <<-EOF &&
-+	start
-+	create $a HEAD
-+	commit
-+	EOF
-+	git update-ref --stdin <stdin >actual &&
-+	printf "%s: ok\n" start commit >expect &&
-+	test_cmp expect actual &&
-+	git rev-parse HEAD >expect &&
-+	git rev-parse $a >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'transaction can handle abort' '
-+	cat >stdin <<-EOF &&
-+	start
-+	create $b HEAD
-+	abort
-+	EOF
-+	git update-ref --stdin <stdin >actual &&
-+	printf "%s: ok\n" start abort >expect &&
-+	test_cmp expect actual &&
-+	test_path_is_missing .git/$b
-+'
-+
-+test_expect_success 'transaction aborts by default' '
-+	cat >stdin <<-EOF &&
-+	start
-+	create $b HEAD
-+	EOF
-+	git update-ref --stdin <stdin >actual &&
-+	printf "%s: ok\n" start >expect &&
-+	test_cmp expect actual &&
-+	test_path_is_missing .git/$b
-+'
-+
-+test_expect_success 'transaction with prepare aborts by default' '
-+	cat >stdin <<-EOF &&
-+	start
-+	create $b HEAD
-+	prepare
-+	EOF
-+	git update-ref --stdin <stdin >actual &&
-+	printf "%s: ok\n" start prepare >expect &&
-+	test_cmp expect actual &&
-+	test_path_is_missing .git/$b
-+'
-+
- test_done
+> > +Cross-Platform Issues
+> > +~~~~~~~~~~~~~~~~~~~~~
+>=20
+> I think you meant to use "--" as everywhere else instead of "~~". This
+> is not a subsection of "Hooks".
+
+Ah, yes.  Apparently my fonts are so small that these are hard to
+distinguish with bright white on grey.  I typically use the
+Setext style in my own documents, but that isn't what we do in Git.
+
+> > +To do so, you can specify a linkgit:gitattributes[5] pattern with with=
+ the
+>=20
+> "with with"
+
+Ah, normally Vim flags those things.  Will fix.
+
+> > +[[windows-diff-control-m]]
+> > +I'm on Windows and git diff shows my files as having a `^M` at the end=
+=2E::
+> > +       By default, Git expects files to be stored with Unix line endin=
+gs.  As
+> > +       such, the carriage return (`^M`) that is part of a Windows line=
+ ending
+> > +       results is show because it is considered to be trailing whitesp=
+ace.  Git
+>=20
+> "results is show"? "is shown"? Perhaps with a comma after "shown" for
+> better reading flow (IMVHO).
+
+This should be "is shown".  I'm not sure if a comma after "shown" is
+grammatical here as it stands, but I think we could write "is shown,
+since" and that would be okay.  I'll check a reference and rephrase if
+necessary.
+
+> > +       defaults to showing trailing whitespace only on new lines, not =
+existing
+> > +       ones.
+>=20
+> > +We also recommend setting a link:gitattributes[5] file to explicitly m=
+ark which
+>=20
+> s/link:/linkgit:/
+
+Will fix.
 --=20
-2.26.0
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-
---2oS5YaxWCcQjTEyO
+--DozTQjXnjm3C9Xhk
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.20 (GNU/Linux)
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAl57KlMACgkQVbJhu7ck
-PpT0Kw/+JtAYHSgNYqtlo2rvoCvZIaP/Dyg5vMCPM9zAaGGCs+OYWUaswTFIZp3d
-gIp5vKT5/abnXJCGlwPh8OkZqLUAs4dOw3R3OucGELNTB0/IVztNlIjbhKIWjhZT
-i35VKuVDZNJkeWFrFtgxQKGRCpzT/ZtrLmhfXndtU6xuZwXG5IXwyiml2YRGV2Di
-UjKRvWbb7Xi6ttaAzJ7YdoPNa19qWZZjfeAjelTSaKGU/fG7U5+QJNFok+Uk2m9l
-pTPzmQt6yK/ewK4fimVYeT8KlDUA7jERJk2S/IInIy7kxc1dsUPowhqrFGRPplYv
-H7yINgKEiTz3gbI+K1tTFYpUM9gUM2WvUP0ofxu6VuRb4cdMvf7t6L8J8SWS0kC0
-R0LfB+babyuPs8TIXP3Q5Z3m4BTUEPQb0bVbx/2mMJBKl+mR2wrr6FdBzRNGyM22
-DdsbRJbQ9Sl84uG/RmTtbmTSMiF1EVRY4SntwpPvlyO291k5TtSgsCpQ2zLhEnrF
-67Itth+V/NQ8wHu/azEADYtv3vsS9JJ5KGWa0Ic3O0idTrR9KJaEZbGTTXEeoq9f
-KGn5n0W/8VwuLoJc+pXEz8tLeDPPSfsoOBwVR5dt1OorSJP6mKBs0DBZBIFPG4vh
-2wZCytv0hgs7Uz8bfRFw+UDTVne2bFVPrhdGMgHS7GPF5ZsIYjo=
-=igRW
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXns6gAAKCRB8DEliiIei
+gVWOAP9pKzAhIhdQzr7Fz8jpq+76e+ou/dCpl2TFNRk6WgihRgD/SdBytpXxcAm2
+o0UFybDCa4geo1aRaxLWek2f9ni4QQE=
+=N6+X
 -----END PGP SIGNATURE-----
 
---2oS5YaxWCcQjTEyO--
+--DozTQjXnjm3C9Xhk--
