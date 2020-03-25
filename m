@@ -2,97 +2,158 @@ Return-Path: <SRS0=ys1m=5K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D3CF9C1975A
-	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 17:09:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C65D6C1975A
+	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 17:23:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B337C2078A
-	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 17:09:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 977B920772
+	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 17:23:16 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qWgTfrhz"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Rd+rgpdu"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727530AbgCYRJy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 Mar 2020 13:09:54 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:38144 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726102AbgCYRJy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Mar 2020 13:09:54 -0400
-Received: by mail-ed1-f65.google.com with SMTP id e5so3414151edq.5
-        for <git@vger.kernel.org>; Wed, 25 Mar 2020 10:09:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=tn3mlHuIs2HW29nSEkW7W03WUAdjMUBxfyeUMDwVUXw=;
-        b=qWgTfrhzfYOOdP0euZihsvVx6QyLZhXmqylfiAPocthd2Kyek0NvF7q07+BlvuYwzG
-         riz3F7pCLo/alLpI0L6hdksKQh8rSzipe8mbp9e4QvnsimrZMysS57ibnPKVc/QQhZuH
-         Iuot1A/VYD266nJkZeTSjlUNUPrpZTkINb2A4u0iJlir2sFIFsdyaZx0Cq/ordieDDvr
-         ER7iu63aF1HZABZp32/vTiujpG5Yk6nu+W83Zt7H9c247lwYSxiFYCH/pXv3enQ80+nJ
-         OnxRYHFWBmHIE4LdzJSAoRIuOkZwCzfeNbkvHiwzYYdMbcbRQLU/1axCGthmOIh6S6gD
-         dc5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=tn3mlHuIs2HW29nSEkW7W03WUAdjMUBxfyeUMDwVUXw=;
-        b=YIW26WWcv50OdX7ucaCNZ08OXSEyPH7iYlzPigXVZM4OjI0yq8oWmi2t8lu1NOxPVL
-         VgdKOct2CdruXX3W+v3tFUxu2A5yq+kuZjb/Mxs6BR56rFy4kOneCbKXNIAYpaxsn0p3
-         PBjCQCXubgJhL+CHINsHTXU5+AUjdNU/jAf7MqBe3zJ2+ysKDgot8b0fichLgwrdt8MD
-         appyas8IRvjO0ntlCpHRNUwPzpUEtEedkE9wZOAaeQZKe+FHis53MF8vSTtzKZUyh6Dz
-         FoniK/lOYGssXop8ow6k7IdLlxg23E8ErXN4h3YluKNtkdEGaSGlP/wwMh36bk/RKjyx
-         LToA==
-X-Gm-Message-State: ANhLgQ0s7Yw9XudiFaVx/E+eO1GFlxEJSta/F2zLN9bC7XCoP4edHCg0
-        pev3ki40vDel2BYGcmB8DFnndL1HGiPlyOuLx6w=
-X-Google-Smtp-Source: ADFU+vvHO0e3zSZsQk0AEP7C/87YZ/pKIKgFdJrUoUnmNZbIJPNEh0Bh3gCScC/b14AEhC8VGn7cJp/31yFj9c62r/c=
-X-Received: by 2002:a17:906:3ec5:: with SMTP id d5mr4203485ejj.106.1585156192097;
- Wed, 25 Mar 2020 10:09:52 -0700 (PDT)
+        id S1727688AbgCYRXO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 Mar 2020 13:23:14 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60152 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727236AbgCYRXO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Mar 2020 13:23:14 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 621F759AA0;
+        Wed, 25 Mar 2020 13:23:11 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=bRs87v1wqDD22tjVd5+pJzFouqE=; b=Rd+rgp
+        du3yL5RapWJ6oSnUHGwhgH7wEgPWafHJHmF5EDAnbvqwrJfi8egxR23qQGvQ5v+O
+        8B9q9gjNN4g8YNGlHxVWJx/KeDS2VrrHMKr5R/rutwylNG66dqs03wHTP9tSNj7M
+        xwrvxG3Is46cwz6ITBSP617cp7AWuhaZnaN20=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=E74MmsrSV9XP5rwmX9uCV8G1ZQFBHsxP
+        MEKD8DtZdPwH5uwnr0dy5pf9RpIp9q3g/cDZjR+53k/dyMLqYVuyASl5MtM4LZQW
+        gqvzWIWZDmjutAgTO2NIhdO/jrgW82xIMPVKs3Th3ywsgMK867JGqMs1DB0qk2SK
+        irBP5XmhT7k=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5AD7D59A9F;
+        Wed, 25 Mar 2020 13:23:11 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DC54059A9E;
+        Wed, 25 Mar 2020 13:23:10 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 4/5] tests: do not let lazy prereqs inside `test_expect_*` turn off tracing
+References: <pull.728.git.git.1584968990.gitgitgadget@gmail.com>
+        <pull.728.v2.git.git.1585114881.gitgitgadget@gmail.com>
+        <0767c8b77c820cfc03bbc617da4dc9f20ba4a46a.1585114881.git.gitgitgadget@gmail.com>
+Date:   Wed, 25 Mar 2020 10:23:10 -0700
+In-Reply-To: <0767c8b77c820cfc03bbc617da4dc9f20ba4a46a.1585114881.git.gitgitgadget@gmail.com>
+        (Johannes Schindelin via GitGitGadget's message of "Wed, 25 Mar 2020
+        05:41:20 +0000")
+Message-ID: <xmqqwo78wdq9.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.587.git.1584997990694.gitgitgadget@gmail.com>
- <pull.587.v2.git.1585143910604.gitgitgadget@gmail.com> <20200325163540.vdc7l72fke7yqryb@tb-raspi4>
-In-Reply-To: <20200325163540.vdc7l72fke7yqryb@tb-raspi4>
-From:   =?UTF-8?Q?Andr=C3=A1s_Kucsma?= <r0maikx02b@gmail.com>
-Date:   Wed, 25 Mar 2020 18:09:40 +0100
-Message-ID: <CANPdQvKbgisOQatrwcY66Asodxi__feaVOvoJe2j9qvHcrbZBQ@mail.gmail.com>
-Subject: Re: [PATCH v2] Fix dir sep handling of GIT_ASKPASS on Windows
-To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     =?UTF-8?Q?Andr=C3=A1s_Kucsma_via_GitGitGadget?= 
-        <gitgitgadget@gmail.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4D135E10-6EBD-11EA-BE34-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 25, 2020 at 5:35 PM Torsten B=C3=B6gershausen <tboegi@web.de> w=
-rote:
->
-> Thanks for working on this. I have 1 or 2 nits/questions, please see belo=
-w.
->
-> On Wed, Mar 25, 2020 at 01:45:10PM +0000, Andr=C3=A1s Kucsma via GitGitGa=
-dget wrote:
-> > From: Andras Kucsma <r0maikx02b@gmail.com>
-> >
-> > On Windows with git installed through cygwin, GIT_ASKPASS failed to run
->
-> My understanding is, that git under cygwin needs this patch (so to say),
-> but isn't it so, that even Git for Windows has the same issue ?
-> The headline of the patch and the indicate so.
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-Git for Windows does not have this issue, because there
-GIT_WINDOWS_NATIVE is defined, which is not true under Cygwin:
-https://github.com/git/git/blob/274b9cc2/git-compat-util.h#L157-L165
+> The `test_expect_*` functions use `test_eval_` and so does
+> `test_run_lazy_prereq_`. If tracing is enabled via the `-x` option,
+> `test_eval_` turns on tracing while evaluating the code block, and turns
+> it off directly after it.
+>
+> This is unwanted for nested invocations.
 
-You can see in start_command() that there are separate implementations
-based on GIT_WINDOWS_NATIVE. The problematic code is in prepare_cmd,
-which is not called in the branch where GIT_WINDOWS_NATIVE is defined:
-https://github.com/git/git/blob/274b9cc2/run-command.c#L740
+Nice finding.
 
-This means, that cygwin is running in the Unix-like branch of the
-code, even though it supports backslashes in its paths.
+> As we will introduce just such a scenario with the GPG, GPGSM and
+> RFC1991 prereqs, let's fix that by introducing a variable that keeps
+> track of the current trace level: nested `test_eval_` calls will
+> increment and then decrement the level, and only when it reaches 0, the
+> tracing will _actually_ be turned off.
+
+Doesn't this explanation urge us to reorder these patches?  It
+sounds to me that it argues to have this step before 3/5.
+
+Other than that, both the explanation and the code look correctly
+done.  It looks to me that the surrounding code favors trailing "_"
+instead of leading one for private names, so we might want to rename
+the variable to $trace_level_ but that is minor.
+
+Thanks.
+
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  t/t0000-basic.sh | 13 +++++++++++++
+>  t/test-lib.sh    |  6 ++++--
+>  2 files changed, 17 insertions(+), 2 deletions(-)
+>
+> diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
+> index 3e440c078d5..b8597216200 100755
+> --- a/t/t0000-basic.sh
+> +++ b/t/t0000-basic.sh
+> @@ -833,6 +833,19 @@ then
+>  	exit 1
+>  fi
+>  
+> +test_expect_success 'lazy prereqs do not turn off tracing' "
+> +	run_sub_test_lib_test lazy-prereq-and-tracing \
+> +		'lazy prereqs and -x' -v -x <<-\\EOF &&
+> +	test_lazy_prereq LAZY true
+> +
+> +	test_expect_success lazy 'test_have_prereq LAZY && echo trace'
+> +
+> +	test_done
+> +	EOF
+> +
+> +	grep 'echo trace' lazy-prereq-and-tracing/err
+> +"
+> +
+>  test_expect_success 'tests clean up even on failures' "
+>  	run_sub_test_lib_test_err \
+>  		failing-cleanup 'Failing tests with cleanup commands' <<-\\EOF &&
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index 0ea1e5a05ed..dbf25348106 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -882,6 +882,7 @@ maybe_setup_valgrind () {
+>  	fi
+>  }
+>  
+> +_trace_level=0
+>  want_trace () {
+>  	test "$trace" = t && {
+>  		test "$verbose" = t || test "$verbose_log" = t
+> @@ -895,7 +896,7 @@ want_trace () {
+>  test_eval_inner_ () {
+>  	# Do not add anything extra (including LF) after '$*'
+>  	eval "
+> -		want_trace && set -x
+> +		want_trace && _trace_level=$(($_trace_level+1)) && set -x
+>  		$*"
+>  }
+>  
+> @@ -926,7 +927,8 @@ test_eval_ () {
+>  		test_eval_ret_=$?
+>  		if want_trace
+>  		then
+> -			set +x
+> +			test 1 = $_trace_level && set +x
+> +			_trace_level=$(($_trace_level-1))
+>  		fi
+>  	} 2>/dev/null 4>&2
