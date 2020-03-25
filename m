@@ -2,154 +2,125 @@ Return-Path: <SRS0=ys1m=5K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D49ADC43331
-	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 21:10:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 59F44C43331
+	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 21:21:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id ACBC0207FC
-	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 21:10:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2928B20719
+	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 21:21:28 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TYfS1MnW"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qvVOqVy4"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727487AbgCYVKf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 Mar 2020 17:10:35 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:50583 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727464AbgCYVKe (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Mar 2020 17:10:34 -0400
-Received: by mail-wm1-f67.google.com with SMTP id d198so4300244wmd.0
-        for <git@vger.kernel.org>; Wed, 25 Mar 2020 14:10:34 -0700 (PDT)
+        id S1727525AbgCYVV1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 Mar 2020 17:21:27 -0400
+Received: from mail-ot1-f66.google.com ([209.85.210.66]:34119 "EHLO
+        mail-ot1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727401AbgCYVV1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Mar 2020 17:21:27 -0400
+Received: by mail-ot1-f66.google.com with SMTP id j16so3660674otl.1
+        for <git@vger.kernel.org>; Wed, 25 Mar 2020 14:21:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=iNPb5oYBS4R0kbCu+dDQM3OBW7xvpjOe+8Ve5+pcj28=;
-        b=TYfS1MnWsKG/ApngDlPpwAeSGnXn2vM41T6lLTe2uk4Ha/LIwRhODT9EtMt3c3onSh
-         +2YHcziv2GdY2nUqx3oSjF4z0neMuCxy6H5GtBG7hl6HQljGMGC7s5rLo4Nihf24l1NT
-         U2e4AiMEdBNqHnaHz0+svhDGLiKg9RDiaTJ7AwAMJa67lRCHahF3s090WIdeXZ0X5pi2
-         MLaLa8XcUNQoQaJzUzXE+4cg9a6mW1lvsoi191VCzzpP6o0Kzdt511NZafpZl+dDWiTn
-         z5PojHKaZ8VFiFFRfsJzjaFR66Wr9VlX2m2OwwjmOmA3OlSE1BgNnK3+tEl2l4LlDzuq
-         s75w==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=LcRS9LiLp8/ZvM5WgaZzKlYSFsXLpd+gWecNf3NseMg=;
+        b=qvVOqVy48OdbCGebwFytc5R4ecYYTeHjqZWIpqYqYPFOF9XQJgT8b0/2EM+2yH4hhL
+         cSgTYsoJ/7g3SZpfEr+G3w7hMxRVcr5md9dRuM1QgXir7h9Ri+5c8nGMF5qRG/t3Y8Q0
+         64vAp4gAPtZFkW5ebYQkxcrB3ZqmlXUFBb/DY1voIBlKAG4T2mm569Uvgkhg/wTyZZXc
+         jshGzwvJX5w/y5qlPeksUHILJaY2MKzfKifxTZs39f+VkLDLWPAljTTvfCHd1emfRZi1
+         lL7wRqc+oSblUaYitNBc7J5WbPFF1Z3C2Up7nWwZakTvpsam/TAQ9VlC+CcoV3VIhHe4
+         apcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=iNPb5oYBS4R0kbCu+dDQM3OBW7xvpjOe+8Ve5+pcj28=;
-        b=t3NjriEbFruAXLzdGXTp3bGAx5USlL/JVvO5u4YKiXucjWSk5BmpO/vcNUpa6juRyL
-         CFbNqscPP6V7mKOEkuX9LFBidfA161qgkxE/v3a3pR+6vqDejZ3YQnb5Jnqlip7VD+Sx
-         /QbLJauSA6ISckR5DqwFPIxX5yPDL35q3QQKUjkhL/JPIOCITx2MOM5ENXn4qOjiX0Yg
-         5epfJilW7f7k6D95ECEU3Ozp2Bun/YQFEqr6RoMUUqvhtuHMLwk0byAwDRAxzWM1eW3C
-         4BoOyyIL8lx2t74uphcIzQDD54UPa5PCkTeLBmGNek/XruUVkSFMaLMbt9yHf653t2Lw
-         GKAg==
-X-Gm-Message-State: ANhLgQ1wvSGmcf1QToL9v8eOfJpwMwq2Q4QGsHkOyvplhmnTaXXA/PY/
-        VQATy+zNQks1D8Z5yGWIZc9M0slX8ZA=
-X-Google-Smtp-Source: ADFU+vvnT2YPmMi+KTZhe9FvuvpdyDRxK1Xx3tMvTaxEgBEttCu/uLJqSN63OrH8M73njlf1RQoT+w==
-X-Received: by 2002:a7b:ca52:: with SMTP id m18mr5214473wml.156.1585170629140;
-        Wed, 25 Mar 2020 14:10:29 -0700 (PDT)
-Received: from localhost.localdomain (87-231-246-247.rev.numericable.fr. [87.231.246.247])
-        by smtp.gmail.com with ESMTPSA id u16sm352760wro.23.2020.03.25.14.10.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Mar 2020 14:10:28 -0700 (PDT)
-From:   Damien Robert <damien.olivier.robert@gmail.com>
-X-Google-Original-From: Damien Robert <damien.olivier.robert+git@gmail.com>
-To:     git@vger.kernel.org, Philippe Blain <levraiphilippeblain@gmail.com>
-Cc:     Damien Robert <damien.olivier.robert+git@gmail.com>
-Subject: [PATCH v4 4/5] doc: be more precise on (fetch|push).recurseSubmodules
-Date:   Wed, 25 Mar 2020 22:09:42 +0100
-Message-Id: <20200325210943.339240-5-damien.olivier.robert+git@gmail.com>
-X-Mailer: git-send-email 2.25.2
-In-Reply-To: <20200325210943.339240-1-damien.olivier.robert+git@gmail.com>
-References: <20200325210943.339240-1-damien.olivier.robert+git@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=LcRS9LiLp8/ZvM5WgaZzKlYSFsXLpd+gWecNf3NseMg=;
+        b=goVwP4UKpbgHuhQb49ZuoFSQr0TI2k/z3/Ku+HzAPCW5FgBqjx0xDS0U054M7AHUqH
+         +kE4TddVF28Hxhw67LlCF9AqRMS+KvqhBA7fcbGukcduEuy3iDqaXPd8Q4eFx1hLMuH+
+         KGPcGyns8pQW4LfmXLsv6Gl7WNHseR7+TaL5SeDiGtymOYTDhxG8DoVnavtcoS38USuR
+         svLmGZFAQqzWZPHMzXj00KuAfGlPBJ67NsFrocDTwRchsGb/SMDjWaKvtHiY2OWot/NW
+         xDY7ZXI/lGudZaKS90epqljPLZ6cSLxTAUsRxWN6QWtkmeuIbzTuIRf+EIAxPOTFZXgY
+         mH5g==
+X-Gm-Message-State: ANhLgQ3R+yA9MPA9O1uUh3PE/V0Ay2higSai6/C3WpMHYm+YegYIoAez
+        5UtKcale4B3EoENp2SFGzyURO1xXXTtX0bnG4H6WPY6B
+X-Google-Smtp-Source: ADFU+vsRajJDiCX+GuOVeMgrwquW0ISY2h5x61V+NwFD698kg+nhcNntNZFSf9aJsKCHgrHpsKnQ19JhzdXrZgg0kaw=
+X-Received: by 2002:a05:6830:1ad4:: with SMTP id r20mr4150111otc.316.1585171284390;
+ Wed, 25 Mar 2020 14:21:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CAM+g_Nuu2jGuNwUMS3j8=EjOrthYzfVTrUzOxQJ=aYcoBAL3Tg@mail.gmail.com>
+ <20200325053908.GC651138@coredump.intra.peff.net>
+In-Reply-To: <20200325053908.GC651138@coredump.intra.peff.net>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 25 Mar 2020 14:21:13 -0700
+Message-ID: <CABPp-BF9LDfaw8=S4yqtuZ5U70Jcj_yZHq17Y7SUa17DwRqMSA@mail.gmail.com>
+Subject: Re: "git rebase" behavior change in 2.26.0
+To:     Jeff King <peff@peff.net>
+Cc:     Norbert Kiesel <nkiesel@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The default value also depends on the value of submodule.recurse.
-Use this opportunity to correct some grammar mistakes in
-Documentation/config/fetch.txt signaled by Robert P. J. Day.
+On Tue, Mar 24, 2020 at 10:40 PM Jeff King <peff@peff.net> wrote:
+>
+> On Tue, Mar 24, 2020 at 08:38:04PM -0700, Norbert Kiesel wrote:
+>
+> > I track an upstream repo with "pull.rebase = true" where I do a `git
+> > pull` followed by a `git log -p ORIG_HEAD..` for a branch to see
+> > changes since the last "pull".  I normally do not commit to this
+> > branch and thus this normally is a "fast-forward" merge.
+> >
+> > Starting with 2.26 this no longer works because ORIG_HEAD is always
+> > set to HEAD after my `git pull`.
+> >
+> > I track other prances from the same repo where I do local changes and
+> > then want the `git pull --rebase` and I thus do not want to
+> > give up on the `pull.rebase = true` configuration.
+>
+> I can imagine this is related to the switch to the "merge" backend for
+> git-pull, which may be more eager to overwrite ORIG_HEAD. Perhaps try:
+>
+>   git -c rebase.backend=apply pull
+>
+> and see if that behaves differently.
+>
+> I tried to reproduce what you're seeing, but my recipe doesn't seem to
+> show any difference between the two versions:
+>
+> -- >8 --
+> #!/bin/sh
+>
+> rm -rf repo
+>
+> git init -q repo
+> cd repo
+> echo content >base && git add base && git commit -q -m base
+> git clone -q . dst
+> echo content >new && git add new && git commit -q -m new
+>
+> cd dst
+> git rev-parse HEAD >.git/ORIG_HEAD
+> echo before: $(git log -1 --oneline ORIG_HEAD)
+> git -c pull.rebase=true pull -q ..
+> echo after: $(git log -1 --oneline ORIG_HEAD)
+> -- 8< --
+>
+> We don't seem to touch ORIG_HEAD in either case. But maybe a more
+> complex set of pulled commits would trigger it?
 
-Also mention `fetch.recurseSubmodules` in fetch-options.txt. In
-git-push.txt, `push.recurseSubmodules` is implicitly mentioned (by
-explaining how to disable it), so no need to add it there.
+I can't duplicate either.  I suspected that perhaps rebase.autoStash
+might help cause it to happen if you had local changes, but I didn't
+succeed in reproducing with that either.
 
-Lastly add a link to `git-fetch` in `git-pull.txt` to explain the
-meaning of `--recurse-submodules` there.
+Norbert: Any ideas what you may be doing differently to trigger this?
+And does it still happen with rebase.backend=apply, as Peff asked
+about?
 
-Signed-off-by: Damien Robert <damien.olivier.robert+git@gmail.com>
----
- Documentation/config/fetch.txt  | 9 +++++----
- Documentation/config/push.txt   | 2 ++
- Documentation/fetch-options.txt | 3 ++-
- Documentation/git-pull.txt      | 3 +--
- 4 files changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/Documentation/config/fetch.txt b/Documentation/config/fetch.txt
-index f11940280f..cd5b1417c4 100644
---- a/Documentation/config/fetch.txt
-+++ b/Documentation/config/fetch.txt
-@@ -1,11 +1,12 @@
- fetch.recurseSubmodules::
--	This option can be either set to a boolean value or to 'on-demand'.
-+	This option can be set either to a boolean value or to 'on-demand'.
- 	Setting it to a boolean changes the behavior of fetch and pull to
--	unconditionally recurse into submodules when set to true or to not
--	recurse at all when set to false. When set to 'on-demand' (the default
--	value), fetch and pull will only recurse into a populated submodule
-+	recurse unconditionally into submodules when set to true or to not
-+	recurse at all when set to false. When set to 'on-demand',
-+	fetch and pull will only recurse fetching into a populated submodule
- 	when its superproject retrieves a commit that updates the submodule's
- 	reference.
-+	Defaults to 'on-demand', or to the value of 'submodule.recurse' if set.
- 
- fetch.fsckObjects::
- 	If it is set to true, git-fetch-pack will check all fetched
-diff --git a/Documentation/config/push.txt b/Documentation/config/push.txt
-index 0a7aa322a9..f5e5b38c68 100644
---- a/Documentation/config/push.txt
-+++ b/Documentation/config/push.txt
-@@ -112,3 +112,5 @@ push.recurseSubmodules::
- 	is 'no' then default behavior of ignoring submodules when pushing
- 	is retained. You may override this configuration at time of push by
- 	specifying '--recurse-submodules=check|on-demand|no'.
-+	If not set, 'no' is used by default, unless 'submodule.recurse' is
-+	set (in which case a 'true' value means 'on-demand').
-diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
-index a115a1ae0e..b1058d63bc 100644
---- a/Documentation/fetch-options.txt
-+++ b/Documentation/fetch-options.txt
-@@ -163,7 +163,8 @@ ifndef::git-pull[]
- 	value. Use 'on-demand' to only recurse into a populated submodule
- 	when the superproject retrieves a commit that updates the submodule's
- 	reference to a commit that isn't already in the local submodule
--	clone.
-+	clone. By default, 'on-demand' is used, unless
-+	`fetch.recurseSubmodules` is set (see linkgit:git-config[1]).
- 
- -j::
- --jobs=<n>::
-diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
-index dfb901f8b8..47bc4a7061 100644
---- a/Documentation/git-pull.txt
-+++ b/Documentation/git-pull.txt
-@@ -86,8 +86,7 @@ OPTIONS
- 
- --[no-]recurse-submodules[=yes|on-demand|no]::
- 	This option controls if new commits of all populated submodules should
--	be fetched and updated, too (see linkgit:git-config[1] and
--	linkgit:gitmodules[5]).
-+	be fetched and updated, too (see linkgit:git-fetch[1], linkgit:git-config[1] and linkgit:gitmodules[5]).
- +
- If the checkout is done via rebase, local submodule commits are rebased as well.
- +
--- 
-Patched on top of v2.26.0 (git version 2.25.2)
-
+Elijah
