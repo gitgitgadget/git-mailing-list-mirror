@@ -2,181 +2,164 @@ Return-Path: <SRS0=ys1m=5K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DB55AC43331
-	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 09:53:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D242FC54FD0
+	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 09:53:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6180620772
-	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 09:53:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A2C3520772
+	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 09:53:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="o+PnE+gj";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CUlSsurU"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MFagwVj0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LKbGD4BU"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727265AbgCYJx0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 Mar 2020 05:53:26 -0400
-Received: from out5-smtp.messagingengine.com ([66.111.4.29]:44937 "EHLO
+        id S1727332AbgCYJx3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 Mar 2020 05:53:29 -0400
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:45985 "EHLO
         out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726154AbgCYJx0 (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 25 Mar 2020 05:53:26 -0400
+        by vger.kernel.org with ESMTP id S1726154AbgCYJx3 (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 25 Mar 2020 05:53:29 -0400
 Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.nyi.internal (Postfix) with ESMTP id 3B45B5C0300;
-        Wed, 25 Mar 2020 05:53:24 -0400 (EDT)
+        by mailout.nyi.internal (Postfix) with ESMTP id 7BA0D5C0105;
+        Wed, 25 Mar 2020 05:53:28 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Wed, 25 Mar 2020 05:53:24 -0400
+  by compute3.internal (MEProxy); Wed, 25 Mar 2020 05:53:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
-        :from:to:cc:subject:message-id:mime-version:content-type; s=fm3;
-         bh=UmXbQyy2AD3tSZYbRI72I08IOagYL4VQfpRHpx3QOKI=; b=o+PnE+gj9Aqx
-        msoXlTkUxfUMobFiIAcNo0+ec6nSS3o1v/gKWzWGqVX3f9d+A7VK4thhZrmFgI8D
-        DItUk576gaOhfHKZmuHCd7fudZU2NzDdXSdcf3iRiZT0NugzyHMbldFiISXWv3fJ
-        moVfwzxy/2hNd7ibT/bc8vhc5bEhvWhc2Lm2+dKwxz36v0BHaAMKKPbixd0NjM7j
-        gFz7Czj/K2P7CRs4K6upQYp4E0gCEA94aycc8qs8bfmm/yKAdG69azYSRUOPkofK
-        B7kVBFVArKip5PDnkYO6SVhpQCTeYE0M/d52iHszpQieoD8617m4iRfvYUXRtbKc
-        gdDMfu1iNg==
+        :from:to:cc:subject:message-id:references:mime-version
+        :content-type:in-reply-to; s=fm3; bh=7sx3PFmiU/1+mQzYwYZ7meSU791
+        rc9wa6KKO1pYAkGA=; b=MFagwVj0Vo+mf+ncRST7RbKdCIskw0TPdxT4Pd0a9D7
+        lDGIN/z3qA4+NXE5rYwf/uAb2E50V58xn7VAo7o1Rn9WE1mzBwF5dnMxUqvxm0Dz
+        zoA5BoWA2uIzy6j1In87bcEHQNDFWi/cTTO+ENnLuqUuElLA61lrk4dkhblc1Ooa
+        2NaewvE0u+FGOWWfcTIrtJtGrowM33n8EdjO2vr4Vjzm7MWTQtYCXh3VXYK80wZN
+        4dFFLik9DI8z+5Ar0MDHpBre2/tdnBJaPCsoGi2BGRcOeeQYCNMcc405ZWKgybV1
+        u5xAnFhTXg5uUUFu6pY6zneTQ+BOb4WfZDyLsDDSW/A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:message-id
-        :mime-version:subject:to:x-me-proxy:x-me-proxy:x-me-sender
-        :x-me-sender:x-sasl-enc; s=fm2; bh=UmXbQyy2AD3tSZYbRI72I08IOagYL
-        4VQfpRHpx3QOKI=; b=CUlSsurUQpZmghKw1uywUnc52af/vdv4O65KQ3DZtSK+o
-        hXe+stIP6Mv08GqpVDAopoQaCxBJf1rYsYNXG7lan/649dHnA7ZbCGjuB+2Bwdf3
-        vP1wd2jBLn18sXlPihUotyJQBN7JMrmxW4SpirUZCFq8S2hE7maAom7NJveW4Q8c
-        DOy6v5SnU4uGfS7nt01ylWmEzIcXS/ctopQQL5gIbyAY0MV0tjY9tdbH0CNItLPA
-        DCF2VZ52k7eTn3/+lMiZKw+7t96n0Lr69PJpI9Mzbu6+dgbmt+vGdMgk7l2NOLzL
-        /QhqZa8GpPtjxnlH2qgDroLuwZJUtmlD4JMtC3Cog==
-X-ME-Sender: <xms:Eyp7XikVZapVxl-HPwKwoHirZ5pzvOYPPton8aPaR1HzAN44UXJ2Tg>
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=7sx3PF
+        miU/1+mQzYwYZ7meSU791rc9wa6KKO1pYAkGA=; b=LKbGD4BUsgT/S0fNMiYaTI
+        YNHc/+xgFOTMDL/EXwmDoMCfYln31QZN6epwdrp4LJKeQSwNmIfsGags1OZP+yUw
+        5/9jXhlxQAFlNSQl4I/exbKmM1z3a9KGLCmmiGRf0Bjq0/rmTiJydd4TteC9Mp2T
+        4hjEfus0ItZLmIqYU6iIESoe0roGqjWW1q9oTuBDlcJQAbvwQuS5pZhRE8paL92P
+        +xRrK7gqr/zgC0wnpzruX4JFelt8k65ylHzIhbBOTng7uoLW7a9qROBLB2TinjU6
+        S7Y/GEt5NIuzup7JEELRM7PaMHzL/6ZF4+fg9neK1NKysroTZLVvNdJ4EhtZc4Qw
+        ==
+X-ME-Sender: <xms:GCp7XlkAaajwD1G1knLgrvp3yBYEEhW3S5ALxsM65ciesT3lLoJElQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedugedrudehfedgtdekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvffukfggtggusehgtderredttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucfkphepjeejrddufedrud
-    ekhedrjedvnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhho
-    mhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:Eyp7XuHN_Q7XYTA2EU0Xz8H0e91rDH7TgdZ7M5ptinVtQ-6EGHB6iA>
-    <xmx:Eyp7Xrq7HxRw55w0QvxA4YgkYX7MCl0TSptoqebOi_SFH4UIlrX-_w>
-    <xmx:Eyp7Xq4To36zFZRfBbUiHuLSp1gvUL0L6cK3fjOWhPDJ_BoM-ur_xg>
-    <xmx:FCp7XhxPviYX-ffbQMLIBNUkGQ9xrhWmRcCcaJHNsDS3yVYUwpXfJQ>
+    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucfkphepjeejrddufe
+    drudekhedrjedvnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhf
+    rhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:GCp7XrqtSVqf4zToh1bzNh6IK_oR-24CwydNfSOPRTfiadK2ZhfCqw>
+    <xmx:GCp7Xp7gE-kOpjuYbpq8B2dVnswDddZKXXT4y0PCUYTVeMU1qQ77pg>
+    <xmx:GCp7XlJP1DiFaOeEA-A3hJFkwzZpgzCgcQMdtAMnrgvmUqrv1otKlQ>
+    <xmx:GCp7XgD7qHz-FoNcO9uQNOSTUM-EKWdryhz5ooT4FOUhqYLbB_uw6A>
 Received: from vm-mail.pks.im (x4d0db948.dyn.telefonica.de [77.13.185.72])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 6ACBF3280063;
-        Wed, 25 Mar 2020 05:53:23 -0400 (EDT)
+        by mail.messagingengine.com (Postfix) with ESMTPA id 151F33280063;
+        Wed, 25 Mar 2020 05:53:27 -0400 (EDT)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 8b95ca36 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Wed, 25 Mar 2020 09:53:19 +0000 (UTC)
-Date:   Wed, 25 Mar 2020 10:53:20 +0100
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 63dcd87f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Wed, 25 Mar 2020 09:53:27 +0000 (UTC)
+Date:   Wed, 25 Mar 2020 10:53:28 +0100
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git <git@vger.kernel.org>
 Cc:     Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH 0/9] Support for transactions in `git-update-ref --stdin`
-Message-ID: <cover.1585129842.git.ps@pks.im>
+Subject: [PATCH 1/9] refs: fix segfault when aborting empty transaction
+Message-ID: <3c7f8c47f361c46751629b44570657ef811d94d0.1585129842.git.ps@pks.im>
+References: <cover.1585129842.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="17pEHd4RhPHOinZp"
+        protocol="application/pgp-signature"; boundary="Dxnq1zWXvFF0Q93v"
 Content-Disposition: inline
+In-Reply-To: <cover.1585129842.git.ps@pks.im>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---17pEHd4RhPHOinZp
+--Dxnq1zWXvFF0Q93v
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+When cleaning up a transaction that has no updates queued, then the
+transaction's backend data will not have been allocated. We correctly
+handle this for the packed backend, where the cleanup function checks
+whether the backend data has been allocated at all -- if not, then there
+is nothing to clean up. For the files backend we do not check this and
+as a result will hit a segfault due to dereferencing a `NULL` pointer
+when cleaning up such a transaction.
 
-inspired by recent discussions about handling transactions in
-git-update-refs(1), this series implements proper transaction support in
-`git update-refs --stdin`. The goal is to have an all-or-nothing
-transaction where a user can queue multiple updates, verify that they
-can be committed, and then finally either commits or aborts the
-transaction. A typical session would look like the following:
+Fix the issue by checking whether `backend_data` is set in the files
+backend, too.
 
-    # Start the transaction
-    > start
-    < start: ok
-    # Queue updates
-    > delete refs/heads/branch
-    > create refs/heads/another $OID1
-    # Prepare the transaction. git-update-ref will now try to allocate
-    # all locks and verify that references are at their expected values.
-    > prepare
-    < prepare: ok
-    # Commit the transaction. The user could also have said "abort" to
-    # roll back everything.
-    > commit
-    < commit: ok
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ refs/files-backend.c | 20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
-The series builds on the already existing transaction support in refs.c
-and exposes it to the user. The most important change that was required
-to support this was to convert `git-update-ref --stdin` to handle input
-linewise instead of trying to read it in full and only acting after
-stdin was closed.
-
-The series is structured as follows:
-
-    Patches 1-2: Preparatory patches which make sense as standalone
-                 patches.
-
-    Patches 3-7: Preparatory patches that make it easier to convert to
-                 reading commands in a line-wise fashion. No functional
-                 changes are expected.
-
-    Patch 8: Conversion to read commands line-wise. No functional
-             changes are expected, except that Git builds up the transaction
-             while reading stdin instead of waiting for stdin to be closed
-             first.
-
-    Patch 9: Implementation of transactional commands.
-
-All in all, the new transactional support will only be enabled if the
-user invokes any the new commands "start", "prepare", "commit" or
-"abort". In case he doesn't, no functional changes are expected.
-
-Patrick
-
-Patrick Steinhardt (9):
-  refs: fix segfault when aborting empty transaction
-  git-update-ref.txt: add missing word
-  strbuf: provide function to append whole lines
-  update-ref: organize commands in an array
-  update-ref: drop unused argument for `parse_refname`
-  update-ref: pass end pointer instead of strbuf
-  update-ref: move transaction handling into `update_refs_stdin()`
-  update-ref: read commands in a line-wise fashion
-  update-ref: implement interactive transaction handling
-
- Documentation/git-update-ref.txt |  28 +++-
- builtin/update-ref.c             | 255 ++++++++++++++++++++++---------
- refs/files-backend.c             |  20 +--
- strbuf.c                         |  10 ++
- strbuf.h                         |   6 +
- t/t1400-update-ref.sh            | 131 ++++++++++++++++
- 6 files changed, 370 insertions(+), 80 deletions(-)
-
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 561c33ac8a..6516c7bc8c 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -2565,17 +2565,19 @@ static void files_transaction_cleanup(struct files_=
+ref_store *refs,
+ 		}
+ 	}
+=20
+-	if (backend_data->packed_transaction &&
+-	    ref_transaction_abort(backend_data->packed_transaction, &err)) {
+-		error("error aborting transaction: %s", err.buf);
+-		strbuf_release(&err);
++	if (backend_data) {
++		if (backend_data->packed_transaction &&
++		    ref_transaction_abort(backend_data->packed_transaction, &err)) {
++			error("error aborting transaction: %s", err.buf);
++			strbuf_release(&err);
++		}
++
++		if (backend_data->packed_refs_locked)
++			packed_refs_unlock(refs->packed_ref_store);
++
++		free(backend_data);
+ 	}
+=20
+-	if (backend_data->packed_refs_locked)
+-		packed_refs_unlock(refs->packed_ref_store);
+-
+-	free(backend_data);
+-
+ 	transaction->state =3D REF_TRANSACTION_CLOSED;
+ }
+=20
 --=20
 2.26.0
 
 
---17pEHd4RhPHOinZp
+--Dxnq1zWXvFF0Q93v
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAl57Kg4ACgkQVbJhu7ck
-PpRoSRAArH2/7z3jo25SYH9Kv3quKEJrizZQHuCHrwGZ8J8YzA1LOnjaE+XaxdwT
-7hrPvC89x4igOaLJUe2UoiEB8hMvcDFLCF2bNccWjTg1lgBEjK5335qB2wdwztN5
-8JXxyo9I10LpjrEPMhD3QCsHpSL2l3Uf23MI0rHQuSn50sL27oHor6e2vfSHCCoF
-jgll1R9CFnIG0stb0HS1t7eL7iM7hvbf3wcE3+ZQnGxAnmyO7jn5QN38Qh2F+DCr
-s1CVHpDL4H0GyE+3ko85Pgcgeqp/ywzC7h5Nhd7DeUCrZHvjlP+uCXFGgnC5xvtl
-RAen7T5J8T5H/73zbeRBt1DEIYIt5uJdy4+Zwlu/X8t7VmBawTeNg8S1TNSxyueD
-Q+gobJRP5b3oG+iHvg7JhpJUMJVDDWN9kc2Kxn+8eTdmncgr6X31WQTd0XfHhq6d
-n9M4ga9cDtDNa8rT2RfUdW2MHQzLFWy4JM6Lt07XySaF4vGAiLSz6+6NlqmJ39XB
-3kyjsf2AVJU3DBvxRkJlwkop7VRvpJCTJFSOp+ms6nwDAFSTXKfIs/w1QjiuLb6l
-sxa7VW6JygCnyzC/F26j0Bieyep3/SeFNv7sUBE9iloJzHcVB121hRr9wqKyVRch
-YU8v2fWBr/2sXwEdgozm21I4TXH8FWhweF/wpCroD+H4zL2oz7Q=
-=cZi2
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAl57KhYACgkQVbJhu7ck
+PpQQ7Q/+JBp1JA9ezlmvRYakDVOsKpYAj+r7dMNy0BUAJjEP8EbnoXUg/y3p/Jkk
+MEtZWfOPm6pm04FE3XWutrqR7Kct1KjEXZSxA1N9oRMAwZI6lOdbmJTL/lM26lgZ
+d8tq4yicj9erbHeASCYqISb9FTlP+GaqXYS3tZDIFBLoUholkbZFQrA2T/QvMBiH
+jdFzllmu7kanLLnKzaA1qyRyLaDrHGOevZkvovBMzAWZ+8yF936FNTg1eHuwZGxw
+kkwAatpUCTujKqrZB8rmfpCR56zpAY/qrmja2JjyXitpT9qYAutF91v1101zwe1O
+pc1vOCAGfBDn5a6xOM+DB7eVzJhiVoGfUqWulgdVzhbNjNPHPBRDS4h3ZzYfb7kG
+GEDO2lqNlCPixqZfrvTXK3aOxVK1QfdCGEWNH0UR91RO9PTb7Or7hEgVW2FS/i+P
+7T5RNmeNUNsdeDVJfOHbiLmc3PvXrioLkkCc6YCK7nqkmma1d6qpNU+/mcdlbigY
+RjTANeefaRQjE6V6VdL99mfBQMtxfwZD+WjnqnOhBETRReiuPk9jlM++8F0nct6g
+T7KAsacioQjrl82qJrU77BGlsl+TqnLh/Hh0PsJ+RRa69FkFRJUwmxJ5Zr/QO+RJ
+NTUhcNVbWJMHugnsZZvBPrDntKopFe7NhD21g3e1gk2v/7wszwQ=
+=3Sc7
 -----END PGP SIGNATURE-----
 
---17pEHd4RhPHOinZp--
+--Dxnq1zWXvFF0Q93v--
