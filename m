@@ -2,232 +2,248 @@ Return-Path: <SRS0=ys1m=5K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+X-Spam-Status: No, score=-11.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 52202C43331
-	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 11:03:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A29E0C43331
+	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 13:45:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1FE0620775
-	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 11:03:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 69E7A20663
+	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 13:45:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="LCqTRwzz"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OZG8Y7vO"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726264AbgCYLDv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 Mar 2020 07:03:51 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:33272 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726043AbgCYLDv (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 25 Mar 2020 07:03:51 -0400
-Received: from camp.crustytoothpaste.net (castro.crustytoothpaste.net [75.10.60.170])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 8CFAD60478;
-        Wed, 25 Mar 2020 11:03:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1585134230;
-        bh=Dx08KIO07kNM0MDk+uhD+WwNfoPt2Ujm3Vz+ncYHiy4=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=LCqTRwzzShdGodZyrRFVurXnwBxWEaMxWil6hE8wKUSAwstnaIg4RKf4B6z49tPOc
-         +W0JtpUO3hRHQlFVZaJApuxhV02O6MxseMZKYTDSLzjVGlm0kkKHhOpwAbIZLo5yt0
-         Q6a++jgceclStJr/D6P60UmI0L81pOAKspnhEQOZk+dhU37G89EF9vuw/XmqyJBg7M
-         8+el8C+ynYyLF2G2IbqnDCveUkrslSAgbxKaECSS5ZAfGIC3rQ/e2VE8TOfJ5QEbTb
-         7IiQr2LFH0ZeYtT5dEvyzf9iLZGkfaHxvPcX68FvWA/vgCltQgjzB/nE3iUICjOaKV
-         AGAkJHH280oOWFrq+4EoFAm7nFtGIlhhvQSq5Dfq74dijFRGdR0DPStrkniXmzB5D/
-         moGeK5vnUo76ozHqQ70JIPirrQ1pHHU3F6WlBEwUuQvXj/pbtccptLlh8c/uMCG+k6
-         hGMbCense0Z38VIfzl4y3bEWFwiljPs5wb2b1toqqvppo9Cu+Rq
-Date:   Wed, 25 Mar 2020 11:03:28 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Shourya Shukla <shouryashukla.oo@gmail.com>
-Subject: Re: [PATCH v2] docs: add a FAQ
-Message-ID: <20200325110328.GK6499@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Shourya Shukla <shouryashukla.oo@gmail.com>
-References: <20200325013434.219775-1-sandals@crustytoothpaste.net>
- <20200325013434.219775-2-sandals@crustytoothpaste.net>
- <CAN0heSofpxFW81=sB+4ukx9S0JOJo_XuKDTBSkTy_-QK+jDz0Q@mail.gmail.com>
+        id S1727430AbgCYNpO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 Mar 2020 09:45:14 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:33559 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727290AbgCYNpO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Mar 2020 09:45:14 -0400
+Received: by mail-ed1-f67.google.com with SMTP id z65so2433485ede.0
+        for <git@vger.kernel.org>; Wed, 25 Mar 2020 06:45:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=I1q73szehWh05yyuig3r+XLhfVW6Kqna5AbYqrHnrUo=;
+        b=OZG8Y7vOKTfEZW/uUcxL5SwBrIzNp2OF7212hL0TqZPZYb4o761vmAQftTlf4MeEUh
+         ZGky5GeODhgaW14Xk2v6OoSYgO9HDtcvo0uWbPquRbIWQCZBQZOsT5ootY8x5zo42XMH
+         4psP0r3xlBxqiy1dgw1FYUe9o0WtAv0XkEUeC6vH1+y29CgP/aulAaJTbduEsGNKuyTJ
+         dSF2bgGaRKoSBElBmL7Ku4S7Uj7yzl+cNLIxayFHt2M4HUaJqMTUZQoBtmtG63K/9Fq1
+         3y2ZMJan3V9bVIcEUsm4mxgCJOpv9XSPFW59xfOoBoCP63T6czq7Vz1/2Dtx8LcLpjWH
+         euKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=I1q73szehWh05yyuig3r+XLhfVW6Kqna5AbYqrHnrUo=;
+        b=BRrXNq0w/eEeBg7+yS+jMON0O4K+vMI+BNEBJ0Ck5f/4x4auDN+A3nC2M6CKa+O5ZF
+         PsOy0p7CLE1LDctNTNoo3XJlc1eNnglSACBMnp95HBS4rf9rE+EL2On+OHu/gI1ZLoVV
+         8DGjvCcJCccTtygx50C++mkspHlXCZ48OSOV5MblRhfoPq1s3kBMlY5k9Cc+/xZOdexp
+         Vnzw7bQUx5YNz5Fe6PGliNxULiBRGlzxVi1jVFDlQ6I/z1zSsSfuh/+h5OwtGGmw+60Q
+         IioJI5sLNKnplrK6jV3wu1+qN2P643LiLs3MrQQcgDVlo6ISPrQ9xZlfeOLS7qGpe0Fa
+         kpWA==
+X-Gm-Message-State: ANhLgQ2NJkiGt1Cdi/ChHIx/nl5ISXm4SZru/M5j/8P0/PeyNV+oqF16
+        Np49GIGxtX/HNcCEWjIgt4szKbGx
+X-Google-Smtp-Source: ADFU+vu3lsTe3uqfdagphS6vCTw2cgwFmGIOBGt7jVRMLkI/mRrgiev29eaoGgxiPO+ce3QyqIGccw==
+X-Received: by 2002:a17:906:e297:: with SMTP id gg23mr3037909ejb.294.1585143911700;
+        Wed, 25 Mar 2020 06:45:11 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id mu6sm375308ejb.25.2020.03.25.06.45.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 25 Mar 2020 06:45:11 -0700 (PDT)
+Message-Id: <pull.587.v2.git.1585143910604.gitgitgadget@gmail.com>
+In-Reply-To: <pull.587.git.1584997990694.gitgitgadget@gmail.com>
+References: <pull.587.git.1584997990694.gitgitgadget@gmail.com>
+From:   "=?UTF-8?Q?Andr=C3=A1s?= Kucsma via GitGitGadget" 
+        <gitgitgadget@gmail.com>
+Date:   Wed, 25 Mar 2020 13:45:10 +0000
+Subject: [PATCH v2] Fix dir sep handling of GIT_ASKPASS on Windows
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="DozTQjXnjm3C9Xhk"
-Content-Disposition: inline
-In-Reply-To: <CAN0heSofpxFW81=sB+4ukx9S0JOJo_XuKDTBSkTy_-QK+jDz0Q@mail.gmail.com>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.4.0-4-amd64)
+To:     git@vger.kernel.org
+Cc:     Torsten =?UTF-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?Andr=C3=A1s?= Kucsma <r0maikx02b@gmail.com>,
+        Andras Kucsma <r0maikx02b@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Andras Kucsma <r0maikx02b@gmail.com>
 
---DozTQjXnjm3C9Xhk
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Windows with git installed through cygwin, GIT_ASKPASS failed to run
+for relative and absolute paths containing only backslashes as directory
+separators.
 
-On 2020-03-25 at 06:23:49, Martin =C3=85gren wrote:
-> On Wed, 25 Mar 2020 at 02:37, brian m. carlson
-> <sandals@crustytoothpaste.net> wrote:
-> > Note that the long lines for certain questions are required, since
-> > Asciidoctor does not permit broken lines there.
-> > ---
->=20
-> Missing sign-off.
+The reason was that git assumed that if there are no forward slashes in
+the executable path, it has to search for the executable on the PATH.
 
-Thanks, will fix.
+The fix is to look for OS specific directory separators, not just
+forward slashes.
 
-> > +You can also just enter your password when prompted, or you can place =
-the
-> > +password (which must be percent-encoded) in the URL.  The latter optio=
-n is not
-> > +particularly secure and can lead to accidental exposure of credentials=
-, so it is
-> > +not recommended.
->=20
-> So should we even mention it? Or should we use the "it is sometimes
-> (erroneously) suggested" construct?
+Signed-off-by: Andras Kucsma <r0maikx02b@gmail.com>
+---
+    Fix dir sep handling of GIT_ASKPASS on Windows
+    
+    On Windows with git installed through cygwin, GIT_ASKPASS failed to run
+    for relative and absolute paths containing only backslashes as directory
+    separators.
+    
+    The reason was that git assumed that if there are no forward slashes in
+    the executable path, it has to search for the executable on the PATH.
+    
+    The fix is to look for OS specific directory separators, not just
+    forward slashes.
+    
+    Signed-off-by: Andras Kucsma r0maikx02b@gmail.com [r0maikx02b@gmail.com]
+    
+    Changes since v1:
+    
+     * Avoid scanning the whole path for a directory separator even if one
+       is found earlier as suggested by Junio C Hamano.
 
-I'll rephrase this to make it a little more obvious that this is a bad
-idea.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-587%2Fr0mai%2Ffix-prepare_cmd-windows-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-587/r0mai/fix-prepare_cmd-windows-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/587
 
-> > +Most hosting providers use a single SSH account for pushing; that is, =
-all users
-> > +push to the `git` account (e.g., `git@git.example.org`).  If that's th=
-e case for
-> > +your provider, you can set up multiple aliases in SSH to make it clear=
- which key
-> > +pair to use.  For example, you could write something like the followin=
-g,
-> > +substituting the proper private key file:
->=20
-> Would this be in `~/.ssh/config`?
+Range-diff vs v1:
 
-Ah, yes, we should tell that to the user.
+ 1:  8fbfbec0d38 ! 1:  947931ac568 Fix dir sep handling of GIT_ASKPASS on Windows
+     @@ -14,6 +14,47 @@
+      
+          Signed-off-by: Andras Kucsma <r0maikx02b@gmail.com>
+      
+     + diff --git a/compat/win32/path-utils.h b/compat/win32/path-utils.h
+     + --- a/compat/win32/path-utils.h
+     + +++ b/compat/win32/path-utils.h
+     +@@
+     + 	return ret;
+     + }
+     + #define find_last_dir_sep win32_find_last_dir_sep
+     ++static inline int win32_has_dir_sep(const char *path)
+     ++{
+     ++	/*
+     ++	 * See how long the non-separator part of the given path is, and
+     ++	 * if and only if it covers the whole path (i.e. path[len] is NULL),
+     ++	 * there is no separator in the path---otherwise there is a separator.
+     ++	 */
+     ++	size_t len = strcspn(path, "/\\");
+     ++	return !!path[len];
+     ++}
+     ++#define has_dir_sep(path) win32_has_dir_sep(path)
+     + int win32_offset_1st_component(const char *path);
+     + #define offset_1st_component win32_offset_1st_component
+     + 
+     +
+     + diff --git a/git-compat-util.h b/git-compat-util.h
+     + --- a/git-compat-util.h
+     + +++ b/git-compat-util.h
+     +@@
+     + #define find_last_dir_sep git_find_last_dir_sep
+     + #endif
+     + 
+     ++#ifndef has_dir_sep
+     ++static inline int git_has_dir_sep(const char *path)
+     ++{
+     ++	return !!strchr(path, '/');
+     ++}
+     ++#define has_dir_sep(path) git_has_dir_sep(path)
+     ++#endif
+     ++
+     + #ifndef query_user_email
+     + #define query_user_email() NULL
+     + #endif
+     +
+       diff --git a/run-command.c b/run-command.c
+       --- a/run-command.c
+       +++ b/run-command.c
+     @@ -31,7 +72,7 @@
+      +	 * the command directly.
+       	 */
+      -	if (!strchr(out->argv[1], '/')) {
+     -+	if (find_last_dir_sep(out->argv[1]) == NULL) {
+     ++	if (!has_dir_sep(out->argv[1])) {
+       		char *program = locate_in_PATH(out->argv[1]);
+       		if (program) {
+       			free((char *)out->argv[1]);
 
-> > ++
-> > +----
-> > +# This is the account for author on git.example.org.
-> > +Host example_author
-> > +       HostName git.example.org
-> > +       User git
-> > +       # This is the key pair registered for author with git.example.o=
-rg.
-> > +       IdentityFile ~/.ssh/id_author
-> > +       IdentitiesOnly yes
-> > +# This is the committer for author on git.example.org.
->=20
-> Looks like you did s/account/committer/ instead of s/author/committer/?
 
-So I did.
+ compat/win32/path-utils.h | 11 +++++++++++
+ git-compat-util.h         |  8 ++++++++
+ run-command.c             | 10 +++++-----
+ 3 files changed, 24 insertions(+), 5 deletions(-)
 
-> > +
-> > +[[last-commit-amend]]
-> > +I've made a mistake in the last commit.  How do I change it?::
-> > +       You can make the appropriate change to your working tree, run `=
-git add
-> > +       <file>` or `git rm <file>`, as approrpiate, to stage it, and th=
-en `git
->=20
-> typoed "appropriate"
+diff --git a/compat/win32/path-utils.h b/compat/win32/path-utils.h
+index f2e70872cd2..18eff7899e9 100644
+--- a/compat/win32/path-utils.h
++++ b/compat/win32/path-utils.h
+@@ -20,6 +20,17 @@ static inline char *win32_find_last_dir_sep(const char *path)
+ 	return ret;
+ }
+ #define find_last_dir_sep win32_find_last_dir_sep
++static inline int win32_has_dir_sep(const char *path)
++{
++	/*
++	 * See how long the non-separator part of the given path is, and
++	 * if and only if it covers the whole path (i.e. path[len] is NULL),
++	 * there is no separator in the path---otherwise there is a separator.
++	 */
++	size_t len = strcspn(path, "/\\");
++	return !!path[len];
++}
++#define has_dir_sep(path) win32_has_dir_sep(path)
+ int win32_offset_1st_component(const char *path);
+ #define offset_1st_component win32_offset_1st_component
+ 
+diff --git a/git-compat-util.h b/git-compat-util.h
+index aed0b5d4f90..8ba576e81e3 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -389,6 +389,14 @@ static inline char *git_find_last_dir_sep(const char *path)
+ #define find_last_dir_sep git_find_last_dir_sep
+ #endif
+ 
++#ifndef has_dir_sep
++static inline int git_has_dir_sep(const char *path)
++{
++	return !!strchr(path, '/');
++}
++#define has_dir_sep(path) git_has_dir_sep(path)
++#endif
++
+ #ifndef query_user_email
+ #define query_user_email() NULL
+ #endif
+diff --git a/run-command.c b/run-command.c
+index f5e1149f9b3..0f41af3b550 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -421,12 +421,12 @@ static int prepare_cmd(struct argv_array *out, const struct child_process *cmd)
+ 	}
+ 
+ 	/*
+-	 * If there are no '/' characters in the command then perform a path
+-	 * lookup and use the resolved path as the command to exec.  If there
+-	 * are '/' characters, we have exec attempt to invoke the command
+-	 * directly.
++	 * If there are no dir separator characters in the command then perform
++	 * a path lookup and use the resolved path as the command to exec. If
++	 * there are dir separator characters, we have exec attempt to invoke
++	 * the command directly.
+ 	 */
+-	if (!strchr(out->argv[1], '/')) {
++	if (!has_dir_sep(out->argv[1])) {
+ 		char *program = locate_in_PATH(out->argv[1]);
+ 		if (program) {
+ 			free((char *)out->argv[1]);
 
-Will fix.
-
-> > +[[restrict-with-hooks]]
-> > +How do I prevent users from making certain changes with hooks?::
->=20
-> I read this as:
->=20
->   How do I prevent users from making "certain changes with hooks"?
->=20
-> As opposed to your intended meaning:
->=20
->   How do I (with hooks) prevent users from making certain changes?
->=20
-> I'm not suggesting the latter as a "fix" for this "problem" though,
-> since it's a bit clumsy. How about adding a comma:
->=20
->   How do I prevent users from making certain changes, with hooks?
->=20
-> Or maybe just dropping those last two words.
->=20
-> Please trust your judgement on whether this is a problem, and if so, how
-> to go about addressing it -- I know you have lots of such judgement.
-
-How about, "How do I use hooks to prevent users from making certain
-changes?"  That seems to both read smoothly and avoid the misplaced
-modifier.
-
-> > +Cross-Platform Issues
-> > +~~~~~~~~~~~~~~~~~~~~~
->=20
-> I think you meant to use "--" as everywhere else instead of "~~". This
-> is not a subsection of "Hooks".
-
-Ah, yes.  Apparently my fonts are so small that these are hard to
-distinguish with bright white on grey.  I typically use the
-Setext style in my own documents, but that isn't what we do in Git.
-
-> > +To do so, you can specify a linkgit:gitattributes[5] pattern with with=
- the
->=20
-> "with with"
-
-Ah, normally Vim flags those things.  Will fix.
-
-> > +[[windows-diff-control-m]]
-> > +I'm on Windows and git diff shows my files as having a `^M` at the end=
-=2E::
-> > +       By default, Git expects files to be stored with Unix line endin=
-gs.  As
-> > +       such, the carriage return (`^M`) that is part of a Windows line=
- ending
-> > +       results is show because it is considered to be trailing whitesp=
-ace.  Git
->=20
-> "results is show"? "is shown"? Perhaps with a comma after "shown" for
-> better reading flow (IMVHO).
-
-This should be "is shown".  I'm not sure if a comma after "shown" is
-grammatical here as it stands, but I think we could write "is shown,
-since" and that would be okay.  I'll check a reference and rephrase if
-necessary.
-
-> > +       defaults to showing trailing whitespace only on new lines, not =
-existing
-> > +       ones.
->=20
-> > +We also recommend setting a link:gitattributes[5] file to explicitly m=
-ark which
->=20
-> s/link:/linkgit:/
-
-Will fix.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---DozTQjXnjm3C9Xhk
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXns6gAAKCRB8DEliiIei
-gVWOAP9pKzAhIhdQzr7Fz8jpq+76e+ou/dCpl2TFNRk6WgihRgD/SdBytpXxcAm2
-o0UFybDCa4geo1aRaxLWek2f9ni4QQE=
-=N6+X
------END PGP SIGNATURE-----
-
---DozTQjXnjm3C9Xhk--
+base-commit: 274b9cc25322d9ee79aa8e6d4e86f0ffe5ced925
+-- 
+gitgitgadget
