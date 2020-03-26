@@ -8,61 +8,60 @@ X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D6942C43331
-	for <git@archiver.kernel.org>; Thu, 26 Mar 2020 15:35:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ECA4AC2D0E8
+	for <git@archiver.kernel.org>; Thu, 26 Mar 2020 15:35:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id AF3BB20714
-	for <git@archiver.kernel.org>; Thu, 26 Mar 2020 15:35:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B7A0120714
+	for <git@archiver.kernel.org>; Thu, 26 Mar 2020 15:35:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FI+xG82n"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Gee173Gg"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728501AbgCZPff (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 Mar 2020 11:35:35 -0400
-Received: from mail-ed1-f45.google.com ([209.85.208.45]:45428 "EHLO
-        mail-ed1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727779AbgCZPfe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Mar 2020 11:35:34 -0400
-Received: by mail-ed1-f45.google.com with SMTP id u59so7271243edc.12
-        for <git@vger.kernel.org>; Thu, 26 Mar 2020 08:35:33 -0700 (PDT)
+        id S1728527AbgCZPfi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 Mar 2020 11:35:38 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:39664 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727779AbgCZPfh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Mar 2020 11:35:37 -0400
+Received: by mail-ed1-f68.google.com with SMTP id a43so7314121edf.6
+        for <git@vger.kernel.org>; Thu, 26 Mar 2020 08:35:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=rQUbvxTSezPan3293Q6f6exzq1VQ8yKiUsD6iNm48yQ=;
-        b=FI+xG82nEX2s0LPM0xB/Quiu9Rhb2vPnXjvfS3wmT+pZSnhfz/0EB4QxOHttF2j7dS
-         cZbC+8wfneHoFXQhe5d/2AyFxNBvM4WVmhKiImHaM0fOVNnR2MLAGjOlYincsAaELlM7
-         EMcA4P2kU4Zww+I1EhZWSfmxJ7OuNsQZMqWZZpJ0ZspUVIJmv+E1+JZ4WU67N/BLufbk
-         1CPxR/hoLGn1hpqk6qGUG9P63JZdyGQmnYS9ia3No6EIaKwhtg03czxlQqBuTAhlEeni
-         HOMd4bVTpCceQnRrdG16Qd3eafPYiIyU2M5hB9ny1vI0Ob07k8PlD36+OOU8mBq9tH7T
-         S+zQ==
+        bh=Zr7j7KDO6DqFDe33EpDYB1oLRw9+sRniw+RwvncNmuU=;
+        b=Gee173Gg0WCsgMdc8hgkKHMw6IzIfoAbtEdjXfNIZ1ZN/4rx5f9OfaCz2zxCtNj37a
+         yYnzupdmqAzIszniUOOpPvFkmPR0tjC48a8HcrRMUlLFuKenLITA0P1hUV0jLD8ZZ5Jc
+         leInSteB4eJafKz22/4icxCVZi5RCbPd25gxC2o9ry0/dk73Eql1pLnTrbb28DxYQH9f
+         mGIZg+7cm6ubQ30N3QFiYYGtkmGJgncfQkdZ78SdBerse/2molopGK3lEyhXDjzsJfVI
+         nrwubg/HTryhI/W4a8Gj1uZewdp4/jhcG1xvkVyliOQwrol99tjGtJ7qSexnBaXewrvQ
+         bBjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=rQUbvxTSezPan3293Q6f6exzq1VQ8yKiUsD6iNm48yQ=;
-        b=qjwPpPVY25aF0IVeOjM8cLISLt+DK6lvmjyt/1kW6zVX1rNCww3VHAli24kHVB+J11
-         pQ+3vBgk+lnvNwjLWPYnP4QFcpFwkcvJEC8kJB4MBmp3d41xLUd3kxhsLq20WZnrMS2k
-         MSeoJMWm7azf8cDVIuh5MURwZBurj+b7A4+3SR3IRgwyHltTRhu2Nipj6YUce3TcxLan
-         Iz0lVoZ37LM6H7AbEzROZQdMwtT29QVMGRmEwmSKD3/4+YNgIWuPk67gK/t7+V5ANfEB
-         o2YIAXhgnq5ntwpkgFsWZwjk53N14C63F63PpkuhtIfgN2o4aN5bGn3Z04TAwPV0gfS8
-         RJ7A==
-X-Gm-Message-State: ANhLgQ2BQrklMyIT45SqWnHgtQWmAEo2rvDyTjL4PmfWIg/QhhMe7qmA
-        p6DLuBQlgYmRz5LVGDa9iIeWVfYN
-X-Google-Smtp-Source: ADFU+vuf50zLbyZQ0p24XWCuD9WlzJ61v7EqpxsFK0DZ9ixF/9cq2pMx99s1iubyrKfNZBTrwPZ99A==
-X-Received: by 2002:a17:906:1504:: with SMTP id b4mr8328113ejd.275.1585236932697;
-        Thu, 26 Mar 2020 08:35:32 -0700 (PDT)
+        bh=Zr7j7KDO6DqFDe33EpDYB1oLRw9+sRniw+RwvncNmuU=;
+        b=NT5joBxMNg93D+LWdOVX3uC54f3OdQa9fJiQC21G83OYb9RlkR1BpldpqABjMiClwz
+         PbCxsIFlecKwzumrT7wXZVMq8WKPCpckZjdgLdrvc0RUuK5yfDAruM5eubtJgLk32ItJ
+         wRKIJA6JI07BoZU3nwANKX1Q5Go4kFmGLxNKBZQOxQVZD3LbxqnUGvfZ6IBa7cPkogYz
+         L3V6EmEY1/urvrrghZtrMu0xXjMREUpx/D3eH/OksCGMFaedHFUMKI+dNbcHaWSqorzs
+         TPpJSZ3PjRekTWf5Oyt8ANSbCiuFHPLSjgd14SgxlTt5UvaRvfBhYyG9Xwa2jHDqpuQ2
+         vexw==
+X-Gm-Message-State: ANhLgQ34jYF/gz1gosPJ9AfOdBTucg0AuCeERuhoVFezoO6GOxVTBE1Y
+        4GQIFNy1l/028S+O+BNMIKfhEQCr
+X-Google-Smtp-Source: ADFU+vvnd5v9hu06sn5lCZhe1PMuxEvzyipDsHO99tiZXLvF80iC2EnVIw7Nw41O3ynGBW1xgsk6Ww==
+X-Received: by 2002:a05:6402:1345:: with SMTP id y5mr8263737edw.196.1585236933284;
+        Thu, 26 Mar 2020 08:35:33 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id gr15sm337946ejb.12.2020.03.26.08.35.32
+        by smtp.gmail.com with ESMTPSA id bs8sm325172ejb.92.2020.03.26.08.35.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 26 Mar 2020 08:35:32 -0700 (PDT)
-Message-Id: <f35830c0eba216b7b4f144409e302a87ff8b5c06.1585236929.git.gitgitgadget@gmail.com>
+Message-Id: <f69f97e24ba8fc931e7c86931756e1a176348f3c.1585236929.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.728.v3.git.git.1585236929.gitgitgadget@gmail.com>
 References: <pull.728.v2.git.git.1585114881.gitgitgadget@gmail.com>
         <pull.728.v3.git.git.1585236929.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 26 Mar 2020 15:35:26 +0000
-Subject: [PATCH v3 3/5] tests: do not let lazy prereqs inside `test_expect_*`
- turn off tracing
+Date:   Thu, 26 Mar 2020 15:35:27 +0000
+Subject: [PATCH v3 4/5] tests: turn GPG, GPGSM and RFC1991 into lazy prereqs
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,92 +77,171 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The `test_expect_*` functions use `test_eval_` and so does
-`test_run_lazy_prereq_`. If tracing is enabled via the `-x` option,
-`test_eval_` turns on tracing while evaluating the code block, and turns
-it off directly after it.
+The code to set those prereqs is executed completely outside of any
+`test_eval_` block. As a consequence, its output had to be suppressed so
+that it does not clutter the output of a regular test script run.
 
-This is unwanted for nested invocations.
+Unfortunately, the output *stays* suppressed even when the `--verbose`
+option is in effect.
 
-One somewhat surprising example of this is when running a test that
-calls `test_i18ngrep`: that function requires the `C_LOCALE_OUTPUT`
-prereq, and that prereq is a lazy one, so it is evaluated via
-`test_eval_`, the command tracing is turned off, and the test case
-continues to run _without tracing the commands_.
+This hid important output when debugging why the GPG prereq was not
+enabled in the Windows part of our CI builds.
 
-Another somewhat surprising example is when one lazy prereq depends on
-another lazy prereq: the former will call `test_have_prereq` with the
-latter one, which in turn calls `test_eval_` and -- you guessed it --
-tracing (if enabled) will be turned off _before_ returning to evaluating
-the other lazy prereq.
+In preparation for fixing that, let's move all of this code into lazy
+prereqs.
 
-As we will introduce just such a scenario with the GPG, GPGSM and
-RFC1991 prereqs, let's fix that by introducing a variable that keeps
-track of the current trace level: nested `test_eval_` calls will
-increment and then decrement the level, and only when it reaches 0, the
-tracing will _actually_ be turned off.
+The only slightly tricky part is the global environment variable
+`GNUPGHOME`. Originally, it was configured only when we verified that
+there is a `gpg` in the `PATH` that we can use. This is now no longer
+possible, as lazy prereqs are evaluated in a subshell that changes the
+working directory to a temporary one. Therefore, we simply _always_ set
+that environment variable: it does not hurt anything because it does not
+indicate the presence of a working GPG.
+
+Side note: it was quite tempting to use a hack that is possible because
+we do not validate what is passed to `test_lazy_prereq` (and it is
+therefore possible to "break out" of the lazy_prereq subshell:
+
+	test_lazy_prereq GPG '...) && GNUPGHOME=... && (...'
+
+However, this is rather tricksy hobbitses code, and the current patch is
+_much_ easier to understand.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t0000-basic.sh | 13 +++++++++++++
- t/test-lib.sh    |  6 ++++--
- 2 files changed, 17 insertions(+), 2 deletions(-)
+ t/lib-gpg.sh | 102 ++++++++++++++++++++++++++++-----------------------
+ 1 file changed, 57 insertions(+), 45 deletions(-)
 
-diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-index 3e440c078d5..b8597216200 100755
---- a/t/t0000-basic.sh
-+++ b/t/t0000-basic.sh
-@@ -833,6 +833,19 @@ then
- 	exit 1
- fi
- 
-+test_expect_success 'lazy prereqs do not turn off tracing' "
-+	run_sub_test_lib_test lazy-prereq-and-tracing \
-+		'lazy prereqs and -x' -v -x <<-\\EOF &&
-+	test_lazy_prereq LAZY true
+diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
+index 4ead1268351..7a78c562e8d 100755
+--- a/t/lib-gpg.sh
++++ b/t/lib-gpg.sh
+@@ -1,12 +1,25 @@
+-gpg_version=$(gpg --version 2>&1)
+-if test $? != 127
+-then
++# We always set GNUPGHOME, even if no usable GPG was found, as
++#
++# - It does not hurt, and
++#
++# - we cannot set global environment variables in lazy prereqs because they are
++#   executed in an eval'ed subshell that changes the working directory to a
++#   temporary one.
 +
-+	test_expect_success lazy 'test_have_prereq LAZY && echo trace'
++GNUPGHOME="$PWD/gpghome"
++export GNUPGHOME
 +
-+	test_done
-+	EOF
++test_lazy_prereq GPG '
++	gpg_version=$(gpg --version 2>&1)
++	test $? != 127 || exit 1
 +
-+	grep 'echo trace' lazy-prereq-and-tracing/err
-+"
+ 	# As said here: http://www.gnupg.org/documentation/faqs.html#q6.19
+-	# the gpg version 1.0.6 didn't parse trust packets correctly, so for
++	# the gpg version 1.0.6 did not parse trust packets correctly, so for
+ 	# that version, creation of signed tags using the generated key fails.
+ 	case "$gpg_version" in
+-	'gpg (GnuPG) 1.0.6'*)
++	"gpg (GnuPG) 1.0.6"*)
+ 		say "Your version of gpg (1.0.6) is too buggy for testing"
++		exit 1
+ 		;;
+ 	*)
+ 		# Available key info:
+@@ -25,55 +38,54 @@ then
+ 		# To export ownertrust:
+ 		#	gpg --homedir /tmp/gpghome --export-ownertrust \
+ 		#		> lib-gpg/ownertrust
+-		mkdir ./gpghome &&
+-		chmod 0700 ./gpghome &&
+-		GNUPGHOME="$PWD/gpghome" &&
+-		export GNUPGHOME &&
++		mkdir "$GNUPGHOME" &&
++		chmod 0700 "$GNUPGHOME" &&
+ 		(gpgconf --kill gpg-agent >/dev/null 2>&1 || : ) &&
+ 		gpg --homedir "${GNUPGHOME}" 2>/dev/null --import \
+ 			"$TEST_DIRECTORY"/lib-gpg/keyring.gpg &&
+ 		gpg --homedir "${GNUPGHOME}" 2>/dev/null --import-ownertrust \
+ 			"$TEST_DIRECTORY"/lib-gpg/ownertrust &&
+ 		gpg --homedir "${GNUPGHOME}" </dev/null >/dev/null 2>&1 \
+-			--sign -u committer@example.com &&
+-		test_set_prereq GPG &&
+-		# Available key info:
+-		# * see t/lib-gpg/gpgsm-gen-key.in
+-		# To generate new certificate:
+-		#  * no passphrase
+-		#	gpgsm --homedir /tmp/gpghome/ \
+-		#		-o /tmp/gpgsm.crt.user \
+-		#		--generate-key \
+-		#		--batch t/lib-gpg/gpgsm-gen-key.in
+-		# To import certificate:
+-		#	gpgsm --homedir /tmp/gpghome/ \
+-		#		--import /tmp/gpgsm.crt.user
+-		# To export into a .p12 we can later import:
+-		#	gpgsm --homedir /tmp/gpghome/ \
+-		#		-o t/lib-gpg/gpgsm_cert.p12 \
+-		#		--export-secret-key-p12 "committer@example.com"
+-		echo | gpgsm --homedir "${GNUPGHOME}" 2>/dev/null \
+-			--passphrase-fd 0 --pinentry-mode loopback \
+-			--import "$TEST_DIRECTORY"/lib-gpg/gpgsm_cert.p12 &&
+-
+-		gpgsm --homedir "${GNUPGHOME}" 2>/dev/null -K |
+-		grep fingerprint: |
+-		cut -d" " -f4 |
+-		tr -d '\n' >"${GNUPGHOME}/trustlist.txt" &&
+-
+-		echo " S relax" >>"${GNUPGHOME}/trustlist.txt" &&
+-		echo hello | gpgsm --homedir "${GNUPGHOME}" >/dev/null \
+-			-u committer@example.com -o /dev/null --sign - 2>&1 &&
+-		test_set_prereq GPGSM
++			--sign -u committer@example.com
+ 		;;
+ 	esac
+-fi
++'
 +
- test_expect_success 'tests clean up even on failures' "
- 	run_sub_test_lib_test_err \
- 		failing-cleanup 'Failing tests with cleanup commands' <<-\\EOF &&
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 0ea1e5a05ed..529056be497 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -882,6 +882,7 @@ maybe_setup_valgrind () {
- 	fi
- }
++test_lazy_prereq GPGSM '
++	test_have_prereq GPG &&
++	# Available key info:
++	# * see t/lib-gpg/gpgsm-gen-key.in
++	# To generate new certificate:
++	#  * no passphrase
++	#	gpgsm --homedir /tmp/gpghome/ \
++	#		-o /tmp/gpgsm.crt.user \
++	#		--generate-key \
++	#		--batch t/lib-gpg/gpgsm-gen-key.in
++	# To import certificate:
++	#	gpgsm --homedir /tmp/gpghome/ \
++	#		--import /tmp/gpgsm.crt.user
++	# To export into a .p12 we can later import:
++	#	gpgsm --homedir /tmp/gpghome/ \
++	#		-o t/lib-gpg/gpgsm_cert.p12 \
++	#		--export-secret-key-p12 "committer@example.com"
++       echo | gpgsm --homedir "${GNUPGHOME}" 2>/dev/null \
++	       --passphrase-fd 0 --pinentry-mode loopback \
++	       --import "$TEST_DIRECTORY"/lib-gpg/gpgsm_cert.p12 &&
++
++       gpgsm --homedir "${GNUPGHOME}" 2>/dev/null -K |
++       grep fingerprint: |
++       cut -d" " -f4 |
++	tr -d "\\n" >"${GNUPGHOME}/trustlist.txt" &&
++
++       echo " S relax" >>"${GNUPGHOME}/trustlist.txt" &&
++       echo hello | gpgsm --homedir "${GNUPGHOME}" >/dev/null \
++	       -u committer@example.com -o /dev/null --sign - 2>&1
++'
  
-+trace_level_=0
- want_trace () {
- 	test "$trace" = t && {
- 		test "$verbose" = t || test "$verbose_log" = t
-@@ -895,7 +896,7 @@ want_trace () {
- test_eval_inner_ () {
- 	# Do not add anything extra (including LF) after '$*'
- 	eval "
--		want_trace && set -x
-+		want_trace && trace_level_=$(($trace_level_+1)) && set -x
- 		$*"
- }
+-if test_have_prereq GPG &&
+-    echo | gpg --homedir "${GNUPGHOME}" -b --rfc1991 >/dev/null 2>&1
+-then
+-	test_set_prereq RFC1991
+-fi
++test_lazy_prereq RFC1991 '
++	test_have_prereq GPG &&
++	echo | gpg --homedir "${GNUPGHOME}" -b --rfc1991 >/dev/null 2>&1
++'
  
-@@ -926,7 +927,8 @@ test_eval_ () {
- 		test_eval_ret_=$?
- 		if want_trace
- 		then
--			set +x
-+			test 1 = $trace_level_ && set +x
-+			trace_level_=$(($trace_level_-1))
- 		fi
- 	} 2>/dev/null 4>&2
- 
+ sanitize_pgp() {
+ 	perl -ne '
 -- 
 gitgitgadget
 
