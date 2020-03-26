@@ -7,99 +7,117 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 00D3DC43331
-	for <git@archiver.kernel.org>; Thu, 26 Mar 2020 00:37:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F239C43331
+	for <git@archiver.kernel.org>; Thu, 26 Mar 2020 00:50:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id C372A2076A
-	for <git@archiver.kernel.org>; Thu, 26 Mar 2020 00:37:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2D7922073E
+	for <git@archiver.kernel.org>; Thu, 26 Mar 2020 00:50:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="EC20bRY+"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CgT9BGj/"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727590AbgCZAhc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 Mar 2020 20:37:32 -0400
-Received: from mail-qt1-f194.google.com ([209.85.160.194]:45413 "EHLO
-        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727536AbgCZAhc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Mar 2020 20:37:32 -0400
-Received: by mail-qt1-f194.google.com with SMTP id t17so3900539qtn.12
-        for <git@vger.kernel.org>; Wed, 25 Mar 2020 17:37:32 -0700 (PDT)
+        id S1727560AbgCZAul (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 Mar 2020 20:50:41 -0400
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:43511 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727539AbgCZAul (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Mar 2020 20:50:41 -0400
+Received: by mail-pl1-f196.google.com with SMTP id v23so1480588ply.10
+        for <git@vger.kernel.org>; Wed, 25 Mar 2020 17:50:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=S9IZclsWLZMnGEUrKs4qZMTW9nfvF7wjMauw+lOnH+s=;
-        b=EC20bRY+9emYsFyXMvjqnBYrTR2RSdWrce1CA5FDUT5A/78FWwukVdzFnQsOEIjVdO
-         cdvoosLyR+bWIa7BiX6avq4Cfv6biKh6u1TH0ARYr36gSNPZyPEXi9G5nSE2sY0msNVD
-         cr/1WazstLX4W9bhJviDirfzG3WVHLs0zpSZHgvQ3vr00WNgRUo31WlE+Kfz964Bo6K3
-         B0z/6gtm6YAaeFHMYdhfyHpcOnwbl1dWQf/0yrriXwQuFGcARP94OP2PsFk7NhoNxgc2
-         QMIY7He2UxcZ92aLV1io1ieUF3Ej7YHdr2ptVZKuaZTPHuzh0o4yNyGP2oex+6M2PDmh
-         MSNQ==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=iV6ymD1kQQONQHm4JdBry95DQKFCs+rEV8XV/WUjq8s=;
+        b=CgT9BGj/SX+N9el8boeJPlDd1v0cDIoXz9DPW6rKZRlntPuWf4XfJU+/BwYVKOquw3
+         sWS1eaLsch5TQH70vO3kNJYXdKksPw5ILklK5+SvkjBrKi0v8HRIegLFTHyXCoNcWFsL
+         ldmxjuzDhcH22Cc67wuacktPLZmPg8Ej3LZL19jTQmXxfO+E8zmsn3n/Z7iAeGAwTkHq
+         8AvF7+WwTy0dNFYFMS0p7Nb3LdgtpzBif4N2zewUvAEfpY9gvIqgZzZU3iUvLPMnpTpP
+         UGexkcl/wdieJ0I47/REfvE0AY9b+wJWb6KO1U6Jjv2VP4XnSvubWae4wdH5Sw3HO7IE
+         9Esw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=S9IZclsWLZMnGEUrKs4qZMTW9nfvF7wjMauw+lOnH+s=;
-        b=Yv8FS57QOUvDB0481127Hf+pc7fSx+Acnv+ETXMoaIKsANTZC9i0VczpwzWlx1wNec
-         8OQFOivN8Ipi1jMdYQmZvz979g6V20Bk3p/qEu/XyfMH+2U8TYnIAeh/snHuj0VxiX+B
-         QQnERI0CTyKVBj+zdTm16T8AZE4W3Wz/4ROuX6vmu6KvD0v6UnMeO3dcM2XpKNOOXFjW
-         tBGXXVi8Ahgm9hice0E9l+3M31URsq0BZ8XO4IjCZv8Rk33JdgEpZVKxQIqZOusatkfZ
-         nib1n5m5kltYqCx0keHOFLqCMkJbtadcdkP7Emf6vzv5x31z+UmDY9BKiM8XbqOWXEwf
-         Ue5g==
-X-Gm-Message-State: ANhLgQ1upaPImCtXRJ2g04bRFTcJA2qfoHzBEHtfa4+IZ06/hfKVvvcx
-        Lv8GmaOM2gedpQkhOeUnXN2xYN6nUm0=
-X-Google-Smtp-Source: ADFU+vs1VgKIanoeleFKEgs1GJv+NqzdPyfuxhqZBm1JyQ0rQBwbfy5jT/0yT2/QFd2aOmCJsNi6Hw==
-X-Received: by 2002:aed:25a7:: with SMTP id x36mr5606586qtc.203.1585183051464;
-        Wed, 25 Mar 2020 17:37:31 -0700 (PDT)
-Received: from [192.168.2.21] ([142.118.142.146])
-        by smtp.googlemail.com with ESMTPSA id w132sm356308qkb.96.2020.03.25.17.37.30
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 25 Mar 2020 17:37:30 -0700 (PDT)
-Content-Type: text/plain;
-        charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.60.0.2.5\))
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=iV6ymD1kQQONQHm4JdBry95DQKFCs+rEV8XV/WUjq8s=;
+        b=aZ/SDeaNXrvUHV66vd1EJscoSttKfPuOge84Lxv6XqHTKvlnCTdgoaNsiDdCyq7ePH
+         PKhR37Ep4/IXtrV+rhBjKmdwIlhE37P87TxOsk6QuktOR3Fi0x1iIR4bADnPXfq0Ngxv
+         CkshbCA+bFIyGRSezpwp54udoGnJhqzbBHONAMIdetgTi0TJ3XCj9+L7wwlsNVZlACw8
+         hPawbT5GTpfUxTI/yhQeNKkSsU9J5Xl6iQ2HkjLOCPY7916Xr7d9MZEvtyFs7hlSND8h
+         eCgxlFg2GI1WQKaOLsF8vBKNbNNFa/kE4kEW/7g//Z5X62iHZJtGGlzOsPCPgy2Id4j/
+         6QQQ==
+X-Gm-Message-State: ANhLgQ28WBQPzSjBL+1saWvy9nW6NO2WGlpn7/07naVoZB/6EGYW303R
+        UKwgaX0E41F+NQ3f9En5tCU72Sc9
+X-Google-Smtp-Source: ADFU+vvLeYfuiI7i4D0boXD+qrjB/mNdEtLmkHvHqm7Q5MAe1NmIa8K76KIBf3WipQVWfpNUW7toQQ==
+X-Received: by 2002:a17:902:728d:: with SMTP id d13mr5738825pll.92.1585183840325;
+        Wed, 25 Mar 2020 17:50:40 -0700 (PDT)
+Received: from localhost ([2402:800:6374:c347:544a:f0cc:8a21:fee3])
+        by smtp.gmail.com with ESMTPSA id v25sm262162pgl.55.2020.03.25.17.50.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 25 Mar 2020 17:50:39 -0700 (PDT)
+Date:   Thu, 26 Mar 2020 07:50:37 +0700
+From:   Danh Doan <congdanhqx@gmail.com>
+To:     Daniel Malendez <dmalendez@googlemail.com>
+Cc:     Bryan Turner <bturner@atlassian.com>,
+        Git Users <git@vger.kernel.org>
 Subject: Re: Git doesn't support symlinks
-From:   Daniel Malendez <dmalendez@googlemail.com>
-In-Reply-To: <D3B355BB-BB09-4AA7-8D8A-58B61529D617@googlemail.com>
-Date:   Wed, 25 Mar 2020 20:37:30 -0400
-Cc:     Git Users <git@vger.kernel.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <F9453040-2E7D-4CAB-AA7F-0C6C04E2FC99@googlemail.com>
+Message-ID: <20200326005037.GA5398@danh.dev>
 References: <CA8EDABA-A41C-4177-A149-51DCD07C319C@googlemail.com>
  <CAGyf7-FF0aEEiRGjZ_+RuyYnSV5cYn+-Hp5q7dZRADj_VL034g@mail.gmail.com>
  <D3B355BB-BB09-4AA7-8D8A-58B61529D617@googlemail.com>
-To:     Bryan Turner <bturner@atlassian.com>
-X-Mailer: Apple Mail (2.3608.60.0.2.5)
+ <F9453040-2E7D-4CAB-AA7F-0C6C04E2FC99@googlemail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <F9453040-2E7D-4CAB-AA7F-0C6C04E2FC99@googlemail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks for your feedback!
+On 2020-03-25 20:37:30-0400, Daniel Malendez <dmalendez@googlemail.com> wrote:
+> Thanks for your feedback!
+> 
+> > On Mar 25, 2020, at 8:23 PM, Bryan Turner <bturner@atlassian.com> wrote:
+> > 
+> > This didn't add the same thing. What does a "git status" show at this
+> > point? I'd expect it would show "Versions/Current/Headers/interior.h"
+> > as added to the index, not "Headers/interior.h".
+> 
+> $ git add .
+> $ git status
+> Changes to be committed:
+>   (use "git rm --cached <file>..." to unstage)
+> 	new file:   Foo.framework/Headers
+> 	new file:   Foo.framework/Versions/A/Headers/Interior.h
+> 
+> > It doesn't necessarily seem like a bug, to me; more like a case where
+> > Git could potentially be "smarter" to try and determine that, while
+> > "Headers/interior.h" is beyond a symlink, the target of that symlink
+> > is still in the repository. (Versions/Current _is_ in the same
+> > repository, right?)
+> 
+> Agree, makes sense!
+> 
+> I think what happens here is that `git add .` adds the
+> Foo.framework/Headers directory first, to circumvent this check
+> failing here?
 
-> On Mar 25, 2020, at 8:23 PM, Bryan Turner <bturner@atlassian.com> =
-wrote:
->=20
-> This didn't add the same thing. What does a "git status" show at this
-> point? I'd expect it would show "Versions/Current/Headers/interior.h"
-> as added to the index, not "Headers/interior.h".
+"Foo.framework/Headers" is a symlinks,
+and git simply adds that, without caring where it's linked to.
 
-$ git add .
-$ git status
-Changes to be committed:
-  (use "git rm --cached <file>..." to unstage)
-	new file:   Foo.framework/Headers
-	new file:   Foo.framework/Versions/A/Headers/Interior.h
+To git, there's nothing inside "Foo.framework/Headers",
+it's a blob, which happends to be type: symlink.
 
-> It doesn't necessarily seem like a bug, to me; more like a case where
-> Git could potentially be "smarter" to try and determine that, while
-> "Headers/interior.h" is beyond a symlink, the target of that symlink
-> is still in the repository. (Versions/Current _is_ in the same
-> repository, right?)
+IOW, you can:
 
-Agree, makes sense!
+	$ git add Foo.framework/Headers # without add the target
+	$ ln -s /usr/bin bin
+	$ git add bin # git won't write to index anything from /usr/bin
 
-I think what happens here is that `git add .` adds the =
-Foo.framework/Headers directory first, to circumvent this check failing =
-here?
-https://github.com/git/git/blob/master/pathspec.c#L596
-Whereas a single =E2=80=9Cgit add path/to/file=E2=80=9D would fail here=
+> https://github.com/git/git/blob/master/pathspec.c#L596
+> Whereas a single “git add path/to/file” would fail here
+
+-- 
+Danh
