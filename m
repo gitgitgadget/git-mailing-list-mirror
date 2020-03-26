@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CA072C2D0E5
-	for <git@archiver.kernel.org>; Thu, 26 Mar 2020 21:27:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1BE50C2D0ED
+	for <git@archiver.kernel.org>; Thu, 26 Mar 2020 21:27:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8B7212074D
-	for <git@archiver.kernel.org>; Thu, 26 Mar 2020 21:27:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E192D20722
+	for <git@archiver.kernel.org>; Thu, 26 Mar 2020 21:27:48 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e2I41Jjk"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LytDxeZF"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727702AbgCZV1r (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 Mar 2020 17:27:47 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:45544 "EHLO
+        id S1727711AbgCZV1s (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 Mar 2020 17:27:48 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:35016 "EHLO
         mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726260AbgCZV1q (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Mar 2020 17:27:46 -0400
-Received: by mail-ed1-f65.google.com with SMTP id u59so8654498edc.12
-        for <git@vger.kernel.org>; Thu, 26 Mar 2020 14:27:44 -0700 (PDT)
+        with ESMTP id S1726954AbgCZV1r (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Mar 2020 17:27:47 -0400
+Received: by mail-ed1-f65.google.com with SMTP id a20so8740031edj.2
+        for <git@vger.kernel.org>; Thu, 26 Mar 2020 14:27:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=QI3gH0FzLV7g0yB+cY6fjEbNythXyD8cgG7YB5sfWw8=;
-        b=e2I41JjkhvfSt7wQqasFgVeFJr+ZfbYxISQgjw229iVWP9RLbubHW6Kqefz/UdE3ic
-         jk87C/gWyJg/JNAuVh0UQwZSVtJdFK7W+CHlYdNjDiIA62Z0IkzbV0jyCuKh9+D9T8my
-         SVIwm/YGb87i3BCcu78HeyDeXnVVpc7TKXBMiDKqkdY73deIyn+/6NFKYcHBwbKtKKv/
-         zzoOmZ9ULqjhZfG3slD8rZbmGZoeviZmKx4onatbn8eKc/G0PSz9pKrrH8XtPqSrJa2n
-         n002aJ95+sMO+aS2hLlOm/KIniD8dkobEAPhyzvBg4qZx+ONJpVkd8L/VCA20ABwd9R+
-         fnLQ==
+        bh=ip1sdkCAke+L9RTot1ew8WG61s7QEX3alK/LLGEt0Fk=;
+        b=LytDxeZFrUPMIRK0eZbLnSX0a3aKsEkML949NS+giPsNNaahqWRerMbqUbLSTLc/6n
+         rf41UQar2XtB25GuR1Lom+ltPtDPtSeLbxqSOJjGR+IVs1QoRGYEj6xe4pafVbNbtvUn
+         BwByflbHaSwXFqZuFuYwk1Ku50Q/E8mnaiLQSWxeNZxuqb6+++QA4rWf4LkB2OlMM3I9
+         DbaCZsqlJ6ackU9kr0KS5xHs8MSBwYCZo64NEv/g+6Ysmo4gfbLX07B7kiZDMvjzgJPc
+         /F9ksMaDE6wR+G1U3rGS7cCh5EMTu0I8Vl+wCosciVclLON5TSv2XDgKf2VlbaxodoEA
+         uM+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=QI3gH0FzLV7g0yB+cY6fjEbNythXyD8cgG7YB5sfWw8=;
-        b=PGjN0Yl9YmN2WX3in8mvJdu1/t4G70TF5zV7JINKoeM6LcPpF1MnZwe8p9/ykR8R5x
-         8z5vzBcchQTK/QVzBWI3QedO7CkDDZ6/gZgRzCdQhH2X216w1SPLl+Fo9BSJFsLbbG9L
-         DbalOn7jp8ua6YaQjfLVnv+CGJf4b+3ATy14MDyMmHXCnwrAoebGB2pDVbiTmNV2F/Jq
-         IgNYEgX9TeWhjRUEvuB3otStd485/DZpkRvIaatgTfjkaQw4URlcOc7gI69bAGt5sroS
-         LgdjG2GKXdWAbRv0xUsj8KDPmsFRSHzruxf3Q87afoH76mqTtH627dlX5mhgMbw6DXsv
-         uCuQ==
-X-Gm-Message-State: ANhLgQ3PifR9ua9D7DmLlWLjCsIFR4e3RO0cxkv0wqnjYPU7UYptv/l7
-        d2bfZoz0/hbWEwxkulTx4t+HlgUJ
-X-Google-Smtp-Source: ADFU+vu+P3pTDCvXzZ07FDVfLmg2i0wA+XOpRnilakfV9ZHX9JSbBDvhh4iHfQbLKyy73Ruc02utsg==
-X-Received: by 2002:a17:906:1993:: with SMTP id g19mr9872323ejd.70.1585258063408;
-        Thu, 26 Mar 2020 14:27:43 -0700 (PDT)
+        bh=ip1sdkCAke+L9RTot1ew8WG61s7QEX3alK/LLGEt0Fk=;
+        b=rdSii8bsgxiCqftAX1JHD2Bie+6MeMlVU1br64BGEepqn7l4zqSeWyhL9a0XEo5H10
+         XIvJZdXne15yBuQ81YjzCYLSP1URHxOTqTq+HL1cjLrwrzIjPntswEqHBifFyqHTFzBo
+         RoKAO14bHfk5D2l96INFibToPJENOgRY1rFnEsb4AGPjUIWsIBUtF1u67/4BC9tbqVRN
+         imGlHYEDz02gOw4BCEQazsmo44nV9rj0C1gdwpIL+mwffuHvhw+L7WTWe5WnfnY7mRHu
+         YLHEDg1GIrROHHHCGPzKSjd4jTAZhET1kaZNZLklJe8RCENUW6eHLlosTdZoiB+9frbn
+         yw6A==
+X-Gm-Message-State: ANhLgQ13hY2wI/TEnhPoBwcUVZpYl/d9yz4VCBYPLvilSMG1WT/bCAtU
+        7J8DeaCyIL1ZRhfyYMMFE9ND/v6t
+X-Google-Smtp-Source: ADFU+vtmVUl9PawTvVQQoPoigFsOQoH1fcTuMLpBgOib2HYqSuHc64FTT76hL+3Bh57mnKhpNpF6JQ==
+X-Received: by 2002:a17:906:2cd1:: with SMTP id r17mr9974315ejr.280.1585258066027;
+        Thu, 26 Mar 2020 14:27:46 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p20sm552471edw.31.2020.03.26.14.27.42
+        by smtp.gmail.com with ESMTPSA id u29sm523960edd.47.2020.03.26.14.27.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Mar 2020 14:27:42 -0700 (PDT)
-Message-Id: <752403e339bae098104f41c541c2b0e684586c1f.1585258061.git.gitgitgadget@gmail.com>
+        Thu, 26 Mar 2020 14:27:45 -0700 (PDT)
+Message-Id: <b5ad1939379a7cc6727fe5fdab3210a60cb56542.1585258061.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.700.v4.git.git.1585258061.gitgitgadget@gmail.com>
 References: <pull.700.v3.git.git.1585164718.gitgitgadget@gmail.com>
         <pull.700.v4.git.git.1585258061.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 26 Mar 2020 21:27:34 +0000
-Subject: [PATCH v4 1/7] t7063: more thorough status checking
+Date:   Thu, 26 Mar 2020 21:27:37 +0000
+Subject: [PATCH v4 4/7] dir: fix broken comment
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,259 +80,23 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-It turns out the t7063 has some testcases that even without using the
-untracked cache cover situations that nothing else in the testsuite
-handles.  Checking the results of
-  git status --porcelain
-both with and without the untracked cache, and comparing both against
-our expected results helped uncover a critical bug in some dir.c
-restructuring.
-
-Unfortunately, it's not easy to run status and tell it to ignore the
-untracked cache; the only knob we have it to instruct it to *delete*
-(and ignore) the untracked cache.
-
-Create a simple helper that will create a clone of the index that is
-missing the untracked cache bits, and use it to compare that the results
-with the untracked cache match the results we get without the untracked
-cache.
-
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- t/t7063-status-untracked-cache.sh | 52 +++++++++++++++++++++++++++++++
- 1 file changed, 52 insertions(+)
+ dir.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t7063-status-untracked-cache.sh b/t/t7063-status-untracked-cache.sh
-index 190ae149cf3..156d06c34e8 100755
---- a/t/t7063-status-untracked-cache.sh
-+++ b/t/t7063-status-untracked-cache.sh
-@@ -30,6 +30,30 @@ status_is_clean() {
- 	test_must_be_empty ../status.actual
- }
- 
-+# Ignore_Untracked_Cache, abbreviated to 3 letters because then people can
-+# compare commands side-by-side, e.g.
-+#    iuc status --porcelain >expect &&
-+#    git status --porcelain >actual &&
-+#    test_cmp expect actual
-+iuc() {
-+	git ls-files -s >../current-index-entries
-+	git ls-files -t | grep ^S | sed -e s/^S.// >../current-sparse-entries
-+
-+	GIT_INDEX_FILE=.git/tmp_index
-+	export GIT_INDEX_FILE
-+	git update-index --index-info <../current-index-entries
-+	git update-index --skip-worktree $(cat ../current-sparse-entries)
-+
-+	git -c core.untrackedCache=false "$@"
-+	ret=$?
-+
-+	rm ../current-index-entries
-+	rm $GIT_INDEX_FILE
-+	unset GIT_INDEX_FILE
-+
-+	return $ret
-+}
-+
- test_lazy_prereq UNTRACKED_CACHE '
- 	{ git update-index --test-untracked-cache; ret=$?; } &&
- 	test $ret -ne 1
-@@ -95,6 +119,8 @@ test_expect_success 'status first time (empty cache)' '
- 	: >../trace &&
- 	GIT_TRACE_UNTRACKED_STATS="$TRASH_DIRECTORY/trace" \
- 	git status --porcelain >../actual &&
-+	iuc status --porcelain >../status.iuc &&
-+	test_cmp ../status.expect ../status.iuc &&
- 	test_cmp ../status.expect ../actual &&
- 	cat >../trace.expect <<EOF &&
- node creation: 3
-@@ -115,6 +141,8 @@ test_expect_success 'status second time (fully populated cache)' '
- 	: >../trace &&
- 	GIT_TRACE_UNTRACKED_STATS="$TRASH_DIRECTORY/trace" \
- 	git status --porcelain >../actual &&
-+	iuc status --porcelain >../status.iuc &&
-+	test_cmp ../status.expect ../status.iuc &&
- 	test_cmp ../status.expect ../actual &&
- 	cat >../trace.expect <<EOF &&
- node creation: 0
-@@ -136,6 +164,7 @@ test_expect_success 'modify in root directory, one dir invalidation' '
- 	: >../trace &&
- 	GIT_TRACE_UNTRACKED_STATS="$TRASH_DIRECTORY/trace" \
- 	git status --porcelain >../actual &&
-+	iuc status --porcelain >../status.iuc &&
- 	cat >../status.expect <<EOF &&
- A  done/one
- A  one
-@@ -145,6 +174,7 @@ A  two
- ?? four
- ?? three
- EOF
-+	test_cmp ../status.expect ../status.iuc &&
- 	test_cmp ../status.expect ../actual &&
- 	cat >../trace.expect <<EOF &&
- node creation: 0
-@@ -183,6 +213,7 @@ test_expect_success 'new .gitignore invalidates recursively' '
- 	: >../trace &&
- 	GIT_TRACE_UNTRACKED_STATS="$TRASH_DIRECTORY/trace" \
- 	git status --porcelain >../actual &&
-+	iuc status --porcelain >../status.iuc &&
- 	cat >../status.expect <<EOF &&
- A  done/one
- A  one
-@@ -192,6 +223,7 @@ A  two
- ?? dtwo/
- ?? three
- EOF
-+	test_cmp ../status.expect ../status.iuc &&
- 	test_cmp ../status.expect ../actual &&
- 	cat >../trace.expect <<EOF &&
- node creation: 0
-@@ -230,6 +262,7 @@ test_expect_success 'new info/exclude invalidates everything' '
- 	: >../trace &&
- 	GIT_TRACE_UNTRACKED_STATS="$TRASH_DIRECTORY/trace" \
- 	git status --porcelain >../actual &&
-+	iuc status --porcelain >../status.iuc &&
- 	cat >../status.expect <<EOF &&
- A  done/one
- A  one
-@@ -237,6 +270,7 @@ A  two
- ?? .gitignore
- ?? dtwo/
- EOF
-+	test_cmp ../status.expect ../status.iuc &&
- 	test_cmp ../status.expect ../actual &&
- 	cat >../trace.expect <<EOF &&
- node creation: 0
-@@ -286,6 +320,7 @@ test_expect_success 'status after the move' '
- 	: >../trace &&
- 	GIT_TRACE_UNTRACKED_STATS="$TRASH_DIRECTORY/trace" \
- 	git status --porcelain >../actual &&
-+	iuc status --porcelain >../status.iuc &&
- 	cat >../status.expect <<EOF &&
- A  done/one
- A  one
-@@ -293,6 +328,7 @@ A  one
- ?? dtwo/
- ?? two
- EOF
-+	test_cmp ../status.expect ../status.iuc &&
- 	test_cmp ../status.expect ../actual &&
- 	cat >../trace.expect <<EOF &&
- node creation: 0
-@@ -343,6 +379,7 @@ test_expect_success 'status after the move' '
- 	: >../trace &&
- 	GIT_TRACE_UNTRACKED_STATS="$TRASH_DIRECTORY/trace" \
- 	git status --porcelain >../actual &&
-+	iuc status --porcelain >../status.iuc &&
- 	cat >../status.expect <<EOF &&
- A  done/one
- A  one
-@@ -350,6 +387,7 @@ A  two
- ?? .gitignore
- ?? dtwo/
- EOF
-+	test_cmp ../status.expect ../status.iuc &&
- 	test_cmp ../status.expect ../actual &&
- 	cat >../trace.expect <<EOF &&
- node creation: 0
-@@ -390,10 +428,12 @@ test_expect_success 'status after commit' '
- 	: >../trace &&
- 	GIT_TRACE_UNTRACKED_STATS="$TRASH_DIRECTORY/trace" \
- 	git status --porcelain >../actual &&
-+	iuc status --porcelain >../status.iuc &&
- 	cat >../status.expect <<EOF &&
- ?? .gitignore
- ?? dtwo/
- EOF
-+	test_cmp ../status.expect ../status.iuc &&
- 	test_cmp ../status.expect ../actual &&
- 	cat >../trace.expect <<EOF &&
- node creation: 0
-@@ -447,12 +487,14 @@ test_expect_success 'test sparse status with untracked cache' '
- 	avoid_racy &&
- 	GIT_TRACE_UNTRACKED_STATS="$TRASH_DIRECTORY/trace" \
- 	git status --porcelain >../status.actual &&
-+	iuc status --porcelain >../status.iuc &&
- 	cat >../status.expect <<EOF &&
-  M done/two
- ?? .gitignore
- ?? done/five
- ?? dtwo/
- EOF
-+	test_cmp ../status.expect ../status.iuc &&
- 	test_cmp ../status.expect ../status.actual &&
- 	cat >../trace.expect <<EOF &&
- node creation: 0
-@@ -487,12 +529,14 @@ test_expect_success 'test sparse status again with untracked cache' '
- 	: >../trace &&
- 	GIT_TRACE_UNTRACKED_STATS="$TRASH_DIRECTORY/trace" \
- 	git status --porcelain >../status.actual &&
-+	iuc status --porcelain >../status.iuc &&
- 	cat >../status.expect <<EOF &&
-  M done/two
- ?? .gitignore
- ?? done/five
- ?? dtwo/
- EOF
-+	test_cmp ../status.expect ../status.iuc &&
- 	test_cmp ../status.expect ../status.actual &&
- 	cat >../trace.expect <<EOF &&
- node creation: 0
-@@ -514,6 +558,7 @@ test_expect_success 'test sparse status with untracked cache and subdir' '
- 	: >../trace &&
- 	GIT_TRACE_UNTRACKED_STATS="$TRASH_DIRECTORY/trace" \
- 	git status --porcelain >../status.actual &&
-+	iuc status --porcelain >../status.iuc &&
- 	cat >../status.expect <<EOF &&
-  M done/two
- ?? .gitignore
-@@ -521,6 +566,7 @@ test_expect_success 'test sparse status with untracked cache and subdir' '
- ?? done/sub/
- ?? dtwo/
- EOF
-+	test_cmp ../status.expect ../status.iuc &&
- 	test_cmp ../status.expect ../status.actual &&
- 	cat >../trace.expect <<EOF &&
- node creation: 2
-@@ -560,6 +606,8 @@ test_expect_success 'test sparse status again with untracked cache and subdir' '
- 	: >../trace &&
- 	GIT_TRACE_UNTRACKED_STATS="$TRASH_DIRECTORY/trace" \
- 	git status --porcelain >../status.actual &&
-+	iuc status --porcelain >../status.iuc &&
-+	test_cmp ../status.expect ../status.iuc &&
- 	test_cmp ../status.expect ../status.actual &&
- 	cat >../trace.expect <<EOF &&
- node creation: 0
-@@ -573,6 +621,7 @@ EOF
- test_expect_success 'move entry in subdir from untracked to cached' '
- 	git add dtwo/two &&
- 	git status --porcelain >../status.actual &&
-+	iuc status --porcelain >../status.iuc &&
- 	cat >../status.expect <<EOF &&
-  M done/two
- A  dtwo/two
-@@ -580,12 +629,14 @@ A  dtwo/two
- ?? done/five
- ?? done/sub/
- EOF
-+	test_cmp ../status.expect ../status.iuc &&
- 	test_cmp ../status.expect ../status.actual
- '
- 
- test_expect_success 'move entry in subdir from cached to untracked' '
- 	git rm --cached dtwo/two &&
- 	git status --porcelain >../status.actual &&
-+	iuc status --porcelain >../status.iuc &&
- 	cat >../status.expect <<EOF &&
-  M done/two
- ?? .gitignore
-@@ -593,6 +644,7 @@ test_expect_success 'move entry in subdir from cached to untracked' '
- ?? done/sub/
- ?? dtwo/
- EOF
-+	test_cmp ../status.expect ../status.iuc &&
- 	test_cmp ../status.expect ../status.actual
- '
+diff --git a/dir.c b/dir.c
+index d0f3d660850..3a367683661 100644
+--- a/dir.c
++++ b/dir.c
+@@ -2259,7 +2259,7 @@ static enum path_treatment read_directory_recursive(struct dir_struct *dir,
+ 					add_untracked(untracked, path.buf + baselen);
+ 				break;
+ 			}
+-			/* skip the dir_add_* part */
++			/* skip the add_path_to_appropriate_result_list() */
+ 			continue;
+ 		}
  
 -- 
 gitgitgadget
