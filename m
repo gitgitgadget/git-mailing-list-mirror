@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 67DD1C2D0E7
-	for <git@archiver.kernel.org>; Thu, 26 Mar 2020 04:38:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E771C43331
+	for <git@archiver.kernel.org>; Thu, 26 Mar 2020 04:38:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3BF2920719
-	for <git@archiver.kernel.org>; Thu, 26 Mar 2020 04:38:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 043D320719
+	for <git@archiver.kernel.org>; Thu, 26 Mar 2020 04:38:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FLCt9Fal"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iPAbnhzG"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726347AbgCZEiA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 Mar 2020 00:38:00 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:36502 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726210AbgCZEh6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Mar 2020 00:37:58 -0400
-Received: by mail-pf1-f196.google.com with SMTP id i13so2174867pfe.3
-        for <git@vger.kernel.org>; Wed, 25 Mar 2020 21:37:58 -0700 (PDT)
+        id S1726401AbgCZEiD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 Mar 2020 00:38:03 -0400
+Received: from mail-pj1-f67.google.com ([209.85.216.67]:53837 "EHLO
+        mail-pj1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726270AbgCZEiC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Mar 2020 00:38:02 -0400
+Received: by mail-pj1-f67.google.com with SMTP id l36so1952944pjb.3
+        for <git@vger.kernel.org>; Wed, 25 Mar 2020 21:38:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=n+z6BdC5bveeBZcRo7RMZhSYRMUrKbaLzmtDUtbC3KI=;
-        b=FLCt9FalUuxNdx9BqjGjEI5GQG8A86U2MibrzwlpIgAECZdyzuVebhoPC3PeUTwRQI
-         f2TIYdZjX/ZRsjaqpZvIFZNDIgiS3coky9B1BYN/s1ElmBZW2gbesxaz5eov6NOyv4Fa
-         pCGlfGX5lX7eCzbZNOoYv32FhuYLZhQJzeAASVg536NvDV8sB6AZR/QuArY6mSczhXUR
-         aaWi7l7DILX+zBZRnXGuphvBC+9JA1cb/j76bKV4r2H3W/qMwFiMU+VQA/39vINwiHQr
-         GtVRfQGIMcoO6BhrUMl0QN2SgBcaILWot4TCg5G+zPl299weemDh4BNyv4SuMPoUUVpc
-         L9vQ==
+        bh=nWRiskax7tm9yH3inDrU/u9x8duAw9U0FkyXTN++6Xs=;
+        b=iPAbnhzGLDJbn5iTRMFdixJP4HKyjl53uknjPSMryvw1t1f3N3sN4rgM0BmpS7yn9p
+         yvHgINigY+5EpqRX4z+wXfv6QdPQWYPyDtL9GsDMM4h/O3Pm4LWSzAe9dY602l1Hel+4
+         XLpyYUATSRI+56Gim65LJH15pGOmdFZm5UQPN2SAtykzkeetHlptjZ5GvXx0ZModqK+9
+         xT66Hi/I3vvtPf80lGsHUwsoaZzSB8r855JuJ8ct3gdDoel8UwvdJ2qHgqIKV22Dka8+
+         vedH/uAyqfisKFxQnpqFzxz5xGnEfL2kg0kybN+q+2uDLYL+bV2mFFpNbI3xVYfLPsn0
+         GVVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=n+z6BdC5bveeBZcRo7RMZhSYRMUrKbaLzmtDUtbC3KI=;
-        b=kSRyMjXkmmh+s4t/Oy1I4kUUDATrcV0cRGMAAhp1NfmGXxhHJJve1HL70UAO6VbQH4
-         VUjRN897qkvg23BQEkMjPLUO2OQQIh6zm4+bHV179u1NPB5mRZiM3fSuylRjskeWZUnT
-         pcV3TszI92ip1OXYY9W4dD1gMAz/Xrw6PI8U2SDxUeky1rg5JTEUdgxF2ICHkALt/Z3y
-         nu6nYHvCxlNauO9TlKMh3hwD1y1KAfrO57bva3D2000HlvXqU8JJcAjRDb6t7lVnMBh1
-         BbBMj9sUEI6l33/YUdoYYrBMfU4ZpLK4BLj+MIiYaqF9LAch+qe/pZx1Un4clp16ZgJ5
-         jxYA==
-X-Gm-Message-State: ANhLgQ2QFFgi0Tjb1V5iQAlkrJZzA32ni3iCu7Ae2joCLRZ0uYhAQxSY
-        u5uX9D7LrPUP+mVTqE2wr/ZCGvQW
-X-Google-Smtp-Source: ADFU+vuPoomKePFaV5wmtC+S35sOD7wBJpSb2yrLNpu1HUiMVaa5AS6MZY08T2tAssYIi/fTseYecQ==
-X-Received: by 2002:aa7:999e:: with SMTP id k30mr6849256pfh.235.1585197477339;
-        Wed, 25 Mar 2020 21:37:57 -0700 (PDT)
+        bh=nWRiskax7tm9yH3inDrU/u9x8duAw9U0FkyXTN++6Xs=;
+        b=Isq0uNueegvPHHRK/3FKrd1sEmyMjsgEmbSnVoRINR4eAV/FmA7jb/FoaWuCFRWTw7
+         6QxMBa6KVgCsoBjrSTs5Nj4mrDjHBkq9sUX64ymsT/cZ412AY+p2pQu4PGdu+AEb/zmc
+         x9vEK/rnHJmjKxicsfdHczjfjcqapeJQrpHfkd/6PIzXG7rv6KtmmxPG/NNtPjplJrhD
+         Ey66JCsPV/Vb8gOySy19RFXlE04GWaqXgY5GM2t31KAKaLKTGHrNf5LxTk0HBLQqUco7
+         9fqIPJg+QODd4dlxrVgvTsxAzsIZ8tOXRji/diQVOWMZ6Ddc31N5m3s4xrTDpKbATpKn
+         RKRA==
+X-Gm-Message-State: ANhLgQ1O/ul7b5rJHhvlksnmB9ZVmc85y/rCxd+r5Qr6gjRqSm1hoeE+
+        +xMnDwMYipe1rNrBzmYlhGlxuMgr
+X-Google-Smtp-Source: ADFU+vtgaw8TPsB+Smr2QBjO8nwC+Wjp/dfWplQ7/pTt17piCXLknsTN2KfsRQU0zTGyMjWm1XX5AQ==
+X-Received: by 2002:a17:902:7b89:: with SMTP id w9mr6657686pll.34.1585197480632;
+        Wed, 25 Mar 2020 21:38:00 -0700 (PDT)
 Received: from localhost.localdomain ([2402:800:6374:c347:544a:f0cc:8a21:fee3])
-        by smtp.gmail.com with ESMTPSA id u21sm639344pjy.8.2020.03.25.21.37.56
+        by smtp.gmail.com with ESMTPSA id u21sm639344pjy.8.2020.03.25.21.37.59
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 25 Mar 2020 21:37:56 -0700 (PDT)
+        Wed, 25 Mar 2020 21:38:00 -0700 (PDT)
 From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
-        <congdanhqx@gmail.com>
-Subject: [PATCH v4 6/8] t7063: drop non-POSIX argument "-ls" from find(1)
-Date:   Thu, 26 Mar 2020 11:37:36 +0700
-Message-Id: <b3acf4adcfdfd48f0728c5b05913d81b8ee6362f.1585197360.git.congdanhqx@gmail.com>
+        <congdanhqx@gmail.com>, Jeff King <peff@peff.net>
+Subject: [PATCH v4 8/8] t5703: feed raw data into test-tool unpack-sideband
+Date:   Thu, 26 Mar 2020 11:37:38 +0700
+Message-Id: <2b8e75aaa5b196fdd1ffca02ae53cc859fe1e522.1585197360.git.congdanhqx@gmail.com>
 X-Mailer: git-send-email 2.26.0.rc2.357.g1e1ba0441d
 In-Reply-To: <cover.1585197360.git.congdanhqx@gmail.com>
 References: <cover.1584838148.git.congdanhqx@gmail.com> <cover.1585197360.git.congdanhqx@gmail.com>
@@ -74,33 +74,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since commit 6b7728db81, (t7063: work around FreeBSD's lazy mtime
-update feature, 2016-08-03), we started to use ls as a trick to update
-directory's mtime.
+busybox's sed isn't binary clean.
+Thus, triggers false-negative on this test.
 
-However, `-ls` flag isn't required by POSIX's find(1), and
-busybox(1) doesn't implement it.
+We could replace sed with perl on this usecase.
+But, we could slightly modify the helper to discard unwanted data in the
+beginning.
 
-Use "-exec ls -ld {} +" instead.
+Fix the false negative by updating this helper.
 
+Helped-by: Jeff King <peff@peff.net>
 Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
 ---
- t/t7063-status-untracked-cache.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/helper/test-pkt-line.c           | 2 +-
+ t/t5703-upload-pack-ref-in-want.sh | 5 +----
+ 2 files changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/t/t7063-status-untracked-cache.sh b/t/t7063-status-untracked-cache.sh
-index 190ae149cf..6738497ea7 100755
---- a/t/t7063-status-untracked-cache.sh
-+++ b/t/t7063-status-untracked-cache.sh
-@@ -18,7 +18,7 @@ GIT_FORCE_UNTRACKED_CACHE=true
- export GIT_FORCE_UNTRACKED_CACHE
+diff --git a/t/helper/test-pkt-line.c b/t/helper/test-pkt-line.c
+index 282d536384..12ca698e17 100644
+--- a/t/helper/test-pkt-line.c
++++ b/t/helper/test-pkt-line.c
+@@ -67,7 +67,7 @@ static void unpack_sideband(void)
+ 		case PACKET_READ_NORMAL:
+ 			band = reader.line[0] & 0xff;
+ 			if (band < 1 || band > 2)
+-				die("unexpected side band %d", band);
++				continue; /* skip non-sideband packets */
+ 			fd = band;
  
- sync_mtime () {
--	find . -type d -ls >/dev/null
-+	find . -type d -exec ls -ld {} + >/dev/null
+ 			write_or_die(fd, reader.line + 1, reader.pktlen - 1);
+diff --git a/t/t5703-upload-pack-ref-in-want.sh b/t/t5703-upload-pack-ref-in-want.sh
+index 7fba3063bf..a34460f7d8 100755
+--- a/t/t5703-upload-pack-ref-in-want.sh
++++ b/t/t5703-upload-pack-ref-in-want.sh
+@@ -13,10 +13,7 @@ get_actual_refs () {
  }
  
- avoid_racy() {
+ get_actual_commits () {
+-	sed -n -e '/packfile/,/0000/{
+-		/packfile/d
+-		p
+-		}' <out | test-tool pkt-line unpack-sideband >o.pack &&
++	test-tool pkt-line unpack-sideband <out >o.pack &&
+ 	git index-pack o.pack &&
+ 	git verify-pack -v o.idx >objs &&
+ 	grep commit objs | cut -d" " -f1 | sort >actual_commits
 -- 
 2.26.0.rc2.357.g1e1ba0441d
 
