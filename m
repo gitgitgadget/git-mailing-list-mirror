@@ -1,98 +1,125 @@
-Return-Path: <SRS0=ys1m=5K=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=lIKx=5L=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 61403C43331
-	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 23:38:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 313A6C43331
+	for <git@archiver.kernel.org>; Thu, 26 Mar 2020 00:18:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 2C3AA2076A
-	for <git@archiver.kernel.org>; Wed, 25 Mar 2020 23:38:48 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="N6R8siAg"
+	by mail.kernel.org (Postfix) with ESMTP id 112AB20719
+	for <git@archiver.kernel.org>; Thu, 26 Mar 2020 00:18:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727420AbgCYXip (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 Mar 2020 19:38:45 -0400
-Received: from mail-qt1-f177.google.com ([209.85.160.177]:37682 "EHLO
-        mail-qt1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726970AbgCYXip (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Mar 2020 19:38:45 -0400
-Received: by mail-qt1-f177.google.com with SMTP id z24so2595607qtu.4
-        for <git@vger.kernel.org>; Wed, 25 Mar 2020 16:38:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20161025;
-        h=from:content-transfer-encoding:mime-version:subject:message-id:date
-         :to;
-        bh=DYpwvNWX0wCaW3Rv1wucR3dVcop0i/lcmTzAaWy8/ZI=;
-        b=N6R8siAgOwMNpGa/ba5CVuwMGdTkHiNs2YuneSNsS2Hb/b5lHUo6vaKHlP4BbXuuQ5
-         LUGZn5BCh0Ud/cYspgoJhxWIpv+pUWh6TBzo9TB7Nj9F4ERPHYwCHEJplgnN/oX+86hy
-         hBbb4y6xAuvdFUi3RkvIrUl5OLO7CYrPyCv4SLXWdEzrXpTol9Cde7n7LoTytxUzJnQw
-         QXM2ovtmkq9zPglV3IsJamw502pOEkOCffJqML0FhTrxVRrDfRP/FsIvLADvvNEwNDSy
-         tpl4SdEdDHMknyrTyrH8XJUczBdBEA3TVsveDdnbkx+oph4Xp5eVunzE/IMrjut4Po21
-         dBqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:content-transfer-encoding:mime-version
-         :subject:message-id:date:to;
-        bh=DYpwvNWX0wCaW3Rv1wucR3dVcop0i/lcmTzAaWy8/ZI=;
-        b=KT3Xd17x9bk79YdyfvNeZ2YfKGHtv/XWn2Wl5qGHgcmgHHvAcZtws3iiPzgGl1tXB5
-         u4g68JH7im9a6vZ7XFLv4mSWohRaB5Sh30E7luS6Xh5IrtI6PeWxF8dSoGhyIUhg2HbA
-         BIu58MZ1lGDAOh+US6gVtyYYeekUoC1inhhTWZW9JmWCtFNS7m640Fmi7yipDSoGA1kI
-         mqTriCjp1Gm5cqm9Xf3PfKnU2z43+8rl8eKtBs/2eix/4k/IM2tuZHeg2Nw4NDkqCQYf
-         Ek+ByExgq8ADKHjCSAcaaIR2zQIn7tSfIbM8QTccikvGBf3pQqwfT9rHbYCvLALYpX7I
-         SI5A==
-X-Gm-Message-State: ANhLgQ2L+SuGS11usF0OMINptTq3kdfc8PZpYqf3cG47CTxw9KITXz87
-        hLhJbcgLHH7JhLznoG8e4d8kF2dbvdI=
-X-Google-Smtp-Source: ADFU+vtML7Um4dsbw9Buj3DxIbzDpy7qi0l9VHfr4casizwwZSaOo42GgmBZeAir0OwLLGJYlTvEug==
-X-Received: by 2002:aed:200f:: with SMTP id 15mr5538955qta.152.1585179522265;
-        Wed, 25 Mar 2020 16:38:42 -0700 (PDT)
-Received: from [192.168.2.21] ([142.118.142.146])
-        by smtp.googlemail.com with ESMTPSA id n21sm407456qtn.17.2020.03.25.16.38.40
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 25 Mar 2020 16:38:41 -0700 (PDT)
-From:   Daniel Malendez <dmalendez@googlemail.com>
-Content-Type: text/plain;
-        charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.60.0.2.5\))
-Subject: Git doesn't support symlinks
-Message-Id: <CA8EDABA-A41C-4177-A149-51DCD07C319C@googlemail.com>
-Date:   Wed, 25 Mar 2020 19:38:37 -0400
-To:     git@vger.kernel.org
-X-Mailer: Apple Mail (2.3608.60.0.2.5)
+        id S1727592AbgCZAS3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 Mar 2020 20:18:29 -0400
+Received: from mx.sdf.org ([205.166.94.20]:49855 "EHLO mx.sdf.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727498AbgCZAS2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Mar 2020 20:18:28 -0400
+Received: from sdf.org (IDENT:lkml@faeroes.freeshell.org [205.166.94.9])
+        by mx.sdf.org (8.15.2/8.14.5) with ESMTPS id 02Q0IMt3012029
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits) verified NO);
+        Thu, 26 Mar 2020 00:18:22 GMT
+Received: (from lkml@localhost)
+        by sdf.org (8.15.2/8.12.8/Submit) id 02Q0ILT5005394;
+        Thu, 26 Mar 2020 00:18:21 GMT
+Date:   Thu, 26 Mar 2020 00:18:21 +0000
+From:   George Spelvin <lkml@SDF.ORG>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        lkml@sdf.org
+Subject: Re: Feature request: rebase -i inside of rebase -i
+Message-ID: <20200326001821.GB8865@SDF.ORG>
+References: <20200320223015.GA19579@SDF.ORG>
+ <xmqq36a2bpxz.fsf@gitster.c.googlers.com>
+ <20200320233528.GB19579@SDF.ORG>
+ <nycvar.QRO.7.76.6.2003211135380.46@tvgsbejvaqbjf.bet>
+ <20200321175612.GC19579@SDF.ORG>
+ <nycvar.QRO.7.76.6.2003252008490.46@tvgsbejvaqbjf.bet>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.2003252008490.46@tvgsbejvaqbjf.bet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone,
+On Wed, Mar 25, 2020 at 08:26:48PM +0100, Johannes Schindelin wrote:
+> On Sat, 21 Mar 2020, George Spelvin wrote:
+>> My assumption has been that, for simplicity, there would only be one
+>> commit in progress, and aborting it aborts everything.
+>
+> But that does not necessarily make sense. Imagine that you rebase the
+> latest three commits, interactively. Then a merge conflict in the third
+> makes you realize that the first commit is no longer needed.
+> 
+> Enter the nested rebase. You manually re-schedule the failed `pick` via
+> `git rebase --edit-todo` and then run the nested rebase: `git reset --hard
+> && git rebase -i --nested HEAD~2`.
+> 
+> Except that you made a typo and said `HEAD~3` instead of `HEAD~2`. You
+> delete the entire todo list to get a chance to restart the nested rebase.
+> 
+> But now the entire rebase gets aborted?
 
-I use `Ubuntu 18.04` with filesystem `ext` and `git 2.26.0`. I want to =
-add a macOS Framework to my git repo, which fails with the following =
-error message:
+Um, this example is not persuasive.  If I just leave the excess commit at 
+the front of the to-do list, then it will be recreated without change.
 
-    $ git add -f /var/opt/project1/Foo.framework/Headers/Interior.h
-    fatal: pathspec '/var/opt/project1/Foo.framework/Headers/Interior.h' =
-is beyond a symbolic link
+(Note that if I choose too *small* a nubmer by accident, I can insert a 
+"break" at the front of the list and then rebase --nested starting from 
+there.)
 
-If I use `$ git add .` it works fine. Is this a bug? This is what `ls` =
-returns
+Okay, but what if I screw up worse and type HEAD^55 instead of HEAD^5?
+nd that includes multiple merges and other messy stuff?
 
-    Foo.framework $ ls -l
-    lrwxr-xr-x  Headers -> Versions/Current/Headers
-    lrwxr-xr-x  Resources -> Versions/Current/Resources
-    drwxr-xr-x  Versions
+Well, perhaps a general-purpose optimization could be applied: for the 
+first, mandatory, edit-todo, don't actually check out the tree until the 
+edit is complete.  When it is, chop off any prefix of unaltered commits 
+and start the rebase at the first change.
 
-This sounds like a bug, correct? If not, I am thankful for any advice! =
-Thanks!
+That would make inadvertently specifying a start point too far back
+reasonably harmless.
 
+It would also provide one level of nested abort in the case of a nested 
+rebase.  Until you save the initial todo, the rebase doesn't do anything 
+except some bookkeeping.  So you could have that be a special case, 
+without providing a more general nested --abort.
 
+The main problem with a full nested rebase is that you need to define when 
+the inner rebase completes and the outer rebase resumes.  I very much 
+want the ability to move commits around between the outer rebase and the 
+inner one, which makes that distinction ill-defined.
 
+> If that would happen to me, I would unleash a whole slew of rarely used
+> words in the vague direction of whoever implemented the nested rebase
+> feature...
 
-Best Regards,
-Daniel=
+The thing is, it's already quite possible to make a mess of a rebase
+halfway through and need to abort after you've put a lot of work in.
+
+I think a more general-purpose recovery mechanism might be more
+useful.
+
+For example, if the --edit-todo included a (commented-out) list of what 
+had already been done, then after realizing that you screwed up
+conflict resolve b' and have now committed bad resolutions c' and d'
+on top of it, you could easily rebase --nested and replace b', c' and d'
+with the original b, c and d.
+
+Without aborting and throwing away a' as well, which was perhaps a lot of
+work.
+
+>> If I delete any of those five commits, then rebase.missingCommitsCheck
+>> will trigger.  If I put y in the list, save it, then change my mind and
+>> --edit-todo and delete y, it will also trigger.
+> 
+> As I said, I am not using that feature myself, so I do not even know what
+> "trigger" means in this context. It might totally be okay to use the
+> existing code as-is in the context of a nested rebase. That remains to be
+> verified, though, I think.
+
+What I mean by "trigger" is thatthe check would notice a missing commit
+and produce a warning or error, as configured.
