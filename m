@@ -3,73 +3,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C99FC43331
-	for <git@archiver.kernel.org>; Thu, 26 Mar 2020 19:17:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 44ED4C43331
+	for <git@archiver.kernel.org>; Thu, 26 Mar 2020 19:27:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id E178F20719
-	for <git@archiver.kernel.org>; Thu, 26 Mar 2020 19:17:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D4C5B2070A
+	for <git@archiver.kernel.org>; Thu, 26 Mar 2020 19:27:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="vCzyqRbz"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="L4TSggci"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728448AbgCZTRp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 Mar 2020 15:17:45 -0400
-Received: from mail-ot1-f67.google.com ([209.85.210.67]:33155 "EHLO
-        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726359AbgCZTRp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Mar 2020 15:17:45 -0400
-Received: by mail-ot1-f67.google.com with SMTP id 22so7181600otf.0
-        for <git@vger.kernel.org>; Thu, 26 Mar 2020 12:17:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=5/RLRTAdY7BG4U43sHXi+SkN85SyE83fq+lRKxXAdrY=;
-        b=vCzyqRbz2Rz/C2GwIakvphcHXe6VFEMo3FKy/wgOCCwX75faC/OJkmSiv0QAKOu731
-         03uA0DCb+2dwWEcfNEpKfAshlQs+EpalPn7PImRsywhhz1Cr41z8qhjB/7kRD5W9lLVy
-         7miqIP2ReW714xQdofXdHaV9j2X7dRVYCVomz2n8d9KXgeOd+OhtKucbW1k86AGNXeP1
-         bKL6yO9g+VZ1C6AXtAzrSbN7UsL1G1n1fZ1aZiTTFWoK2WQQRbMsQoRnIb1NS3bTF8pS
-         Tk0vbVPTyXvq09CH852tErcwWtvM+EjWTlt4otOLMunWWAfqrp+uFWyBI7/sRW/N016C
-         R7kQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=5/RLRTAdY7BG4U43sHXi+SkN85SyE83fq+lRKxXAdrY=;
-        b=dHk+C8mRFeqJxOhMox7axfw5FEwXCaRgvzUvHnr4p3zsZUuHQuC7J67Frmq1wf6QU8
-         xKk+3fHXyUuiAdVdrq1jEkVqUyz4+CbMIsgGH/7P4kBo8ERijVK9lHSAcWP0kLOjE4N/
-         yDQVS2+rLR552A+DNf2siivYH4PysrdPa3j+G2V0tBeVQL3RxuD3ewQfxpHQjNxqvYhL
-         yVcjHYKkHjm7S59yzksrDYjs0zgk6X3IN2xRWOZzYvs9022x/Wyv1TAbmR7kbqC9EVwl
-         9Ahr3Rqd693JtfrU3O3wOtkc+cew/SHSKaCM66rAfIzBTjI9eIxjhpUp7YFjaOpUZdWm
-         v+sg==
-X-Gm-Message-State: ANhLgQ1DHNc2IpzsRCZqLzUxN9GsUMQsVTDxuXlrnpIBiZywBy1ycccW
-        oYk3iLvXdsVSoBAaJl5jef1aGyYhgOT9cRfzHYCPc1tz
-X-Google-Smtp-Source: ADFU+vvzr4Sft9eA6AyxaLqI71nBSabI9ewGSn2rK4C0RLB9Eq+lvF1MSKcX38DJ/OjcsgMJdDNOCdI6SUuNIYtVBGM=
-X-Received: by 2002:a9d:6457:: with SMTP id m23mr1014928otl.162.1585250263828;
- Thu, 26 Mar 2020 12:17:43 -0700 (PDT)
-MIME-Version: 1.0
-References: <20200318173051.25875-1-jonathantanmy@google.com> <20200326175033.35944-1-jonathantanmy@google.com>
-In-Reply-To: <20200326175033.35944-1-jonathantanmy@google.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 26 Mar 2020 12:17:32 -0700
-Message-ID: <CABPp-BHdacsWrD3Q1avCCNbt4MhwN5Tm_rY8HKHotJADJdPYxw@mail.gmail.com>
-Subject: Re: [PATCH v2] rebase --merge: optionally skip upstreamed commits
+        id S1727026AbgCZT1K (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 Mar 2020 15:27:10 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:65074 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726067AbgCZT1K (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Mar 2020 15:27:10 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 54F0EC871D;
+        Thu, 26 Mar 2020 15:27:08 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=Z0vPA+vI4HqdUVtKKszOC/8cWQQ=; b=L4TSgg
+        ciVYXKUmlcASn1HwEMXNgiVqC3cYXMCB2KaySdvTJWTSzW705luCGt9j1HOC0OrO
+        VWKaDObmzNRJ9OAH7qYWfxBKNCQ7wGuLkEr/vr2wWQOq/boiOgiZWf4wNfbimXrq
+        9BwP+CQI1wzn10wdZAA9ztewDDAKunz0aCwyE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=rvTCMhF7jmxt9+VTLWovxNDDwWdE2Zvi
+        ANvFdCFgwyK9LEJRvFB2GNcPa/xZoW+GT9I9bJvtKAn8DJZTQ+yxcjmQlRVqojdK
+        I+6shg6l/Gn6g0kaJCNirmpWf9Mjkx5i8AOi4oGNXY60ZWaASTSjj4S+dVnybGDR
+        vPcObjpwcFE=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4CDADC871C;
+        Thu, 26 Mar 2020 15:27:08 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 94C09C871B;
+        Thu, 26 Mar 2020 15:27:05 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     git@vger.kernel.org, newren@gmail.com
+Subject: Re: [PATCH v2] rebase --merge: optionally skip upstreamed commits
+In-Reply-To: <20200326175033.35944-1-jonathantanmy@google.com> (Jonathan Tan's
+        message of "Thu, 26 Mar 2020 10:50:33 -0700")
+References: <20200318173051.25875-1-jonathantanmy@google.com>
+        <20200326175033.35944-1-jonathantanmy@google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+Date:   Thu, 26 Mar 2020 12:27:04 -0700
+Message-ID: <xmqq4kuakjcn.fsf@gitster.c.googlers.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: C6EAC46E-6F97-11EA-9AF7-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 26, 2020 at 10:50 AM Jonathan Tan <jonathantanmy@google.com> wrote:
->
-> > New in V2: changed parameter name, used Taylor's commit message
-> > suggestions, and used Elijah's documentation suggestions.
+Jonathan Tan <jonathantanmy@google.com> writes:
+
+>> New in V2: changed parameter name, used Taylor's commit message
+>> suggestions, and used Elijah's documentation suggestions.
 >
 > I think the discussion has shifted away from whether this functionality
 > is desirable (or desirable and we should implement this functionality
@@ -78,26 +77,15 @@ On Thu, Mar 26, 2020 at 10:50 AM Jonathan Tan <jonathantanmy@google.com> wrote:
 > documenting it this way:
 >
 >   --keep-cherry-pick=(always|never)::
->           Control rebase's behavior towards commits in the working
->           branch that are already present upstream, i.e. cherry-picks.
->   +
->   If 'never', these commits will be dropped. Because this necessitates
->   reading all upstream commits, this can be expensive in repos with a
->   large number of upstream commits that need to be read.
->   +
->   If 'always', all commits (including these) will be re-applied. This
->   allows rebase to forgo reading all upstream commits, potentially
->   improving performance.
->   +
+>   ...
 >   The default is 'never'.
 >   +
 >   See also INCOMPATIBLE OPTIONS below.
->
-> I've tried to use everyone's suggestions: Junio's suggestions to use the
-> "keep" name (instead of "detect", so that we also communicate what we do
-> with the result of our detection) and the non-boolean option (for
-> extensibility later if we need it), and Elijah's suggestion to use
-> "cherry-pick" instead of "duplicate". If this sounds good, I'll update
-> the patch and send out a new version.
 
-Sounds good to me.  Thanks!
+Sounds much better to me.  I do not mind --[no-]keep-cherry-pick,
+either, by the way.  I know I raised the possibility of having to
+make it non-bool later, but since then I haven't thought of a good
+third option myself anyway, so...
+
+Thanks for keeping the ball rolling.
+
