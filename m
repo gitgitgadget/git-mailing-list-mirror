@@ -2,81 +2,128 @@ Return-Path: <SRS0=lIKx=5L=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E972C43331
-	for <git@archiver.kernel.org>; Thu, 26 Mar 2020 19:31:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 899A5C2D0ED
+	for <git@archiver.kernel.org>; Thu, 26 Mar 2020 19:51:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id AE16420722
-	for <git@archiver.kernel.org>; Thu, 26 Mar 2020 19:31:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3DE8E206E6
+	for <git@archiver.kernel.org>; Thu, 26 Mar 2020 19:51:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="TTuP03hR"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="OX7DqlFL"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727541AbgCZTbl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 Mar 2020 15:31:41 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53110 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726067AbgCZTbl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Mar 2020 15:31:41 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 26BBF53677;
-        Thu, 26 Mar 2020 15:31:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=A1rs4oTI2CL+zNOqfC/StMSpI4o=; b=TTuP03
-        hRdcALitEmKjsJ18IOWRXeS2uwsml2Aw7QVvGyWyYcXQXKTRqFU8JsRELgzjMxzt
-        EEKrv3ug+fIVZ1mPK/MfvWMZHqHXazt0dNE0T07OI1Ltz9sNFrD03QlLBmPpMbFA
-        C8ltFiXJ+ROfvY2smBVV9bD/Z3Bk5H+bXQ8do=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=lBF4c9pZq2vA1eA7ACo/LVO4NfWvoDON
-        umriqo3Kwj2RiBnpfdnfm0a0VyJrVHAb7N5sC/Crc8BZwNHVFdO1oWueWDP0Z3px
-        TI5b5gr/BZpRIa6xSazAaFlsYhUT41lOw28JPAQQtj/bud/Taq69bS0zTCvo/MFx
-        hkmNHg0ul38=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0C9D153676;
-        Thu, 26 Mar 2020 15:31:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7E99653670;
-        Thu, 26 Mar 2020 15:31:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
+        id S1728617AbgCZTvC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 Mar 2020 15:51:02 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:39478 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726067AbgCZTvC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Mar 2020 15:51:02 -0400
+Received: by mail-pf1-f193.google.com with SMTP id d25so3312168pfn.6
+        for <git@vger.kernel.org>; Thu, 26 Mar 2020 12:51:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=wdXyNbW5a3wDYCXr8ICW9SlW9dpFgVSIQV9C2D/Sqck=;
+        b=OX7DqlFLkgSjTYuXEyEdsgoJokZSpsYBJpgCQBfzODj76zv+I8VtY3aEF6U3fHyphT
+         M6+Z9f4Fa556zcfzz8CSrT6cQCSmUF/qQ52mkfJ+rzlVqR88O+EeLl+iHTvZ6PlSO/uZ
+         Iyj99Fv9QZ1BAah6u6P8I4qCIXAQhbxMoWSNS5I6mFaPQnFExI2mXkCPxGHDsbblcMoq
+         4Yz4vrktoqbePtQYf7EQ2wmE4Er26FfkdQu6L6p9Bct6Po0f1vmKm4aqBidtxViw6aqJ
+         iUCRtZbcSpfkLQNWD6nyFcA2yZfdElXTMA8CxvymO3fxu5vXM5PHaRZYAe/LpMuhpC5P
+         mdyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=wdXyNbW5a3wDYCXr8ICW9SlW9dpFgVSIQV9C2D/Sqck=;
+        b=SeeH175ahD9iyJaYErMU50fwu96MWq7jv0vXPJ824nsa0hbNjnlTHmSXGS0+qusgsJ
+         oCJxh/P06EbP+y2s1+cHioKsn5TUZMjskA9PW63TbgKh3oiKEF3Fi77r02PKDVBLgdWf
+         0AF1dTrjHmvcRO7bzFyiUG0+obQCnq0S2/e3Zks9eNgfSm+JYcll2LlXnT0pyMnenOzT
+         UY/wQYrwQ4NzVzSm51wa47fVhZUTq2XUjer2pL8qyTRAppFfZI4C0KketmCxUK0m6mWL
+         QbSRwwQP9+NgW//2tU6vRvXZkBVoRy9Sv6SOig2tmI3pA4WMU/70hTBl+yyUocHNYJ5E
+         Fhxg==
+X-Gm-Message-State: ANhLgQ2hvt9LmTrzzAohRQTfeOk2Sd+fHVidHUDA7Zueu3ho4WBncD+Y
+        LiWn/YPRrxJ6aOv9pQ/laAEgDYYrNDk=
+X-Google-Smtp-Source: ADFU+vuBrOaI/d1PacqoMuo3rrGlew4NBWE/y2BjGAQxaJDllnLy73mwWdQlixRVw53bmcyjUm5Mhg==
+X-Received: by 2002:a63:60d:: with SMTP id 13mr10019480pgg.151.1585252261008;
+        Thu, 26 Mar 2020 12:51:01 -0700 (PDT)
+Received: from localhost ([8.44.146.30])
+        by smtp.gmail.com with ESMTPSA id i2sm2049416pfr.203.2020.03.26.12.50.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Mar 2020 12:51:00 -0700 (PDT)
+Date:   Thu, 26 Mar 2020 13:50:58 -0600
+From:   Taylor Blau <me@ttaylorr.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 2/5] t/lib-gpg.sh: stop pretending to be a stand-alone script
-References: <pull.728.git.git.1584968990.gitgitgadget@gmail.com>
-        <pull.728.v2.git.git.1585114881.gitgitgadget@gmail.com>
-        <c1811d54190a62e3d35505e2b806c89238b56de8.1585114881.git.gitgitgadget@gmail.com>
-        <20200326082140.GC2200716@coredump.intra.peff.net>
-Date:   Thu, 26 Mar 2020 12:31:38 -0700
-In-Reply-To: <20200326082140.GC2200716@coredump.intra.peff.net> (Jeff King's
-        message of "Thu, 26 Mar 2020 04:21:40 -0400")
-Message-ID: <xmqqzhc2j4kl.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Subject: Re: [RFC PATCH] fetch-pack: lazy fetch using tree:0
+Message-ID: <20200326195058.GA8613@syl.local>
+References: <20200319174439.230969-1-jonathantanmy@google.com>
+ <20200320061214.GA511478@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 6A2E9EC0-6F98-11EA-BF61-C28CBED8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20200320061214.GA511478@coredump.intra.peff.net>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Hi Peff,
 
-> I wondered if it might be useful to identify the file for editors, etc.
-> But "*.sh" is quite sufficient, and we already stripped most of these
-> out long ago in b54a31243b (t/lib-*.sh: drop executable bit,
-> 2020-03-26).
+On Fri, Mar 20, 2020 at 02:12:14AM -0400, Jeff King wrote:
+> On Thu, Mar 19, 2020 at 10:44:39AM -0700, Jonathan Tan wrote:
+> >  - Some hosts like GitHub support some partial clone filters, but not
+> >    "tree:0".
+>
+> Yes, this is going to fail against GitHub servers, just like it would
+> for older servers. One way to prevent that would be to use a "blob"
+> filter if that's what we originally partial-cloned with. I don't know if
+> that information always reliably makes it into this code path, though.
+> I think I'd prefer a capability-based fix in the long run.
+>
+> We may support "tree:0" eventually at GitHub. It's quick to compute with
+> bitmaps, just like "blob:none" is. But "tree:1" isn't.
 
-That timestamp look too fresh to me ;-)
+I'm rolling this out shortly :).
 
-c74c7203 (test: replace shebangs with descriptions in shell
-libraries, 2013-11-25) was described quite well.
+> One side note (for Taylor, cc'd): our patches elsewhere to limit the
+> allowed filters don't make it possible to express the difference between
+> "tree:0" and "tree:1". It may be worth thinking about that, especially
+> if it influences the config schema (since we'll have to support it
+> forever once it makes it into a release).
+
+They do now, mostly thanks to Peff's original thinking about separating
+out each filter choice into its own subsection, so that we can write not
+just:
+
+  [uploadpack "filter.tree:depth"]
+    allow = true
+
+but also:
+
+  [uploadpack "filter.tree:depth"]
+    allow = true
+    maxDepth = <n>
+
+I have some patches that I'm rolling out to GitHub in the next day or so
+that do just that. I think that we will likely just support the no-trees
+version of this filter (i.e., '--filter=tree:0'), since that is the only
+case that is helped by having up-to-date bitmaps enabled. I assume that
+other administrators will do the same.
+
+I'm going to send these patches upstream in the not-too-distant future,
+because I want to address the original issues that I talked about in my
+RFC about adding these filter subsections to 'upload-pack's
+configuration in the first place in [1].
+
+My hope is that I can do that while these patches are being vetted in
+the wild before I send them to the list.
+
+Thanks,
+Taylor
+
+[1]: https://lore.kernel.org/git/cover.1584477196.git.me@ttaylorr.com/
