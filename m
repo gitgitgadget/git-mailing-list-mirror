@@ -2,83 +2,175 @@ Return-Path: <SRS0=lIKx=5L=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C478C2D0E7
-	for <git@archiver.kernel.org>; Thu, 26 Mar 2020 01:09:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 71DADC43331
+	for <git@archiver.kernel.org>; Thu, 26 Mar 2020 01:37:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id EECBB20714
-	for <git@archiver.kernel.org>; Thu, 26 Mar 2020 01:09:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3790D20719
+	for <git@archiver.kernel.org>; Thu, 26 Mar 2020 01:37:53 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nfedKMdY"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727575AbgCZBJx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 Mar 2020 21:09:53 -0400
-Received: from sunset.tt-solutions.com ([82.240.17.225]:51643 "EHLO
-        smtp.tt-solutions.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727554AbgCZBJx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Mar 2020 21:09:53 -0400
-X-Greylist: delayed 1529 seconds by postgrey-1.27 at vger.kernel.org; Wed, 25 Mar 2020 21:09:53 EDT
-Received: from [192.168.17.86] (helo=Twilight.zeitlins.org)
-        by smtp.tt-solutions.com with esmtps (TLS1.0:ECDHE_RSA_AES_256_CBC_SHA1:256)
-        (Exim 4.92)
-        (envelope-from <vz-git@zeitlins.org>)
-        id 1jHGdD-00079b-06; Thu, 26 Mar 2020 01:44:23 +0100
-Date:   Thu, 26 Mar 2020 01:44:23 +0100
-From:   Vadim Zeitlin <vz-git@zeitlins.org>
-Subject: Re: [PATCH] fetch: allow running as different users in shared repositories
-To:     johannes.schindelin@gmx.de
-cc:     git@vger.kernel.org
+        id S1727644AbgCZBhu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 Mar 2020 21:37:50 -0400
+Received: from mail-oi1-f193.google.com ([209.85.167.193]:39706 "EHLO
+        mail-oi1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727561AbgCZBhu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Mar 2020 21:37:50 -0400
+Received: by mail-oi1-f193.google.com with SMTP id d63so4104961oig.6
+        for <git@vger.kernel.org>; Wed, 25 Mar 2020 18:37:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=PbtO2xfMAD5flwkqZ9VP8IkMZDgyVOjSWXUi13wsnf8=;
+        b=nfedKMdYPQ6EXlty5pqz3mnyl6CmbyxeUSusUgdCThbLxB14nrjettMCXyXEkrGHQZ
+         MEdXMaPnVedyi4cOoDtNckSbuyqNVHhtex6ZyIF8tLEaSPiZmEKtofk4d8wCi4tVvfCk
+         dGH2vw0iwTEDZNxOaDPvo94f6LlBQ0+dwUyV087a8uvMHWdA3DfjBhP7Ob2ZHfJhyDmp
+         xDSw47s135lUC/sQgvsanfZTZRcRMB3mWC5TJmgBMUEFRsYN6pIS3dafGWpfa4wpwgGc
+         tSoqy9QODOsUrB/1fA+KEHibLlNOBoM6uJD9mV/bZw9oraV2muUh1ANaGTJhvoNdDLOE
+         4I9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=PbtO2xfMAD5flwkqZ9VP8IkMZDgyVOjSWXUi13wsnf8=;
+        b=CpjIGqqe7xNpm3o9TGg2IYYZJ21EATdya9Av8q2GT13kJqzBjqMSq6HP2aB0opDNoj
+         jb4tkoC8+SreLaF6QrbV88LQnl7Jw2LRAQsEc/1VjWYkrgAdDCEDbWXe/DIgXh2FcI+v
+         qoT91vqKPnFlYECmTMrhkVaPUICNZxvsc8aXHaHqCW+H22bDL/VWQTG1xhCyizFvNcbq
+         +qWUnHB1WCeinRdApcpii5SXAh8JuEiUFHgNy1+aKsQ+14W5Jiiv2NugRpTzqH44kMkd
+         ZbGuihr21M3mMJXBTr4r/zWqH+KDjrK7qutUE56Cxbt3thbrvA7mBnSyDNPng2cPoEnj
+         tMYg==
+X-Gm-Message-State: ANhLgQ2WhB/vlVcQP5ThppZ+nmNf6gKiZFcQLIkbjojlfjM5Jivw7SQL
+        ym9taeilJ/zs3MdHZKRu9OrvkmAoLGpJXtfJXkg=
+X-Google-Smtp-Source: ADFU+vuPXQjATvGoznWYF/y26MiduQhCbj0W6y9/kjK9Wf8x348tWIThf3+51h2TYfakVfd0D42/oinQcvfmUN/NQOM=
+X-Received: by 2002:aca:df45:: with SMTP id w66mr291839oig.76.1585186668972;
+ Wed, 25 Mar 2020 18:37:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: TEXT/PLAIN; CHARSET=US-ASCII
-Content-Disposition: INLINE
-In-Reply-To: nycvar.QRO.7.76.6.2003252001560.46@tvgsbejvaqbjf.bet
-References: nycvar.QRO.7.76.6.2003252001560.46@tvgsbejvaqbjf.bet
-X-Mailer: Mahogany 0.68.0 'Cynthia', running under Windows 7 (build 7601, Service Pack 1), 64-bit edition
-Message-Id: <E1jHGdD-00079b-06@smtp.tt-solutions.com>
+References: <CAM+g_Nuu2jGuNwUMS3j8=EjOrthYzfVTrUzOxQJ=aYcoBAL3Tg@mail.gmail.com>
+ <20200325053908.GC651138@coredump.intra.peff.net> <CABPp-BF9LDfaw8=S4yqtuZ5U70Jcj_yZHq17Y7SUa17DwRqMSA@mail.gmail.com>
+ <CAM+g_NtHC5ukU3jchVfud_H_m_h29UQ8vmwQoND8s_Q9Hv70Fg@mail.gmail.com>
+In-Reply-To: <CAM+g_NtHC5ukU3jchVfud_H_m_h29UQ8vmwQoND8s_Q9Hv70Fg@mail.gmail.com>
+From:   Norbert Kiesel <nkiesel@gmail.com>
+Date:   Wed, 25 Mar 2020 18:37:36 -0700
+Message-ID: <CAM+g_Nvt3X4d5cjKajzDOcoDgNS4bVkj3a0KvVm4yDEW-J7v2w@mail.gmail.com>
+Subject: Re: "git rebase" behavior change in 2.26.0
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 25 Mar 2020 20:04:09 +0100 Johannes Schindelin wrote:
+I have to wait for a few hours to see more changes in that branch that
+showed this behavior.
 
-JS> Hi Vadim,
+I tried with this branch just now and my repo is in sync with
+upstream.  Nevertheless, I see messages about operations for both
+backends now for `git pull` which I don't remember seeing before:
+% git status --untracked-files=no
+On branch nextrelease
+Your branch is up to date with 'origin/nextrelease'.
 
- Hello Johannes and thanks for your reply!
+nothing to commit (use -u to show untracked files)
+% git -c rebase.backend=merge pull
+Already up to date.
+Successfully rebased and updated refs/heads/nextrelease.
+% git -c rebase.backend=apply pull
+Already up to date.
+First, rewinding head to replay your work on top of it...
+Fast-forwarded nextrelease to d008080d3f2dc5a9af30067f705a3cb26ed847b3.
+%
 
-JS> On Thu, 19 Mar 2020, Vadim Zeitlin wrote:
-JS> 
-JS> > The function fopen_for_writing(), which was added in 79d7582e32 (commit:
-JS> > allow editing the commit message even in shared repos, 2016-01-06) and
-JS> > used for overwriting FETCH_HEAD since ea56518dfe (Handle more file
-JS> > writes correctly in shared repos, 2016-01-11), didn't do it correctly in
-JS> > shared repositories under Linux.
-JS> >
-JS> > This happened because in this situation the file FETCH_HEAD has mode 644
-JS> 
-JS> I wonder why that is. In a shared repository, it should have mode 664, I
-JS> thought.
+Why is git doing anything if the branch is already up-to-date? The
+commit it ff to is the HEAD of that branch so I don't think anything
+is really changing. Also, if I use `-c pull.rebase=false` I see what I
+think is the 2.25 behavior
 
- This file is created using a simple fopen("w") and so is subject to umask.
-With the usual default umask value (022) its mode would be 644, regardless
-of the repository settings.
+% git status --untracked-files=no
+On branch nextrelease
+Your branch is up to date with 'origin/nextrelease'.
 
-[...snip my original description...]
-JS> That rationale makes sense to me, as does the patch.
+nothing to commit (use -u to show untracked files)
+% git -c rebase.backend=merge -c pull.rebase=false pull
+Already up to date.
+% git -c rebase.backend=apply -c pull.rebase=false pull
+Already up to date.
 
- Sorry for a possibly stupid question, but what is the next thing to do
-now? The instructions in Documentation/SubmittingPatches indicate that I
-should wait until the "list forms consensus that [...] your patch is good",
-but it's not quite clear what indicates that a consensus has been reached.
-Is your comment above enough or should I wait for something else? And
-if/when it has been reached, do I really I need to resend the patch to
-the maintainer and cc the list as written in that document? I'm a bit
-surprised by this because I don't see (most) patches being resent to this
-list.
+I had `pull.rebase=true` configured for quite some time now. And yes,
+I should set it for just this "never push" branch instead of for all
+branches.  I just tried with `-c pull.rebase=false -c
+branch.nextrelease.rebase=true` and that shows
+the same behavior as `-c pull.rebase=true`.
 
- This is obviously very non-urgent, but I'd just like to understand what,
-if anything, is expected from me.
+One potential difference: I have tons of untracked files in my working
+directory. Could that make a difference?
 
- Thanks in advance for your guidance!
-VZ
+On Wed, Mar 25, 2020 at 2:39 PM Norbert Kiesel <nkiesel@gmail.com> wrote:
+>
+> I will try to reproduce and will report back.
+>
+> On Wed, Mar 25, 2020 at 2:21 PM Elijah Newren <newren@gmail.com> wrote:
+>>
+>> On Tue, Mar 24, 2020 at 10:40 PM Jeff King <peff@peff.net> wrote:
+>> >
+>> > On Tue, Mar 24, 2020 at 08:38:04PM -0700, Norbert Kiesel wrote:
+>> >
+>> > > I track an upstream repo with "pull.rebase = true" where I do a `git
+>> > > pull` followed by a `git log -p ORIG_HEAD..` for a branch to see
+>> > > changes since the last "pull".  I normally do not commit to this
+>> > > branch and thus this normally is a "fast-forward" merge.
+>> > >
+>> > > Starting with 2.26 this no longer works because ORIG_HEAD is always
+>> > > set to HEAD after my `git pull`.
+>> > >
+>> > > I track other prances from the same repo where I do local changes and
+>> > > then want the `git pull --rebase` and I thus do not want to
+>> > > give up on the `pull.rebase = true` configuration.
+>> >
+>> > I can imagine this is related to the switch to the "merge" backend for
+>> > git-pull, which may be more eager to overwrite ORIG_HEAD. Perhaps try:
+>> >
+>> >   git -c rebase.backend=apply pull
+>> >
+>> > and see if that behaves differently.
+>> >
+>> > I tried to reproduce what you're seeing, but my recipe doesn't seem to
+>> > show any difference between the two versions:
+>> >
+>> > -- >8 --
+>> > #!/bin/sh
+>> >
+>> > rm -rf repo
+>> >
+>> > git init -q repo
+>> > cd repo
+>> > echo content >base && git add base && git commit -q -m base
+>> > git clone -q . dst
+>> > echo content >new && git add new && git commit -q -m new
+>> >
+>> > cd dst
+>> > git rev-parse HEAD >.git/ORIG_HEAD
+>> > echo before: $(git log -1 --oneline ORIG_HEAD)
+>> > git -c pull.rebase=true pull -q ..
+>> > echo after: $(git log -1 --oneline ORIG_HEAD)
+>> > -- 8< --
+>> >
+>> > We don't seem to touch ORIG_HEAD in either case. But maybe a more
+>> > complex set of pulled commits would trigger it?
+>>
+>> I can't duplicate either.  I suspected that perhaps rebase.autoStash
+>> might help cause it to happen if you had local changes, but I didn't
+>> succeed in reproducing with that either.
+>>
+>> Norbert: Any ideas what you may be doing differently to trigger this?
+>> And does it still happen with rebase.backend=apply, as Peff asked
+>> about?
+>>
+>>
+>> Elijah
