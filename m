@@ -2,165 +2,79 @@ Return-Path: <SRS0=lIKx=5L=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.9 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1,
-	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BBC75C2D0E7
-	for <git@archiver.kernel.org>; Thu, 26 Mar 2020 23:14:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D467C43331
+	for <git@archiver.kernel.org>; Thu, 26 Mar 2020 23:27:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8FDE720714
-	for <git@archiver.kernel.org>; Thu, 26 Mar 2020 23:14:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C890920774
+	for <git@archiver.kernel.org>; Thu, 26 Mar 2020 23:27:24 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="D90FEKhV"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ofAVZQVt"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727600AbgCZXOX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 Mar 2020 19:14:23 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:37543 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727347AbgCZXOX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Mar 2020 19:14:23 -0400
-Received: by mail-pg1-f196.google.com with SMTP id a32so3658032pga.4
-        for <git@vger.kernel.org>; Thu, 26 Mar 2020 16:14:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=mFWDjBuGORl9Xj08T5hYFG8jFXZVX1jXrf+cNVZgNdI=;
-        b=D90FEKhVGw8AkKV95yvtnDk1rr6S+FHD7KgivPcrZS/83A6c1aOUFI7Z7gBJzmqSCi
-         MXn7ivyzfLXrbINK7xISnY+Im4p/XnLv7pefjj+DDKxcnvJxd4bKJ/A/E2KBJjSw21j8
-         ++m8XZQMe7kWun52CWyKKEtaOgZVqbGl7+yl1IayQnWT+VDu8W514d46U7InedX/qX4U
-         K50gqgU2eX1Xw2UYo1u5UH0Qdg7BGitHbIaOuujajw26gFOASA0XIIpoS6bF9ax2kpdA
-         2AuQEo7dh0itnWFsOhoDIS7lF6rgqc+jHwQTU+gJ7qONOlfV0pqJTMxVFBDn/Z/XtOb5
-         CcHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to:user-agent;
-        bh=mFWDjBuGORl9Xj08T5hYFG8jFXZVX1jXrf+cNVZgNdI=;
-        b=Yeyg6UTx/HxF4eB9OeH3KLK1bhH5fbsKAbYv8YP5SngbLIneauxvShf2Ow6BF0EY/M
-         YSrhUsvPgKDddAkSZpFfJ6PUHuCi/faTPH7ts0VU9w+4YYeXmElgX1xab3y9+HzHh8Lk
-         0MG6gkHNTOy7zHyl+5i69muL5Iv6CObokQ6nJiXSUEhLc+jc/OobPCnU62+b+d/Bz2aN
-         cf1WRytAtv5PIg1Ctywf5Yv1AndshwunlwQ0id02UFG/b5Io9k5eeYMfVzarnp4Jw9ZF
-         8wF8/DLZRMIZpnZezMMQg2J4ychARh1nquhlaxjorU+AzYhXns/7NrBDMUQt6o3+jPdy
-         Ld/A==
-X-Gm-Message-State: ANhLgQ2UyZs9lJdoX987D2f6pi+nBPDXrgGdL/3oiNSf65xzqbm3esxq
-        OGo9Z3QeKeTag5lcwUlj/GZTZg==
-X-Google-Smtp-Source: ADFU+vul63v3b5C5gz5CJJa78phh0bNxqIkN2HgunC9ZECnUQczRxm0gMQ7EGw0YiIQjfBpINmQNsg==
-X-Received: by 2002:a62:5c07:: with SMTP id q7mr11681327pfb.200.1585264461971;
-        Thu, 26 Mar 2020 16:14:21 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:ece8:7fe:c1f1:a20f])
-        by smtp.gmail.com with ESMTPSA id h64sm2513463pfg.191.2020.03.26.16.14.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Mar 2020 16:14:21 -0700 (PDT)
-Date:   Thu, 26 Mar 2020 16:14:16 -0700
-From:   Josh Steadmon <steadmon@google.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH] connected: always use partial clone optimization
-Message-ID: <20200326231416.GC12694@google.com>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-References: <20200320220045.258462-1-jonathantanmy@google.com>
- <20200326211156.GA37946@google.com>
+        id S1728435AbgCZX1X (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 Mar 2020 19:27:23 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:59056 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727707AbgCZX1W (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Mar 2020 19:27:22 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5836BCAE6A;
+        Thu, 26 Mar 2020 19:27:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=NzC0zP/6uHHECf8FIYL0+OgITWM=; b=ofAVZQ
+        Vt+uHtOre4dCz+4/lALoOEs64YSvCAD4yMvRcQw4uwCb5FK1xJA6holpBm+eKpTl
+        ptwXXwMdggMYisGT1O8r5NpbvQRXl115vh4KA3IPqbYVVJwNVSUoZFNS9pZ+lpvv
+        r3jPlqx7KkwFcz9UE/aSXS2mgNiCg/cIAoWg8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=OH4LZ6KgZg1EIqgKk+q4AoYPJkgrOmwB
+        0NM93ja1c2n6FnZf//KU43XQONhRfYXQ6i66JhqYSid3Eay8WPpsTyH5vnwOhA/r
+        RiCrOoLOh2NW/Kz/+m/bt6aA2HJ3j7zdqZv7CCqt6d/kFVhyhiefF8rSJUlKBC+n
+        k40UF39reS4=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4D269CAE69;
+        Thu, 26 Mar 2020 19:27:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 972F8CAE66;
+        Thu, 26 Mar 2020 19:27:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Damien Robert <damien.olivier.robert@gmail.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Derrick Stolee <dstolee@microsoft.com>,
+        William Baker <William.Baker@microsoft.com>,
+        Damien Robert <damien.olivier.robert+git@gmail.com>
+Subject: Re: [PATCH v4 1/1] midx.c: fix an integer overflow
+References: <20200326213534.399377-1-damien.olivier.robert+git@gmail.com>
+Date:   Thu, 26 Mar 2020 16:27:16 -0700
+In-Reply-To: <20200326213534.399377-1-damien.olivier.robert+git@gmail.com>
+        (Damien Robert's message of "Thu, 26 Mar 2020 22:35:34 +0100")
+Message-ID: <xmqqbloiitnv.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200326211156.GA37946@google.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 55BDCD00-6FB9-11EA-8057-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2020.03.26 14:11, Emily Shaffer wrote:
-> On Fri, Mar 20, 2020 at 03:00:45PM -0700, Jonathan Tan wrote:
-> > With 50033772d5 ("connected: verify promisor-ness of partial clone",
-> > 2020-01-30), the fast path (checking promisor packs) in
-> > check_connected() now passes a subset of the slow path (rev-list) - if
-> > all objects to be checked are found in promisor packs, both the fast
-> > path and the slow path will pass; otherwise, the fast path will
-> > definitely not pass. This means that we can always attempt the fast path
-> > whenever we need to do the slow path.
-> > 
-> > The fast path is currently guarded by a flag; therefore, remove that
-> > flag. Also, make the fast path fallback to the slow path - if the fast
-> > path fails, the failing OID and all remaining OIDs will be passed to
-> > rev-list.
-> 
-> It looks like a pretty simple change. I had one probably-biased
-> complaint about gotos below, otherwise it looks reasonable to me.
+Damien Robert <damien.olivier.robert@gmail.com> writes:
 
-[snip]
+> When verifying a midx index with 0 objects, the
+>     m->num_objects - 1
+> overflows to 4294967295.
 
-> > diff --git a/connected.c b/connected.c
-> > index 7e9bd1bc62..846f2e4eef 100644
-> > --- a/connected.c
-> > +++ b/connected.c
-> > @@ -52,7 +52,7 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
-> >  		strbuf_release(&idx_file);
-> >  	}
-> >  
-> > -	if (opt->check_refs_are_promisor_objects_only) {
-> > +	if (has_promisor_remote()) {
-> >  		/*
-> >  		 * For partial clones, we don't want to have to do a regular
-> >  		 * connectivity check because we have to enumerate and exclude
-> > @@ -71,13 +71,18 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
-> >  				if (find_pack_entry_one(oid.hash, p))
-> >  					goto promisor_pack_found;
-> >  			}
-> > -			return 1;
-> > +			/*
-> > +			 * Fallback to rev-list with oid and the rest of the
-> > +			 * object IDs provided by fn.
-> > +			 */
-> > +			goto no_promisor_pack_found;
-> >  promisor_pack_found:
-> >  			;
-> >  		} while (!fn(cb_data, &oid));
-> >  		return 0;
-> >  	}
-> >  
-> > +no_promisor_pack_found:
-> 
-> Having a look at the final structure of the loop with these gotos, I'm a
-> little confused. Could be this isn't C-idiomatic but I think the code
-> could be easier to read with helpers instead of gotos. I realize it's
-> longer but I have a hard time understanding that your gotos are used to
-> double-continue or double-break; nested loops tend to make me want to
-> use helpers. But - I'm a lowly barely-reformed C++ developer, so what do
-> I know ;)
-> 
->   int oid_in_promisor(oid) {
->     for (p = get_all_packs(the_repository); p; p = p->next) {
->       if (!p->pack_promisor)
->         continue;
->       if (find_pack_entry_one(oid.hash, p)
->         return 1;
->     }
->   }
-> 
->   int all_oids_in_promisors(oid, fn, cb_data)
->   {
->     do {
->       if (! oid_in_promisor(oid))
->         return 0;
->     } while (!fn(cb_data, &oid));
->     return 1;
->   }
-> 
->   int check_connected(...)
->   {
->     ...
->     if (has_promisor_remote()) {
->       if (all_oids_in_promisors(oid, fn, cb_data))
->         return 0;
->       if (opt->shallow_file) {
->        ...
->   }
+I think this is underflow & wraparound, but I'll let it pass ;-)
 
-I like this version better as well.
+The patch looks good; will queue.
+
+Thanks.
