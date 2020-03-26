@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 71DADC43331
-	for <git@archiver.kernel.org>; Thu, 26 Mar 2020 01:37:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BC069C43331
+	for <git@archiver.kernel.org>; Thu, 26 Mar 2020 01:46:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3790D20719
-	for <git@archiver.kernel.org>; Thu, 26 Mar 2020 01:37:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8798920714
+	for <git@archiver.kernel.org>; Thu, 26 Mar 2020 01:46:53 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nfedKMdY"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gf/L27O5"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727644AbgCZBhu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 Mar 2020 21:37:50 -0400
-Received: from mail-oi1-f193.google.com ([209.85.167.193]:39706 "EHLO
-        mail-oi1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727561AbgCZBhu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Mar 2020 21:37:50 -0400
-Received: by mail-oi1-f193.google.com with SMTP id d63so4104961oig.6
-        for <git@vger.kernel.org>; Wed, 25 Mar 2020 18:37:49 -0700 (PDT)
+        id S1727585AbgCZBqw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 Mar 2020 21:46:52 -0400
+Received: from mail-ot1-f41.google.com ([209.85.210.41]:43730 "EHLO
+        mail-ot1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727561AbgCZBqw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Mar 2020 21:46:52 -0400
+Received: by mail-ot1-f41.google.com with SMTP id a6so4226545otb.10
+        for <git@vger.kernel.org>; Wed, 25 Mar 2020 18:46:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=PbtO2xfMAD5flwkqZ9VP8IkMZDgyVOjSWXUi13wsnf8=;
-        b=nfedKMdYPQ6EXlty5pqz3mnyl6CmbyxeUSusUgdCThbLxB14nrjettMCXyXEkrGHQZ
-         MEdXMaPnVedyi4cOoDtNckSbuyqNVHhtex6ZyIF8tLEaSPiZmEKtofk4d8wCi4tVvfCk
-         dGH2vw0iwTEDZNxOaDPvo94f6LlBQ0+dwUyV087a8uvMHWdA3DfjBhP7Ob2ZHfJhyDmp
-         xDSw47s135lUC/sQgvsanfZTZRcRMB3mWC5TJmgBMUEFRsYN6pIS3dafGWpfa4wpwgGc
-         tSoqy9QODOsUrB/1fA+KEHibLlNOBoM6uJD9mV/bZw9oraV2muUh1ANaGTJhvoNdDLOE
-         4I9w==
+        bh=aZWn8WLAopn805wclLQ8AmkGVfaMePNECx13L1JaBCI=;
+        b=gf/L27O5eAVdrKbuOYCQj6lnMuTZfHGmJCd1gNSGQ7Q3o/+Y+UJ20Z96or+DLkMKRK
+         bE9NJVqGpiC3f1CTM2YYcH3vF3Hpe7N77aDSs+XLzxYrFO+s5AishG4nPtXA50FzfGx+
+         gI+kNkArqMcMB1rmx1zW9WE7aRMNgTKbW9fC+/zlVh6eFOZun6u7DCKSiXVHMBWnsU2x
+         wq+4RyzqpBBMhmlFIpq2Kkt7TzWXguFhrAks0zuZOES66YCa/jbBxjNoEHbyTsIXdgdq
+         bwOGQ4jLD7GHWc6vTkwi0bALMge+XKQFY6TnWTF8lUODCOIZtZcs4iZPt7IN9FAnRlOq
+         Pwrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=PbtO2xfMAD5flwkqZ9VP8IkMZDgyVOjSWXUi13wsnf8=;
-        b=CpjIGqqe7xNpm3o9TGg2IYYZJ21EATdya9Av8q2GT13kJqzBjqMSq6HP2aB0opDNoj
-         jb4tkoC8+SreLaF6QrbV88LQnl7Jw2LRAQsEc/1VjWYkrgAdDCEDbWXe/DIgXh2FcI+v
-         qoT91vqKPnFlYECmTMrhkVaPUICNZxvsc8aXHaHqCW+H22bDL/VWQTG1xhCyizFvNcbq
-         +qWUnHB1WCeinRdApcpii5SXAh8JuEiUFHgNy1+aKsQ+14W5Jiiv2NugRpTzqH44kMkd
-         ZbGuihr21M3mMJXBTr4r/zWqH+KDjrK7qutUE56Cxbt3thbrvA7mBnSyDNPng2cPoEnj
-         tMYg==
-X-Gm-Message-State: ANhLgQ2WhB/vlVcQP5ThppZ+nmNf6gKiZFcQLIkbjojlfjM5Jivw7SQL
-        ym9taeilJ/zs3MdHZKRu9OrvkmAoLGpJXtfJXkg=
-X-Google-Smtp-Source: ADFU+vuPXQjATvGoznWYF/y26MiduQhCbj0W6y9/kjK9Wf8x348tWIThf3+51h2TYfakVfd0D42/oinQcvfmUN/NQOM=
-X-Received: by 2002:aca:df45:: with SMTP id w66mr291839oig.76.1585186668972;
- Wed, 25 Mar 2020 18:37:48 -0700 (PDT)
+        bh=aZWn8WLAopn805wclLQ8AmkGVfaMePNECx13L1JaBCI=;
+        b=emIN1Le2v9dl9nM6a+I5fI3vmFpRvvHdrKwrX9hcG2pTe44HYRxeJSWLlcHk2EoB9+
+         wLKpQotMzhA/f+u2EMYZHaPxunjj6wdqXBFgSf1xLQzTSn/OgJJZCP8QHl/L5vpLkMNc
+         i/5efFwlXc0TLSCOWVt+LOIyuJU1liBlKoti2ubA9M11WZnoQ1m2ikVaG0Rhrgv/V/pY
+         lAYkFltH9UFWkElu3SJAnTTZyWxl5VwDdfJQawLxYpUH8HQgdlLOaFGlZjTpfItA/5Ed
+         5bNi7Smd5FB9ycGpqEtiQKPGC+ecgPSutqPfrx5ZAXhui3bpI67q0skVkrIipkpj49JX
+         NChQ==
+X-Gm-Message-State: ANhLgQ0y5F+iksNBabquB4Kx8ifQ7/4EmC1SaLgUsmFbfUOOVHwFXD5/
+        +V5hYxtoUPriRNLKhCvBc+t2YHHaf8CWo9R5fEE+n4mMDsc=
+X-Google-Smtp-Source: ADFU+vuvHOH/5MJ9spxqOTUzA5p86E1ZJNYgyW1a+YVPuSa2hvXxqviCGDf6ZSQTB1g877myI58fagdgKjEECuymKxI=
+X-Received: by 2002:a4a:919b:: with SMTP id d27mr3581358ooh.76.1585187211584;
+ Wed, 25 Mar 2020 18:46:51 -0700 (PDT)
 MIME-Version: 1.0
 References: <CAM+g_Nuu2jGuNwUMS3j8=EjOrthYzfVTrUzOxQJ=aYcoBAL3Tg@mail.gmail.com>
  <20200325053908.GC651138@coredump.intra.peff.net> <CABPp-BF9LDfaw8=S4yqtuZ5U70Jcj_yZHq17Y7SUa17DwRqMSA@mail.gmail.com>
- <CAM+g_NtHC5ukU3jchVfud_H_m_h29UQ8vmwQoND8s_Q9Hv70Fg@mail.gmail.com>
-In-Reply-To: <CAM+g_NtHC5ukU3jchVfud_H_m_h29UQ8vmwQoND8s_Q9Hv70Fg@mail.gmail.com>
+ <CAM+g_NtHC5ukU3jchVfud_H_m_h29UQ8vmwQoND8s_Q9Hv70Fg@mail.gmail.com> <CAM+g_Nvt3X4d5cjKajzDOcoDgNS4bVkj3a0KvVm4yDEW-J7v2w@mail.gmail.com>
+In-Reply-To: <CAM+g_Nvt3X4d5cjKajzDOcoDgNS4bVkj3a0KvVm4yDEW-J7v2w@mail.gmail.com>
 From:   Norbert Kiesel <nkiesel@gmail.com>
-Date:   Wed, 25 Mar 2020 18:37:36 -0700
-Message-ID: <CAM+g_Nvt3X4d5cjKajzDOcoDgNS4bVkj3a0KvVm4yDEW-J7v2w@mail.gmail.com>
+Date:   Wed, 25 Mar 2020 18:46:39 -0700
+Message-ID: <CAM+g_NsUfw6zDRj8H1VNdheKFSHgC9gz7nVy0vbtpTKkYzjjtA@mail.gmail.com>
 Subject: Re: "git rebase" behavior change in 2.26.0
 To:     Elijah Newren <newren@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
@@ -67,110 +67,29 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I have to wait for a few hours to see more changes in that branch that
-showed this behavior.
+Here is a concrete example:
 
-I tried with this branch just now and my repo is in sync with
-upstream.  Nevertheless, I see messages about operations for both
-backends now for `git pull` which I don't remember seeing before:
-% git status --untracked-files=no
-On branch nextrelease
-Your branch is up to date with 'origin/nextrelease'.
-
-nothing to commit (use -u to show untracked files)
-% git -c rebase.backend=merge pull
-Already up to date.
+lt-nkiesel:~Platform(nextrelease)% git -c rebase.backend=merge -c
+pull.rebase=false -c branch.nextrelease.rebase=true pull
+remote: Enumerating objects: 1, done.
+remote: Counting objects: 100% (1/1), done.
+remote: Total 1 (delta 0), reused 0 (delta 0)
+Unpacking objects: 100% (1/1), 279 bytes | 279.00 KiB/s, done.
+From msgit.rnd.metricstream.com:platform/Platform7
+   d008080d3f2..db4042856da  nextrelease -> origin/nextrelease
+Updating d008080d3f2..db4042856da
+Fast-forward
+ modules/bpcsfw/src/main/java/com/metricstream/systemi/client/servlet/servant/BaseViewController.java
+| 54 +++++++++++++++++++++++++-----------------------------
+ modules/bpcsfw/src/main/java/com/metricstream/util/HttpUtils.java
+                               |  5 +++++
+ 2 files changed, 30 insertions(+), 29 deletions(-)
 Successfully rebased and updated refs/heads/nextrelease.
-% git -c rebase.backend=apply pull
-Already up to date.
-First, rewinding head to replay your work on top of it...
-Fast-forwarded nextrelease to d008080d3f2dc5a9af30067f705a3cb26ed847b3.
-%
+lt-nkiesel:~Platform(nextrelease)% git rev-parse ORIG_HEAD
+db4042856da8338f183c831fca92cf63da7988bd
+lt-nkiesel:~Platform(nextrelease)% git rev-parse HEAD
+db4042856da8338f183c831fca92cf63da7988bd
+lt-nkiesel:~Platform(nextrelease)%
 
-Why is git doing anything if the branch is already up-to-date? The
-commit it ff to is the HEAD of that branch so I don't think anything
-is really changing. Also, if I use `-c pull.rebase=false` I see what I
-think is the 2.25 behavior
-
-% git status --untracked-files=no
-On branch nextrelease
-Your branch is up to date with 'origin/nextrelease'.
-
-nothing to commit (use -u to show untracked files)
-% git -c rebase.backend=merge -c pull.rebase=false pull
-Already up to date.
-% git -c rebase.backend=apply -c pull.rebase=false pull
-Already up to date.
-
-I had `pull.rebase=true` configured for quite some time now. And yes,
-I should set it for just this "never push" branch instead of for all
-branches.  I just tried with `-c pull.rebase=false -c
-branch.nextrelease.rebase=true` and that shows
-the same behavior as `-c pull.rebase=true`.
-
-One potential difference: I have tons of untracked files in my working
-directory. Could that make a difference?
-
-On Wed, Mar 25, 2020 at 2:39 PM Norbert Kiesel <nkiesel@gmail.com> wrote:
->
-> I will try to reproduce and will report back.
->
-> On Wed, Mar 25, 2020 at 2:21 PM Elijah Newren <newren@gmail.com> wrote:
->>
->> On Tue, Mar 24, 2020 at 10:40 PM Jeff King <peff@peff.net> wrote:
->> >
->> > On Tue, Mar 24, 2020 at 08:38:04PM -0700, Norbert Kiesel wrote:
->> >
->> > > I track an upstream repo with "pull.rebase = true" where I do a `git
->> > > pull` followed by a `git log -p ORIG_HEAD..` for a branch to see
->> > > changes since the last "pull".  I normally do not commit to this
->> > > branch and thus this normally is a "fast-forward" merge.
->> > >
->> > > Starting with 2.26 this no longer works because ORIG_HEAD is always
->> > > set to HEAD after my `git pull`.
->> > >
->> > > I track other prances from the same repo where I do local changes and
->> > > then want the `git pull --rebase` and I thus do not want to
->> > > give up on the `pull.rebase = true` configuration.
->> >
->> > I can imagine this is related to the switch to the "merge" backend for
->> > git-pull, which may be more eager to overwrite ORIG_HEAD. Perhaps try:
->> >
->> >   git -c rebase.backend=apply pull
->> >
->> > and see if that behaves differently.
->> >
->> > I tried to reproduce what you're seeing, but my recipe doesn't seem to
->> > show any difference between the two versions:
->> >
->> > -- >8 --
->> > #!/bin/sh
->> >
->> > rm -rf repo
->> >
->> > git init -q repo
->> > cd repo
->> > echo content >base && git add base && git commit -q -m base
->> > git clone -q . dst
->> > echo content >new && git add new && git commit -q -m new
->> >
->> > cd dst
->> > git rev-parse HEAD >.git/ORIG_HEAD
->> > echo before: $(git log -1 --oneline ORIG_HEAD)
->> > git -c pull.rebase=true pull -q ..
->> > echo after: $(git log -1 --oneline ORIG_HEAD)
->> > -- 8< --
->> >
->> > We don't seem to touch ORIG_HEAD in either case. But maybe a more
->> > complex set of pulled commits would trigger it?
->>
->> I can't duplicate either.  I suspected that perhaps rebase.autoStash
->> might help cause it to happen if you had local changes, but I didn't
->> succeed in reproducing with that either.
->>
->> Norbert: Any ideas what you may be doing differently to trigger this?
->> And does it still happen with rebase.backend=apply, as Peff asked
->> about?
->>
->>
->> Elijah
+As you can see, git said "Fast-forward" (i.e. no need to rebase) but
+nevertheless after that pull ORIG_HEAD is identical to HEAD
