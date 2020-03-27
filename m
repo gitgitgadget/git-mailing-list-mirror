@@ -2,116 +2,185 @@ Return-Path: <SRS0=iK8c=5M=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.2 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.2 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92516C43331
-	for <git@archiver.kernel.org>; Fri, 27 Mar 2020 15:04:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D537C43331
+	for <git@archiver.kernel.org>; Fri, 27 Mar 2020 15:16:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 64F612072F
-	for <git@archiver.kernel.org>; Fri, 27 Mar 2020 15:04:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 60D9820774
+	for <git@archiver.kernel.org>; Fri, 27 Mar 2020 15:16:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="To2ngMZ9"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="fnUZp+pD"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727803AbgC0PED (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 27 Mar 2020 11:04:03 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:41814 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727726AbgC0PED (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Mar 2020 11:04:03 -0400
-Received: by mail-pf1-f193.google.com with SMTP id z65so4624986pfz.8
-        for <git@vger.kernel.org>; Fri, 27 Mar 2020 08:04:01 -0700 (PDT)
+        id S1727370AbgC0PQL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 27 Mar 2020 11:16:11 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:39151 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726900AbgC0PQL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Mar 2020 11:16:11 -0400
+Received: by mail-pl1-f193.google.com with SMTP id m1so3557617pll.6
+        for <git@vger.kernel.org>; Fri, 27 Mar 2020 08:16:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=OJRA+WxtWwHNbNSVepFr7HQ9MMLN6vmu3FwE4vCW2Bw=;
-        b=To2ngMZ9mnq4KXQLtN42L3DEHt5D0ujSfo2sdQN0FrL4nAPewFwpDD3K4NK7LLDIy/
-         qlC4POxqMn4rs6e+DipNEh5z7HNxfsOHfH24Rvqn+NBxHuHAWarJtW8bel5Y6zHCsZNX
-         M6SAh0wWaNuqZVgB9fewjcfeFJk4b3Mkdi8QKB05MNtb/PT+RTJsWCEjvM/ah3M17Ikw
-         gLmBIuLJxSYPB8ujbR9g+0H0rU9s19ST0l3DH5Oz8G4iPhAGFg4BLRImoIJtmRRPQAT8
-         OeDtRPC1VLWN+9E+ocYwZ8h7vCjMvhWkSt40PVaxwdGUNugQDvXI3GWjQ8kZMFQDmtNA
-         LaMQ==
+        bh=pGa6uPNz6atPgDij/IPBg39R0j1dzzNBF4tiGyR3uts=;
+        b=fnUZp+pDq2oD1DZeqsIBcifJq9TFspr3eOncOvkq+nnVGx8VzOLdW9Nzo6/0DWbBJw
+         SZltZgKbWg9wP5bxKmnvgJu3huZ3OpZoEeOlGlMfhmMxOX2KonhlT+v7HrDON52xtwm+
+         7e4PmF6BQDKDvrpGf3mCo8vc6O1D5rbdM2cFizSHxhjUjDCKSaUIFKPFghsvD8ipyqbr
+         ZlgOcEP+55gdChwRrCq1SHFmap32mtk3iAv8K3IhZ38ni3cwHHj12PmDyZ9o86YflS40
+         y/KjsJecPutQ2NHrN2WinoB2cKyzATBbJr+hS/vrVTzf02an81O94YVvkUTBNjnOJoyL
+         9qtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=OJRA+WxtWwHNbNSVepFr7HQ9MMLN6vmu3FwE4vCW2Bw=;
-        b=AQwRLWez8dZ2hXiHiR8O/OF/USU/h4PxTPE6QOJTWaBFlE+aHhSTc5h5z8MEB69ry7
-         qFECgo6jue6BTpP0yxKJfJJtidoaO9FZwYg4ULsdqFXDhJjRx3JKhwlOAKMdMawaj0VL
-         F4Jjz7G4L5E4fnDyN+PNgI8sN+hCrz8gDW+iDc8Eol1C0MTy40WCXtjT3Fm8mK3Z/QVf
-         l7M7wGA8tiPBlYE0TRkwBfPSiA/4JY+L5OaKk84pxeOIogp1CYP0GnPRxmu78qiexjUq
-         dh6BFIAaIe/bQYAsxYq/ht+cnmK+JBKI1NI72FyF4yyp8nuxs6OJzAmXmt2u8uCCyrHD
-         OXvw==
-X-Gm-Message-State: ANhLgQ26RdAA8UolLt9Id1abo2bsar/TNB2/p/1NbIh9kCripfHol69O
-        Wj4x2VeNgDIal6k8zMEzlFtEiQ==
-X-Google-Smtp-Source: ADFU+vszkUbqmOwUSIXtm5VLdCKB4oX1/e4Ra30gh90gHoIohdq63QIx56tQSB5mV7npIQtJE/SaGA==
-X-Received: by 2002:a63:b52:: with SMTP id a18mr1719249pgl.130.1585321441078;
-        Fri, 27 Mar 2020 08:04:01 -0700 (PDT)
+        bh=pGa6uPNz6atPgDij/IPBg39R0j1dzzNBF4tiGyR3uts=;
+        b=bvO8cA/M2ua7/R9BUJ6zUfjqM5ybXnofrGixgtxEfNQEehNDsExIoB4vZahZlthwCu
+         FndlMm5vP2eBDwpM3osVW2p3HUtjJ/WjzQqOWXTnY5MJWkgqUEk1sauDQda657OQtBej
+         swUXP3jEPh/vq2pydojxNODLl7Ldx8IveE/+edIVFyuBZABASV2worhkbW968EaDlI/g
+         5iNX3RGdBWR48I1BLePEGYKq1RIzHDDwAmodAipDAMo6+YT4elXlMVO9L1JaQ3GiTgsK
+         DT0FkK5vvqgOmrR8x4dNb/j5kPLq/3xnhM9N3fNBqR9ZAxlnSZuubg+1CzGMtt+P9/jW
+         s57w==
+X-Gm-Message-State: ANhLgQ0AIpSDjmYZiM4nOEEeSfPIqYAyn6Z9yqhI3o5vKTQkpQVKnRqH
+        nUf/B6RINgWDt1hj1vO7c1KckQ==
+X-Google-Smtp-Source: ADFU+vsYoqO2+5vunPX4YLY4cTLs+cZfNV0G4menI17dJoFWxagQmg0stwuzdSzve4+vArRZOK0Jrw==
+X-Received: by 2002:a17:902:444:: with SMTP id 62mr13672672ple.109.1585322169266;
+        Fri, 27 Mar 2020 08:16:09 -0700 (PDT)
 Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id f22sm4047197pgl.20.2020.03.27.08.03.59
+        by smtp.gmail.com with ESMTPSA id b133sm2838459pfb.180.2020.03.27.08.16.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Mar 2020 08:03:59 -0700 (PDT)
-Date:   Fri, 27 Mar 2020 09:03:58 -0600
+        Fri, 27 Mar 2020 08:16:08 -0700 (PDT)
+Date:   Fri, 27 Mar 2020 09:16:07 -0600
 From:   Taylor Blau <me@ttaylorr.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>, Derrick Stolee <stolee@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        dstolee@microsoft.com
-Subject: Re: [PATCH 1/1] commit-graph.c: avoid unnecessary tag dereference
- when merging
-Message-ID: <20200327150358.GA30204@syl.local>
-References: <xmqqfte1a6ew.fsf@gitster.c.googlers.com>
- <a0de34e3-3f60-1838-dbaf-2ee3dddc7c89@gmail.com>
- <20200322002005.GA48038@syl.local>
- <1cb561fc-5bce-28f0-e5e1-886f590fba92@gmail.com>
- <20200322054916.GB578498@coredump.intra.peff.net>
- <20200322060434.GC578498@coredump.intra.peff.net>
- <20200322154749.GB53402@syl.local>
- <20200324061159.GC610977@coredump.intra.peff.net>
- <20200324230826.GA42939@syl.local>
- <20200327084248.GA607390@coredump.intra.peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 1/2] test-lib-functions: make packetize() more efficient
+Message-ID: <20200327151607.GA30419@syl.local>
+References: <20200327080210.GA604725@coredump.intra.peff.net>
+ <20200327080300.GA605934@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20200327084248.GA607390@coredump.intra.peff.net>
+In-Reply-To: <20200327080300.GA605934@coredump.intra.peff.net>
 User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 27, 2020 at 04:42:48AM -0400, Jeff King wrote:
-> On Tue, Mar 24, 2020 at 05:08:26PM -0600, Taylor Blau wrote:
-> > I can plan to deploy this patch to GitHub's servers for a ~month and
-> > see if we experience it.
+On Fri, Mar 27, 2020 at 04:03:00AM -0400, Jeff King wrote:
+> The packetize() function takes its input on stdin, and requires 4
+> separate sub-processes to format a simple string. We can do much better
+> by getting the length via the shell's "${#packet}" construct. The one
+> caveat is that the shell can't put a NUL into a variable, so we'll have
+> to continue to provide the stdin form for a few calls.
 >
-> ...I don't think we'll actually generate good data here. We're probably
-> going to end up doing our "big maintenance" commit-graph roll-ups by
-> just feeding --reachable as input, and dropping all of the existing
-> graphs.
+> There are a few other cleanups here in the touched code:
+>
+>  - the stdin form of packetize() had an extra stray "%s" when printing
+>    the packet
+>
+>  - the converted calls in t5562 can be made simpler by redirecting
+>    output as a block, rather than repeated appending
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  t/t5562-http-backend-content-length.sh | 19 ++++++++++++-------
+>  t/test-lib-functions.sh                | 23 ++++++++++++++++-------
+>  2 files changed, 28 insertions(+), 14 deletions(-)
+>
+> diff --git a/t/t5562-http-backend-content-length.sh b/t/t5562-http-backend-content-length.sh
+> index 4a110b307e..3f4ac71f83 100755
+> --- a/t/t5562-http-backend-content-length.sh
+> +++ b/t/t5562-http-backend-content-length.sh
+> @@ -53,15 +53,20 @@ test_expect_success 'setup' '
+>  	test_commit c1 &&
+>  	hash_head=$(git rev-parse HEAD) &&
+>  	hash_prev=$(git rev-parse HEAD~1) &&
+> -	printf "want %s" "$hash_head" | packetize >fetch_body &&
+> -	printf 0000 >>fetch_body &&
+> -	printf "have %s" "$hash_prev" | packetize >>fetch_body &&
+> -	printf done | packetize >>fetch_body &&
+> +	{
+> +		packetize "want $hash_head" &&
+> +		printf 0000 &&
+> +		packetize "have $hash_prev" &&
+> +		packetize "done"
+> +	} >fetch_body &&
 
-For what it's worth (and I'm not sure that it's worth much), but this
-is only true in the last day or so. Before, we were running:
+Nicely done, this is an obvious improvement in clarity over the
+appending '>>' that was here before. The new version reads mouch more
+cleanly.
 
-  $ git commit-graph write --split=merge-all --input=none
+>  	test_copy_bytes 10 <fetch_body >fetch_body.trunc &&
+>  	hash_next=$(git commit-tree -p HEAD -m next HEAD^{tree}) &&
+> -	printf "%s %s refs/heads/newbranch\\0report-status\\n" "$ZERO_OID" "$hash_next" | packetize >push_body &&
+> -	printf 0000 >>push_body &&
+> -	echo "$hash_next" | git pack-objects --stdout >>push_body &&
+> +	{
+> +		printf "%s %s refs/heads/newbranch\\0report-status\\n" \
+> +			"$ZERO_OID" "$hash_next" | packetize &&
+> +		printf 0000 &&
+> +		echo "$hash_next" | git pack-objects --stdout
+> +	} >push_body &&
+>  	test_copy_bytes 10 <push_body >push_body.trunc &&
+>  	: >empty_body
+>  '
+> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+> index 352c213d52..216918a58c 100644
+> --- a/t/test-lib-functions.sh
+> +++ b/t/test-lib-functions.sh
+> @@ -1362,14 +1362,23 @@ nongit () {
+>  	)
+>  } 7>&2 2>&4
+>
+> -# convert stdin to pktline representation; note that empty input becomes an
+> -# empty packet, not a flush packet (for that you can just print 0000 yourself).
+> +# convert function arguments or stdin (if not arguments given) to pktline
+> +# representation. If multiple arguments are given, they are separated by
+> +# whitespace and put in a single packet. Note that data containing NULs must be
+> +# given on stdin, and that empty input becomes an empty packet, not a flush
+> +# packet (for that you can just print 0000 yourself).
+>  packetize() {
+> -	cat >packetize.tmp &&
+> -	len=$(wc -c <packetize.tmp) &&
+> -	printf '%04x%s' "$(($len + 4))" &&
+> -	cat packetize.tmp &&
+> -	rm -f packetize.tmp
+> +	if test $# -gt 0
+> +	then
+> +		packet="$*"
 
-which *did* exercise this code quite frequently (and thus would have
-been helped by this patch). But now, we are running something like:
+Mentioned off-list in a discussion already, but: though I find this
+behavior of joining multiple arguments by a whitespace character a
+little confusing (i.e., what would callers thing this function does if
+they hadn't read the documentation?) I think that this is probably the
+most sane thing that you could do here.
 
-  $ git commit-graph write --split=replace --input=reachable
+On the other hand, nowhere in this patch do we currently call packetize
+with multiple arguments, so perhaps it would be made simpler if we
+instead wrote "$1" anywhere there was "$packet".
 
-...where '--split=replace' means "write a split commit-graph, but drop
-all existing layers before writing it". This case is obviously not
-helped by this patch, although I think the patch is worthwhile for
-callers who do the first thing.
+> +		printf '%04x%s' "$((4 + ${#packet}))" "$packet"
+> +	else
+> +		cat >packetize.tmp &&
+> +		len=$(wc -c <packetize.tmp) &&
+> +		printf '%04x' "$(($len + 4))" &&
+> +		cat packetize.tmp &&
+> +		rm -f packetize.tmp
+> +	fi
+>  }
 
-I'll post patches about that shortly after they've been a little more
-well-vetted (we're only generating split commit-graphs on a percentage
-of repositories for now).
+Right: if the contents contains an unrepresentable byte, then it has to
+be passed over stdin. This part is obviously correct.
 
-> -Peff
+>  # Parse the input as a series of pktlines, writing the result to stdout.
+> --
+> 2.26.0.581.g322f77c0ee
 
 Thanks,
 Taylor
