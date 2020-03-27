@@ -3,154 +3,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 484ECC43331
-	for <git@archiver.kernel.org>; Fri, 27 Mar 2020 19:02:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6823DC43331
+	for <git@archiver.kernel.org>; Fri, 27 Mar 2020 19:18:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1B2A52071B
-	for <git@archiver.kernel.org>; Fri, 27 Mar 2020 19:02:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 14D15206E6
+	for <git@archiver.kernel.org>; Fri, 27 Mar 2020 19:18:42 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QNVUAEZl"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Dk9Oe/oP"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727495AbgC0TCK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 27 Mar 2020 15:02:10 -0400
-Received: from mail-oi1-f196.google.com ([209.85.167.196]:37413 "EHLO
-        mail-oi1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727393AbgC0TCK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Mar 2020 15:02:10 -0400
-Received: by mail-oi1-f196.google.com with SMTP id u20so4991657oic.4
-        for <git@vger.kernel.org>; Fri, 27 Mar 2020 12:02:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=HWUbXt+ORhXpxZDYzcQibFtb0g5BWel8RBuj8wAfN04=;
-        b=QNVUAEZlaDwcm0rEhEa+1rAqjM50hKXPBo9/pcHpljz0LE7RKCGNDr+l6/NE/UfIUx
-         N2K7CAqnsDLRTw1EayTZAGpGOZaylsKzmi7++aDzVYYMTk61EP8JLh7mK4bRQ+OTdhZJ
-         diSejegIZ0yrnDnHwyE8B3cUFEOarJ8ZkOEgulzVWz/vK7wdRtLmkZ2z3QVi8JSu9mjw
-         bdAikd/7aPf8cOtRMX7EexxKNpdnaSDWO8jRMpduvQDv2lqVOINBzbZ1MRGlw1WMDbC9
-         BF/CE+Ticm4H/CA0MySI86NxirXjEqUZ5AMYpJa5EvBAh5U4ZlalLY9mwb3Z6M8j5OlC
-         EyCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=HWUbXt+ORhXpxZDYzcQibFtb0g5BWel8RBuj8wAfN04=;
-        b=mtmvRz9fFLSSi0DcrJ0Sd/B+9y7CIRnfOSJ8tTP8rJ9KqgTj1ryGXMMp8xmZlroPvA
-         d4ba3VdeonrcwIqOOo1A40x1KxEkiJMrSoMpEu0u1mn7FxlsqCm19xvgBywitNqFwZLN
-         65aL23S28FuTaVUDk08DEE4YTVl6SkDZD9XmIPRlfz6P8HH9QWGmPu6FXvvQlunSvF+c
-         rQkKUwJrojYymsIqbTFYNyef+MCdUL98fD+ROieC2FmbjRsWGhpxMCleLMCKczHJMYOU
-         2e26YwaHuffIj/gedtLQa74KaEHVKqxjBaIITEH8QGat7KRHBerP/ONmWmATp2UAf0xD
-         vHvg==
-X-Gm-Message-State: ANhLgQ05Wp8lyGUVGHtH9ON3Jz3ifbL7v6TyAQCnam8XNGTAgASB4VR/
-        DFz9eVF//hjhY+qgUDt0K3I1NpEh4DapkJUW30Y=
-X-Google-Smtp-Source: ADFU+vs1nCqeLzYmyKZxCoTY0dnyVs6X5Uhys+Rj/an9vwDwLcC9iDTKexnMBslaZGgnYfo7NeHti/Av7Ik/4t+OiD8=
-X-Received: by 2002:aca:dc45:: with SMTP id t66mr245502oig.39.1585335728749;
- Fri, 27 Mar 2020 12:02:08 -0700 (PDT)
+        id S1727393AbgC0TSk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 27 Mar 2020 15:18:40 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:63922 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726738AbgC0TSk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Mar 2020 15:18:40 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id B4029B7D54;
+        Fri, 27 Mar 2020 15:18:38 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=2XxztuLkhV5n3l94YF7ioglcW+Y=; b=Dk9Oe/
+        oPj+2g6InTiA2aL/ZkdpA+6JsnhMqi4cpl9wtzIoP7ZUTk2bcihDrwBj+OI4MECb
+        hpuGPbE1rQKHbQpE3uWPmm6jpez1v94+LW2XU6G+wsLow1GOa5OZMSL5omLYWoad
+        cjK9TBE7siTCD7q6yZg8HQTCXNEYzYSU7DjFc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=yFF4flBP2UokJFATiP9eQk5vMeOa+JkS
+        P5eq8T3a5z2tyOTCy6Ei6KZdyPaRZ3oEi0GHSR6gvNrJoHotlgeNY/4NOUvK70cH
+        veMWOvmJgdsJkW4Lpjnadj17hL/SuJ4tH0ZoVsls0+Hv0oyP0gkrIajQGeexuqd0
+        ZOEtDMXs6e8=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id AAE8EB7D52;
+        Fri, 27 Mar 2020 15:18:38 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id F258CB7D51;
+        Fri, 27 Mar 2020 15:18:35 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 1/2] test-lib-functions: make packetize() more efficient
+References: <20200327080210.GA604725@coredump.intra.peff.net>
+        <20200327080300.GA605934@coredump.intra.peff.net>
+Date:   Fri, 27 Mar 2020 12:18:34 -0700
+In-Reply-To: <20200327080300.GA605934@coredump.intra.peff.net> (Jeff King's
+        message of "Fri, 27 Mar 2020 04:03:00 -0400")
+Message-ID: <xmqq1rpdhaid.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <cover.1585027716.git.matheus.bernardino@usp.br>
- <a76242ecfa69cf29995bd859305dc2ab1bc1a221.1585027716.git.matheus.bernardino@usp.br>
- <CABPp-BEbNCYk0pCuEDQ_ViB2=varJPBsVODxNvJs0EVRyBqjBg@mail.gmail.com>
- <CAHd-oW6ANf_iNmYkgXt4jo1seB-AEx1TSH384v+oh1bicG8RDA@mail.gmail.com>
- <CABPp-BGVO3QdbfE84uF_3QDF0-y2iHHh6G5FAFzNRfeRitkuHw@mail.gmail.com> <xmqq369tiyo8.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqq369tiyo8.fsf@gitster.c.googlers.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 27 Mar 2020 12:01:57 -0700
-Message-ID: <CABPp-BG+Wohx4idoh1KSVZvuQ6aUJ6OKACRMi=gkvQjzd2sWUw@mail.gmail.com>
-Subject: Re: [RFC PATCH 3/3] grep: add option to ignore sparsity patterns
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: C19357E2-705F-11EA-91B3-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 27, 2020 at 8:51 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Elijah Newren <newren@gmail.com> writes:
->
-> > Sometimes, code that wasn't meant to be used together accidentally is
-> > used together or the docs suggest they can be used together.  ...
-> > ... but that's the
-> > type of accident that is easy to have in the implementation or docs
-> > because it doesn't even occur to people who understand the design and
-> > the data structures why anyone would attempt that.
->
-> The above is not limited to "git grep", but you said so clearly what
-> I have felt, without being able to express myself in a satisfactory
-> manner, for the last 10 years.
->
-> > ... (Side note: I think this kind of
-> > issues occurs fairly frequently, so I'm unlikely to assume options
-> > were meant to be supported together based solely on a lack of logic
-> > that would throw an error when both are specified.
->
-> Amen to that.
->
-> By the way, and I am so sorry to making the main issue of the
-> discussion into a mere "by the way" point, but if I understand your
-> message correctly, the primary conclusion in there is that a file
-> that is not in the working tree, if the sparsity pattern tells us
-> that it should not be checked out to the working tree, should not be
-> sought in the index instead.  I think I agree with that conclusion.
+Jeff King <peff@peff.net> writes:
 
-Cool.
+> The packetize() function takes its input on stdin, and requires 4
+> separate sub-processes to format a simple string. We can do much better
+> by getting the length via the shell's "${#packet}" construct. The one
+> caveat is that the shell can't put a NUL into a variable, so we'll have
+> to continue to provide the stdin form for a few calls.
 
-> I however have some disagreement on a minor point, though.
->
-> "git grep -e '<pattern>' master" looks for the pattern in the commit
-> at the tip of the master branch.  "git grep -e '<pattern>' master
-> pu" does so in these two commits.  I do not think it is conceptually
-> wrong to allow "git grep -e '<pattern>' --cached master pu" to look
-> for three "commits", i.e. those two commits that already exist, plus
-> the one you would be creating if you were to "git commit" right now.
-> Similarly, I do not see a reason why we should forbid looking for
-> the same pattern in the tracked files in the working tree at the
-> same time we check tree object(s) and/or the index.
->
-> At least in principle.
->
-> There are two practical issues that makes these combinations
-> problematic, but I do not think they are insurmountable.
->
->  - Once you give an object on the command line, there is no syntax
->    to let you say "oh, by the way, I want the working tree as well".
->    If you are looking in the index, the working tree, and optionally
->    in some objects, "--index" instead of "--cached" would be the
->    standard way to tell the command "I want to affect both the index
->    and the working tree", but there is no way to say "I want only
->    tracked files in the working tree and these objects searched".
->    We'd need a new syntax to express it if we wanted to allow the
->    combination.
->
->  - The lines found in the working tree and in the index are prefixed
->    by the filename, while they are prefixed by the tree's name and a
->    colon.  When output for the working tree and the index are
->    combined, we cannot tell where each hit came from.  We need to
->    change the output to allow us to tell them apart, by
->    e.g. prefixing "<worktree>:" and "<index>:" in a way similar to
->    we use "<revision>:".
->
-> Thanks.
+Yuck.  Binary protocol and shell variables do not mix well.
 
-Ah, so you're saying that even though --cached and REVISION are
-incompatible today, that's not fundamental and we could conceivably
-let them or even more options be used together in the future and you
-even highlight how it could be made to sensibly work.  I agree with
-what you say here: _if_ there is a way for users to explicitly specify
-that they want to search multiple versions (whether that is revisions
-or the index or the working tree), _and_ we have a way to distinguish
-which version we found the results from, then (and only then) it'd
-make sense to search the complete set of files from each of those
-versions and show the results for the matches we found.
+Documentation/CodingGuidelines forbids ${#parameter} in the first
+place and we seem to use it only when we know we are using bash.
 
-That differs in multiple important ways from the SKIP_WORKTREE
-behavior I was railing against, and I think what you propose as a
-possibility in contrast would make sense.
+Perhaps we should start considering to lift it.  I dunno.
+
+> +# convert function arguments or stdin (if not arguments given) to pktline
+> +# representation. If multiple arguments are given, they are separated by
+> +# whitespace and put in a single packet. Note that data containing NULs must be
+> +# given on stdin, and that empty input becomes an empty packet, not a flush
+> +# packet (for that you can just print 0000 yourself).
+
+>  packetize() {
+> +	if test $# -gt 0
+> +	then
+> +		packet="$*"
+> +		printf '%04x%s' "$((4 + ${#packet}))" "$packet"
+
+This allows 
+
+		packetize "want $hash_head"
+
+to be written like so:
+
+		packetize want "$hash_head"
+
+which maybe is a handy thing to do.
+
+> +	else
+> +		cat >packetize.tmp &&
+> +		len=$(wc -c <packetize.tmp) &&
+> +		printf '%04x' "$(($len + 4))" &&
+> +		cat packetize.tmp &&
+> +		rm -f packetize.tmp
+
+	perl -e '
+		my $data = do { local $?; <STDIN> };
+                printf "%04x%s", length($data), $data;
+	'
+
+That's one process but much heavier than cat/wc/printf/cat, I guess.
+
+> +	fi
+>  }
+>  
+>  # Parse the input as a series of pktlines, writing the result to stdout.
