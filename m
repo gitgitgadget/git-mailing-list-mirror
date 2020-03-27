@@ -2,92 +2,119 @@ Return-Path: <SRS0=iK8c=5M=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DDF4C43331
-	for <git@archiver.kernel.org>; Fri, 27 Mar 2020 17:46:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B1729C43331
+	for <git@archiver.kernel.org>; Fri, 27 Mar 2020 18:01:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0FE05206E6
-	for <git@archiver.kernel.org>; Fri, 27 Mar 2020 17:46:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7976620716
+	for <git@archiver.kernel.org>; Fri, 27 Mar 2020 18:01:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="CbRjnx8g"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qq6EX08k"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727335AbgC0Rqo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 27 Mar 2020 13:46:44 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:56185 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726540AbgC0Rqo (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Mar 2020 13:46:44 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 244CBB6AF0;
-        Fri, 27 Mar 2020 13:46:42 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=HvlqSizAwfbwppsS98hUlWhB4qg=; b=CbRjnx
-        8gSd9menbEwqOgXr57yI6bT+gJRy0cEoU804ma6ijuIjBuflY8c5SE6SoSD91lqP
-        SOKm+6P4FiB6iPNis/A7Ihx65CyQ6vYq1sSCYXfyfUug26FJL7nW4LcauhOwIoNM
-        f+dO+FK7U/RhumVz4U+d7SYpcINUAPh98Ex0Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ochXVBBr5nBfhaewOJTMlQ19jFJ6Fyye
-        qPKsmfbbYG+aC7i94riG/sWBxHcBFkcakzwNC8+Z+cNEx6Vv99RQQkWkMgpv0JFf
-        OSfdEQZXIyptsMde3JNcTYlS8L1oBQmQ3KGwagISrFNVmSVVFY/nHhmmtYi2fbKM
-        fxw0UdoLNHA=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1D9D0B6AEF;
-        Fri, 27 Mar 2020 13:46:42 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 5E8E0B6AED;
-        Fri, 27 Mar 2020 13:46:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 9/9] fixup! t5512: stop losing git exit code in here-docs
-References: <cover.1585209554.git.liu.denton@gmail.com>
-        <38924d9c4994b5bad93cbbd2659666f6b452a89f.1585269773.git.liu.denton@gmail.com>
-Date:   Fri, 27 Mar 2020 10:46:37 -0700
-In-Reply-To: <38924d9c4994b5bad93cbbd2659666f6b452a89f.1585269773.git.liu.denton@gmail.com>
-        (Denton Liu's message of "Thu, 26 Mar 2020 20:43:45 -0400")
-Message-ID: <xmqqimipherm.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726959AbgC0SBn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 27 Mar 2020 14:01:43 -0400
+Received: from mail-ot1-f43.google.com ([209.85.210.43]:35926 "EHLO
+        mail-ot1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726770AbgC0SBn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Mar 2020 14:01:43 -0400
+Received: by mail-ot1-f43.google.com with SMTP id l23so10683346otf.3
+        for <git@vger.kernel.org>; Fri, 27 Mar 2020 11:01:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=y3wFBRAAtnpmUXIzV7AvQO2JZGJ4X0LNx8kn6EAzoYA=;
+        b=Qq6EX08kHLhKGxU0sKGX+KQPjDwKgwi+NeaQhiuBFjhE6nq9pYCuCp2D+tmdqnfY4M
+         +YAIviwmur4oAPH9WWCr/I+vnE9GYks1I1To2prg/JoTpxn9F2konjvNKRIDWbGolbB9
+         7YdPjki52CUyKcOcePWiwKqKWkfqbolN0EK0x/q6cesOi5bZVmxBzzkCBwKUN7vc0z3V
+         IwBUYOXJZ/XtzLT7NoZRn+yoSg3uuWFRBrd7P2I+AqxucnHQmZ+YvzMoGMT2c7M8bejh
+         Dbh9iDIBoCI8DWc0QMyD4HKB52nD/tvk2wIe8V3HsF39jJyTXQhvtoxWx1oe0E4I2CnA
+         2/HQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=y3wFBRAAtnpmUXIzV7AvQO2JZGJ4X0LNx8kn6EAzoYA=;
+        b=aiYSx0LzLGkbJnLe7Hkw5V/II+AbnZqbw+1aXYFZyapwbCVWFhWFg6hPBjNBICVDnf
+         sjRoxmN7pDvFPikMZ+sDdCdlnRb+xce0ugJpoYMOkALJMGodos9yGKQJxVSMU+C+7oAz
+         lQDL1YLB+emqg+3tj5dY/0TMGDL5Jf9RG4+V+TsBCP/JulThOrH/mg/KLn3Ipxxjhrqe
+         I6DFFSAYN9LLlJwL0MkMRUjBsdgvEW7zYdDOsTbXN/rGZq5JI437Py66uDjoqeryKSys
+         XTCk/r3gaQttbLd+gY45sR1DA44bNpAPAUMJoqzv7J2/JNufp4SGXg3diHg7w9BcHIkq
+         F+Tw==
+X-Gm-Message-State: ANhLgQ0YxvzbJJx943HJ0zjdP3O2SlN2cYc/pdlNSRYEIOpSPGUk/UN9
+        fHhMr60VWDU9wPthAFvINaPlmzXaW+y5iw+jPK0=
+X-Google-Smtp-Source: ADFU+vu2vSnHw5Ov5JBqSgn93t0RideFpnrlMNDtI9UcASnj/Ts63D60TBhys9xXdMKkaOpL1gNSZwl9lBbLcb6/t7s=
+X-Received: by 2002:a4a:3e90:: with SMTP id t138mr532261oot.24.1585332102079;
+ Fri, 27 Mar 2020 11:01:42 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E96BB5F0-7052-11EA-9188-B0405B776F7B-77302942!pb-smtp20.pobox.com
+References: <CAM+g_Nuu2jGuNwUMS3j8=EjOrthYzfVTrUzOxQJ=aYcoBAL3Tg@mail.gmail.com>
+ <20200325053908.GC651138@coredump.intra.peff.net> <CABPp-BF9LDfaw8=S4yqtuZ5U70Jcj_yZHq17Y7SUa17DwRqMSA@mail.gmail.com>
+ <CAM+g_NtHC5ukU3jchVfud_H_m_h29UQ8vmwQoND8s_Q9Hv70Fg@mail.gmail.com>
+ <CAM+g_Nvt3X4d5cjKajzDOcoDgNS4bVkj3a0KvVm4yDEW-J7v2w@mail.gmail.com>
+ <CAM+g_NsUfw6zDRj8H1VNdheKFSHgC9gz7nVy0vbtpTKkYzjjtA@mail.gmail.com>
+ <CABPp-BHMMw+L6fgfdVEEXnhH0w0aK6KfKA9Aq+aSuzWD0Cgr8g@mail.gmail.com>
+ <CABPp-BFMN+pnOjEe2tZZJp3_Noojn5j1ip3dh8Xz9hCZoKJbxw@mail.gmail.com>
+ <20200326072840.GA2198456@coredump.intra.peff.net> <CAM+g_NthmmJh3=Tp3ea6PmDr1h2-WtpiSTO8q02V3judc9p-Kg@mail.gmail.com>
+In-Reply-To: <CAM+g_NthmmJh3=Tp3ea6PmDr1h2-WtpiSTO8q02V3judc9p-Kg@mail.gmail.com>
+From:   Norbert Kiesel <nkiesel@gmail.com>
+Date:   Fri, 27 Mar 2020 11:01:30 -0700
+Message-ID: <CAM+g_NtV5iUM=VJHOX7Um2DFLzjq-x76TYa_P_U6q5HBRmCY=A@mail.gmail.com>
+Subject: Re: "git rebase" behavior change in 2.26.0
+To:     Jeff King <peff@peff.net>
+Cc:     Elijah Newren <newren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
+I ran a "pull" today morning w/o sufficient coffee and thus forgot to
+disable the "pull.rebase" and was bitten by that again.  Here is what
+I see when using "GIT_TRACE2=1 git -c pull.rebase=true pull
+--ff-only":
+...
+10:54:50.578673 run-command.c:735                 child_start[2] git
+merge --ff-only FETCH_HEAD
+10:54:50.580385 common-main.c:48                  version 2.26.0
+10:54:50.580404 common-main.c:49                  start
+/usr/lib/git-core/git merge --ff-only FETCH_HEAD
+10:54:50.580587 repository.c:130                  worktree
+/home/nkiesel/work/Platform
+10:54:50.580785 git.c:440                         cmd_name merge (pull/merge)
+Already up to date.
+10:54:50.589803 git.c:674                         exit elapsed:0.009835 code:0
+10:54:50.589827 trace2/tr2_tgt_normal.c:123       atexit elapsed:0.009874 code:0
+10:54:50.590887 run-command.c:990                 child_exit[2]
+pid:939370 code:0 elapsed:0.012205
+10:54:50.590919 run-command.c:735                 child_start[3] git
+rebase --onto d0527895a4df44f00162b68011b803e597fd400f
+d0527895a4df44f00162b68011b803e597fd400f
+10:54:50.592396 common-main.c:48                  version 2.26.0
+10:54:50.592412 common-main.c:49                  start
+/usr/lib/git-core/git rebase --onto
+d0527895a4df44f00162b68011b803e597fd400f
+d0527895a4df44f00162b68011b803e597fd400f
+10:54:50.592568 repository.c:130                  worktree
+/home/nkiesel/work/Platform
+10:54:50.592714 git.c:440                         cmd_name rebase (pull/rebase)
+10:54:50.593142 builtin/rebase.c:1669             cmd_mode undefined
+10:54:50.614154 run-command.c:735                 child_start[0] git
+checkout d0527895a4df44f00162b68011b803e597fd400f
+10:54:50.678813 run-command.c:990                 child_exit[0]
+pid:939392 code:0 elapsed:0.064656
+Successfully rebased and updated refs/heads/nextrelease.
+10:54:50.697724 git.c:674                         exit elapsed:0.105715 code:0
+10:54:50.697734 trace2/tr2_tgt_normal.c:123       atexit elapsed:0.105729 code:0
+10:54:50.698307 run-command.c:990                 child_exit[3]
+pid:939371 code:0 elapsed:0.107373
+10:54:50.698343 git.c:674                         exit elapsed:5.904200 code:0
+10:54:50.698354 trace2/tr2_tgt_normal.c:123       atexit elapsed:5.904211 code:0
 
-> Subject: Re: [PATCH v2 9/9] fixup! t5512: stop losing git exit code in here-docs
-
-Forgot to do the final "rebase -i --autosquash"?
-
-> Signed-off-by: Denton Liu <liu.denton@gmail.com>
-> ---
->  t/t5512-ls-remote.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/t/t5512-ls-remote.sh b/t/t5512-ls-remote.sh
-> index 8928d1f62d..e98c3a0174 100755
-> --- a/t/t5512-ls-remote.sh
-> +++ b/t/t5512-ls-remote.sh
-> @@ -224,7 +224,7 @@ test_expect_success 'ls-remote --symref' '
->  	oid=$(git rev-parse HEAD) &&
->  	echo "$oid	refs/remotes/origin/HEAD" >>expect &&
->  	generate_references \
-> -	refs/remotes/origin/master \
-> +		refs/remotes/origin/master \
->  		refs/tags/mark \
->  		refs/tags/mark1.1 \
->  		refs/tags/mark1.10 \
+I would argue that "--ff-only" would mean to never rebase, but clearly
+git runs a rebase of HEAD onto HEAD and i assume by that setting
+ORIG_HEAD to HEAD as colloquial damage.
