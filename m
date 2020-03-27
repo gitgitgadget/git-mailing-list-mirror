@@ -3,134 +3,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B62BC43331
-	for <git@archiver.kernel.org>; Fri, 27 Mar 2020 15:51:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6460C43331
+	for <git@archiver.kernel.org>; Fri, 27 Mar 2020 16:37:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id E5C7320748
-	for <git@archiver.kernel.org>; Fri, 27 Mar 2020 15:51:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 79960206E6
+	for <git@archiver.kernel.org>; Fri, 27 Mar 2020 16:37:26 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="wIheiPkI"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jj9S8FV7"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727354AbgC0PvW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 27 Mar 2020 11:51:22 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59764 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726900AbgC0PvV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Mar 2020 11:51:21 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7C72260230;
-        Fri, 27 Mar 2020 11:51:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=r+GIBbLBcxIMtLKuvqIISTyHSN8=; b=wIheiP
-        kI+fJbkl2dHQy3vhsFJ+0jgZD5UlX/J7SH+iGgJw9A/4mqLjP96Ba3WePiN5mJEj
-        tDmbmQffk9jE56hk3GY3x8xqD7ScTOilk8MQzWiZZORUieFbmnsbuuK3N9q5gVup
-        RxXJWYaz5JPE0l5GSDhLGQaOJlcg0aZY58TOQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=OA7JzTMiu7IqU5Y8MNRkT+k4F2xfpzzp
-        3UJ5jXYzSLBx0mP6MEhSHq319vFwV2V0Ce60HDMUT9HmZIzZyLkfDe2/RD05Gby+
-        /eakIZs6H2TJHL8Jr8PF+eUts7obMPcttX5HFEH/ZIGlDy7cq5GoDUWrIQbfgA/B
-        hEs0/aMcqKc=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7487E6022F;
-        Fri, 27 Mar 2020 11:51:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 027706022E;
-        Fri, 27 Mar 2020 11:51:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
-Subject: Re: [RFC PATCH 3/3] grep: add option to ignore sparsity patterns
-References: <cover.1585027716.git.matheus.bernardino@usp.br>
-        <a76242ecfa69cf29995bd859305dc2ab1bc1a221.1585027716.git.matheus.bernardino@usp.br>
-        <CABPp-BEbNCYk0pCuEDQ_ViB2=varJPBsVODxNvJs0EVRyBqjBg@mail.gmail.com>
-        <CAHd-oW6ANf_iNmYkgXt4jo1seB-AEx1TSH384v+oh1bicG8RDA@mail.gmail.com>
-        <CABPp-BGVO3QdbfE84uF_3QDF0-y2iHHh6G5FAFzNRfeRitkuHw@mail.gmail.com>
-Date:   Fri, 27 Mar 2020 08:51:19 -0700
-In-Reply-To: <CABPp-BGVO3QdbfE84uF_3QDF0-y2iHHh6G5FAFzNRfeRitkuHw@mail.gmail.com>
-        (Elijah Newren's message of "Wed, 25 Mar 2020 23:02:20 -0700")
-Message-ID: <xmqq369tiyo8.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1727798AbgC0QhX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 27 Mar 2020 12:37:23 -0400
+Received: from mail-io1-f53.google.com ([209.85.166.53]:36582 "EHLO
+        mail-io1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727792AbgC0QhX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Mar 2020 12:37:23 -0400
+Received: by mail-io1-f53.google.com with SMTP id d15so10481037iog.3
+        for <git@vger.kernel.org>; Fri, 27 Mar 2020 09:37:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=qsMcuEcXWwnpBMe2YkIZ37tYF7L6wJ8CWhns86+H2To=;
+        b=jj9S8FV7NL7dfLo+QBCqwqpFZ1ir9I5t/InJtS/UB7LA2CCuKmScVIQ/SP5yT6ggFj
+         79GpIrmMZ//Rxi87KeJzYpt9UzbRXRxwuO1JL8Moqyup8fwEPejYybusolBvuyouWnsJ
+         6EiH/4cZOzPY0LpHjQsqyxyPj0Di9IKHOBuLTOEhSGxeK4HfYrLrdLgjQFaAAPk9AclB
+         A6wWwgsiUAaBpfLMSMpGy+BUboFrzhlabqe7lXgrKVdLQr9mlvqE0L+ahiqdoifQKKar
+         p+8aoIfAqW7lnAeFssT8DttJd2pPpJr+FdPFM7Shy+p3yyeoKH33MjTtCX3xmam94k6a
+         t1GA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=qsMcuEcXWwnpBMe2YkIZ37tYF7L6wJ8CWhns86+H2To=;
+        b=dFR0NzNrW0hlQ0/nxqBeNJDXZEFDBTixa108k2jPBhmfU4nlX1kdRCItCia1JCkI+C
+         nxTwmDh7qhoeC3KsDiempzN91/HSEhFWvXfLtkHVDjl9+6pTcDmsRrrjivUteT70kyTI
+         ZpjPRFtGLGlIhW/6YfcXonP27vRiRw5XhycRhWL7uGohVGSPnVJKy22rFc55hhJgnlFc
+         IzgY4AWQdMveFDI3C/231G4Wb81xEDPj15tiaSI3+AW3AIwoPUHr5qn8/TwCm/2AbA33
+         KbzWdmbUAUVWGHVJ7oOMFCl63Yfd3LzBxVC2LRu3VMdS2lpFryVFcFuaaYZY8tC0r+aX
+         MpZQ==
+X-Gm-Message-State: ANhLgQ0mb8II+7ayg2DtCP1C40hfyMaywkfGrhYsPEJR+S0Lh84THjEX
+        AJFI2+3x0Ycih3oZVX+e8aR2hsOGI753l9NPGGiuAdPA
+X-Google-Smtp-Source: ADFU+vsymP7z4HJK9HQ9qhTT+WOfznb+jIkjSiqbUd4r6z3sJOGlRsz8Otb7KqaOPZf8kFh2p7rX8dzXjPIFBZqUZ3U=
+X-Received: by 2002:a02:94cf:: with SMTP id x73mr505771jah.92.1585327041948;
+ Fri, 27 Mar 2020 09:37:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: CD277E52-7042-11EA-9EBD-C28CBED8090B-77302942!pb-smtp1.pobox.com
+From:   =?UTF-8?B?U3rFkXRzIMOBa29z?= <szotsaki@gmail.com>
+Date:   Fri, 27 Mar 2020 17:36:56 +0100
+Message-ID: <CAAr69zbzX=ihOQLZRELWHaC42vs=XtNGkuJ+WhzeWaokPNcfAA@mail.gmail.com>
+Subject: git svn 2.26.0 segfault on fetch
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+Dear list,
 
-> Sometimes, code that wasn't meant to be used together accidentally is
-> used together or the docs suggest they can be used together.  ...
-> ... but that's the
-> type of accident that is easy to have in the implementation or docs
-> because it doesn't even occur to people who understand the design and
-> the data structures why anyone would attempt that.
+When I use a "git svn fetch" on my git-SVN repository it dies with
+"error: git-svn died of signal 11".
 
-The above is not limited to "git grep", but you said so clearly what
-I have felt, without being able to express myself in a satisfactory
-manner, for the last 10 years.
+I tried to get a coredump or attach GDB to it but as I see in strace
+there are signal handlers attached to INT, HUP, TERM, QUIT, and PIPE
+and possibly because of them no coredumps are generated even with
+unlimited "-c" and also possibly because of this GDB doesn't stop on
+SIGSEGV.
 
-> ... (Side note: I think this kind of
-> issues occurs fairly frequently, so I'm unlikely to assume options
-> were meant to be supported together based solely on a lack of logic
-> that would throw an error when both are specified.
+What I could do still with turned off ASLR is to run Valgrind with
+children tracking. It gave the following results:
 
-Amen to that.
+Warning: invalid file descriptor -1 in syscall close()
+Invalid read of size 4
+   at 0x9B1A82C: UnknownInlinedFun (atomic_base.h:419)
+   by 0x9B1A82C: UnknownInlinedFun (qatomic_cxx11.h:239)
+   by 0x9B1A82C: UnknownInlinedFun (qbasicatomic.h:107)
+   by 0x9B1A82C: UnknownInlinedFun (qrefcount.h:66)
+   by 0x9B1A82C: UnknownInlinedFun (qstring.h:1263)
+   by 0x9B1A82C: UnknownInlinedFun (kaboutdata.cpp:460)
+   by 0x9B1A82C: KAboutData::~KAboutData() (kaboutdata.cpp:583)
+   by 0x9B1AADC: (anonymous
+namespace)::Q_QGS_s_registry::innerFunction()::Holder::~Holder()
+(kaboutdata.cpp:1041)
+   by 0x4A63706: __run_exit_handlers (exit.c:108)
+   by 0x4A638BB: exit (exit.c:139)
+   by 0x154465: main (perlmain.c:171)
+ Address 0x80cf1c0 is not stack'd, malloc'd or (recently) free'd
 
-By the way, and I am so sorry to making the main issue of the
-discussion into a mere "by the way" point, but if I understand your
-message correctly, the primary conclusion in there is that a file
-that is not in the working tree, if the sparsity pattern tells us
-that it should not be checked out to the working tree, should not be
-sought in the index instead.  I think I agree with that conclusion.
 
-I however have some disagreement on a minor point, though.
+Process terminating with default action of signal 11 (SIGSEGV): dumping cor=
+e
+ Access not within mapped region at address 0x80CF1C0
+   at 0x9B1A82C: UnknownInlinedFun (atomic_base.h:419)
+   by 0x9B1A82C: UnknownInlinedFun (qatomic_cxx11.h:239)
+   by 0x9B1A82C: UnknownInlinedFun (qbasicatomic.h:107)
+   by 0x9B1A82C: UnknownInlinedFun (qrefcount.h:66)
+   by 0x9B1A82C: UnknownInlinedFun (qstring.h:1263)
+   by 0x9B1A82C: UnknownInlinedFun (kaboutdata.cpp:460)
+   by 0x9B1A82C: KAboutData::~KAboutData() (kaboutdata.cpp:583)
+   by 0x9B1AADC: (anonymous
+namespace)::Q_QGS_s_registry::innerFunction()::Holder::~Holder()
+(kaboutdata.cpp:1041)
+   by 0x4A63706: __run_exit_handlers (exit.c:108)
+   by 0x4A638BB: exit (exit.c:139)
+   by 0x154465: main (perlmain.c:171)
+ If you believe this happened as a result of a stack
+ overflow in your program's main thread (unlikely but
+ possible), you can try to increase the size of the
+ main thread stack using the --main-stacksize=3D flag.
+ The main thread stack size used in this run was 8388608.
 
-"git grep -e '<pattern>' master" looks for the pattern in the commit
-at the tip of the master branch.  "git grep -e '<pattern>' master
-pu" does so in these two commits.  I do not think it is conceptually
-wrong to allow "git grep -e '<pattern>' --cached master pu" to look
-for three "commits", i.e. those two commits that already exist, plus
-the one you would be creating if you were to "git commit" right now.
-Similarly, I do not see a reason why we should forbid looking for
-the same pattern in the tracked files in the working tree at the
-same time we check tree object(s) and/or the index.
+During stracing I found this line around the SIGSEGV:
+close(-1)                   =3D -1 EBADF
 
-At least in principle.
+If you could tell me how it's possible to attach GDB onto it, I'd be
+glad to provide you some backtraces as well.
 
-There are two practical issues that makes these combinations
-problematic, but I do not think they are insurmountable.
+Version: 2.26.0.
 
- - Once you give an object on the command line, there is no syntax
-   to let you say "oh, by the way, I want the working tree as well".
-   If you are looking in the index, the working tree, and optionally
-   in some objects, "--index" instead of "--cached" would be the
-   standard way to tell the command "I want to affect both the index
-   and the working tree", but there is no way to say "I want only
-   tracked files in the working tree and these objects searched".
-   We'd need a new syntax to express it if we wanted to allow the
-   combination.
+All the best,
 
- - The lines found in the working tree and in the index are prefixed
-   by the filename, while they are prefixed by the tree's name and a
-   colon.  When output for the working tree and the index are
-   combined, we cannot tell where each hit came from.  We need to
-   change the output to allow us to tell them apart, by
-   e.g. prefixing "<worktree>:" and "<index>:" in a way similar to
-   we use "<revision>:".
-
-Thanks.
+=C3=81kos
