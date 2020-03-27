@@ -4,173 +4,161 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A3AF1C43331
-	for <git@archiver.kernel.org>; Fri, 27 Mar 2020 21:25:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 48793C43331
+	for <git@archiver.kernel.org>; Fri, 27 Mar 2020 21:27:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 679D0206F2
-	for <git@archiver.kernel.org>; Fri, 27 Mar 2020 21:25:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0C906206F2
+	for <git@archiver.kernel.org>; Fri, 27 Mar 2020 21:27:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="d2CPiotj"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Li6tqdCo"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727717AbgC0VZj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 27 Mar 2020 17:25:39 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55257 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727473AbgC0VZj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Mar 2020 17:25:39 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 97874554ED;
-        Fri, 27 Mar 2020 17:25:35 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=7dJ4fvhRyoeUj+9JByawo3PfjYQ=; b=d2CPio
-        tj1vtKJE3OKjVjSkcPIsktHwsj0Rl+RY1/7ePU3gGQAuQkum54SX17+UQNtMGqCF
-        haSwPe3sHwUc7bLCrgyqJGjXCJnTDziyJY8JTn43jHC0dQ0Z4g6eGbc/PfoPDCg4
-        HQXqGF3cjagN0BqsJIhxelUK0Oux0BRYZfkGw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=aewJerSedAjnRPxxdwCFye3hNK61YVca
-        cvnxxw0Hm2k6+WZCBte0V8P8dq4idFG6694k0r2LgIU0XBUWy7mIEsQZaX7BUfd3
-        gAQn+PVWe4y32Db6EsNE8haT9BToUCMTyhc87E0ZWhJ64m8eIUNqnslJE5uLDoXr
-        qWfIz7JlHdY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8F1CF554EC;
-        Fri, 27 Mar 2020 17:25:35 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1727699AbgC0V1C (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 27 Mar 2020 17:27:02 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:34966 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727444AbgC0V1C (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 27 Mar 2020 17:27:02 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1916B554EA;
-        Fri, 27 Mar 2020 17:25:35 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     git <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH 4/9] update-ref: organize commands in an array
-References: <cover.1585129842.git.ps@pks.im>
-        <50ffc263293571f8af71fd1d253ac238c6909229.1585129842.git.ps@pks.im>
-Date:   Fri, 27 Mar 2020 14:25:34 -0700
-In-Reply-To: <50ffc263293571f8af71fd1d253ac238c6909229.1585129842.git.ps@pks.im>
-        (Patrick Steinhardt's message of "Wed, 25 Mar 2020 10:53:55 +0100")
-Message-ID: <xmqqh7y9fq29.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id BB87760489;
+        Fri, 27 Mar 2020 21:27:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1585344421;
+        bh=MYb6WwVZAvDvkcbtLOQaVJXgVhV12EmFALUKC4qSv04=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=Li6tqdCo7yukxoPJbLCyEKIP4AtXfMUJdSVgyhJos7JSCVGEgnMCv5b6zXcOGQktD
+         a+ed2IIRWYmjP6o3Lmkfn3773pjWhdyjY1wBfb7i4vRcLGpsN6f5+thf1vr/L1jkWo
+         i8XfkClNc0S9RC19W1ee55hLayJqqeTtaBYDnO5BxNsGiDXb75wli7s/E9CUzYnADv
+         OxAUQshqBmzo2SH8HIcgQ+PeeNM0ufwVC35ZvvAvl7cUueZBpf6Ung1CrEOTScw0cz
+         7SV5R1c35eK3m2hVJYyDfs4FJN1E6IcEP878cKRJb0TiL9AmFH1lWQ/RQYkzqL8Ud3
+         9StDdmnvGVX6Z6Zc2rQpZpPLfcnwPydK3G+cpPgWmwv9iYfXKRFdF0ws2X/bRNc1uT
+         83uZUoCekgIxVXPaFY+2L6tp3hrBKvv65+DaUpPlJD4/CICEu5+E6mwQvOVBtF2HQt
+         w+5EIzotG/96yLyYurFbt2MGdFmkC1yeobBdZ5/MqIjwSw6uEPN
+Date:   Fri, 27 Mar 2020 21:26:56 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     =?utf-8?B?U3rFkXRzIMOBa29z?= <szotsaki@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: git svn 2.26.0 segfault on fetch
+Message-ID: <20200327212656.GM6499@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?utf-8?B?U3rFkXRzIMOBa29z?= <szotsaki@gmail.com>,
+        git@vger.kernel.org
+References: <CAAr69zbzX=ihOQLZRELWHaC42vs=XtNGkuJ+WhzeWaokPNcfAA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7EEB23EA-7071-11EA-9656-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="20XocjIeMTCm4X0r"
+Content-Disposition: inline
+In-Reply-To: <CAAr69zbzX=ihOQLZRELWHaC42vs=XtNGkuJ+WhzeWaokPNcfAA@mail.gmail.com>
+X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
+ 5.4.0-4-amd64)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Patrick Steinhardt <ps@pks.im> writes:
 
-> +static const struct parse_cmd {
-> +	const char *prefix;
-> +	const char *(*fn)(struct ref_transaction *, struct strbuf *, const char *);
-> +} commands[] = {
+--20XocjIeMTCm4X0r
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Do not call an array the represents a set of THINGs "type things[]";
-instead call it "type thing[]", so that the 0th thing can be
-referred to as thing[0], not things[0].
+On 2020-03-27 at 16:36:56, Sz=C5=91ts =C3=81kos wrote:
+> Dear list,
+>=20
+> When I use a "git svn fetch" on my git-SVN repository it dies with
+> "error: git-svn died of signal 11".
+>=20
+> I tried to get a coredump or attach GDB to it but as I see in strace
+> there are signal handlers attached to INT, HUP, TERM, QUIT, and PIPE
+> and possibly because of them no coredumps are generated even with
+> unlimited "-c" and also possibly because of this GDB doesn't stop on
+> SIGSEGV.
 
-One exception is when the set as a whole is referred to more often
-than individual element of an array, in which case "things" (without
-the [index]) becomes a sensible way to refer to the set.
+Git uses the Subversion Perl bindings and git-svn is written entirely in
+Perl.  While it's possible we've broken something, it's probably a
+little more likely that the Subversion Perl bindings on your system are
+a little broken and that's what's causing the issue.
 
-> +	{ "update", parse_cmd_update },
-> +	{ "create", parse_cmd_create },
-> +	{ "delete", parse_cmd_delete },
-> +	{ "verify", parse_cmd_verify },
-> +	{ "option", parse_cmd_option },
-> +};
-> +
->  static void update_refs_stdin(struct ref_transaction *transaction)
->  {
->  	struct strbuf input = STRBUF_INIT;
->  	const char *next;
-> +	int i;
->  
->  	if (strbuf_read(&input, 0, 1000) < 0)
->  		die_errno("could not read from stdin");
->  	next = input.buf;
->  	/* Read each line dispatch its command */
->  	while (next < input.buf + input.len) {
-> +		const struct parse_cmd *cmd = NULL;
-> +
->  		if (*next == line_termination)
->  			die("empty command in input");
->  		else if (isspace(*next))
->  			die("whitespace before command: %s", next);
-> -		else if (skip_prefix(next, "update ", &next))
-> -			next = parse_cmd_update(transaction, &input, next);
-> -		else if (skip_prefix(next, "create ", &next))
-> -			next = parse_cmd_create(transaction, &input, next);
-> -		else if (skip_prefix(next, "delete ", &next))
-> -			next = parse_cmd_delete(transaction, &input, next);
-> -		else if (skip_prefix(next, "verify ", &next))
-> -			next = parse_cmd_verify(transaction, &input, next);
-> -		else if (skip_prefix(next, "option ", &next))
-> -			next = parse_cmd_option(&input, next);
-> -		else
-> +
-> +		for (i = 0; i < ARRAY_SIZE(commands); i++) {
-> +			if (!skip_prefix(next, commands[i].prefix , &next))
-> +				continue;
-> +			cmd = &commands[i];
-> +			break;
-> +		}
+What operating system are you using?
 
-The only reason why you had to sprinkle
+> What I could do still with turned off ASLR is to run Valgrind with
+> children tracking. It gave the following results:
+>=20
+> Warning: invalid file descriptor -1 in syscall close()
+> Invalid read of size 4
+>    at 0x9B1A82C: UnknownInlinedFun (atomic_base.h:419)
+>    by 0x9B1A82C: UnknownInlinedFun (qatomic_cxx11.h:239)
+>    by 0x9B1A82C: UnknownInlinedFun (qbasicatomic.h:107)
+>    by 0x9B1A82C: UnknownInlinedFun (qrefcount.h:66)
+>    by 0x9B1A82C: UnknownInlinedFun (qstring.h:1263)
+>    by 0x9B1A82C: UnknownInlinedFun (kaboutdata.cpp:460)
+>    by 0x9B1A82C: KAboutData::~KAboutData() (kaboutdata.cpp:583)
+>    by 0x9B1AADC: (anonymous
+> namespace)::Q_QGS_s_registry::innerFunction()::Holder::~Holder()
+> (kaboutdata.cpp:1041)
+>    by 0x4A63706: __run_exit_handlers (exit.c:108)
+>    by 0x4A638BB: exit (exit.c:139)
+>    by 0x154465: main (perlmain.c:171)
+>  Address 0x80cf1c0 is not stack'd, malloc'd or (recently) free'd
 
-	if (!skip_prefix(next, " ", &next))
-		die(_("%s: missing space after command"), cmd);
+This looks like you're loading something with Qt.  Are you using the
+Subversion KWallet integration?  Does disabling it make things work?
 
-all over the place is because the table lacks the trailing SP (which
-makes sense---after all, you are making a table of commands).  In
-other words, it's not like some command called from this dispatcher
-would require " " after the command name and some others would not.
+> Process terminating with default action of signal 11 (SIGSEGV): dumping c=
+ore
+>  Access not within mapped region at address 0x80CF1C0
+>    at 0x9B1A82C: UnknownInlinedFun (atomic_base.h:419)
+>    by 0x9B1A82C: UnknownInlinedFun (qatomic_cxx11.h:239)
+>    by 0x9B1A82C: UnknownInlinedFun (qbasicatomic.h:107)
+>    by 0x9B1A82C: UnknownInlinedFun (qrefcount.h:66)
+>    by 0x9B1A82C: UnknownInlinedFun (qstring.h:1263)
+>    by 0x9B1A82C: UnknownInlinedFun (kaboutdata.cpp:460)
+>    by 0x9B1A82C: KAboutData::~KAboutData() (kaboutdata.cpp:583)
+>    by 0x9B1AADC: (anonymous
+> namespace)::Q_QGS_s_registry::innerFunction()::Holder::~Holder()
+> (kaboutdata.cpp:1041)
+>    by 0x4A63706: __run_exit_handlers (exit.c:108)
+>    by 0x4A638BB: exit (exit.c:139)
+>    by 0x154465: main (perlmain.c:171)
+>  If you believe this happened as a result of a stack
+>  overflow in your program's main thread (unlikely but
+>  possible), you can try to increase the size of the
+>  main thread stack using the --main-stacksize=3D flag.
+>  The main thread stack size used in this run was 8388608.
+>=20
+> During stracing I found this line around the SIGSEGV:
+> close(-1)                   =3D -1 EBADF
+>=20
+> If you could tell me how it's possible to attach GDB onto it, I'd be
+> glad to provide you some backtraces as well.
 
-So why not avoid touching the parse_cmd_<cmd>() at all (except for
-the "option" thing that now needs to take the transaction object for
-uniformity), and then verify the presence of " " here, perhaps like
-this:
+You'd need to run something like the following:
 
-	for (i = 0; i < ARRAY_SIZE(command); i++) {
-		const char *eoc;
-		if (!skip_prefix(next, commands[i].prefix, &eoc) ||
-		    *eoc != ' ')
-			continue;
-		cmd = &command[i];
-                next = eoc;
-		break;
-	}
+  gdb --args /usr/bin/perl /usr/lib/git-core/git-svn <ARGS>
 
-Note that you cannot reuse &next here to future-proof the code;
-otherwise, you wouldn't be able to add a new command, e.g. "options",
-that sits next to the existing command "option", in the future.
+Note that I don't use git-svn and remember next to nothing about using
+Subversion, so hopefully any information you provide makes sense to
+someone more familiar with git-svn than I.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-> +		if (!cmd)
->  			die("unknown command: %s", next);
->  
-> +		if (input.buf[strlen(cmd->prefix)] != line_termination &&
-> +		    input.buf[strlen(cmd->prefix)] != '\0' &&
-> +		    input.buf[strlen(cmd->prefix)] != ' ')
-> +			die("%s: no separator after command", cmd->prefix);
+--20XocjIeMTCm4X0r
+Content-Type: application/pgp-signature; name="signature.asc"
 
-This part of your version does not make sense to me.  If the input
-line began with "update" with some separator that is not a SP, the
-original would not have matched.  But with this code, "update\0"
-would pass this code and cause cmd->fn() to be called, only to get
-the input rejected, because next is not pointing to SP.  So why do
-you even need this if statement?
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.20 (GNU/Linux)
 
-> +
-> +		next = cmd->fn(transaction, &input, next);
->  		next++;
->  	}
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXn5voAAKCRB8DEliiIei
+gf4OAQDnK9Md2UmehT8lFDaLq8FmqWtvmPM5qeP/QvJdIWltCQEAoRzMsRgcejMo
+krQm/+AxVNf045U4Y5/82PgENq1f8go=
+=xpiL
+-----END PGP SIGNATURE-----
 
-Thanks.
+--20XocjIeMTCm4X0r--
