@@ -4,144 +4,153 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 72AF7C43331
-	for <git@archiver.kernel.org>; Fri, 27 Mar 2020 18:44:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 484ECC43331
+	for <git@archiver.kernel.org>; Fri, 27 Mar 2020 19:02:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 48237206F2
-	for <git@archiver.kernel.org>; Fri, 27 Mar 2020 18:44:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1B2A52071B
+	for <git@archiver.kernel.org>; Fri, 27 Mar 2020 19:02:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="r1rzFzhV"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QNVUAEZl"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726959AbgC0Soi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 27 Mar 2020 14:44:38 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:37954 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726900AbgC0Soi (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Mar 2020 14:44:38 -0400
-Received: by mail-wr1-f67.google.com with SMTP id s1so12673631wrv.5
-        for <git@vger.kernel.org>; Fri, 27 Mar 2020 11:44:36 -0700 (PDT)
+        id S1727495AbgC0TCK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 27 Mar 2020 15:02:10 -0400
+Received: from mail-oi1-f196.google.com ([209.85.167.196]:37413 "EHLO
+        mail-oi1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727393AbgC0TCK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Mar 2020 15:02:10 -0400
+Received: by mail-oi1-f196.google.com with SMTP id u20so4991657oic.4
+        for <git@vger.kernel.org>; Fri, 27 Mar 2020 12:02:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=+EK/EYdX0R2iGZ/c9X7LUH+Psmpc3OfBkr1rwXNPORM=;
-        b=r1rzFzhVm0hW2NgsvMzRxinpNIjJV348iK8yHJCsZvM1dn9eCgxIqWJSw/gOJNE/+G
-         iIb6XXm8txOrzoQSwEt5Uu8No+6j7VSI7CrlLK2j4d8HxccipEnCqMnLJdplIoYy3JjO
-         VRXrQqKP2MaNana1B76gol7mxIyTZ4aAzhPT/hPr3TruoHojvVOk5wll+4N3eSiWqoyi
-         +AXy8Cg75mAEfoBwlpsRmfupBMXE1kW5RyM3+p77xhMBZWZ9+YJRHzT7yvHs5Uwc3Efb
-         TSQEAj+MsJtOQ/qJOMdwkE3pG3cP4xuEdT1pPqBLv3lqokS+oZ5G5mLcqzwnSR0gIL+Q
-         odDw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=HWUbXt+ORhXpxZDYzcQibFtb0g5BWel8RBuj8wAfN04=;
+        b=QNVUAEZlaDwcm0rEhEa+1rAqjM50hKXPBo9/pcHpljz0LE7RKCGNDr+l6/NE/UfIUx
+         N2K7CAqnsDLRTw1EayTZAGpGOZaylsKzmi7++aDzVYYMTk61EP8JLh7mK4bRQ+OTdhZJ
+         diSejegIZ0yrnDnHwyE8B3cUFEOarJ8ZkOEgulzVWz/vK7wdRtLmkZ2z3QVi8JSu9mjw
+         bdAikd/7aPf8cOtRMX7EexxKNpdnaSDWO8jRMpduvQDv2lqVOINBzbZ1MRGlw1WMDbC9
+         BF/CE+Ticm4H/CA0MySI86NxirXjEqUZ5AMYpJa5EvBAh5U4ZlalLY9mwb3Z6M8j5OlC
+         EyCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:user-agent:mime-version:content-transfer-encoding;
-        bh=+EK/EYdX0R2iGZ/c9X7LUH+Psmpc3OfBkr1rwXNPORM=;
-        b=TH3+m6nYn+99aPSytV/rGxMLqwJU0YkMJ6x6gpBZLV+OaK9NNwvBJMd9uLEBHZfaQ2
-         kLStdnl4Knf1nqDs4F4+JM4Hd91PrH7aYdbpwMl3fJi39qTrzxCMRNHYrP4sUvJbNBwh
-         nQOUVwQE42/C9TT+nATfJ0CsWjJSRJHrkdNquQKoQo7BTKFJL7eCCB8qrMJSeI+5oyK+
-         Us47lJbA201tF2Im6f0E3GO0fqwGfBZeElgYDfesNg9XWePbu8wGtGoIOMNtXtsinepg
-         t7e8X1mXNPtSd5SO2wR+TyYh0H80mvNW4oqCEtdMYLZd9XQSD4Dt8l3St8UJgKegOEV/
-         ItTw==
-X-Gm-Message-State: ANhLgQ23k3nPh0gbUV3fhdmYgWHckCYU3+5Hac5a7Jpy+GC6C9Z5Oaxe
-        VH1iCmY6J7QXKZ1OJsz3VF0=
-X-Google-Smtp-Source: ADFU+vvTFlPcJWm3/Nna8zAuqH7ihpynst7cLcRPS3pJ7HEM0o9LM9wKrpc/qsv7B0ws11ajq3+P2w==
-X-Received: by 2002:adf:ce0d:: with SMTP id p13mr852759wrn.8.1585334676066;
-        Fri, 27 Mar 2020 11:44:36 -0700 (PDT)
-Received: from ocellus (p200300EAE7168C007DE5706AB5458F3F.dip0.t-ipconnect.de. [2003:ea:e716:8c00:7de5:706a:b545:8f3f])
-        by smtp.gmail.com with ESMTPSA id c18sm9601256wrx.5.2020.03.27.11.44.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Mar 2020 11:44:35 -0700 (PDT)
-Message-ID: <58dbecff48068644daa24b5e39c03dc8ddfb0053.camel@gmail.com>
-Subject: Re: git rebase fast-forward fails with abbreviateCommands
-From:   "Jan Alexander Steffens (heftig)" <jan.steffens@gmail.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Alban Gruin <alban.gruin@gmail.com>
-Date:   Fri, 27 Mar 2020 19:44:34 +0100
-In-Reply-To: <CABPp-BEV0NxMLuM3U8fqECkEB_XHTvLMav1q_TiYveBWrpsr_w@mail.gmail.com>
-References: <9b4bc756764d87c9f34c11e6ec2fc6482f531805.camel@gmail.com>
-         <a3cc46ca-824d-8cab-e333-83f51a7824ca@gmail.com>
-         <CABPp-BEV0NxMLuM3U8fqECkEB_XHTvLMav1q_TiYveBWrpsr_w@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.36.1 
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=HWUbXt+ORhXpxZDYzcQibFtb0g5BWel8RBuj8wAfN04=;
+        b=mtmvRz9fFLSSi0DcrJ0Sd/B+9y7CIRnfOSJ8tTP8rJ9KqgTj1ryGXMMp8xmZlroPvA
+         d4ba3VdeonrcwIqOOo1A40x1KxEkiJMrSoMpEu0u1mn7FxlsqCm19xvgBywitNqFwZLN
+         65aL23S28FuTaVUDk08DEE4YTVl6SkDZD9XmIPRlfz6P8HH9QWGmPu6FXvvQlunSvF+c
+         rQkKUwJrojYymsIqbTFYNyef+MCdUL98fD+ROieC2FmbjRsWGhpxMCleLMCKczHJMYOU
+         2e26YwaHuffIj/gedtLQa74KaEHVKqxjBaIITEH8QGat7KRHBerP/ONmWmATp2UAf0xD
+         vHvg==
+X-Gm-Message-State: ANhLgQ05Wp8lyGUVGHtH9ON3Jz3ifbL7v6TyAQCnam8XNGTAgASB4VR/
+        DFz9eVF//hjhY+qgUDt0K3I1NpEh4DapkJUW30Y=
+X-Google-Smtp-Source: ADFU+vs1nCqeLzYmyKZxCoTY0dnyVs6X5Uhys+Rj/an9vwDwLcC9iDTKexnMBslaZGgnYfo7NeHti/Av7Ik/4t+OiD8=
+X-Received: by 2002:aca:dc45:: with SMTP id t66mr245502oig.39.1585335728749;
+ Fri, 27 Mar 2020 12:02:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <cover.1585027716.git.matheus.bernardino@usp.br>
+ <a76242ecfa69cf29995bd859305dc2ab1bc1a221.1585027716.git.matheus.bernardino@usp.br>
+ <CABPp-BEbNCYk0pCuEDQ_ViB2=varJPBsVODxNvJs0EVRyBqjBg@mail.gmail.com>
+ <CAHd-oW6ANf_iNmYkgXt4jo1seB-AEx1TSH384v+oh1bicG8RDA@mail.gmail.com>
+ <CABPp-BGVO3QdbfE84uF_3QDF0-y2iHHh6G5FAFzNRfeRitkuHw@mail.gmail.com> <xmqq369tiyo8.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqq369tiyo8.fsf@gitster.c.googlers.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 27 Mar 2020 12:01:57 -0700
+Message-ID: <CABPp-BG+Wohx4idoh1KSVZvuQ6aUJ6OKACRMi=gkvQjzd2sWUw@mail.gmail.com>
+Subject: Re: [RFC PATCH 3/3] grep: add option to ignore sparsity patterns
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 2020-03-27 at 11:39 -0700, Elijah Newren wrote:
-> Hi Alban,
-> 
-> On Fri, Mar 27, 2020 at 8:46 AM Alban Gruin <alban.gruin@gmail.com>
-> wrote:
-> > Hi Jan,
-> > 
-> > +cc Johannes, Elijah, and Phillip.
-> > 
-> > Le 27/03/2020 à 12:44, Jan Alexander Steffens (heftig) a écrit :
-> > > Hi,
-> > > 
-> > > Since 2.26.0 a simple "git rebase" fails to fast-forward a
-> > > branch, reporting "error: nothing to do."
-> > > 
-> > > It started to work again after removing my gitconfig. I've
-> > > reduced it to the following:
-> > > 
-> > >     git init foo; cd foo
-> > >     git commit --allow-empty -m foo
-> > >     git commit --allow-empty -m bar
-> > >     git checkout -tb foo
-> > >     git reset HEAD~
-> > >     git -c rebase.abbreviateCommands=true rebase
-> > > 
-> > 
-> > Thank you for reporting this bug.
-> > 
-> > Since git 2.26, the default rebase backend switched from "am" to
-> > "merge".  So, by default, a todo list is created, even if you can't
-> > see it.
-> > 
-> > In this case, the todo list contains only a `noop', but this
-> > command has
-> > no short form, and is abbreviated with a comment mark.  As there is
-> > no
-> > more commands in the list, the backend will fail with the error
-> > "nothing
-> > to do".
-> > 
-> > Three approach to fix this:
-> > 
-> >  1) add an abbreviation to `noop';  this is the simplest fix, and
-> > "n" is
-> > not taken.
-> >  2) if a command has no short form, do not abbreviate it;  this is
-> > trivial to do, and should not break anything.
-> 
-> Both sound reasonable to me.
-> 
-> > A third approach would be to change the meaning of an empty buffer,
-> > but
-> > this would break some tests (at least t3404.3) and cause more
-> > confusion
-> > for users than necessary.
-> 
-> Well, "error: nothing to do" probably makes sense if the user
-> specifies a list of empty commands or sees a list of empty commands
-> and agrees to pass these to the backend.  But I'm not sure that
-> message makes sense for implicitly interactive runs as opposed to
-> explicitly interactive ones.  Perhaps we could change the message to
-> just be "Already up to date" if the buffer is empty and the run is
-> not
-> explicitly interactive?
+On Fri, Mar 27, 2020 at 8:51 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Elijah Newren <newren@gmail.com> writes:
+>
+> > Sometimes, code that wasn't meant to be used together accidentally is
+> > used together or the docs suggest they can be used together.  ...
+> > ... but that's the
+> > type of accident that is easy to have in the implementation or docs
+> > because it doesn't even occur to people who understand the design and
+> > the data structures why anyone would attempt that.
+>
+> The above is not limited to "git grep", but you said so clearly what
+> I have felt, without being able to express myself in a satisfactory
+> manner, for the last 10 years.
+>
+> > ... (Side note: I think this kind of
+> > issues occurs fairly frequently, so I'm unlikely to assume options
+> > were meant to be supported together based solely on a lack of logic
+> > that would throw an error when both are specified.
+>
+> Amen to that.
+>
+> By the way, and I am so sorry to making the main issue of the
+> discussion into a mere "by the way" point, but if I understand your
+> message correctly, the primary conclusion in there is that a file
+> that is not in the working tree, if the sparsity pattern tells us
+> that it should not be checked out to the working tree, should not be
+> sought in the index instead.  I think I agree with that conclusion.
 
-Changing just the message and return code wouldn't be enough, as the
-empty todo results in the rebase being aborted without fast-forwarding
-the branch.
+Cool.
 
+> I however have some disagreement on a minor point, though.
+>
+> "git grep -e '<pattern>' master" looks for the pattern in the commit
+> at the tip of the master branch.  "git grep -e '<pattern>' master
+> pu" does so in these two commits.  I do not think it is conceptually
+> wrong to allow "git grep -e '<pattern>' --cached master pu" to look
+> for three "commits", i.e. those two commits that already exist, plus
+> the one you would be creating if you were to "git commit" right now.
+> Similarly, I do not see a reason why we should forbid looking for
+> the same pattern in the tracked files in the working tree at the
+> same time we check tree object(s) and/or the index.
+>
+> At least in principle.
+>
+> There are two practical issues that makes these combinations
+> problematic, but I do not think they are insurmountable.
+>
+>  - Once you give an object on the command line, there is no syntax
+>    to let you say "oh, by the way, I want the working tree as well".
+>    If you are looking in the index, the working tree, and optionally
+>    in some objects, "--index" instead of "--cached" would be the
+>    standard way to tell the command "I want to affect both the index
+>    and the working tree", but there is no way to say "I want only
+>    tracked files in the working tree and these objects searched".
+>    We'd need a new syntax to express it if we wanted to allow the
+>    combination.
+>
+>  - The lines found in the working tree and in the index are prefixed
+>    by the filename, while they are prefixed by the tree's name and a
+>    colon.  When output for the working tree and the index are
+>    combined, we cannot tell where each hit came from.  We need to
+>    change the output to allow us to tell them apart, by
+>    e.g. prefixing "<worktree>:" and "<index>:" in a way similar to
+>    we use "<revision>:".
+>
+> Thanks.
+
+Ah, so you're saying that even though --cached and REVISION are
+incompatible today, that's not fundamental and we could conceivably
+let them or even more options be used together in the future and you
+even highlight how it could be made to sensibly work.  I agree with
+what you say here: _if_ there is a way for users to explicitly specify
+that they want to search multiple versions (whether that is revisions
+or the index or the working tree), _and_ we have a way to distinguish
+which version we found the results from, then (and only then) it'd
+make sense to search the complete set of files from each of those
+versions and show the results for the matches we found.
+
+That differs in multiple important ways from the SKIP_WORKTREE
+behavior I was railing against, and I think what you propose as a
+possibility in contrast would make sense.
