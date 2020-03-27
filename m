@@ -4,161 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 48793C43331
-	for <git@archiver.kernel.org>; Fri, 27 Mar 2020 21:27:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 196E2C43331
+	for <git@archiver.kernel.org>; Fri, 27 Mar 2020 21:27:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0C906206F2
-	for <git@archiver.kernel.org>; Fri, 27 Mar 2020 21:27:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D67C62072F
+	for <git@archiver.kernel.org>; Fri, 27 Mar 2020 21:27:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Li6tqdCo"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Jti+lJ/Y"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727699AbgC0V1C (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 27 Mar 2020 17:27:02 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:34966 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727444AbgC0V1C (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 27 Mar 2020 17:27:02 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S1727600AbgC0V1a (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 27 Mar 2020 17:27:30 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53332 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727444AbgC0V13 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Mar 2020 17:27:29 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 787F663171;
+        Fri, 27 Mar 2020 17:27:28 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=mXMmYYqZ/vLf
+        +3vlwN+34EiQTqg=; b=Jti+lJ/YshxF59eDhmEWpiyCC9lOP2/6Jh9UNGsLELv2
+        XZkKwSfB/15rEt/Fm98iQXinCe9tejpIyBU9u7Dofpf9HjrzqlJHmdWW3pcQANsV
+        u7Hp6WqVIIo64I9ZrJ+tyrRlibTpK7g6yz+Rq3+CW0s/Bi0C9em1+9JUmL57IaI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=sTOebU
+        x7iMurry5jSkIJ2hi/OBGU5l3mHsYRYVttB12OMAAvqcipWFgTdjI2il1gzqr0zW
+        NHjGpZSDu0rJ7Q6X/ryp7YLi274hyogq4A/4TKRGYI8KtBqxZ6WEiuM73vnZzQwD
+        shiQQlwsQjjMQvAL07aDUN4bZ5zLgDGX9evXg=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6F75363170;
+        Fri, 27 Mar 2020 17:27:28 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id BB87760489;
-        Fri, 27 Mar 2020 21:27:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1585344421;
-        bh=MYb6WwVZAvDvkcbtLOQaVJXgVhV12EmFALUKC4qSv04=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=Li6tqdCo7yukxoPJbLCyEKIP4AtXfMUJdSVgyhJos7JSCVGEgnMCv5b6zXcOGQktD
-         a+ed2IIRWYmjP6o3Lmkfn3773pjWhdyjY1wBfb7i4vRcLGpsN6f5+thf1vr/L1jkWo
-         i8XfkClNc0S9RC19W1ee55hLayJqqeTtaBYDnO5BxNsGiDXb75wli7s/E9CUzYnADv
-         OxAUQshqBmzo2SH8HIcgQ+PeeNM0ufwVC35ZvvAvl7cUueZBpf6Ung1CrEOTScw0cz
-         7SV5R1c35eK3m2hVJYyDfs4FJN1E6IcEP878cKRJb0TiL9AmFH1lWQ/RQYkzqL8Ud3
-         9StDdmnvGVX6Z6Zc2rQpZpPLfcnwPydK3G+cpPgWmwv9iYfXKRFdF0ws2X/bRNc1uT
-         83uZUoCekgIxVXPaFY+2L6tp3hrBKvv65+DaUpPlJD4/CICEu5+E6mwQvOVBtF2HQt
-         w+5EIzotG/96yLyYurFbt2MGdFmkC1yeobBdZ5/MqIjwSw6uEPN
-Date:   Fri, 27 Mar 2020 21:26:56 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     =?utf-8?B?U3rFkXRzIMOBa29z?= <szotsaki@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: git svn 2.26.0 segfault on fetch
-Message-ID: <20200327212656.GM6499@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?U3rFkXRzIMOBa29z?= <szotsaki@gmail.com>,
-        git@vger.kernel.org
-References: <CAAr69zbzX=ihOQLZRELWHaC42vs=XtNGkuJ+WhzeWaokPNcfAA@mail.gmail.com>
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F20216316F;
+        Fri, 27 Mar 2020 17:27:27 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Andreas Schwab <schwab@linux-m68k.org>
+Cc:     =?utf-8?Q?Andr=C3=A1s?= Kucsma via GitGitGadget 
+        <gitgitgadget@gmail.com>, git@vger.kernel.org,
+        Torsten =?utf-8?Q?B?= =?utf-8?Q?=C3=B6gershausen?= 
+        <tboegi@web.de>,
+        =?utf-8?Q?Andr=C3=A1s?= Kucsma <r0maikx02b@gmail.com>
+Subject: Re: [PATCH v3] run-command: trigger PATH lookup properly on Cygwin
+References: <pull.587.v2.git.1585143910604.gitgitgadget@gmail.com>
+        <pull.587.v3.git.1585269403947.gitgitgadget@gmail.com>
+        <xmqqeetdhdxo.fsf@gitster.c.googlers.com> <877dz5bpyd.fsf@igel.home>
+Date:   Fri, 27 Mar 2020 14:27:27 -0700
+In-Reply-To: <877dz5bpyd.fsf@igel.home> (Andreas Schwab's message of "Fri, 27
+        Mar 2020 19:41:30 +0100")
+Message-ID: <xmqqd08xfpz4.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="20XocjIeMTCm4X0r"
-Content-Disposition: inline
-In-Reply-To: <CAAr69zbzX=ihOQLZRELWHaC42vs=XtNGkuJ+WhzeWaokPNcfAA@mail.gmail.com>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.4.0-4-amd64)
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: C2349DE8-7071-11EA-9D36-C28CBED8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Andreas Schwab <schwab@linux-m68k.org> writes:
 
---20XocjIeMTCm4X0r
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On M=C3=A4r 27 2020, Junio C Hamano wrote:
+>
+>> The name of the ASCII character '\0' is NUL, not NULL
+>
+> NUL is not a name, it is an abbreviation or acronym.  Its name is the
+> Null character.
 
-On 2020-03-27 at 16:36:56, Sz=C5=91ts =C3=81kos wrote:
-> Dear list,
->=20
-> When I use a "git svn fetch" on my git-SVN repository it dies with
-> "error: git-svn died of signal 11".
->=20
-> I tried to get a coredump or attach GDB to it but as I see in strace
-> there are signal handlers attached to INT, HUP, TERM, QUIT, and PIPE
-> and possibly because of them no coredumps are generated even with
-> unlimited "-c" and also possibly because of this GDB doesn't stop on
-> SIGSEGV.
+OK, let's put it differently.
 
-Git uses the Subversion Perl bindings and git-svn is written entirely in
-Perl.  While it's possible we've broken something, it's probably a
-little more likely that the Subversion Perl bindings on your system are
-a little broken and that's what's causing the issue.
+> +	 * See how long the non-separator part of the given path is, and
+> +	 * if and only if it covers the whole path (i.e. path[len] is NULL),
 
-What operating system are you using?
-
-> What I could do still with turned off ASLR is to run Valgrind with
-> children tracking. It gave the following results:
->=20
-> Warning: invalid file descriptor -1 in syscall close()
-> Invalid read of size 4
->    at 0x9B1A82C: UnknownInlinedFun (atomic_base.h:419)
->    by 0x9B1A82C: UnknownInlinedFun (qatomic_cxx11.h:239)
->    by 0x9B1A82C: UnknownInlinedFun (qbasicatomic.h:107)
->    by 0x9B1A82C: UnknownInlinedFun (qrefcount.h:66)
->    by 0x9B1A82C: UnknownInlinedFun (qstring.h:1263)
->    by 0x9B1A82C: UnknownInlinedFun (kaboutdata.cpp:460)
->    by 0x9B1A82C: KAboutData::~KAboutData() (kaboutdata.cpp:583)
->    by 0x9B1AADC: (anonymous
-> namespace)::Q_QGS_s_registry::innerFunction()::Holder::~Holder()
-> (kaboutdata.cpp:1041)
->    by 0x4A63706: __run_exit_handlers (exit.c:108)
->    by 0x4A638BB: exit (exit.c:139)
->    by 0x154465: main (perlmain.c:171)
->  Address 0x80cf1c0 is not stack'd, malloc'd or (recently) free'd
-
-This looks like you're loading something with Qt.  Are you using the
-Subversion KWallet integration?  Does disabling it make things work?
-
-> Process terminating with default action of signal 11 (SIGSEGV): dumping c=
-ore
->  Access not within mapped region at address 0x80CF1C0
->    at 0x9B1A82C: UnknownInlinedFun (atomic_base.h:419)
->    by 0x9B1A82C: UnknownInlinedFun (qatomic_cxx11.h:239)
->    by 0x9B1A82C: UnknownInlinedFun (qbasicatomic.h:107)
->    by 0x9B1A82C: UnknownInlinedFun (qrefcount.h:66)
->    by 0x9B1A82C: UnknownInlinedFun (qstring.h:1263)
->    by 0x9B1A82C: UnknownInlinedFun (kaboutdata.cpp:460)
->    by 0x9B1A82C: KAboutData::~KAboutData() (kaboutdata.cpp:583)
->    by 0x9B1AADC: (anonymous
-> namespace)::Q_QGS_s_registry::innerFunction()::Holder::~Holder()
-> (kaboutdata.cpp:1041)
->    by 0x4A63706: __run_exit_handlers (exit.c:108)
->    by 0x4A638BB: exit (exit.c:139)
->    by 0x154465: main (perlmain.c:171)
->  If you believe this happened as a result of a stack
->  overflow in your program's main thread (unlikely but
->  possible), you can try to increase the size of the
->  main thread stack using the --main-stacksize=3D flag.
->  The main thread stack size used in this run was 8388608.
->=20
-> During stracing I found this line around the SIGSEGV:
-> close(-1)                   =3D -1 EBADF
->=20
-> If you could tell me how it's possible to attach GDB onto it, I'd be
-> glad to provide you some backtraces as well.
-
-You'd need to run something like the following:
-
-  gdb --args /usr/bin/perl /usr/lib/git-core/git-svn <ARGS>
-
-Note that I don't use git-svn and remember next to nothing about using
-Subversion, so hopefully any information you provide makes sense to
-someone more familiar with git-svn than I.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---20XocjIeMTCm4X0r
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXn5voAAKCRB8DEliiIei
-gf4OAQDnK9Md2UmehT8lFDaLq8FmqWtvmPM5qeP/QvJdIWltCQEAoRzMsRgcejMo
-krQm/+AxVNf045U4Y5/82PgENq1f8go=
-=xpiL
------END PGP SIGNATURE-----
-
---20XocjIeMTCm4X0r--
+When referring to character '\0' like so, write "NUL", not "NULL",
+as the latter is how you write a null pointer.
