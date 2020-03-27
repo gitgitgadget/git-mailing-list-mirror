@@ -2,94 +2,99 @@ Return-Path: <SRS0=iK8c=5M=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DD4A7C2D0EC
-	for <git@archiver.kernel.org>; Fri, 27 Mar 2020 00:44:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E1BDFC43331
+	for <git@archiver.kernel.org>; Fri, 27 Mar 2020 00:49:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8CBDC20714
-	for <git@archiver.kernel.org>; Fri, 27 Mar 2020 00:44:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A66B92074D
+	for <git@archiver.kernel.org>; Fri, 27 Mar 2020 00:49:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A0jepVW6"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eduR4H4M"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727456AbgC0AoD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 Mar 2020 20:44:03 -0400
-Received: from mail-qt1-f193.google.com ([209.85.160.193]:35414 "EHLO
-        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726363AbgC0AoD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Mar 2020 20:44:03 -0400
-Received: by mail-qt1-f193.google.com with SMTP id e14so7308918qts.2
-        for <git@vger.kernel.org>; Thu, 26 Mar 2020 17:44:01 -0700 (PDT)
+        id S1727547AbgC0AtG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 Mar 2020 20:49:06 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:51114 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727446AbgC0AtF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Mar 2020 20:49:05 -0400
+Received: by mail-wm1-f66.google.com with SMTP id d198so9838664wmd.0
+        for <git@vger.kernel.org>; Thu, 26 Mar 2020 17:49:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=ibNOJpUhlTg2jT33AmcMJgUohLdCQoA58aRpHOquG1Y=;
-        b=A0jepVW6VwOIYWfuWtIpmfx+UU7f2GeJzXLvE6OXg2B58WSs27B3oueFjUSAn+RuBK
-         8qt1H7fKdVZ3Uh4AsksKOPCSYDgTLy3BKr7gVbTuzf5FdUAJtiDxVQFoSL/XuKvMts9l
-         ZUL+vg+Q61vy764fb0K5B3xPxw7nq4X4usUsoA3mvFWppUsH0No6/CAU9CtzPWasMA40
-         awZ/N2o80pOxLDIPM/24afE5IMaXFaTxBgpmWUDYUzuR+k7HDd/vAcS6hqpkv924hENJ
-         Dsov1vo05VWsjwjypyGBUIUAcQJbU1G9lnqytf1GmO6nhCAdALaKQjDbHoMDkzwZ03jn
-         I4AQ==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=AtaLAwnXGUPigMOZsuTiV71cTVWw5YUyEOmxTGp9rrw=;
+        b=eduR4H4MZsaypOJ96+GQz+w+9ZwGabVqGON/azcy2Gj2lkghM2h6Th1c9tVyNiAfq8
+         wG02134Jcdq9E3a0V+6VzNEZp6nlBw64NvRPiOcr4OBd8Fd0afps2ZVrVKAEtqHzIkWr
+         37vkxOFvWcf03+Fe+cw4c0bFTlNAQXe1PmT4ANBDhrEB6FIgLX/7vlBSKTj7miJjPP4f
+         DacZ7qM64/9EhRFaZTmCPYBCBKb0BmPlDPwbnnip0FYVUW8CirfbE/s4HFUwx2fxf0IB
+         H7x+sJEtw2Asxes4TpdHyRO8rb6qvaC3vHUJVIOjFpccKu+NcQvDdvfaWKzc+FOpEQz9
+         R48Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=ibNOJpUhlTg2jT33AmcMJgUohLdCQoA58aRpHOquG1Y=;
-        b=AopTceYI1LLZZ4se0EBbb7WlRKlKKu3mqGkJsKMj/A213JsRkGZSlHb3WhR/Sbdmzn
-         pz9RL25wPy4xUB59JlJ9+NN4OdVZzIyTmn1f2xki/E/C/pXzWi1J7PM6c82o0Ph44YNX
-         ci+vbwTyJFhrcUHqdnLimv7NFhnB1jTFS4zWSWIMmv/46ZArVVjXrREs9bNxt31PbWL6
-         NJSJCxg+t8mAlXdlITl4vQnlU1hrVjiX1AtIZ23+f5WhVpl8cbrwYcQESc6/b9gKEBfE
-         9WzEjOriYV6bZcLKPuZXG0p5Ufi1ztcZFNFMwLb+FPNevmJJ07UqQ8iwUj8OlhK90qNt
-         qlIw==
-X-Gm-Message-State: ANhLgQ14VUg7Y9ZPLTKMSqMNctsr6AJry2BzL2uzj0RzzSYAg/xcZrR0
-        zNwXeUV5b/FYu63Dg1fMCfvXh42I
-X-Google-Smtp-Source: ADFU+vsnyEhl9QJov0mbcMva4lrydpdNqSJ26akbrJm9tzEzPfWbXZjr+mzEgSxmkZt/z/sV/Cv0uQ==
-X-Received: by 2002:aed:3e71:: with SMTP id m46mr1382352qtf.77.1585269840468;
-        Thu, 26 Mar 2020 17:44:00 -0700 (PDT)
-Received: from localhost.localdomain (ktnron0919w-grc-01-76-68-141-233.dsl.bell.ca. [76.68.141.233])
-        by smtp.gmail.com with ESMTPSA id x127sm2578542qke.135.2020.03.26.17.43.59
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=AtaLAwnXGUPigMOZsuTiV71cTVWw5YUyEOmxTGp9rrw=;
+        b=FGa5WrBxZ+S3FjCYzkBA9uWaR/ud5u2v4IyF5xPJwYtf3Dmtb+t2IMerRFkw6PjcCF
+         yIzqCtsjymkjjJGjxOv2C28FZV/4VXHV2FPofxrfHQbgTYwGkFSop5I7p2x9uve/bPPv
+         2zIjv37D3AOabUEmT96CJznKqKLvxy+lZpFjAgpZdAkWVsoIumy5L+WPFY07ZlgP6REh
+         JZZeIB0PdtCG3/l3pRRx45TC/KIE5D+OxhE10hC1vI1priASHZMmmIYVXdccU2KU9mTu
+         ufTiTR655CtUv4zOEUrniSAei0aut6pkynKJLEkUYgQNjUmpoy+Z7rk6em/xx4UMabfj
+         6Sgg==
+X-Gm-Message-State: ANhLgQ15nT5qW/JKxAgRzVZDRlmJHfSUixhiGJSkbqgScu8X734h27Nc
+        3fbSmvN+D6wfR7h2PlhMQMkl5NC6
+X-Google-Smtp-Source: ADFU+vuzB311SZlaVtfmaih7y+m+7o6CUNrlFEY4Bd6biS8h7XbHdVOiTA6C3Mmy8IUdjMYfmJWMMg==
+X-Received: by 2002:a1c:5452:: with SMTP id p18mr2747238wmi.102.1585270143952;
+        Thu, 26 Mar 2020 17:49:03 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id l8sm5849903wmj.2.2020.03.26.17.49.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Mar 2020 17:43:59 -0700 (PDT)
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 9/9] fixup! t5512: stop losing git exit code in here-docs
-Date:   Thu, 26 Mar 2020 20:43:45 -0400
-Message-Id: <38924d9c4994b5bad93cbbd2659666f6b452a89f.1585269773.git.liu.denton@gmail.com>
-X-Mailer: git-send-email 2.26.0.159.g23e2136ad0
-In-Reply-To: <cover.1585209554.git.liu.denton@gmail.com>
-References: <cover.1585209554.git.liu.denton@gmail.com>
-MIME-Version: 1.0
+        Thu, 26 Mar 2020 17:49:03 -0700 (PDT)
+Message-Id: <bb41a2a52f48263a5b5c6fad955f506cb6390a22.1585270142.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.726.v3.git.git.1585270142.gitgitgadget@gmail.com>
+References: <pull.726.v2.git.git.1584813609.gitgitgadget@gmail.com>
+        <pull.726.v3.git.git.1585270142.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 27 Mar 2020 00:48:44 +0000
+Subject: [PATCH v3 01/18] unpack-trees: fix minor typo in comment
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Derrick Stolee <dstolee@microsoft.com>,
+        Elijah Newren <newren@gmail.com>,
+        Elijah Newren <newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
+From: Elijah Newren <newren@gmail.com>
+
+Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
+Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- t/t5512-ls-remote.sh | 2 +-
+ unpack-trees.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t5512-ls-remote.sh b/t/t5512-ls-remote.sh
-index 8928d1f62d..e98c3a0174 100755
---- a/t/t5512-ls-remote.sh
-+++ b/t/t5512-ls-remote.sh
-@@ -224,7 +224,7 @@ test_expect_success 'ls-remote --symref' '
- 	oid=$(git rev-parse HEAD) &&
- 	echo "$oid	refs/remotes/origin/HEAD" >>expect &&
- 	generate_references \
--	refs/remotes/origin/master \
-+		refs/remotes/origin/master \
- 		refs/tags/mark \
- 		refs/tags/mark1.1 \
- 		refs/tags/mark1.10 \
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 1ecdab33040..0d0eec0221e 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -1618,7 +1618,7 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
+ 
+ 		/*
+ 		 * Sparse checkout loop #2: set NEW_SKIP_WORKTREE on entries not in loop #1
+-		 * If the will have NEW_SKIP_WORKTREE, also set CE_SKIP_WORKTREE
++		 * If they will have NEW_SKIP_WORKTREE, also set CE_SKIP_WORKTREE
+ 		 * so apply_sparse_checkout() won't attempt to remove it from worktree
+ 		 */
+ 		mark_new_skip_worktree(o->pl, &o->result,
 -- 
-2.26.0.159.g23e2136ad0
+gitgitgadget
 
