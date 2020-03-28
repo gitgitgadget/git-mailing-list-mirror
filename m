@@ -2,89 +2,135 @@ Return-Path: <SRS0=KP1k=5N=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A327BC43331
-	for <git@archiver.kernel.org>; Sat, 28 Mar 2020 22:25:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A37CC43331
+	for <git@archiver.kernel.org>; Sat, 28 Mar 2020 23:49:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6B23320714
-	for <git@archiver.kernel.org>; Sat, 28 Mar 2020 22:25:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F34A72074F
+	for <git@archiver.kernel.org>; Sat, 28 Mar 2020 23:49:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VSKvUSQD"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Zc99xgaR"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727176AbgC1WZv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 28 Mar 2020 18:25:51 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:37334 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726604AbgC1WZv (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 Mar 2020 18:25:51 -0400
-Received: by mail-wm1-f68.google.com with SMTP id d1so16908455wmb.2
-        for <git@vger.kernel.org>; Sat, 28 Mar 2020 15:25:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=adslg7Rva2toOJt6zrGZm0CXN/rR705jefIbe5gYg0U=;
-        b=VSKvUSQDgL4NI1giA8cX922AnbA37Ho9kV/C1L0MaPz6Qdut8DC6vEeuPh9a7RgbqD
-         tlJCOZzXVSjokLmG6DI0ESfuUdja8bwbaxpO9eyloV9EuvOPYNy3vN3h0QifnCFZ3rmC
-         zly8WEDdhZYaboDFtlPDnbWyE4hnqKKoFrhv20NCcQxd/2Kc+sPbqZcTDhOOcQMHmhG7
-         N3/+wDjw4NCTCDdGfYL+GEsKcgBe9LFEmEl6JshRfUDFBdpUOXEdM9wha2lIaTyMjXwC
-         RygS0saJ/HucgIGzNjyk6uDAvjltEIcTlmB20Xr0UVHW69Fr01vS3bS/qmSpdza5nDrv
-         vuzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=adslg7Rva2toOJt6zrGZm0CXN/rR705jefIbe5gYg0U=;
-        b=UXTOHVq3JrPgBJJGagDMT4f74zElHv8VjJ1vmB5Hegi36ryATAKYnQJ0QX60JuCefU
-         dcGJwKV0YPTa2OkJpr6gVhBL77egVc2kH9CZw2rYmzs1862DND4e1bUH2Xh1MTnTwHgs
-         VEG8zlULVg7otfrIt6Ae6RFcYUuhapqzCnXVayiiXEkbYhEAtAcNea1UJ7AYYPhcCyET
-         cQ0BV7UcAZzT7i3VXvMJeLbnG7XmFKOm6vNjg7jFQ92vPUJSHWiw5c65SE9oDvacVzI8
-         N1CDomuzdZMs6juFpeGawgQb0+c3UYn487vbAJ9OeHm7JHN9GbrAB8RzpxgkMe4WNhWC
-         oO0Q==
-X-Gm-Message-State: ANhLgQ1ZIJY/U5beg99ScRpx6E8RFWC7Cr/f/STAuSicUKSEDUh/k8Ay
-        Y+MEDrSdOHZScH1fH6VvZgs=
-X-Google-Smtp-Source: ADFU+vuqHUuDqx8JGdOTcKGQ5gImMNLQ4qHWA8o3Xn2yhPUtW5fvOWUQnQDWlckkFmtducw8iJKSrw==
-X-Received: by 2002:a1c:4642:: with SMTP id t63mr5361783wma.164.1585434348907;
-        Sat, 28 Mar 2020 15:25:48 -0700 (PDT)
-Received: from doriath (87-231-246-247.rev.numericable.fr. [87.231.246.247])
-        by smtp.gmail.com with ESMTPSA id d13sm14435622wrv.34.2020.03.28.15.25.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 28 Mar 2020 15:25:48 -0700 (PDT)
-Date:   Sat, 28 Mar 2020 23:25:46 +0100
-From:   Damien Robert <damien.olivier.robert@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 1/1] remote.c: fix handling of %(push:remoteref)
-Message-ID: <20200328222546.gvrtzkcazf3bhjno@doriath>
-X-PGP-Key: http://www.normalesup.org/~robert/pro/files/Damien_Olivier_Robert.asc
-X-Start-Date: Sat, 28 Mar 2020 23:23:56 +0100
-References: <20200303161223.1870298-3-damien.olivier.robert+git@gmail.com>
- <20200312164558.2388589-1-damien.olivier.robert+git@gmail.com>
- <20200325221614.ekn56wamfgs4bwmq@doriath>
- <xmqqblohe9ip.fsf@gitster.c.googlers.com>
+        id S1727620AbgC1XtL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 28 Mar 2020 19:49:11 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56195 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726604AbgC1XtL (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 Mar 2020 19:49:11 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C34B9446D3;
+        Sat, 28 Mar 2020 19:49:08 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=sa5kVR9CdjbnvH+FXc3d3hxc830=; b=Zc99xg
+        aRWXNNONuuCIzHUmHmKn3Qjj8xNXIvuWps0bSJJrxByJpz1qiirOCYuluxVdlrhZ
+        kRvwa59qprRQy1cxeyDeh/nLFqYgR146wURcY6Kd6hkwV3mhnhy10cSNCGCKSNpf
+        rkJJH1p7cDJk5hEfChLrBSQ+94irLoBkusuXI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=NK3OibCYsMpt83w8vpYla3DHn7w/rckZ
+        Ya1bI6NWsBXFBH79T7Y0lKgeEo3gYwOs/vkH8vxutnSHpTVOo45Ul4iSlnIrK/aV
+        IMExaTxj6cP1n6DEO4RmN0+Yis4cOfstNSZY7ThZk/AmZHCFZPojCxs1t/wukcuB
+        wTmKvmGFfmQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id AAEB5446D2;
+        Sat, 28 Mar 2020 19:49:08 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 26CF9446D1;
+        Sat, 28 Mar 2020 19:49:08 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: [PATCH v2] t/README: suggest how to leave test early with failure
+References: <pull.728.git.git.1584968990.gitgitgadget@gmail.com>
+        <pull.728.v2.git.git.1585114881.gitgitgadget@gmail.com>
+        <85457a7b61874e8e9f3af9c231451df0aba7a7b5.1585114881.git.gitgitgadget@gmail.com>
+        <20200326083519.GD2200716@coredump.intra.peff.net>
+        <nycvar.QRO.7.76.6.2003261450590.46@tvgsbejvaqbjf.bet>
+        <20200327091004.GA610157@coredump.intra.peff.net>
+        <xmqqr1xdhev8.fsf@gitster.c.googlers.com>
+        <20200328105418.GA639140@coredump.intra.peff.net>
+Date:   Sat, 28 Mar 2020 16:49:07 -0700
+In-Reply-To: <20200328105418.GA639140@coredump.intra.peff.net> (Jeff King's
+        message of "Sat, 28 Mar 2020 06:54:18 -0400")
+Message-ID: <xmqqpncwca6k.fsf_-_@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqblohe9ip.fsf@gitster.c.googlers.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: B71D32CA-714E-11EA-AFAF-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From Junio C Hamano, Fri 27 Mar 2020 at 15:08:14 (-0700) :
-> Damien Robert <damien.olivier.robert@gmail.com> writes:
-> > IMHO this patch should be good to cook.
-> Would love to queue it but I haven't had a time to look at it.
+Over time, we added the support to our test framework to make it
+easy to leave a test early with failure, but it was not clearly
+documented in t/README to help developers writing new tests.
 
-Sure, no worries, I was just wondering if this was on your todo list or if
-the last patch version fell through the cracks (I have no idea how you
-manage to keep up with the traffic of this ml).
+Helped-by: Jeff King <peff@peff.net>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-Your message managed to invoke Jeff who suggests some improvements to the
-test, so I'll reroll anyway :)
+ * Trimmed the description quite a bit and dropped alternatives.
+
+ t/README | 34 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 34 insertions(+)
+
+diff --git a/t/README b/t/README
+index 9afd61e3ca..0dca346950 100644
+--- a/t/README
++++ b/t/README
+@@ -550,6 +550,40 @@ Here are the "do's:"
+    reports "ok" or "not ok" to the end user running the tests. Under
+    --verbose, they are shown to help debug the tests.
+ 
++ - Be careful when you loop
++
++   You may need to verify multiple things in a loop, but the
++   following does not work correctly:
++
++	test_expect_success 'test three things' '
++	    for i in one two three
++	    do
++		test_something "$i"
++	    done &&
++	    test_something_else
++	'
++
++   Because the status of the loop itself is the exit status of the
++   test_something in the last round, the loop does not fail when
++   "test_something" for "one" or "two".  This is not what you want.
++
++   Instead, you can break out of the loop immediately when you see a
++   failure.  Because all test_expect_* snippets are executed inside
++   a function, "return 1" can be used to fail the test immediately
++   upon a failure:
++
++	test_expect_success 'test three things' '
++	    for i in one two three
++	    do
++		test_something "$i" || return 1
++	    done &&
++	    test_something_else
++	'
++
++   Note that we still &&-chain the loop to propagate failures from
++   earlier commands.
++
++
+ And here are the "don'ts:"
+ 
+  - Don't exit() within a <script> part.
+-- 
+2.26.0-103-g3bab5d5625
+
