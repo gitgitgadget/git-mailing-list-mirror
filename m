@@ -2,43 +2,38 @@ Return-Path: <SRS0=KP1k=5N=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7296FC43331
-	for <git@archiver.kernel.org>; Sat, 28 Mar 2020 17:05:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 97062C43331
+	for <git@archiver.kernel.org>; Sat, 28 Mar 2020 17:08:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 4935020714
-	for <git@archiver.kernel.org>; Sat, 28 Mar 2020 17:05:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6C06020748
+	for <git@archiver.kernel.org>; Sat, 28 Mar 2020 17:08:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726265AbgC1RF5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 28 Mar 2020 13:05:57 -0400
-Received: from smtp.hosts.co.uk ([85.233.160.19]:59794 "EHLO smtp.hosts.co.uk"
+        id S1726899AbgC1RIs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 28 Mar 2020 13:08:48 -0400
+Received: from smtp.hosts.co.uk ([85.233.160.19]:58630 "EHLO smtp.hosts.co.uk"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725807AbgC1RF5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 Mar 2020 13:05:57 -0400
+        id S1725807AbgC1RIs (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 Mar 2020 13:08:48 -0400
 Received: from [92.30.123.115] (helo=[192.168.1.38])
         by smtp.hosts.co.uk with esmtpa (Exim)
         (envelope-from <philipoakley@iee.email>)
-        id 1jIEuA-0006iI-AJ; Sat, 28 Mar 2020 17:05:54 +0000
-Subject: Re: Git alias syntax help
-To:     Jeff King <peff@peff.net>,
-        =?UTF-8?B?zqPPhM6xz43Pgc6/z4Igzp3PhM6tzr0=?= =?UTF-8?B?z4TOv8+C?= 
-        <stdedos@gmail.com>
-Cc:     git <git@vger.kernel.org>
-References: <CAHMHMxWpLAnj3w8DGLMFbfy-A-pBjDxNdMeiM-fyuu-gnZyg+Q@mail.gmail.com>
- <20200114222802.GC3957260@coredump.intra.peff.net>
- <CAHMHMxVajKxjBweG=mps0gLwE1o8M69DvPb1iUQYgLXx0VO5AA@mail.gmail.com>
- <20200115181351.GB4081287@coredump.intra.peff.net>
+        id 1jIEww-0003MR-FO; Sat, 28 Mar 2020 17:08:46 +0000
+Subject: Re: See Fault when running git diff
+To:     "Stewart, Tim" <Timothy.Stewart@Pearson.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+References: <771f0c5de3874158acdeb18003ac62495F73D361-1387-42DA-B582-725ADA24BB21@pearson.com>
 From:   Philip Oakley <philipoakley@iee.email>
-Message-ID: <941494c1-b082-e003-b169-00d4e39ed2f5@iee.email>
-Date:   Sat, 28 Mar 2020 17:05:54 +0000
+Message-ID: <11fa2daa-b301-6128-9f25-384a5ad7dc27@iee.email>
+Date:   Sat, 28 Mar 2020 17:08:46 +0000
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
  Thunderbird/68.6.0
 MIME-Version: 1.0
-In-Reply-To: <20200115181351.GB4081287@coredump.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <771f0c5de3874158acdeb18003ac62495F73D361-1387-42DA-B582-725ADA24BB21@pearson.com>
+Content-Type: text/plain; charset=windows-1252
 Content-Transfer-Encoding: 8bit
 Content-Language: en-GB
 Sender: git-owner@vger.kernel.org
@@ -46,62 +41,25 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Tim,
 
-On 15/01/2020 18:13, Jeff King wrote:
-> On Wed, Jan 15, 2020 at 01:13:17AM +0200, Î£Ï„Î±ÏÏÎ¿Ï‚ ÎÏ„Î­Î½Ï„Î¿Ï‚ wrote:
+On 15/01/2020 19:47, Stewart, Tim wrote:
+> Steps to reproduce:
 >
->>>> new = "!f() { : git log ; git log \"${1}@{1}..${1}@{0}\" \"$@\" ; } ; f"
->>>> new = !f() { : git log ; git log "${1}@{1}..${1}@{0}" "$@" ; } ; f
->>> Only the first one is correct. In addition to the quotes in the second
->>> one being eaten by the config parser, the unquoted semicolon starts a
->>> comment.
->> Could somehow the latter "become" the correct option?
-> Unfortunately not without breaking compatibility of existing config
-> files.
 >
->> Especially in the case of `!sh`:
->> 1) You need to quote everything after `=` sign ("forced" double quotes), then
->> 2) `sh -c` needs another set (singles are most safe here, I think), and
->> 3) If, for some reason, you need to quote further ("$@" would be a
->> common suspect usually)
-> Yes, the quoting can get pretty hairy. If your command is complicated, I
-> suggest writing it as a separate script and dropping it into your $PATH
-> as git-new. Then "git new" will run it automatically (and it's not even
-> any less efficient; it still ends up with a single shell invocation).
+> Start a rebase operation that results in one or more conflicts in one or more of the repository’s sub-directories.
+> List the conflicts with the following command: git diff --name-only --diff-filter=U –relative
+> Identify one of the conflicts that is in a subdirectory.
+> cd to that directory
+> Run the same command again: git diff --name-only --diff-filter=U –relative
+> Receive segmentation fault error.  I would have expected to see a list of files relative to the current directory.
+> The following commands work just fine in the subdirectory you cd’ed to (I introduced spacing to make which arguments are present or absent more clear):
+> git diff --name-only --diff-filter=U
+> git diff                        --diff-filter=U –relative
 >
->> Thank you very much for a complete explaination of all of this .
->>
->> Can some of this be documented somewhere?
->> Are they somewhere and I missed them?
-> I think the config syntax around quoting is described in "git help
-> config" (see the section Syntax). The shell parts seem out of scope for
-> Git's manpages themselves, though it sounds like maybe some examples you
-> found could stand to be fixed (and/or to call out the subtlety).
 >
->> If nothing more, a link to this e-mail chain either on the wiki (if
->> https://git.wiki.kernel.org/index.php/Aliases is an official page) or
->> on git-alias help (here
->> https://git-scm.com/book/en/v2/Git-Basics-Git-Aliases or in some
->> "advanced" section, which I cannot find)
->>
->> If https://git.wiki.kernel.org/index.php/Aliases is an official page,
->> then: was this written for an earlier version?
->> Could it also be updated?
-> I think both of the issues you mentioned have always been true. That
-> wiki is open to editing by the world,
-
-I took the liberty of adding a small subsection on quoting based on this
-discussion, and adding a link to it. Feedback on my ignorance welcomed ;-)
->  so it's possible that somebody
-> just added bad examples (and fixes would be welcome).
->
-> I don't know the book content very well. Looking at the page you
-> linked, I don't think it says anything _wrong_, but it definitely
-> doesn't discuss more advanced alias usage. I suspect that would be a
-> welcome addition; they take contributions at
-> https://github.com/progit/progit2.
->
-> -Peff
-Philip
-
+>  
+> It appears that the –diff-filter=U argument is not required to induce the seg fault making the minimal failing case: ‘git diff --name-only –relative’ when run from a subdirectory.
+Is this still present in the recent V2.26.0?
+--
+Philip, (catching up on old emails)
