@@ -2,158 +2,172 @@ Return-Path: <SRS0=KP1k=5N=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 309A7C43331
-	for <git@archiver.kernel.org>; Sat, 28 Mar 2020 21:11:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1923BC43331
+	for <git@archiver.kernel.org>; Sat, 28 Mar 2020 22:18:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id E569720716
-	for <git@archiver.kernel.org>; Sat, 28 Mar 2020 21:11:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CDDED2073E
+	for <git@archiver.kernel.org>; Sat, 28 Mar 2020 22:18:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EwfLmAL0"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SNU1/0J5"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727167AbgC1VLj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 28 Mar 2020 17:11:39 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:43463 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726604AbgC1VLj (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 Mar 2020 17:11:39 -0400
-Received: by mail-wr1-f66.google.com with SMTP id m11so10280689wrx.10
-        for <git@vger.kernel.org>; Sat, 28 Mar 2020 14:11:36 -0700 (PDT)
+        id S1727718AbgC1WSd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 28 Mar 2020 18:18:33 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:38392 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727151AbgC1WSd (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 Mar 2020 18:18:33 -0400
+Received: by mail-wm1-f65.google.com with SMTP id f6so10306640wmj.3
+        for <git@vger.kernel.org>; Sat, 28 Mar 2020 15:18:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=Ngy6MUBQ1iGnsQSLvldqx5ooCSJtBGE/Ql8EWue0BUg=;
-        b=EwfLmAL0B9Cn0vvT272LcbPgvz1dwQZZhFOo9vTEFqVrLh5iQOEUKJEV8BETOw1+Kc
-         Ecx/HnYr0+OtFOrcUmRJF6LkPP1EDmUkq4jBDycp04iRkiUTvvP7fBOvG+7Zum/aed1i
-         uU4tCCEykWNs/kzLt/7QU5BGUzTNuCHei14oqo8NJaPDDmLFEVjnleoc86t4Lhx552By
-         EXisoC47sk4TQ2HZuvYkmSI1Rf860yxowQ863SNU0kk929dG10Cv6hvwp6JFlId6E83I
-         jQRU6ERIRQT7HJ9ccwrPyPFTMFX+gng6sWXhkzyAyWQV4qipNEMRAHo6VsuX4q+KcIul
-         ntvw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=BIbq/dC9IkVwDNK0nuN03yMaImZAGymdjVQEeSP305c=;
+        b=SNU1/0J5lYA0CKPxB0Y2bxmz/kIEr2BdINfbzv49Eg6OA1In6V4h7Po4G1qeflva7v
+         WXEO7TW8kFOSjbHubOA02lo0Vl0QEpuEdTGTEMaZFcP53EOy2TcpuG0951m0ADELRzZV
+         t0BeuETHeaf0LUNEaEuzwj3sZ6IfoiKr5MNW5AHd1y2GAMur8yROLRpoZilPY8Vy4ScI
+         66rDROrMCBOdEpoMGVYRnGKUw1GoqudnnwFLtFuuVsOEWmlYOCC2Nq0YJJZEE49AMlR8
+         YKlOTYg1dapGJ/Tgexs1wolPrhxOeA6WSpBRp+kyMEljxCBv+bZosirT6fE7WR9Rqnkb
+         8V5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=Ngy6MUBQ1iGnsQSLvldqx5ooCSJtBGE/Ql8EWue0BUg=;
-        b=rYEQ47T+aHcznoeM5lgO+6iLmrcHD8I3x4DKcv5d0QpPt7/hYVsZ2uABlEQQvtqnr5
-         2jEf7sfQu5PoUb8M9ALazVgUBszeWvzEp6sEE/hwce7rY5WmWHNKdKxmoQEBGZuraQpv
-         Qdc3/A6nm6nyBgjXNQqWMz6TmHhSyXmQzXVv+KE8bA9Rt2R+K3GdVqtQ2CghjPxnzGwC
-         o4WoRdEyAIof76FljXLsO8PbpU8r8RYzdawEQ/1goxTSNlGLDnmm5a8iojfvD7osPKvw
-         aDtUfkRmRdX+a9MyJ0E6HJouPzveQxmi5bDhRB0C52LKtR4Wcyrsvxb3GnpsbeHycPXD
-         EY9g==
-X-Gm-Message-State: ANhLgQ0I8lKIwQTFw7oNRis7ecZlUWReU5Q1QjCYHCMiEkrXEf/hX4hZ
-        rSrFs0A0Cs/m3/Kds7NDsKRTf+f5
-X-Google-Smtp-Source: ADFU+vvdAh4rVkeUx3gf9AawNdaHzHtvV15g0AxDFS6630a6bYc8hpcb0k7YIbm9pFjWo4hkfq4cFg==
-X-Received: by 2002:adf:eed1:: with SMTP id a17mr6228990wrp.287.1585429895364;
-        Sat, 28 Mar 2020 14:11:35 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u204sm13568204wmg.40.2020.03.28.14.11.34
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=BIbq/dC9IkVwDNK0nuN03yMaImZAGymdjVQEeSP305c=;
+        b=fLc3Ad1bKbtgIKBcTjismpshmUyqc+JRlKviNb/vhC8Fuw/FHxe4knEMck2tZ4q3XB
+         FDRsUf+alPTgFEicYecFl6KkWJpWD9BSDpiQfzqu/pRJAR6vS3e13kaaQZ3nB4d3Hy2C
+         Ne/m6gL+RBkXG9hsTW5GmvwjV4q3Gs0u6xchukZSnRZ1USwf46alg8jOUw0bVA7z34jT
+         OO/t7Y0UxpLMAkoqqtw++zPdlKHuA/A9ydzbPNmy4VuJOqfDkKZychzJxo8ME1sxD8lb
+         x5CnLu1PsAWs7PNyGNgkJbB8kH9UYCc7MJ37AWkGvCPsS7nkDz1TxwMaxi6ECsNB/sdK
+         jS4g==
+X-Gm-Message-State: ANhLgQ1giHBGZq/Lz+NXTvtp6ZmAH7WdWp2DSZoKolf8PDudRvHtkJ99
+        Ojg4XFReAqpOFTGZqVpI0vpoWJ/4RatC3G0o
+X-Google-Smtp-Source: ADFU+vuosbfRBrof7iXeB4eIC5RpCo9vFmYln2fD7IPif80jx0DjUqj8Oi1Dgo6I+pl1PwBU64HDUw==
+X-Received: by 2002:a1c:3dd7:: with SMTP id k206mr5708492wma.147.1585433911056;
+        Sat, 28 Mar 2020 15:18:31 -0700 (PDT)
+Received: from localhost.localdomain (87-231-246-247.rev.numericable.fr. [87.231.246.247])
+        by smtp.gmail.com with ESMTPSA id h2sm6726514wmb.16.2020.03.28.15.18.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 28 Mar 2020 14:11:34 -0700 (PDT)
-Message-Id: <pull.590.git.1585429894378.gitgitgadget@gmail.com>
-From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 28 Mar 2020 21:11:34 +0000
-Subject: [PATCH] doc: log takes multiple revision ranges
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Sat, 28 Mar 2020 15:18:30 -0700 (PDT)
+From:   Damien Robert <damien.olivier.robert@gmail.com>
+X-Google-Original-From: Damien Robert <damien.olivier.robert+git@gmail.com>
+To:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        William Baker <William.Baker@microsoft.com>
+Cc:     Damien Robert <damien.olivier.robert+git@gmail.com>
+Subject: [PATCH 1/1] midx.c: fix an integer underflow
+Date:   Sat, 28 Mar 2020 23:18:22 +0100
+Message-Id: <20200328221822.228469-1-damien.olivier.robert+git@gmail.com>
+X-Mailer: git-send-email 2.26.0
+In-Reply-To: <20200312173520.2401776-1-damien.olivier.robert+git@gmail.com>
+References: 
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Martin =?UTF-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Alex Henrie <alexhenrie24@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Philippe Blain <levraiphilippeblain@gmail.com>
+When verifying a midx index with 0 objects, the
+    m->num_objects - 1
+underflows and wraps around to 4294967295.
 
-`git log` accepts multiple revision ranges, but makes no mention of that
-in its documentation. Currently readers have to go to the `git
-rev-list` documentation to discover this useful feature.
+Fix this both by checking that the midx contains at least one oid,
+and also that we don't write any midx when there is no packfiles.
 
-Mention it and adjust the synopsys in the doc and in the short
-help for `git log`.
+Update the tests to check that `git multi-pack-index write` does
+not write an midx when there is no objects, and another to check
+that `git multi-pack-index verify` warns when it verifies an midx with no
+objects. For this last test, use t5319/no-objects.midx which was
+generated by an older version of git.
 
-Also add links to the documentation for `git rev-list` and `git diff`
-instead of simply mentioning them, to make it easier for readers to reach
-these documentation pages. Let's link to `git diff` as this is the
-porcelain command, and the rest of the family (`diff-index`, `diff-tree` and
-`diff-files`) are mentioned in the "Raw output format" section of the
-`git diff` documentation.
-
-Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+Signed-off-by: Damien Robert <damien.olivier.robert+git@gmail.com>
 ---
-    doc: log takes multiple revision ranges
-    
-    I hesitated to send this in two patches but decided not to, if it would
-    be preferred I'll split it.
+Change since v4: use "$objdir" in tests rather than ".git/objects/"
+Use this opportunity to use the correct technical term in the commit
+message, as pointed out by Junio.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-590%2Fphil-blain%2Fdoc-log-multiple-ranges-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-590/phil-blain/doc-log-multiple-ranges-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/590
+ midx.c                      |  15 +++++++++++++++
+ t/t5319-multi-pack-index.sh |  13 +++++++++----
+ t/t5319/no-objects.midx     | Bin 0 -> 1116 bytes
+ 3 files changed, 24 insertions(+), 4 deletions(-)
+ create mode 100644 t/t5319/no-objects.midx
 
- Documentation/git-log.txt | 12 ++++++------
- builtin/log.c             |  2 +-
- 2 files changed, 7 insertions(+), 7 deletions(-)
+diff --git a/midx.c b/midx.c
+index 1527e464a7..a520e26395 100644
+--- a/midx.c
++++ b/midx.c
+@@ -923,6 +923,12 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
+ 	cur_chunk = 0;
+ 	num_chunks = large_offsets_needed ? 5 : 4;
+ 
++	if (packs.nr - dropped_packs == 0) {
++		error(_("no pack files to index."));
++		result = 1;
++		goto cleanup;
++	}
++
+ 	written = write_midx_header(f, num_chunks, packs.nr - dropped_packs);
+ 
+ 	chunk_ids[cur_chunk] = MIDX_CHUNKID_PACKNAMES;
+@@ -1124,6 +1130,15 @@ int verify_midx_file(struct repository *r, const char *object_dir, unsigned flag
+ 				    i, oid_fanout1, oid_fanout2, i + 1);
+ 	}
+ 
++	if (m->num_objects == 0) {
++		midx_report(_("the midx contains no oid"));
++		/*
++		 * Remaining tests assume that we have objects, so we can
++		 * return here.
++		 */
++		return verify_midx_error;
++	}
++
+ 	if (flags & MIDX_PROGRESS)
+ 		progress = start_sparse_progress(_("Verifying OID order in multi-pack-index"),
+ 						 m->num_objects - 1);
+diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
+index 43a7a66c9d..22240fd30b 100755
+--- a/t/t5319-multi-pack-index.sh
++++ b/t/t5319-multi-pack-index.sh
+@@ -42,10 +42,15 @@ test_expect_success 'setup' '
+ 	EOF
+ '
+ 
+-test_expect_success 'write midx with no packs' '
+-	test_when_finished rm -f pack/multi-pack-index &&
+-	git multi-pack-index --object-dir=. write &&
+-	midx_read_expect 0 0 4 .
++test_expect_success "don't write midx with no packs" '
++	test_must_fail git multi-pack-index --object-dir=. write &&
++	test_path_is_missing pack/multi-pack-index
++'
++
++test_expect_success "Warn if a midx contains no oid" '
++	cp "$TEST_DIRECTORY"/t5319/no-objects.midx $objdir/pack/multi-pack-index &&
++	test_must_fail git multi-pack-index verify &&
++	rm $objdir/pack/multi-pack-index
+ '
+ 
+ generate_objects () {
+diff --git a/t/t5319/no-objects.midx b/t/t5319/no-objects.midx
+new file mode 100644
+index 0000000000000000000000000000000000000000..e466b8e08654c29effb5248cb109d81cfbcfd2f4
+GIT binary patch
+literal 1116
+zcmebEbctYOWMKe-06#}xFoS`?!{5`z4T<doVY7Jn`@2EKSv;WfKnj_S5FKTWhQMeD
+djEoT2!pSZW+;QcELdu7jD{8h)6W8x`1prin5MuxU
 
-diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
-index bed09bb09e5..fa8affd436a 100644
---- a/Documentation/git-log.txt
-+++ b/Documentation/git-log.txt
-@@ -9,15 +9,15 @@ git-log - Show commit logs
- SYNOPSIS
- --------
- [verse]
--'git log' [<options>] [<revision range>] [[--] <path>...]
-+'git log' [<options>] [<revision range>...] [[--] <path>...]
- 
- DESCRIPTION
- -----------
- Shows the commit logs.
- 
--The command takes options applicable to the `git rev-list`
-+The command takes options applicable to the linkgit:git-rev-list[1]
- command to control what is shown and how, and options applicable to
--the `git diff-*` commands to control how the changes
-+the linkgit:git-diff[1] family of commands to control how the changes
- each commit introduces are shown.
- 
- 
-@@ -90,9 +90,9 @@ include::line-range-format.txt[]
- 	<revision range> is specified, it defaults to `HEAD` (i.e. the
- 	whole history leading to the current commit).  `origin..HEAD`
- 	specifies all the commits reachable from the current commit
--	(i.e. `HEAD`), but not from `origin`. For a complete list of
--	ways to spell <revision range>, see the 'Specifying Ranges'
--	section of linkgit:gitrevisions[7].
-+	(i.e. `HEAD`), but not from `origin`. You can give more than 
-+	one revision range. For a complete list of ways to spell <revision range>,
-+	see the 'Specifying Ranges' section of linkgit:gitrevisions[7]. 
- 
- [--] <path>...::
- 	Show only commits that are enough to explain how the files
-diff --git a/builtin/log.c b/builtin/log.c
-index 83a4a6188e2..51c2ef54823 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -53,7 +53,7 @@ static const char *fmt_patch_subject_prefix = "PATCH";
- static const char *fmt_pretty;
- 
- static const char * const builtin_log_usage[] = {
--	N_("git log [<options>] [<revision-range>] [[--] <path>...]"),
-+	N_("git log [<options>] [<revision-range>...] [[--] <path>...]"),
- 	N_("git show [<options>] <object>..."),
- 	NULL
- };
+literal 0
+HcmV?d00001
 
-base-commit: 076cbdcd739aeb33c1be87b73aebae5e43d7bcc5
 -- 
-gitgitgadget
+Patched on top of v2.26.0-103-g3bab5d5625 (git version 2.26.0)
+
