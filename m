@@ -2,172 +2,96 @@ Return-Path: <SRS0=KP1k=5N=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1923BC43331
-	for <git@archiver.kernel.org>; Sat, 28 Mar 2020 22:18:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 97600C43331
+	for <git@archiver.kernel.org>; Sat, 28 Mar 2020 22:23:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id CDDED2073E
-	for <git@archiver.kernel.org>; Sat, 28 Mar 2020 22:18:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5D7AB2073E
+	for <git@archiver.kernel.org>; Sat, 28 Mar 2020 22:23:48 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SNU1/0J5"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="vEvAvb9n"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727718AbgC1WSd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 28 Mar 2020 18:18:33 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:38392 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727151AbgC1WSd (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 Mar 2020 18:18:33 -0400
-Received: by mail-wm1-f65.google.com with SMTP id f6so10306640wmj.3
-        for <git@vger.kernel.org>; Sat, 28 Mar 2020 15:18:32 -0700 (PDT)
+        id S1727588AbgC1WXr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 28 Mar 2020 18:23:47 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:38415 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726604AbgC1WXr (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 Mar 2020 18:23:47 -0400
+Received: by mail-wr1-f66.google.com with SMTP id s1so16333604wrv.5
+        for <git@vger.kernel.org>; Sat, 28 Mar 2020 15:23:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=BIbq/dC9IkVwDNK0nuN03yMaImZAGymdjVQEeSP305c=;
-        b=SNU1/0J5lYA0CKPxB0Y2bxmz/kIEr2BdINfbzv49Eg6OA1In6V4h7Po4G1qeflva7v
-         WXEO7TW8kFOSjbHubOA02lo0Vl0QEpuEdTGTEMaZFcP53EOy2TcpuG0951m0ADELRzZV
-         t0BeuETHeaf0LUNEaEuzwj3sZ6IfoiKr5MNW5AHd1y2GAMur8yROLRpoZilPY8Vy4ScI
-         66rDROrMCBOdEpoMGVYRnGKUw1GoqudnnwFLtFuuVsOEWmlYOCC2Nq0YJJZEE49AMlR8
-         YKlOTYg1dapGJ/Tgexs1wolPrhxOeA6WSpBRp+kyMEljxCBv+bZosirT6fE7WR9Rqnkb
-         8V5A==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=gR0iuoiyoMDBivrt28CmMVg/JmvwAQRFPqF2+WJvmDE=;
+        b=vEvAvb9nUpNzw0eq9qTA+0vVG2XHNZPhYc1Q5SdJWEOkptwPV2d1BvI7tF/oVIjPuD
+         3C9G1DE8ucJc9uCF+DgoyK92GxXHLLPAOaQN37rKJ6r38qICapFMzESO/kBASPjBeTr5
+         1tWYgcFxBVjHDbWLGbCJXsaw+K4tOHjJnINJJjlw13S95C4L8QvL51ZnmgV/ce45MTvP
+         KsRqbK7NeU/aICz4X48ckJzz5lqb57Nz4KGfXJo+G1wsYdEFblGXoPGv1imdWTR+2ecB
+         dPQE869DIPHStY6fVh1W1N361ji2I+omeyhouq337A+rhoPCiIMgRtE3r6CQhUFALIBL
+         QYmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=BIbq/dC9IkVwDNK0nuN03yMaImZAGymdjVQEeSP305c=;
-        b=fLc3Ad1bKbtgIKBcTjismpshmUyqc+JRlKviNb/vhC8Fuw/FHxe4knEMck2tZ4q3XB
-         FDRsUf+alPTgFEicYecFl6KkWJpWD9BSDpiQfzqu/pRJAR6vS3e13kaaQZ3nB4d3Hy2C
-         Ne/m6gL+RBkXG9hsTW5GmvwjV4q3Gs0u6xchukZSnRZ1USwf46alg8jOUw0bVA7z34jT
-         OO/t7Y0UxpLMAkoqqtw++zPdlKHuA/A9ydzbPNmy4VuJOqfDkKZychzJxo8ME1sxD8lb
-         x5CnLu1PsAWs7PNyGNgkJbB8kH9UYCc7MJ37AWkGvCPsS7nkDz1TxwMaxi6ECsNB/sdK
-         jS4g==
-X-Gm-Message-State: ANhLgQ1giHBGZq/Lz+NXTvtp6ZmAH7WdWp2DSZoKolf8PDudRvHtkJ99
-        Ojg4XFReAqpOFTGZqVpI0vpoWJ/4RatC3G0o
-X-Google-Smtp-Source: ADFU+vuosbfRBrof7iXeB4eIC5RpCo9vFmYln2fD7IPif80jx0DjUqj8Oi1Dgo6I+pl1PwBU64HDUw==
-X-Received: by 2002:a1c:3dd7:: with SMTP id k206mr5708492wma.147.1585433911056;
-        Sat, 28 Mar 2020 15:18:31 -0700 (PDT)
-Received: from localhost.localdomain (87-231-246-247.rev.numericable.fr. [87.231.246.247])
-        by smtp.gmail.com with ESMTPSA id h2sm6726514wmb.16.2020.03.28.15.18.29
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=gR0iuoiyoMDBivrt28CmMVg/JmvwAQRFPqF2+WJvmDE=;
+        b=J5MkEtauPAk4DT8jPeS4bsm5VPiPsp0rvTlqP2IUKO78MgakrQ2y3Qt4Xs0uwyuPIE
+         AIlrCqUoEIdkWdNvalZ44xAY7mkQI7+10OCy6eXfmsu6A6CDsLuU6IbBmCX33lcAHDE8
+         fFaQTfNSqop6B8k+egJRwF3oaEs4k7sS88AEAGAZIN16BUP4ntdYyXr50SD//55yV1IX
+         R3kizeDhKFMZ3o2beoTXCFsZBXWWA4uj7DKpZby45uPHb48DLcWRkjX1q096U1mQcb4X
+         w5wGCKMcRAy7hDt2JIzf1q43XhqlYtMFIt7mGtp8C2N1buLGW7fyAlDDU3Bnf0EQEqmj
+         ztRw==
+X-Gm-Message-State: ANhLgQ2EI25beNQhbUB4D50reBc9G94kAuyds27rGrelKwuLOOkPMlsc
+        Seebq8DpG7JroYqJIwG7mhI=
+X-Google-Smtp-Source: ADFU+vuvAimXjcUkXuG5Al+ED7g5Y8iBGxepmds4qkaTzI7e74X9VAG0+wzpl0Vi6lWbdhQrZN8Kog==
+X-Received: by 2002:adf:dd05:: with SMTP id a5mr454471wrm.18.1585434225181;
+        Sat, 28 Mar 2020 15:23:45 -0700 (PDT)
+Received: from doriath (87-231-246-247.rev.numericable.fr. [87.231.246.247])
+        by smtp.gmail.com with ESMTPSA id w204sm14239253wma.1.2020.03.28.15.23.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 28 Mar 2020 15:18:30 -0700 (PDT)
+        Sat, 28 Mar 2020 15:23:44 -0700 (PDT)
+Date:   Sat, 28 Mar 2020 23:23:42 +0100
 From:   Damien Robert <damien.olivier.robert@gmail.com>
-X-Google-Original-From: Damien Robert <damien.olivier.robert+git@gmail.com>
-To:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>,
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
         Derrick Stolee <dstolee@microsoft.com>,
         William Baker <William.Baker@microsoft.com>
-Cc:     Damien Robert <damien.olivier.robert+git@gmail.com>
-Subject: [PATCH 1/1] midx.c: fix an integer underflow
-Date:   Sat, 28 Mar 2020 23:18:22 +0100
-Message-Id: <20200328221822.228469-1-damien.olivier.robert+git@gmail.com>
-X-Mailer: git-send-email 2.26.0
-In-Reply-To: <20200312173520.2401776-1-damien.olivier.robert+git@gmail.com>
-References: 
+Subject: Re: [PATCH v4 1/1] midx.c: fix an integer overflow
+Message-ID: <20200328222342.jfxsk3gvujgqdt4f@doriath>
+X-PGP-Key: http://www.normalesup.org/~robert/pro/files/Damien_Olivier_Robert.asc
+X-Start-Date: Sat, 28 Mar 2020 23:18:57 +0100
+References: <20200326213534.399377-1-damien.olivier.robert+git@gmail.com>
+ <xmqqbloiitnv.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqbloiitnv.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When verifying a midx index with 0 objects, the
-    m->num_objects - 1
-underflows and wraps around to 4294967295.
+From Junio C Hamano, Thu 26 Mar 2020 at 16:27:16 (-0700) :
+> I think this is underflow & wraparound, but I'll let it pass ;-)
 
-Fix this both by checking that the midx contains at least one oid,
-and also that we don't write any midx when there is no packfiles.
+Ah thanks for the 'wraparound' term, I was missing it, so that's why I
+wrote overflow instead since everybody understand what I meant.
 
-Update the tests to check that `git multi-pack-index write` does
-not write an midx when there is no objects, and another to check
-that `git multi-pack-index verify` warns when it verifies an midx with no
-objects. For this last test, use t5319/no-objects.midx which was
-generated by an older version of git.
+Mathematically I think of this as a truncating in the ring of 2-adic integers,
+but I did not want to write this in the commit message :)
 
-Signed-off-by: Damien Robert <damien.olivier.robert+git@gmail.com>
----
-Change since v4: use "$objdir" in tests rather than ".git/objects/"
-Use this opportunity to use the correct technical term in the commit
-message, as pointed out by Junio.
+> The patch looks good; will queue.
 
- midx.c                      |  15 +++++++++++++++
- t/t5319-multi-pack-index.sh |  13 +++++++++----
- t/t5319/no-objects.midx     | Bin 0 -> 1116 bytes
- 3 files changed, 24 insertions(+), 4 deletions(-)
- create mode 100644 t/t5319/no-objects.midx
-
-diff --git a/midx.c b/midx.c
-index 1527e464a7..a520e26395 100644
---- a/midx.c
-+++ b/midx.c
-@@ -923,6 +923,12 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
- 	cur_chunk = 0;
- 	num_chunks = large_offsets_needed ? 5 : 4;
- 
-+	if (packs.nr - dropped_packs == 0) {
-+		error(_("no pack files to index."));
-+		result = 1;
-+		goto cleanup;
-+	}
-+
- 	written = write_midx_header(f, num_chunks, packs.nr - dropped_packs);
- 
- 	chunk_ids[cur_chunk] = MIDX_CHUNKID_PACKNAMES;
-@@ -1124,6 +1130,15 @@ int verify_midx_file(struct repository *r, const char *object_dir, unsigned flag
- 				    i, oid_fanout1, oid_fanout2, i + 1);
- 	}
- 
-+	if (m->num_objects == 0) {
-+		midx_report(_("the midx contains no oid"));
-+		/*
-+		 * Remaining tests assume that we have objects, so we can
-+		 * return here.
-+		 */
-+		return verify_midx_error;
-+	}
-+
- 	if (flags & MIDX_PROGRESS)
- 		progress = start_sparse_progress(_("Verifying OID order in multi-pack-index"),
- 						 m->num_objects - 1);
-diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
-index 43a7a66c9d..22240fd30b 100755
---- a/t/t5319-multi-pack-index.sh
-+++ b/t/t5319-multi-pack-index.sh
-@@ -42,10 +42,15 @@ test_expect_success 'setup' '
- 	EOF
- '
- 
--test_expect_success 'write midx with no packs' '
--	test_when_finished rm -f pack/multi-pack-index &&
--	git multi-pack-index --object-dir=. write &&
--	midx_read_expect 0 0 4 .
-+test_expect_success "don't write midx with no packs" '
-+	test_must_fail git multi-pack-index --object-dir=. write &&
-+	test_path_is_missing pack/multi-pack-index
-+'
-+
-+test_expect_success "Warn if a midx contains no oid" '
-+	cp "$TEST_DIRECTORY"/t5319/no-objects.midx $objdir/pack/multi-pack-index &&
-+	test_must_fail git multi-pack-index verify &&
-+	rm $objdir/pack/multi-pack-index
- '
- 
- generate_objects () {
-diff --git a/t/t5319/no-objects.midx b/t/t5319/no-objects.midx
-new file mode 100644
-index 0000000000000000000000000000000000000000..e466b8e08654c29effb5248cb109d81cfbcfd2f4
-GIT binary patch
-literal 1116
-zcmebEbctYOWMKe-06#}xFoS`?!{5`z4T<doVY7Jn`@2EKSv;WfKnj_S5FKTWhQMeD
-djEoT2!pSZW+;QcELdu7jD{8h)6W8x`1prin5MuxU
-
-literal 0
-HcmV?d00001
+Thanks. I just sent a v5 with a microfix (which is not really important, so
+v5 can be dropped). Since pu is subject to be rewound anyway, I guess you
+prefer a new version rather than a patch on top of v4?
 
 -- 
-Patched on top of v2.26.0-103-g3bab5d5625 (git version 2.26.0)
-
+Damien Robert
+http://www.normalesup.org/~robert/pro
