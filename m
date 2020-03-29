@@ -6,94 +6,78 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9BB10C43331
-	for <git@archiver.kernel.org>; Sun, 29 Mar 2020 16:23:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 02A9EC43331
+	for <git@archiver.kernel.org>; Sun, 29 Mar 2020 16:27:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3E82E20733
-	for <git@archiver.kernel.org>; Sun, 29 Mar 2020 16:23:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A9A2C20733
+	for <git@archiver.kernel.org>; Sun, 29 Mar 2020 16:27:37 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="HeRFs3Eh"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="onEUXTPO"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728297AbgC2QX4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 29 Mar 2020 12:23:56 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:57580 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728209AbgC2QX4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Mar 2020 12:23:56 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1F388CB091;
-        Sun, 29 Mar 2020 12:23:54 -0400 (EDT)
+        id S1728280AbgC2Q1d (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 29 Mar 2020 12:27:33 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51956 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728209AbgC2Q1c (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Mar 2020 12:27:32 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C5BBB6333C;
+        Sun, 29 Mar 2020 12:27:30 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=Aq8+ituN2POg
-        +U3SHeO1EBYz6Ps=; b=HeRFs3EhwxF42/ajbksGE+60wGUJqzLfpYCn9Yr+Vsti
-        v7r2DziIc3KSpSSCEyumlPMu82ujjNi8UOFiqAA/zBLNMELYNyTv43PqwXrMg0Ps
-        yOPNgjIXcyoxspvXa0e9RajwhEXBfRxbzwQk8RQAuJMGwOZEGZv7Rwq218Jzoe4=
+        :content-type:content-transfer-encoding; s=sasl; bh=/5DBw1BD1dM4
+        cLQgxAXl7Ke/MVM=; b=onEUXTPOOtMy+KgUyIj8Hsk5JUNaDsJftSUjaRtvl4zT
+        Lk9XCwoyWmcveTRd5X5v4WL6mpuewXIz6OZApXbLzxa3zYEW9SnFDtlAPISG8MS8
+        UaI5GX+MSDfCyrgbPpZVYUNIfOR53mnSSQvqZQJ1zn8SgX88TdQLZfPWyL2M7NA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=Bf0aqr
-        HPn3hxqyo2N+jM4xLndC9NShS7wXEsMTCsE68DAh/J/I3Uvdna+8e8DEiE4WmK9V
-        sfDcvctd9guzxHJQDHB+EWFmGhMxmNi95a1X4LeHpFX0oA1hVR7+M8+BgyUPcs8Q
-        3lmikFjUlp7RfGUwS3hQ/0HD7CyTyypwyU9Ng=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1763CCB090;
-        Sun, 29 Mar 2020 12:23:54 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=a6nXHA
+        Syn1bEqp0gGIkIpjD7hsQ5U7riptj/fbAz3z4TddvYedyObl+jtiCYIf2/ZNJ8ob
+        R6VmfTZJHPrVMrTeyOu3vou+iDwACOP/zFmBK9i7ydWa3JE3lhwlIl0L32/r6irO
+        CDufVnpmUcdHZTLLcy9rgUeHspzuMBK62JZYs=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id BDC016333B;
+        Sun, 29 Mar 2020 12:27:30 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 61F51CB08F;
-        Sun, 29 Mar 2020 12:23:51 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 49D866333A;
+        Sun, 29 Mar 2020 12:27:30 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 0/4] Travis + Azure jobs for linux with musl libc
-References: <cover.1585203294.git.congdanhqx@gmail.com>
-        <cover.1585474409.git.congdanhqx@gmail.com>
-Date:   Sun, 29 Mar 2020 09:23:49 -0700
-In-Reply-To: <cover.1585474409.git.congdanhqx@gmail.com> (=?utf-8?B?IsSQ?=
- =?utf-8?B?b8OgbiBUcuG6p24gQ8O0bmc=?=
-        Danh"'s message of "Sun, 29 Mar 2020 17:12:28 +0700")
-Message-ID: <xmqqmu7zb04q.fsf@gitster.c.googlers.com>
+To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH 0/6] Doc: drop support for docbook-xsl before 1.74
+References: <cover.1585486103.git.martin.agren@gmail.com>
+Date:   Sun, 29 Mar 2020 09:27:29 -0700
+In-Reply-To: <cover.1585486103.git.martin.agren@gmail.com> ("Martin
+ =?utf-8?Q?=C3=85gren=22's?=
+        message of "Sun, 29 Mar 2020 15:18:04 +0200")
+Message-ID: <xmqqiminazym.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: AD19440E-71D9-11EA-ABBD-8D86F504CC47-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 2F93041A-71DA-11EA-9CA0-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh  <congdanhqx@gmail.com> writes=
-:
+Martin =C3=85gren <martin.agren@gmail.com> writes:
 
-> Change from v1:
-> - fix spelling
-> - run-docker.sh: use "jobname" environment variable instead of passing =
-argument
-> - add linux-musl job on Azure
-> - Add 4th patch for jt/rebase-allow-duplicate (feel free to squash into
->  jt/rebase-allow-duplicate)
->
-> The first 3 patches could be applied on top of master,
-> but the last patch needs to be applied on top of jt/rebase-allow-duplic=
-ate
+> After this series, user-manual.conf still refers to older docbook-xsl
+> versions. The proper fix there might be to actually be a bit more
+> aggressive and drop that hunk, making the rendered docs prettier.
+> There's some history there, including mentions of texinfo, which is
+> outside my comfort zone. I've got work in progress there, but I'd rathe=
+r
+> submit that separately from these "expected no-op" patches.
 
-This note was very helpful.  Very much appreciated.
+It certainly is long overdue to write off these versions as too old
+to matter.
 
-Please keep this a three-patch series ([1/4], [2/4] and [3/4] become
-[1/3], [2/3] and [3/3]), and make the fourth one a separate fix to
-the other topic.  Even if we were not going to take this topic, the
-last one is an independently useful improvement.
+Thanks.  Will queue.
 
-I'll update jt/rebase-allow-duplicate with the last one, so no real
-harm done, but keeping the topics separate on the list would help
-reduce confusion.
-
-Thanks.
