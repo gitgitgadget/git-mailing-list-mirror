@@ -2,109 +2,156 @@ Return-Path: <SRS0=P8cE=5O=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EAE06C43331
-	for <git@archiver.kernel.org>; Sun, 29 Mar 2020 23:24:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 25730C43331
+	for <git@archiver.kernel.org>; Sun, 29 Mar 2020 23:24:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B852720774
-	for <git@archiver.kernel.org>; Sun, 29 Mar 2020 23:24:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 032EB2074A
+	for <git@archiver.kernel.org>; Sun, 29 Mar 2020 23:24:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727376AbgC2XYF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 29 Mar 2020 19:24:05 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:55410 "EHLO dcvr.yhbt.net"
+        id S1727387AbgC2XYP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 29 Mar 2020 19:24:15 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:55440 "EHLO dcvr.yhbt.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726463AbgC2XYF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Mar 2020 19:24:05 -0400
+        id S1726463AbgC2XYO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Mar 2020 19:24:14 -0400
 Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-        by dcvr.yhbt.net (Postfix) with ESMTP id 1CBF61F487;
-        Sun, 29 Mar 2020 23:24:05 +0000 (UTC)
-Date:   Sun, 29 Mar 2020 23:24:04 +0000
+        by dcvr.yhbt.net (Postfix) with ESMTP id 68CC11F49B;
+        Sun, 29 Mar 2020 23:24:14 +0000 (UTC)
+Date:   Sun, 29 Mar 2020 23:24:14 +0000
 From:   Eric Wong <e@80x24.org>
 To:     Lukas Pupka-Lipinski <lukas.pupkalipinski@lpl-mind.de>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] added: Multi line support for ignore-paths configuration
-Message-ID: <20200329232404.GA12701@dcvr>
-References: <e5c78a24-e17f-c1bb-4ea7-3ddaa45abcf0@lpl-mind.de>
- <20200325203823.GA21913@dcvr>
- <0515a11b-d9ae-3f22-65a8-5efee235d5c9@lpl-mind.de>
+Subject: Re: git-svn: Skip commit if all items of a commit are ignored by
+ ignore configuration
+Message-ID: <20200329232414.GA27925@dcvr>
+References: <b20ed6ca-1283-fb6d-a00c-94557218e01c@lpl-mind.de>
+ <1467670a-a9eb-f230-4ec0-bd6d54411a69@lpl-mind.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <0515a11b-d9ae-3f22-65a8-5efee235d5c9@lpl-mind.de>
+In-Reply-To: <1467670a-a9eb-f230-4ec0-bd6d54411a69@lpl-mind.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Lukas Pupka-Lipinski <lukas.pupkalipinski@lpl-mind.de> wrote:
-> Hi Eric,
 > 
-> thanks for your feedback.
+> I used the ignore-paths option to ignore a lot of stuff I don’t need. The
+> ignore pattern works well, but it could and up in empty commits. So just the
+> message without any modifications / changes. The patch below skip a commit
+> if all changes are ignored by the ignore-paths option.
+
+Hi Lukas, this seems like an incompatible change, but it also
+matches the intent of the user if they use ignore-paths (which
+AFAIK is a rarely-used feature).
+
+I guess it's OK to make it the default behavior, but maybe
+others have objections...
+
+> Signed-off-by: Lukas Pupka-Lipinski <lukas.pupkalipinski@lpl-mind.de>
+
+Thanks :>  More comments inline...
+
+> diff --git a/perl/Git/SVN/Ra.pm b/perl/Git/SVN/Ra.pm
+> index 56ad9870bc..a5a6c0b774 100644
+> --- a/perl/Git/SVN/Ra.pm
+> +++ b/perl/Git/SVN/Ra.pm
+> @@ -457,13 +457,22 @@ sub gs_fetch_loop_common {
+>              $find_trailing_edge = 0;
+>          }
+>          $SVN::Error::handler = $err_handler;
+> -
+> +
+
+This patch (and your other) are both white-space damaged,
+but there doesn't need to be a whitespace change, there.
+
+I'm not sure which mail client you use, but
+https://git-send-email.io/ documents git-send-email
+as being shipped with Git-for-Windows.
+
+Personally, I'm fine with attachments if they can go through
+without whitespace damage (not speaking for the rest of
+git@vger).  You can test by emailing yourself and trying
+"git am" on it.
+
+>          my %exists = map { $_->path => $_ } @$gsv;
+>          foreach my $r (sort {$a <=> $b} keys %revs) {
+>              my ($paths, $logged) = @{delete $revs{$r}};
+> -
+
+Again, no extraneous whitespace changes, please.
+
+>              foreach my $gs ($self->match_globs(\%exists, $paths,
+>                                                 $globs, $r)) {
+> +
+> +
+> +                my $fetcher=Git::SVN::Fetcher->new($gs);
+
+Initializing Git::SVN::Fetcher here and closing it is an
+expensive operation since it calls git-config(1) many times.
+This is especially bad for most users who do not use
+--ignore-paths at all.
+
+I know git-svn isn't fast, but I've been hoping to find spare
+time to make it use fast-import and speed it up, eventually.
+
+Instead, I think it's possible to bail out of Git::SVN::do_fetch
+and still skip the commit without extra network traffic.  I
+suggest you try that route, instead.
+
+> +
+> +                my $skip=$self->is_empty_commit($paths,$fetcher);
+> +                if ($skip){
+> +                    print "skip commit $r\n";
+> +                    next;
+> +                }
+> +                $fetcher->close_edit();
+>                  if ($gs->rev_map_max >= $r) {
+>                      next;
+>                  }
+
+Style: put whitespace between operators for readability
+and consistency with the rest of our code:
+
+	my $skip = $self->is_empty_commit($paths, $fetcher);
+        if ($skip) {
+		print "skip commit $r\n";
+		...
+
+We also use hard tabs for indentation.
+
+> @@ -506,6 +517,21 @@ sub gs_fetch_loop_common {
+> Git::SVN::gc();
+>  }
 > 
-> I will include your general Feedback in the next Patch mail.
-> 
-> In Addition i think its not clear what i was trying to solve. I use the git
-> svn extension for our company SVN. Unfortunately we have a lot of stuff in
-> the SVN what I do not use and don’t want to checkout. So I started to use
-> the ignore-paths option. But git only allows to have ca. 150 char in one
-> config line. Which is not enough for me. So I started to extend the code to
-> use also the next line. So that your expression can be bigger than 150 char,
-> spread over several lines.
+> +sub is_empty_commit{
+> +    my ($self, $paths,$fetcher) = @_;
+> +    my $path="";
+> +    foreach $path (keys %$paths){
+> +        unless (defined $path && -d $path ){
 
-Thanks for the explanation.  In the future, please keep
-git@vger.kernel.org and anybody else in the discussion in the
-Cc: list (use reply-to-all in your mailer).
+The `-d' check is invalid.  "git-svn fetch" never touches the
+working tree.
 
-> I hope that make it clear.
+> +            my $ignored=$fetcher->is_path_ignored($path);
+> +            if (!$ignored){
+> +                return 0;
+> +            }
+> +        }
+> +    }
+> +    return 1;
+> +}
+> +
+> +
+>  sub get_dir_globbed {
+>      my ($self, $left, $depth, $r) = @_;
 
-OK, please do, thank you :)
-
-> I will resend the second mail in few seconds
-> 
-> > That looks like it would munge the following:
-> > 
-> > 	[svn-remote "foo"]
-> > 		ignore-paths = a
-> > 		ignore-paths = b
-> > 
-> > into "a\nb\n"
-> > 
-> > And finally into a regexp:/ab/
-> > 
-> > ...Which doesn't seem correct, to me.
-> 
-> No this will end up into "ab" the \n and \r are removed at
-> 
-> +    $v  =~ s/[\x0A\x0D]//g if (defined $v);
-
-Right, so do you agree your patch is broken in that case
-and needs fixing?
-
-Sorry, my mental abilities are dulled from the stress and
-insomnia caused by the pandemic, so I have more trouble
-understanding things than usual :<
-
-> Am 25.03.2020 um 21:38 schrieb Eric Wong:
-> > > 2.25.1.windows.1
-> > I'm not sure how git-config or chomp() behaves on Windows systems
-> > with CRLF line endings, though.
-> > 
-> > A possibility would be replacing chomp(@v) with:
-> > 
-> > 	s/\r?\n\z//s for @v;
-> 
-> Yes that has to be done. Its implemented in
-> 
-> +    $v  =~ s/[\x0A\x0D]//g if (defined $v);
-
-Does that mean you'll send a v2 of the patch which uses
-
-	s/\r?\n\z//s for @v;
-
-?
-
-Thanks in advance for clarifying.
+Same style comments as before, and a single empty line
+in-between subs is enough.  Thanks.
