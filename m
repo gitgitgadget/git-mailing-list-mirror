@@ -2,114 +2,110 @@ Return-Path: <SRS0=P8cE=5O=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URI_HEX autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A0901C43331
-	for <git@archiver.kernel.org>; Sun, 29 Mar 2020 00:30:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9CA93C43331
+	for <git@archiver.kernel.org>; Sun, 29 Mar 2020 01:34:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 38CED206CC
-	for <git@archiver.kernel.org>; Sun, 29 Mar 2020 00:30:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3B86E206E6
+	for <git@archiver.kernel.org>; Sun, 29 Mar 2020 01:34:27 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (4096-bit key) header.d=sourcephile.fr header.i=@sourcephile.fr header.b="T94pBIkT"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="myZanXMa"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727722AbgC2AaC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 28 Mar 2020 20:30:02 -0400
-Received: from revolt129.abo.ilico.org ([80.67.180.129]:40942 "EHLO
-        mermet.sourcephile.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727697AbgC2AaC (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 Mar 2020 20:30:02 -0400
-X-Greylist: delayed 554 seconds by postgrey-1.27 at vger.kernel.org; Sat, 28 Mar 2020 20:30:02 EDT
-From:   Julien Moutinho <julm+git@sourcephile.fr>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sourcephile.fr;
-        s=20200101; t=1585441246;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=HGsMBcZRprlN1eKOfuQqPtNzwLdzD+d3xIK26Z3ryKU=;
-        b=T94pBIkTfA/34zKa9A61d/xpUqbWCtykavFmrX0IeEaGdx1fG3nss50SDC15gzGO/eIc9k
-        +/vLL88d4TZVPRx1lG9VlnXqQWWaIwfM9w9kXTSoU+iEurDBveavNnTtnvtPkwy+sS6wO5
-        64cuPfVj5Fg9ZkhVznEXpLAAOjieWyQhSOuAdGzOL4nvQfC9lI18keRt6uUI+VDzp8+8Aj
-        CD9R2fnldIP4+EyeBWFugWKFIdqGKX0en54DEynnfThKzvBtRq8VZbm2bR/CD97sAgNr5u
-        X2v3V2v9XP0fVCFHOelu8UoC4rpq5mryqFb5Qw4Jd74KiF8HDzJ+X7DhyzpRaVpPBh6eS6
-        HQTp+YREbICP12DPlfqB+N3aLnORGkxpY0yC5J3kdiWYmeFBdGWuZbglLwf41vIfyv2EY8
-        NcKPxdGwt5KrIjxZDTp7RzUs1dBjgI9p7o2iesa6FfzoenPRJEzY12Q0duLNhvZwnpwu6J
-        Md0X/dFsXl62lv8ureFJ6px+wdmEaTg3iNeWbDFudxrxsH7++PIZk/5BLGiWPJvp3hzwRX
-        ncvQ/u+29/Vf46xCK/3MYkH2doDBj9upgjJxmafjxJl9psJMKW9zpmDJq7YONDR9UJs86a
-        v3UmGW9TDazRfAkHleyJZ9anDnUGW4p9VpKQW0xXjr5yZISTXfBNM=
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, Julien Moutinho <julm+git@sourcephile.fr>
-Subject: [PATCH] gitweb: fix UTF-8 encoding when using CGI::Fast
-Date:   Sun, 29 Mar 2020 01:20:28 +0100
-Message-Id: <20200329002028.26080-1-julm+git@sourcephile.fr>
+        id S1727803AbgC2BeY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 28 Mar 2020 21:34:24 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:52095 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727718AbgC2BeY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 Mar 2020 21:34:24 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5F9D2C31BA;
+        Sat, 28 Mar 2020 21:34:19 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=aniw+C2r/BNvJrJ2iw9CxUvlPJY=; b=myZanX
+        MaNHXDV7SFHOet7/0wzIfpjamL+QbVsbbVGVd7Ecgsa41QEqeN4rIOqApRG9S7ia
+        dU73QGXx4KktZHtqMgIOMGM0wmzCLWqLiBjECZ2tguJCM2ZYZ3f1rG8FtZu5RTqP
+        6nrtYNd8ghVbdO0B7klhY0CRSS89j+fpIluEs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=GE8B9uQ6ZKal8miNflwQjjNVTpM11GBU
+        eSg6qqB8lZo+31cRlD32FnI98W3AmyVL21pf/cG8KAs3P5XRoSmyjVS5hPxCRrBo
+        RSsWqQgRGee13bba+bUpJIT7ElrCRHAV/Se8f1TqwuF4vSzN7QKfM+ilpN2smB4Z
+        KPrDP6BidrE=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 56D13C31B9;
+        Sat, 28 Mar 2020 21:34:19 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A578AC31B6;
+        Sat, 28 Mar 2020 21:34:16 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        Alex Henrie <alexhenrie24@gmail.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>
+Subject: Re: [PATCH] doc: log takes multiple revision ranges
+References: <pull.590.git.1585429894378.gitgitgadget@gmail.com>
+Date:   Sat, 28 Mar 2020 18:34:14 -0700
+In-Reply-To: <pull.590.git.1585429894378.gitgitgadget@gmail.com> (Philippe
+        Blain via GitGitGadget's message of "Sat, 28 Mar 2020 21:11:34 +0000")
+Message-ID: <xmqqd08wc5bd.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 67488600-715D-11EA-81C4-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-FCGI streams are implemented using the older stream API: TIEHANDLE,
-therefore applying PerlIO layers using binmode() has no effect to them.
-The solution in this patch is to redefine the FCGI::Stream::PRINT function
-to use UTF-8 as output encoding, except within git_blob_plain() and git_snapshot()
-which must still output in raw binary mode.
+"Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-This problem and solution were previously reported back in 2012:
-- http://git.661346.n2.nabble.com/Gitweb-running-as-FCGI-does-not-print-its-output-in-UTF-8-td7573415.html
-- http://stackoverflow.com/questions/5005104
+> From: Philippe Blain <levraiphilippeblain@gmail.com>
+>
+> `git log` accepts multiple revision ranges, but makes no mention of that
+> in its documentation. Currently readers have to go to the `git
+> rev-list` documentation to discover this useful feature.
 
-Signed-off-by: Julien Moutinho <julm+git@sourcephile.fr>
----
- gitweb/gitweb.perl | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+I have a mixed feeling about this change.  Surely you can write
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 65a3a9e..1a02a12 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -1291,9 +1291,23 @@ sub run_request {
- our ($pre_dispatch_hook, $post_dispatch_hook, $pre_listen_hook);
- our $CGI = 'CGI';
- our $cgi;
-+our $FCGI_Stream_PRINT_raw = \&FCGI::Stream::PRINT;
- sub configure_as_fcgi {
- 	require CGI::Fast;
- 	our $CGI = 'CGI::Fast';
-+	# FCGI is not Unicode aware hence the UTF-8 encoding must be done manually.
-+	# However no encoding must be done within git_blob_plain() and git_snapshot()
-+	# which must still output in raw binary mode.
-+	no warnings 'redefine';
-+	my $enc = Encode::find_encoding('UTF-8');
-+	*FCGI::Stream::PRINT = sub {
-+		my @OUTPUT = @_;
-+		for (my $i = 1; $i < @_; $i++) {
-+			$OUTPUT[$i] = $enc->encode($_[$i], Encode::FB_CROAK|Encode::LEAVE_SRC);
-+		}
-+		@_ = @OUTPUT;
-+		goto $FCGI_Stream_PRINT_raw;
-+	};
- 
- 	my $request_number = 0;
- 	# let each child service 100 requests
-@@ -7079,6 +7093,7 @@ sub git_blob_plain {
- 			($sandbox ? 'attachment' : 'inline')
- 			. '; filename="' . $save_as . '"');
- 	local $/ = undef;
-+	local *FCGI::Stream::PRINT = $FCGI_Stream_PRINT_raw;
- 	binmode STDOUT, ':raw';
- 	print <$fd>;
- 	binmode STDOUT, ':utf8'; # as set at the beginning of gitweb.cgi
-@@ -7417,6 +7432,7 @@ sub git_snapshot {
- 
- 	open my $fd, "-|", $cmd
- 		or die_error(500, "Execute git-archive failed");
-+	local *FCGI::Stream::PRINT = $FCGI_Stream_PRINT_raw;
- 	binmode STDOUT, ':raw';
- 	print <$fd>;
- 	binmode STDOUT, ':utf8'; # as set at the beginning of gitweb.cgi
--- 
-2.25.1
+	git log   v1.0..v2.0   v4.0..v5.0 -- Makefile
+
+and you can explain that the command appears to take two "ranges",
+but I do not think we want to encourage it to those who do not
+understand what the above actually *means*.  
+
+Specifially, it does *NOT* list commits between v1.0 and v2.0, or
+between v4.0 and v5.0, that touch the path Makefile.  In other
+words, you didn't really give two ranges with the syntax.  What the
+A..B notation means could be called a range, only when it appears
+alone.
+
+And we have *no* intention of changing the semantics.
+
+"A..B" is a mere short-hand for ^A B, and it may appear to be a
+range, but "A..B C..D" does not make "two ranges".  It still merely
+is a short-hand for ^A B ^C D, and if C reaches A and B (in the
+above example, v4.0 is very likely to reach both v1.0 and v2.0), it
+means the same thing as "C..D", i.e. "git log v4.0..v5.0 -- Makefile".
+
+So I have a mildly strong opinion against the change to the synopsys
+and the short-help; it is a bad change that does not help users.  If
+there are not sufficient explanation on the equivalence between A..B
+and ^A B on "git log" documentation but there is one elsewhere, adding
+a reference to help users learn is very much appreciated, though, and
+I initially was hoping that the second hunk of this patch was such a
+change, but it appears that it is not (it just adds the misleading
+"you can have more than one" without making readers aware of what it
+means to write "A..B C..D").
+
+Thanks.
 
