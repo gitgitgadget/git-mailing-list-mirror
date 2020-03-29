@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1DF34C43331
-	for <git@archiver.kernel.org>; Sun, 29 Mar 2020 10:13:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A960BC2D0E7
+	for <git@archiver.kernel.org>; Sun, 29 Mar 2020 10:13:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id DAA5920732
-	for <git@archiver.kernel.org>; Sun, 29 Mar 2020 10:13:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 802442076A
+	for <git@archiver.kernel.org>; Sun, 29 Mar 2020 10:13:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GfxPMTf6"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mHX5fs4m"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727910AbgC2KM7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 29 Mar 2020 06:12:59 -0400
-Received: from mail-pl1-f170.google.com ([209.85.214.170]:42021 "EHLO
-        mail-pl1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727832AbgC2KM7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Mar 2020 06:12:59 -0400
-Received: by mail-pl1-f170.google.com with SMTP id e1so5463674plt.9
-        for <git@vger.kernel.org>; Sun, 29 Mar 2020 03:12:57 -0700 (PDT)
+        id S1727931AbgC2KNC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 29 Mar 2020 06:13:02 -0400
+Received: from mail-pj1-f41.google.com ([209.85.216.41]:40089 "EHLO
+        mail-pj1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727832AbgC2KNC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Mar 2020 06:13:02 -0400
+Received: by mail-pj1-f41.google.com with SMTP id kx8so5960453pjb.5
+        for <git@vger.kernel.org>; Sun, 29 Mar 2020 03:13:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=iiMkaElhGWAGWzibQkdS/t+S2SLXO5KEB7PiIv4m/h8=;
-        b=GfxPMTf6WSRpSOFIEaSs8syXiNODXlfZORY4sOcObXOWMkvNRB6aIu9PMMt9kFTCUj
-         AxTZbDJ0TrYqPyx9xrIJCeoHJ9bJXu34I8WoOmsfNxi/gl5FV6KcCTX42vIAC34DS+jU
-         ipuI/vTH9bnyJWsqUJDKI+KTMQRIt4z1b5lp/KxQ9n2JeG/lQYDZFUqOfekI97L0AMVi
-         xWPCJ6PMCZZRDWoXM1h1IG5elIAtyNNeep2DX+oSWog1Cxx9RYbAjkuJ85lAIfY08Xld
-         iYrvKxkMYwZENFrhV8YiWxYsGYitGFMyOI9APPBA1qNQWNEt7iy1x8qFBGBU067WoNp2
-         8heQ==
+        bh=6IzUc5asZit39Tse4zGkRlshXbcjT5AWF0ICnq8VI8k=;
+        b=mHX5fs4m2ESlp1rdja2pSPgpOyNhNissdLfPVRp0gWG2X76h8vWB9gPIdv1ZqXh6K6
+         eGogXUjT3HXYkTC1eAioeX6dngabtYjv5svvYTcCVIM/v0z+Hs85ocIbfw0COImxMFUe
+         S40LsvQWJB5FQFCX6t/GJnvE/bMOX3h0GzuH8ijmZiBCtaTl6vO9yZoEez3QEyKTy/Ym
+         f/v/rFa3pUWXxesu8qv5+n1yoXiGEvLEFgDVuOrxT7U1gQBfn2++nkigkjFjd6NwSrff
+         YRJDm9h0FgdTh2gGsmqKguETGN4pTsEN567HdDrFRlye4UyukllE08gyDX6Qx52Z8eG6
+         5RsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=iiMkaElhGWAGWzibQkdS/t+S2SLXO5KEB7PiIv4m/h8=;
-        b=A4V1QqY+l3WBYbMiW74z5xxd0t3HKBb7YL8/ZKGTTVtvmQi8TKxphmPN4BuqfmBcCa
-         Zhj+A+URzMDWEYjG3zV/jEg+JirTSystgEV8GpARddEEwrvtSSP4SignAa0JeMpmNPIr
-         GBDaPLl65be59laAR+4EBiXlZ7xoygniR/90OM+XMyLnF0QhKsk4Z14NbGd+4NS0eWzU
-         Qnn4CIiTZWwQOznPLeBMc0BWVy7j2vIxMkFB+hXLqaZDkKiFwsBq0XJxmCvTSdRUAqXU
-         wi7XYvnCSVZPu/xrxf4HHph1tOoUurUuYj9i54dYh+slYYBgm2EUgKkuGpoMuImecNjU
-         U3YQ==
-X-Gm-Message-State: ANhLgQ09Ysd3V0CtnsnHeaebgCaD2+hTpYTCBczKzNg6Bpni/oWL3xHh
-        l+CXyfECXcgCwDVPADXiuQ7UT7tw
-X-Google-Smtp-Source: ADFU+vsZmEQy6UrjU+b2r2icXsNSA/88bh1lHAciYx2IG7VoLB8mw/IihRMszehSo5A9x0rmcMBDJQ==
-X-Received: by 2002:a17:902:59dd:: with SMTP id d29mr7413152plj.246.1585476776190;
-        Sun, 29 Mar 2020 03:12:56 -0700 (PDT)
+        bh=6IzUc5asZit39Tse4zGkRlshXbcjT5AWF0ICnq8VI8k=;
+        b=tHcF/hoMuO20CTG2gIWpWiT3rtMfZWR6eP0x2kh3eSdAZZXIDD5IPyj0EpJd+sAwh/
+         7Pb+4+rcG7WC4j5arQv7E/hZXGuBLdUGzevSIUFHpkS7bXGgC2rxMXkj0O6eNwYb5QuC
+         h+bpTb5RQi+MvjInWn9V/VrFzn6xYVLgqGIKsmNYTCU36QhBA58GyfKoVVQUx6bLMQ4F
+         lWec92z2BhA5UFnq/3aSeQx8kamJtkjuVEnTZ1FuYYwrzA9+DELivFg/uLhXy8RIfEQM
+         YspuhMSRDo9Vqg3y8b5jP90LP5ZCg6tBT2bx/ZBAXLxaseo8k64mC8jdNSqf1nS1icpw
+         iN+g==
+X-Gm-Message-State: ANhLgQ1W87Km2JTAOWRdZUkVyFclKV5Qbk9avQ1CJ6okhy70G4PaaBF3
+        DJS4khG2R5SkgIbLktqFbGFn0BzQ
+X-Google-Smtp-Source: ADFU+vuKqZyVcoBiegyXa/BeZ/Kof0R+2TRTZW2mdfWeLXiLKphofBnmZA152ChDyaql/Z2ry2WyIQ==
+X-Received: by 2002:a17:90a:e7d0:: with SMTP id kb16mr8734699pjb.97.1585476780547;
+        Sun, 29 Mar 2020 03:13:00 -0700 (PDT)
 Received: from localhost.localdomain ([2402:800:6375:f121:1d2a:e7e0:840f:1f18])
-        by smtp.gmail.com with ESMTPSA id v26sm7757386pfn.51.2020.03.29.03.12.54
+        by smtp.gmail.com with ESMTPSA id v26sm7757386pfn.51.2020.03.29.03.12.59
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 29 Mar 2020 03:12:55 -0700 (PDT)
+        Sun, 29 Mar 2020 03:13:00 -0700 (PDT)
 From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>
-Subject: [PATCH v2 1/4] ci: libify logic for usage and checking CI_USER
-Date:   Sun, 29 Mar 2020 17:12:29 +0700
-Message-Id: <1ec7c2024d60ce2b6888367fc48942e8febef15f.1585474409.git.congdanhqx@gmail.com>
+Subject: [PATCH v2 2/4] ci: refactor docker runner script
+Date:   Sun, 29 Mar 2020 17:12:30 +0700
+Message-Id: <140e0ef39064d0194e05cad6d9f48e8e5b03aacc.1585474409.git.congdanhqx@gmail.com>
 X-Mailer: git-send-email 2.26.0.302.g234993491e
 In-Reply-To: <cover.1585474409.git.congdanhqx@gmail.com>
 References: <cover.1585203294.git.congdanhqx@gmail.com> <cover.1585474409.git.congdanhqx@gmail.com>
@@ -74,116 +74,100 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This part of logic will be reused for alpine docker later.
+We will support alpine check in docker later in this series.
 
-Merge those logic into single chunk since they will be used together.
-
-While we're at it, add a comment to tell people run with root inside
-podman container.
+While we're at it, tell people to run as root in podman.
 
 Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
 ---
- ci/lib-docker.sh        | 37 +++++++++++++++++++++++++++++++++++++
- ci/run-linux32-build.sh | 35 +----------------------------------
- 2 files changed, 38 insertions(+), 34 deletions(-)
- create mode 100644 ci/lib-docker.sh
+ .travis.yml                                 |  2 +-
+ azure-pipelines.yml                         |  4 ++--
+ ci/{run-linux32-docker.sh => run-docker.sh} | 22 +++++++++++++++------
+ 3 files changed, 19 insertions(+), 9 deletions(-)
+ rename ci/{run-linux32-docker.sh => run-docker.sh} (48%)
 
-diff --git a/ci/lib-docker.sh b/ci/lib-docker.sh
-new file mode 100644
-index 0000000000..ac155ace54
---- /dev/null
-+++ b/ci/lib-docker.sh
-@@ -0,0 +1,37 @@
-+# Library of functions shared by all CI scripts run inside docker
+diff --git a/.travis.yml b/.travis.yml
+index fc5730b085..069aeeff3c 100644
+--- a/.travis.yml
++++ b/.travis.yml
+@@ -32,7 +32,7 @@ matrix:
+       services:
+         - docker
+       before_install:
+-      script: ci/run-linux32-docker.sh
++      script: ci/run-docker.sh
+     - env: jobname=StaticAnalysis
+       os: linux
+       compiler:
+diff --git a/azure-pipelines.yml b/azure-pipelines.yml
+index af2a5ea484..f6dcc35ad4 100644
+--- a/azure-pipelines.yml
++++ b/azure-pipelines.yml
+@@ -478,14 +478,14 @@ jobs:
+        test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || ci/mount-fileshare.sh //gitfileshare.file.core.windows.net/test-cache gitfileshare "$GITFILESHAREPWD" "$HOME/test-cache" || exit 1
+ 
+        res=0
+-       sudo AGENT_OS="$AGENT_OS" BUILD_BUILDNUMBER="$BUILD_BUILDNUMBER" BUILD_REPOSITORY_URI="$BUILD_REPOSITORY_URI" BUILD_SOURCEBRANCH="$BUILD_SOURCEBRANCH" BUILD_SOURCEVERSION="$BUILD_SOURCEVERSION" SYSTEM_PHASENAME="$SYSTEM_PHASENAME" SYSTEM_TASKDEFINITIONSURI="$SYSTEM_TASKDEFINITIONSURI" SYSTEM_TEAMPROJECT="$SYSTEM_TEAMPROJECT" CC=$CC MAKEFLAGS="$MAKEFLAGS" bash -lxc ci/run-linux32-docker.sh || res=1
++       sudo AGENT_OS="$AGENT_OS" BUILD_BUILDNUMBER="$BUILD_BUILDNUMBER" BUILD_REPOSITORY_URI="$BUILD_REPOSITORY_URI" BUILD_SOURCEBRANCH="$BUILD_SOURCEBRANCH" BUILD_SOURCEVERSION="$BUILD_SOURCEVERSION" SYSTEM_PHASENAME="$SYSTEM_PHASENAME" SYSTEM_TASKDEFINITIONSURI="$SYSTEM_TASKDEFINITIONSURI" SYSTEM_TEAMPROJECT="$SYSTEM_TEAMPROJECT" CC=$CC MAKEFLAGS="$MAKEFLAGS" jobname=Linux32 bash -lxc ci/run-docker.sh || res=1
+ 
+        sudo chmod a+r t/out/TEST-*.xml
+        test ! -d t/failed-test-artifacts || sudo chmod a+r t/failed-test-artifacts
+ 
+        test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || sudo umount "$HOME/test-cache" || res=1
+        exit $res
+-    displayName: 'ci/run-linux32-docker.sh'
++    displayName: 'jobname=Linux32 ci/run-docker.sh'
+     env:
+       GITFILESHAREPWD: $(gitfileshare.pwd)
+   - task: PublishTestResults@2
+diff --git a/ci/run-linux32-docker.sh b/ci/run-docker.sh
+similarity index 48%
+rename from ci/run-linux32-docker.sh
+rename to ci/run-docker.sh
+index 751acfcf8a..be698817cb 100755
+--- a/ci/run-linux32-docker.sh
++++ b/ci/run-docker.sh
+@@ -1,15 +1,25 @@
+ #!/bin/sh
+ #
+-# Download and run Docker image to build and test 32-bit Git
++# Download and run Docker image to build and test Git
+ #
+ 
+ . ${0%/*}/lib.sh
+ 
+-docker pull daald/ubuntu32:xenial
++case "$jobname" in
++Linux32)
++	CI_TARGET=linux32
++	CI_CONTAINER="daald/ubuntu32:xenial"
++	;;
++*)
++	exit 1 ;;
++esac
 +
-+if test $# -ne 1 || test -z "$1"
-+then
-+	echo >&2 "usage: $0 <host-user-id>"
-+	exit 1
-+fi
-+
-+# If this script runs inside a docker container, then all commands are
-+# usually executed as root. Consequently, the host user might not be
-+# able to access the test output files.
-+# If a non 0 host user id is given, then create a user "ci" with that
-+# user id to make everything accessible to the host user.
-+HOST_UID=$1
-+if test $HOST_UID -eq 0
-+then
-+	# Just in case someone does want to run the test suite as root.
-+	# or podman is used in place of docker
-+	CI_USER=root
-+else
-+	CI_USER=ci
-+	if test "$(id -u $CI_USER 2>/dev/null)" = $HOST_UID
-+	then
-+		echo "user '$CI_USER' already exists with the requested ID $HOST_UID"
-+	else
-+		useradd -u $HOST_UID $CI_USER
-+	fi
-+
-+	# Due to a bug the test suite was run as root in the past, so
-+	# a prove state file created back then is only accessible by
-+	# root.  Now that bug is fixed, the test suite is run as a
-+	# regular user, but the prove state file coming from Travis
-+	# CI's cache might still be owned by root.
-+	# Make sure that this user has rights to any cached files,
-+	# including an existing prove state file.
-+	test -n "$cache_dir" && chown -R $HOST_UID:$HOST_UID "$cache_dir"
-+fi
-diff --git a/ci/run-linux32-build.sh b/ci/run-linux32-build.sh
-index e3a193adbc..81296cdd19 100755
---- a/ci/run-linux32-build.sh
-+++ b/ci/run-linux32-build.sh
-@@ -8,11 +8,7 @@
++docker pull "$CI_CONTAINER"
  
- set -ex
+ # Use the following command to debug the docker build locally:
+-# $ docker run -itv "${PWD}:/usr/src/git" --entrypoint /bin/bash daald/ubuntu32:xenial
+-# root@container:/# /usr/src/git/ci/run-linux32-build.sh <host-user-id>
++# <host-user-id> must be 0 if podman is used in place of docker
++# $ docker run -itv "${PWD}:/usr/src/git" --entrypoint /bin/sh "$CI_CONTAINER"
++# root@container:/# /usr/src/git/ci/run-$CI_TARGET-build.sh <host-user-id>
  
--if test $# -ne 1 || test -z "$1"
--then
--	echo >&2 "usage: run-linux32-build.sh <host-user-id>"
--	exit 1
--fi
-+. "${0%/*}/lib-docker.sh"
+ container_cache_dir=/tmp/travis-cache
  
- # Update packages to the latest available versions
- linux32 --32bit i386 sh -c '
-@@ -21,35 +17,6 @@ linux32 --32bit i386 sh -c '
- 	libexpat-dev gettext python >/dev/null
- '
+@@ -23,8 +33,8 @@ docker run \
+ 	--env cache_dir="$container_cache_dir" \
+ 	--volume "${PWD}:/usr/src/git" \
+ 	--volume "$cache_dir:$container_cache_dir" \
+-	daald/ubuntu32:xenial \
+-	/usr/src/git/ci/run-linux32-build.sh $(id -u $USER)
++	"$CI_CONTAINER" \
++	"/usr/src/git/ci/run-$CI_TARGET-build.sh" $(id -u $USER)
  
--# If this script runs inside a docker container, then all commands are
--# usually executed as root. Consequently, the host user might not be
--# able to access the test output files.
--# If a non 0 host user id is given, then create a user "ci" with that
--# user id to make everything accessible to the host user.
--HOST_UID=$1
--if test $HOST_UID -eq 0
--then
--	# Just in case someone does want to run the test suite as root.
--	CI_USER=root
--else
--	CI_USER=ci
--	if test "$(id -u $CI_USER 2>/dev/null)" = $HOST_UID
--	then
--		echo "user '$CI_USER' already exists with the requested ID $HOST_UID"
--	else
--		useradd -u $HOST_UID $CI_USER
--	fi
--
--	# Due to a bug the test suite was run as root in the past, so
--	# a prove state file created back then is only accessible by
--	# root.  Now that bug is fixed, the test suite is run as a
--	# regular user, but the prove state file coming from Travis
--	# CI's cache might still be owned by root.
--	# Make sure that this user has rights to any cached files,
--	# including an existing prove state file.
--	test -n "$cache_dir" && chown -R $HOST_UID:$HOST_UID "$cache_dir"
--fi
--
- # Build and test
- linux32 --32bit i386 su -m -l $CI_USER -c '
- 	set -ex
+ check_unignored_build_artifacts
+ 
 -- 
 2.26.0.302.g234993491e
 
