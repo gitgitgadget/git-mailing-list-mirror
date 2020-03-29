@@ -6,90 +6,91 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E651C43331
-	for <git@archiver.kernel.org>; Sun, 29 Mar 2020 18:36:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C181C43331
+	for <git@archiver.kernel.org>; Sun, 29 Mar 2020 19:14:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 2C74B2076A
-	for <git@archiver.kernel.org>; Sun, 29 Mar 2020 18:36:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1C53F2073E
+	for <git@archiver.kernel.org>; Sun, 29 Mar 2020 19:14:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="HxKPphxk"
+	dkim=pass (4096-bit key) header.d=sourcephile.fr header.i=@sourcephile.fr header.b="wVd84/Rh"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728426AbgC2SgQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 29 Mar 2020 14:36:16 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:63165 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727506AbgC2SgP (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Mar 2020 14:36:15 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id CBD28C7FDC;
-        Sun, 29 Mar 2020 14:36:13 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=oRFvtMy6Y6ruf0Z1VsiUh2g1bhE=; b=HxKPph
-        xkZLkP22jt+Efib6aaqsERA4WhDozZ16mSHyogkfMDtK6QqhkToDvi4WAgGDJfRW
-        aBN4LTFIncMoxm2uo46zjc/1iYgQyfVyY9ItKg1n5a/EnE5PQ884Hdf4W+D/Ei4e
-        GTynBOAcut0OTTpzkEsxJXGfDVFOcY4j2cHqs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=V6iUWXHYbfBfE98mf+p/Ngn94R6FVCc7
-        m5UGjamU7t461sHtedS8dLi1qqfy8OUrEu8JO/NjzuSdPiQ5kLwb9RBe1f/6VuI3
-        ONNPspNEI7l4ez69Amq4ByzXVGJ80fbCTLdDwjtv7xH4pVGVxrodOfFcj0z8YtXg
-        IPx21MkGSn4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C351FC7FDA;
-        Sun, 29 Mar 2020 14:36:13 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 10789C7FD9;
-        Sun, 29 Mar 2020 14:36:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Garima Singh <garimasigit@gmail.com>
-Cc:     Jakub Narebski <jnareb@gmail.com>,
-        Garima Singh via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
-        Christian Couder <christian.couder@gmail.com>,
-        Emily Shaffer <emilyshaffer@gmail.com>,
-        Garima Singh <garima.singh@microsoft.com>
-Subject: Re: [PATCH v2 00/11] Changed Paths Bloom Filters
-References: <pull.497.git.1576879520.gitgitgadget@gmail.com>
-        <pull.497.v2.git.1580943390.gitgitgadget@gmail.com>
-        <86a75swuie.fsf@gmail.com>
-        <fdcbd793-57c2-f5ea-ccb9-cf34e911b669@gmail.com>
-Date:   Sun, 29 Mar 2020 11:36:09 -0700
-In-Reply-To: <fdcbd793-57c2-f5ea-ccb9-cf34e911b669@gmail.com> (Garima Singh's
-        message of "Fri, 21 Feb 2020 12:41:22 -0500")
-Message-ID: <xmqqtv279ffq.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1728496AbgC2TOE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 29 Mar 2020 15:14:04 -0400
+Received: from revolt129.abo.ilico.org ([80.67.180.129]:41634 "EHLO
+        mermet.sourcephile.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727606AbgC2TOD (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Mar 2020 15:14:03 -0400
+Date:   Sun, 29 Mar 2020 21:14:00 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sourcephile.fr;
+        s=20200101; t=1585509240;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=Jgtok8FDK9MLNzP+E4IOvT3aewHX9Ck64guFuH7PFTY=;
+        b=wVd84/RhBWEtOHxULVZF+pAX4bpVTPcqr34XrNyJ4GfrHuuOVubpsjJKo3lmr8kGahLec9
+        bfFH0xFbg94jK1Dp/haGxwKZmJhrR6aICazSizGdJwW9remkzfvxkEwHNCcwiye7qhTlTU
+        WCx47eRUfF1KMKvv9O3GXW36tMlcmmj/2j/CNW3UvzchIYWVgmtyIBNwwsKohcSgs8cxxT
+        wdMK2/yTe/gvxURox6oNkep2bSRCkTw9IRX/IzX9Xu9ZtYyM9ZD/tya5OdjmxHfuIP2IVW
+        g7edcUa1Bad9gbitImFBENAjj7zEv6RIzckj5yLBoSBC9cD4cbp9nant2w70dU4tIZeoPP
+        NAAYYEOgPGm7EchY/0ov+ZrAV6JW4pLwCNcSTMSnqOMAVR2bqTxjkIQVK8uHNWkBwPQ4L/
+        076qb8lE8zU+kH8K63OJo/66RrWmbed90+ZS+jWIlf8DzroZWWyW84BETVD2IeSQRQsk8I
+        zloEuoHNJrn1U+/H842jfeDP4w1ETfAKPa7vAg6eugKK6O3WNYIg3hy4FyKkI29/zP0x1H
+        24wvsmFWUqrr7cch2w/ewb1WZMc+IjSoUKi9fxMqfFVACFWDIADmkVkjTZoL4hNhbv2w43
+        C774ejoOVVZydeTQADzNrLMFz3HY0K46YTT9ZjMKCH6vPIKy6tvek=
+From:   Julien Moutinho <julm+git@sourcephile.fr>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] gitweb: fix UTF-8 encoding when using CGI::Fast
+Message-ID: <20200329191400.eh377knm4fxm66pd@sourcephile.fr>
+References: <20200329002028.26080-1-julm+git@sourcephile.fr>
+ <xmqqr1xbb0xr.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 29828A34-71EC-11EA-8140-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <xmqqr1xbb0xr.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Garima Singh <garimasigit@gmail.com> writes:
+Le dim. 29 mars 2020 09h06 -0700, Junio C Hamano a =C3=A9crit=C2=A0:
+> Julien Moutinho <julm+git@sourcephile.fr> writes:
+> >  	require CGI::Fast;
+> >  	our $CGI =3D 'CGI::Fast';
+> > +	# FCGI is not Unicode aware hence the UTF-8 encoding must be done man=
+ually.
+> > +	# However no encoding must be done within git_blob_plain() and git_sn=
+apshot()
+> > +	# which must still output in raw binary mode.
+>=20
+> I guess this comment would be sufficient to help future developers
+> when they find that newer version of CGI::Fast has become Unicode
+> aware later can make this part conditional to the version of the
+> module, perhaps?
+Sure, though as long as CGI::Fast will be relying on FCGI,
+I would not bet on any improvement on this bug
+which has been waiting to be fixed on FCGI's bugtracker since 2013:
+https://rt.cpan.org/Public/Bug/Display.html?id=3D89383
 
-> On 2/8/2020 6:04 PM, Jakub Narebski wrote:
->> "Garima Singh via GitGitGadget" <gitgitgadget@gmail.com> writes:
->> ...
-> I have gone back and forth on doing this. I like most of the core Bloom filter
-> computations being isolated in one patch/commit. But based on the rest of your
-> review, it seems like you are leaning heavily on having this split out. 
-> So, I will take a proper stab at doing it for v3. 
-> ...
-> Thanks for taking the time for reviewing this series so thoroughly! 
-> It is greatly appreciated! 
+> Would "use CGI::Fast (-utf8)" instead of the whole thing help, by
+> the way?
+Unfortunately not, the -utf8 option (aka. $CGI::$PARAM_UTF8)
+controls the decoding of the input parameters,
+not the encoding of the output.
+- https://metacpan.org/pod/CGI#-utf8
+- https://stackoverflow.com/questions/5005104/how-to-force-fastcgi-to-encod=
+e-form-data-as-utf-8-as-cgi-pm-has-option/7097698#7097698
 
-Thanks for a great discussion.  Just a friendly ping to the thread,
-so that something from the discussion thread will stay on the first
-page of mailing list archive's threaded view ;-)
+> > our $FCGI_Stream_PRINT_raw =3D \&FCGI::Stream::PRINT;
+> [...]
+> > +	local *FCGI::Stream::PRINT =3D $FCGI_Stream_PRINT_raw;
+I had forgotten to test the patch without FastCGI,
+but AFAICS it is innocuous in non-FastCGI mode:
+Perl does not chokes on \&FCGI::Stream::PRINT despite it being not reachabl=
+e,
+and the local binding emits no redefine warning since it's not a redefine
+in this case, but a define.
 
+Regards,
