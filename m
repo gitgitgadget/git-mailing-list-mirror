@@ -6,108 +6,94 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CC611C43331
-	for <git@archiver.kernel.org>; Sun, 29 Mar 2020 16:06:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9BB10C43331
+	for <git@archiver.kernel.org>; Sun, 29 Mar 2020 16:23:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 9DA262073B
-	for <git@archiver.kernel.org>; Sun, 29 Mar 2020 16:06:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3E82E20733
+	for <git@archiver.kernel.org>; Sun, 29 Mar 2020 16:23:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="tF0GZlCN"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="HeRFs3Eh"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728322AbgC2QGa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 29 Mar 2020 12:06:30 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:54115 "EHLO
+        id S1728297AbgC2QX4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 29 Mar 2020 12:23:56 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:57580 "EHLO
         pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728209AbgC2QGa (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Mar 2020 12:06:30 -0400
+        with ESMTP id S1728209AbgC2QX4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Mar 2020 12:23:56 -0400
 Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id ED934CAFDD;
-        Sun, 29 Mar 2020 12:06:29 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1F388CB091;
+        Sun, 29 Mar 2020 12:23:54 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=EZMpesZMMjTo/yStUJJzLNPDyxs=; b=tF0GZl
-        CNXxH7JOKWPGl1K1G5fUOjq6W2bgaTYWVvKo36otjU/NoV8095+lfQBuOGc0sjv6
-        OuFPX/vSo9CLX3FsdRhLjFzPe/CuHqqHEWq49OH1QXs4IC9sLoMh5FufYeFXzQDa
-        7vh11WQq8r3lsXqHyhrP9SMrPNWqV2d6ayEd4=
+        :content-type:content-transfer-encoding; s=sasl; bh=Aq8+ituN2POg
+        +U3SHeO1EBYz6Ps=; b=HeRFs3EhwxF42/ajbksGE+60wGUJqzLfpYCn9Yr+Vsti
+        v7r2DziIc3KSpSSCEyumlPMu82ujjNi8UOFiqAA/zBLNMELYNyTv43PqwXrMg0Ps
+        yOPNgjIXcyoxspvXa0e9RajwhEXBfRxbzwQk8RQAuJMGwOZEGZv7Rwq218Jzoe4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=vzXHz/5l3yIvyepRa6WVy1CmpX4ZPvWa
-        dkO+9gxD66n9pFR2HJa6OFxEvLr1TOwZqBBkVzyAdRwZwoJ5C27euKH2FceUVHcY
-        f6nDIHGt9S1uZ+lxCkeeg8mo3mkAYP6ncwLNQJCUXk/Ox00vfX6ysQTWMX5WVgXr
-        jbfpKFE8+l4=
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=Bf0aqr
+        HPn3hxqyo2N+jM4xLndC9NShS7wXEsMTCsE68DAh/J/I3Uvdna+8e8DEiE4WmK9V
+        sfDcvctd9guzxHJQDHB+EWFmGhMxmNi95a1X4LeHpFX0oA1hVR7+M8+BgyUPcs8Q
+        3lmikFjUlp7RfGUwS3hQ/0HD7CyTyypwyU9Ng=
 Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id E6503CAFDC;
-        Sun, 29 Mar 2020 12:06:29 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1763CCB090;
+        Sun, 29 Mar 2020 12:23:54 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 25E21CAFDB;
-        Sun, 29 Mar 2020 12:06:26 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 61F51CB08F;
+        Sun, 29 Mar 2020 12:23:51 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Julien Moutinho <julm+git@sourcephile.fr>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] gitweb: fix UTF-8 encoding when using CGI::Fast
-References: <20200329002028.26080-1-julm+git@sourcephile.fr>
-Date:   Sun, 29 Mar 2020 09:06:24 -0700
-In-Reply-To: <20200329002028.26080-1-julm+git@sourcephile.fr> (Julien
-        Moutinho's message of "Sun, 29 Mar 2020 01:20:28 +0100")
-Message-ID: <xmqqr1xbb0xr.fsf@gitster.c.googlers.com>
+To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 0/4] Travis + Azure jobs for linux with musl libc
+References: <cover.1585203294.git.congdanhqx@gmail.com>
+        <cover.1585474409.git.congdanhqx@gmail.com>
+Date:   Sun, 29 Mar 2020 09:23:49 -0700
+In-Reply-To: <cover.1585474409.git.congdanhqx@gmail.com> (=?utf-8?B?IsSQ?=
+ =?utf-8?B?b8OgbiBUcuG6p24gQ8O0bmc=?=
+        Danh"'s message of "Sun, 29 Mar 2020 17:12:28 +0700")
+Message-ID: <xmqqmu7zb04q.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3E153628-71D7-11EA-B627-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: AD19440E-71D9-11EA-ABBD-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Julien Moutinho <julm+git@sourcephile.fr> writes:
+=C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh  <congdanhqx@gmail.com> writes=
+:
 
->  	require CGI::Fast;
->  	our $CGI = 'CGI::Fast';
-> +	# FCGI is not Unicode aware hence the UTF-8 encoding must be done manually.
-> +	# However no encoding must be done within git_blob_plain() and git_snapshot()
-> +	# which must still output in raw binary mode.
+> Change from v1:
+> - fix spelling
+> - run-docker.sh: use "jobname" environment variable instead of passing =
+argument
+> - add linux-musl job on Azure
+> - Add 4th patch for jt/rebase-allow-duplicate (feel free to squash into
+>  jt/rebase-allow-duplicate)
+>
+> The first 3 patches could be applied on top of master,
+> but the last patch needs to be applied on top of jt/rebase-allow-duplic=
+ate
 
-I guess this comment would be sufficient to help future developers
-when they find that newer version of CGI::Fast has become Unicode
-aware later can make this part conditional to the version of the
-module, perhaps?
+This note was very helpful.  Very much appreciated.
 
-Would "use CGI::Fast (-utf8)" instead of the whole thing help, by
-the way?
+Please keep this a three-patch series ([1/4], [2/4] and [3/4] become
+[1/3], [2/3] and [3/3]), and make the fourth one a separate fix to
+the other topic.  Even if we were not going to take this topic, the
+last one is an independently useful improvement.
 
-> +	no warnings 'redefine';
-> +	my $enc = Encode::find_encoding('UTF-8');
-> +	*FCGI::Stream::PRINT = sub {
-> +		my @OUTPUT = @_;
-> +		for (my $i = 1; $i < @_; $i++) {
-> +			$OUTPUT[$i] = $enc->encode($_[$i], Encode::FB_CROAK|Encode::LEAVE_SRC);
-> +		}
-> +		@_ = @OUTPUT;
-> +		goto $FCGI_Stream_PRINT_raw;
-> +	};
+I'll update jt/rebase-allow-duplicate with the last one, so no real
+harm done, but keeping the topics separate on the list would help
+reduce confusion.
 
-
-
->  	my $request_number = 0;
->  	# let each child service 100 requests
-> @@ -7079,6 +7093,7 @@ sub git_blob_plain {
->  			($sandbox ? 'attachment' : 'inline')
->  			. '; filename="' . $save_as . '"');
->  	local $/ = undef;
-> +	local *FCGI::Stream::PRINT = $FCGI_Stream_PRINT_raw;
->  	binmode STDOUT, ':raw';
->  	print <$fd>;
->  	binmode STDOUT, ':utf8'; # as set at the beginning of gitweb.cgi
-> @@ -7417,6 +7432,7 @@ sub git_snapshot {
->  
->  	open my $fd, "-|", $cmd
->  		or die_error(500, "Execute git-archive failed");
-> +	local *FCGI::Stream::PRINT = $FCGI_Stream_PRINT_raw;
->  	binmode STDOUT, ':raw';
->  	print <$fd>;
->  	binmode STDOUT, ':utf8'; # as set at the beginning of gitweb.cgi
+Thanks.
