@@ -2,134 +2,164 @@ Return-Path: <SRS0=sJPh=5P=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B5BAC43331
-	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 12:43:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B388FC43331
+	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 12:52:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1DB9820675
-	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 12:43:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 77E1220716
+	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 12:52:59 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pSpG9PBy"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m19TfaDC"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730159AbgC3Mnq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Mar 2020 08:43:46 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:37217 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727339AbgC3Mnq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Mar 2020 08:43:46 -0400
-Received: by mail-wm1-f68.google.com with SMTP id j19so2924572wmi.2
-        for <git@vger.kernel.org>; Mon, 30 Mar 2020 05:43:43 -0700 (PDT)
+        id S1730001AbgC3Mw5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Mar 2020 08:52:57 -0400
+Received: from mail-qk1-f193.google.com ([209.85.222.193]:42736 "EHLO
+        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729862AbgC3Mw5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Mar 2020 08:52:57 -0400
+Received: by mail-qk1-f193.google.com with SMTP id 139so8806819qkd.9
+        for <git@vger.kernel.org>; Mon, 30 Mar 2020 05:52:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=GxEBw2WvVWRUdkrlXW6ClwwoJwK79xs2b8FVCn2oLzk=;
-        b=pSpG9PBykdglJWGmx1JNDlvz2rMxKhNmjBCPDc9Tv0Ynvxk1WhP+4uPQccjv0AJyvV
-         eBjYpKKpC6J/05nukilXQusuXz/Wqun4OSXVWplfiuTU9SZm9AdkKnhS2Hfzi4tdn2Kx
-         aDa1L4Lz7dFe8PYJF/YHcrHkt7V+aMyMfLvXXyI1ntpjia3piQEGNRDJStxE02mXOQ3v
-         GFAKJk3Cts8Jj6jfTZd18YXVAGvCm6klPcf4YGYNYoDl44bCLRCFasr9sfuwN8v3zScI
-         hzoF3mXUkxzgq39nps4827955G6IgsuHzBn6yWJf9dNmbEOosJLbCJEVgPhQnLdIEm7j
-         ixWA==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=UoNmfZOY1FFhIe/dH/tY01rPaIxD4J/8XG3MgrxmCCw=;
+        b=m19TfaDCCE7YZ8QZFWVucFi+KXuirLUP3vkKUismSUOXSB/5Sb1fQoJMjPleZj1Nla
+         mSEz30N5QL8cjz/Wj0IJpGEGEqnHgS7tV8rw4QK1v7ZAf+SGLiEnQLi0DWaYVW1ye8y5
+         mv633qzyY53z/HfqdNbF87q7AlGIyVPEHC4PMi4cvS6nR3wlCdd385tN1wkOKZGVIl2x
+         J0lJHsiKvBjK5i75zz3e6ReAT8wEw3ZMLDM2HJUiYlPrUwozotXzIJZ896+Ow1kOhhFg
+         YtiU104L3wcTfc1PCQc9yobEr1pV/AmPV7pQAZNemtSyNT4f5/WJ5q8oHwP+uUuDXdAL
+         BH1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=GxEBw2WvVWRUdkrlXW6ClwwoJwK79xs2b8FVCn2oLzk=;
-        b=eU5iHTqNeM/GVSu6diY53MsCXOQvhRrMM4ja2WhMDi788+wljUeLAz+/ndImxCgpAI
-         mDZ+M/ZPhU0yxkI73GKOuxhJzN6X//VDqeTWaNkj75yX7u88mpboX3O8ckFOhDvKP7N4
-         Nl9k9culHGRBqZ+kQFLGwddEkxi4lXxHERv2T7rkmFRrbTIiBb8tAS1dLZmqVV6annmW
-         B7bOSmCYme+tkoISHqVHu7j+WYiyQ5JYYY6h1gfeW4YTHanPQvyT6OvPJ09jRvM8OVTF
-         BZNCCAPjUXMY5lRLUhhrVgJqa/738dgN1L5ySYXdW+r55XsPLKZX3BOsAPAiJZ9Dvhfk
-         +ZnQ==
-X-Gm-Message-State: ANhLgQ1R14wIbxQYWx7m6XY3FWOTkeKV6uXQJ36H72ZhTsY3i/6t400T
-        YS10fpChDx6Vd8zlrEOpgLbsT9ru
-X-Google-Smtp-Source: ADFU+vsd/v/z1GZlxpj/6LnJOqOhyjcc0g7filAA2pszW2jsAUU5Dla3XyHp38qvmbtovmPnX33cYg==
-X-Received: by 2002:a05:600c:4410:: with SMTP id u16mr12842793wmn.161.1585572222373;
-        Mon, 30 Mar 2020 05:43:42 -0700 (PDT)
-Received: from localhost.localdomain (atoulouse-654-1-428-45.w2-6.abo.wanadoo.fr. [2.6.211.45])
-        by smtp.googlemail.com with ESMTPSA id 9sm20228480wmm.6.2020.03.30.05.43.41
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 30 Mar 2020 05:43:41 -0700 (PDT)
-From:   Alban Gruin <alban.gruin@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Elijah Newren <newren@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Junio C Hamano <gitster@pobox.com>, jan.steffens@gmail.com,
-        Alban Gruin <alban.gruin@gmail.com>
-Subject: [PATCH v1 2/2] t3432: test `--merge' with `rebase.abbreviateCommands = true', too
-Date:   Mon, 30 Mar 2020 14:42:36 +0200
-Message-Id: <20200330124236.6716-3-alban.gruin@gmail.com>
-X-Mailer: git-send-email 2.25.0
-In-Reply-To: <20200330124236.6716-1-alban.gruin@gmail.com>
-References: <9b4bc756764d87c9f34c11e6ec2fc6482f531805.camel@gmail.com>
- <20200330124236.6716-1-alban.gruin@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=UoNmfZOY1FFhIe/dH/tY01rPaIxD4J/8XG3MgrxmCCw=;
+        b=hn8JnLaWgAZY+68fs0AC7JIl+gMUXc+F86uDWvjkjF00pXY/OkMAVTYaVVLOiAdUUQ
+         8bu3YZMMU+Y6YABdp0ge60Nkj0/l9WChd30ue3etqQxNKAny4tOcWj42sqp/ln6qbMKR
+         hK1ULHYXHaZLnuasxHDaAChfeGMGXKK/wreijfpSBM+InWSKJoNUO7t+inIzLxsq/j3w
+         nIwrGVEN8BL9sUxoEQhqBOdHXHy0UfKAy9jX/wJCfJBfnlfC7Gg3fj6G104qXmjlzcCf
+         7UVHMfgtmZIaterUUu3Zg0gV+6IQ3KNZCBY+DSlJ5sAE33FyRyYBX+rNbIfKWvDoeiMu
+         TgWg==
+X-Gm-Message-State: ANhLgQ07+EdU2sDq5+WHyf8S8jVOQ62pigLECaEYPvrvcr4KSBZNRI6+
+        PLsCubQ/DjMh+MMsQK+n6ac=
+X-Google-Smtp-Source: ADFU+vvvAiQ1uGCLX1WnK9DtKSyCJAlmOPjRiydSJgBnggL0UVIv7aNVZos3d3i8JNRKeMiMdjibfg==
+X-Received: by 2002:ae9:ddc6:: with SMTP id r189mr11426808qkf.14.1585572776305;
+        Mon, 30 Mar 2020 05:52:56 -0700 (PDT)
+Received: from [192.168.1.127] ([192.222.216.4])
+        by smtp.gmail.com with ESMTPSA id a18sm7991366qkc.117.2020.03.30.05.52.55
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 30 Mar 2020 05:52:55 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH] doc: log takes multiple revision ranges
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+In-Reply-To: <xmqqd08wc5bd.fsf@gitster.c.googlers.com>
+Date:   Mon, 30 Mar 2020 08:52:52 -0400
+Cc:     Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>,
+        =?utf-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        Alex Henrie <alexhenrie24@gmail.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <51E0F312-E132-4E8E-AFE6-570CB02B4590@gmail.com>
+References: <pull.590.git.1585429894378.gitgitgadget@gmail.com> <xmqqd08wc5bd.fsf@gitster.c.googlers.com>
+To:     Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When fast forwarding, `git --merge' should act the same whether
-`rebase.abbreviateCommands' is set or not, but so far it was not the
-case.  This duplicates the tests ensuring that `--merge' works when fast
-forwarding to check if it also works with abbreviated commands.
+Hi Junio,=20
+> Le 28 mars 2020 =C3=A0 21:34, Junio C Hamano <gitster@pobox.com> a =
+=C3=A9crit :
+>=20
+> "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>=20
+>> From: Philippe Blain <levraiphilippeblain@gmail.com>
+>>=20
+>> `git log` accepts multiple revision ranges, but makes no mention of =
+that
+>> in its documentation. Currently readers have to go to the `git
+>> rev-list` documentation to discover this useful feature.
+>=20
+> I have a mixed feeling about this change.  Surely you can write
+>=20
+> 	git log   v1.0..v2.0   v4.0..v5.0 -- Makefile
+>=20
+> and you can explain that the command appears to take two "ranges",
+> but I do not think we want to encourage it to those who do not
+> understand what the above actually *means*. =20
+>=20
+> Specifially, it does *NOT* list commits between v1.0 and v2.0, or
+> between v4.0 and v5.0, that touch the path Makefile.  In other
+> words, you didn't really give two ranges with the syntax.  What the
+> A..B notation means could be called a range, only when it appears
+> alone.
+>=20
+> And we have *no* intention of changing the semantics.
 
-Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
----
- t/t3432-rebase-fast-forward.sh | 24 +++++++++++++++++++-----
- 1 file changed, 19 insertions(+), 5 deletions(-)
+Of course, I understand.
 
-diff --git a/t/t3432-rebase-fast-forward.sh b/t/t3432-rebase-fast-forward.sh
-index 6c9d4a1375..6f0452c0ea 100755
---- a/t/t3432-rebase-fast-forward.sh
-+++ b/t/t3432-rebase-fast-forward.sh
-@@ -28,10 +28,12 @@ test_rebase_same_head () {
- 	shift &&
- 	cmp_f="$1" &&
- 	shift &&
--	test_rebase_same_head_ $status_n $what_n $cmp_n " --apply" "$*" &&
--	test_rebase_same_head_ $status_f $what_f $cmp_f " --apply --no-ff" "$*"
--	test_rebase_same_head_ $status_n $what_n $cmp_n " --merge" "$*" &&
--	test_rebase_same_head_ $status_f $what_f $cmp_f " --merge --no-ff" "$*"
-+	test_rebase_same_head_ $status_n $what_n $cmp_n 0 " --apply" "$*" &&
-+	test_rebase_same_head_ $status_f $what_f $cmp_f 0 " --apply --no-ff" "$*"
-+	test_rebase_same_head_ $status_n $what_n $cmp_n 0 " --merge" "$*" &&
-+	test_rebase_same_head_ $status_f $what_f $cmp_f 0 " --merge --no-ff" "$*"
-+	test_rebase_same_head_ $status_n $what_n $cmp_n 1 " --merge" "$*" &&
-+	test_rebase_same_head_ $status_f $what_f $cmp_f 1 " --merge --no-ff" "$*"
- }
- 
- test_rebase_same_head_ () {
-@@ -41,9 +43,21 @@ test_rebase_same_head_ () {
- 	shift &&
- 	cmp="$1" &&
- 	shift &&
-+	abbreviate="$1" &&
-+	shift &&
- 	flag="$1"
- 	shift &&
--	test_expect_$status "git rebase$flag $* with $changes is $what with $cmp HEAD" "
-+	if test $abbreviate -eq 1
-+	then
-+		msg="git rebase$flag $* (rebase.abbreviateCommands = true) with $changes is $what with $cmp HEAD"
-+	else
-+		msg="git rebase$flag $* with $changes is $what with $cmp HEAD"
-+	fi &&
-+	test_expect_$status "$msg" "
-+		if test $abbreviate -eq 1
-+		then
-+			test_config rebase.abbreviateCommands true
-+		fi &&
- 		oldhead=\$(git rev-parse HEAD) &&
- 		test_when_finished 'git reset --hard \$oldhead' &&
- 		cp .git/logs/HEAD expect &&
--- 
-2.25.0
+>=20
+> "A..B" is a mere short-hand for ^A B, and it may appear to be a
+> range, but "A..B C..D" does not make "two ranges".  It still merely
+> is a short-hand for ^A B ^C D, and if C reaches A and B (in the
+> above example, v4.0 is very likely to reach both v1.0 and v2.0), it
+> means the same thing as "C..D", i.e. "git log v4.0..v5.0 -- Makefile".
 
+Yes, you are right.
+
+>=20
+> So I have a mildly strong opinion against the change to the synopsys
+> and the short-help; it is a bad change that does not help users.  If
+> there are not sufficient explanation on the equivalence between A..B
+> and ^A B on "git log" documentation but there is one elsewhere, adding
+> a reference to help users learn is very much appreciated, though,
+
+So the 'git log' documentation states:=20
+
+    origin..HEAD specifies all the commits reachable from the current =
+commit=20
+    (i.e. HEAD), but not from origin. For a complete list of ways to =
+spell <revision range>,=20
+    see the Specifying Ranges section of gitrevisions[7].
+
+What I wanted to achieve with this patch is to make readers aware that=20=
+
+they can write e.g.
+
+    git log branch1 branch2 branch3 branch4 --not master
+
+to see commits on each of branch1-4, that are not on master,=20
+since this is not immediately obvious (at least to me)
+in the 'git log' man page. Even following the link to gitrevisions[7],=20=
+
+it is not explicitly mentioned in the "Specifying Ranges" section=20
+that a range denotes the set of all commits reachable by all given refs,=20=
+
+minus the ones reachable by all given refs prefixed by '^' or '--not'.
+However, this is really clear in the 'git rev-list' documentation,=20
+which uses  '<commit>...' in the synopsis
+and clearly talks about the "set of commits" point of view:
+
+    You can think of this as a set operation. Commits given on the =
+command line form=20
+    a set of commits that are reachable from any of them, and then =
+commits reachable=20
+    from any of the ones given with ^ in front are subtracted from that =
+set. The remaining=20
+    commits are what comes out in the command=E2=80=99s output. Various =
+other options and=20
+    paths parameters can be used to further limit the result.
+
+Do you think it would be appropriate that this explanation could somehow =
+also appear=20
+in the 'git log' (and maybe also 'gitrevisions') documentation ?
+
+Thanks for the quick feedback,
+Philippe.=
