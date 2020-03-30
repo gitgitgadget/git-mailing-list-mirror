@@ -2,74 +2,111 @@ Return-Path: <SRS0=sJPh=5P=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D5003C43331
-	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 18:15:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 29A7BC2D0EB
+	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 18:18:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B130A206F6
-	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 18:15:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0F1EE206F6
+	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 18:18:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726518AbgC3SPq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Mar 2020 14:15:46 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:36300 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726017AbgC3SPq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Mar 2020 14:15:46 -0400
-Received: by mail-wm1-f68.google.com with SMTP id g62so23134389wme.1
-        for <git@vger.kernel.org>; Mon, 30 Mar 2020 11:15:45 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ZdtuBRdGr47+qpZIPxZlu21Y0Otzp+9F7XwfsUfnmUY=;
-        b=R8fob/CLSs3mjjeFVvBRDYLdlHPpA1ujPrCukX7qOvoOrdbO07JtcP/1MbZTVHanhV
-         1A7/XT6hdfcnwAQ266ZbF1ILikWiTFosoXoggLOlrf6YkrygDnNOaESxQqvmWjcHP44r
-         1pluEKGKKOQALFJ+ThXjb/DMlgYBA1wPz56Rc7bTGm8soLkNmDNYzM8moR4wqDVbzcB+
-         gSo2EAahkJAvhIe3j+RFNfD6j2IYoG9b54txhczvbWfQIIw+BfQjnA9UQPXQ6KGf6RGy
-         YgUm9FcuqWf3GMrNBz8SLxZUDgBahr/2bb2qAbl3WoxF3gEbdLl2tC0qL7iCHAsFeulE
-         /NIA==
-X-Gm-Message-State: ANhLgQ3ov4vSuKoYrHi1bjkGSVry369/fuWQiJuRRzWqWTON+ARwR3Y4
-        012BDIN6QSLjq5NlnUZj5FnXJ8l/p1YuXO44wVo=
-X-Google-Smtp-Source: ADFU+vsNiinQlDe8mWwlPsH1eB6CjD1+85oxt6xxVjOZeLyEx4CcVWoX1RypI19FMmx+M08qaPT/G1xZaoya+Xx1VDg=
-X-Received: by 2002:a1c:a78a:: with SMTP id q132mr515983wme.107.1585592144828;
- Mon, 30 Mar 2020 11:15:44 -0700 (PDT)
+        id S1727806AbgC3SSc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Mar 2020 14:18:32 -0400
+Received: from mx.sdf.org ([205.166.94.20]:59710 "EHLO mx.sdf.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726017AbgC3SSb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Mar 2020 14:18:31 -0400
+Received: from sdf.org (IDENT:lkml@sdf.lonestar.org [205.166.94.16])
+        by mx.sdf.org (8.15.2/8.14.5) with ESMTPS id 02UIIC3R022799
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits) verified NO);
+        Mon, 30 Mar 2020 18:18:12 GMT
+Received: (from lkml@localhost)
+        by sdf.org (8.15.2/8.12.8/Submit) id 02UIICGB001653;
+        Mon, 30 Mar 2020 18:18:12 GMT
+Date:   Mon, 30 Mar 2020 18:18:12 +0000
+From:   George Spelvin <lkml@SDF.ORG>
+To:     Philip Oakley <philipoakley@iee.email>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        lkml@sdf.org
+Subject: Re: Feature request: rebase -i inside of rebase -i
+Message-ID: <20200330181812.GB9199@SDF.ORG>
+References: <20200320223015.GA19579@SDF.ORG>
+ <xmqq36a2bpxz.fsf@gitster.c.googlers.com>
+ <20200320233528.GB19579@SDF.ORG>
+ <nycvar.QRO.7.76.6.2003211135380.46@tvgsbejvaqbjf.bet>
+ <20200321175612.GC19579@SDF.ORG>
+ <nycvar.QRO.7.76.6.2003252008490.46@tvgsbejvaqbjf.bet>
+ <20200326001821.GB8865@SDF.ORG>
+ <nycvar.QRO.7.76.6.2003281510260.46@tvgsbejvaqbjf.bet>
+ <0eef4721-1646-48f2-1102-71159d06b049@iee.email>
 MIME-Version: 1.0
-References: <9b4bc756764d87c9f34c11e6ec2fc6482f531805.camel@gmail.com>
- <20200330124236.6716-1-alban.gruin@gmail.com> <20200330124236.6716-2-alban.gruin@gmail.com>
-In-Reply-To: <20200330124236.6716-2-alban.gruin@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 30 Mar 2020 14:15:33 -0400
-Message-ID: <CAPig+cQDCqUh9zpUHreS1GqG7hFgV9ChzZj0mtnMbcmVeY0ofQ@mail.gmail.com>
-Subject: Re: [PATCH v1 1/2] sequencer: don't abbreviate a command if it
- doesn't have a short form
-To:     Alban Gruin <alban.gruin@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Elijah Newren <newren@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Junio C Hamano <gitster@pobox.com>, jan.steffens@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0eef4721-1646-48f2-1102-71159d06b049@iee.email>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 30, 2020 at 8:43 AM Alban Gruin <alban.gruin@gmail.com> wrote:
-> When the sequencer is requested to abbreviate commands, it will replace
-> those that does not have a short form (eg. `noop') by a comment mark.
+On Mon, Mar 30, 2020 at 03:01:28PM +0100, Philip Oakley wrote:
+> Perhaps we can go the other way on this one.
+> 
+> I'd agree that attempting to nest (misunderstood mistaken) rebases is
+> digging a too deep hole that we'd not get out of. However we do have
+> other rebases available, specifically the "rebasing merges"
+> https://git-scm.com/docs/git-rebase#_rebasing_merges.
+> 
+> I know rebasing merges is way down the man page, but it has all the
+> power and flexibility needed _if_ we can step across from the mistaken
+> rebase step (we are at the command prompt aren't we?) into the rebasing
+> merge mode.
+> 
+> This will require a little bit of expansion of the insn (instruction)
+> sheet so as to _include commented lines of the rebase steps completed_
+> so far, along with the labels, resets, merges, etc, so that the user can
+> _see_ where they they are within their failed progress (along with a
+> title line telling them their initial command and that they are now on a
+> rebasing merge insn;-).
+> 
+> From there they can update the insn to reset back to the correct point,
+> redo the correct picks, and then get back to their remaining rebase steps.
+> 
+> It's a thought anyway.
 
-s/does/do/
+I'm confused.  *How* does --rebase-merge mode help?  You're saying
+"hey, if we use this, it solves the issue" but I don't see how to
+pound this nail with that screwdriver.
 
-> `noop' serves no purpose, except when fast-forwarding (ie. by running
-> `git rebase').  Removing it will break this command when
-> `rebase.abbreviateCommands' is set to true.
->
-> This changes todo_list_to_strbuf() to check if a command has an actual
-> short form, and to ignore it if not.
+I don't see how creating a branching history helps, and I don't see how to 
+use the reset/label/merge commands to do anything but create a branching 
+history.
 
-Perhaps: s/This changes/Change/
+I suppose it is possible to use the "reset" command in isolation
+to describe the jump to a new base.  So you could have a history of:
 
-> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
+# Command already executed:
+# reset base
+# pick A
+# pick B
+# pick C
+# label rebase-1  User asked for a nested rebase
+# reset A'
+
+# Commands pending:
+pick B'
+pick C'
+# rebase-2 complete, resume rebase-1
+pick D
+pick E
+
+Is that what you were getting at?
+
+I was thinking of it being implicit, but it might be nice for the initial
+"reset" in each rebase to be explicit, *and not yet executed during
+the initial todo edit*.
+
+That makes it really clear that deleting the todo list entirely
+results in no change to the tree.
