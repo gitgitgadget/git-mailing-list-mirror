@@ -2,75 +2,102 @@ Return-Path: <SRS0=sJPh=5P=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+X-Spam-Status: No, score=-11.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0EF64C43331
-	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 15:21:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 12339C43331
+	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 16:04:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id E01DD20732
-	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 15:21:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D253C2072E
+	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 16:04:20 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="eEENu0uH"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728932AbgC3PVC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Mar 2020 11:21:02 -0400
-Received: from mout.kundenserver.de ([212.227.126.131]:46865 "EHLO
-        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726114AbgC3PVC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Mar 2020 11:21:02 -0400
-Received: from [192.168.100.176] ([80.150.130.51]) by mrelayeu.kundenserver.de
- (mreue011 [212.227.15.167]) with ESMTPSA (Nemesis) id
- 1MNc1T-1jgwBO0I4R-00P9iy; Mon, 30 Mar 2020 17:20:49 +0200
-Subject: Re: [PATCH] gitk: to run in a bare repository (was: gitk can't be run
- from non-worktree folders)
-To:     Git List <git@vger.kernel.org>
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Paul Mackerras <paulus@ozlabs.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        Martin von Zweigbergk <martinvonz@gmail.com>
-References: <4e2e5829-b9a7-b9b4-5605-ac28e8dbc45a@onlinehome.de>
- <20200123163151.GC6837@szeder.dev>
- <CAPig+cTixT9JYDPn-umKdQLtTm5byA1wwmvVY1ryuh+hv2=6MQ@mail.gmail.com>
- <xmqqpnfa3sj1.fsf@gitster-ct.c.googlers.com>
- <xmqqk15i3rp7.fsf_-_@gitster-ct.c.googlers.com>
- <20200123192707.GA110440@coredump.intra.peff.net>
-From:   ch <cr@onlinehome.de>
-Message-ID: <8be28321-3108-4846-ac6a-d5c7977774dc@onlinehome.de>
-Date:   Mon, 30 Mar 2020 17:20:47 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101
- Thunderbird/68.6.0
-MIME-Version: 1.0
-In-Reply-To: <20200123192707.GA110440@coredump.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:w3QLoKoKHC2MUeAs/tMOfX0rjKGAL27vybmRwc50S0hVsy5B9DM
- 3VnP3efTEzsFqvZRJxRSoAtqMxl4UGf6ctHBHZK7H/1XCrccMJ8xrk1I8PlkaDAUxcuKouL
- xsMJUpLZWFquAO9aUcmebbyRY9WOrqxCkC+7/VXQuoujc1k8B/9i2T2PYdwnBkLsgIwjk7w
- ZzI7jO2+CBo7QP2TrY3GA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:x4nwgb6BK5I=:rVNXF1+lHECGUunXCyco3S
- 7n1v/PPB67hpcvUIAWqmqtnP3SKW2NtF/nnK/P8+0otdim6+QgYhRhymA8hXWrCR6jfTrnMWH
- q+Ut1S4aw8fONecHTt9LifdTi53cbn26Sc+EpXq6J5fB+kIq5S70uSG/2FVDL9iOB3jdmAWYW
- zBzXuoBR69bl9hvZCCmCh2Ntg8ZVbC/uLJ+rKY9FG2O8D1I6mvVTHe8d2rTQA35LTcE9iiRXB
- W56UjKkQAKu6hsCfihnn6vkZ6xlA8J38rKLNdZuSpiTJyM6nzh1liP1n+O57FQMoQRH4VDrSZ
- 8SmrfqJMT6NsBYfIf1zYT33C6WFHTwilws7SXTsbw3HgAA8bZ/Xcq+Rd51Z6h1kqn13J7Bm29
- hMq4Wg9BwJDoj+aDjWMfWmreKGJWJDbgEQPMvI6sxBggGOjUZ5jI/fRNaf+r2MSNrlqEJHLZC
- b4QL2znI5xQIOHaysA9A6/SbVAN+fN3Rgcy/hhfCLuCZbLO6poojXAhYZEMrg2mdrkVbosXiN
- aIR5E5urlBQ0SPvH2gagp8+zAmsVF2Tg00WGG6W6FCfOxzdwCoxq1uKGqR37ybukTjOf6ktLx
- /jcPHCM0ZhYjlvi2Pma1bpD4cgBsWwpLml2B2KeATyClYd0jFo29h1Wo/Hw5Y7tt54Z57bJKT
- 3QLCwb0+ZF4Fthrr584wz/9W8CKRweaQQ8TjmSoSM0LYYEt/u9Yi2hrgRZfkBwWjevNQefoll
- pjNC9yOltaIgVtJ2oQxgk1hDrNYv12Q1CP63bmrz36qtAyK2BnoKv+SKSu5/8pb89NifC53vh
- f9S/45J/V0A+n8ljgDOr4E/A7C0Ckl4c39RUtMAyhnEtYZkhFtYsFrys0YhDCvnZPomwfcb
+        id S1729819AbgC3QEU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Mar 2020 12:04:20 -0400
+Received: from mail-ua1-f73.google.com ([209.85.222.73]:45950 "EHLO
+        mail-ua1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727048AbgC3QET (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Mar 2020 12:04:19 -0400
+Received: by mail-ua1-f73.google.com with SMTP id h10so7718806uab.12
+        for <git@vger.kernel.org>; Mon, 30 Mar 2020 09:04:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=siZnDi3GDp1pz//paASpHCTtEwsRWBNa6sCGP4eqUIo=;
+        b=eEENu0uH72B2RMx5tIdBbrr+T4BvTsxDBgpwZ3N2beI7JCWrdsBSOorg/kMRSVhzcU
+         7tWe+K5E0ToOIqlI4aooa78kf3/1/YhOtQiUrYgRKBj8VsnnygU6g0iIIIDpcrURLk9m
+         3UB6qKNjljMk7kvGNBTgMZKB8EqX95Uy+jhtqK7TFOohvrJ9jIHLq/4Wzaf1wKtkSM9Q
+         Pb30mKD8RKiGgKR23KeYhxY6rO/uMFp+vlFILZZEjGka2ePHLgYtZcVOcVxnN5J82oke
+         QgneTqEaXQ8DQAS3kpcP6QBBB7voIJa6FnsaDI2n1revkqI1n6/fNqTrMZGHDfnPLhGp
+         s2Vw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=siZnDi3GDp1pz//paASpHCTtEwsRWBNa6sCGP4eqUIo=;
+        b=OlRVemCLNEUQ7Kw1VyzjzWW8Yc4UtyrbekCWmNfGOM7siEsMRngcFxjUSi2B0hScUW
+         GqRQB6shkF8CUaxg6No0BowQeS+9acdWVwSAKGDOz3YD9lVEmHGkJbQUffCVVvgkqDDO
+         fiHGgqqSyeEcd56d/N5EjjOCh9zwSRvx65d1OdT5KYo8k5MdN7MdniP7Z3uYz+eZuXEX
+         WxvwdAo3H0ohAVdSmMVaZSbSGNuvP9jOURt7Y+OZp8HvKqKSEkIfdFe+gJeqg0mPazuY
+         W6nPZsQo5JWxu4soiwVz4Kb40uA+87HDdvwTvxLDZOyZtP+vRxiqJpacBK1fIzYniwvt
+         yq3A==
+X-Gm-Message-State: AGi0PuZc5zg/Yao8+GffmnCyqc8g4wPZnLwqDiCFV92Z/c+rdtJd/S2f
+        YCg6nJ6Ex6B6h/DC0LK+A7maS2Hav46dECs4ZYXG
+X-Google-Smtp-Source: APiQypJKkwMZNmVwRRIyd5BAgk5R7Uvr2afuFwgF9zsdbwftnce9dofJdvZ5LqN9RPkgYMebtcwdKcOd01IjzKen4cEx
+X-Received: by 2002:a05:6102:2087:: with SMTP id h7mr9433825vsr.226.1585584256955;
+ Mon, 30 Mar 2020 09:04:16 -0700 (PDT)
+Date:   Mon, 30 Mar 2020 09:04:12 -0700
+In-Reply-To: <xmqqd08ua0jo.fsf@gitster.c.googlers.com>
+Message-Id: <20200330160412.120614-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <xmqqd08ua0jo.fsf@gitster.c.googlers.com>
+X-Mailer: git-send-email 2.26.0.rc2.310.g2932bb562d-goog
+Subject: Re: [PATCH] connected: always use partial clone optimization
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     gitster@pobox.com
+Cc:     jonathantanmy@google.com, emilyshaffer@google.com,
+        steadmon@google.com, git@vger.kernel.org, peff@peff.net
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sorry for bumping this thread but what's the integration status of the patch?
-The issue still seems to be present in v2.26.0.windows.1.
+> Jonathan Tan <jonathantanmy@google.com> writes:
+> 
+> >> Sounds good.  Jonathan?  I've squashed Josh'es Reviewed-by, but I
+> >> will refrain from merging it to 'next' just yet to see if you too
+> >> like the proposed code structure.
+> >
+> > I think that this is a local enough concern that going either way won't
+> > paint us into a corner, so if what's in
+> > jt/connectivity-check-optim-in-partial-clone is OK, I prefer using that
+> > to reduce churn.
+> 
+> If you do not think their improvement is not much of improvement,
+> then please say so.
 
-On Thu, Jan 23, 2020 at 11:20:36AM -0800, Junio C Hamano wrote:
+Yes, I don't think that their improvement is much of an improvement. If
+we were to split up the logic into functions, one of the functions would
+need to be documented as "Return true if all objects returned by 'fn'
+exist in promisor packs. If one of them does not, return false; the ID
+of the failing object is then stored in 'oid', and 'fn' can be used to
+obtain all untested objects." Peff said something similar in [1].
 
- > -- >8 --
- > Subject: [PATCH] gitk: be prepared to be run in a bare repository
+So I think it's better to inline the logic, even if we have to use
+"goto", so that we can see all of this in one place.
+
+[1] https://lore.kernel.org/git/20200330133714.GA2410648@coredump.intra.peff.net/
+
+> On the other hand, if you also believe that the
+> resulting code is better, adopting the improvement (in other words,
+> help from other people) and get a better version of the code queued
+> before it hits 'next' is not a "churn".  Leaving a chance to make
+> the code into a shape that you think better is a waste and risking
+> the chance to forget improving it with a follow-up patch.
+
+I agree.
