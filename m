@@ -2,121 +2,76 @@ Return-Path: <SRS0=sJPh=5P=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C129AC43331
-	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 05:22:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5429CC43331
+	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 07:33:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8ECE820733
-	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 05:22:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1F83F20748
+	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 07:33:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rGVNkH0A"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tdoVY+nH"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728508AbgC3FWd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Mar 2020 01:22:33 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:43202 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727706AbgC3FWd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Mar 2020 01:22:33 -0400
-Received: by mail-pl1-f195.google.com with SMTP id v23so6265106ply.10
-        for <git@vger.kernel.org>; Sun, 29 Mar 2020 22:22:32 -0700 (PDT)
+        id S1729420AbgC3Hdu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Mar 2020 03:33:50 -0400
+Received: from mail-qv1-f52.google.com ([209.85.219.52]:45126 "EHLO
+        mail-qv1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729394AbgC3Hdu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Mar 2020 03:33:50 -0400
+Received: by mail-qv1-f52.google.com with SMTP id g4so8400808qvo.12
+        for <git@vger.kernel.org>; Mon, 30 Mar 2020 00:33:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=dF8pizz18MkLbTbInXlnO/kK3CFl9DTfQQYMEQ2RK3E=;
-        b=rGVNkH0AibxHrIDzf4epc6zqK0yh+3BiPXm+5V1qR9dB4yYAidDhCubpyljxCaWRdX
-         mYU3p/0RcgHdpPY8ALKjT9MzdGmsNlzRn7GQPwlFaBrNjrsOqKxijJC1k1H4D4wg6nf6
-         qo4gAQBW+7jiB7q/XnpdNtKWQLs9smpGnohlY3n9fgVbtXpo/h8M3NgZqLEBqZMdeSwO
-         64BgcY77YbV7/ySZbmOGBAZ+NySVdrUX7IenM+tjU2Iqhq1wyaUkRMYtI8Z/+ulwhHva
-         oCggmOvQSTC2xktduHqQ6i5fmguXB1knjTpkRcHNXCrvmr24Xl6MQOG1/kDk4goWWOgt
-         jpSg==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=4GSqmOpPIaDFeNRvshmFBkEQzAELyCS18qsrWcfMmfM=;
+        b=tdoVY+nHJa/YxOliO4RoyMeT8bL8Urluh4wHxFAGnolj8aysdqv5W/lY4gJoVs/nz0
+         soP5NpnaZhaA5R+7aoWLD6ooNdYURPhf3zUFYCocpZWgkhQ1tYZafvb3Ts0JIYaPWcK3
+         k9FixQtnDr6fvNVpIgTX9NcRM5h8UK1sSSvY4HHTePtuujIK1jSFpz3E7oM+fHcucxMC
+         YG2RS2zAJey6/WT63ih/8u1V6nNGiJdgDOHXaXOWv8G0Fg5wxupPnbyQ9IxynxS0l4AQ
+         Ayg1BCYwswma9ZXybTLl2Envch72401SAdBjSQbH2BioaMmoIec45PTEd/pwPtSM6hz/
+         HHPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=dF8pizz18MkLbTbInXlnO/kK3CFl9DTfQQYMEQ2RK3E=;
-        b=rXmf4D26ln0jLO69W4Z9j6VMomJRHiS+eNc63dLuplVW6W+evckXhv14/BP4RLvu4q
-         lrhPVCEKuCQBy5KvlMDJrJZzf17fT6+LGLP4B8K39Sonqv4voFdplTsERjqRNrz2yiIY
-         hGzQXVmOe5CkNFado3bG9XvbkRD2MuaouXIdl7MGJ8/1B9rt6s2sD1YhTSmbWarKfh8i
-         F6bavISaMKZ1rR0ToIS0/R1LBeKOtJtVU12YRmU34NeazGO+s50yu/u0LLm1R4Mcrzo2
-         DRSXKH6IhCrYRRjiMykUlertDmLK8bybsanGGlaLEk03tJZSU2GGMv5u+rARnCHjD210
-         UZPA==
-X-Gm-Message-State: ANhLgQ33f4mwBTTVoM89A54o0+aVS0rjWSTag1tY4M+CXQu3ihg7xsZm
-        jaNMtUgIb37k4RgJEAdnEic=
-X-Google-Smtp-Source: ADFU+vuGH0fZysRjXK/ro7jCfRCV9udlsWND4tWtqU0M6ACE9KtSUml01mW5d7Ekf7GboD8gyk7/Tw==
-X-Received: by 2002:a17:90b:3583:: with SMTP id mm3mr14137021pjb.123.1585545752130;
-        Sun, 29 Mar 2020 22:22:32 -0700 (PDT)
-Received: from localhost ([2402:800:6375:f121:1d2a:e7e0:840f:1f18])
-        by smtp.gmail.com with ESMTPSA id w27sm9214672pfq.211.2020.03.29.22.22.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 29 Mar 2020 22:22:31 -0700 (PDT)
-Date:   Mon, 30 Mar 2020 12:22:29 +0700
-From:   Danh Doan <congdanhqx@gmail.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, newren@gmail.com, gitster@pobox.com
-Subject: Re: [PATCH v3] rebase --merge: optionally skip upstreamed commits
-Message-ID: <20200330052229.GA786@danh.dev>
-References: <20200309205523.121319-1-jonathantanmy@google.com>
- <20200330040621.13701-1-jonathantanmy@google.com>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=4GSqmOpPIaDFeNRvshmFBkEQzAELyCS18qsrWcfMmfM=;
+        b=DlR9k9qSWAij5Sl4gRHQnq5I3tqujFHuWAAj65/hMvQ/q/OYfxRXQcmkAoUcj06c57
+         8pVghxDUMNjki3FEWQW5VBfqsBQSpD+beDBJeiGAhAoyLkSuCB8YZHdwp7hvP+ShN6Ss
+         /CfmyAmIHmn3OHNll3Y2tHjaDXV3ZJ5rKXgvPLOJbcE7EeLQxXQtrpGcDRcjrTxizrRv
+         94a+mun1Tq9HECCkYnxBr8aCpL7MeCNaitkTDIbKh4OgbKj/l1+UU7EEbU4x+4QR6rsd
+         GyAqTefhMCup4XoVeLURbMTmD5UfIs1LnWYRR66zJJC2HyZmaS+rq/b0CrCrERnPWzER
+         1VuA==
+X-Gm-Message-State: ANhLgQ23OuMe0TUVZE4Exf91WQm6D5V0qGRCzr609SyGXtRhATZC4vqc
+        NNN7z8KwcwRCMGvUN5kzZcr1AUmJjvh9NrsBdTJn3nJVcrk=
+X-Google-Smtp-Source: ADFU+vuZ7HDQckM5I2rMi0leCPHtC2T6wmVYhiixzLAQpGIT7XvtdICE7+ILkgmf6afpsnhfWbFGij6cFR824bQOIDs=
+X-Received: by 2002:a05:6214:2c4:: with SMTP id g4mr10669315qvu.65.1585553628933;
+ Mon, 30 Mar 2020 00:33:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20200330040621.13701-1-jonathantanmy@google.com>
+From:   Angel Pan <dinoallosaurus1111@gmail.com>
+Date:   Mon, 30 Mar 2020 15:33:38 +0800
+Message-ID: <CAFk=nY7efz8ZisEuyAcU09J+ja4qE8LorUUPeupGVEjBBc6HDA@mail.gmail.com>
+Subject: [GSoC] Question about microprojects
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2020-03-29 21:06:21-0700, Jonathan Tan <jonathantanmy@google.com> wrote:
-> When rebasing against an upstream that has had many commits since the
-> original branch was created:
-> 
->  O -- O -- ... -- O -- O (upstream)
->   \
->    -- O (my-dev-branch)
-> 
-> it must read the contents of every novel upstream commit, in addition to
-> the tip of the upstream and the merge base, because "git rebase"
-> attempts to exclude commits that are duplicates of upstream ones. This
-> can be a significant performance hit, especially in a partial clone,
-> wherein a read of an object may end up being a fetch.
-> 
-> Add a flag to "git rebase" to allow suppression of this feature. This
-> flag only works when using the "merge" backend.
-> 
-> This flag changes the behavior of sequencer_make_script(), called from
-> do_interactive_rebase() <- run_rebase_interactive() <-
-> run_specific_rebase() <- cmd_rebase(). With this flag, limit_list()
-> (indirectly called from sequencer_make_script() through
-> prepare_revision_walk()) will no longer call cherry_pick_list(), and
-> thus PATCHSAME is no longer set. Refraining from setting PATCHSAME both
-> means that the intermediate commits in upstream are no longer read (as
-> shown by the test) and means that no PATCHSAME-caused skipping of
-> commits is done by sequencer_make_script(), either directly or through
-> make_script_with_merges().
-> 
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
-> This commit contains Junio's sign-off because I based it on
-> jt/rebase-allow-duplicate.
-> 
-> This does not include the fix by Đoàn Trần Công Danh. If we want all
-> commits to pass all tests (whether run by Busybox or not) it seems like
-> we should squash that patch instead of having it as a separate commit.
-> If we do squash, maybe include a "Helped-by" with Đoàn Trần Công Danh's
-> name.
-
-Hi Jonathan,
-
-Feel free to squash it in.
-
-
--- 
-Danh
+Hello everyone. Sorry I am late for GSoC application... But I am ready
+to start contribute to git.
+I am a freshman in Computer Science and this is my first time
+contributing to git project.  I have already had some experience
+working with C, shell and Perl. I found that there are several lines
+of code in shell scripts using 'type' instead of "command -V", which
+is not currently in POSIX standard but in XSI... See:
+https://pubs.opengroup.org/onlinepubs/9699919799/
+I thought that it would be better to use POSIX standard although many
+common shell including 'type' as its built-in.
+I would like to go through all the code and replace type with "command
+-V" properly.
+Is this worth doing so?
+Thanks,
+Angel
