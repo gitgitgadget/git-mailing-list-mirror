@@ -7,183 +7,181 @@ X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B9F63C2D0E7
-	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 00:31:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 35C55C2D0EE
+	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 00:31:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 90B4D20780
-	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 00:31:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0BE70206DB
+	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 00:31:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EKzFjR4b"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H96YCwQp"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727797AbgC3Aby (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 29 Mar 2020 20:31:54 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:42996 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727740AbgC3Abt (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Mar 2020 20:31:49 -0400
-Received: by mail-wr1-f68.google.com with SMTP id h15so19273252wrx.9
-        for <git@vger.kernel.org>; Sun, 29 Mar 2020 17:31:47 -0700 (PDT)
+        id S1727821AbgC3Ab4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 29 Mar 2020 20:31:56 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:40908 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727793AbgC3Abx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Mar 2020 20:31:53 -0400
+Received: by mail-wr1-f65.google.com with SMTP id u10so19287365wro.7
+        for <git@vger.kernel.org>; Sun, 29 Mar 2020 17:31:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=UFasefMTFJlBZT0H7l3YT+5vQ3mTXZeAfKd7dCO5Krw=;
-        b=EKzFjR4bdBp1fI4DnnTeJc4NNGsBf822vG0cLPRuDgfuagmD3aPO1CimgUYS+SftDh
-         P+n2eq84mIv3zNJy+muSMLqBHSn2zEbRdTZjjkOD8tyFcesuCDmdLOqhHiUxiNQ1URj6
-         wlT5z5C0a+uhrZIgRf0pzM1X/7JtCY5Cq8AlZMIlpOEqCQ8+gjle5CxyzIFHcpQMfF8U
-         esZ5yukMBzr7JXierqCVrA1seua9jfuEw36XMHzl5dUtCtjEFjRdBpP6VoXEMMJUd2Hr
-         gu16x6I1sKvjEn52uFfpRrEBygAlc3qV1M9d8ijvhRefl4uqOpJJI2XIU/O2dThqJu8h
-         Td1g==
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=l2hH/TavINoYF3ZV0UYu/koCVh28c/8hMEtEzNLktok=;
+        b=H96YCwQpkAfWGmpqXQ9dYttZgVMQhkiLR16SkFEksq0tcbb5kvjkCIQbzi4o/YeLHE
+         T//q+rE6GURo+25Tj44VevilVFXm3xmidLDgIFgGfaSl5M48b+0iaBIxLxcdS1peuxX+
+         eXpARx+6N8vmyUAqGayOfilHubZUf6XpppkXGltcWiijLNfsKBFxTa8aGFIePFManzow
+         2I+lqzejVu7MgX/vPhBdBYFVfJcqMUwpzCoPqVqFYYGuHVuteouCKHAFMKt+PIHGz0Fj
+         Iod0X/1787S3eJTnf9GQHVZAcSfcmfZzacIAvLEj2lBZ9pajaQCTcqdHR3DxkmL7a/Dj
+         WAKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=UFasefMTFJlBZT0H7l3YT+5vQ3mTXZeAfKd7dCO5Krw=;
-        b=cTcqwxC1sPZKQw38gd58MVOPSrp+0kduLzKNlGFbgFdkelVftFzT0wdjGvVEJCMa/l
-         PbFKDgmDDdDlPoK/S1vQ4kOg25TIj/LIx+k9Sp+PlxVh3cCDW6jwHVoxQBMCyamFHQrA
-         4wCAT6gFuzyNBOBnkTyvCRV+sGr0kfnzH6YVG0dili9bkRbt4cttfbSK+h9X1tocho6j
-         r/Uynr1K0h1WZ0e2fKVXyNa2X0K6BhcmFmUmPD3jlIgBwGWg3kfKJkeDZspNM24ENLPS
-         paiKv5ncShAmVFbYVqsa8QA66S3hTXVHNPqMcn6fctyDclwK51fD/NC/LBZHTMZtAkCt
-         gUfQ==
-X-Gm-Message-State: ANhLgQ0FEafWM4qGIaT3jmxDDrq+hNkXNc7qbsfkMQcT/1wO4G704/Da
-        tZibYn2LkS4lqpCr1AVrXW9h2m5m
-X-Google-Smtp-Source: ADFU+vutmmSUtJyn+Gpf71lOQoWX6nDOl6jKltFvCcsPHDO/TwUYVoMMi2jXUaBrsXlpuATaYEU7VQ==
-X-Received: by 2002:adf:a18b:: with SMTP id u11mr12688749wru.390.1585528306747;
-        Sun, 29 Mar 2020 17:31:46 -0700 (PDT)
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=l2hH/TavINoYF3ZV0UYu/koCVh28c/8hMEtEzNLktok=;
+        b=s1xf7hUp+yH/faeX/UWJFkftLnDKizqDzL4WQ4IRoXfNB+IV7oo4Ogw7kEnHgdhr4u
+         1WsBCeGVtMNeHJaWAkRbcwhcxgYfMh+SVl8xy81x6L1Q9wzw+TTz7QYHxF/Njs/DefA8
+         95VM+TgoQi0HtXeAmmOMCRLpnqT/WMaDPrk1mHbkbPFG6nIfXjYXkAKO7cMfZRxk46z4
+         Lxas50L/LIPD9NbeFYzy3jNyPsCO7tvpbuEYn6Y5Awfz/NM2UR0Au2Qz8/CSgnAD/bXT
+         Rons6KX/CWyfOSrJcT4HqAWVfFtLEaTmGcPd4pJmBVE2DGdMPLkGYuk9JlJj8shlgYCH
+         9tPg==
+X-Gm-Message-State: ANhLgQ0BmRvGSSL+sy7mXXLtawLz/mdwum3z2j0/AvjWnJY2wz08p2eT
+        5WmsWwelIbXOlGDqgPQz+TW+4pGE
+X-Google-Smtp-Source: ADFU+vvlFAdarOj3DtHLxgRXcW6hnZOYZUaO1736MAdp5gAJo6Yh4Ieqa4DZb5Fn+5gyjdMUjiubsA==
+X-Received: by 2002:a5d:4e03:: with SMTP id p3mr11678929wrt.408.1585528311980;
+        Sun, 29 Mar 2020 17:31:51 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o14sm18359569wmh.22.2020.03.29.17.31.46
+        by smtp.gmail.com with ESMTPSA id t2sm18064219wml.30.2020.03.29.17.31.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 29 Mar 2020 17:31:46 -0700 (PDT)
-Message-Id: <d24c85c54ef841eb2a62d95937c1bf9884ba690a.1585528298.git.gitgitgadget@gmail.com>
+        Sun, 29 Mar 2020 17:31:51 -0700 (PDT)
+Message-Id: <b5eb280178ff314e2f28d0b9e22910a1464b10d6.1585528299.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.497.v3.git.1585528298.gitgitgadget@gmail.com>
 References: <pull.497.v2.git.1580943390.gitgitgadget@gmail.com>
         <pull.497.v3.git.1585528298.gitgitgadget@gmail.com>
-From:   "Jeff King via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 30 Mar 2020 00:31:29 +0000
-Subject: [PATCH v3 07/16] commit-graph: examine changed-path objects in pack
- order
-Fcc:    Sent
+From:   "Garima Singh via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 30 Mar 2020 00:31:36 +0000
+Subject: [PATCH v3 14/16] revision.c: add trace2 stats around Bloom filter
+ usage
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+Fcc:    Sent
 To:     git@vger.kernel.org
 Cc:     stolee@gmail.com, szeder.dev@gmail.com, jonathantanmy@google.com,
         Garima Singh <garima.singh@microsoft.com>,
-        Jeff King <peff@peff.net>
+        Garima Singh <garima.singh@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff King <peff@peff.net>
+From: Garima Singh <garima.singh@microsoft.com>
 
-Looking at the diff of commit objects in pack order is much faster than
-in sha1 order, as it gives locality to the access of tree deltas
-(whereas sha1 order is effectively random). Unfortunately the
-commit-graph code sorts the commits (several times, sometimes as an oid
-and sometimes a pointer-to-commit), and we ultimately traverse in sha1
-order.
+Add trace2 statistics around Bloom filter usage and behavior
+for 'git log -- path' commands that are hoping to benefit from
+the presence of computed changed paths Bloom filters.
 
-Instead, let's remember the position at which we see each commit, and
-traverse in that order when looking at bloom filters. This drops my time
-for "git commit-graph write --changed-paths" in linux.git from ~4
-minutes to ~1.5 minutes.
+These statistics are great for performance analysis work and
+for formal testing, which we will see in the commit following
+this one.
 
-Probably the "--reachable" code path would want something similar.
-
-Or alternatively, we could use a different data structure (either a
-hash, or maybe even just a bit in "struct commit") to keep track of
-which oids we've seen, etc instead of sorting. And then we could keep
-the original order.
-
-Signed-off-by: Jeff King <peff@peff.net>
+Helped-by: Derrick Stolee <dstolee@microsoft.com
+Helped-by: SZEDER Gábor <szeder.dev@gmail.com>
+Helped-by: Jonathan Tan <jonathantanmy@google.com>
 Signed-off-by: Garima Singh <garima.singh@microsoft.com>
 ---
- commit-graph.c | 38 +++++++++++++++++++++++++++++++++++---
- 1 file changed, 35 insertions(+), 3 deletions(-)
+ revision.c | 41 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 41 insertions(+)
 
-diff --git a/commit-graph.c b/commit-graph.c
-index 862a00d67ed..31b06f878ce 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -17,6 +17,7 @@
- #include "replace-object.h"
- #include "progress.h"
+diff --git a/revision.c b/revision.c
+index d3fcb7c6ff6..2b06ee739c8 100644
+--- a/revision.c
++++ b/revision.c
+@@ -30,6 +30,7 @@
+ #include "hashmap.h"
+ #include "utf8.h"
  #include "bloom.h"
-+#include "commit-slab.h"
++#include "json-writer.h"
  
- #define GRAPH_SIGNATURE 0x43475048 /* "CGPH" */
- #define GRAPH_CHUNKID_OIDFANOUT 0x4f494446 /* "OIDF" */
-@@ -46,9 +47,32 @@
- /* Remember to update object flag allocation in object.h */
- #define REACHABLE       (1u<<15)
+ volatile show_early_output_fn_t show_early_output;
  
--char *get_commit_graph_filename(struct object_directory *odb)
-+/* Keep track of the order in which commits are added to our list. */
-+define_commit_slab(commit_pos, int);
-+static struct commit_pos commit_pos = COMMIT_SLAB_INIT(1, commit_pos);
-+
-+static void set_commit_pos(struct repository *r, const struct object_id *oid)
-+{
-+	static int32_t max_pos;
-+	struct commit *commit = lookup_commit(r, oid);
-+
-+	if (!commit)
-+		return; /* should never happen, but be lenient */
-+
-+	*commit_pos_at(&commit_pos, commit) = max_pos++;
-+}
-+
-+static int commit_pos_cmp(const void *va, const void *vb)
- {
--	return xstrfmt("%s/info/commit-graph", odb->path);
-+	const struct commit *a = *(const struct commit **)va;
-+	const struct commit *b = *(const struct commit **)vb;
-+	return commit_pos_at(&commit_pos, a) -
-+	       commit_pos_at(&commit_pos, b);
-+}
-+
-+char *get_commit_graph_filename(struct object_directory *obj_dir)
-+{
-+	return xstrfmt("%s/info/commit-graph", obj_dir->path);
+@@ -625,6 +626,30 @@ static void file_change(struct diff_options *options,
+ 	options->flags.has_changes = 1;
  }
  
- static char *get_split_graph_filename(struct object_directory *odb,
-@@ -1021,6 +1045,8 @@ static int add_packed_commits(const struct object_id *oid,
- 	oidcpy(&(ctx->oids.list[ctx->oids.nr]), oid);
- 	ctx->oids.nr++;
- 
-+	set_commit_pos(ctx->r, oid);
++static int bloom_filter_atexit_registered;
++static unsigned int count_bloom_filter_maybe;
++static unsigned int count_bloom_filter_definitely_not;
++static unsigned int count_bloom_filter_false_positive;
++static unsigned int count_bloom_filter_not_present;
++static unsigned int count_bloom_filter_length_zero;
 +
- 	return 0;
++static void trace2_bloom_filter_statistics_atexit(void)
++{
++	struct json_writer jw = JSON_WRITER_INIT;
++
++	jw_object_begin(&jw, 0);
++	jw_object_intmax(&jw, "filter_not_present", count_bloom_filter_not_present);
++	jw_object_intmax(&jw, "zero_length_filter", count_bloom_filter_length_zero);
++	jw_object_intmax(&jw, "maybe", count_bloom_filter_maybe);
++	jw_object_intmax(&jw, "definitely_not", count_bloom_filter_definitely_not);
++	jw_object_intmax(&jw, "false_positive", count_bloom_filter_false_positive);
++	jw_end(&jw);
++
++	trace2_data_json("bloom", the_repository, "statistics", &jw);
++
++	jw_release(&jw);
++}
++
+ static void prepare_to_use_bloom_filter(struct rev_info *revs)
+ {
+ 	struct pathspec_item *pi;
+@@ -661,6 +686,11 @@ static void prepare_to_use_bloom_filter(struct rev_info *revs)
+ 	revs->bloom_key = xmalloc(sizeof(struct bloom_key));
+ 	fill_bloom_key(path, len, revs->bloom_key, revs->bloom_filter_settings);
+ 
++	if (trace2_is_enabled() && !bloom_filter_atexit_registered) {
++		atexit(trace2_bloom_filter_statistics_atexit);
++		bloom_filter_atexit_registered = 1;
++	}
++
+ 	free(path_alloc);
  }
  
-@@ -1141,6 +1167,7 @@ static void compute_bloom_filters(struct write_commit_graph_context *ctx)
- {
- 	int i;
- 	struct progress *progress = NULL;
-+	struct commit **sorted_commits;
+@@ -679,10 +709,12 @@ static int check_maybe_different_in_bloom_filter(struct rev_info *revs,
+ 	filter = get_bloom_filter(revs->repo, commit, 0);
  
- 	init_bloom_filters();
- 
-@@ -1149,13 +1176,18 @@ static void compute_bloom_filters(struct write_commit_graph_context *ctx)
- 			_("Computing commit changed paths Bloom filters"),
- 			ctx->commits.nr);
- 
-+	ALLOC_ARRAY(sorted_commits, ctx->commits.nr);
-+	COPY_ARRAY(sorted_commits, ctx->commits.list, ctx->commits.nr);
-+	QSORT(sorted_commits, ctx->commits.nr, commit_pos_cmp);
-+
- 	for (i = 0; i < ctx->commits.nr; i++) {
--		struct commit *c = ctx->commits.list[i];
-+		struct commit *c = sorted_commits[i];
- 		struct bloom_filter *filter = get_bloom_filter(ctx->r, c);
- 		ctx->total_bloom_filter_data_size += sizeof(unsigned char) * filter->len;
- 		display_progress(progress, i + 1);
+ 	if (!filter) {
++		count_bloom_filter_not_present++;
+ 		return -1;
  	}
  
-+	free(sorted_commits);
- 	stop_progress(&progress);
+ 	if (!filter->len) {
++		count_bloom_filter_length_zero++;
+ 		return -1;
+ 	}
+ 
+@@ -690,6 +722,11 @@ static int check_maybe_different_in_bloom_filter(struct rev_info *revs,
+ 				       revs->bloom_key,
+ 				       revs->bloom_filter_settings);
+ 
++	if (result)
++		count_bloom_filter_maybe++;
++	else
++		count_bloom_filter_definitely_not++;
++
+ 	return result;
+ }
+ 
+@@ -736,6 +773,10 @@ static int rev_compare_tree(struct rev_info *revs,
+ 			   &revs->pruning) < 0)
+ 		return REV_TREE_DIFFERENT;
+ 
++	if (!nth_parent)
++		if (bloom_ret == 1 && tree_difference == REV_TREE_SAME)
++			count_bloom_filter_false_positive++;
++
+ 	return tree_difference;
  }
  
 -- 
