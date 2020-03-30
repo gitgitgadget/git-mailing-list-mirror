@@ -2,446 +2,420 @@ Return-Path: <SRS0=sJPh=5P=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 33B08C2D0ED
-	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 11:56:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D92CC43331
+	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 12:13:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id F356F20748
-	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 11:56:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3B94920716
+	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 12:13:41 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="w4oU6TtD"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X/J1JAgC"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730033AbgC3L4p (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Mar 2020 07:56:45 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:36786 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729989AbgC3L4o (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 30 Mar 2020 07:56:44 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 5F8BF60798;
-        Mon, 30 Mar 2020 11:56:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1585569402;
-        bh=3sIRFK/colWVKfJ+VjdJYqJjxhpJRNdGgWFRjptdZkg=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-         In-Reply-To:References:Content-Type:Content-Disposition;
-        b=w4oU6TtDGPa9Pr9QgxUIdkSnp5QRWaTIAkL9t747uP/YJyl8vHf4+aFCEVA8328mM
-         q4+99K3+01OSe+Vybd1bwBI2AAr1FiWyF2WQnAZBEn/uorgu6abrGvrcS6dKOltucd
-         bHiuvGHCfXUsHBJpU0H+rN/mOv/0iMP6VOWKsm/VGBDwqN24ikd2H4JzGkAYe5x/Li
-         1RwE5h4qQipDIngNVICoTz30IELRho/JqmJYDVKQK1Y0Ugb9IRY9DDE2V3Hjku3RkF
-         IfoKezyb4ILVOU39L+jfX7qxByoheO5XLPHaoeJI/H/aeEWlKwE+jvmjYu2Eq+NEH3
-         YvwWkgdjSLAe+cnUG8whgunEK7BT/pAXZRtKiPFE9KXfCqyvVOJP3tk7zl+QuoZtmW
-         H28wO5jHlPGGrubISUbvVN5XCz4KpYjiQJdJo47LK3RWsg++kJxiTX1lUThlIYhEPV
-         JdPb6/qFVPUD6w5JTfFCJbXwnmo2ZGwxBbrF/uLl2GasGArm3UB
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     <git@vger.kernel.org>
-Cc:     Emily Shaffer <emilyshaffer@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Shourya Shukla <shouryashukla.oo@gmail.com>,
-        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-Subject: [PATCH v3 1/1] docs: add a FAQ
-Date:   Mon, 30 Mar 2020 11:55:18 +0000
-Message-Id: <20200330115518.121528-2-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.26.0.292.g33ef6b2f38
-In-Reply-To: <20200330115518.121528-1-sandals@crustytoothpaste.net>
-References: <20200330115518.121528-1-sandals@crustytoothpaste.net>
+        id S1730084AbgC3MNk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Mar 2020 08:13:40 -0400
+Received: from mail-qv1-f67.google.com ([209.85.219.67]:33054 "EHLO
+        mail-qv1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729996AbgC3MNk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Mar 2020 08:13:40 -0400
+Received: by mail-qv1-f67.google.com with SMTP id p19so8744090qve.0
+        for <git@vger.kernel.org>; Mon, 30 Mar 2020 05:13:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=wjGCip/hpGJBWTL3ukT8ZY41odfBMJ+rmQB6FupQolM=;
+        b=X/J1JAgCPkmHKM8M2w03wtSqrgawKOtp3FaUK7KZXrdCT53Jai5wM7PmBgIRsf4q6w
+         08pKIc46Km84tvoWoW4bpNFRCNSQMIGIZS4BJdwiBjxTNoyVxY/G8crWJ+PB+SfUiuUn
+         uW09D4Qrt+V3/cq+A2QiLrOsMXSvR841TSxMODdyY4Ofm4rt9XQnoamfiZTaLefy3PNZ
+         WWDVmWRBqeZZxqa2G0XlwbSt0RRF+fV0iPquMU8fsW5R8SU9tJh7EQM/fhCucZ3ecuXV
+         bXyO+DHY8i1VkQVVwibBDb13wF9Yzfz0CxrIslyye9SFsCu7a1yqBEiQ/UUzqx2xgb6s
+         aSzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=wjGCip/hpGJBWTL3ukT8ZY41odfBMJ+rmQB6FupQolM=;
+        b=Tn69001FUyPmnwPgjt5ZmufiimyE7PeliY3PVaZRoRSH7BhY2TZQBN3c5NzO+ECJ1k
+         T9+qVnPg2lEFgC/NXBXITjiOvRxfQH7M8wuuE16s6wfhysQLanSTp7A0/PUkCNF+bBA3
+         2n4Olg1+qfVrc2Pj7bL6bWn1KDXEju7jessPQNoS2a5hOWWJBntPd2ZIzzxM4lyZ3cKz
+         rKEeDXSv9bdZnT/nASx+MPbS+IORrT4XMz+cAjEuPFfE+W7tOp/INTkf81MjltE5eOEc
+         83KWQ0pZzk6J+z65eivt+mgQ2pjL1ANCzZIFsuPpYXlcWWZWCn9mrg1lIszv9IqisDt1
+         jG3g==
+X-Gm-Message-State: ANhLgQ3TISbKYaAOapK/gwfMx9rVF1C2/rTcUMoqofVRnQAz6v9J6SnE
+        7cZSPk5jfSyc44hrG1K1qXI=
+X-Google-Smtp-Source: ADFU+vuui5gjbW1BOiuInHHn9YznUj9/79aaWIvkYWDVrw+SBS5YpWB1xD+3vkg5DcSpRBZp86kZJg==
+X-Received: by 2002:a05:6214:1863:: with SMTP id eh3mr11597951qvb.71.1585570415924;
+        Mon, 30 Mar 2020 05:13:35 -0700 (PDT)
+Received: from [192.168.1.83] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id g187sm9904665qkf.115.2020.03.30.05.13.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 30 Mar 2020 05:13:34 -0700 (PDT)
+Subject: Re: [PATCH v3] rebase --merge: optionally skip upstreamed commits
+To:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+Cc:     congdanhqx@gmail.com, newren@gmail.com, gitster@pobox.com
+References: <20200309205523.121319-1-jonathantanmy@google.com>
+ <20200330040621.13701-1-jonathantanmy@google.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <e917f451-c00a-c819-7f78-888ba6e8f5ea@gmail.com>
+Date:   Mon, 30 Mar 2020 08:13:32 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:75.0) Gecko/20100101
+ Thunderbird/75.0
 MIME-Version: 1.0
+In-Reply-To: <20200330040621.13701-1-jonathantanmy@google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Git is an enormously flexible and powerful piece of software.  However,
-it can be intimidating for many users and there are a set of common
-questions that users often ask.  While we already have some new user
-documentation, it's worth adding a FAQ to address common questions that
-users often have.  Even though some of this is addressed elsewhere in
-the documentation, experience has shown that it is difficult for users
-to find, so a centralized location is helpful.
+On 3/30/2020 12:06 AM, Jonathan Tan wrote:
+> When rebasing against an upstream that has had many commits since the
+> original branch was created:
+> 
+>  O -- O -- ... -- O -- O (upstream)
+>   \
+>    -- O (my-dev-branch)
+> 
+> it must read the contents of every novel upstream commit, in addition to
+> the tip of the upstream and the merge base, because "git rebase"
+> attempts to exclude commits that are duplicates of upstream ones. This
+> can be a significant performance hit, especially in a partial clone,
+> wherein a read of an object may end up being a fetch.
+> 
+> Add a flag to "git rebase" to allow suppression of this feature. This
+> flag only works when using the "merge" backend.
 
-Add such a FAQ and fill it with some common questions and answers.
-While there are few entries now, we can expand it in the future to cover
-more things as we find new questions that users have.  Let's also add
-section markers so that people answering questions can directly link
-users to the proper answer.
+So this is the behavior that already exists, and you are providing a way
+to suppress it. However, you also change the default in this patch, which
+may surprise users expecting this behavior to continue.
 
-The FAQ also addresses common configuration questions that apply not
-only to Git as an independent piece of software but also the ecosystem
-of CI tools and hosting providers that people use, since these are the
-source of common questions.  An attempt has been made to avoid
-mentioning any particular provider or tool, but to nevertheless cover
-common configurations that apply to a wide variety of such tools.
+> This flag changes the behavior of sequencer_make_script(), called from
+> do_interactive_rebase() <- run_rebase_interactive() <-
+> run_specific_rebase() <- cmd_rebase(). With this flag, limit_list()
+> (indirectly called from sequencer_make_script() through
+> prepare_revision_walk()) will no longer call cherry_pick_list(), and
+> thus PATCHSAME is no longer set. Refraining from setting PATCHSAME both
+> means that the intermediate commits in upstream are no longer read (as
+> shown by the test) and means that no PATCHSAME-caused skipping of
+> commits is done by sequencer_make_script(), either directly or through
+> make_script_with_merges().
+> 
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+> This commit contains Junio's sign-off because I based it on
+> jt/rebase-allow-duplicate.
+> 
+> This does not include the fix by Đoàn Trần Công Danh. If we want all
+> commits to pass all tests (whether run by Busybox or not) it seems like
+> we should squash that patch instead of having it as a separate commit.
+> If we do squash, maybe include a "Helped-by" with Đoàn Trần Công Danh's
+> name.
+> 
+> Junio wrote [1]:
+> 
+>> Sounds much better to me.  I do not mind --[no-]keep-cherry-pick,
+>> either, by the way.  I know I raised the possibility of having to
+>> make it non-bool later, but since then I haven't thought of a good
+>> third option myself anyway, so...
+> 
+> In that case, I think it's better to stick to bool. This also means that
+> the change from the version in jt/rebase-allow-duplicate is very small,
+> hopefully aiding reviewers - mostly a replacement of
+> --skip-cherry-pick-detection with --keep-cherry-pick (which mean the
+> same thing).
+> 
+> [1] https://lore.kernel.org/git/xmqq4kuakjcn.fsf@gitster.c.googlers.com/
+> ---
+>  Documentation/git-rebase.txt | 21 +++++++++-
+>  builtin/rebase.c             |  7 ++++
+>  sequencer.c                  |  3 +-
+>  sequencer.h                  |  2 +-
+>  t/t3402-rebase-merge.sh      | 77 ++++++++++++++++++++++++++++++++++++
+>  5 files changed, 107 insertions(+), 3 deletions(-)
+> 
+> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+> index 0c4f038dd6..f4f8afeb9a 100644
+> --- a/Documentation/git-rebase.txt
+> +++ b/Documentation/git-rebase.txt
+> @@ -318,6 +318,21 @@ See also INCOMPATIBLE OPTIONS below.
+>  +
+>  See also INCOMPATIBLE OPTIONS below.
+>  
+> +--keep-cherry-pick::
+> +--no-keep-cherry-pick::
 
-Note that the long lines for certain questions are required, since
-Asciidoctor does not permit broken lines there.
+I noticed that this _could_ have been simplified to
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- Documentation/Makefile   |   1 +
- Documentation/gitfaq.txt | 337 +++++++++++++++++++++++++++++++++++++++
- 2 files changed, 338 insertions(+)
- create mode 100644 Documentation/gitfaq.txt
+	--[no-]keep-cherry-pick::
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 8fe829cc1b..59e6ce3a2a 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -30,6 +30,7 @@ MAN7_TXT += gitcredentials.txt
- MAN7_TXT += gitcvs-migration.txt
- MAN7_TXT += gitdiffcore.txt
- MAN7_TXT += giteveryday.txt
-+MAN7_TXT += gitfaq.txt
- MAN7_TXT += gitglossary.txt
- MAN7_TXT += gitnamespaces.txt
- MAN7_TXT += gitremote-helpers.txt
-diff --git a/Documentation/gitfaq.txt b/Documentation/gitfaq.txt
-new file mode 100644
-index 0000000000..1cf83df118
---- /dev/null
-+++ b/Documentation/gitfaq.txt
-@@ -0,0 +1,337 @@
-+gitfaq(7)
-+=========
-+
-+NAME
-+----
-+gitfaq - Frequently asked questions about using Git
-+
-+SYNOPSIS
-+--------
-+gitfaq
-+
-+DESCRIPTION
-+-----------
-+
-+The examples in this FAQ assume a standard POSIX shell, like `bash` or `dash`,
-+and a user, A U Thor, who has the account `author` on the hosting provider
-+`git.example.org`.
-+
-+Configuration
-+-------------
-+
-+[[user-name]]
-+What should I put in `user.name`?::
-+	You should put your personal name, generally a form using a given name
-+	and family name.  For example, the current maintainer of Git uses "Junio
-+	C Hamano".  This will be the name portion that is stored in every commit
-+	you make.
-++
-+This configuration doesn't have any effect on authenticating to remote services;
-+for that, see `credential.username` in linkgit:git-config[1].
-+
-+[[http-postbuffer]]
-+What does `http.postBuffer` really do?::
-+	This option changes the size of the buffer that Git uses when pushing
-+	data to a remote over HTTP or HTTPS.  If the data is larger than this
-+	size, libcurl, which handles the HTTP support for Git, will use chunked
-+	transfer encoding since it isn't known ahead of time what the size of
-+	the pushed data will be.
-++
-+Leaving this value at the default size is fine unless you know that either the
-+remote server or a proxy in the middle doesn't support HTTP/1.1 (which
-+introduced the chunked transfer encoding) or is known to be broken with chunked
-+data.  This is often (erroneously) suggested as a solution for generic push
-+problems, but since almost every server and proxy supports at least HTTP/1.1,
-+raising this value usually doesn't solve most push problems.  A server or proxy
-+that didn't correctly support HTTP/1.1 and chunked transfer encoding wouldn't be
-+that useful on the Internet today, since it would break lots of traffic.
-++
-+Note that increasing this value will increase the memory used on every relevant
-+push that Git does over HTTP or HTTPS, since the entire buffer is allocated
-+regardless of whether or not it is all used.  Thus, it's best to leave it at the
-+default unless you are sure you need a different value.
-+
-+[[configure-editor]]
-+How do I configure a different editor?::
-+	If you haven't specified an editor specifically for Git, it will by default
-+	use the editor you've configured using the `VISUAL` or `EDITOR` environment
-+	variables, or if neither is specified, the system default (which is usually
-+	`vi`).  Since some people find `vi` difficult to use or prefer a different
-+	editor, it may be desirable to change the editor used.
-++
-+If you want to configure a general editor for most programs which need one, you
-+can edit your shell configuration (e.g., `~/.bashrc` or `~/.zshenv`) to contain
-+a line setting the `EDITOR` or `VISUAL` environment variable to an appropriate
-+value.  For example, if you prefer the editor `nano`, then you could write the
-+following:
-++
-+----
-+export VISUAL=nano
-+----
-++
-+If you want to configure an editor specifically for Git, you can either set the
-+`core.editor` configuration value or the `GIT_EDITOR` environment variable.  You
-+can see linkgit:git-var[1] for details on the order in which these options are
-+consulted.
-++
-+Note that in all cases, the editor value will be passed to the shell, so any
-+arguments containing spaces should be appropriately quoted.  Additionally, if
-+your editor normally detaches from the terminal when invoked, you should specify
-+it with an argument that makes it not do that, or else Git will not see any
-+changes.  An example of a configuration addressing both of these issues on
-+Windows would be the configuration `"C:\Program Files\Vim\gvim.exe" --nofork`,
-+which quotes the filename with spaces and specifies the `--nofork` option to
-+avoid backgrounding the process.
-+
-+Credentials
-+-----------
-+
-+[[http-credentials]]
-+How do I specify my credentials when pushing over HTTP?::
-+	The easiest way to do this is to use a credential helper via the
-+	`credential.helper` configuration.  Most systems provide a standard
-+	choice to integrate with the system credential manager.  For example,
-+	Git for Windows provides the `wincred` credential manager, macOS has the
-+	`osxkeychain` credential manager, and Unix systems with a standard
-+	desktop environment can use the `libsecret` credential manager.  All of
-+	these store credentials in an encrypted store to keep your passwords or
-+	tokens secure.
-++
-+In addition, you can use the `store` credential manager which stores in a file
-+in your home directory, or the `cache` credential manager, which does not
-+permanently store your credentials, but does prevent you from being prompted for
-+them for a certain period of time.
-++
-+You can also just enter your password when prompted.  While it is possible to
-+place the password (which must be percent-encoded) in the URL, this is not
-+particularly secure and can lead to accidental exposure of credentials, so it is
-+not recommended.
-+
-+[[http-credentials-environment]]
-+How do I read a password or token from an environment variable?::
-+	The `credential.helper` configuration option can also take an arbitrary
-+	shell command that produces the credential protocol on standard output.
-+	This is useful when passing credentials into a container, for example.
-++
-+Such a shell command can be specified by starting the option value with an
-+exclamation point.  If your password or token were stored in the `GIT_TOKEN`,
-+you could run the following command to set your credential helper:
-++
-+----
-+$ git config credential.helper \
-+	'!f() { echo username=author; echo "password=$GIT_TOKEN"; };f'
-+----
-+
-+[[http-reset-credentials]]
-+How do I change the password or token I've saved in my credential manager?::
-+	Usually, if the password or token is invalid, Git will erase it and
-+	prompt for a new one.  However, there are times when this doesn't always
-+	happen.  To change the password or token, you can erase the existing
-+	credentials and then Git will prompt for new ones.  To erase
-+	credentials, use a syntax like the following (substituting your username
-+	and the hostname):
-++
-+----
-+$ echo url=https://author@git.example.org | git credential reject
-+----
-+
-+[[multiple-accounts-http]]
-+How do I use multiple accounts with the same hosting provider using HTTP?::
-+	Usually the easiest way to distinguish between these accounts is to use
-+	the username in the URL.  For example, if you have the accounts `author`
-+	and `committer` on `git.example.org`, you can use the URLs
-+	https://author@git.example.org/org1/project1.git and
-+	https://committer@git.example.org/org2/project2.git.  This way, when you
-+	use a credential helper, it will automatically try to look up the
-+	correct credentials for your account.  If you already have a remote set
-+	up, you can change the URL with something like `git remote set-url
-+	origin https://author@git.example.org/org1/project1.git` (see
-+	linkgit:git-remote[1] for details).
-+
-+[[multiple-accounts-ssh]]
-+How do I use multiple accounts with the same hosting provider using SSH?::
-+	With most hosting providers that support SSH, a single key pair uniquely
-+	identifies a user.  Therefore, to use multiple accounts, it's necessary
-+	to create a key pair for each account.  If you're using a reasonably
-+	modern OpenSSH version, you can create a new key pair with something
-+	like `ssh-keygen -t ed25519 -f ~/.ssh/id_committer`.  You can then
-+	register the public key (in this case, `~/.ssh/id_committer.pub`; note
-+	the `.pub`) with the hosting provider.
-++
-+Most hosting providers use a single SSH account for pushing; that is, all users
-+push to the `git` account (e.g., `git@git.example.org`).  If that's the case for
-+your provider, you can set up multiple aliases in SSH to make it clear which key
-+pair to use.  For example, you could write something like the following in
-+`~/.ssh/config`, substituting the proper private key file:
-++
-+----
-+# This is the account for author on git.example.org.
-+Host example_author
-+	HostName git.example.org
-+	User git
-+	# This is the key pair registered for author with git.example.org.
-+	IdentityFile ~/.ssh/id_author
-+	IdentitiesOnly yes
-+# This is the account for committer on git.example.org.
-+Host example_committer
-+	HostName git.example.org
-+	User git
-+	# This is the key pair registered for committer with git.example.org.
-+	IdentityFile ~/.ssh/id_committer
-+	IdentitiesOnly yes
-+----
-++
-+Then, you can adjust your push URL to use `git@example_author` or
-+`git@example_committer` instead of `git@example.org` (e.g., `git remote set-url
-+git@example_author:org1/project1.git`).
-+
-+Common Issues
-+-------------
-+
-+[[last-commit-amend]]
-+I've made a mistake in the last commit.  How do I change it?::
-+	You can make the appropriate change to your working tree, run `git add
-+	<file>` or `git rm <file>`, as appropriate, to stage it, and then `git
-+	commit --amend`.  Your change will be included in the commit, and you'll
-+	be prompted to edit the commit message again; if you wish to use the
-+	original message verbatim, you can use the `--no-edit` option to `git
-+	commit` in addition, or just save and quit when your editor opens.
-+
-+[[undo-previous-change]]
-+I've made a change with a bug and it's been included in the main branch.  How should I undo it?::
-+	The usual way to deal with this is to use `git revert`.  This preserves
-+	the history that the original change was made and was a valuable
-+	contribution, but also introduces a new commit that undoes those changes
-+	because the original had a problem.  The commit message of the revert
-+	indicates the commit which was reverted and is usually edited to include
-+	an explanation as to why the revert was made.
-+
-+[[ignore-tracked-files]]
-+How do I ignore changes to a tracked file?::
-+	Git doesn't provide a way to do this.  The reason is that if Git needs
-+	to overwrite this file, such as during a checkout, it doesn't know
-+	whether the changes to the file are precious and should be kept, or
-+	whether they are irrelevant and can safely be destroyed.  Therefore, it
-+	has to take the safe route and always preserve them.
-++
-+It's tempting to try to use certain features of `git update-index`, namely the
-+assume-unchanged and skip-worktree bits, but these don't work properly for this
-+purpose and shouldn't be used this way.
-++
-+If your goal is to modify a configuration file, it can often be helpful to have
-+a file checked into the repository which is a template or set of defaults which
-+can then be copied alongside and modified as appropriate.  This second, modified
-+file is usually ignored to prevent accidentally committing it.
-+
-+Hooks
-+-----
-+
-+[[restrict-with-hooks]]
-+How do I use hooks to prevent users from making certain changes?::
-+	The only safe place to make these changes is on the remote repository
-+	(i.e., the Git server), usually in the `pre-receive` hook or in a
-+	continuous integration (CI) system.  These are the locations in which
-+	policy can be enforced effectively.
-++
-+It's common to try to use `pre-commit` hooks (or, for commit messages,
-+`commit-msg` hooks) to check these things, which is great if you're working as a
-+solo developer and want the tooling to help you.  However, using hooks on a
-+developer machine is not effective as a policy control because a user can bypass
-+these hooks with `--no-verify` without being noticed (among various other ways).
-+Git assumes that the user is in control of their local repositories and doesn't
-+try to prevent this or tattle on the user.
-++
-+In addition, some advanced users find `pre-commit` hooks to be an impediment to
-+workflows that use temporary commits to stage work in progress or that create
-+fixup commits, so it's better to push these kinds of checks to the server
-+anyway.
-+
-+Cross-Platform Issues
-+---------------------
-+
-+[[windows-text-binary]]
-+I'm on Windows and my text files are detected as binary.::
-+	Git works best when you store text files as UTF-8.  Many programs on
-+	Windows support UTF-8, but some do not and only use the little-endian
-+	UTF-16 format, which Git detects as binary.  If you can't use UTF-8 with
-+	your programs, you can specify a working tree encoding that indicates
-+	which encoding your files should be checked out with, while still
-+	storing these files as UTF-8 in the repository.  This allows tools like
-+	linkgit:git-diff[1] to work as expected, while still allowing your tools
-+	to work.
-++
-+To do so, you can specify a linkgit:gitattributes[5] pattern with the
-+`working-tree-encoding` attribute.  For example, the following pattern sets all
-+C files to use UTF-16LE-BOM, which is a common encoding on Windows:
-++
-+----
-+*.c	working-tree-encoding=UTF-16LE-BOM
-+----
-++
-+You will need to run `git add --renormalize` to have this take effect.  Note
-+that if you are making these changes on a project that is used across platforms,
-+you'll probably want to make it in a per-user configuration file or in the one
-+in `$GIT_DIR/info/attributes`, since making it in a `.gitattributes` file in the
-+repository will apply to all users of the repository.
-++
-+See the following entry for information about normalizing line endings as well,
-+and see linkgit:gitattributes[5] for more information about attribute files.
-+
-+[[windows-diff-control-m]]
-+I'm on Windows and git diff shows my files as having a `^M` at the end.::
-+	By default, Git expects files to be stored with Unix line endings.  As such,
-+	the carriage return (`^M`) that is part of a Windows line ending is shown
-+	because it is considered to be trailing whitespace.  Git defaults to showing
-+	trailing whitespace only on new lines, not existing ones.
-++
-+You can store the files in the repository with Unix line endings and convert
-+them automatically to your platform's line endings.  To do that, set the
-+configuration option `core.eol` to `native` and see the following entry for
-+information about how to configure files as text or binary.
-++
-+You can also control this behavior with the `core.whitespace` setting if you
-+don't wish to remove the carriage returns from your line endings.
-+
-+[[recommended-storage-settings]]
-+What's the recommended way to store files in Git?::
-+	While Git can store and handle any file of any type, there are some
-+	settings that work better than others.  In general, we recommend that
-+	text files be stored in UTF-8 without a byte-order mark (BOM) with LF
-+	(Unix-style) endings.  We also recommend the use of UTF-8 (again,
-+	without BOM) in commit messages.  These are the settings that work best
-+	across platforms and with tools such as `git diff` and `git merge`.
-++
-+Additionally, if you have a choice between storage formats that are text based
-+or non-text based, we recommend storing files in the text format and, if
-+necessary, transforming them into the other format.  For example, a text-based
-+SQL dump with one record per line will work much better for diffing and merging
-+than an actual database file.  Similarly, text-based formats such as Markdown
-+and AsciiDoc will work better than binary formats such as Microsoft Word and
-+PDF.
-++
-+Similarly, storing binary dependencies (e.g., shared libraries or JAR files) or
-+build products in the repository is generally not recommended.  Dependencies and
-+build products are best stored on an artifact or package server with only
-+references, URLs, and hashes stored in the repository.
-++
-+We also recommend setting a linkgit:gitattributes[5] file to explicitly mark
-+which files are text and which are binary.  If you want Git to guess, you can
-+set the attribute `text=auto`.  For example, the following might be appropriate
-+in some projects:
-++
-+----
-+# By default, guess.
-+*	text=auto
-+# Mark all C files as text.
-+*.c	text
-+# Mark all JPEG files as binary.
-+*.jpg	binary
-+----
-++
-+These settings help tools pick the right format for output such as patches and
-+result in files being checked out in the appropriate line ending for the
-+platform.
-+
-+GIT
-+---
-+Part of the linkgit:git[1] suite
+but I also see several uses of either in our documentation. Do we
+have a preference? By inspecting the lines before a "no-" string,
+I see that some have these two lines, some use the [no-] pattern,
+and others highlight the --no-<option> flag completely separately.
+
+> +	Control rebase's behavior towards commits in the working
+> +	branch that are already present upstream, i.e. cherry-picks.
+
+I think the "already present upstream" is misleading. We don't rebase
+things that are _reachable_ already, but this is probably better as
+
+	Specify if rebase should include commits in the working branch
+	that have diffs equivalent to other commits upstream. For example,
+	a cherry-picked commit has an equivalent diff.
+
+> ++
+> +By default, these commits will be dropped. Because this necessitates
+> +reading all upstream commits, this can be expensive in repos with a
+> +large number of upstream commits that need to be read.
+
+Now I'm confused. Are they dropped by default? Which option does what?
+--keep-cherry-pick makes me think that cherry-picked commits will come
+along for the rebase, so we will not check for them. But you have documented
+that --no-keep-cherry-pick is the default.
+
+(Also, I keep writing "--[no-]keep-cherry-picks" (plural) because that
+seems more natural to me. Then I go back and fix it when I notice.)
+
+> ++
+> +If `--keep-cherry-pick is given`, all commits (including these) will be
+
+Bad tick marks: "`--keep-cherry-pick` is given"
+
+> +re-applied. This allows rebase to forgo reading all upstream commits,
+> +potentially improving performance.
+
+This reasoning is good. Could you also introduce a config option to make
+--keep-cherry-pick the default? I would like to enable that option by
+default in Scalar, but could also see partial clones wanting to enable that
+by default, too.
+
+> ++
+> +See also INCOMPATIBLE OPTIONS below.
+> +
+
+Could we just say that his only applies with the --merge option? Why require
+the jump to the end of the options section? (After writing this, I go look
+at the rest of the doc file and see this is a common pattern.)
+
+>  --rerere-autoupdate::
+>  --no-rerere-autoupdate::
+>  	Allow the rerere mechanism to update the index with the
+> @@ -568,6 +583,9 @@ In addition, the following pairs of options are incompatible:
+>   * --keep-base and --onto
+>   * --keep-base and --root
+>  
+> +Also, the --keep-cherry-pick option requires the use of the merge backend
+> +(e.g., through --merge).
+> +
+
+Will the command _fail_ if someone says --keep-cherry-pick without the merge
+backend, or just have no effect? Also, specify the option with ticks and
+
+	`--[no-]keep-cherry-pick`
+
+It seems that none of the options in this section are back-ticked, which I think
+is a doc bug.
+
+>  BEHAVIORAL DIFFERENCES
+>  -----------------------
+>  
+> @@ -866,7 +884,8 @@ Only works if the changes (patch IDs based on the diff contents) on
+>  'subsystem' did.
+>  
+>  In that case, the fix is easy because 'git rebase' knows to skip
+> -changes that are already present in the new upstream.  So if you say
+> +changes that are already present in the new upstream (unless
+> +`--keep-cherry-pick` is given). So if you say
+>  (assuming you're on 'topic')
+>  ------------
+>      $ git rebase subsystem
+> diff --git a/builtin/rebase.c b/builtin/rebase.c
+> index 8081741f8a..626549b0b2 100644
+> --- a/builtin/rebase.c
+> +++ b/builtin/rebase.c
+> @@ -88,6 +88,7 @@ struct rebase_options {
+>  	struct strbuf git_format_patch_opt;
+>  	int reschedule_failed_exec;
+>  	int use_legacy_rebase;
+> +	int keep_cherry_pick;
+>  };
+>  
+>  #define REBASE_OPTIONS_INIT {			  	\
+> @@ -381,6 +382,7 @@ static int run_rebase_interactive(struct rebase_options *opts,
+>  	flags |= opts->rebase_cousins > 0 ? TODO_LIST_REBASE_COUSINS : 0;
+>  	flags |= opts->root_with_onto ? TODO_LIST_ROOT_WITH_ONTO : 0;
+>  	flags |= command == ACTION_SHORTEN_OIDS ? TODO_LIST_SHORTEN_IDS : 0;
+> +	flags |= opts->keep_cherry_pick ? TODO_LIST_KEEP_CHERRY_PICK : 0;
+
+Since opts->keep_cherry_pick is initialized as zero, did you change the default
+behavior? Do we not have a test that verifies this behavior when using the merge
+backend an no "--keep-cherry-pick" option?
+
+If you initialize it to -1, then you can tell if the --no-keep-cherry-pick option
+is specified, which is relevant to my concern below.
+
+>  
+>  	switch (command) {
+>  	case ACTION_NONE: {
+> @@ -1515,6 +1517,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>  		OPT_BOOL(0, "reschedule-failed-exec",
+>  			 &reschedule_failed_exec,
+>  			 N_("automatically re-schedule any `exec` that fails")),
+> +		OPT_BOOL(0, "keep-cherry-pick", &options.keep_cherry_pick,
+> +			 N_("apply all changes, even those already present upstream")),
+>  		OPT_END(),
+>  	};
+>  	int i;
+> @@ -1848,6 +1852,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>  			      "interactive or merge options"));
+>  	}
+>  
+> +	if (options.keep_cherry_pick && !is_interactive(&options))
+> +		die(_("--keep-cherry-pick does not work with the 'apply' backend"));
+> +
+
+I see you are failing here. Is this the right decision?
+
+The apply backend will "keep" cherry-picks because it will not look for them upstream.
+If anything, shouldn't it be that "--no-keep-cherry-pick" is incompatible?
+
+>  	if (options.signoff) {
+>  		if (options.type == REBASE_PRESERVE_MERGES)
+>  			die("cannot combine '--signoff' with "
+> diff --git a/sequencer.c b/sequencer.c
+> index b9dbf1adb0..7bbb63f444 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -4800,12 +4800,13 @@ int sequencer_make_script(struct repository *r, struct strbuf *out, int argc,
+>  	int keep_empty = flags & TODO_LIST_KEEP_EMPTY;
+>  	const char *insn = flags & TODO_LIST_ABBREVIATE_CMDS ? "p" : "pick";
+>  	int rebase_merges = flags & TODO_LIST_REBASE_MERGES;
+> +	int keep_cherry_pick = flags & TODO_LIST_KEEP_CHERRY_PICK;
+>  
+>  	repo_init_revisions(r, &revs, NULL);
+>  	revs.verbose_header = 1;
+>  	if (!rebase_merges)
+>  		revs.max_parents = 1;
+> -	revs.cherry_mark = 1;
+> +	revs.cherry_mark = !keep_cherry_pick;
+>  	revs.limited = 1;
+>  	revs.reverse = 1;
+>  	revs.right_only = 1;
+> diff --git a/sequencer.h b/sequencer.h
+> index 9f9ae291e3..298b7de1c8 100644
+> --- a/sequencer.h
+> +++ b/sequencer.h
+> @@ -148,7 +148,7 @@ int sequencer_remove_state(struct replay_opts *opts);
+>   * `--onto`, we do not want to re-generate the root commits.
+>   */
+>  #define TODO_LIST_ROOT_WITH_ONTO (1U << 6)
+> -
+> +#define TODO_LIST_KEEP_CHERRY_PICK (1U << 7)
+>  
+>  int sequencer_make_script(struct repository *r, struct strbuf *out, int argc,
+>  			  const char **argv, unsigned flags);
+> diff --git a/t/t3402-rebase-merge.sh b/t/t3402-rebase-merge.sh
+> index a1ec501a87..64200c5f20 100755
+> --- a/t/t3402-rebase-merge.sh
+> +++ b/t/t3402-rebase-merge.sh
+> @@ -162,4 +162,81 @@ test_expect_success 'rebase --skip works with two conflicts in a row' '
+>  	git rebase --skip
+>  '
+>  
+> +test_expect_success '--keep-cherry-pick' '
+> +	git init repo &&
+> +
+> +	# O(1-10) -- O(1-11) -- O(0-10) master
+> +	#        \
+> +	#         -- O(1-11) -- O(1-12) otherbranch
+> +
+> +	printf "Line %d\n" $(test_seq 1 10) >repo/file.txt &&
+> +	git -C repo add file.txt &&
+> +	git -C repo commit -m "base commit" &&
+> +
+> +	printf "Line %d\n" $(test_seq 1 11) >repo/file.txt &&
+> +	git -C repo commit -a -m "add 11" &&
+> +
+> +	printf "Line %d\n" $(test_seq 0 10) >repo/file.txt &&
+> +	git -C repo commit -a -m "add 0 delete 11" &&
+> +
+> +	git -C repo checkout -b otherbranch HEAD^^ &&
+> +	printf "Line %d\n" $(test_seq 1 11) >repo/file.txt &&
+> +	git -C repo commit -a -m "add 11 in another branch" &&
+> +
+> +	printf "Line %d\n" $(test_seq 1 12) >repo/file.txt &&
+> +	git -C repo commit -a -m "add 12 in another branch" &&
+> +
+> +	# Regular rebase fails, because the 1-11 commit is deduplicated
+> +	test_must_fail git -C repo rebase --merge master 2> err &&
+> +	test_i18ngrep "error: could not apply.*add 12 in another branch" err &&
+> +	git -C repo rebase --abort &&
+
+OK. So here you are demonstrating that the --no-keep-cherry-pick is the
+new default. Just trying to be sure that this was intended.
+
+> +
+> +	# With --keep-cherry-pick, it works
+> +	git -C repo rebase --merge --keep-cherry-pick master
+> +'
+> +
+> +test_expect_success '--keep-cherry-pick refrains from reading unneeded blobs' '
+> +	git init server &&
+> +
+> +	# O(1-10) -- O(1-11) -- O(1-12) master
+> +	#        \
+> +	#         -- O(0-10) otherbranch
+> +
+> +	printf "Line %d\n" $(test_seq 1 10) >server/file.txt &&
+> +	git -C server add file.txt &&
+> +	git -C server commit -m "merge base" &&
+> +
+> +	printf "Line %d\n" $(test_seq 1 11) >server/file.txt &&
+> +	git -C server commit -a -m "add 11" &&
+> +
+> +	printf "Line %d\n" $(test_seq 1 12) >server/file.txt &&
+> +	git -C server commit -a -m "add 12" &&
+> +
+> +	git -C server checkout -b otherbranch HEAD^^ &&
+> +	printf "Line %d\n" $(test_seq 0 10) >server/file.txt &&
+> +	git -C server commit -a -m "add 0" &&
+> +
+> +	test_config -C server uploadpack.allowfilter 1 &&
+> +	test_config -C server uploadpack.allowanysha1inwant 1 &&
+> +
+> +	git clone --filter=blob:none "file://$(pwd)/server" client &&
+> +	git -C client checkout origin/master &&
+> +	git -C client checkout origin/otherbranch &&
+> +
+> +	# Sanity check to ensure that the blobs from the merge base and "add
+> +	# 11" are missing
+> +	git -C client rev-list --objects --all --missing=print >missing_list &&
+> +	MERGE_BASE_BLOB=$(git -C server rev-parse master^^:file.txt) &&
+> +	ADD_11_BLOB=$(git -C server rev-parse master^:file.txt) &&
+> +	grep "\\?$MERGE_BASE_BLOB" missing_list &&
+> +	grep "\\?$ADD_11_BLOB" missing_list &&
+> +
+> +	git -C client rebase --merge --keep-cherry-pick origin/master &&
+> +
+> +	# The blob from the merge base had to be fetched, but not "add 11"
+> +	git -C client rev-list --objects --all --missing=print >missing_list &&
+> +	! grep "\\?$MERGE_BASE_BLOB" missing_list &&
+> +	grep "\\?$ADD_11_BLOB" missing_list
+> +'
+
+I appreciate this test showing that this is accomplishing the goal in
+a partial clone. 
+
+Thanks,
+-Stolee
+
+
