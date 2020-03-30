@@ -6,101 +6,124 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C996C43331
-	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 17:39:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C857C43331
+	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 17:51:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 4E8A520732
-	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 17:39:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F1B1E2073B
+	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 17:51:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="PxAukstS"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="F0CfpxGp"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729021AbgC3RjY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Mar 2020 13:39:24 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56266 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726403AbgC3RjY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Mar 2020 13:39:24 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1F13243996;
-        Mon, 30 Mar 2020 13:39:23 -0400 (EDT)
+        id S1729609AbgC3RvC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Mar 2020 13:51:02 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57913 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728075AbgC3RvC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Mar 2020 13:51:02 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6B214533A4;
+        Mon, 30 Mar 2020 13:50:57 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=6lEFdFFqOaLwbBD36Uk4vfKNLgw=; b=PxAuks
-        tSPIqSKhSUKu9Z3991UqLRvS84Xhff2rqvb3khteRNrOlJaaAN61KdUFCMPfPwST
-        9xD9PrEd5pWNFjdorJkmLT/teaLAV3Uya494to46I5p9SxY/QvGCVMdqWgXjLOHO
-        o7F+3ZyIrAMretgelCi6X/i2dX8YGQPIKF5cQ=
+        :content-type; s=sasl; bh=P3lMCcK9C7sEu+5vfubUm7rYbhU=; b=F0Cfpx
+        GpxaKytbx5P3W6EiHmrdT0rJ12zpP1Hnkb65iDjEDrPul2DtfG0Wi8EdpmCt3jFC
+        OG6/V/7ddxjTA83V8davL4aqUOLrBq5+FfwDh36MI1C2v/+xuw5+a06jkbZB/72M
+        nE9wSmUjqILOU7CvUSTCePSmqsY915DbwPovw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=MlzZz5zWoZEJeYqCharSTFKhdSSe0mH8
-        fk/rdW5+8kpZmIAp9bV8lT6+sLOMDIbB2C0Mip8VWigLjPv5Y2V3fgpsop4NiuwX
-        q/AN1gh8szQth8Plk+bELp3sqoqFSrpS3EZhojoh/QQ6woPx4um0Y3TBgyCWCfnw
-        Og99HQaYQ04=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 158A143995;
-        Mon, 30 Mar 2020 13:39:23 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=rNR4qu3py38tGwh1dCKn89zkMGzRevzl
+        i2FqRkoFOeJ7ctxglQkMAQXxu44m95EPiCelEk/SAD2oiOK9xYyBGW83Pv0MAOFF
+        lAS/ZSkUwk6ODoAbWGR6Hu6B2e3DmeuS37Gq3OS6e5RT8zjJ3YJAWTvFGC24NPna
+        EZ8iNu1JPGg=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 61724533A3;
+        Mon, 30 Mar 2020 13:50:57 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7CBAD43994;
-        Mon, 30 Mar 2020 13:39:22 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C8365533A2;
+        Mon, 30 Mar 2020 13:50:56 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     git <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH 8/9] update-ref: read commands in a line-wise fashion
-References: <cover.1585129842.git.ps@pks.im>
-        <1db63f97ec78fad794cec51c5d96b093f7cd2440.1585129843.git.ps@pks.im>
-        <xmqqo8she9yp.fsf@gitster.c.googlers.com>
-        <20200330081144.GB186019@ncase.pks.im>
-Date:   Mon, 30 Mar 2020 10:39:21 -0700
-In-Reply-To: <20200330081144.GB186019@ncase.pks.im> (Patrick Steinhardt's
-        message of "Mon, 30 Mar 2020 10:11:44 +0200")
-Message-ID: <xmqqk13191yu.fsf@gitster.c.googlers.com>
+To:     Alban Gruin <alban.gruin@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Elijah Newren <newren@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        jan.steffens@gmail.com
+Subject: Re: [PATCH v1 1/2] sequencer: don't abbreviate a command if it doesn't have a short form
+References: <9b4bc756764d87c9f34c11e6ec2fc6482f531805.camel@gmail.com>
+        <20200330124236.6716-1-alban.gruin@gmail.com>
+        <20200330124236.6716-2-alban.gruin@gmail.com>
+Date:   Mon, 30 Mar 2020 10:50:56 -0700
+In-Reply-To: <20200330124236.6716-2-alban.gruin@gmail.com> (Alban Gruin's
+        message of "Mon, 30 Mar 2020 14:42:35 +0200")
+Message-ID: <xmqqeet991fj.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 6444097E-72AD-11EA-8E11-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 021B78D4-72AF-11EA-8B13-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Patrick Steinhardt <ps@pks.im> writes:
+Alban Gruin <alban.gruin@gmail.com> writes:
 
-> On Fri, Mar 27, 2020 at 02:58:38PM -0700, Junio C Hamano wrote:
->> Patrick Steinhardt <ps@pks.im> writes:
->> 
->> >  static const struct parse_cmd {
->> >  	const char *prefix;
->> > -	const char *(*fn)(struct ref_transaction *, const char *, const char *);
->> > +	void (*fn)(struct ref_transaction *, const char *, const char *);
->> > +	unsigned extra_lines;
->> 
->> Define and explain the meaning of extra_lines in a comment.  Without
->> it, the most natural way to infer what the variable means by readers
->> would be that "update" command sometimes receives up to two more
->> lines but it also is perfectly normal if there is no extra line.
->> 
->> But I am not sure if that is what is going on.
->> 
->> "update" _always_ needs exactly two more input "lines" when the
->> input is NUL delimited, perhaps, and it is an _error_ if there are
->> not these two lines, no?
->
-> That's extactly right. I pondered on a good name, but I wasn't yet able
-> to come up with any one that brings across its meaning. I originally had
-> `extra_args` but changed it after some internal discussion with Chris.
+>  static char command_to_char(const enum todo_command command)
+>  {
+> -	if (command < TODO_COMMENT && todo_command_info[command].c)
+> +	if (command < TODO_COMMENT)
+>  		return todo_command_info[command].c;
+>  	return comment_line_char;
+>  }
 
-Wouldn't it make more sense to store the number of args expected
-here, not "extra"?  The one that does not take any then can say "I
-am subcommand X and I do not want a SP after my name".
+This is not a new issue, and it may not even be an issue at all, but
+it is curious that command_to_string() barfs with "unknown command"
+when fed an int outside enum todo_command or TODO_COMMENT iteslf,
+while this returns comment_line_char.  Makes a reader wonder if both
+of them should be dying the same way.
 
-The "sometimes after the command there is line.termination, and
-sometimes there is NUL, and yet some other times there is SP", which
-is a sloppy way to check malformed input (i.e. you do not want SP
-for a command that does not take parameters), that you have after
-the loop can then go, if you did the parsing that way.
+> @@ -4963,6 +4963,8 @@ static void todo_list_to_strbuf(struct repository *r, struct todo_list *todo_lis
+>  		max = num;
+>  
+>  	for (item = todo_list->items, i = 0; i < max; i++, item++) {
+> +		char cmd;
+> +
+>  		/* if the item is not a command write it and continue */
+>  		if (item->command >= TODO_COMMENT) {
+>  			strbuf_addf(buf, "%.*s\n", item->arg_len,
+> @@ -4971,8 +4973,9 @@ static void todo_list_to_strbuf(struct repository *r, struct todo_list *todo_lis
+>  		}
+>  
+>  		/* add command to the buffer */
+> -		if (flags & TODO_LIST_ABBREVIATE_CMDS)
+> -			strbuf_addch(buf, command_to_char(item->command));
+> +		cmd = command_to_char(item->command);
+> +		if (flags & TODO_LIST_ABBREVIATE_CMDS && cmd)
 
+Even though the precedence rule may not require it, for
+readability's sake, it would be easier to see the association if
+this is written with an extra set of parentheses, i.e.
+
+		if ((flags & TODO_LIST_ABBREVIATE_CMDS) && cmd)
+
+> +			strbuf_addch(buf, cmd);
+>  		else
+>  			strbuf_addstr(buf, command_to_string(item->command));
+
+The logic is quite clear.  If there is an abbreviation and the user
+prefers to see it, we use it, but otherwise we'll give the full
+spelling.
+
+We are sure we will never get TODO_COMMENT here in item->command at
+this point (the loop would have already continued after adding it to
+the buffer), so it does not affect us that command_to_string() would
+die.  For that matter, if we made command_to_char() die, just like
+command_to_string() would, nobody will get hurt and the resulting
+code would become saner.  But obviously it is outside the scope of
+this fix (#leftoverbits).
+
+Thanks.
