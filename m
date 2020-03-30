@@ -8,59 +8,59 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 14C9AC43331
-	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 16:58:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 35037C2D0E5
+	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 16:58:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D06E920776
-	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 16:58:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 00E282073B
+	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 16:58:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OfRU3UN1"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SWIiZ45j"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729363AbgC3Q6F (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Mar 2020 12:58:05 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:35842 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726000AbgC3Q6F (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Mar 2020 12:58:05 -0400
-Received: by mail-pf1-f193.google.com with SMTP id i13so8882614pfe.3
-        for <git@vger.kernel.org>; Mon, 30 Mar 2020 09:58:04 -0700 (PDT)
+        id S1730168AbgC3Q6J (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Mar 2020 12:58:09 -0400
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:40566 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729049AbgC3Q6J (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Mar 2020 12:58:09 -0400
+Received: by mail-pl1-f196.google.com with SMTP id h11so6953620plk.7
+        for <git@vger.kernel.org>; Mon, 30 Mar 2020 09:58:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=B9QSCEk7yE2zlJXYKaq2yfWDxnM5gWJbIfoxoVxCSEM=;
-        b=OfRU3UN1dcQguhxtP3XcHx5kUWOyLEoONQK5UMY4keJgk90DiyFTugxG7WRe2HNIVN
-         skoWxy61CHdUUhzy9Giv7iOox2rWW8Cs0b84j62+xloblyGdTleatkeE0Q1+gCuH/v7f
-         3Id4sGULUj1Ri/tw34TPUqimbUKMsnHXb0FtVtIPvW0I1CIdzBjq7sy03ZvZjVVErW2X
-         96zouSZUI1fujpTmj/KsMhRo8FJMdLIPJo6uXKN5bi3BI4A4+s3eajHyHLKvplMcSUT0
-         W8xUECmqH2hrEEVsviRpIHYym/goHVMdSTWcGAwurFSZcKVjkg2yJ749Fx90SJQSRgFx
-         UyEg==
+        bh=J088IZ1WYDOBwVWp4YS2BUNn8QUFSJR52RGDcJilvgk=;
+        b=SWIiZ45jk2q53piN3HKdUXc2oweJHo913WJ61+G3n690ZCjisDLR07NiUau2v47SE/
+         8MjPr3EdX8XK6pKVe1IfOTwz1gE38qk04aSxT7dbs+rp49HYmAloIxXpxqKHzhj1lhDg
+         775U1tUa2TI5QHWL5LEZdurJsveDiyKKSUf14q3tXVukSfrWp2Sbx9L+DI73mkwFgbks
+         bnucGrNq5JeCvCQZkYQSS6twQ4ZJEFeWqesVzeKc7U2602sA0mdOa02sTWbYvrRAhEzV
+         vh323Y6Spowll++NRPvwuM3XhKSn5jbWCLznFH+L7M6sCecdKTOJ7KjVLUirr8Hdkf/0
+         cpAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=B9QSCEk7yE2zlJXYKaq2yfWDxnM5gWJbIfoxoVxCSEM=;
-        b=kyUpDHHq9ElCQFI563eqlJEeFNuOLcsCpL8KaumddMJrb7hD91sxig5bwkkZjdMwrx
-         U6aPIJZK+7E/3eD1UFRRYzgr3Jfmq8g6ZPh0QgFC5kGcju5mekGumOD40/gdqEN36dWJ
-         tZn4VUsMGPsnYNyT2DmbuTcRhEI+GL2BMhLIcK4Zdxsk6aIpGTkvzLMD1cTrXPKNAJ7e
-         vgqwd9cMMDTSVBEUbg4guJySlIkqHBaAKmPQ1nd1ij+fWQ6MK2PjwLeXaIIlwkd74Jbo
-         VUJFlCtYVxQHSOahBcRomEiyBud8nXophWberdaMiROn5AZgVKJ8xURJMfU0r/5dfg2e
-         o9MA==
-X-Gm-Message-State: AGi0PuaLnKodN0oqlrx5o6DSmk/rIYFXtgj9q6CmZUXIdEDLx5K1L21U
-        PpDxqF5HAPf2hPZRJKZeNihDawZ8Ty0=
-X-Google-Smtp-Source: APiQypLIdddlaOOS2QSTGhMkkK5aB1G8f3a7in/alsvs+CLCy3Qi4tfJI3iC6dPab2rOXo6Kd4PCJg==
-X-Received: by 2002:aa7:9839:: with SMTP id q25mr213391pfl.2.1585587483712;
-        Mon, 30 Mar 2020 09:58:03 -0700 (PDT)
+        bh=J088IZ1WYDOBwVWp4YS2BUNn8QUFSJR52RGDcJilvgk=;
+        b=AhJwoSFykQUwu0EMmPsE7n4o4cAgA9ngua62voo/562B5ZcX7Fwmzd7mptntQbmnZe
+         8N0mYIPwqjgZsEtJqxOoHU4dHVjV2Zq+G6TYaw/Ma3kLDuEWU1s9kUOKDq+9PwQ1kIzd
+         t92dncGsm5gf8IgEVpSnV/a595Qri3LyLnd+Q8B6YyHruPV5T+S5oRJ97UynCLWnpiJK
+         ADBrOvtqB45tVnxqqTuhAeSGgX4EHkBcG1m8Ij3AfG1R1r/dElTyXNb07yyqp0q0MhHO
+         3H/XeYsHaG7zy79YuZn5ab4fqdUZIhlsMOGRUzAo6ZBPJ+FCTT2BesHA8lIPC+RZUxZv
+         Y86w==
+X-Gm-Message-State: AGi0PuZaWF+RHoEd4LW8AU+KU1wacUOk0n7eD5M9YbPesGBP8Uisjjyd
+        lLdy3BWuqxCTPc3jXq/mJDCiXH0NEAA=
+X-Google-Smtp-Source: APiQypKg9LRaG3wtf4ys0b+IcyaiSDiuBp1+NcPsviLnJndQJGYTgTQnzg3mFafM2QgsEsptNl43uw==
+X-Received: by 2002:a17:90a:f305:: with SMTP id ca5mr24443pjb.75.1585587487161;
+        Mon, 30 Mar 2020 09:58:07 -0700 (PDT)
 Received: from tigtog.localdomain.localdomain ([144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id a24sm10589604pfl.115.2020.03.30.09.58.03
+        by smtp.gmail.com with ESMTPSA id a24sm10589604pfl.115.2020.03.30.09.58.05
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 30 Mar 2020 09:58:03 -0700 (PDT)
+        Mon, 30 Mar 2020 09:58:06 -0700 (PDT)
 From:   Jiang Xin <worldhello.net@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
 Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: [PATCH v5 1/6] transport: not report a non-head push as a branch
-Date:   Mon, 30 Mar 2020 12:57:49 -0400
-Message-Id: <20200330165754.19195-2-worldhello.net@gmail.com>
+Subject: [PATCH v5 4/6] receive-pack: new config receive.procReceiveRefs
+Date:   Mon, 30 Mar 2020 12:57:52 -0400
+Message-Id: <20200330165754.19195-5-worldhello.net@gmail.com>
 X-Mailer: git-send-email 2.26.0.rc0
 In-Reply-To: <20200304113312.34229-1-zhiyou.jx@alibaba-inc.com>
 References: <20200304113312.34229-1-zhiyou.jx@alibaba-inc.com>
@@ -73,209 +73,283 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 
-When pushing a new reference (not a head or tag), report it as a new
-reference instead of a new branch.
+Add a new multi-valued config variable "receive.procReceiveRefs"
+for `receive-pack` command, like the follows:
+
+    git config --system --add receive.procReceiveRefs refs/for/
+    git config --system --add receive.procReceiveRefs refs/drafts/
+
+If the specific prefix strings match the reference names of the commands
+which are sent by git client to `receive-pack`, these commands will be
+executed by an external hook (named "proc-receive"), instead of the
+internal `execute_commands` function.
+
+For example, if it is set to "refs/for/", pushing to a reference such as
+"refs/for/master" will not create or update reference "refs/for/master",
+but may create or update a pull request directly by running the external
+hook.
 
 Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 ---
- t/t5411-proc-receive-hook.sh | 153 +++++++++++++++++++++++++++++++++++
- t/t5516-fetch-push.sh        |   2 +-
- transport.c                  |   9 ++-
- 3 files changed, 160 insertions(+), 4 deletions(-)
- create mode 100755 t/t5411-proc-receive-hook.sh
+ Documentation/config/receive.txt |  14 ++++
+ builtin/receive-pack.c           |  43 ++++++++--
+ t/t5411-proc-receive-hook.sh     | 130 +++++++++++++++++++++++++++++++
+ 3 files changed, 180 insertions(+), 7 deletions(-)
 
+diff --git a/Documentation/config/receive.txt b/Documentation/config/receive.txt
+index 65f78aac37..0178f2d478 100644
+--- a/Documentation/config/receive.txt
++++ b/Documentation/config/receive.txt
+@@ -114,6 +114,20 @@ receive.hideRefs::
+ 	An attempt to update or delete a hidden ref by `git push` is
+ 	rejected.
+ 
++receive.procReceiveRefs::
++	This is a multi-valued variable that defines reference prefixes
++	to match the commands in `receive-pack`.  Commands matching the
++	prefixes will be executed by an external hooks "proc-receive",
++	instead of the internal `execute_commands` function.  If this
++	variable is not defined, the "proc-receive" hook will never be
++	used, and all commands will be executed by the internal
++	`execute_commands` function.
++
++	For example, if this variable is set to "refs/for/", pushing to
++	reference such as "refs/for/master" will not create or update a
++	reference named "refs/for/master", but may create or update a
++	pull request directly by running an external hook.
++
+ receive.updateServerInfo::
+ 	If set to true, git-receive-pack will run git-update-server-info
+ 	after receiving data from git-push and updating refs.
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 7dbb05df8c..21b3a1d3fa 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -76,6 +76,7 @@ static struct object_id push_cert_oid;
+ static struct signature_check sigcheck;
+ static const char *push_cert_nonce;
+ static const char *cert_nonce_seed;
++static struct string_list proc_receive_refs;
+ 
+ static const char *NONCE_UNSOLICITED = "UNSOLICITED";
+ static const char *NONCE_BAD = "BAD";
+@@ -228,6 +229,20 @@ static int receive_pack_config(const char *var, const char *value, void *cb)
+ 		return 0;
+ 	}
+ 
++	if (strcmp(var, "receive.procreceiverefs") == 0) {
++		char *prefix;
++		int len;
++
++		if (!value)
++			return config_error_nonbool(var);
++		prefix = xstrdup(value);
++		len = strlen(prefix);
++		while (len && prefix[len - 1] == '/')
++			prefix[--len] = '\0';
++		string_list_insert(&proc_receive_refs, prefix);
++		return 0;
++	}
++
+ 	return git_default_config(var, value, cb);
+ }
+ 
+@@ -1710,15 +1725,26 @@ static void execute_commands(struct command *commands,
+ 	/* Try to find commands that have special prefix in their reference names,
+ 	 * and mark them to run an external "proc-receive" hook later.
+ 	 */
+-	for (cmd = commands; cmd; cmd = cmd->next) {
+-		if (!should_process_cmd(cmd))
+-			continue;
++	if (proc_receive_refs.nr > 0) {
++		struct strbuf refname_full = STRBUF_INIT;
++		size_t prefix_len;
++
++		strbuf_addstr(&refname_full, get_git_namespace());
++		prefix_len = refname_full.len;
+ 
+-		/* TODO: replace the fixed prefix by looking up git config variables. */
+-		if (!strncmp(cmd->ref_name, "refs/for/", 9)) {
+-			cmd->run_proc_receive = 1;
+-			run_proc_receive = 1;
++		for (cmd = commands; cmd; cmd = cmd->next) {
++			if (!should_process_cmd(cmd))
++				continue;
++
++			strbuf_setlen(&refname_full, prefix_len);
++			strbuf_addstr(&refname_full, cmd->ref_name);
++			if (ref_is_matched(&proc_receive_refs, cmd->ref_name, refname_full.buf)) {
++				cmd->run_proc_receive = 1;
++				run_proc_receive = 1;
++			}
+ 		}
++
++		strbuf_release(&refname_full);
+ 	}
+ 
+ 	if (run_receive_hook(commands, "pre-receive", 0, push_options)) {
+@@ -2178,6 +2204,8 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
+ 		OPT_END()
+ 	};
+ 
++	string_list_init(&proc_receive_refs, 0);
++
+ 	packet_trace_identity("receive-pack");
+ 
+ 	argc = parse_options(argc, argv, prefix, options, receive_pack_usage, 0);
+@@ -2293,5 +2321,6 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
+ 	oid_array_clear(&shallow);
+ 	oid_array_clear(&ref);
+ 	free((void *)push_cert_nonce);
++	string_list_clear(&proc_receive_refs, 0);
+ 	return 0;
+ }
 diff --git a/t/t5411-proc-receive-hook.sh b/t/t5411-proc-receive-hook.sh
-new file mode 100755
-index 0000000000..1784bcb584
---- /dev/null
+index 79a3e7fde7..4c3699fa85 100755
+--- a/t/t5411-proc-receive-hook.sh
 +++ b/t/t5411-proc-receive-hook.sh
-@@ -0,0 +1,153 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2020 Jiang Xin
-+#
-+
-+test_description='Test proc-receive hook'
-+
-+. ./test-lib.sh
-+
-+# Create commits in <repo> and assign each commit's oid to shell variables
-+# given in the arguments (A, B, and C). E.g.:
-+#
-+#     create_commits_in <repo> A B C
-+#
-+# NOTE: Never calling this function from a subshell since variable
-+# assignments will disappear when subshell exits.
-+create_commits_in () {
-+	repo="$1" &&
-+	if ! parent=$(git -C "$repo" rev-parse HEAD^{})
-+	then
-+		parent=
-+	fi &&
-+	T=$(git -C "$repo" write-tree) &&
-+	shift &&
-+	while test $# -gt 0
-+	do
-+		name=$1 &&
-+		test_tick &&
-+		if test -z "$parent"
-+		then
-+			oid=$(echo $name | git -C "$repo" commit-tree $T)
-+		else
-+			oid=$(echo $name | git -C "$repo" commit-tree -p $parent $T)
-+		fi &&
-+		eval $name=$oid &&
-+		parent=$oid &&
-+		shift ||
-+		return 1
-+	done &&
-+	git -C "$repo" update-ref refs/heads/master $oid
-+}
-+
-+# Format the output of git-push, git-show-ref and other commands to make a
-+# user-friendly and stable text.  We can easily prepare the expect text
-+# without having to worry about future changes of the commit ID and spaces
-+# of the output.  We also replce single quotes with double quotes, because
-+# it is boring to prepare unquoted single quotes in expect txt.
-+make_user_friendly_and_stable_output () {
-+	sed \
-+		-e "s/  *\$//" \
-+		-e "s/   */ /g" \
-+		-e "s/'/\"/g" \
-+		-e "s/$A/<COMMIT-A>/g" \
-+		-e "s/$B/<COMMIT-B>/g" \
-+		-e "s/$TAG/<TAG-v123>/g" \
-+		-e "s/$ZERO_OID/<ZERO-OID>/g" \
-+		-e "s/[0-9a-f]\{7,\}/<OID>/g"
-+}
-+
-+# Refs of upstream : master(B)  next(A)
-+# Refs of workbench: master(A)           tags/v123
-+test_expect_success "setup" '
-+	git init --bare upstream &&
-+	git init workbench &&
-+	create_commits_in workbench A B &&
+@@ -179,6 +179,14 @@ test_expect_success "cleanup" '
+ 	)
+ '
+ 
++test_expect_success "add two receive.procReceiveRefs settings" '
 +	(
-+		cd workbench &&
-+		# Try to make a stable fixed width for abbreviated commit ID,
-+		# this fixed-width oid will be replaced with "<OID>".
-+		git config core.abbrev 7 &&
-+		git remote add origin ../upstream &&
-+		git update-ref refs/heads/master $A &&
-+		git tag -m "v123" v123 $A &&
-+		git push origin \
-+			$B:refs/heads/master \
-+			$A:refs/heads/next
-+	) &&
-+	TAG=$(git -C workbench rev-parse v123) &&
-+
-+	# setup pre-receive hook
-+	cat >upstream/hooks/pre-receive <<-\EOF &&
-+	#!/bin/sh
-+
-+	echo >&2 "# pre-receive hook"
-+
-+	while read old new ref
-+	do
-+		echo >&2 "pre-receive< $old $new $ref"
-+	done
-+	EOF
-+
-+	# setup post-receive hook
-+	cat >upstream/hooks/post-receive <<-\EOF &&
-+	#!/bin/sh
-+
-+	echo >&2 "# post-receive hook"
-+
-+	while read old new ref
-+	do
-+		echo >&2 "post-receive< $old $new $ref"
-+	done
-+	EOF
-+
-+	chmod a+x \
-+		upstream/hooks/pre-receive \
-+		upstream/hooks/post-receive
++		cd upstream &&
++		git config --add receive.procReceiveRefs refs/for/ &&
++		git config --add receive.procReceiveRefs refs/review/
++	)
 +'
 +
-+# Refs of upstream : master(B)  next(A)
-+# Refs of workbench: master(A)           tags/v123
-+# git-push -f      : master(A)  NULL     tags/v123  refs/review/master/topic(A)  a/b/c(A)
-+test_expect_success "normal git-push command" '
-+	git -C workbench push -f origin \
-+		refs/tags/v123 \
-+		:refs/heads/next \
-+		HEAD:refs/heads/master \
-+		HEAD:refs/review/master/topic \
-+		HEAD:refs/heads/a/b/c \
+ # Refs of upstream : master(A)
+ # Refs of workbench: master(A)  tags/v123
+ # git push         :                       next(A)  refs/for/master/topic(A)
+@@ -705,4 +713,126 @@ test_expect_success "push with options" '
+ 	test_cmp expect actual
+ '
+ 
++# Refs of upstream : master(A)             next(A)
++# Refs of workbench: master(A)  tags/v123
++test_expect_success "cleanup" '
++	git -C upstream update-ref -d refs/heads/next
++'
++
++test_expect_success "setup proc-receive hook" '
++	cat >upstream/hooks/proc-receive <<-EOF &&
++	#!/bin/sh
++
++	printf >&2 "# proc-receive hook\n"
++
++	test-tool proc-receive -v \
++		-r "$ZERO_OID $A refs/for/next/topic ok" \
++		-r "$ZERO_OID $A refs/review/a/b/c/topic ok" \
++		-r "$ZERO_OID $A refs/for/master/topic ok"
++	EOF
++	chmod a+x upstream/hooks/proc-receive
++'
++
++# Refs of upstream : master(A)
++# Refs of workbench: master(A)  tags/v123
++# git push         :                       refs/for/next/topic(A)  refs/review/a/b/c/topic(A)  refs/for/master/topic(A)
++test_expect_success "report update of all special refs" '
++	git -C workbench push origin \
++		HEAD:refs/for/next/topic \
++		HEAD:refs/review/a/b/c/topic \
++		HEAD:refs/for/master/topic \
 +		>out 2>&1 &&
 +	make_user_friendly_and_stable_output <out >actual &&
 +	cat >expect <<-EOF &&
 +	remote: # pre-receive hook
-+	remote: pre-receive< <COMMIT-B> <COMMIT-A> refs/heads/master
-+	remote: pre-receive< <COMMIT-A> <ZERO-OID> refs/heads/next
-+	remote: pre-receive< <ZERO-OID> <TAG-v123> refs/tags/v123
-+	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/review/master/topic
-+	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/heads/a/b/c
++	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/for/next/topic
++	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/review/a/b/c/topic
++	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
++	remote: # proc-receive hook
++	remote: proc-receive< <ZERO-OID> <COMMIT-A> refs/for/next/topic
++	remote: proc-receive< <ZERO-OID> <COMMIT-A> refs/review/a/b/c/topic
++	remote: proc-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
++	remote: proc-receive> <ZERO-OID> <COMMIT-A> refs/for/next/topic ok
++	remote: proc-receive> <ZERO-OID> <COMMIT-A> refs/review/a/b/c/topic ok
++	remote: proc-receive> <ZERO-OID> <COMMIT-A> refs/for/master/topic ok
 +	remote: # post-receive hook
-+	remote: post-receive< <COMMIT-B> <COMMIT-A> refs/heads/master
-+	remote: post-receive< <COMMIT-A> <ZERO-OID> refs/heads/next
-+	remote: post-receive< <ZERO-OID> <TAG-v123> refs/tags/v123
-+	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/review/master/topic
-+	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/heads/a/b/c
++	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/next/topic
++	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/review/a/b/c/topic
++	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
 +	To ../upstream
-+	 + <OID>...<OID> HEAD -> master (forced update)
-+	 - [deleted] next
-+	 * [new tag] v123 -> v123
-+	 * [new reference] HEAD -> refs/review/master/topic
-+	 * [new branch] HEAD -> a/b/c
++	 * [new reference] HEAD -> refs/for/next/topic
++	 * [new reference] HEAD -> refs/review/a/b/c/topic
++	 * [new reference] HEAD -> refs/for/master/topic
 +	EOF
 +	test_cmp expect actual &&
 +	git -C upstream show-ref >out &&
 +	make_user_friendly_and_stable_output <out >actual &&
 +	cat >expect <<-EOF &&
-+	<COMMIT-A> refs/heads/a/b/c
 +	<COMMIT-A> refs/heads/master
-+	<COMMIT-A> refs/review/master/topic
-+	<TAG-v123> refs/tags/v123
 +	EOF
 +	test_cmp expect actual
 +'
 +
-+test_done
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index 9ff041a093..9e4b9313b5 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -1039,7 +1039,7 @@ test_force_fetch_tag "annotated tag" "-f -a -m'tag message'"
- test_expect_success 'push --porcelain' '
- 	mk_empty testrepo &&
- 	echo >.git/foo  "To testrepo" &&
--	echo >>.git/foo "*	refs/heads/master:refs/remotes/origin/master	[new branch]"  &&
-+	echo >>.git/foo "*	refs/heads/master:refs/remotes/origin/master	[new reference]"  &&
- 	echo >>.git/foo "Done" &&
- 	git push >.git/bar --porcelain  testrepo refs/heads/master:refs/remotes/origin/master &&
- 	(
-diff --git a/transport.c b/transport.c
-index 1fdc7dac1a..272c0f4046 100644
---- a/transport.c
-+++ b/transport.c
-@@ -500,9 +500,12 @@ static void print_ok_ref_status(struct ref *ref, int porcelain, int summary_widt
- 				 porcelain, summary_width);
- 	else if (is_null_oid(&ref->old_oid))
- 		print_ref_status('*',
--			(starts_with(ref->name, "refs/tags/") ? "[new tag]" :
--			"[new branch]"),
--			ref, ref->peer_ref, NULL, porcelain, summary_width);
-+				 (starts_with(ref->name, "refs/tags/")
-+				  ? "[new tag]"
-+				  : (starts_with(ref->name, "refs/heads/")
-+				     ? "[new branch]"
-+				     : "[new reference]")),
-+				 ref, ref->peer_ref, NULL, porcelain, summary_width);
- 	else {
- 		struct strbuf quickref = STRBUF_INIT;
- 		char type;
++test_expect_success "setup proc-receive hook" '
++	cat >upstream/hooks/proc-receive <<-EOF &&
++	#!/bin/sh
++
++	printf >&2 "# proc-receive hook\n"
++
++	test-tool proc-receive -v \
++		-r "$ZERO_OID $A refs/for/next/topic ok" \
++		-r "$ZERO_OID $A refs/for/master/topic ok"
++	EOF
++	chmod a+x upstream/hooks/proc-receive
++'
++
++# Refs of upstream : master(A)
++# Refs of workbench: master(A)  tags/v123
++# git push         :                       bar(A)  baz(A)  refs/for/next/topic(A)  foo(A)  refs/for/master/topic(A)
++test_expect_success "report mixed refs update" '
++	git -C workbench push origin \
++		HEAD:refs/heads/bar \
++		HEAD:refs/heads/baz \
++		HEAD:refs/for/next/topic \
++		HEAD:refs/heads/foo \
++		HEAD:refs/for/master/topic \
++		>out 2>&1 &&
++	make_user_friendly_and_stable_output <out >actual &&
++	cat >expect <<-EOF &&
++	remote: # pre-receive hook
++	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/heads/bar
++	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/heads/baz
++	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/for/next/topic
++	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/heads/foo
++	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
++	remote: # proc-receive hook
++	remote: proc-receive< <ZERO-OID> <COMMIT-A> refs/for/next/topic
++	remote: proc-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
++	remote: proc-receive> <ZERO-OID> <COMMIT-A> refs/for/next/topic ok
++	remote: proc-receive> <ZERO-OID> <COMMIT-A> refs/for/master/topic ok
++	remote: # post-receive hook
++	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/heads/bar
++	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/heads/baz
++	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/next/topic
++	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/heads/foo
++	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
++	To ../upstream
++	 * [new branch] HEAD -> bar
++	 * [new branch] HEAD -> baz
++	 * [new reference] HEAD -> refs/for/next/topic
++	 * [new branch] HEAD -> foo
++	 * [new reference] HEAD -> refs/for/master/topic
++	EOF
++	test_cmp expect actual &&
++	git -C upstream show-ref >out &&
++	make_user_friendly_and_stable_output <out >actual &&
++	cat >expect <<-EOF &&
++	<COMMIT-A> refs/heads/bar
++	<COMMIT-A> refs/heads/baz
++	<COMMIT-A> refs/heads/foo
++	<COMMIT-A> refs/heads/master
++	EOF
++	test_cmp expect actual
++'
++
+ test_done
 -- 
 2.26.0.4.g39bcdcb101.dirty
 
