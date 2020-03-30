@@ -8,53 +8,53 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D266C43331
-	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 12:43:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B5BAC43331
+	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 12:43:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 41FE520675
-	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 12:43:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1DB9820675
+	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 12:43:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PXuBMcTr"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pSpG9PBy"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730188AbgC3Mnl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Mar 2020 08:43:41 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:38117 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727339AbgC3Mnl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Mar 2020 08:43:41 -0400
-Received: by mail-wr1-f68.google.com with SMTP id s1so21423100wrv.5
-        for <git@vger.kernel.org>; Mon, 30 Mar 2020 05:43:40 -0700 (PDT)
+        id S1730159AbgC3Mnq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Mar 2020 08:43:46 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:37217 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727339AbgC3Mnq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Mar 2020 08:43:46 -0400
+Received: by mail-wm1-f68.google.com with SMTP id j19so2924572wmi.2
+        for <git@vger.kernel.org>; Mon, 30 Mar 2020 05:43:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=+7zMnJZf3Mk6iE1dfTseoJMVNZQ6Y1co2wnq/rJfkuY=;
-        b=PXuBMcTr8y1u+ndEWJwDz0Z52QBFZySk8bIeJkf06Er0bs49mhK1GpqtiUFVGMparO
-         Ox0KAzHBUGXqkGy8wU0yRRIoOkJ+Pk8bWNL7ma4d6KW9xqMIAGI1cQq1PNIuE1114d2Y
-         15AyqL2TaQcxqA5d3Nx3dtzinLU5Wk5K+DyfNz1qoR82hj45A+msPrv4ddbIR4Y6Q6xI
-         EMqWNVg4U1xc63TG5jCjPOq+N+WAL89gWYTFPPe9aVxysxxZe+LPAP7xchv4TVoEf8x7
-         VWmpGXfdyDHBDl8ceueveg4gYbTAIKVHxMJFBWoIrSazDjZlQA3HJSNzcg5qYC91GVC2
-         a1Pg==
+        bh=GxEBw2WvVWRUdkrlXW6ClwwoJwK79xs2b8FVCn2oLzk=;
+        b=pSpG9PBykdglJWGmx1JNDlvz2rMxKhNmjBCPDc9Tv0Ynvxk1WhP+4uPQccjv0AJyvV
+         eBjYpKKpC6J/05nukilXQusuXz/Wqun4OSXVWplfiuTU9SZm9AdkKnhS2Hfzi4tdn2Kx
+         aDa1L4Lz7dFe8PYJF/YHcrHkt7V+aMyMfLvXXyI1ntpjia3piQEGNRDJStxE02mXOQ3v
+         GFAKJk3Cts8Jj6jfTZd18YXVAGvCm6klPcf4YGYNYoDl44bCLRCFasr9sfuwN8v3zScI
+         hzoF3mXUkxzgq39nps4827955G6IgsuHzBn6yWJf9dNmbEOosJLbCJEVgPhQnLdIEm7j
+         ixWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=+7zMnJZf3Mk6iE1dfTseoJMVNZQ6Y1co2wnq/rJfkuY=;
-        b=YrMySdhrXDy+chUG0L+U/+3TpKWnCqLxu/PE8GkiEa0vLZ9mipuifH1EcnvvS6zpGs
-         79hZPL4ZO0W00a+tOIO9ylFbZzdFI0dU5F/TXw2pNa7lI73pvjjq2MiBUA2eC3nINoM7
-         kGtdW5s/7mrpRUu5EQmwAO1eA3T5TAMRZF/GJaRnpieN4tHkFdW0nJQ43BUzCpogp7jb
-         9xAgyCs7aSIm0EoXNR4UThBTY4E6dXXS+0nMAL2gbmhk7Aye6YeyTCTcV9F04lqQ6tpz
-         fI8ttAK/wR/8GrbnUxmocVy699EK5NSsHdaNC9wvhcQOhe84JMLHsYDVDMgfsOsKp5Gh
-         G4Sw==
-X-Gm-Message-State: ANhLgQ3OUYXRhSTplQSw+IAzl5uybwM6WxgOLePO5Z+he+/bRvdRYUxS
-        niPI+ueG1OQsQ+OQsJkbsl7OMTKw
-X-Google-Smtp-Source: ADFU+vtuSr6JWQYfXa8bicZSfs9QsumoEXZwAlX82Jf5vpRatBeB0Q43QxlHTpwycH8AHo61bDx+mA==
-X-Received: by 2002:adf:ff81:: with SMTP id j1mr14541045wrr.171.1585572218994;
-        Mon, 30 Mar 2020 05:43:38 -0700 (PDT)
+        bh=GxEBw2WvVWRUdkrlXW6ClwwoJwK79xs2b8FVCn2oLzk=;
+        b=eU5iHTqNeM/GVSu6diY53MsCXOQvhRrMM4ja2WhMDi788+wljUeLAz+/ndImxCgpAI
+         mDZ+M/ZPhU0yxkI73GKOuxhJzN6X//VDqeTWaNkj75yX7u88mpboX3O8ckFOhDvKP7N4
+         Nl9k9culHGRBqZ+kQFLGwddEkxi4lXxHERv2T7rkmFRrbTIiBb8tAS1dLZmqVV6annmW
+         B7bOSmCYme+tkoISHqVHu7j+WYiyQ5JYYY6h1gfeW4YTHanPQvyT6OvPJ09jRvM8OVTF
+         BZNCCAPjUXMY5lRLUhhrVgJqa/738dgN1L5ySYXdW+r55XsPLKZX3BOsAPAiJZ9Dvhfk
+         +ZnQ==
+X-Gm-Message-State: ANhLgQ1R14wIbxQYWx7m6XY3FWOTkeKV6uXQJ36H72ZhTsY3i/6t400T
+        YS10fpChDx6Vd8zlrEOpgLbsT9ru
+X-Google-Smtp-Source: ADFU+vsd/v/z1GZlxpj/6LnJOqOhyjcc0g7filAA2pszW2jsAUU5Dla3XyHp38qvmbtovmPnX33cYg==
+X-Received: by 2002:a05:600c:4410:: with SMTP id u16mr12842793wmn.161.1585572222373;
+        Mon, 30 Mar 2020 05:43:42 -0700 (PDT)
 Received: from localhost.localdomain (atoulouse-654-1-428-45.w2-6.abo.wanadoo.fr. [2.6.211.45])
-        by smtp.googlemail.com with ESMTPSA id 9sm20228480wmm.6.2020.03.30.05.43.37
+        by smtp.googlemail.com with ESMTPSA id 9sm20228480wmm.6.2020.03.30.05.43.41
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 30 Mar 2020 05:43:38 -0700 (PDT)
+        Mon, 30 Mar 2020 05:43:41 -0700 (PDT)
 From:   Alban Gruin <alban.gruin@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -62,9 +62,9 @@ Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Phillip Wood <phillip.wood@dunelm.org.uk>,
         Junio C Hamano <gitster@pobox.com>, jan.steffens@gmail.com,
         Alban Gruin <alban.gruin@gmail.com>
-Subject: [PATCH v1 1/2] sequencer: don't abbreviate a command if it doesn't have a short form
-Date:   Mon, 30 Mar 2020 14:42:35 +0200
-Message-Id: <20200330124236.6716-2-alban.gruin@gmail.com>
+Subject: [PATCH v1 2/2] t3432: test `--merge' with `rebase.abbreviateCommands = true', too
+Date:   Mon, 30 Mar 2020 14:42:36 +0200
+Message-Id: <20200330124236.6716-3-alban.gruin@gmail.com>
 X-Mailer: git-send-email 2.25.0
 In-Reply-To: <20200330124236.6716-1-alban.gruin@gmail.com>
 References: <9b4bc756764d87c9f34c11e6ec2fc6482f531805.camel@gmail.com>
@@ -76,54 +76,60 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When the sequencer is requested to abbreviate commands, it will replace
-those that does not have a short form (eg. `noop') by a comment mark.
-`noop' serves no purpose, except when fast-forwarding (ie. by running
-`git rebase').  Removing it will break this command when
-`rebase.abbreviateCommands' is set to true.
-
-This changes todo_list_to_strbuf() to check if a command has an actual
-short form, and to ignore it if not.
+When fast forwarding, `git --merge' should act the same whether
+`rebase.abbreviateCommands' is set or not, but so far it was not the
+case.  This duplicates the tests ensuring that `--merge' works when fast
+forwarding to check if it also works with abbreviated commands.
 
 Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
 ---
- sequencer.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ t/t3432-rebase-fast-forward.sh | 24 +++++++++++++++++++-----
+ 1 file changed, 19 insertions(+), 5 deletions(-)
 
-diff --git a/sequencer.c b/sequencer.c
-index 6fd2674632..79d0c5cb2e 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -1578,7 +1578,7 @@ static const char *command_to_string(const enum todo_command command)
- 
- static char command_to_char(const enum todo_command command)
- {
--	if (command < TODO_COMMENT && todo_command_info[command].c)
-+	if (command < TODO_COMMENT)
- 		return todo_command_info[command].c;
- 	return comment_line_char;
+diff --git a/t/t3432-rebase-fast-forward.sh b/t/t3432-rebase-fast-forward.sh
+index 6c9d4a1375..6f0452c0ea 100755
+--- a/t/t3432-rebase-fast-forward.sh
++++ b/t/t3432-rebase-fast-forward.sh
+@@ -28,10 +28,12 @@ test_rebase_same_head () {
+ 	shift &&
+ 	cmp_f="$1" &&
+ 	shift &&
+-	test_rebase_same_head_ $status_n $what_n $cmp_n " --apply" "$*" &&
+-	test_rebase_same_head_ $status_f $what_f $cmp_f " --apply --no-ff" "$*"
+-	test_rebase_same_head_ $status_n $what_n $cmp_n " --merge" "$*" &&
+-	test_rebase_same_head_ $status_f $what_f $cmp_f " --merge --no-ff" "$*"
++	test_rebase_same_head_ $status_n $what_n $cmp_n 0 " --apply" "$*" &&
++	test_rebase_same_head_ $status_f $what_f $cmp_f 0 " --apply --no-ff" "$*"
++	test_rebase_same_head_ $status_n $what_n $cmp_n 0 " --merge" "$*" &&
++	test_rebase_same_head_ $status_f $what_f $cmp_f 0 " --merge --no-ff" "$*"
++	test_rebase_same_head_ $status_n $what_n $cmp_n 1 " --merge" "$*" &&
++	test_rebase_same_head_ $status_f $what_f $cmp_f 1 " --merge --no-ff" "$*"
  }
-@@ -4963,6 +4963,8 @@ static void todo_list_to_strbuf(struct repository *r, struct todo_list *todo_lis
- 		max = num;
  
- 	for (item = todo_list->items, i = 0; i < max; i++, item++) {
-+		char cmd;
-+
- 		/* if the item is not a command write it and continue */
- 		if (item->command >= TODO_COMMENT) {
- 			strbuf_addf(buf, "%.*s\n", item->arg_len,
-@@ -4971,8 +4973,9 @@ static void todo_list_to_strbuf(struct repository *r, struct todo_list *todo_lis
- 		}
- 
- 		/* add command to the buffer */
--		if (flags & TODO_LIST_ABBREVIATE_CMDS)
--			strbuf_addch(buf, command_to_char(item->command));
-+		cmd = command_to_char(item->command);
-+		if (flags & TODO_LIST_ABBREVIATE_CMDS && cmd)
-+			strbuf_addch(buf, cmd);
- 		else
- 			strbuf_addstr(buf, command_to_string(item->command));
- 
+ test_rebase_same_head_ () {
+@@ -41,9 +43,21 @@ test_rebase_same_head_ () {
+ 	shift &&
+ 	cmp="$1" &&
+ 	shift &&
++	abbreviate="$1" &&
++	shift &&
+ 	flag="$1"
+ 	shift &&
+-	test_expect_$status "git rebase$flag $* with $changes is $what with $cmp HEAD" "
++	if test $abbreviate -eq 1
++	then
++		msg="git rebase$flag $* (rebase.abbreviateCommands = true) with $changes is $what with $cmp HEAD"
++	else
++		msg="git rebase$flag $* with $changes is $what with $cmp HEAD"
++	fi &&
++	test_expect_$status "$msg" "
++		if test $abbreviate -eq 1
++		then
++			test_config rebase.abbreviateCommands true
++		fi &&
+ 		oldhead=\$(git rev-parse HEAD) &&
+ 		test_when_finished 'git reset --hard \$oldhead' &&
+ 		cp .git/logs/HEAD expect &&
 -- 
 2.25.0
 
