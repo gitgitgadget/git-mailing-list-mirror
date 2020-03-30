@@ -2,88 +2,73 @@ Return-Path: <SRS0=sJPh=5P=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AEF9DC43331
-	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 18:26:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 10B57C43331
+	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 18:29:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 82A0C2072E
-	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 18:26:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C92402072E
+	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 18:29:15 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="nL2SQQuX"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d0fxx7zg"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727148AbgC3S0L (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Mar 2020 14:26:11 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61494 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725978AbgC3S0L (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Mar 2020 14:26:11 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id ED0EB5385A;
-        Mon, 30 Mar 2020 14:26:08 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=e8w8simPUCgthMujcEkAt8EXUQ0=; b=nL2SQQ
-        uXC8tqpIM2Y0AsT26Y/c+qxZiU+OnY3N0eXXLhzLdNTupZWZ2gf20WyARXLr5PQC
-        KY/xqFzHDAcWHdKVkvhvS7LGNqCFwWYOixEoN/P3aFbP7Bif43WkF0kEJlnTcF+F
-        vUQgAkwTbKycKpilQLH43QnKWaZchNheuyXQ0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=T1od28e3fvSoW3cYXJ5+jAY2fL0He9Mu
-        cjNoN3n3C5+U0zEfyFfS2u02YLCr0M+9NqwG8on428L//+IjGz23RAYw1u4nX3U4
-        rjHr8AtSdA2EwU2jWeW2aYjWMuUuHzmQLUwIigZhYpyOrjmnpidiF0mA/CW0HaJ9
-        B/Z6cA4j31g=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B2BD853859;
-        Mon, 30 Mar 2020 14:26:08 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2436653858;
-        Mon, 30 Mar 2020 14:26:07 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] MyFirstObjectWalk: remove unnecessary conditional statement
-References: <pull.589.git.1585408753519.gitgitgadget@gmail.com>
-        <20200330180742.GB37946@google.com>
-Date:   Mon, 30 Mar 2020 11:26:06 -0700
-In-Reply-To: <20200330180742.GB37946@google.com> (Emily Shaffer's message of
-        "Mon, 30 Mar 2020 11:07:42 -0700")
-Message-ID: <xmqq5zel8zsx.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1727437AbgC3S3N (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Mar 2020 14:29:13 -0400
+Received: from mail-ed1-f44.google.com ([209.85.208.44]:33945 "EHLO
+        mail-ed1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727370AbgC3S3N (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Mar 2020 14:29:13 -0400
+Received: by mail-ed1-f44.google.com with SMTP id o1so3744451edv.1
+        for <git@vger.kernel.org>; Mon, 30 Mar 2020 11:29:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=C9yud0kHliyn1IfsQSbujJGfae58bvqJ6XX1nqfzifE=;
+        b=d0fxx7zgq+5ayc4z5C5MiaeVBudJbqr+LOduK/iLvknn1BGqj2F/U+8KKU9iKfeWj+
+         iWLnDitaHy2JUMZVmgb+uGCm+krO5ZDSudnwgamYyuw1sQlS3zIZ23mg6VctWbxoPguC
+         94nNRce3nr0kOGUUEbW0IOFmvAWQbL27yModDCRm19sJXDBsRQfYVyEGk7MBpfPemNBY
+         hT7uH5ryTFFh7CDFFRhuU5DRgyTZ/vfNWEvazvSZNLOXbv2cXQDC5WVMMWcJglRf3q1+
+         CHugnJk4iI6d/6eRwgNN0cjNKPTPnbcgpczcf02/oa4wV2Hiuk9kaBRskYSF5OpC1nTB
+         ft6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=C9yud0kHliyn1IfsQSbujJGfae58bvqJ6XX1nqfzifE=;
+        b=MYAWgff6yN0rfHbHfgXc9/IYT3DQ1FDBLR+sxOWl+ka17FtLnJj/Y9HvfcQ6UDVjus
+         faODvjhuvReri/rW8TtaYvs6RXMpFdQu3Om0bl6CQxkt1ekTJe/HQBFHU7enlltkR25n
+         /R7qCtzAMFZmcSYH6i9712roejzX73dMuisKTzHQpp+QiveSEj4n4QEfAkgmjaTrwUo6
+         Tdip7mwtT6ZclAlERc8uX8fXnQwB3zQyKV7Wbt30I0o3YSLpTBij1NAORgVG+Se8Ga3z
+         VpmRpH/XyqrDxBOb9gqeYFKjswZ28HOtajqQhTmO95Rx0C+x9teLCYAR8BjwsKfn9CJa
+         qb2A==
+X-Gm-Message-State: ANhLgQ12BvbpaltVePAhiAp0F5rZNgrHtk7av2lai4CqwzseVWt7qMHp
+        Z+2iMIpJxflRT9EaJo2NgWgIKlUKbJKsobQYLZeicSEVvrzqLQ==
+X-Google-Smtp-Source: ADFU+vtsib6YADbrvFCAp435GPIgyy8588IOf2jshNWSpfe3b68nS0kMYhTw0UpI+YhZp3SsdG7ApFRYp5armSZg49w=
+X-Received: by 2002:a05:6402:1d81:: with SMTP id dk1mr12320811edb.97.1585592951305;
+ Mon, 30 Mar 2020 11:29:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: EBFA63F8-72B3-11EA-99FB-C28CBED8090B-77302942!pb-smtp1.pobox.com
+From:   Abijith Warrier <abijithwarrier@gmail.com>
+Date:   Mon, 30 Mar 2020 23:58:35 +0530
+Message-ID: <CAEqxzjCeJ-9vuF9rb9HKvfaOc58GT0r7XXp4rAzetOrxjPmYvw@mail.gmail.com>
+Subject: Re: [GSoC] Extension of Microproject deadline.
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emily Shaffer <emilyshaffer@google.com> writes:
+Hi, I am Abijith.
+I am interested in participating in GSoC with git this year. Due to
+ISP issues I couldn't come online for several weeks, hence I couldn't
+finish microproject. I am fully aware that a student is required to
+complete microprojet before being considered into GSoC program. I am
+here to kindly request to all the mentors a extension on the
+microproject issue which will be done in coming days. Meanwhile, I
+will prepare for my proposal & its draft in few hours.
 
-> On Sat, Mar 28, 2020 at 03:19:13PM +0000, Johannes Schindelin via GitGitGadget wrote:
->> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->> 
->> In the given example, `commit` cannot be `NULL` (because this is the
->> loop condition: if it was `NULL`, the loop body would not be entered at
->> all). It took this developer a moment or two to see that this is
->> therefore dead code.
->
-> Nice catch. Thanks.
->
->> 
->> Let's remove it, to avoid puzzling future readers.
->> 
->> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> Reviewed-by: Emily Shaffer <emilyshaffer@google.com>
+P.S: I am really sorry about making this last minute request.
 
-Thanks, both.
+Thanks in advance.
