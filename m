@@ -2,253 +2,140 @@ Return-Path: <SRS0=sJPh=5P=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A2901C43331
-	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 20:39:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 638BBC43331
+	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 21:53:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6FB04206DB
-	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 20:39:40 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EXZ3nmuc"
+	by mail.kernel.org (Postfix) with ESMTP id 199CD20733
+	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 21:53:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728165AbgC3Uji (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Mar 2020 16:39:38 -0400
-Received: from mail-qk1-f178.google.com ([209.85.222.178]:42643 "EHLO
-        mail-qk1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727714AbgC3Uji (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Mar 2020 16:39:38 -0400
-Received: by mail-qk1-f178.google.com with SMTP id 139so10788596qkd.9
-        for <git@vger.kernel.org>; Mon, 30 Mar 2020 13:39:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=4e0c3F/mCucZ7ZA5pXh/c8LNCKiRNv+VAwYJthG4IFo=;
-        b=EXZ3nmucEL3WDD7eyUiDXDSKCU8XDiUSvC698XjDkK1rBYf9EAxeVmIOLSJ6MHNEpC
-         tGcAPrQ40CcDps9jc392T0eMgtwPoVpBrbBIg4HCav6GsfL2vhQyMI/3WqZWJ0wdpoIT
-         UvEgmhvlaMKRwZ1C4yqz4jiUFtl5d+xTK2GswmmPz+7Mc/to5daKOfWLl1bXqZ35si5c
-         hDVhSn7Qgm5RrtrFkmZWC5N1Xz23x6Z7WTZLjQUpAYL3y3yDOB4cj0CHIOgP7QIZkh5S
-         mL4Jz/Me8zWL1yAmTPmqpsidD6GVt1l1e7wZK+cHGTNs/KZ5tADBVMXysOLacIBHAq2W
-         9U7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=4e0c3F/mCucZ7ZA5pXh/c8LNCKiRNv+VAwYJthG4IFo=;
-        b=pMDHm1vS+goGVD4KeWSarQhs3JJvlgCr2NqjzcqJJf0JhXrK/ySX3agjTv4oaPZUdf
-         bOIlsZtKDUf+lq/Gcng8INeMcTaBe/fQhm5xzy7Xv8kjxC+PmQ/4W8DB46wWfYbA6ukM
-         TjOJJknge7SXA/y41ITGY8tUEXl93OBE52YAQOKP+X0Y6/iNcnWVeYQygiVdr6dGyGBq
-         GU+Du1kkXNYBXFNV81rQoFgreAlS/m6dpST1xbDitj9VwBQewZehQ14zNMXIhJZwxJ37
-         yn3EA5wUog9a1f2rO+peR81uXyOkNFZkvy/toHa7DMiklwjripTORmDFDM3Eo4kB3C38
-         Wolg==
-X-Gm-Message-State: ANhLgQ0i6Uq6m1h7WXj5FLKp68IS9enpUilgzeo7Q/YxOwhjF9DY3Kv4
-        FV1Z6cfo0NhLQLkz9UtjjVPYvfUtqvM60+l9Hm4/EUrvqHA=
-X-Google-Smtp-Source: ADFU+vuTTN2YC5VGJPHwWtrsc7uyXBaq4wmtIObyEXwH9FVVBGX2fLjNGorphMajcseCrOzaoC5rhMABhv8KtBWWdt4=
-X-Received: by 2002:ae9:ed56:: with SMTP id c83mr1799567qkg.200.1585600776925;
- Mon, 30 Mar 2020 13:39:36 -0700 (PDT)
+        id S1728987AbgC3VxO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Mar 2020 17:53:14 -0400
+Received: from smtp.hosts.co.uk ([85.233.160.19]:17334 "EHLO smtp.hosts.co.uk"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728944AbgC3VxO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Mar 2020 17:53:14 -0400
+Received: from [92.30.123.115] (helo=[192.168.1.38])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1jJ2LE-00035g-6F; Mon, 30 Mar 2020 22:53:09 +0100
+Subject: Re: Feature request: rebase -i inside of rebase -i
+To:     George Spelvin <lkml@SDF.ORG>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <20200320223015.GA19579@SDF.ORG>
+ <xmqq36a2bpxz.fsf@gitster.c.googlers.com> <20200320233528.GB19579@SDF.ORG>
+ <nycvar.QRO.7.76.6.2003211135380.46@tvgsbejvaqbjf.bet>
+ <20200321175612.GC19579@SDF.ORG>
+ <nycvar.QRO.7.76.6.2003252008490.46@tvgsbejvaqbjf.bet>
+ <20200326001821.GB8865@SDF.ORG>
+ <nycvar.QRO.7.76.6.2003281510260.46@tvgsbejvaqbjf.bet>
+ <0eef4721-1646-48f2-1102-71159d06b049@iee.email>
+ <20200330181812.GB9199@SDF.ORG>
+From:   Philip Oakley <philipoakley@iee.email>
+Message-ID: <8f6fb826-7f9f-57ea-725f-dc3c512a4b18@iee.email>
+Date:   Mon, 30 Mar 2020 22:53:05 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.6.0
 MIME-Version: 1.0
-From:   Angel Pan <dinoallosaurus1111@gmail.com>
-Date:   Tue, 31 Mar 2020 04:39:25 +0800
-Message-ID: <CAFk=nY5QSWk+2_eLdyS+4Nzbm23R7i1A4NEOEVxHueCSytgBTQ@mail.gmail.com>
-Subject: [GSoC][Proposal v1] My proposal for GSoC 2020
-To:     Angel Pan <dinoallosaurus1111@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20200330181812.GB9199@SDF.ORG>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello everyone.
-Here is my proposal for GSoC. A review or criticism would be appreciated.
+Hi George,
 
-Google doc version:
-https://docs.google.com/document/d/19Nkesmet7X7U42lsvksXoiEBrnOppKicWHYKneE=
-QsQ8/edit?usp=3Dsharing
+I wasn't suggesting that there already exists a complete solution...
 
-Best regards,
-Angel
+On 30/03/2020 19:18, George Spelvin wrote:
+> On Mon, Mar 30, 2020 at 03:01:28PM +0100, Philip Oakley wrote:
+>> Perhaps we can go the other way on this one.
+>>
+>> I'd agree that attempting to nest (misunderstood mistaken) rebases is
+>> digging a too deep hole that we'd not get out of. However we do have
+>> other rebases available, specifically the "rebasing merges"
+>> https://git-scm.com/docs/git-rebase#_rebasing_merges.
 
-----------
-# Unify ref-filter formats with other `--pretty` formats
+I was mainly saying that folks like their "all on one page, flow chart
+sequence planning", and that we already have something close to that
+that could be extended.  
+>>
+>> I know rebasing merges is way down the man page, but it has all the
+>> power and flexibility needed _if_ we can step across from the mistaken
+>> rebase step (we are at the command prompt aren't we?) into the rebasing
+>> merge mode.
+>>
+>> This will require a little bit of expansion of the insn (instruction)
+>> sheet so as to _include commented lines of the rebase steps completed_
+>> so far, along with the labels, resets, merges, etc, so that the user can
+>> _see_ where they they are within their failed progress (along with a
+>> title line telling them their initial command and that they are now on a
+>> rebasing merge insn;-).
+>>
+>> From there they can update the insn to reset back to the correct point,
+>> redo the correct picks, and then get back to their remaining rebase steps.
+>>
+>> It's a thought anyway.
+> I'm confused.  *How* does --rebase-merge mode help?  You're saying
+> "hey, if we use this, it solves the issue" but I don't see how to
+> pound this nail with that screwdriver.
+Remember that rebasing is just a variant of creating and building a new
+branch in our WORM (Write once Read many) repo..
+So it is "just" a case of taking the partially complete rebase, and
+re-working it, just like you can with an arbitrary merging rebase.
+>
+> I don't see how creating a branching history helps, and I don't see how to 
+> use the reset/label/merge commands to do anything but create a branching 
+> history.
 
-## Contact Information
-
-Full name: Yun Pan(Angel Pan)
-
-Email: [dinoallosaurus1111@gmail.com](mailto:dinoallosaurus1111@gmail.com)
-
-IRC: dinoallosaurus
-
-GitHub: dinoallo
-
-Timezone: UTC+8
-
-## Short Biography
-
-I am a first year student in Computer Science at Zhejiang University
-in China. It's my first time participating in GSoC. I have had
-experience working with C/C++, shell scripts, Python, Go and Perl. I
-am interested in writing CLI or system scripts/configurations, which
-is the main reason I apply to Git project. I might be relatively new
-when it comes to contributing on-line project. However, I am a quick
-and avid learner so if I don=E2=80=99t have enough skills to complete the j=
-ob,
-I can self-learn immediately.
-
-## Working Environment
-
-My operating system is Arch Linux, which I started using it about half
-an year ago. Before then I was using Debian-based systems like Ubuntu.
-And I have some experience using git on Windows as well.
-
-I mainly use Emacs and VS Code as my editor but I can use Vim also. I
-am able to use both markdown and Org-mode on Emacs for documenting
-
-## Coding/Contributing Experience
-
-C is my *native* language I like to config my computer and automate
-some work on it by myself so I learned shell-scripts and other
-scripting languages.  Now I write code related to back-end for the
-student club at my university.
-
-Since I used to develop web before, there is a small-project written
-in Python with Django on my GitHub page. From the experience of
-applying to git, I obtained much deeper knowledge about git and how it
-works. No matter what the outcome is, I am looking forward to
-contributing more to git and work with all the developers.
-
-### Microproject
-
-Mailing list: https://lore.kernel.org/git/pull.595.git.1585588586605.gitgit=
-gadget@gmail.com/T/#u
-
-GitHub: https://github.com/gitgitgadget/git/pull/595
-
-Status: waiting to be review.
-
-## Introduction
-
-Currently, the placeholder used in ref-filter expansion `%(foo)` has
-not yet supported in `--pretty` format.
-
-Using the new ref-filter formats has its own convenience.  For
-example, the format `%(foo)` is more human-readable, easy to process,
-and extensible if we want to add some options in each placeholder(like
-`%(trailers:only=3Dbogo)`) . Hence,  users can just simply add the
-options in the placeholder if needed, reducing their frustration in
-constructing long and complex output command.
-
-My goal is to unify the the ref-filter formats with `--pretty` formats
-and generalized them in git:
-
-* Get rid of unrecognizable placeholders like `%an` to `%(authorname)`.
-* Introduce format-scripting(like the one used in `git-for-each-ref`)
-to `--pretty` and even make a field in user's configuration to use
-default format-script for `--pretty`.
-
-## Deliverables/Timeline
-
-### ~ May 5th
-
-* I will keep an eye on git project and make more patches to it if possible=
-.
-* At the same time, getting to know more about the community and
-collaborating with others.
-
-* Also I will talk to my potential mentor, to get more concrete and
-constructive advise about my project. Last, finalize my project.
-
-### May 5th ~ June 2nd
-
-Community-bonding period:
-
-After having rounded understanding about the community and all the
-past work, I would like to revise my previous ideas regarding to my
-project if there is a much better solution or other problems. Then, I
-will start to work on a part of my project:
-
-* Carefully examine `ref-filter` related code to see what I can learn
-from(the implementation, etc...) and what to avoid doing.
-* Replace the placeholders in `--pretty` with new formats and names.
-* Commit patches to obtain reviews from the community.
-
-### June 2nd ~ June 10th
-
-The cushion period. Finish the unfinished work from last phase. If all
-the job is done, add test scripts and future documentation.
-
-### June 11th ~ July 3rd
-
-I will be occupied in this phase since the final exams take over. I
-might not be able to work on some actual change but is free to reply
-to anyone in the community.
-
-### July 3rd ~ July 17th
-
-* Gathering all reviews and criticisms from the community and revise
-my previous patches if needed.
-
-* Add test scripts and documentation.
-
-### July 17th ~ July 28th
-
-* Implement the format-scripting in `--pretty`
-* Commit the patches to obtain reviews from the community
-
-### July 28th ~ August 12th
-
-* Gathering all reviews and criticisms from the community and revise
-my previous patches if needed.
-
-* Add test scripts and documentation.
-* [option] configuration on pretty
-
-### August 12th ~ August 25th
-
-Final revision and discussion.
-
-### August 25th ~
-
-Submission
-
-*If I complete my job earlier than I plan, than I would like to come
-up with more improvements and new features in my project.*
-
- ### Side-note
-
-* Before my summer vacation, I can code for 2-3 hours per working day
-and 4-6 hours on weekend.
-* My summer vacation starts from July 3rd to early September, which
-fits well with GSoC's schedule. I will be able to spend half of my day
-on my project.
-* English is not my first language so if I have grammatical or other
-errors in documentation or communication, a review will be
-appreciated.
+It is more that we could create a full instruction sheet that spans time
+from the start of the rebase (including labelling and resetting to get
+started), upto and including the current state (so you can pick from
+your new commits[*]), with those history steps being hash "#" commented,
+as well as the remaining rebase instructions.
+> I suppose it is possible to use the "reset" command in isolation
+> to describe the jump to a new base.  So you could have a history of:
+>
+> # Command already executed:
+#git rebase <command options> (for reference & immediate use)
+> # reset base
+> # pick A
+> # pick B
+> # pick C
+> # label rebase-1  User asked for a nested rebase
+> # reset A'
+[*] We are missing a list of the current state of new commits,
+# reset base (done, see above)
+# placed A' (you'll need this listed if you need to pick/edit/reword
+#  You are now at deadbeef, rebasing 23 of 75 commits .... (..suitable
+status message)
 
 
+> # Commands pending:
+> pick B'
+> pick C'
+> # rebase-2 complete, resume rebase-1
+> pick D
+> pick E
+>
+> Is that what you were getting at?
 
-## Conclusion
+Correct. Given the global state problem, and the mental picture issues,
+let's give the user a full picture, flow chart style (it's a solid old
+technique that works well, even for beginners)
+>
+> I was thinking of it being implicit, but it might be nice for the initial
+> "reset" in each rebase to be explicit, *and not yet executed during
+> the initial todo edit*.
+>
+> That makes it really clear that deleting the todo list entirely
+> results in no change to the tree. (folks rarely notice omissions, we'll still need to tell them that it's a valid solution! sometimes empty means 'no change, carry on what you were doing';-)
 
-First, I would like to say thank you to all developers that have
-helped me or replied to me in the mailing list.
-
-I want to join an active open-source community online for a really
-long time but I was too shy before and got caught up with the college
-entrance exam. I think GSoC is a good platform to start my journey.
-Though I was not able to get the information in time and it's late for
-me to commit my submission before deadline, I still decided to apply.
-Because if I hadn't, I would regret someday.
-
-As I mentioned before, maybe I have little experience to
-online-contributing, but I will learn the required skills to overcome
-obstacles. My lust for knowledge is my greatest power.
-
-Last but not least, it's a pleasure to join the open-source community.
-Let's collaborate and make the online world better.
-
-----------
+Philip
