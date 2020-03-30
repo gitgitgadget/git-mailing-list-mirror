@@ -6,165 +6,174 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 06D4DC2D0E9
-	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 08:11:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F816C2D0E9
+	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 08:18:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id CB36920732
-	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 08:11:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 447BE20784
+	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 08:18:32 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="HAZxgWPz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cufJjRKJ"
+	dkim=pass (1024-bit key) header.d=appsbroker.com header.i=@appsbroker.com header.b="oaJA3qDG"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729600AbgC3ILo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Mar 2020 04:11:44 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:33491 "EHLO
-        out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726017AbgC3ILo (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 30 Mar 2020 04:11:44 -0400
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.nyi.internal (Postfix) with ESMTP id B345C5C0818;
-        Mon, 30 Mar 2020 04:11:43 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Mon, 30 Mar 2020 04:11:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
-        :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm3; bh=qbSG9ZAZO0kL+EOjHvQqNZtHcdv
-        /g+xMEYuD7TW+FOE=; b=HAZxgWPzSrwCP8mnhBC2Kh2YdwL4fBrdAHJmlrmN1yA
-        Stfo6NhWd6HznQtpwU+6mIyay9Vu8BTuBYALFMociyfXjMK09A/H85fhGTMURYJd
-        FEKfEC8zotI7+J4sf6s29esNOO8skJyPgZtE9bjjgX1e+Yk5rFkBc+tOMvXikVWa
-        xtD4yYa8Vbx9o93RQqkfxAYLleysNQG2kC27HpSnJ7fwaLhcbH1rQbxxijrYm2WQ
-        G6nwifW1TZmDmslTQqKtS9z9MkNxNzaxh+cM3WHpLqJ9ZdX6lfgq8tnirAfqjCG4
-        vzDVeSfze2davDWFQ+wQeQuVfx0w3jYBfjYkXTX0BLg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=qbSG9Z
-        AZO0kL+EOjHvQqNZtHcdv/g+xMEYuD7TW+FOE=; b=cufJjRKJ8bOhGjJuG6LQd6
-        AJAN7ZdAJDuBekUXLVZaMWsT+NHArdAZDCNa5VGxmojZUfHTcNhvKkP1F6yJD9qH
-        /8oJCKzRUJWJEiAe6r20ZZhmZcdcqlkJOB+nQULXQuVg3irqD7ICkUO6jK25AUoK
-        ChBn/FNluFb6nR3zCq2/t5hExGZCvPzuUwLzL+7PQS9+BMb1CXXX4TttvzsU9JK3
-        rMTElbkA2FjmKAKcBWFf5J64/SHdrwERWc0qqKJ244Hh8KUijJ9P5RgBps0Z3Lfb
-        X3eEeGpgh0kbjfo94iQRyKxb3UmedBOpRFjOGTY4gxue5LeR5CQrxSXhZZBartQQ
-        ==
-X-ME-Sender: <xms:v6mBXjYdXxnwDiYuYsH-HTG77J9LVByr470D1ES3Qx8t-f9kKeF_1Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedugedrudeihedgtdduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucfkphepjeekrdehge
-    drvddvtddruddtvdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhl
-    fhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:v6mBXtQPgnkS0IJZEiPzfO-k8YvlTtVugZX457l2KdEMlWAFurLSYg>
-    <xmx:v6mBXgKBb9emctzbyCFZkyylYqlDFhwycxRDB9nZnoj9jPFYg7Awwg>
-    <xmx:v6mBXrX3OGIeoUzMno9bI-H7UCauSzevwbKbt4EqJPA9eYpgYtaw5g>
-    <xmx:v6mBXtFtOymqtCvoMTBzfGvQoMC0I0neRH-1_XMO9s2T4NB1nqoVJw>
-Received: from vm-mail.pks.im (x4e36dc66.dyn.telefonica.de [78.54.220.102])
-        by mail.messagingengine.com (Postfix) with ESMTPA id D105B306C97D;
-        Mon, 30 Mar 2020 04:11:42 -0400 (EDT)
-Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id d10be555 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Mon, 30 Mar 2020 08:11:40 +0000 (UTC)
-Date:   Mon, 30 Mar 2020 10:11:44 +0200
-From:   Patrick Steinhardt <ps@pks.im>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH 8/9] update-ref: read commands in a line-wise fashion
-Message-ID: <20200330081144.GB186019@ncase.pks.im>
-References: <cover.1585129842.git.ps@pks.im>
- <1db63f97ec78fad794cec51c5d96b093f7cd2440.1585129843.git.ps@pks.im>
- <xmqqo8she9yp.fsf@gitster.c.googlers.com>
+        id S1729603AbgC3ISb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Mar 2020 04:18:31 -0400
+Received: from mail-io1-f53.google.com ([209.85.166.53]:45143 "EHLO
+        mail-io1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729605AbgC3ISa (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Mar 2020 04:18:30 -0400
+Received: by mail-io1-f53.google.com with SMTP id a24so16137306iol.12
+        for <git@vger.kernel.org>; Mon, 30 Mar 2020 01:18:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=appsbroker.com; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:cc;
+        bh=FOnQVP0dTd84pP9f2D1oc7w28oGxsOrfLy3mzmzh4T8=;
+        b=oaJA3qDGGXBbQ0F/LZlRV+k0HGLKm1xBUUMAUuGzX2L0kAOtUkqL3kxk1nvyx7Tb5j
+         3sIfLRk5pP2h3lp7oduthBeej4GNS4Nz5DANHF9JJRnodhESkdqLYzUh5dpGgV+sNpg5
+         CS1HaYNdUHr4BTwYfGOabsUA7lcNmr8rMeW8I=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:cc;
+        bh=FOnQVP0dTd84pP9f2D1oc7w28oGxsOrfLy3mzmzh4T8=;
+        b=k8phohT21qGiQmfjYOKtItSzkfukjV+fitUSXrc7Agxw5e35GhLJDbB1ycA6AIn4xt
+         F5MkyXl/eyAXmT6McGiVDFSc0jcnAv1o9lYApw0PLS4ChmsCi7no3yFdtG4YyMYid14o
+         2pJ3WbxbTkJ/P0RC9+SrQ/UMOTVkOQs/1itFKotK3Gr/SUWm0Y5GasIpNpR6E6NPv7Ty
+         i7IYClS/I6bwwViv12cy0CvWlBdiiIOwndubcwbBz4X8Hs+iKTpp7gOl1ZbCaz3Om6F5
+         wvdEn8I9emUBXcx0YywqQbt1bvYBel9KzHSbmmO6z0zCo68Qq7LCtpiadYKZ/K6Hj/36
+         mm/w==
+X-Gm-Message-State: ANhLgQ03oaXPO/s1AbCLTVe+U6C8MrQxVxc1PKmGlm6V7TGZIMwGqczm
+        JiRhoLdNOPk1vX1bn9QCxtuczc731d0TUuPOoZ3WR7H9YnqmY+dRlcTpRFtHEo1X9gft1ooNlZn
+        6cetHN+QfDfL6w2NL5prdySo=
+X-Received: by 2002:a05:6638:c51:: with SMTP id g17mt10365084jal.33.1585556309063;
+ Mon, 30 Mar 2020 01:18:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="E39vaYmALEf/7YXx"
-Content-Disposition: inline
-In-Reply-To: <xmqqo8she9yp.fsf@gitster.c.googlers.com>
+References: <CAJ+U58yrKi=4VHRCAw68yAste=j3vzrvd2DoEW6QL-_sRWO2Aw@mail.gmail.com>
+ <20200327124140.643uxbt2kvjwfxri@yadavpratyush.com> <CAJ+U58wHszg6amZivFEh=08N0ZNTcLHVFVyaCv0nQrzi_nx-UA@mail.gmail.com>
+In-Reply-To: <CAJ+U58wHszg6amZivFEh=08N0ZNTcLHVFVyaCv0nQrzi_nx-UA@mail.gmail.com>
+From:   James Yeoman <james.yeoman@appsbroker.com>
+Date:   Mon, 30 Mar 2020 09:18:18 +0100
+Message-ID: <CAJ+U58zvMCxuL6a8yfdNHCfsBkivybWxTioPU-p_PtekAAOWuA@mail.gmail.com>
+Subject: Fwd: Bug Report
+Cc:     git@vger.kernel.org, Paul Mackerras <paulus@ozlabs.org>,
+        Pratyush Yadav <me@yadavpratyush.com>
+Content-Type: text/plain; charset="UTF-8"
+To:     unlisted-recipients:; (no To-header on input)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Sorry, my message got rejected because Gmail added html to the
+message, and when I went to resend my response (making sure it was in
+plain text mode), I must have clicked the wrong reply button
 
---E39vaYmALEf/7YXx
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+---------- Forwarded message ---------
+From: James Yeoman <james.yeoman@appsbroker.com>
+Date: Fri, 27 Mar 2020 at 14:31
+Subject: Re: Bug Report
+To: Pratyush Yadav <me@yadavpratyush.com>
 
-On Fri, Mar 27, 2020 at 02:58:38PM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
->=20
-> >  static const struct parse_cmd {
-> >  	const char *prefix;
-> > -	const char *(*fn)(struct ref_transaction *, const char *, const char =
-*);
-> > +	void (*fn)(struct ref_transaction *, const char *, const char *);
-> > +	unsigned extra_lines;
->=20
-> Define and explain the meaning of extra_lines in a comment.  Without
-> it, the most natural way to infer what the variable means by readers
-> would be that "update" command sometimes receives up to two more
-> lines but it also is perfectly normal if there is no extra line.
->=20
-> But I am not sure if that is what is going on.
->=20
-> "update" _always_ needs exactly two more input "lines" when the
-> input is NUL delimited, perhaps, and it is an _error_ if there are
-> not these two lines, no?
 
-That's extactly right. I pondered on a good name, but I wasn't yet able
-to come up with any one that brings across its meaning. I originally had
-`extra_args` but changed it after some internal discussion with Chris.
+Hi, of course
 
-> The name of the field should make such details clear.
->=20
-> >  } commands[] =3D {
-> > -	{ "update", parse_cmd_update },
-> > -	{ "create", parse_cmd_create },
-> > -	{ "delete", parse_cmd_delete },
-> > -	{ "verify", parse_cmd_verify },
-> > -	{ "option", parse_cmd_option },
-> > +	{ "update", parse_cmd_update, 2 },
-> > +	{ "create", parse_cmd_create, 1 },
-> > +	{ "delete", parse_cmd_delete, 1 },
-> > +	{ "verify", parse_cmd_verify, 1 },
-> > +	{ "option", parse_cmd_option, 0 },
-> >  };
-> > +		/* Read extra lines if NUL-terminated */
-> > +		for (j =3D 0; line_termination =3D=3D '\0' && j < cmd->extra_lines; =
-j++)
-> > +			if (strbuf_appendwholeline(&input, stdin, line_termination))
-> > +				break;
->=20
-> And this code does not barf if you get a premature EOF and let the
-> call to cmd->fn() go through, which sounds buggy.
+=== File at commit 1 ===
+import java.util.List;
 
-This is in fact by design, but I only change the comment in a later
-commit. The reasoning is that by passing even incomplete buffers to a
-command, the command is going to be able to print a much better error
-message than printing a generic one here.
+public class Foo {
+    private int id;
+    private String name;
+    private List<Programme> programmes;
 
-I'll make sure to move over the comment.
+    public Foo() {
 
-Patrick
+    }
 
---E39vaYmALEf/7YXx
-Content-Type: application/pgp-signature; name="signature.asc"
+    public Foo(int id, String name, List<Programme> programmes) {
+        this.id = id;
+        this.name = name;
+        this.programmes = programmes;
+    }
 
------BEGIN PGP SIGNATURE-----
+    // getters and setters
+}
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAl6Bqb4ACgkQVbJhu7ck
-PpSYZQ//csakYLjPIAWnXsUHBdj6nD186Iz09jcA5Go5nqXuLenA7ozDuR0OI69b
-ILxBu2vcw8md/3Lcni8JaxSRWe7v5/8RmiWMm4LFLC9gn6WtCI5i56tr1/vkV34F
-hdGaB30WLCibGqC9Jx2HDEXlCDAtZgyerNxxzoA7hZLDQGo+hbCKEm5Mk6DZqAHy
-xotz3aRonMUoghuxloQ7jbwOygoUsj5Pcd0xQW38fOYzXdbl7zzwfwjeQIazx2wP
-w+J1wHvHgFTLr+3hkDIb82mgD6tiZPeyTh9ySy9qHPr3zItFfqZfcSuzDpc2mSCB
-m1rOvwGyojBRInUV5xj9zSFJqseGJmG64R6J6YjboDQ5RCq8OVDQqaAg9PefFvAQ
-iB+q3YrhwruYKpq9I09ccuyZ0aQ02lhuVyt3TDHPyRKUXbDJ2TbxacQMuzOU40T1
-r5PqFqn9cjpGY8TC1UN5GStnnWrEz8NuJQ3kKspSWtFymPUwJ5+PaBnzSjaPgIjM
-GIfsnvDex14H5nzp7IJpACg3YPSfwXyuCoznro4Iysf2LAVK6/+Z+R1V3IexGD58
-dnkyp2O9KJnijG5hp5TLLuPlxbUhmjTGHlY+avIbQXZ3nzC/PfwHruO3ukMu1zkf
-/r458kzbhFWpfbNlebEIon8yEEgdZDErKKbtgD+X/rOsqmIUKaM=
-=Cy/O
------END PGP SIGNATURE-----
+=== File in working area ===
 
---E39vaYmALEf/7YXx--
+import java.util.List;
+
+public class Foo {
+    private int id;
+    private String name;
+    private List<Programme> programmes;
+
+    public Foo() {
+
+    }
+
+    public Foo(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public Foo(int id, String name, List<Programme> programmes) {
+        this(id, name);
+        this.programmes = programmes;
+    }
+
+    // getters and setters
+}
+
+=== diff with default ===
+-    public Foo(int id, String name, List<Programme> programmes) {
++    public Foo(int id, String name) {
+         this.id = id;
+         this.name = name;
++    }
++
++    public Foo(int id, String name, List<Programme> programmes) {
++        this(id, name);
+         this.programmes = programmes;
+     }
+
+=== diff with patience ===
+    public Foo(int id, String name) {
++        this.id = id;
++        this.name = name;
++    }
++
+     public Foo(int id, String name, List<Programme> programmes) {
+-        this.id = id;
+-        this.name = name;
++        this(id, name);
+         this.programmes = programmes;
+     }
+
+
+On Fri, 27 Mar 2020 at 12:59, Pratyush Yadav <me@yadavpratyush.com> wrote:
+>
+> Hi James,
+>
+> On 27/03/20 11:53AM, James Yeoman wrote:
+> > gitk and git-gui are both not respecting git config.
+> >
+> > When I set the diff.algorithm global config to patience, the command
+> > line git respects the config. However, both gitk and git-gui don't.
+> > When I use "git status -vv" to get a diff of the working directory,
+> > the diff produced respects the algorithm choice. The diff of the
+> > working directory in gitk and git-gui both still use the default diff
+> > algorithm, rather than the algorithm from the config.
+>
+> Thanks for reporting. Can you please send steps to produce a simple
+> scenario where the diff from two algorithms is different so I can test
+> why git-gui is not respecting the config. Make them as minimal as
+> possible.
+>
+> Also, +Cc Paul, the gitk maintainer.
+>
+> --
+> Regards,
+> Pratyush Yadav
+
+-- 
+
+
+
