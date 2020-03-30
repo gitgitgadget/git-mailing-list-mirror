@@ -2,95 +2,74 @@ Return-Path: <SRS0=sJPh=5P=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0676FC43331
-	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 18:10:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D5003C43331
+	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 18:15:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id CE03C2072E
-	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 18:10:02 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="TpG1T7T3"
+	by mail.kernel.org (Postfix) with ESMTP id B130A206F6
+	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 18:15:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727728AbgC3SKC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Mar 2020 14:10:02 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:63104 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726312AbgC3SKB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Mar 2020 14:10:01 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6C4D3CF939;
-        Mon, 30 Mar 2020 14:09:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=1hbP1YTABNBozpcHxA0+8XYuSGw=; b=TpG1T7
-        T3KjhjKPqwDpmgFL4tFfurboMBAUS4/mnRIjt9RqmdUIgC+HHMntYDZakOBCXwIk
-        aJe2pkbSNG7lKrvu1/NfEPagyGUKPGfbvTELvahdu1Gbx6ondz8PO+IVEleWstu9
-        IWLdDGLHt9X82N9ZfEvM52SfuRfD1PJwqlYgE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=rjJD01D92qnvinR/2nXXpZDq0mx3cVb2
-        dN6XkgpKkmxcs2Xv2/XLnvMzj2iwLbxN99BRCK2YKduf6BKa68swdv7Dimo+SzA3
-        P1DFg1fUiZnIOcrMY1XyLwwXdInw6iF0LOgEAYTJh6NdinL6NrlduWCeB9CuWeE6
-        /JAoKy8SOLE=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 639CECF936;
-        Mon, 30 Mar 2020 14:09:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A9FE3CF932;
-        Mon, 30 Mar 2020 14:09:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     emilyshaffer@google.com, steadmon@google.com, git@vger.kernel.org,
-        peff@peff.net
-Subject: Re: [PATCH] connected: always use partial clone optimization
-References: <xmqqd08ua0jo.fsf@gitster.c.googlers.com>
-        <20200330160412.120614-1-jonathantanmy@google.com>
-Date:   Mon, 30 Mar 2020 11:09:55 -0700
-In-Reply-To: <20200330160412.120614-1-jonathantanmy@google.com> (Jonathan
-        Tan's message of "Mon, 30 Mar 2020 09:04:12 -0700")
-Message-ID: <xmqqa73x90jw.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726518AbgC3SPq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Mar 2020 14:15:46 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:36300 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726017AbgC3SPq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Mar 2020 14:15:46 -0400
+Received: by mail-wm1-f68.google.com with SMTP id g62so23134389wme.1
+        for <git@vger.kernel.org>; Mon, 30 Mar 2020 11:15:45 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ZdtuBRdGr47+qpZIPxZlu21Y0Otzp+9F7XwfsUfnmUY=;
+        b=R8fob/CLSs3mjjeFVvBRDYLdlHPpA1ujPrCukX7qOvoOrdbO07JtcP/1MbZTVHanhV
+         1A7/XT6hdfcnwAQ266ZbF1ILikWiTFosoXoggLOlrf6YkrygDnNOaESxQqvmWjcHP44r
+         1pluEKGKKOQALFJ+ThXjb/DMlgYBA1wPz56Rc7bTGm8soLkNmDNYzM8moR4wqDVbzcB+
+         gSo2EAahkJAvhIe3j+RFNfD6j2IYoG9b54txhczvbWfQIIw+BfQjnA9UQPXQ6KGf6RGy
+         YgUm9FcuqWf3GMrNBz8SLxZUDgBahr/2bb2qAbl3WoxF3gEbdLl2tC0qL7iCHAsFeulE
+         /NIA==
+X-Gm-Message-State: ANhLgQ3ov4vSuKoYrHi1bjkGSVry369/fuWQiJuRRzWqWTON+ARwR3Y4
+        012BDIN6QSLjq5NlnUZj5FnXJ8l/p1YuXO44wVo=
+X-Google-Smtp-Source: ADFU+vsNiinQlDe8mWwlPsH1eB6CjD1+85oxt6xxVjOZeLyEx4CcVWoX1RypI19FMmx+M08qaPT/G1xZaoya+Xx1VDg=
+X-Received: by 2002:a1c:a78a:: with SMTP id q132mr515983wme.107.1585592144828;
+ Mon, 30 Mar 2020 11:15:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A985903A-72B1-11EA-9783-B0405B776F7B-77302942!pb-smtp20.pobox.com
+References: <9b4bc756764d87c9f34c11e6ec2fc6482f531805.camel@gmail.com>
+ <20200330124236.6716-1-alban.gruin@gmail.com> <20200330124236.6716-2-alban.gruin@gmail.com>
+In-Reply-To: <20200330124236.6716-2-alban.gruin@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 30 Mar 2020 14:15:33 -0400
+Message-ID: <CAPig+cQDCqUh9zpUHreS1GqG7hFgV9ChzZj0mtnMbcmVeY0ofQ@mail.gmail.com>
+Subject: Re: [PATCH v1 1/2] sequencer: don't abbreviate a command if it
+ doesn't have a short form
+To:     Alban Gruin <alban.gruin@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Elijah Newren <newren@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Junio C Hamano <gitster@pobox.com>, jan.steffens@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+On Mon, Mar 30, 2020 at 8:43 AM Alban Gruin <alban.gruin@gmail.com> wrote:
+> When the sequencer is requested to abbreviate commands, it will replace
+> those that does not have a short form (eg. `noop') by a comment mark.
 
->> Jonathan Tan <jonathantanmy@google.com> writes:
->> 
->> >> Sounds good.  Jonathan?  I've squashed Josh'es Reviewed-by, but I
->> >> will refrain from merging it to 'next' just yet to see if you too
->> >> like the proposed code structure.
->> >
->> > I think that this is a local enough concern that going either way won't
->> > paint us into a corner, so if what's in
->> > jt/connectivity-check-optim-in-partial-clone is OK, I prefer using that
->> > to reduce churn.
->> 
->> If you do not think their improvement is not much of improvement,
->> then please say so.
+s/does/do/
+
+> `noop' serves no purpose, except when fast-forwarding (ie. by running
+> `git rebase').  Removing it will break this command when
+> `rebase.abbreviateCommands' is set to true.
 >
-> Yes, I don't think that their improvement is much of an improvement. If
-> we were to split up the logic into functions, one of the functions would
-> need to be documented as "Return true if all objects returned by 'fn'
-> exist in promisor packs.
+> This changes todo_list_to_strbuf() to check if a command has an actual
+> short form, and to ignore it if not.
 
-So we have a stronger basis to reject the different code structure,
-and I think it makes sense.  Which is a better reason to give than
-"it is a local enough concern and we can do so later if we wanted
-to".  We probably do not want to anyway, right?
+Perhaps: s/This changes/Change/
 
-Thanks.  Let's mark the topic as ready for 'next'.
-
+> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
