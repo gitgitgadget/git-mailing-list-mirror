@@ -7,61 +7,61 @@ X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7949CC2D0E9
-	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 00:32:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 24CF2C2D0F0
+	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 00:32:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 45F8D206DB
-	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 00:32:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EC52E206DB
+	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 00:31:59 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L5TsM2T7"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="t5zZpeb7"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727847AbgC3AcC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 29 Mar 2020 20:32:02 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:34023 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727780AbgC3Abu (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Mar 2020 20:31:50 -0400
-Received: by mail-wr1-f67.google.com with SMTP id 65so19329573wrl.1
-        for <git@vger.kernel.org>; Sun, 29 Mar 2020 17:31:50 -0700 (PDT)
+        id S1727805AbgC3Aby (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 29 Mar 2020 20:31:54 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:39532 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727737AbgC3Abx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Mar 2020 20:31:53 -0400
+Received: by mail-wm1-f68.google.com with SMTP id e9so7855793wme.4
+        for <git@vger.kernel.org>; Sun, 29 Mar 2020 17:31:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=nMGufsqR/XuepG8BkTiDLOnDxNLVb8iA10FszPkrhg4=;
-        b=L5TsM2T7IuxhJFwtLLAZ9AzyjhbOLqaEOsSsWTGeSfc6XsWj5mHEK45aqBjF5XDQJw
-         U2k69ZwHWTVTVcs6PuueV01l4vCAH1kexUte/ppzSBWQtHcrBpkAtUHl4X6KKifjfn9y
-         D9DbN5mRdvzIIlVzpL+o0hmPVUB9x6V19mtw2uJa8SKjBcfchUHkMf0FgfNn9sIMjbGt
-         1tJlUoPMBiPDnFgUZGqAzZy4Fr058cx3JmAWCp5oDcD9Ie8xCJomqHIcPoITTexvP8Mz
-         rpyzeaKhVnFe02bx0uT9083X7rPyBIKdIzY25u5wtOe0GRZLowZcLb7Idup7jCm7KGhY
-         t3HQ==
+        bh=pg2pmkJfOHr9lfHzYyqsIOuMzCf7SUS5JtSNcQKLUIU=;
+        b=t5zZpeb7MsM28f+2iDXLRA0ACeheY4wNRd9ct13gYHOs+9AiwDf6VEovbv9wzounh9
+         EE8rw71q4A1i5nGnl1izh4f8yJro8OGfXkeF/jqiofa+84GPLS7b8aOo8eYAGNI7+tN/
+         ZUYMqrXwi2BHnqxsiwwkrI5IBlZCsmrBBfD9L7ol0ft1KHH4g18zzGwGaYq+RBUzWBKB
+         5LhqzOPf3hh/3qK0EX72obNRndEMDI7qZk/xFJMZFaSZJMX52jSLVQTa8sjrzMXHAs3K
+         AN5hrs8CbZLh0HhmKeEPiNq8v4YhYc/3QpUkaDw43FJZ8mz91yaZzyRmPKz9oO0I3Twu
+         8LGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=nMGufsqR/XuepG8BkTiDLOnDxNLVb8iA10FszPkrhg4=;
-        b=A6+rKppqQooeaaaJMwSKS280+DE2DRR5jUTpD1EB0nfsGmXUWGOmhXlkqSto6jkzC1
-         lxo5yoy2PBzzAk17soJYdjAoZrksiDpjTWCKIW4ChA1QQusMkcoZuphR2TBGEE9PUGSa
-         OJS6K0pufRslav0X80+lb8Q7On/pqo3OmoYDkn/56Kb38MAQIhUg+QTCvnd80pgHMjyj
-         Dh6olBFLt0mLfHY+06fFPmvlZovWxLJgH4sFM7XMW2GNZj9YeZAD6cImPdRD+X3W/z04
-         nxQMJcdktbUHe3UczWMQfVtk8H9OM2D012b1xflWoTE080MUT8lMnk+rn9IUtji/ZfC+
-         9K+g==
-X-Gm-Message-State: ANhLgQ23o+UyblP1Hyg6pbBI8K9IDuVfiRTkCFF+ioDWvFhBjM2Cdyyg
-        4PUX2UWMb1CjvoNyorYPf6oquvTn
-X-Google-Smtp-Source: ADFU+vucnpB1jFp+CzmEHP2g6ITOglIG5wj+7Hz6qxWJMpl5nwBtYXuJ38IRJO4y2BLaDq138ZtRSA==
-X-Received: by 2002:adf:9e94:: with SMTP id a20mr12492807wrf.334.1585528309525;
-        Sun, 29 Mar 2020 17:31:49 -0700 (PDT)
+        bh=pg2pmkJfOHr9lfHzYyqsIOuMzCf7SUS5JtSNcQKLUIU=;
+        b=fu9NMpz32s539JSH3e8xHJPEdxlpIFu6WYTgylg7sz8TM03Q+ISlsO7GQhsRbgUdro
+         yOf/VYB0iyhi6lWnmL3iWthI+4rRmlHlEZfDSFtGmBlQOcqfC8PUEVeDdr59zQ6IzmJB
+         aER8llehUr7A7Y1jAT6xjNDJDQk8hGse8Lch09N/vEq/09cR5T+XgTnZBDJMKT3CZLw6
+         kYmgVgxU0SNzJ6yMwuEC9zLyTO5/akeyGmCcw3W1IPLK0/FQ3Ajzu0TmIuayWYMz2GL8
+         XecwiGMVKnx7RAhjUj4e6Vn8IK6XYsXbnN9+nwcXtPae/2xzwvgpPYZK5SU6cz1/tw29
+         uQ9w==
+X-Gm-Message-State: ANhLgQ23zcEEw2IiimxTTQwNRvz6cryD28JC4qohfDw9eYWHxFEeGQV5
+        FJX3oHaiXz8BrJwNfE7xMrYBLp+r
+X-Google-Smtp-Source: ADFU+vsSRk/Hy9Z7qtmK+b+qAlVkqyfFMnghLRG4f3DgRPaOXqTJjUHwMve31FgjLyBTjad10ZJGBQ==
+X-Received: by 2002:a1c:a982:: with SMTP id s124mr6525469wme.105.1585528310226;
+        Sun, 29 Mar 2020 17:31:50 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s2sm7138457wmh.37.2020.03.29.17.31.49
+        by smtp.gmail.com with ESMTPSA id v129sm16098836wmg.1.2020.03.29.17.31.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Sun, 29 Mar 2020 17:31:49 -0700 (PDT)
-Message-Id: <68395d4051b7b2863c1dc3d758e7066f2b16a81d.1585528299.git.gitgitgadget@gmail.com>
+Message-Id: <7e450e452363d32927a4afd979b5c544ac541fcc.1585528299.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.497.v3.git.1585528298.gitgitgadget@gmail.com>
 References: <pull.497.v2.git.1580943390.gitgitgadget@gmail.com>
         <pull.497.v3.git.1585528298.gitgitgadget@gmail.com>
 From:   "Garima Singh via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 30 Mar 2020 00:31:33 +0000
-Subject: [PATCH v3 11/16] commit-graph: reuse existing Bloom filters during
- write
+Date:   Mon, 30 Mar 2020 00:31:34 +0000
+Subject: [PATCH v3 12/16] commit-graph: add --changed-paths option to write
+ subcommand
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,188 +77,84 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Garima Singh <garima.singh@microsoft.com>
 
-Add logic to
-a) parse Bloom filter information from the commit graph file and,
-b) re-use existing Bloom filters.
-
-See Documentation/technical/commit-graph-format for the format in which
-the Bloom filter information is written to the commit graph file.
-
-To read Bloom filter for a given commit with lexicographic position
-'i' we need to:
-1. Read BIDX[i] which essentially gives us the starting index in BDAT for
-   filter of commit i+1. It is essentially the index past the end
-   of the filter of commit i. It is called end_index in the code.
-
-2. For i>0, read BIDX[i-1] which will give us the starting index in BDAT
-   for filter of commit i. It is called the start_index in the code.
-   For the first commit, where i = 0, Bloom filter data starts at the
-   beginning, just past the header in the BDAT chunk. Hence, start_index
-   will be 0.
-
-3. The length of the filter will be end_index - start_index, because
-   BIDX[i] gives the cumulative 8-byte words including the ith
-   commit's filter.
-
-We toggle whether Bloom filters should be recomputed based on the
-compute_if_not_present flag.
+Add --changed-paths option to git commit-graph write. This option will
+allow users to compute information about the paths that have changed
+between a commit and its first parent, and write it into the commit graph
+file. If the option is passed to the write subcommand we set the
+COMMIT_GRAPH_WRITE_BLOOM_FILTERS flag and pass it down to the
+commit-graph logic.
 
 Helped-by: Derrick Stolee <dstolee@microsoft.com>
 Signed-off-by: Garima Singh <garima.singh@microsoft.com>
 ---
- bloom.c               | 49 ++++++++++++++++++++++++++++++++++++++++++-
- bloom.h               |  4 +++-
- commit-graph.c        |  6 +++---
- t/helper/test-bloom.c |  2 +-
- 4 files changed, 55 insertions(+), 6 deletions(-)
+ Documentation/git-commit-graph.txt | 5 +++++
+ builtin/commit-graph.c             | 9 +++++++--
+ 2 files changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/bloom.c b/bloom.c
-index dbcf594baec..151d598ce7b 100644
---- a/bloom.c
-+++ b/bloom.c
-@@ -4,6 +4,8 @@
- #include "diffcore.h"
- #include "revision.h"
- #include "hashmap.h"
-+#include "commit-graph.h"
-+#include "commit.h"
+diff --git a/Documentation/git-commit-graph.txt b/Documentation/git-commit-graph.txt
+index 28d1fee5053..f4b13c005b8 100644
+--- a/Documentation/git-commit-graph.txt
++++ b/Documentation/git-commit-graph.txt
+@@ -57,6 +57,11 @@ or `--stdin-packs`.)
+ With the `--append` option, include all commits that are present in the
+ existing commit-graph file.
+ +
++With the `--changed-paths` option, compute and write information about the
++paths changed between a commit and it's first parent. This operation can
++take a while on large repositories. It provides significant performance gains
++for getting history of a directory or a file with `git log -- <path>`.
+++
+ With the `--split` option, write the commit-graph as a chain of multiple
+ commit-graph files stored in `<dir>/info/commit-graphs`. The new commits
+ not already in the commit-graph are added in a new "tip" file. This file
+diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
+index d1ab6625f63..cacb5d04a80 100644
+--- a/builtin/commit-graph.c
++++ b/builtin/commit-graph.c
+@@ -9,7 +9,7 @@
  
- define_commit_slab(bloom_filter_slab, struct bloom_filter);
+ static char const * const builtin_commit_graph_usage[] = {
+ 	N_("git commit-graph verify [--object-dir <objdir>] [--shallow] [--[no-]progress]"),
+-	N_("git commit-graph write [--object-dir <objdir>] [--append|--split] [--reachable|--stdin-packs|--stdin-commits] [--[no-]progress] <split options>"),
++	N_("git commit-graph write [--object-dir <objdir>] [--append|--split] [--reachable|--stdin-packs|--stdin-commits] [--changed-paths] [--[no-]progress] <split options>"),
+ 	NULL
+ };
  
-@@ -26,6 +28,36 @@ static inline unsigned char get_bitmask(uint32_t pos)
- 	return ((unsigned char)1) << (pos & (BITS_PER_WORD - 1));
- }
+@@ -19,7 +19,7 @@ static const char * const builtin_commit_graph_verify_usage[] = {
+ };
  
-+static int load_bloom_filter_from_graph(struct commit_graph *g,
-+				   struct bloom_filter *filter,
-+				   struct commit *c)
-+{
-+	uint32_t lex_pos, start_index, end_index;
-+
-+	while (c->graph_pos < g->num_commits_in_base)
-+		g = g->base_graph;
-+
-+	/* The commit graph commit 'c' lives in doesn't carry bloom filters. */
-+	if (!g->chunk_bloom_indexes)
-+		return 0;
-+
-+	lex_pos = c->graph_pos - g->num_commits_in_base;
-+
-+	end_index = get_be32(g->chunk_bloom_indexes + 4 * lex_pos);
-+
-+	if (lex_pos > 0)
-+		start_index = get_be32(g->chunk_bloom_indexes + 4 * (lex_pos - 1));
-+	else
-+		start_index = 0;
-+
-+	filter->len = end_index - start_index;
-+	filter->data = (unsigned char *)(g->chunk_bloom_data +
-+					sizeof(unsigned char) * start_index +
-+					BLOOMDATA_CHUNK_HEADER_SIZE);
-+
-+	return 1;
-+}
-+
- /*
-  * Calculate the murmur3 32-bit hash value for the given data
-  * using the given seed.
-@@ -127,7 +159,8 @@ void init_bloom_filters(void)
- }
+ static const char * const builtin_commit_graph_write_usage[] = {
+-	N_("git commit-graph write [--object-dir <objdir>] [--append|--split] [--reachable|--stdin-packs|--stdin-commits] [--[no-]progress] <split options>"),
++	N_("git commit-graph write [--object-dir <objdir>] [--append|--split] [--reachable|--stdin-packs|--stdin-commits] [--changed-paths] [--[no-]progress] <split options>"),
+ 	NULL
+ };
  
- struct bloom_filter *get_bloom_filter(struct repository *r,
--				      struct commit *c)
-+				      struct commit *c,
-+					  int compute_if_not_present)
- {
- 	struct bloom_filter *filter;
- 	struct bloom_filter_settings settings = DEFAULT_BLOOM_FILTER_SETTINGS;
-@@ -140,6 +173,20 @@ struct bloom_filter *get_bloom_filter(struct repository *r,
+@@ -32,6 +32,7 @@ static struct opts_commit_graph {
+ 	int split;
+ 	int shallow;
+ 	int progress;
++	int enable_changed_paths;
+ } opts;
  
- 	filter = bloom_filter_slab_at(&bloom_filters, c);
+ static struct object_directory *find_odb(struct repository *r,
+@@ -135,6 +136,8 @@ static int graph_write(int argc, const char **argv)
+ 			N_("start walk at commits listed by stdin")),
+ 		OPT_BOOL(0, "append", &opts.append,
+ 			N_("include all commits already in the commit-graph file")),
++		OPT_BOOL(0, "changed-paths", &opts.enable_changed_paths,
++			N_("enable computation for changed paths")),
+ 		OPT_BOOL(0, "progress", &opts.progress, N_("force progress reporting")),
+ 		OPT_BOOL(0, "split", &opts.split,
+ 			N_("allow writing an incremental commit-graph file")),
+@@ -168,6 +171,8 @@ static int graph_write(int argc, const char **argv)
+ 		flags |= COMMIT_GRAPH_WRITE_SPLIT;
+ 	if (opts.progress)
+ 		flags |= COMMIT_GRAPH_WRITE_PROGRESS;
++	if (opts.enable_changed_paths)
++		flags |= COMMIT_GRAPH_WRITE_BLOOM_FILTERS;
  
-+	if (!filter->data) {
-+		load_commit_graph_info(r, c);
-+		if (c->graph_pos != COMMIT_NOT_FROM_GRAPH &&
-+			r->objects->commit_graph->chunk_bloom_indexes) {
-+			if (load_bloom_filter_from_graph(r->objects->commit_graph, filter, c))
-+				return filter;
-+			else
-+				return NULL;
-+		}
-+	}
-+
-+	if (filter->data || !compute_if_not_present)
-+		return filter;
-+
- 	repo_diff_setup(r, &diffopt);
- 	diffopt.flags.recursive = 1;
- 	diffopt.detect_rename = 0;
-diff --git a/bloom.h b/bloom.h
-index 85ab8e9423d..760d7122374 100644
---- a/bloom.h
-+++ b/bloom.h
-@@ -32,6 +32,7 @@ struct bloom_filter_settings {
- 
- #define DEFAULT_BLOOM_FILTER_SETTINGS { 1, 7, 10 }
- #define BITS_PER_WORD 8
-+#define BLOOMDATA_CHUNK_HEADER_SIZE 3 * sizeof(uint32_t)
- 
- /*
-  * A bloom_filter struct represents a data segment to
-@@ -79,6 +80,7 @@ void add_key_to_filter(const struct bloom_key *key,
- void init_bloom_filters(void);
- 
- struct bloom_filter *get_bloom_filter(struct repository *r,
--				      struct commit *c);
-+				      struct commit *c,
-+				      int compute_if_not_present);
- 
- #endif
-\ No newline at end of file
-diff --git a/commit-graph.c b/commit-graph.c
-index a8b6b5cca5d..77668629e27 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -1086,7 +1086,7 @@ static void write_graph_chunk_bloom_indexes(struct hashfile *f,
- 			ctx->commits.nr);
- 
- 	while (list < last) {
--		struct bloom_filter *filter = get_bloom_filter(ctx->r, *list);
-+		struct bloom_filter *filter = get_bloom_filter(ctx->r, *list, 0);
- 		cur_pos += filter->len;
- 		display_progress(progress, ++i);
- 		hashwrite_be32(f, cur_pos);
-@@ -1115,7 +1115,7 @@ static void write_graph_chunk_bloom_data(struct hashfile *f,
- 	hashwrite_be32(f, settings->bits_per_entry);
- 
- 	while (list < last) {
--		struct bloom_filter *filter = get_bloom_filter(ctx->r, *list);
-+		struct bloom_filter *filter = get_bloom_filter(ctx->r, *list, 0);
- 		display_progress(progress, ++i);
- 		hashwrite(f, filter->data, filter->len * sizeof(unsigned char));
- 		list++;
-@@ -1296,7 +1296,7 @@ static void compute_bloom_filters(struct write_commit_graph_context *ctx)
- 
- 	for (i = 0; i < ctx->commits.nr; i++) {
- 		struct commit *c = sorted_commits[i];
--		struct bloom_filter *filter = get_bloom_filter(ctx->r, c);
-+		struct bloom_filter *filter = get_bloom_filter(ctx->r, c, 1);
- 		ctx->total_bloom_filter_data_size += sizeof(unsigned char) * filter->len;
- 		display_progress(progress, i + 1);
- 	}
-diff --git a/t/helper/test-bloom.c b/t/helper/test-bloom.c
-index f18d1b722e1..ce412664ba9 100644
---- a/t/helper/test-bloom.c
-+++ b/t/helper/test-bloom.c
-@@ -39,7 +39,7 @@ static void get_bloom_filter_for_commit(const struct object_id *commit_oid)
- 	struct bloom_filter *filter;
- 	setup_git_directory();
- 	c = lookup_commit(the_repository, commit_oid);
--	filter = get_bloom_filter(the_repository, c);
-+	filter = get_bloom_filter(the_repository, c, 1);
- 	print_bloom_filter(filter);
- }
- 
+ 	read_replace_refs = 0;
+ 	odb = find_odb(the_repository, opts.obj_dir);
 -- 
 gitgitgadget
 
