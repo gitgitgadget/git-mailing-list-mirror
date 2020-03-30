@@ -7,61 +7,60 @@ X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 24CF2C2D0F0
-	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 00:32:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 834F4C2D0E7
+	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 00:32:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id EC52E206DB
-	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 00:31:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 54A8820786
+	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 00:32:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="t5zZpeb7"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SHa/tFDv"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727805AbgC3Aby (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 29 Mar 2020 20:31:54 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:39532 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727737AbgC3Abx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Mar 2020 20:31:53 -0400
-Received: by mail-wm1-f68.google.com with SMTP id e9so7855793wme.4
-        for <git@vger.kernel.org>; Sun, 29 Mar 2020 17:31:51 -0700 (PDT)
+        id S1727834AbgC3AcA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 29 Mar 2020 20:32:00 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:54736 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727768AbgC3Abv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Mar 2020 20:31:51 -0400
+Received: by mail-wm1-f67.google.com with SMTP id c81so18033554wmd.4
+        for <git@vger.kernel.org>; Sun, 29 Mar 2020 17:31:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=pg2pmkJfOHr9lfHzYyqsIOuMzCf7SUS5JtSNcQKLUIU=;
-        b=t5zZpeb7MsM28f+2iDXLRA0ACeheY4wNRd9ct13gYHOs+9AiwDf6VEovbv9wzounh9
-         EE8rw71q4A1i5nGnl1izh4f8yJro8OGfXkeF/jqiofa+84GPLS7b8aOo8eYAGNI7+tN/
-         ZUYMqrXwi2BHnqxsiwwkrI5IBlZCsmrBBfD9L7ol0ft1KHH4g18zzGwGaYq+RBUzWBKB
-         5LhqzOPf3hh/3qK0EX72obNRndEMDI7qZk/xFJMZFaSZJMX52jSLVQTa8sjrzMXHAs3K
-         AN5hrs8CbZLh0HhmKeEPiNq8v4YhYc/3QpUkaDw43FJZ8mz91yaZzyRmPKz9oO0I3Twu
-         8LGw==
+        bh=lKRmXl/SCDI8E+Ga3COYKCQR4IKS00g3pKKk/jGMaB4=;
+        b=SHa/tFDv6w+2qiIx/sQ9f1dIIWiQhyohZF9s+Sdsun1q+jQ1/j0HwL5r5BdGt7Lffx
+         caYPlD70tAvSR0WXkuCCFDbKZoZCyjtaeibYtWqU+j7ui7H98pZnsUSTyBKyGWrnK7k2
+         VVMP6b8qleiQmoKq4bGC22KeALGK2f5BYEUpfe8NMyACJSexBqAbPZ8v945a2PlJao+I
+         XKaRsfXA8UT/H+2h+wl7PhHwLK9VDSTaFuNVLBQK8VGL/7aebzHtuzPoV1sEBVh8/q5c
+         ggN4OskdSDc5WwT7ONtFgQK1vZ3DU4/BqZgyWuBKFKOR1hMm0kx3q4wbWMDhzVjzH9QF
+         +P4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=pg2pmkJfOHr9lfHzYyqsIOuMzCf7SUS5JtSNcQKLUIU=;
-        b=fu9NMpz32s539JSH3e8xHJPEdxlpIFu6WYTgylg7sz8TM03Q+ISlsO7GQhsRbgUdro
-         yOf/VYB0iyhi6lWnmL3iWthI+4rRmlHlEZfDSFtGmBlQOcqfC8PUEVeDdr59zQ6IzmJB
-         aER8llehUr7A7Y1jAT6xjNDJDQk8hGse8Lch09N/vEq/09cR5T+XgTnZBDJMKT3CZLw6
-         kYmgVgxU0SNzJ6yMwuEC9zLyTO5/akeyGmCcw3W1IPLK0/FQ3Ajzu0TmIuayWYMz2GL8
-         XecwiGMVKnx7RAhjUj4e6Vn8IK6XYsXbnN9+nwcXtPae/2xzwvgpPYZK5SU6cz1/tw29
-         uQ9w==
-X-Gm-Message-State: ANhLgQ23zcEEw2IiimxTTQwNRvz6cryD28JC4qohfDw9eYWHxFEeGQV5
-        FJX3oHaiXz8BrJwNfE7xMrYBLp+r
-X-Google-Smtp-Source: ADFU+vsSRk/Hy9Z7qtmK+b+qAlVkqyfFMnghLRG4f3DgRPaOXqTJjUHwMve31FgjLyBTjad10ZJGBQ==
-X-Received: by 2002:a1c:a982:: with SMTP id s124mr6525469wme.105.1585528310226;
-        Sun, 29 Mar 2020 17:31:50 -0700 (PDT)
+        bh=lKRmXl/SCDI8E+Ga3COYKCQR4IKS00g3pKKk/jGMaB4=;
+        b=fH3jmtnd7Go4N94jUtVB5s5IdknoWX+Pi4QAZON7yH+K23Nc/3Uin82kKg2xVxeuqO
+         pHVzJyYvTUhdt9iCpsTivK+sUk6NxO/B2RaS23OCpfMzgkonecfKIghjdxtiAFkzuKN+
+         OFem6/S7/hffqwmOcftjbSEtYyT9Kp1RfmbX8GlYHHmOg7GwouY4C0H4IZRwTZdVf/X4
+         txVofAPBbLWwbNDFTtWrxK2QMZ8NdpWgAwok1ceGUCLtkObiMJalAwy8BQhPpbqPx4dF
+         8/DqmUjR84107oYNHpxaZ7xNUO2McQtUNXoVf+PQHxMQbDGvcyIo9YncpIxiwx3DIltj
+         6BXg==
+X-Gm-Message-State: ANhLgQ1a14NfX8yp3zubNlkVFv8qTeLMAnwfz6dg9MUn+YQAqFQmrEfy
+        EdQNydR4QkeP8TNpq+Ww8edtdIek
+X-Google-Smtp-Source: ADFU+vt1hFXGGcXOw5P4ICvrDXujOR5YSvWhmUcSAzWQeqFEpiT0dxrvryEblgBHeYL3eGiWMUal9A==
+X-Received: by 2002:a1c:56d5:: with SMTP id k204mr11089925wmb.13.1585528307561;
+        Sun, 29 Mar 2020 17:31:47 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v129sm16098836wmg.1.2020.03.29.17.31.49
+        by smtp.gmail.com with ESMTPSA id h10sm20012996wrq.33.2020.03.29.17.31.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 29 Mar 2020 17:31:49 -0700 (PDT)
-Message-Id: <7e450e452363d32927a4afd979b5c544ac541fcc.1585528299.git.gitgitgadget@gmail.com>
+        Sun, 29 Mar 2020 17:31:47 -0700 (PDT)
+Message-Id: <5ed16f35fed43018ce441adfff55b85967d3918c.1585528298.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.497.v3.git.1585528298.gitgitgadget@gmail.com>
 References: <pull.497.v2.git.1580943390.gitgitgadget@gmail.com>
         <pull.497.v3.git.1585528298.gitgitgadget@gmail.com>
 From:   "Garima Singh via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 30 Mar 2020 00:31:34 +0000
-Subject: [PATCH v3 12/16] commit-graph: add --changed-paths option to write
- subcommand
+Date:   Mon, 30 Mar 2020 00:31:30 +0000
+Subject: [PATCH v3 08/16] commit-graph: examine commits by generation number
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,84 +76,99 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Garima Singh <garima.singh@microsoft.com>
 
-Add --changed-paths option to git commit-graph write. This option will
-allow users to compute information about the paths that have changed
-between a commit and its first parent, and write it into the commit graph
-file. If the option is passed to the write subcommand we set the
-COMMIT_GRAPH_WRITE_BLOOM_FILTERS flag and pass it down to the
-commit-graph logic.
+When running 'git commit-graph write --changed-paths', we sort the
+commits by pack-order to save time when computing the changed-paths
+bloom filters. This does not help when finding the commits via the
+'--reachable' flag.
 
-Helped-by: Derrick Stolee <dstolee@microsoft.com>
+If not using pack-order, then sort by generation number before
+examining the diff. Commits with similar generation are more likely
+to have many trees in common, making the diff faster.
+
+On the Linux kernel repository, this change reduced the computation
+time for 'git commit-graph write --reachable --changed-paths' from
+3m00s to 1m37s.
+
+Helped-by: Jeff King <peff@peff.net>
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 Signed-off-by: Garima Singh <garima.singh@microsoft.com>
 ---
- Documentation/git-commit-graph.txt | 5 +++++
- builtin/commit-graph.c             | 9 +++++++--
- 2 files changed, 12 insertions(+), 2 deletions(-)
+ commit-graph.c | 33 ++++++++++++++++++++++++++++++---
+ 1 file changed, 30 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/git-commit-graph.txt b/Documentation/git-commit-graph.txt
-index 28d1fee5053..f4b13c005b8 100644
---- a/Documentation/git-commit-graph.txt
-+++ b/Documentation/git-commit-graph.txt
-@@ -57,6 +57,11 @@ or `--stdin-packs`.)
- With the `--append` option, include all commits that are present in the
- existing commit-graph file.
- +
-+With the `--changed-paths` option, compute and write information about the
-+paths changed between a commit and it's first parent. This operation can
-+take a while on large repositories. It provides significant performance gains
-+for getting history of a directory or a file with `git log -- <path>`.
-++
- With the `--split` option, write the commit-graph as a chain of multiple
- commit-graph files stored in `<dir>/info/commit-graphs`. The new commits
- not already in the commit-graph are added in a new "tip" file. This file
-diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
-index d1ab6625f63..cacb5d04a80 100644
---- a/builtin/commit-graph.c
-+++ b/builtin/commit-graph.c
-@@ -9,7 +9,7 @@
+diff --git a/commit-graph.c b/commit-graph.c
+index 31b06f878ce..732c81fa1b2 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -70,6 +70,25 @@ static int commit_pos_cmp(const void *va, const void *vb)
+ 	       commit_pos_at(&commit_pos, b);
+ }
  
- static char const * const builtin_commit_graph_usage[] = {
- 	N_("git commit-graph verify [--object-dir <objdir>] [--shallow] [--[no-]progress]"),
--	N_("git commit-graph write [--object-dir <objdir>] [--append|--split] [--reachable|--stdin-packs|--stdin-commits] [--[no-]progress] <split options>"),
-+	N_("git commit-graph write [--object-dir <objdir>] [--append|--split] [--reachable|--stdin-packs|--stdin-commits] [--changed-paths] [--[no-]progress] <split options>"),
- 	NULL
- };
++static int commit_gen_cmp(const void *va, const void *vb)
++{
++	const struct commit *a = *(const struct commit **)va;
++	const struct commit *b = *(const struct commit **)vb;
++
++	/* lower generation commits first */
++	if (a->generation < b->generation)
++		return -1;
++	else if (a->generation > b->generation)
++		return 1;
++
++	/* use date as a heuristic when generations are equal */
++	if (a->date < b->date)
++		return -1;
++	else if (a->date > b->date)
++		return 1;
++	return 0;
++}
++
+ char *get_commit_graph_filename(struct object_directory *obj_dir)
+ {
+ 	return xstrfmt("%s/info/commit-graph", obj_dir->path);
+@@ -815,7 +834,8 @@ struct write_commit_graph_context {
+ 		 report_progress:1,
+ 		 split:1,
+ 		 check_oids:1,
+-		 changed_paths:1;
++		 changed_paths:1,
++		 order_by_pack:1;
  
-@@ -19,7 +19,7 @@ static const char * const builtin_commit_graph_verify_usage[] = {
- };
+ 	const struct split_commit_graph_opts *split_opts;
+ 	size_t total_bloom_filter_data_size;
+@@ -1178,7 +1198,11 @@ static void compute_bloom_filters(struct write_commit_graph_context *ctx)
  
- static const char * const builtin_commit_graph_write_usage[] = {
--	N_("git commit-graph write [--object-dir <objdir>] [--append|--split] [--reachable|--stdin-packs|--stdin-commits] [--[no-]progress] <split options>"),
-+	N_("git commit-graph write [--object-dir <objdir>] [--append|--split] [--reachable|--stdin-packs|--stdin-commits] [--changed-paths] [--[no-]progress] <split options>"),
- 	NULL
- };
+ 	ALLOC_ARRAY(sorted_commits, ctx->commits.nr);
+ 	COPY_ARRAY(sorted_commits, ctx->commits.list, ctx->commits.nr);
+-	QSORT(sorted_commits, ctx->commits.nr, commit_pos_cmp);
++
++	if (ctx->order_by_pack)
++		QSORT(sorted_commits, ctx->commits.nr, commit_pos_cmp);
++	else
++		QSORT(sorted_commits, ctx->commits.nr, commit_gen_cmp);
  
-@@ -32,6 +32,7 @@ static struct opts_commit_graph {
- 	int split;
- 	int shallow;
- 	int progress;
-+	int enable_changed_paths;
- } opts;
+ 	for (i = 0; i < ctx->commits.nr; i++) {
+ 		struct commit *c = sorted_commits[i];
+@@ -1884,6 +1908,7 @@ int write_commit_graph(struct object_directory *odb,
+ 	}
  
- static struct object_directory *find_odb(struct repository *r,
-@@ -135,6 +136,8 @@ static int graph_write(int argc, const char **argv)
- 			N_("start walk at commits listed by stdin")),
- 		OPT_BOOL(0, "append", &opts.append,
- 			N_("include all commits already in the commit-graph file")),
-+		OPT_BOOL(0, "changed-paths", &opts.enable_changed_paths,
-+			N_("enable computation for changed paths")),
- 		OPT_BOOL(0, "progress", &opts.progress, N_("force progress reporting")),
- 		OPT_BOOL(0, "split", &opts.split,
- 			N_("allow writing an incremental commit-graph file")),
-@@ -168,6 +171,8 @@ static int graph_write(int argc, const char **argv)
- 		flags |= COMMIT_GRAPH_WRITE_SPLIT;
- 	if (opts.progress)
- 		flags |= COMMIT_GRAPH_WRITE_PROGRESS;
-+	if (opts.enable_changed_paths)
-+		flags |= COMMIT_GRAPH_WRITE_BLOOM_FILTERS;
+ 	if (pack_indexes) {
++		ctx->order_by_pack = 1;
+ 		if ((res = fill_oids_from_packs(ctx, pack_indexes)))
+ 			goto cleanup;
+ 	}
+@@ -1893,8 +1918,10 @@ int write_commit_graph(struct object_directory *odb,
+ 			goto cleanup;
+ 	}
  
- 	read_replace_refs = 0;
- 	odb = find_odb(the_repository, opts.obj_dir);
+-	if (!pack_indexes && !commit_hex)
++	if (!pack_indexes && !commit_hex) {
++		ctx->order_by_pack = 1;
+ 		fill_oids_from_all_packs(ctx);
++	}
+ 
+ 	close_reachable(ctx);
+ 
 -- 
 gitgitgadget
 
