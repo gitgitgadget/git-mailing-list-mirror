@@ -2,140 +2,137 @@ Return-Path: <SRS0=sJPh=5P=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.2 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 638BBC43331
-	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 21:53:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6817C43331
+	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 23:59:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 199CD20733
-	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 21:53:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7281A205ED
+	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 23:59:54 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="GSkDh3to"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728987AbgC3VxO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Mar 2020 17:53:14 -0400
-Received: from smtp.hosts.co.uk ([85.233.160.19]:17334 "EHLO smtp.hosts.co.uk"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728944AbgC3VxO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Mar 2020 17:53:14 -0400
-Received: from [92.30.123.115] (helo=[192.168.1.38])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1jJ2LE-00035g-6F; Mon, 30 Mar 2020 22:53:09 +0100
-Subject: Re: Feature request: rebase -i inside of rebase -i
-To:     George Spelvin <lkml@SDF.ORG>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <20200320223015.GA19579@SDF.ORG>
- <xmqq36a2bpxz.fsf@gitster.c.googlers.com> <20200320233528.GB19579@SDF.ORG>
- <nycvar.QRO.7.76.6.2003211135380.46@tvgsbejvaqbjf.bet>
- <20200321175612.GC19579@SDF.ORG>
- <nycvar.QRO.7.76.6.2003252008490.46@tvgsbejvaqbjf.bet>
- <20200326001821.GB8865@SDF.ORG>
- <nycvar.QRO.7.76.6.2003281510260.46@tvgsbejvaqbjf.bet>
- <0eef4721-1646-48f2-1102-71159d06b049@iee.email>
- <20200330181812.GB9199@SDF.ORG>
-From:   Philip Oakley <philipoakley@iee.email>
-Message-ID: <8f6fb826-7f9f-57ea-725f-dc3c512a4b18@iee.email>
-Date:   Mon, 30 Mar 2020 22:53:05 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.6.0
+        id S1729089AbgC3X7w (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Mar 2020 19:59:52 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:37400 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727553AbgC3X7w (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Mar 2020 19:59:52 -0400
+Received: by mail-pf1-f195.google.com with SMTP id h72so9441050pfe.4
+        for <git@vger.kernel.org>; Mon, 30 Mar 2020 16:59:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=AuiM14rlpW9Jv5d7bXRHZx97pz14WhXdt+w+zCJ+Ijc=;
+        b=GSkDh3to/KLODZ6YjR7g+Z/4phEwsrsTjygyq0b7BkIKr6vxzzqgdK8QLaxXAsFpKN
+         +YENwLTmyWnkqgY5zuLZfpHo0Awt7s+q5RwPN9IG7Mk831AzbPtU+urhU6Mx4Xlcp8jf
+         RefDlRzQ4gk1AEhEgGIbSp7xjkQxEKiyKRH998fLfIXsovqIdfKx/mjdTdByq/zHITZm
+         BNgOZzOMLXjXSOUi+tt3V3uPT9bBPdnHxQQeivECmCruqOuZTHEhYGgZc/AjcdJxR2du
+         9AFBPHVQI7uEnZ+zOP5RKF1iqAm8iEecfJeQLzRd/M1QcXdwbVA9xuMEEsEZPxdzhYlQ
+         YvjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=AuiM14rlpW9Jv5d7bXRHZx97pz14WhXdt+w+zCJ+Ijc=;
+        b=NqDodZ1Q6VlFgfE4YeoFDmQVEskCl5brLkagNOgA38F85AHTVoZvMGPpne5PZLcr5E
+         oKnY/DWQd5f4V9SQ2aHAOAG5sd6frYA8fgra3ODELyfh242Xeb0gGzS9hF6QKO/CUHmM
+         OqvcobwYOkx7Wp3Yyhv6dHLPuS9Dbgb++Jham2HKJsQccmEsI0kphgo0QAh59O2esDNv
+         om1IroE8Y/r/OeJINZ3ojFCTNOD4VRG7TZbtMS0DNi2P7cjlvsvegiPxXuqVoDyoaPiu
+         Smx/XQhK46cUBLDe1uFOuB9vP1JNgg3TFOBcHdB9Vrf2LGClnbwqSiuV8RiDtu0hDc7l
+         l4Hw==
+X-Gm-Message-State: ANhLgQ3lt223o2+eBnoceke2oeb5a/yBZQx4i393RdmOkdF/VgNvrX++
+        zBXlC8kJxVT2lB8dVtj9l1nTRA==
+X-Google-Smtp-Source: ADFU+vsHf+Dvnvuhaj8oZL3kvFp6ObWWkRMuHmw5/wlSz0TDi7Eg5PGQ9/JbkxTSDhgeXA1VJgH2Ww==
+X-Received: by 2002:a63:6b0a:: with SMTP id g10mr15500255pgc.386.1585612790669;
+        Mon, 30 Mar 2020 16:59:50 -0700 (PDT)
+Received: from localhost ([8.44.146.30])
+        by smtp.gmail.com with ESMTPSA id x189sm11044988pfb.1.2020.03.30.16.59.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 30 Mar 2020 16:59:50 -0700 (PDT)
+Date:   Mon, 30 Mar 2020 17:59:49 -0600
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Alban Gruin <alban.gruin@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] sequencer: mark messages for translation
+Message-ID: <20200330235949.GC83990@syl.local>
+References: <20200328130515.17550-1-alban.gruin@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20200330181812.GB9199@SDF.ORG>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
+Content-Disposition: inline
+In-Reply-To: <20200328130515.17550-1-alban.gruin@gmail.com>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi George,
+Hi Alban,
 
-I wasn't suggesting that there already exists a complete solution...
+This looks good to me. I scratched my head for a little while wondering
+about why these weren't marked for translation originally. They were
+added back during the initial conversion to C. Some of the strings had
+English-ism's such as "1st", "2nd", and so on, but weren't.
 
-On 30/03/2020 19:18, George Spelvin wrote:
-> On Mon, Mar 30, 2020 at 03:01:28PM +0100, Philip Oakley wrote:
->> Perhaps we can go the other way on this one.
->>
->> I'd agree that attempting to nest (misunderstood mistaken) rebases is
->> digging a too deep hole that we'd not get out of. However we do have
->> other rebases available, specifically the "rebasing merges"
->> https://git-scm.com/docs/git-rebase#_rebasing_merges.
+Johannes notes in [1] that marking those strings for translation was a
+topic to be left until after v2.10.1, but I think he is busy enough that
+this was easy to drop in the shuffle :-).
 
-I was mainly saying that folks like their "all on one page, flow chart
-sequence planning", and that we already have something close to that
-that could be extended.  
->>
->> I know rebasing merges is way down the man page, but it has all the
->> power and flexibility needed _if_ we can step across from the mistaken
->> rebase step (we are at the command prompt aren't we?) into the rebasing
->> merge mode.
->>
->> This will require a little bit of expansion of the insn (instruction)
->> sheet so as to _include commented lines of the rebase steps completed_
->> so far, along with the labels, resets, merges, etc, so that the user can
->> _see_ where they they are within their failed progress (along with a
->> title line telling them their initial command and that they are now on a
->> rebasing merge insn;-).
->>
->> From there they can update the insn to reset back to the correct point,
->> redo the correct picks, and then get back to their remaining rebase steps.
->>
->> It's a thought anyway.
-> I'm confused.  *How* does --rebase-merge mode help?  You're saying
-> "hey, if we use this, it solves the issue" but I don't see how to
-> pound this nail with that screwdriver.
-Remember that rebasing is just a variant of creating and building a new
-branch in our WORM (Write once Read many) repo..
-So it is "just" a case of taking the partially complete rebase, and
-re-working it, just like you can with an arbitrary merging rebase.
+So, I am glad that you're addressing this. If you wanted, it may be
+worthwhile to distill some of this into the patch message. But the
+changes themselves look good to me.
+
+On Sat, Mar 28, 2020 at 02:05:15PM +0100, Alban Gruin wrote:
+> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
+> ---
+>  sequencer.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
 >
-> I don't see how creating a branching history helps, and I don't see how to 
-> use the reset/label/merge commands to do anything but create a branching 
-> history.
-
-It is more that we could create a full instruction sheet that spans time
-from the start of the rebase (including labelling and resetting to get
-started), upto and including the current state (so you can pick from
-your new commits[*]), with those history steps being hash "#" commented,
-as well as the remaining rebase instructions.
-> I suppose it is possible to use the "reset" command in isolation
-> to describe the jump to a new base.  So you could have a history of:
+> diff --git a/sequencer.c b/sequencer.c
+> index 6fd2674632..ba13a9a63b 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -3128,7 +3128,7 @@ static int do_exec(struct repository *r, const char *command_line)
+>  	const char *child_argv[] = { NULL, NULL };
+>  	int dirty, status;
 >
-> # Command already executed:
-#git rebase <command options> (for reference & immediate use)
-> # reset base
-> # pick A
-> # pick B
-> # pick C
-> # label rebase-1  User asked for a nested rebase
-> # reset A'
-[*] We are missing a list of the current state of new commits,
-# reset base (done, see above)
-# placed A' (you'll need this listed if you need to pick/edit/reword
-#  You are now at deadbeef, rebasing 23 of 75 commits .... (..suitable
-status message)
+> -	fprintf(stderr, "Executing: %s\n", command_line);
+> +	fprintf(stderr, _("Executing: %s\n"), command_line);
+>  	child_argv[0] = command_line;
+>  	argv_array_pushf(&child_env, "GIT_DIR=%s", absolute_path(get_git_dir()));
+>  	argv_array_pushf(&child_env, "GIT_WORK_TREE=%s",
+> @@ -3841,7 +3841,7 @@ static int pick_commits(struct repository *r,
+>  					fclose(f);
+>  				}
+>  				if (!opts->quiet)
+> -					fprintf(stderr, "Rebasing (%d/%d)%s",
+> +					fprintf(stderr, _("Rebasing (%d/%d)%s"),
+>  						todo_list->done_nr,
+>  						todo_list->total_nr,
+>  						opts->verbose ? "\n" : "\r");
+> @@ -4093,7 +4093,7 @@ static int pick_commits(struct repository *r,
+>  			if (!opts->verbose)
+>  				term_clear_line();
+>  			fprintf(stderr,
+> -				"Successfully rebased and updated %s.\n",
+> +				_("Successfully rebased and updated %s.\n"),
 
-
-> # Commands pending:
-> pick B'
-> pick C'
-> # rebase-2 complete, resume rebase-1
-> pick D
-> pick E
+>  				head_ref.buf);
+>  		}
 >
-> Is that what you were getting at?
+> --
+> 2.25.0
 
-Correct. Given the global state problem, and the mental picture issues,
-let's give the user a full picture, flow chart style (it's a solid old
-technique that works well, even for beginners)
->
-> I was thinking of it being implicit, but it might be nice for the initial
-> "reset" in each rebase to be explicit, *and not yet executed during
-> the initial todo edit*.
->
-> That makes it really clear that deleting the todo list entirely
-> results in no change to the tree. (folks rarely notice omissions, we'll still need to tell them that it's a valid solution! sometimes empty means 'no change, carry on what you were doing';-)
+Either way, if you decide to add more context to the commit message I'd
+be glad, but this is probably just fine as-is, so please have my:
 
-Philip
+  Reviewed-by: Taylor Blau <me@ttaylorr.com>
+
+Thanks,
+Taylor
+
+[1]: https://lore.kernel.org/git/alpine.DEB.2.20.1609011658300.129229@virtualbox/
