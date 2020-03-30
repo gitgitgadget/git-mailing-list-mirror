@@ -4,64 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,LOTS_OF_MONEY,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AA0FBC2D0EF
-	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 00:31:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B2642C2D0F2
+	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 00:31:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7524B206DB
-	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 00:31:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7D3CF206DB
+	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 00:31:59 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A6qlyZIL"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cqSFHE7y"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727820AbgC3Abz (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1727826AbgC3Ab5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 29 Mar 2020 20:31:57 -0400
+Received: from mail-wr1-f45.google.com ([209.85.221.45]:40827 "EHLO
+        mail-wr1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727795AbgC3Abz (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 29 Mar 2020 20:31:55 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:40906 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727771AbgC3Abv (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Mar 2020 20:31:51 -0400
-Received: by mail-wr1-f65.google.com with SMTP id u10so19287250wro.7
-        for <git@vger.kernel.org>; Sun, 29 Mar 2020 17:31:50 -0700 (PDT)
+Received: by mail-wr1-f45.google.com with SMTP id u10so19287393wro.7
+        for <git@vger.kernel.org>; Sun, 29 Mar 2020 17:31:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=RzDq0RVy9u/llzNNfsL9IhgF26sWW+4SNXyurg5TCzc=;
-        b=A6qlyZILYMW8Hkj6sTzmI1QbpgF/P7xBOQYaYxyyTUPvW4utVeyE+PMSOJ1x1FrW7b
-         BsCnaudKeOAsQ821c7LZvPuaz638D9UjmW3DqtzkfZBhxGiJ7NqoeiaI5/07SfhAIn9l
-         I15n7MpppJvFiEuHF3BgzBMqAJZNjlH00vLxW8uPX+FITORR5mPXHcL8XTE8GM/YfppK
-         32nS4mZBrIXcF6fh5lsoHDAsN/TKymvuotHbSePRuQsTch+Dx2b2iMYQj9abccGRxZ2l
-         a293ixBs03J5O8B7P+SN1rLv3VresSMgwNz8p4SEDth+d0lEDN5d5Zm8KxvTL0VMEJQh
-         6Jnw==
+        bh=ZsHUaVtS2qOnoUjyOO9pvlAfuFOOP8BOHJQ/886lGO4=;
+        b=cqSFHE7ySfNLLhoU4c88HQKei/FqILXGRkufpfqgSoQHXT+DSGV0Ld4buXqPg1tXcg
+         lQMYnq0yhyhUOOIS1vW1voJbFYzefkiklTzQi2ST1W6OluJ71jI5gWnqDFaWVdokzyzG
+         CEvBWYNA8/m5DfHWW8NMaW7g0Z0ynlkVlyMmXfBlJwj/mylPZhSp7o5iqMgVGxCjPbBv
+         6GB1tNdRbs/1NnFhpWzyHFX0AimcZE8EqWexFjHN68dpLWyhsVOcKcCP5XDYGlFqT1Qy
+         mrsXB4/NAAQrl0LO6O9vOhU4ACRzphSQzX4PhNAfz6kOvwUA1CciHY/6zpDE6pGqXDv0
+         0G9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=RzDq0RVy9u/llzNNfsL9IhgF26sWW+4SNXyurg5TCzc=;
-        b=DXg/lXDVL3HgzVXeFtwocdWy7OtXALgDMcMdR4rJKsWVfqFBiDtdtjvxdfNBcc8GZh
-         W6CpksbhseODaZPGerXfyf9pDtMHNYDR/GAku6Pm0VGJG6K0ZMJwnlsyUA7CCBpDhlEO
-         5HwM7Soy5CO46fupFecjn8DDjbIs6UnuZ8ftC1zYQrSIIyk/rT610hEDj1Y5FkEFxN7t
-         XjwqF3x2Ru2azWNInfe86WyGha+KoIghOoK8B345CCnPkCdenDldDwXtY6KjFo2DEvwY
-         NjtFs2J2ZsqY/w706SGtkm65Hp5cziVAunOilBRX1iPMUHMaf+xpII6H8g5IXivS6CY2
-         GSwQ==
-X-Gm-Message-State: ANhLgQ3e5Sj0des+czWD2RZLHRFXxgR0jte95Q31hSP1EcWpLnRX4knt
-        HseYYotiLqQ8z/AhS43xHcrcXtpC
-X-Google-Smtp-Source: ADFU+vv6XdRPnNrBTleaP1qGfe4z6WRoT8WsVJZL+P+mKuExjkvCx9orwNIuQTZFdGf6zlvPgFo0+Q==
-X-Received: by 2002:adf:dcc2:: with SMTP id x2mr11495502wrm.192.1585528308933;
-        Sun, 29 Mar 2020 17:31:48 -0700 (PDT)
+        bh=ZsHUaVtS2qOnoUjyOO9pvlAfuFOOP8BOHJQ/886lGO4=;
+        b=eUHjJV0cR04ECP9dRfN4I2CkKvHIwrTzgAl6+uY3O+VdkZqNpLJdzqASUvR9EFjMHB
+         5wPXL88RHV6HKHXf3rnmEptmMzj9uLFdJeplQ6727Fe92eEEsA0FWR6aJyyqsC7QMSml
+         dlbrfQlIQa06GRdk3bhlr2EAZvsknnXOAZWOCMsEf+P/YmXScV1E1zxbKidob4k5nltn
+         OOWaq/6sbHRBtWm5TEyb5Y6/reKc2u7AKb5R4PoMJ/k/enQyoehS4fQotuMENHlYwEQn
+         tuCLgz/a8auJg6EmABXSFKT+WfjgcnQ3o/Xt7zkuv3mJHvfmOhfL68tVH+KId9TAHSx4
+         32rg==
+X-Gm-Message-State: ANhLgQ3vrJallLOHteiE1uv0xOU06mfVzybyRlLlB9t/8IioC/+wyCaY
+        8YGwUU3l5PF6sSWxZDSSXYu0kFNH
+X-Google-Smtp-Source: ADFU+vvCjuZrkthNjymky4kPoOlPz25md+YV6fjxQzYx678k/okKlIl/gfbDpHhF+W7/sPKaRbrqmg==
+X-Received: by 2002:a05:6000:114f:: with SMTP id d15mr12548135wrx.143.1585528312685;
+        Sun, 29 Mar 2020 17:31:52 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u5sm19760433wrq.85.2020.03.29.17.31.48
+        by smtp.gmail.com with ESMTPSA id x206sm18696186wmg.17.2020.03.29.17.31.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 29 Mar 2020 17:31:48 -0700 (PDT)
-Message-Id: <1e4663523ded1e97cc43a5987776eb2a7d6db451.1585528299.git.gitgitgadget@gmail.com>
+        Sun, 29 Mar 2020 17:31:52 -0700 (PDT)
+Message-Id: <3019ef72881289589d5b76c8c0c8177a2c464972.1585528299.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.497.v3.git.1585528298.gitgitgadget@gmail.com>
 References: <pull.497.v2.git.1580943390.gitgitgadget@gmail.com>
         <pull.497.v3.git.1585528298.gitgitgadget@gmail.com>
 From:   "Garima Singh via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 30 Mar 2020 00:31:32 +0000
-Subject: [PATCH v3 10/16] commit-graph: write Bloom filters to commit graph
- file
+Date:   Mon, 30 Mar 2020 00:31:37 +0000
+Subject: [PATCH v3 15/16] t4216: add end to end tests for git log with Bloom
+ filters
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,271 +78,202 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Garima Singh <garima.singh@microsoft.com>
 
-Update the technical documentation for commit-graph-format with
-the formats for the Bloom filter index (BIDX) and Bloom filter
-data (BDAT) chunks. Write the computed Bloom filters information
-to the commit graph file using this format.
+These tests exercises writing commit graph with Bloom filters
+and exercises 'git log -- path' with all the applicable
+options. They check that the output is the same with and
+without Bloom filters, confirm Bloom filters were used by
+checking if trace2 statistics were logged correctly.
 
-Helped-by: Derrick Stolee <dstolee@microsoft.com>
+Also confirms cases where Bloom filters are not used:
+1. Multiple path specs,
+2. --walk-reflogs (see patch titled 'revision.c: use Bloom filters...'
+   for details,
+3. If the latest commit graph does not have Bloom filters
+
 Signed-off-by: Garima Singh <garima.singh@microsoft.com>
 ---
- .../technical/commit-graph-format.txt         |  30 +++++
- commit-graph.c                                | 113 +++++++++++++++++-
- commit-graph.h                                |   5 +
- 3 files changed, 147 insertions(+), 1 deletion(-)
+ t/helper/test-read-graph.c |   4 +
+ t/t4216-log-bloom.sh       | 155 +++++++++++++++++++++++++++++++++++++
+ 2 files changed, 159 insertions(+)
+ create mode 100755 t/t4216-log-bloom.sh
 
-diff --git a/Documentation/technical/commit-graph-format.txt b/Documentation/technical/commit-graph-format.txt
-index a4f17441aed..de56f9f1efd 100644
---- a/Documentation/technical/commit-graph-format.txt
-+++ b/Documentation/technical/commit-graph-format.txt
-@@ -17,6 +17,9 @@ metadata, including:
- - The parents of the commit, stored using positional references within
-   the graph file.
+diff --git a/t/helper/test-read-graph.c b/t/helper/test-read-graph.c
+index f8a461767ca..4223ff32fb6 100644
+--- a/t/helper/test-read-graph.c
++++ b/t/helper/test-read-graph.c
+@@ -45,6 +45,10 @@ int cmd__read_graph(int argc, const char **argv)
+ 		printf(" commit_metadata");
+ 	if (graph->chunk_extra_edges)
+ 		printf(" extra_edges");
++	if (graph->chunk_bloom_indexes)
++		printf(" bloom_indexes");
++	if (graph->chunk_bloom_data)
++		printf(" bloom_data");
+ 	printf("\n");
  
-+- The Bloom filter of the commit carrying the paths that were changed between
-+  the commit and its first parent, if requested.
+ 	UNLEAK(graph);
+diff --git a/t/t4216-log-bloom.sh b/t/t4216-log-bloom.sh
+new file mode 100755
+index 00000000000..38accd272df
+--- /dev/null
++++ b/t/t4216-log-bloom.sh
+@@ -0,0 +1,155 @@
++#!/bin/sh
 +
- These positional references are stored as unsigned 32-bit integers
- corresponding to the array position within the list of commit OIDs. Due
- to some special constants we use to track parents, we can store at most
-@@ -93,6 +96,33 @@ CHUNK DATA:
-       positions for the parents until reaching a value with the most-significant
-       bit on. The other bits correspond to the position of the last parent.
- 
-+  Bloom Filter Index (ID: {'B', 'I', 'D', 'X'}) (N * 4 bytes) [Optional]
-+    * The ith entry, BIDX[i], stores the number of 8-byte word blocks in all
-+      Bloom filters from commit 0 to commit i (inclusive) in lexicographic
-+      order. The Bloom filter for the i-th commit spans from BIDX[i-1] to
-+      BIDX[i] (plus header length), where BIDX[-1] is 0.
-+    * The BIDX chunk is ignored if the BDAT chunk is not present.
++test_description='git log for a path with Bloom filters'
++. ./test-lib.sh
 +
-+  Bloom Filter Data (ID: {'B', 'D', 'A', 'T'}) [Optional]
-+    * It starts with header consisting of three unsigned 32-bit integers:
-+      - Version of the hash algorithm being used. We currently only support
-+	value 1 which corresponds to the 32-bit version of the murmur3 hash
-+	implemented exactly as described in
-+	https://en.wikipedia.org/wiki/MurmurHash#Algorithm and the double
-+	hashing technique using seed values 0x293ae76f and 0x7e646e2 as
-+	described in https://doi.org/10.1007/978-3-540-30494-4_26 "Bloom Filters
-+	in Probabilistic Verification"
-+      - The number of times a path is hashed and hence the number of bit positions
-+	      that cumulatively determine whether a file is present in the commit.
-+      - The minimum number of bits 'b' per entry in the Bloom filter. If the filter
-+	      contains 'n' entries, then the filter size is the minimum number of 64-bit
-+	      words that contain n*b bits.
-+    * The rest of the chunk is the concatenation of all the computed Bloom
-+      filters for the commits in lexicographic order.
-+    * Note: Commits with no changes or more than 512 changes have Bloom filters
-+      of length zero.
-+    * The BDAT chunk is present if and only if BIDX is present.
++GIT_TEST_COMMIT_GRAPH=0
++GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS=0
 +
-   Base Graphs List (ID: {'B', 'A', 'S', 'E'}) [Optional]
-       This list of H-byte hashes describe a set of B commit-graph files that
-       form a commit-graph chain. The graph position for the ith commit in this
-diff --git a/commit-graph.c b/commit-graph.c
-index 732c81fa1b2..a8b6b5cca5d 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -24,8 +24,10 @@
- #define GRAPH_CHUNKID_OIDLOOKUP 0x4f49444c /* "OIDL" */
- #define GRAPH_CHUNKID_DATA 0x43444154 /* "CDAT" */
- #define GRAPH_CHUNKID_EXTRAEDGES 0x45444745 /* "EDGE" */
-+#define GRAPH_CHUNKID_BLOOMINDEXES 0x42494458 /* "BIDX" */
-+#define GRAPH_CHUNKID_BLOOMDATA 0x42444154 /* "BDAT" */
- #define GRAPH_CHUNKID_BASE 0x42415345 /* "BASE" */
--#define MAX_NUM_CHUNKS 5
-+#define MAX_NUM_CHUNKS 7
- 
- #define GRAPH_DATA_WIDTH (the_hash_algo->rawsz + 16)
- 
-@@ -319,6 +321,32 @@ struct commit_graph *parse_commit_graph(void *graph_map, int fd,
- 				chunk_repeated = 1;
- 			else
- 				graph->chunk_base_graphs = data + chunk_offset;
-+			break;
-+
-+		case GRAPH_CHUNKID_BLOOMINDEXES:
-+			if (graph->chunk_bloom_indexes)
-+				chunk_repeated = 1;
-+			else
-+				graph->chunk_bloom_indexes = data + chunk_offset;
-+			break;
-+
-+		case GRAPH_CHUNKID_BLOOMDATA:
-+			if (graph->chunk_bloom_data)
-+				chunk_repeated = 1;
-+			else {
-+				uint32_t hash_version;
-+				graph->chunk_bloom_data = data + chunk_offset;
-+				hash_version = get_be32(data + chunk_offset);
-+
-+				if (hash_version != 1)
-+					break;
-+
-+				graph->bloom_filter_settings = xmalloc(sizeof(struct bloom_filter_settings));
-+				graph->bloom_filter_settings->hash_version = hash_version;
-+				graph->bloom_filter_settings->num_hashes = get_be32(data + chunk_offset + 4);
-+				graph->bloom_filter_settings->bits_per_entry = get_be32(data + chunk_offset + 8);
-+			}
-+			break;
- 		}
- 
- 		if (chunk_repeated) {
-@@ -337,6 +365,15 @@ struct commit_graph *parse_commit_graph(void *graph_map, int fd,
- 		last_chunk_offset = chunk_offset;
- 	}
- 
-+	if (graph->chunk_bloom_indexes && graph->chunk_bloom_data) {
-+		init_bloom_filters();
-+	} else {
-+		/* We need both the bloom chunks to exist together. Else ignore the data */
-+		graph->chunk_bloom_indexes = NULL;
-+		graph->chunk_bloom_data = NULL;
-+		graph->bloom_filter_settings = NULL;
-+	}
-+
- 	hashcpy(graph->oid.hash, graph->data + graph->data_len - graph->hash_len);
- 
- 	if (verify_commit_graph_lite(graph)) {
-@@ -1034,6 +1071,59 @@ static void write_graph_chunk_extra_edges(struct hashfile *f,
- 	}
- }
- 
-+static void write_graph_chunk_bloom_indexes(struct hashfile *f,
-+					    struct write_commit_graph_context *ctx)
-+{
-+	struct commit **list = ctx->commits.list;
-+	struct commit **last = ctx->commits.list + ctx->commits.nr;
-+	uint32_t cur_pos = 0;
-+	struct progress *progress = NULL;
-+	int i = 0;
-+
-+	if (ctx->report_progress)
-+		progress = start_delayed_progress(
-+			_("Writing changed paths Bloom filters index"),
-+			ctx->commits.nr);
-+
-+	while (list < last) {
-+		struct bloom_filter *filter = get_bloom_filter(ctx->r, *list);
-+		cur_pos += filter->len;
-+		display_progress(progress, ++i);
-+		hashwrite_be32(f, cur_pos);
-+		list++;
-+	}
-+
-+	stop_progress(&progress);
++test_expect_success 'setup test - repo, commits, commit graph, log outputs' '
++	git init &&
++	mkdir A A/B A/B/C &&
++	test_commit c1 A/file1 &&
++	test_commit c2 A/B/file2 &&
++	test_commit c3 A/B/C/file3 &&
++	test_commit c4 A/file1 &&
++	test_commit c5 A/B/file2 &&
++	test_commit c6 A/B/C/file3 &&
++	test_commit c7 A/file1 &&
++	test_commit c8 A/B/file2 &&
++	test_commit c9 A/B/C/file3 &&
++	test_commit c10 file_to_be_deleted &&
++	git checkout -b side HEAD~4 &&
++	test_commit side-1 file4 &&
++	git checkout master &&
++	git merge side &&
++	test_commit c11 file5 &&
++	mv file5 file5_renamed &&
++	git add file5_renamed &&
++	git commit -m "rename" &&
++	rm file_to_be_deleted &&
++	git add . &&
++	git commit -m "file removed" &&
++	git commit-graph write --reachable --changed-paths
++'
++graph_read_expect () {
++	NUM_CHUNKS=5
++	cat >expect <<- EOF
++	header: 43475048 1 1 $NUM_CHUNKS 0
++	num_commits: $1
++	chunks: oid_fanout oid_lookup commit_metadata bloom_indexes bloom_data
++	EOF
++	test-tool read-graph >actual &&
++	test_cmp expect actual
 +}
 +
-+static void write_graph_chunk_bloom_data(struct hashfile *f,
-+					 struct write_commit_graph_context *ctx,
-+					 const struct bloom_filter_settings *settings)
-+{
-+	struct commit **list = ctx->commits.list;
-+	struct commit **last = ctx->commits.list + ctx->commits.nr;
-+	struct progress *progress = NULL;
-+	int i = 0;
++test_expect_success 'commit-graph write wrote out the bloom chunks' '
++	graph_read_expect 15
++'
 +
-+	if (ctx->report_progress)
-+		progress = start_delayed_progress(
-+			_("Writing changed paths Bloom filters data"),
-+			ctx->commits.nr);
++# Turn off any inherited trace2 settings for this test.
++sane_unset GIT_TRACE2 GIT_TRACE2_PERF GIT_TRACE2_EVENT
++sane_unset GIT_TRACE2_PERF_BRIEF
++sane_unset GIT_TRACE2_CONFIG_PARAMS
 +
-+	hashwrite_be32(f, settings->hash_version);
-+	hashwrite_be32(f, settings->num_hashes);
-+	hashwrite_be32(f, settings->bits_per_entry);
-+
-+	while (list < last) {
-+		struct bloom_filter *filter = get_bloom_filter(ctx->r, *list);
-+		display_progress(progress, ++i);
-+		hashwrite(f, filter->data, filter->len * sizeof(unsigned char));
-+		list++;
-+	}
-+
-+	stop_progress(&progress);
++setup () {
++	rm "$TRASH_DIRECTORY/trace.perf"
++	git -c core.commitGraph=false log --pretty="format:%s" $1 >log_wo_bloom &&
++	GIT_TRACE2_PERF="$TRASH_DIRECTORY/trace.perf" git -c core.commitGraph=true log --pretty="format:%s" $1 >log_w_bloom
 +}
 +
- static int oid_compare(const void *_a, const void *_b)
- {
- 	const struct object_id *a = (const struct object_id *)_a;
-@@ -1438,6 +1528,7 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
- 	struct strbuf progress_title = STRBUF_INIT;
- 	int num_chunks = 3;
- 	struct object_id file_hash;
-+	const struct bloom_filter_settings bloom_settings = DEFAULT_BLOOM_FILTER_SETTINGS;
- 
- 	if (ctx->split) {
- 		struct strbuf tmp_file = STRBUF_INIT;
-@@ -1482,6 +1573,12 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
- 		chunk_ids[num_chunks] = GRAPH_CHUNKID_EXTRAEDGES;
- 		num_chunks++;
- 	}
-+	if (ctx->changed_paths) {
-+		chunk_ids[num_chunks] = GRAPH_CHUNKID_BLOOMINDEXES;
-+		num_chunks++;
-+		chunk_ids[num_chunks] = GRAPH_CHUNKID_BLOOMDATA;
-+		num_chunks++;
-+	}
- 	if (ctx->num_commit_graphs_after > 1) {
- 		chunk_ids[num_chunks] = GRAPH_CHUNKID_BASE;
- 		num_chunks++;
-@@ -1500,6 +1597,15 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
- 						4 * ctx->num_extra_edges;
- 		num_chunks++;
- 	}
-+	if (ctx->changed_paths) {
-+		chunk_offsets[num_chunks + 1] = chunk_offsets[num_chunks] +
-+						sizeof(uint32_t) * ctx->commits.nr;
-+		num_chunks++;
++test_bloom_filters_used () {
++	log_args=$1
++	bloom_trace_prefix="statistics:{\"filter_not_present\":0,\"zero_length_filter\":0,\"maybe\""
++	setup "$log_args" &&
++	grep -q "$bloom_trace_prefix" "$TRASH_DIRECTORY/trace.perf" && 
++	test_cmp log_wo_bloom log_w_bloom &&
++    test_path_is_file "$TRASH_DIRECTORY/trace.perf"
++}
 +
-+		chunk_offsets[num_chunks + 1] = chunk_offsets[num_chunks] +
-+						sizeof(uint32_t) * 3 + ctx->total_bloom_filter_data_size;
-+		num_chunks++;
-+	}
- 	if (ctx->num_commit_graphs_after > 1) {
- 		chunk_offsets[num_chunks + 1] = chunk_offsets[num_chunks] +
- 						hashsz * (ctx->num_commit_graphs_after - 1);
-@@ -1537,6 +1643,10 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
- 	write_graph_chunk_data(f, hashsz, ctx);
- 	if (ctx->num_extra_edges)
- 		write_graph_chunk_extra_edges(f, ctx);
-+	if (ctx->changed_paths) {
-+		write_graph_chunk_bloom_indexes(f, ctx);
-+		write_graph_chunk_bloom_data(f, ctx, &bloom_settings);
-+	}
- 	if (ctx->num_commit_graphs_after > 1 &&
- 	    write_graph_chunk_base(f, ctx)) {
- 		return -1;
-@@ -2184,6 +2294,7 @@ void free_commit_graph(struct commit_graph *g)
- 		close(g->graph_fd);
- 	}
- 	free(g->filename);
-+	free(g->bloom_filter_settings);
- 	free(g);
- }
- 
-diff --git a/commit-graph.h b/commit-graph.h
-index 86be81219da..8e7a8e0e5b2 100644
---- a/commit-graph.h
-+++ b/commit-graph.h
-@@ -11,6 +11,7 @@
- #define GIT_TEST_COMMIT_GRAPH_DIE_ON_LOAD "GIT_TEST_COMMIT_GRAPH_DIE_ON_LOAD"
- 
- struct commit;
-+struct bloom_filter_settings;
- 
- char *get_commit_graph_filename(struct object_directory *odb);
- int open_commit_graph(const char *graph_file, int *fd, struct stat *st);
-@@ -59,6 +60,10 @@ struct commit_graph {
- 	const unsigned char *chunk_commit_data;
- 	const unsigned char *chunk_extra_edges;
- 	const unsigned char *chunk_base_graphs;
-+	const unsigned char *chunk_bloom_indexes;
-+	const unsigned char *chunk_bloom_data;
++test_bloom_filters_not_used () {
++	log_args=$1
++	setup "$log_args" &&
++	!(grep -q "statistics:{\"filter_not_present\":" "$TRASH_DIRECTORY/trace.perf") && 
++	test_cmp log_wo_bloom log_w_bloom
++}
 +
-+	struct bloom_filter_settings *bloom_filter_settings;
- };
- 
- struct commit_graph *load_commit_graph_one_fd_st(int fd, struct stat *st,
++for path in A A/B A/B/C A/file1 A/B/file2 A/B/C/file3 file4 file5 file5_renamed file_to_be_deleted
++do
++	for option in "" \
++              "--all" \
++		      "--full-history" \
++		      "--full-history --simplify-merges" \
++		      "--simplify-merges" \
++		      "--simplify-by-decoration" \
++		      "--follow" \
++		      "--first-parent" \
++		      "--topo-order" \
++		      "--date-order" \
++		      "--author-date-order" \
++		      "--ancestry-path side..master"
++	do
++		test_expect_success "git log option: $option for path: $path" '
++			test_bloom_filters_used "$option -- $path"
++		'
++	done
++done
++
++test_expect_success 'git log -- folder works with and without the trailing slash' '
++	test_bloom_filters_used "-- A" &&
++	test_bloom_filters_used "-- A/"
++'
++
++test_expect_success 'git log for path that does not exist. ' '
++	test_bloom_filters_used "-- path_does_not_exist"
++'
++
++test_expect_success 'git log with --walk-reflogs does not use Bloom filters' '
++	test_bloom_filters_not_used "--walk-reflogs -- A"
++'
++
++test_expect_success 'git log -- multiple path specs does not use Bloom filters' '
++	test_bloom_filters_not_used "-- file4 A/file1"
++'
++
++test_expect_success 'git log with wildcard that resolves to a single path uses Bloom filters' '
++	test_bloom_filters_used "-- *4" &&
++	test_bloom_filters_used "-- *renamed"
++'
++
++test_expect_success 'git log with wildcard that resolves to a multiple paths does not uses Bloom filters' '
++	test_bloom_filters_not_used "-- *" &&
++	test_bloom_filters_not_used "-- file*"
++'
++
++test_expect_success 'setup - add commit-graph to the chain without Bloom filters' '
++	test_commit c14 A/anotherFile2 &&
++	test_commit c15 A/B/anotherFile2 &&
++	test_commit c16 A/B/C/anotherFile2 &&
++	GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS=0 git commit-graph write --reachable --split &&
++	test_line_count = 2 .git/objects/info/commit-graphs/commit-graph-chain
++'
++
++test_expect_success 'Do not use Bloom filters if the latest graph does not have Bloom filters.' '
++	test_bloom_filters_not_used "-- A/B"
++'
++
++test_expect_success 'setup - add commit-graph to the chain with Bloom filters' '
++	test_commit c17 A/anotherFile3 &&
++	git commit-graph write --reachable --changed-paths --split &&
++	test_line_count = 3 .git/objects/info/commit-graphs/commit-graph-chain
++'
++
++test_bloom_filters_used_when_some_filters_are_missing () {
++	log_args=$1
++	bloom_trace_prefix="statistics:{\"filter_not_present\":3,\"zero_length_filter\":0,\"maybe\":8,\"definitely_not\":6"
++	setup "$log_args" &&
++	grep -q "$bloom_trace_prefix" "$TRASH_DIRECTORY/trace.perf" && 
++	test_cmp log_wo_bloom log_w_bloom
++}
++
++test_expect_success 'Use Bloom filters if they exist in the latest but not all commit graphs in the chain.' '
++	test_bloom_filters_used_when_some_filters_are_missing "-- A/B"
++'
++
++test_done
+\ No newline at end of file
 -- 
 gitgitgadget
 
