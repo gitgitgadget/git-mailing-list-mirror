@@ -2,124 +2,95 @@ Return-Path: <SRS0=sJPh=5P=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-20.9 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1,USER_IN_DEF_DKIM_WL autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 24539C43331
-	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 18:07:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0676FC43331
+	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 18:10:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id EBC1D20780
-	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 18:07:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CE03C2072E
+	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 18:10:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="a+CyXxij"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="TpG1T7T3"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728335AbgC3SHs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Mar 2020 14:07:48 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:45421 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727905AbgC3SHs (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Mar 2020 14:07:48 -0400
-Received: by mail-pl1-f196.google.com with SMTP id t4so1083632plq.12
-        for <git@vger.kernel.org>; Mon, 30 Mar 2020 11:07:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=W3JfbMmweGKYZZa6U+ObE2BTM12+S35moeo/2Rsj36c=;
-        b=a+CyXxijly9jPzFxNSFj+7AbcVl96EFl+A3xcC1Jlf5kdvl84IkCNilp7fONgW4uqu
-         zdkJA4juLHcKVrYUhF4BE+uw6JW+YcyQMZ/AUPvrFjJ5UBsms17PKkrEZJ46rszU2EId
-         3G6dQixfxzjKstuUtdtP+lMvCQwgPTVcH5sfDwTxi9U0j4rNYm0n0+2wqgzsZx2uZBKZ
-         1bPZmYxHAC/K6ad0960+6q+MQHtb1W9oOoFpTNL8bhgRnXah+ApviwWEwFCBJpvaIMlq
-         4QqnDuL9Bk2FiqyoNPPED/Eny9AliCaspDpFRNwp1mzpC8tfyiDbCTxwF7V8ePI/zuwL
-         kL2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=W3JfbMmweGKYZZa6U+ObE2BTM12+S35moeo/2Rsj36c=;
-        b=aSbwQ9uR1M7gGE5kvzeZagZCbC7aDRubumIWhUWKFccfy33QX4jUDdguAGZ95+llJj
-         FG/9UL7rpgjmb7nXsHq3bRvKJ9U2uhdC/vERCA7GjoU1iBcshW7T1O53DOCLfWy61I+n
-         /wcjfM4ZiDGvMV6Nredb25zdNSD0LGoMpMnO2/KfVzvt0IIZldOmX2j+pYfYml09zaD3
-         X6VRdjPR3nYp4ti45J6xu7FMe6e4TQHQdiFKpwCt3V77C6wvEzquXo73ssUSNR/FcHKN
-         3z/tkjfFkUQRa+ryVV3UZL2EJiMyi7/rN3tMUn34WKoT4wBPJINCxgUR66Y2rno/Fsvf
-         IO0A==
-X-Gm-Message-State: AGi0PuYffp0zcubpJ+ojkPdwnXbSCFAqhQHrudiZ0jibWa2rBX4qPYzy
-        R7BMES/vynIRvxYUeKhFSJlFUQ==
-X-Google-Smtp-Source: APiQypJOhT7N7/TTd+NEbxk39GrzUkgz9KVRtCLt6N8Q06yibSJxY6hxKTThaVhgk/9z1FSK4yPiIw==
-X-Received: by 2002:a17:90b:3556:: with SMTP id lt22mr639357pjb.138.1585591667193;
-        Mon, 30 Mar 2020 11:07:47 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
-        by smtp.gmail.com with ESMTPSA id b9sm10123872pgi.75.2020.03.30.11.07.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Mar 2020 11:07:46 -0700 (PDT)
-Date:   Mon, 30 Mar 2020 11:07:42 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] MyFirstObjectWalk: remove unnecessary conditional
- statement
-Message-ID: <20200330180742.GB37946@google.com>
-References: <pull.589.git.1585408753519.gitgitgadget@gmail.com>
+        id S1727728AbgC3SKC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Mar 2020 14:10:02 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:63104 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726312AbgC3SKB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Mar 2020 14:10:01 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6C4D3CF939;
+        Mon, 30 Mar 2020 14:09:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=1hbP1YTABNBozpcHxA0+8XYuSGw=; b=TpG1T7
+        T3KjhjKPqwDpmgFL4tFfurboMBAUS4/mnRIjt9RqmdUIgC+HHMntYDZakOBCXwIk
+        aJe2pkbSNG7lKrvu1/NfEPagyGUKPGfbvTELvahdu1Gbx6ondz8PO+IVEleWstu9
+        IWLdDGLHt9X82N9ZfEvM52SfuRfD1PJwqlYgE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=rjJD01D92qnvinR/2nXXpZDq0mx3cVb2
+        dN6XkgpKkmxcs2Xv2/XLnvMzj2iwLbxN99BRCK2YKduf6BKa68swdv7Dimo+SzA3
+        P1DFg1fUiZnIOcrMY1XyLwwXdInw6iF0LOgEAYTJh6NdinL6NrlduWCeB9CuWeE6
+        /JAoKy8SOLE=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 639CECF936;
+        Mon, 30 Mar 2020 14:09:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A9FE3CF932;
+        Mon, 30 Mar 2020 14:09:56 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     emilyshaffer@google.com, steadmon@google.com, git@vger.kernel.org,
+        peff@peff.net
+Subject: Re: [PATCH] connected: always use partial clone optimization
+References: <xmqqd08ua0jo.fsf@gitster.c.googlers.com>
+        <20200330160412.120614-1-jonathantanmy@google.com>
+Date:   Mon, 30 Mar 2020 11:09:55 -0700
+In-Reply-To: <20200330160412.120614-1-jonathantanmy@google.com> (Jonathan
+        Tan's message of "Mon, 30 Mar 2020 09:04:12 -0700")
+Message-ID: <xmqqa73x90jw.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <pull.589.git.1585408753519.gitgitgadget@gmail.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+Content-Type: text/plain
+X-Pobox-Relay-ID: A985903A-72B1-11EA-9783-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Mar 28, 2020 at 03:19:13PM +0000, Johannes Schindelin via GitGitGadget wrote:
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> 
-> In the given example, `commit` cannot be `NULL` (because this is the
-> loop condition: if it was `NULL`, the loop body would not be entered at
-> all). It took this developer a moment or two to see that this is
-> therefore dead code.
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-Nice catch. Thanks.
+>> Jonathan Tan <jonathantanmy@google.com> writes:
+>> 
+>> >> Sounds good.  Jonathan?  I've squashed Josh'es Reviewed-by, but I
+>> >> will refrain from merging it to 'next' just yet to see if you too
+>> >> like the proposed code structure.
+>> >
+>> > I think that this is a local enough concern that going either way won't
+>> > paint us into a corner, so if what's in
+>> > jt/connectivity-check-optim-in-partial-clone is OK, I prefer using that
+>> > to reduce churn.
+>> 
+>> If you do not think their improvement is not much of improvement,
+>> then please say so.
+>
+> Yes, I don't think that their improvement is much of an improvement. If
+> we were to split up the logic into functions, one of the functions would
+> need to be documented as "Return true if all objects returned by 'fn'
+> exist in promisor packs.
 
-> 
-> Let's remove it, to avoid puzzling future readers.
-> 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+So we have a stronger basis to reject the different code structure,
+and I think it makes sense.  Which is a better reason to give than
+"it is a local enough concern and we can do so later if we wanted
+to".  We probably do not want to anyway, right?
 
-Reviewed-by: Emily Shaffer <emilyshaffer@google.com>
+Thanks.  Let's mark the topic as ready for 'next'.
 
-> ---
->     MyFirstObjectWalk: remove unnecessary conditional statement
->     
->     Our introductory documentation made me scratch my head because our
->     example contains dead code. I'd like to remove it lest we confuse future
->     contributors.
-> 
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-589%2Fdscho%2Fgit-walken-head-scratcher-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-589/dscho/git-walken-head-scratcher-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/589
-> 
->  Documentation/MyFirstObjectWalk.txt | 3 ---
->  1 file changed, 3 deletions(-)
-> 
-> diff --git a/Documentation/MyFirstObjectWalk.txt b/Documentation/MyFirstObjectWalk.txt
-> index aa828dfdc44..c3f2d1a831e 100644
-> --- a/Documentation/MyFirstObjectWalk.txt
-> +++ b/Documentation/MyFirstObjectWalk.txt
-> @@ -357,9 +357,6 @@ static void walken_commit_walk(struct rev_info *rev)
->  	...
->  
->  	while ((commit = get_revision(rev))) {
-> -		if (!commit)
-> -			continue;
-> -
->  		strbuf_reset(&prettybuf);
->  		pp_commit_easy(CMIT_FMT_ONELINE, commit, &prettybuf);
->  		puts(prettybuf.buf);
-> 
-> base-commit: 3bab5d56259722843359702bc27111475437ad2a
-> -- 
-> gitgitgadget
