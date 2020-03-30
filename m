@@ -2,102 +2,121 @@ Return-Path: <SRS0=sJPh=5P=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 77716C43331
-	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 14:02:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3391AC43331
+	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 14:03:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3145B20776
-	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 14:02:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0655C2073B
+	for <git@archiver.kernel.org>; Mon, 30 Mar 2020 14:03:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726114AbgC3OCt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Mar 2020 10:02:49 -0400
-Received: from cloud.peff.net ([104.130.231.41]:55602 "HELO cloud.peff.net"
+        id S1726981AbgC3ODL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Mar 2020 10:03:11 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55608 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725978AbgC3OCt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Mar 2020 10:02:49 -0400
-Received: (qmail 15145 invoked by uid 109); 30 Mar 2020 14:02:48 -0000
+        id S1726312AbgC3ODL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Mar 2020 10:03:11 -0400
+Received: (qmail 15152 invoked by uid 109); 30 Mar 2020 14:03:10 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 30 Mar 2020 14:02:48 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 30 Mar 2020 14:03:10 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18663 invoked by uid 111); 30 Mar 2020 14:12:51 -0000
+Received: (qmail 18691 invoked by uid 111); 30 Mar 2020 14:13:14 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 30 Mar 2020 10:12:51 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 30 Mar 2020 10:13:14 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Mon, 30 Mar 2020 10:02:47 -0400
+Date:   Mon, 30 Mar 2020 10:03:09 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Subject: [PATCH 0/7] oid_array cleanups
-Message-ID: <20200330140247.GA476088@coredump.intra.peff.net>
+Subject: [PATCH 1/7] oid_array: use size_t for count and allocation
+Message-ID: <20200330140309.GA2456038@coredump.intra.peff.net>
+References: <20200330140247.GA476088@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <20200330140247.GA476088@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I recently encountered a repo in the wild that had over 2^31 objects,
-and found that cat-file barfed:
+The oid_array object uses an "int" to store the number of items and the
+allocated size. It's rather unlikely for somebody to have more than 2^31
+objects in a repository (the sha1's alone would be 40GB!), but if they
+do, we'd overflow our alloc variable.
 
-  $ git cat-file --batch-all-objects --batch-check
+You can reproduce this case with something like:
+
+  git init repo
+  cd repo
+
+  # make a pack with 2^24 objects
+  perl -e '
+    my $nr = 2**24;
+
+    for (my $i = 0; $i < $nr; $i++) {
+	    print "blob\n";
+	    print "data 4\n";
+	    print pack("N", $i);
+    }
+  ' | git fast-import
+
+  # now make 256 copies of it; most of these objects will be duplicates,
+  # but oid_array doesn't de-dup until all values are read and it can
+  # sort the result.
+  cd .git/objects/pack/
+  pack=$(echo *.pack)
+  idx=$(echo *.idx)
+  for i in $(seq 0 255); do
+    # no need to waste disk space
+    ln "$pack" "pack-extra-$i.pack"
+    ln "$idx" "pack-extra-$i.idx"
+  done
+
+  # and now force an oid_array to store all of it
+  git cat-file --batch-all-objects --batch-check
+
+which results in:
+
   fatal: size_t overflow: 32 * 18446744071562067968
 
-The issue is that we use an "int" to store the count and the allocation.
-Fortunately our st_mult() protection kicks in before we end up with an
-undersized buffer, so this shouldn't be dangerous. And while I'd argue
-that having that many objects is probably silly and likely to cause
-other problems, I'd just as soon we kept our allocating code as robust
-as possible.
+So the good news is that st_mult() sees the problem (the large number is
+because our int wraps negative, and then that gets cast to a size_t),
+doing the job it was meant to: bailing in crazy situations rather than
+causing an undersized buffer.
 
-The first patch is the actual fix, followed by some related type
-cleanup. The rest of it is just leftovers from the
-s/sha1_array/oid_array/ transition a few years back.
+But we should avoid hitting this case at all, and instead limit
+ourselves based on what malloc() is willing to give us. We can easily do
+that by switching to size_t.
 
-  [1/7]: oid_array: use size_t for count and allocation
-  [2/7]: oid_array: use size_t for iteration
-  [3/7]: oid_array: rename source file from sha1-array
-  [4/7]: test-tool: rename sha1-array to oid-array
-  [5/7]: bisect: stop referring to sha1_array
-  [6/7]: ref-filter: stop referring to "sha1 array"
-  [7/7]: oidset: stop referring to sha1-array
+The cat-file process above made it to ~120GB virtual set size before the
+integer overflow (our internal hash storage is 32-bytes now in
+preparation for sha256, so we'd expect ~128GB total needed, plus
+potentially more to copy from one realloc'd block to another)). After
+this patch (and about 130GB of RAM+swap), it does eventually read in the
+whole set. No test for obvious reasons.
 
- Makefile                                         |  4 ++--
- bisect.c                                         |  8 ++++----
- builtin/cat-file.c                               |  2 +-
- builtin/diff.c                                   |  2 +-
- builtin/fetch-pack.c                             |  2 +-
- builtin/pack-objects.c                           |  2 +-
- builtin/pull.c                                   |  2 +-
- builtin/receive-pack.c                           |  2 +-
- builtin/send-pack.c                              |  2 +-
- builtin/tag.c                                    |  2 +-
- cache.h                                          |  2 +-
- combine-diff.c                                   |  2 +-
- connect.c                                        |  2 +-
- delta-islands.c                                  |  2 +-
- fetch-pack.c                                     |  2 +-
- object-store.h                                   |  2 +-
- sha1-array.c => oid-array.c                      | 10 +++++-----
- sha1-array.h => oid-array.h                      |  6 +++---
- oidset.h                                         |  2 +-
- parse-options-cb.c                               |  2 +-
- ref-filter.c                                     |  7 +++----
- ref-filter.h                                     |  2 +-
- remote-curl.c                                    |  2 +-
- send-pack.c                                      |  2 +-
- sha1-name.c                                      |  2 +-
- shallow.c                                        |  2 +-
- submodule.c                                      |  2 +-
- t/helper/{test-sha1-array.c => test-oid-array.c} |  8 ++++----
- t/helper/test-tool.c                             |  2 +-
- t/helper/test-tool.h                             |  2 +-
- t/t0064-sha1-array.sh                            | 16 ++++++++--------
- transport.c                                      |  2 +-
- 32 files changed, 54 insertions(+), 55 deletions(-)
- rename sha1-array.c => oid-array.c (93%)
- rename sha1-array.h => oid-array.h (97%)
- rename t/helper/{test-sha1-array.c => test-oid-array.c} (83%)
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ sha1-array.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/sha1-array.h b/sha1-array.h
+index dc1bca9c9a..c5e4b9324f 100644
+--- a/sha1-array.h
++++ b/sha1-array.h
+@@ -49,8 +49,8 @@
+  */
+ struct oid_array {
+ 	struct object_id *oid;
+-	int nr;
+-	int alloc;
++	size_t nr;
++	size_t alloc;
+ 	int sorted;
+ };
+ 
+-- 
+2.26.0.597.g7e08ed78ff
 
