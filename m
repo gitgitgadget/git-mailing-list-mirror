@@ -2,274 +2,178 @@ Return-Path: <SRS0=DhGT=5Q=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 38A9EC43331
-	for <git@archiver.kernel.org>; Tue, 31 Mar 2020 19:15:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 90AD4C43331
+	for <git@archiver.kernel.org>; Tue, 31 Mar 2020 19:26:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id F1AE0212CC
-	for <git@archiver.kernel.org>; Tue, 31 Mar 2020 19:15:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5A11520784
+	for <git@archiver.kernel.org>; Tue, 31 Mar 2020 19:26:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="gBklLRLW"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UeibJkrW"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727627AbgCaTPE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 Mar 2020 15:15:04 -0400
-Received: from mout.web.de ([212.227.15.3]:41279 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726295AbgCaTPD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Mar 2020 15:15:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1585682101;
-        bh=7Yc1ymXNf+vLU6f1HxnCDhLchvTaaP/egNyOvIbiIzc=;
-        h=X-UI-Sender-Class:Subject:To:References:From:Date:In-Reply-To;
-        b=gBklLRLWMPR5CGob+2bt8jisoPWWPWd/gbeYGh5LobhnN5LITk08btp7SKJ624K+p
-         5mhsLsDbcanHwe7hOa1y0Nr7/D7QHT1prLvXkPr+YAWuHVWrGrnreh6uKp//0DYyRf
-         HAM3ZJDk+gNkDD0EEPRDNjvQZopEjAKLtQwtolHY=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([79.203.21.89]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MJlGW-1jKSHJ0Pq8-00195S; Tue, 31
- Mar 2020 21:15:01 +0200
-Subject: Re: fast-import's hash table is slow
-To:     Jeff King <peff@peff.net>, git@vger.kernel.org
-References: <20200331094553.GB7274@coredump.intra.peff.net>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <fcf422e4-08f6-634a-39ba-18d40d1c25ca@web.de>
-Date:   Tue, 31 Mar 2020 21:14:58 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
+        id S1728087AbgCaT0S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 Mar 2020 15:26:18 -0400
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:37694 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727509AbgCaT0S (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Mar 2020 15:26:18 -0400
+Received: by mail-lj1-f196.google.com with SMTP id r24so23295256ljd.4
+        for <git@vger.kernel.org>; Tue, 31 Mar 2020 12:26:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=3bhdvbpQzSliO3AZVLc2yy6RgT/mF0G1gSZU2usypvk=;
+        b=UeibJkrW7oXvqQQ3sdzvV3nmaYvBNQAwsgMEywg76o24Ho0wfgZSVpgnS3YZGKtjUv
+         gPAw49cqLCPEqie3u5R88vfyqvDbXXFs6LOlaf+grgJSwRPGld87Tx27VF40t80sBppx
+         N09Ca00qs1YTsgUjrgshZWpKIC4SEkjgZ5lpaw9YLsCvCGgHVm2z/izE0KH4aSGiNWpx
+         EhIAP4dIafEXJ7yiMxp4nIc37rcRTRSkRgkL9GFqAPfX2YNqa1KOa1qUo+EeCXR4buyl
+         UJh9j1vA0X2NmBc/CitbIwGAEAvgsEP0fsZZitoZC0BmeHRWlfiyTWcNCHo6knZwFXda
+         ogZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=3bhdvbpQzSliO3AZVLc2yy6RgT/mF0G1gSZU2usypvk=;
+        b=e7PP95lb8ToWDRa7aFxFVowTvzXIlWuM6jSS372P3faMpQ4xiixXlwTbb/MloKJoA3
+         3A9e5e25pC4O9yDwN0b7hhTCOKgBhTfqcOJKIBgmxMukO6WiGgSbpNhBgCA9RVz2C3+i
+         7VJYY5lI28HNNIUfk+11Ef6pRzqTYjrUiK2+IRfnVeirvyUlefrO0qkIF9Y8ReHzBcJ8
+         OCyxeStCwqb+8pHp/pMj29+zf2y6cfyNujDtM1OI8TxvlPHD48BmbOj9KUr/M8jnpsO/
+         YKPuoh75MnGbyhTB/ZlEIWlsIE4BbzKkM+ja/4p8RCmRxUrAOPmVzDnpF1gbCVnxMXQn
+         Iylg==
+X-Gm-Message-State: AGi0PuYQLmGTkotrc70OxecyybZp0DjxzbZGK3fChkO/CLDYMy9CNcKt
+        dn8eArioqLCVyKz+ozykG4k=
+X-Google-Smtp-Source: APiQypJTF9+4QQuWA/fO8srD9Z1ThR94TbBq4X8ekUMeiIElDCzxLbmLxQWeKReZl6tNJIj9K54MFw==
+X-Received: by 2002:a2e:2e14:: with SMTP id u20mr6222893lju.73.1585682775462;
+        Tue, 31 Mar 2020 12:26:15 -0700 (PDT)
+Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
+        by smtp.gmail.com with ESMTPSA id z23sm9038649ljh.55.2020.03.31.12.26.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 31 Mar 2020 12:26:14 -0700 (PDT)
+From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 0/6] Doc: drop support for docbook-xsl before 1.74
+Date:   Tue, 31 Mar 2020 21:26:00 +0200
+Message-Id: <20200331192600.588-1-martin.agren@gmail.com>
+X-Mailer: git-send-email 2.26.0
+In-Reply-To: <20200330094513.GB1735224@coredump.intra.peff.net>
+References: <20200330094513.GB1735224@coredump.intra.peff.net>
 MIME-Version: 1.0
-In-Reply-To: <20200331094553.GB7274@coredump.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:SVYv0r9OZihmVg/M3HWvzcgEsHz0m4DkB1KO+R4QkR+ln4N1lwb
- n/Z1qBEQyogNnu50mvnSDk10dvschTeE6jkPpSJOw9PZnDEHXgjZDwHViua6QZhimzVrSQL
- ZMYkl0/7boJHYsqogumhK5lSkxhvZmybStib9X4xZH+zzJle3d8XaI562gn/YvB2BeNkl89
- jDzLZ5bhOQmaDGkyGpLCQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:SqU3WTQL3Js=:Umr/i6Pq5TT++DUfG4kRM8
- AuF1rDlTQr65kzy3P4xl48s5wtj6sUq7qPetxaHYKl9k0Ticpuv/XjQyMn24kybGgE9p0TN/b
- u7su0AW0LnqJiKwR/AjUceIVCVsMnkyoKhe+Qo87j847++ONZ/n+UiGa7hmFllsrJ43Ce9qiS
- RpkflTP03HQWSq7jY0ZDfHITJPJK8XUxv1Ey6kyYbgzCdeD/ic5vF6sMrCf4W6ZaT5qWR5rsO
- vzekdpvZxxZP9myV6VaNv/I2T+W7liRNJvJ1tdNa8eEFDt8AcpkZjaPGbYWCXPsXvuVJt1P2g
- hQdxjBz7134tkTMZ/ck1jn/i57pyfM2xrAcCeFmYWev4uwDaefRxQ1fpzCB76SBNGQjHSH9P0
- Buf2x8O/7VQlYzKxHHjQYHZbR050ohyZfH6hGyykx5M4ucNR2xdMJ2IOzrrY22wDrtCV6GS2t
- OoSzryF1wV/u3zFjXb6u75Lpc+ID+j9EujHXLjL858cJVg0rbyxoqx2OusyNBsAg9iAWqQnHW
- EOsE/YeajlnVBBhywSFPohgZsjuUrf75FNCjo/Ye8XX3vI8xjzKuwDrS6kNx6BtfA3GBvRdTy
- q66lENnexWyz6EMRs+maqQdpeDPot0jgygkPJVGXwWJQjks2VAj1NToQ+CFHkuc46+dYmi87L
- heh40fyB0whRBO8TyijwNRrhp6cCFEtLbmKR+jHJkgnv+k9gjqLzzGFhf/oLHuIdSOBXzYt+q
- Xu55bqjCSkotgjFqVEX8FuvZINQlhzsw/YukEUrlV7KpdT3PX9+YgwEpyMUJ6yd3kRCfFY1gx
- ybMUaF1GgFFUz/2uWwPYxtfpDs9jsAqHlVe07tiKQoTcB7BvBbzzRpnvM3aui7pKEuH89xhoB
- FU25D8nYjFUDB59fM6ZSl0iN7etri7xoGg95EgXqB94NbuCVKUg/l7f5JNvOo0d6p1nzj1Oeq
- mte8puX5TDGlDrGfEHPGig89A5Eeg3zATAbyvtoxFsDWpnLy4ss8xJ8Ipm5xPRM4p7k0dE1e1
- F86QzIkVZ4e42fHyyjs2PYqNvJuDOHpRMsBydjMebGz1Nrf1tgsFESn800cQtl3zhfRDNpcAW
- zD391d52fDpzknmgOD8kmgOLb23TjIKe3shCehey6CutViyZ2Rn1V9zazVf/jMet7mTCym4hu
- 8eUODMJyraAut95XUnEubE7elCc32mS1L59LcER7U/QUdsxZz7DZ+mv1rRHdoUvxIVxZs8ntH
- FU7M6l/UFjOiXeMjK
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 31.03.20 um 11:45 schrieb Jeff King:
-> [breaking thread, since this is really an independent topic]
+On Mon, 30 Mar 2020 at 11:45, Jeff King <peff@peff.net> wrote:
 >
-> On Mon, Mar 30, 2020 at 10:09:30AM -0400, Jeff King wrote:
+> On Sun, Mar 29, 2020 at 03:18:04PM +0200, Martin Ågren wrote:
 >
->> So I arrived at this fast-import solution, which was...not super fast.
->> Profiling showed that we were spending 80% of the time inserting into
->> our custom hashtable, which is fixed at 2^16 entries and then chains
->> beyond that. Swapping it out for a khash proved much faster, but I'm no=
-t
->> sure if the memory games are too gross (see the comment in find_object
->> below).
->>
->> I also didn't look into whether we could get rid of the extra allocatin=
-g
->> pool (and store the structs right in the hash), or if it's necessary fo=
-r
->> their pointers to be stable.
->
-> I briefly tried to get rid of the pool. I _think_ it should be possible,
-> but I did see some test failures. It's entirely possible I screwed it
-> up. However, I did generate a few interesting measurements showing how
-> the current hash table behaves on this test:
->
->   git init repo
->   cd repo
->   perl -e '
->       my $bits =3D shift;
->       my $nr =3D 2**$bits;
->
->       for (my $i =3D 0; $i < $nr; $i++) {
->               print "blob\n";
->               print "data 4\n";
->               print pack("N", $i);
->       }
->   ' "$@" | git fast-import
->
-> Here are wall-clock timings for the current tip of master, versus with
-> the patch below applied:
->
-> nr_objects   master       patch
-> 2^20         0m04.317s    0m5.109s
-> 2^21         0m10.204s    0m9.702s
-> 2^22         0m27.159s    0m17.911s
-> 2^23         1m19.038s    0m35.080s
-> 2^24         4m18.766s    1m10.233s
+> Yay, I'm very happy to see this series. I'd be happy to go even further
+> if there's some benefit, but I think this removes the last of the
+> Makefile knobs.
 
-I get similar numbers.
+Yes, I should have been clear about that: This does remove the last
+Makefile knob. At least I couldn't find any more with some browsing and
+grepping.
 
-Pre-sizing by putting this near the top of cmd_main() gets the time
-for 1M down to 4 seconds:
+> > After this series, user-manual.conf still refers to older docbook-xsl
+> > versions. The proper fix there might be to actually be a bit more
+> > aggressive and drop that hunk, making the rendered docs prettier.
+> > There's some history there, including mentions of texinfo, which is
+> > outside my comfort zone. I've got work in progress there, but I'd rather
+> > submit that separately from these "expected no-op" patches.
+>
+> Yeah, dropping that bit from user-manual.conf seems reasonable. That
+> shouldn't show anything in doc-diff because it's not installed with the
+> manpages. And the HTML build wouldn't use docbook. I installed the
+> zillion packages needed to build user-manual.pdf. The behavior without
+> that block looks significantly nicer (the example blocks are actually
+> shaded).
 
-	kh_resize_object_entry_set(&object_table, 1 << 18);
+This matches what I've seen.
 
-The more fair 1 << 16 does not cut it, the totally unfair 1 << 20 gives
-a small extra boost.
+> Anyway, that was just for my own curiosity. If you've got further work
+> in that area and prefer to do it as a separate series, that's fine by
+> me.
 
->
-> The curve on master is quadratic-ish (each line has double the number of
-> objects of the previous one; the times don't multiply by 4, but that's
-> because the hash table is only part of the work we're doing). With my
-> patch, it's pretty linear.
->
-> But I'm still disappointed that the smallest case is actually _slower_
-> with the patch. The existing hash table is so simple I can imagine using
-> khash has a little overhead. But I'm surprised it would be so much (or
-> that the existing hash table does OK at 2^20; it only has 2^16 buckets).
->
-> Maybe this email will nerd-snipe Ren=C3=A9 into poking at it.
->
-> The patch I tested is below (it's slightly different than what I showed
-> before, in that it handles duplicate insertions). Maybe using hashmap.c
-> would be better?
->
-> ---
-> diff --git a/fast-import.c b/fast-import.c
-> index 202dda11a6..6ebac665a0 100644
-> --- a/fast-import.c
-> +++ b/fast-import.c
-> @@ -39,12 +39,25 @@
->
->  struct object_entry {
->  	struct pack_idx_entry idx;
-> -	struct object_entry *next;
->  	uint32_t type : TYPE_BITS,
->  		pack_id : PACK_ID_BITS,
->  		depth : DEPTH_BITS;
->  };
->
-> +static inline unsigned int object_entry_hash(struct object_entry *oe)
-> +{
-> +	return oidhash(&oe->idx.oid);
-> +}
-> +
-> +static inline int object_entry_equal(struct object_entry *a,
-> +				     struct object_entry *b)
-> +{
-> +	return oideq(&a->idx.oid, &b->idx.oid);
-> +}
-> +
-> +KHASH_INIT(object_entry_set, struct object_entry *, int, 0,
-> +	   object_entry_hash, object_entry_equal);
-> +
->  struct object_entry_pool {
->  	struct object_entry_pool *next_pool;
->  	struct object_entry *next_free;
-> @@ -178,7 +191,7 @@ static off_t pack_size;
->  /* Table of objects we've written. */
->  static unsigned int object_entry_alloc =3D 5000;
->  static struct object_entry_pool *blocks;
-> -static struct object_entry *object_table[1 << 16];
-> +static kh_object_entry_set_t object_table;
->  static struct mark_set *marks;
->  static const char *export_marks_file;
->  static const char *import_marks_file;
-> @@ -455,44 +468,45 @@ static struct object_entry *new_object(struct obje=
-ct_id *oid)
->
->  static struct object_entry *find_object(struct object_id *oid)
->  {
-> -	unsigned int h =3D oid->hash[0] << 8 | oid->hash[1];
-> -	struct object_entry *e;
-> -	for (e =3D object_table[h]; e; e =3D e->next)
-> -		if (oideq(oid, &e->idx.oid))
-> -			return e;
-> +	/*
-> +	 * this cast works because we only look at the oid part of the entry,
-> +	 * and it comes first in the struct
-> +	 */
-> +	khiter_t pos =3D kh_get_object_entry_set(&object_table,
-> +					       (struct object_entry *)oid);
+Not sure about "further work" really. I'm pretty sure you tried out the
+exact same diff that I have, and I'm glad you agree it looks prettier /
+"significantly nicer". A small part of why I didn't submit it is that
+it's user manual vs man pages. Another part is that it's an intentional
+change as opposed to an intended no-op.
 
-Dirty, but I can believe the comment.
+But most importantly: When I looked into the history, I came upon
+c2a7f5d438 ("docs: monospace listings in docbook output", 2012-08-07),
+which made me worry about breaking "make info". On second thought, I
+might have broken it many times already over the past few years, since
+I've never built the info. So maybe worrying about that all of a sudden
+is a bit unfounded in a way. :-/
 
+(I tried to build "info" while working on this. It works in the sense
+that it doesn't error out, but I don't get anything that looks remotely
+useful. I've never used info at all though, to be honest, so could be
+missing something fundamental.)
 
-> +	if (pos !=3D kh_end(&object_table))
-> +		return kh_key(&object_table, pos);
->  	return NULL;
->  }
->
->  static struct object_entry *insert_object(struct object_id *oid)
->  {
-> -	unsigned int h =3D oid->hash[0] << 8 | oid->hash[1];
-> -	struct object_entry *e =3D object_table[h];
-> +	struct object_entry *e;
-> +	int was_empty;
-> +	khiter_t pos;
->
-> -	while (e) {
-> -		if (oideq(oid, &e->idx.oid))
-> -			return e;
-> -		e =3D e->next;
-> -	}
-> +	pos =3D kh_put_object_entry_set(&object_table, (struct object_entry *)=
-oid, &was_empty);
+Here's what I have. I suppose it could be framed as a patch 1/7 instead.
 
-Now this looks illegal.  khash is surely reading a full object_entry from =
-oid,
-which only is a mere object_id, no?
+Martin
 
-> +	if (!was_empty)
-> +		return kh_key(&object_table, pos);
->
->  	e =3D new_object(oid);
-> -	e->next =3D object_table[h];
->  	e->idx.offset =3D 0;
-> -	object_table[h] =3D e;
-> +	kh_key(&object_table, pos) =3D e;
->  	return e;
->  }
->
->  static void invalidate_pack_id(unsigned int id)
->  {
-> -	unsigned int h;
->  	unsigned long lu;
->  	struct tag *t;
-> +	khiter_t iter;
->
-> -	for (h =3D 0; h < ARRAY_SIZE(object_table); h++) {
-> -		struct object_entry *e;
-> -
-> -		for (e =3D object_table[h]; e; e =3D e->next)
-> +	for (iter =3D kh_begin(&object_table); iter !=3D kh_end(&object_table)=
-; iter++) {
-> +		if (kh_exist(&object_table, iter)) {
-> +			struct object_entry *e =3D kh_key(&object_table, iter);
->  			if (e->pack_id =3D=3D id)
->  				e->pack_id =3D MAX_PACK_ID;
-> +		}
->  	}
+-- >8 --
+Subject: [PATCH 7/6?] user-manual.conf: don't specify [listingblock]
 
-Is this really the best way to handle that, independently of the hashmap
-that's used?  I wonder how an extra hashmap or set of valid pack_id
-values (or set of invalidated pack_id values?) would fare against having
-to touch all object entries here.
+This is the config file we use when we build the user manual with
+AsciiDoc. The comment at the top of this chunk that we're removing says
+the following:
 
->
->  	for (lu =3D 0; lu < branch_table_sz; lu++) {
->
+  "unbreak" docbook-xsl v1.68 for manpages (sic!). v1.69 works with or
+  without this.
+
+This comes from d19fbc3c17 ("Documentation: add git user's manual",
+2007-01-07), where it looks like this conf file in general and this
+snippet in particular was copy-pasted from asciidoc.conf.
+
+This chunk is very similar to something we just got rid of for the
+manpages, and because this appears to be aimed at v1.68 -- which we no
+longer support for the manpages as of a few commits ago --, it's
+tempting to get rid of this. That reveals an interesting aspect of
+"works with or without this": it turns out it actually works /better/
+without!
+
+Dropping this makes us render code snippets and shell listings using
+<screen> rather than <literallayout>, just like Asciidoctor does. In
+user-manual.pdf, this puts the contents into dimmed-background,
+easy-to-distinguish-from-the-surrounding-text boxes, as opposed to
+white-background (transparent) boxes.
+
+Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+---
+ Documentation/user-manual.conf | 10 ----------
+ 1 file changed, 10 deletions(-)
+
+diff --git a/Documentation/user-manual.conf b/Documentation/user-manual.conf
+index d87294de2f..0148f126dc 100644
+--- a/Documentation/user-manual.conf
++++ b/Documentation/user-manual.conf
+@@ -9,13 +9,3 @@ tilde=&#126;
+ 
+ [linkgit-inlinemacro]
+ <ulink url="{target}.html">{target}{0?({0})}</ulink>
+-
+-ifdef::backend-docbook[]
+-# "unbreak" docbook-xsl v1.68 for manpages. v1.69 works with or without this.
+-[listingblock]
+-<example><title>{title}</title>
+-<literallayout class="monospaced">
+-|
+-</literallayout>
+-{title#}</example>
+-endif::backend-docbook[]
 
