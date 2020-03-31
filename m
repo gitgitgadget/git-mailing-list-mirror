@@ -2,138 +2,206 @@ Return-Path: <SRS0=DhGT=5Q=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 61155C43331
-	for <git@archiver.kernel.org>; Tue, 31 Mar 2020 09:34:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 223B4C43331
+	for <git@archiver.kernel.org>; Tue, 31 Mar 2020 09:45:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3D8C120675
-	for <git@archiver.kernel.org>; Tue, 31 Mar 2020 09:34:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E606F2073B
+	for <git@archiver.kernel.org>; Tue, 31 Mar 2020 09:45:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729984AbgCaJej (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 Mar 2020 05:34:39 -0400
-Received: from cloud.peff.net ([104.130.231.41]:56652 "HELO cloud.peff.net"
+        id S1730333AbgCaJpy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 Mar 2020 05:45:54 -0400
+Received: from cloud.peff.net ([104.130.231.41]:56670 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726488AbgCaJej (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Mar 2020 05:34:39 -0400
-Received: (qmail 23443 invoked by uid 109); 31 Mar 2020 09:34:39 -0000
+        id S1729997AbgCaJpy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Mar 2020 05:45:54 -0400
+Received: (qmail 23604 invoked by uid 109); 31 Mar 2020 09:45:54 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 31 Mar 2020 09:34:39 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 31 Mar 2020 09:45:54 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28143 invoked by uid 111); 31 Mar 2020 09:44:43 -0000
+Received: (qmail 28199 invoked by uid 111); 31 Mar 2020 09:55:59 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 31 Mar 2020 05:44:43 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 31 Mar 2020 05:55:59 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 31 Mar 2020 05:34:37 -0400
+Date:   Tue, 31 Mar 2020 05:45:53 -0400
 From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 3/5] tests: turn GPG, GPGSM and RFC1991 into lazy
- prereqs
-Message-ID: <20200331093437.GA7274@coredump.intra.peff.net>
-References: <pull.728.git.git.1584968990.gitgitgadget@gmail.com>
- <pull.728.v2.git.git.1585114881.gitgitgadget@gmail.com>
- <85457a7b61874e8e9f3af9c231451df0aba7a7b5.1585114881.git.gitgitgadget@gmail.com>
- <20200326083519.GD2200716@coredump.intra.peff.net>
- <nycvar.QRO.7.76.6.2003261450590.46@tvgsbejvaqbjf.bet>
- <20200327091004.GA610157@coredump.intra.peff.net>
- <nycvar.QRO.7.76.6.2003302027240.46@tvgsbejvaqbjf.bet>
+To:     git@vger.kernel.org
+Subject: fast-import's hash table is slow
+Message-ID: <20200331094553.GB7274@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.2003302027240.46@tvgsbejvaqbjf.bet>
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 30, 2020 at 08:39:08PM +0200, Johannes Schindelin wrote:
+[breaking thread, since this is really an independent topic]
 
-> > So my perspective was the opposite of yours: "return" is the officially
-> > sanctioned way to exit early from a test snippet, and "exit" only
-> > happens to work because of the undocumented fact that lazy prereqs
-> > happen in a subshell. But it turns out neither was documented. :)
+On Mon, Mar 30, 2020 at 10:09:30AM -0400, Jeff King wrote:
+
+> So I arrived at this fast-import solution, which was...not super fast.
+> Profiling showed that we were spending 80% of the time inserting into
+> our custom hashtable, which is fixed at 2^16 entries and then chains
+> beyond that. Swapping it out for a khash proved much faster, but I'm not
+> sure if the memory games are too gross (see the comment in find_object
+> below).
 > 
-> Can a subshell inside a function cause a `return` from said function? I
-> don't think so, but let's put that to a test:
-> [...]
-> To me, the fact that that `return` does not return from the function, but
-> only exits the subshell, in my mind lends more credence to the idea that
-> `exit` is more appropriate in this context than `return`.
+> I also didn't look into whether we could get rid of the extra allocating
+> pool (and store the structs right in the hash), or if it's necessary for
+> their pointers to be stable.
 
-Hmm, yeah, I was wrong about it actually returning from the function.
-Thanks for demonstrating.  Returning from just the subshell in the case
-of lazy_prereq is OK for our purposes, since the exit value of the
-subshell is taken as the result of the prereq check (and in turn becomes
-the return value of that function anyway).
+I briefly tried to get rid of the pool. I _think_ it should be possible,
+but I did see some test failures. It's entirely possible I screwed it
+up. However, I did generate a few interesting measurements showing how
+the current hash table behaves on this test:
 
-But it does make more sympathetic to the idea that "exit" is appropriate
-here. Especially given the prodding below (which you can skip to the
-last paragraph if you're not interested in shell arcana):
+  git init repo
+  cd repo
+  perl -e '
+      my $bits = shift;
+      my $nr = 2**$bits;
 
-> For shiggles, I also added that `$?` because I really, _really_ wanted to
-> know whether my reading of GNU Bash's documentation was correct, and it
-> appears I was mistaken: apparently `return` used outside a function does
-> _not_ cause a non-zero exit code.
+      for (my $i = 0; $i < $nr; $i++) {
+              print "blob\n";
+              print "data 4\n";
+              print pack("N", $i);
+      }
+  ' "$@" | git fast-import
 
-I think the issue may be in the definition of "outside a function".
+Here are wall-clock timings for the current tip of master, versus with
+the patch below applied:
 
-If we really are at the top-level outside of a function, then return
-gives a non-zero exit but _doesn't_ return in bash:
+nr_objects   master       patch
+2^20         0m04.317s    0m5.109s
+2^21         0m10.204s    0m9.702s
+2^22         0m27.159s    0m17.911s
+2^23         1m19.038s    0m35.080s
+2^24         4m18.766s    1m10.233s
 
-  $ bash -c 'return 2; echo inside=$?'; echo outside=$?
-  bash: line 0: return: can only `return' from a function or sourced script
-  inside=1
-  outside=0
+The curve on master is quadratic-ish (each line has double the number of
+objects of the previous one; the times don't multiply by 4, but that's
+because the hash table is only part of the work we're doing). With my
+patch, it's pretty linear.
 
-So even though we asked to return 2, it gave us a generic "1" return
-code and continued executing (and then outside=0 because the echo was
-successful).
+But I'm still disappointed that the smallest case is actually _slower_
+with the patch. The existing hash table is so simple I can imagine using
+khash has a little overhead. But I'm surprised it would be so much (or
+that the existing hash table does OK at 2^20; it only has 2^16 buckets).
 
-And that's true even in a subshell (not we moved "outside" into the bash
-process so we can see that it keeps going):
+Maybe this email will nerd-snipe René into poking at it.
 
-  $ bash -c '(return 2; echo inside=$?); echo outside=$?'
-  bash: line 0: return: can only `return' from a function or sourced script
-  inside=1
-  outside=0
+The patch I tested is below (it's slightly different than what I showed
+before, in that it handles duplicate insertions). Maybe using hashmap.c
+would be better?
 
-But if we actually _are_ inside a function, even inside a subshell, then
-return "works", by stopping execution in the subshell and returning the
-value we asked (in your example we got "0" because you didn't specify a
-value for "return", so it just propagated the exit code of the earlier
-"echo").
-
-  $ bash -c 'f() { (return 2; echo inside=$?); echo outside=$?; }; f'
-  outside=2
-
-It's just a bit odd (to me) that it still runs the rest of the function.
-
-Dash behaves a bit more sensibly with an out-of-function return, just
-returning from the script:
-
-  $ dash -c 'return 2; echo inside=$?'; echo outside=$?
-  outside=2
-
-and with a subshell, it returns only from that subshell:
-
-  $ dash -c '(return 2; echo inside=$?); echo outside=$?'
-  outside=2
-
-So inside a subshell-in-a-function, it behaves exactly the same
-(returning from the subshell but not the function).
-
-I think the behavior of both shells is fine for our purposes. We _are_
-in a function, so as long as we return from the subshell immediately
-we're happy. But given the oddities in how bash behaves, and the fact
-that POSIX says:
-
-  If the shell is not currently executing a function or dot script, the
-  results are unspecified.
-
-it may be better to stay away from the question entirely.
-
--Peff
+---
+diff --git a/fast-import.c b/fast-import.c
+index 202dda11a6..6ebac665a0 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -39,12 +39,25 @@
+ 
+ struct object_entry {
+ 	struct pack_idx_entry idx;
+-	struct object_entry *next;
+ 	uint32_t type : TYPE_BITS,
+ 		pack_id : PACK_ID_BITS,
+ 		depth : DEPTH_BITS;
+ };
+ 
++static inline unsigned int object_entry_hash(struct object_entry *oe)
++{
++	return oidhash(&oe->idx.oid);
++}
++
++static inline int object_entry_equal(struct object_entry *a,
++				     struct object_entry *b)
++{
++	return oideq(&a->idx.oid, &b->idx.oid);
++}
++
++KHASH_INIT(object_entry_set, struct object_entry *, int, 0,
++	   object_entry_hash, object_entry_equal);
++
+ struct object_entry_pool {
+ 	struct object_entry_pool *next_pool;
+ 	struct object_entry *next_free;
+@@ -178,7 +191,7 @@ static off_t pack_size;
+ /* Table of objects we've written. */
+ static unsigned int object_entry_alloc = 5000;
+ static struct object_entry_pool *blocks;
+-static struct object_entry *object_table[1 << 16];
++static kh_object_entry_set_t object_table;
+ static struct mark_set *marks;
+ static const char *export_marks_file;
+ static const char *import_marks_file;
+@@ -455,44 +468,45 @@ static struct object_entry *new_object(struct object_id *oid)
+ 
+ static struct object_entry *find_object(struct object_id *oid)
+ {
+-	unsigned int h = oid->hash[0] << 8 | oid->hash[1];
+-	struct object_entry *e;
+-	for (e = object_table[h]; e; e = e->next)
+-		if (oideq(oid, &e->idx.oid))
+-			return e;
++	/*
++	 * this cast works because we only look at the oid part of the entry,
++	 * and it comes first in the struct
++	 */
++	khiter_t pos = kh_get_object_entry_set(&object_table,
++					       (struct object_entry *)oid);
++	if (pos != kh_end(&object_table))
++		return kh_key(&object_table, pos);
+ 	return NULL;
+ }
+ 
+ static struct object_entry *insert_object(struct object_id *oid)
+ {
+-	unsigned int h = oid->hash[0] << 8 | oid->hash[1];
+-	struct object_entry *e = object_table[h];
++	struct object_entry *e;
++	int was_empty;
++	khiter_t pos;
+ 
+-	while (e) {
+-		if (oideq(oid, &e->idx.oid))
+-			return e;
+-		e = e->next;
+-	}
++	pos = kh_put_object_entry_set(&object_table, (struct object_entry *)oid, &was_empty);
++	if (!was_empty)
++		return kh_key(&object_table, pos);
+ 
+ 	e = new_object(oid);
+-	e->next = object_table[h];
+ 	e->idx.offset = 0;
+-	object_table[h] = e;
++	kh_key(&object_table, pos) = e;
+ 	return e;
+ }
+ 
+ static void invalidate_pack_id(unsigned int id)
+ {
+-	unsigned int h;
+ 	unsigned long lu;
+ 	struct tag *t;
++	khiter_t iter;
+ 
+-	for (h = 0; h < ARRAY_SIZE(object_table); h++) {
+-		struct object_entry *e;
+-
+-		for (e = object_table[h]; e; e = e->next)
++	for (iter = kh_begin(&object_table); iter != kh_end(&object_table); iter++) {
++		if (kh_exist(&object_table, iter)) {
++			struct object_entry *e = kh_key(&object_table, iter);
+ 			if (e->pack_id == id)
+ 				e->pack_id = MAX_PACK_ID;
++		}
+ 	}
+ 
+ 	for (lu = 0; lu < branch_table_sz; lu++) {
