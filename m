@@ -2,215 +2,274 @@ Return-Path: <SRS0=DhGT=5Q=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-5.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D9AEC43331
-	for <git@archiver.kernel.org>; Tue, 31 Mar 2020 19:12:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 38A9EC43331
+	for <git@archiver.kernel.org>; Tue, 31 Mar 2020 19:15:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 698D62137B
-	for <git@archiver.kernel.org>; Tue, 31 Mar 2020 19:12:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F1AE0212CC
+	for <git@archiver.kernel.org>; Tue, 31 Mar 2020 19:15:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QXdJyjHt"
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="gBklLRLW"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729662AbgCaTMO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 Mar 2020 15:12:14 -0400
-Received: from mail-oi1-f193.google.com ([209.85.167.193]:42573 "EHLO
-        mail-oi1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729405AbgCaTMO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Mar 2020 15:12:14 -0400
-Received: by mail-oi1-f193.google.com with SMTP id e4so19914552oig.9
-        for <git@vger.kernel.org>; Tue, 31 Mar 2020 12:12:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=LS9kJhunC4nzwO4vOWhlu3vGqgI7OIJUoGuRt44KUbA=;
-        b=QXdJyjHtqX+5cklXldwm6Gv/+vQ5cAhFw/IHXrIetsmvj9TUfPUI/s/TDB5FCatk5i
-         01guK8ujJkPOidgmy4TcCI4WKqaZAYfOVsPJb+gPu5IxsXQZuYBc0zDmumZ1SHmOVQMG
-         4ynwyQrlNSv+Z3eAyySBokrGQyoWElHGrckI7guVtkJ85YlqQ+EZ9CdGocMwVxGJfqGL
-         TnU+IUQOUGgQEyJ/9wJb+X3iEUmoQ6MQHkRxVQ/Y+jXdSyjOJVaJ3CXEhUshgin1pV/e
-         XzsGKwixYenw6K+NAWW8IK5dZsQRGIZaSUvlhnp6WFgq0UPpGHWXqbc+Kz/11jG2A1jH
-         5aOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=LS9kJhunC4nzwO4vOWhlu3vGqgI7OIJUoGuRt44KUbA=;
-        b=IdH6mXUn468CGrYb2Xa8gs5f31W/tS1Nv/pFNSIebybcaRYAwFwe3Kb/qcHF7PQ0t5
-         yUTgeYjFbJA8YnOy3lNJ2u2ers6H5a35L5Oy0f+3Jokju/WU/0F7sgVFbdahBspsOvj9
-         YDsEyHR/Fu1rxgCcW6E9Kev4XY4NLFI1lrJMHwJL4HDgwq5J8kjC8z7TmwskGEWPZD/a
-         00POgGaSzmaf75Cxq+GtXX9DZYP7IbNhTDZfzskz0LFwn/f3fm+wWs/l5NMWARSyZNUo
-         7ct3eIeNGNC1BAzcYVrTw07FkOzNUbfK+CIBwFsE84IyWX935iSapoH5vPJCu5BveGvY
-         gTHw==
-X-Gm-Message-State: AGi0PuYrCFFx/+XO6l0hSFha80dBFacqoS+DcPViIqE7ANE9wn++nixi
-        BujgtbOS/MPJO46R2xg4ERSszzVeTwsLthaWY7s=
-X-Google-Smtp-Source: APiQypI4px2SBVqYnLmAKPs4kGBh0BLJ5ZBMUD3W4oQ2qJ2eQxglj6NsOxVJlPBS0yHxkfT/TkV48atU4lPc0FrI0pA=
-X-Received: by 2002:aca:4b84:: with SMTP id y126mr280807oia.31.1585681933013;
- Tue, 31 Mar 2020 12:12:13 -0700 (PDT)
+        id S1727627AbgCaTPE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 Mar 2020 15:15:04 -0400
+Received: from mout.web.de ([212.227.15.3]:41279 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726295AbgCaTPD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Mar 2020 15:15:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1585682101;
+        bh=7Yc1ymXNf+vLU6f1HxnCDhLchvTaaP/egNyOvIbiIzc=;
+        h=X-UI-Sender-Class:Subject:To:References:From:Date:In-Reply-To;
+        b=gBklLRLWMPR5CGob+2bt8jisoPWWPWd/gbeYGh5LobhnN5LITk08btp7SKJ624K+p
+         5mhsLsDbcanHwe7hOa1y0Nr7/D7QHT1prLvXkPr+YAWuHVWrGrnreh6uKp//0DYyRf
+         HAM3ZJDk+gNkDD0EEPRDNjvQZopEjAKLtQwtolHY=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.26] ([79.203.21.89]) by smtp.web.de (mrweb002
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MJlGW-1jKSHJ0Pq8-00195S; Tue, 31
+ Mar 2020 21:15:01 +0200
+Subject: Re: fast-import's hash table is slow
+To:     Jeff King <peff@peff.net>, git@vger.kernel.org
+References: <20200331094553.GB7274@coredump.intra.peff.net>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <fcf422e4-08f6-634a-39ba-18d40d1c25ca@web.de>
+Date:   Tue, 31 Mar 2020 21:14:58 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.5.0
 MIME-Version: 1.0
-References: <cover.1585027716.git.matheus.bernardino@usp.br>
- <a76242ecfa69cf29995bd859305dc2ab1bc1a221.1585027716.git.matheus.bernardino@usp.br>
- <CABPp-BEbNCYk0pCuEDQ_ViB2=varJPBsVODxNvJs0EVRyBqjBg@mail.gmail.com>
- <xmqq7dz938sc.fsf@gitster.c.googlers.com> <CAHd-oW5qq=dtaSmqcSyxoHd3HPipxjfaiCXtdBQwk9yNVe9okA@mail.gmail.com>
-In-Reply-To: <CAHd-oW5qq=dtaSmqcSyxoHd3HPipxjfaiCXtdBQwk9yNVe9okA@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 31 Mar 2020 12:12:01 -0700
-Message-ID: <CABPp-BE6zW0nJSStcVU=_DoDBnPgLqOR8pkTXK3dW11=T01OhA@mail.gmail.com>
-Subject: Re: [RFC PATCH 3/3] grep: add option to ignore sparsity patterns
-To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20200331094553.GB7274@coredump.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:SVYv0r9OZihmVg/M3HWvzcgEsHz0m4DkB1KO+R4QkR+ln4N1lwb
+ n/Z1qBEQyogNnu50mvnSDk10dvschTeE6jkPpSJOw9PZnDEHXgjZDwHViua6QZhimzVrSQL
+ ZMYkl0/7boJHYsqogumhK5lSkxhvZmybStib9X4xZH+zzJle3d8XaI562gn/YvB2BeNkl89
+ jDzLZ5bhOQmaDGkyGpLCQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:SqU3WTQL3Js=:Umr/i6Pq5TT++DUfG4kRM8
+ AuF1rDlTQr65kzy3P4xl48s5wtj6sUq7qPetxaHYKl9k0Ticpuv/XjQyMn24kybGgE9p0TN/b
+ u7su0AW0LnqJiKwR/AjUceIVCVsMnkyoKhe+Qo87j847++ONZ/n+UiGa7hmFllsrJ43Ce9qiS
+ RpkflTP03HQWSq7jY0ZDfHITJPJK8XUxv1Ey6kyYbgzCdeD/ic5vF6sMrCf4W6ZaT5qWR5rsO
+ vzekdpvZxxZP9myV6VaNv/I2T+W7liRNJvJ1tdNa8eEFDt8AcpkZjaPGbYWCXPsXvuVJt1P2g
+ hQdxjBz7134tkTMZ/ck1jn/i57pyfM2xrAcCeFmYWev4uwDaefRxQ1fpzCB76SBNGQjHSH9P0
+ Buf2x8O/7VQlYzKxHHjQYHZbR050ohyZfH6hGyykx5M4ucNR2xdMJ2IOzrrY22wDrtCV6GS2t
+ OoSzryF1wV/u3zFjXb6u75Lpc+ID+j9EujHXLjL858cJVg0rbyxoqx2OusyNBsAg9iAWqQnHW
+ EOsE/YeajlnVBBhywSFPohgZsjuUrf75FNCjo/Ye8XX3vI8xjzKuwDrS6kNx6BtfA3GBvRdTy
+ q66lENnexWyz6EMRs+maqQdpeDPot0jgygkPJVGXwWJQjks2VAj1NToQ+CFHkuc46+dYmi87L
+ heh40fyB0whRBO8TyijwNRrhp6cCFEtLbmKR+jHJkgnv+k9gjqLzzGFhf/oLHuIdSOBXzYt+q
+ Xu55bqjCSkotgjFqVEX8FuvZINQlhzsw/YukEUrlV7KpdT3PX9+YgwEpyMUJ6yd3kRCfFY1gx
+ ybMUaF1GgFFUz/2uWwPYxtfpDs9jsAqHlVe07tiKQoTcB7BvBbzzRpnvM3aui7pKEuH89xhoB
+ FU25D8nYjFUDB59fM6ZSl0iN7etri7xoGg95EgXqB94NbuCVKUg/l7f5JNvOo0d6p1nzj1Oeq
+ mte8puX5TDGlDrGfEHPGig89A5Eeg3zATAbyvtoxFsDWpnLy4ss8xJ8Ipm5xPRM4p7k0dE1e1
+ F86QzIkVZ4e42fHyyjs2PYqNvJuDOHpRMsBydjMebGz1Nrf1tgsFESn800cQtl3zhfRDNpcAW
+ zD391d52fDpzknmgOD8kmgOLb23TjIKe3shCehey6CutViyZ2Rn1V9zazVf/jMet7mTCym4hu
+ 8eUODMJyraAut95XUnEubE7elCc32mS1L59LcER7U/QUdsxZz7DZ+mv1rRHdoUvxIVxZs8ntH
+ FU7M6l/UFjOiXeMjK
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-// adding Jonathan Tan to cc based on the fact that we keep bringing
-up partial clones and how it relates...
-
-On Sun, Mar 29, 2020 at 8:23 PM Matheus Tavares Bernardino
-<matheus.bernardino@usp.br> wrote:
+Am 31.03.20 um 11:45 schrieb Jeff King:
+> [breaking thread, since this is really an independent topic]
 >
-> On Tue, Mar 24, 2020 at 3:30 PM Junio C Hamano <gitster@pobox.com> wrote:
-> >
-> > Elijah Newren <newren@gmail.com> writes:
-> >
-> > > On Mon, Mar 23, 2020 at 11:13 PM Matheus Tavares
-> > > <matheus.bernardino@usp.br> wrote:
-> > >>
-> > >> In the last commit, git-grep learned to honor sparsity patterns. For
-> > >> some use cases, however, it may be desirable to search outside the
-> > >> sparse checkout. So add the '--ignore-sparsity' option, which restores
-> > >> the old behavior. Also add the grep.ignoreSparsity configuration, to
-> > >> allow setting this behavior by default.
-> > >
-> > > Should `--ignore-sparsity` be a global git option rather than a
-> > > grep-specific one?  Also, should grep.ignoreSparsity rather be
-> > > core.ignoreSparsity or core.searchOutsideSparsePaths or something?
-> >
-> > Great question.  I think "git diff" with various options would also
-> > want to optionally be able to be confined within the sparse cone, or
-> > checking the entire world by lazily fetching outside the sparsity.
-> [...]
-> > Regardless of the choice of the default, it would be a good
-> > idea to make the subcommands consistently offer the same default and
-> > allow the non-default views with the same UI.
+> On Mon, Mar 30, 2020 at 10:09:30AM -0400, Jeff King wrote:
 >
-> Yeah, it seems like a sensible path. Regarding implementation, there
-> is the question that Elijah raised, of whether to use a global git
-> option or separate but consistent options for each subcommand. I don't
-> have much experience with sparse checkout to argument for one or
-> another, so I would like to hear what others have to say about it.
+>> So I arrived at this fast-import solution, which was...not super fast.
+>> Profiling showed that we were spending 80% of the time inserting into
+>> our custom hashtable, which is fixed at 2^16 entries and then chains
+>> beyond that. Swapping it out for a khash proved much faster, but I'm no=
+t
+>> sure if the memory games are too gross (see the comment in find_object
+>> below).
+>>
+>> I also didn't look into whether we could get rid of the extra allocatin=
+g
+>> pool (and store the structs right in the hash), or if it's necessary fo=
+r
+>> their pointers to be stable.
 >
-> A question that comes to my mind regarding the global git option is:
-> will --ignore-sparsity (or whichever name we choose for it [1]) be
-> sufficient for all subcommands? Or may some of them require additional
-> options for command-specific behaviors concerning sparsity patterns?
-> Also, would it be OK if we just ignored the option in commands that do
-> not operate differently in sparse checkouts (maybe, fetch, branch and
-> send-email, for example)? And would it make sense to allow
-> constructions such as `git --ignore-sparsity checkout` or even `git
-> --ignore-sparsity sparse-checkout ...`?
+> I briefly tried to get rid of the pool. I _think_ it should be possible,
+> but I did see some test failures. It's entirely possible I screwed it
+> up. However, I did generate a few interesting measurements showing how
+> the current hash table behaves on this test:
+>
+>   git init repo
+>   cd repo
+>   perl -e '
+>       my $bits =3D shift;
+>       my $nr =3D 2**$bits;
+>
+>       for (my $i =3D 0; $i < $nr; $i++) {
+>               print "blob\n";
+>               print "data 4\n";
+>               print pack("N", $i);
+>       }
+>   ' "$@" | git fast-import
+>
+> Here are wall-clock timings for the current tip of master, versus with
+> the patch below applied:
+>
+> nr_objects   master       patch
+> 2^20         0m04.317s    0m5.109s
+> 2^21         0m10.204s    0m9.702s
+> 2^22         0m27.159s    0m17.911s
+> 2^23         1m19.038s    0m35.080s
+> 2^24         4m18.766s    1m10.233s
 
-I think the same option would probably be sufficient for all
-subcommands, though I have a minor question about the merge machinery
-(below).  And generally, I think it would be unusual for people to
-pass the command line flag; I suspect most would set a config option
-for most cases and then only occasionally override it on the command
-line.  Since that config option would always be set, I'd expect
-commands that are unaffected to just ignore it (much like both "git -c
-merge.detectRenames=true fetch" and "git --work-tree=othertree fetch"
-will both ignore the irrelevant options rather than trying to detect
-that they were specified and error out).
+I get similar numbers.
 
-> [1]: Does anyone have suggestions for the option/config name? The best
-> I could come up with so far (without being too verbose) is
-> --no-sparsity-constraints. But I fear this might sound generic. As
-> Elijah already mentioned, --ignore-sparsity is not good either, as it
-> introduces double negatives in code...
+Pre-sizing by putting this near the top of cmd_main() gets the time
+for 1M down to 4 seconds:
 
-Does verbosity matter that much?  I think people would set it in
-config, and tab completion would make it pretty easy to complete in
-any event.
+	kh_resize_object_entry_set(&object_table, 1 << 18);
 
-Anyway, maybe it will help if I provide a very rough first draft of
-what changes we could introduce to Documentation/config/core.txt, and
-then ask a bunch of my own questions about it below:
+The more fair 1 << 16 does not cut it, the totally unfair 1 << 20 gives
+a small extra boost.
 
-"""
-core.restrictToSparsePaths::
-        Only meaningful in conjuntion with core.sparseCheckoutCone.
-        This option extends sparse checkouts (which limit which paths
-        are written to the worktree), so that output and operations
-        are also limited to the sparsity paths where possible and
-        implemented.  The purpose of this option is to (1) focus
-        output for the user on the portion of the repository that is
-        of interest to them, and (2) enable potentially dramatic
-        performance improvements, especially in conjunction with
-        partial clones.
-+
-When this option is true, git commands such as log, diff, and grep may
-limit their output to the directories specified by the sparse cone, or
-to the intersection of those paths and any (like `*.c) that the user
-might also specify on the command line.  (Note that this limit for
-diff and grep only becomes relevant with --cached or when specifying a
-REVISION, since a search of the working tree will automatically be
-limited to the sparse paths that are present.)  Also, commands like
-bisect may only select commits which modify paths within the sparsity
-cone.  The merge machinery may use the sparse paths as a heuristic to
-avoid trying to detect renames from within the sparsity cone to
-outside the sparsity cone when at least one side of history only
-touches paths within the sparsity cone (this can make the merge
-machinery faster, but may risk modify/delete conflicts since upstream
-can rename a file within the sparsity paths to a location outside
-them).  Commands which export, integrity check, or create history will
-always operate on full trees (e.g. fast-export, format-patch, fsck,
-commit, etc.), unaffected by any sparsity patterns.
-"""
+>
+> The curve on master is quadratic-ish (each line has double the number of
+> objects of the previous one; the times don't multiply by 4, but that's
+> because the hash table is only part of the work we're doing). With my
+> patch, it's pretty linear.
+>
+> But I'm still disappointed that the smallest case is actually _slower_
+> with the patch. The existing hash table is so simple I can imagine using
+> khash has a little overhead. But I'm surprised it would be so much (or
+> that the existing hash table does OK at 2^20; it only has 2^16 buckets).
+>
+> Maybe this email will nerd-snipe Ren=C3=A9 into poking at it.
+>
+> The patch I tested is below (it's slightly different than what I showed
+> before, in that it handles duplicate insertions). Maybe using hashmap.c
+> would be better?
+>
+> ---
+> diff --git a/fast-import.c b/fast-import.c
+> index 202dda11a6..6ebac665a0 100644
+> --- a/fast-import.c
+> +++ b/fast-import.c
+> @@ -39,12 +39,25 @@
+>
+>  struct object_entry {
+>  	struct pack_idx_entry idx;
+> -	struct object_entry *next;
+>  	uint32_t type : TYPE_BITS,
+>  		pack_id : PACK_ID_BITS,
+>  		depth : DEPTH_BITS;
+>  };
+>
+> +static inline unsigned int object_entry_hash(struct object_entry *oe)
+> +{
+> +	return oidhash(&oe->idx.oid);
+> +}
+> +
+> +static inline int object_entry_equal(struct object_entry *a,
+> +				     struct object_entry *b)
+> +{
+> +	return oideq(&a->idx.oid, &b->idx.oid);
+> +}
+> +
+> +KHASH_INIT(object_entry_set, struct object_entry *, int, 0,
+> +	   object_entry_hash, object_entry_equal);
+> +
+>  struct object_entry_pool {
+>  	struct object_entry_pool *next_pool;
+>  	struct object_entry *next_free;
+> @@ -178,7 +191,7 @@ static off_t pack_size;
+>  /* Table of objects we've written. */
+>  static unsigned int object_entry_alloc =3D 5000;
+>  static struct object_entry_pool *blocks;
+> -static struct object_entry *object_table[1 << 16];
+> +static kh_object_entry_set_t object_table;
+>  static struct mark_set *marks;
+>  static const char *export_marks_file;
+>  static const char *import_marks_file;
+> @@ -455,44 +468,45 @@ static struct object_entry *new_object(struct obje=
+ct_id *oid)
+>
+>  static struct object_entry *find_object(struct object_id *oid)
+>  {
+> -	unsigned int h =3D oid->hash[0] << 8 | oid->hash[1];
+> -	struct object_entry *e;
+> -	for (e =3D object_table[h]; e; e =3D e->next)
+> -		if (oideq(oid, &e->idx.oid))
+> -			return e;
+> +	/*
+> +	 * this cast works because we only look at the oid part of the entry,
+> +	 * and it comes first in the struct
+> +	 */
+> +	khiter_t pos =3D kh_get_object_entry_set(&object_table,
+> +					       (struct object_entry *)oid);
 
-Several questions here, of course:
+Dirty, but I can believe the comment.
 
-  * do people like or hate the name?  indifferent?  have alternate ideas?
-  * should we restrict this to core.sparseCheckoutCone as I suggested
-above or also allow people to do it with core.sparseCheckout without
-the cone mode?  I think attempting to weld partial clones together
-with core.sparseCheckout is crazy, so I'm tempted to just make it be
-specific to cone mode and to push people to use it.  But I'm
-interested in thoughts on the matter.
-  * should worktrees be affected?  (I've been an advocate of new
-worktrees inheriting the sparse patterns of the worktree in use at the
-time the new worktree was created.  Junio once suggested he didn't
-like that and that worktrees should start out dense.  That seems
-problematic to me in big repos with partial clones and sparse chckouts
-in use.  Perhaps dense new worktrees is the behavior you get when
-core.restrictToSparsePaths is false?)
-  * does my idea for the merge machinery make folks uncomfortable?
-Should that be a different option?  Being able to do trivial *tree*
-merges for the huge portion of the tree outside the sparsity paths
-would be a huge win, especially with partial clones, but it certainly
-is different.  Then again, microsoft has disabled rename detection
-entirely based on it being too expensive, so perhaps the idea of
-rename-detection-within-your-cone-if-you-really-didn't-modify-anything-outside-the-cone-on-your-side-of-history
-is a reasonable middle ground between off and on for rename detection.
-  * what should the default be?  Junio suggested elsewhere[1] that
-sparse-checkouts and partial clones should probably be welded together
-(with partial clones downloading just history in the sparsity paths by
-default), in which case having this option be true would be useful.
-But it may also be slightly weird because it'll probably take us a
-while to implement this; while the big warning in
-git-sparse-checkout.txt certainly allows this:
-        THIS COMMAND IS EXPERIMENTAL. ITS BEHAVIOR, AND THE BEHAVIOR OF OTHER
-        COMMANDS IN THE PRESENCE OF SPARSE-CHECKOUTS, WILL LIKELY CHANGE IN
-        THE FUTURE.
-It may still be slightly weird that the default behavior of commands
-in the presence of sparse-checkouts changes release to release until
-we get it all implemented.
 
-[1] https://lore.kernel.org/git/xmqqh7ycw5lc.fsf@gitster.c.googlers.com/
+> +	if (pos !=3D kh_end(&object_table))
+> +		return kh_key(&object_table, pos);
+>  	return NULL;
+>  }
+>
+>  static struct object_entry *insert_object(struct object_id *oid)
+>  {
+> -	unsigned int h =3D oid->hash[0] << 8 | oid->hash[1];
+> -	struct object_entry *e =3D object_table[h];
+> +	struct object_entry *e;
+> +	int was_empty;
+> +	khiter_t pos;
+>
+> -	while (e) {
+> -		if (oideq(oid, &e->idx.oid))
+> -			return e;
+> -		e =3D e->next;
+> -	}
+> +	pos =3D kh_put_object_entry_set(&object_table, (struct object_entry *)=
+oid, &was_empty);
+
+Now this looks illegal.  khash is surely reading a full object_entry from =
+oid,
+which only is a mere object_id, no?
+
+> +	if (!was_empty)
+> +		return kh_key(&object_table, pos);
+>
+>  	e =3D new_object(oid);
+> -	e->next =3D object_table[h];
+>  	e->idx.offset =3D 0;
+> -	object_table[h] =3D e;
+> +	kh_key(&object_table, pos) =3D e;
+>  	return e;
+>  }
+>
+>  static void invalidate_pack_id(unsigned int id)
+>  {
+> -	unsigned int h;
+>  	unsigned long lu;
+>  	struct tag *t;
+> +	khiter_t iter;
+>
+> -	for (h =3D 0; h < ARRAY_SIZE(object_table); h++) {
+> -		struct object_entry *e;
+> -
+> -		for (e =3D object_table[h]; e; e =3D e->next)
+> +	for (iter =3D kh_begin(&object_table); iter !=3D kh_end(&object_table)=
+; iter++) {
+> +		if (kh_exist(&object_table, iter)) {
+> +			struct object_entry *e =3D kh_key(&object_table, iter);
+>  			if (e->pack_id =3D=3D id)
+>  				e->pack_id =3D MAX_PACK_ID;
+> +		}
+>  	}
+
+Is this really the best way to handle that, independently of the hashmap
+that's used?  I wonder how an extra hashmap or set of valid pack_id
+values (or set of invalidated pack_id values?) would fare against having
+to touch all object entries here.
+
+>
+>  	for (lu =3D 0; lu < branch_table_sz; lu++) {
+>
+
