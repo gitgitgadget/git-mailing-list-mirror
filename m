@@ -2,145 +2,152 @@ Return-Path: <SRS0=DhGT=5Q=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.0 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BD92C43331
-	for <git@archiver.kernel.org>; Tue, 31 Mar 2020 17:22:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A4B0DC43331
+	for <git@archiver.kernel.org>; Tue, 31 Mar 2020 17:48:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3AB6E20BED
-	for <git@archiver.kernel.org>; Tue, 31 Mar 2020 17:22:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1585675348;
-	bh=EyOFtifAj4Nv5ZHFF0MyS9OeMZi5aDRKIoZZmji26+A=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=c+EWKOhJjf+SpkHQiymL0W/YYQmQZkzpENk7JQWcFZVDD/py5afkc/ptR6h5tahFP
-	 78pQkSWaMLc34UIrlAFMb8OdN1/dGmU/LqyeWpSYifXPR/IlgjDzX8DcVxMjW2FEJD
-	 5N/lxxJan0UngyxFDslWuxw1WBWHKHWU2XFa9SNg=
+	by mail.kernel.org (Postfix) with ESMTP id 77103212CC
+	for <git@archiver.kernel.org>; Tue, 31 Mar 2020 17:48:16 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BkA+DRV8"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726197AbgCaRW0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 Mar 2020 13:22:26 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:51414 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726194AbgCaRW0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Mar 2020 13:22:26 -0400
-Received: by mail-wm1-f65.google.com with SMTP id z7so753510wmk.1
-        for <git@vger.kernel.org>; Tue, 31 Mar 2020 10:22:24 -0700 (PDT)
+        id S1726205AbgCaRsO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 Mar 2020 13:48:14 -0400
+Received: from mail-ot1-f67.google.com ([209.85.210.67]:41525 "EHLO
+        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725988AbgCaRsN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Mar 2020 13:48:13 -0400
+Received: by mail-ot1-f67.google.com with SMTP id f52so22934306otf.8
+        for <git@vger.kernel.org>; Tue, 31 Mar 2020 10:48:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=d2dOr4ZxDnnsdaMKQV2e2xTOUEQAecZefGGXrnSV+Ks=;
-        b=Ks73nIqdIwz4rpp8WwGYphZkOVftU2V9XgYPhj7p06Glx307m8OaKBQXu5cpOCWIis
-         +AUimkuex9MxvW7AxzT7nZ1w4nyVvgiNS4nRPZuLHt4o4W0C8TCVtb7WYBUjGRMq2qLI
-         q76YllZEws4Jjbx8hRR37OHs/T3E1cFR+CZzc=
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=D3HWxe+H0W+bRjBUSbOz4mOn3qkh1ayCiVXUWIiEJ9Y=;
+        b=BkA+DRV8c0SLdCFqAWaPor+EBiiGB6Q585t/MXUvVeWgJesBIRpqn2uSYe7R61v4sO
+         0O6emI2qO/BHkA3GajNEU6h27YahrAr0ODeNRDtnDHpJUaGJ1YQzqHivZ6o+h7NxllJD
+         iYF/urPrP1acIKvUVNnhCBQ8Ma2rGnhHCYd21xG0Y976bpoqhHeG7XDZ8+Oso5iww8ee
+         9EWcO53vlD9IJMre5zeqJkuod7eSYZwtARk9C+4quuU9Z/lT5vYHdeSVzzZdfCCwzf/Z
+         ipzTnIm+FhKJXCwxjJUvj+sO+6DZb0qGC9XLNatzZZk+OA/ENnne6AEx5wWiWIy6bv7X
+         7DiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to;
-        bh=d2dOr4ZxDnnsdaMKQV2e2xTOUEQAecZefGGXrnSV+Ks=;
-        b=lxqTlECYI0hHqKY2AN8oY52GHSAVAWe8/t05muqghIKqeko9+U489Kdu6h1VUXAtcj
-         4u9IwuglvXhgk2XXXw+1n83O8WPWqOCgH2T/MBlnxApkXecOFdtpLPtIG3lF3pYOC43I
-         uT6qKNxJ1mSYFDEb8voXz0x+eFuBxcC5rVMAr1flwihBglGsZ9qUAMKwUx1FJl8nGcac
-         GMIYl2X1/zPmVCWzy7CU1ccMwi2cqObejH29DHt3b2rEWY7+ZeDy4laiiIKZTkAQpVhf
-         jQe3q5qUpU8T9wkHt9HRZAQg2Oj9uyHMqdhlrAAPp0wNN82K34me2j49CcizOW9EmAqv
-         zXSA==
-X-Gm-Message-State: ANhLgQ0OZUKn1FU0eY9XCmddBOkAeRCa+c9jUxxywfVKLOo3D0xEcaIs
-        Jv0VmBjKo/S24Gr7r2pWXT7NsA==
-X-Google-Smtp-Source: ADFU+vvakZsPrUsz5JNCbUe7AfZjURVljDhByr4WfwU517kv7o1dcL0Br7EfDkeWsHHmacVwUduzOA==
-X-Received: by 2002:a7b:c4d0:: with SMTP id g16mr4449507wmk.101.1585675343940;
-        Tue, 31 Mar 2020 10:22:23 -0700 (PDT)
-Received: from chatter.i7.local ([185.220.102.6])
-        by smtp.gmail.com with ESMTPSA id w66sm4786530wma.38.2020.03.31.10.22.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 Mar 2020 10:22:22 -0700 (PDT)
-Date:   Tue, 31 Mar 2020 13:22:18 -0400
-From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To:     Josep Torra <n770galaxy@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Possible regression in git 2.26.0
-Message-ID: <20200331172218.evsoljccfmjec2mz@chatter.i7.local>
-Mail-Followup-To: Josep Torra <n770galaxy@gmail.com>, git@vger.kernel.org
-References: <CAE0g23A0+4MPwACTsdjk=eOYaGBDEwsD2t_F072Z33Gb6y2qZw@mail.gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=D3HWxe+H0W+bRjBUSbOz4mOn3qkh1ayCiVXUWIiEJ9Y=;
+        b=qSe025TKo1wbI0jFLkx2eMwYH4nO5ULqILy2ie6F6bo/iyVriXVZpNbReZbzpjPFd/
+         rxqr14WzcjQKIE8AILRDSEJZ93ajgXuHe3LxQ5l6zkkQ/1/VEcwBJs1+PdB+jKB1ahTb
+         39QFMMluQrC2LsxFK4oULsNNvuQvj1ODyutaYUyb2LyUyQtN6eDusv6Y5/ERmDEvQFaF
+         Wpawck5tG3w+Gahp3o19mXlv+UlBHHEfkIvb2r/1mPwnbsUzygEPpe1b9gcinRQ643HL
+         ObT24VZifCypKRQ5Z2uiGJdgvc8kn2LGhUBOLWC+uLQZLYqr8BrVtQ0im7+fjGVakCPS
+         j6bA==
+X-Gm-Message-State: ANhLgQ065qeR2CBAcSan49AM9r4J2d5tiBZ1d5rjLpWJ+0vn6SPrhHF1
+        HjG8oulRoUysyYHlFqX3qUdFsrU7f/A=
+X-Google-Smtp-Source: ADFU+vuZ5DHP7J384uMg4HWmaopdeQy45tSpvznr3KXnM+18du/XXAvsCICcPbRMGBFNAQV9aIS2ZA==
+X-Received: by 2002:a9d:3405:: with SMTP id v5mr14539684otb.131.1585676893112;
+        Tue, 31 Mar 2020 10:48:13 -0700 (PDT)
+Received: from [192.168.1.83] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id b2sm5286420oii.20.2020.03.31.10.48.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 31 Mar 2020 10:48:11 -0700 (PDT)
+Subject: Re: [PATCH] diff: restrict when prefetching occurs
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, peff@peff.net
+References: <b956528c-412b-2f38-bd90-1fa2ae4b8604@gmail.com>
+ <20200331165058.53637-1-jonathantanmy@google.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <d1995983-c5b2-8d44-3949-10286b3f7c0e@gmail.com>
+Date:   Tue, 31 Mar 2020 13:48:10 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:75.0) Gecko/20100101
+ Thunderbird/75.0
 MIME-Version: 1.0
+In-Reply-To: <20200331165058.53637-1-jonathantanmy@google.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAE0g23A0+4MPwACTsdjk=eOYaGBDEwsD2t_F072Z33Gb6y2qZw@mail.gmail.com>
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 31, 2020 at 07:13:25PM +0200, Josep Torra wrote:
-> Today I'd noticed a failure in some custom automation that seems to
-> came as a side effect after of a git client update.
+On 3/31/2020 12:50 PM, Jonathan Tan wrote:
+>> This conflicts with [3], so please keep that in mind.
+>>
+>> Maybe [3] should be adjusted to assume this patch, because that change
+>> is mostly about disabling the batch download when no renames are required.
+>> As Peff said [2] the full rename detection trigger is "overly broad".
+>>
+>> However, the changed-path Bloom filters are an excellent test for this
+>> patch, as computing them in a partial clone will trigger downloading all
+>> blobs without [3].
+>>
+>> [3] https://lore.kernel.org/git/55824cda89c1dca7756c8c2d831d6e115f4a9ddb.1585528298.git.gitgitgadget@gmail.com/T/#u
+>>
+>>> [1] https://lore.kernel.org/git/20200128213508.31661-1-jonathantanmy@google.com/
+>>> [2] https://lore.kernel.org/git/20200130055136.GA2184413@coredump.intra.peff.net/
 > 
-> The issue issue I'd spotted is the following:
+> Thanks for the pointer. Yes, I think that [3] should be adjusted to
+> assume this patch.
 > 
-> $ git clone git://git.launchpad.net/~ubuntu-kernel/ubuntu/+source/linux/+git/bionic
-> linux/bionic
-> Cloning into 'linux/bionic'...
-> fatal: remote error: Parameters must have values
+>>> +		for (i = 0; i < rename_dst_nr; i++) {
+>>> +			if (rename_dst[i].pair)
+>>> +				continue; /* already found exact match */
+>>> +			add_if_missing(options->repo, &to_fetch, rename_dst[i].two);
+>>
+>> Could this be reversed instead to avoid the "continue"?
 > 
-> Reverting to git 2.17.1 didn't show the issue.
-> 
-> I'd asked at #git in freenode and @rafasc was able to reproduce and
-> bisect, pointing to
-> 
-> https://github.com/git/git/commit/684ceae32dae726c6a5c693b257b156926aba8b7
-> 
-> For the time being I'd added `-c protocol.version=0` as a temporary workaround.
-> 
-> Is this a regression?
+> Hmm...I prefer the "return early" approach, but can change it if others
+> prefer to avoid the "continue" here.
 
-I'd like to relay the following conversation I had recently:
+The "return early" approach is great and makes sense unless there is
+only one line of code happening in the other case. Not sure if there
+is any potential that the non-continue case grows in size or not.
 
-06:00 <sfr> anyone know why git recently has fetched basically a whole kernel
-            repo when I try to update some trees/branches
-06:00 <sfr> this has happened to me for three separate trees over the past few days
-06:01 <sfr> none were on git.kernel.org
-11:31 <mricon> sfr: if you have an example of the tree/branch that caused you to
-               download a lot for a simple pull, I'd be interested in knowing what it
-               is so I can poke.
-16:26 <sfr> mricon: last evening it was fetching the drm tree
-            (git://git.freedesktop.org/git/drm/drm.git branch drm-next):
-16:26 <sfr> remote: Enumerating objects: 7237633, done.
-16:26 <sfr> remote: Counting objects: 100% (7237633/7237633), done.
-16:26 <sfr> remote: Compressing objects: 100% (1069838/1069838), done.
-16:26 <sfr> remote: Total 7237633 (delta 6121918), reused 7236008 (delta 6120350)
-16:26 <sfr> Receiving objects: 100% (7237633/7237633), 1.32 GiB | 642.00 KiB/s, done.
-16:26 <sfr> Resolving deltas: 100% (6121918/6121918), done.
-16:26 <sfr> From git://git.freedesktop.org/git/drm/drm
-16:26 <sfr>    c2556238120bc..700d6ab987f3b  drm-next   -> drm/drm-next
-16:30 <mricon> sfr: interesting. What's your git version?
-16:30 <sfr> $ git --version
-16:30 <sfr> git version 2.26.0
-16:31 <sfr> Debian, so may have some extra patches
-16:35 <mricon> sfr: git-2.26.0 switched to protocol v2 by default, so I'm curious
-               if that is what changed
-16:35 <mricon> but I've been using protocol v2 for a while now, and I don't see
-               this problem
-16:36 <mricon> I also don't yet have git-2.26.0
-16:37 <mricon> sfr: if you come across another repo that shows this problem, 
-               I suggest you set protocol.version=1 in your .gitconfig to see
-               if that makes any difference
-16:37 <sfr> mricon: ok, thanks
-16:38 <mricon> total shot in the dark
-16:46 <sfr> mricon: that *seems* to make a difference
-16:47 <sfr> repo: git://anongit.freedesktop.org/drm/drm-misc branch: for-linux-next
-16:48 <sfr> went from trying to transfer 7226542 to just 19
-16:48 <sfr> even after I did a reset of the remote branch at my end and a gc
-16:49 <sfr> it updated b1e7396a1d0e..98878d9dfc7a
-16:50 <sfr> in case it matters, I have "tagopt = --no-tags" set for all the repos
-            I fetch (for obvious reasons)
-16:52 <sfr> removing the protocol.version=1 (and resetting/gcing) gets me the bad 
-            behaviour again :-(
-16:52 <sfr> mricon: so good shot! :-)
+Doesn't hurt that much to have the "return early" approach, as you
+wrote it.
 
-It appears that there are cases where protocol.version=2 is causing 
-weird results during ref negotiation?
+>> 	if (!rename_dst[i].pair)
+>> 		add_if_missing(options->repo, &to_fetch, rename_dst[i].two);
+>>
+>>> +		}
+>>> +		for (i = 0; i < rename_src_nr; i++)
+>>> +			add_if_missing(options->repo, &to_fetch, rename_src[i].p->one);
+>>
+>> Does this not have the equivalent "rename_src[i].pair" logic for exact
+>> matches?
+> 
+> Thanks for the catch. There's no "pair" in rename_src[i], but the
+> equivalent is "if (skip_unmodified &&
+> diff_unmodified_pair(rename_src[i].p))", which you can see in the "for"
+> loop later in the function. I've added this.
+> 
+>>> +		if (to_fetch.nr)
+>>> +			promisor_remote_get_direct(options->repo,
+>>> +						   to_fetch.oid, to_fetch.nr);
+>>
+>> Perhaps promisor_remote_get_direct() could have the check for
+>> nr == 0 to exit early instead of putting that upon all the
+>> callers?
+> 
+> The 2nd param is a pointer to an array, and I think it would be strange
+> to pass a pointer to a 0-size region of memory anywhere, so I'll leave
+> it as it is.
 
--K
+Well, I would assume that to_fetch.oid is either NULL or is alloc'd
+larger than to_fetch.nr when there are no added objects.
+
+This is now the fourth location where we if (to_fetch.nr) promisor_remote_get_direct()
+so we have already violated the rule of three.
+
+My preference would be to insert a patch before this that halts the
+promisor_remote_get_direct() call on an nr of 0 and deletes the "if (nr)"
+conditions from the three existing callers. Then this patch could use
+the logic without ever adding the "if (nr)".
+
+Thanks,
+-Stolee
