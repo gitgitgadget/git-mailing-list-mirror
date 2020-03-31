@@ -2,90 +2,87 @@ Return-Path: <SRS0=DhGT=5Q=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 90BB7C43331
-	for <git@archiver.kernel.org>; Tue, 31 Mar 2020 18:43:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 96002C43331
+	for <git@archiver.kernel.org>; Tue, 31 Mar 2020 18:47:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 587DF20784
-	for <git@archiver.kernel.org>; Tue, 31 Mar 2020 18:43:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 46F8C21473
+	for <git@archiver.kernel.org>; Tue, 31 Mar 2020 18:47:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="o+Kds7dl"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="cNt4tbUu"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727549AbgCaSnq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 Mar 2020 14:43:46 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:50910 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726194AbgCaSnq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Mar 2020 14:43:46 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6242BB6F58;
-        Tue, 31 Mar 2020 14:43:44 -0400 (EDT)
+        id S1726977AbgCaSrM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 Mar 2020 14:47:12 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:54268 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726209AbgCaSrL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Mar 2020 14:47:11 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 031F7B9E06;
+        Tue, 31 Mar 2020 14:47:10 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=OW+iK2MoPM0vWmY/WwYLORVk5Pk=; b=o+Kds7
-        dlx6/CKN8zNXCA9/YOgsoX+i1IOwsYFpxCif+zBFBpkL77t/s7NS2e4fyCexWm2p
-        qXoKtc2XOlxqzv5JnAcZcIKGpe/Qzot7rI1V2PntPw3eDI+dZlTv7q0V0iHk6gXJ
-        C0MwSpHEfF/YiICxa3dNw6flf8GMyVxxJ+LqQ=
+        :content-type; s=sasl; bh=4RBggfnmXBF8avUVdfhDJNi068c=; b=cNt4tb
+        Uu+ND49970R2O4WzTXJOpRN2HE5Hznl2II+c0NyFDYM4k+7t8Sgx4TWQUpYgmoC8
+        w7z6Zfi4Ge8wupsj7+pXQDCsNdEg+EiLdjyN6oZ0XqqgjZFlIp9vWBv8QQtm9tSX
+        ZYI1F/rS5WupNMcyo3wTiIChh1BHSPJzMibKs=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=HLk3h0hqoYoA7Jv0bHhQDXiCe9menwcq
-        Nh6apEC7QWsDwuqcz7zwlTeqnc7pWx/ZJN/3Rjo6YAmKthCIwYb9EdHaDcUz229G
-        zHvB5mUn+y8K28avMs9xrrOANYWlDNyLMIer+KAya/5RG3fj4ED0OVvCCKHJuGmJ
-        AOqQMV6WHDg=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 59E48B6F57;
-        Tue, 31 Mar 2020 14:43:44 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=l6A7fBg3Q7K2rPWMadduEtCV2EvAI0E7
+        BNZ6TA9VN/wdUaDPWivjFG2mhceUnGXVdfCRe4Z1avJLPkrbqjkPWDU8ARRgtwY2
+        FFpd4GJ93OPLk4W1wcXflFIGxsvLiWe2R2HAUvkC7kTzNtygQQ800roN5t1MTfR9
+        HOMLbT0ZdxI=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id EEF3CB9E05;
+        Tue, 31 Mar 2020 14:47:09 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A38ADB6F56;
-        Tue, 31 Mar 2020 14:43:41 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 330A3B9E04;
+        Tue, 31 Mar 2020 14:47:07 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Git Mailing List <git@vger.kernel.org>, congdanhqx@gmail.com,
-        Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v3] rebase --merge: optionally skip upstreamed commits
-References: <20200309205523.121319-1-jonathantanmy@google.com>
-        <20200330040621.13701-1-jonathantanmy@google.com>
-        <CABPp-BGew8HWChsMVH3ZNS4DuH=nE-GF5ouifP7DhLP-xQ_xbg@mail.gmail.com>
-        <xmqqh7y474r3.fsf@gitster.c.googlers.com>
-Date:   Tue, 31 Mar 2020 11:43:40 -0700
-In-Reply-To: <xmqqh7y474r3.fsf@gitster.c.googlers.com> (Junio C. Hamano's
-        message of "Tue, 31 Mar 2020 11:34:24 -0700")
-Message-ID: <xmqqd08s74bn.fsf@gitster.c.googlers.com>
+To:     Danh Doan <congdanhqx@gmail.com>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 0/5] ci: replace our Azure Pipeline by GitHub Actions
+References: <pull.743.git.git.1585658913.gitgitgadget@gmail.com>
+        <20200331144648.GC15850@danh.dev>
+Date:   Tue, 31 Mar 2020 11:47:05 -0700
+In-Reply-To: <20200331144648.GC15850@danh.dev> (Danh Doan's message of "Tue,
+        31 Mar 2020 21:46:48 +0700")
+Message-ID: <xmqq8sjg745y.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 8AEA0042-737F-11EA-9BBC-8D86F504CC47-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 056CBBDE-7380-11EA-BC32-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Danh Doan <congdanhqx@gmail.com> writes:
 
-> True.  So instead of letting the machine match commits on the both
-> sides up, the end-user who is rebasing will find matches (or near
-> matches) and manually handle them.  It would be a good idea to
-> describe the pros and cons for the option (which I think has already
-> been written fairly clearly in the proposed patch).
+>> The only caveat is that this will only work once the patch series makes it
+>> to master.
+>
+> Github Actions also works in other branches, at least in pu:
+> https://github.com/sgn/git/runs/548975243?check_suite_focus=true
+>
+> Anyway, this series will conflicts with my series for linux-musl CI.
+> And, Github Actions' Documentation job in pu failed because of missing
+> "curl-config".
+>
+> Attached patches can be used to merge this series into pu.
 
-Sorry, strike the part in (parentheses) out.  I was looking at the
-description in an earlier version with --skip-cherry-pick-detection,
-which had a good explanation on "if such detection is not done,
-then..." but with the latest one seems to have lost the description
-altogether.  Minimally something like this from the earlier round
-should probably be resurrected.
-
-    ... these duplicates will be re-applied, which will likely
-    result in no new changes (as they are already in upstream) and
-    drop them from the resulting history.
-
+Please work together to have either one of them build on the other.
 Thanks.
+
+
