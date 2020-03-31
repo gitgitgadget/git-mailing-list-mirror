@@ -2,65 +2,65 @@ Return-Path: <SRS0=DhGT=5Q=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_ABUSE_SURBL
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FF24C2D0F0
-	for <git@archiver.kernel.org>; Tue, 31 Mar 2020 12:48:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E09C5C2D0EE
+	for <git@archiver.kernel.org>; Tue, 31 Mar 2020 12:48:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 369BC20848
-	for <git@archiver.kernel.org>; Tue, 31 Mar 2020 12:48:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B785620848
+	for <git@archiver.kernel.org>; Tue, 31 Mar 2020 12:48:43 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h99HEP99"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="unlOCCUb"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730831AbgCaMsk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 Mar 2020 08:48:40 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:41132 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730819AbgCaMsj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Mar 2020 08:48:39 -0400
-Received: by mail-ed1-f68.google.com with SMTP id v1so24936925edq.8
+        id S1730833AbgCaMsm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 Mar 2020 08:48:42 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:41130 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730824AbgCaMsl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Mar 2020 08:48:41 -0400
+Received: by mail-ed1-f66.google.com with SMTP id v1so24936919edq.8
         for <git@vger.kernel.org>; Tue, 31 Mar 2020 05:48:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=zyZpUA8nBfjC2evyD5TpTCHzkcm56ucjOIO2HYjnuq8=;
-        b=h99HEP99zCcBX5co/Q2xOUMEr9LJ7IM9/EtVPDdol9eaenSzLE1PtT6Hr7xX835MIg
-         jaykDAGz5BjJRgNpiY00WYaAZIKKSc5ZSEd3uuFOaoFMdh+QvANsYX7IwAPRVj+fABAV
-         KudxBexToQ3jI78bgDV3nPV1oc4oSka5nF/mEb4Fu8o+WbTVD9HyyPoN3dV15WQFEsCD
-         fYnbmNO5W4xRhTfxMTj0suRJdZIMetQVg6d4q8ra9Nr0G58WPTBn0JerEOfXziIEoBBe
-         YKhx4Gfj5ZQUhejUgbVsiXPzkf+K2pdqrP6X1FqEdLsDWxjrH0hH+qsrxByn+YI60rIz
-         M76w==
+        bh=CMEwJOkUItdJQ0xWMHIa6rJf/HsgOG9qk3FLfbQdSiQ=;
+        b=unlOCCUb9bsmIicCsfbC24RNHSVahUcRkgF/qEjZi80/x6svIpOX1cmP1zIuWDtU6b
+         STJf9FqcH1FT/Z3rr/euSfZcwGpl06ICt9LSt7pJPagWTlrnzw1Gu0i4Y+i7ZguMMhCH
+         TEqyBkF4SUJAehWCv1ywCgTHg4oJB8TthexwQ029qjkjFzNVdJci6nuOdXZXLuHcS3Ym
+         H/ECwezGO6zZxJ313JS7EREJKRxhI1xHXA/RJgikNTU+QYpOkDOECDKiR9+m4AGi/AqN
+         FYFvAmSDStFQlcuUMfM8dOWagM9IwGkROC/1xucC/l8iymkwzY4bX2J2YOwBcaHhObqG
+         KOhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=zyZpUA8nBfjC2evyD5TpTCHzkcm56ucjOIO2HYjnuq8=;
-        b=mxLchFN06+XUYkcz48HIe7sa7y/yk3WBA3sjSqye+1UimRq4iRt4B1A4521AUfsCEO
-         wmc6crpNeJJ2J7JVosj4I3JlqlFyXw9NKf6mmjIQm1w+rYNRzZxfCZj6FI9otWoYKKtk
-         i3OuTD1UyjzKUMrENopWJBETVOhFjUxKfxl322EsLAReQ90OMqO8sA6Zqi/1hbUmxqei
-         b54aEWaTrllNaHkhbac0mJfs88OKD/keUZvtWB4oLScmYI1lWuw6edzGGBEBjvWx/j0I
-         Vglh6hzqR75IpNcpz8bPIkwSa0QD9pXdR2pQroOZMZA2FpiwjW4jp+xYCRDgOaSMvFhO
-         DzWg==
-X-Gm-Message-State: ANhLgQ0QlsaS8O39SSfqajnISTVD1pmZfMn41GDUhUa9q5dBSGUJPkYD
-        I0EdTSKUxUlElv5HBzjTJHu6Ozom
-X-Google-Smtp-Source: ADFU+vuP3Zqlrw/X/Hdc+KMAjRons3AD1+Ek4WnFKoDJwxS9a+ewF73kQDpu4CbT/cHA2eBe+4f0VQ==
-X-Received: by 2002:a17:906:5952:: with SMTP id g18mr15842106ejr.208.1585658917213;
-        Tue, 31 Mar 2020 05:48:37 -0700 (PDT)
+        bh=CMEwJOkUItdJQ0xWMHIa6rJf/HsgOG9qk3FLfbQdSiQ=;
+        b=Hc+ZQDOJBsUNznixepumIemubfRBJdO/TEOKAppKGAFP1gY/GOuBxdlDJ7vmrk1BtC
+         qSL9RpXJHGInS4/7AgMXxJR0J2JUDRd5YZfvEGmxeGy+nviPTMND2IHg+sHyC2qtQNa5
+         i9JC5KRIGAJ7ImuAfj4vtOM43uwX4qe+brZiZUqkNm1jYnplR0xMPEPIXFw0I6w7QtGL
+         8gdgQsYD4hZV+Ep3VnkJroHuX8z4aPTjGtPqh0Jxa1G6/hwFkeFKF6lDlh3niUngivv/
+         D47TBUxndYYdQiNRAOnzaeZ5+Ixi/dLVkAsmPq5c/cMJe9jHnAmT+2bS7nsj8OzhvmcH
+         m4Mg==
+X-Gm-Message-State: ANhLgQ1ha+Y09VgRLZ1+alxfNaeWLi8c1tT9+wupQdUWTCgWJ56zt0s2
+        3tBkXSOyVQElhdmPQqcIuzFzujr/
+X-Google-Smtp-Source: ADFU+vsS8OLe6vyJ3dHxtCBMpH2MXsYGmmCHCRNQAJ9FJYreHU0YuwrVuGgCs+zcWogl/vRluBfW8Q==
+X-Received: by 2002:a50:cdda:: with SMTP id h26mr10025260edj.364.1585658915904;
+        Tue, 31 Mar 2020 05:48:35 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a4sm2279781edq.28.2020.03.31.05.48.36
+        by smtp.gmail.com with ESMTPSA id n18sm1725723eja.68.2020.03.31.05.48.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 Mar 2020 05:48:36 -0700 (PDT)
-Message-Id: <a30419dca111d161b4f28b6ce55084654e02140c.1585658913.git.gitgitgadget@gmail.com>
+        Tue, 31 Mar 2020 05:48:35 -0700 (PDT)
+Message-Id: <d9227c87a7bb2872f6a69f48f6a4988f08545d8a.1585658913.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.743.git.git.1585658913.gitgitgadget@gmail.com>
 References: <pull.743.git.git.1585658913.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 31 Mar 2020 12:48:32 +0000
-Subject: [PATCH 4/5] README: add a build badge for the GitHub Actions runs
+Date:   Tue, 31 Mar 2020 12:48:30 +0000
+Subject: [PATCH 2/5] ci/lib: allow running in GitHub Actions
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,20 +75,52 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
+For each CI system we support, we need a specific arm in that if/else
+construct in ci/lib.sh. Let's add one for GitHub Actions.
+
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- README.md | 1 +
- 1 file changed, 1 insertion(+)
+ ci/lib.sh | 20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/README.md b/README.md
-index 9d4564c8aa1..e2e00ae2495 100644
---- a/README.md
-+++ b/README.md
-@@ -1,3 +1,4 @@
-+[![Build status](https://github.com/git/git/workflows/CI/PR/badge.svg)](https://github.com/git/git/actions?query=branch%3Amaster+event%3Apush)
- [![Build Status](https://dev.azure.com/git/git/_apis/build/status/git.git)](https://dev.azure.com/git/git/_build/latest?definitionId=11)
- 
- Git - fast, scalable, distributed revision control system
+diff --git a/ci/lib.sh b/ci/lib.sh
+index 8d73551a12f..52e350496a3 100755
+--- a/ci/lib.sh
++++ b/ci/lib.sh
+@@ -34,7 +34,7 @@ save_good_tree () {
+ # successfully before (e.g. because the branch got rebased, changing only
+ # the commit messages).
+ skip_good_tree () {
+-	if test "$TRAVIS_DEBUG_MODE" = true
++	if test "$TRAVIS_DEBUG_MODE" = true || test true = "$GITHUB_ACTIONS"
+ 	then
+ 		return
+ 	fi
+@@ -136,6 +136,24 @@ then
+ 	MAKEFLAGS="$MAKEFLAGS --jobs=10"
+ 	test windows_nt != "$CI_OS_NAME" ||
+ 	GIT_TEST_OPTS="--no-chain-lint --no-bin-wrappers $GIT_TEST_OPTS"
++elif test true = "$GITHUB_ACTIONS"
++then
++	CI_TYPE=github-actions
++	CI_BRANCH="$GITHUB_REF"
++	CI_COMMIT="$GITHUB_SHA"
++	CI_OS_NAME="$(echo "$RUNNER_OS" | tr A-Z a-z)"
++	test macos != "$CI_OS_NAME" || CI_OS_NAME=osx
++	CI_REPO_SLUG="$GITHUB_REPOSITORY"
++	CI_JOB_ID="$GITHUB_RUN_ID"
++	CC="${CC:-gcc}"
++
++	cache_dir="$HOME/none"
++
++	export GIT_PROVE_OPTS="--timer --jobs 10"
++	export GIT_TEST_OPTS="--verbose-log -x"
++	MAKEFLAGS="$MAKEFLAGS --jobs=10"
++	test windows != "$CI_OS_NAME" ||
++	GIT_TEST_OPTS="--no-chain-lint --no-bin-wrappers $GIT_TEST_OPTS"
+ else
+ 	echo "Could not identify CI type" >&2
+ 	env >&2
 -- 
 gitgitgadget
 
