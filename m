@@ -2,140 +2,87 @@ Return-Path: <SRS0=DhGT=5Q=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 49772C43331
-	for <git@archiver.kernel.org>; Tue, 31 Mar 2020 16:51:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AB7C8C43331
+	for <git@archiver.kernel.org>; Tue, 31 Mar 2020 17:13:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1D61220784
-	for <git@archiver.kernel.org>; Tue, 31 Mar 2020 16:51:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6830A20848
+	for <git@archiver.kernel.org>; Tue, 31 Mar 2020 17:13:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="MZhaxGzY"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KwzDk9kL"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730420AbgCaQvD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 Mar 2020 12:51:03 -0400
-Received: from mail-pj1-f74.google.com ([209.85.216.74]:36550 "EHLO
-        mail-pj1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726194AbgCaQvD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Mar 2020 12:51:03 -0400
-Received: by mail-pj1-f74.google.com with SMTP id np18so2657731pjb.1
-        for <git@vger.kernel.org>; Tue, 31 Mar 2020 09:51:02 -0700 (PDT)
+        id S1731299AbgCaRN2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 Mar 2020 13:13:28 -0400
+Received: from mail-oi1-f196.google.com ([209.85.167.196]:35143 "EHLO
+        mail-oi1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730149AbgCaRN1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Mar 2020 13:13:27 -0400
+Received: by mail-oi1-f196.google.com with SMTP id t25so19596114oij.2
+        for <git@vger.kernel.org>; Tue, 31 Mar 2020 10:13:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=z4HLXxDjqTh7utDzuszATBeOzdrc4l8O6s7UUrxG4l4=;
-        b=MZhaxGzYJNpNnvBc3txHbUhzxPiv7pbhVsKNCOuF2YBLt8J1yjhQr+CUux9oST51tW
-         sKl15fD1jMFq8fTHtxOeV8qcC6zmO/IKO890xyA9++5dOA88qgSk3Dv/7Q6WR7D1tn9i
-         8GymNTSqUro64na9lRhieXu4NPqEAsDjH5jtSwp0nlzvTCTBKmcuJVKSoyXwWoZ7VZFJ
-         IDB83ZOSyh8LSWBcb2kk/NPyBH62A1Ko0Lo3orvPZ/ntoCJwt/F1ezQWihCzWzcChALf
-         MUf8a/4e17bAcyrfR2p5zWzubfMeydU20AxQwxNE/vkezKFNXrd9dDDNr6kHQPGOVOvR
-         eFgQ==
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=7hW84VoP+elEeMZALf3M5a1Msrmz1A+rWW+ZAONQsp8=;
+        b=KwzDk9kLtT6a9I22zPq06AwkOwZBez2vJhgX+u8gmrxBpj5eLfGsOifbZhYHjW92+O
+         lM47fKNuqs8pfNw3/DajzjFVphHeGReQmQr79yZigHaXBuQFZ7YMh8dILHDM8WHCC4Qc
+         XnuydnF4Pt6GQdHgkGWvRqXLNEqRpe9QA5ejbx9lashoNp2CSCSAOtmmIcn1NQGyG0fC
+         BpK7/UC4Tjkinhkk5Iapj60evx6TXo9T+9SO1MJ5NDnXNNiHGNc/IOny79yYcvJq+cG7
+         aMiCrgW6GyyyyjX0yAKba3jRq/DJ08EP6v46a7Z9y2vcIAU3u7hxESHU7g6GRjGo32Ib
+         TEnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=z4HLXxDjqTh7utDzuszATBeOzdrc4l8O6s7UUrxG4l4=;
-        b=XzABIG/c4025hez1ydovtAiuzDPT74YCL7V+fF39kIFKq98NboL6AaNE34R0ydQ9lX
-         hShjlSLwlgMNT+R07HohxyQ1/EeIQBVcx/qrtKGlRt7mYmvFRKs9nDhmvd2KI6rFshDE
-         hmnKL02yu653iKQIIYD+SmCC8oFWonNRPgScfdEmUw4YBN+KMl4LxMPe+3WOSeXCVppW
-         DLbKI110vG4VaoQCm25SeLJyCoyyH4kCAHwuib/+nyF410RNg9YtWkvhXEYk8ziiwAEf
-         m0MUS+pVE3VAsW06pRSN4KRh/x384WAXLscMRB3+ZDaf5vxc72nZhHtg0Jt7d98pjbII
-         wJqA==
-X-Gm-Message-State: ANhLgQ01P3Uee1td8OaNLPi/vPXZFmIy5cBO0iaUIe+f3gRibGF86YnQ
-        wuMCOD6b55wdtvOGyXVg+J9f1TT2kwAEooaUh3dU
-X-Google-Smtp-Source: ADFU+vtS+ZZZHJD7RsjktO84Q4rooZM6vlJU6MFWEjpwePk6GLXo1D6oBZMbh+WKFQ0xGrDaiDo3uK4fffETkgimMAt/
-X-Received: by 2002:a63:4d2:: with SMTP id 201mr18151487pge.276.1585673461392;
- Tue, 31 Mar 2020 09:51:01 -0700 (PDT)
-Date:   Tue, 31 Mar 2020 09:50:58 -0700
-In-Reply-To: <b956528c-412b-2f38-bd90-1fa2ae4b8604@gmail.com>
-Message-Id: <20200331165058.53637-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <b956528c-412b-2f38-bd90-1fa2ae4b8604@gmail.com>
-X-Mailer: git-send-email 2.26.0.rc2.310.g2932bb562d-goog
-Subject: Re: [PATCH] diff: restrict when prefetching occurs
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     stolee@gmail.com
-Cc:     jonathantanmy@google.com, git@vger.kernel.org, peff@peff.net
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=7hW84VoP+elEeMZALf3M5a1Msrmz1A+rWW+ZAONQsp8=;
+        b=tYOT8L8gDVgcO5qUveuIWgcPFon0UjB0pfgIco0M+9gMPDRd9NvvjeAm/iMOCVQzul
+         P9ViOy9xsVxTPZXgu9Pso6fSLtiK4ndFwoF9XQPXXBsNUY5Vcruq4foD3TJFiSeeZ3J6
+         VfCANHNWmODdcIiGRlE5E3FfUcaOxDV7OpxHVnsMydqda4/pH4F+dvnR0HYAcRY3dicp
+         Gws7CsMlwzvVaWRA7kuX/Bz1Ghp8GA00VRMjWKXtSh5V/63cNfYOa9pwcX6b/J+jzvd2
+         yV7yekr/K3BTikjxP4YjxrfCLPXaq2gIY+KiQKgVoAyf3ppJP43L7NfyWPv52uKNBfpv
+         fe6w==
+X-Gm-Message-State: ANhLgQ3lml7IOO9yfVwtB3HAw8A9U+b0Vglqms91XkVJ5EWPTAMagVMf
+        gHK0fRz6Ggo5sS3im1fabkM73uck31HS23oQ9QaeQg==
+X-Google-Smtp-Source: ADFU+vuwoDcejf61kef8ZhDuzb8uUDZD8/rd8LkktQkpUcItwjstLfQuOlIe14sAocTt9yZWHOkHdconNcAm3NFEDE4=
+X-Received: by 2002:aca:de42:: with SMTP id v63mr2641841oig.99.1585674806510;
+ Tue, 31 Mar 2020 10:13:26 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 2002:a4a:d844:0:0:0:0:0 with HTTP; Tue, 31 Mar 2020 10:13:25
+ -0700 (PDT)
+From:   Josep Torra <n770galaxy@gmail.com>
+Date:   Tue, 31 Mar 2020 19:13:25 +0200
+Message-ID: <CAE0g23A0+4MPwACTsdjk=eOYaGBDEwsD2t_F072Z33Gb6y2qZw@mail.gmail.com>
+Subject: Possible regression in git 2.26.0
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> This conflicts with [3], so please keep that in mind.
-> 
-> Maybe [3] should be adjusted to assume this patch, because that change
-> is mostly about disabling the batch download when no renames are required.
-> As Peff said [2] the full rename detection trigger is "overly broad".
-> 
-> However, the changed-path Bloom filters are an excellent test for this
-> patch, as computing them in a partial clone will trigger downloading all
-> blobs without [3].
-> 
-> [3] https://lore.kernel.org/git/55824cda89c1dca7756c8c2d831d6e115f4a9ddb.1585528298.git.gitgitgadget@gmail.com/T/#u
-> 
-> > [1] https://lore.kernel.org/git/20200128213508.31661-1-jonathantanmy@google.com/
-> > [2] https://lore.kernel.org/git/20200130055136.GA2184413@coredump.intra.peff.net/
+Today I'd noticed a failure in some custom automation that seems to
+came as a side effect after of a git client update.
 
-Thanks for the pointer. Yes, I think that [3] should be adjusted to
-assume this patch.
+The issue issue I'd spotted is the following:
 
-> > +		for (i = 0; i < rename_dst_nr; i++) {
-> > +			if (rename_dst[i].pair)
-> > +				continue; /* already found exact match */
-> > +			add_if_missing(options->repo, &to_fetch, rename_dst[i].two);
-> 
-> Could this be reversed instead to avoid the "continue"?
+$ git clone git://git.launchpad.net/~ubuntu-kernel/ubuntu/+source/linux/+git/bionic
+linux/bionic
+Cloning into 'linux/bionic'...
+fatal: remote error: Parameters must have values
 
-Hmm...I prefer the "return early" approach, but can change it if others
-prefer to avoid the "continue" here.
+Reverting to git 2.17.1 didn't show the issue.
 
-> 	if (!rename_dst[i].pair)
-> 		add_if_missing(options->repo, &to_fetch, rename_dst[i].two);
-> 
-> > +		}
-> > +		for (i = 0; i < rename_src_nr; i++)
-> > +			add_if_missing(options->repo, &to_fetch, rename_src[i].p->one);
-> 
-> Does this not have the equivalent "rename_src[i].pair" logic for exact
-> matches?
+I'd asked at #git in freenode and @rafasc was able to reproduce and
+bisect, pointing to
 
-Thanks for the catch. There's no "pair" in rename_src[i], but the
-equivalent is "if (skip_unmodified &&
-diff_unmodified_pair(rename_src[i].p))", which you can see in the "for"
-loop later in the function. I've added this.
+https://github.com/git/git/commit/684ceae32dae726c6a5c693b257b156926aba8b7
 
-> > +		if (to_fetch.nr)
-> > +			promisor_remote_get_direct(options->repo,
-> > +						   to_fetch.oid, to_fetch.nr);
-> 
-> Perhaps promisor_remote_get_direct() could have the check for
-> nr == 0 to exit early instead of putting that upon all the
-> callers?
+For the time being I'd added `-c protocol.version=0` as a temporary workaround.
 
-The 2nd param is a pointer to an array, and I think it would be strange
-to pass a pointer to a 0-size region of memory anywhere, so I'll leave
-it as it is.
+Is this a regression?
 
-> > +test_expect_success 'diff does not fetch anything if inexact rename detection is not needed' '
-> > +	test_when_finished "rm -rf server client trace" &&
-> > +
-> > +	test_create_repo server &&
-> > +	echo a >server/a &&
-> > +	printf "b\nb\nb\nb\nb\n" >server/b &&
-> > +	git -C server add a b &&
-> > +	git -C server commit -m x &&
-> 
-> > +	rm server/b &&
-> > +	printf "b\nb\nb\nb\nb\n" >server/c &&
-> 
-> Would "mv server/b server/c" make it more clear that
-> this is an exact rename?
+Thanks for looking into this.
 
-True. Will do.
-
-Thanks for the review.
+Josep Torra
