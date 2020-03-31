@@ -2,383 +2,146 @@ Return-Path: <SRS0=DhGT=5Q=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A90C3C2D0F0
-	for <git@archiver.kernel.org>; Tue, 31 Mar 2020 12:48:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1379CC43331
+	for <git@archiver.kernel.org>; Tue, 31 Mar 2020 13:37:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6AACB20848
-	for <git@archiver.kernel.org>; Tue, 31 Mar 2020 12:48:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D70892071A
+	for <git@archiver.kernel.org>; Tue, 31 Mar 2020 13:37:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gW0l5rny"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S59Ud5s+"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730843AbgCaMso (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 Mar 2020 08:48:44 -0400
-Received: from mail-ed1-f48.google.com ([209.85.208.48]:43855 "EHLO
-        mail-ed1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730617AbgCaMsm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Mar 2020 08:48:42 -0400
-Received: by mail-ed1-f48.google.com with SMTP id bd14so24896243edb.10
-        for <git@vger.kernel.org>; Tue, 31 Mar 2020 05:48:37 -0700 (PDT)
+        id S1730875AbgCaNhE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 Mar 2020 09:37:04 -0400
+Received: from mail-wr1-f45.google.com ([209.85.221.45]:33331 "EHLO
+        mail-wr1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730216AbgCaNhD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Mar 2020 09:37:03 -0400
+Received: by mail-wr1-f45.google.com with SMTP id a25so26037926wrd.0
+        for <git@vger.kernel.org>; Tue, 31 Mar 2020 06:37:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=FTVK0QpZ0ksBZRoFKFADzS7qf3fXAoNTOCDwmRfMF8Y=;
-        b=gW0l5rny8uznyBHuTnXRBxOVi4piVTrOcQVn4K4VxjxkgFeGsIDpjhRaB9NtaEgKFa
-         Mm+rwAQxEnGFUd6Bho/GmZnRXbFmFb97zKUbWG8DN3lH100rNsWOw3dsTZGGhaCReDZ6
-         DslkaW5PRJbLblnLn8YMPUImju6zkyPvv4I99583XBWmz7IDTDcktrJDZGEBsVZT83zi
-         UMrEHaF0pYn3vwZEDg6fqCkbWThAw1qjjXYwh0vPfqP8wfW9K9NQyZLcLYtMtziu1c57
-         YXPMcmGuSEzoVkcB5HmYf3DSVHFpO1KP0GjRnhUEmprDBs0aXs0hAveje3cLL0/GNuD0
-         quYA==
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=K/llh/xdSFr4wec5ABQwwjVlX58hUqvjCEKQMJZiZFQ=;
+        b=S59Ud5s+xVqXvE6ca3dmzjp3pa8zc84EwLG4LznGWI84M7T76h0iCzArd2ZPH7yxUd
+         b5pgw9x4khOplPBhFfVldDWaRARzhFaNfRy1HpnlhETcoKvWBCUzh0YjWaCOZHPRoRUS
+         nCX1NDfKefk4uAHHjvb5TEUr7Bvnnagpbi8U50nE+nMYGlc81feGCg0ZI5I3O6VrYnhZ
+         y+gii2rvM7l009H7DqtNDJEjUYYbTSNhLnQTzBxskhV+ZWo0tWlBKxaTpxiSIwUkZWOV
+         pup/vJHrlf+yBYX7sekmqD8PDe/eYh0C219ThPDc9tdT0RT8UwfikMioqATqvnXYK/0k
+         dosg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=FTVK0QpZ0ksBZRoFKFADzS7qf3fXAoNTOCDwmRfMF8Y=;
-        b=Lvl0ROJ1sSmBW6eNBts/l88bnRrzIH+NYLpKpjHWcw2ynib3FIEerJ1mvHQ3DYyZjB
-         tdDjPBai+sLDrEOsCZZ3IuLDWn+oYGh00g7mxWGb1HJiEThpzYTLN/A3CI0axe4kxTcr
-         jLvdydSv0eEMQFHuvVjxi2XiBZwIymn+HKDI50Ft6+NRkkiHHvUGd6n3lBd9OEAES8OC
-         gTOjmSKGFpxySdOcVPnAbJYX0jIfToFw4paULxggt9Pt23lly5rs6OOm228uwaHiYqSO
-         goYmOhAIeyTYmVxC1XS/3gTQ1K+5dlqj/i8mGch8Y6dseoBy2rjIRRZelg2xeBpP35bo
-         kE4Q==
-X-Gm-Message-State: ANhLgQ3+85MN76dAHLQ3REHqDEIUXBl31AvKM/joGzKY0+XQFOQKMBue
-        GQKItGdINluXS/XBe4N9YXFfN95q
-X-Google-Smtp-Source: ADFU+vsH2JmsT850e/5wuuy1xf6WflrqyOG+bt3Bvd4nMaXejcuffe1ZyJmqpa18KWGHX+CrKJQu/w==
-X-Received: by 2002:a17:906:3443:: with SMTP id d3mr3760854ejb.18.1585658916560;
-        Tue, 31 Mar 2020 05:48:36 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p34sm2305328edb.63.2020.03.31.05.48.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 Mar 2020 05:48:36 -0700 (PDT)
-Message-Id: <36621bdd31a53046450f73ed197585469b1a1b96.1585658913.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.743.git.git.1585658913.gitgitgadget@gmail.com>
-References: <pull.743.git.git.1585658913.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 31 Mar 2020 12:48:31 +0000
-Subject: [PATCH 3/5] ci: configure GitHub Actions for CI/PR
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=K/llh/xdSFr4wec5ABQwwjVlX58hUqvjCEKQMJZiZFQ=;
+        b=VcTphh1BuMLw2hxs0IlNAV5KpLlpnrcK4covunO4qnDsVrPEr9zNw/dkX8AZXSNfBJ
+         A6oYMYCDBSoxEHH6LtYhRmdTL1B3GjdQ35QN6waxQ0HD+n84ICf/ylhpvkbiyfiscySw
+         4Vz7bmSs7nAQLsTmL/SfSR+CQgvTddVvzFsGnd06PvJLJBOvZfG5SP4e694HF2l17txD
+         Y3Y5MruE4fxi7AjGV/LYn2Q8c8FDxarMo+frOHa9HoTrWaOawsHQj7HQaLTTNXst/R84
+         MMy9nJjQSCEN3DYENFOp4VmTa1nYYk+/fCNAatKt2QFsjzo59f7N7VJpBc0+dgSMH47F
+         bSUg==
+X-Gm-Message-State: ANhLgQ0uW7bubVURBwIyX0VK/4rjweh/LImlzSxGxtMiCbFCuHP7cxNw
+        C/5peBHenm8SP0fNSyTdKxPmkzGa
+X-Google-Smtp-Source: ADFU+vtV31Ansd0EWkRHap7LWx3jDEFNT9dZ/G9Hln9rVRy8kJCmnmv7I1URItZecd0UDoggKTK6+A==
+X-Received: by 2002:a5d:4305:: with SMTP id h5mr19829580wrq.69.1585661822044;
+        Tue, 31 Mar 2020 06:37:02 -0700 (PDT)
+Received: from [192.168.1.240] (85.25.198.146.dyn.plus.net. [146.198.25.85])
+        by smtp.gmail.com with ESMTPSA id w7sm26436176wrr.60.2020.03.31.06.37.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 31 Mar 2020 06:37:00 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: Feature request: rebase -i inside of rebase -i
+To:     Philip Oakley <philipoakley@iee.email>,
+        George Spelvin <lkml@SDF.ORG>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <20200320223015.GA19579@SDF.ORG>
+ <xmqq36a2bpxz.fsf@gitster.c.googlers.com> <20200320233528.GB19579@SDF.ORG>
+ <nycvar.QRO.7.76.6.2003211135380.46@tvgsbejvaqbjf.bet>
+ <20200321175612.GC19579@SDF.ORG>
+ <nycvar.QRO.7.76.6.2003252008490.46@tvgsbejvaqbjf.bet>
+ <20200326001821.GB8865@SDF.ORG>
+ <nycvar.QRO.7.76.6.2003281510260.46@tvgsbejvaqbjf.bet>
+ <20200328163024.GA26885@SDF.ORG> <20200331000018.GD9199@SDF.ORG>
+ <7fbe0ddc-74a3-b6b5-09b1-bff171382d0e@iee.email>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <ef1a1475-45b3-8696-ed1e-b28f7b655ece@gmail.com>
+Date:   Tue, 31 Mar 2020 14:36:59 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.6.0
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+In-Reply-To: <7fbe0ddc-74a3-b6b5-09b1-bff171382d0e@iee.email>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Hi Philip, George and Johannes
 
-This patch adds CI builds via GitHub Actions. While the underlying
-technology is at least _very_ similar to that of Azure Pipelines, GitHub
-Actions are much easier to set up than Azure Pipelines: no need to
-install a GitHub App, no need to set up an Azure DevOps account, all you
-need to do is push to your fork on GitHub.
+I really like the idea of being able to extend or rewind an existing 
+rebase to reedit commits.
 
-Therefore, it makes a lot of sense for us to have a working GitHub
-Actions setup.
+On 31/03/2020 11:57, Philip Oakley wrote:
+> Hi george,
+> 
+> On 31/03/2020 01:00, George Spelvin wrote:
+>> Thinking about Philip Oakley's suggestion, it dawned on me that
+>> we can *already* do a nested rebase manually, and having a less
+>> manual alias for the procedure would be reasonable.
+>>
+>> Suppose the last four commits are O-A-B-C, and whether they were created
+>> by this rebase or existed before is irrelevant.
+>>
+>> If I want to rebase --nested -i O, then I --edit-todo and
+> 
+> Maybe `--rework` as a possible alternate option name, if the concept of
+> it being truly nested process does not work out?
 
-While transmogrifying `azure-pipelines.yml` into
-`.github/workflows/main.yml`, we also use the opportunity to accelerate
-the step that sets up a minimal subset of Git for Windows' SDK in the
-Windows-build job: we now download a `.tar.xz` stored in Azure Blobs and
-extract it simultaneously (by calling `curl` and piping the result to
-`tar`, decompressing via `xz`, all three utilities being available by
-grace of using Git for Windows' Bash that is installed on the build
-agents). This accelerates that step from ~1m50s to ~7s.
+or `--rewind` ?
 
-Also, we do away with the parts that try to mount a file share on which
-`prove` can store data between runs. It is just too complicated to set
-up, so it's little return on investment there.
+>> prepend the following four lines:
+>> reset O
+>> pick A
+>> pick B
+>> pick C
+>>
+>> If a nested rebase command does just that, I think it would cover my
+>> use case.  If it adds a comment saying "nested rebase ends here",
+>> it's easy to cancel the nested rebase if there was a mistake.
+>>
+>> A slightly fancier thing a nestrd rebase could do is see if any of the
+>> newly created picks are also used in merges that were already in the todo
+>> list.  In that case, follow the pick by a label command and update the
+>> later merge to refer to the label.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- .github/workflows/main.yml | 271 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 271 insertions(+)
- create mode 100644 .github/workflows/main.yml
+If we're going to support rewinding a rebase that creates merges then 
+this is a prerequisite otherwise it wont work properly. It will also 
+need to update any existing labels that refer to a commits that get 
+rewritten when rewinding.
 
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-new file mode 100644
-index 00000000000..14025c8a7eb
---- /dev/null
-+++ b/.github/workflows/main.yml
-@@ -0,0 +1,271 @@
-+name: CI/PR
-+
-+on: [push, pull_request]
-+
-+jobs:
-+  windows-build:
-+    runs-on: windows-latest
-+    steps:
-+    - uses: actions/checkout@v1
-+    - name: Download git-sdk-64-minimal
-+      shell: bash
-+      run: a=git-sdk-64-minimal && mkdir -p $a && curl -# https://wingit.blob.core.windows.net/ci-artifacts/$a.tar.xz | tar -C $a -xJf -
-+    - name: Build
-+      shell: powershell
-+      env:
-+        HOME: ${{runner.workspace}}
-+        MSYSTEM: MINGW64
-+        DEVELOPER: 1
-+        NO_PERL: 1
-+      run: |
-+        & .\git-sdk-64-minimal\usr\bin\bash.exe -lc @"
-+        printf '%s\n' /git-sdk-64-minimal/ >>.git/info/exclude
-+
-+          ci/make-test-artifacts.sh artifacts
-+        "@
-+        if (!$?) { exit(1) }
-+    - name: Upload build artifacts
-+      uses: actions/upload-artifact@v1
-+      with:
-+        name: windows-artifacts
-+        path: artifacts
-+  windows-test:
-+    runs-on: windows-latest
-+    needs: [windows-build]
-+    strategy:
-+      matrix:
-+        nr: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-+    steps:
-+    - uses: actions/checkout@v1
-+    - name: Download git-sdk-64-minimal
-+      shell: bash
-+      run: a=git-sdk-64-minimal && mkdir -p $a && curl -# https://wingit.blob.core.windows.net/ci-artifacts/$a.tar.xz | tar -C $a -xJf -
-+    - name: Download build artifacts
-+      uses: actions/download-artifact@v1
-+      with:
-+        name: windows-artifacts
-+        path: ${{github.workspace}}
-+    - name: Test
-+      shell: powershell
-+      run: |
-+        & .\git-sdk-64-minimal\usr\bin\bash.exe -lc @"
-+          test -f artifacts.tar.gz || {
-+            echo No test artifacts found\; skipping >&2
-+            exit 0
-+          }
-+          tar xf artifacts.tar.gz || exit 1
-+
-+          # Let Git ignore the SDK
-+          printf '%s\n' /git-sdk-64-minimal/ >>.git/info/exclude
-+
-+          ci/run-test-slice.sh ${{matrix.nr}} 10 || {
-+            ci/print-test-failures.sh
-+            exit 1
-+          }
-+        "@
-+        if (!$?) { exit(1) }
-+  vs-build:
-+    runs-on: windows-latest
-+    steps:
-+    - uses: actions/checkout@v1
-+    - name: Download git-sdk-64-minimal
-+      shell: bash
-+      run: a=git-sdk-64-minimal && mkdir -p $a && curl -# https://wingit.blob.core.windows.net/ci-artifacts/$a.tar.xz | tar -C $a -xJf -
-+    - name: Generate Visual Studio Solution
-+      shell: powershell
-+      env:
-+        MSYSTEM: MINGW64
-+        DEVELOPER: 1
-+        NO_PERL: 1
-+        GIT_CONFIG_PARAMETERS: "'user.name=CI' 'user.email=ci@git'"
-+      run: |
-+        & .\git-sdk-64-minimal\usr\bin\bash.exe -lc @"
-+          make NDEBUG=1 DEVELOPER=1 vcxproj
-+        "@
-+        if (!$?) { exit(1) }
-+    - name: Download vcpkg artifacts
-+      shell: powershell
-+      run: |
-+        $urlbase = "https://dev.azure.com/git/git/_apis/build/builds"
-+        $id = ((Invoke-WebRequest -UseBasicParsing "${urlbase}?definitions=9&statusFilter=completed&resultFilter=succeeded&`$top=1").content | ConvertFrom-JSON).value[0].id
-+        $downloadUrl = ((Invoke-WebRequest -UseBasicParsing "${urlbase}/$id/artifacts").content | ConvertFrom-JSON).value[0].resource.downloadUrl
-+        (New-Object Net.WebClient).DownloadFile($downloadUrl, "compat.zip")
-+        Expand-Archive compat.zip -DestinationPath . -Force
-+        Remove-Item compat.zip
-+    - name: Add msbuild to PATH
-+      uses: microsoft/setup-msbuild@v1.0.0
-+    - name: MSBuild
-+      run: msbuild git.sln -property:Configuration=Release -property:Platform=x64 -maxCpuCount:4 -property:PlatformToolset=v142
-+    - name: Bundle artifact tar
-+      shell: powershell
-+      env:
-+        MSYSTEM: MINGW64
-+        DEVELOPER: 1
-+        NO_PERL: 1
-+        MSVC: 1
-+        VCPKG_ROOT: ${{github.workspace}}\compat\vcbuild\vcpkg
-+      run: |
-+        & compat\vcbuild\vcpkg_copy_dlls.bat release
-+        if (!$?) { exit(1) }
-+        & git-sdk-64-minimal\usr\bin\bash.exe -lc @"
-+          mkdir -p artifacts &&
-+          eval \"`$(make -n artifacts-tar INCLUDE_DLLS_IN_ARTIFACTS=YesPlease ARTIFACTS_DIRECTORY=artifacts 2>&1 | grep ^tar)\"
-+        "@
-+        if (!$?) { exit(1) }
-+    - name: Upload build artifacts
-+      uses: actions/upload-artifact@v1
-+      with:
-+        name: vs-artifacts
-+        path: artifacts
-+  vs-test:
-+    runs-on: windows-latest
-+    needs: [vs-build]
-+    strategy:
-+      matrix:
-+        nr: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-+    steps:
-+    - uses: actions/checkout@v1
-+    - name: Download git-64-portable
-+      shell: bash
-+      run: a=git-64-portable && mkdir -p $a && curl -# https://wingit.blob.core.windows.net/ci-artifacts/$a.tar.xz | tar -C $a -xJf -
-+    - name: Download build artifacts
-+      uses: actions/download-artifact@v1
-+      with:
-+        name: vs-artifacts
-+        path: ${{github.workspace}}
-+    - name: Test (parallel)
-+      shell: powershell
-+      env:
-+        MSYSTEM: MINGW64
-+        NO_SVN_TESTS: 1
-+        GIT_TEST_SKIP_REBASE_P: 1
-+      run: |
-+        & git-64-portable\git-cmd.exe --command=usr\bin\bash.exe -lc @"
-+          test -f artifacts.tar.gz || {
-+            echo No test artifacts found\; skipping >&2
-+            exit 0
-+          }
-+          tar xf artifacts.tar.gz || exit 1
-+
-+          # Let Git ignore the SDK and the test-cache
-+          printf '%s\n' /git-64-portable/ /test-cache/ >>.git/info/exclude
-+
-+          cd t &&
-+          PATH=\"`$PWD/helper:`$PATH\" &&
-+          test-tool.exe run-command testsuite --jobs=10 -V -x --write-junit-xml \
-+                  `$(test-tool.exe path-utils slice-tests \
-+                          ${{matrix.nr}} 10 t[0-9]*.sh)
-+        "@
-+        if (!$?) { exit(1) }
-+  linux-clang:
-+    runs-on: ubuntu-latest
-+    steps:
-+    - uses: actions/checkout@v1
-+    - name: install dependencies
-+      env:
-+        CC: clang
-+      run: |
-+        sudo apt-get update &&
-+        sudo apt-get -y install git gcc make libssl-dev libcurl4-openssl-dev libexpat-dev tcl tk gettext git-email zlib1g-dev apache2-bin &&
-+        ci/install-dependencies.sh
-+    - name: ci/run-build-and-test.sh
-+      env:
-+        CC: clang
-+      run: |
-+        ci/run-build-and-tests.sh || {
-+          ci/print-test-failures.sh
-+          exit 1
-+        }
-+  linux-gcc:
-+    runs-on: ubuntu-latest
-+    steps:
-+    - uses: actions/checkout@v1
-+    - name: install dependencies
-+      run: |
-+        sudo add-apt-repository ppa:ubuntu-toolchain-r/test &&
-+        sudo apt-get update &&
-+        sudo apt-get -y install git gcc make libssl-dev libcurl4-openssl-dev libexpat-dev tcl tk gettext git-email zlib1g-dev apache2 language-pack-is git-svn gcc-8 &&
-+        ci/install-dependencies.sh
-+    - name: ci/run-build-and-tests.sh
-+      run: |
-+        ci/run-build-and-tests.sh || {
-+          ci/print-test-failures.sh
-+          exit 1
-+        }
-+  osx-clang:
-+    runs-on: macos-latest
-+    steps:
-+    - uses: actions/checkout@v1
-+    - name: install dependencies
-+      env:
-+        CC: clang
-+      run: ci/install-dependencies.sh
-+    - name: ci/run-build-and-tests.sh
-+      env:
-+        CC: clang
-+      run: |
-+        ci/run-build-and-tests.sh || {
-+          ci/print-test-failures.sh
-+          exit 1
-+        }
-+  osx-gcc:
-+    runs-on: macos-latest
-+    steps:
-+    - uses: actions/checkout@v1
-+    - name: install dependencies
-+      run: ci/install-dependencies.sh
-+    - name: ci/run-build-and-tests.sh
-+      run: |
-+        ci/run-build-and-tests.sh || {
-+          ci/print-test-failures.sh
-+          exit 1
-+        }
-+  GETTEXT_POISON:
-+    runs-on: ubuntu-latest
-+    steps:
-+    - uses: actions/checkout@v1
-+    - name: install dependencies
-+      run: |
-+        sudo apt-get update &&
-+        sudo apt-get -y install git gcc make libssl-dev libcurl4-openssl-dev libexpat-dev tcl tk gettext git-email zlib1g-dev
-+    - name: ci/run-build-and-tests.sh
-+      env:
-+        jobname: GETTEXT_POISON
-+      run: |
-+        ci/run-build-and-tests.sh || {
-+          ci/print-test-failures.sh
-+          exit 1
-+        }
-+  linux32:
-+    runs-on: ubuntu-latest
-+    steps:
-+    - uses: actions/checkout@v1
-+    - name: ci/run-linux32-docker.sh
-+      run: |
-+        res=0
-+        sudo GITHUB_ACTIONS="$GITHUB_ACTIONS" RUNNER_OS="$RUNNER_OS" GITHUB_REF="$GITHUB_REF" GITHUB_SHA="$GITHUB_SHA" GITHUB_REPOSITORY="$GITHUB_REPOSITORY" GITHUB_RUN_ID="$GITHUB_RUN_ID" CC=$CC MAKEFLAGS="$MAKEFLAGS" bash -lxc ci/run-linux32-docker.sh || res=1
-+  static-analysis:
-+    runs-on: ubuntu-latest
-+    steps:
-+    - uses: actions/checkout@v1
-+    - name: install dependencies
-+      run: |
-+        sudo apt-get update &&
-+        sudo apt-get install -y coccinelle libcurl4-openssl-dev libssl-dev libexpat-dev gettext
-+    - name: ci/run-static-analysis.sh
-+      env:
-+        jobname: StaticAnalysis
-+      run: ci/run-static-analysis.sh
-+  documentation:
-+    runs-on: ubuntu-latest
-+    steps:
-+    - uses: actions/checkout@v1
-+    - name: install dependencies
-+      run: |
-+        sudo apt-get update &&
-+        sudo apt-get install -y asciidoc xmlto asciidoctor docbook-xsl-ns
-+    - name: ci/test-documentation.sh
-+      env:
-+        ALREADY_HAVE_ASCIIDOCTOR: yes.
-+        jobname: Documentation
-+      run: ci/test-documentation.sh
--- 
-gitgitgadget
+When cancelling the nested rebase we need to take care to restore any 
+labels to their previous value if they have been updated by the nested 
+rebase. We also need to restore the list or rewritten commits so that we 
+don't report that we've rewritten the commits from the nested rebase 
+that we're aborting. These two requirements unfortunately make it 
+difficult to implement the nested rebase just by updating the todo list. 
+It needs to save the current labels (and reference the commits somewhere 
+so they don't get gc'd) and the rewritten-list. `git rebase --abort` (or 
+whatever we end up using to abort the nested part of the rebase) needs 
+to restore the labels and rewritten-list. I think it should probably 
+restore the todo list as well - if the original part of the todo list 
+gets edited during the nested rebase should we drop those changes to the 
+list or keep them when the nested rebase is aborted?
 
+Best Wishes
+
+Phillip
