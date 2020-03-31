@@ -2,284 +2,326 @@ Return-Path: <SRS0=DhGT=5Q=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
-	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B123C43331
-	for <git@archiver.kernel.org>; Tue, 31 Mar 2020 02:04:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C202C43331
+	for <git@archiver.kernel.org>; Tue, 31 Mar 2020 03:53:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id CEF102072D
-	for <git@archiver.kernel.org>; Tue, 31 Mar 2020 02:04:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 02FAA2072D
+	for <git@archiver.kernel.org>; Tue, 31 Mar 2020 03:53:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="pKtSo1ZS"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m9RU0FeM"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729197AbgCaCEX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Mar 2020 22:04:23 -0400
-Received: from mail-pl1-f201.google.com ([209.85.214.201]:54976 "EHLO
-        mail-pl1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727698AbgCaCEX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Mar 2020 22:04:23 -0400
-Received: by mail-pl1-f201.google.com with SMTP id p8so14588624plr.21
-        for <git@vger.kernel.org>; Mon, 30 Mar 2020 19:04:22 -0700 (PDT)
+        id S1729142AbgCaDxR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Mar 2020 23:53:17 -0400
+Received: from mail-pf1-f169.google.com ([209.85.210.169]:34118 "EHLO
+        mail-pf1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727358AbgCaDxR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Mar 2020 23:53:17 -0400
+Received: by mail-pf1-f169.google.com with SMTP id 23so9711406pfj.1
+        for <git@vger.kernel.org>; Mon, 30 Mar 2020 20:53:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to:cc;
-        bh=dO5sVnEW5hwbi+dAh6D9pHgoDe16/xynZ+5FIN9mYLI=;
-        b=pKtSo1ZSk2cngoddEgh9XepZ8gMQ2sYhPSP9bLjEj1jUr7Cwh78U7NFBmN/26RKtU1
-         faNOBSGBbTosJprGVg2MP6sgiJgDx3wpEcJIlGvqSVhj5TeiHkj4C1Vf9rhEz2xP0Xdo
-         yDWM5YPwo0F3KEondfkekNFET6HqYXVXiWiq7FZg+L7ZPuWmRrH15wBNrb7UdbWv5JWr
-         mWIVdMgDcAs+Y41evM1/0n03jYPxW7RQRxQ1nO8Ir+vzZFbfqPJO6utDZPOSo1qFAA15
-         n1dInwMLbs0wcJYh8TLS8nvqB08tMDjHwXXlepzF1u97NIbLjYF6hhR7Dikf70n4pNXi
-         m/ag==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:reply-to:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=2453McZ1DU3uF3cN+TdCF7CDLNbOV8yMR4/AJ7+7yQM=;
+        b=m9RU0FeMPs10OD9yOuW9pVum373OJ7jEZ7uLHkoojIbUkLIPhN13NS692fNyeT81Sb
+         I7wApOhQwAFfAGVBBjlCtpPYIYW/GgrQCVtfyQjJMe7otXhKHtVGpRyQjRlH0k3Db7T+
+         MSDAvynN74JupJoXClexTh20hLyCVlqyk7lc4nhGe7Qcxq4P8kKNJCZa3DgVp+XWn+V9
+         kjGo8NousADaL+vr0EyrXfu8qrYafXcLdaOJ4KdHVLizyWnOfj85pt/X3Sg0hYIYQmwV
+         2QZKmLXaoKfkUMGs5+U1inBVXV0OXC8Z7MzqKfw+DgkxMlFvOdS7OX6/f3hf/4XJsS1k
+         R/Vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=dO5sVnEW5hwbi+dAh6D9pHgoDe16/xynZ+5FIN9mYLI=;
-        b=Ibx61rdusH00SGNV6y5AkP/UyLtCJR9Idyha3Wkock2JfppH8cZGklaeuK9gNRbPX+
-         HMe/r2fEwItP7Ix3grr5cjAUxNaGY4dRxjYS5d1aDIdgQ8TJcD5IXaeeqjUhbf50LNTR
-         TMUEfD9YKD4QqKMzUGDCt8+ne+TDJzMxAms6XnHtM83JXa23g3mgclv5TEk99PxicAHK
-         RoUZ7o557bkLLHpjx+dtj80aFQ4zqkDbPQMbU1bYjNO6boxpGZ6jpWD/Mp+KbqFp4x1M
-         7bezNK2FSKHiP/SI9pS022BdZKbfa+UrINHkRgOP+ZuYbRwCwPwwgcIIpP+NGzlS8eW8
-         2Pzw==
-X-Gm-Message-State: AGi0PuY2HOPmGkvd5m7otj+cgcoKDtPTpVn/Lm82Qqx7Rq9fDZSC5FUO
-        x46o6lNEB8th79xyZQ0q3F77cxoYKlTk8jlKyb6rEnSuic3LrMWCsuvXracqcIXApyl+TWqA8ZL
-        tBHHeWtBQme8j2WuTF/MD7+Q5xWuwHAz6M+p4XYT7cooS2ghb5NmhH/yyiS5aZeciy0L6pISI3j
-        lo
-X-Google-Smtp-Source: APiQypLZNQfIQoCH+KiNDSdyppwK9QQqBterw/QuKzn/Ax+jw5CfP/H9HXrd/kp/wHjM+SOaF9CDmgEXcO6v7Fl9srWJ
-X-Received: by 2002:a17:90a:e003:: with SMTP id u3mr1127553pjy.157.1585620261439;
- Mon, 30 Mar 2020 19:04:21 -0700 (PDT)
-Date:   Mon, 30 Mar 2020 19:04:18 -0700
-Message-Id: <20200331020418.55640-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.26.0.rc2.310.g2932bb562d-goog
-Subject: [PATCH] diff: restrict when prefetching occurs
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>, peff@peff.net
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:reply-to
+         :references:mime-version:content-disposition
+         :content-transfer-encoding:in-reply-to;
+        bh=2453McZ1DU3uF3cN+TdCF7CDLNbOV8yMR4/AJ7+7yQM=;
+        b=c/dckGxW8k68U01ZQphuLKMFzFjDju3I9IzA1Qmy2n7Jqt+y7QEFD51/88doSl8VR6
+         QRqp57JKJLIzPRe9L496zJB8YZd/6mqKt04VFC9mfr+TTULr9GcbaR0yMILEeEyKIJ02
+         Iegfr1qL06zQj5SpCs9FBh+ganGlDEMse1ZRdrk5oIG7PzzMoD+tIfP9ZNBsXCC+lfv3
+         PxAMjHQzxMGdGmvqjBPmc0gu75qz8v/DS5qLeLGQI0icbe3NCK5G2R/tdfSqTjkGYw1O
+         0/JnR8bP19Y4tKK3U5x51RbxZ7RKQ3JlkXaKWtDLI3A1WBV5y6toFMWx7VduDzuSWHG0
+         8OXA==
+X-Gm-Message-State: ANhLgQ1cvRCE6PJDj48jweJugeikrqpGUoA15UZoVlYo/fRKbEFjv6uW
+        PKzlDp9D1ayp78jkWDp6BcY=
+X-Google-Smtp-Source: ADFU+vuDWNT5QTO/pZj72uGVkFOakfw/w2C58bVFRJAaLk2bUCGIl9IszCYg0p0+mOkAevNN/ukWSA==
+X-Received: by 2002:aa7:998e:: with SMTP id k14mr15862352pfh.313.1585626794724;
+        Mon, 30 Mar 2020 20:53:14 -0700 (PDT)
+Received: from Abhishek-Arch ([2409:4064:7:51b6:8571:d99:52d0:9caf])
+        by smtp.gmail.com with ESMTPSA id s1sm11165796pfh.59.2020.03.30.20.53.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 30 Mar 2020 20:53:13 -0700 (PDT)
+Date:   Tue, 31 Mar 2020 09:22:06 +0530
+From:   Abhishek Kumar <abhishekkumar8222@gmail.com>
+To:     Angel Pan <dinoallosaurus1111@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [GSoC][Proposal v1] My proposal for GSoC 2020
+Message-ID: <20200331035206.GA1576@Abhishek-Arch>
+Reply-To: CAFk=nY5QSWk+2_eLdyS+4Nzbm23R7i1A4NEOEVxHueCSytgBTQ@mail.gmail.com
+References: <CAFk=nY5QSWk+2_eLdyS+4Nzbm23R7i1A4NEOEVxHueCSytgBTQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAFk=nY5QSWk+2_eLdyS+4Nzbm23R7i1A4NEOEVxHueCSytgBTQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Commit 7fbbcb21b1 ("diff: batch fetching of missing blobs", 2019-04-08)
-optimized "diff" by prefetching blobs in a partial clone, but there are
-some cases wherein blobs do not need to be prefetched. In particular, if
-(1) no blob data is included in the output of the diff, (2)
-break-rewrite detection is not requested, and (3) no inexact rename
-detection is needed, then no blobs are read at all.
+On Tue, Mar 31, 2020 at 04:39:25AM +0800, Angel Pan wrote:
+> Hello everyone.
+> Here is my proposal for GSoC. A review or criticism would be appreciated.
+> 
+> Google doc version:
+> https://docs.google.com/document/d/19Nkesmet7X7U42lsvksXoiEBrnOppKicWHYKneEQsQ8/edit?usp=sharing
+> 
+> Best regards,
+> Angel
+> 
+> ----------
 
-Therefore, in such a case, do not prefetch. Change diffcore_std() to
-only prefetch if (1) and/or (2) is not true (currently, it always
-prefetches); change diffcore_rename() to prefetch if (3) is not true and
-no prefetch has yet occurred.
+Side note: Use the project title in the e-mail subject. This would help
+mentors to understand what the project is about at a first glance.
 
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
-I decided to revisit [1] because at $DAYJOB there was a new case that
-required this. I used Peff's code from [2] for the rebase part, and also
-automatically prefetch if blob data will be included in the output of
-the diff and/or break-rewrite detection is requested.
+>
+> # Unify ref-filter formats with other `--pretty` formats
+> 
+> ## Contact Information
+> 
+> Full name: Yun Pan(Angel Pan)
+> 
+> Email: [dinoallosaurus1111@gmail.com](mailto:dinoallosaurus1111@gmail.com)
+> 
+> IRC: dinoallosaurus
+> 
+> GitHub: dinoallo
+> 
+> Timezone: UTC+8
+> 
+> ## Short Biography
+> 
+> I am a first year student in Computer Science at Zhejiang University
+> in China. It's my first time participating in GSoC. I have had
+> experience working with C/C++, shell scripts, Python, Go and Perl. I
+> am interested in writing CLI or system scripts/configurations, which
+> is the main reason I apply to Git project. I might be relatively new
 
-[1] https://lore.kernel.org/git/20200128213508.31661-1-jonathantanmy@google.com/
-[2] https://lore.kernel.org/git/20200130055136.GA2184413@coredump.intra.peff.net/
----
- diff.c                        | 26 +++++++++++++++----
- diffcore-rename.c             | 40 +++++++++++++++++++++++++++-
- diffcore.h                    |  2 +-
- t/t4067-diff-partial-clone.sh | 49 +++++++++++++++++++++++++++++++++++
- 4 files changed, 110 insertions(+), 7 deletions(-)
+"I am applying" instead of "I apply".
 
-diff --git a/diff.c b/diff.c
-index 1010d806f5..19c5d638d6 100644
---- a/diff.c
-+++ b/diff.c
-@@ -6507,10 +6507,24 @@ static void add_if_missing(struct repository *r,
- 
- void diffcore_std(struct diff_options *options)
- {
--	if (options->repo == the_repository && has_promisor_remote()) {
--		/*
--		 * Prefetch the diff pairs that are about to be flushed.
--		 */
-+	int prefetched = 0;
-+	int output_formats_to_prefetch = DIFF_FORMAT_DIFFSTAT |
-+		DIFF_FORMAT_NUMSTAT |
-+		DIFF_FORMAT_PATCH |
-+		DIFF_FORMAT_SHORTSTAT |
-+		DIFF_FORMAT_DIRSTAT;
-+
-+	/*
-+	 * Check if the user requested a blob-data-requiring diff output and/or
-+	 * break-rewrite detection (which requires blob data). If yes, prefetch
-+	 * the diff pairs.
-+	 *
-+	 * If no prefetching occurs, diffcore_rename() will prefetch if it
-+	 * decides that it needs inexact rename detection.
-+	 */
-+	if (options->repo == the_repository && has_promisor_remote() &&
-+	    (options->output_format & output_formats_to_prefetch ||
-+	     (!options->found_follow && options->break_opt != -1))) {
- 		int i;
- 		struct diff_queue_struct *q = &diff_queued_diff;
- 		struct oid_array to_fetch = OID_ARRAY_INIT;
-@@ -6520,6 +6534,8 @@ void diffcore_std(struct diff_options *options)
- 			add_if_missing(options->repo, &to_fetch, p->one);
- 			add_if_missing(options->repo, &to_fetch, p->two);
- 		}
-+		prefetched = 1;
-+
- 		if (to_fetch.nr)
- 			/*
- 			 * NEEDSWORK: Consider deduplicating the OIDs sent.
-@@ -6538,7 +6554,7 @@ void diffcore_std(struct diff_options *options)
- 			diffcore_break(options->repo,
- 				       options->break_opt);
- 		if (options->detect_rename)
--			diffcore_rename(options);
-+			diffcore_rename(options, prefetched);
- 		if (options->break_opt != -1)
- 			diffcore_merge_broken();
- 	}
-diff --git a/diffcore-rename.c b/diffcore-rename.c
-index e189f407af..962565f066 100644
---- a/diffcore-rename.c
-+++ b/diffcore-rename.c
-@@ -7,6 +7,7 @@
- #include "object-store.h"
- #include "hashmap.h"
- #include "progress.h"
-+#include "promisor-remote.h"
- 
- /* Table of rename/copy destinations */
- 
-@@ -448,7 +449,18 @@ static int find_renames(struct diff_score *mx, int dst_cnt, int minimum_score, i
- 	return count;
- }
- 
--void diffcore_rename(struct diff_options *options)
-+static void add_if_missing(struct repository *r,
-+			   struct oid_array *to_fetch,
-+			   const struct diff_filespec *filespec)
-+{
-+	if (filespec && filespec->oid_valid &&
-+	    !S_ISGITLINK(filespec->mode) &&
-+	    oid_object_info_extended(r, &filespec->oid, NULL,
-+				     OBJECT_INFO_FOR_PREFETCH))
-+		oid_array_append(to_fetch, &filespec->oid);
-+}
-+
-+void diffcore_rename(struct diff_options *options, int prefetched)
- {
- 	int detect_rename = options->detect_rename;
- 	int minimum_score = options->rename_score;
-@@ -538,6 +550,32 @@ void diffcore_rename(struct diff_options *options)
- 		break;
- 	}
- 
-+	if (!prefetched) {
-+		/*
-+		 * At this point we know there's actual work to do: we have rename
-+		 * destinations that didn't find an exact match, and we have potential
-+		 * sources. So we'll have to do inexact rename detection, which
-+		 * requires looking at the blobs.
-+		 *
-+		 * If we haven't already prefetched, it's worth pre-fetching
-+		 * them as a group now.
-+		 */
-+		int i;
-+		struct oid_array to_fetch = OID_ARRAY_INIT;
-+
-+		for (i = 0; i < rename_dst_nr; i++) {
-+			if (rename_dst[i].pair)
-+				continue; /* already found exact match */
-+			add_if_missing(options->repo, &to_fetch, rename_dst[i].two);
-+		}
-+		for (i = 0; i < rename_src_nr; i++)
-+			add_if_missing(options->repo, &to_fetch, rename_src[i].p->one);
-+		if (to_fetch.nr)
-+			promisor_remote_get_direct(options->repo,
-+						   to_fetch.oid, to_fetch.nr);
-+		oid_array_clear(&to_fetch);
-+	}
-+
- 	if (options->show_rename_progress) {
- 		progress = start_delayed_progress(
- 				_("Performing inexact rename detection"),
-diff --git a/diffcore.h b/diffcore.h
-index 7c07347e42..9f69506574 100644
---- a/diffcore.h
-+++ b/diffcore.h
-@@ -144,7 +144,7 @@ struct diff_filepair *diff_queue(struct diff_queue_struct *,
- void diff_q(struct diff_queue_struct *, struct diff_filepair *);
- 
- void diffcore_break(struct repository *, int);
--void diffcore_rename(struct diff_options *);
-+void diffcore_rename(struct diff_options *, int prefetched);
- void diffcore_merge_broken(void);
- void diffcore_pickaxe(struct diff_options *);
- void diffcore_order(const char *orderfile);
-diff --git a/t/t4067-diff-partial-clone.sh b/t/t4067-diff-partial-clone.sh
-index 4831ad35e6..7acb64727d 100755
---- a/t/t4067-diff-partial-clone.sh
-+++ b/t/t4067-diff-partial-clone.sh
-@@ -131,4 +131,53 @@ test_expect_success 'diff with rename detection batches blobs' '
- 	test_line_count = 1 done_lines
- '
- 
-+test_expect_success 'diff does not fetch anything if inexact rename detection is not needed' '
-+	test_when_finished "rm -rf server client trace" &&
-+
-+	test_create_repo server &&
-+	echo a >server/a &&
-+	printf "b\nb\nb\nb\nb\n" >server/b &&
-+	git -C server add a b &&
-+	git -C server commit -m x &&
-+	rm server/b &&
-+	printf "b\nb\nb\nb\nb\n" >server/c &&
-+	git -C server add c &&
-+	git -C server commit -a -m x &&
-+
-+	test_config -C server uploadpack.allowfilter 1 &&
-+	test_config -C server uploadpack.allowanysha1inwant 1 &&
-+	git clone --bare --filter=blob:limit=0 "file://$(pwd)/server" client &&
-+
-+	# Ensure no fetches.
-+	GIT_TRACE_PACKET="$(pwd)/trace" git -C client diff --raw -M HEAD^ HEAD &&
-+	! test_path_exists trace
-+'
-+
-+test_expect_success 'diff --break-rewrites fetches only if necessary, and batches blobs if it does' '
-+	test_when_finished "rm -rf server client trace" &&
-+
-+	test_create_repo server &&
-+	echo a >server/a &&
-+	printf "b\nb\nb\nb\nb\n" >server/b &&
-+	git -C server add a b &&
-+	git -C server commit -m x &&
-+	printf "c\nc\nc\nc\nc\n" >server/b &&
-+	git -C server commit -a -m x &&
-+
-+	test_config -C server uploadpack.allowfilter 1 &&
-+	test_config -C server uploadpack.allowanysha1inwant 1 &&
-+	git clone --bare --filter=blob:limit=0 "file://$(pwd)/server" client &&
-+
-+	# Ensure no fetches.
-+	GIT_TRACE_PACKET="$(pwd)/trace" git -C client diff --raw -M HEAD^ HEAD &&
-+	! test_path_exists trace &&
-+
-+	# But with --break-rewrites, ensure that there is exactly 1 negotiation
-+	# by checking that there is only 1 "done" line sent. ("done" marks the
-+	# end of negotiation.)
-+	GIT_TRACE_PACKET="$(pwd)/trace" git -C client diff --break-rewrites --raw -M HEAD^ HEAD &&
-+	grep "git> done" trace >done_lines &&
-+	test_line_count = 1 done_lines
-+'
-+
- test_done
--- 
-2.26.0.rc2.310.g2932bb562d-goog
+> when it comes to contributing on-line project. However, I am a quick
 
+"on-line" project is an unusual word choice, although I understand your
+sentiment. Collaborative might work better.
+
+> and avid learner so if I don’t have enough skills to complete the job,
+> I can self-learn immediately.
+> 
+> ## Working Environment
+> 
+> My operating system is Arch Linux, which I started using it about half
+> an year ago. Before then I was using Debian-based systems like Ubuntu.
+> And I have some experience using git on Windows as well.
+> 
+
+Nice! I use Arch too.
+
+> I mainly use Emacs and VS Code as my editor but I can use Vim also. I
+> am able to use both markdown and Org-mode on Emacs for documenting
+> 
+> ## Coding/Contributing Experience
+> 
+> C is my *native* language I like to config my computer and automate
+
+"configure" instead of "config".
+
+> some work on it by myself so I learned shell-scripts and other
+> scripting languages.  Now I write code related to back-end for the
+> student club at my university.
+> 
+> Since I used to develop web before, there is a small-project written
+> in Python with Django on my GitHub page. From the experience of
+> applying to git, I obtained much deeper knowledge about git and how it
+> works. No matter what the outcome is, I am looking forward to
+> contributing more to git and work with all the developers.
+> 
+> ### Microproject
+> 
+> Mailing list: https://lore.kernel.org/git/pull.595.git.1585588586605.gitgitgadget@gmail.com/T/#u
+> 
+> GitHub: https://github.com/gitgitgadget/git/pull/595
+> 
+> Status: waiting to be review.
+
+I have reviewed the pull request. Code changes seem look good to me but
+you need to write a better commit message (as harry-hov noted). Send out
+a second version as soon as you are done.
+
+The title and a one-line description of the microproject in the proposal
+would be useful.
+
+>
+> ## Introduction
+> 
+> Currently, the placeholder used in ref-filter expansion `%(foo)` has
+> not yet supported in `--pretty` format.
+> 
+> Using the new ref-filter formats has its own convenience.  For
+> example, the format `%(foo)` is more human-readable, easy to process,
+> and extensible if we want to add some options in each placeholder(like
+> `%(trailers:only=bogo)`) . Hence,  users can just simply add the
+> options in the placeholder if needed, reducing their frustration in
+> constructing long and complex output command.
+> 
+> My goal is to unify the the ref-filter formats with `--pretty` formats
+> and generalized them in git:
+
+"generalize" instead of "generalized"
+
+> 
+> * Get rid of unrecognizable placeholders like `%an` to `%(authorname)`.
+
+Removing old, short placeholders like `%an` could break existing scripts
+and user flow.
+
+Having both short and descriptive placeholders would be better.
+
+> * Introduce format-scripting(like the one used in `git-for-each-ref`)
+> to `--pretty` and even make a field in user's configuration to use
+> default format-script for `--pretty`.
+> 
+
+Could you elaborate on what format-scripting means? Do you mean use of
+`--format` option to configure the output format?
+
+While the two goals you have are appreciable, the broader aim of this
+project is to remove *duplicate* implementation of format command
+output.
+
+You can also read up on other proposals and previous work done on this
+project idea.
+
+> ## Deliverables/Timeline
+> 
+> ### ~ May 5th
+> 
+> * I will keep an eye on git project and make more patches to it if possible.
+> * At the same time, getting to know more about the community and
+> collaborating with others.
+> 
+> * Also I will talk to my potential mentor, to get more concrete and
+> constructive advise about my project. Last, finalize my project.
+> 
+> ### May 5th ~ June 2nd
+> 
+> Community-bonding period:
+> 
+> After having rounded understanding about the community and all the
+> past work, I would like to revise my previous ideas regarding to my
+> project if there is a much better solution or other problems. Then, I
+> will start to work on a part of my project:
+> 
+> * Carefully examine `ref-filter` related code to see what I can learn
+> from(the implementation, etc...) and what to avoid doing.
+> * Replace the placeholders in `--pretty` with new formats and names.
+> * Commit patches to obtain reviews from the community.
+> 
+> ### June 2nd ~ June 10th
+> 
+> The cushion period. Finish the unfinished work from last phase. If all
+> the job is done, add test scripts and future documentation.
+> 
+> ### June 11th ~ July 3rd
+> 
+> I will be occupied in this phase since the final exams take over. I
+> might not be able to work on some actual change but is free to reply
+> to anyone in the community.
+> 
+> ### July 3rd ~ July 17th
+> 
+> * Gathering all reviews and criticisms from the community and revise
+> my previous patches if needed.
+> 
+> * Add test scripts and documentation.
+> 
+> ### July 17th ~ July 28th
+> 
+> * Implement the format-scripting in `--pretty`
+> * Commit the patches to obtain reviews from the community
+> 
+> ### July 28th ~ August 12th
+> 
+> * Gathering all reviews and criticisms from the community and revise
+> my previous patches if needed.
+> 
+> * Add test scripts and documentation.
+> * [option] configuration on pretty
+> 
+> ### August 12th ~ August 25th
+> 
+> Final revision and discussion.
+> 
+> ### August 25th ~
+> 
+> Submission
+> 
+> *If I complete my job earlier than I plan, than I would like to come
+> up with more improvements and new features in my project.*
+> 
+>  ### Side-note
+> 
+> * Before my summer vacation, I can code for 2-3 hours per working day
+> and 4-6 hours on weekend.
+> * My summer vacation starts from July 3rd to early September, which
+> fits well with GSoC's schedule. I will be able to spend half of my day
+> on my project.
+> * English is not my first language so if I have grammatical or other
+> errors in documentation or communication, a review will be
+> appreciated.
+> 
+
+I have fixed some of grammatical errors but your English is
+understandable.
+
+I personally use Grammarly to fix my errors. It's not foolproof but
+pretty close.
+
+> 
+> 
+> ## Conclusion
+> 
+> First, I would like to say thank you to all developers that have
+> helped me or replied to me in the mailing list.
+> 
+> I want to join an active open-source community online for a really
+> long time but I was too shy before and got caught up with the college
+> entrance exam. I think GSoC is a good platform to start my journey.
+> Though I was not able to get the information in time and it's late for
+> me to commit my submission before deadline, I still decided to apply.
+> Because if I hadn't, I would regret someday.
+> 
+
+Yeah, I know the feeling. Git is one of the better communities to work
+with, so you have made a fine choice.
+
+> As I mentioned before, maybe I have little experience to
+> online-contributing, but I will learn the required skills to overcome
+> obstacles. My lust for knowledge is my greatest power.
+> 
+> Last but not least, it's a pleasure to join the open-source community.
+> Let's collaborate and make the online world better.
+> 
+> ----------
+
+Thanks for the proposal!
+
+I hope you have submitted the PDF draft already. Today is the deadline
+and you can always re-upload later.
+
+Regards
+Abhishek
