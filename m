@@ -2,124 +2,123 @@ Return-Path: <SRS0=RItT=5R=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ECB5AC43331
-	for <git@archiver.kernel.org>; Wed,  1 Apr 2020 21:23:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 66D59C43331
+	for <git@archiver.kernel.org>; Wed,  1 Apr 2020 21:35:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 9317C20772
-	for <git@archiver.kernel.org>; Wed,  1 Apr 2020 21:23:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 37C4D2071A
+	for <git@archiver.kernel.org>; Wed,  1 Apr 2020 21:35:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="wL5YzVT5"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="nGVeFXSM"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732669AbgDAVXK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Apr 2020 17:23:10 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:58387 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732357AbgDAVXK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Apr 2020 17:23:10 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 81C7EC15F5;
-        Wed,  1 Apr 2020 17:23:05 -0400 (EDT)
+        id S1732441AbgDAVf3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Apr 2020 17:35:29 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62331 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732337AbgDAVf3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Apr 2020 17:35:29 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8F9CF5831C;
+        Wed,  1 Apr 2020 17:35:26 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=sJ7Jks7lAOmT
-        4oGYzSEuLUEJtjI=; b=wL5YzVT5z0uV9PoTa2llA4kfDAPl87J+DhOL6GgVktGq
-        Qt/bu5KVdjy75t/rbo16osOlFG35wMuao3uQPrHJLGufCzpHrA0+ERdm16RiYnIU
-        wNvMr+wLZMbcffHF9TPoiQTKRbaBvPCrFfxx6g3Qg/j580cK583A8AZcWynPfeI=
+        :content-type; s=sasl; bh=0ZWPcf74tlOizmOLMPv/xZGRfpY=; b=nGVeFX
+        SMtANttJDj7v9NreK2VA9tyk3JiZkg3J3pfEIfQha8wH8chRWkuOfAy1807Og+Xz
+        Ikg6Qqb1DVbrWHfrAehy6pskvEneQraHrxdCQ41jqDID1v96t2klEQr5RrjSeY8b
+        2RNZMHsnQ8VqRhSQ83FFdFglsi1APMBkdbVg0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=L/8JcP
-        6PipKQlaKO0AuYIMQ95cjnHa5R3/jSgQTPsUWZtNXagIDkZ+Zw9JFkr65d47ULwL
-        697RbADF/i3chNInClHJj87+8Qb9ecxDzKJmtWC1BUUaKIzwqJXj4cLPZHz4IeHh
-        j6X3kWKjjL0siPbAoiE9NwXdMEVEsqFIobKm0=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7AFFAC15F4;
-        Wed,  1 Apr 2020 17:23:05 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=WkojoL64f5bYTSXiK5RxQGTKIiLYh+tf
+        QVr5EUE6fDtU+Dc4CS2aMRs5CFKxUNHgtjNXUhxpDsGxrbv5MLxV3mFgC6CIks/g
+        S7PzFf/BZwM+BOnDOO9yRUrbuoUUr23gmhov3/1CuDDENWHeJ9Kok1eq6jnNtBQ6
+        X0vblpbxDgA=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 85ED95831A;
+        Wed,  1 Apr 2020 17:35:26 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id BB4A6C15F3;
-        Wed,  1 Apr 2020 17:23:02 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E97D058319;
+        Wed,  1 Apr 2020 17:35:25 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-Subject: Re: [PATCH v2 0/6] ci: replace our Azure Pipeline by GitHub Actions
-References: <pull.743.git.git.1585658913.gitgitgadget@gmail.com>
-        <cover.1585756350.git.congdanhqx@gmail.com>
-Date:   Wed, 01 Apr 2020 14:23:01 -0700
-In-Reply-To: <cover.1585756350.git.congdanhqx@gmail.com> (=?utf-8?B?IsSQ?=
- =?utf-8?B?b8OgbiBUcuG6p24gQ8O0bmc=?=
-        Danh"'s message of "Wed, 1 Apr 2020 22:55:02 +0700")
-Message-ID: <xmqq7dyy6gui.fsf@gitster.c.googlers.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, me@ttaylorr.com, peff@peff.net,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v2 1/2] t5319: replace 'touch -m' with 'test-tool chmtime'
+References: <pull.596.git.1585764695643.gitgitgadget@gmail.com>
+        <pull.596.v2.git.1585774844.gitgitgadget@gmail.com>
+        <24e26ecda632421e4c1a61ebabf6ea78301685b1.1585774844.git.gitgitgadget@gmail.com>
+Date:   Wed, 01 Apr 2020 14:35:25 -0700
+In-Reply-To: <24e26ecda632421e4c1a61ebabf6ea78301685b1.1585774844.git.gitgitgadget@gmail.com>
+        (Derrick Stolee via GitGitGadget's message of "Wed, 01 Apr 2020
+        21:00:43 +0000")
+Message-ID: <xmqq369m6g9u.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: F82F5384-745E-11EA-8A10-8D86F504CC47-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: B329B5B6-7460-11EA-B290-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh  <congdanhqx@gmail.com> writes=
-:
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> This series is based on work started by Dscho,
-> I started to work with this series since there're merge conflicts
-> with my series at dd/ci-musl-lib, and Dscho said he was busy for a whil=
-e.
+> From: Derrick Stolee <dstolee@microsoft.com>
 >
-> Changes frome Dscho's version:
-> * Based on dd/ci-musl-libc
-> * Move artifact extraction out of Test phase of windows-test
-> * Move ci/print-test-failures.sh out of build-and-test phase
-> * set TERM environment variable if not exist
-> * add linux-musl job
-> * v1 doesn't report failure on linux32, fixed
-> * run linux32 directly inside container
-> * install development file of curl in documentation job because "curl-c=
-onfig"
->   will be called in pu's Makefile
->   + Other approach could be call make CURL_CONFIG=3D: in test-documenta=
-tion.sh
->
-> Sample run:
-> * of this series: https://github.com/sgn/git/actions/runs/68291472
-> * pretend compile failure: https://github.com/sgn/git/actions/runs/6829=
-2112
-> * pretend test failure: https://github.com/sgn/git/actions/runs/6829305=
-6
-> * merged to pu: https://github.com/sgn/git/actions/runs/68301122
+> The use of 'touch -m' to modify a file's mtime is slightly less
+> portable than using our own 'test-tool chmtime'.
 
-When I look at
+Portability aside, the relative form would also be resistant against
+skews between filesystem time and wallclock time and is preferrable
+when we can use it.
 
-    https://github.com/git/git/actions
+> The important
+> thing is that these pack-files are ordered in a special way to
+> ensure the multi-pack-index selects some as the "newer" pack-files
+> when resolving duplicate objects.
 
-it appears that every time I push[*1*], we are running _two_ sets of
-the same tests, one says "Pu nu bu?" and the other says "CI/PR".
+This note is very much appreciated.
 
-In addition, the former refers to "Pull request #nnn synchronize by
-gitster", with #nnn part made clickable, but clicking on it results
-in 404 page, as there is no such pull request.
+>  		rm -rf .git/objects/pack &&
+>  		mv .git/objects/pack-backup .git/objects/pack &&
+> -		touch -m -t 201901010000 .git/objects/pack/pack-D* &&
+> -		touch -m -t 201901010001 .git/objects/pack/pack-C* &&
+> -		touch -m -t 201901010002 .git/objects/pack/pack-B* &&
+> -		touch -m -t 201901010003 .git/objects/pack/pack-A* &&
+> +		test-tool chmtime =-5 .git/objects/pack/pack-D* &&
+> +		test-tool chmtime =-4 .git/objects/pack/pack-C* &&
+> +		test-tool chmtime =-3 .git/objects/pack/pack-B* &&
+> +		test-tool chmtime =-2 .git/objects/pack/pack-A* &&
 
-Does this series need some help from me (i.e. changing my workflow)
-to make the CI tests run more smoothly?
+The original wants D to be the oldest and A to be the newest, and
+the updated would want the same ordering.
+
+When created, we know A gets created before B which gets created
+before C and so on, in the "setup expire tests" part.  If each step
+takes too much time (e.g. the VM is heavily loaded), wouldn't the
+adjustment above become insufficient?
+
+In other words, would we want to flip the order these packs get
+created in the "setup" part, in addition to the use of chmtime
+(which reads the existing file timestamp using stat(2) and then
+updates the file timestamp relative to the original timestamp)
+we see here?
+
+Also, in the best case (i.e. original timestamp of A/B/C/D are the
+same), the above seems to assume that the filesystem has at least 1
+second file timestamp granularity.  Do we want to make them at least
+2 seconds apart, or am I worried too much about ancient filesystems
+that no longer metter?
 
 Thanks.
 
-
-[Footnote]=20
-
-*1* I always push to github.com/git/git and github.com/gitster/git
-almost at the same time---the latter has all the topics that gets
-merged to 'pu' separated out.  But the latter push does not say
-anything about anybody asking to anybody else to pull anything.
+>  		ls .git/objects/pack >expect &&
+>  		MINSIZE=$(test-tool path-utils file-size .git/objects/pack/*pack | sort -n | head -n 1) &&
+>  		git multi-pack-index repack --batch-size=$MINSIZE &&
