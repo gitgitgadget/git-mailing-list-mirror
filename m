@@ -2,132 +2,124 @@ Return-Path: <SRS0=RItT=5R=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
+X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D54CEC43331
-	for <git@archiver.kernel.org>; Wed,  1 Apr 2020 21:22:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ECB5AC43331
+	for <git@archiver.kernel.org>; Wed,  1 Apr 2020 21:23:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 98CCD20772
-	for <git@archiver.kernel.org>; Wed,  1 Apr 2020 21:22:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9317C20772
+	for <git@archiver.kernel.org>; Wed,  1 Apr 2020 21:23:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="vIy4reQD"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="wL5YzVT5"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732554AbgDAVWH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Apr 2020 17:22:07 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:43328 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732357AbgDAVWH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Apr 2020 17:22:07 -0400
-Received: by mail-wr1-f67.google.com with SMTP id m11so1767049wrx.10
-        for <git@vger.kernel.org>; Wed, 01 Apr 2020 14:22:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=z512z0pCSgo6dn/v86xT98cN7VeOO0uCc1Yrlx0rIbs=;
-        b=vIy4reQDcuQSvpnGLbGnX6ofRm6R6wQooyL5JGKoMtdZc4pvCdfiT+3lN4x+tdpfSv
-         PZYCygG3aZLrFqujHzHZ4cvzUvgInQ9zCOp2vA0KPAJbKfQif8hYN9mYn/LhzKzHpZ/1
-         VgmeUIDLEmmjeRA6anylLYrrf0V/aHakKYgyL3NNf5IUmwiE6yYveNYGUTROQ8eU/MZm
-         RQ97vUjkkIl2LO8kYY4KtL9NfLpWqVwSBPvQ2V8QJvX9BNEiadqnLS3VOeAFBTRcZxwl
-         gZk+RYgRv/z/TT42mHbT91oxXS224dSN4d5SUJdok7G/LrTShlJTLn0S9m6QE683Jncl
-         Ye0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=z512z0pCSgo6dn/v86xT98cN7VeOO0uCc1Yrlx0rIbs=;
-        b=tskUHdCmfEZjp1M7YhJF4Cf4rMda6vKbmvxlreIVHZd0D9GBqDi/rQw5V4M38o9CnN
-         625OIhkpO+Eo25Y/iI7w1vARL8BV60m3CoBOD/5IfGfySJmExVoOl1g5B9KdIGOYQoV4
-         2cpABXPPWnTpGPO2tt3r2Zj6x63b2+OX8m/V8wvKogzvuGasDN5rcezor+DtQL+lhT3N
-         antLhbWJCu2tw5aI/WNfQDRZVHJ65QGyVbOMNREqg3l8cll04XlL041YM+BYPW7ML79Z
-         y7sdkAQq1BoHd0Gd3VQnTN93uS2ic9nMGmCT8z0dzE/vLntLjgCBc/YEtbS0181a2jCn
-         8LBA==
-X-Gm-Message-State: ANhLgQ391jqZtGijscvDyG2xbG6J7G4oNtZb1Ss73Jgr3SSeNOn3D6jU
-        5VDJ7uF52XiPUQGReKxPd2jPuiaD
-X-Google-Smtp-Source: ADFU+vuzQtDjEgaEsUf+B2u/wEL5T7B06Vy5bqgMqSRxDUEChEW3ukClT1EBn+hMZMMQaoeDcb7xcw==
-X-Received: by 2002:adf:9465:: with SMTP id 92mr27841480wrq.122.1585776124912;
-        Wed, 01 Apr 2020 14:22:04 -0700 (PDT)
-Received: from localhost.localdomain (78-131-17-192.pool.digikabel.hu. [78.131.17.192])
-        by smtp.gmail.com with ESMTPSA id p10sm4484911wrm.6.2020.04.01.14.22.03
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 01 Apr 2020 14:22:04 -0700 (PDT)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
-        <congdanhqx@gmail.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH] ci: make MAKEFLAGS available inside the Docker container in the Linux32 job
-Date:   Wed,  1 Apr 2020 23:21:51 +0200
-Message-Id: <20200401212151.15164-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.26.0.483.g160d1dcc28
+        id S1732669AbgDAVXK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Apr 2020 17:23:10 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:58387 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732357AbgDAVXK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Apr 2020 17:23:10 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 81C7EC15F5;
+        Wed,  1 Apr 2020 17:23:05 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=sJ7Jks7lAOmT
+        4oGYzSEuLUEJtjI=; b=wL5YzVT5z0uV9PoTa2llA4kfDAPl87J+DhOL6GgVktGq
+        Qt/bu5KVdjy75t/rbo16osOlFG35wMuao3uQPrHJLGufCzpHrA0+ERdm16RiYnIU
+        wNvMr+wLZMbcffHF9TPoiQTKRbaBvPCrFfxx6g3Qg/j580cK583A8AZcWynPfeI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=L/8JcP
+        6PipKQlaKO0AuYIMQ95cjnHa5R3/jSgQTPsUWZtNXagIDkZ+Zw9JFkr65d47ULwL
+        697RbADF/i3chNInClHJj87+8Qb9ecxDzKJmtWC1BUUaKIzwqJXj4cLPZHz4IeHh
+        j6X3kWKjjL0siPbAoiE9NwXdMEVEsqFIobKm0=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7AFFAC15F4;
+        Wed,  1 Apr 2020 17:23:05 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id BB4A6C15F3;
+        Wed,  1 Apr 2020 17:23:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+Subject: Re: [PATCH v2 0/6] ci: replace our Azure Pipeline by GitHub Actions
+References: <pull.743.git.git.1585658913.gitgitgadget@gmail.com>
+        <cover.1585756350.git.congdanhqx@gmail.com>
+Date:   Wed, 01 Apr 2020 14:23:01 -0700
+In-Reply-To: <cover.1585756350.git.congdanhqx@gmail.com> (=?utf-8?B?IsSQ?=
+ =?utf-8?B?b8OgbiBUcuG6p24gQ8O0bmc=?=
+        Danh"'s message of "Wed, 1 Apr 2020 22:55:02 +0700")
+Message-ID: <xmqq7dyy6gui.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: F82F5384-745E-11EA-8A10-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Once upon a time we ran 'make --jobs=2 ...' to build Git, its
-documentation, or to apply Coccinelle semantic patches.  Then commit
-eaa62291ff (ci: inherit --jobs via MAKEFLAGS in run-build-and-tests,
-2019-01-27) came along, and started using the MAKEFLAGS environment
-variable to centralize setting the number of parallel jobs in
-'ci/libs.sh'.  Alas, it forgot to update 'ci/run-linux32-docker.sh' to
-make MAKEFLAGS available inside the Docker container running the 32
-bit Linux job, and, consequently, since then that job builds Git
-sequentially, and it ignores any Makefile knobs that we might set in
-MAKEFLAGS (though we don't set any for the 32 bit Linux job at the
-moment).
+=C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh  <congdanhqx@gmail.com> writes=
+:
 
-So update the 'docker run' invocation in 'ci/run-linux32-docker.sh' to
-make MAKEFLAGS available inside the Docker container as well.  Set
-CC=gcc for the 32 bit Linux job, because that's the compiler installed
-in the 32 bit Linux Docker image that we use (Travis CI nowadays sets
-CC=clang by default, but clang is not installed in this image).
+> This series is based on work started by Dscho,
+> I started to work with this series since there're merge conflicts
+> with my series at dd/ci-musl-lib, and Dscho said he was busy for a whil=
+e.
+>
+> Changes frome Dscho's version:
+> * Based on dd/ci-musl-libc
+> * Move artifact extraction out of Test phase of windows-test
+> * Move ci/print-test-failures.sh out of build-and-test phase
+> * set TERM environment variable if not exist
+> * add linux-musl job
+> * v1 doesn't report failure on linux32, fixed
+> * run linux32 directly inside container
+> * install development file of curl in documentation job because "curl-c=
+onfig"
+>   will be called in pu's Makefile
+>   + Other approach could be call make CURL_CONFIG=3D: in test-documenta=
+tion.sh
+>
+> Sample run:
+> * of this series: https://github.com/sgn/git/actions/runs/68291472
+> * pretend compile failure: https://github.com/sgn/git/actions/runs/6829=
+2112
+> * pretend test failure: https://github.com/sgn/git/actions/runs/6829305=
+6
+> * merged to pu: https://github.com/sgn/git/actions/runs/68301122
 
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
----
+When I look at
 
-The 'dd/musl-libc-travis-ci' topic needs some more updates, and those
-will depend on this fix.
+    https://github.com/git/git/actions
 
- ci/lib.sh                | 3 +++
- ci/run-linux32-docker.sh | 1 +
- 2 files changed, 4 insertions(+)
+it appears that every time I push[*1*], we are running _two_ sets of
+the same tests, one says "Pu nu bu?" and the other says "CI/PR".
 
-diff --git a/ci/lib.sh b/ci/lib.sh
-index c3a8cd2104..d637825222 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -198,6 +198,9 @@ osx-clang|osx-gcc)
- GIT_TEST_GETTEXT_POISON)
- 	export GIT_TEST_GETTEXT_POISON=true
- 	;;
-+Linux32)
-+	CC=gcc
-+	;;
- esac
- 
- MAKEFLAGS="$MAKEFLAGS CC=${CC:-cc}"
-diff --git a/ci/run-linux32-docker.sh b/ci/run-linux32-docker.sh
-index 751acfcf8a..ebb18fa747 100755
---- a/ci/run-linux32-docker.sh
-+++ b/ci/run-linux32-docker.sh
-@@ -20,6 +20,7 @@ docker run \
- 	--env GIT_PROVE_OPTS \
- 	--env GIT_TEST_OPTS \
- 	--env GIT_TEST_CLONE_2GB \
-+	--env MAKEFLAGS \
- 	--env cache_dir="$container_cache_dir" \
- 	--volume "${PWD}:/usr/src/git" \
- 	--volume "$cache_dir:$container_cache_dir" \
--- 
-2.26.0.483.g160d1dcc28
+In addition, the former refers to "Pull request #nnn synchronize by
+gitster", with #nnn part made clickable, but clicking on it results
+in 404 page, as there is no such pull request.
 
+Does this series need some help from me (i.e. changing my workflow)
+to make the CI tests run more smoothly?
+
+Thanks.
+
+
+[Footnote]=20
+
+*1* I always push to github.com/git/git and github.com/gitster/git
+almost at the same time---the latter has all the topics that gets
+merged to 'pu' separated out.  But the latter push does not say
+anything about anybody asking to anybody else to pull anything.
