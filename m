@@ -7,61 +7,60 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B1696C2D0E7
-	for <git@archiver.kernel.org>; Wed,  1 Apr 2020 11:29:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DE79FC43331
+	for <git@archiver.kernel.org>; Wed,  1 Apr 2020 11:29:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8801A20857
-	for <git@archiver.kernel.org>; Wed,  1 Apr 2020 11:29:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B0F952080C
+	for <git@archiver.kernel.org>; Wed,  1 Apr 2020 11:29:08 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gsF777Xw"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Dt6qAA4V"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732350AbgDAL3G (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1732336AbgDAL3G (ORCPT <rfc822;git@archiver.kernel.org>);
         Wed, 1 Apr 2020 07:29:06 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:34666 "EHLO
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:46407 "EHLO
         mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732150AbgDAL3G (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1732244AbgDAL3G (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 1 Apr 2020 07:29:06 -0400
-Received: by mail-ed1-f65.google.com with SMTP id o1so10946189edv.1
-        for <git@vger.kernel.org>; Wed, 01 Apr 2020 04:29:04 -0700 (PDT)
+Received: by mail-ed1-f65.google.com with SMTP id cf14so29162606edb.13
+        for <git@vger.kernel.org>; Wed, 01 Apr 2020 04:29:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=4D690/NLx/9daAF2hWG5tCfDYzmNZsPcuZnuRxKSdQk=;
-        b=gsF777XwuGxfCQsgQkAOs27rfAwTUD3w5ruWIUvrea9sTwQGygwoFJ9udowfezOClK
-         7M2p8Nh77/55GJkaefuJXKuH8Wf93Wf0GavnIoIBaoZXXfwy1ryGbh0AsHk6LOMX/Q/V
-         2C+wPBUVHuANxeaOZJTU3vC/PkJ4rig5QNCI1zx4NSQh6KA6Qxo6uW+tnQUd4831OJi3
-         P84unDEUo8HvGjp7bXI1aYzQraYa34EYstqXzh2auC8ndPRBFNqbikureaYHkKyuYni3
-         KQ/3MQRk/iWwqs4dsVFP5v4MzsiacG8YA4JX+XZlEZ/daM/vN20Vubs+dhCUcOGkjKEJ
-         POPg==
+        bh=c5jxiwoT9rIsUs25Z1wdbQYxfOfdfVcJvvnS9hg6XKE=;
+        b=Dt6qAA4V+g9btME2jpL0HhKYp9Wuhz9+drxaRxP19ou8B1/bUgJL7IDWFi2Rb4hRB0
+         SKxB5dGCEM9wLpriUvbIHqxBstXt1i47aVc/6qQRWXXiwiEkGt+HN6huPS8LQ85Ve+eS
+         a8S/YyGxEWZk1pFpZR1ceP11rFWkwAM0XbcVi0Pt9Axb5eJilkyE3ZIn2RuF6083lD+I
+         CBE7gVsZkMi8UnDrbQY/mLGRb8YEXi3zN/gblWFVIgV3G9gLkGEviNeCH2gtGAHIfmVB
+         6SByAzv+u+l/e8UeEPnvHuUZIzi9gDWpSfmM5bNSzUgKk6pfGthIcb3h1lW/AJZabXI1
+         2o2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=4D690/NLx/9daAF2hWG5tCfDYzmNZsPcuZnuRxKSdQk=;
-        b=G4CThJ7nnDWqmfdoswejqStpiHOBmZPJhKnEjY7ItFcT8JBd1gcRnn82Eid4Tfqheu
-         8v6QZ4iFu5PfCqS95nS4NsfVr5w8IPXQIXPD6rW2XHHCAYck/U/f8YiyBH44hWSveVNm
-         Q1uwBQt/GIvHyW338c7v+0FFBM9HsVCDxU+kCNNeW8SawJupwsqGXV1K4F9DAcHSgRqN
-         vol67DxHUGxsFztWy702pYmrbtOHZV11UiHngIhH9DeV5XYyixPF7sSBYpn4K5B6j8QQ
-         kLHBShssaXffkrNOLeZlz8j/+dWjIjHgZDODtXW/f4DElg+/HLj5ToCcaLe+LMUXgBlj
-         8NOg==
-X-Gm-Message-State: ANhLgQ2bNmkrQ3PT031HKLGupkM46uBkx0tSre1BsTA7AdTfcfgOi7OL
-        t79PCzAOfedLEijvRiwhD/lyeyTp
-X-Google-Smtp-Source: ADFU+vs2sw4UByx5wXeom802Gnqpg+QdiQDDSRBsNz8hhm/6pNbyWPMJYWOhC4+pFdvc++KRhQJb7A==
-X-Received: by 2002:a17:906:b34f:: with SMTP id cd15mr15923853ejb.332.1585740543389;
-        Wed, 01 Apr 2020 04:29:03 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n62sm380815edc.74.2020.04.01.04.29.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=c5jxiwoT9rIsUs25Z1wdbQYxfOfdfVcJvvnS9hg6XKE=;
+        b=pzgfPnfPS1IpgEaGrK/aQnzgPl8tJinDQS0ntvNZhTJHO/jaN6hZRxTV3ekF9wGi55
+         MISEfli1K3vfe7sji8fdk4eq2XNwNjtc3OVG6046I/IS6lmRX2pg9yzBwx/cNyp8y6os
+         PXsZ6F8PjnTrMrXuPET5H+rwXfH2miGn9nYk+A6ymHVy4OvAWcTZEMUPzV4cfz3C0Wyd
+         PhCSMB1c7+F8wPmWyUujgFRHHP4f7jQ0QJx09047jib9rMDqQ/ELgOy6uBTl9KxSH6Ug
+         GMsXoywNq/wRWUSBdSVqYqxY8f66wZE6pQrO+Le7L5a84vtMt2vfVuH8mIuOycK7f5to
+         4YIw==
+X-Gm-Message-State: ANhLgQ2XF3vAOWD7WsEYmm3rHkzEujc9uwhjJGWCcBcyVW03hQ5I4HTG
+        daUQ7pbDbObzYj6ZIZSKABjpjPhW
+X-Google-Smtp-Source: ADFU+vvl2pyLXQ9y2fFPTUEY4BLyRpOovGY1i60zrh70TDAkT6VqB+WatmGemrJFJjpAmFX/WknEEg==
+X-Received: by 2002:a17:906:d8cd:: with SMTP id re13mr7901790ejb.62.1585740542406;
         Wed, 01 Apr 2020 04:29:02 -0700 (PDT)
-Message-Id: <d08f823844de9590176919cf7c475e4fbd89033d.1585740538.git.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id i26sm384200edx.23.2020.04.01.04.29.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 01 Apr 2020 04:29:01 -0700 (PDT)
+Message-Id: <8d34e2c5c8b4ff7d09fad7686201fb5b7d325ba8.1585740538.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.539.v8.git.1585740538.gitgitgadget@gmail.com>
 References: <pull.539.v7.git.1582706986.gitgitgadget@gmail.com>
         <pull.539.v8.git.1585740538.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 01 Apr 2020 11:28:52 +0000
-Subject: [PATCH v8 3/9] refs: document how ref_iterator_advance_fn should
- handle symrefs
+Date:   Wed, 01 Apr 2020 11:28:51 +0000
+Subject: [PATCH v8 2/9] create .git/refs in files-backend.c
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,27 +75,48 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
+This prepares for supporting the reftable format, which will want
+create its own file system layout in .git
+
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- refs/refs-internal.h | 5 +++++
- 1 file changed, 5 insertions(+)
+ builtin/init-db.c    | 2 --
+ refs/files-backend.c | 6 ++++++
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index ff2436c0fb7..3490aac3a40 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -438,6 +438,11 @@ void base_ref_iterator_free(struct ref_iterator *iter);
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index 0b7222e7188..3b50b1aa0e5 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -251,8 +251,6 @@ static int create_default_files(const char *template_path,
+ 	 * We need to create a "refs" dir in any case so that older
+ 	 * versions of git can tell that this is a repository.
+ 	 */
+-	safe_create_dir(git_path("refs"), 1);
+-	adjust_shared_perm(git_path("refs"));
  
- /* Virtual function declarations for ref_iterators: */
+ 	if (refs_init_db(&err))
+ 		die("failed to set up refs db: %s", err.buf);
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 561c33ac8a9..ab7899a9c77 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -3157,9 +3157,15 @@ static int files_init_db(struct ref_store *ref_store, struct strbuf *err)
+ 		files_downcast(ref_store, REF_STORE_WRITE, "init_db");
+ 	struct strbuf sb = STRBUF_INIT;
  
-+/*
-+ * backend-specific implementation of ref_iterator_advance.
-+ * For symrefs, the function should set REF_ISSYMREF, and it should also
-+ * dereference the symref to provide the OID referent.
-+ */
- typedef int ref_iterator_advance_fn(struct ref_iterator *ref_iterator);
++	files_ref_path(refs, &sb, "refs");
++	safe_create_dir(sb.buf, 1);
++	/* adjust permissions even if directory already exists. */
++	adjust_shared_perm(sb.buf);
++
+ 	/*
+ 	 * Create .git/refs/{heads,tags}
+ 	 */
++	strbuf_reset(&sb);
+ 	files_ref_path(refs, &sb, "refs/heads");
+ 	safe_create_dir(sb.buf, 1);
  
- typedef int ref_iterator_peel_fn(struct ref_iterator *ref_iterator,
 -- 
 gitgitgadget
 
