@@ -8,62 +8,61 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86805C2D0F0
-	for <git@archiver.kernel.org>; Wed,  1 Apr 2020 15:55:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F41B9C18E5B
+	for <git@archiver.kernel.org>; Wed,  1 Apr 2020 15:55:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5C1BF20658
-	for <git@archiver.kernel.org>; Wed,  1 Apr 2020 15:55:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CABDD20658
+	for <git@archiver.kernel.org>; Wed,  1 Apr 2020 15:55:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XFZJVXzS"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e3cXhKsh"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733189AbgDAPzg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Apr 2020 11:55:36 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:46522 "EHLO
+        id S1733192AbgDAPzi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Apr 2020 11:55:38 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:41647 "EHLO
         mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732799AbgDAPzf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Apr 2020 11:55:35 -0400
-Received: by mail-pf1-f195.google.com with SMTP id q3so108590pff.13
-        for <git@vger.kernel.org>; Wed, 01 Apr 2020 08:55:35 -0700 (PDT)
+        with ESMTP id S1732799AbgDAPzh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Apr 2020 11:55:37 -0400
+Received: by mail-pf1-f195.google.com with SMTP id a24so124027pfc.8
+        for <git@vger.kernel.org>; Wed, 01 Apr 2020 08:55:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=07EyyNwdFdVGrLCI0PMJK4tI1rF5z6vKTZ5wZr3yar0=;
-        b=XFZJVXzS5oWIIoUH/oZ0+rxS07XWDoeveBSmfdUBALk7HelvQzf4s8mjjociESUfCt
-         u+tF6UWfGdjgPegsYnGz9/dZUIpgLGuKfJez/kEB4JsVbcj/uVdg6+3AYptUUv2xbcUw
-         JGG85LysvlBt5wQ+MzbgzzOgvC73fqfFYXqJq1j4hWBtR7Jlx8DMx5/vvBQPoQNtGwYD
-         3WVsvVKK5KEikJTgx0fO8ioy2fBYeiwdRnisPlQ+dGXvWVQ9kmN8oEJTDmfNAs8vyeRS
-         IQoNZD18yUvMVSHAlUFyoCtGZqto5/OuxIhmrzIm/Vo3Xdk0A2UAoPEZGRDfs5DHCCiH
-         iVFw==
+        bh=OBAHPB1UzI5WDJbpz0K+g8RnWuSyhFNCzWBDIBdzs84=;
+        b=e3cXhKshsBH4AODhy62F6ryTWAZNXTkmCiJ18FJX+xAmQgUP7XyoPYPMsXxtt9Czhy
+         BTeSTexgTBRg0fGehRY9oNSmzKbisSovMTCmkoFjBRZc6KGkuDmdxpGfy8SMEL/0RDmE
+         WkX8NQiNf1hJefXjTzzfQvr4UnnHQxCp/BgZ2x6488czpP/sVlD+BuuowUlK/MAmKrsU
+         LopWMH+yaYnoc918O9xu086itfYKp4wvTwL9t9lAuvqUWbccMn4XoIlIPuJcMw9jrnST
+         jOx0NizFpwzHHM7e3w7A2L8ttNoaB13owsgaa4TFTUPEkb1yudTIfvSK66xPmS5U/Y2G
+         rOCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=07EyyNwdFdVGrLCI0PMJK4tI1rF5z6vKTZ5wZr3yar0=;
-        b=hvPDWRd6Tci+HlT7tY8Eze5dfqmvOTDC+drHB2AyBJDmpeDyNYP129NM6BKIj4a5ZM
-         +4S8gEjEFHXKbrfZvDL05oheY6RrNcckKnJD4QRxGr/WIp7b1a4kWpd8OaYsoRsWpI22
-         5VlOb8pepd2qssqB4E2B/VJB0Lc1vHhcgPd0eKWD0Di+Z36RB+Zeem4OPS/qc11l/X9B
-         Kk9Wt55VKN3tHMAv4cixhY3a2KifCLEFDV+vb53SHhz9KLZKZYuOA4uDa+4jkUgz3XKu
-         1I/2cs+T5RFpIeO9BTvCgZUj2jnHEkxFHXECi4GarOcrFE+VxxQjLqgEGUfzg2RdWYqi
-         x9YA==
-X-Gm-Message-State: AGi0PubzohSUEujvXZzBPc7oxabeFZU05uNh6e28cgfnA6UvhuKsyfQG
-        l+NiphFGYxgWolUMhv+XezrxMrF8
-X-Google-Smtp-Source: APiQypLvSLz58v8Gq5ftFdFXoJsPpkH4JQ5F1i45FFawEJeWsFD/qnLhCX5K1EkZesYmUulHmxwgWA==
-X-Received: by 2002:a63:de51:: with SMTP id y17mr9895431pgi.70.1585756534269;
-        Wed, 01 Apr 2020 08:55:34 -0700 (PDT)
+        bh=OBAHPB1UzI5WDJbpz0K+g8RnWuSyhFNCzWBDIBdzs84=;
+        b=WuK5anaEJ91VXaRKHCFmZVzsQkFIZdcicjNMp/MT5v1+oGqENg1rmTUp4Zh8gVghSV
+         xKVZvclFASmb9Z5j1prt1SAQn8etAMs2Hkrz3CntWm6Y0ry45sVuiPiH1xA1LBIAf49C
+         XEiccUYtiD9xYqUEkfa5epEunZR1aWooKxZwXj4Ty5aGfMjqoUh+c00fi0/7DLxi/ah0
+         gfQYcgWh2cJBJM54XnWyQJDVdD4suaOFn+BBDG6KznZrfB9JMAy+bI8V1MitIdQlDfgi
+         SpSeNX8ezEzDPIscLNYh/vRcLCvj4ShUw/iVXXHDEu1sT2NbuwuRCweyEURnWju0hQkG
+         ADjA==
+X-Gm-Message-State: AGi0Pua4kh+Sd/HTYzVRXwMcaAo8gkmdNY1HLgidlsMAg2ZqIdz0k5hw
+        ZKMQbe4BqDpdxw0sY1fGR+UJU7YU
+X-Google-Smtp-Source: APiQypK11ROAH7a5C2tQH3OqJXqFd3RxTheea3vZX2g42/grAgAUGaA5WpvwD2jfbAsajTRqRYGY0A==
+X-Received: by 2002:a63:81c8:: with SMTP id t191mr1870864pgd.124.1585756535889;
+        Wed, 01 Apr 2020 08:55:35 -0700 (PDT)
 Received: from localhost.localdomain ([2402:800:6375:207b:be21:746a:7a56:9d4d])
-        by smtp.gmail.com with ESMTPSA id x4sm1990826pjf.23.2020.04.01.08.55.32
+        by smtp.gmail.com with ESMTPSA id x4sm1990826pjf.23.2020.04.01.08.55.34
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 01 Apr 2020 08:55:33 -0700 (PDT)
+        Wed, 01 Apr 2020 08:55:35 -0700 (PDT)
 From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>
-Subject: [PATCH v2 2/6] ci/lib: allow running in GitHub Actions
-Date:   Wed,  1 Apr 2020 22:55:04 +0700
-Message-Id: <079038c4a7599d269ffa8286d25c0baeb8426b62.1585756350.git.congdanhqx@gmail.com>
+Subject: [PATCH v2 3/6] ci/lib: set TERM environment variable if not exist
+Date:   Wed,  1 Apr 2020 22:55:05 +0700
+Message-Id: <f9d0b6b0d55b79c075d9c4860f8cdfd636edd5da.1585756350.git.congdanhqx@gmail.com>
 X-Mailer: git-send-email 2.26.0.334.g6536db25bb
 In-Reply-To: <cover.1585756350.git.congdanhqx@gmail.com>
 References: <pull.743.git.git.1585658913.gitgitgadget@gmail.com> <cover.1585756350.git.congdanhqx@gmail.com>
@@ -75,55 +74,30 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+GitHub Action doesn't set TERM environment variable, which is required
+by "tput".
 
-For each CI system we support, we need a specific arm in that if/else
-construct in ci/lib.sh. Let's add one for GitHub Actions.
+Fallback to dumb if it's not set.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
 ---
- ci/lib.sh | 20 +++++++++++++++++++-
- 1 file changed, 19 insertions(+), 1 deletion(-)
+ ci/lib.sh | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/ci/lib.sh b/ci/lib.sh
-index 766da75063..d2fe02083f 100755
+index d2fe02083f..c605695e38 100755
 --- a/ci/lib.sh
 +++ b/ci/lib.sh
-@@ -34,7 +34,7 @@ save_good_tree () {
- # successfully before (e.g. because the branch got rebased, changing only
- # the commit messages).
- skip_good_tree () {
--	if test "$TRAVIS_DEBUG_MODE" = true
-+	if test "$TRAVIS_DEBUG_MODE" = true || test true = "$GITHUB_ACTIONS"
- 	then
- 		return
- 	fi
-@@ -136,6 +136,24 @@ then
- 	MAKEFLAGS="$MAKEFLAGS --jobs=10"
- 	test windows_nt != "$CI_OS_NAME" ||
- 	GIT_TEST_OPTS="--no-chain-lint --no-bin-wrappers $GIT_TEST_OPTS"
-+elif test true = "$GITHUB_ACTIONS"
-+then
-+	CI_TYPE=github-actions
-+	CI_BRANCH="$GITHUB_REF"
-+	CI_COMMIT="$GITHUB_SHA"
-+	CI_OS_NAME="$(echo "$RUNNER_OS" | tr A-Z a-z)"
-+	test macos != "$CI_OS_NAME" || CI_OS_NAME=osx
-+	CI_REPO_SLUG="$GITHUB_REPOSITORY"
-+	CI_JOB_ID="$GITHUB_RUN_ID"
-+	CC="${CC:-gcc}"
+@@ -79,6 +79,9 @@ check_unignored_build_artifacts ()
+ 	}
+ }
+ 
++# GitHub Action doesn't set TERM, which is required by tput
++export TERM=${TERM:-dumb}
 +
-+	cache_dir="$HOME/none"
-+
-+	export GIT_PROVE_OPTS="--timer --jobs 10"
-+	export GIT_TEST_OPTS="--verbose-log -x"
-+	MAKEFLAGS="$MAKEFLAGS --jobs=10"
-+	test windows != "$CI_OS_NAME" ||
-+	GIT_TEST_OPTS="--no-chain-lint --no-bin-wrappers $GIT_TEST_OPTS"
- else
- 	echo "Could not identify CI type" >&2
- 	env >&2
+ # Clear MAKEFLAGS that may come from the outside world.
+ export MAKEFLAGS=
+ 
 -- 
 2.26.0.334.g6536db25bb
 
