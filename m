@@ -2,115 +2,101 @@ Return-Path: <SRS0=RItT=5R=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 528C4C43331
-	for <git@archiver.kernel.org>; Wed,  1 Apr 2020 14:06:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B758C2D0F3
+	for <git@archiver.kernel.org>; Wed,  1 Apr 2020 15:55:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 206DA2077D
-	for <git@archiver.kernel.org>; Wed,  1 Apr 2020 14:06:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 30A3A214DB
+	for <git@archiver.kernel.org>; Wed,  1 Apr 2020 15:55:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B99/LSIk"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SdYJ8lGd"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732876AbgDAOGr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Apr 2020 10:06:47 -0400
-Received: from mail-qt1-f196.google.com ([209.85.160.196]:46255 "EHLO
-        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732587AbgDAOGr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Apr 2020 10:06:47 -0400
-Received: by mail-qt1-f196.google.com with SMTP id g7so21620671qtj.13
-        for <git@vger.kernel.org>; Wed, 01 Apr 2020 07:06:46 -0700 (PDT)
+        id S1733185AbgDAPze (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Apr 2020 11:55:34 -0400
+Received: from mail-pg1-f182.google.com ([209.85.215.182]:46845 "EHLO
+        mail-pg1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732799AbgDAPzd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Apr 2020 11:55:33 -0400
+Received: by mail-pg1-f182.google.com with SMTP id k191so226888pgc.13
+        for <git@vger.kernel.org>; Wed, 01 Apr 2020 08:55:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=LzrFokBq4cCOspjxf/hGSuxjlneoPnzTD6GzpF6A0lw=;
-        b=B99/LSIkoEtzTPsWqhEFgtd8oiC4ryGLi0dncuI1oHmuvati8o166mm6KHnM8zKMqU
-         pZ+tzasrFeUP6xMwtNUmYaMlMl0qwgeFaWGrl/vwpeJHmhLFBY1HCMexqZ7crsGCPj+y
-         lptwLs7VOlACU94VIvYHJMJyr8uw9t2a30zdAPwr0MvunrFUl5lZ5VtHq9BL7yl9QA89
-         xDRDqz8jQKEkOeho+a+5ugStpb15uwaQYC8TdE4pvg9k5P6q3mxmiVU3hSQd5f01vQws
-         4ptHnNn5kH+1N2cOVlbCIXXfD9iADj2QbSFn7Oogf04D8/T1d5ZglGFXLfT+7E3AAtq1
-         75BA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=P4unpLNU70LpbgWYQj9DrWaPgVV5ZYHD+TqOgm/LWcc=;
+        b=SdYJ8lGd4h05WzN5za15dFd7wIDS1WYI9atKwrcDjO5NRFoRPLf96Ejecp+byxx0d9
+         7Xj/RzCCCfrnCy3So2yNYQ0Te6j4lSwbA+aHB1I/tzZclWXlzCCDXv9WOezdvMtx+3BG
+         7HLTsObAvK/j0xVA0duIDGFdS5adQ5c1Q0Yf9KDxQtanKRPWdfX8fZOw+W5zw3qVFjmf
+         yIK2EVYrNArpibeIDkjHHXVnpol2EdZfZbRDKCerdoTKjG9Wp4U6c8b8V5Gb0A3VrxNZ
+         FQqkcJ7TZRymWak2GJQVnJ0ooqJaxiArQdw5KIHfywIi6KzHPFL8c7iX9C/Rbw8W8lQz
+         C0+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=LzrFokBq4cCOspjxf/hGSuxjlneoPnzTD6GzpF6A0lw=;
-        b=ouS5OK79K6YMmgUio5dGoUVSppt6AV48S3vLtCSlKWob7YrQAtgHN7UEmP0npA4cXV
-         22kwBmxv2awgUu0nQ69kjKOkV5Cf8J3SE64mcJXOJCxAfm0t5iP2oL6Er4HYQCPZmvJS
-         Pe+jfqC9oozUQvf4BXU9w14YxMTl/y+hjDQuW46aW9v73Y1zlsz0ZCyH8NE6R6o7Xe2z
-         eJRi3DoYUlHUvEdeLepMVNqd+BRz746UOztALA7RgkNpmMOdlvI0Y4+TrCfXKMvRXfP2
-         sb9DiZalgEnwG+pvOcffvQdwr0RUiFH8x5EpdS6Shh76VKRLkNzFxWYwLKuqPKD5aKfV
-         ABHw==
-X-Gm-Message-State: ANhLgQ1XAkt5GMmK9gF9zSIWQ5KI6vpIk+mM/233XVAh5ymWpx7slPno
-        W3Z4ojalfm1kDftOSGgPnkGOwGgL
-X-Google-Smtp-Source: ADFU+vttACSQ1CyEg+W60wZ1msUpMT9cC8G8trDZDeLwH+pjA6a8v6bDTPZ9xhf/PcYmbh9VQVjWgQ==
-X-Received: by 2002:ac8:6c5d:: with SMTP id z29mr10683285qtu.176.1585750005941;
-        Wed, 01 Apr 2020 07:06:45 -0700 (PDT)
-Received: from generichostname ([199.249.110.29])
-        by smtp.gmail.com with ESMTPSA id 77sm1476034qkh.26.2020.04.01.07.06.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Apr 2020 07:06:44 -0700 (PDT)
-Date:   Wed, 1 Apr 2020 10:06:43 -0400
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] Fix -Wmaybe-uninitialized warnings under -O0
-Message-ID: <20200401140643.GA880372@generichostname>
-References: <33984eeaabbfbcfd4b9d3903549d8b7d6c4ced7e.1585726172.git.liu.denton@gmail.com>
- <20200401095255.GA60227@coredump.intra.peff.net>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=P4unpLNU70LpbgWYQj9DrWaPgVV5ZYHD+TqOgm/LWcc=;
+        b=lzISTwyTRrKeryNcwD1bgifHhvipPJPerlZIkFx1UOu7LYSu98rcJxA6LTYtscdTyt
+         Gg5HV20Rch4OGG/ClEZV0/a74iLQF83y3IGCJw50dQFkgQyD7VH6SfB9QV4ykZKK5902
+         ZM0wNu0Y2OWbkguTGUXWC3UBnC847tMlE7JMdow+KZCDBAAofVxhl0zXleCQElZV0Gh0
+         oaYtLfZQPDIYQWyggs4Lc0dq3uDSkfQVhXHzRPtEJ4aZPW+9NlrIMUFe9QNkWtNqnAM3
+         MiJ0eyKBfjbmcLA9Y1z8wSVbQoBeRCbgG5ZIOfw8PIsnvac86Ybu7pgyzvt5frz1aClj
+         Q8sw==
+X-Gm-Message-State: AGi0PuZygFVUVSkR5WIFYkMt3fd0EFah4vYCW3QYEUebde1Z02oDyJcj
+        8omXCyJVrGZo2RUKQEzsQmVUsg+M
+X-Google-Smtp-Source: APiQypLXz3F6282gq9usa5oUiF/ElT+orm9LbYXU2eV/uqChN8gCker9XjxA6zFGfaeODCGTHh6HZQ==
+X-Received: by 2002:a63:340f:: with SMTP id b15mr4785010pga.38.1585756532442;
+        Wed, 01 Apr 2020 08:55:32 -0700 (PDT)
+Received: from localhost.localdomain ([2402:800:6375:207b:be21:746a:7a56:9d4d])
+        by smtp.gmail.com with ESMTPSA id x4sm1990826pjf.23.2020.04.01.08.55.30
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 01 Apr 2020 08:55:31 -0700 (PDT)
+From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>
+Subject: [PATCH v2 1/6] ci/lib: if CI type is unknown, show the environment variables
+Date:   Wed,  1 Apr 2020 22:55:03 +0700
+Message-Id: <27cb77c257e717aba3386505d70d4cc93cdf13fa.1585756350.git.congdanhqx@gmail.com>
+X-Mailer: git-send-email 2.26.0.334.g6536db25bb
+In-Reply-To: <cover.1585756350.git.congdanhqx@gmail.com>
+References: <pull.743.git.git.1585658913.gitgitgadget@gmail.com> <cover.1585756350.git.congdanhqx@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200401095255.GA60227@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-On Wed, Apr 01, 2020 at 05:52:55AM -0400, Jeff King wrote:
-> On Wed, Apr 01, 2020 at 03:30:16AM -0400, Denton Liu wrote:
-> 
-> > When compiling Git under -O0, gcc (Arch Linux 9.3.0-1) 9.3.0 produces
-> > many -Wmaybe-uninitialized warnings. These are false positives since
-> > when Git is compiled under -O2, gcc is smart enough to see that the
-> > code paths that use these variables all initialise them beforehand.
-> > Nonetheless, these warnings block the compilation process when
-> > DEVELOPER=1 is enabled (which enables -Werror).
-> > 
-> > Fix these warnings by initializing these variables with dummy values (0,
-> > -1 or NULL as appropriate).
-> 
-> Hmph. I almost always compile with -O0 and have been using gcc 9.3.0
-> since it was packaged for Debian a few weeks ago, but I don't see any of
-> these warnings.
-> 
-> The current version in Debian unstable is 9.3.0-8, which picks up some
-> extra patches from the upstream gcc-9 branch. But even if I download a
-> snapshot of the original 9.3.0 release, it builds fine.
-> 
-> So why does your version behave differently? And if this is a temporary
-> state for a buggy version of gcc (that may be fixed in the next point
-> release), is it worth changing our source code to appease it?
+This should help with adding new CI-specific if-else arms.
 
-A correction to the earlier message... It seems like I wasn't reporting
-the correct settings. I was actually compiling with -Og, not -O0
-(whoops!).
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
+---
+ ci/lib.sh | 1 +
+ 1 file changed, 1 insertion(+)
 
-I tested it with gcc-8 and it seems like it also reports the same
-problem. Also, -O1 reports warnings as well.
+diff --git a/ci/lib.sh b/ci/lib.sh
+index c3a8cd2104..766da75063 100755
+--- a/ci/lib.sh
++++ b/ci/lib.sh
+@@ -138,6 +138,7 @@ then
+ 	GIT_TEST_OPTS="--no-chain-lint --no-bin-wrappers $GIT_TEST_OPTS"
+ else
+ 	echo "Could not identify CI type" >&2
++	env >&2
+ 	exit 1
+ fi
+ 
+-- 
+2.26.0.334.g6536db25bb
 
-I guess the question is do we only support -O0 and -O2 or should we
-support the levels in between as well?
-
-Sorry for the confusion,
-
-Denton
-
-> 
-> -Peff
