@@ -2,97 +2,105 @@ Return-Path: <SRS0=RItT=5R=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-5.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 24FD4C43331
-	for <git@archiver.kernel.org>; Wed,  1 Apr 2020 18:17:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F199C43331
+	for <git@archiver.kernel.org>; Wed,  1 Apr 2020 18:56:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id E87A72063A
-	for <git@archiver.kernel.org>; Wed,  1 Apr 2020 18:17:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 173C820784
+	for <git@archiver.kernel.org>; Wed,  1 Apr 2020 18:56:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hgSR8LI+"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="v2maqImX"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732435AbgDASRy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Apr 2020 14:17:54 -0400
-Received: from mail-ot1-f67.google.com ([209.85.210.67]:35824 "EHLO
-        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730420AbgDASRx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Apr 2020 14:17:53 -0400
-Received: by mail-ot1-f67.google.com with SMTP id v2so601905oto.2
-        for <git@vger.kernel.org>; Wed, 01 Apr 2020 11:17:53 -0700 (PDT)
+        id S1732219AbgDAS4d (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Apr 2020 14:56:33 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:46554 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726640AbgDAS4d (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Apr 2020 14:56:33 -0400
+Received: by mail-pl1-f193.google.com with SMTP id s23so295899plq.13
+        for <git@vger.kernel.org>; Wed, 01 Apr 2020 11:56:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=TAFX/vILoNGye6ppgemYpBVX0HdxBuUKUSAjOyAO8hc=;
-        b=hgSR8LI+awDaJWOOlBuNEktgm/OlPFI9oI6xYiD3A7EMxq3+Lt+ZerPyl/BwLexSgV
-         aXpT/0oQsp5HvBCNN4O1j+9C3LaOfZYRag5lYlk9fd2ieJeLBi2Y8mHDq7Wzl5pXz0Kl
-         Ycq21p5pgY6hKke1wZLQOikJXIL72VyWcECfoVrglJ7jAnjmqHGw3V6jciTdZJh2hWRm
-         3RvAC3X0EmulU4mi2mhc5uq7Zo99Cs2HbCBH5t7iaqAbfZF6bLwe7GacYUmjSu8Tt2Ws
-         k7HnB44QJd6CvlOR+dOXsmrlVsUVWJuBXqjpQewjhJ5/Eh+KQUJomDYd860EBXKPpDsm
-         fx+Q==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=IAUcDbgLiiXHDmZdgROGVp1DoOyTa+qbOnU8SqaofAI=;
+        b=v2maqImX4RPnS39FRPDvS4dXtD04RJn0TLAM46jJH0ztVqJqvhrsIXbxuFloE4PN69
+         TkZ/joFJD3mycd7pJhPZknX1FE0kFUq9QW2AuG09SzrlUMtb7NgeHyjbNp/SLnUaUoM5
+         sq0PyKzgksfd/xwp0juJxTfPmmdHv6uN0L2hhAPt/IQPJ1dPuW+CJVGQuqdlJIg93vRa
+         JZfxqVvheRysri9QntoFq1yWR2hg33FcbId5CHN4/WxcsfnGSAxP6VhVkPlcRqyfteqB
+         iLVOBMy18DxjgBZ1VNE+47tXqQsKJi7IdG0crMP0wy03lolFpYbPnFcdVPP/scT2etni
+         k/kA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=TAFX/vILoNGye6ppgemYpBVX0HdxBuUKUSAjOyAO8hc=;
-        b=UR7RDXcLGfTE1pA6BtiC3mdKIYnSHTfAf5J8HoANUHwnyIesoBJhAONlbkGeMJjkVP
-         v2TZbaNX7O2bWMpYIirVc7jhqxDz970icxsAhAwBaiboASGksp3hhUEgfG2EAIv7tcFc
-         tQv+R0e8HIhLeGWXk1sTp5NOoncYrh7J8M1zslvJpblhGgtPYxwJ8v661YV3NzGIVgjG
-         GZw4LDre+uCUzlF4vtzNswz57payyzDKktXuwh+mqoygVaYQ+RJk95jd/W/i+/3c5Ckv
-         CEYudvN670AaswVq/oHAPvZS0Gl19RdLsX8mZHelCcRToRR/B4zbpovsFmiSHieeM9xI
-         rKow==
-X-Gm-Message-State: ANhLgQ3EZJHmJ7MVswSEndohx7N3mbyvtcoYMFQFjhBRtzbf8V4ppIgW
-        qpRutqLbZD+8v4ZaYAYjs2VHzOjkBV4=
-X-Google-Smtp-Source: ADFU+vuSTevffdKUunHW51oBIsGIfW/hdBkMsn024Bqs9hM/Ernu5oOYDW7ShVlswWqq+EWEpi3wEQ==
-X-Received: by 2002:a9d:2c69:: with SMTP id f96mr7699474otb.62.1585765072826;
-        Wed, 01 Apr 2020 11:17:52 -0700 (PDT)
-Received: from [192.168.1.83] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id m134sm718922oig.14.2020.04.01.11.17.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 01 Apr 2020 11:17:52 -0700 (PDT)
-Subject: Re: [PATCH] commit-graph: fix buggy --expire-time option
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     me@ttaylorr.com, peff@peff.net,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=IAUcDbgLiiXHDmZdgROGVp1DoOyTa+qbOnU8SqaofAI=;
+        b=hIXan+Yu5xPmJa8hBBbBzIC/6cLPB2iLIG8lSpTJLtARNaeH3ourbyc58/M9AsEyR/
+         WETMQo0ezQijqsl2RBN5X6SQnoYOCXurrp+KxVN+EkRJPDz4qe55xSoDt6+6UVNRzt6a
+         WVH1kskKWt50ClmgKhelbvjgkcQMHcfZUOxKYSCe6wX8xR7ZFK62l9oezf7ivY+ksfni
+         mrUCq6jvVGGeObjpmFDyEC8WN6Rp0LvwN82MRJVhaCD1McbWXqcvNcWP2gcRhRuTF0hT
+         Yp9nJ7vhze94Dz03dHWL0FoOycw38bpXqPzaizfVVz+uIGSpFUw8J4KLBaQ8cbPHuBNo
+         g8Hw==
+X-Gm-Message-State: AGi0PuZYD6aM4yDzx2UiEtXdbyRkbA9TaIgCrl/zFtVgfE/fmTOTsPIK
+        re+iECWzMi7mzaKNqUVPYV4PVA==
+X-Google-Smtp-Source: APiQypKsCgIqmtscHuw3mz3ICpPuBfKazdS37NwzASRsCD6tRcJ4vmz6d9rwHd3iDJdLQs8tr1458A==
+X-Received: by 2002:a17:90b:110f:: with SMTP id gi15mr6395366pjb.184.1585767391703;
+        Wed, 01 Apr 2020 11:56:31 -0700 (PDT)
+Received: from localhost ([8.44.146.30])
+        by smtp.gmail.com with ESMTPSA id h198sm2086304pfe.76.2020.04.01.11.56.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 01 Apr 2020 11:56:30 -0700 (PDT)
+Date:   Wed, 1 Apr 2020 12:56:29 -0600
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, me@ttaylorr.com, peff@peff.net,
         Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH] commit-graph: fix buggy --expire-time option
+Message-ID: <20200401185629.GA13599@syl.local>
 References: <pull.596.git.1585764695643.gitgitgadget@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <bbd2b8e4-47f5-a99e-fb14-b6c1ce2ad9a9@gmail.com>
-Date:   Wed, 1 Apr 2020 14:17:50 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:75.0) Gecko/20100101
- Thunderbird/75.0
+ <bbd2b8e4-47f5-a99e-fb14-b6c1ce2ad9a9@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <pull.596.git.1585764695643.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+In-Reply-To: <bbd2b8e4-47f5-a99e-fb14-b6c1ce2ad9a9@gmail.com>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4/1/2020 2:11 PM, Derrick Stolee via GitGitGadget wrote:
-> Also I noticed that the help text was copied from the --max-commits
-> option. Fix that help text.
-...
-> diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
-> index 4a70b33fb5f..8000ff0d2ee 100644
-> --- a/builtin/commit-graph.c
-> +++ b/builtin/commit-graph.c
-> @@ -140,7 +140,7 @@ static int graph_write(int argc, const char **argv)
->  		OPT_INTEGER(0, "size-multiple", &split_opts.size_multiple,
->  			N_("maximum ratio between two levels of a split commit-graph")),
->  		OPT_EXPIRY_DATE(0, "expire-time", &split_opts.expire_time,
-> -			N_("maximum number of commits in a non-base split commit-graph")),
-> +			N_("do not expire files newer than a number of seconds before now")),
+On Wed, Apr 01, 2020 at 02:17:50PM -0400, Derrick Stolee wrote:
+> On 4/1/2020 2:11 PM, Derrick Stolee via GitGitGadget wrote:
+> > Also I noticed that the help text was copied from the --max-commits
+> > option. Fix that help text.
+> ...
+> > diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
+> > index 4a70b33fb5f..8000ff0d2ee 100644
+> > --- a/builtin/commit-graph.c
+> > +++ b/builtin/commit-graph.c
+> > @@ -140,7 +140,7 @@ static int graph_write(int argc, const char **argv)
+> >  		OPT_INTEGER(0, "size-multiple", &split_opts.size_multiple,
+> >  			N_("maximum ratio between two levels of a split commit-graph")),
+> >  		OPT_EXPIRY_DATE(0, "expire-time", &split_opts.expire_time,
+> > -			N_("maximum number of commits in a non-base split commit-graph")),
+> > +			N_("do not expire files newer than a number of seconds before now")),
+>
+> and of course I messed this up even now.  Should be:
+>
+> > +			N_("do not expire files newer than a given date-time")),
 
-and of course I messed this up even now.  Should be:
+I wonder if the double-negative can be avoided. Perhaps this should be
+instead:
 
-> +			N_("do not expire files newer than a given date-time")),
+  expire files older than the given date-time
 
--Stolee
+or similar.
+
+> -Stolee
+
+Thanks,
+Taylor
