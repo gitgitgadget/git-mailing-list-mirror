@@ -2,135 +2,222 @@ Return-Path: <SRS0=RItT=5R=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A1556C43331
-	for <git@archiver.kernel.org>; Wed,  1 Apr 2020 06:35:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 88103C43331
+	for <git@archiver.kernel.org>; Wed,  1 Apr 2020 07:30:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 69BF32071A
-	for <git@archiver.kernel.org>; Wed,  1 Apr 2020 06:35:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4E00920772
+	for <git@archiver.kernel.org>; Wed,  1 Apr 2020 07:30:26 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d+bNTPVN"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GQcE6bjw"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731836AbgDAGf4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Apr 2020 02:35:56 -0400
-Received: from mail-ot1-f41.google.com ([209.85.210.41]:44008 "EHLO
-        mail-ot1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731741AbgDAGfz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Apr 2020 02:35:55 -0400
-Received: by mail-ot1-f41.google.com with SMTP id a6so24795122otb.10
-        for <git@vger.kernel.org>; Tue, 31 Mar 2020 23:35:55 -0700 (PDT)
+        id S1731885AbgDAHaZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Apr 2020 03:30:25 -0400
+Received: from mail-qv1-f47.google.com ([209.85.219.47]:35326 "EHLO
+        mail-qv1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731680AbgDAHaZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Apr 2020 03:30:25 -0400
+Received: by mail-qv1-f47.google.com with SMTP id q73so12340879qvq.2
+        for <git@vger.kernel.org>; Wed, 01 Apr 2020 00:30:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=EMC1K4IIftozRGA8A6xjeRQRvpUt5Cj98f7GDU+pt0M=;
-        b=d+bNTPVN2fwPl7upeYrQhxjL6ugWNJtyxrym0auYA5b3cAvEfoVwMD+DUVywk1YSB4
-         icxXYIMmmNfIcC8W1/Jk/nMpAiHqYUHkUteMCsQ7iaqEijI7CQl2c1cJhrJRzQi+rxDa
-         NYJbOzMn15ChQR6dDWwrUNnW9tgeq4pUTQD2y33WBa8ByxY6d+DT0Nd6WxuHEVR0y/gK
-         k48iSoQsBgMY4xJc1jIJpScVbmRqbtnytw95UiRmLetHBljuhVrrO6heQG0NDFi3E9nP
-         6IrG9szm/9rA4O6ajip0OCQf3+20qgm1UvMY6yonziUfu1Flk9jwQf6cevOp/4NqQ4lT
-         l7+w==
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=lz34pCkALQ+PeFbRbx83AnmToW+xYIHszcCnScw5ktQ=;
+        b=GQcE6bjwH8EL366dJH7laG7VjXXRej9aKeVrtzPQ6EzuReHMVcRKRwzDXAEvAepzk/
+         vH6IYK+2dwn1MnobiYPc/SXeuPXjHI6fm604F2r+J1KmUqnG6Mr/PPrXorEhWaI+j+Q9
+         9dQUHBmt7X0zIMBLnawqiWKK3yFCJrq6sGr9vwZj+W4eza3lV5HCAalHRrQofDkX6P91
+         rACy++1Maacdy2PSrcn9WRJK6dfHM99n8lfmwfz7moBhW5q0MIL4Vf9fYZVLU3q/Gfsj
+         sEsMHkJ4CkGCVdYXMW4yCMl1ynsAI5RLSyxDpFOk5c8ZI6b7SBytOGsnK1Az9YYPA/Ef
+         +uXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=EMC1K4IIftozRGA8A6xjeRQRvpUt5Cj98f7GDU+pt0M=;
-        b=lFfzZ4J0/Mei9lzg9OzpaGvv9sc6fQUXEa17dBIy1qeXaCwQyfXGmJgRKo4UepTWjF
-         y/Ga8jaxnCAb9vswwlpWq5DAUaRvZEDVX1omHRXwRfJsCR0L/CAy16NGt6PFcxFp+7QS
-         3/yTEEkZSd/wPSqWIP7cgmRYRBPTGgi6S2cWyKVgFeIZl9ClJpOSLcqGLZendT+dLqm6
-         BbNWbC+PzuS3J/5f8XOJsXqz0Tdb0IM7Z9W6NBjQxpygFozWJfaFXtsaRmd+jYL4FU/t
-         sJFW0U1jQUfTXT722NkA/WuszL3r5VYNSQISALkUXLEh3NawiriioO6cGHmso8chOq5b
-         IAjg==
-X-Gm-Message-State: ANhLgQ1NKwkCiSbpOI5b5uKGA2vhsYOUJ/i0+ewxA6YnDrR+2PMbXFy4
-        zMjY7GM23aMl8yiHA29WHT2v/c+m5Dl03BRE+2GNQdCXuPs=
-X-Google-Smtp-Source: ADFU+vuJp4mgYw+OAOvUvzyxT7ipuiPAPJ+CL/HiYtCCY+3HM/jvo/MJSgIPV0TSazHbeL33rnJFA+WGOScuL6lxfBQ=
-X-Received: by 2002:a05:6830:2428:: with SMTP id k8mr11689568ots.345.1585722955099;
- Tue, 31 Mar 2020 23:35:55 -0700 (PDT)
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=lz34pCkALQ+PeFbRbx83AnmToW+xYIHszcCnScw5ktQ=;
+        b=VOplEQxiwvttmy9plujXSIwdEqHMTfLuuGYYdickaeNTEI3+8j22w/wzHYIJ9UE7a9
+         pvpqZl98JmZqH6mhGPFt1Agt7QBMjS0mO4APTTACX/wUhh/UXKA7+p4wEV+WkUltYaxE
+         3F8lM6wF5KdNHkYHdE5+D/339Aloo9rVutpLgF26QlZEqPEPMjm9crKabJAPfKKyykeK
+         NpGV7c89fJ/hdRHVbiB2cfs+0NgnvFH4ovM/Dp+7AjBUd90bLEE0ZXsLT6T9knPRyS/m
+         Y46xkwFAOakh+42NtnB1R0m8dq6Gsg4twhcZWTmN1tgYS32JXO16LyD9A9YLdOdibuyl
+         LySQ==
+X-Gm-Message-State: ANhLgQ2rv2LqCMTcTZzdwLAh+BcDDTQaKTu8Z6dUVNU87H375Cl+GsMB
+        vMKRLg4g5FPjFC7F+WUDZkakMCQb
+X-Google-Smtp-Source: ADFU+vsINnd3S1vT5OTu4hxRBP+rLV8IekfDe28RycPJ1BCqCYO7QRC8WUutYuRjS3nOs/SRnzW9fw==
+X-Received: by 2002:a0c:e886:: with SMTP id b6mr20099404qvo.31.1585726222934;
+        Wed, 01 Apr 2020 00:30:22 -0700 (PDT)
+Received: from archbookpro.lan ([199.249.110.29])
+        by smtp.gmail.com with ESMTPSA id m53sm1004247qta.15.2020.04.01.00.30.21
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 01 Apr 2020 00:30:22 -0700 (PDT)
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Subject: [PATCH] Fix -Wmaybe-uninitialized warnings under -O0
+Date:   Wed,  1 Apr 2020 03:30:16 -0400
+Message-Id: <33984eeaabbfbcfd4b9d3903549d8b7d6c4ced7e.1585726172.git.liu.denton@gmail.com>
+X-Mailer: git-send-email 2.26.0.159.g23e2136ad0
 MIME-Version: 1.0
-References: <CAGyf7-FUjCefwGjvCcwmjO=GADd5S0cU_=S_tVy4nMaj07+rQA@mail.gmail.com>
-In-Reply-To: <CAGyf7-FUjCefwGjvCcwmjO=GADd5S0cU_=S_tVy4nMaj07+rQA@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 31 Mar 2020 23:35:44 -0700
-Message-ID: <CABPp-BFDx2j5Kf584Myb6wuEq5G7wbogJ2vos8OTDsh+ySfk8w@mail.gmail.com>
-Subject: Re: Rebase-via-merge behavior difference between Linux and Windows
-To:     Bryan Turner <bturner@atlassian.com>
-Cc:     Git Users <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 31, 2020 at 4:25 PM Bryan Turner <bturner@atlassian.com> wrote:
->
-> With the default rebase backend changing from "apply" to "merge" in
-> 2.26, I've seen several threads about behavior changes between the two
-> backends. This is _not_ one of those (although, as I mention at the
-> end, the "apply" backend doesn't appear to have this issue).
->
-> Instead, what I'm observing is a behavior difference between the same
-> "merge" backend depending on whether the command is run on Linux or
-> Windows.
->
-> A little context: Bitbucket Server has a set of zipped repositories
-> that provide consistent initial state, and we have tests that download
-> those zips and then run various Git commands against them and verify
-> we get expected outcomes. These same tests run on both Windows and
-> Linux.
->
-> Using our merge test repository[1], one such test performs the following steps:
-> * Unzip bare repository
-> * `git clone --shared -b branch_that_differ_by_empty_commit_trgt
-> <unzipped> rebase-test`
-> * `git rebase -q --no-verify 7549846524f8aed2bd1c0249993ae1bf9d3c9998
-> 298924b8c403240eaf89dcda0cce7271620ab2f6`
->
-> 298924b8c40 is an empty commit (i.e. `git commit --allow-empty`), and
-> is the only commit not already reachable from 7549846524f.
->
-> On Linux, when this test completes, "HEAD" in "rebase-test" is
-> 7549846524f because the empty commit was discarded. This is the
-> expected behavior. On Windows, "HEAD" is a new empty commit, which
-> causes our test to fail.
+When compiling Git under -O0, gcc (Arch Linux 9.3.0-1) 9.3.0 produces
+many -Wmaybe-uninitialized warnings. These are false positives since
+when Git is compiled under -O2, gcc is smart enough to see that the
+code paths that use these variables all initialise them beforehand.
+Nonetheless, these warnings block the compilation process when
+DEVELOPER=1 is enabled (which enables -Werror).
 
-I don't have a Windows box to test, but it's good that you are seeing
-the correct behavior there.  I do have a Linux box, and cannot
-duplicate the behavior you state, even downloading the zip you
-mentioned and following your steps to reproduce.  Actually, I did
-reproduce that behavior the first time because I was accidentally
-using git-2.25.0.  But with git-2.26.0 on Linux, I see a new empty
-commit after rebasing, as expected.
+Fix these warnings by initializing these variables with dummy values (0,
+-1 or NULL as appropriate).
 
-Is there any chance you accidentally ran with an older git version
-when on Linux?  If you really were using git 2.26.0 on Linux...then
-I'm totally confused at how you got that behavior.
+Signed-off-by: Denton Liu <liu.denton@gmail.com>
+---
+ builtin/branch.c          | 2 +-
+ diff.c                    | 2 +-
+ fast-import.c             | 4 ++--
+ http-backend.c            | 2 +-
+ ref-filter.c              | 2 +-
+ refs/packed-backend.c     | 2 +-
+ t/helper/test-ref-store.c | 2 +-
+ trace2/tr2_dst.c          | 2 +-
+ trailer.c                 | 2 +-
+ 9 files changed, 10 insertions(+), 10 deletions(-)
 
-And yes, I am stating the exact opposite expectation than what you
-did; let me quote from the relevant bits of the 2.26.0 manpage for git
-rebase:
+diff --git a/builtin/branch.c b/builtin/branch.c
+index d8297f80ff..3669fba546 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -455,7 +455,7 @@ static void print_current_branch_name(void)
+ {
+ 	int flags;
+ 	const char *refname = resolve_ref_unsafe("HEAD", 0, NULL, &flags);
+-	const char *shortname;
++	const char *shortname = NULL;
+ 	if (!refname)
+ 		die(_("could not resolve HEAD"));
+ 	else if (!(flags & REF_ISSYMREF))
+diff --git a/diff.c b/diff.c
+index f2cfbf2214..99a35774d7 100644
+--- a/diff.c
++++ b/diff.c
+@@ -3263,7 +3263,7 @@ static void emit_binary_diff_body(struct diff_options *o,
+ 	void *delta;
+ 	void *deflated;
+ 	void *data;
+-	unsigned long orig_size;
++	unsigned long orig_size = 0;
+ 	unsigned long delta_size;
+ 	unsigned long deflate_size;
+ 	unsigned long data_size;
+diff --git a/fast-import.c b/fast-import.c
+index b8b65a801c..0509c0b92f 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -1829,7 +1829,7 @@ static void parse_original_identifier(void)
+ 
+ static int parse_data(struct strbuf *sb, uintmax_t limit, uintmax_t *len_res)
+ {
+-	const char *data;
++	const char *data = NULL;
+ 	strbuf_reset(sb);
+ 
+ 	if (!skip_prefix(command_buf.buf, "data ", &data))
+@@ -2719,7 +2719,7 @@ static void parse_new_commit(const char *arg)
+ static void parse_new_tag(const char *arg)
+ {
+ 	static struct strbuf msg = STRBUF_INIT;
+-	const char *from;
++	const char *from = NULL;
+ 	char *tagger;
+ 	struct branch *s;
+ 	struct tag *t;
+diff --git a/http-backend.c b/http-backend.c
+index ec3144b444..1091cdf2cd 100644
+--- a/http-backend.c
++++ b/http-backend.c
+@@ -252,7 +252,7 @@ static void http_config(void)
+ 
+ static struct rpc_service *select_service(struct strbuf *hdr, const char *name)
+ {
+-	const char *svc_name;
++	const char *svc_name = NULL;
+ 	struct rpc_service *svc = NULL;
+ 	int i;
+ 
+diff --git a/ref-filter.c b/ref-filter.c
+index b1812cb69a..6abd48f81a 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -1938,7 +1938,7 @@ static int for_each_fullref_in_pattern(struct ref_filter *filter,
+ {
+ 	struct string_list prefixes = STRING_LIST_INIT_DUP;
+ 	struct string_list_item *prefix;
+-	int ret;
++	int ret = 0;
+ 
+ 	if (!filter->match_as_path) {
+ 		/*
+diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+index 4458a0f69c..f37c6d19a6 100644
+--- a/refs/packed-backend.c
++++ b/refs/packed-backend.c
+@@ -627,7 +627,7 @@ static struct snapshot *create_snapshot(struct packed_ref_store *refs)
+ 
+ 	/* If the file has a header line, process it: */
+ 	if (snapshot->buf < snapshot->eof && *snapshot->buf == '#') {
+-		char *tmp, *p, *eol;
++		char *tmp, *p = NULL, *eol;
+ 		struct string_list traits = STRING_LIST_INIT_NODUP;
+ 
+ 		eol = memchr(snapshot->buf, '\n',
+diff --git a/t/helper/test-ref-store.c b/t/helper/test-ref-store.c
+index 799fc00aa1..d82dcb83a3 100644
+--- a/t/helper/test-ref-store.c
++++ b/t/helper/test-ref-store.c
+@@ -19,7 +19,7 @@ static unsigned int arg_flags(const char *arg, const char *name)
+ 
+ static const char **get_store(const char **argv, struct ref_store **refs)
+ {
+-	const char *gitdir;
++	const char *gitdir = NULL;
+ 
+ 	if (!argv[0]) {
+ 		die("ref store required");
+diff --git a/trace2/tr2_dst.c b/trace2/tr2_dst.c
+index ae052a07fe..910301a53d 100644
+--- a/trace2/tr2_dst.c
++++ b/trace2/tr2_dst.c
+@@ -227,7 +227,7 @@ static int tr2_dst_try_unix_domain_socket(struct tr2_dst *dst,
+ {
+ 	unsigned int uds_try = 0;
+ 	int fd;
+-	int e;
++	int e = 0;
+ 	const char *path = NULL;
+ 
+ 	/*
+diff --git a/trailer.c b/trailer.c
+index 0c414f2fed..cac9d0a4d9 100644
+--- a/trailer.c
++++ b/trailer.c
+@@ -507,7 +507,7 @@ static int git_trailer_config(const char *conf_key, const char *value, void *cb)
+ 	struct arg_item *item;
+ 	struct conf_info *conf;
+ 	char *name = NULL;
+-	enum trailer_info_type type;
++	enum trailer_info_type type = -1;
+ 	int i;
+ 
+ 	if (!skip_prefix(conf_key, "trailer.", &trailer_item))
+-- 
+2.26.0.159.g23e2136ad0
 
-BEHAVIORAL DIFFERENCES
------------------------
-...
-Empty commits
-~~~~~~~~~~~~~
-
-The apply backend unfortunately drops intentionally empty commits, i.e.
-commits that started empty, though these are rare in practice.  It
-also drops commits that become empty and has no option for controlling
-this behavior.
-
-The merge backend keeps intentionally empty commits.  Similar to the
-apply backend, by default the merge backend drops commits that become
-empty unless -i/--interactive is specified (in which case it stops and
-asks the user what to do).  The merge backend also has an
---empty={drop,keep,ask} option for changing the behavior of handling
-commits that become empty.
-
-
-So the apply backend has the wrong behavior, we just haven't bothered
-updating it.  Perhaps we should.
