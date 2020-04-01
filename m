@@ -7,60 +7,61 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7394CC2D0F1
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B1696C2D0E7
 	for <git@archiver.kernel.org>; Wed,  1 Apr 2020 11:29:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 400702080C
+	by mail.kernel.org (Postfix) with ESMTP id 8801A20857
 	for <git@archiver.kernel.org>; Wed,  1 Apr 2020 11:29:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i+PWJs0w"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gsF777Xw"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732344AbgDAL3G (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1732350AbgDAL3G (ORCPT <rfc822;git@archiver.kernel.org>);
         Wed, 1 Apr 2020 07:29:06 -0400
-Received: from mail-ed1-f43.google.com ([209.85.208.43]:46659 "EHLO
-        mail-ed1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732273AbgDAL3G (ORCPT <rfc822;git@vger.kernel.org>);
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:34666 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732150AbgDAL3G (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 1 Apr 2020 07:29:06 -0400
-Received: by mail-ed1-f43.google.com with SMTP id cf14so29162681edb.13
-        for <git@vger.kernel.org>; Wed, 01 Apr 2020 04:29:05 -0700 (PDT)
+Received: by mail-ed1-f65.google.com with SMTP id o1so10946189edv.1
+        for <git@vger.kernel.org>; Wed, 01 Apr 2020 04:29:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=1g7xJNEHljtESnR5/L4oArBHPSBJu5a8+IEAIVDCwIk=;
-        b=i+PWJs0w535KuC5UgJCkDv80PwO6yFlvRsvdlszp9rx1+8GrAPpLyaFcSW7SI8IUgz
-         yOK6l7G8/YifgSIWNrHSjeWVH901Y5wkicvYNoZplolqAylJ2BamzAA8teJbQu05lK/N
-         nlX8Loo76Thhtgsxfu+ypIp5UpiYLeppQFb2Rn3541weGfH+Zo3Gp3LoygiDcEqMk0Q1
-         7Bu4VoyJF6sDJLxhq63Ja5AHgePGp6/iSf8Sboqya/TioNdDZZsS54Hmvk7Etve6RYUo
-         gmXhFKpla+np9CVjvr6QU+mnAvGHyI6KDrMcCHxeMpiVMmv/oRvsw85hDxqkRxqPD8Wo
-         aefQ==
+        bh=4D690/NLx/9daAF2hWG5tCfDYzmNZsPcuZnuRxKSdQk=;
+        b=gsF777XwuGxfCQsgQkAOs27rfAwTUD3w5ruWIUvrea9sTwQGygwoFJ9udowfezOClK
+         7M2p8Nh77/55GJkaefuJXKuH8Wf93Wf0GavnIoIBaoZXXfwy1ryGbh0AsHk6LOMX/Q/V
+         2C+wPBUVHuANxeaOZJTU3vC/PkJ4rig5QNCI1zx4NSQh6KA6Qxo6uW+tnQUd4831OJi3
+         P84unDEUo8HvGjp7bXI1aYzQraYa34EYstqXzh2auC8ndPRBFNqbikureaYHkKyuYni3
+         KQ/3MQRk/iWwqs4dsVFP5v4MzsiacG8YA4JX+XZlEZ/daM/vN20Vubs+dhCUcOGkjKEJ
+         POPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=1g7xJNEHljtESnR5/L4oArBHPSBJu5a8+IEAIVDCwIk=;
-        b=KZ4YhUVLcpl6sLdBIlEyGXaG12NWBl3znCIcKW3GSH0hRBKogGGe7cupddf/hc++et
-         7h40E/fTJd8ZQbJPFFRl9LY2NEIrvleWHyZTOMjJwiG6LOIoRizhhEQGcX1zWC0x0/wE
-         YLWE8cnwJQunSX9qJT8VZjoYXtaRsTGX/JMwLfbDkvjlObZfIM2nlNkr1KSIy+B8NSdW
-         cA1midI8O3H6qzOj/1EWbMY8xccfiO1O1UerYpGTSwKwWIMpFuScgg8yQ8rtFK3dQsy7
-         iZ/tnBPurTjzP7h0mESYFExuVDK1cnQhy8VO0/jJo/MSZbotmPQFIZ3pCVhXZdKnaa0C
-         qeyQ==
-X-Gm-Message-State: ANhLgQ1V2lSYmiv2IodD1k7NCiTk9TZKg7bhfVxymjV4cAhm9MWz6DJs
-        E62XSrGR5wYXSzzLE3Y+ap9XBdA3
-X-Google-Smtp-Source: ADFU+vsAU1ToDTxNFuRMtBDgb3j4qR0KFLrXaOAOlpQvGPr5ngZvTEXXe37kyH+4U4mhTjjnOz/QvA==
-X-Received: by 2002:a17:906:694d:: with SMTP id c13mr20374272ejs.268.1585740544355;
-        Wed, 01 Apr 2020 04:29:04 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id rp7sm475854ejb.83.2020.04.01.04.29.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=4D690/NLx/9daAF2hWG5tCfDYzmNZsPcuZnuRxKSdQk=;
+        b=G4CThJ7nnDWqmfdoswejqStpiHOBmZPJhKnEjY7ItFcT8JBd1gcRnn82Eid4Tfqheu
+         8v6QZ4iFu5PfCqS95nS4NsfVr5w8IPXQIXPD6rW2XHHCAYck/U/f8YiyBH44hWSveVNm
+         Q1uwBQt/GIvHyW338c7v+0FFBM9HsVCDxU+kCNNeW8SawJupwsqGXV1K4F9DAcHSgRqN
+         vol67DxHUGxsFztWy702pYmrbtOHZV11UiHngIhH9DeV5XYyixPF7sSBYpn4K5B6j8QQ
+         kLHBShssaXffkrNOLeZlz8j/+dWjIjHgZDODtXW/f4DElg+/HLj5ToCcaLe+LMUXgBlj
+         8NOg==
+X-Gm-Message-State: ANhLgQ2bNmkrQ3PT031HKLGupkM46uBkx0tSre1BsTA7AdTfcfgOi7OL
+        t79PCzAOfedLEijvRiwhD/lyeyTp
+X-Google-Smtp-Source: ADFU+vs2sw4UByx5wXeom802Gnqpg+QdiQDDSRBsNz8hhm/6pNbyWPMJYWOhC4+pFdvc++KRhQJb7A==
+X-Received: by 2002:a17:906:b34f:: with SMTP id cd15mr15923853ejb.332.1585740543389;
         Wed, 01 Apr 2020 04:29:03 -0700 (PDT)
-Message-Id: <ca95b3a371e71f53fc7c3eebe8847572b4ab3f28.1585740538.git.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id n62sm380815edc.74.2020.04.01.04.29.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 01 Apr 2020 04:29:02 -0700 (PDT)
+Message-Id: <d08f823844de9590176919cf7c475e4fbd89033d.1585740538.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.539.v8.git.1585740538.gitgitgadget@gmail.com>
 References: <pull.539.v7.git.1582706986.gitgitgadget@gmail.com>
         <pull.539.v8.git.1585740538.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 01 Apr 2020 11:28:53 +0000
-Subject: [PATCH v8 4/9] Add .gitattributes for the reftable/ directory
+Date:   Wed, 01 Apr 2020 11:28:52 +0000
+Subject: [PATCH v8 3/9] refs: document how ref_iterator_advance_fn should
+ handle symrefs
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,17 +78,25 @@ From: Han-Wen Nienhuys <hanwen@google.com>
 
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- reftable/.gitattributes | 1 +
- 1 file changed, 1 insertion(+)
- create mode 100644 reftable/.gitattributes
+ refs/refs-internal.h | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/reftable/.gitattributes b/reftable/.gitattributes
-new file mode 100644
-index 00000000000..f44451a3795
---- /dev/null
-+++ b/reftable/.gitattributes
-@@ -0,0 +1 @@
-+/zlib-compat.c	whitespace=-indent-with-non-tab,-trailing-space
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index ff2436c0fb7..3490aac3a40 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -438,6 +438,11 @@ void base_ref_iterator_free(struct ref_iterator *iter);
+ 
+ /* Virtual function declarations for ref_iterators: */
+ 
++/*
++ * backend-specific implementation of ref_iterator_advance.
++ * For symrefs, the function should set REF_ISSYMREF, and it should also
++ * dereference the symref to provide the OID referent.
++ */
+ typedef int ref_iterator_advance_fn(struct ref_iterator *ref_iterator);
+ 
+ typedef int ref_iterator_peel_fn(struct ref_iterator *ref_iterator,
 -- 
 gitgitgadget
 
