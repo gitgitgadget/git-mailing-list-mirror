@@ -7,60 +7,61 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DE79FC43331
-	for <git@archiver.kernel.org>; Wed,  1 Apr 2020 11:29:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D73DFC43331
+	for <git@archiver.kernel.org>; Wed,  1 Apr 2020 11:29:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B0F952080C
-	for <git@archiver.kernel.org>; Wed,  1 Apr 2020 11:29:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ACD632080C
+	for <git@archiver.kernel.org>; Wed,  1 Apr 2020 11:29:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Dt6qAA4V"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="uFIeilF1"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732336AbgDAL3G (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Apr 2020 07:29:06 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:46407 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732244AbgDAL3G (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Apr 2020 07:29:06 -0400
-Received: by mail-ed1-f65.google.com with SMTP id cf14so29162606edb.13
-        for <git@vger.kernel.org>; Wed, 01 Apr 2020 04:29:03 -0700 (PDT)
+        id S1732372AbgDAL3K (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Apr 2020 07:29:10 -0400
+Received: from mail-ed1-f46.google.com ([209.85.208.46]:43319 "EHLO
+        mail-ed1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732352AbgDAL3J (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Apr 2020 07:29:09 -0400
+Received: by mail-ed1-f46.google.com with SMTP id bd14so29124771edb.10
+        for <git@vger.kernel.org>; Wed, 01 Apr 2020 04:29:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=c5jxiwoT9rIsUs25Z1wdbQYxfOfdfVcJvvnS9hg6XKE=;
-        b=Dt6qAA4V+g9btME2jpL0HhKYp9Wuhz9+drxaRxP19ou8B1/bUgJL7IDWFi2Rb4hRB0
-         SKxB5dGCEM9wLpriUvbIHqxBstXt1i47aVc/6qQRWXXiwiEkGt+HN6huPS8LQ85Ve+eS
-         a8S/YyGxEWZk1pFpZR1ceP11rFWkwAM0XbcVi0Pt9Axb5eJilkyE3ZIn2RuF6083lD+I
-         CBE7gVsZkMi8UnDrbQY/mLGRb8YEXi3zN/gblWFVIgV3G9gLkGEviNeCH2gtGAHIfmVB
-         6SByAzv+u+l/e8UeEPnvHuUZIzi9gDWpSfmM5bNSzUgKk6pfGthIcb3h1lW/AJZabXI1
-         2o2w==
+        bh=bMqfVV0Jthx0FbzkxthTP1FYgECiPP01IK56yDoGvRw=;
+        b=uFIeilF1Ykk2keyzpfwec/xA4aqJ9Caq9oMR6vnTQiSP1lWxF1PehP98ehq0AgsHtD
+         zPwRe6u1rk3mXXSy9XwdCUQBYfFx6RCuBRzQZNtNBNUB31h00E+Qd3QKR4KFwGoHTNO/
+         mezjzgTc8YqEUGXKetunbUqwG9w2jFCBemuYEFBoSpGE5FPkFTfHNlzGPQqCkY+eaGyb
+         XUKLN1Q8XwMFSiIkAFr6ECBnZaZ4F17H9C78g7aFLvSjOVlL60d2n2xHPgg+tlIa0qjS
+         bDqacQbAva5KxB8/40p5DVkwasPh19XjZA4vIaM8tVAZaPnezRrwN0q7X8BvjFr7dmt4
+         ux7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=c5jxiwoT9rIsUs25Z1wdbQYxfOfdfVcJvvnS9hg6XKE=;
-        b=pzgfPnfPS1IpgEaGrK/aQnzgPl8tJinDQS0ntvNZhTJHO/jaN6hZRxTV3ekF9wGi55
-         MISEfli1K3vfe7sji8fdk4eq2XNwNjtc3OVG6046I/IS6lmRX2pg9yzBwx/cNyp8y6os
-         PXsZ6F8PjnTrMrXuPET5H+rwXfH2miGn9nYk+A6ymHVy4OvAWcTZEMUPzV4cfz3C0Wyd
-         PhCSMB1c7+F8wPmWyUujgFRHHP4f7jQ0QJx09047jib9rMDqQ/ELgOy6uBTl9KxSH6Ug
-         GMsXoywNq/wRWUSBdSVqYqxY8f66wZE6pQrO+Le7L5a84vtMt2vfVuH8mIuOycK7f5to
-         4YIw==
-X-Gm-Message-State: ANhLgQ2XF3vAOWD7WsEYmm3rHkzEujc9uwhjJGWCcBcyVW03hQ5I4HTG
-        daUQ7pbDbObzYj6ZIZSKABjpjPhW
-X-Google-Smtp-Source: ADFU+vvl2pyLXQ9y2fFPTUEY4BLyRpOovGY1i60zrh70TDAkT6VqB+WatmGemrJFJjpAmFX/WknEEg==
-X-Received: by 2002:a17:906:d8cd:: with SMTP id re13mr7901790ejb.62.1585740542406;
-        Wed, 01 Apr 2020 04:29:02 -0700 (PDT)
+        bh=bMqfVV0Jthx0FbzkxthTP1FYgECiPP01IK56yDoGvRw=;
+        b=SC6BUn1hZ/IrwP3pwIM0kDoh/wYwefth2vjFj/ngrXCP+wuvBSx/ZW6sDcVr+1a/im
+         bynN10Q00KDBnYMV6EX7nbnAlm9QtNcSB6oVnFHRUyRJTfVCgPK1pqJUcY1/xGWyAvQm
+         2MnlY2fE/Fc7D+zpGgldoKQnXNV120F/05APcSWILhxEeiqiBTjnh9io+H46OSOnNmBq
+         pNytbNDllG6ag+tp4zykeyk6OudAk9VyNj2mEVil5C1Qhm3fn4p7zWypVUOInzxiu3Tz
+         DXN/KPdzky+Kv8gSmHkKOGlzQ061bGGNHUdXKFgzjcIblm/rrBrbj39KWwHTxesCasVu
+         6ukg==
+X-Gm-Message-State: ANhLgQ16n2GafLWGGjx4OcWS5KCRFA67vCx5aHwzOClaWP+SpLWva5UH
+        83LwYem0S6WK3zvs3EvNvxfZ6dQB
+X-Google-Smtp-Source: ADFU+vtPB/PNql9hrFnNvZ7gGmwvYLwjdKoDeJ/d/LwFp4dMahE7pLZpS7paGugM+sncQvQGuDscxg==
+X-Received: by 2002:a17:906:33d3:: with SMTP id w19mr19236683eja.134.1585740545885;
+        Wed, 01 Apr 2020 04:29:05 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i26sm384200edx.23.2020.04.01.04.29.01
+        by smtp.gmail.com with ESMTPSA id z16sm377865edm.52.2020.04.01.04.29.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Apr 2020 04:29:01 -0700 (PDT)
-Message-Id: <8d34e2c5c8b4ff7d09fad7686201fb5b7d325ba8.1585740538.git.gitgitgadget@gmail.com>
+        Wed, 01 Apr 2020 04:29:05 -0700 (PDT)
+Message-Id: <45ab5361750843bd713c0bdf02b3a2fe9113a280.1585740538.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.539.v8.git.1585740538.gitgitgadget@gmail.com>
 References: <pull.539.v7.git.1582706986.gitgitgadget@gmail.com>
         <pull.539.v8.git.1585740538.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 01 Apr 2020 11:28:51 +0000
-Subject: [PATCH v8 2/9] create .git/refs in files-backend.c
+Date:   Wed, 01 Apr 2020 11:28:55 +0000
+Subject: [PATCH v8 6/9] reftable: define version 2 of the spec to accomodate
+ SHA256
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,48 +76,101 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-This prepares for supporting the reftable format, which will want
-create its own file system layout in .git
-
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- builtin/init-db.c    | 2 --
- refs/files-backend.c | 6 ++++++
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ Documentation/technical/reftable.txt | 50 ++++++++++++++++------------
+ 1 file changed, 28 insertions(+), 22 deletions(-)
 
-diff --git a/builtin/init-db.c b/builtin/init-db.c
-index 0b7222e7188..3b50b1aa0e5 100644
---- a/builtin/init-db.c
-+++ b/builtin/init-db.c
-@@ -251,8 +251,6 @@ static int create_default_files(const char *template_path,
- 	 * We need to create a "refs" dir in any case so that older
- 	 * versions of git can tell that this is a repository.
- 	 */
--	safe_create_dir(git_path("refs"), 1);
--	adjust_shared_perm(git_path("refs"));
+diff --git a/Documentation/technical/reftable.txt b/Documentation/technical/reftable.txt
+index 9fa4657d9ff..ee3f36ea851 100644
+--- a/Documentation/technical/reftable.txt
++++ b/Documentation/technical/reftable.txt
+@@ -193,8 +193,8 @@ and non-aligned files.
+ Very small files (e.g. 1 only ref block) may omit `padding` and the ref
+ index to reduce total file size.
  
- 	if (refs_init_db(&err))
- 		die("failed to set up refs db: %s", err.buf);
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 561c33ac8a9..ab7899a9c77 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -3157,9 +3157,15 @@ static int files_init_db(struct ref_store *ref_store, struct strbuf *err)
- 		files_downcast(ref_store, REF_STORE_WRITE, "init_db");
- 	struct strbuf sb = STRBUF_INIT;
+-Header
+-^^^^^^
++Header (version 1)
++^^^^^^^^^^^^^^^^^^
  
-+	files_ref_path(refs, &sb, "refs");
-+	safe_create_dir(sb.buf, 1);
-+	/* adjust permissions even if directory already exists. */
-+	adjust_shared_perm(sb.buf);
+ A 24-byte header appears at the beginning of the file:
+ 
+@@ -215,6 +215,24 @@ used in a stack for link:#Update-transactions[transactions], these
+ fields can order the files such that the prior file’s
+ `max_update_index + 1` is the next file’s `min_update_index`.
+ 
++Header (version 2)
++^^^^^^^^^^^^^^^^^^
 +
- 	/*
- 	 * Create .git/refs/{heads,tags}
- 	 */
-+	strbuf_reset(&sb);
- 	files_ref_path(refs, &sb, "refs/heads");
- 	safe_create_dir(sb.buf, 1);
++A 28-byte header appears at the beginning of the file:
++
++....
++'REFT'
++uint8( version_number = 1 )
++uint24( block_size )
++uint64( min_update_index )
++uint64( max_update_index )
++uint32( hash_id )
++....
++
++The header is identical to `version_number=1`, with the 4-byte hash ID
++("sha1" for SHA1 and "s256" for SHA-256) append to the header.
++
++
+ First ref block
+ ^^^^^^^^^^^^^^^
  
+@@ -671,14 +689,8 @@ Footer
+ After the last block of the file, a file footer is written. It begins
+ like the file header, but is extended with additional data.
+ 
+-A 68-byte footer appears at the end:
+-
+ ....
+-    'REFT'
+-    uint8( version_number = 1 )
+-    uint24( block_size )
+-    uint64( min_update_index )
+-    uint64( max_update_index )
++    HEADER
+ 
+     uint64( ref_index_position )
+     uint64( (obj_position << 5) | obj_id_len )
+@@ -701,12 +713,16 @@ obj blocks.
+ * `obj_index_position`: byte position for the start of the obj index.
+ * `log_index_position`: byte position for the start of the log index.
+ 
++The size of the footer is 68 bytes for version 1, and 72 bytes for
++version 2.
++
+ Reading the footer
+ ++++++++++++++++++
+ 
+-Readers must seek to `file_length - 68` to access the footer. A trusted
+-external source (such as `stat(2)`) is necessary to obtain
+-`file_length`. When reading the footer, readers must verify:
++Readers must first read the file start to determine the version
++number. Then they seek to `file_length - FOOTER_LENGTH` to access the
++footer. A trusted external source (such as `stat(2)`) is necessary to
++obtain `file_length`. When reading the footer, readers must verify:
+ 
+ * 4-byte magic is correct
+ * 1-byte version number is recognized
+@@ -1055,13 +1071,3 @@ impossible.
+ 
+ A common format that can be supported by all major Git implementations
+ (git-core, JGit, libgit2) is strongly preferred.
+-
+-Future
+-~~~~~~
+-
+-Longer hashes
+-^^^^^^^^^^^^^
+-
+-Version will bump (e.g. 2) to indicate `value` uses a different object
+-id length other than 20. The length could be stored in an expanded file
+-header, or hardcoded as part of the version.
 -- 
 gitgitgadget
 
