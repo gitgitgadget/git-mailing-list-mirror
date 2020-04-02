@@ -2,66 +2,65 @@ Return-Path: <SRS0=dTtN=5S=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F3527C43331
-	for <git@archiver.kernel.org>; Thu,  2 Apr 2020 20:09:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 14DFEC43331
+	for <git@archiver.kernel.org>; Thu,  2 Apr 2020 20:29:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8973F206E9
-	for <git@archiver.kernel.org>; Thu,  2 Apr 2020 20:09:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D64C120678
+	for <git@archiver.kernel.org>; Thu,  2 Apr 2020 20:29:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="x+9wytqH"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ME+06J/s"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388386AbgDBUI5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Apr 2020 16:08:57 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:58475 "EHLO
+        id S2389574AbgDBU3A (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Apr 2020 16:29:00 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:50744 "EHLO
         pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726617AbgDBUI5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Apr 2020 16:08:57 -0400
+        with ESMTP id S1730837AbgDBU27 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Apr 2020 16:28:59 -0400
 Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8A647CCE52;
-        Thu,  2 Apr 2020 16:08:55 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id E584ACCFE6;
+        Thu,  2 Apr 2020 16:28:57 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=UKFjqK0jvPqf5j7yWdqmSaqyda4=; b=x+9wyt
-        qHHOXoD1YvYFFBPT+Sncd4s3w9M8sKE0NdKwD/QJfR5YvZVT6ULCYvO6eqhr41n4
-        TWcDUVGmNPJpSuH++IT9U56jPeazPUUjxElrQ/QcsNb9XQ+4G07oQA3kpqyzNo5o
-        ROksLbnj7qXywmOyjVKSojxig+RzSGer+gd/4=
+        :content-type; s=sasl; bh=1nHwxFgQWsSPVWteVL48HyQBUsQ=; b=ME+06J
+        /sx+oDw84tNuCYi/GftZ/fcY6jIX9uKLdHVz0zKsM9bZGuzF+4xUYmVFEYqs+DnK
+        DSpVPqbRXCmahCVVfBH9d9rQP8W8Bb9uznDirOqPSBugwisF2pmwgW5yEBmLXjG8
+        w/dtAFDiC4nOD9vVjtviNdPu2FLxdpUsFPsFg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=MCQ2C/Pa09hMruRTKivw9XkID7laM95T
-        j51pK8+r6wq7qaLaENLrRrnUcCPHdMnX1bJqxtvrZNwAeDTq227kI0cVgziHpWlN
-        hy/nMNQUg5KNyW4BHKAZStbhrVz/cbmeO/SE+86qIGsHvKgmq26ogAojcjsCWKWh
-        SJZm+n3ee60=
+        :content-type; q=dns; s=sasl; b=N+KRcvZ+f6T/mxTL7MXZB6vLL0aRTWm3
+        MfU2pQlcOPMvAg9PoG7fKlRKuFn/ZaskDbOuwF9kKMeSJ2SpLGSx2hbxE9PvJeMV
+        LIPnW8NZdG1xGytzn3iDxPMNKViLg9oY6ZHsIcS4puumc9BL8oqUkve8dxwrZGvz
+        LORqEjXlkNI=
 Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8272DCCE51;
-        Thu,  2 Apr 2020 16:08:55 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id DDDEECCFE4;
+        Thu,  2 Apr 2020 16:28:57 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C58C7CCE50;
-        Thu,  2 Apr 2020 16:08:52 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 367F5CCFE2;
+        Thu,  2 Apr 2020 16:28:55 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, stolee@gmail.com, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 2/2] diff: restrict when prefetching occurs
+Cc:     git@vger.kernel.org, stolee@gmail.com,
+        Garima Singh <garima.singh@microsoft.com>
+Subject: Re: [PATCH v2 0/2] Restrict when prefetcing occurs
 References: <20200331020418.55640-1-jonathantanmy@google.com>
         <cover.1585854639.git.jonathantanmy@google.com>
-        <a3322cdedf019126305fcead5918d523a1b2dfbc.1585854639.git.jonathantanmy@google.com>
-Date:   Thu, 02 Apr 2020 13:08:51 -0700
-In-Reply-To: <a3322cdedf019126305fcead5918d523a1b2dfbc.1585854639.git.jonathantanmy@google.com>
-        (Jonathan Tan's message of "Thu, 2 Apr 2020 12:19:17 -0700")
-Message-ID: <xmqq7dyx3b1o.fsf@gitster.c.googlers.com>
+Date:   Thu, 02 Apr 2020 13:28:53 -0700
+In-Reply-To: <cover.1585854639.git.jonathantanmy@google.com> (Jonathan Tan's
+        message of "Thu, 2 Apr 2020 12:19:15 -0700")
+Message-ID: <xmqq369l3a4a.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: C63746BA-751D-11EA-B5A7-B0405B776F7B-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 92E9339C-7520-11EA-9B45-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -69,158 +68,44 @@ X-Mailing-List: git@vger.kernel.org
 
 Jonathan Tan <jonathantanmy@google.com> writes:
 
-> +	int prefetched = 0;
-> +	int output_formats_to_prefetch = DIFF_FORMAT_DIFFSTAT |
-> +		DIFF_FORMAT_NUMSTAT |
-> +		DIFF_FORMAT_PATCH |
-> +		DIFF_FORMAT_SHORTSTAT |
-> +		DIFF_FORMAT_DIRSTAT;
+> Thanks, everyone, for your review.
+>
+> New in v2:
+>  - added restriction on fetching rename_src's blob, following Stolee's
+>    comment
+>  - folded oid_nr==0 check into promisor_remote_get_direct(), following
+>    Stolee's comment
+>  - used "mv server/b server/c", following Stolee's comment
+>  - made diff_add_if_missing() public function, following Junio's comment
+>
+> I didn't change the "continue" part that Stolee suggested [1].
+>
+> [1] https://lore.kernel.org/git/xmqqlfng75cl.fsf@gitster.c.googlers.com/
+>
+> Jonathan Tan (2):
+>   promisor-remote: accept 0 as oid_nr in function
+>   diff: restrict when prefetching occurs
+>
+>  builtin/index-pack.c          |  5 ++--
+>  diff.c                        | 49 +++++++++++++++++++++++------------
+>  diffcore-rename.c             | 37 +++++++++++++++++++++++++-
+>  diffcore.h                    | 10 ++++++-
+>  promisor-remote.c             |  3 +++
+>  promisor-remote.h             |  8 ++++++
+>  t/t4067-diff-partial-clone.sh | 48 ++++++++++++++++++++++++++++++++++
+>  unpack-trees.c                |  5 ++--
+>  8 files changed, 141 insertions(+), 24 deletions(-)
 
-Would this want to be a "const int" (or even #define), I wonder.  I
-do not care too much between the two, but leaving it as a variable
-makes me a bit nervous.
+I notice that a439b4ef (diff: skip batch object download when
+possible, 2020-03-30) by Garima seems to aim for something similar.
 
-> +	/*
-> +	 * Check if the user requested a blob-data-requiring diff output and/or
-> +	 * break-rewrite detection (which requires blob data). If yes, prefetch
-> +	 * the diff pairs.
-> +	 *
-> +	 * If no prefetching occurs, diffcore_rename() will prefetch if it
-> +	 * decides that it needs inexact rename detection.
-> +	 */
+I'll for now keep both topics with conflict resolution, but it may
+make sense for you two to compare notes.  
 
-Name-only etc. that Derrick mentioned in the other thread would be
-relevant only when rename detection is active, and you'd do that in
-diffcore_rename().  Good.
+I especially like the way this series enumerates the formats that
+matter to prefetching and the way the change is localized in
+diffcore_std(); the other topic splits a similar logic (with
+different criteria) between diff_setup_done() and diffcore_std(),
+which I found suboptimal.
 
-> +	if (options->repo == the_repository && has_promisor_remote() &&
-> +	    (options->output_format & output_formats_to_prefetch ||
-> +	     (!options->found_follow && options->break_opt != -1))) {
->  		int i;
->  		struct diff_queue_struct *q = &diff_queued_diff;
->  		struct oid_array to_fetch = OID_ARRAY_INIT;
->  
->  		for (i = 0; i < q->nr; i++) {
->  			struct diff_filepair *p = q->queue[i];
-> -			add_if_missing(options->repo, &to_fetch, p->one);
-> -			add_if_missing(options->repo, &to_fetch, p->two);
-> +			diff_add_if_missing(options->repo, &to_fetch, p->one);
-> +			diff_add_if_missing(options->repo, &to_fetch, p->two);
->  		}
-> +
-> +		prefetched = 1;
-> +
-
-Wouldn't it logically make more sense to do this after calling
-promisor_remote_get_direct() and if to_fetch.nr is not 0, ...
-
->  		/*
->  		 * NEEDSWORK: Consider deduplicating the OIDs sent.
->  		 */
->  		promisor_remote_get_direct(options->repo,
->  					   to_fetch.oid, to_fetch.nr);
-> +
-
-... namely, here?
-
-When (q->nr != 0), to_fetch.nr may not be zero, I suspect, but the
-original code before [1/2] protected against to_fetch.nr==0 case, so
-...?
-
->  		oid_array_clear(&to_fetch);
->  	}
->  
-> @@ -6537,7 +6555,7 @@ void diffcore_std(struct diff_options *options)
->  			diffcore_break(options->repo,
->  				       options->break_opt);
->  		if (options->detect_rename)
-> -			diffcore_rename(options);
-> +			diffcore_rename(options, prefetched);
->  		if (options->break_opt != -1)
->  			diffcore_merge_broken();
->  	}
-> diff --git a/diffcore-rename.c b/diffcore-rename.c
-> index e189f407af..79ac1b4bee 100644
-> --- a/diffcore-rename.c
-> +++ b/diffcore-rename.c
-> @@ -7,6 +7,7 @@
->  #include "object-store.h"
->  #include "hashmap.h"
->  #include "progress.h"
-> +#include "promisor-remote.h"
->  
->  /* Table of rename/copy destinations */
->  
-> @@ -448,7 +449,7 @@ static int find_renames(struct diff_score *mx, int dst_cnt, int minimum_score, i
->  	return count;
->  }
->  
-> -void diffcore_rename(struct diff_options *options)
-> +void diffcore_rename(struct diff_options *options, int prefetched)
->  {
->  	int detect_rename = options->detect_rename;
->  	int minimum_score = options->rename_score;
-> @@ -538,6 +539,40 @@ void diffcore_rename(struct diff_options *options)
->  		break;
->  	}
->  
-> +	if (!prefetched) {
-> +		/*
-> +		 * At this point we know there's actual work to do: we have rename
-> +		 * destinations that didn't find an exact match, and we have potential
-> +		 * sources. So we'll have to do inexact rename detection, which
-> +		 * requires looking at the blobs.
-> +		 *
-> +		 * If we haven't already prefetched, it's worth pre-fetching
-> +		 * them as a group now.
-> +		 */
-
-This comment makes me wonder if it would be even better to
-
- - prepare an empty to_fetch OID array in the caller,
-
- - if the output format is one of the ones that wants prefetch, add
-   object names to to_fetch in the caller, BUT not fetch there.
-
- - pass &to_fetch by the caller to this function, and this code here
-   may add even more objects,
-
- - then do the prefetch here (so a single promisor interaction will
-   grab objects the caller would have fetched before calling us and
-   the ones we want here), and then clear the to_fetch array.
-
- - the caller, after seeing this function returns, checks to_fetch
-   and if it is not empty, fetches (i.e. the caller prepared list of
-   objects based on the output type, we ended up not calling this
-   helper, and then finally the caller does the prefetch).
-
-That way, the "unless we have already prefetched" logic can go, and
-we can lose one indentation level, no?
-
-
-> +		int i;
-> +		struct oid_array to_fetch = OID_ARRAY_INIT;
-> +
-> +		for (i = 0; i < rename_dst_nr; i++) {
-> +			if (rename_dst[i].pair)
-> +				continue; /* already found exact match */
-> +			diff_add_if_missing(options->repo, &to_fetch, rename_dst[i].two);
-> +		}
-> +		for (i = 0; i < rename_src_nr; i++) {
-> +			if (skip_unmodified &&
-> +			    diff_unmodified_pair(rename_src[i].p))
-> +				/*
-> +				 * The "for" loop below will not need these
-> +				 * blobs, so skip prefetching.
-> +				 */
-> +				continue;
-> +			diff_add_if_missing(options->repo, &to_fetch, rename_src[i].p->one);
-> +		}
-> +		if (to_fetch.nr)
-> +			promisor_remote_get_direct(options->repo,
-> +						   to_fetch.oid, to_fetch.nr);
-
-You no longer need the if(), no?
-
-> +		oid_array_clear(&to_fetch);
-> +	}
+Thanks.
