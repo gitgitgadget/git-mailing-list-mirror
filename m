@@ -2,189 +2,126 @@ Return-Path: <SRS0=dTtN=5S=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 97344C43331
-	for <git@archiver.kernel.org>; Thu,  2 Apr 2020 02:02:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D6D77C43331
+	for <git@archiver.kernel.org>; Thu,  2 Apr 2020 03:02:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5C37320675
-	for <git@archiver.kernel.org>; Thu,  2 Apr 2020 02:02:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A46842063A
+	for <git@archiver.kernel.org>; Thu,  2 Apr 2020 03:02:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cRLIIZEa"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k5orHp8J"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732664AbgDBCCb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Apr 2020 22:02:31 -0400
-Received: from mail-wm1-f41.google.com ([209.85.128.41]:55344 "EHLO
-        mail-wm1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727135AbgDBCCb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Apr 2020 22:02:31 -0400
-Received: by mail-wm1-f41.google.com with SMTP id r16so1732907wmg.5
-        for <git@vger.kernel.org>; Wed, 01 Apr 2020 19:02:28 -0700 (PDT)
+        id S1732739AbgDBDCq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Apr 2020 23:02:46 -0400
+Received: from mail-oi1-f173.google.com ([209.85.167.173]:34911 "EHLO
+        mail-oi1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732498AbgDBDCq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Apr 2020 23:02:46 -0400
+Received: by mail-oi1-f173.google.com with SMTP id t25so1582672oij.2
+        for <git@vger.kernel.org>; Wed, 01 Apr 2020 20:02:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=R8jy4WCzF2jjbQ6LGNuPIuU37z6/40Pegm3dML6IzXU=;
-        b=cRLIIZEa5hJfWX95+c9XdKPh9h+FhP8+KS+uCn7QM91sPENFdOVxWIaV7OwEl01caX
-         CdEKzzxvLqiIReyCbbjJc+w0zD19CG1XoSrIOHsNC/UZgl6KnV8bPZiledZS/S+CiVNI
-         +BYjjwDOct+jv77uu/Kl8oAAtrUzOcGRivcWyVLwKSN+ABQyhjJKBrmiOQu4qFQbOCMH
-         dvI0Q5MlMhw5v3OC7a95NkR9uRpeJOSZRpOOt4e7T6iImc2jRHCYPCAgohLdneCvMwwl
-         GJvN74krKrBK7pgiyfQAgRw1owwVlf+W7/xC59sA0tIKrgLWpYHMyRVdwHNgqKy3GvuD
-         jpQQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=DS6WxF8ga71LLCtJiu44yEL2TJ78UeZz1yeYhuGEjSE=;
+        b=k5orHp8JL5ccGP8DeDdpx0ybzq8fqbkD7po9hCCh7n1BYJPT9PRiQped7bk3XppN86
+         5HWRh6uiAo3AjJ1QFo9DzEr0o8o/PYD3ICnie+0427E7B7GgOrEnAz+0vckxh2zh9ynM
+         jgPkKPxaeTD2KP686RMLV1C9C+SRdEAtEbLEZlDg2wJZeTpgVFd0xmThUMzqI9xx4oaB
+         VXzqAX1x1Ao+EyL6WSl7N4H0GVXMwRk0MlknmheF1l6SUribFWRdvwLaM6UUqgxK/rsd
+         6GbHDDTzvb1sO5qf2TXrbao7+ysSYoLm8+dHJBgzbg4er41waHNmnoQdY/PiPGVOnh6j
+         XDcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=R8jy4WCzF2jjbQ6LGNuPIuU37z6/40Pegm3dML6IzXU=;
-        b=ZNt+zNzyFh5qXnWPlCwFiT5NBUBJ4nTXIUvcOOsUVQC8tTi6R3srpE7Qs2MM7FlIQC
-         hsAfPO2W0UEkSpjNF8sQ45zA/zwZ1MKBS2OHBT9IyG/QDijjHukU80R4I5WqDGY1S4Ll
-         mV0YT0vJomhiAgsVY39KjIPxWGxJQYXAoSalUqQva+3ht8Lsz7X1AdG6ccssAS+T2juV
-         R8G1CEdCJz7EDiSpOX42WBeaEwcdak8CD3VDk/2ecHUayt/LUEazqn3teGLvB/02q+GJ
-         KC64gPBsPqbrlIh0xa7Kr3ZkRWi2ovmoY9/kQePetvgiA0AsmEVZzwDuw0PHXjtA6EdK
-         Abfw==
-X-Gm-Message-State: AGi0PuZ3gwWYPYao7QrpOlWjg3nAtU8UHNs+mSprWD4LcfZjj0w6s0rN
-        OT0bkniSIHbyiTUOgtUXuze7RTg5
-X-Google-Smtp-Source: APiQypJ+Dqv2y1vmxbfHSflfS8PRzO/+kx+0TtHBDJ5IO/eVRLfypIHHYYVA6xE5wMZZnmkcklUc4w==
-X-Received: by 2002:a1c:9652:: with SMTP id y79mr879157wmd.89.1585792947556;
-        Wed, 01 Apr 2020 19:02:27 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j6sm5639332wrb.4.2020.04.01.19.02.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Apr 2020 19:02:26 -0700 (PDT)
-Message-Id: <pull.745.git.git.1585792946341.gitgitgadget@gmail.com>
-From:   "Teng Long via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 02 Apr 2020 02:02:26 +0000
-Subject: [PATCH] clone: document partial clone section
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=DS6WxF8ga71LLCtJiu44yEL2TJ78UeZz1yeYhuGEjSE=;
+        b=tXIzn1rhr0UQC5NKAVK6P1bPqBMgU92w+6Oc8I9TKFGtigZUK41EwP3BpszSinjZFL
+         i8xGyZfWimwuwYGk5vamE30EiAGKxEndX67BF2SbSZ7g0WaZu6RPaF63cU4SFQG9QNx1
+         qXdmd4U9Iw9Y+Gj9mQs34y3ihCXgL2GXqC+Ec9OhA2dUnaRmpkPfFKzbSpt4cyRDOfs0
+         E7RA+UDzVQJj8QQBuhOX1UtalDZ/F+CoeCjp1ynYIOCFtc2wc0ZdQBVNgDnil8UZwro8
+         0xLCFoer88I/zd1nik1fvXLm6gUzGYASU4hnVJrePCD3h3QZ4SsnzkDNzXRyokWsStMC
+         fKLg==
+X-Gm-Message-State: AGi0PuaxAYSbyJIpya1SCMZzzeMhuGBOSNaIDehw3gkS3nkpYersr1jX
+        9KETIbjOqDn+ZYxsm+9FERgs4f4ssN9g8iZ7TXo=
+X-Google-Smtp-Source: APiQypLIturQBwK4LaUYHj3qR1TjsXzJUS3h/NAGLESZdr1G9H8EOyYvCBa2hvyFvV6GZdnVh//hI5rwZFFv/t6Tduw=
+X-Received: by 2002:a05:6808:12:: with SMTP id u18mr800989oic.167.1585796565065;
+ Wed, 01 Apr 2020 20:02:45 -0700 (PDT)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Teng Long <dyroneteng@gmail.com>,
-        Dyrone Teng <dyroneteng@gmail.com>
+References: <CAGyf7-FUjCefwGjvCcwmjO=GADd5S0cU_=S_tVy4nMaj07+rQA@mail.gmail.com>
+ <CABPp-BFDx2j5Kf584Myb6wuEq5G7wbogJ2vos8OTDsh+ySfk8w@mail.gmail.com> <CAGyf7-FTNOgDbWEoniaOWueWGXwH6=0gj_FzDqP35422vxhYEA@mail.gmail.com>
+In-Reply-To: <CAGyf7-FTNOgDbWEoniaOWueWGXwH6=0gj_FzDqP35422vxhYEA@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 1 Apr 2020 20:02:34 -0700
+Message-ID: <CABPp-BEYqmU76yqnaC3AdgACpfWeCCytX_ixnB94xQk_4KnK_w@mail.gmail.com>
+Subject: Re: Rebase-via-merge behavior difference between Linux and Windows
+To:     Bryan Turner <bturner@atlassian.com>
+Cc:     Git Users <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Dyrone Teng <dyroneteng@gmail.com>
+Hi Bryan,
 
-Partial clones are created using 'git clone', but there is no related
-help information in the git-clone documentation during a period. Add
-a relevant section to help users understand what partial clones are
-and how they differ from normal clones.
+On Wed, Apr 1, 2020 at 6:16 PM Bryan Turner <bturner@atlassian.com> wrote:
+>
+> On Tue, Mar 31, 2020 at 11:35 PM Elijah Newren <newren@gmail.com> wrote:
+> >
+> > On Tue, Mar 31, 2020 at 4:25 PM Bryan Turner <bturner@atlassian.com> wrote:
+> > >
+> > > Using our merge test repository[1], one such test performs the following steps:
+> > > * Unzip bare repository
+> > > * `git clone --shared -b branch_that_differ_by_empty_commit_trgt
+> > > <unzipped> rebase-test`
+> > > * `git rebase -q --no-verify 7549846524f8aed2bd1c0249993ae1bf9d3c9998
+> > > 298924b8c403240eaf89dcda0cce7271620ab2f6`
+> > >
+> > > 298924b8c40 is an empty commit (i.e. `git commit --allow-empty`), and
+> > > is the only commit not already reachable from 7549846524f.
+> > >
+> > > On Linux, when this test completes, "HEAD" in "rebase-test" is
+> > > 7549846524f because the empty commit was discarded. This is the
+> > > expected behavior. On Windows, "HEAD" is a new empty commit, which
+> > > causes our test to fail.
+> >
+> > I don't have a Windows box to test, but it's good that you are seeing
+> > the correct behavior there.  I do have a Linux box, and cannot
+> > duplicate the behavior you state, even downloading the zip you
+> > mentioned and following your steps to reproduce.  Actually, I did
+> > reproduce that behavior the first time because I was accidentally
+> > using git-2.25.0.  But with git-2.26.0 on Linux, I see a new empty
+> > commit after rebasing, as expected.
+> >
+> > Is there any chance you accidentally ran with an older git version
+> > when on Linux?  If you really were using git 2.26.0 on Linux...then
+> > I'm totally confused at how you got that behavior.
+>
+> I went back through our build logs and confirmed that we _are_ running
+> Git 2.26 (phew). I then set up a local Git 2.26 environment and...it
+> produced the same new behavior as 2.26 on Windows (so the correct
+> behavior, per the documented changes).
+>
+> At that point I dug further into our builds and found that while we
+> were using the right Git version, we _weren't_ running all the same
+> tests on Linux and Windows. So the successful build on Linux was not
+> because the tests pass--I've adjusted the builds and confirmed that
+> the tests _don't_ pass--but rather because the relevant tests weren't
+> being run at all.
+>
+> Very sorry for wasting your time, Elijah. I should have looked into
+> our builds more closely to verify they were running the same tests
+> before I took the question to the list.
 
-The section briefly introduces the applicable scenarios and some
-precautions of partial clone. If users want to know more about its
-technical design and other details, users can view the link of
-git-partial-clone(7) according to the guidelines in the section.
+Hey, no worries; you provide good comments on the list and it was
+really nice that your report came with very detailed steps to follow,
+so it ended up not taking that long to check.  Thanks for double
+checking to verify that I wasn't insane (or at least that this one
+issue doesn't prove I am).  Anyway, not a big deal at all; keep
+reporting potential issues you run across in the future.
 
-Signed-off-by: Teng Long <dyroneteng@gmail.com>
----
-    clone: document partial clone section
-    
-    Partial clones are created using 'git clone', but there is no related
-    help information in the git-clone documentation during a period. Add a
-    relevant section to help users understand what partial clones are and
-    how they differ from normal clones.
-    
-    The section briefly introduces the applicable scenarios and some
-    precautions of partial clone. If users want to know more about its
-    technical design and other details, users can view the link of
-    git-partial-clone(7) according to the guidelines in the section.
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-745%2Fdyrone%2Fmaster-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-745/dyrone/master-v1
-Pull-Request: https://github.com/git/git/pull/745
-
- Documentation/git-clone.txt | 69 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 69 insertions(+)
-
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index bf24f1813ad..dd92d153535 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -297,6 +297,75 @@ or `--mirror` is given)
- 	for `host.xz:foo/.git`).  Cloning into an existing directory
- 	is only allowed if the directory is empty.
- 
-+Partial Clone
-+-------------
-+
-+By default, `git clone` will download every reachable object, including
-+every version of every file in the history of the repository. The **partial clone**
-+feature allows Git to transfer fewer objects and request them from the
-+remote only when they are needed, so some reachable objects can be
-+omitted from the initial `git clone` and subsequent `git fetch`
-+operations. In this way, a partial clone can reduce the network traffic
-+costs and disk space usage when git is working under a large repository.
-+
-+To use the partial clone feature, you can run `git clone` with the 
-+`--filter=<filter-spec>` option. If the repository has a deep history
-+and you don't want to download any blobs, the form `filter=blob:none`
-+will omit all the blobs. If the repository has some large blobs and you
-+want to prevent some large blobs being downloaded by an appropriate
-+threshold, the form `--filter=blob:limit=<n>[kmg]` omits blobs larger
-+than n bytes or units (see linkgit:git-rev-list[1]).
-+
-+When using a partial clone, Git will request missing objects from the
-+remote(s) when necessary. Several commands that do not involve a request
-+over a network may now trigger these requests.
-+
-+For example, The <repository> contains two branches which names 'master'
-+and 'topic. Then, we clone the repository by
-+
-+    $ git clone --filter=blob:none --no-checkout <repository>
-+
-+With the `--filter=blob:none` option Git will omit all the blobs and
-+the `--no-checkout` option Git will not perform a checkout of HEAD
-+after the clone is complete. Then, we check out the remote tracking
-+'topic' branch by
-+
-+    $ git checkout -b topic origin/topic 
-+
-+The output looks like
-+
-+------------
-+    remote: Enumerating objects: 1, done.
-+    remote: Counting objects: 100% (1/1), done.
-+    remote: Total 1 (delta 0), reused 0 (delta 0), pack-reused 0
-+    Receiving objects: 100% (1/1), 43 bytes | 43.00 KiB/s, done.
-+    Branch 'topic' set up to track remote branch 'topic' from 'origin'.
-+    Switched to a new branch 'topic'
-+------------
-+
-+The output is a bit surprising but it shows how partial clone works.
-+When we check out the branch 'topic' Git will request the missing blobs
-+because they are needed. Then, We can switch back to branch 'master' by
-+
-+    $ git checkout master
-+
-+This time the output looks like
-+
-+------------
-+    Switched to branch 'master'
-+    Your branch is up to date with 'origin/master'.
-+------------
-+
-+It shows that when we switch back to the previous location, the checkout
-+is done without a download because the repository has all the blobs that
-+were downloaded previously.
-+
-+`git log` may also make a surprise with partial clones. `git log
-+--<path>` will not cause downloads with the blob filters, because it's
-+only reading commits. `git log -p -- <path>` will download blobs to
-+generate the patch output and git log --raw will download all blobs
-+that changed at recent commits in order to compute renames.
-+
- :git-clone: 1
- include::urls.txt[]
- 
-
-base-commit: 9fadedd637b312089337d73c3ed8447e9f0aa775
--- 
-gitgitgadget
+Elijah
