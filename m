@@ -8,62 +8,61 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C1AFC43331
-	for <git@archiver.kernel.org>; Thu,  2 Apr 2020 13:17:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 95D8DC43331
+	for <git@archiver.kernel.org>; Thu,  2 Apr 2020 13:17:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id E41D420719
-	for <git@archiver.kernel.org>; Thu,  2 Apr 2020 13:17:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6C4E820719
+	for <git@archiver.kernel.org>; Thu,  2 Apr 2020 13:17:33 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f5UwrtEC"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B+Hn8MM3"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388453AbgDBNR3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Apr 2020 09:17:29 -0400
-Received: from mail-pf1-f180.google.com ([209.85.210.180]:41311 "EHLO
-        mail-pf1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732262AbgDBNR2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Apr 2020 09:17:28 -0400
-Received: by mail-pf1-f180.google.com with SMTP id a24so1730199pfc.8
-        for <git@vger.kernel.org>; Thu, 02 Apr 2020 06:17:28 -0700 (PDT)
+        id S2388533AbgDBNRc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Apr 2020 09:17:32 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:44213 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388375AbgDBNRc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Apr 2020 09:17:32 -0400
+Received: by mail-pl1-f193.google.com with SMTP id h11so1311031plr.11
+        for <git@vger.kernel.org>; Thu, 02 Apr 2020 06:17:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=n77DzuaAwDbvPneZ1mVTrwO5eaYfIQGdf0jbE+9yFcs=;
-        b=f5UwrtECffJIoFcuavZs0k78XLfFri6x7hk+JW2tGkZjNXfsDiLExTVqLw7Qv5a9Qb
-         9EJGcICWJ4X/WnJlUYftPA+rQJ5u/d/NK8EfhcOw+aSFJ0fVMsktQ00S6wSEDzuKedFJ
-         uLBuPG5PplINDPJX0QNa42W3FEs4+jTPnpN425E1mKFXhJQeddOBQzfhEz3htVZPH5av
-         3JUg56i4vXdp0bjKoBwJsqLN+O5lXqMM7ufEt1TCcmnLiSDImf6WGuYHRX4fuvOkAZwu
-         Y/XpgwVmyxCM3b3Krwvn8eAcPJlMJqe9R2GrqZj7s6B1GP3bh4b0XYhWCL/ixYeoIHYQ
-         YDeg==
+        bh=eaXsE6HfC8ZzKL2659ahPmPTXknfweBAs1BcSEUi2Mo=;
+        b=B+Hn8MM3CxkJDKcvEHRsPiskB61A4+tzSYa/32ZHoYgp1Fqs+UHAWZEyeAm9NaE+42
+         BISMydmWmQlh55Lkmwy4i8ARLil6kuM0Hi+/ND88x4ZtQ03bacpqQzSWw/egoxfaYBdO
+         uxc+puhNDWSfKgDikjunApulIUBT7HxZqTrfISGlyR5uVBlY61yySEbH92JgtjUTQ/tP
+         /mlsdi9HMYW9sjUTambjP8SAKbt9M+P2sSr6prtGJYKf7amX4dEjxii4APJGvbX+jgHn
+         zC9EjNj427BaNBSyLUlZMjb3znNOsVTmrQzwoJ4CBQJrQmM2+imH34o1b9040G4c7Zp/
+         9aDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=n77DzuaAwDbvPneZ1mVTrwO5eaYfIQGdf0jbE+9yFcs=;
-        b=CXVCEpuxYGMBQwJpspnR3H/5c5tjfyuzV1ks2GOYS8L/tl9J+6nxTe4WKipOHbubux
-         4RHNpy9tJdTOwBWwtC/hz78trIXjLHrr3yB7o0D8kPBacr5FfY/K2V164x2Cz5cGatqH
-         UMquhcLf2J0d+Pf1zOff1EyEd4ezxZrLt9LdCLpgMR05NXy7AjsigzsosioHcdYzBhoy
-         zNSg6tt1iwSrvLgekm+dXKBuFJWezrDrFP2giwUKD+VGDpoZDi+aMmYPLiEyzd9/L5Hz
-         QfOBcnrpPfE7S/0+OwNsUeN27XE2+MSp4REiKLfZIZcLtWPO+mF/glSG2EjB62tQmh3S
-         WHXg==
-X-Gm-Message-State: AGi0PubCloVpLEyaxxz6Fs+J7etAvmsdj2bVV4/maxixHKw1IOqnidIi
-        Mos3IKTFv76nODvBzW0zko53VuQW
-X-Google-Smtp-Source: APiQypKpI1/WrrxXWM6JlDZRjPr0BI7xGxTBk5EVSNaNLE/iFN1EN976z5Idq2O0yykbMwfV5+H42A==
-X-Received: by 2002:a65:6816:: with SMTP id l22mr3243124pgt.420.1585833447389;
-        Thu, 02 Apr 2020 06:17:27 -0700 (PDT)
+        bh=eaXsE6HfC8ZzKL2659ahPmPTXknfweBAs1BcSEUi2Mo=;
+        b=pkwdraEld8sckt13rvDKeaKMourEdWjNNS8LLDknC1Jqx4zrXAHaZXrWoEAxM+dPBL
+         NBRGmRRSA5xKrVlLuxanNLKySM+xz4ddZFATS2ZYr2kEpflhy63Sbvd9zbjRwHmmbXeC
+         xcs6lfSKFmW8IR3O7m0wyHoqFKkhiGl+3ZULbgGqZwXKFYJ5awTfdxTdBIjKfJBuiDdK
+         nZAq/qeSA1d8FP13nxRGnTr593AIqT38/4YLhkWVsWsufS0gks/fTLhZNzE0B7vvsQcV
+         8dHoVtJ346CHTRF4Y65HGQarBwQH7B0ECBSBEBZ5ppEJbVBJDlSLd9u3ypqBl4fWA+az
+         6nvg==
+X-Gm-Message-State: AGi0Puao7vBW5RYkiNDiGgi1o4TiNHCySkvbJydUXYMzRRm7lOhvKFl/
+        b+BKJ+rhqdWoBLXMJOsT3gNorSQs
+X-Google-Smtp-Source: APiQypJqskmsVZ9xMBXLTJ4W/8ctBJnqgYLQq6sBNNYCPGAjiB+gD5JcQXrIZf8X1YfHN5v9IEo90g==
+X-Received: by 2002:a17:90b:430f:: with SMTP id ih15mr3774385pjb.56.1585833450713;
+        Thu, 02 Apr 2020 06:17:30 -0700 (PDT)
 Received: from localhost.localdomain ([2402:800:6375:207b:be21:746a:7a56:9d4d])
-        by smtp.gmail.com with ESMTPSA id g18sm3350711pgh.42.2020.04.02.06.17.25
+        by smtp.gmail.com with ESMTPSA id g18sm3350711pgh.42.2020.04.02.06.17.29
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 02 Apr 2020 06:17:26 -0700 (PDT)
+        Thu, 02 Apr 2020 06:17:30 -0700 (PDT)
 From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>
-Subject: [PATCH v3 1/6] ci/lib: if CI type is unknown, show the environment variables
-Date:   Thu,  2 Apr 2020 20:16:55 +0700
-Message-Id: <3f9f1c6335d95cc8120697cf7293a7a755b1abb1.1585832999.git.congdanhqx@gmail.com>
+Subject: [PATCH v3 3/6] ci/lib: set TERM environment variable if not exist
+Date:   Thu,  2 Apr 2020 20:16:57 +0700
+Message-Id: <9a03c0844cf0595d611a0df32c8777ca51ab6fe2.1585832999.git.congdanhqx@gmail.com>
 X-Mailer: git-send-email 2.26.0.334.g6536db25bb
 In-Reply-To: <cover.1585832999.git.congdanhqx@gmail.com>
 References: <cover.1585756350.git.congdanhqx@gmail.com> <cover.1585832999.git.congdanhqx@gmail.com>
@@ -75,27 +74,29 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+GitHub Action doesn't set TERM environment variable, which is required
+by "tput".
 
-This should help with adding new CI-specific if-else arms.
+Fallback to dumb if it's not set.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
 ---
- ci/lib.sh | 1 +
- 1 file changed, 1 insertion(+)
+ ci/lib.sh | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/ci/lib.sh b/ci/lib.sh
-index 87cd29bab6..bda746df68 100755
+index f92e3a5211..40b159e24d 100755
 --- a/ci/lib.sh
 +++ b/ci/lib.sh
-@@ -138,6 +138,7 @@ then
- 	GIT_TEST_OPTS="--no-chain-lint --no-bin-wrappers $GIT_TEST_OPTS"
- else
- 	echo "Could not identify CI type" >&2
-+	env >&2
- 	exit 1
- fi
+@@ -79,6 +79,9 @@ check_unignored_build_artifacts ()
+ 	}
+ }
+ 
++# GitHub Action doesn't set TERM, which is required by tput
++export TERM=${TERM:-dumb}
++
+ # Clear MAKEFLAGS that may come from the outside world.
+ export MAKEFLAGS=
  
 -- 
 2.26.0.334.g6536db25bb
