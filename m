@@ -7,76 +7,76 @@ X-Spam-Status: No, score=-6.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FF9BC2BA14
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4A79C2BA15
 	for <git@archiver.kernel.org>; Thu,  2 Apr 2020 07:09:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 66D122078B
+	by mail.kernel.org (Postfix) with ESMTP id 9215E20784
 	for <git@archiver.kernel.org>; Thu,  2 Apr 2020 07:09:32 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="L3ujEh93";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="S4yo+W7Y"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BesSw1Ws";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Zy009x9c"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733114AbgDBHJS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Apr 2020 03:09:18 -0400
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:60571 "EHLO
+        id S2387444AbgDBHJZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Apr 2020 03:09:25 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:52571 "EHLO
         out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728612AbgDBHJR (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 2 Apr 2020 03:09:17 -0400
+        by vger.kernel.org with ESMTP id S2387403AbgDBHJZ (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 2 Apr 2020 03:09:25 -0400
 Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.nyi.internal (Postfix) with ESMTP id 08E8C5C028F;
-        Thu,  2 Apr 2020 03:09:17 -0400 (EDT)
+        by mailout.nyi.internal (Postfix) with ESMTP id C08555C0281;
+        Thu,  2 Apr 2020 03:09:23 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Thu, 02 Apr 2020 03:09:17 -0400
+  by compute3.internal (MEProxy); Thu, 02 Apr 2020 03:09:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
         :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm3; bh=kXhCDV4jmHqEtHWXlMbTY/O6mzR
-        l0JCm4WOa10GSc9M=; b=L3ujEh93gUWbzdOK/V7eOOYaCe3+wffIj/hcWecsVw2
-        lSZ9n8xs2RiMXVXB9wi8WYwYU+SUSRsO+hQgMyl8cuou8wihYBXlkD7YDUVpOvWk
-        WboVX1rfEKkm6FwBHvMDTTdg6TZ+5JFYhMBcl/bkPGtsNWsW75gGN850hp6xYR2f
-        t8yKKLBL9fg3eCHY84dr9DMdJ5XOEs2IFzd9DIzi3lpx94fvoztOBkCi9EI3FFli
-        5HApLccnslJ/2OK2e9r9a1AhG4RYikXf3qFSRNjAVyno8KZ8zwIdj2/2NdfzV33c
-        jmjIL4Ty86LaVn3I56V09qc+Ivd+nkzAK1weRTGen2w==
+        :content-type:in-reply-to; s=fm3; bh=9nyYQw0I6X7TuKb5N1BpfD/eCx0
+        47AyTZ8RmD30iCmk=; b=BesSw1Ws2xjln+4HeHzZ887NOyRqYU+T+pZR3sPpxYA
+        XX7NvBzWv7JKyBlA5fQLFr39+s/p31QUZynXEyQR2iR8x4OlqKLMQkvmLIsqVym+
+        wk7JM5EpMuonlRs9q1rtoYijt4HWiGmHYN3KYRoKQLCaq80uJlAV7S4DQBHRpmvm
+        kLFYCxKFqAqujxM8OvsgLgufZSxYRTO2uGWwADYqnRJKyb/JsP4NEK7tvQ7apmOu
+        Itxu28sjUCqQLjNYLE+qQwUlr0FyDchaADQgNNHwBP8Jwv9eM6FViAoCeUhlaxBw
+        qC8WVoZjsY1EwxMXhF9qgRJ4L2ulwa92WQtYGF2SJsw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:content-type:date:from:in-reply-to
         :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=kXhCDV
-        4jmHqEtHWXlMbTY/O6mzRl0JCm4WOa10GSc9M=; b=S4yo+W7YNAwxuRKCoCbCeo
-        2j2xHASPjm/gBdFBQ3jGjg7go7Zh6vjzBC2kw/FOgCi0efMklN7sRRLteDQH/a8X
-        657Rp16PIgMiuoNJcqCHDSbkB0f+J6QmFHRTPu1g/Updfs9F6q5N24kk/3BRlZgW
-        +oPe7dXRpmn0QuZeb0168w0PlQfanH3o+/M245f8yqxljYlbimjyG5kyi9G1jPBr
-        NClW3Bafx8uXprH+Yn3uoI6jErkTkji15Y0sfllMd+EE7aRKGTaVm0o32ID5asUf
-        D6UJ9GaRW1e6ExSyy4CkHFfAaUVVWicJLNOZzL8qKZskPKfxZFgS1h+ibqbvvpRw
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=9nyYQw
+        0I6X7TuKb5N1BpfD/eCx047AyTZ8RmD30iCmk=; b=Zy009x9cezG7x24K2dgN8M
+        KtkFsoNoVmqsYCIaoqzShzwq7etE6eStLRU6e87RBHwDADRailgRq056UbDNm7rE
+        Y8tWWHd1R+7zhi6uPQ5Gt8AQS9C86uHVrAQtE642LrIB994jMa22R1/Gmz8VCqoh
+        8wpelRvGKRAxh5Iz8EZ6oxn/b62hf3KIG+4pSDFZ3FR6sHb9JTWy5H/OMGyLCzHQ
+        Gk9gVVVGr88v5Zp99p5EYsFOYgjo0jK+8c6m45/oymlHgaOliWFYtZ2SkrrNJQ6R
+        TOkrRrkvv678o08dLmgc3TYfnqlPuIhBgeSH5fY2cH5qXMQZJDxOib1OtHJdXm7g
         ==
-X-ME-Sender: <xms:nI-FXkRnubcNxXvhaZzgK7WZtUlUNL4mGoxePTfq-QyN1ZNlDc8Mcw>
+X-ME-Sender: <xms:o4-FXgqOyJeACD0QzCngTxhizL3o4s9R51mC538BxhCuQ9E8ayCvaw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrtdefgdduudeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucfkphepkeelrdduvd
-    drleegrddvkeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhr
+    drleegrddvkeenucevlhhushhtvghrufhiiigvpedvnecurfgrrhgrmhepmhgrihhlfhhr
     ohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:nI-FXnhVjuJ1QpXb3YanAYXaxmzBVncbTHwgEvC2mPZNUnCoDYWGYg>
-    <xmx:nI-FXorVMqeftdJNv10mXXC8syySgh_Rg2ONFxU2Z_euelLvUQl4IA>
-    <xmx:nI-FXvN-Rx-472PqJK8FoeuHGgyebnfi3u1ZpQ63VY4TWOUhw6vNEQ>
-    <xmx:nY-FXpLtmx4_K_NGq1sm5V9xi5JG2SMxbORX1VKrKblT26X9ta_sHw>
+X-ME-Proxy: <xmx:o4-FXq5rXg6ZMeR59MJYvP2SseAxAWvt9KNPtT4mUvpX4tj55ImcTg>
+    <xmx:o4-FXgMaBd2gpCD4pcS2MF2QHWQkZ98Z4OcWFtc5UQPZddLCzZPDeA>
+    <xmx:o4-FXsPOTVSpNssJpnhomWb4JSCY3ZXxPyEPQEhI94Qol8-OMj36Vw>
+    <xmx:o4-FXhs0l5oWG3_eFdFYKZg52QplVAFJLVeqYUN2UDutFf41ZbXbwA>
 Received: from vm-mail.pks.im (x590c5e1c.dyn.telefonica.de [89.12.94.28])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 68B8E306CD75;
-        Thu,  2 Apr 2020 03:09:16 -0400 (EDT)
+        by mail.messagingengine.com (Postfix) with ESMTPA id 14D23306CDA9;
+        Thu,  2 Apr 2020 03:09:22 -0400 (EDT)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 4dcf2220 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Thu, 2 Apr 2020 07:09:15 +0000 (UTC)
-Date:   Thu, 2 Apr 2020 09:09:22 +0200
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 847ad378 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Thu, 2 Apr 2020 07:09:20 +0000 (UTC)
+Date:   Thu, 2 Apr 2020 09:09:27 +0200
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git <git@vger.kernel.org>
 Cc:     Christian Couder <christian.couder@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 1/9] refs: fix segfault when aborting empty transaction
-Message-ID: <7a297db4daaee84dc90ddeaa8f77b68a39231ef1.1585811013.git.ps@pks.im>
+Subject: [PATCH v3 2/9] git-update-ref.txt: add missing word
+Message-ID: <15857e1b8ca800a92fa96fee818a54456bfbd330.1585811013.git.ps@pks.im>
 References: <cover.1585129842.git.ps@pks.im>
  <cover.1585811013.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="RnlQjJ0d97Da+TV1"
+        protocol="application/pgp-signature"; boundary="YiEDa0DAkWCtVeE4"
 Content-Disposition: inline
 In-Reply-To: <cover.1585811013.git.ps@pks.im>
 Sender: git-owner@vger.kernel.org
@@ -85,83 +85,55 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---RnlQjJ0d97Da+TV1
+--YiEDa0DAkWCtVeE4
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-When cleaning up a transaction that has no updates queued, then the
-transaction's backend data will not have been allocated. We correctly
-handle this for the packed backend, where the cleanup function checks
-whether the backend data has been allocated at all -- if not, then there
-is nothing to clean up. For the files backend we do not check this and
-as a result will hit a segfault due to dereferencing a `NULL` pointer
-when cleaning up such a transaction.
-
-Fix the issue by checking whether `backend_data` is set in the files
-backend, too.
+The description for the "verify" command is lacking a single word "is",
+which this commit corrects.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- refs/files-backend.c | 20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+ Documentation/git-update-ref.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 561c33ac8a..6516c7bc8c 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -2565,17 +2565,19 @@ static void files_transaction_cleanup(struct files_=
-ref_store *refs,
- 		}
- 	}
+diff --git a/Documentation/git-update-ref.txt b/Documentation/git-update-re=
+f.txt
+index 9671423117..9bd039ce08 100644
+--- a/Documentation/git-update-ref.txt
++++ b/Documentation/git-update-ref.txt
+@@ -107,7 +107,7 @@ delete::
 =20
--	if (backend_data->packed_transaction &&
--	    ref_transaction_abort(backend_data->packed_transaction, &err)) {
--		error("error aborting transaction: %s", err.buf);
--		strbuf_release(&err);
-+	if (backend_data) {
-+		if (backend_data->packed_transaction &&
-+		    ref_transaction_abort(backend_data->packed_transaction, &err)) {
-+			error("error aborting transaction: %s", err.buf);
-+			strbuf_release(&err);
-+		}
-+
-+		if (backend_data->packed_refs_locked)
-+			packed_refs_unlock(refs->packed_ref_store);
-+
-+		free(backend_data);
- 	}
+ verify::
+ 	Verify <ref> against <oldvalue> but do not change it.  If
+-	<oldvalue> zero or missing, the ref must not exist.
++	<oldvalue> is zero or missing, the ref must not exist.
 =20
--	if (backend_data->packed_refs_locked)
--		packed_refs_unlock(refs->packed_ref_store);
--
--	free(backend_data);
--
- 	transaction->state =3D REF_TRANSACTION_CLOSED;
- }
-=20
+ option::
+ 	Modify behavior of the next command naming a <ref>.
 --=20
 2.26.0
 
 
---RnlQjJ0d97Da+TV1
+--YiEDa0DAkWCtVeE4
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAl6Fj6EACgkQVbJhu7ck
-PpTkgQ/+MSnj56osbnikVJdwaUl+Cegx7Rs6mp5c7fMtpxsZsENPp7NZ5QzvDvEv
-lMfE8fPH22wIx3IRgiPhehbVI0MusOmgMvubw8Vbd8SOh8PT7qhzAeemUeJramd0
-FttjLX8bq8uxLvI4QZPzelfwMYB2aFRj7LMl2YYH+9s7zrcRkOm1Ae7Lf/XtPXZi
-gQlrfHxCQhje09NSOkpBHBYW2lpifW+q0+vZ1j2tTn04odkXJmgnAHSGvAXsOzT6
-UtOj/W12UQT8pR7Q5cNHPz3L/p5WyiCQzGvEV0m2r1kSFoPFnPwDId6cLGsNvPsa
-iVyOi2x6wSaP+sb2SqV9MDorsRtU7GsNh+UbIy6E4/O1DzLr7zdwMS+pzdJtaf/G
-yGRW3Eqn8EKSBw/fsB+9l87Y3O9aX6MFhPvd52sbooetrlYdqY3c2y7Rtlyr3ori
-MdA+CAd/6JeACvnYsgj7hnG8q1FHNQDUAST486yxWqpMrA8LBmXmDocQpGCyxyIQ
-uiQ65SMdNJmGjpPSyybbY/wvTK2Nkx08/2QDAKmL6AG7jV8efwW4DJ0ybae2qgce
-HhKvMn/AOh1U9YPHo8ZRupnJZJoRe253dn8DCtsHbsuvaKcXKivSEZvUgB91Vqm0
-Lu9GaPE/CkHVZL8ZsielcC4jAv+/5/jMUohamrnvhv/IvYBdU24=
-=oEgL
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAl6Fj6cACgkQVbJhu7ck
+PpRC9g/8Ct9Nv3gWDKmirQqcqwOcYSuCy84gEWHtiMSBpKVdOqm+CnbAaJfXtgy5
+gCk4V9jRmWH6SLUiEqPpWvjNqIjdb2iHcGupvlbDdLth/3MM7kWnPBaXHEFbaeTv
+/p1ZmxF/G0xO4kMvYEqM4tJviuAnHFj6tuOuX087JUJfDcSHaLoEPekAuJ4pv6H+
+RnZR2iNg0qWf6qnYRIVbqJy7ppXC1R84HdhTO4fv13eqKHUCrj7OMUsikYP0jUwx
+jWW3bHH8M/9mE09wIQCAljr9SQ7HkEkkhxyOjp2NYtpHjUm1oziyQnVuPmPRB0bo
+5q09GDO1eNDSgVYfLnbZi9Qh3zx0GQ8i+drw3uPVLA2LdjRkj2CTxkWwL/ucmqGH
+7WE7UXSuep19ksSgif/FBu2gjTzieK74KBS6T0UTrtDM83dITfAJqzFi479kSDwQ
+ilHY3P+qv3seCrMCUUEAVq6dT7ycnO671TNCsx1o4OVFLigfRogCi+dxRSGuBy2e
+GcscA4qjvHGo4domik788eEu6U0Xg/d0cwo4Of9oNG3Y43l/6uKnVbTxzh2fttVJ
+GBs05dBbJxoMkqyMMe1RATfcj+fJymFrrVSTs0MN4J+46IsqU3cMZ57XTWrY8JG+
+as3D2mOXXN/HIMO/EBwE4bfNxQd71SezFPvu+3bFsiSWkNvhuCI=
+=oeew
 -----END PGP SIGNATURE-----
 
---RnlQjJ0d97Da+TV1--
+--YiEDa0DAkWCtVeE4--
