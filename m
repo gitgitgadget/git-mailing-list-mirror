@@ -6,92 +6,87 @@ X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A295C43331
-	for <git@archiver.kernel.org>; Thu,  2 Apr 2020 16:36:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AEDE1C43331
+	for <git@archiver.kernel.org>; Thu,  2 Apr 2020 16:49:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 094B62074D
-	for <git@archiver.kernel.org>; Thu,  2 Apr 2020 16:36:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 827E42078B
+	for <git@archiver.kernel.org>; Thu,  2 Apr 2020 16:49:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="GZfEncLd"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="gY3g6Rsl"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389072AbgDBQgU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Apr 2020 12:36:20 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54624 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732404AbgDBQgT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Apr 2020 12:36:19 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7E4054FB0F;
-        Thu,  2 Apr 2020 12:36:17 -0400 (EDT)
+        id S2388695AbgDBQtC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Apr 2020 12:49:02 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:65295 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727412AbgDBQtC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Apr 2020 12:49:02 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 751B0C8772;
+        Thu,  2 Apr 2020 12:49:00 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=FunfQ0WG4Niz+FdW37hZB8t+n+o=; b=GZfEncLdDl9WWjENuS+s
-        nB1gPL1yx+0PV8i9dV1DuTAtd+q/cWIJbrcoC3mHVR7qNY6t2wKtTVOxZor3QLyz
-        dZp0kKcrzZlmLOheXwgWkfPfLZhMpt3A0TEj56UHAB+3ExfXuzImw1m3VnFf+mYz
-        Dx0R0qrH2tye1WxgYGTZ8sE=
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=EptOp7wGHQpLyNoMKkbAMq/ln/A=; b=gY3g6R
+        sl174VngOVr3KVdBHEOFzomdpGI//A21KcSQZxDQ0QFJNMonQ/kfEoIS0QuVJBS4
+        wTIFbSIjgU4eLZ1F9rue/EF0REBwQrPxt46mT+ZDWgAJNqMtVhOH+fwTSv1DgisS
+        mwLXUPLVJ9sxkfSExbxZpriz9FmqQ7Y17gutI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         q=dns; s=sasl; b=j3JnmCzPT/T13iTRSrT4uWKrL3cpypJ2qB3IA6eFMPPa0j
-        9jCCTIqR9BKmbObfebvbIEgKTKbZM17WuyhFZ1ztfBDr00PL8WLtgt/5OUR5gDhw
-        gSFthcunPbwaBwEV6u5crI47FMvfiAXvSND7wP/0fcLZbsyp6TCGp/4B91Sw8=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7425E4FB0D;
-        Thu,  2 Apr 2020 12:36:17 -0400 (EDT)
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=PXQwnF9v+ThHl0EmUw1yUqwlKPp0P44R
+        93mp73RzAf1d+T22JwruM82mvl0yTlbQbzMEuMpnNAVtZmqHg3oCYITYxt3BgiPi
+        ZObUmVKnhdb/dszeBzLh8+IgICKjk7MT2CfbeYW7iQoAaFi+fGdbbYyr957YA/dh
+        fou8trrZaew=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6E5BDC8771;
+        Thu,  2 Apr 2020 12:49:00 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 001314FB0C;
-        Thu,  2 Apr 2020 12:36:16 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B370CC876C;
+        Thu,  2 Apr 2020 12:48:57 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, me@ttaylorr.com,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v2 1/2] t5319: replace 'touch -m' with 'test-tool chmtime'
-References: <pull.596.git.1585764695643.gitgitgadget@gmail.com>
-        <pull.596.v2.git.1585774844.gitgitgadget@gmail.com>
-        <24e26ecda632421e4c1a61ebabf6ea78301685b1.1585774844.git.gitgitgadget@gmail.com>
-        <xmqq369m6g9u.fsf@gitster.c.googlers.com>
-        <8e6b1f75-534a-ad79-544b-126ea61b2058@gmail.com>
-        <20200402125113.GA3091800@coredump.intra.peff.net>
-Date:   Thu, 02 Apr 2020 09:36:16 -0700
-Message-ID: <xmqqo8s94zgf.fsf@gitster.c.googlers.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Jeff King <peff@peff.net>,
+        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 0/6] Doc: drop support for docbook-xsl before 1.74
+References: <20200330094513.GB1735224@coredump.intra.peff.net>
+        <20200331192600.588-1-martin.agren@gmail.com>
+        <20200401101716.GC60227@coredump.intra.peff.net>
+        <20200402004533.GA6369@camp.crustytoothpaste.net>
+Date:   Thu, 02 Apr 2020 09:48:56 -0700
+In-Reply-To: <20200402004533.GA6369@camp.crustytoothpaste.net> (brian
+        m. carlson's message of "Thu, 2 Apr 2020 00:45:33 +0000")
+Message-ID: <xmqqk12x4yvb.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 1329B48A-7500-11EA-B988-C28CBED8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: D8986198-7501-11EA-9674-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> On Wed, Apr 01, 2020 at 08:06:47PM -0400, Derrick Stolee wrote:
+> I believe Emacs does have good integration with the info format.  I
+> personally prefer documentation in almost any other format and would
+> also be happy to see it go away, but Emacs users may find it convenient.
 >
-> I wonder if that would run afoul of the same "mtime and system clock are
-> not quite the same" issue we saw recently in [1].
+> Junio, I believe you use Emacs.  Do you have an opinion on whether, on
+> the whole, Emacs users are likely to make good use of the info
+> documentation?
 
-I had the exact thing in mind, which was why I suggested "chmtime"
-in the first place (the second reason was that it was easy to do
-relative time using the tool than "date + touch"), but I missed that
-the tool has a mode that uses timestamp relative to system clock.
+I probably am very atypical; I used to read even system manuals via
+info in Emacs, but for the last 10 years or more, I don't.  Another
+reason that makes me a bad judge is because I do not use our doc in
+any formatted form---"git grep -e ... Documentation/" is easier and
+faster.  So, no, I have no opinion.
 
-> I think it might not because we're only comparing mtimes set
-> through the same mechanism (find the system time, subtract from
-> it, and assign to mtime). If system time is monotonically
-> increasing at any rate, that would produce the desired effect.
+> If nobody seems to care very much for the info documentation, we could
+> drop it.  I've put a query out on Twitter to see if anyone I know is
+> using it.
 
-But in this particular case, I think, even though setting the
-filesystem timestamp based on something that was obtained from the
-system clock feels as if we are asking for trouble, the values we
-later read back from the filesystem for executing the codepath being
-tested (namely, expiration logic) get compared with another value
-that is derived from from the system clock (i.e. expiration cutoff),
-so in that sense you might be able to argue that it is even more
-correct ;-)
-
+Thanks.
