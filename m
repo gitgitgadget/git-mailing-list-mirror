@@ -8,59 +8,59 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B30BAC2BA12
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A610C43331
 	for <git@archiver.kernel.org>; Thu,  2 Apr 2020 16:35:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 897AF20787
+	by mail.kernel.org (Postfix) with ESMTP id 54B2820757
 	for <git@archiver.kernel.org>; Thu,  2 Apr 2020 16:35:37 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kSLAvwqY"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gUL0Ryfz"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388820AbgDBQfe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Apr 2020 12:35:34 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:40731 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388809AbgDBQfe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Apr 2020 12:35:34 -0400
-Received: by mail-pg1-f194.google.com with SMTP id t24so2077093pgj.7
-        for <git@vger.kernel.org>; Thu, 02 Apr 2020 09:35:33 -0700 (PDT)
+        id S2388796AbgDBQfd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Apr 2020 12:35:33 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:36025 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388416AbgDBQfc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Apr 2020 12:35:32 -0400
+Received: by mail-pf1-f193.google.com with SMTP id n10so2005066pff.3
+        for <git@vger.kernel.org>; Thu, 02 Apr 2020 09:35:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=k0TTErNib/oVDKYqMrFH1TE4YX/C72t6kSBmdz23lsc=;
-        b=kSLAvwqYCYEqXFP0dqlppT0TyqfZdtBbr1ekG3qIt+l46zqn07Knrm0Pb7SsS3E19a
-         h5hO6bf1Z7dV6zh1XAZCP32BJL1UbqJd5eXDmKp2PEYHBd6qqDK6mNRIMfekWhVk7eeh
-         wfVPBF2snYut4taHS4ForAM/9uOMiyJaX5FJi+LEV2mXOKvOYKF92nJKmLo3CsAlwAru
-         6a7DkREnJP8qp/6S6MejEwzcmdwYwvVUrvF8ecOal3FHHlk0+0SDRFlC2qDZu5OQ5w35
-         wEK73br/iQXWxLFBOg6k0k/TVDOWTNjkxpONCEVZXBw9YKpf5wwMEqTmw/HGHSbJbGUk
-         tp0A==
+        bh=2MdD9ucr1ur7WPrdtKKTz6KGlO+aXnPbgsbR2W0by/k=;
+        b=gUL0RyfzcXjCbbk3zS46XMCztcN7JQ4CBN/zwwSE1Qd9RqevxSvqQ29fdusv0aWROL
+         L9MzIDCgrps40t+OE4R7+SHjqWB3gGBKhuQp4Wppg+WxndlnS+1xLSeUp8kfQmQ+skvI
+         J5xP6PEMemBVDK9KZ/4YcyRZ3IUfWCAmAe10X94ari3+DgKKeDJx6PMs1NJwXVSH9wuc
+         P10vtTaiAbFXDy/bVNyDRP0nVIO4bF8kU5MyYgyazjtvSoh/fkIQZwdgwIO0PYP0J2jF
+         cVMl21nxVRWq4vtljANGKO8G5vkhIrDFstJnD8sfUIB98c4YD3UeRNgzRSywvhaDE6Nz
+         VNdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=k0TTErNib/oVDKYqMrFH1TE4YX/C72t6kSBmdz23lsc=;
-        b=Yld3tOAHGIE4k0ebK4bzmM6a2FPkFt8PwEF08cY8fILbWnfGgRGN0glDBhpAZQ6Ki1
-         YnGpDsQG7s7vp4krCjeQlKRkHtD8Eqq4LOtzklzjLj0pHF92fnJue+mPUYz6bJ0ABEY8
-         K0mYl0B3cKUkYAjKK9ucDwL+0UG6DY45D1WkbcLICyWrYPpwO9LZ7lXZlfj6QsxHjlrm
-         qr1XclbAP9+rVNAzvhX1AjVDf83k2nJcLEHd7fP5yCOgx6svX1p/xJTmbMSgPBz8GWie
-         WT4TM1jRvZgBUcHCditpzJHK4XwjHEx3E0H/RbftU886vdcE1sWqIFxSx1KEyXh3awB7
-         o2vw==
-X-Gm-Message-State: AGi0PubyIUB75aTysisVuxnbBXa+AOO5OsyftEtqxSTAiDTq2UUP6N5G
-        yRoqKe9VhjQhUzvAnMlr1oI=
-X-Google-Smtp-Source: APiQypIflVj5O72v1qnyzdXaNsAxystkFCaL6s/av+8FflMOOAL6o4O2BplmeZnPCd05T7FMKjRztA==
-X-Received: by 2002:aa7:96f0:: with SMTP id i16mr4207653pfq.198.1585845333098;
-        Thu, 02 Apr 2020 09:35:33 -0700 (PDT)
+        bh=2MdD9ucr1ur7WPrdtKKTz6KGlO+aXnPbgsbR2W0by/k=;
+        b=DrdL/70QQUPXxZqHtRM1QW/niuQ43LIEdfCvbeGxRw672SnA3xW0l5LFv6uud2D4dZ
+         Fk85aJkuBtkaElivk34o+lcKgrKfzF6bpzNQouEiinqb1p7hRj/MyQfBZoBIMBJhxqJ9
+         4VgyathgsRCOQEDV76tMBdJmIbsV6Eho5MpmCkX8tie+TWxbyDXyoBsdr+bHUt3+coeD
+         m0CImlCq6LNxKGbi9W024bd7fe+HemCBdlFFK/hSgPiEcJlZt3S0666L9qiBQSH8barN
+         2R8Wyplb/thnX0+5FuQlUsdtuTO8CaAQEFGi/e0QIkCN0e1qD+mC8V3QjGKajlscUB36
+         jQJQ==
+X-Gm-Message-State: AGi0PuZuZjwTP0o0YFaRDdvLtEnp7bQahi+DGrjce10hozLuBRrOY29V
+        oDB+Swd82hDV78zhCL1lJyw=
+X-Google-Smtp-Source: APiQypI9V+tiZk5//wpTzO8GRWmXpCRQ8WM7bneGF4k6T60XvCcMlAfBxxuvcWmkw+F0H2ttU5qxbQ==
+X-Received: by 2002:a62:dd09:: with SMTP id w9mr759832pff.311.1585845330995;
+        Thu, 02 Apr 2020 09:35:30 -0700 (PDT)
 Received: from tigtog.localdomain.localdomain ([144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id 1sm4178140pjc.32.2020.04.02.09.35.32
+        by smtp.gmail.com with ESMTPSA id 1sm4178140pjc.32.2020.04.02.09.35.30
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 02 Apr 2020 09:35:32 -0700 (PDT)
+        Thu, 02 Apr 2020 09:35:30 -0700 (PDT)
 From:   Jiang Xin <worldhello.net@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
 Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: [PATCH v6 3/7] refs.c: refactor to reuse ref_is_hidden()
-Date:   Thu,  2 Apr 2020 12:35:16 -0400
-Message-Id: <20200402163520.1338-4-worldhello.net@gmail.com>
+Subject: [PATCH v6 1/7] transport: not report a non-head push as a branch
+Date:   Thu,  2 Apr 2020 12:35:14 -0400
+Message-Id: <20200402163520.1338-2-worldhello.net@gmail.com>
 X-Mailer: git-send-email 2.26.0.rc0
 In-Reply-To: <20200304113312.34229-1-zhiyou.jx@alibaba-inc.com>
 References: <20200304113312.34229-1-zhiyou.jx@alibaba-inc.com>
@@ -73,56 +73,209 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 
-Add new function `ref_is_matched()` to reuse `ref_is_hidden()`. Will use
-this function for `receive-pack` to check commands with specific
-prefixes.
-
-Test case t5512 covered this change.
+When pushing a new reference (not a head or tag), report it as a new
+reference instead of a new branch.
 
 Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 ---
- refs.c | 11 ++++++++---
- refs.h |  1 +
- 2 files changed, 9 insertions(+), 3 deletions(-)
+ t/t5411-proc-receive-hook.sh | 153 +++++++++++++++++++++++++++++++++++
+ t/t5516-fetch-push.sh        |   2 +-
+ transport.c                  |   9 ++-
+ 3 files changed, 160 insertions(+), 4 deletions(-)
+ create mode 100755 t/t5411-proc-receive-hook.sh
 
-diff --git a/refs.c b/refs.c
-index 1ab0bb54d3..229159ea1a 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1389,13 +1389,18 @@ int parse_hide_refs_config(const char *var, const char *value, const char *secti
- }
- 
- int ref_is_hidden(const char *refname, const char *refname_full)
-+{
-+	return ref_is_matched(hide_refs, refname, refname_full);
+diff --git a/t/t5411-proc-receive-hook.sh b/t/t5411-proc-receive-hook.sh
+new file mode 100755
+index 0000000000..1784bcb584
+--- /dev/null
++++ b/t/t5411-proc-receive-hook.sh
+@@ -0,0 +1,153 @@
++#!/bin/sh
++#
++# Copyright (c) 2020 Jiang Xin
++#
++
++test_description='Test proc-receive hook'
++
++. ./test-lib.sh
++
++# Create commits in <repo> and assign each commit's oid to shell variables
++# given in the arguments (A, B, and C). E.g.:
++#
++#     create_commits_in <repo> A B C
++#
++# NOTE: Never calling this function from a subshell since variable
++# assignments will disappear when subshell exits.
++create_commits_in () {
++	repo="$1" &&
++	if ! parent=$(git -C "$repo" rev-parse HEAD^{})
++	then
++		parent=
++	fi &&
++	T=$(git -C "$repo" write-tree) &&
++	shift &&
++	while test $# -gt 0
++	do
++		name=$1 &&
++		test_tick &&
++		if test -z "$parent"
++		then
++			oid=$(echo $name | git -C "$repo" commit-tree $T)
++		else
++			oid=$(echo $name | git -C "$repo" commit-tree -p $parent $T)
++		fi &&
++		eval $name=$oid &&
++		parent=$oid &&
++		shift ||
++		return 1
++	done &&
++	git -C "$repo" update-ref refs/heads/master $oid
 +}
 +
-+int ref_is_matched(struct string_list *match_refs, const char *refname, const char *refname_full)
- {
- 	int i;
- 
--	if (!hide_refs)
-+	if (!match_refs)
- 		return 0;
--	for (i = hide_refs->nr - 1; i >= 0; i--) {
--		const char *match = hide_refs->items[i].string;
-+	for (i = match_refs->nr - 1; i >= 0; i--) {
-+		const char *match = match_refs->items[i].string;
- 		const char *subject;
- 		int neg = 0;
- 		const char *p;
-diff --git a/refs.h b/refs.h
-index 545029c6d8..a2ea043f7f 100644
---- a/refs.h
-+++ b/refs.h
-@@ -739,6 +739,7 @@ int parse_hide_refs_config(const char *var, const char *value, const char *);
-  * parameter always points to the full ref name.
-  */
- int ref_is_hidden(const char *, const char *);
-+int ref_is_matched(struct string_list *, const char *, const char *);
- 
- enum ref_type {
- 	REF_TYPE_PER_WORKTREE,	  /* refs inside refs/ but not shared       */
++# Format the output of git-push, git-show-ref and other commands to make a
++# user-friendly and stable text.  We can easily prepare the expect text
++# without having to worry about future changes of the commit ID and spaces
++# of the output.  We also replce single quotes with double quotes, because
++# it is boring to prepare unquoted single quotes in expect txt.
++make_user_friendly_and_stable_output () {
++	sed \
++		-e "s/  *\$//" \
++		-e "s/   */ /g" \
++		-e "s/'/\"/g" \
++		-e "s/$A/<COMMIT-A>/g" \
++		-e "s/$B/<COMMIT-B>/g" \
++		-e "s/$TAG/<TAG-v123>/g" \
++		-e "s/$ZERO_OID/<ZERO-OID>/g" \
++		-e "s/[0-9a-f]\{7,\}/<OID>/g"
++}
++
++# Refs of upstream : master(B)  next(A)
++# Refs of workbench: master(A)           tags/v123
++test_expect_success "setup" '
++	git init --bare upstream &&
++	git init workbench &&
++	create_commits_in workbench A B &&
++	(
++		cd workbench &&
++		# Try to make a stable fixed width for abbreviated commit ID,
++		# this fixed-width oid will be replaced with "<OID>".
++		git config core.abbrev 7 &&
++		git remote add origin ../upstream &&
++		git update-ref refs/heads/master $A &&
++		git tag -m "v123" v123 $A &&
++		git push origin \
++			$B:refs/heads/master \
++			$A:refs/heads/next
++	) &&
++	TAG=$(git -C workbench rev-parse v123) &&
++
++	# setup pre-receive hook
++	cat >upstream/hooks/pre-receive <<-\EOF &&
++	#!/bin/sh
++
++	echo >&2 "# pre-receive hook"
++
++	while read old new ref
++	do
++		echo >&2 "pre-receive< $old $new $ref"
++	done
++	EOF
++
++	# setup post-receive hook
++	cat >upstream/hooks/post-receive <<-\EOF &&
++	#!/bin/sh
++
++	echo >&2 "# post-receive hook"
++
++	while read old new ref
++	do
++		echo >&2 "post-receive< $old $new $ref"
++	done
++	EOF
++
++	chmod a+x \
++		upstream/hooks/pre-receive \
++		upstream/hooks/post-receive
++'
++
++# Refs of upstream : master(B)  next(A)
++# Refs of workbench: master(A)           tags/v123
++# git-push -f      : master(A)  NULL     tags/v123  refs/review/master/topic(A)  a/b/c(A)
++test_expect_success "normal git-push command" '
++	git -C workbench push -f origin \
++		refs/tags/v123 \
++		:refs/heads/next \
++		HEAD:refs/heads/master \
++		HEAD:refs/review/master/topic \
++		HEAD:refs/heads/a/b/c \
++		>out 2>&1 &&
++	make_user_friendly_and_stable_output <out >actual &&
++	cat >expect <<-EOF &&
++	remote: # pre-receive hook
++	remote: pre-receive< <COMMIT-B> <COMMIT-A> refs/heads/master
++	remote: pre-receive< <COMMIT-A> <ZERO-OID> refs/heads/next
++	remote: pre-receive< <ZERO-OID> <TAG-v123> refs/tags/v123
++	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/review/master/topic
++	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/heads/a/b/c
++	remote: # post-receive hook
++	remote: post-receive< <COMMIT-B> <COMMIT-A> refs/heads/master
++	remote: post-receive< <COMMIT-A> <ZERO-OID> refs/heads/next
++	remote: post-receive< <ZERO-OID> <TAG-v123> refs/tags/v123
++	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/review/master/topic
++	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/heads/a/b/c
++	To ../upstream
++	 + <OID>...<OID> HEAD -> master (forced update)
++	 - [deleted] next
++	 * [new tag] v123 -> v123
++	 * [new reference] HEAD -> refs/review/master/topic
++	 * [new branch] HEAD -> a/b/c
++	EOF
++	test_cmp expect actual &&
++	git -C upstream show-ref >out &&
++	make_user_friendly_and_stable_output <out >actual &&
++	cat >expect <<-EOF &&
++	<COMMIT-A> refs/heads/a/b/c
++	<COMMIT-A> refs/heads/master
++	<COMMIT-A> refs/review/master/topic
++	<TAG-v123> refs/tags/v123
++	EOF
++	test_cmp expect actual
++'
++
++test_done
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index 9ff041a093..9e4b9313b5 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -1039,7 +1039,7 @@ test_force_fetch_tag "annotated tag" "-f -a -m'tag message'"
+ test_expect_success 'push --porcelain' '
+ 	mk_empty testrepo &&
+ 	echo >.git/foo  "To testrepo" &&
+-	echo >>.git/foo "*	refs/heads/master:refs/remotes/origin/master	[new branch]"  &&
++	echo >>.git/foo "*	refs/heads/master:refs/remotes/origin/master	[new reference]"  &&
+ 	echo >>.git/foo "Done" &&
+ 	git push >.git/bar --porcelain  testrepo refs/heads/master:refs/remotes/origin/master &&
+ 	(
+diff --git a/transport.c b/transport.c
+index 1fdc7dac1a..272c0f4046 100644
+--- a/transport.c
++++ b/transport.c
+@@ -500,9 +500,12 @@ static void print_ok_ref_status(struct ref *ref, int porcelain, int summary_widt
+ 				 porcelain, summary_width);
+ 	else if (is_null_oid(&ref->old_oid))
+ 		print_ref_status('*',
+-			(starts_with(ref->name, "refs/tags/") ? "[new tag]" :
+-			"[new branch]"),
+-			ref, ref->peer_ref, NULL, porcelain, summary_width);
++				 (starts_with(ref->name, "refs/tags/")
++				  ? "[new tag]"
++				  : (starts_with(ref->name, "refs/heads/")
++				     ? "[new branch]"
++				     : "[new reference]")),
++				 ref, ref->peer_ref, NULL, porcelain, summary_width);
+ 	else {
+ 		struct strbuf quickref = STRBUF_INIT;
+ 		char type;
 -- 
 2.24.1.15.g448c31058d.agit.4.5
 
