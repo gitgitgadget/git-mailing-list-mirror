@@ -7,76 +7,76 @@ X-Spam-Status: No, score=-6.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 34E79C43331
-	for <git@archiver.kernel.org>; Thu,  2 Apr 2020 07:09:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C97AC43331
+	for <git@archiver.kernel.org>; Thu,  2 Apr 2020 07:09:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id F224E20784
-	for <git@archiver.kernel.org>; Thu,  2 Apr 2020 07:09:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6987120784
+	for <git@archiver.kernel.org>; Thu,  2 Apr 2020 07:09:41 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="aW3KugoF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XEmbdwRe"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NiYz5upb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="zzsfl8/v"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387502AbgDBHJf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Apr 2020 03:09:35 -0400
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:47495 "EHLO
+        id S2387509AbgDBHJk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Apr 2020 03:09:40 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:55501 "EHLO
         out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2387447AbgDBHJf (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 2 Apr 2020 03:09:35 -0400
+        by vger.kernel.org with ESMTP id S2387447AbgDBHJj (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 2 Apr 2020 03:09:39 -0400
 Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.nyi.internal (Postfix) with ESMTP id 291B25C0281;
-        Thu,  2 Apr 2020 03:09:34 -0400 (EDT)
+        by mailout.nyi.internal (Postfix) with ESMTP id C57EE5C0293;
+        Thu,  2 Apr 2020 03:09:38 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Thu, 02 Apr 2020 03:09:34 -0400
+  by compute3.internal (MEProxy); Thu, 02 Apr 2020 03:09:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
         :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm3; bh=yM9X7I4cWYrAHEkC6K+XmEnQGrD
-        DWu/uule9ZBR7Oa8=; b=aW3KugoFs6DJDM0IFJPCGwAciiU66LWyGHmLKO8MJWv
-        /pU/WcpP9at/SS3BwFTFy0XnQZqQwxIWi3omtUngq5TJqI098w3bWYEobj53z94C
-        CcdaYTFPGzjQpLDxm+iwe596dOCdnYKAZv76QXqeb3etoYim2HxjQog8jikPi/rm
-        b4QY1cUwg4384yZwIt4qwIJRwrl/Hn/TwI9bYu8f+PxaHjlgs0jKvnNx5G/Rl5RI
-        SSW/p/INJsQEY6YrEZQUdOVFNFMl2zgjAL/e8AT3zJePu+BzPHliqxKlHueJYfga
-        tRqzatGsco33Fq6DjtAMPVqUfpwz8ymZsGvsFwrKJgQ==
+        :content-type:in-reply-to; s=fm3; bh=c/r194pnijwD639zp9GRammRLa+
+        motWVbhfHPCgM2EY=; b=NiYz5upbxutOmG9vkfQz1Os1LYoKxnzIsTBqjvqU+Ky
+        Uat207hHHtWzwUX4AYSd7ivbhcMt1hF278WIK3DM280502+CfGjXTKlXQXtVClWD
+        tQnhOfF7YI0B+aSK36KzvsckT3SWZaWYUn8WBmzQjp0fgnekLu8x4mWXs5hkYDF0
+        n9J+cgXAFSWb2EID3a3tqLoQ31iKZdJs4K5yj1vhcM6tWeALLP6bFPsv2TFZi+s0
+        JDBV5FoklwHisfnsrQJLRsUnK+bhhopKwPH4VAWXMnKFFddRKlgZEssZGSy5CM7+
+        crQO+TIEnTpQoOFRhstlxkyfDArqBPuwzNf0TNgsh2A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:content-type:date:from:in-reply-to
         :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=yM9X7I
-        4cWYrAHEkC6K+XmEnQGrDDWu/uule9ZBR7Oa8=; b=XEmbdwReoZubDZJ66/E2Er
-        VZXgf8v1yv77bfxid8/hvMKseo+jUdkvTCuzk/3XBBmjLOCpo+3NeAcWr2OuNfEv
-        yT0ejOdtUlZpRCwnEWpV6UQcUdh6nPukVWhcxLo10dpRUi71q6P1/aZb4HXq2h7q
-        U4d9xVR91dl+pe3Rh9OpKuYIBJ0yU7z3iSJ69Zv3+Wj1YJ1wyuudAVORdkAgZ4U0
-        ljqWPWLJGynT1V61cqBsCsKXs92YoKpSDEP3gQG2z+Pdhyg+mrN/DOiP4VFTjyvB
-        WuBm2txQqS07qofTGByyEMZc69m2uc3o/AwbkjCVzu9YiTcW1KAIk3z3w54yRRtw
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=c/r194
+        pnijwD639zp9GRammRLa+motWVbhfHPCgM2EY=; b=zzsfl8/vk180U/MHeQAzuQ
+        bIB6nk276R3Bcb5YP6n0RHh7njytAEVlC+V3jYqs9vLxyP6210gK1BHnP3D6wAYE
+        cfellz1WAfrC1u3C3S3RuunExh86SZ3rUjaM2ztBXbeAQ+iYFwA9YHPDuqeI/kz0
+        Bls9r5Td0Szt/ejhFg2TZlyuF+vDGVZQ+sJoUaF1KtXDzNC863YqX6XvbVunBLgO
+        NNVofrEw1Tm8Fdh4O8Z08rvM+Zq8ppJFTxEeyXmMY1MZVyOwbSxMqXgHS5vIpWu6
+        iEymebA9YPiAgQOjIX2yJ9AgyDOBAkNh/mZqMh6chrHOjoXgKoSLi+0U5zxa4blg
         ==
-X-ME-Sender: <xms:ro-FXvLd-euYGnI0OUIK4Z7bzAnuN-WAr-vUvZCamZXPUaqw2bQtAg>
+X-ME-Sender: <xms:so-FXmPGujtiCPPJztFCRJNB0lWnwODF27IxSrpFy_QSLzZadeqQDA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrtdefgdduudeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucfkphepkeelrdduvd
-    drleegrddvkeenucevlhhushhtvghrufhiiigvpeegnecurfgrrhgrmhepmhgrihhlfhhr
+    drleegrddvkeenucevlhhushhtvghrufhiiigvpeehnecurfgrrhgrmhepmhgrihhlfhhr
     ohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:ro-FXjsS1L3Uqb4ChKpCz-GmMu-PUo50dy1BTNp-E6fLQYYyYftWcw>
-    <xmx:ro-FXgn0sqxed9qAYlP5y2NtlSGXC0lZtMKgH2ie34e64pF2lcJsuQ>
-    <xmx:ro-FXilKCD4_WcuiB0DA_MpAiJ0ae3A2JRw9xSEgAD7yEKh4DxCvug>
-    <xmx:ro-FXjldvBR6AoIw-7zUhDzkTmqUbbsSvEqwFiSGmZdGavdfyJvnaA>
+X-ME-Proxy: <xmx:so-FXgo6qgY7WuADrq8VRJZLyMfQGkduwwH82Whl4N7iuDYpLrm09w>
+    <xmx:so-FXn8LIJCJfHfl_T5c8u8UewzAsil2inV5yB59F2zIcBTo34FqQA>
+    <xmx:so-FXnpGN7G_zi3M0sKANyYv-fEy1YwVLjT8huLwqKh4-Tm0pSe4DQ>
+    <xmx:so-FXvUD8fCN14ae2jGmsfyeIcVCZKDxaFgZDl-0IDsjpd7WuNvWJw>
 Received: from vm-mail.pks.im (x590c5e1c.dyn.telefonica.de [89.12.94.28])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 6F973306CD75;
-        Thu,  2 Apr 2020 03:09:33 -0400 (EDT)
+        by mail.messagingengine.com (Postfix) with ESMTPA id 3167A306CD98;
+        Thu,  2 Apr 2020 03:09:38 -0400 (EDT)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id e063f603 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Thu, 2 Apr 2020 07:09:31 +0000 (UTC)
-Date:   Thu, 2 Apr 2020 09:09:38 +0200
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id cff692a1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Thu, 2 Apr 2020 07:09:36 +0000 (UTC)
+Date:   Thu, 2 Apr 2020 09:09:43 +0200
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git <git@vger.kernel.org>
 Cc:     Christian Couder <christian.couder@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 4/9] update-ref: organize commands in an array
-Message-ID: <0f881d49366fe9d9806b08af35319475ca07abc3.1585811013.git.ps@pks.im>
+Subject: [PATCH v3 5/9] update-ref: drop unused argument for `parse_refname`
+Message-ID: <c96395a14de1f7fd73e04eb035b58486f737b310.1585811013.git.ps@pks.im>
 References: <cover.1585129842.git.ps@pks.im>
  <cover.1585811013.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="vkogqOf2sHV7VnPd"
+        protocol="application/pgp-signature"; boundary="AqsLC8rIMeq19msA"
 Content-Disposition: inline
 In-Reply-To: <cover.1585811013.git.ps@pks.im>
 Sender: git-owner@vger.kernel.org
@@ -85,126 +85,97 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---vkogqOf2sHV7VnPd
+--AqsLC8rIMeq19msA
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-We currently manually wire up all commands known to `git-update-ref
---stdin`, making it harder than necessary to preprocess arguments after
-the command is determined. To make this more extensible, let's refactor
-the code to use an array of known commands instead. While this doesn't
-add a lot of value now, it is a preparatory step to implement line-wise
-reading of commands.
-
-As we're going to introduce commands without trailing spaces, this
-commit also moves whitespace parsing into the respective commands.
+The `parse_refname` function accepts a `struct strbuf *input` argument
+that isn't used at all. As we're about to convert commands to not use a
+strbuf anymore but instead an end pointer, let's drop this argument now
+to make the converting commit easier to review.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/update-ref.c | 41 +++++++++++++++++++++++++++++------------
- 1 file changed, 29 insertions(+), 12 deletions(-)
+ builtin/update-ref.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/builtin/update-ref.c b/builtin/update-ref.c
-index 2d8f7f0578..a6ff88b95b 100644
+index a6ff88b95b..1bba5ea6c2 100644
 --- a/builtin/update-ref.c
 +++ b/builtin/update-ref.c
-@@ -310,7 +310,8 @@ static const char *parse_cmd_verify(struct ref_transact=
+@@ -50,7 +50,7 @@ static const char *parse_arg(const char *next, struct str=
+buf *arg)
+  * the argument.  Die if C-quoting is malformed or the reference name
+  * is invalid.
+  */
+-static char *parse_refname(struct strbuf *input, const char **next)
++static char *parse_refname(const char **next)
+ {
+ 	struct strbuf ref =3D STRBUF_INIT;
+=20
+@@ -186,7 +186,7 @@ static const char *parse_cmd_update(struct ref_transact=
 ion *transaction,
- 	return next;
- }
+ 	struct object_id new_oid, old_oid;
+ 	int have_old;
 =20
--static const char *parse_cmd_option(struct strbuf *input, const char *next)
-+static const char *parse_cmd_option(struct ref_transaction *transaction,
-+				    struct strbuf *input, const char *next)
- {
- 	const char *rest;
- 	if (skip_prefix(next, "no-deref", &rest) && *rest =3D=3D line_termination)
-@@ -320,33 +321,49 @@ static const char *parse_cmd_option(struct strbuf *in=
-put, const char *next)
- 	return rest;
- }
+-	refname =3D parse_refname(input, &next);
++	refname =3D parse_refname(&next);
+ 	if (!refname)
+ 		die("update: missing <ref>");
 =20
-+static const struct parse_cmd {
-+	const char *prefix;
-+	const char *(*fn)(struct ref_transaction *, struct strbuf *, const char *=
-);
-+} command[] =3D {
-+	{ "update", parse_cmd_update },
-+	{ "create", parse_cmd_create },
-+	{ "delete", parse_cmd_delete },
-+	{ "verify", parse_cmd_verify },
-+	{ "option", parse_cmd_option },
-+};
-+
- static void update_refs_stdin(struct ref_transaction *transaction)
- {
- 	struct strbuf input =3D STRBUF_INIT;
- 	const char *next;
-+	int i;
+@@ -220,7 +220,7 @@ static const char *parse_cmd_create(struct ref_transact=
+ion *transaction,
+ 	char *refname;
+ 	struct object_id new_oid;
 =20
- 	if (strbuf_read(&input, 0, 1000) < 0)
- 		die_errno("could not read from stdin");
- 	next =3D input.buf;
- 	/* Read each line dispatch its command */
- 	while (next < input.buf + input.len) {
-+		const struct parse_cmd *cmd =3D NULL;
-+
- 		if (*next =3D=3D line_termination)
- 			die("empty command in input");
- 		else if (isspace(*next))
- 			die("whitespace before command: %s", next);
--		else if (skip_prefix(next, "update ", &next))
--			next =3D parse_cmd_update(transaction, &input, next);
--		else if (skip_prefix(next, "create ", &next))
--			next =3D parse_cmd_create(transaction, &input, next);
--		else if (skip_prefix(next, "delete ", &next))
--			next =3D parse_cmd_delete(transaction, &input, next);
--		else if (skip_prefix(next, "verify ", &next))
--			next =3D parse_cmd_verify(transaction, &input, next);
--		else if (skip_prefix(next, "option ", &next))
--			next =3D parse_cmd_option(&input, next);
--		else
-+
-+		for (i =3D 0; i < ARRAY_SIZE(command); i++) {
-+			const char *prefix =3D command[i].prefix;
-+
-+			if (!skip_prefix(next, prefix, &next) ||
-+			    !skip_prefix(next, " ", &next))
-+				continue;
-+
-+			cmd =3D &command[i];
-+			break;
-+		}
-+		if (!cmd)
- 			die("unknown command: %s", next);
+-	refname =3D parse_refname(input, &next);
++	refname =3D parse_refname(&next);
+ 	if (!refname)
+ 		die("create: missing <ref>");
 =20
-+		next =3D cmd->fn(transaction, &input, next);
- 		next++;
- 	}
+@@ -253,7 +253,7 @@ static const char *parse_cmd_delete(struct ref_transact=
+ion *transaction,
+ 	struct object_id old_oid;
+ 	int have_old;
+=20
+-	refname =3D parse_refname(input, &next);
++	refname =3D parse_refname(&next);
+ 	if (!refname)
+ 		die("delete: missing <ref>");
+=20
+@@ -288,7 +288,7 @@ static const char *parse_cmd_verify(struct ref_transact=
+ion *transaction,
+ 	char *refname;
+ 	struct object_id old_oid;
+=20
+-	refname =3D parse_refname(input, &next);
++	refname =3D parse_refname(&next);
+ 	if (!refname)
+ 		die("verify: missing <ref>");
 =20
 --=20
 2.26.0
 
 
---vkogqOf2sHV7VnPd
+--AqsLC8rIMeq19msA
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAl6Fj7EACgkQVbJhu7ck
-PpTOKw//dOBu9PFuATcjHAk3G2sLp2NZzokJBeE3ZDKLpfmtZXY+QyEWp+/Zd4LV
-7X+FCr7o8lJylNeaTDxamGgDpksHYQYahOPhj89VeHJG2Tiu8xr86wFXNQZKWzeQ
-JfZr9N57XrDUC7WIHJYKAj40DG6lG66tc7o6hXkSaKUJ9wW+6EfEeojGA/a9UgK9
-gm+ldfxme4VJQhcstzQddT8DTDB46JAaPMdY6ZImT+YU7Zxa0I8GDlvlBcG9oUYt
-EnOwkLPjpohDm9R03pYrGwnNOc0zB5ycHHIPkiQly04mxM78jEumtfRGzFlCURd1
-mIvPh2+Ofdd8v28s7sKGyczU+tgYx+5FmlC5tnpZMi1a+fnaYuJTRlNc2ZldD7hz
-g8njfcgKMW/SkQDO9ZvBxnisog6X/J1xwFoo0grs0tGbyKzvOJonxyomE6VbO1df
-+hfCVXG+fZgKiozNoqbULACFMbUAZq120wLpHqHKc6T4I4bghWlviMbytJziHMk9
-eXL91Q2zqyPqkVDWtlAzi3v/1lMc9CBe9mnfUENSH0TNEjoeMHpirV1+179wlz0u
-CoVyj3jHrWWAr8zatVjbuZ/CQopyTzkraABdq0SWtEXxwj3oOqQu7ulWXiY98+8z
-3GiYB+u/YbD5V63qayrKSn3rLBgMvsXogeWoNsomQnqXRBvq4t0=
-=7Fdf
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAl6Fj7YACgkQVbJhu7ck
+PpSjrg//V2dUu8QRuk/WxCV89SjxJjpCA2UklwSfCJl2nXSPdNif7ColgmrUOxJ4
+QpvlkRIrHYVU77+21TnFxD0g9uOdWw71lD/jYfuymDWS1ThawOLflLOp7fh5lvKO
+K8kFJlPWcv9PZ93UdElaO7tdaurZwlQDWCrRqlObVgvd8D7wbIgpizsN+f6Ydcr/
+rE/rDMXHittsOXAF3fXEyM6/IRnQsNfh/QNNe9P/Q+DHKdJuv4pAZy2RGncYc9JR
+iEs2USdTI7ZHpE0MHaIraYSWDoDRt51rX+ADznRNaviDqC+mjJ4LgAtYF3f8QBCN
+icOwJ7AO823vOZuymWasmIjz38Y2UzRV32r8Eijx2TInm7xK9RSWOnSpfflDP9MS
+5OHLSY1JG7oRqbPTt8mWJBtG2ZVNhgjYMUvnGSmXWXd9uutOH36cW6BH2ghLGcIV
+/jTH2TDLrIIF41hQyBVVSpA2dCJ256p96fuONDscsgpx6HKbtwHnQ8EUzyA8yLAN
+1iEfK1B/34J5zxJAFNoLwaTa9LWZi4EluK9arP9oNjmBrvFcHyWuzYDlPH0kGKiP
+uGC5E4laMIh68bIF0xY3q72pHlDPpCxegd8HrZKIehYgJGLd/pvrtKxqwDm/jdi8
+KtVoPx+lPjJh3rLZBSr8FEA/jYnnWdA4Tgv6FT13H8Me3aVd64U=
+=rhBc
 -----END PGP SIGNATURE-----
 
---vkogqOf2sHV7VnPd--
+--AqsLC8rIMeq19msA--
