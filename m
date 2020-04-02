@@ -8,56 +8,56 @@ X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D14CC43331
-	for <git@archiver.kernel.org>; Thu,  2 Apr 2020 13:41:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1515FC43331
+	for <git@archiver.kernel.org>; Thu,  2 Apr 2020 14:59:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id C96F320757
-	for <git@archiver.kernel.org>; Thu,  2 Apr 2020 13:41:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CE6A9206CC
+	for <git@archiver.kernel.org>; Thu,  2 Apr 2020 14:59:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="trH/g8np"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y7q1TOvg"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388788AbgDBNlb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Apr 2020 09:41:31 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:40748 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388745AbgDBNlb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Apr 2020 09:41:31 -0400
-Received: by mail-wr1-f65.google.com with SMTP id s8so2108338wrt.7
-        for <git@vger.kernel.org>; Thu, 02 Apr 2020 06:41:29 -0700 (PDT)
+        id S2388931AbgDBO7j (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Apr 2020 10:59:39 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:45725 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388782AbgDBO7i (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Apr 2020 10:59:38 -0400
+Received: by mail-wr1-f67.google.com with SMTP id t7so4548432wrw.12
+        for <git@vger.kernel.org>; Thu, 02 Apr 2020 07:59:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=4AD27c2n6InpMrCBI9aQi3Odyxx2ieMT0Sbp3ZwYouU=;
-        b=trH/g8nphMQHU6tS+xzSNuCk54VuY6mmElz4RSkToiiK9LtsoyGlnsitXpwDqhsED4
-         pvCtUlUqYJn1LMuZN/qAHNWQUp92P9DY0tbyFccAXQLaafU/GIfM1gRmk5oBDG0uzCwX
-         sRNt1CTlS/C8CoZP6hRI3IAid6NVeBdS1s7U0LnGgOPaPXcjsekfLMRnmWocgQL/J09J
-         IANSuuKeIKLlZTENc1YKYzcagtmOvt4bv8hPqAgnF2U+G9fbkeSWM5VwoE9MZ8/RduWZ
-         NR+Dvpoh/JMyc05AiXkpFiPRhdezg6hucLSxKfVZiopvjgRTzF1vr/H9o5IX+hdyaLGq
-         wANQ==
+        bh=1Rb63qFsi36SLpLUu0UIdRhg0z+UIEdo84861D6XwaU=;
+        b=Y7q1TOvgVJYsalxGBl7y2MZC5aLKJemynBM2vAGqmJCuWRk82oGhoru9oWTBqna3eW
+         WKpTQ9K5ayxwssRcZu2+4ykmgJrcLxqSgjku41dCEB4Fe0eLQWSrgIrpklt+tD9p52Ba
+         Kp8j4ahNEVQUXVDPZFkIW5B3Ro0Yhg+I/EPeqBoq0Cahwk+n3rXeJo7ukPynkfI6+WhX
+         qI5MgyL2Nf6qu2P3X7HQ0Fp2nEB+DNx3PfGddmW04Xsj/x4KO69UQEZkszFNXbV953qx
+         mWlbD6FuRQjpwDRTLLQlBeTqNZtgmu445RS5dfpsVgVdUXso0BmhNbHzN6xaA+nVfMoF
+         e03g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:reply-to:subject:to:cc:references:from
          :message-id:date:user-agent:mime-version:in-reply-to
          :content-language:content-transfer-encoding;
-        bh=4AD27c2n6InpMrCBI9aQi3Odyxx2ieMT0Sbp3ZwYouU=;
-        b=fDt3t6nueyYpS36uD74rstT94b6jCf9ir3oyXuoVGpjUzrk9FqryeWNsTKy39xeglu
-         x+lBvkKIyv9uQ0LPzSR01pEMHopwt0BUjveHGL6UUsXwVtRISOW5TOroQS3ShTrViZsu
-         7v/941wGlXX5s9SSgjH07m59h+/8TJRrnDqXoJe0puxcQkuxFRB/ju4Vp/cnYlgD6Xu0
-         XUjgYzYs8w3IDsJlai1Ci8MbQ5FMmvJEtsVvg+za+LkmMtMIggvBzMRiBefQV7422oye
-         x45iAfST5WFAkkNrG1OITdfaaUQzqvqBqhRErJdkbahNEJ6xbspOiISQNE4z79ZcMd2W
-         XlOw==
-X-Gm-Message-State: AGi0PuZJ1OY59N6JU2mdmIrH++jQPWHUpjBImVF0qAFMnOiT6g2VIC7N
-        AfvMXOrupsQj8pK8vdJyPmpcErpD
-X-Google-Smtp-Source: APiQypKy9v1uHtfRE93olcf+QcVmfVTfhLJgYk8g+lbvzyfmb4OYAsiB1w8UPtJU+g+Za80b6X+Kew==
-X-Received: by 2002:a5d:54cb:: with SMTP id x11mr3808814wrv.179.1585834888928;
-        Thu, 02 Apr 2020 06:41:28 -0700 (PDT)
+        bh=1Rb63qFsi36SLpLUu0UIdRhg0z+UIEdo84861D6XwaU=;
+        b=othZuQN5GBgyHjvSZG4fFTBwOOxPa8+fD8+/GGG7m3MpueBIzoW4Gh+0juCsWVaJyl
+         Z7rwLuDBWg+A+Yno03bhauVZ0clPjHPE7T6uqZYcxYc4v3jLTyBwsECOWceyNrSkKtaV
+         7bXXbprTl3LyUGiUjqUmqHlKz4V7cAG64rNXwtk4+jk1xLoc5KrFXYNaV/XgChVJ75z4
+         6q2YKkb/BAgCfBV8M9ilnc7lbkFSyaW9T9+lYkNcGR7NUViQ3Bi+9DglMctxosKOtulz
+         k7y8DVE1lx6CTWV3CLmWmS6EXMgJLzKQYFJvbF/OMZUPLH1XY5kTmOxQExwetu6PdKv7
+         yM7Q==
+X-Gm-Message-State: AGi0PuaG04pd+xu3PrT/qB2L5M7hffhZM0kuRuaEzIzsk+ofJbnnOllR
+        1Vtj/7tTnRshSEx3shOPw28Xa3ee
+X-Google-Smtp-Source: APiQypLabeisg5aV4ufI5fdZgCmprrAPtO/6BZdJ++p+4EUwugD8phPoPLEGqOTDcE7xOU93RoA94A==
+X-Received: by 2002:a5d:464a:: with SMTP id j10mr3867271wrs.3.1585839576519;
+        Thu, 02 Apr 2020 07:59:36 -0700 (PDT)
 Received: from [192.168.1.240] (85.25.198.146.dyn.plus.net. [146.198.25.85])
-        by smtp.gmail.com with ESMTPSA id m8sm6950013wmc.28.2020.04.02.06.41.28
+        by smtp.gmail.com with ESMTPSA id u17sm8450297wri.45.2020.04.02.07.59.35
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 Apr 2020 06:41:28 -0700 (PDT)
+        Thu, 02 Apr 2020 07:59:35 -0700 (PDT)
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 07/19] rebase: use read_oneliner()
+Subject: Re: [PATCH v3 09/19] rebase: use apply_autostash() from sequencer.c
 To:     Denton Liu <liu.denton@gmail.com>,
         Git Mailing List <git@vger.kernel.org>
 Cc:     Alban Gruin <alban.gruin@gmail.com>,
@@ -65,14 +65,14 @@ Cc:     Alban Gruin <alban.gruin@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
 References: <cover.1577185374.git.liu.denton@gmail.com>
  <cover.1584782450.git.liu.denton@gmail.com>
- <d07a50c5b22128263aaa8eef94546fe8bc8a9ec8.1584782450.git.liu.denton@gmail.com>
+ <03bdaeebc993058bf14a0d196f5a1a68800e538e.1584782450.git.liu.denton@gmail.com>
 From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <51bbff1e-ccca-5d13-24f1-942dcfe6174d@gmail.com>
-Date:   Thu, 2 Apr 2020 14:41:27 +0100
+Message-ID: <66697cd4-ca4e-804c-311d-8132bb1c0a8b@gmail.com>
+Date:   Thu, 2 Apr 2020 15:59:34 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.6.0
 MIME-Version: 1.0
-In-Reply-To: <d07a50c5b22128263aaa8eef94546fe8bc8a9ec8.1584782450.git.liu.denton@gmail.com>
+In-Reply-To: <03bdaeebc993058bf14a0d196f5a1a68800e538e.1584782450.git.liu.denton@gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-GB-large
 Content-Transfer-Encoding: 7bit
@@ -84,127 +84,136 @@ X-Mailing-List: git@vger.kernel.org
 Hi Denton
 
 On 21/03/2020 09:21, Denton Liu wrote:
-> Since in sequencer.c, read_one() basically duplicates the functionality
-> of read_oneliner(), reduce code duplication by replacing read_one() with
-> read_oneliner().
-> 
-> This was done with the following Coccinelle script
-> 
-> 	@@
-> 	expression a, b;
-> 	@@
-> 	- read_one(a, b)
-> 	+ !read_oneliner(b, a, READ_ONELINER_WARN_NON_EXISTENCE)
-> 
-> and long lines were manually broken up.
+> The apply_autostash() function in builtin/rebase.c is similar enough to
+> the apply_autostash() function in sequencer.c that they are almost
+> interchangeable.
 
-It's great to see read_one() going away
+You say they are almost interchangeable and then use them as if they are 
+completely interchangeable. I think they are interchangeable, the only 
+difference I could see is that the code in rebase.c redirects stdin when 
+forking 'git stash apply' but the sequencer does not, I don't think this 
+matters.
 
-Thanks
+Best Wishes
 
 Phillip
 
+  Make the sequencer.c version extern and use it in
+> rebase.
+> 
+> The rebase version was introduced in 6defce2b02 (builtin rebase: support
+> `--autostash` option, 2018-09-04) as part of the shell to C conversion.
+> It opted to duplicate the function because, at the time, there was
+> another in-progress project converting interactive rebase from shell to
+> C as well and they did not want to clash with them by refactoring
+> sequencer.c version of apply_autostash(). Since both efforts are long
+> done, we can freely combine them together now.
+> 
 > Signed-off-by: Denton Liu <liu.denton@gmail.com>
 > ---
->   builtin/rebase.c | 37 +++++++++++++++++--------------------
->   1 file changed, 17 insertions(+), 20 deletions(-)
+>   builtin/rebase.c | 49 ++----------------------------------------------
+>   sequencer.c      |  2 +-
+>   sequencer.h      |  2 ++
+>   3 files changed, 5 insertions(+), 48 deletions(-)
 > 
 > diff --git a/builtin/rebase.c b/builtin/rebase.c
-> index bff53d5d16..1146463099 100644
+> index 1146463099..ceb115247a 100644
 > --- a/builtin/rebase.c
 > +++ b/builtin/rebase.c
-> @@ -586,15 +586,6 @@ static const char *state_dir_path(const char *filename, struct rebase_options *o
->   	return path.buf;
+> @@ -712,51 +712,6 @@ static int rebase_write_basic_state(struct rebase_options *opts)
+>   	return 0;
 >   }
 >   
-> -/* Read one file, then strip line endings */
-> -static int read_one(const char *path, struct strbuf *buf)
+> -static int apply_autostash(struct rebase_options *opts)
 > -{
-> -	if (strbuf_read_file(buf, path, 0) < 0)
-> -		return error_errno(_("could not read '%s'"), path);
-> -	strbuf_trim_trailing_newline(buf);
+> -	const char *path = state_dir_path("autostash", opts);
+> -	struct strbuf autostash = STRBUF_INIT;
+> -	struct child_process stash_apply = CHILD_PROCESS_INIT;
+> -
+> -	if (!file_exists(path))
+> -		return 0;
+> -
+> -	if (!read_oneliner(&autostash, path, READ_ONELINER_WARN_NON_EXISTENCE))
+> -		return error(_("Could not read '%s'"), path);
+> -	/* Ensure that the hash is not mistaken for a number */
+> -	strbuf_addstr(&autostash, "^0");
+> -	argv_array_pushl(&stash_apply.args,
+> -			 "stash", "apply", autostash.buf, NULL);
+> -	stash_apply.git_cmd = 1;
+> -	stash_apply.no_stderr = stash_apply.no_stdout =
+> -		stash_apply.no_stdin = 1;
+> -	if (!run_command(&stash_apply))
+> -		printf(_("Applied autostash.\n"));
+> -	else {
+> -		struct argv_array args = ARGV_ARRAY_INIT;
+> -		int res = 0;
+> -
+> -		argv_array_pushl(&args,
+> -				 "stash", "store", "-m", "autostash", "-q",
+> -				 autostash.buf, NULL);
+> -		if (run_command_v_opt(args.argv, RUN_GIT_CMD))
+> -			res = error(_("Cannot store %s"), autostash.buf);
+> -		argv_array_clear(&args);
+> -		strbuf_release(&autostash);
+> -		if (res)
+> -			return res;
+> -
+> -		fprintf(stderr,
+> -			_("Applying autostash resulted in conflicts.\n"
+> -			  "Your changes are safe in the stash.\n"
+> -			  "You can run \"git stash pop\" or \"git stash drop\" "
+> -			  "at any time.\n"));
+> -	}
+> -
+> -	strbuf_release(&autostash);
 > -	return 0;
 > -}
 > -
->   /* Initialize the rebase options from the state directory. */
->   static int read_basic_state(struct rebase_options *opts)
+>   static int finish_rebase(struct rebase_options *opts)
 >   {
-> @@ -602,8 +593,10 @@ static int read_basic_state(struct rebase_options *opts)
->   	struct strbuf buf = STRBUF_INIT;
->   	struct object_id oid;
+>   	struct strbuf dir = STRBUF_INIT;
+> @@ -764,7 +719,7 @@ static int finish_rebase(struct rebase_options *opts)
+>   	int ret = 0;
 >   
-> -	if (read_one(state_dir_path("head-name", opts), &head_name) ||
-> -	    read_one(state_dir_path("onto", opts), &buf))
-> +	if (!read_oneliner(&head_name, state_dir_path("head-name", opts),
-> +			   READ_ONELINER_WARN_NON_EXISTENCE) ||
-> +	    !read_oneliner(&buf, state_dir_path("onto", opts),
-> +			   READ_ONELINER_WARN_NON_EXISTENCE))
->   		return -1;
->   	opts->head_name = starts_with(head_name.buf, "refs/") ?
->   		xstrdup(head_name.buf) : NULL;
-> @@ -619,9 +612,11 @@ static int read_basic_state(struct rebase_options *opts)
->   	 */
->   	strbuf_reset(&buf);
->   	if (file_exists(state_dir_path("orig-head", opts))) {
-> -		if (read_one(state_dir_path("orig-head", opts), &buf))
-> +		if (!read_oneliner(&buf, state_dir_path("orig-head", opts),
-> +				   READ_ONELINER_WARN_NON_EXISTENCE))
->   			return -1;
-> -	} else if (read_one(state_dir_path("head", opts), &buf))
-> +	} else if (!read_oneliner(&buf, state_dir_path("head", opts),
-> +				  READ_ONELINER_WARN_NON_EXISTENCE))
->   		return -1;
->   	if (get_oid(buf.buf, &opts->orig_head))
->   		return error(_("invalid orig-head: '%s'"), buf.buf);
-> @@ -641,8 +636,8 @@ static int read_basic_state(struct rebase_options *opts)
+>   	delete_ref(NULL, "REBASE_HEAD", NULL, REF_NO_DEREF);
+> -	apply_autostash(opts);
+> +	apply_autostash(state_dir_path("autostash", opts));
+>   	close_object_store(the_repository->objects);
+>   	/*
+>   	 * We ignore errors in 'gc --auto', since the
+> @@ -1209,7 +1164,7 @@ static int run_specific_rebase(struct rebase_options *opts, enum action action)
+>   	} else if (status == 2) {
+>   		struct strbuf dir = STRBUF_INIT;
 >   
->   	if (file_exists(state_dir_path("allow_rerere_autoupdate", opts))) {
->   		strbuf_reset(&buf);
-> -		if (read_one(state_dir_path("allow_rerere_autoupdate", opts),
-> -			    &buf))
-> +		if (!read_oneliner(&buf, state_dir_path("allow_rerere_autoupdate", opts),
-> +				   READ_ONELINER_WARN_NON_EXISTENCE))
->   			return -1;
->   		if (!strcmp(buf.buf, "--rerere-autoupdate"))
->   			opts->allow_rerere_autoupdate = RERERE_AUTOUPDATE;
-> @@ -655,8 +650,8 @@ static int read_basic_state(struct rebase_options *opts)
+> -		apply_autostash(opts);
+> +		apply_autostash(state_dir_path("autostash", opts));
+>   		strbuf_addstr(&dir, opts->state_dir);
+>   		remove_dir_recursively(&dir, 0);
+>   		strbuf_release(&dir);
+> diff --git a/sequencer.c b/sequencer.c
+> index ad40a8b3fc..b52668f8de 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -3655,7 +3655,7 @@ static enum todo_command peek_command(struct todo_list *todo_list, int offset)
+>   	return -1;
+>   }
 >   
->   	if (file_exists(state_dir_path("gpg_sign_opt", opts))) {
->   		strbuf_reset(&buf);
-> -		if (read_one(state_dir_path("gpg_sign_opt", opts),
-> -			    &buf))
-> +		if (!read_oneliner(&buf, state_dir_path("gpg_sign_opt", opts),
-> +				   READ_ONELINER_WARN_NON_EXISTENCE))
->   			return -1;
->   		free(opts->gpg_sign_opt);
->   		opts->gpg_sign_opt = xstrdup(buf.buf);
-> @@ -664,7 +659,8 @@ static int read_basic_state(struct rebase_options *opts)
+> -static int apply_autostash(const char *path)
+> +int apply_autostash(const char *path)
+>   {
+>   	struct strbuf stash_sha1 = STRBUF_INIT;
+>   	struct child_process child = CHILD_PROCESS_INIT;
+> diff --git a/sequencer.h b/sequencer.h
+> index 5c9662a60a..bab910f012 100644
+> --- a/sequencer.h
+> +++ b/sequencer.h
+> @@ -191,6 +191,8 @@ void commit_post_rewrite(struct repository *r,
+>   			 const struct commit *current_head,
+>   			 const struct object_id *new_head);
 >   
->   	if (file_exists(state_dir_path("strategy", opts))) {
->   		strbuf_reset(&buf);
-> -		if (read_one(state_dir_path("strategy", opts), &buf))
-> +		if (!read_oneliner(&buf, state_dir_path("strategy", opts),
-> +				   READ_ONELINER_WARN_NON_EXISTENCE))
->   			return -1;
->   		free(opts->strategy);
->   		opts->strategy = xstrdup(buf.buf);
-> @@ -672,7 +668,8 @@ static int read_basic_state(struct rebase_options *opts)
->   
->   	if (file_exists(state_dir_path("strategy_opts", opts))) {
->   		strbuf_reset(&buf);
-> -		if (read_one(state_dir_path("strategy_opts", opts), &buf))
-> +		if (!read_oneliner(&buf, state_dir_path("strategy_opts", opts),
-> +				   READ_ONELINER_WARN_NON_EXISTENCE))
->   			return -1;
->   		free(opts->strategy_opts);
->   		opts->strategy_opts = xstrdup(buf.buf);
-> @@ -724,7 +721,7 @@ static int apply_autostash(struct rebase_options *opts)
->   	if (!file_exists(path))
->   		return 0;
->   
-> -	if (read_one(path, &autostash))
-> +	if (!read_oneliner(&autostash, path, READ_ONELINER_WARN_NON_EXISTENCE))
->   		return error(_("Could not read '%s'"), path);
->   	/* Ensure that the hash is not mistaken for a number */
->   	strbuf_addstr(&autostash, "^0");
+> +int apply_autostash(const char *path);
+> +
+>   #define SUMMARY_INITIAL_COMMIT   (1 << 0)
+>   #define SUMMARY_SHOW_AUTHOR_DATE (1 << 1)
+>   void print_commit_summary(struct repository *repo,
 > 
