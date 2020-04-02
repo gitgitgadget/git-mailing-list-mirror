@@ -2,97 +2,101 @@ Return-Path: <SRS0=dTtN=5S=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FCDAC43331
-	for <git@archiver.kernel.org>; Thu,  2 Apr 2020 17:52:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E5BCAC43331
+	for <git@archiver.kernel.org>; Thu,  2 Apr 2020 17:53:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7429C2077D
-	for <git@archiver.kernel.org>; Thu,  2 Apr 2020 17:52:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B50092074D
+	for <git@archiver.kernel.org>; Thu,  2 Apr 2020 17:53:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IPt3lZyb"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZMVGuyTf"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388754AbgDBRw4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Apr 2020 13:52:56 -0400
-Received: from mail-ot1-f66.google.com ([209.85.210.66]:47048 "EHLO
-        mail-ot1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388745AbgDBRwz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Apr 2020 13:52:55 -0400
-Received: by mail-ot1-f66.google.com with SMTP id 111so4315721oth.13
-        for <git@vger.kernel.org>; Thu, 02 Apr 2020 10:52:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=UKLYQ0M5q3Zgsg2MnoVyrZ1UkiJE2nZARgIX+81Fo+I=;
-        b=IPt3lZybP7Ly99cjeJo6tYTp3Nn16nWiyJALFUqfnLYBNsayeIGdpMtKWpDKFAGTqz
-         3WAldzxQzuRSgN31e0G85y5GKwoq767T7rWYKNERbtpHBMmWJ9heU533mTOWkDWUUaU+
-         Vj28hdNj/uohYU57lOH4mp6YkiWFseZlQ9HSTBqbeH64EeSBtgLfR89N0IU1yjdiUgLp
-         8hVZxoYClHg/btE0FnJAwMDaIc4nivZhuwguFRsie7stgmFC7j9CrDPFkEfpkRgubE/L
-         WU4q9EcwskvGu6Ld+Vo5rGK4u7UGgpwjRHydbzA1BcebgwsU+2AIJxrGk9KYycpLKZUe
-         T76g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=UKLYQ0M5q3Zgsg2MnoVyrZ1UkiJE2nZARgIX+81Fo+I=;
-        b=YXc0UpNvHuctCwzX2Oc823ftm4MnFyKyDlmD9lXOaLmjTdrjTbtLZ8rwOZ+z5De678
-         1bLl0Oz7mmADxNDvewAkBDjB4/LEia4OUc6S9QrPYxHOsXxpJMRYKshCRnW0Fm7KQciw
-         5fH/wTBkVlBYc4K9pk2qOhcR6rFXTfGyFOvq0tqJluSJpW79QpNHxV+VxwF24saFKvM3
-         EoZXCOeGpxm4AuSbJEXOSxD4TZFWrKFPsoF8AMwUNgGEOWoKpZTH7iN/45gA7WnbC10C
-         UDI75MFgtOlTbc6PmAFfw92Fh/DstG56qRF/Md7XmS5EdY0UJUYGRVff80x+EPQlYzLD
-         ZWfQ==
-X-Gm-Message-State: AGi0PuYogj1B5ioWoUhpxgRqNhQ8dx4rF+xbNLQYR7BtrwHJNCdqejTI
-        VjLkj9UqQ1u3jUo5SAuP/dA=
-X-Google-Smtp-Source: APiQypJl0GS/pIeOucinLhDdsIaU51TWmmsOMs+nHMdCajeRKASeXoGa81TY7u8ACss6/heqNk8TeA==
-X-Received: by 2002:a4a:d1a4:: with SMTP id z4mr3752373oor.52.1585849974971;
-        Thu, 02 Apr 2020 10:52:54 -0700 (PDT)
-Received: from [192.168.1.83] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id x80sm1512988oix.56.2020.04.02.10.52.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 Apr 2020 10:52:54 -0700 (PDT)
-Subject: Re: [PATCH] clone: document partial clone section
-To:     Junio C Hamano <gitster@pobox.com>,
-        Teng Long via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Teng Long <dyroneteng@gmail.com>
-References: <pull.745.git.git.1585792946341.gitgitgadget@gmail.com>
- <xmqqa73t4wmk.fsf@gitster.c.googlers.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <120c8b18-6707-ce8e-7905-8f9565094034@gmail.com>
-Date:   Thu, 2 Apr 2020 13:52:53 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:75.0) Gecko/20100101
- Thunderbird/75.0
+        id S2388856AbgDBRxh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Apr 2020 13:53:37 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58516 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726617AbgDBRxh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Apr 2020 13:53:37 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 00C6B5FFBC;
+        Thu,  2 Apr 2020 13:53:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=eGE7ilAYT2Ue
+        CQ+7Ny6LXj47h84=; b=ZMVGuyTf8dyrdPmnJdWSbt8jZli1SLdK5LmPbmbfUQsY
+        4Xh3OZ7uhnXK0/liy86tApH7zKFTr3lB6ShzGu0Q/++ikzfWuyJHhPpxZK9KPVlh
+        LAxbvPqlXZOTyQiXTm5HVdeYTv+FhOLgBgFT93dJ3faCWt5ibeDnkW/rFNN9hzw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=Y7ZMfz
+        cdqiai8u+j1eBX20pHodNCf41hIp8v2ph6djqIldoRzYAXRzGHUOn+fMVDkTq1Rb
+        zpysh4y5TRo3TdLgs/0Pad4sDk4kSSKX2imb2GG2zimzWxWYEj1BonUTWS8RT99r
+        oJcHAZk0NZI8crR9VP+7KzF+hxK+T1aX1AV58=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id EB06C5FFBA;
+        Thu,  2 Apr 2020 13:53:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 739485FFB9;
+        Thu,  2 Apr 2020 13:53:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+Cc:     git@vger.kernel.org,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v3 0/6] Travis + Azure jobs for linux with musl libc
+References: <cover.1585474409.git.congdanhqx@gmail.com>
+        <cover.1585832270.git.congdanhqx@gmail.com>
+Date:   Thu, 02 Apr 2020 10:53:35 -0700
+In-Reply-To: <cover.1585832270.git.congdanhqx@gmail.com> (=?utf-8?B?IsSQ?=
+ =?utf-8?B?b8OgbiBUcuG6p24gQ8O0bmc=?=
+        Danh"'s message of "Thu, 2 Apr 2020 20:03:59 +0700")
+Message-ID: <xmqqsghl3hb4.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqa73t4wmk.fsf@gitster.c.googlers.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+X-Pobox-Relay-ID: E080DBD4-750A-11EA-9F60-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4/2/2020 1:37 PM, Junio C Hamano wrote:
->> `git log -p -- <path>` will download blobs to
->> +generate the patch output and git log --raw will download all blobs
->> +that changed at recent commits in order to compute renames.
-> I do not know anybody sane uses '--raw' these days, but a better
-> way to describe this may be
+=C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh  <congdanhqx@gmail.com> writes=
+:
 
-Ha. This was my fault for recommending it. The point was that some
-diff options require blob contents even if it doesn't seem obvious.
-Yes, "-p" will get contents to show the in-file diff, but --raw
-will calculate renames so it can show the rename in the output.
+> This is a nearly rewrite of this series, because there're GitHub Action
+> allow running directly inside container.
+>
+> =3D> I rewrite this series to prepare as much as possible for the GitHu=
+b
+> Action series.
+> ...
+>  .travis.yml                                   | 10 ++++-
+>  azure-pipelines.yml                           | 39 ++++++++++++++++++-
+>  ci/install-docker-dependencies.sh             | 18 +++++++++
+>  ci/lib.sh                                     |  8 ++++
+>  ...n-linux32-build.sh =3D> run-docker-build.sh} | 39 +++++++++++++----=
+--
+>  ci/{run-linux32-docker.sh =3D> run-docker.sh}   | 28 ++++++++++---
+>  6 files changed, 121 insertions(+), 21 deletions(-)
+>  create mode 100755 ci/install-docker-dependencies.sh
+>  rename ci/{run-linux32-build.sh =3D> run-docker-build.sh} (63%)
+>  rename ci/{run-linux32-docker.sh =3D> run-docker.sh} (43%)
 
-When I use '--raw' what I really care about is '--name-only' but
-does that compute renames?
+Thanks.  The above diffstat makes me wonder if it makes more sense
+to do the topic from Dscho first to migrate existing CI targets to
+GitHub Actions and then add musl job to the ci suite on top?  That
+way, we won't have to worry about azure-pipelines.yml at all here.
 
-As you mention, '--summary' would suffice for the point as it
-checks for renames.
 
-Thanks,
--Stolee
+
