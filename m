@@ -2,158 +2,689 @@ Return-Path: <SRS0=dTtN=5S=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C44F3C10F26
-	for <git@archiver.kernel.org>; Thu,  2 Apr 2020 05:15:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CBBDEC43331
+	for <git@archiver.kernel.org>; Thu,  2 Apr 2020 06:56:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 97246206F5
-	for <git@archiver.kernel.org>; Thu,  2 Apr 2020 05:15:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7E5E32078B
+	for <git@archiver.kernel.org>; Thu,  2 Apr 2020 06:56:49 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j6h99NxS"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pzJ5KbGf"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726653AbgDBFPt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Apr 2020 01:15:49 -0400
-Received: from mail-oi1-f194.google.com ([209.85.167.194]:46589 "EHLO
-        mail-oi1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726214AbgDBFPt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Apr 2020 01:15:49 -0400
-Received: by mail-oi1-f194.google.com with SMTP id q204so1716214oia.13
-        for <git@vger.kernel.org>; Wed, 01 Apr 2020 22:15:48 -0700 (PDT)
+        id S2387431AbgDBG4s (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Apr 2020 02:56:48 -0400
+Received: from mail-il1-f178.google.com ([209.85.166.178]:43035 "EHLO
+        mail-il1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725789AbgDBG4r (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Apr 2020 02:56:47 -0400
+Received: by mail-il1-f178.google.com with SMTP id g15so2526397ilj.10
+        for <git@vger.kernel.org>; Wed, 01 Apr 2020 23:56:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=K0ANoA1+uHJkorPPcoe44A803XaN1cisznpHg+TByGY=;
-        b=j6h99NxS6uXWZy/yEonXv2jR6/puXCQvJsDf6Hgyw6vaZhOAkaHl5HltygRWo4Fi1F
-         G3t54yL2cI54nrVdS6C8TVbc8xzdgf4syYTdnlAkExGrlD1QT41plRHjIJZ7DIdOYrqY
-         I2PwgmdzkdgBOJ6wzaXQ1zx1CFaOLXKn6TiR9hnmD4xT7nOaEntwHp5IM29A0WZJA13U
-         R9o/z9DSr8MY3LATdSm5Qoit2x5psLTSm9oN5SyeocJyF9OSiQE8LVOgQYhRHlU2l6WQ
-         MTfzSj0WfKUJLyGzGP/RNiRQxreUPiH/isFTs7Av+LP35RLAMqBmZ6JJFqfffj1XJHCS
-         fDJQ==
+         :cc:content-transfer-encoding;
+        bh=jF3sL2A0cxunQ6o/FhkUt94cwmGvIhtk86AhqFMhdEc=;
+        b=pzJ5KbGfCtpszXJRJ9OKjKjvwBM5oMTC5NY3ppRjsMTwUuC2DnfdKEgKlIWD+wM//C
+         9wCNeee32/4BPGqobWb9YkNPdR698QlNqgELG/mEIv4q1207oYjUL096KKVVNuY9d7SD
+         EN8hEvyccwQriLHca3sFEBv6exAdQTMwH21ywGyp/rjmzes/SPM/hP0ZULLCKD7neE/F
+         tU5FnzPgLaLqVpxqibyH5vHCO551XgmwXaVXkKtb35kq23EDvdJCLUO+/PMa+vh2VwfA
+         ndw8R417HYoykMyCSvFKL151eWaTsZld1WxRW0cQaQspFx1LdAKUE3Sq+w9TWaPOqpnF
+         hDjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=K0ANoA1+uHJkorPPcoe44A803XaN1cisznpHg+TByGY=;
-        b=RHK6ZD6xGJ0miiMe+qk8zDVaGJtJfFa7rbUGuT4jouDS5r3nuWBg5zchnPyoZFlbYD
-         DyZ4wc97VlzwGt+zHmoHrr97y5WojsYuOLPx9x58k18yQELyvTaf3kn7CjLwaNc3eZRp
-         aye+yKuxlskzdkDxxaaD0tIvl2yoc1TB0VPFnw5VqNV9lUCTt1/nPSvOOA8OAFb4JQ3B
-         A/kWoT0ScNvVlXfHFZlSH9op1I4LzRaECFNKYAmdAx9fqzJo/LaCfLmfiYZ2aqewGBb1
-         PPtxiDYpvzbMThyGkdTfmeLiFCFGx/bNEyGJPB+Pc/g1v8BGi+P4mFXwP1xcTrec8Jvx
-         d7FA==
-X-Gm-Message-State: AGi0PubqbVNGCPXjePXEc3rDhZTsOl8n38VJsgyyTVfBQdib7DXc5c7g
-        TM8WWrRQ2KbKIsXOiNstgaFtxw5fqArSINKtKp0=
-X-Google-Smtp-Source: APiQypJAQj0LJj1+91JWqQahYJ3S3rDrWlBGswOyu8o2jvC6lQWMeY72NAPsy6geUYoKPLHlFc/CzDzpOUtjG89dMD8=
-X-Received: by 2002:aca:4b84:: with SMTP id y126mr985890oia.31.1585804547961;
- Wed, 01 Apr 2020 22:15:47 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=jF3sL2A0cxunQ6o/FhkUt94cwmGvIhtk86AhqFMhdEc=;
+        b=B+EKdc1W5wKiqxfVvyRcM7X6509IiQE4ZpO4yu+Ldc55YiGezRMotft/TDO/+KbnJR
+         gGl9JlitK2PJGjcB4qQGeigBjuVRuJFTF/LXf1RLVc2ZUCdO22BkUieyHRVBUGRDQdob
+         qds4fUdfEzmeL7y1zXHV94Tk0dnTY/FXFZOCSExidpycaN7KIOmLWMOe0HIbgMefU6D2
+         3YLXQ2p9gQUvYqv7Cfe9pPlUvb8x3IRsxh/lP+xVwHv/2WEOBBfjK4HuRx/0W/Y4Dq6h
+         rU0RvFZJnfRuwCeXYfdTuFsZEY+B/KfCi28NIBpuNvQUDWPuVv5IYqgHzbrJzqFL9ncW
+         cxbQ==
+X-Gm-Message-State: AGi0PuZvJtqyMfF/TE3NpFuAL0nDXCLQpHscSXLgI2KSx0iqjB9G5kwg
+        ZYtwOJ+34f7wc4q+hyQ+D0LSEOsGcq0cN8DeSj73OQ==
+X-Google-Smtp-Source: APiQypISc6GgeX8vJrQkJDa0Cyq2AUe2hwIkDzeZjnLW5Saa/NfV2epMomCLZLvhSci017dLd+bdai52pH6lj9oV+Gg=
+X-Received: by 2002:a92:7e82:: with SMTP id q2mr1763149ill.188.1585810606327;
+ Wed, 01 Apr 2020 23:56:46 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.746.git.git.1585773096145.gitgitgadget@gmail.com> <24197.9157.362143.972556@chiark.greenend.org.uk>
-In-Reply-To: <24197.9157.362143.972556@chiark.greenend.org.uk>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 1 Apr 2020 22:15:37 -0700
-Message-ID: <CABPp-BGo=6W5wfba7us8ca3eAfz04v8WxyOQ96DkoXn2fV=J1Q@mail.gmail.com>
-Subject: Re: [PATCH] sequencer: honor GIT_REFLOG_ACTION
-To:     Ian Jackson <ijackson@chiark.greenend.org.uk>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Paul Gevers <elbrus@debian.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <xmqq4ku46s8z.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqq4ku46s8z.fsf@gitster.c.googlers.com>
+From:   "Miriam R." <mirucam@gmail.com>
+Date:   Thu, 2 Apr 2020 08:56:35 +0200
+Message-ID: <CAN7CjDC-cSQtJmShc6iXyW=1LWBXk0_KX1OaZK8_TEnHbsX0NA@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Mar 2020, #10; Tue, 31)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 1, 2020 at 4:29 PM Ian Jackson
-<ijackson@chiark.greenend.org.uk> wrote:
->
-> Hi.  Thanks for looking at this.
->
-> Elijah Newren via GitGitGadget writes ("[PATCH] sequencer: honor GIT_REFLOG_ACTION"):
-> >     I'm not the best with getenv/setenv. The xstrdup() wrapping is
-> >     apparently necessary on mac and bsd. The xstrdup seems like it leaves us
-> >     with a memory leak, but since setenv(3) says to not alter or free it, I
-> >     think it's right. Anyone have any alternative suggestions?
->
-> I can try to help.  It's not entirely trivial.
->
-> The setenv interface is a wrapper around putenv.  putenv has had a
-> variety of different semantics.  Some of these sets of semantics
-> cannot be used to re-set the same environment variable without a
-> memory leak - and even figuring out what semantics you have would be
-> complex and tend to produce code which would fail in bad ways.
-> There's a short summary of the situation in Linux's putenv(3).
->
-> Would it be possible for git to arrange to set GIT_REFLOG_ACTION only
-> when it is invoking subprocesses ?  Otherwise it would update, and
-> look at, a global variable of its own.  (Or a parameter to relevant
-> functions if one doesn't like the action-at-a-distance effect of a
-> global.)
->
-> And, it seems to me that the reflog handling should be centralised.
->
-> > +     char *reflog_action = getenv("GIT_REFLOG_ACTION");
-> >
-> >       va_start(ap, fmt);
-> >       strbuf_reset(&buf);
-> > -     strbuf_addstr(&buf, action_name(opts));
-> > +     strbuf_addstr(&buf, reflog_action ? reflog_action : action_name(opts));
->
-> Open coding this kind of thing at every site which needs to think
-> about the reflog actions will surely result in some of the instances
-> having bugs.
->
-> Writing a single function that contans this (or most of it) would
-> happily decouple all of its call sites from literally asking about
-> getenv("GIT_REFLOG_ACTION") thereby making it easier to do the
-> indirection-through-program-variables I suggest.
+Hi,
+I sent a v2 patch series of "Finish converting git bisect to C part 2"
+twelve days ago:
+https://public-inbox.org/git/20200321161020.22817-1-mirucam@gmail.com/
+and I haven't received any feedback, who could review it again?
+Also I was wondering why the patch series is not in 'pu'.
 
-That sounds great, but I'm not sure that "only when invoking
-subprocesses" will limit the places where we set the environment
-variable all that much; it might actually expand it.  I wasn't there
-for the whole history, but my understanding is the rebase code has
-slowly transformed from the original all-shell rebase
-implementation(s), to being a helper program that the shell could call
-into for parts of its operations and passing control back and forth
-between shell and C, to being a reimplementation of just invoking the
-same commands that the shell script would have, to slowly transforming
-into an actual library where invocations of other git subprocesses are
-being replaced with relevant function calls.  It's a long cleanup
-process that is still ongoing.  I'd like to get to the point where we
-only invoke subprocesses if the user specifies --exec or a special
-merge strategy, but that's a goal with a longer term timeframe than
-fixing a 2.26 regression.
+Best,
+Miriam.
 
-> Having said that,
+
+El mi=C3=A9., 1 abr. 2020 a las 1:06, Junio C Hamano (<gitster@pobox.com>) =
+escribi=C3=B3:
 >
-> > diff --git a/t/t3406-rebase-message.sh b/t/t3406-rebase-message.sh
-> > index 61b76f33019..927a4f4a4e4 100755
-> > --- a/t/t3406-rebase-message.sh
-> > +++ b/t/t3406-rebase-message.sh
+> Here are the topics that have been cooking.  Commits prefixed with
+> '-' are only in 'pu' (proposed updates) while commits prefixed with
+> '+' are in 'next'.  The ones marked with '.' do not appear in any of
+> the integration branches, but I am still holding onto them.
 >
-> This test case convinces me that the patch has the right behaviour for
-> at least the case I care about :-).
-
-Cool, sounds like it's a good immediate fix for the 2.26 regression,
-and then longer term as we continue refactoring we can hopefully
-isolate subprocess handling and writing of state.
-
-As a heads up, though, my personal plans for rebase (subject to buy-in
-from other stakeholders) is to make it do a lot more in-memory work.
-In particular, this means for common cases there will be no subprocess
-invocations, no writing of any state unless/until you hit a conflict,
-no updating of any files in the working tree until all commits have
-been created (or a conflict is hit), and no updating of the branch
-until after all the commits have been created.  Thus, for the common
-cases with no conflicts, there would only be 1 entry in the reflog of
-HEAD the entire operation, rather than approximately 1 per commit.  I
-have a proof-of-concept showing these ideas work for basic cases.  So,
-I hope your tests don't depend on the number of entries added to
-HEAD's reflog.
+> The 'next' branch has been rewound and rebuilt.
+>
+> You can find the changes described here in the integration branches
+> of the repositories listed at
+>
+>     http://git-blame.blogspot.com/p/git-public-repositories.html
+>
+> --------------------------------------------------
+> [New Topics]
+>
+> * ag/rebase-merge-allow-ff-under-abbrev-command (2020-03-30) 2 commits
+>  - t3432: test `--merge' with `rebase.abbreviateCommands =3D true', too
+>  - sequencer: don't abbreviate a command if it doesn't have a short form
+>
+>  "git rebase" with the merge backend did not work well when the
+>  rebase.abbreviateCommands configuration was set.
+>
+>  Will merge to 'next'.
+>
+>
+> * jk/oid-array-cleanups (2020-03-30) 7 commits
+>  - oidset: stop referring to sha1-array
+>  - ref-filter: stop referring to "sha1 array"
+>  - bisect: stop referring to sha1_array
+>  - test-tool: rename sha1-array to oid-array
+>  - oid_array: rename source file from sha1-array
+>  - oid_array: use size_t for iteration
+>  - oid_array: use size_t for count and allocation
+>
+>  Code cleanup.
+>
+>  Will merge to 'next'.
+>
+>
+> * jx/proc-receive-hook (2020-03-31) 7 commits
+>  - SQUASH???
+>  - doc: add documentation for the proc-receive hook
+>  - receive-pack: refactor report for proc-receive
+>  - receive-pack: new config receive.procReceiveRefs
+>  - refs.c: refactor to reuse ref_is_hidden()
+>  - receive-pack: add new proc-receive hook
+>  - transport: not report a non-head push as a branch
+>
+> --------------------------------------------------
+> [Stalled]
+>
+> * gs/commit-graph-path-filter (2020-03-30) 16 commits
+>  - commit-graph: add GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS test flag
+>  - t4216: add end to end tests for git log with Bloom filters
+>  - revision.c: add trace2 stats around Bloom filter usage
+>  - revision.c: use Bloom filters to speed up path based revision walks
+>  - commit-graph: add --changed-paths option to write subcommand
+>  - commit-graph: reuse existing Bloom filters during write
+>  - commit-graph: write Bloom filters to commit graph file
+>  - diff: skip batch object download when possible
+>  - commit-graph: examine commits by generation number
+>  - commit-graph: examine changed-path objects in pack order
+>  - commit-graph: compute Bloom filters for changed paths
+>  - diff: halt tree-diff early after max_changes
+>  - bloom.c: core Bloom filter implementation for changed paths.
+>  - bloom.c: introduce core Bloom filter constructs
+>  - bloom.c: add the murmur3 hash implementation
+>  - commit-graph: define and use MAX_NUM_CHUNKS
+>
+>  Introduce an extension to the commit-graph to make it efficient to
+>  check for the paths that were modified at each commit using Bloom
+>  filters.
+>
+>  Expecting a reroll.
+>  cf. <fdcbd793-57c2-f5ea-ccb9-cf34e911b669@gmail.com>
+>  Breakage due to byte-order dependency reported.
+>
+>
+> * mk/use-size-t-in-zlib (2018-10-15) 1 commit
+>  - zlib.c: use size_t for size
+>
+>  The wrapper to call into zlib followed our long tradition to use
+>  "unsigned long" for sizes of regions in memory, which have been
+>  updated to use "size_t".
+>
+> --------------------------------------------------
+> [Cooking]
+>
+> * dr/midx-avoid-int-underflow (2020-03-28) 1 commit
+>  - midx.c: fix an integer underflow
+>
+>  When fed a midx that records no objects, some codepaths tried to
+>  loop from 0 through (num_objects-1), which, due to integer
+>  arithmetic wrapping around, made it nonsense operation with out of
+>  bounds array accesses.  The code has been corrected to reject such
+>  an midx file.
+>
+>  Will merge to 'next'.
+>
+>
+> * ak/run-command-on-cygwin-fix (2020-03-27) 1 commit
+>  - run-command: trigger PATH lookup properly on Cygwin
+>
+>  Utitiles run via the run_command() API were not spawned correctly
+>  on Cygwin, when the paths to them are given as a full path with
+>  backslashes.
+>
+>  Will merge to 'next'.
+>
+>
+> * dd/ci-musl-libc (2020-03-29) 3 commits
+>  - travis: build and test on Linux with musl libc and busybox
+>  - ci: refactor docker runner script
+>  - ci: libify logic for usage and checking CI_USER
+>
+>  A new CI job to build and run test suite on linux with musl libc
+>  has been added.
+>
+>
+> * dr/doc-recurse-submodules (2020-03-27) 5 commits
+>  - doc: --recurse-submodules mostly applies to active submodules
+>  - doc: be more precise on (fetch|push).recurseSubmodules
+>  - doc: explain how to deactivate submodule.recurse completely
+>  - doc: document --recurse-submodules for reset and restore
+>  - doc: list all commands affected by submodule.recurse
+>
+>  Documentation updates around the "--recurse-submodules" option.
+>
+>  Getting there...
+>  cf. <F03FAA2F-EDFB-4497-A4E8-3AC267C779FC@gmail.com>
+>  cf. <1EA4CEB1-D329-4916-A9AC-2F64A7A4F6D0@gmail.com>
+>
+>
+> * dr/push-remoteref-fix (2020-03-27) 1 commit
+>  - remote.c: fix handling of %(push:remoteref)
+>
+>  The "%(push:remoteref)" placeholder in the "--format=3D" argument of
+>  "git format-patch" (and friends) only showed what got explicitly
+>  configured, not what ref at the receiving end would be updated when
+>  "git push" was used, as it ignored the default behaviour (e.g. update
+>  the same ref as the source).
+>
+>  Expecting a reroll.
+>  cf. <20200328222546.gvrtzkcazf3bhjno@doriath>
+>
+>
+> * jc/doc-test-leaving-early (2020-03-29) 1 commit
+>  - t/README: suggest how to leave test early with failure
+>
+>  Document the recommended way to abort a failing test early (e.g. by
+>  exiting a loop), which is to say "return 1".
+>
+>  Will merge to 'next'.
+>
+>
+> * jk/build-with-right-curl (2020-03-27) 2 commits
+>  - Makefile: use curl-config --cflags
+>  - Makefile: avoid running curl-config multiple times
+>
+>  The build procedure did not use the libcurl library and its include
+>  files correctly for a custom-built installation.
+>
+>  Will merge to 'next'.
+>
+>
+> * jk/harden-protocol-v2-delim-handling (2020-03-29) 3 commits
+>  - test-lib-functions: simplify packetize() stdin code
+>  - upload-pack: handle unexpected delim packets
+>  - test-lib-functions: make packetize() more efficient
+>
+>  The server-end of the v2 protocol to serve "git clone" and "git
+>  fetch" was not prepared to see a delim packets at unexpected
+>  places, which led to a crash.
+>
+>  Will merge to 'next'.
+>
+>
+> * jk/p5310-drop-non-bitmap-timing (2020-03-27) 1 commit
+>  - p5310: stop timing non-bitmap pack-to-disk
+>
+>  Perf-test update.
+>
+>  Will merge to 'next'.
+>
+>
+> * jk/test-cleanup (2020-03-27) 2 commits
+>  - t/lib-*.sh: drop executable bit
+>  - t/lib-credential.sh: drop shebang line
+>
+>  Test cleanup.
+>
+>  Will merge to 'next'.
+>
+>
+> * ps/transactional-update-ref-stdin (2020-03-30) 9 commits
+>  - update-ref: implement interactive transaction handling
+>  - update-ref: read commands in a line-wise fashion
+>  - update-ref: move transaction handling into `update_refs_stdin()`
+>  - update-ref: pass end pointer instead of strbuf
+>  - update-ref: drop unused argument for `parse_refname`
+>  - update-ref: organize commands in an array
+>  - strbuf: provide function to append whole lines
+>  - git-update-ref.txt: add missing word
+>  - refs: fix segfault when aborting empty transaction
+>
+>  "git update-ref --stdin" learned a handful of new verbs to let the
+>  user control ref update transactions more explicitly, which helps
+>  as an ingredient to implement two-phase commit-style atomic
+>  ref-updates across multiple repositories.
+>
+>  Good start, but suspect not quite there yet.
+>  cf. <xmqqo8she9yp.fsf@gitster.c.googlers.com>
+>
+>
+> * ag/sequencer-i18n-messages (2020-03-28) 1 commit
+>  - sequencer: mark messages for translation
+>
+>  Message fix.
+>
+>  Will merge to 'next'.
+>
+>
+> * dl/wrapper-fix-indentation (2020-03-28) 1 commit
+>  - wrapper: indent with tabs
+>
+>  Coding style fix.
+>
+>  Will merge to 'next'.
+>
+>
+> * en/pull-do-not-rebase-after-fast-forwarding (2020-03-27) 1 commit
+>  - pull: avoid running both merge and rebase
+>
+>  "git pull --rebase" tried to run a rebase even after noticing that
+>  the pull results in a fast-forward and no rebase is needed nor
+>  sensible, for the past few years due to a mistake nobody noticed.
+>
+>  Will merge to 'next'.
+>
+>
+> * jc/allow-strlen-substitution-in-shell-scripts (2020-03-29) 1 commit
+>  - CodingGuidelines: allow ${#posix} =3D=3D strlen($posix)
+>
+>  Coding guideline update.
+>
+>
+> * jm/gitweb-fastcgi-utf8 (2020-03-29) 1 commit
+>  - gitweb: fix UTF-8 encoding when using CGI::Fast
+>
+>  Gitweb update.
+>
+>
+> * js/walk-doc-optim (2020-03-30) 1 commit
+>  - MyFirstObjectWalk: remove unnecessary conditional statement
+>
+>  Code cleanup.
+>
+>  Will merge to 'next'.
+>
+>
+> * jx/atomic-push (2020-03-29) 4 commits
+>  - transport-helper: new method reject_atomic_push()
+>  - transport-helper: mark failure for atomic push
+>  - send-pack: mark failure of atomic push properly
+>  - t5543: never report what we do not push
+>
+>  "git push --atomic" used to show failures for refs that weren't
+>  even pushed, which has been corrected.
+>
+>  Will merge to 'next'.
+>
+>
+> * ma/doc-discard-docbook-xsl-1.73 (2020-03-29) 6 commits
+>  - INSTALL: drop support for docbook-xsl before 1.74
+>  - manpage-normal.xsl: fold in manpage-base.xsl
+>  - manpage-bold-literal.xsl: stop using git.docbook.backslash
+>  - Doc: drop support for docbook-xsl before 1.73.0
+>  - Doc: drop support for docbook-xsl before 1.72.0
+>  - Doc: drop support for docbook-xsl before 1.71.1
+>
+>  Raise the minimum required version of docbook-xsl package to 1.74,
+>  as 1.74.0 was from late 2008, which is more than 10 years old, and
+>  drop compatibility cruft from our documentation suite.
+>
+>  Will merge to 'next'.
+>
+>
+> * pb/rebase-doc-typofix (2020-03-28) 1 commit
+>  - git-rebase.txt: fix typo
+>
+>  Typofix.
+>
+>  Will merge to 'next'.
+>
+>
+> * rs/pull-options-sync-code-and-doc (2020-03-28) 2 commits
+>  - pull: pass documented fetch options on
+>  - pull: remove --update-head-ok from documentation
+>
+>  "git pull" shares many options with underlying "git fetch", but
+>  some of them were not documented and some of those that would make
+>  sense to pass down were not passed down.
+>
+>  Will merge to 'next'.
+>
+>
+> * en/fill-directory-exponential (2020-03-26) 7 commits
+>  - dir: replace exponential algorithm with a linear one
+>  - dir: refactor treat_directory to clarify control flow
+>  - dir: fix confusion based on variable tense
+>  - dir: fix broken comment
+>  - dir: consolidate treat_path() and treat_one_path()
+>  - dir: fix simple typo in comment
+>  - t7063: more thorough status checking
+>
+>  The directory traversal code had redundant recursive calls which
+>  made its performance characteristics exponential with respect to
+>  the depth of the tree, which was corrected.
+>
+>  Expecting a reroll.
+>  cf. <pull.700.v4.git.git.1585258061.gitgitgadget@gmail.com> (v4)
+>  cf. <CABPp-BFXWx_MPL1Z0-X5hHf0N1T_13TEbAhVTKh6-atO1+g90Q@mail.gmail.com>
+>
+>
+> * dd/test-with-busybox (2020-03-26) 8 commits
+>  - t5703: feed raw data into test-tool unpack-sideband
+>  - t4124: tweak test so that non-compliant diff(1) can also be used
+>  - t7063: drop non-POSIX argument "-ls" from find(1)
+>  - t5616: use rev-parse instead to get HEAD's object_id
+>  - t5003: skip conversion test if unzip -a is unavailable
+>  - t5003: drop the subshell in test_lazy_prereq
+>  - test-lib-functions: test_cmp: eval $GIT_TEST_CMP
+>  - t4061: use POSIX compliant regex(7)
+>
+>  Various tests have been updated to work around issues found with
+>  shell utilities that come with busybox etc.
+>
+>  Will merge to 'next'.
+>
+>
+> * dl/libify-a-few (2020-03-24) 2 commits
+>  - Lib-ify prune-packed
+>  - Lib-ify fmt-merge-msg
+>
+>  Code in builtin/*, i.e. those can only be called from within
+>  built-in subcommands, that implements bulk of a couple of
+>  subcommands have been moved to libgit.a so that they could be used
+>  by others.
+>
+>  Will merge to 'next'.
+>
+>
+> * dl/test-must-fail-fixes-3 (2020-03-27) 8 commits
+>  - t5801: teach compare_refs() to accept !
+>  - t5612: stop losing return codes of git commands
+>  - t5612: don't use `test_must_fail test_cmp`
+>  - t5607: reorder `nongit test_must_fail`
+>  - t5550: simplify no matching line check
+>  - t5512: stop losing return codes of git commands
+>  - t5512: stop losing git exit code in here-docs
+>  - t5512: don't use `test_must_fail test_cmp`
+>
+>  Test clean-up continues.
+>
+>  Will merge to 'next'.
+>
+>
+> * en/sparse-checkout (2020-03-27) 18 commits
+>  - sparse-checkout: provide a new reapply subcommand
+>  - unpack-trees: failure to set SKIP_WORKTREE bits always just a warning
+>  - unpack-trees: provide warnings on sparse updates for unmerged paths to=
+o
+>  - unpack-trees: make sparse path messages sound like warnings
+>  - unpack-trees: split display_error_msgs() into two
+>  - unpack-trees: rename ERROR_* fields meant for warnings to WARNING_*
+>  - unpack-trees: move ERROR_WOULD_LOSE_SUBMODULE earlier
+>  - sparse-checkout: use improved unpack_trees porcelain messages
+>  - sparse-checkout: use new update_sparsity() function
+>  - unpack-trees: add a new update_sparsity() function
+>  - unpack-trees: pull sparse-checkout pattern reading into a new function
+>  - unpack-trees: do not mark a dirty path with SKIP_WORKTREE
+>  - unpack-trees: allow check_updates() to work on a different index
+>  - t1091: make some tests a little more defensive against failures
+>  - unpack-trees: simplify pattern_list freeing
+>  - unpack-trees: simplify verify_absent_sparse()
+>  - unpack-trees: remove unused error type
+>  - unpack-trees: fix minor typo in comment
+>
+>  "sparse-checkout" UI improvements.
+>
+>  Will merge to 'next'.
+>
+>
+> * js/import-tars-do-not-make-phony-files-from-pax-headers (2020-03-24) 1 =
+commit
+>  - import-tars: ignore the global PAX header
+>
+>  The import-tars importer (in contrib/fast-import/) used to create
+>  phony files at the top-level of the repository when the archive
+>  contains global PAX headers, which made its own logic to detect and
+>  omit the common leading directory ineffective, which has been
+>  corrected.
+>
+>  Will merge to 'next'.
+>
+>
+> * js/test-junit-finalization-fix (2020-03-23) 1 commit
+>  - tests(junit-xml): avoid invalid XML
+>
+>  Test fix.
+>
+>  Will merge to 'next'.
+>
+>
+> * js/tests-gpg-integration-on-windows (2020-03-26) 5 commits
+>  - tests: increase the verbosity of the GPG-related prereqs
+>  - tests: turn GPG, GPGSM and RFC1991 into lazy prereqs
+>  - tests: do not let lazy prereqs inside `test_expect_*` turn off tracing
+>  - t/lib-gpg.sh: stop pretending to be a stand-alone script
+>  - tests(gpg): allow the gpg-agent to start on Windows
+>
+>  Enable tests that require GnuPG on Windows.
+>
+>  Will merge to 'next'.
+>
+>
+> * dl/merge-autostash (2020-03-24) 19 commits
+>  - pull: pass --autostash to merge
+>  - t5520: make test_pull_autostash() accept expect_parent_num
+>  - merge: teach --autostash option
+>  - sequencer: implement save_autostash()
+>  - sequencer: unlink autostash in apply_autostash()
+>  - sequencer: extract perform_autostash() from rebase
+>  - rebase: generify create_autostash()
+>  - rebase: extract create_autostash()
+>  - reset: extract reset_head() from rebase
+>  - rebase: generify reset_head()
+>  - rebase: use apply_autostash() from sequencer.c
+>  - sequencer: make apply_rebase() accept a path
+>  - rebase: use read_oneliner()
+>  - sequencer: make read_oneliner() extern
+>  - sequencer: configurably warn on non-existent files
+>  - sequencer: make read_oneliner() accept flags
+>  - sequencer: use file strbuf for read_oneliner()
+>  - t7600: use test_write_lines()
+>  - Makefile: ASCII-sort +=3D lists
+>
+>  "git merge" learns the "--autostash" option.
+>
+>  Will merge to 'next'.
+>
+>
+> * js/trace2-env-vars (2020-03-23) 1 commit
+>  - trace2: teach Git to log environment variables
+>
+>  Trace2 enhancement to allow logging of the environment variables.
+>
+>  Will merge to 'next'.
+>
+>
+> * ar/test-style-fixes (2020-03-22) 2 commits
+>  - t: fix whitespace around &&
+>  - t9500: remove spaces after redirect operators
+>
+>  Style fixes.
+>
+>  Will merge to 'next'.
+>
+>
+> * ds/doc-clone-filter (2020-03-22) 1 commit
+>  - clone: document --filter options
+>
+>  Doc update.
+>
+>  Will merge to 'next'.
+>
+>
+> * jk/t3419-drop-expensive-tests (2020-03-22) 1 commit
+>  - t3419: drop EXPENSIVE tests
+>
+>  Test update.
+>
+>  Will merge to 'next'.
+>
+>
+> * jt/connectivity-check-optim-in-partial-clone (2020-03-29) 1 commit
+>  - connected: always use partial clone optimization
+>
+>  Simplify the commit ancestry connectedness check in a partial clone
+>  repository in which "promised" objects are assumed to be obtainable
+>  lazily on-demand from promisor remote repositories.
+>
+>  Will merge to 'next'.
+>
+>
+> * mt/test-lib-bundled-short-options (2020-03-25) 1 commit
+>  - test-lib: allow short options to be bundled
+>
+>  Minor test usability improvement.
+>
+>  Will merge to 'next'.
+>
+>
+> * bk/p4-pre-edit-changelist (2020-02-14) 7 commits
+>  - git-p4: add RCS keyword status message
+>  - git-p4: add p4 submit hooks
+>  - git-p4: restructure code in submit
+>  - git-p4: add --no-verify option
+>  - git-p4: add p4-pre-submit exit text
+>  - git-p4: create new function run_git_hook
+>  - git-p4: rewrite prompt to be Windows compatible
+>
+>  "git p4" learned four new hooks and also "--no-verify" option to
+>  bypass them (and the existing "p4-pre-submit" hook).
+>
+>  Will merge to 'next'.
+>  Getting tired of waiting for response to RFH from Windows/Python folks.
+>  cf. <pull.698.v6.git.git.1581691486.gitgitgadget@gmail.com>
+>
+>
+> * jt/rebase-allow-duplicate (2020-03-31) 1 commit
+>  - rebase --merge: optionally skip upstreamed commits
+>
+>  Allow "git rebase" to reapply all local commits, even if the may be
+>  already in the upstream, without checking first.
+>
+>  Waiting for discussion to settle, possibly followed by a reroll.
+>  cf. <20200318192821.43808-1-jonathantanmy@google.com>
+>
+>
+> * bc/faq (2020-03-30) 1 commit
+>  - docs: add a FAQ
+>
+>  Doc update.
+>
+>  Will merge to 'next'.
+>
+>
+> * jc/log-no-mailmap (2020-03-16) 3 commits
+>  - log: give --[no-]use-mailmap a more sensible synonym --[no-]mailmap
+>  - clone: reorder --recursive/--recurse-submodules
+>  - parse-options: teach "git cmd -h" to show alias as alias
+>
+>  "git log" learns "--[no-]mailmap" as a synonym to "--[no-]use-mailmap"
+>
+>  Will merge to 'next'.
+>
+>
+> * tb/commit-graph-split-merge (2020-03-24) 3 commits
+>   (merged to 'next' on 2020-03-31 at 2183baf09c)
+>  + builtin/commit-graph.c: support '--input=3Dgraphed'
+>  + builtin/commit-graph.c: introduce '--input=3D<source>'
+>  + builtin/commit-graph.c: support '--split[=3D<strategy>]'
+>
+>  The code to write out the commit-graph has been taught a few
+>  options to control if the resulting graph chains should be merged
+>  or a single new incremental graph is created.
+>
+>  Will merge to 'master'.
+>
+>
+> * hn/reftable (2020-02-26) 6 commits
+>  . Reftable support for git-core
+>  . Add reftable library
+>  . reftable: file format documentation
+>  . refs: document how ref_iterator_advance_fn should handle symrefs
+>  . create .git/refs in files-backend.c
+>  . refs.h: clarify reflog iteration order
+>
+>  A new refs backend "reftable" to replace the traditional
+>  combination of packed-refs files and one-file-per-ref loose refs
+>  has been implemented and integrated for improved performance and
+>  atomicity.
+>
+>  Temporarily ejected as this unfortunately conflicts with the
+>  SHA-256 topic.
+>
+>
+> * es/bugreport (2020-03-26) 5 commits
+>  - bugreport: add compiler info
+>  - bugreport: add uname info
+>  - bugreport: gather git version and build info
+>  - bugreport: add tool to generate debugging info
+>  - help: move list_config_help to builtin/help
+>
+>  The "bugreport" tool.
+>
+>  Ready for 'next' to be improved/enhanced on top?  As the scope of
+>  the topic got trimmed, hopefully these early parts can be polished
+>  quickly enough to be merged down.
+>
+> --------------------------------------------------
+> [Discarded]
+>
+> * jc/rebase-backend-keep-old-default (2020-03-10) 1 commit
+>  . rebase: do not switch the default to 'merge' just yet
+>
+>  The "merge" backend of "git rebase" still has a few bugs and
+>  unexpected behaviour that need to be ironed out before it becomes
+>  the default.  Let's switch the default back to the "apply" backend
+>  for now.
+>
+>
+> * vn/reset-deleted-ita (2019-07-26) 1 commit
+>  . reset: unstage empty deleted ita files
+>
+>  "git reset HEAD [<pathspec>]" did not reset an empty file that was
+>  added with the intent-to-add bit.
