@@ -2,101 +2,105 @@ Return-Path: <SRS0=dTtN=5S=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-5.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6EC67C43331
-	for <git@archiver.kernel.org>; Thu,  2 Apr 2020 10:15:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 17AE7C43331
+	for <git@archiver.kernel.org>; Thu,  2 Apr 2020 11:30:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 450EB2074D
-	for <git@archiver.kernel.org>; Thu,  2 Apr 2020 10:15:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DE0C020787
+	for <git@archiver.kernel.org>; Thu,  2 Apr 2020 11:30:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="giUzpU/A"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PfUHglnM"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387928AbgDBKP5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Apr 2020 06:15:57 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:44798 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728135AbgDBKP4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Apr 2020 06:15:56 -0400
-Received: by mail-pg1-f196.google.com with SMTP id 142so1621737pgf.11
-        for <git@vger.kernel.org>; Thu, 02 Apr 2020 03:15:54 -0700 (PDT)
+        id S2388080AbgDBLaD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Apr 2020 07:30:03 -0400
+Received: from mail-qt1-f193.google.com ([209.85.160.193]:43259 "EHLO
+        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388001AbgDBLaC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Apr 2020 07:30:02 -0400
+Received: by mail-qt1-f193.google.com with SMTP id a5so2842025qtw.10
+        for <git@vger.kernel.org>; Thu, 02 Apr 2020 04:30:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=CLDDMVLXiD/ZgqaYTSvd9gtBPBPTdVwkdIdghP85McE=;
-        b=giUzpU/AezM9sbaSBT5i5/Y0Xia74/4NMJAae3fbPVfEsSmVeKIWN2oXG87rooqbbw
-         u7th5LUKGQNINjhWjAz1MpQOtNACloby1wxLKNQFMBihxedI4Ej3IOyois+/603GvyDJ
-         gw8oBw1hr6JBtJy1TUuZU5jhArigEfuIn2YJMO067unvrwIypa9Lm+Tfyj6Ra++Iczly
-         th7AjocNTcv3re+huFppC+I2wGi4hQ779T4JYGwTt5mMIuOPu9vCoJm8njqOiTPnGT19
-         8NCVEXXMgFmTDyHLsYK797rQxfaeE+zgYkuV6o8jpyCgGxOjbxWPP5Pna8FELE9wi7wQ
-         wv4g==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=oDeG2Ot1bu3KTddxdubDUJeZaCl1YIFpwx7gIKkGmnU=;
+        b=PfUHglnMqoBvsKZt/I/aEcaPZBeeS2UsxPeCubSWMxx/1Me12NJeAJ/P1HB5Fqe/lH
+         tgbaDAniN/D8wHBIbH3bNuBNrQqYJ0umVQ4unr8dIpKLch9+1ZK4EEYyyBKz+hyKykh7
+         uSeiOhbnZ5Dp5OAYsqjuDn4l/HsfkjIFUraVYlvnIId3kQkWoji2JkLuNzex1fyb3QqA
+         /NQ2tTUWA8/t1791f/Npm8yPddvyi3btZq2WaU2cFnbsQP8UotgEml9T5yfxfFf3yhXi
+         shgaQOgRrMxqTGXI92WhAqCkLt2adO3XbBDJMCYDWcCxnue/NGPtzpTrPMbNi2/DKSN9
+         fk1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=CLDDMVLXiD/ZgqaYTSvd9gtBPBPTdVwkdIdghP85McE=;
-        b=l9fAHhhZcir5mEz3uZfqWizr1Jbha0ZPO60tffEAM/CCpamY49LC+cEtLjPUGuYeUP
-         DcyqP+CpKYb+uaP5g1MVAdEWNdy7PARIT7GFJT81FaskdVOkEAyuwXEj3jwz6VPdeX1N
-         ff72edRvjRm8MV1a9d0Dx2vbjzqVC+od1c3SA9tyi7RcOQkcjEQD3i1IhvsbUR/gAYCP
-         tSs/GvuW1uo7I6Cj8sC7GLP3jaBDZkNfSdLL3HasxEVwDkKTlM3I2Mnscfr/7stHZggL
-         l41R8rqe5g9e5hHiqe3b5IkGZ7cjprTdAhxFgiAsGNDmFBk/ZtAJvMsoi5n7CRI45Kf5
-         QoOQ==
-X-Gm-Message-State: AGi0PuafwoeQ4bgjbiaEZXxz5vqFn6A5Z6Fyg9Uxy4Pt7+QWZHfVMquP
-        7sWBdcwsyW2B8n3HU6gowbbflDl9
-X-Google-Smtp-Source: APiQypLSTqaOkPFP1g+Aw0bj5skLWHTwrYOE0CruG1l2IJL8VfRf4dV/6HOinPoONSXuwatAYV/hkw==
-X-Received: by 2002:a63:3002:: with SMTP id w2mr2664846pgw.290.1585822553785;
-        Thu, 02 Apr 2020 03:15:53 -0700 (PDT)
-Received: from localhost.localdomain ([2402:800:6375:207b:be21:746a:7a56:9d4d])
-        by smtp.gmail.com with ESMTPSA id nu13sm3599948pjb.22.2020.04.02.03.15.52
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 02 Apr 2020 03:15:53 -0700 (PDT)
-From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
-        <congdanhqx@gmail.com>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
-        <congdanhqx@gmail.com>
-Subject: [PATCH v2 5/5] Documentation: document merge option --no-gpg-sign
-Date:   Thu,  2 Apr 2020 17:15:34 +0700
-Message-Id: <d35dd89c52e427861c38d17e43c61fca149dbfd5.1585821581.git.congdanhqx@gmail.com>
-X-Mailer: git-send-email 2.26.0.334.g6536db25bb
-In-Reply-To: <cover.1585821581.git.congdanhqx@gmail.com>
-References: <20200331064456.GA15850@danh.dev> <cover.1585821581.git.congdanhqx@gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=oDeG2Ot1bu3KTddxdubDUJeZaCl1YIFpwx7gIKkGmnU=;
+        b=ICQ2LckflMoEeE81TZGLwWAtoHuUNQ5J8U2mNsYZHQPvpNAfgw+E9P5MeH4nWAFzSH
+         gb9pgXH3F3LEgblhrIA603BCAMpPhoQVjfCASnq7pTeBmYhJnTt2t7+LuUeVi9f6OZnu
+         X/CqwTKjrmqFaDpPD3ZOLI+F7fTKYVrkdmZksxbV143RBLkTSmVf0Q6nLTiQM+W+XlTt
+         DTvSVSHSzfva136ZWnmH2+nRi6WAvgmDTUGIokqIS4UZztgHucFMLZkJRe3kiVbAMD+2
+         5Kd6vUF/NDt3A9SyBpf1AizNpjsdNWC+5y6VHr3PzKTVbi0E2XKXOCpsG5KyEMNFVk9Q
+         YAOQ==
+X-Gm-Message-State: AGi0PuaMjgu6U15G3qNSrUmUJNGwPvX7kPWWz2P5JfoAQgBWQ4m58gKu
+        qhUIMhcWUddlas8okU9TgjqSHo7IEc4=
+X-Google-Smtp-Source: APiQypJXbzJrVWhOOCheF7ksjuWvt3DpYED/hw8Ms5nfqGQpenGMDhMUT4e93gaIdPUqSWBh6o12PQ==
+X-Received: by 2002:ac8:7293:: with SMTP id v19mr2422283qto.133.1585827001552;
+        Thu, 02 Apr 2020 04:30:01 -0700 (PDT)
+Received: from [192.168.1.83] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id k18sm3230433qkh.46.2020.04.02.04.30.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 02 Apr 2020 04:30:01 -0700 (PDT)
+Subject: Re: [PATCH] clone: document partial clone section
+To:     Teng Long via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Teng Long <dyroneteng@gmail.com>
+References: <pull.745.git.git.1585792946341.gitgitgadget@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <f5787308-a673-7356-6d9e-f226954e1310@gmail.com>
+Date:   Thu, 2 Apr 2020 07:29:58 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:75.0) Gecko/20100101
+ Thunderbird/75.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <pull.745.git.git.1585792946341.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
----
- Documentation/merge-options.txt | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+On 4/1/2020 10:02 PM, Teng Long via GitGitGadget wrote:
+> From: Dyrone Teng <dyroneteng@gmail.com>
+> 
+> Partial clones are created using 'git clone', but there is no related
+> help information in the git-clone documentation during a period. Add
+> a relevant section to help users understand what partial clones are
+> and how they differ from normal clones.
+> 
+> The section briefly introduces the applicable scenarios and some
+> precautions of partial clone. If users want to know more about its
+> technical design and other details, users can view the link of
+> git-partial-clone(7) according to the guidelines in the section.
+Everyone, meet Dyrone! Dyrone volunteered to work on the partial
+clone documentation after I reached out on Twitter. We did one
+round of internal review before this submission.
 
-diff --git a/Documentation/merge-options.txt b/Documentation/merge-options.txt
-index 40dc4f5e8c..c46e4fe598 100644
---- a/Documentation/merge-options.txt
-+++ b/Documentation/merge-options.txt
-@@ -61,9 +61,12 @@ When not possible, refuse to merge and exit with a non-zero status.
- 
- -S[<keyid>]::
- --gpg-sign[=<keyid>]::
-+--no-gpg-sign::
- 	GPG-sign the resulting merge commit. The `keyid` argument is
- 	optional and defaults to the committer identity; if specified,
--	it must be stuck to the option without a space.
-+	it must be stuck to the option without a space. "--no-gpg-sign"
-+	is useful to countermand both `commit.gpgSign` configuration variable,
-+	and earlier "--gpg-sign".
- 
- --log[=<n>]::
- --no-log::
--- 
-2.26.0.334.g6536db25bb
+Dyrone, do you want to introduce yourself a bit more to the
+community?
+
+> From: Dyrone Teng <dyroneteng@gmail.com>
+> Signed-off-by: Teng Long <dyroneteng@gmail.com>
+
+And a small thing: we prefer the sign-off to match the author
+information at the top. These are at least the same email
+address, so that's good.
+
+Thanks,
+-Stolee
 
