@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3AE20C43331
-	for <git@archiver.kernel.org>; Thu,  2 Apr 2020 13:04:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EABB1C43331
+	for <git@archiver.kernel.org>; Thu,  2 Apr 2020 13:04:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0CBCA20675
-	for <git@archiver.kernel.org>; Thu,  2 Apr 2020 13:04:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C07BC20757
+	for <git@archiver.kernel.org>; Thu,  2 Apr 2020 13:04:45 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mTZOKLky"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U7yOJvaA"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388192AbgDBNEk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Apr 2020 09:04:40 -0400
-Received: from mail-pj1-f67.google.com ([209.85.216.67]:40062 "EHLO
-        mail-pj1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729033AbgDBNEj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Apr 2020 09:04:39 -0400
-Received: by mail-pj1-f67.google.com with SMTP id kx8so1475444pjb.5
-        for <git@vger.kernel.org>; Thu, 02 Apr 2020 06:04:39 -0700 (PDT)
+        id S2388253AbgDBNEp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Apr 2020 09:04:45 -0400
+Received: from mail-pl1-f169.google.com ([209.85.214.169]:38381 "EHLO
+        mail-pl1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388171AbgDBNEm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Apr 2020 09:04:42 -0400
+Received: by mail-pl1-f169.google.com with SMTP id w3so1312648plz.5
+        for <git@vger.kernel.org>; Thu, 02 Apr 2020 06:04:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=aUzV235WMnzvbTMVOAZmCWuc5LuKwPpcztnjQibor+Y=;
-        b=mTZOKLkyIvRFie70lKuWn8GK/dJoCcFhQ+A+yPJ6s0VxM5P5LSipuQlSev3BOX1trD
-         uTszSnCfGYwtAqMlR4U9NWMfQ3KJuoM1Sw2MNmMrJQz3qnYUMvOfmisXXH7Wum5vSieu
-         LavMJvam/weifuhhk+5p9sftiGMNmWJ6JkLi1NZ1zR1+fecicz3QjGXJYMU5u/jr/p0I
-         lKjh5jSCtwHrnZHxQrK/9I9x//H003nnx2fZtuTpVrXrHzbllaeqbtIYq8FcnFuaQCyd
-         F80N46g068iOAl6G44/aujp1vtmRML8eUFGgqzrSDNvRRYcexWkWGVVW7nkgBw3V3Xd3
-         BqPg==
+        bh=RjJlf+NbEOVWOA3c1dQ7gl1DX4DXq6IImAbBtdg7bHM=;
+        b=U7yOJvaAttToLh6NBLq8zTCS/zD+CMvy5Mny/j786qZL6wDnSKgCqzhXanQeLQJEqy
+         /KtCzguCkUlwKzx3U1kvto3d7GKABiWVr5rpFxxAHFscqeI93M8kYhL1fcNb6/xb3pOA
+         KoW8AM50joOpVtrXE+hfsk+2lDbz9ay/Klyy5ofAhlHNrolp3T5Mpc0QdXYFaS7qTzfb
+         v/CAELq0X+9IbVzLeLsLeb/rCFKvXwC7xtWeAj220h9o9hwVD3II8ia0dZDobQJhmYUQ
+         7YZXVuApE2n256hvMt6MzBGHncKRixGPBlqRvmYoCdRiMD8QrdAxSKiLf+Wp5t/2Jod8
+         60lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=aUzV235WMnzvbTMVOAZmCWuc5LuKwPpcztnjQibor+Y=;
-        b=Sl/4d3Z6xuRtGg6Lqi3RLDgCp0vcvc3YgQvTZ3VEqaMvHM/UYKQG3pboJTf+5U57T6
-         4kDNxQnenpKC4K3njpckYi8GjfRXdKG5CGZ1LOPf1iHW87bwAWDqp3gRZAP4q+zkwuJD
-         qzaaaG/Hl4prVoDZsFiIWnpmXAqSDjaYLlgodWP6VK2jXZHzTYAVWDQ3aw4MXYpaeids
-         xQXqwQfjQvEmBALwMTWAh6oziSuRPkmhjssBbMWsR6S9XHUeiE9S4palIrytcz3u3sP+
-         nhYNRlH3PpYnhVzXxDnuPM53uaxmthpNo+ePdhrRAO6PWv/pt1BWF9g2nKUQO9lGuDbM
-         l9Cw==
-X-Gm-Message-State: AGi0Puau5vVfc/A/qLNc/N77ka5Prp5fGZJDNbhx/0mVKrMf/a7XCsqM
-        LQRSWT3J3M2+mPqWC5ytfZlPeBu5
-X-Google-Smtp-Source: APiQypJGTR6kOEB0llEeypcLWzLRQk6zdYa/b/3hA9XiJmmywMsQQ7Ci2KBaur2jAfCRxOU5VI5K0Q==
-X-Received: by 2002:a17:90a:fa08:: with SMTP id cm8mr3715045pjb.144.1585832678154;
-        Thu, 02 Apr 2020 06:04:38 -0700 (PDT)
+        bh=RjJlf+NbEOVWOA3c1dQ7gl1DX4DXq6IImAbBtdg7bHM=;
+        b=s/6TtsiV2NMo4WHASwV1uS47mp/m7VX9Rreu3Ls8f3aNdgzADH//F81qT4b/ILNdSY
+         es2DO/eAdwPg5CJh1AtXjhVszJT/HnZnk/b5Z0VN/seLlIPx+TnrKdgpLEP5QK2LzV0z
+         x1UKlVfE24UyDdHry1JJ1UsBDUFKBAdvhUUFieF9itVB1z3rUenkYy2/YZi9izXJTwUe
+         YN12oRCn6jzPlgjy+bElWHmHtEkgPV/izySNYDponpksd4aZqzLounwpAvKpGVbaOu7R
+         47ifIgAbGxz1DEo8ZtJJ/+kwadkHUwXsfNlQDbEvFHabf8MjouT4elPYdwa2v43IPH4o
+         T+8w==
+X-Gm-Message-State: AGi0PuakRFatApzrCoW/W/QHO+O3EWSwkDmLhs7OPSAhmS++n+19DTja
+        W47rxZH8c0M487btkFeid+N0twE/
+X-Google-Smtp-Source: APiQypL0NX0MinsKIc+jrKJ0JbW2jTW3/Xph0Vf2y5fLTwnsEbkWORhXUfvWPCiv54Ykd2Cx5BS6Pw==
+X-Received: by 2002:a17:902:bf42:: with SMTP id u2mr2636637pls.99.1585832680521;
+        Thu, 02 Apr 2020 06:04:40 -0700 (PDT)
 Received: from localhost.localdomain ([2402:800:6375:207b:be21:746a:7a56:9d4d])
-        by smtp.gmail.com with ESMTPSA id o15sm3371124pgj.60.2020.04.02.06.04.36
+        by smtp.gmail.com with ESMTPSA id o15sm3371124pgj.60.2020.04.02.06.04.39
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 02 Apr 2020 06:04:37 -0700 (PDT)
+        Thu, 02 Apr 2020 06:04:40 -0700 (PDT)
 From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>
-Subject: [PATCH v3 2/6] ci/lib-docker: preserve required environment variables
-Date:   Thu,  2 Apr 2020 20:04:01 +0700
-Message-Id: <b7b079f559a17b6d6cef037afd6ce023df8f90b0.1585832270.git.congdanhqx@gmail.com>
+Subject: [PATCH v3 3/6] ci/linux32: parameterise command to switch arch
+Date:   Thu,  2 Apr 2020 20:04:02 +0700
+Message-Id: <8c8cf3eb24d3099fcf95807a10c5e1b9b0256a98.1585832270.git.congdanhqx@gmail.com>
 X-Mailer: git-send-email 2.26.0.334.g6536db25bb
 In-Reply-To: <cover.1585832270.git.congdanhqx@gmail.com>
 References: <cover.1585474409.git.congdanhqx@gmail.com> <cover.1585832270.git.congdanhqx@gmail.com>
@@ -74,43 +74,69 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We're using "su -m" to preserve environment variables in the shell run
-by "su". But, that options will be ignored while "-l" (aka "--login") is
-specified.
+In a later patch, the remaining of this command will be re-used for the
+CI job for linux with musl libc.
 
-Since we don't have interest in all environment variables,
-pass only those necessary variables to the inner script.
+Allow customisation of the emulator, now.
 
 Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
 ---
- ci/run-linux32-build.sh | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ ci/run-linux32-build.sh  | 13 +++++++++++--
+ ci/run-linux32-docker.sh |  2 ++
+ 2 files changed, 13 insertions(+), 2 deletions(-)
 
 diff --git a/ci/run-linux32-build.sh b/ci/run-linux32-build.sh
-index e3a193adbc..7f985615c2 100755
+index 7f985615c2..44bb332f64 100755
 --- a/ci/run-linux32-build.sh
 +++ b/ci/run-linux32-build.sh
-@@ -51,10 +51,17 @@ else
+@@ -14,8 +14,17 @@ then
+ 	exit 1
+ fi
+ 
++case "$jobname" in
++Linux32)
++	switch_cmd="linux32 --32bit i386"
++	;;
++*)
++	exit 1
++	;;
++esac
++
+ # Update packages to the latest available versions
+-linux32 --32bit i386 sh -c '
++command $switch_cmd sh -c '
+     apt update >/dev/null &&
+     apt install -y build-essential libcurl4-openssl-dev libssl-dev \
+ 	libexpat-dev gettext python >/dev/null
+@@ -51,7 +60,7 @@ else
  fi
  
  # Build and test
--linux32 --32bit i386 su -m -l $CI_USER -c '
-+linux32 --32bit i386 su -m -l $CI_USER -c "
+-linux32 --32bit i386 su -m -l $CI_USER -c "
++command $switch_cmd su -m -l $CI_USER -c "
  	set -ex
-+	export DEVELOPER='$DEVELOPER'
-+	export DEFAULT_TEST_TARGET='$DEFAULT_TEST_TARGET'
-+	export GIT_PROVE_OPTS='$GIT_PROVE_OPTS'
-+	export GIT_TEST_OPTS='$GIT_TEST_OPTS'
-+	export GIT_TEST_CLONE_2GB='$GIT_TEST_CLONE_2GB'
-+	export MAKEFLAGS='$MAKEFLAGS'
-+	export cache_dir='$cache_dir'
- 	cd /usr/src/git
--	test -n "$cache_dir" && ln -s "$cache_dir/.prove" t/.prove
-+	test -n '$cache_dir' && ln -s '$cache_dir/.prove' t/.prove
- 	make
- 	make test
--'
-+"
+ 	export DEVELOPER='$DEVELOPER'
+ 	export DEFAULT_TEST_TARGET='$DEFAULT_TEST_TARGET'
+diff --git a/ci/run-linux32-docker.sh b/ci/run-linux32-docker.sh
+index ebb18fa747..54186b6aa7 100755
+--- a/ci/run-linux32-docker.sh
++++ b/ci/run-linux32-docker.sh
+@@ -9,6 +9,7 @@ docker pull daald/ubuntu32:xenial
+ 
+ # Use the following command to debug the docker build locally:
+ # $ docker run -itv "${PWD}:/usr/src/git" --entrypoint /bin/bash daald/ubuntu32:xenial
++# root@container:/# export jobname=<jobname>
+ # root@container:/# /usr/src/git/ci/run-linux32-build.sh <host-user-id>
+ 
+ container_cache_dir=/tmp/travis-cache
+@@ -21,6 +22,7 @@ docker run \
+ 	--env GIT_TEST_OPTS \
+ 	--env GIT_TEST_CLONE_2GB \
+ 	--env MAKEFLAGS \
++	--env jobname \
+ 	--env cache_dir="$container_cache_dir" \
+ 	--volume "${PWD}:/usr/src/git" \
+ 	--volume "$cache_dir:$container_cache_dir" \
 -- 
 2.26.0.334.g6536db25bb
 
