@@ -2,91 +2,89 @@ Return-Path: <SRS0=9X1Y=5T=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 97AF4C43331
-	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 19:53:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CA44EC43331
+	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 19:53:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 61DFF206E9
-	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 19:53:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 90B04206E9
+	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 19:53:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iD6HqiUU"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="PHBysnq6"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727950AbgDCTxK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Apr 2020 15:53:10 -0400
-Received: from mail-ot1-f66.google.com ([209.85.210.66]:33216 "EHLO
-        mail-ot1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727627AbgDCTxK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Apr 2020 15:53:10 -0400
-Received: by mail-ot1-f66.google.com with SMTP id 22so8639934otf.0
-        for <git@vger.kernel.org>; Fri, 03 Apr 2020 12:53:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=YTrXgF2NxpT7lFgnSPTQXv9s/FutMCTv9r92CfY9oms=;
-        b=iD6HqiUUuyi6FjQpsM+9BzlsICv9lVS7F7nT8ETUBSQTUMwkdMFYfrD5MrnDmLumuL
-         jgQnsuT3D8HyXAORdafqfCp9Bxu4JlMCencf2dUn27wuyiUf9OvofMXiMy6AUo8qskJR
-         GjyDUak21a66NPppId/ey6tq5WJ8CFFda7zgdbSesGLvd7KLZPqI7zeachoL2U57YcMK
-         YDdiVRTtlDYfdZocXJWcldWNJMqYRL6wDh/jdCy5oLAAR5YxLhlKHYUXhUXPxIJhAsib
-         2QjtTUCVBniuG6Q/DAKgSdBR/kP3phu1ejPuTYvdjmK7p2NiKAb9q1wOnfQOiWTkgasD
-         C4Iw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=YTrXgF2NxpT7lFgnSPTQXv9s/FutMCTv9r92CfY9oms=;
-        b=JUUBC2/iD5pa6XrcI76GoPy/pvL6pqOnXMKmqBKd+mUPYH9asl4uI8TZ+hgTw79g0s
-         fMA2mM5rSUyDwcIR2PySsCRH5rDtP+L1hE2zMEbsUJloaYd0eNPfvEtSdKlLdjWHeD18
-         0IGmjB7Vz8DFOq98jFsLkQEt45ELpPhRCxF1v+Zj9cZg5wuQtpPLCHAfwunwezqhlHln
-         82JQUlsA72EDzGr4WX09t9V/50XAfpqIglVBovq+r3OU/u3gEbz1MiGm1gpuGRQwdrM8
-         YA7KDezgKlU1Xq1vRXR6rnqCR9jRgWYZCnNvVq0iVstZob2D4QOCIOY4OkWC7wi8W7JY
-         lmhA==
-X-Gm-Message-State: AGi0PuZFaeav/cLiWaR7DdkmQERlibFSFKzQzDnQ2pvnbg8p047wMGoH
-        XGLSfnwyYT0ad2VzQrtwralYXolTSuwh91P4MGo=
-X-Google-Smtp-Source: APiQypIi7cAPdCIyYsnvCgDZLYUEmS5MrVi2IpXu5e949IA+2tisT/i2AZGd+P1w4VseohscTXske0GoErqYcNFihS8=
-X-Received: by 2002:a4a:a88a:: with SMTP id q10mr8176490oom.17.1585943589685;
- Fri, 03 Apr 2020 12:53:09 -0700 (PDT)
+        id S1727948AbgDCTx4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Apr 2020 15:53:56 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:55941 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727593AbgDCTx4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Apr 2020 15:53:56 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 92DFFB2DD6;
+        Fri,  3 Apr 2020 15:53:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=AyKVWW0w9xuze6qqPPP4gpO9Z2k=; b=PHBysn
+        q6zk/hm9urW+rpgjtyxH8zLdcgPgBuu9Nfp6apNoqEU4NN/a7drMgSFs2ibFA5S4
+        2iHmORs1J8bwsHb3m7pz3nLfhPWqhdTtbVwcaWIKfbPONCKhgVimLLHZN+tIpCCN
+        7rgXtRRUo/sqvpFoFU1yYlEyqUcLQY7ZtNdh0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=SzfbtUPEhOsMIhdZ3zafQGncL3h3Opf0
+        dujtpYu5IVxehVNS5OlC/SA7BoSHOZvvVUsQnkpY+uMFDUL8d+9uttp5bc6GVyMD
+        boSKjqEqG4pJiPvFkpn+ur6pw9BDH5Hj109c9iNT6Xb1qlJWw+JmZ9ZUcOTsszmS
+        o5xGRI7xcWU=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 89FB1B2DD4;
+        Fri,  3 Apr 2020 15:53:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id BD59CB2DD3;
+        Fri,  3 Apr 2020 15:53:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Josep Torra <n770galaxy@gmail.com>, git@vger.kernel.org
+Subject: Re: Possible regression in git 2.26.0
+References: <CAE0g23A0+4MPwACTsdjk=eOYaGBDEwsD2t_F072Z33Gb6y2qZw@mail.gmail.com>
+        <20200403185804.GA659704@coredump.intra.peff.net>
+        <20200403193644.GA662633@coredump.intra.peff.net>
+Date:   Fri, 03 Apr 2020 12:53:50 -0700
+In-Reply-To: <20200403193644.GA662633@coredump.intra.peff.net> (Jeff King's
+        message of "Fri, 3 Apr 2020 15:36:44 -0400")
+Message-ID: <xmqq8sjcz6pd.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.749.git.git.1585888520572.gitgitgadget@gmail.com> <xmqqk12wz7jv.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqk12wz7jv.fsf@gitster.c.googlers.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 3 Apr 2020 12:52:58 -0700
-Message-ID: <CABPp-BHQ9NSaocWEC9GGN4xD7sqi6MrtF98gDgZ5O5fhYYgwbw@mail.gmail.com>
-Subject: Re: [PATCH] git-rebase.txt: add another hook to the hooks section,
- and explain more
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: D79278B8-75E4-11EA-AB4B-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 3, 2020 at 12:35 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> >  The apply backend has not traditionally called the post-commit hook,
-> > +while the merge backend has.  In contrast, the apply backend has
-> > +traditionally called the post-checkout hook while the merge backend
-> > +has not.  However, the calling of these hooks in both cases was by
-> > +accident of implementation rather than by design (both backends were
-> > +originally implemented as shell scripts and happened to invoke other
-> > +commands like 'git checkout' or 'git commit' that would call the
-> > +hooks).  Both backends should have the same behavior, though it is not
-> > +entirely clear which, if any, is correct.  We will likely remove both
-> > +of these hooks in the future.
->
-> I'd phrase, instead of "remove", "stop calling from 'git rebase'".
-> These hooks will still be called from their intended context ;-)
+Jeff King <peff@peff.net> writes:
 
-Makes sense; I'll update it.
+> I guess it's this:
+>
+>   https://code.launchpad.net/launchpad
+>
+> but I can't find any trace of the "Parameters must have values" error
+> message in there. It looks like it builds on dulwich, but I can't find
+> the message there either. So I'm at a loss.
+
+Let me apologize in advance for a totally useless distraction, but
+nevertheless I found it funny.  My search engine found
+
+    https://ntrs.nasa.gov/archive/nasa/casi.ntrs.nasa.gov/19780010630.pdf
+
+when I asked
+
+    launchpad "parameters must have values"
+
+https://www.google.com/search?q=launchpad+%22parameters+must+have+values%22
+
+;-)
