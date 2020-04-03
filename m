@@ -8,59 +8,59 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 65FC2C2BA17
-	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 20:48:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2600AC43331
+	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 20:48:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3085F20737
-	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 20:48:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E4E8020737
+	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 20:48:23 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O5eIam3c"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E2cp2Hvt"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728195AbgDCUsU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Apr 2020 16:48:20 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:39077 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728023AbgDCUsT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Apr 2020 16:48:19 -0400
-Received: by mail-wm1-f66.google.com with SMTP id e9so9193605wme.4
-        for <git@vger.kernel.org>; Fri, 03 Apr 2020 13:48:18 -0700 (PDT)
+        id S1728229AbgDCUsX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Apr 2020 16:48:23 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:39921 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728183AbgDCUsW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Apr 2020 16:48:22 -0400
+Received: by mail-wr1-f65.google.com with SMTP id p10so10101743wrt.6
+        for <git@vger.kernel.org>; Fri, 03 Apr 2020 13:48:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=1JgnQCENXnxSxTBQ+dou4+ONms+UDuFcC9VU5XVFBhw=;
-        b=O5eIam3cqyYBAunijAXvjzxw4fX2LML4OzJfXUqLZZeOdCZkWXxff7pGtj0V6ARirx
-         unU7qT2MkPrqB8PfzYKN3PmSWkNBPEMfsrF+r6UKGGbwPYqYaz0Q3DQy52gGkpEbyD+a
-         31WISvi8QCV7zidTjBtz+KcdMhIt8s1oYlB1agoIdhiFIxO8MWUOR8dXQHfEb4uYAwa8
-         db6GX8IpHUuLvYTBBSBEJY6ibqsCtaHRvIbf8zG33EEphVE5Q2q93oInimNXQLhHkhq+
-         c4PkKBJ/PzrMDIq31Aiy4KCXI9USsOro0B7I4sfHky0JwQKQhwYBm6rCxBnqYKKHR0aM
-         C45g==
+        bh=xEImF1A4p7QFuDuF3WIteQwhoDa7cHlk/KxuH3rnj2k=;
+        b=E2cp2Hvtf5JtIsDnLop5nvj3IBQamZocIMOoIv/q3lqPH3FPb9a+cRe//pD0GFce0N
+         9L7WiuEx+8ovrQ2Q7uBSBxpLo7SokgD0OOJXtLhrNv2Y3yU4HnLQZDmCF/ePwlhcEARD
+         Genm+YER9jtYHwtaYq+/ftBhAy96nfWLDgMppF+kVVdgFmz9HRbmSQfsEGPJtFwTISnv
+         IED8w4o70J1bBvPpwaioSRxe+7hfmxdLjvBuM4EoHbRutjH6Wio/VeG7MPXwNHcwCeYP
+         cJCIvK1TwikU6w2zzsqXYcHtOIYy81AaJZa9Ilgmr/h3RXYm7+Er+NP3udZYgQLLG9Lo
+         R8zQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=1JgnQCENXnxSxTBQ+dou4+ONms+UDuFcC9VU5XVFBhw=;
-        b=r9ocjAxoW1FRfL/7Smt5En2Z+fXh4meo72vSamNjRd8vahNMUB72Byep4UTqqm20Xs
-         yqI1sNR9KV6VP/vUWcfrBl2j1LKXwTFUo8KBiGM8nQ+PhmMX2cRl4fbqOqTkaMWzcjcm
-         5HT6n/2RWwiy0oWsIW+kqvOi4zdlrDGxPp8rDvGkLEm6i3xvw7K6z08XLe9NsjVMoxt6
-         9Dxp5cEoN5ADxu1RO9zm0HDeUC9y2Ds6dfwknOsbIVNFeX19c+ZzBfOX89M+ttrWfg5A
-         glXnM5AuoEtF+EUU1X0QkuqbMIUFCgt5dZzCRntbvlHXZRtS2qqn7C2dUyHxrDVuDt1z
-         hvpA==
-X-Gm-Message-State: AGi0PuZBxf34YKUizFJWkS6HMg1OkSEYCRRgoXqKcTqg2Row55j9jukW
-        Au2yKB7a84QnBE4/MvSxtKgTBXRX
-X-Google-Smtp-Source: APiQypIoSbSHbwFZWuX7ep332ZsctAr5mu6JWjVpweZYjp9X5KPzbDEMMZySjehFJSUZn5RoYWOWDA==
-X-Received: by 2002:a1c:9c15:: with SMTP id f21mr10308529wme.18.1585946897161;
-        Fri, 03 Apr 2020 13:48:17 -0700 (PDT)
+        bh=xEImF1A4p7QFuDuF3WIteQwhoDa7cHlk/KxuH3rnj2k=;
+        b=O7Bwrmg060ybgHgdAxB0W59N5OQYQWp2ZiePptOc41PbjC8A8LFmFNwYsK4jG/zaNz
+         25ZzNFpQ+g/FL1ypMrWqndjhxsuNAushK38xGg8S/7Dy7P0fu9E6AVCTj1TCi8DnXME4
+         rE2dp73axfwZoXSEBN8VlemxwGw8ayAkEWF9hov87Pov9JadvVo6OO0mtEHhUVjKQa2B
+         wGiGH7eINrSlMU9XnK7xLl14hwlWavVLb6VBLCGtX3mw3KX0EXUES9++E6/Z8yf2A/ea
+         2Bqv547BMTzOfK4qyaCo5pW8lmxjoi4YRwx9fNNj9f04hn5U+yziqg4IzJkBRCAOYEAv
+         RQFA==
+X-Gm-Message-State: AGi0Pub5w2y0tHpkhvwrgzyLifbVpePWiSOv27Kg84neJlzG2/WW9p5H
+        Wm9sco3Gn7qL+0ouFQGHvVT24D05
+X-Google-Smtp-Source: APiQypJlpqUtXv0Octe2Faxct/0uCL7kJx8+hiQmC4cthRV7DRk8LVKojF0jftGGp2szntDHO8Pwzg==
+X-Received: by 2002:adf:fa51:: with SMTP id y17mr4223668wrr.358.1585946899375;
+        Fri, 03 Apr 2020 13:48:19 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c85sm12795160wmd.48.2020.04.03.13.48.16
+        by smtp.gmail.com with ESMTPSA id p13sm13377933wru.3.2020.04.03.13.48.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Apr 2020 13:48:16 -0700 (PDT)
-Message-Id: <cd3facd1e03923204bd2259ff0635a5bbf68d700.1585946894.git.gitgitgadget@gmail.com>
+        Fri, 03 Apr 2020 13:48:18 -0700 (PDT)
+Message-Id: <5277398f189dd6e1456b0afdd6d85dbac7d98d07.1585946894.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.597.git.1585946894.gitgitgadget@gmail.com>
 References: <pull.597.git.1585946894.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 03 Apr 2020 20:48:01 +0000
-Subject: [PATCH 02/15] run-job: implement commit-graph job
+Date:   Fri, 03 Apr 2020 20:48:04 +0000
+Subject: [PATCH 05/15] run-job: implement pack-files job
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,263 +76,354 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The first job to implement in the 'git run-job' command is the
-'commit-graph' job. It is based on the sequence of events in the
-'commit-graph' job in Scalar [1]. This sequence is as follows:
+The previous change cleaned up loose objects using the
+'loose-objects' that can be run safely in the background. Add a
+similar job that performs similar cleanups for pack-files.
 
-1. git commit-graph write --reachable --split
-2. git commit-graph verify --shallow
-3. If the verify succeeds, stop.
-4. Delete the commit-graph-chain file.
-5. git commit-graph write --reachable --split
+One issue with running 'git repack' is that it is designed to
+repack all pack-files into a single pack-file. While this is the
+most space-efficient way to store object data, it is not time or
+memory efficient. This becomes extremely important if the repo is
+so large that a user struggles to store two copies of the pack on
+their disk.
 
-By writing an incremental commit-graph file using the "--split"
-option we minimize the disruption from this operation. The default
-behavior is to merge layers until the new "top" layer is less than
-half the size of the layer below. This provides quick writes "most"
-of the time, with the longer writes following a power law
-distribution.
+Instead, perform an "incremental" repack by collecting a few small
+pack-files into a new pack-file. The multi-pack-index facilitates
+this process ever since 'git multi-pack-index expire' was added in
+19575c7 (multi-pack-index: implement 'expire' subcommand,
+2019-06-10) and 'git multi-pack-index repack' was added in ce1e4a1
+(midx: implement midx_repack(), 2019-06-10).
 
-Most importantly, concurrent Git processes only look at the
-commit-graph-chain file for a very short amount of time, so they
-will verly likely not be holding a handle to the file when we try
-to replace it. (This only matters on Windows.)
+The 'pack-files' job runs the following steps:
 
-If a concurrent process reads the old commit-graph-chain file, but
-our job expires some of the .graph files before they can be read,
-then those processes will see a warning message (but not fail).
-This could be avoided by a future update to use the --expire-time
-argument when writing the commit-graph.
+1. 'git multi-pack-index write' creates a multi-pack-index file if
+   one did not exist, and otherwise will update the multi-pack-index
+   with any new pack-files that appeared since the last write. This
+   is particularly relevant with the background fetch job.
 
-By using 'git commit-graph verify --shallow' we can ensure that
-the file we just wrote is valid. This is an extra safety precaution
-that is faster than our 'write' subcommand. In the rare situation
-that the newest layer of the commit-graph is corrupt, we can "fix"
-the corruption by deleting the commit-graph-chain file and rewrite
-the full commit-graph as a new one-layer commit graph. This does
-not completely prevent _that_ file from being corrupt, but it does
-recompute the commit-graph by parsing commits from the object
-database. In our use of this step in Scalar and VFS for Git, we
-have only seen this issue arise because our microsoft/git fork
-reverted 43d3561 ("commit-graph write: don't die if the existing
-graph is corrupt" 2019-03-25) for a while to keep commit-graph
-writes very fast. We dropped the revert when updating to v2.23.0.
-The verify still has potential for catching corrupt data across
-the layer boundary: if the new file has commit X with parent Y
-in an old file but the commit ID for Y in the old file had a
-bitswap, then we will notice that in the 'verify' command.
+   When the multi-pack-index sees two copies of the same object, it
+   stores the offset data into the newer pack-file. This means that
+   some old pack-files could become "unreferenced" which I will use
+   to mean "a pack-file that is in the pack-file list of the
+   multi-pack-index but none of the objects in the multi-pack-index
+   reference a location inside that pack-file."
 
-[1] https://github.com/microsoft/scalar/blob/master/Scalar.Common/Maintenance/CommitGraphStep.cs
+2. 'git multi-pack-index expire' deletes any unreferenced pack-files
+   and updaes the multi-pack-index to drop those pack-files from the
+   list. This is safe to do as concurrent Git processes will see the
+   multi-pack-index and not open those packs when looking for object
+   contents. (Similar to the 'loose-objects' job, there are some Git
+   commands that open pack-files regardless of the multi-pack-index,
+   but they are rarely used. Further, a user that self-selects to
+   use background operations would likely refrain from using those
+   commands.)
 
-RFC QUESTIONS:
+3. 'git multi-pack-index repack --bacth-size=<size>' collects a set
+   of pack-files that are listed in the multi-pack-index and creates
+   a new pack-file containing the objects whose offsets are listed
+   by the multi-pack-index to be in those objects. The set of pack-
+   files is selected greedily by sorting the pack-files by modified
+   time and adding a pack-file to the set if its "expected size" is
+   smaller than the batch size until the total expected size of the
+   selected pack-files is at least the batch size. The "expected
+   size" is calculated by taking the size of the pack-file divided
+   by the number of objects in the pack-file and multiplied by the
+   number of objects from the multi-pack-index with offset in that
+   pack-file. The expected size approximats how much data from that
+   pack-file will contribute to the resulting pack-file size. The
+   intention is that the resulting pack-file will be close in size
+   to the provided batch size.
 
-1. Are links like [1] helpful?
+   The next run of the pack-files job will delete these repacked
+   pack-files during the 'expire' step.
 
-2. Can anyone think of a way to test the rewrite fallback?
-   It requires corrupting the latest file between two steps of
-   this one command, so that is a tricky spot to inject a fault.
+   In this version, the batch size is set to "0" which ignores the
+   size restrictions when selecting the pack-files. It instead
+   selects all pack-files and repacks all packed objects into a
+   single pack-file. This will be updated in the next change, but
+   it requires doing some calculations that are better isolated to
+   a separate change.
+
+Each of the above steps update the multi-pack-index file. After
+each step, we verify the new multi-pack-index. If the new
+multi-pack-index is corrupt, then delete the multi-pack-index,
+rewrite it from scratch, and stop doing the later steps of the
+job. This is intended to be an extra-safe check without leaving
+a repo with many pack-files without a multi-pack-index.
+
+These steps are based on a similar background maintenance step in
+Scalar (and VFS for Git) [1]. This was incredibly effective for
+users of the Windows OS repository. After using the same VFS for Git
+repository for over a year, some users had _thousands_ of pack-files
+that combined to up to 250 GB of data. We noticed a few users were
+running into the open file descriptor limits (due in part to a bug
+in the multi-pack-index fixed by af96fe3392 (midx: add packs to
+packed_git linked list, 2019-04-29).
+
+These pack-files were mostly small since they contained the commits
+and trees that were pushed to the origin in a given hour. The GVFS
+protocol includes a "prefetch" step that asks for pre-computed pack-
+files containing commits and trees by timestamp. These pack-files
+were grouped into "daily" pack-files once a day for up to 30 days.
+If a user did not request prefetch packs for over 30 days, then they
+would get the entire history of commits and trees in a new, large
+pack-file. This led to a large number of pack-files that had poor
+delta compression.
+
+By running this pack-file maintenance step once per day, these repos
+with thousands of packs spanning 200+ GB dropped to dozens of pack-
+files spanning 30-50 GB. This was done all without removing objects
+from the system and using a constant batch size of two gigabytes.
+Once the work was done to reduce the pack-files to small sizes, the
+batch size of two gigabytes means that not every run triggers a
+repack operation, so the following run will not expire a pack-file.
+This has kept these repos in a "clean" state.
+
+[1] https://github.com/microsoft/scalar/blob/master/Scalar.Common/Maintenance/PackfileMaintenanceStep.cs
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/git-run-job.txt | 21 ++++++++++--
- builtin/run-job.c             | 60 ++++++++++++++++++++++++++++++++++-
- commit-graph.c                |  2 +-
- commit-graph.h                |  1 +
- t/t7900-run-job.sh            | 32 +++++++++++++++++++
- 5 files changed, 112 insertions(+), 4 deletions(-)
+ Documentation/git-run-job.txt | 18 ++++++-
+ builtin/run-job.c             | 90 ++++++++++++++++++++++++++++++++++-
+ midx.c                        |  2 +-
+ midx.h                        |  1 +
+ t/t7900-run-job.sh            | 39 +++++++++++++++
+ 5 files changed, 147 insertions(+), 3 deletions(-)
 
 diff --git a/Documentation/git-run-job.txt b/Documentation/git-run-job.txt
-index 0627b3ed259..8bf2762d650 100644
+index 43ca1160b5a..108ed25b8bd 100644
 --- a/Documentation/git-run-job.txt
 +++ b/Documentation/git-run-job.txt
 @@ -9,7 +9,7 @@ git-run-job - Run a maintenance job. Intended for background operation.
  SYNOPSIS
  --------
  [verse]
--'git run-job <job-name>'
-+'git run-job commit-graph'
+-'git run-job (commit-graph|fetch|loose-objects)'
++'git run-job (commit-graph|fetch|loose-objects|pack-files)'
  
  
  DESCRIPTION
-@@ -28,7 +28,24 @@ BEHAVIOR MAY BE ALTERED IN THE FUTURE.
- JOBS
- ----
+@@ -71,6 +71,22 @@ a batch of loose objects. The batch size is limited to 50 thousand
+ objects to prevent the job from taking too long on a repository with
+ many loose objects.
  
--TBD
-+'commit-graph'::
++'pack-files'::
 +
-+The `commit-graph` job updates the `commit-graph` files incrementally,
-+then verifies that the written data is correct. If the new layer has an
-+issue, then the chain file is removed and the `commit-graph` is
-+rewritten from scratch.
-++
-+The verification only checks the top layer of the `commit-graph` chain.
-+If the incremental write merged the new commits with at least one
-+existing layer, then there is potential for on-disk corruption being
-+carried forward into the new file. This will be noticed and the new
-+commit-graph file will be clean as Git reparses the commit data from
-+the object database.
-++
-+The incremental write is safe to run alongside concurrent Git processes
-+since it will not expire `.graph` files that were in the previous
-+`commit-graph-chain` file. They will be deleted by a later run based on
-+the expiration delay.
- 
- 
++The `pack-files` job incrementally repacks the object directory using
++the `multi-pack-index` feature. In order to prevent race conditions with
++concurrent Git commands, it follows a two-step process. First, it
++deletes any pack-files included in the `multi-pack-index` where none of
++the objects in the `multi-pack-index` reference those pack-files; this
++only happens if all objects in the pack-file are also stored in a newer
++pack-file. Second, it selects a group of pack-files whose "expected
++size" is below the batch size until the group has total expected size at
++least the batch size; see the `--batch-size` option for the `repack`
++subcommand in linkgit:git-multi-pack-index[1]. The default batch-size is
++zero, which is a special case that attempts to repack all pack-files
++into a single pack-file.
++
++
  GIT
+ ---
+ Part of the linkgit:git[1] suite
 diff --git a/builtin/run-job.c b/builtin/run-job.c
-index 2c78d053aa4..dd7709952d3 100644
+index cecf9058c51..d3543f7ccb9 100644
 --- a/builtin/run-job.c
 +++ b/builtin/run-job.c
-@@ -1,12 +1,65 @@
+@@ -1,13 +1,14 @@
  #include "builtin.h"
  #include "config.h"
-+#include "commit-graph.h"
-+#include "object-store.h"
+ #include "commit-graph.h"
++#include "midx.h"
+ #include "object-store.h"
  #include "parse-options.h"
-+#include "repository.h"
-+#include "run-command.h"
+ #include "repository.h"
+ #include "run-command.h"
  
  static char const * const builtin_run_job_usage[] = {
--	N_("git run-job"),
-+	N_("git run-job commit-graph"),
+-	N_("git run-job (commit-graph|fetch|loose-objects)"),
++	N_("git run-job (commit-graph|fetch|loose-objects|pack-files)"),
  	NULL
  };
  
-+static int run_write_commit_graph(void)
+@@ -238,6 +239,91 @@ static int run_loose_objects_job(void)
+ 	return prune_packed() || pack_loose();
+ }
+ 
++static int multi_pack_index_write(void)
 +{
 +	struct argv_array cmd = ARGV_ARRAY_INIT;
-+
-+	argv_array_pushl(&cmd, "commit-graph", "write",
-+			 "--split", "--reachable", "--no-progress",
-+			 NULL);
-+
++	argv_array_pushl(&cmd, "multi-pack-index", "write",
++			 "--no-progress", NULL);
 +	return run_command_v_opt(cmd.argv, RUN_GIT_CMD);
 +}
 +
-+static int run_verify_commit_graph(void)
++static int rewrite_multi_pack_index(void)
 +{
-+	struct argv_array cmd = ARGV_ARRAY_INIT;
++	char *midx_name = get_midx_filename(the_repository->objects->odb->path);
 +
-+	argv_array_pushl(&cmd, "commit-graph", "verify",
-+			 "--shallow", "--no-progress", NULL);
++	unlink(midx_name);
++	free(midx_name);
 +
-+	return run_command_v_opt(cmd.argv, RUN_GIT_CMD);
-+}
-+
-+static int run_commit_graph_job(void)
-+{
-+	char *chain_path;
-+
-+	if (run_write_commit_graph()) {
-+		error(_("failed to write commit-graph"));
++	if (multi_pack_index_write()) {
++		error(_("failed to rewrite multi-pack-index"));
 +		return 1;
 +	}
 +
-+	if (!run_verify_commit_graph())
-+		return 0;
++	return 0;
++}
 +
-+	warning(_("commit-graph verify caught error, rewriting"));
++static int multi_pack_index_verify(void)
++{
++	struct argv_array cmd = ARGV_ARRAY_INIT;
++	argv_array_pushl(&cmd, "multi-pack-index", "verify",
++			 "--no-progress", NULL);
++	return run_command_v_opt(cmd.argv, RUN_GIT_CMD);
++}
 +
-+	chain_path = get_chain_filename(the_repository->objects->odb);
-+	if (unlink(chain_path)) {
-+		UNLEAK(chain_path);
-+		die(_("failed to remove commit-graph at %s"), chain_path);
++static int multi_pack_index_expire(void)
++{
++	struct argv_array cmd = ARGV_ARRAY_INIT;
++	argv_array_pushl(&cmd, "multi-pack-index", "expire",
++			 "--no-progress", NULL);
++	return run_command_v_opt(cmd.argv, RUN_GIT_CMD);
++}
++
++static int multi_pack_index_repack(void)
++{
++	int result;
++	struct argv_array cmd = ARGV_ARRAY_INIT;
++	argv_array_pushl(&cmd, "multi-pack-index", "repack",
++			 "--no-progress", "--batch-size=0", NULL);
++	result = run_command_v_opt(cmd.argv, RUN_GIT_CMD);
++
++	if (result && multi_pack_index_verify()) {
++		warning(_("multi-pack-index verify failed after repack"));
++		result = rewrite_multi_pack_index();
 +	}
-+	free(chain_path);
 +
-+	if (!run_write_commit_graph())
-+		return 0;
++	return result;
++}
 +
-+	error(_("failed to rewrite commit-graph"));
-+	return 1;
++static int run_pack_files_job(void)
++{
++	if (multi_pack_index_write()) {
++		error(_("failed to write multi-pack-index"));
++		return 1;
++	}
++
++	if (multi_pack_index_verify()) {
++		warning(_("multi-pack-index verify failed after initial write"));
++		return rewrite_multi_pack_index();
++	}
++
++	if (multi_pack_index_expire()) {
++		error(_("multi-pack-index expire failed"));
++		return 1;
++	}
++
++	if (multi_pack_index_verify()) {
++		warning(_("multi-pack-index verify failed after expire"));
++		return rewrite_multi_pack_index();
++	}
++
++	if (multi_pack_index_repack()) {
++		error(_("multi-pack-index repack failed"));
++		return 1;
++	}
++
++	return 0;
 +}
 +
  int cmd_run_job(int argc, const char **argv, const char *prefix)
  {
  	static struct option builtin_run_job_options[] = {
-@@ -23,6 +76,11 @@ int cmd_run_job(int argc, const char **argv, const char *prefix)
- 			     builtin_run_job_usage,
- 			     PARSE_OPT_KEEP_UNKNOWN);
+@@ -261,6 +347,8 @@ int cmd_run_job(int argc, const char **argv, const char *prefix)
+ 			return run_fetch_job();
+ 		if (!strcmp(argv[0], "loose-objects"))
+ 			return run_loose_objects_job();
++		if (!strcmp(argv[0], "pack-files"))
++			return run_pack_files_job();
+ 	}
  
-+	if (argc > 0) {
-+		if (!strcmp(argv[0], "commit-graph"))
-+			return run_commit_graph_job();
-+	}
-+
  	usage_with_options(builtin_run_job_usage,
- 			   builtin_run_job_options);
- }
-diff --git a/commit-graph.c b/commit-graph.c
-index f013a84e294..6867f92d04a 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -56,7 +56,7 @@ static char *get_split_graph_filename(struct object_directory *odb,
- 		       oid_hex);
- }
+diff --git a/midx.c b/midx.c
+index 1527e464a7b..0f0d0a38812 100644
+--- a/midx.c
++++ b/midx.c
+@@ -36,7 +36,7 @@
  
--static char *get_chain_filename(struct object_directory *odb)
-+char *get_chain_filename(struct object_directory *odb)
+ #define PACK_EXPIRED UINT_MAX
+ 
+-static char *get_midx_filename(const char *object_dir)
++char *get_midx_filename(const char *object_dir)
  {
- 	return xstrfmt("%s/info/commit-graphs/commit-graph-chain", odb->path);
+ 	return xstrfmt("%s/pack/multi-pack-index", object_dir);
  }
-diff --git a/commit-graph.h b/commit-graph.h
-index e87a6f63600..8b7bd5a6cb1 100644
---- a/commit-graph.h
-+++ b/commit-graph.h
-@@ -13,6 +13,7 @@
- struct commit;
+diff --git a/midx.h b/midx.h
+index e6fa356b5ca..cf2c09dffc2 100644
+--- a/midx.h
++++ b/midx.h
+@@ -39,6 +39,7 @@ struct multi_pack_index {
  
- char *get_commit_graph_filename(struct object_directory *odb);
-+char *get_chain_filename(struct object_directory *odb);
- int open_commit_graph(const char *graph_file, int *fd, struct stat *st);
+ #define MIDX_PROGRESS     (1 << 0)
  
- /*
++char *get_midx_filename(const char *object_dir);
+ struct multi_pack_index *load_multi_pack_index(const char *object_dir, int local);
+ int prepare_midx_pack(struct repository *r, struct multi_pack_index *m, uint32_t pack_int_id);
+ int bsearch_midx(const struct object_id *oid, struct multi_pack_index *m, uint32_t *result);
 diff --git a/t/t7900-run-job.sh b/t/t7900-run-job.sh
-index 1eac80b7ed3..18b9bd26b3a 100755
+index 41da083257b..416ba04989d 100755
 --- a/t/t7900-run-job.sh
 +++ b/t/t7900-run-job.sh
-@@ -5,6 +5,8 @@ test_description='git run-job
- Testing the background jobs, in the foreground
+@@ -6,6 +6,7 @@ Testing the background jobs, in the foreground
  '
  
-+GIT_TEST_COMMIT_GRAPH=0
-+
+ GIT_TEST_COMMIT_GRAPH=0
++GIT_TEST_MULTI_PACK_INDEX=0
+ 
  . ./test-lib.sh
  
- test_expect_success 'help text' '
-@@ -12,4 +14,34 @@ test_expect_success 'help text' '
- 	test_i18ngrep "usage: git run-job" err
+@@ -93,4 +94,42 @@ test_expect_success 'loose-objects job' '
+ 	test_cmp packs-between packs-after
  '
  
-+test_expect_success 'commit-graph job' '
-+	git init server &&
-+	(
-+		cd server &&
-+		chain=.git/objects/info/commit-graphs/commit-graph-chain &&
-+		git checkout -b master &&
-+		for i in $(test_seq 1 15)
-+		do
-+			test_commit $i || return 1
-+		done &&
-+		git run-job commit-graph 2>../err &&
-+		test_must_be_empty ../err &&
-+		test_line_count = 1 $chain &&
-+		for i in $(test_seq 16 19)
-+		do
-+			test_commit $i || return 1
-+		done &&
-+		git run-job commit-graph 2>../err &&
-+		test_must_be_empty ../err &&
-+		test_line_count = 2 $chain &&
-+		for i in $(test_seq 20 23)
-+		do
-+			test_commit $i || return 1
-+		done &&
-+		git run-job commit-graph 2>../err &&
-+		test_must_be_empty ../err &&
-+		test_line_count = 1 $chain
-+	)
++test_expect_success 'pack-files job' '
++	packDir=.git/objects/pack &&
++
++	# Create three disjoint pack-files with size BIG, small, small.
++
++	echo HEAD~2 | git -C client pack-objects --revs $packDir/test-1 &&
++
++	test_tick &&
++	git -C client pack-objects --revs $packDir/test-2 <<-\EOF &&
++	HEAD~1
++	^HEAD~2
++	EOF
++
++	test_tick &&
++	git -C client pack-objects --revs $packDir/test-3 <<-\EOF &&
++	HEAD
++	^HEAD~1
++	EOF
++
++	rm -f client/$packDir/pack-* &&
++	rm -f client/$packDir/loose-* &&
++
++	ls client/$packDir/*.pack >packs-before &&
++	test_line_count = 3 packs-before &&
++
++	# the job repacks the two into a new pack, but does not
++	# delete the old ones.
++	git -C client run-job pack-files &&
++	ls client/$packDir/*.pack >packs-between &&
++	test_line_count = 4 packs-between &&
++
++	# the job deletes the two old packs, and does not write
++	# a new one because only one pack remains.
++	git -C client run-job pack-files &&
++	ls client/.git/objects/pack/*.pack >packs-after &&
++	test_line_count = 1 packs-after
 +'
 +
  test_done
