@@ -2,128 +2,109 @@ Return-Path: <SRS0=9X1Y=5T=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E73BCC43331
-	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 00:23:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 801D0C43331
+	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 00:25:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A590020787
-	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 00:23:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 42A5820787
+	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 00:25:33 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FICGKAte"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mj/963Xv"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389752AbgDCAXa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Apr 2020 20:23:30 -0400
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:37156 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388971AbgDCAXa (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Apr 2020 20:23:30 -0400
-Received: by mail-pl1-f193.google.com with SMTP id x1so2011438plm.4
-        for <git@vger.kernel.org>; Thu, 02 Apr 2020 17:23:28 -0700 (PDT)
+        id S2389809AbgDCAZc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Apr 2020 20:25:32 -0400
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:44288 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388951AbgDCAZb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Apr 2020 20:25:31 -0400
+Received: by mail-pl1-f196.google.com with SMTP id h11so1996278plr.11
+        for <git@vger.kernel.org>; Thu, 02 Apr 2020 17:25:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=xQTHwBEAxwCG1C6nV82HGMpvkFKvKWTbtkNGcnj54TQ=;
-        b=FICGKAteVTErwWuqEH7AGsbKdTgOd2tO2RFNbuniifIDgDuV8gqaHcFyC1l3hnpbW2
-         dpgm1MOebbCGdvpRuEzp3eGoIW7F3LKLknk+JTbOS+QiJ5R8P9uSfOswVPhulaHzcRCq
-         KQUv0hTHaB9aHPsgBaSjvwS9H6g5o3Ujrh8BdwTPzwr1sNTCHTmUUnoi51RAbHCPRJV0
-         U3ikCV/kOyGdK5JzCzIQWBx72X6WX4gfrJvo873D+ir6dHDR0koFa4lLC8kgXQ+VbDed
-         2ecPZ/L3CnOnHhGroAGM51XLfIP4sAHgTcmVj6RFz7JQaLlFVxm5gpQDWT5DMPKyGd+Z
-         tMjQ==
+        bh=0CrdFMIQUy/BKzhsuD1fsaDGXS27PjoLL3ps7KmPFL0=;
+        b=mj/963XvHjKPxNoZGo8DvV/RWgtuykD1/1MOhm3Skn9q2VlS1SkbGX53C7y8fDVgow
+         uD2xLF0v7DPizQs3T1mbGcTDkxuBWLGxsnQjVuMMIJKLDi8RxYep1HdfgY8Uvd/ZhvYp
+         7kSzPjRdBxrESLDrBZ2N/w4tL+b2VQQ9GGT4SADvwIruhdZQDFYLbrys8r6Xu5HKyaML
+         2QjuxjWwnPDlpAHKw0sG2WMetawU1Z0OZM54hlNvVlk6p8n6sHOxi2oxeIJCuQatiGMh
+         mII7zg+cBhRLIjX9ZjnhAkk8sWrRABD2YgGlK5QVeYvLkzJUmqFmtsjxlKQWa5W4yJhs
+         1rsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to;
-        bh=xQTHwBEAxwCG1C6nV82HGMpvkFKvKWTbtkNGcnj54TQ=;
-        b=dUE88oBhaFpmM9DmeQEpdIykMAjfrnY/MPsDwH/pLem+ipzB56B2KYfLOsajhfDmT1
-         mYtJ2D4+uF1uvEpd9phjhQKkMm+PSyjlaqZhJMJ/Gl57eu/QFmfSryi2VSCChEQ+5voI
-         Fq8K5yCzGzJ3nNinzeSBxXbiN2l9Cv4e6tVkOHc0ynUgBHZPMJe9NHAIHfb49hJCt75o
-         d9LqSABYkBKDk8DLr5o73u70fnnoD8SXOGMDlPQRy5fuytPQWv2b2vXDJPOfBi4AWxDo
-         phD4dTO4o+eKyr67yZxWrghPyeLqGtZfx/nUfL4NGU7igPoSey9MHf3j8/rmb+xcPxZq
-         4N1w==
-X-Gm-Message-State: AGi0Pua/slKTwJ8dAV2X/3wCAG18uWw0tHRvAV1/U37rXhjp1GQg7rJ2
-        VwiXF9wAlcm6p83WkZ0lIQmOJ3iF
-X-Google-Smtp-Source: APiQypLGaqtDQdie1ArJbEVQHaxRxJ8bxLVEe/hvRnuSDJpOF/cuwa4tUUPsrqF89arnILABz6SYJg==
-X-Received: by 2002:a17:90a:9417:: with SMTP id r23mr3248738pjo.192.1585873407597;
-        Thu, 02 Apr 2020 17:23:27 -0700 (PDT)
+        bh=0CrdFMIQUy/BKzhsuD1fsaDGXS27PjoLL3ps7KmPFL0=;
+        b=qjeNS7PQqY09sY6aXhWGBFgmR89CmnIKBw9z4TIgNejI7A8cTB7hn42Cc+QcxAYNoS
+         u8fFmkLPTTcJJ1p82CKVnHbxW7BhuNtSCYBxsZkIqNdIs5ZLHRVFTZMtW9UDfKJFbhxg
+         aA/t3bhX/O9U5nPmF2x32rP6+5qO+AZBR5NkMb8uMyAbL/SDFXEbLGZFxepe+N8zYGy3
+         mrvgFPc0kVyA+k53ufQxQN1d8kBd2zVuOvk0tiAVw7dFjPUORgEe8hbixWO2SxbLZKLE
+         UA64NPJ4uK/2MmcWG1SsQF8JfmAZ0GVr6zqf5HmDzsGAch1R03xq9ufKXd0eO0+a4dPi
+         Il0w==
+X-Gm-Message-State: AGi0PuadZWj2kvxkkfnq88cE/yi+ND+G1SH2ofJyLJ+yE+7kr9kVES0E
+        o199waYfoX93UmiY4grqdGU=
+X-Google-Smtp-Source: APiQypKNgT2O5cCM1v3zrZazqKTzs7KeY6+dQB4v3Cqo3i6cVB1k6suASyPbDcrNd/ugIQWTATFojg==
+X-Received: by 2002:a17:90a:ac18:: with SMTP id o24mr6621545pjq.62.1585873530296;
+        Thu, 02 Apr 2020 17:25:30 -0700 (PDT)
 Received: from localhost ([2402:800:6375:207b:be21:746a:7a56:9d4d])
-        by smtp.gmail.com with ESMTPSA id g75sm4465083pje.37.2020.04.02.17.23.25
+        by smtp.gmail.com with ESMTPSA id k70sm4133023pga.91.2020.04.02.17.25.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Apr 2020 17:23:26 -0700 (PDT)
-Date:   Fri, 3 Apr 2020 07:23:24 +0700
+        Thu, 02 Apr 2020 17:25:29 -0700 (PDT)
+Date:   Fri, 3 Apr 2020 07:25:28 +0700
 From:   Danh Doan <congdanhqx@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v3 0/6] Travis + Azure jobs for linux with musl libc
-Message-ID: <20200403002324.GA29543@danh.dev>
-References: <cover.1585474409.git.congdanhqx@gmail.com>
- <cover.1585832270.git.congdanhqx@gmail.com>
- <xmqqsghl3hb4.fsf@gitster.c.googlers.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 5/5] Documentation: document merge option --no-gpg-sign
+Message-ID: <20200403002528.GB29543@danh.dev>
+References: <20200331064456.GA15850@danh.dev>
+ <cover.1585821581.git.congdanhqx@gmail.com>
+ <d35dd89c52e427861c38d17e43c61fca149dbfd5.1585821581.git.congdanhqx@gmail.com>
+ <xmqqo8s93go8.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqsghl3hb4.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqo8s93go8.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2020-04-02 10:53:35-0700, Junio C Hamano <gitster@pobox.com> wrote:
+On 2020-04-02 11:07:19-0700, Junio C Hamano <gitster@pobox.com> wrote:
 > Đoàn Trần Công Danh  <congdanhqx@gmail.com> writes:
 > 
-> > This is a nearly rewrite of this series, because there're GitHub Action
-> > allow running directly inside container.
+> > Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
+> > ---
+> >  Documentation/merge-options.txt | 5 ++++-
+> >  1 file changed, 4 insertions(+), 1 deletion(-)
 > >
-> > => I rewrite this series to prepare as much as possible for the GitHub
-> > Action series.
-> > ...
-> >  .travis.yml                                   | 10 ++++-
-> >  azure-pipelines.yml                           | 39 ++++++++++++++++++-
-> >  ci/install-docker-dependencies.sh             | 18 +++++++++
-> >  ci/lib.sh                                     |  8 ++++
-> >  ...n-linux32-build.sh => run-docker-build.sh} | 39 +++++++++++++------
-> >  ci/{run-linux32-docker.sh => run-docker.sh}   | 28 ++++++++++---
-> >  6 files changed, 121 insertions(+), 21 deletions(-)
-> >  create mode 100755 ci/install-docker-dependencies.sh
-> >  rename ci/{run-linux32-build.sh => run-docker-build.sh} (63%)
-> >  rename ci/{run-linux32-docker.sh => run-docker.sh} (43%)
+> > diff --git a/Documentation/merge-options.txt b/Documentation/merge-options.txt
+> > index 40dc4f5e8c..c46e4fe598 100644
+> > --- a/Documentation/merge-options.txt
+> > +++ b/Documentation/merge-options.txt
+> > @@ -61,9 +61,12 @@ When not possible, refuse to merge and exit with a non-zero status.
+> >  
+> >  -S[<keyid>]::
+> >  --gpg-sign[=<keyid>]::
+> > +--no-gpg-sign::
+> >  	GPG-sign the resulting merge commit. The `keyid` argument is
+> >  	optional and defaults to the committer identity; if specified,
+> > -	it must be stuck to the option without a space.
+> > +	it must be stuck to the option without a space. "--no-gpg-sign"
+> > +	is useful to countermand both `commit.gpgSign` configuration variable,
+> > +	and earlier "--gpg-sign".
 > 
-> Thanks.  The above diffstat makes me wonder if it makes more sense
-> to do the topic from Dscho first to migrate existing CI targets to
-> GitHub Actions and then add musl job to the ci suite on top?  That
-> way, we won't have to worry about azure-pipelines.yml at all here.
+> Shouldn't [4/5] also add '--no-gpg-sign' to the header like the
+> above?
 
-You can ignore the change to azure-pipelines.yml in 6/6
-to reduce noise about Azure (it'll be deleted by next series anyway).
-And declare that this series is working
-for Travis only (as same intention of v1). New diffstat:
----------------8<------------------
- .travis.yml                                      | 10 +++++-
- azure-pipelines.yml                              |  4 +--
- ci/install-docker-dependencies.sh                | 18 +++++++++++
- ci/lib.sh                                        |  8 +++++
- ci/{run-linux32-build.sh => run-docker-build.sh} | 39 ++++++++++++++++--------
- ci/{run-linux32-docker.sh => run-docker.sh}      | 28 +++++++++++++----
- 6 files changed, 86 insertions(+), 21 deletions(-)
-
----------------->8----------------
-
-In _my_ opinion, I still prefer have this series first.
-
-But, if we prefer to have GitHub Action first:
-- We'll need 5/6 moved to that series
-- In the rebased of this series, we'll change about 10 lines in GitHub Action yml.
-
-If people think it's better that way, please tell me, I could re-order it.
+Yes, my bad. Since it's very small change.
+Could you please help me do it instead.
 
 -- 
 Danh
