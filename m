@@ -2,192 +2,118 @@ Return-Path: <SRS0=9X1Y=5T=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DE2AC43331
-	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 18:30:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B98E9C43331
+	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 18:30:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0C2252076E
-	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 18:30:50 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="hk1Qhz4b"
+	by mail.kernel.org (Postfix) with ESMTP id 92E3F2077D
+	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 18:30:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390993AbgDCSas (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Apr 2020 14:30:48 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53441 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728066AbgDCSas (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Apr 2020 14:30:48 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 415764AAF7;
-        Fri,  3 Apr 2020 14:30:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=HPv5M64AAIJ9Wy/RGQA3qtQqBwE=; b=hk1Qhz
-        4bxrM1BaEknh17sihx0D0jwJq8f6SLXywDRkUqOtQ4z0hBI1hCjbz3dEUnztmYpv
-        zWIWPU6tVNEJYeP+aEBFYmuhF3xoRAs/nEH/OnlwTmbhfjsl3/NxBwwH+9HOybcW
-        YnKPWksOKHXtlYL2KBX0HuByjBL72wgYtA3oI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Kf9iMsn5P+LnjfsSZjaBxPyx15UYVbGb
-        SmLrpN4ZxWFV0j8auqQWGdYXWnHl2EdKjILcmDDSeZkFB8IfIy9w3C7Rz3x4GW/V
-        A5VyEyyGYFgF56iXnO06+1E2HW59FzkX30yOiqQHE0/UNuEiG/Eo2+fgmYSUBzp3
-        /FtTvgOqJNY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 370424AAF5;
-        Fri,  3 Apr 2020 14:30:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9050B4AAF2;
-        Fri,  3 Apr 2020 14:30:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Miriam Rubio <mirucam@gmail.com>, git <git@vger.kernel.org>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2 01/11] bisect--helper: fix `cmd_*()` function switch default return
-References: <20200321161020.22817-1-mirucam@gmail.com>
-        <20200321161020.22817-2-mirucam@gmail.com>
-        <xmqqk12x17za.fsf@gitster.c.googlers.com>
-        <CAP8UFD3t5ZukXqfEr9W8FFror=SemmoB0hokri2BK6ZYcq619Q@mail.gmail.com>
-Date:   Fri, 03 Apr 2020 11:30:42 -0700
-In-Reply-To: <CAP8UFD3t5ZukXqfEr9W8FFror=SemmoB0hokri2BK6ZYcq619Q@mail.gmail.com>
-        (Christian Couder's message of "Fri, 3 Apr 2020 15:17:54 +0200")
-Message-ID: <xmqqv9mgzajx.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S2391065AbgDCSa6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Apr 2020 14:30:58 -0400
+Received: from cloud.peff.net ([104.130.231.41]:60856 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S2390874AbgDCSa6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Apr 2020 14:30:58 -0400
+Received: (qmail 29425 invoked by uid 109); 3 Apr 2020 18:30:58 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 03 Apr 2020 18:30:58 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 21503 invoked by uid 111); 3 Apr 2020 18:41:11 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 03 Apr 2020 14:41:11 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 3 Apr 2020 14:30:57 -0400
+From:   Jeff King <peff@peff.net>
+To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>, git@vger.kernel.org
+Subject: Re: [PATCH 3/3] commit-graph: error out on invalid commit oids in
+ 'write --stdin-commits'
+Message-ID: <20200403183057.GA659224@coredump.intra.peff.net>
+References: <20190805080240.30892-1-szeder.dev@gmail.com>
+ <20190805080240.30892-4-szeder.dev@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3A6301C6-75D9-11EA-997C-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190805080240.30892-4-szeder.dev@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
+On Mon, Aug 05, 2019 at 10:02:40AM +0200, SZEDER Gábor wrote:
 
->> The return value from error() is *NOT* taken from "enum
->> bisect_error"; its value (-1) happens to be the same as
->> BISECT_FAILED, but that is by accident, and not by design.
->
-> In bisect.h we have made sure that BISECT_FAILED would be -1, so it is
-> not by accident:
+> While 'git commit-graph write --stdin-commits' expects commit object
+> ids as input, it accepts and silently skips over any invalid commit
+> object ids, and still exits with success:
+> 
+>   # nonsense
+>   $ echo not-a-commit-oid | git commit-graph write --stdin-commits
+>   $ echo $?
+>   0
+>   # sometimes I forgot that refs are not good...
+>   $ echo HEAD | git commit-graph write --stdin-commits
+>   $ echo $?
+>   0
+>   # valid tree OID, but not a commit OID
+>   $ git rev-parse HEAD^{tree} | git commit-graph write --stdin-commits
+>   $ echo $?
+>   0
+>   $ ls -l .git/objects/info/commit-graph
+>   ls: cannot access '.git/objects/info/commit-graph': No such file or directory
+> 
+> Check that all input records are indeed valid commit object ids and
+> return with error otherwise, the same way '--stdin-packs' handles
+> invalid input; see e103f7276f (commit-graph: return with errors during
+> write, 2019-06-12).
 
-It *is* accident waiting to happen, unless you have a comment to
-tell future developers that they are forbidden from changing the
-assignment of values; "We've made sure" alone is not a good excuse.
+Can you explain more why the old behavior is a problem? For reasons (see
+below), we want to do something like:
 
-> enum bisect_error {
->         BISECT_OK = 0,
->         BISECT_FAILED = -1,
->         BISECT_ONLY_SKIPPED_LEFT = -2,
->         BISECT_MERGE_BASE_CHECK = -3,
->         BISECT_NO_TESTABLE_COMMIT = -4,
->         BISECT_INTERNAL_SUCCESS_1ST_BAD_FOUND = -10,
->         BISECT_INTERNAL_SUCCESS_MERGE_BASE = -11
-> };
->
->> So the above code is accident waiting to happen, while
->>
->>         default:
->>                 error(_("BUG: ..."));
->>                 res = BISECT_FAILED;
->>
->> would be a lot more correct (by design).
->
-> I think it is very unlikely that we will ever change the value
-> returned by error(), so I don't think there is an accident waiting to
-> happen.
->
-> Maybe we should make it clearer though in bisect.h in the comment
-> before the enum, that we chose -1 for BISECT_FAILED so that it is the
-> same as what error() returns....
+  git for-each-ref --format='%(objectname)' |
+  git commit-graph write --stdin-commits
 
-In this particular case, you do not even need to rely on such a
-comment to tie hands of future developers' needs (e.g. they may need
-to add a new enum value that must come between OK and FAILED because
-they will find "if (err < FAILED)" is an easy way to do something
-they need to do; an ordering requirement similar to how "enum
-todo_command" in sequencer.h wants to enforce certain ordering of
-values is not uncommon, and they will find it awkward if they are
-told that they cannot move FAILED to some value other than -1).  You
-were even shown a better way to separate "res" from the value
-error() returns (which will always be -1) and BISECT_FAILED (which
-may be -1 right now, but future developers may want to change it,
-and you have the power to allow it).
+In v2.23 and earlier, that worked exactly like --reachable, but now it
+will blow up if there are any refs that point to a non-commit (e.g., a
+tag of a blob).
 
-I do not see why you are still giving a lame excuse after that.
+It can be worked around by asking for %(objecttype) and %(*objecttype)
+and grepping the result, but that's awkward and much less efficient
+(especially if you have a lot of annotated tags, as we may have to open
+and parse each one).
 
-I even do not like the fact that you are doing so in the context of
-being a mentor---please do not spoil the opportunity to educate good
-developers of our future; instead please lead them by showing a good
-example.
+Now obviously you could just use --reachable for the code above. But
+here are two plausible cases where you might not want to do that:
 
-> I am ok with using "-res" here. There are other places where
-> "abs(res)" is needed though, so code could look a bit more consistent
-> if "abs(res)" was used here too.
+ - you're limiting the graph to only a subset of refs (e.g., you want to
+   graph refs/heads/ and refs/tags, but not refs/some-other-weird-area/).
 
-If there are two kinds of codepaths, some *need* to deal with both
-positive and negative for good reasons, and others only need to deal
-with non-positive values, it would make it easier to understand the
-code by consistently using -res for the latter while using abs() for
-the former.
+ - you're generating an incremental graph update. You know somehow that
+   a few refs were updated, and you want to feed those tips to generate
+   the incremental, but not the rest of the refs (not because it would
+   be wrong to do so, but in the name of keeping it O(size of change)
+   and not O(number of refs in the repo).
 
-This is a tangent, but a codepath that needs abs(res) may need to be
-reexaimined for correctness, as it is likely that it is a sign that
-a sloppy developer swept a deeper underlying problem under the rug.
+The latter is the actual case that bit us. I suppose one could do
+something like:
 
-Imagine that a function A, in one if() statement in it, returns
-error() whose value is -1, and in some other if() statement returns
-BAD_XYZZY whose value is 1.  The function A also returns BAD_FROTZ
-whose value is 2.  The only guarantee the caller gets from the
-function A is that an error is signaled by non-zero value, and zero
-means success.
+  git rev-list --no-walk <maybe-commits |
+  git commit-graph write --stdin-commits
 
-And if you use abs() to squash an error and BAD_XYZZY into 1 in your
-function B that calls A, what good are you doing to the callers of
-your B?  They cannot tell between error and BAD_XYZZY, but they can
-tell them from BAD_FROTZ, but does such an arrangement make any
-sense?  It would be far more rational to make your B either (1)
-return -1 for any error, if B thinks callers do not have to care
-(which could be a valid stance to take, depending on the nature of
-B), or (2) add an error code to BAD_{XYZZY,FROTZ} family and map -1
-that comes from an error to that value, so that the callers can tell
-them apart, or (3) do the equivalent of (2) but do so inside A (not
-in B), and update call the callers of A.
+to use rev-list as a filter, but that feels kind of baroque.
 
-Any of the above is more sensible and future-proof, compared to
-blindly using abs(res) and claim that you are safe because you are
-not returning a negative value.
+Normally I'm in favor of more error checking instead of less, but in
+this case it feels like it's putting scripted use at a disadvantage
+versus the internal code (e.g., the auto-write for git-fetch uses the
+"--reachable" semantics for its internal invocation).
 
->> By the way, under what condition can the "BUG:" be reached?  Would
->> it only be reachable by a programming error?
->
-> It could happen if a user would try to directly use `git
-> bisect--helper <cmd> ...` with an unsupported <cmd>. Users are not
-> supposed to directly use bisect--helper though.
->
-> It could also happen if a developer uses `git bisect--helper <cmd>
-> ...` in a script, program or alias if <cmd> is not properly spelled or
-> is unavailable for some reason.
+-Peff
 
-If the user can legitimately trigger it, it is not a "BUG:".  Let's
-make sure we use "BUG:" (whether it comes from BUG("...") or handcrafted
-message like this one here) only when there is a bug in our program.
-In other words, when a user sees "BUG:" emitted from our program and
-reports it to us, there shouldn't be a room for us to say, "eh,
-thanks for reporting, but it is an intended behaviour---you are just
-holding it wrong".
-
-If I did not know bisect--helper is its way out (which would be the
-endgame of making "git bisect" fully converted to C), I would say
-that we should just mark it as an error, but in the endgame state,
-there won't be any end-user visible bisect--helper, so I am OK to
-label it as a "BUG:" in this case.  It will be in the endgame state.
-
-Thanks.
+PS As an aside, I think the internal git-fetch write could benefit from
+   this same trick: feed the set of newly-stored ref tips to the
+   commit-graph machinery, rather than using for_each_ref().
