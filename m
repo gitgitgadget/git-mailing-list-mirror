@@ -2,99 +2,129 @@ Return-Path: <SRS0=9X1Y=5T=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 690B3C43331
-	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 20:27:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 60BC1C2BA12
+	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 20:40:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 29EDE20719
-	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 20:27:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 311B5217D8
+	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 20:40:22 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="oVVnMlze"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EasQsLOa"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727909AbgDCU1Q (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Apr 2020 16:27:16 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:51550 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726368AbgDCU1Q (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 3 Apr 2020 16:27:16 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 47F0E60734;
-        Fri,  3 Apr 2020 20:27:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1585945635;
-        bh=/vSTzQG4oAWn6JluNM0YRDdVykZBT6yIGSZXQ1qdne4=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=oVVnMlzeh9BNgBpbW+wcLc6indfPdsqV+R9bVyC1ZULZ39WcGwj6wagS3F4H6+ser
-         w1nysm2zlm86keGv9/kkYQQKLrn24UE2WA7t2BdZ1JR3YUqXV7Z8TLnbXVKUOkB6CD
-         FZ1PPNxE1IYVnqDMEgxIUMpQqYCqs6JCwBDc+B+XVMSMgTDTxizU6o0uFnzZA1H72r
-         sLlq/DG17xzHgqzuOjVSU08M0JoB/BrH8UT9nwoq0gEd7SKYIUwXvw11oe0wdAEW16
-         1kIomYk10QNW+pQcC4xvz54svzHZCIY+HyOjGBnl6uJdnRf0W3AxPqrD3iGWlUa87k
-         45kqkLj9RbKYIpyFUdTBeCC3VXngATSlUs1zPfmvNWJBBb6NbFXtWvUF/nC3imBlGD
-         M8ZnUtx+WQ7M53hhPC4sqHGpIL3R6Jmk16wrbvsTKELaKpXI6HJYkUtqRE+iCd7o0b
-         eORuaV54zif3PL75b1W64CACRuuS4ehI6bgFJ+ZIkfdD6+CjDle
-Date:   Fri, 3 Apr 2020 20:27:09 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     number201724 <number201724@me.com>
-Cc:     git@vger.kernel.org
-Subject: Re: The closing bracket is missing.
-Message-ID: <20200403202709.GC6369@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        number201724 <number201724@me.com>, git@vger.kernel.org
-References: <8d439c14-6b39-bbb7-a558-61c1e79ff1f3@me.com>
+        id S1728060AbgDCUkV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Apr 2020 16:40:21 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:46641 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728312AbgDCUkT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Apr 2020 16:40:19 -0400
+Received: by mail-wr1-f67.google.com with SMTP id j17so10001339wru.13
+        for <git@vger.kernel.org>; Fri, 03 Apr 2020 13:40:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=7kkOkUiVtNHnSOe7KbWWWygZ4U68gLXsnnvPN+A21Hg=;
+        b=EasQsLOaJrbskDhKp6QT/+WR8IdAxYoTvNG60/IfCrvxQX82HSdQtDL5ayIGD8VUQs
+         I04vpB9JrEUoRd54+NlNXZDAWn/1X7mDp4ADm5OjwyXBXnVGIgGsmeAJHVK0Td13aKr5
+         I+U64D2g7ZSq1KiskYW/ZK2YuF5K4FDuGJS7NSSbonfyKbjuvGK5HFhgnaV9kRt7b8AC
+         LsU1n0kVK38C4ft9rjuRRlyVODKDYryU9o70QGdOYAYgmKw/emF7WBAPSB2LOzIyif1s
+         TX55YSRuUX3hHE7Q/A7H73xb9gvqhM/VthTwKF58YOtt4dqklNPZOLx+UPoJwb2Mhy6+
+         1MIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=7kkOkUiVtNHnSOe7KbWWWygZ4U68gLXsnnvPN+A21Hg=;
+        b=Fbh6yNd6ubZ1/8u2UxQpToPslNAv+E9vkmY+6noifxQ0UMbGvkZr43hKtba9RLODHW
+         AU38UW9OJmCOh5uJJaNQbb+1UooXBTCCDvmp7xcX0cZ7cKZGi3Cb/1cVkUhXSTEWzWK7
+         9wDiechWibAQn2nIBVp37VQM2ks3FuwoW8FQPnauctFGXtFVBuaAquJaTRo2TQ23xt+k
+         /6J+APNjwGglMpFShYQIFfJrg7m1J0D60bkrFSDDEMgnDCFdOGEKdbN/kv9AIIzLtTxv
+         I2AOzG08ePsvesT2bjOAGLjTMM/NFw8G5i8rVuiEowBQP/6mwftcdx8XGfK/TK9zYKCq
+         1VHw==
+X-Gm-Message-State: AGi0PubsqArfbWqGZId+xz9iYlmeReeMnH6xT99FLPss5A8hLbAez/RA
+        XEQ5TMLGLqlIlzV/p0jptFA=
+X-Google-Smtp-Source: APiQypLPSwNPFsJAn4aTOYTG8lBO106scTVKvRYk/xEzXra4burdZcTXbhI418lQ0sB+YOAdDIz0+w==
+X-Received: by 2002:adf:e44a:: with SMTP id t10mr10765148wrm.322.1585946416518;
+        Fri, 03 Apr 2020 13:40:16 -0700 (PDT)
+Received: from szeder.dev (78-131-17-192.pool.digikabel.hu. [78.131.17.192])
+        by smtp.gmail.com with ESMTPSA id g127sm12971227wmf.10.2020.04.03.13.40.15
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 03 Apr 2020 13:40:15 -0700 (PDT)
+Date:   Fri, 3 Apr 2020 22:40:13 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>, git@vger.kernel.org
+Subject: Re: [PATCH 3/3] commit-graph: error out on invalid commit oids in
+ 'write --stdin-commits'
+Message-ID: <20200403204013.GC7859@szeder.dev>
+References: <20190805080240.30892-1-szeder.dev@gmail.com>
+ <20190805080240.30892-4-szeder.dev@gmail.com>
+ <20200403183057.GA659224@coredump.intra.peff.net>
+ <20200403184933.GA57202@syl.local>
+ <20200403193842.GA7859@szeder.dev>
+ <20200403195103.GA663412@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="kfjH4zxOES6UT95V"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <8d439c14-6b39-bbb7-a558-61c1e79ff1f3@me.com>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.4.0-4-amd64)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200403195103.GA663412@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Apr 03, 2020 at 03:51:03PM -0400, Jeff King wrote:
+> On Fri, Apr 03, 2020 at 09:38:42PM +0200, SZEDER Gábor wrote:
+> 
+> > > > Can you explain more why the old behavior is a problem?
+> > 
+> > Because when I do:
+> > 
+> >    # sometimes I forgot that refs are not good...
+> >    $ echo HEAD | git commit-graph write --stdin-commits
+> > 
+> > then I get _nothing_: neither an error, nor a commit-graph.
+> 
+> OK, that makes more sense: it's an input format error, because we only
+> take hex oids.
+> 
+> Do you care about complaining about:
+> 
+>   git rev-parse HEAD^{tree} | git commit-graph write --stdin-commits
+> 
+> ? That's the case that's much more interesting, I think.
 
---kfjH4zxOES6UT95V
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Hm, are you trying to go in the direction where '--stdin-commits'
+would keep erroring out on any non-full-hex-oid, but would accept and
+silently ignore any hex oids that are not commits (perhaps even when
+there is no such object, dunno)?  I think that would support the use
+cases you mentioned, while it would still save me when I do the 'echo
+<ref>' thing (somehow I regularly do that, remember doing it the day
+before yesterday!).
 
-On 2020-04-03 at 02:39:10, number201724 wrote:
-> command-list.h:53:69: error: expected =E2=80=98}=E2=80=99 before =E2=80=
-=98;=E2=80=99 token
-> =C2=A0=C2=A0 53 |=C2=A0 { "git-apply", N_("Apply a patch to files and/or =
-to the index"),
-> 0};
->=20
-> command-list.h=C2=A0 The closing bracket is missing. In the master branch.
+I only mentioned the ^{tree} form in the commit message for the sake
+of completeness, i.e. to show various cases where the user would get
+neither error nor commit-graph.
 
-I don't see this behavior when compiling on my system, which is a Debian
-sid/amd64 system.  Can you tell us a little more about your system and
-its version, including what shell is being used for /bin/sh, how you're
-building (with make or with configure), and anything else that might be
-relevant?
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---kfjH4zxOES6UT95V
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXoecHQAKCRB8DEliiIei
-gRRiAQDCxbeDQPM6UwRzbJKG+MXiK2dXKlpsa0bWf0b0aoTCtAD/ViyuUbOpg9dP
-ZfYdeViRLFSe4hUikPBGN4lUxYJ5DAI=
-=KrBx
------END PGP SIGNATURE-----
-
---kfjH4zxOES6UT95V--
+> > Or introduce 'git commit-graph write --stdin-refs'?  Or teach
+> > '--stdin-commits' to DWIM and accept and parse refs?  Though the
+> > question still remains what to do with refs that can't be peeled back
+> > to commits
+> 
+> Right. I think there are two orthogonal questions:
+> 
+>   - whether to resolve arbitrary names to objects and how to handle such
+>     input if we don't
+> 
+>   - what to do with an oid (whether given as hex or resolved from a
+>     name) that isn't a commit-ish
+> 
+> -Peff
