@@ -2,201 +2,231 @@ Return-Path: <SRS0=9X1Y=5T=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8166C43331
-	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 20:48:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9879BC43331
+	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 21:15:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7971E20737
-	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 20:48:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 62D2A2077D
+	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 21:15:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="brt7Vx6E"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Rc9AT8mT"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728208AbgDCUsi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Apr 2020 16:48:38 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:34692 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728344AbgDCUs3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Apr 2020 16:48:29 -0400
-Received: by mail-wr1-f66.google.com with SMTP id 65so10138093wrl.1
-        for <git@vger.kernel.org>; Fri, 03 Apr 2020 13:48:28 -0700 (PDT)
+        id S1728117AbgDCVPE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Apr 2020 17:15:04 -0400
+Received: from mail-qv1-f66.google.com ([209.85.219.66]:32955 "EHLO
+        mail-qv1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727809AbgDCVPE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Apr 2020 17:15:04 -0400
+Received: by mail-qv1-f66.google.com with SMTP id p19so4384761qve.0
+        for <git@vger.kernel.org>; Fri, 03 Apr 2020 14:15:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=uaA66BdJ4rQYa191bEp+z8INgPrbZtjrQ6daT6uI/iA=;
-        b=brt7Vx6EgDk1DRdI9dGWSNgsrqOl4Z+nSgsj88o/k2agVrFwwJStDeXIGSDmUlMNyD
-         epmzuZEK9h8fx2QqS5sLIpFtXIvtlqf3E+NxXosfER7IIxkvUh7kYmTNklYnXqz0GkSw
-         5u3WJC7HpHgbIb9SiD/P9q5UxEF22cs9r2hT66I47Hhi+herP+EBEzcFe9pwbtW8ghAC
-         mj8c0Bg5nZ0JT3V7/R4XqJJAaB0QXtXJMrEj+/pmTGVcyPYyb4COk7iPSHkkaP3n9dxc
-         r5vvGB8eh1FuOVsXDGa3fMf5mNXOl20pgl/U8sg+Uj+2O3UFlvRhA7rvrGk5j34mGtxm
-         m5kw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=t/n5Cp5GRQO5HLWtic8iXCsKH4EuKLF89+YQk18uNi0=;
+        b=Rc9AT8mTsNZEp8C1dj5RG1lSzn7zpEU+zQxHd3nJa7h0JlM++sepsewcm/xxUlgD6p
+         2bRd4z4Luy48HAS2op8fBRllQwFqlo8nA6DKtyFp7B/BzwWQKi8g7dU4izIj/L7ztqgf
+         7nXmLGidLYV4K2mLmONoNsTL5t9XMkGFjRDv7WtULF1ZUXs2Ml3t8ts1IAJ1c0dTg+Rf
+         H5wlS1fRO22B0P2JiRku8odb8mJy9FlUql+8NfZ2i6JwokGyA+KjYix1tPCEYKr/vUrn
+         1tEm6Mm2YUbE06gSlH5kTwjqTI6ymQd/n0LLxR+vAyI2RnrY3n1laAuJkr4QmdX8aGLK
+         mE3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=uaA66BdJ4rQYa191bEp+z8INgPrbZtjrQ6daT6uI/iA=;
-        b=NqzyQDwqh/FjJdhz3W15zgxPAYXvO7wjoNyIrzGKcN8+CdtZn4tQMWICgra20J0tEs
-         gXGMUd9XH7PAJk+DZCFoKCPG7SxWVTJFtl4DtgOMWcTx3pDXePvofEm252tPyGR4S8SL
-         CDp0WW855hBytZhydP6dae1L3s3Vmo58PUNqP27xZQxy6S8DKbJzaLHD23GxuFc9kWjl
-         M71AE0zvYaDn+X4yOLzM/e4aCuEZm65wMpg/Vv5fylzSIXALEhRJP13VqlnyU1Cg5boO
-         heeCM5NM3X8f4Kvq5jaO095u6RaKkNF8RReTOq5guYhIRY1og0+QG51MFrPmc6Tfhbl7
-         U2lg==
-X-Gm-Message-State: AGi0PuYH6S/iNjRvuCSbv0bmcdisyHZ8q/HrD4Dg63lEMSkUc5vh++aL
-        3HygR/M1qn+wxXEBGk7aGpOw02Fa
-X-Google-Smtp-Source: APiQypIjqu6/cyX1KiHWTpUejBgYcrbNVCLO62aupHGo2j3FqQi+o0CCIeXfBqLKt6w2GgNiq68FoQ==
-X-Received: by 2002:a5d:4401:: with SMTP id z1mr9814486wrq.412.1585946907249;
-        Fri, 03 Apr 2020 13:48:27 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m21sm12636814wmc.6.2020.04.03.13.48.26
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=t/n5Cp5GRQO5HLWtic8iXCsKH4EuKLF89+YQk18uNi0=;
+        b=nnx6HlNNEVAM1OaNQyKFceRvYPT4vfcRIfB/DEoAftsB57MvXTCJM+FvH6ZsE7muZa
+         bPV+PBx0f7pViiLMlwGu/4k6fqzje1VhltjOzjuv3+ORTNaTR2mNOtRiTIZQk0LeYeAP
+         06HEa0/Cy+96BuRNNv27e/A73GolAW9ucPUKXz7uXmOTT9OrDNhz5vq9QmSFXsZCw8Zy
+         8ZQXDbwcL/FLomT39AowVOcDRWSzBMJAdmor0X3rGmYMh6KfIyTRpRDaG0351SyHUuYZ
+         qZNb4DRob9AfAd3niq8774kyfddulodq/puOOafeMqyyzHQnldog5i9rXtKJ2w68k5cb
+         6JUw==
+X-Gm-Message-State: AGi0PuY/bm4lf5JXZsid/a9E3RaPMkS7YRPVIwr7oT2Kryczlksz1ywR
+        nv2Rywuoy9XhF93lslXd9lw=
+X-Google-Smtp-Source: APiQypLUaWidzc/ntpZWMP8LhTHIkUou+BEwQUd+gX2GEkMXGIOwBuPxdcF8NZU20R73nwNbal3fMQ==
+X-Received: by 2002:a05:6214:7e6:: with SMTP id bp6mr10577032qvb.47.1585948501551;
+        Fri, 03 Apr 2020 14:15:01 -0700 (PDT)
+Received: from generichostname ([199.249.110.29])
+        by smtp.gmail.com with ESMTPSA id z18sm8033620qtz.77.2020.04.03.14.14.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Apr 2020 13:48:26 -0700 (PDT)
-Message-Id: <84cab34e8f26cca7eedd07e58b99bd2152d90a7d.1585946894.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.597.git.1585946894.gitgitgadget@gmail.com>
-References: <pull.597.git.1585946894.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 03 Apr 2020 20:48:14 +0000
-Subject: [PATCH 15/15] runjob: customize the loose-objects batch size
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Fri, 03 Apr 2020 14:15:00 -0700 (PDT)
+Date:   Fri, 3 Apr 2020 17:14:58 -0400
+From:   Denton Liu <liu.denton@gmail.com>
+To:     phillip.wood@dunelm.org.uk
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Alban Gruin <alban.gruin@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 17/19] merge: teach --autostash option
+Message-ID: <20200403211458.GA14409@generichostname>
+References: <cover.1577185374.git.liu.denton@gmail.com>
+ <cover.1584782450.git.liu.denton@gmail.com>
+ <9e3d4393cae8813cc4718c6ffcc28231b1344fbe.1584782450.git.liu.denton@gmail.com>
+ <cd7cb5aa-0a08-29dc-e1cc-f65a4010622f@gmail.com>
+ <20200403103126.GA3163329@generichostname>
+ <20200403105639.GA3193506@generichostname>
+ <faa275d4-ca5d-9ab9-cbcb-aebd5e53e20b@gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     peff@peff.net, jrnieder@google.com, stolee@gmail.com,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <faa275d4-ca5d-9ab9-cbcb-aebd5e53e20b@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+Hi Phillip,
 
-Allow a user to override the default number of loose objects to
-place into a new pack-file as part of the loose-objects job. This
-can be done via the job.loose-objects.batchSize config option or
-the --batch-size=<count> option in the 'git run-job' command. The
-config value is checked once per run of 'git run-job loose-objects'
-so an instance started by 'git job-runner' will use new values
-automatically without restarting the 'git job-runner' process.
+On Fri, Apr 03, 2020 at 02:09:26PM +0100, Phillip Wood wrote:
+> Hi Denton
+> 
+> On 03/04/2020 11:56, Denton Liu wrote:
+> > On Fri, Apr 03, 2020 at 06:31:26AM -0400, Denton Liu wrote:
+> > > > > diff --git a/builtin/reset.c b/builtin/reset.c
+> > > > > index 18228c312e..038c8532eb 100644
+> > > > > --- a/builtin/reset.c
+> > > > > +++ b/builtin/reset.c
+> > > > > @@ -25,6 +25,7 @@
+> > > > >    #include "cache-tree.h"
+> > > > >    #include "submodule.h"
+> > > > >    #include "submodule-config.h"
+> > > > > +#include "sequencer.h"
+> > > > >    #define REFRESH_INDEX_DELAY_WARNING_IN_MS (2 * 1000)
+> > > > > @@ -437,8 +438,12 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+> > > > >    		if (reset_type == HARD && !update_ref_status && !quiet)
+> > > > >    			print_new_head_line(lookup_commit_reference(the_repository, &oid));
+> > > > >    	}
+> > > > > -	if (!pathspec.nr)
+> > > > > +	if (!pathspec.nr) {
+> > > > > +		if (reset_type == HARD)
+> > > > > +			save_autostash(git_path_merge_autostash(the_repository));
+> > > > > +
+> > > > >    		remove_branch_state(the_repository, 0);
+> > > > 
+> > > > This removes the autostash file for all reset types but we only keep the
+> > > > stash in the case of 'reset --hard' which is confusing.
+> > > 
+> > > I was worried that this change would be controversial... The rationale
+> > > behind this change was that with `reset --hard`, we want to leave a
+> > > clean working tree behind so we save it into the stash reflog. In all
+> > > other cases, remove_branch_state() will apply the saved stash entry
+> > > which should be fine since users don't expect a clean worktree with the
+> > > other reset types.
+> > > 
+> > > I considered saving the autostash in all cases of reset but
+> > > `git merge --abort` invokes `git reset --merge` behind the scenes so
+> > > we'd have to consider that. Perhaps we can make all resets save the
+> > > stash entry and, in the case of `merge --abort`, we can add some extra
+> > > logic to subvert this so that the stash entry is applied?
+> > 
+> > Perhaps something like this?
+> > 
+> > -- >8 --
+> > commit 14d0b569cb7675f00d32d3d7fad7564fcaeca458
+> > Author: Denton Liu <liu.denton@gmail.com>
+> > Date:   Fri Apr 3 06:50:34 2020 -0400
+> > 
+> >      squash! merge: teach --autostash option
+> >      Stash is saved when any reset is run, when git merge --abort is run,
+> >      stash is applied.
+> 
+> I think this is the easiest behavior to understand, it avoids changing the
+> behavior of reset, in particular it stops 'reset --mixed/--soft' from
+> suddenly starting to touch the working tree.
 
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- Documentation/config/job.txt  |  6 ++++++
- Documentation/git-run-job.txt |  8 +++++---
- builtin/run-job.c             | 31 ++++++++++++++++++++++++++-----
- 3 files changed, 37 insertions(+), 8 deletions(-)
+Great, I'll use this approach then.
 
-diff --git a/Documentation/config/job.txt b/Documentation/config/job.txt
-index 6c22a40dd36..baa5b927e14 100644
---- a/Documentation/config/job.txt
-+++ b/Documentation/config/job.txt
-@@ -16,6 +16,12 @@ job.<job-name>.lastRun::
- 	can manually update this to a later time to delay a specific
- 	job on this repository.
- 
-+job.loose-objects.batchSize::
-+	This string value `<count>` limits the number of loose-objects
-+	collected into a single pack-file during the `loose-objects`
-+	job. Default batch size is fifty thousand. See linkgit:git-run-job[1]
-+	for more details.
-+
- job.pack-files.batchSize::
- 	This string value `<size>` will be passed to the
- 	`git multi-pack-index repack --batch-size=<size>` command as
-diff --git a/Documentation/git-run-job.txt b/Documentation/git-run-job.txt
-index c6d5674d699..73210791533 100644
---- a/Documentation/git-run-job.txt
-+++ b/Documentation/git-run-job.txt
-@@ -67,9 +67,11 @@ commands, it follows a two-step process. First, it deletes any loose
- objects that already exist in a pack-file; concurrent Git processes will
- examine the pack-file for the object data instead of the loose object.
- Second, it creates a new pack-file (starting with "loose-") containing
--a batch of loose objects. The batch size is limited to 50 thousand
--objects to prevent the job from taking too long on a repository with
--many loose objects.
-+a batch of loose objects.
-++
-+By default, the batch size is limited to 50 thousand objects to prevent
-+the job from taking too long on a repository with many loose objects.
-+This can be overridden with the `--batch-size=<count>` option.
- 
- 'pack-files'::
- 
-diff --git a/builtin/run-job.c b/builtin/run-job.c
-index 76765535e09..b7c5a74cdbb 100644
---- a/builtin/run-job.c
-+++ b/builtin/run-job.c
-@@ -13,6 +13,11 @@ static char const * const builtin_run_job_usage[] = {
- 	NULL
- };
- 
-+static char const * const builtin_run_job_loose_objects_usage[] = {
-+	N_("git run-job loose-objects [--batch-size=<count>]"),
-+	NULL
-+};
-+
- static char const * const builtin_run_job_pack_file_usage[] = {
- 	N_("git run-job pack-files [--batch-size=<size>]"),
- 	NULL
-@@ -183,7 +188,7 @@ static int write_loose_object_to_stdin(const struct object_id *oid,
- 	return ++(d->count) > d->batch_size;
- }
- 
--static int pack_loose(void)
-+static int pack_loose(int batch_size)
- {
- 	int result = 0;
- 	struct write_loose_object_data data;
-@@ -219,7 +224,7 @@ static int pack_loose(void)
- 
- 	data.in = xfdopen(pack_proc->in, "w");
- 	data.count = 0;
--	data.batch_size = 50000;
-+	data.batch_size = batch_size;
- 
- 	for_each_loose_file_in_objdir(the_repository->objects->odb->path,
- 				      write_loose_object_to_stdin,
-@@ -240,9 +245,25 @@ static int pack_loose(void)
- 	return result;
- }
- 
--static int run_loose_objects_job(void)
-+static int run_loose_objects_job(int argc, const char **argv)
- {
--	return prune_packed() || pack_loose();
-+	static int batch_size;
-+	static struct option builtin_run_job_loose_objects_options[] = {
-+		OPT_INTEGER(0, "batch-size", &batch_size,
-+			    N_("specify the maximum number of loose objects to store in a pack-file")),
-+		OPT_END(),
-+	};
-+
-+	if (repo_config_get_int(the_repository,
-+				"job.loose-objects.batchsize",
-+				&batch_size))
-+		batch_size = 50000;
-+
-+	argc = parse_options(argc, argv, NULL,
-+			     builtin_run_job_loose_objects_options,
-+			     builtin_run_job_loose_objects_usage, 0);
-+
-+	return prune_packed() || pack_loose(batch_size);
- }
- 
- static int multi_pack_index_write(void)
-@@ -427,7 +448,7 @@ int cmd_run_job(int argc, const char **argv, const char *prefix)
- 		if (!strcmp(argv[0], "fetch"))
- 			return run_fetch_job();
- 		if (!strcmp(argv[0], "loose-objects"))
--			return run_loose_objects_job();
-+			return run_loose_objects_job(argc, argv);
- 		if (!strcmp(argv[0], "pack-files"))
- 			return run_pack_files_job(argc, argv);
- 	}
--- 
-gitgitgadget
+> > diff --git a/builtin/merge.c b/builtin/merge.c
+> > index 9573d77096..31b82d614c 100644
+> > --- a/builtin/merge.c
+> > +++ b/builtin/merge.c
+> > @@ -1242,6 +1242,8 @@ static int merging_a_throwaway_tag(struct commit *commit)
+> >   	return is_throwaway_tag;
+> >   }
+> > +static GIT_PATH_FUNC(git_path_merge_autostash_saved, "MERGE_AUTOSTASH_SAVED")
+> > +
+> >   int cmd_merge(int argc, const char **argv, const char *prefix)
+> >   {
+> >   	struct object_id result_tree, stash, head_oid;
+> > @@ -1295,9 +1297,16 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+> >   		if (!file_exists(git_path_merge_head(the_repository)))
+> >   			die(_("There is no merge to abort (MERGE_HEAD missing)."));
+> > +		if (file_exists(git_path_merge_autostash(the_repository))) {
+> > +			if (rename(git_path_merge_autostash(the_repository),
+> > +						git_path_merge_autostash_saved()))
+> > +				die_errno(_("failed to rename autostash"));
+> 
+> This is a bit of a performance, can't we just remember the stash oid in a
+> variable and tweak the apply code?
+
+This makes me a little bit sad because we basically have to duplicate
+the file-handling portion of apply_save_autostash() but I agree that
+doing your way should be better.
+
+> > +		}
+> > +
+> >   		/* Invoke 'git reset --merge' */
+> >   		ret = cmd_reset(nargc, nargv, prefix);
+> > -		apply_autostash(git_path_merge_autostash(the_repository));
+> > +
+> > +		apply_autostash(git_path_merge_autostash_saved());
+> 
+> Calling cmd_reset() was already a bit dodgy by our normal rules, now we're
+> calling other functions after it though I guess given the current autostash
+> implementation it's mostly in a separate process.
+> 
+> I think this is a good direction to go in
+> BTW what message gets printed when the stash is saved?
+
+This is the message that is printed:
+
+	$ git reset --hard
+	HEAD is now at c4c4222 commit 1
+	Autostash exists; creating a new stash entry.
+	Your changes are safe in the stash.
+	You can run "git stash pop" or "git stash drop" at any time.
+
+Thanks,
+
+Denton
+
+> Best Wishes
+> 
+> Phillip
+> 
+> >   		goto done;
+> >   	}
+> > diff --git a/builtin/reset.c b/builtin/reset.c
+> > index 038c8532eb..060470c455 100644
+> > --- a/builtin/reset.c
+> > +++ b/builtin/reset.c
+> > @@ -439,9 +439,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+> >   			print_new_head_line(lookup_commit_reference(the_repository, &oid));
+> >   	}
+> >   	if (!pathspec.nr) {
+> > -		if (reset_type == HARD)
+> > -			save_autostash(git_path_merge_autostash(the_repository));
+> > -
+> > +		save_autostash(git_path_merge_autostash(the_repository));
+> >   		remove_branch_state(the_repository, 0);
+> >   	}
+> > > 
+> > > I'm not sure about what the most intuitive behaviour is. I thought that
+> > > this implementation would be the best but I'm not entirely sure. I'd
+> > > appreciate some more discussion on this.
+> > > 
+> > > Thanks,
+> > > 
+> > > Denton
+> > > 
+> > > > Best Wishes
+> > > > 
+> > > > Phillip
+> > > > 
+> > > > > +	}
+> > > > >    	return update_ref_status;
+> > > > >    }
