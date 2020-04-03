@@ -7,85 +7,88 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CAA25C43331
-	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 05:20:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D9608C43331
+	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 06:01:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 94FE720787
-	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 05:20:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A95E6206F6
+	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 06:01:50 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h/79CwsC"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dlh4bkVk"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731892AbgDCFUD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Apr 2020 01:20:03 -0400
-Received: from mail-vs1-f66.google.com ([209.85.217.66]:44651 "EHLO
-        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726024AbgDCFUD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Apr 2020 01:20:03 -0400
-Received: by mail-vs1-f66.google.com with SMTP id e138so4152876vsc.11
-        for <git@vger.kernel.org>; Thu, 02 Apr 2020 22:19:58 -0700 (PDT)
+        id S2387880AbgDCGBs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Apr 2020 02:01:48 -0400
+Received: from mail-lf1-f65.google.com ([209.85.167.65]:42663 "EHLO
+        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729349AbgDCGBs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Apr 2020 02:01:48 -0400
+Received: by mail-lf1-f65.google.com with SMTP id s13so4744662lfb.9
+        for <git@vger.kernel.org>; Thu, 02 Apr 2020 23:01:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=loSimIxhmJjJXfr1h1iyghNOolZ1OlFDyyKgk2wV4tA=;
-        b=h/79CwsCpL0n8Ommxdhn3Cbty0wrtnOY6XDiv+4lfQMOGHrUqzydqq6c++SkU8IADr
-         hafHt0QH5qtbOycTJhe6R1Y+wUrrTKhdUBEY4riAvcN8x4eTXG0FStirCYPEmCuUPAnM
-         b0LPYEA6HCr+Rze2tRWIXSMefoAQe93Uc/oLuJ7RrMHR9cevPFpi2Y1etE5RHgsRVsFW
-         zP9kEJL2HOFS4oz8qiEADxPRU5cJAxEC68QfVcHt8p7bgeskZnJvipByu1L6jf7DX7L1
-         hph/wJ7dEs9nQtHTNM/mhQTgA3fWK7JmT9yaVle1ptBX3Ipoy/XDlPr9aOpENXzoYd8L
-         UTqQ==
+         :cc;
+        bh=v2GaOMBJzGar6inPYInh2L7i0FgpEEQyjQh0M7MnXYQ=;
+        b=dlh4bkVkJ/tMwV2ZTl03I5+uaGvMaw/t1680yvpYvlFdYNI67Cyh1EdHVm3psRI5vy
+         vA96otguq5ZT9CE3wNdO3UOxsv8axCbrSExBZMrao9qHa92vUncsUa5F5bj+9qqyUEBQ
+         893dDGSskgeFDGedojaEd7jFhMn/LbYz0GrmjaRj6eBDHixzuB3Um3TOfFMMY//tDflJ
+         9KXzuj4krBRMQU3YoVDEWvMoRb/LntG0fRu9I5bvjYy1Xv03Iit8RW4A+Fwqy/nYZElY
+         sFtrlqdL2kjHZXi+eDAFiXoOEwFxZfZYVU8K7tvrBka4nasyN2jeI8Q1lfWtxtgTNYR3
+         rVIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=loSimIxhmJjJXfr1h1iyghNOolZ1OlFDyyKgk2wV4tA=;
-        b=SjWP0u7ubV9WeQvz8u9Al6z0399PJ5MTCFBYyTQx87HewTqvTJ+FEMOP2cFFtdEmbi
-         Th67PDVaUIZyjp00oldKjUvtDR8PSpLzcJhnQu1brxfbV+MMpY4bVq0D0CYX0r3xHYUf
-         29wqKUiAQ6PQ9cYdb8cKkCCaLms5M1rGmuz+1vHq2VK2iy7dMYjZh18NXAtRKytJeLJY
-         uFgrOO2Fyuff2OKWDNfi/MxG2P8p9+E2eKyLUv07xCUYVV7xB0JUA7YR688wYjT+3D/L
-         QGfZLIWKyjcrZ/D7yn4U8vJ5LdJBaw9ofLMaTzofA0IEHqqfw7iLaQSPYEf1ypuwXxP3
-         rASg==
-X-Gm-Message-State: AGi0Pua4GM7HImK6U4iSr7+vgiqO6B/PaG+O0hVD9rviqprK2OiiQodY
-        fM5NxvMBs4QYXy3P671x663O9TyCLyLnSt5zXdg=
-X-Google-Smtp-Source: APiQypJBaM5ENkrQEsjMU7PwDmApH5TxIjxIlMhND8pfT6CuS2YaQcl5X8Y+XCRV9wmpVN0KhpdO2178uXumXS8yxw8=
-X-Received: by 2002:a05:6102:116d:: with SMTP id k13mr4857650vsg.79.1585891196738;
- Thu, 02 Apr 2020 22:19:56 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=v2GaOMBJzGar6inPYInh2L7i0FgpEEQyjQh0M7MnXYQ=;
+        b=YzlkZx8PVg3hg3Djr+WEBLQaRXkCaeQfYv5HUDwwgTkTblJiG4Cfgiw4gJ9nzobkRR
+         wUYZczOPyC2iR/cxhhs7bE8NWdUU2r3rLVdXe5gc74kfPG54oQxJTjHUUdVyp/gD+QsQ
+         Gxa3dofSWS2g2qmdDFBIuSKyQ9evrxyVJrAHKk9X6XlWHWL2Q6CQKHzw6Ax3YIs6U8MK
+         kk8cOK0qqbWcTD49DD4quKd/oakC1bP8DdP6nAZUZpJVSBAP7Cbcfd7u3+ff7xG8bIUt
+         4OLtT6bMhoGqqAJz8rFeKpiXMed/CPwKA98VNcHZk9h/DkdGEXdgIM2HoNbX8GEUcG8S
+         J7Vw==
+X-Gm-Message-State: AGi0PuZksTY7Brr75OAF39Zj/GGdMo6UGtDsASW1VrsWtnCGusM+t/CX
+        C3ke4mroJb/zZR6ASPGayYWYhUKVkzhubicai01A9V0F
+X-Google-Smtp-Source: APiQypIwc0QyVc+Y9PcoXi00fLuy8HZAB+SUJ5IxXndt2RIZ3/p3Z5N5Pq5J9QOlfurGjBCg0y3uQ1ecffTe8hMgCuc=
+X-Received: by 2002:a19:240a:: with SMTP id k10mr4348939lfk.30.1585893705497;
+ Thu, 02 Apr 2020 23:01:45 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200331064456.GA15850@danh.dev> <cover.1585821581.git.congdanhqx@gmail.com>
- <9975d4c61301f865dbd6aa3e1f70c6b5cc64daf0.1585821581.git.congdanhqx@gmail.com>
-In-Reply-To: <9975d4c61301f865dbd6aa3e1f70c6b5cc64daf0.1585821581.git.congdanhqx@gmail.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Fri, 3 Apr 2020 07:21:58 +0200
-Message-ID: <CAN0heSob_O4hNj8-9eLc3Qq-Cj-SzWyOkdQh8zG0bqSFTvpwoA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/5] rebase.c: honour --no-gpg-sign
-To:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+References: <20200402225807.8603-1-shouryashukla.oo@gmail.com> <xmqqo8s91ktt.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqo8s91ktt.fsf@gitster.c.googlers.com>
+From:   Shourya Shukla <shouryashukla.oo@gmail.com>
+Date:   Fri, 3 Apr 2020 11:31:34 +0530
+Message-ID: <CAP6+3T2Kj2tfeaR+xm_B=_oJO8eWLyOjeXLm+8WSRSFSjkpUSQ@mail.gmail.com>
+Subject: Re: [PATCH 0/1] submodule--helper.c: Rename 'cb_foreach' to 'foreach_cb'
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Danh,
+I apologize. I did not notice that my patch was merged.
 
-On Thu, 2 Apr 2020 at 12:17, =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh <co=
-ngdanhqx@gmail.com> wrote:
+Regards,
+Shourya Shukla
+
+
+On Fri, Apr 3, 2020 at 5:50 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
->  -S[<keyid>]::
->  --gpg-sign[=3D<keyid>]::
-> +--no-gpg-sign::
->         GPG-sign commits. The `keyid` argument is optional and
->         defaults to the committer identity; if specified, it must be
-> -       stuck to the option without a space.
-> +       stuck to the option without a space. "--no-gpg-sign" is useful to
-> +       countermand both `commit.gpgSign` configuration variable, and
-> +       earlier "--gpg-sign".
-
-Please use `backticks`: `--no-gpg-sign` and `--gpg-sign` just like you
-do with `commit.gpgSign`. It will then end up typeset in monospace. This
-comment applies to all five patches.
-
-Thanks for working on this.
-
-Martin
+> Shourya Shukla <shouryashukla.oo@gmail.com> writes:
+>
+> > Subcommands in 'submodule--helper.c' which give a callback to other functions
+> > have structures and macros named in the format: 'subcommand_cb' and 'SUBCOMMAND_CB_INIT'
+> > respectively.
+> >
+> > The subcommand 'foreach' did not follow this convention and therefore had the naming of
+> > the form: 'struct foreach_cb' and 'CB_FOREACH_INIT'. Rename these to: 'struct foreach_cb'
+> > and 'FOREACH_CB_INIT' respectively.
+> >
+> >
+> > Shourya Shukla (1):
+> >   submodule--helper.c: Rename 'cb_foreach' to 'foreach_cb'
+> >
+> >  builtin/submodule--helper.c | 8 ++++----
+> >  1 file changed, 4 insertions(+), 4 deletions(-)
+>
+> Isn't this already in 'master'?
+>
