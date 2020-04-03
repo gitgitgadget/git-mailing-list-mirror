@@ -2,215 +2,340 @@ Return-Path: <SRS0=9X1Y=5T=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F0CAC2BA16
-	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 20:48:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 65FC2C2BA17
+	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 20:48:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 217842076E
-	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 20:48:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3085F20737
+	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 20:48:21 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sL9rXJYV"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O5eIam3c"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728141AbgDCUsS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Apr 2020 16:48:18 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:44475 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728060AbgDCUsS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Apr 2020 16:48:18 -0400
-Received: by mail-wr1-f65.google.com with SMTP id m17so10057449wrw.11
-        for <git@vger.kernel.org>; Fri, 03 Apr 2020 13:48:16 -0700 (PDT)
+        id S1728195AbgDCUsU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Apr 2020 16:48:20 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:39077 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728023AbgDCUsT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Apr 2020 16:48:19 -0400
+Received: by mail-wm1-f66.google.com with SMTP id e9so9193605wme.4
+        for <git@vger.kernel.org>; Fri, 03 Apr 2020 13:48:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=L+MmjOjlt0bx+fnxKDrxPxSS4vqBZ3EYSvBsRgS+xm8=;
-        b=sL9rXJYV3tsyzWVkLN2wS6sCOGqXdgNjdeBzoF+zbZh5ue6xu4iUb+U7C76JxHDCJc
-         jziOWgzw+vPq4F0q9ej3jA8VWdGC2slVDbw87UZA5llqI/Ffy8ltimu+2au53sgKPZWH
-         QTwm5meZSSv3csLbKH+xsv9JPBqJ42d1y12jVUzMYeJ2dTdfpI6tS7Tg9wDbtln6SlBd
-         quNgJmTYscsyr4c18BE+PPsWf5xS1lcIMs4YOrzHuX0ZKO8dI7JxkUFePMoemLqcYHHi
-         /cbQpffMeFdU6fdLwqgL0gZa2FiYVZqWQbgM82MYLonbxJpczQsl6mHx0NT1+9yPnJB6
-         VT0g==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=1JgnQCENXnxSxTBQ+dou4+ONms+UDuFcC9VU5XVFBhw=;
+        b=O5eIam3cqyYBAunijAXvjzxw4fX2LML4OzJfXUqLZZeOdCZkWXxff7pGtj0V6ARirx
+         unU7qT2MkPrqB8PfzYKN3PmSWkNBPEMfsrF+r6UKGGbwPYqYaz0Q3DQy52gGkpEbyD+a
+         31WISvi8QCV7zidTjBtz+KcdMhIt8s1oYlB1agoIdhiFIxO8MWUOR8dXQHfEb4uYAwa8
+         db6GX8IpHUuLvYTBBSBEJY6ibqsCtaHRvIbf8zG33EEphVE5Q2q93oInimNXQLhHkhq+
+         c4PkKBJ/PzrMDIq31Aiy4KCXI9USsOro0B7I4sfHky0JwQKQhwYBm6rCxBnqYKKHR0aM
+         C45g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=L+MmjOjlt0bx+fnxKDrxPxSS4vqBZ3EYSvBsRgS+xm8=;
-        b=JliXApeXA7ZBuYcX/2jHzyy7MJWgS8bkorQt5cPK6GYVfAeik2Fd4bGu/AxrA8c37X
-         DjVJUhMat1koq4tesdR9rO40vb8RDA0uI5NLkg9xBKzL4jdzJ2OLzQxXAcfHpOaZl+fD
-         WsmDx/EAGIGBiTSUzd36qwIr3icmTDuuK8WFU0/wH08xAB9kjHm64g2HpbEPcSPhCQig
-         EjpAtZjZtuUCnqWUgncKNnuio5o62xNESwMvhOFYZISBvW+jQElOM7jfV8A6B6UZ+RhJ
-         DstgeWbJG14BT6Uc/mtRpnDgl85RHm8B9O/zUYa4a1Cq6hR6DFP5/Km1XLDeP7q1eH4S
-         OdJw==
-X-Gm-Message-State: AGi0Pub/nTZHMVsg1BSGlZqeMNJu1neRxIA9M21zyEJKkF5mypkhNFpo
-        Zyt1EB2gSW3DHojxEQs+IQBXCMuq
-X-Google-Smtp-Source: APiQypK31pi+9AbXikIXT2jtEfys9tOQtmnUATynQ3P2QHo97aLUEs2TmkY7ZOwHbGIp5rgWJQGppA==
-X-Received: by 2002:adf:fd47:: with SMTP id h7mr11047532wrs.105.1585946895584;
-        Fri, 03 Apr 2020 13:48:15 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=1JgnQCENXnxSxTBQ+dou4+ONms+UDuFcC9VU5XVFBhw=;
+        b=r9ocjAxoW1FRfL/7Smt5En2Z+fXh4meo72vSamNjRd8vahNMUB72Byep4UTqqm20Xs
+         yqI1sNR9KV6VP/vUWcfrBl2j1LKXwTFUo8KBiGM8nQ+PhmMX2cRl4fbqOqTkaMWzcjcm
+         5HT6n/2RWwiy0oWsIW+kqvOi4zdlrDGxPp8rDvGkLEm6i3xvw7K6z08XLe9NsjVMoxt6
+         9Dxp5cEoN5ADxu1RO9zm0HDeUC9y2Ds6dfwknOsbIVNFeX19c+ZzBfOX89M+ttrWfg5A
+         glXnM5AuoEtF+EUU1X0QkuqbMIUFCgt5dZzCRntbvlHXZRtS2qqn7C2dUyHxrDVuDt1z
+         hvpA==
+X-Gm-Message-State: AGi0PuZBxf34YKUizFJWkS6HMg1OkSEYCRRgoXqKcTqg2Row55j9jukW
+        Au2yKB7a84QnBE4/MvSxtKgTBXRX
+X-Google-Smtp-Source: APiQypIoSbSHbwFZWuX7ep332ZsctAr5mu6JWjVpweZYjp9X5KPzbDEMMZySjehFJSUZn5RoYWOWDA==
+X-Received: by 2002:a1c:9c15:: with SMTP id f21mr10308529wme.18.1585946897161;
+        Fri, 03 Apr 2020 13:48:17 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q4sm16439272wmj.1.2020.04.03.13.48.15
+        by smtp.gmail.com with ESMTPSA id c85sm12795160wmd.48.2020.04.03.13.48.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Apr 2020 13:48:15 -0700 (PDT)
-Message-Id: <pull.597.git.1585946894.gitgitgadget@gmail.com>
+        Fri, 03 Apr 2020 13:48:16 -0700 (PDT)
+Message-Id: <cd3facd1e03923204bd2259ff0635a5bbf68d700.1585946894.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.597.git.1585946894.gitgitgadget@gmail.com>
+References: <pull.597.git.1585946894.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 03 Apr 2020 20:47:59 +0000
-Subject: [PATCH 00/15] [RFC] Maintenance jobs and job runner
+Date:   Fri, 03 Apr 2020 20:48:01 +0000
+Subject: [PATCH 02/15] run-job: implement commit-graph job
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, jrnieder@google.com, stolee@gmail.com,
+        Derrick Stolee <dstolee@microsoft.com>,
         Derrick Stolee <dstolee@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Background maintenance. I've blogged about it [1]. I've talked about it [2].
-I brought it up at the contributor summit [3]. I think it's important. It's
-a critical feature in Scalar and VFS for Git. It's the main reason we
-created the "scalar register" feature for existing repos (so the Scalar
-background maintenance would apply to a "vanilla" Git repo).
+From: Derrick Stolee <dstolee@microsoft.com>
 
-[1] https://devblogs.microsoft.com/devops/introducing-scalar/[2] 
-https://stolee.dev/docs/git-merge-2020.pdf[3] 
-https://lore.kernel.org/git/35FDF767-CE0C-4C51-88A8-12965CD2D4FF@jramsay.com.au/
+The first job to implement in the 'git run-job' command is the
+'commit-graph' job. It is based on the sequence of events in the
+'commit-graph' job in Scalar [1]. This sequence is as follows:
 
-This RFC does the "maintenance" half of "background maintenance". It creates
-two new builtins to assist users in scheduling their own background
-maintenance:
+1. git commit-graph write --reachable --split
+2. git commit-graph verify --shallow
+3. If the verify succeeds, stop.
+4. Delete the commit-graph-chain file.
+5. git commit-graph write --reachable --split
 
- * git run-job <job-name>: This builtin will run a single instance of a
-   maintenance job.
-   
-   
- * git job-runner [--repo=<path>]: This builtin will run an infinite loop
-   that executes git run-job as a subcommand.
-   
-   
+By writing an incremental commit-graph file using the "--split"
+option we minimize the disruption from this operation. The default
+behavior is to merge layers until the new "top" layer is less than
+half the size of the layer below. This provides quick writes "most"
+of the time, with the longer writes following a power law
+distribution.
 
-I believe that I could replace most maintenance steps in Scalar with the git
-run-job command and all that we would lose is some logging. (The only one
-that would remain is the one that sets recommended config settings, but that
-could be changed to a one-time operation at service start-up.) I haven't
-tested this yet, but I plan to before sending a non-RFC option.
+Most importantly, concurrent Git processes only look at the
+commit-graph-chain file for a very short amount of time, so they
+will verly likely not be holding a handle to the file when we try
+to replace it. (This only matters on Windows.)
 
-Of course, just because we think these maintenance operations work for our
-scenario does not mean that they immediately work as the "canonical"
-maintenance activities. I attempt to demonstrate the value of these jobs as
-they are implemented. My perspective is skewed towards very large
-repositories (2000+ full-time contributors), but even medium-size
-repositories (100-200 full-time contributors) can benefit from these jobs.
+If a concurrent process reads the old commit-graph-chain file, but
+our job expires some of the .graph files before they can be read,
+then those processes will see a warning message (but not fail).
+This could be avoided by a future update to use the --expire-time
+argument when writing the commit-graph.
 
-I've tried to split the series into logical commits. This includes each
-specific maintenance job being completely described in its own commit (plus
-maybe an extra one to allow a custom option).
+By using 'git commit-graph verify --shallow' we can ensure that
+the file we just wrote is valid. This is an extra safety precaution
+that is faster than our 'write' subcommand. In the rare situation
+that the newest layer of the commit-graph is corrupt, we can "fix"
+the corruption by deleting the commit-graph-chain file and rewrite
+the full commit-graph as a new one-layer commit graph. This does
+not completely prevent _that_ file from being corrupt, but it does
+recompute the commit-graph by parsing commits from the object
+database. In our use of this step in Scalar and VFS for Git, we
+have only seen this issue arise because our microsoft/git fork
+reverted 43d3561 ("commit-graph write: don't die if the existing
+graph is corrupt" 2019-03-25) for a while to keep commit-graph
+writes very fast. We dropped the revert when updating to v2.23.0.
+The verify still has potential for catching corrupt data across
+the layer boundary: if the new file has commit X with parent Y
+in an old file but the commit ID for Y in the old file had a
+bitswap, then we will notice that in the 'verify' command.
 
-Most commit messages have "RFC QUESTION(S)" for things I was unsure about.
+[1] https://github.com/microsoft/scalar/blob/master/Scalar.Common/Maintenance/CommitGraphStep.cs
 
-I'm currently testing this locally by setting job.repo in my global config
-to be a few important repos on my Linux VM then running 
-GIT_TRACE2_PERF=<path> git job-runner --daemonize to launch a background
-process that logs the subcommands to <path>.
+RFC QUESTIONS:
 
-Here I will call out things that could definitely be improved:
+1. Are links like [1] helpful?
 
- 1. The git job-runner process is not tested AT ALL. It's a bit tricky to
-    test it since it shouldn't exit when things work as expected. I expect
-    to create a --no-loop option to stop after one iteration of the job
-    loop. But I would like a bit more feedback on the concept before jumping
-    into those tests. (I do test the git run-job builtin for each job, but
-    not the customization through arguments and config.) Perhaps we could do
-    some funny business about mocking git using --exec-path to check that it
-    is calling git run-job in the correct order (and more importantly, not 
-    calling it when certain config settings are present).
-    
-    
- 2. The --daemonize option at the end is shamelessly stolen from git gc
-    --daemonize and git daemon, but has limited abilities on some platforms
-    (I've tested on Linux and macOS). I have not done my research on how far
-    this gets us to allowing users to launch this at startup or something. 
-    
-    
- 3. As I said, this is the "maintenance" "half" of "background maintenance".
-    The "background" part is harder in my opinion because it involves
-    creating platform-specific ways to consistently launch background
-    processes. For example, Unix systems should have one way to service
-    start X while Windows has another. macOS has launchd to launch processes
-    as users log in, which should be a good way forward. Scalar implements a
-    Windows Service that runs as root but impersonates the latest user to
-    log in, and it implements a macOS "service" that is running only with
-    the current user. I expect to need to create these services myself as a
-    follow-up, but I lack the expertise to do it (currently). If someone
-    else has experience creating these things and wants to take over or
-    advise that half then I would appreciate the help!
-    
-    
- 4. I noticed late in the RFC process that I'm not clearing my argv_arrays
-    carefully in the job-runner. This will need to be rectified and
-    carefully checked with valgrind before merging this code. While it leaks
-    memory very slowly, it will be important that we don't leak any memory
-    at all since this is a long-lived process. There's also some places
-    where I was careful to not include too much of libgit.a to help keep the
-    memory footprint low.
-    
-    
+2. Can anyone think of a way to test the rewrite fallback?
+   It requires corrupting the latest file between two steps of
+   this one command, so that is a tricky spot to inject a fault.
 
-Thanks, -Stolee
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ Documentation/git-run-job.txt | 21 ++++++++++--
+ builtin/run-job.c             | 60 ++++++++++++++++++++++++++++++++++-
+ commit-graph.c                |  2 +-
+ commit-graph.h                |  1 +
+ t/t7900-run-job.sh            | 32 +++++++++++++++++++
+ 5 files changed, 112 insertions(+), 4 deletions(-)
 
-Derrick Stolee (15):
-  run-job: create barebones builtin
-  run-job: implement commit-graph job
-  run-job: implement fetch job
-  run-job: implement loose-objects job
-  run-job: implement pack-files job
-  run-job: auto-size or use custom pack-files batch
-  config: add job.pack-files.batchSize option
-  job-runner: create builtin for job loop
-  job-runner: load repos from config by default
-  job-runner: use config to limit job frequency
-  job-runner: use config for loop interval
-  job-runner: add --interval=<span> option
-  job-runner: skip a job if job.<job-name>.enabled is false
-  job-runner: add --daemonize option
-  runjob: customize the loose-objects batch size
-
- .gitignore                       |   2 +
- Documentation/config.txt         |   2 +
- Documentation/config/job.txt     |  37 +++
- Documentation/git-job-runner.txt |  63 +++++
- Documentation/git-run-job.txt    | 102 +++++++
- Makefile                         |   2 +
- builtin.h                        |   2 +
- builtin/job-runner.c             | 347 +++++++++++++++++++++++
- builtin/run-job.c                | 458 +++++++++++++++++++++++++++++++
- cache.h                          |   4 +-
- command-list.txt                 |   2 +
- commit-graph.c                   |   2 +-
- commit-graph.h                   |   1 +
- daemon.h                         |   7 +
- git.c                            |   2 +
- midx.c                           |   2 +-
- midx.h                           |   1 +
- t/t7900-run-job.sh               | 137 +++++++++
- 18 files changed, 1168 insertions(+), 5 deletions(-)
- create mode 100644 Documentation/config/job.txt
- create mode 100644 Documentation/git-job-runner.txt
- create mode 100644 Documentation/git-run-job.txt
- create mode 100644 builtin/job-runner.c
- create mode 100644 builtin/run-job.c
- create mode 100644 daemon.h
- create mode 100755 t/t7900-run-job.sh
-
-
-base-commit: 9fadedd637b312089337d73c3ed8447e9f0aa775
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-597%2Fderrickstolee%2Fjobs-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-597/derrickstolee/jobs-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/597
+diff --git a/Documentation/git-run-job.txt b/Documentation/git-run-job.txt
+index 0627b3ed259..8bf2762d650 100644
+--- a/Documentation/git-run-job.txt
++++ b/Documentation/git-run-job.txt
+@@ -9,7 +9,7 @@ git-run-job - Run a maintenance job. Intended for background operation.
+ SYNOPSIS
+ --------
+ [verse]
+-'git run-job <job-name>'
++'git run-job commit-graph'
+ 
+ 
+ DESCRIPTION
+@@ -28,7 +28,24 @@ BEHAVIOR MAY BE ALTERED IN THE FUTURE.
+ JOBS
+ ----
+ 
+-TBD
++'commit-graph'::
++
++The `commit-graph` job updates the `commit-graph` files incrementally,
++then verifies that the written data is correct. If the new layer has an
++issue, then the chain file is removed and the `commit-graph` is
++rewritten from scratch.
+++
++The verification only checks the top layer of the `commit-graph` chain.
++If the incremental write merged the new commits with at least one
++existing layer, then there is potential for on-disk corruption being
++carried forward into the new file. This will be noticed and the new
++commit-graph file will be clean as Git reparses the commit data from
++the object database.
+++
++The incremental write is safe to run alongside concurrent Git processes
++since it will not expire `.graph` files that were in the previous
++`commit-graph-chain` file. They will be deleted by a later run based on
++the expiration delay.
+ 
+ 
+ GIT
+diff --git a/builtin/run-job.c b/builtin/run-job.c
+index 2c78d053aa4..dd7709952d3 100644
+--- a/builtin/run-job.c
++++ b/builtin/run-job.c
+@@ -1,12 +1,65 @@
+ #include "builtin.h"
+ #include "config.h"
++#include "commit-graph.h"
++#include "object-store.h"
+ #include "parse-options.h"
++#include "repository.h"
++#include "run-command.h"
+ 
+ static char const * const builtin_run_job_usage[] = {
+-	N_("git run-job"),
++	N_("git run-job commit-graph"),
+ 	NULL
+ };
+ 
++static int run_write_commit_graph(void)
++{
++	struct argv_array cmd = ARGV_ARRAY_INIT;
++
++	argv_array_pushl(&cmd, "commit-graph", "write",
++			 "--split", "--reachable", "--no-progress",
++			 NULL);
++
++	return run_command_v_opt(cmd.argv, RUN_GIT_CMD);
++}
++
++static int run_verify_commit_graph(void)
++{
++	struct argv_array cmd = ARGV_ARRAY_INIT;
++
++	argv_array_pushl(&cmd, "commit-graph", "verify",
++			 "--shallow", "--no-progress", NULL);
++
++	return run_command_v_opt(cmd.argv, RUN_GIT_CMD);
++}
++
++static int run_commit_graph_job(void)
++{
++	char *chain_path;
++
++	if (run_write_commit_graph()) {
++		error(_("failed to write commit-graph"));
++		return 1;
++	}
++
++	if (!run_verify_commit_graph())
++		return 0;
++
++	warning(_("commit-graph verify caught error, rewriting"));
++
++	chain_path = get_chain_filename(the_repository->objects->odb);
++	if (unlink(chain_path)) {
++		UNLEAK(chain_path);
++		die(_("failed to remove commit-graph at %s"), chain_path);
++	}
++	free(chain_path);
++
++	if (!run_write_commit_graph())
++		return 0;
++
++	error(_("failed to rewrite commit-graph"));
++	return 1;
++}
++
+ int cmd_run_job(int argc, const char **argv, const char *prefix)
+ {
+ 	static struct option builtin_run_job_options[] = {
+@@ -23,6 +76,11 @@ int cmd_run_job(int argc, const char **argv, const char *prefix)
+ 			     builtin_run_job_usage,
+ 			     PARSE_OPT_KEEP_UNKNOWN);
+ 
++	if (argc > 0) {
++		if (!strcmp(argv[0], "commit-graph"))
++			return run_commit_graph_job();
++	}
++
+ 	usage_with_options(builtin_run_job_usage,
+ 			   builtin_run_job_options);
+ }
+diff --git a/commit-graph.c b/commit-graph.c
+index f013a84e294..6867f92d04a 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -56,7 +56,7 @@ static char *get_split_graph_filename(struct object_directory *odb,
+ 		       oid_hex);
+ }
+ 
+-static char *get_chain_filename(struct object_directory *odb)
++char *get_chain_filename(struct object_directory *odb)
+ {
+ 	return xstrfmt("%s/info/commit-graphs/commit-graph-chain", odb->path);
+ }
+diff --git a/commit-graph.h b/commit-graph.h
+index e87a6f63600..8b7bd5a6cb1 100644
+--- a/commit-graph.h
++++ b/commit-graph.h
+@@ -13,6 +13,7 @@
+ struct commit;
+ 
+ char *get_commit_graph_filename(struct object_directory *odb);
++char *get_chain_filename(struct object_directory *odb);
+ int open_commit_graph(const char *graph_file, int *fd, struct stat *st);
+ 
+ /*
+diff --git a/t/t7900-run-job.sh b/t/t7900-run-job.sh
+index 1eac80b7ed3..18b9bd26b3a 100755
+--- a/t/t7900-run-job.sh
++++ b/t/t7900-run-job.sh
+@@ -5,6 +5,8 @@ test_description='git run-job
+ Testing the background jobs, in the foreground
+ '
+ 
++GIT_TEST_COMMIT_GRAPH=0
++
+ . ./test-lib.sh
+ 
+ test_expect_success 'help text' '
+@@ -12,4 +14,34 @@ test_expect_success 'help text' '
+ 	test_i18ngrep "usage: git run-job" err
+ '
+ 
++test_expect_success 'commit-graph job' '
++	git init server &&
++	(
++		cd server &&
++		chain=.git/objects/info/commit-graphs/commit-graph-chain &&
++		git checkout -b master &&
++		for i in $(test_seq 1 15)
++		do
++			test_commit $i || return 1
++		done &&
++		git run-job commit-graph 2>../err &&
++		test_must_be_empty ../err &&
++		test_line_count = 1 $chain &&
++		for i in $(test_seq 16 19)
++		do
++			test_commit $i || return 1
++		done &&
++		git run-job commit-graph 2>../err &&
++		test_must_be_empty ../err &&
++		test_line_count = 2 $chain &&
++		for i in $(test_seq 20 23)
++		do
++			test_commit $i || return 1
++		done &&
++		git run-job commit-graph 2>../err &&
++		test_must_be_empty ../err &&
++		test_line_count = 1 $chain
++	)
++'
++
+ test_done
 -- 
 gitgitgadget
+
