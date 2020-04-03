@@ -8,59 +8,59 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BD6DC2BA12
-	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 16:08:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A52A3C43331
+	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 16:08:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D37E0206E9
+	by mail.kernel.org (Postfix) with ESMTP id 541262077D
 	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 16:08:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SWrNEzuR"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aQj0fdTX"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404064AbgDCQIw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Apr 2020 12:08:52 -0400
-Received: from mail-pj1-f48.google.com ([209.85.216.48]:52682 "EHLO
-        mail-pj1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2403930AbgDCQIv (ORCPT <rfc822;git@vger.kernel.org>);
+        id S2404050AbgDCQIv (ORCPT <rfc822;git@archiver.kernel.org>);
         Fri, 3 Apr 2020 12:08:51 -0400
-Received: by mail-pj1-f48.google.com with SMTP id ng8so3174046pjb.2
-        for <git@vger.kernel.org>; Fri, 03 Apr 2020 09:08:50 -0700 (PDT)
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:33201 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2403815AbgDCQIu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Apr 2020 12:08:50 -0400
+Received: by mail-pg1-f194.google.com with SMTP id d17so3721999pgo.0
+        for <git@vger.kernel.org>; Fri, 03 Apr 2020 09:08:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=zxZn2NE+xONNExDkM9Q1+HFPkiEsUoMqOBIhwmm4F7A=;
-        b=SWrNEzuRZuxr1C4nqAzYgowCm5sNYUwNCFpnMSv0LOfy/hVbhKYRyXNa+1C2bXowN7
-         KieIcAuxI1GJx5mikuSGQ/LefVCFHgCwVDhPMQZRudgVhmzJ+UlCO/RsonZGTB048cyD
-         RiY3VzzpU/44nJy+wK5PhlEs/Iw2AZqzCHyqvc004z7W27REeH2HZ1wFedE87c6sHPNd
-         Q93w6QpIS2Qxm6SUmH4huKSkZt4A/g86jPuUb9lRWhmS/LuklW4Aw3Y1Lvm7zjQqYhk4
-         ro7xoe0tOB+xKKx78PzdxQ6J4mLtlb1TbgVebrLkiCRYB9BAB7AT2R/azHtjpKSC/zOp
-         9JiQ==
+        bh=WWDsCeSmmyY11Yg712xenThq1w1sxtAHVZL+x89oJR8=;
+        b=aQj0fdTXE6vV65nGyHVa1BwcD/bZyuRcwCsuSSbOAdWkbox6yKVEWQpKFoK74i3hXh
+         vSdHGDSyPEV3/PRH3kP2AcFnsoDFb2lBEBKi4rLeEmdhbSG4e9sPxmmtP5LEpx1tEdF9
+         Xr24rKPra1P6pspIUpI78wPqOKuClCXZsT8J7YLwkdT5T17dYNO41zOliAzG2fSphp2I
+         GaJdp06SgWa+GEUHjgwwRhxGv+l/1DLCGsyzfkGj0XmAukz11Dz9njV1RsJKxUpYxqMK
+         iSj5U1Lsn8vvkcgYkWl8C3IQY+hNGTrwSFRvkFWmxxwegZlO7lL3WvwLOkxxG2jVlQIQ
+         yv0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=zxZn2NE+xONNExDkM9Q1+HFPkiEsUoMqOBIhwmm4F7A=;
-        b=QR65eDwPvY0jX+9gT+2zTXeO1hWirxKWMgOl4egW0GYGN+cPKqFVYTiNQXBpejRDT6
-         iAMa9gkQfPudpB2DtlExbttv5Dj6HJFUfosP6GT+/be0KWlPX2lSFSN70RC2Z4VXBmcV
-         WT7ZAPZzq773D4utA+JGCOZ/hya3EdO7apNy6S1jxexKJ99PC5vtQPIbeT7cs6cIDrPi
-         zb07IopWIiDmwlYTojFXkVN5aK6nYdEeg14Hvr+xfBhoEjKVKXDzf3eHp/0vflhjfVba
-         8OY3jSWh9oTJNqip9CD3s4Gnb9pjYX+6XstVWc7K0athG83fLDsw0BIiZje2tsq7Jz1v
-         36GQ==
-X-Gm-Message-State: AGi0PuaN1BAZuU/F4DA8/T4VIWKIZnrjDZQYKrWSNin4nJgkIoywH7aJ
-        zFqmAGu5FE2XFs54oquUFaA8qK3I5Iw=
-X-Google-Smtp-Source: APiQypKB28MuOZHtSvbzC9mo0dBKaFlqpymSMcYxtH+xcuE8iOGsIN47f5SQyfHJFoSkXHncv1dnzw==
-X-Received: by 2002:a17:902:14b:: with SMTP id 69mr8593648plb.121.1585930129165;
-        Fri, 03 Apr 2020 09:08:49 -0700 (PDT)
+        bh=WWDsCeSmmyY11Yg712xenThq1w1sxtAHVZL+x89oJR8=;
+        b=YunVaNxqzv7tu80TBOldpEHvJzx/sZ2yqQh2DKcjA53PWZICSNkvkTGa03RDrGrSm0
+         PdhKMlnfUOvgmuMf9sT7YL029W2xeGidwGjrOuankaJiXMJoG/utjdbCt4ee28Xr8QEf
+         r/9S3pRVEirV62ZT6vFzuBe6ubxb+pa+QzXbZ7OIacdxhRvmPZmml9YfLZHMswmJ+1FA
+         DDI+uHdatlnqQo/YxTi+zaNTuDX5dR1+Gd7JU+NPMrFIccx3i1/TtJNjOOCw5J/0Mjyy
+         4EyWeBd64UQrK72hvAKuB68gvbr5KGgns2tpIup8y7dJuLOGNJIkwZQ9oKXL+JQfVzDk
+         h6bQ==
+X-Gm-Message-State: AGi0PuZ+dz0bVET+CSsIzgf8G0XoyLGPxtRgQo1MQMDZh/eeJRiIttUe
+        L1ZQo78YTUEOAq4WihFIhIk=
+X-Google-Smtp-Source: APiQypKvyhYHJaMuRQJfMb3e+rIWPVqiqaGNUNSareN0ZRihNie69B9/uSqkp1nC49UOOdzQVDVdMw==
+X-Received: by 2002:a63:a58:: with SMTP id z24mr4385682pgk.8.1585930125831;
+        Fri, 03 Apr 2020 09:08:45 -0700 (PDT)
 Received: from tigtog.localdomain.localdomain ([144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id 21sm5670420pgf.41.2020.04.03.09.08.48
+        by smtp.gmail.com with ESMTPSA id 21sm5670420pgf.41.2020.04.03.09.08.44
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 03 Apr 2020 09:08:48 -0700 (PDT)
+        Fri, 03 Apr 2020 09:08:45 -0700 (PDT)
 From:   Jiang Xin <worldhello.net@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
 Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: [PATCH v7 5/7] receive-pack: refactor report for proc-receive
-Date:   Fri,  3 Apr 2020 12:08:36 -0400
-Message-Id: <20200403160838.6252-6-worldhello.net@gmail.com>
+Subject: [PATCH v7 2/7] receive-pack: add new proc-receive hook
+Date:   Fri,  3 Apr 2020 12:08:33 -0400
+Message-Id: <20200403160838.6252-3-worldhello.net@gmail.com>
 X-Mailer: git-send-email 2.26.0.rc0
 In-Reply-To: <xmqqftdl3fss.fsf@gitster.c.googlers.com>
 References: <xmqqftdl3fss.fsf@gitster.c.googlers.com>
@@ -73,465 +73,1297 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 
-The "proc-receive" may update one or more references, and will send its
-result one by one in pkt-line format.  Each line of the result has four
-fields and one optional message field, as "<old-oid> <new-oid> <ref>
-<status> [<message>]".  See the following example:
+Git calls an internal `execute_commands` function to handle commands
+sent from client to `git-receive-pack`.  Regardless of what references
+the user pushes, git creates or updates the corresponding references if
+the user has write-permission.  A contributor who has no
+write-permission, cannot push to the repository directly.  So, the
+contributor has to write commits to an alternate location, and sends
+pull request by emails or by other ways.  We call this workflow as a
+distributed workflow.
 
+It would be more convenient to work in a centralized workflow like what
+Gerrit provided for some cases.  For example, a read-only user who
+cannot push to a branch directly can run the following `git push`
+command to push commits to a pseudo reference (has a prefix "refs/for/",
+not "refs/heads/") to create a code review.
+
+    git push origin \
+        HEAD:refs/for/<branch-name>/<session>
+
+The `<branch-name>` in the above example can be as simple as "master",
+or a more complicated branch name like "foo/bar".  The `<session>` in
+the above example command can be the local branch name of the client
+side, such as "my/topic".
+
+We cannot implement a centralized workflow elegantly by using
+"pre-receive" + "post-receive", because Git will call the internal
+function "execute_commands" to create references (even the special
+pseudo reference) between these two hooks.  Even though we can delete
+the temporarily created pseudo reference via the "post-receive" hook,
+having a temporary reference is not safe for concurrent pushes.
+
+So, add a filter and a new handler to support this kind of workflow.
+The filter will check the prefix of the reference name, and if the
+command has a special reference name, the filter will turn a specific
+field (`run_proc_receive`) on for the command.  Commands with this filed
+turned on will be executed by a new handler (an hook named
+"proc-receive") instead of the internal `execute_commands` function.
+We can use this "proc-receive" command to create pull requests or send
+emails for code review.
+
+Suggested by Junio, this "proc-receive" hook reads the commands,
+push-options (optional), and send result using a protocol in pkt-line
+format.  In the following example, The letter "S" stands for
+"receive-pack" and letter "H" stands for the hook.
+
+    # Version and capabilities negotiation.
+    S: PKT-LINE(version=1\0push-options atomic...)
+    S: flush-pkt
+    H: PKT-LINE(version=1\0push-options...)
+    H: flush-pkt
+
+    # Send commands from server to the hook.
+    S: PKT-LINE(old-oid new-oid ref)
+    S: ... ...
+    S: flush-pkt
+    # Only if push-options have been negotiated.
+    S: PKT-LINE(push-option)
+    S: ... ...
+    S: flush-pkt
+
+    # Receive result from the hook.
     # OK, run this command successfully.
-    PKT-LINE(old-oid new-oid ref ok)
-
+    H: PKT-LINE(old-oid new-oid ref ok)
     # NO, I reject it.
-    PKT-LINE(old-oid new-oid ref ng reason)
+    H: PKT-LINE(old-oid new-oid ref ng reason)
+    # OK, but use an alternate reference. (in latter commit)
+    H: PKT-LINE(old-oid new-oid ref ok ref:alt-ref)
+    # It will fallthrough to receive-pack to execute. (in latter commit)
+    H: PKT-LINE(old-oid new-oid ref ft)
+    H: ... ...
+    H: flush-pkt
 
-    # OK, but use an alternate reference.
-    PKT-LINE(old-oid new-oid ref ok ref:alt-ref)
+After receiving a command, the hook can create/update another alternate
+reference.  For example, a command for a reference "refs/for/master" may
+create a special reference, such as "refs/pull/123/head".  The alternate
+reference can be returned from the result in an extensible format like
+"<old-oid> <new-oid> <reference> <status> [<message>]".
 
-    # It will fallthrough to receive-pack to execute.
-    PKT-LINE(old-oid new-oid ref ft)
-
-The first three fields have the same foramt as a command.
-
-The forth field has a two-letter status code.  Available status code:
-
-* ok: The command runs successfully.  If the optional message has a
-  prefix "ref:", the hook has created/updated an alternate reference
-  instead.
-
-* ng: Fail to run the command. Error message is in the optional message
-  field.
-
-* ft: Will fallthrough to receive-pack to execute.
+The result will be stored in a command list, and "receive-pack" will use
+the result to replace the commands that have specific `run_proc_receive`
+field turned on.
 
 Suggested-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 ---
- builtin/receive-pack.c       | 21 +++++++--
- t/t5411-proc-receive-hook.sh | 90 +++++++++++++++++++++++++++++++++---
- transport-helper.c           | 64 ++++++++++++-------------
- transport.c                  | 59 +++++++++++++----------
- 4 files changed, 168 insertions(+), 66 deletions(-)
+ Makefile                     |   1 +
+ builtin/receive-pack.c       | 264 +++++++++++++++-
+ t/helper/test-proc-receive.c | 172 ++++++++++
+ t/helper/test-tool.c         |   1 +
+ t/helper/test-tool.h         |   1 +
+ t/t5411-proc-receive-hook.sh | 593 ++++++++++++++++++++++++++++++++++-
+ 6 files changed, 1018 insertions(+), 14 deletions(-)
+ create mode 100644 t/helper/test-proc-receive.c
 
+diff --git a/Makefile b/Makefile
+index ef1ff2228f..1c52c280ce 100644
+--- a/Makefile
++++ b/Makefile
+@@ -725,6 +725,7 @@ TEST_BUILTINS_OBJS += test-parse-pathspec-file.o
+ TEST_BUILTINS_OBJS += test-path-utils.o
+ TEST_BUILTINS_OBJS += test-pkt-line.o
+ TEST_BUILTINS_OBJS += test-prio-queue.o
++TEST_BUILTINS_OBJS += test-proc-receive.o
+ TEST_BUILTINS_OBJS += test-progress.o
+ TEST_BUILTINS_OBJS += test-reach.o
+ TEST_BUILTINS_OBJS += test-read-cache.o
 diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 8540829b05..47138e8fa8 100644
+index 2cc18bbffd..eb583093aa 100644
 --- a/builtin/receive-pack.c
 +++ b/builtin/receive-pack.c
-@@ -328,6 +328,7 @@ static void write_head_info(void)
+@@ -308,11 +308,14 @@ static void write_head_info(void)
+ 	packet_flush(1);
+ }
+ 
++#define RUN_PROC_RECEIVE_SCHEDULED	1
++#define RUN_PROC_RECEIVE_RETURNED	2
  struct command {
  	struct command *next;
  	const char *error_string;
-+	const char *extra_string;
  	unsigned int skip_update:1,
- 		     did_not_exist:1,
- 		     run_proc_receive:2;
-@@ -913,7 +914,12 @@ static int read_proc_receive_result(struct packet_reader *reader,
- 			else
- 				hint->error_string = "failed";
- 			code = 1;
--		} else if (strcmp("ok", status)) {
-+		} else if (!strcmp("ok", status)) {
-+			hint->extra_string = xstrdup_or_null(msg);
-+		} else if (!strcmp("ft", status)) {
-+			/* Reset "run_proc_receive" field, and continue to run in "receive-pack" */
-+			hint->run_proc_receive = 0;
-+		} else {
- 			strbuf_addf(errmsg, "proc-receive has bad status '%s' for '%s'\n",
- 				    status, reader->line);
- 			return -1;
-@@ -2183,12 +2189,17 @@ static void report(struct command *commands, const char *unpack_status)
- 	packet_buf_write(&buf, "unpack %s\n",
- 			 unpack_status ? unpack_status : "ok");
- 	for (cmd = commands; cmd; cmd = cmd->next) {
--		if (!cmd->error_string)
--			packet_buf_write(&buf, "ok %s\n",
--					 cmd->ref_name);
--		else
-+		if (!cmd->error_string) {
-+			if (!cmd->extra_string)
-+				packet_buf_write(&buf, "ok %s\n",
-+						 cmd->ref_name);
-+			else
-+				packet_buf_write(&buf, "ok %s%c%s\n",
-+						 cmd->ref_name, ' ', cmd->extra_string);
-+		} else {
- 			packet_buf_write(&buf, "ng %s %s\n",
- 					 cmd->ref_name, cmd->error_string);
-+		}
- 	}
- 	packet_buf_flush(&buf);
+-		     did_not_exist:1;
++		     did_not_exist:1,
++		     run_proc_receive:2;
+ 	int index;
+ 	struct object_id old_oid;
+ 	struct object_id new_oid;
+@@ -817,6 +820,234 @@ static int run_update_hook(struct command *cmd)
+ 	return finish_command(&proc);
+ }
  
++static struct command *find_command_by_refname(const struct command *list,
++					       const char *refname)
++{
++	for ( ; list; list = list->next)
++		if (!strcmp(list->ref_name, refname))
++			return (struct command *)list;
++	return NULL;
++}
++
++static int read_proc_receive_result(struct packet_reader *reader,
++				    struct command *commands,
++				    struct strbuf *errmsg)
++{
++	struct command *hint;
++	struct command *cmd;
++	int code = 0;
++
++	hint = NULL;
++	for (;;) {
++		struct object_id old_oid, new_oid;
++		const char *refname;
++		const char *p;
++		char *status;
++		char *msg = NULL;
++
++		if (packet_reader_read(reader) != PACKET_READ_NORMAL)
++			break;
++		if (parse_oid_hex(reader->line, &old_oid, &p) ||
++		    *p++ != ' ' ||
++		    parse_oid_hex(p, &new_oid, &p) ||
++		    *p++ != ' ') {
++			strbuf_addf(errmsg, "proc-receive expected 'old new ref status [msg]', got '%s'\n",
++				    reader->line);
++			return -1;
++		}
++
++		refname = p;
++		status = strchr(p, ' ');
++		if (!status) {
++			strbuf_addf(errmsg, "proc-receive expected 'old new ref status [msg]', got '%s'\n",
++				    reader->line);
++			return -1;
++		}
++		*status++ = '\0';
++		if (strlen(status) > 2 && *(status + 2) == ' ') {
++			msg = status + 2;
++			*msg++ = '\0';
++		}
++		if (strlen(status) != 2) {
++			strbuf_addf(errmsg, "proc-receive has bad status '%s' for '%s'\n",
++				    status, reader->line);
++			return -1;
++		}
++
++		/* first try searching at our hint, falling back to all refs */
++		if (hint)
++			hint = find_command_by_refname(hint, refname);
++		if (!hint)
++			hint = find_command_by_refname(commands, refname);
++		if (!hint) {
++			strbuf_addf(errmsg, "proc-receive reported status on unknown ref: %s\n",
++				    refname);
++			continue;
++		}
++		if (!hint->run_proc_receive) {
++			strbuf_addf(errmsg, "proc-receive reported status on ref of builtin command: %s\n",
++				    refname);
++			continue;
++		}
++		hint->run_proc_receive |= RUN_PROC_RECEIVE_RETURNED;
++		oidcpy(&hint->old_oid, &old_oid);
++		oidcpy(&hint->new_oid, &new_oid);
++		if (!strcmp(status, "ng")) {
++			if (msg)
++				hint->error_string = xstrdup(msg);
++			else
++				hint->error_string = "failed";
++			code = 1;
++		} else if (strcmp("ok", status)) {
++			strbuf_addf(errmsg, "proc-receive has bad status '%s' for '%s'\n",
++				    status, reader->line);
++			return -1;
++		}
++	}
++
++	for (cmd = commands; cmd; cmd = cmd->next)
++		if (cmd->run_proc_receive &&
++		    !(cmd->run_proc_receive & RUN_PROC_RECEIVE_RETURNED))
++		    cmd->error_string = "no report from proc-receive";
++
++	return code;
++}
++
++static int run_proc_receive_hook(struct command *commands,
++				 const struct string_list *push_options)
++{
++	struct child_process proc = CHILD_PROCESS_INIT;
++	struct async muxer;
++	struct command *cmd;
++	const char *argv[2];
++	struct packet_reader reader;
++	struct strbuf cap = STRBUF_INIT;
++	struct strbuf errmsg = STRBUF_INIT;
++	int pr_use_push_options = 0;
++	int version = 0;
++	int code;
++
++	argv[0] = find_hook("proc-receive");
++	if (!argv[0]) {
++		rp_error("cannot find hook 'proc-receive'");
++		return -1;
++	}
++	argv[1] = NULL;
++
++	proc.argv = argv;
++	proc.in = -1;
++	proc.out = -1;
++	proc.trace2_hook_name = "proc-receive";
++
++	if (use_sideband) {
++		memset(&muxer, 0, sizeof(muxer));
++		muxer.proc = copy_to_sideband;
++		muxer.in = -1;
++		code = start_async(&muxer);
++		if (code)
++			return code;
++		proc.err = muxer.in;
++	} else {
++		proc.err = 0;
++	}
++
++	code = start_command(&proc);
++	if (code) {
++		if (use_sideband)
++			finish_async(&muxer);
++		return code;
++	}
++
++	sigchain_push(SIGPIPE, SIG_IGN);
++
++	/* Version negotiaton */
++	packet_reader_init(&reader, proc.out, NULL, 0,
++			   PACKET_READ_CHOMP_NEWLINE |
++			   PACKET_READ_DIE_ON_ERR_PACKET);
++	if (use_atomic)
++		strbuf_addstr(&cap, " atomic");
++	if (use_push_options)
++		strbuf_addstr(&cap, " push-options");
++	if (cap.len) {
++		packet_write_fmt(proc.in, "version=1%c%s\n", '\0', cap.buf + 1);
++		strbuf_release(&cap);
++	} else {
++		packet_write_fmt(proc.in, "version=1\n");
++	}
++	packet_flush(proc.in);
++
++	for (;;) {
++		int linelen;
++
++		if (packet_reader_read(&reader) != PACKET_READ_NORMAL)
++			break;
++
++		if (reader.pktlen > 8 && starts_with(reader.line, "version=")) {
++			version = atoi(reader.line + 8);
++			linelen = strlen(reader.line);
++			if (linelen < reader.pktlen) {
++				const char *feature_list = reader.line + linelen + 1;
++				if (parse_feature_request(feature_list, "push-options"))
++					pr_use_push_options = 1;
++			}
++		}
++	}
++
++	if (version != 1) {
++		strbuf_addf(&errmsg, "proc-receive version '%d' is not supported\n",
++			    version);
++		code = -1;
++		goto cleanup;
++	}
++
++	/* Send commands */
++	for (cmd = commands; cmd; cmd = cmd->next) {
++		char *old_hex, *new_hex;
++
++		if (!cmd->run_proc_receive || cmd->skip_update || cmd->error_string)
++			continue;
++		old_hex = oid_to_hex(&cmd->old_oid);
++		new_hex = oid_to_hex(&cmd->new_oid);
++		packet_write_fmt(proc.in, "%s %s %s",
++				 old_hex, new_hex, cmd->ref_name);
++	}
++	packet_flush(proc.in);
++
++	/* Send push options */
++	if (pr_use_push_options) {
++		struct string_list_item *item;
++
++		for_each_string_list_item(item, push_options)
++			packet_write_fmt(proc.in, "%s", item->string);
++		packet_flush(proc.in);
++	}
++
++	/* Read result from proc-receive */
++	code = read_proc_receive_result(&reader, commands, &errmsg);
++
++cleanup:
++	close(proc.in);
++	close(proc.out);
++	if (use_sideband)
++		finish_async(&muxer);
++	if (finish_command(&proc)) {
++		strbuf_addstr(&errmsg, "proc-receive did not exit properly\n");
++		code = -1;
++	}
++	if (errmsg.len >0) {
++		char *p = errmsg.buf;
++
++		p += errmsg.len - 1;
++		if (*p == '\n')
++			*p = '\0';
++		rp_error("%s", errmsg.buf);
++		strbuf_release(&errmsg);
++	}
++	sigchain_pop(SIGPIPE);
++
++	return code;
++}
++
+ static char *refuse_unconfigured_deny_msg =
+ 	N_("By default, updating the current branch in a non-bare repository\n"
+ 	   "is denied, because it will make the index and work tree inconsistent\n"
+@@ -1392,7 +1623,7 @@ static void execute_commands_non_atomic(struct command *commands,
+ 	struct strbuf err = STRBUF_INIT;
+ 
+ 	for (cmd = commands; cmd; cmd = cmd->next) {
+-		if (!should_process_cmd(cmd))
++		if (!should_process_cmd(cmd) || cmd->run_proc_receive)
+ 			continue;
+ 
+ 		transaction = ref_transaction_begin(&err);
+@@ -1432,7 +1663,7 @@ static void execute_commands_atomic(struct command *commands,
+ 	}
+ 
+ 	for (cmd = commands; cmd; cmd = cmd->next) {
+-		if (!should_process_cmd(cmd))
++		if (!should_process_cmd(cmd) || cmd->run_proc_receive)
+ 			continue;
+ 
+ 		cmd->error_string = update(cmd, si);
+@@ -1468,6 +1699,7 @@ static void execute_commands(struct command *commands,
+ 	struct iterate_data data;
+ 	struct async muxer;
+ 	int err_fd = 0;
++	int run_proc_receive = 0;
+ 
+ 	if (unpacker_error) {
+ 		for (cmd = commands; cmd; cmd = cmd->next)
+@@ -1497,6 +1729,20 @@ static void execute_commands(struct command *commands,
+ 
+ 	reject_updates_to_hidden(commands);
+ 
++	/* Try to find commands that have special prefix in their reference names,
++	 * and mark them to run an external "proc-receive" hook later.
++	 */
++	for (cmd = commands; cmd; cmd = cmd->next) {
++		if (!should_process_cmd(cmd))
++			continue;
++
++		/* TODO: replace the fixed prefix by looking up git config variables. */
++		if (!strncmp(cmd->ref_name, "refs/for/", 9)) {
++			cmd->run_proc_receive = RUN_PROC_RECEIVE_SCHEDULED;
++			run_proc_receive = 1;
++		}
++	}
++
+ 	if (run_receive_hook(commands, "pre-receive", 0, push_options)) {
+ 		for (cmd = commands; cmd; cmd = cmd->next) {
+ 			if (!cmd->error_string)
+@@ -1523,6 +1769,18 @@ static void execute_commands(struct command *commands,
+ 	free(head_name_to_free);
+ 	head_name = head_name_to_free = resolve_refdup("HEAD", 0, NULL, NULL);
+ 
++	if (run_proc_receive) {
++		int code;
++
++		code = run_proc_receive_hook(commands, push_options);
++		if (code) {
++			for (cmd = commands; cmd; cmd = cmd->next) {
++				if (!cmd->error_string  && (cmd->run_proc_receive || use_atomic))
++					cmd->error_string = "fail to run proc-receive hook";
++			}
++		}
++	}
++
+ 	if (use_atomic)
+ 		execute_commands_atomic(commands, si);
+ 	else
+diff --git a/t/helper/test-proc-receive.c b/t/helper/test-proc-receive.c
+new file mode 100644
+index 0000000000..ed30817905
+--- /dev/null
++++ b/t/helper/test-proc-receive.c
+@@ -0,0 +1,172 @@
++#include "cache.h"
++#include "connect.h"
++#include "parse-options.h"
++#include "pkt-line.h"
++#include "string-list.h"
++#include "test-tool.h"
++
++static const char *proc_receive_usage[] = {
++	"test-tool proc-receive [<options>...]",
++	NULL
++};
++
++static int version = 1;
++static int verbose = 0;
++static int no_push_options = 0;
++static int use_atomic = 0;
++static int use_push_options = 0;
++static struct string_list returns = STRING_LIST_INIT_NODUP;
++
++struct command {
++	struct command *next;
++	const char *error_string;
++	unsigned int skip_update:1,
++		     did_not_exist:1;
++	int index;
++	struct object_id old_oid;
++	struct object_id new_oid;
++	char ref_name[FLEX_ARRAY]; /* more */
++};
++
++static void proc_receive_verison(struct packet_reader *reader) {
++	int server_version = 0;
++
++	for (;;) {
++		int linelen;
++
++		if (packet_reader_read(reader) != PACKET_READ_NORMAL)
++			break;
++
++		if (reader->pktlen > 8 && starts_with(reader->line, "version=")) {
++			server_version = atoi(reader->line+8);
++			linelen = strlen(reader->line);
++			if (linelen < reader->pktlen) {
++				const char *feature_list = reader->line + linelen + 1;
++				if (parse_feature_request(feature_list, "atomic"))
++					use_atomic= 1;
++				if (parse_feature_request(feature_list, "push-options"))
++					use_push_options = 1;
++			}
++		}
++	}
++
++	if (server_version != 1)
++		die("bad protocol version: %d", server_version);
++
++	packet_write_fmt(1, "version=%d%c%s\n",
++			 version, '\0',
++			 use_push_options && !no_push_options ? "push-options": "");
++	packet_flush(1);
++}
++
++static void proc_receive_read_commands(struct packet_reader *reader,
++				       struct command **commands)
++{
++	struct command **tail = commands;
++
++	for (;;) {
++		struct object_id old_oid, new_oid;
++		struct command *cmd;
++		const char *refname;
++		const char *p;
++
++		if (packet_reader_read(reader) != PACKET_READ_NORMAL) {
++			break;
++		}
++
++		if (parse_oid_hex(reader->line, &old_oid, &p) ||
++		    *p++ != ' ' ||
++		    parse_oid_hex(p, &new_oid, &p) ||
++		    *p++ != ' ')
++			die("protocol error: expected 'old new ref', got '%s'",
++			    reader->line);
++		refname = p;
++		FLEX_ALLOC_STR(cmd, ref_name, refname);
++		oidcpy(&cmd->old_oid, &old_oid);
++		oidcpy(&cmd->new_oid, &new_oid);
++
++		*tail = cmd;
++		tail = &cmd->next;
++	}
++}
++
++static void proc_receive_read_push_options(struct packet_reader *reader,
++					   struct string_list *options)
++{
++
++	if (no_push_options || !use_push_options)
++	       return;
++
++	while (1) {
++		if (packet_reader_read(reader) != PACKET_READ_NORMAL)
++			break;
++
++		string_list_append(options, reader->line);
++	}
++}
++
++int cmd__proc_receive(int argc, const char **argv)
++{
++	struct packet_reader reader;
++	struct command *commands;
++	struct string_list push_options = STRING_LIST_INIT_DUP;
++	struct string_list_item *item;
++	struct option options[] = {
++		OPT_BOOL(0, "no-push-options", &no_push_options,
++			 "disable push options"),
++		OPT_STRING_LIST('r', "return", &returns, "old/new/ref/status/msg",
++				"return of results"),
++		OPT__VERBOSE(&verbose, "be verbose"),
++		OPT_INTEGER('V', "version", &version,
++			    "use this protocol version number"),
++		OPT_END()
++	};
++
++	argc = parse_options(argc, argv, "test-tools", options, proc_receive_usage, 0);
++	if (argc > 0)
++		usage_msg_opt("Too many arguments.", proc_receive_usage, options);
++
++	packet_reader_init(&reader, 0, NULL, 0,
++			   PACKET_READ_CHOMP_NEWLINE |
++			   PACKET_READ_DIE_ON_ERR_PACKET);
++
++	proc_receive_verison(&reader);
++	proc_receive_read_commands(&reader, &commands);
++	proc_receive_read_push_options(&reader, &push_options);
++
++	if (verbose) {
++		struct command *cmd;
++
++		if (use_push_options || use_atomic)
++			fprintf(stderr, "proc-receive:%s%s\n",
++				use_atomic? " atomic": "",
++				use_push_options ? " push_options": "");
++
++		for (cmd = commands; cmd; cmd = cmd->next) {
++			char *old_hex, *new_hex;
++
++			old_hex = oid_to_hex(&cmd->old_oid);
++			new_hex = oid_to_hex(&cmd->new_oid);
++			fprintf(stderr, "proc-receive< %s %s %s\n",
++				old_hex, new_hex, cmd->ref_name);
++		}
++
++		if (push_options.nr > 0) {
++			for_each_string_list_item(item, &push_options)
++				fprintf(stderr, "proc-receive< %s\n", item->string);
++		}
++
++		if (returns.nr) {
++			for_each_string_list_item(item, &returns)
++				fprintf(stderr, "proc-receive> %s\n", item->string);
++		}
++	}
++
++	if (returns.nr) {
++		for_each_string_list_item(item, &returns)
++			packet_write_fmt(1, "%s\n", item->string);
++	}
++	packet_flush(1);
++
++	return 0;
++}
+diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
+index 31eedcd241..f865433a61 100644
+--- a/t/helper/test-tool.c
++++ b/t/helper/test-tool.c
+@@ -44,6 +44,7 @@ static struct test_cmd cmds[] = {
+ 	{ "path-utils", cmd__path_utils },
+ 	{ "pkt-line", cmd__pkt_line },
+ 	{ "prio-queue", cmd__prio_queue },
++	{ "proc-receive", cmd__proc_receive},
+ 	{ "progress", cmd__progress },
+ 	{ "reach", cmd__reach },
+ 	{ "read-cache", cmd__read_cache },
+diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
+index 4eb5e6609e..059008cf22 100644
+--- a/t/helper/test-tool.h
++++ b/t/helper/test-tool.h
+@@ -34,6 +34,7 @@ int cmd__parse_pathspec_file(int argc, const char** argv);
+ int cmd__path_utils(int argc, const char **argv);
+ int cmd__pkt_line(int argc, const char **argv);
+ int cmd__prio_queue(int argc, const char **argv);
++int cmd__proc_receive(int argc, const char **argv);
+ int cmd__progress(int argc, const char **argv);
+ int cmd__reach(int argc, const char **argv);
+ int cmd__read_cache(int argc, const char **argv);
 diff --git a/t/t5411-proc-receive-hook.sh b/t/t5411-proc-receive-hook.sh
-index cc5f1adda4..07a3742068 100755
+index 1784bcb584..a62dadb412 100755
 --- a/t/t5411-proc-receive-hook.sh
 +++ b/t/t5411-proc-receive-hook.sh
-@@ -743,8 +743,8 @@ test_expect_success "setup proc-receive hook" '
+@@ -43,8 +43,11 @@ create_commits_in () {
+ # Format the output of git-push, git-show-ref and other commands to make a
+ # user-friendly and stable text.  We can easily prepare the expect text
+ # without having to worry about future changes of the commit ID and spaces
+-# of the output.  We also replce single quotes with double quotes, because
+-# it is boring to prepare unquoted single quotes in expect txt.
++# of the output.  Single quotes are replaced with double quotes, because
++# it is boring to prepare unquoted single quotes in expect txt.  We also
++# remove some locale error messages, which break test if we turn on
++# `GIT_TEST_GETTEXT_POISON=true` in order to test unintentional translations
++# on plumbing commands.
+ make_user_friendly_and_stable_output () {
+ 	sed \
+ 		-e "s/  *\$//" \
+@@ -54,13 +57,16 @@ make_user_friendly_and_stable_output () {
+ 		-e "s/$B/<COMMIT-B>/g" \
+ 		-e "s/$TAG/<TAG-v123>/g" \
+ 		-e "s/$ZERO_OID/<ZERO-OID>/g" \
+-		-e "s/[0-9a-f]\{7,\}/<OID>/g"
++		-e "s/[0-9a-f]\{7,\}/<OID>/g" \
++		-e "s#To ../upstream.git#To <URL/of/upstream.git>#" \
++		-e "/^error: / d"
+ }
  
- 	test-tool proc-receive -v \
- 		-r "$ZERO_OID $A refs/review/a/b/c/topic ok" \
--		-r "$ZERO_OID $A refs/for/next/topic ok" \
--		-r "$ZERO_OID $A refs/for/master/topic ok"
-+		-r "$ZERO_OID $A refs/for/next/topic ok ref:refs/pull/123/head" \
-+		-r "$ZERO_OID $A refs/for/master/topic ok ref:refs/pull/124/head"
+ # Refs of upstream : master(B)  next(A)
+ # Refs of workbench: master(A)           tags/v123
+ test_expect_success "setup" '
+-	git init --bare upstream &&
++	upstream=upstream.git &&
++	git init --bare "$upstream" &&
+ 	git init workbench &&
+ 	create_commits_in workbench A B &&
+ 	(
+@@ -68,7 +74,7 @@ test_expect_success "setup" '
+ 		# Try to make a stable fixed width for abbreviated commit ID,
+ 		# this fixed-width oid will be replaced with "<OID>".
+ 		git config core.abbrev 7 &&
+-		git remote add origin ../upstream &&
++		git remote add origin ../$upstream &&
+ 		git update-ref refs/heads/master $A &&
+ 		git tag -m "v123" v123 $A &&
+ 		git push origin \
+@@ -78,7 +84,7 @@ test_expect_success "setup" '
+ 	TAG=$(git -C workbench rev-parse v123) &&
+ 
+ 	# setup pre-receive hook
+-	cat >upstream/hooks/pre-receive <<-\EOF &&
++	cat >"$upstream/hooks/pre-receive" <<-\EOF &&
+ 	#!/bin/sh
+ 
+ 	echo >&2 "# pre-receive hook"
+@@ -90,7 +96,7 @@ test_expect_success "setup" '
  	EOF
- 	chmod a+x "$upstream/hooks/proc-receive"
+ 
+ 	# setup post-receive hook
+-	cat >upstream/hooks/post-receive <<-\EOF &&
++	cat >"$upstream/hooks/post-receive" <<-\EOF &&
+ 	#!/bin/sh
+ 
+ 	echo >&2 "# post-receive hook"
+@@ -102,8 +108,8 @@ test_expect_success "setup" '
+ 	EOF
+ 
+ 	chmod a+x \
+-		upstream/hooks/pre-receive \
+-		upstream/hooks/post-receive
++		"$upstream/hooks/pre-receive" \
++		"$upstream/hooks/post-receive"
  '
-@@ -769,16 +769,16 @@ test_expect_success "report update of all special refs" '
- 	remote: proc-receive< <ZERO-OID> <COMMIT-A> refs/review/a/b/c/topic
- 	remote: proc-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
- 	remote: proc-receive> <ZERO-OID> <COMMIT-A> refs/review/a/b/c/topic ok
--	remote: proc-receive> <ZERO-OID> <COMMIT-A> refs/for/next/topic ok
--	remote: proc-receive> <ZERO-OID> <COMMIT-A> refs/for/master/topic ok
-+	remote: proc-receive> <ZERO-OID> <COMMIT-A> refs/for/next/topic ok ref:refs/pull/123/head
-+	remote: proc-receive> <ZERO-OID> <COMMIT-A> refs/for/master/topic ok ref:refs/pull/124/head
- 	remote: # post-receive hook
- 	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/next/topic
- 	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/review/a/b/c/topic
- 	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
- 	To <URL/of/upstream.git>
--	 * [new reference] HEAD -> refs/for/next/topic
-+	 * [new reference] HEAD -> refs/pull/123/head
- 	 * [new reference] HEAD -> refs/review/a/b/c/topic
--	 * [new reference] HEAD -> refs/for/master/topic
-+	 * [new reference] HEAD -> refs/pull/124/head
+ 
+ # Refs of upstream : master(B)  next(A)
+@@ -131,7 +137,7 @@ test_expect_success "normal git-push command" '
+ 	remote: post-receive< <ZERO-OID> <TAG-v123> refs/tags/v123
+ 	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/review/master/topic
+ 	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/heads/a/b/c
+-	To ../upstream
++	To <URL/of/upstream.git>
+ 	 + <OID>...<OID> HEAD -> master (forced update)
+ 	 - [deleted] next
+ 	 * [new tag] v123 -> v123
+@@ -139,7 +145,7 @@ test_expect_success "normal git-push command" '
+ 	 * [new branch] HEAD -> a/b/c
  	EOF
  	test_cmp expect actual &&
- 	git -C "$upstream" show-ref >out &&
-@@ -807,6 +807,7 @@ test_expect_success "setup proc-receive hook" '
- # git push         :                       bar(A)  baz(A)  refs/for/next/topic(A)  foo(A)  refs/for/master/topic(A)
- test_expect_success "report mixed refs update" '
- 	git -C workbench push origin \
-+		$B:refs/heads/master \
- 		HEAD:refs/heads/bar \
- 		HEAD:refs/heads/baz \
- 		HEAD:refs/for/next/topic \
-@@ -816,6 +817,7 @@ test_expect_success "report mixed refs update" '
+-	git -C upstream show-ref >out &&
++	git -C "$upstream" show-ref >out &&
  	make_user_friendly_and_stable_output <out >actual &&
  	cat >expect <<-EOF &&
- 	remote: # pre-receive hook
-+	remote: pre-receive< <COMMIT-A> <COMMIT-B> refs/heads/master
- 	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/heads/bar
- 	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/heads/baz
- 	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/for/next/topic
-@@ -827,12 +829,14 @@ test_expect_success "report mixed refs update" '
- 	remote: proc-receive> <ZERO-OID> <COMMIT-A> refs/for/next/topic ok
- 	remote: proc-receive> <ZERO-OID> <COMMIT-A> refs/for/master/topic ok
- 	remote: # post-receive hook
-+	remote: post-receive< <COMMIT-A> <COMMIT-B> refs/heads/master
- 	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/heads/bar
- 	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/heads/baz
- 	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/next/topic
- 	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/heads/foo
- 	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
- 	To <URL/of/upstream.git>
-+	 <OID>..<OID> <COMMIT-B> -> master
- 	 * [new branch] HEAD -> bar
- 	 * [new branch] HEAD -> baz
- 	 * [new reference] HEAD -> refs/for/next/topic
-@@ -846,6 +850,80 @@ test_expect_success "report mixed refs update" '
- 	<COMMIT-A> refs/heads/bar
- 	<COMMIT-A> refs/heads/baz
- 	<COMMIT-A> refs/heads/foo
-+	<COMMIT-B> refs/heads/master
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success "config receive.procReceiveRefs for all ref/" '
-+	git -C "$upstream" config --add receive.procReceiveRefs refs/
-+'
-+
-+test_expect_success "setup proc-receive hook" '
-+	cat >"$upstream/hooks/proc-receive" <<-EOF &&
-+	#!/bin/sh
-+
-+	printf >&2 "# proc-receive hook\n"
-+
-+	test-tool proc-receive -v \
-+		-r "$B $A refs/heads/master ft" \
-+		-r "$A $ZERO_OID refs/heads/foo ft" \
-+		-r "$A $B refs/heads/bar ft" \
-+		-r "$A $B refs/for/master/topic ok ref:refs/pull/123/head" \
-+		-r "$B $A refs/for/next/topic ok ref:refs/pull/124/head"
-+	EOF
-+	chmod a+x "$upstream/hooks/proc-receive"
-+'
-+
-+# Refs of upstream : master(B)             foo(A)  bar(A))  baz(A)
+ 	<COMMIT-A> refs/heads/a/b/c
+@@ -150,4 +156,569 @@ test_expect_success "normal git-push command" '
+ 	test_cmp expect actual
+ '
+ 
++# Refs of upstream : master(A)  tags/v123  refs/review/master/topic(A)  a/b/c(A)
 +# Refs of workbench: master(A)  tags/v123
-+# git push -f      :                       (NULL)  (B)              refs/for/master/topic(A)  refs/for/next/topic(A)
-+test_expect_success "report test: fallthrough" '
-+	git -C workbench push -f origin \
-+		HEAD:refs/heads/master \
-+		:refs/heads/foo \
-+		$B:refs/heads/bar \
++test_expect_success "cleanup" '
++	(
++		cd "$upstream" &&
++		git update-ref -d refs/review/master/topic &&
++		git update-ref -d refs/tags/v123 &&
++		git update-ref -d refs/heads/a/b/c
++	)
++'
++
++# Refs of upstream : master(A)
++# Refs of workbench: master(A)  tags/v123
++# git push         :                       next(A)  refs/for/master/topic(A)
++test_expect_success "no proc-receive hook, fail to push special ref" '
++	test_must_fail git -C workbench push origin \
++		HEAD:next \
 +		HEAD:refs/for/master/topic \
-+		HEAD:refs/for/next/topic \
 +		>out 2>&1 &&
 +	make_user_friendly_and_stable_output <out >actual &&
 +	cat >expect <<-EOF &&
 +	remote: # pre-receive hook
-+	remote: pre-receive< <COMMIT-A> <COMMIT-B> refs/heads/bar
-+	remote: pre-receive< <COMMIT-A> <ZERO-OID> refs/heads/foo
-+	remote: pre-receive< <COMMIT-B> <COMMIT-A> refs/heads/master
++	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/heads/next
 +	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
-+	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/for/next/topic
-+	remote: # proc-receive hook
-+	remote: proc-receive< <COMMIT-A> <COMMIT-B> refs/heads/bar
-+	remote: proc-receive< <COMMIT-A> <ZERO-OID> refs/heads/foo
-+	remote: proc-receive< <COMMIT-B> <COMMIT-A> refs/heads/master
-+	remote: proc-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
-+	remote: proc-receive< <ZERO-OID> <COMMIT-A> refs/for/next/topic
-+	remote: proc-receive> <COMMIT-B> <COMMIT-A> refs/heads/master ft
-+	remote: proc-receive> <COMMIT-A> <ZERO-OID> refs/heads/foo ft
-+	remote: proc-receive> <COMMIT-A> <COMMIT-B> refs/heads/bar ft
-+	remote: proc-receive> <COMMIT-A> <COMMIT-B> refs/for/master/topic ok ref:refs/pull/123/head
-+	remote: proc-receive> <COMMIT-B> <COMMIT-A> refs/for/next/topic ok ref:refs/pull/124/head
++	remote: error: cannot find hook "proc-receive"
 +	remote: # post-receive hook
-+	remote: post-receive< <COMMIT-A> <COMMIT-B> refs/heads/bar
-+	remote: post-receive< <COMMIT-A> <ZERO-OID> refs/heads/foo
-+	remote: post-receive< <COMMIT-B> <COMMIT-A> refs/heads/master
-+	remote: post-receive< <COMMIT-A> <COMMIT-B> refs/for/master/topic
-+	remote: post-receive< <COMMIT-B> <COMMIT-A> refs/for/next/topic
++	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/heads/next
 +	To <URL/of/upstream.git>
-+	 <OID>..<OID> <COMMIT-B> -> bar
-+	 - [deleted] foo
-+	 + <OID>...<OID> HEAD -> master (forced update)
-+	 * [new reference] HEAD -> refs/pull/123/head
-+	 * [new reference] HEAD -> refs/pull/124/head
++	 * [new branch] HEAD -> next
++	 ! [remote rejected] HEAD -> refs/for/master/topic (fail to run proc-receive hook)
 +	EOF
 +	test_cmp expect actual &&
 +	git -C "$upstream" show-ref >out &&
 +	make_user_friendly_and_stable_output <out >actual &&
 +	cat >expect <<-EOF &&
-+	<COMMIT-B> refs/heads/bar
-+	<COMMIT-A> refs/heads/baz
- 	<COMMIT-A> refs/heads/master
- 	EOF
- 	test_cmp expect actual
-diff --git a/transport-helper.c b/transport-helper.c
-index 20a7185ec4..cec3495d59 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -747,37 +747,39 @@ static int push_update_ref_status(struct strbuf *buf,
- 			msg = xstrdup(msg);
- 		strbuf_release(&msg_buf);
- 
--		if (!strcmp(msg, "no match")) {
--			status = REF_STATUS_NONE;
--			FREE_AND_NULL(msg);
--		}
--		else if (!strcmp(msg, "up to date")) {
--			status = REF_STATUS_UPTODATE;
--			FREE_AND_NULL(msg);
--		}
--		else if (!strcmp(msg, "non-fast forward")) {
--			status = REF_STATUS_REJECT_NONFASTFORWARD;
--			FREE_AND_NULL(msg);
--		}
--		else if (!strcmp(msg, "already exists")) {
--			status = REF_STATUS_REJECT_ALREADY_EXISTS;
--			FREE_AND_NULL(msg);
--		}
--		else if (!strcmp(msg, "fetch first")) {
--			status = REF_STATUS_REJECT_FETCH_FIRST;
--			FREE_AND_NULL(msg);
--		}
--		else if (!strcmp(msg, "needs force")) {
--			status = REF_STATUS_REJECT_NEEDS_FORCE;
--			FREE_AND_NULL(msg);
--		}
--		else if (!strcmp(msg, "stale info")) {
--			status = REF_STATUS_REJECT_STALE;
--			FREE_AND_NULL(msg);
--		}
--		else if (!strcmp(msg, "forced update")) {
--			forced = 1;
--			FREE_AND_NULL(msg);
-+		if (status != REF_STATUS_OK) {
-+			if (!strcmp(msg, "no match")) {
-+				status = REF_STATUS_NONE;
-+				FREE_AND_NULL(msg);
-+			}
-+			else if (!strcmp(msg, "up to date")) {
-+				status = REF_STATUS_UPTODATE;
-+				FREE_AND_NULL(msg);
-+			}
-+			else if (!strcmp(msg, "non-fast forward")) {
-+				status = REF_STATUS_REJECT_NONFASTFORWARD;
-+				FREE_AND_NULL(msg);
-+			}
-+			else if (!strcmp(msg, "already exists")) {
-+				status = REF_STATUS_REJECT_ALREADY_EXISTS;
-+				FREE_AND_NULL(msg);
-+			}
-+			else if (!strcmp(msg, "fetch first")) {
-+				status = REF_STATUS_REJECT_FETCH_FIRST;
-+				FREE_AND_NULL(msg);
-+			}
-+			else if (!strcmp(msg, "needs force")) {
-+				status = REF_STATUS_REJECT_NEEDS_FORCE;
-+				FREE_AND_NULL(msg);
-+			}
-+			else if (!strcmp(msg, "stale info")) {
-+				status = REF_STATUS_REJECT_STALE;
-+				FREE_AND_NULL(msg);
-+			}
-+			else if (!strcmp(msg, "forced update")) {
-+				forced = 1;
-+				FREE_AND_NULL(msg);
-+			}
- 		}
- 	}
- 
-diff --git a/transport.c b/transport.c
-index 272c0f4046..28731fa014 100644
---- a/transport.c
-+++ b/transport.c
-@@ -459,15 +459,18 @@ void transport_update_tracking_ref(struct remote *remote, struct ref *ref, int v
- 	}
- }
- 
--static void print_ref_status(char flag, const char *summary,
-+static void print_ref_status(char flag, const char *summary, char *target_refname,
- 			     struct ref *to, struct ref *from, const char *msg,
- 			     int porcelain, int summary_width)
- {
-+	if (!target_refname)
-+		target_refname = to->name;
++	<COMMIT-A> refs/heads/master
++	<COMMIT-A> refs/heads/next
++	EOF
++	test_cmp expect actual
++'
 +
- 	if (porcelain) {
- 		if (from)
--			fprintf(stdout, "%c\t%s:%s\t", flag, from->name, to->name);
-+			fprintf(stdout, "%c\t%s:%s\t", flag, from->name, target_refname);
- 		else
--			fprintf(stdout, "%c\t:%s\t", flag, to->name);
-+			fprintf(stdout, "%c\t:%s\t", flag, target_refname);
- 		if (msg)
- 			fprintf(stdout, "%s (%s)\n", summary, msg);
- 		else
-@@ -481,9 +484,9 @@ static void print_ref_status(char flag, const char *summary,
- 		fprintf(stderr, " %s%c %-*s%s ", red, flag, summary_width,
- 			summary, reset);
- 		if (from)
--			fprintf(stderr, "%s -> %s", prettify_refname(from->name), prettify_refname(to->name));
-+			fprintf(stderr, "%s -> %s", prettify_refname(from->name), prettify_refname(target_refname));
- 		else
--			fputs(prettify_refname(to->name), stderr);
-+			fputs(prettify_refname(target_refname), stderr);
- 		if (msg) {
- 			fputs(" (", stderr);
- 			fputs(msg, stderr);
-@@ -495,18 +498,26 @@ static void print_ref_status(char flag, const char *summary,
- 
- static void print_ok_ref_status(struct ref *ref, int porcelain, int summary_width)
- {
-+	char *refname;
++# Refs of upstream : master(A)             next(A)
++# Refs of workbench: master(A)  tags/v123
++test_expect_success "cleanup" '
++	git -C "$upstream" update-ref -d refs/heads/next
++'
 +
-+	if (ref->remote_status && !strncmp(ref->remote_status, "ref:", 4))
-+		refname = ref->remote_status + 4;
-+	else
-+		refname = ref->name;
++# Refs of upstream : master(A)
++# Refs of workbench: master(A)  tags/v123
++# git push --atomic:                       next(A)  refs/for/master/topic(A)
++test_expect_success "no proc-receive hook, fail all for atomic push" '
++	test_must_fail git -C workbench push --atomic origin \
++		HEAD:next \
++		HEAD:refs/for/master/topic >out 2>&1 &&
++	make_user_friendly_and_stable_output <out >actual &&
++	cat >expect <<-EOF &&
++	remote: # pre-receive hook
++	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/heads/next
++	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
++	remote: error: cannot find hook "proc-receive"
++	To <URL/of/upstream.git>
++	 ! [remote rejected] HEAD -> next (fail to run proc-receive hook)
++	 ! [remote rejected] HEAD -> refs/for/master/topic (fail to run proc-receive hook)
++	EOF
++	test_cmp expect actual &&
++	git -C "$upstream" show-ref >out &&
++	make_user_friendly_and_stable_output <out >actual &&
++	cat >expect <<-EOF &&
++	<COMMIT-A> refs/heads/master
++	EOF
++	test_cmp expect actual
++'
 +
- 	if (ref->deletion)
--		print_ref_status('-', "[deleted]", ref, NULL, NULL,
-+		print_ref_status('-', "[deleted]", refname, ref, NULL, NULL,
- 				 porcelain, summary_width);
--	else if (is_null_oid(&ref->old_oid))
-+	else if (is_null_oid(&ref->old_oid)) {
++test_expect_success "setup proc-receive hook (bad version)" '
++	cat >"$upstream/hooks/proc-receive" <<-EOF &&
++	#!/bin/sh
 +
- 		print_ref_status('*',
--				 (starts_with(ref->name, "refs/tags/")
-+				 (starts_with(refname, "refs/tags/")
- 				  ? "[new tag]"
--				  : (starts_with(ref->name, "refs/heads/")
-+				  : (starts_with(refname, "refs/heads/")
- 				     ? "[new branch]"
- 				     : "[new reference]")),
--				 ref, ref->peer_ref, NULL, porcelain, summary_width);
--	else {
-+				 refname, ref, ref->peer_ref, NULL, porcelain, summary_width);
-+	} else {
- 		struct strbuf quickref = STRBUF_INIT;
- 		char type;
- 		const char *msg;
-@@ -525,7 +536,7 @@ static void print_ok_ref_status(struct ref *ref, int porcelain, int summary_widt
- 		strbuf_add_unique_abbrev(&quickref, &ref->new_oid,
- 					 DEFAULT_ABBREV);
- 
--		print_ref_status(type, quickref.buf, ref, ref->peer_ref, msg,
-+		print_ref_status(type, quickref.buf, refname, ref, ref->peer_ref, msg,
- 				 porcelain, summary_width);
- 		strbuf_release(&quickref);
- 	}
-@@ -542,56 +553,56 @@ static int print_one_push_status(struct ref *ref, const char *dest, int count,
- 
- 	switch(ref->status) {
- 	case REF_STATUS_NONE:
--		print_ref_status('X', "[no match]", ref, NULL, NULL,
-+		print_ref_status('X', "[no match]", NULL, ref, NULL, NULL,
- 				 porcelain, summary_width);
- 		break;
- 	case REF_STATUS_REJECT_NODELETE:
--		print_ref_status('!', "[rejected]", ref, NULL,
-+		print_ref_status('!', "[rejected]", NULL, ref, NULL,
- 				 "remote does not support deleting refs",
- 				 porcelain, summary_width);
- 		break;
- 	case REF_STATUS_UPTODATE:
--		print_ref_status('=', "[up to date]", ref,
-+		print_ref_status('=', "[up to date]", NULL, ref,
- 				 ref->peer_ref, NULL, porcelain, summary_width);
- 		break;
- 	case REF_STATUS_REJECT_NONFASTFORWARD:
--		print_ref_status('!', "[rejected]", ref, ref->peer_ref,
-+		print_ref_status('!', "[rejected]", NULL, ref, ref->peer_ref,
- 				 "non-fast-forward", porcelain, summary_width);
- 		break;
- 	case REF_STATUS_REJECT_ALREADY_EXISTS:
--		print_ref_status('!', "[rejected]", ref, ref->peer_ref,
-+		print_ref_status('!', "[rejected]", NULL, ref, ref->peer_ref,
- 				 "already exists", porcelain, summary_width);
- 		break;
- 	case REF_STATUS_REJECT_FETCH_FIRST:
--		print_ref_status('!', "[rejected]", ref, ref->peer_ref,
-+		print_ref_status('!', "[rejected]", NULL, ref, ref->peer_ref,
- 				 "fetch first", porcelain, summary_width);
- 		break;
- 	case REF_STATUS_REJECT_NEEDS_FORCE:
--		print_ref_status('!', "[rejected]", ref, ref->peer_ref,
-+		print_ref_status('!', "[rejected]", NULL, ref, ref->peer_ref,
- 				 "needs force", porcelain, summary_width);
- 		break;
- 	case REF_STATUS_REJECT_STALE:
--		print_ref_status('!', "[rejected]", ref, ref->peer_ref,
-+		print_ref_status('!', "[rejected]", NULL, ref, ref->peer_ref,
- 				 "stale info", porcelain, summary_width);
- 		break;
- 	case REF_STATUS_REJECT_SHALLOW:
--		print_ref_status('!', "[rejected]", ref, ref->peer_ref,
-+		print_ref_status('!', "[rejected]", NULL, ref, ref->peer_ref,
- 				 "new shallow roots not allowed",
- 				 porcelain, summary_width);
- 		break;
- 	case REF_STATUS_REMOTE_REJECT:
--		print_ref_status('!', "[remote rejected]", ref,
-+		print_ref_status('!', "[remote rejected]", NULL, ref,
- 				 ref->deletion ? NULL : ref->peer_ref,
- 				 ref->remote_status, porcelain, summary_width);
- 		break;
- 	case REF_STATUS_EXPECTING_REPORT:
--		print_ref_status('!', "[remote failure]", ref,
-+		print_ref_status('!', "[remote failure]", NULL, ref,
- 				 ref->deletion ? NULL : ref->peer_ref,
- 				 "remote failed to report status",
- 				 porcelain, summary_width);
- 		break;
- 	case REF_STATUS_ATOMIC_PUSH_FAILED:
--		print_ref_status('!', "[rejected]", ref, ref->peer_ref,
-+		print_ref_status('!', "[rejected]", NULL, ref, ref->peer_ref,
- 				 "atomic push failed", porcelain, summary_width);
- 		break;
- 	case REF_STATUS_OK:
++	printf >&2 "# proc-receive hook\n"
++
++	test-tool proc-receive -v --version 2
++	EOF
++	chmod a+x "$upstream/hooks/proc-receive"
++'
++
++# Refs of upstream : master(A)
++# Refs of workbench: master(A)  tags/v123
++# git push         :                       refs/for/master/topic(A)
++test_expect_success "proc-receive bad protocol: unknown version" '
++	test_must_fail git -C workbench push origin \
++		HEAD:refs/for/master/topic \
++		>out 2>&1 &&
++	make_user_friendly_and_stable_output <out >actual &&
++	cat >expect <<-EOF &&
++	remote: # pre-receive hook
++	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
++	remote: # proc-receive hook
++	remote: fatal: the remote end hung up unexpectedly
++	remote: error: proc-receive version "2" is not supported
++	remote: proc-receive did not exit properly
++	To <URL/of/upstream.git>
++	 ! [remote rejected] HEAD -> refs/for/master/topic (fail to run proc-receive hook)
++	EOF
++	test_i18ncmp expect actual &&
++	git -C "$upstream" show-ref >out &&
++	make_user_friendly_and_stable_output <out >actual &&
++	cat >expect <<-EOF &&
++	<COMMIT-A> refs/heads/master
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success "setup proc-receive hook (no report)" '
++	cat >"$upstream/hooks/proc-receive" <<-EOF
++	#!/bin/sh
++
++	printf >&2 "# proc-receive hook\n"
++
++	test-tool proc-receive -v
++	EOF
++'
++
++# Refs of upstream : master(A)
++# Refs of workbench: master(A)  tags/v123
++# git push         :                       next(A)  refs/for/master/topic(A)
++test_expect_success "proc-receive bad protocol: no report" '
++	test_must_fail git -C workbench push origin \
++		HEAD:refs/heads/next \
++		HEAD:refs/for/master/topic >out 2>&1 &&
++	make_user_friendly_and_stable_output <out >actual &&
++	cat >expect <<-EOF &&
++	remote: # pre-receive hook
++	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/heads/next
++	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
++	remote: # proc-receive hook
++	remote: proc-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
++	remote: # post-receive hook
++	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/heads/next
++	To <URL/of/upstream.git>
++	 * [new branch] HEAD -> next
++	 ! [remote rejected] HEAD -> refs/for/master/topic (no report from proc-receive)
++	EOF
++	test_cmp expect actual &&
++	git -C "$upstream" show-ref >out &&
++	make_user_friendly_and_stable_output <out >actual &&
++	cat >expect <<-EOF &&
++	<COMMIT-A> refs/heads/master
++	<COMMIT-A> refs/heads/next
++	EOF
++	test_cmp expect actual
++'
++
++# Refs of upstream : master(A)             next(A)
++# Refs of workbench: master(A)  tags/v123
++test_expect_success "cleanup" '
++	git -C "$upstream" update-ref -d refs/heads/next
++
++'
++
++test_expect_success "setup proc-receive hook (bad oid)" '
++	cat >"$upstream/hooks/proc-receive" <<-EOF
++	#!/bin/sh
++
++	printf >&2 "# proc-receive hook\n"
++
++	test-tool proc-receive -v \
++		-r "bad-id new-id ref ok"
++	EOF
++'
++
++# Refs of upstream : master(A)
++# Refs of workbench: master(A)  tags/v123
++# git push         :                       refs/for/master/topic
++test_expect_success "proc-receive bad protocol: bad oid" '
++	test_must_fail git -C workbench push origin \
++		HEAD:refs/for/master/topic\
++		>out 2>&1 &&
++	make_user_friendly_and_stable_output <out >actual &&
++	cat >expect <<-EOF &&
++	remote: # pre-receive hook
++	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
++	remote: # proc-receive hook
++	remote: proc-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
++	remote: proc-receive> bad-id new-id ref ok
++	remote: error: proc-receive expected "old new ref status [msg]", got "bad-id new-id ref ok"
++	To <URL/of/upstream.git>
++	 ! [remote rejected] HEAD -> refs/for/master/topic (fail to run proc-receive hook)
++	EOF
++	test_cmp expect actual &&
++	git -C "$upstream" show-ref >out &&
++	make_user_friendly_and_stable_output <out >actual &&
++	cat >expect <<-EOF &&
++	<COMMIT-A> refs/heads/master
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success "setup proc-receive hook (no status)" '
++	cat >"$upstream/hooks/proc-receive" <<-EOF
++	#!/bin/sh
++
++	printf >&2 "# proc-receive hook\n"
++
++	test-tool proc-receive -v \
++		-r "$ZERO_OID $A refs/for/master/topic"
++	EOF
++'
++
++# Refs of upstream : master(A)
++# Refs of workbench: master(A)  tags/v123
++# git push         :                       refs/for/master/topic
++test_expect_success "proc-receive bad protocol: no status" '
++	test_must_fail git -C workbench push origin \
++		HEAD:refs/for/master/topic \
++		>out 2>&1 &&
++	make_user_friendly_and_stable_output <out >actual &&
++	cat >expect <<-EOF &&
++	remote: # pre-receive hook
++	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
++	remote: # proc-receive hook
++	remote: proc-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
++	remote: proc-receive> <ZERO-OID> <COMMIT-A> refs/for/master/topic
++	remote: error: proc-receive expected "old new ref status [msg]", got "<ZERO-OID> <COMMIT-A> refs/for/master/topic"
++	To <URL/of/upstream.git>
++	 ! [remote rejected] HEAD -> refs/for/master/topic (fail to run proc-receive hook)
++	EOF
++	test_cmp expect actual &&
++	git -C "$upstream" show-ref >out &&
++	make_user_friendly_and_stable_output <out >actual &&
++	cat >expect <<-EOF &&
++	<COMMIT-A> refs/heads/master
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success "setup proc-receive hook (unknown status)" '
++	cat >"$upstream/hooks/proc-receive" <<-EOF
++	#!/bin/sh
++
++	printf >&2 "# proc-receive hook\n"
++
++	test-tool proc-receive -v \
++		-r "$ZERO_OID $A refs/for/master/topic xx msg"
++	EOF
++'
++
++# Refs of upstream : master(A)
++# Refs of workbench: master(A)  tags/v123
++# git push         :                       refs/for/master/topic
++test_expect_success "proc-receive bad protocol: unknown status" '
++	test_must_fail git -C workbench push origin \
++			HEAD:refs/for/master/topic \
++			>out 2>&1 &&
++	make_user_friendly_and_stable_output <out >actual &&
++	cat >expect <<-EOF &&
++	remote: # pre-receive hook
++	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
++	remote: # proc-receive hook
++	remote: proc-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
++	remote: proc-receive> <ZERO-OID> <COMMIT-A> refs/for/master/topic xx msg
++	remote: error: proc-receive has bad status "xx" for "<ZERO-OID> <COMMIT-A> refs/for/master/topic"
++	To <URL/of/upstream.git>
++	 ! [remote rejected] HEAD -> refs/for/master/topic (fail to run proc-receive hook)
++	EOF
++	test_cmp expect actual &&
++	git -C "$upstream" show-ref >out &&
++	make_user_friendly_and_stable_output <out >actual &&
++	cat >expect <<-EOF &&
++	<COMMIT-A> refs/heads/master
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success "setup proc-receive hook (bad status)" '
++	cat >"$upstream/hooks/proc-receive" <<-EOF
++	#!/bin/sh
++
++	printf >&2 "# proc-receive hook\n"
++
++	test-tool proc-receive -v \
++		-r "$ZERO_OID $A refs/for/master/topic bad status"
++	EOF
++'
++
++# Refs of upstream : master(A)
++# Refs of workbench: master(A)  tags/v123
++# git push         :                       refs/for/master/topic
++test_expect_success "proc-receive bad protocol: bad status" '
++	test_must_fail git -C workbench push origin \
++		HEAD:refs/for/master/topic \
++		>out 2>&1 &&
++	make_user_friendly_and_stable_output <out >actual &&
++	cat >expect <<-EOF &&
++	remote: # pre-receive hook
++	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
++	remote: # proc-receive hook
++	remote: proc-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
++	remote: proc-receive> <ZERO-OID> <COMMIT-A> refs/for/master/topic bad status
++	remote: error: proc-receive has bad status "bad status" for "<ZERO-OID> <COMMIT-A> refs/for/master/topic"
++	To <URL/of/upstream.git>
++	 ! [remote rejected] HEAD -> refs/for/master/topic (fail to run proc-receive hook)
++	EOF
++	test_cmp expect actual &&
++	git -C "$upstream" show-ref >out &&
++	make_user_friendly_and_stable_output <out >actual &&
++	cat >expect <<-EOF &&
++	<COMMIT-A> refs/heads/master
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success "setup proc-receive hook (ng)" '
++	cat >"$upstream/hooks/proc-receive" <<-EOF
++	#!/bin/sh
++
++	printf >&2 "# proc-receive hook\n"
++
++	test-tool proc-receive -v \
++		-r "$ZERO_OID $A refs/for/master/topic ng"
++	EOF
++'
++
++# Refs of upstream : master(A)
++# Refs of workbench: master(A)  tags/v123
++# git push         :                       refs/for/master/topic
++test_expect_success "proc-receive: fail to update (no message)" '
++	test_must_fail git -C workbench push origin \
++		HEAD:refs/for/master/topic \
++		>out 2>&1 &&
++	make_user_friendly_and_stable_output <out >actual &&
++	cat >expect <<-EOF &&
++	remote: # pre-receive hook
++	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
++	remote: # proc-receive hook
++	remote: proc-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
++	remote: proc-receive> <ZERO-OID> <COMMIT-A> refs/for/master/topic ng
++	To <URL/of/upstream.git>
++	 ! [remote rejected] HEAD -> refs/for/master/topic (failed)
++	EOF
++	test_cmp expect actual &&
++	git -C "$upstream" show-ref >out &&
++	make_user_friendly_and_stable_output <out >actual &&
++	cat >expect <<-EOF &&
++	<COMMIT-A> refs/heads/master
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success "setup proc-receive hook (ng message)" '
++	cat >"$upstream/hooks/proc-receive" <<-EOF
++	#!/bin/sh
++
++	printf >&2 "# proc-receive hook\n"
++
++	test-tool proc-receive -v \
++		-r "$ZERO_OID $A refs/for/master/topic ng error msg"
++	EOF
++'
++
++# Refs of upstream : master(A)
++# Refs of workbench: master(A)  tags/v123
++# git push         :                       refs/for/master/topic
++test_expect_success "proc-receive: fail to update (has message)" '
++	test_must_fail git -C workbench push origin \
++		HEAD:refs/for/master/topic \
++		>out 2>&1 &&
++	make_user_friendly_and_stable_output <out >actual &&
++	cat >expect <<-EOF &&
++	remote: # pre-receive hook
++	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
++	remote: # proc-receive hook
++	remote: proc-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
++	remote: proc-receive> <ZERO-OID> <COMMIT-A> refs/for/master/topic ng error msg
++	To <URL/of/upstream.git>
++	 ! [remote rejected] HEAD -> refs/for/master/topic (error msg)
++	EOF
++	test_cmp expect actual &&
++	git -C "$upstream" show-ref >out &&
++	make_user_friendly_and_stable_output <out >actual &&
++	cat >expect <<-EOF &&
++	<COMMIT-A> refs/heads/master
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success "setup proc-receive hook (report status on builtin command)" '
++	cat >"$upstream/hooks/proc-receive" <<-EOF
++	#!/bin/sh
++
++	printf >&2 "# proc-receive hook\n"
++
++	test-tool proc-receive -v \
++		-r "$ZERO_OID $A refs/heads/master ok"
++	EOF
++'
++
++# Refs of upstream : master(A)
++# Refs of workbench: master(A)  tags/v123
++# git push         : (B)                   refs/for/master/topic
++test_expect_success "proc-receive: warning on report for builtin command" '
++	test_must_fail git -C workbench push origin \
++		$B:refs/heads/master \
++		HEAD:refs/for/master/topic \
++		>out 2>&1 &&
++	make_user_friendly_and_stable_output <out >actual &&
++	cat >expect <<-EOF &&
++	remote: # pre-receive hook
++	remote: pre-receive< <COMMIT-A> <COMMIT-B> refs/heads/master
++	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
++	remote: # proc-receive hook
++	remote: proc-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
++	remote: proc-receive> <ZERO-OID> <COMMIT-A> refs/heads/master ok
++	remote: error: proc-receive reported status on ref of builtin command: refs/heads/master
++	remote: # post-receive hook
++	remote: post-receive< <COMMIT-A> <COMMIT-B> refs/heads/master
++	To <URL/of/upstream.git>
++	 <OID>..<OID> <COMMIT-B> -> master
++	 ! [remote rejected] HEAD -> refs/for/master/topic (no report from proc-receive)
++	EOF
++	test_cmp expect actual &&
++	git -C "$upstream" show-ref >out &&
++	make_user_friendly_and_stable_output <out >actual &&
++	cat >expect <<-EOF &&
++	<COMMIT-B> refs/heads/master
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success "cleanup" '
++	git -C "$upstream" update-ref refs/heads/master $A
++'
++
++test_expect_success "setup proc-receive hook (ok)" '
++	cat >"$upstream/hooks/proc-receive" <<-EOF
++	#!/bin/sh
++
++	printf >&2 "# proc-receive hook\n"
++
++	test-tool proc-receive -v \
++		-r "$ZERO_OID $A refs/for/master/topic ok"
++	EOF
++'
++
++# Refs of upstream : master(A)
++# Refs of workbench: master(A)  tags/v123
++# git push         :                       refs/for/master/topic
++test_expect_success "proc-receive: ok" '
++	git -C workbench push origin \
++		HEAD:refs/for/master/topic \
++		>out 2>&1 &&
++	make_user_friendly_and_stable_output <out >actual &&
++	cat >expect <<-EOF &&
++	remote: # pre-receive hook
++	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
++	remote: # proc-receive hook
++	remote: proc-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
++	remote: proc-receive> <ZERO-OID> <COMMIT-A> refs/for/master/topic ok
++	remote: # post-receive hook
++	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
++	To <URL/of/upstream.git>
++	 * [new reference] HEAD -> refs/for/master/topic
++	EOF
++	test_cmp expect actual &&
++	git -C "$upstream" show-ref >out &&
++	make_user_friendly_and_stable_output <out >actual &&
++	cat >expect <<-EOF &&
++	<COMMIT-A> refs/heads/master
++	EOF
++	test_cmp expect actual
++'
++
++# Refs of upstream : master(A)
++# Refs of workbench: master(A)  tags/v123
++# git push         :                       refs/for/a/b/c/my/topic
++test_expect_success "proc-receive: no report from proc-receive" '
++	test_must_fail git -C workbench push origin \
++		HEAD:refs/for/a/b/c/my/topic \
++		>out 2>&1 &&
++	make_user_friendly_and_stable_output <out >actual &&
++	cat >expect <<-EOF &&
++	remote: # pre-receive hook
++	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/for/a/b/c/my/topic
++	remote: # proc-receive hook
++	remote: proc-receive< <ZERO-OID> <COMMIT-A> refs/for/a/b/c/my/topic
++	remote: proc-receive> <ZERO-OID> <COMMIT-A> refs/for/master/topic ok
++	remote: error: proc-receive reported status on unknown ref: refs/for/master/topic
++	To <URL/of/upstream.git>
++	 ! [remote rejected] HEAD -> refs/for/a/b/c/my/topic (no report from proc-receive)
++	EOF
++	test_cmp expect actual &&
++	git -C "$upstream" show-ref >out &&
++	make_user_friendly_and_stable_output <out >actual &&
++	cat >expect <<-EOF &&
++	<COMMIT-A> refs/heads/master
++	EOF
++	test_cmp expect actual
++'
++
++# Refs of upstream : master(A)
++# Refs of workbench: master(A)  tags/v123
++# git push -o ...  :                       refs/for/master/topic
++test_expect_success "not support push options" '
++	test_must_fail git -C workbench push \
++		-o issue=123 \
++		-o reviewer=user1 \
++		origin \
++		HEAD:refs/for/master/topic \
++		>out 2>&1 &&
++	make_user_friendly_and_stable_output <out >actual &&
++	cat >expect <<-EOF &&
++	fatal: the receiving end does not support push options
++	fatal: the remote end hung up unexpectedly
++	EOF
++	test_i18ncmp expect actual &&
++	git -C "$upstream" show-ref >out &&
++	make_user_friendly_and_stable_output <out >actual &&
++	cat >expect <<-EOF &&
++	<COMMIT-A> refs/heads/master
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success "enable push options" '
++	git -C "$upstream" config receive.advertisePushOptions true
++'
++
++# Refs of upstream : master(A)
++# Refs of workbench: master(A)  tags/v123
++# git push -o ...  :                       next(A)  refs/for/master/topic
++test_expect_success "push with options" '
++	git -C workbench push \
++		--atomic \
++		-o issue=123 \
++		-o reviewer=user1 \
++		origin \
++		HEAD:refs/heads/next \
++		HEAD:refs/for/master/topic \
++		>out 2>&1 &&
++	make_user_friendly_and_stable_output <out >actual &&
++	cat >expect <<-EOF &&
++	remote: # pre-receive hook
++	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/heads/next
++	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
++	remote: # proc-receive hook
++	remote: proc-receive: atomic push_options
++	remote: proc-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
++	remote: proc-receive< issue=123
++	remote: proc-receive< reviewer=user1
++	remote: proc-receive> <ZERO-OID> <COMMIT-A> refs/for/master/topic ok
++	remote: # post-receive hook
++	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/heads/next
++	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
++	To <URL/of/upstream.git>
++	 * [new branch] HEAD -> next
++	 * [new reference] HEAD -> refs/for/master/topic
++	EOF
++	test_cmp expect actual &&
++	git -C "$upstream" show-ref >out &&
++	make_user_friendly_and_stable_output <out >actual &&
++	cat >expect <<-EOF &&
++	<COMMIT-A> refs/heads/master
++	<COMMIT-A> refs/heads/next
++	EOF
++	test_cmp expect actual
++'
++
+ test_done
 -- 
 2.24.1.15.g448c31058d.agit.4.5
 
