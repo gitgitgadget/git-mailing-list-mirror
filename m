@@ -7,59 +7,59 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 11C0EC2BA17
-	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 20:48:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 681D2C2BA19
+	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 20:48:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id DA10520737
-	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 20:48:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3D2732076E
+	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 20:48:33 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HC5qZYGI"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qVmEJ9eQ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728348AbgDCUs2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1728381AbgDCUsb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Apr 2020 16:48:31 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:36560 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728212AbgDCUs2 (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 3 Apr 2020 16:48:28 -0400
-Received: from mail-wr1-f48.google.com ([209.85.221.48]:46829 "EHLO
-        mail-wr1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728289AbgDCUs0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Apr 2020 16:48:26 -0400
-Received: by mail-wr1-f48.google.com with SMTP id j17so10027190wru.13
-        for <git@vger.kernel.org>; Fri, 03 Apr 2020 13:48:25 -0700 (PDT)
+Received: by mail-ed1-f65.google.com with SMTP id i7so10945912edq.3
+        for <git@vger.kernel.org>; Fri, 03 Apr 2020 13:48:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=EMuCE8Wpkcm/9HDiuuXGeeA8/8PLGU8hxaMUO7tsTVc=;
-        b=HC5qZYGIDD/n7HE1v7/khRNrxs2LKtDzozO9Iwj5HBqG5CSaE6n4X2OwduaJ2eV1nl
-         GD+z6/QB9sErWD9o2uNzDN+artCqmttBtkUSBbYHPSMSMLHczeDyor32jjyNUiyKkz0m
-         tT8S2zBqgeqsweWhFii7sPFKmCFon1QPxGFGnyGQR6fQ5BxNqEkS+DiKfOU32O482BAe
-         1lhGZR08awXBHu+t0FsMaQw9so6mzjZRIWfFOTmVDw1Pr96kZOUoIsiwg+babclkVEkU
-         0hir0qnUJ9P5KXmF7jIV88a9Nwh4taSMbjCkrO+TvDPJW/SNWVlhp1tAe8sqq/noMI24
-         jexQ==
+        bh=p0goYEAGAkM938d45wxG7Ig5Uy9EhvHHYBBuFO5J+EY=;
+        b=qVmEJ9eQxoLZweQIAQwJnfJSzYMH2OVUwyJVFOVIrrzCntc/ZMU1RwHV+RP6HKjfbz
+         QDAbNSx1dProx2yfl6VMFNeXNznL4XenLD489fY6mvggMDZRtln/ZAAQ8jD+3dJqmRSe
+         AdaDo1QtNnhzxjgBOvE7G7YESzo4nnoTYymczgWBIBt/C+CGkERdDKNvDFX2zcWsSJ0J
+         7s/q4Ot0xmDbOllvgHdH82/JXr8Mtr2Qol6ALKWaAQ/elYzrQyS32Ns7sP2UMRR9m9qS
+         vh5b8BNmMuh7TU5C0iPkqB29FJnMaI6MejpqiKghQKRfGsZ+2lWB0uVaNPRrM9fHEkK9
+         GvuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=EMuCE8Wpkcm/9HDiuuXGeeA8/8PLGU8hxaMUO7tsTVc=;
-        b=ay/gWpxIqFYL60wmiZy7O7yeSxx4AWPBcPvtEXUUbVlxI+qewsXX8F4J9EmZlFypT1
-         wPjchnFKNJotic6Kh1SNGX8o6YjI+lMHjcRImr8OnSedt94WyISKFDslRHp7i5bPIYsC
-         9Ki2yMuzAuCG2aN9PDcsXhphPDtmO8z6Fyt4qAVR5dCPFuRlLiqLlxfy7BgmxCvdcyzL
-         gvWnKixuonEENqLTjoDB44BCYZYLylKqqtVzWUQZ4MDd68JU1FrqzsR+l0fwIhOKvBJA
-         /DdYTCXBBIRbfEr1q7fVpYAQ1p06hLcr4xbw9//XRoRd2UdsZO1MZ6gQCcWO9asoDf+f
-         sJkw==
-X-Gm-Message-State: AGi0PuYcrpIBWYkGfezJs5gqKzeseNOJ+peMgI/1y5Mc1UF6UBs8mJ3N
-        9gbwZhT7luS7n/hSXKq7h2mF+ilH
-X-Google-Smtp-Source: APiQypIsAcP8AmXFUbVk8KtbKTJ9ucocz901PKVz06btJwLVIMQtIKmLFUsgO1RzwlyMS0zSR0kldw==
-X-Received: by 2002:a5d:4611:: with SMTP id t17mr11449584wrq.16.1585946904156;
-        Fri, 03 Apr 2020 13:48:24 -0700 (PDT)
+        bh=p0goYEAGAkM938d45wxG7Ig5Uy9EhvHHYBBuFO5J+EY=;
+        b=WX4qHad9xdfrpsCf8wCP1pizTu6xp8/BkMQkK6T/PRTcuQVPCeu+RW7SOB7cPnfHYw
+         cxipZU14WmhdJsoJR6Cb0pUBV76DVY4I9+auHd+NvsS0RJFKTzU3dw4Jl+N7DwQLsP12
+         sJ15m77gLu12Hsr+YqEgjTNYqQociTGS+pwvvLrysFfMRchEOe6Y5d6ck0I+a8214oT5
+         Mu2QI5xqzJ3j959u4aLVb+nRgPV2+oK64bSSl9wf7w4bI96tGbtQmmtyTlT+EFt6Oc7i
+         ehu+kB6gZCA3VFL4uWdUfh59eYakf8k4Uf5sviH7P9jjT2KWCLjFuHy66zA8AH7oizGU
+         U7Xw==
+X-Gm-Message-State: AGi0PuY+uatlZdNCSCwJq40HdPCE/ouq25nOYARY1FjKMZCVFNFFFOiP
+        jc1a7BOA6OSYogu9HkJL8Vqlt7Kt
+X-Google-Smtp-Source: APiQypLcRplmAKKqp6IFpWjdFZEQP4foofibEkmoP77wgAdhrZxwvvG/FYz7JBbOnxw64zy1xXWHSg==
+X-Received: by 2002:a50:fd0d:: with SMTP id i13mr9775448eds.263.1585946906505;
+        Fri, 03 Apr 2020 13:48:26 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x18sm13467389wrr.2.2020.04.03.13.48.23
+        by smtp.gmail.com with ESMTPSA id u5sm1575178edy.88.2020.04.03.13.48.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Apr 2020 13:48:23 -0700 (PDT)
-Message-Id: <2c3c9d28a903e23c37e44f9783299f3c001f574e.1585946894.git.gitgitgadget@gmail.com>
+        Fri, 03 Apr 2020 13:48:26 -0700 (PDT)
+Message-Id: <b22398b00443388ece4cd352ac347cd364fc11a3.1585946894.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.597.git.1585946894.gitgitgadget@gmail.com>
 References: <pull.597.git.1585946894.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 03 Apr 2020 20:48:10 +0000
-Subject: [PATCH 11/15] job-runner: use config for loop interval
+Date:   Fri, 03 Apr 2020 20:48:13 +0000
+Subject: [PATCH 14/15] job-runner: add --daemonize option
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,60 +75,148 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The 'git job-runner' process uses a sleep(X) call to pause its
-operation between iterations of the job loop. This defaults to 30
-minutes, but is now available to be done with longer or shorter
-intervals according to the job.loopInterval config option. For
-example, a user may want the job loop to run once every five
-minutes while another wants the job loop to run once every six
-hours.
+Git has the ability to fork the process and launch a "daemonized"
+copy of the current process. This is used to launch a background
+'git gc' command in some cases or to launch the 'git daemon'
+server process.
 
-This config value is checked immediately before the sleep(X) call,
-which allows users to see the effect without restarting the
-job-runner process. However, the process will be paused until the
-previous sleep(X) call returns and the job loop is executed.
+Update the 'git job-runner' command with a --daemonize option that
+launches this background process.
 
-RFC QUESITON: Is this use of sleep(X) the best way to do this?
-Is there a better way to delay the process for a time interval, or
-until a specified time? This just seemed like the simplest option.
-The job-runner is doing low-priority work on an unpredictable
-schedule by design, so sleep(X) seemd appropriate.
+The implementation of daemonize() in setup.c is very clear that
+this may no-op and return an error if NO_POSIX_GOODIES is not
+defined. Include an error message to point out that this mechanism
+may not be available on a platform-by-platform basis.
+
+Include a clear error message that daemonize() might fail due to
+platform incompatibilities.
+
+I have been running the current version of this series on my
+Linux VM using --daemonize to keep my copies of torvalds/linux and
+git/git maintained. Using GIT_TRACE2_PERF set to a path, I can see
+that the 'git run-job' processes are being created on the correct
+schedule according to my config for each.
+
+RFC QUESTION: I notice that 'git gc' does not document --daemonize.
+Is that intentional? Or is it an oversight?
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/config/job.txt | 4 ++++
- builtin/job-runner.c         | 6 +++++-
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ Documentation/git-job-runner.txt |  5 +++++
+ builtin/job-runner.c             | 12 ++++++++++--
+ cache.h                          |  4 +---
+ daemon.h                         |  7 +++++++
+ 4 files changed, 23 insertions(+), 5 deletions(-)
+ create mode 100644 daemon.h
 
-diff --git a/Documentation/config/job.txt b/Documentation/config/job.txt
-index 7c799d66221..772001e6744 100644
---- a/Documentation/config/job.txt
-+++ b/Documentation/config/job.txt
-@@ -1,3 +1,7 @@
-+job.loopInterval::
-+	The number of seconds to sleep between rounds of running
-+	background jobs in `git job-runner`.
+diff --git a/Documentation/git-job-runner.txt b/Documentation/git-job-runner.txt
+index 0719113a008..f48d6bcd10b 100644
+--- a/Documentation/git-job-runner.txt
++++ b/Documentation/git-job-runner.txt
+@@ -39,6 +39,11 @@ OPTIONS
+ 	If this is not specified, then the default will be found from
+ 	`jobs.loopInterval` or the default value of 30 minutes.
+ 
++--daemonize::
++	If supported by your platform, launch an identical
++	`git job-runner` process in the background and close the
++	foreground process immediately.
 +
- job.<job-name>.interval::
- 	The minimum number of seconds between runs of
- 	`git run-job <job-name>` when running `git job-runner`.
+ 
+ CONFIGURATION
+ -------------
 diff --git a/builtin/job-runner.c b/builtin/job-runner.c
-index aee55c106e8..7e37b122d99 100644
+index 45f82a50d49..3b629428ef1 100644
 --- a/builtin/job-runner.c
 +++ b/builtin/job-runner.c
-@@ -261,7 +261,11 @@ static int run_job_loop_step(struct string_list *list)
- static unsigned int get_loop_interval(void)
- {
- 	/* Default: 30 minutes */
--	return 30 * 60;
-+	timestamp_t interval = 30 * 60;
-+
-+	try_get_timestamp(NULL, ".", "loopinterval", &interval);
-+
-+	return interval;
+@@ -1,5 +1,6 @@
+ #include "builtin.h"
+ #include "config.h"
++#include "daemon.h"
+ #include "parse-options.h"
+ #include "run-command.h"
+ #include "string-list.h"
+@@ -78,7 +79,8 @@ static int try_get_config(const char *job,
+ 
+ 	fclose(proc_out);
+ 
+-	result = finish_command(config_proc);
++	/* ignore result as 'git config' fails on non-existent value */
++	finish_command(config_proc);
+ 
+ cleanup:
+ 	free(config_proc);
+@@ -93,7 +95,7 @@ static int try_get_timestamp(const char *job,
+ 	char *value;
+ 	int result = try_get_config(job, repo, postfix, &value);
+ 
+-	if (!result) {
++	if (!result && value) {
+ 		*t = atol(value);
+ 		free(value);
+ 	}
+@@ -304,6 +306,7 @@ static int initialize_jobs(struct string_list *list)
+ 	return 0;
  }
  
- static int initialize_jobs(struct string_list *list)
++static int arg_daemonize = 0;
+ int cmd_job_runner(int argc, const char **argv, const char *prefix)
+ {
+ 	int result;
+@@ -316,6 +319,8 @@ int cmd_job_runner(int argc, const char **argv, const char *prefix)
+ 			       PARSE_OPT_NONEG, arg_repos_append),
+ 		OPT_INTEGER(0, "interval", &arg_interval,
+ 			    N_("seconds to pause between running any jobs")),
++		OPT_BOOL(0, "daemonize", &arg_daemonize,
++			 N_("request to spawn a background process")),
+ 		OPT_END(),
+ 	};
+ 
+@@ -328,6 +333,9 @@ int cmd_job_runner(int argc, const char **argv, const char *prefix)
+ 			     builtin_job_runner_usage,
+ 			     0);
+ 
++	if (arg_daemonize && daemonize())
++		die(_("failed to daemonize; this may not be available on your platform."));
++
+ 	result = initialize_jobs(&job_list);
+ 
+ 	while (!(result = run_job_loop_step(&job_list))) {
+diff --git a/cache.h b/cache.h
+index c77b95870a5..34ef690faf6 100644
+--- a/cache.h
++++ b/cache.h
+@@ -17,6 +17,7 @@
+ #include "sha1-array.h"
+ #include "repository.h"
+ #include "mem-pool.h"
++#include "daemon.h"
+ 
+ #include <zlib.h>
+ typedef struct git_zstream {
+@@ -631,9 +632,6 @@ int init_db(const char *git_dir, const char *real_git_dir,
+ 	    unsigned int flags);
+ void initialize_repository_version(int hash_algo);
+ 
+-void sanitize_stdfds(void);
+-int daemonize(void);
+-
+ #define alloc_nr(x) (((x)+16)*3/2)
+ 
+ /**
+diff --git a/daemon.h b/daemon.h
+new file mode 100644
+index 00000000000..c1e50a20354
+--- /dev/null
++++ b/daemon.h
+@@ -0,0 +1,7 @@
++#ifndef DAEMON_H__
++#define DAEMON_H__
++
++void sanitize_stdfds(void);
++int daemonize(void);
++
++#endif
 -- 
 gitgitgadget
 
