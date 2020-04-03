@@ -8,59 +8,59 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 93E90C43331
-	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 16:08:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 63713C2BA15
+	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 16:08:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 568012073B
-	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 16:08:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3ACCF2073B
+	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 16:08:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jTY1nz6V"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Got4H1Zi"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2403834AbgDCQIq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Apr 2020 12:08:46 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:44010 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727882AbgDCQIq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Apr 2020 12:08:46 -0400
-Received: by mail-pg1-f196.google.com with SMTP id g20so3698764pgk.10
-        for <git@vger.kernel.org>; Fri, 03 Apr 2020 09:08:45 -0700 (PDT)
+        id S2404018AbgDCQIu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Apr 2020 12:08:50 -0400
+Received: from mail-pj1-f65.google.com ([209.85.216.65]:54276 "EHLO
+        mail-pj1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2403873AbgDCQIt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Apr 2020 12:08:49 -0400
+Received: by mail-pj1-f65.google.com with SMTP id np9so3169714pjb.4
+        for <git@vger.kernel.org>; Fri, 03 Apr 2020 09:08:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=2MdD9ucr1ur7WPrdtKKTz6KGlO+aXnPbgsbR2W0by/k=;
-        b=jTY1nz6VcHpmdAwJ5b3c0Lh8N6Tdp683W6R/zvf4T7x4/H9dcQQkaDYzH2OGIkvVJ2
-         IGH54g9mukXoieBEhrcap6EhUh4P5lkzMgt/igLVVQ7EnZx7VPNzM55m2gR5ua+dYqva
-         ep7TrLprVvVgQl/5MsKNMH5FYiz8ASkJlRO1CLcgMfAIdhDOBfiz8SfhGAAqdxs72g3H
-         T/VwMJLuD94W5zUGagpVkd48DUOMu4bV05+Bb2ySzUGogFyGX5IRFNgnrkpxq/GF5w14
-         HldOaa3hYjliLLvauBMbUwC7hdIc3xU3rmKiOo/Onx67cSVHz22vvjIbOHzc5aDkAc4m
-         7KVA==
+        bh=k0TTErNib/oVDKYqMrFH1TE4YX/C72t6kSBmdz23lsc=;
+        b=Got4H1ZiA3EW0zzuA7fTrRJ/lNe2WWwl4JyHpo2tq8LK28CHLv9FjmDGlz/9BF0zkt
+         nkPEhfoUyFkP7qkT70iafdfVyh2Bbdi9N6cPpGsOBPL63MDa+o0Udo5JHGqU7XwxI0Ft
+         isAgvuDc2aYOlWeGDvn48E04GOd69L4ma2h2iqhNpNglqttMucqoDBhFOLSqTABMJ4oZ
+         vvqiro8E1K20T4uNC/1DI/vmvYCwA3VlcVL4EubJ869c8Gzww002rpprMBbZlrHE+VKg
+         gKK3c2pjlgRzBU3Vv0cJH0kko4e27XSAoyN/gKHHDQ+rZ6FP7GbbiYuRdE2S7SYt1mry
+         AdJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=2MdD9ucr1ur7WPrdtKKTz6KGlO+aXnPbgsbR2W0by/k=;
-        b=gVtD89VFEtTuEnRbPm86ewyXuZkuAXHjnn83IgtpiCqqHPK2Y3QW1pDCeWvNHdsxoR
-         y5gYXoSoiPpfwuSoMgvtirAcSC4S7RyYMmrE3jTtg2dC2jyc3CV3Apiozy9YOToXasZW
-         x7jZiFAREe4KVCFJKo+ktK2VNOhnjLYpO0x2iE457OipUbjEkH3RQpWEdk6wkKKY0acC
-         gXdgfrRVExQ9CM9i8Y5HBIOxtMtUvK9fqAZry4mJFEGUX5XbrMTvQQXLd9OFCmOnqP2O
-         wSBMj7PUL1XF/apVWb0Q8dr69HFz+Cblz0nadoushAYpc+wWjd65ekgbbcLcdtNPjZK3
-         zL1w==
-X-Gm-Message-State: AGi0PuZKXTjZ2nawECbTsTgq3MJ32qJr9OcZq1MiGR8JRGRFYIMB55t4
-        51+KF//ZYa4PfQS+sy51mh7mbCjBrE4=
-X-Google-Smtp-Source: APiQypJoV+ITv2YZW+hw8zaQmi3cDHGZr2eNkyk/hOimzzReKa17b9C6UmICqQf+peZFGL/AnL/Cyg==
-X-Received: by 2002:aa7:9695:: with SMTP id f21mr9275952pfk.93.1585930124802;
-        Fri, 03 Apr 2020 09:08:44 -0700 (PDT)
+        bh=k0TTErNib/oVDKYqMrFH1TE4YX/C72t6kSBmdz23lsc=;
+        b=UsS0sFwlUCYXW2AZ9KYdRquRgq1JB291DBjk2Ax7duQ4lDiD2wgQEcNZpwmB2JZfCp
+         rpIcqbg2pqjvq4Dzm1krVMvxki84mspEZNZbtGW7t9rvqhDHM3trr/tNTnIomFx1Se9C
+         EaPl6N69JF9kaq+440PAX0BM8UKoHE7TOQ96vaBvGKZqWjhOIdRYDecIg/j89+k7ACuP
+         kSbM6kTQ4cogxmcvPNFSgKcDspz998jLs23pACFv36PA6WZivx4fYHAI+2g4xWGBWa1B
+         FPADoxpVmEQoz8SChf48WZT59dENiuwR0PMnXQWJLr8/QbrXasGBWQ/Ru2NGGJV1CezS
+         UQiA==
+X-Gm-Message-State: AGi0PuYi5YNUL4igmDD/lWLe8WxG0YL0CMRW45PS5FFNrspnqfUX8UN2
+        xznxGKJGZOMTXaYZjO0/Yo8ZatLa8Ss=
+X-Google-Smtp-Source: APiQypKptXJGIG4XBXs4ETbocJErQnb9iJWcvD5KqOElNl+DxVnzYV3sCyc9vCPFGtM5CkfJoVC2pA==
+X-Received: by 2002:a17:902:d3cb:: with SMTP id w11mr8415077plb.257.1585930126886;
+        Fri, 03 Apr 2020 09:08:46 -0700 (PDT)
 Received: from tigtog.localdomain.localdomain ([144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id 21sm5670420pgf.41.2020.04.03.09.08.44
+        by smtp.gmail.com with ESMTPSA id 21sm5670420pgf.41.2020.04.03.09.08.45
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 03 Apr 2020 09:08:44 -0700 (PDT)
+        Fri, 03 Apr 2020 09:08:46 -0700 (PDT)
 From:   Jiang Xin <worldhello.net@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
 Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: [PATCH v7 1/7] transport: not report a non-head push as a branch
-Date:   Fri,  3 Apr 2020 12:08:32 -0400
-Message-Id: <20200403160838.6252-2-worldhello.net@gmail.com>
+Subject: [PATCH v7 3/7] refs.c: refactor to reuse ref_is_hidden()
+Date:   Fri,  3 Apr 2020 12:08:34 -0400
+Message-Id: <20200403160838.6252-4-worldhello.net@gmail.com>
 X-Mailer: git-send-email 2.26.0.rc0
 In-Reply-To: <xmqqftdl3fss.fsf@gitster.c.googlers.com>
 References: <xmqqftdl3fss.fsf@gitster.c.googlers.com>
@@ -73,209 +73,56 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 
-When pushing a new reference (not a head or tag), report it as a new
-reference instead of a new branch.
+Add new function `ref_is_matched()` to reuse `ref_is_hidden()`. Will use
+this function for `receive-pack` to check commands with specific
+prefixes.
+
+Test case t5512 covered this change.
 
 Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 ---
- t/t5411-proc-receive-hook.sh | 153 +++++++++++++++++++++++++++++++++++
- t/t5516-fetch-push.sh        |   2 +-
- transport.c                  |   9 ++-
- 3 files changed, 160 insertions(+), 4 deletions(-)
- create mode 100755 t/t5411-proc-receive-hook.sh
+ refs.c | 11 ++++++++---
+ refs.h |  1 +
+ 2 files changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/t/t5411-proc-receive-hook.sh b/t/t5411-proc-receive-hook.sh
-new file mode 100755
-index 0000000000..1784bcb584
---- /dev/null
-+++ b/t/t5411-proc-receive-hook.sh
-@@ -0,0 +1,153 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2020 Jiang Xin
-+#
-+
-+test_description='Test proc-receive hook'
-+
-+. ./test-lib.sh
-+
-+# Create commits in <repo> and assign each commit's oid to shell variables
-+# given in the arguments (A, B, and C). E.g.:
-+#
-+#     create_commits_in <repo> A B C
-+#
-+# NOTE: Never calling this function from a subshell since variable
-+# assignments will disappear when subshell exits.
-+create_commits_in () {
-+	repo="$1" &&
-+	if ! parent=$(git -C "$repo" rev-parse HEAD^{})
-+	then
-+		parent=
-+	fi &&
-+	T=$(git -C "$repo" write-tree) &&
-+	shift &&
-+	while test $# -gt 0
-+	do
-+		name=$1 &&
-+		test_tick &&
-+		if test -z "$parent"
-+		then
-+			oid=$(echo $name | git -C "$repo" commit-tree $T)
-+		else
-+			oid=$(echo $name | git -C "$repo" commit-tree -p $parent $T)
-+		fi &&
-+		eval $name=$oid &&
-+		parent=$oid &&
-+		shift ||
-+		return 1
-+	done &&
-+	git -C "$repo" update-ref refs/heads/master $oid
+diff --git a/refs.c b/refs.c
+index 1ab0bb54d3..229159ea1a 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1389,13 +1389,18 @@ int parse_hide_refs_config(const char *var, const char *value, const char *secti
+ }
+ 
+ int ref_is_hidden(const char *refname, const char *refname_full)
++{
++	return ref_is_matched(hide_refs, refname, refname_full);
 +}
 +
-+# Format the output of git-push, git-show-ref and other commands to make a
-+# user-friendly and stable text.  We can easily prepare the expect text
-+# without having to worry about future changes of the commit ID and spaces
-+# of the output.  We also replce single quotes with double quotes, because
-+# it is boring to prepare unquoted single quotes in expect txt.
-+make_user_friendly_and_stable_output () {
-+	sed \
-+		-e "s/  *\$//" \
-+		-e "s/   */ /g" \
-+		-e "s/'/\"/g" \
-+		-e "s/$A/<COMMIT-A>/g" \
-+		-e "s/$B/<COMMIT-B>/g" \
-+		-e "s/$TAG/<TAG-v123>/g" \
-+		-e "s/$ZERO_OID/<ZERO-OID>/g" \
-+		-e "s/[0-9a-f]\{7,\}/<OID>/g"
-+}
-+
-+# Refs of upstream : master(B)  next(A)
-+# Refs of workbench: master(A)           tags/v123
-+test_expect_success "setup" '
-+	git init --bare upstream &&
-+	git init workbench &&
-+	create_commits_in workbench A B &&
-+	(
-+		cd workbench &&
-+		# Try to make a stable fixed width for abbreviated commit ID,
-+		# this fixed-width oid will be replaced with "<OID>".
-+		git config core.abbrev 7 &&
-+		git remote add origin ../upstream &&
-+		git update-ref refs/heads/master $A &&
-+		git tag -m "v123" v123 $A &&
-+		git push origin \
-+			$B:refs/heads/master \
-+			$A:refs/heads/next
-+	) &&
-+	TAG=$(git -C workbench rev-parse v123) &&
-+
-+	# setup pre-receive hook
-+	cat >upstream/hooks/pre-receive <<-\EOF &&
-+	#!/bin/sh
-+
-+	echo >&2 "# pre-receive hook"
-+
-+	while read old new ref
-+	do
-+		echo >&2 "pre-receive< $old $new $ref"
-+	done
-+	EOF
-+
-+	# setup post-receive hook
-+	cat >upstream/hooks/post-receive <<-\EOF &&
-+	#!/bin/sh
-+
-+	echo >&2 "# post-receive hook"
-+
-+	while read old new ref
-+	do
-+		echo >&2 "post-receive< $old $new $ref"
-+	done
-+	EOF
-+
-+	chmod a+x \
-+		upstream/hooks/pre-receive \
-+		upstream/hooks/post-receive
-+'
-+
-+# Refs of upstream : master(B)  next(A)
-+# Refs of workbench: master(A)           tags/v123
-+# git-push -f      : master(A)  NULL     tags/v123  refs/review/master/topic(A)  a/b/c(A)
-+test_expect_success "normal git-push command" '
-+	git -C workbench push -f origin \
-+		refs/tags/v123 \
-+		:refs/heads/next \
-+		HEAD:refs/heads/master \
-+		HEAD:refs/review/master/topic \
-+		HEAD:refs/heads/a/b/c \
-+		>out 2>&1 &&
-+	make_user_friendly_and_stable_output <out >actual &&
-+	cat >expect <<-EOF &&
-+	remote: # pre-receive hook
-+	remote: pre-receive< <COMMIT-B> <COMMIT-A> refs/heads/master
-+	remote: pre-receive< <COMMIT-A> <ZERO-OID> refs/heads/next
-+	remote: pre-receive< <ZERO-OID> <TAG-v123> refs/tags/v123
-+	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/review/master/topic
-+	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/heads/a/b/c
-+	remote: # post-receive hook
-+	remote: post-receive< <COMMIT-B> <COMMIT-A> refs/heads/master
-+	remote: post-receive< <COMMIT-A> <ZERO-OID> refs/heads/next
-+	remote: post-receive< <ZERO-OID> <TAG-v123> refs/tags/v123
-+	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/review/master/topic
-+	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/heads/a/b/c
-+	To ../upstream
-+	 + <OID>...<OID> HEAD -> master (forced update)
-+	 - [deleted] next
-+	 * [new tag] v123 -> v123
-+	 * [new reference] HEAD -> refs/review/master/topic
-+	 * [new branch] HEAD -> a/b/c
-+	EOF
-+	test_cmp expect actual &&
-+	git -C upstream show-ref >out &&
-+	make_user_friendly_and_stable_output <out >actual &&
-+	cat >expect <<-EOF &&
-+	<COMMIT-A> refs/heads/a/b/c
-+	<COMMIT-A> refs/heads/master
-+	<COMMIT-A> refs/review/master/topic
-+	<TAG-v123> refs/tags/v123
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_done
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index 9ff041a093..9e4b9313b5 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -1039,7 +1039,7 @@ test_force_fetch_tag "annotated tag" "-f -a -m'tag message'"
- test_expect_success 'push --porcelain' '
- 	mk_empty testrepo &&
- 	echo >.git/foo  "To testrepo" &&
--	echo >>.git/foo "*	refs/heads/master:refs/remotes/origin/master	[new branch]"  &&
-+	echo >>.git/foo "*	refs/heads/master:refs/remotes/origin/master	[new reference]"  &&
- 	echo >>.git/foo "Done" &&
- 	git push >.git/bar --porcelain  testrepo refs/heads/master:refs/remotes/origin/master &&
- 	(
-diff --git a/transport.c b/transport.c
-index 1fdc7dac1a..272c0f4046 100644
---- a/transport.c
-+++ b/transport.c
-@@ -500,9 +500,12 @@ static void print_ok_ref_status(struct ref *ref, int porcelain, int summary_widt
- 				 porcelain, summary_width);
- 	else if (is_null_oid(&ref->old_oid))
- 		print_ref_status('*',
--			(starts_with(ref->name, "refs/tags/") ? "[new tag]" :
--			"[new branch]"),
--			ref, ref->peer_ref, NULL, porcelain, summary_width);
-+				 (starts_with(ref->name, "refs/tags/")
-+				  ? "[new tag]"
-+				  : (starts_with(ref->name, "refs/heads/")
-+				     ? "[new branch]"
-+				     : "[new reference]")),
-+				 ref, ref->peer_ref, NULL, porcelain, summary_width);
- 	else {
- 		struct strbuf quickref = STRBUF_INIT;
- 		char type;
++int ref_is_matched(struct string_list *match_refs, const char *refname, const char *refname_full)
+ {
+ 	int i;
+ 
+-	if (!hide_refs)
++	if (!match_refs)
+ 		return 0;
+-	for (i = hide_refs->nr - 1; i >= 0; i--) {
+-		const char *match = hide_refs->items[i].string;
++	for (i = match_refs->nr - 1; i >= 0; i--) {
++		const char *match = match_refs->items[i].string;
+ 		const char *subject;
+ 		int neg = 0;
+ 		const char *p;
+diff --git a/refs.h b/refs.h
+index 545029c6d8..a2ea043f7f 100644
+--- a/refs.h
++++ b/refs.h
+@@ -739,6 +739,7 @@ int parse_hide_refs_config(const char *var, const char *value, const char *);
+  * parameter always points to the full ref name.
+  */
+ int ref_is_hidden(const char *, const char *);
++int ref_is_matched(struct string_list *, const char *, const char *);
+ 
+ enum ref_type {
+ 	REF_TYPE_PER_WORKTREE,	  /* refs inside refs/ but not shared       */
 -- 
 2.24.1.15.g448c31058d.agit.4.5
 
