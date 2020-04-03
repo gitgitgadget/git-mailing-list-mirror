@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BD82C2BA17
-	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 10:28:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9CBA4C43331
+	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 10:28:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 229C9208E4
-	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 10:28:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 65EAD20787
+	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 10:28:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pYKBRpdx"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FKAVCaAI"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390504AbgDCK2f (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Apr 2020 06:28:35 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:34384 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727774AbgDCK2f (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Apr 2020 06:28:35 -0400
-Received: by mail-pf1-f195.google.com with SMTP id v23so385089pfm.1
-        for <git@vger.kernel.org>; Fri, 03 Apr 2020 03:28:34 -0700 (PDT)
+        id S2390541AbgDCK2h (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Apr 2020 06:28:37 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:42594 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727774AbgDCK2g (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Apr 2020 06:28:36 -0400
+Received: by mail-pf1-f193.google.com with SMTP id 22so3272137pfa.9
+        for <git@vger.kernel.org>; Fri, 03 Apr 2020 03:28:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=JnFTjtfieg1I1m3De+/JhaHJBf3ebLw/Fn4BrFMog6s=;
-        b=pYKBRpdxgZCdmFr76YnS/KEyFHVaF9hUbfzJXZn6sCSIzI6A9bc//Bg4Z31qaw7Y5Y
-         oGsDyHuhE+b3at0c76mBguOlDEuCzn6ck8MaH+1KuMu7KwRuCNuPNAMKa0NRhdOG/wyk
-         fZfiEhmQ74Ny1hzJBXSQJ0XvsQUM4g0ZQIe6VTO1JsAxQHgZBQs+saBREeNKvndBzpMn
-         JsFflTnWlZEkVPRI/9GgRbWEUDYg227bB2n1zTuhAaRrVIhADF6y1j2lt3vvkh/an9kd
-         i2+narDkUlSZx4raL8kBkyCI0aFAGTldBlaLwsUrJ0bay/R4ei/dGN/7jzn/bMeojA4/
-         TrnQ==
+        bh=TfiCFBcEscmFgaoXbzjzBdCQMTmRszXm0lpXzuORUks=;
+        b=FKAVCaAIA2xsxCtWaVUfKg1sH2Q412uUqAz3j6/nM0eJWOvTNoQWw2KIRPtMsbOPT2
+         XFphZ1Np//tbONY+L49IaICj5/3HLM7wXRnzRMawHn0FucuoP10vWKHk1hEnjen+FziN
+         3dU9OgDHZe7gReAHcNpCU048Nt5/715KURhhwyvRHlWUBTZ31dwZYv4AicwRpJ0iYpiR
+         jTpogOgWasg+9MqA+21JyCrTzTkowI1TVfUahaRdmNoxlLd3kL66EzqJMBp2meD0ZMVV
+         6Rm2U0nURibmqaIK+VHv/mXxpFROVR2lniypIhX7g7UshAlCesHUB4vfMb9p2GxO1e44
+         CSGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=JnFTjtfieg1I1m3De+/JhaHJBf3ebLw/Fn4BrFMog6s=;
-        b=KSyDYsVR6s0sLNyCgr+ViDENpRoRklJeEF6M1jrz5M4cF0pLTzDCGhRMiryixlT/sE
-         W92NeaRoaVtb0Fn06mlqqQnWE4ZP8TOPhz6hLiFZV2pXztqLfMQThruihU7IvGVR+HAI
-         AZz9xmGC5SPN3N1Dp3Gq/CaOrXHsVfqYzQbi3wgRfc8u7WFMgGa93Tt2RRiCuo8B+13L
-         cVET8jDaBTZ93E+Jss6/CWnEODAt+gd5jJ5SZBYopK/ECc0kFWvc70Sbd2ZRu8R3cFyq
-         6d+wb2tJ12LNUWPySch6k4QVHyP5U4XtqUMbnxKhEawW6AEodLPcdKJ7yuN3yuovGL85
-         CCxw==
-X-Gm-Message-State: AGi0PuaE/tOvlIgB76bler3KIs52psbgO5+zNveyXnTJWaWyGF1QpNxt
-        dH3olU8BMMGxO6V3tCzhio+TuxZQ
-X-Google-Smtp-Source: APiQypKauJwlC+18R4a9ly06p8PhsxLBTWrBrk5fQL4Ihws0f+LIYX3n0GBz+IHZIru/XKlt6k14sw==
-X-Received: by 2002:a63:2989:: with SMTP id p131mr7650944pgp.281.1585909714036;
-        Fri, 03 Apr 2020 03:28:34 -0700 (PDT)
+        bh=TfiCFBcEscmFgaoXbzjzBdCQMTmRszXm0lpXzuORUks=;
+        b=VBAETOZtpwA/7yWE9Jx55O79QmwFEEBAkNEok/eEKLgKNWCKiqOuDkgyCHu/b0NLr+
+         KOtUPfhxX/ZoQgeqW7+K7l/0UrJi50ko/I+a2WpNpm+XeIxtovKC1ara8hcv+vQVQEDg
+         rsHahN2lT/62BxBsG4jAjHBtahbVLxwDc+YjcycUBzmHRuQmP1C1OAA6IBeGm9gGDxCA
+         MkeRJEQsGhKR7oqWf5OeMIw7vrSoWwq+IQqef9IxKdCPfbYRqlOx1NJAXsuX4znbhsJM
+         A1tXfuWsd6QtilyTR7ml5PAClBvvGYlQhbdq1g44e1KAnWP8aeJQ+99dUVflkiDdZwY8
+         AVuA==
+X-Gm-Message-State: AGi0PuY9lcCjMwQLxx9KGCb1KMkHcXVkocUwvRam2pha9HMZGnZ4XFk1
+        wnN97Snyp4c4bx3qZUkJjXjvL3yC
+X-Google-Smtp-Source: APiQypLL8akxQSqUp243IH1FQwjZaTkpyYKvw7b27X/djkIYCY0GbqMeo/pSbdnw2d+Fs6BghGqvjA==
+X-Received: by 2002:a63:7c16:: with SMTP id x22mr7489008pgc.172.1585909715500;
+        Fri, 03 Apr 2020 03:28:35 -0700 (PDT)
 Received: from localhost.localdomain ([2402:800:6375:207b:be21:746a:7a56:9d4d])
-        by smtp.gmail.com with ESMTPSA id c21sm4958126pgn.84.2020.04.03.03.28.32
+        by smtp.gmail.com with ESMTPSA id c21sm4958126pgn.84.2020.04.03.03.28.34
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 03 Apr 2020 03:28:33 -0700 (PDT)
+        Fri, 03 Apr 2020 03:28:35 -0700 (PDT)
 From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>
-Subject: [PATCH v3 1/6] rebase.c: honour --no-gpg-sign
-Date:   Fri,  3 Apr 2020 17:28:02 +0700
-Message-Id: <b601c99f7b947aa86c10976d9ebcef8e7a917b9b.1585909453.git.congdanhqx@gmail.com>
+Subject: [PATCH v3 2/6] cherry-pick/revert: honour --no-gpg-sign in all case
+Date:   Fri,  3 Apr 2020 17:28:03 +0700
+Message-Id: <28ebbfe72a04b787fb92702199efea663a6b7ee5.1585909453.git.congdanhqx@gmail.com>
 X-Mailer: git-send-email 2.26.0.334.g6536db25bb
 In-Reply-To: <cover.1585909453.git.congdanhqx@gmail.com>
 References: <20200331064456.GA15850@danh.dev> <cover.1585909453.git.congdanhqx@gmail.com>
@@ -74,19 +74,24 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+{cherry-pick,revert} --edit hasn't honoured --no-gpg-sign yet.
+
+Pass this option down to git-commit to honour it.
+
 Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
 ---
- Documentation/git-rebase.txt |  5 ++-
- builtin/rebase.c             |  7 ++--
- t/t3435-rebase-gpg-sign.sh   | 71 ++++++++++++++++++++++++++++++++++++
- 3 files changed, 79 insertions(+), 4 deletions(-)
- create mode 100755 t/t3435-rebase-gpg-sign.sh
+ Documentation/git-cherry-pick.txt |  5 +-
+ Documentation/git-revert.txt      |  5 +-
+ sequencer.c                       |  2 +
+ t/t3514-cherry-pick-revert-gpg.sh | 86 +++++++++++++++++++++++++++++++
+ 4 files changed, 96 insertions(+), 2 deletions(-)
+ create mode 100755 t/t3514-cherry-pick-revert-gpg.sh
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index f7a6033607..19e280f93f 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -354,9 +354,12 @@ See also INCOMPATIBLE OPTIONS below.
+diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
+index 83ce51aedf..75feeef08a 100644
+--- a/Documentation/git-cherry-pick.txt
++++ b/Documentation/git-cherry-pick.txt
+@@ -109,9 +109,12 @@ effect to your index in a row.
  
  -S[<keyid>]::
  --gpg-sign[=<keyid>]::
@@ -98,58 +103,62 @@ index f7a6033607..19e280f93f 100644
 +	countermand both `commit.gpgSign` configuration variable, and
 +	earlier `--gpg-sign`.
  
- -q::
- --quiet::
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 27a07d4e78..7e2ad66e9e 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -1593,6 +1593,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ --ff::
+ 	If the current HEAD is the same as the parent of the
+diff --git a/Documentation/git-revert.txt b/Documentation/git-revert.txt
+index 9d22270757..044276e9da 100644
+--- a/Documentation/git-revert.txt
++++ b/Documentation/git-revert.txt
+@@ -90,9 +90,12 @@ effect to your index in a row.
  
- 	options.allow_empty_message = 1;
- 	git_config(rebase_config, &options);
-+	/* options.gpg_sign_opt will be either "-S" or NULL */
-+	gpg_sign = options.gpg_sign_opt ? "" : NULL;
-+	FREE_AND_NULL(options.gpg_sign_opt);
+ -S[<keyid>]::
+ --gpg-sign[=<keyid>]::
++--no-gpg-sign::
+ 	GPG-sign commits. The `keyid` argument is optional and
+ 	defaults to the committer identity; if specified, it must be
+-	stuck to the option without a space.
++	stuck to the option without a space. `--no-gpg-sign` is useful to
++	countermand both `commit.gpgSign` configuration variable, and
++	earlier `--gpg-sign`.
  
- 	if (options.use_legacy_rebase ||
- 	    !git_env_bool("GIT_TEST_REBASE_USE_BUILTIN", -1))
-@@ -1823,10 +1826,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	if (options.empty != EMPTY_UNSPECIFIED)
- 		imply_merge(&options, "--empty");
- 
--	if (gpg_sign) {
--		free(options.gpg_sign_opt);
-+	if (gpg_sign)
- 		options.gpg_sign_opt = xstrfmt("-S%s", gpg_sign);
--	}
- 
- 	if (exec.nr) {
- 		int i;
-diff --git a/t/t3435-rebase-gpg-sign.sh b/t/t3435-rebase-gpg-sign.sh
+ -s::
+ --signoff::
+diff --git a/sequencer.c b/sequencer.c
+index 6fd2674632..9969355de7 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -946,6 +946,8 @@ static int run_git_commit(struct repository *r,
+ 		argv_array_push(&cmd.args, "--amend");
+ 	if (opts->gpg_sign)
+ 		argv_array_pushf(&cmd.args, "-S%s", opts->gpg_sign);
++	else
++		argv_array_push(&cmd.args, "--no-gpg-sign");
+ 	if (defmsg)
+ 		argv_array_pushl(&cmd.args, "-F", defmsg, NULL);
+ 	else if (!(flags & EDIT_MSG))
+diff --git a/t/t3514-cherry-pick-revert-gpg.sh b/t/t3514-cherry-pick-revert-gpg.sh
 new file mode 100755
-index 0000000000..b47c59c190
+index 0000000000..5b2e250eaa
 --- /dev/null
-+++ b/t/t3435-rebase-gpg-sign.sh
-@@ -0,0 +1,71 @@
++++ b/t/t3514-cherry-pick-revert-gpg.sh
+@@ -0,0 +1,86 @@
 +#!/bin/sh
 +#
 +# Copyright (c) 2020 Doan Tran Cong Danh
 +#
 +
-+test_description='test rebase --[no-]gpg-sign'
++test_description='test {cherry-pick,revert} --[no-]gpg-sign'
 +
 +. ./test-lib.sh
-+. "$TEST_DIRECTORY/lib-rebase.sh"
 +. "$TEST_DIRECTORY/lib-gpg.sh"
 +
 +if ! test_have_prereq GPG
 +then
-+	skip_all='skip all test rebase --[no-]gpg-sign, gpg not available'
++	skip_all='skip all test {cherry-pick,revert} --[no-]gpg-sign, gpg not available'
 +	test_done
 +fi
 +
-+test_rebase_gpg_sign () {
++test_gpg_sign () {
 +	local must_fail= will=will fake_editor=
 +	if test "x$1" = "x!"
 +	then
@@ -158,49 +167,65 @@ index 0000000000..b47c59c190
 +		shift
 +	fi
 +	conf=$1
-+	shift
-+	test_expect_success "rebase $* with commit.gpgsign=$conf $will sign commit" "
-+		git reset two &&
++	cmd=$2
++	cmit=$3
++	shift 3
++	test_expect_success "$cmd $* $cmit with commit.gpgsign=$conf $will sign commit" "
++		git reset --hard tip &&
 +		git config commit.gpgsign $conf &&
-+		set_fake_editor &&
-+		FAKE_LINES='r 1 p 2' git rebase --force-rebase --root $* &&
-+		$must_fail git verify-commit HEAD^ &&
-+		$must_fail git verify-commit HEAD
++		git $cmd $* $cmit &&
++		git rev-list tip.. >rev-list &&
++		$must_fail git verify-commit \$(cat rev-list)
 +	"
 +}
 +
 +test_expect_success 'setup' '
 +	test_commit one &&
-+	test_commit two &&
-+	test_must_fail git verify-commit HEAD &&
-+	test_must_fail git verify-commit HEAD^
-+'
-+
-+test_expect_success 'setup: merge commit' '
-+	test_commit fork-point &&
 +	git switch -c side &&
++	test_commit side1 &&
++	test_commit side2 &&
++	git switch - &&
++	test_commit two &&
 +	test_commit three &&
-+	git switch master &&
-+	git merge --no-ff side &&
-+	git tag merged
++	test_commit tip
 +'
 +
-+test_rebase_gpg_sign ! false
-+test_rebase_gpg_sign   true
-+test_rebase_gpg_sign ! true  --no-gpg-sign
-+test_rebase_gpg_sign ! true  --gpg-sign --no-gpg-sign
-+test_rebase_gpg_sign   false --no-gpg-sign --gpg-sign
-+test_rebase_gpg_sign   true  -i
-+test_rebase_gpg_sign ! true  -i --no-gpg-sign
-+test_rebase_gpg_sign ! true  -i --gpg-sign --no-gpg-sign
-+test_rebase_gpg_sign   false -i --no-gpg-sign --gpg-sign
++test_gpg_sign ! false cherry-pick   side
++test_gpg_sign ! false cherry-pick ..side
++test_gpg_sign   true  cherry-pick   side
++test_gpg_sign   true  cherry-pick ..side
++test_gpg_sign ! true  cherry-pick   side --no-gpg-sign
++test_gpg_sign ! true  cherry-pick ..side --no-gpg-sign
++test_gpg_sign ! true  cherry-pick   side --gpg-sign --no-gpg-sign
++test_gpg_sign ! true  cherry-pick ..side --gpg-sign --no-gpg-sign
++test_gpg_sign   false cherry-pick   side --no-gpg-sign --gpg-sign
++test_gpg_sign   false cherry-pick ..side --no-gpg-sign --gpg-sign
++test_gpg_sign   true  cherry-pick   side --edit
++test_gpg_sign   true  cherry-pick ..side --edit
++test_gpg_sign ! true  cherry-pick   side --edit --no-gpg-sign
++test_gpg_sign ! true  cherry-pick ..side --edit --no-gpg-sign
++test_gpg_sign ! true  cherry-pick   side --edit --gpg-sign --no-gpg-sign
++test_gpg_sign ! true  cherry-pick ..side --edit --gpg-sign --no-gpg-sign
++test_gpg_sign   false cherry-pick   side --edit --no-gpg-sign --gpg-sign
++test_gpg_sign   false cherry-pick ..side --edit --no-gpg-sign --gpg-sign
 +
-+test_expect_failure 'rebase -p --no-gpg-sign override commit.gpgsign' '
-+	git reset --hard merged &&
-+	git config commit.gpgsign true &&
-+	git rebase -p --no-gpg-sign --onto=one fork-point master &&
-+	test_must_fail git verify-commit HEAD
-+'
++test_gpg_sign ! false revert HEAD  --edit
++test_gpg_sign ! false revert two.. --edit
++test_gpg_sign   true  revert HEAD  --edit
++test_gpg_sign   true  revert two.. --edit
++test_gpg_sign ! true  revert HEAD  --edit --no-gpg-sign
++test_gpg_sign ! true  revert two.. --edit --no-gpg-sign
++test_gpg_sign ! true  revert HEAD  --edit --gpg-sign --no-gpg-sign
++test_gpg_sign ! true  revert two.. --edit --gpg-sign --no-gpg-sign
++test_gpg_sign   false revert HEAD  --edit --no-gpg-sign --gpg-sign
++test_gpg_sign   false revert two.. --edit --no-gpg-sign --gpg-sign
++test_gpg_sign   true  revert HEAD  --no-edit
++test_gpg_sign   true  revert two.. --no-edit
++test_gpg_sign ! true  revert HEAD  --no-edit --no-gpg-sign
++test_gpg_sign ! true  revert two.. --no-edit --no-gpg-sign
++test_gpg_sign ! true  revert HEAD  --no-edit --gpg-sign --no-gpg-sign
++test_gpg_sign ! true  revert two.. --no-edit --gpg-sign --no-gpg-sign
++test_gpg_sign   false revert HEAD  --no-edit --no-gpg-sign --gpg-sign
 +
 +test_done
 -- 
