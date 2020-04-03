@@ -2,109 +2,63 @@ Return-Path: <SRS0=9X1Y=5T=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 801D0C43331
-	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 00:25:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EFA94C43331
+	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 02:47:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 42A5820787
-	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 00:25:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A7EE52063A
+	for <git@archiver.kernel.org>; Fri,  3 Apr 2020 02:47:48 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mj/963Xv"
+	dkim=pass (2048-bit key) header.d=me.com header.i=@me.com header.b="GruJpdhU"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389809AbgDCAZc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Apr 2020 20:25:32 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:44288 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388951AbgDCAZb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Apr 2020 20:25:31 -0400
-Received: by mail-pl1-f196.google.com with SMTP id h11so1996278plr.11
-        for <git@vger.kernel.org>; Thu, 02 Apr 2020 17:25:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=0CrdFMIQUy/BKzhsuD1fsaDGXS27PjoLL3ps7KmPFL0=;
-        b=mj/963XvHjKPxNoZGo8DvV/RWgtuykD1/1MOhm3Skn9q2VlS1SkbGX53C7y8fDVgow
-         uD2xLF0v7DPizQs3T1mbGcTDkxuBWLGxsnQjVuMMIJKLDi8RxYep1HdfgY8Uvd/ZhvYp
-         7kSzPjRdBxrESLDrBZ2N/w4tL+b2VQQ9GGT4SADvwIruhdZQDFYLbrys8r6Xu5HKyaML
-         2QjuxjWwnPDlpAHKw0sG2WMetawU1Z0OZM54hlNvVlk6p8n6sHOxi2oxeIJCuQatiGMh
-         mII7zg+cBhRLIjX9ZjnhAkk8sWrRABD2YgGlK5QVeYvLkzJUmqFmtsjxlKQWa5W4yJhs
-         1rsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=0CrdFMIQUy/BKzhsuD1fsaDGXS27PjoLL3ps7KmPFL0=;
-        b=qjeNS7PQqY09sY6aXhWGBFgmR89CmnIKBw9z4TIgNejI7A8cTB7hn42Cc+QcxAYNoS
-         u8fFmkLPTTcJJ1p82CKVnHbxW7BhuNtSCYBxsZkIqNdIs5ZLHRVFTZMtW9UDfKJFbhxg
-         aA/t3bhX/O9U5nPmF2x32rP6+5qO+AZBR5NkMb8uMyAbL/SDFXEbLGZFxepe+N8zYGy3
-         mrvgFPc0kVyA+k53ufQxQN1d8kBd2zVuOvk0tiAVw7dFjPUORgEe8hbixWO2SxbLZKLE
-         UA64NPJ4uK/2MmcWG1SsQF8JfmAZ0GVr6zqf5HmDzsGAch1R03xq9ufKXd0eO0+a4dPi
-         Il0w==
-X-Gm-Message-State: AGi0PuadZWj2kvxkkfnq88cE/yi+ND+G1SH2ofJyLJ+yE+7kr9kVES0E
-        o199waYfoX93UmiY4grqdGU=
-X-Google-Smtp-Source: APiQypKNgT2O5cCM1v3zrZazqKTzs7KeY6+dQB4v3Cqo3i6cVB1k6suASyPbDcrNd/ugIQWTATFojg==
-X-Received: by 2002:a17:90a:ac18:: with SMTP id o24mr6621545pjq.62.1585873530296;
-        Thu, 02 Apr 2020 17:25:30 -0700 (PDT)
-Received: from localhost ([2402:800:6375:207b:be21:746a:7a56:9d4d])
-        by smtp.gmail.com with ESMTPSA id k70sm4133023pga.91.2020.04.02.17.25.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Apr 2020 17:25:29 -0700 (PDT)
-Date:   Fri, 3 Apr 2020 07:25:28 +0700
-From:   Danh Doan <congdanhqx@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 5/5] Documentation: document merge option --no-gpg-sign
-Message-ID: <20200403002528.GB29543@danh.dev>
-References: <20200331064456.GA15850@danh.dev>
- <cover.1585821581.git.congdanhqx@gmail.com>
- <d35dd89c52e427861c38d17e43c61fca149dbfd5.1585821581.git.congdanhqx@gmail.com>
- <xmqqo8s93go8.fsf@gitster.c.googlers.com>
+        id S2390204AbgDCCrq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Apr 2020 22:47:46 -0400
+Received: from pv50p00im-zteg10011501.me.com ([17.58.6.42]:36580 "EHLO
+        pv50p00im-zteg10011501.me.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1731842AbgDCCrq (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 2 Apr 2020 22:47:46 -0400
+X-Greylist: delayed 512 seconds by postgrey-1.27 at vger.kernel.org; Thu, 02 Apr 2020 22:47:46 EDT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=1a1hai;
+        t=1585881554; bh=Bw5natrXGBtiREOBwzu34tcW8AJ5JeqGFPFPUfczy/k=;
+        h=To:From:Subject:Message-ID:Date:Content-Type;
+        b=GruJpdhUO7nSTG+FvJekWLj7h8RZ46boGKtG/QmEbg58MLpdHhFFzMV3bQt1CC9kG
+         Cz8ZrIqliZ2FPdaPG5twXKEh0tiSeH3zYgalU/ABfW8i3AU7vqEh/nNfIEb7zmAdgY
+         bk3X32R142kdT6oVRklV4pbzqR7AbXEVsaJ/1PXtIZ6snEBd+o8WVOyinlaDyeMl/X
+         MvN+JqjuMHzsNy69mRZP4XxpPlbz2tKtU+cq+26yUHq3Rsyqvqri3fcrrIawbrxUyZ
+         gQqJ8KGLkVlsM4PNHYsJguzARFjhrY+uEBPvLy8zxKyBSXERTsuAkwGOv8bQQwrw1y
+         MtbNHe+aocdew==
+Received: from [10.0.0.7] (unknown [110.7.216.3])
+        by pv50p00im-zteg10011501.me.com (Postfix) with ESMTPSA id 91CB5B0011D
+        for <git@vger.kernel.org>; Fri,  3 Apr 2020 02:39:13 +0000 (UTC)
+To:     git@vger.kernel.org
+From:   number201724 <number201724@me.com>
+Subject: The closing bracket is missing.
+Message-ID: <8d439c14-6b39-bbb7-a558-61c1e79ff1f3@me.com>
+Date:   Fri, 3 Apr 2020 10:39:10 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqo8s93go8.fsf@gitster.c.googlers.com>
+Content-Language: en-US
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2020-04-02_13:,,
+ signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=1 malwarescore=0
+ phishscore=0 bulkscore=0 spamscore=0 clxscore=1011 mlxscore=0
+ mlxlogscore=576 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1908290000 definitions=main-2004030020
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2020-04-02 11:07:19-0700, Junio C Hamano <gitster@pobox.com> wrote:
-> Đoàn Trần Công Danh  <congdanhqx@gmail.com> writes:
-> 
-> > Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
-> > ---
-> >  Documentation/merge-options.txt | 5 ++++-
-> >  1 file changed, 4 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/Documentation/merge-options.txt b/Documentation/merge-options.txt
-> > index 40dc4f5e8c..c46e4fe598 100644
-> > --- a/Documentation/merge-options.txt
-> > +++ b/Documentation/merge-options.txt
-> > @@ -61,9 +61,12 @@ When not possible, refuse to merge and exit with a non-zero status.
-> >  
-> >  -S[<keyid>]::
-> >  --gpg-sign[=<keyid>]::
-> > +--no-gpg-sign::
-> >  	GPG-sign the resulting merge commit. The `keyid` argument is
-> >  	optional and defaults to the committer identity; if specified,
-> > -	it must be stuck to the option without a space.
-> > +	it must be stuck to the option without a space. "--no-gpg-sign"
-> > +	is useful to countermand both `commit.gpgSign` configuration variable,
-> > +	and earlier "--gpg-sign".
-> 
-> Shouldn't [4/5] also add '--no-gpg-sign' to the header like the
-> above?
+command-list.h:53:69: error: expected ‘}’ before ‘;’ token
+    53 |  { "git-apply", N_("Apply a patch to files and/or to the 
+index"), 0};
 
-Yes, my bad. Since it's very small change.
-Could you please help me do it instead.
+command-list.h  The closing bracket is missing. In the master branch.
 
--- 
-Danh
