@@ -8,199 +8,129 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F345FC2BA15
-	for <git@archiver.kernel.org>; Sat,  4 Apr 2020 01:09:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DE54C43331
+	for <git@archiver.kernel.org>; Sat,  4 Apr 2020 01:12:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id C975F2074B
-	for <git@archiver.kernel.org>; Sat,  4 Apr 2020 01:09:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CBA1F20731
+	for <git@archiver.kernel.org>; Sat,  4 Apr 2020 01:12:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IkdbqytD"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rGKfRAxV"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726414AbgDDBJJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Apr 2020 21:09:09 -0400
-Received: from mail-pj1-f49.google.com ([209.85.216.49]:35165 "EHLO
-        mail-pj1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726302AbgDDBJI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Apr 2020 21:09:08 -0400
-Received: by mail-pj1-f49.google.com with SMTP id g9so3824617pjp.0
-        for <git@vger.kernel.org>; Fri, 03 Apr 2020 18:09:06 -0700 (PDT)
+        id S1726365AbgDDBMC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Apr 2020 21:12:02 -0400
+Received: from mail-qt1-f173.google.com ([209.85.160.173]:42838 "EHLO
+        mail-qt1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726170AbgDDBMC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Apr 2020 21:12:02 -0400
+Received: by mail-qt1-f173.google.com with SMTP id b10so2483905qtt.9
+        for <git@vger.kernel.org>; Fri, 03 Apr 2020 18:12:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=oZsbfhHg1d/pKYF4FSc/InjvjWMthEBndeltLqsIzSE=;
-        b=IkdbqytDzCvPQWUQ18ddQNeNhOv/zbF3+4ThgULsEO7dLldTmDQtf/Ur4Nh5jD73d6
-         9tUmtzNbA3hzoOxD6HpTY7OVmJoBtqo7TW1yYrnlVGw7cAQ8BOceB1MvdYAk/L7zUONk
-         bYWyUUaTcvbM4RhUwpWyUzf+cMRq1QTJIwS9DYPyKuTOAB2kGzb48O+vaaFQW0hfHDi3
-         DMQ2keRT5+2Yzb8dViO5S+DwkKXYA4JhPaTbu9j3Oor5UfPah2Jpj+DCTUD7M9JdOXZD
-         V+gsStjXcxGxBDZJXvKpLTdcLLbTEiqkq0l5npWjkAp3V7Tv0CAAGePqh7iJVE/pMbzM
-         fIWw==
+        bh=Ub/Rqz/ZQ52smebEp7L5zy/sTdobfJ66/yCyFnDZTAI=;
+        b=rGKfRAxVGtQOZPMFvjObtEYwmEqqtxzdbKqd4ZZ8b/QeDCPWmEwgCbq94VZlnKGQc1
+         mK/J6E76o1LRswhuDvKN+veY0ZlLhXp/l805GvhY/UF5UgS7XGyKMsTfuSgYRPh3Rnw8
+         NcgQC8X5cfKJBzLoo3dazoB5C4vFhe9zBq3bB5Gpd573v2zlZNPMFO1mkvvHuhOvHFTN
+         tkdfTyO9+v8zRrjwouhdVv9xmnMtw5gXStBJUy2ORW6yO2f9io7YzZujrua9fIGldIHh
+         n07IIgfcBtx3vIBU7VYHFwwdWk2tLawvMUNz9AodLZNVtQ+FCysMSv/PsLq5YTeC+HOe
+         Sjyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=oZsbfhHg1d/pKYF4FSc/InjvjWMthEBndeltLqsIzSE=;
-        b=Z+igc7tLjMAxpJqX4pbJThxflw97cUvD8O5pUgsl3JdjZ/ig+xAPYi83KmOZ/zP8Q7
-         AOkb4NdLQxr4iVjuRv0qo3i0m9rGySZT63y7M9bkjP8J2tJ+8+TcHWJldvJHfu7/e9Kn
-         DCvKsYp1LwzXWlSRHLohkaZa3hCjD7DuHDBotevmyrEeqGQh3o3Sum7Z9ayBSsjNdtNI
-         1RqMssMR2Aa5oD4pn2dqRCTMDTdFrPsIGc0eqRIX2hbak350E8kHPtdj/C/5sh7dx8fe
-         GM/NttVBhyY/E+W5fDhBScoKLeTRbCry3+YYGUFJIFoXOsRmV9I+mM43BKEAcEf35LLd
-         3+Vw==
-X-Gm-Message-State: AGi0PubtCxE8ADPZCVbZmq71gC8y/SIJctDfKFcv88g3i2Q0ZTY4GCFU
-        vweO3mfzyQ0Z0YTtmv7mli1qlEpJ
-X-Google-Smtp-Source: APiQypLSbhpp9pCekmzkMVYOzEN2bWGV9x9dP4SKgcy/Nw8vcM0nFQrBQvSHnWZqHJajzaGsvMii7Q==
-X-Received: by 2002:a17:90a:8c1:: with SMTP id 1mr13510738pjn.77.1585962545708;
-        Fri, 03 Apr 2020 18:09:05 -0700 (PDT)
-Received: from localhost.localdomain ([2402:800:6375:207b:be21:746a:7a56:9d4d])
-        by smtp.gmail.com with ESMTPSA id o12sm6664319pjt.16.2020.04.03.18.09.04
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 03 Apr 2020 18:09:05 -0700 (PDT)
-From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
-        <congdanhqx@gmail.com>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
-        <congdanhqx@gmail.com>
-Subject: [PATCH v4 4/6] ci: refactor docker runner script
-Date:   Sat,  4 Apr 2020 08:08:48 +0700
-Message-Id: <b5de868c1e354153bec78d892e13a6faf03c4f31.1585961568.git.congdanhqx@gmail.com>
-X-Mailer: git-send-email 2.26.0.334.g6536db25bb
-In-Reply-To: <cover.1585961568.git.congdanhqx@gmail.com>
-References: <cover.1585474409.git.congdanhqx@gmail.com> <cover.1585961568.git.congdanhqx@gmail.com>
+        bh=Ub/Rqz/ZQ52smebEp7L5zy/sTdobfJ66/yCyFnDZTAI=;
+        b=Hub7Ofngty0u60EdHY5UbTWIYFM2SncCYAI6Lzqt/9mtbApDBQPF9L5t0eGr5Icp3K
+         Mv+ZOYU9n5Jgjo8bIp0tQdzhG1KP/AIz5fyoxHg/XE5gxYpEW8Tl9LxyvM127o4AR9Dw
+         HSeFuLq/mRZ5LKzpH6hEYilFUS/TVFNzM6CrUcVYvEOQxQ2t3NVFsVSXcFS+Mx9JBt0I
+         PUVnyUenSEcUAZdkiUfWQuRFqMsaqgAyDO6dhtmUTqNoP97sRKTmL4+qNTGwf94GZEtn
+         IHCPc6nLewJKzl6uVr/j/lM3ThsgBmE4TrRWjtoFnpAMZgToer2+d4AaISHVbzVLH/UW
+         +cCg==
+X-Gm-Message-State: AGi0PuZ5/mtwTekoHIn2W3dudD/oto0IJCzoctqsZX+duDw2bjZe3p0h
+        zvQbxICHGoME7e05gQSW52mYvlS0
+X-Google-Smtp-Source: APiQypId84ZTgVKzRxo5hHdc3xi/9wwkzlP3JAouSB5r2g8v3qlXaNJuqwbSddUGbBBpT7W57oTcbQ==
+X-Received: by 2002:ac8:342b:: with SMTP id u40mr10536993qtb.83.1585962721187;
+        Fri, 03 Apr 2020 18:12:01 -0700 (PDT)
+Received: from localhost.localdomain (ktnron0919w-grc-01-76-68-143-128.dsl.bell.ca. [76.68.143.128])
+        by smtp.gmail.com with ESMTPSA id a136sm3297503qkc.75.2020.04.03.18.12.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 03 Apr 2020 18:12:00 -0700 (PDT)
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Alban Gruin <alban.gruin@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood123@gmail.com>
+Subject: [PATCH v4 02/23] t7600: use test_write_lines()
+Date:   Fri,  3 Apr 2020 21:11:15 -0400
+Message-Id: <059e0e8e43f633086fc297f8328288047b45d0e0.1585962672.git.liu.denton@gmail.com>
+X-Mailer: git-send-email 2.26.0.159.g23e2136ad0
+In-Reply-To: <cover.1585962672.git.liu.denton@gmail.com>
+References: <cover.1584782450.git.liu.denton@gmail.com> <cover.1585962672.git.liu.denton@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We will support alpine check in docker later in this series.
+In t7600, we were rewriting `printf '%s\n' ...` to create files from
+parameters, one per line. However, we already have a function that wraps
+this for us: test_write_lines(). Rewrite these instances to use that
+function instead of open coding it.
 
-While we're at it, tell people to run as root in podman,
-if podman is used as drop-in replacement for docker,
-because podman will map host-user to container's root,
-therefore, mapping their permission.
-
-Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
+Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- .travis.yml                                   |  2 +-
- azure-pipelines.yml                           |  4 ++--
- ...n-linux32-build.sh => run-docker-build.sh} |  6 ++---
- ci/{run-linux32-docker.sh => run-docker.sh}   | 22 ++++++++++++++-----
- 4 files changed, 22 insertions(+), 12 deletions(-)
- rename ci/{run-linux32-build.sh => run-docker-build.sh} (93%)
- rename ci/{run-linux32-docker.sh => run-docker.sh} (53%)
+ t/t7600-merge.sh | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/.travis.yml b/.travis.yml
-index fc5730b085..069aeeff3c 100644
---- a/.travis.yml
-+++ b/.travis.yml
-@@ -32,7 +32,7 @@ matrix:
-       services:
-         - docker
-       before_install:
--      script: ci/run-linux32-docker.sh
-+      script: ci/run-docker.sh
-     - env: jobname=StaticAnalysis
-       os: linux
-       compiler:
-diff --git a/azure-pipelines.yml b/azure-pipelines.yml
-index 675c3a43c9..11413f66f8 100644
---- a/azure-pipelines.yml
-+++ b/azure-pipelines.yml
-@@ -489,14 +489,14 @@ jobs:
-        test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || ci/mount-fileshare.sh //gitfileshare.file.core.windows.net/test-cache gitfileshare "$GITFILESHAREPWD" "$HOME/test-cache" || exit 1
+diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
+index 132608879a..4fa0ef8e3b 100755
+--- a/t/t7600-merge.sh
++++ b/t/t7600-merge.sh
+@@ -29,15 +29,15 @@ Testing basic merge operations/option parsing.
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-gpg.sh
  
-        res=0
--       sudo AGENT_OS="$AGENT_OS" BUILD_BUILDNUMBER="$BUILD_BUILDNUMBER" BUILD_REPOSITORY_URI="$BUILD_REPOSITORY_URI" BUILD_SOURCEBRANCH="$BUILD_SOURCEBRANCH" BUILD_SOURCEVERSION="$BUILD_SOURCEVERSION" SYSTEM_PHASENAME="$SYSTEM_PHASENAME" SYSTEM_TASKDEFINITIONSURI="$SYSTEM_TASKDEFINITIONSURI" SYSTEM_TEAMPROJECT="$SYSTEM_TEAMPROJECT" CC=$CC MAKEFLAGS="$MAKEFLAGS" bash -lxc ci/run-linux32-docker.sh || res=1
-+       sudo AGENT_OS="$AGENT_OS" BUILD_BUILDNUMBER="$BUILD_BUILDNUMBER" BUILD_REPOSITORY_URI="$BUILD_REPOSITORY_URI" BUILD_SOURCEBRANCH="$BUILD_SOURCEBRANCH" BUILD_SOURCEVERSION="$BUILD_SOURCEVERSION" SYSTEM_PHASENAME="$SYSTEM_PHASENAME" SYSTEM_TASKDEFINITIONSURI="$SYSTEM_TASKDEFINITIONSURI" SYSTEM_TEAMPROJECT="$SYSTEM_TEAMPROJECT" CC=$CC MAKEFLAGS="$MAKEFLAGS" jobname=Linux32 bash -lxc ci/run-docker.sh || res=1
+-printf '%s\n' 1 2 3 4 5 6 7 8 9 >file
+-printf '%s\n' '1 X' 2 3 4 5 6 7 8 9 >file.1
+-printf '%s\n' 1 2 3 4 '5 X' 6 7 8 9 >file.5
+-printf '%s\n' 1 2 3 4 5 6 7 8 '9 X' >file.9
+-printf '%s\n' 1 2 3 4 5 6 7 8 '9 Y' >file.9y
+-printf '%s\n' '1 X' 2 3 4 5 6 7 8 9 >result.1
+-printf '%s\n' '1 X' 2 3 4 '5 X' 6 7 8 9 >result.1-5
+-printf '%s\n' '1 X' 2 3 4 '5 X' 6 7 8 '9 X' >result.1-5-9
+-printf '%s\n' 1 2 3 4 5 6 7 8 '9 Z' >result.9z
++test_write_lines 1 2 3 4 5 6 7 8 9 >file
++test_write_lines '1 X' 2 3 4 5 6 7 8 9 >file.1
++test_write_lines 1 2 3 4 '5 X' 6 7 8 9 >file.5
++test_write_lines 1 2 3 4 5 6 7 8 '9 X' >file.9
++test_write_lines 1 2 3 4 5 6 7 8 '9 Y' >file.9y
++test_write_lines '1 X' 2 3 4 5 6 7 8 9 >result.1
++test_write_lines '1 X' 2 3 4 '5 X' 6 7 8 9 >result.1-5
++test_write_lines '1 X' 2 3 4 '5 X' 6 7 8 '9 X' >result.1-5-9
++test_write_lines 1 2 3 4 5 6 7 8 '9 Z' >result.9z
  
-        sudo chmod a+r t/out/TEST-*.xml
-        test ! -d t/failed-test-artifacts || sudo chmod a+r t/failed-test-artifacts
+ create_merge_msgs () {
+ 	echo "Merge tag 'c2'" >msg.1-5 &&
+@@ -81,7 +81,7 @@ verify_head () {
+ }
  
-        test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || sudo umount "$HOME/test-cache" || res=1
-        exit $res
--    displayName: 'ci/run-linux32-docker.sh'
-+    displayName: 'jobname=Linux32 ci/run-docker.sh'
-     env:
-       GITFILESHAREPWD: $(gitfileshare.pwd)
-   - task: PublishTestResults@2
-diff --git a/ci/run-linux32-build.sh b/ci/run-docker-build.sh
-similarity index 93%
-rename from ci/run-linux32-build.sh
-rename to ci/run-docker-build.sh
-index 44bb332f64..a05b48c559 100755
---- a/ci/run-linux32-build.sh
-+++ b/ci/run-docker-build.sh
-@@ -1,16 +1,16 @@
- #!/bin/sh
- #
--# Build and test Git in a 32-bit environment
-+# Build and test Git inside container
- #
- # Usage:
--#   run-linux32-build.sh <host-user-id>
-+#   run-docker-build.sh <host-user-id>
- #
+ verify_parents () {
+-	printf '%s\n' "$@" >parents.expected &&
++	test_write_lines "$@" >parents.expected &&
+ 	>parents.actual &&
+ 	i=1 &&
+ 	while test $i -le $#
+@@ -95,7 +95,7 @@ verify_parents () {
+ }
  
- set -ex
- 
- if test $# -ne 1 || test -z "$1"
- then
--	echo >&2 "usage: run-linux32-build.sh <host-user-id>"
-+	echo >&2 "usage: run-docker-build.sh <host-user-id>"
- 	exit 1
- fi
- 
-diff --git a/ci/run-linux32-docker.sh b/ci/run-docker.sh
-similarity index 53%
-rename from ci/run-linux32-docker.sh
-rename to ci/run-docker.sh
-index 54186b6aa7..3881f99b53 100755
---- a/ci/run-linux32-docker.sh
-+++ b/ci/run-docker.sh
-@@ -1,16 +1,26 @@
- #!/bin/sh
- #
--# Download and run Docker image to build and test 32-bit Git
-+# Download and run Docker image to build and test Git
- #
- 
- . ${0%/*}/lib.sh
- 
--docker pull daald/ubuntu32:xenial
-+case "$jobname" in
-+Linux32)
-+	CI_CONTAINER="daald/ubuntu32:xenial"
-+	;;
-+*)
-+	exit 1
-+	;;
-+esac
-+
-+docker pull "$CI_CONTAINER"
- 
- # Use the following command to debug the docker build locally:
--# $ docker run -itv "${PWD}:/usr/src/git" --entrypoint /bin/bash daald/ubuntu32:xenial
-+# <host-user-id> must be 0 if podman is used as drop-in replacement for docker
-+# $ docker run -itv "${PWD}:/usr/src/git" --entrypoint /bin/sh "$CI_CONTAINER"
- # root@container:/# export jobname=<jobname>
--# root@container:/# /usr/src/git/ci/run-linux32-build.sh <host-user-id>
-+# root@container:/# /usr/src/git/ci/run-docker-build.sh <host-user-id>
- 
- container_cache_dir=/tmp/travis-cache
- 
-@@ -26,8 +36,8 @@ docker run \
- 	--env cache_dir="$container_cache_dir" \
- 	--volume "${PWD}:/usr/src/git" \
- 	--volume "$cache_dir:$container_cache_dir" \
--	daald/ubuntu32:xenial \
--	/usr/src/git/ci/run-linux32-build.sh $(id -u $USER)
-+	"$CI_CONTAINER" \
-+	/usr/src/git/ci/run-docker-build.sh $(id -u $USER)
- 
- check_unignored_build_artifacts
- 
+ verify_mergeheads () {
+-	printf '%s\n' "$@" >mergehead.expected &&
++	test_write_lines "$@" >mergehead.expected &&
+ 	while read sha1 rest
+ 	do
+ 		git rev-parse $sha1
 -- 
-2.26.0.334.g6536db25bb
+2.26.0.159.g23e2136ad0
 
