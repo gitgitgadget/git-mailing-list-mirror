@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E9A24C2BA19
-	for <git@archiver.kernel.org>; Sat,  4 Apr 2020 01:12:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AE153C2BA15
+	for <git@archiver.kernel.org>; Sat,  4 Apr 2020 01:12:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id C133B20731
-	for <git@archiver.kernel.org>; Sat,  4 Apr 2020 01:12:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8436320731
+	for <git@archiver.kernel.org>; Sat,  4 Apr 2020 01:12:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P3b2Om5d"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DI6P2iVo"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726528AbgDDBMO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Apr 2020 21:12:14 -0400
-Received: from mail-qt1-f194.google.com ([209.85.160.194]:42698 "EHLO
-        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726512AbgDDBML (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Apr 2020 21:12:11 -0400
-Received: by mail-qt1-f194.google.com with SMTP id b10so2484113qtt.9
-        for <git@vger.kernel.org>; Fri, 03 Apr 2020 18:12:11 -0700 (PDT)
+        id S1726621AbgDDBMR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Apr 2020 21:12:17 -0400
+Received: from mail-qv1-f66.google.com ([209.85.219.66]:46334 "EHLO
+        mail-qv1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726551AbgDDBMQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Apr 2020 21:12:16 -0400
+Received: by mail-qv1-f66.google.com with SMTP id bu9so4574640qvb.13
+        for <git@vger.kernel.org>; Fri, 03 Apr 2020 18:12:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=o0cVVs4U0C8huOh0K2x4n9ozqCvkQ76WZSM+jWciwC8=;
-        b=P3b2Om5dOdXEIfO2TNXM7njg8ULgHS/K+cMHR1M2Mk02G2t1tEMltisU5o14+byro2
-         DcwT9Twx+loJUl9MaemkGkq7kxwgJrNoT2cuTR4LUmdE0bVxIpSAfgE4DvMA141qNeLO
-         AC1D24xIMPS86CYpGa9d4oLQ9nM/zBGdCkc3shsfJxVmiI7zrDaGrK+cmPQiR+Eye8qA
-         7+B9ska1jX4bbtiKrBLcXNtTlAGX90Bt8urWkV5W/RseWgt7TqTRiYCnLNB/6e8sCN6W
-         QhREZmiEGuNSjc5YcnQ4At+Aaik6rr/wO3OkeObQdfJ8M5uQYpD5B89OlvUNiNMd9DOf
-         hILw==
+        bh=dnSIFpWzrZIhL4coIee8OMYgHWQfDde9r+RYhxzpxa0=;
+        b=DI6P2iVoEzTZSTWPI+53jFO2k3Xk8jVyT3jmr6vbXEsUla/7dTQdD0XpTGgBSQ4qz0
+         nBGAQ+IZdrBgTk1rVFuiTf0fsEPXgUHI9c33GHRByt1U9zSxaBO85kOURLdwlkT6AxFR
+         5vKD7Rl7b1T1VCnxiuGWUxHIYjZx84NoNjawVG9YGXEDLlAJuuqdJAm+XoZGNU2QrPqA
+         bwpD5e0XTUCek+BO0I4NMmIGhIOTgxQaaq6x9Xevv+Uq/FGj2L3LVXo/BzcQewnDyWhu
+         fHcwEuZeUlKho8cSDcVRT7zQRJsShU3G5cxJyH5b2Dow5Oh043jU8Ty9phgPpFZYRovd
+         lxzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=o0cVVs4U0C8huOh0K2x4n9ozqCvkQ76WZSM+jWciwC8=;
-        b=nuTHKdYA/q60M8R/93gskL7h6UxhNmIKJ5s/WGDYgbU1ytcZSHYH2+7EaH/uY5PqPJ
-         aoyxoY3m5zno6AMaGNh1tmpghehciaB1zmPy37+FZSPeIxplPhn+TZhkztBjjMdZnMtN
-         HSneMuCozRBXkRSviYSPcnZNiYqRf2Bm19MkV8zMFqj2+UdrjZS0Je67DfKn52wtPbqR
-         mza/Bll666DHDTZ+dxuIQIyX9Mc4AXbua1CfXz0txjIwBnFtf0i9d6SXdEhGr3McwzFy
-         yeOt3eOFW8w2ivfrphtO2qwpNwRM2aJwGNrH9tCl2VGTGfgAoIWlhXf1T9YVaK5QHhVC
-         ET8w==
-X-Gm-Message-State: AGi0PubJnc33CHrzvxnw0rwFq3pnwlOqzW/lRuGrV1yBkry/N0y5ktZh
-        dGSaMa2OJQ+1Hn3Ndne2E/v8bqy7
-X-Google-Smtp-Source: APiQypK97MReIBk0/VrHG/0EoVTl8IaFojp0Ywk5you7tfe1xg1/3J8Hv3r+xHZ7kbBktIHIaLiATA==
-X-Received: by 2002:ac8:5486:: with SMTP id h6mr11073234qtq.256.1585962730328;
-        Fri, 03 Apr 2020 18:12:10 -0700 (PDT)
+        bh=dnSIFpWzrZIhL4coIee8OMYgHWQfDde9r+RYhxzpxa0=;
+        b=ItlgDgnmFp04djvsB3wT6l35I7Eujcw6HqaWs+ZFSUhIMlpWnXfF2bvtotmmXKIoc8
+         q2iJIKPi7Nun9qJhLqaHcNGjxAasVbyY6NCMf6TwRj/IH8vLcGcIHqz9XFi5YLUqQ+ga
+         oqMw5DmApPayWuH8e6PjWe7lnp+IFs6CK2Slr2kV3lGDzNzD39sFzhQzCcDd13Z8kRxe
+         LNrypeXr7ya//opHube03wevfNeJnitigc52vh55hpPM0ASWblg0EF95NDHuw5531UPo
+         oHsBClahZdvn0vJkUHAOQgbLskKSlMwGsR3f0ERqXZ7LGcXN57sNG6rGEA2PSN/Ij0Qp
+         v1CQ==
+X-Gm-Message-State: AGi0PuZ1vAYGmqo/gFGhh4GAOTusyK3WLkvWq2WXlX5iw91AA8WUO8Tg
+        RAQzeQsw+miSYu/34sS42yAkRg46
+X-Google-Smtp-Source: APiQypIvFttcAg7f8e8rPu8qP8IH9x52J8LBNq24DaGapLwH9SM8x5M8tD4Wwc5KoLrycNMxgWM5VQ==
+X-Received: by 2002:ad4:4581:: with SMTP id x1mr10638221qvu.152.1585962734828;
+        Fri, 03 Apr 2020 18:12:14 -0700 (PDT)
 Received: from localhost.localdomain (ktnron0919w-grc-01-76-68-143-128.dsl.bell.ca. [76.68.143.128])
-        by smtp.gmail.com with ESMTPSA id a136sm3297503qkc.75.2020.04.03.18.12.09
+        by smtp.gmail.com with ESMTPSA id a136sm3297503qkc.75.2020.04.03.18.12.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Apr 2020 18:12:09 -0700 (PDT)
+        Fri, 03 Apr 2020 18:12:14 -0700 (PDT)
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Alban Gruin <alban.gruin@gmail.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v4 11/23] sequencer: rename stash_sha1 to stash_oid
-Date:   Fri,  3 Apr 2020 21:11:24 -0400
-Message-Id: <a52583beff4494b9147b4c700f7be985b80f4197.1585962673.git.liu.denton@gmail.com>
+Subject: [PATCH v4 15/23] rebase: extract create_autostash()
+Date:   Fri,  3 Apr 2020 21:11:28 -0400
+Message-Id: <d5f51cd80e8bc85146ac8ea0cb95f89afbd7324d.1585962673.git.liu.denton@gmail.com>
 X-Mailer: git-send-email 2.26.0.159.g23e2136ad0
 In-Reply-To: <cover.1585962672.git.liu.denton@gmail.com>
 References: <cover.1584782450.git.liu.denton@gmail.com> <cover.1585962672.git.liu.denton@gmail.com>
@@ -74,69 +74,130 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The preferred terminology is to refer to object identifiers as "OIDs".
-Rename the `stash_sha1` variable to `stash_oid` in order to conform to
-this.
+In a future commit, we will lib-ify this code. In preparation for
+this, extract the code into the create_autostash() function so that it
+can be cleaned up before it is finally lib-ified.
+
+This patch is best viewed with `--color-moved` and
+`--color-moved-ws=allow-indentation-change`.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- sequencer.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ builtin/rebase.c | 94 +++++++++++++++++++++++++-----------------------
+ 1 file changed, 50 insertions(+), 44 deletions(-)
 
-diff --git a/sequencer.c b/sequencer.c
-index ae9efe5825..4b7985942d 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -3651,23 +3651,23 @@ static enum todo_command peek_command(struct todo_list *todo_list, int offset)
- 
- static int apply_autostash(const char *path)
- {
--	struct strbuf stash_sha1 = STRBUF_INIT;
-+	struct strbuf stash_oid = STRBUF_INIT;
- 	struct child_process child = CHILD_PROCESS_INIT;
- 	int ret = 0;
- 
--	if (!read_oneliner(&stash_sha1, path,
-+	if (!read_oneliner(&stash_oid, path,
- 			   READ_ONELINER_SKIP_IF_EMPTY)) {
--		strbuf_release(&stash_sha1);
-+		strbuf_release(&stash_oid);
- 		return 0;
- 	}
--	strbuf_trim(&stash_sha1);
-+	strbuf_trim(&stash_oid);
- 
- 	child.git_cmd = 1;
- 	child.no_stdout = 1;
- 	child.no_stderr = 1;
- 	argv_array_push(&child.args, "stash");
- 	argv_array_push(&child.args, "apply");
--	argv_array_push(&child.args, stash_sha1.buf);
-+	argv_array_push(&child.args, stash_oid.buf);
- 	if (!run_command(&child))
- 		fprintf(stderr, _("Applied autostash.\n"));
- 	else {
-@@ -3679,9 +3679,9 @@ static int apply_autostash(const char *path)
- 		argv_array_push(&store.args, "-m");
- 		argv_array_push(&store.args, "autostash");
- 		argv_array_push(&store.args, "-q");
--		argv_array_push(&store.args, stash_sha1.buf);
-+		argv_array_push(&store.args, stash_oid.buf);
- 		if (run_command(&store))
--			ret = error(_("cannot store %s"), stash_sha1.buf);
-+			ret = error(_("cannot store %s"), stash_oid.buf);
- 		else
- 			fprintf(stderr,
- 				_("Applying autostash resulted in conflicts.\n"
-@@ -3690,7 +3690,7 @@ static int apply_autostash(const char *path)
- 				  " \"git stash drop\" at any time.\n"));
- 	}
- 
--	strbuf_release(&stash_sha1);
-+	strbuf_release(&stash_oid);
- 	return ret;
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index 55730f6360..8349f3a03a 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -1269,6 +1269,55 @@ static int check_exec_cmd(const char *cmd)
+ 	return 0;
  }
  
++static void create_autostash(struct rebase_options *options)
++{
++	struct strbuf buf = STRBUF_INIT;
++	struct lock_file lock_file = LOCK_INIT;
++	int fd;
++
++	fd = hold_locked_index(&lock_file, 0);
++	refresh_cache(REFRESH_QUIET);
++	if (0 <= fd)
++		repo_update_index_if_able(the_repository, &lock_file);
++	rollback_lock_file(&lock_file);
++
++	if (has_unstaged_changes(the_repository, 1) ||
++	    has_uncommitted_changes(the_repository, 1)) {
++		const char *autostash =
++			state_dir_path("autostash", options);
++		struct child_process stash = CHILD_PROCESS_INIT;
++		struct object_id oid;
++
++		argv_array_pushl(&stash.args,
++				 "stash", "create", "autostash", NULL);
++		stash.git_cmd = 1;
++		stash.no_stdin = 1;
++		strbuf_reset(&buf);
++		if (capture_command(&stash, &buf, GIT_MAX_HEXSZ))
++			die(_("Cannot autostash"));
++		strbuf_trim_trailing_newline(&buf);
++		if (get_oid(buf.buf, &oid))
++			die(_("Unexpected stash response: '%s'"),
++			    buf.buf);
++		strbuf_reset(&buf);
++		strbuf_add_unique_abbrev(&buf, &oid, DEFAULT_ABBREV);
++
++		if (safe_create_leading_directories_const(autostash))
++			die(_("Could not create directory for '%s'"),
++			    options->state_dir);
++		write_file(autostash, "%s", oid_to_hex(&oid));
++		printf(_("Created autostash: %s\n"), buf.buf);
++		if (reset_head(the_repository, NULL, "reset --hard",
++			       NULL, RESET_HEAD_HARD, NULL, NULL,
++			       DEFAULT_REFLOG_ACTION) < 0)
++			die(_("could not reset --hard"));
++
++		if (discard_index(the_repository->index) < 0 ||
++			repo_read_index(the_repository) < 0)
++			die(_("could not read index"));
++	}
++	strbuf_release(&buf);
++}
+ 
+ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ {
+@@ -1902,50 +1951,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		die(_("could not read index"));
+ 
+ 	if (options.autostash) {
+-		struct lock_file lock_file = LOCK_INIT;
+-		int fd;
+-
+-		fd = hold_locked_index(&lock_file, 0);
+-		refresh_cache(REFRESH_QUIET);
+-		if (0 <= fd)
+-			repo_update_index_if_able(the_repository, &lock_file);
+-		rollback_lock_file(&lock_file);
+-
+-		if (has_unstaged_changes(the_repository, 1) ||
+-		    has_uncommitted_changes(the_repository, 1)) {
+-			const char *autostash =
+-				state_dir_path("autostash", &options);
+-			struct child_process stash = CHILD_PROCESS_INIT;
+-			struct object_id oid;
+-
+-			argv_array_pushl(&stash.args,
+-					 "stash", "create", "autostash", NULL);
+-			stash.git_cmd = 1;
+-			stash.no_stdin = 1;
+-			strbuf_reset(&buf);
+-			if (capture_command(&stash, &buf, GIT_MAX_HEXSZ))
+-				die(_("Cannot autostash"));
+-			strbuf_trim_trailing_newline(&buf);
+-			if (get_oid(buf.buf, &oid))
+-				die(_("Unexpected stash response: '%s'"),
+-				    buf.buf);
+-			strbuf_reset(&buf);
+-			strbuf_add_unique_abbrev(&buf, &oid, DEFAULT_ABBREV);
+-
+-			if (safe_create_leading_directories_const(autostash))
+-				die(_("Could not create directory for '%s'"),
+-				    options.state_dir);
+-			write_file(autostash, "%s", oid_to_hex(&oid));
+-			printf(_("Created autostash: %s\n"), buf.buf);
+-			if (reset_head(the_repository, NULL, "reset --hard",
+-				       NULL, RESET_HEAD_HARD, NULL, NULL,
+-				       DEFAULT_REFLOG_ACTION) < 0)
+-				die(_("could not reset --hard"));
+-
+-			if (discard_index(the_repository->index) < 0 ||
+-				repo_read_index(the_repository) < 0)
+-				die(_("could not read index"));
+-		}
++		create_autostash(&options);
+ 	}
+ 
+ 	if (require_clean_work_tree(the_repository, "rebase",
 -- 
 2.26.0.159.g23e2136ad0
 
