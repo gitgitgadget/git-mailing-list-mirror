@@ -2,86 +2,159 @@ Return-Path: <SRS0=+7zH=5U=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.8 required=3.0
+	tests=HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 91EA6C2BA15
-	for <git@archiver.kernel.org>; Sat,  4 Apr 2020 14:36:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DB06C2BA15
+	for <git@archiver.kernel.org>; Sat,  4 Apr 2020 14:58:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 636FA2071C
-	for <git@archiver.kernel.org>; Sat,  4 Apr 2020 14:36:51 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S8Km3DTa"
+	by mail.kernel.org (Postfix) with ESMTP id 2841A206D4
+	for <git@archiver.kernel.org>; Sat,  4 Apr 2020 14:58:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726352AbgDDOgs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 4 Apr 2020 10:36:48 -0400
-Received: from mail-ua1-f47.google.com ([209.85.222.47]:33649 "EHLO
-        mail-ua1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726016AbgDDOgs (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Apr 2020 10:36:48 -0400
-Received: by mail-ua1-f47.google.com with SMTP id v24so3861770uak.0
-        for <git@vger.kernel.org>; Sat, 04 Apr 2020 07:36:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=rSFUmjkhUwFktMfFu5JtTTa4okfr9VyP4wgATYxrQks=;
-        b=S8Km3DTagp80oKH+lOshnzZaidvaDBJ9ce3pykZe4i5pddJ25HVHnwQFpRD/luT1bJ
-         g84MBMZOZBRi2QQHpyrGpFug6Yh09Tw+dvxHe26+q5CNYFZUO6x3bDIA1mJPwtALCaB9
-         2SIUfjHU1GgXKynCO/1IB398gtGy0vxYIFNVgstXk5IS3ETtdLOBgef5p9Q0/+onDSqx
-         mbTRIAixcl3MXR8HVVKrnU54RtdW82HJucD0Q0krLiG8mny3mSlruZ1tm0p0OZIxYlk+
-         LQwSyw4JfqVLPbE6tsaWkLRaCNG6Qi0q5HH8+bccX6pUg4gpdJmFffrPgJUrBB+F0mh9
-         mL7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=rSFUmjkhUwFktMfFu5JtTTa4okfr9VyP4wgATYxrQks=;
-        b=fzBIoG/hjcmRu2qR2gipUC127vpKYfN/fEM8+TkEl6hdcOd0vKwMLdcksUNm7BjfHD
-         B6hhsPDfLoUfvv54wCYdg8IVl0peWvOiL9UFG775VA2Ya5VnvO430Ulawvv2qORUQLBG
-         yuH2NUMDA1pNagstOQ42n3gdECqAmq5Afs+BNVzx5H0D3qZelV0IvT0MdpYs/oV4wsgF
-         fJJ9p9hNZXPopP+wJHuemIjofAupS5U+BrN4c1w9dJIAM4GDHRoWMojNwhy87FF8bMrt
-         4IdZqrpDq+M4TO9HavCGd8D3A48QjLo1mm6XKmMPjNDCAPPXck4zUHTm7zMdL4PX2o2Q
-         D7Qw==
-X-Gm-Message-State: AGi0Puae6ZOv2qtINgfPM35tE/bQVVeG6QVUh0y1QWN/NWMjaGjuvljq
-        K1WNbA2fYOAD9Ugv8y/C5ongM5jeXpzH0736Kow=
-X-Google-Smtp-Source: APiQypJyK3him5adPyMj9wIdZM/AgwJrj0T71NeDEJv0bV2oCNp5Lrl2ZQsSNDjFPUo+Fi5x5QWOR/mZaLcipCyt1XE=
-X-Received: by 2002:ab0:18a8:: with SMTP id t40mr10634129uag.115.1586011007769;
- Sat, 04 Apr 2020 07:36:47 -0700 (PDT)
+        id S1726269AbgDDO6a (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 4 Apr 2020 10:58:30 -0400
+Received: from cloud.peff.net ([104.130.231.41]:33482 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725837AbgDDO6a (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Apr 2020 10:58:30 -0400
+Received: (qmail 5371 invoked by uid 109); 4 Apr 2020 14:58:30 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 04 Apr 2020 14:58:30 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 29670 invoked by uid 111); 4 Apr 2020 15:08:46 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 04 Apr 2020 11:08:46 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Sat, 4 Apr 2020 10:58:29 -0400
+From:   Jeff King <peff@peff.net>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: [PATCH] Makefile: avoid running curl-config unnecessarily
+Message-ID: <20200404145829.GB679473@coredump.intra.peff.net>
+References: <20200326080540.GA2200522@coredump.intra.peff.net>
+ <nycvar.QRO.7.76.6.2004041535360.46@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-References: <20200331064456.GA15850@danh.dev> <cover.1585909453.git.congdanhqx@gmail.com>
-In-Reply-To: <cover.1585909453.git.congdanhqx@gmail.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Sat, 4 Apr 2020 16:36:36 +0200
-Message-ID: <CAN0heSrrhrPSqMr8hovdFxbM7+rYMS004KDr1NKuM8JwKXsxuA@mail.gmail.com>
-Subject: Re: [PATCH v3 0/6] Honour and Document --no-gpg-sign
-To:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Dominic Chen <d.c.ddcc@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.2004041535360.46@tvgsbejvaqbjf.bet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 3 Apr 2020 at 12:28, =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh <co=
-ngdanhqx@gmail.com> wrote:
->
-> Multiple commands that understand --gpg-sign but haven't understand
-> --no-gpg-sign, yet.
->
-> Also, document more commands that honours --no-gpg-sign
->
-> Change in v3 since v2:
-> - Use `backticks` instead of "dquote" for options
+On Sat, Apr 04, 2020 at 03:38:00PM +0200, Johannes Schindelin wrote:
 
-Cool, thanks!
+> >   [1/2]: Makefile: avoid running curl-config multiple times
+> >   [2/2]: Makefile: use curl-config --cflags
+> 
+> I _suspect_ that this is responsible for the build failure
+> 
+> 	make: curl-config: Command not found
+> 
+> at https://github.com/git/git/runs/556459415#step:4:674
+> 
+> Do we need this to fix this?
 
-> - Add missing "--no-gpg-sign::"
-> - Merge git-commit-tree --[no-]gpg-sign"
+Hmm, yeah. It's an unfortunate side effect of the ":=" assignment to
+stop repeatedly invoking curl-config. Now it's only invoked once, but
+it's _always_ once, even if we're not building anything that needs it.
 
-Martin
+I wonder if there's a way to expand a Makefile variable lazily, but only
+once...aha, with some help from the Internet, I came up with the patch
+below.
+
+> -- snip --
+> diff --git a/ci/test-documentation.sh b/ci/test-documentation.sh
+> index de41888430a..325b4cc6185 100755
+> --- a/ci/test-documentation.sh
+> +++ b/ci/test-documentation.sh
+> @@ -11,6 +11,7 @@ filter_log () {
+>  	    -e '/^    \* new asciidoc flags$/d' \
+>  	    -e '/stripped namespace before processing/d' \
+>  	    -e '/Attributed.*IDs for element/d' \
+> +	    -e '/curl-config: Command not found/d' \
+>  	    "$1"
+>  }
+
+Yes, this works, but it's rather unfortunate that we're invoking
+curl-config when it's not needed. Perhaps using NO_CURL in the
+documentation job would be better. But if the patch below isn't too
+disgusting, I think I prefer that approach (because it helps _any_
+top-level make invocation that isn't actually building http binaries).
+
+Junio, you may want to hold off on moving jk/build-with-right-curl to
+next until we resolve this one way or the other.
+
+-- >8 --
+Subject: [PATCH] Makefile: avoid running curl-config unnecessarily
+
+Commit 94a88e2524 (Makefile: avoid running curl-config multiple times,
+2020-03-26) put the call to $(CURL_CONFIG) into a "simple" variable
+which is expanded immediately, rather than expanding it each time it's
+needed. However, that also means that we expand it whenever the Makefile
+is parsed, whether we need it or not.
+
+This is wasteful, but also breaks the ci/test-documentation.sh job, as
+it does not have curl at all and complains about the extra messages to
+stderr. An easy way to see it is just:
+
+  $ make CURL_CONFIG=does-not-work check-builtins
+  make: does-not-work: Command not found
+  make: does-not-work: Command not found
+  GIT_VERSION = 2.26.0.108.gb3f3f45f29
+  make: does-not-work: Command not found
+  make: does-not-work: Command not found
+  ./check-builtins.sh
+
+We can get the best of both worlds if we're willing to accept a little
+Makefile hackery. Courtesy of the article at:
+
+  http://make.mad-scientist.net/deferred-simple-variable-expansion/
+
+this patch uses a lazily-evaluated recursive variable which replaces its
+contents with an immediately assigned simple one on first use.
+
+Reported-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+This is our first use of eval in the Makefile, but that goes back to GNU
+make v3.80, which is from 2002. I think that should be OK.
+
+If this inlining is too gross, we could probably contain it in a
+function where callers would do something like:
+
+  $(eval lazy-shell-var, CURL_LDFLAGS, $(CURL_CONFIG) --libs)
+
+That's better in the sense that there's less gobbledygook at each
+callsite, but worse in that it obscures the fact that it's a variable
+assignment. I'd probably consider going that direction if we started
+growing more use-cases than these two.
+
+We could probably also stuff this into a sh
+ Makefile | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 5099f6a8f8..97dbdcd201 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1366,12 +1366,12 @@ else
+ 	endif
+ 
+ 	ifndef CURL_LDFLAGS
+-		CURL_LDFLAGS := $(shell $(CURL_CONFIG) --libs)
++		CURL_LDFLAGS = $(eval CURL_LDFLAGS := $$(shell $$(CURL_CONFIG) --libs))$(CURL_LDFLAGS)
+ 	endif
+ 	CURL_LIBCURL += $(CURL_LDFLAGS)
+ 
+ 	ifndef CURL_CFLAGS
+-		CURL_CFLAGS := $(shell $(CURL_CONFIG) --cflags)
++		CURL_CFLAGS = $(eval CURL_CFLAGS := $$(shell $$(CURL_CONFIG) --cflags))$(CURL_CFLAGS)
+ 	endif
+ 	BASIC_CFLAGS += $(CURL_CFLAGS)
+ 
+-- 
+2.26.0.410.gc279fb3cbd
+
