@@ -2,162 +2,119 @@ Return-Path: <SRS0=+7zH=5U=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FE56C2BA16
-	for <git@archiver.kernel.org>; Sat,  4 Apr 2020 12:07:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0650EC2BA16
+	for <git@archiver.kernel.org>; Sat,  4 Apr 2020 12:17:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0CFEB206F5
-	for <git@archiver.kernel.org>; Sat,  4 Apr 2020 12:07:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BEC2F206E9
+	for <git@archiver.kernel.org>; Sat,  4 Apr 2020 12:17:26 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AZzR1ecp"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Y0xS2aQp"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726057AbgDDMHr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 4 Apr 2020 08:07:47 -0400
-Received: from mail-qv1-f68.google.com ([209.85.219.68]:42607 "EHLO
-        mail-qv1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725870AbgDDMHr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Apr 2020 08:07:47 -0400
-Received: by mail-qv1-f68.google.com with SMTP id ca9so4991371qvb.9
-        for <git@vger.kernel.org>; Sat, 04 Apr 2020 05:07:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=pisXdmOKxP7L4p44SfZeQEn5sgw8sHIBYoufEHTDlug=;
-        b=AZzR1ecp3LR4gmFgfYfbSlXUk85nKMsGEwoTz8Xs4yehMumOQEfaF8ZGdQXxwuZCAX
-         z7eMBpP4CaEKoKX1nRy5nPOqj6+SShhmbBbFTkgLsoaHO3P87k3iuDMEIbx0V6J9KAeQ
-         ydZw/htJnKIqJXu0U3G3Z6XpiwU9O+JYeaq622VyOE20eeWfIgNxLRK4+BGLIrW0thAQ
-         s6q7Yrq7VOs8mnbzLsTTUTFHn1pa085GRXFQ5JsdEaU8cDeOmFnNsr3oAYXu07FoRYDj
-         dQXkGiIDbHMvUjcy2naK3oiEQMLpEYXmjs1jtA22vQCHvTUacOnSwf4v9VNvDztRJozH
-         IcsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=pisXdmOKxP7L4p44SfZeQEn5sgw8sHIBYoufEHTDlug=;
-        b=a+x1zCCEHgp9tpFi0fgTfVzMHHaDdmK3+jm45BK21S1j1sX+j8RUbmWFEIcxki3ZAM
-         C1tKPJKkvue0ZW0lHP7fYgiYmI6gvY1ZzG859ogtI7CLyfFX1sCb6UHsppwE6uUBJMc+
-         6dFJGnoYWWcqNuvitydbNvYAiWRaCcxLvi/7Pxoi50EK0MvpMqpv0NnIh5BBCB7EIORg
-         YS1Cak/LoFDK4mfGSBekJXj9p14KY8S8G+XHunktDgpdbTtk/6fxw7kZna0gQOiV6RiV
-         2QsE6jUtmczqJZeVfWX2ILGv/S8d4f42dS0AvtknCL2srscL2ZUPVV0Sz/jWOItnnzg3
-         I+yw==
-X-Gm-Message-State: AGi0PuaoekIKgqm7sUP6/GBfiqeOUE/2bkAXn+xR5Fj45aojUo7Ab/5K
-        Lh6yWPdDm48pkbs0GYyVhLo8NWsd
-X-Google-Smtp-Source: APiQypLB3C99rGnv4hTt/999SCdSMJJhBth0mc74SbI2aRNip0VuoA4uC+6Zo/SzqgCLH5aypIjmhg==
-X-Received: by 2002:ad4:41c2:: with SMTP id a2mr12305029qvq.112.1586002065856;
-        Sat, 04 Apr 2020 05:07:45 -0700 (PDT)
-Received: from generichostname ([199.249.110.29])
-        by smtp.gmail.com with ESMTPSA id w13sm8655655qtn.81.2020.04.04.05.07.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 04 Apr 2020 05:07:45 -0700 (PDT)
-Date:   Sat, 4 Apr 2020 08:07:43 -0400
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] Fix -Wmaybe-uninitialized warnings under -O0
-Message-ID: <20200404120743.GA636417@generichostname>
-References: <33984eeaabbfbcfd4b9d3903549d8b7d6c4ced7e.1585726172.git.liu.denton@gmail.com>
- <20200401095255.GA60227@coredump.intra.peff.net>
- <20200401140643.GA880372@generichostname>
- <20200403140447.GA639586@coredump.intra.peff.net>
+        id S1726187AbgDDMRZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 4 Apr 2020 08:17:25 -0400
+Received: from mout.gmx.net ([212.227.17.21]:58563 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725943AbgDDMRY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Apr 2020 08:17:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1586002638;
+        bh=ePJO90AK7/6gsKOcv4NSmbx8M/3o/ROws0TK3mMmHXw=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Y0xS2aQpySjQZvMkwSzlyfotLLpHnKO4KOHKR7RIxYKBJC532vlxl2yfxXYGwObf+
+         /Pvdie4okGryb5qV2Zaq1ZnNNuagOsow56IB9tTmTzjd7EmtrXzeZ/YywdH3Az3P1a
+         1iyYGyPUWCPszrhxi9JPuNHVK1A47vtptn6d0S48=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from MININT-QA14EDB.fritz.box ([213.196.212.7]) by mail.gmx.com
+ (mrgmx105 [212.227.17.168]) with ESMTPSA (Nemesis) id
+ 1N3siG-1jBwGE2LAm-00zlu1; Sat, 04 Apr 2020 14:17:18 +0200
+Date:   Sat, 4 Apr 2020 14:17:17 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     George Spelvin <lkml@SDF.ORG>
+cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Philip Oakley <philipoakley@iee.email>
+Subject: Re: Feature request: rebase -i inside of rebase -i
+In-Reply-To: <20200331000018.GD9199@SDF.ORG>
+Message-ID: <nycvar.QRO.7.76.6.2004041414370.46@tvgsbejvaqbjf.bet>
+References: <20200320223015.GA19579@SDF.ORG> <xmqq36a2bpxz.fsf@gitster.c.googlers.com> <20200320233528.GB19579@SDF.ORG> <nycvar.QRO.7.76.6.2003211135380.46@tvgsbejvaqbjf.bet> <20200321175612.GC19579@SDF.ORG> <nycvar.QRO.7.76.6.2003252008490.46@tvgsbejvaqbjf.bet>
+ <20200326001821.GB8865@SDF.ORG> <nycvar.QRO.7.76.6.2003281510260.46@tvgsbejvaqbjf.bet> <20200328163024.GA26885@SDF.ORG> <20200331000018.GD9199@SDF.ORG>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200403140447.GA639586@coredump.intra.peff.net>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:l9BpkKqe+8lAKAdNkD4Y6UvN5qgB6MDmMu6h7dl9I8dsMSaXSDZ
+ mi22t5QfLohHhWO3v1gaKu/vjoDS0bqp2xpHbTDkrpyV0ZX5OGbuarGrls7OjpbAQZPO4sM
+ EjtAdvQq4jdAojuFXog2bwDVj2SB0Ypv/hLDizpmkr4jHG4X3UnAHNuZHAo0ihSOP7cU04Z
+ ZDIoGPeMzpyld/vv3EQlQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:u1Fnd8uyKgs=:jtxu+nO60p2Q5WFIpHYQpN
+ RcI/tTyzkMeAgJdUY+Xq8N1Pqgof8shcR6CIhwYlJr/Sn45Veq+AmFOT6ZtQVhrdRrEYB7z+5
+ BthAZvUeP48iVW/WLgOC6W1M5tggYqmWYOPRVZb38leflFMx/aDCRS3FBuqwFEjlJHszcEkyV
+ 6ohQJHuifYBzg+5WJEq6XuVD5nAEev7PmSi0y/HgUH7K49qJRAL6/O6+sQqr0WDk3q2o633QR
+ 9mqRvrww2VH9aYlE3FEdLIlk7ntMsxGSr+c7rKQTK+/QWCW1xdmzjBq3EzSDjWRFBM+uW1KU/
+ LCUYJu6JTQ8HPBIB8nvLTguz7GymXehI9Gb1k22iCxjgnV/HHflWHoxDKX4dG+keVFW1tXOjP
+ 9DaWNZ7Z7yd+rrkOHALA84s05hS/vOjMK0gJ2i1Y47a2m222i8kMx0bR6XkxjEDkism2SnMEF
+ vGpJ23hJBh3cLqLRsp5wIc8vrI4ULJ0p5z/xFkivdrZa1xCsMdftMmKnCyhrJeBd8FTm0Y2Qb
+ Bp9P9rLgS6l8TOoYOnrTq+nZID7GDtU7MOJI5g5+Zqj5aGwfIPTSyLngkz8L6viYV+LZqhQpw
+ gIKZHOyPVIgL1Z7i8jexAz5DXwajgr5OPEGbFlI7rrtKnWoPWMYTlHlOt72VVlQHdIeqB7Tzp
+ qr1X46D1X8RLGHYvVNwQH9dvGElBV7D45pkmdmj+Zwg5zVIzRQuUuPAxsDFZiIVYqJJrkkeru
+ etCIw+ImGMNC145mibABrWbtk/CK+g0Q34TVZwNAfftwX2BFtLNGWeyKh/OWPP6//s/BJ/+iJ
+ WTaUGuVNCBlx44CR1Dp4ct9gPAFEVRMSD84aN4TA7/4UswCR8sD08vjja9+mmnMf+jSGhGUGk
+ Igu2UKtQsWxrvkrlyaqkVX43F5xU8oquSHNlGZo65sEosW3ZMKdb4df4lI4okcryOHEMa90Sl
+ mvDnco0ebM0EPyF15ytwhDowwob6wCv3SYlgXAuiCb75g6sjW+MQcFGY2rJkeY48Tp6jHnA8m
+ t8V8qvJUERe2hcRRaNVh7NXs0cL+GFS4aeaCwOC1bKflgY3S0hMa3eJyunBr90K+X5qVkD9Hv
+ 6fT/Yh222ZlKox6kf111rdU1DDWin33CTiiPaSzBXBJTFzNXfF1HXurjXWyBekVdE/ozUj4ma
+ 81gJY/E2vpsRPB4sctgoESdbDwL1p5x2lHFNRxS8CgjA+MogaNJLpE/orFRBSsaCvEL9WBgII
+ yCLDSuS48G7jbXyjb
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+Hi George,
 
-On Fri, Apr 03, 2020 at 10:04:47AM -0400, Jeff King wrote:
-> On Wed, Apr 01, 2020 at 10:06:43AM -0400, Denton Liu wrote:
-> 
-> > > So why does your version behave differently? And if this is a temporary
-> > > state for a buggy version of gcc (that may be fixed in the next point
-> > > release), is it worth changing our source code to appease it?
-> > 
-> > A correction to the earlier message... It seems like I wasn't reporting
-> > the correct settings. I was actually compiling with -Og, not -O0
-> > (whoops!).
-> > 
-> > I tested it with gcc-8 and it seems like it also reports the same
-> > problem. Also, -O1 reports warnings as well.
-> 
-> Ah, OK, I can reproduce easily with -Og (up through gcc-10). Most of
-> them don't trigger with -O1; just the one in ref-filter.c.
-> 
-> That one's interesting. We have:
-> 
->   int ret = 0;
->   ...
->   if (...)
->          ...
->   else
->          ret = for_each_fullref_in_pattern(...);
->   ...
->   return ret;
-> 
-> So we'd either have 0 or an assigned return. But the bug is actually in
-> for_each_fullref_in_pattern(), which does this:
-> 
->   int ret; /* uninitialized! */
-> 
->   /* a bunch of early return conditionals */
->   if (...)
->     return ...;
-> 
->   for_each_string_list_item(...) {
->     ret = for_each_fullref_in(...);
+On Tue, 31 Mar 2020, George Spelvin wrote:
 
-This loop is missing a bit of important context:
+> Thinking about Philip Oakley's suggestion, it dawned on me that
+> we can *already* do a nested rebase manually, and having a less
+> manual alias for the procedure would be reasonable.
+>
+> Suppose the last four commits are O-A-B-C, and whether they were created
+> by this rebase or existed before is irrelevant.
+>
+> If I want to rebase --nested -i O, then I --edit-todo and
+> prepend the following four lines:
+> reset O
+> pick A
+> pick B
+> pick C
+>
+> If a nested rebase command does just that, I think it would cover my
+> use case.  If it adds a comment saying "nested rebase ends here",
+> it's easy to cancel the nested rebase if there was a mistake.
 
-	if (ret)
-		break;
+FWIW this is precisely what I do in
+https://github.com/git-for-windows/build-extra/blob/70d940d1b/ever-green.s=
+h#L184-L246
 
->   }
-> 
->   return ret;
-> 
-> but that will return an uninitialized value when there are no patterns.
-> I doubt we have such a case, but that may explain why -O0 does not
-> complain (it assumes "in_pattern" will return a useful value) and -O2
-> does not (it is able to figure out that it always does), but -O1 only
-> inlines part of it.
-> 
-> Curiously, -Og _does_ find the correct function.
-> 
-> Your patch silences it, but is it doing the right thing? It sets "ret =
-> 0", but we haven't actually iterated anything. Should it be an error
-> instead?
+I create a new worktree (without checking out anything), start a rebase
+with a custom (fake) editor that simply grabs the todo list and aborts
+that rebase. Then I remove that worktree and insert the grabbed todo list
+into the current one.
 
-I understood the semantics of for_each_fullref_in_pattern() (in the
-non-early return case) to be "for each item, iterate and compute a
-value; if that value is non-zero return it. If not found, return zero".
-The missing context above is important since, without it, we lose the
-semantics.
+However, I find that it is not at all easy to cancel the nested rebase
+because the current `HEAD` is recorded _nowhere_.
 
-If I'm understanding the above correctly then, studying this function in
-a vacuum, it would make sense to assign a default value of 0 since if
-the for operates on an empty list, the function should consider the item
-vacuously not found and we should return 0 as a result.
+Ciao,
+Dscho
 
-This was the type of analysis I applied to the other changes. I'll admit
-that I studied the other functions in a vacuum as well since these
-seemed to be superficial warnings (since they aren't triggered with
--O{0,2}) which indicated to me that the code was correct except for some
-"cosmetic" errors. I dunno, perhaps this is my inexperience showing
-through.
-
-Thanks,
-
-Denton
-
-P.S. Do we want to quash the -O3 warnings as well?
-
-> -Peff
+> A slightly fancier thing a nestrd rebase could do is see if any of the
+> newly created picks are also used in merges that were already in the tod=
+o
+> list.  In that case, follow the pick by a label command and update the
+> later merge to refer to the label.
+>
