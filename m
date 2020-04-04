@@ -2,141 +2,132 @@ Return-Path: <SRS0=+7zH=5U=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BE9EC43331
-	for <git@archiver.kernel.org>; Sat,  4 Apr 2020 00:16:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CACC8C2BA17
+	for <git@archiver.kernel.org>; Sat,  4 Apr 2020 01:09:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id E4EE1206F6
-	for <git@archiver.kernel.org>; Sat,  4 Apr 2020 00:16:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9C8642074B
+	for <git@archiver.kernel.org>; Sat,  4 Apr 2020 01:09:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="umDLmSGV"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mX4NqHuS"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726197AbgDDAQ1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Apr 2020 20:16:27 -0400
-Received: from mail-oi1-f195.google.com ([209.85.167.195]:46393 "EHLO
-        mail-oi1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725980AbgDDAQ1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Apr 2020 20:16:27 -0400
-Received: by mail-oi1-f195.google.com with SMTP id q204so7748999oia.13
-        for <git@vger.kernel.org>; Fri, 03 Apr 2020 17:16:25 -0700 (PDT)
+        id S1726339AbgDDBJC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Apr 2020 21:09:02 -0400
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:41414 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726208AbgDDBJC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Apr 2020 21:09:02 -0400
+Received: by mail-pl1-f196.google.com with SMTP id d24so3484868pll.8
+        for <git@vger.kernel.org>; Fri, 03 Apr 2020 18:09:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=bXRgUTYankw7s7YNj4UvYbIQYlEKZ5IsuW39+dPBSVU=;
-        b=umDLmSGVnxH7WW4DmrV8Fd6Z3Ha5/1UKLCu4Y4Sk8a9dLCIwAOs/QBuy9mIseLyW+6
-         ORvmeH4heqK/XELoPEPEJVfJoVXLYwX5x+RVh2xaRDXe9REEr3y7TOk9uiLhyrF91ouD
-         Of9a8Vh8duRnAQWsmkUIfNQMCruG94CxssKcMsKdouJc3twH+uwPyseibD+k+/JtceIV
-         goE9DElAMSlY3uqyyMKluRrrlpeOIFzj810kTlpNQ7mhvpZQjLnUFc0CuRMY9oMxUli5
-         5Tsj5bmLEQu6oIBDK8M0ifEmnwoXgi3DghwZGGQPTJjVlROypelkc6WRF8elmXmxEvfR
-         kIEA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=F/05iEFWX5JXC5UQTYfzsFMJZ0Wb9bXyAbm9U1echHc=;
+        b=mX4NqHuS6+FAOXYWMGw+GQRXEfxKt9m1yNSQMWWXF4rBjxrvHwnAUEoEdNrIQgdhJY
+         esbklpcl5MsdvW0RSLVj1jiACPXocqRSOq9HG9rrNLTXhoc5QIkX20JvIZhOeVEyT8vP
+         GXGwlKMSf8aPVCeQCYgmkeTohyGQx4W9TF+cuWlViQVMT8da5ebXMfQurY43XBC4nGop
+         F7BoaZxirDSTQqlZKiyhHbGmtMLqj9kXQtOgzpaPN+b53OhQ3Q+zMVwmKoWhIO1MJo2p
+         38o80e4mZfbyvmLbp0pW/754xhEVmL+AW1RqEDqwbU3bB5B/horh6VzHrNeONvKFTUdq
+         KTlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=bXRgUTYankw7s7YNj4UvYbIQYlEKZ5IsuW39+dPBSVU=;
-        b=eP87QeyyIcCDiXxJ0XAVePQ/3bcy8isPaAD9hrteT8iZYGQdVAzptMfV5pgfycB/dO
-         rWcDu2BVzKjQjp7mdvFgDhjbpXYZBfkXC9eFLLCSz/oUqPi7c+CAhiUVCjY9AgEI28VO
-         WLbr40phrRwxEvehfCwHgftG8cfOQc5pR89cLwFoKoif/Q5YqeZXygMnkcIpIwzz8XPq
-         qcz7g9IVAFa7AbF5aLMiW03uMPjKnY0dXpSer4ICvZkeW0GY2JOV3d5jfvzVAztPb4Il
-         ImoVhLpJqcKYF1+RdWMnj8cL7yVcjYy8p9MqsPlcp1sWApPH1GfxEugHxUzHPeVtHCdM
-         EA7w==
-X-Gm-Message-State: AGi0PubFwhS4qS9jmDY/uZ2ssUrCBfawJl6D/IOpe7j16m0SaoTkaLAL
-        2eyExR0Q8Ac4BiOF+RMV+uI=
-X-Google-Smtp-Source: APiQypLgC6LPhAKWZ+ZRoRtadGQeNmY6RcAEc1ZSmgT3+Gd0GUZFSVKwVytSQFIGf6+Lh0So8FHlmg==
-X-Received: by 2002:aca:5d8a:: with SMTP id r132mr5217331oib.129.1585959384838;
-        Fri, 03 Apr 2020 17:16:24 -0700 (PDT)
-Received: from [192.168.1.83] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id t184sm2583093oie.47.2020.04.03.17.16.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 03 Apr 2020 17:16:24 -0700 (PDT)
-Subject: Re: [PATCH 00/15] [RFC] Maintenance jobs and job runner
-To:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, peff@peff.net, jrnieder@google.com,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.597.git.1585946894.gitgitgadget@gmail.com>
- <xmqqv9mgxn7u.fsf@gitster.c.googlers.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <cc9df614-2736-7cdd-006f-59878ee551c8@gmail.com>
-Date:   Fri, 3 Apr 2020 20:16:21 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:75.0) Gecko/20100101
- Thunderbird/75.0
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=F/05iEFWX5JXC5UQTYfzsFMJZ0Wb9bXyAbm9U1echHc=;
+        b=Zf4VfCtJPQLcAPHJEOaJazyzrJoHqN/8VOMURejPZ41p4z8zmsloo3eBP3RKvGxdin
+         19mZpX7k//lq61IPCSlnCd5+Dujd6GN1AxsmTqWIAFbdJeOezPc2WUBgpNeqxx/Kasaj
+         /7/aNzSZH7/X869U4QEx2xw03wiqQEDY6SCRjry9IRT7tPQH++89dzWLSDLqO1uajyV5
+         dRaf859kFKpwoGDlRrGP0G+WOrehN8xOI0MABU1KA4UgLkkYloj+WPL+HuHTYeXr/DwV
+         HX5ZjxjqSWkg6iZT/dJegndl3v7CRaKpELacE6y3WcGgwFyKA3BYC1nfNHrf8DzKL5VW
+         WXRg==
+X-Gm-Message-State: AGi0PubRwbD8HvBlcvWZgsW8QNcBXLVw7kCeY1SFNipUkTFKGVmGK6Qg
+        cbWtWajxPOm8ppgYp0A596PN+7w0
+X-Google-Smtp-Source: APiQypJ4Ktk+GF+Cg7HKvISSmSNP8ffrxMzGfThv9AD59MWhgppNSr045j1voX8Gwu4CVAH450+uoA==
+X-Received: by 2002:a17:902:a588:: with SMTP id az8mr10143285plb.338.1585962541002;
+        Fri, 03 Apr 2020 18:09:01 -0700 (PDT)
+Received: from localhost.localdomain ([2402:800:6375:207b:be21:746a:7a56:9d4d])
+        by smtp.gmail.com with ESMTPSA id o12sm6664319pjt.16.2020.04.03.18.08.59
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 03 Apr 2020 18:09:00 -0700 (PDT)
+From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>
+Subject: [PATCH v4 1/6] ci: make MAKEFLAGS available inside the Docker container in the Linux32 job
+Date:   Sat,  4 Apr 2020 08:08:45 +0700
+Message-Id: <2fdce60075935f8ff94bc117747f1768f41ed435.1585961568.git.congdanhqx@gmail.com>
+X-Mailer: git-send-email 2.26.0.334.g6536db25bb
+In-Reply-To: <cover.1585961568.git.congdanhqx@gmail.com>
+References: <cover.1585474409.git.congdanhqx@gmail.com> <cover.1585961568.git.congdanhqx@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqv9mgxn7u.fsf@gitster.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4/3/2020 5:40 PM, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->>  * git run-job <job-name>: This builtin will run a single instance of a
->>    maintenance job.
->>    
->>  * git job-runner [--repo=<path>]: This builtin will run an infinite loop
->>    that executes git run-job as a subcommand.
-> 
-> What does this have to do with "git", though?  IOW, why does this
-> have to be part of Git, so that those who would benefit from having
-> a mechanism that makes it easy to run regular maintenance tasks but
-> are not Git users (or those that want to do such maintenance tasks
-> that are not necessarily tied to "git") must use "git" to do so?
-> 
-> I'll find out later why it is so after reading thru 15 patches
-> myself, so no need to give a quick answer to the above; it was just
-> my knee-jerk reaction.
+From: SZEDER Gábor <szeder.dev@gmail.com>
 
-That's a reasonable reaction. The short version of my reasoning is that
-many many people _use_ Git but are not Git experts. While a Git expert
-could find the right set of commands to run and at what frequency to
-keep their repo clean, most users do not want to spend time learning
-these commands. It's also worth our time as contributors to select what
-a good set of non-intrusive maintenance tasks could be, and make them
-easily accessible to users.
+Once upon a time we ran 'make --jobs=2 ...' to build Git, its
+documentation, or to apply Coccinelle semantic patches.  Then commit
+eaa62291ff (ci: inherit --jobs via MAKEFLAGS in run-build-and-tests,
+2019-01-27) came along, and started using the MAKEFLAGS environment
+variable to centralize setting the number of parallel jobs in
+'ci/libs.sh'.  Alas, it forgot to update 'ci/run-linux32-docker.sh' to
+make MAKEFLAGS available inside the Docker container running the 32
+bit Linux job, and, consequently, since then that job builds Git
+sequentially, and it ignores any Makefile knobs that we might set in
+MAKEFLAGS (though we don't set any for the 32 bit Linux job at the
+moment).
 
-This series gets us half of the way there: a user interested in doing
-background maintenance could figure out how to launch "git run-job" on
-a schedule for their platform, or to launch "git job-runner" at start-
-up. That's a lot simpler than learning how the commit-graph,
-multi-pack-index, prune-packed, pack-objects, and fetch builtins work
-with the complicated sets of arguments.
+So update the 'docker run' invocation in 'ci/run-linux32-docker.sh' to
+make MAKEFLAGS available inside the Docker container as well.  Set
+CC=gcc for the 32 bit Linux job, because that's the compiler installed
+in the 32 bit Linux Docker image that we use (Travis CI nowadays sets
+CC=clang by default, but clang is not installed in this image).
 
-The second half would be to create a command such as
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
+---
+ ci/lib.sh                | 3 +++
+ ci/run-linux32-docker.sh | 1 +
+ 2 files changed, 4 insertions(+)
 
-	git please-run-maintenance-on-this-repo
+diff --git a/ci/lib.sh b/ci/lib.sh
+index c3a8cd2104..d637825222 100755
+--- a/ci/lib.sh
++++ b/ci/lib.sh
+@@ -198,6 +198,9 @@ osx-clang|osx-gcc)
+ GIT_TEST_GETTEXT_POISON)
+ 	export GIT_TEST_GETTEXT_POISON=true
+ 	;;
++Linux32)
++	CC=gcc
++	;;
+ esac
+ 
+ MAKEFLAGS="$MAKEFLAGS CC=${CC:-cc}"
+diff --git a/ci/run-linux32-docker.sh b/ci/run-linux32-docker.sh
+index 751acfcf8a..ebb18fa747 100755
+--- a/ci/run-linux32-docker.sh
++++ b/ci/run-linux32-docker.sh
+@@ -20,6 +20,7 @@ docker run \
+ 	--env GIT_PROVE_OPTS \
+ 	--env GIT_TEST_OPTS \
+ 	--env GIT_TEST_CLONE_2GB \
++	--env MAKEFLAGS \
+ 	--env cache_dir="$container_cache_dir" \
+ 	--volume "${PWD}:/usr/src/git" \
+ 	--volume "$cache_dir:$container_cache_dir" \
+-- 
+2.26.0.334.g6536db25bb
 
-that initializes the background jobs and enables them on the repo they
-are using. This allows the most casual of Git user to work efficiently
-on very large repositories.
-
-Sometimes it is hard to remember that people use Git because it is an
-important tool for getting their work done. Time waiting for Git to do
-a slow operation or being blocked on a triggered "git gc --auto" is
-time they would rather be doing what they want to do. Background
-maintenance is a way to reduce the time users spend blocked on Git and
-increase their productivity on the more important things.
-
-Of course, I'm biased to using very large repositories where the
-existing maintenance process is insufficient. The design of these jobs
-is taken directly from what we designed and built for VFS for Git and
-Scalar over the winter of 2018-2019. These jobs were incredibly effective
-in cleaning up repositories that were accumulating cruft for over a year
-without any maintenance. Those repos have stayed clean and we haven't
-found more maintenance tasks to be necesary.
-
-I still believe that there are plenty of repos of similar size to the
-Linux kernel that are in frequent use and could benefit from these
-operations.
-
-Thanks,
--Stolee
