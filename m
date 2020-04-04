@@ -5,65 +5,65 @@ X-Spam-Level:
 X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E36FC43331
-	for <git@archiver.kernel.org>; Sat,  4 Apr 2020 01:12:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 42763C2BA15
+	for <git@archiver.kernel.org>; Sat,  4 Apr 2020 01:12:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5997620731
-	for <git@archiver.kernel.org>; Sat,  4 Apr 2020 01:12:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1A73E20787
+	for <git@archiver.kernel.org>; Sat,  4 Apr 2020 01:12:26 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aSVz80FM"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="q1M05W5+"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726622AbgDDBMS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Apr 2020 21:12:18 -0400
-Received: from mail-qv1-f67.google.com ([209.85.219.67]:42235 "EHLO
-        mail-qv1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726543AbgDDBMP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Apr 2020 21:12:15 -0400
-Received: by mail-qv1-f67.google.com with SMTP id ca9so4583869qvb.9
-        for <git@vger.kernel.org>; Fri, 03 Apr 2020 18:12:14 -0700 (PDT)
+        id S1726887AbgDDBMZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Apr 2020 21:12:25 -0400
+Received: from mail-qv1-f65.google.com ([209.85.219.65]:46338 "EHLO
+        mail-qv1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726681AbgDDBMX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Apr 2020 21:12:23 -0400
+Received: by mail-qv1-f65.google.com with SMTP id bu9so4574740qvb.13
+        for <git@vger.kernel.org>; Fri, 03 Apr 2020 18:12:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ICf0wpj7mUiwdzmSpJBeoO9Lw8Eczo0VrcBY43WRqJ8=;
-        b=aSVz80FM1O72ORx3cs+rN2wJKpU/i2ERPXqkoDZhvSnAKCSb1QoYpVNa5tf9kiW+KQ
-         UjksvaQTXntGdbwQSBCObkF81HX5Ofs6rwz765Dq7p1kFdbMXBej2bc5QQ+e6L4w5qWK
-         4pQaVcDS5SWmCt9vpnYg6KChII53OIAIDN3y4RStgwu/ptDRh+svEaN6hi3daY/h95M0
-         iFdRRxY5iffOsgNa342/PLRdQpyfSIxE8WxqRg3dBQKbmf5d1uSKUArK+huSfzNdUzHR
-         AknlUa1x7wr+SIkQurAgNeY0Kh0W4uYrrpsu9SqqsjLREnS2DgXDMdzWErxeH3r/gVal
-         bfEw==
+        bh=Y3JpD1BmGlEgxfNhigHedIBI5YZ1431gBF8qqQU816M=;
+        b=q1M05W5+ZPyxwEs2CAwUMdYonBSe83Th+gflSB846XvdgelJPz7m0X2DOQDK8JC7LY
+         gjPFU3qu6JTLPpNnUC/MTJzekOTHMAVXwUg8LtA8xcvCtz/JmpqG2l+xZdV/kAahz93a
+         jKrDtecdGOQZkxMXC/hMKP7eiJ3vOpDyIgSvThDsLLa/NXzz4gXw0c3ss3aUdhDnntZ2
+         RJAtE+bQ/A/MnhzwnQeEc7DSPnE/777Xv9qNmtzh4/TKQ3Syj0h3ZjTZRLPDMFWiv8gk
+         WVpRip4szhZA2LFoe9IG95kZGkyRwwzDjoBYs5e+Kca3kkE1P4lXKjbnnuIG7djrXh1W
+         CAgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ICf0wpj7mUiwdzmSpJBeoO9Lw8Eczo0VrcBY43WRqJ8=;
-        b=SeUfW1GwtyWVKi0gdSSZ/gLHoAcHun4QC/EuQg2KS7xJ5bJC/sTsshUnGfx7tanw/l
-         hCRaxExTuLYv4Uc4/l0dnQ0OUQu6UTTVxpPhZILN4PwkLIgOStMQzuo1+MFvHR5WzBE3
-         NdT8aaKgG/nqaVDwAsmISj9zYijlmKRpUzDY5/NdA7FLupFw1Vd9iYUOM3NXx7hQBIFj
-         70Xq3O5PXpyqP7yTQCw55C0RHjKEMjMJFjnFIIksI622TTEBJJ+Tc28L8QXIAemOXoGA
-         wdEhFDLHqr0dD2PZDaFp5GiP4CA6FRBGf0IT/ToJyHRmQTJdLA6hZ4KbR4KgRDAFvPdE
-         YVlA==
-X-Gm-Message-State: AGi0PuYDIUL9gatsCEGs8F3TRrNqgaRl7gGAm2Hx/mlqBqnF+ICV5mgl
-        fte6EkEiYBlHO1dh6KORwJSdpbS7
-X-Google-Smtp-Source: APiQypLHU9sRInDpexRXgz+pdpoNkVOfOKFl65QEFf5ZY6u/vYOvEZKafNA/eKGnuBabCN5pf3+YNQ==
-X-Received: by 2002:ad4:49b2:: with SMTP id u18mr11381798qvx.102.1585962733778;
-        Fri, 03 Apr 2020 18:12:13 -0700 (PDT)
+        bh=Y3JpD1BmGlEgxfNhigHedIBI5YZ1431gBF8qqQU816M=;
+        b=kX00MfFCCy/9poWcuAi1Eqmf7jTIjpsJtlW4NtsMkRqnmw/4Mn2TslDr3dsX5W7CNr
+         M1chtTRYX9YF5+E1teKfPUiyJ0CdgsDtJiANmrXjqeXsjUr/xnJGUTjtxtuZCNPlq4Bk
+         75M+DBUI2zUqd5m6GLERl6dcKUCCB/utHSx+hzH/+dEVA4SXwaoLgpRPPbsRFhJtCq/8
+         TZJGfKlNru7z0F0+3arV4Iz/pGSKHqIU9lLuEBB+PJUPasp1JdGYCtyAGZVOWw/3e9uI
+         OmlW7gZYmC1LWaW/kRU5gx2u1r8JI+eEKWQxKG2hIz7LRGi/2XqVpx/m0YThnRBFB6OC
+         QqgA==
+X-Gm-Message-State: AGi0Pual+uyF94ODoBlRqjSUW85fAyA3Z9sCwzJ+NRyA8NOpUSBqZWnd
+        zFLr2JAWtxGgLi5gdv+OiKNkPJ5f
+X-Google-Smtp-Source: APiQypILVaMO44g35dnaREs/IBwZTdQtuVlqYmrm+r4UuOWBEQE0CIvX/IWvPIk0UK7E5EVDF/DPnA==
+X-Received: by 2002:a05:6214:1e5:: with SMTP id c5mr11172489qvu.233.1585962742200;
+        Fri, 03 Apr 2020 18:12:22 -0700 (PDT)
 Received: from localhost.localdomain (ktnron0919w-grc-01-76-68-143-128.dsl.bell.ca. [76.68.143.128])
-        by smtp.gmail.com with ESMTPSA id a136sm3297503qkc.75.2020.04.03.18.12.12
+        by smtp.gmail.com with ESMTPSA id a136sm3297503qkc.75.2020.04.03.18.12.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Apr 2020 18:12:13 -0700 (PDT)
+        Fri, 03 Apr 2020 18:12:21 -0700 (PDT)
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Alban Gruin <alban.gruin@gmail.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v4 14/23] reset: extract reset_head() from rebase
-Date:   Fri,  3 Apr 2020 21:11:27 -0400
-Message-Id: <045668620dc5173fddb899f38a976059c84b5465.1585962673.git.liu.denton@gmail.com>
+Subject: [PATCH v4 22/23] t5520: make test_pull_autostash() accept expect_parent_num
+Date:   Fri,  3 Apr 2020 21:11:35 -0400
+Message-Id: <f1e54622fbd9e7a3e94fa97d758e39c01b97b1bc.1585962673.git.liu.denton@gmail.com>
 X-Mailer: git-send-email 2.26.0.159.g23e2136ad0
 In-Reply-To: <cover.1585962672.git.liu.denton@gmail.com>
 References: <cover.1584782450.git.liu.denton@gmail.com> <cover.1585962672.git.liu.denton@gmail.com>
@@ -74,362 +74,72 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Continue the process of lib-ifying the autostash code. In a future
-commit, this will be used to implement `--autostash` in other builtins.
-
-This patch is best viewed with `--color-moved`.
+Before, test_pull_autostash() was hardcoded to run
+`test_cmp_rev HEAD^ copy` to test that a rebase happened. However, in a
+future patch, we plan on testing merging as well. Make
+test_pull_autostash() accept a parent number as an argument so that, in
+the future, we can test if a merge happened in addition to a rebase.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- Makefile         |   1 +
- builtin/rebase.c | 139 +---------------------------------------------
- reset.c          | 140 +++++++++++++++++++++++++++++++++++++++++++++++
- reset.h          |  20 +++++++
- 4 files changed, 162 insertions(+), 138 deletions(-)
- create mode 100644 reset.c
- create mode 100644 reset.h
+ t/t5520-pull.sh | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index f709fc3f77..338fb55b73 100644
---- a/Makefile
-+++ b/Makefile
-@@ -970,6 +970,7 @@ LIB_OBJS += replace-object.o
- LIB_OBJS += repo-settings.o
- LIB_OBJS += repository.o
- LIB_OBJS += rerere.o
-+LIB_OBJS += reset.o
- LIB_OBJS += resolve-undo.o
- LIB_OBJS += revision.o
- LIB_OBJS += run-command.o
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 0f650a798e..55730f6360 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -27,6 +27,7 @@
- #include "branch.h"
- #include "sequencer.h"
- #include "rebase-interactive.h"
-+#include "reset.h"
- 
- #define DEFAULT_REFLOG_ACTION "rebase"
- 
-@@ -761,144 +762,6 @@ static void add_var(struct strbuf *buf, const char *name, const char *value)
- 	}
+diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
+index 2f86fca042..f610dc14de 100755
+--- a/t/t5520-pull.sh
++++ b/t/t5520-pull.sh
+@@ -10,11 +10,13 @@ modify () {
  }
  
--#define GIT_REFLOG_ACTION_ENVIRONMENT "GIT_REFLOG_ACTION"
--
--#define RESET_HEAD_DETACH (1<<0)
--#define RESET_HEAD_HARD (1<<1)
--#define RESET_HEAD_RUN_POST_CHECKOUT_HOOK (1<<2)
--#define RESET_HEAD_REFS_ONLY (1<<3)
--#define RESET_ORIG_HEAD (1<<4)
--
--static int reset_head(struct repository *r, struct object_id *oid, const char *action,
--		      const char *switch_to_branch, unsigned flags,
--		      const char *reflog_orig_head, const char *reflog_head,
--		      const char *default_reflog_action)
--{
--	unsigned detach_head = flags & RESET_HEAD_DETACH;
--	unsigned reset_hard = flags & RESET_HEAD_HARD;
--	unsigned run_hook = flags & RESET_HEAD_RUN_POST_CHECKOUT_HOOK;
--	unsigned refs_only = flags & RESET_HEAD_REFS_ONLY;
--	unsigned update_orig_head = flags & RESET_ORIG_HEAD;
--	struct object_id head_oid;
--	struct tree_desc desc[2] = { { NULL }, { NULL } };
--	struct lock_file lock = LOCK_INIT;
--	struct unpack_trees_options unpack_tree_opts;
--	struct tree *tree;
--	const char *reflog_action;
--	struct strbuf msg = STRBUF_INIT;
--	size_t prefix_len;
--	struct object_id *orig = NULL, oid_orig,
--		*old_orig = NULL, oid_old_orig;
--	int ret = 0, nr = 0;
--
--	if (switch_to_branch && !starts_with(switch_to_branch, "refs/"))
--		BUG("Not a fully qualified branch: '%s'", switch_to_branch);
--
--	if (!refs_only && repo_hold_locked_index(r, &lock, LOCK_REPORT_ON_ERROR) < 0) {
--		ret = -1;
--		goto leave_reset_head;
--	}
--
--	if ((!oid || !reset_hard) && get_oid("HEAD", &head_oid)) {
--		ret = error(_("could not determine HEAD revision"));
--		goto leave_reset_head;
--	}
--
--	if (!oid)
--		oid = &head_oid;
--
--	if (refs_only)
--		goto reset_head_refs;
--
--	memset(&unpack_tree_opts, 0, sizeof(unpack_tree_opts));
--	setup_unpack_trees_porcelain(&unpack_tree_opts, action);
--	unpack_tree_opts.head_idx = 1;
--	unpack_tree_opts.src_index = r->index;
--	unpack_tree_opts.dst_index = r->index;
--	unpack_tree_opts.fn = reset_hard ? oneway_merge : twoway_merge;
--	unpack_tree_opts.update = 1;
--	unpack_tree_opts.merge = 1;
--	if (!detach_head)
--		unpack_tree_opts.reset = 1;
--
--	if (repo_read_index_unmerged(r) < 0) {
--		ret = error(_("could not read index"));
--		goto leave_reset_head;
--	}
--
--	if (!reset_hard && !fill_tree_descriptor(r, &desc[nr++], &head_oid)) {
--		ret = error(_("failed to find tree of %s"),
--			    oid_to_hex(&head_oid));
--		goto leave_reset_head;
--	}
--
--	if (!fill_tree_descriptor(r, &desc[nr++], oid)) {
--		ret = error(_("failed to find tree of %s"), oid_to_hex(oid));
--		goto leave_reset_head;
--	}
--
--	if (unpack_trees(nr, desc, &unpack_tree_opts)) {
--		ret = -1;
--		goto leave_reset_head;
--	}
--
--	tree = parse_tree_indirect(oid);
--	prime_cache_tree(r, r->index, tree);
--
--	if (write_locked_index(r->index, &lock, COMMIT_LOCK) < 0) {
--		ret = error(_("could not write index"));
--		goto leave_reset_head;
--	}
--
--reset_head_refs:
--	reflog_action = getenv(GIT_REFLOG_ACTION_ENVIRONMENT);
--	strbuf_addf(&msg, "%s: ", reflog_action ? reflog_action : default_reflog_action);
--	prefix_len = msg.len;
--
--	if (update_orig_head) {
--		if (!get_oid("ORIG_HEAD", &oid_old_orig))
--			old_orig = &oid_old_orig;
--		if (!get_oid("HEAD", &oid_orig)) {
--			orig = &oid_orig;
--			if (!reflog_orig_head) {
--				strbuf_addstr(&msg, "updating ORIG_HEAD");
--				reflog_orig_head = msg.buf;
--			}
--			update_ref(reflog_orig_head, "ORIG_HEAD", orig,
--				   old_orig, 0, UPDATE_REFS_MSG_ON_ERR);
--		} else if (old_orig)
--			delete_ref(NULL, "ORIG_HEAD", old_orig, 0);
--	}
--
--	if (!reflog_head) {
--		strbuf_setlen(&msg, prefix_len);
--		strbuf_addstr(&msg, "updating HEAD");
--		reflog_head = msg.buf;
--	}
--	if (!switch_to_branch)
--		ret = update_ref(reflog_head, "HEAD", oid, orig,
--				 detach_head ? REF_NO_DEREF : 0,
--				 UPDATE_REFS_MSG_ON_ERR);
--	else {
--		ret = update_ref(reflog_head, switch_to_branch, oid,
--				 NULL, 0, UPDATE_REFS_MSG_ON_ERR);
--		if (!ret)
--			ret = create_symref("HEAD", switch_to_branch,
--					    reflog_head);
--	}
--	if (run_hook)
--		run_hook_le(NULL, "post-checkout",
--			    oid_to_hex(orig ? orig : &null_oid),
--			    oid_to_hex(oid), "1", NULL);
--
--leave_reset_head:
--	strbuf_release(&msg);
--	rollback_lock_file(&lock);
--	while (nr)
--		free((void *)desc[--nr].buffer);
--	return ret;
--}
--
- static int move_to_original_branch(struct rebase_options *opts)
- {
- 	struct strbuf orig_head_reflog = STRBUF_INIT, head_reflog = STRBUF_INIT;
-diff --git a/reset.c b/reset.c
-new file mode 100644
-index 0000000000..79b683bffa
---- /dev/null
-+++ b/reset.c
-@@ -0,0 +1,140 @@
-+#include "git-compat-util.h"
-+#include "cache-tree.h"
-+#include "lockfile.h"
-+#include "refs.h"
-+#include "reset.h"
-+#include "run-command.h"
-+#include "tree-walk.h"
-+#include "tree.h"
-+#include "unpack-trees.h"
-+
-+int reset_head(struct repository *r, struct object_id *oid, const char *action,
-+	       const char *switch_to_branch, unsigned flags,
-+	       const char *reflog_orig_head, const char *reflog_head,
-+	       const char *default_reflog_action)
-+{
-+	unsigned detach_head = flags & RESET_HEAD_DETACH;
-+	unsigned reset_hard = flags & RESET_HEAD_HARD;
-+	unsigned run_hook = flags & RESET_HEAD_RUN_POST_CHECKOUT_HOOK;
-+	unsigned refs_only = flags & RESET_HEAD_REFS_ONLY;
-+	unsigned update_orig_head = flags & RESET_ORIG_HEAD;
-+	struct object_id head_oid;
-+	struct tree_desc desc[2] = { { NULL }, { NULL } };
-+	struct lock_file lock = LOCK_INIT;
-+	struct unpack_trees_options unpack_tree_opts;
-+	struct tree *tree;
-+	const char *reflog_action;
-+	struct strbuf msg = STRBUF_INIT;
-+	size_t prefix_len;
-+	struct object_id *orig = NULL, oid_orig,
-+		*old_orig = NULL, oid_old_orig;
-+	int ret = 0, nr = 0;
-+
-+	if (switch_to_branch && !starts_with(switch_to_branch, "refs/"))
-+		BUG("Not a fully qualified branch: '%s'", switch_to_branch);
-+
-+	if (!refs_only && repo_hold_locked_index(r, &lock, LOCK_REPORT_ON_ERROR) < 0) {
-+		ret = -1;
-+		goto leave_reset_head;
-+	}
-+
-+	if ((!oid || !reset_hard) && get_oid("HEAD", &head_oid)) {
-+		ret = error(_("could not determine HEAD revision"));
-+		goto leave_reset_head;
-+	}
-+
-+	if (!oid)
-+		oid = &head_oid;
-+
-+	if (refs_only)
-+		goto reset_head_refs;
-+
-+	memset(&unpack_tree_opts, 0, sizeof(unpack_tree_opts));
-+	setup_unpack_trees_porcelain(&unpack_tree_opts, action);
-+	unpack_tree_opts.head_idx = 1;
-+	unpack_tree_opts.src_index = r->index;
-+	unpack_tree_opts.dst_index = r->index;
-+	unpack_tree_opts.fn = reset_hard ? oneway_merge : twoway_merge;
-+	unpack_tree_opts.update = 1;
-+	unpack_tree_opts.merge = 1;
-+	if (!detach_head)
-+		unpack_tree_opts.reset = 1;
-+
-+	if (repo_read_index_unmerged(r) < 0) {
-+		ret = error(_("could not read index"));
-+		goto leave_reset_head;
-+	}
-+
-+	if (!reset_hard && !fill_tree_descriptor(r, &desc[nr++], &head_oid)) {
-+		ret = error(_("failed to find tree of %s"),
-+			    oid_to_hex(&head_oid));
-+		goto leave_reset_head;
-+	}
-+
-+	if (!fill_tree_descriptor(r, &desc[nr++], oid)) {
-+		ret = error(_("failed to find tree of %s"), oid_to_hex(oid));
-+		goto leave_reset_head;
-+	}
-+
-+	if (unpack_trees(nr, desc, &unpack_tree_opts)) {
-+		ret = -1;
-+		goto leave_reset_head;
-+	}
-+
-+	tree = parse_tree_indirect(oid);
-+	prime_cache_tree(r, r->index, tree);
-+
-+	if (write_locked_index(r->index, &lock, COMMIT_LOCK) < 0) {
-+		ret = error(_("could not write index"));
-+		goto leave_reset_head;
-+	}
-+
-+reset_head_refs:
-+	reflog_action = getenv(GIT_REFLOG_ACTION_ENVIRONMENT);
-+	strbuf_addf(&msg, "%s: ", reflog_action ? reflog_action : default_reflog_action);
-+	prefix_len = msg.len;
-+
-+	if (update_orig_head) {
-+		if (!get_oid("ORIG_HEAD", &oid_old_orig))
-+			old_orig = &oid_old_orig;
-+		if (!get_oid("HEAD", &oid_orig)) {
-+			orig = &oid_orig;
-+			if (!reflog_orig_head) {
-+				strbuf_addstr(&msg, "updating ORIG_HEAD");
-+				reflog_orig_head = msg.buf;
-+			}
-+			update_ref(reflog_orig_head, "ORIG_HEAD", orig,
-+				   old_orig, 0, UPDATE_REFS_MSG_ON_ERR);
-+		} else if (old_orig)
-+			delete_ref(NULL, "ORIG_HEAD", old_orig, 0);
-+	}
-+
-+	if (!reflog_head) {
-+		strbuf_setlen(&msg, prefix_len);
-+		strbuf_addstr(&msg, "updating HEAD");
-+		reflog_head = msg.buf;
-+	}
-+	if (!switch_to_branch)
-+		ret = update_ref(reflog_head, "HEAD", oid, orig,
-+				 detach_head ? REF_NO_DEREF : 0,
-+				 UPDATE_REFS_MSG_ON_ERR);
-+	else {
-+		ret = update_ref(reflog_head, switch_to_branch, oid,
-+				 NULL, 0, UPDATE_REFS_MSG_ON_ERR);
-+		if (!ret)
-+			ret = create_symref("HEAD", switch_to_branch,
-+					    reflog_head);
-+	}
-+	if (run_hook)
-+		run_hook_le(NULL, "post-checkout",
-+			    oid_to_hex(orig ? orig : &null_oid),
-+			    oid_to_hex(oid), "1", NULL);
-+
-+leave_reset_head:
-+	strbuf_release(&msg);
-+	rollback_lock_file(&lock);
-+	while (nr)
-+		free((void *)desc[--nr].buffer);
-+	return ret;
-+
-+}
-diff --git a/reset.h b/reset.h
-new file mode 100644
-index 0000000000..12f83c78e2
---- /dev/null
-+++ b/reset.h
-@@ -0,0 +1,20 @@
-+#ifndef RESET_H
-+#define RESET_H
-+
-+#include "hash.h"
-+#include "repository.h"
-+
-+#define GIT_REFLOG_ACTION_ENVIRONMENT "GIT_REFLOG_ACTION"
-+
-+#define RESET_HEAD_DETACH (1<<0)
-+#define RESET_HEAD_HARD (1<<1)
-+#define RESET_HEAD_RUN_POST_CHECKOUT_HOOK (1<<2)
-+#define RESET_HEAD_REFS_ONLY (1<<3)
-+#define RESET_ORIG_HEAD (1<<4)
-+
-+int reset_head(struct repository *r, struct object_id *oid, const char *action,
-+	       const char *switch_to_branch, unsigned flags,
-+	       const char *reflog_orig_head, const char *reflog_head,
-+	       const char *default_reflog_action);
-+
-+#endif
+ test_pull_autostash () {
++	expect_parent_num="$1" &&
++	shift &&
+ 	git reset --hard before-rebase &&
+ 	echo dirty >new_file &&
+ 	git add new_file &&
+ 	git pull "$@" . copy &&
+-	test_cmp_rev HEAD^ copy &&
++	test_cmp_rev HEAD^"$expect_parent_num" copy &&
+ 	echo dirty >expect &&
+ 	test_cmp expect new_file &&
+ 	echo "modified again" >expect &&
+@@ -369,22 +371,22 @@ test_expect_success '--rebase fails with multiple branches' '
+ 
+ test_expect_success 'pull --rebase succeeds with dirty working directory and rebase.autostash set' '
+ 	test_config rebase.autostash true &&
+-	test_pull_autostash --rebase
++	test_pull_autostash 1 --rebase
+ '
+ 
+ test_expect_success 'pull --rebase --autostash & rebase.autostash=true' '
+ 	test_config rebase.autostash true &&
+-	test_pull_autostash --rebase --autostash
++	test_pull_autostash 1 --rebase --autostash
+ '
+ 
+ test_expect_success 'pull --rebase --autostash & rebase.autostash=false' '
+ 	test_config rebase.autostash false &&
+-	test_pull_autostash --rebase --autostash
++	test_pull_autostash 1 --rebase --autostash
+ '
+ 
+ test_expect_success 'pull --rebase --autostash & rebase.autostash unset' '
+ 	test_unconfig rebase.autostash &&
+-	test_pull_autostash --rebase --autostash
++	test_pull_autostash 1 --rebase --autostash
+ '
+ 
+ test_expect_success 'pull --rebase --no-autostash & rebase.autostash=true' '
+@@ -422,7 +424,7 @@ test_expect_success 'pull.rebase' '
+ 
+ test_expect_success 'pull --autostash & pull.rebase=true' '
+ 	test_config pull.rebase true &&
+-	test_pull_autostash --autostash
++	test_pull_autostash 1 --autostash
+ '
+ 
+ test_expect_success 'pull --no-autostash & pull.rebase=true' '
 -- 
 2.26.0.159.g23e2136ad0
 
