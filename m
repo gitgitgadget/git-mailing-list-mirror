@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A709C2BA1B
-	for <git@archiver.kernel.org>; Sun,  5 Apr 2020 20:16:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 57C89C2BA1E
+	for <git@archiver.kernel.org>; Sun,  5 Apr 2020 20:16:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1ECD62072F
-	for <git@archiver.kernel.org>; Sun,  5 Apr 2020 20:16:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2C1F320659
+	for <git@archiver.kernel.org>; Sun,  5 Apr 2020 20:16:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Lhb44B5e"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IStKyodh"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727703AbgDEUQx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 5 Apr 2020 16:16:53 -0400
-Received: from mail-wm1-f45.google.com ([209.85.128.45]:39347 "EHLO
-        mail-wm1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727018AbgDEUQw (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Apr 2020 16:16:52 -0400
-Received: by mail-wm1-f45.google.com with SMTP id y20so1724083wma.4
-        for <git@vger.kernel.org>; Sun, 05 Apr 2020 13:16:51 -0700 (PDT)
+        id S1727798AbgDEUQz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 5 Apr 2020 16:16:55 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:52069 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727077AbgDEUQy (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Apr 2020 16:16:54 -0400
+Received: by mail-wm1-f68.google.com with SMTP id z7so12591085wmk.1
+        for <git@vger.kernel.org>; Sun, 05 Apr 2020 13:16:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=GczwqmMhMlAsF6vOl+pzB+tlGjL9CRkkYe2i+lVhiBo=;
-        b=Lhb44B5ensr6Mt9U5U5S+BSYgHKzc7MCR2tL+m4cqS+1ubKCYwYw2aZPm9c4o3GKyN
-         GHQ5JJkS+lWtr3252D71rq3fkn4+X7kFQCCUeDm0GlZhoo081KWg24Ag6oSbQh92GCJY
-         cWBxcL7Td5aiCoKkIw+DLfwxs00H53IrCUj+I9EFBQFf455aj/PvfTIzFQwkbUj+TQ/f
-         if9ReNHx5DbW997+tAMTgj85Lq9e+xsop8zkn/7qTyqBy/f52nULphi+G4LHAZCbu35E
-         6ac5DFkQPxqVi2cmBU/N8wcG1iycUUlLoylpr82M/LPMj6HiCdUjOCNM2h9LEUhaPhTn
-         ytdg==
+        bh=bYBe3OpuZ9n0K8eByYmAM/5gIOocBDpwe2ST+mZ+Pu4=;
+        b=IStKyodhOVUdmNgNsRozznBvWPtgESf0fD3M8vCwJ936kYHmkxOzlWGjBUy+mEVEBh
+         cUQuGdU+rnjkhmox0cS4LpADpdq7F0/MdcuzxaaQ7tETGVc9yctvKEzsvCoqfnSBPADq
+         Qub5Ee9DsoP9PKXfNi9mTSt5XTn6pUSL35f5tWnkimYz8Wzo2V6T9TWqp24Bmbz2PdRh
+         GoGrfTaH9ixHgNe5JauKwj2TCBJPENHXMwx7NdPdpoYT+L867f+gIj7a31DFDIi/HOgP
+         6RF0Rro3j+/RCtXwjjKuZsbl3I+WAaH0lHVPkH4l3CPldSr4pcqQ/ozmYGLCld415ID9
+         v9DQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=GczwqmMhMlAsF6vOl+pzB+tlGjL9CRkkYe2i+lVhiBo=;
-        b=uTbP4ZaEva65VyKMcZ03SLFVtOnatbWSudTCZtv3fE0O1c7p5RxiqxQdD4kM90xEaH
-         GpoBiXpumTyBsFA2kAimx29D6mYxpu2pBbqsperLV5GDPszasZpHYcP9TtdKZSktSSbS
-         WzKJ/E4buJ5iA2hwRrKvLVK9sSzcv8+U1dh+/fK0YP9dfIW+ur6hNOc1ZtwLC974KZt7
-         FouLFPzKkuV80Bnix3t11fW2KXLq1CO86dUbow6xtEHHcb5yA+5mgEFRsIOZM5kQZdT1
-         ZOu5TQ2rtysgkJs0Pcj4G/FogrOQeoRsW/uPpibNHvEDAFHeQe3RrOzafIzv2yxZDNUE
-         VZrQ==
-X-Gm-Message-State: AGi0PuaZd62zmX9m2I9g5M1FHnAv84fnt5pyb2Jv4mNY88pPSplmq6dO
-        ypteYPmweANQcdtRjpvQqLjtJIeYGmy0xg==
-X-Google-Smtp-Source: APiQypKtp5RHjGzPXGRKVXFUZUikhGYLrd1Trkaavjn0EM7iPQFkWvJhwDD4gB9ngcCJwRiUUtBH2w==
-X-Received: by 2002:a05:600c:2f88:: with SMTP id t8mr10341962wmn.46.1586117810479;
-        Sun, 05 Apr 2020 13:16:50 -0700 (PDT)
+        bh=bYBe3OpuZ9n0K8eByYmAM/5gIOocBDpwe2ST+mZ+Pu4=;
+        b=mklREFP5KLolqmrpeZFce0ykW9bK0dj36ojLQggW6HL10Aa+qkmaWkVdMkIMwwIQAv
+         NvrHdEGl2mRlkioCSsRlZlpoOW0iRD72UQsUgcWDvHcmzHlBoGa8ENfxTVOekHpqQxnX
+         ukoDNVx4Tzo9x9/GX/+jXAZB5ait5h8olcOtcGiEgh2dTBg/hqH7X7wdPJzXnYXjDJbm
+         SOWdwnYIg4B5/6lKBOz5BxXfYzkVmxpLEma5vONsxT0ehkLsHOG2t9kkVbMgjhUg07B/
+         bvzmW6nYO8bimyqGs3Hu6jAsRNQb0ZQ6bbcdeE9jvaaID5w5jYnivwTJ0TiK43aa130K
+         su3w==
+X-Gm-Message-State: AGi0PuYKJ4/or7XcefhYxpsucWQbrHI5TJWj0O9z5HQVSsL0+PXknvYY
+        E/2g0VHPCsHUELC0mRbVmnJgG2oYnS5KIg==
+X-Google-Smtp-Source: APiQypKNOyxhapjxaMvAcprRMLauaczyubxuxPy/eEjEOWDPMAXX2GRsn2Yd5QYCishe+g5e9airAg==
+X-Received: by 2002:a1c:6189:: with SMTP id v131mr19399341wmb.69.1586117812125;
+        Sun, 05 Apr 2020 13:16:52 -0700 (PDT)
 Received: from localhost.localdomain (87-231-246-247.rev.numericable.fr. [87.231.246.247])
-        by smtp.gmail.com with ESMTPSA id d7sm22468921wrr.77.2020.04.05.13.16.49
+        by smtp.gmail.com with ESMTPSA id d7sm22468921wrr.77.2020.04.05.13.16.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 05 Apr 2020 13:16:50 -0700 (PDT)
+        Sun, 05 Apr 2020 13:16:51 -0700 (PDT)
 From:   Damien Robert <damien.olivier.robert@gmail.com>
 X-Google-Original-From: Damien Robert <damien.olivier.robert+git@gmail.com>
 To:     git@vger.kernel.org, Philippe Blain <levraiphilippeblain@gmail.com>
 Cc:     Damien Robert <damien.olivier.robert+git@gmail.com>
-Subject: [PATCH v5 1/5] doc: list all commands affected by submodule.recurse
-Date:   Sun,  5 Apr 2020 22:16:29 +0200
-Message-Id: <20200405201633.704987-2-damien.olivier.robert+git@gmail.com>
+Subject: [PATCH v5 3/5] doc: explain how to deactivate submodule.recurse completely
+Date:   Sun,  5 Apr 2020 22:16:31 +0200
+Message-Id: <20200405201633.704987-4-damien.olivier.robert+git@gmail.com>
 X-Mailer: git-send-email 2.26.0
 In-Reply-To: <20200405201633.704987-1-damien.olivier.robert+git@gmail.com>
 References: <20200405201633.704987-1-damien.olivier.robert+git@gmail.com>
@@ -72,45 +72,29 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Note that `ls-files` is not affected, even though it has a
-`--recurse-submodules` option, so list it as an exception too.
-
 Signed-off-by: Damien Robert <damien.olivier.robert+git@gmail.com>
 ---
- Documentation/config/submodule.txt | 5 +++--
- Documentation/gitsubmodules.txt    | 3 ++-
- 2 files changed, 5 insertions(+), 3 deletions(-)
+ Documentation/config/submodule.txt | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
 diff --git a/Documentation/config/submodule.txt b/Documentation/config/submodule.txt
-index b33177151c..5962f41ead 100644
+index 5962f41ead..d7a63c8c12 100644
 --- a/Documentation/config/submodule.txt
 +++ b/Documentation/config/submodule.txt
-@@ -59,8 +59,9 @@ submodule.active::
- 
- submodule.recurse::
- 	Specifies if commands recurse into submodules by default. This
--	applies to all commands that have a `--recurse-submodules` option,
--	except `clone`.
-+	applies to all commands that have a `--recurse-submodules` option
-+	(`checkout`, `fetch`, `grep`, `pull`, `push`, `read-tree`, `reset`,
-+	`restore` and `switch`) except `clone` and `ls-files`.
+@@ -63,6 +63,13 @@ submodule.recurse::
+ 	(`checkout`, `fetch`, `grep`, `pull`, `push`, `read-tree`, `reset`,
+ 	`restore` and `switch`) except `clone` and `ls-files`.
  	Defaults to false.
++	When set to true, it can be deactivated via the
++	`--no-recurse-submodules` option. Note that some Git commands
++	lacking this option may call some of the above commands affected by
++	`submodule.recurse`; for instance `git remote update` will call
++	`git fetch` but does not have a `--no-recurse-submodules` option.
++	For these commands a workaround is to temporarily change the
++	configuration value by using `git -c submodule.recurse=0`.
  
  submodule.fetchJobs::
-diff --git a/Documentation/gitsubmodules.txt b/Documentation/gitsubmodules.txt
-index c476f891b5..f9f4e65c9e 100644
---- a/Documentation/gitsubmodules.txt
-+++ b/Documentation/gitsubmodules.txt
-@@ -271,7 +271,8 @@ will not be checked out by default; You can instruct 'clone' to recurse
- into submodules. The 'init' and 'update' subcommands of 'git submodule'
- will maintain submodules checked out and at an appropriate revision in
- your working tree. Alternatively you can set 'submodule.recurse' to have
--'checkout' recursing into submodules.
-+'checkout' recursing into submodules (note that 'submodule.recurse' also
-+affects other git commands, see linkgit:git-config[1] for a complete list).
- 
- 
- SEE ALSO
+ 	Specifies how many submodules are fetched/cloned at the same time.
 -- 
 Patched on top of v2.26.0-106-g9fadedd637 (git version 2.26.0)
 
