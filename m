@@ -8,69 +8,69 @@ X-Spam-Status: No, score=-13.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DEC11C2BA15
-	for <git@archiver.kernel.org>; Sun,  5 Apr 2020 15:10:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 48032C2BA15
+	for <git@archiver.kernel.org>; Sun,  5 Apr 2020 15:14:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 99D3D206B8
-	for <git@archiver.kernel.org>; Sun,  5 Apr 2020 15:10:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ED93720672
+	for <git@archiver.kernel.org>; Sun,  5 Apr 2020 15:14:46 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="skE1PCYe"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oe/tBHmI"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727026AbgDEPKG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 5 Apr 2020 11:10:06 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:34540 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726452AbgDEPKF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Apr 2020 11:10:05 -0400
-Received: by mail-wm1-f67.google.com with SMTP id c195so5962411wme.1
-        for <git@vger.kernel.org>; Sun, 05 Apr 2020 08:10:03 -0700 (PDT)
+        id S1726891AbgDEPOo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 5 Apr 2020 11:14:44 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:45555 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726452AbgDEPOo (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Apr 2020 11:14:44 -0400
+Received: by mail-wr1-f68.google.com with SMTP id v5so3377223wrp.12
+        for <git@vger.kernel.org>; Sun, 05 Apr 2020 08:14:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=2gVQXdCU6crf1uLIn7JaLNGdhIK7Jbuqe4AE2bSf4HI=;
-        b=skE1PCYedoSpuu1lQRUYkEBWdaeFbFsdP+hUzZzttCWys8Jx3IscFcxO4oSL1ZV/wl
-         3YL7NotUBl3XloQZu96mKYN03150sV6evyXRDOayeJA1PdTg+1FrySoSI7iyGU8nWyW4
-         gifu+yRPeyMNOTK+FQATdzVxf+0zCPiSEpVWDiJENtXiqPNKWY7v5YDqBggzU6fgv/5d
-         mu3CvLepKekOeVKF/amdarVa2jr4BlOKT1ylKYQaaczQu+EOnAaFi44bCwEjZZTqr9ab
-         JSTX6GoOAFB2ZL+z6y37DtYj3QJSCpseo60NAqWF4Hx1W9LmF7derVlFWQ1MKJPl4Sv5
-         mdMw==
+        bh=stRGHYq2Gxkuv/Wn0Mfm1Kq1Pf2YRCYNYThi+xrVWMY=;
+        b=oe/tBHmINRpjJogIfZBBjZedzPZ1sIgIHFWeBZ6/CrXUj05SpD+pPeo1Y3qMoTu17A
+         93F8U6/CvOKTjuuOqYGDxZJQuz9N6fds4B/TpANRpvko27MQ+2fOFVA5KlJqsXcRzBoE
+         ANQ5JrdTOvOOD4qhafA4ZfE4H5KT5FBXDThV89+b6rjGX1Dwof6BlT5oX4uRjrz7WfBf
+         NxN3eKZFCUuhEyNpdDNOdAASliwCfCG3okGq3Wnf6lyBmcZqsDg5tIN/6gt40F2opWSZ
+         LUT/mnYW8ygrk630Rd5Lu0ZLwWCxnGB5mpdKW6/jPi63GpKzubPs+NF8HXQ6zVC/dEJW
+         ZPwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:reply-to:subject:to:cc:references:from
          :message-id:date:user-agent:mime-version:in-reply-to
          :content-language:content-transfer-encoding;
-        bh=2gVQXdCU6crf1uLIn7JaLNGdhIK7Jbuqe4AE2bSf4HI=;
-        b=HJMBjqSRcBChdVr1vjj/6573STmEngQKvbf1+/axdmf9eB8I7MnsjYTJyyUpPkM1fa
-         7uKcE+rumn6vgfBIVd1k0yfNY+VeVZ9WV2XcJy8ROc83P6S/GBLvtUVbck0kGYZ3YX45
-         /LpL55HbQX2/basqGXd6fyZ64tO0MSYm4PE7+pIDVVnyxR0YQlYzJAy71KV11p6Eoxxo
-         02N05MRT4PEmmrUgOUzpTt46Sng+mUOsVJhbVed+DQEr1nZRKBBtKBgy2VnY6OvAtNr7
-         4uYOxcgPnSkQwJ5rJdwAwsEySJ61Dy3Zmonn9vhTzTsNHzagl1iE/2XlJrmY0atXymF/
-         zXrA==
-X-Gm-Message-State: AGi0PuacxixgaqTg8LYEp1T6sN07QlvfOFTH9z88FK0pD8trxV9Vy6dC
-        T2F2Fft1ZXlPOds82WH2m/g=
-X-Google-Smtp-Source: APiQypK8V368LkvstE4f20scwQzwHi5wORy9eS6mtiTQUKpfGWJifwUq3GKHWXgz3dlJ4MzfjoRLqg==
-X-Received: by 2002:a1c:f409:: with SMTP id z9mr19123113wma.51.1586099402788;
-        Sun, 05 Apr 2020 08:10:02 -0700 (PDT)
+        bh=stRGHYq2Gxkuv/Wn0Mfm1Kq1Pf2YRCYNYThi+xrVWMY=;
+        b=RWWW/gRl+dx6pCcTnhmMv5UcY9/0w40HM+ILM5l3Ilyy+3lI6M3n4s6BQrcO57U4TZ
+         1obJiyrTKdTbm0IeSpPlK4ojSVRdGCd+Zv1fSa1HTjWli0rv1IGIz9c5pueI9blrql0H
+         QGHdRNZqg2g54w9+CwYAovMJjZjebDmL43pQRtqxaZ8KzeWg2+eCsv/8pz0t/RSb7tmz
+         W2vWxukCC1e4RjtPfTMD179DGF84Fo+D/JXdA8ZEvIFlBpYz44SeBoWD58JF9MaX0Sou
+         dieVZKSWpzegj/Bv8brCzhZQhtyL18A5ffmgFrJTBTRnA1piqC+Xq4Y0BXeiXahI3cDj
+         ZWLA==
+X-Gm-Message-State: AGi0Pua9h6RSdSBsbmxl9fVPPmupQNMUew0E4poDF3u6KopYjnvNz2ma
+        1WmIHZz90cUn5N7794UoG/ykSR+Z
+X-Google-Smtp-Source: APiQypK8qSuIhvtUAZv3/tghMSdBLoPrvSLDTRiVMsQVSgOKZWk1LWkjCVpPRSztq6/S5HdOIs1Ppw==
+X-Received: by 2002:adf:eccd:: with SMTP id s13mr1412226wro.105.1586099680838;
+        Sun, 05 Apr 2020 08:14:40 -0700 (PDT)
 Received: from [192.168.1.240] (85.25.198.146.dyn.plus.net. [146.198.25.85])
-        by smtp.gmail.com with ESMTPSA id v7sm5732717wmg.3.2020.04.05.08.10.01
+        by smtp.gmail.com with ESMTPSA id f62sm20219394wmf.44.2020.04.05.08.14.39
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 05 Apr 2020 08:10:02 -0700 (PDT)
+        Sun, 05 Apr 2020 08:14:40 -0700 (PDT)
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 01/15] run-job: create barebones builtin
+Subject: Re: [PATCH 03/15] run-job: implement fetch job
 To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
 Cc:     peff@peff.net, jrnieder@google.com, stolee@gmail.com,
         Derrick Stolee <dstolee@microsoft.com>
 References: <pull.597.git.1585946894.gitgitgadget@gmail.com>
- <665da239774419074a9bae49b9c92b340885bfa3.1585946894.git.gitgitgadget@gmail.com>
+ <77b1da5d3063a2404cd750adfe3bb8be9b6c497d.1585946894.git.gitgitgadget@gmail.com>
 From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <fc5e6823-ebb3-df58-d7fc-6fb2b58cffe8@gmail.com>
-Date:   Sun, 5 Apr 2020 16:10:01 +0100
+Message-ID: <0e924507-e77e-bff9-196a-e73f296a99d9@gmail.com>
+Date:   Sun, 5 Apr 2020 16:14:38 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.6.0
 MIME-Version: 1.0
-In-Reply-To: <665da239774419074a9bae49b9c92b340885bfa3.1585946894.git.gitgitgadget@gmail.com>
+In-Reply-To: <77b1da5d3063a2404cd750adfe3bb8be9b6c497d.1585946894.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-GB-large
 Content-Transfer-Encoding: 7bit
@@ -84,208 +84,272 @@ Hi Stolee
 On 03/04/2020 21:48, Derrick Stolee via GitGitGadget wrote:
 > From: Derrick Stolee <dstolee@microsoft.com>
 > 
-> The 'git run-job' command will be used to execute a short-lived set
-> of maintenance activities by a background job manager. The intention
-> is to perform small batches of work that reduce the foreground time
-> taken by repository maintenance such as 'git gc --auto'.
+> When working with very large repositories, an incremental 'git fetch'
+> command can download a large amount of data. If there are many other
+> users pushing to a common repo, then this data can rival the initial
+> pack-file size of a 'git clone' of a medium-size repo.
 > 
-> This change does the absolute minimum to create the builtin and show
-> the usage output.
+> Users may want to keep the data on their local repos as close as
+> possible to the data on the remote repos by fetching periodically in
+> the background. This can break up a large daily fetch into several
+> smaller hourly fetches.
 > 
-> Provide an explicit warning that this command is experimental. The
-> set of jobs may change, and each job could alter its behavior in
-> future versions.
+> However, if we simply ran 'git fetch <remote>' in the background,
+> then the user running a foregroudn 'git fetch <remote>' would lose
+> some important feedback when a new branch appears or an existing
+> branch updates. This is especially true if a remote branch is
+> force-updated and this isn't noticed by the user because it occurred
+> in the background. Further, the functionality of 'git push
+> --force-with-lease' becomes suspect.
 > 
-> RFC QUESTION: This builtin is based on the background maintenance in
-> Scalar. Specifically, this builtin is based on the "scalar run <job>"
-> command [1] [2]. My default thought was to make this a "git run <job>"
-> command to maximize similarity. However, it seems like "git run" is
-> too generic. Or, am I being overly verbose for no reason?
+> When running 'git fetch <remote> <options>' in the background, use
+> the following options for careful updating:
+> 
+> 1. --no-tags prevents getting a new tag when a user wants to see
+>     the new tags appear in their foreground fetches.
+> 
+> 2. --refmap= removes the configured refspec which usually updates
+>     refs/remotes/<remote>/* with the refs advertised by the remote.
+> 
+> 3. By adding a new refspec "+refs/heads/*:refs/hidden/<remote>/*"
+>     we can ensure that we actually load the new values somewhere in
+>     our refspace while not updating refs/heads or refs/remotes. By
+>     storing these refs here, the commit-graph job will update the
+>     commit-graph with the commits from these hidden refs.
+> 
+> 4. --prune will delete the refs/hidden/<remote> refs that no
+>     longer appear on the remote.
+> 
+> We've been using this step as a critical background job in Scalar
+> [1] (and VFS for Git). This solved a pain point that was showing up
+> in user reports: fetching was a pain! Users do not like waiting to
+> download the data that was created while they were away from their
+> machines. After implementing background fetch, the foreground fetch
+> commands sped up significantly because they mostly just update refs
+> and download a small amount of new data. The effect is especially
+> dramatic when paried with --no-show-forced-udpates (through
+> fetch.showForcedUpdates=false).
+> 
+> [1] https://github.com/microsoft/scalar/blob/master/Scalar.Common/Maintenance/FetchStep.cs
+> 
+> RFC QUESTIONS:
+> 
+> 1. One downside of the refs/hidden pattern is that 'git log' will
+>     decorate commits with twice as many refs if they appear at a
+>     remote ref (<remote>/<ref> _and_ refs/hidden/<remote>/<ref>). Is
+>     there an easy way to exclude a refspace from decorations? Should
+>     we make refs/hidden/* a "special" refspace that is excluded from
+>     decorations?
 
-Having read through this series I wondered if we wanted a single git 
-command such as 'git maintenance' (suggestions of better names welcome) 
-and then 'git run-job' could become 'git maintenance run', 'git 
-job-runner' would become another subcommand (run-jobs or schedule-jobs?) 
-and the 'git please-run-maintenance-on-this-repo' you mentioned in you 
-email to Junio could become 'git maintenance init' (or maybe setup)
+Having some way to specify which refs outside of 
+refs/{heads,remote,tags}/ to show or exclude from decorations would be 
+useful I think. Fetching to a hidden ref is a good idea (as are the 
+other steps you outline above) but as you say we don't want it to show 
+up in the output of 'git log' etc.
+
+> 2. This feature is designed for a desktop machine or equivalent
+>     that has a permanent wired network connection, and the machine
+>     stays on while the user is not present. For things like laptops
+>     with inconsistent WiFi connections (that may be metered) the
+>     feature can use the less stable connection more than the user
+>     wants. Of course, this feature is opt-in for Git, but in Scalar
+>     we have a "scalar pause" command [2] that pauses all maintenance
+>     for some amount of time. We should consider a similar mechanism
+>     for Git, but for the point of this series the user needs to set
+>     up the "background" part of these jobs manually.
+> 
+> [2] https://github.com/microsoft/scalar/blob/master/Scalar/CommandLine/PauseVerb.cs
+> [3] https://github.com/microsoft/scalar/blob/master/docs/advanced.md#controlling-background-maintenance
+> 
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>   Documentation/git-run-job.txt | 13 ++++-
+>   builtin/run-job.c             | 89 ++++++++++++++++++++++++++++++++++-
+>   t/t7900-run-job.sh            | 22 +++++++++
+>   3 files changed, 122 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Documentation/git-run-job.txt b/Documentation/git-run-job.txt
+> index 8bf2762d650..eb92e891915 100644
+> --- a/Documentation/git-run-job.txt
+> +++ b/Documentation/git-run-job.txt
+> @@ -9,7 +9,7 @@ git-run-job - Run a maintenance job. Intended for background operation.
+>   SYNOPSIS
+>   --------
+>   [verse]
+> -'git run-job commit-graph'
+> +'git run-job (commit-graph|fetch)'
+>   
+>   
+>   DESCRIPTION
+> @@ -47,6 +47,17 @@ since it will not expire `.graph` files that were in the previous
+>   `commit-graph-chain` file. They will be deleted by a later run based on
+>   the expiration delay.
+>   
+> +'fetch'::
+> +
+> +The `fetch` job updates the object directory with the latest objects
+> +from all registered remotes. For each remote, a `git fetch` command is
+> +run. The refmap is custom to avoid updating local or remote branches
+> +(those in `refs/heads` or `refs/remotes`). Instead, the remote refs are
+> +stored in `refs/hidden/<remote>/`. Also, no tags are updated.
+> ++
+> +This means that foreground fetches are still required to update the
+> +remote refs, but the users is notified when the branches and tags are
+> +updated on the remote.
+>   
+>   GIT
+>   ---
+> diff --git a/builtin/run-job.c b/builtin/run-job.c
+> index dd7709952d3..e59056b2918 100644
+> --- a/builtin/run-job.c
+> +++ b/builtin/run-job.c
+> @@ -7,7 +7,7 @@
+>   #include "run-command.h"
+>   
+>   static char const * const builtin_run_job_usage[] = {
+> -	N_("git run-job commit-graph"),
+> +	N_("git run-job (commit-graph|fetch)"),
+>   	NULL
+>   };
+>   
+> @@ -60,6 +60,91 @@ static int run_commit_graph_job(void)
+>   	return 1;
+>   }
+>   
+> +static int fetch_remote(const char *remote)
+> +{
+> +	int result;
+> +	struct argv_array cmd = ARGV_ARRAY_INIT;
+> +	struct strbuf refmap = STRBUF_INIT;
+> +
+> +	argv_array_pushl(&cmd, "fetch", remote, "--quiet", "--prune",
+> +			 "--no-tags", "--refmap=", NULL);
+> +
+> +	strbuf_addf(&refmap, "+refs/heads/*:refs/hidden/%s/*", remote);
+> +	argv_array_push(&cmd, refmap.buf);
+> +
+> +	result = run_command_v_opt(cmd.argv, RUN_GIT_CMD);
+> +
+> +	strbuf_release(&refmap);
+> +	return result;
+> +}
+> +
+> +static int fill_remotes(struct string_list *remotes)
+
+Isn't there a easy way to get this using the config api rather than 
+forking 'git remote'?
 
 Best Wishes
 
 Phillip
 
-> [1] https://github.com/microsoft/scalar/blob/master/docs/advanced.md#run-maintenance-in-the-foreground
-> [2] https://github.com/microsoft/scalar/blob/master/Scalar/CommandLine/RunVerb.cs
-> 
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->   .gitignore                    |  1 +
->   Documentation/git-run-job.txt | 36 +++++++++++++++++++++++++++++++++++
->   Makefile                      |  1 +
->   builtin.h                     |  1 +
->   builtin/run-job.c             | 28 +++++++++++++++++++++++++++
->   command-list.txt              |  1 +
->   git.c                         |  1 +
->   t/t7900-run-job.sh            | 15 +++++++++++++++
->   8 files changed, 84 insertions(+)
->   create mode 100644 Documentation/git-run-job.txt
->   create mode 100644 builtin/run-job.c
->   create mode 100755 t/t7900-run-job.sh
-> 
-> diff --git a/.gitignore b/.gitignore
-> index 188bd1c3de1..5dea9d3b96b 100644
-> --- a/.gitignore
-> +++ b/.gitignore
-> @@ -144,6 +144,7 @@
->   /git-rev-parse
->   /git-revert
->   /git-rm
-> +/git-run-job
->   /git-send-email
->   /git-send-pack
->   /git-serve
-> diff --git a/Documentation/git-run-job.txt b/Documentation/git-run-job.txt
-> new file mode 100644
-> index 00000000000..0627b3ed259
-> --- /dev/null
-> +++ b/Documentation/git-run-job.txt
-> @@ -0,0 +1,36 @@
-> +git-run-job(1)
-> +==============
-> +
-> +NAME
-> +----
-> +git-run-job - Run a maintenance job. Intended for background operation.
-> +
-> +
-> +SYNOPSIS
-> +--------
-> +[verse]
-> +'git run-job <job-name>'
-> +
-> +
-> +DESCRIPTION
-> +-----------
-> +
-> +Run a maintenance job on the current repository. This is available as a
-> +command for a few reasons. First, the background job feature can launch
-> +these commands on a schedule and each process will completely clear its
-> +memory when complete. Second, an expert user could create their own job
-> +schedule by running these jobs themselves.
-> +
-> +THIS COMMAND IS EXPERIMENTAL. THE SET OF AVAILABLE JOBS OR THEIR EXACT
-> +BEHAVIOR MAY BE ALTERED IN THE FUTURE.
-> +
-> +
-> +JOBS
-> +----
-> +
-> +TBD
-> +
-> +
-> +GIT
-> +---
-> +Part of the linkgit:git[1] suite
-> diff --git a/Makefile b/Makefile
-> index ef1ff2228f0..f5f9c4d9e94 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -1125,6 +1125,7 @@ BUILTIN_OBJS += builtin/rev-list.o
->   BUILTIN_OBJS += builtin/rev-parse.o
->   BUILTIN_OBJS += builtin/revert.o
->   BUILTIN_OBJS += builtin/rm.o
-> +BUILTIN_OBJS += builtin/run-job.o
->   BUILTIN_OBJS += builtin/send-pack.o
->   BUILTIN_OBJS += builtin/shortlog.o
->   BUILTIN_OBJS += builtin/show-branch.o
-> diff --git a/builtin.h b/builtin.h
-> index 2b25a80cde3..3e0ddaaf67f 100644
-> --- a/builtin.h
-> +++ b/builtin.h
-> @@ -220,6 +220,7 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix);
->   int cmd_rev_parse(int argc, const char **argv, const char *prefix);
->   int cmd_revert(int argc, const char **argv, const char *prefix);
->   int cmd_rm(int argc, const char **argv, const char *prefix);
-> +int cmd_run_job(int argc, const char **argv, const char *prefix);
->   int cmd_send_pack(int argc, const char **argv, const char *prefix);
->   int cmd_shortlog(int argc, const char **argv, const char *prefix);
->   int cmd_show(int argc, const char **argv, const char *prefix);
-> diff --git a/builtin/run-job.c b/builtin/run-job.c
-> new file mode 100644
-> index 00000000000..2c78d053aa4
-> --- /dev/null
-> +++ b/builtin/run-job.c
-> @@ -0,0 +1,28 @@
-> +#include "builtin.h"
-> +#include "config.h"
-> +#include "parse-options.h"
-> +
-> +static char const * const builtin_run_job_usage[] = {
-> +	N_("git run-job"),
-> +	NULL
-> +};
-> +
-> +int cmd_run_job(int argc, const char **argv, const char *prefix)
 > +{
-> +	static struct option builtin_run_job_options[] = {
-> +		OPT_END(),
-> +	};
+> +	int result = 0;
+> +	FILE *proc_out;
+> +	struct strbuf line = STRBUF_INIT;
+> +	struct child_process *remote_proc = xmalloc(sizeof(*remote_proc));
 > +
-> +	if (argc == 2 && !strcmp(argv[1], "-h"))
-> +		usage_with_options(builtin_run_job_usage,
-> +				   builtin_run_job_options);
+> +	child_process_init(remote_proc);
 > +
-> +	git_config(git_default_config, NULL);
-> +	argc = parse_options(argc, argv, prefix,
-> +			     builtin_run_job_options,
-> +			     builtin_run_job_usage,
-> +			     PARSE_OPT_KEEP_UNKNOWN);
+> +	argv_array_pushl(&remote_proc->args, "git", "remote", NULL);
 > +
-> +	usage_with_options(builtin_run_job_usage,
-> +			   builtin_run_job_options);
+> +	remote_proc->out = -1;
+> +
+> +	if (start_command(remote_proc)) {
+> +		error(_("failed to start 'git remote' process"));
+> +		result = 1;
+> +		goto cleanup;
+> +	}
+> +
+> +	proc_out = xfdopen(remote_proc->out, "r");
+> +
+> +	/* if there is no line, leave the value as given */
+> +	while (!strbuf_getline(&line, proc_out))
+> +		string_list_append(remotes, line.buf);
+> +
+> +	strbuf_release(&line);
+> +
+> +	fclose(proc_out);
+> +
+> +	if (finish_command(remote_proc)) {
+> +		error(_("failed to finish 'git remote' process"));
+> +		result = 1;
+> +	}
+> +
+> +cleanup:
+> +	free(remote_proc);
+> +	return result;
 > +}
-> diff --git a/command-list.txt b/command-list.txt
-> index 20878946558..1cd2b415e46 100644
-> --- a/command-list.txt
-> +++ b/command-list.txt
-> @@ -156,6 +156,7 @@ git-revert                              mainporcelain
->   git-rev-list                            plumbinginterrogators
->   git-rev-parse                           plumbinginterrogators
->   git-rm                                  mainporcelain           worktree
-> +git-run-job                             plumbingmanipulators
->   git-send-email                          foreignscminterface             complete
->   git-send-pack                           synchingrepositories
->   git-shell                               synchelpers
-> diff --git a/git.c b/git.c
-> index b07198fe036..db5a43c8687 100644
-> --- a/git.c
-> +++ b/git.c
-> @@ -566,6 +566,7 @@ static struct cmd_struct commands[] = {
->   	{ "rev-parse", cmd_rev_parse, NO_PARSEOPT },
->   	{ "revert", cmd_revert, RUN_SETUP | NEED_WORK_TREE },
->   	{ "rm", cmd_rm, RUN_SETUP },
-> +	{ "run-job", cmd_run_job, RUN_SETUP },
->   	{ "send-pack", cmd_send_pack, RUN_SETUP },
->   	{ "shortlog", cmd_shortlog, RUN_SETUP_GENTLY | USE_PAGER },
->   	{ "show", cmd_show, RUN_SETUP },
+> +
+> +static int run_fetch_job(void)
+> +{
+> +	int result = 0;
+> +	struct string_list_item *item;
+> +	struct string_list remotes = STRING_LIST_INIT_DUP;
+> +
+> +	if (fill_remotes(&remotes)) {
+> +		error(_("failed to fill remotes"));
+> +		result = 1;
+> +		goto cleanup;
+> +	}
+> +
+> +	/*
+> +	 * Do not modify the result based on the success of the 'fetch'
+> +	 * operation, as a loss of network could cause 'fetch' to fail
+> +	 * quickly. We do not want that to stop the rest of our
+> +	 * background operations.
+> +	 */
+> +	for (item = remotes.items;
+> +	     item && item < remotes.items + remotes.nr;
+> +	     item++)
+> +		fetch_remote(item->string);
+> +
+> +cleanup:
+> +	string_list_clear(&remotes, 0);
+> +	return result;
+> +}
+> +
+>   int cmd_run_job(int argc, const char **argv, const char *prefix)
+>   {
+>   	static struct option builtin_run_job_options[] = {
+> @@ -79,6 +164,8 @@ int cmd_run_job(int argc, const char **argv, const char *prefix)
+>   	if (argc > 0) {
+>   		if (!strcmp(argv[0], "commit-graph"))
+>   			return run_commit_graph_job();
+> +		if (!strcmp(argv[0], "fetch"))
+> +			return run_fetch_job();
+>   	}
+>   
+>   	usage_with_options(builtin_run_job_usage,
 > diff --git a/t/t7900-run-job.sh b/t/t7900-run-job.sh
-> new file mode 100755
-> index 00000000000..1eac80b7ed3
-> --- /dev/null
+> index 18b9bd26b3a..d3faeba135b 100755
+> --- a/t/t7900-run-job.sh
 > +++ b/t/t7900-run-job.sh
-> @@ -0,0 +1,15 @@
-> +#!/bin/sh
+> @@ -44,4 +44,26 @@ test_expect_success 'commit-graph job' '
+>   	)
+>   '
+>   
+> +test_expect_success 'fetch job' '
+> +	git clone "file://$(pwd)/server" client &&
 > +
-> +test_description='git run-job
+> +	# Before fetching, build a client commit-graph
+> +	git -C client run-job commit-graph &&
+> +	chain=client/.git/objects/info/commit-graphs/commit-graph-chain &&
+> +	test_line_count = 1 $chain &&
 > +
-> +Testing the background jobs, in the foreground
+> +	git -C client branch -v --remotes >before-refs &&
+> +	test_commit -C server 24 &&
+> +
+> +	git -C client run-job fetch &&
+> +	git -C client branch -v --remotes >after-refs &&
+> +	test_cmp before-refs after-refs &&
+> +	test_cmp server/.git/refs/heads/master \
+> +		 client/.git/refs/hidden/origin/master &&
+> +
+> +	# the hidden ref should trigger a new layer in the commit-graph
+> +	git -C client run-job commit-graph &&
+> +	test_line_count = 2 $chain
 > +'
 > +
-> +. ./test-lib.sh
-> +
-> +test_expect_success 'help text' '
-> +	test_must_fail git run-job -h 2>err &&
-> +	test_i18ngrep "usage: git run-job" err
-> +'
-> +
-> +test_done
+>   test_done
 > 
