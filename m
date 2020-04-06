@@ -2,101 +2,86 @@ Return-Path: <SRS0=cWmm=5W=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1EED6C2BA1A
-	for <git@archiver.kernel.org>; Mon,  6 Apr 2020 23:46:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 58959C2BA1A
+	for <git@archiver.kernel.org>; Mon,  6 Apr 2020 23:47:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id DB32E206F8
-	for <git@archiver.kernel.org>; Mon,  6 Apr 2020 23:46:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 171DE20768
+	for <git@archiver.kernel.org>; Mon,  6 Apr 2020 23:47:43 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="SIKjFWDP"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m+BLpq1y"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726310AbgDFXqg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Apr 2020 19:46:36 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:56825 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725933AbgDFXqf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Apr 2020 19:46:35 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 56364CE37B;
-        Mon,  6 Apr 2020 19:46:33 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=HLI4RzQazHtuZDuSdFN511Ugv2U=; b=SIKjFW
-        DPYlJgRVA3oaG6OVguwbkzUzBkT/2NABAuNI2U1NieXqaMRfKhKu4KcJHPmhKV2+
-        abABEz9xMK4btgifsVRNtOkmllru/EoDs5nr++AGMgJ+HBPC6QcCWrx4OEdOMlKM
-        VIjCkqrxO7s1/PzJ8jtqUSdUx8F11drIe2vXc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=JEz4Hw0teIEvxFicTTnRlIqB3rPa1Oaa
-        +bD3CkpOounnc7oZAcguOijCSTgihatHLfw9MWViyG8vQjp43Kl/Son2tI37MGYA
-        /if/3xry7+65G8reHH9VaBsJgxGnTBHmaRWAQ7U7WQKHZgGQzpufS0NMGpLSY4G7
-        +EnNnS2Tifs=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4E261CE37A;
-        Mon,  6 Apr 2020 19:46:33 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9515CCE377;
-        Mon,  6 Apr 2020 19:46:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Shourya Shukla <shouryashukla.oo@gmail.com>
-Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net,
-        emilyshaffer@google.com, martin.agren@gmail.com
-Subject: Re: [PATCH 1/2] gitfaq: cleanup gitfaq.txt
-References: <20200406181216.5340-1-shouryashukla.oo@gmail.com>
-        <20200406181216.5340-2-shouryashukla.oo@gmail.com>
-Date:   Mon, 06 Apr 2020 16:46:28 -0700
-In-Reply-To: <20200406181216.5340-2-shouryashukla.oo@gmail.com> (Shourya
-        Shukla's message of "Mon, 6 Apr 2020 23:42:15 +0530")
-Message-ID: <xmqqy2r8tbxn.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726331AbgDFXrm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Apr 2020 19:47:42 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:42103 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726303AbgDFXrl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Apr 2020 19:47:41 -0400
+Received: by mail-pf1-f193.google.com with SMTP id 22so8388346pfa.9
+        for <git@vger.kernel.org>; Mon, 06 Apr 2020 16:47:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=5IeWhIaEE+4Z8ZbWY8NQvuA/LAeAIn+04WFSSNKaUm8=;
+        b=m+BLpq1y5U2q1D1M5RKqol8R0cJJcpG5gDtqxxNtOOgpZrwiMXw2zq209nhGxPJ5iB
+         T3mC7lZB91VHvUR34bS61Dyz5VmhB7jsEwLrJIFU0UrgC4HEF1DWd3iAqJ7CBRxQZ+GG
+         IzArKOy3orTKGouEcKcNx8VvH4I6nXumUjPODbcXv04AIYiYpqopkKBo90GNiONAjVbA
+         kw+8DCtSTMYOLP2nExP3P8GSHNS1yY5znSKmVoLuFKHZDGjkBltpclZgBrLlfKERPZ7d
+         7fhYbGMB0zya4tkn5XN8Xk3vJCXcdZ498F7FDgCJc77r3Uvu/p+G+DifG++yqGeN5fsD
+         B1gw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=5IeWhIaEE+4Z8ZbWY8NQvuA/LAeAIn+04WFSSNKaUm8=;
+        b=UQq+FzogcA9sA1vAyOErsqO9FzIkCsHadxdJKi/gqmccM54fL2S2wQibPqdv+yXJct
+         Bppsh/iqnSdn6G2VLTpD/7L1Tb4u3oktM2qhm/VadjjKsR3NdpvEpOQdgMerr8ZRK1jc
+         Pw1+0q/bP0WGFGzyt7+gUX0EA5ZANJwu9DVWrH2QMWx+88H1d5VIQC9/9f/zw6Wh5qb0
+         3gIy4IzeHW2DD0O7wzXVlBbUWBSHan4GzXn9H+ChPDqKNwsfPcyf9YhMegeBXwYrCSFT
+         BBCFe5aq1oES2GEEjOYBh7l86Ag2883U2VynuAFXFrWIGeLyrKJ4oSVNCJA7pYmvdla3
+         agzA==
+X-Gm-Message-State: AGi0PuburuODqf9mKkx81PZWzLjH4MPPP5zMWg2ctnO0UkXfqXS1ZxUV
+        Ov3TAbeVGHDMOFca87aNB8I=
+X-Google-Smtp-Source: APiQypI+P2070T7Fdq3HJatRsFDjTf3lJC3DFHukUYn8Pvb1WHIpxAqYU4u4VJ9f0LE3hvhF2NBphw==
+X-Received: by 2002:a63:de51:: with SMTP id y17mr1613015pgi.70.1586216860611;
+        Mon, 06 Apr 2020 16:47:40 -0700 (PDT)
+Received: from localhost ([2402:800:6375:207b:be21:746a:7a56:9d4d])
+        by smtp.gmail.com with ESMTPSA id 144sm12533706pfx.184.2020.04.06.16.47.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 06 Apr 2020 16:47:40 -0700 (PDT)
+Date:   Tue, 7 Apr 2020 06:47:38 +0700
+From:   Danh Doan <congdanhqx@gmail.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v12 5/5] bugreport: add compiler info
+Message-ID: <20200406234738.GA2568@danh.dev>
+References: <20200406224526.256074-1-emilyshaffer@google.com>
+ <20200406224526.256074-6-emilyshaffer@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D6ED27E0-7860-11EA-ADEA-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200406224526.256074-6-emilyshaffer@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Shourya Shukla <shouryashukla.oo@gmail.com> writes:
+On 2020-04-06 15:45:26-0700, Emily Shaffer <emilyshaffer@google.com> wrote:
+> Helped-by: Danh Doan <congdanhqx@gmail.com>
 
-[jc: All other changes in 1/2 turned out to be removal of SP when
-there were dot-SP-SP at the end of a sentence, which I am omitted
-here as they were so distracting.]
+If you ever send another version of this series, my Git identity is:
 
-> -Such a shell command can be specified by starting the option value with an
-> -exclamation point.  If your password or token were stored in the `GIT_TOKEN`,
-> +Such a shell command can be specified by putting an exclamation point before
-> +the option. If your password or token were stored in the `GIT_TOKEN`,
->  you could run the following command to set your credential helper:
+Đoàn Trần Công Danh <congdanhqx@gmail.com>
 
-Sorry, but I am not sure how this change is an improvement.  It is
-not making it worse, but it is not making it any better, at least to
-me.
+Thanks,
 
-> -How do I ignore changes to a tracked file?::
-> -	Git doesn't provide a way to do this.  The reason is that if Git needs
-> +How do I ignore changes made to a tracked file?::
-> +	Git doesn't provide a way to do this. The reason is that if Git needs
-
-Ah, strike what I said about your new section on ".gitignore"; this
-is already the right place to describe it.
-
-With or without 'made', I think the header says the same thing, but
-I guess it does not hurt to be explicit.
-
-By the way, if you still want to pursue "full-stop at the end of the
-sentence MUST be followed by no more than one SP", I won't stop you,
-but please do so in a separate patch that has NO OTHER CHANGES.
-They drown other changes out that are not mechanical and makes them
-hard to review.
-
-Thanks.
+-- 
+Danh
