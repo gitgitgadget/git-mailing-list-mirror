@@ -2,130 +2,140 @@ Return-Path: <SRS0=cWmm=5W=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 04336C2D0F4
-	for <git@archiver.kernel.org>; Mon,  6 Apr 2020 03:30:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 332FFC2BA18
+	for <git@archiver.kernel.org>; Mon,  6 Apr 2020 07:11:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id C024020678
-	for <git@archiver.kernel.org>; Mon,  6 Apr 2020 03:30:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 96AE9206F8
+	for <git@archiver.kernel.org>; Mon,  6 Apr 2020 07:11:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="uKCtYxwk"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JLePjBQR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sutUwqMP"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726473AbgDFDaE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 5 Apr 2020 23:30:04 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:58048 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726408AbgDFDaE (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Apr 2020 23:30:04 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 68717BA42E;
-        Sun,  5 Apr 2020 23:30:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=V9LXZMVqe467xlIi4aNSmbYel9M=; b=uKCtYx
-        wkZ66UBjv9twdpj3kjeYHxLylJVAkLX2dxOWL6TTAQort3Df+/+Ch9VGf31xjaji
-        71KagC5gCH/5LyVPL1rQeS5qyD1Q7W4OEfYUE3Cf9shRKIC+5SMA1j8sz9LJn6ub
-        YbZJ2zxUp1Urrhjl3HyR/zkVpVwa2RGymTJj8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=t86+xoPEc9XAnUXGmXt1AhRyO88MqlTs
-        vs6MRfnx6yJs11DZMCzguuYqd079i8RcnaDRBM8QrYgsRxEcyAabK6UBsQr9DxCu
-        +in69YmwAI4W8jkpjzpVorK45LiXhmRuW4f836BBc/mPZXam/S5EAVaqyw5XjcEd
-        px50s0iXc/w=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 51AD3BA42D;
-        Sun,  5 Apr 2020 23:30:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 60426BA429;
-        Sun,  5 Apr 2020 23:29:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Emma Brooks <me@pluvano.com>
-Cc:     git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH] format-patch: teach --no-encode-headers
-References: <20200405231109.8249-1-me@pluvano.com>
-Date:   Sun, 05 Apr 2020 20:29:57 -0700
-In-Reply-To: <20200405231109.8249-1-me@pluvano.com> (Emma Brooks's message of
-        "Sun, 5 Apr 2020 23:11:09 +0000")
-Message-ID: <xmqqd08lwatm.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726605AbgDFHLF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Apr 2020 03:11:05 -0400
+Received: from wout5-smtp.messagingengine.com ([64.147.123.21]:59375 "EHLO
+        wout5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726491AbgDFHLF (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 6 Apr 2020 03:11:05 -0400
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+        by mailout.west.internal (Postfix) with ESMTP id CC1F2B5E;
+        Mon,  6 Apr 2020 03:11:03 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute3.internal (MEProxy); Mon, 06 Apr 2020 03:11:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
+        :from:to:cc:subject:message-id:references:mime-version
+        :content-type:in-reply-to; s=fm3; bh=7MRQJGR3Hm8T2HVImrBtMzx7Xc4
+        WMcc4PVxgRWmYhQM=; b=JLePjBQRufyChAN+oiPLYerHFypv5SZ+wACv8J3g28V
+        3MnjhhUIUcnO30X1Hfrk0/RevtZkSzPuzsDEK0FPSEt9Yste8YpxDBIB4P+W1Woy
+        /nxhqYZdjbFozIUWzJTNOHXWaVKhdUwigHWMatDVONw0Gu/jYn6UJWq5vrk3dD2j
+        jqV2WUUfbxbJ9XjexrqAWrWbXlJSUr0ts/r/LVI+UpXMQ44R7k124a4tZzKM+9VV
+        wea3zRJQsu2cei/gWso/SPAPDfCx9dazJcppe331KNkV1E8+/j96JS5/EnDhT+Pn
+        7/eBkgq9Ec+DxmVvma7XpvRKh49gAz439JDf19QBISg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=7MRQJG
+        R3Hm8T2HVImrBtMzx7Xc4WMcc4PVxgRWmYhQM=; b=sutUwqMPTvoOIoIWcQezw1
+        LedvZE1DlMY+ZId7UPxuqAwj3B8JqiXWMdcNZ/co58RhIvdm4in6MtXoTp94UXFk
+        CAc18Yu7Ud1n5pk5jUT9eiwuMOpNlSq9j6IMVtCpMOYtCMsHILCn5MHKC8ye7BdE
+        +QcDD7Qd8serPApvyQGvyquGg30UExDTy34SLoG02jrE3uN6MSKn3kKOrISlIIeQ
+        l/5RPErXRlfYqEKyFOQpBIZq0se77z/MYld82Ulo2Ag92AcMGljThG5ildYs30hj
+        2jU5wDmRhprOrRs/lG3GFZkj6MJ0dFAYUOtCxJzHRCHukSpAKYwkdOM77EPkrobA
+        ==
+X-ME-Sender: <xms:B9aKXmXZAwIdTwtbqLrXB18vdX5MTI4VRXpdXjLiWyARRZ8gEiWQ4A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedruddvgdduudelucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucfkphepjeekrdehhe
+    drudefledrvdduvdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhl
+    fhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:B9aKXupgJVKAneyIcaY_SLRwnTW-PHsroR9gOXxDO6IDFupz3Xy-lA>
+    <xmx:B9aKXjyGUQAZTSdM-itTnupiwTt6fnC2ex1ylK7BqwSfvD_MN-LcyA>
+    <xmx:B9aKXljmN-xWFDvne186qgrJR5XjZVrawBfNjswplfLHtFsaCEUEaw>
+    <xmx:B9aKXkO4eYKdsvRCHihjGHdOC9zTZ-OpGtdesi8JoDG603_CICZ_xw>
+Received: from vm-mail.pks.im (x4e378bd4.dyn.telefonica.de [78.55.139.212])
+        by mail.messagingengine.com (Postfix) with ESMTPA id 71BB23280060;
+        Mon,  6 Apr 2020 03:11:02 -0400 (EDT)
+Received: from localhost (tanuki [10.192.0.23])
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id be3b4e66 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Mon, 6 Apr 2020 07:10:58 +0000 (UTC)
+Date:   Mon, 6 Apr 2020 09:10:57 +0200
+From:   Patrick Steinhardt <ps@pks.im>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Phillip Wood <phillip.wood123@gmail.com>,
+        git <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH v3 9/9] update-ref: implement interactive transaction
+ handling
+Message-ID: <20200406071057.GB5302@tanuki.pks.im>
+References: <cover.1585129842.git.ps@pks.im>
+ <cover.1585811013.git.ps@pks.im>
+ <5670bea2b15bafbd93d7d507b35e54980ad06fb9.1585811014.git.ps@pks.im>
+ <fd4b874a-478f-2139-e910-c000b8a1f396@gmail.com>
+ <xmqqa73s1njt.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E4C53862-77B6-11EA-A531-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="U+BazGySraz5kW0T"
+Content-Disposition: inline
+In-Reply-To: <xmqqa73s1njt.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emma Brooks <me@pluvano.com> writes:
 
-> When commit subjects or authors have non-ASCII characters, git
-> format-patch Q-encodes them so they can be safely sent over email.
-> However, if the patch transfer method is something other than email (web
-> review tools, sneakernet), this only serves to make the patch metadata
-> harder to read without first applying it (unless you can decode RFC 2047
-> in your head). git am as well as some email software supports
-> non-Q-encoded mail as described in RFC 6531.
->
-> Add --[no-]encode-headers and format.encodeHeaders to let the user
-> control this behavior.
+--U+BazGySraz5kW0T
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-This would be immensely useful.  I often find the in-body headers
-that are Q-encoded too ugly to live.
+On Fri, Apr 03, 2020 at 10:33:58AM -0700, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+>=20
+> > I found the talk of "non-transactional" sessions a bit confusing
+> > because the normal --stdin does update all the refs it is given as a
+> > single transaction, so that if it cannot update one ref none of them
+> > are updated. If I've understood correctly these changes are about
+> > coordinating transactions across several repositories. I'm not sure
+> > how best to convey that in the man page - perhaps we could call them
+> > single repository transactions and multi repository transaction or
+> > something.
+>=20
+> FWIW, I described the topic in my "What's cooking" report as adding
+> an ingredient to implement two-phase commit-style atomic updates
+> across multiple repositories.=20
 
-Is the RFC2047 the only thing we do to message headers?  What I am
-trying is to figure out if "encode-headers - yes/no?" would be a
-stable (iow, would we be gaining other kinds of encoding over time?)
-and well-defined (iow, is there a case where one kind of 'encoding'
-is still desirable while disabling other kinds of 'encoding' is
-wanted?) question.  If there is any doubt in your answers to the
-above question, we may have to make sure the name of the option
-makes it clear to users what kind of encoding we're talking about.
+Fair enough. It definitely may serve as a building block for cross-repo
+transactions, which also is the original intent of this patch series.
+I'm not sure whether it makes sense to document it as such, as I can
+imagine usecases acting on a single repository that still want to be in
+the business of doing two-phase commits.
 
-> +format.encodeHeaders::
-> +	Encode email headers that have non-ASCII characters with
-> +	"Q-encoding" for email transmission. Defaults to true.
+Patrick
 
-OK.
+--U+BazGySraz5kW0T
+Content-Type: application/pgp-signature; name="signature.asc"
 
->  
-> +--[no-]encode-headers::
+-----BEGIN PGP SIGNATURE-----
 
-I think we'd want to standadize on writing these out, i.e.
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAl6K1gAACgkQVbJhu7ck
+PpS64Q/+IFR5o1J6BUF/KFO4YckO/z25NNMQR+fySWAUOxFIQlTgHaJ8thDfV7L0
+jkEtRydTzaAf085yvFp2o3I/0AzSPzm1SKxcnLTn1xPi7NrB5c8vgxZRNtSLppSG
+/PHLes3Lfye5WrLpa0Rj75OpklTKukcGJNze8i1HHU4oxchLJRIyHJbAfI961/83
+i5fJcEqKcESpIyBe4w/0Vi0e/vDZQBxqw4HEwox3+ura1azh1V8aIAiTVZsINxSP
+rY+fPI0N8uI9TQ6tGTDRczyEfzS7i+YdRsr9cvot/JX1N1gF56vDxOO5dJqTKMWF
+V1+S6+B7hOMjgeGipLwylvT0TAl1acLc6KPkQaM4ovtkNYfcmn1FjRgOqG6wQ/rr
+7L/R9BNCrWms0K3CWbKo8A5KEK6PNpUTV322L9ShBziB5rxoHmq315qZvwnfByqP
+WV/gq/ivwY0PoPtw3A6Qo1fgEqxXtu9I+tq4HX6s+iReeFkW5+GSjI2zp9xLQTwc
+Ffkr9LP2g+oIaW8ilSXkQa4bc7gxDyUal+pycUijhMmt1I02H35Ww+744GGOLZeC
+PWKluhx2lKCTVy35A5lJ2UFB0pYrOrHzkxs2RdqTkD1Pb/B85wwVVSKIdvNd/rK+
+42+HJUPfexekA2UrsMfl3fSho4JIcKAXB/hE1j4XRjkVkCU8o1E=
+=NPr0
+-----END PGP SIGNATURE-----
 
-        --encode-headers::
-        --no-encode-headers::
-
-so let's follow that when adding a new option.
-
-> +	Encode email headers that have non-ASCII characters with
-> +	"Q-encoding", instead of outputting the headers verbatim. The
-
-I wonder if calling RFC2047 out helps readers here, when they wonder
-what Q is and how they can decipher it.
-
-> +	default is `--encode-headers` unless the `format.encodeHeaders`
-> +	configuration variable is set.
-
-I am wondering if we can go even shorter, e.g.
-
-	The default is set to the value of `format.encodeHeaders`
-	configuration variable.
-
-> -		if (needs_rfc2047_encoding(namebuf, namelen)) {
-> +		if (pp->encode_headers &&
-> +				needs_rfc2047_encoding(namebuf, namelen)) {
-
-Don't overly indent the second line like this.  The same comment
-applies to the next hunk (not quoted).
-
-Thanks.
+--U+BazGySraz5kW0T--
