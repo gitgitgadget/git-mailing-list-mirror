@@ -4,107 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A4F00C2BA19
-	for <git@archiver.kernel.org>; Mon,  6 Apr 2020 08:48:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 537CFC2BA19
+	for <git@archiver.kernel.org>; Mon,  6 Apr 2020 09:46:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 65427206C3
-	for <git@archiver.kernel.org>; Mon,  6 Apr 2020 08:48:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 211D0206F5
+	for <git@archiver.kernel.org>; Mon,  6 Apr 2020 09:46:42 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f1MjQu4V"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Li3yr9uD"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726687AbgDFIsV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Apr 2020 04:48:21 -0400
-Received: from mail-lf1-f46.google.com ([209.85.167.46]:36536 "EHLO
-        mail-lf1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726514AbgDFIsV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Apr 2020 04:48:21 -0400
-Received: by mail-lf1-f46.google.com with SMTP id w145so11111309lff.3
-        for <git@vger.kernel.org>; Mon, 06 Apr 2020 01:48:18 -0700 (PDT)
+        id S1726873AbgDFJqj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Apr 2020 05:46:39 -0400
+Received: from mail-pj1-f47.google.com ([209.85.216.47]:36815 "EHLO
+        mail-pj1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726721AbgDFJqj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Apr 2020 05:46:39 -0400
+Received: by mail-pj1-f47.google.com with SMTP id nu11so6222494pjb.1
+        for <git@vger.kernel.org>; Mon, 06 Apr 2020 02:46:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=xHf8vyfIwJggRR7yGnrF9qHu0i1cPvXRUao/DwQ9rCA=;
-        b=f1MjQu4VhbVdWKkBbHa1HA1vbfJha8Pl/C/XX+GthDSimdmqLT0f1/X6OTudvmITtE
-         BeVF3rBRNAA8pRwrgDDcULkcUuuixkC0MgDvag/MzqWNhnM6aTch5YMfaOscvOfnp42Z
-         w1obvXzxZF0SWAxqVODSa0NppfBKMdC/05vdXd86u+tesvGFpyJV9516lei3PI5hkfW1
-         lcW2FA12FkWxFGWJJ4AgXsxXpYfnBFRrotTnG39QeaK8+iwltyZVElNF0OxvHF7DKyGo
-         2swZRBd8UMcWSQjzpT11/L5lW5xGL5QeV4ZCncpBKllS/oM/GgSmj4sUrs4djX3ek6Qz
-         aK9A==
+         :cc;
+        bh=7navwiBHhGxRR/KUTojrJm0UqZ/MBb19p9C5J+upI9w=;
+        b=Li3yr9uDYV70LM9vrulF28bAt4tITNsVf3kMn5C/5ijUqvnorLMmJAnyT6rpdrzZ2k
+         hgUmbZSkDraLqaPKUr8PqsJQCDyJX/7n2GAFa75b/DfZUTrdemWyEKbFtLbN9myeJD7k
+         W8xb73JeyZgNmSoJfwPA2GWdIQ8h8EJxE2ixfRy6Grt3yu//6lF27Z7Vi+/Qb1trXRfU
+         ZLT7k1wm+Nn5Hei5vxtjW5uPzwMLMUpoT3ZPf6dnqDdC+vadLAHWE+2N1GBEbZy+cn2W
+         5jzvcyeLnOpXubcMwVDq/G3lWTl2TBQ13ipYtjrbcGrm2wM+TWx+CcKAsugTQWjOXQ3A
+         RpvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=xHf8vyfIwJggRR7yGnrF9qHu0i1cPvXRUao/DwQ9rCA=;
-        b=E+BM/cmOVLOML7ood0esZC7WbQthy98oBVcJN8DwcFTWKM7bMq21m37GE1Cv7hPzAy
-         RZrXdrYuFwIQmJ2sXseo1XKNBebC7+9AubmS8ypce73MUbk9ylt6u2i1ISxgGkFJuSxs
-         BA36ldHH1Qnu7+dt2niTPQDyz8tcOPJ8xRfQvGnAR/yX6c/r+Zg1NHVgvi+Fst7kDetL
-         9gtRnbD8ZCPoI8HHOvaXwgFeh4qyWE5stcI4eAX7rnLjgomjaA7EIbkxM9p27nPtaots
-         2BRqI4XV95l2SqZEZ3Xvwv+vu5CISqM/MVDPhm9xUApvFJW78S9tMjekaChD5umrh4EK
-         VIWQ==
-X-Gm-Message-State: AGi0Pubz8pr6P5lvApwylugZiZJrlWZ0OhWS5Hn8KNLd4HbHom6k5MHa
-        vRf3FfaLQDbb9Y6DNUCqEDbtMWvv4RaIDxpmBpTPZQ==
-X-Google-Smtp-Source: APiQypKZcCyWuhGinJotVeW9ASKr7bHz1bxZ01ml5y/yRPtzZbMQC/Nojyj85wP390noXns5IQi+6/Rzgp3V8yMr/2M=
-X-Received: by 2002:a19:ad4c:: with SMTP id s12mr12650973lfd.109.1586162897315;
- Mon, 06 Apr 2020 01:48:17 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=7navwiBHhGxRR/KUTojrJm0UqZ/MBb19p9C5J+upI9w=;
+        b=HbtlAk5+snVw5i+sekqthpegljcuvnrCKQuEn/k8bcAwhbro3011qAuMu+kghj/S31
+         4FJ/F/lwOnWN2ULdgRKpUxEIG2b2V/r8cMkFaxGW34LH/WDtIM/3trc5jWoaZTbWBvF/
+         lKHq2tvaSiwotgb5CoXmliPlUJnNj9Xs5UaXUPgyDqna8Wqn+7qx4Z2D3dAkiJtx/pGW
+         JuwW5duYcfp2Lg2z/UrjW3FVfMNLD6jxztghVvdflMC15ghF5p3ZyDfk3eJ8R39fuUSv
+         yuNOa74EXtFG+xq0hZIzeI0I+tYa09ioAus0mF8pBJWTUEDDBEeepzIfAbeVjVUgBeSq
+         8VsQ==
+X-Gm-Message-State: AGi0PuYjR05PY4og0W6rd+DwQzbvLmdeSP8H3HLfb29YWE3tJ54P36KJ
+        +vAIP3S1bEmx4jiZbbuz2UkMtP+pNbyPNKXZ7fw=
+X-Google-Smtp-Source: APiQypIA90JrJIZue4HDjJ1DKD5urAJmn0HZZwcNU36Z9O96J1LfFQIdTOZCNxwtZyS1JFud1vMUt445Zy6AERz7hJg=
+X-Received: by 2002:a17:90a:343:: with SMTP id 3mr21546691pjf.115.1586166396163;
+ Mon, 06 Apr 2020 02:46:36 -0700 (PDT)
 MIME-Version: 1.0
-References: <CA+Sgv42V+xfoJVoFpPkWREXT0yuKZDeMDEGa3y8NDVU-4D1iYA@mail.gmail.com>
-In-Reply-To: <CA+Sgv42V+xfoJVoFpPkWREXT0yuKZDeMDEGa3y8NDVU-4D1iYA@mail.gmail.com>
-From:   =?UTF-8?B?VG9tw6HFoSBQcm9jaMOhemth?= <tomas.prochazka5d@gmail.com>
-Date:   Mon, 6 Apr 2020 10:48:06 +0200
-Message-ID: <CA+Sgv42bOAaRBX99EpgpnSkGXFCWFpED7hwdwkWmPSOKuL1VBg@mail.gmail.com>
-Subject: Fwd: Q: use '-C' flag with 'git config --global'
-To:     git@vger.kernel.org
-Cc:     tomas.volf@showmax.com
+References: <20200320223015.GA19579@SDF.ORG> <xmqq36a2bpxz.fsf@gitster.c.googlers.com>
+ <20200320233528.GB19579@SDF.ORG> <nycvar.QRO.7.76.6.2003211135380.46@tvgsbejvaqbjf.bet>
+ <20200321175612.GC19579@SDF.ORG> <nycvar.QRO.7.76.6.2003252008490.46@tvgsbejvaqbjf.bet>
+ <20200326001821.GB8865@SDF.ORG> <nycvar.QRO.7.76.6.2003281510260.46@tvgsbejvaqbjf.bet>
+ <20200328163024.GA26885@SDF.ORG> <nycvar.QRO.7.76.6.2004041417420.46@tvgsbejvaqbjf.bet>
+ <20200404174116.GB11944@SDF.ORG>
+In-Reply-To: <20200404174116.GB11944@SDF.ORG>
+From:   Sebastien Bruckert <sbruckert.dev@gmail.com>
+Date:   Mon, 6 Apr 2020 06:40:07 -0400
+Message-ID: <CA+KXf2C0XytyNEAAdTOZAzw5YTQuv3PSjJ7RgyWqTj9MPp6BDQ@mail.gmail.com>
+Subject: Re: Feature request: rebase -i inside of rebase -i
+To:     George Spelvin <lkml@sdf.org>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi all,
 
-I'm running into issue that if I run `git -C <pwd/to/showmax/project>
-config --global user.email` I don't get expected email.
-Expected: tomas.prochazka@showmax.com
-Got: tomas.prochazka5d@gmail.com
+What is your problem actually ? You want to edit a commit before where
+you are in a rebase ?
 
-My config contains a little catch:
+O --- A --- B --- C --- D
+* You are in a middle of a rebase at commit C.
+* You want to edit A without finishing all your actual rebase.
 
-~/.gitconfig
-```
-[user]
-       name =3D Tom=C3=A1=C5=A1 Proch=C3=A1zka
-       email =3D tomas.prochazka5d@gmail.com
+Is that right ?
 
-[includeIf "gitdir:~/Workspace/Showmax/"]
-   path =3D ~/Workspace/Showmax/.gitconfig
-```
-~/Workspace/Showmax/.gitconfig
-```
-[user]
-    name =3D Tom=C3=A1=C5=A1 Proch=C3=A1zka
-    email =3D tomas.prochazka@showmax.com
-```
+Then, why making a whole new rebase for that operation ?
 
-I get correct email setting if I run command without `--global` flag.
-But What I understand from the [`git-config`
-docs](https://git-scm.com/docs/git-config#_description) if no flag is
-passed the values are read from system, global and local.
+In this example, you are finally editing A with some sort of new
+nested operation. This operation should not do anything else than
+this. Like something atomical, you edit the commit / add a commit /
+remove one, and that's all. End of the story. Back to the original
+rebase, and back to commit C. If that "nested" operation  made
+conflict with B, we can move the actual rebase to B to clean the mess
+you made with the "nested" operation. But you are still in only one
+rebase. If you abort, everything gets cleaned up.
 
-If I run commands one by one, No returns the ~correct~ expected email:
+I don't know if any of this is pertinent / understandable, but I hope
+it gave a fresh view on that. You guys are maybe a bit too focused on
+what to do in case of an abort of a nested rebase. However, we don't
+actually know if a nested rebase is the best solution for this job.
 
-~ $ git -C <pwd/to/showmax/project> config --system user.email
-~ $ git -C <pwd/to/showmax/project> config --global user.email
-tomas.prochazka5d@gmail.com
-~ $ git -C <pwd/to/showmax/project> config --local user.email
-
-Am I missing something?
-Thanks for the answer.
-
-Regards
-Tom=C3=A1=C5=A1 Proch=C3=A1zka
+My two cents
