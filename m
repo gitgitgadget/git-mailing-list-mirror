@@ -2,191 +2,83 @@ Return-Path: <SRS0=cWmm=5W=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.3 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
-	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CA117C2BA1E
-	for <git@archiver.kernel.org>; Mon,  6 Apr 2020 17:00:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C1D29C2BA1B
+	for <git@archiver.kernel.org>; Mon,  6 Apr 2020 17:56:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 9C66720780
-	for <git@archiver.kernel.org>; Mon,  6 Apr 2020 17:00:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 811DC206F8
+	for <git@archiver.kernel.org>; Mon,  6 Apr 2020 17:56:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZW2IVRpc"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ohg6CCM8"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729748AbgDFRAH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Apr 2020 13:00:07 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:34047 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729534AbgDFRAG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Apr 2020 13:00:06 -0400
-Received: by mail-ed1-f67.google.com with SMTP id o1so412889edv.1
-        for <git@vger.kernel.org>; Mon, 06 Apr 2020 10:00:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=UFasefMTFJlBZT0H7l3YT+5vQ3mTXZeAfKd7dCO5Krw=;
-        b=ZW2IVRpcpynnmdWd9MwShV+IGVlix1i0OmwnruhqVydq4sGWjbOdU4QZFCiK46DepB
-         sCvGTuAfSJtEd6hX9BXqN8JUde33W6XIcQtZ8feRsAjaGIPHYg3znsPUQubJn5q8cjbV
-         GnFKTOEbKNyX8CNeQSV5M5X//+q37XEO7VCGG2/g73yK0GacUxkP2pvrnMK5q+jRfjUd
-         Yw3KOgWrB4Pa0+qa92O9kNj4e2Odxx+pLrNZfplsuV42gHNMX4yRBqU5qFjLYIlOPX0Q
-         dBpPz+KJe9akrpIXuWnHeQEX8bMYSbuiWTIHibJQFuYzyCdseFNKTrQjp41oHuUGRCjb
-         /4bw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=UFasefMTFJlBZT0H7l3YT+5vQ3mTXZeAfKd7dCO5Krw=;
-        b=iuUru8iYsuRDkdvlm+jciFzwsxKZA76kg7a4V7z53SJMUu49lFvwYFMAIpxeiNxINT
-         VSAJK5XktvA/54doh8QyCNSjVQCNZyxdyfoy4oEgLMRAmM3wk/hBvCj4edL1MRJhKdJ9
-         MkKPgE2Lyl6+n24dk6bjEB5Y8kQG5KukDJGbD7fKX08XdOLm+dWnhqGSGjyKtVWsIWj5
-         dtyzKU71AeUPRwVBEbootAjukKhGaieCPtwZ62WoBvK7mHhnxmWdROIgkpGvUxnTXm0o
-         aYRUSiNs3GLlexRuLt6W4rgXS7D4hn2b8fPpLUG2JwISt0xMrDN53Ib70TJpzqkdJDRm
-         5VeA==
-X-Gm-Message-State: AGi0PuYcbrw+O8V5qtiygi1ElGrvqdt/55wOlqCz/8T6ZOHAfTtiUgC3
-        vjTaz1joXR5QgY771NL+xwZ9D9jC
-X-Google-Smtp-Source: APiQypKetCJooeemvfUfapTBPls4zQR7iXPoJNSXBYeQ8kyqIDIG1JjmsakDbjkCm+/AjhrfNfpvFw==
-X-Received: by 2002:aa7:d88f:: with SMTP id u15mr9444826edq.87.1586192402142;
-        Mon, 06 Apr 2020 10:00:02 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s7sm2988773ejx.28.2020.04.06.10.00.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Apr 2020 10:00:01 -0700 (PDT)
-Message-Id: <d24c85c54ef841eb2a62d95937c1bf9884ba690a.1586192395.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.497.v4.git.1586192395.gitgitgadget@gmail.com>
-References: <pull.497.v3.git.1585528298.gitgitgadget@gmail.com>
-        <pull.497.v4.git.1586192395.gitgitgadget@gmail.com>
-From:   "Jeff King via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 06 Apr 2020 16:59:47 +0000
-Subject: [PATCH v4 07/15] commit-graph: examine changed-path objects in pack
- order
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1726574AbgDFR4y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Apr 2020 13:56:54 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:62108 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726520AbgDFR4y (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Apr 2020 13:56:54 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1EF6ECBE84;
+        Mon,  6 Apr 2020 13:56:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=umpbdNPfFvhG
+        7gVZhQDU6sZ8zOE=; b=Ohg6CCM8qaklUbeIRMbNX5lbUH6MkLsUr6u5Dv8kYfBh
+        cbCShOFZzcOI1l7S08b6MF3JdYA6CPVVlPL1/SBthY8nRlE5nC4GjAdB+Ay5sjI3
+        4slCpdzr/16lOJ+0Y+XfQlgTQDf61C0KdtgTPXBmuYYCijnDAcuMrlO6WOGRTv4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=He8hy9
+        JjRHuEw1UfxlfqhNNdjrLSci91AWmixIOoUCwsKPwroho+koTda7gVS13ExGI+X+
+        QICrTyG11+JCKIePcq3llgue9hwu3kUMtgjNjQzePBn6XmKHE9NAS0Q1fDSORmq4
+        iSdZMyxDsC0PxTvoD7tb0mcC+fJ9uUfVP2jmI=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 17235CBE83;
+        Mon,  6 Apr 2020 13:56:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 5A1C6CBE81;
+        Mon,  6 Apr 2020 13:56:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Damien Robert <damien.olivier.robert@gmail.com>
+Cc:     git@vger.kernel.org, Philippe Blain <levraiphilippeblain@gmail.com>
+Subject: Re: [PATCH v5 4/5] doc: be more precise on (fetch|push).recurseSubmodules
+References: <20200405201633.704987-1-damien.olivier.robert+git@gmail.com>
+        <20200405201633.704987-5-damien.olivier.robert+git@gmail.com>
+        <xmqqk12twq7x.fsf@gitster.c.googlers.com>
+        <20200406134926.fid74suincbqlibu@feanor>
+Date:   Mon, 06 Apr 2020 10:56:49 -0700
+In-Reply-To: <20200406134926.fid74suincbqlibu@feanor> (Damien Robert's message
+        of "Mon, 6 Apr 2020 15:49:26 +0200")
+Message-ID: <xmqq8sj8wl9a.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     stolee@gmail.com, szeder.dev@gmail.com, jonathantanmy@google.com,
-        Garima Singh <garima.singh@microsoft.com>,
-        Jeff King <peff@peff.net>
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: FE527A78-782F-11EA-AA7C-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff King <peff@peff.net>
+Damien Robert <damien.olivier.robert@gmail.com> writes:
 
-Looking at the diff of commit objects in pack order is much faster than
-in sha1 order, as it gives locality to the access of tree deltas
-(whereas sha1 order is effectively random). Unfortunately the
-commit-graph code sorts the commits (several times, sometimes as an oid
-and sometimes a pointer-to-commit), and we ultimately traverse in sha1
-order.
+> From Junio C Hamano, Sun 05 Apr 2020 at 14:57:22 (-0700)=C2=A0:
+>> Why did you lose quotes around on-demand on this line?  Shouldn't it
+>> be typeset the same way as the other one in the sentence "Defaults
+>> to ..."?
+>
+> Yes it should, sorry it's my mistake, I'll send a new version.
 
-Instead, let's remember the position at which we see each commit, and
-traverse in that order when looking at bloom filters. This drops my time
-for "git commit-graph write --changed-paths" in linux.git from ~4
-minutes to ~1.5 minutes.
+Thanks.  You may want to wait a bit so that (1) others can spot
+similar mistakes, if any, in the version on the list and (2) you
+yourself find some similar errors while waiting for others.
 
-Probably the "--reachable" code path would want something similar.
-
-Or alternatively, we could use a different data structure (either a
-hash, or maybe even just a bit in "struct commit") to keep track of
-which oids we've seen, etc instead of sorting. And then we could keep
-the original order.
-
-Signed-off-by: Jeff King <peff@peff.net>
-Signed-off-by: Garima Singh <garima.singh@microsoft.com>
----
- commit-graph.c | 38 +++++++++++++++++++++++++++++++++++---
- 1 file changed, 35 insertions(+), 3 deletions(-)
-
-diff --git a/commit-graph.c b/commit-graph.c
-index 862a00d67ed..31b06f878ce 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -17,6 +17,7 @@
- #include "replace-object.h"
- #include "progress.h"
- #include "bloom.h"
-+#include "commit-slab.h"
- 
- #define GRAPH_SIGNATURE 0x43475048 /* "CGPH" */
- #define GRAPH_CHUNKID_OIDFANOUT 0x4f494446 /* "OIDF" */
-@@ -46,9 +47,32 @@
- /* Remember to update object flag allocation in object.h */
- #define REACHABLE       (1u<<15)
- 
--char *get_commit_graph_filename(struct object_directory *odb)
-+/* Keep track of the order in which commits are added to our list. */
-+define_commit_slab(commit_pos, int);
-+static struct commit_pos commit_pos = COMMIT_SLAB_INIT(1, commit_pos);
-+
-+static void set_commit_pos(struct repository *r, const struct object_id *oid)
-+{
-+	static int32_t max_pos;
-+	struct commit *commit = lookup_commit(r, oid);
-+
-+	if (!commit)
-+		return; /* should never happen, but be lenient */
-+
-+	*commit_pos_at(&commit_pos, commit) = max_pos++;
-+}
-+
-+static int commit_pos_cmp(const void *va, const void *vb)
- {
--	return xstrfmt("%s/info/commit-graph", odb->path);
-+	const struct commit *a = *(const struct commit **)va;
-+	const struct commit *b = *(const struct commit **)vb;
-+	return commit_pos_at(&commit_pos, a) -
-+	       commit_pos_at(&commit_pos, b);
-+}
-+
-+char *get_commit_graph_filename(struct object_directory *obj_dir)
-+{
-+	return xstrfmt("%s/info/commit-graph", obj_dir->path);
- }
- 
- static char *get_split_graph_filename(struct object_directory *odb,
-@@ -1021,6 +1045,8 @@ static int add_packed_commits(const struct object_id *oid,
- 	oidcpy(&(ctx->oids.list[ctx->oids.nr]), oid);
- 	ctx->oids.nr++;
- 
-+	set_commit_pos(ctx->r, oid);
-+
- 	return 0;
- }
- 
-@@ -1141,6 +1167,7 @@ static void compute_bloom_filters(struct write_commit_graph_context *ctx)
- {
- 	int i;
- 	struct progress *progress = NULL;
-+	struct commit **sorted_commits;
- 
- 	init_bloom_filters();
- 
-@@ -1149,13 +1176,18 @@ static void compute_bloom_filters(struct write_commit_graph_context *ctx)
- 			_("Computing commit changed paths Bloom filters"),
- 			ctx->commits.nr);
- 
-+	ALLOC_ARRAY(sorted_commits, ctx->commits.nr);
-+	COPY_ARRAY(sorted_commits, ctx->commits.list, ctx->commits.nr);
-+	QSORT(sorted_commits, ctx->commits.nr, commit_pos_cmp);
-+
- 	for (i = 0; i < ctx->commits.nr; i++) {
--		struct commit *c = ctx->commits.list[i];
-+		struct commit *c = sorted_commits[i];
- 		struct bloom_filter *filter = get_bloom_filter(ctx->r, c);
- 		ctx->total_bloom_filter_data_size += sizeof(unsigned char) * filter->len;
- 		display_progress(progress, i + 1);
- 	}
- 
-+	free(sorted_commits);
- 	stop_progress(&progress);
- }
- 
--- 
-gitgitgadget
 
