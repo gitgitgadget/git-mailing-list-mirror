@@ -2,100 +2,98 @@ Return-Path: <SRS0=cWmm=5W=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 537CFC2BA19
-	for <git@archiver.kernel.org>; Mon,  6 Apr 2020 09:46:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 27096C2BA19
+	for <git@archiver.kernel.org>; Mon,  6 Apr 2020 11:44:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 211D0206F5
-	for <git@archiver.kernel.org>; Mon,  6 Apr 2020 09:46:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ECA14206F8
+	for <git@archiver.kernel.org>; Mon,  6 Apr 2020 11:44:14 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Li3yr9uD"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UimYAMne"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726873AbgDFJqj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Apr 2020 05:46:39 -0400
-Received: from mail-pj1-f47.google.com ([209.85.216.47]:36815 "EHLO
-        mail-pj1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726721AbgDFJqj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Apr 2020 05:46:39 -0400
-Received: by mail-pj1-f47.google.com with SMTP id nu11so6222494pjb.1
-        for <git@vger.kernel.org>; Mon, 06 Apr 2020 02:46:36 -0700 (PDT)
+        id S1727376AbgDFLoM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Apr 2020 07:44:12 -0400
+Received: from mail-qk1-f193.google.com ([209.85.222.193]:35017 "EHLO
+        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727192AbgDFLoM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Apr 2020 07:44:12 -0400
+Received: by mail-qk1-f193.google.com with SMTP id k134so5164275qke.2
+        for <git@vger.kernel.org>; Mon, 06 Apr 2020 04:44:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=7navwiBHhGxRR/KUTojrJm0UqZ/MBb19p9C5J+upI9w=;
-        b=Li3yr9uDYV70LM9vrulF28bAt4tITNsVf3kMn5C/5ijUqvnorLMmJAnyT6rpdrzZ2k
-         hgUmbZSkDraLqaPKUr8PqsJQCDyJX/7n2GAFa75b/DfZUTrdemWyEKbFtLbN9myeJD7k
-         W8xb73JeyZgNmSoJfwPA2GWdIQ8h8EJxE2ixfRy6Grt3yu//6lF27Z7Vi+/Qb1trXRfU
-         ZLT7k1wm+Nn5Hei5vxtjW5uPzwMLMUpoT3ZPf6dnqDdC+vadLAHWE+2N1GBEbZy+cn2W
-         5jzvcyeLnOpXubcMwVDq/G3lWTl2TBQ13ipYtjrbcGrm2wM+TWx+CcKAsugTQWjOXQ3A
-         RpvQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=pQ2dWBMPfelRjS9ZTYeynmn4FDb5owZhy8fjmX9jVM8=;
+        b=UimYAMneibFTF2kcQcozUozPKQlLoIim+syFREwK/GjwrT2vzhfcs1hN8EOnxH8kHU
+         56CP3DI2Vozh04BAC3elB5+9yDmfNOaP9iT9qlbIclSDbT7tDd5TbMdsELdDbaLGNTbi
+         Oinr0jNiWIpauqoGwqmUQUFd9/EJZi78ut+kSHXR/mWVRaKtKEIKQc/sJsmtFTF4SD0r
+         yI1nRAqawEoQMt/3Be4lTEQzvKmTAmQK151Qf01+UHgAAFoDu+F20m7ccZfWpfOcIIkY
+         IDB7aCUomgPjcvjOAUavKAtyelh6jdO4sNvAsvhDSg0siFTf6s1GyNfi7dN8t/UuTu3E
+         NeMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=7navwiBHhGxRR/KUTojrJm0UqZ/MBb19p9C5J+upI9w=;
-        b=HbtlAk5+snVw5i+sekqthpegljcuvnrCKQuEn/k8bcAwhbro3011qAuMu+kghj/S31
-         4FJ/F/lwOnWN2ULdgRKpUxEIG2b2V/r8cMkFaxGW34LH/WDtIM/3trc5jWoaZTbWBvF/
-         lKHq2tvaSiwotgb5CoXmliPlUJnNj9Xs5UaXUPgyDqna8Wqn+7qx4Z2D3dAkiJtx/pGW
-         JuwW5duYcfp2Lg2z/UrjW3FVfMNLD6jxztghVvdflMC15ghF5p3ZyDfk3eJ8R39fuUSv
-         yuNOa74EXtFG+xq0hZIzeI0I+tYa09ioAus0mF8pBJWTUEDDBEeepzIfAbeVjVUgBeSq
-         8VsQ==
-X-Gm-Message-State: AGi0PuYjR05PY4og0W6rd+DwQzbvLmdeSP8H3HLfb29YWE3tJ54P36KJ
-        +vAIP3S1bEmx4jiZbbuz2UkMtP+pNbyPNKXZ7fw=
-X-Google-Smtp-Source: APiQypIA90JrJIZue4HDjJ1DKD5urAJmn0HZZwcNU36Z9O96J1LfFQIdTOZCNxwtZyS1JFud1vMUt445Zy6AERz7hJg=
-X-Received: by 2002:a17:90a:343:: with SMTP id 3mr21546691pjf.115.1586166396163;
- Mon, 06 Apr 2020 02:46:36 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=pQ2dWBMPfelRjS9ZTYeynmn4FDb5owZhy8fjmX9jVM8=;
+        b=qPhDSUfvUVQdCJYVK3rnXHc7Mj9ZcOce7nNeIWysDJDFMSmHyoF+ZZH4Bj+xwtyzOq
+         jSlxvenq/rv8GtNOdr7o1ylwRFw6P9cFoxcsNeL15dt5n7JXPnWFSH4yvZNu2PSQlf5f
+         S5F6FgBzFuPaoyyLiUsm4ko4+EOVM8mGxmtpqCV5jB5jI3JJeErraWRODNoULInFG4wl
+         hKMs1Lg2e6ImtXgd3WKXNMTVfmJGbWtNJkPzKSXUNrmlhJyrLAQbb8nawZv2UbIkTqvI
+         UbLuibgjON3on8M4uhGkD724Stdyt9urpqDztyLxuxY5Dq/V0RdgoCcWeZBGkVSSkOJE
+         KJqw==
+X-Gm-Message-State: AGi0PuZc4JYbeNib+m92ODLVRcrvfRCZlceeTP74nY6coxlDXV9GnCl+
+        oErYOdQY8EFSuKG+oKwglm8=
+X-Google-Smtp-Source: APiQypJnf7KFQSRhBpg64ys4IvOTscaDSQOrQN5puRTXkflMNNhC86io7mIpoknyrVU5yrOhmVJ3Lw==
+X-Received: by 2002:a05:620a:806:: with SMTP id s6mr21034230qks.188.1586173449662;
+        Mon, 06 Apr 2020 04:44:09 -0700 (PDT)
+Received: from [192.168.1.83] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id 69sm14307535qki.131.2020.04.06.04.44.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 06 Apr 2020 04:44:09 -0700 (PDT)
+Subject: Re: [PATCH v2 0/2] Restrict when prefetcing occurs
+To:     Junio C Hamano <gitster@pobox.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, Garima Singh <garima.singh@microsoft.com>
+References: <20200331020418.55640-1-jonathantanmy@google.com>
+ <cover.1585854639.git.jonathantanmy@google.com>
+ <xmqq369l3a4a.fsf@gitster.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <7de2f54b-8704-a0e1-12aa-0ca9d3d70f6f@gmail.com>
+Date:   Mon, 6 Apr 2020 07:44:07 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:75.0) Gecko/20100101
+ Thunderbird/75.0
 MIME-Version: 1.0
-References: <20200320223015.GA19579@SDF.ORG> <xmqq36a2bpxz.fsf@gitster.c.googlers.com>
- <20200320233528.GB19579@SDF.ORG> <nycvar.QRO.7.76.6.2003211135380.46@tvgsbejvaqbjf.bet>
- <20200321175612.GC19579@SDF.ORG> <nycvar.QRO.7.76.6.2003252008490.46@tvgsbejvaqbjf.bet>
- <20200326001821.GB8865@SDF.ORG> <nycvar.QRO.7.76.6.2003281510260.46@tvgsbejvaqbjf.bet>
- <20200328163024.GA26885@SDF.ORG> <nycvar.QRO.7.76.6.2004041417420.46@tvgsbejvaqbjf.bet>
- <20200404174116.GB11944@SDF.ORG>
-In-Reply-To: <20200404174116.GB11944@SDF.ORG>
-From:   Sebastien Bruckert <sbruckert.dev@gmail.com>
-Date:   Mon, 6 Apr 2020 06:40:07 -0400
-Message-ID: <CA+KXf2C0XytyNEAAdTOZAzw5YTQuv3PSjJ7RgyWqTj9MPp6BDQ@mail.gmail.com>
-Subject: Re: Feature request: rebase -i inside of rebase -i
-To:     George Spelvin <lkml@sdf.org>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <xmqq369l3a4a.fsf@gitster.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all,
+On 4/2/2020 4:28 PM, Junio C Hamano wrote:
+> I notice that a439b4ef (diff: skip batch object download when
+> possible, 2020-03-30) by Garima seems to aim for something similar.
+> 
+> I'll for now keep both topics with conflict resolution, but it may
+> make sense for you two to compare notes.
 
-What is your problem actually ? You want to edit a commit before where
-you are in a rebase ?
+I pointed this out in [1]. I think the right thing to do is for
+Garima's/my patch to rely on Jonathan's change. The commit needs
+to be modified, not simply ejected, but it could be separated from
+the rest of Garima's series. It is only a performance fix for
+normal clones, but is critical for partial clones.
 
-O --- A --- B --- C --- D
-* You are in a middle of a rebase at commit C.
-* You want to edit A without finishing all your actual rebase.
+Garima: do you think it would be easy to remove that patch if/when
+you do a v4 and I can make a new series based on yours and Jonathan's
+with the rename setting?
 
-Is that right ?
-
-Then, why making a whole new rebase for that operation ?
-
-In this example, you are finally editing A with some sort of new
-nested operation. This operation should not do anything else than
-this. Like something atomical, you edit the commit / add a commit /
-remove one, and that's all. End of the story. Back to the original
-rebase, and back to commit C. If that "nested" operation  made
-conflict with B, we can move the actual rebase to B to clean the mess
-you made with the "nested" operation. But you are still in only one
-rebase. If you abort, everything gets cleaned up.
-
-I don't know if any of this is pertinent / understandable, but I hope
-it gave a fresh view on that. You guys are maybe a bit too focused on
-what to do in case of an abort of a nested rebase. However, we don't
-actually know if a nested rebase is the best solution for this job.
-
-My two cents
+[1] https://lore.kernel.org/git/b956528c-412b-2f38-bd90-1fa2ae4b8604@gmail.com/
+Thanks,
+-Stolee
