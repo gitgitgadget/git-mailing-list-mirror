@@ -7,116 +7,104 @@ X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 95B86C2BA19
-	for <git@archiver.kernel.org>; Mon,  6 Apr 2020 12:46:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ACFC1C2BA1A
+	for <git@archiver.kernel.org>; Mon,  6 Apr 2020 12:48:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 69937221EC
-	for <git@archiver.kernel.org>; Mon,  6 Apr 2020 12:46:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7FFC3221E8
+	for <git@archiver.kernel.org>; Mon,  6 Apr 2020 12:48:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FRS18smU"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H0SlTkFo"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728128AbgDFMqX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Apr 2020 08:46:23 -0400
-Received: from mail-qv1-f66.google.com ([209.85.219.66]:34384 "EHLO
-        mail-qv1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728060AbgDFMqX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Apr 2020 08:46:23 -0400
-Received: by mail-qv1-f66.google.com with SMTP id s18so7405009qvn.1
-        for <git@vger.kernel.org>; Mon, 06 Apr 2020 05:46:21 -0700 (PDT)
+        id S1728045AbgDFMsL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Apr 2020 08:48:11 -0400
+Received: from mail-qt1-f193.google.com ([209.85.160.193]:45912 "EHLO
+        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728009AbgDFMsK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Apr 2020 08:48:10 -0400
+Received: by mail-qt1-f193.google.com with SMTP id 71so5818701qtc.12
+        for <git@vger.kernel.org>; Mon, 06 Apr 2020 05:48:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=majKF7ZgECp3I7hNXVrP7gPQR5lUYKOwHANk4HRDMd0=;
-        b=FRS18smUPCrBbncghpJ/AyU7o0K35wyHte68qEh5cniUY9TGni+LGu/jFn5MBkXovd
-         sVyZu1rzeZvCuDmcYfz64RBq2esnfisx7Fama/8OaoTb5/VL8Mdkb1F8jCJHMCldUZDX
-         RyyljzdCU4tFZshWuwxQb77Mzmes7qubqtjsfV8f6DiMcDsSyalp7dyNtsQ00njO70jZ
-         zOHf5LWtlBJr/pGKocuE0wc8dbDoucQM34thPR8DUVJ1fI6lyElanpCGiwvhpdfKo7Yz
-         IwJmASh32FLeaV99Mq4ARnIXyWE4ykFTNZhl6UBGKLQwnrnCFumkPUP6+xYarzGLbcpj
-         Q8cA==
+        bh=k/58GvzDUScdC87+B48TwaHYAWlTQis77iRn1/ejSeQ=;
+        b=H0SlTkFosU0VN2dL9oTBvXbhD8l3T1ZEDTT+pSPNypyKqLWHwHXAXpTwgdE4D62mhf
+         mGTVnUt9OkTzwM8LW6xbCGcgLoZnRGQcwsylfDUeFdZYBSyAeYD/iEzvptEuK8fee5Ca
+         PEeAoVmTHx4+eMVDKfArgT2N/WHkCBF2b/T6dAWZusWz6TLLsNRw2wfqUPk22VR/FUsL
+         aqcCMgzRQMglkYSmZrvlis6vGUcFnTaVNlZIp1el4kWM3u/Cpgx46cw1drpsXE+UGaOw
+         +yyAJIhy3JqorH22GjavLlj5YHrL8Pc082lUPMzD0WEos8Lz963EvU60GR8fi2pFxXnx
+         S6RQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=majKF7ZgECp3I7hNXVrP7gPQR5lUYKOwHANk4HRDMd0=;
-        b=XRa2ZCQWs1tnPS7gag/vzTbbyHHcuHaq5CI7jJ9drWEfylkKv6v7+QNZPJpuUccT6U
-         CwFPQa1Gc95vwlGJMneCxbX1N6LXvOxD/o16EymZBy5WZ8mwZOkXfk6AzU2zjSjk+f17
-         XpGFOnFKJ+XOi4OVd6VGYg1L0zDnMpuChklaJQLfWe94ZyFy8qqTaxN5aoh4xU4AP4xA
-         Sb26GMHgacBt/B9Qrqsz3/7EePxWTd1KFFy63OnQaDdmS4aelsFMmB7sRS0C2j1oMDG4
-         ZDEDEgzwYo2+IxOmhBe2RLUr6EGuJg72L83idG2T51y7y6k9SM7TM7SIW7ffxkTmOvDN
-         p8Fw==
-X-Gm-Message-State: AGi0PuYKD6s8TuSbGa7Sgh2aVpm640dSjClJqELuIqBb8VBsOcEcL3tN
-        8NPWROmxeH8f54YgSMF7rPU=
-X-Google-Smtp-Source: APiQypLie/R3w8K0zp/gKREj9ISLc/8F5k/XVqWOl9zNb7lJqjnCjxn1RgNmTKV1K4v/gGfgiqw2mg==
-X-Received: by 2002:a05:6214:1471:: with SMTP id c17mr19850952qvy.97.1586177180964;
-        Mon, 06 Apr 2020 05:46:20 -0700 (PDT)
+        bh=k/58GvzDUScdC87+B48TwaHYAWlTQis77iRn1/ejSeQ=;
+        b=m3Eeee2Nnp+LbSOlHkcRFpo+As+/1nPjHqPIGLOBjYVh25dCAr6rJNhPCEVBAvm7Cc
+         0ix5E4qVN/Z+HEZSc5ja0HCoytOUD0t0KNWZpGQam5igcpHw94Yhyzrv/Bw8SPxY0Bm7
+         vgngmE6gVBxb3cJEJHoQ2hoX7RJeuWQUm4hD9XeFfj7xiICZh5IJI5ndU5Y8jKeMC6Du
+         t/yUx1biUkkhZ2M0N/paMCqipixcklPu+ypdrKbGKp74utWB2AfQJxm9hADW9Ite62Lt
+         SrXaXF8R1SxnDwcap0dPiyjy2CT+oytp+VWHOoQnxZfgxWview0HvVJHrTVl027AQ6Ou
+         0NQQ==
+X-Gm-Message-State: AGi0Pub8NRcNQTAJOhTRE3QMDRMszuNbxn0MihfhtPgza94pQrXN/MqU
+        knN9J0fXYsqzZrE2ShWxfpg=
+X-Google-Smtp-Source: APiQypIhrzNA9EUIIONl3D6/Q1kAF/QGaDz2i8DLDipfqOYTjbjDIDBQKCtOhfK51dkD6mGYz4osCQ==
+X-Received: by 2002:ac8:f23:: with SMTP id e32mr381986qtk.368.1586177289056;
+        Mon, 06 Apr 2020 05:48:09 -0700 (PDT)
 Received: from [192.168.1.83] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id z6sm7793574qke.56.2020.04.06.05.46.19
+        by smtp.gmail.com with ESMTPSA id j32sm7556124qtb.20.2020.04.06.05.48.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Apr 2020 05:46:20 -0700 (PDT)
+        Mon, 06 Apr 2020 05:48:08 -0700 (PDT)
 Subject: Re: [PATCH 03/15] run-job: implement fetch job
-To:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, peff@peff.net, jrnieder@google.com,
+To:     phillip.wood@dunelm.org.uk,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     peff@peff.net, jrnieder@google.com,
         Derrick Stolee <dstolee@microsoft.com>
 References: <pull.597.git.1585946894.gitgitgadget@gmail.com>
  <77b1da5d3063a2404cd750adfe3bb8be9b6c497d.1585946894.git.gitgitgadget@gmail.com>
- <xmqqeet1y8wy.fsf@gitster.c.googlers.com>
+ <0e924507-e77e-bff9-196a-e73f296a99d9@gmail.com>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <704d278d-205a-d11c-3454-73e06aa75dfa@gmail.com>
-Date:   Mon, 6 Apr 2020 08:46:18 -0400
+Message-ID: <e023974a-e1a0-31f6-e7ac-daf74312fb2c@gmail.com>
+Date:   Mon, 6 Apr 2020 08:48:07 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:75.0) Gecko/20100101
  Thunderbird/75.0
 MIME-Version: 1.0
-In-Reply-To: <xmqqeet1y8wy.fsf@gitster.c.googlers.com>
+In-Reply-To: <0e924507-e77e-bff9-196a-e73f296a99d9@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4/5/2020 4:28 PM, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On 4/5/2020 11:14 AM, Phillip Wood wrote:
+> Hi Stolee
 > 
+> On 03/04/2020 21:48, Derrick Stolee via GitGitGadget wrote:
+>> From: Derrick Stolee <dstolee@microsoft.com>
+>> RFC QUESTIONS:
+>>
 >> 1. One downside of the refs/hidden pattern is that 'git log' will
->>    decorate commits with twice as many refs if they appear at a
->>    remote ref (<remote>/<ref> _and_ refs/hidden/<remote>/<ref>). Is
->>    there an easy way to exclude a refspace from decorations?
+>>     decorate commits with twice as many refs if they appear at a
+>>     remote ref (<remote>/<ref> _and_ refs/hidden/<remote>/<ref>). Is
+>>     there an easy way to exclude a refspace from decorations? Should
+>>     we make refs/hidden/* a "special" refspace that is excluded from
+>>     decorations?
 > 
-> I do not think there is, but it makes sense to teach the decoration
-> machinery to either use only certain refs hierarchies or use all
-> hierarchies except for certain ones; if we want to make sure we
-> won't break existing workflows, we should by defautlt use all the
-> refs we currently use and nothing else, but over time we probably
-> would want to migrate the default to cover only the local and
-> remote-tracking branches and tags (and at that point, refs/hidden
-> would be outside the decoration source).
+> Having some way to specify which refs outside of refs/{heads,remote,tags}/ to show or exclude from decorations would be useful I think. Fetching to a hidden ref is a good idea (as are the other steps you outline above) but as you say we don't want it to show up in the output of 'git log' etc.
 
-I'll see what I can do about adding config to remove some refs from
-decorations. That is immediately useful for Scalar users, too.
+I'll work on this first. It seems less controversial.
 
-> By the way, I have a moderately strong opinion against the use of
-> "refs/hidden" for the purpose of "prefetch in advance, without
-> disrupting refs/remotes".  There may be more than one reason why
-> some refs want to be "hidden", and depending on the purose, the
-> exact refs that one workflow (e.g. "decorate") wants to hide may be
-> the ones that want to be exposed.
+>> +static int fill_remotes(struct string_list *remotes)
 > 
-> If we rename it to "refs/prefetch/", would it make the purpose of
-> the hierarchy clearer without squatting on a vague (because it does
-> not tell why it is hidden) name "hidden" that other people might
-> want to use to hide their stuff for different reasons?
+> Isn't there a easy way to get this using the config api rather than forking 'git remote'?
 
-I like "refs/prefetch". That's more descriptive.
+You're right. I should have used the config here. I've been overly
+biased to how we do it in the C# layer of Scalar _plus_ how I wanted
+the job-runner to run "outside" a Git repository. This could be much
+simpler with the config API.
 
->> Should
->>    we make refs/hidden/* a "special" refspace that is excluded from
->>    decorations?
-> 
-> See above.
 Thanks,
 -Stolee
-
