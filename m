@@ -2,250 +2,204 @@ Return-Path: <SRS0=cWmm=5W=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D2427C2BA19
-	for <git@archiver.kernel.org>; Mon,  6 Apr 2020 14:42:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F9D5C2BA19
+	for <git@archiver.kernel.org>; Mon,  6 Apr 2020 14:43:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 95C6A24679
-	for <git@archiver.kernel.org>; Mon,  6 Apr 2020 14:42:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 04A0A24679
+	for <git@archiver.kernel.org>; Mon,  6 Apr 2020 14:43:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YKCXqYrW"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ad4p6ck7"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728724AbgDFOm2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Apr 2020 10:42:28 -0400
-Received: from mail-qt1-f178.google.com ([209.85.160.178]:36915 "EHLO
-        mail-qt1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728668AbgDFOm2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Apr 2020 10:42:28 -0400
-Received: by mail-qt1-f178.google.com with SMTP id n17so2875260qtv.4
-        for <git@vger.kernel.org>; Mon, 06 Apr 2020 07:42:27 -0700 (PDT)
+        id S1728727AbgDFOnD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Apr 2020 10:43:03 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:42957 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728668AbgDFOnC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Apr 2020 10:43:02 -0400
+Received: by mail-wr1-f67.google.com with SMTP id h15so17766859wrx.9
+        for <git@vger.kernel.org>; Mon, 06 Apr 2020 07:43:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
+        h=reply-to:subject:from:to:cc:references:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=sSWUnhdxjFhH7Vf1TmwxKKkD4jLICAilxvUI1AFgRbs=;
-        b=YKCXqYrWiUySGN+CaH02v7DogpVdPUKvyDu1xyc4JnD4pkY+eVoArf85Mk0JoBd5bj
-         5N+GLbkE1qiw9ukfcyA1FqUr4FaEN+MSabpT52ksv7CHtnOopz9hpQXSEORyA+gW+IRv
-         Hc+ji1BnoCiMKoDSiOzZR8tQf+DJPZs+izKyhKwNe56+rV8SlL3QbATDG71Gh3lx2KWX
-         4xqGYv7XxEJ3hIFMo6I8oy+9/JKAdfIJT02NyyBXoDrUYugiQucEU76E7PYwuRm+Ad2J
-         96BSe2uF5VtX73UWOsFS35HL5ZO5jMBPFSiddbpU8M/srXeZZoFI1CTMGkt5KnTHCX8d
-         DE/Q==
+        bh=prhf3tgganI+Oi8AxO1wlo4Npd13cUkls+JTCFz92fM=;
+        b=ad4p6ck76ozq0tVL2sLAIYSWQlfGfjphfxfQZKNF879XJkABDq5QA2daCCnW/L/z1M
+         8I+mwXFeBTubG7tiNqMTEmBFrp91Kyol3ZML+LY+Lre0ejeEl9MNDmoFf/4YgYwNqano
+         95CZhJNV3ha/l4XuDzSVKPz2JEHOQ+IlrDQbpdbWGqi1moDtly3T29mJLMbpb8k2mmiY
+         2t1eYiMZCB2gKWntIc2ChxhVRfOjyQucGJRKvVXqkNDCs9PnO6Ii3DwWSIr+6/ziT9I6
+         5AM5ubjFP1ECVS2k9auqrMzVseNRAmk2zDmKTHSwH6muGxrv8y7EwENH33bsUVsEcU/2
+         aFSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=sSWUnhdxjFhH7Vf1TmwxKKkD4jLICAilxvUI1AFgRbs=;
-        b=G6DYHrUYw+mk9GbHDs7Do7gz8bt99ZkTmCVapVfb76TlW/FMlmVL1CTjcu5+nCumD/
-         wjZnLlYNwseKhJL9mcA3pRZtRVcZyEpQhFQouBU8q6gkwdSy7xIbadVM9fVbVeU7E2VS
-         P/gG1m6hOoK+wND017nGh01enzEZXrksEx2KNPnNiOCf/RaX8uXe3AO7yoPbhjhifzhU
-         iDlQT6FIPPYCBI+I78kP0OJDf1OIaOKMNO90IYwxBp1n0vht77aYBrkxejQNq/YHc6aq
-         9FBFzcCiVQe4vDSg3Uk4pPka460es+00758S8FHmBJktSNEzUwS4pH5M7cFcqqxBoBs6
-         +vMw==
-X-Gm-Message-State: AGi0PubRyRFV/oaBa8Fhbgn980e+NSpHdhY6A5HSbock/SOyqIbGrma3
-        GDzRX+Ik2FwnKfQkXMeM9jQ=
-X-Google-Smtp-Source: APiQypKnVlDzmomKTSxK8YbloqByU3l19JHFszZPsQ4SQ9gyZC1wOFI244/m+pXcmaap/0ktAlWIhw==
-X-Received: by 2002:ac8:36a1:: with SMTP id a30mr20630264qtc.103.1586184146131;
-        Mon, 06 Apr 2020 07:42:26 -0700 (PDT)
-Received: from [192.168.1.83] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id l186sm3890593qke.16.2020.04.06.07.42.25
+        h=x-gm-message-state:reply-to:subject:from:to:cc:references
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=prhf3tgganI+Oi8AxO1wlo4Npd13cUkls+JTCFz92fM=;
+        b=KOWX3khKn8KdyQjfvP1ahJALgxz7GgZh/HBk+VnJJ1tNtcJKXBAJTqCpLPDNOTqIvZ
+         fx/051rgTVGZhZnZ83ZWFZVMb34RMFHDsh4qAMtldldB9EbXbiExnRGdopqZFheh9FP8
+         uxtRO8IAlnNX5Yb4euhRffABRU6VvpsZghLFIOPOqQVc3snTQ3CvkIkuH4mKJkFBPoF0
+         80xYEnYeJv4IQw7LsWqrjIzNIzHVcn8aimG6vLD4xuSh9i+m7TEyhNNyZ0rSYEjXgvv7
+         8FCH4HIEwP+9KYx9XUdG9xPw25hkd0jyeRZ8i+YwQlBRgkzh/gIec4y7SV0XdMY009K5
+         fHZA==
+X-Gm-Message-State: AGi0PuaDSfGe45ONlLsEBKO7b1Fi5ae+kQmcCR4uGSi5xPUNqHjicl9e
+        Y+vE0Cf/jh4DMAkXJVgDSzs=
+X-Google-Smtp-Source: APiQypJH/rqVon5/HVHvjs9U0/LeaetoZeMe5TAogyF2sGC6yWf7VVwrwws29C2q63uYR8pwLDZsZA==
+X-Received: by 2002:a5d:4611:: with SMTP id t17mr25689808wrq.16.1586184181235;
+        Mon, 06 Apr 2020 07:43:01 -0700 (PDT)
+Received: from [192.168.1.240] (85.25.198.146.dyn.plus.net. [146.198.25.85])
+        by smtp.gmail.com with ESMTPSA id n131sm6404289wmf.35.2020.04.06.07.43.00
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Apr 2020 07:42:25 -0700 (PDT)
-Subject: Re: [PATCH 01/15] run-job: create barebones builtin
-To:     Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, peff@peff.net, jrnieder@google.com,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.597.git.1585946894.gitgitgadget@gmail.com>
- <665da239774419074a9bae49b9c92b340885bfa3.1585946894.git.gitgitgadget@gmail.com>
- <fc5e6823-ebb3-df58-d7fc-6fb2b58cffe8@gmail.com>
- <xmqqimidybzu.fsf@gitster.c.googlers.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <208bdbc7-9c8e-5105-0627-7db86135db7b@gmail.com>
-Date:   Mon, 6 Apr 2020 10:42:23 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:75.0) Gecko/20100101
- Thunderbird/75.0
+        Mon, 06 Apr 2020 07:43:00 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v4 04/23] sequencer: reuse strbuf_trim() in
+ read_oneliner()
+From:   Phillip Wood <phillip.wood123@gmail.com>
+To:     Denton Liu <liu.denton@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Cc:     Alban Gruin <alban.gruin@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+References: <cover.1584782450.git.liu.denton@gmail.com>
+ <cover.1585962672.git.liu.denton@gmail.com>
+ <c7a3cfa20005aeeedc27d2eb4af1e2c4470ad73d.1585962672.git.liu.denton@gmail.com>
+ <4e04fd90-bb71-0d7e-e611-5c408161d3e5@gmail.com>
+Message-ID: <1c382358-08ca-8bf8-cbd6-d00406472bcd@gmail.com>
+Date:   Mon, 6 Apr 2020 15:42:59 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.6.0
 MIME-Version: 1.0
-In-Reply-To: <xmqqimidybzu.fsf@gitster.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <4e04fd90-bb71-0d7e-e611-5c408161d3e5@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4/5/2020 3:21 PM, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
+Hi Denton
+
+On 06/04/2020 15:03, Phillip Wood wrote:
+> Hi Denton
 > 
->> Hi Stolee
+> On 04/04/2020 02:11, Denton Liu wrote:
+>> In the original read_oneliner() logic, we duplicated the logic for
+>> strbuf_trim_trailing_newline() with one exception: instead of preventing
+>> buffer accesses below index 0, it would prevent buffer accesses below
+>> index `orig_len`. Although this is correct, it isn't worth having the
+>> duplicated logic around.
 >>
->> On 03/04/2020 21:48, Derrick Stolee via GitGitGadget wrote:
->>> From: Derrick Stolee <dstolee@microsoft.com>
->>>
->>> The 'git run-job' command will be used to execute a short-lived set
->>> of maintenance activities by a background job manager. The intention
->>> is to perform small batches of work that reduce the foreground time
->>> taken by repository maintenance such as 'git gc --auto'.
->>>
->>> This change does the absolute minimum to create the builtin and show
->>> the usage output.
->>>
->>> Provide an explicit warning that this command is experimental. The
->>> set of jobs may change, and each job could alter its behavior in
->>> future versions.
->>>
->>> RFC QUESTION: This builtin is based on the background maintenance in
->>> Scalar. Specifically, this builtin is based on the "scalar run <job>"
->>> command [1] [2]. My default thought was to make this a "git run <job>"
->>> command to maximize similarity. However, it seems like "git run" is
->>> too generic. Or, am I being overly verbose for no reason?
+>> Reset `buf` before using it then replace the trimming logic with
+>> strbuf_trim().
+> 
+> I should have picked up on this before but this changes the semantics of 
+> the function as it strips all whitespace from the start and end of the 
+> strbuf. Above you talked about using strbuf_trim_trailing_newline() 
+> instead which would not change the semantics of this function. You could 
+> test to see if we've read anything and only call 
+> strbuf_trim_trailing_newline() in that case without messing with 
+> strbuf_reset(). (there is a corner case where if the buffer ends with 
+> '\r' when the function is called and it reads a single '\n' then the 
+> '\r' would be stripped as well but I think that is unlikely to happen in 
+> the wild)
+
+I'd also be fine with dropping this patch and leaving the trimming code 
+as is
+
+Best Wishes
+
+Phillip
+
+> Best Wishes
+> 
+> Phillip
+> 
+>> As a cleanup, remove all reset_strbuf()s that happen before
+>> read_oneliner() is called.
 >>
->> Having read through this series I wondered if we wanted a single git
->> command such as 'git maintenance' (suggestions of better names
->> welcome) and then 'git run-job' could become 'git maintenance run',
->> 'git job-runner' would become another subcommand (run-jobs or
->> schedule-jobs?) and the 'git please-run-maintenance-on-this-repo' you
->> mentioned in you email to Junio could become 'git maintenance init'
->> (or maybe setup)
-> 
-> I had a very similar impression.  In addition to what you already
-> said, a few more were:
-> 
->  - Why the existing "git repack" isn't such "maintenance" command?
->    IOW why do we even need [01/15]?  After all, "repack" may have
->    started its life as a tool to reorganize the PACKFILES, but it is
->    no longer limited to 'git/objects/pack/*.pack' files with its
->    knowledge about the loose object files and the "--prune" option.
->    Consolidating pieces of information spread across multiple .idx
->    files, reachability bitmaps and commit graph files, into a newer
->    and more performant forms can just be part of "packing the pieces
->    of information in a repository for optimum performance", which is
->    a better way to understand why "repack" has a word 'pack' in its
->    name.
-
-To me, "git repack" is a specific kind of maintenance. The end result
-is a pack-file. Now, "git gc" is a bit more general, because it will
-create a pack-file but also update the commit-graph file. Still, its
-name is still very specific: it "collects garbage". The goals of this
-series are to replace "git gc --auto" with something less invasive.
-
-I'll include an alternate CLI proposal at the end of this message.
-
->  - Many of the "maintenance" operations this series proposes do make
->    sense, just like other "maintenance" operations we already have
->    in "repack", "prune", "prune-packed" etc., which are welcome
->    additions. 
-
-Thanks. I'm glad these steps make sense. They are definitely more
-"incremental" updates than a full repack or GC.
- 
->  - Like the individual steps that appear in e.g. "repack", however,
->    some of the individual steps in this series can be triggered by
->    calling underlying tools directly, allowing scripted maintenance
->    commands that suit individual needs better than the canned
->    invocation of "run-job", but I didn't get the impression that the
->    series strives to make sure that all knobs of these individual
->    steps are available to scripters who want to deviate from what
->    "run-job" prescribes.  If it is not doing so, we probably should.
-> 
->  - Again, I do not think we want a reimplementation of cron, at or
->    inetd that is not specific to "git" at all.
-
-I expected the job-runner to get some push-back. The design for it in
-the current RFC matched how we do it in Scalar more than anything else.
-You're probably right that it would be better to leave the "background"
-part to the platform.
-
-Of course, not every platform has "cron" but that just means we need a
-cross-platform way to launch Git processes on some schedule. That could
-be a command that creates a cron job on platforms that have it, and on
-Windows it could create a scheduled task instead.
-
-But what should we launch? It should probably be a Git command that
-checks config for a list of repositories, then runs "the maintenance
-command" on each of those repos.
-
-I'm inserting a break here to draw the eye to a new proposed design:
-
----
-
-Create a "git maintenance" builtin. This has a few subcommands:
-
-1. "run" will run the configured maintenance on the current repo. This
-   should become the single entry point for users to say "please clean
-   up my repo." What _exactly_ it does can be altered with config. I'll
-   list some possibilities after listing the subcommands.
-
-2. "run-on-repos" uses command-line arguments or config to launch "git
-   -C <dir> maintenance run" for all configured directories. The
-   intention is that this is launched on some schedule by a platform-
-   specific scheduling mechanism (i.e. cron).
-   (This subcommand could use a better name.)
-
-3. "schedule" adds the current repository to the configured list of
-   repositories for running with "run-on-repos". It will also initialize
-   the platform-specific scheduling mechanism. This may be to start the
-   schedule for the first time OR to update how frequent "run-on-repos"
-   is run, as appropriate.
-
-4. (OPTIONAL) "mode <mode>" adjusts the config for the current repo to
-   change the type of maintenance requested for this repo. For example,
-   "simple" could just run "git gc --auto" using a normal range.
-   "incremental" could run the maintenance tasks from this series.
-   Finally, "server" could run maintenance tasks as if we are serving
-   the repo to others, so we repack aggressively with full bitmaps, and
-   more frequently.
-
-Here are some possible maintenance tasks. Not all of them would
-be appropriate to run on the same repo, or at least not with the
-same frequency:
-
-* "fetch" : the background fetch from PATCH 3. Appropriate for all modes,
-  but perhaps would want users to opt-in to this in the  basic mode.
-
-* "commit-graph" : the incremental commit-graph writes from PATCH 2.
-  Appropriate whenever the "fetch" command is being run, but also
-  valuable for the "server" mode.
-
-* "gc" : Run "git gc --auto". This would be enabled by default, but
-  should be disabled for the "incremental" and "server" modes.
-
-* "repack" : Run "git repack <options>" with appropriate options based
-  on config. The "server" mode would include custom delta and bitmap
-  options. (I will leave the specifics to those who maintain servers to
-  recommend the best options for "server" mode.)
-
-* "loose-objects" : see PATCH 4. Appropriate for "incremental" mode.
-
-* "multi-pack-index" or "incremental-repack" : Run the "pack-files" job
-  from PATCH 5. Appropriate for "incremental" mode.
-
-* "pack-refs" : create a packed-refs file or repack the reftable as
-  appropriate for those features. (I have less familiarity with these.)
-
-Notice that with this new set of options we could do something rather
-dramatic: replace all calls to "git gc --auto" with "git maintenance
-run --auto". By default, these would be equivalent. However, "git
-maintenance run --auto" is more clear that the behavior is less specific
-than "git gc" and could be configured to do something different.
-
-I used an "--auto" option in the suggestion above to help distinguish
-between the command being run as a foreground operation instead of a
-background operation. Part of setting up a schedule would include
-disabling these "foreground" maintenance tasks and relying entirely on
-the background tasks instead. The best situation would be to avoid
-launching the subprocess at all.
-
----
-
-What do people think of this alternative? Does this get us closer to an
-appropriate level of work for Git to do?
-
-Thanks,
--Stolee
+>> Signed-off-by: Denton Liu <liu.denton@gmail.com>
+>> ---
+>>   sequencer.c | 18 +++++-------------
+>>   1 file changed, 5 insertions(+), 13 deletions(-)
+>>
+>> diff --git a/sequencer.c b/sequencer.c
+>> index faab0b13e8..09ca68f540 100644
+>> --- a/sequencer.c
+>> +++ b/sequencer.c
+>> @@ -420,8 +420,8 @@ static int write_message(const void *buf, size_t 
+>> len, const char *filename,
+>>   }
+>>   /*
+>> - * Reads a file that was presumably written by a shell script, i.e. 
+>> with an
+>> - * end-of-line marker that needs to be stripped.
+>> + * Resets a strbuf then reads a file that was presumably written by a 
+>> shell
+>> + * script, i.e. with an end-of-line marker that needs to be stripped.
+>>    *
+>>    * Note that only the last end-of-line marker is stripped, 
+>> consistent with the
+>>    * behavior of "$(cat path)" in a shell script.
+>> @@ -431,23 +431,19 @@ static int write_message(const void *buf, size_t 
+>> len, const char *filename,
+>>   static int read_oneliner(struct strbuf *buf,
+>>       const char *path, int skip_if_empty)
+>>   {
+>> -    int orig_len = buf->len;
+>>       if (!file_exists(path))
+>>           return 0;
+>> +    strbuf_reset(buf);
+>>       if (strbuf_read_file(buf, path, 0) < 0) {
+>>           warning_errno(_("could not read '%s'"), path);
+>>           return 0;
+>>       }
+>> -    if (buf->len > orig_len && buf->buf[buf->len - 1] == '\n') {
+>> -        if (--buf->len > orig_len && buf->buf[buf->len - 1] == '\r')
+>> -            --buf->len;
+>> -        buf->buf[buf->len] = '\0';
+>> -    }
+>> +    strbuf_trim(buf);
+>> -    if (skip_if_empty && buf->len == orig_len)
+>> +    if (skip_if_empty && !buf->len)
+>>           return 0;
+>>       return 1;
+>> @@ -2471,7 +2467,6 @@ void parse_strategy_opts(struct replay_opts 
+>> *opts, char *raw_opts)
+>>   static void read_strategy_opts(struct replay_opts *opts, struct 
+>> strbuf *buf)
+>>   {
+>> -    strbuf_reset(buf);
+>>       if (!read_oneliner(buf, rebase_path_strategy(), 0))
+>>           return;
+>>       opts->strategy = strbuf_detach(buf, NULL);
+>> @@ -2494,7 +2489,6 @@ static int read_populate_opts(struct replay_opts 
+>> *opts)
+>>                   free(opts->gpg_sign);
+>>                   opts->gpg_sign = xstrdup(buf.buf + 2);
+>>               }
+>> -            strbuf_reset(&buf);
+>>           }
+>>           if (read_oneliner(&buf, 
+>> rebase_path_allow_rerere_autoupdate(), 1)) {
+>> @@ -2526,7 +2520,6 @@ static int read_populate_opts(struct replay_opts 
+>> *opts)
+>>               opts->keep_redundant_commits = 1;
+>>           read_strategy_opts(opts, &buf);
+>> -        strbuf_reset(&buf);
+>>           if (read_oneliner(&opts->current_fixups,
+>>                     rebase_path_current_fixups(), 1)) {
+>> @@ -4006,7 +3999,6 @@ static int pick_commits(struct repository *r,
+>>                   res = error(_("could not read orig-head"));
+>>                   goto cleanup_head_ref;
+>>               }
+>> -            strbuf_reset(&buf);
+>>               if (!read_oneliner(&buf, rebase_path_onto(), 0)) {
+>>                   res = error(_("could not read 'onto'"));
+>>                   goto cleanup_head_ref;
+>>
