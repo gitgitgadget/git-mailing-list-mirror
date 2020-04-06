@@ -2,66 +2,65 @@ Return-Path: <SRS0=cWmm=5W=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 47E46C2BA17
-	for <git@archiver.kernel.org>; Mon,  6 Apr 2020 19:06:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3BA05C2BA2B
+	for <git@archiver.kernel.org>; Mon,  6 Apr 2020 19:28:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 19272206C0
-	for <git@archiver.kernel.org>; Mon,  6 Apr 2020 19:06:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 16E1A20768
+	for <git@archiver.kernel.org>; Mon,  6 Apr 2020 19:28:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="CkBgsqdf"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="N8xTZNUp"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726303AbgDFTGZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Apr 2020 15:06:25 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60891 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725895AbgDFTGY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Apr 2020 15:06:24 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 73D7765328;
-        Mon,  6 Apr 2020 15:06:22 -0400 (EDT)
+        id S1726130AbgDFT2r (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Apr 2020 15:28:47 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:50142 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725933AbgDFT2q (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Apr 2020 15:28:46 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5CA5BCC8F3;
+        Mon,  6 Apr 2020 15:28:43 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=0Ng8C0U4gyllrlpvwtRqbIPBu+0=; b=CkBgsq
-        dfoOrwg5ZZN1i0jhFKfamoA+aYnIIhnKqW3SX8zoQKKwTrl4G00gXlxldxQkqz7p
-        Oij0XdDtd+nwvFTlGvnf/pXjC/+FVUf7FRZJv2D+vibibsLkF7y0tPT4jELAT5K0
-        4kutVcf5Fzz+M58akuW/gmC7qzlod+wwX/AmE=
+        :content-type; s=sasl; bh=T0RrgxR2xGmktqg14Gnt2G5hKZU=; b=N8xTZN
+        Upd0FeiZZARF43mjf+AXJjlJUTnD5GXf8hQG1N6/yzw/sUakl9fKq+QedTgAQhCO
+        AgFQkPpCmOjk+bVfin4VPE5m/Ld3sgO3ukiedn0hBkTt6M9dtJRWwhCGfmcJ9Nid
+        62XHE1UBKmUJX0VQTkkJC0igAADzukKcP+mUU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=tttVgRCrTGAxYc9+QoLi26Wxs1QKJI2y
-        Q7MjSGpjDEsIhMbtmoFCGXiSExHkDxRZ6b3I1Vxj5TkM9zCzfdNJHVn8Ktbe8lqD
-        ++qUzQtFIRbv/II4I6V/x+d4HFqrJfmPlWqSF6cvMS+fnSU6CmrXNrces67K3qz5
-        07EJiTzJi20=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6367565327;
-        Mon,  6 Apr 2020 15:06:22 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=eCn/CXcAlMHYvlm+vdwujgUpO9v1nVU4
+        C0LSzWoHRyDmE6nepcD1ynOHNoDHbnEjfWnnU3XOKxFfstWsJDeO62lr/tJNSnZv
+        IY5QwtS6Xa7T4dwRltOOam+dl8xRZHPedYA8mx9zJOvRNtP692zv0Y4/195GT61O
+        RuI/LeqyITQ=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 53EE5CC8F2;
+        Mon,  6 Apr 2020 15:28:43 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B6A5765326;
-        Mon,  6 Apr 2020 15:06:21 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 97539CC8EE;
+        Mon,  6 Apr 2020 15:28:40 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Shourya Shukla <shouryashukla.oo@gmail.com>
 Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net,
         emilyshaffer@google.com, martin.agren@gmail.com
-Subject: Re: [PATCH 1/2] gitfaq: cleanup gitfaq.txt
+Subject: Re: [PATCH 2/2] gitfaq: append the 'Common Issues' section
 References: <20200406181216.5340-1-shouryashukla.oo@gmail.com>
-        <20200406181216.5340-2-shouryashukla.oo@gmail.com>
-Date:   Mon, 06 Apr 2020 12:06:21 -0700
-In-Reply-To: <20200406181216.5340-2-shouryashukla.oo@gmail.com> (Shourya
-        Shukla's message of "Mon, 6 Apr 2020 23:42:15 +0530")
-Message-ID: <xmqqzhbov3gy.fsf@gitster.c.googlers.com>
+        <20200406181216.5340-3-shouryashukla.oo@gmail.com>
+Date:   Mon, 06 Apr 2020 12:28:39 -0700
+In-Reply-To: <20200406181216.5340-3-shouryashukla.oo@gmail.com> (Shourya
+        Shukla's message of "Mon, 6 Apr 2020 23:42:16 +0530")
+Message-ID: <xmqqv9mcv2fs.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: B410A6F6-7839-11EA-B9C4-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: D217FE9E-783C-11EA-8566-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -69,53 +68,75 @@ X-Mailing-List: git@vger.kernel.org
 
 Shourya Shukla <shouryashukla.oo@gmail.com> writes:
 
-> The file contained a lot of whitespace errors as well as some
-> grammatical mistakes. Amend them.
->
-> Signed-off-by: Shourya Shukla <shouryashukla.oo@gmail.com>
-> ---
->  Documentation/gitfaq.txt | 110 +++++++++++++++++++--------------------
->  1 file changed, 55 insertions(+), 55 deletions(-)
->
-> diff --git a/Documentation/gitfaq.txt b/Documentation/gitfaq.txt
-> index 1cf83df118..3ca16b1092 100644
-> --- a/Documentation/gitfaq.txt
-> +++ b/Documentation/gitfaq.txt
-> @@ -23,7 +23,7 @@ Configuration
->  What should I put in `user.name`?::
->  	You should put your personal name, generally a form using a given name
->  	and family name.  For example, the current maintainer of Git uses "Junio
-> -	C Hamano".  This will be the name portion that is stored in every commit
-> +	C Hamano". This will be the name portion that is stored in every commit
->  	you make.
->  +
->  This configuration doesn't have any effect on authenticating to remote services;
-> @@ -32,7 +32,7 @@ for that, see `credential.username` in linkgit:git-config[1].
->  [[http-postbuffer]]
->  What does `http.postBuffer` really do?::
->  	This option changes the size of the buffer that Git uses when pushing
-> -	data to a remote over HTTP or HTTPS.  If the data is larger than this
-> +	data to a remote over HTTP or HTTPS. If the data is larger than this
->  	size, libcurl, which handles the HTTP support for Git, will use chunked
->  	transfer encoding since it isn't known ahead of time what the size of
->  	the pushed data will be.
-> @@ -40,15 +40,15 @@ What does `http.postBuffer` really do?::
->  Leaving this value at the default size is fine unless you know that either the
->  remote server or a proxy in the middle doesn't support HTTP/1.1 (which
->  introduced the chunked transfer encoding) or is known to be broken with chunked
-> -data.  This is often (erroneously) suggested as a solution for generic push
-> +data. This is often (erroneously) suggested as a solution for generic push
->  problems, but since almost every server and proxy supports at least HTTP/1.1,
-> -raising this value usually doesn't solve most push problems.  A server or proxy
-> +raising this value usually doesn't solve most push problems. A server or proxy
+> +[[rebasing-and-merging]]
+> +How do I know when to merge or rebase?::
+> +	Rebasing and merging two entirely different concepts with different utiilites.
 
-All of the above look useless noise.  It's not like it is turning
-multiple SP after full-stop into a single SP (there is one that is
-not touched in the pre-context in the first hunk, for example)---
-not that such a change is worth a churn.
+Can you wrap these lines at a more reasonable column, like 65-72?
 
-Please split them out and concentrate on true errors and typoes;
-otherwise it is too distracting and unreviewable.
+> +	In Git terms, rebasing means to place changes made in one branch over another branch
+> +	(called base, hence the term rebase). The commit history of the branch wanting to rebase
+> +	get placed over the branch on the receiving end and it appears as if those changes took
+> +	place in the receiving branch itself. Merging, as the name suggests, merges the latest
+> +	commit of one branch onto the recent branch, making this combination appear as one separate
+> +	commit.
+
+There is nothing technically wrong per-se in the above, but is this
+worth saying here, instead of polishing the tutorial or rebase/merge
+manual pages?  Also, in the above, I do not see much that would help
+readers to decide which one between merge and rebase to choose.
+
+> +[[files-in-.gitignore-are-tracked]]
+> +I asked Git to ignore various files, yet they show up as changes in my staging area::
+> +	One uses `.gitignore` to ignore files from getting tracked in the working tree. This ignores
+> +	the aforementioned files for the whole lifetime of the project unless they area removed from
+> +	the `.gitignore`.
+
+This should mention "git add" (and possibly "git status") somewhere.
+You list patterns to match cruft you want to "IGNORE", (i.e. would
+not want to track), so that "git add ." would ignore it, and "git
+status" won't make noises about them not being tracked.
+
+> But, `.gitignore` will only ignore the files which were not a part of the
+> +	repository when they were mentioned in the `.gitignore`. Hence, addition of a file to `.gitignore`
+> +	after it was added to the working tree will have no effect and Git will keep tracking them.
+> +	To prevent this from happening, one has to use `git rm --cached <file>` to remove the file
+> +	from the staging area(i.e. the cache) and not from the repository. 
+
+That's not "prevent this from happening".  It is more like
+recovering from an earlier mistake of adding what you did not want
+to add.
+
+But people ask ".gitignore does not ignore, my vendor.o file is
+tracked, and I want changes to vendor.o to be ignored" in the
+context of "once tracked, .gitignore would ont kick in", so the
+above advice to "remove from the tracked set" would not even help
+them.  Their expectation needs to be adjusted, and an entry in FAQ
+you are trying to add is a good place to do so.
+
+> +[[checking-out]]
+> +What is checking out a commit/branch? How do I perform one?::
+> +	In Git terminology, checking out means updating the current working tree with a another commit or
+> +	even a separate tree(which would translate to a branch).
+
+Unless you are going to mention "switch" and "restore", you should
+stress the fact that "checkout" checks out two separate things for
+two different purposes upfront, in the first sentence.
+
+ - Checking out a branch (or a commit) is to set up the working tree
+   files in preparation for working on the history of the branch
+   (most often, to grow the history by adding more commits, but
+   sometimes to edit the history by rebasing).
+
+ - Checking out individual paths out of a tree-ish (most often, a
+   commit) is to grab a verbatim copy of the path recorded in the
+   tree-ish to update the files in the working tree, and is done to
+   work on the history of the current branch.
+
+People found the "checkout" command confusing, as the distinction
+between the two weren't clearly taught to them.  More recent
+versions of Git introduced "switch" and "restore" subcommands that
+can be used only for the former and for the latter purpose,
+respectively.
 
 Thanks.
-
