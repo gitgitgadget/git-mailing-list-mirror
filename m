@@ -7,241 +7,134 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CD390C2BB54
-	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 22:24:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ECE9CC2D0EC
+	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 22:37:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 884262075E
-	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 22:24:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BB8FB2063A
+	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 22:37:32 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="PwhHZwvO"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="HlQ90Oyu"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726670AbgDGWYL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Apr 2020 18:24:11 -0400
-Received: from mout.gmx.net ([212.227.17.22]:51503 "EHLO mout.gmx.net"
+        id S1726416AbgDGWhb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Apr 2020 18:37:31 -0400
+Received: from mout.gmx.net ([212.227.15.19]:56131 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726527AbgDGWYK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Apr 2020 18:24:10 -0400
+        id S1726380AbgDGWhb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Apr 2020 18:37:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1586298225;
-        bh=iFWoSy9h+LOCXAr9Wq7NQLeLLZKQej8QXhZUe0oeSQM=;
+        s=badeba3b8450; t=1586299045;
+        bh=XNWEm9e5zMXfnLXjK5CFyLjT3S3mcSYTt86c7KDJQBw=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=PwhHZwvO11Hv3cAGg8HEutCQ7dmIeg4a22JeRymn4xzridw6q5vVIXoCeG8N0xt66
-         ZPHle/nF4U24BZfibnn2IWL6rr0CYRI7Ma6ObXUoyj8a74CGPMgk34mMP8sHD0KAcv
-         UCvPlxlWJae3/iB+MrZwkix+OB7zcgXm9rzMif5Q=
+        b=HlQ90OyukCTkf7ezph58z/UJbrAnghP+lsCZRcylp7L6RnwFVlRWnqbkT1zcspPu+
+         mavPMrj4DwtvpSexncsY3U0gC2n/WW4SCvlvTAzNOyFp93lnbMebAW6GmXpxWba2cc
+         zmft8iGDiZGR7eChuVUtzXuav3ZH/8GRNWapC16A=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from MININT-QA14EDB.fritz.box ([89.1.212.75]) by mail.gmx.com
- (mrgmx105 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 1MOREc-1jf62p0rle-00PsK5; Wed, 08 Apr 2020 00:23:45 +0200
-Date:   Wed, 8 Apr 2020 00:23:43 +0200 (CEST)
+ (mrgmx004 [212.227.17.190]) with ESMTPSA (Nemesis) id
+ 1Mplc7-1iwZqa1PDx-00qCwV; Wed, 08 Apr 2020 00:37:25 +0200
+Date:   Wed, 8 Apr 2020 00:37:24 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-cc:     Derrick Stolee <stolee@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, peff@peff.net, jrnieder@google.com,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 00/15] [RFC] Maintenance jobs and job runner
-In-Reply-To: <20200407014829.GL6369@camp.crustytoothpaste.net>
-Message-ID: <nycvar.QRO.7.76.6.2004072355100.46@tvgsbejvaqbjf.bet>
-References: <pull.597.git.1585946894.gitgitgadget@gmail.com> <xmqqv9mgxn7u.fsf@gitster.c.googlers.com> <cc9df614-2736-7cdd-006f-59878ee551c8@gmail.com> <20200407014829.GL6369@camp.crustytoothpaste.net>
+To:     Elijah Newren <newren@gmail.com>
+cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Paul Gevers <elbrus@debian.org>,
+        Ian Jackson <ijackson@chiark.greenend.org.uk>,
+        Alban Gruin <alban.gruin@gmail.com>
+Subject: Re: [PATCH] sequencer: honor GIT_REFLOG_ACTION
+In-Reply-To: <CABPp-BFXT1QkTLUFSAju2TwzVdSRjKSyLQYp2KaoW2+S2U8KJw@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2004080037080.46@tvgsbejvaqbjf.bet>
+References: <pull.746.git.git.1585773096145.gitgitgadget@gmail.com> <b187cb5f-a6c8-2908-e3fd-e1210e6970e0@gmail.com> <CABPp-BE_mimSRg5wf0Yzn2s-dX=64ZS1jGszqwHzr3aju0bj=A@mail.gmail.com> <09397e37-a22b-5159-b760-bae238ae3ed6@gmail.com>
+ <nycvar.QRO.7.76.6.2004071649190.46@tvgsbejvaqbjf.bet> <CABPp-BFXT1QkTLUFSAju2TwzVdSRjKSyLQYp2KaoW2+S2U8KJw@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:YZcRSmRMBxIfdgJRjbngdpiwaCr1nH0RwWHGgQqr4X+cZEiGeoN
- poK4VhMJbQos30IfdSiubqgTU1Dryl1rlqeVVx4Q3R0xkoLa1fnKn/Tk1JDY4G+tRLufPDR
- QyB2lmE7OVN6A/XLVyU3a9ZzVY9qlzwKaRXCN0Gz7DFhUlfbiitMTVDWo2WhZPIa96q/pWO
- UcnZy7AHqzCkOYTUDP8Ig==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:xMhyPvOn/E0=:Mxh42WWrVKgcoc4y8no3qi
- exBiOQ6I/of90m8Armr+yqHM9BGVhLXA5RQLDKvzkr+58BCFtwnRCUKpaWMTnRz5xMUePYh4k
- DQHpr03hhfuJ6HbN9iry0mnUoX1za6oG9EpBA+sl3vJPUPmGwHGO7uWVmfjF2O3ZkFBX65kyr
- Rg3yIveMLeUXQCAw1+8AGuVDMF8lP9QFUF9hTfQLzBTqf7jOGcZlCKwAZtBTIjgqDuBFUu/mK
- 0yvI9bD1aUOMEpTUaVDqAZmxy9mv6rXKmCGs8yVFNtwTRVIe+RrUEs3QqZSuhANoDSCpVx8Zl
- MytVkY5bPmIQSm3PEqnRJjVN+Doo4JpNDnclxVgwXNOgDvst7bQQnyKR/NCPZpal0wyTY57mc
- gIC566vrPwonqN/h2JR5q+msAFhfO301KPJW2wZ89ICje86/1lJRvOrS/G9aDlFVEfDbrwSfd
- DRlxGEFd2CaVcCHltBHFkxp2yzw73wssQotmx03GbOIbSxJ07z/5ehAAaXZ7IyzJVGPBVVkNo
- FC9qPEAaidQAXJJeLeXectw43anVCoqptUYYNPBVG7svHH5HAtzsgP6RYkK7HX6px5KJqTK9g
- BD13Ypk2OwVxO6Hqdqz1KQD6aSpw3IswukHR3bK2hioYTJ92NV4EeQDlaqZo23lrPgNmGS9De
- TeGUsVriFu721HxEBOI/3AUGOw0QEyBlzXnvaYlgHvStIHKkkRHeL2IrDpjNXLeo7CgYVtlcq
- nLBlFmJq1922x3zhbjq4ahK5AkeQ+ADbCkz62d27JMQHGCNuMuomwi4VTZ49c35Q/XBvk+mwm
- UCpBctfqOtNG2NGSciGEx+81+qBHBLAgUMqg8Byb1d/ZkWkOcRILrFyJ/2IBkCLjc1zzcQeaS
- iGwyDRty38JnwHxw9RtUoqxA9IzvKf7isrMFiL+HSoCwyGHk2P+PZuPeuNA2NzTPXW2/eOKpA
- WPgfjO+WrLfYVblOl7bwE7yHJvG7UBNUJ2MJHKMoWEDN0AIiSLwmCVZnEQ/Q89kN+P76VoCBk
- PURZ+M3RJh9ZPTUG0UBYzl4PkvWcKIxC89Ye7fdFtkOrUtDEkiOHuf9xrKD8tveMnJor6LR8d
- WPlaRkw2jyWAwQgGVQQbp8E0hVwP+pshaxTJhOI25QITI40KwtyoudzyIEZJfYVhzj+cNWawj
- 2V2dXXR2atwXhFt11oMvwSd6MHbwMEACZrUzUJl6HxNs4Kni6zAKNBysrXqi1XfqAk6wxHmBy
- Fp1qHgBnFo0QkWBP7dfVj90i7tKVODfizO4HABw==
+X-Provags-ID: V03:K1:WxzBKVuyKvG6umPUM8F5nbTjQh5O4JvLwsKrbhsw0LDgdCx9lO2
+ ZDtDhGIJ6kpwH1A4ULsfk9Wk/XtiMwTkV4o5AC0/6MvvHf6CvcoqZVpVwMcMzN8425GfQDv
+ rS0qEOycCuEg61BFFubx+Svqji1S4YNzmVKSVEn38yRoDuu4R8SD48KfstPExhxY8Iw6+R9
+ imX9UoK2Js9EudeI1Iylw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:dM7CfKUTMG4=:EtWCxHfTjvihQaL54VWEN0
+ HPi4gtobpCqrtmq4gOmyqjPVGwhUtD+GzUV9kzEQEl0nGwLzIBWrjwwcz3hWwVB43OIpeJ7LO
+ jCNfhsDKWwTjLrp3SGk36/G4MU7jHh5OaQDxoJU2hjwtu2x/XP5neJEAA8SJJCDwGUP1fV5QY
+ B3vjxtSZnPdlmnduNU0SPLurHaXnczluJevvgQGy+dueWnvuxy8E/R/tZp7DzUrzrEy8eLoqo
+ lFJTkoZEMuTUcJ11o9ObAO4oflsm1TTRz+qwGnlN3AHgFXklOsCg65Kab+jyEyr+zmuKV4fdl
+ YsOc9crbT8X2ySqx1gjCJCrJQ3DnDTe8+xWZoBGQDu8V3EBQCM6ZSedCddfCUlvk/bnyHCHdH
+ uXUc53aeisrNDRw+6rNve1ElENjJy7Mnue7CavraFXZbB1s/wiSh8lXnaP0TZmAm5qx6d9ofG
+ sFg2QIT33TeI75lrV2T3IzDwiajh+K3gcT9E3bxsuJkHu4DkDZFWfwukk4js8LIo5eDUMvOFI
+ B7FATvJg6YKpEICTxhxtt6B7F/l7DqoRXbc6EEfGJZ4f+MSfW5wcgKzmuuMk6ItVY7l2Y+Z0j
+ K15y0b8wtgNb2/0oWQFxOOA0zPeOsKK2YgNjFgzMuENQaFsIbznSQQES87b54twccH5KSFgCl
+ 9FYMznNx3teuYz8oWQAm9/X2N6oyQcdR/3K1HoJWcvhX43grFphZ9n0E9Wm16jhPaDoUfxj6q
+ 1tG3th86PXwi6BRpc+IDD9q+6Dii+tSNgGfh/0QZNR4tGwFj0ZbaxdIDFyABXpVzMqCBrkrhn
+ 6P7aeI1WcT8+oMEoQQnjA5qJ7w/GVGKPa4Z3FeicC7hoHVpL4Fap4JRVkDTe7eoekCRsV/9sr
+ R7jgkyhswjyxSP2Ni7HFwUmqKZtC8DiEZtJWWg+yvNLO3GtWebIDrpXvDPAMFDUAbKWPG5poa
+ RjxU9hJreQOljWZdki7Vhee7C4c+UAHG72I2bGRaD2McqyKGFXcK33PJRqJLmIn64jSe0Nmpv
+ L/ZGaUzDd0+hAWIY2dWjfhLpcigu0dreAIJ/cHvN9Pgf3sknrMX+6lNiTOCx1CNLcEWaxQP2m
+ FOWmGE6j6xfQgbad9kjowPyKuiaLjg9+j6UaQ1FerLehPEim5cHuGPFtPgcRUn7BOrC6DWLtD
+ A/AqRxg1SmsOUgGnB9U0yvY8TSPNmMc/cPcdvEKk0IyEnM6cxbgE9FyeFRn4Y82e+lJhQ2b1/
+ Sig4DZJWdFp1tw3Q+vDqHwzXanJ1IA8pcRIHgow==
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi brian,
+Hi Elijah,
 
-On Tue, 7 Apr 2020, brian m. carlson wrote:
+On Tue, 7 Apr 2020, Elijah Newren wrote:
 
-> On 2020-04-04 at 00:16:21, Derrick Stolee wrote:
-> > On 4/3/2020 5:40 PM, Junio C Hamano wrote:
-> > > "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> > >
-> > >>  * git run-job <job-name>: This builtin will run a single instance =
-of a
-> > >>    maintenance job.
-> > >>
-> > >>  * git job-runner [--repo=3D<path>]: This builtin will run an infin=
-ite loop
-> > >>    that executes git run-job as a subcommand.
-> > >
-> > > What does this have to do with "git", though?  IOW, why does this
-> > > have to be part of Git, so that those who would benefit from having
-> > > a mechanism that makes it easy to run regular maintenance tasks but
-> > > are not Git users (or those that want to do such maintenance tasks
-> > > that are not necessarily tied to "git") must use "git" to do so?
-> > >
-> > > I'll find out later why it is so after reading thru 15 patches
-> > > myself, so no need to give a quick answer to the above; it was just
-> > > my knee-jerk reaction.
+> On Tue, Apr 7, 2020 at 7:50 AM Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
 > >
-> > That's a reasonable reaction. The short version of my reasoning is tha=
-t
-> > many many people _use_ Git but are not Git experts. While a Git expert
-> > could find the right set of commands to run and at what frequency to
-> > keep their repo clean, most users do not want to spend time learning
-> > these commands. It's also worth our time as contributors to select wha=
-t
-> > a good set of non-intrusive maintenance tasks could be, and make them
-> > easily accessible to users.
+> > On Thu, 2 Apr 2020, Phillip Wood wrote:
 > >
-> > This series gets us half of the way there: a user interested in doing
-> > background maintenance could figure out how to launch "git run-job" on
-> > a schedule for their platform, or to launch "git job-runner" at start-
-> > up. That's a lot simpler than learning how the commit-graph,
-> > multi-pack-index, prune-packed, pack-objects, and fetch builtins work
-> > with the complicated sets of arguments.
+> > > On 02/04/2020 18:01, Elijah Newren wrote:
+> > > >
+> > > > On Thu, Apr 2, 2020 at 2:25 AM Phillip Wood <phillip.wood123@gmail=
+.com>
+> > > > wrote:
+> > > > >
+> > > > > On 01/04/2020 21:31, Elijah Newren via GitGitGadget wrote:
+> > > > >
+> > > > > >        va_start(ap, fmt);
+> > > > > >        strbuf_reset(&buf);
+> > > > > > -     strbuf_addstr(&buf, action_name(opts));
+> > > > > > +     strbuf_addstr(&buf, reflog_action ? reflog_action :
+> > > > > > action_name(opts));
+> > > > > >        if (sub_action)
+> > > > > >                strbuf_addf(&buf, " (%s)", sub_action);
+> > > > > >        if (fmt) {
+> > > > > > @@ -3799,8 +3800,10 @@ static int pick_commits(struct reposito=
+ry *r,
+> > > > > >                        struct replay_opts *opts)
+> > > > > >    {
+> > > > > >        int res =3D 0, reschedule =3D 0;
+> > > > > > +     char *prev_reflog_action;
+> > > > > >
+> > > > > >        setenv(GIT_REFLOG_ACTION, action_name(opts), 0);
+> > > > > > +     prev_reflog_action =3D xstrdup(getenv(GIT_REFLOG_ACTION)=
+);
+> > > > >
+> > > > > I'm confused as to why saving the environment variable immediate=
+ly after
+> > > > > setting it works but the test shows it does - why doesn't this c=
+lobber
+> > > > > the value of GIT_REFLOG_ACTION set by the user?
+> > > >
+> > > > The third parameter, 0, means only set the environment variable if
+> > > > it's not already set.
+> > >
+> > > Ah thanks, I thought I must be missing something fairly obvious but =
+couldn't
+> > > see what it was
+> >
+> > FWIW I was also about to comment on that. Maybe that warrants even a c=
+ode
+> > comment above the `prev_reflog_action`?
 >
-> If there are periodic tasks that should be done, even if only on large
-> repos, then let's have a git gc --periodic that does them.  I'm not sure
-> that fetch should be in that set, but nothing prevents users from doing
-> "git fetch origin && git gc --periodic".
+> Yeah, if it tripped you both up, I'll add such a comment to the code
+> to help explain it.
 
-Hmm. Who says that maintenance tasks are essentially only `gc`? With
-_maaaaaybe_ a `fetch` thrown in?
-
-And about "nothing prevents users from doing ...": while that is true,
-_even less_ is preventing those same users from _forgetting_ to run them,
-or _not even knowing_ about the need to run them.
-
-I vividly remember how `git gc --auto` was introduced. A Linux developer
-too many was complaining about their Git operations becoming slower and
-slower over the course of some months.
-
-That is a very illustrative example of what we're trying to accomplish
-here: we are dealing with people whose job it is not to become Git
-experts, but whose job is to develop software, and it just so happens that
-they use Git as version control system. For the most part, they are not
-even all that interested in the internals of Git. Strange, I know.
-
-The solution then, and now, is to teach Git to do these things for the
-users, without the need to know a specific command and when to run it.
-
-I am not saying that the current state of the design is perfect. What I am
-saying is that the goal is very clear, and important, and we must try to
-get there: to teach Git to run maintenance for the user, without much in
-the way of the user asking for it, but Git knowing when to do what, and
-trying mostly to stay out of the users' way.
-
-> Let's make it as simple and straightforward as possible.
-
-I fear that we're running the danger of confusing _two_ meanings of "as
-simple and straightforward as possible" here.
-
-=46rom my perspective, Stolee's patches aim to make using Git as simple an=
-d
-straightforward as possible, and the historical record shows that Scalar
-(after which they are modeled) does a pretty good job at that, or is at
-least heading in the right direction.
-
-I get the impression, however, that many reviewers here seem to favor the
-goal of making the _patches_ as simple and straightforward as possible,
-however, at the expense of the original goal. Like, totally sacrificing
-the ease of use in return for "just use a shell script" advice.
-
-> As for handling multiple repositories, the tool to do that could be as
-> simple as a shell script which reads from ~/.config/git/repo-maintenance
-> (or whatever) and runs the same command on all of the repos it finds
-> there, possibly with a subcommand to add and remove repos.
-
-Sure, that is flexible.
-
-And it requires a ton of Git expertise to know what to put into those
-scripts. And Git updates cannot deliver more value to those scripts.
-
-Which taps right into the above-mentioned focus on _the patches'_
-simplicity, as opposed to the original goal of making _using Git_ simpler
-and less painful with big repositories.
-
-> > The second half would be to create a command such as
-> >
-> > 	git please-run-maintenance-on-this-repo
-> >
-> > that initializes the background jobs and enables them on the repo they
-> > are using. This allows the most casual of Git user to work efficiently
-> > on very large repositories.
->
-> I'm not opposed to seeing a tool that can schedule periodic maintenance
-> jobs, perhaps in contrib, depending on whether other people think it
-> should go.  However, I think running periodic jobs is best handled on
-> Unix with cron or anacron and not a custom tool or a command in Git.
-
-Okay, here is a challenge for you: design this such that the Windows
-experience does _not_ feel like a 3rd-class citizen. Go ahead. Yes, there
-is a scheduler. Yep, it does not do cron-like things. Precisely: you have
-to feed it an XML to make use of the "advanced" features. Yeah, I also
-cannot remember what the semantics are regarding missed jobs due to
-shutdown cycles. Nope, you cannot rely on the XML being an option, that
-would require Windows 10. The list goes on.
-
-Do you see where I am getting at?
-
-It's really asking the user to take on _all_ the burden of the complexity.
-The complexity has to live _somewhere_, after all, and if you want to
-prevent Git from taking care of it, there are only the users left to hold
-the candle.
-
-I'd rather Git take up that responsibility, and lift that burden from the
-users' shoulders. It's not like we have a stellar record of usability, so
-we might just as well welcome Stolee's effort to improve Git in that
-respect.
-
-> I've dealt with systems that implemented periodic tasks without using
-> the existing tools for doing that, and I've found that usually that's a
-> mistake.  Despite seeming straightforward, there are a lot of tricky
-> edge cases to deal with and it's easy to get wrong.
-
-That might be true for general-purpose periodic taks managers.
-
-But that's not what we need in Git, do we? The scope is a _lot_ more
-reduced.
-
-But maybe you found one of those issues in Stolee's patches? If so, please
-do contribute your experience there to point out those issues, so that
-they can be addressed.
-
-> We also don't have to reimplement all the features in the system
-> scheduler and can let expert users use a different tool of their choice
-> instead if cron (or the Windows equivalent) is not to their liking.
-
-Do we really want to start relying on `cron`, when the major platform used
-by the target audience (enterprise software engineers who deal with rather
-larger repositories than git.git or linux.git) quite obviously _lacks_
-support for that?
-
-That would be a decision that would not make sense to me. I mean, why go
-to all the lengths of making it easier and less involved to manage large
-repositories, and then just slam the door shut into the faces of all of
-those developers working on Windows, an operating system with a rather
-large market share?
-
-Ciao,
+Thank you!
 Dscho
