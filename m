@@ -2,102 +2,146 @@ Return-Path: <SRS0=6awY=5X=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.3 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_IN_DEF_DKIM_WL
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0AC37C2D0EC
-	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 23:44:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C7F9C2BB55
+	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 23:51:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 82F9320719
-	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 23:44:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 20FB320747
+	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 23:51:27 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="q93roYOo"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="nShhHgB4"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726481AbgDGXoY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Apr 2020 19:44:24 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:51782 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726386AbgDGXoY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Apr 2020 19:44:24 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 75EC1CA8AB;
-        Tue,  7 Apr 2020 19:44:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=VuxpLkii3zJun5V9iEuOa+heN6M=; b=q93roY
-        OoN9dY2HWWV/Z74LJlVsO9PAhtzRkvUP1RVmLmeOMp28J4qADdrQreT6aZCL70o0
-        CavkcbzBQ8HWKcH9DEKCu4RRYpCunVbpU+1BNvxdr0+FCej5dJahFw0qCrZRl1Fl
-        4BQsbWOH/BSlUOQ+/HqOvf+UjcByIs0cM/G9c=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=q4G0n9oNPD6QQZHD0JPNY14Sid2DozOr
-        gBgp7dJ6FmMHw43tVe8gsrzbw48YKzJaJC6U4OEC3cSqDuutD/3EIJCzvyMwAlo/
-        1wAhtLF0ONSfYf1mc87hoR2wm535ZV6WoUQfl/INGBTMOKejFyzXQk3rSvdRJamG
-        SrEhuhJ6dM8=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6E61BCA8AA;
-        Tue,  7 Apr 2020 19:44:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B91D6CA8A9;
-        Tue,  7 Apr 2020 19:44:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, garimasigit@gmail.com
-Subject: Re: [PATCH v3 2/4] diff: make diff_populate_filespec_options struct
-References: <20200331020418.55640-1-jonathantanmy@google.com>
-        <cover.1586296510.git.jonathantanmy@google.com>
-        <c1973fd6308109b0cc99544500d8932222b66726.1586296510.git.jonathantanmy@google.com>
-Date:   Tue, 07 Apr 2020 16:44:18 -0700
-In-Reply-To: <c1973fd6308109b0cc99544500d8932222b66726.1586296510.git.jonathantanmy@google.com>
-        (Jonathan Tan's message of "Tue, 7 Apr 2020 15:11:41 -0700")
-Message-ID: <xmqqpncirhd9.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726705AbgDGXv0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Apr 2020 19:51:26 -0400
+Received: from mail-pf1-f171.google.com ([209.85.210.171]:39247 "EHLO
+        mail-pf1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726626AbgDGXvW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Apr 2020 19:51:22 -0400
+Received: by mail-pf1-f171.google.com with SMTP id k15so1545296pfh.6
+        for <git@vger.kernel.org>; Tue, 07 Apr 2020 16:51:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=a31L181iIegQzPfqj+BqjmDabCswXiC1eI4GB9nLU9c=;
+        b=nShhHgB4rl5XEsEFGi9cisYlYYk9uM89+uL7xZrYmHjKHOrUcVzuSqIGtZc0UBgkrO
+         gliKCJQrZmo+5x/EYadmHU+rFAyn+Qc4GZajPpstelGo3Gh1Rew1sKpKx5v+Z+Wl/BfP
+         vzukrHpsgE4aBYf3s0QHfqLjp5bbpkrlBvNqplVw4VVTjtSY8x6KZE1G/qA4dQWhu6pE
+         wEUQHo3FRjl3+uXJlfG1bQo5WwXCHOY1QfNhfJchhuvE+ToTUhSa9hV77pBf3cGLRsDN
+         eUYrZ5LHrlw7IMbbH4IY9jeAiEzuAvSMA27Yqx9CS2GPYnEtq9pTLX5ifEHg3gvXLmOs
+         4OXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=a31L181iIegQzPfqj+BqjmDabCswXiC1eI4GB9nLU9c=;
+        b=Tt6QEErkY948tCaxgnenutx4a4MUwpZZeEwQ/dE0HFGcbNrQ/UeehnRwO5yqBD5TuA
+         XzHD6eCGA+yuVbiWq8VwKMkBqb1oCpci5HpB8hDFeTpW6tYcJDCZn/xH/i6VqfW+HIUi
+         38B6Fspzrb1LIw9OB3YuLAt9hEZ8dHYtvlF1twsBcsfeobCE4skdjqYbSL7PVEQrz1Al
+         j0X7UkdPbUxk/qOEpvGjlA4VeLPkszEc8S2iCwvwoME8WA1Y2d7WFp+mprpXauUu179/
+         BMczPAjxcbrurF3wP6fiwcFcPqKOGcd5A2oe1nzHmY5k4g5MN/Cxd7oFpqLQc/Ho0es5
+         PtMA==
+X-Gm-Message-State: AGi0PuYPV+FnSoSn3SxHK4TGtd5E0C0ILVi7RXAbAy7vvT5XGEd1JRd0
+        UtFPGyEwhrrZJoY5LgdkCxNk9Q==
+X-Google-Smtp-Source: APiQypL9s8rRopvCR6f2BAfQzFHPi6UKHUbkC/S15Q57++oPRVOwkBLGZ5HRc4gpZ6qMInAzNO31+Q==
+X-Received: by 2002:aa7:963d:: with SMTP id r29mr4674990pfg.87.1586303481599;
+        Tue, 07 Apr 2020 16:51:21 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
+        by smtp.gmail.com with ESMTPSA id q11sm1047333pfs.94.2020.04.07.16.51.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Apr 2020 16:51:20 -0700 (PDT)
+Date:   Tue, 7 Apr 2020 16:51:16 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     James Ramsay <james@jramsay.com.au>, git@vger.kernel.org
+Subject: Re: [TOPIC 2/17] Hooks in the future
+Message-ID: <20200407235116.GE137962@google.com>
+References: <AC2EB721-2979-43FD-922D-C5076A57F24B@jramsay.com.au>
+ <0D7F1872-7614-46D6-BB55-6FEAA79F1FE6@jramsay.com.au>
+ <20200312141628.GL212281@google.com>
+ <xmqqeetwcf4k.fsf@gitster.c.googlers.com>
+ <20200407230132.GD137962@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B3585F38-7929-11EA-87CD-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200407230132.GD137962@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+On Tue, Apr 07, 2020 at 04:01:32PM -0700, Emily Shaffer wrote:
+> Thoughts?
 
-> The behavior of diff_populate_filespec() currently can be customized
-> through a bitflag, but a subsequent patch requires it to support a
-> non-boolean option. Replace the bitflag with an options struct.
+Jonathan Nieder and I discussed this a little bit offline, and he
+suggested another thought:
 
-Hmph, clever :-).
+[hook "unique-name"]
+  pre-commit = ~/path-to-hook.sh args-for-precommit
+  pre-push = ~/path-to-hook.sh
+  order = 001
 
-> +	struct diff_populate_filespec_options dpf_options = {
-> +		.check_size_only = 1,
-> +	};
+Then, in another config:
 
-I would have called this instance of d-p-f-o "check_size_only",
-which would make the site that uses it ...
+hook.unique-name.pre-push-order = 123
 
->  	if (!DIFF_FILE_VALID(one))
->  		return 0;
-> -	diff_populate_filespec(r, one, CHECK_SIZE_ONLY);
-> +	diff_populate_filespec(r, one, &dpf_options);
+or,
 
-... easier to understand, especially if we can made it constant, but
-that would probably contradict the plan to add more fields to the
-structure, so let's see how it goes.
+hook.unique-name.enable = false
+hook.unique-name.pre-commit-enable = true
 
-> @@ -3339,13 +3346,17 @@ static void emit_binary_diff(struct diff_options *o,
->  int diff_filespec_is_binary(struct repository *r,
->  			    struct diff_filespec *one)
->  {
-> +	struct diff_populate_filespec_options dpf_options = {
-> +		.check_binary = 1,
-> +	};
-> +
+To pick it apart a little more:
 
-The same comment applies to here, too.
+ - Let's give each logical action a unique name, e.g. "git-secrets".
+ - Users can sign up for a certain event by providing the command to
+   run, e.g. `hook.git-secrets.pre-commit = git-secrets pre-commit`.
+ - Users can set up defaults for the logical action, e.g.
+   `hook.git-secrets.before = gerrit` (where "gerrit" is the unique name
+   for another logical action), and then change it on a per-hook basis
+   e.g. `hook.git-secrets.pre-commit-before = clang-tidy`
 
+There's some benefit:
+ - We don't have to kludge something new (multiple sections with the
+   same name, but logically disparate) into the config semantics where
+   it doesn't really fit.
+ - Users could, for example, turn off all "git-secrets" invocations in a
+   repo without knowing which hooks it's attached to, e.g.
+   `hook.git-secrets.enable = false`
+ - We still have the option to add and remove parameters like 'order' or
+   'before'/'after' or 'parallelizable' or etc., on a per-hook basis or
+   for all flavors of a logical action such as "git-secrets"
+ - It may be easier for a config-authoring iteration of 'git-hook' to
+   modify existing configs than it would be if the ordering of config
+   entries is vital.
+
+One drawback I can think of is that these unique names could be either
+difficult to autogenerate and guarantee uniqueness, or difficult for
+humans to parse. I'd have to rethink the UI for writing or editing with
+git-hook (rather than editing the config by hand), although I think with
+the mood shifting away from configs looking like
+"hook.pre-commit=123:~/path-to-thing.sh" my UI mockups are all invalid
+anyways :)
+
+We also considered something like:
+
+[hook "git-secrets-pre-commit"]
+  command = ~/path-to-hooks.sh args-for-precommit
+  order = 001
+
+[hook "git-secrets-pre-push"]
+  comand = ~/path-to-hook.sh
+  order = 123
+
+but concluded that it's more verbose without adding additional value
+over the earlier proposal above. This syntax can achieve a subset of
+goals but is missing extra value like an easy path to disable all hooks
+in that logical action, or nice defaults when you don't expect the order
+or parallelism to change.
+
+Definitely interested in hearing more ideas :)
+
+ - Emily
