@@ -2,117 +2,138 @@ Return-Path: <SRS0=6awY=5X=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4078FC2D0EC
-	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 22:39:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 13C79C2D0EC
+	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 22:41:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0C6762063A
-	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 22:39:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D10882063A
+	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 22:41:41 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="wvFpq1Ua"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="JgtDPSKZ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726417AbgDGWjo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Apr 2020 18:39:44 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:42826 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726380AbgDGWjo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Apr 2020 18:39:44 -0400
-Received: by mail-pl1-f195.google.com with SMTP id v2so402744plp.9
-        for <git@vger.kernel.org>; Tue, 07 Apr 2020 15:39:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=z53XxueW0ndDTRreWIOI5Gch0Gv1lzFes3Gs2SGj/XQ=;
-        b=wvFpq1Uay3I65/DdHsgBLG1PvLvnUGBggYfO1Up1r6VJ6DOPRqZtCn0uUHpGArMIUA
-         YXqiA4C1qNgq/3+aAoyBfmDkj8t+M1kJWnzZ2+0WtdZX2Jpk58Ao+GlPVbTyBcplsZK+
-         2spsPJVGs00LAx7nh96j74756KoEC1G2UiqadvNm0jEgS7Eno/yQFH3QC5lKvA/5GcFg
-         tLpAS66apgoeMdid6nQJEuAtZySXb4q7f3PZWQEYN6JvCbynVRv//k+EDQonlxoq9Rjs
-         nZZ1h7XAO4W1tl4sAQYsISE1qkkyjS6WimD6CJsTjcISs2MyLDnAxnzd4tDGdk0+NLtB
-         /0rw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=z53XxueW0ndDTRreWIOI5Gch0Gv1lzFes3Gs2SGj/XQ=;
-        b=gKkHbDuhHW9PkufPVadQ/pBOJAt/ek64wXxJabSaVs/5O7Ff0jnZV7u8oYNxOLPnBg
-         eC+K9nUJ3T0V/UUo5Ro3PBje+nUY6l9hwkxjZNhQdaovqFrpTbExZnlcDTqpYNNTY32Y
-         YbekuIdscYE8K7FQSqxPGnOI8RBXuQRSpRwD3mpJuH5k83+i/WCzkC7l2OTKcCQ28vmP
-         HLV4SM8Rh8DlG1r9En/v/i70kvjU7P4vtJpbuhmq3DYGgR4D7P9a9VsMzNE0dpHPV1Iz
-         NbvC1qK7CDNRAoAd2YO+Fc2Z16SK50h5eyvyqTFOVhczRG2xctCaFxcEMX4kwPOWiTGP
-         PwnA==
-X-Gm-Message-State: AGi0PuY1W7n+/IeNFXgpp1yqyOIEiJzU05jiO+1SkcBlIKoUD9Hg3N5C
-        hNblBI0wFFUqiAMDmAKOHSrGoA==
-X-Google-Smtp-Source: APiQypL5kgF53TNvDPXepSi0NZlEb3QYQge9grTrOzB4vbBftcagyb8QZ3Fm4W+1kmAB6W7CQycVbg==
-X-Received: by 2002:a17:902:a404:: with SMTP id p4mr4500440plq.167.1586299179658;
-        Tue, 07 Apr 2020 15:39:39 -0700 (PDT)
-Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id nl7sm2767254pjb.36.2020.04.07.15.39.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Apr 2020 15:39:39 -0700 (PDT)
-Date:   Tue, 7 Apr 2020 16:39:38 -0600
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] t0007: fix a typo
-Message-ID: <20200407223938.GB22683@syl.local>
-References: <pull.598.git.1586009782089.gitgitgadget@gmail.com>
+        id S1726426AbgDGWlj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Apr 2020 18:41:39 -0400
+Received: from mout.gmx.net ([212.227.15.15]:44407 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726380AbgDGWlj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Apr 2020 18:41:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1586299297;
+        bh=cJPzAXEH4qws2Cwnv0lTJQny2qCLgXW/SIlrZeX1dJg=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=JgtDPSKZwlR3Ysqfkh5K628oDIeXT2SBlnoD+iqKFhnnzzu5R5RZs5tQyxN+wm0fq
+         I+cqAJTXutcElYyfZDY79v00DX5V6RBkqtzvJOMJXghuxK+JCvbfl8F5eRksFOjdpr
+         Wa05DsDNHy2ckM5vrbZh3J6Y0tXxbe8mxidgcaKY=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from MININT-QA14EDB.fritz.box ([89.1.212.75]) by mail.gmx.com
+ (mrgmx005 [212.227.17.190]) with ESMTPSA (Nemesis) id
+ 1Md6Mj-1inAG210Il-00aAYi; Wed, 08 Apr 2020 00:41:37 +0200
+Date:   Wed, 8 Apr 2020 00:41:36 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Danh Doan <congdanhqx@gmail.com>
+cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 2/5] ci/lib: allow running in GitHub Actions
+In-Reply-To: <20200405000108.GC1896@danh.dev>
+Message-ID: <nycvar.QRO.7.76.6.2004080039240.46@tvgsbejvaqbjf.bet>
+References: <pull.743.git.git.1585658913.gitgitgadget@gmail.com> <d9227c87a7bb2872f6a69f48f6a4988f08545d8a.1585658913.git.gitgitgadget@gmail.com> <20200403084654.GK2224@szeder.dev> <nycvar.QRO.7.76.6.2004042207410.46@tvgsbejvaqbjf.bet>
+ <20200405000108.GC1896@danh.dev>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <pull.598.git.1586009782089.gitgitgadget@gmail.com>
+Content-Type: multipart/mixed; boundary="8323328-2069516959-1586299297=:46"
+X-Provags-ID: V03:K1:/apxKrHBf9bfLGe9bZnzu6QfmBnSpG13nVQtFYYJxKvmHeNhPET
+ DrJNSdZFaXsrQwlhsDjsksWNGOJPf4n9UPkEt9ufVw/wlfPqUgQ8szTihy3I3Bb1D66BV78
+ SBAUMeYsTUa4rOnS9PLBUpp/rq0loaPx3Wk4ef6Gyk9Mf/2V4ALR06FR+JDoAtMLuyACHBq
+ XLgVaLHuZu8ocFqGciNVA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:NUWn8Mv39dg=:2MOsT17Lw1PkD+pGrr+sKG
+ 8jChn4E4mDQrXq2YfWhNG2+weVXpNg6GeD0TowI6UUz47rjZSP9yrieeaq7p0fILXxwr8ougF
+ YRwK5HyyLdMRoTl811aSAEmEX2kSM+pMVkVMaJ73pgW9J9D+uYAgcsrdQgPBYKLsFhEi73fPI
+ EPj9B6cadms63vY67vBXYZktbZaaHAzkSVBIZSKtmpmnTK8owg5W04S8WW3vF8+5h+k4blBLu
+ CzAWXY2akb5vNw/k+BHbZLriZfThqIW5pB65LffICNukPBbqEjqsc0DcgETmq1d+kDZ6nLsI9
+ SagjNqD8UukvRTpTOVYqnQaQsS+D3ee6vpv6EK2XQNBCMxfonJ0K/taM3bCUdKwFl7KOW4bao
+ znSNZ6TzYOgT8JCDlp7sHed5yVHnThqEAyXFz1C0af/1/ebY7t3Jl1yzHfOBkWjTOOVGMDCdg
+ ui+bS4vA7V52Ogk3R19jqkTGJwTX/kjzAmT3hQ4AbheffTbMIcylJCb4owa67i0In0cR2V7yO
+ aHKd4DCuFsK5Q4FxamlllTMDm4aSC4PP0eQcDMCGHyM8Bm0fMg14pvPq4sM+aRg9KTSb2FXHa
+ 7ttru9pUKIu4nbNKcvHfWYlwBlyrWeIZhFK40gwhdZvgJFnc6e2DIEm3TolHvGSKmf0nG85Bd
+ NAkK+F5KRMNMX+y4LnXsicuA2BEFQNGliFHjDEtfSE1DoNlefvWRJea47Zt83gbfXEzEXA8iZ
+ DKyOZjDUDcF+E504c+CsBdRokr68a/EIHGCqVZLExI5OmL3x6b9rt9RyixbJclwy5LxBhZN7l
+ j6oVdBx/K822cdQx157XKr2m1Y5ZOootlYWU89HA4oLDPdYGrvOI9hY5F2xaAn7p1juLFjrQn
+ A7ZqahTgMsc+dlAA4nM0thvPzp653UFOEwCgl29hxWiTugUH7E0Xavr7YQn0x3qb+sb8hhxDh
+ 908DOuIkkrGAECpK0REkx5JXr/kQoa9TbsZBbJBGHBtjGW0tPkBlWZ2WFjszF+GjUNUcgrmdh
+ gh4lLQ3oFmW+1wEyHCPf3g+ijuUVglb9RkW9MvmM4jFn+b6+of/NBrhUxtRg7/4FyHR6XQp1N
+ xYi+TRSePcMGZPBR3/V5NBb+jyIGCmED0S/RwZ2s74l+/5gwPmFa6WD8MtLeKbyQ+N6WEru1A
+ fHNREbWzGRzos5CJjoLDnGbHxtKOGaoOu0V1hnhH+aC5nQkUfvhsGbZeuJ2IqitBAMRgivxDq
+ d+mWV9wNLRSgf4SPOEDTBtrcTDEeC0ImSuojLyA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Sat, Apr 04, 2020 at 02:16:21PM +0000, Johannes Schindelin via GitGitGadget wrote:
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->     Fix typo "identites"
->
->     I am fairly certain that 879ed7539357 (t: add tests for "git var",
->     2012-11-28) did not meant to use the French spelling (for which the
->     accent would be missing, anyway).
+--8323328-2069516959-1586299297=:46
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-;-).
+Hi Danh,
 
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-598%2Fdscho%2Ftyop-identites-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-598/dscho/tyop-identites-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/598
->
->  t/t0007-git-var.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/t/t0007-git-var.sh b/t/t0007-git-var.sh
-> index 1f600e2cae5..88b9ae81588 100755
-> --- a/t/t0007-git-var.sh
-> +++ b/t/t0007-git-var.sh
-> @@ -17,7 +17,7 @@ test_expect_success 'get GIT_COMMITTER_IDENT' '
->  	test_cmp expect actual
->  '
->
-> -test_expect_success !FAIL_PREREQS,!AUTOIDENT 'requested identites are strict' '
-> +test_expect_success !FAIL_PREREQS,!AUTOIDENT 'requested identities are strict' '
+On Sun, 5 Apr 2020, Danh Doan wrote:
 
-Looks obviously good.
-
->  	(
->  		sane_unset GIT_COMMITTER_NAME &&
->  		sane_unset GIT_COMMITTER_EMAIL &&
+> On 2020-04-04 22:08:56+0200, Johannes Schindelin <Johannes.Schindelin@gm=
+x.de> wrote:
+> > Hi G=C3=A1bor,
+> >
+> > On Fri, 3 Apr 2020, SZEDER G=C3=A1bor wrote:
+> >
+> > > > +	CI_TYPE=3Dgithub-actions
+> > > > +	CI_BRANCH=3D"$GITHUB_REF"
+> > > > +	CI_COMMIT=3D"$GITHUB_SHA"
+> > > > +	CI_OS_NAME=3D"$(echo "$RUNNER_OS" | tr A-Z a-z)"
+> > > > +	test macos !=3D "$CI_OS_NAME" || CI_OS_NAME=3Dosx
+> > >
+> > > Hmm, if "macos" isn't not equal to $CI_OS_NAME, then set
+> > > CI_OS_NAME=3Dosx.  This is head-scratchingly backwards, and I think
+> > >
+> > >   test "$CI_OS_NAME" =3D macos && CI_OS_NAME=3Dosx
+> > >
+> > > would read better.
+> >
+> > I can understand where you come from, but your code is not `set -e` sa=
+fe,
+> > which is the reason why I wrote the code this way (compare to the alre=
+ady
+> > existing code in the previous clause, which was copy-edited here).
 >
-> base-commit: 9fadedd637b312089337d73c3ed8447e9f0aa775
-> --
-> gitgitgadget
+> I certainly saw a shell that broke on
+>
+> set -e
+> test false && ..
+>
+> I couldn't recall it, though.
+>
+> Would it be OK if we change it this way:
+>
+> 	if "$CI_OS_NAME" =3D macos; then CI_OS_NAME=3Dosx; fi
 
-Thanks,
-Taylor
+We would have to fix quite a bit of code if we wanted to avoid the
+`<opposite> || <action>` pattern.
+
+If we _would_ need to (which I don't think we do), I'd prefer:
+
+	case "$CI_OS_NAME" in macos) CI_OS_NAME=3Dosx;; esac
+
+But again, we would have to clean up quite a few instances of this, I am
+sure, and it might not be worth the effort, given the short-and-sweet
+nature of the originally-proposed solution.
+
+Ciao,
+Dscho
+
+--8323328-2069516959-1586299297=:46--
