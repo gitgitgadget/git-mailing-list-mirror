@@ -2,111 +2,146 @@ Return-Path: <SRS0=6awY=5X=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8590C2BA2B
-	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 15:24:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CB6C1C2BA1A
+	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 15:53:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 54BFC2074F
-	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 15:24:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9ED2B20730
+	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 15:53:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="wokkObPV"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=aepfle.de header.i=@aepfle.de header.b="l4GJooe1"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729099AbgDGPYK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Apr 2020 11:24:10 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55987 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728994AbgDGPYK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Apr 2020 11:24:10 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 07E40447DE;
-        Tue,  7 Apr 2020 11:24:08 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=myDJSqzxFkTBy6XHcIzSWD9UqJU=; b=wokkOb
-        PVBLRzqtrBEVbKkjxK7x92eh1APIyceFPrDfNGUHP+o31fEHvTMHLrzaAGqm5ny1
-        F0lPqsJxWA++RnGWE5AW83ec+Wrvm56REeGCbPRn8ZORrsmC/PZilPAxJ4A8xcdC
-        NHZBcQrsirQ9FwsIObc5ooMMFCRNeYEj/xzRw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=WaGo4i1kkgL9+Cu9VgiVg4yWbgV+ts3R
-        gRN2DFBjoSpFYsqA08Qbf2f1nrb2oz2Q9gNRbZtM8kA0HqcGe77zOr5EkZLi8FEL
-        AxeIstMsE+WXJ0Ifkz5nNqS0RVGZ9DFn7JOPCzAiRetjjH2uYcs0MbuGoWpTuRXE
-        YpaHDpiv8cY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id F1F04447DD;
-        Tue,  7 Apr 2020 11:24:07 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 71F85447DC;
-        Tue,  7 Apr 2020 11:24:07 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?utf-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        Aaron Schrab <aaron@schrab.com>,
-        Danh Doan <congdanhqx@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?utf-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: [PATCH v12 0/5] bugreport: add tool to generate debugging info
-References: <20200406224526.256074-1-emilyshaffer@google.com>
-Date:   Tue, 07 Apr 2020 08:24:06 -0700
-In-Reply-To: <20200406224526.256074-1-emilyshaffer@google.com> (Emily
-        Shaffer's message of "Mon, 6 Apr 2020 15:45:21 -0700")
-Message-ID: <xmqqlfn7tj3d.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726964AbgDGPw5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Apr 2020 11:52:57 -0400
+Received: from mo4-p00-ob.smtp.rzone.de ([81.169.146.216]:34221 "EHLO
+        mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726833AbgDGPw5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Apr 2020 11:52:57 -0400
+X-Greylist: delayed 726 seconds by postgrey-1.27 at vger.kernel.org; Tue, 07 Apr 2020 11:52:56 EDT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1586274775;
+        s=strato-dkim-0002; d=aepfle.de;
+        h=Message-ID:Subject:To:From:Date:X-RZG-CLASS-ID:X-RZG-AUTH:From:
+        Subject:Sender;
+        bh=0Vm5jvdMMayd/AwXXhj00PE8ghMFHjy0GR5Lfh87NN4=;
+        b=l4GJooe1P6ckza86t8onD0IM13cp0a0RIkOJk+fPoeoOHMIfotcZzApdq9CuETfm8s
+        SuZnuEkIaxdAcV5Mrxy+Gm/oWJucLWKNOTYOWrHto6R0wrCCGKtmQd8CAHAfqVOxd6p0
+        dW9RN92pbVApcPlHyF/AYs7PAoPqJ3RwVMqlpPlDgwVhO9t8tcBVOIbN3TKYZO48XjUb
+        6riG7udOrvlSSXUZd/oa7H3GU7KTBccPKJZxU9zzx/M+yXJ7KnfHS+WJnsY9Tx3InOvK
+        FZybhoAWhFXM14j8IKQKuAyWFI+8kCQGiHv9hPvblKZC+0fXKPJIZfedW51SAIJYbYRh
+        f5Kg==
+X-RZG-AUTH: ":P2EQZWCpfu+qG7CngxMFH1J+3q8wa/QXkBR9MXjAuzBW/OdlBZQ4AHSS32kg"
+X-RZG-CLASS-ID: mo00
+Received: from aepfle.de
+        by smtp.strato.de (RZmta 46.2.1 DYNA|AUTH)
+        with ESMTPSA id 204e5fw37Fenh96
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+        Tue, 7 Apr 2020 17:40:49 +0200 (CEST)
+Date:   Tue, 7 Apr 2020 17:40:46 +0200
+From:   Olaf Hering <olaf@aepfle.de>
+To:     linux-kernel@vger.kernel.org, git@vger.kernel.org
+Subject: get_maintainer.pl sends bogus addresses to git send-email
+Message-ID: <20200407154046.GA15368@aepfle.de>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D2A0CC72-78E3-11EA-B73C-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="qDbXVdCdHGoSgWSk"
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emily Shaffer <emilyshaffer@google.com> writes:
 
-> Since v11, reordered tests per SZEDER's comment so that the
-> test_when_finished lines come first in each test.
->
-> Emily Shaffer (5):
->   help: move list_config_help to builtin/help
->   bugreport: add tool to generate debugging info
->   bugreport: gather git version and build info
->   bugreport: add uname info
->   bugreport: add compiler info
+--qDbXVdCdHGoSgWSk
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Overall it was a pleasnt read.
+For me sending patches via git send-email fails because email address
+conversion is failing. Something appends a ')' to x86/lkml@kernel.org.
+I suspect the double '))' in MAINTAINERS is confusing the command.
+I tried to send the trivial patch from v5.0 and v5.6 tag.
 
-Just to avoid misunderstanding, those comments in which I envisioned
-a way to report versions and attributes on different parts of "git"
-(and I expect we'd be reporting versions and add-ons to tools like
-'wish' that runs gitk and git-gui, 'perl' and 'python' in a similar
-way---by finding them on the $PATH and asking them who they are) are
-NOT "without these, the bugreport tool would not be useful", but "we
-will in time need these, so let's keep them in mind" issues [*1*].
+Is this a failure in ./scripts/get_maintainer.pl,
+or is this something git does internally?
+I'm sure others use such command on a daily basis, so likely something on
+my end became broken at some point in the past.
 
-So, I am hoping that this is ready to move to 'next'.
+Olaf
 
-Thanks.
+linux.git $ git send-email --reroll-count 1 --confirm=3Dalways --annotate -=
+-to-cmd ./scripts/get_maintainer.pl  HEAD^
+
+(mbox) Adding cc: Olaf Hering <olaf@aepfle.de> from line 'From: Olaf Hering=
+ <olaf@aepfle.de>'
+(body) Adding cc: Olaf Hering <olaf@aepfle.de> from line 'Signed-off-by: Ol=
+af Hering <olaf@aepfle.de>'
+(to-cmd) Adding to: "K. Y. Srinivasan" <kys@microsoft.com> from: './scripts=
+/get_maintainer.pl'
+(to-cmd) Adding to: Haiyang Zhang <haiyangz@microsoft.com> from: './scripts=
+/get_maintainer.pl'
+(to-cmd) Adding to: Stephen Hemminger <sthemmin@microsoft.com> from: './scr=
+ipts/get_maintainer.pl'
+(to-cmd) Adding to: Sasha Levin <sashal@kernel.org> from: './scripts/get_ma=
+intainer.pl'
+(to-cmd) Adding to: Thomas Gleixner <tglx@linutronix.de> from: './scripts/g=
+et_maintainer.pl'
+(to-cmd) Adding to: Ingo Molnar <mingo@redhat.com> from: './scripts/get_mai=
+ntainer.pl'
+(to-cmd) Adding to: Borislav Petkov <bp@alien8.de> from: './scripts/get_mai=
+ntainer.pl'
+(to-cmd) Adding to: "H. Peter Anvin" <hpa@zytor.com> from: './scripts/get_m=
+aintainer.pl'
+(to-cmd) Adding to: x86@kernel.org (maintainer:X86 ARCHITECTURE (32-BIT AND=
+ 64-BIT)) from: './scripts/get_maintainer.pl'
+(to-cmd) Adding to: devel@linuxdriverproject.org (open list:Hyper-V CORE AN=
+D DRIVERS) from: './scripts/get_maintainer.pl'
+(to-cmd) Adding to: linux-kernel@vger.kernel.org (open list:X86 ARCHITECTUR=
+E (32-BIT AND 64-BIT)) from: './scripts/get_maintainer.pl'
+
+=46rom: Olaf Hering <olaf@aepfle.de>
+To: "K. Y. Srinivasan" <kys@microsoft.com>,
+        Haiyang Zhang <haiyangz@microsoft.com>,
+        Stephen Hemminger <sthemmin@microsoft.com>,
+        Sasha Levin <sashal@kernel.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Ingo Molnar <mingo@redhat.com>,
+        Borislav Petkov <bp@alien8.de>,
+        "H. Peter Anvin" <hpa@zytor.com>,
+        x86@kernel.org) (maintainer:X86 ARCHITECTURE (32-BIT AND 64-BIT),
+        devel@linuxdriverproject.org (open list:Hyper-V CORE AND DRIVERS),
+        linux-kernel@vger.kernel.org) (open list:X86 ARCHITECTURE (32-BIT A=
+ND 64-BIT)
+Cc: Olaf Hering <olaf@aepfle.de>
+X-Mailer: git-send-email 2.16.4
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+
+Send this email? ([y]es|[n]o|[q]uit|[a]ll): y
+5.1.3 Invalid character in domain: <x86@kernel.org)>
 
 
-[Footnote]
+--qDbXVdCdHGoSgWSk
+Content-Type: application/pgp-signature; name="signature.asc"
 
-*1* What we saw here in the review showed us a very good starting
-point to report the version of the source one binary was built from,
-and the compiler and library that binary was built with, and various
-attributes of the system that is running that binary.  Thanks to
-step [1/5], these helper functions can also be linked to help other
-parts of "git" (like the transport) report the first two (some code
-may further need to be moved so that they can be called from the
-built-ins and standalones).  The system that the binary is running
-on would be the same anyway, so there is no need to duplicate that
-part of the report.
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEE97o7Um30LT3B+5b/86SN7mm1DoAFAl6MnvkACgkQ86SN7mm1
+DoBZWw//b1Rcjobavt7s5p1SIXjRUQLivHHKjVm7BgoPN30dtaltqRpZH/ngWUpz
+et96oqNdh5ATkSmWvbg0V53H1zc6BNfovcDnQU7hfEYs4VP6jil1tiQg3nKgc63P
+TXOnmuKQjOjzz1tSA40JEdB1CerNTVjAgpdHeNndv0fsxORjUownNPrTWNI+RWov
+wLn4ZWCTIp9181fYuHsX+8qKpqPYUK7oM7BcAPBq/IlQU5g8+YAckwRCU2cCbm4y
+DzUgYyUOyOpgxNfKKb2htcUwpwz77xFBmksiRsO1vY2i4QbU18josDdvqUeJZDJ1
+dwVOOYtbDbKq2yYoJu/vPv/RVamlKy42vh4m03l6KOuh/ZxZxtcN4uGqPKFFyxzy
+2zMx9RFautx+IcBE2ZJGPKeOycs1H9FdJSnUayFMBBuykaBj6/vnPUwR/jmNPkeP
+rYn1A9ZHvbuTWyox1ed1QMrS/sVsbRTNGvWUoYVz/kH/Z3qPQWYtZ5vkRjk2AvHY
+63baYKf7qAtTkS+95FCdrTc54kjNfFBetdn8vtw2AvspD3o+LHUklF/sVrVPhgPm
+pXUoaW0q1u5yuof0xPOvNeeac0EYyPQgeoG52R9tZHBNCWf4TgJZj3hzVv6IldQk
+5CV1nn9TSzjYEtkuVwM0eZdsVuhh9EfbmoLmWY8x/NjcCcIRQaU=
+=r0nd
+-----END PGP SIGNATURE-----
+
+--qDbXVdCdHGoSgWSk--
