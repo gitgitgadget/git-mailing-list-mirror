@@ -6,72 +6,105 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 135AEC2D0EC
-	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 18:48:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CF482C2D0EC
+	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 19:03:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D37FC20730
-	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 18:48:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A204F20768
+	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 19:03:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726744AbgDGSsX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Apr 2020 14:48:23 -0400
-Received: from mga01.intel.com ([192.55.52.88]:55262 "EHLO mga01.intel.com"
+        id S1726898AbgDGTDv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Apr 2020 15:03:51 -0400
+Received: from mx.sdf.org ([205.166.94.20]:57097 "EHLO mx.sdf.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726332AbgDGSsW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Apr 2020 14:48:22 -0400
-IronPort-SDR: ZQKoJyrXpiZYyUL4id/aIH8gkf3j/9E8pIwCdIcR16C1FOaNbkadmGf4xtLFcQuyJKUO//Os3e
- yWuSwLO7X7Ow==
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Apr 2020 11:48:22 -0700
-IronPort-SDR: Q9FaBv0hXjSzGcYDTY6LZILTgCJbymyHklYvW0YdZLJgDBkogSTL2OGhWJsSV1TBrCHhWcPg5K
- ub8enyVVipPQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.72,356,1580803200"; 
-   d="scan'208";a="275195981"
-Received: from smile.fi.intel.com (HELO smile) ([10.237.68.40])
-  by fmsmga004.fm.intel.com with ESMTP; 07 Apr 2020 11:48:21 -0700
-Received: from andy by smile with local (Exim 4.93)
-        (envelope-from <andriy.shevchenko@linux.intel.com>)
-        id 1jLtGq-00GV8f-07; Tue, 07 Apr 2020 21:48:24 +0300
-Date:   Tue, 7 Apr 2020 21:48:23 +0300
-From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To:     git@vger.kernel.org
-Cc:     andy.shevchenko@gmail.com
-Subject: subtle bug in git-am
-Message-ID: <20200407184823.GA3932679@smile.fi.intel.com>
+        id S1726339AbgDGTDu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Apr 2020 15:03:50 -0400
+Received: from sdf.org (IDENT:lkml@otaku.sdf.org [205.166.94.8])
+        by mx.sdf.org (8.15.2/8.14.5) with ESMTPS id 037J3dGQ023459
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits) verified NO);
+        Tue, 7 Apr 2020 19:03:39 GMT
+Received: (from lkml@localhost)
+        by sdf.org (8.15.2/8.12.8/Submit) id 037J3dqS010756;
+        Tue, 7 Apr 2020 19:03:39 GMT
+Date:   Tue, 7 Apr 2020 19:03:39 +0000
+From:   George Spelvin <lkml@SDF.ORG>
+To:     Sebastien Bruckert <sbruckert.dev@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        lkml@sdf.org
+Subject: Re: Feature request: rebase -i inside of rebase -i
+Message-ID: <20200407190339.GA20902@SDF.ORG>
+References: <20200321175612.GC19579@SDF.ORG>
+ <nycvar.QRO.7.76.6.2003252008490.46@tvgsbejvaqbjf.bet>
+ <20200326001821.GB8865@SDF.ORG>
+ <nycvar.QRO.7.76.6.2003281510260.46@tvgsbejvaqbjf.bet>
+ <20200328163024.GA26885@SDF.ORG>
+ <nycvar.QRO.7.76.6.2004041417420.46@tvgsbejvaqbjf.bet>
+ <20200404174116.GB11944@SDF.ORG>
+ <CA+KXf2C0XytyNEAAdTOZAzw5YTQuv3PSjJ7RgyWqTj9MPp6BDQ@mail.gmail.com>
+ <20200406152450.GA9609@SDF.ORG>
+ <CA+KXf2A7L1fRC3+rmDaME186CYf4yS+-dBgy_FkEFVh887N7MA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+In-Reply-To: <CA+KXf2A7L1fRC3+rmDaME186CYf4yS+-dBgy_FkEFVh887N7MA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi!
+On Tue, Apr 07, 2020 at 05:16:50AM -0400, Sebastien Bruckert wrote:
+> Hmmm so you need some way to move C before your actual commit. To make
+> it like a pseudo command, some kind of "git rebase --reattach C
+> --after A"? This seems closer to your original idea.
 
-What I would like to do is to apply patch from one repository to another with
-same files but *different directory structure*.
+That seems too special-purpose and hard to remember.  The standard
+rebase -i operation (generate a todo list and drop me into an editor)
+is perfectly adequate and more familiar.  This is a very manual operation, 
+after all.  ("-i" for "interactive" means "manual".)
 
-When I try to change directory in the target repo to the folder of files, I run
-git-am -p5 my_cool_patch.patch.
+> Or why not modify "--edit-todo" to get commits from before your actual
+> point? It could works like this:
+> 
+> Before:
+> ```
+> #pick b2a96fe O
+> #pick acb7459 A
+> #pick 0dac4a4 B
+> edit 1f54e51 C
+> edit cda2a7e D
+> ```
+> 
+> After:
+> ```
+> #pick b2a96fe O
+> edit 1f54e51 C
+> pick acb7459 A
+> pick 0dac4a4 B
+> edit cda2a7e D
+> ```
+> 
+> So that you are still at C, but keeping the changes you made before on
+> A and B, and going through them only if you have conflicts.
 
-Instead of the expected result (files and their contents is the same!) I got
-fileXXX is not in index.
+Because the only reason this is interesting assumes that A and B have 
+changed!  If I didn't intend to modify A somehow, I wouldn't have included 
+it in the rebase range.  They're now edited patches A' and B'.  So the
+state I want to get to is:
 
-So, I think this is a bug, because -p<n> use in git-am makes little to no sense
-without above feature.
+#pick b2a96fe O
+#pick acb7459 A
+#pick 0dac4a4 B
+reset b2a96fe O
+edit 1f54e51 C
+pick 7f0bcab A'
+pick fcd3c62 B'
+edit cda2a7e D
 
-Perhaps I didn't understand something.
-Please, advise.
+where it will pick the versions of A and B that include the edits I've
+already made.
 
-$ git version
-git version 2.25.1
-
-
--- 
-With Best Regards,
-Andy Shevchenko
-
-
+Now, having the original commits mentioned in comments is useful, in case 
+I made a mess of the edit and want to revert it.  E.g. I can certainly see 
+realizing, three commits later in the rebase, that I recolved a conflict 
+wrong and should re-do it.  Although this can probably be handled with a 
+fixup.
