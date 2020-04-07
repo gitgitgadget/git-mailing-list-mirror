@@ -2,120 +2,111 @@ Return-Path: <SRS0=6awY=5X=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E8DAC2BA2B
-	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 15:18:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A8590C2BA2B
+	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 15:24:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 2B57920692
-	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 15:18:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 54BFC2074F
+	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 15:24:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Oet5IH/1"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="wokkObPV"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729060AbgDGPSp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Apr 2020 11:18:45 -0400
-Received: from mail-ot1-f68.google.com ([209.85.210.68]:40981 "EHLO
-        mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728306AbgDGPSp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Apr 2020 11:18:45 -0400
-Received: by mail-ot1-f68.google.com with SMTP id f52so3470284otf.8
-        for <git@vger.kernel.org>; Tue, 07 Apr 2020 08:18:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=+EDqoRPpuQ36JIqw4D6qbr6esLVBRbTxVpumRK85/Yk=;
-        b=Oet5IH/195ertiNa/P1RTWbhPeNAMmb2R2z9C2bWnohKPW9m8G9sr3w2uqNPAOXs7q
-         nH645VczDOeYlG9hR22b4N54MTc1unGN0H/HP3z4NcMxLVBEx8tRxdjGl9gOOwaTM/eV
-         KzYhePTz8js4rvl775vdLT1hZysYn1qyHu6my+xk51tg9mKlC94h6Jml8v9ob3vNYLac
-         gGjMVaLgn+GlDiFfVJKUNkyUBhoht759YP6jbanrAo4XvUq9HMWcL57VnEwk9yO5eTqy
-         m8J9tW3bKwwbz/ZISzFgRGkdZovCLW0l50yEXuBcdoAXmNqfljPqDSAMtJ1WVzFLqgo2
-         LE1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=+EDqoRPpuQ36JIqw4D6qbr6esLVBRbTxVpumRK85/Yk=;
-        b=FPAbsYPXZ3Z+jJvdcJ9KuySpEvj5xvb0zQVGS+u9sG0IBS0QYWNSWT3CSNYl0mRBdH
-         14w1YpGMrjgAX4NyNNF1hmQ7Dg2K3nA/riVAZTsuXW5hQNtcm0jfgpcrhKU2CJ1yGHPJ
-         tR5ZtR1yWfk0QJP30UEcANugA1d+t7qfxwZ0LHuJieZmhaarPKWtIsNciFxy9bdj2eZ5
-         Yqn2GvzTFNqKG1tI3CtZj3qlcXxscAZBNRdwTXb8hdDiw/Zc2UBUbesWnNUWSL83piR0
-         fEg7DqKlikyoHfmY77Pq3EyRgjNWyFzTUJEJGtkFLamHFyn/dVX3CIz1SW9UkQNyJWzi
-         s5FA==
-X-Gm-Message-State: AGi0PuZXC8i/UBLMcq0hcA/111of3Wnt35BXjwaDaaQR2/+Tbtfwms+f
-        by3ZQZ/LS8coSfP++hTwmj4AJW4LeuJ94Dgjfs4=
-X-Google-Smtp-Source: APiQypLKT2Tctheyz+bgsUjMHqoPfIOqa1f5CWvdRrgMDkN6aXGmA98OqBYt+xbDKf8pe5fS9/wyNDXfx5TPi8xdQ0o=
-X-Received: by 2002:a9d:5e0d:: with SMTP id d13mr2064602oti.162.1586272724351;
- Tue, 07 Apr 2020 08:18:44 -0700 (PDT)
+        id S1729099AbgDGPYK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Apr 2020 11:24:10 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55987 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728994AbgDGPYK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Apr 2020 11:24:10 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 07E40447DE;
+        Tue,  7 Apr 2020 11:24:08 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=myDJSqzxFkTBy6XHcIzSWD9UqJU=; b=wokkOb
+        PVBLRzqtrBEVbKkjxK7x92eh1APIyceFPrDfNGUHP+o31fEHvTMHLrzaAGqm5ny1
+        F0lPqsJxWA++RnGWE5AW83ec+Wrvm56REeGCbPRn8ZORrsmC/PZilPAxJ4A8xcdC
+        NHZBcQrsirQ9FwsIObc5ooMMFCRNeYEj/xzRw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=WaGo4i1kkgL9+Cu9VgiVg4yWbgV+ts3R
+        gRN2DFBjoSpFYsqA08Qbf2f1nrb2oz2Q9gNRbZtM8kA0HqcGe77zOr5EkZLi8FEL
+        AxeIstMsE+WXJ0Ifkz5nNqS0RVGZ9DFn7JOPCzAiRetjjH2uYcs0MbuGoWpTuRXE
+        YpaHDpiv8cY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id F1F04447DD;
+        Tue,  7 Apr 2020 11:24:07 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 71F85447DC;
+        Tue,  7 Apr 2020 11:24:07 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?utf-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        Aaron Schrab <aaron@schrab.com>,
+        Danh Doan <congdanhqx@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?utf-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [PATCH v12 0/5] bugreport: add tool to generate debugging info
+References: <20200406224526.256074-1-emilyshaffer@google.com>
+Date:   Tue, 07 Apr 2020 08:24:06 -0700
+In-Reply-To: <20200406224526.256074-1-emilyshaffer@google.com> (Emily
+        Shaffer's message of "Mon, 6 Apr 2020 15:45:21 -0700")
+Message-ID: <xmqqlfn7tj3d.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.746.git.git.1585773096145.gitgitgadget@gmail.com>
- <b187cb5f-a6c8-2908-e3fd-e1210e6970e0@gmail.com> <CABPp-BE_mimSRg5wf0Yzn2s-dX=64ZS1jGszqwHzr3aju0bj=A@mail.gmail.com>
- <09397e37-a22b-5159-b760-bae238ae3ed6@gmail.com> <nycvar.QRO.7.76.6.2004071649190.46@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.2004071649190.46@tvgsbejvaqbjf.bet>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 7 Apr 2020 08:18:33 -0700
-Message-ID: <CABPp-BFXT1QkTLUFSAju2TwzVdSRjKSyLQYp2KaoW2+S2U8KJw@mail.gmail.com>
-Subject: Re: [PATCH] sequencer: honor GIT_REFLOG_ACTION
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Paul Gevers <elbrus@debian.org>,
-        Ian Jackson <ijackson@chiark.greenend.org.uk>,
-        Alban Gruin <alban.gruin@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: D2A0CC72-78E3-11EA-B73C-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 7, 2020 at 7:50 AM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->
-> Hi,
->
-> On Thu, 2 Apr 2020, Phillip Wood wrote:
->
-> > On 02/04/2020 18:01, Elijah Newren wrote:
-> > >
-> > > On Thu, Apr 2, 2020 at 2:25 AM Phillip Wood <phillip.wood123@gmail.com>
-> > > wrote:
-> > > >
-> > > > On 01/04/2020 21:31, Elijah Newren via GitGitGadget wrote:
-> > > >
-> > > > >        va_start(ap, fmt);
-> > > > >        strbuf_reset(&buf);
-> > > > > -     strbuf_addstr(&buf, action_name(opts));
-> > > > > +     strbuf_addstr(&buf, reflog_action ? reflog_action :
-> > > > > action_name(opts));
-> > > > >        if (sub_action)
-> > > > >                strbuf_addf(&buf, " (%s)", sub_action);
-> > > > >        if (fmt) {
-> > > > > @@ -3799,8 +3800,10 @@ static int pick_commits(struct repository *r,
-> > > > >                        struct replay_opts *opts)
-> > > > >    {
-> > > > >        int res = 0, reschedule = 0;
-> > > > > +     char *prev_reflog_action;
-> > > > >
-> > > > >        setenv(GIT_REFLOG_ACTION, action_name(opts), 0);
-> > > > > +     prev_reflog_action = xstrdup(getenv(GIT_REFLOG_ACTION));
-> > > >
-> > > > I'm confused as to why saving the environment variable immediately after
-> > > > setting it works but the test shows it does - why doesn't this clobber
-> > > > the value of GIT_REFLOG_ACTION set by the user?
-> > >
-> > > The third parameter, 0, means only set the environment variable if
-> > > it's not already set.
-> >
-> > Ah thanks, I thought I must be missing something fairly obvious but couldn't
-> > see what it was
->
-> FWIW I was also about to comment on that. Maybe that warrants even a code
-> comment above the `prev_reflog_action`?
+Emily Shaffer <emilyshaffer@google.com> writes:
 
-Yeah, if it tripped you both up, I'll add such a comment to the code
-to help explain it.
+> Since v11, reordered tests per SZEDER's comment so that the
+> test_when_finished lines come first in each test.
+>
+> Emily Shaffer (5):
+>   help: move list_config_help to builtin/help
+>   bugreport: add tool to generate debugging info
+>   bugreport: gather git version and build info
+>   bugreport: add uname info
+>   bugreport: add compiler info
+
+Overall it was a pleasnt read.
+
+Just to avoid misunderstanding, those comments in which I envisioned
+a way to report versions and attributes on different parts of "git"
+(and I expect we'd be reporting versions and add-ons to tools like
+'wish' that runs gitk and git-gui, 'perl' and 'python' in a similar
+way---by finding them on the $PATH and asking them who they are) are
+NOT "without these, the bugreport tool would not be useful", but "we
+will in time need these, so let's keep them in mind" issues [*1*].
+
+So, I am hoping that this is ready to move to 'next'.
+
+Thanks.
+
+
+[Footnote]
+
+*1* What we saw here in the review showed us a very good starting
+point to report the version of the source one binary was built from,
+and the compiler and library that binary was built with, and various
+attributes of the system that is running that binary.  Thanks to
+step [1/5], these helper functions can also be linked to help other
+parts of "git" (like the transport) report the first two (some code
+may further need to be moved so that they can be called from the
+built-ins and standalones).  The system that the binary is running
+on would be the same anyway, so there is no need to duplicate that
+part of the report.
