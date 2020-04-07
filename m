@@ -2,109 +2,98 @@ Return-Path: <SRS0=6awY=5X=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF482C2D0EC
-	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 19:03:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FC69C2D0EC
+	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 19:25:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A204F20768
-	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 19:03:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3C78F2075E
+	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 19:25:24 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="cvsd1WWz"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726898AbgDGTDv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Apr 2020 15:03:51 -0400
-Received: from mx.sdf.org ([205.166.94.20]:57097 "EHLO mx.sdf.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726339AbgDGTDu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Apr 2020 15:03:50 -0400
-Received: from sdf.org (IDENT:lkml@otaku.sdf.org [205.166.94.8])
-        by mx.sdf.org (8.15.2/8.14.5) with ESMTPS id 037J3dGQ023459
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits) verified NO);
-        Tue, 7 Apr 2020 19:03:39 GMT
-Received: (from lkml@localhost)
-        by sdf.org (8.15.2/8.12.8/Submit) id 037J3dqS010756;
-        Tue, 7 Apr 2020 19:03:39 GMT
-Date:   Tue, 7 Apr 2020 19:03:39 +0000
-From:   George Spelvin <lkml@SDF.ORG>
-To:     Sebastien Bruckert <sbruckert.dev@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        lkml@sdf.org
-Subject: Re: Feature request: rebase -i inside of rebase -i
-Message-ID: <20200407190339.GA20902@SDF.ORG>
-References: <20200321175612.GC19579@SDF.ORG>
- <nycvar.QRO.7.76.6.2003252008490.46@tvgsbejvaqbjf.bet>
- <20200326001821.GB8865@SDF.ORG>
- <nycvar.QRO.7.76.6.2003281510260.46@tvgsbejvaqbjf.bet>
- <20200328163024.GA26885@SDF.ORG>
- <nycvar.QRO.7.76.6.2004041417420.46@tvgsbejvaqbjf.bet>
- <20200404174116.GB11944@SDF.ORG>
- <CA+KXf2C0XytyNEAAdTOZAzw5YTQuv3PSjJ7RgyWqTj9MPp6BDQ@mail.gmail.com>
- <20200406152450.GA9609@SDF.ORG>
- <CA+KXf2A7L1fRC3+rmDaME186CYf4yS+-dBgy_FkEFVh887N7MA@mail.gmail.com>
+        id S1726977AbgDGTZW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Apr 2020 15:25:22 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52784 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726705AbgDGTZV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Apr 2020 15:25:21 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 44351567CF;
+        Tue,  7 Apr 2020 15:25:19 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=JEg7NQdBcsTh
+        fVILqiYdjhtACFU=; b=cvsd1WWzPapxeQDR4cJDz0siNcTmiLi5xq/rCEvvtgNv
+        Cn/uj3SHSnZaiGMCKEy/yj9OpK2+18f8CZCVm4Sl1G5o/A44OaKSAWk+9Ouv9nCJ
+        cB7vGP/BvWSg4N0gw7dl5vntMatkas4tNaylQCDgQLuyd4vWuOGGIW3cTOr1GDA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=AQAX3w
+        FNixGAlNgCnOuLwhht2j7NwS21wDWK6n8ReG7ejdZZ82kagaqMz7QANjooIANgdj
+        5LX2atVgDJDucakOo6RRjCY6ELjRDJgYV7nYw+P+Nj8gjCtSgVywR/X/08k/N3uS
+        I+M6ECSSa5KDzg3B27CHjP8lPfaQJfMp8f+Lo=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 36F06567CE;
+        Tue,  7 Apr 2020 15:25:19 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6747B567C3;
+        Tue,  7 Apr 2020 15:25:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH v4 0/6] Travis jobs for linux with musl libc
+References: <cover.1585474409.git.congdanhqx@gmail.com>
+        <cover.1585961568.git.congdanhqx@gmail.com>
+        <xmqq5zedy8dj.fsf@gitster.c.googlers.com>
+        <nycvar.QRO.7.76.6.2004071654170.46@tvgsbejvaqbjf.bet>
+Date:   Tue, 07 Apr 2020 12:25:08 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.2004071654170.46@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Tue, 7 Apr 2020 16:55:03 +0200 (CEST)")
+Message-ID: <xmqqd08jt7xn.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CA+KXf2A7L1fRC3+rmDaME186CYf4yS+-dBgy_FkEFVh887N7MA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 7EA9F2C0-7905-11EA-B83C-C28CBED8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 07, 2020 at 05:16:50AM -0400, Sebastien Bruckert wrote:
-> Hmmm so you need some way to move C before your actual commit. To make
-> it like a pseudo command, some kind of "git rebase --reattach C
-> --after A"? This seems closer to your original idea.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-That seems too special-purpose and hard to remember.  The standard
-rebase -i operation (generate a todo list and drop me into an editor)
-is perfectly adequate and more familiar.  This is a very manual operation, 
-after all.  ("-i" for "interactive" means "manual".)
+> Hi Junio,
+>
+> On Sun, 5 Apr 2020, Junio C Hamano wrote:
+>
+>> =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh  <congdanhqx@gmail.com> wri=
+tes:
+>>
+>> > The series for GitHub Actions will need to be rebased on this series=
+ again.
+>> > 6/6 in that seriess will have UD conflicts.
+>> > Please "git rm azure-pipelines.yml" to fix conflicts.
+>>
+>> If you want to keep doing this, please take over the ownership of
+>> both series and build one on top of the other.  I asked you and
+>> Dscho to coordinate and work together, but Dscho seems to be
+>> comfortable with the idea of letting you touch his series, so doing
+>> so would still count as you two working together ;-).  I do not have
+>> a strong opinion which parts should come first (it is something that
+>> can be decided between you two which way is cleaner).
+>
+> For the record, Danh and I _are_ working together, and yes, I am totall=
+y
+> comfortable with him taking the lead on submitting the patch series'
+> iterations.
 
-> Or why not modify "--edit-todo" to get commits from before your actual
-> point? It could works like this:
-> 
-> Before:
-> ```
-> #pick b2a96fe O
-> #pick acb7459 A
-> #pick 0dac4a4 B
-> edit 1f54e51 C
-> edit cda2a7e D
-> ```
-> 
-> After:
-> ```
-> #pick b2a96fe O
-> edit 1f54e51 C
-> pick acb7459 A
-> pick 0dac4a4 B
-> edit cda2a7e D
-> ```
-> 
-> So that you are still at C, but keeping the changes you made before on
-> A and B, and going through them only if you have conflicts.
-
-Because the only reason this is interesting assumes that A and B have 
-changed!  If I didn't intend to modify A somehow, I wouldn't have included 
-it in the rebase range.  They're now edited patches A' and B'.  So the
-state I want to get to is:
-
-#pick b2a96fe O
-#pick acb7459 A
-#pick 0dac4a4 B
-reset b2a96fe O
-edit 1f54e51 C
-pick 7f0bcab A'
-pick fcd3c62 B'
-edit cda2a7e D
-
-where it will pick the versions of A and B that include the edits I've
-already made.
-
-Now, having the original commits mentioned in comments is useful, in case 
-I made a mess of the edit and want to revert it.  E.g. I can certainly see 
-realizing, three commits later in the rebase, that I recolved a conflict 
-wrong and should re-do it.  Although this can probably be handled with a 
-fixup.
+Good.  Thanks, both.
