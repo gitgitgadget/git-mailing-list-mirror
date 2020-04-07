@@ -2,60 +2,96 @@ Return-Path: <SRS0=6awY=5X=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A7834C2BA1A
-	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 17:03:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D7D71C2BA80
+	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 17:28:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 4F16D206C0
-	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 17:03:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B9246206F7
+	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 17:28:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726678AbgDGRDA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Apr 2020 13:03:00 -0400
-Received: from cloud.peff.net ([104.130.231.41]:35996 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726671AbgDGRC7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Apr 2020 13:02:59 -0400
-Received: (qmail 2807 invoked by uid 109); 7 Apr 2020 17:02:58 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 07 Apr 2020 17:02:58 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 29535 invoked by uid 111); 7 Apr 2020 17:13:23 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 07 Apr 2020 13:13:23 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 7 Apr 2020 13:02:57 -0400
-From:   Jeff King <peff@peff.net>
-To:     Olaf Hering <olaf@aepfle.de>
-Cc:     linux-kernel@vger.kernel.org, git@vger.kernel.org
-Subject: Re: get_maintainer.pl sends bogus addresses to git send-email
-Message-ID: <20200407170257.GA1844923@coredump.intra.peff.net>
-References: <20200407154046.GA15368@aepfle.de>
+        id S1726521AbgDGR2J convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Tue, 7 Apr 2020 13:28:09 -0400
+Received: from mail-qt1-f172.google.com ([209.85.160.172]:37792 "EHLO
+        mail-qt1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726437AbgDGR2J (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Apr 2020 13:28:09 -0400
+Received: by mail-qt1-f172.google.com with SMTP id n17so3323883qtv.4
+        for <git@vger.kernel.org>; Tue, 07 Apr 2020 10:28:08 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=nvdK7qV8V6qOm6KXzpXU41m0Rf8tDLifJQVcrcgrnBU=;
+        b=irftcRtf0AnB1JPl50JzHkKYrUNjUI+jQA/n8KkVnvEMZYVWwYrCSMZX6txr+Wc6gc
+         e+VVLhfRSbfwr29b5hrwJkPEoZIompBhXqk/4YqUEDBDZxBQbuz6IG18XKYj9d4vGiEO
+         LPxNkyI5EsppaaTg+ahbT6SjUM0rUK9ZTKc++5Y1VM5gLV8Bh6CNGb+4RkW7lEI0yO9N
+         r03bUfjRT4wYi4aDNNNOZjA82ic7Bb/AvYKEGBjyyLPj+zJvCK1TRfWhRlCyY02OJxZB
+         x79/isyghsVFa3YVAqDybF9S9jJKlgKuN5uZgMoUaa2eQcD2qmor7YJueax3Tg7qglpr
+         yq4A==
+X-Gm-Message-State: AGi0PubQM9Aeai4rnMU/szBcW+ImmR00LdKdQ7aU8rk2sPtI9tYpAjsS
+        FTWSOzGqbLlvjO4Hu/hTjdn8sduj5TyJMYJl5c2t4ILqqXo=
+X-Google-Smtp-Source: APiQypKoBSMUmaHwbcMbDHgc0WfCkn1Nu0G4A8QuKbSS1xqYB/XaeSYYZF9KXqLhso8FDZz0Mq4assQQpXqT6gAfHL4=
+X-Received: by 2002:aed:2e07:: with SMTP id j7mr3503640qtd.40.1586280485420;
+ Tue, 07 Apr 2020 10:28:05 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200407154046.GA15368@aepfle.de>
+References: <CAAb+AL8+c6knrQnoi7YOjyM+Wc8-rws-JXVufBc=PciAvPPFJQ@mail.gmail.com>
+ <CABPp-BGFinonZJb2u_0-fX3y_UyJ1dY+O40oN0WAzZht0ddJ4w@mail.gmail.com>
+In-Reply-To: <CABPp-BGFinonZJb2u_0-fX3y_UyJ1dY+O40oN0WAzZht0ddJ4w@mail.gmail.com>
+From:   Sami Boukortt <sami@boukortt.com>
+Date:   Tue, 7 Apr 2020 19:27:54 +0200
+Message-ID: <CAAb+AL-95RKhTghJX4uLxiM3dqZW6U914XBXaLcwK+gC_FezWw@mail.gmail.com>
+Subject: Re: New git-rebase backend: no way to drop already-empty commits
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 07, 2020 at 05:40:46PM +0200, Olaf Hering wrote:
+Thank you for the very prompt response.
 
-> For me sending patches via git send-email fails because email address
-> conversion is failing. Something appends a ')' to x86/lkml@kernel.org.
-> I suspect the double '))' in MAINTAINERS is confusing the command.
-> I tried to send the trivial patch from v5.0 and v5.6 tag.
-> 
-> Is this a failure in ./scripts/get_maintainer.pl,
-> or is this something git does internally?
-> I'm sure others use such command on a daily basis, so likely something on
-> my end became broken at some point in the past.
+Le mar. 7 avr. 2020 à 18:54, Elijah Newren <newren@gmail.com> a écrit :
+>
+> On Tue, Apr 7, 2020 at 9:33 AM Sami Boukortt <sami@boukortt.com> wrote:
+> >
+> > Hi,
+> >
+> > Using git 2.26.0, I just tried using `git rebase` to strip empty
+> > commits from a branch, but it leaves them as-is, even with
+> > `--empty=drop`. With the “apply” backend, it removes them properly. Am
+> > I holding it wrong?
+> >
+> > `git rebase -i` also doesn’t pre-comment them like it used to.
+>
+> Yes, from the manpage:
+>
+> """
+> […]
+> """
 
-It's a bug in send-email's hand-rolled address parser, which was fixed
-in bd869f67b9 (send-email: add and use a local copy of Mail::Address,
-2018-01-05). Upgrade to Git v2.17.0 or newer.
+D’oh, not sure how I missed this. :) Thanks.
 
--Peff
+> To remove previously intentional commits, whether empty or not, use -i
+> and remove the lines corresponding to the commits you don't want.
+
+Sadly, that is somewhat inconvenient, as those commits are not
+actually “intentional” from my viewpoint (though I understand that git
+has no way of knowing this), but rather created by another tool
+(git-imerge), which means that I have to check each commit
+individually and risk mistakes. The old `rebase -i` behavior, where
+such commits were automatically commented out, would be an acceptable
+compromise, or even a comment added at the end of the commit line (so
+that they are still kept if the editor is closed without changing the
+rebase list). If there are plans to eventually remove the “apply”
+backend, could that workaround be considered?
+
+Alternatively, I could also use `git filter-branch` (with
+`--prune-empty`), but apparently, its use is heavily discouraged.
+
+Thanks again,
+Sami
