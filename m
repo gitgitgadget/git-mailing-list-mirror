@@ -7,111 +7,136 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 67E7EC2BA1A
-	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 00:50:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EC270C2BA1A
+	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 00:58:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 362E820768
-	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 00:50:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A7A3A20768
+	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 00:58:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EXyJHibl"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KY02CgeU"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726331AbgDGAuI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Apr 2020 20:50:08 -0400
-Received: from mail-pj1-f65.google.com ([209.85.216.65]:37860 "EHLO
-        mail-pj1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726230AbgDGAuI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Apr 2020 20:50:08 -0400
-Received: by mail-pj1-f65.google.com with SMTP id k3so12527pjj.2
-        for <git@vger.kernel.org>; Mon, 06 Apr 2020 17:50:07 -0700 (PDT)
+        id S1726352AbgDGA6d (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Apr 2020 20:58:33 -0400
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:41209 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726331AbgDGA6d (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Apr 2020 20:58:33 -0400
+Received: by mail-pl1-f196.google.com with SMTP id d24so569154pll.8
+        for <git@vger.kernel.org>; Mon, 06 Apr 2020 17:58:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=rx1sdqSFGbsyiE2w2VZPbQn/KlMbppLrWzgvh8UOJ8M=;
-        b=EXyJHiblC4lbgjGQnPIXfpby0UidTCoGEJ0179obucSPYNUEu/veWVva0UEw+dbdcS
-         WxokozP01VVNf9WRSo3pZ4Mc7fdET81LaIE0kKvWmVKcNBmT52TtP78r0vAsnY74plKC
-         heMZs363l9g70FYLQBaPTaaWMFOFSKNujL5mESr69QHUvObLfLDhYrReaJ7IoTdFY0rC
-         qZOkMoVc2N6Dt9CbPPiqjIQm9e/L3J+oBzqVljuaane3Nud4SEfdQdv1RAVMgXTnef8g
-         8u6XyyuMowc81O0reiLRJ2cmRpqW6RChbUjiES64/c5g9O/BTj8g4OI6CsvnIHzh0R2O
-         Lv5g==
+        bh=wpqZaP362RTbH8Ws9oB2PiCALCS5ZL6rsOd5FIcihdM=;
+        b=KY02CgeUv3V2U+/3Ek+9gtCyvo/5odfxL2LAAkxvHwalqrNEa/2pENJgyoZh4fBTqe
+         Wb/tbwZMrjT5BVD8aqHbHDyVwgmdB+8HhH7BMGraxsiy4KUz2inPYrZEkBnVTRic0prX
+         LJh2Dqyk/XyY2E/cW6/P5UD1wbkMbxsFR29HkEwxYjqIpXtLQ8dkVAD7IaFfoy6RE8bU
+         Areo9ZdEsI6fNFpcBD6z1umihRX64UsCZaC8FvYWcjy/172zO2F0esgQSqCL6K11SC2o
+         tyXoTn5efR2mrAzbT32aGFoGp9eRizdv5pzDSalmQgt+bEqGmHHSoR5gbXNuNpiRculC
+         gfYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=rx1sdqSFGbsyiE2w2VZPbQn/KlMbppLrWzgvh8UOJ8M=;
-        b=hPG7mEFeyAjWqcwJiBoEH2t0UBZgdkr6J3muaAieSaJ3ygbt8IBH7hCeO2zROB+w0c
-         GYutMK/rOqQ7sU/IiV8kgqbrJyWa7hPm3JosOK0u0ZREoa1vO/2F7L+bTzMSZFVbwXG7
-         1kKZSsEg1ksMJ37dXgCTuRoQjhYF/+db5S+0p/qJl3yR4HCCf03XaO68Tw5Bxm1Lf0EQ
-         wvxaRZ849d/Rc4+EvmN/BwrrADWLlv1G8+ongAwSlYV8tlk8E+8Ggb//uchaO9cZaWf5
-         YwPeTCKIGDOgdRa4eC5u4/FvxQ2mZpuGNfvLMW2/rQHqZrdKKDxAw98Smd9XvP7obj+J
-         aQkw==
-X-Gm-Message-State: AGi0PuYaIB/lF5APWS0tjDP+zZbOL5d8aQ00cd0S8RfY45DWRr0irUzB
-        Y21hrmkuqkc1+8clPzmobMBz9gqER70=
-X-Google-Smtp-Source: APiQypKsdgg3G8TfEXDRjLktmFqfUPVD4tgkTEcMIt2LavB3UfdkQK8cNk9+TOh0HcUxZvPz+FIRbw==
-X-Received: by 2002:a17:90a:a40d:: with SMTP id y13mr2136229pjp.82.1586220607211;
-        Mon, 06 Apr 2020 17:50:07 -0700 (PDT)
+        bh=wpqZaP362RTbH8Ws9oB2PiCALCS5ZL6rsOd5FIcihdM=;
+        b=RQDxyziiKA+2tgymEo6UZO9nuBWJFTzDYOuQ5AvMTrxVfV2sXrsNiryo4FXLq7i3vM
+         QjBp5zcLnvRglnVCXu/GFhk8PU7D0EY4p5h495wWY8ylRIXsrhJCuD4sPTCvIP8aFDcn
+         3qZClbsf0Kupm5vELEdiy0ixoS1GZpOlxSpOA2811LeTKGUKAqr4DFzsl+1cGuntHGyq
+         LB/CMb6S13dl/d1t52WheuhV9U1KsoDNm3r9ogiUmsNZNsWsOZwcJPfSGAItEXBaM/E7
+         6DeqGpp/pK+OiLBK30rbxMIi3qGSKr7X5/YWUXdHKPtmEP58uxFmDCluPDqr4MoRKcmW
+         eM8g==
+X-Gm-Message-State: AGi0Pubn95+RH3abN8eEJPxOL47gPjJ5HI6xrkTCXL4wZ4DVIsiK49lp
+        /FA6udc4SVR65doTIRjBI3U=
+X-Google-Smtp-Source: APiQypLF1PWN7noLl29xfdnjLz6s4oy+rSRBZYEj6LCW2UjbJmkdZnHxlGwzu+QEDGRnBYONkI8+gg==
+X-Received: by 2002:a17:902:5a44:: with SMTP id f4mr28236plm.306.1586221110931;
+        Mon, 06 Apr 2020 17:58:30 -0700 (PDT)
 Received: from localhost ([2402:800:6375:207b:be21:746a:7a56:9d4d])
-        by smtp.gmail.com with ESMTPSA id z63sm11883425pgd.12.2020.04.06.17.50.06
+        by smtp.gmail.com with ESMTPSA id i13sm12479089pfa.113.2020.04.06.17.58.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Apr 2020 17:50:06 -0700 (PDT)
-Date:   Tue, 7 Apr 2020 07:50:04 +0700
+        Mon, 06 Apr 2020 17:58:30 -0700 (PDT)
+Date:   Tue, 7 Apr 2020 07:58:28 +0700
 From:   Danh Doan <congdanhqx@gmail.com>
 To:     Derrick Stolee <stolee@gmail.com>
 Cc:     Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
         Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org, peff@peff.net, jrnieder@google.com,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 00/15] [RFC] Maintenance jobs and job runner
-Message-ID: <20200407005004.GB2568@danh.dev>
+Subject: Re: [PATCH 01/15] run-job: create barebones builtin
+Message-ID: <20200407005828.GC2568@danh.dev>
 References: <pull.597.git.1585946894.gitgitgadget@gmail.com>
- <xmqqv9mgxn7u.fsf@gitster.c.googlers.com>
- <cc9df614-2736-7cdd-006f-59878ee551c8@gmail.com>
+ <665da239774419074a9bae49b9c92b340885bfa3.1585946894.git.gitgitgadget@gmail.com>
+ <fc5e6823-ebb3-df58-d7fc-6fb2b58cffe8@gmail.com>
+ <xmqqimidybzu.fsf@gitster.c.googlers.com>
+ <208bdbc7-9c8e-5105-0627-7db86135db7b@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <cc9df614-2736-7cdd-006f-59878ee551c8@gmail.com>
+In-Reply-To: <208bdbc7-9c8e-5105-0627-7db86135db7b@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2020-04-03 20:16:21-0400, Derrick Stolee <stolee@gmail.com> wrote:
-> On 4/3/2020 5:40 PM, Junio C Hamano wrote:
-> > "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> > 
-> >>  * git run-job <job-name>: This builtin will run a single instance of a
-> >>    maintenance job.
-> >>    
-> >>  * git job-runner [--repo=<path>]: This builtin will run an infinite loop
-> >>    that executes git run-job as a subcommand.
-> > 
-> > What does this have to do with "git", though?  IOW, why does this
-> > have to be part of Git, so that those who would benefit from having
-> > a mechanism that makes it easy to run regular maintenance tasks but
-> > are not Git users (or those that want to do such maintenance tasks
-> > that are not necessarily tied to "git") must use "git" to do so?
+On 2020-04-06 10:42:23-0400, Derrick Stolee <stolee@gmail.com> wrote:
+> Of course, not every platform has "cron" but that just means we need a
+> cross-platform way to launch Git processes on some schedule. That could
+> be a command that creates a cron job on platforms that have it, and on
 
-I also agree with Junio,
-I don't think Git should be responsible to be a scheduler.
-It's the job of either tranditional crontab, at on *nix, or scheduler
-on Windows.
+There's Unix system that doesn't have cron.
+People could use other scheduler mechanism.
 
-> That's a reasonable reaction. The short version of my reasoning is that
-> many many people _use_ Git but are not Git experts. While a Git expert
-> could find the right set of commands to run and at what frequency to
-> keep their repo clean, most users do not want to spend time learning
-> these commands. It's also worth our time as contributors to select what
+A lot of systemd users uses systemd-timer.
+I'm using snooze.
+Each of those set of utilities have different grammar and
+configuration.
 
-And now, people will need to learn _both_ Git existing maintainance
-command, and new scheduler (Do I understand it right?, I haven't go
-through all patches)
+> Windows it could create a scheduled task instead.
+> 
+> But what should we launch? It should probably be a Git command that
+> checks config for a list of repositories, then runs "the maintenance
+> command" on each of those repos.
+> 
+> I'm inserting a break here to draw the eye to a new proposed design:
+> 
+> ---
+> 
+> Create a "git maintenance" builtin. This has a few subcommands:
+> 
+> 1. "run" will run the configured maintenance on the current repo. This
+>    should become the single entry point for users to say "please clean
+>    up my repo." What _exactly_ it does can be altered with config. I'll
+>    list some possibilities after listing the subcommands.
+> 
+> 2. "run-on-repos" uses command-line arguments or config to launch "git
+>    -C <dir> maintenance run" for all configured directories. The
+>    intention is that this is launched on some schedule by a platform-
+>    specific scheduling mechanism (i.e. cron).
 
-Yes, it could be a setup it once and forget, but,
-if there's a problem with their local repo, they will scratch
-their head to understand what wrong with them.
+So, IIUC, Git will have a _hard_ dependencies on cron on *nix?
+Else, we're gonna received a bug-report that some tools doesn't work?
 
-It's easier to destroy their repo, and it's harder to know what
-operation is running in their computer.
+I've seen some bug report in our distro that "git add -p" doesn't work
+like documented, because it's in "git-perl" packages.
+When we merge "git-perl" back to git, other people (who never use
+"git add -p" and git-sendemail) complain why does we add a hard dependencies
+on perl to git.
+
+>    (This subcommand could use a better name.)
+> 
+> 3. "schedule" adds the current repository to the configured list of
+>    repositories for running with "run-on-repos". It will also initialize
+>    the platform-specific scheduling mechanism. This may be to start the
+>    schedule for the first time OR to update how frequent "run-on-repos"
+>    is run, as appropriate.
+> 
+> 4. (OPTIONAL) "mode <mode>" adjusts the config for the current repo to
+>    change the type of maintenance requested for this repo. For example,
+>    "simple" could just run "git gc --auto" using a normal range.
+>    "incremental" could run the maintenance tasks from this series.
+>    Finally, "server" could run maintenance tasks as if we are serving
+>    the repo to others, so we repack aggressively with full bitmaps, and
+>    more frequently.
 
 -- 
 Danh
