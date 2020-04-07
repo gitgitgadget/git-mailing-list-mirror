@@ -2,96 +2,98 @@ Return-Path: <SRS0=6awY=5X=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.0 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_SANE_2 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0394FC2BA1A
-	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 17:29:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1AA2DC2BA80
+	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 17:30:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D4BFF20730
-	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 17:29:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E3A4920768
+	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 17:30:01 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=aepfle.de header.i=@aepfle.de header.b="GfhmcrnW"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726483AbgDGR3n (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Apr 2020 13:29:43 -0400
-Received: from smtprelay0050.hostedemail.com ([216.40.44.50]:46752 "EHLO
-        smtprelay.hostedemail.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726420AbgDGR3m (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 7 Apr 2020 13:29:42 -0400
-X-Greylist: delayed 540 seconds by postgrey-1.27 at vger.kernel.org; Tue, 07 Apr 2020 13:29:42 EDT
-Received: from smtprelay.hostedemail.com (10.5.19.251.rfc1918.com [10.5.19.251])
-        by smtpgrave04.hostedemail.com (Postfix) with ESMTP id 99BEF1800EC46
-        for <git@vger.kernel.org>; Tue,  7 Apr 2020 17:20:42 +0000 (UTC)
-Received: from filter.hostedemail.com (clb03-v110.bra.tucows.net [216.40.38.60])
-        by smtprelay06.hostedemail.com (Postfix) with ESMTP id 62F4D18033F62;
-        Tue,  7 Apr 2020 17:20:41 +0000 (UTC)
-X-Session-Marker: 6A6F6540706572636865732E636F6D
-X-HE-Tag: army88_5e3ac7fd8b42
-X-Filterd-Recvd-Size: 2612
-Received: from XPS-9350.home (unknown [47.151.136.130])
-        (Authenticated sender: joe@perches.com)
-        by omf02.hostedemail.com (Postfix) with ESMTPA;
-        Tue,  7 Apr 2020 17:20:40 +0000 (UTC)
-Message-ID: <2e6975d606846c834a387c07ee11cdce52356586.camel@perches.com>
+        id S1726546AbgDGR36 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Apr 2020 13:29:58 -0400
+Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.51]:25834 "EHLO
+        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726420AbgDGR36 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Apr 2020 13:29:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1586280596;
+        s=strato-dkim-0002; d=aepfle.de;
+        h=References:In-Reply-To:Message-ID:Subject:Cc:To:From:Date:
+        X-RZG-CLASS-ID:X-RZG-AUTH:From:Subject:Sender;
+        bh=3FGuj7N8e29gKvPlFnzIwsDBtK6iaslDZO/2Jm/LaGU=;
+        b=GfhmcrnWyzcQmUa5Lz3s3bRLyaocHib8/gkI7bKngEYf0qBXU+9ZkVkApCoJi6Wm8P
+        GtLINSe7uD6w0tp8Cs6uc1TBmF1a/sKQlvdX2Q8OT1T+yHpoUoNBaMp0x73xBdXbWTwi
+        Gbc9m7MxysiWheSTPAFJe37jIzPzU8cmPHMfwkxTlnaHzEtwqGT0ObgQQPu+MrI0bFXU
+        urTpXPiEyQpWxzY9SgcEgdPTlR57/33FD6vmFRHckAeEOqe+174ZsCe/K7yq+9AKaI43
+        e8/v1gcbPiJ0TqIw+KAY8qVrx2NjjZeubwTksDrGrVu5RLJQRz9tqTUrW47LVl4sFJbs
+        +/lg==
+X-RZG-AUTH: ":P2EQZWCpfu+qG7CngxMFH1J+3q8wa/QED/SSGq+wjGiUC4AUztn93FPS2dyuY88K"
+X-RZG-CLASS-ID: mo00
+Received: from sender
+        by smtp.strato.de (RZmta 46.2.1 DYNA|AUTH)
+        with ESMTPSA id 204e5fw37HTuhOV
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+        Tue, 7 Apr 2020 19:29:56 +0200 (CEST)
+Date:   Tue, 7 Apr 2020 19:29:49 +0200
+From:   Olaf Hering <olaf@aepfle.de>
+To:     Joe Perches <joe@perches.com>
+Cc:     Jeff King <peff@peff.net>, linux-kernel@vger.kernel.org,
+        git@vger.kernel.org
 Subject: Re: get_maintainer.pl sends bogus addresses to git send-email
-From:   Joe Perches <joe@perches.com>
-To:     Jeff King <peff@peff.net>, Olaf Hering <olaf@aepfle.de>
-Cc:     linux-kernel@vger.kernel.org, git@vger.kernel.org
-Date:   Tue, 07 Apr 2020 10:18:41 -0700
-In-Reply-To: <20200407170257.GA1844923@coredump.intra.peff.net>
+Message-ID: <20200407192949.586159e7.olaf@aepfle.de>
+In-Reply-To: <2e6975d606846c834a387c07ee11cdce52356586.camel@perches.com>
 References: <20200407154046.GA15368@aepfle.de>
-         <20200407170257.GA1844923@coredump.intra.peff.net>
-Content-Type: text/plain; charset="ISO-8859-1"
-User-Agent: Evolution 3.34.1-2 
+        <20200407170257.GA1844923@coredump.intra.peff.net>
+        <2e6975d606846c834a387c07ee11cdce52356586.camel@perches.com>
+X-Mailer: Claws Mail 2019.12.31 (GTK+ 2.24.32; x86_64-suse-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ boundary="Sig_/gyvhdOKHJllakF_ac6Obz20"; protocol="application/pgp-signature"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 2020-04-07 at 13:02 -0400, Jeff King wrote:
-> On Tue, Apr 07, 2020 at 05:40:46PM +0200, Olaf Hering wrote:
-> 
-> > For me sending patches via git send-email fails because email address
-> > conversion is failing. Something appends a ')' to x86/lkml@kernel.org.
-> > I suspect the double '))' in MAINTAINERS is confusing the command.
-> > I tried to send the trivial patch from v5.0 and v5.6 tag.
-> > 
-> > Is this a failure in ./scripts/get_maintainer.pl,
-> > or is this something git does internally?
-> > I'm sure others use such command on a daily basis, so likely something on
-> > my end became broken at some point in the past.
-> 
-> It's a bug in send-email's hand-rolled address parser, which was fixed
-> in bd869f67b9 (send-email: add and use a local copy of Mail::Address,
-> 2018-01-05). Upgrade to Git v2.17.0 or newer.
+--Sig_/gyvhdOKHJllakF_ac6Obz20
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
 
-Not really.
-You need to add --norolestats on the get_maintainer command line
+Am Tue, 07 Apr 2020 10:18:41 -0700
+schrieb Joe Perches <joe@perches.com>:
 
-git send-email expects bare email addresses, not ones annotated
-with additional content.
+> You need to add --norolestats on the get_maintainer command line
+
+Thanks, this can be used as a workaround for the time being.
+Not sure why anyone would actually care about such details in default mode.=
+..
 
 
-For instance:
+Olaf
 
-$ ./scripts/get_maintainer.pl -f lib/vsprintf.c
-Petr Mladek <pmladek@suse.com> (maintainer:VSPRINTF)
-Steven Rostedt <rostedt@goodmis.org> (maintainer:VSPRINTF)
-Sergey Senozhatsky <sergey.senozhatsky@gmail.com> (maintainer:VSPRINTF)
-Andy Shevchenko <andriy.shevchenko@linux.intel.com> (reviewer:VSPRINTF)
-Rasmus Villemoes <linux@rasmusvillemoes.dk> (reviewer:VSPRINTF)
-linux-kernel@vger.kernel.org (open list)
+--Sig_/gyvhdOKHJllakF_ac6Obz20
+Content-Type: application/pgp-signature
+Content-Description: Digitale Signatur von OpenPGP
 
-vs:
+-----BEGIN PGP SIGNATURE-----
 
-$ ./scripts/get_maintainer.pl -f --norolestats lib/vsprintf.c
-Petr Mladek <pmladek@suse.com>
-Steven Rostedt <rostedt@goodmis.org>
-Sergey Senozhatsky <sergey.senozhatsky@gmail.com>
-Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Rasmus Villemoes <linux@rasmusvillemoes.dk>
-linux-kernel@vger.kernel.org
+iQIzBAEBCAAdFiEE97o7Um30LT3B+5b/86SN7mm1DoAFAl6MuI0ACgkQ86SN7mm1
+DoDElRAAoKPmoW8t03Z5XrOYrmXy2RJPzRRguC/zAbQL+N3AK+xfNHqy93bBDyPF
+xonrACp9WyHtLNywMLH+5k2PecEch70kGyzbw6P1O/H530rN1wWWdbdwywguKpgm
+JVaWu5AEQHWukFfqsZH3BduY8ThOPbsGCar0l+ZtRAlUAs2eYeXv8tcdu0NeVaGS
+9ZyzLO2w7i/wX2MQUfGyJAeJTLFEkXGi+4jy4z+9c05zUqPzmXSncMR5njCytNjD
+W7lEOthcFVKMAUmIvMlnT8KvraKdbJ229Cqs5vlA9LCQK6bd0Xg0MAkH6tHOH61U
+31EV5C4zn5j+/QZdk9qYmlPjyKz7AWp88OiC17ZOqzugILIxGFU2QZwRcxcsVvGK
+dn2llTaTuzen77ifvNhcAjZPhlwrMStqAs0GSFD54XczCNnGUBV6PR/kPt/PhTWT
+ICHAE5HOC+/QmWwI4LsXGwi8l6i+HEd49sr+Egl/iu7mLERmtEY7tROtyYfi+oul
+/oaLYwuXV/kJsLgR2Y2V+D3iWjadyGl9OWbXNaN8AuKXL7dNP1bELbwiqBdJfu6c
+CZsxfi1pzzicw+2s3Hg/phjCgYKlhf9DjVdU9SdQCUY3qF9nGHrJlB0heJBGL+6U
+o/uIBId7siYE3oB3W9OBlp/ZsuQnBAnwx9FiohN5JJTjQo/5uoU=
+=HUNz
+-----END PGP SIGNATURE-----
 
-
+--Sig_/gyvhdOKHJllakF_ac6Obz20--
