@@ -3,133 +3,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8780C2BA1A
-	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 20:01:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8EDCFC2D0EC
+	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 20:05:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 73B752074B
-	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 20:01:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3AAE32074B
+	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 20:05:08 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=atlassian-com.20150623.gappssmtp.com header.i=@atlassian-com.20150623.gappssmtp.com header.b="UMMSeteu"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="slpLhSz0"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726973AbgDGUBV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Apr 2020 16:01:21 -0400
-Received: from mail-io1-f65.google.com ([209.85.166.65]:34191 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726436AbgDGUBV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Apr 2020 16:01:21 -0400
-Received: by mail-io1-f65.google.com with SMTP id f3so4768337ioj.1
-        for <git@vger.kernel.org>; Tue, 07 Apr 2020 13:01:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Q7DWNluOpU9cwgeKd6Ivt8y4HXd2FCbx7hJ7O5Gvghg=;
-        b=UMMSeteubjNsvOlMLyrzcpYi8zhyEvNV9jZ9M+NmcvfUjQ9Rz6A8I3aXrfuzgqcezT
-         m5aREnimdlPP23SMNEJd+kQ/sVUUnfd9wo/ueiWKM+Caoyrr646sFSFnOakS/LQBwzUw
-         hXQFXpCvxPA4wi9Zy6P8plBWDluxajYy5GrSewONyeniihRWblnaCZ8K1cE4/vHatDZ4
-         u54/Jg7NG7L0FhrpvmJRKiYjFHhvWks3XI2Y6wzCMfyeGt6rU/+0DC/KSM5B2fcU2hs7
-         BFJLZx1R5VKjv1L0ZmXhoE/18LXEOFsKOcbOUVM9mHHAoK0xGJnazL8UMys+qASY7MIo
-         sBdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Q7DWNluOpU9cwgeKd6Ivt8y4HXd2FCbx7hJ7O5Gvghg=;
-        b=ABVtJHN3z7N/uO+0UEE4kwrlXf9warcM1Jmjnfpeope/5TfvaflGEuIol+/KK0Tviz
-         WXW9IRt3nKjA5pyNRJTgjKa48nMgJcLDdy4KDEpEVs2d6TZKCVmiS98j7MMjXwGToqqY
-         hG7gYmRxzKC6EqzK7YtdJ7CdJGdfKbzY32K21MaFNgeiOZswgEHeR6dPZ2NhXgTt9thW
-         yFZ7Tcs8SdXZKj+aSqFzulCJMaxS6PM+nYOcFhAskuIT/b7GbqrowqA/x7JmfkH4KFcT
-         38UVFrpd7oHTH2vFejJb4gpBhcACapcfydYiLmY/x7y5Y8Ne1tRYI0XIaqAv3GeanwFU
-         7HyA==
-X-Gm-Message-State: AGi0PubLo42pD64z/yHyq0Mtc/p2bYMUdgfbLu5NrYGXRZaCff7zHYr3
-        M2MDps8uLtqhFqu0zkR8FH5aZy2N9zVPN3YVVCjeGw==
-X-Google-Smtp-Source: APiQypJjQACwYItsqTs11x+cPZ/0jHdlIuLxXusqJLMYVWErFaciZbF8Zl3hBuA5/MXsgq9RK2kQW9ICo+ubhC1XXY0=
-X-Received: by 2002:a05:6638:d6:: with SMTP id w22mr3527882jao.72.1586289680047;
- Tue, 07 Apr 2020 13:01:20 -0700 (PDT)
+        id S1726791AbgDGUFH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Apr 2020 16:05:07 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63613 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726712AbgDGUFH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Apr 2020 16:05:07 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0923456C65;
+        Tue,  7 Apr 2020 16:05:05 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ikKqUEQaWUZStYrwG5oUg73Q2eA=; b=slpLhS
+        z0OZmRBLY1Oqw+xBWYDopidVWIIiB+qGXNuCM1bcW0QaMFnaiFxFp6rv7VW8qUJO
+        lYoyDexN82dI/RfGz2P7ryhnfULZ4KNsd2HIZUi7KjaEsmcjLuHxNZy5qvNyighy
+        AQ40A2S344N4DyHQlYDionx2N1CVZUUnM2GRM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Jh88sTB5N/Nma6kvnp65rNjwMa+pO4Wq
+        XcRGBVKYWYQ+tIH2z7S7posglV4okkWC4idlIW26WOaK+OP7vrPK/su/0M92wVg0
+        KyDTQ7SvejbyGt5zkjo3NT8qe0qRVkmLGuQpJVrCZCPgx1Jpt5iKrF9PebqR4EJp
+        3+tHD+bwf5Y=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id EEA7156C63;
+        Tue,  7 Apr 2020 16:05:04 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6C8E756C62;
+        Tue,  7 Apr 2020 16:05:03 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v12 3/5] bugreport: gather git version and build info
+References: <20200406224526.256074-1-emilyshaffer@google.com>
+        <20200406224526.256074-4-emilyshaffer@google.com>
+        <xmqqeet0urts.fsf@gitster.c.googlers.com>
+        <20200407184240.GB137962@google.com>
+Date:   Tue, 07 Apr 2020 13:05:02 -0700
+In-Reply-To: <20200407184240.GB137962@google.com> (Emily Shaffer's message of
+        "Tue, 7 Apr 2020 11:42:40 -0700")
+Message-ID: <xmqq4ktvt635.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <CAMSEaH6+fQuDjhY-5THoYpEjjrHU4Sofnmr-nASHaTZbHvQw1w@mail.gmail.com>
- <CAMSEaH5eZdNooNHQJAto_0dCZSFtiji8ZYvft+oZQXfzDHSyEg@mail.gmail.com>
-In-Reply-To: <CAMSEaH5eZdNooNHQJAto_0dCZSFtiji8ZYvft+oZQXfzDHSyEg@mail.gmail.com>
-From:   Bryan Turner <bturner@atlassian.com>
-Date:   Tue, 7 Apr 2020 13:01:09 -0700
-Message-ID: <CAGyf7-GVYMXKpptZ8w3tcZAKp41j5_EDe9kp6YcDp7=S4LuVpQ@mail.gmail.com>
-Subject: Re: Git clone question
-To:     Sankar P <sankar.curiosity@gmail.com>
-Cc:     Git Users <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 11928D18-790B-11EA-8EE5-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 7, 2020 at 11:21 AM Sankar P <sankar.curiosity@gmail.com> wrote:
->
-> Hi
->
-> I am trying to understand about git clone.
->
-> From the few git videos that I have watched and using git, I
-> understand that git stores the difference between each version, as an
-> object, with the sha of the diff as the way to address the object.
+Emily Shaffer <emilyshaffer@google.com> writes:
 
-This is not correct. Git stores full objects, not diffs/patches, and
-the SHA is of the full object contents, not the changes to those
-contents versus the previous contents.
+> To be clear, do you want me to include the output of get_compiler_info()
+> in "git version --build-options" when I do that change, too?
 
-Objects are stored compressed (using libz). In addition to
-compression, when objects are packed Git can use a technique called
-"delta compression" to allow it to build one object in terms of
-another. This is something like a diff/patch, but it's not the delta
-that gets hashed; it's the full object (before and after).
+In the endgame, there are two kinds of information we'd want to
+gather and report, I would think.
 
->
-> However, what is not clear to me is, how does `git clone` then work ?
-> If a repository has a thousand commits, do we download all the
-> thousand objects to the client system and then apply them one on top
-> of the other ? I am sure that must not be the case because the `git
-> clone` operation completes so fast, and I doubt if my disks are that
-> fast.
+Ones that can be different per-binary are things like:
 
-Between libz compression and delta compression the pack file
-containing all of those objects tends to be substantially smaller than
-the full set of objects.
+ - what version of the source code the binary was compiled from
+ - with what compiler options
+ - using which compiler and
+ - linking with what libraries,
+ - where in the filesystem is the binary located
 
->
-> However, when I do a `git clone` I could see the history until the first commit.
+The others are various properties of the system the user is using,
+and having trouble using, Git on:
 
-Yes, when cloning by default you receive all the objects in the
-history of the repository and, as you note below, you can also perform
-a "shallow clone" to limit what you get to some specific depth. Newer
-versions of Git are also working on introducing the concept of a
-"partial clone", where some types of objects (large files, for
-example) are not downloaded up front and are instead downloaded on
-first access. This isn't yet widely supported, though.
+ - how many CPUs do we have,
+ - how much free memory,
+ - is the repository's filesystem case sensitive,
+ - what version of 'wish' is being used.
 
->
-> I can also partially ignore the history and clone only the last N
-> commits history too. So my question is, how does `git clone` work
-> under the hood and how is it so fast ? Does the git server save the
-> expanded git tree (with all the git patches applied) and we just
-> transfer them when we do the `git clone` ?
+We'd want the former to be reported for each binary that matters, so
+"git version --build-options" would want to say it, "git remote-curl
+--build-options" would want to say it, and being different binaries,
+they may say different things.
 
-As noted above, there's no "patching" going on. The server does store
-a packfile, though, and depending on how recently the pack was created
-it can reuse substantial portions of that pack when creating a pack to
-serve the clone.
+There is not much point in duplicating the latter that are not
+binary specific, so it probably makes sense to gather them inside,
+and report them from, "git bugreport" itself.
 
->
-> Are there any good talks / papers / books on the internals of the
-> working of git ?
-
-Have you checked https://git-scm.com/book/en/v2 ?
-
->
-> Thanks.
->
->
-> --
-> Sankar P
-> http://psankar.blogspot.com
+Thanks.
