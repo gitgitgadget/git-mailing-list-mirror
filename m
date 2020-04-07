@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AF17C2BA2B
-	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 14:28:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 977CCC2BA80
+	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 14:28:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5124B207FF
-	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 14:28:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6E830207FF
+	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 14:28:50 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Nhxz4Wyz"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ugznGEkP"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729162AbgDGO2s (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Apr 2020 10:28:48 -0400
-Received: from mail-qt1-f195.google.com ([209.85.160.195]:38098 "EHLO
+        id S1729164AbgDGO2t (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Apr 2020 10:28:49 -0400
+Received: from mail-qt1-f195.google.com ([209.85.160.195]:42486 "EHLO
         mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728917AbgDGO2o (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1729148AbgDGO2o (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 7 Apr 2020 10:28:44 -0400
-Received: by mail-qt1-f195.google.com with SMTP id 13so895037qtt.5
-        for <git@vger.kernel.org>; Tue, 07 Apr 2020 07:28:42 -0700 (PDT)
+Received: by mail-qt1-f195.google.com with SMTP id b10so2760937qtt.9
+        for <git@vger.kernel.org>; Tue, 07 Apr 2020 07:28:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ZVpvRBsOEcGbH9LZoGNRkq69RUMJ2X5uwsFCDN5jT7s=;
-        b=Nhxz4Wyz/3ndD6UVfrpcrogbQkFuCUwr+6JHR97oQNk8+h815BKjU6r2rFtlGsstSb
-         e5nUWNwuHJriuSn4G5XIJ6XK+/B9uAqXfoX492qwYhgANp1XhYjlTGgDvRq3jL3Ss88h
-         3KkGPslm9aEN21oIyY2NQx4qTn4+9XS54GmGGcZxr+/ZSTB0Kz0Q6VphO+4yvcRHUQtU
-         78mCx228YFWSFFzuS5CuyiyJmRzmjKJCA/B9f3lURwWs5Aoo/o3InC9rnO02nNZfRs9Z
-         oK1AM+gIIvx8EdJptgYFVB9EKis72KPJ9mY8inpfRbSv2ZHvOaoO8rJM9w62PuoSD2bO
-         enKw==
+        bh=sgPcTgpTgIyew8hRZr8Ws7nuOduXFE7R9jvKARasCX8=;
+        b=ugznGEkPf9qXlYhtfTAdc1oESfmK3PN4tjh+zNa74rhTkCxI9eKGRALJOTc1ddwAMH
+         VpDegveIAAvC77hIzIBbqebyVvNGdg1bdDCjofwKaMFhEsP5gbgHLdPg848pcTdLfUNS
+         8OHg7a5GA8m+iyzG9OCl6x5c0IRxDhljO6RsgvMN9Kd/uT+/SGa/ovz7iVNknP4mzyIs
+         FPxxptGc9rPNAq5vy0wIjMfxRiz9mRGk07PcJMb/i7V5L6uBPoknEaSP6Lsj3DH7Fl7R
+         OjaXGmgXSqan6jlXQI+Mm1Uk90x7pAfhWWtR/gsR38hdqfMXRPu7c13yOpxuYWdVn5N7
+         ridA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ZVpvRBsOEcGbH9LZoGNRkq69RUMJ2X5uwsFCDN5jT7s=;
-        b=jGTvhtNDWpjWcNCmBHyH6KD4/Ue6TSZ8JQBCI8RifVlOc/cRLf/ZEq1D8qxzA/3Kdr
-         Xog06KhU3LcH11K7udQBv3OptF3K1KpfsDeQM9x4KocErgwlPgPE6qWzE3lxlRRCbw0C
-         EEE/A6bHXYHS7lA9SXimtOnPFisI/PRZxziHMZbedNIsRPsVZS8KK/vTr03uD31eKAaY
-         Qf4BntRQRxWz0W3ZxVA7VXtY04Gv5MGqq6299MGYpvNFgDkZybDUn8cuPMa0G8PN78fg
-         1tUmfncaNwq0+4Nu6nu9UXVWriucyOvKOtR4mTxKUuNJkB+c9qDuMiAlw1YPZoXUe3nv
-         UIMA==
-X-Gm-Message-State: AGi0PuanDai1zmVQRZ9kkshv7FXh0mq0w54YpFD6pLb4eTSCLRG8Rbeh
-        cajwMaEmSAQ11/YWIdni5g72Zd/s
-X-Google-Smtp-Source: APiQypK8rNbTX6Y47tm920cNe1HpBtAV8EPQdh03JUyhLJ3Z/stxLx5TJ8x32YkCxLF9puIhYGX+Ag==
-X-Received: by 2002:ac8:4557:: with SMTP id z23mr2522790qtn.350.1586269721122;
-        Tue, 07 Apr 2020 07:28:41 -0700 (PDT)
+        bh=sgPcTgpTgIyew8hRZr8Ws7nuOduXFE7R9jvKARasCX8=;
+        b=rRZfPjJPfd825CJ23vBz9KsGd3JQhug66zX5rqKYohWV3VBvFdvnRO657tgDjx69qs
+         ESQNo8xGhncA5E59jKoXBLFASaV3MdbqwMoyNh97Bwt9O1JEbkrumHsZVJL+vdgJJdLd
+         wDRZrPhSqCp/7o0xtONRE/Xft0M6DpygQLa8o9QgKMb3fJp8SOZ7kXK2D50bqvDyY3BO
+         7Z9xjMxf73fuX7eUF6WIg00jFQiXr8olJebtPo84QAUVOIRFwCgRWAoYXw/O3sskn0jT
+         1ged9WKe0ol6LX4+OsRViSVEQzuo5iVY53crKc+Oc2IsxPMbf2U0faM4Ms1X09R0UO6P
+         5PFw==
+X-Gm-Message-State: AGi0PuZhVv17gDfS33AbvLs0khlSth4calL9Vr7qMBzLkWP6e/5cpr0h
+        7hFe5kkaj3hbxUIA4UabPB6Wt+gm
+X-Google-Smtp-Source: APiQypJr/D2ww1k+jm7LFRAOHAE4F1Qs3PLVxLx2gI5iXi8Cp3eqw+ql9+U+TN6di8jL9WXpsRtDCw==
+X-Received: by 2002:ac8:1901:: with SMTP id t1mr2484739qtj.269.1586269722843;
+        Tue, 07 Apr 2020 07:28:42 -0700 (PDT)
 Received: from archbookpro.lan ([199.249.110.29])
-        by smtp.gmail.com with ESMTPSA id j6sm17051736qti.25.2020.04.07.07.28.39
+        by smtp.gmail.com with ESMTPSA id j6sm17051736qti.25.2020.04.07.07.28.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Apr 2020 07:28:40 -0700 (PDT)
+        Tue, 07 Apr 2020 07:28:41 -0700 (PDT)
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Alban Gruin <alban.gruin@gmail.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v5 18/22] sequencer: implement save_autostash()
-Date:   Tue,  7 Apr 2020 10:28:05 -0400
-Message-Id: <7e04ce8d8e8ec8308efda05ea7f0cd31f9612ea0.1586269543.git.liu.denton@gmail.com>
+Subject: [PATCH v5 19/22] sequencer: implement apply_autostash_oid()
+Date:   Tue,  7 Apr 2020 10:28:06 -0400
+Message-Id: <732b3f99455066ae780dd8a0e662173f1bd02e60.1586269543.git.liu.denton@gmail.com>
 X-Mailer: git-send-email 2.26.0.159.g23e2136ad0
 In-Reply-To: <cover.1586269542.git.liu.denton@gmail.com>
 References: <cover.1585962672.git.liu.denton@gmail.com> <cover.1586269542.git.liu.denton@gmail.com>
@@ -74,111 +74,113 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Extract common functionality of apply_autostash() into
-apply_save_autostash() and use it to implement save_autostash(). This
-function will be used in a future commit.
+Split apply_save_autostash() into apply_autostash_oid() and
+apply_save_autostash() where the former operates on an OID string and
+the latter reads the OID from a file before passing it into
+apply_save_autostash_oid().
 
-The difference between save_autostash() and apply_autostash() is that
-the former does not try to apply the stash. It skips that step and
-just stores the created entry in the stash reflog.
-
-This is useful in the case where we abort an operation when an autostash
-is present but we don't want to dirty the worktree with the application
-of the stash. For example, in a future commit, we will implement
-`git merge --autostash`. Since merges can be aborted using
-`git reset --hard`, we'd make use of save_autostash() to save the
-autostash entry instead of applying it to the worktree thus keeping the
-worktree undirtied.
+This function is required for a future commmit which will rely on being
+able to apply an autostash whose OID is stored as a string.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- sequencer.c | 37 +++++++++++++++++++++++++++----------
+ sequencer.c | 38 ++++++++++++++++++++++++++------------
  sequencer.h |  1 +
- 2 files changed, 28 insertions(+), 10 deletions(-)
+ 2 files changed, 27 insertions(+), 12 deletions(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index 645bc47ce3..084ea4117e 100644
+index 084ea4117e..f1eba4cb1f 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -3707,7 +3707,7 @@ void create_autostash(struct repository *r, const char *path,
+@@ -3707,26 +3707,18 @@ void create_autostash(struct repository *r, const char *path,
  	strbuf_release(&buf);
  }
  
--int apply_autostash(const char *path)
-+static int apply_save_autostash(const char *path, int attempt_apply)
+-static int apply_save_autostash(const char *path, int attempt_apply)
++static int apply_save_autostash_oid(const char *stash_oid, int attempt_apply)
  {
- 	struct strbuf stash_oid = STRBUF_INIT;
+-	struct strbuf stash_oid = STRBUF_INIT;
  	struct child_process child = CHILD_PROCESS_INIT;
-@@ -3720,13 +3720,17 @@ int apply_autostash(const char *path)
- 	}
- 	strbuf_trim(&stash_oid);
+ 	int ret = 0;
  
--	child.git_cmd = 1;
--	child.no_stdout = 1;
--	child.no_stderr = 1;
--	argv_array_push(&child.args, "stash");
--	argv_array_push(&child.args, "apply");
--	argv_array_push(&child.args, stash_oid.buf);
--	if (!run_command(&child))
-+	if (attempt_apply) {
-+		child.git_cmd = 1;
-+		child.no_stdout = 1;
-+		child.no_stderr = 1;
-+		argv_array_push(&child.args, "stash");
-+		argv_array_push(&child.args, "apply");
-+		argv_array_push(&child.args, stash_oid.buf);
-+		ret = run_command(&child);
-+	}
-+
-+	if (attempt_apply && !ret)
- 		fprintf(stderr, _("Applied autostash.\n"));
- 	else {
- 		struct child_process store = CHILD_PROCESS_INIT;
-@@ -3742,10 +3746,13 @@ int apply_autostash(const char *path)
- 			ret = error(_("cannot store %s"), stash_oid.buf);
+-	if (!read_oneliner(&stash_oid, path,
+-			   READ_ONELINER_SKIP_IF_EMPTY)) {
+-		strbuf_release(&stash_oid);
+-		return 0;
+-	}
+-	strbuf_trim(&stash_oid);
+-
+ 	if (attempt_apply) {
+ 		child.git_cmd = 1;
+ 		child.no_stdout = 1;
+ 		child.no_stderr = 1;
+ 		argv_array_push(&child.args, "stash");
+ 		argv_array_push(&child.args, "apply");
+-		argv_array_push(&child.args, stash_oid.buf);
++		argv_array_push(&child.args, stash_oid);
+ 		ret = run_command(&child);
+ 	}
+ 
+@@ -3741,9 +3733,9 @@ static int apply_save_autostash(const char *path, int attempt_apply)
+ 		argv_array_push(&store.args, "-m");
+ 		argv_array_push(&store.args, "autostash");
+ 		argv_array_push(&store.args, "-q");
+-		argv_array_push(&store.args, stash_oid.buf);
++		argv_array_push(&store.args, stash_oid);
+ 		if (run_command(&store))
+-			ret = error(_("cannot store %s"), stash_oid.buf);
++			ret = error(_("cannot store %s"), stash_oid);
  		else
  			fprintf(stderr,
--				_("Applying autostash resulted in conflicts.\n"
-+				_("%s\n"
- 				  "Your changes are safe in the stash.\n"
- 				  "You can run \"git stash pop\" or"
--				  " \"git stash drop\" at any time.\n"));
-+				  " \"git stash drop\" at any time.\n"),
-+				attempt_apply ?
-+				_("Applying autostash resulted in conflicts.") :
-+				_("Autostash exists; creating a new stash entry."));
+ 				_("%s\n"
+@@ -3755,6 +3747,23 @@ static int apply_save_autostash(const char *path, int attempt_apply)
+ 				_("Autostash exists; creating a new stash entry."));
  	}
  
- 	unlink(path);
-@@ -3753,6 +3760,16 @@ int apply_autostash(const char *path)
- 	return ret;
- }
- 
-+int save_autostash(const char *path)
-+{
-+	return apply_save_autostash(path, 0);
++	return ret;
 +}
 +
-+int apply_autostash(const char *path)
++static int apply_save_autostash(const char *path, int attempt_apply)
 +{
-+	return apply_save_autostash(path, 1);
++	struct strbuf stash_oid = STRBUF_INIT;
++	int ret = 0;
++
++	if (!read_oneliner(&stash_oid, path,
++			   READ_ONELINER_SKIP_IF_EMPTY)) {
++		strbuf_release(&stash_oid);
++		return 0;
++	}
++	strbuf_trim(&stash_oid);
++
++	ret = apply_save_autostash_oid(stash_oid.buf, attempt_apply);
++
+ 	unlink(path);
+ 	strbuf_release(&stash_oid);
+ 	return ret;
+@@ -3770,6 +3779,11 @@ int apply_autostash(const char *path)
+ 	return apply_save_autostash(path, 1);
+ }
+ 
++int apply_autostash_oid(const char *stash_oid)
++{
++	return apply_save_autostash_oid(stash_oid, 1);
 +}
 +
  static const char *reflog_message(struct replay_opts *opts,
  	const char *sub_action, const char *fmt, ...)
  {
 diff --git a/sequencer.h b/sequencer.h
-index 9d1fe0ccfb..306d4cecfb 100644
+index 306d4cecfb..5a85eeef92 100644
 --- a/sequencer.h
 +++ b/sequencer.h
-@@ -193,6 +193,7 @@ void commit_post_rewrite(struct repository *r,
- 
- void create_autostash(struct repository *r, const char *path,
+@@ -195,6 +195,7 @@ void create_autostash(struct repository *r, const char *path,
  		      const char *default_reflog_action);
-+int save_autostash(const char *path);
+ int save_autostash(const char *path);
  int apply_autostash(const char *path);
++int apply_autostash_oid(const char *stash_oid);
  
  #define SUMMARY_INITIAL_COMMIT   (1 << 0)
+ #define SUMMARY_SHOW_AUTHOR_DATE (1 << 1)
 -- 
 2.26.0.159.g23e2136ad0
 
