@@ -2,58 +2,299 @@ Return-Path: <SRS0=6awY=5X=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=BODY_SINGLE_WORD,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4AFB0C2BA16
-	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 05:06:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7567EC2BA16
+	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 05:18:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1294A206F7
-	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 05:06:25 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=me.com header.i=@me.com header.b="FvHcZwR+"
+	by mail.kernel.org (Postfix) with ESMTP id 43F7F20730
+	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 05:18:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726329AbgDGFGX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Apr 2020 01:06:23 -0400
-Received: from pv50p00im-ztdg10021801.me.com ([17.58.6.56]:52403 "EHLO
-        pv50p00im-ztdg10021801.me.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725802AbgDGFGX (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 7 Apr 2020 01:06:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=1a1hai;
-        t=1586235982; bh=ruW4UFXxVsMKbdPMnmxDaTv+16pA7U93ISteQk0ZEwg=;
-        h=To:From:Subject:Message-ID:Date:Content-Type;
-        b=FvHcZwR+d596bdsnJH3JulZ2YKPzl5CqdwHfkcj0GhEWeYomj8B6xEVcz1ylEnUdG
-         zT2/epCrA6XOqJYo2iNmAZoi5328OaXIQrWLt94MoVmTN+O6iTCHrf3euS+quhnQ7a
-         Fnm0NjVU9RC9N3f39jErE5JfpZcd80M+FYBOTP8tviYxY2oW+ivHmXWr+YIWuZ26og
-         MqsjEvkAVHAgFmvVRSoy2RQFrTWbedC2KwwC2kEJUHUgOys7OTs8WpZP/to8uvkBlC
-         ljNxcL684mneNtwQZB92ItJFvy4XF0IYjliA8yCJ4AC3EcuIeZhJuKJedJFryF39EW
-         EIL3DW5JhePtw==
-Received: from [10.0.0.7] (unknown [110.7.217.176])
-        by pv50p00im-ztdg10021801.me.com (Postfix) with ESMTPSA id 189BC3605FD
-        for <git@vger.kernel.org>; Tue,  7 Apr 2020 05:06:21 +0000 (UTC)
+        id S1726704AbgDGFSz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Apr 2020 01:18:55 -0400
+Received: from aibo.runbox.com ([91.220.196.211]:35068 "EHLO aibo.runbox.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726399AbgDGFSz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Apr 2020 01:18:55 -0400
+Received: from [10.9.9.202] (helo=mailfront20.runbox)
+        by mailtransmit03.runbox with esmtp (Exim 4.86_2)
+        (envelope-from <me@pluvano.com>)
+        id 1jLgdO-00078D-OI; Tue, 07 Apr 2020 07:18:50 +0200
+Received: by mailfront20.runbox with esmtpsa  [Authenticated alias (964124)]  (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.90_1)
+        id 1jLgd2-0004LK-Nz; Tue, 07 Apr 2020 07:18:30 +0200
+From:   Emma Brooks <me@pluvano.com>
 To:     git@vger.kernel.org
-From:   number201724 <number201724@me.com>
-Subject: help
-Message-ID: <c638c240-d87d-44bf-c7b0-071e169cefa9@me.com>
-Date:   Tue, 7 Apr 2020 13:06:19 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.6.0
+Cc:     Denton Liu <liu.denton@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Emma Brooks <me@pluvano.com>
+Subject: [PATCH v2] format-patch: teach --no-q-encode-headers
+Date:   Tue,  7 Apr 2020 05:17:45 +0000
+Message-Id: <20200407051745.44390-1-me@pluvano.com>
+X-Mailer: git-send-email 2.26.0.110.g09a3ae2f00.dirty
+In-Reply-To: <20200405231109.8249-1-me@pluvano.com>
+References: <20200405231109.8249-1-me@pluvano.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2020-04-07_01:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=1 suspectscore=1 malwarescore=0
- phishscore=0 bulkscore=0 spamscore=1 clxscore=1015 mlxscore=1
- mlxlogscore=198 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1908290000 definitions=main-2004070042
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-help
+When commit subjects or authors have non-ASCII characters, git
+format-patch Q-encodes them so they can be safely sent over email.
+However, if the patch transfer method is something other than email (web
+review tools, sneakernet), this only serves to make the patch metadata
+harder to read without first applying it (unless you can decode RFC 2047
+in your head). git am as well as some email software supports
+non-Q-encoded mail as described in RFC 6531.
 
+Add --[no-]q-encode-headers and format.qEncodeHeaders to let the user
+control this behavior.
+
+Signed-off-by: Emma Brooks <me@pluvano.com>
+---
+
+Changes since v1:
+
+- Rename --encode-headers to --q-encode-headers
+- Rename format.encodeHeaders to format.qEncodeHeaders
+- Simplify language in docs
+- Reel in over-indented lines
+
+ Documentation/config/format.txt    |  4 +++
+ Documentation/git-format-patch.txt |  8 +++++
+ builtin/log.c                      |  7 ++++
+ log-tree.c                         |  1 +
+ pretty.c                           |  6 ++--
+ pretty.h                           |  1 +
+ revision.c                         |  4 +++
+ revision.h                         |  3 +-
+ t/t4014-format-patch.sh            | 53 ++++++++++++++++++++++++++++++
+ 9 files changed, 84 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/config/format.txt b/Documentation/config/format.txt
+index 45c7bd5a8f..9b0d665d27 100644
+--- a/Documentation/config/format.txt
++++ b/Documentation/config/format.txt
+@@ -57,6 +57,10 @@ format.suffix::
+ 	`.patch`. Use this variable to change that suffix (make sure to
+ 	include the dot if you want it).
+ 
++format.qEncodeHeaders::
++	Encode email headers that have non-ASCII characters with
++	"Q-encoding" for email transmission. Defaults to true.
++
+ format.pretty::
+ 	The default pretty format for log/show/whatchanged command,
+ 	See linkgit:git-log[1], linkgit:git-show[1],
+diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+index 0d4f8951bb..13de39a27c 100644
+--- a/Documentation/git-format-patch.txt
++++ b/Documentation/git-format-patch.txt
+@@ -24,6 +24,7 @@ SYNOPSIS
+ 		   [(--reroll-count|-v) <n>]
+ 		   [--to=<email>] [--cc=<email>]
+ 		   [--[no-]cover-letter] [--quiet]
++		   [--[no-]q-encode-headers]
+ 		   [--no-notes | --notes[=<ref>]]
+ 		   [--interdiff=<previous>]
+ 		   [--range-diff=<previous> [--creation-factor=<percent>]]
+@@ -253,6 +254,13 @@ feeding the result to `git send-email`.
+ 	containing the branch description, shortlog and the overall diffstat.  You can
+ 	fill in a description in the file before sending it out.
+ 
++--q-encode-headers::
++--no-q-encode-headers::
++	Encode email headers that have non-ASCII characters with
++	"Q-encoding" (described in RFC 2047), instead of outputting the
++	headers verbatim. The default is set to the value of the
++	`format.qEncodeHeaders` configuration variable.
++
+ --interdiff=<previous>::
+ 	As a reviewer aid, insert an interdiff into the cover letter,
+ 	or as commentary of the lone patch of a 1-patch series, showing
+diff --git a/builtin/log.c b/builtin/log.c
+index 83a4a6188e..ea63902b82 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -46,6 +46,7 @@ static int default_abbrev_commit;
+ static int default_show_root = 1;
+ static int default_follow;
+ static int default_show_signature;
++static int default_q_encode_headers = 1;
+ static int decoration_style;
+ static int decoration_given;
+ static int use_mailmap_config = 1;
+@@ -151,6 +152,7 @@ static void cmd_log_init_defaults(struct rev_info *rev)
+ 	rev->show_root_diff = default_show_root;
+ 	rev->subject_prefix = fmt_patch_subject_prefix;
+ 	rev->show_signature = default_show_signature;
++	rev->q_encode_headers = default_q_encode_headers;
+ 	rev->diffopt.flags.allow_textconv = 1;
+ 
+ 	if (default_date_mode)
+@@ -438,6 +440,10 @@ static int git_log_config(const char *var, const char *value, void *cb)
+ 		return git_config_string(&fmt_pretty, var, value);
+ 	if (!strcmp(var, "format.subjectprefix"))
+ 		return git_config_string(&fmt_patch_subject_prefix, var, value);
++	if (!strcmp(var, "format.qencodeheaders")) {
++		default_q_encode_headers = git_config_bool(var, value);
++		return 0;
++	}
+ 	if (!strcmp(var, "log.abbrevcommit")) {
+ 		default_abbrev_commit = git_config_bool(var, value);
+ 		return 0;
+@@ -1719,6 +1725,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 	rev.show_notes = show_notes;
+ 	memcpy(&rev.notes_opt, &notes_opt, sizeof(notes_opt));
+ 	rev.commit_format = CMIT_FMT_EMAIL;
++	rev.q_encode_headers = default_q_encode_headers;
+ 	rev.expand_tabs_in_log_default = 0;
+ 	rev.verbose_header = 1;
+ 	rev.diff = 1;
+diff --git a/log-tree.c b/log-tree.c
+index 897a90233e..fb37149854 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -693,6 +693,7 @@ void show_log(struct rev_info *opt)
+ 	ctx.abbrev = opt->diffopt.abbrev;
+ 	ctx.after_subject = extra_headers;
+ 	ctx.preserve_subject = opt->preserve_subject;
++	ctx.q_encode_headers = opt->q_encode_headers;
+ 	ctx.reflog_info = opt->reflog_info;
+ 	ctx.fmt = opt->commit_format;
+ 	ctx.mailmap = opt->mailmap;
+diff --git a/pretty.c b/pretty.c
+index 28afc701b6..3ae52cc9db 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -474,7 +474,8 @@ void pp_user_info(struct pretty_print_context *pp,
+ 		}
+ 
+ 		strbuf_addstr(sb, "From: ");
+-		if (needs_rfc2047_encoding(namebuf, namelen)) {
++		if (pp->q_encode_headers &&
++		    needs_rfc2047_encoding(namebuf, namelen)) {
+ 			add_rfc2047(sb, namebuf, namelen,
+ 				    encoding, RFC2047_ADDRESS);
+ 			max_length = 76; /* per rfc2047 */
+@@ -1767,7 +1768,8 @@ void pp_title_line(struct pretty_print_context *pp,
+ 	if (pp->print_email_subject) {
+ 		if (pp->rev)
+ 			fmt_output_email_subject(sb, pp->rev);
+-		if (needs_rfc2047_encoding(title.buf, title.len))
++		if (pp->q_encode_headers &&
++		    needs_rfc2047_encoding(title.buf, title.len))
+ 			add_rfc2047(sb, title.buf, title.len,
+ 						encoding, RFC2047_SUBJECT);
+ 		else
+diff --git a/pretty.h b/pretty.h
+index 4ad1fc31ff..e40b6d3e83 100644
+--- a/pretty.h
++++ b/pretty.h
+@@ -43,6 +43,7 @@ struct pretty_print_context {
+ 	struct string_list *mailmap;
+ 	int color;
+ 	struct ident_split *from_ident;
++	unsigned q_encode_headers:1;
+ 
+ 	/*
+ 	 * Fields below here are manipulated internally by pp_* functions and
+diff --git a/revision.c b/revision.c
+index 8136929e23..51d3e8a558 100644
+--- a/revision.c
++++ b/revision.c
+@@ -2241,6 +2241,10 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 		revs->topo_order = 1;
+ 		revs->rewrite_parents = 1;
+ 		revs->graph = graph_init(revs);
++	} else if (!strcmp(arg, "--q-encode-headers")) {
++		revs->q_encode_headers = 1;
++	} else if (!strcmp(arg, "--no-q-encode-headers")) {
++		revs->q_encode_headers = 0;
+ 	} else if (!strcmp(arg, "--root")) {
+ 		revs->show_root_diff = 1;
+ 	} else if (!strcmp(arg, "--no-commit-id")) {
+diff --git a/revision.h b/revision.h
+index 475f048fb6..4794aa4742 100644
+--- a/revision.h
++++ b/revision.h
+@@ -203,7 +203,8 @@ struct rev_info {
+ 			use_terminator:1,
+ 			missing_newline:1,
+ 			date_mode_explicit:1,
+-			preserve_subject:1;
++			preserve_subject:1,
++			q_encode_headers:1;
+ 	unsigned int	disable_stdin:1;
+ 	/* --show-linear-break */
+ 	unsigned int	track_linear:1,
+diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+index b653dd7d44..9f780b8fe8 100755
+--- a/t/t4014-format-patch.sh
++++ b/t/t4014-format-patch.sh
+@@ -1160,6 +1160,59 @@ test_expect_success 'format-patch wraps extremely long from-header (rfc2047)' '
+ 	check_author "Foö Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar"
+ '
+ 
++cat >expect <<'EOF'
++From: Foö Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar
++ Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo
++ Bar Foo Bar Foo Bar Foo Bar <author@example.com>
++EOF
++test_expect_success 'format-patch wraps extremely long from-header (non-ASCII without Q-encoding)' '
++	echo content >>file &&
++	git add file &&
++	GIT_AUTHOR_NAME="Foö Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar" \
++	git commit -m author-check &&
++	git format-patch --no-q-encode-headers --stdout -1 >patch &&
++	sed -n "/^From: /p; /^ /p; /^$/q" patch >actual &&
++	test_cmp expect actual
++'
++
++cat >expect <<'EOF'
++Subject: [PATCH] Foö
++EOF
++test_expect_success 'subject lines are unencoded with --no-q-encode-headers' '
++	echo content >>file &&
++	git add file &&
++	git commit -m "Foö" &&
++	git format-patch --no-q-encode-headers -1 --stdout >patch &&
++	grep ^Subject: patch >actual &&
++	test_cmp expect actual
++'
++
++cat >expect <<'EOF'
++Subject: [PATCH] Foö
++EOF
++test_expect_success 'subject lines are unencoded with format.qEncodeHeaders=false' '
++	echo content >>file &&
++	git add file &&
++	git commit -m "Foö" &&
++	git config format.qEncodeHeaders false &&
++	git format-patch -1 --stdout >patch &&
++	grep ^Subject: patch >actual &&
++	test_cmp expect actual
++'
++
++cat >expect <<'EOF'
++Subject: [PATCH] =?UTF-8?q?Fo=C3=B6?=
++EOF
++test_expect_success '--q-encode-headers overrides format.qEncodeHeaders' '
++	echo content >>file &&
++	git add file &&
++	git commit -m "Foö" &&
++	git config format.qEncodeHeaders false &&
++	git format-patch --q-encode-headers -1 --stdout >patch &&
++	grep ^Subject: patch >actual &&
++	test_cmp expect actual
++'
++
+ cat >expect <<'EOF'
+ Subject: header with . in it
+ EOF
