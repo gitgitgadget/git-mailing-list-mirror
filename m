@@ -2,139 +2,117 @@ Return-Path: <SRS0=6awY=5X=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ECE9CC2D0EC
-	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 22:37:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4078FC2D0EC
+	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 22:39:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id BB8FB2063A
-	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 22:37:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0C6762063A
+	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 22:39:45 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="HlQ90Oyu"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="wvFpq1Ua"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726416AbgDGWhb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Apr 2020 18:37:31 -0400
-Received: from mout.gmx.net ([212.227.15.19]:56131 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726380AbgDGWhb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Apr 2020 18:37:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1586299045;
-        bh=XNWEm9e5zMXfnLXjK5CFyLjT3S3mcSYTt86c7KDJQBw=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=HlQ90OyukCTkf7ezph58z/UJbrAnghP+lsCZRcylp7L6RnwFVlRWnqbkT1zcspPu+
-         mavPMrj4DwtvpSexncsY3U0gC2n/WW4SCvlvTAzNOyFp93lnbMebAW6GmXpxWba2cc
-         zmft8iGDiZGR7eChuVUtzXuav3ZH/8GRNWapC16A=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from MININT-QA14EDB.fritz.box ([89.1.212.75]) by mail.gmx.com
- (mrgmx004 [212.227.17.190]) with ESMTPSA (Nemesis) id
- 1Mplc7-1iwZqa1PDx-00qCwV; Wed, 08 Apr 2020 00:37:25 +0200
-Date:   Wed, 8 Apr 2020 00:37:24 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Elijah Newren <newren@gmail.com>
-cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Paul Gevers <elbrus@debian.org>,
-        Ian Jackson <ijackson@chiark.greenend.org.uk>,
-        Alban Gruin <alban.gruin@gmail.com>
-Subject: Re: [PATCH] sequencer: honor GIT_REFLOG_ACTION
-In-Reply-To: <CABPp-BFXT1QkTLUFSAju2TwzVdSRjKSyLQYp2KaoW2+S2U8KJw@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2004080037080.46@tvgsbejvaqbjf.bet>
-References: <pull.746.git.git.1585773096145.gitgitgadget@gmail.com> <b187cb5f-a6c8-2908-e3fd-e1210e6970e0@gmail.com> <CABPp-BE_mimSRg5wf0Yzn2s-dX=64ZS1jGszqwHzr3aju0bj=A@mail.gmail.com> <09397e37-a22b-5159-b760-bae238ae3ed6@gmail.com>
- <nycvar.QRO.7.76.6.2004071649190.46@tvgsbejvaqbjf.bet> <CABPp-BFXT1QkTLUFSAju2TwzVdSRjKSyLQYp2KaoW2+S2U8KJw@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726417AbgDGWjo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Apr 2020 18:39:44 -0400
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:42826 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726380AbgDGWjo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Apr 2020 18:39:44 -0400
+Received: by mail-pl1-f195.google.com with SMTP id v2so402744plp.9
+        for <git@vger.kernel.org>; Tue, 07 Apr 2020 15:39:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=z53XxueW0ndDTRreWIOI5Gch0Gv1lzFes3Gs2SGj/XQ=;
+        b=wvFpq1Uay3I65/DdHsgBLG1PvLvnUGBggYfO1Up1r6VJ6DOPRqZtCn0uUHpGArMIUA
+         YXqiA4C1qNgq/3+aAoyBfmDkj8t+M1kJWnzZ2+0WtdZX2Jpk58Ao+GlPVbTyBcplsZK+
+         2spsPJVGs00LAx7nh96j74756KoEC1G2UiqadvNm0jEgS7Eno/yQFH3QC5lKvA/5GcFg
+         tLpAS66apgoeMdid6nQJEuAtZySXb4q7f3PZWQEYN6JvCbynVRv//k+EDQonlxoq9Rjs
+         nZZ1h7XAO4W1tl4sAQYsISE1qkkyjS6WimD6CJsTjcISs2MyLDnAxnzd4tDGdk0+NLtB
+         /0rw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=z53XxueW0ndDTRreWIOI5Gch0Gv1lzFes3Gs2SGj/XQ=;
+        b=gKkHbDuhHW9PkufPVadQ/pBOJAt/ek64wXxJabSaVs/5O7Ff0jnZV7u8oYNxOLPnBg
+         eC+K9nUJ3T0V/UUo5Ro3PBje+nUY6l9hwkxjZNhQdaovqFrpTbExZnlcDTqpYNNTY32Y
+         YbekuIdscYE8K7FQSqxPGnOI8RBXuQRSpRwD3mpJuH5k83+i/WCzkC7l2OTKcCQ28vmP
+         HLV4SM8Rh8DlG1r9En/v/i70kvjU7P4vtJpbuhmq3DYGgR4D7P9a9VsMzNE0dpHPV1Iz
+         NbvC1qK7CDNRAoAd2YO+Fc2Z16SK50h5eyvyqTFOVhczRG2xctCaFxcEMX4kwPOWiTGP
+         PwnA==
+X-Gm-Message-State: AGi0PuY1W7n+/IeNFXgpp1yqyOIEiJzU05jiO+1SkcBlIKoUD9Hg3N5C
+        hNblBI0wFFUqiAMDmAKOHSrGoA==
+X-Google-Smtp-Source: APiQypL5kgF53TNvDPXepSi0NZlEb3QYQge9grTrOzB4vbBftcagyb8QZ3Fm4W+1kmAB6W7CQycVbg==
+X-Received: by 2002:a17:902:a404:: with SMTP id p4mr4500440plq.167.1586299179658;
+        Tue, 07 Apr 2020 15:39:39 -0700 (PDT)
+Received: from localhost ([8.44.146.30])
+        by smtp.gmail.com with ESMTPSA id nl7sm2767254pjb.36.2020.04.07.15.39.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Apr 2020 15:39:39 -0700 (PDT)
+Date:   Tue, 7 Apr 2020 16:39:38 -0600
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] t0007: fix a typo
+Message-ID: <20200407223938.GB22683@syl.local>
+References: <pull.598.git.1586009782089.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:WxzBKVuyKvG6umPUM8F5nbTjQh5O4JvLwsKrbhsw0LDgdCx9lO2
- ZDtDhGIJ6kpwH1A4ULsfk9Wk/XtiMwTkV4o5AC0/6MvvHf6CvcoqZVpVwMcMzN8425GfQDv
- rS0qEOycCuEg61BFFubx+Svqji1S4YNzmVKSVEn38yRoDuu4R8SD48KfstPExhxY8Iw6+R9
- imX9UoK2Js9EudeI1Iylw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:dM7CfKUTMG4=:EtWCxHfTjvihQaL54VWEN0
- HPi4gtobpCqrtmq4gOmyqjPVGwhUtD+GzUV9kzEQEl0nGwLzIBWrjwwcz3hWwVB43OIpeJ7LO
- jCNfhsDKWwTjLrp3SGk36/G4MU7jHh5OaQDxoJU2hjwtu2x/XP5neJEAA8SJJCDwGUP1fV5QY
- B3vjxtSZnPdlmnduNU0SPLurHaXnczluJevvgQGy+dueWnvuxy8E/R/tZp7DzUrzrEy8eLoqo
- lFJTkoZEMuTUcJ11o9ObAO4oflsm1TTRz+qwGnlN3AHgFXklOsCg65Kab+jyEyr+zmuKV4fdl
- YsOc9crbT8X2ySqx1gjCJCrJQ3DnDTe8+xWZoBGQDu8V3EBQCM6ZSedCddfCUlvk/bnyHCHdH
- uXUc53aeisrNDRw+6rNve1ElENjJy7Mnue7CavraFXZbB1s/wiSh8lXnaP0TZmAm5qx6d9ofG
- sFg2QIT33TeI75lrV2T3IzDwiajh+K3gcT9E3bxsuJkHu4DkDZFWfwukk4js8LIo5eDUMvOFI
- B7FATvJg6YKpEICTxhxtt6B7F/l7DqoRXbc6EEfGJZ4f+MSfW5wcgKzmuuMk6ItVY7l2Y+Z0j
- K15y0b8wtgNb2/0oWQFxOOA0zPeOsKK2YgNjFgzMuENQaFsIbznSQQES87b54twccH5KSFgCl
- 9FYMznNx3teuYz8oWQAm9/X2N6oyQcdR/3K1HoJWcvhX43grFphZ9n0E9Wm16jhPaDoUfxj6q
- 1tG3th86PXwi6BRpc+IDD9q+6Dii+tSNgGfh/0QZNR4tGwFj0ZbaxdIDFyABXpVzMqCBrkrhn
- 6P7aeI1WcT8+oMEoQQnjA5qJ7w/GVGKPa4Z3FeicC7hoHVpL4Fap4JRVkDTe7eoekCRsV/9sr
- R7jgkyhswjyxSP2Ni7HFwUmqKZtC8DiEZtJWWg+yvNLO3GtWebIDrpXvDPAMFDUAbKWPG5poa
- RjxU9hJreQOljWZdki7Vhee7C4c+UAHG72I2bGRaD2McqyKGFXcK33PJRqJLmIn64jSe0Nmpv
- L/ZGaUzDd0+hAWIY2dWjfhLpcigu0dreAIJ/cHvN9Pgf3sknrMX+6lNiTOCx1CNLcEWaxQP2m
- FOWmGE6j6xfQgbad9kjowPyKuiaLjg9+j6UaQ1FerLehPEim5cHuGPFtPgcRUn7BOrC6DWLtD
- A/AqRxg1SmsOUgGnB9U0yvY8TSPNmMc/cPcdvEKk0IyEnM6cxbgE9FyeFRn4Y82e+lJhQ2b1/
- Sig4DZJWdFp1tw3Q+vDqHwzXanJ1IA8pcRIHgow==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <pull.598.git.1586009782089.gitgitgadget@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah,
+Hi Johannes,
 
-On Tue, 7 Apr 2020, Elijah Newren wrote:
-
-> On Tue, Apr 7, 2020 at 7:50 AM Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> >
-> > On Thu, 2 Apr 2020, Phillip Wood wrote:
-> >
-> > > On 02/04/2020 18:01, Elijah Newren wrote:
-> > > >
-> > > > On Thu, Apr 2, 2020 at 2:25 AM Phillip Wood <phillip.wood123@gmail=
-.com>
-> > > > wrote:
-> > > > >
-> > > > > On 01/04/2020 21:31, Elijah Newren via GitGitGadget wrote:
-> > > > >
-> > > > > >        va_start(ap, fmt);
-> > > > > >        strbuf_reset(&buf);
-> > > > > > -     strbuf_addstr(&buf, action_name(opts));
-> > > > > > +     strbuf_addstr(&buf, reflog_action ? reflog_action :
-> > > > > > action_name(opts));
-> > > > > >        if (sub_action)
-> > > > > >                strbuf_addf(&buf, " (%s)", sub_action);
-> > > > > >        if (fmt) {
-> > > > > > @@ -3799,8 +3800,10 @@ static int pick_commits(struct reposito=
-ry *r,
-> > > > > >                        struct replay_opts *opts)
-> > > > > >    {
-> > > > > >        int res =3D 0, reschedule =3D 0;
-> > > > > > +     char *prev_reflog_action;
-> > > > > >
-> > > > > >        setenv(GIT_REFLOG_ACTION, action_name(opts), 0);
-> > > > > > +     prev_reflog_action =3D xstrdup(getenv(GIT_REFLOG_ACTION)=
-);
-> > > > >
-> > > > > I'm confused as to why saving the environment variable immediate=
-ly after
-> > > > > setting it works but the test shows it does - why doesn't this c=
-lobber
-> > > > > the value of GIT_REFLOG_ACTION set by the user?
-> > > >
-> > > > The third parameter, 0, means only set the environment variable if
-> > > > it's not already set.
-> > >
-> > > Ah thanks, I thought I must be missing something fairly obvious but =
-couldn't
-> > > see what it was
-> >
-> > FWIW I was also about to comment on that. Maybe that warrants even a c=
-ode
-> > comment above the `prev_reflog_action`?
+On Sat, Apr 04, 2020 at 02:16:21PM +0000, Johannes Schindelin via GitGitGadget wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
 >
-> Yeah, if it tripped you both up, I'll add such a comment to the code
-> to help explain it.
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>     Fix typo "identites"
+>
+>     I am fairly certain that 879ed7539357 (t: add tests for "git var",
+>     2012-11-28) did not meant to use the French spelling (for which the
+>     accent would be missing, anyway).
 
-Thank you!
-Dscho
+;-).
+
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-598%2Fdscho%2Ftyop-identites-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-598/dscho/tyop-identites-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/598
+>
+>  t/t0007-git-var.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/t/t0007-git-var.sh b/t/t0007-git-var.sh
+> index 1f600e2cae5..88b9ae81588 100755
+> --- a/t/t0007-git-var.sh
+> +++ b/t/t0007-git-var.sh
+> @@ -17,7 +17,7 @@ test_expect_success 'get GIT_COMMITTER_IDENT' '
+>  	test_cmp expect actual
+>  '
+>
+> -test_expect_success !FAIL_PREREQS,!AUTOIDENT 'requested identites are strict' '
+> +test_expect_success !FAIL_PREREQS,!AUTOIDENT 'requested identities are strict' '
+
+Looks obviously good.
+
+>  	(
+>  		sane_unset GIT_COMMITTER_NAME &&
+>  		sane_unset GIT_COMMITTER_EMAIL &&
+>
+> base-commit: 9fadedd637b312089337d73c3ed8447e9f0aa775
+> --
+> gitgitgadget
+
+Thanks,
+Taylor
