@@ -2,119 +2,118 @@ Return-Path: <SRS0=6awY=5X=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B43C4C2BA2B
-	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 15:06:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 909F7C2BB85
+	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 15:06:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7F94820692
-	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 15:06:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 623B92072A
+	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 15:06:55 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="o01yjopD"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eqMxG5ks"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729092AbgDGPGf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Apr 2020 11:06:35 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:33960 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728917AbgDGPGf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Apr 2020 11:06:35 -0400
-Received: by mail-wm1-f68.google.com with SMTP id c195so5561wme.1
-        for <git@vger.kernel.org>; Tue, 07 Apr 2020 08:06:34 -0700 (PDT)
+        id S1729355AbgDGPGy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Apr 2020 11:06:54 -0400
+Received: from mail-oi1-f194.google.com ([209.85.167.194]:46065 "EHLO
+        mail-oi1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728917AbgDGPGx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Apr 2020 11:06:53 -0400
+Received: by mail-oi1-f194.google.com with SMTP id l22so1751329oii.12
+        for <git@vger.kernel.org>; Tue, 07 Apr 2020 08:06:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=fdZStmJc5G52ec0aG/+C/+0YAs5hltYhVlGBQBGMnjY=;
-        b=o01yjopDy+M6VrTAM3DsyP0pb6lR4NT2548YQ6nZbSdmVEIdmK7YMASEynhYnO5C8H
-         dAK/7eguqHa9Q/t8+XWm7pnQgXS+x8WIm9GzBIRHfI+z4Z6L1CTludhtKpQJImog0Ius
-         fGmvyb5MOteJmd4UPhhC5p6s/j2+EW8Vwk2iaNrnPKD7sdHvUOnldB6Ci4nCpT3ldJgO
-         fum4oTfsT5XGcsEPTcqa2ydphR+XRHGXZa/2b03kketdz0DIkZvFoXJ0MriLPH2gBSV6
-         matoYhyTgKif//woglasLz4nyyHtOgoqr1IkJF1yNvtJiTGLAizsOPRQOUaP/MHhrbzL
-         O7zw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=mZWw+hjDsNCLef4wGJtQuAn8zjJb2PTZEGKPqhr8TG4=;
+        b=eqMxG5ksh+6j9cuZShWC0SQOYK4GlGEC8OW3Bq4zSpU6eMHoe4jfTf5w2H6lkrZ+vS
+         JZjyBdaCfEjwXSlFVcAq4fCTtXo4OBg8ugILFezEyYj6k+lB6DNAkL9RrEm1+Cs9+zj9
+         1I9WtxPhAyJZhmm2Apl79f00U3497CyyUiAzavLMPYYV/0BHSjdj81jkuMmpcPb6PbDB
+         ia1dHhXBUCkZDbJiOUbfb/dzKHoncWw3OpBPG0nhLsCaF2NGjCrXnXcPlOeqs0O9Z6fH
+         smd+iOlvbtM5TK2gf07+8N0q8gkKmrOJpQcAuxcvu4rWFwfPbxYRinxVem7yPBXDYW1Z
+         FJtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:cc:references:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=fdZStmJc5G52ec0aG/+C/+0YAs5hltYhVlGBQBGMnjY=;
-        b=k0sCJTbs/MJLDhNgQmEjveZrooFb2O6hc+BFERMrASWpKo83musQdwcIGjAY9dv1Mz
-         K1SLJM+K+8XHgBrCiurukiWGJJ0h3wRmhEZ6oxz5QMw3xlbEmCh4OqlvJeWSb1N2anLL
-         xkUSTwfGJ7zlReMPmih9nMAlHp46mexBozDngjiKzFRH6HuVv9eq4Z2+RU58hwGxVHjy
-         RhivR7/vVo3ySx8l1S1rXz99NIyBkPGmrIp7oMrzQsKs4LOa+MD0jU0pKzgRA0MEu5RO
-         RYHACyycYg3+GFZJ7SSU9hyWhyDcSTzngFweD8EiAfXX1mrayc4vpyph+GsStIkdnIf9
-         i+LQ==
-X-Gm-Message-State: AGi0PuZMU/sW8dxKsICfqlvGL/nfu+Wi6R+0bUvzpZ8vAufz71tyTWRn
-        m220YXJvi8Zc8/ZWQoiy7Ko=
-X-Google-Smtp-Source: APiQypIaOgQocx0pwSyQ9yEHbuO1uwhtXVR9E07OrPpn3f0mFMDz7yL1f2oblc1lxvabLGwIuA2F9g==
-X-Received: by 2002:a7b:c050:: with SMTP id u16mr3066830wmc.68.1586271993614;
-        Tue, 07 Apr 2020 08:06:33 -0700 (PDT)
-Received: from [192.168.1.240] (85.25.198.146.dyn.plus.net. [146.198.25.85])
-        by smtp.gmail.com with ESMTPSA id j68sm32696448wrj.32.2020.04.07.08.06.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Apr 2020 08:06:33 -0700 (PDT)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4 21/23] merge: teach --autostash option
-To:     Denton Liu <liu.denton@gmail.com>, phillip.wood@dunelm.org.uk
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-References: <cover.1584782450.git.liu.denton@gmail.com>
- <cover.1585962672.git.liu.denton@gmail.com>
- <7adf7941921065fa1a5e68524e2dd3cd28f9a12b.1585962673.git.liu.denton@gmail.com>
- <07ec44b0-1162-aac9-1a07-579a3768cbd1@gmail.com>
- <20200407130946.GA2503067@generichostname>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <0b112a11-ef46-10e0-e0ae-ab895eb5fab0@gmail.com>
-Date:   Tue, 7 Apr 2020 16:06:31 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.6.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=mZWw+hjDsNCLef4wGJtQuAn8zjJb2PTZEGKPqhr8TG4=;
+        b=GMfL260rmB6teFG48cwbFYKI55674kG1A1BK6YvohQpr4bNhfF9eeFBIf29Q+SH+Eb
+         C5UNrg0TERa61iclsYMekgWK0+7+kC9ElpnT7PMMAZAjcgHKPi+PHATmvZC/L8WIeiln
+         KIxM4atgVLXDocCppfz5iDhN7mvqAAsEGWfdoUDugWoFUzsr4Vm8kP90Euh9EWUKhzzQ
+         DZH5UMiBJxJTcSWfVjkNFpkFyTnMFwmq+HOyupz0qpgHlkz2ukZP4h44RQVJTzhidQlP
+         FwsXVAu8qAyCJTt3p4HVQ50Bmo7eJY60LsUCECyuayRzQTPHDXu+Jse3XSe1xyiaAWay
+         qM5w==
+X-Gm-Message-State: AGi0PuZcViiYUX5nXojuuiY7wRYxegxCzBljWk58ZgiibRZf4/sK+5de
+        erEcRnSpEluw3JObUgIt/bkryPYXlxTJo3wJET1Et3Z9
+X-Google-Smtp-Source: APiQypJqwYDUXtBHIajIdTYBVR2r6UoNnYlyp/nBUJ22YsZlLPp7VI93N/aWYO9oScZrQbGK5+kGgVSXMLlOkr5vJd4=
+X-Received: by 2002:aca:4b84:: with SMTP id y126mr2008761oia.31.1586272012781;
+ Tue, 07 Apr 2020 08:06:52 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20200407130946.GA2503067@generichostname>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
+References: <20200407141125.30872-1-phillip.wood123@gmail.com> <20200407141125.30872-6-phillip.wood123@gmail.com>
+In-Reply-To: <20200407141125.30872-6-phillip.wood123@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 7 Apr 2020 08:06:41 -0700
+Message-ID: <CABPp-BEr8dHY1f6trPBMAZxoP7a3SbtNZahLA4pj6rNomAMLZg@mail.gmail.com>
+Subject: Re: [PATCH 5/6] Revert "sequencer: allow callers of
+ read_author_script() to ignore fields"
+To:     Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Denton
+On Tue, Apr 7, 2020 at 7:11 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
+>
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>
+> This reverts commit c068bcc59b4f16322a77b6a47b53d44b05c51fec.
+>
+> This functionality is no longer used as since the last commit we always
+> want all of the fields returned.
 
-On 07/04/2020 14:09, Denton Liu wrote:
-> Hi Phillip,
-> 
-> Thanks for the review. The documentation rewordings are particularly
-> helpful.
+That's a little hard to parse.  Maybe s/used as since/used; since/ ?
 
-Thanks I'm glad they were useful
-
-> On Mon, Apr 06, 2020 at 04:20:24PM +0100, Phillip Wood wrote:
->>>    --quit::
->>>    	Forget about the current merge in progress. Leave the index
->>
->> Should we be saving the stash if the user runs 'git merge --quit'?
-> 
-> Yes, this is its current behaviour, although it's undocumented. In my
-> next reroll, I've added a test case and documentation for this. This is
-> similar to how `git rebase --quit` behaves.
-
-That's great - I'll try and read through v5 later in the week, it looks 
-like there aren't too many changes
-
-> Now that I think about it, when `git rebase --quit` happens, the
-> autostash is just dropped out of existence, which is probably
-> undesirable behaviour. I'll probably submit a later series to save that
-> autostash so that it's not lost forever.
-
-That's a good idea, Thanks
-
-Phillip
-
-> Thanks,
-> 
-> Denton
-> 
+>
+> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> ---
+>  sequencer.c | 16 +++-------------
+>  1 file changed, 3 insertions(+), 13 deletions(-)
+>
+> diff --git a/sequencer.c b/sequencer.c
+> index 56f6e49289..17c7b18245 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -825,19 +825,9 @@ int read_author_script(const char *path, char **name, char **email, char **date,
+>                 error(_("missing 'GIT_AUTHOR_DATE'"));
+>         if (date_i < 0 || email_i < 0 || date_i < 0 || err)
+>                 goto finish;
+> -
+> -       if (name)
+> -               *name = kv.items[name_i].util;
+> -       else
+> -               free(kv.items[name_i].util);
+> -       if (email)
+> -               *email = kv.items[email_i].util;
+> -       else
+> -               free(kv.items[email_i].util);
+> -       if (date)
+> -               *date = kv.items[date_i].util;
+> -       else
+> -               free(kv.items[date_i].util);
+> +       *name = kv.items[name_i].util;
+> +       *email = kv.items[email_i].util;
+> +       *date = kv.items[date_i].util;
+>         retval = 0;
+>  finish:
+>         string_list_clear(&kv, !!retval);
+> --
+> 2.26.0
+>
