@@ -2,138 +2,175 @@ Return-Path: <SRS0=6awY=5X=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.3 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_IN_DEF_DKIM_WL
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 13C79C2D0EC
-	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 22:41:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 89BB3C2D0EC
+	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 23:01:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D10882063A
-	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 22:41:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5EF4220719
+	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 23:01:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="JgtDPSKZ"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="isfuG0I5"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726426AbgDGWlj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Apr 2020 18:41:39 -0400
-Received: from mout.gmx.net ([212.227.15.15]:44407 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726380AbgDGWlj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Apr 2020 18:41:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1586299297;
-        bh=cJPzAXEH4qws2Cwnv0lTJQny2qCLgXW/SIlrZeX1dJg=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=JgtDPSKZwlR3Ysqfkh5K628oDIeXT2SBlnoD+iqKFhnnzzu5R5RZs5tQyxN+wm0fq
-         I+cqAJTXutcElYyfZDY79v00DX5V6RBkqtzvJOMJXghuxK+JCvbfl8F5eRksFOjdpr
-         Wa05DsDNHy2ckM5vrbZh3J6Y0tXxbe8mxidgcaKY=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from MININT-QA14EDB.fritz.box ([89.1.212.75]) by mail.gmx.com
- (mrgmx005 [212.227.17.190]) with ESMTPSA (Nemesis) id
- 1Md6Mj-1inAG210Il-00aAYi; Wed, 08 Apr 2020 00:41:37 +0200
-Date:   Wed, 8 Apr 2020 00:41:36 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Danh Doan <congdanhqx@gmail.com>
-cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 2/5] ci/lib: allow running in GitHub Actions
-In-Reply-To: <20200405000108.GC1896@danh.dev>
-Message-ID: <nycvar.QRO.7.76.6.2004080039240.46@tvgsbejvaqbjf.bet>
-References: <pull.743.git.git.1585658913.gitgitgadget@gmail.com> <d9227c87a7bb2872f6a69f48f6a4988f08545d8a.1585658913.git.gitgitgadget@gmail.com> <20200403084654.GK2224@szeder.dev> <nycvar.QRO.7.76.6.2004042207410.46@tvgsbejvaqbjf.bet>
- <20200405000108.GC1896@danh.dev>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726420AbgDGXBi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Apr 2020 19:01:38 -0400
+Received: from mail-pg1-f173.google.com ([209.85.215.173]:39600 "EHLO
+        mail-pg1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726393AbgDGXBi (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Apr 2020 19:01:38 -0400
+Received: by mail-pg1-f173.google.com with SMTP id g32so2435175pgb.6
+        for <git@vger.kernel.org>; Tue, 07 Apr 2020 16:01:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=96SrzJPXaNIl/adQYBPCs3K42AYgV9pTr+6iYmWenz4=;
+        b=isfuG0I5fbhIhGsdmTsokEDTNDjf3Zu0KUpXrqDM0dvdPu2qG06PPPAsaDZstaRPpE
+         VLR7V1wkKtVuItShX8SQyzBfEFTrIucCCuLOFUCWrmgGGWtUyPtEuqP/4ooKtlfM2n0a
+         sNS7fympG6+dVx79sSvbnFV1poSIvQXCNSeE9L83rdLwstYXV+hIq8bXcWO/xPga8UKD
+         GqFKJum9Jf2zT4V6RAfhfwaNw+6jB27//dFxjRlWuCXcysIhJDCyXxcGNOYZ+WMJJuFN
+         9KXvYdD3qjrgmiosS6KPW+dCG5B/Jp8bjupGoKmJNj9WQVh62Ckbs0kbeTkPKP+JvvbK
+         /hiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=96SrzJPXaNIl/adQYBPCs3K42AYgV9pTr+6iYmWenz4=;
+        b=U7S0H91g5VmicJZSG5L2FRYqkoRSMA8+TqOjhsxux0izB+J6nqAs83UjxsOPUXl0PR
+         mmvXlkBPJO0k/uK+GNCuo0iZRs9EDWAs9yuH4W76OgDnM+azgtDGHxcDOXfebvsUXy8w
+         WQZUyGGivJT9BleLndj4MNGUE6VUQMp5ZvgmBhKpXdg2aZWKJbbPnzwV6QqcI/H+Jww/
+         kPCLfEQ0pmF0QhNfSBMwAGiKV5ZNI01CvmQV3W34EU0uK0BMmfGWKA4Hw1Q4faVj1xwB
+         SA3K8lV2uiSLT280I6WRaOYoz09LoHqD/DQoV5CvZdhNwhi4pMZbuLaVWO8N/hD3tHk6
+         o8IQ==
+X-Gm-Message-State: AGi0Pubu/6lxZDJ+eGSemmomMDy9daWnBubd897RtgPSanfLSKyS6y7c
+        bFwRKjZjQMBprdvH/uhLCas73g==
+X-Google-Smtp-Source: APiQypJ9VDRjqKWUIQA+48w8hh3mVUtiJXynNawiIc9EN8Dkl28P+iPjGC5qhR1Z5pTcLckiTS0OgA==
+X-Received: by 2002:a63:a07:: with SMTP id 7mr3317390pgk.261.1586300497237;
+        Tue, 07 Apr 2020 16:01:37 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
+        by smtp.gmail.com with ESMTPSA id o187sm672852pfb.12.2020.04.07.16.01.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Apr 2020 16:01:36 -0700 (PDT)
+Date:   Tue, 7 Apr 2020 16:01:32 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     James Ramsay <james@jramsay.com.au>, git@vger.kernel.org
+Subject: Re: [TOPIC 2/17] Hooks in the future
+Message-ID: <20200407230132.GD137962@google.com>
+References: <AC2EB721-2979-43FD-922D-C5076A57F24B@jramsay.com.au>
+ <0D7F1872-7614-46D6-BB55-6FEAA79F1FE6@jramsay.com.au>
+ <20200312141628.GL212281@google.com>
+ <xmqqeetwcf4k.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-2069516959-1586299297=:46"
-X-Provags-ID: V03:K1:/apxKrHBf9bfLGe9bZnzu6QfmBnSpG13nVQtFYYJxKvmHeNhPET
- DrJNSdZFaXsrQwlhsDjsksWNGOJPf4n9UPkEt9ufVw/wlfPqUgQ8szTihy3I3Bb1D66BV78
- SBAUMeYsTUa4rOnS9PLBUpp/rq0loaPx3Wk4ef6Gyk9Mf/2V4ALR06FR+JDoAtMLuyACHBq
- XLgVaLHuZu8ocFqGciNVA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:NUWn8Mv39dg=:2MOsT17Lw1PkD+pGrr+sKG
- 8jChn4E4mDQrXq2YfWhNG2+weVXpNg6GeD0TowI6UUz47rjZSP9yrieeaq7p0fILXxwr8ougF
- YRwK5HyyLdMRoTl811aSAEmEX2kSM+pMVkVMaJ73pgW9J9D+uYAgcsrdQgPBYKLsFhEi73fPI
- EPj9B6cadms63vY67vBXYZktbZaaHAzkSVBIZSKtmpmnTK8owg5W04S8WW3vF8+5h+k4blBLu
- CzAWXY2akb5vNw/k+BHbZLriZfThqIW5pB65LffICNukPBbqEjqsc0DcgETmq1d+kDZ6nLsI9
- SagjNqD8UukvRTpTOVYqnQaQsS+D3ee6vpv6EK2XQNBCMxfonJ0K/taM3bCUdKwFl7KOW4bao
- znSNZ6TzYOgT8JCDlp7sHed5yVHnThqEAyXFz1C0af/1/ebY7t3Jl1yzHfOBkWjTOOVGMDCdg
- ui+bS4vA7V52Ogk3R19jqkTGJwTX/kjzAmT3hQ4AbheffTbMIcylJCb4owa67i0In0cR2V7yO
- aHKd4DCuFsK5Q4FxamlllTMDm4aSC4PP0eQcDMCGHyM8Bm0fMg14pvPq4sM+aRg9KTSb2FXHa
- 7ttru9pUKIu4nbNKcvHfWYlwBlyrWeIZhFK40gwhdZvgJFnc6e2DIEm3TolHvGSKmf0nG85Bd
- NAkK+F5KRMNMX+y4LnXsicuA2BEFQNGliFHjDEtfSE1DoNlefvWRJea47Zt83gbfXEzEXA8iZ
- DKyOZjDUDcF+E504c+CsBdRokr68a/EIHGCqVZLExI5OmL3x6b9rt9RyixbJclwy5LxBhZN7l
- j6oVdBx/K822cdQx157XKr2m1Y5ZOootlYWU89HA4oLDPdYGrvOI9hY5F2xaAn7p1juLFjrQn
- A7ZqahTgMsc+dlAA4nM0thvPzp653UFOEwCgl29hxWiTugUH7E0Xavr7YQn0x3qb+sb8hhxDh
- 908DOuIkkrGAECpK0REkx5JXr/kQoa9TbsZBbJBGHBtjGW0tPkBlWZ2WFjszF+GjUNUcgrmdh
- gh4lLQ3oFmW+1wEyHCPf3g+ijuUVglb9RkW9MvmM4jFn+b6+of/NBrhUxtRg7/4FyHR6XQp1N
- xYi+TRSePcMGZPBR3/V5NBb+jyIGCmED0S/RwZ2s74l+/5gwPmFa6WD8MtLeKbyQ+N6WEru1A
- fHNREbWzGRzos5CJjoLDnGbHxtKOGaoOu0V1hnhH+aC5nQkUfvhsGbZeuJ2IqitBAMRgivxDq
- d+mWV9wNLRSgf4SPOEDTBtrcTDEeC0ImSuojLyA==
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqeetwcf4k.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Fri, Mar 13, 2020 at 10:56:59AM -0700, Junio C Hamano wrote:
+> Emily Shaffer <emilyshaffer@google.com> writes:
 
---8323328-2069516959-1586299297=:46
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Phew - now that git-bugreport looks to be on the path to 'next' I get to
+work on hooks again :) Forgive me for the late reply.
 
-Hi Danh,
-
-On Sun, 5 Apr 2020, Danh Doan wrote:
-
-> On 2020-04-04 22:08:56+0200, Johannes Schindelin <Johannes.Schindelin@gm=
-x.de> wrote:
-> > Hi G=C3=A1bor,
+> 
+> > This means that we could do something like this:
 > >
-> > On Fri, 3 Apr 2020, SZEDER G=C3=A1bor wrote:
+> > [hook "/path/to/executable.sh"]
+> > 	event = pre-commit
+> > 	order = 123
+> > 	mustSucceed = false
+> > 	parallelizable = true
 > >
-> > > > +	CI_TYPE=3Dgithub-actions
-> > > > +	CI_BRANCH=3D"$GITHUB_REF"
-> > > > +	CI_COMMIT=3D"$GITHUB_SHA"
-> > > > +	CI_OS_NAME=3D"$(echo "$RUNNER_OS" | tr A-Z a-z)"
-> > > > +	test macos !=3D "$CI_OS_NAME" || CI_OS_NAME=3Dosx
-> > >
-> > > Hmm, if "macos" isn't not equal to $CI_OS_NAME, then set
-> > > CI_OS_NAME=3Dosx.  This is head-scratchingly backwards, and I think
-> > >
-> > >   test "$CI_OS_NAME" =3D macos && CI_OS_NAME=3Dosx
-> > >
-> > > would read better.
-> >
-> > I can understand where you come from, but your code is not `set -e` sa=
-fe,
-> > which is the reason why I wrote the code this way (compare to the alre=
-ady
-> > existing code in the previous clause, which was copy-edited here).
->
-> I certainly saw a shell that broke on
->
-> set -e
-> test false && ..
->
-> I couldn't recall it, though.
->
-> Would it be OK if we change it this way:
->
-> 	if "$CI_OS_NAME" =3D macos; then CI_OS_NAME=3Dosx; fi
+> > etc, etc as needed.
+> 
+> You can do
+> 
+>     [hook "pre-commit"]
+> 	order = 123
+> 	path = "/path/to/executable.sh"
+> 
+>     [hook "pre-commit"]
+> 	order = 234
+> 	path = "/path/to/another-executable.sh"
+> 
+> as well, and using the second level for what hook the (sub)section
+> is about, instead of "we have this path that is used for a hook.
+> What hook is it?", feels (at least to me) more natural.
 
-We would have to fix quite a bit of code if we wanted to avoid the
-`<opposite> || <action>` pattern.
+Yeah, I see what you mean, and it's true I misread the notes and
+misremembered Peff's suggestion. I was reworking my RFC patch some
+today, and noticed that the following two configs:
 
-If we _would_ need to (which I don't think we do), I'd prefer:
+A.gitconfig:
+  [hook "pre-commit"]
+    command = "/path/to/executable.sh"
+    option = foo
+  [hook "pre-commit"]
+    command = "/path/to/another-executable.sh"
 
-	case "$CI_OS_NAME" in macos) CI_OS_NAME=3Dosx;; esac
+B.gitconfig:
+  [hook "pre-commit"]
+    command = "/path/to/executable.sh"
+  [hook "pre-commit"]
+    option = foo
+    command = "/path/to/another-executable.sh"
 
-But again, we would have to clean up quite a few instances of this, I am
-sure, and it might not be worth the effort, given the short-and-sweet
-nature of the originally-proposed solution.
+are indistinguishable during the config parse - both show up during the
+config callback looking like:
 
-Ciao,
-Dscho
+  value = "hook.pre-commit.command"; var = "/path/to/executable.sh"
+  value = "hook.pre-commit.option"; var = "foo"
+  value = "hook.pre-commit.command"; var = "/path/to/another-executable.sh"
 
---8323328-2069516959-1586299297=:46--
+I didn't see anything to get around this in the config parser library;
+if I missed it I'd love to know.
+
+Using the hook path as the subsection still doesn't help, of course. I
+think the only way I see around it is to require a specific value at the
+beginning of each hook config section, e.g. "each hook entry must begin
+with 'command'"; that means that the config parser callback can look
+something like:
+
+  parse section, subsection, key
+  if section.subsection = "hook.pre-commit":
+    if key = "command":
+      add a new hook to the hook list
+    else:
+      operate on the tail of the hook list
+
+The price of this is poor user experience for those handcrafting their
+own hook configs, but I don't think it's poorer than carefully spelling
+out "123:~/my-hook-path.sh:whatever:other:options" or something. I'll
+add that I had planned to teach 'git-hook' to write and modify config
+files for the user with an interactive-rebase-like UI, so a brittle
+config layout might not be the end of the world.
+
+Or, I suppose, we could teach the config parser how to understand
+"structlike" configs like this where repeated header entries need to be
+collated together. That seems to be contrary to the semantics of the
+config file right now, though, and it looks like it'd require a rework
+of the config_set implementation: today config_set_element looks like
+
+  struct config_set_element {
+          struct hashmap_entry ent;
+          char *key; /* "hook.pre-commit.command" */
+          struct string_list value_list; /* "/path/to/executable.sh"
+	                                  * "path/to/another-executable.sh"
+					  */
+  };
+
+I'm not very keen on the idea of changing the way configs are stored for
+everyone, although if folks are unsatisfied with the way it is now and
+want to do that, I guess it's an option. But it's certainly more
+overhead than my earlier suggestion.
+
+Thoughts?
+
+ - Emily
