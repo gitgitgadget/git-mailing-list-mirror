@@ -6,98 +6,95 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8EDCFC2D0EC
-	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 20:05:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 39F65C2D0EC
+	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 20:08:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3AAE32074B
-	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 20:05:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 028872076E
+	for <git@archiver.kernel.org>; Tue,  7 Apr 2020 20:08:26 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="slpLhSz0"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="iwvTaO/v"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726791AbgDGUFH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Apr 2020 16:05:07 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63613 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726712AbgDGUFH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Apr 2020 16:05:07 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0923456C65;
-        Tue,  7 Apr 2020 16:05:05 -0400 (EDT)
+        id S1727307AbgDGUIX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Apr 2020 16:08:23 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:51296 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726712AbgDGUIX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Apr 2020 16:08:23 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0CB9CC91DD;
+        Tue,  7 Apr 2020 16:08:21 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ikKqUEQaWUZStYrwG5oUg73Q2eA=; b=slpLhS
-        z0OZmRBLY1Oqw+xBWYDopidVWIIiB+qGXNuCM1bcW0QaMFnaiFxFp6rv7VW8qUJO
-        lYoyDexN82dI/RfGz2P7ryhnfULZ4KNsd2HIZUi7KjaEsmcjLuHxNZy5qvNyighy
-        AQ40A2S344N4DyHQlYDionx2N1CVZUUnM2GRM=
+        :content-type; s=sasl; bh=V4UwT+AMPfNl8eKY+TpolBAAXgA=; b=iwvTaO
+        /v2fQVdCrFGiCugznF2KItapEZ2gNF4aphCK3QlrTR3wODO40mUEWsPYdmdF8B/S
+        2t6sUzEnjJUeZKMBpYuwzkYU87rgHYDeYZEfdkJlSoTzmRvvmmiMksnjV0IwZGYe
+        wJ1Jn5LoECLO6CIZ9k2vAJnNqzwk4iCqu4ETc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Jh88sTB5N/Nma6kvnp65rNjwMa+pO4Wq
-        XcRGBVKYWYQ+tIH2z7S7posglV4okkWC4idlIW26WOaK+OP7vrPK/su/0M92wVg0
-        KyDTQ7SvejbyGt5zkjo3NT8qe0qRVkmLGuQpJVrCZCPgx1Jpt5iKrF9PebqR4EJp
-        3+tHD+bwf5Y=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id EEA7156C63;
-        Tue,  7 Apr 2020 16:05:04 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=XZmwutIPVA28eUtsL0R/PPBlqDgrQMA0
+        u9n6UyX/f80PQa96QaTg5s4RuPDnfGdFaMOjG5DHenuti0wBthYPLoGzpNu6dWYw
+        lgJRDC2YogLV4oIQAWVEpTZrKKnW8he37/i/KqcetECTws9hVBxI1R1S2tkDLUqh
+        Wr0IS7I31cg=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 03C8FC91DC;
+        Tue,  7 Apr 2020 16:08:21 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6C8E756C62;
-        Tue,  7 Apr 2020 16:05:03 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 4BE1CC91DA;
+        Tue,  7 Apr 2020 16:08:18 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v12 3/5] bugreport: gather git version and build info
-References: <20200406224526.256074-1-emilyshaffer@google.com>
-        <20200406224526.256074-4-emilyshaffer@google.com>
-        <xmqqeet0urts.fsf@gitster.c.googlers.com>
-        <20200407184240.GB137962@google.com>
-Date:   Tue, 07 Apr 2020 13:05:02 -0700
-In-Reply-To: <20200407184240.GB137962@google.com> (Emily Shaffer's message of
-        "Tue, 7 Apr 2020 11:42:40 -0700")
-Message-ID: <xmqq4ktvt635.fsf@gitster.c.googlers.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Derrick Stolee <stolee@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, peff@peff.net, jrnieder@google.com,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 00/15] [RFC] Maintenance jobs and job runner
+References: <pull.597.git.1585946894.gitgitgadget@gmail.com>
+        <xmqqv9mgxn7u.fsf@gitster.c.googlers.com>
+        <cc9df614-2736-7cdd-006f-59878ee551c8@gmail.com>
+        <20200407014829.GL6369@camp.crustytoothpaste.net>
+Date:   Tue, 07 Apr 2020 13:08:16 -0700
+In-Reply-To: <20200407014829.GL6369@camp.crustytoothpaste.net> (brian
+        m. carlson's message of "Tue, 7 Apr 2020 01:48:29 +0000")
+Message-ID: <xmqqzhbnrrdb.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 11928D18-790B-11EA-8EE5-C28CBED8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 85B8835A-790B-11EA-971B-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emily Shaffer <emilyshaffer@google.com> writes:
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> To be clear, do you want me to include the output of get_compiler_info()
-> in "git version --build-options" when I do that change, too?
+> If there are periodic tasks that should be done, even if only on large
+> repos, then let's have a git gc --periodic that does them.  I'm not sure
+> that fetch should be in that set, but nothing prevents users from doing
+> "git fetch origin && git gc --periodic".  Let's make it as simple and
+> straightforward as possible.
 
-In the endgame, there are two kinds of information we'd want to
-gather and report, I would think.
+Yeah, thanks for bringing up "git gc" here.  Earlier I mumbled
+sometrhing about "git repack", which seemed to have needlessly
+muddied the discussion, but "gc" is exactly the "we already have a
+wrapper the users are familiar with---why not extend it" thing.
 
-Ones that can be different per-binary are things like:
+> I'm not opposed to seeing a tool that can schedule periodic maintenance
+> jobs, perhaps in contrib, depending on whether other people think it
+> should go.  However, I think running periodic jobs is best handled on
+> Unix with cron or anacron and not a custom tool or a command in Git.
+>
+> I've dealt with systems that implemented periodic tasks without using
+> the existing tools for doing that, and I've found that usually that's a
+> mistake.  Despite seeming straightforward, there are a lot of tricky
+> edge cases to deal with and it's easy to get wrong.
+>
+> We also don't have to reimplement all the features in the system
+> scheduler and can let expert users use a different tool of their choice
+> instead if cron (or the Windows equivalent) is not to their liking.
 
- - what version of the source code the binary was compiled from
- - with what compiler options
- - using which compiler and
- - linking with what libraries,
- - where in the filesystem is the binary located
-
-The others are various properties of the system the user is using,
-and having trouble using, Git on:
-
- - how many CPUs do we have,
- - how much free memory,
- - is the repository's filesystem case sensitive,
- - what version of 'wish' is being used.
-
-We'd want the former to be reported for each binary that matters, so
-"git version --build-options" would want to say it, "git remote-curl
---build-options" would want to say it, and being different binaries,
-they may say different things.
-
-There is not much point in duplicating the latter that are not
-binary specific, so it probably makes sense to gather them inside,
-and report them from, "git bugreport" itself.
-
-Thanks.
+;-)  You said it much better than I would have myself.  Thanks.
