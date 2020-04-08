@@ -2,126 +2,176 @@ Return-Path: <SRS0=ek70=5Y=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E7E20C2D0EA
-	for <git@archiver.kernel.org>; Wed,  8 Apr 2020 14:26:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 74290C2D0EA
+	for <git@archiver.kernel.org>; Wed,  8 Apr 2020 15:29:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A3689206F5
-	for <git@archiver.kernel.org>; Wed,  8 Apr 2020 14:26:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 15DAD206C0
+	for <git@archiver.kernel.org>; Wed,  8 Apr 2020 15:29:00 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CFOswzDL"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SHvkHHPb"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728003AbgDHOZ6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Apr 2020 10:25:58 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:46898 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726795AbgDHOZ6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Apr 2020 10:25:58 -0400
-Received: by mail-ed1-f65.google.com with SMTP id cf14so8719299edb.13
-        for <git@vger.kernel.org>; Wed, 08 Apr 2020 07:25:56 -0700 (PDT)
+        id S1727707AbgDHP26 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Apr 2020 11:28:58 -0400
+Received: from mail-qk1-f193.google.com ([209.85.222.193]:45187 "EHLO
+        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727049AbgDHP26 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Apr 2020 11:28:58 -0400
+Received: by mail-qk1-f193.google.com with SMTP id m67so433355qke.12
+        for <git@vger.kernel.org>; Wed, 08 Apr 2020 08:28:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=etNqsKayiseZ5oWmm5t8mJc9+bcCitycbBkjwUKAzMU=;
-        b=CFOswzDL/sYnIg+GNWo1dunsSh8Dx7M2MOBMB3ofatp2xAs2rs/l7e919qEPdK6f/l
-         Z9uODMpOaIKuZ4jCH8Y+h13DmXa4h38zSKj0zRLnvph0LBMAvA1T9BEIUQZfJ9yDx0r3
-         8WIXs9cyvUWKwsTNrwl5FGQr+Zqh4Ubk68CMI08+IYKJJl+NZ7aR38thKmgLQZAL1Sd4
-         I1NqB6qivjomnA/jOlQUiliKwh0JvpXR/Z3YBIii4GbPpxddeLnRnD9rLbVi4rd+DM95
-         fxBMl/xYB82hEGKsAmjaloStsMJg7HVwt117SYptaXtqXFQb3doIuQymU5H0zSeseJhq
-         FQFA==
+        h=subject:from:to:cc:references:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=J3M4OBtlZU4K96qMCFiU8UNlKTEVA3wIXd5atAGB9eM=;
+        b=SHvkHHPb0tFrD11XpOpT9EkPpWuNVaE1beFVyMsID8iQVe/eBZwwfv49otqd0EnROt
+         3ObIJlGXAd4daDVl5luSPgJtWoben0I/i0QzX8W0CZdttcSs93yaK1yP3ZRsuH7JJTLO
+         s2kBVLtcDQ987MZLfeE/KRp+B92oPCz5OsDJgGZ0m7Io3ucFUW5k9bDrwY5bBaZ2cETg
+         mNqtgeADX8rcLbo8S5KdXYstKLhMbZ+RnkOFiwvVKmi8FHsuuLYEyLtoEora0nttk3Zw
+         MOmVMyV0qE2GOnONC7SINYB/wuzybuKkuXvWJ1FoEinbtEjo40aP44j62PE9KpXhjYsE
+         viKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=etNqsKayiseZ5oWmm5t8mJc9+bcCitycbBkjwUKAzMU=;
-        b=o23wmQW8GphivEPBO3ImACe5u/PQOOY5kfuiPp91yluHy7wT7DnIf7kbCyAqgVjZyK
-         jbgicVY2u5Rq4XzsP0ME3fiCsNowvPkmrQjhzUMIyv9Je6ppg6q2knxgVS4hRzlnR+Cb
-         xMS0Z+UhgzWHixutXcjZFIOQkKXsjAmVn+GFfEg/ycCH0b053j75fDFFP0BUxLq5Z/vd
-         FVUhNghK/A31qqDby9o2juy8A2MtC56qkZ8gZKRsWkcPMXOL216PuMyIAYQmAwQVhfn/
-         Sw12r7VO76qLezsYABCqAwgkdzXeEd/EC0okQlX3FWDBcGwVvyH03aN2ac8OAOtVJBf/
-         AfvA==
-X-Gm-Message-State: AGi0PuZwwCIYF4j+BDR55HUcaOBWGY16HJFS526AM1fuwOHOBlBGR8K9
-        /+zHWZfcCJxWTLAeDOkQyQ9ER0BR
-X-Google-Smtp-Source: APiQypLNo1W6Vp55HrQpjyeAdSypHbBbhHVaBEcl24RUnjeuw4vM+u3zfhX05NnigJC8iP5XJ1SJxA==
-X-Received: by 2002:a50:cf8e:: with SMTP id h14mr6802040edk.369.1586355950492;
-        Wed, 08 Apr 2020 07:25:50 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id qu11sm596170ejb.12.2020.04.08.07.25.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Apr 2020 07:25:50 -0700 (PDT)
-Message-Id: <pull.600.git.1586355949189.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 08 Apr 2020 14:25:49 +0000
-Subject: [PATCH] subtree: fix build with AsciiDoctor 2
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=J3M4OBtlZU4K96qMCFiU8UNlKTEVA3wIXd5atAGB9eM=;
+        b=YVKe+WgE23ngBLsw+kSx0MeLI407e3Enwt8zMJVErYR3zI9Qxm0CCg/ppSrt/QAsio
+         kO5bPgBhjJ2kZVB7nxpWUtR+uwhr25FeX/pyPLAyZ/yEzmObWijPzfJZJ41H0gRhBPw5
+         85LLi3ju7xt/3IgYnvgRTimHC05sY3QfXf49oRC2UmBGLKuweV1mK5NOBlN7CWR5G0yc
+         /+bsJsrl6KXXQJeZ/k85iRZ2vko2MV07i4ZDsLphqM7B/GaVvH6L7WRjKxCMxq3svE4W
+         8je3/oTKW9NEYm/2t4RC5LPeLfWbXxWQVlAT51+ZfQl1udWVAd2LPVWII7kk/kYQih+T
+         pG+g==
+X-Gm-Message-State: AGi0PuY3J+fzv63awTp00tdN1Y3UGbxH6tYVkRDNOwI0PGQlOxf/S0mu
+        n9mJ9St8BbqjDuHvlGuH/mw=
+X-Google-Smtp-Source: APiQypJrHpI+vzGV7EUfFTroUMjJBRp160ZGMJ4Dp2tk0+NpZ6w2BvClQGl0Hd3uJcwegCog1TsduA==
+X-Received: by 2002:a37:67c8:: with SMTP id b191mr7806913qkc.166.1586359736096;
+        Wed, 08 Apr 2020 08:28:56 -0700 (PDT)
+Received: from [192.168.1.83] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id d189sm9960772qkf.118.2020.04.08.08.28.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 08 Apr 2020 08:28:55 -0700 (PDT)
+Subject: Re: [PATCH] revision: --include-diversions adds helpful merges
+From:   Derrick Stolee <stolee@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, peff@peff.net, me@ttaylorr.com,
+        Derrick Stolee <dstolee@microsoft.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+References: <pull.599.git.1586308923544.gitgitgadget@gmail.com>
+ <xmqqv9mapxw9.fsf@gitster.c.googlers.com>
+ <5f1c6868-303c-ccc1-553e-e54d0fa8e24f@gmail.com>
+Message-ID: <74562b04-b1ce-cad4-da18-4af030a3dc29@gmail.com>
+Date:   Wed, 8 Apr 2020 11:28:53 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:75.0) Gecko/20100101
+ Thunderbird/75.0
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+In-Reply-To: <5f1c6868-303c-ccc1-553e-e54d0fa8e24f@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On 4/7/2020 9:39 PM, Derrick Stolee wrote:
+> On 4/7/2020 9:30 PM, Junio C Hamano wrote:
+>> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>>
+>>>     This --include-diversions option could use a better name.
+>>
+>> True, but I do not think of a better (or for that matter a worse)
+>> one.  
 
-This is a (late) companion for f6461b82b93 (Documentation: fix build
-with Asciidoctor 2, 2019-09-15).
+Here are some alternative names:
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-    Adjust contrib/subtree to AsciiDoctor 2, too
-    
-    This is something I had to do because the Git for Windows release
-    process now offers only AsciiDoctor 2.
+	--audit-merges
+	--audit-trunk
+	--first-merges
+	--subtle-merges
+	--more-merges
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-600%2Fdscho%2Fsubtree-and-docbook-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-600/dscho/subtree-and-docbook-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/600
+The "audit" name implies some of the intent: we are trying to
+audit which merge commits introduced these changes. The --audit-trunk
+implies we are using a trunk-based workflow where parent order is
+critical. However, "trunk" may be confusing when there are multiple
+long-lived branches.
 
- contrib/subtree/Makefile | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+A "first merge" is confusing when we see a sequence of multiple
+diversion merges (I include a test with this exact situation in
+my next version.)
 
-diff --git a/contrib/subtree/Makefile b/contrib/subtree/Makefile
-index 6906aae4414..6fa7496bfdb 100644
---- a/contrib/subtree/Makefile
-+++ b/contrib/subtree/Makefile
-@@ -25,14 +25,16 @@ ASCIIDOC_HTML    = xhtml11
- ASCIIDOC_DOCBOOK = docbook
- ASCIIDOC_EXTRA   =
- XMLTO            = xmlto
-+XMLTO_EXTRA      =
- 
- ifdef USE_ASCIIDOCTOR
- ASCIIDOC         = asciidoctor
- ASCIIDOC_CONF    =
- ASCIIDOC_HTML    = xhtml5
--ASCIIDOC_DOCBOOK = docbook45
-+ASCIIDOC_DOCBOOK = docbook
- ASCIIDOC_EXTRA  += -I../../Documentation -rasciidoctor-extensions
- ASCIIDOC_EXTRA  += -alitdd='&\#x2d;&\#x2d;'
-+XMLTO_EXTRA     += --skip-validation
- endif
- 
- ifndef SHELL_PATH
-@@ -78,7 +80,7 @@ install-html: $(GIT_SUBTREE_HTML)
- 	$(INSTALL) -m 644 $^ $(DESTDIR)$(htmldir)
- 
- $(GIT_SUBTREE_DOC): $(GIT_SUBTREE_XML)
--	$(XMLTO) -m $(MANPAGE_XSL) man $^
-+	$(XMLTO) -m $(MANPAGE_XSL) $(XMLTO_EXTRA) man $^
- 
- $(GIT_SUBTREE_XML): $(GIT_SUBTREE_TXT)
- 	$(ASCIIDOC) -b $(ASCIIDOC_DOCBOOK) -d manpage $(ASCIIDOC_CONF) \
+"subtle" is a bit wishy-washy.
 
-base-commit: 9fadedd637b312089337d73c3ed8447e9f0aa775
--- 
-gitgitgadget
+"--more-merges" is not very specific. The way we are adding
+merges to the final result may not be the only way we want to
+add "more" merges in the future.
+
+So, I think "--audit-merges" is the best of these alternatives.
+I'd be happy to be overruled with a different option. Hopefully,
+these options inspire better ideas from the community.
+
+>> As a new feature, I think this is a reasonable thing to want,
+>> especially it is in line with the push in the past few years to
+>> treat the first parent history specially.
+>>
+>> I wonder how this would interact with the ancestry-path option?
+>> That one also, like the simplify-merges option, needs a limited
+>> traversal, and if this new mode can do without a limited traversal
+>> (in other words, the output can be done incrementally from the tip)
+>> and achieve something similar to what these other options wanted to
+>> show, that would be great.
+> 
+> You're right. I briefly considered the --ancestry-path option before
+> realizing that would get a huge set of commits (for example: every
+> topic based on the branch after the pull request was merged).
+> 
+> The --include-diversions works incrementally like simplified merges.
+> Based on the implementation, it would not change the results when
+> added to a --full-history query. This makes sense: a diversion would
+> appear in the --full-history results, anyway.
+> 
+> It is worth adding tests for the combination with --ancestry-path
+> and --simplify-merges, as the --include-diversions option would
+> add results to those queries.
+
+My gitgitgadget PR [1] is updated with tests and some new logic to
+handle the new option along with --simplify-merges. The situation was
+a bit subtle, so my next version will include a significant update to
+the rev-list documentation under the "History Simplification" mode.
+
+I'll give things some time to calm on the name of the option before
+sending a v2.
+
+My v2 also includes adding a new object flag "DIVERSION" to track
+these commits from the TREESAME calculation through the simplify-merges
+logic. When I was adding a new flag, I realized that I already
+messed up the 32-bit alignment of "struct object" when adding the
+TOPO_ORDER flags. The parsed, type, and flags bitfields add up to
+33 bits!
+
+A solution would include pulling the TOPO_ORDER_* flags to be bits
+22 and 23 instead of 26 and 27, but that would collide with what is
+happening in builtin/show-branch.c. But then I saw the following
+comment in builtin/show-branch.c:
+
+/*
+ * TODO: convert this use of commit->object.flags to commit-slab
+ * instead to store a pointer to ref name directly. Then use the same
+ * UNINTERESTING definition from revision.h here.
+ */
+
+Is anyone interested in tackling this problem? I don't see any
+test failures when I swap the TOPO_ORDER_ flag locations, but
+that might just mean that show-branch isn't tested enough.
+
+Thanks,
+-Stolee
+
+[1] https://github.com/gitgitgadget/git/pull/599
