@@ -2,78 +2,72 @@ Return-Path: <SRS0=ek70=5Y=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.5 required=3.0 tests=FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D2BCC2D0EA
-	for <git@archiver.kernel.org>; Wed,  8 Apr 2020 16:21:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 36B96C2D0F4
+	for <git@archiver.kernel.org>; Wed,  8 Apr 2020 16:23:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 12B6220784
-	for <git@archiver.kernel.org>; Wed,  8 Apr 2020 16:21:38 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IORfy2yZ"
+	by mail.kernel.org (Postfix) with ESMTP id 17F3520784
+	for <git@archiver.kernel.org>; Wed,  8 Apr 2020 16:23:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729934AbgDHQVf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Apr 2020 12:21:35 -0400
-Received: from mail-oi1-f176.google.com ([209.85.167.176]:41786 "EHLO
-        mail-oi1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728473AbgDHQVf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Apr 2020 12:21:35 -0400
-Received: by mail-oi1-f176.google.com with SMTP id k9so473992oia.8
-        for <git@vger.kernel.org>; Wed, 08 Apr 2020 09:21:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=d6/GSdPFPmht7Cotk4rekTMEYkc3LR4WwyHUa81RMDE=;
-        b=IORfy2yZuXbMMlNVXYkX86CG1QpaK9Sohpv0zMq7svLURaRt6KU4YemPCAEpdpgdOo
-         okusjC3HadwWePld74tS6QL2l2skd/ddBd/E6bBtwOCZPX0Bw3cYf8tDBYoCLZybXHWf
-         ce5iL9EQhejQ2dElpown+Fgla6DyozricafMkKxrbx+sDdsVM5JUcD/M5Grlw7/Nmdkc
-         vqhDH2gFxyYcgiRx9hHLgwJMtfxoCe0LBP4hND7be7vAabxM0INezPNetlvq6SqmsrdY
-         bANHD9EX2Fxy14kouH1VUDJzfJGVDVMP8K/a07HKzxOEkPB92pu8ZWiZAjvrojvw7OTI
-         H/EQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=d6/GSdPFPmht7Cotk4rekTMEYkc3LR4WwyHUa81RMDE=;
-        b=WHmE0VL88c+yfpKZWxBrki8FV6EzZ4C77pSXudbugFZljKskLyZ2RTaFSg0TIlGV7a
-         DVoJinnxsZCl+wHRlHeA7fo3Mf/plwnFsmGwPD8xOdCiSgOLLKUlRg0i2c/UYsDeL4Uq
-         sYaiSQ1PQpbM6rFqYPeyGTIiA/D6S+jyS+o0xTC77LsfiJ42IHV+0zspZnNckgsIXwI2
-         3sZTmDFcRPc6/nNUTtJIGv3rkPYP+ofJUu+82WeIoERWHqf0Hjg5AV6C8Ifsbk2xiIl9
-         P+zQz6btEJvylL3D8oQqFbIcNJU7VhohK3DvCE6nCAlGPhC/pgMVoWdo9/FjrvWcL7Gy
-         IvSw==
-X-Gm-Message-State: AGi0PuagnCuSq2OPgCAXjf6glvJwSIF6SwfClFjQ/Ks02clSzKn3mM5x
-        InjmYhi50lRMKTZFHpmdpxO2im6ty9UbQMSqU1o=
-X-Google-Smtp-Source: APiQypK8Pyq4tFxNgjKv/N00bxKleZ72VMhq8WJ4dbtMGAYATZ0nXmDwZxyr737Cv0Rv1I5EmL/3NH2OdKFDZpHVQYA=
-X-Received: by 2002:a05:6808:12:: with SMTP id u18mr3160673oic.167.1586362893822;
- Wed, 08 Apr 2020 09:21:33 -0700 (PDT)
-MIME-Version: 1.0
-References: <CABPp-BEHQUzRjddKrC7Q7j+2W-W9ZjdVnXVjsM6wVWrpDF7cwQ@mail.gmail.com>
- <1540391834.807942587.1586332379241.JavaMail.root@zimbra39-e7>
-In-Reply-To: <1540391834.807942587.1586332379241.JavaMail.root@zimbra39-e7>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 8 Apr 2020 09:21:22 -0700
-Message-ID: <CABPp-BHFnFx-YV=vcQ0O-s0xKUi9g0n5MWEssWb_B_iTv7LGLQ@mail.gmail.com>
-Subject: Re: [BUG] submodule move badly handled by git-rebase
-To:     ydirson@free.fr
+        id S1729903AbgDHQXI convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Wed, 8 Apr 2020 12:23:08 -0400
+Received: from smtp5-g21.free.fr ([212.27.42.5]:23316 "EHLO smtp5-g21.free.fr"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728473AbgDHQXH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Apr 2020 12:23:07 -0400
+Received: from zimbra39-e7.priv.proxad.net (unknown [172.20.243.189])
+        by smtp5-g21.free.fr (Postfix) with ESMTP id 015C36001D;
+        Wed,  8 Apr 2020 18:23:05 +0200 (CEST)
+Date:   Wed, 8 Apr 2020 18:23:04 +0200 (CEST)
+From:   ydirson@free.fr
+To:     Elijah Newren <newren@gmail.com>
 Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Message-ID: <907083995.810443848.1586362984955.JavaMail.root@zimbra39-e7>
+In-Reply-To: <1540391834.807942587.1586332379241.JavaMail.root@zimbra39-e7>
+Subject: Re: [BUG] submodule move badly handled by git-rebase
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
+X-Originating-IP: [91.170.159.152]
+X-Mailer: Zimbra 7.2.0-GA2598 (ZimbraWebClient - FF3.0 (Linux)/7.2.0-GA2598)
+X-Authenticated-User: ydirson@free.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Yann,
+This may be related to another funky behaviour I just noticed, linked
+to moving submodules around:
 
-On Wed, Apr 8, 2020 at 12:52 AM <ydirson@free.fr> wrote:
->
+- when initially created, the $TOP/orig-name submodule's git-dir gets created in
+  $TOP/.git/modules/orig-name, with $TOP/.git/modules/orig-name/config
+  containing a core.worktree value pointing to $TOP/orig-name
+- when moving the submodule, only the submodule worktree is moved, the git-dir
+  being the same $TOP/.git/modules/orig-name, where the core.worktree still
+  points to the old location
+
+Other unwanted behaviour include "git clean" reporting (and possibly cleaning)
+files from the wrong work tree - it took me head-scratching to understand why
+"git clean -fdx" was ignoring all the cruft I had in this worktree...
+
+Why is it that we need a core.worktree setting at all in there ?  Removing it
+allows "git clean" to do what's expected of it.  OTOH it does not make the
+original problem go away...
+
+----- Mail original -----
+> De: ydirson@free.fr
+> À: "Elijah Newren" <newren@gmail.com>
+> Cc: "git" <git@vger.kernel.org>
+> Envoyé: Mercredi 8 Avril 2020 09:52:59
+> Objet: Re: [BUG] submodule move badly handled by git-rebase
+> 
 > Hi Elijah,
->
+> 
 > > Hi Yann,
-> >
+> > 
 > > On Tue, Apr 7, 2020 at 9:36 AM <ydirson@free.fr> wrote:
 > > >
 > > > Hello all,
@@ -108,7 +102,8 @@ On Wed, Apr 8, 2020 at 12:52 AM <ydirson@free.fr> wrote:
 > > > Adding as subdir/gitlab-oe~08e230f... move submodule instead
 > > > error: could not apply 08e230f... move submodule
 > > > Resolve all conflicts manually, mark them as resolved with
-> > > "git add/rm <conflicted_files>", then run "git rebase --continue".
+> > > "git add/rm <conflicted_files>", then run "git rebase
+> > > --continue".
 > > > You can instead skip this commit: run "git rebase --skip".
 > > > To abort and get back to the state before "git rebase", run "git
 > > > rebase --abort".
@@ -137,8 +132,9 @@ On Wed, Apr 8, 2020 at 12:52 AM <ydirson@free.fr> wrote:
 > > >         added by them:   subdir/gitlab-oe
 > > >
 > > > (master|REBASE 3/3)$
-> >
-> > I couldn't figure out how to duplicate.  Maybe I did something wrong,
+> > 
+> > I couldn't figure out how to duplicate.  Maybe I did something
+> > wrong,
 > > but it was:
 > >     # download your fast-export stream
 > >     git init temp
@@ -152,36 +148,37 @@ On Wed, Apr 8, 2020 at 12:52 AM <ydirson@free.fr> wrote:
 > >     echo >>README
 > >     git commit -a -m noise
 > >     git rebase --continue
-> >
-> > After the rebase --continue, the rebase completes just fine applying
-> > the patch with the submodule move.  git range-diff master@{1}... will
-> > show that I inserted a new commit in the middle.  git log --raw looks
+> > 
+> > After the rebase --continue, the rebase completes just fine
+> > applying
+> > the patch with the submodule move.  git range-diff master@{1}...
+> > will
+> > show that I inserted a new commit in the middle.  git log --raw
+> > looks
 > > good, showing all four commits including the moved submodule at the
 > > end.
->
-> You're right, I missed crucial point: no problem appears unless the submodule
-> is initialized.  After checking out the master branch (and possibly issuing
-> "git reset --hard" to make sure everything is clean), it is necessary to
+> 
+> You're right, I missed crucial point: no problem appears unless the
+> submodule
+> is initialized.  After checking out the master branch (and possibly
+> issuing
+> "git reset --hard" to make sure everything is clean), it is necessary
+> to
 > run "git submodule update --init".
->
->
+> 
+> 
 > > What git version did you use?  Do you need special settings (what's
 > > in
 > > your ~/.gitconfig and your .git/config)?
->
-> This is 2.26.0, but like my other report I had it with 2.25.1 already.
-> Just tested with an clear config (HOME and GIT_CONFIG_NOSYSTEM set) and
+> 
+> This is 2.26.0, but like my other report I had it with 2.25.1
+> already.
+> Just tested with an clear config (HOME and GIT_CONFIG_NOSYSTEM set)
+> and
 > the problem triggers as well.
-
-Ah, gotcha.  With the "git submodule update --init", I can duplicate
-with 2.26.0 and 2.24.1 and I probably could with any other git version
-going back to when submodules were introduced.
-
-I decided to also test with the "ort" merge strategy[1] that I haven't
-worked on in over a month.  It fixes this testcase.  So this is yet
-another example of it having better correctness than merge-recursive.
-Thanks for the report.
-
-Elijah
-
-[1] https://github.com/newren/git/tree/git-merge-2020-demo
+> 
+> Best regards,
+> --
+> Yann
+> 
+> 
