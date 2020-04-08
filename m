@@ -6,77 +6,54 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 58A4FC2D0F4
-	for <git@archiver.kernel.org>; Wed,  8 Apr 2020 17:28:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A9192C2BA1B
+	for <git@archiver.kernel.org>; Wed,  8 Apr 2020 17:30:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 408E12082F
-	for <git@archiver.kernel.org>; Wed,  8 Apr 2020 17:28:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8D44220730
+	for <git@archiver.kernel.org>; Wed,  8 Apr 2020 17:30:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730586AbgDHR2y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Apr 2020 13:28:54 -0400
-Received: from cloud.peff.net ([104.130.231.41]:37178 "HELO cloud.peff.net"
+        id S1729564AbgDHRaW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Apr 2020 13:30:22 -0400
+Received: from cloud.peff.net ([104.130.231.41]:37190 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1729557AbgDHR2y (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Apr 2020 13:28:54 -0400
-Received: (qmail 12310 invoked by uid 109); 8 Apr 2020 17:28:54 -0000
+        id S1728771AbgDHRaW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Apr 2020 13:30:22 -0400
+Received: (qmail 12329 invoked by uid 109); 8 Apr 2020 17:30:22 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 08 Apr 2020 17:28:54 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 08 Apr 2020 17:30:22 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9630 invoked by uid 111); 8 Apr 2020 17:39:21 -0000
+Received: (qmail 9651 invoked by uid 111); 8 Apr 2020 17:40:49 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 08 Apr 2020 13:39:21 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 08 Apr 2020 13:40:49 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Wed, 8 Apr 2020 13:28:53 -0400
+Date:   Wed, 8 Apr 2020 13:30:21 -0400
 From:   Jeff King <peff@peff.net>
-To:     Joe Perches <joe@perches.com>
-Cc:     Olaf Hering <olaf@aepfle.de>, linux-kernel@vger.kernel.org,
-        git@vger.kernel.org
-Subject: Re: get_maintainer.pl sends bogus addresses to git send-email
-Message-ID: <20200408172853.GA1961925@coredump.intra.peff.net>
-References: <20200407154046.GA15368@aepfle.de>
- <20200407170257.GA1844923@coredump.intra.peff.net>
- <2e6975d606846c834a387c07ee11cdce52356586.camel@perches.com>
- <20200407174449.GA1884106@coredump.intra.peff.net>
- <2afc201cea5fd59829ce818041b4290a0ec5bb8c.camel@perches.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Happy birthday to all of us ;-)
+Message-ID: <20200408173021.GB1961925@coredump.intra.peff.net>
+References: <xmqqzhbmpyh6.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <2afc201cea5fd59829ce818041b4290a0ec5bb8c.camel@perches.com>
+In-Reply-To: <xmqqzhbmpyh6.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 07, 2020 at 02:56:19PM -0700, Joe Perches wrote:
+On Tue, Apr 07, 2020 at 06:17:41PM -0700, Junio C Hamano wrote:
 
-> > Syntactically they are rfc822 comments, and send-email _should_ be able
-> > to handle them (and does in recent versions).
+> So, it was today 15 years ago that Linus announced the availability
+> of the first tarball of Git.
 > 
-> I'm not certain that comments are allowed _after_ a tld in an
-> email address.  In any case, I guess it's a good thing I used
-> parentheses for the get_maintainer rolestats block.
-
-Oh, it's much more horrible than that. RFC822 contains this example:
-
-  Muhammed.(I am  the greatest) Ali @(the)Vegas.WBA
-
-which parses to:
-
-  Muhammed.Ali@Vegas.WBA
-
-Perl's Mail::Address does decipher that correctly.
-
-> > > linux-kernel@vger.kernel.org (open list)
-> > 
-> > In this one, I think that the comment will be used as the name field,
-> > since there isn't one.
+> Let me thank all the contributors, both long timers and relatively
+> newer ones, for working on the system to help our users better.
 > 
-> I think that slightly unexpected as the name field is not required.
+> But I should not forget to thank others who help us by doing things
+> other than writing code.  Writing code is not the only work on the
+> software.
 
-TBH, so do I. That's all done by Mail::Address's format() method. We
-could probably convince it to be less magical, but perhaps it's best to
-just leave it alone. Presumably that logic has some historical basis,
-and as you note, it's a mistake to be passing these fields into
-send-email in the first place.
+And let us also not forget to thank any maintainers. :)
 
 -Peff
