@@ -2,124 +2,114 @@ Return-Path: <SRS0=ek70=5Y=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F92CC2D0F4
-	for <git@archiver.kernel.org>; Wed,  8 Apr 2020 22:00:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3267C2BA16
+	for <git@archiver.kernel.org>; Wed,  8 Apr 2020 22:08:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id F30BB2078E
-	for <git@archiver.kernel.org>; Wed,  8 Apr 2020 22:00:01 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KrPYdVEF"
+	by mail.kernel.org (Postfix) with ESMTP id 7B99B2078E
+	for <git@archiver.kernel.org>; Wed,  8 Apr 2020 22:08:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726641AbgDHWAA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Apr 2020 18:00:00 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56799 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726469AbgDHWAA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Apr 2020 18:00:00 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B4D3650C64;
-        Wed,  8 Apr 2020 17:59:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=FdcP1+bSK6qTz7xKOJmxMS9EsS0=; b=KrPYdV
-        EFEcOcprvsBU0amr5EqjRIClK4GC3axjbWAVbJRQKdCkaNctabfbZ2yNI+X54Fgy
-        Q1AZkE2tkWWtgfveWAZdwgYefVTPyINNs5vOnuaueCaiPt6ZzOs74Dp+op1Uxfw3
-        sQbnQPxVJGk4QvKV8ydtx1td3UYvO6HBXM77k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=tm71PDEtv7sEUT+I8gOhR2UoKXdSGMd3
-        U+am86QGHuy5/p2FYHcLWAacTNXI+ijGZ7N8cpWMjrBa1LvMYgS99hKzmQjf09/x
-        H/Uoo32G1+sPiD7eWUsP7voseLizXTqYqZTapM7tCXAmpSSWK73RCq7Awu8SQG1n
-        oPlSunu3HZg=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id ABFF250C63;
-        Wed,  8 Apr 2020 17:59:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 075FC50C62;
-        Wed,  8 Apr 2020 17:59:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] mingw: make is_hidden tests in t0001/t5611 more robust
-References: <pull.603.git.1586374474512.gitgitgadget@gmail.com>
-Date:   Wed, 08 Apr 2020 14:59:55 -0700
-In-Reply-To: <pull.603.git.1586374474512.gitgitgadget@gmail.com> (Johannes
-        Schindelin via GitGitGadget's message of "Wed, 08 Apr 2020 19:34:34
-        +0000")
-Message-ID: <xmqqmu7locys.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726619AbgDHWIn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Apr 2020 18:08:43 -0400
+Received: from cloud.peff.net ([104.130.231.41]:37608 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726607AbgDHWIl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Apr 2020 18:08:41 -0400
+Received: (qmail 13926 invoked by uid 109); 8 Apr 2020 22:08:41 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 08 Apr 2020 22:08:41 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 13290 invoked by uid 111); 8 Apr 2020 22:19:09 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 08 Apr 2020 18:19:09 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 8 Apr 2020 18:08:40 -0400
+From:   Jeff King <peff@peff.net>
+To:     Abhishek Kumar <abhishekkumar8222@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] oidmap: rework iterators to return typed pointer
+Message-ID: <20200408220840.GB3468797@coredump.intra.peff.net>
+References: <20200408040659.14511-1-abhishekkumar8222@gmail.com>
+ <20200408070346.24872-1-abhishekkumar8222@gmail.com>
+ <20200408070346.24872-2-abhishekkumar8222@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 48491398-79E4-11EA-9B65-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20200408070346.24872-2-abhishekkumar8222@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+On Wed, Apr 08, 2020 at 12:33:46PM +0530, Abhishek Kumar wrote:
 
-> diff --git a/t/t0001-init.sh b/t/t0001-init.sh
-> index 26f82063267..2456688b281 100755
-> --- a/t/t0001-init.sh
-> +++ b/t/t0001-init.sh
-> @@ -395,7 +395,7 @@ test_expect_success SYMLINKS 're-init to move gitdir symlink' '
->  # Tests for the hidden file attribute on windows
->  is_hidden () {
->  	# Use the output of `attrib`, ignore the absolute path
-> -	case "$(attrib "$1")" in *H*?:*) return 0;; esac
-> +	case "$("$SYSTEMROOT"/system32/attrib "$1")" in *H*?:*) return 0;; esac
->  	return 1
->  }
+> 87571c3f (hashmap: use *_entry APIs for iteration, 2019-10-06) modified
+> hashmap_iter_next() to return a hashmap_entry pointer instead of void
+> pointer.
+> 
+> However, oidmap_iter_next() is unaware of the struct type containing
+> oidmap_entry and explicitly returns a void pointer.
+> 
+> Rework oidmap_iter_next() to include struct type and return appropriate
+> pointer. This allows for compile-time type checks.
 
-I wondered if this (and the other one) want to be in test-lib but I
-am on the fence.  All three tests that call this helper in t0001 are
-protected with MINGW prerequisite, but until I realized it, the call
-to "attrib" (whether it is given as a full path or relies on $PATH
-lookup) looked like a portability nightmare waiting to happen.  It
-would make it even worse if we moved the above as-is to test-lib, as
-it is harder to see what the callers are doing once we did so.
+Yes, I think returning a pointer to an oidmap_entry makes sense. And
+then we get type safety, and anybody who wants embed an oidmap_entry can
+use container_of() to get back to their original struct.
 
-With a change like this, however
+But...
 
-	is_hidden () {
-		if ! test_have_prereq MINGW
-		then
-			BUG "use of is_hidden outside MINGW prerequisite"
-		fi
-		case "$("$SYSTEMROOT"/system32/attrib "$1")" in 
-		*H*?:*)	return 0 ;;
-		*)	return 1 ;;
-		esac
-	}
+> +/*
+> + * Returns the next entry, or NULL if there are no more entries.
+> + *
+> + * The entry is of @type (e.g. "struct foo") and has a member of type struct
+> + * oidmap_entry.
+> + */
+> +#define oidmap_iter_next(iter, type) \
+> +	(type *) hashmap_iter_next(&(iter)->h_iter)
 
-I think it is OK to consolidate these two copies into one in test-lib
+This cast is turning a hashmap_entry into whatever type the caller
+passed in.  But it's doing it with a straight cast. We know that
+hashmap_entry and oidmap_entry pointers are equivalent, but we don't
+know where the oidmap_entry is with respect to the user's type.
 
-Thanks.
+I think oidmap_iter_next() should continue to be a function that returns
+an oidmap_entry pointer (and use container_of_or_null() to get to it
+from the hashmap_entry, even though we know the offset is 0).
 
+And then the caller can either use container_of() to get to their
+original struct, or we can provide a helper macro. See the difference
+between hashmap_iter_first() and hashmap_iter_first_entry().
 
-> diff --git a/t/t5611-clone-config.sh b/t/t5611-clone-config.sh
-> index 60c1ba951b7..87b8073cd74 100755
-> --- a/t/t5611-clone-config.sh
-> +++ b/t/t5611-clone-config.sh
-> @@ -95,7 +95,7 @@ test_expect_success 'clone -c remote.<remote>.fetch=<refspec> --origin=<name>' '
->  # Tests for the hidden file attribute on windows
->  is_hidden () {
->  	# Use the output of `attrib`, ignore the absolute path
-> -	case "$(attrib "$1")" in *H*?:*) return 0;; esac
-> +	case "$("$SYSTEMROOT"/system32/attrib "$1")" in *H*?:*) return 0;; esac
->  	return 1
->  }
+There's no hashmap_iter_next_entry(). There could be, but instead it
+skipped straight to hashmap_for_each_entry(), which uses an offset
+within the variable rather than the type. But likewise, we could add
+oidmap_for_each_entry() here.
+
+> diff --git a/t/helper/test-oidmap.c b/t/helper/test-oidmap.c
+> index 0acf99931e..a28bf007a8 100644
+> --- a/t/helper/test-oidmap.c
+> +++ b/t/helper/test-oidmap.c
+> @@ -96,7 +96,7 @@ int cmd__oidmap(int argc, const char **argv)
 >  
->
-> base-commit: 9fadedd637b312089337d73c3ed8447e9f0aa775
+>  			struct oidmap_iter iter;
+>  			oidmap_iter_init(&map, &iter);
+> -			while ((entry = oidmap_iter_next(&iter)))
+> +			while ((entry = oidmap_iter_next(&iter, struct test_entry)))
+>  				printf("%s %s\n", oid_to_hex(&entry->entry.oid), entry->name);
+
+This works because "test_entry" has the oidmap_entry at the start.
+
+But it wouldn't work with a struct where that wasn't the case, nor would
+it provide any compile-time safety (because of the cast).
+
+Note that if we do want to support that and get type safety (and I think
+it is worth doing), oidmap_get() would need similar treatment (it
+returns a void pointer, but it is really a pointer to an oidmap_entry).
+And I guess oidmap_put() and oidmap_remove(), which returns pointers to
+existing entries.
+
+-Peff
