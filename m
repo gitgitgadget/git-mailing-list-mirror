@@ -8,62 +8,63 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 491BDC2D0EA
-	for <git@archiver.kernel.org>; Wed,  8 Apr 2020 07:05:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C667EC2D0EA
+	for <git@archiver.kernel.org>; Wed,  8 Apr 2020 07:05:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1CAD82074F
-	for <git@archiver.kernel.org>; Wed,  8 Apr 2020 07:05:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A00592074F
+	for <git@archiver.kernel.org>; Wed,  8 Apr 2020 07:05:08 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dwUvsoc4"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O+zLKWpt"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726652AbgDHHFE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Apr 2020 03:05:04 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:40100 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726636AbgDHHFD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Apr 2020 03:05:03 -0400
-Received: by mail-pg1-f196.google.com with SMTP id c5so2918546pgi.7
-        for <git@vger.kernel.org>; Wed, 08 Apr 2020 00:05:03 -0700 (PDT)
+        id S1726668AbgDHHFH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Apr 2020 03:05:07 -0400
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:44342 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726636AbgDHHFG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Apr 2020 03:05:06 -0400
+Received: by mail-pl1-f196.google.com with SMTP id h11so2180996plr.11
+        for <git@vger.kernel.org>; Wed, 08 Apr 2020 00:05:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=JYkTw+9ipDyvovT5b6Vwg13pxsjEqbA1/jPrEeTNxIk=;
-        b=dwUvsoc4oWD91ADjM4C1s+xVIO0pGXSxrr8AYMzXFf1KVhVs2X8q213v1lPZQ5p8/7
-         e4F/AfZcIANSIF4zs5aOemyYIx5tj8KE2oxa9P7o6H8ZqDBGNkiclg9/SRoQX1Encych
-         IwWpsgbEC1x0EZQErFXL/tkgyS3l5BwgCDOh30JgVRsXLHh3QIi5EuF4hC2/wXc9z69r
-         lcqYg5YoHd9C8j7erdj8NgifQU23vECJJ3NXkErq2C/YXW9CKvHdB0biFZ1ROMkIM/AU
-         j72TQY+yI4ztnv+qy0tkmqwd0D81yhTNBVPUtXCT0rMgeFr0ONsno4LdsPHwnBQm9JUl
-         ShxQ==
+        bh=yav+ovAJ9p4fMLMk0ZCj/krt/m0kroK80cw297/2E/o=;
+        b=O+zLKWptOOmD+xPwF4vUYYvPVCxUszZaSlI43s994GoNqHBXfdGzKqxjA/Vrw5afWZ
+         +VwNonS9RwAvsdvF+p55nOytsJLtGJZxHM+qbsJz+LvgJsJ5UMW4N9nIapKi3l2wzWxn
+         hJbSMyK9LsRDvoMPdp7T0ZRRK8KdniimrSRVarIWQQs/DAp5j3oESAJ6Lu+w6eqqj4gi
+         SJpYE6GT8YUrCw6VpoO3fiVufjFXsGDDpof1Gd1ILVum0V5hoXwCqQFjf5XTrUX100Mu
+         Y90VWNXwBIGcOj0rJXSNWEMYuyYWSl7h1LJ6EhcOuv/N403D026e/T+/E3Hkuk8AekFR
+         xt1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=JYkTw+9ipDyvovT5b6Vwg13pxsjEqbA1/jPrEeTNxIk=;
-        b=Cmows9Ef0kz+YIgCzRECI5DKMB1XiVUeWvMJiIjr2plmVUVWl0NvTq5URVRiOB+fqy
-         kSmerF7p1uhyXsxO9hqKwCanRAjffdLwQFQm61Zpo3Y9vEwfgJW5zYHarI2s9ye04rEo
-         v/9BQxn8BQzoyVez7sDYg7nbyBfgtle/Qgz6j8R3/IyLS8ZjjLF4YUGP+T5B1huPjpP6
-         UwthLCTk8QS2igADctFN0n14HjIwSOslbPeEpCtCZHBPj4E7re9/SzjZPU76vFqqWbma
-         tLtDCT/BWIe5ilXm6HA8FZCGZOK5AJIuaHsyUx5jxnxG5vGcdmobifWE2Ml787mJG1Tl
-         5AtQ==
-X-Gm-Message-State: AGi0PuZbLDP/Bsb1bHUPeKs8FkN5tqpd8CxlDSC152VzJsln9jrM+eYU
-        SaHYHNzAq6Ei9Qh95ArVvQb/IAH8MxM=
-X-Google-Smtp-Source: APiQypIx2cxufagj/6tvYfPe6QxI4blzq1jEuAcfMahtPks3q5ECG5ghI7RlKqjZm96BrgEE6f2RqA==
-X-Received: by 2002:a65:6409:: with SMTP id a9mr5441483pgv.245.1586329502071;
-        Wed, 08 Apr 2020 00:05:02 -0700 (PDT)
+        bh=yav+ovAJ9p4fMLMk0ZCj/krt/m0kroK80cw297/2E/o=;
+        b=DYk1KjKnLf8B0uXbYHs/2aZ8J8VaCGvVLfctE20iJDs4/Xm9x7BV7DZuYM2AbAEbuN
+         rH/uxQ6Dm8Ru5DjEnBvIpRrWF4WHaQpIR4GlfqH0tRO3CULANZIiXfxw4uc/X2C3ZjLN
+         SW2nMS17BdT3srGPdRW0FAJwF+CREbSMND05Ub/Xlpm1jwdu1WbWbDoX03m7zO6gHqYW
+         ShCoRcFE+PEFq9Ssh3e2aRKf1QPHiAdHBPlOOdJp3e3A5ZDqLXtMcj059tdzLGGj+pLa
+         OCogoSS8roCgd2vjRebl3NMslzHnCMWn0Bt13MHu5lx1/VI1LU5ktdLuwSrETC3lwyCb
+         TfJQ==
+X-Gm-Message-State: AGi0PuaCzAE/9urz7rFzx6Ln8zFbFUu0uvlTnf3Ylx98gsaMNtW1XNAs
+        +Myl8evc/jkHBVMt3++2l6IbXbZw7ks=
+X-Google-Smtp-Source: APiQypJ/W/PptSLXeumCYFN8TTyxcJ+B0yzxMRMauZr45mL6qFaAxTKuxDNE7xFNPJS6MkSr0wrKnA==
+X-Received: by 2002:a17:90a:24af:: with SMTP id i44mr3771792pje.136.1586329505373;
+        Wed, 08 Apr 2020 00:05:05 -0700 (PDT)
 Received: from localhost.localdomain ([2409:4064:2182:8a2e:a277:ba54:a2ce:8862])
-        by smtp.gmail.com with ESMTPSA id d26sm15669489pfo.37.2020.04.08.00.04.58
+        by smtp.gmail.com with ESMTPSA id d26sm15669489pfo.37.2020.04.08.00.05.02
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Apr 2020 00:05:00 -0700 (PDT)
+        Wed, 08 Apr 2020 00:05:04 -0700 (PDT)
 From:   Abhishek Kumar <abhishekkumar8222@gmail.com>
 To:     git@vger.kernel.org
-Subject: [PATCH v2 1/2] oidmap: make oidmap_free independent of struct layout
-Date:   Wed,  8 Apr 2020 12:33:45 +0530
-Message-Id: <20200408070346.24872-1-abhishekkumar8222@gmail.com>
+Subject: [PATCH v2 2/2] oidmap: rework iterators to return typed pointer
+Date:   Wed,  8 Apr 2020 12:33:46 +0530
+Message-Id: <20200408070346.24872-2-abhishekkumar8222@gmail.com>
 X-Mailer: git-send-email 2.26.0
-In-Reply-To: <20200408040659.14511-1-abhishekkumar8222@gmail.com>
+In-Reply-To: <20200408070346.24872-1-abhishekkumar8222@gmail.com>
 References: <20200408040659.14511-1-abhishekkumar8222@gmail.com>
+ <20200408070346.24872-1-abhishekkumar8222@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -71,58 +72,73 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-c8e424c9 (hashmap: introduce hashmap_free_entries, 2019-10-06)
-introduced hashmap_free_entries(), which can free any struct pointer,
-regardless of the hashmap_entry field offset.
+87571c3f (hashmap: use *_entry APIs for iteration, 2019-10-06) modified
+hashmap_iter_next() to return a hashmap_entry pointer instead of void
+pointer.
 
-oidmap does not make use of this flexibilty, hardcoding the offset to
-zero instead. Let's fix this by passing struct type and member to
-hashmap_free_entries().
+However, oidmap_iter_next() is unaware of the struct type containing
+oidmap_entry and explicitly returns a void pointer.
 
-Additionally, remove an erroneous semi-colon at the end of
-hashmap_free_entries() macro.
+Rework oidmap_iter_next() to include struct type and return appropriate
+pointer. This allows for compile-time type checks.
 
 Signed-off-by: Abhishek Kumar <abhishekkumar8222@gmail.com>
 ---
+ oidmap.h               | 27 +++++++++++++++------------
+ t/helper/test-oidmap.c |  2 +-
+ 2 files changed, 16 insertions(+), 13 deletions(-)
 
-Changes in v2:
-- Fix references to earlier commits.
-- Grammar fixes.
-
- hashmap.h | 2 +-
- oidmap.c  | 6 ++++--
- 2 files changed, 5 insertions(+), 3 deletions(-)
-
-diff --git a/hashmap.h b/hashmap.h
-index 79ae9f80de..6d0a65a39f 100644
---- a/hashmap.h
-+++ b/hashmap.h
-@@ -245,7 +245,7 @@ void hashmap_free_(struct hashmap *map, ssize_t offset);
-  * where @member is the hashmap_entry struct used to associate with @map
-  */
- #define hashmap_free_entries(map, type, member) \
--	hashmap_free_(map, offsetof(type, member));
-+	hashmap_free_(map, offsetof(type, member))
- 
- /* hashmap_entry functions */
- 
-diff --git a/oidmap.c b/oidmap.c
-index 423aa014a3..65d63787a8 100644
---- a/oidmap.c
-+++ b/oidmap.c
-@@ -26,8 +26,10 @@ void oidmap_free(struct oidmap *map, int free_entries)
- 	if (!map)
- 		return;
- 
--	/* TODO: make oidmap itself not depend on struct layouts */
--	hashmap_free_(&map->map, free_entries ? 0 : -1);
-+	if (free_entries)
-+		hashmap_free_entries(&map->map, struct oidmap_entry, internal_entry);
-+	else
-+		hashmap_free(&map->map);
+diff --git a/oidmap.h b/oidmap.h
+index c66a83ab1d..5d6b34a7ce 100644
+--- a/oidmap.h
++++ b/oidmap.h
+@@ -76,18 +76,21 @@ static inline void oidmap_iter_init(struct oidmap *map, struct oidmap_iter *iter
+ 	hashmap_iter_init(&map->map, &iter->h_iter);
  }
  
- void *oidmap_get(const struct oidmap *map, const struct object_id *key)
+-static inline void *oidmap_iter_next(struct oidmap_iter *iter)
+-{
+-	/* TODO: this API could be reworked to do compile-time type checks */
+-	return (void *)hashmap_iter_next(&iter->h_iter);
+-}
++/*
++ * Returns the next entry, or NULL if there are no more entries.
++ *
++ * The entry is of @type (e.g. "struct foo") and has a member of type struct
++ * oidmap_entry.
++ */
++#define oidmap_iter_next(iter, type) \
++	(type *) hashmap_iter_next(&(iter)->h_iter)
+ 
+-static inline void *oidmap_iter_first(struct oidmap *map,
+-				      struct oidmap_iter *iter)
+-{
+-	oidmap_iter_init(map, iter);
+-	/* TODO: this API could be reworked to do compile-time type checks */
+-	return (void *)oidmap_iter_next(iter);
+-}
++/*
++ * Returns the first entry in @map using @iter, where the entry is of @type
++ * (e.g. "struct foo") and has a member of type struct oidmap_entry.
++ */
++#define oidmap_iter_first(map, iter, type) \
++	({oidmap_iter_init(map, iter); \
++	 oidmap_iter_next(iter, type); })
+ 
+ #endif
+diff --git a/t/helper/test-oidmap.c b/t/helper/test-oidmap.c
+index 0acf99931e..a28bf007a8 100644
+--- a/t/helper/test-oidmap.c
++++ b/t/helper/test-oidmap.c
+@@ -96,7 +96,7 @@ int cmd__oidmap(int argc, const char **argv)
+ 
+ 			struct oidmap_iter iter;
+ 			oidmap_iter_init(&map, &iter);
+-			while ((entry = oidmap_iter_next(&iter)))
++			while ((entry = oidmap_iter_next(&iter, struct test_entry)))
+ 				printf("%s %s\n", oid_to_hex(&entry->entry.oid), entry->name);
+ 
+ 		} else {
 -- 
 2.26.0
 
