@@ -6,94 +6,104 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B4731C2D0EC
-	for <git@archiver.kernel.org>; Wed,  8 Apr 2020 00:26:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E0034C2BB54
+	for <git@archiver.kernel.org>; Wed,  8 Apr 2020 00:40:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7AB25206F7
-	for <git@archiver.kernel.org>; Wed,  8 Apr 2020 00:26:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B79C9206A1
+	for <git@archiver.kernel.org>; Wed,  8 Apr 2020 00:40:24 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="BdvReOjA"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="qyUvUwxH"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726426AbgDHA0P (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Apr 2020 20:26:15 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:56694 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726406AbgDHA0P (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Apr 2020 20:26:15 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4536ACAD39;
-        Tue,  7 Apr 2020 20:26:13 -0400 (EDT)
+        id S1726469AbgDHAkW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Apr 2020 20:40:22 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:61822 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726406AbgDHAkU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Apr 2020 20:40:20 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id DCCA3B090F;
+        Tue,  7 Apr 2020 20:40:18 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=S+dU51b7wPDGbtD957v2z/0T8kk=; b=BdvReO
-        jAdsBighPy+ZxZPEpePzAvbKWSAv9YeK/t1p5N1PY6vFzTJMXAznjCu8hi2lq3Vg
-        G4yBWNoJeSD45eYnSw/f6OT9ZOqQ8PJHxdsgfOu4f9ZEda4EMKJ6GN0pz3tgyYMh
-        zS+IS+ZVrOIcoa2niqaoViEeMb6n49ZFbbfF0=
+        :content-type; s=sasl; bh=1q590koMLpdTAJ3mdR3CzqbyxEI=; b=qyUvUw
+        xHObpHLJn+E+OSBUku05X/DK+TAswkA6HdZJURLGOrlGmYbixXSD1s+AdA/uVUjF
+        hbqD+EhrG5xE4Bctbp1r7xENb+S/wyW955VeGt4LPM/jlvaMOHHcviH93ZXlwkJB
+        ESZrW9VgkFSwpxICtCtGL+QLGAaE40pHvklZM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=q308hHV0c+bO8jyAVMNn/cIQXdbxnj4H
-        cx+CKiCo3WJOsCRdnnBT+0iTbBBoOmjglsQN6H/687Adsrh4Zk97dj6CvslFpm4Q
-        1BlJYGz5Cgevwsb9JLmePHgI0k4fzTRuGEEDIr8xf02k+dstV7X8yLAubTGwNhxv
-        dYvRGu7NUFo=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3CF20CAD38;
-        Tue,  7 Apr 2020 20:26:13 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=ZiNE2CbVTapFtDvC8mb3DOZXpXFi5Gby
+        LGCYPIT+TpA7tfINz1VqUFvZNS9j8oeSJWrhVk0ah+EMcJKRqHblR09yBQNQOLAw
+        j15yL9PVDqqIeo8a4nbuBjsjFoKqurjCwKmVgVUn06LZlY4i7uf3TbKrXnRv9L3Z
+        JcendPwnicg=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id D5FF2B090B;
+        Tue,  7 Apr 2020 20:40:18 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 899BDCAD37;
-        Tue,  7 Apr 2020 20:26:10 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 26DEEB0909;
+        Tue,  7 Apr 2020 20:40:16 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v5 08/22] rebase: use read_oneliner()
-References: <cover.1585962672.git.liu.denton@gmail.com>
-        <cover.1586269542.git.liu.denton@gmail.com>
-        <0cc279fc14dd27ed2606064d236115aa72551dce.1586269543.git.liu.denton@gmail.com>
-Date:   Tue, 07 Apr 2020 17:26:08 -0700
-In-Reply-To: <0cc279fc14dd27ed2606064d236115aa72551dce.1586269543.git.liu.denton@gmail.com>
-        (Denton Liu's message of "Tue, 7 Apr 2020 10:27:55 -0400")
-Message-ID: <xmqq8sj6rffj.fsf@gitster.c.googlers.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     James Ramsay <james@jramsay.com.au>, git@vger.kernel.org
+Subject: Re: [TOPIC 2/17] Hooks in the future
+References: <AC2EB721-2979-43FD-922D-C5076A57F24B@jramsay.com.au>
+        <0D7F1872-7614-46D6-BB55-6FEAA79F1FE6@jramsay.com.au>
+        <20200312141628.GL212281@google.com>
+        <xmqqeetwcf4k.fsf@gitster.c.googlers.com>
+        <20200407230132.GD137962@google.com>
+        <20200407235116.GE137962@google.com>
+Date:   Tue, 07 Apr 2020 17:40:14 -0700
+In-Reply-To: <20200407235116.GE137962@google.com> (Emily Shaffer's message of
+        "Tue, 7 Apr 2020 16:51:16 -0700")
+Message-ID: <xmqq4ktures1.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 8BE6A80A-792F-11EA-81A3-B0405B776F7B-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 83EA4830-7931-11EA-8162-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
+Emily Shaffer <emilyshaffer@google.com> writes:
 
-> Since in sequencer.c, read_one() basically duplicates the functionality
-> of read_oneliner(), reduce code duplication by replacing read_one() with
-> read_oneliner().
+> [hook "unique-name"]
+>   pre-commit = ~/path-to-hook.sh args-for-precommit
+>   pre-push = ~/path-to-hook.sh
+>   order = 001
 >
-> This was done with the following Coccinelle script
+> Then, in another config:
 >
-> 	@@
-> 	expression a, b;
-> 	@@
-> 	- read_one(a, b)
-> 	+ !read_oneliner(b, a, READ_ONELINER_WARN_NON_EXISTENCE)
+> hook.unique-name.pre-push-order = 123
+>
+> or,
+>
+> hook.unique-name.enable = false
+> hook.unique-name.pre-commit-enable = true
+>
+> To pick it apart a little more:
+>
+>  - Let's give each logical action a unique name, e.g. "git-secrets".
+>  - Users can sign up for a certain event by providing the command to
+>    run, e.g. `hook.git-secrets.pre-commit = git-secrets pre-commit`.
+>  - Users can set up defaults for the logical action, e.g.
+>    `hook.git-secrets.before = gerrit` (where "gerrit" is the unique name
+>    for another logical action), and then change it on a per-hook basis
+>    e.g. `hook.git-secrets.pre-commit-before = clang-tidy`
 
-WARN_MISSING, you mean?
+Sorry, but the description and the tokens used in there are so
+detached from the current reality that I am having a hard time
+trying to even guess what you two were talking about.  
 
-> -/* Read one file, then strip line endings */
-> -static int read_one(const char *path, struct strbuf *buf)
-> -{
-> -	if (strbuf_read_file(buf, path, 0) < 0)
-> -		return error_errno(_("could not read '%s'"), path);
-> -	strbuf_trim_trailing_newline(buf);
-> -	return 0;
-> -}
-> -
+For example, how would I express that I am using program X as my
+'push-to-checkout' hook in a way consistent with the above
+description?  Would "push" correspond to your "git-secrets" and
+"checkout" to your "pre-commit", or would these be placed where you
+wrote "unique-name"?
 
-OK.  Both functions trim the end-of-line marker from the end of the
-string, so this is truly a no-op that reduces the code.  Good.
+
+
