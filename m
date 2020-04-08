@@ -2,118 +2,328 @@ Return-Path: <SRS0=ek70=5Y=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F798C2D0EC
-	for <git@archiver.kernel.org>; Wed,  8 Apr 2020 01:18:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A01FC2D0EC
+	for <git@archiver.kernel.org>; Wed,  8 Apr 2020 01:22:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 21C8D206A1
-	for <git@archiver.kernel.org>; Wed,  8 Apr 2020 01:18:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DA7F7206A1
+	for <git@archiver.kernel.org>; Wed,  8 Apr 2020 01:22:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Fwok6tzl"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UmzEUCc7"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726520AbgDHBSh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Apr 2020 21:18:37 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:51690 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726406AbgDHBSh (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 7 Apr 2020 21:18:37 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id A5A486042C;
-        Wed,  8 Apr 2020 01:18:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1586308716;
-        bh=bx/vZyArH/Uq7xzUjlXEH9IOjV6e/G40mtoXFpx64xM=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=Fwok6tzlQfqLNAflsMAt5ZDz7WFeDSQQI/8V5FONJxOzB/ckxnJDx5Mdt41vdfdN5
-         /7/ogQCMJHZVPKewAxtuEivUO9SjJu/doDbY6J2x4txzZITFU8k2gpymdHY1wa94BL
-         ddBTgsJdjykj31d8ftFIz6QSDGAU4bnbac2+ndNLELDoz8gefraX+5YX0I+nq+4gHY
-         I3VSDLZ2OcSqplkmdBlwuT6tWKUg5qHLufqQW6WstVaNhg/bsaQ1KdmGGHNi8me94v
-         Vg6YHhdmWv+5Eu32k9POZTqC/fXkUP8d50DnW9lQAFDMBdmzwmxP3vRsrYS2Ukpqc1
-         13kICa9mtxf+MN3KYFLPhTj4lu9XRY7e2HBRRv3LBWZ25t97uQT7xNJ8qlR3pGYTgZ
-         7HHWymEWprTXwXKMEIyLAV80OsX19X/coXpo8hJmdgw+NKrmphbLgT6WhqRyX0SEch
-         Wa1PqrnnwTcck9nbJ0fJfGA0ltk1tL3sjwDJD70knYHFo5Wmczk
-Date:   Wed, 8 Apr 2020 01:18:30 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc:     git@vger.kernel.org, andy.shevchenko@gmail.com
-Subject: Re: subtle bug in git-am
-Message-ID: <20200408011830.GA6549@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        git@vger.kernel.org, andy.shevchenko@gmail.com
-References: <20200407184823.GA3932679@smile.fi.intel.com>
+        id S1726421AbgDHBWI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Apr 2020 21:22:08 -0400
+Received: from mail-wr1-f51.google.com ([209.85.221.51]:35744 "EHLO
+        mail-wr1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726416AbgDHBWI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Apr 2020 21:22:08 -0400
+Received: by mail-wr1-f51.google.com with SMTP id g3so5981678wrx.2
+        for <git@vger.kernel.org>; Tue, 07 Apr 2020 18:22:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=boui5qiyRaRoRo+uO9+lSkZ8xHghPsMsmT11so6TBJE=;
+        b=UmzEUCc7WK/7ehDWzif/7H4vjOjr32B2egOeVrZ26BRUI1bVbzNDmMthVbqe2/541/
+         mQ8UCISWZnhcEj30Ctg9Nrf0T8cD+KEzY7dLxBTIi8Kh8OFJGyLGdi+DamC7DCPXadX0
+         4nacICxDgcLfxYdNMjnnFTPN4kr6S69xYIT0h/VeQE7fe+R+Ihy4T9TbQwW9zqzEFPdY
+         tUqF+UHQ4XsnGmSwR/4Iy/vyljWOl0usXBPkw0W9DwHoyWdHl0d2VlAohAAIaqN1xAxs
+         2u2OoCXVz5e3kAJEbl9DBBLbfK388uwS5cU+JMu2BtMgQE8mCLSanCJcwX2HVUQlQvRF
+         0PXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=boui5qiyRaRoRo+uO9+lSkZ8xHghPsMsmT11so6TBJE=;
+        b=DkDe6hgbZ4tkxnuN2mGxV6KvXM56TLbDpnWQMm1wgWGfVKc/na3IeU0+3aCgMajGze
+         b0O1UfkRRI3euof0w1KraA9OqbuzbQ0UmruFyNHNc/GU+3DRNc2ZPdoXSql6farKtUOl
+         9Tz0gukfPYMNxb5LA5BBnqeMVaKsdadvsjUioSxu06EBv6lAGsvgvbXZmPqQY4vTa8ud
+         WUyOvlTEI7Y11ctc09DHXpM0sVgnn3LguNNlDjB3lUJM/ZfDH+QJZQ1Pz2p2dsLyMWG7
+         Ax9fCmPXyII3NsyTyJ9Gr2g+t4GMTZe8MbHvuftH7aVW1+Z/U0eRH4+WErPAsllc0jn9
+         KL5g==
+X-Gm-Message-State: AGi0PuaTQ/OmfoLv9vPLRgZrrCeKhZ47TdMhY8y4cehGOFXh4Fvpe0Bl
+        u0vpCPyBm64aVeBZAHb+AS5EyOXx
+X-Google-Smtp-Source: APiQypLcLV3UIoFcbLZeG8vi5rOcxFqK3Qmu4YKDRvfE+ybZOB0oWiQf5NTooj8xDbSB7Ik3O1+0Og==
+X-Received: by 2002:adf:f2c5:: with SMTP id d5mr5613794wrp.409.1586308924423;
+        Tue, 07 Apr 2020 18:22:04 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id p22sm4619904wmc.42.2020.04.07.18.22.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Apr 2020 18:22:04 -0700 (PDT)
+Message-Id: <pull.599.git.1586308923544.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 08 Apr 2020 01:22:03 +0000
+Subject: [PATCH] revision: --include-diversions adds helpful merges
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="PEIAKu/WMn1b1Hv9"
-Content-Disposition: inline
-In-Reply-To: <20200407184823.GA3932679@smile.fi.intel.com>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.4.0-4-amd64)
+To:     git@vger.kernel.org
+Cc:     peff@peff.net, me@ttaylorr.com,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Derrick Stolee <dstolee@microsoft.com>
 
---PEIAKu/WMn1b1Hv9
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+The default file history simplification of "git log -- <path>" or
+"git rev-list -- <path>" focuses on providing the smallest set of
+commits that first contributed a change. The revision walk greatly
+restricts the set of walked commits by visiting only the first
+TREESAME parent of a merge commit, when one exists. This means
+that portions of the commit-graph are not walked, which can be a
+performance benefit, but can also "hide" commits that added changes
+but were ignored by a merge resolution.
 
-On 2020-04-07 at 18:48:23, Andy Shevchenko wrote:
-> Hi!
->=20
-> What I would like to do is to apply patch from one repository to another =
-with
-> same files but *different directory structure*.
->=20
-> When I try to change directory in the target repo to the folder of files,=
- I run
-> git-am -p5 my_cool_patch.patch.
->=20
-> Instead of the expected result (files and their contents is the same!) I =
-got
-> fileXXX is not in index.
->=20
-> So, I think this is a bug, because -p<n> use in git-am makes little to no=
- sense
-> without above feature.
+The --full-history option modifies this by walking all commits and
+reporting a merge commit as "interesting" if it has _any_ parent
+that is not TREESAME. This tends to be an over-representation of
+important commits, especially in an environment where most merge
+commits are created by pull request completion.
 
-So if I understand correctly, you're expecting git am to apply relative
-to the current directory in the repository.  I have also expected that
-behavior in the past, and found it surprising when it did not.
+Suppose we have a commit A and we create a commit B on top that
+changes our file. When we merge the pull request, we create a merge
+commit M. If no one else changed the file in the first-parent
+history between M and A, then M will not be TREESAME to its first
+parent, but will be TREESAME to B. Thus, the simplified history
+will be "B". However, M will appear in the --full-history mode.
 
-What git am does is apply relative to the root of the repository.  If
-you'd instead like to apply to a specific subdirectory of the
-repository, you can use the --directory option to specify to which
-directory your patch should apply.
+However, suppose that a number of topics T1, T2, ..., Tn were
+created based on commits C1, C2, ..., Cn between A and M as
+follows:
 
-This is the behavior of git apply, which underpins git am.  However,
-outside of a repository, it _does_ apply relative to the current
-directory, since there's no repository root to consider.  I, at least,
-found this confusing, but that's how it works.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+  A----C1----C2--- ... ---Cn----M------P1---P2--- ... ---Pn
+   \     \     \            \  /      /    /            /
+    \     \__.. \            \/ ..__T1    /           Tn
+     \           \__..       /\     ..__T2           /
+      \_____________________B  \____________________/
 
---PEIAKu/WMn1b1Hv9
-Content-Type: application/pgp-signature; name="signature.asc"
+If the commits T1, T2, ... Tn did not change the file, then all of
+P1 through Pn will be TREESAME to their first parent, but not
+TREESAME to their second. This means that all of those merge commits
+appear in the --full-history view, with edges that immediately
+collapse into the lower history without introducing interesting
+single-parent commits.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
+The --simplify-merges option was introduced to remove these extra
+merge commits. By noticing that the rewritten parents are reachable
+from their first parents, those edges can be simplified away. Finally,
+the commits now look like single-parent commits that are TREESAME to
+their "only" parent. Thus, they are removed and this issue does not
+cause issues anymore. However, this also ends up removing the commit
+M from the history view! Even worse, the --simplify-merges option
+requires walking the entire history before returning a single result.
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXo0mZQAKCRB8DEliiIei
-gSJtAP4z/jfZp/VHGPbbhMvVW17xavk3x4iDpjhdtHkkNoKZNAEAlBPz1fjFUVb3
-8GAB8t7/2dFrGQzuK/dvR1nCcY32xAc=
-=LktH
------END PGP SIGNATURE-----
+Many Git users are using Git alongside a Git service that provides
+code storage alongside a code review tool commonly called "Pull
+Requests" or "Merge Requests" against a target branch.  When these
+requests are accepted and merged, they typically create a merge
+commit whose first parent is the previous branch tip and the second
+parent is the tip of the topic branch used for the request. This
+presents a valuable order to the parents, but also makes that merge
+commit slightly special. Users may want to see not only which
+commits changed a file, but which pull requests merged those commits
+into their branch. In the previous example, this would mean the
+users want to see the merge commit "M" in addition to the single-
+parent commit "C".
 
---PEIAKu/WMn1b1Hv9--
+Users are even more likely to want these merge commits when they
+use pull requests to merge into a feature branch before merging that
+feature branch into their trunk.
+
+In some sense, users are asking for the "first" merge commit to
+bring in the change to their branch. As long as the parent order is
+consistent, this can be handled with the following rule:
+
+  Include a merge commit if it is not TREESAME to its first
+  parent, but is TREESAME to a later parent.
+
+I call such merge commits "diversions" because they divert the
+history walk away from the first-parent history. As such, this
+change adds the "--include-diversions" option to rev-list and log.
+To test these options, extend the standard test example to include
+a merge commit that is not TREESAME to its first parent. It is
+surprising that that option was not already in the example, as it
+is instructive.
+
+In particular, this extension demonstrates a common issue with file
+history simplification. When a user resolves a merge conflict using
+"-Xours" or otherwise ignoring one side of the conflict, they create
+a TREESAME edge that probably should not be TREESAME. This leads
+users to become frustrated and complain that "my change disappeared!"
+In my experience, showing them history with --full-history and
+--simplify-merges quickly reveals the problematic merge. As mentioned,
+this option is expensive to compute. The --include-diversions option
+_might_ show the merge commit (usually titled "resolving conflicts")
+more quickly. Of course, this depends on the user having the correct
+parent order, which is backwards when using "git pull".
+
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+    Add a new history mode
+    
+    This --include-diversions option could use a better name.
+    
+    An experienced developer in the Windows OS Engineering Systems team
+    pointed out how hard it is to find out when a change was "introduced" in
+    the Windows OS repo. Due to their multi-leveled, long-lived branch
+    organization, a commit could be part of hundreds of pull requests as the
+    branches are merged across the organization.
+    
+    My default answer was "this is complicated not because of Git, but
+    because of how you are branching." I then tried to explain how finding
+    the "first merge" to include a commit is incredibly difficult and
+    requires performing multiple reachability queries. As I was working it
+    out on paper, I realized that was true if we relied only on the
+    commit-graph shape to inform our qurey.
+    
+    If we use the TREESAME information, then suddenly we get a much clearer
+    picture! Let's simply pick out those merge commits that "introduced a
+    change" because they are TREESAME to a non-first-parent (and not
+    TREESAME to the first parent).
+    
+    My name of "diversions" could probably use some work, but I like the
+    basic concept of this option.
+    
+    I welcome any and all feedback. Thanks!
+    
+    -Stolee
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-599%2Fderrickstolee%2Fnew-history-mode-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-599/derrickstolee/new-history-mode-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/599
+
+ Documentation/rev-list-options.txt |  6 ++++
+ revision.c                         | 16 ++++++++++-
+ revision.h                         |  1 +
+ t/t6012-rev-list-simplify.sh       | 44 ++++++++++++++++++++++++++++++
+ 4 files changed, 66 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index bfd02ade991..0c878be94a9 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -342,6 +342,12 @@ Default mode::
+ 	branches if the end result is the same (i.e. merging branches
+ 	with the same content)
+ 
++--include-diversions::
++	Include all commits from the default mode, but also any merge
++	commits that are not TREESAME to the first parent but are
++	TREESAME to a later parent. This mode is helpful for showing
++	the merge commits that "first introduced" a change to a branch.
++
+ --full-history::
+ 	Same as the default mode, but does not prune some history.
+ 
+diff --git a/revision.c b/revision.c
+index 8136929e236..915d8febdc4 100644
+--- a/revision.c
++++ b/revision.c
+@@ -870,7 +870,19 @@ static void try_to_simplify_commit(struct rev_info *revs, struct commit *commit)
+ 			}
+ 			parent->next = NULL;
+ 			commit->parents = parent;
+-			commit->object.flags |= TREESAME;
++
++			/*
++			 * A merge commit is a "diversion" if it is not
++			 * TREESAME to its first parent but is TREESAME
++			 * to a later parent. In the simplified history,
++			 * we "divert" the history walk to the later
++			 * parent. These commits are shown when "diversions"
++			 * is enabled, so do not mark the object as
++			 * TREESAME here.
++			 */
++			if (!revs->diversions || !nth_parent)
++				commit->object.flags |= TREESAME;
++
+ 			return;
+ 
+ 		case REV_TREE_NEW:
+@@ -2265,6 +2277,8 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 	} else if (!strcmp(arg, "--full-diff")) {
+ 		revs->diff = 1;
+ 		revs->full_diff = 1;
++	} else if (!strcmp(arg, "--include-diversions")) {
++		revs->diversions = 1;
+ 	} else if (!strcmp(arg, "--full-history")) {
+ 		revs->simplify_history = 0;
+ 	} else if (!strcmp(arg, "--relative-date")) {
+diff --git a/revision.h b/revision.h
+index 475f048fb61..f06a73cbcd8 100644
+--- a/revision.h
++++ b/revision.h
+@@ -129,6 +129,7 @@ struct rev_info {
+ 			no_walk:2,
+ 			remove_empty_trees:1,
+ 			simplify_history:1,
++			diversions:1,
+ 			topo_order:1,
+ 			simplify_merges:1,
+ 			simplify_by_decoration:1,
+diff --git a/t/t6012-rev-list-simplify.sh b/t/t6012-rev-list-simplify.sh
+index a10f0df02b0..9c91226f737 100755
+--- a/t/t6012-rev-list-simplify.sh
++++ b/t/t6012-rev-list-simplify.sh
+@@ -154,4 +154,48 @@ test_expect_success '--full-diff is not affected by --parents' '
+ 	test_cmp expected actual
+ '
+ 
++#
++# Modify the test repo to add a merge whose first parent is not TREESAME
++# but whose second parent is TREESAME
++#
++# A--B----------G--H--I--K--L--N
++#  \  \           /     /     /
++#   \  \         /     /     /
++#    C------E---F     J     /
++#     \  \_/               /
++#      \                  /
++#       M-----------------
++test_expect_success 'expand graph' '
++	git switch -c branchM C &&
++	echo "new data" >file &&
++	git add file &&
++	test_tick &&
++	test_commit M &&
++
++	git checkout master &&
++	git merge -Xtheirs branchM -m "N" &&
++	note N
++'
++
++check_result 'M C A' -- file
++check_result 'N M C A' --include-diversions -- file
++
++check_result 'N M L K J I H F E D C G B A' --full-history --topo-order
++check_result 'N M L K I H G F E D C B J A' --full-history
++check_result 'N M L K I H G F E D C B J A' --full-history --date-order
++check_result 'N M L K I H G F E D B C J A' --full-history --author-date-order
++check_result 'N M K I H E C B A' --full-history -- file
++check_result 'N M K I H E C B A' --full-history --topo-order -- file
++check_result 'N M K I H E C B A' --full-history --date-order -- file
++check_result 'N M K I H E B C A' --full-history --author-date-order -- file
++check_result 'N M I E C B A' --simplify-merges -- file
++check_result 'N M I E C B A' --simplify-merges --topo-order -- file
++check_result 'N M I E C B A' --simplify-merges --date-order -- file
++check_result 'N M I E B C A' --simplify-merges --author-date-order -- file
++check_result 'M C A' --topo-order -- file
++check_result 'M C A' --date-order -- file
++check_result 'M C A' --author-date-order -- file
++check_result 'H' --first-parent -- another-file
++check_result 'H' --first-parent --topo-order -- another-file
++
+ test_done
+
+base-commit: 274b9cc25322d9ee79aa8e6d4e86f0ffe5ced925
+-- 
+gitgitgadget
