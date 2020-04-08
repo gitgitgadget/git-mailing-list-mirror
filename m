@@ -2,104 +2,111 @@ Return-Path: <SRS0=ek70=5Y=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.3 required=3.0
-	tests=HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F181C2D0F4
-	for <git@archiver.kernel.org>; Wed,  8 Apr 2020 19:13:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D34A8C2D0F4
+	for <git@archiver.kernel.org>; Wed,  8 Apr 2020 19:14:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 490F420768
-	for <git@archiver.kernel.org>; Wed,  8 Apr 2020 19:13:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A2D1F20768
+	for <git@archiver.kernel.org>; Wed,  8 Apr 2020 19:14:23 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="FYjATxWT"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729441AbgDHTNW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Apr 2020 15:13:22 -0400
-Received: from smtp.hosts.co.uk ([85.233.160.19]:37967 "EHLO smtp.hosts.co.uk"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728195AbgDHTNV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Apr 2020 15:13:21 -0400
-Received: from [92.30.123.115] (helo=[192.168.1.38])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1jMG8T-0001pN-98; Wed, 08 Apr 2020 20:13:18 +0100
-Subject: Re: [PATCH] bloom: ignore renames when computing changed paths
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Derrick Stolee <dstolee@microsoft.com>
-References: <pull.601.git.1586363907252.gitgitgadget@gmail.com>
-From:   Philip Oakley <philipoakley@iee.email>
-Message-ID: <7b23c659-56b4-5ed1-eb66-eb112cbde8a3@iee.email>
-Date:   Wed, 8 Apr 2020 20:13:17 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.6.0
+        id S1729798AbgDHTOW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Apr 2020 15:14:22 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:52835 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727469AbgDHTOW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Apr 2020 15:14:22 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 01A6BB18BD;
+        Wed,  8 Apr 2020 15:14:22 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=Am2KCpZbuf+V
+        pptIeAwa+c/u/KY=; b=FYjATxWTcAe8lJ/0IIZwBNGaw3iL6eNTFX6RHdOP1IpL
+        Ho5UMbzxsDLDbc+BFxV9wVBx7kELjv8jwJ9OGZ/Mh0LovPqZBH+m4V5nFSgoEpRp
+        KGEICaBc6TXCEYjMWhwSUYTju5fNX0A2DBf2zoSKSZWo1wWxsdxgKdFAOxdssE4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=Od6hls
+        tm8nQPk4W+jJfXcjnjmFxbKVx6mdZ+Vauv+1pI6VcIOhHiY20lj2S5MHg27o9dK6
+        YMf2Y2MMOutfxnhUpq7qwCSV3Z03D/mvIAZmXU7V27X0OQgBdAvm5vPguchuRBZ1
+        alWeR15TBuHCda9QhZehCD448pv/7pughiuW0=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id ED833B18BC;
+        Wed,  8 Apr 2020 15:14:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id E7BE6B18BB;
+        Wed,  8 Apr 2020 15:14:17 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Matthias =?utf-8?Q?A=C3=9Fhauer?= <mha1993@live.de>
+Subject: Re: [PATCH] mingw: use modern strftime implementation if possible
+References: <pull.753.git.git.1586368729890.gitgitgadget@gmail.com>
+Date:   Wed, 08 Apr 2020 12:14:16 -0700
+In-Reply-To: <pull.753.git.git.1586368729890.gitgitgadget@gmail.com> (Johannes
+        Schindelin via GitGitGadget's message of "Wed, 08 Apr 2020 17:58:49
+        +0000")
+Message-ID: <xmqqblo1pz7b.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <pull.601.git.1586363907252.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
+X-Pobox-Relay-ID: 24B9EBD0-79CD-11EA-BC35-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-spelling nit.
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-On 08/04/2020 17:38, Derrick Stolee via GitGitGadget wrote:
-> From: Derrick Stolee <dstolee@microsoft.com>
+> From: =3D?UTF-8?q?Matthias=3D20A=3DC3=3D9Fhauer?=3D <mha1993@live.de>
 >
-> The changed-path Bloom filters record an entry in the filter for
-> every path that was changed. This includes every add and delete,
-> regardless of whther a rename was detected. Detecting renames
-whether
-> causes significant performance issues, but also will trigger
-> downloading missing blobs in partial clone.
+> Microsoft introduced a new "Universal C Runtime Library" (UCRT) with
+> Visual Studio 2015. The UCRT comes with a new strftime() implementation
+> that supports more date formats. We link git against the older
+> "Microsoft Visual C Runtime Library" (MSVCRT), so to use the UCRT
+> strftime() we need to load it from ucrtbase.dll using
+> DECLARE_PROC_ADDR()/INIT_PROC_ADDR().
 >
-> The simple fix is to disable rename detection when computing a
-> changed-path Bloom filter.
+> Most supported Windows systems should have recieved the UCRT via Window=
+s
+> update, but in some cases only MSVCRT might be available. In that case
+> we fall back to using that implementation.
 >
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> With this change, it is possible to use e.g. the `%g` and `%V` date
+> format specifiers, e.g.
+>
+> 	git show -s --format=3D%cd --date=3Dformat:=E2=80=98%g.%V=E2=80=99 HEA=
+D
+>
+> Without this change, the user would see this error message on Windows:
+>
+> 	fatal: invalid strftime format: '=E2=80=98%g.%V=E2=80=99'
+>
+> This fixes https://github.com/git-for-windows/git/issues/2495
+>
+> Signed-off-by: Matthias A=C3=9Fhauer <mha1993@live.de>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > ---
->     bloom: ignore renames when computing changed paths
->     
->     I promised [1] I would adapt the commit that was dropped from
->     gs/commit-graph-path-filter [2] on top of gs/commit-graph-path-filter
->     and jt/avoid-prefetch-when-able-in-diff. However, I noticed that the
->     change was extremely simple and has value without basing it on
->     jt/avoid-prefetch-when-able-in-diff.
->     
->     This change applied to gs/commit-graph-path-filter has obvious CPU time
->     improvements for computing changed-path Bloom filters (that I did not
->     measure). The partial clone improvements require
->     jt/avoid-prefetch-when-able-in-diff to be included, too, but the code
->     does not depend on it at compile time.
->     
->     Thanks, -Stolee
->     
->     [1] 
->     https://lore.kernel.org/git/7de2f54b-8704-a0e1-12aa-0ca9d3d70f6f@gmail.com/
->     [2] 
->     https://lore.kernel.org/git/55824cda89c1dca7756c8c2d831d6e115f4a9ddb.1585528298.git.gitgitgadget@gmail.com/
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-601%2Fderrickstolee%2Fdiff-and-bloom-filters-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-601/derrickstolee/diff-and-bloom-filters-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/601
->
->  bloom.c | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/bloom.c b/bloom.c
-> index c5b461d1cfe..dd9bab9bbd6 100644
-> --- a/bloom.c
-> +++ b/bloom.c
-> @@ -189,6 +189,7 @@ struct bloom_filter *get_bloom_filter(struct repository *r,
->  
->  	repo_diff_setup(r, &diffopt);
->  	diffopt.flags.recursive = 1;
-> +	diffopt.detect_rename = 0;
->  	diffopt.max_changes = max_changes;
->  	diff_setup_done(&diffopt);
->  
->
-> base-commit: d5b873c832d832e44523d1d2a9d29afe2b84c84f
-Philip
+>     Use a modern strftime() on Windows when available
+>    =20
+>     This is another contribution that came in via Git for Windows.
+
+Sure.  It would be very surprising if contribution to compat/mingw.c
+came in via Git on Macintosh ;-)
+
+Will apply, together with the other one.  Thanks.
+
