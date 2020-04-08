@@ -2,90 +2,96 @@ Return-Path: <SRS0=ek70=5Y=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.5 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	URIBL_SBL,URIBL_SBL_A,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 49A32C2D0F4
-	for <git@archiver.kernel.org>; Wed,  8 Apr 2020 18:36:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 86ABEC2D0F4
+	for <git@archiver.kernel.org>; Wed,  8 Apr 2020 18:48:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id E361D2072F
-	for <git@archiver.kernel.org>; Wed,  8 Apr 2020 18:36:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 625682075E
+	for <git@archiver.kernel.org>; Wed,  8 Apr 2020 18:48:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728792AbgDHSg3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Apr 2020 14:36:29 -0400
-Received: from bsmtp2.bon.at ([213.33.87.16]:56354 "EHLO bsmtp2.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726860AbgDHSg2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Apr 2020 14:36:28 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp2.bon.at (Postfix) with ESMTPSA id 48yCfL3xHWz5tlC;
-        Wed,  8 Apr 2020 20:36:26 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 81C764951;
-        Wed,  8 Apr 2020 20:36:25 +0200 (CEST)
-Subject: [PATCH] gitk: Un-hide selection in added and removed text and search
- results
-From:   Johannes Sixt <j6t@kdbg.org>
-To:     Paul Mackerras <paulus@ozlabs.org>
-Cc:     Stefan Dotterweich <stefandotterweich@gmx.de>, git@vger.kernel.org
-References: <20200211212448.9288-1-stefandotterweich@gmx.de>
- <8b5b8d89-59c2-7349-25c1-2529db13fa6e@kdbg.org>
-Message-ID: <2ecfbb59-3a65-9db0-4ff7-e649ab6dfb6e@kdbg.org>
-Date:   Wed, 8 Apr 2020 20:36:25 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.6.0
+        id S1728391AbgDHSsp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Apr 2020 14:48:45 -0400
+Received: from cloud.peff.net ([104.130.231.41]:37304 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1728208AbgDHSsp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Apr 2020 14:48:45 -0400
+Received: (qmail 12766 invoked by uid 109); 8 Apr 2020 18:48:44 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 08 Apr 2020 18:48:44 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 10986 invoked by uid 111); 8 Apr 2020 18:59:12 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 08 Apr 2020 14:59:12 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 8 Apr 2020 14:48:43 -0400
+From:   Jeff King <peff@peff.net>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, me@ttaylorr.com,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH] revision: --include-diversions adds helpful merges
+Message-ID: <20200408184843.GA1963695@coredump.intra.peff.net>
+References: <pull.599.git.1586308923544.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <8b5b8d89-59c2-7349-25c1-2529db13fa6e@kdbg.org>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+In-Reply-To: <pull.599.git.1586308923544.gitgitgadget@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The recently introduced background for the tags that highlight
-added and removed text takes precedence over the background color
-of the selection. But selected text is more important than the
-highlighted text. Make the highlighting tags the lowest priority.
+On Wed, Apr 08, 2020 at 01:22:03AM +0000, Derrick Stolee via GitGitGadget wrote:
 
-The same argument holds for the highlight of search results. But
-search results are a bit more important. Therefore, make them
-also low-priority, but just above the added-and-removed tags.
+> The default file history simplification of "git log -- <path>" or
+> "git rev-list -- <path>" focuses on providing the smallest set of
+> commits that first contributed a change. The revision walk greatly
+> restricts the set of walked commits by visiting only the first
+> TREESAME parent of a merge commit, when one exists. This means
+> that portions of the commit-graph are not walked, which can be a
+> performance benefit, but can also "hide" commits that added changes
+> but were ignored by a merge resolution.
+> [...]
 
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
-Am 07.04.20 um 18:42 schrieb Johannes Sixt:
-> There is one major gripe, though: the new background color overrides the
-> selection background and makes the selection invisible. This is a
-> showstopper.
+Thanks for a really great description of the problem.
 
-Here is a fix for that on top of Stefan's patch. The patch text works
-without Stefan's patch (and would un-hide the selection in search
-results), but the commit message would have to be adjusted.
+Playing around with the patch, I found one curiosity. Try this:
 
--- Hannes
+  git log --graph --oneline origin -- GIT-VERSION-GEN >old
+  git log --graph --oneline --include-diversions \
+                            origin -- GIT-VERSION-GEN >new
+  diff -u old new
 
- gitk | 5 +++++
- 1 file changed, 5 insertions(+)
+The first hunk has:
 
-diff --git a/gitk b/gitk
-index 4129c0ba95..d4dd9aca64 100755
---- a/gitk
-+++ b/gitk
-@@ -2468,6 +2468,11 @@ proc makewindow {} {
-     $ctext tag conf currentsearchhit -back $currentsearchhitbgcolor
-     $ctext tag conf wwrap -wrap word -lmargin2 1c
-     $ctext tag conf bold -font textfontbold
-+    # set these to the lowest priority:
-+    $ctext tag lower currentsearchhit
-+    $ctext tag lower found
-+    $ctext tag lower dresult
-+    $ctext tag lower d0
- 
-     .pwbottom add .bleft
-     if {!$use_ttk} {
--- 
-2.26.0.207.gdeb9c6cae9
+  @@ -70,6 +70,7 @@
+   * 20769079d2 Git 2.12-rc2
+   * 5588dbffbd Git 2.12-rc1
+   * 6e3a7b3398 Git 2.12-rc0
+  +* 0a45050a14 Merge branch 'rj/git-version-gen-do-not-force-abbrev'
+   * a7659747c2 GIT-VERSION-GEN: do not force abbreviation length used by 'describe'
+   * 8d7a455ed5 Start post 2.11 cycle
+   * 454cb6bd52 Git 2.11
+
+which makes sense. That merge brought in a7659747c2, and the other side
+hadn't touched it. But I can't tell from the output how the two are
+related. Nor can I just add "-p" to the invocation; after we've
+simplified, it has only a single parent, but it's TREESAME to that
+parent. So it has no diff.
+
+I actually think the most descriptive output here would be something
+like:
+
+  * 6e3a7b3398 Git 2.12-rc0
+  * 0a45050a14 Merge branch 'rj/git-version-gen-do-not-force-abbrev'
+  |\
+  | * a7659747c2 GIT-VERSION-GEN: do not force abbreviation length used by 'describe'
+  |/
+  * Start post 2.11 cycle
+
+I.e., leaving both parents intact for a "diversion" merge. But maybe
+that would have secondary effects in other places.
+
+-Peff
