@@ -2,147 +2,132 @@ Return-Path: <SRS0=ek70=5Y=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DEC00C2D0F4
-	for <git@archiver.kernel.org>; Wed,  8 Apr 2020 19:28:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DC884C2D0F4
+	for <git@archiver.kernel.org>; Wed,  8 Apr 2020 19:33:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A60C92072F
-	for <git@archiver.kernel.org>; Wed,  8 Apr 2020 19:28:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9176B20730
+	for <git@archiver.kernel.org>; Wed,  8 Apr 2020 19:33:08 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YTHYCZGv"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DVnNtL+R"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729968AbgDHT2Z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Apr 2020 15:28:25 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:33155 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729961AbgDHT2Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Apr 2020 15:28:25 -0400
-Received: by mail-io1-f66.google.com with SMTP id o127so1368701iof.0
-        for <git@vger.kernel.org>; Wed, 08 Apr 2020 12:28:20 -0700 (PDT)
+        id S1729978AbgDHTdG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Apr 2020 15:33:06 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:33804 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728209AbgDHTdF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Apr 2020 15:33:05 -0400
+Received: by mail-ed1-f68.google.com with SMTP id x62so829728ede.1
+        for <git@vger.kernel.org>; Wed, 08 Apr 2020 12:33:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=Frhyb2oRY2hoMJI/I75GFdnYR2bL8hiwl2ZP4E6zu+Q=;
-        b=YTHYCZGvxv33GD/fAE5Og4Hrb6z/Q47eM7LApXPHI3hqbDImQumCtcovFQyLrR4Ckd
-         FUmNdplSy/yOUKeYqy0sP/pQ51jlaMgcC0t92uGsqqkvjdd0kW9LJ/fMoIJMeZ7awI9/
-         oVB5O8ONhCAVoAtnAv5rOHZTfIMnzl9RkoyNhSHb2t28Vl2lVNOiHbpHT8I+Ml9oKvWf
-         DxFVnxOglDFOxFsFQdqjJYJl+jXX0CnbYpjPhVq0o35he86ygbNqaPLY183dLYPXwQ5M
-         3/x9dquarhy59g5MQRojUD9ScAbpj7F2Yfut47VM3Lhq/AGVauPO2jX8SIsww9MQGb/l
-         ftPQ==
+        h=message-id:from:date:subject:mime-version:content-transfer-encoding
+         :fcc:to:cc;
+        bh=hkxcwkfov41oIK99xM9ufFvKKqGrO1o+PAGoa0ilKOU=;
+        b=DVnNtL+RiqdIDM1BL9+bI0/tNlAAYIzDQLie+e3i+BrUEmz9p0CJtIIpnFfEHP9v9l
+         qX9MLmiAP9B/eYbtP/rLn4W8mWYmRwn2V1+Krmtqm8lOUYQMjwSYPus70aUS3ESdKPRd
+         zoqrdvFUpbx6lhPxugDUSFQvgkL9YpgUJWKGskLv+MDTwgxu5delDbCDqLmT/wjMczzL
+         03DdxDpYXhH2EgIItl3WtcdJnFRu85iKv+7qdEgmjy7kctMSyn1flFBAv8YCuNOE67Hp
+         yRAjsOyXkcBcsNAyRYUQMDeyBZxJcom6OrOoPazbH3YlSLMTeVnlXxYeFQNS/ZWO/ld8
+         5bhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=Frhyb2oRY2hoMJI/I75GFdnYR2bL8hiwl2ZP4E6zu+Q=;
-        b=jXq9oXoKddl2rF/jVEitMZ4Okhd2gChcvL299w8AYmGzrKQm4pkuughZWSt5Hkz7X6
-         44Vu8HoOnPtEyeKbsF6/3+cWCFTCQmta6m0W5/0Hb1s7rUIkG9EzM03doVBMLtj5MLj9
-         1o2n5Z0TRTROElZXLGM8Cn1VJIIsElS0WmFrImoR/zX0zjQL6SQlSiYlLDDJfv9aBCwK
-         gWyClSbwXa4fFbTC8TcqM5ANbPTP/MIU+mrnp1IbV1s3uTCM4aYTkY1FZ346Hnsz70F4
-         11eaaDxHpXbN246/o4FZM6Utq1tSRpsuTcqsmmh5P/ACdNdDEMXf5ILpbOuntbz3vz/o
-         B+lg==
-X-Gm-Message-State: AGi0PubTFoeCQA4zQg9wMwkiJrCjYjvvg1j6547fCRp+X5cdtqM4j8Om
-        Lqclv4yhre4C9qkiJuMvyG8lF1MyGkI82Gxom/5eYTPJ
-X-Google-Smtp-Source: APiQypKiZSS49rHihT6R0ZNFYBnSsiXQI1jLhX7wnmyCEGxKLKLFDDFChslkywDKjam18z4IKiWMjwB8cGNp2IfCa88=
-X-Received: by 2002:a02:1c07:: with SMTP id c7mr8157592jac.19.1586374099941;
- Wed, 08 Apr 2020 12:28:19 -0700 (PDT)
+        h=x-gm-message-state:message-id:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=hkxcwkfov41oIK99xM9ufFvKKqGrO1o+PAGoa0ilKOU=;
+        b=E2c8be18LE0JMsDuAjhUGs61KGwxS7d6drOOiIpcrCQ/U9izXBXp0ymzZRu/k4jaJ9
+         xNIq2/HMBCKs/bleECkm77FsCifitRWd5o2tHRWIitfKeNjACJuXeq2znhLBg29cEBUb
+         jsFxoB5EyYKAZJhauAVQTfEdb2/XB3Kp01EnH2VL/+qr30aCxvWW0FjDy9oKAcaeT4i8
+         tPuEzAWy02U2cW+E8tYwmnDMblCg9zLwdk/2KPoEZXta3f49cjm6vJot0tf4aPJazzpj
+         RKtPCMnjuxz7e7O+URPmNenv/RaA24x5nsS27ljcqyWOl1/PuVIC0nCT7q9AAGKHwyPe
+         aUzg==
+X-Gm-Message-State: AGi0PuZHbbcuNbuSb7dFPV9X2pS3mqmOq1eFs8XedlUwXUGQrDl5oWsB
+        EuynES/vgdC2MiLlthFa+3GFf295
+X-Google-Smtp-Source: APiQypKSF19Rtt1KSAa2pjv1Jv/OknX2zPWMwcWHf23Ouzr5vZmuMUOPXUw6m7D0tJcIAnVs6sMUtA==
+X-Received: by 2002:a05:6402:160e:: with SMTP id f14mr8040063edv.301.1586374381889;
+        Wed, 08 Apr 2020 12:33:01 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id k4sm3659717ejj.63.2020.04.08.12.33.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Apr 2020 12:33:01 -0700 (PDT)
+Message-Id: <pull.755.git.git.1586374380709.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 08 Apr 2020 19:33:00 +0000
+Subject: [PATCH] clean: explicitly `fflush` stdout
 MIME-Version: 1.0
-From:   Erwin Bonsma <erwin.bonsma@gmail.com>
-Date:   Wed, 8 Apr 2020 21:28:09 +0200
-Message-ID: <CAG5PFTvqnR-aeJ=+4W5A5WKqJ8Wq3JsD7J5QjwprE+Nws+=YBg@mail.gmail.com>
-Subject: Commit includes rename which was not staged, nor actually performed
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc:    Sent
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        =?UTF-8?q?=EB=A7=88=EB=88=84=EC=97=98?= <nalla@hamal.uberspace.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+From: =?UTF-8?q?=EB=A7=88=EB=88=84=EC=97=98?= <nalla@hamal.uberspace.de>
 
-I encountered a problem with git version 2.24.1 (Apple Git-126). When
-committing changes to a single file, the commit included a rename,
-which was not staged, nor actually carried out.
+For performance reasons `stdout` is buffered by default. That leads to
+problems if after printing to `stdout` a read on `stdin` is performed.
 
-More specifically:
+For that reason interactive commands like `git clean -i` do not function
+properly anymore if the `stdout` is not flushed by `fflush(stdout)` before
+trying to read from `stdin`.
 
-> git status
-On branch unwanted-rename
-Changes to be committed:
-  (use "git restore --staged <file>..." to unstage)
-modified:   it.xliff
+So let's precede all reads on `stdin` in `git clean -i` by flushing
+`stdout`.
 
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-Pending/it.xliff.todo
+Signed-off-by: 마누엘 <nalla@hamal.uberspace.de>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+    Explicitly fflush stdout in git clean
+    
+    This is yet another patch that was funneled through a Git for Windows
+    PR. It has served us well for almost five years now, and it is beyond
+    time that it find its final home in core Git.
 
-> git commit -m "Some fixes"
-[unwanted-rename 98098ab] Some fixes
- 2 files changed, 792 insertions(+), 826 deletions(-)
- rename de.xliff => Pending/it.xliff.todo (56%)
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-755%2Fdscho%2Ffflush-in-git-clean-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-755/dscho/fflush-in-git-clean-v1
+Pull-Request: https://github.com/git/git/pull/755
 
-> git log --name-only HEAD~1..HEAD
-commit 98098abe5bc9c10a644009e6d185fa967941caca (HEAD -> unwanted-rename)
-Author: Erwin Bonsma <eriban@users.sourceforge.net>
-Date:   Wed Apr 8 20:47:09 2020 +0200
+ builtin/clean.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-    Some fixes
+diff --git a/builtin/clean.c b/builtin/clean.c
+index 5abf087e7c4..2bd06d13395 100644
+--- a/builtin/clean.c
++++ b/builtin/clean.c
+@@ -580,6 +580,7 @@ static int *list_and_choose(struct menu_opts *opts, struct menu_stuff *stuff)
+ 			       clean_get_color(CLEAN_COLOR_RESET));
+ 		}
+ 
++		fflush(stdout);
+ 		if (strbuf_getline_lf(&choice, stdin) != EOF) {
+ 			strbuf_trim(&choice);
+ 		} else {
+@@ -662,6 +663,7 @@ static int filter_by_patterns_cmd(void)
+ 		clean_print_color(CLEAN_COLOR_PROMPT);
+ 		printf(_("Input ignore patterns>> "));
+ 		clean_print_color(CLEAN_COLOR_RESET);
++		fflush(stdout);
+ 		if (strbuf_getline_lf(&confirm, stdin) != EOF)
+ 			strbuf_trim(&confirm);
+ 		else
+@@ -760,6 +762,7 @@ static int ask_each_cmd(void)
+ 			qname = quote_path_relative(item->string, NULL, &buf);
+ 			/* TRANSLATORS: Make sure to keep [y/N] as is */
+ 			printf(_("Remove %s [y/N]? "), qname);
++			fflush(stdout);
+ 			if (strbuf_getline_lf(&confirm, stdin) != EOF) {
+ 				strbuf_trim(&confirm);
+ 			} else {
 
-Pending/it.xliff.todo
-it.xliff
-
-> ls de.*
-de.xliff # The file is still present
-
-> git status
-On branch unwanted-rename
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-Pending/it.xliff.todo # The file is still untracked
-
-> rm Pending/it.xliff.todo
-> git checkout master
-> git checkout unwanted-rename
-
-Now let's inspect the resulting revision again.
-
-> ls de.*
-ls: de.xliff: No such file or directory # The file is now gone, as
-commit suggested
-> ls Pending/it.xliff.*
-Pending/it.xliff.todo # The untracked, removed file was indeed added
-to source control
-
-The changes can be reproduced on the unwanted-rename branch available
-at https://git.code.sf.net/p/grandperspectiv/localization
-
-The branch includes the wrong commit. To reproduce it:
-> git reset --soft HEAD~1
-> git restore --staged de.xliff
-> git restore --staged Pending/it.xliff.todo
-> git restore de.xliff
-
-Now working copy is ready for replay.
-> git status
-On branch unwanted-rename
-Your branch is behind 'origin/unwanted-rename' by 1 commit, and can be
-fast-forwarded.
-  (use "git pull" to update your local branch)
-
-Changes to be committed:
-  (use "git restore --staged <file>..." to unstage)
-modified:   it.xliff
-
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-Pending/it.xliff.todo
-
-> git commit -m "Some fixes"
-[unwanted-rename 4d1368c] Some fixes
- 2 files changed, 792 insertions(+), 826 deletions(-)
- rename de.xliff => Pending/it.xliff.todo (56%)
-
-Cheers,
-Erwin
+base-commit: 9fadedd637b312089337d73c3ed8447e9f0aa775
+-- 
+gitgitgadget
