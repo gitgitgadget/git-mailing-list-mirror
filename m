@@ -6,88 +6,83 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F542C2BA19
-	for <git@archiver.kernel.org>; Thu,  9 Apr 2020 22:55:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 02ADBC2BA19
+	for <git@archiver.kernel.org>; Thu,  9 Apr 2020 22:57:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A1B952074F
-	for <git@archiver.kernel.org>; Thu,  9 Apr 2020 22:55:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C6BFB2083E
+	for <git@archiver.kernel.org>; Thu,  9 Apr 2020 22:57:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="CXz51eAU"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="HB+zOKRU"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726825AbgDIWzd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Apr 2020 18:55:33 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59068 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726726AbgDIWzc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Apr 2020 18:55:32 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 48831414E7;
-        Thu,  9 Apr 2020 18:55:31 -0400 (EDT)
+        id S1726793AbgDIW5F (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Apr 2020 18:57:05 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:61257 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726725AbgDIW5E (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Apr 2020 18:57:04 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 24485BD14D;
+        Thu,  9 Apr 2020 18:57:05 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=phOv4EDzhZO+KKFNPUwUUltbfLw=; b=CXz51e
-        AU3F4DvnHzrgXmue5keQA6MfYPToUlh/R8/OYXdqus9gLDsWhCybFG/PDTy+iZhw
-        zm35Q5+/5Ep34bSFOCuo/Jv65nrsa+bf2yRASywOK2liW2dnZQg3NE4r/TfvLtP2
-        z5FpNxrhlrgjgEfq7RH/nxxEUb95Gty6lt06E=
+        :content-type; s=sasl; bh=k5sT7dITZ88DRoC22OKr3nF1mK8=; b=HB+zOK
+        RU3XZMK63XYKwatRo85KzoRP8MzdqTrMu/SiuZ7K/T00TXi19Oi5VxdIREISWYUG
+        fSjKnI6GxDLHDlp1Qey/lNpKK6vcu1ys7SEoU8xFYBSldFngY+1Hx/h0l1VrOE99
+        kFJTAChXpoO52BKOv5eJPNyT2bVDV8jr67ODM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=WQCWNpfiHtJ636OLq6r4US/EPZ0H0NvS
-        w9s0Fx/j85ImpRIaeJ2ULBplAumCXyy0JcCjRD8gxdMdLYuaIm+snnAycHU1sUR+
-        UqWtal7co8kTchC9/6sByp8qbiMe/2bzVmph0Ntmtt+1/gDpr3FjCr92NwFlb/0s
-        SE+ENfdcKgs=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3FDF7414E6;
-        Thu,  9 Apr 2020 18:55:31 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=UUq8gwuTQrtasfGNG4MCchGY3QzoD8So
+        b1EICLH+hmHa8OgIG15wtS2mp+vcN8v4ESBjnMzZFLx0JfewdOX/DTVAa/I0IqDw
+        oOjG8wxhOhwyzgnGpf+nzCZVmJI0NITIQy6k91NVNdFzTD6f8uHXMTZPpF2JcmCL
+        ww3OA9bFpEE=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1C6BDBD14C;
+        Thu,  9 Apr 2020 18:57:05 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B6416414E5;
-        Thu,  9 Apr 2020 18:55:30 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 62265BD147;
+        Thu,  9 Apr 2020 18:57:02 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Norbert Kiesel <nkiesel@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [git 2.26] stat counts reported by commit and log are different
-References: <CAM+g_Nv4UqQNAuYyo5zsTsiomCe4ueoM6ZGU1aqAjLGV9+jQJg@mail.gmail.com>
-        <20200409135959.GB3494212@coredump.intra.peff.net>
-        <CAM+g_NuZ3pKAd80+HoR8-_0=N9wV28L-yyb1VhJhTbYH+RS0og@mail.gmail.com>
-        <20200409224747.GA4173825@coredump.intra.peff.net>
-Date:   Thu, 09 Apr 2020 15:55:30 -0700
-In-Reply-To: <20200409224747.GA4173825@coredump.intra.peff.net> (Jeff King's
-        message of "Thu, 9 Apr 2020 18:47:47 -0400")
-Message-ID: <xmqq8sj4mfq5.fsf@gitster.c.googlers.com>
+To:     =?utf-8?Q?=C3=89rico?= Rolim <erico.erc@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [BUG] segmentation fault in git-diff
+References: <CAFDeuWO+2JEGudtnHZvSsSUOVRR83U9ziLEjSoDyMWxYhvDMKg@mail.gmail.com>
+        <xmqqh7xsmg7j.fsf@gitster.c.googlers.com>
+        <xmqqd08gmg3s.fsf@gitster.c.googlers.com>
+Date:   Thu, 09 Apr 2020 15:57:00 -0700
+In-Reply-To: <xmqqd08gmg3s.fsf@gitster.c.googlers.com> (Junio C. Hamano's
+        message of "Thu, 09 Apr 2020 15:47:19 -0700")
+Message-ID: <xmqq4ktsmfnn.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 3657C874-7AB5-11EA-A2AA-C28CBED8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 6CF9562C-7AB5-11EA-9ED4-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> It might make sense to do so (and/or to make it possible to enable it by
-> config like we did for years with diff.renames). But it definitely is
-> way more expensive.
-> ...
-> So not quite as bad percentage-wise, but still pretty expensive. And for
-> not a huge benefit. There are ~261 impacted commits. You can see a
-> recent example with:
+> Junio C Hamano <gitster@pobox.com> writes:
 >
->   git show -B -M --stat --summary ce6521e44
+>> This is 'next' running for me:
 >
-> where we find that most of builtin/fmt-merge-msg.c was moved to
-> fmt-merge-msg.c. It's nice, but it's expensive enough that it probably
-> shouldn't be the default.
+> Scratch all that---sorry, but I did see the note about trailing
+> slash, but somehow managed to forget adding it when I tried it.
 
-Not only that, it can cost correctness-wise.  Until this
 
-  https://public-inbox.org/git/xmqqegqaahnh.fsf@gitster.dls.corp.google.com/
+$ git checkout v2.22.0 && make && ./git-rev-parse :/any/path/
 
-gets corrected, it is not advisable to enable -B and -M at the same
-time.
+segfaults, while
+
+$ git checkout v2.21.0 && make && ./git-rev-parse :/any/path/
+
+is OK.  We should be able to bisect this fairly straightforward
+between these two.
+
 
