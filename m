@@ -3,163 +3,151 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-5.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,
 	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DB93C2BA2B
-	for <git@archiver.kernel.org>; Thu,  9 Apr 2020 11:56:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3709AC2BB55
+	for <git@archiver.kernel.org>; Thu,  9 Apr 2020 12:02:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5324120A8B
-	for <git@archiver.kernel.org>; Thu,  9 Apr 2020 11:56:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0EE8920771
+	for <git@archiver.kernel.org>; Thu,  9 Apr 2020 12:02:45 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WwFVMN0g"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Wh1SVSpI"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726579AbgDIL4q (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Apr 2020 07:56:46 -0400
-Received: from mail-qt1-f194.google.com ([209.85.160.194]:34046 "EHLO
-        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725970AbgDIL4q (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Apr 2020 07:56:46 -0400
-Received: by mail-qt1-f194.google.com with SMTP id 14so2484713qtp.1
-        for <git@vger.kernel.org>; Thu, 09 Apr 2020 04:56:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=SN4CunUGem6axQCrTqT5Psu02fF9SaNhoCNSVMiPqH4=;
-        b=WwFVMN0gWdzchR5/LUQlTJUwzkyyqHc+Uk6s8rnRvMROgc0tdgW7mcem//dz0cBofm
-         bW9joFlnZcJKXxeI1bTelmJ4zPAR55PBhJ6QP/Iyi89OY/Y2tGwBqvyRaqv5L1M0Xbjv
-         CdSUlr1uK1iBWrvI3aAeawF90F2/Qul/NNsadn+2iVrAEs3+lkukvUYaT9BGZhaaUji0
-         7nEGV3BYQiN//vEuMOpd7tQx4uU0EXKDxqJv9BtgRLJbpg/65aXecAQqCMK3G6lRURks
-         uasz1jvB246ur6qBUZY9Z1pcV2xkwleX9OhXBVKaQwrWypyk9iVcXdrJ5/L2HP8gowri
-         1ekA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=SN4CunUGem6axQCrTqT5Psu02fF9SaNhoCNSVMiPqH4=;
-        b=P0WvJiBO5sAgAqL1XWkZIfAJUbWWJKMJv7uELRdppV1oIaHa7tz9S2mkRDhQwITubS
-         woG7bFBpoudllAhzt2+LpSzDETaZttPbtEV5/7NJSUhJ6/Z3L00H21DTkHgCQ9UkmNRN
-         MeLqw+T6tU5Jfk3ZUDhgfYggx1DIIstwIDzHhNMn3ibv/YgOmpH9kHro0xH+uCq/jYxf
-         YHMLrPp/D5OEQnKszLcGtkMkGh42w22nqHow3AEI8U5m3yBMzfX2WYqIXz2CRos2NSMj
-         nx/9keUCg8FQGUo271uST2CKq5TvQURnPnndQIvKfWlpYX8V04ORcoFSpBssTmEcxab0
-         vIsg==
-X-Gm-Message-State: AGi0PuY5EyLJDSqWOwXBD9krTL8i+H5ijZ4aHnJZfXaimBJfvM1+hHXa
-        jCceKKLRXwEGxqT4KxS26d8=
-X-Google-Smtp-Source: APiQypIzDz6+cNBKU5UiyKV8Yq5o5lp4F+ntAhr/mTIP576qUuuywLRoQSFNemwWSuQ/937ayqoHDg==
-X-Received: by 2002:ac8:6919:: with SMTP id e25mr11747671qtr.151.1586433405971;
-        Thu, 09 Apr 2020 04:56:45 -0700 (PDT)
-Received: from [192.168.1.83] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id f13sm21607095qti.47.2020.04.09.04.56.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Apr 2020 04:56:45 -0700 (PDT)
-Subject: Re: [PATCH] bloom: ignore renames when computing changed paths
-To:     Jeff King <peff@peff.net>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>,
-        Philip Oakley <philipoakley@iee.email>
-References: <pull.601.git.1586363907252.gitgitgadget@gmail.com>
- <20200408223111.GC3468797@coredump.intra.peff.net>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <72fa2e30-b841-9600-ae2c-21a269817f1c@gmail.com>
-Date:   Thu, 9 Apr 2020 07:56:43 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:75.0) Gecko/20100101
- Thunderbird/75.0
+        id S1726571AbgDIMCn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Apr 2020 08:02:43 -0400
+Received: from mout.gmx.net ([212.227.17.22]:46027 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725987AbgDIMCn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Apr 2020 08:02:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1586433761;
+        bh=Zo70W504pHOCVI4OLkNM4bJ+GRXOu+s86JWS1/n44S8=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Wh1SVSpIH4QLkt4T2WHKFycYtvwwvFOO8oCxfOcUJANv2t5baqodhlwCbXONycHeL
+         aKUanr7uJahWHrFofVMpz7PiBiMf0sluHRWT/5SaZlFat+JdQ0AHzyXOyyeFb2Y7OK
+         rB5So/91uR71dvVvVcB4i8WPw/vYqfWUmKu8NJrw=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from MININT-QA14EDB.fritz.box ([89.1.213.254]) by mail.gmx.com
+ (mrgmx105 [212.227.17.168]) with ESMTPSA (Nemesis) id
+ 1MEm27-1jWjIQ1BP9-00GGCp; Thu, 09 Apr 2020 14:02:41 +0200
+Date:   Thu, 9 Apr 2020 14:02:42 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Nathan Sanders <spekbukkem@gmail.com>
+Subject: Re: [PATCH] mingw: cope with the Isilon network file system
+In-Reply-To: <CAN0heSrvZb3z3JdYSXs4Dy4nBwPYBAQZ5Zf2f9RSeUnyQSLeeg@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2004091356110.46@tvgsbejvaqbjf.bet>
+References: <pull.756.git.git.1586427853403.gitgitgadget@gmail.com> <CAN0heSrvZb3z3JdYSXs4Dy4nBwPYBAQZ5Zf2f9RSeUnyQSLeeg@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <20200408223111.GC3468797@coredump.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="8323328-1348633090-1586433763=:46"
+X-Provags-ID: V03:K1:M8xu+6DO80RgtdDEL6Jv9b+FgYx9wscawcv8WUbB0sPx9JL5dte
+ sY/WvGLQGImmBcSYSDsm1yEcfWKrM5XraXHZvC/vLLIjPFiwMDAEZtlcpdrtrEkodbglKS6
+ mnJjPWbfn6PhsemV7754s8RZAOYQuvwRE2NlJr9oCQn6wdue3rAoyIzw3m/qr7LVvGRvls+
+ 6T19roEFmbaARr8tHC3dQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:EK/TiQJAlgw=:z39XYPDIYXnKou2Z9goLho
+ o+eOgmZvbUARbP9AR0Vw8jn48fpgK5RErdsRvn/JaEK2hDPy85HARxBWhFsda6zOUiX4WkpCl
+ Qt/S2JdRRwSaTaNGSPRwIue3PHpOvZ/zyR8JdNfFyVeJbtA4rtEtS9BaxELm4SWBEyh5AobNg
+ NByC72rsIjd9sgycK6Fyed9c3WcScoXGu2k5R/pT1j7oWe1dPEMSlF79NlOFmikvBKoysIg/p
+ EaXfloKaOro4L0XC5skJnp4GDyDsIJV3gJ06K8ZJI2InQLU/apEqdaR67jrI1cIlo5YmeHFez
+ eB1+mGOzTE4JP9/jiuySDdyFg4RaUSCddLEUEoADsjnB13eNKgBbCVYdBPSyuLSRoJ9YX0r2S
+ LDJzWrPoDG6lKrfDMC75XtZtASlneePlbkkjjTUCZihsxfjRxt1SQYaGGqR2qrNdDaR0gX9HS
+ ZHf40xrugyIOLCn50CK6nVuw1hj7t/hrwTULNil+HrPLjnZ2dDue5oEBdxJP0gQnzQ7yhK1kk
+ IuyVpKxPjxoeXoeEzZVkKnkzO/lRtJGnx5e0DpadjOP6JJ4O1uaJP2nuKkJugc+j+I2kf5PYd
+ bnVWe4gsqbxHJHMaelk7KlQx3J4JgL2GuoqLRGXqh1xchejMhXhcSntcq1Eq7CDf6/PBZDYPJ
+ WC45lneJLFqTq5FqeK6NdSxEIkCidhX6WnMkbHlb/Kv5rF9be3ANbVZoQ+lzyJFwv7hIu8WIV
+ WHIw6w3525LX+sO8OTLhTU9iMpYywqJKnBPIMG6h4EFT+z2e0iiYdvtrBSqyL833Tj8f0Rw4c
+ vNyLhz1KS0Wj6AyjRNnfl0XX7kcCptH8MiaGR+Mbr3Xb6vW8MBJhGnrkhoF+UXyD7RN+xZhFn
+ l2qWTz3TV+kf3qmaGlWIcRZSH51g7scqUof4lD5+sU4/aAV1EERP7TnaX9xcg4twEvy5VQw5k
+ HxMroUD2pQMtGE4TdhMHmSZr8PePaycHaptrj1RD3X5DBchJi6yRWqU0Q0WVzJWrC1MGwiE2Y
+ wL7uB3ISoHig6ZMggxYhq4s1qSCU7J8KELGUMg6JI0e3QAofA/NgcdIDlJm2U6vKXT4HzxU/S
+ LaQsr3toiVKcZy+/vz2KhsEPxUCt4y5BsnUjc8GoiNE1cN6zfy1Ayka9x0qgNhZYWo9Glewdp
+ E/72osbU6jKNxYCeNbXAaOnPm/vL3t7yRuocebQeSM8wuloigt8L+q8k2/ld4HI+Vjen4H7Gk
+ 5SuBxlc+fg3IC9h5k
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4/8/2020 6:31 PM, Jeff King wrote:
-> On Wed, Apr 08, 2020 at 04:38:27PM +0000, Derrick Stolee via GitGitGadget wrote:
-> 
->> From: Derrick Stolee <dstolee@microsoft.com>
->>
->> The changed-path Bloom filters record an entry in the filter for
->> every path that was changed. This includes every add and delete,
->> regardless of whther a rename was detected. Detecting renames
->> causes significant performance issues, but also will trigger
->> downloading missing blobs in partial clone.
->>
->> The simple fix is to disable rename detection when computing a
->> changed-path Bloom filter.
-> 
-> Yes, we should be doing as simple a tree-diff as possible.
-> 
-> I wonder if this might actually be fixing a potential bug, too. The loop
-> below this code only looks at the "two" half of each queued diff pair.
-> With renames enabled, we might see the source path only in the "one"
-> half of the rename pair.
-> 
-> However, this seems to work already. If I do:
-> 
->   echo content >file
->   git add file
->   git commit -m added
->   echo change >file
->   git commit -am changed
->   git mv file other
->   git commit -am 'rename away'
->   git mv other file
->   git commit -am 'rename back'
->   git rm file
->   git commit -am removed
-> 
->   git commit-graph write --reachable --changed-paths
->   git log --oneline -- file | cat
-> 
-> then I see all of the commits. Instrumenting Git like:
-> 
-> diff --git a/bloom.c b/bloom.c
-> index c5b461d1cf..fb2a758e1d 100644
-> --- a/bloom.c
-> +++ b/bloom.c
-> @@ -207,6 +207,10 @@ struct bloom_filter *get_bloom_filter(struct repository *r,
->  		for (i = 0; i < diff_queued_diff.nr; i++) {
->  			const char *path = diff_queued_diff.queue[i]->two->path;
->  
-> +			warning("queuing touched %c path %s for %s",
-> +				diff_queued_diff.queue[i]->status,
-> +				path, oid_to_hex(&c->object.oid));
-> +
->  			/*
->  			* Add each leading directory of the changed file, i.e. for
->  			* 'dir/subdir/file' add 'dir' and 'dir/subdir' as well, so
-> 
-> results in:
-> 
->   warning: queuing touched A path file for 2346d88b0cb4bca11c38ee545d007a7a14ca472a
->   warning: queuing touched M path file for 991cd7f0696ae29fea738ca1b8340c90dae4b201
->   warning: queuing touched D path file for d3642c9fb27459ea09f6c967a1e6ad119e265d6f
->   warning: queuing touched A path other for d3642c9fb27459ea09f6c967a1e6ad119e265d6f
->   warning: queuing touched A path file for bc908eb29e562d97ebb8cf718e41b69d3aa1d834
->   warning: queuing touched D path other for bc908eb29e562d97ebb8cf718e41b69d3aa1d834
->   warning: queuing touched D path file for 7433b46bd6aa170ab17a651c10658a5b0c10ba4f
-> 
-> So we really aren't detecting renames in the first place! And indeed,
-> checking diffopt.detect_rename shows that it is unset. So I'm curious if
-> there is a case where that would not be true. I _think_ it would only be
-> true in a program which ran init_diff_ui_defaults(), but never in
-> git-commit-graph.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-So our issue was really that the partial clone prefetch logic was just
-overly aggressive.
+--8323328-1348633090-1586433763=:46
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> Even if it does nothing in practice, I'm not at all opposed to having it
-> in there as an explicit documentation of our expectations/requirements
-> for the loop below. But it's probably worth saying so in the commit
-> message.
+Hi Martin,
 
-I will update the message and send a v2. I'll fix the typo that Philip pointed
-out, too.
+On Thu, 9 Apr 2020, Martin =C3=85gren wrote:
 
-Thanks,
--Stolee
+> On Thu, 9 Apr 2020 at 12:26, Johannes Schindelin via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+>
+> >         handle =3D CreateFileW(wfilename, FILE_APPEND_DATA,
+> >                         FILE_SHARE_WRITE | FILE_SHARE_READ,
+> >                         NULL, create, FILE_ATTRIBUTE_NORMAL, NULL);
+> > -       if (handle =3D=3D INVALID_HANDLE_VALUE)
+> > -               return errno =3D err_win_to_posix(GetLastError()), -1;
+>
+> (This code, which is being removed, used "," to avoid having to introduc=
+e
+> braces. There's another instance of this pattern a bit above.)
 
+Oh yes, that's an important point I had missed.
+
+> > +       if (handle =3D=3D INVALID_HANDLE_VALUE) {
+>
+> (Adding a brace here.)
+>
+> > +               DWORD err =3D GetLastError();
+> > +               /*
+> > +                * Some network storage solutions (e.g. Isilon) might =
+return
+> > +                * ERROR_INVALID_PARAMETER instead of expected error
+> > +                * ERROR_PATH_NOT_FOUND, which results in a unknow err=
+or. If
+>
+> s/ a / an /
+> s/unknow/&n/
+
+Oh shucks. Usually I try to do a final review of the patches before I
+"upstream" them. Seems like the quality of my submission here is not what
+I want it to be.
+
+>
+> > +                * so, the error is now forced to be an ERROR_PATH_NOT=
+_FOUND
+> > +                * error instead.
+> > +                */
+>
+> "is now forced" sounds more like it describes this change/commit, rather
+> than this piece of code. Maybe this final sentence can be scrapped
+> entirely, since the forcing/translating/mapping is obvious from the code
+> anyway? The remainder of the comment goes into *why* and looks more
+> useful. Just my 2 cents.
+>
+> > +               if (err =3D=3D ERROR_INVALID_PARAMETER)
+> > +                       err =3D ERROR_PATH_NOT_FOUND;
+> > +               return errno =3D err_win_to_posix(err), -1;
+> > +       }
+>
+> Now there's no need to avoid introducing braces, so maybe split this
+> into two lines for a lower huh-factor?
+>
+>   errno =3D err_win_to_posix(err);
+>   return -1;
+
+Absolutely.
+
+I updated the PR at https://github.com/git/git/pull/756 (also addressing
+issues with the commit message) and will wait for while before sending v2.
+
+Thank you for your excellent review,
+Dscho
+
+--8323328-1348633090-1586433763=:46--
