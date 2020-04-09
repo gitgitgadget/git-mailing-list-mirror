@@ -2,114 +2,209 @@ Return-Path: <SRS0=Te6D=5Z=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 39ABCC2BA19
-	for <git@archiver.kernel.org>; Thu,  9 Apr 2020 18:56:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 830E3C2BA19
+	for <git@archiver.kernel.org>; Thu,  9 Apr 2020 19:11:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id CA97C20757
-	for <git@archiver.kernel.org>; Thu,  9 Apr 2020 18:55:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4AF6A206F5
+	for <git@archiver.kernel.org>; Thu,  9 Apr 2020 19:11:41 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="dFWttr+E"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lohQAOk6"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726477AbgDISz6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Apr 2020 14:55:58 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:58894 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725970AbgDISz5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Apr 2020 14:55:57 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4ACF1BB483;
-        Thu,  9 Apr 2020 14:55:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=zXvjXd7aCIPG6DhiygRlIER+968=; b=dFWttr
-        +EBMJOmXx3rRroCzazGdiH3ABCjaOmmxBnZZXyjdvorPQjfXK0bOOYq6E61I79CK
-        XjBfuwXr9EDC144cTt3uCFDETjSoNsxpru23+iRepHKHM01OJB4OyhwrSHvnZNXV
-        VbEcUVWfUVIlC5FxpMLk1m3Io/HurZrkXNzis=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=X71P80SHN575M3VfBt1Wp8xc/DZgwC2H
-        UBtX54qG40pR29Qssr8Ylk0DbJX1UFmsCvllFQZUPJhDeqkpcvnznlvZxCdRkKBQ
-        A7a2bxEE91bnChNdlerM84TXrlvEvyj2Shx2T0/yBYrpsh/6JvKFPaQjwmkZT6DN
-        FVF2uzjO6zU=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4291EBB482;
-        Thu,  9 Apr 2020 14:55:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 8B282BB480;
-        Thu,  9 Apr 2020 14:55:53 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, me@ttaylorr.com,
-        Derrick Stolee <dstolee@microsoft.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] revision: --include-diversions adds helpful merges
-References: <74562b04-b1ce-cad4-da18-4af030a3dc29@gmail.com>
-        <xmqqzhbloj4u.fsf@gitster.c.googlers.com>
-        <20200408200526.GA2270445@coredump.intra.peff.net>
-        <9eab6c60-3c99-d6ac-9206-02ce37f7a479@gmail.com>
-        <xmqqv9m9oe2p.fsf@gitster.c.googlers.com>
-        <91fafa17-c58f-dcd0-320d-48c4512561f6@gmail.com>
-        <xmqqimi9o705.fsf@gitster.c.googlers.com>
-        <7d84fc45-786f-7a2e-5889-ef26916627ef@iee.email>
-        <xmqqeeswodol.fsf@gitster.c.googlers.com>
-        <63667043-dbca-0092-209d-865c2f60efc8@gmail.com>
-        <20200409182455.GA4166316@coredump.intra.peff.net>
-Date:   Thu, 09 Apr 2020 11:55:51 -0700
-In-Reply-To: <20200409182455.GA4166316@coredump.intra.peff.net> (Jeff King's
-        message of "Thu, 9 Apr 2020 14:24:55 -0400")
-Message-ID: <xmqq369co5e0.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726684AbgDITLh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Apr 2020 15:11:37 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:42785 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726598AbgDITLh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Apr 2020 15:11:37 -0400
+Received: by mail-ed1-f65.google.com with SMTP id cw6so1264499edb.9
+        for <git@vger.kernel.org>; Thu, 09 Apr 2020 12:11:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=fPBqiMlP0LYIgiwZhCyQ2S4KJoWUnmUXuicScoSWa3E=;
+        b=lohQAOk6ZASyJIRpj2f3p+V87XXq3Hjg5MFZNiPlheqSc/+UNbOL5CJCp5SGC47kll
+         V0137UUNGbeGQacVMdEus6pqEydo/NAITeuXijAY6pd/ZSvd8E66ypMz3UXUaJe6v5bi
+         D7b0KjnUR4JV/A2ygPYpqSpKeTK+suzIz9aVCIbz46RNj0djAlQh3V4ocmOfWr4jsF5L
+         JAQFIrZKuz/3sV85zT7O2w+oWR9yiYjTaw7XGHUngr+TSyTcQDf8e0gBBhr73beKyRds
+         BgV8NZ2ZV8lhvYhnMQdnYSjlD/Kc/8BIZOSAJjhFMSn58neLcHI4wVy6V3iUaQ1aCA/6
+         TTyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=fPBqiMlP0LYIgiwZhCyQ2S4KJoWUnmUXuicScoSWa3E=;
+        b=IQWmDjU124iS6G4iPzfIRU5/8VOBOJY8bKbC/C8geXqiSZ6+/kSK6b4IR+oq8gnz7Q
+         uchtNlAGu5I2XlRNU6GVjT+eD0w5XLCityq1ThLjykY3JzVGOdJZaVlhOCnjwI2+Spgz
+         yQWZ5lzZLWbE9HEOtrPs5fX0LjYRaSnGtdgSmqwk1AVvzNDxwG7FBWCqe6ZkJ52A81A+
+         ARl0FtrGGIUORtfYcNNoyhagReap9S8S5ERsYFmsft7vdtXqNRvYaS583OUe7J0FUN5T
+         imUQ9TIohHE3DVKlvNp5QmDN2vigWKCexf9+/Mk0+UkETfjmqM0xfhPYObrSg4AmXD58
+         fuaQ==
+X-Gm-Message-State: AGi0PuaFnx/cNrRshf4sHgnqb6APU8z6LhzggDebfGbuef0rVcnlVwPH
+        U6c16606I6vHC62tvFQnqXUEuYjD
+X-Google-Smtp-Source: APiQypKs/KRoWzl9dADhY2fOCtKDJ3jgL7aiJVkGq2vQhCwKpPV8+15adJj9J0iN5CkQ1OSJtrNiXg==
+X-Received: by 2002:a17:906:9386:: with SMTP id l6mr462916ejx.305.1586459495442;
+        Thu, 09 Apr 2020 12:11:35 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id y28sm69024edi.9.2020.04.09.12.11.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Apr 2020 12:11:34 -0700 (PDT)
+Message-Id: <pull.605.git.1586459494321.gitgitgadget@gmail.com>
+From:   "Alba Mendez via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 09 Apr 2020 19:11:34 +0000
+Subject: [PATCH] pack-format: document missing fields
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: BCE14BD0-7A93-11EA-97C8-B0405B776F7B-77302942!pb-smtp20.pobox.com
+To:     git@vger.kernel.org
+Cc:     Alba Mendez <me@alba.sh>, Alba Mendez <me@alba.sh>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+From: Alba Mendez <me@alba.sh>
 
-> On Thu, Apr 09, 2020 at 01:20:57PM -0400, Derrick Stolee wrote:
->
->> In conclusion, I think "--show-pulls" provides the right context for these
->> extra merges to show in the history view. It also roots these merges in a
->> Git-native name (that also happens to evoke the "pull request" concept that
->> is _not_ native to Git).
->> 
->> What do you think?
->
-> Yeah, after reading more of the thread, I think the simplest way to
-> think about is "keep merges that pulled in something" with the
-> implication of "(even if the other side didn't touch anything)".
+Document missing fields in the description of the delta data, added at
+011b648 (pack-format.txt: more details on pack file format, 2018-05-11).
 
-Isn't it more like "even if our side didn't touch anything", though?
+Also, the description of object entries at the main section is a bit
+vague. There's an equivalent but more detailed description in the index
+section; since they are redundant, put that one in place of the first.
 
-If a merge pulled in something, the other side by definition did
-something (i.e. what was pulled in); if we did something since they
-forked, we would have shown the merge without this patch---the only
-new behaviour we are adding is to show the merge even when our side
-didn't touch since they forked---so far we never showed that merge,
-but now with this option we would when we are asked to.
+I have also expanded tabs to prevent alignment issues and rephrased a
+bit to make things clearer.
 
-I agree that "this is showing pulls" is an easy way to explain.
+Signed-off-by: Alba Mendez <me@alba.sh>
+---
+    pack-format: document missing fields
+    
+    Hello! These are some fixes & improvements for the pack-format
+    documentation.
 
-> And "something you pulled" is a sensible way to think of that. So
-> --show-pulls makes sense to me. Or if we really want to tie it in to
-> simplification, --no-simplify-pulls. But that's more awkward to type,
-> and none of the existing simplification options use the word simplify. ;)
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-605%2Fmildsunrise%2Fpatch-1-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-605/mildsunrise/patch-1-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/605
 
-;-)
+ Documentation/technical/pack-format.txt | 75 ++++++++++---------------
+ 1 file changed, 31 insertions(+), 44 deletions(-)
+
+diff --git a/Documentation/technical/pack-format.txt b/Documentation/technical/pack-format.txt
+index d3a142c6520..b78e03137f4 100644
+--- a/Documentation/technical/pack-format.txt
++++ b/Documentation/technical/pack-format.txt
+@@ -9,7 +9,7 @@ Git pack format
+          The signature is: {'P', 'A', 'C', 'K'}
  
+      4-byte version number (network byte order):
+-	 Git currently accepts version number 2 or 3 but
++         Git currently accepts version number 2 or 3 but
+          generates version 2 only.
+ 
+      4-byte number of objects contained in the pack (network byte order)
+@@ -20,19 +20,34 @@ Git pack format
+    - The header is followed by number of object entries, each of
+      which looks like this:
+ 
+-     (undeltified representation)
+-     n-byte type and length (3-bit type, (n-1)*7+4-bit length)
+-     compressed data
+-
+-     (deltified representation)
+-     n-byte type and length (3-bit type, (n-1)*7+4-bit length)
+-     20-byte base object name if OBJ_REF_DELTA or a negative relative
+-	 offset from the delta object's position in the pack if this
+-	 is an OBJ_OFS_DELTA object
+-     compressed delta data
++     packed object header:
++        1-byte size extension bit (MSB)
++            type (next 3-bit)
++            size0 (lower 4-bit)
++        n-byte sizeN (as long as MSB is set, each 7-bit)
++            size0..sizeN form 4+7+7+..+7 bit integer, size0
++            is the least significant part, and sizeN is the
++            most significant part.
++     packed object data:
++        If it is not DELTA, then deflated bytes (the
++            size above is the size before compression).
++        If it is REF_DELTA, then
++            20-byte base object name SHA-1.
++            deflated delta data (the size above is the
++                size of this data before compression).
++        If it is OFS_DELTA, then
++            n-byte offset (see below) interpreted as a
++                negative offset from the type-byte of
++                the header of the ofs-delta entry.
++            deflated delta data (the size above is the
++                size of this data before compression).
+ 
+-     Observation: length of each object is encoded in a variable
+-     length format and is not constrained to 32-bit or anything.
++     offset encoding:
++        n bytes with MSB set in all but the last one.
++        The offset is then the number constructed by
++        concatenating the lower 7 bit of each byte, and
++        for n >= 2 adding 2^7 + 2^14 + ... + 2^(7*(n-1))
++        to the result.
+ 
+   - The trailer records 20-byte SHA-1 checksum of all of the above.
+ 
+@@ -67,7 +82,9 @@ Ref-delta can also refer to an object outside the pack (i.e. the
+ so-called "thin pack"). When stored on disk however, the pack should
+ be self contained to avoid cyclic dependency.
+ 
+-The delta data is a sequence of instructions to reconstruct an object
++The deflated delta data begins with two n-byte sizes: the size of
++the base object data, and the size of the reconstructed object data.
++What follows is a sequence of instructions to reconstruct the object
+ from the base object. If the base object is deltified, it must be
+ converted to canonical form first. Each instruction appends more and
+ more data to the target object until it's complete. There are two
+@@ -186,36 +203,6 @@ trailer	  | | packfile checksum              |
+                   |
+ Pack file entry: <+
+ 
+-     packed object header:
+-	1-byte size extension bit (MSB)
+-	       type (next 3 bit)
+-	       size0 (lower 4-bit)
+-        n-byte sizeN (as long as MSB is set, each 7-bit)
+-		size0..sizeN form 4+7+7+..+7 bit integer, size0
+-		is the least significant part, and sizeN is the
+-		most significant part.
+-     packed object data:
+-        If it is not DELTA, then deflated bytes (the size above
+-		is the size before compression).
+-	If it is REF_DELTA, then
+-	  20-byte base object name SHA-1 (the size above is the
+-		size of the delta data that follows).
+-          delta data, deflated.
+-	If it is OFS_DELTA, then
+-	  n-byte offset (see below) interpreted as a negative
+-		offset from the type-byte of the header of the
+-		ofs-delta entry (the size above is the size of
+-		the delta data that follows).
+-	  delta data, deflated.
+-
+-     offset encoding:
+-	  n bytes with MSB set in all but the last one.
+-	  The offset is then the number constructed by
+-	  concatenating the lower 7 bit of each byte, and
+-	  for n >= 2 adding 2^7 + 2^14 + ... + 2^(7*(n-1))
+-	  to the result.
+-
+-
+ 
+ == Version 2 pack-*.idx files support packs larger than 4 GiB, and
+    have some other reorganizations.  They have the format:
+
+base-commit: 9fadedd637b312089337d73c3ed8447e9f0aa775
+-- 
+gitgitgadget
