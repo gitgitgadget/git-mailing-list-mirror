@@ -7,106 +7,85 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 66D95C2BA19
-	for <git@archiver.kernel.org>; Thu,  9 Apr 2020 21:58:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0368CC2BA19
+	for <git@archiver.kernel.org>; Thu,  9 Apr 2020 22:22:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 335802072F
-	for <git@archiver.kernel.org>; Thu,  9 Apr 2020 21:58:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BC2AD2083E
+	for <git@archiver.kernel.org>; Thu,  9 Apr 2020 22:22:49 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fU0oe4cj"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A9/kUAV6"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726916AbgDIV6h (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Apr 2020 17:58:37 -0400
-Received: from mail-oi1-f194.google.com ([209.85.167.194]:33376 "EHLO
-        mail-oi1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726827AbgDIV6h (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Apr 2020 17:58:37 -0400
-Received: by mail-oi1-f194.google.com with SMTP id m14so1277691oic.0
-        for <git@vger.kernel.org>; Thu, 09 Apr 2020 14:58:37 -0700 (PDT)
+        id S1726793AbgDIWWs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Apr 2020 18:22:48 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:35920 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726638AbgDIWWs (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Apr 2020 18:22:48 -0400
+Received: by mail-pf1-f193.google.com with SMTP id n10so196778pff.3
+        for <git@vger.kernel.org>; Thu, 09 Apr 2020 15:22:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=gedGrSDEHwVU6Kx2sriNPwmlF8SatychkJLQnVOS+Jc=;
-        b=fU0oe4cjMSsySpaQk2fAjvQDSR1+D/qtAeARV4puqtAhGfhwWsI0G/tqPeubLCYLnX
-         jqwmHqKhI9qj4+7ONYh2xRkcc8XiPrVjLpL+KzkSGm/fAooO8uGq/fKu2RfXXiyefR2g
-         Wta4ZDzzIizWYfBAWuvOCdJWmP9KgQa4X86qCbQqBprR4dvEsq+z3fMybcTWF6XHSe9Z
-         3X3ljlMmpyd/QSQLEtF4zUzE21DPFUhlYbj8HTHvsbrv9aGoQegvdyLg+9I8disDcQe+
-         MgeUk4izwa2rnidYf8l52FiJu2l52UgPPRBVHYPlmIji8/Kpj5FNpO6SFIT+hTkqSmUN
-         8t/Q==
+        h=mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=oiomvP6jWZT1Vmsux6pz2M3MKs0agAZ72FRCDoqmYyw=;
+        b=A9/kUAV6QpuyRGiq19tdvvmslJnuoxOiKS6DVhTycTS26Ukd7cmeAZqDzt6cF2YmiD
+         GJfLPgz8eg9JtRoytHu/tVbHGNg1gqwYoJA9dEei2QUETMgnaE4XX4FVf6UrociAQGkT
+         FWP5iPoRBEBl2pruU8vErd9VKTYDbMMUB3j6mq2Snllrk4UAf0/vrzbDIPm0JEhiu9Xs
+         ACuMhfEYaWFUJzMwyElzHdy7DojBGUTDYT3ZGGdmIhHXozrdunrFs1DmMeCtxhqCShcj
+         45WLDu+19CbxQdYoIrInCBpCkBOfB513Dd0hkAaJs/UsgFSKz95hbN89B9ALQE2byvvA
+         Lh6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=gedGrSDEHwVU6Kx2sriNPwmlF8SatychkJLQnVOS+Jc=;
-        b=lNI5jjrv+zhpH9Aq/v5L7inJakHXrC0RXJO6mE92eAOjnS2La3K5a8+/NY2L8/dFJD
-         /ylk8+UQSqb0V/D3oO7mN/TPfZww0PCbunI9KF7LkM/vi8B7BMPTjdYmmJTcGRKnRsri
-         7yFqUqlvLD1m4bK8wdNr2c/ZQl7uJbVP+ZmJO+g5cmsVU850QjEQXQwGf30AmTTqqz4u
-         e1B/dPqrrjqd5O9gQe62JoR9/sm4d0wrsrgi9hniL1NiQiIoV/GuVpkX3dx1fXBUvzqd
-         o9sg6EbkG8e6GakOJo8/39bLSRnV3ELUYtdDYuF2wmm5Y/ki+PTBuSl2YZGe26KVB8CB
-         +biA==
-X-Gm-Message-State: AGi0PuaXtocXkt56bEqqndRdzf0bznhULHbi7pcwOIJzEz7/MWk2EW1J
-        KYqc/KpnZ3l25uxueIf6bU5Z2y7K/yz2wiJU4eTK+44p
-X-Google-Smtp-Source: APiQypKC8KEhGqgklehMVqzPbyubJ+WcudiHViA+FhQz6FZTGadvJLabDI3GIcA2fO+UOn106aCcTHw1GPbuJFgoHYA=
-X-Received: by 2002:aca:df45:: with SMTP id w66mr1220226oig.76.1586469516985;
- Thu, 09 Apr 2020 14:58:36 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=oiomvP6jWZT1Vmsux6pz2M3MKs0agAZ72FRCDoqmYyw=;
+        b=nRdGdsCc8YVIXKhtQ0JnAwBqPXSZHe7XladHrwk5f+mYSD6rRQWHrDei8UlzMVhEZX
+         OBVNkvtguUUjKXcx5MGf5eS4cQiM0tkXXFY8sLTWSS/lPNYs5vHxCo91YSzvzGbw++7a
+         ljU4BdKkkSRIEA22+rc63TSoEBWqotPC6+NJQo1GgiozogOWbRYBOsTXP1IvTtVkEnsY
+         5lIWU0PZUKf4m8qw97/69DeUaowGvhwMG02JZtCfVzkupX44VdFjOYSTiWU+HKgnHUf4
+         7uIHdUPF9yceI6lyXf5vaepPx6SMhTfhTHj9NTJkuwGVdbrAQYCJBMnUIWsagb88tFFY
+         b3mg==
+X-Gm-Message-State: AGi0PuYbOKR1byrxJiwC5zoXnZnc4Pfd2tA4N2pVpmPgTWoYQMZqnwos
+        0utd01WZqhNlhgr7IxPr0PU0AfujmC33BLLKb+HYMnKDq6Y=
+X-Google-Smtp-Source: APiQypKYWnI1sIp7QsN3DQxq9iWZuxjYZWaXVJCMwxOwcHmkA2wz4+Q0AhXyDiCdKXEf4Dw0P6hn5EdGUi9uHtWkeDA=
+X-Received: by 2002:a63:64c4:: with SMTP id y187mr1578315pgb.36.1586470965394;
+ Thu, 09 Apr 2020 15:22:45 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAM+g_Nv4UqQNAuYyo5zsTsiomCe4ueoM6ZGU1aqAjLGV9+jQJg@mail.gmail.com>
- <20200409135959.GB3494212@coredump.intra.peff.net>
-In-Reply-To: <20200409135959.GB3494212@coredump.intra.peff.net>
-From:   Norbert Kiesel <nkiesel@gmail.com>
-Date:   Thu, 9 Apr 2020 14:58:25 -0700
-Message-ID: <CAM+g_NuZ3pKAd80+HoR8-_0=N9wV28L-yyb1VhJhTbYH+RS0og@mail.gmail.com>
-Subject: Re: [git 2.26] stat counts reported by commit and log are different
-To:     Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>
+From:   =?UTF-8?B?w4lyaWNvIFJvbGlt?= <erico.erc@gmail.com>
+Date:   Thu, 9 Apr 2020 19:22:34 -0300
+Message-ID: <CAFDeuWO+2JEGudtnHZvSsSUOVRR83U9ziLEjSoDyMWxYhvDMKg@mail.gmail.com>
+Subject: [BUG] segmentation fault in git-diff
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks for the explanation. I still wonder why break-detection is by
-default enabled for commit but disabled for log.  Is there any
-rationale for this?
+Hey there!
 
-On Thu, Apr 9, 2020 at 7:00 AM Jeff King <peff@peff.net> wrote:
->
-> On Wed, Apr 08, 2020 at 07:04:02PM -0700, Norbert Kiesel wrote:
->
-> > % git commit -m 'major code cleanup for SCIMPatchOperationUtil'
-> > [nkiesel/nextrelease/SCIM_2 d4db6f6d83f] major code cleanup for
-> > SCIMPatchOperationUtil
-> >  1 file changed, 2106 insertions(+), 3367 deletions(-)
-> >  rewrite utils/SCIMPatchOperationUtil.java (74%)
->
-> The commit summary diff is done with the break-detection option on. You
-> can tell it kicked in here because of the "rewrite" line. What that
-> means is that the changes to the file were so extensive that Git decided
-> the file had been totally rewritten, and broke it into a separate
-> add/delete. That has two implications:
->
->   - we'd consider it a candidate for rename detection; that didn't
->     happen here because there were no other files added or deleted to
->     serve as source/dest candidates
->
->   - the diff will be reported as a complete removal of the old content
->     and the addition of the new, _even for lines that were the same_
->
-> > % git log --stat -1
-> > commit d4db6f6d83f (HEAD -> nkiesel/nextrelease/SCIM_2)
-> > Author: Norbert Kiesel <nkiesel@metricstream.com>
-> > Date:   Wed Apr 8 18:49:27 2020 -0700
-> >
-> >     major code cleanup for SCIMPatchOperationUtil
-> >
-> >  utils/SCIMPatchOperationUtil.java | 3807
-> > +++++++++++++++++++++++++++++++++++++++++++++++++++++----------------------------------------------------------------------------------------------------------
-> >  1 file changed, 1273 insertions(+), 2534 deletions(-)
->
-> But in git-log break-detection isn't on by default. Try adding "-B" and
-> you will get the other numbers.
->
-> Try also adding "-p" to see the whole-diff in action.
->
-> -Peff
+I have found a bug in the git-diff utility, which is reproducible in
+the next branch. In any repository, if I run
+
+    git diff :/any/path/
+
+(The important part is the trailing forward slash. No slash will
+generate either a valid diff or an error message about the path not
+being known. ":/" also works without issue)
+
+it will trigger a SIGSEV. I have traced that back to the
+refs_read_raw_ref() function, where it seems the ref_store parameter
+passed to it is 0x0 (according to GDB). It's always possible to include
+a null-check in that function to fix the issue, but I don't think
+that'd be the best solution. I can attempt to fix it, but I don't know
+what (and where) the proper solution would be, because I don't know what
+the expected behavior is here, nor where exactly it should fail. Do you
+think this could also warrant the creation of a test?
+
+I don't know what the best debug resources (valgrind output, core file
+from gdb) would be, but I can provide them if necessary.
+
+Thanks,
+
+=C3=89rico Nogueira
