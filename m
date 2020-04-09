@@ -2,87 +2,83 @@ Return-Path: <SRS0=Te6D=5Z=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 02ADBC2BA19
-	for <git@archiver.kernel.org>; Thu,  9 Apr 2020 22:57:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B7CDC2BA19
+	for <git@archiver.kernel.org>; Thu,  9 Apr 2020 23:12:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id C6BFB2083E
-	for <git@archiver.kernel.org>; Thu,  9 Apr 2020 22:57:06 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="HB+zOKRU"
+	by mail.kernel.org (Postfix) with ESMTP id F157A206E9
+	for <git@archiver.kernel.org>; Thu,  9 Apr 2020 23:12:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726793AbgDIW5F (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Apr 2020 18:57:05 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:61257 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726725AbgDIW5E (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Apr 2020 18:57:04 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 24485BD14D;
-        Thu,  9 Apr 2020 18:57:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=k5sT7dITZ88DRoC22OKr3nF1mK8=; b=HB+zOK
-        RU3XZMK63XYKwatRo85KzoRP8MzdqTrMu/SiuZ7K/T00TXi19Oi5VxdIREISWYUG
-        fSjKnI6GxDLHDlp1Qey/lNpKK6vcu1ys7SEoU8xFYBSldFngY+1Hx/h0l1VrOE99
-        kFJTAChXpoO52BKOv5eJPNyT2bVDV8jr67ODM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=UUq8gwuTQrtasfGNG4MCchGY3QzoD8So
-        b1EICLH+hmHa8OgIG15wtS2mp+vcN8v4ESBjnMzZFLx0JfewdOX/DTVAa/I0IqDw
-        oOjG8wxhOhwyzgnGpf+nzCZVmJI0NITIQy6k91NVNdFzTD6f8uHXMTZPpF2JcmCL
-        ww3OA9bFpEE=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1C6BDBD14C;
-        Thu,  9 Apr 2020 18:57:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 62265BD147;
-        Thu,  9 Apr 2020 18:57:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?=C3=89rico?= Rolim <erico.erc@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [BUG] segmentation fault in git-diff
-References: <CAFDeuWO+2JEGudtnHZvSsSUOVRR83U9ziLEjSoDyMWxYhvDMKg@mail.gmail.com>
-        <xmqqh7xsmg7j.fsf@gitster.c.googlers.com>
-        <xmqqd08gmg3s.fsf@gitster.c.googlers.com>
-Date:   Thu, 09 Apr 2020 15:57:00 -0700
-In-Reply-To: <xmqqd08gmg3s.fsf@gitster.c.googlers.com> (Junio C. Hamano's
-        message of "Thu, 09 Apr 2020 15:47:19 -0700")
-Message-ID: <xmqq4ktsmfnn.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726871AbgDIXMy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Apr 2020 19:12:54 -0400
+Received: from cloud.peff.net ([104.130.231.41]:38806 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726734AbgDIXMy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Apr 2020 19:12:54 -0400
+Received: (qmail 22375 invoked by uid 109); 9 Apr 2020 23:12:55 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 09 Apr 2020 23:12:55 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 24003 invoked by uid 111); 9 Apr 2020 23:23:25 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 09 Apr 2020 19:23:25 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 9 Apr 2020 19:12:53 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Norbert Kiesel <nkiesel@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [git 2.26] stat counts reported by commit and log are different
+Message-ID: <20200409231253.GA4180345@coredump.intra.peff.net>
+References: <CAM+g_Nv4UqQNAuYyo5zsTsiomCe4ueoM6ZGU1aqAjLGV9+jQJg@mail.gmail.com>
+ <20200409135959.GB3494212@coredump.intra.peff.net>
+ <CAM+g_NuZ3pKAd80+HoR8-_0=N9wV28L-yyb1VhJhTbYH+RS0og@mail.gmail.com>
+ <20200409224747.GA4173825@coredump.intra.peff.net>
+ <xmqq8sj4mfq5.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 6CF9562C-7AB5-11EA-9ED4-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq8sj4mfq5.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Thu, Apr 09, 2020 at 03:55:30PM -0700, Junio C Hamano wrote:
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> This is 'next' running for me:
->
-> Scratch all that---sorry, but I did see the note about trailing
-> slash, but somehow managed to forget adding it when I tried it.
+> Jeff King <peff@peff.net> writes:
+> 
+> > It might make sense to do so (and/or to make it possible to enable it by
+> > config like we did for years with diff.renames). But it definitely is
+> > way more expensive.
+> > ...
+> > So not quite as bad percentage-wise, but still pretty expensive. And for
+> > not a huge benefit. There are ~261 impacted commits. You can see a
+> > recent example with:
+> >
+> >   git show -B -M --stat --summary ce6521e44
+> >
+> > where we find that most of builtin/fmt-merge-msg.c was moved to
+> > fmt-merge-msg.c. It's nice, but it's expensive enough that it probably
+> > shouldn't be the default.
+> 
+> Not only that, it can cost correctness-wise.  Until this
+> 
+>   https://public-inbox.org/git/xmqqegqaahnh.fsf@gitster.dls.corp.google.com/
+> 
+> gets corrected, it is not advisable to enable -B and -M at the same
+> time.
 
+Ah, I forgot about that. I think the resulting diff might still be
+useful for a human to read, but yeah, it cannot be applied (though even
+there, it would be nice for it to make a little more clear to humans
+what's happening with the destination file).
 
-$ git checkout v2.22.0 && make && ./git-rev-parse :/any/path/
+I wonder if we ought to remove -B from its use in status/commit, but I
+guess there we are never generating a diff to apply, but rather one to
+help humans understand what happened.
 
-segfaults, while
-
-$ git checkout v2.21.0 && make && ./git-rev-parse :/any/path/
-
-is OK.  We should be able to bisect this fairly straightforward
-between these two.
-
-
+-Peff
