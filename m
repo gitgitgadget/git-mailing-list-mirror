@@ -4,102 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B804C2BA2B
-	for <git@archiver.kernel.org>; Thu,  9 Apr 2020 15:00:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D3BEC2BA2B
+	for <git@archiver.kernel.org>; Thu,  9 Apr 2020 15:21:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 18A1F20692
-	for <git@archiver.kernel.org>; Thu,  9 Apr 2020 15:00:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D68902074F
+	for <git@archiver.kernel.org>; Thu,  9 Apr 2020 15:21:40 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y0UvEZK1"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Gx9kV5Ng"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727801AbgDIPAs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Apr 2020 11:00:48 -0400
-Received: from mail-ua1-f68.google.com ([209.85.222.68]:46690 "EHLO
-        mail-ua1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726977AbgDIPAs (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Apr 2020 11:00:48 -0400
-Received: by mail-ua1-f68.google.com with SMTP id o14so561645uat.13
-        for <git@vger.kernel.org>; Thu, 09 Apr 2020 08:00:48 -0700 (PDT)
+        id S1728102AbgDIPVj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Apr 2020 11:21:39 -0400
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:46462 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728057AbgDIPVj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Apr 2020 11:21:39 -0400
+Received: by mail-pl1-f194.google.com with SMTP id x2so1322871plv.13
+        for <git@vger.kernel.org>; Thu, 09 Apr 2020 08:21:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=K/1bBpw8W4OKP2dL4Avc1cWDxVw51d94XPJu+H5J4BA=;
-        b=Y0UvEZK1fCe+8Q3n2PtRXTmMq9ATjhdOUkpm8xc7fbzdjwt1YqAdMdgipNBeNfz+5+
-         puw9zRSLozS2p9Rqddp/5TWAv2XKX5gCLYSbCMZOGyBRHAb5RT445POVWYC+CQWTwoo9
-         1h9CGHbyDHjRsm1/8xYyP4NtIs0LQROqgga+Qc5VPawICxWe96CwGmg3nrZTQwt2ILdv
-         n5RsPwaflwa2oUINWhLCJiOcpN/8ZM46dihxtP/8sxrsAjvEF7a+6vQHb+og1/2GQijg
-         GnVVbzII4NetXa6+Gk//abNXz0JuPpqnra47hNVV3f+z+uKZA+v36F45hKGzma0Kq6t5
-         UTsA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=HI16aODzsz+SNlYyGaHEJrFuucGsFvnhl4NtZy3Mmyk=;
+        b=Gx9kV5NgELpmlWTHyNuXPsw7QGcNQ4uRb1ojxyAbRTIDuUgOquHPabKn85VJH3FE7a
+         hUL/BdhavAcvJ8HXSTS+xfSA2Mhn0Yl/Ovmfc10cnV1mWP03J5zuN2f4mEgwkr6fRRiq
+         3lMLB13lM/IXCNxgeAcFBdwu0XcJ9ws52Z9SbmG7xzcUYarW7WeJbv8zzngjhlutoDGk
+         pJDXn2E66ivkyfJQRoJBjL732lxTeWj/6h+AMzAA5yWXg0cdz3mNMwR19I/c8JwsL7pn
+         Bf5SAIej8yvvFp3JgN4SZZIF8GAzYSi1cDlnNavRBt3d8E0fPJJ8rJYLWGuzTLb6m8h1
+         TI+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=K/1bBpw8W4OKP2dL4Avc1cWDxVw51d94XPJu+H5J4BA=;
-        b=QokDIDThhXPwNutyLRHG6EtoFxnjYkhuMyNLjlCzc1f65ccxHC4sGaARd+QLoJxZ7R
-         7ixKJ6eDJ9Pkfq5JM96x0fjdR6AJTAYbBrDeTOXFVcdP0LLujS/gtqDVTDPo7X4hfSun
-         377gEmPDkj/GEeFBsikeCTBp8MsJcP0LS/Eo/jIxP6/E1UG7MDmPR19GKslfK4UW55w2
-         1+RnFcm1XmZHZ6zWaYmYFul3HqU2IO6zC4UqiGWfdc4ABp7I9m6L1hTzdr6ZezM6bDjz
-         PMDN9KWMdLmcDIlbzZFkzL23iLJ+Mjn7fRA4agAviR6i/buHFfVTtXb14Ql/bxIK3zup
-         TvyA==
-X-Gm-Message-State: AGi0PuafIDZndApTuQuPaBkvgMDiQWQG5CgBd0t3CZwNASFemqnSTvkc
-        5ZMzbp6gS7MdBBrWwC0x/6hjSXJcTReJkCR57OqSWRZY
-X-Google-Smtp-Source: APiQypLKBv6Yku5M/GvxCc7HDDy6tSPyZ0h/5bGrdIyY5JaMVW6KZNK9X76V3usvccFyhY1yWnuFtTOCXa0JXvofTzw=
-X-Received: by 2002:ab0:5550:: with SMTP id u16mr4567385uaa.62.1586444447721;
- Thu, 09 Apr 2020 08:00:47 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=HI16aODzsz+SNlYyGaHEJrFuucGsFvnhl4NtZy3Mmyk=;
+        b=puZhPQ6XwLvo26tLgutbvpOWlORqrC6VFlO/oIDd21bwv/pQ88uwAC+MakuP0aW2eB
+         eZNcxY2dkVX4V8a7nObnEJRatc+HkaOPADhzVVTR0Y08zop696U2SW+qU/nMNRmIvxOK
+         C/Dfc35oj7+76ThYu9luPC//jcoIrY65Ve1s1Ba7KcHhSbnFIJRc3UcULFHGnxyAQpFT
+         gy9hPRoW07HqLlbJ6Tr3A+CTjfbTGRlZ6XbWkJmzFkI4t7Bl7m23BXwt2ym4Ov3o1KxV
+         leK21LL0sWAawm3Lkbdqr2iC48ScAevx9pn6T5Oe5qpNV9h2ZJoayGpc/wjgCTzVvNpQ
+         u+hA==
+X-Gm-Message-State: AGi0PuYYdN3xiMAZXmgG/KyJ0snd48IXDmfQ9kBwnNdKbZVr+pGqsXrf
+        +2AAR9tiAZSpbYE0HV1Tps8=
+X-Google-Smtp-Source: APiQypIpQeYucTPZjbgDmq+fbD/4/fem46yWP2DD1uHlBAkOvkQhfXn+hkqYAI2MrYBx9S2cfkVr9g==
+X-Received: by 2002:a17:90b:1a8b:: with SMTP id ng11mr12443390pjb.109.1586445696780;
+        Thu, 09 Apr 2020 08:21:36 -0700 (PDT)
+Received: from localhost ([2402:800:6375:207b:be21:746a:7a56:9d4d])
+        by smtp.gmail.com with ESMTPSA id v25sm18691428pgl.55.2020.04.09.08.21.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Apr 2020 08:21:36 -0700 (PDT)
+Date:   Thu, 9 Apr 2020 22:21:34 +0700
+From:   Danh Doan <congdanhqx@gmail.com>
+To:     Allo via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Allo <dinoallosaurus1111@gmail.com>
+Subject: Re: [PATCH v2] t4200-rerere.sh: use test_path_is_* functions in the
+ script
+Message-ID: <20200409152134.GC1937@danh.dev>
+References: <pull.595.git.1585588586605.gitgitgadget@gmail.com>
+ <pull.595.v2.git.1586444061576.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-References: <20200409103541.23743-1-martin.agren@gmail.com> <20200409141452.GC3494212@coredump.intra.peff.net>
-In-Reply-To: <20200409141452.GC3494212@coredump.intra.peff.net>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Thu, 9 Apr 2020 17:00:34 +0200
-Message-ID: <CAN0heSp3=8fTGb5Ciuvr8+EevNSrAfskvrrS_PN=VPhKJyB5jA@mail.gmail.com>
-Subject: Re: [PATCH] config.txt: move closing "----" to cover entire listing
-To:     Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <pull.595.v2.git.1586444061576.gitgitgadget@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 9 Apr 2020 at 16:14, Jeff King <peff@peff.net> wrote:
->
-> On Thu, Apr 09, 2020 at 12:35:41PM +0200, Martin =C3=85gren wrote:
->
-> >  Not sure how I managed to botch this in 1925fe0c8a.
->
-> I managed to botch the review, as well. :)
+On 2020-04-09 14:54:21+0000, Allo via GitGitGadget <gitgitgadget@gmail.com> wrote:
+> From: Angel Pan <dinoallosaurus1111@gmail.com>
+> 
+> Subject: t4200-rerere.sh: use test_path_is_* functions in the script
 
-:)
+"in the script" looks too verbose to me. Because the script has been
+mentioned earlier.
 
-> I checked it with doc-diff, but was surprised to find no change. That's
-> because the manpage shows it the same either way (the indented chunk is
-> just a different example, but two examples back to back render the same
-> as a single one). But you can see the difference in the HTML version,
-> where the final example isn't in the grey box.
+> The original code works fine. However, since the code base has already had help-functions(in test-lib-functions),
 
-Ah, you're using AsciiDoc. With Asciidoctor, there is a change in
-indentation of the "path =3D foo.inc" line with this new, proposed patch.
-The original commit reduced the number of occurrences of such
-AsciiDoc/tor differences around this spot, but failed to bring the
-number all the way down to zero. Now, finally, that discrepancy will be
-fixed.
+We wrap lines at 72 characters per line.
+And, missing space before open parenthese.
 
-> That explains why I didn't see the issue when running doc-diff on the
-> original bug. I wonder if we could teach doc-diff to look at the HTML,
-> too. I'm not sure how, though. Certainly html2text or similar would get
-> us something diff-able, but without the visual elements (like the grey
-> box), I don't know that it's much more valuable than the manpages.
+I'm not good at wording, but I think this commit message is too
+verbose. I would say something like:
 
-At one point I considered trying out diffoscope for this. It should
-allegedly be good at comparing "everything". But being good at
-everything, it wanted to pull in a discouragingly large number of
-dependencies, so I never actually tried it out. It doesn't explicitly
-claim to know html or manpages (but does mention xml and pdf), so I
-dunno.
+	Prefer "test_path_is_dir" to "test -d" and test_path_is_file
+	to "test -f" because they're more friendly to debug.
 
-Martin
+That's not a good message, either. But, it's some what simpler and
+cleaner.
+
+> the change is able to help people understand the code better, as well as improve debug-friendliness.
+> 
+> * t4200-rerere.sh: replace "test -d" with "test_path_is_dir"
+> * t4200-rerere.sh: replace "test -f" with "test_path_is_file"
+> 
+
+-- 
+Danh
