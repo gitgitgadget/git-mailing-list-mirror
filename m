@@ -2,155 +2,206 @@ Return-Path: <SRS0=1KXq=52=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C503C2D0EC
-	for <git@archiver.kernel.org>; Fri, 10 Apr 2020 19:50:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AE25DC2D0EC
+	for <git@archiver.kernel.org>; Fri, 10 Apr 2020 20:06:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6C8FB2084D
-	for <git@archiver.kernel.org>; Fri, 10 Apr 2020 19:50:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6F0522078E
+	for <git@archiver.kernel.org>; Fri, 10 Apr 2020 20:06:29 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="p8PPww9P"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726638AbgDJTuI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Apr 2020 15:50:08 -0400
-Received: from cloud.peff.net ([104.130.231.41]:40090 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726203AbgDJTuI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Apr 2020 15:50:08 -0400
-Received: (qmail 7681 invoked by uid 109); 10 Apr 2020 19:50:09 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 10 Apr 2020 19:50:09 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 2281 invoked by uid 111); 10 Apr 2020 20:00:42 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 10 Apr 2020 16:00:42 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 10 Apr 2020 15:50:07 -0400
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Subject: [PATCH 6/6] config: reject parsing of files over INT_MAX
-Message-ID: <20200410195007.GF1363756@coredump.intra.peff.net>
-References: <20200410194211.GA1363484@coredump.intra.peff.net>
+        id S1726646AbgDJUG2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Apr 2020 16:06:28 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:59362 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726177AbgDJUG1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Apr 2020 16:06:27 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 73678C4C8C;
+        Fri, 10 Apr 2020 16:06:23 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=X/ED3dDDjyxdLnNn2mr5T+Osynk=; b=p8PPww
+        9PCejuBF2NusSE5rsbZifOxy0DMxjLakub/jyVsQ+efgpU361DJ0m5aHt0bVfs9Q
+        jHysP8KdFJXyAiyo8EO7xdW1f/Z2Hj2MrQT4AKlDznE8ThEdxSm+960K1Hm/kNNY
+        bIALYr3G8lozI0eKDZ9Sy79rB+b5WVWxtrOL4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=KcBSb48Q1NXXeY2oMR/z2Zu6xycGivEu
+        +LCpECKQrUzSQBunRWTfoO9LAGlwwfiLMCEmY5duBf6LM4J/xFnpud47+YZHxYXK
+        NtpqARi6FpOm9siRVJJwWjquQJIVGK3BzVlquDbjjdOmskBMRmJpZ3DNAzOHat+y
+        /6IEEo2DkUs=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6AFE1C4C8B;
+        Fri, 10 Apr 2020 16:06:23 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B75ADC4C8A;
+        Fri, 10 Apr 2020 16:06:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, peff@peff.net, me@ttaylorr.com,
+        philipoakley@iee.email, sandals@crustytoothpaste.net,
+        Johannes.Schindelin@gmx.de, Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v3] revision: --show-pulls adds helpful merges
+References: <pull.599.v2.git.1586390501128.gitgitgadget@gmail.com>
+        <pull.599.v3.git.1586521183873.gitgitgadget@gmail.com>
+Date:   Fri, 10 Apr 2020 13:06:19 -0700
+In-Reply-To: <pull.599.v3.git.1586521183873.gitgitgadget@gmail.com> (Derrick
+        Stolee via GitGitGadget's message of "Fri, 10 Apr 2020 12:19:43
+        +0000")
+Message-ID: <xmqq369bjebo.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200410194211.GA1363484@coredump.intra.peff.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID: BEE34022-7B66-11EA-935D-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-While the last few commits have made it possible for the config parser
-to handle config files up to the limits of size_t, the rest of the code
-isn't really ready for this. In particular, we often feed the keys as
-strings into printf "%s" format specifiers. And because the printf
-family of functions must return an int to specify the result, they
-complain. Here are two concrete examples (using glibc; we're in
-uncharted territory here so results may vary):
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Generate a gigantic .gitmodules file like this:
+>   A----C1----C2--- ... ---Cn----M------P1---P2--- ... ---Pn
+>    \     \     \            \  /      /    /            /
+>     \     \__.. \            \/ ..__T1    /           Tn
+>      \           \__..       /\     ..__T2           /
+>       \_____________________B  \____________________/
+>
+> If the commits T1, T2, ... Tn did not change the file, then all of
+> P1 through Pn will be TREESAME to their first parent, but not
+> TREESAME to their second. This means that all of those merge commits
+> appear in the --full-history view, with edges that immediately
+> collapse into the lower history without introducing interesting
+> single-parent commits.
+>
+> The --simplify-merges option was introduced to remove these extra
+> merge commits. By noticing that the rewritten parents are reachable
+> from their first parents, those edges can be simplified away. Finally,
+> the commits now look like single-parent commits that are TREESAME to
+> their "only" parent. Thus, they are removed and this issue does not
+> cause issues anymore. However, this also ends up removing the commit
+> M from the history view! Even worse, the --simplify-merges option
+> requires walking the entire history before returning a single result.
 
-   git submodule add /some/other/repo foo
-   {
-           printf '[submodule "'
-           perl -e 'print "a" x 2**31'
-	   echo '"]path = foo'
-   } >.gitmodules
-   git commit -m 'huge gitmodule'
+True.  It is not advisable to use --simplify-merges unless you are
+limiting the history at the bottom for that reason.
 
-then try this:
+> In some sense, users are asking for the "first" merge commit to
+> bring in the change to their branch. As long as the parent order is
+> consistent, this can be handled with the following rule:
+>
+>   Include a merge commit if it is not TREESAME to its first
+>   parent, but is TREESAME to a later parent.
 
-   $ git show
-   BUG: strbuf.c:397: your vsnprintf is broken (returned -1)
+"but is" -> "even if it is" would make it a bit more accurate, I
+would think.  Normally, such a merge that is treesame to some side
+branch is omitted from the output, but the rule wants it to be shown
+even if all the changes were brought in from one single parent.
 
-The problem is that we end up calling:
+> Update Documentation/rev-list-options.txt with significant details
+> around this option. This requires updating the example in the
+> History Simplification section to demonstrate some of the problems
+> with TREESAME second parents.
 
-   strbuf_addf(&sb, "submodule.%s.ignore", submodule_name);
+Good.
 
-which relies on vsnprintf(), and that function has no way to report back
-a size larger than INT_MAX.
+> diff --git a/revision.c b/revision.c
+> index 8136929e236..f89dd6caa55 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -870,7 +870,19 @@ static void try_to_simplify_commit(struct rev_info *revs, struct commit *commit)
+>  			}
+>  			parent->next = NULL;
+>  			commit->parents = parent;
+> -			commit->object.flags |= TREESAME;
+> +
+> +			/*
+> +			 * A merge commit is a "diversion" if it is not
+> +			 * TREESAME to its first parent but is TREESAME
+> +			 * to a later parent. In the simplified history,
+> +			 * we "divert" the history walk to the later
+> +			 * parent. These commits are shown when "show_pulls"
+> +			 * is enabled, so do not mark the object as
+> +			 * TREESAME here.
 
-Taking that same file, try this:
+As we no longer use the word "diversion", this explanation should
+shift the focus from defining the word "diversion" and giving its
+background to explaining why the above parent rewriting is done and
+why the TREESAME marking is conditional, e.g.
 
-  git config --file=.gitmodules --list --name-only
+      			The tree of the merge and of the parent are
+      			the same; from here on, we stop following
+      			histories of all other parents but this one
+      			by culling commit->parents list.  We also
+      			normally mark the merge commit TREESAME as
+      			the merge itself did not introduce any
+      			change relative to the parent, but we
+      			refrain from doing so for the first parent
+      			under "--show-pulls" mode, in order to let
+      			the output phase to show the merge, which is
+      			the last commit before we divert our walk to
+      			a side history.
 
-On my system it produces an output with exactly 4GB of spaces. I
-confirmed in a debugger that we reach the config callback with the key
-intact: it's 2147483663 bytes and full of a's. But when we print it with
-this call:
+or something along that line.
 
-  printf("%s%c", key_, term);
+> +			if (!revs->show_pulls || !nth_parent)
+> +				commit->object.flags |= TREESAME;
+> +
+>  			return;
 
-we just get the spaces.
+> @@ -897,6 +909,10 @@ static void try_to_simplify_commit(struct rev_info *revs, struct commit *commit)
+>  				relevant_change = 1;
+>  			else
+>  				irrelevant_change = 1;
+> +
+> +			if (!nth_parent)
+> +				commit->object.flags |= PULL_MERGE;
 
-So given the fact that these are insane cases which we have no need to
-support, the weird behavior from feeding the results to printf even if
-the code is careful, and the possibility of uncareful code introducing
-its own integer truncation issues, let's just declare INT_MAX as a limit
-for parsing config files.
+For a three-parent merge that brings in changes to the first parent,
+if the result matches the second parent, we would have returned in
+the previous hunk before having a chance to inspect the third one
+and marking the merge result with PULL_MERGE, but if you swap the
+order of the second and the third parent, the second parent, which
+has different tree from the result, would not return in the previous
+hunk and cause the merge with PULL_MERGE here.  And then when we
+inspect the third parent, the previous hunk's return would kick in.
+So for two merges that merge exactly the same two branches on top of
+exactly the same commit on the mainline, you sometimes mark the
+result with PULL_MERGE and sometimes don't, depending on the order
+of the second and the third parent.
 
-We'll enforce the limit in get_next_char(), which generalizes over all
-sources (blobs, files, etc) and covers any element we're parsing
-(whether section, key, value, etc). For simplicity, the limit is over
-the length of the _whole_ file, so you couldn't have two 1GB values in
-the same file. This should be perfectly fine, as the expected size for
-config files is generally kilobytes at most.
+That feels iffy.  Treating the first parent differently from others
+is what we intend to do with this change, bhut this hunk treats the
+other parents differently depending on the merge order.
 
-With this patch both cases above will yield:
+> @@ -3019,7 +3037,8 @@ static struct commit_list **simplify_one(struct rev_info *revs, struct commit *c
+>  	if (!cnt ||
+>  	    (commit->object.flags & UNINTERESTING) ||
+>  	    !(commit->object.flags & TREESAME) ||
+> -	    (parent = one_relevant_parent(revs, commit->parents)) == NULL)
+> +	    (parent = one_relevant_parent(revs, commit->parents)) == NULL ||
+> +	    (revs->show_pulls && (commit->object.flags & PULL_MERGE)))
+>  		st->simplified = commit;
 
-  fatal: bad config line 1 in file .gitmodules
+... hence, wouldn't we see different result here ...
 
-That's not an amazing error message, but the parser isn't set up to
-provide specific messages (it just breaks out of the parsing loop and
-gives that generic error even if see a syntactic issue). And we really
-wouldn't expect to see this case outside of somebody maliciously probing
-the limits of the config system.
+> @@ -3602,6 +3621,10 @@ enum commit_action get_commit_action(struct rev_info *revs, struct commit *commi
+>  			/* drop merges unless we want parenthood */
+>  			if (!want_ancestry(revs))
+>  				return commit_ignore;
+> +
+> +			if (revs->show_pulls && (commit->object.flags & PULL_MERGE))
+> +				return commit_show;
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- config.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+... and also here?
 
-diff --git a/config.c b/config.c
-index 1c25c94863..8db9c77098 100644
---- a/config.c
-+++ b/config.c
-@@ -37,6 +37,7 @@ struct config_source {
- 	enum config_error_action default_error_action;
- 	int linenr;
- 	int eof;
-+	size_t total_len;
- 	struct strbuf value;
- 	struct strbuf var;
- 	unsigned subsection_case_sensitive : 1;
-@@ -524,6 +525,19 @@ static int get_next_char(void)
- 			c = '\r';
- 		}
- 	}
-+
-+	if (c != EOF && ++cf->total_len > INT_MAX) {
-+		/*
-+		 * This is an absurdly long config file; refuse to parse
-+		 * further in order to protect downstream code from integer
-+		 * overflows. Note that we can't return an error specifically,
-+		 * but we can mark EOF and put trash in the return value,
-+		 * which will trigger a parse error.
-+		 */
-+		cf->eof = 1;
-+		return 0;
-+	}
-+
- 	if (c == '\n')
- 		cf->linenr++;
- 	if (c == EOF) {
-@@ -1540,6 +1554,7 @@ static int do_config_from(struct config_source *top, config_fn_t fn, void *data,
- 	top->prev = cf;
- 	top->linenr = 1;
- 	top->eof = 0;
-+	top->total_len = 0;
- 	strbuf_init(&top->value, 1024);
- 	strbuf_init(&top->var, 1024);
- 	cf = top;
--- 
-2.26.0.414.ge3a6455e3d
+Thanks.
