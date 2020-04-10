@@ -2,114 +2,260 @@ Return-Path: <SRS0=1KXq=52=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B57BC2BA2B
-	for <git@archiver.kernel.org>; Fri, 10 Apr 2020 11:27:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2409FC2BB85
+	for <git@archiver.kernel.org>; Fri, 10 Apr 2020 11:27:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 47D2A20753
-	for <git@archiver.kernel.org>; Fri, 10 Apr 2020 11:27:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E659E20753
+	for <git@archiver.kernel.org>; Fri, 10 Apr 2020 11:27:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ay1hERec"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="skaKZYMm"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726082AbgDJL1y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Apr 2020 07:27:54 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:37049 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725897AbgDJL1y (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Apr 2020 07:27:54 -0400
-Received: by mail-ed1-f65.google.com with SMTP id de14so2102065edb.4
-        for <git@vger.kernel.org>; Fri, 10 Apr 2020 04:27:53 -0700 (PDT)
+        id S1726142AbgDJL14 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Apr 2020 07:27:56 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:39398 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725913AbgDJL1z (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Apr 2020 07:27:55 -0400
+Received: by mail-ed1-f66.google.com with SMTP id a43so2089563edf.6
+        for <git@vger.kernel.org>; Fri, 10 Apr 2020 04:27:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=lzH68EtxRs2IVGS4zNMQ53URBlC0f6SOeyc44Mx2Y9s=;
-        b=Ay1hERecWuzc8VZKf+MnXyZVwaFZPH2HvbO60TQoAAq8D72yHn7bciiXEze/vZmu4z
-         IF6kNe5RJPJpoD7XLklQ8feEufCQNX5AbkCBsEMZUS62xUZ1OeCjdmJkCP5qev3x9Nh8
-         4IY1sg1i0MIH0W7A93x9LFirGIwd0WATQrw81BJ4D5wjs3iwfj2++cNuD9zvvWfkanb/
-         ADNXpKEu3uQAkL+K4U8LCr0JTmPVs2rT7uu3SWiiyx71wAkRMA5+ElL1GxUPS4WxxFLc
-         EOxPX+adeAqk7ZxlaXAUXlKbfSojoPFu4Cg/jnnn5nC83/q0HbJGq97rxSR2wVNCnmWL
-         bNiQ==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=vcUL0ADdvScH2aAEn20aMlyAkhWM60EaeIPM/oQLy8A=;
+        b=skaKZYMmPSVJ/eWUfIdxUgl56lqzn967CQfvpSfOJ+z89tvEqzj27OIJVSxEfXMeT6
+         j87im+4e2cpj5DCG5QxxzCOQA371v/jqXzgIz+sBw2QSl+PAzR+LC2JC8WnDtxAsmP+d
+         X+srSd9brap0uuyqjJ/BebG9dzwe4cavX6ZFWrzAl/SVClRh73dyJW9Jqs0zBWNS4C9k
+         LCthDFEx/cTvUiMV/MWJu44P2HHSK3yrcnH8EAwsoRu0Hv9cEiZw7Q2KZ/AyKox6kt7a
+         cT7y7zHGAD7pDrrS7sAXwBBwk2up/LB62tJOc700exqHQ4IamVee9NNIjFz5wxXh0v9n
+         LdPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=lzH68EtxRs2IVGS4zNMQ53URBlC0f6SOeyc44Mx2Y9s=;
-        b=NFN2WUJY/sGZ8Z7/vWpky/3h3j6XQnaAIHK7IPYQ4qZ/UF0Icr1beq1+JACzBXpP2r
-         g+cRljfTZuV1+GfSs5wM4tgtKtWG903zBRjHcPPIqOE8GpbraVthS44aGTnka/1yx5cr
-         LJcXAHtSB5yLxQszns65v8ywoq7gTFk+kV3hbDNQ2NGEOB/x0CxWD+91T1XSofDHYK6K
-         9l76UzsyHfVl/0VTuKJC6121lbSHPlLzbsI/3go2c0xSHnS038PuzlnpQe7B0E9AK5JV
-         JpcwZ/I4OEC9CNu3cjI4qfHFCTcfB3U3QKg6WY0npWPZTaZx2J35/AQ6EfpxsPI5LXC4
-         G/Ig==
-X-Gm-Message-State: AGi0PuaYVbSN55jaWs98xK7SJQHGdfKS1uFVbH7C3n1I6zkypKV8GH4P
-        rSQa71V40sZ5+dpfnp1yK7CtuaMW
-X-Google-Smtp-Source: APiQypJ3+fowKhm4Y05Rb/Yp3rchjYwEDxkXB5quwdYGC0Z8iGF3GfvGJWKD2CLd8EFEq41vDus4Iw==
-X-Received: by 2002:a17:906:cd18:: with SMTP id oz24mr3442360ejb.195.1586518072858;
-        Fri, 10 Apr 2020 04:27:52 -0700 (PDT)
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=vcUL0ADdvScH2aAEn20aMlyAkhWM60EaeIPM/oQLy8A=;
+        b=sPUzEecQzT+P7YhVhdC1e0jxFh3pI8Bmg1Wd4zEblWKkp33lK4SPa1a/cN7/w89qdR
+         QggoUswW80dUe2Xd0tFsGP8h5hIsJgZCO/xgP7wzGHlYm6gN7Jnt3F3yCdI2+hkSDtlb
+         b6XTdCzgfW3b+6cj7xfbjL0dXLkfAX5luuESarpWQXxDKNRHwLKah6R6gbh+7hZpgGq4
+         pkQOKU5Hykwfkhz9w4WUOdWwpbe2KdLABIYEhetpFYC3q3vvTlLD59EQaH2eGHR21fhu
+         fDpyFoRXKHCE0NvlM5BVLnsjI3kcpJEEjzteJHZYOzzsj2BH6nTJHzyZg7CnzeJJzYMG
+         OeVw==
+X-Gm-Message-State: AGi0Pua1k2V/xR2TMf2sTevnKsTiC/kBKz9rgxeeHR5RyoTvNitJit/b
+        2QXVWz9LpgeTijWjTuopF82jUT42
+X-Google-Smtp-Source: APiQypKOBmGTTZ2KoEUH2WB7eLazmkUbtof+0G4cPpipV4Qw1TryCxPClV2buLL/uw7FWW4R9VRqgg==
+X-Received: by 2002:a05:6402:1c99:: with SMTP id cy25mr4451984edb.78.1586518073604;
+        Fri, 10 Apr 2020 04:27:53 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w6sm103378eja.33.2020.04.10.04.27.52
+        by smtp.gmail.com with ESMTPSA id l62sm83479edl.89.2020.04.10.04.27.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Apr 2020 04:27:52 -0700 (PDT)
-Message-Id: <pull.755.v2.git.git.1586518072.gitgitgadget@gmail.com>
-In-Reply-To: <pull.755.git.git.1586374380709.gitgitgadget@gmail.com>
+        Fri, 10 Apr 2020 04:27:53 -0700 (PDT)
+Message-Id: <9d2ee78a9e414c0b6aacbc9c878ab08eb70703d5.1586518072.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.755.v2.git.git.1586518072.gitgitgadget@gmail.com>
 References: <pull.755.git.git.1586374380709.gitgitgadget@gmail.com>
+        <pull.755.v2.git.git.1586518072.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 10 Apr 2020 11:27:49 +0000
-Subject: [PATCH v2 0/2] Explicitly fflush stdout in git clean
-MIME-Version: 1.0
+Date:   Fri, 10 Apr 2020 11:27:50 +0000
+Subject: [PATCH v2 1/2] Refactor code asking the user for input interactively
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Fcc:    Sent
+MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
         Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is yet another patch that was funneled through a Git for Windows PR,
-read: it has been battle-tested.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Of course, the current iteration of this patch series has not been
-battle-tested, so please do review carefully, so that we can prevent bugs
-from slipping in during the review process.
+There are quite a few code locations (e.g. `git clean --interactive`)
+where Git asks the user for an answer. In preparation for fixing a bug
+shared by all of them, and also to DRY up the code, let's refactor it.
 
-Changes since v1:
+Please note that most of these callers trimmed white-space both at the
+beginning and at the end of the answer, instead of trimming only the
+end (as the caller in `add-patch.c` does).
 
- * Added a preparatory patch that refactors all interactive input reading
-   via strbuf_getline(..., stdin).
- * Adjusted the patch and its commit message accordingly.
+THerefore, technically speaking, we change behavior in this patch. At
+the same time, it can be argued that this is actually a bug fix.
 
-Johannes Schindelin (1):
-  Refactor code asking the user for input interactively
-
-마누엘 (1):
-  Explicitly `fflush` stdout before expecting interactive input
-
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
  add-interactive.c |  4 ++--
  add-patch.c       |  4 ++--
  builtin/clean.c   | 14 ++++----------
- prompt.c          | 12 ++++++++++++
+ prompt.c          | 10 ++++++++++
  prompt.h          |  2 ++
  shell.c           |  4 ++--
- 6 files changed, 24 insertions(+), 16 deletions(-)
+ 6 files changed, 22 insertions(+), 16 deletions(-)
 
-
-base-commit: 9fadedd637b312089337d73c3ed8447e9f0aa775
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-755%2Fdscho%2Ffflush-in-git-clean-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-755/dscho/fflush-in-git-clean-v2
-Pull-Request: https://github.com/git/git/pull/755
-
-Range-diff vs v1:
-
- 1:  21acd883b94 < -:  ----------- clean: explicitly `fflush` stdout
- -:  ----------- > 1:  9d2ee78a9e4 Refactor code asking the user for input interactively
- -:  ----------- > 2:  d3949e42004 Explicitly `fflush` stdout before expecting interactive input
-
+diff --git a/add-interactive.c b/add-interactive.c
+index 4a9bf85cac0..29cd2fe0201 100644
+--- a/add-interactive.c
++++ b/add-interactive.c
+@@ -9,6 +9,7 @@
+ #include "lockfile.h"
+ #include "dir.h"
+ #include "run-command.h"
++#include "prompt.h"
+ 
+ static void init_color(struct repository *r, struct add_i_state *s,
+ 		       const char *slot_name, char *dst,
+@@ -289,13 +290,12 @@ static ssize_t list_and_choose(struct add_i_state *s,
+ 		fputs(singleton ? "> " : ">> ", stdout);
+ 		fflush(stdout);
+ 
+-		if (strbuf_getline(&input, stdin) == EOF) {
++		if (git_read_line_interactively(&input) == EOF) {
+ 			putchar('\n');
+ 			if (immediate)
+ 				res = LIST_AND_CHOOSE_QUIT;
+ 			break;
+ 		}
+-		strbuf_trim(&input);
+ 
+ 		if (!input.len)
+ 			break;
+diff --git a/add-patch.c b/add-patch.c
+index d8dafa8168d..d8bfe379be4 100644
+--- a/add-patch.c
++++ b/add-patch.c
+@@ -7,6 +7,7 @@
+ #include "color.h"
+ #include "diff.h"
+ #include "compat/terminal.h"
++#include "prompt.h"
+ 
+ enum prompt_mode_type {
+ 	PROMPT_MODE_CHANGE = 0, PROMPT_DELETION, PROMPT_HUNK,
+@@ -1158,9 +1159,8 @@ static int read_single_character(struct add_p_state *s)
+ 		return res;
+ 	}
+ 
+-	if (strbuf_getline(&s->answer, stdin) == EOF)
++	if (git_read_line_interactively(&s->answer) == EOF)
+ 		return EOF;
+-	strbuf_trim_trailing_newline(&s->answer);
+ 	return 0;
+ }
+ 
+diff --git a/builtin/clean.c b/builtin/clean.c
+index 5abf087e7c4..c8c011d2ddf 100644
+--- a/builtin/clean.c
++++ b/builtin/clean.c
+@@ -18,6 +18,7 @@
+ #include "color.h"
+ #include "pathspec.h"
+ #include "help.h"
++#include "prompt.h"
+ 
+ static int force = -1; /* unset */
+ static int interactive;
+@@ -420,7 +421,6 @@ static int find_unique(const char *choice, struct menu_stuff *menu_stuff)
+ 	return found;
+ }
+ 
+-
+ /*
+  * Parse user input, and return choice(s) for menu (menu_stuff).
+  *
+@@ -580,9 +580,7 @@ static int *list_and_choose(struct menu_opts *opts, struct menu_stuff *stuff)
+ 			       clean_get_color(CLEAN_COLOR_RESET));
+ 		}
+ 
+-		if (strbuf_getline_lf(&choice, stdin) != EOF) {
+-			strbuf_trim(&choice);
+-		} else {
++		if (git_read_line_interactively(&choice) == EOF) {
+ 			eof = 1;
+ 			break;
+ 		}
+@@ -662,9 +660,7 @@ static int filter_by_patterns_cmd(void)
+ 		clean_print_color(CLEAN_COLOR_PROMPT);
+ 		printf(_("Input ignore patterns>> "));
+ 		clean_print_color(CLEAN_COLOR_RESET);
+-		if (strbuf_getline_lf(&confirm, stdin) != EOF)
+-			strbuf_trim(&confirm);
+-		else
++		if (git_read_line_interactively(&confirm) == EOF)
+ 			putchar('\n');
+ 
+ 		/* quit filter_by_pattern mode if press ENTER or Ctrl-D */
+@@ -760,9 +756,7 @@ static int ask_each_cmd(void)
+ 			qname = quote_path_relative(item->string, NULL, &buf);
+ 			/* TRANSLATORS: Make sure to keep [y/N] as is */
+ 			printf(_("Remove %s [y/N]? "), qname);
+-			if (strbuf_getline_lf(&confirm, stdin) != EOF) {
+-				strbuf_trim(&confirm);
+-			} else {
++			if (git_read_line_interactively(&confirm) == EOF) {
+ 				putchar('\n');
+ 				eof = 1;
+ 			}
+diff --git a/prompt.c b/prompt.c
+index 6d5885d0096..098dcfb7cf9 100644
+--- a/prompt.c
++++ b/prompt.c
+@@ -74,3 +74,13 @@ char *git_prompt(const char *prompt, int flags)
+ 	}
+ 	return r;
+ }
++
++int git_read_line_interactively(struct strbuf *line)
++{
++	int ret = strbuf_getline_lf(line, stdin);
++
++	if (ret != EOF)
++		strbuf_trim_trailing_newline(line);
++
++	return ret;
++}
+diff --git a/prompt.h b/prompt.h
+index e04cced030c..e294e93541c 100644
+--- a/prompt.h
++++ b/prompt.h
+@@ -6,4 +6,6 @@
+ 
+ char *git_prompt(const char *prompt, int flags);
+ 
++int git_read_line_interactively(struct strbuf *line);
++
+ #endif /* PROMPT_H */
+diff --git a/shell.c b/shell.c
+index 54cca7439de..cef7ffdc9e1 100644
+--- a/shell.c
++++ b/shell.c
+@@ -4,6 +4,7 @@
+ #include "strbuf.h"
+ #include "run-command.h"
+ #include "alias.h"
++#include "prompt.h"
+ 
+ #define COMMAND_DIR "git-shell-commands"
+ #define HELP_COMMAND COMMAND_DIR "/help"
+@@ -76,12 +77,11 @@ static void run_shell(void)
+ 		int count;
+ 
+ 		fprintf(stderr, "git> ");
+-		if (strbuf_getline_lf(&line, stdin) == EOF) {
++		if (git_read_line_interactively(&line) == EOF) {
+ 			fprintf(stderr, "\n");
+ 			strbuf_release(&line);
+ 			break;
+ 		}
+-		strbuf_trim(&line);
+ 		rawargs = strbuf_detach(&line, NULL);
+ 		split_args = xstrdup(rawargs);
+ 		count = split_cmdline(split_args, &argv);
 -- 
 gitgitgadget
+
