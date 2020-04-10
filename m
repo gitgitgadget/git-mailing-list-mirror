@@ -2,154 +2,104 @@ Return-Path: <SRS0=1KXq=52=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 974FAC2BA19
-	for <git@archiver.kernel.org>; Fri, 10 Apr 2020 03:04:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F883C2BB55
+	for <git@archiver.kernel.org>; Fri, 10 Apr 2020 04:57:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6FDA820A8B
-	for <git@archiver.kernel.org>; Fri, 10 Apr 2020 03:04:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D524A20692
+	for <git@archiver.kernel.org>; Fri, 10 Apr 2020 04:57:16 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="pyQam4Bz"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726703AbgDJDEL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Apr 2020 23:04:11 -0400
-Received: from cloud.peff.net ([104.130.231.41]:39166 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726659AbgDJDEL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Apr 2020 23:04:11 -0400
-Received: (qmail 24137 invoked by uid 109); 10 Apr 2020 03:04:12 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 10 Apr 2020 03:04:12 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 26480 invoked by uid 111); 10 Apr 2020 03:14:43 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 09 Apr 2020 23:14:43 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 9 Apr 2020 23:04:11 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?w4lyaWNv?= Rolim <erico.erc@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: Re* [BUG] segmentation fault in git-diff
-Message-ID: <20200410030411.GA48173@coredump.intra.peff.net>
-References: <CAFDeuWO+2JEGudtnHZvSsSUOVRR83U9ziLEjSoDyMWxYhvDMKg@mail.gmail.com>
- <xmqqh7xsmg7j.fsf@gitster.c.googlers.com>
- <xmqqd08gmg3s.fsf@gitster.c.googlers.com>
- <xmqq4ktsmfnn.fsf@gitster.c.googlers.com>
- <20200409234152.GA42330@coredump.intra.peff.net>
- <xmqqv9m8kxzy.fsf_-_@gitster.c.googlers.com>
+        id S1725858AbgDJE5O (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Apr 2020 00:57:14 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:58817 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725208AbgDJE5O (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Apr 2020 00:57:14 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1CC30BF382;
+        Fri, 10 Apr 2020 00:57:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=pa4OOgK/hbD3e8VVhpGBzml8thc=; b=pyQam4
+        BzyjYzCb3eY0peCgG6jBGS4idevGDrOkrYlBe6MerIn1OGBg5Nb+fh1QqQ+GgDuM
+        PhGqbHNGe3nWldtjLnVZnc68wzXfYnGR8xrR2j9MIbEBCAWxPhVIA8o1cG3KFDPu
+        VKSrBvEIBExbejcyCjwV9bAi2Mzo7h3ZNZoNg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=DY5OytXIz85VmN4mAEZWaBIcUe6cLzDc
+        PlOzYEHwQPjc9DLM/bDjmffJ2PujFnMZtuVK5E1zaP4NfFLyqmL2ndlZEkAku8nQ
+        D5mCOD3+jXJqq58SV+2ePBkbXNioeUgvMbBys6J6ZGnTFhvkpdC23NtvF6XDLYiX
+        zb4gQ4oW1To=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 08216BF381;
+        Fri, 10 Apr 2020 00:57:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 424B4BF380;
+        Fri, 10 Apr 2020 00:57:10 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Bryan Turner <bturner@atlassian.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Users <git@vger.kernel.org>, phillip.wood123@gmail.com,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH] rebase -i: mark commits that begin empty in todo editor
+References: <pull.757.git.git.1586474800276.gitgitgadget@gmail.com>
+        <xmqqimi8kvue.fsf@gitster.c.googlers.com>
+        <CAGyf7-H4jtnVjgZ20qC-mzJHRd7Ffqm=Vh18wJPiiSS4NPnhyQ@mail.gmail.com>
+Date:   Thu, 09 Apr 2020 21:57:08 -0700
+In-Reply-To: <CAGyf7-H4jtnVjgZ20qC-mzJHRd7Ffqm=Vh18wJPiiSS4NPnhyQ@mail.gmail.com>
+        (Bryan Turner's message of "Thu, 9 Apr 2020 19:06:42 -0700")
+Message-ID: <xmqqeeswkkez.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqv9m8kxzy.fsf_-_@gitster.c.googlers.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: BC44C108-7AE7-11EA-9454-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 09, 2020 at 05:03:45PM -0700, Junio C Hamano wrote:
+Bryan Turner <bturner@atlassian.com> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > But there are a bunch of other commits around the same time replacing
-> > the_repository, and it seems like an easy mistake to make. Perhaps we
-> > should rename the "refs" member of "struct repository" to something more
-> > clearly private, which would force callers to use the access method.
-> 
-> Here is the final version that I am going to apply and merge to
-> 'jch' branch.  This is an ancient regression in Git timescale, so
-> its fix is not all that urgent, though.
+>> So, from that point of view, this may not be enough, but a "throw
+>> away all" option is not enough, either.  We'd want to have both to
+>> serve such users better.
+>
+> This was why I wondered whether it might be worth extending the
+> --empty option to add another possible value, like "drop-all", that
+> would allow the caller to say they want to drop all empty
+> commits--both those that started out empty and those that became
+> empty.
 
-Agreed. The patch looks good to me.
+You are talking about "empty from the beginning" and "has become
+empty due to rebasing", but the use case you quoted and responding
+to is not about the distinction between those two.
 
-I prepared the patch below on top. I mostly wanted it as an auditing
-tool to find similar cases, but there were none. It may still be worth
-applying to protect ourselves in the future.
+The original scenario that triggered this thread was to clean a
+history the user created with git-imerge.  Part of using the tool,
+apparently, you can choose to leave empty commits the tool
+internally needs to create.  To the "git rebase" command that is
+tasked to clean up the history, an empty commit that was left due to
+what imerge did, and an empty commit that was originally created by
+the end user (perhaps deliberately in order to server as some sort
+of a marker) look the same---they both are "empty from the
+beginning", not "commits that became no-op as the result of
+rebasing".
 
--- >8 --
-Subject: [PATCH] repository: mark the "refs" pointer as private
-
-The "refs" pointer in a struct repository starts life as NULL, but then
-is lazily initialized when it is accessed via get_main_ref_store().
-However, it's easy for calling code to forget this and access it
-directly, leading to code which works _some_ of the time, but fails if
-it is called before anybody else accesses the refs.
-
-This was the cause of the bug fixed by 5ff4b920eb (sha1-name: do not
-assume that the ref store is initialized, 2020-04-09). In order to
-prevent similar bugs, let's more clearly mark the "refs" field as
-private.
-
-In addition to helping future code, the name change will help us audit
-any existing direct uses. Besides get_main_ref_store() itself, it turns
-out there is only one. But we know it's OK as it is on the line directly
-after the fix from 5ff4b920eb, which will have initialized the pointer.
-However it's still a good idea for it to model the proper use of the
-accessing function, so we'll convert it.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- refs.c       | 8 ++++----
- repository.h | 8 ++++++--
- sha1-name.c  | 2 +-
- 3 files changed, 11 insertions(+), 7 deletions(-)
-
-diff --git a/refs.c b/refs.c
-index 1ab0bb54d3..b8759116cd 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1852,14 +1852,14 @@ static struct ref_store *ref_store_init(const char *gitdir,
- 
- struct ref_store *get_main_ref_store(struct repository *r)
- {
--	if (r->refs)
--		return r->refs;
-+	if (r->refs_private)
-+		return r->refs_private;
- 
- 	if (!r->gitdir)
- 		BUG("attempting to get main_ref_store outside of repository");
- 
--	r->refs = ref_store_init(r->gitdir, REF_STORE_ALL_CAPS);
--	return r->refs;
-+	r->refs_private = ref_store_init(r->gitdir, REF_STORE_ALL_CAPS);
-+	return r->refs_private;
- }
- 
- /*
-diff --git a/repository.h b/repository.h
-index 040057dea6..6534fbb7b3 100644
---- a/repository.h
-+++ b/repository.h
-@@ -67,8 +67,12 @@ struct repository {
- 	 */
- 	struct parsed_object_pool *parsed_objects;
- 
--	/* The store in which the refs are held. */
--	struct ref_store *refs;
-+	/*
-+	 * The store in which the refs are held. This should generally only be
-+	 * accessed via get_main_ref_store(), as that will lazily initialize
-+	 * the ref object.
-+	 */
-+	struct ref_store *refs_private;
- 
- 	/*
- 	 * Contains path to often used file names.
-diff --git a/sha1-name.c b/sha1-name.c
-index 878553b132..fccc97fa7a 100644
---- a/sha1-name.c
-+++ b/sha1-name.c
-@@ -1816,7 +1816,7 @@ static enum get_oid_result get_oid_with_context_1(struct repository *repo,
- 			cb.repo = repo;
- 			cb.list = &list;
- 			refs_for_each_ref(get_main_ref_store(repo), handle_one_ref, &cb);
--			refs_head_ref(repo->refs, handle_one_ref, &cb);
-+			refs_head_ref(get_main_ref_store(repo), handle_one_ref, &cb);
- 			commit_list_sort_by_date(&list);
- 			return get_oid_oneline(repo, name + 2, oid, list);
- 		}
--- 
-2.26.0.414.ge3a6455e3d
-
+And in order to help manually sift these two apart, " # empty"
+marker would help, as there are three kinds of "pick" in the
+instruction stream.  Commits that are not no-op (i.e. without the 
+" # empty" mark), commits that imerge made no-op (the user wants
+to get rid of) and commits that are no-op because the user wanted
+them to be.  The latter two classes would be marked with " # empty"
+and the user can selectively apply s/pick/drop/ to them.
