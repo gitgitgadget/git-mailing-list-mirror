@@ -2,100 +2,136 @@ Return-Path: <SRS0=1KXq=52=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 24F2BC2D0EC
-	for <git@archiver.kernel.org>; Fri, 10 Apr 2020 17:47:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EB887C2D0EC
+	for <git@archiver.kernel.org>; Fri, 10 Apr 2020 17:51:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id F0281207FF
-	for <git@archiver.kernel.org>; Fri, 10 Apr 2020 17:47:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B2D5C207FF
+	for <git@archiver.kernel.org>; Fri, 10 Apr 2020 17:51:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TOX7exEw"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ifXpwex/"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726681AbgDJRrj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Apr 2020 13:47:39 -0400
-Received: from mail-ot1-f54.google.com ([209.85.210.54]:32989 "EHLO
-        mail-ot1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726177AbgDJRrj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Apr 2020 13:47:39 -0400
-Received: by mail-ot1-f54.google.com with SMTP id 103so2565459otv.0
-        for <git@vger.kernel.org>; Fri, 10 Apr 2020 10:47:39 -0700 (PDT)
+        id S1726657AbgDJRvi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Apr 2020 13:51:38 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:46311 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726595AbgDJRvi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Apr 2020 13:51:38 -0400
+Received: by mail-ed1-f68.google.com with SMTP id w4so1599054edv.13
+        for <git@vger.kernel.org>; Fri, 10 Apr 2020 10:51:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=QvAD6VdyHv0NVYYbiCg9yPJhpP2IkVywAJs88Qbxwvs=;
-        b=TOX7exEwR3m2LQYS4rZqbGLa6nO8HH3v4HR2XFMkFjf478bR3jE9Hi7QyNtcc2TB5z
-         AiEhaY8BWSNfr+m3QCx/7x+dUqjN1KuMe3Wrd38h5TSz1cd3L4LwAnmZs6yMisDlkw0K
-         JIg2rxNypNPeXTOjlqwFCr7k0wEgE3RSFqGs+pUUM0y9HUpcSIgux2clJu8kgJH9t30x
-         4d39KwreTfrYZWEsm6aCLvr/gz9+vTI6nypt8oX9HHAQZoaOl17urVzZn/IdX47wbePs
-         yxW5loYYQuPibL7TnshkIC5i1KGXfctZmR+LG94X7cmSenmwxgLdfz69Z3KiuPKdf0SZ
-         7CWg==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=P9viWhQnWu0BgQ5CRfbADlrAq5dIrIvowrryXcXLOEI=;
+        b=ifXpwex/Me8iYHKlFBREsDcv9v7pTMrjA9lTw/eGNN8rKxADqw84bfo1C/0gyuIIWa
+         KLVHpRT6yQ9zWwaBB5KYuGTk8JqmuLD7dKrAgQQpGQBvFv5m2gd8i8w7squG5s/MjjK9
+         80+zDoHtDICoWNIr0I3DGzhOMU/y/r11hcdrYSZCBBcshP0/OJEH5S8t6JvBeYsh6Xl/
+         fuhUcMEtd/qL++UxrtU5qaWC7p6qdS6bzgO+E5iZcpPjvAWtpRmgOPfmkMdUQuLUYcZ6
+         GIku6cuq0wealyZVfNUM5Ik5AB4duDDe9lUsQXgS/KyFE87Hn4AabXT9GdGYsZhGq6hX
+         8Jog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=QvAD6VdyHv0NVYYbiCg9yPJhpP2IkVywAJs88Qbxwvs=;
-        b=sBZTEYBjz3tCGVafXhALB71s5npiWvmJMVokOTWPtchuXM5CeS9FA4MpFREUslMp4S
-         E2+bGfCX7/BkyBikREakD7UUuFhHunwgo12z3gDqsCtUI3fq9tGfhK4ieE2Gc2h+C2qF
-         lCEGDKdJA0wvY3QcVV6hCq0hUxiu0Zq4xV0o5HZzRDsGbORM1PSzNa5fqZVuIszxQEQI
-         xRxwaDOp8PuoLhz9yrawv+UIoTMwxsrWP3GpWbWx8HvdKP7BWsEBcO7/5m5E0OI+ABCf
-         eqp8Sd9zLgDzJuFCvHSFOI8B7MVdgzymJrHMT6wca3Gg8vgv/F7Ris81muzM/3jFQkVu
-         +rlg==
-X-Gm-Message-State: AGi0Pubv5yaLHfi4iW2wiaYSWHYbzRrHrdrYFWjqiJ+M195BLXzALn7z
-        iY4aSZFH8eqMksh2h0HoTk8wf1CyYseOsvkT/ZI=
-X-Google-Smtp-Source: APiQypJJgZ+wU+JtfncRMs65uuL0z9JrbANvt3cyRzXn5mr0qYAvPDY5BueIjpRU06JQJuzuHpboihz2gaL/q3NWcpg=
-X-Received: by 2002:a4a:9451:: with SMTP id j17mr4915231ooi.30.1586540858444;
- Fri, 10 Apr 2020 10:47:38 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=P9viWhQnWu0BgQ5CRfbADlrAq5dIrIvowrryXcXLOEI=;
+        b=NE7Df3IJtKd6bFksBcWYiF6rQwZ9FrC/v94hKVjUI3AKhFVykLRQVFH4BA3jHnMpsA
+         mChvEHnnVT/0WDuTcI0eCzzCPF5L8+NPsep3rIKNBfKMMyMCPfXa3wp+h28FOgeAB8h/
+         8uyX+lK4+9W4GhFjL2y12j+DmVHIHZtj7GxZFu4Zto5+R+t5nTtoPGn9DWCC2175SgBX
+         djKJPkuhNqDYpnzt2pAQD7cW8/0hBv+kGaLwWIojTf+J8GyK8GpeMzc6prfzyolqLESA
+         wKPrtMoQ/WLGm0Y/tvwT0Z3REfkNy/V7EJjMMav8XSeax+LktZFwPsxxR4/xQ7XdPwpc
+         bABQ==
+X-Gm-Message-State: AGi0PuYukD+Ff3IPIlSFtsDEig/lISTyx0oVhXvA6c1eEBGBMiW2I06Z
+        A16jBwMlvXvn6zqurppCVHzwHa1O
+X-Google-Smtp-Source: APiQypKg7mXbMRx6lsjkDQqgPIHQZttFMx/idCYJxHaL9v+DTlHfl9elekOPAj/cIggD6d+WjHKk6g==
+X-Received: by 2002:a17:906:298f:: with SMTP id x15mr4967635eje.380.1586541096242;
+        Fri, 10 Apr 2020 10:51:36 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id k4sm177551ejj.63.2020.04.10.10.51.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Apr 2020 10:51:35 -0700 (PDT)
+Message-Id: <0d94eea376a65304bc31fd1841216a04b5c15709.1586541094.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.757.v2.git.git.1586541094.gitgitgadget@gmail.com>
+References: <pull.757.git.git.1586474800276.gitgitgadget@gmail.com>
+        <pull.757.v2.git.git.1586541094.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 10 Apr 2020 17:51:32 +0000
+Subject: [PATCH v2 1/3] rebase -i: mark commits that begin empty in todo
+ editor
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <FA375405E0773E4095AD3784C67AE52214DA4BC3@UMECHPA7A.easf.csd.disa.mil>
-In-Reply-To: <FA375405E0773E4095AD3784C67AE52214DA4BC3@UMECHPA7A.easf.csd.disa.mil>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 10 Apr 2020 10:47:27 -0700
-Message-ID: <CABPp-BFWnfr0kc3Od4XC2ZmJ94k3p+oSmbz2k1+GyY+S-OVwig@mail.gmail.com>
-Subject: Re: Possible impacts on Git due to COVID19
-To:     "Coghlan, Owen R CTR USARMY PEO EIS (USA)" 
-        <owen.r.coghlan.ctr@mail.mil>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "Pegram, George A JR CIV USARMY SEC (USA)" 
-        <george.a.pegram.civ@mail.mil>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     phillip.wood123@gmail.com, Johannes.Schindelin@gmx.de,
+        bturner@atlassian.com, sami@boukortt.com,
+        Elijah Newren <newren@gmail.com>,
+        Elijah Newren <newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 10, 2020 at 7:04 AM Coghlan, Owen R CTR USARMY PEO EIS
-(USA) <owen.r.coghlan.ctr@mail.mil> wrote:
->
-> Good Morning,
->
-> My name is Owen Coghlan and I'm the Cyber Security Analyst  for Defensive=
- Cyber Operations, Cyber Platforms and Systems, located at Fort Belvoir sup=
-porting the Army. Are there any  possible impacts or slowdowns due to COVID=
-19? Impacts such as supply chain, coders, and shipping, where your software=
- product is concerned. This information would be greatly appreciated.
+From: Elijah Newren <newren@gmail.com>
 
-I'm not sure what kind of "supply chain or shipping" you are
-envisioning would even be applicable to git.  I'm also not even sure
-why slowdowns would matter -- you get new features slower?
+While many users who intentionally create empty commits do not want them
+thrown away by a rebase, there are third-party tools that generate empty
+commits that a user might not want.  In the past, users have used rebase
+to get rid of such commits (a side-effect of the fact that the --apply
+backend is not currently capable of keeping them).  While such users
+could fire up an interactive rebase and just remove the lines
+corresponding to empty commits, that might be difficult if the
+third-party tool generates many of them.  Simplify this task for users
+by marking such lines with a suffix of " # empty" in the todo list.
 
-It's also not at all clear whether we have an overall slowdown; not to
-me at least.  Some developers who contribute may have less time to do
-so (e.g. due to the sudden need to homeschool kids), but others might
-have more time.  While some git developers may have worked in the same
-company and collaborated in person, overall, git development has
-always been done electronically and remotely and has contributors from
-many companies as well as hobbyists.  If someone had a reason to be
-interested in this kind of answer beyond "My gut answer right now is I
-don't think so", they could try counting patch submissions to the
-mailing list or the number of new commits entering various branches
-and compare it to previous release cycles.  That information is
-publically available for all to see, after all.  But digging out this
-information seems like work for someone who feels that documenting the
-answer provides some kind of utility.  If you just want a rough gut
-estimate, I don't perceive any slowdowns.
+Suggested-by: Sami Boukortt <sami@boukortt.com>
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ Documentation/git-rebase.txt | 3 ++-
+ sequencer.c                  | 5 +++++
+ 2 files changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index f7a6033607f..8ab0558aca2 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -620,7 +620,8 @@ commits that started empty, though these are rare in practice.  It
+ also drops commits that become empty and has no option for controlling
+ this behavior.
+ 
+-The merge backend keeps intentionally empty commits.  Similar to the
++The merge backend keeps intentionally empty commits (though with -i
++they are marked as empty in the todo list editor).  Similar to the
+ apply backend, by default the merge backend drops commits that become
+ empty unless -i/--interactive is specified (in which case it stops and
+ asks the user what to do).  The merge backend also has an
+diff --git a/sequencer.c b/sequencer.c
+index e528225e787..ce9fd27a878 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -4656,6 +4656,9 @@ static int make_script_with_merges(struct pretty_print_context *pp,
+ 			strbuf_addf(&buf, "%s %s %s", cmd_pick,
+ 				    oid_to_hex(&commit->object.oid),
+ 				    oneline.buf);
++			if (is_empty)
++				strbuf_addf(&buf, " %c empty",
++					    comment_line_char);
+ 
+ 			FLEX_ALLOC_STR(entry, string, buf.buf);
+ 			oidcpy(&entry->entry.oid, &commit->object.oid);
+@@ -4861,6 +4864,8 @@ int sequencer_make_script(struct repository *r, struct strbuf *out, int argc,
+ 		strbuf_addf(out, "%s %s ", insn,
+ 			    oid_to_hex(&commit->object.oid));
+ 		pretty_print_commit(&pp, commit, out);
++		if (is_empty)
++			strbuf_addf(out, " %c empty", comment_line_char);
+ 		strbuf_addch(out, '\n');
+ 	}
+ 	return 0;
+-- 
+gitgitgadget
+
