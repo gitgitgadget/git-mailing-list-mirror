@@ -2,97 +2,100 @@ Return-Path: <SRS0=1KXq=52=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BA2BC2D0EC
-	for <git@archiver.kernel.org>; Fri, 10 Apr 2020 17:45:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 24F2BC2D0EC
+	for <git@archiver.kernel.org>; Fri, 10 Apr 2020 17:47:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D6CFD2082D
-	for <git@archiver.kernel.org>; Fri, 10 Apr 2020 17:45:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F0281207FF
+	for <git@archiver.kernel.org>; Fri, 10 Apr 2020 17:47:40 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="mSb2Rd6F"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TOX7exEw"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726682AbgDJRpD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Apr 2020 13:45:03 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59339 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726177AbgDJRpC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Apr 2020 13:45:02 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D0B8D486EC;
-        Fri, 10 Apr 2020 13:45:00 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=319Nix7g/M/wCUZWFkE7qsi1by0=; b=mSb2Rd
-        6F8qnYH/qXihX0E5R+pRpzNYP0vgjk9fYtoBvclj/yIh1T2ov7uc/4kBEZbeFAP/
-        riy1PC7qP21TwPTeZD1Dk3R7uFjhfVkpVtRyxJIYkFqYYwEgN+9DuJbOWbb/uZ7k
-        6eScSkvRbNxpYTZN7rrhbZqWkr4tvphIWVakA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=QFH/O9THsXmpqq3r7Y9K+0Id9+PVRRou
-        87wmdxJH+ZmVsNjp455fQ8DX1S//4TOCQ4ahR+qoRKGjNlA3AzUGuLVq0M/5Q0yx
-        Ks2NDhghKJE99dgKsmEfA3249G+SrBVFg+yPGLX3Gkw/onD91I3FpWo8r8wowQzJ
-        Py03Qs4HC+s=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8390B486EB;
-        Fri, 10 Apr 2020 13:45:00 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BD817486EA;
-        Fri, 10 Apr 2020 13:44:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 1/2] Refactor code asking the user for input interactively
-References: <pull.755.git.git.1586374380709.gitgitgadget@gmail.com>
-        <pull.755.v2.git.git.1586518072.gitgitgadget@gmail.com>
-        <9d2ee78a9e414c0b6aacbc9c878ab08eb70703d5.1586518072.git.gitgitgadget@gmail.com>
-Date:   Fri, 10 Apr 2020 10:44:59 -0700
-In-Reply-To: <9d2ee78a9e414c0b6aacbc9c878ab08eb70703d5.1586518072.git.gitgitgadget@gmail.com>
-        (Johannes Schindelin via GitGitGadget's message of "Fri, 10 Apr 2020
-        11:27:50 +0000")
-Message-ID: <xmqqftdbjkv8.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726681AbgDJRrj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Apr 2020 13:47:39 -0400
+Received: from mail-ot1-f54.google.com ([209.85.210.54]:32989 "EHLO
+        mail-ot1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726177AbgDJRrj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Apr 2020 13:47:39 -0400
+Received: by mail-ot1-f54.google.com with SMTP id 103so2565459otv.0
+        for <git@vger.kernel.org>; Fri, 10 Apr 2020 10:47:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=QvAD6VdyHv0NVYYbiCg9yPJhpP2IkVywAJs88Qbxwvs=;
+        b=TOX7exEwR3m2LQYS4rZqbGLa6nO8HH3v4HR2XFMkFjf478bR3jE9Hi7QyNtcc2TB5z
+         AiEhaY8BWSNfr+m3QCx/7x+dUqjN1KuMe3Wrd38h5TSz1cd3L4LwAnmZs6yMisDlkw0K
+         JIg2rxNypNPeXTOjlqwFCr7k0wEgE3RSFqGs+pUUM0y9HUpcSIgux2clJu8kgJH9t30x
+         4d39KwreTfrYZWEsm6aCLvr/gz9+vTI6nypt8oX9HHAQZoaOl17urVzZn/IdX47wbePs
+         yxW5loYYQuPibL7TnshkIC5i1KGXfctZmR+LG94X7cmSenmwxgLdfz69Z3KiuPKdf0SZ
+         7CWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=QvAD6VdyHv0NVYYbiCg9yPJhpP2IkVywAJs88Qbxwvs=;
+        b=sBZTEYBjz3tCGVafXhALB71s5npiWvmJMVokOTWPtchuXM5CeS9FA4MpFREUslMp4S
+         E2+bGfCX7/BkyBikREakD7UUuFhHunwgo12z3gDqsCtUI3fq9tGfhK4ieE2Gc2h+C2qF
+         lCEGDKdJA0wvY3QcVV6hCq0hUxiu0Zq4xV0o5HZzRDsGbORM1PSzNa5fqZVuIszxQEQI
+         xRxwaDOp8PuoLhz9yrawv+UIoTMwxsrWP3GpWbWx8HvdKP7BWsEBcO7/5m5E0OI+ABCf
+         eqp8Sd9zLgDzJuFCvHSFOI8B7MVdgzymJrHMT6wca3Gg8vgv/F7Ris81muzM/3jFQkVu
+         +rlg==
+X-Gm-Message-State: AGi0Pubv5yaLHfi4iW2wiaYSWHYbzRrHrdrYFWjqiJ+M195BLXzALn7z
+        iY4aSZFH8eqMksh2h0HoTk8wf1CyYseOsvkT/ZI=
+X-Google-Smtp-Source: APiQypJJgZ+wU+JtfncRMs65uuL0z9JrbANvt3cyRzXn5mr0qYAvPDY5BueIjpRU06JQJuzuHpboihz2gaL/q3NWcpg=
+X-Received: by 2002:a4a:9451:: with SMTP id j17mr4915231ooi.30.1586540858444;
+ Fri, 10 Apr 2020 10:47:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: FFD5A610-7B52-11EA-8377-C28CBED8090B-77302942!pb-smtp1.pobox.com
+References: <FA375405E0773E4095AD3784C67AE52214DA4BC3@UMECHPA7A.easf.csd.disa.mil>
+In-Reply-To: <FA375405E0773E4095AD3784C67AE52214DA4BC3@UMECHPA7A.easf.csd.disa.mil>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 10 Apr 2020 10:47:27 -0700
+Message-ID: <CABPp-BFWnfr0kc3Od4XC2ZmJ94k3p+oSmbz2k1+GyY+S-OVwig@mail.gmail.com>
+Subject: Re: Possible impacts on Git due to COVID19
+To:     "Coghlan, Owen R CTR USARMY PEO EIS (USA)" 
+        <owen.r.coghlan.ctr@mail.mil>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "Pegram, George A JR CIV USARMY SEC (USA)" 
+        <george.a.pegram.civ@mail.mil>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+On Fri, Apr 10, 2020 at 7:04 AM Coghlan, Owen R CTR USARMY PEO EIS
+(USA) <owen.r.coghlan.ctr@mail.mil> wrote:
+>
+> Good Morning,
+>
+> My name is Owen Coghlan and I'm the Cyber Security Analyst  for Defensive=
+ Cyber Operations, Cyber Platforms and Systems, located at Fort Belvoir sup=
+porting the Army. Are there any  possible impacts or slowdowns due to COVID=
+19? Impacts such as supply chain, coders, and shipping, where your software=
+ product is concerned. This information would be greatly appreciated.
 
-> -		if (strbuf_getline(&input, stdin) == EOF) {
-> +		if (git_read_line_interactively(&input) == EOF) {
+I'm not sure what kind of "supply chain or shipping" you are
+envisioning would even be applicable to git.  I'm also not even sure
+why slowdowns would matter -- you get new features slower?
 
-It's not like we are mimicking or giving a thin wrapper to improve
-an existing read_line_interactively() from a third-party, so I do
-not see much point in giving "git_" prefix here.  On the other hand,
-"strbuf_" prefix may not hurt (but the type of its first parameter
-is sufficient so it is not exactly required).
-
->  			printf(_("Remove %s [y/N]? "), qname);
-> -			if (strbuf_getline_lf(&confirm, stdin) != EOF) {
-> -				strbuf_trim(&confirm);
-> -			} else {
-> +			if (git_read_line_interactively(&confirm) == EOF) {
->  				putchar('\n');
->  				eof = 1;
-
-A fat-finger that gave an answer " yes <RET>" used to be still taken
-as a yes but now it is interpreted as "no", because the new helper
-trims a lot less.  In general, the existing code should be already
-choosing the safer default, so such a change in behaviour brought in
-by this change, even if they were not intentional, should probably
-be safe.
-
-Thanks.
+It's also not at all clear whether we have an overall slowdown; not to
+me at least.  Some developers who contribute may have less time to do
+so (e.g. due to the sudden need to homeschool kids), but others might
+have more time.  While some git developers may have worked in the same
+company and collaborated in person, overall, git development has
+always been done electronically and remotely and has contributors from
+many companies as well as hobbyists.  If someone had a reason to be
+interested in this kind of answer beyond "My gut answer right now is I
+don't think so", they could try counting patch submissions to the
+mailing list or the number of new commits entering various branches
+and compare it to previous release cycles.  That information is
+publically available for all to see, after all.  But digging out this
+information seems like work for someone who feels that documenting the
+answer provides some kind of utility.  If you just want a rough gut
+estimate, I don't perceive any slowdowns.
