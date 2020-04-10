@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-14.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EBF2EC2BBC7
-	for <git@archiver.kernel.org>; Fri, 10 Apr 2020 17:18:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 411F9C2BB1D
+	for <git@archiver.kernel.org>; Fri, 10 Apr 2020 17:18:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id C4B4E2145D
-	for <git@archiver.kernel.org>; Fri, 10 Apr 2020 17:18:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0750C2087E
+	for <git@archiver.kernel.org>; Fri, 10 Apr 2020 17:18:45 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wz66rFkz"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jSJoDv4j"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726736AbgDJRSm (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1726741AbgDJRSm (ORCPT <rfc822;git@archiver.kernel.org>);
         Fri, 10 Apr 2020 13:18:42 -0400
-Received: from mail-pj1-f66.google.com ([209.85.216.66]:39798 "EHLO
-        mail-pj1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726671AbgDJRSl (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Apr 2020 13:18:41 -0400
-Received: by mail-pj1-f66.google.com with SMTP id o1so135307pjs.4
-        for <git@vger.kernel.org>; Fri, 10 Apr 2020 10:18:41 -0700 (PDT)
+Received: from mail-pg1-f172.google.com ([209.85.215.172]:41099 "EHLO
+        mail-pg1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726729AbgDJRSj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Apr 2020 13:18:39 -0400
+Received: by mail-pg1-f172.google.com with SMTP id m13so1223392pgd.8
+        for <git@vger.kernel.org>; Fri, 10 Apr 2020 10:18:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=2s8YeHubB8Som9HdzP1bglEbIaOh+D+1TDY/7CiVOUI=;
-        b=Wz66rFkz2Wkwaa54gw9sdm/UzRcOuaO0AlyX0HFHPnJvk4k3z6D0Mw8DcDo1Xnl8n0
-         powV4Nko38SCRxQ/AZp838LtIEpjjKrUZlU+S7iG88CPB2/Y05PSGGfl1RcBv6g0lIyk
-         RjWmPWrJuHm+NgaHoa6NgUttIjpgl175FpNE6dlfj1eLRW6dJGNVu+v3eQgS5EH75IOf
-         tUOBnyHs4HyBzbtmgEzEpR6dJectlVrzlogDaVnxRyMZglxyvkeoqeDFefbQq5FsV4x2
-         XoPZRv1TtA9/jaDmXtQ6oxfHR3MDNuk1ikWij2l/hZg1FQQ7FiWJfr4vOeWR/xh/x+P5
-         gpIw==
+        bh=8IDNYxGTTFzR2xbXg7IeZjoE+09kWxt7+/pFxM/ObS8=;
+        b=jSJoDv4j4EDGGXWN9fkZmlakZCjGT0vm5iZ15iQadgqTEfbd6gAxThQj9cnei8Uv2p
+         McgoAHfw2ewjeY33f+HqtvXQOnz53EeOU1KCGJXjFy8aAkS41kid959pt3a00nzrpx5N
+         yypK4NSH4tDQvliooE5dPJ4caoAd2DJVlx+2eltZIVIm1jkPQy1eSpvKH8JhkL/7M5BJ
+         9WsesiTQS5HLcjl7IfufzFpZCzMWbXbJxXeWhpHcjpy/U5ycxrMZSF3hoayV+ml7lACx
+         qYtXeYjusdfNGt5vuflHLw9eIF1iDPXfHkfJhS6TKCIXPUSgViH+QsuCotus2XG6ZoH/
+         bRcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=2s8YeHubB8Som9HdzP1bglEbIaOh+D+1TDY/7CiVOUI=;
-        b=M+rBWDX7fJdBW3UO4hr+ZzhebpIJ+yEPum3a4OCbyuzZ9aR6jOHeBLygmeleRP8W8B
-         XZkUfe2fcA+vJQi/RwNro2KY1Jz5glg9PFVhdbpUmrU9NqazfbcD5jn9zLwVvdix2hZB
-         xdo+9fN6gsoI2RvrGoEurEwzXa9uHfnGuQKWTRPaztbwX4RaATthOOX4oXoTMoMSUfN/
-         Nkse7WXzcLD6Vv0tCWijEqluyqhZ9JKVOlADguWP6J4iZ+Xxst+Ek+j36GzlDon9bglS
-         xBf/9rXUnp6vIzi6NCk6KG9rKo9ROTqMm+ZqS+WW7ESsFACu1lcziWG1+gBYa+kVR8DL
-         bKzA==
-X-Gm-Message-State: AGi0PuZu+oAe2wiA78ju2bIOcalEffxXzZAcWB1SEFzwSG82AX5YoHSe
-        Bl/0QmdF04nBXC+JEPj2TNxEdxv1
-X-Google-Smtp-Source: APiQypLAPcRNgG4oT4dSyVnzFB/InqMsqU5j2bt73VaU1lGDOrMvcB/VNiCstXPvQlwgPTJbHI497w==
-X-Received: by 2002:a17:902:164:: with SMTP id 91mr5412501plb.207.1586539120447;
-        Fri, 10 Apr 2020 10:18:40 -0700 (PDT)
+        bh=8IDNYxGTTFzR2xbXg7IeZjoE+09kWxt7+/pFxM/ObS8=;
+        b=OyBH+RI+GST9Cf9MnB19Krba53HYurD9o89YQW3ZPoXwJ/SlUj1NbVb0c/Stxp9yeA
+         otjFUXxRNDoWiYrPmaIocYiJmWggkdmskaYsFHSRfhyD2ywPnJxiUsv9J+7q6By09Mkk
+         yU6aj9AkOlmfP2FBi17OBDmSO7PlWYCX0Q4raAHznf+bsdmcPXeBEsSsLpUE3xRCv/De
+         W8ven6KUdpBA1CAWQdCqURPSpQhwRjmDtcgkBakF/cBKtCSCWW6n9QjVl7sP6ax4Mig2
+         xJGUNbMQlzD3dv6W1GuVmhwHZz17pkeVv9OIK3UMf26kx0AsItIu7/ARBp5x6jqE17PZ
+         0SQw==
+X-Gm-Message-State: AGi0Pubs4v8Uh7wbpqufxoD1ZdJOuJYJr+z5jQjPoTFSIQgdS028rR4w
+        B5kogT0RU+GFTtaj+zHqvbfd+hJZ
+X-Google-Smtp-Source: APiQypImdcDpY5pXhkGI2/+osZJtAJ6FM7CIG3O897alQMP5IOdYhXSlubK9p+MH2PJRrDis8es+UA==
+X-Received: by 2002:aa7:9207:: with SMTP id 7mr5892631pfo.178.1586539116707;
+        Fri, 10 Apr 2020 10:18:36 -0700 (PDT)
 Received: from localhost.localdomain ([2402:800:6375:207b:be21:746a:7a56:9d4d])
-        by smtp.gmail.com with ESMTPSA id s125sm1972897pgc.12.2020.04.10.10.18.38
+        by smtp.gmail.com with ESMTPSA id s125sm1972897pgc.12.2020.04.10.10.18.35
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 10 Apr 2020 10:18:39 -0700 (PDT)
+        Fri, 10 Apr 2020 10:18:36 -0700 (PDT)
 From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
         =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>
-Subject: [PATCH v5 11/12] ci: add a problem matcher for GitHub Actions
-Date:   Sat, 11 Apr 2020 00:18:13 +0700
-Message-Id: <3caeb0b7f44d6f034050e3e1a14ed700e6077659.1586538752.git.congdanhqx@gmail.com>
+Subject: [PATCH v5 09/12] ci: retire the Azure Pipelines definition
+Date:   Sat, 11 Apr 2020 00:18:11 +0700
+Message-Id: <575b3afd3cd47dd53530df74a681f11783162e76.1586538752.git.congdanhqx@gmail.com>
 X-Mailer: git-send-email 2.26.0.334.g6536db25bb
 In-Reply-To: <cover.1586538752.git.congdanhqx@gmail.com>
 References: <pull.743.git.git.1585658913.gitgitgadget@gmail.com> <cover.1586538752.git.congdanhqx@gmail.com>
@@ -77,59 +77,591 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-With this patch, test failures will be annotated with a helpful,
-clickable message in GitHub Actions. For details, see
-https://github.com/actions/toolkit/blob/master/docs/problem-matchers.md
-
-Note: we need to set `TEST_SHELL_PATH` to Bash so that the problem
-matcher is fed a file and line number for each test failure.
+We have GitHub Actions now. Running the same builds and tests in Azure
+Pipelines would be redundant, and a waste of energy.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
 ---
- ci/git-problem-matcher.json | 16 ++++++++++++++++
- ci/lib.sh                   |  5 +++++
- 2 files changed, 21 insertions(+)
- create mode 100644 ci/git-problem-matcher.json
+ README.md           |   1 -
+ azure-pipelines.yml | 558 --------------------------------------------
+ 2 files changed, 559 deletions(-)
+ delete mode 100644 azure-pipelines.yml
 
-diff --git a/ci/git-problem-matcher.json b/ci/git-problem-matcher.json
-new file mode 100644
-index 0000000000..506dfbd97f
---- /dev/null
-+++ b/ci/git-problem-matcher.json
-@@ -0,0 +1,16 @@
-+{
-+    "problemMatcher": [
-+        {
-+            "owner": "git-test-suite",
-+            "pattern": [
-+                {
-+                    "regexp": "^([^ :]+\\.sh):(\\d+): (error|warning|info):\\s+(.*)$",
-+                    "file": 1,
-+                    "line": 2,
-+                    "severity": 3,
-+                    "message": 4
-+                }
-+            ]
-+        }
-+    ]
-+}
-diff --git a/ci/lib.sh b/ci/lib.sh
-index 8b39624f3c..4c54540fa8 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -157,6 +157,11 @@ then
- 	MAKEFLAGS="$MAKEFLAGS --jobs=10"
- 	test windows != "$CI_OS_NAME" ||
- 	GIT_TEST_OPTS="--no-chain-lint --no-bin-wrappers $GIT_TEST_OPTS"
-+
-+	# https://github.com/actions/toolkit/blob/master/docs/commands.md#problem-matchers
-+	echo "::add-matcher::ci/git-problem-matcher.json"
-+	test linux-musl = "$jobname" ||
-+	MAKEFLAGS="$MAKEFLAGS TEST_SHELL_PATH=/bin/sh"
- else
- 	echo "Could not identify CI type" >&2
- 	env >&2
+diff --git a/README.md b/README.md
+index e2e00ae249..eb8115e6b0 100644
+--- a/README.md
++++ b/README.md
+@@ -1,5 +1,4 @@
+ [![Build status](https://github.com/git/git/workflows/CI/PR/badge.svg)](https://github.com/git/git/actions?query=branch%3Amaster+event%3Apush)
+-[![Build Status](https://dev.azure.com/git/git/_apis/build/status/git.git)](https://dev.azure.com/git/git/_build/latest?definitionId=11)
+ 
+ Git - fast, scalable, distributed revision control system
+ =========================================================
+diff --git a/azure-pipelines.yml b/azure-pipelines.yml
+deleted file mode 100644
+index 11413f66f8..0000000000
+--- a/azure-pipelines.yml
++++ /dev/null
+@@ -1,558 +0,0 @@
+-variables:
+-  Agent.Source.Git.ShallowFetchDepth: 1
+-
+-jobs:
+-- job: windows_build
+-  displayName: Windows Build
+-  condition: succeeded()
+-  pool:
+-    vmImage: windows-latest
+-  timeoutInMinutes: 240
+-  steps:
+-  - powershell: |
+-      if ("$GITFILESHAREPWD" -ne "" -and "$GITFILESHAREPWD" -ne "`$`(gitfileshare.pwd)") {
+-        net use s: \\gitfileshare.file.core.windows.net\test-cache "$GITFILESHAREPWD" /user:AZURE\gitfileshare /persistent:no
+-        cmd /c mklink /d "$(Build.SourcesDirectory)\test-cache" S:\
+-      }
+-    displayName: 'Mount test-cache'
+-    env:
+-      GITFILESHAREPWD: $(gitfileshare.pwd)
+-  - powershell: |
+-      $urlbase = "https://dev.azure.com/git-for-windows/git/_apis/build/builds"
+-      $id = ((Invoke-WebRequest -UseBasicParsing "${urlbase}?definitions=22&statusFilter=completed&resultFilter=succeeded&`$top=1").content | ConvertFrom-JSON).value[0].id
+-      $downloadUrl = ((Invoke-WebRequest -UseBasicParsing "${urlbase}/$id/artifacts").content | ConvertFrom-JSON).value[1].resource.downloadUrl
+-      (New-Object Net.WebClient).DownloadFile($downloadUrl,"git-sdk-64-minimal.zip")
+-      Expand-Archive git-sdk-64-minimal.zip -DestinationPath . -Force
+-      Remove-Item git-sdk-64-minimal.zip
+-
+-      # Let Git ignore the SDK and the test-cache
+-      "/git-sdk-64-minimal/`n/test-cache/`n" | Out-File -NoNewLine -Encoding ascii -Append "$(Build.SourcesDirectory)\.git\info\exclude"
+-    displayName: 'Download git-sdk-64-minimal'
+-  - powershell: |
+-      & git-sdk-64-minimal\usr\bin\bash.exe -lc @"
+-        ci/make-test-artifacts.sh artifacts
+-      "@
+-      if (!$?) { exit(1) }
+-    displayName: Build
+-    env:
+-      HOME: $(Build.SourcesDirectory)
+-      MSYSTEM: MINGW64
+-      DEVELOPER: 1
+-      NO_PERL: 1
+-  - task: PublishPipelineArtifact@0
+-    displayName: 'Publish Pipeline Artifact: test artifacts'
+-    inputs:
+-      artifactName: 'windows-artifacts'
+-      targetPath: '$(Build.SourcesDirectory)\artifacts'
+-  - task: PublishPipelineArtifact@0
+-    displayName: 'Publish Pipeline Artifact: git-sdk-64-minimal'
+-    inputs:
+-      artifactName: 'git-sdk-64-minimal'
+-      targetPath: '$(Build.SourcesDirectory)\git-sdk-64-minimal'
+-  - powershell: |
+-      if ("$GITFILESHAREPWD" -ne "" -and "$GITFILESHAREPWD" -ne "`$`(gitfileshare.pwd)") {
+-        cmd /c rmdir "$(Build.SourcesDirectory)\test-cache"
+-      }
+-    displayName: 'Unmount test-cache'
+-    condition: true
+-    env:
+-      GITFILESHAREPWD: $(gitfileshare.pwd)
+-
+-- job: windows_test
+-  displayName: Windows Test
+-  dependsOn: windows_build
+-  condition: succeeded()
+-  pool:
+-    vmImage: windows-latest
+-  timeoutInMinutes: 240
+-  strategy:
+-    parallel: 10
+-  steps:
+-  - powershell: |
+-      if ("$GITFILESHAREPWD" -ne "" -and "$GITFILESHAREPWD" -ne "`$`(gitfileshare.pwd)") {
+-        net use s: \\gitfileshare.file.core.windows.net\test-cache "$GITFILESHAREPWD" /user:AZURE\gitfileshare /persistent:no
+-        cmd /c mklink /d "$(Build.SourcesDirectory)\test-cache" S:\
+-      }
+-    displayName: 'Mount test-cache'
+-    env:
+-      GITFILESHAREPWD: $(gitfileshare.pwd)
+-  - task: DownloadPipelineArtifact@0
+-    displayName: 'Download Pipeline Artifact: test artifacts'
+-    inputs:
+-      artifactName: 'windows-artifacts'
+-      targetPath: '$(Build.SourcesDirectory)'
+-  - task: DownloadPipelineArtifact@0
+-    displayName: 'Download Pipeline Artifact: git-sdk-64-minimal'
+-    inputs:
+-      artifactName: 'git-sdk-64-minimal'
+-      targetPath: '$(Build.SourcesDirectory)\git-sdk-64-minimal'
+-  - powershell: |
+-      & git-sdk-64-minimal\usr\bin\bash.exe -lc @"
+-        test -f artifacts.tar.gz || {
+-          echo No test artifacts found\; skipping >&2
+-          exit 0
+-        }
+-        tar xf artifacts.tar.gz || exit 1
+-
+-        # Let Git ignore the SDK and the test-cache
+-        printf '%s\n' /git-sdk-64-minimal/ /test-cache/ >>.git/info/exclude
+-
+-        ci/run-test-slice.sh `$SYSTEM_JOBPOSITIONINPHASE `$SYSTEM_TOTALJOBSINPHASE || {
+-          ci/print-test-failures.sh
+-          exit 1
+-        }
+-      "@
+-      if (!$?) { exit(1) }
+-    displayName: 'Test (parallel)'
+-    env:
+-      HOME: $(Build.SourcesDirectory)
+-      MSYSTEM: MINGW64
+-      NO_SVN_TESTS: 1
+-      GIT_TEST_SKIP_REBASE_P: 1
+-  - powershell: |
+-      if ("$GITFILESHAREPWD" -ne "" -and "$GITFILESHAREPWD" -ne "`$`(gitfileshare.pwd)") {
+-        cmd /c rmdir "$(Build.SourcesDirectory)\test-cache"
+-      }
+-    displayName: 'Unmount test-cache'
+-    condition: true
+-    env:
+-      GITFILESHAREPWD: $(gitfileshare.pwd)
+-  - task: PublishTestResults@2
+-    displayName: 'Publish Test Results **/TEST-*.xml'
+-    inputs:
+-      mergeTestResults: true
+-      testRunTitle: 'windows'
+-      platform: Windows
+-      publishRunAttachments: false
+-    condition: succeededOrFailed()
+-  - task: PublishBuildArtifacts@1
+-    displayName: 'Publish trash directories of failed tests'
+-    condition: failed()
+-    inputs:
+-      PathtoPublish: t/failed-test-artifacts
+-      ArtifactName: failed-test-artifacts
+-
+-- job: vs_build
+-  displayName: Visual Studio Build
+-  condition: succeeded()
+-  pool:
+-    vmImage: windows-latest
+-  timeoutInMinutes: 240
+-  steps:
+-  - powershell: |
+-      if ("$GITFILESHAREPWD" -ne "" -and "$GITFILESHAREPWD" -ne "`$`(gitfileshare.pwd)") {
+-        net use s: \\gitfileshare.file.core.windows.net\test-cache "$GITFILESHAREPWD" /user:AZURE\gitfileshare /persistent:no
+-        cmd /c mklink /d "$(Build.SourcesDirectory)\test-cache" S:\
+-      }
+-    displayName: 'Mount test-cache'
+-    env:
+-      GITFILESHAREPWD: $(gitfileshare.pwd)
+-  - powershell: |
+-      $urlbase = "https://dev.azure.com/git-for-windows/git/_apis/build/builds"
+-      $id = ((Invoke-WebRequest -UseBasicParsing "${urlbase}?definitions=22&statusFilter=completed&resultFilter=succeeded&`$top=1").content | ConvertFrom-JSON).value[0].id
+-      $downloadUrl = ((Invoke-WebRequest -UseBasicParsing "${urlbase}/$id/artifacts").content | ConvertFrom-JSON).value[1].resource.downloadUrl
+-      (New-Object Net.WebClient).DownloadFile($downloadUrl,"git-sdk-64-minimal.zip")
+-      Expand-Archive git-sdk-64-minimal.zip -DestinationPath . -Force
+-      Remove-Item git-sdk-64-minimal.zip
+-
+-      # Let Git ignore the SDK and the test-cache
+-      "/git-sdk-64-minimal/`n/test-cache/`n" | Out-File -NoNewLine -Encoding ascii -Append "$(Build.SourcesDirectory)\.git\info\exclude"
+-    displayName: 'Download git-sdk-64-minimal'
+-  - powershell: |
+-      & git-sdk-64-minimal\usr\bin\bash.exe -lc @"
+-        make NDEBUG=1 DEVELOPER=1 vcxproj
+-      "@
+-      if (!$?) { exit(1) }
+-    displayName: Generate Visual Studio Solution
+-    env:
+-      HOME: $(Build.SourcesDirectory)
+-      MSYSTEM: MINGW64
+-      DEVELOPER: 1
+-      NO_PERL: 1
+-      GIT_CONFIG_PARAMETERS: "'user.name=CI' 'user.email=ci@git'"
+-  - powershell: |
+-      $urlbase = "https://dev.azure.com/git/git/_apis/build/builds"
+-      $id = ((Invoke-WebRequest -UseBasicParsing "${urlbase}?definitions=9&statusFilter=completed&resultFilter=succeeded&`$top=1").content | ConvertFrom-JSON).value[0].id
+-      $downloadUrl = ((Invoke-WebRequest -UseBasicParsing "${urlbase}/$id/artifacts").content | ConvertFrom-JSON).value[0].resource.downloadUrl
+-      (New-Object Net.WebClient).DownloadFile($downloadUrl, "compat.zip")
+-      Expand-Archive compat.zip -DestinationPath . -Force
+-      Remove-Item compat.zip
+-    displayName: 'Download vcpkg artifacts'
+-  - task: MSBuild@1
+-    inputs:
+-      solution: git.sln
+-      platform: x64
+-      configuration: Release
+-      maximumCpuCount: 4
+-      msbuildArguments: /p:PlatformToolset=v142
+-  - powershell: |
+-      & compat\vcbuild\vcpkg_copy_dlls.bat release
+-      if (!$?) { exit(1) }
+-      & git-sdk-64-minimal\usr\bin\bash.exe -lc @"
+-        mkdir -p artifacts &&
+-        eval \"`$(make -n artifacts-tar INCLUDE_DLLS_IN_ARTIFACTS=YesPlease ARTIFACTS_DIRECTORY=artifacts | grep ^tar)\"
+-      "@
+-      if (!$?) { exit(1) }
+-    displayName: Bundle artifact tar
+-    env:
+-      HOME: $(Build.SourcesDirectory)
+-      MSYSTEM: MINGW64
+-      DEVELOPER: 1
+-      NO_PERL: 1
+-      MSVC: 1
+-      VCPKG_ROOT: $(Build.SourcesDirectory)\compat\vcbuild\vcpkg
+-  - powershell: |
+-      $tag = (Invoke-WebRequest -UseBasicParsing "https://gitforwindows.org/latest-tag.txt").content
+-      $version = (Invoke-WebRequest -UseBasicParsing "https://gitforwindows.org/latest-version.txt").content
+-      $url = "https://github.com/git-for-windows/git/releases/download/${tag}/PortableGit-${version}-64-bit.7z.exe"
+-      (New-Object Net.WebClient).DownloadFile($url,"PortableGit.exe")
+-      & .\PortableGit.exe -y -oartifacts\PortableGit
+-      # Wait until it is unpacked
+-      while (-not @(Remove-Item -ErrorAction SilentlyContinue PortableGit.exe; $?)) { sleep 1 }
+-    displayName: Download & extract portable Git
+-  - task: PublishPipelineArtifact@0
+-    displayName: 'Publish Pipeline Artifact: MSVC test artifacts'
+-    inputs:
+-      artifactName: 'vs-artifacts'
+-      targetPath: '$(Build.SourcesDirectory)\artifacts'
+-  - powershell: |
+-      if ("$GITFILESHAREPWD" -ne "" -and "$GITFILESHAREPWD" -ne "`$`(gitfileshare.pwd)") {
+-        cmd /c rmdir "$(Build.SourcesDirectory)\test-cache"
+-      }
+-    displayName: 'Unmount test-cache'
+-    condition: true
+-    env:
+-      GITFILESHAREPWD: $(gitfileshare.pwd)
+-
+-- job: vs_test
+-  displayName: Visual Studio Test
+-  dependsOn: vs_build
+-  condition: succeeded()
+-  pool:
+-    vmImage: windows-latest
+-  timeoutInMinutes: 240
+-  strategy:
+-    parallel: 10
+-  steps:
+-  - powershell: |
+-      if ("$GITFILESHAREPWD" -ne "" -and "$GITFILESHAREPWD" -ne "`$`(gitfileshare.pwd)") {
+-        net use s: \\gitfileshare.file.core.windows.net\test-cache "$GITFILESHAREPWD" /user:AZURE\gitfileshare /persistent:no
+-        cmd /c mklink /d "$(Build.SourcesDirectory)\test-cache" S:\
+-      }
+-    displayName: 'Mount test-cache'
+-    env:
+-      GITFILESHAREPWD: $(gitfileshare.pwd)
+-  - task: DownloadPipelineArtifact@0
+-    displayName: 'Download Pipeline Artifact: VS test artifacts'
+-    inputs:
+-      artifactName: 'vs-artifacts'
+-      targetPath: '$(Build.SourcesDirectory)'
+-  - powershell: |
+-      & PortableGit\git-cmd.exe --command=usr\bin\bash.exe -lc @"
+-        test -f artifacts.tar.gz || {
+-          echo No test artifacts found\; skipping >&2
+-          exit 0
+-        }
+-        tar xf artifacts.tar.gz || exit 1
+-
+-        # Let Git ignore the SDK and the test-cache
+-        printf '%s\n' /PortableGit/ /test-cache/ >>.git/info/exclude
+-
+-        cd t &&
+-        PATH=\"`$PWD/helper:`$PATH\" &&
+-        test-tool.exe run-command testsuite --jobs=10 -V -x --write-junit-xml \
+-                `$(test-tool.exe path-utils slice-tests \
+-                        `$SYSTEM_JOBPOSITIONINPHASE `$SYSTEM_TOTALJOBSINPHASE t[0-9]*.sh)
+-      "@
+-      if (!$?) { exit(1) }
+-    displayName: 'Test (parallel)'
+-    env:
+-      HOME: $(Build.SourcesDirectory)
+-      MSYSTEM: MINGW64
+-      NO_SVN_TESTS: 1
+-      GIT_TEST_SKIP_REBASE_P: 1
+-  - powershell: |
+-      if ("$GITFILESHAREPWD" -ne "" -and "$GITFILESHAREPWD" -ne "`$`(gitfileshare.pwd)") {
+-        cmd /c rmdir "$(Build.SourcesDirectory)\test-cache"
+-      }
+-    displayName: 'Unmount test-cache'
+-    condition: true
+-    env:
+-      GITFILESHAREPWD: $(gitfileshare.pwd)
+-  - task: PublishTestResults@2
+-    displayName: 'Publish Test Results **/TEST-*.xml'
+-    inputs:
+-      mergeTestResults: true
+-      testRunTitle: 'vs'
+-      platform: Windows
+-      publishRunAttachments: false
+-    condition: succeededOrFailed()
+-  - task: PublishBuildArtifacts@1
+-    displayName: 'Publish trash directories of failed tests'
+-    condition: failed()
+-    inputs:
+-      PathtoPublish: t/failed-test-artifacts
+-      ArtifactName: failed-vs-test-artifacts
+-
+-- job: linux_clang
+-  displayName: linux-clang
+-  condition: succeeded()
+-  pool:
+-    vmImage: ubuntu-latest
+-  steps:
+-  - bash: |
+-       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || ci/mount-fileshare.sh //gitfileshare.file.core.windows.net/test-cache gitfileshare "$GITFILESHAREPWD" "$HOME/test-cache" || exit 1
+-
+-       sudo apt-get update &&
+-       sudo apt-get -y install git gcc make libssl-dev libcurl4-openssl-dev libexpat-dev tcl tk gettext git-email zlib1g-dev apache2-bin &&
+-
+-       export CC=clang || exit 1
+-
+-       ci/install-dependencies.sh || exit 1
+-       ci/run-build-and-tests.sh || {
+-           ci/print-test-failures.sh
+-           exit 1
+-       }
+-
+-       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || sudo umount "$HOME/test-cache" || exit 1
+-    displayName: 'ci/run-build-and-tests.sh'
+-    env:
+-      GITFILESHAREPWD: $(gitfileshare.pwd)
+-  - task: PublishTestResults@2
+-    displayName: 'Publish Test Results **/TEST-*.xml'
+-    inputs:
+-      mergeTestResults: true
+-      testRunTitle: 'linux-clang'
+-      platform: Linux
+-      publishRunAttachments: false
+-    condition: succeededOrFailed()
+-  - task: PublishBuildArtifacts@1
+-    displayName: 'Publish trash directories of failed tests'
+-    condition: failed()
+-    inputs:
+-      PathtoPublish: t/failed-test-artifacts
+-      ArtifactName: failed-test-artifacts
+-
+-- job: linux_gcc
+-  displayName: linux-gcc
+-  condition: succeeded()
+-  pool:
+-    vmImage: ubuntu-latest
+-  steps:
+-  - bash: |
+-       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || ci/mount-fileshare.sh //gitfileshare.file.core.windows.net/test-cache gitfileshare "$GITFILESHAREPWD" "$HOME/test-cache" || exit 1
+-
+-       sudo add-apt-repository ppa:ubuntu-toolchain-r/test &&
+-       sudo apt-get update &&
+-       sudo apt-get -y install git gcc make libssl-dev libcurl4-openssl-dev libexpat-dev tcl tk gettext git-email zlib1g-dev apache2 language-pack-is git-svn gcc-8 || exit 1
+-
+-       ci/install-dependencies.sh || exit 1
+-       ci/run-build-and-tests.sh || {
+-           ci/print-test-failures.sh
+-           exit 1
+-       }
+-
+-       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || sudo umount "$HOME/test-cache" || exit 1
+-    displayName: 'ci/run-build-and-tests.sh'
+-    env:
+-      GITFILESHAREPWD: $(gitfileshare.pwd)
+-  - task: PublishTestResults@2
+-    displayName: 'Publish Test Results **/TEST-*.xml'
+-    inputs:
+-      mergeTestResults: true
+-      testRunTitle: 'linux-gcc'
+-      platform: Linux
+-      publishRunAttachments: false
+-    condition: succeededOrFailed()
+-  - task: PublishBuildArtifacts@1
+-    displayName: 'Publish trash directories of failed tests'
+-    condition: failed()
+-    inputs:
+-      PathtoPublish: t/failed-test-artifacts
+-      ArtifactName: failed-test-artifacts
+-
+-- job: osx_clang
+-  displayName: osx-clang
+-  condition: succeeded()
+-  pool:
+-    vmImage: macOS-latest
+-  steps:
+-  - bash: |
+-       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || ci/mount-fileshare.sh //gitfileshare.file.core.windows.net/test-cache gitfileshare "$GITFILESHAREPWD" "$HOME/test-cache" || exit 1
+-
+-       export CC=clang
+-
+-       ci/install-dependencies.sh || exit 1
+-       ci/run-build-and-tests.sh || {
+-           ci/print-test-failures.sh
+-           exit 1
+-       }
+-
+-       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || umount "$HOME/test-cache" || exit 1
+-    displayName: 'ci/run-build-and-tests.sh'
+-    env:
+-      GITFILESHAREPWD: $(gitfileshare.pwd)
+-  - task: PublishTestResults@2
+-    displayName: 'Publish Test Results **/TEST-*.xml'
+-    inputs:
+-      mergeTestResults: true
+-      testRunTitle: 'osx-clang'
+-      platform: macOS
+-      publishRunAttachments: false
+-    condition: succeededOrFailed()
+-  - task: PublishBuildArtifacts@1
+-    displayName: 'Publish trash directories of failed tests'
+-    condition: failed()
+-    inputs:
+-      PathtoPublish: t/failed-test-artifacts
+-      ArtifactName: failed-test-artifacts
+-
+-- job: osx_gcc
+-  displayName: osx-gcc
+-  condition: succeeded()
+-  pool:
+-    vmImage: macOS-latest
+-  steps:
+-  - bash: |
+-       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || ci/mount-fileshare.sh //gitfileshare.file.core.windows.net/test-cache gitfileshare "$GITFILESHAREPWD" "$HOME/test-cache" || exit 1
+-
+-       ci/install-dependencies.sh || exit 1
+-       ci/run-build-and-tests.sh || {
+-           ci/print-test-failures.sh
+-           exit 1
+-       }
+-
+-       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || umount "$HOME/test-cache" || exit 1
+-    displayName: 'ci/run-build-and-tests.sh'
+-    env:
+-      GITFILESHAREPWD: $(gitfileshare.pwd)
+-  - task: PublishTestResults@2
+-    displayName: 'Publish Test Results **/TEST-*.xml'
+-    inputs:
+-      mergeTestResults: true
+-      testRunTitle: 'osx-gcc'
+-      platform: macOS
+-      publishRunAttachments: false
+-    condition: succeededOrFailed()
+-  - task: PublishBuildArtifacts@1
+-    displayName: 'Publish trash directories of failed tests'
+-    condition: failed()
+-    inputs:
+-      PathtoPublish: t/failed-test-artifacts
+-      ArtifactName: failed-test-artifacts
+-
+-- job: gettext_poison
+-  displayName: GETTEXT_POISON
+-  condition: succeeded()
+-  pool:
+-    vmImage: ubuntu-latest
+-  steps:
+-  - bash: |
+-       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || ci/mount-fileshare.sh //gitfileshare.file.core.windows.net/test-cache gitfileshare "$GITFILESHAREPWD" "$HOME/test-cache" || exit 1
+-
+-       sudo apt-get update &&
+-       sudo apt-get -y install git gcc make libssl-dev libcurl4-openssl-dev libexpat-dev tcl tk gettext git-email zlib1g-dev &&
+-
+-       export jobname=GETTEXT_POISON || exit 1
+-
+-       ci/run-build-and-tests.sh || {
+-           ci/print-test-failures.sh
+-           exit 1
+-       }
+-
+-       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || sudo umount "$HOME/test-cache" || exit 1
+-    displayName: 'ci/run-build-and-tests.sh'
+-    env:
+-      GITFILESHAREPWD: $(gitfileshare.pwd)
+-  - task: PublishTestResults@2
+-    displayName: 'Publish Test Results **/TEST-*.xml'
+-    inputs:
+-      mergeTestResults: true
+-      testRunTitle: 'gettext-poison'
+-      platform: Linux
+-      publishRunAttachments: false
+-    condition: succeededOrFailed()
+-  - task: PublishBuildArtifacts@1
+-    displayName: 'Publish trash directories of failed tests'
+-    condition: failed()
+-    inputs:
+-      PathtoPublish: t/failed-test-artifacts
+-      ArtifactName: failed-test-artifacts
+-
+-- job: linux32
+-  displayName: Linux32
+-  condition: succeeded()
+-  pool:
+-    vmImage: ubuntu-latest
+-  steps:
+-  - bash: |
+-       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || ci/mount-fileshare.sh //gitfileshare.file.core.windows.net/test-cache gitfileshare "$GITFILESHAREPWD" "$HOME/test-cache" || exit 1
+-
+-       res=0
+-       sudo AGENT_OS="$AGENT_OS" BUILD_BUILDNUMBER="$BUILD_BUILDNUMBER" BUILD_REPOSITORY_URI="$BUILD_REPOSITORY_URI" BUILD_SOURCEBRANCH="$BUILD_SOURCEBRANCH" BUILD_SOURCEVERSION="$BUILD_SOURCEVERSION" SYSTEM_PHASENAME="$SYSTEM_PHASENAME" SYSTEM_TASKDEFINITIONSURI="$SYSTEM_TASKDEFINITIONSURI" SYSTEM_TEAMPROJECT="$SYSTEM_TEAMPROJECT" CC=$CC MAKEFLAGS="$MAKEFLAGS" jobname=Linux32 bash -lxc ci/run-docker.sh || res=1
+-
+-       sudo chmod a+r t/out/TEST-*.xml
+-       test ! -d t/failed-test-artifacts || sudo chmod a+r t/failed-test-artifacts
+-
+-       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || sudo umount "$HOME/test-cache" || res=1
+-       exit $res
+-    displayName: 'jobname=Linux32 ci/run-docker.sh'
+-    env:
+-      GITFILESHAREPWD: $(gitfileshare.pwd)
+-  - task: PublishTestResults@2
+-    displayName: 'Publish Test Results **/TEST-*.xml'
+-    inputs:
+-      mergeTestResults: true
+-      testRunTitle: 'linux32'
+-      platform: Linux
+-      publishRunAttachments: false
+-    condition: succeededOrFailed()
+-  - task: PublishBuildArtifacts@1
+-    displayName: 'Publish trash directories of failed tests'
+-    condition: failed()
+-    inputs:
+-      PathtoPublish: t/failed-test-artifacts
+-      ArtifactName: failed-test-artifacts
+-
+-- job: static_analysis
+-  displayName: StaticAnalysis
+-  condition: succeeded()
+-  pool:
+-    vmImage: ubuntu-latest
+-  steps:
+-  - bash: |
+-       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || ci/mount-fileshare.sh //gitfileshare.file.core.windows.net/test-cache gitfileshare "$GITFILESHAREPWD" "$HOME/test-cache" || exit 1
+-
+-       sudo apt-get update &&
+-       sudo apt-get install -y coccinelle libcurl4-openssl-dev libssl-dev libexpat-dev gettext &&
+-
+-       export jobname=StaticAnalysis &&
+-
+-       ci/run-static-analysis.sh || exit 1
+-
+-       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || sudo umount "$HOME/test-cache" || exit 1
+-    displayName: 'ci/run-static-analysis.sh'
+-    env:
+-      GITFILESHAREPWD: $(gitfileshare.pwd)
+-
+-- job: documentation
+-  displayName: Documentation
+-  condition: succeeded()
+-  pool:
+-    vmImage: ubuntu-latest
+-  steps:
+-  - bash: |
+-       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || ci/mount-fileshare.sh //gitfileshare.file.core.windows.net/test-cache gitfileshare "$GITFILESHAREPWD" "$HOME/test-cache" || exit 1
+-
+-       sudo apt-get update &&
+-       sudo apt-get install -y asciidoc xmlto asciidoctor docbook-xsl-ns &&
+-
+-       export ALREADY_HAVE_ASCIIDOCTOR=yes. &&
+-       export jobname=Documentation &&
+-
+-       ci/test-documentation.sh || exit 1
+-
+-       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || sudo umount "$HOME/test-cache" || exit 1
+-    displayName: 'ci/test-documentation.sh'
+-    env:
+-      GITFILESHAREPWD: $(gitfileshare.pwd)
 -- 
 2.26.0.334.g6536db25bb
 
