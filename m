@@ -2,163 +2,144 @@ Return-Path: <SRS0=1KXq=52=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 82419C2BA19
-	for <git@archiver.kernel.org>; Fri, 10 Apr 2020 00:50:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 367E4C2BA19
+	for <git@archiver.kernel.org>; Fri, 10 Apr 2020 00:56:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 24BC320768
-	for <git@archiver.kernel.org>; Fri, 10 Apr 2020 00:50:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 09C1220768
+	for <git@archiver.kernel.org>; Fri, 10 Apr 2020 00:56:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="hDbWmtSr"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="jBOIvAz9"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726924AbgDJAuX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Apr 2020 20:50:23 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:56927 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726327AbgDJAuX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Apr 2020 20:50:23 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 391E1BDCAF;
-        Thu,  9 Apr 2020 20:50:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=cnCEbBqDnm/3KN6q0EUsTs7fyVI=; b=hDbWmt
-        SrWAXtiL8dqSd77fqHwEN57NbYuBb5XKEGFN8sC8B25REJ0xORfaAMPwx9UcFgDT
-        NTQUVLRGeM5WBzLnADXvouogag3tstRaW7f2GIY74Q0zYcpof82CKn+8jS+GKEan
-        tJa9i3Z+9KGVZFf6M95NWiXitU5rDV9BIO4TI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Tg+es7A4q7df4nlIplvM9XdI28BbSdp6
-        oPlnYxbdJ49MxBgU3AJ+7Rh/c2n6lIN4WTEAKu7yEWjpKWkhioJDgXL6uezS8HKr
-        p2w7OVZnzUp5YdY7btUDYh64vUPEnuOW6Y9V62jGTFzSl3wajhrzK2TPcbg0vV2T
-        D/9sCTRZoOU=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 30AC3BDCAE;
-        Thu,  9 Apr 2020 20:50:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1726582AbgDJA4J (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Apr 2020 20:56:09 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:51754 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726574AbgDJA4J (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 9 Apr 2020 20:56:09 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 77213BDCAC;
-        Thu,  9 Apr 2020 20:50:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, phillip.wood123@gmail.com,
-        Johannes.Schindelin@gmx.de, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH] rebase -i: mark commits that begin empty in todo editor
-References: <pull.757.git.git.1586474800276.gitgitgadget@gmail.com>
-Date:   Thu, 09 Apr 2020 17:50:17 -0700
-In-Reply-To: <pull.757.git.git.1586474800276.gitgitgadget@gmail.com> (Elijah
-        Newren via GitGitGadget's message of "Thu, 09 Apr 2020 23:26:39
-        +0000")
-Message-ID: <xmqqimi8kvue.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id DE5976042C;
+        Fri, 10 Apr 2020 00:56:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1586480168;
+        bh=tzIeLiMgKGtHcm7/O0CR+r/JEGW/p3Z6KbKBaas68xU=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=jBOIvAz9j9/jx3tqcZvG4XVBUEF6tShSb/XTXpgTSR0xvHazgnvUwlXyMwI4y1uuw
+         X1Zkrh2T6FjnRWKB/pPDvIHDS7bc2Vdba0i81Gdm9RioEIQctzyIfxszyRNywxaV2K
+         fZf/zzPSl7CNGTSJbL2XPMB96gnZMVzYRvHnfS8OnE03RMDc8mVQnoXuFhy+oIp303
+         tKXjoO2yRPU7m6C7JLDyt5xvDDJ2qtxlkpiHihnYz6JwyrW/kYNw4Eey8gqYd62djd
+         7QAyqvNnT7cSL2uLTouywMrzeqfX37NNZZP0RrJr2l1Gk2JC4ZuTyN92qjYUZ1zf6G
+         R8pZh6PYr5Qiv0Q1wJTTdQpkubCgwT5osqeOF5J7ucZTduICnUfB4EHpxbuRmykP44
+         /KjiiWsra0IyXPKDogTq+01bjwQtZeezP6delpYM8O1Rvzk9ejmVnOtapkNuXmet1D
+         ao4Zoh9MfB0IO1/hZfluyoHRUKNePrE59lzGKs4/BYVMKumeoj1
+Date:   Fri, 10 Apr 2020 00:56:03 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH] builtin/receive-pack: use constant-time comparison for
+ HMAC value
+Message-ID: <20200410005603.GC6639@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>
+References: <20200409233730.680612-1-sandals@crustytoothpaste.net>
+ <xmqqr1wwkxqe.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 405A8270-7AC5-11EA-B62D-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="f0KYrhQ4vYSV2aJu"
+Content-Disposition: inline
+In-Reply-To: <xmqqr1wwkxqe.fsf@gitster.c.googlers.com>
+X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
+ 5.5.0-1-amd64)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> From: Elijah Newren <newren@gmail.com>
->
-> While many users who intentionally create empty commits do not want them
-> thrown away by a rebase, there are third-party tools that generate empty
-> commits that a user might not want.  In the past, users have used rebase
-> to get rid of such commits (a side-effect of the fact that the --apply
-> backend is not currently capable of keeping them).  While such users
-> could fire up an interactive rebase and just remove the lines
-> corresponding to empty commits, that might be difficult if the
-> third-party tool generates many of them.  Simplify this task for users
-> by marking such lines with a suffix of " # empty" in the todo list.
->
-> Suggested-by: Sami Boukortt <sami@boukortt.com>
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->     rebase -i: mark commits that begin empty in todo editor
->     
->     If this isn't enough, we could talk about resurrecting --no-keep-empty
->     (and making --keep-empty just exist to countermand an earlier
->     --no-keep-empty), but perhaps this is good enough?
+--f0KYrhQ4vYSV2aJu
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-This does look like an unsatisfying substitute for the real thing,
-but perhaps looking for " # empty" and turning them a drop is simple
-enough?  Emacs types may do something like
+On 2020-04-10 at 00:09:29, Junio C Hamano wrote:
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+>=20
+> > When we're comparing a push cert nonce, we currently do so using strcmp.
+> > Most implementations of strcmp short-circuit and exit as soon as they
+> > know whether two values are equal.  This, however, is a problem when
+> > we're comparing the output of HMAC, as it leaks information in the time
+> > taken about how much of the two values match if they do indeed differ.
+> >
+> > In our case, the nonce is used to prevent replay attacks against our
+> > server via the embedded timestamp and replay attacks using requests from
+> > a different server via the HMAC.  Push certs, which contain the nonces,
+> > are signed, so an attacker cannot tamper with the nonces without
+> > breaking validation of the signature.  They can, of course, create their
+> > own signatures with invalid nonces, but they can also create their own
+> > signatures with valid nonces, so there's nothing to be gained.  Thus,
+> > there is no security problem.
+> >
+> > Even though it doesn't appear that there are any negative consequences
+> > from the current technique, for safety and to encourage good practices,
+> > let's use a constant time comparison function for nonce verification.
+> > POSIX does not provide one, but they are easy to write.
+>=20
+> Devil's advocate mode on.
+>=20
+> If the HMAC plus digital signature are the real security, even
+> though writing this patch may be a nice mental exercise, is there a
+> merit in deliberately adding more code and making the code
+> immesurably slower by applying it?
+>=20
+> You just established in the previous paragraph that "for safety" is
+> a red herring.
 
-    C-x h C-u M-| 
-    sed -e '/ # empty$/s/^pick /drop /'
-    <RET>
+Here's the thing: I'm pretty sure there's not a security issue, but I'm
+not a cryptologist and can't speak for certain.  We didn't think TLS had
+all of the issues it did, until we determined that it did.  If someone
+who is a cryptologist comes up with an attack scenario we hadn't
+considered, we're covered.
 
-and vi folks have something similar that begins with a ':'.
+Also, if we ever use this HMAC implementation for something else in the
+future, that use might be vulnerable.  So it makes sense to always use a
+constant time comparison for HMAC so it looks wrong not to.  I think
+it's a good idea to make people feel icky about doing things like
+non-constant HMAC comparisons or using MD5 even in the rare case where
+it doesn't matter because almost all of the time, it does.
 
-But it would not beat just being able to say "--no-keep-empty" (or
-"--discard-empty"), would it?
+If we were using a language like C++ or Rust that returned a typed value
+for our results, we'd get this behavior for free, and we wouldn't know
+or care about the extremely minor performance impact.  The cost of using
+a constant time comparison instead of an optimized strcmp is going to be
+a handful of cycles and be dwarfed by the fact that we're forking and
+execing a process (and moreover, probably a shell) to verify the push
+cert.
 
-On the other hand, even if there were "--discard-empty" available,
-there may still be two classes of empty ones (e.g. ones that were
-created by third-party tools, the others that were deliberately
-empty) that the user may need and want to sift through, and for such 
-a use case, the marking this patch does would be very valuable.
+So I think this is valuable, although I understand if you don't want to
+take it.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-So, from that point of view, this may not be enough, but a "throw
-away all" option is not enough, either.  We'd want to have both to
-serve such users better.
+--f0KYrhQ4vYSV2aJu
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Thanks.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.20 (GNU/Linux)
 
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-757%2Fnewren%2Frebase-mark-empty-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-757/newren/rebase-mark-empty-v1
-> Pull-Request: https://github.com/git/git/pull/757
->
->  Documentation/git-rebase.txt | 3 ++-
->  sequencer.c                  | 5 +++++
->  2 files changed, 7 insertions(+), 1 deletion(-)
->
-> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-> index f7a6033607f..8ab0558aca2 100644
-> --- a/Documentation/git-rebase.txt
-> +++ b/Documentation/git-rebase.txt
-> @@ -620,7 +620,8 @@ commits that started empty, though these are rare in practice.  It
->  also drops commits that become empty and has no option for controlling
->  this behavior.
->  
-> -The merge backend keeps intentionally empty commits.  Similar to the
-> +The merge backend keeps intentionally empty commits (though with -i
-> +they are marked as empty in the todo list editor).  Similar to the
->  apply backend, by default the merge backend drops commits that become
->  empty unless -i/--interactive is specified (in which case it stops and
->  asks the user what to do).  The merge backend also has an
-> diff --git a/sequencer.c b/sequencer.c
-> index e528225e787..ce9fd27a878 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -4656,6 +4656,9 @@ static int make_script_with_merges(struct pretty_print_context *pp,
->  			strbuf_addf(&buf, "%s %s %s", cmd_pick,
->  				    oid_to_hex(&commit->object.oid),
->  				    oneline.buf);
-> +			if (is_empty)
-> +				strbuf_addf(&buf, " %c empty",
-> +					    comment_line_char);
->  
->  			FLEX_ALLOC_STR(entry, string, buf.buf);
->  			oidcpy(&entry->entry.oid, &commit->object.oid);
-> @@ -4861,6 +4864,8 @@ int sequencer_make_script(struct repository *r, struct strbuf *out, int argc,
->  		strbuf_addf(out, "%s %s ", insn,
->  			    oid_to_hex(&commit->object.oid));
->  		pretty_print_commit(&pp, commit, out);
-> +		if (is_empty)
-> +			strbuf_addf(out, " %c empty", comment_line_char);
->  		strbuf_addch(out, '\n');
->  	}
->  	return 0;
->
-> base-commit: 274b9cc25322d9ee79aa8e6d4e86f0ffe5ced925
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXo/EIwAKCRB8DEliiIei
+gWAHAQCS2EkSfxJXXM3EJdR0MjDrh1PqlMywscJa90qsC+/f0wEAg5oOyq17yCvJ
+WIqBFzaopKUu5JQdw+dsNHN3TEtPcAE=
+=omUl
+-----END PGP SIGNATURE-----
+
+--f0KYrhQ4vYSV2aJu--
