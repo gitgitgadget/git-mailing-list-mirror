@@ -2,98 +2,114 @@ Return-Path: <SRS0=1KXq=52=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4ACA7C2BA2B
-	for <git@archiver.kernel.org>; Fri, 10 Apr 2020 11:14:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B57BC2BA2B
+	for <git@archiver.kernel.org>; Fri, 10 Apr 2020 11:27:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1C312208E4
-	for <git@archiver.kernel.org>; Fri, 10 Apr 2020 11:14:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 47D2A20753
+	for <git@archiver.kernel.org>; Fri, 10 Apr 2020 11:27:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="kQzYZMpF"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ay1hERec"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726009AbgDJLOr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Apr 2020 07:14:47 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:59544 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725913AbgDJLOr (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Apr 2020 07:14:47 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B98E6C69D7;
-        Fri, 10 Apr 2020 07:14:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=LIahu0u7lQokfxV3mGwSpNi6miU=; b=kQzYZM
-        pFM2CQBoCesTQD65UEhDQuaoYAXTNbTXfVzn0bdzHqaErwTDau48bqIoMrSPp7Ze
-        eYE0DBdKKk3McEMgfyg/K+ZBKdl1nFfccnoDu3b8ox6o7MF9T4nzgZLSSezWj6Ta
-        Qt+5QRTu05kDCgEH5anfkmkgVErCN/yJh/jnk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=r5h4pcyBmMDr2LUuqWG8bnegx6Fqeksu
-        SC3a85aqg/yB0pVZM6pKUqqZMFuAioopguto69q3jK8bd2xhz3Ab0RpM8k48Hv5H
-        wQygr5WdDABtfS7M6EqTIyercgqiafSpm1f8gTBfJNuv7L25nLGxRSkIDDesk/ve
-        14h5aRNLBKY=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B2776C69D6;
-        Fri, 10 Apr 2020 07:14:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0C996C69D5;
-        Fri, 10 Apr 2020 07:14:42 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 0/3] Make the tests that test core.hideDotFiles more robust
-References: <pull.603.git.1586374474512.gitgitgadget@gmail.com>
-        <pull.603.v2.git.1586516583.gitgitgadget@gmail.com>
-Date:   Fri, 10 Apr 2020 04:14:41 -0700
-In-Reply-To: <pull.603.v2.git.1586516583.gitgitgadget@gmail.com> (Johannes
-        Schindelin via GitGitGadget's message of "Fri, 10 Apr 2020 11:03:00
-        +0000")
-Message-ID: <xmqq5ze7lhi6.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726082AbgDJL1y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Apr 2020 07:27:54 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:37049 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725897AbgDJL1y (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Apr 2020 07:27:54 -0400
+Received: by mail-ed1-f65.google.com with SMTP id de14so2102065edb.4
+        for <git@vger.kernel.org>; Fri, 10 Apr 2020 04:27:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=lzH68EtxRs2IVGS4zNMQ53URBlC0f6SOeyc44Mx2Y9s=;
+        b=Ay1hERecWuzc8VZKf+MnXyZVwaFZPH2HvbO60TQoAAq8D72yHn7bciiXEze/vZmu4z
+         IF6kNe5RJPJpoD7XLklQ8feEufCQNX5AbkCBsEMZUS62xUZ1OeCjdmJkCP5qev3x9Nh8
+         4IY1sg1i0MIH0W7A93x9LFirGIwd0WATQrw81BJ4D5wjs3iwfj2++cNuD9zvvWfkanb/
+         ADNXpKEu3uQAkL+K4U8LCr0JTmPVs2rT7uu3SWiiyx71wAkRMA5+ElL1GxUPS4WxxFLc
+         EOxPX+adeAqk7ZxlaXAUXlKbfSojoPFu4Cg/jnnn5nC83/q0HbJGq97rxSR2wVNCnmWL
+         bNiQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=lzH68EtxRs2IVGS4zNMQ53URBlC0f6SOeyc44Mx2Y9s=;
+        b=NFN2WUJY/sGZ8Z7/vWpky/3h3j6XQnaAIHK7IPYQ4qZ/UF0Icr1beq1+JACzBXpP2r
+         g+cRljfTZuV1+GfSs5wM4tgtKtWG903zBRjHcPPIqOE8GpbraVthS44aGTnka/1yx5cr
+         LJcXAHtSB5yLxQszns65v8ywoq7gTFk+kV3hbDNQ2NGEOB/x0CxWD+91T1XSofDHYK6K
+         9l76UzsyHfVl/0VTuKJC6121lbSHPlLzbsI/3go2c0xSHnS038PuzlnpQe7B0E9AK5JV
+         JpcwZ/I4OEC9CNu3cjI4qfHFCTcfB3U3QKg6WY0npWPZTaZx2J35/AQ6EfpxsPI5LXC4
+         G/Ig==
+X-Gm-Message-State: AGi0PuaYVbSN55jaWs98xK7SJQHGdfKS1uFVbH7C3n1I6zkypKV8GH4P
+        rSQa71V40sZ5+dpfnp1yK7CtuaMW
+X-Google-Smtp-Source: APiQypJ3+fowKhm4Y05Rb/Yp3rchjYwEDxkXB5quwdYGC0Z8iGF3GfvGJWKD2CLd8EFEq41vDus4Iw==
+X-Received: by 2002:a17:906:cd18:: with SMTP id oz24mr3442360ejb.195.1586518072858;
+        Fri, 10 Apr 2020 04:27:52 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id w6sm103378eja.33.2020.04.10.04.27.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Apr 2020 04:27:52 -0700 (PDT)
+Message-Id: <pull.755.v2.git.git.1586518072.gitgitgadget@gmail.com>
+In-Reply-To: <pull.755.git.git.1586374380709.gitgitgadget@gmail.com>
+References: <pull.755.git.git.1586374380709.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 10 Apr 2020 11:27:49 +0000
+Subject: [PATCH v2 0/2] Explicitly fflush stdout in git clean
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7A601438-7B1C-11EA-9013-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+This is yet another patch that was funneled through a Git for Windows PR,
+read: it has been battle-tested.
 
-> Junio, I'm sorry that I did not get to send v2 yesterday, and that you spent
-> time on the two add-on patches even after I finalized this second iteration
-> (but I was first waiting for the PR build to pass and while that happened, I
-> got stuck in meeting after meeting).
+Of course, the current iteration of this patch series has not been
+battle-tested, so please do review carefully, so that we can prevent bugs
+from slipping in during the review process.
 
-Heh, mails cross all the time, so there is not much to be sorry, and
-it is not a race, and it's not much of an issue who sent an
-equivalent patch to the list first ;-)
+Changes since v1:
 
-A few issues I noticed that are not worth pointing out inline with
-the patches are
+ * Added a preparatory patch that refactors all interactive input reading
+   via strbuf_getline(..., stdin).
+ * Adjusted the patch and its commit message accordingly.
 
- [1/3] The "consolidate" is a bit uneven.  It keeps the 'windows'
-       (lowercase) to pretend to be a pure code movement, while
-       adding the "prereq or die" that makes it an impure code
-       movement.  If I were doing this, this step would be pure code
-       movement, and [3/3] would have the "prereq or die" as its
-       main theme, i.e. make sure it is hard to misuse.  [3/3] would
-       also do "s/windows/Windows/" as "while at it".
+Johannes Schindelin (1):
+  Refactor code asking the user for input interactively
 
- [2/3] The test numbers on the title is no longer relevant, and I
-       would suggest retitling this step.  No matter which test uses
-       it currently, or any new uses added in the future to other
-       tests, with this patch the helper is more robust, and it was
-       the point of [1/3].
- 
-Thanks.
+마누엘 (1):
+  Explicitly `fflush` stdout before expecting interactive input
+
+ add-interactive.c |  4 ++--
+ add-patch.c       |  4 ++--
+ builtin/clean.c   | 14 ++++----------
+ prompt.c          | 12 ++++++++++++
+ prompt.h          |  2 ++
+ shell.c           |  4 ++--
+ 6 files changed, 24 insertions(+), 16 deletions(-)
+
+
+base-commit: 9fadedd637b312089337d73c3ed8447e9f0aa775
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-755%2Fdscho%2Ffflush-in-git-clean-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-755/dscho/fflush-in-git-clean-v2
+Pull-Request: https://github.com/git/git/pull/755
+
+Range-diff vs v1:
+
+ 1:  21acd883b94 < -:  ----------- clean: explicitly `fflush` stdout
+ -:  ----------- > 1:  9d2ee78a9e4 Refactor code asking the user for input interactively
+ -:  ----------- > 2:  d3949e42004 Explicitly `fflush` stdout before expecting interactive input
+
+-- 
+gitgitgadget
