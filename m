@@ -2,84 +2,105 @@ Return-Path: <SRS0=1KXq=52=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A4753C2D0EC
-	for <git@archiver.kernel.org>; Fri, 10 Apr 2020 21:29:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E530C2D0EC
+	for <git@archiver.kernel.org>; Fri, 10 Apr 2020 21:31:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 758A720757
-	for <git@archiver.kernel.org>; Fri, 10 Apr 2020 21:29:15 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="rzwc9jPY"
+	by mail.kernel.org (Postfix) with ESMTP id 5D8EA20753
+	for <git@archiver.kernel.org>; Fri, 10 Apr 2020 21:31:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726687AbgDJV3N (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Apr 2020 17:29:13 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59244 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726638AbgDJV3N (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Apr 2020 17:29:13 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D40914A0E0;
-        Fri, 10 Apr 2020 17:29:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=J11MhelPfx7tdQLmmtbFzbzs9Kc=; b=rzwc9j
-        PYHXSvPsq4W9t9CjUX9Vsx6rjRxdId3zvMrbwrACkapLjBV6+zx+FnoEsSPPaOCm
-        Utn2KMvUwOGE7zic6Y+a7FWHO1DaUavRmEg4JQpiY1mWs2P7D6VLPqcVrn1cVs/r
-        u1k8lBmmmBhDqMsY4CNAyApt7hjzzAp3/NSOg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=BshHMMIV17Zj8bgh2w7/xw5mqf5CRSao
-        PkwWZoZr8FstfUv4p0oQsiVWohL4cRg8ks+FNnMmWT+Y4ri2J/S04X0XKRc1Gu/6
-        dDZ5R4JfmbHPZE9nu+4Bz5dhnE3zXHg6tYXUKtoQ3kxPhgyauXtq/xDd7hmNj9cD
-        EeVudGFPBkM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C64E54A0DF;
-        Fri, 10 Apr 2020 17:29:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4D2E14A0DE;
-        Fri, 10 Apr 2020 17:29:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, phillip.wood123@gmail.com,
-        Johannes.Schindelin@gmx.de, bturner@atlassian.com,
-        sami@boukortt.com,
-        "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: Re: [PATCH v2 0/3] rebase -i: mark commits that begin empty in todo editor
-References: <pull.757.git.git.1586474800276.gitgitgadget@gmail.com>
-        <pull.757.v2.git.git.1586541094.gitgitgadget@gmail.com>
-        <xmqqpncfhy3g.fsf@gitster.c.googlers.com>
-Date:   Fri, 10 Apr 2020 14:29:10 -0700
-In-Reply-To: <xmqqpncfhy3g.fsf@gitster.c.googlers.com> (Junio C. Hamano's
-        message of "Fri, 10 Apr 2020 13:42:11 -0700")
-Message-ID: <xmqqd08fhvx5.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726701AbgDJVbr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Apr 2020 17:31:47 -0400
+Received: from cloud.peff.net ([104.130.231.41]:40260 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726582AbgDJVbr (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Apr 2020 17:31:47 -0400
+Received: (qmail 8323 invoked by uid 109); 10 Apr 2020 21:31:48 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 10 Apr 2020 21:31:48 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 3307 invoked by uid 111); 10 Apr 2020 21:42:21 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 10 Apr 2020 17:42:21 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 10 Apr 2020 17:31:46 -0400
+From:   Jeff King <peff@peff.net>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        James Ramsay <james@jramsay.com.au>, git@vger.kernel.org
+Subject: Re: [TOPIC 2/17] Hooks in the future
+Message-ID: <20200410213146.GA2075494@coredump.intra.peff.net>
+References: <AC2EB721-2979-43FD-922D-C5076A57F24B@jramsay.com.au>
+ <0D7F1872-7614-46D6-BB55-6FEAA79F1FE6@jramsay.com.au>
+ <20200312141628.GL212281@google.com>
+ <xmqqeetwcf4k.fsf@gitster.c.googlers.com>
+ <20200407230132.GD137962@google.com>
+ <20200407235116.GE137962@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 51943BF0-7B72-11EA-860F-C28CBED8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20200407235116.GE137962@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Tue, Apr 07, 2020 at 04:51:16PM -0700, Emily Shaffer wrote:
 
-> So I am OK to rebase the other topic to v2.26.0; would that help?  I
-> already saw there was some entanglement with the other topic in one
-> of the patches in this series, so...
+> On Tue, Apr 07, 2020 at 04:01:32PM -0700, Emily Shaffer wrote:
+> > Thoughts?
+> 
+> Jonathan Nieder and I discussed this a little bit offline, and he
+> suggested another thought:
+> 
+> [hook "unique-name"]
+>   pre-commit = ~/path-to-hook.sh args-for-precommit
+>   pre-push = ~/path-to-hook.sh
+>   order = 001
 
-So I've done such a rebasing and queued the result to 'pu'.
-jt/rebase-allow-duplicate used to be directly on v2.25.0 but now it
-is on top of 'master'==9fadedd6, and these three patches are queued
-directly on top of that.  Hopefully I can push out the result of
-today's integration with other topics in an hour or so.
+Yeah, giving each block a unique name lets you give them each an order.
+It seems kind of weird to me that you'd define multiple hook types for a
+given name. And it doesn't leave a lot of room for defining
+per-hook-type options; you have to make new keys like pre-push-order
+(though that does work because the hook names are a finite set that
+conforms to our config key names).
 
-Thanks.
+What if we added a layer of indirection: have a section for each type of
+hook, defining keys for that type. And then for each hook command we
+define there, it can have its own section, too. Maybe better explained
+with an example:
+
+  [hook "pre-receive"]
+  # put any pre-receive related options here; e.g., a rule for what to
+  # do with hook exit codes (e.g., stop running, run all but return exit
+  # code, ignore failures, etc)
+  fail = stop
+
+  # And we can define actual hook commands. This one refers to the
+  # hookcmd block below.
+  command = foo
+
+  # But if there's no such hookcmd block, we could just do something
+  # sensible, like defaulting hookcmd.X.command to "X"
+  command = /path/to/some-hook.sh
+
+  [hookcmd "foo"]
+  # the actual hook command to run
+  command = /path/to/another-hook
+  # other hook options, like order priority
+  order = 123
+
+I think both this schema and the one you wrote above can express the
+same set of things. But you don't _have_ to pick a unique name if you
+don't want to. Just doing:
+
+  [hook "pre-receive"]
+  command = /some/script
+
+would be valid and useful (and that's as far as 99% of use cases would
+need to go).
+
+-Peff
