@@ -2,124 +2,154 @@ Return-Path: <SRS0=1KXq=52=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A5A98C2BA19
-	for <git@archiver.kernel.org>; Fri, 10 Apr 2020 02:06:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 974FAC2BA19
+	for <git@archiver.kernel.org>; Fri, 10 Apr 2020 03:04:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 71FD220730
-	for <git@archiver.kernel.org>; Fri, 10 Apr 2020 02:06:57 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=atlassian-com.20150623.gappssmtp.com header.i=@atlassian-com.20150623.gappssmtp.com header.b="c7T0wPo3"
+	by mail.kernel.org (Postfix) with ESMTP id 6FDA820A8B
+	for <git@archiver.kernel.org>; Fri, 10 Apr 2020 03:04:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726571AbgDJCGx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Apr 2020 22:06:53 -0400
-Received: from mail-io1-f67.google.com ([209.85.166.67]:35435 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725987AbgDJCGx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Apr 2020 22:06:53 -0400
-Received: by mail-io1-f67.google.com with SMTP id w20so469670iob.2
-        for <git@vger.kernel.org>; Thu, 09 Apr 2020 19:06:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=rNpkdz0VX/H26By7W2i3SSsXV4PxT/4CwLJLS465cT4=;
-        b=c7T0wPo3VDuCafgDr9ukMqmkjvY8vxo5hktgmyYSxEdwL0Pur6RCfJbC9d+aoPhj2T
-         WUjqs7E9egZtoTkJMhfXzxO9kLcWnWDFC9UPwzn2AISjIDlZkCRWroV8gCYroAdCFLVP
-         WmWeUT6InP/QsvjF1nsxdb7G+A+8QeOJiIEAvgwltchBe5gpuWKv+/pzJY6h6PKV17H7
-         UBaAXjPoeqpYqAidNmHtQ57JLRzbpOcGmAcuGYQkdDBw9/BD/TQQFr0bppVq329S2Fu3
-         +w7OZnEk3+lmnA3IK6A9ns45g3FPXwA8Ojc0H5WR/e0XunzgjWTQYco2y+ppcA0aOjVb
-         q8wg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=rNpkdz0VX/H26By7W2i3SSsXV4PxT/4CwLJLS465cT4=;
-        b=tfwo0/rHGvgzVjBa21yLnqwhpky/saOF0AlZKahQ+cmz32gAd4jXbWJfojrcnma1lV
-         UyKK/G4vw9fn0hTjgkssrQ+Dw0WcZdVCaAvVWwbWY1igvlk/ImivZYFYTL2Xjs0sxLy6
-         3NccweC94wlwtzSVBPpw2SoLFrE1ur9TbY5cc4mS2TK9SxKEJVPi9bO4uwvr5T7CP4B2
-         0B9XKzHJID+E1vP9aQ7aoWvGeVnqYRxwvs59b3vtK0YhI3ojiAyGv4npuOqjo6U18MEz
-         OVSwidZAjLtHjuuMkL/fFlCFcuqeX13oXT7mwAoHr0pPSKWdPn7qymsuKNMB5MVU/V/y
-         Ou0w==
-X-Gm-Message-State: AGi0PubjMljPFLAraT6lz1S58rXEEw+IHSBcc7+xJi5/2nR0ULr+VWzp
-        EbRHw4YHOPKwht4GWP/wmzmJTm3ZlNEgPmecZ0qtvQ==
-X-Google-Smtp-Source: APiQypKSN3y6jHMeZ9oeLCPGMfKuj+C5x9BMXJvcLkuYoi5V3vm0wDDy6CnPnzO2KRlecTiGH34vbJyk3hHIlXeg69E=
-X-Received: by 2002:a02:4e07:: with SMTP id r7mr2563223jaa.96.1586484413041;
- Thu, 09 Apr 2020 19:06:53 -0700 (PDT)
-MIME-Version: 1.0
-References: <pull.757.git.git.1586474800276.gitgitgadget@gmail.com> <xmqqimi8kvue.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqimi8kvue.fsf@gitster.c.googlers.com>
-From:   Bryan Turner <bturner@atlassian.com>
-Date:   Thu, 9 Apr 2020 19:06:42 -0700
-Message-ID: <CAGyf7-H4jtnVjgZ20qC-mzJHRd7Ffqm=Vh18wJPiiSS4NPnhyQ@mail.gmail.com>
-Subject: Re: [PATCH] rebase -i: mark commits that begin empty in todo editor
+        id S1726703AbgDJDEL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Apr 2020 23:04:11 -0400
+Received: from cloud.peff.net ([104.130.231.41]:39166 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726659AbgDJDEL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Apr 2020 23:04:11 -0400
+Received: (qmail 24137 invoked by uid 109); 10 Apr 2020 03:04:12 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 10 Apr 2020 03:04:12 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 26480 invoked by uid 111); 10 Apr 2020 03:14:43 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 09 Apr 2020 23:14:43 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 9 Apr 2020 23:04:11 -0400
+From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Users <git@vger.kernel.org>, phillip.wood123@gmail.com,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Elijah Newren <newren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     =?utf-8?B?w4lyaWNv?= Rolim <erico.erc@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: Re* [BUG] segmentation fault in git-diff
+Message-ID: <20200410030411.GA48173@coredump.intra.peff.net>
+References: <CAFDeuWO+2JEGudtnHZvSsSUOVRR83U9ziLEjSoDyMWxYhvDMKg@mail.gmail.com>
+ <xmqqh7xsmg7j.fsf@gitster.c.googlers.com>
+ <xmqqd08gmg3s.fsf@gitster.c.googlers.com>
+ <xmqq4ktsmfnn.fsf@gitster.c.googlers.com>
+ <20200409234152.GA42330@coredump.intra.peff.net>
+ <xmqqv9m8kxzy.fsf_-_@gitster.c.googlers.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqv9m8kxzy.fsf_-_@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 9, 2020 at 5:50 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > From: Elijah Newren <newren@gmail.com>
-> >
-> > While many users who intentionally create empty commits do not want them
-> > thrown away by a rebase, there are third-party tools that generate empty
-> > commits that a user might not want.  In the past, users have used rebase
-> > to get rid of such commits (a side-effect of the fact that the --apply
-> > backend is not currently capable of keeping them).  While such users
-> > could fire up an interactive rebase and just remove the lines
-> > corresponding to empty commits, that might be difficult if the
-> > third-party tool generates many of them.  Simplify this task for users
-> > by marking such lines with a suffix of " # empty" in the todo list.
-> >
-> > Suggested-by: Sami Boukortt <sami@boukortt.com>
-> > Signed-off-by: Elijah Newren <newren@gmail.com>
-> > ---
-> >     rebase -i: mark commits that begin empty in todo editor
-> >
-> >     If this isn't enough, we could talk about resurrecting --no-keep-empty
-> >     (and making --keep-empty just exist to countermand an earlier
-> >     --no-keep-empty), but perhaps this is good enough?
->
-> This does look like an unsatisfying substitute for the real thing,
-> but perhaps looking for " # empty" and turning them a drop is simple
-> enough?  Emacs types may do something like
->
->     C-x h C-u M-|
->     sed -e '/ # empty$/s/^pick /drop /'
->     <RET>
->
-> and vi folks have something similar that begins with a ':'.
->
-> But it would not beat just being able to say "--no-keep-empty" (or
-> "--discard-empty"), would it?
->
-> On the other hand, even if there were "--discard-empty" available,
-> there may still be two classes of empty ones (e.g. ones that were
-> created by third-party tools, the others that were deliberately
-> empty) that the user may need and want to sift through, and for such
-> a use case, the marking this patch does would be very valuable.
->
-> So, from that point of view, this may not be enough, but a "throw
-> away all" option is not enough, either.  We'd want to have both to
-> serve such users better.
+On Thu, Apr 09, 2020 at 05:03:45PM -0700, Junio C Hamano wrote:
 
-This was why I wondered whether it might be worth extending the
---empty option to add another possible value, like "drop-all", that
-would allow the caller to say they want to drop all empty
-commits--both those that started out empty and those that became
-empty. That fourth mode would be distinct from the existing three.
-(I'm not sure what to call said mode; "drop-all" looks odd alongside
-the existing "drop". I just say "drop-all" here to help illustrate the
-idea.)
+> Jeff King <peff@peff.net> writes:
+> 
+> > But there are a bunch of other commits around the same time replacing
+> > the_repository, and it seems like an easy mistake to make. Perhaps we
+> > should rename the "refs" member of "struct repository" to something more
+> > clearly private, which would force callers to use the access method.
+> 
+> Here is the final version that I am going to apply and merge to
+> 'jch' branch.  This is an ancient regression in Git timescale, so
+> its fix is not all that urgent, though.
+
+Agreed. The patch looks good to me.
+
+I prepared the patch below on top. I mostly wanted it as an auditing
+tool to find similar cases, but there were none. It may still be worth
+applying to protect ourselves in the future.
+
+-- >8 --
+Subject: [PATCH] repository: mark the "refs" pointer as private
+
+The "refs" pointer in a struct repository starts life as NULL, but then
+is lazily initialized when it is accessed via get_main_ref_store().
+However, it's easy for calling code to forget this and access it
+directly, leading to code which works _some_ of the time, but fails if
+it is called before anybody else accesses the refs.
+
+This was the cause of the bug fixed by 5ff4b920eb (sha1-name: do not
+assume that the ref store is initialized, 2020-04-09). In order to
+prevent similar bugs, let's more clearly mark the "refs" field as
+private.
+
+In addition to helping future code, the name change will help us audit
+any existing direct uses. Besides get_main_ref_store() itself, it turns
+out there is only one. But we know it's OK as it is on the line directly
+after the fix from 5ff4b920eb, which will have initialized the pointer.
+However it's still a good idea for it to model the proper use of the
+accessing function, so we'll convert it.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ refs.c       | 8 ++++----
+ repository.h | 8 ++++++--
+ sha1-name.c  | 2 +-
+ 3 files changed, 11 insertions(+), 7 deletions(-)
+
+diff --git a/refs.c b/refs.c
+index 1ab0bb54d3..b8759116cd 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1852,14 +1852,14 @@ static struct ref_store *ref_store_init(const char *gitdir,
+ 
+ struct ref_store *get_main_ref_store(struct repository *r)
+ {
+-	if (r->refs)
+-		return r->refs;
++	if (r->refs_private)
++		return r->refs_private;
+ 
+ 	if (!r->gitdir)
+ 		BUG("attempting to get main_ref_store outside of repository");
+ 
+-	r->refs = ref_store_init(r->gitdir, REF_STORE_ALL_CAPS);
+-	return r->refs;
++	r->refs_private = ref_store_init(r->gitdir, REF_STORE_ALL_CAPS);
++	return r->refs_private;
+ }
+ 
+ /*
+diff --git a/repository.h b/repository.h
+index 040057dea6..6534fbb7b3 100644
+--- a/repository.h
++++ b/repository.h
+@@ -67,8 +67,12 @@ struct repository {
+ 	 */
+ 	struct parsed_object_pool *parsed_objects;
+ 
+-	/* The store in which the refs are held. */
+-	struct ref_store *refs;
++	/*
++	 * The store in which the refs are held. This should generally only be
++	 * accessed via get_main_ref_store(), as that will lazily initialize
++	 * the ref object.
++	 */
++	struct ref_store *refs_private;
+ 
+ 	/*
+ 	 * Contains path to often used file names.
+diff --git a/sha1-name.c b/sha1-name.c
+index 878553b132..fccc97fa7a 100644
+--- a/sha1-name.c
++++ b/sha1-name.c
+@@ -1816,7 +1816,7 @@ static enum get_oid_result get_oid_with_context_1(struct repository *repo,
+ 			cb.repo = repo;
+ 			cb.list = &list;
+ 			refs_for_each_ref(get_main_ref_store(repo), handle_one_ref, &cb);
+-			refs_head_ref(repo->refs, handle_one_ref, &cb);
++			refs_head_ref(get_main_ref_store(repo), handle_one_ref, &cb);
+ 			commit_list_sort_by_date(&list);
+ 			return get_oid_oneline(repo, name + 2, oid, list);
+ 		}
+-- 
+2.26.0.414.ge3a6455e3d
+
