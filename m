@@ -2,95 +2,81 @@ Return-Path: <SRS0=1KXq=52=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E547C2BB55
-	for <git@archiver.kernel.org>; Fri, 10 Apr 2020 19:10:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CD17C2D0EC
+	for <git@archiver.kernel.org>; Fri, 10 Apr 2020 19:42:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 209132083E
-	for <git@archiver.kernel.org>; Fri, 10 Apr 2020 19:10:17 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="c4QXkHWp"
+	by mail.kernel.org (Postfix) with ESMTP id 582D320732
+	for <git@archiver.kernel.org>; Fri, 10 Apr 2020 19:42:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726683AbgDJTKP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Apr 2020 15:10:15 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59137 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726142AbgDJTKP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Apr 2020 15:10:15 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AA2486103D;
-        Fri, 10 Apr 2020 15:10:13 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=rQ7FUKnX9sFC
-        8ltT4Q558cwITdw=; b=c4QXkHWpKiUve5vZDvd9yMJCIHrwET51tNVAvPUgVfXE
-        f5y6YFWfnenEGA7ldTR4nzuQ9JQWqnDhFaIjTFskDjvkstWN6pJkOnKmCYftD3es
-        QjJdiH8HNcQpKdMsEz/TaSt3H6MLSxUPxnNMgkkl5NLlohIFAARVMAPr0ryFDKo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=xWroSv
-        slE2q8jbeZMI8g62ahB+JjWSxwW0G6GWKGoQ4VXFfPCD6NZOKihLzRRCcSrqzopg
-        xYz21Wn5ukIdKHMem2JNoX3VwTsRZ6Tp4AgNcd13WRJeJoMSgvFWXQuNtlapsT3d
-        rhIbaY5TVMuxbkuhOrqtgpBePhU5qLOIa4tFU=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A098F6103C;
-        Fri, 10 Apr 2020 15:10:13 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 23AF86103B;
-        Fri, 10 Apr 2020 15:10:13 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 2/5] ci/lib: allow running in GitHub Actions
-References: <pull.743.git.git.1585658913.gitgitgadget@gmail.com>
-        <d9227c87a7bb2872f6a69f48f6a4988f08545d8a.1585658913.git.gitgitgadget@gmail.com>
-        <20200403084654.GK2224@szeder.dev>
-        <nycvar.QRO.7.76.6.2004042207410.46@tvgsbejvaqbjf.bet>
-        <20200410153131.GM2224@szeder.dev>
-Date:   Fri, 10 Apr 2020 12:10:12 -0700
-In-Reply-To: <20200410153131.GM2224@szeder.dev> ("SZEDER =?utf-8?Q?G=C3=A1?=
- =?utf-8?Q?bor=22's?= message of
-        "Fri, 10 Apr 2020 17:31:31 +0200")
-Message-ID: <xmqq7dynjgx7.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726680AbgDJTmN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Apr 2020 15:42:13 -0400
+Received: from cloud.peff.net ([104.130.231.41]:40054 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726663AbgDJTmM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Apr 2020 15:42:12 -0400
+Received: (qmail 7602 invoked by uid 109); 10 Apr 2020 19:42:13 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 10 Apr 2020 19:42:13 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 2158 invoked by uid 111); 10 Apr 2020 19:52:46 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 10 Apr 2020 15:52:46 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 10 Apr 2020 15:42:11 -0400
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Subject: [PATCH 0/6] better handling of gigantic config files
+Message-ID: <20200410194211.GA1363484@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: E7A3AA72-7B5E-11EA-9E5A-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
+The fact that parse_config_key() requires its callers to use an "int"
+for a string length has bugged me for a while, and it re-bugged me when
+looking at it today. So I finally decided to do something about it,
+which led to an odyssey of other small fixes and cleanups.
 
->> > CI_OS_NAME=3Dosx.  This is head-scratchingly backwards, and I think
->> >
->> >   test "$CI_OS_NAME" =3D macos && CI_OS_NAME=3Dosx
->> >
->> > would read better.
->>=20
->> I can understand where you come from, but your code is not `set -e` sa=
-fe,
->
-> It works as expected in at least in dash, Bash, BusyBox sh, ksh,
-> ksh93, mksh/lksh, yash, posh, FreeBSD /bin/sh, NetBSD /bin/sh.
+In particular, I was curious what kinds of bad behavior you could
+provoke by having a key name larger than 2GB (especially because we use
+the same parser for .gitmodules files, which might not be trusted). It
+turns out: basically none, because the config parser chokes immediately
+dues to its own int/size_t confusion.
 
-Thanks for a clarification.  I do not use "set -e" myself (it is not
-a good idea to rely on it in general), and was wondering if what was
-said up there was true, as it did not sound like a useful behaviour
-at all.  Not complaining about a non-zero exit before && or || makes
-it usable ;-)
+After patch 5, the config system _can_ actually handle stupidly-sized
+config keys, but in the end I decided to explicitly disallow them.
+There's downstream code that would be impossible to fix, and nobody
+actually cares about this case working anyway. See patch 6 for more
+discussion. I do still think the other patches are worth having as a
+cleanup; the more code that is safe from unexpected integer truncation
+the better.
 
+  [1/6]: remote: drop auto-strlen behavior of make_branch() and make_rewrite()
+  [2/6]: parse_config_key(): return subsection len as size_t
+  [3/6]: config: drop useless length variable in write_pair()
+  [4/6]: git_config_parse_key(): return baselen as size_t
+  [5/6]: config: use size_t to store parsed variable baselen
+  [6/6]: config: reject parsing of files over INT_MAX
 
+ archive-tar.c      |  4 ++--
+ builtin/help.c     |  2 +-
+ builtin/reflog.c   |  2 +-
+ config.c           | 42 +++++++++++++++++++++++++++++-------------
+ config.h           |  4 ++--
+ convert.c          |  2 +-
+ fsck.c             |  2 +-
+ ll-merge.c         |  2 +-
+ promisor-remote.c  |  2 +-
+ remote.c           | 37 +++++++++++++------------------------
+ submodule-config.c |  3 ++-
+ userdiff.c         |  4 ++--
+ 12 files changed, 56 insertions(+), 50 deletions(-)
 
+-Peff
