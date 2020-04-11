@@ -2,80 +2,80 @@ Return-Path: <SRS0=KYeX=53=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D4D0EC2BA2B
-	for <git@archiver.kernel.org>; Sat, 11 Apr 2020 11:21:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 019E0C2BBFD
+	for <git@archiver.kernel.org>; Sat, 11 Apr 2020 12:18:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 98ECC2084D
-	for <git@archiver.kernel.org>; Sat, 11 Apr 2020 11:21:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BF3A220692
+	for <git@archiver.kernel.org>; Sat, 11 Apr 2020 12:18:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=anirban-org.20150623.gappssmtp.com header.i=@anirban-org.20150623.gappssmtp.com header.b="GqNefPzz"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fBohGevR"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726070AbgDKLVr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 11 Apr 2020 07:21:47 -0400
-Received: from mail-pg1-f174.google.com ([209.85.215.174]:36877 "EHLO
-        mail-pg1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725951AbgDKLVq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Apr 2020 07:21:46 -0400
-Received: by mail-pg1-f174.google.com with SMTP id r4so2129532pgg.4
-        for <git@vger.kernel.org>; Sat, 11 Apr 2020 04:21:46 -0700 (PDT)
+        id S1728707AbgDKMS5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 11 Apr 2020 08:18:57 -0400
+Received: from mail-wr1-f46.google.com ([209.85.221.46]:33144 "EHLO
+        mail-wr1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728241AbgDKMS4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 Apr 2020 08:18:56 -0400
+Received: by mail-wr1-f46.google.com with SMTP id a25so5084207wrd.0
+        for <git@vger.kernel.org>; Sat, 11 Apr 2020 05:18:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=anirban-org.20150623.gappssmtp.com; s=20150623;
-        h=content-transfer-encoding:from:mime-version:date:subject:message-id
-         :to;
-        bh=EwEYek9vMTQll25owZ9aE8GjjgCOcXvpjDa1yZhfiu4=;
-        b=GqNefPzzhEnou44rgMc3PIMg3KKFFDu72RqRQOQwDQKDOyw/Q7uNl1mqT+eulwoI/H
-         9AQy1lnrW+14gRjahgpN//XIiF02y62xgGJChBQCZYbMVsosCwkCf9bVKg02jnDrXybk
-         SVC/EnX/meITHQaI16jaMoXDRaxz2ZVPCoqmFSbbS0WlOuC++CWsfy4Bai5L31KxA18Q
-         EAKM0q3jbo8YCuZBzE+XtCWhgPNQOBpmDUNHvY3nHagjVb+DBK9MeMu7V1StLLTg9V2v
-         vbtQYRdPHdYU31R5/tnqNlKRaI++UMr/h21WctFcfuZQyI7nMoFp2YZwpdtsTLInlM3D
-         WhXw==
+        d=gmail.com; s=20161025;
+        h=from:to:subject:in-reply-to:date:message-id:mime-version;
+        bh=7SrWXjDRehGdf63l5raWflRhowHotGar6xFFe++20o0=;
+        b=fBohGevR9teE6OX2/98CX0ZcXHQaCvEMpHOcpOXbHlhIck0gM7xhEd9vwuSZW75WR2
+         5ugSZLWtir5hnz5hcFdbw9IeR6a0dy7Fz4UsDelv6NNuI79dU+5uHq4hQ/cGTrKEs/6t
+         cTOFD2cSM1Nstb24BfnFzohrCjwm3Qxyk6jRvm3ib2zgqCHASZYoaCRsxctR258VdxIB
+         cNX4RC5UtzLg89xA/xbvYcStlsRwe3RlGz1TL+spMztQPs/bHUXu7XOM1Kcu+QF71l0t
+         wTvZh/2ohNsGiGstLkHHSy9QX1dmtMALonKbsXjjm/XFvGForHD+rnLRUEjG3MYS3tNE
+         012Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:content-transfer-encoding:from:mime-version:date
-         :subject:message-id:to;
-        bh=EwEYek9vMTQll25owZ9aE8GjjgCOcXvpjDa1yZhfiu4=;
-        b=Gjj1SKcCQASPetF8oYkTKQD7UtbIVULld/b+GgXs07q1/1nqE7kmNmUdHvHsGDqWKU
-         zP+SIPaFxUysu4bypN9iZZPHUiqjgKWFB5O3HB7vfw+G/lwsKPx7Mo4+X1r2vL2aBm00
-         +m07vQUkS49eJTjtu8EO9IzxqT1a08LLbDDTcgnX9VpjbHNRhLOZzIZIknVn8g22X/26
-         oTiswCD4VcmV7QuQMzamZCd2nDKgDtLAjTgbFFfvi4LFQglxRRLkaQt6szqFyPk15HoQ
-         XrNsuPxGal6/kyvM0rHcObaPqKbDCxYirvFcPiBA4W5X6DWyKYodY2pFHJDtVMH8Do7o
-         GBag==
-X-Gm-Message-State: AGi0PuZyVquiPVCtLbVQhkA6kySQkQJE6K8VYmlir2S8G1rue4xvpSvx
-        urfiiIjVhKrUlqgf1BfW4Fz13163vjo=
-X-Google-Smtp-Source: APiQypI5n2D9ni2dyGI5zLnSdJy/LfGrBDM5rlcwuoEBksL/Ui1Y5CYrFgILPxxSNbPQ9tjrHhkAFA==
-X-Received: by 2002:a62:1b12:: with SMTP id b18mr9438850pfb.258.1586604105396;
-        Sat, 11 Apr 2020 04:21:45 -0700 (PDT)
-Received: from [192.168.1.3] ([115.96.129.142])
-        by smtp.gmail.com with ESMTPSA id v36sm3639161pgn.44.2020.04.11.04.21.44
+        h=x-gm-message-state:from:to:subject:in-reply-to:date:message-id
+         :mime-version;
+        bh=7SrWXjDRehGdf63l5raWflRhowHotGar6xFFe++20o0=;
+        b=rjIjHMenNf0wFPQbgV3IOozZtSTS1/0dUx7VJqvGzb5wsx3IZqFtYLy11yCMsJ1xmP
+         WcOs8TuIZwmo0Z0S7gNrJPzybJzwT8EgCMlWC/dHddvoXu+EhlYpi419Fd0J33ppMlXX
+         qISXTtQnT9iTryX9yZz79onFFltzRkCDoX+EQQC/OjaCMQF3VbPM2K/B6c7yH/9Amz9n
+         Fdk5OT0Jdd53g+va+7CS6F80XTTWrq/DFPPJKLn0NU9vsiOZ1CIXcs5XG/Jyae9ikzN8
+         ezfveOHTJxslAn099gDu0M3EwMMV2aB1ypJFG+Y1h3hkrDv20WN8AcfgzSgf4P/oxivI
+         PzeQ==
+X-Gm-Message-State: AGi0PuZJtD0VpFD/628Mt02CIKPvJE0jr5tFyjbmF9GBG5CcLcQMkn5O
+        rF/LUFpzpDf/T7q8yvjq4ipT1No7
+X-Google-Smtp-Source: APiQypL0UQwWON/9qgQx/r8hfI+FeUzn122yJckCpFaGds/ebBAE3KC0DaOSiFK8z8rYuElpI0JR2A==
+X-Received: by 2002:a5d:6a46:: with SMTP id t6mr9170129wrw.93.1586607534579;
+        Sat, 11 Apr 2020 05:18:54 -0700 (PDT)
+Received: from delllaptop.lockywolf.net ([95.85.18.95])
+        by smtp.gmail.com with ESMTPSA id w7sm6961855wrr.60.2020.04.11.05.18.52
         for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 11 Apr 2020 04:21:44 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-From:   Ani Sinha <ani@anirban.org>
-Mime-Version: 1.0 (1.0)
-Date:   Sat, 11 Apr 2020 16:51:42 +0530
-Subject: Cherry pick a commit but with files in another location 
-Message-Id: <FC3905FB-D3B9-433D-876D-8DB68D3491C3@anirban.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 11 Apr 2020 05:18:54 -0700 (PDT)
+From:   Vladimir Nikishkin <lockywolf@gmail.com>
 To:     git@vger.kernel.org
-X-Mailer: iPad Mail (17E255)
+Subject: When will this patch be merged?
+In-Reply-To: <1394631731-4678-1-git-send-email-orgad.shaneh@audiocodes.com>
+Date:   Sat, 11 Apr 2020 20:08:21 +0800
+Message-Id: <20200411120821.7675-1-lockywolf@gmail.com>
+X-Mailer: git-send-email 2.26.0
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+When will this patch be merged? It is 2020, and git submodule is
+barely usable with my internet provider, since outbound connections
+are randomly shaped to 10k/s. At the moment I set up updating
+submodules for the night, hoping that it works. If this patch was
+accepted I would just see at which attempt the stream is not shaped
+and reissue the command if it is.
 
-I have an use case where I need to cherry pick a change from one branch to a=
-nother. The change will apply cleanly but the files in the branch  where I w=
-ant to cherry pick the co mit to have been moved under a different directory=
-. So simple cherry pick will result in conflicts. Is there a clean way to ch=
-erry pick in this case? Is there an option to provide -p0, -p1 etc to the pa=
-tch?
+-- 
+--
+Vladimir Nikishkin (MiEr, lockywolf)
 
-Thanks
-Ani=20=
