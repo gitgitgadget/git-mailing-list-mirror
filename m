@@ -2,65 +2,66 @@ Return-Path: <SRS0=KYeX=53=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7BC3CC2D0EC
-	for <git@archiver.kernel.org>; Sat, 11 Apr 2020 02:44:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D92AC2BB86
+	for <git@archiver.kernel.org>; Sat, 11 Apr 2020 02:44:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 34C4C2078E
-	for <git@archiver.kernel.org>; Sat, 11 Apr 2020 02:44:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1E8912078E
+	for <git@archiver.kernel.org>; Sat, 11 Apr 2020 02:44:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I7e0baO0"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aU0zqr8e"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726678AbgDKCob (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Apr 2020 22:44:31 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:51390 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726650AbgDKCob (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Apr 2020 22:44:31 -0400
-Received: by mail-wm1-f67.google.com with SMTP id x4so4230243wmj.1
-        for <git@vger.kernel.org>; Fri, 10 Apr 2020 19:44:30 -0700 (PDT)
+        id S1726690AbgDKCoc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Apr 2020 22:44:32 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:45482 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726663AbgDKCoc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Apr 2020 22:44:32 -0400
+Received: by mail-wr1-f66.google.com with SMTP id v5so4203629wrp.12
+        for <git@vger.kernel.org>; Fri, 10 Apr 2020 19:44:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=LCit2TAicDqxpYVE+1SUwgsAu17+40kD3Te5pIaBa3o=;
-        b=I7e0baO0eJJlSS+GRFaovFhiS3h27GUvnZQmxlNarUBZEHYru9IKh7Vae+7+z1nsQK
-         Ia/88aKqhC/KyHM+Z+9+4oqktjqUraizFy8vO60/6xk3RIE9RsaFfqXX3nd8uVDT635g
-         W6cXYU5ZEHayoxrv2PdbfBgRo4C/ojOQKTpzCjhr1Aop/nxU2c/9PNqoQGoZ4IxAaitn
-         GsuFrBeXNZQs7ZC4sDHlKoCxouYoYk7JxVXCnV9Rg8BU9OwkXqQI+4gllxyvKaQ131rE
-         49/6FVPP6PpBIdyeBUo3EPZ5tearAA/NB83PZ28nuZUoBqiNFtDHo2Q2kMxfyS+KEVhk
-         HY0A==
+        bh=3UKkrNollMxOCF3COKvL0YNkyQfsg0h7u9ryo5UdsJM=;
+        b=aU0zqr8e5lkcfSZhvnOrZkXLsy3BjSNLj+5qacoqwrHobB0VLDKT9Q7sEerzFAuq/f
+         AfJCmwCbCi+g/EdU/3FQjvfGRjzEbLBEhtqP1sYRyioG6YvdnyaqAXO2U9VqHSE4Dewr
+         QGLXDo049SzIBzf7L4Aa7/Im8Vy51nZzOCuWrVxoQPRWWa+2ZIDChZqwYSJl1cEKhNIl
+         ZvVU8/KnQg+qorw9iQOoi6/M5QKXHKWj7pMzkZ18E6XunDk0EwJGEGckpVQlFPM+SZ1O
+         vqNdb/R0w4KUHzTiCMIrfTP+Ln6ibrdWXHvqj7Na7Rqq0HZpx9tjUKCOE7E05udXKKjg
+         SzPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=LCit2TAicDqxpYVE+1SUwgsAu17+40kD3Te5pIaBa3o=;
-        b=jwajCxLgYGZDRUn1RPYjqkcADcTCu7SZvKRvXDiB8zWEhnKarYuKiCcqTbOL7wQEQ0
-         Nlu2Lgp3W9XPaok0gxYIOH9DWfiwC37kPpss3vKbuQPpB2gsdy6HyhETD57aC+22UaWU
-         ctxoAQReU5Ealq0gL/yojPOQDn6UXeb3lxSnUenRFEHdvb0BG8KCGqO+beJnO3S4x08R
-         3bArrBQL5Ru+DcY4U2IkjwWa/SBiXRaOBuuub8H2tv4p5gcpBXPj2VsD7myzvXGC/L73
-         L2Ih+ITrSVDMNTPuEozW9iqMh9mNt6pjs+VLptCOFz9UcOlEXxjxwvTYmFGsjISX6EwD
-         lH2w==
-X-Gm-Message-State: AGi0PuaJYdtrgLCtqnpYR+xA/vbykEY1xez0PcIdsIDjnvUkWkcQzNEd
-        uGLneg3sXsuzTJfDb+ug62xcWqOi
-X-Google-Smtp-Source: APiQypKwPQUysdaZVXR9i2KKL4U0xG3VBBxY0cie40dVbeMnRDU2guP7UGCL7wq7AvXIsukFjOXXDg==
-X-Received: by 2002:a05:600c:4152:: with SMTP id h18mr5152047wmm.31.1586573069209;
-        Fri, 10 Apr 2020 19:44:29 -0700 (PDT)
+        bh=3UKkrNollMxOCF3COKvL0YNkyQfsg0h7u9ryo5UdsJM=;
+        b=ao0su7mmHhp/d2Lkii/y6WW1VGU3+DfnL4pBct/1+jCTtVwb9pQUm3pY5JBxguPYMi
+         7HTejQ9v3jD7cT95LT8P8rMKtrYPWhhLSSi6nNkRxSrOgX0HLfASZxxAiiD+s8uWgMG2
+         IFB1Uwb1cGuMrptQn5RDgjdX6nGl6iVms9Ct1qTUZffkZRm7xnPXSNsczJ6HyXayMVDN
+         xUyiB/6ikZsM2pPjtT4gnl27Yynw5GiWjIsd9shEcUaMAtQGb4tk4C9z0GQ+V8xIqqLU
+         MPLSwkIi8ti03Qav6s8rhB9cK+223KZ1HGV+N8RI2BhMMcHaEMdw22Bgxkdkt4TVwx9x
+         GQYg==
+X-Gm-Message-State: AGi0PuYoIUVc8bGZOOrdeFXkjQjlSSg4EQbQioa3ccI1k0ZmM0Ey0aeR
+        3U7cZtDCZQm7BQtJUmjsw3HPE29j
+X-Google-Smtp-Source: APiQypKBCs6yIIp/grJCk/xAkzu3Ck87CnVtT/iL8Apc+jRpt/VfHbtKZGHQPVlRjlvHKu4GnRswKw==
+X-Received: by 2002:adf:f08b:: with SMTP id n11mr7049202wro.323.1586573070928;
+        Fri, 10 Apr 2020 19:44:30 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v16sm5082116wml.30.2020.04.10.19.44.28
+        by smtp.gmail.com with ESMTPSA id k14sm5324735wrp.53.2020.04.10.19.44.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Apr 2020 19:44:28 -0700 (PDT)
-Message-Id: <pull.757.v3.git.git.1586573067.gitgitgadget@gmail.com>
-In-Reply-To: <pull.757.v2.git.git.1586541094.gitgitgadget@gmail.com>
+        Fri, 10 Apr 2020 19:44:30 -0700 (PDT)
+Message-Id: <3a5bedc68d696f19ab8eb40d1af8abd42172219f.1586573068.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.757.v3.git.git.1586573067.gitgitgadget@gmail.com>
 References: <pull.757.v2.git.git.1586541094.gitgitgadget@gmail.com>
+        <pull.757.v3.git.git.1586573067.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 11 Apr 2020 02:44:23 +0000
-Subject: [PATCH v3 0/4] rebase -i: mark commits that begin empty in todo editor
+Date:   Sat, 11 Apr 2020 02:44:25 +0000
+Subject: [PATCH v3 2/4] rebase: reinstate --no-keep-empty
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,108 +69,347 @@ MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     jonathantanmy@google.com, phillip.wood123@gmail.com,
         Johannes.Schindelin@gmx.de, bturner@atlassian.com,
-        sami@boukortt.com, Elijah Newren <newren@gmail.com>
+        sami@boukortt.com, Elijah Newren <newren@gmail.com>,
+        Elijah Newren <newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Changes since v2:
+From: Elijah Newren <newren@gmail.com>
 
- * Addressed feedback from Junio in patch 2, including moving some of the
-   wording to the new patch (see next point)
- * Edited jt/rebase-allow-duplicate to include the changes Jonathan
-   mentioned on the list, then rebased it on top of this series, and made
-   the related options mention each other.
+Commit d48e5e21da ("rebase (interactive-backend): make --keep-empty the
+default", 2020-02-15) turned --keep-empty (for keeping commits which
+start empty) into the default.  The logic underpinning that commit was:
 
-Elijah Newren (3):
-  rebase -i: mark commits that begin empty in todo editor
-  rebase: reinstate --no-keep-empty
-  rebase: fix an incompatible-options error message
+  1) 'git commit' errors out on the creation of empty commits without an
+     override flag
+  2) Once someone determines that the override is worthwhile, it's
+     annoying and/or harmful to required them to take extra steps in
+     order to keep such commits around (and to repeat such steps with
+     every rebase).
 
-Jonathan Tan (1):
-  rebase --merge: optionally skip upstreamed commits
+While the logic on which the decision was made is sound, the result was
+a bit of an overcorrection.  Instead of jumping to having --keep-empty
+being the default, it jumped to making --keep-empty the only available
+behavior.  There was a simple workaround, though, which was thought to
+be good enough at the time.  People could still drop commits which
+started empty the same way the could drop any commits: by firing up an
+interactive rebase and picking out the commits they didn't want from the
+list.  However, there are cases where external tools might create enough
+empty commits that picking all of them out is painful.  As such, having
+a flag to automatically remove start-empty commits may be beneficial.
 
- Documentation/git-rebase.txt      | 70 +++++++++++++++++++++-------
- builtin/rebase.c                  | 24 +++++++---
- sequencer.c                       | 14 +++++-
- sequencer.h                       |  4 +-
- t/t3402-rebase-merge.sh           | 77 +++++++++++++++++++++++++++++++
- t/t3421-rebase-topology-linear.sh | 10 ++--
- t/t3424-rebase-empty.sh           | 36 +++++++++++++++
- 7 files changed, 202 insertions(+), 33 deletions(-)
+Provide users a way to drop commits which start empty using a flag that
+existed for years: --no-keep-empty.  Interpret --keep-empty as
+countermanding any previous --no-keep-empty, but otherwise leaving
+--keep-empty as the default.
 
+This might lead to some slight weirdness since commands like
+  git rebase --empty=drop --keep-empty
+  git rebase --empty=keep --no-keep-empty
+look really weird despite making perfect sense (the first will drop
+commits which become empty, but keep commits that started empty; the
+second will keep commits which become empty, but drop commits which
+started empty).  However, --no-keep-empty was named years ago and we are
+predominantly keeping it for backward compatibility; also we suspect it
+will only be used rarely since folks already have a simple way to drop
+commits they don't want with an interactive rebase.
 
-base-commit: 274b9cc25322d9ee79aa8e6d4e86f0ffe5ced925
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-757%2Fnewren%2Frebase-mark-empty-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-757/newren/rebase-mark-empty-v3
-Pull-Request: https://github.com/git/git/pull/757
+Reported-by: Bryan Turner <bturner@atlassian.com>
+Reported-by: Sami Boukortt <sami@boukortt.com>
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ Documentation/git-rebase.txt      | 48 ++++++++++++++++++++-----------
+ builtin/rebase.c                  | 15 ++++++----
+ sequencer.c                       |  6 ++++
+ sequencer.h                       |  2 +-
+ t/t3421-rebase-topology-linear.sh | 10 +++----
+ t/t3424-rebase-empty.sh           | 36 +++++++++++++++++++++++
+ 6 files changed, 87 insertions(+), 30 deletions(-)
 
-Range-diff vs v2:
-
- 1:  0d94eea376a = 1:  0d94eea376a rebase -i: mark commits that begin empty in todo editor
- 2:  e15c599c874 ! 2:  3a5bedc68d6 rebase: reinstate --no-keep-empty
-     @@ Commit message
-      
-          Commit d48e5e21da ("rebase (interactive-backend): make --keep-empty the
-          default", 2020-02-15) turned --keep-empty (for keeping commits which
-     -    start empty) into the default.  That commit viewed this, though as
-     -    turning that flag into a no-op.  As such, --no-keep-empty was translated
-     -    into undoing a no-op, i.e. also a no-op.  The logic underpinning that
-     -    commit was:
-     +    start empty) into the default.  The logic underpinning that commit was:
-      
-            1) 'git commit' errors out on the creation of empty commits without an
-               override flag
-     @@ Commit message
-          look really weird despite making perfect sense (the first will drop
-          commits which become empty, but keep commits that started empty; the
-          second will keep commits which become empty, but drop commits which
-     -    started empty).
-     +    started empty).  However, --no-keep-empty was named years ago and we are
-     +    predominantly keeping it for backward compatibility; also we suspect it
-     +    will only be used rarely since folks already have a simple way to drop
-     +    commits they don't want with an interactive rebase.
-      
-          Reported-by: Bryan Turner <bturner@atlassian.com>
-          Reported-by: Sami Boukortt <sami@boukortt.com>
-     @@ Documentation/git-rebase.txt: See also INCOMPATIBLE OPTIONS below.
-      -always dropped.
-      +Note that commits which start empty are kept (unless --no-keep-empty
-      +is specified), and commits which are clean cherry-picks (as determined
-     -+by `git log --cherry-mark ...`) are detected and dropped as a preliminary
-     -+step (unless --keep-cherry-picks is passed).
-     ++by `git log --cherry-mark ...`) are always dropped.
-       +
-       See also INCOMPATIBLE OPTIONS below.
-       
-     @@ Documentation/git-rebase.txt: See also INCOMPATIBLE OPTIONS below.
-      -	to halt.
-      +	Do not keep commits that start empty before the rebase
-      +	(i.e. that do not change anything from its parent) in the
-     -+	result.  For commits which become empty after rebasing, see
-     -+	the --empty and --keep-cherry-pick flags.
-     ++	result.  The default is to keep commits which start empty,
-     ++	since creating such commits requires passing the --allow-empty
-     ++	override flag to `git commit`, signifying that a user is very
-     ++	intentionally creating such a commit and thus wants to keep
-     ++	it.
-       +
-      -See also BEHAVIORAL DIFFERENCES and INCOMPATIBLE OPTIONS below.
-     ++Usage of this flag will probably be rare, since you can get rid of
-     ++commits that start empty by just firing up an interactive rebase and
-     ++removing the lines corresponding to the commits you don't want.  This
-     ++flag exists as a convenient shortcut, such as for cases where external
-     ++tools generate many empty commits and you want them all removed.
-     +++
-     ++For commits which do not start empty but become empty after rebasing,
-     ++see the --empty flag.
-     +++
-      +See also INCOMPATIBLE OPTIONS below.
-       
-       --allow-empty-message::
- 3:  ee5e42361fc = 3:  5c8863b9d34 rebase: fix an incompatible-options error message
- -:  ----------- > 4:  20d3a50f5a4 rebase --merge: optionally skip upstreamed commits
-
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index 8ab0558aca2..18d718ac61d 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -277,20 +277,32 @@ See also INCOMPATIBLE OPTIONS below.
+ 	Other options, like --exec, will use the default of drop unless
+ 	-i/--interactive is explicitly specified.
+ +
+-Note that commits which start empty are kept, and commits which are
+-clean cherry-picks (as determined by `git log --cherry-mark ...`) are
+-always dropped.
++Note that commits which start empty are kept (unless --no-keep-empty
++is specified), and commits which are clean cherry-picks (as determined
++by `git log --cherry-mark ...`) are always dropped.
+ +
+ See also INCOMPATIBLE OPTIONS below.
+ 
++--no-keep-empty::
+ --keep-empty::
+-	No-op.  Rebasing commits that started empty (had no change
+-	relative to their parent) used to fail and this option would
+-	override that behavior, allowing commits with empty changes to
+-	be rebased.  Now commits with no changes do not cause rebasing
+-	to halt.
++	Do not keep commits that start empty before the rebase
++	(i.e. that do not change anything from its parent) in the
++	result.  The default is to keep commits which start empty,
++	since creating such commits requires passing the --allow-empty
++	override flag to `git commit`, signifying that a user is very
++	intentionally creating such a commit and thus wants to keep
++	it.
+ +
+-See also BEHAVIORAL DIFFERENCES and INCOMPATIBLE OPTIONS below.
++Usage of this flag will probably be rare, since you can get rid of
++commits that start empty by just firing up an interactive rebase and
++removing the lines corresponding to the commits you don't want.  This
++flag exists as a convenient shortcut, such as for cases where external
++tools generate many empty commits and you want them all removed.
+++
++For commits which do not start empty but become empty after rebasing,
++see the --empty flag.
+++
++See also INCOMPATIBLE OPTIONS below.
+ 
+ --allow-empty-message::
+ 	No-op.  Rebasing commits with an empty message used to fail
+@@ -587,7 +599,7 @@ are incompatible with the following options:
+  * --preserve-merges
+  * --interactive
+  * --exec
+- * --keep-empty
++ * --no-keep-empty
+  * --empty=
+  * --edit-todo
+  * --root when used in combination with --onto
+@@ -620,13 +632,15 @@ commits that started empty, though these are rare in practice.  It
+ also drops commits that become empty and has no option for controlling
+ this behavior.
+ 
+-The merge backend keeps intentionally empty commits (though with -i
+-they are marked as empty in the todo list editor).  Similar to the
+-apply backend, by default the merge backend drops commits that become
+-empty unless -i/--interactive is specified (in which case it stops and
+-asks the user what to do).  The merge backend also has an
+---empty={drop,keep,ask} option for changing the behavior of handling
+-commits that become empty.
++The merge backend keeps intentionally empty commits by default (though
++with -i they are marked as empty in the todo list editor, or they can
++be dropped automatically with --no-keep-empty).
++
++Similar to the apply backend, by default the merge backend drops
++commits that become empty unless -i/--interactive is specified (in
++which case it stops and asks the user what to do).  The merge backend
++also has an --empty={drop,keep,ask} option for changing the behavior
++of handling commits that become empty.
+ 
+ Directory rename detection
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index bff53d5d167..022aa2589a5 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -85,6 +85,7 @@ struct rebase_options {
+ 	const char *action;
+ 	int signoff;
+ 	int allow_rerere_autoupdate;
++	int keep_empty;
+ 	int autosquash;
+ 	char *gpg_sign_opt;
+ 	int autostash;
+@@ -100,6 +101,7 @@ struct rebase_options {
+ #define REBASE_OPTIONS_INIT {			  	\
+ 		.type = REBASE_UNSPECIFIED,	  	\
+ 		.empty = EMPTY_UNSPECIFIED,	  	\
++		.keep_empty = 1,			\
+ 		.default_backend = "merge",	  	\
+ 		.flags = REBASE_NO_QUIET, 		\
+ 		.git_am_opts = ARGV_ARRAY_INIT,		\
+@@ -379,6 +381,7 @@ static int run_sequencer_rebase(struct rebase_options *opts,
+ 
+ 	git_config_get_bool("rebase.abbreviatecommands", &abbreviate_commands);
+ 
++	flags |= opts->keep_empty ? TODO_LIST_KEEP_EMPTY : 0;
+ 	flags |= abbreviate_commands ? TODO_LIST_ABBREVIATE_CMDS : 0;
+ 	flags |= opts->rebase_merges ? TODO_LIST_REBASE_MERGES : 0;
+ 	flags |= opts->rebase_cousins > 0 ? TODO_LIST_REBASE_COUSINS : 0;
+@@ -442,6 +445,7 @@ static int run_sequencer_rebase(struct rebase_options *opts,
+ 	return ret;
+ }
+ 
++static void imply_merge(struct rebase_options *opts, const char *option);
+ static int parse_opt_keep_empty(const struct option *opt, const char *arg,
+ 				int unset)
+ {
+@@ -449,10 +453,8 @@ static int parse_opt_keep_empty(const struct option *opt, const char *arg,
+ 
+ 	BUG_ON_OPT_ARG(arg);
+ 
+-	/*
+-	 * If we ever want to remap --keep-empty to --empty=keep, insert:
+-	 * 	opts->empty = unset ? EMPTY_UNSPECIFIED : EMPTY_KEEP;
+-	 */
++	imply_merge(opts, unset ? "--no-keep-empty" : "--keep-empty");
++	opts->keep_empty = !unset;
+ 	opts->type = REBASE_MERGE;
+ 	return 0;
+ }
+@@ -471,7 +473,7 @@ int cmd_rebase__interactive(int argc, const char **argv, const char *prefix)
+ 		OPT_NEGBIT(0, "ff", &opts.flags, N_("allow fast-forward"),
+ 			   REBASE_FORCE),
+ 		{ OPTION_CALLBACK, 'k', "keep-empty", &options, NULL,
+-			N_("(DEPRECATED) keep empty commits"),
++			N_("keep commits which start empty"),
+ 			PARSE_OPT_NOARG | PARSE_OPT_HIDDEN,
+ 			parse_opt_keep_empty },
+ 		OPT_BOOL_F(0, "allow-empty-message", &opts.allow_empty_message,
+@@ -1162,6 +1164,7 @@ static int run_specific_rebase(struct rebase_options *opts, enum action action)
+ 		opts->allow_rerere_autoupdate ?
+ 			opts->allow_rerere_autoupdate == RERERE_AUTOUPDATE ?
+ 			"--rerere-autoupdate" : "--no-rerere-autoupdate" : "");
++	add_var(&script_snippet, "keep_empty", opts->keep_empty ? "yes" : "");
+ 	add_var(&script_snippet, "autosquash", opts->autosquash ? "t" : "");
+ 	add_var(&script_snippet, "gpg_sign_opt", opts->gpg_sign_opt);
+ 	add_var(&script_snippet, "cmd", opts->cmd);
+@@ -1547,7 +1550,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 			       N_("how to handle commits that become empty"),
+ 			       PARSE_OPT_NONEG, parse_opt_empty),
+ 		{ OPTION_CALLBACK, 'k', "keep-empty", &options, NULL,
+-			N_("(DEPRECATED) keep empty commits"),
++			N_("keep commits which start empty"),
+ 			PARSE_OPT_NOARG | PARSE_OPT_HIDDEN,
+ 			parse_opt_keep_empty },
+ 		OPT_BOOL(0, "autosquash", &options.autosquash,
+diff --git a/sequencer.c b/sequencer.c
+index ce9fd27a878..d973e19729e 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -4591,6 +4591,7 @@ static int make_script_with_merges(struct pretty_print_context *pp,
+ 				   struct rev_info *revs, struct strbuf *out,
+ 				   unsigned flags)
+ {
++	int keep_empty = flags & TODO_LIST_KEEP_EMPTY;
+ 	int rebase_cousins = flags & TODO_LIST_REBASE_COUSINS;
+ 	int root_with_onto = flags & TODO_LIST_ROOT_WITH_ONTO;
+ 	struct strbuf buf = STRBUF_INIT, oneline = STRBUF_INIT;
+@@ -4645,6 +4646,8 @@ static int make_script_with_merges(struct pretty_print_context *pp,
+ 		is_empty = is_original_commit_empty(commit);
+ 		if (!is_empty && (commit->object.flags & PATCHSAME))
+ 			continue;
++		if (is_empty && !keep_empty)
++			continue;
+ 
+ 		strbuf_reset(&oneline);
+ 		pretty_print_commit(pp, commit, &oneline);
+@@ -4822,6 +4825,7 @@ int sequencer_make_script(struct repository *r, struct strbuf *out, int argc,
+ 	struct pretty_print_context pp = {0};
+ 	struct rev_info revs;
+ 	struct commit *commit;
++	int keep_empty = flags & TODO_LIST_KEEP_EMPTY;
+ 	const char *insn = flags & TODO_LIST_ABBREVIATE_CMDS ? "p" : "pick";
+ 	int rebase_merges = flags & TODO_LIST_REBASE_MERGES;
+ 
+@@ -4861,6 +4865,8 @@ int sequencer_make_script(struct repository *r, struct strbuf *out, int argc,
+ 
+ 		if (!is_empty && (commit->object.flags & PATCHSAME))
+ 			continue;
++		if (is_empty && !keep_empty)
++			continue;
+ 		strbuf_addf(out, "%s %s ", insn,
+ 			    oid_to_hex(&commit->object.oid));
+ 		pretty_print_commit(&pp, commit, out);
+diff --git a/sequencer.h b/sequencer.h
+index 718a07426da..7ebaa237340 100644
+--- a/sequencer.h
++++ b/sequencer.h
+@@ -134,7 +134,7 @@ int sequencer_rollback(struct repository *repo, struct replay_opts *opts);
+ int sequencer_skip(struct repository *repo, struct replay_opts *opts);
+ int sequencer_remove_state(struct replay_opts *opts);
+ 
+-/* #define TODO_LIST_KEEP_EMPTY (1U << 0) */ /* No longer used */
++#define TODO_LIST_KEEP_EMPTY (1U << 0)
+ #define TODO_LIST_SHORTEN_IDS (1U << 1)
+ #define TODO_LIST_ABBREVIATE_CMDS (1U << 2)
+ #define TODO_LIST_REBASE_MERGES (1U << 3)
+diff --git a/t/t3421-rebase-topology-linear.sh b/t/t3421-rebase-topology-linear.sh
+index cf8dfd6c203..4a9204b4b64 100755
+--- a/t/t3421-rebase-topology-linear.sh
++++ b/t/t3421-rebase-topology-linear.sh
+@@ -220,14 +220,13 @@ test_have_prereq !REBASE_P || test_run_rebase failure -p
+ test_run_rebase () {
+ 	result=$1
+ 	shift
+-	test_expect_$result "rebase $* --keep-empty" "
++	test_expect_$result "rebase $* --no-keep-empty drops begin-empty commits" "
+ 		reset_rebase &&
+-		git rebase $* --keep-empty c l &&
+-		test_cmp_rev c HEAD~3 &&
+-		test_linear_range 'd k l' c..
++		git rebase $* --no-keep-empty c l &&
++		test_cmp_rev c HEAD~2 &&
++		test_linear_range 'd l' c..
+ 	"
+ }
+-test_run_rebase success --apply
+ test_run_rebase success -m
+ test_run_rebase success -i
+ test_have_prereq !REBASE_P || test_run_rebase success -p
+@@ -242,7 +241,6 @@ test_run_rebase () {
+ 		test_linear_range 'd k l' j..
+ 	"
+ }
+-test_run_rebase success --apply
+ test_run_rebase success -m
+ test_run_rebase success -i
+ test_have_prereq !REBASE_P || test_run_rebase success -p
+diff --git a/t/t3424-rebase-empty.sh b/t/t3424-rebase-empty.sh
+index e1e30517ea6..5e1045a0afc 100755
+--- a/t/t3424-rebase-empty.sh
++++ b/t/t3424-rebase-empty.sh
+@@ -123,6 +123,42 @@ test_expect_success 'rebase --interactive uses default of --empty=ask' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'rebase --merge --empty=drop --keep-empty' '
++	git checkout -B testing localmods &&
++	git rebase --merge --empty=drop --keep-empty upstream &&
++
++	test_write_lines D C B A >expect &&
++	git log --format=%s >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'rebase --merge --empty=drop --no-keep-empty' '
++	git checkout -B testing localmods &&
++	git rebase --merge --empty=drop --no-keep-empty upstream &&
++
++	test_write_lines C B A >expect &&
++	git log --format=%s >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'rebase --merge --empty=keep --keep-empty' '
++	git checkout -B testing localmods &&
++	git rebase --merge --empty=keep --keep-empty upstream &&
++
++	test_write_lines D C2 C B A >expect &&
++	git log --format=%s >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'rebase --merge --empty=keep --no-keep-empty' '
++	git checkout -B testing localmods &&
++	git rebase --merge --empty=keep --no-keep-empty upstream &&
++
++	test_write_lines C2 C B A >expect &&
++	git log --format=%s >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'rebase --merge does not leave state laying around' '
+ 	git checkout -B testing localmods~2 &&
+ 	git rebase --merge upstream &&
 -- 
 gitgitgadget
+
