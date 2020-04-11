@@ -5,64 +5,62 @@ X-Spam-Level:
 X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D807C2D0EC
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 56909C2BBC7
 	for <git@archiver.kernel.org>; Sat, 11 Apr 2020 02:44:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 07EAB2078E
+	by mail.kernel.org (Postfix) with ESMTP id 2DD252082D
 	for <git@archiver.kernel.org>; Sat, 11 Apr 2020 02:44:37 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wy9ufmqo"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="o5hlD+UK"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726683AbgDKCoc (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1726692AbgDKCod (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Apr 2020 22:44:33 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:33631 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726650AbgDKCoc (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 10 Apr 2020 22:44:32 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:45482 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726659AbgDKCoc (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Apr 2020 22:44:32 -0400
-Received: by mail-wr1-f67.google.com with SMTP id v5so4203609wrp.12
-        for <git@vger.kernel.org>; Fri, 10 Apr 2020 19:44:30 -0700 (PDT)
+Received: by mail-wm1-f68.google.com with SMTP id v8so5920645wma.0
+        for <git@vger.kernel.org>; Fri, 10 Apr 2020 19:44:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=P9viWhQnWu0BgQ5CRfbADlrAq5dIrIvowrryXcXLOEI=;
-        b=Wy9ufmqoeNZVRpqu4xkVhULO1YcQ7SsNT+4dgUe9/lQLgulsgSdNxXgySo+X1IKFAr
-         zWPmN3yY4fWwPX/tKkVD2VXdP3U2HQ6oNUKP2MwSI1HT9h9V+gWTn1JP7QT7qIFgekJz
-         YQSgBJ38oKTgoNa97mFJGm4cOX68MD20+0Fa2+0v4dx6G5xNOqkuwxz/7wqKmM9fxVPJ
-         U5m6be4PQwXDqdAsI7cSMKcksCcarF1vfmcEm5WKqUOzZTlUGvzRJWypvS4qLxGyiyMm
-         +uMTSXR3JqvqeOPruBiJMiMZv9zDL6tnCkWQLT/Xo1baRVmZTdy2r1EIYlqqnjdstRAI
-         Kjvw==
+        bh=uKuuHJEYmJLprzJwDK7aADJABshMqhpuzDAb3cVwbSs=;
+        b=o5hlD+UKg/jSuYQXDZ3bX004C9/3CGqc0sRUkaoAlqtfzuodswwUlKYBHbXgjILVUs
+         THrzXPYp4XGt0RTOEEUJ6Ed9OYsH2XpHvWWWARdOFWd5h4T0AdZ3NOpjB/7hxdp1QohV
+         towf/wptzHYhrN7mACCY1g1KSmHknlOHHtQhageWU0F+b85mEUozZeXpmLHptXDpJtzi
+         ID6roK/5M5hkOI3HFVAYPmwttNraZH1ZsTWoEfn6TdTByeEy43064GDwPXzhvPgKIJxa
+         K4vAzo1ut9a161tpz9aIIpiZapx2AuSRFT93h1IzX2P0TgV1THN0mADR4n9yw6v5bYAt
+         ijtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=P9viWhQnWu0BgQ5CRfbADlrAq5dIrIvowrryXcXLOEI=;
-        b=GfGmaxcDwNi3tSlt39q1qEQxnQyBPnh9az7pv6PafeRVvn4IQBjl1ok8JCJDe9QgGQ
-         qZLy0zwXdpJnJUpj8CUVH2a9xKZRZxCQtSG8ukEHyt7d62Pq56dJeoAhR1cq2MiH/NQN
-         xutJcOwubgVKnYb86/APqMHPRnTTUDoaT2ub/J9M9okcyojFszQu+67EM4U35mLDVYHW
-         mJlKdc+Pka43AvsTHP2v/c7lY52Uhc4N17pN+LdiOzKuJ2RB9eRYEMKMsV6wsuZ9tF8O
-         ZvhFEWSaFYiGo4uMBrnxORqGSsRM9TexeVRV8v9FSN6vgJHb6ZtJ+ztVrLP6szx58wSM
-         edTQ==
-X-Gm-Message-State: AGi0PuaEiPMmHVqs70K1f2ng/S/NXBAqNrgfN5vLQFWHCIgCI1dwAlb2
-        Dnhif3Pk5+0izbTpze2yx40O9ct6
-X-Google-Smtp-Source: APiQypJALGPbF+m/fnsZ2iwRKeVp5sV3XMpZU0c8QMh0a0EtIU7JNXGhoNlEHnQEKr/jJRBA7eg7rA==
-X-Received: by 2002:adf:ec02:: with SMTP id x2mr7410630wrn.365.1586573070059;
-        Fri, 10 Apr 2020 19:44:30 -0700 (PDT)
+        bh=uKuuHJEYmJLprzJwDK7aADJABshMqhpuzDAb3cVwbSs=;
+        b=D4SoS6B5aQPu4DV4HM05eR1u7LsVydv6WSlZ2iuQixyix0dVLx9sVqXcK9QE4sVeg9
+         hCUrjM5O5EZaqhVEC1mEpFCkMtFg+lzpzx8xvEWe56r/mPZ/esFD3FXcP5//7WSRB+z2
+         5rk22Gti42litZhCxkovD3d8Y58a6fK68BYaCZtXtnwGIZxdpilzrUmWvmE2WwQHApJS
+         YxWNxuKAOrmVJ6x5xSsuXfsmib3ptsP8fs+U2wt5tQTbyiLfhzxv2hBSnr3W4Hy71+f2
+         GcewZH7GR7wK+uR7/AicBHBPVY0D4aSc7j0hfnU1y4V1ZgEvZm3JsI5IoOQ5/yoaRs0f
+         rzng==
+X-Gm-Message-State: AGi0PuZsxK5KFKXuIItheInHZbfKlHmLrlg+57wpMA1NuYzVBLYJti8l
+        tmb6FLhzWPyBkyCgCJZVtREp9Pk9
+X-Google-Smtp-Source: APiQypK7L35lpVi++YKioHDUQ+AObu9Q6nDU30OPaL9zUZcR7px1cR+i64CfmB1w646FI/iKLJW1eA==
+X-Received: by 2002:a05:600c:c8:: with SMTP id u8mr8097463wmm.142.1586573071572;
+        Fri, 10 Apr 2020 19:44:31 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e23sm5466785wra.43.2020.04.10.19.44.29
+        by smtp.gmail.com with ESMTPSA id t81sm5631888wmb.15.2020.04.10.19.44.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Apr 2020 19:44:29 -0700 (PDT)
-Message-Id: <0d94eea376a65304bc31fd1841216a04b5c15709.1586573067.git.gitgitgadget@gmail.com>
+        Fri, 10 Apr 2020 19:44:31 -0700 (PDT)
+Message-Id: <5c8863b9d349f1ea43ae397715ca39d263ee816d.1586573068.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.757.v3.git.git.1586573067.gitgitgadget@gmail.com>
 References: <pull.757.v2.git.git.1586541094.gitgitgadget@gmail.com>
         <pull.757.v3.git.git.1586573067.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 11 Apr 2020 02:44:24 +0000
-Subject: [PATCH v3 1/4] rebase -i: mark commits that begin empty in todo
- editor
+Date:   Sat, 11 Apr 2020 02:44:26 +0000
+Subject: [PATCH v3 3/4] rebase: fix an incompatible-options error message
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,60 +77,37 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-While many users who intentionally create empty commits do not want them
-thrown away by a rebase, there are third-party tools that generate empty
-commits that a user might not want.  In the past, users have used rebase
-to get rid of such commits (a side-effect of the fact that the --apply
-backend is not currently capable of keeping them).  While such users
-could fire up an interactive rebase and just remove the lines
-corresponding to empty commits, that might be difficult if the
-third-party tool generates many of them.  Simplify this task for users
-by marking such lines with a suffix of " # empty" in the todo list.
+When the user specifies the apply backend with options that only work
+with the merge backend, such as
 
-Suggested-by: Sami Boukortt <sami@boukortt.com>
+    git rebase --apply --exec /bin/true HEAD~3
+
+the error message has always been
+
+    fatal: --exec requires an interactive rebase
+
+This error message is misleading and was one of the reasons we renamed
+the interactive backend to the merge backend.  Update the error message
+to state that these options merely require use of the merge backend.
+
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- Documentation/git-rebase.txt | 3 ++-
- sequencer.c                  | 5 +++++
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ builtin/rebase.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index f7a6033607f..8ab0558aca2 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -620,7 +620,8 @@ commits that started empty, though these are rare in practice.  It
- also drops commits that become empty and has no option for controlling
- this behavior.
- 
--The merge backend keeps intentionally empty commits.  Similar to the
-+The merge backend keeps intentionally empty commits (though with -i
-+they are marked as empty in the todo list editor).  Similar to the
- apply backend, by default the merge backend drops commits that become
- empty unless -i/--interactive is specified (in which case it stops and
- asks the user what to do).  The merge backend also has an
-diff --git a/sequencer.c b/sequencer.c
-index e528225e787..ce9fd27a878 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -4656,6 +4656,9 @@ static int make_script_with_merges(struct pretty_print_context *pp,
- 			strbuf_addf(&buf, "%s %s %s", cmd_pick,
- 				    oid_to_hex(&commit->object.oid),
- 				    oneline.buf);
-+			if (is_empty)
-+				strbuf_addf(&buf, " %c empty",
-+					    comment_line_char);
- 
- 			FLEX_ALLOC_STR(entry, string, buf.buf);
- 			oidcpy(&entry->entry.oid, &commit->object.oid);
-@@ -4861,6 +4864,8 @@ int sequencer_make_script(struct repository *r, struct strbuf *out, int argc,
- 		strbuf_addf(out, "%s %s ", insn,
- 			    oid_to_hex(&commit->object.oid));
- 		pretty_print_commit(&pp, commit, out);
-+		if (is_empty)
-+			strbuf_addf(out, " %c empty", comment_line_char);
- 		strbuf_addch(out, '\n');
- 	}
- 	return 0;
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index 022aa2589a5..0e223a96d46 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -561,7 +561,7 @@ static void imply_merge(struct rebase_options *opts, const char *option)
+ {
+ 	switch (opts->type) {
+ 	case REBASE_APPLY:
+-		die(_("%s requires an interactive rebase"), option);
++		die(_("%s requires the merge backend"), option);
+ 		break;
+ 	case REBASE_MERGE:
+ 	case REBASE_PRESERVE_MERGES:
 -- 
 gitgitgadget
 
