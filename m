@@ -2,127 +2,405 @@ Return-Path: <SRS0=e9fP=54=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 22808C2BA2B
-	for <git@archiver.kernel.org>; Sun, 12 Apr 2020 13:08:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BE118C2BB85
+	for <git@archiver.kernel.org>; Sun, 12 Apr 2020 13:30:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id CB77820705
-	for <git@archiver.kernel.org>; Sun, 12 Apr 2020 13:08:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 96DF8206E5
+	for <git@archiver.kernel.org>; Sun, 12 Apr 2020 13:30:32 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=mazurok-com.20150623.gappssmtp.com header.i=@mazurok-com.20150623.gappssmtp.com header.b="qgBn6rzC"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g/5g/C1L"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726818AbgDLNIJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 12 Apr 2020 09:08:09 -0400
-Received: from mail-pj1-f68.google.com ([209.85.216.68]:52526 "EHLO
-        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726043AbgDLNII (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Apr 2020 09:08:08 -0400
-Received: by mail-pj1-f68.google.com with SMTP id ng8so2817479pjb.2
-        for <git@vger.kernel.org>; Sun, 12 Apr 2020 06:08:08 -0700 (PDT)
+        id S1727050AbgDLNab (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 12 Apr 2020 09:30:31 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:36210 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726139AbgDLNaa (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Apr 2020 09:30:30 -0400
+Received: by mail-pf1-f196.google.com with SMTP id n10so3387683pff.3
+        for <git@vger.kernel.org>; Sun, 12 Apr 2020 06:30:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=mazurok-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=NQF601bi7LZxRPOhHwOsjnpxFhzDGL3UB9nfQsrPopc=;
-        b=qgBn6rzCsdPg3KFSZHdvgPs4+80yEXlIHfwnMwt2gpBLr9fNbLKP5wBdOtY0NoKtIV
-         4H9kOpW+i3oTw2sSLArxAlkQusSwd8OIQp5MzPuMk1E3dmxVe5KCFmyysHDuYGWCdmQe
-         jDQD7O4ZI4N71gKrzEs/j7BABZsAIaM53wNXPOStcAvkB2jtZKSW9u1gOvDdk2aEAmYO
-         dcnCMvFa3WmTr4GSMj3URYYuzqToVc4vmVK2qRWvooR3vU99R5a9Z3jycIQJtqmoDA3c
-         2cok/Drk7PqPiLDgHbXZTpneB/XvSEOyC3gPT5HQmGE7+nJY7V1mcwhusLj274Fhrt5F
-         Be6A==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=AV8RM3Oi7CJu/JFRX4Z9/2Gfv/C6QD3yd7CWFxPldpQ=;
+        b=g/5g/C1LijtGF5ekOes+TadDVQMbyGRqIKloOkahR12bkWki3xp1aTtJP7wQM6ESjL
+         0my+JHB+575cCUv4whc+rGe9LxO13OBHf0x5UtMygWGnf/CJrGDFMeHkPs4r7M8hQ1n9
+         lWLLuL+qPGtrNokzhpyxKiWAUjD20ahx450s17n826Ta3jBShbHjrS5S6/OT5GDvHZs6
+         LogHcr/sYSP0EuCkw7PeO5Az5cYJ9u+3mKw4H53mxRpP1+MiENoJBroOlqRBUqqCLaTU
+         4GVnQ7rela/vuicXdhCmVO2iBkxraunM8uDA97WknYnIFbQWNbWLmwf5AzjnUgSHAG3W
+         dCJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=NQF601bi7LZxRPOhHwOsjnpxFhzDGL3UB9nfQsrPopc=;
-        b=L7PJYtBjDItIjiVFcGN480bQZ+VJsHqFrV4i71NCey1yEyDaWCap5dENqileEv9h3i
-         0tNEQDe/UP/KZlkessyZHHZjRkfHdLv1Ol9HAHDyrDtk55E1/8RJTRoom8CanMUsGf2m
-         L0npMzWEyu45wY9XltqBJP+IJc+SCufYeO0BadB4R/qzfVSY3NhbuuczT/CospmypVYQ
-         PtrE4GjcntOXt9lW7byr0b4ZI05rMH6iOZk9Bap8Q8mYlURRufTVVBeo50KJuz/hlWgL
-         PrgoscZo3yMAkwKiy4eAjfQ44AlwjnGJ2fK1gQ6yY4VemFWPHJqHb6eDIVCW+ijbvvTo
-         dKvA==
-X-Gm-Message-State: AGi0PuZdJBiGl+osBcOVJMPrCeqKIh1k7ueHVFIJ418IVOZok7g7MsjU
-        kKRcGpRJDPRoq246Y6LVtpH0sQ==
-X-Google-Smtp-Source: APiQypK8gk97Ts9YiANquAxfNmgf8gJU9fVoq/Gvt7b2y1Sj+PK0BHijUh9FN4u58qGHU0givZH/dA==
-X-Received: by 2002:a17:902:6a88:: with SMTP id n8mr13007783plk.292.1586696888255;
-        Sun, 12 Apr 2020 06:08:08 -0700 (PDT)
-Received: from maxims-mac-mini.lan (124-149-62-136.dyn.iinet.net.au. [124.149.62.136])
-        by smtp.gmail.com with ESMTPSA id c10sm5723436pgh.48.2020.04.12.06.08.05
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=AV8RM3Oi7CJu/JFRX4Z9/2Gfv/C6QD3yd7CWFxPldpQ=;
+        b=HWB4x4rIdYEylvThp5LRZPfS6rE8HBmgk6QfwlKZdfkwBf4F/mwYnw4Gt0VyonrwD6
+         IspUAYtqxBhmKcNdVN4sd2iX59/ITzzMK+F7Vct/6ooYxNi8x8tfE2q3H4yvWYIdAWrA
+         fTIYh+s1IrNaen9FfQAFOg16L0DkFULpDH8o+4ua7Fyf3ZGZ2pGHJIUPu+v1CBt3SWMD
+         7oqihSrRgKoyeAD5AxxQ0+uGvBBTLdQcbum04yqqrqBGD1Ym4QbDMBtQphwttCn7QLwz
+         AwdwAxyvvEH+9s1hNFomM6GcvncNxZDynmAbRIXMYpwNfqkqShW1upNy5hDR5WwRGHaV
+         SrUg==
+X-Gm-Message-State: AGi0Pube6qOrFF4pr/fpgJ/Yn6y2dzoV1lPHVOqmb1E64RY6sZRfjUEY
+        K0kwcV6NxFku3uWWxuDKE4c=
+X-Google-Smtp-Source: APiQypLa7FIevJ1oBMWdLeGqBGMmb1CYdzDDHquWDGAS5fG0ViSZRcDFumkgJi9kiAUwtxltyxiEig==
+X-Received: by 2002:a63:8249:: with SMTP id w70mr13588818pgd.52.1586698229581;
+        Sun, 12 Apr 2020 06:30:29 -0700 (PDT)
+Received: from tigtog.localdomain.localdomain ([144.34.163.219])
+        by smtp.gmail.com with ESMTPSA id 139sm6093363pfv.0.2020.04.12.06.30.28
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 12 Apr 2020 06:08:07 -0700 (PDT)
-Content-Type: text/plain;
-        charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
-Subject: Re: [PATCH] Make stashing nothing exit 1
-From:   Maxim Mazurok <maxim@mazurok.com>
-In-Reply-To: <87d0mic9fm.fsf@evledraar.gmail.com>
-Date:   Sun, 12 Apr 2020 23:08:01 +1000
-Cc:     Keith Smiley <keithbsmiley@gmail.com>, git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <8F6FC77C-1784-4EF1-B005-2C01516A5BEB@mazurok.com>
-References: <01020169a7ad6af3-ad50e2d1-19fb-46eb-b397-759f8d579e8b-000000@eu-west-1.amazonses.com>
- <87d0mic9fm.fsf@evledraar.gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-X-Mailer: Apple Mail (2.3608.80.23.2.2)
+        Sun, 12 Apr 2020 06:30:29 -0700 (PDT)
+From:   Jiang Xin <worldhello.net@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Subject: [PATCH v10 1/8] transport: not report a non-head push as a branch
+Date:   Sun, 12 Apr 2020 09:30:15 -0400
+Message-Id: <20200412133022.17590-2-worldhello.net@gmail.com>
+X-Mailer: git-send-email 2.26.0.rc0
+In-Reply-To: <20200407120813.25025-1-worldhello.net@gmail.com>
+References: <20200407120813.25025-1-worldhello.net@gmail.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> * stash is currently (in the 'next' branch) being rewritten in C. It's
->   a better move at this point to patch that version, this code is =
-about
->   to be deleted.
->
-> * This is missing a corresponding test, and skimming the stash manpage
->   we should document how these exit codes are supposed to act.
->
-> * Shouldn't we do this consistently across all the other sub-commands?
->   Trying some of them seems 'push' may be the odd one out, but maybe
->   I've missed some (and this would/should be covered by
->   tests). I.e. some single test that does a bunch of ops with no
->   entries / nothing to stash and asserts exit codes.
+From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 
-I was doing git automation where I=E2=80=99m doing this:
-1. git stash push --keep-index --message all-changes
-2. git stash push  --message staged-changed
-3. git checkout -B my_branch master
-4. git checkout stash -- .
-6. git stash drop
-7. git stash pop
-The goal is to do this for every folder and put changes for this folder =
-in it=E2=80=99s own branch. More info here: =
-https://github.com/Maxim-Mazurok/google-api-typings-generator/blob/e4d277b=
-67ee34999e2fea04cba7d06c97af9e6bb/bin/auto-update/index.ts#L57
+When pushing a new reference (not a head or tag), report it as a new
+reference instead of a new branch.
 
-So, I also found that "git stash push=E2=80=9D doesn=E2=80=99t return 1 =
-and I think it=E2=80=99s not in line with =E2=80=9Cgit stash pop=E2=80=9D =
-behavior.
+Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+---
+ t/t5411-proc-receive-hook.sh               | 75 +++++++++++++++++++
+ t/t5411/common-functions.sh                | 50 +++++++++++++
+ t/t5411/common-test-cases.sh               | 43 +++++++++++
+ t/t5412-proc-receive-hook-http-protocol.sh | 86 ++++++++++++++++++++++
+ t/t5516-fetch-push.sh                      |  2 +-
+ transport.c                                |  9 ++-
+ 6 files changed, 261 insertions(+), 4 deletions(-)
+ create mode 100755 t/t5411-proc-receive-hook.sh
+ create mode 100644 t/t5411/common-functions.sh
+ create mode 100644 t/t5411/common-test-cases.sh
+ create mode 100755 t/t5412-proc-receive-hook-http-protocol.sh
 
-In my workflow it makes harder to find the problem.
+diff --git a/t/t5411-proc-receive-hook.sh b/t/t5411-proc-receive-hook.sh
+new file mode 100755
+index 0000000000..ef289fe92a
+--- /dev/null
++++ b/t/t5411-proc-receive-hook.sh
+@@ -0,0 +1,75 @@
++#!/bin/sh
++#
++# Copyright (c) 2020 Jiang Xin
++#
++
++test_description='Test proc-receive hook'
++
++. ./test-lib.sh
++
++. "$TEST_DIRECTORY"/t5411/common-functions.sh
++
++# Format the output of git-push, git-show-ref and other commands to make a
++# user-friendly and stable text.  In addition to the common format method,
++# we also replace the URL of different protocol for the upstream repository
++# with a fixed pattern.
++make_user_friendly_and_stable_output () {
++	make_user_friendly_and_stable_output_common | sed \
++		-e "s#To ../upstream.git#To <URL/of/upstream.git>#"
++}
++
++# Refs of upstream : master(B)  next(A)
++# Refs of workbench: master(A)           tags/v123
++test_expect_success "setup" '
++	git init --bare upstream.git &&
++	git init workbench &&
++	create_commits_in workbench A B &&
++	(
++		cd workbench &&
++		# Try to make a stable fixed width for abbreviated commit ID,
++		# this fixed-width oid will be replaced with "<OID>".
++		git config core.abbrev 7 &&
++		git remote add origin ../upstream.git &&
++		git update-ref refs/heads/master $A &&
++		git tag -m "v123" v123 $A &&
++		git push origin \
++			$B:refs/heads/master \
++			$A:refs/heads/next
++	) &&
++	TAG=$(git -C workbench rev-parse v123) &&
++
++	# setup pre-receive hook
++	cat >upstream.git/hooks/pre-receive <<-\EOF &&
++	#!/bin/sh
++
++	echo >&2 "# pre-receive hook"
++
++	while read old new ref
++	do
++		echo >&2 "pre-receive< $old $new $ref"
++	done
++	EOF
++
++	# setup post-receive hook
++	cat >upstream.git/hooks/post-receive <<-\EOF &&
++	#!/bin/sh
++
++	echo >&2 "# post-receive hook"
++
++	while read old new ref
++	do
++		echo >&2 "post-receive< $old $new $ref"
++	done
++	EOF
++
++	chmod a+x \
++		upstream.git/hooks/pre-receive \
++		upstream.git/hooks/post-receive &&
++
++	upstream=upstream.git
++'
++
++# Include test cases for both file and HTTP protocol
++. "$TEST_DIRECTORY"/t5411/common-test-cases.sh
++
++test_done
+diff --git a/t/t5411/common-functions.sh b/t/t5411/common-functions.sh
+new file mode 100644
+index 0000000000..6e400c0625
+--- /dev/null
++++ b/t/t5411/common-functions.sh
+@@ -0,0 +1,50 @@
++# Create commits in <repo> and assign each commit's oid to shell variables
++# given in the arguments (A, B, and C). E.g.:
++#
++#     create_commits_in <repo> A B C
++#
++# NOTE: Never calling this function from a subshell since variable
++# assignments will disappear when subshell exits.
++create_commits_in () {
++	repo="$1" &&
++	if ! parent=$(git -C "$repo" rev-parse HEAD^{} --)
++	then
++		parent=
++	fi &&
++	T=$(git -C "$repo" write-tree) &&
++	shift &&
++	while test $# -gt 0
++	do
++		name=$1 &&
++		test_tick &&
++		if test -z "$parent"
++		then
++			oid=$(echo $name | git -C "$repo" commit-tree $T)
++		else
++			oid=$(echo $name | git -C "$repo" commit-tree -p $parent $T)
++		fi &&
++		eval $name=$oid &&
++		parent=$oid &&
++		shift ||
++		return 1
++	done &&
++	git -C "$repo" update-ref refs/heads/master $oid
++}
++
++# Format the output of git-push, git-show-ref and other commands to make a
++# user-friendly and stable text.  We can easily prepare the expect text
++# without having to worry about future changes of the commit ID and spaces
++# of the output.  We also replce single quotes with double quotes, because
++# it is boring to prepare unquoted single quotes in expect txt.
++make_user_friendly_and_stable_output_common () {
++	sed \
++		-e "s/  *\$//" \
++		-e "s/   */ /g" \
++		-e "s/'/\"/g" \
++		-e "s/$A/<COMMIT-A>/g" \
++		-e "s/$B/<COMMIT-B>/g" \
++		-e "s/$TAG/<TAG-v123>/g" \
++		-e "s/$ZERO_OID/<ZERO-OID>/g" \
++		-e "s/$(echo $A | cut -c1-7)[0-9a-f]*/<OID-A>/g" \
++		-e "s/$(echo $B | cut -c1-7)[0-9a-f]*/<OID-B>/g"
++}
+diff --git a/t/t5411/common-test-cases.sh b/t/t5411/common-test-cases.sh
+new file mode 100644
+index 0000000000..23655846e4
+--- /dev/null
++++ b/t/t5411/common-test-cases.sh
+@@ -0,0 +1,43 @@
++# Refs of upstream : master(B)  next(A)
++# Refs of workbench: master(A)           tags/v123
++# git-push -f      : master(A)  NULL     tags/v123  refs/review/master/topic(A)  a/b/c(A)
++test_expect_success "normal git-push command" '
++	git -C workbench push -f origin \
++		refs/tags/v123 \
++		:refs/heads/next \
++		HEAD:refs/heads/master \
++		HEAD:refs/review/master/topic \
++		HEAD:refs/heads/a/b/c \
++		>out 2>&1 &&
++	make_user_friendly_and_stable_output <out >actual &&
++	cat >expect <<-EOF &&
++	remote: # pre-receive hook
++	remote: pre-receive< <COMMIT-B> <COMMIT-A> refs/heads/master
++	remote: pre-receive< <COMMIT-A> <ZERO-OID> refs/heads/next
++	remote: pre-receive< <ZERO-OID> <TAG-v123> refs/tags/v123
++	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/review/master/topic
++	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/heads/a/b/c
++	remote: # post-receive hook
++	remote: post-receive< <COMMIT-B> <COMMIT-A> refs/heads/master
++	remote: post-receive< <COMMIT-A> <ZERO-OID> refs/heads/next
++	remote: post-receive< <ZERO-OID> <TAG-v123> refs/tags/v123
++	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/review/master/topic
++	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/heads/a/b/c
++	To <URL/of/upstream.git>
++	 + <OID-B>...<OID-A> HEAD -> master (forced update)
++	 - [deleted] next
++	 * [new tag] v123 -> v123
++	 * [new reference] HEAD -> refs/review/master/topic
++	 * [new branch] HEAD -> a/b/c
++	EOF
++	test_cmp expect actual &&
++	git -C "$upstream" show-ref >out &&
++	make_user_friendly_and_stable_output <out >actual &&
++	cat >expect <<-EOF &&
++	<COMMIT-A> refs/heads/a/b/c
++	<COMMIT-A> refs/heads/master
++	<COMMIT-A> refs/review/master/topic
++	<TAG-v123> refs/tags/v123
++	EOF
++	test_cmp expect actual
++'
+diff --git a/t/t5412-proc-receive-hook-http-protocol.sh b/t/t5412-proc-receive-hook-http-protocol.sh
+new file mode 100755
+index 0000000000..e2446d4d32
+--- /dev/null
++++ b/t/t5412-proc-receive-hook-http-protocol.sh
+@@ -0,0 +1,86 @@
++#!/bin/sh
++#
++# Copyright (c) 2020 Jiang Xin
++#
++
++test_description='Test proc-receive hook for HTTP protocol'
++
++. ./test-lib.sh
++
++ROOT_PATH="$PWD"
++. "$TEST_DIRECTORY"/lib-gpg.sh
++. "$TEST_DIRECTORY"/lib-httpd.sh
++. "$TEST_DIRECTORY"/lib-terminal.sh
++start_httpd
++
++. "$TEST_DIRECTORY"/t5411/common-functions.sh
++
++# Format the output of git-push, git-show-ref and other commands to make a
++# user-friendly and stable text.  In addition to the common format method,
++# we also replace the URL of different protocol for the upstream repository
++# with a fixed pattern.
++make_user_friendly_and_stable_output () {
++	make_user_friendly_and_stable_output_common | sed \
++		-e "s#To http:.*/upstream.git#To <URL/of/upstream.git>#"
++}
++
++# Refs of upstream : master(B)  next(A)
++# Refs of workbench: master(A)           tags/v123
++test_expect_success "setup" '
++	git init --bare upstream.git &&
++	git -C upstream.git config http.receivepack true &&
++	git init workbench &&
++	create_commits_in workbench A B &&
++	(
++		cd workbench &&
++		# Try to make a stable fixed width for abbreviated commit ID,
++		# this fixed-width oid will be replaced with "<OID>".
++		git config core.abbrev 7 &&
++		git remote add origin ../upstream.git &&
++		git update-ref refs/heads/master $A &&
++		git tag -m "v123" v123 $A &&
++		git push origin \
++			$B:refs/heads/master \
++			$A:refs/heads/next
++	) &&
++	TAG=$(git -C workbench rev-parse v123) &&
++
++	# setup pre-receive hook
++	cat >upstream.git/hooks/pre-receive <<-\EOF &&
++	#!/bin/sh
++
++	echo >&2 "# pre-receive hook"
++
++	while read old new ref
++	do
++		echo >&2 "pre-receive< $old $new $ref"
++	done
++	EOF
++
++	# setup post-receive hook
++	cat >upstream.git/hooks/post-receive <<-\EOF &&
++	#!/bin/sh
++
++	echo >&2 "# post-receive hook"
++
++	while read old new ref
++	do
++		echo >&2 "post-receive< $old $new $ref"
++	done
++	EOF
++
++	chmod a+x \
++		upstream.git/hooks/pre-receive \
++		upstream.git/hooks/post-receive &&
++
++	upstream="$HTTPD_DOCUMENT_ROOT_PATH/upstream.git" &&
++	mv upstream.git "$upstream" &&
++	git -C workbench remote set-url origin $HTTPD_URL/smart/upstream.git
++'
++
++setup_askpass_helper
++
++# Include test cases for both file and HTTP protocol
++. "$TEST_DIRECTORY"/t5411/common-test-cases.sh
++
++test_done
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index 9ff041a093..9e4b9313b5 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -1039,7 +1039,7 @@ test_force_fetch_tag "annotated tag" "-f -a -m'tag message'"
+ test_expect_success 'push --porcelain' '
+ 	mk_empty testrepo &&
+ 	echo >.git/foo  "To testrepo" &&
+-	echo >>.git/foo "*	refs/heads/master:refs/remotes/origin/master	[new branch]"  &&
++	echo >>.git/foo "*	refs/heads/master:refs/remotes/origin/master	[new reference]"  &&
+ 	echo >>.git/foo "Done" &&
+ 	git push >.git/bar --porcelain  testrepo refs/heads/master:refs/remotes/origin/master &&
+ 	(
+diff --git a/transport.c b/transport.c
+index 1fdc7dac1a..272c0f4046 100644
+--- a/transport.c
++++ b/transport.c
+@@ -500,9 +500,12 @@ static void print_ok_ref_status(struct ref *ref, int porcelain, int summary_widt
+ 				 porcelain, summary_width);
+ 	else if (is_null_oid(&ref->old_oid))
+ 		print_ref_status('*',
+-			(starts_with(ref->name, "refs/tags/") ? "[new tag]" :
+-			"[new branch]"),
+-			ref, ref->peer_ref, NULL, porcelain, summary_width);
++				 (starts_with(ref->name, "refs/tags/")
++				  ? "[new tag]"
++				  : (starts_with(ref->name, "refs/heads/")
++				     ? "[new branch]"
++				     : "[new reference]")),
++				 ref, ref->peer_ref, NULL, porcelain, summary_width);
+ 	else {
+ 		struct strbuf quickref = STRBUF_INIT;
+ 		char type;
+-- 
+2.24.1.15.g448c31058d.agit.4.5
 
-Another problem is that sometimes =E2=80=9Cgit stash=E2=80=9D doesn=E2=80=99=
-t seem to work.
-You can see by downloading full log from here: =
-https://github.com/Maxim-Mazurok/google-api-typings-generator/runs/5802748=
-97
-That at the bottom, when processing gapi.client.youtubereporting it says =
-that both stashes (form step 1 and 2) were created, but then when =
-running =E2=80=9Cgit stash list=E2=80=9D it shows only one stash.
-Because it only happens sometimes, I assume that it may be because =
-filesystem not flushing all the changes immediately.
-Any help on this would be appreciated.
-
-Regarding =E2=80=9Cgit stash=E2=80=9D return code, do you think it makes =
-sense to add this to C implementation, create tests and find other =
-potential inconsistencies? I would be happy to help. And it seems like =
-other people also are facing this problem because =E2=80=9Cgit stash=E2=80=
-=9D doesn=E2=80=99t fail: =
-https://stackoverflow.com/questions/34114700/git-stash-pop-only-if-success=
-fully-stashed-before
-
-Regards,
-Maxim Mazurok=
