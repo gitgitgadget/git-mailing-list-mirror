@@ -2,103 +2,75 @@ Return-Path: <SRS0=e9fP=54=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,FSL_HELO_FAKE,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 41994C2BA2B
-	for <git@archiver.kernel.org>; Sun, 12 Apr 2020 06:32:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A2B5C2BA2B
+	for <git@archiver.kernel.org>; Sun, 12 Apr 2020 07:39:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 12630206DA
-	for <git@archiver.kernel.org>; Sun, 12 Apr 2020 06:32:05 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XkGAgxXc"
+	by mail.kernel.org (Postfix) with ESMTP id 419B9206E9
+	for <git@archiver.kernel.org>; Sun, 12 Apr 2020 07:39:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725907AbgDLGcD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 12 Apr 2020 02:32:03 -0400
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:33874 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725873AbgDLGcD (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Apr 2020 02:32:03 -0400
-Received: by mail-pl1-f194.google.com with SMTP id a23so2269074plm.1
-        for <git@vger.kernel.org>; Sat, 11 Apr 2020 23:32:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=ui1wcWIVs9jI0tbmHJtf7+kimZzW0oxaEL4u0krpZl8=;
-        b=XkGAgxXcnvjh36ZjyuXvpAOYuFBL85EAruLg/8EK6wfxuUnOyJo/yfDrJ3EB0WWd6W
-         rBHs07reztbPN3eUsJkHSSQxzOAQcBHPwS7HNsdd4aMEl61E9TUVmXU2ui+6b3iBHfcs
-         E3h+8RqKx323J/Ce2IWimv1g7CI2RUvCs1VQTwLQZWBZ5rYOfZ3IpInNI4Xq8BRsHfbK
-         mAY/Iue4dglP3bbZhPPg0q5vXYlPtGe1YbkVT5sNiHvv8GRleNmOhJJmlUIim2LtUEj4
-         KMs3n/qMsrwV72Pv0B+Rra0Waou2HqsnPyIj6AqG67fq8rs7J5cEsOGmSjZT/lDxsKf9
-         J2Fg==
+        id S1725909AbgDLHjr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 12 Apr 2020 03:39:47 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:32966 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725873AbgDLHjq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Apr 2020 03:39:46 -0400
+Received: by mail-wm1-f65.google.com with SMTP id v8so7871491wma.0
+        for <git@vger.kernel.org>; Sun, 12 Apr 2020 00:39:45 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=ui1wcWIVs9jI0tbmHJtf7+kimZzW0oxaEL4u0krpZl8=;
-        b=rL/9Wn/1UTjGmpF4rBCoY5h45igX3E7nm1krcrBRw5aAxs+qEFjkTJ1/ZcapEvU3Xd
-         rCeYlqmfwziFacXiNn8jncPlxmmOzq0nS8CNUMCpMX7rmXu56eEa20KPefAo9YpfUXYd
-         P4Gxae5hP3qgcW3edQVuZuyTr0BW9Cpo0AefCeGuyKN2HX7ElBNF3n2ZOegIDZmVG7Bp
-         ykKSgr9JfrP3niBGV7Mw7twqUc8JwClkP6KArrrBFHzVzc66OcWRqh5XibL2zeTt/Hjl
-         YxsoU5+70kfiQUaa7Cnmf7aD4xgzb97VGgzQfHY8MGhQAkkNSuKh/UoHbBIH4BVmaTqq
-         7lXQ==
-X-Gm-Message-State: AGi0PuY9izTXdX2tUw8KwUZC5tKCWHK/mrM2wXkvgo+fOXahsIv1q2Tk
-        v/gz+x2IJMyudIy+mvirHk2AwELy
-X-Google-Smtp-Source: APiQypLj5oF01f/nNdOB8ej6nhm//V+IxEkTApFg22lK9upFzQqg6UUrYkQ7fbmbhPVQaA6AO2eemA==
-X-Received: by 2002:a17:902:8f8b:: with SMTP id z11mr12456695plo.189.1586673122223;
-        Sat, 11 Apr 2020 23:32:02 -0700 (PDT)
-Received: from gmail.com (48.57.197.35.bc.googleusercontent.com. [35.197.57.48])
-        by smtp.gmail.com with ESMTPSA id g11sm5642526pjs.17.2020.04.11.23.32.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 11 Apr 2020 23:32:01 -0700 (PDT)
-Date:   Sat, 11 Apr 2020 23:31:58 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Vladimir Nikishkin <lockywolf@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: When will this patch be merged?
-Message-ID: <20200412063158.GA27852@gmail.com>
-References: <1394631731-4678-1-git-send-email-orgad.shaneh@audiocodes.com>
- <20200411120821.7675-1-lockywolf@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=mK6mLCwVYRvRKNlLO+n3XlH+HHwnqPHY72htxiDNbGs=;
+        b=Tvzp/AL0eNP6kEYnEUueluluMfQwAWaORNjKnQE+qgo2gF7NuMLMPtN+MYFeIDHADJ
+         t95w3Twk7aiwVP32dRDBaoAbBrSlCNdsUPfd9W5vp00jBp7nhlIKeKOtI2TrzfuGXAqi
+         X5Vk/QYlTMLx2cC4YIL5ocfdmFDKoiwBZ/eLfuONHhnogHDmp9Zicjt0ptNHY1FiUwRS
+         ULhuqgO47nebaqm6I9ei0Lg/oTXNbVQugBMMZuoEwgvKyI6jJvYDebDhnjHpfHkEB1pv
+         U5IwAb34kAZxvHfwxt0fGxf4fpGtzPyfC4q/iJ65RUJzU0p4p2G6nTULDQn/n087D2UV
+         Qa/g==
+X-Gm-Message-State: AGi0PubL8g067Nqgdu8/8EkDwwEQgV0Ginx3ivHmToQff0msTNUuunzv
+        pxYkkSVRawamB0kD+gvErxV7vzqIw8IZDvqpl+Y=
+X-Google-Smtp-Source: APiQypIkVOfKgeolSZbLFZrMik7v1ayE8N9MSympl70s43xlW007e9557NrMUF69tA27BDO26DS7KdVvk/05UGWAd1w=
+X-Received: by 2002:a7b:c213:: with SMTP id x19mr12789383wmi.53.1586677184260;
+ Sun, 12 Apr 2020 00:39:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200411120821.7675-1-lockywolf@gmail.com>
+References: <pull.609.git.1586566981.gitgitgadget@gmail.com>
+ <431fde6803140398eec0744c866616a0a78f9433.1586566981.git.gitgitgadget@gmail.com>
+ <xmqq5ze5he8o.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqq5ze5he8o.fsf@gitster.c.googlers.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sun, 12 Apr 2020 03:39:33 -0400
+Message-ID: <CAPig+cRm515C05SD_ivZmdPEUW=Tw3j2r4_p9_oSmRjs++BLZw@mail.gmail.com>
+Subject: Re: [PATCH 3/3] blame: use changed-path Bloom filters
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>,
+        Jakub Narebski <jnareb@gmail.com>, garimasigit@gmail.com,
+        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Vladimir,
+On Sat, Apr 11, 2020 at 6:03 PM Junio C Hamano <gitster@pobox.com> wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> > The lack of improvement for the MAINTAINERS file and the relatively
+> > modest improvement for the other examples can be easily explained.
+> > The blame machinery needs to compute line-level diffs to determine
+> > which lines were changed by each commit. That makes up a large
+> > proportion of the computation time, and this change does not
+> > attempt to improve on that section of the algorithm. The
+> > MAINTAINERS file is large and changed often, so it takes time to
+> > determine which lines were updated by which commit. In contrast,
+> > the code files are much smaller, and it takes longer to comute
+> > the line-by-line diff for a single patch on the Linux mailing
+> > lists.
 
-Vladimir Nikishkin wrote:
+s/comute/compute/
 
-> [Subject: Re: When will this patch be merged?]
-
-Please keep in mind that these mails appear in people's crowded
-inboxes, where a subject line can provide valuable context.
-
-Which patch do you mean?
-
-> When will this patch be merged? It is 2020, and git submodule is
-> barely usable with my internet provider, since outbound connections
-> are randomly shaped to 10k/s. At the moment I set up updating
-> submodules for the night, hoping that it works. If this patch was
-> accepted I would just see at which attempt the stream is not shaped
-> and reissue the command if it is.
-
-From the In-Reply-To field, it looks like you're responding to [1]
-("submodule: add verbose mode for add/update"), from 2014.  Have you
-tested that patch?  Does it apply to current Git?  Has it been working
-well for you?
-
-For your application, it sounds like having a timeout (plus Git's
-existing support for retries when fetching submodules) would help.  Am
-I understanding correctly?
-
-Thanks and hope that helps,
-Jonathan
-
-[1] https://lore.kernel.org/git/1394631731-4678-1-git-send-email-orgad.shaneh@audiocodes.com/
+(Sorry for replying to Junio's reply -- the original is no longer in
+my mailbox.)
