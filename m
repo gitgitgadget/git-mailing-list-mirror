@@ -1,120 +1,104 @@
-Return-Path: <SRS0=KYeX=53=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=e9fP=54=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,FSL_HELO_FAKE,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C86B2C2BA19
-	for <git@archiver.kernel.org>; Sat, 11 Apr 2020 22:03:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 41994C2BA2B
+	for <git@archiver.kernel.org>; Sun, 12 Apr 2020 06:32:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 979AA20769
-	for <git@archiver.kernel.org>; Sat, 11 Apr 2020 22:03:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 12630206DA
+	for <git@archiver.kernel.org>; Sun, 12 Apr 2020 06:32:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="C4bIPnVu"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XkGAgxXc"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726806AbgDKWDZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 11 Apr 2020 18:03:25 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63215 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726108AbgDKWDY (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Apr 2020 18:03:24 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5867A4159B;
-        Sat, 11 Apr 2020 18:03:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=xQJL37fMUdsWvtlN8WkPIgxl4iQ=; b=C4bIPn
-        Vuy/kRRPC5hRPoMLfLP1lCwZgYKgVn7lBj3G+3HC30su+f0OHvdoaIrhyaVbyL4i
-        JBFtigMJCwhLMzRAFM1DMnZMhlk3d2zdojCZQ0jwdMKmR8Tov6aV5VXwgYTgOyQt
-        LVZumC5ZDZUM9egHKS5qknW7z3bwZloFOz6Mg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=mYJrJFQ+BaW7mMULD1TxSMLFEh/7wrMq
-        jUZilPQgiiG4Ov6cua51Br5uDwnRWjz9qEuxB3nIs1ypoNKpiibDYhc/QfzRvyc8
-        d8oGFys5F74ypjMcS62/J9u+QvPMU6jK6IiKnThFXOarDrFKSLyWsfCEgonVzUTr
-        wymFqkieCE8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4F71E41598;
-        Sat, 11 Apr 2020 18:03:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D0C9841597;
-        Sat, 11 Apr 2020 18:03:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, me@ttaylorr.com, jnareb@gmail.com,
-        garimasigit@gmail.com, Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 3/3] blame: use changed-path Bloom filters
-References: <pull.609.git.1586566981.gitgitgadget@gmail.com>
-        <431fde6803140398eec0744c866616a0a78f9433.1586566981.git.gitgitgadget@gmail.com>
-Date:   Sat, 11 Apr 2020 15:03:19 -0700
-In-Reply-To: <431fde6803140398eec0744c866616a0a78f9433.1586566981.git.gitgitgadget@gmail.com>
-        (Derrick Stolee via GitGitGadget's message of "Sat, 11 Apr 2020
-        01:03:01 +0000")
-Message-ID: <xmqq5ze5he8o.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1725907AbgDLGcD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 12 Apr 2020 02:32:03 -0400
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:33874 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725873AbgDLGcD (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Apr 2020 02:32:03 -0400
+Received: by mail-pl1-f194.google.com with SMTP id a23so2269074plm.1
+        for <git@vger.kernel.org>; Sat, 11 Apr 2020 23:32:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=ui1wcWIVs9jI0tbmHJtf7+kimZzW0oxaEL4u0krpZl8=;
+        b=XkGAgxXcnvjh36ZjyuXvpAOYuFBL85EAruLg/8EK6wfxuUnOyJo/yfDrJ3EB0WWd6W
+         rBHs07reztbPN3eUsJkHSSQxzOAQcBHPwS7HNsdd4aMEl61E9TUVmXU2ui+6b3iBHfcs
+         E3h+8RqKx323J/Ce2IWimv1g7CI2RUvCs1VQTwLQZWBZ5rYOfZ3IpInNI4Xq8BRsHfbK
+         mAY/Iue4dglP3bbZhPPg0q5vXYlPtGe1YbkVT5sNiHvv8GRleNmOhJJmlUIim2LtUEj4
+         KMs3n/qMsrwV72Pv0B+Rra0Waou2HqsnPyIj6AqG67fq8rs7J5cEsOGmSjZT/lDxsKf9
+         J2Fg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=ui1wcWIVs9jI0tbmHJtf7+kimZzW0oxaEL4u0krpZl8=;
+        b=rL/9Wn/1UTjGmpF4rBCoY5h45igX3E7nm1krcrBRw5aAxs+qEFjkTJ1/ZcapEvU3Xd
+         rCeYlqmfwziFacXiNn8jncPlxmmOzq0nS8CNUMCpMX7rmXu56eEa20KPefAo9YpfUXYd
+         P4Gxae5hP3qgcW3edQVuZuyTr0BW9Cpo0AefCeGuyKN2HX7ElBNF3n2ZOegIDZmVG7Bp
+         ykKSgr9JfrP3niBGV7Mw7twqUc8JwClkP6KArrrBFHzVzc66OcWRqh5XibL2zeTt/Hjl
+         YxsoU5+70kfiQUaa7Cnmf7aD4xgzb97VGgzQfHY8MGhQAkkNSuKh/UoHbBIH4BVmaTqq
+         7lXQ==
+X-Gm-Message-State: AGi0PuY9izTXdX2tUw8KwUZC5tKCWHK/mrM2wXkvgo+fOXahsIv1q2Tk
+        v/gz+x2IJMyudIy+mvirHk2AwELy
+X-Google-Smtp-Source: APiQypLj5oF01f/nNdOB8ej6nhm//V+IxEkTApFg22lK9upFzQqg6UUrYkQ7fbmbhPVQaA6AO2eemA==
+X-Received: by 2002:a17:902:8f8b:: with SMTP id z11mr12456695plo.189.1586673122223;
+        Sat, 11 Apr 2020 23:32:02 -0700 (PDT)
+Received: from gmail.com (48.57.197.35.bc.googleusercontent.com. [35.197.57.48])
+        by smtp.gmail.com with ESMTPSA id g11sm5642526pjs.17.2020.04.11.23.32.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 11 Apr 2020 23:32:01 -0700 (PDT)
+Date:   Sat, 11 Apr 2020 23:31:58 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Vladimir Nikishkin <lockywolf@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: When will this patch be merged?
+Message-ID: <20200412063158.GA27852@gmail.com>
+References: <1394631731-4678-1-git-send-email-orgad.shaneh@audiocodes.com>
+ <20200411120821.7675-1-lockywolf@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 41039DCA-7C40-11EA-B989-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200411120821.7675-1-lockywolf@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Hi Vladimir,
 
-> From: Derrick Stolee <dstolee@microsoft.com>
-> Subject: Re: [PATCH 3/3] blame: use changed-path Bloom filters
+Vladimir Nikishkin wrote:
 
-Ahh, I almost forgot we spell Bloom with capital B, so I should go
-back and amend the title of [2/3].
+> [Subject: Re: When will this patch be merged?]
 
-> When computing a blame, there is a section in find_origin() that
-> computes a diff between a commit and one of its parents. When this
-> is the first parent, we can check the Bloom filters before calling
-> diff_tree_oid().
->
-> In order to make this work with the blame machinery, we need to
-> initialize a struct bloom_key with the initial path. But also, we
-> need to add more keys to a list if a rename is detected. We then
-> check to see if _any_ of these keys answer "maybe" in the diff.
+Please keep in mind that these mails appear in people's crowded
+inboxes, where a subject line can provide valuable context.
 
-Yes.  I think after gaining experience with this technique, we may
-be able to speed up the "git log --follow" while correcting its
-semantics at the same time.  The prospect is unnervingly exciting.
+Which patch do you mean?
 
-> Generally, this is a performance enhancement and should not
-> change the behavior of 'git blame' in any way.
+> When will this patch be merged? It is 2020, and git submodule is
+> barely usable with my internet provider, since outbound connections
+> are randomly shaped to 10k/s. At the moment I set up updating
+> submodules for the night, hoping that it works. If this patch was
+> accepted I would just see at which attempt the stream is not shaped
+> and reissue the command if it is.
 
-Absolutely.
+From the In-Reply-To field, it looks like you're responding to [1]
+("submodule: add verbose mode for add/update"), from 2014.  Have you
+tested that patch?  Does it apply to current Git?  Has it been working
+well for you?
 
-> The lack of improvement for the MAINTAINERS file and the relatively
-> modest improvement for the other examples can be easily explained.
-> The blame machinery needs to compute line-level diffs to determine
-> which lines were changed by each commit. That makes up a large
-> proportion of the computation time, and this change does not
-> attempt to improve on that section of the algorithm. The
-> MAINTAINERS file is large and changed often, so it takes time to
-> determine which lines were updated by which commit. In contrast,
-> the code files are much smaller, and it takes longer to comute
-> the line-by-line diff for a single patch on the Linux mailing
-> lists.
+For your application, it sounds like having a timeout (plus Git's
+existing support for retries when fetching submodules) would help.  Am
+I understanding correctly?
 
-Yup, tree-diff for a deeper path would benefit the most, and your
-numbers were indeed impressive.
+Thanks and hope that helps,
+Jonathan
 
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  blame.c         | 139 ++++++++++++++++++++++++++++++++++++++++++++----
->  blame.h         |   6 +++
->  builtin/blame.c |  10 ++++
->  3 files changed, 146 insertions(+), 9 deletions(-)
-
-I am kind-a surprised how little additional code it takes to do
-this.  Good job.
+[1] https://lore.kernel.org/git/1394631731-4678-1-git-send-email-orgad.shaneh@audiocodes.com/
