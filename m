@@ -2,353 +2,153 @@ Return-Path: <SRS0=e9fP=54=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.2 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E55C9C352B6
-	for <git@archiver.kernel.org>; Sun, 12 Apr 2020 13:30:39 +0000 (UTC)
-Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id BF68920673
-	for <git@archiver.kernel.org>; Sun, 12 Apr 2020 13:30:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BF673C2BA2B
+	for <git@archiver.kernel.org>; Sun, 12 Apr 2020 17:56:16 +0000 (UTC)
+X-Greylist: delayed 68 seconds by postgrey-1.34 at mail.kernel.org; Sun, 12 Apr 2020 17:56:16 UTC
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m6Kbt8az"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="iS/oC2CX"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 671FF20692
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=gmx.de
+Authentication-Results: mail.kernel.org; spf=none smtp.mailfrom=git-owner@vger.kernel.org
+Received: from vger.kernel.org (unknown [209.132.180.67])
+	by mail.kernel.org (Postfix) with ESMTP id 671FF20692
+	for <git@archiver.kernel.org>; Sun, 12 Apr 2020 17:56:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727073AbgDLNae (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 12 Apr 2020 09:30:34 -0400
-Received: from mail-pg1-f174.google.com ([209.85.215.174]:38306 "EHLO
-        mail-pg1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726139AbgDLNad (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Apr 2020 09:30:33 -0400
-Received: by mail-pg1-f174.google.com with SMTP id p8so3331958pgi.5
-        for <git@vger.kernel.org>; Sun, 12 Apr 2020 06:30:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=eBq2DMTG1zsRCX23vFlnEO2sIQ+lxz0GgRNEYq4lFpY=;
-        b=m6Kbt8azylbWI+QLbof1L4A6vXCBs+XILmKPbG8DxElde5dPKWoXUWBJlKp7SPGhVK
-         FZNLanVM3O3cr7m6C7VK8y7X2PEWKrQ61+q6Bwkh1n3su2K50IMQ4tfGheCaC7ENPajz
-         ztTVsUOM6eGdg8m72OfghJEimDlCcBSyLlJOmIan1wzp1uMPdWS8m161NSkIzDYioAAH
-         l2fbKgVbAblG3ei8vUTT7g4DhmtAFxgXJMkesupvMLd/o1UzVSDzgsvZovzDEkkx97YL
-         E+zDVArdsnNShEIQPBAbd2evZ34au2QKHyBEaGi9kilktvbjGMTagjVlsvr7h6oM+zsX
-         PP7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=eBq2DMTG1zsRCX23vFlnEO2sIQ+lxz0GgRNEYq4lFpY=;
-        b=VSsBeyVMqL8ECeo9b0Ty0Wo9Y1d36j01f02pB2g891O8hF9UePvnPMpbg8E+y8KkQ6
-         fkbWOAb38KhEB0RMJyXblZOQezZqZlMha2oAsNMZeypW5DzkWmzarnUxHnlyBbAx9M3g
-         W0jANOt9iZ8MaGVQ5gfaKG/4klDEqLRdaYao0gOJ0ffWb0rMMDhBGH8kXVLd27+pmAHR
-         LlPsVyy1zm7kzWcdBEckiX+s1HK44RlwnJGnlOlpp4dGxnzSivoAvIKu9xh8rCQXGdvX
-         KLVlFzSzj70rafEn2DkpXAXm9uyDr8/8jKOMpnWy02af5HLaIN57rn0FO+c/bGUg+AZN
-         4mWw==
-X-Gm-Message-State: AGi0PuZH5n7PluyDUpEHQFBLpd1bL2EOn4WJy/AqGMsB8boSBiAPhqoA
-        lnmDw8yoGA/FsH2yxEW0Cds=
-X-Google-Smtp-Source: APiQypL3hV4b67zdSiOPm/Ea/2mdDdpoFDeEvCOxPP7Mye8tAL6JMg9m2tIZ1hO/eAhKWKdAeHTGRw==
-X-Received: by 2002:a63:3002:: with SMTP id w2mr12882446pgw.290.1586698232072;
-        Sun, 12 Apr 2020 06:30:32 -0700 (PDT)
-Received: from tigtog.localdomain.localdomain ([144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id 139sm6093363pfv.0.2020.04.12.06.30.31
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 12 Apr 2020 06:30:31 -0700 (PDT)
-From:   Jiang Xin <worldhello.net@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: [PATCH v10 4/8] receive-pack: new config receive.procReceiveRefs
-Date:   Sun, 12 Apr 2020 09:30:18 -0400
-Message-Id: <20200412133022.17590-5-worldhello.net@gmail.com>
-X-Mailer: git-send-email 2.26.0.rc0
-In-Reply-To: <20200407120813.25025-1-worldhello.net@gmail.com>
-References: <20200407120813.25025-1-worldhello.net@gmail.com>
+        id S1727416AbgDLRzG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 12 Apr 2020 13:55:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.18]:38216 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727190AbgDLRzG (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Apr 2020 13:55:06 -0400
+X-Greylist: delayed 440 seconds by postgrey-1.27 at vger.kernel.org; Sun, 12 Apr 2020 13:55:05 EDT
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF430C0A3BF0
+        for <git@vger.kernel.org>; Sun, 12 Apr 2020 10:47:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1586713657;
+        bh=ckLKZWP+33x7M1WB8sIgL17Z1/ZrpGsfEwQi+NvjjLM=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=iS/oC2CXSAbYd/kZxS3BCUGWwuDAMhm2SM3DxdPhqLRF2zrzhYDpTkDcTDy5rOULm
+         HRtKNbHm/ePL+RmXbWyyhSfJyvQ4M1uqj3oixEXlKrkpbyZWOfiwod11rJ8QMgXf89
+         6jjr2OtdpROj8efNwUgJwu46XqqSA704eZzLB+Ho=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from MININT-QA14EDB.fritz.box ([89.1.213.12]) by mail.gmx.com
+ (mrgmx105 [212.227.17.168]) with ESMTPSA (Nemesis) id
+ 1N8XPt-1jAIjw0ofx-014WP5; Sun, 12 Apr 2020 19:47:37 +0200
+Date:   Sun, 12 Apr 2020 19:47:35 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Elijah Newren <newren@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Git Mailing List <git@vger.kernel.org>,
+        Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 1/6] Revert "Revert "Merge branch
+ 'ra/rebase-i-more-options'""
+In-Reply-To: <xmqqlfn7rnj2.fsf@gitster.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2004121944590.46@tvgsbejvaqbjf.bet>
+References: <20200407141125.30872-1-phillip.wood123@gmail.com> <20200407141125.30872-2-phillip.wood123@gmail.com> <CABPp-BEnmpET=6rEdDXJWnPjzV33a2x6rKB6FQ-o8y+8ssK4jw@mail.gmail.com> <xmqqv9mbroqw.fsf@gitster.c.googlers.com>
+ <xmqqlfn7rnj2.fsf@gitster.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:PkyarZVbEWNejm7/qU9NVeq64ihfyE0Zd8kFFDSlBzL/J7miBUl
+ jFe5CZjDBpwq9YuXg7CIkj7AkicYtQvM/HT3bNHbgrVwT7ei4+4S+RBGvuq3ubJKRIJ2/Mu
+ KCU3fyKlG6QOTDep0HPdZCcOyItvHyuJpK17UJ/gDczoQFPIe6xI8bkAXWIHjTAbYYFDuPo
+ FBi0gCU/I6kxcv/xz3OrA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:GwrLHxX8mjc=:XLBtxtWYs5utvwKSU5Unk8
+ 1rrXUu3UmYqJCgmxtnhMX5zWOzFaAPKdng51+Yt8BW9sCbtEklYgTQa4MLNfk4KLJuEKRTwfG
+ Qk3ZjZhIWn0n97B7cm6aX8twjvE4YF0Hr6CFQFRhkZ0eROtQ0dqT2cl/BqM1J6x53U4EQVy5H
+ 1CiKcQwX7t0KUrU9UY9WrOv84Wn0CbOWW2RVm6z+H+cN/NZSabNntBGtrBl2i8PoiwcB/pQrP
+ EIV8fRPhDDnriXPsS23FWpVc83qADDEOV7vE0Cx0t7jYLZHxhTiW9rKA0S9ng1MuwkEnsFgT8
+ L0NYkvr0EWNoTNJh9HvrIzXv43cChj9r/QSdMTm/3mXoWTxd+RiwrnfciR55xiMj/hSHHIMdT
+ rE2lRYS9tusapklp3OFjC/lcUK61QhoeT6D1L7+7yhVamcL1aw1FOXY5sqdPPQ+rfAh8WXN3B
+ kZLO1kUGTgIaiSjRawyRpNQW6ayvDoJDCt2UrpBLscyISVIR8IpmP7ZLxxHrmA1seBwDWNDQu
+ pwK85a08x/E3Q7X9lYvoXUTeCMqLwLjohjivr9cO4Gx+tVo+lSL03oTIXRENr6VKzjMAw2BEf
+ lmR+lr1UvSbvlUSfPetRlRr90BHJWZpID2gPlZ4Y8abn01HDYf/drROl8dg4IDHPvkJApIMAK
+ fkBf5r/KSCwHU45MG9VMxJmCXLRSqVcxyCwTO3O1q8J7cGN7fMk6V4KsQTGdAOF1SEP0HMlSF
+ fbXqrtniC+oXeRCVQ1KEwW4SsuWsHGmkQVntdLdMfkkGIRq4G1Cu1n7L9RuSVEbzBH5Sxbl47
+ xnEpXjmUnE//uz8L+Ccsn+HEjCvbeQzV6MtDXmdCy3DKj2zhxaRRZoAMPUR4CK15VPiQF69l5
+ HvwPWdfoHqnBEMTNLqNnDeDGHMabJ7CnW009vMMU29sLw82tOjUws16REUle75NfklFlsj3Ge
+ dTpt1fCICvoTqcgebRE20eGet64wBqCr3vR8fC1zCswCdT4oc2c9hNEPEGDwuY6IiRgRWV+Wq
+ ysLyhzq+dngjSy/u3EpHwLftJM3yjkwEJErki+idxM925ecR1RkhsbfZZilMf+pb1F3rfBFg8
+ jXcfbtxmLQK3FVvMVwFxBI7q6fuoMeg6OooZw0G6pBNfsJCvBOYsTwo7Ogcl5PhVtBP92y2Zm
+ XKmuRalEKlKsZj1KmGPUqV3Doto5tFPjbLQlzGk5ge5/BLwB1R/UAlc+h1mfzFpm5FU9gLB2g
+ sAyEdCma2JOlIhzJ6
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Hi Phillip, Elijah & Junio,
 
-Add a new multi-valued config variable "receive.procReceiveRefs"
-for `receive-pack` command, like the follows:
+On Tue, 7 Apr 2020, Junio C Hamano wrote:
 
-    git config --system --add receive.procReceiveRefs refs/for
-    git config --system --add receive.procReceiveRefs refs/drafts
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+> > Elijah Newren <newren@gmail.com> writes:
+> >
+> >> On Tue, Apr 7, 2020 at 7:11 AM Phillip Wood <phillip.wood123@gmail.co=
+m> wrote:
+> >>>
+> >>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+> >>>
+> >>> This reverts commit 4d924528d8bfe947abfc54ee9bd3892ab509c8cd.
+> >>>
+> >>> This is being reverted to enable some fixups for
+> >>> ra/rebase-i-more-options to be built on this commit.
+> >>
+> >> This makes sense to me, but it will be only the second 'Revert
+> >> "Revert..."' commit in all of git.git and I'm curious if Junio will b=
+e
+> >> unhappy with it.
+> >
+> > Nah, there isn't much to become unhappy about.
+> >
+> > I however suspect that the alternative would certainly be much nicer
+> > and easier to understand, which is to rebuild the 7-patch series
+> > c58ae96fc4..d82dfa7f5b but bugs already fixed, instead of doing this
+> > patch to take us back to a known buggy state and then fix the result
+> > with 5 more patches.  Is that what you meant?
+>
+> After looking at the conflict resolution while merging the result of
+> applying these patches on top of the older codebase, I would have to
+> say that the approach """I've opted to add some cleanup commits on
+> top of Rohit's work rather than reworking his patches.""" may not
+> have been particularly a brilliant idea, not because the conflicts
+> arising from an older codebase are unpleasant to resolve (they seem
+> to be reasonably contained), but because it resurrects other
+> unwanted cruft we have cleaned up since then, and worse yet, it does
+> so without triggering conflicts.  For example, we'll end up seeing
+> mentions of "'am' backend", which have all been updated to "'apply'
+> backend", in the documentation, and patches [2-6/6] do not fix them.
+>
+> [5/6] is an example of one more "unwanted" thing the reversion
+> resurrects that needed to be fixed, I guess?
+>
+> The result of applying all these patches and merging it to 'master'
+> and/or 'pu' may be more or less right, as far as the new features
+> added to the "rebase -i" by the series are concerned but there may
+> be many small "unwanted cruft" we may be resurrecting with [1/6],
+> so...
 
-If the specific prefix strings match the reference names of the commands
-which are sent from git client to `receive-pack`, these commands will be
-executed by an external hook (named "proc-receive"), instead of the
-internal `execute_commands` function.
+I agree that it would make for a much nicer read if the entire patch
+series was simply rebased on top of v2.26.0, with drops instead of
+reverts. I suspect that 4/6 will not even become a fixup, but that the
+resulting patch is really more of an `Initial-patch-by: Rohit` material
+with Phillip as the author on record.
 
-For example, if it is set to "refs/for", pushing to a reference such as
-"refs/for/master" will not create or update reference "refs/for/master",
-but may create or update a pull request directly by running the hook
-"proc-receive".
+As to the changes, I had a brief look over them, and I have nothing to add
+to Elijah's review except to stress how excited I am about the increased
+test coverage. From my perspective, this makes the patch series 10x
+better.
 
-Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
----
- Documentation/config/receive.txt |  14 ++++
- builtin/receive-pack.c           |  43 ++++++++--
- t/t5411/common-test-cases.sh     | 130 +++++++++++++++++++++++++++++++
- 3 files changed, 180 insertions(+), 7 deletions(-)
-
-diff --git a/Documentation/config/receive.txt b/Documentation/config/receive.txt
-index 65f78aac37..e7b967feeb 100644
---- a/Documentation/config/receive.txt
-+++ b/Documentation/config/receive.txt
-@@ -114,6 +114,20 @@ receive.hideRefs::
- 	An attempt to update or delete a hidden ref by `git push` is
- 	rejected.
- 
-+receive.procReceiveRefs::
-+	This is a multi-valued variable that defines reference prefixes
-+	to match the commands in `receive-pack`.  Commands matching the
-+	prefixes will be executed by an external hook "proc-receive",
-+	instead of the internal `execute_commands` function.  If this
-+	variable is not defined, the "proc-receive" hook will never be
-+	used, and all commands will be executed by the internal
-+	`execute_commands` function.
-+
-+	For example, if this variable is set to "refs/for", pushing to
-+	reference such as "refs/for/master" will not create or update a
-+	reference named "refs/for/master", but may create or update a
-+	pull request directly by running the hook "proc-receive".
-+
- receive.updateServerInfo::
- 	If set to true, git-receive-pack will run git-update-server-info
- 	after receiving data from git-push and updating refs.
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 1a57c5bb3b..bdd0f0f448 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -76,6 +76,7 @@ static struct object_id push_cert_oid;
- static struct signature_check sigcheck;
- static const char *push_cert_nonce;
- static const char *cert_nonce_seed;
-+static struct string_list proc_receive_refs;
- 
- static const char *NONCE_UNSOLICITED = "UNSOLICITED";
- static const char *NONCE_BAD = "BAD";
-@@ -228,6 +229,20 @@ static int receive_pack_config(const char *var, const char *value, void *cb)
- 		return 0;
- 	}
- 
-+	if (strcmp(var, "receive.procreceiverefs") == 0) {
-+		char *prefix;
-+		int len;
-+
-+		if (!value)
-+			return config_error_nonbool(var);
-+		prefix = xstrdup(value);
-+		len = strlen(prefix);
-+		while (len && prefix[len - 1] == '/')
-+			prefix[--len] = '\0';
-+		string_list_insert(&proc_receive_refs, prefix);
-+		return 0;
-+	}
-+
- 	return git_default_config(var, value, cb);
- }
- 
-@@ -1734,15 +1749,26 @@ static void execute_commands(struct command *commands,
- 	/* Try to find commands that have special prefix in their reference names,
- 	 * and mark them to run an external "proc-receive" hook later.
- 	 */
--	for (cmd = commands; cmd; cmd = cmd->next) {
--		if (!should_process_cmd(cmd))
--			continue;
-+	if (proc_receive_refs.nr > 0) {
-+		struct strbuf refname_full = STRBUF_INIT;
-+		size_t prefix_len;
-+
-+		strbuf_addstr(&refname_full, get_git_namespace());
-+		prefix_len = refname_full.len;
- 
--		/* TODO: replace the fixed prefix by looking up git config variables. */
--		if (!strncmp(cmd->ref_name, "refs/for/", 9)) {
--			cmd->run_proc_receive = RUN_PROC_RECEIVE_SCHEDULED;
--			run_proc_receive = 1;
-+		for (cmd = commands; cmd; cmd = cmd->next) {
-+			if (!should_process_cmd(cmd))
-+				continue;
-+
-+			strbuf_setlen(&refname_full, prefix_len);
-+			strbuf_addstr(&refname_full, cmd->ref_name);
-+			if (ref_is_matched(&proc_receive_refs, cmd->ref_name, refname_full.buf)) {
-+				cmd->run_proc_receive = RUN_PROC_RECEIVE_SCHEDULED;
-+				run_proc_receive = 1;
-+			}
- 		}
-+
-+		strbuf_release(&refname_full);
- 	}
- 
- 	if (run_receive_hook(commands, "pre-receive", 0, push_options)) {
-@@ -2196,6 +2222,8 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
- 		OPT_END()
- 	};
- 
-+	string_list_init(&proc_receive_refs, 0);
-+
- 	packet_trace_identity("receive-pack");
- 
- 	argc = parse_options(argc, argv, prefix, options, receive_pack_usage, 0);
-@@ -2311,5 +2339,6 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
- 	oid_array_clear(&shallow);
- 	oid_array_clear(&ref);
- 	free((void *)push_cert_nonce);
-+	string_list_clear(&proc_receive_refs, 0);
- 	return 0;
- }
-diff --git a/t/t5411/common-test-cases.sh b/t/t5411/common-test-cases.sh
-index 8e30c8f31e..d6ad0e1bc8 100644
---- a/t/t5411/common-test-cases.sh
-+++ b/t/t5411/common-test-cases.sh
-@@ -53,6 +53,14 @@ test_expect_success "cleanup" '
- 	)
- '
- 
-+test_expect_success "add two receive.procReceiveRefs settings" '
-+	(
-+		cd "$upstream" &&
-+		git config --add receive.procReceiveRefs refs/for &&
-+		git config --add receive.procReceiveRefs refs/review/
-+	)
-+'
-+
- # Refs of upstream : master(A)
- # Refs of workbench: master(A)  tags/v123
- # git push         :                       next(A)  refs/for/master/topic(A)
-@@ -617,3 +625,125 @@ test_expect_success "push with options" '
- 	EOF
- 	test_cmp expect actual
- '
-+
-+# Refs of upstream : master(A)             next(A)
-+# Refs of workbench: master(A)  tags/v123
-+test_expect_success "cleanup" '
-+	git -C "$upstream" update-ref -d refs/heads/next
-+'
-+
-+test_expect_success "setup proc-receive hook" '
-+	cat >"$upstream/hooks/proc-receive" <<-EOF &&
-+	#!/bin/sh
-+
-+	printf >&2 "# proc-receive hook\n"
-+
-+	test-tool proc-receive -v \
-+		-r "$ZERO_OID $A refs/review/a/b/c/topic ok" \
-+		-r "$ZERO_OID $A refs/for/next/topic ok" \
-+		-r "$B $A refs/for/master/topic ok"
-+	EOF
-+	chmod a+x "$upstream/hooks/proc-receive"
-+'
-+
-+# Refs of upstream : master(A)
-+# Refs of workbench: master(A)  tags/v123
-+# git push         :                       refs/for/next/topic(A)  refs/review/a/b/c/topic(A)  refs/for/master/topic(A)
-+test_expect_success "report update of all special refs" '
-+	git -C workbench push origin \
-+		HEAD:refs/for/next/topic \
-+		HEAD:refs/review/a/b/c/topic \
-+		HEAD:refs/for/master/topic \
-+		>out 2>&1 &&
-+	make_user_friendly_and_stable_output <out >actual &&
-+	cat >expect <<-EOF &&
-+	remote: # pre-receive hook
-+	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/for/next/topic
-+	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/review/a/b/c/topic
-+	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
-+	remote: # proc-receive hook
-+	remote: proc-receive< <ZERO-OID> <COMMIT-A> refs/for/next/topic
-+	remote: proc-receive< <ZERO-OID> <COMMIT-A> refs/review/a/b/c/topic
-+	remote: proc-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
-+	remote: proc-receive> <ZERO-OID> <COMMIT-A> refs/review/a/b/c/topic ok
-+	remote: proc-receive> <ZERO-OID> <COMMIT-A> refs/for/next/topic ok
-+	remote: proc-receive> <COMMIT-B> <COMMIT-A> refs/for/master/topic ok
-+	remote: # post-receive hook
-+	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/next/topic
-+	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/review/a/b/c/topic
-+	remote: post-receive< <COMMIT-B> <COMMIT-A> refs/for/master/topic
-+	To <URL/of/upstream.git>
-+	 * [new reference] HEAD -> refs/for/next/topic
-+	 * [new reference] HEAD -> refs/review/a/b/c/topic
-+	 * [new reference] HEAD -> refs/for/master/topic
-+	EOF
-+	test_cmp expect actual &&
-+	git -C "$upstream" show-ref >out &&
-+	make_user_friendly_and_stable_output <out >actual &&
-+	cat >expect <<-EOF &&
-+	<COMMIT-A> refs/heads/master
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success "setup proc-receive hook" '
-+	cat >"$upstream/hooks/proc-receive" <<-EOF &&
-+	#!/bin/sh
-+
-+	printf >&2 "# proc-receive hook\n"
-+
-+	test-tool proc-receive -v \
-+		-r "$ZERO_OID $A refs/for/next/topic ok" \
-+		-r "$A $B refs/for/master/topic ok"
-+	EOF
-+	chmod a+x "$upstream/hooks/proc-receive"
-+'
-+
-+# Refs of upstream : master(A)
-+# Refs of workbench: master(A)  tags/v123
-+# git push         :                       bar(A)  baz(A)  refs/for/next/topic(A)  foo(A)  refs/for/master/topic(A)
-+test_expect_success "report mixed refs update" '
-+	git -C workbench push origin \
-+		HEAD:refs/heads/bar \
-+		HEAD:refs/heads/baz \
-+		HEAD:refs/for/next/topic \
-+		HEAD:refs/heads/foo \
-+		HEAD:refs/for/master/topic \
-+		>out 2>&1 &&
-+	make_user_friendly_and_stable_output <out >actual &&
-+	cat >expect <<-EOF &&
-+	remote: # pre-receive hook
-+	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/heads/bar
-+	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/heads/baz
-+	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/for/next/topic
-+	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/heads/foo
-+	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
-+	remote: # proc-receive hook
-+	remote: proc-receive< <ZERO-OID> <COMMIT-A> refs/for/next/topic
-+	remote: proc-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
-+	remote: proc-receive> <ZERO-OID> <COMMIT-A> refs/for/next/topic ok
-+	remote: proc-receive> <COMMIT-A> <COMMIT-B> refs/for/master/topic ok
-+	remote: # post-receive hook
-+	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/heads/bar
-+	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/heads/baz
-+	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/next/topic
-+	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/heads/foo
-+	remote: post-receive< <COMMIT-A> <COMMIT-B> refs/for/master/topic
-+	To <URL/of/upstream.git>
-+	 * [new branch] HEAD -> bar
-+	 * [new branch] HEAD -> baz
-+	 * [new reference] HEAD -> refs/for/next/topic
-+	 * [new branch] HEAD -> foo
-+	 * [new reference] HEAD -> refs/for/master/topic
-+	EOF
-+	test_cmp expect actual &&
-+	git -C "$upstream" show-ref >out &&
-+	make_user_friendly_and_stable_output <out >actual &&
-+	cat >expect <<-EOF &&
-+	<COMMIT-A> refs/heads/bar
-+	<COMMIT-A> refs/heads/baz
-+	<COMMIT-A> refs/heads/foo
-+	<COMMIT-A> refs/heads/master
-+	EOF
-+	test_cmp expect actual
-+'
--- 
-2.24.1.15.g448c31058d.agit.4.5
-
+Thanks,
+Dscho
