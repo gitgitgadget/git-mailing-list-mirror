@@ -7,63 +7,63 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8AF00C2BA19
-	for <git@archiver.kernel.org>; Mon, 13 Apr 2020 14:45:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BFDDC2BA2B
+	for <git@archiver.kernel.org>; Mon, 13 Apr 2020 14:45:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6895F20732
-	for <git@archiver.kernel.org>; Mon, 13 Apr 2020 14:45:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 023CB20732
+	for <git@archiver.kernel.org>; Mon, 13 Apr 2020 14:45:41 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rdxtz09l"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pnU0h/vk"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730840AbgDMOpi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Apr 2020 10:45:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39334 "EHLO
+        id S1730842AbgDMOpk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Apr 2020 10:45:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39338 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729157AbgDMOpc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Apr 2020 10:45:32 -0400
-Received: from mail-ed1-x543.google.com (mail-ed1-x543.google.com [IPv6:2a00:1450:4864:20::543])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7630C008749
-        for <git@vger.kernel.org>; Mon, 13 Apr 2020 07:45:31 -0700 (PDT)
-Received: by mail-ed1-x543.google.com with SMTP id w4so10544062edv.13
-        for <git@vger.kernel.org>; Mon, 13 Apr 2020 07:45:31 -0700 (PDT)
+        with ESMTP id S1729135AbgDMOpd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Apr 2020 10:45:33 -0400
+Received: from mail-ed1-x541.google.com (mail-ed1-x541.google.com [IPv6:2a00:1450:4864:20::541])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A80ADC0A3BDC
+        for <git@vger.kernel.org>; Mon, 13 Apr 2020 07:45:32 -0700 (PDT)
+Received: by mail-ed1-x541.google.com with SMTP id m12so12224979edl.12
+        for <git@vger.kernel.org>; Mon, 13 Apr 2020 07:45:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=CK8bi4vHfQDw1c0f+oMfXd4Pn0+O30qcnAMquqODCEk=;
-        b=rdxtz09ls6a3lMyoFDVb1y2vOx3/pCJ+nWdfB1oyFNOlrmhxAiXhWR5x0eg/iE62R/
-         4phzRi+1bplwJmubP6XpcB8pWXMNUkS3VDLOrSP6ItD9G5jyf2D0Z8o7ac/L78ZiZD8R
-         /BV2f2U1xfmG1jrDNx/iwSv4GrI6J5vM0e6JjA7lche+h0MCDzYmqRMceha/Aq45Ai5x
-         o7/L7/Eh4nHtJhNOPrJqQ3y0QKhJoY3JrIp28iiPNzVSdL/qfHinYVRrTGiXuyGziwbC
-         iTOEJNPDY65P+5uHEXszkkKSkuHlw/vU2l3qCYXE33xnj88Wnpdw3M9wD33qIrN+Wh3N
-         qj4w==
+        bh=r/pAlhTV2VI3Fe2zoXUXryFeLmak93OLBNBWVSPFoTU=;
+        b=pnU0h/vkDclAb2oDfZV4QE/FYIhrrDiJMx1ilfadLZy2ZguEfhHaiQeDbg/u4AMaPN
+         Iyg7DPr97bKzOJzdwykenycHqKOkU5+FlvTosxJ2QWDIljnwHMCshFt/DUsRSLbjh7Uf
+         JAjYOKqMBNvuIuSLQlPp/LWJBPtmADvtS5Hiij+d/zOvAl4X8S2/Y8mIZzdH0VI6pWX1
+         dx8adjahwEk24myYeIxVDwWalFlcCVLi4LgsItCHzrvMTlVSBEFTLUkDZiCp5F6qGR7P
+         MsSKGRfiFqKg+cGjD4ZX141blDPhXbfW2bOQQuTrfA0LAYH7dY9Xsn6MogVrXojVJhaM
+         FpeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=CK8bi4vHfQDw1c0f+oMfXd4Pn0+O30qcnAMquqODCEk=;
-        b=Ww53mpWhMsZb0abdQDv9GH/kshlzqRQhsr7+E+bkCcipNJ+/jxFoWFZrpiR/ARLjUx
-         oWIZI5NNcnSNWpUGtez9U9defdWZKchmA/rcntoMHFV704ELfnIvjPMZ6kAYPHEsa7uf
-         JezFioElmBqfnjJ5i8NYFiCd6k/HCgk5soWQKD8Uv/Pwwdy7G+FySV4+uS0dgar2O3K9
-         KTqwPR36CCGWm7ofiqndu/nE7VQIIgNX4XGv7JNGacO25ujHxUhtHzuo0mkj6iu+jZAT
-         z19jGOLzyn6Djgd4lA6hoWJ3uH06pIzO+m9iPAZoKm8sUEG0CnuArxx0WFqkhhBqOKEW
-         lgFg==
-X-Gm-Message-State: AGi0PuZHODM/SxKPaKni/TVNkDhA6rlAN3d6WS+2PNI9G+E5TZT9aMLp
-        gXnzqCriLcAoVzDlYjTOzjFiE9Fr
-X-Google-Smtp-Source: APiQypKil5Q4fEnj6ZbKps5CmV60/m2ImyWjUiSpv/gbqvonzNbkzOZSxwHZsYwfy79fL19iKvrVvw==
-X-Received: by 2002:a17:907:aab:: with SMTP id bz11mr15819364ejc.311.1586789130194;
+        bh=r/pAlhTV2VI3Fe2zoXUXryFeLmak93OLBNBWVSPFoTU=;
+        b=eG7NDXLqTEHUdnYh0elGZTNJ+UOx1oXqSYy54rw/wpqBk5pPsP2SGf9LLtskyziTPd
+         IrMvP0Stppqo3yJHdcvVPPp3iQQOeuZ5JIjP0AU+GOvTwmLCc8ogjo1dM2Ag7L+jWE6K
+         i/nNCChpjpu3SbiBQqURMl6hqc31G0dwnzkC0KiUfUb6VInfIpFYRjvkGbDzbj5Xq6CH
+         uS+h7dOBiE/FTlaN/Ml4n0psOt5XWJBa5xQXao9+I9LGAi1nlF+zMapVo/+UO5wTfdsK
+         8h41a2aSgfZ1MGhPjQZJE8zE5hsMoGgj6b5IkjIIXMfehNPYVzDQeBLm0+i/bJAgZQGv
+         fxoQ==
+X-Gm-Message-State: AGi0PuaaM10I2Ukt4xiHKJOMReczVO9h8o6lRLoy6tXCpd0tWUI3j4Oc
+        ae517ZT5Jf4HZBNJbWVe99cvndjx
+X-Google-Smtp-Source: APiQypJD2rMZ2tAUhpO7W9cnMoYdWrN/oiAk7UJBE92DfKuHgeikHjUPTEQgcCrLo8mDSc37ETV23A==
+X-Received: by 2002:a17:906:6416:: with SMTP id d22mr15916318ejm.221.1586789130963;
         Mon, 13 Apr 2020 07:45:30 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l7sm1477005ejx.82.2020.04.13.07.45.29
+        by smtp.gmail.com with ESMTPSA id g15sm1613961ejk.77.2020.04.13.07.45.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Apr 2020 07:45:29 -0700 (PDT)
-Message-Id: <824f8ad067bd53e0283180ab8e3828662fcd1fd4.1586789126.git.gitgitgadget@gmail.com>
+        Mon, 13 Apr 2020 07:45:30 -0700 (PDT)
+Message-Id: <4ae196d6355926c56095aee30cf73665a4ea5785.1586789126.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.609.v2.git.1586789126.gitgitgadget@gmail.com>
 References: <pull.609.git.1586566981.gitgitgadget@gmail.com>
         <pull.609.v2.git.1586789126.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 13 Apr 2020 14:45:25 +0000
-Subject: [PATCH v2 3/4] commit-graph: write commit-graph in more tests
+Date:   Mon, 13 Apr 2020 14:45:26 +0000
+Subject: [PATCH v2 4/4] blame: use changed-path Bloom filters
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,92 +79,372 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The GIT_TEST_COMMIT_GRAPH test environment variable triggers
-commit-graph writes during each "git commit" process. To expand
-the number of tests that have commits in the commit-graph file,
-add a helper method that computes the commit-graph and place
-that helper inside "git commit" and "git merge".
+The changed-path Bloom filters help reduce the amount of tree
+parsing required during history queries. Before calculating a
+diff, we can ask the filter if a path changed between a commit
+and its first parent. If the filter says "no" then we can move
+on without parsing trees. If the filter says "maybe" then we
+parse trees to discover if the answer is actually "yes" or "no".
+
+When computing a blame, there is a section in find_origin() that
+computes a diff between a commit and one of its parents. When this
+is the first parent, we can check the Bloom filters before calling
+diff_tree_oid().
+
+In order to make this work with the blame machinery, we need to
+initialize a struct bloom_key with the initial path. But also, we
+need to add more keys to a list if a rename is detected. We then
+check to see if _any_ of these keys answer "maybe" in the diff.
+
+During development, I purposefully left out this "add a new key
+when a rename is detected" to see if the test suite would catch
+my error. That is how I discovered the issues with
+GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS from the previous change.
+With that change, we can feel some confidence in the coverage of
+this change.
+
+If a user requests copy detection using "git blame -C", then there
+are more places where the set of "important" files can expand. I
+do not know enough about how this happens in the blame machinery.
+Thus, the Bloom filter integration is explicitly disabled in this
+mode. A later change could expand the bloom_key data with an
+appropriate call (or calls) to add_bloom_key().
+
+If we did not disable this mode, then the following tests would
+fail:
+
+	t8003-blame-corner-cases.sh
+	t8011-blame-split-file.sh
+
+Generally, this is a performance enhancement and should not
+change the behavior of 'git blame' in any way. If a repo has a
+commit-graph file with computed changed-path Bloom filters, then
+they should notice improved performance for their 'git blame'
+commands.
+
+Here are some example timings that I found by blaming some paths
+in the Linux kernel repository:
+
+ git blame arch/x86/kernel/topology.c >/dev/null
+
+ Before: 0.83s
+  After: 0.24s
+
+ git blame kernel/time/time.c >/dev/null
+
+ Before: 0.72s
+  After: 0.24s
+
+ git blame tools/perf/ui/stdio/hist.c >/dev/null
+
+ Before: 0.27s
+  After: 0.11s
+
+I specifically looked for "deep" paths that were also edited many
+times. As a counterpoint, the MAINTAINERS file was edited many
+times but is located in the root tree. This means that the cost of
+computing a diff relative to the pathspec is very small. Here are
+the timings for that command:
+
+ git blame MAINTAINERS >/dev/null
+
+ Before: 20.1s
+  After: 18.0s
+
+These timings are the best of five. The worst-case runs were on the
+order of 2.5 minutes for both cases. Note that the MAINTAINERS file
+has 18,740 lines across 17,000+ commits. This happens to be one of
+the cases where this change provides the least improvement.
+
+The lack of improvement for the MAINTAINERS file and the relatively
+modest improvement for the other examples can be easily explained.
+The blame machinery needs to compute line-level diffs to determine
+which lines were changed by each commit. That makes up a large
+proportion of the computation time, and this change does not
+attempt to improve on that section of the algorithm. The
+MAINTAINERS file is large and changed often, so it takes time to
+determine which lines were updated by which commit. In contrast,
+the code files are much smaller, and it takes longer to comute
+the line-by-line diff for a single patch on the Linux mailing
+lists.
+
+Outside of the "-C" integration, I believe there is little more to
+gain from the changed-path Bloom filters for 'git blame' after this
+patch.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- builtin/commit.c | 4 +---
- builtin/merge.c  | 7 +++++--
- commit-graph.c   | 7 +++++++
- commit-graph.h   | 2 ++
- 4 files changed, 15 insertions(+), 5 deletions(-)
+ blame.c         | 139 ++++++++++++++++++++++++++++++++++++++++++++----
+ blame.h         |   6 +++
+ builtin/blame.c |  10 ++++
+ 3 files changed, 146 insertions(+), 9 deletions(-)
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index d3e7781e658..27d4ff6b790 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1700,9 +1700,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 		      "new_index file. Check that disk is not full and quota is\n"
- 		      "not exceeded, and then \"git restore --staged :/\" to recover."));
- 
--	if (git_env_bool(GIT_TEST_COMMIT_GRAPH, 0) &&
--	    write_commit_graph_reachable(the_repository->objects->odb, 0, NULL))
--		return 1;
-+	git_test_write_commit_graph_or_die();
- 
- 	repo_rerere(the_repository, 0);
- 	run_command_v_opt(argv_gc_auto, RUN_GIT_CMD);
-diff --git a/builtin/merge.c b/builtin/merge.c
-index d127d2225f8..db11af5b1cd 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -40,6 +40,7 @@
- #include "branch.h"
- #include "commit-reach.h"
- #include "wt-status.h"
+diff --git a/blame.c b/blame.c
+index 29770e5c81c..9fbf79e47c3 100644
+--- a/blame.c
++++ b/blame.c
+@@ -9,6 +9,8 @@
+ #include "blame.h"
+ #include "alloc.h"
+ #include "commit-slab.h"
++#include "bloom.h"
 +#include "commit-graph.h"
  
- #define DEFAULT_TWOHEAD (1<<0)
- #define DEFAULT_OCTOPUS (1<<1)
-@@ -1673,9 +1674,11 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 				   head_commit);
- 	}
+ define_commit_slab(blame_suspects, struct blame_origin *);
+ static struct blame_suspects blame_suspects;
+@@ -1246,13 +1248,75 @@ static int fill_blob_sha1_and_mode(struct repository *r,
+ 	return -1;
+ }
  
--	if (squash)
-+	if (squash) {
- 		finish(head_commit, remoteheads, NULL, NULL);
--	else
++struct blame_bloom_data {
++	/*
++	 * Changed-path Bloom filter keys. These can help prevent
++	 * computing diffs against first parents, but we need to
++	 * expand the list as code is moved or files are renamed.
++	 */
++	struct bloom_filter_settings *settings;
++	struct bloom_key **keys;
++	int nr;
++	int alloc;
++};
 +
-+		git_test_write_commit_graph_or_die();
-+	} else
- 		write_merge_state(remoteheads);
- 
- 	if (merge_was_ok)
-diff --git a/commit-graph.c b/commit-graph.c
-index 3e8f36ce5c8..5d64cb5f09c 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -19,6 +19,13 @@
- #include "bloom.h"
- #include "commit-slab.h"
- 
-+void git_test_write_commit_graph_or_die(void)
++static int bloom_count_queries = 0;
++static int bloom_count_no = 0;
++static int maybe_changed_path(struct repository *r,
++			      struct commit *parent,
++			      struct blame_origin *origin,
++			      struct blame_bloom_data *bd)
 +{
-+	if (git_env_bool(GIT_TEST_COMMIT_GRAPH, 0) &&
-+	    write_commit_graph_reachable(the_repository->objects->odb, 0, NULL))
-+		die("failed to write commit-graph under GIT_TEST_COMMIT_GRAPH");
++	int i;
++	struct bloom_filter *filter;
++
++	if (!bd)
++		return 1;
++
++	if (origin->commit->generation == GENERATION_NUMBER_INFINITY)
++		return 1;
++
++	filter = get_bloom_filter(r, origin->commit, 0);
++
++	if (!filter)
++		return 1;
++
++	bloom_count_queries++;
++	for (i = 0; i < bd->nr; i++) {
++		if (bloom_filter_contains(filter,
++					  bd->keys[i],
++					  bd->settings))
++			return 1;
++	}
++
++	bloom_count_no++;
++	return 0;
 +}
 +
- #define GRAPH_SIGNATURE 0x43475048 /* "CGPH" */
- #define GRAPH_CHUNKID_OIDFANOUT 0x4f494446 /* "OIDF" */
- #define GRAPH_CHUNKID_OIDLOOKUP 0x4f49444c /* "OIDL" */
-diff --git a/commit-graph.h b/commit-graph.h
-index 8655d064c14..8f852a9bee2 100644
---- a/commit-graph.h
-+++ b/commit-graph.h
-@@ -11,6 +11,8 @@
- #define GIT_TEST_COMMIT_GRAPH_DIE_ON_LOAD "GIT_TEST_COMMIT_GRAPH_DIE_ON_LOAD"
- #define GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS "GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS"
- 
-+void git_test_write_commit_graph_or_die(void);
++static void add_bloom_key(struct blame_bloom_data *bd,
++			  const char *path)
++{
++	if (!bd)
++		return;
 +
- struct commit;
- struct bloom_filter_settings;
++	if (bd->nr >= bd->alloc) {
++		bd->alloc *= 2;
++		REALLOC_ARRAY(bd->keys, bd->alloc);
++	}
++
++	bd->keys[bd->nr] = xmalloc(sizeof(struct bloom_key));
++	fill_bloom_key(path, strlen(path), bd->keys[bd->nr], bd->settings);
++	bd->nr++;
++}
++
+ /*
+  * We have an origin -- check if the same path exists in the
+  * parent and return an origin structure to represent it.
+  */
+ static struct blame_origin *find_origin(struct repository *r,
+ 					struct commit *parent,
+-					struct blame_origin *origin)
++					struct blame_origin *origin,
++					struct blame_bloom_data *bd)
+ {
+ 	struct blame_origin *porigin;
+ 	struct diff_options diff_opts;
+@@ -1286,10 +1350,19 @@ static struct blame_origin *find_origin(struct repository *r,
  
+ 	if (is_null_oid(&origin->commit->object.oid))
+ 		do_diff_cache(get_commit_tree_oid(parent), &diff_opts);
+-	else
+-		diff_tree_oid(get_commit_tree_oid(parent),
+-			      get_commit_tree_oid(origin->commit),
+-			      "", &diff_opts);
++	else {
++		int compute_diff = 1;
++		if (origin->commit->parents &&
++		    !oidcmp(&parent->object.oid,
++			    &origin->commit->parents->item->object.oid))
++			compute_diff = maybe_changed_path(r, parent,
++							  origin, bd);
++
++		if (compute_diff)
++			diff_tree_oid(get_commit_tree_oid(parent),
++				      get_commit_tree_oid(origin->commit),
++				      "", &diff_opts);
++	}
+ 	diffcore_std(&diff_opts);
+ 
+ 	if (!diff_queued_diff.nr) {
+@@ -1341,7 +1414,8 @@ static struct blame_origin *find_origin(struct repository *r,
+  */
+ static struct blame_origin *find_rename(struct repository *r,
+ 					struct commit *parent,
+-					struct blame_origin *origin)
++					struct blame_origin *origin,
++					struct blame_bloom_data *bd)
+ {
+ 	struct blame_origin *porigin = NULL;
+ 	struct diff_options diff_opts;
+@@ -1366,6 +1440,7 @@ static struct blame_origin *find_rename(struct repository *r,
+ 		struct diff_filepair *p = diff_queued_diff.queue[i];
+ 		if ((p->status == 'R' || p->status == 'C') &&
+ 		    !strcmp(p->two->path, origin->path)) {
++			add_bloom_key(bd, p->one->path);
+ 			porigin = get_origin(parent, p->one->path);
+ 			oidcpy(&porigin->blob_oid, &p->one->oid);
+ 			porigin->mode = p->one->mode;
+@@ -2332,6 +2407,11 @@ static void distribute_blame(struct blame_scoreboard *sb, struct blame_entry *bl
+ 
+ #define MAXSG 16
+ 
++typedef struct blame_origin *(*blame_find_alg)(struct repository *,
++					       struct commit *,
++					       struct blame_origin *,
++					       struct blame_bloom_data *);
++
+ static void pass_blame(struct blame_scoreboard *sb, struct blame_origin *origin, int opt)
+ {
+ 	struct rev_info *revs = sb->revs;
+@@ -2356,8 +2436,7 @@ static void pass_blame(struct blame_scoreboard *sb, struct blame_origin *origin,
+ 	 * common cases, then we look for renames in the second pass.
+ 	 */
+ 	for (pass = 0; pass < 2 - sb->no_whole_file_rename; pass++) {
+-		struct blame_origin *(*find)(struct repository *, struct commit *, struct blame_origin *);
+-		find = pass ? find_rename : find_origin;
++		blame_find_alg find = pass ? find_rename : find_origin;
+ 
+ 		for (i = 0, sg = first_scapegoat(revs, commit, sb->reverse);
+ 		     i < num_sg && sg;
+@@ -2369,7 +2448,7 @@ static void pass_blame(struct blame_scoreboard *sb, struct blame_origin *origin,
+ 				continue;
+ 			if (parse_commit(p))
+ 				continue;
+-			porigin = find(sb->repo, p, origin);
++			porigin = find(sb->repo, p, origin, sb->bloom_data);
+ 			if (!porigin)
+ 				continue;
+ 			if (oideq(&porigin->blob_oid, &origin->blob_oid)) {
+@@ -2809,3 +2888,45 @@ struct blame_entry *blame_entry_prepend(struct blame_entry *head,
+ 	blame_origin_incref(o);
+ 	return new_head;
+ }
++
++void setup_blame_bloom_data(struct blame_scoreboard *sb,
++			    const char *path)
++{
++	struct blame_bloom_data *bd;
++
++	if (!sb->repo->objects->commit_graph)
++		return;
++
++	if (!sb->repo->objects->commit_graph->bloom_filter_settings)
++		return;
++
++	bd = xmalloc(sizeof(struct blame_bloom_data));
++
++	bd->settings = sb->repo->objects->commit_graph->bloom_filter_settings;
++
++	bd->alloc = 4;
++	bd->nr = 0;
++	ALLOC_ARRAY(bd->keys, bd->alloc);
++
++	add_bloom_key(bd, path);
++
++	sb->bloom_data = bd;
++}
++
++void cleanup_scoreboard(struct blame_scoreboard *sb)
++{
++	if (sb->bloom_data) {
++		int i;
++		for (i = 0; i < sb->bloom_data->nr; i++) {
++			free(sb->bloom_data->keys[i]->hashes);
++			free(sb->bloom_data->keys[i]);
++		}
++		free(sb->bloom_data->keys);
++		FREE_AND_NULL(sb->bloom_data);
++
++		trace2_data_intmax("blame", sb->repo,
++				   "bloom/queries", bloom_count_queries);
++		trace2_data_intmax("blame", sb->repo,
++				   "bloom/response-no", bloom_count_no);
++	}
++}
+diff --git a/blame.h b/blame.h
+index 089b181ff27..b6bbee41472 100644
+--- a/blame.h
++++ b/blame.h
+@@ -100,6 +100,8 @@ struct blame_entry {
+ 	int unblamable;
+ };
+ 
++struct blame_bloom_data;
++
+ /*
+  * The current state of the blame assignment.
+  */
+@@ -156,6 +158,7 @@ struct blame_scoreboard {
+ 	void(*found_guilty_entry)(struct blame_entry *, void *);
+ 
+ 	void *found_guilty_entry_data;
++	struct blame_bloom_data *bloom_data;
+ };
+ 
+ /*
+@@ -180,6 +183,9 @@ void init_scoreboard(struct blame_scoreboard *sb);
+ void setup_scoreboard(struct blame_scoreboard *sb,
+ 		      const char *path,
+ 		      struct blame_origin **orig);
++void setup_blame_bloom_data(struct blame_scoreboard *sb,
++			    const char *path);
++void cleanup_scoreboard(struct blame_scoreboard *sb);
+ 
+ struct blame_entry *blame_entry_prepend(struct blame_entry *head,
+ 					long start, long end,
+diff --git a/builtin/blame.c b/builtin/blame.c
+index bf1cecdf3f9..3c13634f279 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -1061,6 +1061,14 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+ 	string_list_clear(&ignore_revs_file_list, 0);
+ 	string_list_clear(&ignore_rev_list, 0);
+ 	setup_scoreboard(&sb, path, &o);
++
++	/*
++	 * Changed-path Bloom filters are disabled when looking
++	 * for copies.
++	 */
++	if (!(opt & PICKAXE_BLAME_COPY))
++		setup_blame_bloom_data(&sb, path);
++
+ 	lno = sb.num_lines;
+ 
+ 	if (lno && !range_list.nr)
+@@ -1164,5 +1172,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+ 		printf("num get patch: %d\n", sb.num_get_patch);
+ 		printf("num commits: %d\n", sb.num_commits);
+ 	}
++
++	cleanup_scoreboard(&sb);
+ 	return 0;
+ }
 -- 
 gitgitgadget
-
