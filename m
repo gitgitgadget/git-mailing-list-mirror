@@ -7,63 +7,63 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A94BCC2BBFD
-	for <git@archiver.kernel.org>; Mon, 13 Apr 2020 14:45:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B36AC2BA2B
+	for <git@archiver.kernel.org>; Mon, 13 Apr 2020 14:45:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8895B2075E
-	for <git@archiver.kernel.org>; Mon, 13 Apr 2020 14:45:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 762D420767
+	for <git@archiver.kernel.org>; Mon, 13 Apr 2020 14:45:37 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ePTBjSHt"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qkbai/gu"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729199AbgDMOpc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Apr 2020 10:45:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39326 "EHLO
+        id S1729218AbgDMOpf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Apr 2020 10:45:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39330 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729135AbgDMOpa (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Apr 2020 10:45:30 -0400
-Received: from mail-ed1-x542.google.com (mail-ed1-x542.google.com [IPv6:2a00:1450:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B4DAC0A3BE2
+        with ESMTP id S1729137AbgDMOpb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Apr 2020 10:45:31 -0400
+Received: from mail-ed1-x544.google.com (mail-ed1-x544.google.com [IPv6:2a00:1450:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEA67C008748
         for <git@vger.kernel.org>; Mon, 13 Apr 2020 07:45:30 -0700 (PDT)
-Received: by mail-ed1-x542.google.com with SMTP id cb27so12202143edb.11
+Received: by mail-ed1-x544.google.com with SMTP id z65so12316064ede.0
         for <git@vger.kernel.org>; Mon, 13 Apr 2020 07:45:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=wMWAdJaDoesQ7l4YrmZbXUqFvfIk/aDRRi7TZz1QS+k=;
-        b=ePTBjSHtVMe0onPh+iNXJwqxoaBvxIwbdhdZ9NpFO3jrvrCxi19Ov3TatjLxsP6Ms8
-         oIJ0HueZl6+5oo0n0SprhogjAStC6qw3A7NS7EpIde/qOmv0SwWsCWYswXiZ+XoKkeTn
-         lLAkVigrsksBV9BS+Lye6C4xI4XrdyoqmrsFgVaOVpUdNUpFPRbWtAB0GRSCdvKIjNzH
-         I6oA+unYlfvhXP6KfI/RbtpdsKJwVcy/5c80pO8bApw9pR+18ct57qEEvcCVgIfYUXjw
-         5JrLER9ToP4+jDLCYkbqOpFzeu+CLBXK4s3/bfDs8zSL/5uOQMZcRlC0q3MXTkbXcQzf
-         vgSQ==
+        bh=fxI4kN9j15YUGF9BkcGNTLKPd6kti9IzYEg0lAbFWEA=;
+        b=qkbai/guJV5D4HQZhEnHBd8BuHKjLk3cl/nkysfcG0D1ywggLBIkEpDYNk3zVwIrTH
+         9+iAlaW1iMgh00KDlYILABn3RhwJQAjttvX/gEdC7vS3uTM2qa+LsFJoiTR+nHmd2iJH
+         xMfZAwbnSfnc5QqymwL1hdT7AyU1Tb4K2tzEDIjkikpFsMd1tv3X5fjX/lEBuia8Pil2
+         Vx2MvIeeNipJOoJgXqygdgEa/15RKATuoE1n7PoP4yHDMPnnZib5lBQEx6VSXQUwqpHV
+         scPNfbeMb4RW/dAMGt9jMB7rYM2qgiD4aiBh2nxYxh5CDKkP1tAYZVI5grtQLQrFJOQp
+         +KfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=wMWAdJaDoesQ7l4YrmZbXUqFvfIk/aDRRi7TZz1QS+k=;
-        b=ejG59kxjO/We2AM79hTtN7BACCBN1rRoGKyw0T5tG30zHdgQwc1kr4lWCckogON8+i
-         V1oHZwuHqB79nu7mUx358OPAduN6rYx7JcU1f0YDqpvNqjO3AxG2xZLCQLsvka3nS0e+
-         +JOYaG3jJUYkWXQ9D6Sz7tc8801JodxqsIJZqtfSRWIxGWDOfyAl2Pfhyt8RthqV9iwz
-         amv2nUNWrWJI+shBtVSe1YlNe13q68fFAPqieAmsl+eog/4AvBfZQVBztFXSEvA46qjt
-         /GP19u2Y9bhPYFTKOm3E/0KIgjYvMf0YfchQ9psiPoKmJqjceKm00ac0JcZR06Jhupmd
-         743g==
-X-Gm-Message-State: AGi0Pub4XizRXb7nB5qtI+4eBX0rJyNFM2AYUjQGgmQxql1RrYiYipPp
-        Q57sihfvpR+/Vk4NTBMZu71rlyH/
-X-Google-Smtp-Source: APiQypJSJpbaqUlEQ87s31wxTVA85gup8ie6dfGSM/BK4TSTF4oejmNTXj99kBxN9Y241upSC6PRzg==
-X-Received: by 2002:a17:906:1f55:: with SMTP id d21mr16288767ejk.320.1586789128613;
-        Mon, 13 Apr 2020 07:45:28 -0700 (PDT)
+        bh=fxI4kN9j15YUGF9BkcGNTLKPd6kti9IzYEg0lAbFWEA=;
+        b=TO/CQzex5DufLUGJPWYxJCU4DufksHIUv6UuOdj+kSZ/HeQbmmIVg8r/IhnoDfCG0g
+         Y/+pX51kuZxQkiASOOfFTVoPl4++bn8gfpSTC4+AI1qTyhip90dxPJn00edOT+gzpCNb
+         EQuaAS7NM1X1fC6AjkRQmsy4iIf04sl86iZHL5eoW0ohxdUAbPsLDh4ucwioU/5EiX+o
+         G0lYBVVoB2sSslwEmCp3Vksp+CEXqVfkipJXwMsi/aUdfIEKb6cLfdO4IIKm+QTMWqsq
+         YEH3D4PvdzC6WxhAjpiLhqsURVRJvgnV6eGww3vZN/OWus2XAJR+ioE8h+w9To5ewdHR
+         C9FA==
+X-Gm-Message-State: AGi0PuadwW2/HJ3Gss9hvWa+ECurXvz1s88/0UFC8kerXLHf2KbS8aB4
+        UPfKxP2L71LyGrFnVYaMRsyq5fNr
+X-Google-Smtp-Source: APiQypKqmwojgqKxQ/Zmx6OEnE/RVbdHuiW7noCCUoAyEQEEMRv75zbp69yFc5w7SULzgPMkQeO1RA==
+X-Received: by 2002:a17:906:f90e:: with SMTP id lc14mr1995312ejb.156.1586789129395;
+        Mon, 13 Apr 2020 07:45:29 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u8sm1334855edx.13.2020.04.13.07.45.28
+        by smtp.gmail.com with ESMTPSA id r19sm83399edo.12.2020.04.13.07.45.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Mon, 13 Apr 2020 07:45:28 -0700 (PDT)
-Message-Id: <adc03eee4ac8a0911bfd2a7ae03364ef0e744ef0.1586789126.git.gitgitgadget@gmail.com>
+Message-Id: <7e8f1aed1138ab2a52a8957ac95895ac9effd933.1586789126.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.609.v2.git.1586789126.gitgitgadget@gmail.com>
 References: <pull.609.git.1586566981.gitgitgadget@gmail.com>
         <pull.609.v2.git.1586789126.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 13 Apr 2020 14:45:23 +0000
-Subject: [PATCH v2 1/4] revision: complicated pathspecs disable filters
+Date:   Mon, 13 Apr 2020 14:45:24 +0000
+Subject: [PATCH v2 2/4] commit: write commit-graph with Bloom filters
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,70 +79,37 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The changed-path Bloom filters work only when we can compute an
-explicit Bloom filter key in advance. When a pathspec is given
-that allows case-insensitive checks or wildcard matching, we
-must disable the Bloom filter performance checks.
+The GIT_TEST_COMMIT_GRAPH environment variable updates the commit-
+graph file whenever "git commit" is run, ensuring that we always
+have an updated commit-graph throughout the test suite. The
+GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS environment variable was
+introduced to write the changed-path Bloom filters whenever "git
+commit-graph write" is run. However, the GIT_TEST_COMMIT_GRAPH
+trick doesn't launch a separate process and instead writes it
+directly.
 
-By checking the pathspec in prepare_to_use_bloom_filters(), we
-avoid setting up the Bloom filter data and thus revert to the
-usual logic.
+Update the "git commit" builtin to write changed-path Bloom filters
+when both GIT_TEST_COMMIT_GRAPH and GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS
+are enabled.
 
-Before this change, the following tests would fail*:
-
-	t6004-rev-list-path-optim.sh (Tests 6-7)
-	t6130-pathspec-noglob.sh (Tests 3-6)
-	t6131-pathspec-icase.sh (Tests 3-5)
-
-*These tests would fail when using GIT_TEST_COMMIT_GRAPH and
-GIT_TEST_COMMIT_GRAPH_BLOOM_FILTERS except that the latter
-environment variable was not set up correctly to write the changed-
-path Bloom filters in the test suite. That will be fixed in the
-next change.
-
-Helped-by: Taylor Blau <me@ttaylorr.com>
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- revision.c | 19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+ commit-graph.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/revision.c b/revision.c
-index 2b06ee739c8..f78c636e4d0 100644
---- a/revision.c
-+++ b/revision.c
-@@ -650,6 +650,20 @@ static void trace2_bloom_filter_statistics_atexit(void)
- 	jw_release(&jw);
- }
+diff --git a/commit-graph.c b/commit-graph.c
+index 77668629e27..3e8f36ce5c8 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -1968,6 +1968,8 @@ int write_commit_graph(struct object_directory *odb,
+ 	ctx->check_oids = flags & COMMIT_GRAPH_WRITE_CHECK_OIDS ? 1 : 0;
+ 	ctx->split_opts = split_opts;
+ 	ctx->changed_paths = flags & COMMIT_GRAPH_WRITE_BLOOM_FILTERS ? 1 : 0;
++	if (git_env_bool(GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS, 0))
++		ctx->changed_paths = 1;
+ 	ctx->total_bloom_filter_data_size = 0;
  
-+static int forbid_bloom_filters(struct pathspec *spec)
-+{
-+	if (spec->has_wildcard)
-+		return 1;
-+	if (spec->nr > 1)
-+		return 1;
-+	if (spec->magic & ~PATHSPEC_LITERAL)
-+		return 1;
-+	if (spec->nr && (spec->items[0].magic & ~PATHSPEC_LITERAL))
-+		return 1;
-+
-+	return 0;
-+}
-+
- static void prepare_to_use_bloom_filter(struct rev_info *revs)
- {
- 	struct pathspec_item *pi;
-@@ -659,7 +673,10 @@ static void prepare_to_use_bloom_filter(struct rev_info *revs)
- 	int len;
- 
- 	if (!revs->commits)
--	    return;
-+		return;
-+
-+	if (forbid_bloom_filters(&revs->prune_data))
-+		return;
- 
- 	repo_parse_commit(revs->repo, revs->commits->item);
- 
+ 	if (ctx->split) {
 -- 
 gitgitgadget
 
