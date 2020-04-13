@@ -7,87 +7,96 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 08E1AC2BB86
-	for <git@archiver.kernel.org>; Mon, 13 Apr 2020 12:14:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E515C2BA19
+	for <git@archiver.kernel.org>; Mon, 13 Apr 2020 13:16:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DCCBC2073E
-	for <git@archiver.kernel.org>; Mon, 13 Apr 2020 12:14:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3551420692
+	for <git@archiver.kernel.org>; Mon, 13 Apr 2020 13:16:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="o9MJUG8b"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V8o/tdTX"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728256AbgDMMOu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Apr 2020 08:14:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51920 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1728251AbgDMMOn (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 13 Apr 2020 08:14:43 -0400
-Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10BF7C03BC81
-        for <git@vger.kernel.org>; Mon, 13 Apr 2020 05:05:13 -0700 (PDT)
-Received: by mail-ot1-x333.google.com with SMTP id x11so8809287otp.6
-        for <git@vger.kernel.org>; Mon, 13 Apr 2020 05:05:12 -0700 (PDT)
+        id S1728697AbgDMNQH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Apr 2020 09:16:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44312 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728135AbgDMNQH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Apr 2020 09:16:07 -0400
+Received: from mail-oi1-x244.google.com (mail-oi1-x244.google.com [IPv6:2607:f8b0:4864:20::244])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05CC9C0A3BDC
+        for <git@vger.kernel.org>; Mon, 13 Apr 2020 06:16:07 -0700 (PDT)
+Received: by mail-oi1-x244.google.com with SMTP id s202so4092680oih.3
+        for <git@vger.kernel.org>; Mon, 13 Apr 2020 06:16:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:from:date:message-id:subject:to:cc;
-        bh=mKiy1/2n8ZhtwoZJnCZdNCgyT3uHG6YpPLP0VoZ4Qo8=;
-        b=o9MJUG8b8x8lJfWY+dLoEqUb48QZoY7WOpv2WmJ31doUT2GkEp0nt0xG+sT3fgFGfJ
-         VIfY0qQ+0tNJBmkbmjXrg4VQ/zP5BHffXvs8+OL5VxhO+57qyZCJLmeX2/VfSN8oKDNz
-         9rDAHaQXr3nVGi4c8HGnuFNBrzA715T0mOyJgw8YCRW1sD9B+lL7bNgqj5YikURBBtCU
-         ciSTgNyKDwKYhtc5+xaD2dqShvY4Z+sxHRbwCTB8RMaXD/R/UWTG+Baf94+o+FyGqCTi
-         pK/E3wMz+5EbncI61qF4jrGqwTG7o0TPPx/7IDKmrGsFPM10olb8LT3tLYhNmhtfAzXS
-         ZdeA==
+        bh=FidUyVaJVED0/VfxaURE66mVnb1tfZkJuJKOLd6KX48=;
+        b=V8o/tdTXaNEDtDiCfWVZ0I1qi0hyD2osPAqRK2GP0BvjsLqOre9tttXlKnyl22zpgJ
+         gRdKh44ZYLr4S38rJenHdxxat11MjoKWvLcLrlrlDrcRhZMFjqkyEQvMSckzgzke+J5E
+         9h+VK2xMM+umNKeK0SCRYk0le8GGfBNXGIzpW2s2ulEaMdpPzTK3lgSOpdUhPlx6GD+8
+         iZq7rAc84Umnu/NFfDTtZiJoc4tKq70XyGOfMqnCK7/AHAQjvmC8o+hnoxyGPvtCOTOP
+         9+PkPa0GruBui9QmXOJTKBISR6b7+xzvRVJ7uakvepWFPFYMTLT49BUlHeimG5HIS6+M
+         KGQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=mKiy1/2n8ZhtwoZJnCZdNCgyT3uHG6YpPLP0VoZ4Qo8=;
-        b=rzNkdRItiw9RgWKOMJHVJq9WDvLOVcYuyH7H923m+2ZbScdPhLOE3FFLBz9p61/gHe
-         juz7baA0CYHbea5h+heZiyMp59iHrx/DMqQxvIYXbZfKOjrOruyoe8fmKk8W+r0GZ62j
-         nZt2IMZTIjL2cSpTq6dYUvRp1fxMCQkR7ep0bIWzI7C0u2Yj9u8WCY3vuZb93lOugu0k
-         Xl0Kae2VfZeJ07f/Fm8RUtNxXIbo6FHH7I8E3na2ERPgfT2QPovdetrmjqja0mmLXOqc
-         t79+xM01FCcpXeLUfwOk5/tM6otS7KdCJCSI0mEAUuqmNsn4rktc4aGxDI8W9ctwwq4R
-         JsSQ==
-X-Gm-Message-State: AGi0PubUNJFXDRU1rl77hsc6d6CSDoLQaXsF+blXcOjFkyB9gibiOcnH
-        lMBuGGyeAka3hbkgAp7aiwY/4xiSR9m7ZzkZgcy3W2SF
-X-Google-Smtp-Source: APiQypIcx1Ba2rY1joSslhaJQ1lU0JtudU0Ll7A2y0drJZm5rkPgvuEwrlFVPyb4QT/baLvzNyfPQfcciRkfQVGD32U=
-X-Received: by 2002:a9d:6e09:: with SMTP id e9mr13560838otr.32.1586779511381;
- Mon, 13 Apr 2020 05:05:11 -0700 (PDT)
+        bh=FidUyVaJVED0/VfxaURE66mVnb1tfZkJuJKOLd6KX48=;
+        b=M7yOL3dZEnJF2/g6fcLQ0pgVgqlb/JzyGpmX1mUJjArkwwtl4UB19rSJtNHpLT2/x2
+         K6cDqkivQ0jVSH8VzVxEcgcooyopZmcsQMlBaHQsZw3AYvgEWPu0d3eZnAWmWus5MUYK
+         t5zMGC1ZZKcd189G5ILQOEHrksqEos+/6J0BAR7Ko+72YQuvd7iiHq04gc0HQ+J6K41R
+         y9FKP6SrfJSCcuPX7OVF/P/SpXWruinQ8Bg+u54ZRaXHxoTw5+z9wLNwTBiR2DdU9s30
+         jw2mgX4CN4/r7k+ASNZ5xofW9mS4JsntZw/4IQU//AWfMqArqucxZppCyWiI2i4eIJiU
+         7LtQ==
+X-Gm-Message-State: AGi0PuY8Lo4J3cOPNV9Aq9U+u1GnpJ+DkS8J5pkFsH4uHmOYgd2ZR4Ka
+        CeewVBLLaejKq+LW+zVO12nERfGlfvZh+vvbeNQ=
+X-Google-Smtp-Source: APiQypKN9iGXzWdjdG6w9UeQ57bDeqJ4IU87oKLZjdSPzZ0NF7gVdZVcCU2FJbfMaW9fvrgOLUPf7ko6B2pP7HYnsPY=
+X-Received: by 2002:aca:ddc5:: with SMTP id u188mr11076206oig.8.1586783766281;
+ Mon, 13 Apr 2020 06:16:06 -0700 (PDT)
 MIME-Version: 1.0
 From:   Son Luong Ngoc <sluongng@gmail.com>
-Date:   Mon, 13 Apr 2020 14:05:00 +0200
-Message-ID: <CAL3xRKceuniEOq+PqN15FC4-mxsWJd4+e2fu1Ku9q_+8JmR9pw@mail.gmail.com>
-Subject: Git pull stuck when Trace2 target set to Unix Stream Socket
-To:     git@vger.kernel.org
-Cc:     Jeff.Hostetler@microsoft.com
+Date:   Mon, 13 Apr 2020 15:15:54 +0200
+Message-ID: <CAL3xRKew_RHbPbp0qSa7WcDbaMmMWWmBi_nvPbmKaSpVDJM08g@mail.gmail.com>
+Subject: Re: [PATCH 03/15] run-job: implement fetch job
+To:     gitgitgadget@gmail.com
+Cc:     dstolee@microsoft.com, git@vger.kernel.org, jrnieder@google.com,
+        peff@peff.net, stolee@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey folks,
+Hi Derrick,
 
-I am trying to write a simple git trace2 event collector and I notice
-that when git doing git pull with trace events being sent to a unix
-stream socket, the entire operation halted.
+First of all, thanks a ton for upstreaming this.
+Despite multiple complaints about re-implementing cron in git,
+I see this as a huge improvement to git UX and it is very much welcome change.
 
-Reproduce as follow:
-```
-cd git/git
-git config trace2.eventTarget af_unix:stream:/tmp/git_trace.sock
-git config trace2.eventBrief false
-(rm /tmp/git_trace.sock | ) &&  nc -lkU /tmp/git_trace.sock
+> 3. By adding a new refspec "+refs/heads/*:refs/hidden/<remote>/*"
+>    we can ensure that we actually load the new values somewhere in
+>    our refspace while not updating refs/heads or refs/remotes. By
+>    storing these refs here, the commit-graph job will update the
+>    commit-graph with the commits from these hidden refs.
+Ideally I think we want to let user configure which refs they want to
+prefetch with the default behavior being prefecting all HEADS
+available from remote.
+Using Facebook's Mercurial extension
+[RemoteFileLog](https://www.mercurial-scm.org/repo/hg/file/tip/hgext/remotefilelog/__init__.py#l31)
+as a UX reference,
+users should only prefetch the refs that they actually care about.
 
-# In a different terminal
-git pull # Pull stuck and never complete
-```
-
-This does not happen when you set eventBrief to true
-```
-git config trace2.eventBrief true
-```
-
-Worth to note that if eventTarget is a file instead of a socket,
-everything works fine.
+> 1. One downside of the refs/hidden pattern is that 'git log' will
+>    decorate commits with twice as many refs if they appear at a
+>    remote ref (<remote>/<ref> _and_ refs/hidden/<remote>/<ref>). Is
+>    there an easy way to exclude a refspace from decorations? Should
+>    we make refs/hidden/* a "special" refspace that is excluded from
+>    decorations?
+In git-log, there is
+[--decorate-refs-exclude](https://git-scm.com/docs/git-log#Documentation/git-log.txt---decorate-refs-excludeltpatterngt)
+which I think we can move into git-config as
+`log.decorate-refs-exclude`?
+If you let the `prefetch refs` be configurable as I suggested above, I
+think it make sense to have the git-log exclusions being configurable
+as well.
 
 Cheers,
 Son Luong.
