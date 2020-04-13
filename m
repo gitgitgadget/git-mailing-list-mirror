@@ -2,123 +2,99 @@ Return-Path: <SRS0=K77S=55=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7BEA7C2BA19
-	for <git@archiver.kernel.org>; Mon, 13 Apr 2020 17:23:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4FA49C2BA19
+	for <git@archiver.kernel.org>; Mon, 13 Apr 2020 17:23:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5025F20735
-	for <git@archiver.kernel.org>; Mon, 13 Apr 2020 17:23:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2B9D320735
+	for <git@archiver.kernel.org>; Mon, 13 Apr 2020 17:23:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="cJNppIul"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="byH9sv6V"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732769AbgDMRXW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Apr 2020 13:23:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59138 "EHLO
+        id S1732772AbgDMRXn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Apr 2020 13:23:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59198 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1732579AbgDMRXV (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 13 Apr 2020 13:23:21 -0400
-Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3434BC0A3BDC
-        for <git@vger.kernel.org>; Mon, 13 Apr 2020 10:23:19 -0700 (PDT)
-Received: by mail-pg1-x529.google.com with SMTP id r4so4732574pgg.4
-        for <git@vger.kernel.org>; Mon, 13 Apr 2020 10:23:19 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1732579AbgDMRXm (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 13 Apr 2020 13:23:42 -0400
+Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0F54C0A3BDC
+        for <git@vger.kernel.org>; Mon, 13 Apr 2020 10:23:41 -0700 (PDT)
+Received: by mail-pj1-x1042.google.com with SMTP id b7so4114474pju.0
+        for <git@vger.kernel.org>; Mon, 13 Apr 2020 10:23:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=y1EW52Zw0IZw/l1caOMbhQSTQVcM3gSZtJJJPzZvGqI=;
-        b=cJNppIulhNaRJM86SIIdc7WcPuOd8BmQy1nmovTl5edzVeeXM+INjFL9mMDZ4kLnCX
-         GYhQGxV13XK5cWJ+lDrPW8n6IdMZjJUlbSHigydfdT7b+6TRgU7+MawLGmyCPQ6s7xd+
-         62tT7OYD4tOg0P/vUZ0wF0gHEBKXlePMxzDElwb5nUNlLBNSjRkO4yFL2PXR/VgEhRun
-         lgwLb9mYl53bmEP5KvJ1yUZJv/9BGfya3p3v9gcb6TAByI40ZlOlIPiDP0TBAlh9vC4V
-         K6IKKWJb8G0FAAPC3Z+JMf/ZqxHkGUJgEvr3FfsgfCKJoDJ2UxcmZU3LFUcqib7XbugW
-         SgVg==
+        bh=nr3/U6thSJr5xhjLkdaoE7XntqO/5rjkHLxy5d+zsBE=;
+        b=byH9sv6VqA1Ql/sLDOSpa8vTrMNe9F4m/TgDPFJLp3HWmuEhICuMcMf2tK+Ya6xixE
+         8t+zWohp7lZUMuE+KVckuoQAFTf1PNHfYIirVN/GV6ao3+x5M39L4RndszudGIndZMK8
+         kka+uLhMO6neCnQ4r+2p+prdAAZLKR3Ibu6Ou6Y87AejSj7R7V/AWm0TekTMJqNi2eiR
+         T2bieCX3D827w3crR6xPSNm/S75CGARNA1O5OP6hg20B+WRtH+LuZsRh/QucruDwzEle
+         9IlumSZkNkSAygQDqVoCkq49b+26iscQwv8ZgOY91clqfzDw3aMEHf+pJWD6YoglJAMA
+         TvUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=y1EW52Zw0IZw/l1caOMbhQSTQVcM3gSZtJJJPzZvGqI=;
-        b=TSh6ZW8xWw7SMLlwgLaMu5fVdJmbzt8LVkGhGckpunLF6+SQct/TuHk+loeAezfFCA
-         oNOOCpS2C/3e4il7EEHOdWwNkgaJzhrPw+eVmD0MXhJpOB+K8hXqTX75qxsoAHRaKsaE
-         Solh/ZAMXUOvmRRE3FuJSP3ldf/lnXwYxAM/6tMjQ2alKcnFUlGH1TsALpQkQMo8MgYx
-         hMC7fwJU6eBpOevy18QqNjxGgZ3DaJSbha0y68RptkGc774kiAuLUXkwK4C0B0suLdCU
-         Wo7rOiNwc2chmQWT8VTMBqiiywZh6mSVInCIxclpofEYrv87Gyz7jILcQ10PSJEepOpZ
-         W7Nw==
-X-Gm-Message-State: AGi0PuZIN6zUDr1nTd0+OGp39tRj17bOgskQI6gH7AfUuzTPT7eqNtY3
-        NF+pJbwZftAinP1YN1Movhgl8Q==
-X-Google-Smtp-Source: APiQypLGZY+XssuPXc/IJ5hfd/Nr6mEo97IA92ndHKmW6XFXmlqWd8Y9nNgG9lojU+hlLkIpM2MLHg==
-X-Received: by 2002:a65:6250:: with SMTP id q16mr18743399pgv.9.1586798598489;
-        Mon, 13 Apr 2020 10:23:18 -0700 (PDT)
+        bh=nr3/U6thSJr5xhjLkdaoE7XntqO/5rjkHLxy5d+zsBE=;
+        b=Q9Bo9CK4hlsZQ+dXRwc/xp8XtpjaqlrpZ+Xn7f1f1HuXoudzFPygjm3TPUdWfOUJmL
+         0j2fSbeqLnowoKB/vqoFNNJkQRKSNdRhlNoBBo8MSGHLKC+TtQmSw53C/Q0ufLF1dbh+
+         hCPIQ3eoqcrMqQYtPoGk32a44cIazzy++ArPbCb864huZuI/TKdq4h9dUbejuz7Erq6w
+         YCuZbJK4BAVRNJtsn2PHEc+PvsagkPN9UjhkFqOcHQI/QzvmwQ4BRqRbV5yUxPIFStsO
+         QeqXptG2pazY4yD1iH5pWZiHpnOMLg2tbGoCPGJys1dNUpbZGY1xG2+s4iV494RTXGt0
+         Suzg==
+X-Gm-Message-State: AGi0PuYNhcyzwtoRz7Gg8DvGpDX81UxLZ0PGa5yj8aeowG3+CyfMmkrG
+        SmyWgAKgtvqZYPfwsrMqBLSb4En/aRZXNg==
+X-Google-Smtp-Source: APiQypIzo6Vplx+z5m80UcwLzoHq42zM+SiyHCKBW8hfuGPYfIetRestdioJHi0eqbu/C58l4ru/HQ==
+X-Received: by 2002:a17:90a:aa96:: with SMTP id l22mr2613030pjq.1.1586798621407;
+        Mon, 13 Apr 2020 10:23:41 -0700 (PDT)
 Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id q131sm4197096pfq.115.2020.04.13.10.23.17
+        by smtp.gmail.com with ESMTPSA id r4sm8264656pgi.6.2020.04.13.10.23.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Apr 2020 10:23:18 -0700 (PDT)
-Date:   Mon, 13 Apr 2020 11:23:16 -0600
+        Mon, 13 Apr 2020 10:23:40 -0700 (PDT)
+Date:   Mon, 13 Apr 2020 11:23:40 -0600
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Son Luong Ngoc <sluongng@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        Jeff.Hostetler@microsoft.com
-Subject: Re: Git pull stuck when Trace2 target set to Unix Stream Socket
-Message-ID: <20200413172316.GA63249@syl.local>
-References: <CAL3xRKceuniEOq+PqN15FC4-mxsWJd4+e2fu1Ku9q_+8JmR9pw@mail.gmail.com>
- <20200413160051.GB59601@syl.local>
- <D350F464-61DE-4EB6-BBE1-514A0C051F38@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Subject: Re: [PATCH 0/6] better handling of gigantic config files
+Message-ID: <20200413172340.GB63249@syl.local>
+References: <20200410194211.GA1363484@coredump.intra.peff.net>
+ <20200413004927.GC55122@syl.local>
+ <20200413172052.GB8183@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <D350F464-61DE-4EB6-BBE1-514A0C051F38@gmail.com>
+In-Reply-To: <20200413172052.GB8183@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 13, 2020 at 07:19:03PM +0200, Son Luong Ngoc wrote:
-> Hi Taylor,
+On Mon, Apr 13, 2020 at 01:20:52PM -0400, Jeff King wrote:
+> On Sun, Apr 12, 2020 at 06:49:27PM -0600, Taylor Blau wrote:
 >
-> Thanks for the swift reply.
->
-> > On Apr 13, 2020, at 18:00, Taylor Blau <me@ttaylorr.com> wrote:
-> > I doubt that this is important (for a reason that I'll point out below),
-> > but it looks like your invocation here is malformed with the trailing
-> > pipe character.
+> > Thanks for doing this. I knew that it rang a bell for some reason, but
+> > it was because of the upload-pack changes to limit the set of allowed
+> > object filter choices that I'd sent as an RFC somewhere.
 > >
-> > Did you mean to redirect the output of rm away? If so, '2>&1 >/dev/null'
-> > will do what you want.
-> It was an emailing mistake. I meant to write
-> > rm /tmp/git_trace.sock || true
-
-For what it's worth, 'rm -f' would suffice, too, but it doesn't matter.
-
-> So that the command is reproducible on repeated run.
-> I must have deleted the remaining part by mistake.
+> > I was using 'parse_config_key()', and I think that you noted somewhere
+> > that it was odd that it filled an int and not a size_t. So, thanks very
+> > much for fixing that case.
 >
-> > Odd. From my memory, trace2 will give up trying to connect to the socket
-> > (disabling itself and optionally printing a warning) if 'socket(2)' or
-> > 'connect(2)' set the error bit. My guess above is that you don't have a
-> > listening socket (because your shell is waiting for you to close the
-> > '|'), so there's no connection to be made.
-> There is definitely connection still, as I can still receive more events after interupting the stuck git command by Ctrl-C.
+> Yes, your patch was part of why it was on my mind, though really all of
+> this is the culmination of many years of annoyance. :)
 >
-> > Odd. What version of Git are you using? Your description makes it
-> > sound like it may be a bug, so I'd be curious to hear Jeff's
-> > interpretation of things, too.
-> 2.26.0 built from Master git/git
->
-> For more info, I have created a paste to demonstrate the bug
-> https://gist.github.com/sluongng/e14563e4ce3cc9545781ecd5a95169f6
-> In which, I run `git pull origin` and `git version` on a relatively stale https://gitlab.com/gitlab-org/gitlab.git local copy.
->
-> You can get more information from the trace in that paste.
-> I have annotated the moment which the stuck happened with `It stucks HERE` phrase so look for it.
+> You'll have to update your code to use size_t when the two are merged
+> together. I don't think there's anything else in flight that needs
+> similar treatment, though.
 
-Hmm. It sounds like maybe there is a bug. If Jeff doesn't have time to
-take a look, I'll try to figure out what's going on here.
+Nope, just that. Easy enough :).
 
-> Cheers,
-> Son Luong.
+> -Peff
 
 Thanks,
 Taylor
