@@ -2,121 +2,151 @@ Return-Path: <SRS0=K77S=55=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1BA4EC2BA19
-	for <git@archiver.kernel.org>; Mon, 13 Apr 2020 16:00:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 102FEC2BA19
+	for <git@archiver.kernel.org>; Mon, 13 Apr 2020 16:09:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E9AC72072D
-	for <git@archiver.kernel.org>; Mon, 13 Apr 2020 16:00:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DB1B42063A
+	for <git@archiver.kernel.org>; Mon, 13 Apr 2020 16:09:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="FQ1sorux"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="zFp1Xekm"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731203AbgDMQAz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Apr 2020 12:00:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34736 "EHLO
+        id S1731264AbgDMQJM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Apr 2020 12:09:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36748 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731188AbgDMQAy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Apr 2020 12:00:54 -0400
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C290C0A3BDC
-        for <git@vger.kernel.org>; Mon, 13 Apr 2020 09:00:54 -0700 (PDT)
-Received: by mail-pj1-x1030.google.com with SMTP id t40so3954926pjb.3
-        for <git@vger.kernel.org>; Mon, 13 Apr 2020 09:00:54 -0700 (PDT)
+        with ESMTP id S1731259AbgDMQJL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Apr 2020 12:09:11 -0400
+Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 283C2C0A3BDC
+        for <git@vger.kernel.org>; Mon, 13 Apr 2020 09:09:11 -0700 (PDT)
+Received: by mail-pl1-x642.google.com with SMTP id k18so3534834pll.6
+        for <git@vger.kernel.org>; Mon, 13 Apr 2020 09:09:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=u9/8J28a3XgxnTrJi2ALAtM+VvJxe4UQKfWjNAY2PHw=;
-        b=FQ1soruxZEat2z6qkmT2f78R9AY31MuN0Y3ckiYSEj2nl6CNVTkWyzqQugdfrt8s2q
-         YF7P9/UGnIKaTY69VbQsb51qWAlwGKjD8HZLroCAA5mGaWAfgj2n2IDEKmZ2lf4+QZ4M
-         O1kOWx6uXZQWShjoHu6RIy58BkTct32b8u63Pg5D+y3385vpxIqho7BiOH5DwRuQ46NP
-         NsTsNIcGAttILeuRbLL/ec7h2Cer6Ih6IRbPucuufCLMIi5mL9mhKYx3jGk3ss/uJH1U
-         3Z9YDNr1wdU7LrbKFHNmcSApcKrNq/XXU/HB9diK/9HPmoGW7+m1ojjkT6Hv0h+ChtiH
-         hL9A==
+        bh=sNnLYNFX7xVLpuDsSHege/R5XzztvpGZnD7d4D6QGLE=;
+        b=zFp1Xekmppa5Bcg7exmFVM1VhNITkxgCci6aZDdSQSFAK5jZUSER9du3Otv7lbdPOh
+         21y2QDWNpNYkq+iaOGUPitNpCI/OqVgSrG7DSV/1HMto1+O9ZUreIyTUccrRnAsjlV04
+         NKcgtd305eK50cn0E/VX17/OiFgczC2r+Grjcwr18Jlcr9S+ZWDZ0vrAYiOGVNhaeHVh
+         k9e8g7xUAMwwTxqcTrx7HtFjBRVSCa66FxCIQPZH9oAjtWdWlAQMVsyHt1mL7XTMHQYc
+         /l07p1FNHBssY3IgnvOJbtI0VUGNksmRxyYqN1YXCwRu8tbs0xLCJa9pYIXn5IEarm1q
+         xG7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=u9/8J28a3XgxnTrJi2ALAtM+VvJxe4UQKfWjNAY2PHw=;
-        b=mCJBExKzLG/1tngMeHbVbNhmRzBbJHqRiSBgjAF8/1M0li34VZRwTpNFjihMW0zwGY
-         JjBqmribVff6H9sf/hck6FOFRr+F0F5bkbfkLiaI9li2kxekAgYeP8sa8AXGD/jh7CKt
-         kVJLdoQV7jd/lMDrGL/hZUuUjthESJLpWQl8LTwSgegrPnHeID0LXVDF681eExopD2Zm
-         ScqxMi1geBXp6mj11bO2BgU9US3G8VZ39FEEfqmKk+8ODLg8dMfWSfxPh4fBCvSClWS0
-         D6E1ZJhMZyoK7KCt0uLlwVUSr3wHGLMak1XQDjFb8A8nY+IDy66IBAm/G1e+/4x8CVHC
-         Yaaw==
-X-Gm-Message-State: AGi0PuYANn4Vy1RjoNFZMw+j9mdnD3EjiKxNl4xyZjfvM/ld1BJ5fjDS
-        J3FeD/5QwvJDCZUsPienum+tWA==
-X-Google-Smtp-Source: APiQypJAg3+Q4XHV7eKWqBdwITTammK45VV4eXRxCGF/G4ePwu2JwdrHU455XkwYTeTGcSJ/NftYuQ==
-X-Received: by 2002:a17:90b:3849:: with SMTP id nl9mr21757916pjb.86.1586793653393;
-        Mon, 13 Apr 2020 09:00:53 -0700 (PDT)
+        bh=sNnLYNFX7xVLpuDsSHege/R5XzztvpGZnD7d4D6QGLE=;
+        b=AQCqkDpq8N+M7RiVyQRslVHX9e6zgLFNjSPZuh9z6V894uxpEqZmmtd0sDwSTRK23Y
+         O8QbKQWhBKDdiPOemT9FnWwXXbLLxwY7uFHFCFQnQgnolbhwKjruf0sNayboJG55H7IY
+         lVZyzX91VNagnSte7y6kJ8R1evGHFTvp1muoIdT9CZa9Hp/kuq5s1EWVYCABSsTdEAzA
+         7mPVbYY8D7S0eGgo21a29GTmlOcQS/H9p1ZfMP5a67IzxV3e5BH083fQwlIEEs87zJPb
+         VNri4k+C6Z5KXH9VwDuQ35iGpAcaRHMjsSZipxEIbToBT0gYjJs63vba/MYtidLIyxWQ
+         U7Rg==
+X-Gm-Message-State: AGi0PubUGMQqvpDquqBY9ML1/c7ODTTJdSm2luUXGT/ZNZ14Q9yQpR0K
+        b7Bqs2RQ3WBP7RyBXBOi7cqOcA==
+X-Google-Smtp-Source: APiQypLgzy59Rq/RWK0bbfccKZE4Y4BkjgCXyUlOU3qNBLhQhsB/KD12KRc5fPgJ5vS22dGigMscAw==
+X-Received: by 2002:a17:902:347:: with SMTP id 65mr18031328pld.21.1586794150477;
+        Mon, 13 Apr 2020 09:09:10 -0700 (PDT)
 Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id l30sm7315596pgu.29.2020.04.13.09.00.52
+        by smtp.gmail.com with ESMTPSA id o125sm8154560pgo.74.2020.04.13.09.09.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Apr 2020 09:00:52 -0700 (PDT)
-Date:   Mon, 13 Apr 2020 10:00:51 -0600
+        Mon, 13 Apr 2020 09:09:09 -0700 (PDT)
+Date:   Mon, 13 Apr 2020 10:09:08 -0600
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Son Luong Ngoc <sluongng@gmail.com>
-Cc:     git@vger.kernel.org, Jeff.Hostetler@microsoft.com
-Subject: Re: Git pull stuck when Trace2 target set to Unix Stream Socket
-Message-ID: <20200413160051.GB59601@syl.local>
-References: <CAL3xRKceuniEOq+PqN15FC4-mxsWJd4+e2fu1Ku9q_+8JmR9pw@mail.gmail.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, me@ttaylorr.com, jnareb@gmail.com,
+        garimasigit@gmail.com, Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v2 1/4] revision: complicated pathspecs disable filters
+Message-ID: <20200413160908.GD59601@syl.local>
+References: <pull.609.git.1586566981.gitgitgadget@gmail.com>
+ <pull.609.v2.git.1586789126.gitgitgadget@gmail.com>
+ <adc03eee4ac8a0911bfd2a7ae03364ef0e744ef0.1586789126.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAL3xRKceuniEOq+PqN15FC4-mxsWJd4+e2fu1Ku9q_+8JmR9pw@mail.gmail.com>
+In-Reply-To: <adc03eee4ac8a0911bfd2a7ae03364ef0e744ef0.1586789126.git.gitgitgadget@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 13, 2020 at 02:05:00PM +0200, Son Luong Ngoc wrote:
-> Hey folks,
+On Mon, Apr 13, 2020 at 02:45:23PM +0000, Derrick Stolee via GitGitGadget wrote:
+> From: Derrick Stolee <dstolee@microsoft.com>
 >
-> I am trying to write a simple git trace2 event collector and I notice
-> that when git doing git pull with trace events being sent to a unix
-> stream socket, the entire operation halted.
+> The changed-path Bloom filters work only when we can compute an
+> explicit Bloom filter key in advance. When a pathspec is given
+> that allows case-insensitive checks or wildcard matching, we
+> must disable the Bloom filter performance checks.
 >
-> Reproduce as follow:
-> ```
-> cd git/git
-> git config trace2.eventTarget af_unix:stream:/tmp/git_trace.sock
-> git config trace2.eventBrief false
-> (rm /tmp/git_trace.sock | ) &&  nc -lkU /tmp/git_trace.sock
-
-I doubt that this is important (for a reason that I'll point out below),
-but it looks like your invocation here is malformed with the trailing
-pipe character.
-
-Did you mean to redirect the output of rm away? If so, '2>&1 >/dev/null'
-will do what you want.
-
-> # In a different terminal
-> git pull # Pull stuck and never complete
-> ```
-
-Odd. From my memory, trace2 will give up trying to connect to the socket
-(disabling itself and optionally printing a warning) if 'socket(2)' or
-'connect(2)' set the error bit. My guess above is that you don't have a
-listening socket (because your shell is waiting for you to close the
-'|'), so there's no connection to be made.
-
-> This does not happen when you set eventBrief to true
-> ```
-> git config trace2.eventBrief true
-> ```
-
-Odd. What version of Git are you using? Your description makes it
-sound like it may be a bug, so I'd be curious to hear Jeff's
-interpretation of things, too.
-
-> Worth to note that if eventTarget is a file instead of a socket,
-> everything works fine.
+> By checking the pathspec in prepare_to_use_bloom_filters(), we
+> avoid setting up the Bloom filter data and thus revert to the
+> usual logic.
 >
-> Cheers,
-> Son Luong.
+> Before this change, the following tests would fail*:
+>
+> 	t6004-rev-list-path-optim.sh (Tests 6-7)
+> 	t6130-pathspec-noglob.sh (Tests 3-6)
+> 	t6131-pathspec-icase.sh (Tests 3-5)
+>
+> *These tests would fail when using GIT_TEST_COMMIT_GRAPH and
+> GIT_TEST_COMMIT_GRAPH_BLOOM_FILTERS except that the latter
+> environment variable was not set up correctly to write the changed-
+> path Bloom filters in the test suite. That will be fixed in the
+> next change.
+>
+> Helped-by: Taylor Blau <me@ttaylorr.com>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  revision.c | 19 ++++++++++++++++++-
+>  1 file changed, 18 insertions(+), 1 deletion(-)
+>
+> diff --git a/revision.c b/revision.c
+> index 2b06ee739c8..f78c636e4d0 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -650,6 +650,20 @@ static void trace2_bloom_filter_statistics_atexit(void)
+>  	jw_release(&jw);
+>  }
+>
+> +static int forbid_bloom_filters(struct pathspec *spec)
+> +{
+> +	if (spec->has_wildcard)
+> +		return 1;
+> +	if (spec->nr > 1)
+> +		return 1;
+> +	if (spec->magic & ~PATHSPEC_LITERAL)
+> +		return 1;
+> +	if (spec->nr && (spec->items[0].magic & ~PATHSPEC_LITERAL))
+> +		return 1;
+> +
+> +	return 0;
+> +}
+> +
+>  static void prepare_to_use_bloom_filter(struct rev_info *revs)
+>  {
+>  	struct pathspec_item *pi;
+> @@ -659,7 +673,10 @@ static void prepare_to_use_bloom_filter(struct rev_info *revs)
+>  	int len;
+>
+>  	if (!revs->commits)
+> -	    return;
+> +		return;
+> +
+> +	if (forbid_bloom_filters(&revs->prune_data))
+> +		return;
+>
+>  	repo_parse_commit(revs->repo, revs->commits->item);
+>
+> --
+> gitgitgadget
+>
+
+Nicely done, this looks good to me. Thanks.
 
 Thanks,
 Taylor
