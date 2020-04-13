@@ -2,165 +2,109 @@ Return-Path: <SRS0=K77S=55=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A4875C2BB86
-	for <git@archiver.kernel.org>; Mon, 13 Apr 2020 10:06:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 58E9FC2BA19
+	for <git@archiver.kernel.org>; Mon, 13 Apr 2020 10:59:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7930A2073E
-	for <git@archiver.kernel.org>; Mon, 13 Apr 2020 10:06:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2957E20678
+	for <git@archiver.kernel.org>; Mon, 13 Apr 2020 10:59:43 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PVFAfBuT"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DratqhuW"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728599AbgDMKGI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Apr 2020 06:06:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42244 "EHLO
+        id S1728859AbgDMK7m (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Apr 2020 06:59:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1728236AbgDMKEp (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 13 Apr 2020 06:04:45 -0400
-X-Greylist: delayed 367 seconds by postgrey-1.27 at vger.kernel.org; Mon, 13 Apr 2020 06:04:45 EDT
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2ACAC00861A
-        for <git@vger.kernel.org>; Mon, 13 Apr 2020 02:58:37 -0700 (PDT)
-Received: by mail-wr1-x441.google.com with SMTP id i10so9540559wrv.10
-        for <git@vger.kernel.org>; Mon, 13 Apr 2020 02:58:37 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1728295AbgDMK7l (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 13 Apr 2020 06:59:41 -0400
+X-Greylist: delayed 379 seconds by postgrey-1.27 at vger.kernel.org; Mon, 13 Apr 2020 06:59:41 EDT
+Received: from mail-ed1-x542.google.com (mail-ed1-x542.google.com [IPv6:2a00:1450:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B7E8C0A3BDC
+        for <git@vger.kernel.org>; Mon, 13 Apr 2020 03:53:22 -0700 (PDT)
+Received: by mail-ed1-x542.google.com with SMTP id e5so11465731edq.5
+        for <git@vger.kernel.org>; Mon, 13 Apr 2020 03:53:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=rPW7oYoMXt5gMGDg6mkoyvlPPGACBN547sT5N+PqIII=;
-        b=PVFAfBuTeu7dxoPLBfDiO096oMlPp/s7I+CzCFKfnREzQTf3qy8P+ey7oDFp9HMw01
-         kJ9B0qrW5XqTozbxAHHxUVsiWduAi1F+didRhLeMm9H1/WNgT/3svvSEvIJ1ka9PMtVZ
-         Hy7w2RI9prF4XMNOxNQxodQPPM9mWuazWUjHRyDlW5CTZEBcb6TEmNC6EPoJZ7J3hiYY
-         fWH5MaQnD06EFzkaFfGcBAd72pwhT5ZAYtMOdXZQH1l4ADq6Mk1dmBx3ffkujSejymZ5
-         uNVqtrm3ZLpKn8GAxtCpqZ5QmRInzuFDOaKhs7AYoKkj6dAgxD8FYP/0ytqvkTlnG/ci
-         /eTQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=v4DC6IJMyqRCydGojRAqZWFFTMR3CLnFsX/GNzrPNGw=;
+        b=DratqhuWzbPG9y1tXxKayDtqLxJHsbPo9Hoji+CpaV/IqU6WWs3zwZzx/3V5YlG+1k
+         39MXrKQ3uXG0YPk2P/qVuEoCwB3fSfL+Mx/pLH4UV/oApinq932h3CteyalvrNaojEC/
+         000W+EmyykALbIEesCr+K0xj7Sq+p0fu6GByWfVlnHN6/AXT1E9+u5ycFAijlmM9AdXX
+         gSr7o/O3XgQEZSbTS7ZlFZaLOdUR4gqP/qU7onTPGZ/YVLUHQmtHqjWeXI1tHQxI+Ue1
+         Vqqpnk2+9PuLrxhXW0hEtsGRiW2tyPPYtUdQytOJQqFdTiRB25WB5mThoTRMF8yMEYYv
+         Z5Rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=rPW7oYoMXt5gMGDg6mkoyvlPPGACBN547sT5N+PqIII=;
-        b=P1h58WVEFzyiH66JbuX1M5cLkQW/9Ho3eYPxwQjL3LkXGYjURQfyhnI66trU12bPAS
-         pDaJqsmkJWUN52MUJ77U3DPQIbFdSmtgl/nPVF1F04R7aNjadAq0hWMhEy762tHwtcJ4
-         DBp51VK8qCIjKoqo9JKHzhbRwQnMBzkx4oYdUX82bgdwnazjEBUOyvAGyHcQftmQMeZ3
-         Y6epbMb40B/kvwpehgHzzzt/yl3GLZSx8QMe9eQjLubDWEE5myGMSU+8+72mlOUImBTo
-         OzINnO1h1D7JrEXlimca8EXQ1ygmsbMa4qNP3k2RPMUhBwoETRKtRPMTgtkAQTQlsbos
-         za8w==
-X-Gm-Message-State: AGi0PuZnidGgGtvHiUAItbi+APTGzVl0lRUoVupFVF0MuxefFIFibnhJ
-        LWA51qTsve/NQfvSj97Oicw=
-X-Google-Smtp-Source: APiQypKP2CkoZVBxOeUtiXz9N9+HZoFs5KgR1bswAoouFzWSd2cde1rbny0Os9IOaIKT2JoqrWCW4g==
-X-Received: by 2002:adf:ea82:: with SMTP id s2mr17713601wrm.407.1586771916340;
-        Mon, 13 Apr 2020 02:58:36 -0700 (PDT)
-Received: from [192.168.1.201] (155.20.198.146.dyn.plus.net. [146.198.20.155])
-        by smtp.googlemail.com with ESMTPSA id s14sm14427397wme.33.2020.04.13.02.58.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Apr 2020 02:58:35 -0700 (PDT)
-Subject: Re: [PATCH 1/6] Revert "Revert "Merge branch
- 'ra/rebase-i-more-options'""
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Git Mailing List <git@vger.kernel.org>,
-        Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-References: <20200407141125.30872-1-phillip.wood123@gmail.com>
- <20200407141125.30872-2-phillip.wood123@gmail.com>
- <CABPp-BEnmpET=6rEdDXJWnPjzV33a2x6rKB6FQ-o8y+8ssK4jw@mail.gmail.com>
- <xmqqv9mbroqw.fsf@gitster.c.googlers.com>
- <xmqqlfn7rnj2.fsf@gitster.c.googlers.com>
- <nycvar.QRO.7.76.6.2004121944590.46@tvgsbejvaqbjf.bet>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <43d06bc0-b2ee-0ae6-f22c-9850e4033d45@gmail.com>
-Date:   Mon, 13 Apr 2020 10:58:34 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=v4DC6IJMyqRCydGojRAqZWFFTMR3CLnFsX/GNzrPNGw=;
+        b=MBsFTwHq/2YmB0KAcsYR5RNCBQuf0vsSrSeVrgqyga0QAJNNFuoHscEYVDISN52tAy
+         hnR8eoEPm87y3RdeI591e+DBbhwPYvrqxgA5Oe+V2IQmfDe8/yJ1hTHjtMgAW457KRcW
+         OaJhFaM5YzxGhOJ6C14IuW9mxPYCo3cGJdgRvOxMZjmi3XUtcWIUMp86v72t9zsrz/IX
+         B260RR046JdLEk+GSCgQxxSJ4jlZ0CJX8Yd1AXVyIa9O/lStso6U0QD58MxkmP7mJh41
+         3h7CeAdcl5ri8WVeamxDGT8ZVsvew+PZhPMsDh6rHJBF+HBKQlqeV1iuItW4NtGQ4cKW
+         gJeg==
+X-Gm-Message-State: AGi0PuZ2c40VhzNOtfk8DWeQclCIDegXNGpT6VEY7jPf5xIK2k+/mQ7v
+        wdheMGPRhudEGkL5TIvDmLF9lSMd3WkGHMVz2evJGw==
+X-Google-Smtp-Source: APiQypJgYOUkvCdRYtU3WNLS7cB5uLlw60FbdCCK/dlz2hoQd6XBHjuhAj3Uk61MiV24FTDhQgaqlJ/ErOyuBe9CNaM=
+X-Received: by 2002:aa7:d614:: with SMTP id c20mr15912427edr.232.1586775200513;
+ Mon, 13 Apr 2020 03:53:20 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.2004121944590.46@tvgsbejvaqbjf.bet>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <CAJs9aZ-iXUtZoumnMzTFPrc=mtz2+s4EDUKhxw_KQp42h3mxBw@mail.gmail.com>
+ <facf8152-00ce-4878-a13b-3fe72c13fa25@kdbg.org> <0360e896-73b9-3585-54a2-5427bfafaae1@iee.email>
+In-Reply-To: <0360e896-73b9-3585-54a2-5427bfafaae1@iee.email>
+From:   rupert THURNER <rupert.thurner@gmail.com>
+Date:   Mon, 13 Apr 2020 12:53:09 +0200
+Message-ID: <CAJs9aZ_Rs8k1Uv-jn-YHCmRaM6kWipcucTCTeE44-BT3ssnNhQ@mail.gmail.com>
+Subject: Re: configure remote/local as mine/theirs
+To:     Philip Oakley <philipoakley@iee.email>
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi All
+On Sun, Apr 12, 2020 at 12:12 PM Philip Oakley <philipoakley@iee.email> wrote:
+> On 11/04/2020 22:40, Johannes Sixt wrote:
+> > Am 11.04.20 um 14:51 schrieb rupert THURNER:
+> >> my brain about it sometimes. can i somehow configure git so it
+> >> would use "mine" and "theirs" only?
+> > The words "mine" (actually "ours") and "theirs" have a very precise
+> > meaning in Git. If you were to use these meanings during a rebase, you
+> > would not like the result: it would call "ours" what you intend to call
+> > "theirs", and vice versa.
+> >
+> > Consider this history:
+> >
+> >
+> > --a--b--c--d   <-- upstream ("theirs" from your point of view)
+> >    \
+> >     x--y--z    <-- branch to rebase ("mine/ours" from your POV)
+> >
+> > During a rebase, Git is "positioned" on the history following commit d,
+> > i.e. on "their" branch. Then it cherry-picks commits x, y, and z. In
+> > that situation, the change that you consider "theirs" is actually "ours"
+> > from Git's point of view, and your own change (those introduced by x, y,
+> > and z) are "theirs" from Git's point of view.
+thank you for the nice explanation! there would be no easy
+way to swap the names in the rebase case? or introduce
+a new one, "mine"?
 
-On 12/04/2020 18:47, Johannes Schindelin wrote:
-> Hi Phillip, Elijah & Junio,
-> 
-> On Tue, 7 Apr 2020, Junio C Hamano wrote:
-> 
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->>> Elijah Newren <newren@gmail.com> writes:
->>>
->>>> On Tue, Apr 7, 2020 at 7:11 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
->>>>>
->>>>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>>>>
->>>>> This reverts commit 4d924528d8bfe947abfc54ee9bd3892ab509c8cd.
->>>>>
->>>>> This is being reverted to enable some fixups for
->>>>> ra/rebase-i-more-options to be built on this commit.
->>>>
->>>> This makes sense to me, but it will be only the second 'Revert
->>>> "Revert..."' commit in all of git.git and I'm curious if Junio will be
->>>> unhappy with it.
->>>
->>> Nah, there isn't much to become unhappy about.
->>>
->>> I however suspect that the alternative would certainly be much nicer
->>> and easier to understand, which is to rebuild the 7-patch series
->>> c58ae96fc4..d82dfa7f5b but bugs already fixed, instead of doing this
->>> patch to take us back to a known buggy state and then fix the result
->>> with 5 more patches.  Is that what you meant?
->>
->> After looking at the conflict resolution while merging the result of
->> applying these patches on top of the older codebase, I would have to
->> say that the approach """I've opted to add some cleanup commits on
->> top of Rohit's work rather than reworking his patches.""" may not
->> have been particularly a brilliant idea, not because the conflicts
->> arising from an older codebase are unpleasant to resolve (they seem
->> to be reasonably contained), but because it resurrects other
->> unwanted cruft we have cleaned up since then, and worse yet, it does
->> so without triggering conflicts.  For example, we'll end up seeing
->> mentions of "'am' backend", which have all been updated to "'apply'
->> backend", in the documentation, and patches [2-6/6] do not fix them.
->>
->> [5/6] is an example of one more "unwanted" thing the reversion
->> resurrects that needed to be fixed, I guess?
->>
->> The result of applying all these patches and merging it to 'master'
->> and/or 'pu' may be more or less right, as far as the new features
->> added to the "rebase -i" by the series are concerned but there may
->> be many small "unwanted cruft" we may be resurrecting with [1/6],
->> so...
-> 
-> I agree that it would make for a much nicer read if the entire patch
-> series was simply rebased on top of v2.26.0, with drops instead of
-> reverts. I suspect that 4/6 will not even become a fixup, but that the
-> resulting patch is really more of an `Initial-patch-by: Rohit` material
-> with Phillip as the author on record.
-> 
-> As to the changes, I had a brief look over them, and I have nothing to add
-> to Elijah's review except to stress how excited I am about the increased
-> test coverage. From my perspective, this makes the patch series 10x
-> better.
+> given the way Git is using it's terminology, would you have any
+> suggestions as to how the man page(s) could now be _clarified_ so as to
+> avoid these potential misunderstandings? Even perhaps
+>     "theirs", "ours", "local" and "remote" are distinct terms in Git
+> with different meanings as detailed in gitreference/glossary.   (or some
+> such - though 3/4 are not in the glossary!)
+philip, maybe phrase it as johannes did, add it to the man pages
+of rebase, and mergetool? the change you consider "theirs" is
+actually "ours", swapped for technical reasons when rebasing.
 
-Thanks for all your feedback, I'll reroll as a new patch series based on
-master
-
-Best Wishes
-
-Phillip
-
-> Thanks,
-> Dscho
-> 
-
+rupert
