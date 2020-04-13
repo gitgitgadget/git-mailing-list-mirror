@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8F9FC3815B
-	for <git@archiver.kernel.org>; Mon, 13 Apr 2020 16:48:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F5A4C352BE
+	for <git@archiver.kernel.org>; Mon, 13 Apr 2020 16:48:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 861E2206E9
-	for <git@archiver.kernel.org>; Mon, 13 Apr 2020 16:48:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4438B2063A
+	for <git@archiver.kernel.org>; Mon, 13 Apr 2020 16:48:53 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pF7/+5M8"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MtObFgk8"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731798AbgDMQss (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Apr 2020 12:48:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45912 "EHLO
+        id S1731805AbgDMQsw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Apr 2020 12:48:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45898 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1731789AbgDMQsm (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 13 Apr 2020 12:48:42 -0400
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB42BC008748
-        for <git@vger.kernel.org>; Mon, 13 Apr 2020 09:48:41 -0700 (PDT)
-Received: by mail-pj1-x1034.google.com with SMTP id mn19so4019846pjb.0
-        for <git@vger.kernel.org>; Mon, 13 Apr 2020 09:48:41 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1731777AbgDMQsj (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 13 Apr 2020 12:48:39 -0400
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF434C008749
+        for <git@vger.kernel.org>; Mon, 13 Apr 2020 09:48:38 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id e16so3757046pjp.1
+        for <git@vger.kernel.org>; Mon, 13 Apr 2020 09:48:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Y/VtPuf/KRndKzB/ORhQqCBSQs7ZC3obq6O/x7cTYhg=;
-        b=pF7/+5M8/4RbfPHA0Ed+5wFApWLe7ty4dK08cv7jkMu6cGeV5JhJ2kdiZOyxf/Yhzp
-         j+vJE3K8+1Px+CjbsvvFnceduh+K0DFPH1GdpROg5EfJcSgTEsABai85YaBnoL1tlcU3
-         EdVyZO7EAY8OFRCLIKNUtiooVnBL4viDFt+B83jnPIhioqxhWpIr6f1VriVnGBfif1V4
-         m3AGiB2gb9oRTPfVulbj1irkjIW3F3YohZUGfOfF3KGp6GVP9653o6LYqPJWtxWEXSPX
-         /YGK4qgFFCbi6MwNfOuGdYMwh+DFTATyQzNzBbTeNTLcpASAmETDgAvOpMbf4O69o5oF
-         9sGA==
+        bh=bHBqCfBVWklnW7g/Pe9qVtdQDkxWyDDmVXPRncu3M78=;
+        b=MtObFgk89cbR7Xcono/qiKtZkBzk0DzjnB0Kq++LuPeYiZ/+h40swjw63XSnItj7Py
+         DMQMVYBuIwdv4piFwA3AqGNLhs+M4GwaUAxITB1FQLNEeoSf6ay5t75Fh2BRd2Zn5azx
+         1/uR9M72Q1jfWKQS/V5iq2O1gLcD5hS68ax5sC8zsp9l8A/9IXqD/T7O/ZGQqIz13VWI
+         O75EifAxbJtS4QfIXIIe3PVSp4dhJGM+GUmVNCsFyqvutvER3k2P4tIUJuWnr6s5Mv94
+         XsHK7liKMUk6NkTmdMZ7yps9pg8Zq+2S+vK98C1treMH2WI0f+AXqW+pIkim91cf6954
+         VKsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Y/VtPuf/KRndKzB/ORhQqCBSQs7ZC3obq6O/x7cTYhg=;
-        b=K9y6m16FIi/xKP6sirz4AM1duOJMXZp0oWiSAznck2DRe+Dh5GFJxuLvZu6J0p1I5g
-         LE/3lO7GV3cw0UdFL6MGMnetF3aKn9fQfoCd2gELhgc6QDs6DidEaDKXjCst3RL1rv7g
-         cT1alcR1r7wYQNRUCLxAkWpBPngHbIEDJtIubPSa/RhVVhDGGd94EHQP1T+TD+q1nBYT
-         saCvjoN3qIJSd1XVl6kNlsqrFlTos8jWn97HOHKY532/IbHSnBz77Nee46UF70CcTTXi
-         EHQnINizpfq7rYESoE2zfXFqIJGxbFlwuDQB4S6pQWRCN59v8Ss0TTH+Azq4zMnHw0f6
-         09VA==
-X-Gm-Message-State: AGi0PubMHPNBd/8sUt48Oq42YUWEsY5mny6BjGd7uDZRN/zPQ5u5tgsE
-        Jk7YdCxtq2+My1I0qLEVucgR3fTnftw=
-X-Google-Smtp-Source: APiQypJyvJVS2K1YyS6uZc3kH1wpWAE+hQBFhe+i5A1sjkFL02oOKKQ2vg8wIDzZTJXIqBeUIwnjrQ==
-X-Received: by 2002:a17:902:7687:: with SMTP id m7mr11906936pll.253.1586796521295;
-        Mon, 13 Apr 2020 09:48:41 -0700 (PDT)
+        bh=bHBqCfBVWklnW7g/Pe9qVtdQDkxWyDDmVXPRncu3M78=;
+        b=tYvEu/5dlA+qsijhJqBslK5NpvgLrYkE8x3fXNLuiv1D/jUIa4Dml0UaVEazOmpZCL
+         JZhd+pecAA6YeIeecCbVIiLsdIf59Skn+k44p+rulHC69U0u93ZCTSpeBebAHrWPZn4c
+         fDV5smfLxXa6Xkd+somuaeMawY043Wmr1fWadv334amb9aAYhMK9JH4uqcYjixJXMbvy
+         h8TZYZ62aTBsxRIX//cXXTqAdByZzX0yVPiwr1BGDC4/CtBlouO3Eb35J21+WceNBvyP
+         d7aXZJH4KafDPv3mPk2nQqf1sTi8GPZSOC0ww+r1w8YP5n+aibXQlEuBp9s/LfZjYSb5
+         fBYw==
+X-Gm-Message-State: AGi0PuaFyv/iNigdv++yXbFRsvGsa7U66I6s6aJceVGRY7spHcsjEqOy
+        k4CNUH17w63L5Vi3abLhjvA=
+X-Google-Smtp-Source: APiQypJiUCumg01LwFiHmgHnqZpVIedhGgKl8V8PICFErZ2XgIEnC8VCpc+ePglkl/RRrivni+/Pgg==
+X-Received: by 2002:a17:902:b40e:: with SMTP id x14mr18931545plr.154.1586796518427;
+        Mon, 13 Apr 2020 09:48:38 -0700 (PDT)
 Received: from tigtog.localdomain.localdomain ([144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id e11sm9254885pfh.117.2020.04.13.09.48.40
+        by smtp.gmail.com with ESMTPSA id e11sm9254885pfh.117.2020.04.13.09.48.37
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 13 Apr 2020 09:48:40 -0700 (PDT)
+        Mon, 13 Apr 2020 09:48:38 -0700 (PDT)
 From:   Jiang Xin <worldhello.net@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
 Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: [PATCH v11 7/7] doc: add documentation for the proc-receive hook
-Date:   Mon, 13 Apr 2020 12:48:27 -0400
-Message-Id: <20200413164828.23260-8-worldhello.net@gmail.com>
+Subject: [PATCH v11 4/7] send-pack: extension for client-side status report
+Date:   Mon, 13 Apr 2020 12:48:24 -0400
+Message-Id: <20200413164828.23260-5-worldhello.net@gmail.com>
 X-Mailer: git-send-email 2.26.0.rc0
 In-Reply-To: <20200412133022.17590-1-worldhello.net@gmail.com>
 References: <20200412133022.17590-1-worldhello.net@gmail.com>
@@ -76,82 +76,298 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 
-Add documentation for the new "proc-receive" hook.
+This is the client-side extension for status report of git-push.
 
+The "proc-receive" hook may receive a command for a pseudo-reference
+with a zero-old as its old-oid, while the result of the hook may point
+to an alternate reference and the reference may exist already with a
+non-zero old-oid.  Git client may receive a report with extened status
+as the following example:
+
+    ok refs/for/master/topic\0ref=refs/pull/123/head old-oid=...
+
+Parse the key-value pairs in the extended status after the null
+character of the report, and show the proper reference name, old-oid
+and new-oid to the user.
+
+Suggested-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 ---
- Documentation/githooks.txt | 58 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 58 insertions(+)
+ remote.c                     | 28 +++++++++++++++
+ remote.h                     |  3 ++
+ send-pack.c                  | 13 ++++++-
+ t/t5411/common-test-cases.sh |  6 ++--
+ transport-helper.c           | 66 +++++++++++++++++++-----------------
+ transport.c                  | 33 +++++++++++++++---
+ 6 files changed, 110 insertions(+), 39 deletions(-)
 
-diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index 3dccab5375..1c528e2fc4 100644
---- a/Documentation/githooks.txt
-+++ b/Documentation/githooks.txt
-@@ -333,6 +333,64 @@ The default 'update' hook, when enabled--and with
- `hooks.allowunannotated` config option unset or set to false--prevents
- unannotated tags to be pushed.
+diff --git a/remote.c b/remote.c
+index c43196ec06..0b22d9e14c 100644
+--- a/remote.c
++++ b/remote.c
+@@ -1,5 +1,6 @@
+ #include "cache.h"
+ #include "config.h"
++#include "connect.h"
+ #include "remote.h"
+ #include "refs.h"
+ #include "refspec.h"
+@@ -2311,3 +2312,30 @@ void apply_push_cas(struct push_cas_option *cas,
+ 	for (ref = remote_refs; ref; ref = ref->next)
+ 		apply_cas(cas, remote, ref);
+ }
++
++void update_ref_from_remote_status(struct ref *ref)
++{
++	char *val;
++	char c;
++	int len;
++
++	if (!ref->remote_status)
++		return;
++
++	val = (char *)parse_feature_value(ref->remote_status, "old-oid", &len);
++	if (val && len) {
++		c = *(val+len);
++		*(val+len) = '\0';
++		get_oid_hex(val, &ref->old_oid);
++		*(val+len) = c;
++	}
++	val = (char *)parse_feature_value(ref->remote_status, "new-oid", &len);
++	if (val && len) {
++		c = *(val+len);
++		*(val+len) = '\0';
++		get_oid_hex(val, &ref->new_oid);
++		*(val+len) = c;
++	}
++	if (parse_feature_request(ref->remote_status, "forced-update"))
++		ref->forced_update = 1;
++}
+diff --git a/remote.h b/remote.h
+index 11d8719b58..09cf7014e3 100644
+--- a/remote.h
++++ b/remote.h
+@@ -345,4 +345,7 @@ int parseopt_push_cas_option(const struct option *, const char *arg, int unset);
+ int is_empty_cas(const struct push_cas_option *);
+ void apply_push_cas(struct push_cas_option *, struct remote *, struct ref *);
  
-+proc-receive
-+~~~~~~~~~~~~
++/* Parse key-value pairs of remote_status and update the reference accordingly */
++void update_ref_from_remote_status(struct ref *ref);
 +
-+This hook is invoked by linkgit:git-receive-pack[1].  If the server has
-+set the multi-valued config variable `receive.procReceiveRefs`, and the
-+commands sent to 'receive-pack' have matching reference names, these
-+commands will be executed by this hook, instead of by the internal
-+`execute_commands()` function.  This hook is responsible for updating
-+the relevant references and reporting the results back to 'receive-pack'.
+ #endif
+diff --git a/send-pack.c b/send-pack.c
+index 0407841ae8..ab294c9426 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -159,6 +159,9 @@ static int receive_status(struct packet_reader *reader, struct ref *refs)
+ 	while (1) {
+ 		const char *refname;
+ 		char *msg;
++		char *extended_status = NULL;
++		int len;
 +
-+This hook executes once for the receive operation.  It takes no
-+arguments, but uses a pkt-line format protocol to communicate with
-+'receive-pack' to read commands, push-options and send results.  In the
-+following example for the protocol, the letter 'S' stands for
-+'receive-pack' and the letter 'H' stands for this hook.
+ 		if (packet_reader_read(reader) != PACKET_READ_NORMAL)
+ 			break;
+ 		if (!starts_with(reader->line, "ok ") && !starts_with(reader->line, "ng ")) {
+@@ -167,10 +170,13 @@ static int receive_status(struct packet_reader *reader, struct ref *refs)
+ 			break;
+ 		}
+ 
++		len = strlen(reader->line);
+ 		refname = reader->line + 3;
+ 		msg = strchr(refname, ' ');
+ 		if (msg)
+ 			*msg++ = '\0';
++		if (reader->pktlen > len)
++			extended_status = (char *)reader->line + len + 1;
+ 
+ 		/* first try searching at our hint, falling back to all refs */
+ 		if (hint)
+@@ -194,7 +200,12 @@ static int receive_status(struct packet_reader *reader, struct ref *refs)
+ 			hint->status = REF_STATUS_REMOTE_REJECT;
+ 			ret = -1;
+ 		}
+-		hint->remote_status = xstrdup_or_null(msg);
++		if (msg) {
++			hint->remote_status = xstrdup(msg);
++		} else if (extended_status) {
++			hint->remote_status = xstrdup(extended_status);
++			update_ref_from_remote_status(hint);
++		}
+ 		/* start our next search from the next ref */
+ 		hint = hint->next;
+ 	}
+diff --git a/t/t5411/common-test-cases.sh b/t/t5411/common-test-cases.sh
+index fe970df755..7fa7211ce4 100644
+--- a/t/t5411/common-test-cases.sh
++++ b/t/t5411/common-test-cases.sh
+@@ -640,9 +640,9 @@ test_expect_success "proc-receive: report with extended status" '
+ 	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/a/b/c/topic
+ 	remote: post-receive< <COMMIT-B> <COMMIT-A> refs/for/master/topic
+ 	To <URL/of/upstream.git>
+-	 * [new reference] HEAD -> refs/for/next/topic
++	 * [new reference] HEAD -> refs/pull/123/head
+ 	 * [new reference] HEAD -> refs/for/a/b/c/topic
+-	 * [new reference] HEAD -> refs/for/master/topic
++	 + <OID-B>...<OID-A> HEAD -> refs/pull/124/head (forced update)
+ 	EOF
+ 	test_cmp expect actual &&
+ 	git -C "$upstream" show-ref >out &&
+@@ -701,7 +701,7 @@ test_expect_success "proc-receive: report update of mixed refs" '
+ 	 * [new branch] HEAD -> baz
+ 	 * [new reference] HEAD -> refs/for/next/topic
+ 	 * [new branch] HEAD -> foo
+-	 * [new reference] HEAD -> refs/for/master/topic
++	 <OID-A>..<OID-B> HEAD -> refs/for/master/topic
+ 	EOF
+ 	test_cmp expect actual &&
+ 	git -C "$upstream" show-ref >out &&
+diff --git a/transport-helper.c b/transport-helper.c
+index 20a7185ec4..d2179631cf 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -747,37 +747,39 @@ static int push_update_ref_status(struct strbuf *buf,
+ 			msg = xstrdup(msg);
+ 		strbuf_release(&msg_buf);
+ 
+-		if (!strcmp(msg, "no match")) {
+-			status = REF_STATUS_NONE;
+-			FREE_AND_NULL(msg);
+-		}
+-		else if (!strcmp(msg, "up to date")) {
+-			status = REF_STATUS_UPTODATE;
+-			FREE_AND_NULL(msg);
+-		}
+-		else if (!strcmp(msg, "non-fast forward")) {
+-			status = REF_STATUS_REJECT_NONFASTFORWARD;
+-			FREE_AND_NULL(msg);
+-		}
+-		else if (!strcmp(msg, "already exists")) {
+-			status = REF_STATUS_REJECT_ALREADY_EXISTS;
+-			FREE_AND_NULL(msg);
+-		}
+-		else if (!strcmp(msg, "fetch first")) {
+-			status = REF_STATUS_REJECT_FETCH_FIRST;
+-			FREE_AND_NULL(msg);
+-		}
+-		else if (!strcmp(msg, "needs force")) {
+-			status = REF_STATUS_REJECT_NEEDS_FORCE;
+-			FREE_AND_NULL(msg);
+-		}
+-		else if (!strcmp(msg, "stale info")) {
+-			status = REF_STATUS_REJECT_STALE;
+-			FREE_AND_NULL(msg);
+-		}
+-		else if (!strcmp(msg, "forced update")) {
+-			forced = 1;
+-			FREE_AND_NULL(msg);
++		if (status != REF_STATUS_OK) {
++			if (!strcmp(msg, "no match")) {
++				status = REF_STATUS_NONE;
++				FREE_AND_NULL(msg);
++			}
++			else if (!strcmp(msg, "up to date")) {
++				status = REF_STATUS_UPTODATE;
++				FREE_AND_NULL(msg);
++			}
++			else if (!strcmp(msg, "non-fast forward")) {
++				status = REF_STATUS_REJECT_NONFASTFORWARD;
++				FREE_AND_NULL(msg);
++			}
++			else if (!strcmp(msg, "already exists")) {
++				status = REF_STATUS_REJECT_ALREADY_EXISTS;
++				FREE_AND_NULL(msg);
++			}
++			else if (!strcmp(msg, "fetch first")) {
++				status = REF_STATUS_REJECT_FETCH_FIRST;
++				FREE_AND_NULL(msg);
++			}
++			else if (!strcmp(msg, "needs force")) {
++				status = REF_STATUS_REJECT_NEEDS_FORCE;
++				FREE_AND_NULL(msg);
++			}
++			else if (!strcmp(msg, "stale info")) {
++				status = REF_STATUS_REJECT_STALE;
++				FREE_AND_NULL(msg);
++			}
++			else if (!strcmp(msg, "forced update")) {
++				forced = 1;
++				FREE_AND_NULL(msg);
++			}
+ 		}
+ 	}
+ 
+@@ -802,6 +804,8 @@ static int push_update_ref_status(struct strbuf *buf,
+ 	(*ref)->status = status;
+ 	(*ref)->forced_update |= forced;
+ 	(*ref)->remote_status = msg;
++	if (status == REF_STATUS_OK && (*ref)->remote_status)
++		update_ref_from_remote_status(*ref);
+ 	return !(status == REF_STATUS_OK);
+ }
+ 
+diff --git a/transport.c b/transport.c
+index 272c0f4046..b0451c7a3c 100644
+--- a/transport.c
++++ b/transport.c
+@@ -463,11 +463,30 @@ static void print_ref_status(char flag, const char *summary,
+ 			     struct ref *to, struct ref *from, const char *msg,
+ 			     int porcelain, int summary_width)
+ {
++	char *from_name = NULL;
++	char *to_name = NULL;
++	const char *val;
++	int len;
 +
-+    # Version and features negotiation.
-+    S: PKT-LINE(version=1\0push-options atomic...)
-+    S: flush-pkt
-+    H: PKT-LINE(version=1\0push-options...)
-+    H: flush-pkt
++	if (from && from->remote_status) {
++		val = parse_feature_value(from->remote_status, "ref", &len);
++		if (val && len)
++			 from_name = xmemdupz(val, len);
++	}
++	if (to && to->remote_status) {
++		val = parse_feature_value(to->remote_status, "ref", &len);
++		if (val && len)
++			 to_name = xmemdupz(val, len);
++	}
 +
-+    # Send commands from server to the hook.
-+    S: PKT-LINE(<old-oid> <new-oid> <ref>)
-+    S: ... ...
-+    S: flush-pkt
-+    # Send push-options only if the 'push-options' feature is enabled.
-+    S: PKT-LINE(push-option)
-+    S: ... ...
-+    S: flush-pkt
-+
-+    # Receive result from the hook.
-+    # OK, run this command successfully.
-+    H: PKT-LINE(<old-oid> <new-oid> <ref> ok)
-+    # NO, I reject it.
-+    H: PKT-LINE(<old-oid> <new-oid> <ref> ng <reason>)
-+    # Fall through, let 'receive-pack' to execute it.
-+    H: PKT-LINE(<old-oid> <new-oid> <ref> ft)
-+    # OK, but has an alternate reference.  The alternate reference name
-+    # and other status are given in key=value pairs after the null
-+    # character.
-+    H: PKT-LINE(<old-oid> <new-oid> <ref> ok\0ref=refs/pull/123/head
-+                forced-update)
-+    H: ... ...
-+    H: flush-pkt
-+
-+Each command for the 'proc-receive' hook may point to a pseudo-reference
-+and always has a zero-old as its old-oid, while the 'proc-receive' hook
-+may update an alternate reference and the alternate reference may exist
-+already with a non-zero old-oid.  For this case, this hook may return
-+different OID and different reference name as extended status of the
-+report line.
-+
-+The report of the commands of this hook should have the same order as
-+the input.  The exit status of the 'proc-receive' hook only determines
-+the success or failure of the group of commands sent to it, unless
-+atomic push is in use.
-+
- [[post-receive]]
- post-receive
- ~~~~~~~~~~~~
+ 	if (porcelain) {
+ 		if (from)
+-			fprintf(stdout, "%c\t%s:%s\t", flag, from->name, to->name);
++			fprintf(stdout, "%c\t%s:%s\t", flag,
++				from_name ? from_name : from->name,
++				to_name ? to_name: to->name);
+ 		else
+-			fprintf(stdout, "%c\t:%s\t", flag, to->name);
++			fprintf(stdout, "%c\t:%s\t", flag,
++				to_name ? to_name: to->name);
+ 		if (msg)
+ 			fprintf(stdout, "%s (%s)\n", summary, msg);
+ 		else
+@@ -481,9 +500,11 @@ static void print_ref_status(char flag, const char *summary,
+ 		fprintf(stderr, " %s%c %-*s%s ", red, flag, summary_width,
+ 			summary, reset);
+ 		if (from)
+-			fprintf(stderr, "%s -> %s", prettify_refname(from->name), prettify_refname(to->name));
++			fprintf(stderr, "%s -> %s",
++				prettify_refname(from_name ? from_name : from->name),
++				prettify_refname(to_name ? to_name : to->name));
+ 		else
+-			fputs(prettify_refname(to->name), stderr);
++			fputs(prettify_refname(to_name ? to_name : to->name), stderr);
+ 		if (msg) {
+ 			fputs(" (", stderr);
+ 			fputs(msg, stderr);
+@@ -491,6 +512,10 @@ static void print_ref_status(char flag, const char *summary,
+ 		}
+ 		fputc('\n', stderr);
+ 	}
++	if (from_name)
++		free(from_name);
++	if (to_name)
++		free(to_name);
+ }
+ 
+ static void print_ok_ref_status(struct ref *ref, int porcelain, int summary_width)
 -- 
 2.24.1.15.g448c31058d.agit.4.5
 
