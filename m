@@ -2,179 +2,235 @@ Return-Path: <SRS0=K77S=55=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 18155C2BA19
-	for <git@archiver.kernel.org>; Mon, 13 Apr 2020 15:26:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 89C69C2BA2B
+	for <git@archiver.kernel.org>; Mon, 13 Apr 2020 15:28:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E721D2072C
-	for <git@archiver.kernel.org>; Mon, 13 Apr 2020 15:26:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6017020735
+	for <git@archiver.kernel.org>; Mon, 13 Apr 2020 15:28:45 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VfKsPVwI"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DT5JFZW3"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730199AbgDMP0N (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Apr 2020 11:26:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52078 "EHLO
+        id S1731077AbgDMP2o (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Apr 2020 11:28:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53206 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730089AbgDMP0H (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Apr 2020 11:26:07 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8F36C0A3BDC
-        for <git@vger.kernel.org>; Mon, 13 Apr 2020 08:26:06 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id cb27so12396367edb.11
-        for <git@vger.kernel.org>; Mon, 13 Apr 2020 08:26:06 -0700 (PDT)
+        with ESMTP id S1731068AbgDMP2n (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Apr 2020 11:28:43 -0400
+Received: from mail-ed1-x544.google.com (mail-ed1-x544.google.com [IPv6:2a00:1450:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89FCAC0A3BDC
+        for <git@vger.kernel.org>; Mon, 13 Apr 2020 08:28:42 -0700 (PDT)
+Received: by mail-ed1-x544.google.com with SMTP id z65so12524182ede.0
+        for <git@vger.kernel.org>; Mon, 13 Apr 2020 08:28:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=VJqJXQr2WC/8FI4EHcvahIna9npL1l91IGyZNgw0l9o=;
-        b=VfKsPVwIQpmCKt/gh9SmbGI8Tv0rfWMifx7buve4meWp9j91k98sNYurdrWe70WkBU
-         2e3cxg5a3K/+oPXJwFYbJkN9j4CroAMT34huZ3sh0YGZuP2FPOdyGZddSf/JZp3VEBt6
-         p7bazKndSMfbZEpj8PNhLNyxsZ958YhZHMF0PEysMETXI3vbbn+Ihgoju6hET6C3BB+8
-         6kB3FCG7HAbRlvLJOkkStG5B5nVp9XPQYqHBZMNv2ej6XFyjWt0fgzdoJkImutCnWZIf
-         2ffVBqf1/shTebkORwTaHjWT8TPR1qMaD2KG3GhKptLGH/I4qwrfczo8Kg5G6AT3NMR8
-         3nmw==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=2Gnpy3FGBsOlAmddiSttkJ0gDVD1NzA/5NeQK4mctVU=;
+        b=DT5JFZW3fizcTtUiQTGY/aQ1izSz+1pdt8c9spg70QSCZGwubfmFwfp43cJxNu4DCm
+         7Jh4+5gRfvW87u3KN7LMa7J5SMhZIe7uJrp1c7PB4aZ0+s7NZYmrWRXuFZ4hr7cQpOLy
+         GhdJ9r4zzGYrpFOnlyteeAORjAXa62QXT9C0zOyBhYTzxHOeiwPehppG3VQgr3p2zcB/
+         E0VPp6RUfuiHLaxSqa2qenmmCgMPrZf/FRldNbmaioFoUqJSGF48rMkJ3j9d7/GWniRX
+         DRUJT6mUcs0V4F99ibHjp2iI3z7EqYSKHcIoHTSlO+QhruLRNwWeHHmlWLDEk6Nya7tP
+         wJDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=VJqJXQr2WC/8FI4EHcvahIna9npL1l91IGyZNgw0l9o=;
-        b=AwmuBEt2vLYMVymwQSrTgOzoIsblJl1vwn/jzjR3m/RzDqVLwVei1hPtnHiaPuQFYD
-         pTFicMbNVHkHQ/HxRb4idGcGLr/FkvdokboTSsi/0hyiFYvb8UwidyFV2jLLdYZSv+8n
-         d79TStPCAXqLyfSIgQT7eP0XYuFh1K+1k7RRFtndECAUcMKlVnvMIlr7FQIqY5TwR5nM
-         V7DaaSNLLZWIZMhXYsJ8ymi7v1XAWILR5hKLhpOoPqQu2DA0/EllQ6y74u3lWkqCbW5b
-         Sky5Oe6DPvkJ2ptB58DzgR0QWqTpJHuZDV52MbV7me7Ru+j/qMyIAxGV0IC/qs/bdXO9
-         SXng==
-X-Gm-Message-State: AGi0Pua+lpOqH0h/1lnIARS9+xM6QnKfHZc8/JT0RgPVByjt/b+wQrjt
-        VGE+ob/hVNXNkVRkT5d90VCzWt8e
-X-Google-Smtp-Source: APiQypLDxQv7LLAKD1AEqZDeJBQXOTFP3/mf4MXjPUxKVuxt/6qS1eetsqAW7zk6iuAe+gbvAigGaw==
-X-Received: by 2002:a17:906:7d7:: with SMTP id m23mr12643850ejc.154.1586791564475;
-        Mon, 13 Apr 2020 08:26:04 -0700 (PDT)
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=2Gnpy3FGBsOlAmddiSttkJ0gDVD1NzA/5NeQK4mctVU=;
+        b=CGFcqFnbYfxmpYY/VwZzFRaKhSCgSR7hNGmc1rx9dKBp/H81lz92HFbQpx2jMjJauZ
+         q9oOu/jRxePfsRgkzH3fE2lt0R06sFVa0w8u6PwaiqheEf+NrI+bu3kNDjSuLreWaKlJ
+         5IAKP0DjU44gQv4rscokzzk+2Or+p43dykcsBtMoWztQTRU9xUyIhpyTlSOCKqES/FjD
+         TtIbgkLwOFXHrahdBUAhVO2XC36VpJEbfPYNsHECplxmd+xfKWMEbK0wsxzEzx3F0Gr7
+         Am1hlLeafJ43Oq/CAWc2ong6wmrriOA41VMzQMaRA5gjR0Xp/2SNB9w0qD5xYIKjQAMh
+         p9ow==
+X-Gm-Message-State: AGi0Puafvo5nLlXZVkmg3L50GN68p6M3/K55PWRCy0QRPWoQTyQpkHi0
+        jxPJdsPTC8NxR5b9Yp9hHgiXI+tL
+X-Google-Smtp-Source: APiQypJUxmpkHIy7PsaUavtAoJa2MEH9igjKZexiCr5vzj/eNtS3FMAySq6hkf1wJu6sTWQEAbhuuw==
+X-Received: by 2002:a50:af02:: with SMTP id g2mr17024523edd.69.1586791720949;
+        Mon, 13 Apr 2020 08:28:40 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u22sm1649160eje.7.2020.04.13.08.26.03
+        by smtp.gmail.com with ESMTPSA id x25sm41819ejf.49.2020.04.13.08.28.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Apr 2020 08:26:04 -0700 (PDT)
-Message-Id: <c1a44a35095e7d681c312ecaa07c46e49f2fae67.1586791560.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.745.v2.git.git.1586791560.gitgitgadget@gmail.com>
-References: <pull.745.git.git.1585792946341.gitgitgadget@gmail.com>
-        <pull.745.v2.git.git.1586791560.gitgitgadget@gmail.com>
-From:   "Dyrone Teng via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 13 Apr 2020 15:26:00 +0000
-Subject: [PATCH v2 3/3] clone: document partial clone section
+        Mon, 13 Apr 2020 08:28:40 -0700 (PDT)
+Message-Id: <pull.610.git.1586791720114.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 13 Apr 2020 15:28:39 +0000
+Subject: [PATCH] log: add log.excludeDecoration config option
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Teng Long <dyroneteng@gmail.com>,
-        Dyrone Teng <dyroneteng@gmail.com>
+Cc:     sluongng@gmail.com, Derrick Stolee <dstolee@microsoft.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Dyrone Teng <dyroneteng@gmail.com>
+From: Derrick Stolee <dstolee@microsoft.com>
 
-Partial clones are created using 'git clone', but there is no related
-help information in the git-clone documentation. Add a relevant section
-to help users understand what partial clones are and how they differ
-from normal clones.
+In 'git log', the --decorate-refs-exclude option appends a pattern
+to a string_list. This list is used to prevent showing some refs
+in the decoration output, or even by --simplify-by-decoration.
 
-The section briefly introduces the applicable scenarios and some
-precautions of partial clone. If users want to know more about its
-technical design and other details, users can view the link of
-git-partial-clone(7) according to the guidelines in the section.
+Users may want to use their refs space to store utility refs that
+should not appear in the decoration output. For example, Scalar [1]
+runs a background fetch but places the "new" refs inside the
+refs/scalar/hidden/<remote>/* refspace instead of refs/<remote>/*
+to avoid updating remote refs when the user is not looking. However,
+these "hidden" refs appear during regular 'git log' queries.
 
-Signed-off-by: Dyrone Teng <dyroneteng@gmail.com>
+A similar idea to use "hidden" refs is under consideration for core
+Git [2].
+
+Add the 'log.excludeDecoration' config option so users can exclude
+some refs from decorations by default instead of needing to use
+--decorate-refs-exclude manually. The config value is multi-valued
+much like the command-line option.
+
+There are several tests in t4202-log.sh that test the
+--decorate-refs-(include|exclude) options, so these are extended.
+Since the expected output is already stored as a file, simply add
+new calls that replace a "--decorate-refs-exclude" option with an
+in-line config setting.
+
+[1] https://github.com/microsoft/scalar
+[2] https://lore.kernel.org/git/77b1da5d3063a2404cd750adfe3bb8be9b6c497d.1585946894.git.gitgitgadget@gmail.com/
+
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/git-clone.txt | 72 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 72 insertions(+)
+    log: add log.excludeDecoration config option
+    
+    This was something hinted at in the "fetch" step of the background
+    maintenance RFC. Should be a relatively minor addition to our config
+    options.
+    
+    We definitely want this feature for microsoft/git (we would set
+    log.excludeDecoration=refs/scalar/* in all Scalar repos), but we will
+    wait for feedback from the community.
+    
+    Thanks, -Stolee
 
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index eafa1c39927..a6e13666ea1 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -310,6 +310,78 @@ or `--mirror` is given)
- 	for `host.xz:foo/.git`).  Cloning into an existing directory
- 	is only allowed if the directory is empty.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-610%2Fderrickstolee%2Flog-exclude-decoration-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-610/derrickstolee/log-exclude-decoration-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/610
+
+ Documentation/config/log.txt |  5 +++++
+ builtin/log.c                | 14 ++++++++++++++
+ t/t4202-log.sh               | 22 ++++++++++++++++++++++
+ 3 files changed, 41 insertions(+)
+
+diff --git a/Documentation/config/log.txt b/Documentation/config/log.txt
+index e9e1e397f3f..1a158324f79 100644
+--- a/Documentation/config/log.txt
++++ b/Documentation/config/log.txt
+@@ -18,6 +18,11 @@ log.decorate::
+ 	names are shown. This is the same as the `--decorate` option
+ 	of the `git log`.
  
-+Partial Clone
-+-------------
++log.excludeDecoration::
++	Exclude the specified patterns from the log decorations. This multi-
++	valued config option is the same as the `--decorate-refs-exclude`
++	option of `git log`.
 +
-+By default, `git clone` will download every reachable object, including
-+every version of every file in the history of the repository. The
-+**partial clone** feature allows Git to transfer fewer objects and
-+request them from the remote only when they are needed, so some
-+reachable objects can be omitted from the initial `git clone` and
-+subsequent `git fetch` operations.
-+
-+To use the partial clone feature, you can run `git clone` with the 
-+`--filter=<filter-spec>` option. If you want to clone a repository
-+without download any blobs, the form `filter=blob:none` will omit all
-+the blobs. If the repository has some large blobs and you want to
-+prevent some large blobs being downloaded by an appropriate threshold,
-+the form `--filter=blob:limit=<n>[kmg]`omits blobs larger than n bytes
-+or units (see linkgit:git-rev-list[1]).
-+
-+As mentioned before, a partially cloned repository may have to request
-+the missing objects when they are needed. So some 'local' commands may
-+fail without a network connection to the remote repository.
-+
-+For example, The <repository> contains two branches which names 'master'
-+and 'topic. Then, we clone the repository by
-+
-+    $ git clone --filter=blob:none --no-checkout <repository>
-+
-+With the `--filter=blob:none` option Git will omit all the blobs and
-+the `--no-checkout` option Git will not perform a checkout of HEAD
-+after the clone is complete. Then, we check out the remote tracking
-+'topic' branch by
-+
-+    $ git checkout -b topic origin/topic 
-+
-+The output looks like
-+
-+------------
-+    remote: Enumerating objects: 1, done.
-+    remote: Counting objects: 100% (1/1), done.
-+    remote: Total 1 (delta 0), reused 0 (delta 0), pack-reused 0
-+    Receiving objects: 100% (1/1), 43 bytes | 43.00 KiB/s, done.
-+    Branch 'topic' set up to track remote branch 'topic' from 'origin'.
-+    Switched to a new branch 'topic'
-+------------
-+
-+The output is a bit surprising but it shows how partial clone works.
-+When we check out the branch 'topic' Git will request the missing blobs
-+because they are needed. Then, We can switch back to branch 'master' by
-+
-+    $ git checkout master
-+
-+This time the output looks like
-+
-+------------
-+    Switched to branch 'master'
-+    Your branch is up to date with 'origin/master'.
-+------------
-+
-+It shows that when we switch back to the previous location, the checkout
-+is done without a download because the repository has all the blobs that
-+were downloaded previously.
-+
-+`git log` may also make a surprise with partial clones. `git log
-+-- <pathspec>` will not cause downloads with the blob filters, because
-+it's only reading commits and trees. In addition to any options that
-+require git to look at the contents of blobs, like "-p" and "--stat"
-+, options that cause git to report pathnames, like "--summary" and
-+"--raw", will trigger lazy/on-demand fetching of blobs, as they are
-+needed to detect inexact renames.
-+
-+linkgit:partial-clone[1]
-+
- :git-clone: 1
- include::urls.txt[]
+ log.follow::
+ 	If `true`, `git log` will act as if the `--follow` option was used when
+ 	a single <path> is given.  This has the same limitations as `--follow`,
+diff --git a/builtin/log.c b/builtin/log.c
+index 83a4a6188e2..d7d1d5b7143 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -236,7 +236,21 @@ static void cmd_log_init_finish(int argc, const char **argv, const char *prefix,
+ 	}
  
+ 	if (decoration_style) {
++		const struct string_list *config_exclude =
++			repo_config_get_value_multi(the_repository,
++						    "log.excludeDecoration");
++
++		if (config_exclude) {
++			struct string_list_item *item;
++			for (item = config_exclude->items;
++			     item && item < config_exclude->items + config_exclude->nr;
++			     item++)
++				string_list_append(&decorate_refs_exclude,
++						item->string);
++		}
++
+ 		rev->show_decorations = 1;
++
+ 		load_ref_decorations(&decoration_filter, decoration_style);
+ 	}
+ 
+diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+index 0f766ba65f5..b5de449e510 100755
+--- a/t/t4202-log.sh
++++ b/t/t4202-log.sh
+@@ -787,6 +787,9 @@ test_expect_success 'decorate-refs-exclude with glob' '
+ 	EOF
+ 	git log -n6 --decorate=short --pretty="tformat:%f%d" \
+ 		--decorate-refs-exclude="heads/octopus*" >actual &&
++	test_cmp expect.decorate actual &&
++	git -c log.excludeDecoration="heads/octopus*" log \
++		-n6 --decorate=short --pretty="tformat:%f%d" >actual &&
+ 	test_cmp expect.decorate actual
+ '
+ 
+@@ -801,6 +804,9 @@ test_expect_success 'decorate-refs-exclude without globs' '
+ 	EOF
+ 	git log -n6 --decorate=short --pretty="tformat:%f%d" \
+ 		--decorate-refs-exclude="tags/reach" >actual &&
++	test_cmp expect.decorate actual &&
++	git -c log.excludeDecoration="tags/reach" log \
++		-n6 --decorate=short --pretty="tformat:%f%d" >actual &&
+ 	test_cmp expect.decorate actual
+ '
+ 
+@@ -816,6 +822,14 @@ test_expect_success 'multiple decorate-refs-exclude' '
+ 	git log -n6 --decorate=short --pretty="tformat:%f%d" \
+ 		--decorate-refs-exclude="heads/octopus*" \
+ 		--decorate-refs-exclude="tags/reach" >actual &&
++	test_cmp expect.decorate actual &&
++	git -c log.excludeDecoration="heads/octopus*" \
++		-c log.excludeDecoration="tags/reach" log \
++		-n6 --decorate=short --pretty="tformat:%f%d" >actual &&
++	test_cmp expect.decorate actual &&
++	git -c log.excludeDecoration="heads/octopus*" log \
++		--decorate-refs-exclude="tags/reach" \
++		-n6 --decorate=short --pretty="tformat:%f%d" >actual &&
+ 	test_cmp expect.decorate actual
+ '
+ 
+@@ -831,6 +845,10 @@ test_expect_success 'decorate-refs and decorate-refs-exclude' '
+ 	git log -n6 --decorate=short --pretty="tformat:%f%d" \
+ 		--decorate-refs="heads/*" \
+ 		--decorate-refs-exclude="heads/oc*" >actual &&
++	test_cmp expect.decorate actual &&
++	git -c log.excludeDecoration="heads/oc*" log \
++		--decorate-refs="heads/*" \
++		-n6 --decorate=short --pretty="tformat:%f%d" >actual &&
+ 	test_cmp expect.decorate actual
+ '
+ 
+@@ -846,6 +864,10 @@ test_expect_success 'decorate-refs-exclude and simplify-by-decoration' '
+ 	git log -n6 --decorate=short --pretty="tformat:%f%d" \
+ 		--decorate-refs-exclude="*octopus*" \
+ 		--simplify-by-decoration >actual &&
++	test_cmp expect.decorate actual &&
++	git -c log.excludeDecoration="*octopus*" log \
++		-n6 --decorate=short --pretty="tformat:%f%d" \
++		--simplify-by-decoration >actual &&
+ 	test_cmp expect.decorate actual
+ '
+ 
+
+base-commit: 274b9cc25322d9ee79aa8e6d4e86f0ffe5ced925
 -- 
 gitgitgadget
