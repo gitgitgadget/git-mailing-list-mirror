@@ -6,63 +6,64 @@ X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D4E77C2BB86
-	for <git@archiver.kernel.org>; Mon, 13 Apr 2020 22:14:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E13AEC2BA2B
+	for <git@archiver.kernel.org>; Mon, 13 Apr 2020 22:18:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B0EED20739
-	for <git@archiver.kernel.org>; Mon, 13 Apr 2020 22:14:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A2D4020735
+	for <git@archiver.kernel.org>; Mon, 13 Apr 2020 22:18:23 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="tlOZPkB4"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="oZFcd93d"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389493AbgDMWOY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Apr 2020 18:14:24 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64738 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727871AbgDMWOW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Apr 2020 18:14:22 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E20F152C98;
-        Mon, 13 Apr 2020 18:14:20 -0400 (EDT)
+        id S1728024AbgDMWSW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Apr 2020 18:18:22 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:64074 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727857AbgDMWSW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Apr 2020 18:18:22 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 335FFB4F44;
+        Mon, 13 Apr 2020 18:18:20 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=FAtqeYrY8VG6vGR9GmnalWMALzc=; b=tlOZPk
-        B4zofY1doYqHhtHLoijLYfX2hs/k9UpXNAdpbtDRZ3lROB5DQWjunzs1GiH3HkMw
-        jjXCQ130UwV2VBGjtpraDW5NgnAZ2WwbkNTrINN7uWB1AKFsukljEu/rRldHR009
-        e5WAs2udrtFp0kjuHfpM+FQtdGeTB5Hm3VMQQ=
+        :content-type; s=sasl; bh=tF7TVmUaLaMdm9cZvKclhRSS6Ps=; b=oZFcd9
+        3dux4jRVCVgdY+9VITLL3yCCZ+QWrKEMPXWZOKRYR5Nm77+Yr48zIBrwORqbQDXa
+        w51ThdwNxGeufO+z7yWl/xI4BfEK9HmDa20wVIXQd1rXOGH/kbI7xLU1cGaYp23S
+        1F46kOwSmM1q0OBRRHBsC2iFRmx7RT0yGbEdE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=v0dZIKeEEVJW6cPTHBPjR0+M2OWgfSuG
-        TSoK6AflRsT4ZtLLpKE5IQjk/7PbueowghQNrMitxxIix0M8/fxHBDQ7OGpKVqfI
-        xuajGNeuBP+GDSebp4qnN47j7rHRDUkCvTC2ei53btyLj5n2wR4uDTd667E+tW4V
-        uDzizx+Khjg=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id DAAE152C97;
-        Mon, 13 Apr 2020 18:14:20 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=pnOf6fKah54AM5/19ubVXTenZWFtu+dx
+        jg08XbsIkh4zVhdVsw2PvMqO+7O7xb8FOVGD8Ahp4dZeZ5nqlKpoqLsiYWtSG+ir
+        ow4214J5pQ+Gns+a3NLCwwHxGkBMqR81wyweqxKlP8ebiKwvBoAahKYKiIsV/lM4
+        bRYhjFG0Nlg=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2B268B4F43;
+        Mon, 13 Apr 2020 18:18:20 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 660D552C94;
-        Mon, 13 Apr 2020 18:14:20 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 6F848B4F40;
+        Mon, 13 Apr 2020 18:18:17 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: [PATCH 6/6] config: reject parsing of files over INT_MAX
-References: <20200410194211.GA1363484@coredump.intra.peff.net>
-        <20200410195007.GF1363756@coredump.intra.peff.net>
-        <xmqqzhbjgfps.fsf@gitster.c.googlers.com>
-        <20200410221549.GA2078378@coredump.intra.peff.net>
-        <20200413004724.GB55122@syl.local>
-Date:   Mon, 13 Apr 2020 15:14:19 -0700
-In-Reply-To: <20200413004724.GB55122@syl.local> (Taylor Blau's message of
-        "Sun, 12 Apr 2020 18:47:24 -0600")
-Message-ID: <xmqqpncbav9g.fsf@gitster.c.googlers.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, jnareb@gmail.com, garimasigit@gmail.com,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v2 1/4] revision: complicated pathspecs disable filters
+References: <pull.609.git.1586566981.gitgitgadget@gmail.com>
+        <pull.609.v2.git.1586789126.gitgitgadget@gmail.com>
+        <adc03eee4ac8a0911bfd2a7ae03364ef0e744ef0.1586789126.git.gitgitgadget@gmail.com>
+        <20200413160908.GD59601@syl.local>
+Date:   Mon, 13 Apr 2020 15:18:15 -0700
+In-Reply-To: <20200413160908.GD59601@syl.local> (Taylor Blau's message of
+        "Mon, 13 Apr 2020 10:09:08 -0600")
+Message-ID: <xmqqlfmzav2w.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 1F90E89C-7DD4-11EA-BF33-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: ACDA2420-7DD4-11EA-83A2-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -70,9 +71,41 @@ X-Mailing-List: git@vger.kernel.org
 
 Taylor Blau <me@ttaylorr.com> writes:
 
-> ;). Making it lower than INT_MAX moves us into the territory of deciding
-> what is an "appropriately" sized config file, which I'd rather not do.
-> At least we can blame INT_MAX if someone has a too-large config file.
+>> +static int forbid_bloom_filters(struct pathspec *spec)
+>> +{
+>> +	if (spec->has_wildcard)
+>> +		return 1;
+>> +	if (spec->nr > 1)
+>> +		return 1;
+>> +	if (spec->magic & ~PATHSPEC_LITERAL)
+>> +		return 1;
+>> +	if (spec->nr && (spec->items[0].magic & ~PATHSPEC_LITERAL))
+>> +		return 1;
+>> +
+>> +	return 0;
+>> +}
+>> +
+>>  static void prepare_to_use_bloom_filter(struct rev_info *revs)
+>>  {
+>>  	struct pathspec_item *pi;
+>> @@ -659,7 +673,10 @@ static void prepare_to_use_bloom_filter(struct rev_info *revs)
+>>  	int len;
+>>
+>>  	if (!revs->commits)
+>> -	    return;
+>> +		return;
+>> +
+>> +	if (forbid_bloom_filters(&revs->prune_data))
+>> +		return;
+>>
+>>  	repo_parse_commit(revs->repo, revs->commits->item);
+>>
+>> --
+>> gitgitgadget
+>>
+>
+> Nicely done, this looks good to me. Thanks.
 
-;-)  Sensible.
+Likewise.  Very exciting.
 
+Will queue.
