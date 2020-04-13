@@ -2,135 +2,111 @@ Return-Path: <SRS0=K77S=55=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B483C2BB85
-	for <git@archiver.kernel.org>; Mon, 13 Apr 2020 00:49:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4FF7AC2BA19
+	for <git@archiver.kernel.org>; Mon, 13 Apr 2020 05:43:52 +0000 (UTC)
 Received: from vger.kernel.org (unknown [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 4B39920709
-	for <git@archiver.kernel.org>; Mon, 13 Apr 2020 00:49:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 10CA9206A1
+	for <git@archiver.kernel.org>; Mon, 13 Apr 2020 05:43:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="ni6P7tYP"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 4B39920709
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qJohSgS6"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 10CA9206A1
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=none smtp.mailfrom=git-owner@vger.kernel.org
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726885AbgDMAtb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 12 Apr 2020 20:49:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.18]:52578 "EHLO
+        id S1726824AbgDMFnu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Apr 2020 01:43:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.18]:43082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726879AbgDMAta (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Apr 2020 20:49:30 -0400
-Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24BF1C0A3BE0
-        for <git@vger.kernel.org>; Sun, 12 Apr 2020 17:49:29 -0700 (PDT)
-Received: by mail-pl1-x643.google.com with SMTP id g2so2843818plo.3
-        for <git@vger.kernel.org>; Sun, 12 Apr 2020 17:49:29 -0700 (PDT)
+        with ESMTP id S1726524AbgDMFnt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Apr 2020 01:43:49 -0400
+Received: from mail-vs1-xe36.google.com (mail-vs1-xe36.google.com [IPv6:2607:f8b0:4864:20::e36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4ABFCC008676
+        for <git@vger.kernel.org>; Sun, 12 Apr 2020 22:43:49 -0700 (PDT)
+Received: by mail-vs1-xe36.google.com with SMTP id y15so4404870vsm.5
+        for <git@vger.kernel.org>; Sun, 12 Apr 2020 22:43:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=oLr5ISSOS9oY5BjR69OYxySCsvdDdu+8M84hFW0xmo4=;
-        b=ni6P7tYPVYEh+Ol4RMz3FYFAufSOHD1FeDPfFvfdFgkaYWdL0kb1gDAV9EVakj0ZyR
-         ATnGS61MsTn28/O7k7TKIiyS68yRO8Gn8vB3hJzPQXDQVFMKO2uKJ1q5NEdlViL8eHal
-         5f0wKFKZCoF8nXAkqZKi3kYNfqYeSfsVPohmbAblBZqEW/eE47F9lrK9iZ5c6+E6EQGn
-         E+RRd3MctS9e5aui5UlvV/tzJRvHnYgTiJiyl+EL2J2eAp+wA1jA9UXJR9dFBQsMiJpN
-         iKntUaS3jY46mssnsKzW5sbK5es0tqtF3wugFN9hg41DHTVFYelHrV0La1hRE2y6fM7Q
-         EcDA==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=QiF4wwb0lrk7KjlUoVufLXiQ0OCt2Z3vgXvdWmMK5Qw=;
+        b=qJohSgS6Rt+ZgSD+Mr6Hstt/MBMjh4OkGBG+6/7b5EVelpkhuRD2cRRF496qkAXUZa
+         5umf7zZzw8roaLhasq1DdCrB6bJ8lp5jgyHvRmSsXBgB9+g3alvkdyXL4MhQLKlU5Bdh
+         afAqKGDNnDiL0Yk4BqUN25ysHQc4coM7CgKyZOf72ETJK7DwC394isRQZXoNN7jPkFON
+         rQ62Zyq/AxzMrFQUV/c6maMRCOCKXHwH93VHbZ3Tuuj2cqWfV+t2miqyfdgWZN6ly0WV
+         8F+NfNZmZTc4YoNahX075dPK+pRgEcpav41AOunISrPwjkWO+zXKpD5jIpo7hmt8oT6P
+         kBwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=oLr5ISSOS9oY5BjR69OYxySCsvdDdu+8M84hFW0xmo4=;
-        b=VUJ0jUeO7Pw3+Abl0bpRRfyLSiAcxvsFUD1+heVsMS3i66PGQJkTZNPgOcEn7drhn8
-         HwKa8qGsgVMFSgXfMp/bP00myPznHtHD8e5hbk6SU4zLynDrq31E5fEq65WM+n7LGns+
-         w+Ov/l4C6mQi5RuXC5EAmU19G1vhmjl8XPSoacmHLXqrhoGVQbyE2ipXwjsQVoXkJn53
-         KJB35q+68tl8DGsoGdVaF+iZDa2OILQQI3A9K325qxDKq7FG2fA5kTqDlS3O3QWbuH56
-         oe7dUlAI41tdvopJTewl6r1zP6yFxxIPOeEK+evvHLz0f08rFLZ5CcXJ2XVX816eAwz/
-         CHKA==
-X-Gm-Message-State: AGi0PuYP23UrqdZR/Vkb2N008diEngItN2FX99NfHXwRXv0ErfoN4mha
-        tpMI2rlPnjqKVbN/En4S15yi7cnB4+dM8A==
-X-Google-Smtp-Source: APiQypJSaqPhaqaqG4nyXkRDdlH/eNVxdeuhgsiodMuiFkirsPHmuR7R9SQRBiwT7BJaMQMsmIIIrA==
-X-Received: by 2002:a17:90a:890a:: with SMTP id u10mr10770491pjn.154.1586738968489;
-        Sun, 12 Apr 2020 17:49:28 -0700 (PDT)
-Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id y9sm7378007pfo.135.2020.04.12.17.49.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 12 Apr 2020 17:49:27 -0700 (PDT)
-Date:   Sun, 12 Apr 2020 18:49:27 -0600
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 0/6] better handling of gigantic config files
-Message-ID: <20200413004927.GC55122@syl.local>
-References: <20200410194211.GA1363484@coredump.intra.peff.net>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=QiF4wwb0lrk7KjlUoVufLXiQ0OCt2Z3vgXvdWmMK5Qw=;
+        b=TDyabnmBPufZ8wfohLdkZXs454Hk09d4w13/NXay3ZVmOTKBT5FWccy0h82ALO9qN7
+         tspqcDJ7FHwt5+OhlgiY7CpqhbXF56s4nVFlMt8+k1ylY53nFF/8e2tjdDsM/YPag3Z6
+         de2/fGqgYpOXRGxYFZJo7yuKM89xZbG+8tDRaC8+H+T+gCohH1DdictsgpcfXtm6vOI7
+         bPK4hgKnr0buHVyuIwdKltEzi+iYoY2dc5qo5CcSgKexBoimCUUh6ZRQtXYcjePWMJV7
+         BXVFLsDUwbH9231gYAyTtWfgT9cKYQ0W7qj/8rd0x7CWjOEBLoHtELXSyQhosqSytG9g
+         VnJQ==
+X-Gm-Message-State: AGi0PubuBb/S2dqlaLC2qM+x8KwZBH/oB2iuqUNdryc6auFR5g9cYP2e
+        nTmO6yngzqIEd14SLiluAjzciVu2qZS7+its9uSuYLLD
+X-Google-Smtp-Source: APiQypLgmLcOQKRSCgS8CrRPwV1gzYfQTjVGVsI76KLQ9RJbUfVAWUFXoJJ4wZIEVu8CL33JN4M532o6J0GhtgpCJLQ=
+X-Received: by 2002:a67:6c4:: with SMTP id 187mr2740701vsg.54.1586756628504;
+ Sun, 12 Apr 2020 22:43:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200410194211.GA1363484@coredump.intra.peff.net>
+References: <CAN0heSodSeT=Sj4pnutFPgbu9jjwQ_JBtBee1iyP=D3Oc_5G=g@mail.gmail.com>
+ <AE1E8050-EF04-47A0-96E0-27EEC4A0C013@anirban.org>
+In-Reply-To: <AE1E8050-EF04-47A0-96E0-27EEC4A0C013@anirban.org>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Mon, 13 Apr 2020 07:43:35 +0200
+Message-ID: <CAN0heSp+Lmyx=eGjjioCYc6dmncz4Dcwo-MCsfMMKbP6vKdOzQ@mail.gmail.com>
+Subject: Re: Cherry pick a commit but with files in another location
+To:     Ani Sinha <ani@anirban.org>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
-
-On Fri, Apr 10, 2020 at 03:42:11PM -0400, Jeff King wrote:
-> The fact that parse_config_key() requires its callers to use an "int"
-> for a string length has bugged me for a while, and it re-bugged me when
-> looking at it today. So I finally decided to do something about it,
-> which led to an odyssey of other small fixes and cleanups.
+On Sat, 11 Apr 2020 at 15:25, Ani Sinha <ani@anirban.org> wrote:
 >
-> In particular, I was curious what kinds of bad behavior you could
-> provoke by having a key name larger than 2GB (especially because we use
-> the same parser for .gitmodules files, which might not be trusted). It
-> turns out: basically none, because the config parser chokes immediately
-> dues to its own int/size_t confusion.
+> > On Apr 11, 2020, at 6:13 PM, Martin =C3=85gren <martin.agren@gmail.com>=
+ wrote:
+> >
+> > Do you use "git cherry-pick", "git am" or "git apply"?
 >
-> After patch 5, the config system _can_ actually handle stupidly-sized
-> config keys, but in the end I decided to explicitly disallow them.
-> There's downstream code that would be impossible to fix, and nobody
-> actually cares about this case working anyway. See patch 6 for more
-> discussion. I do still think the other patches are worth having as a
-> cleanup; the more code that is safe from unexpected integer truncation
-> the better.
+> Yes
+
+I still don't understand exactly what it is you're doing.
+
+> > (Or
+> > something else entirely?) Are you aware of "-p<n>" for "git apply"
+> > (and "--directory=3D<root>"?) and are wondering what similar options ar=
+e
+> > available with "git cherry-pick"?
 >
->   [1/6]: remote: drop auto-strlen behavior of make_branch() and make_rewrite()
->   [2/6]: parse_config_key(): return subsection len as size_t
->   [3/6]: config: drop useless length variable in write_pair()
->   [4/6]: git_config_parse_key(): return baselen as size_t
->   [5/6]: config: use size_t to store parsed variable baselen
->   [6/6]: config: reject parsing of files over INT_MAX
->
->  archive-tar.c      |  4 ++--
->  builtin/help.c     |  2 +-
->  builtin/reflog.c   |  2 +-
->  config.c           | 42 +++++++++++++++++++++++++++++-------------
->  config.h           |  4 ++--
->  convert.c          |  2 +-
->  fsck.c             |  2 +-
->  ll-merge.c         |  2 +-
->  promisor-remote.c  |  2 +-
->  remote.c           | 37 +++++++++++++------------------------
->  submodule-config.c |  3 ++-
->  userdiff.c         |  4 ++--
->  12 files changed, 56 insertions(+), 50 deletions(-)
->
-> -Peff
+> Yes was wondering if similar options exist for cherry pick. I wanted
+> to use cherry-pick  so that cherry picks can be tracked by git.
 
-Thanks for doing this. I knew that it rang a bell for some reason, but
-it was because of the upload-pack changes to limit the set of allowed
-object filter choices that I'd sent as an RFC somewhere.
+Are you working on some repo that is publicly available, e.g., on
+github/gitlab? If so, you could post a link.
 
-I was using 'parse_config_key()', and I think that you noted somewhere
-that it was odd that it filled an int and not a size_t. So, thanks very
-much for fixing that case.
+What is it that you try doing? You could post the commands you execute.
 
-This series looks very good and straightforward to me. So,
+What happens? You could post error messages.
 
-  Reviewed-by: Taylor Blau <me@ttaylorr.com>
+What do you expect *should* happen? You could try to describe your
+expectations.
 
-Thanks,
-Taylor
+Without that kind of information, it is unfortunately hard to help you.
+
+One final thought: Have you actually tried cherry-picking the way you
+want to, and have you actually encountered a problem? Or are you looking
+for solutions to a problem that you're not sure you're having?
+
+Martin
