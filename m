@@ -2,68 +2,67 @@ Return-Path: <SRS0=cd4n=56=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C71CEC2BA19
-	for <git@archiver.kernel.org>; Tue, 14 Apr 2020 12:33:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F318C2BB86
+	for <git@archiver.kernel.org>; Tue, 14 Apr 2020 12:33:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 959D620787
+	by mail.kernel.org (Postfix) with ESMTP id D92F6206D5
 	for <git@archiver.kernel.org>; Tue, 14 Apr 2020 12:33:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SZkxUxgi"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oGr6JTSg"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2501999AbgDNMdO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Apr 2020 08:33:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48462 "EHLO
+        id S2501996AbgDNMdK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Apr 2020 08:33:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S2501988AbgDNMdF (ORCPT
+        by vger.kernel.org with ESMTP id S1730303AbgDNMdF (ORCPT
         <rfc822;git@vger.kernel.org>); Tue, 14 Apr 2020 08:33:05 -0400
-Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1599C061A0F
+Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45B81C061A0C
         for <git@vger.kernel.org>; Tue, 14 Apr 2020 05:33:05 -0700 (PDT)
-Received: by mail-pl1-x644.google.com with SMTP id t4so4587655plq.12
+Received: by mail-pf1-x442.google.com with SMTP id b8so5982992pfp.8
         for <git@vger.kernel.org>; Tue, 14 Apr 2020 05:33:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=FrOWekQy/e8jsVnuGIGducIfKVaTJAQ9x8ruJ7aTIGY=;
-        b=SZkxUxgilToM/0Ropgl2gOWk5sO0VvJ3LxD4fIgq1tcau5OpawRTcYdYt7atxa5KkP
-         TjQ4/L0RWU+tR7Q19OPuAUw1J73BjO1FOkCpB9/ujyQKDL/wVFfZAf4CV0c0jNejRYEv
-         19vzDy9XwuimxNc1FKTZl1soVtaBYsBcRTUdHvLMBSfbXE7psFHLh9pxiYG4JkHig1Nw
-         69oBJuZrUsvXAUDfmLgwK/m/q6Izpa4qjJfIfcMVNWVruzbOHMcW7Y9OVSjKhxfpMDcN
-         +BSr1B1RFI4DEMet7LcJQHfkuwh6Zc/9pp5TNJHyOcewrVAEcMDOb4VJldo4m03BGq/E
-         Ppgg==
+        bh=Ywv3Oq8f4v3qV5BlX6QDkufMJ/Nc93boB/FE8JLFhZw=;
+        b=oGr6JTSgpYlq5+7ydRqejdYGaM6mcjV6ZUSCAGuBFV6Ex3/hgU1jQCH6FdwMNWXZPL
+         tvU8mHV9IjUCzC1m9hK/uMYbXsGUxzDP0b7v9Mxf6+e9mBMaIvNKBjaJ8QBJeGQP7hOu
+         kO5gcXkuG3ltVb14POaumYJMInmF5+taB/Ugcq/ds9ge6Gqhg63ZUijpzS3eTnVAlsdg
+         ckOpY8KSfbjmAuCV4EcUlRnWOyKIh02ovcxRjwjxE2MfCW5cXqvlMsJWJe9SSxX8aRBf
+         PuVHjSbOn9qnIVMbd5HaM6wt9e4L1es/Awj5vnyF86JnWhpukeMQZuN6W6OEff2hcxyk
+         2KeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=FrOWekQy/e8jsVnuGIGducIfKVaTJAQ9x8ruJ7aTIGY=;
-        b=obEMnKwnJiwNwDel3coR2naQFoI7bPbeZHPCHiy3LsWmlWWQ2hf+my3Yw7zq9DXeh/
-         4YJH+q4+zfc56eRe/kEeOX9snravtyKIPyVbidQy+AMjT0H12SGaANHWuMD/c1l4/5jp
-         QumeAEU55ig/7MsihyUDiyTDz8Rp/r5g5CsGFITT0Jo1JUTb6tpBsxqc8iLSl0pN4NXs
-         oj1MEwb5l8J8TECwfHWIo1TFNv2Uk2H3LObtkj2qdTFt/xoEHfrcJMBjp4rjqA+fw7xs
-         7uFHkp9UFTNVGy/LSecSxLuR4L1pzBRZxQgzxWRdzXEEoV3nh20fEx4YOjenBp1IKADI
-         YOJg==
-X-Gm-Message-State: AGi0PuY8yM45RvHpTqxzCMCxYqis64km1IjxXxksx//v8KirddFXrhZb
-        zerf5AuLyXDB5w8nc2rBZFI=
-X-Google-Smtp-Source: APiQypIGAR5ypx9UfLO8tOWiAQebcpVtsKzTwNazU0xez9q9sfOmRZirY4GFsxlUqZKFSfM2NkYydw==
-X-Received: by 2002:a17:902:7b8e:: with SMTP id w14mr543055pll.173.1586867585085;
-        Tue, 14 Apr 2020 05:33:05 -0700 (PDT)
-Received: from tigtog.localdomain.localdomain ([144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id c9sm996177pfp.53.2020.04.14.05.33.04
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        bh=Ywv3Oq8f4v3qV5BlX6QDkufMJ/Nc93boB/FE8JLFhZw=;
+        b=dbbC8umOKtu8IZ+NX27tqAAcYFRSBBFnAX4S5I0IxEu7upml/6HxOZDymYpg8rsVag
+         Dmx1T1zj72oVJV41VlXZrrvddCvwJqRUTx0j02YsrcLH7ll8sTz265vt815ld+pwEhHV
+         4pq7vBVkVvaedVzexpSzdM1y3h+XT/AdInOOGuHi+0Cj0BcT7geq2xyKmTy95ZBSGsLL
+         SbULdeIx5oQBnvzAvymnIVC4tyxNy8OMkFbvFH4AbLhoiuLxuJiYCcsr7zC/2eQv5Wla
+         lWK/2Fjm98oDPJM4iVyS/JKz4ItHR7ghJw1S9wBWUwj6ZPKYo9w5jBQQarWcgolsNNRD
+         /Ung==
+X-Gm-Message-State: AGi0PuaQOAkQmlKKHdz8cNIRz3twOLeIj8V9whyvuFnHSpdharwo6XWz
+        TYGXJLlHSgTFVrXNuf8XgXU=
+X-Google-Smtp-Source: APiQypL2ywe1z9NUVmD42wyf86k1ApdCpVS38vi4tFicUSJOfFkV8zIYJ7iPyeMbvJFyPHQGp8JZNA==
+X-Received: by 2002:a63:1e0a:: with SMTP id e10mr22332020pge.417.1586867584330;
         Tue, 14 Apr 2020 05:33:04 -0700 (PDT)
+Received: from tigtog.localdomain.localdomain ([144.34.163.219])
+        by smtp.gmail.com with ESMTPSA id c9sm996177pfp.53.2020.04.14.05.33.03
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 14 Apr 2020 05:33:03 -0700 (PDT)
 From:   Jiang Xin <worldhello.net@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
 Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: [PATCH v12 1/7] transport: not report a non-head push as a branch
-Date:   Tue, 14 Apr 2020 08:32:51 -0400
-Message-Id: <20200414123257.27449-2-worldhello.net@gmail.com>
+Subject: [PATCH v12 0/7] New proc-receive hook for centralized workflow
+Date:   Tue, 14 Apr 2020 08:32:50 -0400
+Message-Id: <20200414123257.27449-1-worldhello.net@gmail.com>
 X-Mailer: git-send-email 2.26.0.rc0
 In-Reply-To: <xmqq3697cax0.fsf@gitster.c.googlers.com>
 References: <xmqq3697cax0.fsf@gitster.c.googlers.com>
@@ -76,318 +75,898 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 
-When pushing a new reference (not a head or tag), report it as a new
-reference instead of a new branch.
+## Changes since v11
 
-Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+* Change the syntax of status report from "proc-receive" to "receive-pack".
+
+        # Receive result from the hook.
+        # OK, run this command successfully.
+        H: PKT-LINE(ok <ref>)
+        # NO, I reject it.
+        H: PKT-LINE(ng <ref> <reason>)
+        # Fall through, let 'receive-pack' to execute it.
+        H: PKT-LINE(ft <ref>)
+        # OK, but has an alternate reference.  The alternate reference name
+        # is given in the third parameter, and other status can be given in
+        # key-value pairs.
+        H: PKT-LINE(alt <ref> <alt-ref> old-oid=<old-oid> new-oid=<new-oid>
+                    forced-update)
+        H: ... ...
+        H: flush-pkt
+
+* Support multiple responses from "proc-receive" for one reference.
+  Add test case:
+
+        test_expect_success "setup proc-receive hook (multiple responses)" '
+        	write_script "$upstream/hooks/proc-receive" <<-EOF
+        	printf >&2 "# proc-receive hook\n"
+        	test-tool proc-receive -v \
+        		-r "alt refs/for/master/topic refs/changes/23/123/1" \
+        		-r "alt refs/for/master/topic refs/changes/24/124/2 old-oid=$A new-oid=$B"
+        	EOF
+        '
+        
+        # Refs of upstream : master(A)
+        # Refs of workbench: master(A)  tags/v123
+        # git push         :                       refs/for/master/topic(A)
+        test_expect_success "proc-receive: report multiple response" '
+        	git -C workbench push origin \
+        		HEAD:refs/for/master/topic \
+        		>out 2>&1 &&
+        	make_user_friendly_and_stable_output <out >actual &&
+        	cat >expect <<-EOF &&
+        	remote: # pre-receive hook
+        	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+        	remote: # proc-receive hook
+        	remote: proc-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+        	remote: proc-receive> alt refs/for/master/topic refs/changes/23/123/1
+        	remote: proc-receive> alt refs/for/master/topic refs/changes/24/124/2 old-oid=<COMMIT-A> new-oid=<COMMIT-B>
+        	remote: # post-receive hook
+        	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+        	To <URL/of/upstream.git>
+        	 * [new reference] HEAD -> refs/changes/23/123/1
+        	 <OID-A>..<OID-B> HEAD -> refs/changes/24/124/2
+        	EOF
+        	test_cmp expect actual &&
+        	git -C "$upstream" show-ref >out &&
+        	make_user_friendly_and_stable_output <out >actual &&
+        	cat >expect <<-EOF &&
+        	<COMMIT-A> refs/heads/master
+        	EOF
+        	test_cmp expect actual
+        '
+
+* "receive-pack" checks format of the report from "proc-receive", will
+  discard unknown status.
+
+* Apply the `SQUASH???` commit.
+
+
+## Range-diff v11..v12
+
+1:  bef4360e58 ! 1:  b76900cb0f receive-pack: add new proc-receive hook
+    @@ Commit message
+     
+             # Receive result from the hook.
+             # OK, run this command successfully.
+    -        H: PKT-LINE(<old-oid> <new-oid> <ref> ok)
+    +        H: PKT-LINE(ok <ref>)
+             # NO, I reject it.
+    -        H: PKT-LINE(<old-oid> <new-oid> <ref> ng <reason>)
+    +        H: PKT-LINE(ng <ref> <reason>)
+             # Fall through, let 'receive-pack' to execute it.
+    -        H: PKT-LINE(<old-oid> <new-oid> <ref> ft)
+    +        H: PKT-LINE(ft <ref>)
+             # OK, but has an alternate reference.  The alternate reference name
+    -        # and other status are given in key=value pairs after the null
+    -        # character.
+    -        H: PKT-LINE(<old-oid> <new-oid> <ref> ok\0ref=refs/pull/123/head
+    +        # is given in the third parameter, and other status can be given in
+    +        # key-value pairs.
+    +        H: PKT-LINE(alt <ref> <alt-ref> old-oid=<old-oid> new-oid=<new-oid>
+                         forced-update)
+             H: ... ...
+             H: flush-pkt
+    @@ Commit message
+         other routines.  Finally, the result of the execution of these commands
+         will be reported to end user.
+     
+    -    The reporting function from "receive-pack" to "send-pack" is also
+    -    extended using a backward compatible way by adding key-value pairs
+    -    after an null character, like:
+    +    The reporting function from "receive-pack" to "send-pack" is extended
+    +    using a backward compatible way by adding key-value pairs after an null
+    +    character, like:
+     
+             # OK, run this command successfully with optional extended-status.
+             ok <reference>\0ref=refs/pull/123/head old-oid=...
+    @@ Makefile: TEST_BUILTINS_OBJS += test-parse-pathspec-file.o
+      TEST_BUILTINS_OBJS += test-read-cache.o
+     
+      ## builtin/receive-pack.c ##
+    +@@
+    + #include "remote.h"
+    + #include "connect.h"
+    + #include "string-list.h"
+    ++#include "string.h"
+    + #include "sha1-array.h"
+    + #include "connected.h"
+    + #include "argv-array.h"
+     @@ builtin/receive-pack.c: static void write_head_info(void)
+      	packet_flush(1);
+      }
+    @@ builtin/receive-pack.c: static int run_update_hook(struct command *cmd)
+     +
+     +	for (;;) {
+     +		struct object_id old_oid, new_oid;
+    -+		const char *refname;
+    -+		const char *p;
+     +		char *status;
+    -+		char *msg = NULL;
+    -+		int len;
+    ++		char *refname;
+    ++		char *remains = NULL;
+     +
+     +		if (packet_reader_read(reader) != PACKET_READ_NORMAL)
+     +			break;
+    -+		len = strlen(reader->line);
+    -+		if (parse_oid_hex(reader->line, &old_oid, &p) ||
+    -+		    *p++ != ' ' ||
+    -+		    parse_oid_hex(p, &new_oid, &p) ||
+    -+		    *p++ != ' ') {
+    -+			strbuf_addf(errmsg, "proc-receive expected 'old new ref status [msg]', got '%s'\n",
+    -+				    reader->line);
+    -+			code = -1;
+    -+			continue;
+    ++		status = (char *)reader->line;
+    ++		refname = strchr(status, ' ');
+    ++		if (refname) {
+    ++			*refname++ = '\0';
+    ++			remains = strchr(refname, ' ');
+    ++			if (remains)
+    ++				*remains++ = '\0';
+     +		}
+    -+
+    -+		refname = p;
+    -+		status = strchr(p, ' ');
+    -+		if (!status) {
+    -+			strbuf_addf(errmsg, "proc-receive expected 'old new ref status [msg]', got '%s'\n",
+    ++		if (!refname || strlen(refname) == 0) {
+    ++			strbuf_addf(errmsg, "proc-receive expected '<status> <ref> ...', got '%s'\n",
+     +				    reader->line);
+     +			code = -1;
+     +			continue;
+     +		}
+    -+		*status++ = '\0';
+    -+		msg = strchr(status, ' ');
+    -+		if (msg)
+    -+			*msg++ = '\0';
+     +
+     +		/* first try searching at our hint, falling back to all refs */
+     +		if (hint)
+    @@ builtin/receive-pack.c: static int run_update_hook(struct command *cmd)
+     +			continue;
+     +		}
+     +		if (!strcmp(status, "ng")) {
+    -+			if (msg)
+    -+				hint->error_string = xstrdup(msg);
+    ++			if (remains)
+    ++				hint->error_string = xstrdup(remains);
+     +			else
+     +				hint->error_string = "failed";
+     +			code = -1;
+     +		} else if (!strcmp("ft", status)) {
+     +			/* Reset "run_proc_receive" field, and continue to run in "receive-pack" */
+     +			hint->run_proc_receive = 0;
+    ++		} else if (!strcmp("alt", status)) {
+    ++			char *alt_ref;
+    ++
+    ++			alt_ref = remains;
+    ++			remains = strchr(alt_ref, ' ');
+    ++			if (remains)
+    ++				*remains++ = '\0';
+    ++
+    ++			if (hint->extended_status)
+    ++				strbuf_addstr(&extended_status, hint->extended_status);
+    ++
+    ++			strbuf_addf(&extended_status, "%sref=%s",
+    ++				    extended_status.len > 0 ? " ": "",
+    ++				    alt_ref);
+    ++
+    ++			if (remains) {
+    ++				const char *val;
+    ++				int len;
+    ++
+    ++				val = parse_feature_value(remains, "old-oid", &len);
+    ++				if (val && len > 0)
+    ++					if (!parse_oid_hex(val, &old_oid, &val))
+    ++						strbuf_addf(&extended_status, "%sold-oid=%s",
+    ++							   extended_status.len > 0 ? " ": "",
+    ++							   oid_to_hex(&old_oid));
+    ++
+    ++				val = parse_feature_value(remains, "new-oid", &len);
+    ++				if (val && len > 0)
+    ++					if (!parse_oid_hex(val, &new_oid, &val))
+    ++						strbuf_addf(&extended_status, "%snew-oid=%s",
+    ++							   extended_status.len > 0 ? " ": "",
+    ++							   oid_to_hex(&new_oid));
+    ++
+    ++				if (parse_feature_request(remains, "forced-update"))
+    ++					strbuf_addf(&extended_status, "%sforced-update",
+    ++						    extended_status.len > 0 ? " ": "");
+    ++			}
+    ++
+    ++			if (extended_status.len > 0) {
+    ++				free((void *)hint->extended_status);
+    ++				hint->extended_status = strbuf_detach(&extended_status, NULL);
+    ++			}
+     +		} else if (strcmp("ok", status)) {
+     +			strbuf_addf(errmsg, "proc-receive reported bad status '%s' on ref '%s'\n",
+     +				    status, refname);
+    @@ builtin/receive-pack.c: static int run_update_hook(struct command *cmd)
+     +			/* Skip marking it as RUN_PROC_RECEIVE_RETURNED */
+     +			continue;
+     +		}
+    -+		if (reader->pktlen > len)
+    -+			strbuf_addstr(&extended_status, (char *)reader->line + len + 1);
+    -+		if (oidcmp(&hint->old_oid, &old_oid)) {
+    -+			oidcpy(&hint->old_oid, &old_oid);
+    -+			strbuf_addf(&extended_status, "%sold-oid=%s",
+    -+				    extended_status.len > 0 ? " ": "",
+    -+				    oid_to_hex(&old_oid));
+    -+		}
+    -+		if (oidcmp(&hint->new_oid, &new_oid)) {
+    -+			oidcpy(&hint->new_oid, &new_oid);
+    -+			strbuf_addf(&extended_status, "%snew-oid=%s",
+    -+				    extended_status.len > 0 ? " ": "",
+    -+				    oid_to_hex(&new_oid));
+    -+		}
+    -+		if (extended_status.len > 0)
+    -+			hint->extended_status = strbuf_detach(&extended_status, NULL);
+    ++
+     +		if (hint->run_proc_receive)
+     +			hint->run_proc_receive |= RUN_PROC_RECEIVE_RETURNED;
+     +	}
+    @@ t/t5411/common-test-cases.sh: test_expect_success "normal git-push command" '
+     +
+     +'
+     +
+    -+test_expect_success "setup proc-receive hook (bad oid)" '
+    ++test_expect_success "setup proc-receive hook (no ref)" '
+     +	write_script "$upstream/hooks/proc-receive" <<-EOF
+     +	printf >&2 "# proc-receive hook\n"
+     +	test-tool proc-receive -v \
+    -+		-r "bad-id new-id ref ok"
+    ++		-r "ok"
+     +	EOF
+     +'
+     +
+     +# Refs of upstream : master(A)
+     +# Refs of workbench: master(A)  tags/v123
+     +# git push         :                       refs/for/master/topic
+    -+test_expect_success "proc-receive: bad protocol (bad oid)" '
+    ++test_expect_success "proc-receive: bad protocol (no ref)" '
+     +	test_must_fail git -C workbench push origin \
+     +		HEAD:refs/for/master/topic\
+     +		>out 2>&1 &&
+    @@ t/t5411/common-test-cases.sh: test_expect_success "normal git-push command" '
+     +	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+     +	remote: # proc-receive hook
+     +	remote: proc-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+    -+	remote: proc-receive> bad-id new-id ref ok
+    -+	remote: error: proc-receive expected "old new ref status [msg]", got "bad-id new-id ref ok"
+    -+	To <URL/of/upstream.git>
+    -+	 ! [remote rejected] HEAD -> refs/for/master/topic (proc-receive failed to report status)
+    -+	EOF
+    -+	test_cmp expect actual &&
+    -+	git -C "$upstream" show-ref >out &&
+    -+	make_user_friendly_and_stable_output <out >actual &&
+    -+	cat >expect <<-EOF &&
+    -+	<COMMIT-A> refs/heads/master
+    -+	EOF
+    -+	test_cmp expect actual
+    -+'
+    -+
+    -+test_expect_success "setup proc-receive hook (no status)" '
+    -+	write_script "$upstream/hooks/proc-receive" <<-EOF
+    -+	printf >&2 "# proc-receive hook\n"
+    -+	test-tool proc-receive -v \
+    -+		-r "$ZERO_OID $A refs/for/master/topic"
+    -+	EOF
+    -+'
+    -+
+    -+# Refs of upstream : master(A)
+    -+# Refs of workbench: master(A)  tags/v123
+    -+# git push         :                       refs/for/master/topic
+    -+test_expect_success "proc-receive: bad protocol (no status)" '
+    -+	test_must_fail git -C workbench push origin \
+    -+		HEAD:refs/for/master/topic \
+    -+		>out 2>&1 &&
+    -+	make_user_friendly_and_stable_output <out >actual &&
+    -+	cat >expect <<-EOF &&
+    -+	remote: # pre-receive hook
+    -+	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+    -+	remote: # proc-receive hook
+    -+	remote: proc-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+    -+	remote: proc-receive> <ZERO-OID> <COMMIT-A> refs/for/master/topic
+    -+	remote: error: proc-receive expected "old new ref status [msg]", got "<ZERO-OID> <COMMIT-A> refs/for/master/topic"
+    ++	remote: proc-receive> ok
+    ++	remote: error: proc-receive expected "<status> <ref> ...", got "ok"
+     +	To <URL/of/upstream.git>
+     +	 ! [remote rejected] HEAD -> refs/for/master/topic (proc-receive failed to report status)
+     +	EOF
+    @@ t/t5411/common-test-cases.sh: test_expect_success "normal git-push command" '
+     +	write_script "$upstream/hooks/proc-receive" <<-EOF
+     +	printf >&2 "# proc-receive hook\n"
+     +	test-tool proc-receive -v \
+    -+		-r "$ZERO_OID $A refs/for/master/topic xx msg"
+    ++		-r "xx refs/for/master/topic"
+     +	EOF
+     +'
+     +
+    @@ t/t5411/common-test-cases.sh: test_expect_success "normal git-push command" '
+     +	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+     +	remote: # proc-receive hook
+     +	remote: proc-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+    -+	remote: proc-receive> <ZERO-OID> <COMMIT-A> refs/for/master/topic xx msg
+    ++	remote: proc-receive> xx refs/for/master/topic
+     +	remote: error: proc-receive reported bad status "xx" on ref "refs/for/master/topic"
+     +	To <URL/of/upstream.git>
+     +	 ! [remote rejected] HEAD -> refs/for/master/topic (proc-receive failed to report status)
+    @@ t/t5411/common-test-cases.sh: test_expect_success "normal git-push command" '
+     +	write_script "$upstream/hooks/proc-receive" <<-EOF
+     +	printf >&2 "# proc-receive hook\n"
+     +	test-tool proc-receive -v \
+    -+		-r "$ZERO_OID $A refs/for/master/topic ng"
+    ++		-r "ng refs/for/master/topic"
+     +	EOF
+     +'
+     +
+    @@ t/t5411/common-test-cases.sh: test_expect_success "normal git-push command" '
+     +	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+     +	remote: # proc-receive hook
+     +	remote: proc-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+    -+	remote: proc-receive> <ZERO-OID> <COMMIT-A> refs/for/master/topic ng
+    ++	remote: proc-receive> ng refs/for/master/topic
+     +	To <URL/of/upstream.git>
+     +	 ! [remote rejected] HEAD -> refs/for/master/topic (failed)
+     +	EOF
+    @@ t/t5411/common-test-cases.sh: test_expect_success "normal git-push command" '
+     +	write_script "$upstream/hooks/proc-receive" <<-EOF
+     +	printf >&2 "# proc-receive hook\n"
+     +	test-tool proc-receive -v \
+    -+		-r "$ZERO_OID $A refs/for/master/topic ng error msg"
+    ++		-r "ng refs/for/master/topic error msg"
+     +	EOF
+     +'
+     +
+    @@ t/t5411/common-test-cases.sh: test_expect_success "normal git-push command" '
+     +	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+     +	remote: # proc-receive hook
+     +	remote: proc-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+    -+	remote: proc-receive> <ZERO-OID> <COMMIT-A> refs/for/master/topic ng error msg
+    ++	remote: proc-receive> ng refs/for/master/topic error msg
+     +	To <URL/of/upstream.git>
+     +	 ! [remote rejected] HEAD -> refs/for/master/topic (error msg)
+     +	EOF
+    @@ t/t5411/common-test-cases.sh: test_expect_success "normal git-push command" '
+     +	write_script "$upstream/hooks/proc-receive" <<-EOF
+     +	printf >&2 "# proc-receive hook\n"
+     +	test-tool proc-receive -v \
+    -+		-r "$ZERO_OID $A refs/heads/master ok"
+    ++		-r "ok refs/heads/master"
+     +	EOF
+     +'
+     +
+    @@ t/t5411/common-test-cases.sh: test_expect_success "normal git-push command" '
+     +	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+     +	remote: # proc-receive hook
+     +	remote: proc-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+    -+	remote: proc-receive> <ZERO-OID> <COMMIT-A> refs/heads/master ok
+    ++	remote: proc-receive> ok refs/heads/master
+     +	remote: error: proc-receive reported status on unexpected ref: refs/heads/master
+     +	remote: # post-receive hook
+     +	remote: post-receive< <COMMIT-A> <COMMIT-B> refs/heads/master
+    @@ t/t5411/common-test-cases.sh: test_expect_success "normal git-push command" '
+     +	write_script "$upstream/hooks/proc-receive" <<-EOF
+     +	printf >&2 "# proc-receive hook\n"
+     +	test-tool proc-receive -v \
+    -+		-r "$ZERO_OID $A refs/for/master/topic ok"
+    ++		-r "ok refs/for/master/topic"
+     +	EOF
+     +'
+     +
+    @@ t/t5411/common-test-cases.sh: test_expect_success "normal git-push command" '
+     +	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+     +	remote: # proc-receive hook
+     +	remote: proc-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+    -+	remote: proc-receive> <ZERO-OID> <COMMIT-A> refs/for/master/topic ok
+    ++	remote: proc-receive> ok refs/for/master/topic
+     +	remote: # post-receive hook
+     +	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+     +	To <URL/of/upstream.git>
+    @@ t/t5411/common-test-cases.sh: test_expect_success "normal git-push command" '
+     +	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/for/a/b/c/my/topic
+     +	remote: # proc-receive hook
+     +	remote: proc-receive< <ZERO-OID> <COMMIT-A> refs/for/a/b/c/my/topic
+    -+	remote: proc-receive> <ZERO-OID> <COMMIT-A> refs/for/master/topic ok
+    ++	remote: proc-receive> ok refs/for/master/topic
+     +	remote: error: proc-receive reported status on unknown ref: refs/for/master/topic
+     +	To <URL/of/upstream.git>
+     +	 ! [remote rejected] HEAD -> refs/for/a/b/c/my/topic (proc-receive failed to report status)
+    @@ t/t5411/common-test-cases.sh: test_expect_success "normal git-push command" '
+     +	remote: proc-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+     +	remote: proc-receive< issue=123
+     +	remote: proc-receive< reviewer=user1
+    -+	remote: proc-receive> <ZERO-OID> <COMMIT-A> refs/for/master/topic ok
+    ++	remote: proc-receive> ok refs/for/master/topic
+     +	remote: # post-receive hook
+     +	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/heads/next
+     +	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+    @@ t/t5411/common-test-cases.sh: test_expect_success "normal git-push command" '
+     +	write_script "$upstream/hooks/proc-receive" <<-EOF
+     +	printf >&2 "# proc-receive hook\n"
+     +	test-tool proc-receive -v \
+    -+		-r "$ZERO_OID $B refs/for/master/topic ft"
+    ++		-r "ft refs/for/master/topic"
+     +	EOF
+     +'
+     +
+    @@ t/t5411/common-test-cases.sh: test_expect_success "normal git-push command" '
+     +	remote: pre-receive< <ZERO-OID> <COMMIT-B> refs/for/master/topic
+     +	remote: # proc-receive hook
+     +	remote: proc-receive< <ZERO-OID> <COMMIT-B> refs/for/master/topic
+    -+	remote: proc-receive> <ZERO-OID> <COMMIT-B> refs/for/master/topic ft
+    ++	remote: proc-receive> ft refs/for/master/topic
+     +	remote: # post-receive hook
+     +	remote: post-receive< <ZERO-OID> <COMMIT-B> refs/for/master/topic
+     +	To <URL/of/upstream.git>
+    @@ t/t5411/common-test-cases.sh: test_expect_success "normal git-push command" '
+     +	write_script "$upstream/hooks/proc-receive" <<-EOF
+     +	printf >&2 "# proc-receive hook\n"
+     +	test-tool proc-receive -v \
+    -+		-r "$ZERO_OID $A refs/for/a/b/c/topic ok" \
+    -+		-r "$ZERO_OID $A refs/for/next/topic ok\0ref=refs/pull/123/head" \
+    -+		-r "$B $A refs/for/master/topic ok\0ref=refs/pull/124/head forced-update"
+    ++		-r "ok refs/for/a/b/c/topic" \
+    ++		-r "alt refs/for/next/topic refs/pull/123/head" \
+    ++		-r "alt refs/for/master/topic refs/pull/124/head old-oid=$B forced-update new-oid=$A"
+     +	EOF
+     +'
+     +
+    @@ t/t5411/common-test-cases.sh: test_expect_success "normal git-push command" '
+     +	remote: proc-receive< <ZERO-OID> <COMMIT-A> refs/for/next/topic
+     +	remote: proc-receive< <ZERO-OID> <COMMIT-A> refs/for/a/b/c/topic
+     +	remote: proc-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+    -+	remote: proc-receive> <ZERO-OID> <COMMIT-A> refs/for/a/b/c/topic ok
+    -+	remote: proc-receive> <ZERO-OID> <COMMIT-A> refs/for/next/topic ok\0ref=refs/pull/123/head
+    -+	remote: proc-receive> <COMMIT-B> <COMMIT-A> refs/for/master/topic ok\0ref=refs/pull/124/head forced-update
+    ++	remote: proc-receive> ok refs/for/a/b/c/topic
+    ++	remote: proc-receive> alt refs/for/next/topic refs/pull/123/head
+    ++	remote: proc-receive> alt refs/for/master/topic refs/pull/124/head old-oid=<COMMIT-B> forced-update new-oid=<COMMIT-A>
+     +	remote: # post-receive hook
+     +	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/next/topic
+     +	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/a/b/c/topic
+    -+	remote: post-receive< <COMMIT-B> <COMMIT-A> refs/for/master/topic
+    ++	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+     +	To <URL/of/upstream.git>
+     +	 * [new reference] HEAD -> refs/for/next/topic
+     +	 * [new reference] HEAD -> refs/for/a/b/c/topic
+    @@ t/t5411/common-test-cases.sh: test_expect_success "normal git-push command" '
+     +	test_cmp expect actual
+     +'
+     +
+    ++test_expect_success "setup proc-receive hook (multiple responses)" '
+    ++	write_script "$upstream/hooks/proc-receive" <<-EOF
+    ++	printf >&2 "# proc-receive hook\n"
+    ++	test-tool proc-receive -v \
+    ++		-r "alt refs/for/master/topic refs/changes/23/123/1" \
+    ++		-r "alt refs/for/master/topic refs/changes/24/124/2 old-oid=$A new-oid=$B"
+    ++	EOF
+    ++'
+    ++
+    ++# Refs of upstream : master(A)
+    ++# Refs of workbench: master(A)  tags/v123
+    ++# git push         :                       refs/for/master/topic(A)
+    ++test_expect_success "proc-receive: report multiple response" '
+    ++	git -C workbench push origin \
+    ++		HEAD:refs/for/master/topic \
+    ++		>out 2>&1 &&
+    ++	make_user_friendly_and_stable_output <out >actual &&
+    ++	cat >expect <<-EOF &&
+    ++	remote: # pre-receive hook
+    ++	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+    ++	remote: # proc-receive hook
+    ++	remote: proc-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+    ++	remote: proc-receive> alt refs/for/master/topic refs/changes/23/123/1
+    ++	remote: proc-receive> alt refs/for/master/topic refs/changes/24/124/2 old-oid=<COMMIT-A> new-oid=<COMMIT-B>
+    ++	remote: # post-receive hook
+    ++	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+    ++	To <URL/of/upstream.git>
+    ++	 * [new reference] HEAD -> refs/for/master/topic
+    ++	EOF
+    ++	test_cmp expect actual &&
+    ++	git -C "$upstream" show-ref >out &&
+    ++	make_user_friendly_and_stable_output <out >actual &&
+    ++	cat >expect <<-EOF &&
+    ++	<COMMIT-A> refs/heads/master
+    ++	EOF
+    ++	test_cmp expect actual
+    ++'
+    ++
+     +test_expect_success "setup proc-receive hook" '
+     +	write_script "$upstream/hooks/proc-receive" <<-EOF
+     +	printf >&2 "# proc-receive hook\n"
+     +	test-tool proc-receive -v \
+    -+		-r "$ZERO_OID $A refs/for/next/topic ok" \
+    -+		-r "$A $B refs/for/master/topic ok"
+    ++		-r "ok refs/for/next/topic" \
+    ++		-r "alt refs/for/master/topic refs/for/master/topic old-oid=$A new-oid=$B"
+     +	EOF
+     +'
+     +
+    @@ t/t5411/common-test-cases.sh: test_expect_success "normal git-push command" '
+     +	remote: # proc-receive hook
+     +	remote: proc-receive< <ZERO-OID> <COMMIT-A> refs/for/next/topic
+     +	remote: proc-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+    -+	remote: proc-receive> <ZERO-OID> <COMMIT-A> refs/for/next/topic ok
+    -+	remote: proc-receive> <COMMIT-A> <COMMIT-B> refs/for/master/topic ok
+    ++	remote: proc-receive> ok refs/for/next/topic
+    ++	remote: proc-receive> alt refs/for/master/topic refs/for/master/topic old-oid=<COMMIT-A> new-oid=<COMMIT-B>
+     +	remote: # post-receive hook
+     +	remote: post-receive< <COMMIT-A> <COMMIT-B> refs/heads/master
+     +	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/heads/bar
+     +	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/heads/baz
+     +	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/next/topic
+     +	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/heads/foo
+    -+	remote: post-receive< <COMMIT-A> <COMMIT-B> refs/for/master/topic
+    ++	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+     +	To <URL/of/upstream.git>
+     +	 <OID-A>..<OID-B> <COMMIT-B> -> master
+     +	 * [new branch] HEAD -> bar
+2:  a4a1cc1d14 ! 2:  d20702291b send-pack: extension for client-side status report
+    @@ send-pack.c: static int receive_status(struct packet_reader *reader, struct ref
+      			ret = -1;
+      		}
+     -		hint->remote_status = xstrdup_or_null(msg);
+    -+		if (msg) {
+    ++		if (msg)
+     +			hint->remote_status = xstrdup(msg);
+    -+		} else if (extended_status) {
+    ++		else if (extended_status)
+     +			hint->remote_status = xstrdup(extended_status);
+    -+			update_ref_from_remote_status(hint);
+    -+		}
+      		/* start our next search from the next ref */
+      		hint = hint->next;
+      	}
+    @@ send-pack.c: static int receive_status(struct packet_reader *reader, struct ref
+      ## t/t5411/common-test-cases.sh ##
+     @@ t/t5411/common-test-cases.sh: test_expect_success "proc-receive: report with extended status" '
+      	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/a/b/c/topic
+    - 	remote: post-receive< <COMMIT-B> <COMMIT-A> refs/for/master/topic
+    + 	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+      	To <URL/of/upstream.git>
+     -	 * [new reference] HEAD -> refs/for/next/topic
+     +	 * [new reference] HEAD -> refs/pull/123/head
+    @@ t/t5411/common-test-cases.sh: test_expect_success "proc-receive: report with ext
+      	EOF
+      	test_cmp expect actual &&
+      	git -C "$upstream" show-ref >out &&
+    +@@ t/t5411/common-test-cases.sh: test_expect_success "proc-receive: report multiple response" '
+    + 	remote: # post-receive hook
+    + 	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+    + 	To <URL/of/upstream.git>
+    +-	 * [new reference] HEAD -> refs/for/master/topic
+    ++	 * [new reference] HEAD -> refs/changes/23/123/1
+    ++	 <OID-A>..<OID-B> HEAD -> refs/changes/24/124/2
+    + 	EOF
+    + 	test_cmp expect actual &&
+    + 	git -C "$upstream" show-ref >out &&
+     @@ t/t5411/common-test-cases.sh: test_expect_success "proc-receive: report update of mixed refs" '
+      	 * [new branch] HEAD -> baz
+      	 * [new reference] HEAD -> refs/for/next/topic
+    @@ transport-helper.c: static int push_update_ref_status(struct strbuf *buf,
+      		}
+      	}
+      
+    -@@ transport-helper.c: static int push_update_ref_status(struct strbuf *buf,
+    - 	(*ref)->status = status;
+    - 	(*ref)->forced_update |= forced;
+    - 	(*ref)->remote_status = msg;
+    -+	if (status == REF_STATUS_OK && (*ref)->remote_status)
+    -+		update_ref_from_remote_status(*ref);
+    - 	return !(status == REF_STATUS_OK);
+    - }
+    - 
+     
+      ## transport.c ##
+     @@ transport.c: static void print_ref_status(char flag, const char *summary,
+      			     struct ref *to, struct ref *from, const char *msg,
+      			     int porcelain, int summary_width)
+      {
+    -+	char *from_name = NULL;
+     +	char *to_name = NULL;
+     +	const char *val;
+     +	int len;
+     +
+    -+	if (from && from->remote_status) {
+    -+		val = parse_feature_value(from->remote_status, "ref", &len);
+    -+		if (val && len)
+    -+			 from_name = xmemdupz(val, len);
+    -+	}
+     +	if (to && to->remote_status) {
+     +		val = parse_feature_value(to->remote_status, "ref", &len);
+     +		if (val && len)
+    -+			 to_name = xmemdupz(val, len);
+    ++		to_name = xmemdupz(val, len);
+     +	}
+     +
+      	if (porcelain) {
+      		if (from)
+     -			fprintf(stdout, "%c\t%s:%s\t", flag, from->name, to->name);
+    -+			fprintf(stdout, "%c\t%s:%s\t", flag,
+    -+				from_name ? from_name : from->name,
+    -+				to_name ? to_name: to->name);
+    ++			fprintf(stdout, "%c\t%s:%s\t", flag, from->name,
+    ++				to_name ? to_name : to->name);
+      		else
+     -			fprintf(stdout, "%c\t:%s\t", flag, to->name);
+     +			fprintf(stdout, "%c\t:%s\t", flag,
+    -+				to_name ? to_name: to->name);
+    ++				to_name ? to_name : to->name);
+      		if (msg)
+      			fprintf(stdout, "%s (%s)\n", summary, msg);
+      		else
+    @@ transport.c: static void print_ref_status(char flag, const char *summary,
+      		if (from)
+     -			fprintf(stderr, "%s -> %s", prettify_refname(from->name), prettify_refname(to->name));
+     +			fprintf(stderr, "%s -> %s",
+    -+				prettify_refname(from_name ? from_name : from->name),
+    ++				prettify_refname(from->name),
+     +				prettify_refname(to_name ? to_name : to->name));
+      		else
+     -			fputs(prettify_refname(to->name), stderr);
+    @@ transport.c: static void print_ref_status(char flag, const char *summary,
+      		}
+      		fputc('\n', stderr);
+      	}
+    -+	if (from_name)
+    -+		free(from_name);
+    -+	if (to_name)
+    -+		free(to_name);
+    ++	free(to_name);
+      }
+      
+      static void print_ok_ref_status(struct ref *ref, int porcelain, int summary_width)
+    +@@ transport.c: static void print_ok_ref_status(struct ref *ref, int porcelain, int summary_widt
+    + 	}
+    + }
+    + 
+    +-static int print_one_push_status(struct ref *ref, const char *dest, int count,
+    +-				 int porcelain, int summary_width)
+    ++static int _print_one_push_status(struct ref *ref, const char *dest, int count,
+    ++				  int porcelain, int summary_width)
+    + {
+    + 	if (!count) {
+    + 		char *url = transport_anonymize_url(dest);
+    +@@ transport.c: static int print_one_push_status(struct ref *ref, const char *dest, int count,
+    + 	return 1;
+    + }
+    + 
+    ++static int print_one_push_status(struct ref *ref, const char *dest, int count,
+    ++				 int porcelain, int summary_width)
+    ++{
+    ++	char *head;
+    ++	char *begin;
+    ++	int n = 0;
+    ++
+    ++	if (!ref->remote_status)
+    ++		return _print_one_push_status(ref, dest, count,
+    ++					      porcelain, summary_width);
+    ++
+    ++	head = ref->remote_status;
+    ++	begin = strstr(head, "ref=");
+    ++	if (!begin)
+    ++		begin = ref->remote_status;
+    ++	for (;;) {
+    ++		char *end;
+    ++		struct object_id old_oid;
+    ++		struct object_id new_oid;
+    ++		int forced_update;
+    ++
+    ++		end = strstr(begin + 4, "ref=");
+    ++		if (end)
+    ++			*(end-1) = '\0';
+    ++
+    ++		oidcpy(&old_oid, &ref->old_oid);
+    ++		oidcpy(&new_oid, &ref->new_oid);
+    ++		forced_update = ref->forced_update;
+    ++
+    ++		ref->remote_status = begin;
+    ++		update_ref_from_remote_status(ref);
+    ++		_print_one_push_status(ref, dest, count + n++,
+    ++				       porcelain, summary_width);
+    ++
+    ++		oidcpy(&ref->old_oid, &old_oid);
+    ++		oidcpy(&ref->new_oid, &new_oid);
+    ++		ref->forced_update = forced_update;
+    ++
+    ++		if (end) {
+    ++			begin = end;
+    ++			*(end-1) = ' ';
+    ++		} else {
+    ++			break;
+    ++		}
+    ++	}
+    ++	ref->remote_status = head;
+    ++	return n;
+    ++}
+    ++
+    + static int measure_abbrev(const struct object_id *oid, int sofar)
+    + {
+    + 	char hex[GIT_MAX_HEXSZ + 1];
+3:  4e3c383c12 = 3:  a8860faa17 refs.c: refactor to reuse ref_is_hidden()
+4:  dd83569c4e ! 4:  46a839ddf6 receive-pack: new config receive.procReceiveRefs
+    @@ builtin/receive-pack.c: static void execute_commands(struct command *commands,
+     +	if (proc_receive_refs.nr > 0) {
+     +		struct strbuf refname_full = STRBUF_INIT;
+     +		size_t prefix_len;
+    ++
+    ++		strbuf_addstr(&refname_full, get_git_namespace());
+    ++		prefix_len = refname_full.len;
+      
+     -		/* TODO: replace the fixed prefix by looking up git config variables. */
+     -		if (!strncmp(cmd->ref_name, "refs/for/", 9)) {
+     -			cmd->run_proc_receive = RUN_PROC_RECEIVE_SCHEDULED;
+     -			run_proc_receive = 1;
+    -+		strbuf_addstr(&refname_full, get_git_namespace());
+    -+		prefix_len = refname_full.len;
+    -+
+     +		for (cmd = commands; cmd; cmd = cmd->next) {
+     +			if (!should_process_cmd(cmd))
+     +				continue;
+    @@ t/t5411/common-test-cases.sh: test_expect_success "setup proc-receive hook (with
+      	write_script "$upstream/hooks/proc-receive" <<-EOF
+      	printf >&2 "# proc-receive hook\n"
+      	test-tool proc-receive -v \
+    --		-r "$ZERO_OID $A refs/for/a/b/c/topic ok" \
+    -+		-r "$ZERO_OID $A refs/review/a/b/c/topic ok" \
+    - 		-r "$ZERO_OID $A refs/for/next/topic ok\0ref=refs/pull/123/head" \
+    - 		-r "$B $A refs/for/master/topic ok\0ref=refs/pull/124/head forced-update"
+    +-		-r "ok refs/for/a/b/c/topic" \
+    ++		-r "ok refs/review/a/b/c/topic" \
+    + 		-r "alt refs/for/next/topic refs/pull/123/head" \
+    + 		-r "alt refs/for/master/topic refs/pull/124/head old-oid=$B forced-update new-oid=$A"
+      	EOF
+     @@ t/t5411/common-test-cases.sh: test_expect_success "setup proc-receive hook (with extended status)" '
+      
+    @@ t/t5411/common-test-cases.sh: test_expect_success "setup proc-receive hook (with
+     -	remote: proc-receive< <ZERO-OID> <COMMIT-A> refs/for/a/b/c/topic
+     +	remote: proc-receive< <ZERO-OID> <COMMIT-A> refs/review/a/b/c/topic
+      	remote: proc-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+    --	remote: proc-receive> <ZERO-OID> <COMMIT-A> refs/for/a/b/c/topic ok
+    -+	remote: proc-receive> <ZERO-OID> <COMMIT-A> refs/review/a/b/c/topic ok
+    - 	remote: proc-receive> <ZERO-OID> <COMMIT-A> refs/for/next/topic ok\0ref=refs/pull/123/head
+    - 	remote: proc-receive> <COMMIT-B> <COMMIT-A> refs/for/master/topic ok\0ref=refs/pull/124/head forced-update
+    +-	remote: proc-receive> ok refs/for/a/b/c/topic
+    ++	remote: proc-receive> ok refs/review/a/b/c/topic
+    + 	remote: proc-receive> alt refs/for/next/topic refs/pull/123/head
+    + 	remote: proc-receive> alt refs/for/master/topic refs/pull/124/head old-oid=<COMMIT-B> forced-update new-oid=<COMMIT-A>
+      	remote: # post-receive hook
+      	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/next/topic
+     -	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/a/b/c/topic
+     +	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/review/a/b/c/topic
+    - 	remote: post-receive< <COMMIT-B> <COMMIT-A> refs/for/master/topic
+    + 	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+      	To <URL/of/upstream.git>
+      	 * [new reference] HEAD -> refs/pull/123/head
+     -	 * [new reference] HEAD -> refs/for/a/b/c/topic
+    @@ t/t5411/common-test-cases.sh: test_expect_success "proc-receive: report update o
+     +	write_script "$upstream/hooks/proc-receive" <<-EOF
+     +	printf >&2 "# proc-receive hook\n"
+     +	test-tool proc-receive -v \
+    -+		-r "$B $A refs/heads/master ft" \
+    -+		-r "$A $ZERO_OID refs/heads/foo ft" \
+    -+		-r "$A $B refs/heads/bar ft" \
+    -+		-r "$A $B refs/for/master/topic ok\0ref=refs/pull/123/head" \
+    -+		-r "$B $A refs/for/next/topic ok\0ref=refs/pull/124/head forced-update"
+    ++		-r "ft refs/heads/master" \
+    ++		-r "ft refs/heads/foo" \
+    ++		-r "ft refs/heads/bar" \
+    ++		-r "alt refs/for/master/topic refs/pull/123/head old-oid=$A new-oid=$B " \
+    ++		-r "alt refs/for/next/topic refs/pull/124/head old-oid=$B new-oid=$A forced-update"
+     +	EOF
+     +'
+     +
+    @@ t/t5411/common-test-cases.sh: test_expect_success "proc-receive: report update o
+     +	remote: proc-receive< <COMMIT-B> <COMMIT-A> refs/heads/master
+     +	remote: proc-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+     +	remote: proc-receive< <ZERO-OID> <COMMIT-A> refs/for/next/topic
+    -+	remote: proc-receive> <COMMIT-B> <COMMIT-A> refs/heads/master ft
+    -+	remote: proc-receive> <COMMIT-A> <ZERO-OID> refs/heads/foo ft
+    -+	remote: proc-receive> <COMMIT-A> <COMMIT-B> refs/heads/bar ft
+    -+	remote: proc-receive> <COMMIT-A> <COMMIT-B> refs/for/master/topic ok\0ref=refs/pull/123/head
+    -+	remote: proc-receive> <COMMIT-B> <COMMIT-A> refs/for/next/topic ok\0ref=refs/pull/124/head forced-update
+    ++	remote: proc-receive> ft refs/heads/master
+    ++	remote: proc-receive> ft refs/heads/foo
+    ++	remote: proc-receive> ft refs/heads/bar
+    ++	remote: proc-receive> alt refs/for/master/topic refs/pull/123/head old-oid=<COMMIT-A> new-oid=<COMMIT-B>
+    ++	remote: proc-receive> alt refs/for/next/topic refs/pull/124/head old-oid=<COMMIT-B> new-oid=<COMMIT-A> forced-update
+     +	remote: # post-receive hook
+     +	remote: post-receive< <COMMIT-A> <COMMIT-B> refs/heads/bar
+     +	remote: post-receive< <COMMIT-A> <ZERO-OID> refs/heads/foo
+     +	remote: post-receive< <COMMIT-B> <COMMIT-A> refs/heads/master
+    -+	remote: post-receive< <COMMIT-A> <COMMIT-B> refs/for/master/topic
+    -+	remote: post-receive< <COMMIT-B> <COMMIT-A> refs/for/next/topic
+    ++	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+    ++	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/next/topic
+     +	To <URL/of/upstream.git>
+     +	 <OID-A>..<OID-B> <COMMIT-B> -> bar
+     +	 - [deleted] foo
+5:  2d04f495a3 ! 5:  a357234e97 doc: add documentation for the proc-receive hook
+    @@ Documentation/githooks.txt: The default 'update' hook, when enabled--and with
+     +
+     +    # Receive result from the hook.
+     +    # OK, run this command successfully.
+    -+    H: PKT-LINE(<old-oid> <new-oid> <ref> ok)
+    ++    H: PKT-LINE(ok <ref>)
+     +    # NO, I reject it.
+    -+    H: PKT-LINE(<old-oid> <new-oid> <ref> ng <reason>)
+    ++    H: PKT-LINE(ng <ref> <reason>)
+     +    # Fall through, let 'receive-pack' to execute it.
+    -+    H: PKT-LINE(<old-oid> <new-oid> <ref> ft)
+    ++    H: PKT-LINE(ft <ref>)
+     +    # OK, but has an alternate reference.  The alternate reference name
+    -+    # and other status are given in key=value pairs after the null
+    -+    # character.
+    -+    H: PKT-LINE(<old-oid> <new-oid> <ref> ok\0ref=refs/pull/123/head
+    ++    # is given in the third parameter, and other status can be given in
+    ++    # key-value pairs.
+    ++    H: PKT-LINE(alt <ref> <alt-ref> old-oid=<old-oid> new-oid=<new-oid>
+     +                forced-update)
+     +    H: ... ...
+     +    H: flush-pkt
+
 ---
- t/t5411-proc-receive-hook.sh               | 67 +++++++++++++++++++
- t/t5411/common-functions.sh                | 50 ++++++++++++++
- t/t5411/common-test-cases.sh               | 43 ++++++++++++
- t/t5412-proc-receive-hook-http-protocol.sh | 78 ++++++++++++++++++++++
- t/t5516-fetch-push.sh                      |  2 +-
- transport.c                                |  9 ++-
- 6 files changed, 245 insertions(+), 4 deletions(-)
+
+Jiang Xin (7):
+  transport: not report a non-head push as a branch
+  connect: export parse_feature_value()
+  receive-pack: add new proc-receive hook
+  send-pack: extension for client-side status report
+  refs.c: refactor to reuse ref_is_hidden()
+  receive-pack: new config receive.procReceiveRefs
+  doc: add documentation for the proc-receive hook
+
+ Documentation/config/receive.txt           |  14 +
+ Documentation/githooks.txt                 |  58 ++
+ Makefile                                   |   1 +
+ builtin/receive-pack.c                     | 345 ++++++++-
+ connect.c                                  |   3 +-
+ connect.h                                  |   1 +
+ refs.c                                     |  13 +-
+ refs.h                                     |   1 +
+ remote.c                                   |  28 +
+ remote.h                                   |   3 +
+ send-pack.c                                |  11 +-
+ t/helper/test-proc-receive.c               | 178 +++++
+ t/helper/test-tool.c                       |   1 +
+ t/helper/test-tool.h                       |   1 +
+ t/t5411-proc-receive-hook.sh               |  67 ++
+ t/t5411/common-functions.sh                |  54 ++
+ t/t5411/common-test-cases.sh               | 798 +++++++++++++++++++++
+ t/t5412-proc-receive-hook-http-protocol.sh |  78 ++
+ t/t5516-fetch-push.sh                      |   2 +-
+ transport-helper.c                         |  64 +-
+ transport.c                                |  85 ++-
+ 21 files changed, 1749 insertions(+), 57 deletions(-)
+ create mode 100644 t/helper/test-proc-receive.c
  create mode 100755 t/t5411-proc-receive-hook.sh
  create mode 100644 t/t5411/common-functions.sh
  create mode 100644 t/t5411/common-test-cases.sh
  create mode 100755 t/t5412-proc-receive-hook-http-protocol.sh
 
-diff --git a/t/t5411-proc-receive-hook.sh b/t/t5411-proc-receive-hook.sh
-new file mode 100755
-index 0000000000..3f4bee76d9
---- /dev/null
-+++ b/t/t5411-proc-receive-hook.sh
-@@ -0,0 +1,67 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2020 Jiang Xin
-+#
-+
-+test_description='Test proc-receive hook'
-+
-+. ./test-lib.sh
-+
-+. "$TEST_DIRECTORY"/t5411/common-functions.sh
-+
-+# Format the output of git-push, git-show-ref and other commands to make a
-+# user-friendly and stable text.  In addition to the common format method,
-+# we also replace the URL of different protocol for the upstream repository
-+# with a fixed pattern.
-+make_user_friendly_and_stable_output () {
-+	make_user_friendly_and_stable_output_common |
-+		sed -e "s#To ../upstream.git#To <URL/of/upstream.git>#"
-+}
-+
-+# Refs of upstream : master(B)  next(A)
-+# Refs of workbench: master(A)           tags/v123
-+test_expect_success "setup" '
-+	git init --bare upstream.git &&
-+	git init workbench &&
-+	create_commits_in workbench A B &&
-+	(
-+		cd workbench &&
-+		# Try to make a stable fixed width for abbreviated commit ID,
-+		# this fixed-width oid will be replaced with "<OID>".
-+		git config core.abbrev 7 &&
-+		git remote add origin ../upstream.git &&
-+		git update-ref refs/heads/master $A &&
-+		git tag -m "v123" v123 $A &&
-+		git push origin \
-+			$B:refs/heads/master \
-+			$A:refs/heads/next
-+	) &&
-+	TAG=$(git -C workbench rev-parse v123) &&
-+
-+	# setup pre-receive hook
-+	write_script upstream.git/hooks/pre-receive <<-\EOF &&
-+	exec >&2
-+	echo "# pre-receive hook"
-+	while read old new ref
-+	do
-+		echo "pre-receive< $old $new $ref"
-+	done
-+	EOF
-+
-+	# setup post-receive hook
-+	write_script upstream.git/hooks/post-receive <<-\EOF &&
-+	exec >&2
-+	echo "# post-receive hook"
-+	while read old new ref
-+	do
-+		echo "post-receive< $old $new $ref"
-+	done
-+	EOF
-+
-+	upstream=upstream.git
-+'
-+
-+# Include test cases for both file and HTTP protocol
-+. "$TEST_DIRECTORY"/t5411/common-test-cases.sh
-+
-+test_done
-diff --git a/t/t5411/common-functions.sh b/t/t5411/common-functions.sh
-new file mode 100644
-index 0000000000..4337b10c8c
---- /dev/null
-+++ b/t/t5411/common-functions.sh
-@@ -0,0 +1,50 @@
-+# Create commits in <repo> and assign each commit's oid to shell variables
-+# given in the arguments (A, B, and C). E.g.:
-+#
-+#     create_commits_in <repo> A B C
-+#
-+# NOTE: Never calling this function from a subshell since variable
-+# assignments will disappear when subshell exits.
-+create_commits_in () {
-+	repo="$1" &&
-+	if ! parent=$(git -C "$repo" rev-parse HEAD^{} --)
-+	then
-+		parent=
-+	fi &&
-+	T=$(git -C "$repo" write-tree) &&
-+	shift &&
-+	while test $# -gt 0
-+	do
-+		name=$1 &&
-+		test_tick &&
-+		if test -z "$parent"
-+		then
-+			oid=$(echo $name | git -C "$repo" commit-tree $T)
-+		else
-+			oid=$(echo $name | git -C "$repo" commit-tree -p $parent $T)
-+		fi &&
-+		eval $name=$oid &&
-+		parent=$oid &&
-+		shift ||
-+		return 1
-+	done &&
-+	git -C "$repo" update-ref refs/heads/master $oid
-+}
-+
-+# Format the output of git-push, git-show-ref and other commands to make a
-+# user-friendly and stable text.  We can easily prepare the expect text
-+# without having to worry about future changes of the commit ID and spaces
-+# of the output.  We also replce single quotes with double quotes, because
-+# it is boring to prepare unquoted single quotes in expect text.
-+make_user_friendly_and_stable_output_common () {
-+	sed \
-+		-e "s/  *\$//" \
-+		-e "s/   */ /g" \
-+		-e "s/'/\"/g" \
-+		-e "s/$A/<COMMIT-A>/g" \
-+		-e "s/$B/<COMMIT-B>/g" \
-+		-e "s/$TAG/<TAG-v123>/g" \
-+		-e "s/$ZERO_OID/<ZERO-OID>/g" \
-+		-e "s/$(echo $A | cut -c1-7)[0-9a-f]*/<OID-A>/g" \
-+		-e "s/$(echo $B | cut -c1-7)[0-9a-f]*/<OID-B>/g"
-+}
-diff --git a/t/t5411/common-test-cases.sh b/t/t5411/common-test-cases.sh
-new file mode 100644
-index 0000000000..23655846e4
---- /dev/null
-+++ b/t/t5411/common-test-cases.sh
-@@ -0,0 +1,43 @@
-+# Refs of upstream : master(B)  next(A)
-+# Refs of workbench: master(A)           tags/v123
-+# git-push -f      : master(A)  NULL     tags/v123  refs/review/master/topic(A)  a/b/c(A)
-+test_expect_success "normal git-push command" '
-+	git -C workbench push -f origin \
-+		refs/tags/v123 \
-+		:refs/heads/next \
-+		HEAD:refs/heads/master \
-+		HEAD:refs/review/master/topic \
-+		HEAD:refs/heads/a/b/c \
-+		>out 2>&1 &&
-+	make_user_friendly_and_stable_output <out >actual &&
-+	cat >expect <<-EOF &&
-+	remote: # pre-receive hook
-+	remote: pre-receive< <COMMIT-B> <COMMIT-A> refs/heads/master
-+	remote: pre-receive< <COMMIT-A> <ZERO-OID> refs/heads/next
-+	remote: pre-receive< <ZERO-OID> <TAG-v123> refs/tags/v123
-+	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/review/master/topic
-+	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/heads/a/b/c
-+	remote: # post-receive hook
-+	remote: post-receive< <COMMIT-B> <COMMIT-A> refs/heads/master
-+	remote: post-receive< <COMMIT-A> <ZERO-OID> refs/heads/next
-+	remote: post-receive< <ZERO-OID> <TAG-v123> refs/tags/v123
-+	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/review/master/topic
-+	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/heads/a/b/c
-+	To <URL/of/upstream.git>
-+	 + <OID-B>...<OID-A> HEAD -> master (forced update)
-+	 - [deleted] next
-+	 * [new tag] v123 -> v123
-+	 * [new reference] HEAD -> refs/review/master/topic
-+	 * [new branch] HEAD -> a/b/c
-+	EOF
-+	test_cmp expect actual &&
-+	git -C "$upstream" show-ref >out &&
-+	make_user_friendly_and_stable_output <out >actual &&
-+	cat >expect <<-EOF &&
-+	<COMMIT-A> refs/heads/a/b/c
-+	<COMMIT-A> refs/heads/master
-+	<COMMIT-A> refs/review/master/topic
-+	<TAG-v123> refs/tags/v123
-+	EOF
-+	test_cmp expect actual
-+'
-diff --git a/t/t5412-proc-receive-hook-http-protocol.sh b/t/t5412-proc-receive-hook-http-protocol.sh
-new file mode 100755
-index 0000000000..d102bc438b
---- /dev/null
-+++ b/t/t5412-proc-receive-hook-http-protocol.sh
-@@ -0,0 +1,78 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2020 Jiang Xin
-+#
-+
-+test_description='Test proc-receive hook for HTTP protocol'
-+
-+. ./test-lib.sh
-+
-+ROOT_PATH="$PWD"
-+. "$TEST_DIRECTORY"/lib-gpg.sh
-+. "$TEST_DIRECTORY"/lib-httpd.sh
-+. "$TEST_DIRECTORY"/lib-terminal.sh
-+start_httpd
-+
-+. "$TEST_DIRECTORY"/t5411/common-functions.sh
-+
-+# Format the output of git-push, git-show-ref and other commands to make a
-+# user-friendly and stable text.  In addition to the common format method,
-+# we also replace the URL of different protocol for the upstream repository
-+# with a fixed pattern.
-+make_user_friendly_and_stable_output () {
-+	make_user_friendly_and_stable_output_common |
-+		sed -e "s#To http:.*/upstream.git#To <URL/of/upstream.git>#"
-+}
-+
-+# Refs of upstream : master(B)  next(A)
-+# Refs of workbench: master(A)           tags/v123
-+test_expect_success "setup" '
-+	git init --bare upstream.git &&
-+	git -C upstream.git config http.receivepack true &&
-+	git init workbench &&
-+	create_commits_in workbench A B &&
-+	(
-+		cd workbench &&
-+		# Try to make a stable fixed width for abbreviated commit ID,
-+		# this fixed-width oid will be replaced with "<OID>".
-+		git config core.abbrev 7 &&
-+		git remote add origin ../upstream.git &&
-+		git update-ref refs/heads/master $A &&
-+		git tag -m "v123" v123 $A &&
-+		git push origin \
-+			$B:refs/heads/master \
-+			$A:refs/heads/next
-+	) &&
-+	TAG=$(git -C workbench rev-parse v123) &&
-+
-+	# setup pre-receive hook
-+	write_script upstream.git/hooks/pre-receive <<-\EOF &&
-+	exec >&2
-+	echo "# pre-receive hook"
-+	while read old new ref
-+	do
-+		echo "pre-receive< $old $new $ref"
-+	done
-+	EOF
-+
-+	# setup post-receive hook
-+	write_script upstream.git/hooks/post-receive <<-\EOF &&
-+	exec >&2
-+	echo "# post-receive hook"
-+	while read old new ref
-+	do
-+		echo "post-receive< $old $new $ref"
-+	done
-+	EOF
-+
-+	upstream="$HTTPD_DOCUMENT_ROOT_PATH/upstream.git" &&
-+	mv upstream.git "$upstream" &&
-+	git -C workbench remote set-url origin $HTTPD_URL/smart/upstream.git
-+'
-+
-+setup_askpass_helper
-+
-+# Include test cases for both file and HTTP protocol
-+. "$TEST_DIRECTORY"/t5411/common-test-cases.sh
-+
-+test_done
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index 9ff041a093..9e4b9313b5 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -1039,7 +1039,7 @@ test_force_fetch_tag "annotated tag" "-f -a -m'tag message'"
- test_expect_success 'push --porcelain' '
- 	mk_empty testrepo &&
- 	echo >.git/foo  "To testrepo" &&
--	echo >>.git/foo "*	refs/heads/master:refs/remotes/origin/master	[new branch]"  &&
-+	echo >>.git/foo "*	refs/heads/master:refs/remotes/origin/master	[new reference]"  &&
- 	echo >>.git/foo "Done" &&
- 	git push >.git/bar --porcelain  testrepo refs/heads/master:refs/remotes/origin/master &&
- 	(
-diff --git a/transport.c b/transport.c
-index 1fdc7dac1a..272c0f4046 100644
---- a/transport.c
-+++ b/transport.c
-@@ -500,9 +500,12 @@ static void print_ok_ref_status(struct ref *ref, int porcelain, int summary_widt
- 				 porcelain, summary_width);
- 	else if (is_null_oid(&ref->old_oid))
- 		print_ref_status('*',
--			(starts_with(ref->name, "refs/tags/") ? "[new tag]" :
--			"[new branch]"),
--			ref, ref->peer_ref, NULL, porcelain, summary_width);
-+				 (starts_with(ref->name, "refs/tags/")
-+				  ? "[new tag]"
-+				  : (starts_with(ref->name, "refs/heads/")
-+				     ? "[new branch]"
-+				     : "[new reference]")),
-+				 ref, ref->peer_ref, NULL, porcelain, summary_width);
- 	else {
- 		struct strbuf quickref = STRBUF_INIT;
- 		char type;
 -- 
 2.24.1.15.g448c31058d.agit.4.5
 
