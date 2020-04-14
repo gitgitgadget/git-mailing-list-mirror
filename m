@@ -2,93 +2,117 @@ Return-Path: <SRS0=cd4n=56=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.9 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D0F6BC3815B
-	for <git@archiver.kernel.org>; Tue, 14 Apr 2020 15:23:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 83E72C2BB85
+	for <git@archiver.kernel.org>; Tue, 14 Apr 2020 15:45:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B048B2063A
-	for <git@archiver.kernel.org>; Tue, 14 Apr 2020 15:23:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5605A206D5
+	for <git@archiver.kernel.org>; Tue, 14 Apr 2020 15:45:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=booking.com header.i=@booking.com header.b="BNunNQbj"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="GA9iUJU4"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390847AbgDNPXW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Apr 2020 11:23:22 -0400
-Received: from mailout-202-r1.booking.com ([37.10.30.2]:36847 "EHLO
-        mailout-202-r1.booking.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2390818AbgDNPXD (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 14 Apr 2020 11:23:03 -0400
+        id S2440859AbgDNPp1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Apr 2020 11:45:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50270 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S2440855AbgDNPpP (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 14 Apr 2020 11:45:15 -0400
+Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C653DC061A0E
+        for <git@vger.kernel.org>; Tue, 14 Apr 2020 08:45:15 -0700 (PDT)
+Received: by mail-pg1-x542.google.com with SMTP id g32so49043pgb.6
+        for <git@vger.kernel.org>; Tue, 14 Apr 2020 08:45:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=pnuX+nYG0EAdbQOmmqD550RiYxPwCqV/tRjvk+TlmNo=;
+        b=GA9iUJU4Q55jwt0K2bS5JNmIc2XxKFcMM84014ZpRWSTI54OmzX8+5liTfOiut/vs2
+         NrcwL+2qcYZgyXFfkPQdFRk6StD0qi9RsyVzxaq8KCZ3f+J38wvBdBpXKCSZwfIZwSQs
+         5kNEG9zO2dxFwYmTjm6xTjKYOLxAomDM6TkQnjIxziYcd3G/c37r/ScAaCVSQF1lLsng
+         fmxe/fw+cK409ESGKBw1AT00IioC9g/e9qla/M9RnA4IsMh6TbtwIAvHac5zX0K9/FxM
+         tVVstWRCzLKhszRtPDBHzJQ7L1LCavaZ2bkqcqpkhMx4NNbqh7w2jMh38oyeGVH/nLZt
+         8WXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:cc:to:date:subject;
-        bh=pwhgHFoh/nxd89ybAQ6gkkwzo5Tj6EIH+H3tu7TcZnA=;
-        b=KEbvkG7N6JCAUhe0kf4rnEdzQs3llYmTEVHmSlC8S7smBVqB8EK7StJB+bMXGybmP3
-         VR09hgrqfN0F6w+RGNxs+Lf1ROpHd9T9RZPldmOVMZSTkdCk98zWJlv3c2rk029R6lg0
-         0i7jW6moOiws0DR38TkhSVVMYTjXPnNnPM9v1tT/H8Srb3dZ8FhCEW7egLazSrseak4m
-         J2N/mpsN68tHA0RFddTICuHxdUD8tEP1G0ZDroG0uzNgHMq5YRVGVyvasJgdny+jUlQG
-         cjPm+oX7Z3RkK9qlTrjo12ACc/sZNUwaMfz445EylRtdUQhlyk/swE1DaBRAVc7DlXYA
-         Mk7g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=booking.com; s=bk;
-        t=1586877311; bh=pwhgHFoh/nxd89ybAQ6gkkwzo5Tj6EIH+H3tu7TcZnA=;
-        h=Message-ID:From:To:Date:Subject:From;
-        b=BNunNQbjNwq1NFr9B5al5SqKTMhHXMZ+b8R0KXLqfAe7MBhz0y6GncNsxbaqmbdvJ
-         zQpT4n+gIvTteGD5Up0n3zUbfZTuqncnw+MEDYgMwnZbJTrNVRQbPJajIt5PSaXAtP
-         xgZtRB6tfRwwtbNkbGBOgEr7e5rlwiGBOAO7wJtA=
-X-Gm-Message-State: AGi0PuY+nCheOUiaKqJPD2SI53NcLlvFg8Umcl9sXy2goG72CxJ7VwQt
-        OQ7ZXpAJd2Qh7LGOWjZVOFh029yjAZ8+GLQO7SfGqyWdbPnwPabO7Y3GLKHBYdL+CyIhIyZIbvl
-        BkYXaR0MVPFYYW9VLZdcPf60=
-X-Received: by 2002:adf:80ee:: with SMTP id 101mr7806083wrl.156.1586877310161;
-        Tue, 14 Apr 2020 08:15:10 -0700 (PDT)
-X-Google-Smtp-Source: APiQypLGt/xtk9jOAv6HVp0VXfs2uZ+VvSTw65l73m9gdc604H226IGvO89iPMN+TvzKQqgQOEiqxg==
-X-Received: by 2002:adf:80ee:: with SMTP id 101mr7806063wrl.156.1586877309935;
-        Tue, 14 Apr 2020 08:15:09 -0700 (PDT)
-Message-ID: <5e95d37d.1c69fb81.2b4ec.ce9f@mx.google.com>
-From:   luciano.rocha@booking.com
-Cc:     Luciano Rocha <luciano.rocha@booking.com>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org, peff@peff.net, gitster@pobox.com
-Date:   Tue, 14 Apr 2020 16:27:26 +0200
-Subject: [PATCH 1/1] freshen_file(): use NULL `times' for implicit current-time
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=pnuX+nYG0EAdbQOmmqD550RiYxPwCqV/tRjvk+TlmNo=;
+        b=qD2VjWvqJyaeh5xgBg7kaN0/N0aazIPcByCHAjOugmmXHfgpIswJBAzvEKo+ni3BdZ
+         /nvOHQlcaUgKIUlLoqzOBlxo5Ox+5hY/02IK+rSP1tuFiywd05BZ1+rPy/nbvAlzzTZ/
+         pYC/Lljpyjz9X5ZyoZMaHU3K5wu/JU6VG4XtCuohqeHyIpvCBatSHg2y7gFYo4kf6KrY
+         tNP7At6S/oAZkX7tG9YV5s71UptkcWuFTDuF3VYmvGKur4I1deQYPloLf+D+qiORxn1D
+         eUjw+Zm+wXJNxUbdIFDaIO+6opUtCv0Rft9ucUNcqMX8n7YB4jjLvXsJddws6JArbKQk
+         pW4w==
+X-Gm-Message-State: AGi0PuYxGLT4dha10GESj0wH9nkjWKacmSrFluVjCey+HH/1xHyLZO0N
+        yf6/e/RL+9SZUqhTM5UKNl6L1Q==
+X-Google-Smtp-Source: APiQypIFu/NS7Y507uSd12JcWTSwawAIDaak2cG88SuiwXJ/pEgO5Ds064reUmoEJs/bcOWko2VErg==
+X-Received: by 2002:a63:da47:: with SMTP id l7mr23608783pgj.315.1586879115064;
+        Tue, 14 Apr 2020 08:45:15 -0700 (PDT)
+Received: from localhost ([8.44.146.30])
+        by smtp.gmail.com with ESMTPSA id g72sm11406456pfb.196.2020.04.14.08.45.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Apr 2020 08:45:14 -0700 (PDT)
+Date:   Tue, 14 Apr 2020 09:45:13 -0600
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, sluongng@gmail.com,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH] log: add log.excludeDecoration config option
+Message-ID: <20200414154513.GB93424@syl.local>
+References: <pull.610.git.1586791720114.gitgitgadget@gmail.com>
+ <20200413154945.GA59601@syl.local>
+ <0b9e3156-1101-0f19-91eb-36af541519aa@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <0b9e3156-1101-0f19-91eb-36af541519aa@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Update freshen_file() to use a NULL `times', semantically equivalent to
-the currently setup, with an explicit `actime' and `modtime' set to the
-"current time", but with the advantage that it works with other files
-not owned by the current user.
+On Tue, Apr 14, 2020 at 11:10:33AM -0400, Derrick Stolee wrote:
+> >>  log.follow::
+> >>  	If `true`, `git log` will act as if the `--follow` option was used when
+> >>  	a single <path> is given.  This has the same limitations as `--follow`,
+> >> diff --git a/builtin/log.c b/builtin/log.c
+> >> index 83a4a6188e2..d7d1d5b7143 100644
+> >> --- a/builtin/log.c
+> >> +++ b/builtin/log.c
+> >> @@ -236,7 +236,21 @@ static void cmd_log_init_finish(int argc, const char **argv, const char *prefix,
+> >>  	}
+> >>
+> >>  	if (decoration_style) {
+> >> +		const struct string_list *config_exclude =
+> >> +			repo_config_get_value_multi(the_repository,
+> >> +						    "log.excludeDecoration");
+> >> +
+> >> +		if (config_exclude) {
+> >> +			struct string_list_item *item;
+> >> +			for (item = config_exclude->items;
+> >> +			     item && item < config_exclude->items + config_exclude->nr;
+> >> +			     item++)
+> >
+> > Any reason not to use the 'for_each_string_list_item' macro in
+> > 'string-list.h' for this?
+>
+> The reason is I forgot about it.
 
-Fixes an issue on shared repos with a split index, where eventually a
-user's operation creates a shared index, and another user will later do
-an operation that will try to update its freshness, but will instead
-raise a warning:
-  $ git status
-  warning: could not freshen shared index '.git/sharedindex.bd736fa10e0519593fefdb2aec253534470865b2'
+Heh, in fairness I forgot about it, too :). I thought that this code
+looked familiar, but it was only luck that I had 'string-list.h' open at
+the time I was reading this.
 
-Signed-off-by: Luciano Miguel Ferreira Rocha <luciano.rocha@booking.com>
----
- sha1-file.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+I don't think that it really matters much each way, but if you're
+already re-rolling...
 
-diff --git a/sha1-file.c b/sha1-file.c
-index 6926851724..ccd34dd9e8 100644
---- a/sha1-file.c
-+++ b/sha1-file.c
-@@ -881,9 +881,7 @@ void prepare_alt_odb(struct repository *r)
- /* Returns 1 if we have successfully freshened the file, 0 otherwise. */
- static int freshen_file(const char *fn)
- {
--	struct utimbuf t;
--	t.actime = t.modtime = time(NULL);
--	return !utime(fn, &t);
-+	return !utime(fn, NULL);
- }
- 
- /*
--- 
-2.26.0
+> Thanks,
+> -Stolee
 
+Thanks,
+Taylor
