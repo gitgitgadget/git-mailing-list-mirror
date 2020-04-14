@@ -2,79 +2,120 @@ Return-Path: <SRS0=cd4n=56=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.4 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BC61C2BA19
-	for <git@archiver.kernel.org>; Tue, 14 Apr 2020 14:20:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4368EC38A29
+	for <git@archiver.kernel.org>; Tue, 14 Apr 2020 15:05:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CB77C206D5
-	for <git@archiver.kernel.org>; Tue, 14 Apr 2020 14:20:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 219B62084D
+	for <git@archiver.kernel.org>; Tue, 14 Apr 2020 15:05:01 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b="PJ72qb2N";
-	dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b="PJ72qb2N"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Gouh57xT"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389736AbgDNOU1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Apr 2020 10:20:27 -0400
-Received: from fallback20.mail.ru ([185.5.136.252]:37998 "EHLO
-        fallback20.mail.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389712AbgDNOUY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Apr 2020 10:20:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru; s=mailru;
-        h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=DX/khzL1BkFdQbsUBKSsuxPECIJBVkND3G9HOMLQwMM=;
-        b=PJ72qb2NT86i3s9Z4EUTORBjN3nMQbXm3qBkeOyjbELcR3tkycCNVhdOY5p2Q4/cQQXt5vMiuAIJfVuLGU/WnLhehHr6qknTpf1KfgtbmPX1a93H86UJesQKQNAlAgqSAFCxVMDtJWHA1KvcOOpNbkxCmt86GPjCMglgXkTtYE8=;
-Received: from [10.161.22.25] (port=54522 helo=smtp55.i.mail.ru)
-        by fallback20.m.smailru.net with esmtp (envelope-from <kostix@bswap.ru>)
-        id 1jOMQI-0002xv-0k
-        for git@vger.kernel.org; Tue, 14 Apr 2020 17:20:22 +0300
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru; s=mailru;
-        h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=DX/khzL1BkFdQbsUBKSsuxPECIJBVkND3G9HOMLQwMM=;
-        b=PJ72qb2NT86i3s9Z4EUTORBjN3nMQbXm3qBkeOyjbELcR3tkycCNVhdOY5p2Q4/cQQXt5vMiuAIJfVuLGU/WnLhehHr6qknTpf1KfgtbmPX1a93H86UJesQKQNAlAgqSAFCxVMDtJWHA1KvcOOpNbkxCmt86GPjCMglgXkTtYE8=;
-Received: by smtp55.i.mail.ru with esmtpa (envelope-from <kostix@bswap.ru>)
-        id 1jOMQD-00089c-RV; Tue, 14 Apr 2020 17:20:18 +0300
-Date:   Tue, 14 Apr 2020 17:20:17 +0300
-From:   Konstantin Khomoutov <kostix@bswap.ru>
-To:     Anton Petrunin =
-         =?utf-8?B?0JDQvdGC0L7QvSDQn9C10YLRgNGD0L3QuNC9?= 
-        <anton-petrunin@tuta.io>
-Cc:     git@vger.kernel.org
-Subject: Re: wrong encoding in send-window
-Message-ID: <20200414142017.3zdjo4tiebdhhvm7@carbon>
-References: <M4qEecR--7-2@tuta.io>
+        id S2407220AbgDNPE6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Apr 2020 11:04:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43778 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2407084AbgDNPEJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Apr 2020 11:04:09 -0400
+Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FD99C061A0C
+        for <git@vger.kernel.org>; Tue, 14 Apr 2020 08:04:09 -0700 (PDT)
+Received: by mail-ot1-x341.google.com with SMTP id k21so1579409otl.5
+        for <git@vger.kernel.org>; Tue, 14 Apr 2020 08:04:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=nwwL97TaLqCN20CL065+Y3ss+zlDdO4s1arc7cqorHM=;
+        b=Gouh57xT6iZZkYLTK5Im6Wo6yqmcYfd7W+JKFDVlOyuCDVdtct43l0vb/nEeQQvCTM
+         MC9vol5MRA4LgJBc6Q1GtHnS/8UItJMMQVFi1fxBfNFuuQGiVdGgUY/eXedXjBEPo3na
+         QPfW77oXLNuKxnw+DU09zN4i/HHLeC9N4GM1Pd/Rpm5vZUNneS5FCSKN0a0EYq4jSSNH
+         rRy1F25KzkV6k5lPm7jp8GLVjddho3607Hu4qfo3eqXwH7JDwZGCNMAGz8OOdagc1gcH
+         tGEe7b11a1zkV4/6DfF6reOJPEsgrs7sSjj92Q8c+k/s9Cfjx4mUcnts4DvDGTO145W7
+         lCMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=nwwL97TaLqCN20CL065+Y3ss+zlDdO4s1arc7cqorHM=;
+        b=nJsLuKfhTnNlRguvBbu2BZb01AOaC3pVBIojCn4yhWrDmrJkFBNqlVGzaK/ZyvUlya
+         Qouf4gDVkQkxwMFIoIlk1lTBdd8lzvLjn2e4HBELvXd2jW98VGJch/VFgZ5WasR1Wzvf
+         oiccPQTVciWmQSIScdth0fV7Ycj14z8P2jcV9hqeinkEBuz+jSFpMSYwN7/p8e80xmEU
+         oSGNe+4mtg+u3yv1l6J/P223YXJz61vFYdgXCzM+jpijYoMJnY21cMO7FLanVzDa1zDi
+         MxikP53rdYaTi+6bQdo4u0cSfW0wf61Hk+rA6CX92q7CeSuvCZforO1BONLqCIH7GY0L
+         vO0Q==
+X-Gm-Message-State: AGi0Puaip1QXu2a3HoGIkXtEbHTzf7y9CaIA49ZDpnhhURtspVTF4B+T
+        fei40RvLUjptsYpQIN7GjZyiY+QhLQ4=
+X-Google-Smtp-Source: APiQypJsBncaTi2BXqw//jmu45PyS5BpxoflyRzmSat+2vgt7gVD9ybrH7cZA1CrzaGQ3Xh7cpTowg==
+X-Received: by 2002:a9d:7a47:: with SMTP id z7mr19312902otm.290.1586876648735;
+        Tue, 14 Apr 2020 08:04:08 -0700 (PDT)
+Received: from [192.168.1.83] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id x125sm5715464oia.50.2020.04.14.08.04.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 14 Apr 2020 08:04:08 -0700 (PDT)
+Subject: Re: [PATCH v2 2/4] commit: write commit-graph with Bloom filters
+To:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, jnareb@gmail.com, garimasigit@gmail.com,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.609.git.1586566981.gitgitgadget@gmail.com>
+ <pull.609.v2.git.1586789126.gitgitgadget@gmail.com>
+ <7e8f1aed1138ab2a52a8957ac95895ac9effd933.1586789126.git.gitgitgadget@gmail.com>
+ <20200413161245.GE59601@syl.local> <xmqqh7xnauxc.fsf@gitster.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <74e4e8d6-d401-081d-14cc-c4b6087bdeda@gmail.com>
+Date:   Tue, 14 Apr 2020 11:04:05 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101
+ Thunderbird/76.0
 MIME-Version: 1.0
+In-Reply-To: <xmqqh7xnauxc.fsf@gitster.c.googlers.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <M4qEecR--7-2@tuta.io>
-User-Agent: NeoMutt/20180716
-X-7564579A: 646B95376F6C166E
-X-77F55803: 0A44E481635329DB0E1AA8A03B392317D32E5E48865217369133EF8E37521108988A8C67AE60C645F688BCB05C26794DFB6D45A5407C2EF0A1ADA19CCB298B732EA89EBE2DC0A119C1E40E529E94B2A5
-X-7FA49CB5: 0D63561A33F958A534F3391B1D0CC34B20898BB9782C6BB166CB8C0C277CF9948941B15DA834481FA18204E546F3947CB861051D4BA689FCF6B57BC7E64490618DEB871D839B7333395957E7521B51C2545D4CF71C94A83E9FA2833FD35BB23D27C277FBC8AE2E8B3A703B70628EAD7BA471835C12D1D977C4224003CC8364767815B9869FA544D8D32BA5DBAC0009BE9E8FC8737B5C22491CFB5EB31733C4B376E601842F6C81A12EF20D2F80756B5FDA63EEEA5E5E9D6576E601842F6C81A127C277FBC8AE2E8B8FA608DA6CD568A33AA81AA40904B5D99449624AB7ADAF3726B9191E2D567F0E725E5C173C3A84C3CD42BCEBB57B85E635872C767BF85DA2F004C906525384306FED454B719173D6462275124DF8B9C9DE2850DD75B2526BE5BFE6E7EFDEDCD789D4C264860C145E
-X-D57D3AED: Y8kq8+OzVozcFQziTi/Zi1xwo7H2ZNxGP5qz8aO2mjTJzjHGC4ogvVuzB3zfVUBtENeZ6b5av1fnCBE34JUDkWdM6QxE+Ga5d8voMtmXfSqX7LbxVpFaAQD/ql6jfy+t
-X-Mailru-Internal-Actual: A:0.91060524009111
-X-Mailru-Sender: 641179478317D3F0421D0BEF39CFD138F044D5C297BB6E822A4FA8D52016066FAE66FB262F053E3013BA5AC085B0DF3CFD8FF98A8691EE7BAAB64A3C2C77197FCA12F3F80FA6A2FFE7D80B0F635B57EC67EA787935ED9F1B
-X-Mras: Ok
-X-7564579A: EEAE043A70213CC8
-X-77F55803: E8DB3678F13EF3E07F9F52485CB584D7271FD7DF62800FDCAF625A2050746782D942B26779CD49CFDEDEE099F11567C1880291233E43B411
-X-7FA49CB5: 0D63561A33F958A5ECED3D32BACC72B54CFBCFA021834B9ACF6848CBE4FD71F08941B15DA834481FA18204E546F3947CD2DCF9CF1F528DBCF6B57BC7E64490618DEB871D839B7333395957E7521B51C2545D4CF71C94A83E9FA2833FD35BB23D27C277FBC8AE2E8B974A882099E279BDA471835C12D1D977C4224003CC8364767815B9869FA544D8D32BA5DBAC0009BE9E8FC8737B5C224937E7452263E0972376E601842F6C81A12EF20D2F80756B5FDA63EEEA5E5E9D6576E601842F6C81A127C277FBC8AE2E8B8FA608DA6CD568A33AA81AA40904B5D99449624AB7ADAF3726B9191E2D567F0E725E5C173C3A84C3CD42BCEBB57B85E635872C767BF85DA2F004C906525384306FED454B719173D6462275124DF8B9C9DE2850DD75B2526BE5BFE6E7EFDEDCD789D4C264860C145E
-X-D57D3AED: Y8kq8+OzVozcFQziTi/Zi1xwo7H2ZNxGP5qz8aO2mjTJzjHGC4ogvVuzB3zfVUBtENeZ6b5av1fnCBE34JUDkWdM6QxE+Ga5d8voMtmXfSo2/QOxX0MI1QyxHfUpwjuv
-X-Mailru-MI: 800
-X-Mailru-Sender: A5480F10D64C9005EBA3FDA8F7473FBDF5F18C97EAD6B231D942B26779CD49CF3AC45910FB9EB2A7FD27B1545737DED76F53C80213D1719CB3360D9C94DE366A1CC4A9B39F20364B73395D515EC5B64AAE208404248635DF
-X-Mras: Ok
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 14, 2020 at 03:12:32AM +0200, Anton Petrunin = Антон Петрунин wrote:
+On 4/13/2020 6:21 PM, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
+> 
+>> Hmm. I'm not crazy about a library function looking at 'GIT_TEST_*'
+>> environment variables and potentially ignoring its arguments, but given
+>> the discussion we had in v1, I don't feel strongly enough to recommend
+>> that you change this.
+>>
+>> For what it's worth, I think that 'write_commit_graph' could behave more
+>> purely if callers checked 'GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS' and set
+>> 'flags' appropriately from the outside,...
+> 
+> Yeah, I agree that it would be a lot cleaner if that is easy to
+> arrange.  I have a suspicion that Derrick already tried and the
+> resulting code looked messier and was discarded?
 
-> In the send-window it has wrong encoding --- does not work for Russian;
->  see the attached screenshot.
+Perhaps I could fix both concerns by
 
-What OS is this? What version of Git? How was it installed (from a stock
-package provided by the OS / from the source / some other way)?
+1. Use a macro instead of a library call.
 
-What is the output of running the `locale` program in a terminal window
-in the same X session (please copy and paste the text).
+2. Check the _CHANGED_PATHS variable in the macro.
 
+The macro would look like this:
+
+
+#define git_test_write_commit_graph_or_die() \
+	if (git_env_bool(GIT_TEST_COMMIT_GRAPH, 0)) { \
+		int flags = 0; \
+		if (git_env_bool(GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS, 0)) \
+			flags = COMMIT_GRAPH_WRITE_BLOOM_FILTERS; \
+		if (write_commit_graph_reachable( \
+			the_repository->objects->odb, flags, NULL)) \
+			die("failed to write commit-graph under GIT_TEST_COMMIT_GRAPH"); \
+	}
+
+Thanks,
+-Stolee
