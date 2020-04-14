@@ -2,117 +2,100 @@ Return-Path: <SRS0=cd4n=56=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 83E72C2BB85
-	for <git@archiver.kernel.org>; Tue, 14 Apr 2020 15:45:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B56BC2BA19
+	for <git@archiver.kernel.org>; Tue, 14 Apr 2020 15:52:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5605A206D5
-	for <git@archiver.kernel.org>; Tue, 14 Apr 2020 15:45:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 254D720732
+	for <git@archiver.kernel.org>; Tue, 14 Apr 2020 15:52:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="GA9iUJU4"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="rspfS7Iz"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2440859AbgDNPp1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Apr 2020 11:45:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50270 "EHLO
+        id S2440986AbgDNPwH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Apr 2020 11:52:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S2440855AbgDNPpP (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 14 Apr 2020 11:45:15 -0400
-Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C653DC061A0E
-        for <git@vger.kernel.org>; Tue, 14 Apr 2020 08:45:15 -0700 (PDT)
-Received: by mail-pg1-x542.google.com with SMTP id g32so49043pgb.6
-        for <git@vger.kernel.org>; Tue, 14 Apr 2020 08:45:15 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1732058AbgDNPv7 (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 14 Apr 2020 11:51:59 -0400
+Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53A06C061A0C
+        for <git@vger.kernel.org>; Tue, 14 Apr 2020 08:51:59 -0700 (PDT)
+Received: by mail-pg1-x52b.google.com with SMTP id x26so48206pgc.10
+        for <git@vger.kernel.org>; Tue, 14 Apr 2020 08:51:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=pnuX+nYG0EAdbQOmmqD550RiYxPwCqV/tRjvk+TlmNo=;
-        b=GA9iUJU4Q55jwt0K2bS5JNmIc2XxKFcMM84014ZpRWSTI54OmzX8+5liTfOiut/vs2
-         NrcwL+2qcYZgyXFfkPQdFRk6StD0qi9RsyVzxaq8KCZ3f+J38wvBdBpXKCSZwfIZwSQs
-         5kNEG9zO2dxFwYmTjm6xTjKYOLxAomDM6TkQnjIxziYcd3G/c37r/ScAaCVSQF1lLsng
-         fmxe/fw+cK409ESGKBw1AT00IioC9g/e9qla/M9RnA4IsMh6TbtwIAvHac5zX0K9/FxM
-         tVVstWRCzLKhszRtPDBHzJQ7L1LCavaZ2bkqcqpkhMx4NNbqh7w2jMh38oyeGVH/nLZt
-         8WXQ==
+        bh=CahxmQqFuSN17hzKxp22cYA04X1IdTUqMe8AwCJzziA=;
+        b=rspfS7IzZ5kRBlyooFFNmV69ncvtpw7zU04/1hu5GoxTzCU6CpvLgim/ZylZm3Fsct
+         NTae0Q01ofp6SetGsBIjUbqFoP7yabPhgk1Dslb/5trSx60J+dQ/JghEKzPzs4ZzKFij
+         HavgQu50GOjijzk2EKhgr7hHnohu06L1aKObWjH8jQiTfVJuo2hEDZ9fSzKvHxQtxyzn
+         U3ZBDzXJ2wxF+brPvBpcVdcTH63bhH4f1K3ywx287YqQEcITmemftQYaGJVjJpZ/w03s
+         T1HBT52rzXEhrf5bQ/xAxKBTI/JU6Kh7gmf9qfe32xf8G3RIQqlolh5wnK2lVrFFL+KA
+         P8dA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=pnuX+nYG0EAdbQOmmqD550RiYxPwCqV/tRjvk+TlmNo=;
-        b=qD2VjWvqJyaeh5xgBg7kaN0/N0aazIPcByCHAjOugmmXHfgpIswJBAzvEKo+ni3BdZ
-         /nvOHQlcaUgKIUlLoqzOBlxo5Ox+5hY/02IK+rSP1tuFiywd05BZ1+rPy/nbvAlzzTZ/
-         pYC/Lljpyjz9X5ZyoZMaHU3K5wu/JU6VG4XtCuohqeHyIpvCBatSHg2y7gFYo4kf6KrY
-         tNP7At6S/oAZkX7tG9YV5s71UptkcWuFTDuF3VYmvGKur4I1deQYPloLf+D+qiORxn1D
-         eUjw+Zm+wXJNxUbdIFDaIO+6opUtCv0Rft9ucUNcqMX8n7YB4jjLvXsJddws6JArbKQk
-         pW4w==
-X-Gm-Message-State: AGi0PuYxGLT4dha10GESj0wH9nkjWKacmSrFluVjCey+HH/1xHyLZO0N
-        yf6/e/RL+9SZUqhTM5UKNl6L1Q==
-X-Google-Smtp-Source: APiQypIFu/NS7Y507uSd12JcWTSwawAIDaak2cG88SuiwXJ/pEgO5Ds064reUmoEJs/bcOWko2VErg==
-X-Received: by 2002:a63:da47:: with SMTP id l7mr23608783pgj.315.1586879115064;
-        Tue, 14 Apr 2020 08:45:15 -0700 (PDT)
+        bh=CahxmQqFuSN17hzKxp22cYA04X1IdTUqMe8AwCJzziA=;
+        b=Os/FoMUNv35PwEuCaiJZh1tQ8HVGzxYjGCWOEbYzJ9nqGU4MRM2SKhNjVExD4aqthH
+         kf5l1ZSr4+K6ZyiRkk8eqlt7GXJP/i6adPheHLBR/N1Z140EmOTyrnQh64dhWgC5Vfcs
+         nkap8l3S/V6Maou+qV318Y6kqtGaSWUmJQNHTpgjKZmkB7mRudst6O0ehLrYJ309bH+d
+         ws3slvZnBZCgqvOSIHdyyvZdYIt/nC/yqSxjpiss2Cm7VBRq85kfeJRYqW3WSvI97Cfj
+         xFjkPnSXXTCGv6AZTradq9qVV/0ZMUOZF5V7/n4/z67vB/RTb2gJvF1qTwRWpfkHb1Ws
+         Ktng==
+X-Gm-Message-State: AGi0PubXlpqvCALxw1tg2sgylQhMGL88w/wsKP1CEOZ9bDHddO9SmIq8
+        fRui/y53nxjXSX8pa9g8KhF5EA==
+X-Google-Smtp-Source: APiQypK9logbneCH1KWyhCZ4MDXM+xEDvgFPaLXzlJn1LTFnw2DPRY/QuX1x0tZBF1ghzxPeMiJEYQ==
+X-Received: by 2002:a63:5d7:: with SMTP id 206mr10706678pgf.136.1586879518681;
+        Tue, 14 Apr 2020 08:51:58 -0700 (PDT)
 Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id g72sm11406456pfb.196.2020.04.14.08.45.13
+        by smtp.gmail.com with ESMTPSA id 63sm11442331pfe.96.2020.04.14.08.51.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Apr 2020 08:45:14 -0700 (PDT)
-Date:   Tue, 14 Apr 2020 09:45:13 -0600
+        Tue, 14 Apr 2020 08:51:57 -0700 (PDT)
+Date:   Tue, 14 Apr 2020 09:51:56 -0600
 From:   Taylor Blau <me@ttaylorr.com>
 To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, sluongng@gmail.com,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH] log: add log.excludeDecoration config option
-Message-ID: <20200414154513.GB93424@syl.local>
-References: <pull.610.git.1586791720114.gitgitgadget@gmail.com>
- <20200413154945.GA59601@syl.local>
- <0b9e3156-1101-0f19-91eb-36af541519aa@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Git Test Coverage Report (March 31, 2020)
+Message-ID: <20200414155156.GC93424@syl.local>
+References: <e7e15fd8-01fa-61df-830d-04e4882adc38@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <0b9e3156-1101-0f19-91eb-36af541519aa@gmail.com>
+In-Reply-To: <e7e15fd8-01fa-61df-830d-04e4882adc38@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 14, 2020 at 11:10:33AM -0400, Derrick Stolee wrote:
-> >>  log.follow::
-> >>  	If `true`, `git log` will act as if the `--follow` option was used when
-> >>  	a single <path> is given.  This has the same limitations as `--follow`,
-> >> diff --git a/builtin/log.c b/builtin/log.c
-> >> index 83a4a6188e2..d7d1d5b7143 100644
-> >> --- a/builtin/log.c
-> >> +++ b/builtin/log.c
-> >> @@ -236,7 +236,21 @@ static void cmd_log_init_finish(int argc, const char **argv, const char *prefix,
-> >>  	}
-> >>
-> >>  	if (decoration_style) {
-> >> +		const struct string_list *config_exclude =
-> >> +			repo_config_get_value_multi(the_repository,
-> >> +						    "log.excludeDecoration");
-> >> +
-> >> +		if (config_exclude) {
-> >> +			struct string_list_item *item;
-> >> +			for (item = config_exclude->items;
-> >> +			     item && item < config_exclude->items + config_exclude->nr;
-> >> +			     item++)
-> >
-> > Any reason not to use the 'for_each_string_list_item' macro in
-> > 'string-list.h' for this?
+Hi Stolee,
+
+Apologies for digging up an older report.
+
+On Tue, Mar 31, 2020 at 09:58:17PM -0400, Derrick Stolee wrote:
+> Uncovered code in 'next' not in 'master'
+> --------------------------------------------------------
 >
-> The reason is I forgot about it.
+> Commits introducing uncovered code:
+> Taylor Blau	a599e2c9 builtin/commit-graph.c: introduce '--input=<source>'
+> builtin/commit-graph.c
+> a599e2c9 75) *to = 0;
+> a599e2c9 76) return 0;
+> a599e2c9 86) *to |= COMMIT_GRAPH_INPUT_APPEND;
+>
+> Taylor Blau	5d5916fd builtin/commit-graph.c: support '--split[=<strategy>]'
+> commit-graph.c
+> 5d5916fd 1557) break;
 
-Heh, in fairness I forgot about it, too :). I thought that this code
-looked familiar, but it was only luck that I had 'string-list.h' open at
-the time I was reading this.
+I was leaving this in my inbox as a reminder to address these two
+uncovered hunks, but they have gone away in the backlog of commit-graph
+patches I sent to the list last night.
 
-I don't think that it really matters much each way, but if you're
-already re-rolling...
-
-> Thanks,
-> -Stolee
+Thanks again for running these.
 
 Thanks,
 Taylor
