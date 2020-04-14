@@ -7,76 +7,71 @@ X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B1E51C2BA19
-	for <git@archiver.kernel.org>; Tue, 14 Apr 2020 17:41:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 34CE2C2BA19
+	for <git@archiver.kernel.org>; Tue, 14 Apr 2020 17:50:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9140C206A2
-	for <git@archiver.kernel.org>; Tue, 14 Apr 2020 17:41:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0CAAC20767
+	for <git@archiver.kernel.org>; Tue, 14 Apr 2020 17:50:27 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CXTdL13W"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jyR6gh8d"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730414AbgDNRlA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Apr 2020 13:41:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40214 "EHLO
+        id S2502897AbgDNRuZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Apr 2020 13:50:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41612 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1728863AbgDNRk6 (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 14 Apr 2020 13:40:58 -0400
-Received: from mail-oi1-x243.google.com (mail-oi1-x243.google.com [IPv6:2607:f8b0:4864:20::243])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02830C061A0C
-        for <git@vger.kernel.org>; Tue, 14 Apr 2020 10:40:58 -0700 (PDT)
-Received: by mail-oi1-x243.google.com with SMTP id r25so1282488oij.4
-        for <git@vger.kernel.org>; Tue, 14 Apr 2020 10:40:57 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S2502783AbgDNRt5 (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 14 Apr 2020 13:49:57 -0400
+Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com [IPv6:2607:f8b0:4864:20::744])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8EADC061A0C
+        for <git@vger.kernel.org>; Tue, 14 Apr 2020 10:49:51 -0700 (PDT)
+Received: by mail-qk1-x744.google.com with SMTP id c63so14271312qke.2
+        for <git@vger.kernel.org>; Tue, 14 Apr 2020 10:49:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=/Y19qdHHuhK3MRMAAmx024TB7qBkoHd/YS1g1N7rh5w=;
-        b=CXTdL13W8qvBFdXZJWF96X+sAGi5Cp6+iI+aI+ksJIKj+TDPzkDhL/BT1xRY4GiqMV
-         mH5RndusMD4C1++la36CoWA+BOtVFFovdOS+hLmJ3F8rnsCLxb/jvMSI9U+br8e2sQe2
-         IFjiLKvMihl0pO0I7X2SFDVS8d1OvD7pYNlSkXIO+XdCbwgQouGQviO5/+22WzMBwmi3
-         s7ee0AMEsDOTYLepbOp0NPcmee6MrvHVOmRRUBjt96toD6R8ejtUGd+GtG8RysAaLTJZ
-         HeG3nARLX4hFtXZ7U4ZoMjgIH62cm7Rz9vpvlKDraGlCJ8zu0UDBr5MJo9p9JoLSh12+
-         hdfw==
+        bh=paUr5L/35Vl+BKcIE9Z5BzPk9tAet9YiAimvXhVZeKw=;
+        b=jyR6gh8d7PGol7ITgSuL8zdpSBFTXhGgShXUaroY1o/gl/AZACDCLPVvCkthxrcC5h
+         i0+HDE9QI6ekUgQlWu6nTnG7LPs1Mu2Gmnw4AIK4tQkDT/suV1W1FfwDFfM6vqO4qi7P
+         kNoZkrVAPVqBzu29qXR+cEQyb/T7nugRBmXeyTDqiEzj5HZSfgma3KqBAFBp9eY3ZClq
+         ZX4sKwGzjG9RY3P6LRa/qvHIzMpGRsFfTi0hYI/lWqBTfiLKfV/YreGwSpZTPm0u0oM7
+         Ng3R1cVOW8Ur4plxFVu7N68PBNjmJoG8R20rQ1kFsmFXfRRNg+KS5f4I6Lbm0WdwxCr2
+         Ydyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=/Y19qdHHuhK3MRMAAmx024TB7qBkoHd/YS1g1N7rh5w=;
-        b=dt1piQ+QJnY75UX7o+Lo6AOgMCvKfv0/HtbTMbSi67bsHHYUiNoEFZFSDbnQlW3SdZ
-         cjEhowBLyAXZa57AvrRn3/r7r8Nxxvik6rVKuhxN4y7TJRPEdtxKYXFgRxb3vc/uvI1j
-         kq/2Ahrmz+T54KO84Qr2AHe7fy+VQuLQtW+a+Iq/VHeWzlR42fcGrtpbRQaYvhsgmmAq
-         wUlGR0fQCvRXn2NC0iocQQXr4CqCNSDrrC3Usqf1CTvluO+37QXGdbO8DMpDGd6eHx2u
-         mYzegWQWypKWdoaZKGXeAvSR/BSFY8isJJO9hcyKnt0g5l1+5gRcgz2iFAgRqdoBVbnF
-         sm4A==
-X-Gm-Message-State: AGi0PuaBMvFsQxBKLd3oW0C9LV34Dx+Vy5L7X87vhevgMz0ANh+Ph4vh
-        PUVo1cH89qPCMYfE7Wm8X/M=
-X-Google-Smtp-Source: APiQypLZ0pVtBsUVjCDhJaEkLpiE5KWyayx20qmJtpy1kSkFE2IvxAjxZpSe17ESzLP20gYqjR8gEg==
-X-Received: by 2002:aca:6056:: with SMTP id u83mr16826914oib.95.1586886056944;
-        Tue, 14 Apr 2020 10:40:56 -0700 (PDT)
+        bh=paUr5L/35Vl+BKcIE9Z5BzPk9tAet9YiAimvXhVZeKw=;
+        b=V8Hdvry0g3mSI0rEBug+pqebFg0RYk8JXKzJDx3mdJYs4JH4zLs4HOglfAEaIpDSpp
+         +sJ7I8OBKK7qcGof/c2hbtLy+Bx7z9wmOU0Eyh1eFSLYuQFq3BUCOcK0vuYbpD6Wez/0
+         7hEWXqWNaFUZaV0TzP0LUA3M6GfUBKHDsDuFhrVzzlEzmJ57AdaD9tVh9t1MSCGl9skd
+         hSSQhbaGflSzkj8sp31jo5dJ8wTYF347wr+dxDD0+Rmp4OQuh1ZUPEMDAVGepWdF5xsc
+         4dcf11Djv90Qu5UEB+wfqp6z2jK/eDBnGPccjY2fagj0Q6fOoMGGfJ7En5EZ9jjjsBxq
+         qufA==
+X-Gm-Message-State: AGi0PubpRS+i5cExE3xxZFxTAUPaKcFsS1fgKN38tg2x5eV6yPE9ngQj
+        uu5t8MZNsUL6zHMYNqMi70o=
+X-Google-Smtp-Source: APiQypJIxDHIK2vyJKS8wyYULD5pOqxK5jPqb5mNbvojng2Y0+R7Hpq9W8F8Iye087KQv8BHSjzatg==
+X-Received: by 2002:a37:aa8e:: with SMTP id t136mr13704845qke.175.1586886590750;
+        Tue, 14 Apr 2020 10:49:50 -0700 (PDT)
 Received: from [192.168.1.83] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id k4sm5653302otl.13.2020.04.14.10.40.56
+        by smtp.gmail.com with ESMTPSA id r15sm10812337qkm.53.2020.04.14.10.49.49
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 14 Apr 2020 10:40:56 -0700 (PDT)
-Subject: Re: [PATCH v2 2/4] commit: write commit-graph with Bloom filters
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, jnareb@gmail.com, garimasigit@gmail.com,
+        Tue, 14 Apr 2020 10:49:50 -0700 (PDT)
+Subject: Re: [PATCH] log: add log.excludeDecoration config option
+To:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, sluongng@gmail.com,
         Derrick Stolee <dstolee@microsoft.com>
-References: <pull.609.git.1586566981.gitgitgadget@gmail.com>
- <pull.609.v2.git.1586789126.gitgitgadget@gmail.com>
- <7e8f1aed1138ab2a52a8957ac95895ac9effd933.1586789126.git.gitgitgadget@gmail.com>
- <20200413161245.GE59601@syl.local> <xmqqh7xnauxc.fsf@gitster.c.googlers.com>
- <74e4e8d6-d401-081d-14cc-c4b6087bdeda@gmail.com>
- <xmqqa73e9dws.fsf@gitster.c.googlers.com>
+References: <pull.610.git.1586791720114.gitgitgadget@gmail.com>
+ <xmqqeesq9e8p.fsf@gitster.c.googlers.com>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <36f321b9-e2ff-60c3-637a-38682ee5d9f0@gmail.com>
-Date:   Tue, 14 Apr 2020 13:40:53 -0400
+Message-ID: <5c8cd2dc-f1e2-5c93-094c-e15e45e8543e@gmail.com>
+Date:   Tue, 14 Apr 2020 13:49:47 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101
  Thunderbird/76.0
 MIME-Version: 1.0
-In-Reply-To: <xmqqa73e9dws.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqeesq9e8p.fsf@gitster.c.googlers.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -85,57 +80,93 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4/14/2020 1:26 PM, Junio C Hamano wrote:
-> Derrick Stolee <stolee@gmail.com> writes:
+On 4/14/2020 1:19 PM, Junio C Hamano wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 > 
->> On 4/13/2020 6:21 PM, Junio C Hamano wrote:
->>> Taylor Blau <me@ttaylorr.com> writes:
->>>
->>>> Hmm. I'm not crazy about a library function looking at 'GIT_TEST_*'
->>>> environment variables and potentially ignoring its arguments, but given
->>>> the discussion we had in v1, I don't feel strongly enough to recommend
->>>> that you change this.
->>>>
->>>> For what it's worth, I think that 'write_commit_graph' could behave more
->>>> purely if callers checked 'GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS' and set
->>>> 'flags' appropriately from the outside,...
->>>
->>> Yeah, I agree that it would be a lot cleaner if that is easy to
->>> arrange.  I have a suspicion that Derrick already tried and the
->>> resulting code looked messier and was discarded?
->>
->> Perhaps I could fix both concerns by
->>
->> 1. Use a macro instead of a library call.
->>
->> 2. Check the _CHANGED_PATHS variable in the macro.
+>>  	if (decoration_style) {
+>> +		const struct string_list *config_exclude =
+>> +			repo_config_get_value_multi(the_repository,
+>> +						    "log.excludeDecoration");
+>> +
+>> +		if (config_exclude) {
+>> +			struct string_list_item *item;
+>> +			for (item = config_exclude->items;
+>> +			     item && item < config_exclude->items + config_exclude->nr;
+>> +			     item++)
+>> +				string_list_append(&decorate_refs_exclude,
+>> +						item->string);
+>> +		}
+>> +
+>>  		rev->show_decorations = 1;
+>> +
+>>  		load_ref_decorations(&decoration_filter, decoration_style);
+>>  	}
 > 
-> I am not sure how use of a macro "fixes" purity, though.  And what
-> is the other concern?
-
-The concern was (1) checking the environment and (2) die()ing in the
-library.
-
-> How widely would this "if we are testing, write out the graph file"
-> call be sprinkled over the codebase?  I am hoping that it won't be
-> "everywhere", but only at strategic places (like "just once before
-> we leave a subcommand that creates one or bunch of commits").  And
-> how often would they be called?  I am also hoping that it won't be
-> "inside a tight loop".  In short, I am wondering if we can promise
-> our codebase that 
+> A few random thoughts.  Unlike my other usual reviews, please do not
+> take "should we do X" as a suggestion (these are purely me wondering
+> and nothing more at this point):
 > 
->  - git_test_write_commit_graph_or_die() calls won't be an eyesore
->    (and/or distraction) for developers too much.
+>  * Given that we have command line options to specify what patterns
+>    to include as well as to exclude, it feels somewhat asymmetric to
+>    have only the configuration to exclude.  Should we also have a
+>    configuration for including?
+
+I left the other side out for simplicity and because I didn't know
+the use case. It seems all refs are included by default.
+
+>  * The new code only adds to decorate_refs_exclude, which has the
+>    patterns that were given with the "--decorate-refs-exclude"
+>    command line option.  As refs.c:ref_filter_match() rejects
+>    anything that match an exclude pattern first before looking at
+>    the include patterns, there is no way to countermand what is
+>    configured to be excluded with the configuration from the command
+>    line, even with --decorate-refs" option.  Should we have a new
+>    command line option to "clear" the exclude list read from the
+>    configuration?  And if we add configuration for including for
+>    symmetry, should that be cleared as well?
+>
+>  * As this is a multi-valued configuration, there probably are cases
+>    where you have configured three patterns, and for this single
+>    invocation you would want to override only one of them.  It might
+>    not be usable if the only way to override were to "clear" with a
+>    new option and then add two that you want from the command line.
 > 
->  - git_env_bool() call won't have performance impact.
+> What if we had (configured) exclusion for X, Y and Z, and then
+> allowed the command line to say "include Y", that would result in
+> the combination to specify exclusion of X and Z only?  Can we get
+> away by not having "include these" configuration at all, perhaps,
+> because "if there is no inclusion pattern, anything that does not
+> match exclusion patterns is included" is how the matcher works?
 
-I could add a comment to the header file to say "this is only for
-improving coverage of optional features in the test suite. Do not
-call this method unless you know what you are doing."
+This is a very good point. We should be able to use command-line
+options to override configured values. Something like this should
+show decorations for refs/hidden/origin/master:
 
-My intention right now is to only include this in 'git commit'
-and 'git merge'. Earlier discussion included thoughts about
-'git rebase' and similar, but those are more rarely used when
-constructing an "example repo" in the test scripts.
+  git -c log.excludeDecoration=refs/hidden/* log --decorate-refs=refs/hidden/*
 
+But, the current patch does not.
+ 
+> I guess the last one, despite what I said upfront, is the beginning
+> of my suggestion.  If we take the quoted change as-is, and then
+> before load_ref_decorations() uses the decoration_filter, perhaps we
+> can see for each pattern in the "exclude" list, if there is the same
+> entry in the "include" list, and remove it from both lists.  That
+> way, when the users wonder why their "git log" does not use certain
+> refs to decorate (let's say, you configured "refs/heads/*" in the
+> exclusion list), they can countermand by giving "--decorate-refs"
+> from the command line, perhaps?  It is still unclear to me how well
+> such a scheme works, e.g. how should patterns "refs/tags/*" and
+> "refs/tags/*-rc*" interact when they are given as configs and
+> options to include/exclude in various permutations, though.
+
+My next version will allow this "overwrite" of configured values.
+It seems like an important use case that I had missed.
+
+Without getting into the code immediately, I predict the change
+will be to include a second pass of "configured patterns" after
+the command-line patterns. If the explicit command-line patterns
+have already included the ref, then the configured exclude
+patterns should not be tested.
+ 
+Thanks!
 -Stolee
