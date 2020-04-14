@@ -2,81 +2,119 @@ Return-Path: <SRS0=cd4n=56=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C22FC3815B
-	for <git@archiver.kernel.org>; Tue, 14 Apr 2020 18:24:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 10B00C2BA19
+	for <git@archiver.kernel.org>; Tue, 14 Apr 2020 18:25:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EE750208E0
-	for <git@archiver.kernel.org>; Tue, 14 Apr 2020 18:24:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ACAE420575
+	for <git@archiver.kernel.org>; Tue, 14 Apr 2020 18:25:48 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=walsh.ws header.i=@walsh.ws header.b="A81EB+nm"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="QezIKgTH"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2503854AbgDNSYF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Apr 2020 14:24:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47058 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S2503868AbgDNSX4 (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 14 Apr 2020 14:23:56 -0400
-Received: from mail-vs1-xe2b.google.com (mail-vs1-xe2b.google.com [IPv6:2607:f8b0:4864:20::e2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB431C061A0C
-        for <git@vger.kernel.org>; Tue, 14 Apr 2020 11:23:53 -0700 (PDT)
-Received: by mail-vs1-xe2b.google.com with SMTP id w14so603085vsf.7
-        for <git@vger.kernel.org>; Tue, 14 Apr 2020 11:23:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=walsh.ws; s=google;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=5GTqpGmUGcVfl/ezp8pSRNSdktkqbVhLvP0hF1GAnYI=;
-        b=A81EB+nmA6+SByehPl3pF1s6AHKvZ1QXRujp2NTB+hM+f03Kzz38DNBnIx1plJwRCJ
-         GKyzjKQ6AFzXSbLPDSdK8cEmQIUhfhdwks5nv7u73fHv7EqN9iwhVIscd4QoodkQOkxQ
-         UCuyG6yvTdIKEh/SJLsm0hhu4HWv/25OikG3I=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=5GTqpGmUGcVfl/ezp8pSRNSdktkqbVhLvP0hF1GAnYI=;
-        b=HdENdY83aN2JkQ9zaCU3lRE57MHagGG95FUIbxP8kMUc9dE2oRtZMYDrsGjONXyYN1
-         NZ/9ybjasWEz7N6vNUQwjsRKiziZ+I1BxOdhDeY8SGNwiFWMzK6oCziaUaYfXLkVtTgR
-         nbZQAabVDgHJhc/noOssT8jRXV7nS2b7UgsMJIOMsrV2bAFnvnzdJQse/RhlJogZVeLZ
-         Jm6Mbt4qFyqdHjk0hpR0sn57vAhAzXEcEiDpgpH6StQVB7aKPTvpStW16ODEsBgCP7mV
-         JHIWMngV1jjORplebQ6O+GSUPvanF82AyIDTIn/Y8i5Pm8ckX44rGw6/HYa4Kv8B1MQN
-         pt3Q==
-X-Gm-Message-State: AGi0PuZjeA6DAgBSoNqF6XWedppvPNil5Hi2s1wa/KJ4iCXEpLWGY6Xx
-        oNJeC/rSBPhNnQqwex54YhoY68oJbaiRl4XIeqidA/77HUU=
-X-Google-Smtp-Source: APiQypLiwn+/IqpWzDwMSdWtRpbyQZ4+GIO6Miru1TGVBfhudyM1TWQyryKGjJhyw8jUCzZ5gtK5jShWdl242K8pv3I=
-X-Received: by 2002:a67:f585:: with SMTP id i5mr1325046vso.36.1586888632264;
- Tue, 14 Apr 2020 11:23:52 -0700 (PDT)
+        id S1729664AbgDNSZq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Apr 2020 14:25:46 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56193 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727959AbgDNSZp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Apr 2020 14:25:45 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id EA20E5A3ED;
+        Tue, 14 Apr 2020 14:25:41 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=PVMvZr6y/rfALxXmvufcg90EKdA=; b=QezIKg
+        THIkDeyrq8nBsKsoFELiUWNe6A0aMKJxJLt4iYFJ2xhnpC62oDBPiwIPhEgXyv6v
+        HQG2rBi8jQkMY68tHeaw8aEdt3BvTInLvu8EaWaGg/5q11R2FzoWG5vts2VPsMxE
+        o1eMRLl/KdREdiaEtlYnQgia+bgC2w2mQOEco=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=bPPzbXLzQYOYDdiPmn49DGlgsD8DXm5X
+        04C60FfxG9B3iIRCcLK0acMQuhOWEE8Jqh440whyVkOidp2FQf2YEeaIGBQK24qw
+        CG20fopM27QnGufnGCI7ERrmL7GaOTAbdEK5lVOEz5R1HCy3SJnJeMVfFf086xDM
+        epR8cjNuQF0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E14815A3EC;
+        Tue, 14 Apr 2020 14:25:41 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 639355A3EB;
+        Tue, 14 Apr 2020 14:25:41 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, me@ttaylorr.com, jnareb@gmail.com,
+        garimasigit@gmail.com, Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 1/3] revision: complicated pathspecs disable filters
+In-Reply-To: <44ce43e2-6cf0-0e48-18eb-f02543d81bf4@gmail.com> (Derrick
+        Stolee's message of "Mon, 13 Apr 2020 07:49:12 -0400")
+References: <pull.609.git.1586566981.gitgitgadget@gmail.com>
+        <9cc31c289aa785f026eec84452ed68e80505d95e.1586566981.git.gitgitgadget@gmail.com>
+        <xmqqeesthfbf.fsf@gitster.c.googlers.com>
+        <44ce43e2-6cf0-0e48-18eb-f02543d81bf4@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+Date:   Tue, 14 Apr 2020 11:25:40 -0700
+Message-ID: <xmqqmu7d9b6j.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-From:   Brian Walsh <brian@walsh.ws>
-Date:   Tue, 14 Apr 2020 14:23:41 -0400
-Message-ID: <CAG0OLMYrQhuUXP7yrBCA5yKu3hvnrNKrjSn5nZj45gW_P0U5tg@mail.gmail.com>
-Subject: submodule cloning issue
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 58D03802-7E7D-11EA-B8D5-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I am seeing a problem with cloning a repo with submodules while on my
-company vpn. One of the submodule urls has an http redirect. It will
-timeout trying to clone that redirected submodule and only that
-submodule. I would say that it is solely an issue with my company vpn
-however I can do a git clone of the repo that is failing and it does
-properly redirect and clone. So there is a difference in how git
-submodule--helper clone works vs git clone. If I drop off of the vpn
-it works without any problem.
+Derrick Stolee <stolee@gmail.com> writes:
 
-I am seeing the issue with version 2.25 and 2.26 running under ubuntu.
+>> But if users may use icase pathspec very often, it may be worth
+>> considering to build the bloom filter after downcasing the paths,
+>> perhaps?  Given that many projects extract their source code to a
+>> case insensitive filesystem, I would imagine that downcasing paths
+>> would map two originally different paths into the same thing only
+>> rarely, if ever, so there may not be much downside to do so.
+>
+> This behavior could be extended later, and carefully. My initial
+> thought was that the case check would happen on every commit. If
+> the :(icase) check only happens at the walk tip(s), then we could
+> compute a single Bloom key at the start.
 
-I have not had time to dig into it further to see what is going on.
+Sorry, I am not sure what you mean.
 
-Here is the repo that is having issues.
+Do you mean that we notice that the user wants to match 'foo' case
+insensitively, and tell the logic that uses changed-path records in
+the graph file that commits that cannot possibly have touched any or
+the paths 'foo', 'foO', 'fOo', ... (all 8 case permutations) are not
+interesting?
 
-https://github.com/ycm-core/YouCompleteMe.git
+I guess that would work, but I was wondering if it is simpler
+without much downside if the changed-path records in the graph file
+are prepared on paths after they are normalized to a single case.
+That would lose information (e.g. you no longer can say "commits
+that touch the path 'foo' is interesting, but those that touch the
+path 'Foo' are not"), but makes the side that queries much simpler
+(i.e. you do not have to prepare all 8 case permutations---you only
+ask about 'foo').
 
-This submodule that is buried in there is redirected to a new url. It
-will hang trying to submodule clone.
-https://github.com/mitsuhiko/flask-sphinx-themes.git
+And because the Bloom filter is used only for performance to cull
+commits that can never possibly match, allowing a false positive
+that would be discarded by actually running tree-diff anyway, the
+only potential downside happens when the project has too many paths
+that are different only in cases by increased collisions and by
+reducing our chances to skip running tree-diff (and never affects
+correctness).  
+
+But this is not the "could be extended later" kind of behaviour, I
+am afraid.  It is baked in the data stored in the graph file.
+
+It all depends on how often people want :(icase) pathspec matches in
+the history, I suspect.  My point was that we need to declare that
+:(icase) won't matter in real life (hence we won't optimize our data
+to support that use case), before the way in which the data stored
+in the graph file is computed is cast in stone.
+
+Thanks.
