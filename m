@@ -2,239 +2,153 @@ Return-Path: <SRS0=cd4n=56=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	HTTP_ESCAPED_HOST,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CBD79C352BE
-	for <git@archiver.kernel.org>; Tue, 14 Apr 2020 21:42:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9AFC2C352BE
+	for <git@archiver.kernel.org>; Tue, 14 Apr 2020 21:43:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9CB2320768
-	for <git@archiver.kernel.org>; Tue, 14 Apr 2020 21:42:37 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=pdinc.us header.i=@pdinc.us header.b="SXmmBS/4"
+	by mail.kernel.org (Postfix) with ESMTP id 7A20D20768
+	for <git@archiver.kernel.org>; Tue, 14 Apr 2020 21:43:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2634034AbgDNVm1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Apr 2020 17:42:27 -0400
-Received: from mail2.pdinc.us ([67.90.184.28]:57208 "EHLO mail2.pdinc.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2634027AbgDNVmF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Apr 2020 17:42:05 -0400
-X-Greylist: delayed 2533 seconds by postgrey-1.27 at vger.kernel.org; Tue, 14 Apr 2020 17:41:34 EDT
-Received: from blackfat (nsa1.pdinc.us [67.90.184.2])
-        (authenticated bits=0)
-        by mail2.pdinc.us (8.14.4/8.14.4) with ESMTP id 03EL3O6F020741
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Tue, 14 Apr 2020 17:03:24 -0400
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail2.pdinc.us 03EL3O6F020741
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pdinc.us; s=default;
-        t=1586898204; bh=Rb1hbOvnXjU+R2lTrCJ26Bm+OX3YyU/Tnrx2IyyfZMw=;
-        h=From:To:Cc:References:In-Reply-To:Subject:Date:From;
-        b=SXmmBS/4s55dxQgPQqOes/Hx1vp2ZW/bxAvY9g5JbiBEQxoD+E5rn75LPZAp+oeDu
-         EJs75DjuEwCy1DwounAR1RdIX/wvBp+BcI6h1Yg1eY04w6JVdrBVXXQrWqtpmK0Wu9
-         cSWG7yMScGiuOXqeMozga0N7vcul4HzJkf7WpKvPgdwkgoKRm3htNukj+NjLGeMrAF
-         W9O3jgJ5tIC9HbrFREy0MAph5f/1WC2ccAFmgrnqUkSx8qECbdNYM/GQXyQlsrw6Hp
-         QUFYbOSQ6g5EVQb5Sdx9ElDeyKewrcHEriinJHFtSC8C0Z+MVHLApCDKl4S9gBVjsl
-         TrOVfDXo6iE8A==
-From:   "Jason Pyeron" <jpyeron@pdinc.us>
-To:     "'Git Mailing list'" <git@vger.kernel.org>
-Cc:     "'Robert P. J. Day'" <rpjday@crashcourse.ca>
-References: <alpine.LFD.2.21.2004141612580.6138@localhost.localdomain> 
-In-Reply-To: 
-Subject: RE: has anyone bothered to read this "Git is a security risk"?
-Date:   Tue, 14 Apr 2020 17:03:34 -0400
-Organization: PD Inc
-Message-ID: <03ab01d612a0$28ea0120$7abe0360$@pdinc.us>
+        id S2634059AbgDNVnV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Apr 2020 17:43:21 -0400
+Received: from cloud.peff.net ([104.130.231.41]:53864 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S2634051AbgDNVnH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Apr 2020 17:43:07 -0400
+Received: (qmail 7907 invoked by uid 109); 14 Apr 2020 21:43:05 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 14 Apr 2020 21:43:05 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 2479 invoked by uid 111); 14 Apr 2020 21:53:49 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 14 Apr 2020 17:53:49 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 14 Apr 2020 17:43:04 -0400
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Subject: [PATCH] credential: treat "?" and "#" in URLs as end of host
+Message-ID: <20200414214304.GA1887601@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQFN40TcLujYJQSCtkE5g7Jl/OQGAwFs2nCQqX4ShyA=
-Content-Language: en-us
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Now they are spamming me...
+It's unusual to see:
 
-There "one pager", which is 3 pages - =
-https://blubracket.com/wp-content/uploads/2020/02/BB_OneSheet_FINAL.pdf =
-amused me.
+  https://example.com?query-parameters
 
-> -----Original Message-----
-> From: Jason Pyeron=20
-> Sent: Tuesday, April 14, 2020 4:59 PM
-> To: 'Git Mailing list' <git@vger.kernel.org>
-> Cc: 'Robert P. J. Day' <rpjday@crashcourse.ca>
-> Subject: RE: has anyone bothered to read this "Git is a security =
-risk"?
->=20
-> Yes. It is a FUD tool to sell their product/service.
->=20
-> > -----Original Message-----
-> > From: git-owner@vger.kernel.org <git-owner@vger.kernel.org> On =
-Behalf Of Robert P. J. Day
-> > Sent: Tuesday, April 14, 2020 4:14 PM
-> > To: Git Mailing list <git@vger.kernel.org>
-> > Subject: has anyone bothered to read this "Git is a security risk"?
-> >
-> >
-> > https://twitter.com/blubracket/status/1250123442600513547
->=20
-> They claim 5 risks.
->=20
-> Risk #1 - Secrets in code.
-> Risk #2 - Malicious code from unauthorized open source.
-> Risk #3 - Your business, network and infrastructure blueprint exposed =
-through code.
-> Risk #4 - Sensitive code and PII on public code sharing websites.
-> Risk #5 - IP theft.
->=20
-> With a SALES PITCH at the end
->=20
-> "
-> BluBracket can help.
->=20
-> While software development has changed dramatically and software
-> has grown in importance, the ways we secure code have not. This has to
-> change. BluBracket is the first comprehensive security solution for =
-code
-> in the enterprise. We deliver the insights and control enterprises =
-need
-> to keep code safe. Contact us for an exploration of how we can help,
-> including an audit of your production environments for secrets in code
-> and other vulnerabilities.
-> "
->=20
-> In short by using FUD, the reader is more likely to buy their product =
-which will alleviate your fears,
-> uncertainty, and doubt around GitHub, Inc. and Git technology.
->=20
-> They have 10 specific attacks on Git/Github in their paper, I have =
-listed them below. In square
-> brackets ([]) I have added meaning where needed. The "Git" contextual =
-quotes are as follows:
->=20
-> 1. "A decade ago, companies didn=E2=80=99t worry much about code =
-security. ... GitHub had only just begun ...
-> code and coding environments today represent the biggest unmanaged and =
-unmonitored risk to enterprise
-> security"
->=20
-> 2. "Between Google and Github searches, these secrets [keys, password, =
-etc.] are a gold mine for
-> hackers"
->=20
-> 3. re-quote from How Bad Can It Git? Characterizing Secret Leakage in =
-Public GitHub Repositories
-> Network and Distributed Systems Security (NDSS) Symposium 2019 =
-=E2=80=9CWe find that not only is secret
-> leakage pervasive =E2=80=94 affecting over 100,000 repositories =
-=E2=80=94 but that thousands of new, unique secrets
-> are leaked every day.=E2=80=9D
->=20
-> 4. "In 2018, for instance, hackers mirrored the popular Linux =
-distribution Gentoo=E2=80=99s Github
-> repositories and replaced them with a malicious backdoor that would =
-erase files."
->=20
-> 5. "In 2019, hackers attempted a similar exploit against =
-Ubuntu=E2=80=99s Github repositories."
->=20
-> 6. "Recently, an AWS engineer published a 1G repository to Github =
-containing a treasure trove of PII,
-> including bank statements, customer correspondence, drivers=E2=80=99 =
-licenses, and multiple key pairs and
-> tokens."
->=20
-> 7. "there is so much valuable information now on Github, hacker groups =
-have automated searches"
->=20
-> 8. "hacker posted details about it [Capital One breach] in a public =
-Github repository. Github was
-> recently sued over their role in this incident"
->=20
-> 9. " This [the finding of sensitive data in a repository] generally is =
-inadvertent because Git makes
-> it so easy to share code"
->=20
-> 10. "
->=20
-> But unfortunately, Git is the wild west. Right now security teams have =
-little
-> to no visibility into where this important enterprise asset lives.
->=20
-> While visibility is a huge issue, code proliferation is another. Git =
-was
-> developed for open source projects, not the enterprise. By default, =
-everyone
-> has access to everything. A contractor can download all the code in =
-that
-> repository, not just the section he is working on. With one click, he =
-can then
-> upload your code to his or her own personal repository.
->=20
-> There are currently no repeatable, scalable ways to lock down access =
-or even
-> track and monitor behavior. And if an insider wants to take code and =
-sell it
-> or use it at a competitor, there is currently no way of even being =
-notified that
-> your code has been published. By default, Git proliferates code.
->=20
-> "
->=20
-> In my opinion, as a cyber-security SME, software developer, git user =
-and developer, etc... numbers 1
-> through 8 have nothing to do with Git or Git related =
-technologies/services. Bashing what one can do
-> with GitHub.com is also silly, do not put your sensitive code on =
-someone else's server.
->=20
-> Numbers 9 and 10 have a bit more merit, if only measured using the =
-most sensitive measuring
-> instruments. It is no more easy to be carless with your data stored in =
-a git repository than
-> subversion, than CVS, DVDs, portable hard drives, laptops in a =
-caf=C3=A9, etc. It is just data, you can
-> copy it. 10 is a real concern but not because of git, but because of =
-poor training, bad
-> trustworthiness between the organization and worker, etc. I will =
-recite an event that happened where I
-> work many years ago.
->=20
-> Manager: Did you take DoD source code home without permission?
-> Employee: excuse, avoids question, more excuses
-> Manager: Let me be clear, you are fired. I need the answer to the =
-question, did you take controlled
-> DoD source code home with you?
-> Employee: no.
->=20
-> Git is not a source of the problem, human resource management and =
-cyber security hygiene are. We
-> failed to cultivate a responsible employee, with a work ethic. The =
-employee decided to telework
-> without authorization (play hooky) claiming to work. But the git =
-repository for that project was not
-> accessible from home... Our Git was secure...
->=20
-> **SIGH**
->=20
->=20
-> --
-> Jason Pyeron  | Architect
-> PD Inc        |
-> 10 w 24th St  |
-> Baltimore, MD |
->=20
-> .mil: jason.j.pyeron.ctr@mail.mil
-> .com: jpyeron@pdinc.us
-> tel : 202-741-9397
->=20
->=20
->=20
+without an intervening slash, like:
 
+  https://example.com/some-path?query-parameters
 
+or even:
+
+  https://example.com/?query-parameters
+
+but it is a valid end to the hostname (actually "authority component")
+according to RFC 3986. Likewise for "#".
+
+And curl will parse the URL according to the standard, meaning it will
+contact example.com, but our credential code would ask about a bogus
+hostname with a "?" in it. Let's make sure we follow the standard, and
+more importantly ask about the same hosts that curl will be talking to.
+
+It would be nice if we could just ask curl to parse the URL for us. But
+it didn't grow a URL-parsing API until 7.62, so we'd be stuck with
+fallback code either way. Plus we'd need this code in the main Git
+binary, where we've tried to avoid having a link dependency on libcurl.
+
+But let's at least fix our parser. Moving to curl's parser would prevent
+other potential discrepancies, but this gives us immediate relief for
+the known problem, and would help our fallback code if we eventually use
+curl.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+Just a follow-on to today's release. This isn't security critical after
+the earlier fix, but it made some of the attack vectors much easier.
+
+ credential.c           |  9 ++++++++-
+ t/t0300-credentials.sh | 36 +++++++++++++++++++++++++++++++++++-
+ 2 files changed, 43 insertions(+), 2 deletions(-)
+
+diff --git a/credential.c b/credential.c
+index 21b3ba152f..8aa9777548 100644
+--- a/credential.c
++++ b/credential.c
+@@ -388,7 +388,14 @@ int credential_from_url_gently(struct credential *c, const char *url,
+ 	cp = proto_end + 3;
+ 	at = strchr(cp, '@');
+ 	colon = strchr(cp, ':');
+-	slash = strchrnul(cp, '/');
++
++	/*
++	 * A query or fragment marker before the slash ends the host portion.
++	 * We'll just continue to call this "slash" for simplicity. Notably our
++	 * "trim leading slashes" part won't skip over this part of the path,
++	 * but that's what we'd want.
++	 */
++	slash = cp + strcspn(cp, "/?#");
+ 
+ 	if (!at || slash <= at) {
+ 		/* Case (1) */
+diff --git a/t/t0300-credentials.sh b/t/t0300-credentials.sh
+index 5b78ebbc3f..b6ec676989 100755
+--- a/t/t0300-credentials.sh
++++ b/t/t0300-credentials.sh
+@@ -443,11 +443,45 @@ test_expect_success 'url parser ignores embedded newlines' '
+ 	username=askpass-username
+ 	password=askpass-password
+ 	--
+-	warning: url contains a newline in its host component: https://one.example.com?%0ahost=two.example.com/
++	warning: url contains a newline in its path component: https://one.example.com?%0ahost=two.example.com/
+ 	warning: skipping credential lookup for url: https://one.example.com?%0ahost=two.example.com/
+ 	askpass: Username:
+ 	askpass: Password:
+ 	EOF
+ '
+ 
++# usage: check_host_and_path <url> <expected-host> <expected-path>
++check_host_and_path () {
++	# we always parse the path component, but we need this to make sure it
++	# is passed to the helper
++	test_config credential.useHTTPPath true &&
++	check fill "verbatim user pass" <<-EOF
++	url=$1
++	--
++	protocol=https
++	host=$2
++	path=$3
++	username=user
++	password=pass
++	--
++	verbatim: get
++	verbatim: protocol=https
++	verbatim: host=$2
++	verbatim: path=$3
++	EOF
++}
++
++test_expect_success 'url parser handles bare query marker' '
++	check_host_and_path https://example.com?foo.git example.com ?foo.git
++'
++
++test_expect_success 'url parser handles bare fragment marker' '
++	check_host_and_path https://example.com#foo.git example.com "#foo.git"
++'
++
++test_expect_success 'url parser not confused by encoded markers' '
++	check_host_and_path https://example.com%23%3f%2f/foo.git \
++		"example.com#?/" foo.git
++'
++
+ test_done
+-- 
+2.26.1.429.g609150846d
