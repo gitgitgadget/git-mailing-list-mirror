@@ -2,95 +2,165 @@ Return-Path: <SRS0=cd4n=56=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C080C352BE
-	for <git@archiver.kernel.org>; Tue, 14 Apr 2020 16:27:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9474C352BE
+	for <git@archiver.kernel.org>; Tue, 14 Apr 2020 16:43:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 28A052075E
-	for <git@archiver.kernel.org>; Tue, 14 Apr 2020 16:27:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C594C206E9
+	for <git@archiver.kernel.org>; Tue, 14 Apr 2020 16:43:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QEc+6ekP"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Gz7mgUcJ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391583AbgDNQ1q (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Apr 2020 12:27:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56910 "EHLO
+        id S2436524AbgDNQnC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Apr 2020 12:43:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59408 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S2391533AbgDNQ04 (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 14 Apr 2020 12:26:56 -0400
-Received: from mail-qv1-xf41.google.com (mail-qv1-xf41.google.com [IPv6:2607:f8b0:4864:20::f41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B44FBC061A0F
-        for <git@vger.kernel.org>; Tue, 14 Apr 2020 09:26:56 -0700 (PDT)
-Received: by mail-qv1-xf41.google.com with SMTP id di6so97880qvb.10
-        for <git@vger.kernel.org>; Tue, 14 Apr 2020 09:26:56 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S2407453AbgDNQm7 (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 14 Apr 2020 12:42:59 -0400
+Received: from mail-ed1-x544.google.com (mail-ed1-x544.google.com [IPv6:2a00:1450:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 393DBC061A0C
+        for <git@vger.kernel.org>; Tue, 14 Apr 2020 09:42:59 -0700 (PDT)
+Received: by mail-ed1-x544.google.com with SMTP id i7so413303edq.3
+        for <git@vger.kernel.org>; Tue, 14 Apr 2020 09:42:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=14t/o5r1yMuhaB5ReRN4U2glQbggcee5/EJbnkQGlX0=;
-        b=QEc+6ekPnXThZlGiTdKvW8N7gyDHPFMMRp+fNlax4wTa9babKnXkQnD55u1U3Fzlck
-         LooN+PXExDMpl/R2Atrm1zq+4Au0VVoX1lpUpPb3GuOhnhCv+rm05L9AtYJgCPg1DG9V
-         HVwP93gkS6hgEPl5M7YskpWhszyzsAre8ZgWrAI4WA6ZEFTrkC7FBHdTDr0logzFEo1Z
-         /r8ergcGvsa/Or+87Fgb4SyFAXYHaw4ykRBAfz5i6qdL5ZhyA6ObudeGCaOWZBuHF9tW
-         iKE7dgfW+schJ7+6y1VaD/gZDsPNQOHkvgjK6Mf6Xw1vYiGbVkkrsllwb3xxvwgc1OhO
-         VlzQ==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=5AhrdgHQZgca4kfKW4r1Bq3Qzd2jAaW3HuTxa2z53WQ=;
+        b=Gz7mgUcJZLscaZYISF49hz483sb66eEaCtNqJ7sehyZgyPNw4QIgXAh2H7H2VqtIIw
+         ugBgBsuysBU2RTJ1dx2QqzBAzfRRA/Fq1zm5YYSV80OkhtdzrwuXp3w/9oCkrVwS3fw3
+         CxIO7ChZBZCO9UcBM+LA0FVEWvzFTM4IhMyP7t9499CtOQYhBUQ2xRHNF6rH9mBNDrmo
+         tr7v0JdudXtZKIKu5Zcoh90Jj0Z8rOqaVmlthNIxdjwj4oUSVjpuFpM72s8Y5iLpcEpY
+         3Uz0pAJEDxzPnfXBQtOhpFPcw7s+wrVGMAIw0Nbl0m5Ml3kXzH7LRjs8e0XhK6Ve+4yh
+         glpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=14t/o5r1yMuhaB5ReRN4U2glQbggcee5/EJbnkQGlX0=;
-        b=hRYI3wHryBdKZc2AD2DGgdK69C4pWQ/tVYXWLBQ0XgFrSC+kqDbcpKPrHD2jMiptEJ
-         aEKE4OBAQCmBqZtVOfQMQ0od3CeJR6DOAdEJAm+ABJYZsDvYnY6TiNbu50Yuow6R3oMz
-         FzBRBsC6+BGfWpiOuq9joyS2IMrTtQEOhAqflT4KR0yjhsQK3nfziJu1xqi0wO1zacQ1
-         6bm+rvtH+zSvT30g5NnaA3pEhuHc3uYPv8KsYv8E8pnHnxr0XoJMbXZJ9yYQD9ez2nW7
-         4TPWHkJlkcCUVHTLI62NSAkY7lqgqIdSQ2ydKoerBT7XuJZIlZ1vVG74cl478Tu60Wcx
-         zptw==
-X-Gm-Message-State: AGi0PuaVmqr9zSqGTNnhf3hpA9n/+kC3Qa3OjnCzOT3rN84VvWPUggU0
-        lB3hDJalANvl0sMt6Q67X8E=
-X-Google-Smtp-Source: APiQypIdmmK0O/0O7h3ur7Dr+7AXLaKgR9Lx98d8qfVUSsIOsSF11d4FdqkXTfw4oI5kndMAGmv8VA==
-X-Received: by 2002:a05:6214:8d3:: with SMTP id da19mr789629qvb.49.1586881615751;
-        Tue, 14 Apr 2020 09:26:55 -0700 (PDT)
-Received: from [192.168.1.83] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id f14sm10808005qtp.55.2020.04.14.09.26.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 14 Apr 2020 09:26:55 -0700 (PDT)
-Subject: Re: [PATCH v2 0/3] clone: document partial clone section
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Teng Long via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Teng Long <dyroneteng@gmail.com>
-References: <pull.745.git.git.1585792946341.gitgitgadget@gmail.com>
- <pull.745.v2.git.git.1586791560.gitgitgadget@gmail.com>
- <xmqqd08batub.fsf@gitster.c.googlers.com>
- <e77309ef-68a4-0ebd-0d82-051b07838fd5@gmail.com>
- <xmqqimi29gqy.fsf@gitster.c.googlers.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <3e3ef5ff-a808-efa0-ee32-9d24981efa0c@gmail.com>
-Date:   Tue, 14 Apr 2020 12:26:52 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101
- Thunderbird/76.0
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=5AhrdgHQZgca4kfKW4r1Bq3Qzd2jAaW3HuTxa2z53WQ=;
+        b=aUcSbFcaHf6tbZR97uVTbatpJASesuUXUx8qszO4uWs8QCd3L7tmp7rG9HXIkeF0Iq
+         quZHOBaYgEU5KW7TVoAhxIlkrtdwfaVdMwnh6ttLwU7aqqPIb5euB/KryImY16A5aGFC
+         qqLCY9zjQTHTjHYlisPNJv69x2IBTbuhYRtRmbbLcJe2L4uWrfjgQpckeqRrYrt35DIb
+         s4vp9FE5VmEYZOCILtblk4umc9F7aVYkCZljcEDyATpf4eTZfqnsO3lfYIQTgvkVXijn
+         oFg+tjCIjV/8X8kgh3POjXNbpBitohaqgvVd547UjrC5ZC7+bFFsEHwOHiVmKC6uGRS3
+         x1Xw==
+X-Gm-Message-State: AGi0PuYQ0hb1YI3eoWBGUbgtH8Mwoi75tB5G7Ei3nV7hzva3phE++25V
+        vT6x9z5ElLFY+rk6eFKm7iKg6Azj
+X-Google-Smtp-Source: APiQypLC8M63yqg//sXGnfrgtRTO1dZFeB3Pb6xnTDbt9RZuy5pRVf0m+dH2zbufakji6JD9kQiIfw==
+X-Received: by 2002:a17:906:164f:: with SMTP id n15mr971525ejd.322.1586882577696;
+        Tue, 14 Apr 2020 09:42:57 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id w9sm436061ejn.54.2020.04.14.09.42.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Apr 2020 09:42:57 -0700 (PDT)
+Message-Id: <pull.647.git.git.1586882575822.gitgitgadget@gmail.com>
+From:   "Kazuo Yagi via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 14 Apr 2020 16:42:55 +0000
+Subject: [PATCH] doc: fix the stale link to api-builtin.txt
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-In-Reply-To: <xmqqimi29gqy.fsf@gitster.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+To:     git@vger.kernel.org
+Cc:     Kazuo Yagi <kazuo.yagi@gmail.com>,
+        Kazuo Yagi <kazuo.yagi@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4/14/2020 12:25 PM, Junio C Hamano wrote:
-> Derrick Stolee <stolee@gmail.com> writes:
-> 
->> ... Then when I force-pushed my branch his GGG PR
->> "grew" with the old commits.
-> 
-> Ah, so we only need to review [3/3], treating it as a single patch
-> series?
+From: Kazuo Yagi <kazuo.yagi@gmail.com>
 
-Correct. Thanks.
+ec14d4e had moved documentation from api-builtin.txt to builtin.h.
+This patch updates new-command.txt to reflect that change.
 
--Stolee
+Signed-off-by: Kazuo Yagi <kazuo.yagi@gmail.com>
+---
+    Fixed unavailable link in Documentation/howto/new-command.txt along…
+    
+    … with the changeset history.
+    
+    Signed-off-by: Kazuo Yagi kazuo.yagi@gmail.com [kazuo.yagi@gmail.com]
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-647%2Fkyagi%2Ffix-unavailable-link-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-647/kyagi/fix-unavailable-link-v1
+Pull-Request: https://github.com/git/git/pull/647
+
+ Documentation/howto/new-command.txt |  6 +++---
+ builtin.h                           | 25 +++++++++++++++++++++++++
+ 2 files changed, 28 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/howto/new-command.txt b/Documentation/howto/new-command.txt
+index 15a4c8031f1..ac73c98be72 100644
+--- a/Documentation/howto/new-command.txt
++++ b/Documentation/howto/new-command.txt
+@@ -1,13 +1,13 @@
+ From: Eric S. Raymond <esr@thyrsus.com>
+ Abstract: This is how-to documentation for people who want to add extension
+- commands to Git.  It should be read alongside api-builtin.txt.
++ commands to Git.  It should be read alongside builtin.h.
+ Content-type: text/asciidoc
+ 
+ How to integrate new subcommands
+ ================================
+ 
+ This is how-to documentation for people who want to add extension
+-commands to Git.  It should be read alongside api-builtin.txt.
++commands to Git.  It should be read alongside builtin.h.
+ 
+ Runtime environment
+ -------------------
+@@ -48,7 +48,7 @@ binary); this organization makes it easy for people reading the code
+ to find things.
+ 
+ See the CodingGuidelines document for other guidance on what we consider
+-good practice in C and shell, and api-builtin.txt for the support
++good practice in C and shell, and builtin.h for the support
+ functions available to built-in commands written in C.
+ 
+ What every extension command needs
+diff --git a/builtin.h b/builtin.h
+index 5cf5df69f72..101ef8edc4d 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -92,6 +92,31 @@
+  *
+  * The return value from `cmd_foo()` becomes the exit status of the
+  * command.
++ *
++ * Changeset History
++ * -----------------
++ *
++ * The following describes how the documentation has finally been placed
++ * in this file, over the related changesets.
++ *
++ * +-----------------+ *OLD LINK*  +-----------------+
++ * | api-builtin.txt | <~~~~~~~~~~ | api-command.txt |
++ * +-----------------+             +-----------------+
++ *    |                               ~  *  |
++ *    | deleted,                     ~  N   | moved and renamed from
++ *    | contents is taken over      ~  E    | Documentation/technical/
++ *    | by builtin.h               ~  W     | to
++ *    | (this file)               ~         | Documentation/howto/
++ *    |                          ~ L        |
++ *    |                         ~ I         |
++ *    v                        ~ N          v
++ * +-----------+              ~ K  +-----------------+
++ * | builtin.h | <~~~~~~~~~~~~ *   | new-command.txt |
++ * +-----------+                   +-----------------+
++ *
++ * ---> moved to(or renamed to)
++ * ~~~> refers to
++ *
+  */
+ 
+ #define DEFAULT_MERGE_LOG_LEN 20
+
+base-commit: 3cb8921f74354a3a4aeaa932869acb7e6aabe630
+-- 
+gitgitgadget
