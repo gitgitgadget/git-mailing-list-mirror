@@ -2,165 +2,138 @@ Return-Path: <SRS0=cd4n=56=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E9474C352BE
-	for <git@archiver.kernel.org>; Tue, 14 Apr 2020 16:43:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E2CAEC2BA19
+	for <git@archiver.kernel.org>; Tue, 14 Apr 2020 17:19:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C594C206E9
-	for <git@archiver.kernel.org>; Tue, 14 Apr 2020 16:43:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BD2BA20678
+	for <git@archiver.kernel.org>; Tue, 14 Apr 2020 17:19:42 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Gz7mgUcJ"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="LSI0W20q"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2436524AbgDNQnC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Apr 2020 12:43:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59408 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S2407453AbgDNQm7 (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 14 Apr 2020 12:42:59 -0400
-Received: from mail-ed1-x544.google.com (mail-ed1-x544.google.com [IPv6:2a00:1450:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 393DBC061A0C
-        for <git@vger.kernel.org>; Tue, 14 Apr 2020 09:42:59 -0700 (PDT)
-Received: by mail-ed1-x544.google.com with SMTP id i7so413303edq.3
-        for <git@vger.kernel.org>; Tue, 14 Apr 2020 09:42:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=5AhrdgHQZgca4kfKW4r1Bq3Qzd2jAaW3HuTxa2z53WQ=;
-        b=Gz7mgUcJZLscaZYISF49hz483sb66eEaCtNqJ7sehyZgyPNw4QIgXAh2H7H2VqtIIw
-         ugBgBsuysBU2RTJ1dx2QqzBAzfRRA/Fq1zm5YYSV80OkhtdzrwuXp3w/9oCkrVwS3fw3
-         CxIO7ChZBZCO9UcBM+LA0FVEWvzFTM4IhMyP7t9499CtOQYhBUQ2xRHNF6rH9mBNDrmo
-         tr7v0JdudXtZKIKu5Zcoh90Jj0Z8rOqaVmlthNIxdjwj4oUSVjpuFpM72s8Y5iLpcEpY
-         3Uz0pAJEDxzPnfXBQtOhpFPcw7s+wrVGMAIw0Nbl0m5Ml3kXzH7LRjs8e0XhK6Ve+4yh
-         glpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=5AhrdgHQZgca4kfKW4r1Bq3Qzd2jAaW3HuTxa2z53WQ=;
-        b=aUcSbFcaHf6tbZR97uVTbatpJASesuUXUx8qszO4uWs8QCd3L7tmp7rG9HXIkeF0Iq
-         quZHOBaYgEU5KW7TVoAhxIlkrtdwfaVdMwnh6ttLwU7aqqPIb5euB/KryImY16A5aGFC
-         qqLCY9zjQTHTjHYlisPNJv69x2IBTbuhYRtRmbbLcJe2L4uWrfjgQpckeqRrYrt35DIb
-         s4vp9FE5VmEYZOCILtblk4umc9F7aVYkCZljcEDyATpf4eTZfqnsO3lfYIQTgvkVXijn
-         oFg+tjCIjV/8X8kgh3POjXNbpBitohaqgvVd547UjrC5ZC7+bFFsEHwOHiVmKC6uGRS3
-         x1Xw==
-X-Gm-Message-State: AGi0PuYQ0hb1YI3eoWBGUbgtH8Mwoi75tB5G7Ei3nV7hzva3phE++25V
-        vT6x9z5ElLFY+rk6eFKm7iKg6Azj
-X-Google-Smtp-Source: APiQypLC8M63yqg//sXGnfrgtRTO1dZFeB3Pb6xnTDbt9RZuy5pRVf0m+dH2zbufakji6JD9kQiIfw==
-X-Received: by 2002:a17:906:164f:: with SMTP id n15mr971525ejd.322.1586882577696;
-        Tue, 14 Apr 2020 09:42:57 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w9sm436061ejn.54.2020.04.14.09.42.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Apr 2020 09:42:57 -0700 (PDT)
-Message-Id: <pull.647.git.git.1586882575822.gitgitgadget@gmail.com>
-From:   "Kazuo Yagi via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 14 Apr 2020 16:42:55 +0000
-Subject: [PATCH] doc: fix the stale link to api-builtin.txt
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S2407582AbgDNRTl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Apr 2020 13:19:41 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61240 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2407532AbgDNRTk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Apr 2020 13:19:40 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 80B2359CA9;
+        Tue, 14 Apr 2020 13:19:35 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=6oZ6l9nhzduGLKhh4h/mGOJw8xU=; b=LSI0W2
+        0qhAutXshYQg12PKAAhr1ZaEZWcgnVP0FnIDNocFGG4Cg18jcflriTF4l1+xY1eE
+        lMVVXrMVUqoiBrpiTyu+S90F84qKo/n69DAFjqMvIEUwd3iPFiSiBYiUY+lDsbdv
+        1Y6q5gGBIjwuthZPoDEj1qROCn7gN8BNVftTs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Wl5kjbQRqf7+chFA6Ee9jRPWc4RIcbC3
+        HaAlrV+T6h2RLHH8LHxhPn6JbNZGXjjwKdfr7DWEzLxG6e1Tkzco5IhIoXM+SGS0
+        OEPbaBYpIYkfF6I8OZ/7nQSS8qf6hZrMCeRP4nKnTOijzlepfhu7Bez4x61zeGsa
+        OM1ChAOrVbI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 78D2259CA8;
+        Tue, 14 Apr 2020 13:19:35 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id F0E5E59CA7;
+        Tue, 14 Apr 2020 13:19:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, sluongng@gmail.com,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH] log: add log.excludeDecoration config option
+References: <pull.610.git.1586791720114.gitgitgadget@gmail.com>
+Date:   Tue, 14 Apr 2020 10:19:34 -0700
+In-Reply-To: <pull.610.git.1586791720114.gitgitgadget@gmail.com> (Derrick
+        Stolee via GitGitGadget's message of "Mon, 13 Apr 2020 15:28:39
+        +0000")
+Message-ID: <xmqqeesq9e8p.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Kazuo Yagi <kazuo.yagi@gmail.com>,
-        Kazuo Yagi <kazuo.yagi@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1CA4EA5C-7E74-11EA-AE39-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Kazuo Yagi <kazuo.yagi@gmail.com>
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-ec14d4e had moved documentation from api-builtin.txt to builtin.h.
-This patch updates new-command.txt to reflect that change.
+>  	if (decoration_style) {
+> +		const struct string_list *config_exclude =
+> +			repo_config_get_value_multi(the_repository,
+> +						    "log.excludeDecoration");
+> +
+> +		if (config_exclude) {
+> +			struct string_list_item *item;
+> +			for (item = config_exclude->items;
+> +			     item && item < config_exclude->items + config_exclude->nr;
+> +			     item++)
+> +				string_list_append(&decorate_refs_exclude,
+> +						item->string);
+> +		}
+> +
+>  		rev->show_decorations = 1;
+> +
+>  		load_ref_decorations(&decoration_filter, decoration_style);
+>  	}
 
-Signed-off-by: Kazuo Yagi <kazuo.yagi@gmail.com>
----
-    Fixed unavailable link in Documentation/howto/new-command.txt along…
-    
-    … with the changeset history.
-    
-    Signed-off-by: Kazuo Yagi kazuo.yagi@gmail.com [kazuo.yagi@gmail.com]
+A few random thoughts.  Unlike my other usual reviews, please do not
+take "should we do X" as a suggestion (these are purely me wondering
+and nothing more at this point):
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-647%2Fkyagi%2Ffix-unavailable-link-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-647/kyagi/fix-unavailable-link-v1
-Pull-Request: https://github.com/git/git/pull/647
+ * Given that we have command line options to specify what patterns
+   to include as well as to exclude, it feels somewhat asymmetric to
+   have only the configuration to exclude.  Should we also have a
+   configuration for including?
 
- Documentation/howto/new-command.txt |  6 +++---
- builtin.h                           | 25 +++++++++++++++++++++++++
- 2 files changed, 28 insertions(+), 3 deletions(-)
+ * The new code only adds to decorate_refs_exclude, which has the
+   patterns that were given with the "--decorate-refs-exclude"
+   command line option.  As refs.c:ref_filter_match() rejects
+   anything that match an exclude pattern first before looking at
+   the include patterns, there is no way to countermand what is
+   configured to be excluded with the configuration from the command
+   line, even with --decorate-refs" option.  Should we have a new
+   command line option to "clear" the exclude list read from the
+   configuration?  And if we add configuration for including for
+   symmetry, should that be cleared as well?
 
-diff --git a/Documentation/howto/new-command.txt b/Documentation/howto/new-command.txt
-index 15a4c8031f1..ac73c98be72 100644
---- a/Documentation/howto/new-command.txt
-+++ b/Documentation/howto/new-command.txt
-@@ -1,13 +1,13 @@
- From: Eric S. Raymond <esr@thyrsus.com>
- Abstract: This is how-to documentation for people who want to add extension
-- commands to Git.  It should be read alongside api-builtin.txt.
-+ commands to Git.  It should be read alongside builtin.h.
- Content-type: text/asciidoc
- 
- How to integrate new subcommands
- ================================
- 
- This is how-to documentation for people who want to add extension
--commands to Git.  It should be read alongside api-builtin.txt.
-+commands to Git.  It should be read alongside builtin.h.
- 
- Runtime environment
- -------------------
-@@ -48,7 +48,7 @@ binary); this organization makes it easy for people reading the code
- to find things.
- 
- See the CodingGuidelines document for other guidance on what we consider
--good practice in C and shell, and api-builtin.txt for the support
-+good practice in C and shell, and builtin.h for the support
- functions available to built-in commands written in C.
- 
- What every extension command needs
-diff --git a/builtin.h b/builtin.h
-index 5cf5df69f72..101ef8edc4d 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -92,6 +92,31 @@
-  *
-  * The return value from `cmd_foo()` becomes the exit status of the
-  * command.
-+ *
-+ * Changeset History
-+ * -----------------
-+ *
-+ * The following describes how the documentation has finally been placed
-+ * in this file, over the related changesets.
-+ *
-+ * +-----------------+ *OLD LINK*  +-----------------+
-+ * | api-builtin.txt | <~~~~~~~~~~ | api-command.txt |
-+ * +-----------------+             +-----------------+
-+ *    |                               ~  *  |
-+ *    | deleted,                     ~  N   | moved and renamed from
-+ *    | contents is taken over      ~  E    | Documentation/technical/
-+ *    | by builtin.h               ~  W     | to
-+ *    | (this file)               ~         | Documentation/howto/
-+ *    |                          ~ L        |
-+ *    |                         ~ I         |
-+ *    v                        ~ N          v
-+ * +-----------+              ~ K  +-----------------+
-+ * | builtin.h | <~~~~~~~~~~~~ *   | new-command.txt |
-+ * +-----------+                   +-----------------+
-+ *
-+ * ---> moved to(or renamed to)
-+ * ~~~> refers to
-+ *
-  */
- 
- #define DEFAULT_MERGE_LOG_LEN 20
+ * As this is a multi-valued configuration, there probably are cases
+   where you have configured three patterns, and for this single
+   invocation you would want to override only one of them.  It might
+   not be usable if the only way to override were to "clear" with a
+   new option and then add two that you want from the command line.
 
-base-commit: 3cb8921f74354a3a4aeaa932869acb7e6aabe630
--- 
-gitgitgadget
+What if we had (configured) exclusion for X, Y and Z, and then
+allowed the command line to say "include Y", that would result in
+the combination to specify exclusion of X and Z only?  Can we get
+away by not having "include these" configuration at all, perhaps,
+because "if there is no inclusion pattern, anything that does not
+match exclusion patterns is included" is how the matcher works?
+
+I guess the last one, despite what I said upfront, is the beginning
+of my suggestion.  If we take the quoted change as-is, and then
+before load_ref_decorations() uses the decoration_filter, perhaps we
+can see for each pattern in the "exclude" list, if there is the same
+entry in the "include" list, and remove it from both lists.  That
+way, when the users wonder why their "git log" does not use certain
+refs to decorate (let's say, you configured "refs/heads/*" in the
+exclusion list), they can countermand by giving "--decorate-refs"
+from the command line, perhaps?  It is still unclear to me how well
+such a scheme works, e.g. how should patterns "refs/tags/*" and
+"refs/tags/*-rc*" interact when they are given as configs and
+options to include/exclude in various permutations, though.
+
+Thanks.
+
+
+
