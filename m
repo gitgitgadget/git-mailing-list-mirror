@@ -2,181 +2,128 @@ Return-Path: <SRS0=MaRY=57=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 63719C2BA19
-	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 22:02:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F1C12C2BA19
+	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 22:19:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 336502076D
-	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 22:02:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CA39B206E9
+	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 22:19:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="jeu4peI3"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="etUHU9s/"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731078AbgDOWCu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Apr 2020 18:02:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52898 "EHLO
+        id S1731803AbgDOWTQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Apr 2020 18:19:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55446 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1730034AbgDOWCr (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 15 Apr 2020 18:02:47 -0400
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9AD5C061A0C
-        for <git@vger.kernel.org>; Wed, 15 Apr 2020 15:02:45 -0700 (PDT)
-Received: by mail-pf1-x442.google.com with SMTP id w65so638441pfc.12
-        for <git@vger.kernel.org>; Wed, 15 Apr 2020 15:02:45 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1731098AbgDOWTL (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 15 Apr 2020 18:19:11 -0400
+Received: from mail-il1-x142.google.com (mail-il1-x142.google.com [IPv6:2607:f8b0:4864:20::142])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B098C061A0F
+        for <git@vger.kernel.org>; Wed, 15 Apr 2020 15:19:11 -0700 (PDT)
+Received: by mail-il1-x142.google.com with SMTP id c17so4993663ilk.6
+        for <git@vger.kernel.org>; Wed, 15 Apr 2020 15:19:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=RFy410QuTVY/tRn1RZK+4meEBtrSGNmaG+W8E0BnsZc=;
-        b=jeu4peI3pUPnozX/Rpm/CtC7Iw7n3Aqg4bhbzmTEL+3MeNQZlRoukxvWJHYbtad990
-         +Dg69nG5qkW/EcYPNpyY1gIx9vc5dVzgTPptd/jNKmYPqRA9BJT/zGrbJ/VrQdHbiLXg
-         tMFCjEHhoRBxRvlAvHkmpylKavfLsvVhDRXpDKUNqyl8VeTAeaxs/qFtYS2M4x4swKjF
-         spGNgNw0Q+ZdKkCwwcJMOoE8VXv+LSsWLgfTaP14W3w0t/8PoGTe2tFGRXVj2iHK5fVM
-         VC+FHh9YX0W2HM86kFQ0FNuTStLojfo6MtxKMDH9BFCA5OflPY4PTXVmfQurlJEBymm0
-         cnhQ==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=sPqVrwh1DyB4xHqwqrlp34Iklo4e1n7XGCpE2Xh0iP4=;
+        b=etUHU9s/5hP1UWRgC3dqaaRU9Z/EwN8NSh/jP+bLvplB3XtGUjxSgqKaxC+TiUdJse
+         m9qk6WvdmdJvbayF08PbT/JzkYBNdef7quVIDTo0EF/CxHMRu2vQHwfDHkt8qUaGKQlA
+         840DrghRncTk3pbT0gOup/1jr52k9Utw+qnCmUSYatHJmjrQ2ObMxNdNpYnh7LPMxaXE
+         LstfIX7sv91PgIAmKgGAsByECa8Znaup0bMpaYs2O0f0c85Xxunw8jku2htyfZOQGRt8
+         qFJCJPzDW8JC9yUT5/FYIsuprBAcVeLY4V+SRweRHL4MlVC43U0rBScP9WiaW1BtN4jM
+         tW8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=RFy410QuTVY/tRn1RZK+4meEBtrSGNmaG+W8E0BnsZc=;
-        b=S2HcZdb7kH2o9XW1UjQmd1jjY6GTLpPwihJ5a14Us7kEZ7tbfUFisUvSg+0BcOJZlX
-         JdP3E7eLjjoOAq+wISjo2X6QAD6SYZmCXMVN27apEH5O09Rjfs7MBaKh6VcvU0nbwFvi
-         85/NKBt3N2cRf3fgeadsj5SqA7mzi3cmqx2gFXM4QPUUBgzpZYzPRXJTHXq3L/3/oD5y
-         6XM+O9hAvZl2vEOFJGGBaV8f3dQsna4Xdqd/KKEbTkNhdwcYZ6at1MBZzcZe29rmf4wC
-         NUzI03nscWeTXMZgqAZ67nb9gI3dgRdH6PqwXvy10f3dvSJkbahRPmiGWVOCmIJoX8Yq
-         9sBw==
-X-Gm-Message-State: AGi0Pua0enZ6nTGvujroz6ihq/zFWwnFf12g+5ZgTl2ptou27yhZgTSe
-        SD5gdWyTFyQLPGyuF5m2+Pw8mtOI+dDCHzD1
-X-Google-Smtp-Source: APiQypIkEZM8y2ZVgbxZmZPhH76qaxBADlRn27TINSMk123JNdLS+AecxHqNU8LTNOoUgFaKw33gPA==
-X-Received: by 2002:a63:e54a:: with SMTP id z10mr28490439pgj.346.1586988165004;
-        Wed, 15 Apr 2020 15:02:45 -0700 (PDT)
-Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id l24sm1022678pgo.79.2020.04.15.15.02.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Apr 2020 15:02:44 -0700 (PDT)
-Date:   Wed, 15 Apr 2020 16:02:42 -0600
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Vasil Dimov via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Vasil Dimov <vd@freebsd.org>
-Subject: Re: [PATCH 1/2] range-diff: fix a crash in parsing git-log output
-Message-ID: <20200415220242.GA45241@syl.local>
-References: <pull.760.git.git.1586960921.gitgitgadget@gmail.com>
- <2375e34100e571f9c3ce658d28aba6648fba18a6.1586960921.git.gitgitgadget@gmail.com>
- <xmqqsgh47okk.fsf@gitster.c.googlers.com>
- <20200415162326.GG2464307@coredump.intra.peff.net>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=sPqVrwh1DyB4xHqwqrlp34Iklo4e1n7XGCpE2Xh0iP4=;
+        b=J4BpqwY+cNLc2pazIFe5vAMYYmyHjUYIN3pg5INBLcjmBU+jHsj1racHDnZ1jeqzRd
+         dxEX4jGIvHI17DXfdqUkM2TOdHDkcM3DDPgOPGFs5p4iqXM0tfGepUvlyoyD7iN+NPyC
+         gUCrxBGLLYb5yyWsVp4LrZAGjPl8kfaOCyWuOq5TxHDppUFCouETxgYzQ7Ibk+Xah5VD
+         wcT6b5IxzeFMdW1Dv4nrfpvXeWLGaD0uFra4t0SoU5N+CjvZNtz4RVg9Ted2pELgZSEv
+         Dth7qoblg8wThb1I9OvOdnZR9DOXaQGS53JwBiwRrBk0wRLSTUBCWE/ExeA6ykPzdYx7
+         huXg==
+X-Gm-Message-State: AGi0Pua5bz+AzHmivATeDjdCByUSVzJSWn2eqHqBXQUlcTW1FP0VhXym
+        xrdmBYKyyOQLho8yu59YFGJNkLtWlX3cE6oxGWQ=
+X-Google-Smtp-Source: APiQypInYBJKPSmKfoJSJYDXZ0DDDwZdqg5q0o1q/C6JI/xJkGHPgO5bfyK1fAz3JVpreg/Q6fVjsN0gsQsxKf6VHQc=
+X-Received: by 2002:a92:bbd8:: with SMTP id x85mr7982533ilk.23.1586989150688;
+ Wed, 15 Apr 2020 15:19:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200415162326.GG2464307@coredump.intra.peff.net>
+References: <pull.609.git.1586566981.gitgitgadget@gmail.com>
+ <9cc31c289aa785f026eec84452ed68e80505d95e.1586566981.git.gitgitgadget@gmail.com>
+ <xmqqeesthfbf.fsf@gitster.c.googlers.com> <44ce43e2-6cf0-0e48-18eb-f02543d81bf4@gmail.com>
+ <xmqqmu7d9b6j.fsf@gitster.c.googlers.com> <f57c7908-55ae-deae-e9ea-1909549e628c@gmail.com>
+ <99e0ae2c-6b65-24e4-3d2b-1dff619a5daa@gmail.com>
+In-Reply-To: <99e0ae2c-6b65-24e4-3d2b-1dff619a5daa@gmail.com>
+From:   =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+Date:   Thu, 16 Apr 2020 00:18:33 +0200
+Message-ID: <CANQwDwdcM-hc+Nyc0nBnp79W0BuH2PfdgM6WLqET3sPn1GYc-A@mail.gmail.com>
+Subject: Re: [PATCH 1/3] revision: complicated pathspecs disable filters
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>,
+        Garima Singh <garimasigit@gmail.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
-
-On Wed, Apr 15, 2020 at 12:23:26PM -0400, Jeff King wrote:
-> On Wed, Apr 15, 2020 at 08:31:39AM -0700, Junio C Hamano wrote:
+On Wed, 15 Apr 2020 at 20:37, Derrick Stolee <stolee@gmail.com> wrote:
+[...]
+> -->8--
+> From 89beb9598daabb19e3c896bbceeb0fc1b9ccc6ca Mon Sep 17 00:00:00 2001
+> From: Derrick Stolee <dstolee@microsoft.com>
+> Date: Wed, 15 Apr 2020 18:04:25 +0000
+> Subject: [PATCH] bloom: compute all Bloom hashes from lowercase
 >
-> > "Vasil Dimov via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> >
-> > > From: Vasil Dimov <vd@FreeBSD.org>
-> > >
-> > > `git range-diff` calls `git log` internally and tries to parse its
-> > > output. But `git log` output can be customized by the user in their
-> > > git config and for certain configurations either an error will be
-> > > returned by `git range-diff` or it will crash.
-> > >
-> > > To fix this explicitly set the output format of the internally
-> > > executed `git log` with `--pretty=medium`. Because that cancels
-> > > `--notes`, add explicitly `--notes` at the end.
-> >
-> > Good finding.
-> >
-> > Shouldn't we also disable customizations that come from the
-> > configuration variables like diff.external, diff.<driver>.command?
+> The changed-path Bloom filters currently hash path strings using
+> the exact string for the path. This makes it difficult* to use the
+> filters when restricting to case-insensitive pathspecs.
 >
-> If range-diff were a script, I would say it should be using the
-> "rev-list | diff-tree --stdin" plumbing under the hood, rather than
-> "log".
+> * I say "difficult" because it is possible to generate all 2^n
+>   options for the case of a path and test them all, but this is
+>   a bad idea and should not be done. "Impossible" is an appropriate
+>   alternative.
 >
-> The read_patches() function does let callers pass options to git-log,
-> but I don't _think_ this is exposed to the user. We only allow a few
-> --notes options to be passed, and we should be able to apply those to
-> diff-tree. So converting it to use plumbing might be an option.
+> THIS IS A BREAKING CHANGE. Commit-graph files with changed-path
+> Bloom filters computed by a previous commit will not be compatible
+> with the filters computed in this commit, nor will we get correct
+> results when testing across these incompatible versions. Normally,
+> this would be a completely unacceptable change, but the filters
+> have not been released and hence are still possible to update
+> before release.
 >
-> Though I think there is another bug:
+> TODO: If we decide to move in this direction, then the following
+> steps should be done (and some of them should be done anyway):
 >
->   $ git rev-list HEAD | git diff-tree --stdin --pretty=medium --notes
->   commit 8f3d9f354286745c751374f5f1fcafee6b3f3136
->   git: notes.c:1308: format_display_notes: Assertion `display_notes_trees' failed.
->   Aborted
+> * We need to document the Bloom filter format to specify exactly
+>   how we compute the filter data. The details should be careful
+>   enough that someone can reproduce the exact file format without
+>   looking at the C code.
+>
+> * That document would include the tolower() transformation that is
+>   being done here.
 
-Nice find. I think that I have a patch addressing this below. Please let
-me know what you think:
+Why not modify the BDAT chunk to include version of
+case folding transformation or other collation algorithm
+(other transformation).that is done prior to computing
+the Bloom filter key? Though that might be unnecessary
+flexibility...
 
---- >8 ---
+For example the value of 0x00 in such field of BDAT
+chunk header would mean no transformation, while
+the value of 0x01 would mean per-character tolower()
+or Unicode equivalent of it.
 
-Subject: [PATCH] diff-tree.c: load notes machinery with '--notes'
-
-Since its introduction in 7249e91 (revision.c: support --notes
-command-line option, 2011-03-29), combining '--notes' with '--pretty'
-causes 'git diff-tree' to fail a runtime assertion:
-
-  $ git rev-list HEAD | git diff-tree --stdin --pretty=medium --notes
-  commit 8f3d9f354286745c751374f5f1fcafee6b3f3136
-  git: notes.c:1308: format_display_notes: Assertion `display_notes_trees' failed.
-  Aborted
-
-This failure is due to diff-tree not calling 'load_display_notes' to
-initialize the notes machinery.
-
-Ordinarily, this failure isn't triggered, because it requires passing
-both '--notes' and '--pretty'. Specifically, passing '--pretty' sets
-'opt->verbose_header', causing 'show_log()' to eventually call
-'format_display_notes()', which expects a non-NULL 'display_note_trees'.
-Without initializing the notes machinery, 'display_note_trees' remains
-NULL, and thus triggers an assertion failure. This doesn't occur without
-'--pretty' since we never call 'format_display_notes()' without it.
-
-Fix this by initializing the notes machinery after parsing our options,
-and harden this behavior against regression with a test in t4013.
-
-Reported-by: Jeff King <peff@peff.net>
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- builtin/diff-tree.c     | 2 ++
- t/t4013-diff-various.sh | 1 +
- 2 files changed, 3 insertions(+)
-
-diff --git a/builtin/diff-tree.c b/builtin/diff-tree.c
-index cb9ea79367..17c1cc8c3c 100644
---- a/builtin/diff-tree.c
-+++ b/builtin/diff-tree.c
-@@ -126,6 +126,8 @@ int cmd_diff_tree(int argc, const char **argv, const char *prefix)
-
- 	precompose_argv(argc, argv);
- 	argc = setup_revisions(argc, argv, opt, &s_r_opt);
-+	if (opt->show_notes)
-+		load_display_notes(&opt->notes_opt);
-
- 	while (--argc > 0) {
- 		const char *arg = *++argv;
-diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
-index dde3f11fec..6ae8cfb271 100755
---- a/t/t4013-diff-various.sh
-+++ b/t/t4013-diff-various.sh
-@@ -398,6 +398,7 @@ diff --no-index --raw --no-abbrev dir2 dir
-
- diff-tree --pretty --root --stat --compact-summary initial
- diff-tree --pretty -R --root --stat --compact-summary initial
-+diff-tree --pretty --notes initial
- diff-tree --stat --compact-summary initial mode
- diff-tree -R --stat --compact-summary initial mode
- EOF
---
-2.26.0.106.g9fadedd637
+Best,
+--=20
+Jakub Nar=C4=99bski
