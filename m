@@ -2,142 +2,135 @@ Return-Path: <SRS0=MaRY=57=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,UNPARSEABLE_RELAY autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 27DF1C2BA19
-	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 16:17:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A58CBC38A2B
+	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 16:21:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0C02920656
-	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 16:17:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7F82D208E4
+	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 16:21:17 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="q3L+WvN2"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2410346AbgDOQRT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Apr 2020 12:17:19 -0400
-Received: from mx2.freebsd.org ([96.47.72.81]:28264 "EHLO mx2.freebsd.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2406901AbgDOQRR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Apr 2020 12:17:17 -0400
-Received: from mx1.freebsd.org (mx1.freebsd.org [IPv6:2610:1c1:1:606c::19:1])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
-        (Client CN "mx1.freebsd.org", Issuer "Let's Encrypt Authority X3" (verified OK))
-        by mx2.freebsd.org (Postfix) with ESMTPS id A33B970BEB;
-        Wed, 15 Apr 2020 16:17:11 +0000 (UTC)
-        (envelope-from vd@FreeBSD.org)
-Received: from smtp.freebsd.org (smtp.freebsd.org [IPv6:2610:1c1:1:606c::24b:4])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         server-signature RSA-PSS (4096 bits)
-         client-signature RSA-PSS (4096 bits) client-digest SHA256)
-        (Client CN "smtp.freebsd.org", Issuer "Let's Encrypt Authority X3" (verified OK))
-        by mx1.freebsd.org (Postfix) with ESMTPS id 492SDR37l1z42vK;
-        Wed, 15 Apr 2020 16:17:11 +0000 (UTC)
-        (envelope-from vd@FreeBSD.org)
-Received: from localhost (APN-123-246-8-gprs.simobil.net [46.123.246.8])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (Client did not present a certificate)
-        (Authenticated sender: vd)
-        by smtp.freebsd.org (Postfix) with ESMTPSA id B2DE917C03;
-        Wed, 15 Apr 2020 16:17:06 +0000 (UTC)
-        (envelope-from vd@FreeBSD.org)
-Received: from localhost (localhost [local])
-        by localhost (OpenSMTPD) with ESMTPA id f93339c7;
-        Wed, 15 Apr 2020 18:16:47 +0200 (CEST)
-Date:   Wed, 15 Apr 2020 18:16:47 +0200
-From:   Vasil Dimov <vd@freebsd.org>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Vasil Dimov via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 1/2] range-diff: fix a crash in parsing git-log output
-Message-ID: <20200415161647.GA39892@smle>
-Reply-To: vd@freebsd.org
+        id S1415571AbgDOQUq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Apr 2020 12:20:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56214 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1415556AbgDOQUj (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 15 Apr 2020 12:20:39 -0400
+Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA854C061A0C
+        for <git@vger.kernel.org>; Wed, 15 Apr 2020 09:20:38 -0700 (PDT)
+Received: by mail-pl1-x644.google.com with SMTP id d24so178173pll.8
+        for <git@vger.kernel.org>; Wed, 15 Apr 2020 09:20:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=9JZsiP2wwb4yp7tXBbDl5TzSNqQZu4to9K8auSUXVY4=;
+        b=q3L+WvN2N+xsEkkzUQdeT/Ajr1bSFUlu4lypRFvbr4MpI3JQ///f1rdiqaLo2BC6v0
+         OceKRfVljEkxXVVtVIHHOwIeRI7H2xyq2APw4mcQAKu/Yw9ZmgOBoS5V8h7+kX1RxMLR
+         InaQnr4epPTGQX+I+pldO1f2y5IyNihzjf8TjUwE0wBZB9J+ahAVcB57FQVg2eEmNRkC
+         SSGV+RdHN9Ux7O22FVq1Pyd9SNAPgiQn10auq3tHWRk0I+7wKJTSUrPEQAI/F+CltXlW
+         GlDasH2MJS1FRqjqKmgmpkcqnmsXQWBbh5dI3LUy12lOYWq2imy2ZypokWV+b/1Xvnp2
+         P8vw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=9JZsiP2wwb4yp7tXBbDl5TzSNqQZu4to9K8auSUXVY4=;
+        b=ktQdPntPcq7/y9mSgwiIJtcFXCwhs7/AjYB7+X7mSiCedVmk5MJkW2lUI/D84zZ4kY
+         dkM4NRQl0MMti8VtoNozJ/nfFG9OEZjIezcI8rgxDBjdtpg5y+GxYsbKze+6PDC8Zc24
+         RtE1QgtN+gByANIa96iQJTmtIB9d72ddzb6IAAybknT09OcwVSLc3JD07jkdUAcDv0HR
+         st4/pAZdkOlXC+DfKhmdjsCnGgfx63PouzP5hourzzr7umQDnBEthAjTHdf+hsaOVP5x
+         iD1reOpu0jWt98HPDIS4OGxbxv4u804DLpoFLWCD1QQ9mbBUbIqOiwQrCHKZtU13TENO
+         bqAQ==
+X-Gm-Message-State: AGi0PuZJ/zBY9aKFCHoZzC8hFHl6xUwo8GOnwzy8qPStqst24hHp01WG
+        1oHBQdyYy1mQaz2566iABS0K4g==
+X-Google-Smtp-Source: APiQypIJWxiW3JcZrug9GK47YQh7yawx/VlV/DYvhcfHwq3JpU0CNnBsKB5f2Zh2kkZQFZJAeT7OeQ==
+X-Received: by 2002:a17:902:dc83:: with SMTP id n3mr5554372pld.133.1586967638074;
+        Wed, 15 Apr 2020 09:20:38 -0700 (PDT)
+Received: from localhost ([8.44.146.30])
+        by smtp.gmail.com with ESMTPSA id jx1sm52697pjb.5.2020.04.15.09.20.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Apr 2020 09:20:37 -0700 (PDT)
+Date:   Wed, 15 Apr 2020 10:20:35 -0600
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Vasil Dimov via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Vasil Dimov <vd@freebsd.org>
+Subject: Re: [PATCH 2/2] range-diff: avoid negative string precision
+Message-ID: <20200415162035.GD22823@syl.local>
 References: <pull.760.git.git.1586960921.gitgitgadget@gmail.com>
- <2375e34100e571f9c3ce658d28aba6648fba18a6.1586960921.git.gitgitgadget@gmail.com>
- <xmqqsgh47okk.fsf@gitster.c.googlers.com>
+ <b3384880c7201d65adb7341ce23386d578e69193.1586960921.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="2fHTh5uZTiUOsy+g"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqsgh47okk.fsf@gitster.c.googlers.com>
-User-Agent: Mutt
+In-Reply-To: <b3384880c7201d65adb7341ce23386d578e69193.1586960921.git.gitgitgadget@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
---2fHTh5uZTiUOsy+g
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Wed, Apr 15, 2020 at 08:31:39 -0700, Junio C Hamano wrote:
-> "Vasil Dimov via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Wed, Apr 15, 2020 at 02:28:41PM +0000, Vasil Dimov via GitGitGadget wrote:
+> From: Vasil Dimov <vd@FreeBSD.org>
 >
-> > From: Vasil Dimov <vd@FreeBSD.org>
-> >
-> > `git range-diff` calls `git log` internally and tries to parse its
-> > output. But `git log` output can be customized by the user in their
-> > git config and for certain configurations either an error will be
-> > returned by `git range-diff` or it will crash.
-> >
-> > To fix this explicitly set the output format of the internally
-> > executed `git log` with `--pretty=3Dmedium`. Because that cancels
-> > `--notes`, add explicitly `--notes` at the end.
+> If the supplied integer for "precisoin" is negative in
+
+s/precisoin/precision
+
+> `"%.*s", len, line` then it is ignored. So the current code is
+> equivalent to just `"%s", line` because it is executed only if
+> `len` is negative.
 >
-> Good finding.
+> Fix this by saving the value of `len` before overwriting it with the
+> return value of `parse_git_diff_header()`.
 >
-> Shouldn't we also disable customizations that come from the
-> configuration variables like diff.external, diff.<driver>.command?
+> Signed-off-by: Vasil Dimov <vd@FreeBSD.org>
+> ---
+>  range-diff.c | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+>
+> diff --git a/range-diff.c b/range-diff.c
+> index 5cc920be391..40af0862818 100644
+> --- a/range-diff.c
+> +++ b/range-diff.c
+> @@ -123,16 +123,19 @@ static int read_patches(const char *range, struct string_list *list,
+>  			struct patch patch = { 0 };
+>  			struct strbuf root = STRBUF_INIT;
+>  			int linenr = 0;
+> +			int orig_len;
 
-Hmm, I am not sure. I just read the doc about diff.<driver>.command. Is
-it possible that the user has set up some custom diff tools to compare
-e.g. .jpg files by only comparing their EXIF data instead of the entire
-(binary) files?
+Any reason to not assign this to 'len' up here?
+>
+>  			in_header = 0;
+>  			strbuf_addch(&buf, '\n');
+>  			if (!util->diff_offset)
+>  				util->diff_offset = buf.len;
+>  			line[len - 1] = '\n';
+> +			orig_len = len;
+>  			len = parse_git_diff_header(&root, &linenr, 0, line,
+>  						    len, size, &patch);
 
-Surely if the customizations wrt diff.external and
-diff.<driver>.command produce result that is unparsable by
-git range-diff, then they are not good. But maybe the opposite is the
-case?
+OK, so we cut up the line by placing a NL at len, and then feed it to
+'parse_git_diff_header' which will tell us the length of the thing that
+it parsed, or give a negative value if it couldn't parse...
 
-I don't feel confident enough to judge.
+>  			if (len < 0)
+> -				die(_("could not parse git header '%.*s'"), (int)len, line);
+> +				die(_("could not parse git header '%.*s'"),
+> +				    orig_len, line);
 
---=20
-Vasil Dimov
-gro.DSBeerF@dv
-%
-Sometimes I really think people ought to have to pass a proper exam
-before they're allowed to be parents. Not just the practical, I mean.
-    -- (Terry Pratchett, Thief of Time)
+...and then you restore the original length and print it out here. It
+seems like this error is now misleading though, because the line is
+already modified at the point that the newline was inserted.
 
---2fHTh5uZTiUOsy+g
-Content-Type: application/pgp-signature; name="signature.asc"
+>  			strbuf_addstr(&buf, " ## ");
+>  			if (patch.is_new > 0)
+>  				strbuf_addf(&buf, "%s (new)", patch.new_name);
+> --
+> gitgitgadget
 
------BEGIN PGP SIGNATURE-----
-
-iQQzBAEBCAAdFiEE5k2NRWFNsHVF2czBVN8G9ktVy78FAl6XM2sACgkQVN8G9ktV
-y7+FiR/8DqgdQGRK0Edq3uli96spL1AA4eyx4s72y2lvTd/uWJrvAcM570Cv90xd
-HiNz95lk1qTvUeeP5X4RBN7N/zbhb0WsYbinaguMrKHcuZTaOQFIPltaOWgIe/D7
-wjYzIA3/dpyvm6wPWoWD13fizl9fC0KKiqZmFvSIvqCaxlFlP6LFOBNzqG1ylZID
-iUN7xfW2GBEgZ50CkWI95qr+h/PR2qMXBg2gIqVnh/Gfg/aUkMebXAkDvr88dFA4
-Wj56aLh/dQaIoo5DEIw4bBDhTz6QV8WotO83KXw4IcSWaT20ULVYf2wTFTMY4OKW
-hZC4jSSqN3jsz8NYVkQTuZFkrP5kUpr7QrJOCVruwf3dhjnGKW/ndtd8pHvjbD7e
-G57oz308X/U1y9rNKcGxXVB/ngR1WvXjvavi1qMoZHy1jxAfhJXGV1oV3oeD6YTq
-4rmLWIYwJvfncoFj6ucK+kzRhOa7pEjPqbtdjc73C/kYf1CR08Vn8VZV8lZXD4SR
-/DbRRgb4TFJrmOjRWOvrj/JGILnf9wFQxa9BpBsythkzOkkyQi3I1M/isyZakIYj
-pRXQBmGFMIgHqHiGfZaEDiCEdSxsEPqCot5rCBfRmpvYq95vJzTk/Bj2PY353ecS
-A0woosxgq59l1tMoPOAbs/N2Cbn+WHeG9Cl5AXpJg+mg20GdwN8j6YpvyUHURHTx
-ku3GZP2Vok+4JtWnIQE4Rmy94GP6SaUVYX5AQxGdxB7RoNnqKVZQdvj6rWyC6wlK
-cYmQx9CW1ho7stjdIBPgW+EhQdmGR9frEh9LKnGzG1qiwAyzJCky0q61LtmKcDNN
-HA9rmx/EJO7drZQRyQLMFu3jAQsAN+FDDm94mwyt6Yj02brSz6GEnGdEkizzvxc4
-0YiBS/fDBHYBDB7MkdqmNwYv7K1SJqeUx9h6qwLufi0ATpB0gN6jREn+ACSj7ZHh
-4zA4vuZBc6Dy9f10EJY4UUxuOVAzmgMfvmCMGdztRLrYiL19aG4ZzSA84iNnyqlc
-xWSkxnxDZsy60FupJrHcJOKsWDl9c+6ePD7LrS6MEaJmpjbC1t6TERXxWjQ+x4aN
-jnYiOGJ5xhnRX/UDDssaczHd8DViM2MkmIIF29uSH5Fk1LgnVq88vFhLlfo7URAX
-NvOZmSHNW2x0NX4V3vAkQBZX2uwjsFx4D3UBGRsuK/6bRruJATjaVh+AONFign3I
-KGE8b/S7STho4PCD1MnajgyS5EoJq9GQT+95GD8i50qPn1bKcejEA3n8u/jdzFQH
-LsIEeHNORSepBY0wpPpPrLJt/Xd3NwGonosPw1ZBJnSctmcag7rny4U421g4fxLl
-W3W8BK2l0Wc+VySLEoZKIv4JZw7qdQ==
-=9cQR
------END PGP SIGNATURE-----
-
---2fHTh5uZTiUOsy+g--
+Thanks,
+Taylor
