@@ -2,169 +2,182 @@ Return-Path: <SRS0=MaRY=57=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2DBD0C2BA2B
-	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 03:45:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EFA5DC2BA2B
+	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 04:29:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 26F7320857
-	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 03:45:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B6FF22078B
+	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 04:29:37 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qi7PCJxn"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="sKafc+zy"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389946AbgDODpz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Apr 2020 23:45:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51834 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S2388437AbgDODpy (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 14 Apr 2020 23:45:54 -0400
-Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BEE6C061A0C
-        for <git@vger.kernel.org>; Tue, 14 Apr 2020 20:45:54 -0700 (PDT)
-Received: by mail-pl1-x632.google.com with SMTP id g2so764509plo.3
-        for <git@vger.kernel.org>; Tue, 14 Apr 2020 20:45:54 -0700 (PDT)
+        id S2389158AbgDOE3g (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Apr 2020 00:29:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58510 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726438AbgDOE3e (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Apr 2020 00:29:34 -0400
+Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4E96C061A0C
+        for <git@vger.kernel.org>; Tue, 14 Apr 2020 21:29:33 -0700 (PDT)
+Received: by mail-pg1-x542.google.com with SMTP id i3so947678pgk.1
+        for <git@vger.kernel.org>; Tue, 14 Apr 2020 21:29:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=j+fKs9SpT1RBVFqFA8mXIEzdYzOZUCS2TEFDRp9nq1k=;
-        b=qi7PCJxnscw7odGCyy2056CafV9r2RIzTMFtBBbRrz9Nyq0HqEFK8avw2dwnGsoLbQ
-         F+wuIaF5t7iq/VJ9E7CKaCw7zn9FbqDt5SEQ4FwuV++GGIbwb+wIcwKsrkd1FAlzIGv/
-         gTfq8z80ay6OdVKi/h/VPP0PDtQMj/+G1e7CgS6OKL3HdOoy0wEKCwD5TSI6iDlmhCI8
-         hHZZSMY8Ix4/KECu0VfzDzPBLO+qVL0KmFbST+ZWPN9lTaJeU12yqTnb5N6i3eHqXw6u
-         CY90Y+uqTHop1Qxi4WYII/Clr/4mIfGsN27YGZDT3KzbhmWm2F75I3IvbZ+bQebs03u7
-         HPWg==
+        bh=6jvuVymPpnXURx0vw0AMTqbutc8WcY8rf7IlayjqHYo=;
+        b=sKafc+zyqKIBauvN7HMNgFax8Tu752g9Y4OT68lmkOsfqdjz/ihMrH3/HDHL0m8ZEl
+         3VLXFZTaRPnj1v1AomDIzmOE92hdQgn/7pGMqH1XjZgEJrO2zAlV8yzzu8AchatSWESB
+         Hc2j0SJg7hkweeiObH2RQAACzrpqW7zvDoXgFwNopY1MAtpmsUKh74UTRwimu8mmOGFR
+         zDN3HO0XKSyOgFX1W+pGApl/9naudDBimYl0aSuECh6JfrWTVvDdwjx5KQ8sbhufbGBE
+         T002SJS/l+Gcj2BP+A+z4z7WtcojD4Alillh0ZIZhniJoUuNr/n3TFPddBTaVmEdLxIf
+         jwNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=j+fKs9SpT1RBVFqFA8mXIEzdYzOZUCS2TEFDRp9nq1k=;
-        b=s/uJaP8ks+pCWSLVneSK22/Z+9tc54S0+cQtYfHpUdsK4YkIdUCwUtY2NCjszgO7aS
-         cGUFBM76uaq/emBf0PrLMFW21bpYnewaFoUuzoYOo/kepSott9MDMaXf2XH/J6HTIa3n
-         ATe7CSAKR3sJU+1wHKPEppYKneBVSI3II1EQmLSmuCiOcTxCgV1ukDbx2rGC2Bzc32KG
-         Lq0dfjzy5pXkORal5K03Bsh/HPV8tE+0xXgKMBkiA4wjJgiq8TuSD2/KqlN2t7pRM3Va
-         UHgziq9QJe64DmCxyjqHG2GftoEUzCqHU7GBr5hoeZS3odRQzVVKXQ1llnDbK+TYnxwE
-         +zZA==
-X-Gm-Message-State: AGi0PuZx7ow48jwOaTun8woQKk8kxDNXoNC8H1q9+BLjV30M1ft97VKR
-        gkQSYMCdLaftMg9pi9vuB3X7vj4k
-X-Google-Smtp-Source: APiQypK0ekZtUwZTUfTjysPYu678GMpxRPh5fX6DHJg0PYnkvpquWpq9Gys9GK6K9OBT5sVJUgPGOg==
-X-Received: by 2002:a17:902:ec01:: with SMTP id l1mr3012983pld.151.1586922353332;
-        Tue, 14 Apr 2020 20:45:53 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
-        by smtp.gmail.com with ESMTPSA id x26sm4041543pfo.218.2020.04.14.20.45.52
+        bh=6jvuVymPpnXURx0vw0AMTqbutc8WcY8rf7IlayjqHYo=;
+        b=U7wtD3HD1Q5+3BuLT9v6prpqAOtJzZDOyNcfK/qcJofPvzj6OHRTET81uwinE/joFS
+         vWONkK6FYOS2MeWInldMUsKnGhM2hzFor/e+/UL+ZeUjcB8LSXfcG6nrahNkqjVPGZo5
+         XYmjDSkwAcvGX4TNeMy1sLgk9YvSyEcAd58BE4fGJjcXk7T4vt9fvw7FJ+GDBW49VH+G
+         nSuDgHci2FjKWm67eI2Ge9BAIIDUfDDKyZYYqr1MQsDTEdOw/KEfjlwT4vk76dF7UI63
+         Knz95sYouLYmKFgpV8M040KbARrzFO0seug9ziBSTeMf/Qwfov/FDGW53nGJdxbnz9RT
+         4OlA==
+X-Gm-Message-State: AGi0PuYvGoeD/PiAKtE6kaMubkA3ZFg8f63qJSxyov2AAmHjZ1LZ9Rd9
+        Qq88kXSfMrDUf7n+Zk38iEuGDo4EvtAn85U1
+X-Google-Smtp-Source: APiQypL0IrkzZ8smH7bzn0pLvb0Lv1q6CNDi0rNBtF7j6B1sTlXM5iIZq3ELU09U9m0ZIdSfjGMraw==
+X-Received: by 2002:aa7:8042:: with SMTP id y2mr11902493pfm.94.1586924972679;
+        Tue, 14 Apr 2020 21:29:32 -0700 (PDT)
+Received: from localhost ([8.44.146.30])
+        by smtp.gmail.com with ESMTPSA id q187sm7904435pfb.131.2020.04.14.21.29.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Apr 2020 20:45:52 -0700 (PDT)
-Date:   Tue, 14 Apr 2020 20:45:50 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Emily Shaffer <emilyshaffer@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        James Ramsay <james@jramsay.com.au>, git@vger.kernel.org
-Subject: Re: [TOPIC 2/17] Hooks in the future
-Message-ID: <20200415034550.GB36683@google.com>
-References: <AC2EB721-2979-43FD-922D-C5076A57F24B@jramsay.com.au>
- <0D7F1872-7614-46D6-BB55-6FEAA79F1FE6@jramsay.com.au>
- <20200312141628.GL212281@google.com>
- <xmqqeetwcf4k.fsf@gitster.c.googlers.com>
- <20200407230132.GD137962@google.com>
- <20200407235116.GE137962@google.com>
- <20200410213146.GA2075494@coredump.intra.peff.net>
- <20200413191515.GA5478@google.com>
- <20200413215256.GA18990@coredump.intra.peff.net>
+        Tue, 14 Apr 2020 21:29:31 -0700 (PDT)
+Date:   Tue, 14 Apr 2020 22:29:30 -0600
+From:   Taylor Blau <me@ttaylorr.com>
+To:     git@vger.kernel.org
+Cc:     dstolee@microsoft.com, gitster@pobox.com, martin.agren@gmail.com,
+        peff@peff.net, szeder.dev@gmail.com
+Subject: Re: [PATCH 7/7] commit-graph.c: introduce '--[no-]check-oids'
+Message-ID: <20200415042930.GA11703@syl.local>
+References: <cover.1586836700.git.me@ttaylorr.com>
+ <1ff42f4c3d568dd25889d2808cda3edf38a36cb9.1586836700.git.me@ttaylorr.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20200413215256.GA18990@coredump.intra.peff.net>
+In-Reply-To: <1ff42f4c3d568dd25889d2808cda3edf38a36cb9.1586836700.git.me@ttaylorr.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Whoops. I sent the wrong version of this patch. It should be the below:
 
-Jeff King wrote:
-> On Mon, Apr 13, 2020 at 12:15:15PM -0700, Emily Shaffer wrote:
->> Jeff King wrote:
+--- >8 ---
 
->>> Yeah, giving each block a unique name lets you give them each an order.
->>> It seems kind of weird to me that you'd define multiple hook types for a
->>> given name.
->>
->> Not so odd - git-secrets configures itself for pre-commit,
->> prepare-commit-msg, and commit-msg-hook.
-[...]
-> Yeah, I do see how that use case makes sense. I wonder how common it is
-> versus having separate one-off hooks.
+Subject: [PATCH] shallow.c: use 'reset_repository_shallow' when appropriate
 
-I think separately from the frequency question, we should look at the
-"what model do we want to present to the user" question.
+In bd0b42aed3 (fetch-pack: do not take shallow lock unnecessarily,
+2019-01-10), the author noted that 'is_repository_shallow' produces
+visible side-effect(s) by setting 'is_shallow' and 'shallow_stat'.
 
-It's not too unusual for a project with their source code in a Git
-repository to have conventions they want to nudge users toward.  I'd
-expect them to use a combination of hooks for this:
+This is a problem for e.g., fetching with '--update-shallow' in a
+shallow repsoitory with 'fetch.writeCommitGraph' enabled, since the
+update to '.git/shallow' will cause Git to think that the repository
+*isn't* shallow when it is, thereby circumventing the commit-graph
+compatability check.
 
-	prepare-commit-msg
-	commit-msg
-	pre-push
+This causes problems in shallow repositories with at least shallow refs
+that have at least one ancestor (since the client won't have those
+object(s), and therefore can't take the reachability closure over
+commits to be written to the commit-graph).
 
-Git LFS installs multiple hooks:
+Address this by introducing 'reset_repository_shallow()', and calling it
+when the shallow file is updated, forcing 'is_repository_shallow' to
+re-evaluate whether the repository is still shallow after fetching in
+the above scenario.
 
-	pre-push
-	post-checkout
-	post-commit
-	post-merge
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+ commit.h     |  1 +
+ fetch-pack.c |  1 +
+ shallow.c    | 15 ++++++++-------
+ 3 files changed, 10 insertions(+), 7 deletions(-)
 
-git-secrets installs multiple hooks, as already mentioned.
+diff --git a/commit.h b/commit.h
+index 008a0fa4a0..ee1ba139d4 100644
+--- a/commit.h
++++ b/commit.h
+@@ -251,6 +251,7 @@ int register_shallow(struct repository *r, const struct object_id *oid);
+ int unregister_shallow(const struct object_id *oid);
+ int for_each_commit_graft(each_commit_graft_fn, void *);
+ int is_repository_shallow(struct repository *r);
++void reset_repository_shallow(struct repository *r);
+ struct commit_list *get_shallow_commits(struct object_array *heads,
+ 					int depth, int shallow_flag, int not_shallow_flag);
+ struct commit_list *get_shallow_commits_by_rev_list(
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 1734a573b0..051902ef6d 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -1630,6 +1630,7 @@ static void update_shallow(struct fetch_pack_args *args,
+ 		if (*alternate_shallow_file == '\0') { /* --unshallow */
+ 			unlink_or_warn(git_path_shallow(the_repository));
+ 			rollback_lock_file(&shallow_lock);
++			reset_repository_shallow(the_repository);
+ 		} else
+ 			commit_lock_file(&shallow_lock);
+ 		alternate_shallow_file = NULL;
+diff --git a/shallow.c b/shallow.c
+index 7fd04afed1..fac383dec9 100644
+--- a/shallow.c
++++ b/shallow.c
+@@ -40,13 +40,6 @@ int register_shallow(struct repository *r, const struct object_id *oid)
 
-We've also had some instances over time of one hook replacing another,
-to improve the interface.  A program wanting to install hooks would
-then be likely to migrate from the older interface to the better one.
+ int is_repository_shallow(struct repository *r)
+ {
+-	/*
+-	 * NEEDSWORK: This function updates
+-	 * r->parsed_objects->{is_shallow,shallow_stat} as a side effect but
+-	 * there is no corresponding function to clear them when the shallow
+-	 * file is updated.
+-	 */
+-
+ 	FILE *fp;
+ 	char buf[1024];
+ 	const char *path = r->parsed_objects->alternate_shallow_file;
+@@ -79,6 +72,12 @@ int is_repository_shallow(struct repository *r)
+ 	return r->parsed_objects->is_shallow;
+ }
 
-What I mean to get at is that I think thinking of them in terms of
-individual hooks, the user model assumed by these programs is to think
-of them as plugins hooking into Git.  The individual hooks are events
-that the plugin listens on.  If I am trying to disable a plugin, I
-don't want to have to learn which events it cared about.
++void reset_repository_shallow(struct repository *r)
++{
++	r->parsed_objects->is_shallow = -1;
++	stat_validity_clear(r->parsed_objects->shallow_stat);
++}
++
+ /*
+  * TODO: use "int" elemtype instead of "int *" when/if commit-slab
+  * supports a "valid" flag.
+@@ -362,6 +361,7 @@ void setup_alternate_shallow(struct lock_file *shallow_lock,
+ 		 * shallow file".
+ 		 */
+ 		*alternate_shallow_file = "";
++	reset_repository_shallow(the_repository);
+ 	strbuf_release(&sb);
+ }
 
->                                       And whether setting the order
-> priority for all hooks at once is that useful (e.g., I can easily
-> imagine a case where the pre-commit hook for program A must go before B,
-> but it's the other way around for another hook).
-
-This I agree about.  Actually I'm skeptical about ordering
-dependencies being something that is meaningful for users to work with
-in general, except in the case of closely cooperating hook authors.
-
-That doesn't mean we shouldn't try to futureproof for that, but I
-don't think we need to overfit on it.
-
-[...]
->>> And it doesn't leave a lot of room for defining
->>> per-hook-type options; you have to make new keys like pre-push-order
->>> (though that does work because the hook names are a finite set that
->>> conforms to our config key names).
-
-Exactly: field names like prePushOrder should work okay, even if
-they're a bit noisy.
-
-[...]
->>>   [hook "pre-receive"]
->>>   # put any pre-receive related options here; e.g., a rule for what to
->>>   # do with hook exit codes (e.g., stop running, run all but return exit
->>>   # code, ignore failures, etc)
->>>   fail = stop
->>
->> Interesting - so this is a default for all pre-receive hooks, that I can
->> set at whichever scope I wish.
-
-If I have the mental model of "these are plugins, and particular hooks
-are events they listen to", then it seems hard to make use of this
-broader setting.
-
-But scoped to a particular (plugin, event) pair it sounds very handy.
-
-My two cents,
-Jonathan
+@@ -411,6 +411,7 @@ void prune_shallow(unsigned options)
+ 			die_errno("failed to write to %s",
+ 				  get_lock_file_path(&shallow_lock));
+ 		commit_lock_file(&shallow_lock);
++		reset_repository_shallow(the_repository);
+ 	} else {
+ 		unlink(git_path_shallow(the_repository));
+ 		rollback_lock_file(&shallow_lock);
+--
+2.26.0.106.g9fadedd637
