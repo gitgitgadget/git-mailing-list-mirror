@@ -6,114 +6,119 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D1588C2BA19
-	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 22:29:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AD985C2BA19
+	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 22:42:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B604A206E9
-	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 22:29:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 926AB20732
+	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 22:42:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732103AbgDOW3J (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Apr 2020 18:29:09 -0400
-Received: from cloud.peff.net ([104.130.231.41]:55252 "HELO cloud.peff.net"
+        id S1732648AbgDOWmt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Apr 2020 18:42:49 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55284 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727993AbgDOW3H (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Apr 2020 18:29:07 -0400
-Received: (qmail 14667 invoked by uid 109); 15 Apr 2020 22:29:06 -0000
+        id S1726089AbgDOWmr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Apr 2020 18:42:47 -0400
+Received: (qmail 14735 invoked by uid 109); 15 Apr 2020 22:42:45 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 15 Apr 2020 22:29:06 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 15 Apr 2020 22:42:45 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12312 invoked by uid 111); 15 Apr 2020 22:39:53 -0000
+Received: (qmail 12417 invoked by uid 111); 15 Apr 2020 22:53:32 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 15 Apr 2020 18:39:53 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 15 Apr 2020 18:53:32 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Wed, 15 Apr 2020 18:29:05 -0400
+Date:   Wed, 15 Apr 2020 18:42:44 -0400
 From:   Jeff King <peff@peff.net>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Vasil Dimov via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Vasil Dimov <vd@freebsd.org>
-Subject: Re: [PATCH 1/2] range-diff: fix a crash in parsing git-log output
-Message-ID: <20200415222905.GA3595509@coredump.intra.peff.net>
-References: <pull.760.git.git.1586960921.gitgitgadget@gmail.com>
- <2375e34100e571f9c3ce658d28aba6648fba18a6.1586960921.git.gitgitgadget@gmail.com>
- <xmqqsgh47okk.fsf@gitster.c.googlers.com>
- <20200415162326.GG2464307@coredump.intra.peff.net>
- <20200415220242.GA45241@syl.local>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Emily Shaffer <emilyshaffer@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        James Ramsay <james@jramsay.com.au>, git@vger.kernel.org
+Subject: Re: [TOPIC 2/17] Hooks in the future
+Message-ID: <20200415224244.GB3595509@coredump.intra.peff.net>
+References: <AC2EB721-2979-43FD-922D-C5076A57F24B@jramsay.com.au>
+ <0D7F1872-7614-46D6-BB55-6FEAA79F1FE6@jramsay.com.au>
+ <20200312141628.GL212281@google.com>
+ <xmqqeetwcf4k.fsf@gitster.c.googlers.com>
+ <20200407230132.GD137962@google.com>
+ <20200407235116.GE137962@google.com>
+ <20200410213146.GA2075494@coredump.intra.peff.net>
+ <20200413191515.GA5478@google.com>
+ <20200413215256.GA18990@coredump.intra.peff.net>
+ <20200415034550.GB36683@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20200415220242.GA45241@syl.local>
+In-Reply-To: <20200415034550.GB36683@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 15, 2020 at 04:02:42PM -0600, Taylor Blau wrote:
+On Tue, Apr 14, 2020 at 08:45:50PM -0700, Jonathan Nieder wrote:
 
-> Subject: [PATCH] diff-tree.c: load notes machinery with '--notes'
+> > Yeah, I do see how that use case makes sense. I wonder how common it is
+> > versus having separate one-off hooks.
 > 
-> Since its introduction in 7249e91 (revision.c: support --notes
-> command-line option, 2011-03-29), combining '--notes' with '--pretty'
-> causes 'git diff-tree' to fail a runtime assertion:
+> I think separately from the frequency question, we should look at the
+> "what model do we want to present to the user" question.
+
+I sort of agree. The mental model is important, but we should avoid
+presenting a model that is overly complex to a user who only wants to do
+simple things. So how common that simple thing is impacts the answer to
+your question.
+
+> [...]
+> What I mean to get at is that I think thinking of them in terms of
+> individual hooks, the user model assumed by these programs is to think
+> of them as plugins hooking into Git.  The individual hooks are events
+> that the plugin listens on.  If I am trying to disable a plugin, I
+> don't want to have to learn which events it cared about.
+
+Sure, I agree that's a perfectly reasonable mental model. But for
+somebody who just wants to do a one-off hook, they're now saddled with a
+thing they don't care about: defining a plugin group for their hook.
+
+The examples you gave are all reasonable, but personally I've never used
+anything other than one-off hooks.
+
+On the other hand, I've very rarely used hooks at all myself.
+
+To be clear, I don't _really_ care all that much, and this isn't a hill
+I particularly care to die on. I was mostly just clarifying my earlier
+suggestion. (I _am_ somewhat amazed that the simple concept of "I would
+like to run this shell command instead of $GIT_DIR/hooks/foo" has
+generated so much discussion. So really I am in favor of whatever lets
+me stop thinking about this as soon as possible).
+
+> >                                       And whether setting the order
+> > priority for all hooks at once is that useful (e.g., I can easily
+> > imagine a case where the pre-commit hook for program A must go before B,
+> > but it's the other way around for another hook).
 > 
->   $ git rev-list HEAD | git diff-tree --stdin --pretty=medium --notes
->   commit 8f3d9f354286745c751374f5f1fcafee6b3f3136
->   git: notes.c:1308: format_display_notes: Assertion `display_notes_trees' failed.
->   Aborted
+> This I agree about.  Actually I'm skeptical about ordering
+> dependencies being something that is meaningful for users to work with
+> in general, except in the case of closely cooperating hook authors.
+>
+> That doesn't mean we shouldn't try to futureproof for that, but I
+> don't think we need to overfit on it.
+
+I share that skepticism (and also agree that avoiding painting ourselves
+into a corner is the main thing).
+
+> >>> And it doesn't leave a lot of room for defining
+> >>> per-hook-type options; you have to make new keys like pre-push-order
+> >>> (though that does work because the hook names are a finite set that
+> >>> conforms to our config key names).
 > 
-> This failure is due to diff-tree not calling 'load_display_notes' to
-> initialize the notes machinery.
+> Exactly: field names like prePushOrder should work okay, even if
+> they're a bit noisy.
 
-Yes, I think that's the problem that I saw. And this definitely fixes
-that case, but I think there's another related one.
+A side note:
 
-  $ git notes add -m foo
-  $ git log -1 --format='%h %N'
-  94316974f7 foo
-  $ git rev-list -1 HEAD | git diff-tree --stdin --format='%h %N' -s
-  94316974f7e27dccc6b87f3946bce5d2fc252dc2 %N
-
-This is true even with your patch. With your patch I can add --notes to
-get the right output:
-
-  $ git rev-list -1 HEAD | git diff-tree --stdin --format='%h %N' -s --notes
-  94316974f7e27dccc6b87f3946bce5d2fc252dc2 foo
-
-(It's also slightly curious that %h doesn't abbreviate in diff-tree; I
-guess this is a side effect of the plumbing having no default abbrev
-setting; it may be simplest to just live with it).
-
-> @@ -126,6 +126,8 @@ int cmd_diff_tree(int argc, const char **argv, const char *prefix)
-> 
->  	precompose_argv(argc, argv);
->  	argc = setup_revisions(argc, argv, opt, &s_r_opt);
-> +	if (opt->show_notes)
-> +		load_display_notes(&opt->notes_opt);
-
-In git-log we have the equivalent of these new lines, but just before it
-we check the userformat, too:
-
-          memset(&w, 0, sizeof(w));
-          userformat_find_requirements(NULL, &w);
-  
-          if (!rev->show_notes_given && (!rev->pretty_given || w.notes))
-                  rev->show_notes = 1;
-          if (rev->show_notes)
-                  load_display_notes(&rev->notes_opt);
-
-I think we'd want to do the same here. Even though it's plumbing, I
-can't think of any reason why somebody would _not_ want notes to be
-auto-enabled when they say "%N".
-
-> Ordinarily, this failure isn't triggered, because it requires passing
-> both '--notes' and '--pretty'. Specifically, passing '--pretty' sets
-> 'opt->verbose_header', causing 'show_log()' to eventually call
-> 'format_display_notes()', which expects a non-NULL 'display_note_trees'.
-> Without initializing the notes machinery, 'display_note_trees' remains
-> NULL, and thus triggers an assertion failure. This doesn't occur without
-> '--pretty' since we never call 'format_display_notes()' without it.
-
-It's not just --pretty, of course, but any option that causes us to
-actually try to format notes (--format, --oneline, etc).
+Here you've done a custom munging of pre-push into prePush. I'm fine
+with that, but would we ever want to allow third-party scripts to define
+their own hooks using this mechanism? E.g., if there's a git-hooks
+command could I run "git hooks run foo" to run the foo hook? If so, then
+it might be simpler to just use the name as-is rather than defining the
+exact munging rules.
 
 -Peff
