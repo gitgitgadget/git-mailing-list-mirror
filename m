@@ -2,158 +2,116 @@ Return-Path: <SRS0=MaRY=57=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C19E9C2BA19
-	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 14:29:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9759DC2BA19
+	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 14:51:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9E3262078A
-	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 14:29:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6B0AB2076D
+	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 14:51:28 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ORClhRao"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZEj32eC1"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2394007AbgDOO3C (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Apr 2020 10:29:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38700 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S2393999AbgDOO2q (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 15 Apr 2020 10:28:46 -0400
-Received: from mail-ed1-x542.google.com (mail-ed1-x542.google.com [IPv6:2a00:1450:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C087C061A0E
-        for <git@vger.kernel.org>; Wed, 15 Apr 2020 07:28:46 -0700 (PDT)
-Received: by mail-ed1-x542.google.com with SMTP id c7so5120781edl.2
-        for <git@vger.kernel.org>; Wed, 15 Apr 2020 07:28:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=dG3NkKChRsTApDpikUSdiqFvX3FGhTiGGuLhBA15Ab8=;
-        b=ORClhRaoB0jUcWbiL8LrGV+hQ1iujSCpm/eZZ4JCrmPj4aVl8ELhV2tVJkDFiqv93n
-         PsjKXYfG49TDYyNwSVjDPn4YhGzWslnR+xN8iHbMMh9eVX3F5TlgokuH8Ob8ge9Osjc8
-         TgrK0Dd0rigRcyQ/mkfCKDdF5OBZutjO7YDp7DEqIdUZyKzghPhbeSg9C9DvfR+S4uwO
-         Ce2lcoHO2Z69fM+c3BjEQuAAXGOT4BoGv4yIlnADgqDTfjNHvi6gqLNplGALyXAwkns9
-         QPubqwfBT0BQJVeP2uxIKoITq/dluAW1qSORO3cB5RHM+kDgal04BRiRSdH6NrdNqDFh
-         ykuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=dG3NkKChRsTApDpikUSdiqFvX3FGhTiGGuLhBA15Ab8=;
-        b=UW+YKQFJccJuGHNtYJIS1Mpm9usyYBa+4tK2MaXAT5FXdUAf8DiM/OmrbcnyFqM2jh
-         rtX3fk8LxL5U1+dCZH/1JeAlTAxYwyq/5xE8FNMpZiETIohNgm5cJCzU/NtDEnjX0WvB
-         BuWv3HvfwgXI0WIkQbLeSVoOddIOFKjB4FrfimjHr308u25R+LVdueW0n6o2STOpFJjR
-         AZ91NW6PD2JIKDr2g7LaPZPSCwY4UpzHYsNscvtMZ0W3olS25A8VXqk5ZZLCVzQV3lC1
-         y3SHKLvJkQN2Jq9OvYcoF+DFgLXp62Wpg3sgKCeePOQvyQLecJ6nyJ3EGpdL6jjbXiLj
-         7hTw==
-X-Gm-Message-State: AGi0PuYtjS6GLeB39d+oR7xS1iHvA46XcTtMcvFeOio5pWrCb9y7YaEp
-        ZrQR8njRADn/Hjbno6OTiis58R2p
-X-Google-Smtp-Source: APiQypLhyZIVZrFCKZBMFwdIjTWFDnPTSSj8lDROokCYuEkF+CJk6zTSjWAe/a8GF5J7mmB0n6gH5w==
-X-Received: by 2002:a17:906:af99:: with SMTP id mj25mr5166870ejb.151.1586960924628;
-        Wed, 15 Apr 2020 07:28:44 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v13sm2620117ejb.10.2020.04.15.07.28.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Apr 2020 07:28:44 -0700 (PDT)
-Message-Id: <2375e34100e571f9c3ce658d28aba6648fba18a6.1586960921.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.760.git.git.1586960921.gitgitgadget@gmail.com>
-References: <pull.760.git.git.1586960921.gitgitgadget@gmail.com>
-From:   "Vasil Dimov via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 15 Apr 2020 14:28:40 +0000
-Subject: [PATCH 1/2] range-diff: fix a crash in parsing git-log output
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S371009AbgDOOv1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Apr 2020 10:51:27 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57598 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S370969AbgDOOvW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Apr 2020 10:51:22 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E402A4901B;
+        Wed, 15 Apr 2020 10:51:15 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=yLw4RlNlgPk4zrTYBS+JegXDjxU=; b=ZEj32e
+        C168/6hLNKA793oqQKRCzImMPuwDiDsfa+nrBRVc2SQIAlpowaY9HqTutLNOvFlF
+        oXKuNGhNP10EiFdIMIwp/qtuFwmy+qw8tkyLqF2Kohd4fQhqFvur51Umdw6MkcT7
+        fYsaOxu9Q3Cu6K3xdWm2Ay4vJRT5kV4jUyMXQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=HadCj2fNCaRpnoBOsMCN+TZiRXL/aNuW
+        qTnOwAmjNn5XJ8zyGf4S+aHoCWLX8VugYkWBKCG8+dIZIreCO2BG5J5GQJ92rFaJ
+        Q4vpi2l/qNGmI2MKGheuXgMJWrtGIYXmUvI9YY6iqGfb5OvOOg9+wRS0ggi2OpeW
+        1frSzwZaQyI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id DA54249019;
+        Wed, 15 Apr 2020 10:51:15 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 66E5049017;
+        Wed, 15 Apr 2020 10:51:15 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     Jeff King <peff@peff.net>, phillip.wood@dunelm.org.uk,
+        Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org,
+        James Ramsay <james@jramsay.com.au>
+Subject: Re: [RFC PATCH v2 0/2] configuration-based hook management
+References: <20191210023335.49987-1-emilyshaffer@google.com>
+        <20200414005457.3505-1-emilyshaffer@google.com>
+        <efad3927-1d8f-5545-48e9-9a58c2308273@gmail.com>
+        <20200414203247.GE1879688@coredump.intra.peff.net>
+        <0f661f31-ee75-15fb-0272-48d459176f29@gmail.com>
+Date:   Wed, 15 Apr 2020 07:51:14 -0700
+In-Reply-To: <0f661f31-ee75-15fb-0272-48d459176f29@gmail.com> (Phillip Wood's
+        message of "Wed, 15 Apr 2020 11:01:15 +0100")
+Message-ID: <xmqqd088950d.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Vasil Dimov <vd@freebsd.org>, Vasil Dimov <vd@FreeBSD.org>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 8E7FE064-7F28-11EA-95D8-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Vasil Dimov <vd@FreeBSD.org>
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-`git range-diff` calls `git log` internally and tries to parse its
-output. But `git log` output can be customized by the user in their
-git config and for certain configurations either an error will be
-returned by `git range-diff` or it will crash.
+>> If you want to refer to commands in ordering options (like your
+>> "before"), then you'd have to refer to their names. For "my-command"
+>> that's not too bad. For the longer one, it's a bit awkward. You _could_
+>> do:
+>> 
+>>   hookcmd.my-command.before = git diff --check --cached
+>> 
+>> which is the same number of lines as yours. But I'd probably give it a
+>> name, like:
+>> 
+>>   hookcmd.check-whitespace.command = git diff --check --cached
+>>   hookcmd.my-command.before = check-whitespace
+>> 
+>> That's one more line than yours, but I think it separates the concerns
+>> more clearly. And it extends naturally to more options specific to
+>> check-whitespace.
+>
+> I agree that using a name rather than the command line makes things
+> clearer here
 
-To fix this explicitly set the output format of the internally
-executed `git log` with `--pretty=medium`. Because that cancels
-`--notes`, add explicitly `--notes` at the end.
+True.   
 
-Also, make sure we never crash in the same way - trying to dereference
-`util` which was never created and has remained NULL. It would happen
-if the first line of `git log` output does not begin with 'commit '.
+These ways call for a different attitude to deal with errors
+compared to the approach to order them with numbers, though.  
 
-Alternative considered but discarded - somehow disable all git configs
-and behave as if no config is present in the internally executed
-`git log`, but that does not seem to be possible. GIT_CONFIG_NOSYSTEM
-is the closest to it, but even with that we would still read
-`.git/config`.
+If your approach is to order by number attached to each hook, only
+possible errors you'd need to worry about are (1) what to do when
+the user forgets to give a number to a hook and (2) what to do when
+the user gives the same number by accident to multiple hooks, and
+both can even be made non-errors by declaring that an unnumbered
+hook has a default number, and that two hooks with the same number
+execute in an unspecified and unstable order.
 
-Signed-off-by: Vasil Dimov <vd@FreeBSD.org>
----
- range-diff.c          | 13 +++++++++++++
- t/t3206-range-diff.sh | 10 ++++++++++
- 2 files changed, 23 insertions(+)
+On the other hand, the approach to specify relative ordering among
+hooks can break more easily.  E.g. when a hook that used to be
+before "my-command" got removed.  It is harder to find a "sensible"
+default behaviour for such situations.
 
-diff --git a/range-diff.c b/range-diff.c
-index f745567cf67..5cc920be391 100644
---- a/range-diff.c
-+++ b/range-diff.c
-@@ -63,6 +63,8 @@ static int read_patches(const char *range, struct string_list *list,
- 			"--output-indicator-old=<",
- 			"--output-indicator-context=#",
- 			"--no-abbrev-commit",
-+			"--pretty=medium",
-+			"--notes",
- 			NULL);
- 	if (other_arg)
- 		argv_array_pushv(&cp.args, other_arg->argv);
-@@ -106,6 +108,17 @@ static int read_patches(const char *range, struct string_list *list,
- 			continue;
- 		}
- 
-+		if (!util) {
-+			error(_("could not parse first line of `log` output: "
-+				"did not start with 'commit ': '%s'"),
-+			      line);
-+			string_list_clear(list, 1);
-+			strbuf_release(&buf);
-+			strbuf_release(&contents);
-+			finish_command(&cp);
-+			return -1;
-+		}
-+
- 		if (starts_with(line, "diff --git")) {
- 			struct patch patch = { 0 };
- 			struct strbuf root = STRBUF_INIT;
-diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
-index bd808f87ed5..e024cff65cb 100755
---- a/t/t3206-range-diff.sh
-+++ b/t/t3206-range-diff.sh
-@@ -513,6 +513,16 @@ test_expect_success 'range-diff overrides diff.noprefix internally' '
- 	git -c diff.noprefix=true range-diff HEAD^...
- '
- 
-+test_expect_success 'basic with modified format.pretty with suffix' '
-+	git -c format.pretty="format:commit %H%d%n" range-diff \
-+		master..topic master..unmodified
-+'
-+
-+test_expect_success 'basic with modified format.pretty without "commit "' '
-+	git -c format.pretty="format:%H%n" range-diff \
-+		master..topic master..unmodified
-+'
-+
- test_expect_success 'range-diff compares notes by default' '
- 	git notes add -m "topic note" topic &&
- 	git notes add -m "unmodified note" unmodified &&
--- 
-gitgitgadget
+I am perfectly fine with having more possible error cases than
+allowing misconfigured system to silently do a wrong thing, so...
+
+
 
