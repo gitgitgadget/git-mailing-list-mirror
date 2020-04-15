@@ -2,123 +2,162 @@ Return-Path: <SRS0=MaRY=57=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 93408C2BB85
-	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 08:27:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DBBFFC2BA19
+	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 08:33:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 74BA020775
-	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 08:27:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 887FE20768
+	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 08:33:07 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=atos.net header.i=@atos.net header.b="n7WpOyug"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2894506AbgDOI1X (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Apr 2020 04:27:23 -0400
-Received: from mx2.suse.de ([195.135.220.15]:57608 "EHLO mx2.suse.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2894460AbgDOI1L (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Apr 2020 04:27:11 -0400
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay2.suse.de (unknown [195.135.220.254])
-        by mx2.suse.de (Postfix) with ESMTP id 2A179AC12;
-        Wed, 15 Apr 2020 08:27:07 +0000 (UTC)
-Subject: Re: Fetching 24 Linux commits = 1.2 GiB
-To:     Andreas Schwab <schwab@linux-m68k.org>
-Cc:     git@vger.kernel.org
-References: <b7f5bfb9-61fb-2552-4399-b744428728e4@suse.cz>
- <878sixdv7a.fsf@igel.home> <c35ac17a-fe28-684f-94de-2d2b63b7f4ee@suse.cz>
- <874ktldunk.fsf@igel.home>
-From:   Jiri Slaby <jslaby@suse.cz>
-Autocrypt: addr=jslaby@suse.cz; prefer-encrypt=mutual; keydata=
- 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
-Message-ID: <89363e9d-8739-3061-3d81-806099005e3f@suse.cz>
-Date:   Wed, 15 Apr 2020 10:27:07 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.6.0
-MIME-Version: 1.0
-In-Reply-To: <874ktldunk.fsf@igel.home>
-Content-Type: text/plain; charset=iso-8859-2
+        id S2404850AbgDOIdG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Apr 2020 04:33:06 -0400
+Received: from smtppost.atos.net ([193.56.114.176]:16303 "EHLO
+        smarthost1.atos.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S2404826AbgDOIdD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Apr 2020 04:33:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=atos.net; i=@atos.net; q=dns/txt; s=mail;
+  t=1586939582; x=1618475582;
+  h=from:to:subject:date:message-id:
+   content-transfer-encoding:mime-version;
+  bh=IkrSZH7eNvj4OhaBkmbKweIznq2ZkugGfVrNirF8ras=;
+  b=n7WpOyugL83fVfxUlS/avkKQy3vZN6ayA/xZw6D8d5ol68ZMNPyXE4K9
+   7HgvBzLi5vRch3ECbSpSnqxT9p+mhqK2qxjcHuOmrtRrL7wlKf70BkJgh
+   kVrFL3Kxm/a+gGELglgLuXRF3KffASIKgmrGgvDZFNZYqzw9sO52Xvqcd
+   o=;
+IronPort-SDR: u5cD5bm7g8R/YyPp+cpXIGkKkw83mTP3kDCEpXKm25I96VTLGIKFwuXCaWSEovVjjT14nsnQBX
+ WEUo70/IiCaCUFcfWah3V5ykizOVF12//HnJHUIeqBeM0r7KPbMGC1bIrp/PFJfd60YNPaJdaU
+ DFai45qUOac6PlAB70Bj4Hg1eR3HDht2x7ZsTm4mmSN/u3vrB/XeJQLKayaLVbSabvETBtgC8B
+ n2OXqaQANnGGI3JqF61iOCKqQvHtO+FiVa/tGk2R5bubjZeV4wnDKIP3fzlDsv57L4N3BUcsEM
+ 4Ehowz628ejqotEnlvDIJEuo
+X-IronPort-AV: E=Sophos;i="5.72,386,1580770800"; 
+   d="scan'208";a="30116769"
+X-MGA-submission: =?us-ascii?q?MDEPJ1pGgyprOeHE7Yc+WPTAHohP2ojceAGF2G?=
+ =?us-ascii?q?XRvvvu52eNMaf2ZvCH/9lChzei6yEkuxKytL7Lv8boFHYk7+BHqsJb7Q?=
+ =?us-ascii?q?EEOVxClhK2p80aAVc4A0n5lHT+ulV+EGC+H1j41/q8U8PZXk/sFtnwzp?=
+ =?us-ascii?q?oc?=
+Received: from unknown (HELO DEFTHW99ETYMSX.ww931.my-it-solutions.net) ([10.86.142.53])
+  by smarthost1.atos.net with ESMTP/TLS/ECDHE-RSA-AES256-SHA384; 15 Apr 2020 10:33:00 +0200
+Received: from DEERLM99ETWMSX.ww931.my-it-solutions.net (10.86.142.45) by
+ DEFTHW99ETYMSX.ww931.my-it-solutions.net (10.86.142.53) with Microsoft SMTP
+ Server (TLS) id 14.3.487.0; Wed, 15 Apr 2020 10:31:45 +0200
+Received: from DEERLM99ETQMSX.ww931.my-it-solutions.net (10.86.142.102) by
+ DEERLM99ETWMSX.ww931.my-it-solutions.net (10.86.142.45) with Microsoft SMTP
+ Server (TLS) id 14.3.487.0; Wed, 15 Apr 2020 10:31:39 +0200
+Received: from EUR04-VI1-obe.outbound.protection.outlook.com (10.86.142.137)
+ by hybridsmtp.it-solutions.atos.net (10.86.142.102) with Microsoft SMTP
+ Server (TLS) id 14.3.487.0; Wed, 15 Apr 2020 10:31:36 +0200
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=DBnTv17h9aWbuB/pEJR7Rq4wc16bOzHdVZMeNc7Dbdj9ajY3efK/E8InvGGjGno7Pdw1feaoFk/bToMQUzJSddHiXI/E1JHTAEMXlJbtLb0d9M5Vvl7b1KYwtxlPIOXz8X3hRoMMyD1h+3HDMmFz/ZPsF4nmyC3Py4iMC7/IhKOMMOBd2GeTgUOocRYrPfFDjldeni5RSbb6wXik8q4OiW/XiqX5QnFsuVMc6M1cenhPwyNWbXahVAqx8Y/Sd/6k0MFQ7bp6w/3p3xje4Jd5svr2poPg1gPJnB9t+2qgPBaHYA6Nhd2JeHHevD1BGXHhixWy6ScbFIDdVVLiHZ+83g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=IkrSZH7eNvj4OhaBkmbKweIznq2ZkugGfVrNirF8ras=;
+ b=nxSy1TDpwdw/OoDc0Ve790TfFEaS3HJRaGiPnYxk4eKgnA5S5XDTZkVvuVIJ9Fd14+4/8Ef7WElMVH2yt46VMo/bTXs9/Qfc0713V/PrUeLClRxzzfrUzIExglKKM87/y1eui3ZBLT6faguN3TRV/icqTtpQlOATFcyPKPte8MH0E2F3KJShkfWCmioV/lgYpZLoXB7OL6bupbAS3t+fdWIeKDohBH5jCEDw0RPgRK5Tj7kT7l+pafByxRIrd7RiDHvYCZ4AFs9mnF4/PH7DbcMJP84E3Q+cSexOCIxZSkLh9NLE1dWWPp8B+PfW59vWNAI6SpLdI5H8TEw4DfZkmg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=atos.net; dmarc=pass action=none header.from=atos.net;
+ dkim=pass header.d=atos.net; arc=none
+Received: from AM0PR02MB3715.eurprd02.prod.outlook.com (2603:10a6:208:42::13)
+ by AM0PR02MB5444.eurprd02.prod.outlook.com (2603:10a6:208:15c::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2900.15; Wed, 15 Apr
+ 2020 08:31:35 +0000
+Received: from AM0PR02MB3715.eurprd02.prod.outlook.com
+ ([fe80::b4c8:6064:534d:3eb8]) by AM0PR02MB3715.eurprd02.prod.outlook.com
+ ([fe80::b4c8:6064:534d:3eb8%4]) with mapi id 15.20.2900.028; Wed, 15 Apr 2020
+ 08:31:35 +0000
+From:   "Kerry, Richard" <richard.kerry@atos.net>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Move some files, with all history, from one project into a new one
+Thread-Topic: Move some files, with all history, from one project into a new
+ one
+Thread-Index: AdYS/5siN6K1VEonQ5i65mManIbGnQ==
+Date:   Wed, 15 Apr 2020 08:31:35 +0000
+Message-ID: <AM0PR02MB3715F9566BD9FEFAF832F0749CDB0@AM0PR02MB3715.eurprd02.prod.outlook.com>
+Accept-Language: en-GB, en-US
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: MSIP_Label_112e00b9-34e2-4b26-a577-af1fd0f9f7ee_Enabled=True;
+ MSIP_Label_112e00b9-34e2-4b26-a577-af1fd0f9f7ee_SiteId=33440fc6-b7c7-412c-bb73-0e70b0198d5a;
+ MSIP_Label_112e00b9-34e2-4b26-a577-af1fd0f9f7ee_Owner=richard.kerry@atos.net;
+ MSIP_Label_112e00b9-34e2-4b26-a577-af1fd0f9f7ee_SetDate=2020-04-15T08:31:35.2582334Z;
+ MSIP_Label_112e00b9-34e2-4b26-a577-af1fd0f9f7ee_Name=Atos For Internal Use;
+ MSIP_Label_112e00b9-34e2-4b26-a577-af1fd0f9f7ee_Application=Microsoft Azure
+ Information Protection;
+ MSIP_Label_112e00b9-34e2-4b26-a577-af1fd0f9f7ee_ActionId=35cae97e-01f5-4b66-a8f7-5ef71561b427;
+ MSIP_Label_112e00b9-34e2-4b26-a577-af1fd0f9f7ee_Extended_MSFT_Method=Automatic;
+ MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_Enabled=True;
+ MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_SiteId=33440fc6-b7c7-412c-bb73-0e70b0198d5a;
+ MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_Owner=richard.kerry@atos.net;
+ MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_SetDate=2020-04-15T08:31:35.2582334Z;
+ MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_Name=Atos For Internal Use -
+ All Employees;
+ MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_Application=Microsoft Azure
+ Information Protection;
+ MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_ActionId=35cae97e-01f5-4b66-a8f7-5ef71561b427;
+ MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_Parent=112e00b9-34e2-4b26-a577-af1fd0f9f7ee;
+ MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_Extended_MSFT_Method=Automatic
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=richard.kerry@atos.net; 
+x-originating-ip: [212.56.108.147]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 5e2b8243-a3a2-454a-a712-08d7e117690c
+x-ms-traffictypediagnostic: AM0PR02MB5444:
+x-microsoft-antispam-prvs: <AM0PR02MB544416804A78389FBC5558A39CDB0@AM0PR02MB5444.eurprd02.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:10000;
+x-forefront-prvs: 0374433C81
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM0PR02MB3715.eurprd02.prod.outlook.com;PTR:;CAT:NONE;SFTY:;SFS:(10019020)(4636009)(39860400002)(396003)(366004)(346002)(376002)(136003)(66476007)(66556008)(55016002)(64756008)(9686003)(8676002)(26005)(81156014)(478600001)(6916009)(66946007)(8936002)(86362001)(66446008)(52536014)(186003)(71200400001)(7696005)(6506007)(33656002)(5660300002)(2906002)(316002)(76116006);DIR:OUT;SFP:1102;
+received-spf: None (protection.outlook.com: atos.net does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: 3j4Y945/TtPj4C8lOIpHZM2OhfVxJW8X5FYeCbIsjfRXfH9DdMIpa75o+Oe3TR9twHzN3dMuLm5cnlWBTgWF5JXozlDnAc+nM5OlCxh16itYJVhsByfglgBTEzFpnFrLtZqE6gEsHpaZof4mhlIS0vQ/j1kVH003wP273a636o1DkBmZGXcfldB6UgXTwVE6viJvKfbJ9AWzlBk0N/m1IfpVEKO80wHrjvsx3rNCvgfCPWEhB3Ffn0zyy3f0VCZ3Ih9p5Z5Z+QF11YxpJQttK04xJBMzfs5rc+IJiJQKHnCtXHeufrhMsdcfAWnM8WEMipx+rm8gPR6Fx5M4NW/5MAwUcN4UxO7u3PK0+yeBTIxPWABDXFSyfiW6+5+UnfXbnTHncUIf3gPh4lcB5JvEsuh3rB53w9bcXqf8AOSu8omOHfdvRcFwCWhnYJ/m7Pkn
+x-ms-exchange-antispam-messagedata: wqFQPAcFd6OR4sDB4SnccU60PcDuujg5Bn3yFyffxz03g8Y23ylwKbPqFBLnLMG66bbB3a8BovqjZRNSv3xmraTIHWWvN/xuRzU8rCiMyy0OCXocTE4WknZPgEqgfuo2xUnQAY5Jvw4TA4pXSZwgAg==
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5e2b8243-a3a2-454a-a712-08d7e117690c
+X-MS-Exchange-CrossTenant-originalarrivaltime: 15 Apr 2020 08:31:35.8898
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 33440fc6-b7c7-412c-bb73-0e70b0198d5a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 7Sk3R3DfApRQ1P0tjjjhOmNUFu7wm6kzQDfaGxSczXuJnDWzS37u1bQESd5Zga8ItINfNZgxYNuE3tzaVrn9XA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM0PR02MB5444
+X-OriginatorOrg: atos.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 15. 04. 20, 10:23, Andreas Schwab wrote:
-> On Apr 15 2020, Jiri Slaby wrote:
-> 
->> On 15. 04. 20, 10:11, Andreas Schwab wrote:
->>> On Apr 15 2020, Jiri Slaby wrote:
->>>
->>>> I was at 8f3d9f354286 of:
->>>> git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
->>>>
->>>> I did git remote update today and it fetched:
->>>> Receiving objects: 100% (7330823/7330823), 1.20 GiB
->>>> It updated master: 8f3d9f354286..8632e9b5645b, that is 24 small commits.
->>>
->>> What's your git version?  I just did exactly the same update with git
->>> 2.26.1, and it only fetched 144 objects:
->>>
->>> Receiving objects: 100% (144/144), 50.50 KiB | 1.87 MiB/s, done.
->>
->> $ git --version
->> git version 2.26.1
-> 
-> Was this the first time you used git >= 2.26.0?
+I would like to move some files, from the project in which they have always=
+ resided into  a new project.  I would like to keep all their history.
+I don't want to waste space by also moving the rest of the old project's hi=
+story, or historical file contents.
 
-I doubt that:
-$ grep git-core /var/log/zypp/history|sed 's@x86_64.*@@'
-2020-03-23 16:14:24|install|git-core|2.25.2-467.2|
-2020-03-24 17:19:37|install|git-core|2.26.0-468.1|
-2020-03-29 09:38:34|install|git-core|2.26.0-471.1|
-2020-04-06 06:34:36|install|git-core|2.26.0-473.1|
-2020-04-15 08:21:37|install|git-core|2.26.1-474.1|
+We have a long-standing project, main-system.  A group of files within it a=
+re designated as demo-system (sometimes whole folders, sometimes files with=
+in folders with other files).
+All development is done on the master branch.
+It has now transpired that the demo-system files are necessary, but no long=
+er want to be within main-system but in a new project of their own.  So I w=
+ould like to move them from the main-system repo into a new repo of their o=
+wn.  I do want all their history but I don't want to take any contents from=
+ other files from main-system, which is quite big.
+Please can someone advise if there is a particular method I should best use=
+ for this.
+Do I create a new branch, then delete the rest of main-system leaving only =
+what I want?  Surely if I do that then I would end up with all the main-sys=
+tem file data within the new repo, which would expand its size.
+Is there a recommended way to extract certain files with their histories?
 
-This is the first time I used 2.26.1, though.
+Regards,
+Richard.
 
-thanks,
--- 
-js
-suse labs
