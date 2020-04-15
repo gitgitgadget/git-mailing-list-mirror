@@ -2,1094 +2,173 @@ Return-Path: <SRS0=MaRY=57=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C9B72C2BA19
-	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 23:02:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F0E36C2BA19
+	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 23:30:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6BC8420768
-	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 23:02:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 91B922076A
+	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 23:30:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="M3nOGNxS"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="V8gbiZjl"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387631AbgDOXCH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Apr 2020 19:02:07 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60458 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387759AbgDOXCA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Apr 2020 19:02:00 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 00B094CC9D;
-        Wed, 15 Apr 2020 19:01:54 -0400 (EDT)
+        id S2389444AbgDOXaD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Apr 2020 19:30:03 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:50399 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389251AbgDOX3n (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Apr 2020 19:29:43 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 373FAC7956;
+        Wed, 15 Apr 2020 19:29:38 -0400 (EDT)
         (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-        :subject:date:message-id:mime-version:content-type; s=sasl; bh=c
-        JjM9klKFTA2uh30gldBV7LtTQI=; b=M3nOGNxSIQPdVUlEBBDSIfFVpuKrSkrWO
-        L45xJDikludZVf9oE0TUvHlEr6TDB2hesYVo/A+8epfAFSDk0dK97Ny7ZaDyYJnY
-        L6DfRxnHl49bbDtSVgyPfrB/LjFTmRsIU2NjcjljycOq4A+YxZbveXwD4yNWfGuG
-        wgzGqIbqoo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-        :date:message-id:mime-version:content-type; q=dns; s=sasl; b=bei
-        +2JF++U58dAxJR3O77hfLmzb67QjCGZZ19jcX/oT/Vh3g5QOPo8LiGd9RKtXS5Ny
-        2OobgxuKAL4+ddzJ5ZZW3QydgSRXkytoOViT9rCHRt9HkwE0H0/9BGToYSXjMTZ1
-        pJKke228S08NHmTRe3l1sZvg88XZfyzDxFJEGiA4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id EB5864CC9C;
-        Wed, 15 Apr 2020 19:01:53 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=yzYkqGfqRtLUrx6QAs77Mp0FbEo=; b=V8gbiZ
+        jl4TfRgDYU3Kz2YeYk5cZYy4zpZzVcHZlWS407u1B12t4GhP8IGaXN0fSjmmiswo
+        elTK31O8pMK5s2tgdfoXh/ehcehKnh9yMB6g1NFx4UtCqYk7D4BP5E+780Z7OOHp
+        5T+ovECDc04kJ6SKtK329z5pG9oxSqbeFRJBQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Y7OhAcaj+IZ9e4yq4/OZZGEpktFNC7ZT
+        SNNS/nsinzC4qDt3oT2leHlrhK65xDUBrpLyRPZCDDVBLb7tWCx9dttCMR+77EbP
+        TmyMHz0DvZi/eTkpbb9VhCdQZggzjc4PYLJPZlmT7sQ5AeFCyPbQqBeaC9EU9F0f
+        KU/wunLAWmE=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1C445C7955;
+        Wed, 15 Apr 2020 19:29:38 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 65E074CC9B;
-        Wed, 15 Apr 2020 19:01:53 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 63D8CC7952;
+        Wed, 15 Apr 2020 19:29:35 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Subject: What's cooking in git.git (Apr 2020, #01; Wed, 15)
-X-master-at: efe3874640e2e58209ddbb3b072f48f6b7094f34
-X-next-at: 55bc3eb7cb9c200ab95bbd2415bc0a35fbf29053
-Date:   Wed, 15 Apr 2020 16:01:52 -0700
-Message-ID: <xmqqr1wo4alb.fsf@gitster.c.googlers.com>
+To:     "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>
+Subject: Re: [PATCH v8 0/9] Reftable support git-core
+References: <pull.539.v7.git.1582706986.gitgitgadget@gmail.com>
+        <pull.539.v8.git.1585740538.gitgitgadget@gmail.com>
+Date:   Wed, 15 Apr 2020 16:29:33 -0700
+In-Reply-To: <pull.539.v8.git.1585740538.gitgitgadget@gmail.com> (Han-Wen
+        Nienhuys via GitGitGadget's message of "Wed, 01 Apr 2020 11:28:49
+        +0000")
+Message-ID: <xmqqmu7c49b6.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 18E9931E-7F6D-11EA-81D8-C28CBED8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: F7890D2C-7F70-11EA-A0F5-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Here are the topics that have been cooking.  Commits prefixed with
-'-' are only in 'pu' (proposed updates) while commits prefixed with
-'+' are in 'next'.  The ones marked with '.' do not appear in any of
-the integration branches, but I am still holding onto them.
-
-Now the security fix is behind us, let's start merging things down
-to the 'next' branch.  One topic that has been in the "held" state
-in 'next' has been reverted, and its replacement started cooking in
-'pu'.  Some topics are marked to be merged to 'next' in this report
-but have not been actually merged; a bit of knudging (or objection)
-to decide their fate is greatly appreciated, as usual.
-
-You can find the changes described here in the integration branches
-of the repositories listed at
-
-    http://git-blame.blogspot.com/p/git-public-repositories.html
-
---------------------------------------------------
-[New Topics]
-
-* jk/use-quick-lookup-in-clone-for-tag-following (2020-04-01) 1 commit
-  (merged to 'next' on 2020-04-15 at 11d6110e99)
- + clone: use "quick" lookup while following tags
-
- The logic to auto-follow tags by "git clone --single-branch" was
- not careful to avoid lazy-fetching unnecessary tags, which has been
- corrected.
-
- Will merge to 'master'.
-
-
-* ds/commit-graph-expiry-fix (2020-04-01) 1 commit
- - commit-graph: fix buggy --expire-time option
-
- "git commit-graph write --expire-time=<timestamp>" did not use the
- given timestamp correctly, which has been corrected.
-
- Will merge to 'next'.
-
-
-* ds/t5319-touch-fix (2020-04-01) 1 commit
- - t5319: replace 'touch -m' with 'test-tool chmtime'
-
- Tests update to use "test-chmtime" instead of "touch -t".
-
- Will merge to 'next'.
-
-
-* en/sequencer-reflog-action (2020-04-07) 1 commit
-  (merged to 'next' on 2020-04-15 at 6c635bdaa1)
- + sequencer: honor GIT_REFLOG_ACTION
-
- "git rebase -i" did not leave the reflog entries correctly.
-
- Will merge to 'master'.
-
-
-* dd/no-gpg-sign (2020-04-03) 6 commits
-  (merged to 'next' on 2020-04-15 at 3a326e99af)
- + Documentation: document merge option --no-gpg-sign
- + Documentation: merge commit-tree --[no-]gpg-sign
- + Documentation: reword commit --no-gpg-sign
- + Documentation: document am --no-gpg-sign
- + cherry-pick/revert: honour --no-gpg-sign in all case
- + rebase.c: honour --no-gpg-sign
-
- "git rebase" learned the "--no-gpg-sign" option to countermand
- commit.gpgSign the user may have.
-
- Will merge to 'master'.
-
-
-* en/rebase-doc-hooks-called-by-accident (2020-04-05) 1 commit
- - git-rebase.txt: add another hook to the hooks section, and explain more
-
- "git rebase" happens to call some hooks meant for "checkout" and
- "commit" by this was not a designed behaviour than historical
- accident.  This has been documented.
-
- Will merge to 'next'.
-
-
-* jk/fast-import-use-hashmap (2020-04-06) 1 commit
- - fast-import: replace custom hash with hashmap.c
-
- The custom hash function used by "git fast-import" has been
- replaced with the one from hashmap.c, which gave us a nice
- performance boost.
-
- Will merge to 'next'.
-
-
-* js/t0007-typofix (2020-04-05) 1 commit
-  (merged to 'next' on 2020-04-15 at ac9f86e08f)
- + t0007: fix a typo
-
- Typofix in a test script.
-
- Will merge to 'master'.
-
-
-* jt/avoid-prefetch-when-able-in-diff (2020-04-07) 4 commits
- - diff: restrict when prefetching occurs
- - diff: refactor object read
- - diff: make diff_populate_filespec_options struct
- - promisor-remote: accept 0 as oid_nr in function
-
- "git diff" in a partial clone learned to avoid lazy loading blob
- objects in more casese when they are not needed.
-
- Will merge to 'next'.
-
-
-* lx/submodule-clear-variables (2020-04-02) 1 commit
- - git-submodule.sh: setup uninitialized variables
-
- The "git submodule" command did not initialize a few variables it
- internally uses and was affected by variable settings leaked from
- the environment.
-
- Will merge to 'next'.
-
-
-* pb/pull-fetch-doc (2020-04-05) 2 commits
-  (merged to 'next' on 2020-04-15 at cf530f230f)
- + pull doc: correct outdated description of an example
- + pull doc: refer to a specific section in 'fetch' doc
-
- The more aggressive updates to remote-tracking branches we had for
- the past 7 years or so were not reflected in the documentation,
- which has been corrected.
-
- Will merge to 'master'.
-
-
-* dd/ci-swap-azure-pipelines-with-github-actions (2020-04-10) 14 commits
- - ci: let GitHub Actions upload failed tests' directories
- - ci: add a problem matcher for GitHub Actions
- - tests: when run in Bash, annotate test failures with file name/line number
- - ci: retire the Azure Pipelines definition
- - README: add a build badge for the GitHub Actions runs
- - ci: configure GitHub Actions for CI/PR
- - ci: run gem with sudo to install asciidoctor
- - ci: explicit install all required packages
- - ci: fix the `jobname` of the `GETTEXT_POISON` job
- - ci/lib: set TERM environment variable if not exist
- - ci/lib: allow running in GitHub Actions
- - ci/lib: if CI type is unknown, show the environment variables
- - Merge branch 'dd/ci-musl-libc' into HEAD
- - Merge branch 'dd/test-with-busybox' into HEAD
- (this branch uses dd/ci-musl-libc and dd/test-with-busybox.)
-
- Update the CI configuration to use GitHub Actions, retiring the one
- based on Azure Pipelines.
-
- Will merge to 'next'.
-
-
-* eb/format-patch-no-encode-headers (2020-04-07) 1 commit
-  (merged to 'next' on 2020-04-15 at 368840cd6c)
- + format-patch: teach --no-encode-email-headers
-
- The output from "git format-patch" uses RFC 2047 encoding for
- non-ASCII letters on From: and Subject: headers, so that it can
- directly be fed to e-mail programs.  A new option has been added
- to produce these headers in raw.
-
- Will merge to 'master'.
-
-
-* js/mingw-fixes (2020-04-10) 3 commits
-  (merged to 'next' on 2020-04-15 at 11a3d39d2b)
- + mingw: help debugging by optionally executing bash with strace
- + mingw: do not treat `COM0` as a reserved file name
- + mingw: use modern strftime implementation if possible
-
- Misc fixes for Windows.
-
- Will merge to 'master'.
-
-
-* js/stash-p-fix (2020-04-08) 2 commits
- - stash -p: (partially) fix bug concerning split hunks
- - t3904: fix incorrect demonstration of a bug
-
- Allowing the user to split a patch hunk while "git stash -p" does
- not work well; a band-aid has been added to make this (partially)
- work better.
-
- Will merge to 'next'.
-
-
-* js/subtree-doc-update-to-asciidoctor-2 (2020-04-08) 1 commit
- - subtree: fix build with AsciiDoctor 2
-
- Doc markup update.
-
- Will merge to 'next'.
-
-
-* pw/rebase-i-more-options (2020-04-07) 7 commits
- - SQUASH??? - avoid test numbering crashes
- - t3433: improve coverage
- - Revert "sequencer: allow callers of read_author_script() to ignore fields"
- - rebase -i: fix --committer-date-is-author-date
- - t3433: only compare commit dates
- - t3433: remove loops from tests
- - Revert "Revert "Merge branch 'ra/rebase-i-more-options'""
-
- "git rebase -i" learns a bit more options.
-
- Expecting a reroll.
- cf. <43d06bc0-b2ee-0ae6-f22c-9850e4033d45@gmail.com>
-
-
-* bc/constant-memequal (2020-04-09) 1 commit
- - builtin/receive-pack: use constant-time comparison for HMAC value
-
- Validation of push certificate has been made more robust against
- timing attacks.
-
- Will merge to 'next'.
-
-
-* ds/revision-show-pulls (2020-04-10) 1 commit
-  (merged to 'next' on 2020-04-15 at 89b4d86a3a)
- + revision: --show-pulls adds helpful merges
-
- "git log" learned "--show-pulls" that helps pathspec limited
- history views; a merge commit that takes the whole change from a
- side branch, which is normally omitted from the output, is shown
- in addition to the commits that introduce real changes.
-
- Will merge to 'master'.
-
-
-* en/rebase-no-keep-empty (2020-04-11) 3 commits
-  (merged to 'next' on 2020-04-15 at 9908cee7c0)
- + rebase: fix an incompatible-options error message
- + rebase: reinstate --no-keep-empty
- + rebase -i: mark commits that begin empty in todo editor
- (this branch is used by jt/rebase-allow-duplicate.)
-
- "git rebase" (again) learns to honor "--no-keep-empty", which lets
- the user to discard commits that are empty from the beginning (as
- opposed to the ones that become empty because of rebasing).  The
- interactive rebase also marks commits that are empty in the todo.
-
- Will merge to 'master'.
-
-
-* jc/missing-ref-store-fix (2020-04-09) 2 commits
-  (merged to 'next' on 2020-04-15 at 83caf48c7a)
- + repository: mark the "refs" pointer as private
- + sha1-name: do not assume that the ref store is initialized
-
- We've left the command line parsing of "git log :/a/b/" broken for
- about a full year without anybody noticing, which has been
- corrected.
-
- Will merge to 'master'.
-
-
-* jk/config-use-size-t (2020-04-10) 6 commits
- - config: reject parsing of files over INT_MAX
- - config: use size_t to store parsed variable baselen
- - git_config_parse_key(): return baselen as size_t
- - config: drop useless length variable in write_pair()
- - parse_config_key(): return subsection len as size_t
- - remote: drop auto-strlen behavior of make_branch() and make_rewrite()
-
- The config API made mixed uses of int and size_t types to represent
- length of various pieces of text it parsed, which has been updated
- to use the correct type (i.e. size_t) throughout.
-
- Will merge to 'next'.
-
-
-* js/flush-prompt-before-interative-input (2020-04-10) 2 commits
-  (merged to 'next' on 2020-04-15 at 051407eb3a)
- + interactive: explicitly `fflush` stdout before expecting input
- + interactive: refactor code asking the user for interactive input
-
- The interactive input from various codepaths are consolidated and
- any prompt possibly issued earlier are fflush()ed before we read.
-
- Will merge to 'master'.
-
-
-* js/mingw-is-hidden-test-fix (2020-04-11) 3 commits
-  (merged to 'next' on 2020-04-15 at 1e11f552f7)
- + t: restrict `is_hidden` to be called only on Windows
- + mingw: make test_path_is_hidden more robust
- + t: consolidate the `is_hidden` functions
-
- A Windows-specific test element has been made more robust against
- misuse from both user's environment and programmer's errors.
-
- Will merge to 'master'.
-
-
-* js/mingw-isilon-nfs (2020-04-10) 1 commit
-  (merged to 'next' on 2020-04-15 at 4bac536980)
- + mingw: cope with the Isilon network file system
-
- Will merge to 'master'.
-
-
-* ma/config-doc-fix (2020-04-09) 1 commit
-  (merged to 'next' on 2020-04-15 at 256175ec38)
- + config.txt: move closing "----" to cover entire listing
-
- Doc update.
-
- Will merge to 'master'.
-
-
-* ma/simplify-merge-config-parsing (2020-04-11) 1 commit
-  (merged to 'next' on 2020-04-15 at d2915301e4)
- + merge: use skip_prefix to parse config key
-
- Code simplification.
-
- Will merge to 'master'.
-
-
-* ds/blame-on-bloom (2020-04-13) 4 commits
- - blame: use changed-path Bloom filters
- - commit-graph: write commit-graph in more tests
- - commit: write commit-graph with Bloom filters
- - revision: complicated pathspecs disable filters
- (this branch uses gs/commit-graph-path-filter.)
-
- "git blame" learns to take advantage of the "changed-paths" Bloom
- filter stored in the commit-graph file.
-
-
-* dd/iso-8601-updates (2020-04-15) 2 commits
- - date.c: allow compact version of ISO-8601 datetime
- - date.c: skip fractional second part of ISO-8601
-
- The approxidate parser learns to parse seconds with fraction.
-
- Will merge to 'next'.
-
-
-* ds/log-exclude-decoration-config (2020-04-15) 2 commits
- - SQUASH???
- - log: add log.excludeDecoration config option
-
- The "--decorate-refs" and "--decorate-refs-exclude" options "git
- log" takes have learned a companion configuration variable
- log.excludeDecoration that sits at the lowest priority in the
- family.
-
- Getting there.
-
-
-* jk/credential-parsing-end-of-host-in-URL (2020-04-15) 1 commit
-  (merged to 'next' on 2020-04-15 at 55bc3eb7cb)
- + credential: treat "?" and "#" in URLs as end of host
-
- Parsing of URL for the credential helper has been corrected.
-
- Will merge to 'master'.
-
-
-* lr/freshen-file-fix (2020-04-15) 1 commit
- - freshen_file(): use NULL `times' for implicit current-time
-
- The code that refreshes the last access and modified time of
- on-disk packfiles and loose object files have been updated.
-
- Will merge to 'next'.
-
-
-* tb/commit-graph-split-strategy (2020-04-15) 7 commits
- - commit-graph.c: introduce '--[no-]check-oids'
- - commit-graph.h: replace 'commit_hex' with 'commits'
- - oidset: introduce 'oidset_size'
- - builtin/commit-graph.c: introduce split strategy 'replace'
- - builtin/commit-graph.c: introduce split strategy 'no-merge'
- - builtin/commit-graph.c: support for '--split[=<strategy>]'
- - t/helper/test-read-graph.c: support commit-graph chains
-
- "git commit-graph write" learned different ways to write out split
- files.
-
---------------------------------------------------
-[Stalled]
-
-* mk/use-size-t-in-zlib (2018-10-15) 1 commit
- - zlib.c: use size_t for size
-
- The wrapper to call into zlib followed our long tradition to use
- "unsigned long" for sizes of regions in memory, which have been
- updated to use "size_t".
-
---------------------------------------------------
-[Cooking]
-
-* gs/commit-graph-path-filter (2020-04-09) 16 commits
- - bloom: ignore renames when computing changed paths
- - commit-graph: add GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS test flag
- - t4216: add end to end tests for git log with Bloom filters
- - revision.c: add trace2 stats around Bloom filter usage
- - revision.c: use Bloom filters to speed up path based revision walks
- - commit-graph: add --changed-paths option to write subcommand
- - commit-graph: reuse existing Bloom filters during write
- - commit-graph: write Bloom filters to commit graph file
- - commit-graph: examine commits by generation number
- - commit-graph: examine changed-path objects in pack order
- - commit-graph: compute Bloom filters for changed paths
- - diff: halt tree-diff early after max_changes
- - bloom.c: core Bloom filter implementation for changed paths.
- - bloom.c: introduce core Bloom filter constructs
- - bloom.c: add the murmur3 hash implementation
- - commit-graph: define and use MAX_NUM_CHUNKS
- (this branch is used by ds/blame-on-bloom.)
-
- Introduce an extension to the commit-graph to make it efficient to
- check for the paths that were modified at each commit using Bloom
- filters.
-
- Getting there.
-
-
-* ag/rebase-merge-allow-ff-under-abbrev-command (2020-03-30) 2 commits
-  (merged to 'next' on 2020-04-15 at b4679f7c7c)
- + t3432: test `--merge' with `rebase.abbreviateCommands = true', too
- + sequencer: don't abbreviate a command if it doesn't have a short form
-
- "git rebase" with the merge backend did not work well when the
- rebase.abbreviateCommands configuration was set.
-
- Will merge to 'master'.
-
-
-* jk/oid-array-cleanups (2020-03-30) 7 commits
-  (merged to 'next' on 2020-04-15 at d6155cd023)
- + oidset: stop referring to sha1-array
- + ref-filter: stop referring to "sha1 array"
- + bisect: stop referring to sha1_array
- + test-tool: rename sha1-array to oid-array
- + oid_array: rename source file from sha1-array
- + oid_array: use size_t for iteration
- + oid_array: use size_t for count and allocation
-
- Code cleanup.
-
- Will merge to 'master'.
-
-
-* jx/proc-receive-hook (2020-04-15) 8 commits
- - SQUASH???
- - doc: add documentation for the proc-receive hook
- - receive-pack: new config receive.procReceiveRefs
- - refs.c: refactor to reuse ref_is_hidden()
- - send-pack: extension for client-side status report
- - receive-pack: add new proc-receive hook
- - connect: export parse_feature_value()
- - transport: not report a non-head push as a branch
-
- "git receive-pack" that accepts requests by "git push" learned to
- outsource most of the ref updates to the new "proc-receive" hook.
-
-
-* dr/midx-avoid-int-underflow (2020-03-28) 1 commit
-  (merged to 'next' on 2020-04-15 at eb2343a5eb)
- + midx.c: fix an integer underflow
-
- When fed a midx that records no objects, some codepaths tried to
- loop from 0 through (num_objects-1), which, due to integer
- arithmetic wrapping around, made it nonsense operation with out of
- bounds array accesses.  The code has been corrected to reject such
- an midx file.
-
- Will merge to 'master'.
-
-
-* ak/run-command-on-cygwin-fix (2020-03-27) 1 commit
-  (merged to 'next' on 2020-04-15 at 9e98b82a7f)
- + run-command: trigger PATH lookup properly on Cygwin
-
- Utitiles run via the run_command() API were not spawned correctly
- on Cygwin, when the paths to them are given as a full path with
- backslashes.
-
- Will merge to 'master'.
-
-
-* dd/ci-musl-libc (2020-04-06) 6 commits
- - travis: build and test on Linux with musl libc and busybox
- - ci/linux32: libify install-dependencies step
- - ci: refactor docker runner script
- - ci/linux32: parameterise command to switch arch
- - ci/lib-docker: preserve required environment variables
- - ci: make MAKEFLAGS available inside the Docker container in the Linux32 job
- (this branch is used by dd/ci-swap-azure-pipelines-with-github-actions.)
-
- A new CI job to build and run test suite on linux with musl libc
- has been added.
-
- Will merge to 'next'.
-
-
-* dr/doc-recurse-submodules (2020-04-06) 5 commits
- - doc: --recurse-submodules mostly applies to active submodules
- - doc: be more precise on (fetch|push).recurseSubmodules
- - doc: explain how to deactivate submodule.recurse completely
- - doc: document --recurse-submodules for reset and restore
- - doc: list all commands affected by submodule.recurse
-
- Documentation updates around the "--recurse-submodules" option.
-
- Will merge to 'next'.
-
-
-* dr/push-remoteref-fix (2020-04-06) 2 commits
-  (merged to 'next' on 2020-04-15 at ecf60dc488)
- + remote.c: fix handling of %(push:remoteref)
- + remote.c: fix %(push) for triangular workflows
-
- The "%(push:remoteref)" placeholder in the "--format=" argument of
- "git format-patch" (and friends) only showed what got explicitly
- configured, not what ref at the receiving end would be updated when
- "git push" was used, as it ignored the default behaviour (e.g. update
- the same ref as the source).
-
- Will merge to 'master'.
-
-
-* jc/doc-test-leaving-early (2020-03-29) 1 commit
- - t/README: suggest how to leave test early with failure
-
- Document the recommended way to abort a failing test early (e.g. by
- exiting a loop), which is to say "return 1".
-
- Will merge to 'next'.
-
-
-* jk/build-with-right-curl (2020-04-05) 3 commits
- - Makefile: avoid running curl-config unnecessarily
- - Makefile: use curl-config --cflags
- - Makefile: avoid running curl-config multiple times
-
- The build procedure did not use the libcurl library and its include
- files correctly for a custom-built installation.
-
- On hold.
- cf. <20200404145829.GB679473@coredump.intra.peff.net>
-
-
-* jk/harden-protocol-v2-delim-handling (2020-03-29) 3 commits
-  (merged to 'next' on 2020-04-15 at c983535405)
- + test-lib-functions: simplify packetize() stdin code
- + upload-pack: handle unexpected delim packets
- + test-lib-functions: make packetize() more efficient
-
- The server-end of the v2 protocol to serve "git clone" and "git
- fetch" was not prepared to see a delim packets at unexpected
- places, which led to a crash.
-
- Will merge to 'master'.
-
-
-* jk/p5310-drop-non-bitmap-timing (2020-03-27) 1 commit
-  (merged to 'next' on 2020-04-15 at 7aac76cab2)
- + p5310: stop timing non-bitmap pack-to-disk
-
- Perf-test update.
-
- Will merge to 'master'.
-
-
-* jk/test-cleanup (2020-03-27) 2 commits
-  (merged to 'next' on 2020-04-15 at bce8b2d5ed)
- + t/lib-*.sh: drop executable bit
- + t/lib-credential.sh: drop shebang line
-
- Test cleanup.
-
- Will merge to 'master'.
-
-
-* ps/transactional-update-ref-stdin (2020-04-02) 9 commits
- - update-ref: implement interactive transaction handling
- - update-ref: read commands in a line-wise fashion
- - update-ref: move transaction handling into `update_refs_stdin()`
- - update-ref: pass end pointer instead of strbuf
- - update-ref: drop unused argument for `parse_refname`
- - update-ref: organize commands in an array
- - strbuf: provide function to append whole lines
- - git-update-ref.txt: add missing word
- - refs: fix segfault when aborting empty transaction
-
- "git update-ref --stdin" learned a handful of new verbs to let the
- user control ref update transactions more explicitly, which helps
- as an ingredient to implement two-phase commit-style atomic
- ref-updates across multiple repositories.
-
- Will merge to 'next'.
-
-
-* ag/sequencer-i18n-messages (2020-03-28) 1 commit
-  (merged to 'next' on 2020-04-15 at d6b38d12cf)
- + sequencer: mark messages for translation
-
- Message fix.
-
- Will merge to 'master'.
-
-
-* dl/wrapper-fix-indentation (2020-03-28) 1 commit
-  (merged to 'next' on 2020-04-15 at e6b9c16b1b)
- + wrapper: indent with tabs
-
- Coding style fix.
-
- Will merge to 'master'.
-
-
-* en/pull-do-not-rebase-after-fast-forwarding (2020-03-27) 1 commit
-  (merged to 'next' on 2020-04-15 at 3aa725ff45)
- + pull: avoid running both merge and rebase
-
- "git pull --rebase" tried to run a rebase even after noticing that
- the pull results in a fast-forward and no rebase is needed nor
- sensible, for the past few years due to a mistake nobody noticed.
-
- Will merge to 'master'.
-
-
-* jc/allow-strlen-substitution-in-shell-scripts (2020-03-29) 1 commit
-  (merged to 'next' on 2020-04-15 at 262424efdc)
- + CodingGuidelines: allow ${#posix} == strlen($posix)
-
- Coding guideline update.
-
- Will merge to 'master'.
-
-
-* jm/gitweb-fastcgi-utf8 (2020-03-29) 1 commit
-  (merged to 'next' on 2020-04-15 at adb7f2373a)
- + gitweb: fix UTF-8 encoding when using CGI::Fast
-
- Gitweb update.
-
- Will merge to 'master'.
-
-
-* js/walk-doc-optim (2020-03-30) 1 commit
-  (merged to 'next' on 2020-04-15 at ca36c04a23)
- + MyFirstObjectWalk: remove unnecessary conditional statement
-
- Code cleanup.
-
- Will merge to 'master'.
-
-
-* jx/atomic-push (2020-03-29) 4 commits
- - transport-helper: new method reject_atomic_push()
- - transport-helper: mark failure for atomic push
- - send-pack: mark failure of atomic push properly
- - t5543: never report what we do not push
-
- "git push --atomic" used to show failures for refs that weren't
- even pushed, which has been corrected.
-
- Will merge to 'next'.
-
-
-* ma/doc-discard-docbook-xsl-1.73 (2020-03-31) 7 commits
- - user-manual.conf: don't specify [listingblock]
- - INSTALL: drop support for docbook-xsl before 1.74
- - manpage-normal.xsl: fold in manpage-base.xsl
- - manpage-bold-literal.xsl: stop using git.docbook.backslash
- - Doc: drop support for docbook-xsl before 1.73.0
- - Doc: drop support for docbook-xsl before 1.72.0
- - Doc: drop support for docbook-xsl before 1.71.1
-
- Raise the minimum required version of docbook-xsl package to 1.74,
- as 1.74.0 was from late 2008, which is more than 10 years old, and
- drop compatibility cruft from our documentation suite.
-
- Will merge to 'next'.
-
-
-* pb/rebase-doc-typofix (2020-03-28) 1 commit
-  (merged to 'next' on 2020-04-15 at 8cd8422990)
- + git-rebase.txt: fix typo
-
- Typofix.
-
- Will merge to 'master'.
-
-
-* rs/pull-options-sync-code-and-doc (2020-03-28) 2 commits
-  (merged to 'next' on 2020-04-15 at d743f43034)
- + pull: pass documented fetch options on
- + pull: remove --update-head-ok from documentation
-
- "git pull" shares many options with underlying "git fetch", but
- some of them were not documented and some of those that would make
- sense to pass down were not passed down.
-
- Will merge to 'master'.
-
-
-* en/fill-directory-exponential (2020-04-01) 12 commits
- - completion: fix 'git add' on paths under an untracked directory
- - Fix error-prone fill_directory() API; make it only return matches
- - dir: replace double pathspec matching with single in treat_directory()
- - dir: include DIR_KEEP_UNTRACKED_CONTENTS handling in treat_directory()
- - dir: replace exponential algorithm with a linear one
- - dir: refactor treat_directory to clarify control flow
- - dir: fix confusion based on variable tense
- - dir: fix broken comment
- - dir: consolidate treat_path() and treat_one_path()
- - dir: fix simple typo in comment
- - t3000: add more testcases testing a variety of ls-files issues
- - t7063: more thorough status checking
-
- The directory traversal code had redundant recursive calls which
- made its performance characteristics exponential with respect to
- the depth of the tree, which was corrected.
-
- Is this ready for 'next'?
-
-
-* dd/test-with-busybox (2020-03-26) 8 commits
-  (merged to 'next' on 2020-04-15 at 8177191066)
- + t5703: feed raw data into test-tool unpack-sideband
- + t4124: tweak test so that non-compliant diff(1) can also be used
- + t7063: drop non-POSIX argument "-ls" from find(1)
- + t5616: use rev-parse instead to get HEAD's object_id
- + t5003: skip conversion test if unzip -a is unavailable
- + t5003: drop the subshell in test_lazy_prereq
- + test-lib-functions: test_cmp: eval $GIT_TEST_CMP
- + t4061: use POSIX compliant regex(7)
- (this branch is used by dd/ci-swap-azure-pipelines-with-github-actions.)
-
- Various tests have been updated to work around issues found with
- shell utilities that come with busybox etc.
-
- Will merge to 'master'.
-
-
-* dl/libify-a-few (2020-03-24) 2 commits
- - Lib-ify prune-packed
- - Lib-ify fmt-merge-msg
-
- Code in builtin/*, i.e. those can only be called from within
- built-in subcommands, that implements bulk of a couple of
- subcommands have been moved to libgit.a so that they could be used
- by others.
-
- Will merge to 'next'.
-
-
-* dl/test-must-fail-fixes-3 (2020-03-27) 8 commits
-  (merged to 'next' on 2020-04-15 at dd0130c158)
- + t5801: teach compare_refs() to accept !
- + t5612: stop losing return codes of git commands
- + t5612: don't use `test_must_fail test_cmp`
- + t5607: reorder `nongit test_must_fail`
- + t5550: simplify no matching line check
- + t5512: stop losing return codes of git commands
- + t5512: stop losing git exit code in here-docs
- + t5512: don't use `test_must_fail test_cmp`
-
- Test clean-up continues.
-
- Will merge to 'master'.
-
-
-* en/sparse-checkout (2020-03-27) 18 commits
-  (merged to 'next' on 2020-04-15 at 3e295e445d)
- + sparse-checkout: provide a new reapply subcommand
- + unpack-trees: failure to set SKIP_WORKTREE bits always just a warning
- + unpack-trees: provide warnings on sparse updates for unmerged paths too
- + unpack-trees: make sparse path messages sound like warnings
- + unpack-trees: split display_error_msgs() into two
- + unpack-trees: rename ERROR_* fields meant for warnings to WARNING_*
- + unpack-trees: move ERROR_WOULD_LOSE_SUBMODULE earlier
- + sparse-checkout: use improved unpack_trees porcelain messages
- + sparse-checkout: use new update_sparsity() function
- + unpack-trees: add a new update_sparsity() function
- + unpack-trees: pull sparse-checkout pattern reading into a new function
- + unpack-trees: do not mark a dirty path with SKIP_WORKTREE
- + unpack-trees: allow check_updates() to work on a different index
- + t1091: make some tests a little more defensive against failures
- + unpack-trees: simplify pattern_list freeing
- + unpack-trees: simplify verify_absent_sparse()
- + unpack-trees: remove unused error type
- + unpack-trees: fix minor typo in comment
-
- "sparse-checkout" UI improvements.
-
- Will merge to 'master'.
-
-
-* js/import-tars-do-not-make-phony-files-from-pax-headers (2020-03-24) 1 commit
-  (merged to 'next' on 2020-04-15 at 408afae2c9)
- + import-tars: ignore the global PAX header
-
- The import-tars importer (in contrib/fast-import/) used to create
- phony files at the top-level of the repository when the archive
- contains global PAX headers, which made its own logic to detect and
- omit the common leading directory ineffective, which has been
- corrected.
-
- Will merge to 'master'.
-
-
-* js/test-junit-finalization-fix (2020-03-23) 1 commit
-  (merged to 'next' on 2020-04-15 at 0d6a975146)
- + tests(junit-xml): avoid invalid XML
-
- Test fix.
-
- Will merge to 'master'.
-
-
-* js/tests-gpg-integration-on-windows (2020-03-26) 5 commits
-  (merged to 'next' on 2020-04-15 at 48a13eb0b2)
- + tests: increase the verbosity of the GPG-related prereqs
- + tests: turn GPG, GPGSM and RFC1991 into lazy prereqs
- + tests: do not let lazy prereqs inside `test_expect_*` turn off tracing
- + t/lib-gpg.sh: stop pretending to be a stand-alone script
- + tests(gpg): allow the gpg-agent to start on Windows
-
- Enable tests that require GnuPG on Windows.
-
- Will merge to 'master'.
-
-
-* dl/merge-autostash (2020-04-10) 22 commits
- - pull: pass --autostash to merge
- - t5520: make test_pull_autostash() accept expect_parent_num
- - merge: teach --autostash option
- - sequencer: implement apply_autostash_oid()
- - sequencer: implement save_autostash()
- - sequencer: unlink autostash in apply_autostash()
- - sequencer: extract perform_autostash() from rebase
- - rebase: generify create_autostash()
- - rebase: extract create_autostash()
- - reset: extract reset_head() from rebase
- - rebase: generify reset_head()
- - rebase: use apply_autostash() from sequencer.c
- - sequencer: rename stash_sha1 to stash_oid
- - sequencer: make apply_autostash() accept a path
- - rebase: use read_oneliner()
- - sequencer: make read_oneliner() extern
- - sequencer: configurably warn on non-existent files
- - sequencer: make read_oneliner() accept flags
- - sequencer: make file exists check more efficient
- - sequencer: stop leaking buf
- - t7600: use test_write_lines()
- - Makefile: ASCII-sort += lists
-
- "git merge" learns the "--autostash" option.
-
- Will merge to 'next'.
-
-
-* js/trace2-env-vars (2020-03-23) 1 commit
-  (merged to 'next' on 2020-04-15 at 1aad0adfa0)
- + trace2: teach Git to log environment variables
-
- Trace2 enhancement to allow logging of the environment variables.
-
- Will merge to 'master'.
-
-
-* ar/test-style-fixes (2020-03-22) 2 commits
-  (merged to 'next' on 2020-04-15 at 50ed75bccf)
- + t: fix whitespace around &&
- + t9500: remove spaces after redirect operators
-
- Style fixes.
-
- Will merge to 'master'.
-
-
-* ds/doc-clone-filter (2020-03-22) 1 commit
-  (merged to 'next' on 2020-04-15 at 16276689b3)
- + clone: document --filter options
-
- Doc update.
-
- Will merge to 'master'.
-
-
-* jk/t3419-drop-expensive-tests (2020-03-22) 1 commit
-  (merged to 'next' on 2020-04-15 at a17ac8f996)
- + t3419: drop EXPENSIVE tests
-
- Test update.
-
- Will merge to 'master'.
-
-
-* jt/connectivity-check-optim-in-partial-clone (2020-03-29) 1 commit
-  (merged to 'next' on 2020-04-15 at 1b3692b7fb)
- + connected: always use partial clone optimization
-
- Simplify the commit ancestry connectedness check in a partial clone
- repository in which "promised" objects are assumed to be obtainable
- lazily on-demand from promisor remote repositories.
-
- Will merge to 'master'.
-
-
-* mt/test-lib-bundled-short-options (2020-03-25) 1 commit
-  (merged to 'next' on 2020-04-15 at 7fa0c56d91)
- + test-lib: allow short options to be bundled
-
- Minor test usability improvement.
-
- Will merge to 'master'.
-
-
-* bk/p4-pre-edit-changelist (2020-02-14) 7 commits
-  (merged to 'next' on 2020-04-15 at 3e7cecd445)
- + git-p4: add RCS keyword status message
- + git-p4: add p4 submit hooks
- + git-p4: restructure code in submit
- + git-p4: add --no-verify option
- + git-p4: add p4-pre-submit exit text
- + git-p4: create new function run_git_hook
- + git-p4: rewrite prompt to be Windows compatible
-
- "git p4" learned four new hooks and also "--no-verify" option to
- bypass them (and the existing "p4-pre-submit" hook).
-
- Will merge to 'master'.
-
-
-* jt/rebase-allow-duplicate (2020-04-11) 1 commit
-  (merged to 'next' on 2020-04-15 at 56a9d83adf)
- + rebase --merge: optionally skip upstreamed commits
- (this branch uses en/rebase-no-keep-empty.)
-
- Allow "git rebase" to reapply all local commits, even if the may be
- already in the upstream, without checking first.
-
- Will merge to 'master'.
-
-
-* bc/faq (2020-03-30) 1 commit
-  (merged to 'next' on 2020-04-15 at 2d4c46ca7a)
- + docs: add a FAQ
-
- Doc update.
-
- Will merge to 'master'.
-
-
-* jc/log-no-mailmap (2020-03-16) 3 commits
- - log: give --[no-]use-mailmap a more sensible synonym --[no-]mailmap
- - clone: reorder --recursive/--recurse-submodules
- - parse-options: teach "git cmd -h" to show alias as alias
-
- "git log" learns "--[no-]mailmap" as a synonym to "--[no-]use-mailmap"
-
- Will merge to 'next'.
-
-
-* hn/reftable (2020-04-09) 11 commits
- - SQUASH??? - whitespace errors
- - SQUASH??? - do not forget to clean reftable library
- - Reftable support for git-core
- - Add reftable library
- - reftable: clarify how empty tables should be written
- - reftable: define version 2 of the spec to accomodate SHA256
- - reftable: file format documentation
- - Add .gitattributes for the reftable/ directory
- - refs: document how ref_iterator_advance_fn should handle symrefs
- - create .git/refs in files-backend.c
- - refs.h: clarify reflog iteration order
-
- A new refs backend "reftable" to replace the traditional
- combination of packed-refs files and one-file-per-ref loose refs
- has been implemented and integrated for improved performance and
- atomicity.
-
- At v8.
- cf. <pull.539.v8.git.1585740538.gitgitgadget@gmail.com>
-
-
-* es/bugreport (2020-04-06) 5 commits
- - bugreport: add compiler info
- - bugreport: add uname info
- - bugreport: gather git version and build info
- - bugreport: add tool to generate debugging info
- - help: move list_config_help to builtin/help
-
- The "bugreport" tool.
-
- Will merge to 'next'.
-
---------------------------------------------------
-[Discarded]
-
-* jc/rebase-backend-keep-old-default (2020-03-10) 1 commit
- . rebase: do not switch the default to 'merge' just yet
-
- The "merge" backend of "git rebase" still has a few bugs and
- unexpected behaviour that need to be ironed out before it becomes
- the default.  Let's switch the default back to the "apply" backend
- for now.
-
-
-* vn/reset-deleted-ita (2019-07-26) 1 commit
- . reset: unstage empty deleted ita files
-
- "git reset HEAD [<pathspec>]" did not reset an empty file that was
- added with the intent-to-add bit.
-
-
-* tb/commit-graph-split-merge (2020-03-24) 3 commits
-  (merged to 'next' on 2020-03-31 at 2183baf09c)
- + builtin/commit-graph.c: support '--input=graphed'
- + builtin/commit-graph.c: introduce '--input=<source>'
- + builtin/commit-graph.c: support '--split[=<strategy>]'
-
- The code to write out the commit-graph has been taught a few
- options to control if the resulting graph chains should be merged
- or a single new incremental graph is created.
-
- Discarded---tb/commit-graph-split-strategy supersedes this.
+"Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com> writes:
+
+> This adds the reftable library, and hooks it up as a ref backend.
+
+Since I queued the topic to 'pu', I needed to apply these fix-up
+patches on top.  The change to the Makefile is about "make clean"
+which forgot to clean the reftable library.  All the rest are ws
+clean-ups.
+
+There are build breakages reported on Windows, with possible fixes
+(which IIRC were reported to segfault X-<), but I do not have URL or
+message-IDs handy.
+
+Thanks.
+
+
+ Makefile            | 2 +-
+ builtin/clone.c     | 2 +-
+ builtin/init-db.c   | 4 ++--
+ cache.h             | 2 +-
+ reftable/reftable.h | 8 ++++----
+ 5 files changed, 9 insertions(+), 9 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 9c1a7f0b81..3d5a585d8f 100644
+--- a/Makefile
++++ b/Makefile
+@@ -3126,7 +3126,7 @@ cocciclean:
+ clean: profile-clean coverage-clean cocciclean
+ 	$(RM) *.res
+ 	$(RM) $(OBJECTS)
+-	$(RM) $(LIB_FILE) $(XDIFF_LIB) $(VCSSVN_LIB)
++	$(RM) $(LIB_FILE) $(XDIFF_LIB) $(VCSSVN_LIB) $(REFTABLE_LIB)
+ 	$(RM) $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) git$X
+ 	$(RM) $(TEST_PROGRAMS)
+ 	$(RM) $(FUZZ_PROGRAMS)
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 3bead96e44..54b1441b95 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -1110,7 +1110,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	}
+ 
+ 	init_db(git_dir, real_git_dir, option_template,
+-                GIT_HASH_UNKNOWN,
++		GIT_HASH_UNKNOWN,
+ 		DEFAULT_REF_STORAGE, /* XXX */
+ 		INIT_DB_QUIET);
+ 
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index 888b421338..70645a1848 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -394,7 +394,7 @@ static void validate_hash_algorithm(struct repository_format *repo_fmt, int hash
+ 
+ int init_db(const char *git_dir, const char *real_git_dir,
+ 	    const char *template_dir, int hash, const char *ref_storage_format,
+-            unsigned int flags)
++	    unsigned int flags)
+ {
+ 	int reinit;
+ 	int exist_ok = flags & INIT_DB_EXIST_OK;
+@@ -433,7 +433,7 @@ int init_db(const char *git_dir, const char *real_git_dir,
+ 	 * is an attempt to reinitialize new repository with an old tool.
+ 	 */
+ 	check_repository_format(&repo_fmt);
+-        repo_fmt.ref_storage = xstrdup(ref_storage_format);
++	repo_fmt.ref_storage = xstrdup(ref_storage_format);
+ 
+ 	validate_hash_algorithm(&repo_fmt, hash);
+ 
+diff --git a/cache.h b/cache.h
+index 83c4908ba0..89e257b7a5 100644
+--- a/cache.h
++++ b/cache.h
+@@ -628,7 +628,7 @@ int path_inside_repo(const char *prefix, const char *path);
+ 
+ int init_db(const char *git_dir, const char *real_git_dir,
+ 	    const char *template_dir, int hash_algo,
+-            const char *ref_storage_format,
++	    const char *ref_storage_format,
+ 	    unsigned int flags);
+ void initialize_repository_version(int hash_algo, const char *ref_storage_format);
+ 
+diff --git a/reftable/reftable.h b/reftable/reftable.h
+index 48722428b5..3086884be4 100644
+--- a/reftable/reftable.h
++++ b/reftable/reftable.h
+@@ -446,13 +446,13 @@ struct reftable_addition;
+ /*
+   returns a new transaction to add reftables to the given stack. As a side
+   effect, the ref database is locked.
+-*/ 
++*/
+ int reftable_stack_new_addition(struct reftable_addition **dest, struct reftable_stack *st);
+ 
+-/* Adds a reftable to transaction. */ 
++/* Adds a reftable to transaction. */
+ int reftable_addition_add(struct reftable_addition *add,
+-                          int (*write_table)(struct reftable_writer *wr, void *arg),
+-                          void *arg);
++			  int (*write_table)(struct reftable_writer *wr, void *arg),
++			  void *arg);
+ 
+ /* Commits the transaction, releasing the lock. */
+ int reftable_addition_commit(struct reftable_addition *add);
