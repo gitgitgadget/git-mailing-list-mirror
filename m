@@ -2,194 +2,117 @@ Return-Path: <SRS0=MaRY=57=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A30F3C2BA19
-	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 20:59:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CFC97C2BA19
+	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 21:26:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7B8A92078A
-	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 20:59:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 831912076C
+	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 21:26:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="MpU+ooyg"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="vw38BgzQ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2438645AbgDOU7t (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Apr 2020 16:59:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43160 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S2438334AbgDOU7r (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 15 Apr 2020 16:59:47 -0400
-Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D18E7C061A0C
-        for <git@vger.kernel.org>; Wed, 15 Apr 2020 13:59:46 -0700 (PDT)
-Received: by mail-pg1-x52e.google.com with SMTP id t11so533436pgg.2
-        for <git@vger.kernel.org>; Wed, 15 Apr 2020 13:59:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=7+8uOh54WqkIBhOYX7IVh6v1XW/u0OIO2YMLYoLlo/A=;
-        b=MpU+ooygw6SVUVw8qufiW+l6aOg45YiSEdH7+AgYoA7E9hJcQGKdGZ6ytVCUDL4HWC
-         ywHHwAcZEMvFqWKQy0DFUJgK6Oj4D9MpkyAhzu+5zNU9/KjdqRs/rk7owFOqAVbUM1kk
-         +pm63mcN4pE6lp0aWSQVZ80F0E627ZerDS4rtaJ6zhLZlbEqOQX6YmLVebJjWGRfay3l
-         2t1AFs5tarPoHnz9it2j+jBd8yUXFwu+2z682Depz1dB7EIKNOKBrNuo6bR7C0m/CEqr
-         kVLu1QFc4yx85QpQg5qs2s26alRQ4cynQlpPcyE7ZFX8hyRiH5U6fCuT7EqvUpPpqAEt
-         SR9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=7+8uOh54WqkIBhOYX7IVh6v1XW/u0OIO2YMLYoLlo/A=;
-        b=jQkXZTBct26U8yvD1mKgzLEPlk458cAbCgz2Ck+dmZ/yNmJ1/iGkvs0Y+z1Y8OzQ+v
-         8RPy2/A20HmDWbMH3ZDcLjNLqwdwFygdtWtD9BnnAUQdhTEnOVPPcpRhM2Ta6TDaRQlg
-         A1d3uRHAfwVN3y+hjMwTfpwti5AoltilICrMs2bHTi02/Lez8bDUeoW6mX9OYfzeRqnW
-         lyROddKiRMXGoeDqjM7+PE5TRbAXbxdIheagAxuaNuRbc9LiDAqxsNGzxbu0XC2ZrWqY
-         8/pMw1Dd6vCZD1P/htW+67WA9ELW2Og2JdEBFk1CJmxSDNDpYneWRqQQW/rqVnSkyr4F
-         nghQ==
-X-Gm-Message-State: AGi0PubNdBf5eevauceC8uBAfH9C8KdJ3tGIdtTxSXhkVfYnZe+CQkN/
-        XQQSZhvmy7yIRL11C8UY4WKVWw==
-X-Google-Smtp-Source: APiQypI9mUgiDdD0/lwL+W7ajef+s7596hXBXLYy2mMLmdhd21nO7t4wctud3rZOavAOB9jVj8iXlg==
-X-Received: by 2002:a62:6c1:: with SMTP id 184mr29480077pfg.316.1586984385890;
-        Wed, 15 Apr 2020 13:59:45 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
-        by smtp.gmail.com with ESMTPSA id y126sm9048879pgy.91.2020.04.15.13.59.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Apr 2020 13:59:45 -0700 (PDT)
-Date:   Wed, 15 Apr 2020 13:59:41 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        James Ramsay <james@jramsay.com.au>, git@vger.kernel.org
-Subject: Re: [TOPIC 2/17] Hooks in the future
-Message-ID: <20200415205941.GB24777@google.com>
-References: <AC2EB721-2979-43FD-922D-C5076A57F24B@jramsay.com.au>
- <0D7F1872-7614-46D6-BB55-6FEAA79F1FE6@jramsay.com.au>
- <20200312141628.GL212281@google.com>
- <xmqqeetwcf4k.fsf@gitster.c.googlers.com>
- <20200407230132.GD137962@google.com>
- <20200407235116.GE137962@google.com>
- <20200410213146.GA2075494@coredump.intra.peff.net>
- <20200413191515.GA5478@google.com>
- <20200413215256.GA18990@coredump.intra.peff.net>
- <20200415034550.GB36683@google.com>
+        id S2439074AbgDOV0B (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Apr 2020 17:26:01 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:53156 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2439052AbgDOVZ4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Apr 2020 17:25:56 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6DEF5C6C9D;
+        Wed, 15 Apr 2020 17:25:53 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=s8JQXCb6o78WLo9PWlTQoseU8cI=; b=vw38Bg
+        zQSuSeLQ86UgMcF8YUVwAVpszeOJS7lQUHnJGGuPjCOCuWhduUFbRXjNwur5FQnI
+        ggsUJMvBLCNwlnx44Vn5KonrWSVAgsxZKm4ad9V6txYMkDrAx+N1c36mI6D3ioBd
+        WxRkLWjiCbzxvMG/2x5lrSKeBp0THjims8apA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=xa4smQ2Vt4YLw8AvG1BAvyEvlcCFEfCA
+        pslWHM/x2k1cYGovMksN5Ts2WbTXRSIKZc//DU9DtK3BzjvOSmHwgE24zSRB9wwV
+        2h9lfjEyQ8b4gPjPG7tGivbnrIjRpTWG10TiraTppKyH6GLhfQH2/CJsSlzukWQG
+        0Lm2zZIK5Zc=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6549DC6C9C;
+        Wed, 15 Apr 2020 17:25:53 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 28B60C6C9B;
+        Wed, 15 Apr 2020 17:25:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, me@ttaylorr.com, jnareb@gmail.com,
+        garimasigit@gmail.com, Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 1/3] revision: complicated pathspecs disable filters
+References: <pull.609.git.1586566981.gitgitgadget@gmail.com>
+        <9cc31c289aa785f026eec84452ed68e80505d95e.1586566981.git.gitgitgadget@gmail.com>
+        <xmqqeesthfbf.fsf@gitster.c.googlers.com>
+        <44ce43e2-6cf0-0e48-18eb-f02543d81bf4@gmail.com>
+        <xmqqmu7d9b6j.fsf@gitster.c.googlers.com>
+        <f57c7908-55ae-deae-e9ea-1909549e628c@gmail.com>
+        <99e0ae2c-6b65-24e4-3d2b-1dff619a5daa@gmail.com>
+Date:   Wed, 15 Apr 2020 14:25:48 -0700
+In-Reply-To: <99e0ae2c-6b65-24e4-3d2b-1dff619a5daa@gmail.com> (Derrick
+        Stolee's message of "Wed, 15 Apr 2020 14:37:40 -0400")
+Message-ID: <xmqq8siw5tlv.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200415034550.GB36683@google.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: ADBEA7F8-7F5F-11EA-AB8C-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 14, 2020 at 08:45:50PM -0700, Jonathan Nieder wrote:
-> 
-> Hi,
-> 
-> Jeff King wrote:
-> > On Mon, Apr 13, 2020 at 12:15:15PM -0700, Emily Shaffer wrote:
-> >> Jeff King wrote:
-> 
-> >>> Yeah, giving each block a unique name lets you give them each an order.
-> >>> It seems kind of weird to me that you'd define multiple hook types for a
-> >>> given name.
-> >>
-> >> Not so odd - git-secrets configures itself for pre-commit,
-> >> prepare-commit-msg, and commit-msg-hook.
-> [...]
-> > Yeah, I do see how that use case makes sense. I wonder how common it is
-> > versus having separate one-off hooks.
-> 
-> I think separately from the frequency question, we should look at the
-> "what model do we want to present to the user" question.
-> 
-> It's not too unusual for a project with their source code in a Git
-> repository to have conventions they want to nudge users toward.  I'd
-> expect them to use a combination of hooks for this:
-> 
-> 	prepare-commit-msg
-> 	commit-msg
-> 	pre-push
-> 
-> Git LFS installs multiple hooks:
-> 
-> 	pre-push
-> 	post-checkout
-> 	post-commit
-> 	post-merge
-> 
-> git-secrets installs multiple hooks, as already mentioned.
-> 
-> We've also had some instances over time of one hook replacing another,
-> to improve the interface.  A program wanting to install hooks would
-> then be likely to migrate from the older interface to the better one.
+Derrick Stolee <stolee@gmail.com> writes:
 
-I find this argument particularly compelling :)
+> THIS IS A BREAKING CHANGE. Commit-graph files with changed-path
+> Bloom filters computed by a previous commit will not be compatible
+> with the filters computed in this commit, nor will we get correct
+> results when testing across these incompatible versions. Normally,
+> this would be a completely unacceptable change, but the filters
+> have not been released and hence are still possible to update
+> before release.
 
-> 
-> What I mean to get at is that I think thinking of them in terms of
-> individual hooks, the user model assumed by these programs is to think
-> of them as plugins hooking into Git.  The individual hooks are events
-> that the plugin listens on.  If I am trying to disable a plugin, I
-> don't want to have to learn which events it cared about.
-> 
-> >                                       And whether setting the order
-> > priority for all hooks at once is that useful (e.g., I can easily
-> > imagine a case where the pre-commit hook for program A must go before B,
-> > but it's the other way around for another hook).
-> 
-> This I agree about.  Actually I'm skeptical about ordering
-> dependencies being something that is meaningful for users to work with
-> in general, except in the case of closely cooperating hook authors.
-> 
-> That doesn't mean we shouldn't try to futureproof for that, but I
-> don't think we need to overfit on it.
-> 
-> [...]
-> >>> And it doesn't leave a lot of room for defining
-> >>> per-hook-type options; you have to make new keys like pre-push-order
-> >>> (though that does work because the hook names are a finite set that
-> >>> conforms to our config key names).
-> 
-> Exactly: field names like prePushOrder should work okay, even if
-> they're a bit noisy.
-> 
-> [...]
-> >>>   [hook "pre-receive"]
-> >>>   # put any pre-receive related options here; e.g., a rule for what to
-> >>>   # do with hook exit codes (e.g., stop running, run all but return exit
-> >>>   # code, ignore failures, etc)
-> >>>   fail = stop
-> >>
-> >> Interesting - so this is a default for all pre-receive hooks, that I can
-> >> set at whichever scope I wish.
-> 
-> If I have the mental model of "these are plugins, and particular hooks
-> are events they listen to", then it seems hard to make use of this
-> broader setting.
-> 
-> But scoped to a particular (plugin, event) pair it sounds very handy.
+Sure, it hasn't even hit 'next' yet.  
 
-Striking out on finding another place to fit into the thread, I wonder
-if the reason some of us are thinking "I'm going to write a pre-receive
-hook" rather than "I'm going to write a linter hook" may be because of
-the prior single-script-per-hook limitation. As a result, when you want
-to add another function to your hook, you think, "I'll modify my
-pre-receive hook". I think part of this RFC is a subtle paradigm shift
-away from hooks-as-units-of-work and towards hooks-as-events.
+But I think we are both sort-of leaning towards concluding that it
+does not help all that much.  So I think it is OK.
 
-That observation doesn't really provide much guidance though, except
-maybe to point out we should think about what the glossary entries would
-say for terms like "hook" and "hook command" now... and I think figuring
-out those definitions might help us settle on what is most logical in
-the config.
+> TODO: If we decide to move in this direction, then the following
+> steps should be done (and some of them should be done anyway):
 
-(That makes me think I had better write a design doc next, before I get
-too much further with RFC patches. I made one pass at one a while ago,
-but it was more focused on history and choosing between alternatives;
-since we seem to have agreed on an approach, I'll make another attempt
-focusing on design and definition instead. I'll try to have something to
-the list by next week.)
+Even if we decide not to do this "downcase before hashing" thing, we
+should document how exactly we compute, I think.
 
- - Emily
+And if we decide do change our mind later, it is not the end of the
+world.  We should be able to use a different chunk type to store the
+filters computed over downcased paths.
+
+> * We need to document the Bloom filter format to specify exactly
+>   how we compute the filter data. The details should be careful
+>   enough that someone can reproduce the exact file format without
+>   looking at the C code.
+>
+> * That document would include the tolower() transformation that is
+>   being done here.
+
+As the tree-diff comparison done internally while running "git
+blame" does not take an end-user specified pathspec in any
+meaningful way, this does not matter in practice, but there is
+another possible complication we would want to consider when we
+extend the support to "git log" and friends---negative pathspecs
+(e.g. "git log ':(exclude)COPYING'").  A commit that cannot possibly
+have touched the COPYING file would be eligible for output without
+actually running tree-diff between it and its parent (as long as the
+trees of the two commits are different, we know it must be shown).
+
+Thanks.
