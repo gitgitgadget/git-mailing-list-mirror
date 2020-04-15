@@ -2,80 +2,64 @@ Return-Path: <SRS0=MaRY=57=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF8F6C2BA19
-	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 21:47:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2851AC2BA19
+	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 21:57:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8C96720774
-	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 21:47:57 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="lj5oHZgx"
+	by mail.kernel.org (Postfix) with ESMTP id 0F4EC20774
+	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 21:57:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730306AbgDOVr4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Apr 2020 17:47:56 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:52961 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730024AbgDOVrx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Apr 2020 17:47:53 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7A7A4D44BD;
-        Wed, 15 Apr 2020 17:47:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=7Wler5so0m7kY+YF4qGQh2C6qh8=; b=lj5oHZ
-        gxOV6VaJJ1XwdtmfKz9vXL5lPi2c9GDjmIQiZnAbENR39C6wEAteZWVQ4qDqODc+
-        XtowFODEVw+MGNy3ok7Rrz65DreN648+GqCQShJkwwAZYaPMMNGewcrwX1nEX37F
-        jNgn4QuBOme7bzJwGhxFk3DzMGDN/MDFU7ZtY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=BxIGbvC8HZo04uCV1cRyrUPPNnRLJj00
-        ZKPxHI4fyRIzNU3YH/LSuI+4S+tZxSu2W0wQkfYY9Mb7Fi5REGpaLCusjgXThW+b
-        q6jDKKqTwPWwgdgjEzFM9EvSVY19rvsfDGwcVziwBFZ9DoPQNOgcHeRvZAx8fD4P
-        v+MhrfD58II=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6ED77D44BC;
-        Wed, 15 Apr 2020 17:47:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id BAE63D44B9;
-        Wed, 15 Apr 2020 17:47:48 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
+        id S1729780AbgDOV5f (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Apr 2020 17:57:35 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55180 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1729298AbgDOV5d (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Apr 2020 17:57:33 -0400
+Received: (qmail 14516 invoked by uid 109); 15 Apr 2020 21:57:33 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 15 Apr 2020 21:57:33 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 11912 invoked by uid 111); 15 Apr 2020 22:08:20 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 15 Apr 2020 18:08:20 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 15 Apr 2020 17:57:31 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         git@vger.kernel.org
 Subject: Re: [PATCH] Makefile: avoid running curl-config unnecessarily
+Message-ID: <20200415215731.GA3595073@coredump.intra.peff.net>
 References: <20200326080540.GA2200522@coredump.intra.peff.net>
-        <nycvar.QRO.7.76.6.2004041535360.46@tvgsbejvaqbjf.bet>
-        <20200404145829.GB679473@coredump.intra.peff.net>
-Date:   Wed, 15 Apr 2020 14:47:47 -0700
-In-Reply-To: <20200404145829.GB679473@coredump.intra.peff.net> (Jeff King's
-        message of "Sat, 4 Apr 2020 10:58:29 -0400")
-Message-ID: <xmqqzhbc4e0s.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+ <nycvar.QRO.7.76.6.2004041535360.46@tvgsbejvaqbjf.bet>
+ <20200404145829.GB679473@coredump.intra.peff.net>
+ <xmqqzhbc4e0s.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: BFB16C5E-7F62-11EA-A24B-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqzhbc4e0s.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Wed, Apr 15, 2020 at 02:47:47PM -0700, Junio C Hamano wrote:
 
-> Junio, you may want to hold off on moving jk/build-with-right-curl to
-> next until we resolve this one way or the other.
->
-> -- >8 --
-> Subject: [PATCH] Makefile: avoid running curl-config unnecessarily
+> Jeff King <peff@peff.net> writes:
+> 
+> > Junio, you may want to hold off on moving jk/build-with-right-curl to
+> > next until we resolve this one way or the other.
+> >
+> > -- >8 --
+> > Subject: [PATCH] Makefile: avoid running curl-config unnecessarily
+> 
+> I think this has been accepted favourably after all?  I am inclined
+> to mark these three as ready for 'next'.
 
-I think this has been accepted favourably after all?  I am inclined
-to mark these three as ready for 'next'.
+Yeah, my "until we resolve" was basically "do people find this Makefile
+eval trick too gross". And I think the answer is that it's fine.
 
-Thanks.
+-Peff
