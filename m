@@ -2,76 +2,96 @@ Return-Path: <SRS0=MaRY=57=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 160D5C2BB55
-	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 15:16:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E6FCDC2BA19
+	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 15:19:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E853B2078B
-	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 15:16:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B81B7206A2
+	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 15:19:27 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="yIzh/aGE"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1414606AbgDOPQz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Apr 2020 11:16:55 -0400
-Received: from cloud.peff.net ([104.130.231.41]:54550 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S2393356AbgDOPQy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Apr 2020 11:16:54 -0400
-Received: (qmail 12504 invoked by uid 109); 15 Apr 2020 15:16:52 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 15 Apr 2020 15:16:52 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 4268 invoked by uid 111); 15 Apr 2020 15:27:39 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 15 Apr 2020 11:27:39 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 15 Apr 2020 11:16:52 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-Subject: Re: Fetching 24 Linux commits = 1.2 GiB
-Message-ID: <20200415151652.GB2464307@coredump.intra.peff.net>
-References: <b7f5bfb9-61fb-2552-4399-b744428728e4@suse.cz>
- <20200415135627.vx75hsphbpmgrquv@chatter.i7.local>
- <xmqq1roo947y.fsf@gitster.c.googlers.com>
+        id S2506399AbgDOPT0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Apr 2020 11:19:26 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55665 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2505516AbgDOPTW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Apr 2020 11:19:22 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 03F50493DA;
+        Wed, 15 Apr 2020 11:19:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=8nHHO1lNn0C+GQnyTfmKvtK2buA=; b=yIzh/a
+        GE3zt4o34GRAS/w6AKJp57ALpxu1S1fKyHKwVKU5o8tROA1Ld7oG3kLMdBBJ21EK
+        AbM/KBOk0XtScSfaXQXuWnPHkoCIF5J0twBqQ+o6iapODJRYpTOlBMXmhJJGBlJ5
+        IggtVYUdOXcyDtB9rAPm0JQaDpDQMunqY5MIQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=pU6e4X90djVUXZO3eMdpB1PKeYBSszfZ
+        3U5DCOhtU24rcLWZpvh9AX86vkZHrZQAloYuazdypYpRAKmy9OfuAmQU95zKT+/K
+        rHajztKgAnV3z1FpXSnYa6P6RfiyAox6iHtg9LMaxJR4gho2LeF3ELtcM+rgY+MC
+        2sDf7OJG+es=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id EF962493D9;
+        Wed, 15 Apr 2020 11:19:19 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6AB96493D8;
+        Wed, 15 Apr 2020 11:19:19 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Adam Bannister <adam.bannister@portswigger.net>
+Cc:     git@vger.kernel.org
+Subject: Re: Media query - Git flaw
+References: <CAJQu+bp9SrzaMBuMv1UC8y8rJGn15MAsVogSCm_DNDKRMji1+Q@mail.gmail.com>
+Date:   Wed, 15 Apr 2020 08:19:18 -0700
+In-Reply-To: <CAJQu+bp9SrzaMBuMv1UC8y8rJGn15MAsVogSCm_DNDKRMji1+Q@mail.gmail.com>
+        (Adam Bannister's message of "Wed, 15 Apr 2020 11:46:04 +0100")
+Message-ID: <xmqqwo6g7p55.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq1roo947y.fsf@gitster.c.googlers.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7A403604-7F2C-11EA-A68E-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 15, 2020 at 08:08:17AM -0700, Junio C Hamano wrote:
+Adam Bannister <adam.bannister@portswigger.net> writes:
 
-> Do these (and I think we saw other reports) make us rethink the
-> status of protocol v2 as the default?  Are all of these fallouts 
-> we saw so far easy-to-fix bugs, or are there more fundamental issues
-> in the v2 protocol design?
+> How did the disclosure and patching process go?
 
-I don't think we know yet.
+I guess "Just like any other project" would be enough for you to
+understand, given what you write and where ;-)
 
-I agree with Konstantin that the v2 switch is the likely culprit for
-these issues, but without having been able to reproduce, I don't think
-we know exactly what the problem is yet. It could be a protocol design
-issue, or it could be a minor implementation bug.
+A security researcher discloses a possible vulnerability to the
+git-security mailing list, which is a closed list.  On the list,
+there are developers with relatively high familiarity with the
+entire codebase, and there are those who are responsible for
+managing binary packaging of the software to various distributions.
 
-Note that there is one other issue that's turned up, that I discussed
-here:
+We prepare the fix.  We review the fix.  We repeat until we agree
+that the proposed fix is what we want to deliver.
 
-  https://lore.kernel.org/git/20200328154936.GA1217052@coredump.intra.peff.net/
+We arrange the coordinated disclosure and release among distro
+people and other stakeholders.
 
-That's more fundamental to the v2 design, but:
+All of the above have to be done behind public.
 
-  - it only happens when one side drops the connection, so it's not
-    impacting normal operation (it does turn an error case into a hang,
-    though, which can be rather annoying)
+Then we go public at the same time.  It happened at 1100 US/Pacific
+on Apr 14th, 2020.  For this one, as the fix itself was relatively
+straight-forward, the time it took between the initial contact and
+the release was spent mostly to wait for the slowest partcipant in
+the coordinated disclosure process (obviously I won't name names).
 
-  - it's not in the network protocol itself, but rather the protocol
-    between Git and the remote helper. So we could solve it purely as a
-    client-side fix.
+> What is your advice to Git users?
 
--Peff
+Release is announced and users are urged to upgrade, like you wrote
+on your article at The Daily Swig.
