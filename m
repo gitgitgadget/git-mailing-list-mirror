@@ -5,64 +5,65 @@ X-Spam-Level:
 X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 94D23C2BA19
-	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 14:28:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C19E9C2BA19
+	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 14:29:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7654B2078A
-	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 14:28:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9E3262078A
+	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 14:29:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VCfIRwf7"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ORClhRao"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2394005AbgDOO25 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Apr 2020 10:28:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38704 "EHLO
+        id S2394007AbgDOO3C (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Apr 2020 10:29:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38700 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S2394000AbgDOO2r (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 15 Apr 2020 10:28:47 -0400
-Received: from mail-ed1-x544.google.com (mail-ed1-x544.google.com [IPv6:2a00:1450:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15D64C061A0F
-        for <git@vger.kernel.org>; Wed, 15 Apr 2020 07:28:47 -0700 (PDT)
-Received: by mail-ed1-x544.google.com with SMTP id c7so5120864edl.2
-        for <git@vger.kernel.org>; Wed, 15 Apr 2020 07:28:47 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S2393999AbgDOO2q (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 15 Apr 2020 10:28:46 -0400
+Received: from mail-ed1-x542.google.com (mail-ed1-x542.google.com [IPv6:2a00:1450:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C087C061A0E
+        for <git@vger.kernel.org>; Wed, 15 Apr 2020 07:28:46 -0700 (PDT)
+Received: by mail-ed1-x542.google.com with SMTP id c7so5120781edl.2
+        for <git@vger.kernel.org>; Wed, 15 Apr 2020 07:28:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=+Kc98uF130oKq2yiQtCOSYib7t9FxhgRY+ruPo5hUgI=;
-        b=VCfIRwf7OCP0OZ3dx+DFmAd3Je0pOsVDobcSrbwE5B8ZvCQMAWirMEZ1Ub3Vy0BmkT
-         S6FNJM9/ZUwZSiPsKvnGZE9pfyi4q/M7ke5R6GZKIIys6h1vpofI3bgqGuQgb8Ulgsh3
-         245d3Jndm5nNdJJrKKbgm51o01D5OnlSlEHctHu4LMruzijIPu7ESPyUnl/RkLqNYu4x
-         O61voiRFO1di+fviN4ir2fcA7MB7hBAfiPzbYdZL49mco0/+mNlsp7zTQTqAT1IpWbGJ
-         eYD2vN6ON/uZMBUqvuw64duIQFvh5eB7VZcZCZoirUrMuRfHanSODhhp2vauIar6dG3K
-         nNSw==
+        bh=dG3NkKChRsTApDpikUSdiqFvX3FGhTiGGuLhBA15Ab8=;
+        b=ORClhRaoB0jUcWbiL8LrGV+hQ1iujSCpm/eZZ4JCrmPj4aVl8ELhV2tVJkDFiqv93n
+         PsjKXYfG49TDYyNwSVjDPn4YhGzWslnR+xN8iHbMMh9eVX3F5TlgokuH8Ob8ge9Osjc8
+         TgrK0Dd0rigRcyQ/mkfCKDdF5OBZutjO7YDp7DEqIdUZyKzghPhbeSg9C9DvfR+S4uwO
+         Ce2lcoHO2Z69fM+c3BjEQuAAXGOT4BoGv4yIlnADgqDTfjNHvi6gqLNplGALyXAwkns9
+         QPubqwfBT0BQJVeP2uxIKoITq/dluAW1qSORO3cB5RHM+kDgal04BRiRSdH6NrdNqDFh
+         ykuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=+Kc98uF130oKq2yiQtCOSYib7t9FxhgRY+ruPo5hUgI=;
-        b=l5IKaB5b6v2/8HAA7J1dVambhte1zlAfThLcafSk8OP9gOortUxyhTYXSD63sVTJXy
-         v6gbmvNKjKeDiBJZDRovbLf5vONJ7qGQP2hBxybuYJJkHEPRanTWoGXHQcikCXb0Tsv4
-         noALVRrdbnoMNgmD88MAre6l20znu8F6j0wYfHQRyL8uXkxu2jQq9Yc6ZtXYZlPYhOZh
-         YfSR7ccY4aEy/YAz/fMMaRZMPH2yQLepNuLh8GsRGvvFhxSr6vSl4L06vHjdM1i7h47y
-         OO+rl/FuFoEkEaMbA3IH4ZIXPjys5zj7qhOwWf1EoLCLbHwjKSZS69px6i4/IkilkhZO
-         sLww==
-X-Gm-Message-State: AGi0PubjvAHEpoe+pBXBAyZ7wGZDeA5tA6gk+Y9/1/CZyN0GGM5JQxNv
-        aNWHLAkHBNPPEaa+lqlGrHlN7vU9
-X-Google-Smtp-Source: APiQypJVxJsWoND8DPBgrCzT/qeAyiytWhIKs3YChS/dJ63x1ECbXpMvmxpeQO4ueAMOgRKcaHqONg==
-X-Received: by 2002:a05:6402:28b:: with SMTP id l11mr19287944edv.156.1586960925613;
-        Wed, 15 Apr 2020 07:28:45 -0700 (PDT)
+        bh=dG3NkKChRsTApDpikUSdiqFvX3FGhTiGGuLhBA15Ab8=;
+        b=UW+YKQFJccJuGHNtYJIS1Mpm9usyYBa+4tK2MaXAT5FXdUAf8DiM/OmrbcnyFqM2jh
+         rtX3fk8LxL5U1+dCZH/1JeAlTAxYwyq/5xE8FNMpZiETIohNgm5cJCzU/NtDEnjX0WvB
+         BuWv3HvfwgXI0WIkQbLeSVoOddIOFKjB4FrfimjHr308u25R+LVdueW0n6o2STOpFJjR
+         AZ91NW6PD2JIKDr2g7LaPZPSCwY4UpzHYsNscvtMZ0W3olS25A8VXqk5ZZLCVzQV3lC1
+         y3SHKLvJkQN2Jq9OvYcoF+DFgLXp62Wpg3sgKCeePOQvyQLecJ6nyJ3EGpdL6jjbXiLj
+         7hTw==
+X-Gm-Message-State: AGi0PuYtjS6GLeB39d+oR7xS1iHvA46XcTtMcvFeOio5pWrCb9y7YaEp
+        ZrQR8njRADn/Hjbno6OTiis58R2p
+X-Google-Smtp-Source: APiQypLhyZIVZrFCKZBMFwdIjTWFDnPTSSj8lDROokCYuEkF+CJk6zTSjWAe/a8GF5J7mmB0n6gH5w==
+X-Received: by 2002:a17:906:af99:: with SMTP id mj25mr5166870ejb.151.1586960924628;
+        Wed, 15 Apr 2020 07:28:44 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l16sm2152192edv.71.2020.04.15.07.28.44
+        by smtp.gmail.com with ESMTPSA id v13sm2620117ejb.10.2020.04.15.07.28.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Wed, 15 Apr 2020 07:28:44 -0700 (PDT)
-Message-Id: <b3384880c7201d65adb7341ce23386d578e69193.1586960921.git.gitgitgadget@gmail.com>
+Message-Id: <2375e34100e571f9c3ce658d28aba6648fba18a6.1586960921.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.760.git.git.1586960921.gitgitgadget@gmail.com>
 References: <pull.760.git.git.1586960921.gitgitgadget@gmail.com>
 From:   "Vasil Dimov via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 15 Apr 2020 14:28:41 +0000
-Subject: [PATCH 2/2] range-diff: avoid negative string precision
+Date:   Wed, 15 Apr 2020 14:28:40 +0000
+Subject: [PATCH 1/2] range-diff: fix a crash in parsing git-log output
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,43 +77,83 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Vasil Dimov <vd@FreeBSD.org>
 
-If the supplied integer for "precisoin" is negative in
-`"%.*s", len, line` then it is ignored. So the current code is
-equivalent to just `"%s", line` because it is executed only if
-`len` is negative.
+`git range-diff` calls `git log` internally and tries to parse its
+output. But `git log` output can be customized by the user in their
+git config and for certain configurations either an error will be
+returned by `git range-diff` or it will crash.
 
-Fix this by saving the value of `len` before overwriting it with the
-return value of `parse_git_diff_header()`.
+To fix this explicitly set the output format of the internally
+executed `git log` with `--pretty=medium`. Because that cancels
+`--notes`, add explicitly `--notes` at the end.
+
+Also, make sure we never crash in the same way - trying to dereference
+`util` which was never created and has remained NULL. It would happen
+if the first line of `git log` output does not begin with 'commit '.
+
+Alternative considered but discarded - somehow disable all git configs
+and behave as if no config is present in the internally executed
+`git log`, but that does not seem to be possible. GIT_CONFIG_NOSYSTEM
+is the closest to it, but even with that we would still read
+`.git/config`.
 
 Signed-off-by: Vasil Dimov <vd@FreeBSD.org>
 ---
- range-diff.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ range-diff.c          | 13 +++++++++++++
+ t/t3206-range-diff.sh | 10 ++++++++++
+ 2 files changed, 23 insertions(+)
 
 diff --git a/range-diff.c b/range-diff.c
-index 5cc920be391..40af0862818 100644
+index f745567cf67..5cc920be391 100644
 --- a/range-diff.c
 +++ b/range-diff.c
-@@ -123,16 +123,19 @@ static int read_patches(const char *range, struct string_list *list,
+@@ -63,6 +63,8 @@ static int read_patches(const char *range, struct string_list *list,
+ 			"--output-indicator-old=<",
+ 			"--output-indicator-context=#",
+ 			"--no-abbrev-commit",
++			"--pretty=medium",
++			"--notes",
+ 			NULL);
+ 	if (other_arg)
+ 		argv_array_pushv(&cp.args, other_arg->argv);
+@@ -106,6 +108,17 @@ static int read_patches(const char *range, struct string_list *list,
+ 			continue;
+ 		}
+ 
++		if (!util) {
++			error(_("could not parse first line of `log` output: "
++				"did not start with 'commit ': '%s'"),
++			      line);
++			string_list_clear(list, 1);
++			strbuf_release(&buf);
++			strbuf_release(&contents);
++			finish_command(&cp);
++			return -1;
++		}
++
+ 		if (starts_with(line, "diff --git")) {
  			struct patch patch = { 0 };
  			struct strbuf root = STRBUF_INIT;
- 			int linenr = 0;
-+			int orig_len;
+diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
+index bd808f87ed5..e024cff65cb 100755
+--- a/t/t3206-range-diff.sh
++++ b/t/t3206-range-diff.sh
+@@ -513,6 +513,16 @@ test_expect_success 'range-diff overrides diff.noprefix internally' '
+ 	git -c diff.noprefix=true range-diff HEAD^...
+ '
  
- 			in_header = 0;
- 			strbuf_addch(&buf, '\n');
- 			if (!util->diff_offset)
- 				util->diff_offset = buf.len;
- 			line[len - 1] = '\n';
-+			orig_len = len;
- 			len = parse_git_diff_header(&root, &linenr, 0, line,
- 						    len, size, &patch);
- 			if (len < 0)
--				die(_("could not parse git header '%.*s'"), (int)len, line);
-+				die(_("could not parse git header '%.*s'"),
-+				    orig_len, line);
- 			strbuf_addstr(&buf, " ## ");
- 			if (patch.is_new > 0)
- 				strbuf_addf(&buf, "%s (new)", patch.new_name);
++test_expect_success 'basic with modified format.pretty with suffix' '
++	git -c format.pretty="format:commit %H%d%n" range-diff \
++		master..topic master..unmodified
++'
++
++test_expect_success 'basic with modified format.pretty without "commit "' '
++	git -c format.pretty="format:%H%n" range-diff \
++		master..topic master..unmodified
++'
++
+ test_expect_success 'range-diff compares notes by default' '
+ 	git notes add -m "topic note" topic &&
+ 	git notes add -m "unmodified note" unmodified &&
 -- 
 gitgitgadget
+
