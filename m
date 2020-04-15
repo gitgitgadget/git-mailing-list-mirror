@@ -2,126 +2,133 @@ Return-Path: <SRS0=MaRY=57=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 89D70C2BB1D
-	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 02:12:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5039EC352BE
+	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 02:15:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4B42420732
-	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 02:12:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2F3FD206D5
+	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 02:15:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dXDIrUH+"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gTkLubi/"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392863AbgDOCMI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Apr 2020 22:12:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37368 "EHLO
+        id S2392900AbgDOCPa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Apr 2020 22:15:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37890 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2392860AbgDOCMF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Apr 2020 22:12:05 -0400
-Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C501FC061A0C
-        for <git@vger.kernel.org>; Tue, 14 Apr 2020 19:12:05 -0700 (PDT)
-Received: by mail-pj1-x1042.google.com with SMTP id ng8so6132826pjb.2
-        for <git@vger.kernel.org>; Tue, 14 Apr 2020 19:12:05 -0700 (PDT)
+        with ESMTP id S2387800AbgDOCPZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Apr 2020 22:15:25 -0400
+Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36E45C061A0C
+        for <git@vger.kernel.org>; Tue, 14 Apr 2020 19:15:24 -0700 (PDT)
+Received: by mail-pj1-x1043.google.com with SMTP id a32so6125486pje.5
+        for <git@vger.kernel.org>; Tue, 14 Apr 2020 19:15:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=XIjWU+wSnHHNKwlLFHF1ryberL79wJSQkoCtzUM9M7Y=;
-        b=dXDIrUH+T8e71TlioAychj0Xxg3K0XSO0/cap+2BkLpzsdsAV/eUdSyYmeX8qz3GpH
-         EvOWPbz4uuWzCtu1Wy1ulcjqiZbGuOiv/KDEycXa1m2FqwJSCmj5cMZasD767dA6FqqB
-         pKPEiamYpDLp5rvJ0Zil7zmIXuHcyn6FPywdjdEJbQfbHr3XdUalnfSkRqmaLrPhssXG
-         zKoWXo1VucRkQ2wOqY5ROgI/DB/9iThPG56BeGDBvYeCpQK/vfoN9yMVGKMoQ/e9qgZG
-         6ilJVd1drohsEXKWsrGrWm3VwpVgAbWjBcNQnNkZ7jLRPApeKk7M7QSIwODPNk+5z9Zs
-         kFMg==
+        bh=an7BZy6/IaEgYXhcVDoIAjiZXEruuMOG0g3KjIQFlZ4=;
+        b=gTkLubi/8j0+vCzVlMP1rz+UTpY5VViGABFA9wfeEnqWzWPSrKOngQ1IW3zoskGieB
+         RyfYnXbk0Lioh5+FbAFWAJwcgaxtLRBktT9OqdQIn0AlI1LVTeuwdZ+j33zJs29HtBwD
+         ViqdKupwxMLYrVjAPPIM+3UtJyTH4OygF10cqtsMSz3O0J1z+QfRm6dbucUQZ5kfCvyc
+         JI/X5bpW2S9GA7EHmMzCrQRTEMTfXXOUHnF/xYsUXriSx4FRjzOAI11cQ4EuHi8F6Nrp
+         knztMl1FvYi+jmLj0ZzMdttUa8sjjvrECZ98bdQAsmpjOGKWbPlzXn8bIahrux7EqfMD
+         Dayw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to;
-        bh=XIjWU+wSnHHNKwlLFHF1ryberL79wJSQkoCtzUM9M7Y=;
-        b=UsCPJg55G/e9nn1clHx/k2lB2V+gdtIAOQVP2O1/2fTugRBbLtSQrqRYUhgIL3nCrP
-         gCzTei2mqnDuGX3PkHs8Q+3/bX4hD/lZXcVbCjVx23maKTlQOohw+Rz8EP/99frWTF0i
-         ifhrk1grNVbikaDavYwIyxe4whp6dtwfRszQ5dDYGO0ecNDHXJweDUHaDZVFV1usCKnt
-         OmFgw6WBcbYBauCamw2IlXpcrYIT5F9dPy5LruSO0kF8GOI9M1ryDbWY0ZRJKuujh20K
-         b8oUYtdQhaXu+qCDfgW8IFkozX1Mm1SuaGWAi/SaNgnlG7HhJNirhsMZhs839hXCdE1c
-         2/1w==
-X-Gm-Message-State: AGi0PuYSdJcw7F3h7mzTX1oNOOOfpI9pbNOUfV9sFk5P+9+ZmvzM2j44
-        K03ZXOnZFqnDA53SOWBTe/KUBkbb
-X-Google-Smtp-Source: APiQypI/OObr0xHHn9yTR67WRBMYAx4MqL0509WrmCPQnF8RzmE5Pyy6H47eKFW2mVTNH7ziy2F1EA==
-X-Received: by 2002:a17:902:6a87:: with SMTP id n7mr2864376plk.80.1586916725129;
-        Tue, 14 Apr 2020 19:12:05 -0700 (PDT)
+        bh=an7BZy6/IaEgYXhcVDoIAjiZXEruuMOG0g3KjIQFlZ4=;
+        b=R99WJkw9sRKNLl6fqTCHxWqYaNXTPclp5q9QRrFGAv9pM2297nErYb/9DIh17nU5M+
+         JzV/DyNj86wgHDTu5V41Mj114m32h2CNgoXYt1YSNDFP2Rxk7zGv9b6AgOuwbevArA+4
+         iMaGQc9STMYj7tnUUneabMZ+DJhCuJmkTO3lKqcffUpmlcSnZpyIZ9H0cTWoXXAzQTOe
+         Ozf6LdTqQoz/HNNGSYy1Qd2Ev3Mizl2/cKyzow9ONj1oMnPrv21bYIcNltG3dRFOJu/e
+         5KXSbLxJt9cTk/cNsWKfiiKa019pp+rO82jjOVDzqj7P+9gLLUUTEf8r3oW6/Wo1tnxE
+         6kUw==
+X-Gm-Message-State: AGi0Publx72G+Kryxu8KKGjSvEKT3Y9zPztaUVFHG44VblaJqmszIZF6
+        LgqR5hVp8mOptn/catrstuQ/7EWQ
+X-Google-Smtp-Source: APiQypIqOfSVFPojjNKEmxz71kO4HVQtT7Ee37h3Q7OR8xNtI6pl0bkXnR0H7nvIp+1UzcM1RxB+JQ==
+X-Received: by 2002:a17:90a:b28e:: with SMTP id c14mr3518319pjr.168.1586916923683;
+        Tue, 14 Apr 2020 19:15:23 -0700 (PDT)
 Received: from localhost ([2402:800:6375:207b:be21:746a:7a56:9d4d])
-        by smtp.gmail.com with ESMTPSA id ie17sm5441439pjb.19.2020.04.14.19.12.04
+        by smtp.gmail.com with ESMTPSA id o21sm7630603pjr.37.2020.04.14.19.15.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Apr 2020 19:12:04 -0700 (PDT)
-Date:   Wed, 15 Apr 2020 09:12:02 +0700
+        Tue, 14 Apr 2020 19:15:23 -0700 (PDT)
+Date:   Wed, 15 Apr 2020 09:15:21 +0700
 From:   Danh Doan <congdanhqx@gmail.com>
 To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/2] date.c: allow compact version of ISO-8601 datetime
-Message-ID: <20200415021202.GA19025@danh.dev>
+Cc:     git@vger.kernel.org,
+        "Brian M . Carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH 1/2] date.c: allow fractional second part of ISO-8601
+Message-ID: <20200415021521.GB19025@danh.dev>
 References: <20200414000324.GA2751707@camp.crustytoothpaste.net>
  <cover.1586856398.git.congdanhqx@gmail.com>
- <06e62c58d5accad7bbebbc51f9fb38fda83a73f6.1586856398.git.congdanhqx@gmail.com>
- <20200414202401.GC1879688@coredump.intra.peff.net>
+ <45676f4a7d001dbd25bbae531cc2ae5fc53936bb.1586856398.git.congdanhqx@gmail.com>
+ <20200414201606.GA1879688@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20200414202401.GC1879688@coredump.intra.peff.net>
+In-Reply-To: <20200414201606.GA1879688@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2020-04-14 16:24:01-0400, Jeff King <peff@peff.net> wrote:
-> On Tue, Apr 14, 2020 at 04:31:55PM +0700, Đoàn Trần Công Danh wrote:
+On 2020-04-14 16:16:06-0400, Jeff King <peff@peff.net> wrote:
+> On Tue, Apr 14, 2020 at 04:31:54PM +0700, Đoàn Trần Công Danh wrote:
 > 
-> > @@ -666,6 +666,24 @@ static int match_digit(const char *date, struct tm *tm, int *offset, int *tm_gmt
-> >  		n++;
-> >  	} while (isdigit(date[n]));
-> >  
-> > +	/* 8 digits, compact style of ISO-8601's date: YYYYmmDD */
-> > +	if (n == 8) {
-> > +		tm->tm_year = num / 10000 - 1900;
-> > +		tm->tm_mon = (num % 10000) / 100 - 1;
-> > +		tm->tm_mday = num % 100;
-> > +		return n;
-> > +	}
+> > git-commit(1) says ISO-8601 is one of our supported date format.
+> > However, we only support RFC-3339 date format.
+> > 
+> > We can either:
+> > - Update documentation from ISO-8601 to RFC-3339
+> > - Add full support for ISO-8601
+> > 
+> > This series will try to add full support for ISO-8601.
 > 
-> I worry a little this may conflict with other approxidate heuristics.
-> The only one I can think of is an actual unix timestamp, though, and we
-> already require that to have at least 9 digits (plus anybody wanting to
-> use one robustly really should be using @12345678).
+> That seems more like a cover letter for the full series. The important
+> thing in this patch is more like:
 > 
-> And it looks like we'd exit early from the function for anything longer
-> than 4 digits anyway, ignoring the value.
-> 
-> We could probably tighten the heuristics a bit by insisting that the
-> month and day be sensible. Or even year (see the 1900 to 2100 magic for
-> the 4-digit year guess).
+>   ISO-8601 allows timestamps to have a fractional number of seconds. We
+>   represent time only in terms of whole seconds, so we never bothered
+>   parsing fractional seconds. However, it's better for us to parse and
+>   throw away the fractional part than to refuse to parse the timestamp
+>   at all.
 
-Yeah, It's make sense to tighten the heuristics.
-While 1900 is lower bound for year makes sense to me,
-but I don't think we should limit upper bound for tm_year.
+Yeah, this sounds better. I intended write only this patch.
+I made the second patch when the comment about 8 digits for YYYYMMDD
+come to my eyes, hence this clumsy.
 
-> > +	/* 6 digits, compact style of ISO-8601's time: HHMMSS */
-> > +	if (n == 6) {
-> > +		tm->tm_hour = num / 10000;
-> > +		tm->tm_min = (num % 10000) / 100;
-> > +		tm->tm_sec = num % 100;
-> > +		if (*end == '.' && isdigit(end[1]))
-> > +			strtoul(end + 1, &end, 10);
-> > +		return end - date;
-> > +	}
+> > diff --git a/date.c b/date.c
+> > index b0d9a8421d..2f37397beb 100644
+> > --- a/date.c
+> > +++ b/date.c
+> > @@ -556,6 +556,8 @@ static int match_multi_number(timestamp_t num, char c, const char *date,
+> >  	case ':':
+> >  		if (num3 < 0)
+> >  			num3 = 0;
+> > +		else if (*end == '.' && isdigit(end[1]))
+> > +			strtol(end + 1, &end, 10);
 > 
-> And likewise here that the hour, minute, and second be reasonable.
+> I was a bit worried about this change hurting other cases where people
+> might use dots to separate numbers (but not mean a fraction). But the
+> two common ones I can think of should be OK:
 > 
-> -Peff
+>   - 5.seconds.ago would never match because you look for a digit after
+>     the dot
+
+This is covered.
+
+>   - a date like 2019.10.12 wouldn't match, because we're only looking
+>     after a ":", which heavily implies a time.
+
+Yeah, It's worth to add this test.
+
 
 -- 
 Danh
