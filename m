@@ -2,80 +2,118 @@ Return-Path: <SRS0=MaRY=57=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A6F05C2BA19
-	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 22:19:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D1588C2BA19
+	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 22:29:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 83A79206E9
-	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 22:19:56 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Am1JFMSi"
+	by mail.kernel.org (Postfix) with ESMTP id B604A206E9
+	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 22:29:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731823AbgDOWTw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Apr 2020 18:19:52 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:53987 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731812AbgDOWTp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Apr 2020 18:19:45 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 304F8C7287;
-        Wed, 15 Apr 2020 18:19:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=812SZhGX7YNyiNEmw+GUx/VwOYw=; b=Am1JFM
-        Sij/VpT5nkFu5D9XJ3aiOI/Rz60MRzlFotGCC/tEaT3LjaauW+yU/5L/TiH4R45z
-        pJXW8HN7I+pQKFYAv13lH1OymAliiy0NWHsYt5r+/vGK7gzBVmEd59mlPVlvZBtD
-        hZhc/ZWsKATOso+pNhT+RUmJitWFauDI/0efQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=M50lf8Je5zeU7gJI+Xvuqo98uQPwGOfX
-        O9bUmlzr1EC2I8bw5xh0iN+sypE0jJ9IixuAaeUQDmybt8Q3sRhQVntNW/iuby3L
-        dBpFj7+5mnn1QE7OygOrKptLra0h5AQlueaJt5SkPlpMrAnY0LNov+KXVbQcd2Y9
-        lePv7/m1fCk=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 27E27C7286;
-        Wed, 15 Apr 2020 18:19:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 7080EC7285;
-        Wed, 15 Apr 2020 18:19:41 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     Phillip Wood <phillip.wood123@gmail.com>,
-        Jeff King <peff@peff.net>, phillip.wood@dunelm.org.uk,
-        git@vger.kernel.org, James Ramsay <james@jramsay.com.au>
-Subject: Re: [RFC PATCH v2 0/2] configuration-based hook management
-References: <20191210023335.49987-1-emilyshaffer@google.com>
-        <20200414005457.3505-1-emilyshaffer@google.com>
-        <efad3927-1d8f-5545-48e9-9a58c2308273@gmail.com>
-        <20200414203247.GE1879688@coredump.intra.peff.net>
-        <0f661f31-ee75-15fb-0272-48d459176f29@gmail.com>
-        <xmqqd088950d.fsf@gitster.c.googlers.com>
-        <20200415203029.GA24777@google.com>
-Date:   Wed, 15 Apr 2020 15:19:39 -0700
-In-Reply-To: <20200415203029.GA24777@google.com> (Emily Shaffer's message of
-        "Wed, 15 Apr 2020 13:30:29 -0700")
-Message-ID: <xmqqv9m04cjo.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1732103AbgDOW3J (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Apr 2020 18:29:09 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55252 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727993AbgDOW3H (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Apr 2020 18:29:07 -0400
+Received: (qmail 14667 invoked by uid 109); 15 Apr 2020 22:29:06 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 15 Apr 2020 22:29:06 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 12312 invoked by uid 111); 15 Apr 2020 22:39:53 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 15 Apr 2020 18:39:53 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 15 Apr 2020 18:29:05 -0400
+From:   Jeff King <peff@peff.net>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Vasil Dimov via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Vasil Dimov <vd@freebsd.org>
+Subject: Re: [PATCH 1/2] range-diff: fix a crash in parsing git-log output
+Message-ID: <20200415222905.GA3595509@coredump.intra.peff.net>
+References: <pull.760.git.git.1586960921.gitgitgadget@gmail.com>
+ <2375e34100e571f9c3ce658d28aba6648fba18a6.1586960921.git.gitgitgadget@gmail.com>
+ <xmqqsgh47okk.fsf@gitster.c.googlers.com>
+ <20200415162326.GG2464307@coredump.intra.peff.net>
+ <20200415220242.GA45241@syl.local>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 33BF7470-7F67-11EA-84A1-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20200415220242.GA45241@syl.local>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emily Shaffer <emilyshaffer@google.com> writes:
+On Wed, Apr 15, 2020 at 04:02:42PM -0600, Taylor Blau wrote:
 
-> Or, to put it another way, I don't think we need to solve the config
-> ordering problem today - as long as we don't make it impossible for us
-> to change tomorrow :)
+> Subject: [PATCH] diff-tree.c: load notes machinery with '--notes'
+> 
+> Since its introduction in 7249e91 (revision.c: support --notes
+> command-line option, 2011-03-29), combining '--notes' with '--pretty'
+> causes 'git diff-tree' to fail a runtime assertion:
+> 
+>   $ git rev-list HEAD | git diff-tree --stdin --pretty=medium --notes
+>   commit 8f3d9f354286745c751374f5f1fcafee6b3f3136
+>   git: notes.c:1308: format_display_notes: Assertion `display_notes_trees' failed.
+>   Aborted
+> 
+> This failure is due to diff-tree not calling 'load_display_notes' to
+> initialize the notes machinery.
 
-OK.
+Yes, I think that's the problem that I saw. And this definitely fixes
+that case, but I think there's another related one.
+
+  $ git notes add -m foo
+  $ git log -1 --format='%h %N'
+  94316974f7 foo
+  $ git rev-list -1 HEAD | git diff-tree --stdin --format='%h %N' -s
+  94316974f7e27dccc6b87f3946bce5d2fc252dc2 %N
+
+This is true even with your patch. With your patch I can add --notes to
+get the right output:
+
+  $ git rev-list -1 HEAD | git diff-tree --stdin --format='%h %N' -s --notes
+  94316974f7e27dccc6b87f3946bce5d2fc252dc2 foo
+
+(It's also slightly curious that %h doesn't abbreviate in diff-tree; I
+guess this is a side effect of the plumbing having no default abbrev
+setting; it may be simplest to just live with it).
+
+> @@ -126,6 +126,8 @@ int cmd_diff_tree(int argc, const char **argv, const char *prefix)
+> 
+>  	precompose_argv(argc, argv);
+>  	argc = setup_revisions(argc, argv, opt, &s_r_opt);
+> +	if (opt->show_notes)
+> +		load_display_notes(&opt->notes_opt);
+
+In git-log we have the equivalent of these new lines, but just before it
+we check the userformat, too:
+
+          memset(&w, 0, sizeof(w));
+          userformat_find_requirements(NULL, &w);
+  
+          if (!rev->show_notes_given && (!rev->pretty_given || w.notes))
+                  rev->show_notes = 1;
+          if (rev->show_notes)
+                  load_display_notes(&rev->notes_opt);
+
+I think we'd want to do the same here. Even though it's plumbing, I
+can't think of any reason why somebody would _not_ want notes to be
+auto-enabled when they say "%N".
+
+> Ordinarily, this failure isn't triggered, because it requires passing
+> both '--notes' and '--pretty'. Specifically, passing '--pretty' sets
+> 'opt->verbose_header', causing 'show_log()' to eventually call
+> 'format_display_notes()', which expects a non-NULL 'display_note_trees'.
+> Without initializing the notes machinery, 'display_note_trees' remains
+> NULL, and thus triggers an assertion failure. This doesn't occur without
+> '--pretty' since we never call 'format_display_notes()' without it.
+
+It's not just --pretty, of course, but any option that causes us to
+actually try to format notes (--format, --oneline, etc).
+
+-Peff
