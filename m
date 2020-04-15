@@ -2,119 +2,189 @@ Return-Path: <SRS0=MaRY=57=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-5.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 067D6C2BA19
-	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 13:10:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CEF4C2BA19
+	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 13:27:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D87B020737
-	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 13:10:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0C68620737
+	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 13:27:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J46feKF0"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="inzeqiwD"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2897046AbgDONKW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Apr 2020 09:10:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54688 "EHLO
+        id S2636108AbgDON14 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Apr 2020 09:27:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57456 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S2504445AbgDONKH (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 15 Apr 2020 09:10:07 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D86A6C061A0C
-        for <git@vger.kernel.org>; Wed, 15 Apr 2020 06:10:05 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id 198so2572219lfo.7
-        for <git@vger.kernel.org>; Wed, 15 Apr 2020 06:10:05 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S2636102AbgDON1v (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 15 Apr 2020 09:27:51 -0400
+Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com [IPv6:2607:f8b0:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CE43C061A0C
+        for <git@vger.kernel.org>; Wed, 15 Apr 2020 06:27:50 -0700 (PDT)
+Received: by mail-ot1-x343.google.com with SMTP id m13so67836otf.6
+        for <git@vger.kernel.org>; Wed, 15 Apr 2020 06:27:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:mime-version;
-        bh=fhmC6qslRDbboEErI55fdMPgviNVLP1zE5qqdVuicZw=;
-        b=J46feKF0x1tmeq90yu1/Rjgi4XIrNldUFVYzrZArlY58a/1XB23ADupqA2yatboRLo
-         Us5wsLkPAq9twb3o1Y0cOqLrpghnJ0qPj3hhwARSnqdwHSW/edMHSE/i0BX8A5peie8M
-         F/+KzUC3UxDo+yLInazg+QyafK+tV8KiLeqZf3tuzL7OnHZMnbl6s9jn6mpaCM0zH1ex
-         AlNwXDGPDPr5HaN3qLyq7R3cmCKIiIoIuhH9MGujJVqe6jkqo4s+9TnCeyvlW7HqStfY
-         NBY4FMYHJbSQq/I6ppuI70nI+mf4P45dsGHKIOcK4Lb8Ypx+ODw9IBGM3nppVb64QE0s
-         ok1w==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=m6l7A5lbxkbCzO6GVeqPNECdGgLqevNsduvPXAuIRQ8=;
+        b=inzeqiwD5Cly3Gh7kZWS0rEc/zBwyIq+JYPF4bPQnYngDtsJHbKeYdi0Vu5p7XLKbm
+         qzsPn0XmKqfVrkoQYcvZ1zpqBo9fGWcnSbqKTDTH08jCL5wxCA2ll23l9EIa/IdX6x/Z
+         9tYN5tKnu/yc7Zvr4ej7MzE+KZtT6vA/SH8oAJp5uG7Rw7JRrzzJ6wfQtyUyVn7iF7/z
+         +oKy4dwfi0KV6gikAx3Zbml4L+rEsnmsKgvkKkeaPRqNMGBrh4ZRBl7fct6YMFV4e/VT
+         PFCLIdUaH8KE1UlRAJiRT6YX1RbLNLeenw9LmTAfxOx+K1ve/48J/Fck4u4gChQ2xHby
+         9ewg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:mime-version;
-        bh=fhmC6qslRDbboEErI55fdMPgviNVLP1zE5qqdVuicZw=;
-        b=EVxaccGTxDdsA+ARls/l5582b5D4yOssHTYUNHlwa7UXEeolinTKa3CcyedqiQnEVc
-         4QIRsepVYEArUlWBiq6kQ06/EOSH9R/djaKg9wdhLsY2KkNy+O0gTXyfqgkO+nzy9WjM
-         g4Kx3o4EA8ZvXNoS74/VLYR1HH9CETcbToYFbMIi3ZiraxL7xHALPbAyMxAIdX0CzhJh
-         2bDB+fmMKUGia2LD+GhXhvqKla6E+jPTFWsAi9g3hlJfHoyrE5CXBQztp/l6NLO9pRrA
-         +XBInTswuqgXrIg1TBlkJq4hKOucuz09bsqnTgA6pPCGLA3Jv8KDVsO9xCpT71Hp5N47
-         IBjg==
-X-Gm-Message-State: AGi0PuZPLDI2D7Bs6RcYyEzzhbuNmmYrCqMSBfA+yWh26FpMDPqjjUBW
-        UDfTDpPaKhDKcmOWIXJcEwpL4h6IHzFEPA==
-X-Google-Smtp-Source: APiQypLbm9L0OriKC1p0P7N6SYx+Tf3zUkYg8ftRW7XAvvjgrlipDiXq1eEzzA3h+C22ie3Elu/Z1A==
-X-Received: by 2002:a05:6512:3e2:: with SMTP id n2mr3122499lfq.129.1586956203932;
-        Wed, 15 Apr 2020 06:10:03 -0700 (PDT)
-Received: from real.local ([105.9.164.92])
-        by smtp.gmail.com with ESMTPSA id 23sm11523261ljr.32.2020.04.15.06.10.01
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Apr 2020 06:10:03 -0700 (PDT)
-From:   Keegan Carruthers-Smith <keegan.csmith@gmail.com>
-To:     git@vger.kernel.org
-Subject: git ls-remote and protocolv2
-Date:   Wed, 15 Apr 2020 15:09:17 +0200
-Message-ID: <m2k12g7v5u.fsf@gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=m6l7A5lbxkbCzO6GVeqPNECdGgLqevNsduvPXAuIRQ8=;
+        b=BXgQ5Kp1iGObfKsAfscaWRGS7QeSKR3XiW82mE9Iclb1vA8ECIUfQgqxZrFjtaxrF1
+         fk6OEpjgrqkMr4CsPwEORPD77focHiTazacRxyUoivcmGIHFI2K0i9Q4o3z5bhoXRILf
+         M+vKuoqmIVQzqcIC2VqQLm6YLGtPEZlKq1iT3re3I72D21KqAgKDLp3HrMsZW6Zigd7k
+         tUzWKZcnK0+GWFw+SMxJM+NUUTMIdNmWfxplq3jDSmQfd2O8bFUjyKFzM6B8CFesdggH
+         30+wRrhUrW0uAmKjT6ojXMRlXz3HWU/Z894lOLO0k0TlhlGKZHDF9cRVEBbPDuHOvO3v
+         CssA==
+X-Gm-Message-State: AGi0PuYam+iTovp08/mL2aMoYwMnpvC90p+iQiNWTyMjUqfdg8GO8IL1
+        fITz7cVzcRNyD6b4oDCN2pQ=
+X-Google-Smtp-Source: APiQypLZSDamJ17jv/jtQFY5llyS8mSI7Zx83k9Q4xhBC8wQPjuK+jVWxkQN1W419P8Dh/C7NGB5mA==
+X-Received: by 2002:a9d:629a:: with SMTP id x26mr20633541otk.201.1586957269019;
+        Wed, 15 Apr 2020 06:27:49 -0700 (PDT)
+Received: from [192.168.1.83] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id f45sm6300703otf.30.2020.04.15.06.27.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 15 Apr 2020 06:27:46 -0700 (PDT)
+Subject: Re: [PATCH 1/3] revision: complicated pathspecs disable filters
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, me@ttaylorr.com, jnareb@gmail.com,
+        garimasigit@gmail.com, Derrick Stolee <dstolee@microsoft.com>
+References: <pull.609.git.1586566981.gitgitgadget@gmail.com>
+ <9cc31c289aa785f026eec84452ed68e80505d95e.1586566981.git.gitgitgadget@gmail.com>
+ <xmqqeesthfbf.fsf@gitster.c.googlers.com>
+ <44ce43e2-6cf0-0e48-18eb-f02543d81bf4@gmail.com>
+ <xmqqmu7d9b6j.fsf@gitster.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <f57c7908-55ae-deae-e9ea-1909549e628c@gmail.com>
+Date:   Wed, 15 Apr 2020 09:27:45 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101
+ Thunderbird/76.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <xmqqmu7d9b6j.fsf@gitster.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On 4/14/2020 2:25 PM, Junio C Hamano wrote:
+> Derrick Stolee <stolee@gmail.com> writes:
+> 
+>>> But if users may use icase pathspec very often, it may be worth
+>>> considering to build the bloom filter after downcasing the paths,
+>>> perhaps?  Given that many projects extract their source code to a
+>>> case insensitive filesystem, I would imagine that downcasing paths
+>>> would map two originally different paths into the same thing only
+>>> rarely, if ever, so there may not be much downside to do so.
+>>
+>> This behavior could be extended later, and carefully. My initial
+>> thought was that the case check would happen on every commit. If
+>> the :(icase) check only happens at the walk tip(s), then we could
+>> compute a single Bloom key at the start.
+> 
+> Sorry, I am not sure what you mean.
 
-I would like to take advantage of protocol v2 in "git
-ls-remote". However, it can't reasonably use it because the patterns for
-ls-remote aren't prefix based patterns. See
-https://public-inbox.org/git/20181031042405.GA5503@sigill.intra.peff.net/
+That's my fault. There are a couple of things I misunderstood here.
 
-This is behaviour I would like to implement. At Sourcegraph (were I
-work) we use "git ls-remote HEAD" to test if a remote is reachable and a
-valid git remote. Additionally we use it to get the symref for the
-default branch.
+1. Thinking about "git blame" we would need to "collapse" a pathspec
+   to a specific file before starting history. But blame doesn't
+   allow ":(icase)" anyway.
 
-There may be a better way to do this, but so far it seems ls-remote is
-the most reliable. However, we don't get to take advantage of protocol
-v2. A simple hack I did gives much better perf for our use case:
+2. With that context of "git blame" in my head, I was thinking
+   (incorrectly) that "git log" would collapse the pathspec based on
+   what file(s) match the pattern at HEAD. The tests in
+   t6131-pathspec-icase.sh clearly show that this is wrong. In fact,
+   if we apply the following diff to this patch, then we can get failures
+   with the changed-path filters:
 
-  diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
-  index 6ef519514b..12d3af177a 100644
-  --- a/builtin/ls-remote.c
-  +++ b/builtin/ls-remote.c
-  @@ -91,6 +91,8 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
-   		}
-   	}
-   
-  +	argv_array_push(&ref_prefixes, "HEAD");
-  +
-   	if (flags & REF_TAGS)
-   		argv_array_push(&ref_prefixes, "refs/tags/");
-   	if (flags & REF_HEADS)
+diff --git a/revision.c b/revision.c
+index f78c636e4d..a02be25feb 100644
+--- a/revision.c
++++ b/revision.c
+@@ -652,13 +652,14 @@ static void trace2_bloom_filter_statistics_atexit(void)
+ 
+ static int forbid_bloom_filters(struct pathspec *spec)
+ {
++       int allowed_flags = PATHSPEC_LITERAL | PATHSPEC_ICASE;
+        if (spec->has_wildcard)
+                return 1;
+        if (spec->nr > 1)
+                return 1;
+-       if (spec->magic & ~PATHSPEC_LITERAL)
++       if (spec->magic & ~allowed_flags)
+                return 1;
+-       if (spec->nr && (spec->items[0].magic & ~PATHSPEC_LITERAL))
++       if (spec->nr && (spec->items[0].magic & ~allowed_flags))
+                return 1;
+ 
+        return 0;
 
+> Do you mean that we notice that the user wants to match 'foo' case
+> insensitively, and tell the logic that uses changed-path records in
+> the graph file that commits that cannot possibly have touched any or
+> the paths 'foo', 'foO', 'fOo', ... (all 8 case permutations) are not
+> interesting?
+> 
+> I guess that would work, but I was wondering if it is simpler
+> without much downside if the changed-path records in the graph file
+> are prepared on paths after they are normalized to a single case.
+> That would lose information (e.g. you no longer can say "commits
+> that touch the path 'foo' is interesting, but those that touch the
+> path 'Foo' are not"), but makes the side that queries much simpler
+> (i.e. you do not have to prepare all 8 case permutations---you only
+> ask about 'foo').
+> 
+> And because the Bloom filter is used only for performance to cull
+> commits that can never possibly match, allowing a false positive
+> that would be discarded by actually running tree-diff anyway, the
+> only potential downside happens when the project has too many paths
+> that are different only in cases by increased collisions and by
+> reducing our chances to skip running tree-diff (and never affects
+> correctness).  
+> 
+> But this is not the "could be extended later" kind of behaviour, I
+> am afraid.  It is baked in the data stored in the graph file.
 
-What are the options to allow the use of protocol v2? The ideas I have
-in mind are the following.
+Since the feature is not released, we still have time to update the
+format if we so desired. With the current format, we would need to
+disable the filters when using an :(icase) pathspec as the current
+patch does.
 
-"--ref-prefixes" flag. This changes the behaviour of the patterns to
-instead be ref prefixes so we can pass them as ref prefixes.
+I'm not against the idea. Logically, collapsing case before hashing
+the Bloom keys should not increase the probabilities of false
+positives except in the situations where we have case conflicts.
+There is a small cost in the pre-hashing step to change the case of
+the paths, but that should be much lower than the cost of the hash
+itself and the tree parsing to find the changed paths.
 
-"--ref-prefix=PREFIX" flag. Can be passed in multiple times. Each PREFIX
-is set as a ref prefix.
+> It all depends on how often people want :(icase) pathspec matches in
+> the history, I suspect.  My point was that we need to declare that
+> :(icase) won't matter in real life (hence we won't optimize our data
+> to support that use case), before the way in which the data stored
+> in the graph file is computed is cast in stone.
 
-"refs/" prefix in pattern. If all patterns have a prefix of "refs/" pass
-in the relevant prefixes to remote refs. This would be a breaking change
-for the rare case of refs named like "refs/heads/refs/foo". You also
-wouldn't be able to pass in the symref "HEAD" which is what I want for
-my usecase.
+My earlier statement can be summarized as "we could make this happen"
+and you ask here "is it worth doing?"
 
-I'm happy to implement any of these.
+I will play around with how complicated the change would be while
+the community considers the "is it worth doing?" question.
 
-Cheers,
-Keegan
+Thanks,
+-Stolee
