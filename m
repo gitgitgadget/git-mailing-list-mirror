@@ -2,143 +2,158 @@ Return-Path: <SRS0=MaRY=57=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 36EC2C2BA19
-	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 20:31:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8817AC2BA19
+	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 20:32:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F2B8D20774
-	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 20:31:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5C28A20774
+	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 20:32:46 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="tLIDoEIs"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JDIzETvp"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2438333AbgDOUbB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Apr 2020 16:31:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38594 "EHLO
+        id S371251AbgDOUcj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Apr 2020 16:32:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38890 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S2437621AbgDOUai (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 15 Apr 2020 16:30:38 -0400
-Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5ACAFC061A0F
-        for <git@vger.kernel.org>; Wed, 15 Apr 2020 13:30:36 -0700 (PDT)
-Received: by mail-pf1-x444.google.com with SMTP id u9so533328pfm.10
-        for <git@vger.kernel.org>; Wed, 15 Apr 2020 13:30:36 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S2636965AbgDOUc3 (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 15 Apr 2020 16:32:29 -0400
+Received: from mail-ed1-x544.google.com (mail-ed1-x544.google.com [IPv6:2a00:1450:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CDADC061A10
+        for <git@vger.kernel.org>; Wed, 15 Apr 2020 13:32:29 -0700 (PDT)
+Received: by mail-ed1-x544.google.com with SMTP id ca21so6729896edb.7
+        for <git@vger.kernel.org>; Wed, 15 Apr 2020 13:32:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=nNsK0Kccw9GyhxD7f8DruxRSJPeXCpc9bsm5rCXI7kI=;
-        b=tLIDoEIsWsQsr3zqBygs9UXoOX+kZxNjoFVoZcJmpkibneyBohqaCL+8OYnHzoCDNw
-         KuVNE4Ub3UlXsENdk1oWeMazzaQgE8nGUmKDbtMMRdgua+YHG/RXPklca1RVXWEYzM4Q
-         KTkhg5uIWEymJy4cubLGpbBoCFBhNNfCfB/5mbucUVJBZugBwR/NWLDkh+ncKe0rZh5j
-         Wt+lnTZq+UUDL3OJuhBhuEuJY3fPg0yPVOyE5EDumyAoRt6L53WwY9xI3I5oOkv270X1
-         3k6N+fdqaCLGYfIseKCnalCwU66qxLxk/yqZE3Ah5K1lebQKzNXJT2VIms2q99nOOqZ7
-         Nsyw==
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=dG3NkKChRsTApDpikUSdiqFvX3FGhTiGGuLhBA15Ab8=;
+        b=JDIzETvpKLreV//pHFmY7TdYGyXg88dq4jq0/qixiry2ULg/SP7Q94Wux0I/mmxNL7
+         S81JJooXcG27mOjLoxIZQGoTmYaBVk+0+hsYbgrijQELpqi2X5z/RFvcY/FB13qemJn2
+         T5tK6OWWvbsFOUKJRmI+N2VV0w4oezT2bze6/JTIQRbO280Vb2WOy2JZ6Jnd9H0hluWk
+         duRTCh9wBuHiUOLp9386oNltXr/2YnoJuSzvlxmZnDrCzTOe+CD1lKEPGH73lMtR5QhH
+         NYW4ATaX8oAexUc8OOvtHV5KD0KRCmRhoUL+WA1DGW9VOY5C2I02JgDibis3xbe/zTzr
+         djWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=nNsK0Kccw9GyhxD7f8DruxRSJPeXCpc9bsm5rCXI7kI=;
-        b=h55ageb02tSBXGfgX1bWBaJPLjCiX9Zq5XyvVu07gd35H2TicQbbBIEnHLmntAgpLc
-         5Wa/gYsDzIcev9kyRMUdrKMuE4/3BbeKX8S4jCLfJ28R5ydc190L4pS2V/WaZZRkDJgo
-         bNhLHctK6nwYue+YOwVOaU7i8vuOS3r1RBIV3ss1inVObotkcY3g8u+suxhhwEW1uZGD
-         KWSXTbalCypo4giGfAp958OynDYciw8YTO9vsKHvbRH+SOwIjSutkcV/0kCuwOtzbRD1
-         kkB6nM12e/I22SUiTFP0x7tiymAaRCq+EwGnML0soT1E9dqItgfAtFFzlkH4f+S6QjRe
-         bd3A==
-X-Gm-Message-State: AGi0PubkszxWLsTBCOyorU6DueuRa9+Bgt1UD/3EP+eD/g5FepGrjjAU
-        Wiv3k3o6epgXXg7WDbyLudxi2Q==
-X-Google-Smtp-Source: APiQypJRaJdogpslV7SILpwUbPe7o1XB52pLfqGj73gE51TjpB4fx4TxmA8joLUXmZTgXxUTtod3vg==
-X-Received: by 2002:a63:af5c:: with SMTP id s28mr28275592pgo.21.1586982635683;
-        Wed, 15 Apr 2020 13:30:35 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
-        by smtp.gmail.com with ESMTPSA id i14sm13555545pgh.47.2020.04.15.13.30.33
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=dG3NkKChRsTApDpikUSdiqFvX3FGhTiGGuLhBA15Ab8=;
+        b=GmzZjK1B4adKTbey8P20FnIQlKxR5nFvnJTktZgTIA/QPYfCanoW8BQn1OreCGAbVj
+         PYAsvkNAmnw4v8IgDMBewQp6XcAf2qR6pmzcr+4WwK0gjPboyWlNiPfZ4/yVpJNFYh2U
+         nGIZOfePqVuR037NX6BAoKFiEeb89zFKBbGIhPLJfc7syrak2c6NRsoAkLnzaCx2Beft
+         vfbOlDxeL7p6vxUzNWiryzOQE8sIsWvf4B+zYGMs2K4JoezdQtqpOqVQ0WMy5VQ5D4wf
+         7Cje7j+OgI2reWn3qqiuo7cY71+Hf7Rf3NiuOQ0KGc5X32EM5WyHavoAp9nt8AIUTh1n
+         CfoA==
+X-Gm-Message-State: AGi0PuaW5s6w8Po1PAO4lO218dnF1CzsNioXBj6w+872kXfgCCAuhayN
+        WMlJX/ESy7y8PNERA28el5wYTXoY
+X-Google-Smtp-Source: APiQypLFsO4Lw/ex1k1sYJirIjiBzVR/jDUDqa+3CpQZhMD/myRs2TgDZaHfqSVZInLlW7H1cxcHkg==
+X-Received: by 2002:a50:9d42:: with SMTP id j2mr26385035edk.249.1586982747549;
+        Wed, 15 Apr 2020 13:32:27 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ce16sm2640410ejc.74.2020.04.15.13.32.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Apr 2020 13:30:34 -0700 (PDT)
-Date:   Wed, 15 Apr 2020 13:30:29 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Phillip Wood <phillip.wood123@gmail.com>,
-        Jeff King <peff@peff.net>, phillip.wood@dunelm.org.uk,
-        git@vger.kernel.org, James Ramsay <james@jramsay.com.au>
-Subject: Re: [RFC PATCH v2 0/2] configuration-based hook management
-Message-ID: <20200415203029.GA24777@google.com>
-References: <20191210023335.49987-1-emilyshaffer@google.com>
- <20200414005457.3505-1-emilyshaffer@google.com>
- <efad3927-1d8f-5545-48e9-9a58c2308273@gmail.com>
- <20200414203247.GE1879688@coredump.intra.peff.net>
- <0f661f31-ee75-15fb-0272-48d459176f29@gmail.com>
- <xmqqd088950d.fsf@gitster.c.googlers.com>
+        Wed, 15 Apr 2020 13:32:27 -0700 (PDT)
+Message-Id: <2375e34100e571f9c3ce658d28aba6648fba18a6.1586982745.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.760.v2.git.git.1586982745.gitgitgadget@gmail.com>
+References: <pull.760.git.git.1586960921.gitgitgadget@gmail.com>
+        <pull.760.v2.git.git.1586982745.gitgitgadget@gmail.com>
+From:   "Vasil Dimov via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 15 Apr 2020 20:32:24 +0000
+Subject: [PATCH v2 1/2] range-diff: fix a crash in parsing git-log output
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqd088950d.fsf@gitster.c.googlers.com>
+To:     git@vger.kernel.org
+Cc:     Vasil Dimov <vd@freebsd.org>, Vasil Dimov <vd@FreeBSD.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 15, 2020 at 07:51:14AM -0700, Junio C Hamano wrote:
-> 
-> Phillip Wood <phillip.wood123@gmail.com> writes:
-> 
-> >> If you want to refer to commands in ordering options (like your
-> >> "before"), then you'd have to refer to their names. For "my-command"
-> >> that's not too bad. For the longer one, it's a bit awkward. You _could_
-> >> do:
-> >> 
-> >>   hookcmd.my-command.before = git diff --check --cached
-> >> 
-> >> which is the same number of lines as yours. But I'd probably give it a
-> >> name, like:
-> >> 
-> >>   hookcmd.check-whitespace.command = git diff --check --cached
-> >>   hookcmd.my-command.before = check-whitespace
-> >> 
-> >> That's one more line than yours, but I think it separates the concerns
-> >> more clearly. And it extends naturally to more options specific to
-> >> check-whitespace.
-> >
-> > I agree that using a name rather than the command line makes things
-> > clearer here
-> 
-> True.   
-> 
-> These ways call for a different attitude to deal with errors
-> compared to the approach to order them with numbers, though.  
-> 
-> If your approach is to order by number attached to each hook, only
-> possible errors you'd need to worry about are (1) what to do when
-> the user forgets to give a number to a hook and (2) what to do when
-> the user gives the same number by accident to multiple hooks, and
-> both can even be made non-errors by declaring that an unnumbered
-> hook has a default number, and that two hooks with the same number
-> execute in an unspecified and unstable order.
-> 
-> On the other hand, the approach to specify relative ordering among
-> hooks can break more easily.  E.g. when a hook that used to be
-> before "my-command" got removed.  It is harder to find a "sensible"
-> default behaviour for such situations.
+From: Vasil Dimov <vd@FreeBSD.org>
 
-To be clear, the examples listed (both numbered order and relational
-order) were more for illustration purposes. At the contributor summit, I
-think Peff's suggestion was to stick with config ordering until we
-discover something more robust is needed, which is fine by me. At that
-time, I don't see a problem with doing something like:
+`git range-diff` calls `git log` internally and tries to parse its
+output. But `git log` output can be customized by the user in their
+git config and for certain configurations either an error will be
+returned by `git range-diff` or it will crash.
 
-[hook]
-  ordering = numerical
+To fix this explicitly set the output format of the internally
+executed `git log` with `--pretty=medium`. Because that cancels
+`--notes`, add explicitly `--notes` at the end.
 
-[hookcmd "my-command"]
-  command = ~/my-command.sh
-  order = 001
+Also, make sure we never crash in the same way - trying to dereference
+`util` which was never created and has remained NULL. It would happen
+if the first line of `git log` output does not begin with 'commit '.
 
-(which means others can still rely on config ordering if they want.)
+Alternative considered but discarded - somehow disable all git configs
+and behave as if no config is present in the internally executed
+`git log`, but that does not seem to be possible. GIT_CONFIG_NOSYSTEM
+is the closest to it, but even with that we would still read
+`.git/config`.
 
-Or, to put it another way, I don't think we need to solve the config
-ordering problem today - as long as we don't make it impossible for us
-to change tomorrow :)
+Signed-off-by: Vasil Dimov <vd@FreeBSD.org>
+---
+ range-diff.c          | 13 +++++++++++++
+ t/t3206-range-diff.sh | 10 ++++++++++
+ 2 files changed, 23 insertions(+)
 
- - Emily
+diff --git a/range-diff.c b/range-diff.c
+index f745567cf67..5cc920be391 100644
+--- a/range-diff.c
++++ b/range-diff.c
+@@ -63,6 +63,8 @@ static int read_patches(const char *range, struct string_list *list,
+ 			"--output-indicator-old=<",
+ 			"--output-indicator-context=#",
+ 			"--no-abbrev-commit",
++			"--pretty=medium",
++			"--notes",
+ 			NULL);
+ 	if (other_arg)
+ 		argv_array_pushv(&cp.args, other_arg->argv);
+@@ -106,6 +108,17 @@ static int read_patches(const char *range, struct string_list *list,
+ 			continue;
+ 		}
+ 
++		if (!util) {
++			error(_("could not parse first line of `log` output: "
++				"did not start with 'commit ': '%s'"),
++			      line);
++			string_list_clear(list, 1);
++			strbuf_release(&buf);
++			strbuf_release(&contents);
++			finish_command(&cp);
++			return -1;
++		}
++
+ 		if (starts_with(line, "diff --git")) {
+ 			struct patch patch = { 0 };
+ 			struct strbuf root = STRBUF_INIT;
+diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
+index bd808f87ed5..e024cff65cb 100755
+--- a/t/t3206-range-diff.sh
++++ b/t/t3206-range-diff.sh
+@@ -513,6 +513,16 @@ test_expect_success 'range-diff overrides diff.noprefix internally' '
+ 	git -c diff.noprefix=true range-diff HEAD^...
+ '
+ 
++test_expect_success 'basic with modified format.pretty with suffix' '
++	git -c format.pretty="format:commit %H%d%n" range-diff \
++		master..topic master..unmodified
++'
++
++test_expect_success 'basic with modified format.pretty without "commit "' '
++	git -c format.pretty="format:%H%n" range-diff \
++		master..topic master..unmodified
++'
++
+ test_expect_success 'range-diff compares notes by default' '
+ 	git notes add -m "topic note" topic &&
+ 	git notes add -m "unmodified note" unmodified &&
+-- 
+gitgitgadget
+
