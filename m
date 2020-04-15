@@ -2,95 +2,145 @@ Return-Path: <SRS0=MaRY=57=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	UNPARSEABLE_RELAY autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4AC90C3815B
-	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 19:39:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C62CAC2BA19
+	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 20:19:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 29BB820787
-	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 19:39:53 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="MKuScrfj"
+	by mail.kernel.org (Postfix) with ESMTP id A504820774
+	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 20:19:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2438480AbgDOTjv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Apr 2020 15:39:51 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:52176 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2438305AbgDOTjs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Apr 2020 15:39:48 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 87CE04B435;
-        Wed, 15 Apr 2020 15:39:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=o+b1y/UMM53XGkhA3b31yZ6HuiU=; b=MKuScr
-        fj9OB+L24R5HqIkJH3/lBGqLMJgId9h/ymYRd4FogcgWc6SDlUU7/+jdyjmP+Azk
-        z71wpKyYV77kpFAVGxVVXEfLYdY45A+/9L2BojRy+TqTnaLj2f/6+whVjTGg9lZM
-        TqtakhVLLhpdIFwucg9eaodJJ2d0OrCAbUiN4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=BPnRE4rmliLFx+F1M78tct1g7d2ITRNk
-        5KoLP7ZyOytK2wF5hGi27sW0x7mW1ML/qm1VInGvrY3WwsrSQgx0sCghM34HhwUq
-        iGBOon1nATA1HgNVJv7q1x/oSWstnUPbfUrGH06DPR1g8GfR9Y9mNtjkUjY3OxAG
-        HtaqbA7V3Yc=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7FECE4B434;
-        Wed, 15 Apr 2020 15:39:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
+        id S2437935AbgDOUT4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Apr 2020 16:19:56 -0400
+Received: from mx2.freebsd.org ([96.47.72.81]:46675 "EHLO mx2.freebsd.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2437924AbgDOUTz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Apr 2020 16:19:55 -0400
+Received: from mx1.freebsd.org (mx1.freebsd.org [IPv6:2610:1c1:1:606c::19:1])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        (Client CN "mx1.freebsd.org", Issuer "Let's Encrypt Authority X3" (verified OK))
+        by mx2.freebsd.org (Postfix) with ESMTPS id 6B00E9C133;
+        Wed, 15 Apr 2020 20:19:53 +0000 (UTC)
+        (envelope-from vd@FreeBSD.org)
+Received: from smtp.freebsd.org (smtp.freebsd.org [IPv6:2610:1c1:1:606c::24b:4])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         server-signature RSA-PSS (4096 bits)
+         client-signature RSA-PSS (4096 bits) client-digest SHA256)
+        (Client CN "smtp.freebsd.org", Issuer "Let's Encrypt Authority X3" (verified OK))
+        by mx1.freebsd.org (Postfix) with ESMTPS id 492YcT1MTNz4Lms;
+        Wed, 15 Apr 2020 20:19:53 +0000 (UTC)
+        (envelope-from vd@FreeBSD.org)
+Received: from localhost (APN-123-247-45-gprs.simobil.net [46.123.247.45])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 077384B432;
-        Wed, 15 Apr 2020 15:39:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, me@ttaylorr.com, jnareb@gmail.com,
-        garimasigit@gmail.com, Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 1/3] revision: complicated pathspecs disable filters
-References: <pull.609.git.1586566981.gitgitgadget@gmail.com>
-        <9cc31c289aa785f026eec84452ed68e80505d95e.1586566981.git.gitgitgadget@gmail.com>
-        <xmqqeesthfbf.fsf@gitster.c.googlers.com>
-        <44ce43e2-6cf0-0e48-18eb-f02543d81bf4@gmail.com>
-        <xmqqmu7d9b6j.fsf@gitster.c.googlers.com>
-        <f57c7908-55ae-deae-e9ea-1909549e628c@gmail.com>
-        <99e0ae2c-6b65-24e4-3d2b-1dff619a5daa@gmail.com>
-        <xmqqr1wo5yud.fsf@gitster.c.googlers.com>
-Date:   Wed, 15 Apr 2020 12:39:43 -0700
-In-Reply-To: <xmqqr1wo5yud.fsf@gitster.c.googlers.com> (Junio C. Hamano's
-        message of "Wed, 15 Apr 2020 12:32:42 -0700")
-Message-ID: <xmqqmu7c5yio.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        (Client did not present a certificate)
+        (Authenticated sender: vd)
+        by smtp.freebsd.org (Postfix) with ESMTPSA id 4B1B51998C;
+        Wed, 15 Apr 2020 20:19:52 +0000 (UTC)
+        (envelope-from vd@FreeBSD.org)
+Received: from localhost (localhost [local])
+        by localhost (OpenSMTPD) with ESMTPA id c65755d7;
+        Wed, 15 Apr 2020 22:19:47 +0200 (CEST)
+Date:   Wed, 15 Apr 2020 22:19:47 +0200
+From:   Vasil Dimov <vd@freebsd.org>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Vasil Dimov via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 2/2] range-diff: avoid negative string precision
+Message-ID: <20200415201947.GA47498@smle>
+Reply-To: vd@freebsd.org
+References: <pull.760.git.git.1586960921.gitgitgadget@gmail.com>
+ <b3384880c7201d65adb7341ce23386d578e69193.1586960921.git.gitgitgadget@gmail.com>
+ <20200415162035.GD22823@syl.local>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: DB3C4794-7F50-11EA-8070-C28CBED8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200415162035.GD22823@syl.local>
+User-Agent: Mutt
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Wed, Apr 15, 2020 at 10:20:35 -0600, Taylor Blau wrote:
+> On Wed, Apr 15, 2020 at 02:28:41PM +0000, Vasil Dimov via GitGitGadget wrote:
+> > From: Vasil Dimov <vd@FreeBSD.org>
+> >
+> > If the supplied integer for "precisoin" is negative in
+> 
+> s/precisoin/precision
 
-> As you are, I am on the fence.  
->
-> I do not think :(icase) pathspec is something we want to optimize
-> for, but I still like this new hash function primarily because I
-> suspect that it will increase the number of paths that you can cram
-> into the filter without getting their hashes collided (hence getting
-> false positive), under the assumption that real projects won't try
-> to store too many pair of paths that are only different in their
-> case...
+Fixed in v2.
 
-Sorry, but no, I do not think there is such upside.  It may have
-effects on the actual hash values to downcase paths that are
-originally camelCased, but reducing the entropy of input paths that
-way shouldn't have effect on the overall distribution and rate of
-collision in any meaningful way (otherwise the chosen underlying
-hash function would be broken).  So, sorry for the noise.
+> > `"%.*s", len, line` then it is ignored. So the current code is
+> > equivalent to just `"%s", line` because it is executed only if
+> > `len` is negative.
+> >
+> > Fix this by saving the value of `len` before overwriting it with the
+> > return value of `parse_git_diff_header()`.
+> >
+> > Signed-off-by: Vasil Dimov <vd@FreeBSD.org>
+> > ---
+> >  range-diff.c | 5 ++++-
+> >  1 file changed, 4 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/range-diff.c b/range-diff.c
+> > index 5cc920be391..40af0862818 100644
+> > --- a/range-diff.c
+> > +++ b/range-diff.c
+> > @@ -123,16 +123,19 @@ static int read_patches(const char *range, struct string_list *list,
+> >  			struct patch patch = { 0 };
+> >  			struct strbuf root = STRBUF_INIT;
+> >  			int linenr = 0;
+> > +			int orig_len;
+> 
+> Any reason to not assign this to 'len' up here?
 
+I believe that assigning it just before len is changed and that grouping
+all usage of the new variable close to each other makes the code more
+readable. Ideally it would also be defined below.
 
+> >  			in_header = 0;
+> >  			strbuf_addch(&buf, '\n');
+> >  			if (!util->diff_offset)
+> >  				util->diff_offset = buf.len;
+> >  			line[len - 1] = '\n';
+> > +			orig_len = len;
+> >  			len = parse_git_diff_header(&root, &linenr, 0, line,
+> >  						    len, size, &patch);
+> 
+> OK, so we cut up the line by placing a NL at len, and then feed it to
+> 'parse_git_diff_header' which will tell us the length of the thing that
+> it parsed, or give a negative value if it couldn't parse...
+> 
+> >  			if (len < 0)
+> > -				die(_("could not parse git header '%.*s'"), (int)len, line);
+> > +				die(_("could not parse git header '%.*s'"),
+> > +				    orig_len, line);
+> 
+> ...and then you restore the original length and print it out here. It
+> seems like this error is now misleading though, because the line is
+> already modified at the point that the newline was inserted.
+[...]
 
+It was '\0' before we overwrote it with '\n':
+
+ 89                 len = find_end_of_line(line, size);
+ 90                 line[len - 1] = '\0';
+
+`line` points to a buffer of the entire output of `git log`, with many
+newlines in it. In the beginning of the loop we overwrite the first new
+line char in the buffer with '\0', then we restore it to '\n' and
+eventually advance the pointer to the start of the next line.
+
+I think that the intention of this code is to print only one line (the
+current one).
+
+-- 
+Vasil Dimov
+gro.DSBeerF@dv
+%
+Success consists of going from failure to failure without loss of
+enthusiasm.
+                -- Winston Churchill
