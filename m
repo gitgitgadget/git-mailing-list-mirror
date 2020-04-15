@@ -2,85 +2,123 @@ Return-Path: <SRS0=MaRY=57=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A97C8C3815B
-	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 08:23:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 93408C2BB85
+	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 08:27:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8907F2166E
-	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 08:23:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 74BA020775
+	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 08:27:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2894403AbgDOIXs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Apr 2020 04:23:48 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:34306 "EHLO
-        mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2894391AbgDOIXp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Apr 2020 04:23:45 -0400
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
-        by mail-out.m-online.net (Postfix) with ESMTP id 492Fk82Mc1z1qsjm;
-        Wed, 15 Apr 2020 10:23:44 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.70])
-        by mail.m-online.net (Postfix) with ESMTP id 492Fk826YXz1qtwb;
-        Wed, 15 Apr 2020 10:23:44 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
-        by localhost (dynscan1.mail.m-online.net [192.168.6.70]) (amavisd-new, port 10024)
-        with ESMTP id rtLFB00xP7_q; Wed, 15 Apr 2020 10:23:43 +0200 (CEST)
-X-Auth-Info: DLuwe4OR06+QhEtByVoRTkOLU8WW/e5AIqhJJsZD3P8l2mr8Ze+4g+cc7M2Vrwg+
-Received: from igel.home (ppp-46-244-163-102.dynamic.mnet-online.de [46.244.163.102])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.mnet-online.de (Postfix) with ESMTPSA;
-        Wed, 15 Apr 2020 10:23:43 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 1000)
-        id 20AD62C0C5D; Wed, 15 Apr 2020 10:23:43 +0200 (CEST)
-From:   Andreas Schwab <schwab@linux-m68k.org>
-To:     Jiri Slaby <jslaby@suse.cz>
-Cc:     git@vger.kernel.org
+        id S2894506AbgDOI1X (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Apr 2020 04:27:23 -0400
+Received: from mx2.suse.de ([195.135.220.15]:57608 "EHLO mx2.suse.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2894460AbgDOI1L (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Apr 2020 04:27:11 -0400
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay2.suse.de (unknown [195.135.220.254])
+        by mx2.suse.de (Postfix) with ESMTP id 2A179AC12;
+        Wed, 15 Apr 2020 08:27:07 +0000 (UTC)
 Subject: Re: Fetching 24 Linux commits = 1.2 GiB
+To:     Andreas Schwab <schwab@linux-m68k.org>
+Cc:     git@vger.kernel.org
 References: <b7f5bfb9-61fb-2552-4399-b744428728e4@suse.cz>
-        <878sixdv7a.fsf@igel.home>
-        <c35ac17a-fe28-684f-94de-2d2b63b7f4ee@suse.cz>
-X-Yow:  Put FIVE DOZEN red GIRDLES in each CIRCULAR OPENING!!
-Date:   Wed, 15 Apr 2020 10:23:43 +0200
-In-Reply-To: <c35ac17a-fe28-684f-94de-2d2b63b7f4ee@suse.cz> (Jiri Slaby's
-        message of "Wed, 15 Apr 2020 10:16:59 +0200")
-Message-ID: <874ktldunk.fsf@igel.home>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.0.90 (gnu/linux)
+ <878sixdv7a.fsf@igel.home> <c35ac17a-fe28-684f-94de-2d2b63b7f4ee@suse.cz>
+ <874ktldunk.fsf@igel.home>
+From:   Jiri Slaby <jslaby@suse.cz>
+Autocrypt: addr=jslaby@suse.cz; prefer-encrypt=mutual; keydata=
+ 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
+Message-ID: <89363e9d-8739-3061-3d81-806099005e3f@suse.cz>
+Date:   Wed, 15 Apr 2020 10:27:07 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.6.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <874ktldunk.fsf@igel.home>
+Content-Type: text/plain; charset=iso-8859-2
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Apr 15 2020, Jiri Slaby wrote:
-
-> On 15. 04. 20, 10:11, Andreas Schwab wrote:
->> On Apr 15 2020, Jiri Slaby wrote:
->> 
->>> I was at 8f3d9f354286 of:
->>> git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+On 15. 04. 20, 10:23, Andreas Schwab wrote:
+> On Apr 15 2020, Jiri Slaby wrote:
+> 
+>> On 15. 04. 20, 10:11, Andreas Schwab wrote:
+>>> On Apr 15 2020, Jiri Slaby wrote:
 >>>
->>> I did git remote update today and it fetched:
->>> Receiving objects: 100% (7330823/7330823), 1.20 GiB
->>> It updated master: 8f3d9f354286..8632e9b5645b, that is 24 small commits.
->> 
->> What's your git version?  I just did exactly the same update with git
->> 2.26.1, and it only fetched 144 objects:
->> 
->> Receiving objects: 100% (144/144), 50.50 KiB | 1.87 MiB/s, done.
->
-> $ git --version
-> git version 2.26.1
+>>>> I was at 8f3d9f354286 of:
+>>>> git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+>>>>
+>>>> I did git remote update today and it fetched:
+>>>> Receiving objects: 100% (7330823/7330823), 1.20 GiB
+>>>> It updated master: 8f3d9f354286..8632e9b5645b, that is 24 small commits.
+>>>
+>>> What's your git version?  I just did exactly the same update with git
+>>> 2.26.1, and it only fetched 144 objects:
+>>>
+>>> Receiving objects: 100% (144/144), 50.50 KiB | 1.87 MiB/s, done.
+>>
+>> $ git --version
+>> git version 2.26.1
+> 
+> Was this the first time you used git >= 2.26.0?
 
-Was this the first time you used git >= 2.26.0?
+I doubt that:
+$ grep git-core /var/log/zypp/history|sed 's@x86_64.*@@'
+2020-03-23 16:14:24|install|git-core|2.25.2-467.2|
+2020-03-24 17:19:37|install|git-core|2.26.0-468.1|
+2020-03-29 09:38:34|install|git-core|2.26.0-471.1|
+2020-04-06 06:34:36|install|git-core|2.26.0-473.1|
+2020-04-15 08:21:37|install|git-core|2.26.1-474.1|
 
-Andreas.
+This is the first time I used 2.26.1, though.
 
+thanks,
 -- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 7578 EB47 D4E5 4D69 2510  2552 DF73 E780 A9DA AEC1
-"And now for something completely different."
+js
+suse labs
