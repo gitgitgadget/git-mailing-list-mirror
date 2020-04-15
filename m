@@ -2,173 +2,126 @@ Return-Path: <SRS0=MaRY=57=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F0E36C2BA19
-	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 23:30:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 76CCBC2BA19
+	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 23:49:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 91B922076A
-	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 23:30:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 30DF120787
+	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 23:49:00 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="V8gbiZjl"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="g+DUmK5Y"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389444AbgDOXaD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Apr 2020 19:30:03 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:50399 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389251AbgDOX3n (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Apr 2020 19:29:43 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 373FAC7956;
-        Wed, 15 Apr 2020 19:29:38 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=yzYkqGfqRtLUrx6QAs77Mp0FbEo=; b=V8gbiZ
-        jl4TfRgDYU3Kz2YeYk5cZYy4zpZzVcHZlWS407u1B12t4GhP8IGaXN0fSjmmiswo
-        elTK31O8pMK5s2tgdfoXh/ehcehKnh9yMB6g1NFx4UtCqYk7D4BP5E+780Z7OOHp
-        5T+ovECDc04kJ6SKtK329z5pG9oxSqbeFRJBQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Y7OhAcaj+IZ9e4yq4/OZZGEpktFNC7ZT
-        SNNS/nsinzC4qDt3oT2leHlrhK65xDUBrpLyRPZCDDVBLb7tWCx9dttCMR+77EbP
-        TmyMHz0DvZi/eTkpbb9VhCdQZggzjc4PYLJPZlmT7sQ5AeFCyPbQqBeaC9EU9F0f
-        KU/wunLAWmE=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1C445C7955;
-        Wed, 15 Apr 2020 19:29:38 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S2388056AbgDOXs4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Apr 2020 19:48:56 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:37200 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728103AbgDOXsx (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 15 Apr 2020 19:48:53 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 63D8CC7952;
-        Wed, 15 Apr 2020 19:29:35 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>
-Subject: Re: [PATCH v8 0/9] Reftable support git-core
-References: <pull.539.v7.git.1582706986.gitgitgadget@gmail.com>
-        <pull.539.v8.git.1585740538.gitgitgadget@gmail.com>
-Date:   Wed, 15 Apr 2020 16:29:33 -0700
-In-Reply-To: <pull.539.v8.git.1585740538.gitgitgadget@gmail.com> (Han-Wen
-        Nienhuys via GitGitGadget's message of "Wed, 01 Apr 2020 11:28:49
-        +0000")
-Message-ID: <xmqqmu7c49b6.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id A361E6052F;
+        Wed, 15 Apr 2020 23:48:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1586994532;
+        bh=5NQOPSr1KzWCJHf761Px08z3TKrWUcxYqzqkLY7xA7U=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=g+DUmK5YdYiB9RrfX2Yt1FTDQM1B7DV55pzM5qNAouKmdb8jxFdDENycZY5okybzL
+         ghZV2G2NP1Bz8Ej2eVbPREF+rVsqMjAT9RnGZQwM5QmM0ew9xlVRTIAZDZQTXdM/9k
+         bcvFQ1PfgKbtTZIQvyiTjXnkObKrv0wIC+iWPw3UE6ppJ85CrGjD69SjxABIjqKprK
+         b5MNuKkUBfJ5fXKYuQP0HN9SdH8g+R7MnQPa6tWL8fSKzJm+EJlzDzzvOyvS93YnzT
+         +KCFbY8eHhgFYn9VLQlX5devCejCZRAF1WHgOFfbSESO+gAegQoQZ2N/O9u1nh7GF/
+         rFy9XFr/erkbiu6m52/1YnzhOU9thaI8vfbGsW68EIY9HDGv6nmORMIcFBSCN9Wkj3
+         +QovW72RBVdhAuFx14mHsZzLfEAzy5jM5wIREHZ4VFWslRR+4JF1LmpUmvE2Ql/Iew
+         k1M/ggZl/r2lTRPDPJFX8tTHmTwUD7BhKvXoJT40bm9Y1O0oXc7
+Date:   Wed, 15 Apr 2020 23:48:47 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     luciano.rocha@booking.com, git@vger.kernel.org, peff@peff.net
+Subject: Re: [PATCH 1/1] freshen_file(): use NULL `times' for implicit
+ current-time
+Message-ID: <20200415234847.GI2751707@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>, luciano.rocha@booking.com,
+        git@vger.kernel.org, peff@peff.net
+References: <5e95d37d.1c69fb81.2b4ec.ce9f@mx.google.com>
+ <xmqq4ktk5t4h.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F7890D2C-7F70-11EA-A0F5-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="nO3oAMapP4dBpMZi"
+Content-Disposition: inline
+In-Reply-To: <xmqq4ktk5t4h.fsf@gitster.c.googlers.com>
+X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
+ 5.5.0-1-amd64)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> This adds the reftable library, and hooks it up as a ref backend.
+--nO3oAMapP4dBpMZi
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Since I queued the topic to 'pu', I needed to apply these fix-up
-patches on top.  The change to the Makefile is about "make clean"
-which forgot to clean the reftable library.  All the rest are ws
-clean-ups.
+On 2020-04-15 at 21:36:14, Junio C Hamano wrote:
+> luciano.rocha@booking.com writes:
+>=20
+> > Update freshen_file() to use a NULL `times', semantically equivalent to
+> > the currently setup, with an explicit `actime' and `modtime' set to the
+> > "current time", but with the advantage that it works with other files
+> > not owned by the current user.
+> >
+> > Fixes an issue on shared repos with a split index, where eventually a
+> > user's operation creates a shared index, and another user will later do
+> > an operation that will try to update its freshness, but will instead
+> > raise a warning:
+> >   $ git status
+> >   warning: could not freshen shared index '.git/sharedindex.bd736fa10e0=
+519593fefdb2aec253534470865b2'
+>=20
+> A couple of questions:
+>=20
+>  - Does utime(fn, NULL) work for any non-owner user, or does the
+>    user need to have write access to it?
 
-There are build breakages reported on Windows, with possible fixes
-(which IIRC were reported to segfault X-<), but I do not have URL or
-message-IDs handy.
+The Linux man page says the following:
 
-Thanks.
+  Changing timestamps is permitted when: either the process has
+  appropriate privileges, or the effective user ID equals the user ID of
+  the file, or times is NULL and the process has write permission for
+  the file.
 
+So the answer is the user needs to have write access with utime(fn,
+NULL), but the same EUID (or root) with a specific time.  I believe this
+behavior is because it doesn't make sense to restrict the operation
+which uses the current time since a user with write permissions could
+just run open(2) and write(2) instead with the same effect, just less
+efficiently.
 
- Makefile            | 2 +-
- builtin/clone.c     | 2 +-
- builtin/init-db.c   | 4 ++--
- cache.h             | 2 +-
- reftable/reftable.h | 8 ++++----
- 5 files changed, 9 insertions(+), 9 deletions(-)
+(We've discussed this on the list before, but "appropriate privileges"
+is POSIX-speak for "root access" or the equivalent in an alternate
+system, such as capabilities.)
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-diff --git a/Makefile b/Makefile
-index 9c1a7f0b81..3d5a585d8f 100644
---- a/Makefile
-+++ b/Makefile
-@@ -3126,7 +3126,7 @@ cocciclean:
- clean: profile-clean coverage-clean cocciclean
- 	$(RM) *.res
- 	$(RM) $(OBJECTS)
--	$(RM) $(LIB_FILE) $(XDIFF_LIB) $(VCSSVN_LIB)
-+	$(RM) $(LIB_FILE) $(XDIFF_LIB) $(VCSSVN_LIB) $(REFTABLE_LIB)
- 	$(RM) $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) git$X
- 	$(RM) $(TEST_PROGRAMS)
- 	$(RM) $(FUZZ_PROGRAMS)
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 3bead96e44..54b1441b95 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -1110,7 +1110,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	init_db(git_dir, real_git_dir, option_template,
--                GIT_HASH_UNKNOWN,
-+		GIT_HASH_UNKNOWN,
- 		DEFAULT_REF_STORAGE, /* XXX */
- 		INIT_DB_QUIET);
- 
-diff --git a/builtin/init-db.c b/builtin/init-db.c
-index 888b421338..70645a1848 100644
---- a/builtin/init-db.c
-+++ b/builtin/init-db.c
-@@ -394,7 +394,7 @@ static void validate_hash_algorithm(struct repository_format *repo_fmt, int hash
- 
- int init_db(const char *git_dir, const char *real_git_dir,
- 	    const char *template_dir, int hash, const char *ref_storage_format,
--            unsigned int flags)
-+	    unsigned int flags)
- {
- 	int reinit;
- 	int exist_ok = flags & INIT_DB_EXIST_OK;
-@@ -433,7 +433,7 @@ int init_db(const char *git_dir, const char *real_git_dir,
- 	 * is an attempt to reinitialize new repository with an old tool.
- 	 */
- 	check_repository_format(&repo_fmt);
--        repo_fmt.ref_storage = xstrdup(ref_storage_format);
-+	repo_fmt.ref_storage = xstrdup(ref_storage_format);
- 
- 	validate_hash_algorithm(&repo_fmt, hash);
- 
-diff --git a/cache.h b/cache.h
-index 83c4908ba0..89e257b7a5 100644
---- a/cache.h
-+++ b/cache.h
-@@ -628,7 +628,7 @@ int path_inside_repo(const char *prefix, const char *path);
- 
- int init_db(const char *git_dir, const char *real_git_dir,
- 	    const char *template_dir, int hash_algo,
--            const char *ref_storage_format,
-+	    const char *ref_storage_format,
- 	    unsigned int flags);
- void initialize_repository_version(int hash_algo, const char *ref_storage_format);
- 
-diff --git a/reftable/reftable.h b/reftable/reftable.h
-index 48722428b5..3086884be4 100644
---- a/reftable/reftable.h
-+++ b/reftable/reftable.h
-@@ -446,13 +446,13 @@ struct reftable_addition;
- /*
-   returns a new transaction to add reftables to the given stack. As a side
-   effect, the ref database is locked.
--*/ 
-+*/
- int reftable_stack_new_addition(struct reftable_addition **dest, struct reftable_stack *st);
- 
--/* Adds a reftable to transaction. */ 
-+/* Adds a reftable to transaction. */
- int reftable_addition_add(struct reftable_addition *add,
--                          int (*write_table)(struct reftable_writer *wr, void *arg),
--                          void *arg);
-+			  int (*write_table)(struct reftable_writer *wr, void *arg),
-+			  void *arg);
- 
- /* Commits the transaction, releasing the lock. */
- int reftable_addition_commit(struct reftable_addition *add);
+--nO3oAMapP4dBpMZi
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.20 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXpedXwAKCRB8DEliiIei
+gZ4hAP9t2+uPUNzjcDeTQm0DS9NuMbowQhRLmfwzHMA+INpL0wEAyzH/ZYVPpS1f
+aSDLVoMGZkQTHeaEBwazMsWpLSINEwQ=
+=andx
+-----END PGP SIGNATURE-----
+
+--nO3oAMapP4dBpMZi--
