@@ -2,136 +2,203 @@ Return-Path: <SRS0=MaRY=57=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,HTTP_ESCAPED_HOST,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B0C87C2BB1D
-	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 00:07:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EDC0DC2BB1D
+	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 00:14:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8C9992076B
-	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 00:07:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C94252072D
+	for <git@archiver.kernel.org>; Wed, 15 Apr 2020 00:14:55 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="YHNBcoOM"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="T6oclpit"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392261AbgDOAHl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Apr 2020 20:07:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46412 "EHLO
+        id S2392316AbgDOAOk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Apr 2020 20:14:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47356 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2392254AbgDOAHb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Apr 2020 20:07:31 -0400
-Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32300C061A0C
-        for <git@vger.kernel.org>; Tue, 14 Apr 2020 17:07:31 -0700 (PDT)
-Received: by mail-pj1-x1042.google.com with SMTP id ng8so6016325pjb.2
-        for <git@vger.kernel.org>; Tue, 14 Apr 2020 17:07:31 -0700 (PDT)
+        with ESMTP id S2405209AbgDOANn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Apr 2020 20:13:43 -0400
+Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD50DC061A0C
+        for <git@vger.kernel.org>; Tue, 14 Apr 2020 17:13:39 -0700 (PDT)
+Received: by mail-pl1-x641.google.com with SMTP id t4so572868plq.12
+        for <git@vger.kernel.org>; Tue, 14 Apr 2020 17:13:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=wN47YJNCBX9LswGTXN111W37MnS/FUH2jHo9Rc5XLEE=;
-        b=YHNBcoOMPc1uzRjbG5QoopJm41/msezRe7xp49ixNfPX3FKa86xLeeWmuQc+9XVRdh
-         X90oKL+xtnh7ek9N3ACsiSVtFUl/9RSZ7ULEHfLt7N730fLQtgua2PWbfZHMbOhAoUrX
-         iQyWqP7E0HeehmT3MoY6lnH1RzSqROIpkwxxcpBFTv1SOfFdwTSZsCa8yO1fPpKEgluB
-         vzDJRPHl7uAvSAo60n7I6mwMYcjVC6kqIJyd7mqonlwp2UEjzb19zQAyyLhGYVYChAFN
-         XG+LAGaG9A8ohrlD14Q06FhLhoQcWS0TyRM0GUrV0NWaxQhl9NWEUCQTMhhIPd8GkAwl
-         mx8g==
+        bh=SPftoIRuZuWguuFhST9e7qZqBz2rb9CpCF0uXBr/yf8=;
+        b=T6oclpitwN7CIcfWOaQKWWfyaPsoTvs/T2Gv5eP7Qi8NJ1sT9wn1L2vuTXFdZQFshs
+         LQpognlMzo2nskmhJ+ZRhRLAItDV8b6yFggLURdbdjMzitOqVq/EvOvQ9WtwcO2opEKl
+         tH+6xByHyU7Z3u7+T9pvsdAdOyOnaQOVIgwDValFXOW7GZo/TKZJ8jl2XP85o8I23axw
+         1Jo7IvgVcE20ij+68F6pGnWwEugnTHqs+FT3eq2jNegCUtF21K6OozF97pdgT8lqYzpJ
+         IfMAeY/HyvaYkq2zEHI3Sl6mHjLhLuR15a7eTsBqXPU0SJH3DLmLh1SEufuE3bfa/Igg
+         KHWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=wN47YJNCBX9LswGTXN111W37MnS/FUH2jHo9Rc5XLEE=;
-        b=JsxKxJiPjV9U0pr9PXrgOsXe7Nvc9C0ciw9A8tzoPIDBxtKWSXoHhw0xHascDKDCJp
-         YbkFfr1G1le4HqfHQguiN9DVfewnYpU8z9cPASzr4/qbaa+Ad6I8FOZ7D/A6MzhuVpfh
-         Kvp4F/WEhbk43IH7/UBzPwdrnktp2Bg6hBZplqH3bWP/FPj7oXG5R+0sy/uFklhBwYf3
-         3LiwYOImpozaa2c+OdeiVn/lH2EOVlRnioLzwM/MhpbY+0qD0IegRRSBKI7UyG0gu0bB
-         xR2bPukjxyYWBdEhiC7MNtlh0ElSP1cRy4uZop+BuIes+WT6SWLAXC/mVDh0YBSTrxCi
-         2/ow==
-X-Gm-Message-State: AGi0PuZiabbeQGpfIei9207NX2v/3G3itAfFVK/XGuw2dZc98JrNTRhs
-        7Gq39TH9ZXi+QOg0vN4Zl5iIGDYwr1p1qOyd
-X-Google-Smtp-Source: APiQypKQwq+Z2d7jIBxPkn3QUQM1t3loqoYfelZm91dvYTaoN61/kb8AJwOQhRHwvIx03I7lq1Ddzw==
-X-Received: by 2002:a17:90a:252b:: with SMTP id j40mr3165803pje.60.1586909250254;
-        Tue, 14 Apr 2020 17:07:30 -0700 (PDT)
+        bh=SPftoIRuZuWguuFhST9e7qZqBz2rb9CpCF0uXBr/yf8=;
+        b=AZbV9Ph8XdElelnceGO/hMsyAwwAV2eksXNknyWZ67LhtlzVbLDqRjKzymL7O8Kzjd
+         gasAlN+dhExjCnwUJEFU/6kthZngRyABYLBTktV09YE8nBcr9XvSGqOxZ1nzOKqDaeCU
+         2hfMPQwFKzZYBYGmVDSW79H7yUSH/aYm0kLr19JpsYFisP7bNoXtalkDYO+z0J+JhE+X
+         sA211wpaRYEkq/kMj/DnLnlhJ80kg5f5wML385mB4qn4WFZZ3fdCTFwJLVwk/gy6sskG
+         9JEalJJQXIhu3XMVdGKx7LVK4IsNPnxKzmU7r/+2pOlp0XYlTezoEKYH2/x7Gpb4b5kt
+         /uOA==
+X-Gm-Message-State: AGi0PualK9JIH3nwKNg0bk/iZKn3mEw+YoN6mo3Pwy0LcAlB7+o+KLG4
+        qzD4OwkCyDopK9DJIEE0dUCwEP8CDaikM5qR
+X-Google-Smtp-Source: APiQypLBX6XewDwEuFEXe2q3917/MYIsgZW+wWmGV/MLEMK8TV4Dy/nMjWxw6h2a/GpAUbPd0cyoOQ==
+X-Received: by 2002:a17:902:b717:: with SMTP id d23mr1377243pls.51.1586909619334;
+        Tue, 14 Apr 2020 17:13:39 -0700 (PDT)
 Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id q12sm11149473pgi.86.2020.04.14.17.07.29
+        by smtp.gmail.com with ESMTPSA id r26sm7229122pfq.75.2020.04.14.17.13.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Apr 2020 17:07:29 -0700 (PDT)
-Date:   Tue, 14 Apr 2020 18:07:28 -0600
+        Tue, 14 Apr 2020 17:13:38 -0700 (PDT)
+Date:   Tue, 14 Apr 2020 18:13:37 -0600
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: Is fetch.writeCommitGraph (and thus features.experimental) meant
- to work in the presence of shallow clones?
-Message-ID: <20200415000728.GA7382@syl.local>
-References: <CABPp-BHGubUX5o9KsQaoh_UFjFh2PaMkkJhCao+5LGnFc0dQNg@mail.gmail.com>
- <aca12331-f8e3-28a2-acb6-df9d7e2e70e1@gmail.com>
- <20200414235057.GA6863@syl.local>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] credential: treat "?" and "#" in URLs as end of host
+Message-ID: <20200415001337.GA7457@syl.local>
+References: <20200414214304.GA1887601@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20200414235057.GA6863@syl.local>
+In-Reply-To: <20200414214304.GA1887601@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 14, 2020 at 05:50:57PM -0600, Taylor Blau wrote:
-> On Tue, Apr 14, 2020 at 04:31:19PM -0400, Derrick Stolee wrote:
-> > On 4/14/2020 4:22 PM, Elijah Newren wrote:
-> > > Hi,
-> > >
-> > > I was building a version of git for internal use, and thought I'd try
-> > > turning on features.experimental to get more testing of it.  The
-> > > following test error in the testsuite scared me, though:
-> > >
-> > > t5537.9 (fetch --update-shallow):
-> > >
-> > > ...
-> > > + git fetch --update-shallow ../shallow/.git refs/heads/*:refs/remotes/shallow/*
-> > > remote: Enumerating objects: 18, done.
-> > > remote: Counting objects: 100% (18/18), done.
-> > > remote: Compressing objects: 100% (6/6), done.
-> > > remote: Total 16 (delta 0), reused 6 (delta 0), pack-reused 0
-> > > Unpacking objects: 100% (16/16), 1.16 KiB | 1.17 MiB/s, done.
-> > > From ../shallow/
-> > >  * [new branch]      master     -> shallow/master
-> > >  * [new tag]         heavy-tag  -> heavy-tag
-> > >  * [new tag]         light-tag  -> light-tag
-> > > error: Could not read ac67d3021b4319951fb176469d7732e6914530c5
-> > > error: Could not read ac67d3021b4319951fb176469d7732e6914530c5
-> > > error: Could not read ac67d3021b4319951fb176469d7732e6914530c5
-> > > fatal: unable to parse commit ac67d3021b4319951fb176469d7732e6914530c5
-> > >
-> > > Passing -c fetch.writeCommitGraph=false to the fetch command in that
-> > > test makes it pass.
-> > >
-> > > There were also a couple other tests that failed with
-> > > features.experimental=true (in t5500), but those weren't scary -- they
-> > > were just checking exact want/have lines and features.experimental is
-> > > intended to change those.  This test from t5537 was the only one that
-> > > showed some unexpected fatal error.
-> >
-> > Well, commit-graphs are not supposed to do anything if we have
-> > shallow clones. We definitely don't load a commit-graph in that
-> > case. Seems like we need an extra check in write_commit_graph()
-> > to stop writing in the presence of shallow commits.
->
-> This rang a bell to me, too. There's a bug, but it's due to the mutative
-> side-effects of 'is_repository_shallow' along with '--update-shallow' (a
-> normal 'git fetch' works fine here, with or without
-> fetch.writeCommitGraph).
->
-> Here's a patch that I didn't sign-off on that fixes the problem for me.
+Hi Peff,
 
-Oh, apparently I did sign this one off ;). I'll blame that 'git commit
---amend -vs' is muscle memory for me. In either case, this probably
-needs some work (if it's even the right approach) before queueing it.
-
-> --- >8 ---
+On Tue, Apr 14, 2020 at 05:43:04PM -0400, Jeff King wrote:
+> It's unusual to see:
 >
-> ...
+>   https://example.com?query-parameters
+>
+> without an intervening slash, like:
+>
+>   https://example.com/some-path?query-parameters
+>
+> or even:
+>
+>   https://example.com/?query-parameters
+>
+> but it is a valid end to the hostname (actually "authority component")
+> according to RFC 3986. Likewise for "#".
+>
+> And curl will parse the URL according to the standard, meaning it will
+> contact example.com, but our credential code would ask about a bogus
+> hostname with a "?" in it. Let's make sure we follow the standard, and
+> more importantly ask about the same hosts that curl will be talking to.
+>
+> It would be nice if we could just ask curl to parse the URL for us. But
+> it didn't grow a URL-parsing API until 7.62, so we'd be stuck with
+> fallback code either way. Plus we'd need this code in the main Git
+> binary, where we've tried to avoid having a link dependency on libcurl.
+>
+> But let's at least fix our parser. Moving to curl's parser would prevent
+> other potential discrepancies, but this gives us immediate relief for
+> the known problem, and would help our fallback code if we eventually use
+> curl.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+
+All makes sense to me. I agree that it would probably be preferable if
+we could just use cURL's own parser and forget about this code entirely.
+But, having it still be a fallback knocks out any benefit that we'd be
+getting by relying on their parser rather than our own.
+
+> ---
+> Just a follow-on to today's release. This isn't security critical after
+> the earlier fix, but it made some of the attack vectors much easier.
+
+Yep, thanks for noting.
+
+>  credential.c           |  9 ++++++++-
+>  t/t0300-credentials.sh | 36 +++++++++++++++++++++++++++++++++++-
+>  2 files changed, 43 insertions(+), 2 deletions(-)
+>
+> diff --git a/credential.c b/credential.c
+> index 21b3ba152f..8aa9777548 100644
+> --- a/credential.c
+> +++ b/credential.c
+> @@ -388,7 +388,14 @@ int credential_from_url_gently(struct credential *c, const char *url,
+>  	cp = proto_end + 3;
+>  	at = strchr(cp, '@');
+>  	colon = strchr(cp, ':');
+> -	slash = strchrnul(cp, '/');
+> +
+> +	/*
+> +	 * A query or fragment marker before the slash ends the host portion.
+> +	 * We'll just continue to call this "slash" for simplicity. Notably our
+> +	 * "trim leading slashes" part won't skip over this part of the path,
+> +	 * but that's what we'd want.
+> +	 */
+> +	slash = cp + strcspn(cp, "/?#");
+>
+>  	if (!at || slash <= at) {
+>  		/* Case (1) */
+> diff --git a/t/t0300-credentials.sh b/t/t0300-credentials.sh
+> index 5b78ebbc3f..b6ec676989 100755
+> --- a/t/t0300-credentials.sh
+> +++ b/t/t0300-credentials.sh
+> @@ -443,11 +443,45 @@ test_expect_success 'url parser ignores embedded newlines' '
+>  	username=askpass-username
+>  	password=askpass-password
+>  	--
+> -	warning: url contains a newline in its host component: https://one.example.com?%0ahost=two.example.com/
+> +	warning: url contains a newline in its path component: https://one.example.com?%0ahost=two.example.com/
+>  	warning: skipping credential lookup for url: https://one.example.com?%0ahost=two.example.com/
+>  	askpass: Username:
+>  	askpass: Password:
+>  	EOF
+>  '
+>
+> +# usage: check_host_and_path <url> <expected-host> <expected-path>
+> +check_host_and_path () {
+> +	# we always parse the path component, but we need this to make sure it
+> +	# is passed to the helper
+> +	test_config credential.useHTTPPath true &&
+> +	check fill "verbatim user pass" <<-EOF
+> +	url=$1
+> +	--
+> +	protocol=https
+> +	host=$2
+> +	path=$3
+> +	username=user
+> +	password=pass
+> +	--
+> +	verbatim: get
+> +	verbatim: protocol=https
+> +	verbatim: host=$2
+> +	verbatim: path=$3
+> +	EOF
+> +}
+> +
+> +test_expect_success 'url parser handles bare query marker' '
+> +	check_host_and_path https://example.com?foo.git example.com ?foo.git
+> +'
+> +
+> +test_expect_success 'url parser handles bare fragment marker' '
+> +	check_host_and_path https://example.com#foo.git example.com "#foo.git"
+> +'
+> +
+> +test_expect_success 'url parser not confused by encoded markers' '
+> +	check_host_and_path https://example.com%23%3f%2f/foo.git \
+> +		"example.com#?/" foo.git
+> +'
+> +
+>  test_done
+
+These look good, too. Thanks for working on this.
+
+> --
+> 2.26.1.429.g609150846d
 
 Thanks,
 Taylor
