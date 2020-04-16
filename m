@@ -2,127 +2,153 @@ Return-Path: <SRS0=FNL0=6A=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1DBC8C2BA19
-	for <git@archiver.kernel.org>; Thu, 16 Apr 2020 00:47:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C72CC2BA19
+	for <git@archiver.kernel.org>; Thu, 16 Apr 2020 00:50:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EE5AF208E0
-	for <git@archiver.kernel.org>; Thu, 16 Apr 2020 00:47:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6228A206A2
+	for <git@archiver.kernel.org>; Thu, 16 Apr 2020 00:50:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="VfvPVV6v"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Tyr/QMvm"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405021AbgDPArs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Apr 2020 20:47:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50274 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S2404980AbgDPArh (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 15 Apr 2020 20:47:37 -0400
-Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3BFBC061A0C
-        for <git@vger.kernel.org>; Wed, 15 Apr 2020 17:47:37 -0700 (PDT)
-Received: by mail-pj1-x1043.google.com with SMTP id t40so615329pjb.3
-        for <git@vger.kernel.org>; Wed, 15 Apr 2020 17:47:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=7LNyJHpEZu6zDaiNuqbgk+LKDrIYZdrZiYOtsu6Z+Fg=;
-        b=VfvPVV6vzg4qC94mewalhZsP54vWwOF9gcUYX09pfUHxR6NvLQZ9o+pNduMN6PWmVi
-         Lh5Ssm+UwJAZJrR2ysc4REMdACdIJXcI6V8jfNfNhYQbVd4ZTfSPI0w1oVWVcezCZWgC
-         Za9ca2hPCdluNmQelxEZ712ksXn9YRhG4C6nxFjRMyTGdceeQnwzOzkq7lJsSyZGWLpT
-         8D0jTC6ruBiMNEWjOKzjbNwJLg+ilXavQ1Zq1vrCJwuBuG2+sWf/4hlTfHkD5qzEy7VZ
-         VSzgLsjFznd2ky11D8een4FAGzOq+r93s1q7CuKirnFl02Hi+iwezeC7NYndWmHIo58Y
-         WXvg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=7LNyJHpEZu6zDaiNuqbgk+LKDrIYZdrZiYOtsu6Z+Fg=;
-        b=G7V32BVIvDD2xR95j/BzDmT9ZDaDVn/1gZZRtsIVdqtNICOJqY358ZPGD2+9w9tUCo
-         zQ6BlAMMPwOss5aRX61Du6Pzv1XmLyY2FB8sEmNpIg3CLQ6HX9XgxFnLQQX5G1akBK1D
-         2H+ClL9Y1cVCo60ZXJ/AvkPuAyD3+AO4xCr/6jJQ7XPTGnsQtCFOPuuL8GrKJ0Y+NMYh
-         c6gppV4QZN7e5i394lBKkAIlnfv9lKUV8Fjjqun1k8m+nLGUeMHd0BzfZiPvzDDLwSdV
-         vwGHEfrKBCd4Y7VMUGQqQ958enc1j4CnPZKYI59KQDQRZvXbAlvLuqW69R0wqpQtLmmN
-         MIZg==
-X-Gm-Message-State: AGi0PuYlBdeqlMYLNUUEYVlkkOmwNTa5hVvi8i6UhdDTGAksv3/nGGsJ
-        HMg7E/4CcrbeVHsksDqK1IkhuA==
-X-Google-Smtp-Source: APiQypKBNevmQXUQMZa1I3ej158WvAhnUZyAxT65tIpeN2otqFLdPY3DcbJolJPzcaPRKjeYKUCziA==
-X-Received: by 2002:a17:90a:a40e:: with SMTP id y14mr1977952pjp.151.1586998057024;
-        Wed, 15 Apr 2020 17:47:37 -0700 (PDT)
-Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id z63sm14984448pfb.20.2020.04.15.17.47.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Apr 2020 17:47:35 -0700 (PDT)
-Date:   Wed, 15 Apr 2020 18:47:34 -0600
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: Is fetch.writeCommitGraph (and thus features.experimental) meant
- to work in the presence of shallow clones?
-Message-ID: <20200416004734.GA36156@syl.local>
-References: <CABPp-BHGubUX5o9KsQaoh_UFjFh2PaMkkJhCao+5LGnFc0dQNg@mail.gmail.com>
- <20200415205442.GC216285@google.com>
- <CABPp-BE+bC8aECT4Ak_kSObXV-euq7vCnYeUYBEjYmW4Pko=rw@mail.gmail.com>
+        id S2405139AbgDPAuM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Apr 2020 20:50:12 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64087 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2405058AbgDPAuG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Apr 2020 20:50:06 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C2B744D712;
+        Wed, 15 Apr 2020 20:50:01 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=1V3z787PEk++fQJj9t0dxVwtJAQ=; b=Tyr/QM
+        vmJQfLWFVg57yanZaPmP4sZhCKOJ9KmWvhP7UQg4KvowaN/31SApTbDGt/WhRSx7
+        T/vtIk8quy7wANLFXMMpoxinxOZ7vVjzl70JBzHAAh+1ox6Zl+8KTVpg+ED71rWv
+        mXDL/kA9Ndq+aroTK/F1gcrKisbjASKQVp7ck=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=GK9wvQt8/ymfjOsWBN/1uYxuUrF5X/ls
+        icqP1wAGx7CDveYEf9nud1bTWejMXqvU+Ucrjy+/6p4JDJSk9+QcKGKKNJ5+6oGM
+        ai9tkufuWfygch5kArOXlcVqMMu00lA+O0Xh0sTZLoZgOqQY/Uba3E3ojzrJ03Tf
+        BETOclGGIT8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6CE704D710;
+        Wed, 15 Apr 2020 20:50:01 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 75C254D70F;
+        Wed, 15 Apr 2020 20:50:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Danh Doan <congdanhqx@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH v4 00/12] ci: replace our Azure Pipeline by GitHub Actions
+References: <pull.743.git.git.1585658913.gitgitgadget@gmail.com>
+        <cover.1586309211.git.congdanhqx@gmail.com>
+        <xmqqpncgmk5z.fsf@gitster.c.googlers.com>
+        <nycvar.QRO.7.76.6.2004101604210.46@tvgsbejvaqbjf.bet>
+        <xmqq1rovl54d.fsf@gitster.c.googlers.com>
+        <20200410174141.GB27699@danh.dev>
+Date:   Wed, 15 Apr 2020 17:49:59 -0700
+In-Reply-To: <20200410174141.GB27699@danh.dev> (Danh Doan's message of "Sat,
+        11 Apr 2020 00:41:41 +0700")
+Message-ID: <xmqqh7xk45l4.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CABPp-BE+bC8aECT4Ak_kSObXV-euq7vCnYeUYBEjYmW4Pko=rw@mail.gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 338196A4-7F7C-11EA-A6F2-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 15, 2020 at 03:54:09PM -0700, Elijah Newren wrote:
-> On Wed, Apr 15, 2020 at 1:54 PM Jonathan Nieder <jrnieder@gmail.com> wrote:
-> >
-> > Hi,
-> >
-> > Elijah Newren wrote:
-> >
-> > > I was building a version of git for internal use, and thought I'd try
-> > > turning on features.experimental to get more testing of it.  The
-> > > following test error in the testsuite scared me, though:
-> > >
-> > > t5537.9 (fetch --update-shallow):
-> > >
-> > > ...
-> > > + git fetch --update-shallow ../shallow/.git refs/heads/*:refs/remotes/shallow/*
-> > > remote: Enumerating objects: 18, done.
-> > > remote: Counting objects: 100% (18/18), done.
-> > > remote: Compressing objects: 100% (6/6), done.
-> > > remote: Total 16 (delta 0), reused 6 (delta 0), pack-reused 0
-> > > Unpacking objects: 100% (16/16), 1.16 KiB | 1.17 MiB/s, done.
-> > > From ../shallow/
-> > >  * [new branch]      master     -> shallow/master
-> > >  * [new tag]         heavy-tag  -> heavy-tag
-> > >  * [new tag]         light-tag  -> light-tag
-> > > error: Could not read ac67d3021b4319951fb176469d7732e6914530c5
-> > > error: Could not read ac67d3021b4319951fb176469d7732e6914530c5
-> > > error: Could not read ac67d3021b4319951fb176469d7732e6914530c5
-> > > fatal: unable to parse commit ac67d3021b4319951fb176469d7732e6914530c5
-> > >
-> > > Passing -c fetch.writeCommitGraph=false to the fetch command in that
-> > > test makes it pass.
-> >
-> > Oh!  Thanks for checking this.  At $DAYJOB this was the week we were
-> > going to roll out features.experimental.  Time to roll that back...
-> >
-> > How did you go about the experiment?  Does Taylor's patch make it pass?
+Danh Doan <congdanhqx@gmail.com> writes:
+
+> On 2020-04-10 08:42:10-0700, Junio C Hamano <gitster@pobox.com> wrote:
+>> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>>  ...
+>> > I would like to point out that there is only one single topic that is
+>> > cause for sorrow here, and it is the reftable one.
+>> 
+>> I first thought so, too, but vsbuild failures like the one in
+>> https://github.com/git/git/runs/575116793 do not appear to be
+>> caused by that topic (6a8c1d17b8 excludes reftable), so there
+>> must be somebody else that is broken.
 >
-> Yes, Taylor's patch makes the experiment pass.  My experiment was
-> pretty simple; modify the code so that features.experimental defaults
-> to true:
+> Excerpt from build log:
+>
+>> fatal error C1083: Cannot open include file: 'config-list.h'
+>
+> It's from bugreport topic.
+> I've seen this failure in the past (when testing with pu),
+> then I saw it disappear.
+>
+> I thought it was fixed during my testing for v4.
 
-I'm glad to hear that it is passing now. I would like to have Jonathan
-Tan chime in on whether or not this patch is making sense, but if so,
-I'll prepare it for real and send it out.
+Is the issue something similar to 976aaedc (msvc: add a Makefile
+target to pre-generate the Visual Studio solution, 2019-07-29)?
 
-Thanks,
-Taylor
+If that is the case, perhaps something like this would help?  I'll
+tentatively queue it on top of es/bugreport and merge the result to
+'pu' to see what happens.
+
+-- >8 --
+Subject: msvc: the bugreport topic depends on a generated config-list.h file
+
+For reasons explained in 976aaedc (msvc: add a Makefile target to
+pre-generate the Visual Studio solution, 2019-07-29), some build
+artifacts we consider non-source files cannot be generated in the
+Visual Studio environment, and we already have some Makefile tweaks
+to help Visual Studio to use generated command-list.h header file.
+
+As this topic starts to depend on another such generated header file,
+config-list.h, let's do the same to it.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ compat/vcbuild/README | 4 ++--
+ config.mak.uname      | 6 +++---
+ 2 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/compat/vcbuild/README b/compat/vcbuild/README
+index 1b6dabf5a2..42292e7c09 100644
+--- a/compat/vcbuild/README
++++ b/compat/vcbuild/README
+@@ -92,8 +92,8 @@ The Steps of Build Git with VS2008
+    the git operations.
+ 
+ 3. Inside Git's directory run the command:
+-       make command-list.h
+-   to generate the command-list.h file needed to compile git.
++       make command-list.h config-list.h
++   to generate the header file needed to compile git.
+ 
+ 4. Then either build Git with the GNU Make Makefile in the Git projects
+    root
+diff --git a/config.mak.uname b/config.mak.uname
+index 0ab8e00938..f880cc2792 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -721,9 +721,9 @@ vcxproj:
+ 	 echo '</Project>') >git-remote-http/LinkOrCopyRemoteHttp.targets
+ 	git add -f git/LinkOrCopyBuiltins.targets git-remote-http/LinkOrCopyRemoteHttp.targets
+ 
+-	# Add command-list.h
+-	$(MAKE) MSVC=1 SKIP_VCPKG=1 prefix=/mingw64 command-list.h
+-	git add -f command-list.h
++	# Add command-list.h and config-list.h
++	$(MAKE) MSVC=1 SKIP_VCPKG=1 prefix=/mingw64 config-list.h command-list.h
++	git add -f config-list.h command-list.h
+ 
+ 	# Add scripts
+ 	rm -f perl/perl.mak
