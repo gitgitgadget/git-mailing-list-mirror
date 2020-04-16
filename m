@@ -2,74 +2,137 @@ Return-Path: <SRS0=FNL0=6A=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 23BBBC2BB55
-	for <git@archiver.kernel.org>; Thu, 16 Apr 2020 18:58:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 64349C3815B
+	for <git@archiver.kernel.org>; Thu, 16 Apr 2020 18:59:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 03E8821841
-	for <git@archiver.kernel.org>; Thu, 16 Apr 2020 18:58:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4255F221E8
+	for <git@archiver.kernel.org>; Thu, 16 Apr 2020 18:59:30 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="cdf1+Z1+"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729128AbgDPS6X (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Apr 2020 14:58:23 -0400
-Received: from cloud.peff.net ([104.130.231.41]:56622 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1728928AbgDPS6W (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Apr 2020 14:58:22 -0400
-Received: (qmail 29508 invoked by uid 109); 16 Apr 2020 18:58:22 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 16 Apr 2020 18:58:22 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6323 invoked by uid 111); 16 Apr 2020 19:09:12 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 16 Apr 2020 15:09:12 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 16 Apr 2020 14:58:21 -0400
-From:   Jeff King <peff@peff.net>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Mike Hommey <mh@glandium.org>, git@vger.kernel.org
-Subject: Re: Order of operations at the end of fast-import?
-Message-ID: <20200416185821.GA1289786@coredump.intra.peff.net>
-References: <20200416042449.ztgyrdunsrzt7avp@glandium.org>
- <20200416050909.GB21547@coredump.intra.peff.net>
- <4b3493c9-8a4b-c55e-6749-cccc9dee87b6@kdbg.org>
+        id S1729227AbgDPS73 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Apr 2020 14:59:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51086 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727815AbgDPS70 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Apr 2020 14:59:26 -0400
+Received: from mail-lf1-x142.google.com (mail-lf1-x142.google.com [IPv6:2a00:1450:4864:20::142])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54297C061A0C
+        for <git@vger.kernel.org>; Thu, 16 Apr 2020 11:59:26 -0700 (PDT)
+Received: by mail-lf1-x142.google.com with SMTP id m19so6381552lfq.13
+        for <git@vger.kernel.org>; Thu, 16 Apr 2020 11:59:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=usp-br.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=r15kLJH/nymbS6aftGscNRjCBYsNDZNiWKkpEW5TdKg=;
+        b=cdf1+Z1+8hwcnm6DDwKFEis3V8zVypuBcl5WGtIQikTFs67ZL8mwns1ZvdkhHLVeGd
+         3p6nGqHZtZ5tFyKzWqfRd7u3QhWrGjJIBD656VDm6lLTs+fGUiYpdYmHAeoCXKKMfope
+         58J0w39RkyvzK4ANG9H/8Q8v36G7XMqg2yOeIPntgQlqFk8sKb8ntpSk4VqtsWYXgxO+
+         10+pppwxhImS0Ts7O0HzK0rO20mlRxPb6hp7/4M4L66Ve+iWJnJw8LnkgxO6+ceQJB6e
+         PVnTMd0Y1Isbfh4vVgPRLAB70Qa5MwllLZJQneD+kK72iY3OqvmaOQjswpmidf6gabJH
+         3pXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=r15kLJH/nymbS6aftGscNRjCBYsNDZNiWKkpEW5TdKg=;
+        b=sten0M43BCaoZjFuhYM6aS6MA3XsSdMKMQprpAfj1zzxvue78o4eVkryprw3kXwr3i
+         BWCG+930sZlSQjiXulXdK0B3wwtsFzcZypnt+GC1+3hKRD6InWWCCB0BOKKaO+YgtedG
+         pQH8eFLNDQjaT54rNcEY3e4qkB1ifa+rQ0DX3vgvsBQs3wxNW/wS1W8Gpr++Pu4l1dGE
+         F8LFKuOZNNKB0SZHo0VEFeU41NpEXX7ck3iF5PSjRdXEYfrDuSVAhqf445yoHnre0nmv
+         kuyjnW/g178NRB4RZ4I0fsprzO0+GHyjV7AKI6W879UdfvTrJkj7Xm38UrmUh98g6MU5
+         k2bg==
+X-Gm-Message-State: AGi0Puawp5xZfUxMnmPjXMVkxB1637FW8tTntmpM/a9EjQUxyW8HySm8
+        pnYbEmFvGps2ZUnqWGbicTsjocEsnJxN1mZcbCXZgDNWelY=
+X-Google-Smtp-Source: APiQypKe4bxZfYuzzEQUPhhPKUH1ce1/p4QCL+r6kV/swh+h383j+bfvNUpqmb4qqUT2H1kGVRzSGem7qxQCywgLpEk=
+X-Received: by 2002:ac2:5455:: with SMTP id d21mr1114171lfn.23.1587063563989;
+ Thu, 16 Apr 2020 11:59:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <4b3493c9-8a4b-c55e-6749-cccc9dee87b6@kdbg.org>
+References: <CAOyLvt9=wRfpvGGJqLMi7=wLWu881pOur8c9qNEg+Xqhf8W2ww@mail.gmail.com>
+In-Reply-To: <CAOyLvt9=wRfpvGGJqLMi7=wLWu881pOur8c9qNEg+Xqhf8W2ww@mail.gmail.com>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Thu, 16 Apr 2020 15:59:12 -0300
+Message-ID: <CAHd-oW4NK3E2umq9OXXW9TUyLKQwWN4R-b1KKK117tWPc=K7aw@mail.gmail.com>
+Subject: Re: git-grep's "-z" option misbehaves in subdirectory
+To:     git <git@vger.kernel.org>
+Cc:     Greg Hurrell <greg@hurrell.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Andreas Heiduk <asheiduk@gmail.com>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 16, 2020 at 08:34:27PM +0200, Johannes Sixt wrote:
+[Oops, I messed up the headers in my reply, so I'm not sure if the
+message was properly delivered. I'm replying again, just in case.]
 
-> > This is usually handled by the gc expiration time, which is compared
-> > against the file mtime. The default is 2 weeks, but even something short
-> > like 5 minutes would be plenty to avoid this race (even for a long
-> > import, we should be updating the mtime every time we call write()).
-> 
-> Except that on Windows the times are only updated reliably when all file
-> handles refering to the file are closed. Would that poke a hole in your
-> argument? (I don't think  so, as long as expiration times are not
-> ridiculously short; and people who do gc --prune=now should know what
-> they are doing -- and when.)
+On Mon, Apr 13, 2020 at 6:57 PM Greg Hurrell <greg@hurrell.net> wrote:
+>
+> It seems that `git-grep -lz` behaves differently depending on whether
+> it is inside a subdirectory:
+[...]
+> $ git grep -lz content
+> an "example".txt^@nested/other "example".txt^@
+>
+> Note that, as expected, the files are NUL-terminated and not wrapped
+> in quotes. ("^@" represents NUL byte.)
+>
+> $ cd nested
+> $ git grep -lz content
+> "other \"example\".txt"^@
+>
+> As soon as we move into a subdirectory, files are wrapped in quotes
+> and contain escapes, despite the "-z" switch.
 
-Yes, if you do "git gc --prune=5.minutes" while an hour-long fast-import
-is running, you might be in trouble. Don't do that.
+Note that, differently from other Git commands, "-z" doesn't affect
+quoting/escaping in git-grep. For example, while git-ls-files' man
+page says:
 
-Though on _any_ system, there are other cases where objects sit
-untouched before being referenced. I guess we pull from the index for
-reachability, so "git add" is safe for blobs. I don't know if we are
-clever enough to use cache-tree (and it might not even be there), so
-possibly those trees are at risk until you run "git commit" (or even
-after you run while waiting in the editor).
+-z
+      \0 line termination on output **and do not quote filenames**.
 
-Certainly I think the whole pruning system is a patchwork of assumptions
-that could be violated in extreme cases. But it has been that way for 15
-years. If people aren't routinely finding objects pruned out from under
-them, I'm not inclined to spend a lot of time digging on it.
+The git-grep one only says:
 
--Peff
+-z, --null
+      Output \0 instead of the character that normally follows a file name.
+
+Indeed, this inconsistency might be a little confusing. The reason for
+it may be because "-z" was added in git-grep [1] to mimic the GNU grep
+"-Z" flag, which outputs '\0' after file names. In GNU grep, pathnames
+are never quoted (regardless of whether or not "-Z" is used). Also
+note that, probably due to the same reason, git-grep doesn't obey the
+core.quotePath setting (which would make it quote unusual pathnames by
+default).
+
+Nevertheless, quoting relative paths but not absolute ones is a bug.
+From what I see, we have two options to fix it:
+
+1.  Make git-grep more consistent with other Git commands by always
+quoting/escaping unusual pathnames (relative or not), unless "-z" is
+given or core.quotePath is set to "false".
+
+2.  Keep git-grep compatible with GNU grep, ripgrep and other grepping
+tools, removing the quotes/escaping from relative paths as well. In
+this case, I think it is also a good idea to add a note about this
+behavior in core.quotePath and in git-grep's description of "-z" (as
+it may seem confusing to those who are used to the behavior of "-z" in
+other Git commands).
+
+In my previous [and possibly corrupted] reply, I included a patch[2]
+in the direction of the second option. But thinking about it again,
+I'm not really sure which one is the best way forward here. I'd love
+to hear what others have to say about it, before sending a more
+refined patch.
+
+[1]: See 83caecc, (git grep: Add "-z/--null" option as in GNU's grep.,
+2008-10-01)
+[2]: https://public-inbox.org/git/20200414074204.677139-1-matheus.bernardino@usp.br/
+(for some reason, the mail didn't reach lore.kernel.org. Probably my
+fault, messing with the headers :/)
