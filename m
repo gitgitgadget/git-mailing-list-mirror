@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 72475C2BB85
-	for <git@archiver.kernel.org>; Thu, 16 Apr 2020 16:24:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 46725C352BE
+	for <git@archiver.kernel.org>; Thu, 16 Apr 2020 16:24:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4A1D62223E
-	for <git@archiver.kernel.org>; Thu, 16 Apr 2020 16:24:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2261122240
+	for <git@archiver.kernel.org>; Thu, 16 Apr 2020 16:24:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pnMlLd2y"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X1YbDxtG"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2410768AbgDPQY2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Apr 2020 12:24:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55122 "EHLO
+        id S2410732AbgDPQY3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Apr 2020 12:24:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55134 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1732572AbgDPQYX (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 16 Apr 2020 12:24:23 -0400
-Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5BB0C061A0C
-        for <git@vger.kernel.org>; Thu, 16 Apr 2020 09:24:23 -0700 (PDT)
-Received: by mail-pj1-x1044.google.com with SMTP id q16so1302163pje.1
-        for <git@vger.kernel.org>; Thu, 16 Apr 2020 09:24:23 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S2403967AbgDPQYZ (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 16 Apr 2020 12:24:25 -0400
+Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49ABFC061A0C
+        for <git@vger.kernel.org>; Thu, 16 Apr 2020 09:24:25 -0700 (PDT)
+Received: by mail-pf1-x444.google.com with SMTP id k15so1887083pfh.6
+        for <git@vger.kernel.org>; Thu, 16 Apr 2020 09:24:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=nyxuMOk9EO/0k84GD8wXJZYoGb6KHR263TB1IprII/0=;
-        b=pnMlLd2yv2e91wfIv0re4OBoFfee1zjr/WTQGVEViYV62DkjzwYTAjv4VkS8Tk4rPR
-         AzYFTH/J9lrMarfOiONPJE1PrNPcoIpKIXiDN02E4ABP9GJZ88G4O0auDCSB/Hpes66M
-         4uvoiXPCy5B6RCFvtAxx5kgynVMNKEsYhJSBQv2f1/wTH0GfP/xM/eTIJibzXBndXVTO
-         UNHn8V54CRqfK0MrVZCrS3wEEDywhQW1H4fKHx52vyTEsPqN4wa1Klq/4nwLjmi+2GCs
-         xbmM6NGuVOTgGgjB3LHEEIsymSgvS1eVpVzRnzqpbuu6wPYLxP/EM5BOwC0fVHtt2wm/
-         4Ieg==
+        bh=aY7Hdnh9vR6M7td/46gR8NOmsz2zyoEJNCmXweYbZR8=;
+        b=X1YbDxtGoiIcGZn9opSZUnp3aMsoz3Lp2WNCtfH90DE6+31LYs/WkDIQwbxY9fXT+D
+         uiGm6Rjg/UJg0Epk2+G2/3+m9+2pOQk5bobWqizEo74cNLMflGB0pwiJR1LbqSCv12VP
+         9MCdnOyyLZsN/vs7wy91ASazUzVmU2B85h6arS4IlJRwZm42KbeOOdHBNDEd4/VupJWm
+         Dcff46RNzDpsRdvkwxXnUjJl46BjebH1bzUdlPXOqH7hT32wtRvqPZ6h9JSUgxjIYmsO
+         kRbZuLVIHgHNi2Q1Y6AbmDO0Qg4fSuFvmxSbLeNgd+FQGVG4mCKw33rvl+8YutvV+5XH
+         GI8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=nyxuMOk9EO/0k84GD8wXJZYoGb6KHR263TB1IprII/0=;
-        b=P+4uCn1tzZZ2DSUNOz1YOeM4mc6lEmfS2XNg1YFQHp7FD2jzxWmZHp+8qc29rTsSnz
-         a1J/F+OKJNmOP5vD3kNKd98GyY8/0xy9AyagbVwq1mqMoy3mBp6ZOaQscvnUyWM/xGsV
-         2LjTYD+BlRGv8hx/XMrLCHd6t5KMFoxcMjPCl1ovofYJMY25tXr4uhw4592t+2EylE3I
-         M89E9rOT8uRpD4wkgjERhah09KFvr8+HEi7tj42f6wVe36dN9dlOn6n/Y28O/KMLDB3t
-         L+M2F//U5JAcPaXGZCxWpSh2rDYgHtil6KfaJRJXBYWBI+Wa/JtNpKvBETEGhjydB7wo
-         N8cg==
-X-Gm-Message-State: AGi0PuZ4j8VsWyKitQcFeyksIsuwap0G8tX28RUOVEeHB82tXMzm2oht
-        ns3dqH+qjPlfQfhKt/FwVkVpbalm70U=
-X-Google-Smtp-Source: APiQypIszCdku5iSV67IWCS8U1F0ijCYyL63wNVlqHIKoFRQLTzRvfadlxSHF836Q3VaxuRWx7lQvw==
-X-Received: by 2002:a17:902:ac89:: with SMTP id h9mr10676257plr.266.1587054263491;
-        Thu, 16 Apr 2020 09:24:23 -0700 (PDT)
+        bh=aY7Hdnh9vR6M7td/46gR8NOmsz2zyoEJNCmXweYbZR8=;
+        b=ExhijiMWTpg89J8+6ndULO+CODl5j54rhjMQGesP8/UZjfbFok3iBK9ysLcbNybCIJ
+         bG5BKPKV4ZxDOrveotWPpt6AuTmnfR3oHMGY1yRrAw1w/djm9oAcctnsGXs5hKyUaO/y
+         /JvevHJsHk8XHW1PzopMVHZaq9CbdYQnVLtbMjQF54qZQkfQ5s+B2RxZGzIQKr4rwdQV
+         w2uKkAm8bQQWkDKY1GjpC6ZoI6NnFruW35v+BvDpoLvH46qgXe3hl22fU1lhgH+h2HKP
+         gX2Eg+O1IhafTa4dRYZXzbq2N0DEcTd6BvKkqqKdEVdckA3gg60ogylVwQLXAH6yybCO
+         osJg==
+X-Gm-Message-State: AGi0PuZKiGDmXkuKKsW0YPtqCV2iX0fx71PtJyuwwBaTYBXB0lGRReeU
+        1TV+LODkV2DXAs5toxRKKbc=
+X-Google-Smtp-Source: APiQypJ5xYEhHku6dx6A+SyyRQ7pYCMKBfB+ZgubOqdni4Yk9+vgnojC7fQcxyUbJjUTHLP8KuhBtA==
+X-Received: by 2002:a63:2057:: with SMTP id r23mr32885312pgm.232.1587054264713;
+        Thu, 16 Apr 2020 09:24:24 -0700 (PDT)
 Received: from tigtog.localdomain.localdomain ([144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id c125sm17007933pfa.142.2020.04.16.09.24.22
+        by smtp.gmail.com with ESMTPSA id c125sm17007933pfa.142.2020.04.16.09.24.23
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 16 Apr 2020 09:24:22 -0700 (PDT)
+        Thu, 16 Apr 2020 09:24:24 -0700 (PDT)
 From:   Jiang Xin <worldhello.net@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
 Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: [PATCH v3 2/5] t5543: never report what we do not push
-Date:   Thu, 16 Apr 2020 12:24:12 -0400
-Message-Id: <20200416162415.5751-3-worldhello.net@gmail.com>
+Subject: [PATCH v3 3/5] send-pack: mark failure of atomic push properly
+Date:   Thu, 16 Apr 2020 12:24:13 -0400
+Message-Id: <20200416162415.5751-4-worldhello.net@gmail.com>
 X-Mailer: git-send-email 2.26.0.rc0
 In-Reply-To: <20200329143329.13846-1-worldhello.net@gmail.com>
 References: <20200329143329.13846-1-worldhello.net@gmail.com>
@@ -76,123 +76,132 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 
-When we push some references to the git server, we expect git to report
-the status of the references we are pushing; no more, no less.  But when
-pusing with atomic mode, if some references cannot be pushed, Git reports
-the reject message on all references in the remote repository.
+When pushing with SSH or other smart protocol, references are validated
+by function `check_to_send_update()` before they are sent in commands
+to `send_pack()` of "receve-pack".  For atomic push, if a reference is
+rejected after the validation, only references pushed by user should be
+marked as failure, instead of report failure on all remote references.
 
-Add new test cases in t5543, and fix them in latter commit.
+Commit v2.22.0-1-g3bca1e7f9f (transport-helper: enforce atomic in
+push_refs_with_push, 2019-07-11) wanted to fix report issue of HTTP
+protocol, but marked all remote references failure for atomic push.
+
+In order to fix the issue of status report for SSH or other built-in
+smart protocol, revert part of that commit and add additional status
+for function `atomic_push_failure()`.  The additional status for it
+except the "REF_STATUS_EXPECTING_REPORT" status are:
+
+- REF_STATUS_NONE : Not marked as "REF_STATUS_EXPECTING_REPORT" yet.
+- REF_STATUS_OK   : Assume OK for dryrun or status_report is disabled.
+
+This fix won't resolve the issue of status report in transport-helper
+for HTTP or other protocols, and breaks test case in t5541.  Will fix
+it in additional commit.
 
 Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 ---
- t/t5543-atomic-push.sh | 89 ++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 89 insertions(+)
+ send-pack.c                |  2 ++
+ t/t5541-http-push-smart.sh |  2 +-
+ t/t5543-atomic-push.sh     |  6 +++---
+ t/t5548-push-porcelain.sh  |  2 +-
+ transport.c                | 14 --------------
+ 5 files changed, 7 insertions(+), 19 deletions(-)
 
-diff --git a/t/t5543-atomic-push.sh b/t/t5543-atomic-push.sh
-index 7079bcf9a0..001240eec7 100755
---- a/t/t5543-atomic-push.sh
-+++ b/t/t5543-atomic-push.sh
-@@ -27,6 +27,12 @@ test_refs () {
- 	test_cmp expect actual
- }
+diff --git a/send-pack.c b/send-pack.c
+index 1835cd5582..efefb687b2 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -332,6 +332,8 @@ static int atomic_push_failure(struct send_pack_args *args,
+ 			continue;
  
-+fmt_status_report () {
-+	sed -n \
-+		-e "/^To / { s/   */ /g; p; }" \
-+		-e "/^ ! / { s/   */ /g; p; }"
-+}
-+
- test_expect_success 'atomic push works for a single branch' '
- 	mk_repo_pair &&
- 	(
-@@ -191,4 +197,87 @@ test_expect_success 'atomic push is not advertised if configured' '
- 	test_refs master HEAD@{1}
+ 		switch (ref->status) {
++		case REF_STATUS_NONE:
++		case REF_STATUS_OK:
+ 		case REF_STATUS_EXPECTING_REPORT:
+ 			ref->status = REF_STATUS_ATOMIC_PUSH_FAILED;
+ 			continue;
+diff --git a/t/t5541-http-push-smart.sh b/t/t5541-http-push-smart.sh
+index 23be8ce92d..2c2c3fb0f5 100755
+--- a/t/t5541-http-push-smart.sh
++++ b/t/t5541-http-push-smart.sh
+@@ -177,7 +177,7 @@ test_expect_success 'push (chunked)' '
+ 	 test $HEAD = $(git rev-parse --verify HEAD))
  '
  
-+# References in upstream : master(1) one(1) foo(1)
-+# References in workbench: master(2)        foo(1) two(2) bar(2)
-+# Atomic push            : master(2)               two(2) bar(2)
-+test_expect_failure 'atomic push reports (reject by update hook)' '
-+	mk_repo_pair &&
-+	(
-+		cd workbench &&
-+		test_commit one &&
-+		git branch foo &&
-+		git push up master one foo &&
-+		git tag -d one
-+	) &&
-+	(
-+		mkdir -p upstream/.git/hooks &&
-+		cat >upstream/.git/hooks/update <<-EOF &&
-+		#!/bin/sh
-+
-+		if test "\$1" = "refs/heads/bar"
-+		then
-+			echo >&2 "Pusing to branch bar is prohibited"
-+			exit 1
-+		fi
-+		EOF
-+		chmod a+x upstream/.git/hooks/update
-+	) &&
-+	(
-+		cd workbench &&
-+		test_commit two &&
-+		git branch bar
-+	) &&
-+	test_must_fail git -C workbench \
-+		push --atomic up master two bar >out 2>&1 &&
-+	fmt_status_report <out >actual &&
-+	cat >expect <<-EOF &&
-+	To ../upstream
-+	 ! [remote rejected] master -> master (atomic push failure)
-+	 ! [remote rejected] two -> two (atomic push failure)
-+	 ! [remote rejected] bar -> bar (hook declined)
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+# References in upstream : master(1) one(1) foo(1)
-+# References in workbench: master(2)        foo(1) two(2) bar(2)
-+test_expect_failure 'atomic push reports (mirror, but reject by update hook)' '
-+	(
-+		cd workbench &&
-+		git remote remove up &&
-+		git remote add up ../upstream
-+	) &&
-+	test_must_fail git -C workbench \
-+		push --atomic --mirror up >out 2>&1 &&
-+	fmt_status_report <out >actual &&
-+	cat >expect <<-EOF &&
-+	To ../upstream
-+	 ! [remote rejected] master -> master (atomic push failure)
-+	 ! [remote rejected] one (atomic push failure)
-+	 ! [remote rejected] bar -> bar (hook declined)
-+	 ! [remote rejected] two -> two (atomic push failure)
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+# References in upstream : master(2) one(1) foo(1)
-+# References in workbench: master(1)        foo(1) two(2) bar(2)
-+test_expect_failure 'atomic push reports (reject by non-ff)' '
-+	rm upstream/.git/hooks/update &&
-+	(
-+		cd workbench &&
-+		git push up master &&
-+		git reset --hard HEAD^
-+	) &&
-+	test_must_fail git -C workbench \
-+		push --atomic up master foo bar >out 2>&1 &&
-+	fmt_status_report <out >actual &&
-+	cat >expect <<-EOF &&
-+	To ../upstream
-+	 ! [rejected] master -> master (non-fast-forward)
-+	 ! [rejected] bar -> bar (atomic push failed)
-+	EOF
-+	test_cmp expect actual
-+'
-+
- test_done
+-test_expect_success 'push --atomic also prevents branch creation, reports collateral' '
++test_expect_failure 'push --atomic also prevents branch creation, reports collateral' '
+ 	# Setup upstream repo - empty for now
+ 	d=$HTTPD_DOCUMENT_ROOT_PATH/atomic-branches.git &&
+ 	git init --bare "$d" &&
+diff --git a/t/t5543-atomic-push.sh b/t/t5543-atomic-push.sh
+index 001240eec7..620c30d58f 100755
+--- a/t/t5543-atomic-push.sh
++++ b/t/t5543-atomic-push.sh
+@@ -200,7 +200,7 @@ test_expect_success 'atomic push is not advertised if configured' '
+ # References in upstream : master(1) one(1) foo(1)
+ # References in workbench: master(2)        foo(1) two(2) bar(2)
+ # Atomic push            : master(2)               two(2) bar(2)
+-test_expect_failure 'atomic push reports (reject by update hook)' '
++test_expect_success 'atomic push reports (reject by update hook)' '
+ 	mk_repo_pair &&
+ 	(
+ 		cd workbench &&
+@@ -241,7 +241,7 @@ test_expect_failure 'atomic push reports (reject by update hook)' '
+ 
+ # References in upstream : master(1) one(1) foo(1)
+ # References in workbench: master(2)        foo(1) two(2) bar(2)
+-test_expect_failure 'atomic push reports (mirror, but reject by update hook)' '
++test_expect_success 'atomic push reports (mirror, but reject by update hook)' '
+ 	(
+ 		cd workbench &&
+ 		git remote remove up &&
+@@ -262,7 +262,7 @@ test_expect_failure 'atomic push reports (mirror, but reject by update hook)' '
+ 
+ # References in upstream : master(2) one(1) foo(1)
+ # References in workbench: master(1)        foo(1) two(2) bar(2)
+-test_expect_failure 'atomic push reports (reject by non-ff)' '
++test_expect_success 'atomic push reports (reject by non-ff)' '
+ 	rm upstream/.git/hooks/update &&
+ 	(
+ 		cd workbench &&
+diff --git a/t/t5548-push-porcelain.sh b/t/t5548-push-porcelain.sh
+index 8d487b2a7a..e7d9e06dac 100755
+--- a/t/t5548-push-porcelain.sh
++++ b/t/t5548-push-porcelain.sh
+@@ -110,7 +110,7 @@ run_git_push_porcelain_output_test() {
+ 	# Refs of upstream : master(A)  bar(B)  baz(A)  next(A)
+ 	# Refs of workbench: master(B)  bar(A)  baz(A)  next(A)
+ 	# git-push         : master(B)  bar(A)  NULL    next(A)
+-	test_expect_success "atomic push failed ($PROTOCOL)" '
++	test_expect_failure "atomic push failed ($PROTOCOL)" '
+ 		(
+ 			cd workbench &&
+ 			git update-ref refs/heads/master $B &&
+diff --git a/transport.c b/transport.c
+index 13d638d5fe..a07e39564c 100644
+--- a/transport.c
++++ b/transport.c
+@@ -1248,20 +1248,6 @@ int transport_push(struct repository *r,
+ 		err = push_had_errors(remote_refs);
+ 		ret = push_ret | err;
+ 
+-		if ((flags & TRANSPORT_PUSH_ATOMIC) && err) {
+-			struct ref *it;
+-			for (it = remote_refs; it; it = it->next)
+-				switch (it->status) {
+-				case REF_STATUS_NONE:
+-				case REF_STATUS_UPTODATE:
+-				case REF_STATUS_OK:
+-					it->status = REF_STATUS_ATOMIC_PUSH_FAILED;
+-					break;
+-				default:
+-					break;
+-				}
+-		}
+-
+ 		if (!quiet || err)
+ 			transport_print_push_status(transport->url, remote_refs,
+ 					verbose | porcelain, porcelain,
 -- 
 2.24.1.15.g448c31058d.agit.4.5
 
