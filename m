@@ -2,101 +2,148 @@ Return-Path: <SRS0=FNL0=6A=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 152C2C2BB55
-	for <git@archiver.kernel.org>; Thu, 16 Apr 2020 20:08:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CB223C3815B
+	for <git@archiver.kernel.org>; Thu, 16 Apr 2020 20:19:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AF71A21744
-	for <git@archiver.kernel.org>; Thu, 16 Apr 2020 20:08:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A04CE21BE5
+	for <git@archiver.kernel.org>; Thu, 16 Apr 2020 20:19:55 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="yKUVJi9m"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IFpQqP/J"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729052AbgDPUIK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Apr 2020 16:08:10 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:59469 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727861AbgDPUHx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Apr 2020 16:07:53 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4CAEBCEB66;
-        Thu, 16 Apr 2020 16:07:48 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=4Q4rvw2hIT8wGG9xBJiYGr/OFDU=; b=yKUVJi
-        9mCUUmJDUHJvXnnVfaoRpNvUVUHQ2aYZGBc+VQJZEwEeFuqPNalWg54460oMASyI
-        pt3CtT2JwXeNVKWR6twqXRaCpSidMMEd/mSXwQdtxI1Bm9u+TdN7QCqhwpUTJLvv
-        wOwIiTmjwl8sDFJIqCBSpWufexJoa6xaHHkR4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ZUK7ed6TrRLMCjv2iv2K+DyXFe7I2XR0
-        D12F334fExCdPqanOPV96ISBt/Vkuadk34JlcrrGjYldMDYoDOp9Lnjv4wQsv1Fz
-        XMhJ0vSAbM4+epTMI/w/OwrKp5rv+0kjX9i/At7k20wWML5ESEmYnsIAKaakgsI4
-        mbYpSzLllRM=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 44504CEB65;
-        Thu, 16 Apr 2020 16:07:48 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 82081CEB61;
-        Thu, 16 Apr 2020 16:07:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Cc:     git <git@vger.kernel.org>, Greg Hurrell <greg@hurrell.net>,
-        Andreas Heiduk <asheiduk@gmail.com>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Subject: Re: git-grep's "-z" option misbehaves in subdirectory
-References: <CAOyLvt9=wRfpvGGJqLMi7=wLWu881pOur8c9qNEg+Xqhf8W2ww@mail.gmail.com>
-        <CAHd-oW4NK3E2umq9OXXW9TUyLKQwWN4R-b1KKK117tWPc=K7aw@mail.gmail.com>
-Date:   Thu, 16 Apr 2020 13:07:43 -0700
-In-Reply-To: <CAHd-oW4NK3E2umq9OXXW9TUyLKQwWN4R-b1KKK117tWPc=K7aw@mail.gmail.com>
-        (Matheus Tavares Bernardino's message of "Thu, 16 Apr 2020 15:59:12
-        -0300")
-Message-ID: <xmqq1ronyz1s.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1730402AbgDPUTw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Apr 2020 16:19:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35352 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1730055AbgDPUTr (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 16 Apr 2020 16:19:47 -0400
+Received: from mail-ed1-x542.google.com (mail-ed1-x542.google.com [IPv6:2a00:1450:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE7D6C0610D6
+        for <git@vger.kernel.org>; Thu, 16 Apr 2020 13:14:07 -0700 (PDT)
+Received: by mail-ed1-x542.google.com with SMTP id r7so3017716edo.11
+        for <git@vger.kernel.org>; Thu, 16 Apr 2020 13:14:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=wMWAdJaDoesQ7l4YrmZbXUqFvfIk/aDRRi7TZz1QS+k=;
+        b=IFpQqP/JEp1d7SC8ugVt9TBRH/A1hxyAswWDtbllHLraoOiTLoei+wyrAIxsD7DLf0
+         KVQDW7WZ6M0nCElO9VxrVFop3p4E8rmo4LyXJHdWEDLs8GJyyKtmZ6nuZqaNHLQ2FCkS
+         jmA+q6V77KetHmXGsP0ZfbN7+XgCRELEMWZb2CHxFgm4LiZK2akyBI5NkswWjHQhARIu
+         j0RSHkiW7y62Sw8xpYddyf9JdoA6oq/wPi4dRhxEFdmCpnw77YuFHH1byTzyRpMvLKgx
+         w5WmhHLCe7tOu2TGtGNIAoLUHFkbQXw9l0ASFWPdYuQP0yAhQWE5j70acJKfBpJMQMuO
+         PayQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=wMWAdJaDoesQ7l4YrmZbXUqFvfIk/aDRRi7TZz1QS+k=;
+        b=CX12ek3PS2fzCJpBF5UJWh9XaQ8v9IWScuuFd2WVClJgqH/7PAnShKgC2jFbyaqr6x
+         CFKzUyllcp9cpX6vnfozOLIcHfSdSEtwdQALUDibS2cmEX1kKlAf/aiv1O8R7bFm8bSe
+         2n5KvzxmuYi0Tb+R4oCzNPPgGx01F1t3v5KQw5pyucEWzhVMWf8k4lSjbs8IYcrlmgjw
+         NyT1ZMwMeOGKui8To6jyLiwIRMtcjDMPVpBpZIQUWBHHU0wDc7yMR7ZB9nkf61vWB8yf
+         B3RHSUlwlxZg52NjpKcV/EW1I1i9+0xsWx1uQLAl115MGs8KWfGCtIaQl6tr7dF6k11E
+         q4Iw==
+X-Gm-Message-State: AGi0PubGnu8tBZQJqGYW2OG5zx2eOT+bQ37Hf0AMg5mDAcHPP8phLeun
+        Hk+0RBkDWJpXM/XdMN1KNhX7s9nM
+X-Google-Smtp-Source: APiQypJxIxJOiMaWN3SO8M/6b40hSAkXoTXYg6/p7P8HmbycEQgylAFVXGD5ll1bAfRoXxJ8sWgZSw==
+X-Received: by 2002:aa7:d1d6:: with SMTP id g22mr10343364edp.36.1587068046340;
+        Thu, 16 Apr 2020 13:14:06 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id z13sm2657445edj.0.2020.04.16.13.14.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Apr 2020 13:14:05 -0700 (PDT)
+Message-Id: <adc03eee4ac8a0911bfd2a7ae03364ef0e744ef0.1587068044.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.609.v3.git.1587068044.gitgitgadget@gmail.com>
+References: <pull.609.v2.git.1586789126.gitgitgadget@gmail.com>
+        <pull.609.v3.git.1587068044.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 16 Apr 2020 20:14:02 +0000
+Subject: [PATCH v3 1/3] revision: complicated pathspecs disable filters
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: EFE64794-801D-11EA-BA75-B0405B776F7B-77302942!pb-smtp20.pobox.com
+To:     git@vger.kernel.org
+Cc:     me@ttaylorr.com, jnareb@gmail.com, garimasigit@gmail.com,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Matheus Tavares Bernardino <matheus.bernardino@usp.br> writes:
+From: Derrick Stolee <dstolee@microsoft.com>
 
-> Note that, differently from other Git commands, "-z" doesn't affect
-> quoting/escaping in git-grep. For example, while git-ls-files' man
-> page says:
->
-> -z
->       \0 line termination on output **and do not quote filenames**.
->
-> The git-grep one only says:
->
-> -z, --null
->       Output \0 instead of the character that normally follows a file name.
->
-> Indeed, this inconsistency might be a little confusing. The reason for
-> it may be ...
+The changed-path Bloom filters work only when we can compute an
+explicit Bloom filter key in advance. When a pathspec is given
+that allows case-insensitive checks or wildcard matching, we
+must disable the Bloom filter performance checks.
 
-Let me lift the need for speculation ;-) It was a simple oversight
-when the documentation was writte, and those "add relative with
-quoting" were bugs that not many people thought of testing with -z
-output mode.  It is unfortunate, but it happens that things fall
-into cracks without anybody noticing X-<.
+By checking the pathspec in prepare_to_use_bloom_filters(), we
+avoid setting up the Bloom filter data and thus revert to the
+usual logic.
 
-The reason why we quote paths in output from various commands
-without -z is to make them machine parseable; there is no reason to
-quote if \0 delimiting is used as no paths contain NUL byte in it.
+Before this change, the following tests would fail*:
 
-> 1.  Make git-grep more consistent with other Git commands by always
-> quoting/escaping unusual pathnames (relative or not), unless "-z" is
-> given or core.quotePath is set to "false".
+	t6004-rev-list-path-optim.sh (Tests 6-7)
+	t6130-pathspec-noglob.sh (Tests 3-6)
+	t6131-pathspec-icase.sh (Tests 3-5)
 
-This is the only sensible way forward, I would think.
+*These tests would fail when using GIT_TEST_COMMIT_GRAPH and
+GIT_TEST_COMMIT_GRAPH_BLOOM_FILTERS except that the latter
+environment variable was not set up correctly to write the changed-
+path Bloom filters in the test suite. That will be fixed in the
+next change.
+
+Helped-by: Taylor Blau <me@ttaylorr.com>
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ revision.c | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
+
+diff --git a/revision.c b/revision.c
+index 2b06ee739c8..f78c636e4d0 100644
+--- a/revision.c
++++ b/revision.c
+@@ -650,6 +650,20 @@ static void trace2_bloom_filter_statistics_atexit(void)
+ 	jw_release(&jw);
+ }
+ 
++static int forbid_bloom_filters(struct pathspec *spec)
++{
++	if (spec->has_wildcard)
++		return 1;
++	if (spec->nr > 1)
++		return 1;
++	if (spec->magic & ~PATHSPEC_LITERAL)
++		return 1;
++	if (spec->nr && (spec->items[0].magic & ~PATHSPEC_LITERAL))
++		return 1;
++
++	return 0;
++}
++
+ static void prepare_to_use_bloom_filter(struct rev_info *revs)
+ {
+ 	struct pathspec_item *pi;
+@@ -659,7 +673,10 @@ static void prepare_to_use_bloom_filter(struct rev_info *revs)
+ 	int len;
+ 
+ 	if (!revs->commits)
+-	    return;
++		return;
++
++	if (forbid_bloom_filters(&revs->prune_data))
++		return;
+ 
+ 	repo_parse_commit(revs->repo, revs->commits->item);
+ 
+-- 
+gitgitgadget
+
