@@ -2,114 +2,119 @@ Return-Path: <SRS0=FNL0=6A=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C444C2BA2B
-	for <git@archiver.kernel.org>; Thu, 16 Apr 2020 22:47:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A02D8C2BA2B
+	for <git@archiver.kernel.org>; Thu, 16 Apr 2020 22:55:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 513FA221F7
-	for <git@archiver.kernel.org>; Thu, 16 Apr 2020 22:47:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 78779221F7
+	for <git@archiver.kernel.org>; Thu, 16 Apr 2020 22:55:46 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b00ea62Q"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="lYqmdmVZ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728251AbgDPWrP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Apr 2020 18:47:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58368 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726441AbgDPWrO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Apr 2020 18:47:14 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9643EC061A0C
-        for <git@vger.kernel.org>; Thu, 16 Apr 2020 15:47:14 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id d17so604751wrg.11
-        for <git@vger.kernel.org>; Thu, 16 Apr 2020 15:47:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=dVe21dydQPtfSQerWN2h79Z4A6clNRwzmruE+2UQRYM=;
-        b=b00ea62QYdKWH8mrUhZH0c43DyygbQFg44uA4mRS68advXQaskSipyTMSSwfgmjjTZ
-         8m237rPNy4lc25r6oboVCUZrBZi0IYSb7pn6hmrPSM51MKSwFrD0xh3Lh1Q68m2OQN6d
-         7sqxorlGeLRx+0OW3EtWVr+neEwEKl9W4mCHhHfcNlwKGgD+UPl+eHR1zxIQ7/EqP879
-         1KOYxJYGbpZVUJq6TLEyAU+9JTQpcuZu/AG50mQagBo7wJFmBM0RwZckj88E5l8Z+FBO
-         cgZEWojn1n1uwW4tLWbQDRwE2ecTkVYm5Je/mwHDNf0uQo1p/6jAYkUrxW5BttC9ss1D
-         qmWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=dVe21dydQPtfSQerWN2h79Z4A6clNRwzmruE+2UQRYM=;
-        b=LLE+RA7EcX6zbL+i/EQ8W+D5/CHTNKdkvz/HdwbWuuC4o612WcqblIy0QSxOGK7yUv
-         hjZafV80f14pRo3mU6CQFbRZWJ+pV8Ma8A2CFTSSmFZnTYRjYumwk8e2STFM9fUFjoV2
-         7HRLfPfLN7tFaNURe9ikbBIGJf/s1aqface3Tdh4Wc8Ha/hIZ/XBnUPKrk2uJPjISZ3T
-         PU/IbEkBGuclFTQrSS6coh5VMv4mroUFh3dYhMEMj3+GgAESowNev06UU4ZpUNESb2o2
-         YVZlecSrXNTWQp0g6bnKpcVJknf+2I2WtDsZp9Wa1X0VuVM70HF9tEKe1E/0fRrD03fK
-         BaXg==
-X-Gm-Message-State: AGi0PuZ2PJi8vb56SfKPvbcdcbb6HuZC2nz8LIS8qsxiP10d+IbV4lSr
-        a2J0I5oEoEIk9SdppdL/xFzIIGdhrrs++g==
-X-Google-Smtp-Source: APiQypLV3oCeycMi1Jiyxg8EdAwJW0Fc978CFSXSEemhzkGwmkX9APBVFyrCEgEK9UIUXCK00e5P8w==
-X-Received: by 2002:a05:6000:128d:: with SMTP id f13mr533188wrx.241.1587077231893;
-        Thu, 16 Apr 2020 15:47:11 -0700 (PDT)
-Received: from doriath (87-231-246-247.rev.numericable.fr. [87.231.246.247])
-        by smtp.gmail.com with ESMTPSA id v131sm5438239wmb.19.2020.04.16.15.47.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Apr 2020 15:47:11 -0700 (PDT)
-Date:   Fri, 17 Apr 2020 00:47:08 +0200
-From:   Damien Robert <damien.olivier.robert@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Apr 2020, #01; Wed, 15)
-Message-ID: <20200416224708.zr4dlrz4hpaqsz2s@doriath>
-X-PGP-Key: http://www.normalesup.org/~robert/pro/files/Damien_Olivier_Robert.asc
-X-Start-Date: Fri, 17 Apr 2020 00:36:29 +0200
-References: <xmqqr1wo4alb.fsf@gitster.c.googlers.com>
- <20200416211208.xqnnrkvcl2jw3ejr@doriath>
- <20200416213009.GA1721147@coredump.intra.peff.net>
- <xmqqh7xjxeew.fsf@gitster.c.googlers.com>
+        id S1729126AbgDPWzo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Apr 2020 18:55:44 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:37224 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728497AbgDPWzj (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 16 Apr 2020 18:55:39 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 47DA060443;
+        Thu, 16 Apr 2020 22:55:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1587077707;
+        bh=ojG2tPjsxz7GGC0E7n8FFrdhYzPY/RyVQ6Tt/IyEL/c=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=lYqmdmVZaJRB2vI/4kNZGqkbG1Pi9Qy8lrEDYa4Q9IF1eUI0O0Css8kMsYAz883d3
+         upcr3qichO+yfNLq+AaqHWVFzNBu7gtySmK7hOXr5YMF8AMqiKJflETGL3/OzQhw2t
+         HhgtB1fEfaYSVYuK5645Zc7hXcw0+HNqYHUSFztYO3+z812BXn/t9pD52OrZOsCDhq
+         r3/GkOldqBpFAbIe0IHxRhrSkm0na4EouNq/oswQMzHuIyZ9gQr5Osd/Qd3kvqlAUk
+         K+3AgPEVmvVRT5pCUjeDevz4e4zfrIeeR+1piKlJwXYM5yetNpsb54VhE+LoUwxpc0
+         K/AzxhRwgVuz+xKUPZVF7cg/JqjGm1l+yffdKOLiFIXlNAlivvwvau9H9FFRJ6BpG3
+         q3+xJLV5EkZ7l6IKaGpR4gZPT41nOiAMLC6OeADyj/xmmOj+a3lUdfwKmG/f2pE95n
+         58LKbpzcoAx601mZdPv5fKOMzDb4NWtYIDCa4vGJZhsR1lUSWwY
+Date:   Thu, 16 Apr 2020 22:55:02 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Guy Maurel <guy.j@maurel.de>
+Cc:     git@vger.kernel.org
+Subject: Re: a problem with git diff
+Message-ID: <20200416225502.GJ2751707@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Guy Maurel <guy.j@maurel.de>, git@vger.kernel.org
+References: <65cbee30-fa37-1422-98f2-2c2b5aa094bd@maurel.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="BEa57a89OpeoUzGD"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqh7xjxeew.fsf@gitster.c.googlers.com>
+In-Reply-To: <65cbee30-fa37-1422-98f2-2c2b5aa094bd@maurel.de>
+X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
+ 5.5.0-1-amd64)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From Junio C Hamano, Thu 16 Apr 2020 at 15:18:47 (-0700) :
-> Thanks.  In any case, they already are in 'next', so please update
-> incrementally.  In an early part of the development cycle of a topic, we
-> tend to avoid building a topic from a horribly broken state and fix
-> things up with pile of "oops, that was wrong, and here is a band-aid"
-> patches, but once the patches become reviewable shape, the remaining
-> "issues" tend to be the ones that are not found without careful reviewing
-> and thinking things through, and it often is easier for later history
-> inspection if the fixes are separate.
 
-I am a bit confused because in next you picked both the original patch
-fixing the fallback to default %(push:remoteref) behavior, and the new RFC
-patch fixing triangular workflow (which has not yet been reviewed). But
-your argument seems to indicate you would have preferred two separate topics.
+--BEa57a89OpeoUzGD
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-That's indeed why the patch I sent today drops the triangular workflow
-patch for now.
+On 2020-04-16 at 16:43:40, Guy Maurel wrote:
+> Hello!
+>=20
+> Using the appended two files:
+>   git diff combine.cpp-2020-04-16-A combine.cpp-2020-04-16-R > git-diff.d=
+iff-Y
+>=20
+> doesn't show the same differences as with:
+>   meld combine.cpp-2020-04-16-R combine.cpp-2020-04-16-A
+>=20
+> Have a look at git-diff.diff-Y at line 210:
+> -static void process_returns(void)
+> +static void mark_lvalue(chunk_t *pc)
+>=20
+> which is NOT correct.
 
-I think this is my fault, I should have sent the RFC patches fixing the
-triangular workflow which you picked (along with the original patch
-reviewed by Jeff) in a separate thread, so there were no risk of confusion
-(which was increased by the fact that my cover letter for this indicated
-version 4 while the patches were actually version 6).
+It looks like there's some additional code that gets inserted before the
+process_returns function.  In this case, the diff is accurate in that
+applying it to the old file will result in the new file, but it's not
+very helpful.
 
-The triangular workflow patch is not quite correct in the sense that it
-does not handle (yet) all cases, but on the other hand you could argue that
-this is indeed better than the current code which is always wrong in the
-triangular case.
+The reason is that the default diff algorithm, myers, looks for common
+lines and finds them in the blank lines in both process_returns and the
+new code above it.  It then writes the diff as a set of deletions of the
+lines in process_returns and an addition of the lines in the new code,
+plus a final addition of the process_returns function.  While correct,
+this is, as you noted, confusing.
 
-Sorry I did not catch this sooner :-(
+If you're looking for a more helpful output, you can use
+--diff-algorithm=3Dpatience (or diff.algorithm=3Dpatience), which results
+in a diff output that more logically matches what most humans would like
+to see.  You can also use the histogram diff algorithm, which is based
+on patience but has some additional heuristics.  Which one produces
+better output differs depending on the circumstance.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
--- 
-Damien
+--BEa57a89OpeoUzGD
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.20 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXpjiRQAKCRB8DEliiIei
+gR64AQDZuCY0iz2loj4K/ZLamqreaqt37HKVQGnep3eSJnVmfAD7BDmKocfJesFV
+oss/DJFJc+WHCu9Ha7TC/LVtSCoLnwQ=
+=ODND
+-----END PGP SIGNATURE-----
+
+--BEa57a89OpeoUzGD--
