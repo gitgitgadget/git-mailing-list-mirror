@@ -7,88 +7,103 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B94D3C2BB55
-	for <git@archiver.kernel.org>; Thu, 16 Apr 2020 15:21:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F32FBC2BB55
+	for <git@archiver.kernel.org>; Thu, 16 Apr 2020 15:28:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 98D38214D8
-	for <git@archiver.kernel.org>; Thu, 16 Apr 2020 15:21:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D0DDE206D6
+	for <git@archiver.kernel.org>; Thu, 16 Apr 2020 15:28:27 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dzaPDCl7"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UeK6FkXo"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2409170AbgDPPV6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Apr 2020 11:21:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45168 "EHLO
+        id S2505330AbgDPP2Z (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Apr 2020 11:28:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S2633481AbgDPPVu (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 16 Apr 2020 11:21:50 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5641C061A0C
-        for <git@vger.kernel.org>; Thu, 16 Apr 2020 08:21:49 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id k11so5325092wrp.5
-        for <git@vger.kernel.org>; Thu, 16 Apr 2020 08:21:49 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S2395269AbgDPP2P (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 16 Apr 2020 11:28:15 -0400
+Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E367FC061A0C
+        for <git@vger.kernel.org>; Thu, 16 Apr 2020 08:28:14 -0700 (PDT)
+Received: by mail-ot1-x334.google.com with SMTP id i27so3378692ota.7
+        for <git@vger.kernel.org>; Thu, 16 Apr 2020 08:28:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:date:to:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=22XnkXPbrc5+BJBUz6JAAcJRvvsYeldqK3wpHZDE/aU=;
-        b=dzaPDCl7tyBAuKEyofS+pontz0AJTDM0G0NLvRe/AMrUbChndXiwcQy7lwrrmIGxcu
-         s/iS/igtk5zGdXM1m7KvybH3Sq4COhBwj4zMXws7G2+u2w19G6yLq1/QtzGoiyXhuaFC
-         9NS2cdiznX1KEeRGxphoyp4tXuF+i8R4mTnMAY1yyZuXRr+I25EfYX8zDyaLRQHjtoGx
-         S4ELUWRDh13MtX3LRgUTdZCx4AR43TCGqFMM9eAQvPIe3V1q7JuT3bsAT49wiH/gjlrh
-         rYbUeIjZJAaIqBB37kxLuqO38VWdmACs8f7ZhyARnm6YPPpuhf2Nzkn0onUYFlpHTMcU
-         yNRg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ZD93f4ogDySz/iFhdLK11JS4JyF91JRF4tOokPq17O0=;
+        b=UeK6FkXohyd1jEQOozWFVmCDhyq5vx8+tz/Hyp5vke5LrkFeSQjiBxaNCsfpB9BT8R
+         6OrubuhEj1yb5GScue7m5IkMebyJPdq8YWXVyNweQ9HIuM0C4vtZTpzGjEvWT5i5QuzA
+         8FymJdO8lt8AlgYIfTQUrbfM02G5/sdRDK+rr79NsuOk54MGYVlUBfyoHsQEEqnNhVe/
+         hMJCk/c92aPUXjg6xPo1AYUnTomK9B7fPJnAjneyTp3Zt8TZQboZVn1V23D4dhxZSxDo
+         bsc5zCWckH2QFgFZqi3TsioQmIyaCOHVJArREyCDIJrW/OqXp6mO9VEVayIzIYSIQn1a
+         xsAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:date:to:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=22XnkXPbrc5+BJBUz6JAAcJRvvsYeldqK3wpHZDE/aU=;
-        b=uKQiAjlk2OWnzdyjoc8fdEeVq/ZirDCNxMmUxWtjv9U3hGQF3+UTs4lFLSxLm1cTDP
-         sVC0uRvQ9ZooFLpr5lPbhkCurPQSZZ4lWCO8GDmNtY0vhT2Gn7cmbjg7VRYriFHtuckQ
-         wVmd3EXRXfVeUaEM8PZHqDgjrttRbqaCqKNQUa/nsYTJWqB3BlQ53Sj3lYQJPFfZmrfn
-         dkO3ZWWEKc3ZnNmVNBC55E/emf1/IhLhEKreqSfmtQeakSnu/+1THBmV0B9zZ6s00Lob
-         YwOToVMWFnYBYipE/Bg+j7YD6/6D7mxvQsIAGtRJ+L1QzRVqSbEWeMqxcoUWK1O8OLYb
-         mgmQ==
-X-Gm-Message-State: AGi0PuY8bW8Kh6ift1PIZVSSqd7RITBIkib/LXano4XfusHxtFiJX35X
-        0bgNMkOkz8YyOgmBKMhtARAa7pEV4uA=
-X-Google-Smtp-Source: APiQypL2tbnC76RVdGeNLUfkrN1bFX9at92QYP50Ps97ZVKTmnTXfvJYwXRZg9D/8enZQ645q46AOw==
-X-Received: by 2002:a5d:4447:: with SMTP id x7mr12644856wrr.299.1587050508108;
-        Thu, 16 Apr 2020 08:21:48 -0700 (PDT)
-Received: from feanor (87-231-246-247.rev.numericable.fr. [87.231.246.247])
-        by smtp.gmail.com with ESMTPSA id o16sm28400095wrs.44.2020.04.16.08.21.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Apr 2020 08:21:47 -0700 (PDT)
-From:   Damien Robert <damien.olivier.robert@gmail.com>
-X-Google-Original-From: Damien Robert <damien.olivier.robert+git@gmail.com>
-Date:   Thu, 16 Apr 2020 17:21:45 +0200
-To:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v8 1/1] remote.c: fix handling of %(push:remoteref)
-Message-ID: <20200416152145.wp2zeibxmuyas6y6@feanor>
-X-PGP-Key: http://www.normalesup.org/~robert/pro/files/Damien_Olivier_Robert.asc
-X-Start-Date: Thu, 16 Apr 2020 17:16:50 +0200
-References: <20200312164558.2388589-1-damien.olivier.robert+git@gmail.com>
- <20200416150355.635436-1-damien.olivier.robert+git@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ZD93f4ogDySz/iFhdLK11JS4JyF91JRF4tOokPq17O0=;
+        b=Oxj7pdvwmfkF1BQ3NlfAANdFxmg/DdJpueCINSatBXY8z8/jJ2nyN0+zStly2urYq3
+         h4OfgZmscSAjxd2HOb71nq+FgXRyqqM3eNlfa8ncrqnbvFVr+ctSqQ3CaYi2OfLlbGQb
+         /Z+O5BtMBzicEEY8HH7P2HVWtxeBh4bsvUo+GJzzb7jtEqLWgiw4ROfU4vatyagb9X+N
+         oUy41CJAacbZ8CJRpRANBM7X5qfpZdNfnBnnJWQ5QLkGkGmWEulRXDU2g01wcFeywUwS
+         MDJ5qvVTD5usBkDgR4ENK60tge7s/iVqAAFzznRpuT+VXHRaf99M2bfjCTRdVk8YwS5m
+         no/Q==
+X-Gm-Message-State: AGi0PubDVEnd6ODlbn28dSf9XXTf/WZkRCAKGT0w95Q6Cb7Qv7xKJ+DC
+        5+vUPBW1bVx22ntq/i6gz7emDMdXL+gD/I3FyeXzFlxs
+X-Google-Smtp-Source: APiQypKS0CA5wFK2Ke2xR9wLSnD2NjN83wm/e3P2md99BzbUiIrZHRWtlO8WyST8yBbCP+LrpmuSNUaMR6TuD/o8BNs=
+X-Received: by 2002:a9d:23e2:: with SMTP id t89mr6537509otb.316.1587050894163;
+ Thu, 16 Apr 2020 08:28:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200416150355.635436-1-damien.olivier.robert+git@gmail.com>
+References: <xmqqr1wo4alb.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqr1wo4alb.fsf@gitster.c.googlers.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 16 Apr 2020 08:28:02 -0700
+Message-ID: <CABPp-BE6xrKLA26Xn4apW-MReCeeyPKu=UMkgr4DsPW0vH4kDw@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Apr 2020, #01; Wed, 15)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-So this patch does not solve:
-- the memory leak mentioned by Jeff in https://public-inbox.org/git/20200328131553.GA643242@coredump.intra.peff.net/
-- the non correct result in a triangular workflow mentioned in
-  https://public-inbox.org/git/20200406175648.25737-1-damien.olivier.robert+git@gmail.com/
-  (aka v6, with an incomplete fix)
-- the code duplication between branch_get_push_remoteref and remote_get_1
-  (see my answer to Jeff's code mentioned above as to why his approach
-  would give a micro regression).
+On Wed, Apr 15, 2020 at 6:13 PM Junio C Hamano <gitster@pobox.com> wrote:
 
-Luckily I have figured how to solve 2) and 3). Unfortunately I haven't have
-time to work on this since two weeks, so I have just sent the original bug
-fix first so at least this one gets fixed.
+> * en/fill-directory-exponential (2020-04-01) 12 commits
+>  - completion: fix 'git add' on paths under an untracked directory
+>  - Fix error-prone fill_directory() API; make it only return matches
+>  - dir: replace double pathspec matching with single in treat_directory()
+>  - dir: include DIR_KEEP_UNTRACKED_CONTENTS handling in treat_directory()
+>  - dir: replace exponential algorithm with a linear one
+>  - dir: refactor treat_directory to clarify control flow
+>  - dir: fix confusion based on variable tense
+>  - dir: fix broken comment
+>  - dir: consolidate treat_path() and treat_one_path()
+>  - dir: fix simple typo in comment
+>  - t3000: add more testcases testing a variety of ls-files issues
+>  - t7063: more thorough status checking
+>
+>  The directory traversal code had redundant recursive calls which
+>  made its performance characteristics exponential with respect to
+>  the depth of the tree, which was corrected.
+>
+>  Is this ready for 'next'?
 
-This is exactly as v4, except I moved the tests around to make them easier
-to grok.
+I think it's as ready as it's going to get.  I'm not aware of any
+current issues, am not planning further work barring a report or
+further review, and I'm feeling much better about it than when I first
+submitted it with a bunch of big warnings (though the big warnings it
+contains in that one commit message are still justified).  I'm glad it
+spent a good long while in pu.  My biggest worry with this series is
+that it might get merged just slightly before a release; I hope it
+either spends an average amount of time in next and then merges down
+quickly or else sits in next for a long time and merges at the
+beginning of the 2.28 cycle.
+
+Either way, at $DAYJOB I got a minor victory by getting many
+volunteers who will take newish git versions (as opposed to the old
+"please install at least git>=2.20.0), and I'm currently trying to set
+up a pipeline for them to get new versions easily.  This series will
+be one of the things I include, in order generate more real-world
+testing.
