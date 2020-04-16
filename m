@@ -2,266 +2,127 @@ Return-Path: <SRS0=FNL0=6A=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C7DFC2BA19
-	for <git@archiver.kernel.org>; Thu, 16 Apr 2020 00:37:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1DBC8C2BA19
+	for <git@archiver.kernel.org>; Thu, 16 Apr 2020 00:47:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CA5E3206D6
-	for <git@archiver.kernel.org>; Thu, 16 Apr 2020 00:37:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EE5AF208E0
+	for <git@archiver.kernel.org>; Thu, 16 Apr 2020 00:47:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="aRySiB4w"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="VfvPVV6v"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404522AbgDPAhp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Apr 2020 20:37:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48708 "EHLO
+        id S2405021AbgDPArs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Apr 2020 20:47:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S2404366AbgDPAhn (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 15 Apr 2020 20:37:43 -0400
-Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05D16C061A0C
-        for <git@vger.kernel.org>; Wed, 15 Apr 2020 17:37:42 -0700 (PDT)
-Received: by mail-pf1-x441.google.com with SMTP id r20so830954pfh.9
-        for <git@vger.kernel.org>; Wed, 15 Apr 2020 17:37:42 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S2404980AbgDPArh (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 15 Apr 2020 20:47:37 -0400
+Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3BFBC061A0C
+        for <git@vger.kernel.org>; Wed, 15 Apr 2020 17:47:37 -0700 (PDT)
+Received: by mail-pj1-x1043.google.com with SMTP id t40so615329pjb.3
+        for <git@vger.kernel.org>; Wed, 15 Apr 2020 17:47:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition;
-        bh=WpmV8OMe/tfx5E7hE02w0VjL5G6jY0Muxm3XIs5KrSc=;
-        b=aRySiB4wT7iM1q0SlgAXKnHCjhYb1AZc9GQKp53O0Xr14rT7IFHqz7T0GAESinsslD
-         Qigdq1rSv8Dwcj8HZvyYFsa5GXaxxIvBB0ylGz0ug75vQd4vaFOYTtAbezFq0SS/atrU
-         YP6HzYxG8TQzPZJJlZ2HttmCTVsz6WuEzB2L+3lF85tiv3vkdRTivtdM+yLwtm6CBrqC
-         AnEYaPgIBC5MFTqs0YXRdm1s7AitIqT6Ic9w3kATwAY/ZEu4epuCFmg0Hk22uOLaJ0vY
-         nezaDe6QnMti0rbB6an9HsaZIOZZm3j4nN1t6IE6o6teei5GMtkkDJ2HwGMc6Jv8vuIA
-         63Ag==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=7LNyJHpEZu6zDaiNuqbgk+LKDrIYZdrZiYOtsu6Z+Fg=;
+        b=VfvPVV6vzg4qC94mewalhZsP54vWwOF9gcUYX09pfUHxR6NvLQZ9o+pNduMN6PWmVi
+         Lh5Ssm+UwJAZJrR2ysc4REMdACdIJXcI6V8jfNfNhYQbVd4ZTfSPI0w1oVWVcezCZWgC
+         Za9ca2hPCdluNmQelxEZ712ksXn9YRhG4C6nxFjRMyTGdceeQnwzOzkq7lJsSyZGWLpT
+         8D0jTC6ruBiMNEWjOKzjbNwJLg+ilXavQ1Zq1vrCJwuBuG2+sWf/4hlTfHkD5qzEy7VZ
+         VSzgLsjFznd2ky11D8een4FAGzOq+r93s1q7CuKirnFl02Hi+iwezeC7NYndWmHIo58Y
+         WXvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition;
-        bh=WpmV8OMe/tfx5E7hE02w0VjL5G6jY0Muxm3XIs5KrSc=;
-        b=DOiBnCnenaLciALRUMILsIx/wpS6libMIx2K9ZfJC02ZofoIklYlU8FtuoXutNTnFB
-         qGw90Y8t7NDlJvlK+Q6A2rqOYEtEhfg787WbQvuuzHwU2fSGPUnTvTlPLHD9E41cWwzL
-         00Fv1t8+ZtKt3OWrsQqmSWSWzhZ+x5S1ADd+aeSW0jWDa0j3CBD/IKR0hhMA4elAa7nW
-         OSnH+aMXsL2N5Qgf4bMFhdXyGzzFymq9ALZIVU76mQ1X5YDWLxxjsEVbLw/kk8sV6N8u
-         UGnnLufaqaBFyRA9f8n+JZSonH35Nb4JatX7wLJg3rxjjcnwM8Cl4Y4vJJxrF6pbjRjg
-         5Fjg==
-X-Gm-Message-State: AGi0Pub/TNjaSzyUSnJH2YdmUJiN3TOCgyMuiUDL7QsWefFFHZB8tHR7
-        zEPGWnHDxpixbxebVEjZribBiBm9u8UZ3e20
-X-Google-Smtp-Source: APiQypJK623dvhRZ2cwRwyRCabzoQVhvSXCW+lYd+okHK5K+Ma94Oqb1O141yDucBh4D4TK7YVrzRA==
-X-Received: by 2002:a62:7cc9:: with SMTP id x192mr32402536pfc.176.1586997460856;
-        Wed, 15 Apr 2020 17:37:40 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=7LNyJHpEZu6zDaiNuqbgk+LKDrIYZdrZiYOtsu6Z+Fg=;
+        b=G7V32BVIvDD2xR95j/BzDmT9ZDaDVn/1gZZRtsIVdqtNICOJqY358ZPGD2+9w9tUCo
+         zQ6BlAMMPwOss5aRX61Du6Pzv1XmLyY2FB8sEmNpIg3CLQ6HX9XgxFnLQQX5G1akBK1D
+         2H+ClL9Y1cVCo60ZXJ/AvkPuAyD3+AO4xCr/6jJQ7XPTGnsQtCFOPuuL8GrKJ0Y+NMYh
+         c6gppV4QZN7e5i394lBKkAIlnfv9lKUV8Fjjqun1k8m+nLGUeMHd0BzfZiPvzDDLwSdV
+         vwGHEfrKBCd4Y7VMUGQqQ958enc1j4CnPZKYI59KQDQRZvXbAlvLuqW69R0wqpQtLmmN
+         MIZg==
+X-Gm-Message-State: AGi0PuYlBdeqlMYLNUUEYVlkkOmwNTa5hVvi8i6UhdDTGAksv3/nGGsJ
+        HMg7E/4CcrbeVHsksDqK1IkhuA==
+X-Google-Smtp-Source: APiQypKBNevmQXUQMZa1I3ej158WvAhnUZyAxT65tIpeN2otqFLdPY3DcbJolJPzcaPRKjeYKUCziA==
+X-Received: by 2002:a17:90a:a40e:: with SMTP id y14mr1977952pjp.151.1586998057024;
+        Wed, 15 Apr 2020 17:47:37 -0700 (PDT)
 Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id a7sm580080pfg.157.2020.04.15.17.37.39
+        by smtp.gmail.com with ESMTPSA id z63sm14984448pfb.20.2020.04.15.17.47.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Apr 2020 17:37:40 -0700 (PDT)
-Date:   Wed, 15 Apr 2020 18:37:38 -0600
+        Wed, 15 Apr 2020 17:47:35 -0700 (PDT)
+Date:   Wed, 15 Apr 2020 18:47:34 -0600
 From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Cc:     peff@peff.net, vd@FreeBSD.org
-Subject: [PATCH] diff-tree.c: load notes machinery when required
-Message-ID: <ce1ba0641e37ac84a104cd44af63e759324feb14.1586997354.git.me@ttaylorr.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <stolee@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: Is fetch.writeCommitGraph (and thus features.experimental) meant
+ to work in the presence of shallow clones?
+Message-ID: <20200416004734.GA36156@syl.local>
+References: <CABPp-BHGubUX5o9KsQaoh_UFjFh2PaMkkJhCao+5LGnFc0dQNg@mail.gmail.com>
+ <20200415205442.GC216285@google.com>
+ <CABPp-BE+bC8aECT4Ak_kSObXV-euq7vCnYeUYBEjYmW4Pko=rw@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <CABPp-BE+bC8aECT4Ak_kSObXV-euq7vCnYeUYBEjYmW4Pko=rw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since its introduction in 7249e91 (revision.c: support --notes
-command-line option, 2011-03-29), combining '--notes' with any option
-that causes us to format notes (e.g., '--pretty', '--format="%N"', etc)
-results in a failed assertion at runtime.
+On Wed, Apr 15, 2020 at 03:54:09PM -0700, Elijah Newren wrote:
+> On Wed, Apr 15, 2020 at 1:54 PM Jonathan Nieder <jrnieder@gmail.com> wrote:
+> >
+> > Hi,
+> >
+> > Elijah Newren wrote:
+> >
+> > > I was building a version of git for internal use, and thought I'd try
+> > > turning on features.experimental to get more testing of it.  The
+> > > following test error in the testsuite scared me, though:
+> > >
+> > > t5537.9 (fetch --update-shallow):
+> > >
+> > > ...
+> > > + git fetch --update-shallow ../shallow/.git refs/heads/*:refs/remotes/shallow/*
+> > > remote: Enumerating objects: 18, done.
+> > > remote: Counting objects: 100% (18/18), done.
+> > > remote: Compressing objects: 100% (6/6), done.
+> > > remote: Total 16 (delta 0), reused 6 (delta 0), pack-reused 0
+> > > Unpacking objects: 100% (16/16), 1.16 KiB | 1.17 MiB/s, done.
+> > > From ../shallow/
+> > >  * [new branch]      master     -> shallow/master
+> > >  * [new tag]         heavy-tag  -> heavy-tag
+> > >  * [new tag]         light-tag  -> light-tag
+> > > error: Could not read ac67d3021b4319951fb176469d7732e6914530c5
+> > > error: Could not read ac67d3021b4319951fb176469d7732e6914530c5
+> > > error: Could not read ac67d3021b4319951fb176469d7732e6914530c5
+> > > fatal: unable to parse commit ac67d3021b4319951fb176469d7732e6914530c5
+> > >
+> > > Passing -c fetch.writeCommitGraph=false to the fetch command in that
+> > > test makes it pass.
+> >
+> > Oh!  Thanks for checking this.  At $DAYJOB this was the week we were
+> > going to roll out features.experimental.  Time to roll that back...
+> >
+> > How did you go about the experiment?  Does Taylor's patch make it pass?
+>
+> Yes, Taylor's patch makes the experiment pass.  My experiment was
+> pretty simple; modify the code so that features.experimental defaults
+> to true:
 
-  $ git rev-list HEAD | git diff-tree --stdin --pretty=medium --notes
-  commit 8f3d9f354286745c751374f5f1fcafee6b3f3136
-  git: notes.c:1308: format_display_notes: Assertion `display_notes_trees' failed.
-  Aborted
+I'm glad to hear that it is passing now. I would like to have Jonathan
+Tan chime in on whether or not this patch is making sense, but if so,
+I'll prepare it for real and send it out.
 
-This failure is due to diff-tree not calling 'load_display_notes' to
-initialize the notes machinery.
-
-Ordinarily, this failure isn't triggered, because it requires passing
-both '--notes' and another of the above mentioned options. In the case
-of '--pretty', for example, we set 'opt->verbose_header', causing
-'show_log()' to eventually call 'format_display_notes()', which expects
-a non-NULL 'display_note_trees'.
-
-Without initializing the notes machinery, 'display_note_trees' remains
-NULL, and thus triggers an assertion failure.
-
-Fix this by initializing the notes machinery after parsing our options,
-and harden this behavior against regression with a test in t4013. (Note
-that the added ref in this test requires updating two unrelated tests
-which use 'log --all', and thus need to learn about the new refs).
-
-Reported-by: Jeff King <peff@peff.net>
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
-This is the remainder of the fix that I started earlier today, with some
-additional suggestions from Peff incorporated.
-
- builtin/diff-tree.c                          |  9 +++++++++
- t/t4013-diff-various.sh                      | 11 +++++++++++
- t/t4013/diff.diff-tree_--format=%N_note      |  6 ++++++
- t/t4013/diff.diff-tree_--pretty_--notes_note | 12 ++++++++++++
- t/t4013/diff.log_--decorate=full_--all       | 15 +++++++++++++++
- t/t4013/diff.log_--decorate_--all            | 15 +++++++++++++++
- 6 files changed, 68 insertions(+)
- create mode 100644 t/t4013/diff.diff-tree_--format=%N_note
- create mode 100644 t/t4013/diff.diff-tree_--pretty_--notes_note
-
-diff --git a/builtin/diff-tree.c b/builtin/diff-tree.c
-index cb9ea79367..11551a20cc 100644
---- a/builtin/diff-tree.c
-+++ b/builtin/diff-tree.c
-@@ -109,6 +109,7 @@ int cmd_diff_tree(int argc, const char **argv, const char *prefix)
- 	struct object *tree1, *tree2;
- 	static struct rev_info *opt = &log_tree_opt;
- 	struct setup_revision_opt s_r_opt;
-+	struct userformat_want w;
- 	int read_stdin = 0;
-
- 	if (argc == 2 && !strcmp(argv[1], "-h"))
-@@ -127,6 +128,14 @@ int cmd_diff_tree(int argc, const char **argv, const char *prefix)
- 	precompose_argv(argc, argv);
- 	argc = setup_revisions(argc, argv, opt, &s_r_opt);
-
-+	memset(&w, 0, sizeof(w));
-+	userformat_find_requirements(NULL, &w);
-+
-+	if (!opt->show_notes_given && (!opt->pretty_given || w.notes))
-+		opt->show_notes = 1;
-+	if (opt->show_notes)
-+		load_display_notes(&opt->notes_opt);
-+
- 	while (--argc > 0) {
- 		const char *arg = *++argv;
-
-diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
-index dde3f11fec..4263b95ca6 100755
---- a/t/t4013-diff-various.sh
-+++ b/t/t4013-diff-various.sh
-@@ -95,6 +95,15 @@ test_expect_success setup '
- 	git commit -m "update mode" &&
- 	git checkout -f master &&
-
-+	GIT_AUTHOR_DATE="2006-06-26 00:06:00 +0000" &&
-+	GIT_COMMITTER_DATE="2006-06-26 00:06:00 +0000" &&
-+	export GIT_AUTHOR_DATE GIT_COMMITTER_DATE &&
-+	git checkout -b note initial &&
-+	git update-index --chmod=+x file2 &&
-+	git commit -m "update mode (file2)" &&
-+	git notes add -m "note" &&
-+	git checkout -f master &&
-+
- 	# Same merge as master, but with parents reversed. Hide it in a
- 	# pseudo-ref to avoid impacting tests with --all.
- 	commit=$(echo reverse |
-@@ -398,6 +407,8 @@ diff --no-index --raw --no-abbrev dir2 dir
-
- diff-tree --pretty --root --stat --compact-summary initial
- diff-tree --pretty -R --root --stat --compact-summary initial
-+diff-tree --pretty --notes note
-+diff-tree --format=%N note
- diff-tree --stat --compact-summary initial mode
- diff-tree -R --stat --compact-summary initial mode
- EOF
-diff --git a/t/t4013/diff.diff-tree_--format=%N_note b/t/t4013/diff.diff-tree_--format=%N_note
-new file mode 100644
-index 0000000000..93042ed539
---- /dev/null
-+++ b/t/t4013/diff.diff-tree_--format=%N_note
-@@ -0,0 +1,6 @@
-+$ git diff-tree --format=%N note
-+note
-+
-+
-+:100644 100755 01e79c32a8c99c557f0757da7cb6d65b3414466d 01e79c32a8c99c557f0757da7cb6d65b3414466d M	file2
-+$
-diff --git a/t/t4013/diff.diff-tree_--pretty_--notes_note b/t/t4013/diff.diff-tree_--pretty_--notes_note
-new file mode 100644
-index 0000000000..4d0bde601c
---- /dev/null
-+++ b/t/t4013/diff.diff-tree_--pretty_--notes_note
-@@ -0,0 +1,12 @@
-+$ git diff-tree --pretty --notes note
-+commit a6f364368ca320bc5a92e18912e16fa6b3dff598
-+Author: A U Thor <author@example.com>
-+Date:   Mon Jun 26 00:06:00 2006 +0000
-+
-+    update mode (file2)
-+
-+Notes:
-+    note
-+
-+:100644 100755 01e79c32a8c99c557f0757da7cb6d65b3414466d 01e79c32a8c99c557f0757da7cb6d65b3414466d M	file2
-+$
-diff --git a/t/t4013/diff.log_--decorate=full_--all b/t/t4013/diff.log_--decorate=full_--all
-index 2afe91f116..3f9b872ece 100644
---- a/t/t4013/diff.log_--decorate=full_--all
-+++ b/t/t4013/diff.log_--decorate=full_--all
-@@ -5,12 +5,27 @@ Date:   Mon Jun 26 00:06:00 2006 +0000
-
-     update mode
-
-+commit a6f364368ca320bc5a92e18912e16fa6b3dff598 (refs/heads/note)
-+Author: A U Thor <author@example.com>
-+Date:   Mon Jun 26 00:06:00 2006 +0000
-+
-+    update mode (file2)
-+
-+Notes:
-+    note
-+
- commit cd4e72fd96faed3f0ba949dc42967430374e2290 (refs/heads/rearrange)
- Author: A U Thor <author@example.com>
- Date:   Mon Jun 26 00:06:00 2006 +0000
-
-     Rearranged lines in dir/sub
-
-+commit cbacedd14cb8b89255a2c02b59e77a2e9a8021a0 (refs/notes/commits)
-+Author: A U Thor <author@example.com>
-+Date:   Mon Jun 26 00:06:00 2006 +0000
-+
-+    Notes added by 'git notes add'
-+
- commit 59d314ad6f356dd08601a4cd5e530381da3e3c64 (HEAD -> refs/heads/master)
- Merge: 9a6d494 c7a2ab9
- Author: A U Thor <author@example.com>
-diff --git a/t/t4013/diff.log_--decorate_--all b/t/t4013/diff.log_--decorate_--all
-index d0f308ab2b..f5e20e1e14 100644
---- a/t/t4013/diff.log_--decorate_--all
-+++ b/t/t4013/diff.log_--decorate_--all
-@@ -5,12 +5,27 @@ Date:   Mon Jun 26 00:06:00 2006 +0000
-
-     update mode
-
-+commit a6f364368ca320bc5a92e18912e16fa6b3dff598 (note)
-+Author: A U Thor <author@example.com>
-+Date:   Mon Jun 26 00:06:00 2006 +0000
-+
-+    update mode (file2)
-+
-+Notes:
-+    note
-+
- commit cd4e72fd96faed3f0ba949dc42967430374e2290 (rearrange)
- Author: A U Thor <author@example.com>
- Date:   Mon Jun 26 00:06:00 2006 +0000
-
-     Rearranged lines in dir/sub
-
-+commit cbacedd14cb8b89255a2c02b59e77a2e9a8021a0 (refs/notes/commits)
-+Author: A U Thor <author@example.com>
-+Date:   Mon Jun 26 00:06:00 2006 +0000
-+
-+    Notes added by 'git notes add'
-+
- commit 59d314ad6f356dd08601a4cd5e530381da3e3c64 (HEAD -> master)
- Merge: 9a6d494 c7a2ab9
- Author: A U Thor <author@example.com>
---
-2.26.0.121.gefe3874640.dirty
+Thanks,
+Taylor
