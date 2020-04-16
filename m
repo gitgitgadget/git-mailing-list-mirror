@@ -2,139 +2,134 @@ Return-Path: <SRS0=FNL0=6A=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 72E97C2BA2B
-	for <git@archiver.kernel.org>; Thu, 16 Apr 2020 06:32:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FFE2C2BB85
+	for <git@archiver.kernel.org>; Thu, 16 Apr 2020 10:04:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 562B120732
-	for <git@archiver.kernel.org>; Thu, 16 Apr 2020 06:32:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7173321D7F
+	for <git@archiver.kernel.org>; Thu, 16 Apr 2020 10:04:37 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UHx1fUpr"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2407993AbgDPGcC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Apr 2020 02:32:02 -0400
-Received: from mx2.suse.de ([195.135.220.15]:53446 "EHLO mx2.suse.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2407975AbgDPGcA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Apr 2020 02:32:00 -0400
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay2.suse.de (unknown [195.135.220.254])
-        by mx2.suse.de (Postfix) with ESMTP id E5105AC85
-        for <git@vger.kernel.org>; Thu, 16 Apr 2020 06:31:54 +0000 (UTC)
-Subject: Re: Fetching 24 Linux commits = 1.2 GiB
-To:     git@vger.kernel.org
-References: <b7f5bfb9-61fb-2552-4399-b744428728e4@suse.cz>
- <20200415135627.vx75hsphbpmgrquv@chatter.i7.local>
-From:   Jiri Slaby <jslaby@suse.cz>
-Autocrypt: addr=jslaby@suse.cz; prefer-encrypt=mutual; keydata=
- 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
-Message-ID: <a5bce92f-ad19-75d4-1e34-dacc73321536@suse.cz>
-Date:   Thu, 16 Apr 2020 08:31:55 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.6.0
+        id S2504558AbgDPKEd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Apr 2020 06:04:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52152 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S2504310AbgDPKEb (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 16 Apr 2020 06:04:31 -0400
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89809C061A0C
+        for <git@vger.kernel.org>; Thu, 16 Apr 2020 03:04:29 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id a32so1160294pje.5
+        for <git@vger.kernel.org>; Thu, 16 Apr 2020 03:04:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=RBLHqhTYjzuz8Vu0GWQbzcD4heoWyr4VFX9RxzrXNbU=;
+        b=UHx1fUpr3keLTzXYh6RppkD96UrNP6hcwkPW7wCyebB9TvnWjKa1pzflcqDExm3wsR
+         vkXAUBltHY7Dvg4L/757s0SQvN0WdFA4tmFHIWAA374DPfTp0CN1M2rhxo2vrfY+4U4H
+         gejRUQtFs1mi47AwPBa93rxnU5aNYBt9cHsMIp3iJxntUgYmTmanUqRMn7tddvdHKwxp
+         xmdSI40gZsny5p2lD+DAGsBoOYUufWJkWCWz3ju9x2YyY1Y5G9iB593kBqoqxdqL8Jh/
+         dr7XMmq41M+Et7aonyMchIl8pJfvlcVfrx1CicsBOSqJO+I5d1d3ZYy/VHm5HhNJXhLL
+         XWLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=RBLHqhTYjzuz8Vu0GWQbzcD4heoWyr4VFX9RxzrXNbU=;
+        b=R/m6ZvuYGnzP8BwcDBACr/c7ARG6BbPhmp292VpbTkcGEvlY0cmQXvz8xNgyYu1rmW
+         leQiava3V6BcDGGyXU28nZrNa/EUAMiQG1SCPkmntZqYRx6IPBB16FNe4qwCNQsc7G3l
+         YuntEeecgjOrWxiY7JYKHq6ucznK7tgh9Kt5b9VsOCim3CkXaMX94jTn/z6E1Dp4qbJ9
+         //IgR/piG2DgOd0Cd4S8pzLycDsXZbV8jXoNQcVuPLL67P27p833lJu+tyB+XDlv07wW
+         Gb82gmoBAWjJMqdKPGxpKE9kxqkYNVXtCRXbQE26Xvf9uAAUeBElraYV4kFWaA7xvVS1
+         /CRQ==
+X-Gm-Message-State: AGi0PuYulCk1610y3+ToMlYwIYePATG6ql/opvZVXaXAauqO7B4iRztE
+        bxK/I6jGKSuJA6Vz0tE2eww=
+X-Google-Smtp-Source: APiQypLUr9E4/jVY7drVoo7tafJapSK6wRDAYtXGI0f0Wd3WgtYsehZ7MQbqabFYMuzgPIL57jAV0g==
+X-Received: by 2002:a17:90a:1202:: with SMTP id f2mr4189107pja.15.1587031468991;
+        Thu, 16 Apr 2020 03:04:28 -0700 (PDT)
+Received: from localhost ([2402:800:6374:5380:b9e1:93e1:68db:b9f6])
+        by smtp.gmail.com with ESMTPSA id i10sm2813720pfa.166.2020.04.16.03.04.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Apr 2020 03:04:28 -0700 (PDT)
+Date:   Thu, 16 Apr 2020 17:04:26 +0700
+From:   Danh Doan <congdanhqx@gmail.com>
+To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+Cc:     git@vger.kernel.org,
+        "Brian M . Carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v2 1/2] date.c: skip fractional second part of ISO-8601
+Message-ID: <20200416100426.GA2285@danh.dev>
+References: <cover.1586856398.git.congdanhqx@gmail.com>
+ <cover.1586921235.git.congdanhqx@gmail.com>
+ <03f3e9968bc29b758f2dd32434c9e8d19f624fdd.1586921235.git.congdanhqx@gmail.com>
+ <20200415101747.ua22fjadmfxzri5n@tb-raspi4>
 MIME-Version: 1.0
-In-Reply-To: <20200415135627.vx75hsphbpmgrquv@chatter.i7.local>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200415101747.ua22fjadmfxzri5n@tb-raspi4>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 15. 04. 20, 15:56, Konstantin Ryabitsev wrote:
-> On Wed, Apr 15, 2020 at 10:01:46AM +0200, Jiri Slaby wrote:
->> Hi,
->>
->> I was at 8f3d9f354286 of:
->> git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
->>
->> I did git remote update today and it fetched:
->> Receiving objects: 100% (7330823/7330823), 1.20 GiB
->> It updated master: 8f3d9f354286..8632e9b5645b, that is 24 small commits.
->>
->> One colleague of mine fetched 1324 commits:
->> Receiving objects: 100% (6820/6820), 4.21 MiB | 6.70 MiB/s, done.
->> Resolving deltas: 100% (5114/5114), completed with 1035 local objects.
->> From git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux
->>    7e63420847ae..8632e9b5645b  master     -> origin/master
->>
->> Another colleague fetched the same what I and:
->>   Receiving objects: 100% (7330823/7330823), 1.20 GiB
->> too.
->>
->> I did git gc --prune && git prune now and I am at 1.7G back from 3.5 G.
->>
->> Is that a bug? What info should I provide?
+On 2020-04-15 12:17:48+0200, Torsten Bögershausen <tboegi@web.de> wrote:
+> On Wed, Apr 15, 2020 at 10:31:27AM +0700, Đoàn Trần Công Danh wrote:
+> > git-commit(1) says ISO-8601 is one of our supported date format.
+> >
+> > ISO-8601 allows timestamps to have a fractional number of seconds.
+> > We represent time only in terms of whole seconds, so we never bothered
+> > parsing fractional seconds. However, it's better for us to parse and
+> > throw away the fractional part than to refuse to parse the timestamp
+> > at all.
+> >
+> > And refusing parsing fractional second part may confuse the parse to
+> > think fractional and timezone as day and month in this example:
+> >
+> > 	2008-02-14 20:30:45.019-04:00
+> >
+> > Reported-by: Brian M. Carlson <sandals@crustytoothpaste.net>
+> > Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
+> > ---
+> >  Documentation/date-formats.txt | 2 +-
+> >  date.c                         | 2 ++
+> >  t/t0006-date.sh                | 2 ++
+> >  3 files changed, 5 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/Documentation/date-formats.txt b/Documentation/date-formats.txt
+> > index 6926e0a4c8..6f69ba2ddd 100644
+> > --- a/Documentation/date-formats.txt
+> > +++ b/Documentation/date-formats.txt
+> > @@ -20,7 +20,7 @@ RFC 2822::
+> >  ISO 8601::
+> >  	Time and date specified by the ISO 8601 standard, for example
+> >  	`2005-04-07T22:13:13`. The parser accepts a space instead of the
+> > -	`T` character as well.
+> > +	`T` character as well. The fractional part will be ignored.
 > 
-> I've helped sfr troubleshoot the same issue last week -- it's most 
-> likely due to 2.26 turning on protocol version=2 by default.  
-> Unfortunately, reproducing this has been tricky, so if you can reliably 
-> make this happen again, then providing a full copy of your local tree as 
-> well as the remote you're trying to fetch may greatly help narrow it 
-> down.
+> When somebody has read the whole patch series, it is clear what
+> "fractional part" means. Otherwise it is not clear, what fractional part
+> means. The following may be easier to understand ?
+> 
+>   ISO 8601::
+>   	Time and date specified by the ISO 8601 standard, for example
+>   	`2005-04-07T22:13:13`. The parser accepts a space instead of the
+>   	`T` character as well.
+>   	Fractional parts of a second like `2005-04-07T22:13:13.091`
+>   	will be ignored and treated as `2005-04-07T22:13:13`
 
-I tried hard, but cannot reproduce. I noticed a difference between
-2.25.1 and 2.25.1+protocol.version=2, though:
+Yes, this read better.
+I think I'll rephase to
 
-$ git config protocol.version 1 # the default in 2.25
-$ git fetch
-git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
-8f3d9f354286745c751374f5f1fcafee6b3f3136
-error: Server does not allow request for unadvertised object
-8f3d9f354286745c751374f5f1fcafee6b3f3136
-$ git config protocol.version 2
-$ git fetch
-git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
-8f3d9f354286745c751374f5f1fcafee6b3f3136
-remote: Enumerating objects: 1433262, done.
-...
+	Fractional parts of a second will be ignored, for example
+	`2005-04-07T22:13:13.019` will be treated as
+	`2005-04-07T22:13:13`
 
-Doing fetch v5.7-rc1 (which is 8f3d9f3 above) with proto 1 works. So the
-server obviously advertises different set of objects with proto 1 and 2.
-
-thanks,
 -- 
-js
-suse labs
+Danh
