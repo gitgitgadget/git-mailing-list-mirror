@@ -2,106 +2,87 @@ Return-Path: <SRS0=FNL0=6A=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A2AEC2BA2B
-	for <git@archiver.kernel.org>; Thu, 16 Apr 2020 05:03:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F988C2D0EF
+	for <git@archiver.kernel.org>; Thu, 16 Apr 2020 05:09:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ED24620771
-	for <git@archiver.kernel.org>; Thu, 16 Apr 2020 05:03:48 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="FB14Hm7E"
+	by mail.kernel.org (Postfix) with ESMTP id 4E7C920644
+	for <git@archiver.kernel.org>; Thu, 16 Apr 2020 05:09:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405529AbgDPFDr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Apr 2020 01:03:47 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:58859 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404971AbgDPFDn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Apr 2020 01:03:43 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 79AD7D67C2;
-        Thu, 16 Apr 2020 01:03:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=DWE7lbtO76v7bMOEevYc1Bnivec=; b=FB14Hm
-        7E/bC2hoZTefPE0b0mMlmReNcYZ16ZwtERjHP2vc4F+PxPLKSDEHHrri4VAP6hXG
-        cccSA95mQrnOzVAhoQyItxI+bMhTnvfJAdkbKjkp8Jd6aKVnlbzahijIbfzG1o0D
-        E12hPXAcMMBweFL8Ht3azO4szqicJ5UeWL6VE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=wwxiyJbHAHEdTTqFOIgo2tP2eWTzEcsw
-        mVpA8LZBG++n3DtTxfM2R9a5E9th4LzmiA/I9DSnKSzy2hGzCtNPg4Z6qYwW5g89
-        +elRrYSQKMvYXav01/2F+jqWPMy5toFN7e9kbOjRHOMZMtCc5u/ZQNlgAyQfxsp5
-        izkYHuYh0gY=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7215CD67C1;
-        Thu, 16 Apr 2020 01:03:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B9748D67C0;
-        Thu, 16 Apr 2020 01:03:37 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Emma Brooks <me@pluvano.com>
-Cc:     git@vger.kernel.org, Eric Wong <e@80x24.org>
-Subject: Re: [PATCH] Documentation: explain "mboxrd" pretty format
-References: <20200416041658.85100-1-me@pluvano.com>
-Date:   Wed, 15 Apr 2020 22:03:36 -0700
-In-Reply-To: <20200416041658.85100-1-me@pluvano.com> (Emma Brooks's message of
-        "Thu, 16 Apr 2020 04:16:59 +0000")
-Message-ID: <xmqqlfmw2f9z.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S2405847AbgDPFJT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Apr 2020 01:09:19 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55680 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S2404971AbgDPFJL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Apr 2020 01:09:11 -0400
+Received: (qmail 16467 invoked by uid 109); 16 Apr 2020 05:09:10 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 16 Apr 2020 05:09:10 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 25730 invoked by uid 111); 16 Apr 2020 05:19:58 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 16 Apr 2020 01:19:58 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 16 Apr 2020 01:09:09 -0400
+From:   Jeff King <peff@peff.net>
+To:     Mike Hommey <mh@glandium.org>
+Cc:     git@vger.kernel.org
+Subject: Re: Order of operations at the end of fast-import?
+Message-ID: <20200416050909.GB21547@coredump.intra.peff.net>
+References: <20200416042449.ztgyrdunsrzt7avp@glandium.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A1B55DEA-7F9F-11EA-A1C1-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20200416042449.ztgyrdunsrzt7avp@glandium.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emma Brooks <me@pluvano.com> writes:
+On Thu, Apr 16, 2020 at 01:24:49PM +0900, Mike Hommey wrote:
 
-> The "mboxrd" pretty format was introduced in 9f23e04061 (pretty: support
-> "mboxrd" output format, 2016-06-05) but wasn't mentioned in the
-> documentation.
+> I just noticed that the order of operations at the end of fast-import
+> are:
+> - end_packfile
+> - dump_branches
+> - dump_tags
+> 
+> The first may create loose objects if the pack is small (per
+> fastimport.unpackLimit, defaulting to 100). The latter two create refs.
+> 
+> There seems to be a theoretical race condition here, if something else
+> triggers a gc at the "wrong" time, the loose objects might be cleaned up
+> and the branches/tags refs become dangling.
 >
-> Signed-off-by: Emma Brooks <me@pluvano.com>
-> ---
->  Documentation/pretty-formats.txt | 6 ++++++
->  1 file changed, 6 insertions(+)
->
-> diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-> index a4b6f49186..547a552463 100644
-> --- a/Documentation/pretty-formats.txt
-> +++ b/Documentation/pretty-formats.txt
-> @@ -83,6 +83,12 @@ placeholders, its output is not affected by other options like
->  
->  	  <full commit message>
->  
-> +* 'mboxrd'
-> ++
-> +Like 'email', but lines in the commit message starting with "From "
-> +(preceded by zero or more ">") are quoted with ">" so they aren't
-> +confused as starting a new commit.
+> I understand that the packfile does need to be finished before creating
+> the refs, and that the unpacking replaces that when there aren't enough
+> objects, but wouldn't it be more data-safe to actually finish the pack,
+> create the refs, and then unpack?
 
-I am torn between rephrasing "starting a new commit" with "starting
-a new e-mail message", and keeping it as-is.  Technically, the latter
-is more correct---the >From quoting is a technique to avoid starting
-a line with "From " in a reversible way, as pieces of e-mails in a
-single mailbox file needs to be split at the boundary.  But in the
-context of format-patch, perhaps saying each "record" in the output
-file is a "commit" (not a piece of e-mail message) would probably be
-an acceptable white lie.
+That race is there even without the unpacking step. Another gc might
+remove the pack, dropping its unreferenced objects.
 
-Thanks.
+We do add a ".keep" between writing the pack and updating the refs, but
+it doesn't look like it's done atomically (i.e., we write the .idx file
+and _then_ add the .keep). So there's a small race there.
 
+But all of this is also true of any operation, like git-commit. It's
+creating new loose objects, and then will try to reference them. In
+between, a simultaneous gc will think they're unreachable. Likewise,
+receiving a push may write a pack (with a .keep, though in the correct
+order) or even loose objects.
 
->  * 'raw'
->  +
->  The 'raw' format shows the entire commit exactly as
+This is usually handled by the gc expiration time, which is compared
+against the file mtime. The default is 2 weeks, but even something short
+like 5 minutes would be plenty to avoid this race (even for a long
+import, we should be updating the mtime every time we call write()).
+
+In fact, gc will use the same expiration for clearing out tempfiles. So
+even before we write the final pack and its .keep, any temporary files
+we're writing into would be at risk. But again, if we're actively
+writing, their mtimes should save them.
+
+-Peff
