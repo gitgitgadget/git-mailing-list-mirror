@@ -7,59 +7,59 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 675DEC2BB1D
-	for <git@archiver.kernel.org>; Fri, 17 Apr 2020 22:09:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C1DF7C2BB1D
+	for <git@archiver.kernel.org>; Fri, 17 Apr 2020 22:13:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3CBFD20B1F
-	for <git@archiver.kernel.org>; Fri, 17 Apr 2020 22:09:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9D479214AF
+	for <git@archiver.kernel.org>; Fri, 17 Apr 2020 22:13:46 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GmW0DOlX"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PIxn2Iqn"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728434AbgDQWJf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Apr 2020 18:09:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50188 "EHLO
+        id S1728541AbgDQWNp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Apr 2020 18:13:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50828 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726284AbgDQWJe (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 17 Apr 2020 18:09:34 -0400
-Received: from mail-ed1-x541.google.com (mail-ed1-x541.google.com [IPv6:2a00:1450:4864:20::541])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94988C061A0C
-        for <git@vger.kernel.org>; Fri, 17 Apr 2020 15:09:34 -0700 (PDT)
-Received: by mail-ed1-x541.google.com with SMTP id d16so2336153edv.8
-        for <git@vger.kernel.org>; Fri, 17 Apr 2020 15:09:34 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1726284AbgDQWNp (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 17 Apr 2020 18:13:45 -0400
+Received: from mail-ej1-x642.google.com (mail-ej1-x642.google.com [IPv6:2a00:1450:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6B26C061A0C
+        for <git@vger.kernel.org>; Fri, 17 Apr 2020 15:13:44 -0700 (PDT)
+Received: by mail-ej1-x642.google.com with SMTP id s9so2720666eju.1
+        for <git@vger.kernel.org>; Fri, 17 Apr 2020 15:13:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=BI3LY2dRYFUFR9Ne/JRF/HJqI59WF3e/JNSraYT1PhM=;
-        b=GmW0DOlXXEdihH+iKnd1hRhGm+AAomlEgwPc6C5soPimyE6YybZQtLXnR4VJOYJvlA
-         QtE9iMV5iUTUJecojM5UBy1HMvzyBbohHIaHba5yLn4uxaitruiUIWvRklWzgcBhmF30
-         peueQ5A8v5tvuQmMqNZPJ7S6e4iXRpftD0BPXVmHZAuuX1khqCmILvQsTKH8f6DvUqkR
-         PCPhyI9XJEC7fjRajbVTzI3LLb/OALPkgYVYoHBcqQiYafd+Zi7hvfHb3Jk4krgQwSjn
-         nJgHBE4uQDzh53ggGc4V9DpIQpeBY6tw9p3Vqm8Rha7f850F0TLz7YNsFq58TFpF6lR3
-         w8AA==
+        bh=8GZjnFyR0v3DOKhGYv8eFYwmTe+P3tg9BLv5rKhpUOY=;
+        b=PIxn2Iqnd1+QY53j+bA/dgB3s3bKktFCwM8Hq3dsvcKOjuE75dfcgsF42xPRBjaLjM
+         5oZtJ4AVezlRDqTDKDfr6Gs6f1bhmpC8CgYTv6wM67PahFhp6QjYvRqgveL/tXdAKwMD
+         wG0G5c9fNA3+XVCUO2Hww+yTSIponx/5wzb4HcQgqZgYF+b74QxE/qETWj8vpNS6iSDt
+         bC4BKOnAcHsjOWKV2FGRY7cx1Gec1qwOpKgMqXjBK/iRaHPEHCUA9hDonQzdJigMhF2c
+         x4qt0aTkXT8fB8l5vTlwiCm7Yl2qkujOxxYB5fx8yJ81MBZSkMGCicAxAcyfYDcLX3yh
+         KeGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=BI3LY2dRYFUFR9Ne/JRF/HJqI59WF3e/JNSraYT1PhM=;
-        b=DWITj+HDA9jUS0HhjGfnC+HnF83lLWsHSNMxmcb0kLBIoo/PfMeMIQ/o3pGW6CVDbb
-         TnLqtDzboaM6cGHpS6mSmJjBG67JKZvU2HnM96KGxi8h5zy4rS9g13yT5KM+S9xFEeqY
-         D6fT8/AsCtCpWUATgkZlJXleVbpd8JSi9hnh/jZBDKy14HLkadKAQWzqcmztUrijmas3
-         YVCvZFvS/BtIcZGks7nO19fXPDiVx7fazFQHLS8CjMLV0/bECoT3UCzDpyhzEejC4TjR
-         ghZdYbTKwsJ8yhfG7Ie5epNKmkQAlswDqM+piW48hRNaI6zo5CIQVyosChQQU58k5OUv
-         /izQ==
-X-Gm-Message-State: AGi0PuaCpDK6sSpt33gKTptCVeVev9/Z3Vmu+75Slb8ViWVKOHOzYEm+
-        i5402ovUCAbwj1kstw7WU91PKCqXwiYhojc2Ph8=
-X-Google-Smtp-Source: APiQypKopTPdZFKL/V3G/+GGqjIanyCIpZ5rlvKUh0aY1ldUeKy1rbyh+1Et+3vfElkP9Idwwrlg57cvEpCy/3SkKyA=
-X-Received: by 2002:a50:f0dc:: with SMTP id a28mr4941082edm.87.1587161373250;
- Fri, 17 Apr 2020 15:09:33 -0700 (PDT)
+        bh=8GZjnFyR0v3DOKhGYv8eFYwmTe+P3tg9BLv5rKhpUOY=;
+        b=opUCCUXzwWY3ZyV5osH2XBp6yxqWdXQ42nYGmSgrndPrgmiNSDBgr78zrUWulp0Qwd
+         OfdThBZl3Yd7j4xDZhE3iqwN3j8ttopiUBg6WXOjzoQ8x1pHnXgGI3+iQrrovClViwuD
+         CCaKgUhEzR7xxigsEGjIRQQj2LqKk+IVy/kW1YlzN3DwtJVzsP8eIwESTImNh42HdIt5
+         +Vm+v1UkcONYbPvI/SPGPCTNUvxLx1gBwOK7hwqJGTDQR+X1YS1OwMp0jdV++TIXJN/e
+         MyKAp3CbGqenCTMxvsDUTKk/rzs+5QQ7KPHR6t7/NwgmTiMn/XmQQ2zjnNjuiCPJvSkV
+         FtNA==
+X-Gm-Message-State: AGi0PuZhhMeZXwVCJOFnLKLEla8Rcx+VVtc9lAlD6MB9AUoon9sKNOi7
+        DEZ7GvfRjPgLUSzzLbT1cO9utN3+7mT1Dq0nh/s=
+X-Google-Smtp-Source: APiQypJlZimh1z8N4rmf46cCjZJ5BX444JE83Jgvj7dL+G6Pbtsg82x5SsAQVXREebJiGGVF3/uyzHbqLzUGO9yYEgE=
+X-Received: by 2002:a17:906:258a:: with SMTP id m10mr5361532ejb.255.1587161623563;
+ Fri, 17 Apr 2020 15:13:43 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200416210456.19122-1-shouryashukla.oo@gmail.com>
-In-Reply-To: <20200416210456.19122-1-shouryashukla.oo@gmail.com>
+References: <20200416210456.19122-1-shouryashukla.oo@gmail.com> <20200416210456.19122-3-shouryashukla.oo@gmail.com>
+In-Reply-To: <20200416210456.19122-3-shouryashukla.oo@gmail.com>
 From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sat, 18 Apr 2020 00:09:21 +0200
-Message-ID: <CAP8UFD1y7D_gSharBE9+CVyQKg3qhXMvtzBjkdYA1Aj3hocBMg@mail.gmail.com>
-Subject: Re: [RFC][PATCH 0/2] submodule: port 'set-url' from shell to C
+Date:   Sat, 18 Apr 2020 00:13:32 +0200
+Message-ID: <CAP8UFD2c_QtS=KWY8rwqMOu1A-KLVE_3dfiCUopWT-W60gg8eA@mail.gmail.com>
+Subject: Re: [PATCH 2/2] submodule: port subcommand 'set-url' from shell to C
 To:     Shourya Shukla <shouryashukla.oo@gmail.com>
 Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
         Heba Waly <heba.waly@gmail.com>,
@@ -71,27 +71,14 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
 On Thu, Apr 16, 2020 at 11:05 PM Shourya Shukla
 <shouryashukla.oo@gmail.com> wrote:
 
-> This is my very first attempt at the conversion of subcommand 'set-url' from shell
-> to C, thus making the subcommand a builtin.
->
-> I have based my conversion by looking at the way other subcommands have been implemented
-> in 'submodule--helper.c' as well as the subcommand 'set-url' in 'remote.c'. The approach
-> I have taken is as follows:
->
-> 1. Create a helper function 'update_url_in_gitmodules()' in 'submodule.c'
->    to update the URL of an entry in '.gitmodules'.
+> -       git submodule--helper config submodule."$name".url "$url"
+> -       git submodule--helper sync ${GIT_QUIET:+--quiet} "$name"
+> +       git ${wt_prefix:+-C "$wt_prefix"} ${prefix:+--super-prefix "$prefix"} submodule--helper set-url ${GIT_QUIET:+--quiet} -- "$@"
 
-We usually don't add a function that is unused in the commit that adds it.
-
-> 2. Port the function 'cmd_set_url()' in 'git-submodule.sh' to 'module_set_url()'
->    in 'submodule--helper.c'.
-
-So it seems to me that you could squash the two commits into one.
-
-Thanks,
-Christian.
+Maybe I missed something but I see nothing in the C code that does
+what the `git submodule--helper sync ...` call does. Maybe for now it
+would work better if that call was kept after the the call to `git ...
+submodule--helper set-url ...`
