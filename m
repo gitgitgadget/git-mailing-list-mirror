@@ -5,193 +5,126 @@ X-Spam-Level:
 X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 034A7C2D0EF
-	for <git@archiver.kernel.org>; Fri, 17 Apr 2020 12:54:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 26F20C2D0EF
+	for <git@archiver.kernel.org>; Fri, 17 Apr 2020 13:36:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D11A221D95
-	for <git@archiver.kernel.org>; Fri, 17 Apr 2020 12:54:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E849D2076D
+	for <git@archiver.kernel.org>; Fri, 17 Apr 2020 13:36:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z8BiTg0/"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZHDFKh6s"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729815AbgDQMyZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Apr 2020 08:54:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48648 "EHLO
+        id S1730564AbgDQNgu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Apr 2020 09:36:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1729034AbgDQMyT (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 17 Apr 2020 08:54:19 -0400
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41611C061A0C
-        for <git@vger.kernel.org>; Fri, 17 Apr 2020 05:54:19 -0700 (PDT)
-Received: by mail-wr1-x441.google.com with SMTP id u13so2940386wrp.3
-        for <git@vger.kernel.org>; Fri, 17 Apr 2020 05:54:19 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1730351AbgDQNgu (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 17 Apr 2020 09:36:50 -0400
+Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 521E6C061A0C
+        for <git@vger.kernel.org>; Fri, 17 Apr 2020 06:36:50 -0700 (PDT)
+Received: by mail-pf1-x442.google.com with SMTP id w65so1059923pfc.12
+        for <git@vger.kernel.org>; Fri, 17 Apr 2020 06:36:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=MqEQHhGVt7hrWN5kkxCwfn+LXo35Bkdsm43SsAC0/OA=;
-        b=Z8BiTg0/TZEceP6a6roFwiZdaXfFtKzX+2SiZCASqih8JGBJuHuk5zL/8df3hkUun1
-         w5EVIKw0df/YyIH47ooQ2In6oAIVyZh13/a+VSmhRhXv63Gp18E45qXBMnqALyCvTAUa
-         16f+UBttZbeUCjitg3Mc8S2BAJxlvYtq43n90vW4OD8nGVAgPsRSzpcnI79gYSLa4WPd
-         KbPlWQbGn3lMIt4CvU/dl8dOIZBAdV88AZpy3ccNjQAY2ed+EFuE2Smh56qYbazsjAvF
-         UeK/XuSy5SGa4KuzNGaOIoSGpFs3E69uihWsBpjfFQ1qXd/9Ea9AA1f5btc9FF+xiZMK
-         C27A==
+        bh=l2Jd1l6t3IswWTI0rVm/TvKkLaS7sxXcX1tqyNO7ZE0=;
+        b=ZHDFKh6sCw4riiygZYgd5MsRTj/SQQvT3KbcgCNAEyUH41E+SY+dKlgNja/SbuavNu
+         k1rKY7DYCBNatykh/L9ncPA1RThex0tEDPy0gO84/PBJCKcnth5xXanD97tcITxZKj8S
+         QjUmftLgmBWE4hW5MOSp9xGy6kNUuuovKcSVOVJ1jv0Ri1vlu78YVj4YSPPDDvk5Qfqw
+         tdpQAJye87Q1bk5zMRPzftP8RV7XMKAbn5+FUZ9We3I+wzCTl+Gs/Q7k5iq8ci04ELgN
+         /10nIIyNvNCx2mCHhMYqUAI/WQ5RQatWOFph9lWd7+0LOSF5gXi/JuXnzspRvh+HuVaT
+         3s4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to;
-        bh=MqEQHhGVt7hrWN5kkxCwfn+LXo35Bkdsm43SsAC0/OA=;
-        b=KdqZEAjfNKWLChlfHDoDGw9sREinhI5WhGlbMQhsBfwwjdOG4rPSvDehEHE0w6yqNP
-         XNNHA9Abbg7XVf8Aly2R2HKscPQexRADmBF7Be6vvyBBKs1hl2YjOXuuODfjsp9z8xFw
-         1c1GtpTGaMz+l1+3QDMnCp0MJq92/PvQWpVcGc0qoFbNjAp5ojxi5V7UdrMHWtA5ino8
-         6mtutNMvIkL+4QJ6Agn7BzISqa57Oe1HawIBcj8WGA9xx7Wmy+XOshZLoVEEQ8cNzSgR
-         7aFhSg+iO+DKqtheZObXEIDiY2nqE//bDXZPGIyu3dCUBTTdYI1foNdh90Poh3SVyq8J
-         KOZg==
-X-Gm-Message-State: AGi0PuYc0zz5cWD3JetINEkEq4k2x7CbzvHwbtLBR5pUu94Hy0wUZRPU
-        vZEKZM/ERaXqbo+mW6OTF+a0JltU+Ts=
-X-Google-Smtp-Source: APiQypLeW2V4OVTw44LVRJEhTwIv+2PhJ81st/kN5ueVFxWBTYG7fOToUGAMR8njzZybrBLL4tQ8iw==
-X-Received: by 2002:a5d:5085:: with SMTP id a5mr4092387wrt.394.1587128057750;
-        Fri, 17 Apr 2020 05:54:17 -0700 (PDT)
-Received: from feanor (87-231-246-247.rev.numericable.fr. [87.231.246.247])
-        by smtp.gmail.com with ESMTPSA id t17sm2374693wro.2.2020.04.17.05.54.16
+        bh=l2Jd1l6t3IswWTI0rVm/TvKkLaS7sxXcX1tqyNO7ZE0=;
+        b=IY77iwDvDhYljrawUoJ/1WgijpR8nR40NqYALcqXpKnZ9qT44y5LD1He50VFzn6NAx
+         97eNHP87b1GQaSZyeedW8BonYql5obABn21cUpqtczypug6GzFRLOF0QBeEknLpMnEOH
+         /VK+czYD6q79iBavotyAbsUXZC/XiTbFKUfY4pjcXe7PDzgi8otC+O0SGBGZZM+KVE7D
+         1E5SPI1kNiEvYmqUPjsTTAn9srAdHeW1wg3FUrKRuu7O/rpMicuOuXvsVFhkMHppK/tf
+         MZjNk+IgADDB0dobhc1W/PH/nuRL6cUjfpzFnIFMzAmc1duYlw7CwifOycdMAzCVExXT
+         YX3A==
+X-Gm-Message-State: AGi0Pub2iT83EpSAgikvBHlL3gFc2Dj0eSClq/rA/JTgHJMIpEl6H6PF
+        pJibTjO4+TdqIqTGAv4Q0ArQMDFM
+X-Google-Smtp-Source: APiQypIKrDl1FSnFo9atsziD6TF2tGYgyp8JedxWMI9wdxUE3smTRly5dlz1hoSZVsj812end2csbQ==
+X-Received: by 2002:a63:fa0e:: with SMTP id y14mr2927645pgh.13.1587130609519;
+        Fri, 17 Apr 2020 06:36:49 -0700 (PDT)
+Received: from localhost ([2402:800:6374:5380:b9e1:93e1:68db:b9f6])
+        by smtp.gmail.com with ESMTPSA id l15sm18385438pgk.59.2020.04.17.06.36.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Apr 2020 05:54:17 -0700 (PDT)
-Date:   Fri, 17 Apr 2020 14:54:15 +0200
-From:   Damien Robert <damien.olivier.robert@gmail.com>
+        Fri, 17 Apr 2020 06:36:49 -0700 (PDT)
+Date:   Fri, 17 Apr 2020 20:36:47 +0700
+From:   Danh Doan <congdanhqx@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Cc:     git@vger.kernel.org
 Subject: Re: What's cooking in git.git (Apr 2020, #01; Wed, 15)
-Message-ID: <20200417125415.6o5avmae3cyvq4fy@feanor>
-X-PGP-Key: http://www.normalesup.org/~robert/pro/files/Damien_Olivier_Robert.asc
-X-Start-Date: Fri, 17 Apr 2020 14:45:18 +0200
+Message-ID: <20200417133647.GA26701@danh.dev>
 References: <xmqqr1wo4alb.fsf@gitster.c.googlers.com>
- <20200416211208.xqnnrkvcl2jw3ejr@doriath>
- <20200416213009.GA1721147@coredump.intra.peff.net>
- <xmqqh7xjxeew.fsf@gitster.c.googlers.com>
- <20200416224708.zr4dlrz4hpaqsz2s@doriath>
- <20200416230554.bhk2yfycjwjpxggy@doriath>
- <xmqq4ktjxawx.fsf@gitster.c.googlers.com>
+ <20200417022416.GE2285@danh.dev>
+ <xmqqr1wmwu2f.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqq4ktjxawx.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqr1wmwu2f.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From Junio C Hamano, Thu 16 Apr 2020 at 16:34:22 (-0700)�:
-> > Here were the two reasons for the RFC of this patch e3165570dfca690ea1a71518799153f6350777ae
-> > ...
-> > This means that I get the fallback of 'origin' if no remote is specified.
-> > So if I set a pushRemote="foobar" but no remote, then remote.c will
-> > consider we are in a triangular workflow but git push will not.
- 
-> OK, so in short, what is queued in 'next' is quite borked X-<.  I
-> don't mind reverting the merge then.
+On 2020-04-16 22:38:16-0700, Junio C Hamano <gitster@pobox.com> wrote:
+> Danh Doan <congdanhqx@gmail.com> writes:
+> 
+> > On 2020-04-15 16:01:52-0700, Junio C Hamano <gitster@pobox.com> wrote:
+> >> * dd/iso-8601-updates (2020-04-15) 2 commits
+> >>  - date.c: allow compact version of ISO-8601 datetime
+> >>  - date.c: skip fractional second part of ISO-8601
+> >> 
+> >>  The approxidate parser learns to parse seconds with fraction.
+> >> 
+> >>  Will merge to 'next'.
+> >
+> > I thought we haven't gained enough concious for "12:34:56.7.days.ago"
+> > Current code will treat it as "7 days ago at 12:34:56"
+> > New code will treat it as 12:34:56 (today?)
+> 
+> Yup, it clearly is a regression, and I do not think there is an
+> agreement that the regression matters in real life.
+> 
 
-Yes sorry, I never meant for this patch version to be queued up, hence its rfc
-status :/
+Well, I _think_ we should keep it in pu to see other's feedback for now.
+Even if we want to advance it to next, I would like to have this fixup
+for the documentation the first patch.
 
-The reason I sent it as is, as outlined by my cover letter, was that I
-found it quite surprising that a pushRemote without remote was not
-considered by 'git push' as a triangular workflow. Technically a triangular
-workflow is when the push remote is different from the fetch remote, and we
-could argue when there is no fetch remote it is indeed the case (I know
-that was what I was expecting). So I was wondering if we should not change
-this logic in git push instead.
+--------------8<-------------
+Subject: [PATCH] fixup! date.c: skip fractional second part of ISO-8601
 
-I'll let you decide if you prefer reverting this merge, or applying the
-following fixup on top of next instead.
-
---- 8< ---
-From 2f9268e2fb6ee280137fb928180882619eb9c3e5 Mon Sep 17 00:00:00 2001
-From: Damien Robert <damien.olivier.robert+git@gmail.com>
-Date: Fri, 17 Apr 2020 14:41:02 +0200
-Subject: [PATCH 1/1] remote.c: fix detection of triangular workflow
-
-When a branch has a pushRemote but no remote, then git push does not
-consider this as a triangular workflow.
-
-In remote.c, since is_workflow_triangular does not check for the *explicit
-value, it considers that such a branch is in a triangular workflow
-(except when 'pushRemote=origin' since the default non explicit value of
-fetch_remote is 'origin').
-
-Fix that by checking the values of explicit in remote_for_branch and
-pushremote_for_branch, and add tests.
-
-Signed-off-by: Damien Robert <damien.olivier.robert+git@gmail.com>
+Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
 ---
- remote.c                |  9 ++++++---
- t/t6300-for-each-ref.sh | 32 ++++++++++++++++++++++++++++++++
- 2 files changed, 38 insertions(+), 3 deletions(-)
+ Documentation/date-formats.txt | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/remote.c b/remote.c
-index 7c99469598..18a190198a 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1636,9 +1636,12 @@ static const char *tracking_for_push_dest(struct remote *remote,
- 
- static int is_workflow_triangular(struct branch *branch)
- {
--	struct remote *fetch_remote = remote_get(remote_for_branch(branch, NULL));
--	struct remote *push_remote = remote_get(pushremote_for_branch(branch, NULL));
--	return (fetch_remote && push_remote && fetch_remote != push_remote);
-+	int explicit;
-+	struct remote *fetch_remote = remote_get(remote_for_branch(branch, &explicit));
-+	if (!explicit || !fetch_remote)
-+		return 0;
-+	struct remote *push_remote = remote_get(pushremote_for_branch(branch, &explicit));
-+	return (explicit && push_remote && fetch_remote != push_remote);
- }
- 
- /**
-diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index 8e59ab2567..4c01d4406f 100755
---- a/t/t6300-for-each-ref.sh
-+++ b/t/t6300-for-each-ref.sh
-@@ -945,6 +945,38 @@ test_expect_success '%(push) and %(push:remoteref)' '
- 			--format="%(push:remotename),%(push:remoteref),%(push)" \
- 			refs/heads/master)" &&
- 		test to,refs/heads/master,refs/remotes/to/master = "$actual" &&
-+		actual="$(git -c push.default=nothing for-each-ref \
-+			--format="%(push:remotename),%(push:remoteref),%(push)" \
-+			refs/heads/master)" &&
-+		test to,, = "$actual" &&
-+		git config --unset branch.master.remote &&
-+		git config --unset branch.master.merge &&
-+		actual="$(git -c push.default=simple for-each-ref \
-+			--format="%(push:remotename),%(push:remoteref),%(push)" \
-+			refs/heads/master)" &&
-+		test to,, = "$actual" &&
-+		git config branch.master.merge refs/heads/master &&
-+		actual="$(git -c push.default=simple for-each-ref \
-+			--format="%(push:remotename),%(push:remoteref),%(push)" \
-+			refs/heads/master)" &&
-+		test to,, = "$actual" &&
-+		git config branch.master.merge refs/heads/other &&
-+		actual="$(git -c push.default=simple for-each-ref \
-+			--format="%(push:remotename),%(push:remoteref),%(push)" \
-+			refs/heads/master)" &&
-+		test to,, = "$actual" &&
-+		actual="$(git -c push.default=upstream for-each-ref \
-+			--format="%(push:remotename),%(push:remoteref),%(push)" \
-+			refs/heads/master)" &&
-+		test to,, = "$actual" &&
-+		actual="$(git -c push.default=current for-each-ref \
-+			--format="%(push:remotename),%(push:remoteref),%(push)" \
-+			refs/heads/master)" &&
-+		test to,refs/heads/master,refs/remotes/to/master = "$actual" &&
-+		actual="$(git -c push.default=matching for-each-ref \
-+			--format="%(push:remotename),%(push:remoteref),%(push)" \
-+			refs/heads/master)" &&
-+		test to,refs/heads/master,refs/remotes/to/master = "$actual" &&
- 		actual="$(git -c push.default=nothing for-each-ref \
- 			--format="%(push:remotename),%(push:remoteref),%(push)" \
- 			refs/heads/master)" &&
+diff --git a/Documentation/date-formats.txt b/Documentation/date-formats.txt
+index 6f69ba2ddd..7e7eaba643 100644
+--- a/Documentation/date-formats.txt
++++ b/Documentation/date-formats.txt
+@@ -20,7 +20,10 @@ RFC 2822::
+ ISO 8601::
+ 	Time and date specified by the ISO 8601 standard, for example
+ 	`2005-04-07T22:13:13`. The parser accepts a space instead of the
+-	`T` character as well. The fractional part will be ignored.
++	`T` character as well. Fractional parts of a second will be ignored,
++	for example `2005-04-07T22:13:13.019` will be treated as
++	`2005-04-07T22:13:13`
++
+ +
+ NOTE: In addition, the date part is accepted in the following formats:
+ `YYYY.MM.DD`, `MM/DD/YYYY` and `DD.MM.YYYY`.
 -- 
-Patched on top of v2.26.1-301-g55bc3eb7cb (git version 2.26.0)
+Danh
