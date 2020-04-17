@@ -7,124 +7,91 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 77820C2BB1D
-	for <git@archiver.kernel.org>; Fri, 17 Apr 2020 22:04:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 675DEC2BB1D
+	for <git@archiver.kernel.org>; Fri, 17 Apr 2020 22:09:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4DB4D20B1F
-	for <git@archiver.kernel.org>; Fri, 17 Apr 2020 22:04:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3CBFD20B1F
+	for <git@archiver.kernel.org>; Fri, 17 Apr 2020 22:09:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EOrnjh11"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GmW0DOlX"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728289AbgDQWEu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Apr 2020 18:04:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49464 "EHLO
+        id S1728434AbgDQWJf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Apr 2020 18:09:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50188 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726638AbgDQWEu (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 17 Apr 2020 18:04:50 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B102BC061A0C
-        for <git@vger.kernel.org>; Fri, 17 Apr 2020 15:04:49 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id x4so4391403wmj.1
-        for <git@vger.kernel.org>; Fri, 17 Apr 2020 15:04:49 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1726284AbgDQWJe (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 17 Apr 2020 18:09:34 -0400
+Received: from mail-ed1-x541.google.com (mail-ed1-x541.google.com [IPv6:2a00:1450:4864:20::541])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94988C061A0C
+        for <git@vger.kernel.org>; Fri, 17 Apr 2020 15:09:34 -0700 (PDT)
+Received: by mail-ed1-x541.google.com with SMTP id d16so2336153edv.8
+        for <git@vger.kernel.org>; Fri, 17 Apr 2020 15:09:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=LUe/xa2VtkLWUJ9UJx9k+B6LYSxQRG0qu1wrNEg6E90=;
-        b=EOrnjh11yPsfYNRWnrtrP2CNdi8QOOqkIWjbnFzUIAWA2qBINoDtiCgSiJdUzx1wSi
-         ti1Vn3cV57PehB8npF2ZGgDDSrrRsRJQnUy7SwYsbcB12UylHxquH172tX/By7phcqt7
-         0ztI5NUrW7/hV4UNnwC9XsQmZ/so4tPcOVjn2pIxaovdBxj36OjGBo7Zd/F+GlUB6XNi
-         V8ZjiCc9j6qvywYDdVYUZvc0u5DCBI2BZb4XX/Pff07TRIAVjOd8/DFp3QPHNMz1fndJ
-         RLrKM3J2hzmMqN6y1z0Ut4nnx8XFm0bs9sQZHeHfZUHp0DRkT8WPxMqSmyrgU4tkWnFg
-         BKwA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=BI3LY2dRYFUFR9Ne/JRF/HJqI59WF3e/JNSraYT1PhM=;
+        b=GmW0DOlXXEdihH+iKnd1hRhGm+AAomlEgwPc6C5soPimyE6YybZQtLXnR4VJOYJvlA
+         QtE9iMV5iUTUJecojM5UBy1HMvzyBbohHIaHba5yLn4uxaitruiUIWvRklWzgcBhmF30
+         peueQ5A8v5tvuQmMqNZPJ7S6e4iXRpftD0BPXVmHZAuuX1khqCmILvQsTKH8f6DvUqkR
+         PCPhyI9XJEC7fjRajbVTzI3LLb/OALPkgYVYoHBcqQiYafd+Zi7hvfHb3Jk4krgQwSjn
+         nJgHBE4uQDzh53ggGc4V9DpIQpeBY6tw9p3Vqm8Rha7f850F0TLz7YNsFq58TFpF6lR3
+         w8AA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=LUe/xa2VtkLWUJ9UJx9k+B6LYSxQRG0qu1wrNEg6E90=;
-        b=XrOwvq5+nz4sk5UwxK8cIkcAW7Z594BqVwVzoQ4vCdabnyQvrKo9QkFF4vZyo/kDPp
-         4PD9gm9qINp/n08eGlDpmKeZpzy7TXTGSNpM1mZK21v1auPW6Om+sj+2/q/5U/TxQQ/I
-         hlJdetxjcMcT2F5eQ5vPiqVz8SOdOnx2zNumGOpUlk2c9BwJ7i8H79W2m0va3DqvnET1
-         ztLikzRqmpEX9lgKS1/FQagLIHIq2WUGZZTcHGlQzUY6DPiK2TcO/Cu+68AZReVPajoE
-         kTwlSlG8CRWzeUgeX433iqmg/Rx1kD/Y3h4SgUJQvmG+mxO9I7cTxgDv62otS1H2jEiB
-         c4ow==
-X-Gm-Message-State: AGi0PuZeXdPsOwQvw1w9jozFru7kZq52UL+mnoSDgqAR3Zw1h7icdMyS
-        uw8BBWzu43+6PEeVEX76HCw=
-X-Google-Smtp-Source: APiQypIX0i2pJQAum631jyYC44PYkEWeJblMX9KOcHti0xu4eItAaGIPkrOv0Dp0d6HcuKAHdquUww==
-X-Received: by 2002:a1c:ded4:: with SMTP id v203mr5427413wmg.106.1587161088360;
-        Fri, 17 Apr 2020 15:04:48 -0700 (PDT)
-Received: from doriath (87-231-246-247.rev.numericable.fr. [87.231.246.247])
-        by smtp.gmail.com with ESMTPSA id c17sm33855631wrp.28.2020.04.17.15.04.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Apr 2020 15:04:47 -0700 (PDT)
-Date:   Sat, 18 Apr 2020 00:04:45 +0200
-From:   Damien Robert <damien.olivier.robert@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Apr 2020, #01; Wed, 15)
-Message-ID: <20200417220445.sasjy4rvzonoz7cn@doriath>
-X-PGP-Key: http://www.normalesup.org/~robert/pro/files/Damien_Olivier_Robert.asc
-X-Start-Date: Fri, 17 Apr 2020 23:59:19 +0200
-References: <xmqqr1wo4alb.fsf@gitster.c.googlers.com>
- <20200416211208.xqnnrkvcl2jw3ejr@doriath>
- <20200416213009.GA1721147@coredump.intra.peff.net>
- <xmqqh7xjxeew.fsf@gitster.c.googlers.com>
- <20200416224708.zr4dlrz4hpaqsz2s@doriath>
- <20200416230554.bhk2yfycjwjpxggy@doriath>
- <xmqq4ktjxawx.fsf@gitster.c.googlers.com>
- <20200417125415.6o5avmae3cyvq4fy@feanor>
- <xmqq1romvx2q.fsf@gitster.c.googlers.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=BI3LY2dRYFUFR9Ne/JRF/HJqI59WF3e/JNSraYT1PhM=;
+        b=DWITj+HDA9jUS0HhjGfnC+HnF83lLWsHSNMxmcb0kLBIoo/PfMeMIQ/o3pGW6CVDbb
+         TnLqtDzboaM6cGHpS6mSmJjBG67JKZvU2HnM96KGxi8h5zy4rS9g13yT5KM+S9xFEeqY
+         D6fT8/AsCtCpWUATgkZlJXleVbpd8JSi9hnh/jZBDKy14HLkadKAQWzqcmztUrijmas3
+         YVCvZFvS/BtIcZGks7nO19fXPDiVx7fazFQHLS8CjMLV0/bECoT3UCzDpyhzEejC4TjR
+         ghZdYbTKwsJ8yhfG7Ie5epNKmkQAlswDqM+piW48hRNaI6zo5CIQVyosChQQU58k5OUv
+         /izQ==
+X-Gm-Message-State: AGi0PuaCpDK6sSpt33gKTptCVeVev9/Z3Vmu+75Slb8ViWVKOHOzYEm+
+        i5402ovUCAbwj1kstw7WU91PKCqXwiYhojc2Ph8=
+X-Google-Smtp-Source: APiQypKopTPdZFKL/V3G/+GGqjIanyCIpZ5rlvKUh0aY1ldUeKy1rbyh+1Et+3vfElkP9Idwwrlg57cvEpCy/3SkKyA=
+X-Received: by 2002:a50:f0dc:: with SMTP id a28mr4941082edm.87.1587161373250;
+ Fri, 17 Apr 2020 15:09:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqq1romvx2q.fsf@gitster.c.googlers.com>
+References: <20200416210456.19122-1-shouryashukla.oo@gmail.com>
+In-Reply-To: <20200416210456.19122-1-shouryashukla.oo@gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sat, 18 Apr 2020 00:09:21 +0200
+Message-ID: <CAP8UFD1y7D_gSharBE9+CVyQKg3qhXMvtzBjkdYA1Aj3hocBMg@mail.gmail.com>
+Subject: Re: [RFC][PATCH 0/2] submodule: port 'set-url' from shell to C
+To:     Shourya Shukla <shouryashukla.oo@gmail.com>
+Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Heba Waly <heba.waly@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Just a quick answeŗ, I'll give a more complete one afterwards.
+Hi,
 
-From Junio C Hamano, Fri 17 Apr 2020 at 10:30:53 (-0700) :
-> ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- 
-> [branch "master"]
-> 	pushremote = publish
-> 
-> [remote "publish"]
-> 	url = .
-> 
-> [remote "origin"]
-> 	url = ../somewhere-else
-> ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- 
+On Thu, Apr 16, 2020 at 11:05 PM Shourya Shukla
+<shouryashukla.oo@gmail.com> wrote:
 
-If you remove the remote "origin", then
-	struct remote *fetch_remote = remote_get(NULL);
-used by pull.c will return NULL:
+> This is my very first attempt at the conversion of subcommand 'set-url' from shell
+> to C, thus making the subcommand a builtin.
+>
+> I have based my conversion by looking at the way other subcommands have been implemented
+> in 'submodule--helper.c' as well as the subcommand 'set-url' in 'remote.c'. The approach
+> I have taken is as follows:
+>
+> 1. Create a helper function 'update_url_in_gitmodules()' in 'submodule.c'
+>    to update the URL of an entry in '.gitmodules'.
 
-it fallbacks to 'origin' which does not exist, so remote_get_1 in
-	if (!valid_remote(ret))
-		return NULL;
-returns NULL
+We usually don't add a function that is unused in the commit that adds it.
 
-But is_workflow_triangular in
-	struct remote *fetch_remote = remote_get(remote_for_branch(branch, &explicit);
-);
-returns "origin"
+> 2. Port the function 'cmd_set_url()' in 'git-submodule.sh' to 'module_set_url()'
+>    in 'submodule--helper.c'.
 
-The difference in remote_get_1 is that
-	name_given = 1;
-So
-	if (name_given && !valid_remote(ret))
-		add_url_alias(ret, name);
-gets called.
+So it seems to me that you could squash the two commits into one.
 
-But I think that means that my fixup is actually wrong when a pushRemote is
-set without a remote while 'origin' do exist. I'll need to test. Grmpf!
-
-Thanks a lot for the thorough review!
-
--- 
-Damien Robert
-http://www.normalesup.org/~robert/pro
+Thanks,
+Christian.
