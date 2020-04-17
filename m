@@ -2,135 +2,140 @@ Return-Path: <SRS0=xqrk=6B=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 642C7C2BB1D
-	for <git@archiver.kernel.org>; Fri, 17 Apr 2020 07:11:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C088CC352BE
+	for <git@archiver.kernel.org>; Fri, 17 Apr 2020 09:42:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 38AE7206D5
-	for <git@archiver.kernel.org>; Fri, 17 Apr 2020 07:11:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9AD44208E4
+	for <git@archiver.kernel.org>; Fri, 17 Apr 2020 09:42:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W+NBQtsY"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OokahVA8"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728635AbgDQHLJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Apr 2020 03:11:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51782 "EHLO
+        id S1730347AbgDQJmC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Apr 2020 05:42:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47036 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728374AbgDQHLI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Apr 2020 03:11:08 -0400
-Received: from mail-ed1-x543.google.com (mail-ed1-x543.google.com [IPv6:2a00:1450:4864:20::543])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D3E1C061A0C
-        for <git@vger.kernel.org>; Fri, 17 Apr 2020 00:11:07 -0700 (PDT)
-Received: by mail-ed1-x543.google.com with SMTP id i7so710288edq.3
-        for <git@vger.kernel.org>; Fri, 17 Apr 2020 00:11:07 -0700 (PDT)
+        with ESMTP id S1726793AbgDQJmC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Apr 2020 05:42:02 -0400
+Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com [IPv6:2a00:1450:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9C76C061A0C
+        for <git@vger.kernel.org>; Fri, 17 Apr 2020 02:42:01 -0700 (PDT)
+Received: by mail-ej1-x643.google.com with SMTP id n4so1102338ejs.11
+        for <git@vger.kernel.org>; Fri, 17 Apr 2020 02:42:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=ioJ4gluKOr74pNPXDDE0konbB9teMAnz5uacdjfOlys=;
-        b=W+NBQtsYhGQIefgIatemGwoEaU32iytR+usW4PInvkRTnrVDvnprFt/HuTXsMh7TUI
-         +HHesFsuEhezOmG8M5tMyhjvuTckqQUlVOecJoe3psKGK+BgoeZcJ+W60xt+xuz89jD/
-         NyBXxBgH8IUVhi99f5xeAacW9+hsnNqqn2MiHppLivXYsjz+b9y80jFMVUHWXVpUOkAX
-         JMuMtk0bEbBbXDbFoFxNrpPGcJROf+YmyktXM7VECqKk4zMCCLi2E0zswJRoVomR/Zdo
-         AnojAQpJlLUPA94YlN4AFel2AO6r7q5WPfJhz/ViRbR1ORJdRKwyDD2tI0qM92oLHasn
-         C6nQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=R8rVddOXxY32MBpypJS28bQWRMCv/o3ToFqWsuqbWzw=;
+        b=OokahVA8IW91Qvn4szkrReauHF0y2X9VjgFWnU8488V+3kd3k0E4GxnzeM04awmPkK
+         MYrDOLuzd/q+DW6TE76FZqzxWSqPwqkZJhJrzQKuNIrhrQ5BO1/zXRbFMRX6WXO6sb10
+         K9k2UmuCHws8ro5UDEaRgSxnmDnFzG6Pxp/JxRa9PpaMMJOA0FCQhfKJwm2bv17L9cJf
+         oGJGPRq/OpzHniSj+1AtBdKvtReM51TGQTygos0LxtIzpo7X6w9l0JG5x0325FTiFxjh
+         2XUiG6atp6E+LPpyaGGyuEplkqhpUfI+ehfTWW6SXdDw9b01PQPH9VfkT+GOPFv3uHpr
+         H3sA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=ioJ4gluKOr74pNPXDDE0konbB9teMAnz5uacdjfOlys=;
-        b=kjgatClZNcAH30VPN2HeUtEWmg2NYrTnyhmiSFPMAE7ZBhno9P8C9RQZSNxTC4Pmsf
-         NSx2Y5GdM1shTwXQkCN14UT3hAq3I0Dys+/ViyXD0fVeDAZUCMNIXe0o2Pvf6K/v54pn
-         JC02qqPiw/Y3m0rh2y8XiGTCSq+n2n3Z0zkrxYfbMQCMOX6VVtyhG5mVtRJG9CiJk6Mr
-         lh+5t6UKTFCLfrku+QcR18oG3aSEc4enjAEI0AGIJoVe+HBdR7mVKvvhpzbBUmL+qXRd
-         XGVzE+5Lz9YPbq+mgMZ9MMT4A690tumBHUtICIUJTphec8wNVe1mQx+UjrbuogG6izHu
-         5PEg==
-X-Gm-Message-State: AGi0PuYeHseUPZ/pKUbntuEvfTWRGeoKt+WrOMc5SG542hRC5oLYau3T
-        zYueJsuPkvTuoZMDwZQChsSt+T65
-X-Google-Smtp-Source: APiQypJK+wi52AVFRCNrMhVLKxDq9m8BsJKheUFiFowyopMRqvGCLJwUfSRD8f9CaNJEdqEerCo7GA==
-X-Received: by 2002:a50:d942:: with SMTP id u2mr1702757edj.116.1587107465628;
-        Fri, 17 Apr 2020 00:11:05 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ce16sm3323199ejc.74.2020.04.17.00.11.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Apr 2020 00:11:04 -0700 (PDT)
-Message-Id: <pull.613.git.1587107464322.gitgitgadget@gmail.com>
-From:   "Terry via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 17 Apr 2020 07:11:04 +0000
-Subject: [PATCH] complete: zsh: add missing sub cmd completion candidates
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=R8rVddOXxY32MBpypJS28bQWRMCv/o3ToFqWsuqbWzw=;
+        b=HXmMsaW4JXZDDXYhh0H0rlmVDvyDuO9fZS2H51gImf8yYpjir4jFAMj70mR+cSkpId
+         VRjuCI6QM65kXRByyJqngGiD86Fqf5iPnsUe6YIy2iRcvNEK7lXCp3Chl5TYOOnBSd42
+         vWlcOv7OB63emL12GGpxy4Nthjr0aCVwOXGERrZ7GZ4i2QyAqyA4eYswIJe0bU1l+1D1
+         oMZBtXdXgLdEUwArf9eURBYbL/kf94PYbrEZuMCJFp8t5Ex9RgZFH31RhdtU216PtzPo
+         vpTvxDEDXpzzFvKZMGI/TifWA+NFCD8BAdWQr2ip8zJnkyz7i31+OY9i5kwDqtpx8MdS
+         alwg==
+X-Gm-Message-State: AGi0PuZIIPehmpplPhshTQkoEc+dVvU+9TzVnc5xOTJ4cKRNr4ud5m6K
+        XW5S6jURSyYsZNSr4KEOStSIkZ0Qj0e9Ldl35V0=
+X-Google-Smtp-Source: APiQypKGsEJWfH34Ue6t07keZXfHVQv1Yxdnecxo2R5Gf8sMnPagWDQYAQkxFa2OEBbybvfh0gnSM8zcLspQjQxxLHk=
+X-Received: by 2002:a17:906:eb90:: with SMTP id mh16mr2151010ejb.201.1587116520041;
+ Fri, 17 Apr 2020 02:42:00 -0700 (PDT)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Terry <tmoschou@gmail.com>, Terry Moschou <tmoschou@gmail.com>
+References: <CAP8UFD0wJo4onz0_Vw4-bcX1h61=J=ZiKfM-fMXLj4B9q0aveg@mail.gmail.com>
+ <cover.1584477196.git.me@ttaylorr.com> <20200318101825.GB1227946@coredump.intra.peff.net>
+In-Reply-To: <20200318101825.GB1227946@coredump.intra.peff.net>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Fri, 17 Apr 2020 11:41:48 +0200
+Message-ID: <CAP8UFD3v_J3zGqHKa94d71QB82hTsX0MZasERB-jOnY3Ya-uJw@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/2] upload-pack.c: limit allowed filter choices
+To:     Jeff King <peff@peff.net>
+Cc:     Taylor Blau <me@ttaylorr.com>, git <git@vger.kernel.org>,
+        James Ramsay <james@jramsay.com.au>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Terry Moschou <tmoschou@gmail.com>
+Hi Taylor and Peff,
 
-Add missing 'restore' and 'switch' sub commands to zsh completion
-candidate output. E.g.
+On Wed, Mar 18, 2020 at 11:18 AM Jeff King <peff@peff.net> wrote:
+>
+> On Tue, Mar 17, 2020 at 02:39:05PM -0600, Taylor Blau wrote:
+>
+> > Of course, I would be happy to send along our patches. They are included
+> > in the series below, and correspond roughly to what we are running at
+> > GitHub. (For us, there have been a few more clean-ups and additional
+> > patches, but I squashed them into 2/2 below).
 
-  $ git re<tab>
-  rebase    -- forward-port local commits to the updated upstream head
-  reset     -- reset current HEAD to the specified state
-  restore   -- restore working tree files
+Thanks for the patches, and sorry for the delay in responding!
 
-  $ git s<tab>
-  show      -- show various types of objects
-  status    -- show the working tree status
-  switch    -- switch branches
+> > The approach is roughly that we have:
+> >
+> >   - 'uploadpack.filter.allow' -> specifying the default for unspecified
+> >     filter choices, itself defaulting to true in order to maintain
+> >     backwards compatibility, and
+> >
+> >   - 'uploadpack.filter.<filter>.allow' -> specifying whether or not each
+> >     filter kind is allowed or not. (Originally this was given as 'git
+> >     config uploadpack.filter=blob:none.allow true', but this '=' is
+> >     ambiguous to configuration given over '-c', which itself uses an '='
+> >     to separate keys from values.)
+>
+> One thing that's a little ugly here is the embedded dot in the
+> subsection (i.e., "filter.<filter>"). It makes it look like a four-level
+> key, but really there is no such thing in Git.  But everything else we
+> tried was even uglier.
+>
+> I think we want to declare a real subsection for each filter and not
+> just "uploadpack.filter.<filter>". That gives us room to expand to other
+> config options besides "allow" later on if we need to.
+>
+> We don't want to claim "uploadpack.allow" and "uploadpack.<filter>.allow";
+> that's too generic.
+>
+> Likewise "filter.allow" is too generic.
+>
+> We could do "uploadpackfilter.allow" and "uploadpackfilter.<filter>.allow",
+> but that's both ugly _and_ separates these options from the rest of
+> uploadpack.*.
 
-Signed-off-by: Terry Moschou <tmoschou@gmail.com>
----
-    complete: zsh: add missing sub cmd completion candidates
-    
-    Add missing 'restore' and 'switch' sub commands to zsh completion
-    candidate output. E.g.
-    
-    $ git re<tab>
-    rebase    -- forward-port local commits to the updated upstream head
-    reset     -- reset current HEAD to the specified state
-    restore   -- restore working tree files
-    
-    $ git s<tab>
-    show      -- show various types of objects
-    status    -- show the working tree status
-    switch    -- switch branches
-    
-    Signed-off-by: Terry Moschou tmoschou@gmail.com [tmoschou@gmail.com]
+What do you think about something like:
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-613%2Ftmoschou%2Fupdate-zsh-completion-script-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-613/tmoschou/update-zsh-completion-script-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/613
+[promisorFilter "noBlobs"]
+        type = blob:none
+        uploadpack = true # maybe "allow" could also mean "true" here
+        ...
+?
 
- contrib/completion/git-completion.zsh | 2 ++
- 1 file changed, 2 insertions(+)
+> > I noted in the second patch that there is the unfortunate possibility of
+> > encountering a SIGPIPE when trying to write the ERR sideband back to a
+> > client who requested a non-supported filter. Peff and I have had some
+> > discussion off-list about resurrecting SZEDZER's work which makes room
+> > in the buffer by reading one packet back from the client when the server
+> > encounters a SIGPIPE. It is for this reason that I am marking the series
+> > as 'RFC'.
+>
+> For reference, the patch I was thinking of was this:
+>
+>   https://lore.kernel.org/git/20190830121005.GI8571@szeder.dev/
 
-diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
-index eef4eff53df..ce47e86b60c 100644
---- a/contrib/completion/git-completion.zsh
-+++ b/contrib/completion/git-completion.zsh
-@@ -150,9 +150,11 @@ __git_zsh_cmd_common ()
- 	push:'update remote refs along with associated objects'
- 	rebase:'forward-port local commits to the updated upstream head'
- 	reset:'reset current HEAD to the specified state'
-+	restore:'restore working tree files'
- 	rm:'remove files from the working tree and from the index'
- 	show:'show various types of objects'
- 	status:'show the working tree status'
-+	switch:'switch branches'
- 	tag:'create, list, delete or verify a tag object signed with GPG')
- 	_describe -t common-commands 'common commands' list && _ret=0
- }
+Are you using the patches in this series with or without something
+like the above patch? I am ok to resend this patch series including
+the above patch (crediting Szeder) if you use something like it.
 
-base-commit: de49261b050d9cd8ec73842356077bc5b606640f
--- 
-gitgitgadget
+Thanks,
+Christian.
