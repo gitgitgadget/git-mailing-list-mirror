@@ -2,80 +2,129 @@ Return-Path: <SRS0=xqrk=6B=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DE010C2BB1D
-	for <git@archiver.kernel.org>; Fri, 17 Apr 2020 21:35:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 77820C2BB1D
+	for <git@archiver.kernel.org>; Fri, 17 Apr 2020 22:04:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B522C206D9
-	for <git@archiver.kernel.org>; Fri, 17 Apr 2020 21:35:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4DB4D20B1F
+	for <git@archiver.kernel.org>; Fri, 17 Apr 2020 22:04:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="u6JSKBBh"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EOrnjh11"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728198AbgDQVf6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Apr 2020 17:35:58 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:52889 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725873AbgDQVf6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Apr 2020 17:35:58 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 54536B91B6;
-        Fri, 17 Apr 2020 17:35:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=v2DGNUGQ+kWoYCUOCVxraFVT4Rk=; b=u6JSKB
-        Bhbg1Y5dDQldg6j0b2VODue3/IfYuHIFYnPjfn+HB9VXwSiR+ygAJqdhQ/I9csSI
-        lrm74ukByFmlRzx1lu2B/NtQXXbbITp0FOIukfLIIpLDJAoylg8ZpHujYAQYJqOC
-        SDigic9KRWKD0NBOI2Nk9X0HfgWOix6VwjDbA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=RgY6J0mfST5+VWVR1BFcgXSMgGdgFyOJ
-        az8c1zT69sYNKiPP6z3KbLRJMH+8IUe6SPRv7MaTzD90puEZVJruNidvOZkNJAF9
-        RHZv2uy1i5Iskb71UX8dlfyAVZ6t5Ao9m8my5uyLLTVDrVHvZue6VA0A3qpq9hlZ
-        qwyxqTtJpSo=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4C718B91B5;
-        Fri, 17 Apr 2020 17:35:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 915E0B91B4;
-        Fri, 17 Apr 2020 17:35:53 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Cc:     Andreas Heiduk <asheiduk@gmail.com>, git <git@vger.kernel.org>,
-        Greg Hurrell <greg@hurrell.net>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH] grep: follow conventions for printing paths w/ unusual chars
-References: <xmqq1ronyz1s.fsf@gitster.c.googlers.com>
-        <eaae7214925189f562056b1ee6972c05dcf76a32.1587103366.git.matheus.bernardino@usp.br>
-        <xmqq8siuwqxp.fsf@gitster.c.googlers.com>
-        <CAHd-oW7B1wtHOE7KCtOR-kAXhuj8Du_MAYobWd9nSsSvm_sChQ@mail.gmail.com>
-Date:   Fri, 17 Apr 2020 14:35:51 -0700
-In-Reply-To: <CAHd-oW7B1wtHOE7KCtOR-kAXhuj8Du_MAYobWd9nSsSvm_sChQ@mail.gmail.com>
-        (Matheus Tavares Bernardino's message of "Fri, 17 Apr 2020 18:19:07
-        -0300")
-Message-ID: <xmqqd085vlqg.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1728289AbgDQWEu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Apr 2020 18:04:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49464 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726638AbgDQWEu (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 17 Apr 2020 18:04:50 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B102BC061A0C
+        for <git@vger.kernel.org>; Fri, 17 Apr 2020 15:04:49 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id x4so4391403wmj.1
+        for <git@vger.kernel.org>; Fri, 17 Apr 2020 15:04:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=LUe/xa2VtkLWUJ9UJx9k+B6LYSxQRG0qu1wrNEg6E90=;
+        b=EOrnjh11yPsfYNRWnrtrP2CNdi8QOOqkIWjbnFzUIAWA2qBINoDtiCgSiJdUzx1wSi
+         ti1Vn3cV57PehB8npF2ZGgDDSrrRsRJQnUy7SwYsbcB12UylHxquH172tX/By7phcqt7
+         0ztI5NUrW7/hV4UNnwC9XsQmZ/so4tPcOVjn2pIxaovdBxj36OjGBo7Zd/F+GlUB6XNi
+         V8ZjiCc9j6qvywYDdVYUZvc0u5DCBI2BZb4XX/Pff07TRIAVjOd8/DFp3QPHNMz1fndJ
+         RLrKM3J2hzmMqN6y1z0Ut4nnx8XFm0bs9sQZHeHfZUHp0DRkT8WPxMqSmyrgU4tkWnFg
+         BKwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=LUe/xa2VtkLWUJ9UJx9k+B6LYSxQRG0qu1wrNEg6E90=;
+        b=XrOwvq5+nz4sk5UwxK8cIkcAW7Z594BqVwVzoQ4vCdabnyQvrKo9QkFF4vZyo/kDPp
+         4PD9gm9qINp/n08eGlDpmKeZpzy7TXTGSNpM1mZK21v1auPW6Om+sj+2/q/5U/TxQQ/I
+         hlJdetxjcMcT2F5eQ5vPiqVz8SOdOnx2zNumGOpUlk2c9BwJ7i8H79W2m0va3DqvnET1
+         ztLikzRqmpEX9lgKS1/FQagLIHIq2WUGZZTcHGlQzUY6DPiK2TcO/Cu+68AZReVPajoE
+         kTwlSlG8CRWzeUgeX433iqmg/Rx1kD/Y3h4SgUJQvmG+mxO9I7cTxgDv62otS1H2jEiB
+         c4ow==
+X-Gm-Message-State: AGi0PuZeXdPsOwQvw1w9jozFru7kZq52UL+mnoSDgqAR3Zw1h7icdMyS
+        uw8BBWzu43+6PEeVEX76HCw=
+X-Google-Smtp-Source: APiQypIX0i2pJQAum631jyYC44PYkEWeJblMX9KOcHti0xu4eItAaGIPkrOv0Dp0d6HcuKAHdquUww==
+X-Received: by 2002:a1c:ded4:: with SMTP id v203mr5427413wmg.106.1587161088360;
+        Fri, 17 Apr 2020 15:04:48 -0700 (PDT)
+Received: from doriath (87-231-246-247.rev.numericable.fr. [87.231.246.247])
+        by smtp.gmail.com with ESMTPSA id c17sm33855631wrp.28.2020.04.17.15.04.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 17 Apr 2020 15:04:47 -0700 (PDT)
+Date:   Sat, 18 Apr 2020 00:04:45 +0200
+From:   Damien Robert <damien.olivier.robert@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Apr 2020, #01; Wed, 15)
+Message-ID: <20200417220445.sasjy4rvzonoz7cn@doriath>
+X-PGP-Key: http://www.normalesup.org/~robert/pro/files/Damien_Olivier_Robert.asc
+X-Start-Date: Fri, 17 Apr 2020 23:59:19 +0200
+References: <xmqqr1wo4alb.fsf@gitster.c.googlers.com>
+ <20200416211208.xqnnrkvcl2jw3ejr@doriath>
+ <20200416213009.GA1721147@coredump.intra.peff.net>
+ <xmqqh7xjxeew.fsf@gitster.c.googlers.com>
+ <20200416224708.zr4dlrz4hpaqsz2s@doriath>
+ <20200416230554.bhk2yfycjwjpxggy@doriath>
+ <xmqq4ktjxawx.fsf@gitster.c.googlers.com>
+ <20200417125415.6o5avmae3cyvq4fy@feanor>
+ <xmqq1romvx2q.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 6A3E978C-80F3-11EA-A6C0-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqq1romvx2q.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Matheus Tavares Bernardino <matheus.bernardino@usp.br> writes:
+Just a quick answeŗ, I'll give a more complete one afterwards.
 
-> Right. But the ABC prefix here is always a tree name,...
+From Junio C Hamano, Fri 17 Apr 2020 at 10:30:53 (-0700) :
+> ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- 
+> [branch "master"]
+> 	pushremote = publish
+> 
+> [remote "publish"]
+> 	url = .
+> 
+> [remote "origin"]
+> 	url = ../somewhere-else
+> ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- 
 
-Oh, then that is perfectly fine.  I did not expect that the code
-passes <tree-name>:<pathnname> (like "HEAD~2:t/Makefile") to us as a
-single string.
+If you remove the remote "origin", then
+	struct remote *fetch_remote = remote_get(NULL);
+used by pull.c will return NULL:
 
-Thanks.
+it fallbacks to 'origin' which does not exist, so remote_get_1 in
+	if (!valid_remote(ret))
+		return NULL;
+returns NULL
+
+But is_workflow_triangular in
+	struct remote *fetch_remote = remote_get(remote_for_branch(branch, &explicit);
+);
+returns "origin"
+
+The difference in remote_get_1 is that
+	name_given = 1;
+So
+	if (name_given && !valid_remote(ret))
+		add_url_alias(ret, name);
+gets called.
+
+But I think that means that my fixup is actually wrong when a pushRemote is
+set without a remote while 'origin' do exist. I'll need to test. Grmpf!
+
+Thanks a lot for the thorough review!
+
+-- 
+Damien Robert
+http://www.normalesup.org/~robert/pro
