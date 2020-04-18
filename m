@@ -2,38 +2,38 @@ Return-Path: <SRS0=qItC=6C=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-11.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,MENTIONS_GIT_HOSTING,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 62656C38A2F
-	for <git@archiver.kernel.org>; Sat, 18 Apr 2020 13:13:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FCFBC38A29
+	for <git@archiver.kernel.org>; Sat, 18 Apr 2020 14:57:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 306D82054F
-	for <git@archiver.kernel.org>; Sat, 18 Apr 2020 13:13:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0C41E2072B
+	for <git@archiver.kernel.org>; Sat, 18 Apr 2020 14:57:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="JW39Y/9d"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="h8/97Mol"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725958AbgDRNNV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 18 Apr 2020 09:13:21 -0400
-Received: from mout.gmx.net ([212.227.15.15]:50033 "EHLO mout.gmx.net"
+        id S1726879AbgDRO5H (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 18 Apr 2020 10:57:07 -0400
+Received: from mout.gmx.net ([212.227.17.20]:44715 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725804AbgDRNNU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Apr 2020 09:13:20 -0400
+        id S1726762AbgDRO5G (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Apr 2020 10:57:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1587215592;
-        bh=TNGe9x31NOpTvzEfPHchQrP4elt5jxmKdriFZQn12EY=;
+        s=badeba3b8450; t=1587221819;
+        bh=OcYqrppUNtlrLEhDZEDhU9KMrq/4rmg57J0fc+KlDto=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=JW39Y/9da+YOxX0GedSPEJQXOvPmyPejELZfYD0TrJYwdz+OEzfX2SOhNhwNORh0h
-         fCtI06T0KGweXsItTNTjEeEgL/CzUAOj8d9FgmLs6CZG4Drti30aEJTONWy8oRr2/c
-         U4PlSwEx+0nQPu2FZ1ZOY2HDcdSjWsw+ZUzMhItA=
+        b=h8/97MoldT3y69A5Ecwiw9RbYUhPYOUin4ZAMndMy7rjfOg4ax13eThkOSNcfr+A7
+         4aRwAYwARoRj7kODYu6vs9u39V3nIpcw/FGWSVovA8svjp3zpa8VK5OyIer65KInbW
+         gbRnwDilf5ROE3hXSPK3QBPcJaC03gjH3UwM5bLI=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from MININT-QA14EDB.fritz.box ([89.1.212.169]) by mail.gmx.com
- (mrgmx005 [212.227.17.190]) with ESMTPSA (Nemesis) id
- 1MgvrL-1ilCjt2Fcz-00hQ64; Sat, 18 Apr 2020 15:13:12 +0200
-Date:   Sat, 18 Apr 2020 15:13:11 +0200 (CEST)
+ (mrgmx104 [212.227.17.168]) with ESMTPSA (Nemesis) id
+ 1N2V4J-1jFLHg0XE7-013ygt; Sat, 18 Apr 2020 16:56:59 +0200
+Date:   Sat, 18 Apr 2020 16:56:57 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Matheus Tavares <matheus.bernardino@usp.br>
@@ -41,35 +41,35 @@ cc:     gitster@pobox.com, asheiduk@gmail.com, git@vger.kernel.org,
         greg@hurrell.net, l.s.r@web.de
 Subject: Re: [PATCH] grep: follow conventions for printing paths w/ unusual
  chars
-In-Reply-To: <eaae7214925189f562056b1ee6972c05dcf76a32.1587103366.git.matheus.bernardino@usp.br>
-Message-ID: <nycvar.QRO.7.76.6.2004181509350.46@tvgsbejvaqbjf.bet>
-References: <xmqq1ronyz1s.fsf@gitster.c.googlers.com> <eaae7214925189f562056b1ee6972c05dcf76a32.1587103366.git.matheus.bernardino@usp.br>
+In-Reply-To: <nycvar.QRO.7.76.6.2004181509350.46@tvgsbejvaqbjf.bet>
+Message-ID: <nycvar.QRO.7.76.6.2004181655300.46@tvgsbejvaqbjf.bet>
+References: <xmqq1ronyz1s.fsf@gitster.c.googlers.com> <eaae7214925189f562056b1ee6972c05dcf76a32.1587103366.git.matheus.bernardino@usp.br> <nycvar.QRO.7.76.6.2004181509350.46@tvgsbejvaqbjf.bet>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:OyVUdVfI18aHE7c/kWaCvwh2mrVhUHuQVpR6IaT9OGhp192vzzh
- a3pgJoZUnaeZyEm5ZRTTKJLCtRVVUpAiqtvN+wpPgPDcPHn6pph0/CV7JJJU4pf3RjVHZxk
- nOKpkngT75nnRuz6yTI45eoqrSUVcjv2T5ky0P3B7Hw8FpMQB2GuLD61SsGez5gWBJJkW9+
- pFGA6m54ISf//b/PIyBdw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:mOm9y7qQkho=:KY3qLu5Pmrw7RS42jzo0kq
- d3/Y6erK+Av9GXe2Jg/ObskKQTeBEMKIcB4mjRuxIekiKe2dfS7jxffT2ir30qyV0NR2Hgnmi
- HWpuUma93cHwi7Eih0QNeYM5059ATKnjCPYJfUzp2xfh4BGPe+I2hNWX9T8BVWCKkF3UmRFND
- 9XQaaFpdGvRCmaO2UVfX/zDYWUbAmeH43OKtxRIqyKEhdX8YHw559tk4fSRh02ofzIH/CSCtz
- ISqHv4Hb9glIKbCJtiSQqWdDl/f7+xCXPrmW1YjUvpvRJ/PW1ge/ec4g7pvIUySNjzLEkhBf/
- znnfU5ubCS64G6aY/fQchFeiG6723A1zIY0aP25d7ILiMnbeJ5CJyKi8LlZ+tB/W7QbLc5R/z
- rfxgqHIx2pgE6KfXCRDldCkUphzbo/7f+vFPdjTXoEq4d8ZGLIY0ezSgF0b1iauFIcD5LVqst
- PTxntgvTDfX9aK4nawaClRlWUfYiPTgSFG9aI6BCwB01XKn+l1mN4iXWVfsNgOHMUEg72E3wG
- KcLLrE8dxNzGSUUdSIWmOzFbh4fsmByjk+D8j9kmh2X4Jc6JDJvShm/l5IJMd08hzxgWV2Kbg
- +5W58PCh7AvoBsRrYPBPStDxQZAWBKm1XvoDZjYsZmLA7iiVYO0gEtikcoflfd/NbgTj8fAhi
- VVOj+LvMpFzcdnoHNP08kBVpaST55TnWd12ZOx6r31e40j5hOAGsQG6TMDdF/C/ueo+PbJa5r
- DZmdXYtAVcitg9dfyfvp0nwCOzca2Y8W3TPufhn7i3vxrV70w1lYxvnbU4VCgjlB8zw4okFlv
- Q11W3Qp47A1/sE9cGC1s6Px3T77Uf1yMON/GIbcZw7XESUbJ7Ru5Fi6p8Xv2Aj5ymcIYIJWH7
- 3LdCJav58SRJcP0sl5514lM6OJcu7V259lswD2xVz3uhFCGkibz0wsnxhiZfGVWfjjTn3hR+9
- zGsKY57taYobKT5YgP/omjHLM/Ri47PDsjnWHXmzo63biy385zN0K7eUtVbi6gMJ3k/ZAibTl
- VC5K1W+aamHa8aQ6EDAwB9Q9NbY3CgpW0446ANFFvFlRC8xWBtQ6fZFSoGdpc3J3shTTi7e7g
- 03E7BYRSJiiWYV7K5vrJo9v2rvAOQYINvDJRp5qxeRNg3n586JI+lRdYcMKJQpRSiKIeKEe85
- omH6Cq7IqvBcbcDX8eDYmq+4rxyHSuXmgy+lEVm/T5MDaKa2eby4sXUcC903bpwA5xNGWhXjL
- FRE7eSJKe/H+VTyfW
+X-Provags-ID: V03:K1:1n7wEbjZRCYTk+PVXQYpAVpMeYRNn/Or+nM/Ia/kvAu3fRFKRQH
+ RhXUYMUB2k1j6TVLr2UpLA/yP58o9S6xq/kfYcrv/FrzxAJNbry88HZN/j1P5ostHam0jXm
+ QbOI36BpsfBLtKmKsMEzI/2L9Gg8OK/UE5oE7BbWMlEo7lWEDvQEW+KkjLjza57Qi4jq356
+ 61A/dYvB1D2bxW6pWXpSA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:mVtpc8Mbflo=://wQqXxMEMFlhd9jel0r9v
+ /YnNB1NEqlJO4yzmt0cqCeLWrwZZXMs0hjwK4W1HEPoXVitxfs2as+Mc3+A/LKCNqGu5RNsG0
+ mwcocs98G2odXqM06ik0UzATLnOI/HgivgnbHbOLuD+550lpKPsY56unt2u7ZX/+EksuCKLMN
+ PCc+d24+J4XTSyKYhJdNR0eLd4tTz+wtXmvz4flAqgiJRDlEFi7F3DJ8q4nM9BBArs8to8FUm
+ 0NrXSWXeBp/wkrrjjwYEtrNlKkPo6SW1WWxDHZltcb4IbCGpOXXFOKG/GngxvU28LpH7zJhuy
+ DMKBElLldBe/5wEHAd4pTgGGR/+PtcChlAuP2bEoDgisC5hvd1HEhOzzNkZleVfvbhLbaT5wj
+ 59kXVCWhaKAGtP1Dx88ZCTFs/Nh4Td+JEJ1xksR8x5tJEiHneRDJT/RxUxiAVS1gDFvwl+BbU
+ rZEiBVQbkzd+asEvr5Bpft2qB8XilGhWTT6ta25w1touxaNy2g4wJ2mr8HWOlIBX4tk4AXRuA
+ 76atp+Hh2e5IbKbZhbmCbuGxi9VvJuRvfMKybhadudVCmsQw8YMELct7gR0ZTQ3cEnMFTB/0s
+ V4OpadNTAJG8MbOKvzwxMgRsk3mmFR0PxiTvdbWEhWPF34rU2GJt1CsBLQ9javMDTf0VXThH2
+ XctPC/+jLXmZVrAE27MUjJXsZWFC6GWI3n6dkI5iUZhYnEtWURC/3u9LS+X4slSCZBJyUexe/
+ hRNne5VWG6efsDnhgo5WpI28/M2HNJAGcVc4IXACEBOcDMhZPUaDCgxBs0boa4Q7g9QH7aOmS
+ s9cSPla61O+Srz3hxigfSo/y1wE1mkV+YshEK+ofbfQvOG/An5FG8d7sfhTVAiznDBeDiK2kC
+ fqA4AfsrivVrJqs8GbvX1yeQ2k4rYa34+OqlWFpIIn1qu217cPuiAlSs+I7hTAg8S3aklhaeT
+ K+cwMptokENaNcUtxINa0ue5yO0Ab+LZE/78gK62L49tVeGp/GmSWD1woCS82ZcmUoDVoI4pP
+ XPaojLRq8dvB0F65dz4FR39QBUQ/7FYsdiwLf5aL5ZIDShTimo58C2IODkV0mUOdm2Z5WP21L
+ QRumLUdnzaA5eqAQKNcJ5FvIZ/tr8K7IjCAVaX4Y2pplpcG5hPCB0evjEjLxnntKtpU3Pkgxo
+ Xe77nAVOtSJ7hBb6Xb9O6KpFaDFu3YduZIZQ8MBDyTpT6LtNkDgy3wIqpbZnpp01/65psuzR5
+ 22joo5v3TgxsRmQWg
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -78,201 +78,137 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Matheus,
 
-On Fri, 17 Apr 2020, Matheus Tavares wrote:
+On Sat, 18 Apr 2020, Johannes Schindelin wrote:
 
-> grep does not follow the conventions used by other Git commands when
-> printing paths that contain unusual characters (as double-quotes or
-> newlines). Commands such as ls-files, commit, status and diff will:
+> On Fri, 17 Apr 2020, Matheus Tavares wrote:
 >
-> - Quote and escape unusual pathnames, by default.
-> - Print names verbatim and unquoted when "-z" is used.
+> > grep does not follow the conventions used by other Git commands when
+> > printing paths that contain unusual characters (as double-quotes or
+> > newlines). Commands such as ls-files, commit, status and diff will:
+> >
+> > - Quote and escape unusual pathnames, by default.
+> > - Print names verbatim and unquoted when "-z" is used.
+> >
+> > But grep *never* quotes/escapes absolute paths with unusual chars and
+> > *always* quotes/escapes relative ones, even with "-z". Besides being
+> > inconsistent in its own output, the deviation from other Git commands
+> > can be confusing. So let's make it follow the two rules above and add
+> > some tests for this new behavior. Note that, making grep quote/escape
+> > all unusual paths by default, also make it fully compliant with the
+> > core.quotePath configuration, which is currently ignored for absolute
+> > paths.
+> >
+> > Reported-by: Greg Hurrell <greg@hurrell.net>
+> > Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
+> > ---
+> >  Documentation/git-grep.txt |  6 +++--
+> >  builtin/grep.c             | 46 ++++++++++++++++++++++++++++---------=
+-
+> >  t/t7810-grep.sh            | 44 ++++++++++++++++++++++++++++++++++++
+> >  3 files changed, 82 insertions(+), 14 deletions(-)
 >
-> But grep *never* quotes/escapes absolute paths with unusual chars and
-> *always* quotes/escapes relative ones, even with "-z". Besides being
-> inconsistent in its own output, the deviation from other Git commands
-> can be confusing. So let's make it follow the two rules above and add
-> some tests for this new behavior. Note that, making grep quote/escape
-> all unusual paths by default, also make it fully compliant with the
-> core.quotePath configuration, which is currently ignored for absolute
-> paths.
+> Unfortunately, this causes eight test failures on Windows:
+> https://dev.azure.com/gitgitgadget/git/_build/results?buildId=3D38023&vi=
+ew=3Dms.vss-test-web.build-test-results-tab
 >
-> Reported-by: Greg Hurrell <greg@hurrell.net>
-> Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
-> ---
->  Documentation/git-grep.txt |  6 +++--
->  builtin/grep.c             | 46 ++++++++++++++++++++++++++++----------
->  t/t7810-grep.sh            | 44 ++++++++++++++++++++++++++++++++++++
->  3 files changed, 82 insertions(+), 14 deletions(-)
+> Could you please have a look? I suspect that this has something to do wi=
+th
+> those new tests needing the `FUNNYNAMES` prereq.
 
-Unfortunately, this causes eight test failures on Windows:
-https://dev.azure.com/gitgitgadget/git/_build/results?buildId=3D38023&view=
-=3Dms.vss-test-web.build-test-results-tab
+I need this commit to fix it:
+https://github.com/git-for-windows/git/commit/7ca815e1ab89d6ffdb1a17b3cbac=
+df22a508d33c
 
-Could you please have a look? I suspect that this has something to do with
-those new tests needing the `FUNNYNAMES` prereq.
+I'll paste it here, for your convenience:
 
-Ciao,
-Dscho
+=2D- snipsnap --
+=46rom 7ca815e1ab89d6ffdb1a17b3cbacdf22a508d33c Mon Sep 17 00:00:00 2001
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Date: Sat, 18 Apr 2020 16:49:43 +0200
+Subject: [PATCH] fixup??? grep: follow conventions for printing paths w/
+ unusual chars
 
->
-> diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
-> index ddb6acc025..3109ce8fbe 100644
-> --- a/Documentation/git-grep.txt
-> +++ b/Documentation/git-grep.txt
-> @@ -206,8 +206,10 @@ providing this option will cause it to die.
->
->  -z::
->  --null::
-> -	Output \0 instead of the character that normally follows a
-> -	file name.
-> +	Use \0 as the delimiter for pathnames in the output, and print
-> +	them verbatim. Without this option, pathnames with "unusual"
-> +	characters are quoted as explained for the configuration
-> +	variable core.quotePath (see git-config(1)).
->
->  -o::
->  --only-matching::
-> diff --git a/builtin/grep.c b/builtin/grep.c
-> index 99e2685090..bdf1a4bbc9 100644
-> --- a/builtin/grep.c
-> +++ b/builtin/grep.c
-> @@ -295,6 +295,38 @@ static int grep_cmd_config(const char *var, const c=
-har *value, void *cb)
->  	return st;
->  }
->
-> +static void grep_source_name(struct grep_opt *opt, const char *filename=
-,
-> +			     int tree_name_len, struct strbuf *out)
-> +{
-> +	strbuf_reset(out);
-> +
-> +	if (opt->null_following_name) {
-> +		if (opt->relative && opt->prefix_length) {
-> +			struct strbuf rel_buf =3D STRBUF_INIT;
-> +			const char *rel_name =3D
-> +				relative_path(filename + tree_name_len,
-> +					      opt->prefix, &rel_buf);
-> +
-> +			if (tree_name_len)
-> +				strbuf_add(out, filename, tree_name_len);
-> +
-> +			strbuf_addstr(out, rel_name);
-> +			strbuf_release(&rel_buf);
-> +		} else {
-> +			strbuf_addstr(out, filename);
-> +		}
-> +		return;
-> +	}
-> +
-> +	if (opt->relative && opt->prefix_length)
-> +		quote_path_relative(filename + tree_name_len, opt->prefix, out);
-> +	else
-> +		quote_c_style(filename + tree_name_len, out, NULL, 0);
-> +
-> +	if (tree_name_len)
-> +		strbuf_insert(out, 0, filename, tree_name_len);
-> +}
-> +
->  static int grep_oid(struct grep_opt *opt, const struct object_id *oid,
->  		     const char *filename, int tree_name_len,
->  		     const char *path)
-> @@ -302,13 +334,7 @@ static int grep_oid(struct grep_opt *opt, const str=
-uct object_id *oid,
->  	struct strbuf pathbuf =3D STRBUF_INIT;
->  	struct grep_source gs;
->
-> -	if (opt->relative && opt->prefix_length) {
-> -		quote_path_relative(filename + tree_name_len, opt->prefix, &pathbuf);
-> -		strbuf_insert(&pathbuf, 0, filename, tree_name_len);
-> -	} else {
-> -		strbuf_addstr(&pathbuf, filename);
-> -	}
-> -
-> +	grep_source_name(opt, filename, tree_name_len, &pathbuf);
->  	grep_source_init(&gs, GREP_SOURCE_OID, pathbuf.buf, path, oid);
->  	strbuf_release(&pathbuf);
->
-> @@ -334,11 +360,7 @@ static int grep_file(struct grep_opt *opt, const ch=
-ar *filename)
->  	struct strbuf buf =3D STRBUF_INIT;
->  	struct grep_source gs;
->
-> -	if (opt->relative && opt->prefix_length)
-> -		quote_path_relative(filename, opt->prefix, &buf);
-> -	else
-> -		strbuf_addstr(&buf, filename);
-> -
-> +	grep_source_name(opt, filename, 0, &buf);
->  	grep_source_init(&gs, GREP_SOURCE_FILE, buf.buf, filename, filename);
->  	strbuf_release(&buf);
->
-> diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
-> index 7d7b396c23..ab495dba28 100755
-> --- a/t/t7810-grep.sh
-> +++ b/t/t7810-grep.sh
-> @@ -72,6 +72,8 @@ test_expect_success setup '
->  	# Still a no-op.
->  	function dummy() {}
->  	EOF
-> +	echo unusual >"\"unusual\" pathname" &&
-> +	echo unusual >"t/nested \"unusual\" pathname" &&
->  	git add . &&
->  	test_tick &&
->  	git commit -m initial
-> @@ -481,6 +483,48 @@ do
->  		git grep --count -h -e b $H -- ab >actual &&
->  		test_cmp expected actual
->  	'
-> +
-> +	test_expect_success "grep $L should quote unusual pathnames" '
-> +		cat >expected <<-EOF &&
-> +		${HC}"\"unusual\" pathname":unusual
-> +		${HC}"t/nested \"unusual\" pathname":unusual
-> +		EOF
-> +		git grep unusual $H >actual &&
-> +		test_cmp expected actual
-> +	'
-> +
-> +	test_expect_success "grep $L in subdir should quote unusual relative p=
-athnames" '
-> +		cat >expected <<-EOF &&
-> +		${HC}"nested \"unusual\" pathname":unusual
-> +		EOF
-> +		(
-> +			cd t &&
-> +			git grep unusual $H
-> +		) >actual &&
-> +		test_cmp expected actual
-> +	'
-> +
-> +	test_expect_success "grep -z $L with unusual pathnames" '
-> +		cat >expected <<-EOF &&
-> +		${HC}"unusual" pathname:unusual
-> +		${HC}t/nested "unusual" pathname:unusual
-> +		EOF
-> +		git grep -z unusual $H >actual &&
-> +		tr "\0" ":" <actual >actual-replace-null &&
-> +		test_cmp expected actual-replace-null
-> +	'
-> +
-> +	test_expect_success "grep -z $L in subdir with unusual relative pathna=
-mes" '
-> +		cat >expected <<-EOF &&
-> +		${HC}nested "unusual" pathname:unusual
-> +		EOF
-> +		(
-> +			cd t &&
-> +			git grep -z unusual $H
-> +		) >actual &&
-> +		tr "\0" ":" <actual >actual-replace-null &&
-> +		test_cmp expected actual-replace-null
-> +	'
->  done
->
->  cat >expected <<EOF
-> --
-> 2.26.0
->
->
->
+It is easy to be fooled by the Bash included in Git for Windows, which
+leads you to believe that quotes are valid parts of file names.
+
+On Windows, they are not. But Cygwin (which is the base of MSYS2, which
+is the POSIX emulation layer used by that Bash) only _pretends_ that it
+is a valid file name character. In reality, it will map the character
+into the private Unicode page. Cygwin knows about this. The rest of
+Windows applications (including Git for Windows), however, does not.
+
+As a consequence, `>\"with\ quotes\"` will claim to succeed, but the
+file on disk will have Unicode characters in place of those quotes that
+literally no application but Cygwin ones can handle, and this leads to
+those beautiful new tests to fail.
+
+Let's just use the prereq we introduced to guard precisely against this
+problem: `FUNNYNAMES`.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+=2D--
+ t/t7810-grep.sh | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
+
+diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+index ab495dba28a7..991d5bd9c03f 100755
+=2D-- a/t/t7810-grep.sh
++++ b/t/t7810-grep.sh
+@@ -72,8 +72,11 @@ test_expect_success setup '
+ 	# Still a no-op.
+ 	function dummy() {}
+ 	EOF
+-	echo unusual >"\"unusual\" pathname" &&
+-	echo unusual >"t/nested \"unusual\" pathname" &&
++	if test_have_prereq FUNNYNAMES
++	then
++		echo unusual >"\"unusual\" pathname" &&
++		echo unusual >"t/nested \"unusual\" pathname"
++	fi &&
+ 	git add . &&
+ 	test_tick &&
+ 	git commit -m initial
+@@ -484,7 +487,7 @@ do
+ 		test_cmp expected actual
+ 	'
+
+-	test_expect_success "grep $L should quote unusual pathnames" '
++	test_expect_success FUNNYNAMES "grep $L should quote unusual pathnames" =
+'
+ 		cat >expected <<-EOF &&
+ 		${HC}"\"unusual\" pathname":unusual
+ 		${HC}"t/nested \"unusual\" pathname":unusual
+@@ -493,7 +496,7 @@ do
+ 		test_cmp expected actual
+ 	'
+
+-	test_expect_success "grep $L in subdir should quote unusual relative pat=
+hnames" '
++	test_expect_success FUNNYNAMES "grep $L in subdir should quote unusual r=
+elative pathnames" '
+ 		cat >expected <<-EOF &&
+ 		${HC}"nested \"unusual\" pathname":unusual
+ 		EOF
+@@ -504,7 +507,7 @@ do
+ 		test_cmp expected actual
+ 	'
+
+-	test_expect_success "grep -z $L with unusual pathnames" '
++	test_expect_success FUNNYNAMES "grep -z $L with unusual pathnames" '
+ 		cat >expected <<-EOF &&
+ 		${HC}"unusual" pathname:unusual
+ 		${HC}t/nested "unusual" pathname:unusual
+@@ -514,7 +517,7 @@ do
+ 		test_cmp expected actual-replace-null
+ 	'
+
+-	test_expect_success "grep -z $L in subdir with unusual relative pathname=
+s" '
++	test_expect_success FUNNYNAMES "grep -z $L in subdir with unusual relati=
+ve pathnames" '
+ 		cat >expected <<-EOF &&
+ 		${HC}nested "unusual" pathname:unusual
+ 		EOF
+=2D-
+2.26.1.windows.1
+
