@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 72720C54FD2
-	for <git@archiver.kernel.org>; Sat, 18 Apr 2020 16:03:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 979F7C38A29
+	for <git@archiver.kernel.org>; Sat, 18 Apr 2020 16:04:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 395E621D6C
-	for <git@archiver.kernel.org>; Sat, 18 Apr 2020 16:03:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 741FE22244
+	for <git@archiver.kernel.org>; Sat, 18 Apr 2020 16:04:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UszcH9Zp"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DEm/zWT5"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725879AbgDRQD5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 18 Apr 2020 12:03:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45408 "EHLO
+        id S1727818AbgDRQEC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 18 Apr 2020 12:04:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45426 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726581AbgDRQDv (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 18 Apr 2020 12:03:51 -0400
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45F9BC061A10
-        for <git@vger.kernel.org>; Sat, 18 Apr 2020 09:03:50 -0700 (PDT)
-Received: by mail-pf1-x442.google.com with SMTP id d1so2687383pfh.1
-        for <git@vger.kernel.org>; Sat, 18 Apr 2020 09:03:50 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1727783AbgDRQDz (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 18 Apr 2020 12:03:55 -0400
+Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A6C0C0610D5
+        for <git@vger.kernel.org>; Sat, 18 Apr 2020 09:03:55 -0700 (PDT)
+Received: by mail-pf1-x443.google.com with SMTP id w65so2655629pfc.12
+        for <git@vger.kernel.org>; Sat, 18 Apr 2020 09:03:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=UPo3QpRJR2XiWos3b8MvTn8o0c2HhyHfcUhONqkjpZY=;
-        b=UszcH9Zp/LMa8oyQlesStklPlWp2STHXzseR9U2vzpdWamvDXoXD8T+EXWcULRheIW
-         Yo8FFUr+7POdZVHQfV7wMv7mBq5kRvA+iBC0yxyLA0+Vb55pPcwYlstevBMztuKhaEUp
-         WvR/prGB1SgHdQgiDeWjwE1I+Ug67ywFPMfHmGUVnhBXq2rEHl1jEHEBBP1IJ/CSThpg
-         kay8xqTosApzZgthy3o1JtwRKYb+8QC6Euz0mFl8bzbcVfwbEFBDqoZQPAZHc+ZtdyNS
-         NChnsYCDq07g7wbjJl1JSKr4ktieq+vgK0gqk428YB7U6ztScTBmZmTZufUcfKMKwhsq
-         vVmw==
+        bh=JYboaKpjAoYwIKr0RNOYcugoTKy6HS62FUf5oeWWZHc=;
+        b=DEm/zWT5GICEGJB5EESzXuzcY90Pc//t4X9aRtChwKkBIUgvqz4ePzeHQ1SIuVQlf/
+         w8HT6T0h0Oz7RPGFdPzavzg/GhxzX3VjR4nXeJpQV92G7WBLPotoVVIcnGOvUXuab9cm
+         Z1pwnJeo36mvNrmkQyQFeuC/RJtMPn7EeCDyLRUDmAMf9GTecTZpQiDw/7JPi9jVs/dI
+         sB8x4Vaghfr3RcDcnjZMGggzYebPkaAYzvdPKNv/rA7k5o0bCrIFOaYYNbhtFVSkf4mA
+         FZXM/xWITC4nJEEKI+7lwXDct9raFbmCW5ivmoshw5mXmc/xyiA1QVdzosqp61+svh+0
+         FVNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=UPo3QpRJR2XiWos3b8MvTn8o0c2HhyHfcUhONqkjpZY=;
-        b=sqauKuG2KGxj8MDOBGkuvtmHzD0mApE7xNLudfsf81kaVeeoBkDMH1HFOGV+3chENK
-         6/iGNOu3a+dFhn8sFE4gKVa2GEFsBXKxPbwnuf+bciMeezQdUO4VQjsrM4SsKmLkpFjC
-         GqnMaYXIMxJVEbA/4d2TUazeAoYU8dD0GD6nNfUQOpjnTSIa0bCQppBPHzGVF8y4ZS9P
-         L57mC8i2A40iuYW3AdgzJjXDO8+5e0ArRDPYH6OEEiUfs35f9UB7Mfeu8EFRYNTbcqKG
-         tgUIExaFxFmiJXp4mFjJbG2sZQXdY6adHWTohkYBX9L8rIsbE7ztJdv0d+T/iqLMDvOQ
-         USTQ==
-X-Gm-Message-State: AGi0Puase9ibN1+RVp6xsMvMpOjV1kGuRmjBnrbsDIdXTqmPCJZ5Nqg3
-        WStbaQAAy6RPqK9HSuvn3RE=
-X-Google-Smtp-Source: APiQypKXacIyvssO2k9CPPSlCOoj+cc2BO+PsksnMN5sV8h8NHN3QU32ChFqCxOhLSE56yCeiYazIA==
-X-Received: by 2002:a63:7159:: with SMTP id b25mr8175205pgn.72.1587225829900;
-        Sat, 18 Apr 2020 09:03:49 -0700 (PDT)
+        bh=JYboaKpjAoYwIKr0RNOYcugoTKy6HS62FUf5oeWWZHc=;
+        b=heUzE8ELYa8AHzCNtqbFnyPz6aHqheYpmmSWcpleBZJkK84sH2+s884b19BTnCJ20c
+         /oKVYtgVH9f+Mq+qV3IpLL8JAH/e/Wo86c7VThHCefeZXPMouvZmpdk47ab/QBe8ZhVi
+         u6r/JQCi2aFk7RUG7T89QF1CHp6n4nBDhEq8PXPoch7n22SXj5G7gTmUKmKnamXw9iix
+         JFETfD9Wk79WWGlxwjLsevwQE2UK8v+Ls5K/bE+q/DrdAahmTdmc4OpEjbDtOhb6FmkL
+         E5VTSmw3vW7VtVpS+IQD9mlmEEKxqbFRHc7yTU6bXMw54JJ4jocu0uN224Zum4EwqmG0
+         bybw==
+X-Gm-Message-State: AGi0PuY6Yce4V/6GgYr1Ra/DOgpVfPx3cBMWSQ0/diAMZiAfQ2YfsXpA
+        s7qNldByqIT1Wy2xUYrwUJY=
+X-Google-Smtp-Source: APiQypKCXKEmSpziPp/2olqZdrrCpIaMOrTVPuVUn2ftwJqEvAHvgO+LED+XtGmWzdHVfcHmfGsDBw==
+X-Received: by 2002:aa7:96c1:: with SMTP id h1mr8868674pfq.212.1587225834604;
+        Sat, 18 Apr 2020 09:03:54 -0700 (PDT)
 Received: from tigtog.localdomain.localdomain ([144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id i187sm22461649pfg.33.2020.04.18.09.03.49
+        by smtp.gmail.com with ESMTPSA id i187sm22461649pfg.33.2020.04.18.09.03.53
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 18 Apr 2020 09:03:49 -0700 (PDT)
+        Sat, 18 Apr 2020 09:03:54 -0700 (PDT)
 From:   Jiang Xin <worldhello.net@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
 Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: [PATCH v13 2/8] connect: export parse_feature_value()
-Date:   Sat, 18 Apr 2020 12:03:28 -0400
-Message-Id: <20200418160334.15631-3-worldhello.net@gmail.com>
+Subject: [PATCH v13 6/8] refs.c: refactor to reuse ref_is_hidden()
+Date:   Sat, 18 Apr 2020 12:03:32 -0400
+Message-Id: <20200418160334.15631-7-worldhello.net@gmail.com>
 X-Mailer: git-send-email 2.26.0.rc0
 In-Reply-To: <20200414123257.27449-1-worldhello.net@gmail.com>
 References: <20200414123257.27449-1-worldhello.net@gmail.com>
@@ -76,48 +76,65 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 
-Export `parse_feature_value()` to parse extended status of report for
-"proc-receive" and "receive-pack".
+Add new function `ref_is_matched()` to reuse `ref_is_hidden()`. Will use
+this function for `receive-pack` to check commands with specific
+prefixes.
+
+Test case t5512 covered this change.
 
 Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 ---
- connect.c | 3 +--
- connect.h | 1 +
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ refs.c | 13 +++++++++----
+ refs.h |  1 +
+ 2 files changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/connect.c b/connect.c
-index b6451ab5e8..08e0616726 100644
---- a/connect.c
-+++ b/connect.c
-@@ -18,7 +18,6 @@
- 
- static char *server_capabilities_v1;
- static struct argv_array server_capabilities_v2 = ARGV_ARRAY_INIT;
--static const char *parse_feature_value(const char *, const char *, int *);
- 
- static int check_ref(const char *name, unsigned int flags)
- {
-@@ -447,7 +446,7 @@ struct ref **get_remote_refs(int fd_out, struct packet_reader *reader,
- 	return list;
+diff --git a/refs.c b/refs.c
+index 1ab0bb54d3..a20f56a463 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1388,14 +1388,14 @@ int parse_hide_refs_config(const char *var, const char *value, const char *secti
+ 	return 0;
  }
  
--static const char *parse_feature_value(const char *feature_list, const char *feature, int *lenp)
-+const char *parse_feature_value(const char *feature_list, const char *feature, int *lenp)
+-int ref_is_hidden(const char *refname, const char *refname_full)
++int ref_matches(struct string_list *match_refs, const char *refname, const char *refname_full)
  {
- 	int len;
+ 	int i;
  
-diff --git a/connect.h b/connect.h
-index 5f2382e018..17b3252cbc 100644
---- a/connect.h
-+++ b/connect.h
-@@ -12,6 +12,7 @@ int finish_connect(struct child_process *conn);
- int git_connection_is_socket(struct child_process *conn);
- int server_supports(const char *feature);
- int parse_feature_request(const char *features, const char *feature);
-+const char *parse_feature_value(const char *feature_list, const char *feature, int *len_ret);
- const char *server_feature_value(const char *feature, int *len_ret);
- int url_is_local_not_ssh(const char *url);
+-	if (!hide_refs)
++	if (!match_refs)
+ 		return 0;
+-	for (i = hide_refs->nr - 1; i >= 0; i--) {
+-		const char *match = hide_refs->items[i].string;
++	for (i = match_refs->nr - 1; i >= 0; i--) {
++		const char *match = match_refs->items[i].string;
+ 		const char *subject;
+ 		int neg = 0;
+ 		const char *p;
+@@ -1421,6 +1421,11 @@ int ref_is_hidden(const char *refname, const char *refname_full)
+ 	return 0;
+ }
  
++int ref_is_hidden(const char *refname, const char *refname_full)
++{
++	return ref_matches(hide_refs, refname, refname_full);
++}
++
+ const char *find_descendant_ref(const char *dirname,
+ 				const struct string_list *extras,
+ 				const struct string_list *skip)
+diff --git a/refs.h b/refs.h
+index 545029c6d8..d02c72d3ad 100644
+--- a/refs.h
++++ b/refs.h
+@@ -739,6 +739,7 @@ int parse_hide_refs_config(const char *var, const char *value, const char *);
+  * parameter always points to the full ref name.
+  */
+ int ref_is_hidden(const char *, const char *);
++int ref_matches(struct string_list *, const char *, const char *);
+ 
+ enum ref_type {
+ 	REF_TYPE_PER_WORKTREE,	  /* refs inside refs/ but not shared       */
 -- 
 2.24.1.15.g448c31058d.agit.4.5
 
