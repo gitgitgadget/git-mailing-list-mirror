@@ -7,110 +7,93 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 682BDC2BB1D
-	for <git@archiver.kernel.org>; Sat, 18 Apr 2020 00:52:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 10484C2BA19
+	for <git@archiver.kernel.org>; Sat, 18 Apr 2020 03:22:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3D76E214D8
-	for <git@archiver.kernel.org>; Sat, 18 Apr 2020 00:52:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CC2E3221EA
+	for <git@archiver.kernel.org>; Sat, 18 Apr 2020 03:22:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UV1B3VDK"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dKuhrv59"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725939AbgDRAw4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Apr 2020 20:52:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47504 "EHLO
+        id S1725796AbgDRDW4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Apr 2020 23:22:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42148 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1725856AbgDRAw4 (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 17 Apr 2020 20:52:56 -0400
+        by vger.kernel.org with ESMTP id S1725320AbgDRDW4 (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 17 Apr 2020 23:22:56 -0400
 Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 527CAC061A0C
-        for <git@vger.kernel.org>; Fri, 17 Apr 2020 17:52:56 -0700 (PDT)
-Received: by mail-pf1-x442.google.com with SMTP id p25so1854726pfn.11
-        for <git@vger.kernel.org>; Fri, 17 Apr 2020 17:52:56 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43BE0C061A0C
+        for <git@vger.kernel.org>; Fri, 17 Apr 2020 20:22:56 -0700 (PDT)
+Received: by mail-pf1-x442.google.com with SMTP id c138so2032450pfc.0
+        for <git@vger.kernel.org>; Fri, 17 Apr 2020 20:22:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=/vdHwoPircQWLADluAA2YiWisJbLIOw7I3XM6Y4lxI4=;
-        b=UV1B3VDKVPouV+DdH4ujaedqgwn66a7KcH4xOV9tuRCezR8eN/SVbwL6o9FOJrEM37
-         t2XjBg7lXt4CYuybppv+d7a9UC9Clqi/bD74yYS63AwS0qjkAZyzKAgdWAMWvIKec3o1
-         GlsgwvCuWfhNBvoYvDnCgFivPut9Ev4/JWTP/pda+W7AtqNqyDKiGLbjLJz+INXC/u/u
-         nLeN9PxiVUK0ZPEQNuUOTTEqBHrmjktpv6tPA6kA22QoNMfiq9gie8uRcfWyUwL4QRFX
-         o7kb+rOcpLWlYbsy4aXdtR4bnqXeZAeZsjZfw2AhIVqun3mvSTAKjss4TNLv69F+bEo8
-         nSsQ==
+         :content-disposition:in-reply-to;
+        bh=ywgd6H5lSMz+fUOttCIWbrB5VUnqo2XAuzuN3Xzu7Us=;
+        b=dKuhrv59JivIYkmh2BUF3Uj8OPy3M2Oz+dVsYBXlwrmOfF7+Q1lr8aSQyMDTcXB5fx
+         azG+jDONCHqcRGldbK2tEMMSaVorNddB0251aiVMYfdStbSAgRwXsd/dET5wR+ImNAXt
+         UXrxv0ZAUTrWl9ODQj9R1nhgRrtZ7CnXPNIPR7SNCtz7DPRqQ0Hdv+gEWiUbJgLrU/HM
+         drK0Nd7T0FJJME6VSR3zq7ZnIukU41xW+Y0eoku5Jdiz0MX2eHFXoGPawNujONGNE5Df
+         QIFTowF3K8oLkO5Q+qeRYPqjpPqA9n5w5ehsoOAtkGYAwEPDLf4XAMKmDDVGxYlbCLt9
+         YvCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=/vdHwoPircQWLADluAA2YiWisJbLIOw7I3XM6Y4lxI4=;
-        b=D0fg3HDiRzCOpSf8vwlOa7nwdV52WgtcJn+KanYX1k7ZVL3yUVvnWaCit9PJXogqXs
-         cNXd+W23CfSYWqecqxmozWiP/RxM/ARNpgx8pM0rXX4fYe2RGieS1ZHHcDQOrPKd2NVi
-         /bviCTHa7UYDYrivNfVfGle8InSDcAO10B/tHFCik6ylhqX2oLqRUxpMGAtjRFmqcT1M
-         C36Hrez5JgJWsHIjHNjdDznugCZhtFJLOVmR4YUA+6IRg+4ajDTZ3K/4zKzDXvxwaTl/
-         0b7YvfeDxEKO5IrVh6TmETciarAgtTSPRKGj78F3eGsD7SnZ+xySMULFmeTsL3UPHXH6
-         6uQA==
-X-Gm-Message-State: AGi0PuZFDaZik7HPWTyjkKWwyfhxp8pIa8TIKII3TiCohxJugntyXjog
-        3ie1wh6PExZgUEmzc+55E3M=
-X-Google-Smtp-Source: APiQypJ3C+CKygw3hxBBeAEaJUGetwIb5JVKsM9jsD+x9OtY6/dVhyJPqQ6ho8ghw4EShv/tQWGtVg==
-X-Received: by 2002:a62:2947:: with SMTP id p68mr5775387pfp.282.1587171175687;
-        Fri, 17 Apr 2020 17:52:55 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
-        by smtp.gmail.com with ESMTPSA id 17sm15439379pgg.76.2020.04.17.17.52.54
+         :mime-version:content-disposition:in-reply-to;
+        bh=ywgd6H5lSMz+fUOttCIWbrB5VUnqo2XAuzuN3Xzu7Us=;
+        b=r+onJJbJpcWkcQ8wqZ9++/60kxi5q8nerHV7l57iGJXmXlyJHG3wtjBRMgn5LBT7VS
+         GaEtycHqBLMWlaQMq0mkeMK1qp/qC7LnP+VImHhk6M994SLkRzFM0+z2HwR43ZodQ3t6
+         evdbBgbvsK3HqkDggXnQHjNNgt+0vgitw/8m+zfWje+B0UZEagxGzTlgGtm+7IpxvRHe
+         YuuxyRHwOgltTSH4mh9JXwIGqHFj7gV0uyiB6E3A7P1Jf+K9+owKNWZ3bmA6Unnc7Eru
+         Ni3Mv2h6xKiHgiUKPdwYwtoHfY6jQ0u7b6cecTnS0Jvyj/t2ENkjeGSQv7rr0ptWHM8e
+         wloA==
+X-Gm-Message-State: AGi0PuaGMPa0SA7/9bnQNxiOWcuPe7LgMuqD/gKzBOJN/kWZeQiWKAI7
+        H89rgz17Qb31Ulb6ZIfzFDI=
+X-Google-Smtp-Source: APiQypKC7SZWrAuVfnALmHKEAX0eferCxo2Hc8pOWD3lBuLMONKmBjhEAQk1nvlRQsvUGzPswl+ecg==
+X-Received: by 2002:aa7:8649:: with SMTP id a9mr6405525pfo.138.1587180175488;
+        Fri, 17 Apr 2020 20:22:55 -0700 (PDT)
+Received: from localhost ([2402:800:6374:5380:b9e1:93e1:68db:b9f6])
+        by smtp.gmail.com with ESMTPSA id f10sm1684214pju.34.2020.04.17.20.22.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Apr 2020 17:52:55 -0700 (PDT)
-Date:   Fri, 17 Apr 2020 17:52:53 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Enji Cooper <yaneurabeya@gmail.com>
-Cc:     git@vger.kernel.org, Barret Rhoden <brho@google.com>
-Subject: Re: blame --ignore-rev - repo-level ignore file
-Message-ID: <20200418005253.GB121175@google.com>
-References: <B2997F0D-AEEE-4431-85B8-98831ACF85B6@gmail.com>
- <388B3B98-4929-4B4A-9167-3076CFDD0B5B@gmail.com>
+        Fri, 17 Apr 2020 20:22:54 -0700 (PDT)
+Date:   Sat, 18 Apr 2020 10:22:52 +0700
+From:   Danh Doan <congdanhqx@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>
+Subject: Re: [PATCH v8 0/9] Reftable support git-core
+Message-ID: <20200418032252.GA9169@danh.dev>
+References: <pull.539.v7.git.1582706986.gitgitgadget@gmail.com>
+ <pull.539.v8.git.1585740538.gitgitgadget@gmail.com>
+ <xmqqmu7c49b6.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <388B3B98-4929-4B4A-9167-3076CFDD0B5B@gmail.com>
+In-Reply-To: <xmqqmu7c49b6.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-(+Barret)
-Hi!
+On 2020-04-15 16:29:33-0700, Junio C Hamano <gitster@pobox.com> wrote:
+> "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+> > This adds the reftable library, and hooks it up as a ref backend.
+> 
+> Since I queued the topic to 'pu', I needed to apply these fix-up
+> patches on top.  The change to the Makefile is about "make clean"
+> which forgot to clean the reftable library.  All the rest are ws
+> clean-ups.
+> 
+> There are build breakages reported on Windows, with possible fixes
+> (which IIRC were reported to segfault X-<), but I do not have URL or
+> message-IDs handy.
 
-Enji Cooper wrote:
+FYI, it's also segfault in Linux even if only the test is applied.
+IOW, the code to fix breakages on Windows doesn't affect the segfault.
 
-> Hi,
+Here is the message: <nycvar.QRO.7.76.6.2004101604210.46@tvgsbejvaqbjf.bet>
 
-> Given the increased number of C/C++ and python projects that both
-> use git and a tool like black (python formatting tool), or
-> clang-format (C/C++ tool, primarily), I would like to seriously
-> consider revisiting the topic "blame --ignore-rev - repo-level
-> ignore file” topic that was originally started by Terry Davis here
-> [1] (quoted above for historical reference with the reply provided
-> by Barret Rhoden).
->
-> Having a default configuration that can be used with git instead of
-> forcing end-users to set custom configs per repo clone would make it
-> considerably easier for end-users: one could clone a repo, reformat
-> code with an automated tool in a series of known commits, add
-> ignored revisions to the file when using git blame, then make
-> additional changes building off the automated reformatters' changes.
->
-> I will be more than happy to submit patches to make this possible; I
-> just need some guidance in terms of what’s required when
-> contributing changes, etc.
-
-The first question would be what you expect the end-to-end workflow
-to look like for users.  What commands would they run?  How would
-they discover them?
-
-As for the general contribution process:
-https://www.kernel.org/pub/software/scm/git/docs/MyFirstContribution.html
-is a good starting point.
-
-Thanks and hope that helps,
-Jonathan
-
-> 1. https://marc.info/?l=git&m=156864623817929&q=mbox
+-- 
+Danh
