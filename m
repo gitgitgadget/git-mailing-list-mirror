@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EDA14C352BE
-	for <git@archiver.kernel.org>; Sat, 18 Apr 2020 20:19:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FC9AC352BE
+	for <git@archiver.kernel.org>; Sat, 18 Apr 2020 20:19:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C97AE221F7
-	for <git@archiver.kernel.org>; Sat, 18 Apr 2020 20:19:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1BAEE21D93
+	for <git@archiver.kernel.org>; Sat, 18 Apr 2020 20:19:14 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iD400bHW"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WeqzeGpX"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728274AbgDRUTI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 18 Apr 2020 16:19:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56218 "EHLO
+        id S1728277AbgDRUTN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 18 Apr 2020 16:19:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56234 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1727927AbgDRUTH (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 18 Apr 2020 16:19:07 -0400
-Received: from mail-lj1-x244.google.com (mail-lj1-x244.google.com [IPv6:2a00:1450:4864:20::244])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C39EC061A0C
-        for <git@vger.kernel.org>; Sat, 18 Apr 2020 13:19:07 -0700 (PDT)
-Received: by mail-lj1-x244.google.com with SMTP id u6so5717091ljl.6
-        for <git@vger.kernel.org>; Sat, 18 Apr 2020 13:19:07 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1727927AbgDRUTM (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 18 Apr 2020 16:19:12 -0400
+Received: from mail-lf1-x141.google.com (mail-lf1-x141.google.com [IPv6:2a00:1450:4864:20::141])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79858C061A0C
+        for <git@vger.kernel.org>; Sat, 18 Apr 2020 13:19:12 -0700 (PDT)
+Received: by mail-lf1-x141.google.com with SMTP id 131so4669425lfh.11
+        for <git@vger.kernel.org>; Sat, 18 Apr 2020 13:19:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=akVZWZipRuuLvNi8D4x2KLm7slZlzXxgE2XA/Tdpt64=;
-        b=iD400bHW6mvKG4xDkAZWXWAmnNIu9HF0Eib92scmcWO7S8mitsmBXIwgnDt15vKKd2
-         FKalhbV5wIJFiFWSmRnFd2rVPKU60+8mZTXPNzTbqt3BZdgo7FfbVFNgZ2hWWwk2slim
-         2Ffhwp4qg2NwnNY+yPMSh/YGuhPI2npy/AN5MAhZ3BslOV4C/GDsQW6cicC9vOwUPj3H
-         c12dkeqUhL0mGmnfoQFPIG8gt5aYbbu+F4kOHMo2SJN60xKrmG/EeFY4RE4nbjsSoEIe
-         jwlIwpY4hN2363tb34zwoTDob1tgaNJ79eipgrY3p/CcSiYsxqMxSWR/DgL+atq3o9B1
-         3BMA==
+        bh=nYMvdEnNs1mIQ+phRpew+SOBmCpz1HTNiCuhFQTchUU=;
+        b=WeqzeGpXXU/POf1qeN0JjObLs9ZdpaP7zbwy+r3PhKeNNrs71NDvlyMicKX/oB0R9M
+         EE3BWghzmBwbBTkN08+RA/ZehxZXmwX8H0iQhj+i34N6rJi3nHBjr43uOjN6aGAR9ANk
+         DMjSBA/G+5Trp3ublvwvAM9yDUqBIysD/EUWpZn4fVSwaypnMUtwxH9BXH+gmJdCmfAH
+         LdUKPyQtwFEtZBvySliLeG3gU6BfRTQQcFuT5y0arEsqWIsKILT8IB/b6Ox+Q8o12DGn
+         PdLhKSh60oDDTb+V24p+ZKh4Il5b5Ba3h1n+ubs5I1QzVfb1d/y0JwF2oTydPtdHuCer
+         S7VQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=akVZWZipRuuLvNi8D4x2KLm7slZlzXxgE2XA/Tdpt64=;
-        b=R1mBBi2K3+w5dYhZ94To8s7U2ZYz+T1hUj6N9mRsr2xkiGjrkwT7aJo6631sSXRhe7
-         b+YUYtOPuFtSOouyz7VxpXpd3E7Fp6LSMVZplKsRc6m4e+ccanOcZKgpdFB1OnjiUNbd
-         lzYgOQyqRt5Qq7KqOc9d6CsNVDeKxgg/3496Th3aJdQsxdA3Y9LT9olmKYv8R6hM6zB0
-         c0XcLOSvwCRo6pIZyaio5bAjObmvZ1+nS3zYJKw/CKHdhZMXiZmc0chAZ0hBcTJiaXq9
-         V65+YmxxrG3FzDAJ0g/XJEIHsh4xRv44keakfguoroZTDAXmfhWhTLAsRzd5KUzRl1+R
-         pTSg==
-X-Gm-Message-State: AGi0PuYwuzaU+NQCAzTY15gI4chW2vG3puBi43Wa2QgiNwKSc5j52lNF
-        PDmVEF93Qnx9KKzqL8n0PtwLp+XE
-X-Google-Smtp-Source: APiQypLPfyQZDUU4mf5zR4Fm7D95owvCgake33+/KRBoZhpR6r4Iqu+OgwYjE8P1RrtZarMcTyt1tQ==
-X-Received: by 2002:a2e:7610:: with SMTP id r16mr1990818ljc.156.1587241145615;
-        Sat, 18 Apr 2020 13:19:05 -0700 (PDT)
+        bh=nYMvdEnNs1mIQ+phRpew+SOBmCpz1HTNiCuhFQTchUU=;
+        b=hbslHnzb2rbESmNk7HxtgirAweZCudSTd1Y7LDY1ewzx6SwIRwgLYKYNbaLRhHlRpI
+         dgAA4S9zzh+kGlqEV3nPYDtvU4RDSoWPqSYmxlfTHTj9BKCQP5HemEHqDvdzV192E14R
+         gWBxFN9Ip1xBEK808BFx3h3n6hJ2gTtIJpmqRN4JYOLVIFJeJTWuKwNiMSW8Ce/uQPxX
+         2asmLtJ8036sB9hgCu0DFSN6z9C1gRa1JuRNOdEHo++8FHT/Ovpog+2fN3SsBoDHFrku
+         lxwktqSHQn39v9BRgfv9cx5wOP17JGVptBbV/KcONDRyVqR2tWCF6igS67lFnSStmB8p
+         IDvw==
+X-Gm-Message-State: AGi0PuYHFGLrRvAICQQhboiYTtEtaazKuEO4OgUdgT6v2p/+fK4sXojH
+        rcb2u9yhlk10a12cOfwTBj26Pv2S
+X-Google-Smtp-Source: APiQypIdpHgmYIIcAm6Hp0r7lL5+8XLMW6nqGS4Mq1f4tgEAbF2idP8H5aRW5slyvhgExHQ2lQj6/Q==
+X-Received: by 2002:ac2:4c89:: with SMTP id d9mr5838688lfl.165.1587241150732;
+        Sat, 18 Apr 2020 13:19:10 -0700 (PDT)
 Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
-        by smtp.gmail.com with ESMTPSA id 73sm218713ljj.72.2020.04.18.13.19.04
+        by smtp.gmail.com with ESMTPSA id 73sm218713ljj.72.2020.04.18.13.19.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 18 Apr 2020 13:19:05 -0700 (PDT)
+        Sat, 18 Apr 2020 13:19:10 -0700 (PDT)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>
-Subject: [PATCH 3/6] strbuf: use `strbuf_attach()` correctly
-Date:   Sat, 18 Apr 2020 22:18:26 +0200
-Message-Id: <c21fd9b168ae8248954bc94896d283e9857702ef.1587240635.git.martin.agren@gmail.com>
+Subject: [PATCH 4/6] fast-import: avoid awkward use of `strbuf_attach()`
+Date:   Sat, 18 Apr 2020 22:18:27 +0200
+Message-Id: <5db92b51c0363694c72b2de0c841449fa4e03f28.1587240635.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.26.1
 In-Reply-To: <cover.1587240635.git.martin.agren@gmail.com>
 References: <CAN0heSppn6BBX4V1T1qgKc4XP+8i6qbcEqd1_3NqWQtZJLaJww@mail.gmail.com> <cover.1587240635.git.martin.agren@gmail.com>
@@ -76,29 +76,60 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Similar to earlier commits, don't pass in the same value for `len` and
-`alloc` to `strbuf_attach()`. This string comes from
-`reencode_string_iconv()` which ensures we have an extra byte at the
-end.
+As explained in an earlier commit, per the documentation of
+`strbuf_attach()`, it is incorrect to pass in the same value for `alloc`
+as we do for `len`. But, and this was also explained earlier, doing so
+is still ok-ish because we'll end up allocating a large enough buffer
+under the hood.
+
+But then one really has to wonder whether
+
+  strbuf_attach(&sb, buf, size, size);
+
+is any better than
+
+  strbuf_reset(&sb);
+  strbuf_add(&sb, buf, size);
+  free(buf);
+
+The latter is certainly a lot less subtle about what is going on, and if
+we're lucky, the strbuf's allocated buffer is large enough that we won't
+even need to allocate. So let's change to this more explicit form.
+
+In short, this commit should not make things any worse.
+
+Nearby commits are changing other callsites to pass in a larger 'alloc`
+parameter. Maybe that's safe here, too -- I admit I don't quite follow
+where this memory comes from. In the future, we could possibly switch
+back to `strbuf_attach()` here after looking into the allocations in
+more detail. The immediate reason for this commit is that we want to
+simplify the usage of `strbuf_attach()`, and we won't be able to pass in
+"size, size" any more.
 
 Signed-off-by: Martin Ågren <martin.agren@gmail.com>
 ---
- strbuf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fast-import.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/strbuf.c b/strbuf.c
-index bb0065ccaf..deb338412e 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -152,7 +152,7 @@ int strbuf_reencode(struct strbuf *sb, const char *from, const char *to)
- 	if (!out)
- 		return -1;
- 
--	strbuf_attach(sb, out, len, len);
-+	strbuf_attach(sb, out, len, len + 1);
- 	return 0;
+diff --git a/fast-import.c b/fast-import.c
+index 202dda11a6..7fd501c5cf 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -2946,10 +2946,11 @@ static void cat_blob(struct object_entry *oe, struct object_id *oid)
+ 	cat_blob_write("\n", 1);
+ 	if (oe && oe->pack_id == pack_id) {
+ 		last_blob.offset = oe->idx.offset;
+-		strbuf_attach(&last_blob.data, buf, size, size);
++		strbuf_reset(&last_blob.data);
++		strbuf_add(&last_blob.data, buf, size);
+ 		last_blob.depth = oe->depth;
+-	} else
+-		free(buf);
++	}
++	free(buf);
  }
  
+ static void parse_get_mark(const char *p)
 -- 
 2.26.1
 
