@@ -2,71 +2,72 @@ Return-Path: <SRS0=qItC=6C=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A19D4C352BE
-	for <git@archiver.kernel.org>; Sat, 18 Apr 2020 20:18:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C533C38A29
+	for <git@archiver.kernel.org>; Sat, 18 Apr 2020 20:18:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7F3F0221F7
-	for <git@archiver.kernel.org>; Sat, 18 Apr 2020 20:18:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DFE0021D93
+	for <git@archiver.kernel.org>; Sat, 18 Apr 2020 20:18:54 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GTI7pVu7"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="q1N0/87E"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728255AbgDRUSu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 18 Apr 2020 16:18:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56172 "EHLO
+        id S1728265AbgDRUSy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 18 Apr 2020 16:18:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56178 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1727927AbgDRUSu (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 18 Apr 2020 16:18:50 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA8CAC061A0C
-        for <git@vger.kernel.org>; Sat, 18 Apr 2020 13:18:49 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id g10so4244346lfj.13
-        for <git@vger.kernel.org>; Sat, 18 Apr 2020 13:18:49 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1727927AbgDRUSx (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 18 Apr 2020 16:18:53 -0400
+Received: from mail-lf1-x142.google.com (mail-lf1-x142.google.com [IPv6:2a00:1450:4864:20::142])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33023C061A0C
+        for <git@vger.kernel.org>; Sat, 18 Apr 2020 13:18:53 -0700 (PDT)
+Received: by mail-lf1-x142.google.com with SMTP id x23so4709760lfq.1
+        for <git@vger.kernel.org>; Sat, 18 Apr 2020 13:18:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Amw4txvyBTWw1h2KNQYOsBTYbnNJNuwhjC496m7b6zk=;
-        b=GTI7pVu7ku+TSxk0T5VeSo2BHpYqeQrzHsiZZFtf1DHMb5Of3pTSBD5DrZm0L2es0f
-         xp9llmpweW5qj702puwYJVBHLbGD2s4GhUULilaVMBSwU1pFA6PtPOLRr6EYf8Y7zKGF
-         uO3oFzIayJSMY15kS+O9libYbDRl7w5w8zDGxwxhIkc7V4He1+3nHWVleS8yZgz9Gqp3
-         bN2MY5Mt81zv1ceVjcXTnPonZ3sfDHw2Z+hy+tpJQ4Trxj3LvoXq+MJ34pQDbQ8WNHIh
-         PKdC6HdjjI83HwkpxtcGJtfopV2bkfG+UievKpyLsKXR8E6zZV5TUGNnczWFxVfRxniE
-         LZYw==
+        bh=84hnXTm9qNUGMODcL1hCAyLQDgXtASTHAvb2L4PIv4c=;
+        b=q1N0/87ExXXGsSl2zOd8oUfURLX2VZd1Z598rg3+agRhu8mu6f0TLT8joa0UJvyKNS
+         UfhlGLhXcVipDWoJqfsYCuIizFXjypS6eNZatvaOCir2BDHvOZYDpqqFlU9wn9C7okD8
+         yis79yd/5Lss7U3SHoOZspZxJ0ZS4Mn4GSoMleWTmOdIGTsUnFE8uSrJduxvng/d1ybN
+         e8BAmqcfTV446JLpp+TGRjVGtpIsc6ADrAfP5RbaA1pbcW024pvgWdA5yEvOYi/zLROf
+         mZCeP6KwHy7R+YoELGvMGpQKTnbXbpfAFbRR6Jd9aAZjH3zZpaEFr1wg4YWbAjWl8o3y
+         NLSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Amw4txvyBTWw1h2KNQYOsBTYbnNJNuwhjC496m7b6zk=;
-        b=MM2LeUR47gTYWlxXHzRGzHafoi5Mpt9XsLy1pJTwbYzF7NLwspSVqQevSViuTDFo8T
-         l/MtmwlW3VhbZ2yw9gmRS6wbrRtYtQHL2mAzdj8Fqznm6L3aHgLOel1trahPlsVhVP3x
-         Y92nfBssqo8Sl6TL4PT8Y/jrmNNjydW+r78f0MJ46dTR3Ic/soGp48flBqMHoTubvIzN
-         ZMCtz2xva2pIYhPDgZdBOP10tvzHSAy26mmd57YGAaI1Hndy3lrZ0qMFnBnTyFcF5LPu
-         IKN/Q01kNMASj9f60PAQ1DnJdMo9820A3lwDxS5SKVGLwOVDTumEqZcmZaSs1M9FcRH9
-         SwPw==
-X-Gm-Message-State: AGi0Pua2jKZgvzqXe+GdbjAW8r3VRZFEw/KP0jH9qppOs7+BTEW9MDq5
-        bKuf3GKNJ6tlZUF7K9wJzRv9012M
-X-Google-Smtp-Source: APiQypKJdz2Y5ZHcWPokNeK1lbwf+s5miqd3GEiArFtBAXptZxiPHKgzyEjbNcGo2UM4UYb/iBAtug==
-X-Received: by 2002:a19:dcc:: with SMTP id 195mr5715927lfn.193.1587241127929;
-        Sat, 18 Apr 2020 13:18:47 -0700 (PDT)
+        bh=84hnXTm9qNUGMODcL1hCAyLQDgXtASTHAvb2L4PIv4c=;
+        b=jQnjPfu1XdDi6cCi+68ml6IXg2eC4d2Xz/XhD3hhN1yZ38i08kL+Cxoe1e1aDXtuIc
+         7FwauwTkz4xz5dqI8+8lV9VRLxRvMd7UXN5Pn2HOJ6vm5o6+lpn4QCAo1OTe6dgjbcuI
+         gEAgSqV6Y1z9iEer7m+j+GEKG4MlKz1d6h9/e84btadnS3iptZlda92aAX5dC9SzQfvF
+         JQI/dIcTQrhwrgwzZdp4SPptIyno+uhpaJtonBYfSSGDhKUskzo+tAMhhUq5K/lsZkfE
+         2xwcn3Nco6ZxouzyQNyxIW07La1po8EBlQT5E9ru4PLQJhRl2BwyRe20hRZxghZb6L+Z
+         Xe4w==
+X-Gm-Message-State: AGi0PuYele1yvXDb34+usBYGUTFZNBN0+MVoumeVhNeJnehmphqWvwlt
+        rHQ20MKztS/Wd6i6Lcnq5/hyNBbJ
+X-Google-Smtp-Source: APiQypIpEkrgLEMklVmgvKU6Ees6f5d4E9fAlxNxQUc6dGcrjlu0EldJy50fxi8uOSF4axLDAYTqpQ==
+X-Received: by 2002:a19:1c3:: with SMTP id 186mr5728684lfb.191.1587241131477;
+        Sat, 18 Apr 2020 13:18:51 -0700 (PDT)
 Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
-        by smtp.gmail.com with ESMTPSA id 73sm218713ljj.72.2020.04.18.13.18.47
+        by smtp.gmail.com with ESMTPSA id 73sm218713ljj.72.2020.04.18.13.18.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 18 Apr 2020 13:18:47 -0700 (PDT)
+        Sat, 18 Apr 2020 13:18:51 -0700 (PDT)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>
-Subject: [PATCH 0/6] strbuf: simplify `strbuf_attach()` usage
-Date:   Sat, 18 Apr 2020 22:18:23 +0200
-Message-Id: <cover.1587240635.git.martin.agren@gmail.com>
+Subject: [PATCH 1/6] am: use `strbuf_attach()` correctly
+Date:   Sat, 18 Apr 2020 22:18:24 +0200
+Message-Id: <fa514ce7dad31b8aba0eb693eef9648d509b5334.1587240635.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.26.1
-In-Reply-To: <CAN0heSppn6BBX4V1T1qgKc4XP+8i6qbcEqd1_3NqWQtZJLaJww@mail.gmail.com>
-References: <CAN0heSppn6BBX4V1T1qgKc4XP+8i6qbcEqd1_3NqWQtZJLaJww@mail.gmail.com>
+In-Reply-To: <cover.1587240635.git.martin.agren@gmail.com>
+References: <CAN0heSppn6BBX4V1T1qgKc4XP+8i6qbcEqd1_3NqWQtZJLaJww@mail.gmail.com> <cover.1587240635.git.martin.agren@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,70 +76,50 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, 18 Apr 2020 at 21:56, Martin Ågren <martin.agren@gmail.com> wrote:
-> > -       strbuf_attach(line, out, strlen(out), strlen(out));
-> > +       strbuf_attach(line, out, out_len, out_len);
->
-> This conversion is ok as such. I wondered why we pass in the same
-> value twice (before and after this patch). Turns out this usage is wrong
-> (as per the documentation in strbuf.h) but safe (as per my understanding
-> of the implementation in strbuf.c). I'll follow up with a series that
-> fell out of that investigation.
+Among other parameters, `strbuf_attach()` takes a length and an amount
+of allocated memory. In strbuf.h, it is documented that the latter "must
+be larger than the string length, because the string you pass is
+supposed to be a NUL-terminated string".
 
-Here's that series. It could go in parallel to Danh's, or one could go
-on top of the other. Any of those would be ok with me.
+In builtin/am.c, we simply pass in the length of the string twice.
 
-I think `strbuf_attach()` is sufficiently hard to use that we might as
-well simplify it for the majority of the users that don't care about the
-distinction between the string's length and the size of the allocated
-memory, and avoid it for the few remaining users that are just as well
-off using `strbuf_add()`.
+My first assumption was that we'd end up with `alloc == len` and that,
+e.g., a subsequent `strbuf_avail(sb)` would evaluate `sb->alloc
+- sb->len - 1`, resulting in a huge return value, which could be quite
+bad. But luckily, we end up in `strbuf_grow()` where we reallocate a
+larger buffer, after which we reinstate a '\0' and everything is fine.
 
-The summary is that this function takes `len` and `alloc`, where the
-latter must be greater than the former, yet several callers use the same
-value for both. I first thought this could cause quite hairy problems
-such as writing outside of allocated memory, but it doesn't look that
-way. See the patches for more information.
+One might ask if the function was documented incorrectly in dd613e6b87
+("Strbuf documentation: document most functions", 2008-06-04), but on
+the other hand, one really has to wonder whether it's actually useful to
+be able to pass in `alloc == len` only to end up performing the
+allocation, copying and freeing which this function very much looks like
+it would keep us from having to do.
 
-An alternative to the approach taken here would be to introduce
-`strbuf_attachstr()` and convert most existing users, then convert the
-few remaining ones to use the new function or to move in another
-direction. But the new name is a downer -- what else would you attach to
-a strbuf if not a string?
+Pass in a value one greater than the length for the `alloc` parameter.
+The string has been allocated correctly using the strbuf machinery in
+`read_commit_msg()` and we really do have an extra byte at the end with
+a NUL. This means both that the buffer is as large as we claim it to be
+and that the addition is safe.
 
-Another alternative would be to first convert certain users away from
-the function, then simplify it for the remainder. I preferred to first
-spend a few patches converting a few existing callers to make it clear
-that those are ok.
+Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+---
+ builtin/am.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Martin
-
-Martin Ågren (6):
-  am: use `strbuf_attach()` correctly
-  strbuf_attach: correctly pass in `strlen() + 1` for `alloc`
-  strbuf: use `strbuf_attach()` correctly
-  fast-import: avoid awkward use of `strbuf_attach()`
-  rerere: avoid awkward use of `strbuf_attach()`
-  strbuf: simplify `strbuf_attach()` usage
-
- strbuf.h             | 16 ++++++++--------
- apply.c              |  2 +-
- archive.c            |  2 +-
- blame.c              |  2 +-
- builtin/am.c         |  2 +-
- convert.c            |  4 ++--
- fast-import.c        |  7 ++++---
- imap-send.c          |  2 +-
- mailinfo.c           |  2 +-
- merge-recursive.c    |  2 +-
- path.c               |  3 +--
- pretty.c             |  4 ++--
- refs/files-backend.c |  2 +-
- rerere.c             |  3 ++-
- strbuf.c             | 11 +++++++----
- trailer.c            |  2 +-
- 16 files changed, 35 insertions(+), 31 deletions(-)
-
+diff --git a/builtin/am.c b/builtin/am.c
+index e3dfd93c25..e6a9fe8111 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -1101,7 +1101,7 @@ static void am_append_signoff(struct am_state *state)
+ {
+ 	struct strbuf sb = STRBUF_INIT;
+ 
+-	strbuf_attach(&sb, state->msg, state->msg_len, state->msg_len);
++	strbuf_attach(&sb, state->msg, state->msg_len, state->msg_len + 1);
+ 	append_signoff(&sb, 0, 0);
+ 	state->msg = strbuf_detach(&sb, &state->msg_len);
+ }
 -- 
 2.26.1
 
