@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E166C3A5A9
-	for <git@archiver.kernel.org>; Sat, 18 Apr 2020 16:04:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B3E1C5321D
+	for <git@archiver.kernel.org>; Sat, 18 Apr 2020 16:03:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5B27121D6C
-	for <git@archiver.kernel.org>; Sat, 18 Apr 2020 16:04:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F2BFB21D6C
+	for <git@archiver.kernel.org>; Sat, 18 Apr 2020 16:03:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bVQxsYUL"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aYIWVO4P"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727812AbgDRQD7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 18 Apr 2020 12:03:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45434 "EHLO
+        id S1727803AbgDRQD6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 18 Apr 2020 12:03:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45420 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1727790AbgDRQD5 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 18 Apr 2020 12:03:57 -0400
-Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3046C061A0C
-        for <git@vger.kernel.org>; Sat, 18 Apr 2020 09:03:56 -0700 (PDT)
-Received: by mail-pf1-x42a.google.com with SMTP id x3so2668023pfp.7
-        for <git@vger.kernel.org>; Sat, 18 Apr 2020 09:03:56 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1726408AbgDRQDy (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 18 Apr 2020 12:03:54 -0400
+Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0C37C061A0C
+        for <git@vger.kernel.org>; Sat, 18 Apr 2020 09:03:53 -0700 (PDT)
+Received: by mail-pg1-x544.google.com with SMTP id o15so2177586pgi.1
+        for <git@vger.kernel.org>; Sat, 18 Apr 2020 09:03:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=aFVbeO4bXagJhDbblegxUu51pn+AAl+6nu9bWOWjzwo=;
-        b=bVQxsYULp3NEtergVq/5qXTKOiOD5OnqSTaTSwJ0GSTTkI1jOJutYn4zm6RNtU4Mtl
-         p7rl6IU5BRmMG4UYAHTLc7/Q7YrFBK/jKDz9yA475TbYagB0McVd15FFbnHvg4cip3lv
-         tiEvkR5DIBmNAOKpl7Mfbey9muYXiGqBkk28hz1taXQWBcrP4B4qeYHk/yJrXAKGCqxZ
-         yphastErvvjVEjfW+ZFJihjnN+xkffoH2aCdoU2k4IYAy5qI0jiHdjyPGj5vCRnmSsCv
-         yKBmdbDNeSvSiebUYLePKPtthKASWcgGJNF0CbOUAedzAQfS2f668ulSHAdBUoWgOtK2
-         SVQA==
+        bh=EXoBNmz/nNhkIYSx6NzfMs2CrKVG7dMVw5MBn5q2wOc=;
+        b=aYIWVO4PhM6s4I26+EhFj0YY83VhnI6ngOASUevwDb2lQ/i0467EJ3Df/DUgR4Ngbx
+         CwmDlSXe5YCpHpI69QjeRl9luhwypm4pKv8GnAPWbVsQ3bzYhNHZn7Kzd7DqZSFQfeXE
+         aD4bEQb9dHPePV1Asx3OqipPfUTtsPoVY3da6bzfjw/kP3yGxXuKEhJ0kIX/pD09yDxm
+         tNlGmlGeGlqPiNwf9k8Rxr8xE0whiGIGW9VtFzbamn8aI3vkF8RDak1di92rWAmhJNxO
+         1ct7VIJ/0fGHMrN9PywIzGF9zC0XVXlVR/i/mvS+VP7o+PHn4YNjIUauE+RqwETdcc7m
+         KAuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=aFVbeO4bXagJhDbblegxUu51pn+AAl+6nu9bWOWjzwo=;
-        b=S9KYJF9wA5czLTMV7kFP/WqJFdR3zNeGaqSlRptfcofdp3YG3mdSUV4HZl81hkNzU6
-         aqt8jisjgKO8A5To9Qy+XQVaPWG20n5PEej5cDcHF3zHZT6HuS+MYiADgxEZ/gFJKt7Q
-         t7Gfuw3Z4J6SPZZzw23C33gLbq9lCbgG3OtJEperGUnp2DQOqwDOQnzbff/S5ca7i3zM
-         XPN0ZdJuZa39FxZCSErgXkaEIHRhLu6zkNNaKM1ZP7tWNvkl/E1Qnv9B/Jnq7rL6q4Ii
-         u8BIZTQvCsyw2n895CJ/DOXrQDV2/Kn9ton+zz8dBWXl39S3ndJo1XPZ2mczl9t26hhn
-         3TVA==
-X-Gm-Message-State: AGi0PuY9WOsQ3oO3k77YdcnmjSZuDjpoqEjcjkgwUpQ9y8JcG7mT97jD
-        5UmspUgp8jrgE/dtxlAuxZM=
-X-Google-Smtp-Source: APiQypJEi+oioEl9p+S6bXZi+X/77Qx6YV3FxPIWuNkOSFR6x6xHXqxjSt5Ug6FoYjL0otHjknDlaA==
-X-Received: by 2002:a62:2a8d:: with SMTP id q135mr1684764pfq.10.1587225836404;
-        Sat, 18 Apr 2020 09:03:56 -0700 (PDT)
+        bh=EXoBNmz/nNhkIYSx6NzfMs2CrKVG7dMVw5MBn5q2wOc=;
+        b=YY/AJNmSIZf90paCsMlHfVbWy9q4+IqANwminufVmldOej3q8sQYHXx7w//lNptZZD
+         GmKeBnL0+dtNyjrnCOROVyCCf5WZya4Z2sZvQOvKHga4w+IUyPJvE6BP/glbr19JzfeF
+         dZLuISEUu3SFYlczD0lag+nsKBUa0/N4YhsGsFkKS6sauINEO08/XgsDQBDr+pvViy2u
+         N5olBkP608hPz1yANC/awRioT2grrDRrIEtMsS5KDEj800xruXmqN8FbJmmHGNMyWlBn
+         4KqrRP265NxYbvBDrCCCT2Vg3fduRjIMAUrmBMDCr3kFenUGLLkBgv4lGU0Z7WsJ6BgD
+         kSqQ==
+X-Gm-Message-State: AGi0PubpNSYiE+GQugf9i0nCMMC7k4PCLdSyEXeqWMTsCBzF+BOj5v03
+        BFLBix5yVwioBpA8Uznpgw0=
+X-Google-Smtp-Source: APiQypJphOEqzReiC06a2sHp/vXabkX4rO4DMq+PZ5Kepe8FKceBiF0h22jGoIeYDEN4rvyB3pf5Vw==
+X-Received: by 2002:a62:2ec6:: with SMTP id u189mr5097637pfu.306.1587225832909;
+        Sat, 18 Apr 2020 09:03:52 -0700 (PDT)
 Received: from tigtog.localdomain.localdomain ([144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id i187sm22461649pfg.33.2020.04.18.09.03.55
+        by smtp.gmail.com with ESMTPSA id i187sm22461649pfg.33.2020.04.18.09.03.52
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 18 Apr 2020 09:03:56 -0700 (PDT)
+        Sat, 18 Apr 2020 09:03:52 -0700 (PDT)
 From:   Jiang Xin <worldhello.net@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
 Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: [PATCH v13 8/8] doc: add documentation for the proc-receive hook
-Date:   Sat, 18 Apr 2020 12:03:34 -0400
-Message-Id: <20200418160334.15631-9-worldhello.net@gmail.com>
+Subject: [PATCH v13 4/8] send-pack: extension for client-side status report
+Date:   Sat, 18 Apr 2020 12:03:30 -0400
+Message-Id: <20200418160334.15631-5-worldhello.net@gmail.com>
 X-Mailer: git-send-email 2.26.0.rc0
 In-Reply-To: <20200414123257.27449-1-worldhello.net@gmail.com>
 References: <20200414123257.27449-1-worldhello.net@gmail.com>
@@ -76,82 +76,551 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 
-Add documentation for the new "proc-receive" hook.
+This is the client-side extension for status report of git-push.
 
+The "proc-receive" hook may receive a command for a pseudo-reference
+with a zero-old as its old-oid, while the result of the hook may point
+to an alternate reference and the reference may exist already with a
+non-zero old-oid.  Git client may receive a report with extened status
+as the following example:
+
+    ok refs/for/master/topic\0ref=refs/pull/123/head old-oid=...
+
+Parse the key-value pairs in the extended status after the null
+character of the report, and show the proper reference name, old-oid
+and new-oid to the user.
+
+Suggested-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 ---
- Documentation/githooks.txt | 58 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 58 insertions(+)
+ remote.c                                      | 21 ++++++
+ remote.h                                      |  3 +
+ send-pack.c                                   | 11 ++-
+ t/t5411/test-0032-report-alt.sh               | 14 ++--
+ t/t5411/test-0033-report-alt--porcelain.sh    | 14 ++--
+ .../test-0036-report-multi-alt-for-one-ref.sh | 12 ++-
+ ...report-multi-alt-for-one-ref--porcelain.sh | 12 ++-
+ t/t5411/test-0038-report-mixed-refs.sh        |  2 +-
+ .../test-0039-report-mixed-refs--porcelain.sh |  2 +-
+ transport-helper.c                            | 64 ++++++++--------
+ transport.c                                   | 74 +++++++++++++++++--
+ 11 files changed, 169 insertions(+), 60 deletions(-)
 
-diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index 3dccab5375..a0ea829435 100644
---- a/Documentation/githooks.txt
-+++ b/Documentation/githooks.txt
-@@ -333,6 +333,64 @@ The default 'update' hook, when enabled--and with
- `hooks.allowunannotated` config option unset or set to false--prevents
- unannotated tags to be pushed.
+diff --git a/remote.c b/remote.c
+index c43196ec06..4174746bb9 100644
+--- a/remote.c
++++ b/remote.c
+@@ -1,5 +1,6 @@
+ #include "cache.h"
+ #include "config.h"
++#include "connect.h"
+ #include "remote.h"
+ #include "refs.h"
+ #include "refspec.h"
+@@ -2311,3 +2312,23 @@ void apply_push_cas(struct push_cas_option *cas,
+ 	for (ref = remote_refs; ref; ref = ref->next)
+ 		apply_cas(cas, remote, ref);
+ }
++
++void update_ref_from_remote_status(struct ref *ref)
++{
++	char *val;
++	int len;
++
++	if (!ref->remote_status)
++		return;
++
++	val = (char *)parse_feature_value(ref->remote_status, "old-oid", &len);
++	if (val && len)
++		get_oid_hex(val, &ref->old_oid);
++
++	val = (char *)parse_feature_value(ref->remote_status, "new-oid", &len);
++	if (val && len)
++		get_oid_hex(val, &ref->new_oid);
++
++	if (parse_feature_request(ref->remote_status, "forced-update"))
++		ref->forced_update = 1;
++}
+diff --git a/remote.h b/remote.h
+index 11d8719b58..09cf7014e3 100644
+--- a/remote.h
++++ b/remote.h
+@@ -345,4 +345,7 @@ int parseopt_push_cas_option(const struct option *, const char *arg, int unset);
+ int is_empty_cas(const struct push_cas_option *);
+ void apply_push_cas(struct push_cas_option *, struct remote *, struct ref *);
  
-+proc-receive
-+~~~~~~~~~~~~
++/* Parse key-value pairs of remote_status and update the reference accordingly */
++void update_ref_from_remote_status(struct ref *ref);
 +
-+This hook is invoked by linkgit:git-receive-pack[1].  If the server has
-+set the multi-valued config variable `receive.procReceiveRefs`, and the
-+commands sent to 'receive-pack' have matching reference names, these
-+commands will be executed by this hook, instead of by the internal
-+`execute_commands()` function.  This hook is responsible for updating
-+the relevant references and reporting the results back to 'receive-pack'.
+ #endif
+diff --git a/send-pack.c b/send-pack.c
+index a7c53193c9..6e2c7a0c0c 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -159,6 +159,9 @@ static int receive_status(struct packet_reader *reader, struct ref *refs)
+ 	while (1) {
+ 		const char *refname;
+ 		char *msg;
++		char *extended_status = NULL;
++		int len;
 +
-+This hook executes once for the receive operation.  It takes no
-+arguments, but uses a pkt-line format protocol to communicate with
-+'receive-pack' to read commands, push-options and send results.  In the
-+following example for the protocol, the letter 'S' stands for
-+'receive-pack' and the letter 'H' stands for this hook.
+ 		if (packet_reader_read(reader) != PACKET_READ_NORMAL)
+ 			break;
+ 		if (!starts_with(reader->line, "ok ") && !starts_with(reader->line, "ng ")) {
+@@ -167,10 +170,13 @@ static int receive_status(struct packet_reader *reader, struct ref *refs)
+ 			break;
+ 		}
+ 
++		len = strlen(reader->line);
+ 		refname = reader->line + 3;
+ 		msg = strchr(refname, ' ');
+ 		if (msg)
+ 			*msg++ = '\0';
++		if (reader->pktlen > len)
++			extended_status = (char *)reader->line + len + 1;
+ 
+ 		/* first try searching at our hint, falling back to all refs */
+ 		if (hint)
+@@ -192,7 +198,10 @@ static int receive_status(struct packet_reader *reader, struct ref *refs)
+ 			hint->status = REF_STATUS_OK;
+ 		else
+ 			hint->status = REF_STATUS_REMOTE_REJECT;
+-		hint->remote_status = xstrdup_or_null(msg);
++		if (msg)
++			hint->remote_status = xstrdup(msg);
++		else if (extended_status)
++			hint->remote_status = xstrdup_or_null(extended_status);
+ 		/* start our next search from the next ref */
+ 		hint = hint->next;
+ 	}
+diff --git a/t/t5411/test-0032-report-alt.sh b/t/t5411/test-0032-report-alt.sh
+index dec4afc4c1..bf5faf4f2e 100644
+--- a/t/t5411/test-0032-report-alt.sh
++++ b/t/t5411/test-0032-report-alt.sh
+@@ -52,7 +52,7 @@ test_expect_success "proc-receive: report alt (alt <ref> <alt-ref>, $PROTOCOL)"
+ 	remote: # post-receive hook
+ 	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+ 	To <URL/of/upstream.git>
+-	 * [new reference] HEAD -> refs/for/master/topic
++	 * [new reference] HEAD -> refs/pull/123/head
+ 	EOF
+ 	test_cmp expect actual
+ '
+@@ -82,7 +82,7 @@ test_expect_success "proc-receive: report alt (alt <ref> <alt-ref> forced-update
+ 	remote: # post-receive hook
+ 	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+ 	To <URL/of/upstream.git>
+-	 * [new reference] HEAD -> refs/for/master/topic
++	 * [new reference] HEAD -> refs/pull/123/head
+ 	EOF
+ 	test_cmp expect actual
+ '
+@@ -112,7 +112,7 @@ test_expect_success "proc-receive: report alt (alt <ref> <alt-ref> old-oid=X, $P
+ 	remote: # post-receive hook
+ 	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+ 	To <URL/of/upstream.git>
+-	 * [new reference] HEAD -> refs/for/master/topic
++	 <OID-B>..<OID-A> HEAD -> refs/pull/123/head
+ 	EOF
+ 	test_cmp expect actual
+ '
+@@ -142,7 +142,7 @@ test_expect_success "proc-receive: report alt (alt <ref> old-oid=X, $PROTOCOL)"
+ 	remote: # post-receive hook
+ 	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+ 	To <URL/of/upstream.git>
+-	 * [new reference] HEAD -> refs/for/master/topic
++	 <OID-B>..<OID-A> HEAD -> refs/for/master/topic
+ 	EOF
+ 	test_cmp expect actual
+ '
+@@ -172,7 +172,7 @@ test_expect_success "proc-receive: report alt (alt <ref> old-oid=X new-oid=Y, $P
+ 	remote: # post-receive hook
+ 	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+ 	To <URL/of/upstream.git>
+-	 * [new reference] HEAD -> refs/for/master/topic
++	 <OID-A>..<OID-B> HEAD -> refs/for/master/topic
+ 	EOF
+ 	test_cmp expect actual
+ '
+@@ -214,9 +214,9 @@ test_expect_success "proc-receive: with multiple alt reports ($PROTOCOL)" '
+ 	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/a/b/c/topic
+ 	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+ 	To <URL/of/upstream.git>
+-	 * [new reference] HEAD -> refs/for/next/topic
++	 * [new reference] HEAD -> refs/pull/123/head
+ 	 * [new reference] HEAD -> refs/for/a/b/c/topic
+-	 * [new reference] HEAD -> refs/for/master/topic
++	 + <OID-B>...<OID-A> HEAD -> refs/pull/124/head (forced update)
+ 	EOF
+ 	test_cmp expect actual &&
+ 
+diff --git a/t/t5411/test-0033-report-alt--porcelain.sh b/t/t5411/test-0033-report-alt--porcelain.sh
+index 49d76892ab..3aea911407 100644
+--- a/t/t5411/test-0033-report-alt--porcelain.sh
++++ b/t/t5411/test-0033-report-alt--porcelain.sh
+@@ -53,7 +53,7 @@ test_expect_success "proc-receive: report alt (alt <ref> <alt-ref>, --porcelain,
+ 	remote: # post-receive hook
+ 	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+ 	To <URL/of/upstream.git>
+-	*    HEAD:refs/for/master/topic    [new reference]
++	*    HEAD:refs/pull/123/head    [new reference]
+ 	Done
+ 	EOF
+ 	test_cmp expect actual
+@@ -84,7 +84,7 @@ test_expect_success "proc-receive: report alt (alt <ref> <alt-ref> forced-update
+ 	remote: # post-receive hook
+ 	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+ 	To <URL/of/upstream.git>
+-	*    HEAD:refs/for/master/topic    [new reference]
++	*    HEAD:refs/pull/123/head    [new reference]
+ 	Done
+ 	EOF
+ 	test_cmp expect actual
+@@ -115,7 +115,7 @@ test_expect_success "proc-receive: report alt (alt <ref> <alt-ref> old-oid=X, --
+ 	remote: # post-receive hook
+ 	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+ 	To <URL/of/upstream.git>
+-	*    HEAD:refs/for/master/topic    [new reference]
++	     HEAD:refs/pull/123/head    <OID-B>..<OID-A>
+ 	Done
+ 	EOF
+ 	test_cmp expect actual
+@@ -146,7 +146,7 @@ test_expect_success "proc-receive: report alt (alt <ref> old-oid=X, --porcelain,
+ 	remote: # post-receive hook
+ 	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+ 	To <URL/of/upstream.git>
+-	*    HEAD:refs/for/master/topic    [new reference]
++	     HEAD:refs/for/master/topic    <OID-B>..<OID-A>
+ 	Done
+ 	EOF
+ 	test_cmp expect actual
+@@ -177,7 +177,7 @@ test_expect_success "proc-receive: report alt (alt <ref> old-oid=X new-oid=Y, --
+ 	remote: # post-receive hook
+ 	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+ 	To <URL/of/upstream.git>
+-	*    HEAD:refs/for/master/topic    [new reference]
++	     HEAD:refs/for/master/topic    <OID-A>..<OID-B>
+ 	Done
+ 	EOF
+ 	test_cmp expect actual
+@@ -220,9 +220,9 @@ test_expect_success "proc-receive: with multiple alt reports (--porcelain, $PROT
+ 	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/a/b/c/topic
+ 	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+ 	To <URL/of/upstream.git>
+-	*    HEAD:refs/for/next/topic    [new reference]
++	*    HEAD:refs/pull/123/head    [new reference]
+ 	*    HEAD:refs/for/a/b/c/topic    [new reference]
+-	*    HEAD:refs/for/master/topic    [new reference]
++	+    HEAD:refs/pull/124/head    <OID-B>...<OID-A> (forced update)
+ 	Done
+ 	EOF
+ 	test_cmp expect actual &&
+diff --git a/t/t5411/test-0036-report-multi-alt-for-one-ref.sh b/t/t5411/test-0036-report-multi-alt-for-one-ref.sh
+index fc019f709b..d82b79ffff 100644
+--- a/t/t5411/test-0036-report-multi-alt-for-one-ref.sh
++++ b/t/t5411/test-0036-report-multi-alt-for-one-ref.sh
+@@ -27,7 +27,9 @@ test_expect_success "proc-receive: report multiple alt, no alt-ref for the 1st r
+ 	remote: # post-receive hook
+ 	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+ 	To <URL/of/upstream.git>
+-	 * [new reference] HEAD -> refs/for/master/topic
++	 <OID-A>..<OID-B> HEAD -> refs/for/master/topic
++	 * [new reference] HEAD -> refs/changes/24/124/1
++	 <OID-A>..<OID-B> HEAD -> refs/changes/25/125/1
+ 	EOF
+ 	test_cmp expect actual &&
+ 	git -C "$upstream" show-ref >out &&
+@@ -67,7 +69,9 @@ test_expect_success "proc-receive: report multiple alt, no alt-ref for the 2nd r
+ 	remote: # post-receive hook
+ 	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+ 	To <URL/of/upstream.git>
+-	 * [new reference] HEAD -> refs/for/master/topic
++	 * [new reference] HEAD -> refs/changes/24/124/1
++	 <OID-A>..<OID-B> HEAD -> refs/for/master/topic
++	 + <OID-B>...<OID-A> HEAD -> refs/changes/25/125/1 (forced update)
+ 	EOF
+ 	test_cmp expect actual &&
+ 	git -C "$upstream" show-ref >out &&
+@@ -106,6 +110,7 @@ test_expect_success "proc-receive: report ok and alt for the same ref ($PROTOCOL
+ 	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+ 	To <URL/of/upstream.git>
+ 	 * [new reference] HEAD -> refs/for/master/topic
++	 <OID-A>..<OID-B> HEAD -> refs/changes/24/124/1
+ 	EOF
+ 	test_cmp expect actual &&
+ 	git -C "$upstream" show-ref >out &&
+@@ -143,7 +148,8 @@ test_expect_success "proc-receive: report multiple response ($PROTOCOL)" '
+ 	remote: # post-receive hook
+ 	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+ 	To <URL/of/upstream.git>
+-	 * [new reference] HEAD -> refs/for/master/topic
++	 * [new reference] HEAD -> refs/changes/23/123/1
++	 <OID-A>..<OID-B> HEAD -> refs/changes/24/124/2
+ 	EOF
+ 	test_cmp expect actual &&
+ 	git -C "$upstream" show-ref >out &&
+diff --git a/t/t5411/test-0037-report-multi-alt-for-one-ref--porcelain.sh b/t/t5411/test-0037-report-multi-alt-for-one-ref--porcelain.sh
+index 22607b135e..8cca63c2de 100644
+--- a/t/t5411/test-0037-report-multi-alt-for-one-ref--porcelain.sh
++++ b/t/t5411/test-0037-report-multi-alt-for-one-ref--porcelain.sh
+@@ -27,7 +27,9 @@ test_expect_success "proc-receive: report multiple alt, no alt-ref for the 1st r
+ 	remote: # post-receive hook
+ 	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+ 	To <URL/of/upstream.git>
+-	*    HEAD:refs/for/master/topic    [new reference]
++	     HEAD:refs/for/master/topic    <OID-A>..<OID-B>
++	*    HEAD:refs/changes/24/124/1    [new reference]
++	     HEAD:refs/changes/25/125/1    <OID-A>..<OID-B>
+ 	Done
+ 	EOF
+ 	test_cmp expect actual &&
+@@ -68,7 +70,9 @@ test_expect_success "proc-receive: report multiple alt, no alt-ref for the 2nd r
+ 	remote: # post-receive hook
+ 	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+ 	To <URL/of/upstream.git>
+-	*    HEAD:refs/for/master/topic    [new reference]
++	*    HEAD:refs/changes/24/124/1    [new reference]
++	     HEAD:refs/for/master/topic    <OID-A>..<OID-B>
++	+    HEAD:refs/changes/25/125/1    <OID-B>...<OID-A> (forced update)
+ 	Done
+ 	EOF
+ 	test_cmp expect actual &&
+@@ -108,6 +112,7 @@ test_expect_success "proc-receive: report ok and alt for the same ref (--porcela
+ 	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+ 	To <URL/of/upstream.git>
+ 	*    HEAD:refs/for/master/topic    [new reference]
++	     HEAD:refs/changes/24/124/1    <OID-A>..<OID-B>
+ 	Done
+ 	EOF
+ 	test_cmp expect actual &&
+@@ -146,7 +151,8 @@ test_expect_success "proc-receive: report multiple response (--porcelain, $PROTO
+ 	remote: # post-receive hook
+ 	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
+ 	To <URL/of/upstream.git>
+-	*    HEAD:refs/for/master/topic    [new reference]
++	*    HEAD:refs/changes/23/123/1    [new reference]
++	     HEAD:refs/changes/24/124/2    <OID-A>..<OID-B>
+ 	Done
+ 	EOF
+ 	test_cmp expect actual &&
+diff --git a/t/t5411/test-0038-report-mixed-refs.sh b/t/t5411/test-0038-report-mixed-refs.sh
+index dd03bf1538..566cb6e098 100644
+--- a/t/t5411/test-0038-report-mixed-refs.sh
++++ b/t/t5411/test-0038-report-mixed-refs.sh
+@@ -46,7 +46,7 @@ test_expect_success "proc-receive: report update of mixed refs ($PROTOCOL)" '
+ 	 * [new branch] HEAD -> baz
+ 	 * [new reference] HEAD -> refs/for/next/topic
+ 	 * [new branch] HEAD -> foo
+-	 * [new reference] HEAD -> refs/for/master/topic
++	 <OID-A>..<OID-B> HEAD -> refs/for/master/topic
+ 	EOF
+ 	test_cmp expect actual &&
+ 	git -C "$upstream" show-ref >out &&
+diff --git a/t/t5411/test-0039-report-mixed-refs--porcelain.sh b/t/t5411/test-0039-report-mixed-refs--porcelain.sh
+index e237f40db7..4d617abb1a 100644
+--- a/t/t5411/test-0039-report-mixed-refs--porcelain.sh
++++ b/t/t5411/test-0039-report-mixed-refs--porcelain.sh
+@@ -46,7 +46,7 @@ test_expect_success "proc-receive: report update of mixed refs (--porcelain, $PR
+ 	*    HEAD:refs/heads/baz    [new branch]
+ 	*    HEAD:refs/for/next/topic    [new reference]
+ 	*    HEAD:refs/heads/foo    [new branch]
+-	*    HEAD:refs/for/master/topic    [new reference]
++	     HEAD:refs/for/master/topic    <OID-A>..<OID-B>
+ 	Done
+ 	EOF
+ 	test_cmp expect actual &&
+diff --git a/transport-helper.c b/transport-helper.c
+index a46afcb69d..0c835c5495 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -747,37 +747,39 @@ static int push_update_ref_status(struct strbuf *buf,
+ 			msg = xstrdup(msg);
+ 		strbuf_release(&msg_buf);
+ 
+-		if (!strcmp(msg, "no match")) {
+-			status = REF_STATUS_NONE;
+-			FREE_AND_NULL(msg);
+-		}
+-		else if (!strcmp(msg, "up to date")) {
+-			status = REF_STATUS_UPTODATE;
+-			FREE_AND_NULL(msg);
+-		}
+-		else if (!strcmp(msg, "non-fast forward")) {
+-			status = REF_STATUS_REJECT_NONFASTFORWARD;
+-			FREE_AND_NULL(msg);
+-		}
+-		else if (!strcmp(msg, "already exists")) {
+-			status = REF_STATUS_REJECT_ALREADY_EXISTS;
+-			FREE_AND_NULL(msg);
+-		}
+-		else if (!strcmp(msg, "fetch first")) {
+-			status = REF_STATUS_REJECT_FETCH_FIRST;
+-			FREE_AND_NULL(msg);
+-		}
+-		else if (!strcmp(msg, "needs force")) {
+-			status = REF_STATUS_REJECT_NEEDS_FORCE;
+-			FREE_AND_NULL(msg);
+-		}
+-		else if (!strcmp(msg, "stale info")) {
+-			status = REF_STATUS_REJECT_STALE;
+-			FREE_AND_NULL(msg);
+-		}
+-		else if (!strcmp(msg, "forced update")) {
+-			forced = 1;
+-			FREE_AND_NULL(msg);
++		if (status != REF_STATUS_OK) {
++			if (!strcmp(msg, "no match")) {
++				status = REF_STATUS_NONE;
++				FREE_AND_NULL(msg);
++			}
++			else if (!strcmp(msg, "up to date")) {
++				status = REF_STATUS_UPTODATE;
++				FREE_AND_NULL(msg);
++			}
++			else if (!strcmp(msg, "non-fast forward")) {
++				status = REF_STATUS_REJECT_NONFASTFORWARD;
++				FREE_AND_NULL(msg);
++			}
++			else if (!strcmp(msg, "already exists")) {
++				status = REF_STATUS_REJECT_ALREADY_EXISTS;
++				FREE_AND_NULL(msg);
++			}
++			else if (!strcmp(msg, "fetch first")) {
++				status = REF_STATUS_REJECT_FETCH_FIRST;
++				FREE_AND_NULL(msg);
++			}
++			else if (!strcmp(msg, "needs force")) {
++				status = REF_STATUS_REJECT_NEEDS_FORCE;
++				FREE_AND_NULL(msg);
++			}
++			else if (!strcmp(msg, "stale info")) {
++				status = REF_STATUS_REJECT_STALE;
++				FREE_AND_NULL(msg);
++			}
++			else if (!strcmp(msg, "forced update")) {
++				forced = 1;
++				FREE_AND_NULL(msg);
++			}
+ 		}
+ 	}
+ 
+diff --git a/transport.c b/transport.c
+index 73defc4a5a..ecdcaae90d 100644
+--- a/transport.c
++++ b/transport.c
+@@ -463,11 +463,23 @@ static void print_ref_status(char flag, const char *summary,
+ 			     struct ref *to, struct ref *from, const char *msg,
+ 			     int porcelain, int summary_width)
+ {
++	char *to_name = NULL;
++	const char *val;
++	int len;
 +
-+    # Version and features negotiation.
-+    S: PKT-LINE(version=1\0push-options atomic...)
-+    S: flush-pkt
-+    H: PKT-LINE(version=1\0push-options...)
-+    H: flush-pkt
++	if (to && to->remote_status) {
++		val = parse_feature_value(to->remote_status, "ref", &len);
++		if (val && len)
++			to_name = xmemdupz(val, len);
++	}
 +
-+    # Send commands from server to the hook.
-+    S: PKT-LINE(<old-oid> <new-oid> <ref>)
-+    S: ... ...
-+    S: flush-pkt
-+    # Send push-options only if the 'push-options' feature is enabled.
-+    S: PKT-LINE(push-option)
-+    S: ... ...
-+    S: flush-pkt
+ 	if (porcelain) {
+ 		if (from)
+-			fprintf(stdout, "%c\t%s:%s\t", flag, from->name, to->name);
++			fprintf(stdout, "%c\t%s:%s\t", flag, from->name,
++				to_name ? to_name : to->name);
+ 		else
+-			fprintf(stdout, "%c\t:%s\t", flag, to->name);
++			fprintf(stdout, "%c\t:%s\t", flag,
++				to_name ? to_name : to->name);
+ 		if (msg)
+ 			fprintf(stdout, "%s (%s)\n", summary, msg);
+ 		else
+@@ -481,9 +493,11 @@ static void print_ref_status(char flag, const char *summary,
+ 		fprintf(stderr, " %s%c %-*s%s ", red, flag, summary_width,
+ 			summary, reset);
+ 		if (from)
+-			fprintf(stderr, "%s -> %s", prettify_refname(from->name), prettify_refname(to->name));
++			fprintf(stderr, "%s -> %s",
++				prettify_refname(from->name),
++				prettify_refname(to_name ? to_name : to->name));
+ 		else
+-			fputs(prettify_refname(to->name), stderr);
++			fputs(prettify_refname(to_name ? to_name : to->name), stderr);
+ 		if (msg) {
+ 			fputs(" (", stderr);
+ 			fputs(msg, stderr);
+@@ -491,6 +505,7 @@ static void print_ref_status(char flag, const char *summary,
+ 		}
+ 		fputc('\n', stderr);
+ 	}
++	free(to_name);
+ }
+ 
+ static void print_ok_ref_status(struct ref *ref, int porcelain, int summary_width)
+@@ -531,8 +546,8 @@ static void print_ok_ref_status(struct ref *ref, int porcelain, int summary_widt
+ 	}
+ }
+ 
+-static int print_one_push_status(struct ref *ref, const char *dest, int count,
+-				 int porcelain, int summary_width)
++static int _print_one_push_status(struct ref *ref, const char *dest, int count,
++				  int porcelain, int summary_width)
+ {
+ 	if (!count) {
+ 		char *url = transport_anonymize_url(dest);
+@@ -602,6 +617,53 @@ static int print_one_push_status(struct ref *ref, const char *dest, int count,
+ 	return 1;
+ }
+ 
++static int print_one_push_status(struct ref *ref, const char *dest, int count,
++				 int porcelain, int summary_width)
++{
++	char *head;
++	char *begin;
++	int n = 0;
 +
-+    # Receive result from the hook.
-+    # OK, run this command successfully.
-+    H: PKT-LINE(ok <ref>)
-+    # NO, I reject it.
-+    H: PKT-LINE(ng <ref> <reason>)
-+    # Fall through, let 'receive-pack' to execute it.
-+    H: PKT-LINE(ft <ref>)
-+    # OK, but has an alternate reference.  The alternate reference name
-+    # is given in the third parameter, and other status can be given in
-+    # key-value pairs.
-+    H: PKT-LINE(alt <ref> <alt-ref> old-oid=<old-oid> new-oid=<new-oid>
-+                forced-update)
-+    H: ... ...
-+    H: flush-pkt
++	if (!ref->remote_status)
++		return _print_one_push_status(ref, dest, count,
++					      porcelain, summary_width);
 +
-+Each command for the 'proc-receive' hook may point to a pseudo-reference
-+and always has a zero-old as its old-oid, while the 'proc-receive' hook
-+may update an alternate reference and the alternate reference may exist
-+already with a non-zero old-oid.  For this case, this hook may return
-+different OID and different reference name as extended status of the
-+report line.
++	head = ref->remote_status;
++	begin = head;
++	for (;;) {
++		char *end;
++		struct object_id old_oid;
++		struct object_id new_oid;
++		int forced_update;
 +
-+The report of the commands of this hook should have the same order as
-+the input.  The exit status of the 'proc-receive' hook only determines
-+the success or failure of the group of commands sent to it, unless
-+atomic push is in use.
++		end = strstr(begin + 4, "ref=");
++		if (end)
++			*(end-1) = '\0';
 +
- [[post-receive]]
- post-receive
- ~~~~~~~~~~~~
++		oidcpy(&old_oid, &ref->old_oid);
++		oidcpy(&new_oid, &ref->new_oid);
++		forced_update = ref->forced_update;
++
++		ref->remote_status = begin;
++		update_ref_from_remote_status(ref);
++		_print_one_push_status(ref, dest, count + n++,
++				       porcelain, summary_width);
++
++		oidcpy(&ref->old_oid, &old_oid);
++		oidcpy(&ref->new_oid, &new_oid);
++		ref->forced_update = forced_update;
++
++		if (end) {
++			begin = end;
++			*(end-1) = ' ';
++		} else {
++			break;
++		}
++	}
++	ref->remote_status = head;
++	return n;
++}
++
+ static int measure_abbrev(const struct object_id *oid, int sofar)
+ {
+ 	char hex[GIT_MAX_HEXSZ + 1];
 -- 
 2.24.1.15.g448c31058d.agit.4.5
 
