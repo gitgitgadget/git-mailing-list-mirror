@@ -7,63 +7,62 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 23D6BC2BA2B
-	for <git@archiver.kernel.org>; Sun, 19 Apr 2020 04:34:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 33D45C2BA2B
+	for <git@archiver.kernel.org>; Sun, 19 Apr 2020 04:44:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E0A4921744
-	for <git@archiver.kernel.org>; Sun, 19 Apr 2020 04:34:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0488B21D82
+	for <git@archiver.kernel.org>; Sun, 19 Apr 2020 04:44:21 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mBMnJSn9"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="u5Vz2cDF"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725903AbgDSEeZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 19 Apr 2020 00:34:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47568 "EHLO
+        id S1725927AbgDSEoU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 19 Apr 2020 00:44:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49076 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1725763AbgDSEeY (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 19 Apr 2020 00:34:24 -0400
-Received: from mail-vs1-xe42.google.com (mail-vs1-xe42.google.com [IPv6:2607:f8b0:4864:20::e42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A771C061A0C
-        for <git@vger.kernel.org>; Sat, 18 Apr 2020 21:34:24 -0700 (PDT)
-Received: by mail-vs1-xe42.google.com with SMTP id y185so3826962vsy.8
-        for <git@vger.kernel.org>; Sat, 18 Apr 2020 21:34:24 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1725763AbgDSEoU (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 19 Apr 2020 00:44:20 -0400
+Received: from mail-vk1-xa41.google.com (mail-vk1-xa41.google.com [IPv6:2607:f8b0:4864:20::a41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14532C061A0C
+        for <git@vger.kernel.org>; Sat, 18 Apr 2020 21:44:19 -0700 (PDT)
+Received: by mail-vk1-xa41.google.com with SMTP id q200so1469645vka.13
+        for <git@vger.kernel.org>; Sat, 18 Apr 2020 21:44:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=o4bwdgF23o0Vn56XKelnEA2q0AmkFte6ARcCge0SOP8=;
-        b=mBMnJSn96HhprVjexXhpR3xTNhu9cPQCiU1fvnVes+RH/lJCp5zH3L8R8UPbVzWx13
-         jduE2NuYnScoZ2WXzd5rykoMzc8u1rZgzStvK+qrdWQ2Y3Ow/7cmRggiOFCjhWRzOiZ1
-         Ykb1IipCggOLsUmSEZ8yZFuiJhlQEUue25RYwPxi/llh0NbxruFRDwoDKvbPWbl79aPA
-         MDkhpE9q6teVtKYNGZfc7N1EOU1mpTsmUI+8GL7gjlk9Y9LQqdUNRMY5bvDpN7gGe0Gn
-         odLaE2rQROTR9ctGanoYggipM7AsBYyWW/fcdr0JNNobCjYmZ+DpE8czNUPvsGIlHy0m
-         umKQ==
+        bh=UnrsQIPMNBlm8Pp/RhDZ89qo906IL1ExYi/m+yLF+Vc=;
+        b=u5Vz2cDFuwQxGfp89OqdFcqTeyHZTsNFeRCOFdNXkbRafQOv+4bsCgAFPhIrUsktS3
+         xNmMiX4PbKimht44oa/DVj6e9xX5T+D85PqDTnd+9i9/GnE7IfKaHTvm+/LFM/CTPvY/
+         2+krIIKHI8D+OQQd6qNYattBeSckZYaXYORkKpxctnoztCeugLSQlPG7sfDczG6xIJIY
+         smR/JK1838EIt4JjqSU1R51Ope5ut9MLXzEdoyOo4uBLeBr+nl88Om+DNSF3Vbp4EhXT
+         X/dib0vHHwHqh8E+vn07cDZ5RJqtmy9ITAH61f7pFbvn5AoiksuIrAMjTW0qp1wBlOHg
+         1J3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=o4bwdgF23o0Vn56XKelnEA2q0AmkFte6ARcCge0SOP8=;
-        b=JqcZO1Hc0MachRmgE7XF95gvAujiGjiSVZpykEZtNds1NZeLfPKuk1xN2TDP/mJXeC
-         Wk8tuaLDUbkKbp3wFuE95Wg6PmQT+imOGoD+ISnOdwVaB2Q6KBgPhrPsrKNexdawJe2i
-         RiUkySxJZJkg0P1uWKVbh6MEI1Q2XfILFFVOdWKKEtP0xpPwX36D2Od/JuSw0kEQ7oLR
-         OuC4D8Cn302aGKv18PWsw53Pk/2mGSteFwHKl17ao9CtvXMbatRiO/4hJXTTwUQoQnJm
-         x5ogKh0N8kryfkqYwH6NHtpc+aDkzsrFbyOoMLxfpBLG+1l88RMgDchhIPcLpS3cblOh
-         o+zw==
-X-Gm-Message-State: AGi0PuZX7GeJft7/NeaIa3imyJZq8RqXnz4XuMjfSDr774U3gkSxYDXN
-        9Eh9P4TjZrUpSje7TuCrLQfm1axMlPQj57utLnU=
-X-Google-Smtp-Source: APiQypLHzFbiXl4DuFovLvfEn+RL+t4PmVcd8WWBCrONMfV7jv4fd66fpS6BgX/gIsNxttbAis3xOT/XoLaRznh+P7I=
-X-Received: by 2002:a67:e911:: with SMTP id c17mr7399427vso.46.1587270862618;
- Sat, 18 Apr 2020 21:34:22 -0700 (PDT)
+        bh=UnrsQIPMNBlm8Pp/RhDZ89qo906IL1ExYi/m+yLF+Vc=;
+        b=um75rH0JX08CGrNp9dEEhTwg2YavM3VRD7dLDlknKyMrZko0tCx2unBETP4gQP3Kad
+         VRdIr4jloU1EHgW638JISwHY/VdCXU7eyxn2KJDZzsGpHUpltfZyjfAkbbTKp089JoKz
+         xvhFlyhpoAzXRy1D5XFJ7T3+OxfWZgDSavJjWc8n4U2J1GFgA+JE0kGOZtRZuXmhgGvQ
+         ZZQm0hMLSD2uabTBX1wYmU2jIkz2pF2Ur5y+hku3bQ4kLHr7VvMhuf4yjJo3RRblu9eR
+         HY7Do8ttZyBfUptEC3xYU4W54SAGHXWFeqvIrGFDsd7JA3bV0IKOoaYPJ6vTBvu+sciD
+         SYAg==
+X-Gm-Message-State: AGi0PubguCcJTV7GHiAEUC2p4w1CWqtpUCxKhuxYzPuunxJfP2TTp/Fz
+        hd3GZFHWhSW0R6BiJutpsV6kYzln0QHhbcsYuza3RZQq
+X-Google-Smtp-Source: APiQypJ7w1UREcbJtzJB8UScFC4G4NyGSxJlvCeAfARGmtNz+qOQbO4iOn5rGEHxAWVA3mUTnjC0xpAiaECBy8KN5CI=
+X-Received: by 2002:a1f:2414:: with SMTP id k20mr7230837vkk.57.1587271457916;
+ Sat, 18 Apr 2020 21:44:17 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200418035449.9450-1-congdanhqx@gmail.com> <CAN0heSppn6BBX4V1T1qgKc4XP+8i6qbcEqd1_3NqWQtZJLaJww@mail.gmail.com>
- <xmqqk12ctmm1.fsf@gitster.c.googlers.com> <20200419024805.GC9169@danh.dev>
-In-Reply-To: <20200419024805.GC9169@danh.dev>
+References: <CAN0heSppn6BBX4V1T1qgKc4XP+8i6qbcEqd1_3NqWQtZJLaJww@mail.gmail.com>
+ <cover.1587240635.git.martin.agren@gmail.com>
+In-Reply-To: <cover.1587240635.git.martin.agren@gmail.com>
 From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Sun, 19 Apr 2020 06:34:10 +0200
-Message-ID: <CAN0heSoj9fwpx5WbME+Oew-7NLfBfQCfAKissix+wnFk0UW5uw@mail.gmail.com>
-Subject: Re: [PATCH] mailinfo.c::convert_to_utf8: reuse strlen info
-To:     Danh Doan <congdanhqx@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
+Date:   Sun, 19 Apr 2020 06:44:06 +0200
+Message-ID: <CAN0heSrzVfb1=xUReZidBVhE427r7MRPtZ_RDOorXESq4r-wwQ@mail.gmail.com>
+Subject: Re: [PATCH 0/6] strbuf: simplify `strbuf_attach()` usage
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -71,50 +70,52 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, 19 Apr 2020 at 04:48, Danh Doan <congdanhqx@gmail.com> wrote:
+On Sat, 18 Apr 2020 at 22:18, Martin =C3=85gren <martin.agren@gmail.com> wr=
+ote:
 >
-> On 2020-04-18 16:12:06-0700, Junio C Hamano <gitster@pobox.com> wrote:
-> > Martin =C3=85gren <martin.agren@gmail.com> writes:
+> On Sat, 18 Apr 2020 at 21:56, Martin =C3=85gren <martin.agren@gmail.com> =
+wrote:
+> > > -       strbuf_attach(line, out, strlen(out), strlen(out));
+> > > +       strbuf_attach(line, out, out_len, out_len);
 > >
-> > > This is equivalent as long as `line->len` is equal to
-> > > `strlen(line->buf)`, which it will be (should be) because it's a
-> > > strbuf. Ok.
-> >
-> > For the guarantee to hold true, line->buf[0..line->len] should not
-> > have any '\0' byte in it.
-
-Yes. I sort of assumed it shouldn't ("because strbuf"), but it's a good
-question. Especially considering this is about various encodings..
-
-This assumption that "strlen is length so the conversion is a no-op"
-could potentially be broken both for input (line->len) and output
-(out_len).
-
-> > This helper has two callers, but in either case, it needs to be
-> > prepared to work on output of decode_[bq]_segment().  Is there code
-> > anywhere that guarntees that the decoding won't stuff '\0' in the
-> > line?
+> > This conversion is ok as such. I wondered why we pass in the same
+> > value twice (before and after this patch). Turns out this usage is wron=
+g
+> > (as per the documentation in strbuf.h) but safe (as per my understandin=
+g
+> > of the implementation in strbuf.c). I'll follow up with a series that
+> > fell out of that investigation.
 >
-> the current code allows NUL character in utf-8 [bq]-encoded string
-> in this function (early return) and its caller,
-> and report an error later:
+> Here's that series. It could go in parallel to Danh's, or one could go
+> on top of the other. Any of those would be ok with me.
+
+I realize now that some of the reasoning in this series is incorrect.
+`strbuf_grow()` will use `ALLOC_GROW` meaning we might reallocate
+cheaply rather than doing an entire allocate+copy+free cycle.
+
+Still, there is some buggyness in the usage because we might reallocate
+(with a 50% overhead) even when we shouldn't really need to.
+
+I'll resubmit this after tackling it from a different angle: I'll
+introduce `strbuf_attachstr()`, simplifying and robustifyng most users.
+Then I'll switch a few incorrect users of `strbuf_attach()` to
+`strbuf_attachstr()`. Then a small number of users will continue using
+`strbuf_attach()` with `alloc =3D=3D len` for $reasons.
+
+> The summary is that this function takes `len` and `alloc`, where the
+> latter must be greater than the former, yet several callers use the same
+> value for both. I first thought this could cause quite hairy problems
+> such as writing outside of allocated memory, but it doesn't look that
+> way. See the patches for more information.
 >
->         error: a NUL byte in commit log message not allowed.
->
-> meanwhile, if the email was sent in other encoding, the current code
-> discards everything after NUL in that line,
-> thus silently accept broken commit message.
+> An alternative to the approach taken here would be to introduce
+> `strbuf_attachstr()` and convert most existing users, then convert the
+> few remaining ones to use the new function or to move in another
+> direction. But the new name is a downer -- what else would you attach to
+> a strbuf if not a string?
 
-My knee-jerk reaction to Junio's question was along the same line:
-surely if we could have a NUL in there, the current `strlen()` would use
-it as an excuse to silently truncate the string, either before
-processing or afterwards. Thanks for looking into that more.
-
-> Attached is the faulty patch in ISO-8859-1, which was used to
-> demonstrate my words.
-> The current code will make a commit with only "=C3=81b" in the body,
-> while the new code rightly claims we have a faulty email.
-
-Good find.
+So this is what I'll do instead. The reasoning is, you can attach a
+string (a NUL-terminated buffer) or a non-string (non-NUL-terminated
+buffer).
 
 Martin
