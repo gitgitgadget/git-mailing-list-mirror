@@ -2,263 +2,229 @@ Return-Path: <SRS0=ylBF=6D=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 64679C2BA2B
-	for <git@archiver.kernel.org>; Sun, 19 Apr 2020 06:33:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BA19C38A30
+	for <git@archiver.kernel.org>; Sun, 19 Apr 2020 11:00:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 307AB21473
-	for <git@archiver.kernel.org>; Sun, 19 Apr 2020 06:33:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 36B3822202
+	for <git@archiver.kernel.org>; Sun, 19 Apr 2020 11:00:53 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="yf9YTbw3"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Arw+FP/D"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725953AbgDSGdj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 19 Apr 2020 02:33:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37512 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725446AbgDSGdi (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 19 Apr 2020 02:33:38 -0400
-Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com [IPv6:2607:f8b0:4864:20::744])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06D64C061A0C
-        for <git@vger.kernel.org>; Sat, 18 Apr 2020 23:33:37 -0700 (PDT)
-Received: by mail-qk1-x744.google.com with SMTP id c63so7196039qke.2
-        for <git@vger.kernel.org>; Sat, 18 Apr 2020 23:33:36 -0700 (PDT)
+        id S1725948AbgDSLAv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 19 Apr 2020 07:00:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50028 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1725914AbgDSLAu (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 19 Apr 2020 07:00:50 -0400
+Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79C0AC061A0C
+        for <git@vger.kernel.org>; Sun, 19 Apr 2020 04:00:50 -0700 (PDT)
+Received: by mail-pf1-x442.google.com with SMTP id x3so3492978pfp.7
+        for <git@vger.kernel.org>; Sun, 19 Apr 2020 04:00:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp-br.20150623.gappssmtp.com; s=20150623;
+        d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=h+eHe2QOjujX6GXe6e6fgHV7koJVQxzsut36QV1V12g=;
-        b=yf9YTbw3o7W1snMgYEBExfxnBiytPmAnzyUBzRbdlEb0OUyzK5QPWhMRISUZBqJocw
-         9bZ5ZTkDFGvnOAN13oazqCYTArqvIFwlfLxrCRTR/01q99B2VOobAhtrNZsIOrRjPqXP
-         pzLiznwgf7ioUdeF8/DGpLI4oV4ABiv+OZA05FSCEJfThiPZX/AVg57Dq6yiMFE3xyH7
-         EJuTdzTqTYTtL+tCLjyR/RGgphrVKehM0WwQe26/+xMfM8cD68Yus+Ong3Gs3OPs15LM
-         94M8chQhRvzgrpau9Qrgh2C4xOuY9/pY6/sMQYaY22WmjMLZMKAKjU8iK9IdQmk8XhdT
-         1W1A==
+        bh=swP+oKaiJTVUXA3Z9VeKb1Gt0qoNCtI641XTheNcJPc=;
+        b=Arw+FP/DRKgKHVgoo/zcdpaGgt2d4X+PYv/llMtYIYpcS53X5yxIaarOoGaQaSf2D6
+         c5pyoF2zo/iDJc3MobgSnYWQrzMWJIoS8Joy9b/s71ovvw3+GZaJXevzflnz1AWTUCyo
+         17zrUIIxlpjLFXgLh9clpN+87GCx+fIGCKilRpvOUXXBlzHLCHwdisiJsaT6opN0OB8O
+         yttNHRs2ct1buF6Vt9NhszYh+Xqq43W5wbiU07pJq5ki8zOM5HjXXVYTUiTkZjwhmOIr
+         dyY6FgmSc+CEI7S5cx46je13nWs2AOmUnxuEqjLQHmyf4G701PYh27P6fDt9t/Ou6wdE
+         +dRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=h+eHe2QOjujX6GXe6e6fgHV7koJVQxzsut36QV1V12g=;
-        b=O0O8wprvrNeBxnnK8dvYpbBW+byq6sweU+7JZq45cAkF51U+2ss2Is7MzmgxMu02AZ
-         gbqcoePMP05IH4cIYT1U3QQMsb5x+p9Z61p0Ildn9ByZaj9uEkPBTXZgoBmUTSCJTGDs
-         Aq86hULYbm7JkTE5Ub23px/QPkDEC7J76+xGM108zIa3htq4nMxVEe03ZAdhIrlSJ5zB
-         VYL26LHqnjAmU+tG/LDIJwpmQMCtjGrTy//+hAUFEZVmZubB/B43bOExnkbPI/C3E9o9
-         fEDPrxq/rYjtFBtsgZcqKwzR6QohyWGeSK5MFCK6q/hoV2sT/RcnBR6fhmSmzuh5TuQs
-         FC3g==
-X-Gm-Message-State: AGi0PubE3z/rkCILBSqXBtmXnnsaPmZiSDIzZvQIUJvhVVv2LWWzJACd
-        Hm+oJCnYmo4COis6u/Wv7bipcw==
-X-Google-Smtp-Source: APiQypL07/VCDSzyZeReLSegzmyIOs0DlNeD0WxVWQcmwiiG1nuJjSpIMGENjcwcwCZBFlaBFxCw4g==
-X-Received: by 2002:a05:620a:1289:: with SMTP id w9mr9582123qki.263.1587278016100;
-        Sat, 18 Apr 2020 23:33:36 -0700 (PDT)
-Received: from mango.spo.virtua.com.br ([2804:14c:81:9a16::3])
-        by smtp.gmail.com with ESMTPSA id s15sm21995468qtc.31.2020.04.18.23.33.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 18 Apr 2020 23:33:35 -0700 (PDT)
-From:   Matheus Tavares <matheus.bernardino@usp.br>
-To:     gitster@pobox.com
-Cc:     asheiduk@gmail.com, git@vger.kernel.org, greg@hurrell.net,
-        l.s.r@web.de, Johannes.Schindelin@gmx.de,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v2] grep: follow conventions for printing paths w/ unusual chars
-Date:   Sun, 19 Apr 2020 03:33:24 -0300
-Message-Id: <77218d98948a19f91e88859519eb3c8b0e6b3bb6.1587277808.git.matheus.bernardino@usp.br>
-X-Mailer: git-send-email 2.26.0
-In-Reply-To: <eaae7214925189f562056b1ee6972c05dcf76a32.1587103366.git.matheus.bernardino@usp.br>
-References: <eaae7214925189f562056b1ee6972c05dcf76a32.1587103366.git.matheus.bernardino@usp.br>
+        bh=swP+oKaiJTVUXA3Z9VeKb1Gt0qoNCtI641XTheNcJPc=;
+        b=Krvxt1gY/4q8DVFGjAjB7pMFFTVbjUPugBmfhbu0/bIdJDHb1RyAloPW/V0qSKVULH
+         nZCjnzvKwCM4xcyUN+JEeHhmkOnBuwlvuQm/Ve82GQO956964iPWW/yUAzVH7vw1r7qa
+         zKEvuTCfX8uX/y4Au9S5WXZYaZFX+cLXCf0uVPlMm+Tnn4bAtQXwU1VYDui6g4wbn3da
+         tm1Ti5JditaujHSDQsn/Tebu3T3Q2Sw+sfnTObELVzMRoLAYefcKQBv92dRIFKBc2V9i
+         eBTsxnxVxBDpPpJtKPupqGX2FW0sCzEuuwNGPH3mNJnXSB92+OovrjT9tMzLjrBbfc4S
+         yxuA==
+X-Gm-Message-State: AGi0Pua46fvTMm9i17dm6iPKo1x37Q7uzbBEmvTsE7+2tOI9vmFHPxxB
+        zoPMIfsLvipnoCYbA4/QlNA+aih+
+X-Google-Smtp-Source: APiQypJeAYkK6cpi67gwuOEEuRi2FpE9opDINK7WLr9l/KcqT/NuUAWM5kJJ0wIk2C76gZ8q+BJZqg==
+X-Received: by 2002:a63:3687:: with SMTP id d129mr11289183pga.67.1587294049411;
+        Sun, 19 Apr 2020 04:00:49 -0700 (PDT)
+Received: from localhost.localdomain ([2402:800:6374:5380:b9e1:93e1:68db:b9f6])
+        by smtp.gmail.com with ESMTPSA id b20sm361692pff.8.2020.04.19.04.00.47
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 19 Apr 2020 04:00:48 -0700 (PDT)
+From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+Subject: [PATCH v2 0/3] mailinfo: disallow and complains about NUL character
+Date:   Sun, 19 Apr 2020 18:00:39 +0700
+Message-Id: <cover.1587289680.git.congdanhqx@gmail.com>
+X-Mailer: git-send-email 2.26.1.301.g55bc3eb7cb
+In-Reply-To: <20200418035449.9450-1-congdanhqx@gmail.com>
+References: <20200418035449.9450-1-congdanhqx@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-grep does not follow the conventions used by other Git commands when
-printing paths that contain unusual characters (as double-quotes or
-newlines). Commands such as ls-files, commit, status and diff will:
 
-- Quote and escape unusual pathnames, by default.
-- Print names verbatim and unquoted when "-z" is used.
+On 2020-04-18 22:32:30-0700, Junio C Hamano <gitster@pobox.com> wrote:
+> Martin Ågren <martin.agren@gmail.com> writes:
+>
+> > My knee-jerk reaction to Junio's question was along the same line:
+> > surely if we could have a NUL in there, the current `strlen()` would use
+> > it as an excuse to silently truncate the string, either before
+> > processing or afterwards. Thanks for looking into that more.
+>
+> Exactly.
+>
+> The change introduces a behaviour change, and we should describe it
+> in the log message to help future developers know that we did this
+> change, knowingly that we are changing the behaviour, and believing
+> that the new behaviour is a better one.
 
-But grep *never* quotes/escapes absolute paths with unusual chars and
-*always* quotes/escapes relative ones, even with "-z". Besides being
-inconsistent in its own output, the deviation from other Git commands
-can be confusing. So let's make it follow the two rules above and add
-some tests for this new behavior. Note that, making grep quote/escape
-all unusual paths by default, also make it fully compliant with the
-core.quotePath configuration, which is currently ignored for absolute
-paths.
+Well, I intended to do something else first (because of Thunderbird started
+with HTML email and replace space with non-breaking-space).
 
-Reported-by: Greg Hurrell <greg@hurrell.net>
-Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
----
+I made this change without thinking that much :( And I weren't sure if this
+change is well received.
 
-Changes in v2:
-- Squashed in Dscho's patch fixing the tests' failures in Windows by
-  adding the FUNNYNAMES prereq.
+I've rephased the commit message, added some test, and disallow another NUL
+characters mailinfo.
 
+-------------------8<------------------------
 
- Documentation/git-grep.txt |  6 +++--
- builtin/grep.c             | 46 +++++++++++++++++++++++++++----------
- t/t7810-grep.sh            | 47 ++++++++++++++++++++++++++++++++++++++
- 3 files changed, 85 insertions(+), 14 deletions(-)
+As of current state, Git disallow NUL character in commit message.
 
-diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
-index ddb6acc025..3109ce8fbe 100644
---- a/Documentation/git-grep.txt
-+++ b/Documentation/git-grep.txt
-@@ -206,8 +206,10 @@ providing this option will cause it to die.
- 
- -z::
- --null::
--	Output \0 instead of the character that normally follows a
--	file name.
-+	Use \0 as the delimiter for pathnames in the output, and print
-+	them verbatim. Without this option, pathnames with "unusual"
-+	characters are quoted as explained for the configuration
-+	variable core.quotePath (see git-config(1)).
- 
- -o::
- --only-matching::
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 99e2685090..bdf1a4bbc9 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -295,6 +295,38 @@ static int grep_cmd_config(const char *var, const char *value, void *cb)
- 	return st;
- }
- 
-+static void grep_source_name(struct grep_opt *opt, const char *filename,
-+			     int tree_name_len, struct strbuf *out)
-+{
-+	strbuf_reset(out);
-+
-+	if (opt->null_following_name) {
-+		if (opt->relative && opt->prefix_length) {
-+			struct strbuf rel_buf = STRBUF_INIT;
-+			const char *rel_name =
-+				relative_path(filename + tree_name_len,
-+					      opt->prefix, &rel_buf);
-+
-+			if (tree_name_len)
-+				strbuf_add(out, filename, tree_name_len);
-+
-+			strbuf_addstr(out, rel_name);
-+			strbuf_release(&rel_buf);
-+		} else {
-+			strbuf_addstr(out, filename);
-+		}
-+		return;
-+	}
-+
-+	if (opt->relative && opt->prefix_length)
-+		quote_path_relative(filename + tree_name_len, opt->prefix, out);
-+	else
-+		quote_c_style(filename + tree_name_len, out, NULL, 0);
-+
-+	if (tree_name_len)
-+		strbuf_insert(out, 0, filename, tree_name_len);
-+}
-+
- static int grep_oid(struct grep_opt *opt, const struct object_id *oid,
- 		     const char *filename, int tree_name_len,
- 		     const char *path)
-@@ -302,13 +334,7 @@ static int grep_oid(struct grep_opt *opt, const struct object_id *oid,
- 	struct strbuf pathbuf = STRBUF_INIT;
- 	struct grep_source gs;
- 
--	if (opt->relative && opt->prefix_length) {
--		quote_path_relative(filename + tree_name_len, opt->prefix, &pathbuf);
--		strbuf_insert(&pathbuf, 0, filename, tree_name_len);
--	} else {
--		strbuf_addstr(&pathbuf, filename);
--	}
--
-+	grep_source_name(opt, filename, tree_name_len, &pathbuf);
- 	grep_source_init(&gs, GREP_SOURCE_OID, pathbuf.buf, path, oid);
- 	strbuf_release(&pathbuf);
- 
-@@ -334,11 +360,7 @@ static int grep_file(struct grep_opt *opt, const char *filename)
- 	struct strbuf buf = STRBUF_INIT;
- 	struct grep_source gs;
- 
--	if (opt->relative && opt->prefix_length)
--		quote_path_relative(filename, opt->prefix, &buf);
--	else
--		strbuf_addstr(&buf, filename);
--
-+	grep_source_name(opt, filename, 0, &buf);
- 	grep_source_init(&gs, GREP_SOURCE_FILE, buf.buf, filename, filename);
- 	strbuf_release(&buf);
- 
-diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
-index 7d7b396c23..991d5bd9c0 100755
---- a/t/t7810-grep.sh
-+++ b/t/t7810-grep.sh
-@@ -72,6 +72,11 @@ test_expect_success setup '
- 	# Still a no-op.
- 	function dummy() {}
- 	EOF
-+	if test_have_prereq FUNNYNAMES
-+	then
-+		echo unusual >"\"unusual\" pathname" &&
-+		echo unusual >"t/nested \"unusual\" pathname"
-+	fi &&
- 	git add . &&
- 	test_tick &&
- 	git commit -m initial
-@@ -481,6 +486,48 @@ do
- 		git grep --count -h -e b $H -- ab >actual &&
- 		test_cmp expected actual
- 	'
-+
-+	test_expect_success FUNNYNAMES "grep $L should quote unusual pathnames" '
-+		cat >expected <<-EOF &&
-+		${HC}"\"unusual\" pathname":unusual
-+		${HC}"t/nested \"unusual\" pathname":unusual
-+		EOF
-+		git grep unusual $H >actual &&
-+		test_cmp expected actual
-+	'
-+
-+	test_expect_success FUNNYNAMES "grep $L in subdir should quote unusual relative pathnames" '
-+		cat >expected <<-EOF &&
-+		${HC}"nested \"unusual\" pathname":unusual
-+		EOF
-+		(
-+			cd t &&
-+			git grep unusual $H
-+		) >actual &&
-+		test_cmp expected actual
-+	'
-+
-+	test_expect_success FUNNYNAMES "grep -z $L with unusual pathnames" '
-+		cat >expected <<-EOF &&
-+		${HC}"unusual" pathname:unusual
-+		${HC}t/nested "unusual" pathname:unusual
-+		EOF
-+		git grep -z unusual $H >actual &&
-+		tr "\0" ":" <actual >actual-replace-null &&
-+		test_cmp expected actual-replace-null
-+	'
-+
-+	test_expect_success FUNNYNAMES "grep -z $L in subdir with unusual relative pathnames" '
-+		cat >expected <<-EOF &&
-+		${HC}nested "unusual" pathname:unusual
-+		EOF
-+		(
-+			cd t &&
-+			git grep -z unusual $H
-+		) >actual &&
-+		tr "\0" ":" <actual >actual-replace-null &&
-+		test_cmp expected actual-replace-null
-+	'
- done
- 
- cat >expected <<EOF
+This indirectly disallow NUL in the body of commit message that sent by email
+in UTF-8 encoding.
+
+In those below cases:
+
+* NUL character in header field (be it Subject, Author, Email, etc...)
+* NUL in the body of commit message that originally sent in other than UTF-8
+  encoding
+
+Git silently accepts them, albeit, truncate at the NUL character.
+
+Those email is clearly not generated by Git, they must be crafted.
+
+Complains loudly about those NUL characters.
+
+Đoàn Trần Công Danh (3):
+  t4254: merge 2 steps of a single test
+  mailinfo.c::convert_to_utf8: reuse strlen info
+  mailinfo: disallow NUL character in mail's header
+
+ mailinfo.c            | 11 +++++++--
+ t/t4254-am-corrupt.sh | 52 +++++++++++++++++++++++++++++++++++++++----
+ 2 files changed, 57 insertions(+), 6 deletions(-)
+
+Range-diff against v1:
+-:  ---------- > 1:  d1bc31e692 t4254: merge 2 steps of a single test
+1:  9ce4b7c350 ! 2:  e3e542d388 mailinfo.c::convert_to_utf8: reuse strlen info
+    @@ Commit message
+         We're passing buffer from strbuf to reencode_string,
+         which will call strlen(3) on that buffer,
+         and discard the length of newly created buffer.
+    -
+         Then, we compute the length of the return buffer to attach to strbuf.
+     
+    +    During this process, we introduce a discrimination between mail
+    +    originally written in utf-8 and other encoding.
+    +
+    +    * if the email was written in utf-8, we leave it as is. If there is
+    +      a NUL character in that line, we complains loudly:
+    +
+    +            error: a NUL byte in commit log message not allowed.
+    +
+    +    * if the email was written in other encoding, we truncate the data as
+    +      the NUL character in that line, then we used the truncated line for
+    +      the metadata.
+    +
+         We can do better by reusing all the available information,
+         and call the underlying lower level function that will be called
+    -    indirectly by reencode_string.
+    +    indirectly by reencode_string. By doing this, we will also postpone
+    +    the NUL character processing to the commit step, which will
+    +    complains about the faulty metadata.
+     
+         Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
+     
+    @@ mailinfo.c: static int convert_to_utf8(struct mailinfo *mi,
+      	return 0;
+      }
+      
+    +
+    + ## t/t4254-am-corrupt.sh ##
+    +@@
+    + test_description='git am with corrupt input'
+    + . ./test-lib.sh
+    + 
+    ++write_nul_patch() {
+    ++	space=' '
+    ++	qNUL=
+    ++	case "$1" in
+    ++		subject) qNUL='=00' ;;
+    ++	esac
+    ++	cat <<-EOF
+    ++	From ec7364544f690c560304f5a5de9428ea3b978b26 Mon Sep 17 00:00:00 2001
+    ++	From: A U Thor <author@example.com>
+    ++	Date: Sun, 19 Apr 2020 13:42:07 +0700
+    ++	Subject: [PATCH] =?ISO-8859-1?q?=C4=CB${qNUL}=D1=CF=D6?=
+    ++	MIME-Version: 1.0
+    ++	Content-Type: text/plain; charset=ISO-8859-1
+    ++	Content-Transfer-Encoding: 8bit
+    ++
+    ++	EOF
+    ++	if test "$1" = body
+    ++	then
+    ++		printf "%s\0%s\n" abc def
+    ++	fi
+    ++	cat <<-\EOF
+    ++	---
+    ++	diff --git a/afile b/afile
+    ++	new file mode 100644
+    ++	index 0000000000..e69de29bb2
+    ++	--$space
+    ++	2.26.1
+    ++	EOF
+    ++}
+    ++
+    + test_expect_success setup '
+    + 	# Note the missing "+++" line:
+    + 	cat >bad-patch.diff <<-\EOF &&
+    +@@ t/t4254-am-corrupt.sh: test_expect_success 'try to apply corrupted patch' '
+    + 	test_i18ncmp expected actual
+    + '
+    + 
+    ++test_expect_success "NUL in commit message's body" '
+    ++	test_when_finished "git am --abort" &&
+    ++	write_nul_patch body >body.patch &&
+    ++	test_must_fail git am body.patch 2>err &&
+    ++	grep "a NUL byte in commit log message not allowed" err
+    ++'
+    ++
+    ++test_expect_failure "NUL in commit message's header" '
+    ++	test_when_finished "git am --abort" &&
+    ++	write_nul_patch subject >subject.patch &&
+    ++	test_must_fail git am subject.patch 2>err &&
+    ++	grep "a NUL byte in Subject is not allowed" err
+    ++'
+    ++
+    + test_done
+-:  ---------- > 3:  cb96947b36 mailinfo: disallow NUL character in mail's header
 -- 
-2.26.0
+2.26.1.301.g55bc3eb7cb
 
