@@ -7,63 +7,63 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2905BC54FD0
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B853EC55182
 	for <git@archiver.kernel.org>; Mon, 20 Apr 2020 21:15:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 02E6B20782
+	by mail.kernel.org (Postfix) with ESMTP id 920D720782
 	for <git@archiver.kernel.org>; Mon, 20 Apr 2020 21:15:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZV3F6wEM"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U7/t4ukO"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727862AbgDTVPB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Apr 2020 17:15:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57574 "EHLO
+        id S1727881AbgDTVPC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Apr 2020 17:15:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57564 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1725774AbgDTVPA (ORCPT
+        by vger.kernel.org with ESMTP id S1727835AbgDTVPA (ORCPT
         <rfc822;git@vger.kernel.org>); Mon, 20 Apr 2020 17:15:00 -0400
-Received: from mail-ed1-x544.google.com (mail-ed1-x544.google.com [IPv6:2a00:1450:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87906C061A0F
-        for <git@vger.kernel.org>; Mon, 20 Apr 2020 14:15:00 -0700 (PDT)
-Received: by mail-ed1-x544.google.com with SMTP id f12so8561173edn.12
-        for <git@vger.kernel.org>; Mon, 20 Apr 2020 14:15:00 -0700 (PDT)
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5CCAC061A0C
+        for <git@vger.kernel.org>; Mon, 20 Apr 2020 14:14:58 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id s10so4849359wrr.0
+        for <git@vger.kernel.org>; Mon, 20 Apr 2020 14:14:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=c5jxiwoT9rIsUs25Z1wdbQYxfOfdfVcJvvnS9hg6XKE=;
-        b=ZV3F6wEMKgswOvDLAY7W+YJ1KVeB0hfbUjMkU+E/S4ibq4wW1+7gDfmGD2dxB2+NwV
-         DpEl42FqL8R+xw4LFvR46axnHegbDhVLWCJBON/BBDttUzgsCQmYKEU5Y6vvoz6QQlzl
-         Y+8xf797IEZJm2+wi2GUWhz9Sfh11fjQSzDY/1Ady5Cp0Rlmjl1ufcJFe9AAHKyLbqgA
-         BGKHYRuXQ3BWdcfbeu/bbemCOPQX6mVYrjYDPXHQRQ2gmfzDFhfEN3w3krLQNLRhRxYE
-         CSO6VBaKiiWIPnAWQ7JReMovXk6A+H92JuZIqA8nxN9i9E33Oi1AfHA+du7d2WJ3VD0E
-         rH9A==
+        bh=NfPWVYm5oJnAy6N3ND7qYx88WtkIig5hT6uesdXdV6c=;
+        b=U7/t4ukOLhXv86DnXnzKxUkr1I1anxjWVzcGDDCpuLC+wCoch8qzk+SAzyLmv3QC5O
+         3G98TxfkRTRcHGOHqfw8ckXYayr5JTaj7VTiO6V1fRCW6KIGxW0GCUHcULOh4TroRXgu
+         jO8Rd9qafmppoBfvstdw1dEHyunNblUC3HRUQd3ezo6PwUOjJnlsJHFicNseWxN8ikMS
+         +/zlhJpMhyDYLFLOdz0/nvAX2LEyvEfnAOHar7KVEAxGLd5uV/LDN1QSsaHu2w6ACDf8
+         8dliJmrd/h734UfDkzjUDNtKX3VOYqaeIPF4SR35yT4M6qaRYWWsezJd/wIsj77KoroW
+         NGMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=c5jxiwoT9rIsUs25Z1wdbQYxfOfdfVcJvvnS9hg6XKE=;
-        b=FPSNnI8yK8gjZw9Zj/76qN3sWQndb/7CiJWttncgSMyR1bEJmiAnoMxonKu9Qvn0Yb
-         JysPpm6r1F/0EWEFzuovZV1zP4bQyw5AN1xUUkFX8AvUKEMyokYWpx2qHuzXfYKIeTvR
-         lu72q/Ni9F9H08MYTpNLwpTxTAvc2fY8qWJeRwDCK2TpO9PNMqEaUPqbD0LplGEbmdrE
-         yF+jqhEZx+dK4i5ax3G7RYhsqpdvGrwYTVXUuXge9wXJFW3gzjtgniKpuQN0uiNk3cZa
-         A1gPlgbko2hvskIk7u7fFoi2dfvHRXCU/sr1b6ul7qXUpdBmWqLY2fOrfIXdZCBkl0IS
-         cLag==
-X-Gm-Message-State: AGi0PuZeGr/WkDv8CWhPLFzZx+FYTjr9qdQcyBgcV5bH7a+QW9OQx4yx
-        rFgS5kw9BQR1B/gKF7u60yN8vtzn
-X-Google-Smtp-Source: APiQypI1+nBzVvhDSe0sJYFSSE6ytUbc4ocYT9/xy3zeaZ3npnjqt0VF+biKMKTdbx4kVXiUz/al1w==
-X-Received: by 2002:a05:6402:22ba:: with SMTP id cx26mr12765837edb.198.1587417299198;
-        Mon, 20 Apr 2020 14:14:59 -0700 (PDT)
+        bh=NfPWVYm5oJnAy6N3ND7qYx88WtkIig5hT6uesdXdV6c=;
+        b=KZtRWpaBAaJS/lgEQdfiiWL0rNK9iWZoj19jnaU0EXf0NGLLMEyek5wdyjfoLV3RGP
+         IpmMrdaPoTshdqvTgAryspMia6NXw1x/dBn4r6p/rFnZg60F8eyvijDTV4moYMSRNR0l
+         M6I0Zj/5Q6ayw4/fOTpNe5N9QJxjLCHkLuxXduB8rDVXVbTQ6EWwYchaS52KSINa1X02
+         HgDuEPxOnY3bLgxxAj4Lc6w2qOaIN4/a20mKhJFaXdiZuVFxceWo9zUCIguapYG+Jggt
+         Mpm3nng2rjD6dy3qNtVNV/nLZhUufciJLhhNCp1CjtgnOBwPys0dCgGdt4kgEQRiS2IV
+         gYlw==
+X-Gm-Message-State: AGi0PuZL5Ai0S2ZzIi3UGAf1tLP0Dm48nfeHzUPw+dgeMq8yG8yH76bJ
+        Wt77/MsDlil0Dj+JkmnItP7z/11T
+X-Google-Smtp-Source: APiQypLrfFBeBrH2Y4n1hC4WXwAAl/8LFFAwhABrt/kqD2NCsucsvX9DuKd3B00I/hYQadg8eIcbkA==
+X-Received: by 2002:adf:f350:: with SMTP id e16mr19715282wrp.332.1587417297602;
+        Mon, 20 Apr 2020 14:14:57 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id gg24sm45278ejb.66.2020.04.20.14.14.58
+        by smtp.gmail.com with ESMTPSA id p16sm892546wro.21.2020.04.20.14.14.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Apr 2020 14:14:58 -0700 (PDT)
-Message-Id: <91f1efe24ec2b983437b9e20cab61ce31c3917cb.1587417295.git.gitgitgadget@gmail.com>
+        Mon, 20 Apr 2020 14:14:57 -0700 (PDT)
+Message-Id: <b600d0bc6ddd4ab1e228482e97d10fb40cb07cea.1587417295.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.539.v9.git.1587417295.gitgitgadget@gmail.com>
 References: <pull.539.v8.git.1585740538.gitgitgadget@gmail.com>
         <pull.539.v9.git.1587417295.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 20 Apr 2020 21:14:48 +0000
-Subject: [PATCH v9 03/10] create .git/refs in files-backend.c
+Date:   Mon, 20 Apr 2020 21:14:46 +0000
+Subject: [PATCH v9 01/10] refs.h: clarify reflog iteration order
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,47 +78,37 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-This prepares for supporting the reftable format, which will want
-create its own file system layout in .git
-
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- builtin/init-db.c    | 2 --
- refs/files-backend.c | 6 ++++++
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ refs.h | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/init-db.c b/builtin/init-db.c
-index 0b7222e7188..3b50b1aa0e5 100644
---- a/builtin/init-db.c
-+++ b/builtin/init-db.c
-@@ -251,8 +251,6 @@ static int create_default_files(const char *template_path,
- 	 * We need to create a "refs" dir in any case so that older
- 	 * versions of git can tell that this is a repository.
- 	 */
--	safe_create_dir(git_path("refs"), 1);
--	adjust_shared_perm(git_path("refs"));
+diff --git a/refs.h b/refs.h
+index 545029c6d80..87c9ec921b9 100644
+--- a/refs.h
++++ b/refs.h
+@@ -444,18 +444,21 @@ int delete_refs(const char *msg, struct string_list *refnames,
+ int refs_delete_reflog(struct ref_store *refs, const char *refname);
+ int delete_reflog(const char *refname);
  
- 	if (refs_init_db(&err))
- 		die("failed to set up refs db: %s", err.buf);
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 561c33ac8a9..ab7899a9c77 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -3157,9 +3157,15 @@ static int files_init_db(struct ref_store *ref_store, struct strbuf *err)
- 		files_downcast(ref_store, REF_STORE_WRITE, "init_db");
- 	struct strbuf sb = STRBUF_INIT;
+-/* iterate over reflog entries */
++/* Iterate over reflog entries. */
+ typedef int each_reflog_ent_fn(
+ 		struct object_id *old_oid, struct object_id *new_oid,
+ 		const char *committer, timestamp_t timestamp,
+ 		int tz, const char *msg, void *cb_data);
  
-+	files_ref_path(refs, &sb, "refs");
-+	safe_create_dir(sb.buf, 1);
-+	/* adjust permissions even if directory already exists. */
-+	adjust_shared_perm(sb.buf);
++/* Iterate in over reflog entries, oldest entry first. */
+ int refs_for_each_reflog_ent(struct ref_store *refs, const char *refname,
+ 			     each_reflog_ent_fn fn, void *cb_data);
+ int refs_for_each_reflog_ent_reverse(struct ref_store *refs,
+ 				     const char *refname,
+ 				     each_reflog_ent_fn fn,
+ 				     void *cb_data);
 +
- 	/*
- 	 * Create .git/refs/{heads,tags}
- 	 */
-+	strbuf_reset(&sb);
- 	files_ref_path(refs, &sb, "refs/heads");
- 	safe_create_dir(sb.buf, 1);
++/* Call a function for each reflog entry, oldest entry first. */
+ int for_each_reflog_ent(const char *refname, each_reflog_ent_fn fn, void *cb_data);
+ int for_each_reflog_ent_reverse(const char *refname, each_reflog_ent_fn fn, void *cb_data);
  
 -- 
 gitgitgadget
