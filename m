@@ -2,149 +2,153 @@ Return-Path: <SRS0=xG8z=6E=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9230EC54FCC
-	for <git@archiver.kernel.org>; Mon, 20 Apr 2020 22:07:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BE736C54FCC
+	for <git@archiver.kernel.org>; Mon, 20 Apr 2020 22:22:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 60E732084D
-	for <git@archiver.kernel.org>; Mon, 20 Apr 2020 22:07:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9408220722
+	for <git@archiver.kernel.org>; Mon, 20 Apr 2020 22:22:26 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="TTzWwDsQ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="acFf8V1Y"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726262AbgDTWHE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Apr 2020 18:07:04 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:50677 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726013AbgDTWHE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Apr 2020 18:07:04 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4160CD2C39;
-        Mon, 20 Apr 2020 18:07:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=hACCEQShm4M16VBIUgubw22XAq8=; b=TTzWwD
-        sQjcQ/fqzUTb8Fy80UXOu+NcpAkcibAB5Uo42FEriIZTIIQs02DbmJZrFpU8+ux5
-        WvtfFbFnMp/JZxP4l00DzB7nQOgFPCF2Pf70F0dlc1ZcTGIQt/ppivx6frijmys3
-        NJww/+e+7LqNXo8+U2dapkVTGScZ5WOFa/mgw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=UmHiaTKQ3i3pXeVXvahE3KwutweJjCCv
-        LDayZvi0sOWi4zrUkEez3bA+0TeAyFL9oajp+GN6WL3An4oaqUmXxJClaxXrXYcg
-        YwxPEUOfwYldAQGZou1rbm5C73PCHLT6EgALtIA1sb1uR02OupUWeptgvtCvbMNt
-        zlYX5gJE0tQ=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3B0E9D2C38;
-        Mon, 20 Apr 2020 18:07:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 7B4D8D2C35;
-        Mon, 20 Apr 2020 18:06:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: [PATCH v9 09/10] Add reftable library
-References: <pull.539.v8.git.1585740538.gitgitgadget@gmail.com>
-        <pull.539.v9.git.1587417295.gitgitgadget@gmail.com>
-        <a30001ad1e8f94a0f3901c1694c3dd660ba1e7c0.1587417295.git.gitgitgadget@gmail.com>
-Date:   Mon, 20 Apr 2020 15:06:57 -0700
-In-Reply-To: <a30001ad1e8f94a0f3901c1694c3dd660ba1e7c0.1587417295.git.gitgitgadget@gmail.com>
-        (Han-Wen Nienhuys via GitGitGadget's message of "Mon, 20 Apr 2020
-        21:14:54 +0000")
-Message-ID: <xmqqeeshrev2.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726262AbgDTWWZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Apr 2020 18:22:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39788 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725774AbgDTWWZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Apr 2020 18:22:25 -0400
+Received: from mail-oo1-xc41.google.com (mail-oo1-xc41.google.com [IPv6:2607:f8b0:4864:20::c41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE6F6C061A0C
+        for <git@vger.kernel.org>; Mon, 20 Apr 2020 15:22:23 -0700 (PDT)
+Received: by mail-oo1-xc41.google.com with SMTP id p67so2492371ooa.11
+        for <git@vger.kernel.org>; Mon, 20 Apr 2020 15:22:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ga1ckiww7SBM2alvV/OFrHRtuEv4oHU2U3xaGvy9viA=;
+        b=acFf8V1Yp0iHyeQ0f6I5eLUN7EUD5RDwvOdLWMMrj/tHbcmdQ6zZSZt0cdXkpmPYRj
+         W2Nw3ttbFOZoktGbEKBDaZfEsxFxGP4xPmvulY0c6KipbrND6ddBVxEKr2Fhuo3OTuTX
+         MdM9loqxHs783q8qN07eA2A95FEX45GYZwJBA3KGaNpQ8uutMTamr4i/k7PZGgIcaUrX
+         jwpr0Qz3NGnMEJXiW7Zb/ETSJGF44xNEC2NhpbnZ4t3+DzLd6K3y0hm8HIjx5hCht/Al
+         OsgGYnJ4cVfj9pmeLgQ9MiR//z5VW8FNm1W9HK2COgrN0KovOEZmlDBzcfUwVZjV9Xqk
+         uQRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ga1ckiww7SBM2alvV/OFrHRtuEv4oHU2U3xaGvy9viA=;
+        b=Sam5aKtHMqkb4eI7iDzLjb8cWeI6llLdeBpowhMtkLTAC0u5O25F2OQc6nL9VrabOu
+         iNPbEtg1DTfjGAE22XFjpQaXSD+xdcXxXLdVMtI3M/M0fMazG4scCniXnYflxJsdlzWh
+         xRng9H/kz0dRg3IqkikJo+Wt7Bz2JihT196ScrTVe1ayigFMnUPaL+7BYGORn3y77Z7e
+         TMriB+0wUvcNXoPnWvHNpoPXrgb1urRPJHN/ITlcYRNM3Rvhv9uRKIN58vzDtXzAg640
+         DHyrN1vvJKHdZQmuR++DN4l8MjK+LimY2YpOzGSeZYoI0ewhsA5HamTgrk2D2kckEwVT
+         ZfTQ==
+X-Gm-Message-State: AGi0PubaMbPo5vp8KHwbM6pv+ycc5S2g0X55gkI71ItFbR5ZKepsa4jj
+        bHtW18KkdxTEnLF/F5Uhb46Gfb3oG8qA2QDSDBUKYbFq
+X-Google-Smtp-Source: APiQypLU13uefUuUwvDMD2yBhix4StngYdlicdcjRmXygFt1zi4ySUocUhroLnCLUoNXr2RgT+Pt1VHXFld6U8pFXYE=
+X-Received: by 2002:a4a:850d:: with SMTP id k13mr14596134ooh.7.1587421342880;
+ Mon, 20 Apr 2020 15:22:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 41A71BF2-8353-11EA-AB2B-B0405B776F7B-77302942!pb-smtp20.pobox.com
+References: <CAPMMpoimeOB7-ZTbApMuvA=n6QxFtW_E80gy8Y60CU8EduZc6Q@mail.gmail.com>
+In-Reply-To: <CAPMMpoimeOB7-ZTbApMuvA=n6QxFtW_E80gy8Y60CU8EduZc6Q@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 20 Apr 2020 15:22:11 -0700
+Message-ID: <CABPp-BF+UPXT_91tzA1FqNxyfN7opc74CX1ZEJNhXYB0pGJpiw@mail.gmail.com>
+Subject: Re: Git and sparse-checkout on large monorepos - hiding irrelevant
+ changes for a sparse-checkout specification?
+To:     Tao Klerks <tao@klerks.biz>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Mon, Apr 20, 2020 at 2:21 PM Tao Klerks <tao@klerks.biz> wrote:
+>
+> Hi,
+>
+> I posted an "Is this possible?" question on stackoverflow
+> (https://stackoverflow.com/q/61326025/74296) and was pointed here.
+>
+> I understand from recent updates that there is increasing built-in
+> support for large files and large repos, between some of the older
+> capabilities (sparse checkout in general and shallow clone), and the
+> newer ones (partial-clone and git-sparse-checkout).
+>
+> I'm playing with a large repo, and finding some "rough edges" around
+> large diffs (eg 200,000 files "added" in the "initial" commits of
+> shallow clones).
+>
+> I was hoping these could be smoothed out when using sparse checkout
+> (where each user would only see say 30,000 of those 200,000 files),
+> but can't figure out a way to easily & consistently apply the
+> .git/info/sparse-checkout specification to tools like git-diff and
+> git-log (across many users with some semblance of consistency).
+>
+> Is this something that is or is expected to be supported at some point?
 
-> diff --git a/reftable/update.sh b/reftable/update.sh
-> new file mode 100644
+Yes, we would like to support this at some point.  See
+https://lore.kernel.org/git/xmqq7dz938sc.fsf@gitster.c.googlers.com/
+and a bunch of other emails from that thread.  You may need to set a
+config setting, though (see e.g.
+https://lore.kernel.org/git/CABPp-BE6zW0nJSStcVU=_DoDBnPgLqOR8pkTXK3dW11=T01OhA@mail.gmail.com/
+from that thread).
 
-Shouldn't this be executable, even though the readme tells the
-reader to run "sh update.sh"?
+Also, there is no plan at all for when this will happen.  You'll note
+those links are kind of recent.  These issues have also come up
+before, but I'm too lazy to dig up the links to the other threads.
 
-> index 00000000000..0fd90f89675
-> --- /dev/null
-> +++ b/reftable/update.sh
-> @@ -0,0 +1,14 @@
-> +#!/bin/sh
-> +
-> +set -eux
+> While I'm asking, I have two less-important questions:
+>
+> 1) Are there any plans to support a filter along the lines of "keep
+> blobs used for commits since date X handy"? I know I can do a shallow
+> clone, then turn on filtering/promisors, and then unshallow, but then
+> later fetches don't bring in binaries - a mode that provides this
+> "full commit history but recent blobs only" might be nice? (I imagine
+> that's probably non-trivial, because the filters are probably based on
+> properties of the blobs themselves... but one can dream?)
 
-Use of -e and -u are understandable but -x is a bit unusual unless
-one is debugging...
+Given the context before this in your email, could you clarify what
+you are asking?  In particular, are you really asking for all blobs
+since date X, or for blobs within your sparse cone (going back to
+beginning of history), or blobs within your sparse cone since date X?
 
-> +((cd reftable-repo && git fetch origin && git checkout origin/master ) ||
-> +git clone https://github.com/google/reftable reftable-repo) && \
+I personally don't think doing anything with shallow clones other than
+avoiding breaking existing usecases has any value.  So, I'll focus on
+partial clones.
 
-I think you can discard most of the '\' at the end of the line, as
-the shell knows, when you stop a line with &&, you haven't finished
-talking to it yet.  That would make the result slightly less noisy
-to follow.  We don't rely on "set -e" in this project, but this is a
-borrowed file from our point of view---as long as we are using -e,
-wouldn't it make more sense to take full advantage of it and do
-without &&?
+I've been trying to win some mindshare for the second of those options
+(having the ability to specify sparsity cones to clone/fetch and have
+it respect those and only download blobs touching those paths, plus
+all commits and maybe all trees), and perhaps the others could be
+added on top.  I'm planning to help out with this, after my merge
+work, but who knows when that finishes.
 
-> +cp reftable-repo/c/*.[ch] reftable/ && \
-> +cp reftable-repo/c/include/*.[ch] reftable/ && \
-> +cp reftable-repo/LICENSE reftable/ &&
-> +git --git-dir reftable-repo/.git show --no-patch origin/master \
-> +> reftable/VERSION && \
+> 2) Is there a target date for when git-sparse-checkout will become
+> non-experimental?
 
-> +sed -i~ 's|if REFTABLE_IN_GITCORE|if 1 /* REFTABLE_IN_GITCORE */|' reftable/system.h
+We're more feature based than date based.  I was one of the ones
+asking that we put that loud this-is-experimental warning in the docs,
+and in particular mentioning that other commands (diff, log, grep,
+clone, fetch, etc.) could change in the presence of sparse-checkouts
+precisely because I want to see some of the above things fixed and
+even have some ideas for merge/rebase/cherry-pick in this area.
+You're likely to see some commands start gaining support to work
+better in a sparse-checkout (e.g. Matheus posted some patches to make
+grep better respect those), and more commands slowly gain it over
+time.  Once enough have it and we've worked out the known bugs with
+sparse-checkouts (we have some significant patches in 'next' that 2.26
+users haven't seen yet), then we'll discuss when it's time to remove
+the experimental warning.
 
-"sed -i" is probably GNUism that does not port well.
+> Thanks for any help, my apologies if my questions are too forward.
 
-> +rm reftable/*_test.c reftable/test_framework.* reftable/compat.*
-
-I presume that this is because we copied everything that match
-c/*.[ch] and is not about removing what used to exist in reftable/
-directory locally?  Not complaining, but checking if I am reading
-the intention of the code correctly.
-
-> +git add reftable/*.[ch]
-
-As we flattened when copying from c/include/*.[ch], this "git add"
-can also be flat, which makes sense.  Don't you need to also add the
-LICENSE file in there?
-
-Two comments on the design:
-
- - The list of "what to copy in" largely depends on the upstream
-   reftable library; hardcoding the patterns here would make it
-   harder to reorganize the files for the upstream project.  I
-   wonder if it makes more sense to reserve a single path in the
-   reftable-repo and hardcode the knowledge of what to copy out
-   there?  That would mean the resulting update.sh here can become
-
-	(git -C reftable-repo pull --ff-only && git clone ...) &&
-	reftable-repo/copy-out-to-git-core.sh reftable/
-
-   and the copy-out-to-git-core.sh script that comes with the
-   upstream reftable library is the only one that needs to know
-   where the license and C source files are in the same version as
-   itself, and how to produce $1/VERSION file using the commit log
-   message of the commit it comes from.
-
- - The above procedure (with or without the "who should know what to
-   copy" change) would cope well with modified and new files in the
-   reftable upstream, but does not remove a library file that used
-   to exist (and copied to the git-core project) that no longer is
-   needed and shipped.  It appears that there has to be some way to
-   remove them.
-
-Thanks.
+Sorry that the answer amounts to "we don't have that yet", but the
+things you are asking for are things we've been discussing and moving
+towards.
