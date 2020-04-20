@@ -2,441 +2,230 @@ Return-Path: <SRS0=xG8z=6E=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
-	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A81FC54FCB
-	for <git@archiver.kernel.org>; Mon, 20 Apr 2020 23:53:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 75A57C54FCB
+	for <git@archiver.kernel.org>; Mon, 20 Apr 2020 23:55:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 015922064C
-	for <git@archiver.kernel.org>; Mon, 20 Apr 2020 23:53:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 522082068F
+	for <git@archiver.kernel.org>; Mon, 20 Apr 2020 23:55:00 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="HGjdHQwR"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bTXxE3U0"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726748AbgDTXxW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Apr 2020 19:53:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53896 "EHLO
+        id S1726123AbgDTXy7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Apr 2020 19:54:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54150 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1725989AbgDTXxV (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 20 Apr 2020 19:53:21 -0400
-Received: from mail-ua1-x94a.google.com (mail-ua1-x94a.google.com [IPv6:2607:f8b0:4864:20::94a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FC3FC061A0E
-        for <git@vger.kernel.org>; Mon, 20 Apr 2020 16:53:21 -0700 (PDT)
-Received: by mail-ua1-x94a.google.com with SMTP id v27so5625372uaa.22
-        for <git@vger.kernel.org>; Mon, 20 Apr 2020 16:53:21 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1725988AbgDTXy7 (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 20 Apr 2020 19:54:59 -0400
+Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12B49C061A0E
+        for <git@vger.kernel.org>; Mon, 20 Apr 2020 16:54:59 -0700 (PDT)
+Received: by mail-pl1-x643.google.com with SMTP id d24so4564243pll.8
+        for <git@vger.kernel.org>; Mon, 20 Apr 2020 16:54:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=y4qX2zn+HQyj3v4521mMm8yD2bnKxtKHhI13NupAT5c=;
-        b=HGjdHQwR3Q4ZNmr0R6PpvA/lF0EVFYojOfIlzJGZUlJl0PGgFKJxIeIj5hqDEzh0DQ
-         2CzNWL0x6QWyiFEMbOZMmVtrF6jyNaGGu6ZaZ4tKEeiMcYF6ZJZ/ILMsBlHRtPg3+RQZ
-         K8kKdSS22EYHCkhCPzZWd5lZRUVY4WdevMjr7/VfrY1LW4Yxg0Oj0+wdIhavyaB/UHwW
-         BGBOO0jIyov60f1WqRX7+dFyDZ/L2Xq7MKVw/vlS3pM18eXuY+IXur2GI8uB0hvkTact
-         eyR0AK0TazKSuSdaDw+F9HVGaA2L7bxLrctc5HHHN7Ymo9D6iyXFLWvHllPYKdwkc1WR
-         DOCw==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=txnJMFSE/NWuZQh2Wa2EgPjpi3FQ02/FX2RiR0iI15M=;
+        b=bTXxE3U0J0s8+QNaG6SjMErspUPF+MXVE8Zh2sQpfMWSQPDjR/DiXeB+ZrDC4AoCHf
+         1mkKUXM0GRpiuuv9IuLQlKHdpBHKqRO3MBQqTMgDXKBsZxSqRtsKeXIu+sXgFzR6aS3u
+         mQvsdvNMkZwD2CHE0DmqzNRwcZwcP/MdoE69BpTwDRRU0SfdWP6oglFJeOlerertsl7a
+         SUVegq5bXlgiXpvGIA4mXu/Jr6f0aGMQhd+dCTudA3VCaaXlmRT+Y8JURQQBaf6263HO
+         wEkJROhw0jpa+IGFv3MrxlwsUeY+n1MD8ClXCDcaNDhORcZ62Y8UpkvI6BMBIUAgJKz4
+         8aww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=y4qX2zn+HQyj3v4521mMm8yD2bnKxtKHhI13NupAT5c=;
-        b=Ep+YGusCb5pEmTeyp6DIFCtW0OFIrSGGalNFCUwHmQ4ZHe+3mDiYNuYGQi6FujiHDq
-         pOHvw5HLK2WolJVCbz9SAdr74nGfDoADGx3TQVgSGlE/SDsk+zg7wkxirzzOcDom8Cdq
-         YiYoMS6AnEYMFi8UHFfx8tpoSIJbrwufXhivO0LTBGl4Qw6C7KPUiECCrD/yXQFsyHal
-         y/wuB4KgXKc9LaQQIKqyopbiAbFTahGiqJQrKLMFqKjjg2sLI7O63KCK2Oe1Bf7wxEXK
-         pLvvuMTb5x+XhKZ+rZtb5MeubSwIbaxwnbakBcD41fGPBH91Cga3P8EqqB5IZPhgpTI5
-         WHiw==
-X-Gm-Message-State: AGi0PuYhJcZv/WVGJpGplehM4R268jdLF1yVUtpu8lO9tIJApSEVP0bo
-        vF8BptlyUVlU4n6lOLSibnX5IhkWjIIAONAYD9KmTTNKy/l+NeqRa5SqK52moqn/eAAgoEDKOKO
-        J/juDXdLlMdvZE/YRRST9nxCEe7R9Bc140Kd/RmAnZO6q3YVKA0rK8bLPi+PE41fjG5rUVa3flA
-        ==
-X-Google-Smtp-Source: APiQypIwn2CW+4WUAgIJzhXfqkkL7Knw7kL6p+mMe63Sy5XJ7BqAYjryRKTu7HBxS6pza6sk7gwitdJ+nhMj0mNy638=
-X-Received: by 2002:a1f:99d1:: with SMTP id b200mr6178665vke.95.1587426800321;
- Mon, 20 Apr 2020 16:53:20 -0700 (PDT)
-Date:   Mon, 20 Apr 2020 16:53:10 -0700
-In-Reply-To: <20200415205941.GB24777@google.com>
-Message-Id: <20200420235310.94493-1-emilyshaffer@google.com>
-Mime-Version: 1.0
-References: <20191210023335.49987-1-emilyshaffer@google.com>
-X-Mailer: git-send-email 2.26.1.301.g55bc3eb7cb9-goog
-Subject: [PATCH] doc: propose hooks managed by the config
-From:   Emily Shaffer <emilyshaffer@google.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=txnJMFSE/NWuZQh2Wa2EgPjpi3FQ02/FX2RiR0iI15M=;
+        b=FyMHZtSVGpUtn72WFTwqOVKAciPPm1Jq7ZWLokM9uGEi9fS632ZbXDgiPqqbimOyBJ
+         mcM4n9PZ1R0DkBfmRDbz8B3LUuUWw5RFSFNMZDJXFA6RLrrDnwGakxiMt293HyVx49pw
+         TnlzC1iKeYgiz6joUtAlhA190d7WzqSNKQtYacNkoM+Z+K5Da/e6T9woxaJRwVtx3TTO
+         Ax8w5ZilOk4Qh0JE9SKQGiF2Y9TunvUYyxG8WulA1/LcvQJMGBORYGr1FMiUdaADuUIp
+         RUcWOyUdtnjfYhCLMnENehO1h7CzrMxV344Wkta8KRFNFp6KEKib28bNQ51ZB/mpUCya
+         7ejg==
+X-Gm-Message-State: AGi0Puby4wDl1eS8N0l+7G+Wx39z5LOIRNdhuwEiPjU2cE6D7d4hsYbn
+        X8lCznKBM6dVztk6Oped2rfMc4lv
+X-Google-Smtp-Source: APiQypLJyu1eyukM1J0DrN9wij1O8ZCsKZfoZs9XJOOSBlzgKAQ6iMyR6RgZId97nqnG9hX9LCS7Lg==
+X-Received: by 2002:a17:902:aa84:: with SMTP id d4mr19570950plr.158.1587426898268;
+        Mon, 20 Apr 2020 16:54:58 -0700 (PDT)
+Received: from localhost.localdomain ([2402:800:6374:f359:effc:5180:3a91:1887])
+        by smtp.gmail.com with ESMTPSA id g14sm609248pfh.49.2020.04.20.16.54.56
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 20 Apr 2020 16:54:57 -0700 (PDT)
+From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Emily Shaffer <emilyshaffer@google.com>, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        James Ramsay <james@jramsay.com.au>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=" 
-        <avarab@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>,
-        Josh Steadmon <steadmon@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>,
+        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v3 0/3] Disallow NUL character in mailinfo
+Date:   Tue, 21 Apr 2020 06:54:33 +0700
+Message-Id: <cover.1587426713.git.congdanhqx@gmail.com>
+X-Mailer: git-send-email 2.26.1.301.g55bc3eb7cb
+In-Reply-To: <20200418035449.9450-1-congdanhqx@gmail.com>
+References: <20200418035449.9450-1-congdanhqx@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Begin a design document for config-based hooks, managed via git-hook.
-Focus on an overview of the implementation and motivation for design
-decisions. Briefly discuss the alternatives considered before this
-point. Also, attempt to redefine terms to fit into a multihook world.
 
-Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
----
-Hi all,
+As of current state, Git disallow NUL character in commit message.
 
-I wasn't sure whether it made more sense to leave the design doc in the
-conversation or not, but I figured it fit well into the context. I tried
-to also add relevant IDs to the "References" headers to this mail.
+This indirectly disallow NUL in the body of commit message that sent by email
+in UTF-8 encoding.
 
-Hopefully this is complete enough that we can discuss it directly until
-we feel comfortable getting ready for implementation. I'm planning to
-send a reply today with some comments, too.
+In those below cases:
 
- - Emily
+* NUL character in header field (be it Subject, Author, Email, etc...)
+* NUL in the body of commit message that originally sent in other than UTF-8
+  encoding
 
- Documentation/Makefile                        |   1 +
- .../technical/config-based-hooks.txt          | 317 ++++++++++++++++++
- 2 files changed, 318 insertions(+)
- create mode 100644 Documentation/technical/config-based-hooks.txt
+Git silently accepts them, albeit, truncate at the NUL character.
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 8fe829cc1b..301111f236 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -79,6 +79,7 @@ SP_ARTICLES += $(API_DOCS)
- TECH_DOCS += MyFirstContribution
- TECH_DOCS += MyFirstObjectWalk
- TECH_DOCS += SubmittingPatches
-+TECH_DOCS += technical/config-based-hooks
- TECH_DOCS += technical/hash-function-transition
- TECH_DOCS += technical/http-protocol
- TECH_DOCS += technical/index-format
-diff --git a/Documentation/technical/config-based-hooks.txt b/Documentation/technical/config-based-hooks.txt
-new file mode 100644
-index 0000000000..38893423be
---- /dev/null
-+++ b/Documentation/technical/config-based-hooks.txt
-@@ -0,0 +1,317 @@
-+Configuration-based hook management
-+===================================
-+
-+== Motivation
-+
-+Treat hooks as a first-class citizen by replacing the .git/hook/hookname path as
-+the only source of hooks to execute, in a way which is friendly to users with
-+multiple repos which have similar needs.
-+
-+Redefine "hook" as an event rather than a single script, allowing users to
-+perform unrelated actions on a single event.
-+
-+Take a step closer to safety when copying zipped Git repositories from untrusted
-+users.
-+
-+Make it easier for users to discover Git's hook feature and automate their
-+workflows.
-+
-+== User interfaces
-+
-+=== Config schema
-+
-+Hooks can be introduced by editing the configuration manually. There are two new
-+sections added, `hook` and `hookcmd`.
-+
-+==== `hook`
-+
-+Primarily contains subsections for each hook event. These subsections define
-+hook command execution order; hook commands can be specified by passing the
-+command directly if no additional configuration is needed, or by passing the
-+name of a `hookcmd`. If Git does not find a `hookcmd` whose subsection matches
-+the value of the given command string, Git will try to execute the string
-+directly. Hook event subsections can also contain per-hook-event settings.
-+
-+Also contains top-level hook execution settings, for example,
-+`hook.warnHookDir`, `hook.runHookDir`, or `hook.disableAll`.
-+
-+----
-+[hook "pre-commit"]
-+  command = perl-linter
-+  command = /usr/bin/git-secrets --pre-commit
-+
-+[hook "pre-applypatch"]
-+  command = perl-linter
-+  error = ignore
-+
-+[hook]
-+  warnHookDir = true
-+  runHookDir = prompt
-+----
-+
-+==== `hookcmd`
-+
-+Defines a hook command and its attributes, which will be used when a hook event
-+occurs. Unqualified attributes are assumed to apply to this hook during all hook
-+events, but event-specific attributes can also be supplied. The example runs
-+`/usr/bin/lint-it --language=perl <args passed by Git>`, but for repos which
-+include this config, the hook command will be skipped for all events to which
-+it's normally subscribed _except_ `pre-commit`.
-+
-+----
-+[hookcmd "perl-linter"]
-+  command = /usr/bin/lint-it --language=perl
-+  skip = true
-+  pre-commit-skip = false
-+----
-+
-+=== Command-line API
-+
-+Users should be able to view, reorder, and create hook commands via the command
-+line. External tools should be able to view a list of hooks in the correct order
-+to run.
-+
-+*`git hook list <hook-event>`*
-+
-+*`git hook list (--system|--global|--local|--worktree)`*
-+
-+*`git hook edit <hook-event>`*
-+
-+*`git hook add <hook-command> <hook-event> <options...>`*
-+
-+=== Hook editor
-+
-+The tool which is presented by `git hook edit <hook-command>`. Ideally, this
-+tool should be easier to use than manually editing the config, and then produce
-+a concise config afterwards. It may take a form similar to `git rebase
-+--interactive`.
-+
-+== Implementation
-+
-+=== Library
-+
-+`hook.c` and `hook.h` are responsible for interacting with the config files. In
-+the case when the code generating a hook event doesn't have special concerns
-+about how to run the hooks, the hook library will provide a basic API to call
-+all hooks in config order with an `argv_array` provided by the code which
-+generates the hook event:
-+
-+*`int run_hooks(const char *hookname, struct argv_array *args)`*
-+
-+This call includes the hook command provided by `run-command.h:find_hook()`;
-+eventually, this legacy hook will be gated by a config `hook.runHookDir`. The
-+config is checked against a number of cases:
-+
-+- "no": the legacy hook will not be run
-+- "interactive": Git will prompt the user before running the legacy hook
-+- "warn": Git will print a warning to stderr before running the legacy hook
-+- "yes" (default): Git will silently run the legacy hook
-+
-+If `hook.runHookDir` is provided more than once, Git will use the most
-+restrictive setting provided, for security reasons.
-+
-+If the caller wants to do something more complicated, the hook library can also
-+provide a callback API:
-+
-+*`int for_each_hookcmd(const char *hookname, hookcmd_function *cb)`*
-+
-+Finally, to facilitate the builtin, the library will also provide the following
-+APIs to interact with the config:
-+
-+----
-+int set_hook_commands(const char *hookname, struct string_list *commands,
-+	enum config_scope scope);
-+int set_hookcmd(const char *hookcmd, struct hookcmd options);
-+
-+int list_hook_commands(const char *hookname, struct string_list *commands);
-+int list_hooks_in_scope(enum config_scope scope, struct string_list *commands);
-+----
-+
-+`struct hookcmd` is expected to grow in size over time as more functionality is
-+added to hooks; so that other parts of the code don't need to understand the
-+config schema, `struct hookcmd` should contain logical values instead of string
-+pairs.
-+
-+----
-+struct hookcmd {
-+  const char *name;
-+  const char *command;
-+
-+  /* for illustration only; not planned at present */
-+  int parallelizable;
-+  const char *hookcmd_before;
-+  const char *hookcmd_after;
-+  enum recovery_action on_fail;
-+}
-+----
-+
-+=== Builtin
-+
-+`builtin/hook.c` is responsible for providing the frontend. It's responsible for
-+formatting user-provided data and then calling the library API to set the
-+configs as appropriate. The builtin frontend is not responsible for calling the
-+config directly, so that other areas of Git can rely on the hook library to
-+understand the most recent config schema for hooks.
-+
-+=== Migration path
-+
-+==== Stage 0
-+
-+Hooks are called by running `run-command.h:find_hook()` with the hookname and
-+executing the result. The hook library and builtin do not exist. Hooks only
-+exist as specially named scripts within `.git/hooks/`.
-+
-+==== Stage 1
-+
-+`git hook list --porcelain <hook-event>` is implemented. Users can replace their
-+`.git/hooks/<hook-event>` scripts with a trampoline based on `git hook list`'s
-+output. Modifier commands like `git hook add` and `git hook edit` can be
-+implemented around this time as well.
-+
-+==== Stage 2
-+
-+`hook.h:run_hooks()` is taught to include `run-command.h:find_hook()` at the
-+end; calls to `find_hook()` are replaced with calls to `run_hooks()`. Users can
-+opt-in to config-based hooks simply by creating some in their config; otherwise
-+users should remain unaffected by the change.
-+
-+==== Stage 3
-+
-+The call to `find_hook()` inside of `run_hooks()` learns to check for a config,
-+`hook.runHookDir`. Users can opt into managing their hooks completely via the
-+config this way.
-+
-+==== Stage 4
-+
-+`.git/hooks` is removed from the template and the hook directory is considered
-+deprecated. To avoid breaking older repos, the default of `hook.runHookDir` is
-+not changed, and `find_hook()` is not removed.
-+
-+== Caveats
-+
-+=== Security and repo config
-+
-+Part of the motivation behind this refactor is to mitigate hooks as an attack
-+vector;footnote:[https://lore.kernel.org/git/20171002234517.GV19555@aiede.mtv.corp.google.com/]
-+however, as the design stands, users can still provide hooks in the repo-level
-+config, which is included when a repo is zipped and sent elsewhere.  The
-+security of the repo-level config is still under discussion; this design
-+generally assumes the repo-level config is secure, which is not true yet. The
-+goal is to avoid an overcomplicated design to work around a problem which has
-+ceased to exist.
-+
-+=== Ease of use
-+
-+The config schema is nontrivial; that's why it's important for the `git hook`
-+modifier commands to be usable. Contributors with UX expertise are encouraged to
-+share their suggestions.
-+
-+== Alternative approaches
-+
-+A previous summary of alternatives exists in the
-+archives.footnote:[https://lore.kernel.org/git/20191116011125.GG22855@google.com]
-+
-+=== Status quo
-+
-+Today users can implement multihooks themselves by using a "trampoline script"
-+as their hook, and pointing that script to a directory or list of other scripts
-+they wish to run.
-+
-+=== Hook directories
-+
-+Other contributors have suggested Git learn about the existence of a directory
-+such as `.git/hooks/<hookname>.d` and execute those hooks in alphabetical order.
-+
-+=== Comparison table
-+
-+.Comparison of alternatives
-+|===
-+|Feature |Config-based hooks |Hook directories |Status quo
-+
-+|Supports multiple hooks
-+|Natively
-+|Natively
-+|With user effort
-+
-+|Safer for zipped repos
-+|A little
-+|No
-+|No
-+
-+|Previous hooks just work
-+|If configured
-+|Yes
-+|Yes
-+
-+|Can install one hook to many repos
-+|Yes
-+|No
-+|No
-+
-+|Discoverability
-+|Better (in `git help git`)
-+|Same as before
-+|Same as before
-+
-+|Hard to run unexpected hook
-+|If configured
-+|No
-+|No
-+|===
-+
-+== Future work
-+
-+=== Execution ordering
-+
-+We may find that config order is insufficient for some users; for example,
-+config order makes it difficult to add a new hook to the system or global config
-+which runs at the end of the hook list. A new ordering schema should be:
-+
-+1) Specified by a `hook.order` config, so that users will not unexpectedly see
-+their order change;
-+
-+2) Either dependency or numerically based.
-+
-+Dependency-based ordering is prone to classic linked-list problems, like a
-+cycles and handling of missing dependencies. But, it paves the way for enabling
-+parallelization if some tasks truly depend on others.
-+
-+Numerical ordering makes it tricky for Git to generate suggested ordering
-+numbers for each command, but is easy to determine a definitive order.
-+
-+=== Parallelization
-+
-+Users with many hooks might want to run them simultaneously, if the hooks don't
-+modify state; if one hook depends on another's output, then users will want to
-+specify those dependencies. If we decide to solve this problem, we may want to
-+look to modern build systems for inspiration on how to manage dependencies and
-+parallel tasks.
-+
-+=== Securing hookdir hooks
-+
-+With the design as written in this doc, it's still possible for a malicious user
-+to modify `.git/config` to include `hook.pre-receive.command = rm -rf /`, then
-+zip their repo and send it to another user. It may be necessary to teach Git to
-+only allow one-line hooks like this if they were configured outside of the local
-+scope; or another approach, like a list of safe projects, might be useful. It
-+may also be sufficient (or at least useful) to teach a `hook.disableAll` config
-+or similar flag to the Git executable.
-+
-+=== Submodule inheritance
-+
-+It's possible some submodules may want to run the identical set of hooks that
-+their superrepo runs. While a globally-configured hook set is helpful, it's not
-+a great solution for users who have multiple repos-with-submodules under the
-+same user. It would be useful for submodules to learn how to run hooks from
-+their superrepo's config, or inherit that hook setting.
-+
-+== Glossary
-+
-+*hook event*
-+
-+A point during Git's execution where user scripts may be run, for example,
-+_prepare-commit-msg_ or _pre-push_.
-+
-+*hook command*
-+
-+A user script or executable which will be run on one or more hook events.
+Those email is clearly not generated by Git, they must be crafted.
+
+Complains loudly about those NUL characters.
+
+Change from v2:
+
+* reword 2/3 commit message
+* rename helper for crafting faulty patch, use single heredoc,
+  and allow quoted NUL in both subject and body
+* postpone a grep in test for NUL in subject to clearly indicate that git-am
+  is failing instead of wrong error message.
+* quote the header that contains NUL in the error message.
+
+
+Đoàn Trần Công Danh (3):
+  t4254: merge 2 steps of a single test
+  mailinfo.c: avoid strlen on strings that can contains NUL
+  mailinfo: disallow NUL character in mail's header
+
+ mailinfo.c            | 11 +++++++--
+ t/t4254-am-corrupt.sh | 53 +++++++++++++++++++++++++++++++++++++++----
+ 2 files changed, 58 insertions(+), 6 deletions(-)
+
+Range-diff against v2:
+1:  d1bc31e692 = 1:  d1bc31e692 t4254: merge 2 steps of a single test
+2:  e3e542d388 ! 2:  97ede4aab2 mailinfo.c::convert_to_utf8: reuse strlen info
+    @@ Metadata
+     Author: Đoàn Trần Công Danh <congdanhqx@gmail.com>
+     
+      ## Commit message ##
+    -    mailinfo.c::convert_to_utf8: reuse strlen info
+    +    mailinfo.c: avoid strlen on strings that can contains NUL
+     
+         We're passing buffer from strbuf to reencode_string,
+         which will call strlen(3) on that buffer,
+    @@ t/t4254-am-corrupt.sh
+      test_description='git am with corrupt input'
+      . ./test-lib.sh
+      
+    -+write_nul_patch() {
+    ++make_mbox_with_nul () {
+     +	space=' '
+    -+	qNUL=
+    -+	case "$1" in
+    -+		subject) qNUL='=00' ;;
+    -+	esac
+    ++	q_nul_in_subject=
+    ++	q_nul_in_body=
+    ++	while test $# -ne 0
+    ++	do
+    ++		case "$1" in
+    ++		subject) q_nul_in_subject='=00' ;;
+    ++		body)    q_nul_in_body='=00' ;;
+    ++		esac &&
+    ++		shift
+    ++	done &&
+     +	cat <<-EOF
+     +	From ec7364544f690c560304f5a5de9428ea3b978b26 Mon Sep 17 00:00:00 2001
+     +	From: A U Thor <author@example.com>
+     +	Date: Sun, 19 Apr 2020 13:42:07 +0700
+    -+	Subject: [PATCH] =?ISO-8859-1?q?=C4=CB${qNUL}=D1=CF=D6?=
+    ++	Subject: [PATCH] =?ISO-8859-1?q?=C4=CB${q_nul_in_subject}=D1=CF=D6?=
+     +	MIME-Version: 1.0
+     +	Content-Type: text/plain; charset=ISO-8859-1
+    -+	Content-Transfer-Encoding: 8bit
+    ++	Content-Transfer-Encoding: quoted-printable
+     +
+    -+	EOF
+    -+	if test "$1" = body
+    -+	then
+    -+		printf "%s\0%s\n" abc def
+    -+	fi
+    -+	cat <<-\EOF
+    ++	abc${q_nul_in_body}def
+     +	---
+     +	diff --git a/afile b/afile
+     +	new file mode 100644
+    @@ t/t4254-am-corrupt.sh: test_expect_success 'try to apply corrupted patch' '
+      
+     +test_expect_success "NUL in commit message's body" '
+     +	test_when_finished "git am --abort" &&
+    -+	write_nul_patch body >body.patch &&
+    ++	make_mbox_with_nul body >body.patch &&
+     +	test_must_fail git am body.patch 2>err &&
+     +	grep "a NUL byte in commit log message not allowed" err
+     +'
+     +
+    -+test_expect_failure "NUL in commit message's header" '
+    -+	test_when_finished "git am --abort" &&
+    -+	write_nul_patch subject >subject.patch &&
+    -+	test_must_fail git am subject.patch 2>err &&
+    -+	grep "a NUL byte in Subject is not allowed" err
+    -+'
+    ++test_expect_failure "NUL in commit message's header" "
+    ++	test_when_finished 'git am --abort' &&
+    ++	make_mbox_with_nul subject >subject.patch &&
+    ++	test_must_fail git am subject.patch
+    ++"
+     +
+      test_done
+3:  cb96947b36 ! 3:  b2e760227e mailinfo: disallow NUL character in mail's header
+    @@ mailinfo.c: static void handle_info(struct mailinfo *mi)
+      			continue;
+      
+     +		if (memchr(hdr->buf, '\0', hdr->len)) {
+    -+			error("a NUL byte in %s is not allowed.", header[i]);
+    ++			error("a NUL byte in '%s' is not allowed.", header[i]);
+     +			mi->input_error = -1;
+     +		}
+     +
+    @@ t/t4254-am-corrupt.sh: test_expect_success "NUL in commit message's body" '
+      	grep "a NUL byte in commit log message not allowed" err
+      '
+      
+    --test_expect_failure "NUL in commit message's header" '
+    -+test_expect_success "NUL in commit message's header" '
+    - 	test_when_finished "git am --abort" &&
+    - 	write_nul_patch subject >subject.patch &&
+    +-test_expect_failure "NUL in commit message's header" "
+    ++test_expect_success "NUL in commit message's header" "
+    + 	test_when_finished 'git am --abort' &&
+    + 	make_mbox_with_nul subject >subject.patch &&
+    +-	test_must_fail git am subject.patch
+     +	test_must_fail git mailinfo msg patch <subject.patch 2>err &&
+    -+	grep "a NUL byte in Subject is not allowed" err &&
+    - 	test_must_fail git am subject.patch 2>err &&
+    - 	grep "a NUL byte in Subject is not allowed" err
+    - '
+    ++	grep \"a NUL byte in 'Subject' is not allowed\" err &&
+    ++	test_must_fail git am subject.patch 2>err &&
+    ++	grep \"a NUL byte in 'Subject' is not allowed\" err
+    + "
+    + 
+    + test_done
 -- 
-2.26.1.301.g55bc3eb7cb9-goog
+2.26.1.301.g55bc3eb7cb
 
