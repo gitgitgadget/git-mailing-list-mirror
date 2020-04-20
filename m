@@ -2,130 +2,111 @@ Return-Path: <SRS0=xG8z=6E=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B8D6C54FD0
-	for <git@archiver.kernel.org>; Mon, 20 Apr 2020 18:47:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BD559C3815B
+	for <git@archiver.kernel.org>; Mon, 20 Apr 2020 19:08:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 58D9E20BED
-	for <git@archiver.kernel.org>; Mon, 20 Apr 2020 18:47:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 99C5620672
+	for <git@archiver.kernel.org>; Mon, 20 Apr 2020 19:08:43 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="fGB4E8Cj"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728162AbgDTSrD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Apr 2020 14:47:03 -0400
-Received: from smtp.hosts.co.uk ([85.233.160.19]:60370 "EHLO smtp.hosts.co.uk"
+        id S1726214AbgDTTIm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Apr 2020 15:08:42 -0400
+Received: from mout.gmx.net ([212.227.15.15]:35193 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725613AbgDTSq4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Apr 2020 14:46:56 -0400
-Received: from [92.30.123.115] (helo=[192.168.1.39])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1jQbRT-00062B-7G; Mon, 20 Apr 2020 19:46:51 +0100
-Subject: Re: git-filter-repo For Windows (possibly a request for a bash for
- Windows primer)
-To:     Elijah Newren <newren@gmail.com>,
-        "Kerry, Richard" <richard.kerry@atos.net>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-References: <AM0PR02MB371559B3C5445A3C9D39821B9CD40@AM0PR02MB3715.eurprd02.prod.outlook.com>
- <CABPp-BGis7wswAjwgTa84m-TsQznrQWQJVJZW0_MyN9ieFMzeA@mail.gmail.com>
- <CABPp-BHjF4AJdTrdqxvgsZq+UBZd06upFOHEx-8eQ8qKO-CtkA@mail.gmail.com>
-From:   Philip Oakley <philipoakley@iee.email>
-Message-ID: <9478ea01-8d1d-a897-48f1-813f88dde072@iee.email>
-Date:   Mon, 20 Apr 2020 19:46:51 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+        id S1726013AbgDTTIm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Apr 2020 15:08:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1587409720;
+        bh=h8na02Kz4l1+TrvxPc7Ng0oJUToLLmSI/pRKnx0f9mc=;
+        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+        b=fGB4E8CjSvkrRW7KUQcd9DhpWL+20pacqiSzIuql7cE+EEzJKek9N4MzXq+5wPK86
+         kovRzX9NbNSO5ODB8rBOBkClfOVSgkc+ffdqVFl7K03MvT2xkS3jeQP9zKu2WJhtqD
+         T/75FxaOhzSmcarKHMBUL1ccZrOi98Aaj4OgA/IM=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from fv-az722.zh1rlp1g2pfu1fs5rtqzlakola.parx.internal.cloudapp.net
+ ([52.143.159.47]) by mail.gmx.com (mrgmx005 [212.227.17.190]) with ESMTPSA
+ (Nemesis) id 1MO9zH-1jbFq51aif-00OVUP; Mon, 20 Apr 2020 21:08:40 +0200
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
+        git-packagers@googlegroups.com
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [ANNOUNCE] Git for Windows 2.26.2
+Date:   Mon, 20 Apr 2020 19:08:39 +0000
+Message-Id: <20200420190839.9624-1-johannes.schindelin@gmx.de>
+X-Mailer: git-send-email 2.26.1
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-In-Reply-To: <CABPp-BHjF4AJdTrdqxvgsZq+UBZd06upFOHEx-8eQ8qKO-CtkA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
+Fcc:    Sent
+X-Provags-ID: V03:K1:Z+KjdqgU6oZRuyblhq1WgyguF8RSIEDR3iJZWV4b8cm1iNxZkDL
+ X2wSzetz7sXmVqK8ZtPurFLcXv3Ggbx87NnqyRVGKENHcK7L+pikaCXLczu1H/tR4JpCeI/
+ LovcYo8C+5ZM4lyevV1Naso/pKCDDBbhOKkvW/kFnj0m6EYSl5L8rrL+UrP8jUmfZCCDyzx
+ bXwLMgvFNw6rVLyZbXjYw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:LPyzZrex4yY=:AYOyTgnVmfuSKqE8MxjKR5
+ fEkxn++EIli/l8IRt4MoDtc3ZCdyb/grQ21GzznGhZK4LUD7ndu35EERFt3M7n5EJUg0iv5QV
+ zXnZZxCpE6UU7RVCCwKP62+g/ah41z4lhO6XMlpjNc/aSR9bgz1xYoYcpM5rj2g+jMTVL/l/A
+ AF7kWOFIcwQpB6z0rGADcVhmuA2Usv7ZinvDJdneuMM6uNVcwD7EI//Zv0HxaHCgEXiCipUDy
+ Oe/zUhcUGqIO+TIR9zdXuGfA3VEZCnNNnTvI1KzZ5rifPJ/CH5yyYNbE2Jdm7sV86ZpIwcuxN
+ USMurRKAbqFKom8lx9rOqthfHMjnapOZEYfIco2r54HvzCt9Eqba1pKPlfvx4J5MQGcGcmJ8W
+ l6pgt8mFDGYtVK8COCyJudHm+rw9QkEUG+MPDvRvdzLVcf+s503Kks69v9btj13k6eyCPzzWE
+ 5Q2cqu93XbK6CW9R6a7fbZ/fgs6cBZcUapg6tQbl5sRHELAota/VHYOQDGGQK44lH4o9MDSHr
+ NG70ajppNR/TZkqKxU3CaoCpwycx3/6yHBVssjIAzZBARVgLEt3l6XRHX5/XK5XKWyp0CMviy
+ dHo0qnklMJBD2vrkMQCh/cjU2jDM7+rXR/6U/KmSoOvRjsGc4gEScYHhyNTfzKavL/VVzIhVR
+ 7wRDdr9aJ8j65JqwFYb+FP5YuG4UQF50t8cSiaDYwQ5r5dEJvRQpparMb4kVc9gFvDdxp0jSs
+ SKZTKALyoFA+zj0NLK5gEoat3kI6+oMSktmBIaJ2Lr3TfeHgqwZ6jFIWzxoHG+ugIYKr6S/3e
+ CvU8DchgFFSH3WU8cnrQrFGssJjs1a41IIpIuPlNonokI1gCE67buzidDeWK1jZEViWpreO5G
+ kOJJc8Fije5f/s4g6MLe8Gp4DWuyP2lylt+Q0Y9FaHleW0yFVi9oD0ZwKxSJ91dq4vMBa+22e
+ rkhMxDhoFLLEnZUGvWyxLF7/v31l79nyeucDyKuQQlvSxHxV4zMw1U5Psmo4daqlIIRAtL35X
+ d5NRIOWn0N5uJP/NwUxy9SrkvzfrVybLLBmaf9gqDjjIL0rh51S8Us4tnp+Haq5wqxErJBaqW
+ jP2frRZHLzPRMenmLr4nw6EYD8K3aJXYkXrrP0B2b5T8V9HFEVcZgp+SNcJY10oTOZU/5CBht
+ 3attbdLeT+O3U5tgvUUhxp8dKMH4hI8di7V9IXVuE3chwvvufECTTdZFFVzu66rzalRYgNPU7
+ HuSup2AgWzRO9L4bC
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 20/04/2020 18:24, Elijah Newren wrote:
-> On Mon, Apr 20, 2020 at 9:53 AM Elijah Newren <newren@gmail.com> wrote:
->> On Mon, Apr 20, 2020 at 8:11 AM Kerry, Richard <richard.kerry@atos.net> wrote:
->>>
->>> This follows my earlier query for which the answer was "use git-filter-repo".
->>> I've cloned git-filter-repo from GitHub, and I've installed the latest Python (version 3.8).  I'm working on Windows.  Windows 10 if it makes any difference, so git is Git For Windows.
->>> The first instruction for git-filter-repo is to copy it into the "--exec-path" of git.  That fails, saying Access is Denied.  So leaving aside the option to change the permissions I've followed the second half of the sentence and added my git-filter-repo location to my Path (or PATH if it's in bash).  Now running "get filter-repo" gives:
->>> /usr/bin/env: 'python3.exe': No such file or directory
->>>
->>> My python executable is called python3.exe.  There is a note in the git-filter-repo project about certain Windows installations where it isn't called python3, but that now raises in my mind the question of whether I need to tweak git-filter-repo to look for "python3.exe" rather than just "python3".  Or can I take it that the Windows version of bash understands that it needs to add ".exe" automatically?
->>>
->>> Assuming that is handled automatically, what do I now need to do to satisfy the error message?  Do I need to put something in bash-for-Windows' /usr/bin/env directory?  Or is there something else entirely that I should be doing?
->>>
->>> And is it OK to ask about this on this list, or should I be going to a git-filter-branch resource?  Or for Git For Windows?
->>>
->>> Regards,
->>> Richard.
->> Emailing this list is fine.  You can also open an issue on GitHub for
->> the project if you prefer; I respond in both places.  I may have
->> limited ability to help with Windows issues since I don't have a
->> Windows system to use or test on, though I have succeeded in fixing a
->> few Windows bugs based on reporter feedback. (So maybe this list is
->> better because more people can chime in with Windows experience?)
->> I've got at least a dozen or so reports of people using it
->> successfully on Windows so someone has figured it out.  I'll try to
->> provide a few pointers that might help.
->>
->> You don't have to use "#!/usr/bin/env python3" or "#!/usr/bin/env
->> python".  I could have put "#!/usr/bin/python3" there, but that might
->> make it specific to my system.  I figured other systems installed
->> python3 somewhere other than /usr/bin/, but that /usr/bin/env should
->> be somewhat common and should find the python installation.  If
->> /usr/bin/env doesn't happen to exist on your system, though, it is
->> perfectly fine to have "#!/System/Commands/python3" or whatever is
->> needed.
->>
->> If installation is difficult, you could consider using a package
->> manager.  In particular, the scoop package manager, built for Windows,
->> was one of the first out there to package git-filter-repo -- it was
->> even ahead of most the linux package managers.  (And, yes, scoop can
->> also be used to install python3 as far as I understand.)  I haven't
->> used it myself (because I don't have a Windows system as I mentioned
->> before), but since they were so interested in packaging
->> git-filter-repo and making "scoop install git-filter-repo" part of the
->> instructions (https://github.com/newren/git-filter-repo/issues/20),
->> they look like a friendly bunch that are willing to help.
->>
->> I also looked through the issues and PRs related to Windows, and
->> thought that the following links particularly had interesting comments
->> that might be useful to someone running on Windows:
->>   * https://github.com/newren/git-filter-repo/issues/36
->>   * https://github.com/newren/git-filter-repo/pull/10
->>   * https://github.com/newren/git-filter-repo/issues/48
->> I don't know if any of them will solve your particular problem, but
->> they seemed more likely to be of interest or use than most.  Also,
->> I'll repeat the link for search for reports of Windows issues with
->> git-filter-repo in case I missed one that might be useful to you:
->>   * https://github.com/newren/git-filter-repo/issues?q=is%3Aissue+windows
-> Oh, also https://github.com/newren/git-filter-repo/issues/56 which
-> suggests PowerShell may mess things up (and in a different way than
-> issue 36 showed).
-A similar Python issue occurs on Windows, as reported at
-https://github.com/git-for-windows/git/issues/2594
+Dear Git users,
 
-with a reply by dscho reminding that:
+I hereby announce that Git for Windows 2.26.2 is available from:
 
-This issue is listed specifically in the Known Issues in our Release Notes:
+    https://gitforwindows.org/
 
-        Some console programs, most notably non-MSYS2 Python, PHP, Node
-and OpenSSL, interact correctly with MinTTY only when called through
-winpty (e.g. the Python console needs to be started as winpty python
-instead of just python).
+Changes since Git for Windows v2.26.1 (April 9th 2020)
 
-The installer even suggests (on the page titled "Configuring the
-terminal emulator to use with Git Bash") to
+Yet another security fix release: With a crafted URL that contains a
+newline or empty host, or lacks a scheme, the credential helper
+machinery can be fooled into providing credential information that is
+not appropriate for the protocol in use and host being contacted
+(CVE-2020-11008).
 
-    Use Windows' default console window
-    [...] which works well with Win32 console programs such as
-interactive Python or node.js [...]
+New Features
 
-Hope that helps.
---
-Philip
+  * Comes with Git v2.26.2.
+  * Comes with tig v2.5.1.
+  * Worktree updates (e.g. git checkout, git reset --hard) got a
+    performance boost in sparse checkouts.
 
+Bug Fixes
+
+  * A recent regression in gitk that prevented it from running in bare
+    repositories has been fixed.
+
+Git-2.26.2-64-bit.exe | cdf76510979dace4d3f5368e2f55d4289c405e249399e7ed09049765489da6e8
+Git-2.26.2-32-bit.exe | a7e470e7267d7ceaa94f8c5b0beafc86abf3c7fea66673e961ea48668b8e0b6c
+PortableGit-2.26.2-64-bit.7z.exe | dd36f76a815b993165e67ad3cbc8f5b2976e5757a0c808a4a92fb72d1000e1c8
+PortableGit-2.26.2-32-bit.7z.exe | e18f75db932ab314263c5f7fca7a9d638df3539629dbf5248a4089beb4e03685
+MinGit-2.26.2-64-bit.zip | 2dfbb1c46547c70179442a92b8593d592292b8bce2fd02ac4e0051a8072dde8f
+MinGit-2.26.2-32-bit.zip | d4953a8144eec84d210de48128cda4de4dd359e4112ab3086dda971b85aefb8e
+MinGit-2.26.2-busybox-64-bit.zip | e834ea73fe093fb180dc45f67a1f2a7a566dab53d1d45bc3cd150106f5c40520
+MinGit-2.26.2-busybox-32-bit.zip | 09856289d5dbd445e1e109fea8be85b3bac01ae31f79bef182568061ca880120
+Git-2.26.2-64-bit.tar.bz2 | 7fdc729a332981857a97092ee4b248c69ec9e1728f5b6c432afe79466adfd7da
+Git-2.26.2-32-bit.tar.bz2 | b48020961ba580d6f9a484f79d5e7e33ad532474fbf3ff69ac9b2be41f69105e
+
+Ciao,
+Johannes
