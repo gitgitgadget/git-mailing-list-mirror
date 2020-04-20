@@ -2,112 +2,140 @@ Return-Path: <SRS0=xG8z=6E=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 793F9C54FCC
-	for <git@archiver.kernel.org>; Mon, 20 Apr 2020 22:51:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DAC87C55181
+	for <git@archiver.kernel.org>; Mon, 20 Apr 2020 22:51:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5006220BED
-	for <git@archiver.kernel.org>; Mon, 20 Apr 2020 22:51:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B848920BED
+	for <git@archiver.kernel.org>; Mon, 20 Apr 2020 22:51:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="Fj5U+L6U"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="BB8IijYC"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726497AbgDTWvC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Apr 2020 18:51:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44180 "EHLO
+        id S1726587AbgDTWvG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Apr 2020 18:51:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44194 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726006AbgDTWvC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Apr 2020 18:51:02 -0400
-Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 140FAC061A0E
-        for <git@vger.kernel.org>; Mon, 20 Apr 2020 15:51:02 -0700 (PDT)
-Received: by mail-pf1-x429.google.com with SMTP id 18so2043230pfx.6
-        for <git@vger.kernel.org>; Mon, 20 Apr 2020 15:51:02 -0700 (PDT)
+        with ESMTP id S1726006AbgDTWvF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Apr 2020 18:51:05 -0400
+Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C0ADC061A0E
+        for <git@vger.kernel.org>; Mon, 20 Apr 2020 15:51:05 -0700 (PDT)
+Received: by mail-pf1-x443.google.com with SMTP id d184so1294263pfd.4
+        for <git@vger.kernel.org>; Mon, 20 Apr 2020 15:51:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition;
-        bh=C1C9ZGHg+Y3/wjtkvQLuUr56SYnSOnlIZoHYvqwSPCg=;
-        b=Fj5U+L6UpxwGtiyR6xUvHN7WO4+kLDgELkxbSohqlDYhEc4uY3aAZ1zSi1itd80G5i
-         QOuAbFz2H+BpyqwX513ns/K5kKv/W+ZivR3UpO8Y4sNm95BTyV4ZHxynMgWc/s8sPTGO
-         wM8zIYe6bogBr7pTyFXt2ky8F1/gQZA7A2AViz6ahDxU1JYNB4seh4bDQySnpnGEYhf5
-         dcr+4z3xZWC6kr61u8dHY2TPotJ43p8u7TLefMVy5CqziszVcFpld2JlPel2Az3ZMUJl
-         YvmX6ScFVQs5lmRFA3FPbmQws+un52hZ8yrD5Kno4WIKKp+pYciOYFkJvYWajI20YYj7
-         YYbQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=zc0XD++dRLwJ4ra+UEt7rdgDRmaiZzW5KLmOZ/KKi7c=;
+        b=BB8IijYCVDZGx4eIYioK5nqXKIYkx71iaJB4xsCz5t0YOCwB/N4984TVbCAMvbOdVw
+         eIbX+t/e/lPtjzpnJ2SPj/J/ud7mNXVqML8YpTaifST6Qhecv429GD7oYQBr8PZXF5oB
+         SCC85xZzvOdIyw6nNoQh37RUa0t4d06NKS/INsH1yyK7f701F7Qgbe/+UChZwVxs/iLG
+         y+K6bJH9w/rW2SyWe4pmkllzKGS27MPJ25l+/YjTFLcTP8Zawjs1HGLxWKDj3mz6rwCN
+         EkYU0XBSyjoZChMLze1m/OOxmI+k3wHwYiv+Y1uJ8GfrcednukaKBHCtKrykSOQ4TBKS
+         a6gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition;
-        bh=C1C9ZGHg+Y3/wjtkvQLuUr56SYnSOnlIZoHYvqwSPCg=;
-        b=sI2oNKnse5nMi6UO21qS+moxXDrUhbdXYeN3iv4rVOfzIVkd7+tJuNlyhWnuFHnpPK
-         /4D+mXK5vHrGBHHnkyifp6yAT0IL1xRBXxIfQx0isdtvH6p4WUCBVErm9rWxT1oSmrQg
-         wKZz+Kd/5Q+80s277Ran8Gb4TfNl8N6PL0w0xJaADbxUNKJ3kt55VAxQlFy5RxiLLc9p
-         PgVFCGPbawu5V3YQWKk264IdHfon0+WXSwURxsRVAPY7pcwYrI0t2E2qc6GcjM+zClYx
-         KxN4A+0ulAgvTgm66ud9B5zZsoT01SyouH1jNxw4TXgG8lSSPaG6cDz/f2E584T7c2Pr
-         SPRQ==
-X-Gm-Message-State: AGi0Pub2JwaSWZKTcy30maLxKle7lhMeRugSMazIDSt0S+JPFOVOX/JY
-        Nskfi80DheMxi8486BT41jpSBz7XzgX8bA==
-X-Google-Smtp-Source: APiQypIEyPPV3+Nlt3WuuaXu53Xuq1g796Lh1cMLSQhsDp3K38wDbmxg3Uc6S3XbIWtu9zi7OTwb+g==
-X-Received: by 2002:a63:c70e:: with SMTP id n14mr18471636pgg.249.1587423060117;
-        Mon, 20 Apr 2020 15:51:00 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=zc0XD++dRLwJ4ra+UEt7rdgDRmaiZzW5KLmOZ/KKi7c=;
+        b=ZwBidYGBvMsOHLSsy3l/BjD+bnSLY2XuXf+V6Z1xEM8KZDIgMEd0BatmHW2JX2wt2Q
+         nUCMPjhxoMyvf4e0HsCIVHlR1f3JpSFgkwbdFAbVpdeCIx5QQ4wR+RZYqWvbS6CwLRtL
+         GP5Xz0XeX+CNiHU4jBG5E7gDanzBHI7w5/73eNyTyLs8lydWWEXib7k1beJaUJOLgTil
+         3Rp+9Rn7KW/05E5Y64p9h45P7jf+X6DWRrxRQ+8MCdxzGPRNGFbGFE1Gk3+sMZsA6oqs
+         EEJHzXexVFm7umwO3G5iVfM+vKNH8cBJsMdUHQUf0QaBHnLwJrweAYRkIlWDOpPBXnjO
+         C4+w==
+X-Gm-Message-State: AGi0PubVdEGvQQm/fVhESV8t737frIpV1983p+GE7w2Jj9L0Ct6Q9SeX
+        8pRVHsLTOmLCve73hQIRfqnKMBaevmKs8Q==
+X-Google-Smtp-Source: APiQypIQQbh4sAQRHmE/OVE7Xaqw0cu+oRg8kEwyRVgKFJtBUl8sB2ivbQuog2n8k9gro56pVFaV9w==
+X-Received: by 2002:a62:9a0a:: with SMTP id o10mr10882831pfe.282.1587423064544;
+        Mon, 20 Apr 2020 15:51:04 -0700 (PDT)
 Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id b7sm525314pft.147.2020.04.20.15.50.58
+        by smtp.gmail.com with ESMTPSA id q201sm552100pfq.40.2020.04.20.15.51.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Apr 2020 15:50:59 -0700 (PDT)
-Date:   Mon, 20 Apr 2020 16:50:55 -0600
+        Mon, 20 Apr 2020 15:51:03 -0700 (PDT)
+Date:   Mon, 20 Apr 2020 16:51:03 -0600
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     dstolee@microsoft.com, mhagger@alum.mit.edu, peff@peff.net
-Subject: [PATCH 0/3] commit-graph: write non-split graphs as read-only
-Message-ID: <cover.1587422630.git.me@ttaylorr.com>
+Subject: [PATCH 1/3] tempfile.c: introduce 'create_tempfile_mode'
+Message-ID: <aa86e8df403eef31295e6036f280995fa74cc3b4.1587422630.git.me@ttaylorr.com>
+References: <cover.1587422630.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <cover.1587422630.git.me@ttaylorr.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+In the next patch, 'hold_lock_file_for_update' will gain an additional
+'mode' parameter to specify permissions for the associated temporary
+file.
 
-A colleague of mine pointed out they had occasionally observed that some
-layers of a commit-graph chain appear to be have both read and write
-permission bits for the user, while others are marked as read-only.
+Since the lockfile.c machinery uses 'create_tempfile' which always
+creates a temporary file with global read-write permissions, introduce a
+variant here that allows specifying the mode.
 
-After some investigation, I realized that this only happens to the first
-layer in a commit-graph-chain, and occurs when we move a non-split graph
-into a chain as the new base. Since write_commit_graph() just renames in
-this case, we carry over the 0644 permissions that we create non-split
-graphs with, even though split graphs are created to be read-only.
+Arguably, all temporary files should have permission 0444, since they
+are likely to be renamed into place and then not written to again. This
+is a much larger change than we may want to take on in this otherwise
+small patch, so for the time being, make 'create_tempfile' behave as it
+has always done by inlining it to 'create_tempfile_mode' with mode set
+to '0666'.
 
-Initially, I resolved this by 'chmod(graph, 0444)'-ing the graph after
-renaming it into place, but it ends up being much cleaner if we
-introduce an additional parameter in 'hold_lock_file_for_update' for a
-mode.
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+ tempfile.c | 6 +++---
+ tempfile.h | 7 ++++++-
+ 2 files changed, 9 insertions(+), 4 deletions(-)
 
-The first two patches set this up, and the third patch uses it in
-commit-graph.c, and corrects some test fallout. Eventually, we may want
-to take another look at all of this and always create lockfiles with
-permission 0444, but that change is much larger than this one and could
-instead be done over time.
-
-Thanks,
-Taylor
-
-Taylor Blau (3):
-  tempfile.c: introduce 'create_tempfile_mode'
-  lockfile.c: introduce 'hold_lock_file_for_update_mode'
-  commit-graph.c: write non-split graphs as read-only
-
- commit-graph.c          |  3 ++-
- lockfile.c              | 18 ++++++++++--------
- lockfile.h              | 19 +++++++++++++++++--
- t/t5318-commit-graph.sh | 11 ++++++++++-
- t/t6600-test-reach.sh   |  2 ++
- tempfile.c              |  6 +++---
- tempfile.h              |  7 ++++++-
- 7 files changed, 50 insertions(+), 16 deletions(-)
-
---
+diff --git a/tempfile.c b/tempfile.c
+index d43ad8c191..94aa18f3f7 100644
+--- a/tempfile.c
++++ b/tempfile.c
+@@ -130,17 +130,17 @@ static void deactivate_tempfile(struct tempfile *tempfile)
+ }
+ 
+ /* Make sure errno contains a meaningful value on error */
+-struct tempfile *create_tempfile(const char *path)
++struct tempfile *create_tempfile_mode(const char *path, int mode)
+ {
+ 	struct tempfile *tempfile = new_tempfile();
+ 
+ 	strbuf_add_absolute_path(&tempfile->filename, path);
+ 	tempfile->fd = open(tempfile->filename.buf,
+-			    O_RDWR | O_CREAT | O_EXCL | O_CLOEXEC, 0666);
++			    O_RDWR | O_CREAT | O_EXCL | O_CLOEXEC, mode);
+ 	if (O_CLOEXEC && tempfile->fd < 0 && errno == EINVAL)
+ 		/* Try again w/o O_CLOEXEC: the kernel might not support it */
+ 		tempfile->fd = open(tempfile->filename.buf,
+-				    O_RDWR | O_CREAT | O_EXCL, 0666);
++				    O_RDWR | O_CREAT | O_EXCL, mode);
+ 	if (tempfile->fd < 0) {
+ 		deactivate_tempfile(tempfile);
+ 		return NULL;
+diff --git a/tempfile.h b/tempfile.h
+index cddda0a33c..b5760d4581 100644
+--- a/tempfile.h
++++ b/tempfile.h
+@@ -89,7 +89,12 @@ struct tempfile {
+  * a tempfile (whose "fd" member can be used for writing to it), or
+  * NULL on error. It is an error if a file already exists at that path.
+  */
+-struct tempfile *create_tempfile(const char *path);
++struct tempfile *create_tempfile_mode(const char *path, int mode);
++
++static inline struct tempfile *create_tempfile(const char *path)
++{
++	return create_tempfile_mode(path, 0666);
++}
+ 
+ /*
+  * Register an existing file as a tempfile, meaning that it will be
+-- 
 2.26.1.108.gadb95c98e4
+
