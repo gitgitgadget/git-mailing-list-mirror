@@ -2,66 +2,60 @@ Return-Path: <SRS0=xG8z=6E=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 12D41C3815B
-	for <git@archiver.kernel.org>; Mon, 20 Apr 2020 07:34:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3391C3A5A0
+	for <git@archiver.kernel.org>; Mon, 20 Apr 2020 08:03:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CBB2D2078C
-	for <git@archiver.kernel.org>; Mon, 20 Apr 2020 07:34:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7EF0D206D5
+	for <git@archiver.kernel.org>; Mon, 20 Apr 2020 08:03:16 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="key not found in DNS" (0-bit key) header.d=elijahlynn.net header.i=@elijahlynn.net header.b="Ak5OoV1T"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N2pZt9vZ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725971AbgDTHeJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Apr 2020 03:34:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41554 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1725773AbgDTHeJ (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 20 Apr 2020 03:34:09 -0400
-Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com [IPv6:2607:f8b0:4864:20::82f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0033BC061A0C
-        for <git@vger.kernel.org>; Mon, 20 Apr 2020 00:34:08 -0700 (PDT)
-Received: by mail-qt1-x82f.google.com with SMTP id q17so7698333qtp.4
-        for <git@vger.kernel.org>; Mon, 20 Apr 2020 00:34:08 -0700 (PDT)
+        id S1726112AbgDTIDP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Apr 2020 04:03:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46116 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726017AbgDTIDP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Apr 2020 04:03:15 -0400
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D55CC061A0C
+        for <git@vger.kernel.org>; Mon, 20 Apr 2020 01:03:13 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id z26so8832541ljz.11
+        for <git@vger.kernel.org>; Mon, 20 Apr 2020 01:03:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=elijahlynn.net; s=google;
+        d=gmail.com; s=20161025;
         h=mime-version:from:date:message-id:subject:to;
-        bh=eE224xKcx8c75uq38tUR2eYczxY1pNkDTgJIUMVzs/4=;
-        b=Ak5OoV1T4qKUPrSqz16Y0pPfmIB0bKfuw4N/fTt9nIV4mQUyvwouUrdUsG9JH9FiyJ
-         m4ZdOBqg46grJERzaUwHPFwAoyiEb0/U4P30r3YCkPMSxG9+sU8szlIMU2Wb1t1xKVLl
-         DHZ9Czufls6SqkAu5jBTKYBG6i96l+/4kP8fQ=
+        bh=SLFfPdflAytxUsI05PxWBsHiOGKm9zvh7T8+9FPXMnQ=;
+        b=N2pZt9vZYXbWwk8X8R1qpYOkBAw9Blr2ifvVrd4z30BtjNsSWSQu3DwW9YDQmSDLKS
+         7tyaTb3t0BDk8xp4Oj5zSfLbYFt9hXjE6I4xLVt8xDbVLiQGUX46zCnen2l3Ut+cKMvl
+         DN1HlhXb9DoxBZAZJ6FLoF0vFcKq+CsPxCFxHoRiw77mir5q8RlDvza6BG+YLg9Iuc1k
+         HuStW1CbLe4WdZpa0noWQeP6DWe4pBP7KWourHMC0+MTJnHR45qu6pOjubQF0Ge74+wN
+         Vr+E0jHqMgZOLPExL+LwyF+KPWJkwan4mwwP9Iddo1sPcePk8YLaHwSkmhOGfnDJPwOF
+         Bnpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=eE224xKcx8c75uq38tUR2eYczxY1pNkDTgJIUMVzs/4=;
-        b=uhkML6I4vVUWYr3JfY/SeQNU40JOnGIl+PIqUnzuJjmq3tYEUHLIcGtvFKjGNo1DhE
-         cD2ANEGvJtNugS1vlV6kjx7ZBFHQQKDIuhnfUqGJrDJdZsMyFdf0nH6W35HoCBqQuf4H
-         wbJG1TP85zAS2HUMRd4hmI9gtcdK/rcOGUfpeYpX/0Ta+bFvbZlSnqEoEKwrsWq5OQdB
-         ktkbu1ElBa6ioWAz3E/uG3bktHRSkccLUmPVZqdWvmS7A60BO9Rj7rv4B41lZq4ls5gV
-         H/KtSnElQ/2JtH+o1bpkW2sOVujh1kWKB2PjP2tW362ffv0BIRL9sWhmy9pKZlBZWnUV
-         9Z7g==
-X-Gm-Message-State: AGi0PuaD5EGcho9mtaRm5rEH4ydCZdvKm0k+4D3AvqVx6iQOgnslGwip
-        M+/BbUypdUye+ze/Tvc6LmggMRHZYns=
-X-Google-Smtp-Source: APiQypJ8ZD0+RnwotoUg03n3rO8sgXaQVDSD9hV9nsh1/vWfJYy8XdZ1dG5wcpWojNLWRKo95V2org==
-X-Received: by 2002:aed:34a5:: with SMTP id x34mr13909425qtd.216.1587368048022;
-        Mon, 20 Apr 2020 00:34:08 -0700 (PDT)
-Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com. [209.85.222.176])
-        by smtp.gmail.com with ESMTPSA id o6sm98250qkd.113.2020.04.20.00.34.07
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Apr 2020 00:34:07 -0700 (PDT)
-Received: by mail-qk1-f176.google.com with SMTP id j4so9518137qkc.11
-        for <git@vger.kernel.org>; Mon, 20 Apr 2020 00:34:07 -0700 (PDT)
-X-Received: by 2002:a37:82c1:: with SMTP id e184mr3747024qkd.186.1587368047511;
- Mon, 20 Apr 2020 00:34:07 -0700 (PDT)
+        bh=SLFfPdflAytxUsI05PxWBsHiOGKm9zvh7T8+9FPXMnQ=;
+        b=ifyB6OlfJqDO8z/c0wFFihLEWEYXoQW7E6+/QIj2J1F8p3XpjLldq76WnjiNAk0nDJ
+         47zczS0YfrVPfgW8RW39OZMDqLlk0SOqBiFszQjl3sc/snkD+UjInUtdDo1eAii/ZU72
+         dPQNKgSNm6AlK6CygTbv0paAkr7vZ1HKJRmIu0//ZjgaiEcxzdeNJTyTUpZO9DIehJiu
+         X0ppV2cBb9LGCF7nrVYreeGxPtfeqkOJx3pTZ+jbbUSE474vjIfEFR1O8C+KIt+f8pqO
+         B16ItRHWYScVaZR2SyPyZlhzE2LPhERBz6DRSzb19KaiYlj6Kf6A0A+Gna5DHE1pZYlw
+         JudA==
+X-Gm-Message-State: AGi0PuaVoXTVa0YYXeu0fs26s7OEPVQoEkFheKrSPeL8+RvMJd6aHSbR
+        gcJ3alksHvyDpadVudWujqnI+Xi69cVv+QDhEeN94HyN
+X-Google-Smtp-Source: APiQypJX3q3a43ddxyOLoU6ncv0KCG1PXBEM28Dmm0weR1YgtVym+nzc8qgPN33RPDRnSK4vtOGtm0CC+XIsajIIAqY=
+X-Received: by 2002:a2e:9186:: with SMTP id f6mr8477797ljg.85.1587369791647;
+ Mon, 20 Apr 2020 01:03:11 -0700 (PDT)
 MIME-Version: 1.0
-From:   Elijah Lynn <elijah@elijahlynn.net>
-Date:   Mon, 20 Apr 2020 00:33:51 -0700
-X-Gmail-Original-Message-ID: <CAJ9KuXwmk377rEPVrwwpWmwzyO8N20OZUkUTBRoQoo3OuVYbGw@mail.gmail.com>
-Message-ID: <CAJ9KuXwmk377rEPVrwwpWmwzyO8N20OZUkUTBRoQoo3OuVYbGw@mail.gmail.com>
-Subject: [docs] git stash show also accepts -p|--patch option
+From:   Jakub Horodecki <jakub.horodecki@gmail.com>
+Date:   Mon, 20 Apr 2020 10:03:00 +0200
+Message-ID: <CAGdVfV2JhBp1_3iBWg_3gm5zDPwGizQxiK5QXJSRbDkN4Si4Lw@mail.gmail.com>
+Subject: ls-files -o -i --directory omits files/directories
 To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
@@ -69,19 +63,36 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Was reading `git help stash`and noticed the --patch option says:
+Hello
 
-> This option is only valid for `push` and `save` commands.
+I found a case for git ls-files I suspect might be a bug. For the
+following example repository structure:
 
-But this isn't true, the `git stash show` command also accepts the
---patch command and is very useful as it shows the diff of the stash
-whereas without --patch it just shows the filenames that changed. I
-see this text in master too
-https://github.com/git/git/blob/master/Documentation/git-stash.txt.
+.
+|--   InnerDir
+|     |--   excluded.txt
+|--   file1.txt
+|--   .gitignore
 
-I can gladly submit a patch if this will be acceptable to update the
-docs to state that -p|--patch is applicable to the `show` command as
-well.
+and the .gitignore content:
+InnerDir/*
 
-Elijah Lynn
-www.elijahlynn.net
+the command
+
+git ls-files -oi --exclude-standard --directory
+
+returns no results, that is neither "InnerDir/" directory nor
+"InnerDir/excluded.txt" file. I would expect one of the entries since
+at the moment information about the file is missing completely in the
+listing. Both executing the command without --directory flag and
+adding "InnerDir" to .gitignore produce some output from the command.
+
+So the command returns no results for --others excluded files if
+--directory flag is specified and all files in a directory are ignored
+(but directory itself is not). Is this actually a bug or I
+misunderstood something?
+
+I tested it on latest release of Git for Windows (2.26.1.windows.1, x64).
+
+Best Regards
+Jakub Horodecki
