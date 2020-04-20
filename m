@@ -7,63 +7,64 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E5AAFC54FD0
-	for <git@archiver.kernel.org>; Mon, 20 Apr 2020 21:15:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D734C55181
+	for <git@archiver.kernel.org>; Mon, 20 Apr 2020 21:15:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B9A5C2084D
-	for <git@archiver.kernel.org>; Mon, 20 Apr 2020 21:15:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E9DB220782
+	for <git@archiver.kernel.org>; Mon, 20 Apr 2020 21:15:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aZPY2x7y"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WOZMOlsh"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727895AbgDTVPD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Apr 2020 17:15:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57584 "EHLO
+        id S1727927AbgDTVPG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Apr 2020 17:15:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726067AbgDTVPC (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 20 Apr 2020 17:15:02 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A290C061A0E
-        for <git@vger.kernel.org>; Mon, 20 Apr 2020 14:15:02 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id re23so9161897ejb.4
-        for <git@vger.kernel.org>; Mon, 20 Apr 2020 14:15:02 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1725774AbgDTVPB (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 20 Apr 2020 17:15:01 -0400
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E580C061A0C
+        for <git@vger.kernel.org>; Mon, 20 Apr 2020 14:15:01 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id j2so13971924wrs.9
+        for <git@vger.kernel.org>; Mon, 20 Apr 2020 14:15:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=1g7xJNEHljtESnR5/L4oArBHPSBJu5a8+IEAIVDCwIk=;
-        b=aZPY2x7yH/nazrVZODT7cyXvMQk1KfKwfabkirxLdEx5kl4l547N/1hw0dCoe6RtVK
-         YxwIevmYMAEHF7s0estMlNygjfAPSQzD+Cpq7N5xW1slwIcWR9/0GNTWcfth1LLe2k0B
-         kjhlRsYkxCULdKiXqdiYHxpW0uLQzNP1cyk6/UQiunIBxLulb/u7eAUwxhp7hFt4YSI+
-         q595m3n+xiGAyV24ApJ6A/8h6rgVR2d6Ji83H7RKxOQrKIGVBG5J7GZ7pSEQizng1jAr
-         tVa6ENGel7Vtrxe+c/tfFPvVYyGj0nBFu1oQABXxdsUAWaq421WVm+J0srMu163e0G74
-         1HqA==
+        bh=4D690/NLx/9daAF2hWG5tCfDYzmNZsPcuZnuRxKSdQk=;
+        b=WOZMOlshPqPxIGBsM9l2/neYCh1w/YoVJfZ/1D+bEflE5Ud4JXriwJqotM61pHm9zj
+         caYHDeqAPxjyQX46XAYT53AFg6fIiWqIY1Qh4gRhgMX4pzA3qYvPrfBmYoLM1y7bnF+n
+         U1zWtTm1nbTi+xNDXPvi9SrVPzI99wpZLu/TnlYmLZImMoWa8DV2skLJmPAOpmEshTBa
+         YbkKj9Ij0+oROjhHuzZIjdaMT6HzzU1wQOQgBU6EDwrTTFy7CGSceJh2kLljRb8f9K60
+         8zM66RGxHMvV/O0dvdKDhVoCQE3lCN8223hdMplW4NCBTzrk6v05rVmW1J3ZVQRh3Iko
+         ayhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=1g7xJNEHljtESnR5/L4oArBHPSBJu5a8+IEAIVDCwIk=;
-        b=KLvxqw84Y4iL94551AXFcx8937A9Jip0cwusidE5iA2GxqvO+3wm/zBM5Yq2MqhG4d
-         O0bMqr/76/19i/Q3sJYxvAgWyqIXFKg07itB3+pIm7Fsxkv1xzD9QxC44ibRVAzxihtq
-         BuXpJjJfcihNlkR8GgglJBrojG7TLQ/Ls8Jg+Y8TusxsE4WNxyYdqCVRkfEqt4TMUk6m
-         wZg1AOyYU2HSrLguJl19RYY0DB6e6WvK3ZeYM1CvfD4noagka2H7Z0o5U7vGDNHdKbXH
-         OlQEjlTuMoXtpIjI6hiqMobri5gQ5LFUbHfBeCnJ1gcuCzgrnUSF+5Gi80bfNvAW+8+E
-         zRBQ==
-X-Gm-Message-State: AGi0PuYD59zsPMMcgOb2wKY+xn7SIQQv0Pz5k1N4V59f8Tyx15XChprv
-        7yvUGdd8uEftGrV82FNNCPMRic9S
-X-Google-Smtp-Source: APiQypLR2crv6zWcVwb7uO3E5OD2EmsjlMG69kPeY4RQcKJmfkJEiHM9TvXhX/aRCD0mFeUfDTIsyQ==
-X-Received: by 2002:a17:907:2142:: with SMTP id rk2mr18409334ejb.356.1587417300831;
-        Mon, 20 Apr 2020 14:15:00 -0700 (PDT)
+        bh=4D690/NLx/9daAF2hWG5tCfDYzmNZsPcuZnuRxKSdQk=;
+        b=seh4OIvFyFLanuYpQlZBsXNlrzrQunDw15gcD7sSgW9kyOYlhcb+dxgaAyavk+if4c
+         sfOO46XGGa/YeaDC16zHK2oNQRBUf/dM/oKmyYLdC5URyF2Xi0hInKez4mPVpNGtHlGl
+         pSyGXoXNvj5sDbmKESIxxFSIgg3SCZe0Mfg4isKtLr/quUOVWVzXiVhwpyZZgNR+zJj4
+         n0LNN+1Rdby2uH/HdXtmi0xmpbwUO7mDV3q4zDeQ10FiZYI6Se0QAWYIecA7aRX6sR+S
+         d/nZuuBADKyMnUneqiRt/5I7SsJwTCYr57VvbMnhqUvnNNEC2GvqxKeoPdz4r/fII7a2
+         CYgA==
+X-Gm-Message-State: AGi0PuamLK6VtTnpa87op0RKFzfL+hKTlJJhlDqbPyNWisSf0W+GYDhz
+        M6L6nbpwZfU40AmPAkYhGqITNI6V
+X-Google-Smtp-Source: APiQypJ67u67RaHeZrxWTFo1x8luaM8g9mmEdEQt/Aj25o9xPmSlxLV5kx2kkMHhLSK7dC80mqPG4Q==
+X-Received: by 2002:adf:de8b:: with SMTP id w11mr19712927wrl.48.1587417299991;
+        Mon, 20 Apr 2020 14:14:59 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i16sm43219ejy.64.2020.04.20.14.15.00
+        by smtp.gmail.com with ESMTPSA id s14sm783390wmh.18.2020.04.20.14.14.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Apr 2020 14:15:00 -0700 (PDT)
-Message-Id: <b432c1cc2ae6cc0f8c15d4e13b5b89635f8bc391.1587417295.git.gitgitgadget@gmail.com>
+        Mon, 20 Apr 2020 14:14:59 -0700 (PDT)
+Message-Id: <56f65a2a0d735b6c55fae7f253285b78b0cdf41e.1587417295.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.539.v9.git.1587417295.gitgitgadget@gmail.com>
 References: <pull.539.v8.git.1585740538.gitgitgadget@gmail.com>
         <pull.539.v9.git.1587417295.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 20 Apr 2020 21:14:50 +0000
-Subject: [PATCH v9 05/10] Add .gitattributes for the reftable/ directory
+Date:   Mon, 20 Apr 2020 21:14:49 +0000
+Subject: [PATCH v9 04/10] refs: document how ref_iterator_advance_fn should
+ handle symrefs
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,17 +81,25 @@ From: Han-Wen Nienhuys <hanwen@google.com>
 
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- reftable/.gitattributes | 1 +
- 1 file changed, 1 insertion(+)
- create mode 100644 reftable/.gitattributes
+ refs/refs-internal.h | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/reftable/.gitattributes b/reftable/.gitattributes
-new file mode 100644
-index 00000000000..f44451a3795
---- /dev/null
-+++ b/reftable/.gitattributes
-@@ -0,0 +1 @@
-+/zlib-compat.c	whitespace=-indent-with-non-tab,-trailing-space
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index ff2436c0fb7..3490aac3a40 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -438,6 +438,11 @@ void base_ref_iterator_free(struct ref_iterator *iter);
+ 
+ /* Virtual function declarations for ref_iterators: */
+ 
++/*
++ * backend-specific implementation of ref_iterator_advance.
++ * For symrefs, the function should set REF_ISSYMREF, and it should also
++ * dereference the symref to provide the OID referent.
++ */
+ typedef int ref_iterator_advance_fn(struct ref_iterator *ref_iterator);
+ 
+ typedef int ref_iterator_peel_fn(struct ref_iterator *ref_iterator,
 -- 
 gitgitgadget
 
