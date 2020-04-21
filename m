@@ -2,118 +2,116 @@ Return-Path: <SRS0=ToNR=6F=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CC04FC54FCC
-	for <git@archiver.kernel.org>; Tue, 21 Apr 2020 13:12:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3AF8CC54FCC
+	for <git@archiver.kernel.org>; Tue, 21 Apr 2020 13:49:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A8C0220784
-	for <git@archiver.kernel.org>; Tue, 21 Apr 2020 13:12:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 10A00206B8
+	for <git@archiver.kernel.org>; Tue, 21 Apr 2020 13:49:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nBZQcVxO"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qcg6DZw2"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728900AbgDUNMr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Apr 2020 09:12:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36764 "EHLO
+        id S1728841AbgDUNtq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Apr 2020 09:49:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42482 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1728866AbgDUNMo (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 21 Apr 2020 09:12:44 -0400
-Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF0ABC061A10
-        for <git@vger.kernel.org>; Tue, 21 Apr 2020 06:12:43 -0700 (PDT)
-Received: by mail-pl1-x641.google.com with SMTP id n24so5212299plp.13
-        for <git@vger.kernel.org>; Tue, 21 Apr 2020 06:12:43 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1728479AbgDUNtp (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 21 Apr 2020 09:49:45 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75DE0C061A10
+        for <git@vger.kernel.org>; Tue, 21 Apr 2020 06:49:45 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id t14so16502120wrw.12
+        for <git@vger.kernel.org>; Tue, 21 Apr 2020 06:49:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=rzJ9J1wtHzrN/KosoPr/+d14bcRLxzvn6r16lLzNga0=;
-        b=nBZQcVxOTSamF0tgV7QfJIclbx2ZKDsao1s4MDDtUbhLaj8P9kRyLQ9PRD4uwPbr6P
-         Ilxmpf1qGBURk68phKdQvzxQZYYU9ukALM0nE3yOy4p+y2cwLnP2IHcDB8fRri/KXO57
-         sqZ3voWNqbM4Ji5eXcOVOghWbMn+TxExbQ8zfSimByDD6tMLtKnKikiUusUGLgoRznII
-         R6ZwHFNKcb+IsbjN1OJclZprFC2qv2MLd22Ej0odADmt/uugsn0fLe4VPr9SIXfaStNN
-         c73jiUMQcbb1XEdOBdcTfxBMK5LXXTYgvFlSFbWIe79YUguacO8GWjxGwgJptCA3zTVD
-         lF0w==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=EAz6eucluXU1PPqzi+V2SuJck4Ciac3eS5HWRcQfRVc=;
+        b=Qcg6DZw2PQ9EONcTAoixYGXZ9qZp2Z2MvlMVAMrC1r224W5heY2yTKtyEMjI2OOcFx
+         DFPsYL7q13NNaoae8NKHOH/h1m5cKFAl2tuUUdrSRrYA5rMS2KfDEYdRl6Ts9Jj9sGtY
+         DIVp50fyga7AZimKFfxX4vhRbY8aswJ2uwltpy36p20peCeIxGxCehBfolIGsHh9WDqI
+         auADELz7GSJwG8Qs6bzpyyBtbsnmv5H9n2emBkdGzDGP9pKuB0JBn919xc6E4EeI0XCi
+         JzF7G9+oAdIfeYB8rnregCjhBy0Fgs8Z9rIBJliWSBmthE3XBzRER7KumCQ3TsXi70e1
+         0NHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=rzJ9J1wtHzrN/KosoPr/+d14bcRLxzvn6r16lLzNga0=;
-        b=TefDZiJEHDJYQPLGrisWPd3buXekcKInmS166HwrC67im6HCFnOEmhtXhbchc6YYd0
-         00+P/bvmFoGHujCwBO1YSLaV3O7dRMxfew2b14Umy4foYWcnjuL4Fk3/ntWrtV1wBBAl
-         B8yUIhs9PnsQY7MqbQXTM7iz2SM2z2gxZnN58pcUENuLrM9XfXk7Txp2/CH/VAlI2kvj
-         nk6AaDjqAcx9cXRFIaTUSFAcVYuBQq+hdsafQpE4w1insEb2+zKs/6hOuXgW8uAl5fsf
-         bNtbO6s6tYhTtYw4dIL/aeI15Qo5jY3A+Oe2J5+yPDs2WchLqKcZ4zHyN5gdZw6bLvja
-         CDmg==
-X-Gm-Message-State: AGi0PuY02srbZL1VynXzVi8is26APfZis1vUwox+5ACL7q5F2nq1Bh7B
-        g3fASZ2+N8DEjUJNx2gJOfbSwBTHw6I=
-X-Google-Smtp-Source: APiQypJxcWThnUqLbRSSSJcsznY3BVZEv/sX12T7J96XnZ6DwLGGUnOIEMtHgBORFimpppI9RTK7IA==
-X-Received: by 2002:a17:90a:d985:: with SMTP id d5mr5374423pjv.171.1587474762939;
-        Tue, 21 Apr 2020 06:12:42 -0700 (PDT)
-Received: from konoha.iitr.ac.in ([103.37.201.175])
-        by smtp.gmail.com with ESMTPSA id g2sm2451492pjd.9.2020.04.21.06.12.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Apr 2020 06:12:42 -0700 (PDT)
-From:   Shourya Shukla <shouryashukla.oo@gmail.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, sandals@crustytoothpaste.net,
-        Shourya Shukla <shouryashukla.oo@gmail.com>
-Subject: [PATCH v3 4/4] gitfaq: fetching and pulling a repository
-Date:   Tue, 21 Apr 2020 18:42:23 +0530
-Message-Id: <20200421131223.29337-5-shouryashukla.oo@gmail.com>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200421131223.29337-1-shouryashukla.oo@gmail.com>
-References: <20200421131223.29337-1-shouryashukla.oo@gmail.com>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=EAz6eucluXU1PPqzi+V2SuJck4Ciac3eS5HWRcQfRVc=;
+        b=Lx6ft+7zgus2AVKTSgMX0JMAILJpEUYbXviqyDCyXr/+PDr1Wy0vxpt08Gyl5LiQHs
+         uz6Gi+uy4tOc8IoqtRR7g3QR5S/J2UhcsKpi/4YH+KpemFbHfBitCkBhV7So8qGbZK0K
+         zpbYHJr4fuVj1A7kqgeIEKke7O3uoIe1LdcRJVBktlBLfkpMkwli5sj5CAx4BNpbGhGr
+         6/ujk2Gj2sWk0uQVR9LChOYatBwgqPVVuh4b3+AcBIfAAYgBp9aNkQLynI+8+7hcaVPQ
+         tYgYgLRugZyAX0UoVjcThqQx0CEYB54mCpjw7WVK9953EMwC+II4nTWyPhqelfjX/PVf
+         SG9w==
+X-Gm-Message-State: AGi0PuY5Rvz8mrH2wZWow/1jzykWPD3vxB9mHVg1/Bam/JcZJff2/BdI
+        md8RK49AGgKPDq4UfFdOUfHYJGTCw5kZd9xOBW0Sl6tk1l8=
+X-Google-Smtp-Source: APiQypLRxTJRQHHw2fnaOpTyfeDF3nN1Quw8Q0Yg/uKh8jRaemjwNn2GiFuyNuSbYuQt9V4fJbXJWqTgAfe44EhSbEk=
+X-Received: by 2002:adf:8284:: with SMTP id 4mr24390119wrc.6.1587476983734;
+ Tue, 21 Apr 2020 06:49:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From:   Will Palmer <wmpalmer@gmail.com>
+Date:   Tue, 21 Apr 2020 14:49:07 +0100
+Message-ID: <CAAKF_ubf3EMK6sTrvZo1OSVHLiLjnY=S=W7s1CNCkZLSteaa+g@mail.gmail.com>
+Subject: Possible documentation error for "git revisions"
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add an issue in 'Common Issues' section which addresses the confusion
-between performing a 'fetch' and a 'pull'.
+The Documentation/revisions.txt page may have a couple of errors in
+it, regarding "searching for commits by commit message"
 
-Signed-off-by: Shourya Shukla <shouryashukla.oo@gmail.com>
----
- Documentation/gitfaq.txt | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+it states:
 
-diff --git a/Documentation/gitfaq.txt b/Documentation/gitfaq.txt
-index cea293cf07..e93785f2f8 100644
---- a/Documentation/gitfaq.txt
-+++ b/Documentation/gitfaq.txt
-@@ -289,6 +289,26 @@ way of cloning it in lesser space?::
- 	would mean fetching only the top level commits of the repository
- 	See linkgit:git-clone[1].
- 
-+[[fetching-and-pulling]]
-+How do I know if I want to do a fetch or a pull?::
-+	A fetch brings in the latest changes made upstream (i.e., the
-+	remote repository we are working on). This allows us to inspect
-+	the changes made upstream and integrate all those changes (if
-+	and only if we want to) or only cherry pick certain changes.
-+	Fetching does not have any immediate effects on the local
-+	repository.
-+
-+	A pull is a wrapper for a fetch and merge. This means that doing
-+	a `git pull` will not only fetch the changes made upstream but
-+	integrate them as well with our local repository. The merge may
-+	go smoothly or have merge conflicts depending on the case. A pull
-+	does not allow you to review any changes made upstream but rather
-+	merge those changes on their own.
-++
-+This is the reason why it is sometimes advised to fetch the changes
-+first and then merge them accordingly because not every change might
-+be of utility to the user.
-+
- Hooks
- -----
- 
--- 
-2.20.1
+':/<text>', e.g. ':/fix nasty bug'::
+A colon, followed by a slash, followed by a text, names
+a commit whose commit message matches the specified regular expression.
+This name returns the youngest matching commit which is
+reachable from any ref, including HEAD.
+The regular expression can match any part of the
+commit message. To match messages starting with a string, one can use
+e.g. ':/^foo'. The special sequence ':/!' is reserved for modifiers to what
+is matched. ':/!-foo' performs a negative match, while ':/!!foo' matches a
+literal '!' character, followed by 'foo'. Any other sequence beginning with
+':/!' is reserved for now.
+Depending on the given text, the shell's word splitting rules might
+require additional quoting.
 
+However, I believe that the ":/<text>" syntax now *always* refers to a
+file in the tree-object,
+never a search-by-commit-message. (I wasn't previously aware of this
+change, but I like it!)
+
+Instead, the syntax "HEAD^{/<text>}" *does* appear to perform the
+search described by the
+documentation for ":/<text>". This includes the possibility of
+matching HEAD itself. in my
+own workflow, I've never noticed the distinction, but this does feel
+like a possible error in code,
+rather than documentation. That said, removing the ability for
+"HEAD^{/text}" to match HEAD
+would potentially leave rev-parse with no method for referring to "the
+first match, even if that
+match is HEAD itself", which I think would be bad to remove.
+Personally, I always type
+HEAD^{/text} (or HEAD^{/!-text}) when searching for something "before"
+HEAD, but I do feel
+that I would "expect" that to match HEAD as well, for what it's worth.
+
+Though fixing this as a matter of documentation would be a very small
+change, I don't have
+time right now personally to make it (including necessary steps of
+verification, tracing the
+history of when the documentation became out-of-date, ensuring this is
+a documentation, not
+code, issue, etc). So I'm unfortunately probably going to "fire and
+forget" this bug report.
+
+Thanks to anyone who can complete this!
+
+-- Will Palmer
