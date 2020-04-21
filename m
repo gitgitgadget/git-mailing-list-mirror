@@ -2,98 +2,112 @@ Return-Path: <SRS0=ToNR=6F=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C6C0C2BA19
-	for <git@archiver.kernel.org>; Tue, 21 Apr 2020 08:46:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3BB92C54FC9
+	for <git@archiver.kernel.org>; Tue, 21 Apr 2020 10:02:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 11E192072D
-	for <git@archiver.kernel.org>; Tue, 21 Apr 2020 08:46:18 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=portswigger-net.20150623.gappssmtp.com header.i=@portswigger-net.20150623.gappssmtp.com header.b="FbUQ5fkg"
+	by mail.kernel.org (Postfix) with ESMTP id 2164C2076C
+	for <git@archiver.kernel.org>; Tue, 21 Apr 2020 10:02:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727100AbgDUIqR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Apr 2020 04:46:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52022 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726018AbgDUIqQ (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 21 Apr 2020 04:46:16 -0400
-Received: from mail-ua1-x936.google.com (mail-ua1-x936.google.com [IPv6:2607:f8b0:4864:20::936])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79CA2C061A0F
-        for <git@vger.kernel.org>; Tue, 21 Apr 2020 01:46:15 -0700 (PDT)
-Received: by mail-ua1-x936.google.com with SMTP id s5so4773288uad.4
-        for <git@vger.kernel.org>; Tue, 21 Apr 2020 01:46:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=portswigger-net.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=05GGcsCqaS4k3bCyl9WgtTELU5vYfL0zLjct9mYGT94=;
-        b=FbUQ5fkgLX420i1aOYiMcByGKIEQaZP1BHSE4g3g99wakn3iJh5rGPu5fRBQth0+7h
-         ubZ4f7f/edxfoKgaL8NlndPK9IhSDQw1uv7eSmMEyDCFXOBXiLltVaUFbjwab+ByZW2z
-         YhIcmsudYmgTJ7GrUDJfz4fHjUs+o62BSZxJvpTPuS8CtYAxzqc2AaPBygY13cLjI0X4
-         d5p/RVTPznxJbTZzvYdTeNBoQwaWC9+dlkzChEnasHtP/skU7RcIhmrRfuN7oXF4ir0g
-         Atv7jCqxq6Y8O8NzFwSS9z95sMQBLHjlkF/xCw4U0a1JAvaYsVYH3UrTFHQPKotd7Tq/
-         5L1g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=05GGcsCqaS4k3bCyl9WgtTELU5vYfL0zLjct9mYGT94=;
-        b=nfXonEfn3SljPJN6iTKDT7Qk4t7mnoMOcHmjxIPsDGzRF40rgo1gGJpJMYD9A0EZbq
-         3j7qZibPu30UI+PC5B08LoIUeccSy1gHRUI15iwOgzywR9tIEdvx07XX39ScVw8fhKeD
-         QLFsyR9ofCmdRh/AoBnzC8PG9hbw2XAbSYtHd+I0SPhGPN3BuXriGOIaRoOhy8u/WYwC
-         AUUKL/9fnEyPpWvd7EanW5WlbA/CR3TBcdPNt1MHbMvVQhEHHA/tXJ+upqv8Pyq1Ntcy
-         s4Ki/388PO6DP2Kfk2pz/Mz8qh9qipDi+bUzCdmKJ3Lx27okLY9OXEtXdPuDxyD7tvgB
-         SgdQ==
-X-Gm-Message-State: AGi0PuZM5BCU+bhX2VBy3SByGM5zHB3/GhR5kzeu27vLbGEGNI1qvv6Y
-        WfQdJlzk+fDjjm2rEC3wWijtktGL5NCVyW3TYJwV5jkHDcE=
-X-Google-Smtp-Source: APiQypIwCduNeBCoWuRBlQ6Y4DZamXPlDMfTiKnPK9bU/wOmMuze3EYLBmv/c9X3/+6TtAPMmbkjyAem1XZDbd5ijks=
-X-Received: by 2002:ab0:1d97:: with SMTP id l23mr9124546uak.107.1587458774515;
- Tue, 21 Apr 2020 01:46:14 -0700 (PDT)
+        id S1726628AbgDUKCt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Apr 2020 06:02:49 -0400
+Received: from mx2.suse.de ([195.135.220.15]:55642 "EHLO mx2.suse.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725920AbgDUKCs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Apr 2020 06:02:48 -0400
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay2.suse.de (unknown [195.135.220.254])
+        by mx2.suse.de (Postfix) with ESMTP id 16104AEC2;
+        Tue, 21 Apr 2020 10:02:46 +0000 (UTC)
+Message-ID: <6cb9d009026cfb9918b2ceab3e43ec1cbc303de4.camel@suse.com>
+Subject: Re: Fetching 24 Linux commits = 1.2 GiB
+From:   Martin Wilck <mwilck@suse.com>
+To:     Jiri Slaby <jslaby@suse.cz>, git@vger.kernel.org
+Cc:     konstantin@linuxfoundation.org
+Date:   Tue, 21 Apr 2020 12:02:45 +0200
+In-Reply-To: <a5bce92f-ad19-75d4-1e34-dacc73321536@suse.cz>
+References: <b7f5bfb9-61fb-2552-4399-b744428728e4@suse.cz>
+         <20200415135627.vx75hsphbpmgrquv@chatter.i7.local>
+         <a5bce92f-ad19-75d4-1e34-dacc73321536@suse.cz>
+Content-Type: text/plain; charset="ISO-8859-15"
+User-Agent: Evolution 3.34.4 
 MIME-Version: 1.0
-References: <CAJQu+bp9SrzaMBuMv1UC8y8rJGn15MAsVogSCm_DNDKRMji1+Q@mail.gmail.com>
- <xmqqwo6g7p55.fsf@gitster.c.googlers.com> <20200415154711.GD2464307@coredump.intra.peff.net>
-In-Reply-To: <20200415154711.GD2464307@coredump.intra.peff.net>
-From:   Adam Bannister <adam.bannister@portswigger.net>
-Date:   Tue, 21 Apr 2020 09:46:03 +0100
-Message-ID: <CAJQu+boAfXKG_Kugmh+k2O_AP2LmGbZ+R5XS0rw9==7OtULEZg@mail.gmail.com>
-Subject: Re: Media query - Git flaw
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Forgot to say thanks for all your help and share the link!
-https://portswigger.net/daily-swig/git-security-newline-injection-bug-tricked-version-control-system-into-leaking-usernames-and-password
+On Thu, 2020-04-16 at 08:31 +0200, Jiri Slaby wrote:
+> On 15. 04. 20, 15:56, Konstantin Ryabitsev wrote:
+> > 
+> I tried hard, but cannot reproduce. I noticed a difference between
+> 2.25.1 and 2.25.1+protocol.version=2, though:
+> 
+> $ git config protocol.version 1 # the default in 2.25
+> $ git fetch
+> git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+> 8f3d9f354286745c751374f5f1fcafee6b3f3136
+> error: Server does not allow request for unadvertised object
+> 8f3d9f354286745c751374f5f1fcafee6b3f3136
+> $ git config protocol.version 2
+> $ git fetch
+> git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+> 8f3d9f354286745c751374f5f1fcafee6b3f3136
+> remote: Enumerating objects: 1433262, done.
+> ...
+> 
+> Doing fetch v5.7-rc1 (which is 8f3d9f3 above) with proto 1 works. So
+> the
+> server obviously advertises different set of objects with proto 1 and
+> 2.
 
-Much appreciated...
+I just had the same issue with several kernel repos. The affected repo 
+is a bare clone of Linus' kernel repo, plus "stable" and various
+maintainer repos as additional remotes.
 
-On Wed, 15 Apr 2020 at 16:47, Jeff King <peff@peff.net> wrote:
->
-> On Wed, Apr 15, 2020 at 08:19:18AM -0700, Junio C Hamano wrote:
->
-> > > What is your advice to Git users?
-> >
-> > Release is announced and users are urged to upgrade, like you wrote
-> > on your article at The Daily Swig.
->
-> There's a little more detail and some workarounds discussed in the
-> advisory at:
->
->  https://github.com/git/git/security/advisories/GHSA-qm7j-c969-7j4q
->
-> -Peff
+Interestingly, a single "git fetch --dry-run" with protol version 1
+"fixed" the issue. I hadn't expected that to happen, so unfortunately I
+hadn't made a  backup of the repo before. As this is a 50GB bare repo,
+I'd appreciate instructions on how exactly to archive/upload it for
+debugging if this should happen again.
+
+mwilck@apollon:linux.git[BARE:master]> git fetch --dry-run -v net
+Looking up git.kernel.org ... done.
+Connecting to git.kernel.org (port 9418) ... 136.144.49.103 done.
+remote: Enumerating objects: 7331255, done.
+remote: Counting objects: 100% (7331255/7331255), done.
+remote: Compressing objects: 100% (1113751/1113751), done.
+^C
+mwilck@apollon:linux.git[BARE:master]> git config --get
+protocol.version
+mwilck@apollon:linux.git[BARE:master]> git config protocol.version 1
+mwilck@apollon:linux.git[BARE:master]> git fetch --dry-run -v net
+Looking up git.kernel.org ... done.
+Connecting to git.kernel.org (port 9418) ... 136.144.49.103 done.
+remote: Enumerating objects: 71, done.
+remote: Counting objects: 100% (71/71), done.
+remote: Compressing objects: 100% (48/48), done.
+remote: Total 53 (delta 42), reused 0 (delta 0)
+Unpacking objects: 100% (53/53), 8.06 KiB | 5.00 KiB/s, done.
+^C
+
+(this fixed the issue despite "--dry-run" and myself interrupting the
+process).
+
+mwilck@apollon:linux.git[BARE:master]> git config protocol.version 2
+mwilck@apollon:linux.git[BARE:master]> git fetch --dry-run -v net
+Looking up git.kernel.org ... done.
+Connecting to git.kernel.org (port 9418) ... 136.144.49.103 done.
+From git://git.kernel.org/pub/scm/linux/kernel/git/davem/net
+   9bacd25..a460fc5      master       -> net/master
+ = [up to date]          v2.6.11      -> v2.6.11
+...
+
+Regards
+Martin
 
 
-
--- 
-
-Adam Bannister
-The Daily Swig
-https://portswigger.net/daily-swig
