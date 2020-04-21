@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CE0EC54FC9
-	for <git@archiver.kernel.org>; Tue, 21 Apr 2020 13:12:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EA7FDC54FCC
+	for <git@archiver.kernel.org>; Tue, 21 Apr 2020 13:12:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 28C482076A
-	for <git@archiver.kernel.org>; Tue, 21 Apr 2020 13:12:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B174D2076A
+	for <git@archiver.kernel.org>; Tue, 21 Apr 2020 13:12:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FB6ahO7W"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RfuM18KK"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728676AbgDUNMg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Apr 2020 09:12:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36736 "EHLO
+        id S1728739AbgDUNMi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Apr 2020 09:12:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726018AbgDUNMf (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 21 Apr 2020 09:12:35 -0400
-Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DE6AC061A10
-        for <git@vger.kernel.org>; Tue, 21 Apr 2020 06:12:35 -0700 (PDT)
-Received: by mail-pf1-x441.google.com with SMTP id r14so6584399pfg.2
-        for <git@vger.kernel.org>; Tue, 21 Apr 2020 06:12:35 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1726018AbgDUNMi (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 21 Apr 2020 09:12:38 -0400
+Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D756C061A10
+        for <git@vger.kernel.org>; Tue, 21 Apr 2020 06:12:38 -0700 (PDT)
+Received: by mail-pg1-x541.google.com with SMTP id r4so6741252pgg.4
+        for <git@vger.kernel.org>; Tue, 21 Apr 2020 06:12:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=YpbTyU3zepC+cB3HS5q+NtuYKOns6RRNNtTfLVybn3k=;
-        b=FB6ahO7WEY0OLMj89EoowuoGm8r8GueiP+3FKyl2IcOD+x4nPXmUf34BVF3SlSpMV/
-         HDmZCuoAhqL7Y8eyt3ZVcJonPFoyHPC28ZTenXGBTX0EecPp3/WA9kidAz5dQ3B7rHnt
-         LcKfMrHaY7lKxh8wUbfKRU+MahWmHwhQXqT00DRaAaisU1F9sazU3UZeN2S6bBtCHiPs
-         kIrKlGwC0eLI3DHJ/nGMnj7Azt1vO5kYq4mRZ8czDGdTPvOnBrTdlRuA7n2dDSX4Swp7
-         /arpwIWisVmh9/Kc6N4keRMv6PIKwh8oS2fxIXJnFJTiDOj2IywWOe1+x4mnVUQyRyQA
-         NoKw==
+        bh=nPGXNRz08nd5NAQZZyjrUa9x/USDr2TA+UONIpWHaEw=;
+        b=RfuM18KK4xRM3pf00VuPw6RBgp5FDTZR/ON/QiNVGsq5yLbvLa6qrkD78f5dEnjf8S
+         6mbHMUiXcZnvKHyTgTaH0xgGXiwitNb+y5tzbV4m4k8V8x2apmLgw4YQG1h25SevWBWr
+         ztx8fFMfFXpxwxTJiNps7FyVk0kO0P7BcDR4g8c9uIapkMnKQ/Nd7ptU/kh+kCQsui7h
+         Op3cb44YXo2KlDMUZ+gVpShTBfqkhTee+2BUoAUwQ1Uc+CZQkm1BwXQgy4haC2mfV2Xv
+         vBJb/DQZdmJ/p49F4erZRFsqcXgBczzsmH9hlS0enz62Bafx9OQovGYzLba35IszcXbw
+         78mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=YpbTyU3zepC+cB3HS5q+NtuYKOns6RRNNtTfLVybn3k=;
-        b=QCp0r5Fb5LNDIRXiAsGE0CW6irE6o71f4FdIsV8AM2XQL5cxWankSKbqsD+7dGn4Kr
-         qup0Q1m1FVsSpOPPeIqKgqUhbpItHC5y9ZrvZuD6LNwfZ8wQdyhdIy5zmXN8ng+lIwsA
-         o1IvuW+TjW5DRHeqmkMiu3i4GLbp4T3nRf8NFMdlLwPxMar/dzD+Zbi7XojM39086oXG
-         FUg7jPldooK5GO0/qxa/dZJ86UZ9EH/8o9DF9IT6PkGRqLuG6qiHv1IEJ1jRnWYIta13
-         oIKu0x1mQzgr8rkscnw+wHYRNuY2xQZ/fojxAmaLBA4x2I8VSnoz5rXe4WsBz484jE30
-         V5sA==
-X-Gm-Message-State: AGi0PuY8vfHNwwU77X1L37py70vlvhlBc4VRfRbvXa4CyOi5WHpgmwmO
-        2fP8hNyTzEnCStMYfngY9m120uGWrI4=
-X-Google-Smtp-Source: APiQypJUz4bvyDd1oqK+EM7B7xSWf/UWXYS3F2DV8iqdStGq79Ug6r7Aq1M587HBwtgc/Z76tcl80g==
-X-Received: by 2002:a63:7c1:: with SMTP id 184mr20688903pgh.77.1587474754645;
-        Tue, 21 Apr 2020 06:12:34 -0700 (PDT)
+        bh=nPGXNRz08nd5NAQZZyjrUa9x/USDr2TA+UONIpWHaEw=;
+        b=Urq5f9Au5sgUqI6ZyDsUuL76x97DoiVkbfY89CMgQgRzV6wm5SK+lHSN8oaqn/nUev
+         iqeyt4F/pr0ZQXJNiLyY24O8Iau6UxHUrklketdyjeLb9w4tXDJtIUHzSBkTWiE6cYff
+         mYfGzTv8FImL8raGGSiQCnYuSao011SifzdnIR4X2d92tuPRas0nrGF95u5zIBTzjUxa
+         2A5H4gjK1Upuan00DjprZHeD4zNzYyCHJaZCbAlVKVo3Daz08uXGTWHn/XZ1obtX8Jdg
+         xpPdjw5rH7PByTLlxrHn1HfqUSaabiUpBBEowea+HMzext38WsC/B7NUk5UeEpRT+qTL
+         IRzA==
+X-Gm-Message-State: AGi0PuYKlDAX9ljBbB/5yu1fO8AmfSRXh978LNHv8EV71STvoWB4U0ZK
+        tqniJSgEILXtswr9sf75jSCyTiPaMTw=
+X-Google-Smtp-Source: APiQypLprAY4mwOwJCM37SycuY/dcE76YOkRZCQVihuK+ale8l7O2VKBnDYzjXmuAZ+rGojbhxY+3A==
+X-Received: by 2002:a63:4665:: with SMTP id v37mr20184694pgk.297.1587474757428;
+        Tue, 21 Apr 2020 06:12:37 -0700 (PDT)
 Received: from konoha.iitr.ac.in ([103.37.201.175])
-        by smtp.gmail.com with ESMTPSA id g2sm2451492pjd.9.2020.04.21.06.12.32
+        by smtp.gmail.com with ESMTPSA id g2sm2451492pjd.9.2020.04.21.06.12.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Apr 2020 06:12:33 -0700 (PDT)
+        Tue, 21 Apr 2020 06:12:36 -0700 (PDT)
 From:   Shourya Shukla <shouryashukla.oo@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, sandals@crustytoothpaste.net,
         Shourya Shukla <shouryashukla.oo@gmail.com>
-Subject: [PATCH v3 1/4] gitfaq: files in .gitignore are tracked
-Date:   Tue, 21 Apr 2020 18:42:20 +0530
-Message-Id: <20200421131223.29337-2-shouryashukla.oo@gmail.com>
+Subject: [PATCH v3 2/4] gitfaq: changing the remote of a repository
+Date:   Tue, 21 Apr 2020 18:42:21 +0530
+Message-Id: <20200421131223.29337-3-shouryashukla.oo@gmail.com>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200421131223.29337-1-shouryashukla.oo@gmail.com>
 References: <20200421131223.29337-1-shouryashukla.oo@gmail.com>
@@ -76,41 +76,52 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Add issue in 'Common Issues' section which addresses the problem of
-Git tracking files/paths mentioned in '.gitignore'.
+changing the remote of a repository, covering various cases in which
+one might want to change the remote and the ways to do the same.
 
 Signed-off-by: Shourya Shukla <shouryashukla.oo@gmail.com>
 ---
- Documentation/gitfaq.txt | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ Documentation/gitfaq.txt | 31 +++++++++++++++++++++++++++++++
+ 1 file changed, 31 insertions(+)
 
 diff --git a/Documentation/gitfaq.txt b/Documentation/gitfaq.txt
-index 1cf83df118..96767e7c75 100644
+index 96767e7c75..13d37f96af 100644
 --- a/Documentation/gitfaq.txt
 +++ b/Documentation/gitfaq.txt
-@@ -223,6 +223,27 @@ a file checked into the repository which is a template or set of defaults which
- can then be copied alongside and modified as appropriate.  This second, modified
- file is usually ignored to prevent accidentally committing it.
+@@ -244,6 +244,37 @@ I asked Git to ignore various files, yet they are still tracked::
+ 	category, it is advised to use `git rm --cached <file>` as well as
+ 	add these files/paths in the `.gitignore`.
  
-+[[files-in-.gitignore-are-tracked]]
-+I asked Git to ignore various files, yet they are still tracked::
-+	Git ignores files matching the patterns stated in the '.gitignore'.
-+	Consequently, `git add` does not add the files/paths matching the
-+	pattern in `.gitignore`, meaning they remain untracked; `git status`
-+	does not list the aforementioned files/paths as untracked.
++[[changing-remote-of-the-repository]]
++I want to change the remote of my repository. How do I do that?::
++	A remote is an identifier for a location to which Git pushes your
++	changes as well as fetches any new changes from (if any). There
++	might be different circumstances in which one might need to change
++	the remote:
 +
-+	One thing to note is that the `.gitignore` mechanism applies only
-+	to the files that are not already tracked. A file/path that is
-+	already tracked will stay to be tracked even if you add a pattern
-+	that happens to match it to `.gitignore` file.
++		1. One might want to update the URL of their remote; in that
++		   case, the command to use is, `git remote set-url <name> <newurl>`.
 +
-+	This is probably the reason why Git shows some files/paths in the
-+	staging area. These entities were being tracked before and later
-+	were added in the `.gitignore`, due to which they show up in the
-+	staging area.
++		2. One might want to have two different remotes for fetching
++		   and pushing; this generally happens in case of triangular
++		   workflows: one fetches from one repository and pushes to
++		   another. In this case, it is advisable to have separate
++		   remotes for fetching and pushing. But, another way can be
++		   to change the push URL using the `--push` option in the
++		   `git set-url` command.
 +
-+	To completely ignore and untrack files/paths falling in the above
-+	category, it is advised to use `git rm --cached <file>` as well as
-+	add these files/paths in the `.gitignore`.
++		3. One might want to push changes to a network protocol
++		   different from the one they fetch from. For instance,
++		   one may be using an unauthenticated http:// URL for
++		   fetching from a repository and use an ssh:// URL when
++		   you push via the same remote. In such a case, one can
++		   change the 'push' URL of the same remote using the `--push`
++		   option in `git remote set-url`. Now, the same remote will
++		   have two different kinds of URLs (http and ssh) for fetching
++		   and pulling.
+++
++One can list the remotes of a repository using `git remote -v` command.
++The default name of a remote is 'origin'.
 +
  Hooks
  -----
