@@ -2,176 +2,117 @@ Return-Path: <SRS0=ToNR=6F=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_IN_DEF_DKIM_WL
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86457C54FCC
-	for <git@archiver.kernel.org>; Tue, 21 Apr 2020 19:04:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 23E88C54FCC
+	for <git@archiver.kernel.org>; Tue, 21 Apr 2020 19:14:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 651392072D
-	for <git@archiver.kernel.org>; Tue, 21 Apr 2020 19:04:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 06EF9206D9
+	for <git@archiver.kernel.org>; Tue, 21 Apr 2020 19:14:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ewZ08c4V"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="GVnUQjH9"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726050AbgDUTEq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Apr 2020 15:04:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34914 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1725930AbgDUTEq (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 21 Apr 2020 15:04:46 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDD17C0610D5
-        for <git@vger.kernel.org>; Tue, 21 Apr 2020 12:04:45 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id k1so17873310wrx.4
-        for <git@vger.kernel.org>; Tue, 21 Apr 2020 12:04:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=robzBPtEI66vyyE+EFamo2Z72hFrpas35NXd44Yk4zw=;
-        b=ewZ08c4VD7rcMTXgWICwmUSGCQ/LOAOhyjjQMZlHfAZgBkqMrnLATSu+tySiWgjVUL
-         nOWxu/0iHpQn1mAj+kdEQccahskFQ3UbbwwnzEASNzCj4uxUN9xnmFKGxPBVg00NyF+/
-         uEF1Y0rGOValRWYgzxIiZh50Y0Z8zPOqYGZwHIrIlPB33ipZ2wg216D15EyxAd/HMWSF
-         yfOQBDKmJ3S3lavMIGljxHvaYZvBOAImHyRhVIBPVghclM1VdhD6zLIX3okjT+o4lHmH
-         FMxATfCEHnbMQEufeUe5JgW7uHqqu/Jx/vEGN5aJ7TvRb8OxDLYR+8ce8kNW29KIoVq0
-         pNXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=robzBPtEI66vyyE+EFamo2Z72hFrpas35NXd44Yk4zw=;
-        b=Rm0tR/WcsjmA8kqkXsOMmAbV3TEM3iIJrSzwp5zhFN0ogzxqkMgjKRvcqFvDNCjyB5
-         rHEz4USTaVMz3FpsC5C3VNeo9xOb37gRGDt1WfAJ6g1CuKSKuC02e7Xlbmaj5qW/EIyZ
-         mQf18ECz4w7g6nriM/lhAUwbKDdzT4WYMEJylynn83arhvET7gpG3t0X7TKqMVPsZbRH
-         1JbA2FlnKj0h4+CA1MrWAQw6NBhiKVrXDQrnSTxMzjQW74Rb2eMC8sH0pZ933JE5mBaQ
-         Nrf0P1BYQ0l77jCpnFpz0FDf+9VgBUfKCWI9ZrL3IWdHh5pRUQM0SgPZGHLL6YbfvP2a
-         GY0g==
-X-Gm-Message-State: AGi0Pua+e11Gd/7KXzmIwC5aZC3D9JejgNPQfZLG7QTKt9qFl05uMUhw
-        y6BOrLrYQ62QG7iJ9COowwoI5YHoiz7yuOwhsug3cQ==
-X-Google-Smtp-Source: APiQypJCk0WcFXQlXXHLDdelJwI8PpPe9ddIZ0nUxkx3FeAAVddqaVcgXC6zM4RntKA46iLAUwrmnybODT14kxMlgUQ=
-X-Received: by 2002:adf:8284:: with SMTP id 4mr25657842wrc.6.1587495884127;
- Tue, 21 Apr 2020 12:04:44 -0700 (PDT)
+        id S1726081AbgDUTOa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Apr 2020 15:14:30 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:63135 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725902AbgDUTO3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Apr 2020 15:14:29 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 484BABA384;
+        Tue, 21 Apr 2020 15:14:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=/SYUSqTmGadJDOrxU+i5PCSQqfo=; b=GVnUQj
+        H9U1/3DAj3+5NcGsN/p5oUet7CgHRJB5gEXJO8mvZ2HJEJ7o93y6/b1CLiLvtdBP
+        jq1KpmUSA3ScXaHjZ/Jeas0Ifqq6laaC3KX0aGKGACGzRMYkyNL6Ju7Y9GkNg0bh
+        J5l24mztSQshuQ6d9oW0vPK00vTDtleLHAP/M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Y3RfLXZ66gDxNd7bQpgE5O5hbQYUePbV
+        fN0cdGhswiEWd/XE4ClLzjyq12IEqamDGSCmV7e8QBFMng48OJLWKGb0hokeJyBC
+        kIihQPYhNKlxjR5oAnZuqLkJTRQJ75Mt8G9toEU6u2bJXDZhDZBGLepm+b8n3+Re
+        6wiTkfgPgE4=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 409A7BA383;
+        Tue, 21 Apr 2020 15:14:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 887D2BA37C;
+        Tue, 21 Apr 2020 15:14:23 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Christoph Anton Mitterer <calestyo@scientia.net>
+Cc:     git@vger.kernel.org
+Subject: Re: how to (integrity) verify a whole git repo
+References: <acb9a2da98bce7ea3044cbf37c92163497f7e9e2.camel@scientia.net>
+Date:   Tue, 21 Apr 2020 12:14:21 -0700
+In-Reply-To: <acb9a2da98bce7ea3044cbf37c92163497f7e9e2.camel@scientia.net>
+        (Christoph Anton Mitterer's message of "Tue, 21 Apr 2020 06:45:35
+        +0200")
+Message-ID: <xmqqftcwodma.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.539.v8.git.1585740538.gitgitgadget@gmail.com>
- <pull.539.v9.git.1587417295.gitgitgadget@gmail.com> <a30001ad1e8f94a0f3901c1694c3dd660ba1e7c0.1587417295.git.gitgitgadget@gmail.com>
- <xmqqeeshrev2.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqeeshrev2.fsf@gitster.c.googlers.com>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Tue, 21 Apr 2020 21:04:32 +0200
-Message-ID: <CAFQ2z_Nm9tRVr0cBt=bV5OaTw-VRK5z1hqOwn-TmT=mNe9Xrgg@mail.gmail.com>
-Subject: Re: [PATCH v9 09/10] Add reftable library
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4F70E086-8404-11EA-A576-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 21, 2020 at 12:07 AM Junio C Hamano <gitster@pobox.com> wrote:
-> Shouldn't this be executable, even though the readme tells the
-> reader to run "sh update.sh"?
+Christoph Anton Mitterer <calestyo@scientia.net> writes:
 
-Done.
-
-(should I post an updated version of the patch series for these minor
-changes, or is it OK to fold them with the next major update?)
-
-> > +set -eux
+> How to check everything else? Is it enough to git fsck --full?
 >
-> Use of -e and -u are understandable but -x is a bit unusual unless
-> one is debugging...
+> Everything earlier in the history of a verified tag/commit should be
+> cryptographically safe (assuming SHA1 would be still secure enough),
+> right?
 
-Done.
+Correct.
 
-> > +((cd reftable-repo && git fetch origin && git checkout origin/master )=
- ||
-> > +git clone https://github.com/google/reftable reftable-repo) && \
->
-> I think you can discard most of the '\' at the end of the line, as
-> the shell knows, when you stop a line with &&, you haven't finished
-> talking to it yet.  That would make the result slightly less noisy
-> to follow.  We don't rely on "set -e" in this project, but this is a
-> borrowed file from our point of view---as long as we are using -e,
-> wouldn't it make more sense to take full advantage of it and do
-> without &&?
+> 2) But this of course won't show me anything which is in the repo but
+> not earlier in the history of the tag/commit I've checked, right?!
+> Is there a way to e.g. have everything dropped which is not verifiable
+> via some signed commit/tag?
 
-Done.
+You can compute the commits that are not reachable from any of the
+signed tags.
 
-> > +cp reftable-repo/c/*.[ch] reftable/ && \
-> > +cp reftable-repo/c/include/*.[ch] reftable/ && \
-> > +cp reftable-repo/LICENSE reftable/ &&
-> > +git --git-dir reftable-repo/.git show --no-patch origin/master \
-> > +> reftable/VERSION && \
->
-> > +sed -i~ 's|if REFTABLE_IN_GITCORE|if 1 /* REFTABLE_IN_GITCORE */|' ref=
-table/system.h
->
-> "sed -i" is probably GNUism that does not port well.
+    git rev-list --all --not $list_tags_and_commits_you_trust_here
 
-done.
+will enumerate all the commits that are not reachable from those
+tags.
 
-> > +rm reftable/*_test.c reftable/test_framework.* reftable/compat.*
->
-> I presume that this is because we copied everything that match
-> c/*.[ch] and is not about removing what used to exist in reftable/
-> directory locally?  Not complaining, but checking if I am reading
-> the intention of the code correctly.
+But your "have everything dropped" is a fuzzy notion and you must be
+more precise to define what you want.  Imagine this history:
 
-correct.
 
-> > +git add reftable/*.[ch]
->
-> As we flattened when copying from c/include/*.[ch], this "git add"
-> can also be flat, which makes sense.  Don't you need to also add the
-> LICENSE file in there?
+    ----o-----o-----L-----x----x-----x-----x-----x----x HEAD (master)
+                                          /
+                                         /
+                                        /
+                   ... ------o----o----G
 
-Done.
+where you have two people you trust (Linus and Greg), HEAD is the
+tip of your 'master' branch, probably you fetched from Linus, L and
+G are the two recent tags Linus and Greg signed.
 
-> Two comments on the design:
->
->  - The list of "what to copy in" largely depends on the upstream
->    reftable library; hardcoding the patterns here would make it
->    harder to reorganize the files for the upstream project.  I
->    wonder if it makes more sense to reserve a single path in the
->    reftable-repo and hardcode the knowledge of what to copy out
->    there?  That would mean the resulting update.sh here can become
->
->         (git -C reftable-repo pull --ff-only && git clone ...) &&
->         reftable-repo/copy-out-to-git-core.sh reftable/
->
->    and the copy-out-to-git-core.sh script that comes with the
->    upstream reftable library is the only one that needs to know
->    where the license and C source files are in the same version as
->    itself, and how to produce $1/VERSION file using the commit log
->    message of the commit it comes from.
->
->  - The above procedure (with or without the "who should know what to
->    copy" change) would cope well with modified and new files in the
->    reftable upstream, but does not remove a library file that used
->    to exist (and copied to the git-core project) that no longer is
->    needed and shipped.  It appears that there has to be some way to
->    remove them.
+If you enumerate commits that are not reachable from L or G, you'll
+get all commits that are marked with 'x'.  Commits marked with 'o'
+are reachable from either 'L' or 'G', and you would want to keep
+them.
 
-You are correct, but once this is working to the extent that it's
-accepted into git-core, I expect imports to be infrequent, and I think
-it's not worth the effort to automate this further. If files are
-renamed, the result will likely not compile, so this mistake will be
-easy to catch.
+Now, you need to define what you mean by "have everything dropped".
+You can remove commits 'x' but then after that where would your
+'master' branch point at?  There is no good answer to that question.
 
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
-
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
-
-Registergericht und -nummer: Hamburg, HRB 86891
-
-Sitz der Gesellschaft: Hamburg
-
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+What you could do is remove all branches and tags except for the
+signed tags you trust from your repository and then use "git repack"
+the repository.  Then there will be tags that point at L and G but
+you'd be discarding 'master' (which is not signed) and repack will
+discard all 'x' in the sample history illustrated above.
