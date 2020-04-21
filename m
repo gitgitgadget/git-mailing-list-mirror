@@ -7,98 +7,105 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5298AC2BA19
-	for <git@archiver.kernel.org>; Tue, 21 Apr 2020 06:45:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D8F31C2BA19
+	for <git@archiver.kernel.org>; Tue, 21 Apr 2020 06:53:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2FEF02071E
-	for <git@archiver.kernel.org>; Tue, 21 Apr 2020 06:45:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B326620738
+	for <git@archiver.kernel.org>; Tue, 21 Apr 2020 06:53:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QcUk4ty0"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FMYacU3m"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726013AbgDUGpp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Apr 2020 02:45:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33374 "EHLO
+        id S1726403AbgDUGxF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Apr 2020 02:53:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1725831AbgDUGpp (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 21 Apr 2020 02:45:45 -0400
-Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9FDEC061A0F
-        for <git@vger.kernel.org>; Mon, 20 Apr 2020 23:45:44 -0700 (PDT)
-Received: by mail-pg1-x52e.google.com with SMTP id h69so6325888pgc.8
-        for <git@vger.kernel.org>; Mon, 20 Apr 2020 23:45:44 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1726123AbgDUGxE (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 21 Apr 2020 02:53:04 -0400
+Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com [IPv6:2607:f8b0:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2827AC061A0F
+        for <git@vger.kernel.org>; Mon, 20 Apr 2020 23:53:04 -0700 (PDT)
+Received: by mail-pg1-x531.google.com with SMTP id x26so6330125pgc.10
+        for <git@vger.kernel.org>; Mon, 20 Apr 2020 23:53:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=jM+YXWP/LtcXxJ/CC6XPlE+nCvPwQRWU6Mw+4SXKVyM=;
-        b=QcUk4ty0CWI0vdTD1cHsInmlTBJ6qOq+GydxEUYoUJGSqoIUDv1uIMKzbp4mueyhMo
-         3AE6DFWWRtTAMO38m/zNxThlwNEnCrsE0kJvJdZv8zevmPstqDoB4Efe64NhsCEmwol+
-         H8YrYboCUE3ubwhH5TmFNXAbEcDaJRvXKkC5jieydjIQiUBYUjdLytbC4a8IEWkPF6OU
-         RU7LbjoFSOK++Nz7PcWI2Ck2ZqUixinh2Pg7FrULdC4CbmM0XpmK62327xvLdR3b0eXx
-         HEiJrhmJD+zfxh2IKnopxjCDjyH+unq520a3khwiqg77bZkxdQGClmhxDa3CH1qUm819
-         Gwjg==
+        bh=m7VwugYri/0ydSONAH1YsDHDtsI+XRLFJlSRbDAsRdY=;
+        b=FMYacU3m/mtyIBL72H2sbUpQyyHIlEahIEV5QZFy/AR0eNThOIEmkMX7B9ofLMPKud
+         TAMFrw05H7xznLiHecY7yljwVVEx+qSPIDuge93dVEgwy1nDkEY2w7SUN6+tL8LnE4H+
+         PCieH3Ixan1cW7//IcRTnk1MkQcAXS4Bh0u/eoX5idhw+hru8LBiWjVsAGi6oN/+QV/d
+         cEoBjmmwsD8WQZPRpIoEXB3heayN8sQb2l2/m0XfoySpGc8JQRy/fIuctilQfOCEFsw2
+         6VEYvDVCDuO1OTHgGkDQ5qgNcuXYMj/M4DN6weAXLb6klk9zbFulwltL/HJ6ml1bLfvD
+         GIAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=jM+YXWP/LtcXxJ/CC6XPlE+nCvPwQRWU6Mw+4SXKVyM=;
-        b=QiumNcvWHtHud7mcLAbnX9IMQ0/MFIuE3cXRjfoCUA/tZ2OKsm6KxWy/Aasw2cJybT
-         RMGcXuKFDPH60Gp++YA5tTCt9ueSVl6UM+oq8COZyWWsScQdVXupm4bbf0BWiwpt0OTb
-         GsxFKiQ8R/iFZc96NcXOKoGOzm8ELOBWJBz+LWLkocSG3yhfYcIbw8cq5VrWOECN203+
-         olh7jTsQY6CiRwckw0vq8BbHFetV7P4f9PcfcfZ4V6jnW+aLLBebv/7OX5SyqaS065mm
-         cly2yagRB5U16ZFkekjvrxr/CWe/mgYzRLxP9tEA+/oy6uId7I0DqH3Nt2SFzBGt9Sd1
-         aUpw==
-X-Gm-Message-State: AGi0PuZe4IgzQJ+tIhN1bJyfUaYw8wAQI/9Fe66Jex6Spd9MEF9Y68X8
-        z4zmPwalRYb9ibYtiAkI3rA=
-X-Google-Smtp-Source: APiQypJ/bO4G4aGTp0pRbMv9telLQMvjhAcvb/AYnR3uK5bS/EGO/+nYKbEk8GbNn+iIyjrRNKsgmw==
-X-Received: by 2002:aa7:9a4c:: with SMTP id x12mr20248689pfj.263.1587451544080;
-        Mon, 20 Apr 2020 23:45:44 -0700 (PDT)
+        bh=m7VwugYri/0ydSONAH1YsDHDtsI+XRLFJlSRbDAsRdY=;
+        b=WFt4pNA0pX7jkuZsySVGUptoQjjCjwvCLJlHB97G5r3gvPjgXzfNRkOWOiEJuVzs3k
+         4YZU9AdUbsljlEUhofZlDj2FMVThTC4JoaT/1nX7IqRGz6ANXeSIj1BDPqcX4W1BFKYS
+         LiBFwSDJ32NOh7w5x2meV4RoUFNqAtQv8uF03q5oZfIBRNBGlQUmXyvBCWiuTVn7zvpb
+         EgnCZxydaVSQ+eAqBZLw81jI+qQKwRV5wImBZ7zA3hCvdcGwgZqyUIlxPfWWAsQBtMNl
+         DGo4TUW2QPeLzzJhZF8D20uDWJVmYQpxvMf7z3YxdM64C8+o3PZWirwgQ3e5l8dKWv77
+         DlOA==
+X-Gm-Message-State: AGi0PuZFsXGdldS4Xh0r26suNWIACabML/UCiCFlZjFMWuvcP5vU6lv8
+        e7hZ2Y8AWW73maIOfjb/bHpMosKj
+X-Google-Smtp-Source: APiQypJTIWyeXciLf3R1g80axd6ogJuVtU6QzkP2hv3XaTKIZhnlNACbin7qnoSa0vY5wcrSuGxVeQ==
+X-Received: by 2002:a63:5112:: with SMTP id f18mr1589651pgb.356.1587451983635;
+        Mon, 20 Apr 2020 23:53:03 -0700 (PDT)
 Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
-        by smtp.gmail.com with ESMTPSA id v1sm193896pjs.36.2020.04.20.23.45.43
+        by smtp.gmail.com with ESMTPSA id g2sm1408684pjd.9.2020.04.20.23.53.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Apr 2020 23:45:43 -0700 (PDT)
-Date:   Mon, 20 Apr 2020 23:45:41 -0700
+        Mon, 20 Apr 2020 23:53:03 -0700 (PDT)
+Date:   Mon, 20 Apr 2020 23:53:01 -0700
 From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     "Dixit, Ashutosh" <ashutosh.dixit@intel.com>
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Subject: Re: Bug in 2.26: git-fetch fetching too many objects?
-Message-ID: <20200421064541.GG96152@google.com>
-References: <878siqxiu0.wl-ashutosh.dixit@intel.com>
+To:     Christoph Anton Mitterer <calestyo@scientia.net>
+Cc:     git@vger.kernel.org
+Subject: Re: how to (integrity) verify a whole git repo
+Message-ID: <20200421065301.GH96152@google.com>
+References: <acb9a2da98bce7ea3044cbf37c92163497f7e9e2.camel@scientia.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <878siqxiu0.wl-ashutosh.dixit@intel.com>
+In-Reply-To: <acb9a2da98bce7ea3044cbf37c92163497f7e9e2.camel@scientia.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-(+cc: Jonathan Tan, fetch negotiation expert)
-Hi,
+Hi Christoph,
 
-Dixit, Ashutosh wrote:
+Christoph Anton Mitterer wrote:
 
-> I am seeing a strange behavior in git-fetch in 2.26. I frequently fetch
-> from a couple of linux kernel remotes (so you will have an idea how big the
-> repo is). I have a different system with 2.20 on which I never see a
-> problem.
+> How to cryptographically verify the integrity of a whole git repo (i.e.
+> all it's commits/blobs/etc. in the history?
+
+This happens automatically as part of fetch.  When you fetch, the
+objects' content is transfered over the wire but not their names.  The
+name of each object is a hash of its content.  Thus, whenever you
+address an object by its name, you are using its verified identity.
+
+> Assume e.g. I have the kernel sources and want to do some bisection.
+> One has also retrieved Linus' and GregKH's key via some trusted path
+> and assumes that SHA1 is more or less still safe enough ;-)
 >
-> So let us say I fetch with 2.20 and it fetches say 20,000 objects. However
-> with 2.26 it starts fetching millions of objects, objects which are already
-> present locally. I don't know yet if this happens each time or only once in
-> a while, I have seen it happen twice, will keep an eye out for this.
->
-> If you open a bug please let me know and I can update it with my
-> findings. Unless it is a known issue, perhaps already fixed?
+> 1) Of course there is git verify-tag and verify-commit which are signed
+> with the GPPG, but these alone check, AFAIU, only the respective
+> tag/commit.
 
-Does "git config --global fetch.negotiationAlgorithm skipping" help?
-It might be time for us to make that the default.
+Tag and commit object content include the object ids for the objects
+they reference, so (assuming we are using a strong hash) their name
+is enough to verify all content reachable from them.
 
-I suspect this is related to the change that protocol v2 does to use
-stateless-rpc even in stateful protocols.  If my suspicion is correct,
-then the same behavior would show up with protocol v0 over http and
-https as well.
+In other words, it's a Merkle tree.
+
+> How to check everything else? Is it enough to git fsck --full?
+
+fsck is helpful for checking that objects are valid --- that they
+don't reference any objects you don't have, that their format is
+correct, and so on.  So it's good to run (or you can use the
+transfer.fsckObjects setting to run fsck as part of the clone or fetch
+operation).
 
 Thanks and hope that helps,
 Jonathan
