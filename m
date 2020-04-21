@@ -2,66 +2,66 @@ Return-Path: <SRS0=ToNR=6F=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 52549C54FC9
-	for <git@archiver.kernel.org>; Tue, 21 Apr 2020 18:44:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0CF8FC54FC9
+	for <git@archiver.kernel.org>; Tue, 21 Apr 2020 18:47:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 254822068F
-	for <git@archiver.kernel.org>; Tue, 21 Apr 2020 18:44:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E81972076C
+	for <git@archiver.kernel.org>; Tue, 21 Apr 2020 18:47:14 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nxZofAT7"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EXVSo01p"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729358AbgDUSog (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Apr 2020 14:44:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59972 "EHLO
+        id S1726632AbgDUSrN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Apr 2020 14:47:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60384 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1729144AbgDUSof (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 21 Apr 2020 14:44:35 -0400
-Received: from mail-ua1-x944.google.com (mail-ua1-x944.google.com [IPv6:2607:f8b0:4864:20::944])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BE23C0610D5
-        for <git@vger.kernel.org>; Tue, 21 Apr 2020 11:44:35 -0700 (PDT)
-Received: by mail-ua1-x944.google.com with SMTP id c17so5455428uae.12
-        for <git@vger.kernel.org>; Tue, 21 Apr 2020 11:44:35 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1726575AbgDUSrM (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 21 Apr 2020 14:47:12 -0400
+Received: from mail-vs1-xe41.google.com (mail-vs1-xe41.google.com [IPv6:2607:f8b0:4864:20::e41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3727AC0610D6
+        for <git@vger.kernel.org>; Tue, 21 Apr 2020 11:47:12 -0700 (PDT)
+Received: by mail-vs1-xe41.google.com with SMTP id y185so9141597vsy.8
+        for <git@vger.kernel.org>; Tue, 21 Apr 2020 11:47:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=AJU+Mm+yU5Dk5U/+rnLm9F3ReRPoBv6Pmy6JhxV/whg=;
-        b=nxZofAT72+1RlAgvN79JYjRCsgj36YB62TRqz71cdKoDE8NZ603WiGyBkHx+/Vx064
-         oaZOxskSm1g0IjUerVDeIAFL1bau9NUAPboCvNdz3DeBSaDpPcMTULKEjdIa+aY6YPSE
-         J9qvhJ1xDT6tHRh5pY92jSbZrADR4v4zz//8N4DmYJVexW53wP5e7bD2oRyFdf5K/9KB
-         kyxTxL2J/fuA5vXA+zzhoXNjF1KKIDzrHejEp7QFK5wTEXkEfMaySNwYOklvB0ie9xIo
-         auFXBoB1IOaCbmBQlIazlOr2fqv8f28S6mkMn9k9XqQC138gkCcVew4VCXct/EG/yZIK
-         42wQ==
+        bh=buLCIySQbkAE17bknJ2tXyF3NJL3nmZrzhxmzg+uWAg=;
+        b=EXVSo01pSF8bXXRQkTd9wu9sJK++NFITqmZltJCBN6FvNwrOMXvq4CZkL2q6nPp7DV
+         ujtSdPsXq3nyBUKevBFgxSzTWxQx6azjTqU4g+ppxqJk/SxZyUK70hZ0pnnH7boWZNso
+         R1gGAUlDRpxP8gWlICTRepO+BGqjODEK1WMSo8spuly8sm+IHfzjpH0okJ4wqxx5xiQZ
+         QEKs7L3W4JhNo4nOAC0vbiczk41BjvcuDEt85Xyhf4zgVTxF1uSTNQ8x+MigpmuDlPEZ
+         a1pugccgDLD5cmsYzTcxbG8rP0KjvvEipafrF82cvAED7QGo2Z0s5NWqilB0yIzWd5qM
+         o32Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=AJU+Mm+yU5Dk5U/+rnLm9F3ReRPoBv6Pmy6JhxV/whg=;
-        b=qR48l8YZ7mjBbYANpzNaz9SIs73JXiUTxgEaxGielc20dV2VxMbPkM437lXCAk66Th
-         sGRzFmltphblt3nnBiAa8pKVyyoX8L7g8AyKrxhXzBnE/9clz6HdUYOqs+l8LqvZ3kAN
-         6uB3p1RXW9QH/EmMMHW9XCnWG3732UDitADUCmacGtF16a71k9sar384BjHbH4nv81RF
-         3A0qv0zbM9rGIbjf/ZL8L0US52SLGXzM3yguFWGt7qAM9IuGFRb1P4Cc6Xxmio/mvjCS
-         qzF3pPasCevzHylaLSF17LViDD8mdcg6z4mTjmHyOHp+Foa7bBVNugw738KnFJAcYVxS
-         zqWA==
-X-Gm-Message-State: AGi0PubTdwc7hMedbKNNAKCVMXgJRzfCdr4bk4ywu5TwcgQaIJTNAzbt
-        k8tAz7v4R7nxQAu9T0jE3bUAdeIbrcEYLq+V7D8=
-X-Google-Smtp-Source: APiQypJYvHOwUAGK33vYGOaSVkBkdNX/C9s30Dbu0VXl3r6K8idIRIMWB7wTF6qYRdC/PgjvR5ZYnC0KWkSuijcfk7c=
-X-Received: by 2002:a9f:21eb:: with SMTP id 98mr13367111uac.62.1587494674468;
- Tue, 21 Apr 2020 11:44:34 -0700 (PDT)
+        bh=buLCIySQbkAE17bknJ2tXyF3NJL3nmZrzhxmzg+uWAg=;
+        b=XX7CVV0eQkYuPW5niDxBIhWN9994GDoul9SQHHDmoxGb55VXtg50xuJeTGP+Nfvf1n
+         VKO9PklFd2eo0TmgH26jyUxncY0A+NREmFsoDRzHk1mNogR24gIaVzx5L40eJnYna87M
+         Hxyl5b/4/Q6qCuW5dbFpI3eiC8pIHIrpZkNMmWwvZ7U6kDh+gyYf0zEFQQcqn6yRZqZc
+         TWC3JZTvPNwXKmmSeTLdvxFeT9KTAADohR0R6fzV731WF5kpgW3bo+Soavr7muUggKll
+         EiGlpvjzUxg2Ntem9zTc1sOobBp3uNHBQZu2hCVf88aMfprukCkaEWe6mQ4YbdNpg/bJ
+         0kLw==
+X-Gm-Message-State: AGi0PuYn87Pxtd0G3/QK0+1FLRMcCxKzVLEU0lKGTYjSzxpwUmoxp52o
+        2uqIb8o1LDYXOYMPyUYzj0lAf4h0jHlFRgmq/d0=
+X-Google-Smtp-Source: APiQypJmmgDx1A8bjV+gvaJwHXidls+fS+vax8ToJEodLtrU8lKDQyctgw/s1tsBWQ1PLbehfl9be1HlM9eBiWhV/x0=
+X-Received: by 2002:a67:c592:: with SMTP id h18mr16496327vsk.118.1587494831362;
+ Tue, 21 Apr 2020 11:47:11 -0700 (PDT)
 MIME-Version: 1.0
 References: <cover.1587240635.git.martin.agren@gmail.com> <cover.1587297254.git.martin.agren@gmail.com>
- <54e10bb06a39d23591ea4d02665083d705682468.1587297254.git.martin.agren@gmail.com>
- <xmqqd082rrns.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqd082rrns.fsf@gitster.c.googlers.com>
+ <c3012f1da361af354a904f821b83d61f2534ccb2.1587297254.git.martin.agren@gmail.com>
+ <xmqqzhb6q74r.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqzhb6q74r.fsf@gitster.c.googlers.com>
 From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Tue, 21 Apr 2020 20:44:23 +0200
-Message-ID: <CAN0heSrqDYrZnR8aGRksf4qLZE0YPgPYUbK4AFnnOX470M34Ow@mail.gmail.com>
-Subject: Re: [PATCH 1/4] strbuf: fix doc for `strbuf_attach()`
+Date:   Tue, 21 Apr 2020 20:47:00 +0200
+Message-ID: <CAN0heSp3KWU8Q8_+-GPUePfQorbyWdwm-eo4eGBRcnTtxOvS4A@mail.gmail.com>
+Subject: Re: [PATCH 3/4] strbuf: introduce `strbuf_attachstr()`
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
@@ -72,50 +72,56 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 20 Apr 2020 at 19:30, Junio C Hamano <gitster@pobox.com> wrote:
+On Mon, 20 Apr 2020 at 21:39, Junio C Hamano <gitster@pobox.com> wrote:
 >
 > Martin =C3=85gren <martin.agren@gmail.com> writes:
 >
-> > The function handles reallocation and truncation, yet the docs say that
-> > the "amount [of allocated memory] must be larger than the string length=
-,
-> > because the string you pass is supposed to be a NUL-terminated string".
+> > +/**
+> > + * Attach a string to a buffer similar to `strbuf_attachstr_len()`.
+> > + * Useful if you do not know the length of the string.
+> > + */
+> > +static inline void strbuf_attachstr(struct strbuf *sb, char *str)
+> > +{
+> > +     size_t len =3D strlen(str);
+> > +
+> > +     strbuf_attach(sb, str, len, len + 1);
+> > +}
 >
-> IOW, _attach() does not mind if the original lacks '\0' at the end.
-
-Right, nor if it lacks the space for it.
-
-> > diff --git a/strbuf.h b/strbuf.h
-> > index ce8e49c0b2..2a462f70cc 100644
-> > --- a/strbuf.h
-> > +++ b/strbuf.h
-> > @@ -112,10 +112,12 @@ char *strbuf_detach(struct strbuf *sb, size_t *sz=
-);
-> >  /**
-> >   * Attach a string to a buffer. You should specify the string to attac=
-h,
-> >   * the current length of the string and the amount of allocated memory=
-.
-> > + * The amount must be at least as large as the string length. If the t=
-wo
-> > + * lengths are equal, reallocation will be handled as appropriate and =
-in
-> > + * any case, the string will be NUL-truncated as implied by `len`.
+> This is somewhat worrysome in that the interface is _so_ simple that
+> people may fail to see that str must be allocated piece of memory,
+> and it is preferrable if string fully fills the allocation.
 >
-> NUL-truncated?  Ah, if mem and len are the same, the string is reallocate=
-d
-> to fit an extra byte to NUL-terminate, to make sure strlen(sb->buf)=3D=3D=
-len
-> holds.  Makes sense.
+> We should repeat that (instead of just trusting "similar to ..."
+> would tell them enough) in the doc, perhaps?
 
-Exactly. NUL-terminated would be better. I think I'll split that last
-sentence and replace it with something like the following:
+Yeah, that's a good point. I'll expand on this to try to better get
+through that there are things to consider here.
 
-  If the two lengths are equal, reallocation will be handled as
-  needed. And regardless, the string will be NUL-terminated at `len`.
+> > @@ -1095,7 +1095,7 @@ void trailer_info_get(struct trailer_info *info, =
+const char *str,
+> >       for (ptr =3D trailer_lines; *ptr; ptr++) {
+> >               if (last && isspace((*ptr)->buf[0])) {
+> >                       struct strbuf sb =3D STRBUF_INIT;
+> > -                     strbuf_attach(&sb, *last, strlen(*last), strlen(*=
+last));
+> > +                     strbuf_attachstr(&sb, *last);
+> >                       strbuf_addbuf(&sb, *ptr);
+> >                       *last =3D strbuf_detach(&sb, NULL);
+> >                       continue;
+>
+> This is not wrong per-se, but it is unclear if use of strbuf_attach*
+> family to avoid an explicit malloc/copy/free is buying much at this
+> callsite.  Simplifying the code here of course is not within the
+> scope of this series.
 
-(One might still have strlen(sb->buf) < len though. This just guarantees
-"<=3D")
+For the other patches in this series, I spent some time and effort
+investigating where strings came from, "do I really feel certain that
+they're NUL-terminated?". But for this patch, I more or less went "we've
+been using strlen on this all this time, surely if it wasn't guaranteed
+to be NUL-terminated we'd have messed up already". And I don't think I'm
+making anything worse. But yeah, I didn't really step back to look at
+what these sites are really doing, and how, as much as I did for the
+others.
 
 
 Martin
