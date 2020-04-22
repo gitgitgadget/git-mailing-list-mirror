@@ -2,99 +2,94 @@ Return-Path: <SRS0=GtnF=6G=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D1FC3C55185
-	for <git@archiver.kernel.org>; Wed, 22 Apr 2020 21:27:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 39DB5C54FCB
+	for <git@archiver.kernel.org>; Wed, 22 Apr 2020 22:13:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AF1DD2084D
-	for <git@archiver.kernel.org>; Wed, 22 Apr 2020 21:27:11 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="hONGawWa"
+	by mail.kernel.org (Postfix) with ESMTP id 1196220706
+	for <git@archiver.kernel.org>; Wed, 22 Apr 2020 22:13:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726161AbgDVV1K (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Apr 2020 17:27:10 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:37590 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726066AbgDVV1K (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 22 Apr 2020 17:27:10 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 325AB6088B;
-        Wed, 22 Apr 2020 21:26:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1587590799;
-        bh=saPBVM/bRRMqh6F+dZbYIQQKLF4E1OaStAT6qK9IxNQ=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=hONGawWa36u3NMkIpg1CKk1gnCWFI7xzM5r5aRvGcDGwwBfgvV25lXTGQ0hHFniRS
-         ru22ikVEO/r09gBNLYjBfre/A0fkiGGLYIO8J95P0v8NUHg5Km0wkc+rQm51IuPCZu
-         kyPhoaUehrBjzzvJKFKt3Ak7c4ZcimuciI4ymWX973Wyv1F9a/kHHFuoXqwTU4W076
-         t8mG100t2CHHZ+t5Cozayg1goP3l4tsuacs7T107YXUcilb9fsAf0Qu5WE65Vh2OO2
-         5htpPC15hvNSdQkf2YUtrNOIG/0Fvs8OT09z62c7QyK4n36sHeQZK8dMXpkmtqcKYa
-         5ilfxNetsjJ2nXZAPN0AYP2piJXo6FGi41NYVWtMU2sSa8A58ehsuY+fYR/EgBObTl
-         ZKVtMdPzZ5l+a2SU7cRpyA10MOxW902nMf8qaC7Ey/Hkcu/ccq7tLZaaj8ipjIcXcG
-         HyWKIgAdjW3ZQYtpff/ZMe4Lp/TuKxQ8SRIflExu+HaTazzuMLC
-Date:   Wed, 22 Apr 2020 21:26:33 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Yuri <yuri@rawbw.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [BUG REPORT] --date argument doesn't validate dates
-Message-ID: <20200422212633.GI6465@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Yuri <yuri@rawbw.com>, git@vger.kernel.org
-References: <d633919a-99a4-0b90-f355-66a17000f83f@rawbw.com>
+        id S1726006AbgDVWNg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Apr 2020 18:13:36 -0400
+Received: from cloud.peff.net ([104.130.231.41]:36658 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725839AbgDVWNg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Apr 2020 18:13:36 -0400
+Received: (qmail 11825 invoked by uid 109); 22 Apr 2020 22:13:36 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 22 Apr 2020 22:13:36 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 3284 invoked by uid 111); 22 Apr 2020 22:24:42 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 22 Apr 2020 18:24:42 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 22 Apr 2020 18:13:34 -0400
+From:   Jeff King <peff@peff.net>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Ilya Tretyakov <it@it3xl.ru>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 0/3] credential: handle partial URLs in config settings
+ again
+Message-ID: <20200422221334.GA571740@coredump.intra.peff.net>
+References: <pull.615.git.1587588665.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="0XMZdl/q8hSSmFeD"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <d633919a-99a4-0b90-f355-66a17000f83f@rawbw.com>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.5.0-2-amd64)
+In-Reply-To: <pull.615.git.1587588665.gitgitgadget@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, Apr 22, 2020 at 08:51:02PM +0000, Johannes Schindelin via GitGitGadget wrote:
 
---0XMZdl/q8hSSmFeD
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> This fixes the problem illustrated by Peff's example
+> [https://lore.kernel.org/git/20200422040644.GC3559880@coredump.intra.peff.net/]
+> , in maint-2.17:
+> 
+>   $ echo url=https://example.com |
+>     git -c credential.example.com.username=foo credential fill
+>   warning: url has no scheme: example.com
+>   fatal: credential url cannot be parsed: example.com
+> 
+> The fix is necessarily different than what was proposed by brian
+> [https://lore.kernel.org/git/20200422012344.2051103-1-sandals@crustytoothpaste.net/] 
+> because that fix targets v2.26.x which has 46fd7b390034 (credential: allow
+> wildcard patterns when matching config, 2020-02-20).
+> 
+> This patch series targets maint-2.17 instead (and might actually not be able
+> to fix maint due to that wildcard pattern patch; I haven't had the time to
+> check yet).
 
-On 2020-04-22 at 20:40:48, Yuri wrote:
-> For example, the following command accepts an invalid month "Dx" and an
-> invalid year "20221" and sets the month to "Apr" and the year to "2020".
+Yes, this will remove the die() in all versions, but in v2.26.0 and up,
+that config would be silently ignored (and your new test will fail).
 
-The --date argument accepts a wide variety of formats, including some
-formally specified ones, as well generalized handling through the
-"approxidate" approach.  So it's designed to operate on formats that are
-not well understood and do the best it can with them.  This also allows
-it do things like ignore the irrelevant word "ago" in "5 days ago" and
-still do the right thing.
+> Please note that Git v2.17.4 will not do what we would expect here: if any
+> host name (without protocol) is specified, e.g. -c
+> credential.golli.wog.username = boo, it will actually ignore the host name.
+> That is, this will populate the username:
+> 
+>   $ echo url=https://example.com |
+>     git -c credential.totally.bog.us.username=foo credential fill
 
-If you want to be sure that your date is uniformly understood, then the
-best approach is to either use the Git internal format or RFC 3339
-(which is a profile of ISO 8601).
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+That seems scary. What if it is not .username, but:
 
---0XMZdl/q8hSSmFeD
-Content-Type: application/pgp-signature; name="signature.asc"
+  [credential "example.com"]
+  username = foo
+  helper = "!echo password=bar"
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
+? (Or you can imagine a helper that is pulling from a read-only store,
+like "pass"). That would send the credential to the wrong host.
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXqC2iQAKCRB8DEliiIei
-gbjxAP0V8kCOXuXl8r7m94xBnhpy7Mti/Cjt0uHF0GkAyYeinQEA8kH/ge2W2uau
-yQO6RY6rbZAoD3Eieln2Dp74XaWoFg4=
-=U/D8
------END PGP SIGNATURE-----
+I think any fix we do here needs to make sure we are not any
+reintroducing wrong-host problems (though I do admit that the usage like
+my example above is probably way less common than vanilla helpers that
+do the host-selection themselves).
 
---0XMZdl/q8hSSmFeD--
+-Peff
