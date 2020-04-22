@@ -7,134 +7,94 @@ X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F5EFC55185
-	for <git@archiver.kernel.org>; Wed, 22 Apr 2020 17:17:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D13EC54FCB
+	for <git@archiver.kernel.org>; Wed, 22 Apr 2020 17:18:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5CB8C20776
-	for <git@archiver.kernel.org>; Wed, 22 Apr 2020 17:17:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D022E2082E
+	for <git@archiver.kernel.org>; Wed, 22 Apr 2020 17:18:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="TM3KHFde"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="TlhPtTg/"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726670AbgDVRRn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Apr 2020 13:17:43 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:59929 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726057AbgDVRRm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Apr 2020 13:17:42 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 88BE3C0200;
-        Wed, 22 Apr 2020 13:17:40 -0400 (EDT)
+        id S1726463AbgDVRSv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Apr 2020 13:18:51 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:64319 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726006AbgDVRSu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Apr 2020 13:18:50 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id D0236C2B85;
+        Wed, 22 Apr 2020 13:18:48 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=SqhNdZAHsuk3
-        3sfX04JUyARdTSo=; b=TM3KHFde2w1OlLoGUd5MwWTRlGtNLBYPMeuRgYSFafSn
-        fB0Jh5OqkFThv1W9c6zszOl1OK6qZ/0Xap6aIw0RMd0LmwNuIoizjTE4pxRAOMx7
-        sgATqs3Tdr0meblNTVICMgb1cgTm8Owhojm1fqz6zac+pi5AYxq6oryf+scr05A=
+        :content-type; s=sasl; bh=CQmGGS4feauKxeoykeA5o6F48Us=; b=TlhPtT
+        g/6Y7udoj9xJx5ttCHrLtWipFywX9gVF8Q7Fsjaut6M02ZQhT54x78UdTYmFqrvI
+        yjFGrEaFeISnmalnFPf2P8iJecWd7OXsUAja0nT+8L8TnSQqN1MazI324GCYiwwL
+        vcxTfw9Q03hxDV9jHkZ7x6IckE2nrM86EBVbY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=l4+aVX
-        0vEUecDLJ11u7tCrIZUWs+jnb3tHLmkSYb9N3LOHkK0v/etqF/y8EgmphmmC1WdC
-        KX7LwuRNePOIumA9U3Fnfxwc2vYjDfUjOSRnRV+acSEk7jOBNvweDZp9LF/EIc3e
-        yGVC9bQEeIq+3YcAmyeINKj0q7vju9K4c0RRQ=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 72D59C01FE;
-        Wed, 22 Apr 2020 13:17:40 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=K/HolARdj5H+6FdcJwiliPAKZLY8wcYL
+        oCDl75Rp8V7ymJY7SIVeGMdGnDdpUOLjTrqIYzOOiGQsySgbIuttfCvUa7PtbqRy
+        dIOzdxrKt6EBmq8FnDleFxxJJZs6X3K3l+HCYvb4AXK0MAxhN4ECaNISo5uPHXL/
+        nrPxbhAPjO8=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id C7C46C2B84;
+        Wed, 22 Apr 2020 13:18:48 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A29F2C01FB;
-        Wed, 22 Apr 2020 13:17:37 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 0DB7BC2B82;
+        Wed, 22 Apr 2020 13:18:45 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v3 2/2] date.c: allow compact version of ISO-8601 datetime
-References: <cover.1586856398.git.congdanhqx@gmail.com>
-        <cover.1587559135.git.congdanhqx@gmail.com>
-        <225b6401bd1f7eddc245acfd2c4b37c50c978491.1587559135.git.congdanhqx@gmail.com>
-Date:   Wed, 22 Apr 2020 10:17:35 -0700
-In-Reply-To: <225b6401bd1f7eddc245acfd2c4b37c50c978491.1587559135.git.congdanhqx@gmail.com>
-        (=?utf-8?B?IsSQb8OgbiBUcuG6p24gQ8O0bmc=?= Danh"'s message of "Wed, 22 Apr
- 2020 20:15:53 +0700")
-Message-ID: <xmqqftcvjv80.fsf@gitster.c.googlers.com>
+To:     Jessica Clarke <jrtc27@jrtc27.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH] config.mak.uname: Define FREAD_READS_DIRECTORIES for GNU/Hurd
+References: <20200422153347.40018-1-jrtc27@jrtc27.com>
+Date:   Wed, 22 Apr 2020 10:18:44 -0700
+In-Reply-To: <20200422153347.40018-1-jrtc27@jrtc27.com> (Jessica Clarke's
+        message of "Wed, 22 Apr 2020 16:33:47 +0100")
+Message-ID: <xmqqblnjjv63.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 2A03D11E-84BD-11EA-ADF0-8D86F504CC47-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 52C73D3E-84BD-11EA-822A-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh  <congdanhqx@gmail.com> writes=
-:
+Jessica Clarke <jrtc27@jrtc27.com> writes:
 
-> Signed-off-by: =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh <congdanhqx@g=
-mail.com>
-> ---
->  date.c          | 22 ++++++++++++++++++++++
->  t/t0006-date.sh |  3 +++
->  2 files changed, 25 insertions(+)
+> GNU/Hurd is another platform that behaves like this. Set it to
+> UnfortunatelyYes so that config directory files are correctly processed.
+> This fixes the corresponding 'proper error on directory "files"' test in
+> t1308-config-set.sh.
 >
-> diff --git a/date.c b/date.c
-> index 62f23b4702..882242c2db 100644
-> --- a/date.c
-> +++ b/date.c
-> @@ -672,6 +672,28 @@ static int match_digit(const char *date, struct tm=
- *tm, int *offset, int *tm_gmt
->  		n++;
->  	} while (isdigit(date[n]));
-> =20
-> +	/* 8 digits, compact style of ISO-8601's date: YYYYmmDD */
-> +	/* 6 digits, compact style of ISO-8601's time: HHMMSS */
-> +	if (n =3D=3D 8 || n =3D=3D 6) {
-> +		unsigned int num1 =3D num / 10000;
-> +		unsigned int num2 =3D (num % 10000) / 100;
-> +		unsigned int num3 =3D num % 100;
-> +		if (n =3D=3D 8 && num1 > 1900 &&
-> +		    num2 > 0 && num2 <=3D 12 &&
-> +		    num3 > 0  && num3 <=3D 31) {
-> +			tm->tm_year =3D num1 - 1900;
-> +			tm->tm_mon  =3D num2 - 1;
-> +			tm->tm_mday =3D num3;
-> +		} else if (n =3D=3D 6 && num1 < 60 && num2 < 60 && num3 <=3D 60) {
-> +			tm->tm_hour =3D num1;
-> +			tm->tm_min  =3D num2;
-> +			tm->tm_sec  =3D num3;
-> +			if (*end =3D=3D '.' && isdigit(end[1]))
-> +				strtoul(end + 1, &end, 10);
-> +		}
-> +		return end - date;
-> +	}
-> +
+> Thanks-to: Jeff King <peff@peff.net>
+> Signed-off-by: Jessica Clarke <jrtc27@jrtc27.com>
+> ---
+>  config.mak.uname | 1 +
+>  1 file changed, 1 insertion(+)
 
-Looks sensible except that on our planet, one day has only 24 hours
-;-).
+I'd tweak s/Thanks-to:/Helped-by:/ while queuing.
 
-I think we should try to reuse existing helpers as much as possible
-in date.c to avoid such stupid errors.  During my review of [1/2] I
-found is_date() would be a good thing to try reusing and also
-extracted is_hms() as another candidate we could reuse.
+Thanks for a quick turnaround after reporting the issue and getting
+a response.  The way collaboration is working feels wonderful.
 
->  	/* Four-digit year or a timezone? */
->  	if (n =3D=3D 4) {
->  		if (num <=3D 1400 && *offset =3D=3D -1) {
-> diff --git a/t/t0006-date.sh b/t/t0006-date.sh
-> index 80917c81c3..75ee9a96b8 100755
-> --- a/t/t0006-date.sh
-> +++ b/t/t0006-date.sh
-> @@ -82,6 +82,9 @@ check_parse 2008-02-14 bad
->  check_parse '2008-02-14 20:30:45' '2008-02-14 20:30:45 +0000'
->  check_parse '2008-02-14 20:30:45 -0500' '2008-02-14 20:30:45 -0500'
->  check_parse '2008.02.14 20:30:45 -0500' '2008-02-14 20:30:45 -0500'
-> +check_parse '20080214T203045-04:00' '2008-02-14 20:30:45 -0400'
-> +check_parse '20080214T203045 -04:00' '2008-02-14 20:30:45 -0400'
-> +check_parse '20080214T203045.019-04:00' '2008-02-14 20:30:45 -0400'
->  check_parse '2008-02-14 20:30:45.019-04:00' '2008-02-14 20:30:45 -0400=
-'
->  check_parse '2008-02-14 20:30:45 -0015' '2008-02-14 20:30:45 -0015'
->  check_parse '2008-02-14 20:30:45 -5' '2008-02-14 20:30:45 +0000'
+
+
+>
+> diff --git a/config.mak.uname b/config.mak.uname
+> index 0ab8e00938..3e526f6b9f 100644
+> --- a/config.mak.uname
+> +++ b/config.mak.uname
+> @@ -308,6 +308,7 @@ ifeq ($(uname_S),GNU)
+>  	NO_STRLCPY = YesPlease
+>  	HAVE_PATHS_H = YesPlease
+>  	LIBC_CONTAINS_LIBINTL = YesPlease
+> +	FREAD_READS_DIRECTORIES = UnfortunatelyYes
+>  endif
+>  ifeq ($(uname_S),IRIX)
+>  	NO_SETENV = YesPlease
