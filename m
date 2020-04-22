@@ -2,407 +2,132 @@ Return-Path: <SRS0=GtnF=6G=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 20085C55189
-	for <git@archiver.kernel.org>; Wed, 22 Apr 2020 08:43:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5634CC55189
+	for <git@archiver.kernel.org>; Wed, 22 Apr 2020 08:54:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EC97B206B9
-	for <git@archiver.kernel.org>; Wed, 22 Apr 2020 08:43:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2B44F206A2
+	for <git@archiver.kernel.org>; Wed, 22 Apr 2020 08:54:31 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="unpnI85w"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725961AbgDVInc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Apr 2020 04:43:32 -0400
-Received: from v6.sk ([167.172.42.174]:53276 "EHLO v6.sk"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725786AbgDVInb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Apr 2020 04:43:31 -0400
-Received: from localhost (v6.sk [IPv6:::1])
-        by v6.sk (Postfix) with ESMTP id 89FF4610A8
-        for <git@vger.kernel.org>; Wed, 22 Apr 2020 08:42:58 +0000 (UTC)
-Date:   Wed, 22 Apr 2020 10:42:54 +0200
-From:   Lubomir Rintel <lkundrak@v3.sk>
-To:     git@vger.kernel.org
-Subject: Git 2.26 fetches many times more objects than it should, wasting
- gigabytes
-Message-ID: <20200422084254.GA27502@furthur.local>
+        id S1726068AbgDVIya (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Apr 2020 04:54:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49930 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1725786AbgDVIy3 (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 22 Apr 2020 04:54:29 -0400
+Received: from mail-qt1-x841.google.com (mail-qt1-x841.google.com [IPv6:2607:f8b0:4864:20::841])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D394C03C1A6
+        for <git@vger.kernel.org>; Wed, 22 Apr 2020 01:54:27 -0700 (PDT)
+Received: by mail-qt1-x841.google.com with SMTP id k12so1073364qtm.4
+        for <git@vger.kernel.org>; Wed, 22 Apr 2020 01:54:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=spmf+qZxw4UKEzHSt6Aa+gHLcQhaqvRjyj1CZmuX298=;
+        b=unpnI85wkJmdHlXgJWsRRPOc6VLfrer6+dS4U73e+GSMBTA/55kskTEGc67L2K9j5B
+         /fswcPUTeWvEUOkDu5STX8+VPhOlQKkn0G4AXRih/K+56MzhdaPBjkHNcTqIr7aK7oEX
+         4tTJ+PvnnPhHKiy/8Tbwrjh07OCToN3JKq2jpuqJtDOoBIpfuPtbW4+QNluFXcV/PWd4
+         2SK5adobLvl5ekhaTCi5HMw7cbcVd8q4DWNrV5Ft9Ve++VruNLvzkBajW7dFBDg97HNk
+         77HdrNRStMLeTrDdvNwkfVa/0S2OQneJwiBsjgspbOlxfIqEKJS5QWIoft05HdmpFRVz
+         VMGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=spmf+qZxw4UKEzHSt6Aa+gHLcQhaqvRjyj1CZmuX298=;
+        b=VK3N0SFtx15Xb8+8bivBsM+/WMo+6A6Rmdz2dL8XGJvAQVklVMqT0vWabtwBnd5MyG
+         DautSBonVkGCqXWALrV1uhfgamHa6CWGmwKomybow4asjKs3OieLi1aHWWzNs/DMRkg2
+         NlnyEfixBh88kG6CbTWhaaswm6nH+qLSoZUmh+/4zTSjPwXFK5p80mUzKF4Q6F9RLdbU
+         okgzXNe1c8IB/uLFnK5SQxyE9juCtMjlT/OapBma2l9Rsbh4oTK5U904AahVqviskr5i
+         dgsG5dsXZOfD2sP3V26yPSgP5AOHdlj8i+HY+26jO+VPQUjmhXLn0smLNoiRdIb0vuaI
+         AxXw==
+X-Gm-Message-State: AGi0PuZXFiXM2TYVsk2Y4S0Q4xiLwfJl/x+RSQiTyzFeioopYvm1VO+K
+        KOxRLgixVH7qm3GaPEJOFKE=
+X-Google-Smtp-Source: APiQypLqhOuVOJzX6Bp/uOOEybf3vDukMI0bhZj6XXdzFxgUCpqxjm5f1zYRXhlGTdbWfH6BRvACNQ==
+X-Received: by 2002:ac8:23e3:: with SMTP id r32mr25798832qtr.268.1587545666654;
+        Wed, 22 Apr 2020 01:54:26 -0700 (PDT)
+Received: from generichostname ([199.249.110.29])
+        by smtp.gmail.com with ESMTPSA id w42sm3637188qtj.63.2020.04.22.01.54.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Apr 2020 01:54:26 -0700 (PDT)
+Date:   Wed, 22 Apr 2020 04:54:24 -0400
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 6/8] t9164: don't use `test_must_fail test_cmp`
+Message-ID: <20200422085424.GA25366@generichostname>
+References: <cover.1587372771.git.liu.denton@gmail.com>
+ <dfccb04e2d03656e18286bcca2c558e19d748ffd.1587372771.git.liu.denton@gmail.com>
+ <CAPig+cQ6XS=ZDhAKGuDiGM4zcoxUhnghMY250qYLjuT8YZaoMg@mail.gmail.com>
+ <xmqqr1whrkaa.fsf@gitster.c.googlers.com>
+ <20200421201627.GA9357@generichostname>
+ <xmqqa734muw7.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <xmqqa734muw7.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Junio,
 
-my git repository with Linux grows several gigabytes each time I fetch:
+On Tue, Apr 21, 2020 at 01:44:08PM -0700, Junio C Hamano wrote:
+> Denton Liu <liu.denton@gmail.com> writes:
+> 
+> > On Mon, Apr 20, 2020 at 01:09:49PM -0700, Junio C Hamano wrote:
+> >> Eric Sunshine <sunshine@sunshineco.com> writes:
+> >> 
+> >> > On Mon, Apr 20, 2020 at 4:55 AM Denton Liu <liu.denton@gmail.com> wrote:
+> >> >> The test_must_fail function should only be used for git commands since
+> >> >> we assume that external commands work sanely. Since test_cmp() just
+> >> >> wraps an external command, replace `test_must_fail test_cmp` with
+> >> >> `! test_cmp`.
+> >> >>
+> >> >> Signed-off-by: Denton Liu <liu.denton@gmail.com>
+> >> >> ---
+> >> >> diff --git a/t/t9164-git-svn-dcommit-concurrent.sh b/t/t9164-git-svn-dcommit-concurrent.sh
+> >> >> @@ -103,7 +103,7 @@ test_expect_success 'check if pre-commit hook fails' '
+> >> >> -               test_must_fail svn_cmd commit -m "this commit should fail" &&
+> >> >> +               ! svn_cmd commit -m "this commit should fail" &&
+> >> >
+> >> > Hmm, this doesn't look like 'test_cmp' mentioned in the commit message.
+> >> 
+> >> Yeah, the other hunk is about test_cmp and this hunk is about
+> >> svn_cmd.  The stated rationale applies to both wrappers, I think.
+> >> 
+> >>     Subject: [PATCH 6/8] t9164: use test_must_fail only on git
+> >> 
+> >>     The `test_must_fail` function should only be used for git commands;
+> >>     we are not in the business of catching segmentation fault by external
+> >>     commands.  Shell helper functions test_cmp and svn_cmd used in this
+> >>     script are wrappers around external commands, so just use `! cmd`
+> >>     instead of `test_must_fail cmd`
+> >> 
+> >> perhaps, without any change to the code?
+> >
+> > Thanks, this looks good to me too.
+> 
+> Thanks.  
+> 
+> So the 4-patch test-must-fail-fix series is now complete?  Whee.
 
-  [lkundrak@furthur linux]$ git fetch --all
-  Fetching origin
-  Receiving objects: 100% (431/431), 72.19 KiB | 345.00 KiB/s, done.
-  Fetching stable
-  Receiving objects: 100% (127228/127228), 22.01 MiB | 1.93 MiB/s, done.
-  Fetching next
-  Receiving objects: 100% (31113/31113), 6.51 MiB | 1.11 MiB/s, done.
-  Fetching net
-  Receiving objects: 100% (7331963/7331963), 1.20 GiB | 2.48 MiB/s, done.
-  Fetching tip
-  Receiving objects: 100% (7334643/7334643), 1.20 GiB | 2.44 MiB/s, done.
-  Fetching irqchip
-  Receiving objects: 100% (7333669/7333669), 1.20 GiB | 2.44 MiB/s, done.
-  Fetching drm
-  Receiving objects:  26% (1931483/7336388), 687.05 MiB | 1.55 MiB/s
-  ...
+Hannes suggested that we should drop the tip commit of this series[1]
+and I tend to agree with him. Aside from that, though, the series is
+ready to go.
 
-Note the 1.2 GiB fetches from irqchip, tip, drm, net, etc. It looks like
-the whole history gets fetched instead of the few changes that were
-added since the fetch.
+(I could improve 3/8 as suggested here[2] but I'll throw it in the next
+series instead since I'm trying to get into the habit of not adding in
+unrelated patches.)
 
-When I've first noticed this happening I've thrown away the repository,
-initialized a new one with Git 2.26.0 and fetched everything anew, but
-that didn't help.
-
-I have very little clue about how to debug this. I'd be thankful for
-suggestions about how to provide more details if necessary. I'm using
-git from a Fedora package with this version number:
-
-  [lkundrak@furthur linux]$ rpm -q git
-  git-2.26.0-1.fc32.x86_64
-
-Here's a full log of my today's unfortunate fetch (still running...)
-
-  [lkundrak@furthur linux]$ git fetch --all
-  Fetching origin
-  remote: Enumerating objects: 766, done.
-  remote: Counting objects: 100% (636/636), done.
-  remote: Compressing objects: 100% (154/154), done.
-  remote: Total 431 (delta 355), reused 335 (delta 275)
-  Receiving objects: 100% (431/431), 72.19 KiB | 345.00 KiB/s, done.
-  Resolving deltas: 100% (355/355), completed with 120 local objects.
-  From git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux
-     ae83d0b416db00..18bf34080c4c3b  master     -> origin/master
-  Fetching stable
-  remote: Enumerating objects: 164963, done.
-  remote: Counting objects: 100% (156255/156255), done.
-  remote: Compressing objects: 100% (35062/35062), done.
-  remote: Total 127228 (delta 109912), reused 101371 (delta 91954)
-  Receiving objects: 100% (127228/127228), 22.01 MiB | 1.93 MiB/s, done.
-  Resolving deltas: 100% (109912/109912), completed with 12616 local objects.
-  From git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux
-     8488c3f3bc867e..8e2406c8518775  linux-4.19.y -> stable/linux-4.19.y
-     dc4059d21d87e8..6ccc74c083c0d4  linux-5.4.y  -> stable/linux-5.4.y
-     0634aa9416af81..937381741d02cc  linux-5.5.y  -> stable/linux-5.5.y
-     f07f08b09f05e3..7c572703216073  linux-5.6.y  -> stable/linux-5.6.y
-   * [new tag]                       v4.19.117    -> v4.19.117
-   * [new tag]                       v5.4.34      -> v5.4.34
-   * [new tag]                       v5.5.19      -> v5.5.19
-   * [new tag]                       v5.6.6       -> v5.6.6
-  Fetching next
-  remote: Enumerating objects: 75381, done.
-  remote: Counting objects: 100% (38266/38266), done.
-  remote: Compressing objects: 100% (9052/9052), done.
-  remote: Total 31113 (delta 26421), reused 26574 (delta 22000)
-  Receiving objects: 100% (31113/31113), 6.51 MiB | 1.11 MiB/s, done.
-  Resolving deltas: 100% (26421/26421), completed with 4591 local objects.
-  From git://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next
-   + e98ff732aff9f7...d7b7d5f7953a08 akpm          -> next/akpm  (forced update)
-   + 29d027a641745b...8e32e79bb64e7e akpm-base     -> next/akpm-base  (forced update)
-   + 6735c84f78e417...a5840f9618a90e master        -> next/master  (forced update)
-   + f507be28f9e551...aa411fab3c05eb pending-fixes -> next/pending-fixes  (forced update)
-     ae83d0b416db00..18bf34080c4c3b  stable        -> next/stable
-   * [new tag]                       next-20200422 -> next-20200422
-  Fetching xo
-  From github.com:hackerspace/olpc-xo175-linux
-   * [new branch]                    lr/8250-json-schema-v2 -> xo/lr/8250-json-schema-v2
-   + 3942092b6c20ea...483c7451896cff lr/ariel               -> xo/lr/ariel  (forced update)
-   * [new branch]                    lr/ch7033-v4           -> xo/lr/ch7033-v4
-     0472b4080244b7..d2339c1aeb192d  lr/mmp-adma            -> xo/lr/mmp-adma
-   * [new branch]                    lr/mmp-dts             -> xo/lr/mmp-dts
-   + 3dc167b0785d17...2a1d6d9af30e19 lr/mmp2-clk-audio-gpu  -> xo/lr/mmp2-clk-audio-gpu  (forced update)
-  Fetching olpc
-  Fetching spi
-  From git://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi
-     0dadde344d9655..0392727c261bab  for-5.7    -> spi/for-5.7
-     59fc9ad5cb108b..2f5f5302c569f7  for-5.8    -> spi/for-5.8
-   + 5e60c07c8615e8...bedad93ec5f83a for-linus  -> spi/for-linus  (forced update)
-   + 36792a4aa66c21...c5a7b42434ff12 for-next   -> spi/for-next  (forced update)
-  Fetching arm-soc
-  From git://git.kernel.org/pub/scm/linux/kernel/git/arm/arm-soc
-   + 512e8d40f91d7e...e9801213465aa8 arm/fixes  -> arm-soc/arm/fixes  (forced update)
-   + 512e8d40f91d7e...e9801213465aa8 for-next   -> arm-soc/for-next  (forced update)
-  Fetching net
-  remote: Enumerating objects: 7331963, done.
-  remote: Counting objects: 100% (7331963/7331963), done.
-  remote: Compressing objects: 100% (1114459/1114459), done.
-  remote: Total 7331963 (delta 6171286), reused 7329526 (delta 6169706)
-  Receiving objects: 100% (7331963/7331963), 1.20 GiB | 2.48 MiB/s, done.
-  Resolving deltas: 100% (6171286/6171286), done.
-  From git://git.kernel.org/pub/scm/linux/kernel/git/davem/net
-     9bacd256f13548..b9663b7ca6ff78  master     -> net/master
-  Fetching net-next
-  From git://git.kernel.org/pub/scm/linux/kernel/git/davem/net-next
-     0fde6e3b55a15a..44dd5efc97dae0  master     -> net-next/master
-  Fetching arm
-  From git://git.armlinux.org.uk/~rmk/linux-arm
-     89604523a76eb3..8f3d9f35428674  fixes      -> arm/fixes
-   + 52d3b2f98483c3...365a6327cd643e for-next   -> arm/for-next  (forced update)
-     8632e9b5645bbc..ae83d0b416db00  master     -> arm/master
-  Fetching tip
-  remote: Enumerating objects: 7334643, done.
-  remote: Counting objects: 100% (7334643/7334643), done.
-  remote: Compressing objects: 100% (1115060/1115060), done.
-  Receiving objects: 100% (7334643/7334643), 1.20 GiB | 2.44 MiB/s, done.
-  remote: Total 7334643 (delta 6173502), reused 7332019 (delta 6171782)
-  Resolving deltas: 100% (6173502/6173502), done.
-  From git://git.kernel.org/pub/scm/linux/kernel/git/tip/tip
-   + 36d1b5ecb41546...f091a1f17abdba auto-latest   -> tip/auto-latest  (forced update)
-     11e31f608b499f..6e0d6ac5f3d9d9  core/core     -> tip/core/core
-   + 37d2e30492116b...22105aa089a7f5 master        -> tip/master  (forced update)
-     94d440d6184678..ac84bac4062e7f  timers/urgent -> tip/timers/urgent
-     4caffe6a28d315..675a59b7dec6e0  x86/build     -> tip/x86/build
-     aa61ee7b9ee3cb..a85573f7e74191  x86/mm        -> tip/x86/mm
-     79a3aaa7b82e31..cd2f45b7514cdd  x86/vdso      -> tip/x86/vdso
-  Fetching irqchip
-  remote: Enumerating objects: 7333669, done.
-  remote: Counting objects: 100% (7333669/7333669), done.
-  remote: Compressing objects: 100% (1114570/1114570), done.
-  Receiving objects: 100% (7333669/7333669), 1.20 GiB | 2.44 MiB/s, done.
-  remote: Total 7333669 (delta 6172952), reused 7331159 (delta 6171299)
-  Resolving deltas: 100% (6172952/6172952), done.
-  From git://git.kernel.org/pub/scm/linux/kernel/git/maz/arm-platforms
-   + a2ffd41b964081...41932c0b588f27 hack/vim3l-crap          -> irqchip/hack/vim3l-crap  (forced update)
-   + a97bd23c9e3762...751551c45552e3 kvm-arm64/nv-5.7-rc1-WIP -> irqchip/kvm-arm64/nv-5.7-rc1-WIP  (forced update)
-  Fetching gpio
-  Fetching dvhart
-  remote: Enumerating objects: 23, done.
-  remote: Counting objects: 100% (23/23), done.
-  remote: Total 28 (delta 23), reused 23 (delta 23), pack-reused 5
-  Unpacking objects: 100% (28/28), 5.19 KiB | 13.00 KiB/s, done.
-  From https://github.com/dvhart/linux-pdx86
-     8f3d9f35428674..f7ea285b626682  for-next            -> dvhart/for-next
-   * [new branch]                    ib-pdx86-properties -> dvhart/ib-pdx86-properties
-     00086336a8d96a..ae83d0b416db00  master              -> dvhart/master
-   + 79777a3891c69e...5a93adbdbb42e9 review-andy         -> dvhart/review-andy  (forced update)
-  Fetching power-supply
-  Fetching mmp
-  Fetching usb
-  From git://git.kernel.org/pub/scm/linux/kernel/git/gregkh/usb
-     be34a5854b4606..8f97250c21f0cf  usb-linus  -> usb/usb-linus
-  Fetching pinchartl
-  Fetching drm
-  remote: Enumerating objects: 7336388, done.
-  remote: Counting objects: 100% (7336388/7336388), done.
-  remote: Compressing objects: 100% (1091614/1091614), done.
-  Receiving objects:  26% (1931483/7336388), 687.05 MiB | 1.55 MiB/s
-
-Here's my .git/config:
-
-  [lkundrak@furthur linux]$ cat .git/config 
-  [core]
-  	repositoryformatversion = 0
-  	filemode = true
-  	bare = false
-  	logallrefupdates = true
-  [gui]
-  	wmstate = normal
-  	geometry = 1400x954+-1+26 453 376
-  [merge]
-  	renamelimit = 65535
-  [remote "origin"]
-  	url = git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
-  	fetch = +refs/heads/*:refs/remotes/origin/*
-  [branch "master"]
-  	remote = origin
-  	merge = refs/heads/master
-  [remote "stable"]
-  	url = git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
-  	fetch = +refs/heads/*:refs/remotes/stable/*
-  [remote "next"]
-  	url = git://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git
-  	fetch = +refs/heads/*:refs/remotes/next/*
-  [remote "xo"]
-  	url = git@github.com:hackerspace/olpc-xo175-linux.git
-  	fetch = +refs/heads/*:refs/remotes/xo/*
-  [branch "lr/olpc-xo175"]
-  	remote = xo
-  	merge = refs/heads/lr/olpc-xo175
-  [remote "olpc"]
-  	url = http://dev.laptop.org/git/olpc-kernel/
-  	fetch = +refs/heads/*:refs/remotes/olpc/*
-  [remote "spi"]
-  	url = git://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git
-  	fetch = +refs/heads/*:refs/remotes/spi/*
-  [branch "lr/olpc-xo175-fixes5-mmp"]
-  	remote = xo
-  	merge = refs/heads/lr/olpc-xo175-fixes5-mmp
-  [branch "lr/olpc-xo175-fixes4-ap-sp"]
-  	remote = xo
-  	merge = refs/heads/lr/olpc-xo175-fixes4-ap-sp
-  [branch "lr/olpc-xo175-fixes4-ec"]
-  	remote = xo
-  	merge = refs/heads/lr/olpc-xo175-fixes4-ec
-  [branch "lr/olpc-xo175-fixes2-trivial"]
-  	remote = xo
-  	merge = refs/heads/lr/olpc-xo175-fixes2-trivial
-  [branch "lr/olpc-xo175-fixes3-mmp-camera"]
-  	remote = xo
-  	merge = refs/heads/lr/olpc-xo175-fixes3-mmp-camera
-  [branch "lr/olpc-xo175-drm"]
-  	remote = xo
-  	merge = refs/heads/lr/olpc-xo175-drm
-  [remote "arm-soc"]
-  	url = git://git.kernel.org/pub/scm/linux/kernel/git/arm/arm-soc.git
-  	fetch = +refs/heads/*:refs/remotes/arm-soc/*
-  [branch "lr/olpc-xo175-fixes5-ec"]
-  	remote = xo
-  	merge = refs/heads/lr/olpc-xo175-fixes5-ec
-  [branch "lr/olpc-xo175-fixes7-ec"]
-  	remote = xo
-  	merge = refs/heads/lr/olpc-xo175-fixes7-ec
-  [branch "lr/olpc-xo175-fixes7-battery"]
-  	remote = xo
-  	merge = refs/heads/lr/olpc-xo175-fixes7-battery
-  [branch "lr/olpc-xo175-fixes4-mmp-camera"]
-  	remote = xo
-  	merge = refs/heads/lr/olpc-xo175-fixes4-mmp-camera
-  [branch "lr/olpc-xo175-fixes6"]
-  	remote = xo
-  	merge = refs/heads/lr/olpc-xo175-fixes6
-  [branch "lr/olpc-xo175-fixes1-drm"]
-  	remote = xo
-  	merge = refs/heads/lr/olpc-xo175-fixes1-drm
-  [branch "lr/olpc-xo175-fixes1-drm-dt"]
-  	remote = xo
-  	merge = refs/heads/lr/olpc-xo175-fixes1-drm-dt
-  [branch "lr/olpc-xo175-fixes2-drm"]
-  	remote = xo
-  	merge = refs/heads/lr/olpc-xo175-fixes2-drm
-  [remote "net"]
-  	url = git://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git
-  	fetch = +refs/heads/*:refs/remotes/net/*
-  [remote "net-next"]
-  	url = git://git.kernel.org/pub/scm/linux/kernel/git/davem/net-next.git
-  	fetch = +refs/heads/*:refs/remotes/net-next/*
-  #[remote "olpc-wifi"]
-  #	url = git://dev.laptop.org/users/javier/wireless-testing
-  #	fetch = +refs/heads/*:refs/remotes/olpc-wifi/*
-  [remote "arm"]
-  	url = git://git.armlinux.org.uk/~rmk/linux-arm.git
-  	fetch = +refs/heads/*:refs/remotes/arm/*
-  [branch "lr/olpc-xo175-fixes3-drm"]
-  	remote = xo
-  	merge = refs/heads/lr/olpc-xo175-fixes3-drm
-  [remote "tip"]
-  	url = git://git.kernel.org/pub/scm/linux/kernel/git/tip/tip.git
-  	fetch = +refs/heads/*:refs/remotes/tip/*
-  [remote "irqchip"]
-  	url = git://git.kernel.org/pub/scm/linux/kernel/git/maz/arm-platforms.git
-  	fetch = +refs/heads/*:refs/remotes/irqchip/*
-  [branch "lr/olpc-xo175-fixes6-next"]
-  	remote = xo
-  	merge = refs/heads/lr/olpc-xo175-fixes6-next
-  [remote "gpio"]
-  	url = git://git.kernel.org/pub/scm/linux/kernel/git/linusw/linux-gpio.git
-  	fetch = +refs/heads/*:refs/remotes/gpio/*
-  [branch "lr/olpc-xo175-fixes8-battery"]
-  	remote = xo
-  	merge = refs/heads/lr/olpc-xo175-fixes8-battery
-  [remote "dvhart"]
-  	url = https://github.com/dvhart/linux-pdx86.git
-  	fetch = +refs/heads/*:refs/remotes/dvhart/*
-  [remote "power-supply"]
-  	url = git://git.kernel.org/pub/scm/linux/kernel/git/sre/linux-power-supply.git
-  	fetch = +refs/heads/*:refs/remotes/power-supply/*
-  [branch "lr/olpc-xo175-battery-v6"]
-  	remote = xo
-  	merge = refs/heads/lr/olpc-xo175-battery-v6
-  [branch "lr/olpc-xo175-fixes2-drm-dt"]
-  	remote = xo
-  	merge = refs/heads/lr/olpc-xo175-fixes2-drm-dt
-  [branch "lr/olpc-xo175-fixes4-drm"]
-  	remote = xo
-  	merge = refs/heads/lr/olpc-xo175-fixes4-drm
-  [branch "olpc-5.0"]
-  	remote = xo
-  	merge = refs/heads/olpc-5.0
-  [branch "lr/olpc-xo175-fixes8-ec"]
-  	remote = xo
-  	merge = refs/heads/lr/olpc-xo175-fixes8-ec
-  [branch "lr/olpc-xo175-drm-dt-v3"]
-  	remote = xo
-  	merge = refs/heads/lr/olpc-xo175-drm-dt-v3
-  [branch "lr/olpc-xo175-mmp-camera-v5"]
-  	remote = xo
-  	merge = refs/heads/lr/olpc-xo175-mmp-camera-v5
-  [branch "lr/olpc-xo175-drm-dt-v4"]
-  	remote = xo
-  	merge = refs/heads/lr/olpc-xo175-drm-dt-v4
-  [branch "lr/olpc-xo175-ec-v6"]
-  	remote = xo
-  	merge = refs/heads/lr/olpc-xo175-ec-v6
-  [branch "lr/olpc-xo175-ec-v7"]
-  	remote = xo
-  	merge = refs/heads/lr/olpc-xo175-ec-v7
-  [branch "lr/olpc-xo175-galcore-v1"]
-  	remote = xo
-  	merge = refs/heads/lr/olpc-xo175-galcore-v1
-  [branch "lr/mmp3-1"]
-  	remote = xo
-  	merge = refs/heads/lr/mmp3-1
-  [branch "lr/mmp3-2"]
-  	remote = xo
-  	merge = refs/heads/lr/mmp3-2
-  [branch "lr/mmp3-4"]
-  	remote = xo
-  	merge = refs/heads/lr/mmp3-4
-  [branch "lr/ch7033"]
-  	remote = xo
-  	merge = refs/heads/lr/ch7033
-  [branch "lr/ch7033-1"]
-  	remote = xo
-  	merge = refs/heads/lr/ch7033-1
-  [branch "lr/w000000t"]
-  	remote = xo
-  	merge = refs/heads/lr/w000000t
-  [branch "lr/ariel"]
-  	remote = xo
-  	merge = refs/heads/lr/ariel
-  [remote "mmp"]
-  	url = git://git.kernel.org/pub/scm/linux/kernel/git/lkundrak/linux-mmp
-  	pushurl = git@gitolite.kernel.org:pub/scm/linux/kernel/git/lkundrak/linux-mmp
-  	fetch = +refs/heads/*:refs/remotes/mmp/*
-  [branch "lr/mmp3-hsic"]
-  	remote = xo
-  	merge = refs/heads/lr/mmp3-hsic
-  [branch "lr/mmp3-hsic-v2"]
-  	remote = xo
-  	merge = refs/heads/lr/mmp3-hsic-v2
-  [branch "lr/mmp2-galcore-v1"]
-  	remote = xo
-  	merge = refs/heads/lr/olpc-xo175-galcore-v1
-  [remote "usb"]
-  	url = git://git.kernel.org/pub/scm/linux/kernel/git/gregkh/usb.git
-  	fetch = +refs/heads/*:refs/remotes/usb/*
-  [remote "pinchartl"]
-  	url = git://linuxtv.org/pinchartl/media.git
-  	fetch = +refs/heads/*:refs/remotes/pinchartl/*
-  [remote "drm"]
-  	url = git://anongit.freedesktop.org/drm/drm
-  	fetch = +refs/heads/*:refs/remotes/drm/*
-  [branch "lr/marvell-dt-validation-v2"]
-  	remote = xo
-  	merge = refs/heads/lr/marvell-dt-validation-v2
-  [branch "lr/mmp3-thermal-v1"]
-  	remote = xo
-  	merge = refs/heads/lr/mmp3-thermal-v1
-  [remote "clk"]
-  	url = git://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git
-  	fetch = +refs/heads/*:refs/remotes/clk/*
-  [remote "drm-misc"]
-  	url = git://anongit.freedesktop.org/drm/drm-misc
-  	fetch = +refs/heads/*:refs/remotes/drm-misc/*
-
-Thank you
-Lubo
+[1]: https://lore.kernel.org/git/6cfa2c447e1196d6c4325aff9fac52434d10fda8.1587372771.git.liu.denton@gmail.com/
+[2]: https://lore.kernel.org/git/90faeb7a-1c6a-3fc6-6410-5e264c9340e8@kdbg.org/
