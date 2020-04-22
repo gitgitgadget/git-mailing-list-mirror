@@ -2,68 +2,68 @@ Return-Path: <SRS0=GtnF=6G=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A433CC54FCB
-	for <git@archiver.kernel.org>; Wed, 22 Apr 2020 17:05:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F5EFC55185
+	for <git@archiver.kernel.org>; Wed, 22 Apr 2020 17:17:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 82BF22082E
-	for <git@archiver.kernel.org>; Wed, 22 Apr 2020 17:05:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5CB8C20776
+	for <git@archiver.kernel.org>; Wed, 22 Apr 2020 17:17:45 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="dQyMnnCf"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="TM3KHFde"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726532AbgDVRF6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Apr 2020 13:05:58 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63233 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726154AbgDVRF5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Apr 2020 13:05:57 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 66B665B636;
-        Wed, 22 Apr 2020 13:05:55 -0400 (EDT)
+        id S1726670AbgDVRRn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Apr 2020 13:17:43 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:59929 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726057AbgDVRRm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Apr 2020 13:17:42 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 88BE3C0200;
+        Wed, 22 Apr 2020 13:17:40 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=7NZK1d4WRXn9
-        4L33SOT5Dodh/bw=; b=dQyMnnCfpDE9Q6wfu7CLW6c8Sms1vRcY5QQbr7BvfY2e
-        Q8XxtQLFPxvS6qbiBEe5MPp/xM9iqULP2SWoRTs9BBgrb0skmzd+XMhCA08Ih7oH
-        JLCc5qo0O6hAhlt41xB69QTradoc0zF4iX5JcsKDXje9xTO69hXS/kXKtYl/n+Q=
+        :content-type:content-transfer-encoding; s=sasl; bh=SqhNdZAHsuk3
+        3sfX04JUyARdTSo=; b=TM3KHFde2w1OlLoGUd5MwWTRlGtNLBYPMeuRgYSFafSn
+        fB0Jh5OqkFThv1W9c6zszOl1OK6qZ/0Xap6aIw0RMd0LmwNuIoizjTE4pxRAOMx7
+        sgATqs3Tdr0meblNTVICMgb1cgTm8Owhojm1fqz6zac+pi5AYxq6oryf+scr05A=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=qrJWNo
-        Xtr8tVkj6EQ4Zsd7SG1+NtTeXVDMDPdDzOsJ0S3UhXaou2jEmQ6shtoV/8fEmCUv
-        +1gBr75AQ1AuINCzbzg7Ow4yh2RA5Pi4cdg9o1ZNvXeEQRYzxPGJ3KAI5huFHThi
-        4AbG4e1x8L2Hvnsql5RzPjNezh3AF1arGWi2o=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5E2E25B635;
-        Wed, 22 Apr 2020 13:05:55 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=l4+aVX
+        0vEUecDLJ11u7tCrIZUWs+jnb3tHLmkSYb9N3LOHkK0v/etqF/y8EgmphmmC1WdC
+        KX7LwuRNePOIumA9U3Fnfxwc2vYjDfUjOSRnRV+acSEk7jOBNvweDZp9LF/EIc3e
+        yGVC9bQEeIq+3YcAmyeINKj0q7vju9K4c0RRQ=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 72D59C01FE;
+        Wed, 22 Apr 2020 13:17:40 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id CC21B5B634;
-        Wed, 22 Apr 2020 13:05:54 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A29F2C01FB;
+        Wed, 22 Apr 2020 13:17:37 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
         <congdanhqx@gmail.com>
-Cc:     git@vger.kernel.org,
-        "Brian M . Carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v3 1/2] date.c: skip fractional second part of ISO-8601
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v3 2/2] date.c: allow compact version of ISO-8601 datetime
 References: <cover.1586856398.git.congdanhqx@gmail.com>
         <cover.1587559135.git.congdanhqx@gmail.com>
-        <c6d42785bb762f691b00c48b57c73a1933fadbc3.1587559135.git.congdanhqx@gmail.com>
-Date:   Wed, 22 Apr 2020 10:05:54 -0700
-In-Reply-To: <c6d42785bb762f691b00c48b57c73a1933fadbc3.1587559135.git.congdanhqx@gmail.com>
+        <225b6401bd1f7eddc245acfd2c4b37c50c978491.1587559135.git.congdanhqx@gmail.com>
+Date:   Wed, 22 Apr 2020 10:17:35 -0700
+In-Reply-To: <225b6401bd1f7eddc245acfd2c4b37c50c978491.1587559135.git.congdanhqx@gmail.com>
         (=?utf-8?B?IsSQb8OgbiBUcuG6p24gQ8O0bmc=?= Danh"'s message of "Wed, 22 Apr
- 2020 20:15:52 +0700")
-Message-ID: <xmqqk127jvrh.fsf@gitster.c.googlers.com>
+ 2020 20:15:53 +0700")
+Message-ID: <xmqqftcvjv80.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 8718FF3E-84BB-11EA-BDC9-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 2A03D11E-84BD-11EA-ADF0-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -73,90 +73,68 @@ X-Mailing-List: git@vger.kernel.org
 =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh  <congdanhqx@gmail.com> writes=
 :
 
->  	/* Time? Date? */
->  	switch (c) {
->  	case ':':
-> -		if (num3 < 0)
-> +		if (num3 < 0) {
->  			num3 =3D 0;
-> +		} else if (*end =3D=3D '.' && isdigit(end[1]) &&
-> +			   tm->tm_year !=3D -1 && tm->tm_mon !=3D -1 &&
-> +			   tm->tm_mday !=3D -1) {
-> +			/* Attempt to guess meaning of <num> in HHMMSS.<num>
-> +			 * only interpret as fractional when %Y %m %d is known.
-> +			 */
-> +			strtol(end + 1, &end, 10);
-
-OK, so we saw ':' and parsed <num2> after it, and then saw ':' and
-<num3>, which we know is a good positive number.  We haven't checked
-what <num2> is at this point, but it has to be 0 or more digits
-(because we wouldn't have parsed for <num3> if it weren't terminated
-with the same c, i.e. ':').
-
-*end points at the byte that stopped <num3> and we make sure <num3>
-is followed by "." and a digit.
-
-Regardless of what <num2> is, we just discard the "fractional part
-of seconds" (assuming that <num3> is the "seconds" part).
-
+> Signed-off-by: =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh <congdanhqx@g=
+mail.com>
+> ---
+>  date.c          | 22 ++++++++++++++++++++++
+>  t/t0006-date.sh |  3 +++
+>  2 files changed, 25 insertions(+)
+>
+> diff --git a/date.c b/date.c
+> index 62f23b4702..882242c2db 100644
+> --- a/date.c
+> +++ b/date.c
+> @@ -672,6 +672,28 @@ static int match_digit(const char *date, struct tm=
+ *tm, int *offset, int *tm_gmt
+>  		n++;
+>  	} while (isdigit(date[n]));
+> =20
+> +	/* 8 digits, compact style of ISO-8601's date: YYYYmmDD */
+> +	/* 6 digits, compact style of ISO-8601's time: HHMMSS */
+> +	if (n =3D=3D 8 || n =3D=3D 6) {
+> +		unsigned int num1 =3D num / 10000;
+> +		unsigned int num2 =3D (num % 10000) / 100;
+> +		unsigned int num3 =3D num % 100;
+> +		if (n =3D=3D 8 && num1 > 1900 &&
+> +		    num2 > 0 && num2 <=3D 12 &&
+> +		    num3 > 0  && num3 <=3D 31) {
+> +			tm->tm_year =3D num1 - 1900;
+> +			tm->tm_mon  =3D num2 - 1;
+> +			tm->tm_mday =3D num3;
+> +		} else if (n =3D=3D 6 && num1 < 60 && num2 < 60 && num3 <=3D 60) {
+> +			tm->tm_hour =3D num1;
+> +			tm->tm_min  =3D num2;
+> +			tm->tm_sec  =3D num3;
+> +			if (*end =3D=3D '.' && isdigit(end[1]))
+> +				strtoul(end + 1, &end, 10);
 > +		}
->  		if (num < 25 && num2 >=3D 0 && num2 < 60 && num3 >=3D 0 && num3 <=3D=
- 60) {
->  			tm->tm_hour =3D num;
->  			tm->tm_min =3D num2;
+> +		return end - date;
+> +	}
+> +
 
-And after all that is done, if <num2> (and others) are within a
-reasonable range, we use that as HH:MM:SS. =20
+Looks sensible except that on our planet, one day has only 24 hours
+;-).
 
-OK.  If <num2> (or <num3>, or even <num> for that matter) weren't
-reasonable, is it still sensible to discard the fractional part?
-The answer is not immediately obvious to me.
+I think we should try to reuse existing helpers as much as possible
+in date.c to avoid such stupid errors.  During my review of [1/2] I
+found is_date() would be a good thing to try reusing and also
+extracted is_hms() as another candidate we could reuse.
 
-To be safe, it might make sense to extract a helper function from
-the next conditional, i.e.
-
-static int is_hms(long num1, long num2, long num3)
-{
-	return (0 <=3D num1 && num1 < 25 &&
-		0 <=3D num2 && num2 < 60 &&
-		0 <=3D num3 && num3 <=3D 60);
-}
-
-and use it in the new "else if" block like so?
-
-
-	} else if (*end =3D=3D '.' && isdigit(end[1]) &&
-		   is_date(tm->tm_year, tm->tm_mon, tm->tm_mday, NULL, now, tm) &&
-		   is_hms(num, num2, num3)) {
-		/* Discard ".<num4>" from "HH:MM:SS.<num4>" */
-		(void) strtol(end + 1, &end, 10);
-	}
-
-	if (is_hms(num, num2, num3)) {
-		...
-
-
-
+>  	/* Four-digit year or a timezone? */
+>  	if (n =3D=3D 4) {
+>  		if (num <=3D 1400 && *offset =3D=3D -1) {
 > diff --git a/t/t0006-date.sh b/t/t0006-date.sh
-> index d9fcc829a9..80917c81c3 100755
+> index 80917c81c3..75ee9a96b8 100755
 > --- a/t/t0006-date.sh
 > +++ b/t/t0006-date.sh
-> @@ -81,6 +81,8 @@ check_parse 2008-02 bad
->  check_parse 2008-02-14 bad
+> @@ -82,6 +82,9 @@ check_parse 2008-02-14 bad
 >  check_parse '2008-02-14 20:30:45' '2008-02-14 20:30:45 +0000'
 >  check_parse '2008-02-14 20:30:45 -0500' '2008-02-14 20:30:45 -0500'
-> +check_parse '2008.02.14 20:30:45 -0500' '2008-02-14 20:30:45 -0500'
-> +check_parse '2008-02-14 20:30:45.019-04:00' '2008-02-14 20:30:45 -0400=
+>  check_parse '2008.02.14 20:30:45 -0500' '2008-02-14 20:30:45 -0500'
+> +check_parse '20080214T203045-04:00' '2008-02-14 20:30:45 -0400'
+> +check_parse '20080214T203045 -04:00' '2008-02-14 20:30:45 -0400'
+> +check_parse '20080214T203045.019-04:00' '2008-02-14 20:30:45 -0400'
+>  check_parse '2008-02-14 20:30:45.019-04:00' '2008-02-14 20:30:45 -0400=
 '
 >  check_parse '2008-02-14 20:30:45 -0015' '2008-02-14 20:30:45 -0015'
 >  check_parse '2008-02-14 20:30:45 -5' '2008-02-14 20:30:45 +0000'
->  check_parse '2008-02-14 20:30:45 -5:' '2008-02-14 20:30:45 +0000'
-> @@ -103,6 +105,7 @@ check_approxidate 5.seconds.ago '2009-08-30 19:19:5=
-5'
->  check_approxidate 10.minutes.ago '2009-08-30 19:10:00'
->  check_approxidate yesterday '2009-08-29 19:20:00'
->  check_approxidate 3.days.ago '2009-08-27 19:20:00'
-> +check_approxidate '12:34:56.3.days.ago' '2009-08-27 12:34:56'
->  check_approxidate 3.weeks.ago '2009-08-09 19:20:00'
->  check_approxidate 3.months.ago '2009-05-30 19:20:00'
->  check_approxidate 2.years.3.months.ago '2007-05-30 19:20:00'
