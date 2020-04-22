@@ -2,147 +2,208 @@ Return-Path: <SRS0=GtnF=6G=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-17.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
+	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D7E5DC55185
-	for <git@archiver.kernel.org>; Wed, 22 Apr 2020 17:51:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C2FBC54FCB
+	for <git@archiver.kernel.org>; Wed, 22 Apr 2020 18:02:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BBFC820882
-	for <git@archiver.kernel.org>; Wed, 22 Apr 2020 17:51:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 28CBB2082E
+	for <git@archiver.kernel.org>; Wed, 22 Apr 2020 18:02:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nljfZR8P"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="AE9dwyz0"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726441AbgDVRvR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Apr 2020 13:51:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48962 "EHLO
+        id S1726924AbgDVSCu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Apr 2020 14:02:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50726 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726057AbgDVRvR (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 22 Apr 2020 13:51:17 -0400
-Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com [IPv6:2a00:1450:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 152E7C03C1A9
-        for <git@vger.kernel.org>; Wed, 22 Apr 2020 10:51:17 -0700 (PDT)
-Received: by mail-ej1-x643.google.com with SMTP id s9so2563747eju.1
-        for <git@vger.kernel.org>; Wed, 22 Apr 2020 10:51:17 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1726328AbgDVSCt (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 22 Apr 2020 14:02:49 -0400
+Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A493C03C1A9
+        for <git@vger.kernel.org>; Wed, 22 Apr 2020 11:02:49 -0700 (PDT)
+Received: by mail-pg1-x54a.google.com with SMTP id j16so2390885pgg.3
+        for <git@vger.kernel.org>; Wed, 22 Apr 2020 11:02:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=6qy4mNbFKga5Cp+7mdhpY4H9rqtAS5uU94drXTbOq3Y=;
-        b=nljfZR8PznU1yLHFSPw+bwHksH7PhjNdDlmmfDk797eqnVz0JPMV7KdpTfVbo/efVZ
-         GIXniv6RK6W26PaN7JWdIHKzVy4j524Utb7kq9Xq8LByZ5TSyh/vPBST5FQwh9wMOFtx
-         p5kPq9cAVAui1u7Gx2zBT/0Cu6hOz8lnXGF3zOhTa2JiDVHyNbFdfCYUWVL8rmZX/pVB
-         Wg/7D/IXsouHMZZs3RGTbbO2mfw66eqNER6H8X3BtQhliE/63gpkiPaBnSXL7Xm6w6RI
-         zIHRllV7wjBc3gPHT6B7eJ0G6UuqzseV7QDi02Rkw4z0LCpzbzGoffY5wvKN0ncH6fwI
-         TcJQ==
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=cyu4oXczFtLk0jRIG5wlcipsd1HEKKoY0hc7y2e5zRk=;
+        b=AE9dwyz0SfnLUrEJuPFGA7mN6Wa9f8SAU83LhhW6swI8r314VY1Z8fQCoTwhqjhrM4
+         mBDOBGb5jMjvd3QAqkDCCJc+P5h/+eFTgncsBm9k7Evupl520Xh1NXum1UlN1WfuqDqL
+         CpI+tO1cz2OshhAWJVNE7p97LJa7KRV8NCKSDToi9R8aCXLKz9gsBjAssJ57RFpskgw3
+         uuy19MJz6oQgWnKnnkrO+MeMK2BRnGPKwMkU+LZVdYn1j1dGcLGuH/MlHBhHtl+UJuCC
+         +XNg/XL/q3iTeF1Mz8ZminDFsxClGlHiRAw0+UrKM79IZzhHgXBpT2Rajvnjc9HsIXPb
+         a4QQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=6qy4mNbFKga5Cp+7mdhpY4H9rqtAS5uU94drXTbOq3Y=;
-        b=TDew9xagOClHT1cvbLNs+D3XTQldZnz/pgHpBO2VBT0+UD3BxoYhG1tfWsUbc0tzot
-         N09YVTKKWoR7WupcjcTnHW160UJLwAD+5wvx3EgY9I+3vRBFDHDR3WfHJzfwSBKotj1Q
-         Qnlj2pGuiQN3kbzOo0j+jZdNGYbDhY75fMIBN5VlSi/FFRIcFHdxKGyt7QkXKNCnb7dF
-         EO2K/KVlK35qhNgFUi7RAHGMmYun+2+6lFx0VA+7EfoWBsFjMxCWfI7EI9ZmBdm1bXl8
-         90EpT46SaI629XI+WsEgCIsmSVRxSm/cbmYRl/LiNfblY8qwPnyp6csBJansx3QtlrEU
-         MMPg==
-X-Gm-Message-State: AGi0PuaqPtcc7Zz15gQu96VIrmj6L1fnPSB85XyAUn9u9DkTQogferCP
-        GIYu8IahEZGf3EHsvyvFHacchLZgTDsxpAcmJVyxHa5YoFw=
-X-Google-Smtp-Source: APiQypKVI9nfzndYzoh86R+9afjvQTXizAtVQmC94uT6xSXZhMp2I68Sb7Pney1d/9EdUPyEpp8yi84xI25tWQ+yBwM=
-X-Received: by 2002:a19:c8cf:: with SMTP id y198mr16915048lff.197.1587577516178;
- Wed, 22 Apr 2020 10:45:16 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAAihzVJTN5V3o_aFeUuJH_8+nqZrKHJww3vFQ9K5W0DtbeM14w@mail.gmail.com>
- <20200422031455.GG6465@camp.crustytoothpaste.net>
-In-Reply-To: <20200422031455.GG6465@camp.crustytoothpaste.net>
-From:   Mikhail Strelnikov <mikhail.strelnikov@gmail.com>
-Date:   Wed, 22 Apr 2020 20:45:04 +0300
-Message-ID: <CAAihzVLiB4Cx3BC66bqXMVgAgacRiNGpviUJHROtiJYwxNYCSg@mail.gmail.com>
-Subject: Re: Multiple pushurls, different 'objects\info\packs'
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Mikhail Strelnikov <mikhail.strelnikov@gmail.com>,
-        git@vger.kernel.org
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=cyu4oXczFtLk0jRIG5wlcipsd1HEKKoY0hc7y2e5zRk=;
+        b=mRcvJAYhXiZ3dRqWtYqaUglh5V4khXqEEYDL4IDTMvMoJ4UNGCXRwx0cQ1tSLlYTAI
+         VxVKfLI/elBAhhIkqyp+ikcK8WBleu1xZWsM6jHIqQW0U1wsLhT/0n46IWVcHX8isrVC
+         szP0LJiPNaDQH6OUjOZDXSZDsC4NLwqP9ERGoYzm2uJRge8W1i5o0esdTjJ1pAQWHUP9
+         vSDs3mbrytkBYQ94N+ZzpDRejHxIaleCjrDhtbU9T/KHd7MtyR+E5A674NM/AQm0FSnu
+         bKzBocL2ls5FSN46M3YX1t0/PmuNVI7n8bHowP9j6zqI6iz/YADPbBe755+g0MtmGWMg
+         eC6Q==
+X-Gm-Message-State: AGi0PubPg1z7IX4P796Y93K7ZXtjSeKPTN3T+RJH2fIZAp+UqSwB7Ncs
+        hpBQf1+wZA//Cx4D7Kn69BwL1anYrAy8VpouyFXi
+X-Google-Smtp-Source: APiQypJDeT/8Zdvnh6e0SI6MtNf3/WDQRQktdBlqynYUf9hJS8S9nbvJelXafXdJ/TfkyOJ4sAt/TSdLkikcZYhbtmRM
+X-Received: by 2002:a17:90a:1946:: with SMTP id 6mr11910787pjh.42.1587578568707;
+ Wed, 22 Apr 2020 11:02:48 -0700 (PDT)
+Date:   Wed, 22 Apr 2020 11:02:45 -0700
+In-Reply-To: <8d295389ea43c6b7e008514067b7af6eacba64a5.1587492422.git.me@ttaylorr.com>
+Message-Id: <20200422180245.196132-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <8d295389ea43c6b7e008514067b7af6eacba64a5.1587492422.git.me@ttaylorr.com>
+X-Mailer: git-send-email 2.26.1.301.g55bc3eb7cb9-goog
+Subject: Re: [PATCH] shallow.c: use 'reset_repository_shallow' when appropriate
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     me@ttaylorr.com
+Cc:     git@vger.kernel.org, newren@gmail.com, jrnieder@gmail.com,
+        dstolee@microsoft.com, Jonathan Tan <jonathantanmy@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks Brian,
+> Address this by introducing 'reset_repository_shallow()', and calling
+> it whenever the shallow files is updated. This happens in two cases:
+> 
+>   * during 'update_shallow', when either the repository is
+>     un-shallowing, or after commit_lock_file, when the contents of
+>     .git/shallow is changing, and
+> 
+>   * in 'prune_shallow', when the repository can go from shallow to
+>     un-shallow when the shallow file is updated, forcing
+>     'is_repository_shallow' to re-evaluate whether the repository is
+>     still shallow after fetching in the above scenario.
 
-> delta compression is multithreaded
+From a cursory reading of the code, it seems that this happens in
+fetch-pack and receive-pack. Looking at those files, I found some more
+occasions when this happens. I have outlined them in the patch after the
+scissors (I hope I used the scissors correctly).
 
-That is great news that this is expected behavior and I'm not dealing
-with some sort of obscure data corruption. :)
-Now see there is `git config --global pack.threads 1` (I'm doing
-everything locally, so this might work for me)
+Maybe instead of enumerating the cases (of which there are quite a few),
+say that we do this when we unlink the shallow file, we modify or create
+the shallow file, or when we change the value of alternate_shallow_file.
 
-> reason for wanting bit-for-bit identical
+> @@ -414,6 +414,7 @@ void prune_shallow(unsigned options)
+>  	} else {
+>  		unlink(git_path_shallow(the_repository));
+>  		rollback_lock_file(&shallow_lock);
+> +		reset_repository_shallow(the_repository);
+>  	}
+>  	strbuf_release(&sb);
+>  }
 
-My plan was to have 3 pushurls and shoot one of them if it is not
-bit-for-bit identical to the other two. But you are right, all I need
-is `git fsck`.
+The "if" part (not quoted here) commits the shallow lock file, and thus
+possibly modifies (or creates) the shallow file, so I think we need to
+put reset_repository_shallow() outside the whole "if" block. I have done
+that in the patch after the scissors.
 
-On Wed, Apr 22, 2020 at 6:15 AM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
->
-> On 2020-04-21 at 18:07:42, Mikhail Strelnikov wrote:
-> > Hi,
-> >
-> > I have a repo with two pushurls configured like this:
-> >
-> >
-> > C:\folder\1>git init --bare
-> > Initialized empty Git repository in C:/folder/1/
-> >
-> > C:\folder\2>git init --bare
-> > Initialized empty Git repository in C:/folder/2/
-> >
-> > C:\folder\w>git init
-> > Initialized empty Git repository in C:/folder/w/.git/
-> >
-> > C:\folder\w>git add work.txt
-> >
-> > C:\folder\w>git commit -m "Initial commit"
-> > [master (root-commit) 1b314f3] Initial commit
-> > 1 file changed, 1 insertion(+)
-> > create mode 100644 work.txt
-> >
-> > C:\folder\w>git remote add origin C:\folder\1
-> >
-> > C:\folder\w>git remote set-url origin --push --add C:\folder\1
-> >
-> > C:\folder\w>git remote set-url origin --push --add C:\folder\2
-> >
-> > C:\folder\w>git push --set-upstream origin master
-> >
-> >
-> > I would expect those two folders (C:\folder\1 and C:\folder\2) to
-> > contain exactly the same bytes. And they did for quite some time. But
-> > now there is a difference in 'objects\info\packs' (and some of
-> > objects\pack\pack-*.idx/pack are also different).
-> >
-> > (all the commits are the same in both and all my data is also the same
-> > and 'fast-export --all' yields the same result)
-> >
-> > I'd like to know what might have caused this nondeterminism and if
-> > there is something to do to prevent that.
->
-> You can get nondeterminism because the push to each repository happens
-> independently and delta compression is multithreaded.  You can therefore
-> compute different packs on push and get different packs in the result.
->
-> You could try to avoid it by disabling threading for pushes, but that
-> has to be done on each client that pushes to them.  In general, this is
-> not worth worrying about as long as the data is intact (that is, it
-> passes git fsck) and the refs are identical.  It is also not especially
-> easy to avoid, since determinism of pack files is not considered a goal
-> of Git.
->
-> Maybe if you tell us a little more about your reason for wanting
-> bit-for-bit identical replicas we can provide some assistance in helping
-> you achieve your goals.
-> --
-> brian m. carlson: Houston, Texas, US
-> OpenPGP: https://keybase.io/bk2204
+> +test_expect_success 'fetch --update-shallow (with fetch.writeCommitGraph)' '
+> +	(
+> +	cd shallow &&
+> +	git checkout master &&
+> +	commit 8 &&
+> +	git tag -m foo heavy-tag-for-graph HEAD^ &&
+> +	git tag light-tag-for-graph HEAD^:tracked
+> +	) &&
+> +	(
+> +	cd notshallow &&
+> +	test_config fetch.writeCommitGraph true &&
+
+When I patched onto master, this line causes the test to fail with a
+warning that test_when_finished doesn't work in a subshell. I've
+replaced it with a regular "git config" and it works.
+
+Here is the patch containing what I tried. I think that most of the new
+reset_repository_shallow() invocations don't change any functionality
+(we don't usually read shallow files so many times in a process), so
+they can't be tested, but I think that it's better to include them for
+completeness, and to close the open question mentioned in bd0b42aed3
+("fetch-pack: do not take shallow lock unnecessarily", 2019-01-10)
+(about the full solution involving clearing shallow information whenever
+we commit the shallow lock - we find here that the full solution
+involves this and also clearing shallow information in other cases too).
+
+-- 8< --
+From 46a69a133db2e8e948d2bf296294656c9902e5ae Mon Sep 17 00:00:00 2001
+From: Jonathan Tan <jonathantanmy@google.com>
+Date: Wed, 22 Apr 2020 10:53:30 -0700
+Subject: [PATCH] fixup
+
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+ builtin/receive-pack.c   | 1 +
+ fetch-pack.c             | 2 ++
+ shallow.c                | 2 +-
+ t/t5537-fetch-shallow.sh | 2 +-
+ 4 files changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 2cc18bbffd..d61cbf60e2 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -878,6 +878,7 @@ static int update_shallow_ref(struct command *cmd, struct shallow_info *si)
+ 	}
+ 
+ 	commit_lock_file(&shallow_lock);
++	reset_repository_shallow(the_repository);
+ 
+ 	/*
+ 	 * Make sure setup_alternate_shallow() for the next ref does
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 684868bc17..9a1cec470c 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -1657,6 +1657,7 @@ static void update_shallow(struct fetch_pack_args *args,
+ 						&alternate_shallow_file,
+ 						&extra);
+ 			commit_lock_file(&shallow_lock);
++			reset_repository_shallow(the_repository);
+ 			alternate_shallow_file = NULL;
+ 		}
+ 		oid_array_clear(&extra);
+@@ -1695,6 +1696,7 @@ static void update_shallow(struct fetch_pack_args *args,
+ 					&alternate_shallow_file,
+ 					&extra);
+ 		commit_lock_file(&shallow_lock);
++		reset_repository_shallow(the_repository);
+ 		oid_array_clear(&extra);
+ 		oid_array_clear(&ref);
+ 		alternate_shallow_file = NULL;
+diff --git a/shallow.c b/shallow.c
+index 9d1304e786..1a1ca71ffe 100644
+--- a/shallow.c
++++ b/shallow.c
+@@ -414,8 +414,8 @@ void prune_shallow(unsigned options)
+ 	} else {
+ 		unlink(git_path_shallow(the_repository));
+ 		rollback_lock_file(&shallow_lock);
+-		reset_repository_shallow(the_repository);
+ 	}
++	reset_repository_shallow(the_repository);
+ 	strbuf_release(&sb);
+ }
+ 
+diff --git a/t/t5537-fetch-shallow.sh b/t/t5537-fetch-shallow.sh
+index c9c731c7a9..c5c40fb8e7 100755
+--- a/t/t5537-fetch-shallow.sh
++++ b/t/t5537-fetch-shallow.sh
+@@ -187,7 +187,7 @@ test_expect_success 'fetch --update-shallow (with fetch.writeCommitGraph)' '
+ 	) &&
+ 	(
+ 	cd notshallow &&
+-	test_config fetch.writeCommitGraph true &&
++	git config fetch.writeCommitGraph true &&
+ 	git fetch --update-shallow ../shallow/.git refs/heads/*:refs/remotes/shallow/* &&
+ 	git fsck &&
+ 	git for-each-ref --sort=refname --format="%(refname)" >actual.refs &&
+-- 
+2.26.1.301.g55bc3eb7cb9-goog
+
