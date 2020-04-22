@@ -2,162 +2,137 @@ Return-Path: <SRS0=GtnF=6G=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F2E01C54FCB
-	for <git@archiver.kernel.org>; Wed, 22 Apr 2020 18:45:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 50403C54FCB
+	for <git@archiver.kernel.org>; Wed, 22 Apr 2020 18:48:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C51B92077D
-	for <git@archiver.kernel.org>; Wed, 22 Apr 2020 18:45:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 25BE22076E
+	for <git@archiver.kernel.org>; Wed, 22 Apr 2020 18:48:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="glmYTewH"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iTu9dku6"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726662AbgDVSp6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Apr 2020 14:45:58 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:37568 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725810AbgDVSp5 (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 22 Apr 2020 14:45:57 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 4F7F66088E;
-        Wed, 22 Apr 2020 18:45:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1587581156;
-        bh=PI7eVWWySaEEpIuveG0/tSBFWmmGBf/C1/TKqQdV2aI=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=glmYTewHsGfSClVd991QTupMoSnw8Mt/oh/G/wfGrVHrr7N1qJdVFk6LzJmlzkI9v
-         GtXk2Eajid+kGgCoLBfEtrQxLnSdOwxI6MmKYxbMIOx+eFosuWJDhVUoQLELgHp+A2
-         p8CkNw8GbyOt7CjJYCglW69krZ7SCiNJD4Ah2Vte/djxJmvX5X6tkrr/w+3QXkmGzw
-         CzIdOwu4ukmcvzJ5/zdiukoqjF20gURSWy//HTrvrStjFKY6+Gmz6ZZmWBcbHjHein
-         40J8hfTc1jY1XQtCQCxBaVFgtlqDBGMQYzlGed1+z2NncmkTjRNr0WNvyJJ9nzG75g
-         oijdyxDJjBvmNLdvnYlc3uEx2tv+QruwxTicjkcMSrEtxkPqPyskTt4GNLrTq3Lv17
-         DT9h5bc5QK+zcvAp1/fMLg1+iP472nSy4xVQwekGUrYjkqjcD3cx9yfZi1Ep6xANv6
-         5CNSk5cZ8M7Rcl4LkhCxrBNu2ZBPKPmEWtw3UkBZ5I4BlQLWNA8
-Date:   Wed, 22 Apr 2020 18:45:49 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Ilya Tretyakov <it@it3xl.ru>
-Subject: Re: [PATCH] credential: fix matching URLs with multiple levels in
- path
-Message-ID: <20200422184549.GH6465@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Ilya Tretyakov <it@it3xl.ru>
-References: <20200421225837.GB3515235@coredump.intra.peff.net>
- <20200422012344.2051103-1-sandals@crustytoothpaste.net>
- <20200422041614.GD3559880@coredump.intra.peff.net>
+        id S1726355AbgDVSsi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Apr 2020 14:48:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57800 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725810AbgDVSsh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Apr 2020 14:48:37 -0400
+Received: from mail-io1-xd44.google.com (mail-io1-xd44.google.com [IPv6:2607:f8b0:4864:20::d44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51F23C03C1A9
+        for <git@vger.kernel.org>; Wed, 22 Apr 2020 11:48:36 -0700 (PDT)
+Received: by mail-io1-xd44.google.com with SMTP id k6so3593452iob.3
+        for <git@vger.kernel.org>; Wed, 22 Apr 2020 11:48:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=6X8RKDt3jhyonE09ow557P6i9f65eKKOV64U4zfs6W0=;
+        b=iTu9dku6T2xQbkpg0pPy5eoU+q4+1vYF8M8EpCvUD3f78PatkSaC/a6J11FNYPhgTU
+         s61tv8hyA2USE+vNtbnUQqsvpYYNSzFJ1UsNpFyRf5P12KA5JBakTbq+v2JdvR+U0Yku
+         tm1JlulxkO4gu26Bj8A2sFMpfZF9nxnWWXDhnYd9BhUsXlIgph/VdUB3qBiD3C68XcMC
+         WYtdi+PVml7cAipD9tFRX1V+T+iKpekwFlHBR4sUjZF1CHMUT7pOgLYF+WXbNGoLNZqx
+         eweqrbOH8i/6fq8hlcQvhoeucltHC7LRgr6IgJ9Yt7fiRI02n4IP9TYa9Sc4tRn8QkFf
+         bDjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=6X8RKDt3jhyonE09ow557P6i9f65eKKOV64U4zfs6W0=;
+        b=nqHQInFEOB1ruCUDEPnWz6DTRUPHaGOSqdfXIHmDoXAbd0F9JuOv+XgTEdwazbOD8d
+         dqcuq0Hx1Cyw7SvrbrX1GwTwX2QX+wyf9jj7qSOAYQqFD6tak7vmf9hYfWpIWNBEY7hi
+         Z12GmeNermy21xlijSMglDZDu8YWARL2iQdDEcAYVGvE6czOskCThR6HxyBujjFHDHS7
+         4TYaJDTJEoDNxSruIgcjDMEPhbS8+XMLrViL8/g03gLGL5ndFzdNaNMDmg7sly0r0cOX
+         u/rePCI0oL0TxsyB1DvpfZ1VTNWWS12vO73IfOGV4RmMmWpkPGwoy7PFzrYrc0rOh4fT
+         c9xw==
+X-Gm-Message-State: AGi0PuYVcRjt+q6y/wVM6sKAt3uJIQAW9nLAyvzVO5G5jgy2eIeBbAbU
+        4j7Uc8P3r00xOtyLGPq+rNNs7MnM4rsLAJ7T6q5qq9/v
+X-Google-Smtp-Source: APiQypJWqY1Pk2es0cyzmd676uZZKIUHFXNg+80LwUTPFLdF/0ZS0/eINleqcsdHLqo9PDiCWvhzZMdVdetfRd8121w=
+X-Received: by 2002:a05:6602:2cc4:: with SMTP id j4mr127957iow.144.1587581315507;
+ Wed, 22 Apr 2020 11:48:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="J/zg8ciPNcraoWb6"
-Content-Disposition: inline
-In-Reply-To: <20200422041614.GD3559880@coredump.intra.peff.net>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.5.0-2-amd64)
+References: <20200422153347.40018-1-jrtc27@jrtc27.com> <20200422164150.GA140314@google.com>
+In-Reply-To: <20200422164150.GA140314@google.com>
+From:   Brandon Casey <drafnel@gmail.com>
+Date:   Wed, 22 Apr 2020 11:48:23 -0700
+Message-ID: <CA+sFfMfre6W5GcPh1pWcroFD9S9OPj_uLp5CK11yh-UhqgDs2w@mail.gmail.com>
+Subject: Re: [PATCH] config.mak.uname: Define FREAD_READS_DIRECTORIES for GNU/Hurd
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Jessica Clarke <jrtc27@jrtc27.com>, git <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, Apr 22, 2020 at 9:41 AM Jonathan Nieder <jrnieder@gmail.com> wrote:
+>
+> Jessica Clarke wrote:
+>
+> > GNU/Hurd is another platform that behaves like this. Set it to
+> > UnfortunatelyYes so that config directory files are correctly processed=
+.
+> > This fixes the corresponding 'proper error on directory "files"' test i=
+n
+> > t1308-config-set.sh.
+> >
+> > Thanks-to: Jeff King <peff@peff.net>
+> > Signed-off-by: Jessica Clarke <jrtc27@jrtc27.com>
+> > ---
+> >  config.mak.uname | 1 +
+> >  1 file changed, 1 insertion(+)
+>
+> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+> Thanks.
+>
+> > diff --git a/config.mak.uname b/config.mak.uname
+> > index 0ab8e00938..3e526f6b9f 100644
+> > --- a/config.mak.uname
+> > +++ b/config.mak.uname
+> > @@ -308,6 +308,7 @@ ifeq ($(uname_S),GNU)
+> >       NO_STRLCPY =3D YesPlease
+> >       HAVE_PATHS_H =3D YesPlease
+> >       LIBC_CONTAINS_LIBINTL =3D YesPlease
+> > +     FREAD_READS_DIRECTORIES =3D UnfortunatelyYes
+> >  endif
+>
+> I wonder why we set up this knob this way.  A lot of operating systems
+> support fopen(..., "r") of a directory --- wouldn't it make sense for
+> FREAD_READS_DIRECTORIES to be the default and for users on stricter
+> platforms to be able to set FREAD_DOES_NOT_READ_DIRECTORIES if they
+> want to speed Git up by taking advantage of their saner fread?
 
---J/zg8ciPNcraoWb6
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+At the time it was written, the assumption in the code was that an
+fread() on a directory would produce a failure, and that that was the
+sane and common behavior. fopen(..., "r") on a directory was expected
+to be successful on most platforms, but does fail on some. I don't
+recall if it failed on any of the platforms I had access to at the
+time (Solaris, IRIX), but it does fail on Windows. So I introduced
+this feature that would make fopen() fail when opening a directory for
+use on the platforms where fread() of a directory did not fail,
+instead of trying to wrap fread().
 
-On 2020-04-22 at 04:16:14, Jeff King wrote:
-> On Wed, Apr 22, 2020 at 01:23:44AM +0000, brian m. carlson wrote:
->=20
-> > 46fd7b3900 ("credential: allow wildcard patterns when matching config",
-> > 2020-02-20) introduced support for matching credential helpers using
-> > urlmatch.  In doing so, it introduced code to percent-encode the paths
-> > we get from the credential helper so that they could be effectively
-> > matched by the urlmatch code.
-> >=20
-> > Unfortunately, that code had a bug: it percent-encoded the slashes in
-> > the path, resulting in any URL path that contained multiple levels
-> > (i.e., a directory component) not matching.
-> >=20
-> > We are currently the only caller of the percent-encoding code and could
-> > simply change it not to encode slashes.  However, this would be
-> > surprising to other potential users who might want to use it and might
-> > result in unwanted slashes appearing in the encoded value.
-> >=20
-> > So instead, let's add a flag to skip encoding slashes, which is the
-> > behavior we want here, and use it when calling the code in this case.
-> > Add a test for credential helper URLs using multiple slashes in the
-> > path, which our test suite previously lacked.
->=20
-> Thanks for the quick turnaround. The explanation makes sense.
->=20
-> The patch leaves me with one question, though...
->=20
-> > diff --git a/credential.c b/credential.c
-> > index 108d9e183a..f0e55a27ac 100644
-> > --- a/credential.c
-> > +++ b/credential.c
-> > @@ -136,14 +136,14 @@ static void credential_format(struct credential *=
-c, struct strbuf *out)
-> >  		return;
-> >  	strbuf_addf(out, "%s://", c->protocol);
-> >  	if (c->username && *c->username) {
-> > -		strbuf_add_percentencode(out, c->username);
-> > +		strbuf_add_percentencode(out, c->username, STRBUF_PERCENTENCODE_PATH=
-);
-> >  		strbuf_addch(out, '@');
->=20
-> Wouldn't we want to keep encoding slashes in the username?
+I just looked in config.mak.uname, and I'm surprised to see
+FREAD_READS_DIRECTORIES set for so many platforms. And it's set for
+Linux and Darwin?!?!? Junio added it for Darwin
+(8e178ec4d072da4cd8f4449e17aef3aff5b57f6a) and Nguy=E1=BB=85n Th=C3=A1i Ng=
+=E1=BB=8Dc Duy
+added it for Linux (e2d90fd1c33ae57e4a6da5729ae53876107b3463), but
+also seemed to mistake the intention of FREAD_FREADS_DIRECTORIES as
+being about the fopen(..., "r") of a directory rather than about an
+fread() of a directory.
 
-Oh, you're right, we would.  That makes my commit message shorter, even.
+I just wrote a test program and tested on Linux, Darwin, and Windows.
+Linux and Darwin both succeed to fopen() a directory and fail to
+fread() it, as expected. Windows fails to fopen() a directory.
 
-> > diff --git a/t/t0300-credentials.sh b/t/t0300-credentials.sh
-> > index 5555a1524f..15eeef1dfd 100755
-> > --- a/t/t0300-credentials.sh
-> > +++ b/t/t0300-credentials.sh
-> > @@ -510,6 +510,24 @@ test_expect_success 'helpers can abort the process=
-' '
-> >  	test_i18ncmp expect stderr
-> >  '
-> > =20
-> > +test_expect_success 'helpers can fetch with multiple path components' '
-> > +	test_unconfig credential.helper &&
-> > +	test_config credential.https://example.com/foo/repo.git.helper "verba=
-tim foo bar" &&
->=20
-> OK, you can't just use an argument to "check" because you want to set a
-> specific config option, not just credential.helper. Would this test make
-> sense a little higher in the file, below "match percent-encoded values"
-> perhaps?
+I notice this earlier commit mentions a failure of t1308
+(4e3ecbd43958b1400d6cb85fe5529beda1630e3a). I wonder if this is the
+reason FREAD_READS_DIRECTORIES was added to so many platforms?
 
-I can hoist it, sure.
-
-> > +	echo url=3Dhttps://example.com/foo/repo.git | git credential fill &&
->=20
-> What's this line doing? It will just do the same "check fill" as
-> below, but without the stdout checking. Is it leftover debugging cruft?
-
-Yeah, it is.  I'll rip it out in v2.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---J/zg8ciPNcraoWb6
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXqCQ3AAKCRB8DEliiIei
-gYjSAP9a2fp41buxv9KMxqJDZoC5NFjpICP9YUH0RGXz2Fl6qgEAp48qctFsNr3w
-VbdvIt2ljuycYySI+f7ZC4Bg5uFxSAo=
-=4/Du
------END PGP SIGNATURE-----
-
---J/zg8ciPNcraoWb6--
+-Brandon
