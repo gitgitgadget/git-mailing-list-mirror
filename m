@@ -2,106 +2,79 @@ Return-Path: <SRS0=GtnF=6G=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 28B3BC38A30
-	for <git@archiver.kernel.org>; Wed, 22 Apr 2020 04:57:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 67935C55189
+	for <git@archiver.kernel.org>; Wed, 22 Apr 2020 08:10:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F05472075A
-	for <git@archiver.kernel.org>; Wed, 22 Apr 2020 04:57:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 44AA1206E9
+	for <git@archiver.kernel.org>; Wed, 22 Apr 2020 08:10:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725934AbgDVE5D (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Apr 2020 00:57:03 -0400
-Received: from cloud.peff.net ([104.130.231.41]:35488 "HELO cloud.peff.net"
+        id S1726554AbgDVIJy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Apr 2020 04:09:54 -0400
+Received: from cloud.peff.net ([104.130.231.41]:35566 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725808AbgDVE5D (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Apr 2020 00:57:03 -0400
-Received: (qmail 2975 invoked by uid 109); 22 Apr 2020 04:57:03 -0000
+        id S1726539AbgDVIJv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Apr 2020 04:09:51 -0400
+Received: (qmail 4391 invoked by uid 109); 22 Apr 2020 08:09:51 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 22 Apr 2020 04:57:03 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 22 Apr 2020 08:09:51 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 26495 invoked by uid 111); 22 Apr 2020 05:08:08 -0000
+Received: (qmail 27356 invoked by uid 111); 22 Apr 2020 08:20:56 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 22 Apr 2020 01:08:08 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 22 Apr 2020 04:20:56 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Wed, 22 Apr 2020 00:57:02 -0400
+Date:   Wed, 22 Apr 2020 04:09:50 -0400
 From:   Jeff King <peff@peff.net>
-To:     Michael =?utf-8?Q?F=2E_Sch=C3=B6nitzer?= via GitGitGadget 
-        <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Michael =?utf-8?Q?F=2E_Sch=C3=B6nitzer?= <michi4@schoenitzer.de>,
-        Michael =?utf-8?Q?F=2E_Sch=C3=B6nitzer?= <michael@schoenitzer.de>
-Subject: Re: [PATCH] docs: fix minor glitch in illustration
-Message-ID: <20200422045702.GE3559880@coredump.intra.peff.net>
-References: <pull.762.git.git.1587490505031.gitgitgadget@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Dennis Clarke <dclarke@blastwave.org>, git@vger.kernel.org
+Subject: Re: minor patch required to compile git 2.26.1 on Oracle Solaris 10
+ with Oracle Studio
+Message-ID: <20200422080950.GA464427@coredump.intra.peff.net>
+References: <6bf94982-71c4-78e9-0f4d-7fa4e485c417@blastwave.org>
+ <xmqqzhb8rqa6.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <pull.762.git.git.1587490505031.gitgitgadget@gmail.com>
+In-Reply-To: <xmqqzhb8rqa6.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 21, 2020 at 05:35:04PM +0000, Michael F. Schönitzer via GitGitGadget wrote:
+On Sat, Apr 18, 2020 at 10:35:45PM -0700, Junio C Hamano wrote:
 
-> In the example by Jon Loeliger the selector 'A^2' was duplicated. This
-> might confuse readers.
+> Dennis Clarke <dclarke@blastwave.org> writes:
 > 
-> Signed-off-by: Michael F. Schönitzer <michael@schoenitzer.de>
-> ---
->     fix minor glitch in an illustration in the documentation
->     
->     In the example by Jon Loeliger the selector 'A^2' was duplicated. Since
->     it is the only duplicate and doesn't fix in the structure I assume it is
->     there by incident and since it can confuse readers this patch removes
->     it.
+> > Very minor patch required :
+> 
+> But both size_t and unsigned int are wrong types, no?  Shouldn't we
+> be using socklen_t (and we seem to have autoconf support to figure
+> out an appropriate socklen_t fallback typedef)?
 
-This extra explanation could probably go into the commit message. :)
+That is generally the right type according to POSIX, but I think there's
+something even more subtle going on. If we're defining our own
+inet_ntop(), then the type shouldn't really matter, should it?
 
-> diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
-> index 97f995e5a9a..1ad95065c1f 100644
-> --- a/Documentation/revisions.txt
-> +++ b/Documentation/revisions.txt
-> @@ -233,7 +233,7 @@ G   H   I   J
->  
->      A =      = A^0
->      B = A^   = A^1     = A~1
-> -    C = A^2  = A^2
-> +    C =      = A^2
->      D = A^^  = A^1^1   = A~2
+Dennis didn't show us the compiler errors, but my suspicion is that it
+is complaining because it is seeing the definition of inet_ntop()
+already from a system header, and ours does not match.
 
-OK, so this is describing this diagram:
+Which implies that NO_INET_NTOP should not be set in the first place.
+I think this is the same issue discussed in:
 
-     D   E   F
-      \  |  / \
-       \ | /   |
-        \|/    |
-         B     C
-          \   /
-           \ /
-            A
+  https://lore.kernel.org/git/CAH8yC8m3JFvEcfFF3z1rrRnEPK-adHGObmkOhNZiph7QJKUWqA@mail.gmail.com/
 
-For "B" we can express A^ as a shorthand for A^1. But for C, a second
-parent, there is no such shorthand. We _must_ say A^2. But there's not
-much point in saying it twice.
+with a patch (which needs at least a signoff added) in:
 
-We could just say "C = A^2", but it makes sense to keep A^2 aligned with
-the A^1 from the "B" line to make the comparison obvious.
+  https://lore.kernel.org/git/CAH8yC8kaWXbN+RYMJnM9em7KKW54+N07JtyS1MZk0qppD=m2BA@mail.gmail.com/
 
-So this patch makes sense to me.
+Dennis, does building with:
 
->      E = B^2  = A^^2
+  make NO_INET_NTOP= NO_INET_PTON=
 
-Curiously E goes right for B^2. It could be:
-
-  E =    = B^2 = A^^2
-
-or something if we really wanted to make a giant table where all the
-possible names were grouped, but I don't think there's much point in
-doing so.
+help?
 
 -Peff
