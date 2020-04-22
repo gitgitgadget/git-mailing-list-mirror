@@ -2,156 +2,142 @@ Return-Path: <SRS0=GtnF=6G=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CB546C54FCB
-	for <git@archiver.kernel.org>; Wed, 22 Apr 2020 20:42:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B8E85C54FCB
+	for <git@archiver.kernel.org>; Wed, 22 Apr 2020 20:51:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A1E7520882
-	for <git@archiver.kernel.org>; Wed, 22 Apr 2020 20:42:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 83C042077D
+	for <git@archiver.kernel.org>; Wed, 22 Apr 2020 20:51:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="l5+TA20T"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AfHOf4Vz"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726358AbgDVUmz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Apr 2020 16:42:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47302 "EHLO
+        id S1726523AbgDVUvI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Apr 2020 16:51:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48596 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725779AbgDVUmz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Apr 2020 16:42:55 -0400
-Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 177E9C03C1A9
-        for <git@vger.kernel.org>; Wed, 22 Apr 2020 13:42:55 -0700 (PDT)
-Received: by mail-pf1-x444.google.com with SMTP id r14so1732175pfg.2
-        for <git@vger.kernel.org>; Wed, 22 Apr 2020 13:42:55 -0700 (PDT)
+        with ESMTP id S1726173AbgDVUvI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Apr 2020 16:51:08 -0400
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0CB3C03C1A9
+        for <git@vger.kernel.org>; Wed, 22 Apr 2020 13:51:07 -0700 (PDT)
+Received: by mail-wm1-x341.google.com with SMTP id g12so4141260wmh.3
+        for <git@vger.kernel.org>; Wed, 22 Apr 2020 13:51:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=XNPG0ij/+1AWVbiQeBpIu3GtnbiFR5UF5CBBkCGvmNc=;
-        b=l5+TA20TJbZ1iJ7O1vMvSydPdjlxBb0OTRrMY2VtM7AhLE4vKK+ipLGJPJeVbCtZEG
-         lIMWZ2Uj1qdKB+AtOGNpwXgcMXeYf3Y50I16GGRvhJr9DZb2i7naMDD3NUBvKlEWznSp
-         +RLyi+QzGs6GxtNTJaVnkHb2IHVRGO+iJWP630ajt7sWxf0LfnncQR4yzHpEqNyGi3eh
-         e4OtnzOSEroom8L0F03pZDikbqIKohTSgpFiinzlg9Lq5uYksYWUtR/SOC7T+XkFwAEI
-         2Mf9+LcY/FPMLDnyEejdI3i4T3eUt9MfDiJy1J/0vTTUuBZA/WP4HGH8rKdLSj9h0//X
-         apCw==
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=rvd32UUKZ45GC4sAFR8q7Zo+QOuoGT+rxpJjWD4JuOU=;
+        b=AfHOf4Vz2tkIXsk2d6t80tOxdy3ogxDheCHDPZtRDQ00iCwfHkMspO+o/HnDCSrD7j
+         /JwW8zMUyZpj3YI+APaH3AOf0ameN8sbMz8H8Hy+3MGW7f+2B9BWQVok2tKsmj2D/G8q
+         H/CTBRl2jywkQ6g70+eUbVmCnkUT1K1PemYYceZF3DGdSS/5p6NNrGBWVsf2oxC2PLoH
+         H7NfZEF6da+wl4/3t26exlEuLwE/SUHZv1HAq9YqQNMsKShOx1o2+8iEqPbxeALgu07x
+         cz7YIai7jPmFTJu7f+vEK9VDOmFVHzVZ/NEVrRRrW/zH36N8Mp7r9fv3Gpg/Th5AHu1j
+         bZlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=XNPG0ij/+1AWVbiQeBpIu3GtnbiFR5UF5CBBkCGvmNc=;
-        b=o3HaiFTjuzY95P/JBm+6BF6Wk6VQtYOm78WFrZc80R2Mtj2tDDs501Je9jwRVc6tz+
-         H9OPl9GvsfdD94zLEIKp7ZxtAb5pFS9WE4FYN36gELi4Im3zGcKtE/d4MC/Sg33O/O79
-         jTyMEZXcAEC+MYWUQc3YMQvrlWo8PvBexNN3MYJCG7QbfiLDA2iJpcpCO8IoLjzcHDat
-         nk7FT2UMcR70RKLO3Z/DaHCl6JonuhIkOsRFu14Eq+F0g8ROoTZ4OTdgEwZ7khoKqlUd
-         SGkiOTZMbP1OweqiOA/mW9OiTbnmRSMYmQOaj4ziKys8DEduCNB1mp6USQRvZwyfjzsb
-         +2OA==
-X-Gm-Message-State: AGi0PuY43dBRF0wNniQr/gb/o/ULLVzoLJQabe2KP10rxYStk2OQ8kBg
-        8AFEFUeNy1MAwrkp5GI+hNYw2A==
-X-Google-Smtp-Source: APiQypIgILlFvDd2BeKU/qvUI7fH/p9ms8qiQQQ9/hVdxa9P4KEVHxJf3Bj0qT+Ydn36O7Lt0SEuhA==
-X-Received: by 2002:a63:1c1:: with SMTP id 184mr864110pgb.203.1587588174418;
-        Wed, 22 Apr 2020 13:42:54 -0700 (PDT)
-Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id j26sm363852pfr.215.2020.04.22.13.42.53
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=rvd32UUKZ45GC4sAFR8q7Zo+QOuoGT+rxpJjWD4JuOU=;
+        b=WUHB9GqUe01LSd0Qm7UeADM0/jx05gIuo1w5Ub4nKbAA+HBxUZalwzuugjGPQtLg6I
+         LtpJd5fRhK2Q0rtU6d5U3fFPSEGDs3TpFjpQXh4BO67j9GJruZg5sfEgPRz8Fgu+reOL
+         atm7nGvjcIXMm5MxvmH5vy7BVgoY0yXYdi450dwp+yxDNNTjr+CzdbjqU154qsCohpdD
+         zPWcIZQ3ToW3D0STJcTWPbbuolzYn6LGLgU0Ami+rJRdNnqsQF6s0CfmgAPrGE8bQt/H
+         bA7/DQHMFoOS9gyQ1whgvR5OLZgNVx/VZtph4OLV6hCiGnwGohW000q3iTHN0bDEM7mz
+         riow==
+X-Gm-Message-State: AGi0PuZXRWT/8DzwYE/ABIbJZV4dIawGhvnX6oBHQUNWrBxyBcM013pb
+        XlOGaO2dzgfyYIdCd8Shd5uqFfuh
+X-Google-Smtp-Source: APiQypKtl5jI1/NfMiGiJ5qmvrcKvuK4DFZ5Z7QH1EO4b/T35vluDDXZJOwnH0nLOm6M9sY21+GFIA==
+X-Received: by 2002:a7b:c250:: with SMTP id b16mr377855wmj.100.1587588666291;
+        Wed, 22 Apr 2020 13:51:06 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id s6sm633406wmh.17.2020.04.22.13.51.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Apr 2020 13:42:53 -0700 (PDT)
-Date:   Wed, 22 Apr 2020 14:42:52 -0600
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        git <git@vger.kernel.org>, James Ramsay <james@jramsay.com.au>
-Subject: Re: [RFC PATCH 0/2] upload-pack.c: limit allowed filter choices
-Message-ID: <20200422204252.GB4850@syl.local>
-References: <CAP8UFD0wJo4onz0_Vw4-bcX1h61=J=ZiKfM-fMXLj4B9q0aveg@mail.gmail.com>
- <cover.1584477196.git.me@ttaylorr.com>
- <20200318101825.GB1227946@coredump.intra.peff.net>
- <CAP8UFD3v_J3zGqHKa94d71QB82hTsX0MZasERB-jOnY3Ya-uJw@mail.gmail.com>
- <20200417174030.GB2103@syl.local>
- <20200417180645.GJ1739940@coredump.intra.peff.net>
+        Wed, 22 Apr 2020 13:51:05 -0700 (PDT)
+Message-Id: <pull.615.git.1587588665.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 22 Apr 2020 20:51:02 +0000
+Subject: [PATCH 0/3] credential: handle partial URLs in config settings again
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200417180645.GJ1739940@coredump.intra.peff.net>
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Ilya Tretyakov <it@it3xl.ru>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 17, 2020 at 02:06:45PM -0400, Jeff King wrote:
-> On Fri, Apr 17, 2020 at 11:40:30AM -0600, Taylor Blau wrote:
->
-> > > What do you think about something like:
-> > >
-> > > [promisorFilter "noBlobs"]
-> > >         type = blob:none
-> > >         uploadpack = true # maybe "allow" could also mean "true" here
-> > >         ...
-> > > ?
-> >
-> > I'm not sure about introducing a layer of indirection here with
-> > "noBlobs". It's nice that it could perhaps be enabled/disabled for
-> > different builtins (e.g., by adding 'revList = false', say), but I'm not
-> > convinced that this is improving all of those cases, either.
->
-> Yeah, I don't like forcing the user to invent a subsection name. My
-> first thought was to suggest:
->
->   [promisorFilter "blob:none"]
->   uploadpack = true
->
-> but your tree example shows why that gets awkward: there are more keys
-> than just "allow this".
->
-> > One thing that I can think of (other than replacing the '.' with another
-> > delimiting character other than '=') is renaming the key from
-> > 'uploadPack' to 'uploadPackFilter'. I believe that this was suggested by
->
-> Yeah, that proposal isn't bad. To me the two viable options seem like:
->
->  - uploadpack.filter.<filter>.*: this has the ugly fake multilevel
->    subsection, but stays under uploadpack.*
->
->  - uploadpackfilter.<filter>.*: more natural subsection, but not grouped
->    syntactically with other uploadpack stuff
->
-> I am actually leaning towards the second. It should make the parsing
-> code less confusing, and it's not like there aren't already other config
-> sections that impact uploadpack.
+This fixes the problem illustrated by Peff's example
+[https://lore.kernel.org/git/20200422040644.GC3559880@coredump.intra.peff.net/]
+, in maint-2.17:
 
-Me too.
+  $ echo url=https://example.com |
+    git -c credential.example.com.username=foo credential fill
+  warning: url has no scheme: example.com
+  fatal: credential url cannot be parsed: example.com
 
-> > > > For reference, the patch I was thinking of was this:
-> > > >
-> > > >   https://lore.kernel.org/git/20190830121005.GI8571@szeder.dev/
-> > >
-> > > Are you using the patches in this series with or without something
-> > > like the above patch? I am ok to resend this patch series including
-> > > the above patch (crediting Szeder) if you use something like it.
-> >
-> > We're not using them, but without them we suffer from a problem that if
-> > we can get a SIGPIPE when writing the "sorry, I don't support that
-> > filter" message back to the client, then they won't receive it.
-> >
-> > Szeder's patches help address that issue by catching the SIGPIPE and
-> > popping off enough from the client buffer so that we can write the
-> > message out before dying.
->
-> I definitely think we should pursue that patch, but it really can be
-> done orthogonally. It's an existing bug that affects other instances
-> where upload-pack returns an error. The tests can work around it with
-> "test_must_fail ok=sigpipe" in the meantime.
+The fix is necessarily different than what was proposed by brian
+[https://lore.kernel.org/git/20200422012344.2051103-1-sandals@crustytoothpaste.net/] 
+because that fix targets v2.26.x which has 46fd7b390034 (credential: allow
+wildcard patterns when matching config, 2020-02-20).
 
-Yes, I agree. My main hesitation is that it would be uncouth of me to
-send a patch that includes 'test_must_fail ok=sigpipe' to the list, but
-if you (and others) feel that this is an OK intermediate step (given
-that we can easily remove it once SZEDER's patch lands), then I am OK
-with it, too.
+This patch series targets maint-2.17 instead (and might actually not be able
+to fix maint due to that wildcard pattern patch; I haven't had the time to
+check yet).
 
-And I see that Christian already posted such a patch to the list.
+Please note that Git v2.17.4 will not do what we would expect here: if any
+host name (without protocol) is specified, e.g. -c
+credential.golli.wog.username = boo, it will actually ignore the host name.
+That is, this will populate the username:
 
-> -Peff
+  $ echo url=https://example.com |
+    git -c credential.totally.bog.us.username=foo credential fill
 
-Thanks,
-Taylor
+Obviously, this is unexpected, as a Git config like this would leave the
+last specified user name as "winner":
+
+[credential "first.com"]
+    username = Whos On
+[credential "second.com"]
+    username = Who
+
+This patch series fixes this. The quoted part of [credential "<value>"] will
+be interpreted as a partial URL:
+
+ * It can start with a protocol followed by ://, but does not have to.
+ * If it starts with a protocol, the host name will always be set (if the 
+   :// is followed immediately by yet another slash, then it will be set to
+   the empty string).
+ * If it starts without a protocol, it is treated as a path if the value
+   starts with a slash (and the host will be left unset).
+ * If it starts without a protocol and the first character is not a slash,
+   it will be treated as a host name, optionally followed by a slash and the
+   path.
+
+Johannes Schindelin (3):
+  credential: fix grammar
+  credential: teach `credential_from_url()` a non-strict mode
+  credential: handle `credential.<partial-URL>.<key>` again
+
+ credential.c           | 21 ++++++++++++++-------
+ credential.h           |  8 ++++++--
+ fsck.c                 |  2 +-
+ t/t0300-credentials.sh | 13 +++++++++++++
+ 4 files changed, 34 insertions(+), 10 deletions(-)
+
+
+base-commit: df5be6dc3fd18c294ec93a9af0321334e3f92c9c
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-615%2Fdscho%2Fcredential-config-partial-url-maint-2.17-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-615/dscho/credential-config-partial-url-maint-2.17-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/615
+-- 
+gitgitgadget
