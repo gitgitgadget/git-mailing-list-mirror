@@ -2,115 +2,101 @@ Return-Path: <SRS0=GtnF=6G=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 94053C54FCB
-	for <git@archiver.kernel.org>; Wed, 22 Apr 2020 15:33:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E80EAC55185
+	for <git@archiver.kernel.org>; Wed, 22 Apr 2020 15:34:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3330020706
-	for <git@archiver.kernel.org>; Wed, 22 Apr 2020 15:33:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A228E2076E
+	for <git@archiver.kernel.org>; Wed, 22 Apr 2020 15:34:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="n5jUFP/t"
+	dkim=pass (2048-bit key) header.d=jrtc27.com header.i=@jrtc27.com header.b="TRQgWayW"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726335AbgDVPd5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Apr 2020 11:33:57 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:51930 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726240AbgDVPd5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Apr 2020 11:33:57 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5E958C2057;
-        Wed, 22 Apr 2020 11:33:53 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=dJKUaJS2jSMB+vAw9Xl6PtV81IQ=; b=n5jUFP
-        /trKjv1waoVqAubj/grxzKkfgPjJTXDkY5xMQM7jffJPBlclgbV5hGguGm4kwfhv
-        d9Mnccj4Ba0U3WkPyJbyOBdyofPAtk4wza+qwRuaMNYBjMmnypHGLgHCABk55ZIA
-        tIeVOWp8sVIehtsE2Q2Zu1xF5V5XnoDSEMPjI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=PelFprtRbnjZ2p8rWOQ47xuwqbJ5W1pE
-        HxF40moVigAhIdZoPJe1MHR7MRFWiBOxUsEoHQkjKyM5Z4OuRBQAi/WNjGcbuB6T
-        IlFLgB2dq+tYnVhEFYHt3WdtK04Bcl/+hqbc8q/MkosSmUZzXr1viIBMPeg7g5Pu
-        r8LcWj5e+e4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 56678C2056;
-        Wed, 22 Apr 2020 11:33:53 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 67ED2C2055;
-        Wed, 22 Apr 2020 11:33:50 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Lubomir Rintel <lkundrak@v3.sk>,
-        Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-Subject: Re: Git 2.26 fetches many times more objects than it should, wasting gigabytes
-References: <20200422084254.GA27502@furthur.local>
-        <20200422095702.GA475060@coredump.intra.peff.net>
-        <20200422103011.GA545254@coredump.intra.peff.net>
-        <20200422104000.GA551233@coredump.intra.peff.net>
-Date:   Wed, 22 Apr 2020 08:33:48 -0700
-In-Reply-To: <20200422104000.GA551233@coredump.intra.peff.net> (Jeff King's
-        message of "Wed, 22 Apr 2020 06:40:00 -0400")
-Message-ID: <xmqqwo67k00z.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726386AbgDVPeF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Apr 2020 11:34:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55764 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726240AbgDVPeF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Apr 2020 11:34:05 -0400
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE8CCC03C1A9
+        for <git@vger.kernel.org>; Wed, 22 Apr 2020 08:34:04 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id j1so2947983wrt.1
+        for <git@vger.kernel.org>; Wed, 22 Apr 2020 08:34:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=jrtc27.com; s=gmail.jrtc27.user;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=L+yrM54my9Gzqo53a+My8itzALTVnOcj6mrvqylbOh0=;
+        b=TRQgWayW6lwB3clJtMdsFeQgIDtKJCjMiwVXQg5r5+K0uAVN87Tj4OXzQOZfzniVil
+         oup6yi5F0WTg0FXNRlJ7X6l1vnlXCCcRwfJzYfGHkiWGurWs17VKWg7ejpxmevPTu952
+         X2IdCZ4GUJBU9z5dIfPm0R9qf3dvPkDjH7DJpJdF57wfJ6kUm63x0iiQWCcfaB+4u/dj
+         TS13hoosQroP4tXvalspMpR8xXzYvJQ6JdgJ95WgCNiZvuBs2rJGMr9HqC6Df57d0qbb
+         HQQxtIlkVwKtfw6A1SywVgyyxmZPJ/wHhsJ2qQ1UVMEuH0h0eJ8tr+7A7Gy7JHaxeZar
+         l3DQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=L+yrM54my9Gzqo53a+My8itzALTVnOcj6mrvqylbOh0=;
+        b=B8Cpqjl5q8W2fLu47NUFK++aIl17JxU9CJDt2WEsUPxwr7VjXbikxLJZG6VXGOCLmE
+         AiuLUGLeenWHdkPb+zpEiK7BogMHRnAhMpSrG0v9TuTsunvftCtq3SvQaXOvMTwbCSNC
+         eGCpoLD1Dd5du4c8GAsh+1JSb0ho631UEzZ2WHns53bz6/M4sIImEYFPoIfgvmERB498
+         +aijC+t6INrKcPUZ2Yc7psVz6TYbEojdSOzy8jChAoeXdKLRoGNYLugk2dAgE/Guc/Kw
+         a/1Y0RGCksyieVvhTFBxp03XGz3sn38/q0/+VKEQUV8M6TKU25H+capTjYuttGisTfY7
+         Wo2g==
+X-Gm-Message-State: AGi0PuYi2vV9Zzt+cwr9vNROKztjCXkwlu9FeLcFNiHzITw+ea8mIlxu
+        SyAKzSepi0U6xM0zIocbHcLgMDvnWYeMXA==
+X-Google-Smtp-Source: APiQypIJVqQuNdrS2prSNPGlI57NNneCjlVBv1mjLdV82OPyZKdqHF/GIDoG6ofdFyv4vPaSX1iqGA==
+X-Received: by 2002:adf:fcc6:: with SMTP id f6mr27474740wrs.388.1587569643714;
+        Wed, 22 Apr 2020 08:34:03 -0700 (PDT)
+Received: from Jessicas-MacBook.local (trinity-students-nat.trin.cam.ac.uk. [131.111.193.104])
+        by smtp.gmail.com with ESMTPSA id o18sm8761522wrp.23.2020.04.22.08.34.02
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 22 Apr 2020 08:34:03 -0700 (PDT)
+Received: by Jessicas-MacBook.local (Postfix, from userid 501)
+        id 5C4CB206DCA3DA; Wed, 22 Apr 2020 16:34:02 +0100 (BST)
+From:   Jessica Clarke <jrtc27@jrtc27.com>
+To:     git@vger.kernel.org
+Cc:     Jessica Clarke <jrtc27@jrtc27.com>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] config.mak.uname: Define FREAD_READS_DIRECTORIES for GNU/Hurd
+Date:   Wed, 22 Apr 2020 16:33:47 +0100
+Message-Id: <20200422153347.40018-1-jrtc27@jrtc27.com>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: AA4A99C0-84AE-11EA-A6E1-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+GNU/Hurd is another platform that behaves like this. Set it to
+UnfortunatelyYes so that config directory files are correctly processed.
+This fixes the corresponding 'proper error on directory "files"' test in
+t1308-config-set.sh.
 
-> On Wed, Apr 22, 2020 at 06:30:11AM -0400, Jeff King wrote:
->
->> So it really just seems like v2 does not try hard enough. I think the
->> culprit is the MAX_IN_VAIN setting. If I do this:
->> 
->> diff --git a/fetch-pack.c b/fetch-pack.c
->> index 1734a573b0..016a413d49 100644
->> --- a/fetch-pack.c
->> +++ b/fetch-pack.c
->> @@ -46,7 +46,7 @@ static struct strbuf fsck_msg_types = STRBUF_INIT;
->>   * After sending this many "have"s if we do not get any new ACK , we
->>   * give up traversing our history.
->>   */
->> -#define MAX_IN_VAIN 256
->> +#define MAX_IN_VAIN 20000
->>  
->>  static int multi_ack, use_sideband;
->>  /* Allow specifying sha1 if it is a ref tip. */
->> 
->> then I get that same 48k objects, 23MB fetch that v0 does.
->
-> I don't quite think that's the solution, though. Both old and new are
-> supposed to be respecting MAX_IN_VAIN. So it's not at all clear to me
-> why it restricts the number of haves we'll send in v2, but not in v0.
+Thanks-to: Jeff King <peff@peff.net>
+Signed-off-by: Jessica Clarke <jrtc27@jrtc27.com>
+---
+ config.mak.uname | 1 +
+ 1 file changed, 1 insertion(+)
 
-Thanks for digging.  I tend to agree with your assessment that the
-setting should not make a difference, if v0 find the common out of
-the exchange within the same number of "have"s.
-
-I am guilty of introducing the hardcoded "give up after this many
-naks", which I admit I was never fond of, back in the days there was
-only one original protocol.  In retrospect, I probably should have
-done "after this many naks, stop sending each and every commit but
-start skipping exponentially (or fibonacci)" instead.  After all,
-this was meant to prevent walking all the way down to a different
-root commit when you have more of them than the repository you are
-fetching from---but (1) skipping exponentially down to root is way
-less expensive, even if it is a bit more expensive than not walking
-at all, and (2) if we find a common tree, even if it is distant, it
-is way better than not having any common tree at all.
-
-If we had such a code, however, it would probably have swept the
-real cause of the issue people are reporting under the rug, though.
+diff --git a/config.mak.uname b/config.mak.uname
+index 0ab8e00938..3e526f6b9f 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -308,6 +308,7 @@ ifeq ($(uname_S),GNU)
+ 	NO_STRLCPY = YesPlease
+ 	HAVE_PATHS_H = YesPlease
+ 	LIBC_CONTAINS_LIBINTL = YesPlease
++	FREAD_READS_DIRECTORIES = UnfortunatelyYes
+ endif
+ ifeq ($(uname_S),IRIX)
+ 	NO_SETENV = YesPlease
+-- 
+2.20.1
 
