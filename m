@@ -2,177 +2,263 @@ Return-Path: <SRS0=GtnF=6G=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2652FC55186
-	for <git@archiver.kernel.org>; Wed, 22 Apr 2020 23:13:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 64BD4C55186
+	for <git@archiver.kernel.org>; Wed, 22 Apr 2020 23:27:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EE0E72076E
-	for <git@archiver.kernel.org>; Wed, 22 Apr 2020 23:13:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3B79320787
+	for <git@archiver.kernel.org>; Wed, 22 Apr 2020 23:27:49 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="bC1fmTdv"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="09u+XjXg"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726448AbgDVXNk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Apr 2020 19:13:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42530 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1725839AbgDVXNj (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 22 Apr 2020 19:13:39 -0400
-Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3C1EC03C1AA
-        for <git@vger.kernel.org>; Wed, 22 Apr 2020 16:13:38 -0700 (PDT)
-Received: by mail-pj1-x1042.google.com with SMTP id e6so1646561pjt.4
-        for <git@vger.kernel.org>; Wed, 22 Apr 2020 16:13:38 -0700 (PDT)
+        id S1726284AbgDVX1s (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Apr 2020 19:27:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44738 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725789AbgDVX1r (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Apr 2020 19:27:47 -0400
+Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFBC8C03C1AA
+        for <git@vger.kernel.org>; Wed, 22 Apr 2020 16:27:47 -0700 (PDT)
+Received: by mail-pf1-x442.google.com with SMTP id x77so1960872pfc.0
+        for <git@vger.kernel.org>; Wed, 22 Apr 2020 16:27:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Jn1rNT7YWZIH2z0oO6A1dqXvoIOrx2rvWO0vbd1gErY=;
-        b=bC1fmTdv56iQqpgh5dUGoCZzw311YmKyU0hnz9r5uQto4KZ/Vy3Yqh/KQPAkJGYqT7
-         S+YZVCfzz7swXbTz/DxTye23DWX4Zro3bEDAeBxgxXR9rDNJsz+DexOG1Sk9KLRBTHwd
-         iF/3RwstlYSBNvExdBf7vO/+vJGhBNXp2e77ckIjCV0zdA84yD7Kqy5VVWqzJJdJCMHX
-         YzPS+rO4L0UR5OvzyvRr25XQpiXPfgC//qsTPTCLOqIc7bAsQ37WDRosppAMsq5yeCBG
-         Boo2oPrMbgQqfS59maCxiiN4oRTAvAPxHHwMTNYvFZ+0vTTHcw6DuzY6+kIaB7WzCBCb
-         oRpA==
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=ICNXcnahBZDZCOPnt4nr7knR31Hz+jmoQA4latQgObI=;
+        b=09u+XjXgzw1LjH7jPLinbDDqaOgIbRXt5krQSGIA9lkXkwVeC81cnWDuQH+OYhYnCB
+         YGT4ciMKDY0xP2wO1HMHz212jghp8bfcjFe097RRHfTkbyHPApPLXbqXaXNCXsOnGtZa
+         jteJeJIC9GpTpVsgygbLmf/Y9qnu+5rBK7/uHTPpv4W/eX/3dzMAFFwVQRtPzkl4bfl+
+         WkWpsjxB3CR63AigW0VJyxeLw3v64TmDlYXP0n5i+9hdlP5o5J/ayCuoMx0WIOkHHV29
+         Cg43+pAgkrjPhG5O43YBRIoaDIzoxB5lJFcwQWoBT7K1R4mXCEag/whSCa6Z8IqGM3tz
+         VtAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Jn1rNT7YWZIH2z0oO6A1dqXvoIOrx2rvWO0vbd1gErY=;
-        b=I5RvwntfF/AGJ6N81CXWA5ihffNJ1icH8Lr2o866J1bBCwNE2bwRsp0yKpfXh1Wf9F
-         BxPqlunvmQoPXReFKbWskJK1HKhjXKqouZvZegw6qfL8qex/+Lgm8lSdtf9VKP+ycFTk
-         jVBnPV7K6SlyDmw49ocnYGztoNZM6aTOWzM0uQi1UviNSpgxvYKT0+sjWU6X+TTaPyRn
-         mmelyfPWSTBaeQ4vMlQHDExhLn7gqIqa34EALcK17vtyxofVEIKm2VHfP2tZBMODcuBY
-         NVt+Iu6J9NGFNlJGSIVZwAIZdLITGO2FIRHU+ysff/RvjTh5XN6baE/4T+Ld6ROgSmlw
-         OS7w==
-X-Gm-Message-State: AGi0Pua17Hg2IHRGUq0mERKnH5TyjKIehAbD9BDgtbEdVPPVSqA0gC1a
-        ILSYxKj3A2e4jA4+cXI34f4PnnKUAGuSAw==
-X-Google-Smtp-Source: APiQypLpEYTRdZxxeseEquuubYj/xaJsaQP/b0r7tRGQU6XTpbR+6qjG+o4Yk8kNLV1VFU/Nh8UuuQ==
-X-Received: by 2002:a17:902:d693:: with SMTP id v19mr1083415ply.9.1587597217690;
-        Wed, 22 Apr 2020 16:13:37 -0700 (PDT)
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=ICNXcnahBZDZCOPnt4nr7knR31Hz+jmoQA4latQgObI=;
+        b=d3fj3eyAe0eR7IzHORf1n04sTgoLqDpYj0komOgG0RVmP+t6Fr2rxOIcrU6w22Ophx
+         4eH02diu2Iqbw4g2W5DGfdfDXXAD1Jd2xAGCn/u16dhR2zA5Gfz0s3b+yGqFB8vtAzIh
+         N0EKVJuw5/vvroA3z9gc6k3i4say9jRx4UvggFaXBPm5qG31SRn5GLmN3h5vsydlnq9O
+         TkaX8uGRULtHQmy21plSWPtX5ZTwJ8K94RYG3uH2d+gpHmWzouHIgQ6tbgMfxJ5sfChh
+         KEE0N6KRWgL+HFw6E7ghEre1KON9wGLsa1e+w5VpK1uVPlssRT5KIIFlloejNAiyhKB5
+         Crsg==
+X-Gm-Message-State: AGi0PuboRyGTMaN/BUvsWD4P7xPzPuhr7LWbkGCZLEbg8z4+yYWebIHz
+        e+Z6T0UYdZXeMH9DoAlmVf/epA==
+X-Google-Smtp-Source: APiQypJR6cuZj7nEl8Yxhjak4+vzjySN+ce6jmzSPHlYqUvNiozHp1YCD/eoWkZ1ahYzJnMZT2+KBQ==
+X-Received: by 2002:a62:fccf:: with SMTP id e198mr903968pfh.119.1587598066992;
+        Wed, 22 Apr 2020 16:27:46 -0700 (PDT)
 Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id w75sm568519pfc.156.2020.04.22.16.13.36
+        by smtp.gmail.com with ESMTPSA id y71sm579272pfb.179.2020.04.22.16.27.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Apr 2020 16:13:37 -0700 (PDT)
-Date:   Wed, 22 Apr 2020 17:13:35 -0600
+        Wed, 22 Apr 2020 16:27:46 -0700 (PDT)
+Date:   Wed, 22 Apr 2020 17:27:44 -0600
 From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Cc:     peff@peff.net, chriscool@tuxfamily.org
-Subject: [PATCH 4/4] pack-bitmap: pass object filter to fill-in traversal
-Message-ID: <65467a058e7dca6cf1e2db9cdab81513989b5db0.1587597151.git.me@ttaylorr.com>
-References: <cover.1587597151.git.me@ttaylorr.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [RFC PATCH] fetch-pack: try harder to read an ERR packet
+Message-ID: <20200422232744.GA19100@syl.local>
+References: <20200422163357.27056-1-chriscool@tuxfamily.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cover.1587597151.git.me@ttaylorr.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200422163357.27056-1-chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff King <peff@peff.net>
+On Wed, Apr 22, 2020 at 06:33:57PM +0200, Christian Couder wrote:
 
-Sometimes a bitmap traversal still has to walk some commits manually,
-because those commits aren't included in the bitmap packfile (e.g., due
-to a push or commit since the last full repack). If we're given an
-object filter, we don't pass it down to this traversal. It's not
-necessary for correctness because the bitmap code has its own filters to
-post-process the bitmap result (which it must, to filter out the objects
-that _are_ mentioned in the bitmapped packfile).
+It looks like this may be missing a:
 
-And with blob filters, there was no performance reason to pass along
-those filters, either. The fill-in traversal could omit them from the
-result, but it wouldn't save us any time to do so, since we'd still have
-to walk each tree entry to see if it's a blob or not.
+  From: SZEDER Gábor <szeder.dev@gmail.com>
 
-But now that we support tree filters, there's opportunity for savings. A
-tree:depth=0 filter means we can avoid accessing trees entirely, since
-we know we won't them (or any of the subtrees or blobs they point to).
-The new test in p5310 shows this off (the "partial bitmap" state is one
-where HEAD~100 and its ancestors are all in a bitmapped pack, but
-HEAD~100..HEAD are not). Here are the results (run against linux.git):
+header.
 
-  Test                                                  HEAD^               HEAD
-  -------------------------------------------------------------------------------------------------
-  [...]
-  5310.16: rev-list with tree filter (partial bitmap)   0.19(0.17+0.02)     0.03(0.02+0.01) -84.2%
+> When the server has hung up after sending an ERR packet to the
+> client, the client might still be writing, for example a "done"
+> line. Therefore the client might get a write error before reading
+> the ERR packet.
+>
+> When fetching this could result in the client displaying a
+> "Broken pipe" error, instead of the more useful error sent by
+> the server in the ERR packet.
 
-The absolute number of savings isn't _huge_, but keep in mind that we
-only omitted 100 first-parent links (in the version of linux.git here,
-that's 894 actual commits). In a more pathological case, we might have a
-much larger proportion of non-bitmapped commits. I didn't bother
-creating such a case in the perf script because the setup is expensive,
-and this is plenty to show the savings as a percentage.
+All makes sense.
 
-Signed-off-by: Jeff King <peff@peff.net>
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- pack-bitmap.c                | 14 +++++++++-----
- t/perf/p5310-pack-bitmaps.sh |  5 +++++
- 2 files changed, 14 insertions(+), 5 deletions(-)
+> Instead of immediately die()ing after write_in_full() returned an
+> error, fetch should first try to read all incoming packets in the hope
+> that the remote did send an ERR packet before it died, and then die
+> with the error in that packet, or fall back to the current generic
+> error message if there is no ERR packet (e.g. remote segfaulted or
+> something similarly horrible).
+>
+> Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> ---
+> This just formats the following patch from SZEDER Gábor:
+>
+> https://lore.kernel.org/git/20190830121005.GI8571@szeder.dev/
+>
+> I haven't tried to implement some suggestions discussed later
+> in the above thread like:
+>
+>   - renaming send_request()
 
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index 195ee8cad0..4077e731e8 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -506,7 +506,8 @@ static int should_include(struct commit *commit, void *_data)
- static struct bitmap *find_objects(struct bitmap_index *bitmap_git,
- 				   struct rev_info *revs,
- 				   struct object_list *roots,
--				   struct bitmap *seen)
-+				   struct bitmap *seen,
-+				   struct list_objects_filter_options *filter)
- {
- 	struct bitmap *base = NULL;
- 	int needs_walk = 0;
-@@ -599,8 +600,9 @@ static struct bitmap *find_objects(struct bitmap_index *bitmap_git,
- 		show_data.bitmap_git = bitmap_git;
- 		show_data.base = base;
- 
--		traverse_commit_list(revs, show_commit, show_object,
--				     &show_data);
-+		traverse_commit_list_filtered(filter, revs,
-+					      show_commit, show_object,
-+					      &show_data, NULL);
- 	}
- 
- 	return base;
-@@ -999,7 +1001,8 @@ struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs,
- 
- 	if (haves) {
- 		revs->ignore_missing_links = 1;
--		haves_bitmap = find_objects(bitmap_git, revs, haves, NULL);
-+		haves_bitmap = find_objects(bitmap_git, revs, haves, NULL,
-+					    filter);
- 		reset_revision_walk();
- 		revs->ignore_missing_links = 0;
- 
-@@ -1007,7 +1010,8 @@ struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs,
- 			BUG("failed to perform bitmap walk");
- 	}
- 
--	wants_bitmap = find_objects(bitmap_git, revs, wants, haves_bitmap);
-+	wants_bitmap = find_objects(bitmap_git, revs, wants, haves_bitmap,
-+				    filter);
- 
- 	if (!wants_bitmap)
- 		BUG("failed to perform bitmap walk");
-diff --git a/t/perf/p5310-pack-bitmaps.sh b/t/perf/p5310-pack-bitmaps.sh
-index b629a211f9..95379b1d4e 100755
---- a/t/perf/p5310-pack-bitmaps.sh
-+++ b/t/perf/p5310-pack-bitmaps.sh
-@@ -95,4 +95,9 @@ test_perf 'pack to file (partial bitmap)' '
- 	git pack-objects --use-bitmap-index --all pack2b </dev/null >/dev/null
- '
- 
-+test_perf 'rev-list with tree filter (partial bitmap)' '
-+	git rev-list --use-bitmap-index --count --objects --all \
-+		--filter=tree:0 >/dev/null
-+'
-+
- test_done
--- 
-2.26.2.112.g65467a058e
+Agreed that this is probably something we should do. Maybe
+'send_request_retry' or something? That name is kind of terrible.
+
+>   - covering more code pathes
+
+I see where Peff raised this point originally, but I think that this is
+a good step forward as-is. No need to hold this up looking for complete
+coverage, since this is obviously improving the situation.
+
+>   - avoid blocking indefinitely by looking for an ERR packet
+>     only if the write() resulted in ECONNRESET or EPIPE
+
+I think that I may have addressed this point below.
+
+>   - first printing an error message with error_errno() before
+>     going on to look for an ERR packet
+
+I'm not sure what I think about this one. I'd certainly welcome all
+opinions on this matter.
+
+>   - implementing a timeout
+
+A timeout may be a good thing to do. See what you think about my
+suggestion below, first, though.
+
+>
+> as it seems to me that there was no consensus about those.
+>
+> It follows up from discussions in this thread:
+>
+> https://lore.kernel.org/git/cover.1584477196.git.me@ttaylorr.com/
+>
+>  fetch-pack.c | 25 +++++++++++++++++++------
+>  1 file changed, 19 insertions(+), 6 deletions(-)
+>
+> diff --git a/fetch-pack.c b/fetch-pack.c
+> index 1734a573b0..63e8925e2b 100644
+> --- a/fetch-pack.c
+> +++ b/fetch-pack.c
+> @@ -185,14 +185,27 @@ static enum ack_type get_ack(struct packet_reader *reader,
+>  }
+>
+>  static void send_request(struct fetch_pack_args *args,
+> -			 int fd, struct strbuf *buf)
+> +			 int fd, struct strbuf *buf,
+> +			 struct packet_reader *reader)
+>  {
+>  	if (args->stateless_rpc) {
+>  		send_sideband(fd, -1, buf->buf, buf->len, LARGE_PACKET_MAX);
+>  		packet_flush(fd);
+>  	} else {
+> -		if (write_in_full(fd, buf->buf, buf->len) < 0)
+> +		if (write_in_full(fd, buf->buf, buf->len) < 0) {
+
+This makes sense; if 'write_in_full' fails, we want to go into the
+error-handling case below.
+
+But, I wonder if we could do better than re-using 'write_in_full' here.
+We definitely do want to write 'buf->len' bytes overall, but what
+happens when a 'write()' fails? I think it's at _that_ point we want to
+try and read a packet or two off from the remote.
+
+What if instead this looked something like:
+
+  const char *p = buf;
+  ssize_t total = 0;
+
+  while (count > 0) {
+    ssize_t written = xwrite(fd, p, count);
+    if (written < 0)
+      return -1;
+    /* note the change on this line */
+    if (!written && packet_reader_read(reader) == PACKET_READ_EOF) {
+      errno = ENOSPC;
+      return -1;
+    }
+    count -= written;
+    p += written;
+    total += written;
+  }
+
+  return total;
+
+That is basically the definition of 'write_in_full', but when we didn't
+get a chance to write anything, then we try to read one packet.
+
+This way, we only read exactly as many packets as we need to when we hit
+this case. I'm not sure that it matters in practice, though.
+
+> +			int save_errno = errno;
+> +			/*
+> +			 * Read everything the remote has sent to us.
+> +			 * If there is an ERR packet, then the loop die()s
+> +			 * with the received error message.
+> +			 * If we reach EOF without seeing an ERR, then die()
+> +			 * with a generic error message, most likely "Broken
+> +			 * pipe".
+> +			 */
+> +			while (packet_reader_read(reader) != PACKET_READ_EOF);
+> +			errno = save_errno;
+>  			die_errno(_("unable to write to remote"));
+> +		}
+>  	}
+>  }
+>
+> @@ -349,7 +362,7 @@ static int find_common(struct fetch_negotiator *negotiator,
+>  		const char *arg;
+>  		struct object_id oid;
+>
+> -		send_request(args, fd[1], &req_buf);
+> +		send_request(args, fd[1], &req_buf, &reader);
+>  		while (packet_reader_read(&reader) == PACKET_READ_NORMAL) {
+>  			if (skip_prefix(reader.line, "shallow ", &arg)) {
+>  				if (get_oid_hex(arg, &oid))
+> @@ -372,7 +385,7 @@ static int find_common(struct fetch_negotiator *negotiator,
+>  			die(_("expected shallow/unshallow, got %s"), reader.line);
+>  		}
+>  	} else if (!args->stateless_rpc)
+> -		send_request(args, fd[1], &req_buf);
+> +		send_request(args, fd[1], &req_buf, &reader);
+>
+>  	if (!args->stateless_rpc) {
+>  		/* If we aren't using the stateless-rpc interface
+> @@ -395,7 +408,7 @@ static int find_common(struct fetch_negotiator *negotiator,
+>  			int ack;
+>
+>  			packet_buf_flush(&req_buf);
+> -			send_request(args, fd[1], &req_buf);
+> +			send_request(args, fd[1], &req_buf, &reader);
+>  			strbuf_setlen(&req_buf, state_len);
+>  			flushes++;
+>  			flush_at = next_flush(args->stateless_rpc, count);
+> @@ -470,7 +483,7 @@ static int find_common(struct fetch_negotiator *negotiator,
+>  	trace2_region_leave("fetch-pack", "negotiation_v0_v1", the_repository);
+>  	if (!got_ready || !no_done) {
+>  		packet_buf_write(&req_buf, "done\n");
+> -		send_request(args, fd[1], &req_buf);
+> +		send_request(args, fd[1], &req_buf, &reader);
+>  	}
+>  	print_verbose(args, _("done"));
+>  	if (retval != 0) {
+> --
+> 2.17.1
+
+Thanks,
+Taylor
