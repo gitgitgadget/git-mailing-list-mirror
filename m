@@ -8,64 +8,64 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4FE25C55186
-	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 13:52:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E191C54FCB
+	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 13:52:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3086A20728
-	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 13:52:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 57B7D20728
+	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 13:52:54 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EIbB+VqU"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gjgYMFgX"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728645AbgDWNwv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Apr 2020 09:52:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38040 "EHLO
+        id S1728648AbgDWNwx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Apr 2020 09:52:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38046 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1728506AbgDWNwu (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 23 Apr 2020 09:52:50 -0400
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9588C08E934
-        for <git@vger.kernel.org>; Thu, 23 Apr 2020 06:52:50 -0700 (PDT)
-Received: by mail-pf1-x442.google.com with SMTP id y25so2973765pfn.5
-        for <git@vger.kernel.org>; Thu, 23 Apr 2020 06:52:50 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1728506AbgDWNwx (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 23 Apr 2020 09:52:53 -0400
+Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C5F5C08E934
+        for <git@vger.kernel.org>; Thu, 23 Apr 2020 06:52:52 -0700 (PDT)
+Received: by mail-pj1-x1041.google.com with SMTP id a31so646598pje.1
+        for <git@vger.kernel.org>; Thu, 23 Apr 2020 06:52:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=E6Pa10RZbqUp9fkgDKJ5iLiLAKb3oXXpq5PDrmLBUk0=;
-        b=EIbB+VqUYHZJAfzBBP7fxYxbqwIFZbakL5tSbEnWEkWJBCrSAnlr3u//3yMJstB2z7
-         UOz7LXY7Aj/I750wxK80sPucKZr+AsO9r4844aepKP8QiaBrgqHvpeVxqk17m5hdfSBk
-         qPwgXrrFdE80BTstj1gigSDBLxPkAr1aFV7vIw6jdtCGmVjv5E8JXqxtIyw6zWMUU+nc
-         7ZMGCaag2U8es5fg95ofjj6lHCBDDza43tvaZLZgCwFbUzWH/BHb6u90cpyQmUSMxMje
-         SKpJtedg5AxKY4VpKr0WPXjKFZGuW3EG25IzVjQxsgJws78guJG6W0HfnGNV1mfDlY6v
-         KmAQ==
+        bh=rH6kH/tz9sHgN6M255BbLTntiUtcudBE99s4fQjBjsc=;
+        b=gjgYMFgX2Vh8sSJ5ZV6E+xn7Kx2vyOfQBevpqbofUCyjfrg+9ScOeZJ2A13FCklcMT
+         sKBDV0rksKqVWz9q74ml4Zei5x7DXjZYOQzsGfuKwKNmabtX9Wdu6KIpVpqzQMSvvrAk
+         IvFx7c182p8a7M1W0rPwfl3Nb8jLFqa08vAK9IgIej8JAKk5JBbDXWfeuJeAWQ37SUaQ
+         wy0rGwls1GmFyFBcev+gJl/YRA2WeFRCXt73ctuYuCIz46Zc5ZnKW2bW9g+7J73f2LMv
+         JBp+AQQRvleghyzDOgQVDkDO7wyDfF91UsNMt/+ssWHCLhle2edpvXAurPotndIbnxQ6
+         pJ3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=E6Pa10RZbqUp9fkgDKJ5iLiLAKb3oXXpq5PDrmLBUk0=;
-        b=kYpPuGJkxnI70Xcmcx9DqcgNZY/x1SFxV8KYLBvMsaPLwYTQfMM/uN9vhl5f4yzU2i
-         EEJWUdH41F40vRdgV3SjvLDjq8XOHTBJaCGDiIPAJ5Nobv2xS4We+vlB5DB6HFxe4h8o
-         SAy6qA7MBe2Pj5M1aa4kOUUT+PDmDUJnjPoI32GhZEtEVMZ5Llj74gbUuSQ7VgMP/Yl8
-         LvMP8CKlyPC38xe9mBFyR0WHpuTn5Zp46oZxqZc7UCyWNj6DJhos6mo/KLBKwbcghqu2
-         ueFf+G/4b080kgg3/SYVXyrW9/pfNCNtxI1nBhmVGLAD8rGiYnIL0FtFR0CYoi6IAB3Z
-         x8qw==
-X-Gm-Message-State: AGi0PubWij1Q24a4E8wbLtS/XRwkSz9gyhG++0c59O9CTkCQKBSwFh0D
-        wxVHNzcjFb0YkoPStHMpRvDM9R81
-X-Google-Smtp-Source: APiQypKV51va6TZj2nfRrMi8xpiAoPksV4f1uMbCXElFfKSb71VzsNiJi0uK7HaYuZR1iTQdyRg5+Q==
-X-Received: by 2002:a63:4920:: with SMTP id w32mr4174950pga.119.1587649969953;
-        Thu, 23 Apr 2020 06:52:49 -0700 (PDT)
+        bh=rH6kH/tz9sHgN6M255BbLTntiUtcudBE99s4fQjBjsc=;
+        b=hzvTNgMQjLVIqwxkDAOnamZ8YhxWOoHMK8vl0y2JQBKxiUbboyy+BAiDtyd20bMy0A
+         D86sp8ByFuypuLgKUu3zm85/UDZ7D3rBqV7Rg8ik7Wu510ZsgQ9hM/Oljp0NWaCU6HX4
+         98+60j9v+dNMo1LHmH3zibzoVVCGT5IlMT6cKCQu2MeFfjf/CQGuljCGfO38mIqZh1d7
+         4oIiyYlzK4FU7sebng6JfI2ULcy6wpU/zyN9CGb2JzlRkKjzc7syVm7O+opMJxbh0Oci
+         xsTwHYMoHZjVm96bIkk5NSyA+uATfylfgxvvMFDV+WzRn0gJDmXIRVz/+N5VEYyz1im+
+         dMIA==
+X-Gm-Message-State: AGi0Pub1i2i3PUCyGZ9CBPRuVRSt5Q7EL4ZnNZG0XY2c/WnuP+5O6kxR
+        exmYtBsGBz6D0gsRqVSfhPlHvHgd
+X-Google-Smtp-Source: APiQypKTc8LWuIqccjgWQaGZuowmTz51jVpZJlkDJ0tzGM4NIwC1buox54K7IobsS7GG/x1w6rtfeQ==
+X-Received: by 2002:a17:902:ea8a:: with SMTP id x10mr4119347plb.166.1587649971774;
+        Thu, 23 Apr 2020 06:52:51 -0700 (PDT)
 Received: from localhost.localdomain ([2402:800:6374:f359:1ce8:a621:5f80:1116])
-        by smtp.gmail.com with ESMTPSA id u15sm2430335pjm.47.2020.04.23.06.52.48
+        by smtp.gmail.com with ESMTPSA id u15sm2430335pjm.47.2020.04.23.06.52.50
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 23 Apr 2020 06:52:49 -0700 (PDT)
+        Thu, 23 Apr 2020 06:52:51 -0700 (PDT)
 From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>
-Subject: [PATCH v4 1/4] date.c: s/is_date/set_date/
-Date:   Thu, 23 Apr 2020 20:52:38 +0700
-Message-Id: <1fe69008fc79e6a74e8613011504bc7e342291ab.1587644889.git.congdanhqx@gmail.com>
+Subject: [PATCH v4 2/4] date.c: validate and set time in a helper function
+Date:   Thu, 23 Apr 2020 20:52:39 +0700
+Message-Id: <0d0e4d8edce37dfef13e573588f0c043ddf07f6a.1587644889.git.congdanhqx@gmail.com>
 X-Mailer: git-send-email 2.26.2.384.g435bf60bd5
 In-Reply-To: <cover.1587644889.git.congdanhqx@gmail.com>
 References: <cover.1586856398.git.congdanhqx@gmail.com> <cover.1587644889.git.congdanhqx@gmail.com>
@@ -77,93 +77,57 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The function is_date, confusingly also set tm_year. tm_mon, and tm_mday
-after validating input.
+In a later patch, we will reuse this logic, move it to a helper, now.
 
-Rename to set_date to reflect its real usage.
-
-Also, change return value is 0 on success and -1 on failure following
-our convention on function do some real work.
+While we're at it, explicit states that we intentionally ignore
+old-and-defective 2nd leap second.
 
 Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
 ---
- date.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ date.c | 22 +++++++++++++++++-----
+ 1 file changed, 17 insertions(+), 5 deletions(-)
 
 diff --git a/date.c b/date.c
-index b0d9a8421d..b67c5abe24 100644
+index b67c5abe24..f5d5a91208 100644
 --- a/date.c
 +++ b/date.c
-@@ -497,7 +497,7 @@ static int match_alpha(const char *date, struct tm *tm, int *offset)
- 	return skip_alpha(date);
+@@ -539,6 +539,22 @@ static int set_date(int year, int month, int day, struct tm *now_tm, time_t now,
+ 	return -1;
  }
  
--static int is_date(int year, int month, int day, struct tm *now_tm, time_t now, struct tm *tm)
-+static int set_date(int year, int month, int day, struct tm *now_tm, time_t now, struct tm *tm)
- {
- 	if (month > 0 && month < 13 && day > 0 && day < 32) {
- 		struct tm check = *tm;
-@@ -518,9 +518,9 @@ static int is_date(int year, int month, int day, struct tm *now_tm, time_t now,
- 		else if (year < 38)
- 			r->tm_year = year + 100;
- 		else
--			return 0;
-+			return -1;
- 		if (!now_tm)
--			return 1;
-+			return 0;
- 
- 		specified = tm_to_time_t(r);
- 
-@@ -529,14 +529,14 @@ static int is_date(int year, int month, int day, struct tm *now_tm, time_t now,
- 		 * sure it is not later than ten days from now...
- 		 */
- 		if ((specified != -1) && (now + 10*24*3600 < specified))
--			return 0;
-+			return -1;
- 		tm->tm_mon = r->tm_mon;
- 		tm->tm_mday = r->tm_mday;
- 		if (year != -1)
- 			tm->tm_year = r->tm_year;
--		return 1;
++static int set_time(long hour, long minute, long second, struct tm *tm)
++{
++	/* C90 and old POSIX accepts 2 leap seconds, it's a defect,
++	 * ignore second number 61
++	 */
++	if (0 <= hour && hour <= 24 &&
++	    0 <= minute && minute < 60 &&
++	    0 <= second && second <= 60) {
++		tm->tm_hour = hour;
++		tm->tm_min = minute;
++		tm->tm_sec = second;
 +		return 0;
- 	}
--	return 0;
++	}
 +	return -1;
- }
- 
++}
++
  static int match_multi_number(timestamp_t num, char c, const char *date,
-@@ -575,10 +575,10 @@ static int match_multi_number(timestamp_t num, char c, const char *date,
- 
- 		if (num > 70) {
- 			/* yyyy-mm-dd? */
--			if (is_date(num, num2, num3, NULL, now, tm))
-+			if (set_date(num, num2, num3, NULL, now, tm) == 0)
- 				break;
- 			/* yyyy-dd-mm? */
--			if (is_date(num, num3, num2, NULL, now, tm))
-+			if (set_date(num, num3, num2, NULL, now, tm) == 0)
- 				break;
- 		}
- 		/* Our eastern European friends say dd.mm.yy[yy]
-@@ -586,14 +586,14 @@ static int match_multi_number(timestamp_t num, char c, const char *date,
- 		 * mm/dd/yy[yy] form only when separator is not '.'
- 		 */
- 		if (c != '.' &&
--		    is_date(num3, num, num2, refuse_future, now, tm))
-+		    set_date(num3, num, num2, refuse_future, now, tm) == 0)
+ 			      char *end, struct tm *tm, time_t now)
+ {
+@@ -556,12 +572,8 @@ static int match_multi_number(timestamp_t num, char c, const char *date,
+ 	case ':':
+ 		if (num3 < 0)
+ 			num3 = 0;
+-		if (num < 25 && num2 >= 0 && num2 < 60 && num3 >= 0 && num3 <= 60) {
+-			tm->tm_hour = num;
+-			tm->tm_min = num2;
+-			tm->tm_sec = num3;
++		if (set_time(num, num2, num3, tm) == 0)
  			break;
- 		/* European dd.mm.yy[yy] or funny US dd/mm/yy[yy] */
--		if (is_date(num3, num2, num, refuse_future, now, tm))
-+		if (set_date(num3, num2, num, refuse_future, now, tm) == 0)
- 			break;
- 		/* Funny European mm.dd.yy */
- 		if (c == '.' &&
--		    is_date(num3, num, num2, refuse_future, now, tm))
-+		    set_date(num3, num, num2, refuse_future, now, tm) == 0)
- 			break;
+-		}
  		return 0;
- 	}
+ 
+ 	case '-':
 -- 
 2.26.2.384.g435bf60bd5
 
