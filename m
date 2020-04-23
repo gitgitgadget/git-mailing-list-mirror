@@ -6,74 +6,72 @@ X-Spam-Status: No, score=-6.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2429BC54FD0
-	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 21:03:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B3324C54FCB
+	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 21:04:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0368D20736
-	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 21:03:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8AB8220656
+	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 21:04:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726498AbgDWVDF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Apr 2020 17:03:05 -0400
-Received: from cloud.peff.net ([104.130.231.41]:37848 "HELO cloud.peff.net"
+        id S1726071AbgDWVEL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Apr 2020 17:04:11 -0400
+Received: from cloud.peff.net ([104.130.231.41]:37856 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726057AbgDWVDF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Apr 2020 17:03:05 -0400
-Received: (qmail 17845 invoked by uid 109); 23 Apr 2020 21:03:05 -0000
+        id S1725877AbgDWVEL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Apr 2020 17:04:11 -0400
+Received: (qmail 17859 invoked by uid 109); 23 Apr 2020 21:04:11 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 23 Apr 2020 21:03:05 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 23 Apr 2020 21:04:11 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 13490 invoked by uid 111); 23 Apr 2020 21:14:14 -0000
+Received: (qmail 13516 invoked by uid 111); 23 Apr 2020 21:15:20 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 23 Apr 2020 17:14:14 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 23 Apr 2020 17:15:20 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 23 Apr 2020 17:03:03 -0400
+Date:   Thu, 23 Apr 2020 17:04:09 -0400
 From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Cc:     Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH] blame: drop unused parameter from maybe_changed_path
-Message-ID: <20200423210303.GA1635761@coredump.intra.peff.net>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, Garima Singh <garima.singh@microsoft.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 1/2] test-bloom: fix some whitespace issues
+Message-ID: <20200423210409.GB1635761@coredump.intra.peff.net>
+References: <20200423205851.GA1633985@coredump.intra.peff.net>
+ <20200423205907.GA1634224@coredump.intra.peff.net>
+ <20200423210155.GA46862@syl.local>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <20200423210155.GA46862@syl.local>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We don't use the "parent" parameter at all (probably because the bloom
-filter for a commit is always defined against a single parent anyway).
+On Thu, Apr 23, 2020 at 03:01:55PM -0600, Taylor Blau wrote:
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-This is on top of ds/blame-on-bloom, which just made it to next.
+> On Thu, Apr 23, 2020 at 04:59:07PM -0400, Jeff King wrote:
+> > Signed-off-by: Jeff King <peff@peff.net>
+> > ---
+> >  t/helper/test-bloom.c | 10 +++++-----
+> >  1 file changed, 5 insertions(+), 5 deletions(-)
+> >
+> > diff --git a/t/helper/test-bloom.c b/t/helper/test-bloom.c
+> > index ce412664ba..f9c0ce2bae 100644
+> > --- a/t/helper/test-bloom.c
+> > +++ b/t/helper/test-bloom.c
+> > @@ -27,7 +27,7 @@ static void print_bloom_filter(struct bloom_filter *filter) {
+> >  	}
+> >  	printf("Filter_Length:%d\n", (int)filter->len);
+> >  	printf("Filter_Data:");
+> > -	for (i = 0; i < filter->len; i++){
+> > +	for (i = 0; i < filter->len; i++) {
+> 
+> Thanks for fixing the spacing, but I wonder if these braces should be
+> here at all. Since the body is one line long, maybe this should just be:
+> 
+>   for (i = 0; i < filter->len; i++)
+>     printf("%02x|", filter->data[i]);
 
-I _think_ this is the right solution, but perhaps the function should be
-verifying that we're looking at the right parent?
+I have to admit that I don't care either way, and I think we spend too
+much time quibbling about braces or not-braces. It was really the bad
+indentation that I cared about most.
 
- blame.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
-
-diff --git a/blame.c b/blame.c
-index 9fbf79e47c..da7e28800e 100644
---- a/blame.c
-+++ b/blame.c
-@@ -1263,7 +1263,6 @@ struct blame_bloom_data {
- static int bloom_count_queries = 0;
- static int bloom_count_no = 0;
- static int maybe_changed_path(struct repository *r,
--			      struct commit *parent,
- 			      struct blame_origin *origin,
- 			      struct blame_bloom_data *bd)
- {
-@@ -1355,8 +1354,7 @@ static struct blame_origin *find_origin(struct repository *r,
- 		if (origin->commit->parents &&
- 		    !oidcmp(&parent->object.oid,
- 			    &origin->commit->parents->item->object.oid))
--			compute_diff = maybe_changed_path(r, parent,
--							  origin, bd);
-+			compute_diff = maybe_changed_path(r, origin, bd);
- 
- 		if (compute_diff)
- 			diff_tree_oid(get_commit_tree_oid(parent),
--- 
-2.26.2.827.g3c1233342b
+-Peff
