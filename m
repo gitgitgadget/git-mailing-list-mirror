@@ -2,105 +2,96 @@ Return-Path: <SRS0=24D7=6H=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C65C0C54FCB
-	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 22:04:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C54AC54FD0
+	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 22:11:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 93EE62077D
-	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 22:04:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 25E7B2077D
+	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 22:11:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="LuQIdRe1"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="CFj9rZb7"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726287AbgDWWEZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Apr 2020 18:04:25 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:62362 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726057AbgDWWEZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Apr 2020 18:04:25 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 96B42CDD6A;
-        Thu, 23 Apr 2020 18:04:23 -0400 (EDT)
+        id S1726071AbgDWWLa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Apr 2020 18:11:30 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51599 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726057AbgDWWL3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Apr 2020 18:11:29 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A6C024D7B1;
+        Thu, 23 Apr 2020 18:11:27 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=mGqPDxPNNt0NoofGhHmxWssjz/M=; b=LuQIdR
-        e1rtE/IDDYX2IpVF+Mg2nWckEK1JPemdWzdrDFiVdH3vXDQVzOaiDlD85EK4haCK
-        sBfI40PcjKfLc0S9w2F6hs1AJMOCpclDemyIgXKzc06t95IlgicGOXdRGI/JGecd
-        1MoG5x+2/pyEbY5ZimOQj6lmVCjjK7u6IFq6I=
+        :content-type; s=sasl; bh=MZ+HGmczFiREJEuTcd4rM087raE=; b=CFj9rZ
+        b7SiPvbdhvg20ufroXnIHwwdR1hlhyuPX66c5EHDIcaY1URUNstngDY+fNitF0oT
+        tTvEOnDehIvjR13q6Ws/sQGFk3bp+AHKzLlavUuSARe/rPOuR4TagNj7oglkedTX
+        ysYZpEjS7DhE+Z0Hv7Gbsg/WOZRt3PIuZ83p0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=PWI831rK/nv9Ap3RU4Czvpo4z7uw5Kqz
-        9dyFVmGvzS3U+yxZgtDmFieKMh7UfSmAOWOIZJqdFtEdm2zTelRshhC+xaECeZeW
-        4F+ZavHaQXPGw1Jn50Rn9NWYH2KvR6oKvd34TQDCU7gqH7vj9IKNGVT7hCjpIzn9
-        sjpFZ2DOJk4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8EC9CCDD69;
-        Thu, 23 Apr 2020 18:04:23 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=xfF0G0+NP0Z2rw9V2wMd2BvVxgYoxPZd
+        Ub+DdFR4oFKVvwNW80z3+hAr/XwJn8GX3LEzItl1UquS1yYNqIxyc6jh5FGj+E7T
+        Lh/h8l6wZu0cf9u6P80ZyExs1nWH5yf/UHZj4sSLgHD5CMm6dGczKJ2cVaJqAuMr
+        7s0+OqlU/XE=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 93D804D7B0;
+        Thu, 23 Apr 2020 18:11:27 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D3CA3CDD68;
-        Thu, 23 Apr 2020 18:04:20 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D57314D7AF;
+        Thu, 23 Apr 2020 18:11:25 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, peff@peff.net, szeder.dev@gmail.com,
-        dstolee@microsoft.com
-Subject: Re: [PATCH 4/4] commit-graph: close descriptors after mmap
-References: <cover.1587677671.git.me@ttaylorr.com>
-        <e05db264cb50760cab222157b436e82adeaeadc8.1587677671.git.me@ttaylorr.com>
-Date:   Thu, 23 Apr 2020 15:04:19 -0700
-In-Reply-To: <e05db264cb50760cab222157b436e82adeaeadc8.1587677671.git.me@ttaylorr.com>
-        (Taylor Blau's message of "Thu, 23 Apr 2020 15:41:13 -0600")
-Message-ID: <xmqq368tg8po.fsf@gitster.c.googlers.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Ilya Tretyakov <it@it3xl.ru>
+Subject: Re: [PATCH 2/3] credential: teach `credential_from_url()` a non-strict mode
+References: <pull.615.git.1587588665.gitgitgadget@gmail.com>
+        <1081841b16de31693473e72ff817bed5f0064dda.1587588665.git.gitgitgadget@gmail.com>
+        <20200422233854.GE140314@google.com>
+        <CAPUEspgJvN6f6Wjo-yjYj-x+bYtC3vdSvwUtrF=MbJDjwYUTdA@mail.gmail.com>
+        <nycvar.QRO.7.76.6.2004231433060.18039@tvgsbejvaqbjf.bet>
+        <20200423212212.GA20669@Carlos-MBP>
+        <nycvar.QRO.7.76.6.2004232359120.18039@tvgsbejvaqbjf.bet>
+Date:   Thu, 23 Apr 2020 15:11:25 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.2004232359120.18039@tvgsbejvaqbjf.bet>
+        (Johannes Schindelin's message of "Fri, 24 Apr 2020 00:03:17 +0200
+        (CEST)")
+Message-ID: <xmqqy2qlette.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 6256520C-85AE-11EA-A0FE-B0405B776F7B-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 5FA93EB0-85AF-11EA-9F05-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> From: Jeff King <peff@peff.net>
->
-> We don't ever refer to the descriptor after mmap-ing it. And keeping it
-> open means we can run out of descriptors in degenerate cases (e.g.,
-> thousands of split chain files). Let's close it as soon as possible.
+> Yes (modulo doing "greater than" comparison on pointers which is IIRC not
+> permitted in C in general).
 
-Yikes.  
+Of course, people write a loop like this
 
-Sorry, I should have looked at the use of mmap in this topioc more
-carefully when we queued the series.  It is an easy mistake to make
-by anybody new to the API to leave it open while the region is in
-use.
+	char *cp, *ep = strchr(string, '\n');
 
-With this fix, with or without the other topics still in flight, I
-do not think no code touches graph_fd.  Should we remove the
-graph_fd field from the structure as well?
+	for (cp = string; cp < ep; cp++)
+		...
 
+all the time, and forbidding pointer comparison would make the
+language impossible to use ;-)
 
-
-
- commit-graph.h | 2 --
- 1 file changed, 2 deletions(-)
-
-diff --git a/commit-graph.h b/commit-graph.h
-index a0a2c4a1e5..1254eae948 100644
---- a/commit-graph.h
-+++ b/commit-graph.h
-@@ -40,8 +40,6 @@ struct tree *get_commit_tree_in_graph(struct repository *r,
- 				      const struct commit *c);
- 
- struct commit_graph {
--	int graph_fd;
--
- 	const unsigned char *data;
- 	size_t data_len;
- 
+I think you are confused with a different rule---what is not kosher
+is to compare two pointers that do not point into elements of the
+same array.  Whether the comparison is done in (ptr1 < ptr2) way, or
+(ptr2 - ptr1 < 0) way, does not change the equation.
