@@ -2,91 +2,94 @@ Return-Path: <SRS0=24D7=6H=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	PDS_TONAME_EQ_TOLOCAL_SHORT,SPF_HELO_NONE,SPF_PASS autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A156C55193
-	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 16:17:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 57FFBC54FCB
+	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 16:26:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5F7ED20704
-	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 16:17:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 254A520704
+	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 16:26:10 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ffK255rM"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729569AbgDWQR2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Apr 2020 12:17:28 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:55011 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728865AbgDWQR2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Apr 2020 12:17:28 -0400
-Received: by mail-wm1-f67.google.com with SMTP id h2so7039223wmb.4
-        for <git@vger.kernel.org>; Thu, 23 Apr 2020 09:17:25 -0700 (PDT)
+        id S1729613AbgDWQ0J (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Apr 2020 12:26:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33864 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1729422AbgDWQ0I (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 23 Apr 2020 12:26:08 -0400
+Received: from mail-ed1-x542.google.com (mail-ed1-x542.google.com [IPv6:2a00:1450:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 978F9C09B041
+        for <git@vger.kernel.org>; Thu, 23 Apr 2020 09:26:08 -0700 (PDT)
+Received: by mail-ed1-x542.google.com with SMTP id k22so4797103eds.6
+        for <git@vger.kernel.org>; Thu, 23 Apr 2020 09:26:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=dohRjSv0rjqKuZ+x53VaZqD3Em5Igx1YxeNde9pSRwc=;
+        b=ffK255rMAhTNAEb4s1wOMd87qWJ8Gsqhftdz/zlaBw+kBROKmdDG8jX/UC/5tuj/Az
+         Ua8xmAe/F0ZlG+3S/TNwIDiQIYbqkhEUYBgGe6ugg7o47Vu/Q/pvKgQsgVXJxdj/wAMY
+         Rg6ndny5a2XYYMRkpsjLM6uStD4QF3WcKBR93uDybFqmg4olq5FGHNkFycTlR4fz8ke3
+         Y6bo+Q7G9XzPfS8l7QWmdI2D3ffn7tNJru3tqYFR/jbqT8iycb94TAc1ZBfSjt3esZPV
+         1f2DPtJ9IQavEwLJ+GdmRgHkt8c6EmGsfz99PmUMt5TqitVCFYURe0j1t7FmSSJPrVoQ
+         iotA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=DfHWFTPN0km+rt9meqaPOTRLKS6/QhZSYPzpbmzsphw=;
-        b=UMXb7KkybmNhoSNlpBM1ccZ2aPLSldZDYGCOL2ekxqfoJ8nK3IyaVy58KhvCiBicyh
-         4FRDRfZHoTAGUSrLAJgtb+hNJMaVZocFI7jIl79xtBAFttnBD0JJ6r1+iBJ7QnCdEAWu
-         nGDIjaVNSWB1B/YalU1VXdVOaaq7yAMBRs6Dzf1u7je22AhPpbmf75SAjsWoYXx6tHxh
-         OT89N8B9sBWCuHr3ykXGPQmggCf8S395FVw/IcFbhvzb0+VHvRleoYgkWQ8mqxhNrgPq
-         hA4sgFbMLm2l6XKSoiKlFG/wfGWzzPgPBsra/aqpsMw+TiwZ7gnaP1Xh3WKwXeOUpBk/
-         ePmA==
-X-Gm-Message-State: AGi0PuYsdlTVh/zr6jV66RHt/HjK3986CqL2FzFep9CqwTk3rlrumz2w
-        QZgnxooNBlmQev8A/5Vo9S9YgF83BeCqrqpU9u4=
-X-Google-Smtp-Source: APiQypI7wH16RUym41vkvnwDZHWX6msOWg92LtIe8zyfgRZkRX1Ox3WAGTPLN07+RQhPF8dzcXruxrkSEnjjH4rDeMo=
-X-Received: by 2002:a7b:c213:: with SMTP id x19mr4844040wmi.53.1587658645068;
- Thu, 23 Apr 2020 09:17:25 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=dohRjSv0rjqKuZ+x53VaZqD3Em5Igx1YxeNde9pSRwc=;
+        b=NW5Jt3KWNuWXdwidYK7zeUd2MyrFM3joDW0nzwH68Tf8PaOAO/XcFD9691N6kk/TKT
+         zT09Kv71ibnlTAxW2fufSQcywus0Cuums5uEg0LFL88/jLB3zFRRDALvmtzIBjKivZSZ
+         VottT7XHz951SI7Dr7CmnvMG+hjIsenejj1KaTRAXcS7I5ik69sRXKeyxiAdIk1oIYbZ
+         4zzCCk/QNX36SozS0pWy5BFN27pXymDTG3SJNv6oenBUTfQTHzAfAU7QWR6Ywu/L3H3g
+         210eTmUQ4MQ3kxm1FE8xilFwzAM+orfvCIkP0VG7tQbPV8vRcoebaZwfx2gJ5hIfQuF5
+         lCpQ==
+X-Gm-Message-State: AGi0PuYQ9wwQLc4qbtg/i1zFrmdir8WrxNzjLzKzinS7GYfM7K55H5OR
+        jqcZUCsPn37AQb/zfat+GMincina/WTo1ZLkp9fDgK8smAg=
+X-Google-Smtp-Source: APiQypLkLiYTvYYd2ZC8wyalK+6NYIvQUHWe9pkIqiY+hxim86mHWMZnNMMuHjyZUdYImehA5MlxhrIj2af303D5bro=
+X-Received: by 2002:a50:bb25:: with SMTP id y34mr3284058ede.237.1587659166718;
+ Thu, 23 Apr 2020 09:26:06 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.616.git.1587628367528.gitgitgadget@gmail.com>
-In-Reply-To: <pull.616.git.1587628367528.gitgitgadget@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 23 Apr 2020 12:17:14 -0400
-Message-ID: <CAPig+cSDQe7YDke=fyfdeSZOimcR5jj3FFk=Q4iOk6uiHsT-Zw@mail.gmail.com>
-Subject: Re: [PATCH] macos: do let the build find the gettext headers/libraries/msgfmt
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Thu, 23 Apr 2020 18:25:55 +0200
+Message-ID: <CAP8UFD14Wx=QvuMM92RT=Zd=R_FiPQ=FRUVYmzzuaPPteMPVEQ@mail.gmail.com>
+Subject: [ANNOUNCE] Git Rev News edition 62
+To:     git <git@vger.kernel.org>
+Cc:     lwn@lwn.net, Junio C Hamano <gitster@pobox.com>,
+        Jakub Narebski <jnareb@gmail.com>,
+        Markus Jansen <mja@jansen-preisler.de>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Eric Raymond <esr@thyrsus.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        Edward Thomson <ethomson@edwardthomson.com>,
+        =?UTF-8?Q?Jean=2DNo=C3=ABl_AVILA?= <jn.avila@free.fr>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
         =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+        Derrick Stolee <stolee@gmail.com>, Kyle Meyer <kyle@kyleam.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 23, 2020 at 3:54 AM Johannes Schindelin via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-> Apparently a recent Homebrew update now installs `gettext` into a
-> subdirectory under /usr/local/, requiring the CFLAGS/LDFLAGS to list
-> explicit directories _even_ when asking to force-link the `gettext`
-> package.
->
-> Likewise, the `msgfmt` tool is no longer in the `PATH`.
+Hi everyone,
 
-Interesting. I wonder if this is indeed a recent Homebrew change or if
-something changed elsewhere in the environment. I ask because...
+The 62nd edition of Git Rev News is now published:
 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
-> diff --git a/config.mak.uname b/config.mak.uname
-> @@ -133,8 +133,11 @@ ifeq ($(uname_S),Darwin)
-> -       BASIC_CFLAGS += -I/usr/local/include
-> -       BASIC_LDFLAGS += -L/usr/local/lib
-> +       BASIC_CFLAGS += -I/usr/local/include -I/usr/local/opt/gettext/include
-> +       BASIC_LDFLAGS += -L/usr/local/lib -L/usr/local/opt/gettext/lib
-> +       ifeq ($(shell test -x /usr/local/opt/gettext/bin/msgfmt && echo y),y)
-> +               MSGFMT = /usr/local/opt/gettext/bin/msgfmt
-> +       endif
+  https://git.github.io/rev_news/2020/04/23/edition-62/
 
-... I've needed these assignments in my local config.mak file ever
-since I switched over to Homebrew from Macports (which installed
-everything under top-level /opt) years ago.
+Thanks a lot to Eric S. Raymond, Junio Hamano and Philip Oakley who
+helped this month!
 
-I'm slightly leery of seeing these applied globally on Mac OS in
-config.mak.uname since various package managers on Mac OS install
-packages in wildly different locations, and these settings might cause
-the wrong version of a package to be picked up if a user has a
-preferred version installed elsewhere.
+Enjoy,
+Christian, Jakub, Markus and Kaartic.
 
-Would it be an alternative for the CI/PR build process to just create
-a local customized config.mak rather than patching the
-globally-applied config.mak.uname like this?
+PS: An issue for the next edition is already opened and contributions
+are welcome:
+https://github.com/git/git.github.io/issues/430
