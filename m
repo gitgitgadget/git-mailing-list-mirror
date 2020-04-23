@@ -4,132 +4,212 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9CB8DC55185
-	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 01:23:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D46AC55189
+	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 02:03:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7A6272075A
-	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 01:23:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6EBA3208E4
+	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 02:03:49 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TpG+ktPR"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SuYY6xXl"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726008AbgDWBXJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Apr 2020 21:23:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34282 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1725846AbgDWBXJ (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 22 Apr 2020 21:23:09 -0400
-Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0AEF9C03C1AA
-        for <git@vger.kernel.org>; Wed, 22 Apr 2020 18:23:09 -0700 (PDT)
-Received: by mail-pg1-x542.google.com with SMTP id g6so2033120pgs.9
-        for <git@vger.kernel.org>; Wed, 22 Apr 2020 18:23:09 -0700 (PDT)
+        id S1726054AbgDWCDs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Apr 2020 22:03:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40594 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725781AbgDWCDs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Apr 2020 22:03:48 -0400
+Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA409C03C1AA
+        for <git@vger.kernel.org>; Wed, 22 Apr 2020 19:03:47 -0700 (PDT)
+Received: by mail-pf1-x442.google.com with SMTP id z1so449019pfn.3
+        for <git@vger.kernel.org>; Wed, 22 Apr 2020 19:03:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=Kzf8/6ZIIxzhwXpbiID6u5AVpqCfUxffBGYAB6hodiA=;
-        b=TpG+ktPRP4K1ebfk3FDRhYRLK2DRyad6L5zzRbBpaP4DNHnq5++7XBfOnvr/kXShci
-         0HZnuGF7D8bhnSlxmtDkmQRDUHCvRmBCb13ULN5Rwhg5B5AOqW/k2gc2WibYB4CS/1tw
-         nUZki9q2DtRGRUCmJW8YoQYOHKc6C2SPPtGVrnALPnA5qpdDrY88xDhSYwIpZolG3T04
-         Cgymbni2nBq7FBIYGjedRgZmVEPttmqLmIR6LcU/Vp6nh+qxfrHNQKKCSsNhQaesjjm3
-         eyYkSTOuZCoOOeRg5q+WLD0htKhtwdopJh+3gCMoxsMJrT/63iUklEycVu648pLAJMnB
-         A3jw==
+        bh=OJ4D3HxfxMphiZTRZkjNT0z2N+jHRKIeblTyk/QWJ8w=;
+        b=SuYY6xXlpMGXUZqX9XgDu4Xv0A4Dh4JQ2jr5m1fjZidGIM+B/wDyubyZtjYml/cwxw
+         KQ7v5Ne1jst/K2HYWjwEedM7S6LlIRh8tQbqcaF4MaDwINgatRe8YIIiBOEIzfbegtLJ
+         Fh+L6TXl4VNWoDZLEaemMDj5KyAq/vVqAtiPVn+1SHv1hWvBj/d5q+V4Vl6YskeBf2qI
+         PZQDPRFDuKEsv/T5ZV7I4PTSmjrvokAUGGTolEivYnahIMfD3rriFp2PsA/c3CE4Sg18
+         FTbqPTs3vrKUeoFb/t/bM8ktOr34I0GVcpSeWcOZGbQgjvpBZYwJ8eAYuHJxWRcVWHVB
+         qggQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=Kzf8/6ZIIxzhwXpbiID6u5AVpqCfUxffBGYAB6hodiA=;
-        b=cRCNS/nK0zL2lozQ/n0NME8UEgWDH4EO126jTY6P79YIz6XF3N06MXw6SLmNQ0sQmn
-         K2Tzoe0XR+xqrUMpgrtqamsphgfOqrqgQ90ji+2w1Jlh+sGKJrQMD9kBSZJSCQONcznF
-         qGTov0oMfAI+/KrS1iBO7ESTOcikj+N/AedBRpiBsflvj+EoKurCfxEloeHbSFj8vVYg
-         qOcyC9lGADVcG777lyhh9T+j3mmHX5AGpZFyl5Ap/8ZBG7naY2cj+huqpVmeIqm6r/TT
-         yhV6AL/MetQ2kEC0z7tqBleOuIuZi/c+sih8Glnus5Nv7lP4p6qMYS/EnpY5n6V3zosl
-         6XUw==
-X-Gm-Message-State: AGi0Pub7hmlI3Ejq5cQt9apr8zQm8Mftos3urzjx8vgr0+Upot+iNU6J
-        hM39IqyrbfeO32qYI66bMV8=
-X-Google-Smtp-Source: APiQypLmkWwa8r8klWJ1oNPgn2j40kg1h7cbiXDUPhhNxYOgyVRYqHNoxVt2K1+IULs56dQIsJfXqg==
-X-Received: by 2002:a63:e749:: with SMTP id j9mr1655592pgk.319.1587604988385;
-        Wed, 22 Apr 2020 18:23:08 -0700 (PDT)
+        bh=OJ4D3HxfxMphiZTRZkjNT0z2N+jHRKIeblTyk/QWJ8w=;
+        b=FgfHsjnrvZijg4x38f9kDKpgA9hEakoPc2uc3ESVWHWntNwGaxN4PWF+FKacT1WaAd
+         MxjAn3MWwhtPIIrx+T0Q0G+eYG7AUMRE/E8ySUj1K7mR93WUwwxM/52oylh+7uqEuyDF
+         mqMLNco91K9PCyFFiw/XfotQ78BmPUDqGaPU0kpPhBj2s2fspqKa7UYeX70rywXf8jEY
+         Ccy5LczMVf71XwbSZ40gEpqdmdO8oM1Tf4xgnu98+2TxeEhnEjCJdGup1h25J0C7PTTh
+         AyxRWke0BFH6vyPbUrgxG85W1OOruPIFMI21WU7BkgCAiM3Xz2XN/+GA2gUn+92OQPNE
+         /3gw==
+X-Gm-Message-State: AGi0PuYACtdaAJpttqK2zNigKIEN9vvgRfE+nmox2Wcgn941nDXvPKBk
+        nr50uJKme0HY2qG6REvObwo=
+X-Google-Smtp-Source: APiQypKnKs32HojAbLEFH3l7ANMjkdVVaiMuewVpHTUBPOdI8GZh1bSHCyrPPrtywunYVcl54629ww==
+X-Received: by 2002:a62:e30f:: with SMTP id g15mr1527213pfh.150.1587607427117;
+        Wed, 22 Apr 2020 19:03:47 -0700 (PDT)
 Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
-        by smtp.gmail.com with ESMTPSA id t126sm774168pfb.29.2020.04.22.18.23.07
+        by smtp.gmail.com with ESMTPSA id n17sm839328pff.81.2020.04.22.19.03.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Apr 2020 18:23:07 -0700 (PDT)
-Date:   Wed, 22 Apr 2020 18:23:05 -0700
+        Wed, 22 Apr 2020 19:03:46 -0700 (PDT)
+Date:   Wed, 22 Apr 2020 19:03:44 -0700
 From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, jonathantanmy@google.com, gitster@pobox.com,
-        newren@gmail.com
-Subject: Re: [PATCH v2 2/2] shallow.c: use '{commit,rollback}_shallow_file'
-Message-ID: <20200423012305.GH140314@google.com>
-References: <20200423001438.GC19100@syl.local>
- <cover.1587601501.git.me@ttaylorr.com>
- <296e70790d7a391d471554b0bc5a58e2a091ce88.1587601501.git.me@ttaylorr.com>
+To:     Jacob Keller <jacob.e.keller@intel.com>
+Cc:     git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH] completion: complete remote branches with switch --track
+Message-ID: <20200423020344.GI140314@google.com>
+References: <20200422201541.3766173-1-jacob.e.keller@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <296e70790d7a391d471554b0bc5a58e2a091ce88.1587601501.git.me@ttaylorr.com>
+In-Reply-To: <20200422201541.3766173-1-jacob.e.keller@intel.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau wrote:
+Hi,
 
-> --- a/builtin/receive-pack.c
-> +++ b/builtin/receive-pack.c
-> @@ -872,12 +872,12 @@ static int update_shallow_ref(struct command *cmd, struct shallow_info *si)
->  	opt.env = tmp_objdir_env(tmp_objdir);
->  	setup_alternate_shallow(&shallow_lock, &opt.shallow_file, &extra);
->  	if (check_connected(command_singleton_iterator, cmd, &opt)) {
-> -		rollback_lock_file(&shallow_lock);
-> +		rollback_shallow_file(the_repository, &shallow_lock);
+Jacob Keller wrote:
 
-I like it.
+> If the --track option is supplied to git switch, then a new branch will
+> be created tracking the specified remote branch.
+>
+> Fix git completion support so that remote branches will be completed
+> when --track is enabled.
+>
+> Add a couple of simple test cases to help cover this new behavior. Note
+> that ideally completion for --track would only allow remote branches,
+> and would not complete all refs like HEAD, FETCH_HEAD, etc, so one of
+> the new tests is a test_expect_failure to capture this.
+>
+> Fixes: ae36fe694180 ("completion: support switch")
+> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+> ---
+> I wasn't able to figure out how to get completion to ignore things like tags
+> and similar, but I think this is still an improvement.
+>
+>  contrib/completion/git-completion.bash |  8 +++++---
+>  t/t9902-completion.sh                  | 22 ++++++++++++++++++++++
+>  2 files changed, 27 insertions(+), 3 deletions(-)
 
-I wonder, is there a way we can make it more difficult to accidentally
-use rollback_lock_file where rollback_shallow_file is needed?  For
-example, what if shallow_lock has a different type "struct
-shallow_lock" so one would have to reach in to its lock_file member to
-bypass the shallow_file interface?
+Thanks for writing it.
 
-[...]
->  		oid_array_clear(&extra);
->  		return -1;
->  	}
->  
-> -	commit_lock_file(&shallow_lock);
-> +	commit_shallow_file(the_repository, &shallow_lock);
->  
->  	/*
->  	 * Make sure setup_alternate_shallow() for the next ref does
-> diff --git a/commit.h b/commit.h
-> index 008a0fa4a0..ab91d21131 100644
-> --- a/commit.h
-> +++ b/commit.h
-> @@ -249,6 +249,8 @@ struct oid_array;
->  struct ref;
->  int register_shallow(struct repository *r, const struct object_id *oid);
->  int unregister_shallow(const struct object_id *oid);
-> +int commit_shallow_file(struct repository *r, struct lock_file *lk);
-> +void rollback_shallow_file(struct repository *r, struct lock_file *lk);
+One part I found a little confusing is that --track is being used in
+two ways.  On one hand, it's an option to __git_complete_refs, meaning
+to complete remote-tracking branches.  On the other hand, it's an option
+to git switch, meaning to create a branch set up to "git pull" from a
+remote-tracking branch.
 
-optional: might make sense to put this near setup_alternate_shallow
-for discoverability
+Can the commit message give a motivating example to describe what
+improvement to the user's life this change brings?  ("So now you can
+type 'git ... ' and hit TAB and see ....)
 
-Could this have an API doc comment?
+Some nitpicks:
 
 [...]
-> --- a/shallow.c
-> +++ b/shallow.c
-> @@ -40,13 +40,6 @@ int register_shallow(struct repository *r, const struct object_id *oid)
->  
->  int is_repository_shallow(struct repository *r)
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -2235,12 +2235,14 @@ _git_switch ()
+>  		if [ -n "$(__git_find_on_cmdline "--guess")" ]; then
+>  			track_opt='--track'
+>  		fi
+> -		if [ -z "$(__git_find_on_cmdline "-d --detach")" ]; then
+> -			only_local_ref=y
+> -		else
+> +		if [ -n "$(__git_find_on_cmdline "-d --detach")" ]; then
+>  			# --guess --detach is invalid combination, no
+>  			# dwim will be done when --detach is specified
+>  			track_opt=
+> +		elif [ -z "$(__git_find_on_cmdline "--track")" ]; then
+> +			# if neither --detach or --track are specified then
 
-Not about this patch: it might make sense to split out a shallow.h
-header / API.
+language nits:
+
+- s/or/nor/ (because the clause starts with "neither")
+- s/are/is/ (because "either" and "neither" are singular)
+
+English can be odd.
+
+> +			# match only local refs.
+> +			only_local_ref=y
+>  		fi
+
+Let me check that I understand correctly:
+
+If --detach is passed, the <start-point> parameter is an arbitrary
+commit.  So we want all refs (or even all commits), not just commits
+that are eligible for "git switch --guess" (the default mode) dwimery.
+
+If --track is passed, the <start-point> parameter should be an
+arbitrary remote-tracking branch, not just a remote-tracking branch
+without corresponding local branch that would be eligible for --guess.
+A few lines up we handle this by setting track_opt to empty.
+
+If neither --detach nor --track is passed, then...
+
+... I'm not sure I understand the neither --detach nor --track passed
+case.  Wouldn't this be --guess mode, where "$track_opt" is set, so the
+value of "$only_local_ref" isn't used?  Or is this about the case
+where (1) --detach is not passed, (2) --track is not passed, and (3)
+--no-guess or GIT_COMPLETION_CHECKOUT_NO_GUESS is passed?
+
+Yes, it must be about that case.  In that case, only_local_ref is
+right.
+
+In any case, this is getting difficult to understand, so I wonder if
+some refactoring is in order.
+
+[...]
+> --- a/t/t9902-completion.sh
+> +++ b/t/t9902-completion.sh
+> @@ -1760,6 +1760,28 @@ do
+>  	'
+>  done
+>  
+> +test_expect_success 'git switch - default local branches only' '
+
+nit: "default to local branches only" or "the default is local
+branches only".  In other words, this should be a sentence so the
+reader can understand what property we're testing for.
+
+> +	test_completion "git switch m" <<-\EOF
+> +	master Z
+> +	master-in-other Z
+> +	mybranch Z
+> +	mytag Z
+> +	EOF
+> +'
+> +
+> +test_expect_failure 'git switch - --track remote branches' '
+> +	test_completion "git switch --track " <<-\EOF
+> +	other/branch-in-other Z
+> +	other/master-in-other Z
+> +	EOF
+> +'
+
+Can this have a short comment describing the issue?  If over time the
+behavior changes, we wouldn't have an easy place to see what the
+behavior was at the time this test was added.
+
+> +
+> +test_expect_success 'git switch - --track remote branches partial completion' '
+
+"git switch --track: partially typed remote-tracking branch is completed"
+
+> +	test_completion "git switch --track other/master-in" <<-\EOF
+> +	other/master-in-other Z
+> +	EOF
+> +'
+> +
+>  test_expect_success 'git config - section' '
+>  	test_completion "git config br" <<-\EOF
+>  	branch.Z
 
 Thanks and hope that helps,
 Jonathan
