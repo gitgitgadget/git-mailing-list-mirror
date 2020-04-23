@@ -8,64 +8,64 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A26BC54FCB
-	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 13:48:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 85B58C54FCB
+	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 13:48:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DC3402087E
-	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 13:48:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5CE4820728
+	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 13:48:15 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QBJYZTTh"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UldrMsPq"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728506AbgDWNsM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Apr 2020 09:48:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37316 "EHLO
+        id S1728562AbgDWNsO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Apr 2020 09:48:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37322 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1728339AbgDWNsJ (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 23 Apr 2020 09:48:09 -0400
-Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB43FC08E934
-        for <git@vger.kernel.org>; Thu, 23 Apr 2020 06:48:09 -0700 (PDT)
-Received: by mail-pg1-x543.google.com with SMTP id g6so2903835pgs.9
-        for <git@vger.kernel.org>; Thu, 23 Apr 2020 06:48:09 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1728458AbgDWNsM (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 23 Apr 2020 09:48:12 -0400
+Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AB32C08E934
+        for <git@vger.kernel.org>; Thu, 23 Apr 2020 06:48:11 -0700 (PDT)
+Received: by mail-pj1-x1043.google.com with SMTP id a7so2526145pju.2
+        for <git@vger.kernel.org>; Thu, 23 Apr 2020 06:48:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=6Svij7AqIu1IfO1+ocfAXfydIcw/vut33rQEygmYm5k=;
-        b=QBJYZTThdgXDehoE8lxtFJYikuoex0WCTS8diwZ01hvUUZpkol+pvK4Duefs1JdkbH
-         kp5W+h2rp9PhMg+wGs5o4Dp57sjIoT7fB27OsOhayq5QPD/E2kzX+PivhRjaaaiP8WLd
-         CCY20hN5h7Q8QGqtfxl1SQMW31C4W3E13oJ88xth6tj+aIHTC/zlVmTr9/b5uSnYIkqw
-         mwzNPb39OYqVLmppoTTinKQV+nMmFjCdjfqrd2dHEw+MtSWM/TQcBxW2iZUv9d9nVAed
-         mivcSCHxHAAQ/nsWw4DCZQV3i64C4X9PuR32ko9yqGMrk1AIiw3Tamru1uxX9L+8PH5W
-         7glQ==
+        bh=VOUgvKNu1KMx+CMgWGYhfRw9FoZU/PdCS5jVeb8Itec=;
+        b=UldrMsPqpFEoqd+1+2sOVLO0KmcAskn4ABqWQAGTMN6qvTnfhwCZ/RM3HjRxz28c49
+         eSmElatOLOUvM/NrZ7JQMvlOG34lC6xkHqnugs2X6hp1tzshZYPXD/PWv+/Sk7hbjyoy
+         2gUZ51O4lIMtpfkEffXCfxREnTmxi2X44IkLKBFSFg1LFP1TCstle6953mZnFdM8UsWn
+         aRfCweeZODmKebmTAwS+37TWGUsUluqmKTAwKEIgNTPEevt+jwmLPpKFc0w9O6C6dvNf
+         7jgV3laUMpXcnv2HhVvWhF8PIGRvqP50i/plnMqxccAfQko4KSk1iE+eyMMTK3KY7rP3
+         fIKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=6Svij7AqIu1IfO1+ocfAXfydIcw/vut33rQEygmYm5k=;
-        b=X61lseXy5lVdhgOZFeMYfU//YaVUxs1gg7q0O2/wuXFl4cN2YelzPn9SEkTb2TU+4P
-         qj6wfNnC2AWeTNvDLBYFmfiz0zam9N6R/eOa++wVseCHEaJsiFthkuRErNuhVKCgtqU9
-         XPYjUEGCyMLFB9LnMba1SzdY6jJC71zEOzZ110FrbsT2P6w2BL4VQQhMYlSG+wtbG7q/
-         /eLicv+CF2Dnbp8hSRHWTxPKokyoecXLMHZqUUcakiEb2FAqPwhUOSNJwWETIpRtbQn1
-         wrWghmcHoX2TFLSIA656WvqCeBZDI1Y02EiRTr3Oh4nAaACrjlLQA48NjW0jsQB028Z/
-         YWbQ==
-X-Gm-Message-State: AGi0PuZmIPQj6LL+kujxHVkJ/bipwIITGuw7GBGsMaivzpvX5hKy8nq4
-        YEyRYcCo4VFmQT5oKiLeE1ByF/ik
-X-Google-Smtp-Source: APiQypJLkTjRfatBZVPvQ4Bxy7m404mWc6uuNI0tl8LltZHProp7ouyn/6aN+QiPrgiL3dbM0bHBig==
-X-Received: by 2002:a63:f70e:: with SMTP id x14mr3833764pgh.394.1587649689201;
-        Thu, 23 Apr 2020 06:48:09 -0700 (PDT)
+        bh=VOUgvKNu1KMx+CMgWGYhfRw9FoZU/PdCS5jVeb8Itec=;
+        b=aVfvEnT5ArGecKqchOrNQFoXeGGUIe6UvuGvXORw1YuSzL3J8Vnmw6YL8tEX0OUrFQ
+         A88VOyEU3W2TeOuwwpA3nFRAQZbueHHu+eVXYCXZDaphBmAXrl2P8BTBWzyDVgy4F5sq
+         hlSyn+mm1ZkXe0dX/WZLxofibdrFdp/QFxnl7wYAb94PuNXuheTnRBn96hV7fqpho9uY
+         a0Cv5oqYcLM8y0viIZZvcO4GhLazDSyDZGSRBxqZupYeCMDpud7LLvG0o3Z9j2oKJyJV
+         17pclsyErscz1+bwcXhU7rNNZSYOyyz6ToIa4pRA90NUGrSHM9wdITVn9AC9qNlNpjle
+         QVUg==
+X-Gm-Message-State: AGi0PuY4BNRTjKgpyI0CDIqLpgyRwQZkdAyGOJGAa8TjOXxw8Af4gYJQ
+        A6QWE+taQXyTOXxOlzqxOukOKlz5
+X-Google-Smtp-Source: APiQypLM1lkRCZoLO8YMgGURSj+goCLmNu0mgKrR9KfT6d1qCvkjcjikxc1qOfC4C4ZzQV9pZnjuBw==
+X-Received: by 2002:a17:90a:f194:: with SMTP id bv20mr755176pjb.27.1587649690894;
+        Thu, 23 Apr 2020 06:48:10 -0700 (PDT)
 Received: from localhost.localdomain ([2402:800:6374:f359:1ce8:a621:5f80:1116])
-        by smtp.gmail.com with ESMTPSA id z23sm2635958pfr.136.2020.04.23.06.48.07
+        by smtp.gmail.com with ESMTPSA id z23sm2635958pfr.136.2020.04.23.06.48.09
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 23 Apr 2020 06:48:08 -0700 (PDT)
+        Thu, 23 Apr 2020 06:48:10 -0700 (PDT)
 From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>
-Subject: [PATCH 3/4] graph.c: limit linkage of internal variable
-Date:   Thu, 23 Apr 2020 20:47:55 +0700
-Message-Id: <5bd7b929107c277e10a697bc874b702b85691558.1587648870.git.congdanhqx@gmail.com>
+Subject: [PATCH 4/4] progress.c: silence cgcc suggestion about internal linkage
+Date:   Thu, 23 Apr 2020 20:47:56 +0700
+Message-Id: <dddf2d402702a616e04e7e446e31e0c6697d8c49.1587648870.git.congdanhqx@gmail.com>
 X-Mailer: git-send-email 2.26.2.384.g435bf60bd5
 In-Reply-To: <cover.1587648870.git.congdanhqx@gmail.com>
 References: <cover.1587648870.git.congdanhqx@gmail.com>
@@ -79,22 +79,23 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
 ---
- graph.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ progress.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/graph.c b/graph.c
-index 4fb25ad464..4cd9915075 100644
---- a/graph.c
-+++ b/graph.c
-@@ -1055,7 +1055,7 @@ static void graph_output_commit_line(struct git_graph *graph, struct graph_line
- 		graph_update_state(graph, GRAPH_COLLAPSING);
- }
- 
--const char merge_chars[] = {'/', '|', '\\'};
-+static const char merge_chars[] = {'/', '|', '\\'};
- 
- static void graph_output_post_merge_line(struct git_graph *graph, struct graph_line *line)
- {
+diff --git a/progress.c b/progress.c
+index 19805ac646..fb53a2ec0c 100644
+--- a/progress.c
++++ b/progress.c
+@@ -50,7 +50,9 @@ static volatile sig_atomic_t progress_update;
+  * These are only intended for testing the progress output, i.e. exclusively
+  * for 'test-tool progress'.
+  */
++extern int progress_testing; /* to silence sparse: internal linkage */
+ int progress_testing;
++extern uint64_t progress_test_ns; /* to silence sparse: internal linkage */
+ uint64_t progress_test_ns = 0;
+ void progress_test_force_update(void); /* To silence -Wmissing-prototypes */
+ void progress_test_force_update(void)
 -- 
 2.26.2.384.g435bf60bd5
 
