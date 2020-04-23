@@ -2,91 +2,110 @@ Return-Path: <SRS0=24D7=6H=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.4 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EBE0EC55185
-	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 00:10:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F828C55185
+	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 00:14:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A9AAC2075A
-	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 00:10:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 56F6F20704
+	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 00:14:43 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=blastwave.org header.i=@blastwave.org header.b="dVOZV6+7"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="2MkbENTR"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726078AbgDWAKF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Apr 2020 20:10:05 -0400
-Received: from mail.oetec.com ([108.160.241.186]:37608 "EHLO mail.oetec.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725854AbgDWAKF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Apr 2020 20:10:05 -0400
-X-oetec-MailScanner-From: dclarke@blastwave.org
-X-oetec-MailScanner-SpamCheck: not spam, SpamAssassin (not cached,
-        score=-1.199, required 6, autolearn=not spam, ALL_TRUSTED -1.00,
-        DKIM_SIGNED 0.10, DKIM_VALID -0.10, DKIM_VALID_AU -0.10,
-        DKIM_VALID_EF -0.10, URIBL_BLOCKED 0.00)
-X-oetec-MailScanner: Found to be clean
-X-oetec-MailScanner-ID: 03N09kgn006385
-X-oetec-MailScanner-Information: Please contact oetec for more information
-Received: from [172.16.35.3] (CPEf81d0f84cb23-CMf81d0f84cb20.cpe.net.cable.rogers.com [99.253.169.68])
-        (authenticated bits=0)
-        by mail.oetec.com (8.15.2/8.15.2/Debian-8) with ESMTPSA id 03N09kgn006385
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
-        Wed, 22 Apr 2020 20:09:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=blastwave.org;
-        s=default; t=1587600588;
-        bh=zoHJNbR9W3TQIlQLjOPIyiOSpPnC3X34MPVkPRhjoH4=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=dVOZV6+7X8liw6ZJ0VO4l70U4AiSGEz64S1gh1U/4WkzYTWFP5Z554w2r/svUE7CK
-         6LShvh1Ujt+RcQwag+hfbTR/ZOn6vJrgrPpZz4dPFC+OsJUuiV9MyfP+cypZBs4gpY
-         WscdWgcSOlkRAk9CXFJMPoX9MgizvV3X2qgjBvbwQrMB8BZxd7pZ+Vl4o4IeEqbVj5
-         jFEyQkhixJ0JSgr36q/BGORHUMDf0cuqVWsOB7JOZAdQ6RcWF3/vbLHrOV0n227naE
-         u2yjOYYmgAhtgd2Uwv34M98dliAke12Zz727RmV/DBF0iK0qX4PImsHK+hIZ6Cq55x
-         a5wzkrAHiLk9Q==
-Subject: Re: minor patch required to compile git 2.26.1 on Oracle Solaris 10
- with Oracle Studio
-To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Cc:     Jeffrey Walton <noloader@gmail.com>, git@vger.kernel.org
-References: <6bf94982-71c4-78e9-0f4d-7fa4e485c417@blastwave.org>
- <xmqqzhb8rqa6.fsf@gitster.c.googlers.com>
- <20200422080950.GA464427@coredump.intra.peff.net>
- <20200422081156.GB464427@coredump.intra.peff.net>
-From:   Dennis Clarke <dclarke@blastwave.org>
-Message-ID: <f0beedfb-b50b-51b9-d996-155e0178a90d@blastwave.org>
-Date:   Wed, 22 Apr 2020 20:09:46 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:74.0) Gecko/20100101
- Thunderbird/74.0
+        id S1726234AbgDWAOm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Apr 2020 20:14:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51960 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725846AbgDWAOm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Apr 2020 20:14:42 -0400
+Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBAC7C03C1AA
+        for <git@vger.kernel.org>; Wed, 22 Apr 2020 17:14:41 -0700 (PDT)
+Received: by mail-pl1-x643.google.com with SMTP id n24so1602783plp.13
+        for <git@vger.kernel.org>; Wed, 22 Apr 2020 17:14:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=+lMTc8CS3N0GjBqASHdC+rv8oLmMYvsaeSj1C/l617Q=;
+        b=2MkbENTRzEgNcy6lJi43QJ5/sPVc5MdKVY+1VEGi3FXIBtQrNac2rruid/x4MuICnB
+         ujUdJH3IGV9p+XlY4448Y1qY0cZ9yX8klAarM8YFYenwxiiZX1ORzqeLZJrmaZdWrgPL
+         /9gBMF9/yjtA0kdToqpJYTTGJoogLq/5/7E5ZYofi9bSf1vNWL2XQi/vUqgHibEIUPln
+         wAB7P24poaJ6O0uclZrvG0DsDF4B8Z4KBjt/n7+VKzgHazrm4iqRp9iBNaQKgD40X39G
+         SclBo1W2yUv6DFuXyDhG9vTv3bq4WO1pyDOF1opOvexebhlKpeX8Xcy/oMImb4m+YN7C
+         qpIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=+lMTc8CS3N0GjBqASHdC+rv8oLmMYvsaeSj1C/l617Q=;
+        b=f46IO+3yubHg3fYTBYf+T4ii9nGaUW6pcZTm1lC4YJoSoRbsE5PyFS9IkGqeCHuXXC
+         ZWWanh8cYm9oubLBPYjOFfZm9yFtJFI4Sd9nhmLqC8FVchy/8BLsaTgU2MEat+HCkZeJ
+         ucuEoXCTxIi5dcm2wtItQCV/8yT1iVQMXOXUI+zsTTjjcxeE2jKlWDOb32KaKSUIcmPJ
+         IcJWJ5FpO4lyDiWPWSMTgr3GL3IB7nFfdWUKlXzHKW/AwBDYvewha9zAx7eteV8rwphJ
+         p+fcWfKqDqLAZi5DXOCKPvn3+jHdwFUbYGt7AuqWOAb3CFNXiIMB5+5MHn5nEuqwZLk5
+         JTVQ==
+X-Gm-Message-State: AGi0PuYIe1AAKbsMQ4B8Nh0t/Le/Xa80SHrtHa0gVIl94Et6FEag7oK3
+        VUEsjsQPHvARRqa++izQ2DHNbw==
+X-Google-Smtp-Source: APiQypLua3MeSOjVEskxXJmrICsBJcET2SvdzkSJQFnVY5O2ip2nXRg8LRe6wdo7wdG1FMTCO0GDlg==
+X-Received: by 2002:a17:90a:a484:: with SMTP id z4mr1374225pjp.40.1587600881276;
+        Wed, 22 Apr 2020 17:14:41 -0700 (PDT)
+Received: from localhost ([8.44.146.30])
+        by smtp.gmail.com with ESMTPSA id q2sm647898pfl.174.2020.04.22.17.14.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Apr 2020 17:14:40 -0700 (PDT)
+Date:   Wed, 22 Apr 2020 18:14:38 -0600
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, me@ttaylorr.com,
+        git@vger.kernel.org, newren@gmail.com, jrnieder@gmail.com,
+        dstolee@microsoft.com
+Subject: Re: [PATCH] shallow.c: use 'reset_repository_shallow' when
+ appropriate
+Message-ID: <20200423001438.GC19100@syl.local>
+References: <8d295389ea43c6b7e008514067b7af6eacba64a5.1587492422.git.me@ttaylorr.com>
+ <20200422180245.196132-1-jonathantanmy@google.com>
+ <xmqqy2qnidyy.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-In-Reply-To: <20200422081156.GB464427@coredump.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqy2qnidyy.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2020-04-22 04:11, Jeff King wrote:
-> On Wed, Apr 22, 2020 at 04:09:50AM -0400, Jeff King wrote:
-> 
->> Which implies that NO_INET_NTOP should not be set in the first place.
->> I think this is the same issue discussed in:
->>
->>    https://lore.kernel.org/git/CAH8yC8m3JFvEcfFF3z1rrRnEPK-adHGObmkOhNZiph7QJKUWqA@mail.gmail.com/
->>
->> with a patch (which needs at least a signoff added) in:
->>
->>    https://lore.kernel.org/git/CAH8yC8kaWXbN+RYMJnM9em7KKW54+N07JtyS1MZk0qppD=m2BA@mail.gmail.com/
->>
->> Dennis, does building with:
->>
->>    make NO_INET_NTOP= NO_INET_PTON=
->>
+On Wed, Apr 22, 2020 at 11:15:33AM -0700, Junio C Hamano wrote:
+> Jonathan Tan <jonathantanmy@google.com> writes:
+>
+> >> @@ -414,6 +414,7 @@ void prune_shallow(unsigned options)
+> >>  	} else {
+> >>  		unlink(git_path_shallow(the_repository));
+> >>  		rollback_lock_file(&shallow_lock);
+> >> +		reset_repository_shallow(the_repository);
+> >>  	}
+> >>  	strbuf_release(&sb);
+> >>  }
+> >
+> > The "if" part (not quoted here) commits the shallow lock file, and thus
+> > possibly modifies (or creates) the shallow file, so I think we need to
+> > put reset_repository_shallow() outside the whole "if" block. I have done
+> > that in the patch after the scissors.
+>
+> Is there any rollback_lock_file() or commit_lock_file() call on the
+> shallow lock file in the files involved in this patch that does not
+> need a call to reset_repository_shallow() left after your work?
+>
+> What I am trying to get at is if it would be safer to have a pair of
+> thin wrapper for rolling back or committing a new version of new
+> shallow file, e.g. rollback_shallow_file() + commit_shallow_file(),
+> and replace calls to {rollback,commit}_lock_file() with calls to
+> them.
 
-I will give that a try today and see what happens. There seems to be a 
-2.26.2 release from yesterday and may as well get that going. What was 
-the changelog reason for the bump from 2.26.1 to 2.26.2 ?
+Very elegant. Thanks for an excellent suggestion. v2 incoming just as
+soon as 'make test' finishes...
 
-Dennis
-
-
+Thanks,
+Taylor
