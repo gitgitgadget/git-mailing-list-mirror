@@ -2,70 +2,73 @@ Return-Path: <SRS0=24D7=6H=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 03908C54FCB
-	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 13:48:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D1766C55186
+	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 13:48:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D816720728
-	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 13:48:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B0A372077D
+	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 13:48:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="s/UjpNOs"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TKDU2pKw"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728363AbgDWNsH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Apr 2020 09:48:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37294 "EHLO
+        id S1728413AbgDWNsJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Apr 2020 09:48:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37308 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726429AbgDWNsG (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 23 Apr 2020 09:48:06 -0400
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2770EC08E934
-        for <git@vger.kernel.org>; Thu, 23 Apr 2020 06:48:05 -0700 (PDT)
-Received: by mail-pf1-x442.google.com with SMTP id v63so2953287pfb.10
-        for <git@vger.kernel.org>; Thu, 23 Apr 2020 06:48:05 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1728339AbgDWNsI (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 23 Apr 2020 09:48:08 -0400
+Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EAE2C08E934
+        for <git@vger.kernel.org>; Thu, 23 Apr 2020 06:48:08 -0700 (PDT)
+Received: by mail-pf1-x443.google.com with SMTP id 18so1744030pfv.8
+        for <git@vger.kernel.org>; Thu, 23 Apr 2020 06:48:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=JhkAuUSXXZg11LkphN2dAZHR2scGmokPWAz/UTZSYYs=;
-        b=s/UjpNOscllJfpBQjD6efhT9Z5BRvjb6QyMHbW2DRyktnmzJF+8SjGwYkNJYjmiS78
-         szRWbiNX8J7+G/y2vch6yTs840qMkpN0HNCqDDg6cv/vMdPttF3fcQFmcab73chTtL7B
-         0wTVRWNEOW9xL48zLUDIIJC0LehRoRHiKgtbCX116u6EyRyppJc9phHREnjtN+IjtK97
-         YFl56HUvP1kTzGBkKiBX+ldSOhJZuBZl5o2uTN2rGf9GfOWKWcXOnPjRfmo76A4Fu85j
-         Vfk3r0XW8Ku1rkr54x+e9aTf8R/fcGfKkKk3soYDJSQQ6OQGAjxxkIixTxCA4Ss2svZf
-         x+tg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=6zDL6Rv0DnD2NZ1626U0EgnwYOqorHsi3rL2txzD9pc=;
+        b=TKDU2pKww2xP9WuWYovbVtpIR7MrbKxOi8xYaJgrv9Gf+KzeTnwIM5CoqZZLr/JD4w
+         JJ6ctBDEwOHIKPaYAjDChW7J4ZdPe5vgJLgXn1q4Pf8KZShEFfM9Z5+JiqemPCBmxjFw
+         LyBC0a0ck2w82RMvfdxpK36GiqCidiNppekBo/uXf9OaxkCZA4m9cbDDx3MsQ+H1Anj6
+         iv7p4Pl9539qsBsGxRqZkV2lCu2zWjAWIz9bgk8MsJrKXTEKqwkQUqIkWmQUeG/PTxwQ
+         H8sM6382XV11kW35CYJ6YVnC4//R8ifCIoKhGjMhDQ6c2DdNlcmkSLLPbrr7fE2aBD6d
+         L7JQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=JhkAuUSXXZg11LkphN2dAZHR2scGmokPWAz/UTZSYYs=;
-        b=HUmu2NNuaGyhHHfa6XXHAVhaK6M1wG65Ctq8XoD8nRs2FsvLMOEdTYkWFwI449CjZr
-         L0u2z5yXx858JmqDyW1jHqKOj/TISQhj5mOJ2e9V55QtvfmpxBEWZybTF1aqvU/HWHzR
-         pmVZ11fPLbze9HoVe2JsK/CHHtuyvZU8cDxu217S2Je7XYAYDpsexBTL3ju9/fsot3ZV
-         tPxfdaXYFqkVbPYu45saIS5X/yiAX4tPq0uNoeYAKLzJSRwWe2btuBaXzcEZdsDFVkuG
-         ct/+vR1cfRZ9+U8tFdppoK0CF0kzHb4QeT15vaq6y+ar9vjdhvTv8+tJSkZU3OcFOH+V
-         IHwQ==
-X-Gm-Message-State: AGi0PuYAPUmPj1eUmmKDvUBNW8EMu+IB71Orb0Vm3LRV5FYnrx7nfhLF
-        +t6oxyq9I9+lz+kdVS8nMkdxTKov
-X-Google-Smtp-Source: APiQypKr1hSNUJvvSr+WSOBV7mswsD56HKJivB4Od03oee97pZe8U6ChoyVglx2qEDbTfJYCFO7zQA==
-X-Received: by 2002:a63:5d5c:: with SMTP id o28mr4190377pgm.322.1587649684267;
-        Thu, 23 Apr 2020 06:48:04 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=6zDL6Rv0DnD2NZ1626U0EgnwYOqorHsi3rL2txzD9pc=;
+        b=Ri3zWuwXwLR4QflQukvzBk/3k2GYkWdwndEDtJ5cYR3dapDWiGhwmwbl9P00veVfpY
+         zqaJcM/YhBV4cWU+z6oW1IzKOgZaLqSG82oeU7arSIR7bwD3rcUpvaPqY5QFFN/qoAF+
+         KYkPEzDmvnNjwSda5rnCh+CGYcYVowb9/F13k/O/t2HERzYoLxkmBa1V+EC/z3ya0CDz
+         s2B9ZFPVp5HrhKFUThyiBrJlkLmVk0yQnoTLmXmZ217EwRTY0KTY9TZCpfQrplUXLoGj
+         ocp3t7KMPVwez/ifpGuu93HpOQpajmQMz4iXWh8UeFWdV5dba+96k/Dc+C14L6dsO41E
+         FXYg==
+X-Gm-Message-State: AGi0PubfpkZD+QcqsUoup1umV7V5dgY2pZEUzcPsyt28A5ADNTMa+QJq
+        ThRQOYBlWmjZLiKe+sgOy3wpx2fJ
+X-Google-Smtp-Source: APiQypIhV0LCfFlEKP5BxWIcvJk59AXrHq8LbZALcfuWa1S2bi/KlbGt19qUz6LRv41OAFU7h8wd5A==
+X-Received: by 2002:a63:4f65:: with SMTP id p37mr4220716pgl.60.1587649687568;
+        Thu, 23 Apr 2020 06:48:07 -0700 (PDT)
 Received: from localhost.localdomain ([2402:800:6374:f359:1ce8:a621:5f80:1116])
-        by smtp.gmail.com with ESMTPSA id z23sm2635958pfr.136.2020.04.23.06.48.02
+        by smtp.gmail.com with ESMTPSA id z23sm2635958pfr.136.2020.04.23.06.48.06
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 23 Apr 2020 06:48:03 -0700 (PDT)
+        Thu, 23 Apr 2020 06:48:07 -0700 (PDT)
 From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>
-Subject: [PATCH 0/4] fix make sparse warning
-Date:   Thu, 23 Apr 2020 20:47:52 +0700
-Message-Id: <cover.1587648870.git.congdanhqx@gmail.com>
+Subject: [PATCH 2/4] compat/regex: silence `make sparse` warning
+Date:   Thu, 23 Apr 2020 20:47:54 +0700
+Message-Id: <25f595f56f7f895ab31bf7269aabad9142c0590c.1587648870.git.congdanhqx@gmail.com>
 X-Mailer: git-send-email 2.26.2.384.g435bf60bd5
+In-Reply-To: <cover.1587648870.git.congdanhqx@gmail.com>
+References: <cover.1587648870.git.congdanhqx@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,40 +77,62 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It's happened that I tried to run make check on project that support autoconf.
-Git's Makefile told me to run `make sparse` instead.
+* alloca: somewhere later in the code, we indirectly include alloca.h
+which will define alloca again, include it prior to define alloca in
+order to not define it against.
 
-I /think/ if we have a rule in Makefile, we should adhere to it.
-I also fix another change in ds/blame-on-bloom, which I think it's worth to
-fix, see: <20200423133937.GA1984@danh.dev>
+* Copy all attributes from the header to source file, and move the
+  attributes prior to function name. cgcc is very picky on the position
+  of attribute.
 
-This series is developed from latest master.
+Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
+---
+ compat/regex/regex.c          | 1 +
+ compat/regex/regex_internal.c | 2 +-
+ compat/regex/regex_internal.h | 5 ++---
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
-It's conflicted when merge down next and pu.
-
-For next, please ignore the conflict with fmt-merge-msg.c and
-apply [5/4] instead.
-
-For pu, reftable.c has too much warnings, I'm too lazy to look into it.
-
-Đoàn Trần Công Danh (4):
-  C: s/0/NULL/ for pointer type
-  compat/regex: silence `make sparse` warning
-  graph.c: limit linkage of internal variable
-  progress.c: silence cgcc suggestion about internal linkage
-
- add-interactive.c                   | 2 +-
- builtin/fmt-merge-msg.c             | 2 +-
- compat/regex/regex.c                | 1 +
- compat/regex/regex_internal.c       | 2 +-
- compat/regex/regex_internal.h       | 5 ++---
- graph.c                             | 2 +-
- log-tree.c                          | 4 ++--
- progress.c                          | 2 ++
- range-diff.c                        | 2 +-
- t/helper/test-parse-pathspec-file.c | 6 +++---
- 10 files changed, 15 insertions(+), 13 deletions(-)
-
+diff --git a/compat/regex/regex.c b/compat/regex/regex.c
+index f3e03a9eab..4bef75a716 100644
+--- a/compat/regex/regex.c
++++ b/compat/regex/regex.c
+@@ -62,6 +62,7 @@
+ #include <stdint.h>
+ 
+ #ifdef GAWK
++#include <alloca.h>
+ #undef alloca
+ #define alloca alloca_is_bad_you_should_never_use_it
+ #endif
+diff --git a/compat/regex/regex_internal.c b/compat/regex/regex_internal.c
+index ec51cf3446..58504f795b 100644
+--- a/compat/regex/regex_internal.c
++++ b/compat/regex/regex_internal.c
+@@ -921,7 +921,7 @@ re_string_destruct (re_string_t *pstr)
+ /* Return the context at IDX in INPUT.  */
+ 
+ static unsigned int
+-internal_function
++internal_function __attribute ((pure))
+ re_string_context_at (const re_string_t *input, int idx, int eflags)
+ {
+   int c;
+diff --git a/compat/regex/regex_internal.h b/compat/regex/regex_internal.h
+index 3ee8aae59d..c61a1e4971 100644
+--- a/compat/regex/regex_internal.h
++++ b/compat/regex/regex_internal.h
+@@ -430,9 +430,8 @@ static reg_errcode_t build_wcs_upper_buffer (re_string_t *pstr)
+ # endif /* RE_ENABLE_I18N */
+ static void build_upper_buffer (re_string_t *pstr) internal_function;
+ static void re_string_translate_buffer (re_string_t *pstr) internal_function;
+-static unsigned int re_string_context_at (const re_string_t *input, int idx,
+-					  int eflags)
+-     internal_function __attribute ((pure));
++static internal_function __attribute ((pure))
++unsigned int re_string_context_at (const re_string_t *input, int idx, int eflags);
+ #endif
+ #define re_string_peek_byte(pstr, offset) \
+   ((pstr)->mbs[(pstr)->cur_idx + offset])
 -- 
 2.26.2.384.g435bf60bd5
 
