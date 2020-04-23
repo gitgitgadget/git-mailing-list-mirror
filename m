@@ -2,124 +2,131 @@ Return-Path: <SRS0=24D7=6H=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-14.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B539AC54FCB
-	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 21:37:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A631CC54FD0
+	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 21:37:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 866112074F
-	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 21:37:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8002A2074F
+	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 21:37:42 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="tElvZL6N"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="fx/JbCQ8"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726287AbgDWVhA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Apr 2020 17:37:00 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:60889 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725777AbgDWVhA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Apr 2020 17:37:00 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5B314CDB78;
-        Thu, 23 Apr 2020 17:36:58 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=+2FLjOdVxt+FKZ+qLgtQpWiM66E=; b=tElvZL
-        6NAcQSHfj0HLUu8ww0EAL5IglCpb0dx51UByabRGb6rtdzmgS4XD5VRnah/QWM9e
-        heU3WoA1qOvJlkuQxT/wjB0gqljF4Pj4ttvN+hdCatwzyjzD3wOOC74hra15yBmQ
-        gN3wL5WEMDHmRUrUm/ZVDI0HUYUHfVnkjx8Xs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=wICiVfjTqx7vhmN0LmXeFcBFw+SwKY//
-        gfvZy7YUWGpVvyF+5ItoKLTd7w8Zy8qA1HYCAr8R3MNRifeBCOcyKY9hV1rUNNpn
-        SbruZYM4WnE/vIcq/vPgHAB2FUkCvvxmRufwsTYYphw8wBFlc/Mp0l7tuiLnZ4wz
-        LXg6guTx/6s=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4B1E7CDB77;
-        Thu, 23 Apr 2020 17:36:58 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 91421CDB76;
-        Thu, 23 Apr 2020 17:36:55 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH] blame: drop unused parameter from maybe_changed_path
-References: <20200423210303.GA1635761@coredump.intra.peff.net>
-Date:   Thu, 23 Apr 2020 14:36:53 -0700
-In-Reply-To: <20200423210303.GA1635761@coredump.intra.peff.net> (Jeff King's
-        message of "Thu, 23 Apr 2020 17:03:03 -0400")
-Message-ID: <xmqqk125g9ze.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8DAD6174-85AA-11EA-B67E-B0405B776F7B-77302942!pb-smtp20.pobox.com
+        id S1726310AbgDWVhl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Apr 2020 17:37:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54524 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725777AbgDWVhl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Apr 2020 17:37:41 -0400
+Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0CE8C09B042
+        for <git@vger.kernel.org>; Thu, 23 Apr 2020 14:37:39 -0700 (PDT)
+Received: by mail-pj1-x104a.google.com with SMTP id m6so6012083pjo.0
+        for <git@vger.kernel.org>; Thu, 23 Apr 2020 14:37:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=tCVXCH0ZvQslvVXOX+/Xuu7qK/k2859L8OGo4tIveJE=;
+        b=fx/JbCQ8ecRLjH5aYqI4zuxKQ+z6uXj9aI14bJEL8jVkCGeyPUUrwIF4aAmwVW/lKg
+         aiFeSYdKgpleBmomAro7V4KRmqNbOPAznV7Dx7bv5TCNGTmSQk0YAi74w1fUv6R692QK
+         AaiAxMg4E8eaZUbOaD7FOhxduLqx7sc7BAIiLoyr9jSW7C+yv3d1bV/Qi6NcbtdPTbbY
+         N3VBiSY6PcdOGsqNFAgWvuntZOgS3zZAAHkBMuOel8EiXPOzaOOuSv0IXvFdkCMrev6W
+         LpvYU9vrMZnLDWInKBMEPU5ywFxfelhcMLAuuqJfoeTj3uTzgAr19nPenAnFBTp1y3HD
+         lvFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=tCVXCH0ZvQslvVXOX+/Xuu7qK/k2859L8OGo4tIveJE=;
+        b=Gtziiz9c5btQK0z3S3EVp/GZx2ASWeAusdf1iDNEF5Tfq9iuG1tSVH0lEM5xX1di+/
+         FIMOYqufhqRyqZqUW2DrVw2BJgYz5+rDcA+MuKS1rc4CywHBIXq7pTnr+uMCqrCZBTb9
+         zW7W0XL5gnxOBMUsnuUr5T9Xy8p+vh8LmpLt8xlTtzYNIkCWDxw1vBW8cDX/6dUW1sZ3
+         wufqCAkwAvM9lpk1PKU7xAOUhz4J2RLsFEA/S2hSb/0bJ9VGQvOS62EGSVKI+BqEtFRd
+         PJT4xs9RIeYTu+WNFUIzS44rjv50zUs1hFHe3RapblYu+kAYeczSywxnqJAYHw8du5WI
+         2wDw==
+X-Gm-Message-State: AGi0Pua/J9+GFc7DI/NhQgA7XGWIaNU2R2/bFypWjGwy9Zg3aUzWGCLj
+        ckDmvMrDP0roFREly27Opil9JQWobqVB0TsTOm/r
+X-Google-Smtp-Source: APiQypIYN+ICLd6dnamv8LxMBSiFmE7NbEypc/N/MVFJgoY306Rn8bKcPAIt1RWUPx+HxRhDRO0GO3woAmoVw7UqWVr3
+X-Received: by 2002:a17:90a:a2d:: with SMTP id o42mr2825365pjo.164.1587677859395;
+ Thu, 23 Apr 2020 14:37:39 -0700 (PDT)
+Date:   Thu, 23 Apr 2020 14:37:35 -0700
+In-Reply-To: <20200422104000.GA551233@coredump.intra.peff.net>
+Message-Id: <20200423213735.242662-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <20200422104000.GA551233@coredump.intra.peff.net>
+X-Mailer: git-send-email 2.26.2.303.gf8c07b1a785-goog
+Subject: Re: Git 2.26 fetches many times more objects than it should, wasting gigabytes
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     peff@peff.net
+Cc:     lkundrak@v3.sk, jrnieder@gmail.com, git@vger.kernel.org,
+        Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+> On Wed, Apr 22, 2020 at 06:30:11AM -0400, Jeff King wrote:
+> 
+> > So it really just seems like v2 does not try hard enough. I think the
+> > culprit is the MAX_IN_VAIN setting. If I do this:
+> > 
+> > diff --git a/fetch-pack.c b/fetch-pack.c
+> > index 1734a573b0..016a413d49 100644
+> > --- a/fetch-pack.c
+> > +++ b/fetch-pack.c
+> > @@ -46,7 +46,7 @@ static struct strbuf fsck_msg_types = STRBUF_INIT;
+> >   * After sending this many "have"s if we do not get any new ACK , we
+> >   * give up traversing our history.
+> >   */
+> > -#define MAX_IN_VAIN 256
+> > +#define MAX_IN_VAIN 20000
+> >  
+> >  static int multi_ack, use_sideband;
+> >  /* Allow specifying sha1 if it is a ref tip. */
+> > 
+> > then I get that same 48k objects, 23MB fetch that v0 does.
+> 
+> I don't quite think that's the solution, though. Both old and new are
+> supposed to be respecting MAX_IN_VAIN. So it's not at all clear to me
+> why it restricts the number of haves we'll send in v2, but not in v0.
+> 
+> Maybe somebody more familiar with the negotiation code can comment
+> further.
 
-> We don't use the "parent" parameter at all (probably because the bloom
-> filter for a commit is always defined against a single parent anyway).
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> This is on top of ds/blame-on-bloom, which just made it to next.
->
-> I _think_ this is the right solution, but perhaps the function should be
-> verifying that we're looking at the right parent?
+Thanks for the reproduction recipe (in [1]) and your analysis. I took a
+look, and it's because the check for in_vain is done differently. In v0:
 
-Hmph, "solution" to what problem?  Ah, the fact that parent is an
-unused parameter?
+  if (got_continue && MAX_IN_VAIN < in_vain) {
 
-find_origin() runs a tree-diff over "parent" and "origin->commit",
-with literal pathspec limited to the single path.
+reflecting the documentation in pack-protocol.txt:
 
-And the Bloom filter addition changed the code so that we first
-consult the filter when "origin->commit"'s first parent *is*
-"parent".  Presumably, by asking maybe_changed_path about "origin",
-as "origin" knows what the commit is (i.e. "origin->commit") and
-what path we are talking about (i.e. "origin->path"), it can answer
-"does origin->commit change origin->path relative to its first
-parent?" and it can do so only for the first parent?
+  However, the 256 limit *only* turns on in the canonical client
+  implementation if we have received at least one "ACK %s continue"
+  during a prior round.  This helps to ensure that at least one common
+  ancestor is found before we give up entirely.
 
-The way I read bloom.c::get_bloom_filter(), it only computes a
-diff-tree between the given commit and its first parent (or an empty
-tree), so I think the above is correct.
+(Note that both the code and the documentation call it "continue", but
+the code also correctly handles multi_ack_detailed, which instructs the
+server to send "ACK common" and "ACK ready" in lieu of "ACK continue".)
 
-Thanks.
+When debugging, I noticed that in_vain was increasing far in excess of
+MAX_IN_VAIN, but because got_continue was false, the client did not give
+up.
 
->
->  blame.c | 4 +---
->  1 file changed, 1 insertion(+), 3 deletions(-)
->
-> diff --git a/blame.c b/blame.c
-> index 9fbf79e47c..da7e28800e 100644
-> --- a/blame.c
-> +++ b/blame.c
-> @@ -1263,7 +1263,6 @@ struct blame_bloom_data {
->  static int bloom_count_queries = 0;
->  static int bloom_count_no = 0;
->  static int maybe_changed_path(struct repository *r,
-> -			      struct commit *parent,
->  			      struct blame_origin *origin,
->  			      struct blame_bloom_data *bd)
->  {
-> @@ -1355,8 +1354,7 @@ static struct blame_origin *find_origin(struct repository *r,
->  		if (origin->commit->parents &&
->  		    !oidcmp(&parent->object.oid,
->  			    &origin->commit->parents->item->object.oid))
-> -			compute_diff = maybe_changed_path(r, parent,
-> -							  origin, bd);
-> +			compute_diff = maybe_changed_path(r, origin, bd);
->  
->  		if (compute_diff)
->  			diff_tree_oid(get_commit_tree_oid(parent),
+But in v2:
+
+  if (!haves_added || *in_vain >= MAX_IN_VAIN) {
+
+("haves_added" is irrelevant to this discussion. It is another
+termination condition - when we have run out of "have"s to send.)
+
+So there is no check that "continue" was sent. We probably should change
+v2 to match v0. I can start writing a patch unless someone else would
+like to take a further look at it.
+
+[1] https://lore.kernel.org/git/20200422095702.GA475060@coredump.intra.peff.net/
