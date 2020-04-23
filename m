@@ -8,64 +8,63 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B0D21C55186
-	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 23:43:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ED8ECC55193
+	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 23:43:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 908F02064A
-	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 23:43:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CF43C2064A
+	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 23:43:26 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FuaIEDNw"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AX2u0Qdz"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728196AbgDWXnY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Apr 2020 19:43:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45770 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726632AbgDWXnW (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1728155AbgDWXnW (ORCPT <rfc822;git@archiver.kernel.org>);
         Thu, 23 Apr 2020 19:43:22 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83CCAC09B042
-        for <git@vger.kernel.org>; Thu, 23 Apr 2020 16:43:22 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id v4so8655067wme.1
-        for <git@vger.kernel.org>; Thu, 23 Apr 2020 16:43:22 -0700 (PDT)
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45762 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727065AbgDWXnV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Apr 2020 19:43:21 -0400
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EA42C09B043
+        for <git@vger.kernel.org>; Thu, 23 Apr 2020 16:43:21 -0700 (PDT)
+Received: by mail-wm1-x342.google.com with SMTP id v8so8658768wma.0
+        for <git@vger.kernel.org>; Thu, 23 Apr 2020 16:43:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=zvSRlclVscbKpj/yBPtVkLeJtsfdL6+Sj4GIpIS88zk=;
-        b=FuaIEDNwTVVMshrkXFIxvyT/48q0R59xO8O6b5VAMwP0vFAcUOXkOjXWtEg+ijAJJ4
-         kAlzv63K8UmnRyBsUeohZpWOIGUI9PHU6Q9xTqrv+N0vZcr8Q6WAXYeig8/AmD3SEPSB
-         YKQC90EWNaKSq/lUVPX3dmBmGQto+L2xyiuSDmtz8aAUa+rrxq8jEIOY+YEVxB1nMTBu
-         ChLUI60Y1kitXFMgxWMoBY1uswhC/yEhJgSR2e4ZuNoirh8pSSgKG46NAwln4ClT/v0D
-         8LTQwK0aQ/M2Pbeauh1NU/kMyfe12gXF6bUnuaiLE9OOQ4oX0IgugBTZpzmCMFUSxBuO
-         eFgQ==
+        bh=HYHS38Au6CtTuI2ZgtQFnraejHTl1h/lhxRvcPNe5rs=;
+        b=AX2u0Qdz1tIpTgycQz8VCoOKRHP0fpV6/VPceW1SnH0psMYQyYKOxI8P/0dCqk9n75
+         zqk1383L08a/h6x9g+DBkUs7/j8UbStkFunVmd/51ddIQATmCpcMmPta64RMxYudtzQS
+         IEzoWikiT8W3FS7Ybd+n6ENnIei24Mb/y6jJ1bD8N6s5i3UVZTELh5wmpShSqgD042AA
+         n+X4/ZsUWWkC/WyvLcycqNmD/XAsWCTvmuM54l+BuLL+qPo3ZqOdYnKoheqNBS1xOcGf
+         m5vPPh8hyEs/dzv/H/C1RBKRA7edlJx5RZw+Lu28HsrLc/hj7N6d3Y2Q5KXZ64bsKDi1
+         sRwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=zvSRlclVscbKpj/yBPtVkLeJtsfdL6+Sj4GIpIS88zk=;
-        b=ABymmrTNuQwZhMN0B9NB9NucmaGzcLixls/jFj3fBHIknaIMkXqRG6o7DdMyKL0oWI
-         R3ZJYYSv/wfUxpAnhF6IQ44MhfB8zc+/WCgY9zfD2JufptyiBYuHPSUgR6QSotALbKr7
-         Zef0o+A+GB89pTsMCy/iFS20+nuARrv+dkXLYjxCnrcJFSdXgKCTu/sG/2ABZX+YbIfm
-         jfRbnytrV+XjJAiV1I6a91FIARPVsd8B/LRswMc7didNMsj2ZG3vt8y4jYWF724nmBer
-         Il4/yF+ptFqfYbt+L1sj/+473APAWe0Fi2QeZBWqXtR7Wq8sQfHehASxBpemEPYthAs1
-         UMPg==
-X-Gm-Message-State: AGi0PuYM7l6vSaRDW1bU/KGWkecDOSmWTJFnWm48wMnDqmdzNaVEf54k
-        ZcesLVfVD6533nVOVjWG0nmlLcFb
-X-Google-Smtp-Source: APiQypKXuOwPBmzScdGZFTJiCxBhJcnl+efoLpZLBmyiY2g0HGk47BlbAI5RrRMzHFy1OBQiJcCclg==
-X-Received: by 2002:a1c:1bcb:: with SMTP id b194mr7015746wmb.4.1587685400949;
-        Thu, 23 Apr 2020 16:43:20 -0700 (PDT)
+        bh=HYHS38Au6CtTuI2ZgtQFnraejHTl1h/lhxRvcPNe5rs=;
+        b=B/PACdY+e5Szibwryg7tB4K3fh9aWzDFOUMYZPlW27lQY4gLeUFxztbQMKIWOKKok8
+         z+FyjmqHMEb+77zxvMLnfLZ1GujXLb6EoLDXNrpngXcefkfIgmkzW3D367J9r6h6OlDu
+         WO8SCoDqgOmFA+cxo1N7PzJ/oeloRWI+7Cb8RNqxVYrFHeIvIwLzGnuKKnis2TY5rxIb
+         VIadV560DIl0yjt7iLvWvelSOTgun8vgC5KIDt/oWwhSv5z09xaZscHEacl8EuqNyIqI
+         QbxJzsaY/6NqqQbFFKihHjT1XHYQFUVnUeuVujLAXW8F72RI5viGCe8144lV4HyOcpil
+         LJPw==
+X-Gm-Message-State: AGi0PuabQrPJ+HHVLhDL8IsTIKs8ALV/eEL+fg73Hpl1bEMvLFVUGCKx
+        Ej9VxnRmVK/6SnxzdiVivXmOD1pK
+X-Google-Smtp-Source: APiQypJfa/pNH6FqCWBbgFLhb3Zwnzqa05Dvz9YH0SCK7aSLNqDMet8j1BUUzjwRJeQTB18J5+LzFg==
+X-Received: by 2002:a1c:9e52:: with SMTP id h79mr6797846wme.84.1587685399245;
+        Thu, 23 Apr 2020 16:43:19 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z10sm5902491wrg.69.2020.04.23.16.43.20
+        by smtp.gmail.com with ESMTPSA id l19sm516644wmj.14.2020.04.23.16.43.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Apr 2020 16:43:20 -0700 (PDT)
-Message-Id: <daedaffe960581733c25383a2a1b30056a415594.1587685397.git.gitgitgadget@gmail.com>
+        Thu, 23 Apr 2020 16:43:18 -0700 (PDT)
+Message-Id: <2c1c0ae91eba2092b24c392786ca2e7c81ded334.1587685397.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.615.v2.git.1587685397.gitgitgadget@gmail.com>
 References: <pull.615.git.1587588665.gitgitgadget@gmail.com>
         <pull.615.v2.git.1587685397.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 23 Apr 2020 23:43:17 +0000
-Subject: [PATCH v2 3/3] credential: handle `credential.<partial-URL>.<key>`
- again
+Date:   Thu, 23 Apr 2020 23:43:15 +0000
+Subject: [PATCH v2 1/3] credential: fix grammar
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -85,96 +84,29 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-In the patches for CVE-2020-11008, the ability to specify credential
-settings in the config for partial URLs got lost. For example, it used
-to be possible to specify a credential helper for a specific protocol:
+There was a lot going on behind the scenes when the vulnerability and
+possible solutions were discussed. Grammar was not a primary focus,
+that's why this slipped in.
 
-	[credential "https://"]
-		helper = my-https-helper
-
-Likewise, it used to be possible to configure settings for a specific
-host, e.g.:
-
-	[credential "dev.azure.com"]
-		useHTTPPath = true
-
-Let's reinstate this behavior.
-
-While at it, increase the test coverage to document and verify the
-behavior with a couple other categories of partial URLs.
-
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- credential.c           |  8 +++++++-
- t/t0300-credentials.sh | 39 +++++++++++++++++++++++++++++++++++++++
- 2 files changed, 46 insertions(+), 1 deletion(-)
+ credential.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/credential.c b/credential.c
-index 52965a5122c..3505f6356d8 100644
---- a/credential.c
-+++ b/credential.c
-@@ -53,7 +53,13 @@ static int credential_config_callback(const char *var, const char *value,
- 		char *url = xmemdupz(key, dot - key);
- 		int matched;
- 
--		credential_from_url(&want, url);
-+		if (credential_from_url_gently(&want, url, 1, 0) < 0) {
-+			warning(_("skipping credential lookup for key: %s"),
-+				var);
-+			credential_clear(&want);
-+			free(url);
-+			return 0;
-+		}
- 		matched = credential_match(&want, c);
- 
- 		credential_clear(&want);
-diff --git a/t/t0300-credentials.sh b/t/t0300-credentials.sh
-index efed3ea2955..6fff76cb932 100755
---- a/t/t0300-credentials.sh
-+++ b/t/t0300-credentials.sh
-@@ -448,4 +448,43 @@ test_expect_success 'credential system refuses to work with missing protocol' '
- 	test_i18ncmp expect stderr
- '
- 
-+test_expect_success 'credential config with partial URLs' '
-+	echo "echo password=yep" | write_script git-credential-yep &&
-+	test_write_lines url=https://user@example.com/repo.git >input &&
-+	for partial in \
-+		example.com \
-+		user@example.com \
-+		https:// \
-+		https://example.com \
-+		https://example.com/ \
-+		https://user@example.com \
-+		https://user@example.com/ \
-+		https://example.com/repo.git \
-+		https://user@example.com/repo.git \
-+		/repo.git
-+	do
-+		git -c credential.$partial.helper=yep \
-+			credential fill <input >output &&
-+		grep yep output ||
-+		return 1
-+	done &&
-+
-+	for partial in \
-+		dont.use.this \
-+		http:// \
-+		/repo
-+	do
-+		git -c credential.$partial.helper=yep \
-+			credential fill <input >output &&
-+		! grep yep output ||
-+		return 1
-+	done &&
-+
-+	git -c credential.$partial.helper=yep \
-+		-c credential.with%0anewline.username=uh-oh \
-+		credential fill <input >output 2>error &&
-+	test_i18ngrep "skipping credential lookup for key" error
-+
-+'
-+
- test_done
+diff --git a/credential.h b/credential.h
+index 122a23cd2f1..5a86502d95c 100644
+--- a/credential.h
++++ b/credential.h
+@@ -32,7 +32,7 @@ void credential_write(const struct credential *, FILE *);
+ /*
+  * Parse a url into a credential struct, replacing any existing contents.
+  *
+- * Ifthe url can't be parsed (e.g., a missing "proto://" component), the
++ * If the url can't be parsed (e.g., a missing "proto://" component), the
+  * resulting credential will be empty but we'll still return success from the
+  * "gently" form.
+  *
 -- 
 gitgitgadget
+
