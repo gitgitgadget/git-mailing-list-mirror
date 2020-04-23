@@ -2,136 +2,134 @@ Return-Path: <SRS0=24D7=6H=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ED367C55185
-	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 01:20:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9CB8DC55185
+	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 01:23:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9ACA22075A
-	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 01:20:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7A6272075A
+	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 01:23:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m+GrlMYU"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TpG+ktPR"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726008AbgDWBUo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Apr 2020 21:20:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33918 "EHLO
+        id S1726008AbgDWBXJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Apr 2020 21:23:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34282 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1725854AbgDWBUo (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 22 Apr 2020 21:20:44 -0400
-Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F243C03C1AA
-        for <git@vger.kernel.org>; Wed, 22 Apr 2020 18:20:44 -0700 (PDT)
-Received: by mail-pg1-x543.google.com with SMTP id q18so2026712pgm.11
-        for <git@vger.kernel.org>; Wed, 22 Apr 2020 18:20:44 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1725846AbgDWBXJ (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 22 Apr 2020 21:23:09 -0400
+Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0AEF9C03C1AA
+        for <git@vger.kernel.org>; Wed, 22 Apr 2020 18:23:09 -0700 (PDT)
+Received: by mail-pg1-x542.google.com with SMTP id g6so2033120pgs.9
+        for <git@vger.kernel.org>; Wed, 22 Apr 2020 18:23:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=FSAtoTYklJcXBWodtdmOQseSUXBXOgyrYSgFH2oXWwI=;
-        b=m+GrlMYUV/0w9N5DmVZAX4qhf1c0Ve1WIIV4Fr7IYyOYeJFFZqB4u0aXefSMmjXkjy
-         +QJhsK2qx+lR6D1/5a54UDSwjT86ZSKZzP0eBdwXBe5i7g3+C4ua+sH/aAiW3e0KZyiy
-         TQduWxq4cbakQpxHTbYka0ihXoEKMcDx0Y8mXLCs+RaNFZH/WaBmoQ7QhA5Q8R17ese3
-         MJVWvDWnixPxIWyAdzoF05F7tOtZj7MXHXJAqLXlL/YNItesjohsVC6xqqb4zCGvtpF6
-         vaG0rLcyVPbe0n8viaayy3/4IbIVFmFVOVas6q7sHwPsqt4ZKx0CsYqgr0jN/0eu1AD5
-         csqQ==
+         :content-disposition:in-reply-to;
+        bh=Kzf8/6ZIIxzhwXpbiID6u5AVpqCfUxffBGYAB6hodiA=;
+        b=TpG+ktPRP4K1ebfk3FDRhYRLK2DRyad6L5zzRbBpaP4DNHnq5++7XBfOnvr/kXShci
+         0HZnuGF7D8bhnSlxmtDkmQRDUHCvRmBCb13ULN5Rwhg5B5AOqW/k2gc2WibYB4CS/1tw
+         nUZki9q2DtRGRUCmJW8YoQYOHKc6C2SPPtGVrnALPnA5qpdDrY88xDhSYwIpZolG3T04
+         Cgymbni2nBq7FBIYGjedRgZmVEPttmqLmIR6LcU/Vp6nh+qxfrHNQKKCSsNhQaesjjm3
+         eyYkSTOuZCoOOeRg5q+WLD0htKhtwdopJh+3gCMoxsMJrT/63iUklEycVu648pLAJMnB
+         A3jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=FSAtoTYklJcXBWodtdmOQseSUXBXOgyrYSgFH2oXWwI=;
-        b=qbJdjcCZbql0ZrzYE8YJqBhyurLp5SNC9paimiKrdS+1wNVyjDRpTaFtAknotwGA9W
-         4tyOYlkgx9ZRT0UGWK19cG/WKpzDqej+LVoZ8V0Y2ROVmsXdqzjB4rHUN526+gzD5sla
-         NjZTa6YDBF5DMLlyOmz2bmG6L7PJ7qzPK1JsxJDKnR07LXwnD+NWeez+R1/XUWIgZC5X
-         Fw2Bsv5V9h3xtAfjvFmCaUW5pb9Wz3O8cFBkcMiGi9ltfDGskovDWlmXpuDGE8tFn2/V
-         9qWD9U6Gz/zlvPKAw7gnkP2tebGxJSF9K0pFkIqJNWqnaq4lj5M35izIsvVNaGbhj/DU
-         O9HA==
-X-Gm-Message-State: AGi0PuZ7P7LBwt6Sb2AeDFJWSKuiUwFYUpX7YYcVqecIlcTjnvZkCzzk
-        zy33agXeqdne7FRlnIq61UQ=
-X-Google-Smtp-Source: APiQypLMZgIS9QdsRDRDsDbNQ1vLmFnOau+EvLwUOyOWUj7dk/z6B3/UTg+rRb71OfZnFapCuuCsmw==
-X-Received: by 2002:aa7:9302:: with SMTP id 2mr1352363pfj.256.1587604842933;
-        Wed, 22 Apr 2020 18:20:42 -0700 (PDT)
-Received: from localhost ([2402:800:6374:f359:1ce8:a621:5f80:1116])
-        by smtp.gmail.com with ESMTPSA id o99sm469671pjo.8.2020.04.22.18.20.42
+         :mime-version:content-disposition:in-reply-to;
+        bh=Kzf8/6ZIIxzhwXpbiID6u5AVpqCfUxffBGYAB6hodiA=;
+        b=cRCNS/nK0zL2lozQ/n0NME8UEgWDH4EO126jTY6P79YIz6XF3N06MXw6SLmNQ0sQmn
+         K2Tzoe0XR+xqrUMpgrtqamsphgfOqrqgQ90ji+2w1Jlh+sGKJrQMD9kBSZJSCQONcznF
+         qGTov0oMfAI+/KrS1iBO7ESTOcikj+N/AedBRpiBsflvj+EoKurCfxEloeHbSFj8vVYg
+         qOcyC9lGADVcG777lyhh9T+j3mmHX5AGpZFyl5Ap/8ZBG7naY2cj+huqpVmeIqm6r/TT
+         yhV6AL/MetQ2kEC0z7tqBleOuIuZi/c+sih8Glnus5Nv7lP4p6qMYS/EnpY5n6V3zosl
+         6XUw==
+X-Gm-Message-State: AGi0Pub7hmlI3Ejq5cQt9apr8zQm8Mftos3urzjx8vgr0+Upot+iNU6J
+        hM39IqyrbfeO32qYI66bMV8=
+X-Google-Smtp-Source: APiQypLmkWwa8r8klWJ1oNPgn2j40kg1h7cbiXDUPhhNxYOgyVRYqHNoxVt2K1+IULs56dQIsJfXqg==
+X-Received: by 2002:a63:e749:: with SMTP id j9mr1655592pgk.319.1587604988385;
+        Wed, 22 Apr 2020 18:23:08 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
+        by smtp.gmail.com with ESMTPSA id t126sm774168pfb.29.2020.04.22.18.23.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Apr 2020 18:20:42 -0700 (PDT)
-Date:   Thu, 23 Apr 2020 08:20:40 +0700
-From:   Danh Doan <congdanhqx@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v3 2/2] date.c: allow compact version of ISO-8601 datetime
-Message-ID: <20200423012040.GB1930@danh.dev>
-References: <cover.1586856398.git.congdanhqx@gmail.com>
- <cover.1587559135.git.congdanhqx@gmail.com>
- <225b6401bd1f7eddc245acfd2c4b37c50c978491.1587559135.git.congdanhqx@gmail.com>
- <xmqqftcvjv80.fsf@gitster.c.googlers.com>
+        Wed, 22 Apr 2020 18:23:07 -0700 (PDT)
+Date:   Wed, 22 Apr 2020 18:23:05 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, jonathantanmy@google.com, gitster@pobox.com,
+        newren@gmail.com
+Subject: Re: [PATCH v2 2/2] shallow.c: use '{commit,rollback}_shallow_file'
+Message-ID: <20200423012305.GH140314@google.com>
+References: <20200423001438.GC19100@syl.local>
+ <cover.1587601501.git.me@ttaylorr.com>
+ <296e70790d7a391d471554b0bc5a58e2a091ce88.1587601501.git.me@ttaylorr.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqftcvjv80.fsf@gitster.c.googlers.com>
+In-Reply-To: <296e70790d7a391d471554b0bc5a58e2a091ce88.1587601501.git.me@ttaylorr.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2020-04-22 10:17:35-0700, Junio C Hamano <gitster@pobox.com> wrote:
-> Đoàn Trần Công Danh  <congdanhqx@gmail.com> writes:
-> 
-> > Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
-> > ---
-> >  date.c          | 22 ++++++++++++++++++++++
-> >  t/t0006-date.sh |  3 +++
-> >  2 files changed, 25 insertions(+)
-> >
-> > diff --git a/date.c b/date.c
-> > index 62f23b4702..882242c2db 100644
-> > --- a/date.c
-> > +++ b/date.c
-> > @@ -672,6 +672,28 @@ static int match_digit(const char *date, struct tm *tm, int *offset, int *tm_gmt
-> >  		n++;
-> >  	} while (isdigit(date[n]));
-> >  
-> > +	/* 8 digits, compact style of ISO-8601's date: YYYYmmDD */
-> > +	/* 6 digits, compact style of ISO-8601's time: HHMMSS */
-> > +	if (n == 8 || n == 6) {
-> > +		unsigned int num1 = num / 10000;
-> > +		unsigned int num2 = (num % 10000) / 100;
-> > +		unsigned int num3 = num % 100;
-> > +		if (n == 8 && num1 > 1900 &&
-> > +		    num2 > 0 && num2 <= 12 &&
-> > +		    num3 > 0  && num3 <= 31) {
-> > +			tm->tm_year = num1 - 1900;
-> > +			tm->tm_mon  = num2 - 1;
-> > +			tm->tm_mday = num3;
-> > +		} else if (n == 6 && num1 < 60 && num2 < 60 && num3 <= 60) {
-> > +			tm->tm_hour = num1;
-> > +			tm->tm_min  = num2;
-> > +			tm->tm_sec  = num3;
-> > +			if (*end == '.' && isdigit(end[1]))
-> > +				strtoul(end + 1, &end, 10);
-> > +		}
-> > +		return end - date;
-> > +	}
-> > +
-> 
-> Looks sensible except that on our planet, one day has only 24 hours
-> ;-).
+Taylor Blau wrote:
 
-My bad, I admit that I wouldn't run into this error if we have the
-helper is_hms (or is_time)
+> --- a/builtin/receive-pack.c
+> +++ b/builtin/receive-pack.c
+> @@ -872,12 +872,12 @@ static int update_shallow_ref(struct command *cmd, struct shallow_info *si)
+>  	opt.env = tmp_objdir_env(tmp_objdir);
+>  	setup_alternate_shallow(&shallow_lock, &opt.shallow_file, &extra);
+>  	if (check_connected(command_singleton_iterator, cmd, &opt)) {
+> -		rollback_lock_file(&shallow_lock);
+> +		rollback_shallow_file(the_repository, &shallow_lock);
 
-> 
-> I think we should try to reuse existing helpers as much as possible
-> in date.c to avoid such stupid errors.  During my review of [1/2] I
-> found is_date() would be a good thing to try reusing and also
+I like it.
 
-I'll look into this and see which value should be passed to is_date
+I wonder, is there a way we can make it more difficult to accidentally
+use rollback_lock_file where rollback_shallow_file is needed?  For
+example, what if shallow_lock has a different type "struct
+shallow_lock" so one would have to reach in to its lock_file member to
+bypass the shallow_file interface?
 
-> extracted is_hms() as another candidate we could reuse.
+[...]
+>  		oid_array_clear(&extra);
+>  		return -1;
+>  	}
+>  
+> -	commit_lock_file(&shallow_lock);
+> +	commit_shallow_file(the_repository, &shallow_lock);
+>  
+>  	/*
+>  	 * Make sure setup_alternate_shallow() for the next ref does
+> diff --git a/commit.h b/commit.h
+> index 008a0fa4a0..ab91d21131 100644
+> --- a/commit.h
+> +++ b/commit.h
+> @@ -249,6 +249,8 @@ struct oid_array;
+>  struct ref;
+>  int register_shallow(struct repository *r, const struct object_id *oid);
+>  int unregister_shallow(const struct object_id *oid);
+> +int commit_shallow_file(struct repository *r, struct lock_file *lk);
+> +void rollback_shallow_file(struct repository *r, struct lock_file *lk);
 
--- 
-Danh
+optional: might make sense to put this near setup_alternate_shallow
+for discoverability
+
+Could this have an API doc comment?
+
+[...]
+> --- a/shallow.c
+> +++ b/shallow.c
+> @@ -40,13 +40,6 @@ int register_shallow(struct repository *r, const struct object_id *oid)
+>  
+>  int is_repository_shallow(struct repository *r)
+
+Not about this patch: it might make sense to split out a shallow.h
+header / API.
+
+Thanks and hope that helps,
+Jonathan
