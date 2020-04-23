@@ -2,261 +2,235 @@ Return-Path: <SRS0=24D7=6H=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.2 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=0.5 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6203EC54FD0
-	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 23:18:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 99D01C54FD0
+	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 23:19:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0F98C2077D
-	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 23:18:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6773D20CC7
+	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 23:19:54 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="srUPXO6g"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="NUoDuwUb"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729183AbgDWXSJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Apr 2020 19:18:09 -0400
-Received: from avasout01.plus.net ([84.93.230.227]:33351 "EHLO
-        avasout01.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729716AbgDWXSC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Apr 2020 19:18:02 -0400
-X-Greylist: delayed 451 seconds by postgrey-1.27 at vger.kernel.org; Thu, 23 Apr 2020 19:18:01 EDT
-Received: from [10.0.2.15] ([217.32.115.138])
-        by smtp with ESMTPA
-        id RkzDjTjwMuzYfRkzEjfxEd; Fri, 24 Apr 2020 00:10:28 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-        t=1587683428; bh=1aKxF97sakDssD96NMV0e2CQ2SdNiZRlsaM8w9R4pvY=;
-        h=Subject:To:References:From:Date:In-Reply-To;
-        b=srUPXO6gf7+ARJ3204BQQyuLGVmXnmUh/W22WG9P2C3WfAgZnqAl0a08iTGmvOcap
-         F0jr/RaF6xY2LB9ttAh9MClWpnUqJ5JFWBZv5hmg2hOblSjTlndc12cOsjnYyjJVGq
-         aM5SoiIttvotmV3kurrsUdSZCLMZMiKt79d6oC1aUc0qnRj1wwKX1MjcnKvmDORVTY
-         oxo5AdCD1fsY3Nq4TAtmrakJ8t4/fcLuQXeXpXlM/emsh26xT92wRcLMkWjQGYNdRF
-         +vZyJggyQmF172ppCgjrwL0jo0sPxvJ9k66k2qr3ruputFUNywuwsUOL6pYQy6cq4s
-         Lo6CvsZbQKhFw==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=H8RAP9Qi c=1 sm=1 tr=0
- a=T9WNts+jH3PhiGdS1gtV5Q==:117 a=T9WNts+jH3PhiGdS1gtV5Q==:17
- a=IkcTkHD0fZMA:10 a=eiBuYnCo3If3s6K_Q4YA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH 0/4] fix make sparse warning
-To:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
-        git@vger.kernel.org
-References: <cover.1587648870.git.congdanhqx@gmail.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <86ef24e2-3ab6-5e9c-900b-0eb4dbc1bb04@ramsayjones.plus.com>
-Date:   Fri, 24 Apr 2020 00:10:25 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+        id S1728980AbgDWXTt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Apr 2020 19:19:49 -0400
+Received: from mout.gmx.net ([212.227.17.20]:34155 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728391AbgDWXTr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Apr 2020 19:19:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1587683974;
+        bh=x+0T/UBMzRUH4KH6lvY9NPJFvGLbXzZ1dWMw0S79yO0=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=NUoDuwUb/2vQSKbSze+9YwDJlav4i1dhGvs2BazO4Sg82L5UBhoX+V+XrzZ/k+6YE
+         0YkaxwggSz3fQP0TRUY1yCVZW+AUlRQHf6J8swyiZmWRf5mDnKphUXEXChlpkCeeSa
+         jYJuBYyxjiYOX5npI3/5H3wNzzYjuXglR7nh1zWo=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from MININT-QA14EDB.fritz.box ([89.1.212.237]) by mail.gmx.com
+ (mrgmx105 [212.227.17.168]) with ESMTPSA (Nemesis) id
+ 1MF3HU-1jPYDe219M-00FR7z; Fri, 24 Apr 2020 01:19:34 +0200
+Date:   Fri, 24 Apr 2020 01:19:34 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jonathan Nieder <jrnieder@gmail.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Ilya Tretyakov <it@it3xl.ru>
+Subject: Re: [PATCH 3/3] credential: handle `credential.<partial-URL>.<key>`
+ again
+In-Reply-To: <20200422235708.GF140314@google.com>
+Message-ID: <nycvar.QRO.7.76.6.2004240057220.18039@tvgsbejvaqbjf.bet>
+References: <pull.615.git.1587588665.gitgitgadget@gmail.com> <66823c735b1d5ea2047a29656e82fa6fe895f6f1.1587588665.git.gitgitgadget@gmail.com> <20200422235708.GF140314@google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <cover.1587648870.git.congdanhqx@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfIqxUh1yTk2NOtsTNoihKyAnLlt0NHQkBTrBEuREUEA+xmh6zJwRsdVvy12jamMv+0zDhsx5WXZdcnc4xuYXrxxpq1rz6EY1qmYGVLajFFoev2cgzIbc
- of6NNnWUqHY/7gJYbto/oFyiE32p0y7nwMJvkgBb2U6QmkBjpAoWw5j+rjGcTW0JT+c0ghba8NzX+g==
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:TcxbfJoT3VLLwZ8lv8zzRerefMlRlnAMz2wiwAcy0rqV+ATWuDL
+ VwI5w3Sg3bT86HH2MVbX9dDXXKqfE+7cA2lKk9NOWa47JPIpivH67OFi8t0dgi/AJoEzmvJ
+ ROynfX8agg0f+a4IuWJmDKW/TZ2P1T7SBQgbKWHqzBfFVWlTT3poi6e5JQYqpPSpTjtkCAf
+ LPk1EB/+dNIXIdDlZ0Kjg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:paYc2bw8OMU=:UHvPoaCEWpf5zGVApjHLEP
+ zmny4t3RilaXJSdy+j6PT7xnkW9ZG5o08EZcUZul5dGqlYGnLeINiFS9eKqAJrLBPaUC/9MQG
+ lyodlIPzSLMRK8m18hiJGS6n4rPR0pwSASHnVmBzjq+BcShe/fGZwuNHRE8pOey3GabJqQJmR
+ 20YNdAfpSumyvEyVgG9zd55KGlUHa3SGilbmjjkE1xb1wMOvJZB5cVaNNSplbSDY5Ba6AMCsY
+ JQmTfQEvxEE0Xw2RfbO/72tdav5e/SDAUvfUA4VXV3poua8jMc2DrEEpygIZyheCVZ/gubkMR
+ wGf4QiXcBc/WqwSXt/K+0/Ze+XK4C5yWNqoZGTakQgbKd9+NeK1bnonQllqdFy8AFK18qQqiK
+ ib8KhvKiuelNs2uoZxYRem/hyp5UG7rHQxwyzPOnn40yW/cZ06JVO+6R02iQiHwAzHCyxwu6x
+ H1JhpKIF/j8yIAzaT34U3COVK9VHld+R3lFBe6dXR9UsGN21bGHDXjMMnaCLVW62712ajnVeR
+ EPv818iXQRA3A6vHBeW2u620goupY33m695GIoOwe8+/2sQ4Q9mlYqjpbRNDaBZ1WTBYF+S/+
+ tHplXS0895MBvj3s2uinceW+bNoJmuT86gDcl7Ai7rHWLCNILbU+XbH8yKf+4nxAQVunGoOeV
+ CwkBeCTXo3S551uf46OI/nE1AD6aG+Ur1ndSJzPZTyp7MAZzGwrzrqH2Yo+dLoTzmJs+xvK+n
+ JP6a6j05oPHDfXHez3Zof1TuhIqlSOkxLxgwmfOFpKQW6Ls97xzqSRjVLbyufNE89s9hThc/6
+ /XxBwc1Gu1Ptb72GEBehjLYWoRVBodcY6JHPnJ5TEAziEIfOG9uuwg0yA08V/iAtIyTJuL12Q
+ bYWfqPHD0O+unn/JvaU1LyQYDmchTMfY8MIuhd6ZrmokZDGpIvh8a13LFK6Xpk6Mo3+NBStKQ
+ sQjOUFW2EQQ99g/6b3H6xrKBPe3r/+zQS8Ra5p/GwB+HEVKIa2AjSYe9sjOYWuOPS8/+NyGGX
+ qcwiBg+eEJ+4Ic/vT8PyeSFMU+4XJHG1L8Ke5jD6KKHrIDbBAD2IFreJJlKQ/E3JqYkLdZYZe
+ EbjD/Zm1OmUVfhIvHIM/SaXkMRhuBt0pb3uoUD9gtj+ryhaO0P729siE2rgZvfez/4G2x1lbV
+ /9gaGADM7bK6YeKukGoA+M2Cd8QlLluLQDtXLQ378rj10QjrZXN+KgK0VwT+wfGUXrcsK8XJl
+ hRTTIbzyB1wrIoRBe
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Jonathan,
 
+On Wed, 22 Apr 2020, Jonathan Nieder wrote:
 
-On 23/04/2020 14:47, Đoàn Trần Công Danh wrote:
-> It's happened that I tried to run make check on project that support autoconf.
+> Johannes Schindelin wrote:
+>
+> [...]
+> > --- a/credential.c
+> > +++ b/credential.c
+> > @@ -53,7 +53,12 @@ static int credential_config_callback(const char *v=
+ar, const char *value,
+> >  		char *url =3D xmemdupz(key, dot - key);
+> >  		int matched;
+> >
+> > -		credential_from_url(&want, url);
+> > +		if (credential_from_url_gently(&want, url, 0, 0) < 0) {
+> > +			warning(_("skipping credential lookup for url: %s"), url);
+> > +			credential_clear(c);
+>
+> Hm, the error message doesn't seem right here, since `url` is a config
+> key instead of URL whose credential's are being looked up.
+>
+> Should the error message include the entirety of `var` to make
+> debugging easier?
 
-I try to ignore autoconf as much as possible, so I don't know why people
-who use it regularly seem to expect a 'make check' target (is that anything
-to do with ./config.status --recheck?).
+I suppose you're right.
 
-> Git's Makefile told me to run `make sparse` instead.
+BTW I just realized a much worse issue: `credential_clear(c);`. This
+clears the wrong struct. It should clear `want`, not `c`.
 
-In which case, you must have had sparse installed, otherwise you would
-have been directed to 'make test'. [See commit 912f9980d2 ("Makefile: help
-people who run 'make check' by mistake", 2008-11-11)]
+> [...]
+> > --- a/t/t0300-credentials.sh
+> > +++ b/t/t0300-credentials.sh
+> > @@ -448,4 +448,17 @@ test_expect_success 'credential system refuses to=
+ work with missing protocol' '
+> >  	test_i18ncmp expect stderr
+> >  '
+> >
+> > +test_expect_success 'credential config accepts partial URLs' '
+> > +	echo url=3Dhttps://example.com |
+> > +	git -c credential.example.com.username=3Dboo \
+> > +		credential fill >actual &&
+>
+> Can the tests also check the behavior with bad URLs (that we are
+> appropriately tolerating and warning about them?
 
-The 'check' target was introduced in commit 44c9e8594e ("Fix up header file
-dependencies and add sparse checking rules", 2005-07-03). As you can see,
-that target has nothing to do with autoconf/configure.
+Yes, my bad! The next iteration will have a test for that.
 
-Exactly a year later, support for autoconf tools was added in commit
-556677144b ("autoconf: Use autoconf to write installation directories to config.mak.autogen", 2006-07-03). This provides an 'alternative' to just
-using the Makefile (which is the _primary_ method used to build git).
+> Stepping back: one thing I like about the code in "master" that uses
+> urlmatch_config_entry is that it is not treating these config keys
+> in the same way as URLs that Git would fetch from.  For example, if
+> one of the config keys contains %0a, then that's perfectly fine ---
+> we are not going to write them to a credential helper or to libcurl.
 
-I suspect that the majority of git developers don't use the autoconf
-tools (I have no numbers, just gut feeling).
+That is actually not what the code does, at least not in `maint-2.17`. It
+very much warns about `%0a` in config keys. The test I am adding to verify
+that the warning above is exercised correctly looks like this:
 
-I added the 'sparse' target in commit 0bcd9ae85d ("sparse: Fix errors due to missing target-specific variables", 2011-04-21). After nine years, we could
-perhaps just drop the 'check' target altogether? dunno.
+	git -c credential.$partial.helper=3Dyep \
+                -c credential.with%0anewline.username=3Duh-oh \
+                credential fill >output 2>error &&
+        test_i18ngrep "skipping credential lookup for url" error
 
-> I /think/ if we have a rule in Makefile, we should adhere to it.
+That is literally the only way I get `credential_from_url_gently()` to
+return `-1` in the lenient mode.
 
-Hmm, do you mean that 'make check' should be _reserved_ for autoconf use?
-[fun fact: the test target in the sparse Makefile is 'check' :-D ]
+> The only problem is that the pattern matching syntax doesn't match
+> the behavior that users historically expected.  (Keeping in mind
+> that we never actually provided the behavior that users expected.
+> `credential.example.com.helper` settings applied to all hosts.)
 
-> I also fix another change in ds/blame-on-bloom, which I think it's worth to
-> fix, see: <20200423133937.GA1984@danh.dev>
+Yes, I fix that, too. It is a bad usability bug, in my eyes, and I think
+it is better to fix it while I'm in the space anyway.
 
-Yes, looks good.
+> Would it make sense for parsing these config url patterns to share
+> *less* code with credential_from_url?  Ramifications:
+>
+> - unless we add specific support for it, we'd lose support for
+>   patterns that are specific to a user (e.g.
+>   "credential.https://user@example.com.helper").
+>
+> - likewise, we'd lose support for
+>   "credential.https://user:pass@example.com.helper".
+>
+> - we could control what "credential.https:///repo.git.helper"
+>   means, for example by rejecting it.  When we reject it, the
+>   error message could be specific to this use case instead of
+>   shared with other URL handling.
+>
+> - we wouldn't suport "credential.example.com/repo.git.helper"
+>   by mistake.
 
-> This series is developed from latest master.
+I think we can have _all_ of this _without_ violating the DRY principle.
 
-I have some comments on the patches (I'm running out of time here,
-so I may not get to them till tomorrow).
+Remember: my main motivation for keeping 2/3 apart from 3/3 was so that it
+is really easy to verify that 2/3 does not break the callers that _need_
+the strict mode.
 
-> It's conflicted when merge down next and pu.
-> 
-> For next, please ignore the conflict with fmt-merge-msg.c and
-> apply [5/4] instead.
-> 
-> For pu, reftable.c has too much warnings, I'm too lazy to look into it.
+And since that is the case, we can then enjoy the benefit of the shared
+code for the one caller that wants to match also partial URLs.
 
-For those interested, the 'too much warnings' on the 'pu' branch looks
-like (for pu@faf094bf11):
+> - to sum up, we could specifically define exactly what cases we want
+>   to support:
+>
+> 	[credential "example.com"]
+> 		# settings for the host
+> 		...
+>
+> 	[credential "user@example.com"] # maybe
+> 		# settings for the host/user combination
+> 		...
+>
+> 	[credential "https://"]
+> 		# settings for the scheme
+> 		...
+>
+> 	[credential "https://example.com"]
+> 		# settings for the host/scheme combination
+> 		...
+>
+> 	[credential "https://example.com/"]
+> 		# likewise
+> 		...
+>
+> 	[credential "https://user@example.com"] # maybe
+> 		# settings for the host/scheme/user combination
+> 		...
+>
+> 	[credential "https://user@example.com/"] # maybe
+> 		# likewise
+> 		...
+>
+> 	[credential "https://example.com/repo.git"]
+> 		# settings for the host/scheme/path combination
+> 		...
+>
+> 	[credential "https://user@example.com/repo.git"] # maybe
+> 		# settings for the host/scheme/user/path combination
+> 		...
+>
+>   without accidentally promising support for anything else
+>
+> What do you think?
 
-  $ make sparse >psp-out 2>&1
-  $ diff nsp-out psp-out
-  154a155
-  >     SP refs/reftable-backend.c
-  406a408
-  >     SP t/helper/test-proc-receive.c
-  447a450,511
-  >     SP reftable/basics.c
-  > reftable/basics.c:157:6: warning: symbol 'reftable_malloc_ptr' was not declared. Should it be static?
-  > reftable/basics.c:158:6: warning: symbol 'reftable_realloc_ptr' was not declared. Should it be static?
-  > reftable/basics.c:159:6: warning: symbol 'reftable_free_ptr' was not declared. Should it be static?
-  >     SP reftable/block.c
-  >     SP reftable/bytes.c
-  >     SP reftable/file.c
-  > reftable/file.c:57:37: warning: symbol 'file_vtable' was not declared. Should it be static?
-  >     SP reftable/iter.c
-  > reftable/iter.c:32:33: warning: symbol 'empty_vtable' was not declared. Should it be static?
-  > reftable/iter.c:61:31: warning: Using plain integer as NULL pointer
-  > reftable/iter.c:69:31: warning: Using plain integer as NULL pointer
-  > reftable/iter.c:96:57: warning: Using plain integer as NULL pointer
-  > reftable/iter.c:124:33: warning: symbol 'filtering_ref_iterator_vtable' was not declared. Should it be static?
-  > reftable/iter.c:224:33: warning: symbol 'indexed_table_ref_iter_vtable' was not declared. Should it be static?
-  >     SP reftable/merged.c
-  > reftable/merged.c:141:33: warning: symbol 'merged_iter_vtable' was not declared. Should it be static?
-  > reftable/merged.c:283:31: warning: Using plain integer as NULL pointer
-  > reftable/merged.c:296:31: warning: Using plain integer as NULL pointer
-  >     SP reftable/pq.c
-  >     SP reftable/reader.c
-  > reftable/reader.c:180:42: warning: Using plain integer as NULL pointer
-  > reftable/reader.c:181:42: warning: Using plain integer as NULL pointer
-  > reftable/reader.c:284:41: warning: Using plain integer as NULL pointer
-  > reftable/reader.c:360:44: warning: Using plain integer as NULL pointer
-  > reftable/reader.c:396:33: warning: symbol 'table_iter_vtable' was not declared. Should it be static?
-  > reftable/reader.c:450:36: warning: Using plain integer as NULL pointer
-  > reftable/reader.c:498:42: warning: Using plain integer as NULL pointer
-  > reftable/reader.c:500:44: warning: Using plain integer as NULL pointer
-  > reftable/reader.c:501:42: warning: Using plain integer as NULL pointer
-  > reftable/reader.c:502:36: warning: Using plain integer as NULL pointer
-  > reftable/reader.c:565:34: warning: Using plain integer as NULL pointer
-  > reftable/reader.c:610:31: warning: Using plain integer as NULL pointer
-  > reftable/reader.c:623:31: warning: Using plain integer as NULL pointer
-  > reftable/reader.c:669:36: warning: Using plain integer as NULL pointer
-  > reftable/reader.c:670:42: warning: Using plain integer as NULL pointer
-  > reftable/reader.c:671:35: warning: Using plain integer as NULL pointer
-  > reftable/reader.c:672:35: warning: Using plain integer as NULL pointer
-  >     SP reftable/record.c
-  > reftable/record.c:556:22: warning: symbol 'obj_record_vtable' was not declared. Should it be static?
-  > reftable/record.c:839:22: warning: symbol 'reftable_log_record_vtable' was not declared. Should it be static?
-  > reftable/record.c:961:22: warning: symbol 'index_record_vtable' was not declared. Should it be static?
-  >     SP reftable/slice.c
-  > reftable/slice.c:180:37: warning: symbol 'slice_vtable' was not declared. Should it be static?
-  > reftable/slice.c:200:37: warning: symbol 'malloc_vtable' was not declared. Should it be static?
-  > reftable/slice.c:204:30: warning: symbol 'malloc_block_source_instance' was not declared. Should it be static?
-  >     SP reftable/stack.c
-  > reftable/stack.c:157:62: warning: Using plain integer as NULL pointer
-  > reftable/stack.c:667:41: warning: Using plain integer as NULL pointer
-  > reftable/stack.c:668:44: warning: Using plain integer as NULL pointer
-  > reftable/stack.c:669:44: warning: Using plain integer as NULL pointer
-  > reftable/stack.c:1085:41: warning: Using plain integer as NULL pointer
-  > reftable/stack.c:1111:41: warning: Using plain integer as NULL pointer
-  >     SP reftable/tree.c
-  >     SP reftable/writer.c
-  > reftable/writer.c:231:31: warning: Using plain integer as NULL pointer
-  > reftable/writer.c:299:39: warning: Using plain integer as NULL pointer
-  > reftable/writer.c:347:47: warning: Using plain integer as NULL pointer
-  > reftable/writer.c:426:31: warning: Using plain integer as NULL pointer
-  > reftable/writer.c:468:45: warning: Using plain integer as NULL pointer
-  > reftable/writer.c:584:11: warning: symbol 'debug' was not declared. Should it be static?
-  >     SP reftable/zlib-compat.c
+I added tests for all of those. They all work as a naive user (like me)
+would expect them to.
 
-Also, my static-check perl script says the following symbols are not
-used outside the file which defines them (so they could be marked static):
+I threw in another test, too:
 
-  $ ./static-check.pl >psc
-  $ diff nsc psc
-  71a72,136
-  > reftable/basics.o	- reftable_free_ptr
-  > reftable/basics.o	- reftable_malloc_ptr
-  > reftable/basics.o	- reftable_realloc_ptr
-  > reftable/basics.o	- reftable_set_alloc
-  > reftable/block.o	- block_reader_seek
-  > reftable/block.o	- block_writer_register_restart
-  > reftable/file.o	- file_vtable
-  > reftable/iter.o	- empty_vtable
-  > reftable/iter.o	- filtering_ref_iterator_vtable
-  > reftable/iter.o	- indexed_table_ref_iter_vtable
-  > reftable/merged.o	- merged_iter_vtable
-  > reftable/merged.o	- reftable_merged_table_max_update_index
-  > reftable/merged.o	- reftable_merged_table_min_update_index
-  > reftable/merged.o	- reftable_merged_table_seek_log_at
-  > reftable/pq.o	- merged_iter_pqueue_check
-  > reftable/pq.o	- pq_less
-  > reftable/reader.o	- block_source_close
-  > reftable/reader.o	- block_source_read_block
-  > reftable/reader.o	- block_source_size
-  > reftable/reader.o	- init_reader
-  > reftable/reader.o	- reftable_reader_hash_id
-  > reftable/reader.o	- reftable_reader_refs_for
-  > reftable/reader.o	- reftable_reader_seek_log
-  > reftable/reader.o	- reftable_reader_seek_log_at
-  > reftable/reader.o	- table_iter_vtable
-  > reftable/record.o	- get_var_int
-  > reftable/record.o	- index_record_vtable
-  > reftable/record.o	- obj_record_vtable
-  > reftable/record.o	- put_var_int
-  > reftable/record.o	- record_as_log
-  > reftable/record.o	- record_as_ref
-  > reftable/record.o	- reftable_log_record_equal
-  > reftable/record.o	- reftable_log_record_print
-  > reftable/record.o	- reftable_log_record_vtable
-  > reftable/record.o	- reftable_ref_record_equal
-  > reftable/record.o	- reftable_ref_record_print
-  > reftable/record.o	- reftable_ref_record_vtable
-  > reftable/slice.o	- block_source_from_slice
-  > reftable/slice.o	- malloc_block_source_instance
-  > reftable/slice.o	- malloc_vtable
-  > reftable/slice.o	- slice_equal
-  > reftable/slice.o	- slice_vtable
-  > reftable/slice.o	- slice_write
-  > reftable/slice.o	- slice_write_void
-  > reftable/slice.o	- slice_yield
-  > reftable/stack.o	- fastlog2
-  > reftable/stack.o	- read_lines
-  > reftable/stack.o	- reftable_addition_add
-  > reftable/stack.o	- reftable_addition_close
-  > reftable/stack.o	- reftable_addition_commit
-  > reftable/stack.o	- reftable_stack_auto_compact
-  > reftable/stack.o	- reftable_stack_compaction_stats
-  > reftable/stack.o	- reftable_stack_destroy
-  > reftable/stack.o	- reftable_stack_new_addition
-  > reftable/stack.o	- reftable_stack_read_log
-  > reftable/stack.o	- reftable_stack_reload
-  > reftable/stack.o	- sizes_to_segments
-  > reftable/stack.o	- stack_try_add
-  > reftable/stack.o	- stack_write_compact
-  > reftable/stack.o	- suggest_compaction_segment
-  > reftable/writer.o	- debug
-  > reftable/writer.o	- writer_clear_index
-  > reftable/writer.o	- writer_finish_public_section
-  > reftable/writer.o	- writer_flush_block
-  > reftable/writer.o	- writer_stats
+	[credential "/repo.git"]
+		...
 
-Note: I have not looked at any of the reftable patches/files.
+And I also threw in negative tests, to verify that non-matching protocol
+or host name or path mean that the config setting is ignored.
 
-ATB,
-Ramsay Jones
+Thank you for your thorough review, it really helps me,
+Dscho
