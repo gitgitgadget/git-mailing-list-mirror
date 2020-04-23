@@ -2,113 +2,96 @@ Return-Path: <SRS0=24D7=6H=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A486BC54FCB
-	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 22:16:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AA1D0C54FD0
+	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 22:49:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7C0182077D
-	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 22:16:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1081B20736
+	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 22:49:49 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="J9DU0iJi"
+	dkim=fail reason="key not found in DNS" (0-bit key) header.d=narod.ru header.i=@narod.ru header.b="Y8meLd6I"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726532AbgDWWQf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Apr 2020 18:16:35 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53966 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726056AbgDWWQf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Apr 2020 18:16:35 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 48134664ED;
-        Thu, 23 Apr 2020 18:16:33 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=9ndP8TGT8DGZ/Qkv9hEy3x1+ays=; b=J9DU0i
-        Ji1tGyIxQReg8wKnqLYrm+/Ct1ZpFZwqLrADBOUPBiMA8sxiSC2/UTrNckDviNCK
-        +Ixy5S/Tq8Tiy8xbe0rGERiTCBpK07a2EfPGjAmGTWot2opF4gpHoY8y9FsYWqkt
-        7nvJvopVXMQ/6072tokpyBS2i6oBh5+gTPpbE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ov01/LuS6JmtodwIIMgmIqi5c/lXJOTK
-        1pCsudd67Bl3xdSjBNZBhVa9+OVNt+x9lV+2xnDXMMkV7XlVlXm9lbLwx7LtdZXz
-        cPAG5M3G6aMGuXNrSDQvd+B2j6okFrHrsyWi2SIfksEsDuhmqVuI6eJOe+kXYNTc
-        hnn+syemCQ8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3E4EA664EC;
-        Thu, 23 Apr 2020 18:16:33 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9E4A2664EB;
-        Thu, 23 Apr 2020 18:16:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Ilya Tretyakov <it@it3xl.ru>
-Subject: Re: [PATCH 2/3] credential: teach `credential_from_url()` a non-strict mode
-References: <pull.615.git.1587588665.gitgitgadget@gmail.com>
-        <1081841b16de31693473e72ff817bed5f0064dda.1587588665.git.gitgitgadget@gmail.com>
-        <20200422233854.GE140314@google.com>
-        <CAPUEspgJvN6f6Wjo-yjYj-x+bYtC3vdSvwUtrF=MbJDjwYUTdA@mail.gmail.com>
-        <nycvar.QRO.7.76.6.2004231433060.18039@tvgsbejvaqbjf.bet>
-        <20200423212212.GA20669@Carlos-MBP>
-        <nycvar.QRO.7.76.6.2004232359120.18039@tvgsbejvaqbjf.bet>
-        <xmqqy2qlette.fsf@gitster.c.googlers.com>
-Date:   Thu, 23 Apr 2020 15:16:30 -0700
-In-Reply-To: <xmqqy2qlette.fsf@gitster.c.googlers.com> (Junio C. Hamano's
-        message of "Thu, 23 Apr 2020 15:11:25 -0700")
-Message-ID: <xmqqtv19etkx.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1727913AbgDWWtp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Apr 2020 18:49:45 -0400
+Received: from forward103j.mail.yandex.net ([5.45.198.246]:42724 "EHLO
+        forward103j.mail.yandex.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726057AbgDWWtp (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 23 Apr 2020 18:49:45 -0400
+X-Greylist: delayed 429 seconds by postgrey-1.27 at vger.kernel.org; Thu, 23 Apr 2020 18:49:43 EDT
+Received: from forward102q.mail.yandex.net (forward102q.mail.yandex.net [IPv6:2a02:6b8:c0e:1ba:0:640:516:4e7d])
+        by forward103j.mail.yandex.net (Yandex) with ESMTP id 973416740695
+        for <git@vger.kernel.org>; Fri, 24 Apr 2020 01:42:27 +0300 (MSK)
+Received: from mxback12q.mail.yandex.net (mxback12q.mail.yandex.net [IPv6:2a02:6b8:c0e:1b3:0:640:3818:d096])
+        by forward102q.mail.yandex.net (Yandex) with ESMTP id 939EB7F20013
+        for <git@vger.kernel.org>; Fri, 24 Apr 2020 01:42:27 +0300 (MSK)
+Received: from vla5-e763f15c6769.qloud-c.yandex.net (vla5-e763f15c6769.qloud-c.yandex.net [2a02:6b8:c18:340b:0:640:e763:f15c])
+        by mxback12q.mail.yandex.net (mxback/Yandex) with ESMTP id m0SHhZzQvP-gReGfglS;
+        Fri, 24 Apr 2020 01:42:27 +0300
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=narod.ru; s=mail; t=1587681747;
+        bh=3o5DqZuBmroMX2yTB/z9BOCn8mKTYR8G7KIPNHL6hCE=;
+        h=Subject:From:To:Date:Message-ID;
+        b=Y8meLd6INDQKbBVihkpWkkDceDrYDuLoNV46zPzEtJwDM1/U/H520oW5tZZNrg/8t
+         gzLPrXVGWdpFSJx7xPiQWpRWbxNWs2m3oPb2JOyPzZUrsNps5TwyifYY1QtCMacCYu
+         YeSeswDf2O7fQhKYYthxiJZuzX9A+95zr+F/NOxI=
+Authentication-Results: mxback12q.mail.yandex.net; dkim=pass header.i=@narod.ru
+Received: by vla5-e763f15c6769.qloud-c.yandex.net (smtp/Yandex) with ESMTPSA id lQazpkp8Lm-gQXiJhog;
+        Fri, 24 Apr 2020 01:42:26 +0300
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        (Client certificate not present)
+To:     git@vger.kernel.org
+From:   Victor Porton <porton@narod.ru>
+Subject: [Bug] Misleading error message when run in a non-Git directory
+Autocrypt: addr=porton@narod.ru; keydata=
+ mQENBFNuyHwBCAC/mCl4R1GQ15hzH3ocG0jUDp8OU5eKPrEzBkNscSv6GnNAZ+JyoblUnmTt
+ HVkigeWnCwpwuRr9qqWZPffS7r3iQrD1RgcWw3uNBA7Eo1NBscKXDH+Nk5gaVwyvVlmZcCry
+ /RL/Z+8HxW7sguyrOPPsR5JRe9vVA8hA5lRRPtj/dy1oDq530XjQeyWfkL9TLXa+ji7cPRD/
+ K/z3NDEZBOETLnq7itAHPFul44vadBcElfJ1bCpXffOKDw7pRIZxanMMMpDTPUWigME/B/gt
+ 7bkSgFiGvrHLHAeOnIwE6KvVkcohHvkOdZFUwsgjlEJJDVYrVrSmB9qi4KF17+RUeoa1ABEB
+ AAG0H1ZpY3RvciBQb3J0b24gPHBvcnRvbkBuYXJvZC5ydT6JATgEEwECACIFAlNuyHwCGwMG
+ CwkIBwMCBhUIAgkKCwQWAgMBAh4BAheAAAoJEAk/AOWfbyPVcjcH/ilVVaOxDIPEdUX6HgQH
+ r9CnZweOC7zo4F8hh6ursgnNSZf7rIXEqcECMlqRTvfJfwbWz+jyk8+EP5lHPs5D+uinvVbT
+ sglDkTjENPnLhqbxcWgg9FvDB3Dvd0G37oJnFH6QKtKwg66RPiQinm0bzBumsMaPlI4EwUsG
+ BuB63CZs5njoDrQEI1pk3826qw+kmVmljLX4HVTmU9/77Lu0i00FDJIuuhcLxAWNgM8bB8AI
+ RkH+Hhp5jrau5NdmWgzH2tPB2mU8WZ4Xe0sk5ojIr8Q/+2ebC07uR73xZVljeI1oTnN4m3+h
+ tI2jkebDg8r9UYn5/ICfk9CwKn+HedVRdQS5AQ0EU27IfAEIAOMN8NmSoQ94T+QHjo/ZcB4A
+ XWOw4rd02iKjdtyQyGlXVRNPHOI9UzeAo6Neo5Cf92iq6w7u3n51pt7Mgg47cdPYwjEfr0lW
+ ECfJuWrTmlL5xsSCShPoowfFfAKFx7zkhPvTA1sMLZ5xPZwhKvnlKH5VFph9IKltqMFe6g5u
+ JXXdAsaFHQS2i2H3ZobYx8/lQgjtVHGLJX19Eqisg72MClMMl6gUlNxzfpY5tPwuzkpz8hLb
+ ygNJN4bwDCBUWqTt5dn26bp16Qt4KQjUpo4XjbLOPFWDcprW2gfMt2Z10b1a7JKavPNBzTW1
+ /vf+CInOnGUIxu8bO5zoI1wB4Q7sjLMAEQEAAYkBHwQYAQIACQUCU27IfAIbDAAKCRAJPwDl
+ n28j1bi7B/9XpmjC3lBcHAVDJB+lYDigh/zguW4YprCByglRUBgxqA4RUfDeWNpv47ArIkjr
+ MKKJj49p4NlQU1tvzI9tgTIYYmSSm6AljagL9eQqvDeG5P16PE1rQB8UGh4+i0YG684tys1d
+ rcjFgUlLHpUS0aF/BVDbVvK7sNvuxlm1NHyEtOnxkYrhQNy7tuGzysw4sywDHd+wqV3s6AGM
+ ghninx66vTVjLDkLSzL+ZU8him/Tb53fqMPBFUFGPUCtpoAYYmmqoYh2blGsYLw4yBmrN/Ki
+ d5e4sncB2Qdc9HQXN0aqnirD3D3QkLUcvHIlFwBeQF/O5TO/xTRDgSwvnRFvI6AB
+Message-ID: <c0e916fb-7b0e-1192-e71d-ea6449863e9b@narod.ru>
+Date:   Fri, 24 Apr 2020 01:42:25 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 15EB48B2-85B0-11EA-9036-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+git remote add origin ...
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
->> Yes (modulo doing "greater than" comparison on pointers which is IIRC not
->> permitted in C in general).
->
-> Of course, people write a loop like this
->
-> 	char *cp, *ep = strchr(string, '\n');
->
-> 	for (cp = string; cp < ep; cp++)
-> 		...
->
-> all the time, and forbidding pointer comparison would make the
-> language impossible to use ;-)
->
-> I think you are confused with a different rule---what is not kosher
-> is to compare two pointers that do not point into elements of the
-> same array.  Whether the comparison is done in (ptr1 < ptr2) way, or
-> (ptr2 - ptr1 < 0) way, does not change the equation.
+produces the error
 
-Having said that, between
+fatal: remote origin already exists.
 
-1.	if (strict || slash - url > 0)
-2.	if (strict || slash > url)
- 		c->host = url_decode_mem(host, slash - host);
+when run in the directory which is not initialized by Git (has no .git
+folder).
 
-I think the former is moderately easier to read.  It still has the
-same "Huh?" factor that a comparison between slash and URL guards
-the size of the region being decoded, which is slash - host, and
-makes the reader wonder how these two variables, URL and host,
-relate to each other at this point in the code, though, either way
-the comparison is spelled.
+This error message is misleading.
 
-Thanks.
+git --version
+git version 2.20.1
+
