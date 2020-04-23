@@ -2,101 +2,113 @@ Return-Path: <SRS0=24D7=6H=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D3A02C54FCB
-	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 22:14:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A486BC54FCB
+	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 22:16:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 87CC22077D
-	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 22:14:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7C0182077D
+	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 22:16:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Bike6k14"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="J9DU0iJi"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726071AbgDWWOj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Apr 2020 18:14:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60260 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726056AbgDWWOj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Apr 2020 18:14:39 -0400
-Received: from mail-oo1-xc44.google.com (mail-oo1-xc44.google.com [IPv6:2607:f8b0:4864:20::c44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2702FC09B042
-        for <git@vger.kernel.org>; Thu, 23 Apr 2020 15:14:39 -0700 (PDT)
-Received: by mail-oo1-xc44.google.com with SMTP id c83so1682187oob.6
-        for <git@vger.kernel.org>; Thu, 23 Apr 2020 15:14:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=rSq4jwPn/FOVyOjsZaGreMyxz4NpKTxM5IpinhrdVYc=;
-        b=Bike6k14HMsSlgFM9FKlfODP4kHWdsVNqkmOtZvKESGRfhoaHMNfcwhkZIKpiP6NQy
-         OB3ac9zw2lrNrhZKH/67085rSesdXxzBR7Il3P3z2W6krpWATurm2HahdSpsEFziddSQ
-         hA+0P8b9dN8P2goHYEIq46OJ46LxD2crgTezqCxkj+KzGULISGnSswbnC//DmNn1K6I+
-         UbNML+TdIMV86DG2tjHK2g165zK5sU71Tyf7A7D1ZHHRCgFO6XzxwxB1qa2sLtz8mlBj
-         FHxgt+G3EI8vDYvi8+MmZJNaWkosmrsqhbNe15R/RgZlQZp6WFMi3D8RD/memu+/BYX0
-         b2BA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=rSq4jwPn/FOVyOjsZaGreMyxz4NpKTxM5IpinhrdVYc=;
-        b=jArL4z8K7YgsmMdUmn2Qp7og5d0e3gxqCUdAa7MBzKZgqt9V3dKSOv4uniC1tMEQCZ
-         QzXSNGPMK7Fo0H/fGIbTYUKlXlkxmClYLuwUGxwcXocm0rKD012ZEin2S2MV+3j2RHp4
-         bTiznAav4LwIg+NqYVWj+DrsTYie7KFMNE8Rm3TSUWFPC+PWBRxubxvdNfGfE1UUV9l+
-         /jfI6nKpmeTlIPzO18vE0zNGVF98G0+IPzD48kfbR+I/Gl5CZGGgvll/Tr1woJJl0tuQ
-         foV9zLQi6Xe4mEusMAF0QUKZwROcDlFUcB2/Jc49kVQpi0LlkxAgHbHHkg0u+4nRClTb
-         z0aw==
-X-Gm-Message-State: AGi0PuYOepflzkF8ksJV07CyFdylMFjUT6qQDZYtM9inwJ1UMmFPjS4R
-        bxeoaMRyBdcCueRD17StvpU=
-X-Google-Smtp-Source: APiQypL6h2sr/CZXIrerb1WWTqpEb0mEffC7dK8W49hzbltwMteWCkKMeVEeu69dSlsmAWE39OtFfw==
-X-Received: by 2002:a4a:e151:: with SMTP id p17mr5285122oot.28.1587680078388;
-        Thu, 23 Apr 2020 15:14:38 -0700 (PDT)
-Received: from ?IPv6:2600:1700:b00:7980:9cd1:e4c2:b0cd:6da9? ([2600:1700:b00:7980:9cd1:e4c2:b0cd:6da9])
-        by smtp.gmail.com with ESMTPSA id t203sm1009766oib.52.2020.04.23.15.14.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Apr 2020 15:14:37 -0700 (PDT)
-Subject: Re: [PATCH 0/2] minor fixups for gs/commit-graph-path-filter
-To:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Cc:     Garima Singh <garima.singh@microsoft.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <20200423205851.GA1633985@coredump.intra.peff.net>
-From:   Garima Singh <garimasigit@gmail.com>
-Message-ID: <dde036bb-303c-a9d1-6bf2-880428cfb7c0@gmail.com>
-Date:   Thu, 23 Apr 2020 18:14:36 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+        id S1726532AbgDWWQf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Apr 2020 18:16:35 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53966 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726056AbgDWWQf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Apr 2020 18:16:35 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 48134664ED;
+        Thu, 23 Apr 2020 18:16:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=9ndP8TGT8DGZ/Qkv9hEy3x1+ays=; b=J9DU0i
+        Ji1tGyIxQReg8wKnqLYrm+/Ct1ZpFZwqLrADBOUPBiMA8sxiSC2/UTrNckDviNCK
+        +Ixy5S/Tq8Tiy8xbe0rGERiTCBpK07a2EfPGjAmGTWot2opF4gpHoY8y9FsYWqkt
+        7nvJvopVXMQ/6072tokpyBS2i6oBh5+gTPpbE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ov01/LuS6JmtodwIIMgmIqi5c/lXJOTK
+        1pCsudd67Bl3xdSjBNZBhVa9+OVNt+x9lV+2xnDXMMkV7XlVlXm9lbLwx7LtdZXz
+        cPAG5M3G6aMGuXNrSDQvd+B2j6okFrHrsyWi2SIfksEsDuhmqVuI6eJOe+kXYNTc
+        hnn+syemCQ8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3E4EA664EC;
+        Thu, 23 Apr 2020 18:16:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9E4A2664EB;
+        Thu, 23 Apr 2020 18:16:31 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Ilya Tretyakov <it@it3xl.ru>
+Subject: Re: [PATCH 2/3] credential: teach `credential_from_url()` a non-strict mode
+References: <pull.615.git.1587588665.gitgitgadget@gmail.com>
+        <1081841b16de31693473e72ff817bed5f0064dda.1587588665.git.gitgitgadget@gmail.com>
+        <20200422233854.GE140314@google.com>
+        <CAPUEspgJvN6f6Wjo-yjYj-x+bYtC3vdSvwUtrF=MbJDjwYUTdA@mail.gmail.com>
+        <nycvar.QRO.7.76.6.2004231433060.18039@tvgsbejvaqbjf.bet>
+        <20200423212212.GA20669@Carlos-MBP>
+        <nycvar.QRO.7.76.6.2004232359120.18039@tvgsbejvaqbjf.bet>
+        <xmqqy2qlette.fsf@gitster.c.googlers.com>
+Date:   Thu, 23 Apr 2020 15:16:30 -0700
+In-Reply-To: <xmqqy2qlette.fsf@gitster.c.googlers.com> (Junio C. Hamano's
+        message of "Thu, 23 Apr 2020 15:11:25 -0700")
+Message-ID: <xmqqtv19etkx.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20200423205851.GA1633985@coredump.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 15EB48B2-85B0-11EA-9036-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Junio C Hamano <gitster@pobox.com> writes:
 
-On 4/23/2020 4:58 PM, Jeff King wrote:
-> These are just a few bits I noticed in the test-tool helper when the
-> topic hit next (my -Wunused-parameter patch complained that we never
-> looked at argc).
-> 
->   [1/2]: test-bloom: fix some whitespace issues
->   [2/2]: test-bloom: check that we have expected arguments
-> 
->  t/helper/test-bloom.c | 28 ++++++++++++++++++++--------
->  1 file changed, 20 insertions(+), 8 deletions(-)
-> 
-> -Peff
-> 
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+>> Yes (modulo doing "greater than" comparison on pointers which is IIRC not
+>> permitted in C in general).
+>
+> Of course, people write a loop like this
+>
+> 	char *cp, *ep = strchr(string, '\n');
+>
+> 	for (cp = string; cp < ep; cp++)
+> 		...
+>
+> all the time, and forbidding pointer comparison would make the
+> language impossible to use ;-)
+>
+> I think you are confused with a different rule---what is not kosher
+> is to compare two pointers that do not point into elements of the
+> same array.  Whether the comparison is done in (ptr1 < ptr2) way, or
+> (ptr2 - ptr1 < 0) way, does not change the equation.
 
-Thank you for doing this! 
-Both patches look good to me. 
-I also don't care about the brace/no-brace thing that 
-Taylor brought up for 1/2. 
+Having said that, between
 
-Cheers! 
-Garima Singh
+1.	if (strict || slash - url > 0)
+2.	if (strict || slash > url)
+ 		c->host = url_decode_mem(host, slash - host);
+
+I think the former is moderately easier to read.  It still has the
+same "Huh?" factor that a comparison between slash and URL guards
+the size of the region being decoded, which is slash - host, and
+makes the reader wonder how these two variables, URL and host,
+relate to each other at this point in the code, though, either way
+the comparison is spelled.
+
+Thanks.
