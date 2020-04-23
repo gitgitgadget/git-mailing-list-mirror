@@ -7,230 +7,125 @@ X-Spam-Status: No, score=0.5 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 99D01C54FD0
-	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 23:19:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BFE8C55186
+	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 23:22:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6773D20CC7
-	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 23:19:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0A87D20784
+	for <git@archiver.kernel.org>; Thu, 23 Apr 2020 23:22:55 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="NUoDuwUb"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="YwK+/HmZ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728980AbgDWXTt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Apr 2020 19:19:49 -0400
-Received: from mout.gmx.net ([212.227.17.20]:34155 "EHLO mout.gmx.net"
+        id S1729037AbgDWXWy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Apr 2020 19:22:54 -0400
+Received: from mout.gmx.net ([212.227.15.19]:37419 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728391AbgDWXTr (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Apr 2020 19:19:47 -0400
+        id S1728303AbgDWXWw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Apr 2020 19:22:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1587683974;
-        bh=x+0T/UBMzRUH4KH6lvY9NPJFvGLbXzZ1dWMw0S79yO0=;
+        s=badeba3b8450; t=1587684159;
+        bh=FQh56TeFYRyYmRVQXTzelrFj3FFLs6ug2HN9LOjA6T4=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=NUoDuwUb/2vQSKbSze+9YwDJlav4i1dhGvs2BazO4Sg82L5UBhoX+V+XrzZ/k+6YE
-         0YkaxwggSz3fQP0TRUY1yCVZW+AUlRQHf6J8swyiZmWRf5mDnKphUXEXChlpkCeeSa
-         jYJuBYyxjiYOX5npI3/5H3wNzzYjuXglR7nh1zWo=
+        b=YwK+/HmZR+CdnNIdgGQeNTJnyQE/aDd7nA0clFdcHdJgkz6MEHN4RBPzx06MdixD8
+         SeTq+2dykQRVt5gLr81CIAqqIHdDj7XT7vZwt7HtIY/mQK3R8vaK5YHWwcSapAd0nE
+         5ebjmBhy16VO30J24oHlQUrdAu3/J8FCl16ii8OM=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from MININT-QA14EDB.fritz.box ([89.1.212.237]) by mail.gmx.com
- (mrgmx105 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 1MF3HU-1jPYDe219M-00FR7z; Fri, 24 Apr 2020 01:19:34 +0200
-Date:   Fri, 24 Apr 2020 01:19:34 +0200 (CEST)
+ (mrgmx004 [212.227.17.190]) with ESMTPSA (Nemesis) id
+ 1N4hzZ-1j2MOG07iZ-011fGD; Fri, 24 Apr 2020 01:22:39 +0200
+Date:   Fri, 24 Apr 2020 01:22:38 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Jonathan Nieder <jrnieder@gmail.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org, Jeff King <peff@peff.net>,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
         Ilya Tretyakov <it@it3xl.ru>
-Subject: Re: [PATCH 3/3] credential: handle `credential.<partial-URL>.<key>`
- again
-In-Reply-To: <20200422235708.GF140314@google.com>
-Message-ID: <nycvar.QRO.7.76.6.2004240057220.18039@tvgsbejvaqbjf.bet>
-References: <pull.615.git.1587588665.gitgitgadget@gmail.com> <66823c735b1d5ea2047a29656e82fa6fe895f6f1.1587588665.git.gitgitgadget@gmail.com> <20200422235708.GF140314@google.com>
+Subject: Re: [PATCH 2/3] credential: teach `credential_from_url()` a non-strict
+ mode
+In-Reply-To: <xmqqtv19etkx.fsf@gitster.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2004240121180.18039@tvgsbejvaqbjf.bet>
+References: <pull.615.git.1587588665.gitgitgadget@gmail.com>        <1081841b16de31693473e72ff817bed5f0064dda.1587588665.git.gitgitgadget@gmail.com>        <20200422233854.GE140314@google.com>        <CAPUEspgJvN6f6Wjo-yjYj-x+bYtC3vdSvwUtrF=MbJDjwYUTdA@mail.gmail.com>
+        <nycvar.QRO.7.76.6.2004231433060.18039@tvgsbejvaqbjf.bet>        <20200423212212.GA20669@Carlos-MBP>        <nycvar.QRO.7.76.6.2004232359120.18039@tvgsbejvaqbjf.bet>        <xmqqy2qlette.fsf@gitster.c.googlers.com>
+ <xmqqtv19etkx.fsf@gitster.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:TcxbfJoT3VLLwZ8lv8zzRerefMlRlnAMz2wiwAcy0rqV+ATWuDL
- VwI5w3Sg3bT86HH2MVbX9dDXXKqfE+7cA2lKk9NOWa47JPIpivH67OFi8t0dgi/AJoEzmvJ
- ROynfX8agg0f+a4IuWJmDKW/TZ2P1T7SBQgbKWHqzBfFVWlTT3poi6e5JQYqpPSpTjtkCAf
- LPk1EB/+dNIXIdDlZ0Kjg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:paYc2bw8OMU=:UHvPoaCEWpf5zGVApjHLEP
- zmny4t3RilaXJSdy+j6PT7xnkW9ZG5o08EZcUZul5dGqlYGnLeINiFS9eKqAJrLBPaUC/9MQG
- lyodlIPzSLMRK8m18hiJGS6n4rPR0pwSASHnVmBzjq+BcShe/fGZwuNHRE8pOey3GabJqQJmR
- 20YNdAfpSumyvEyVgG9zd55KGlUHa3SGilbmjjkE1xb1wMOvJZB5cVaNNSplbSDY5Ba6AMCsY
- JQmTfQEvxEE0Xw2RfbO/72tdav5e/SDAUvfUA4VXV3poua8jMc2DrEEpygIZyheCVZ/gubkMR
- wGf4QiXcBc/WqwSXt/K+0/Ze+XK4C5yWNqoZGTakQgbKd9+NeK1bnonQllqdFy8AFK18qQqiK
- ib8KhvKiuelNs2uoZxYRem/hyp5UG7rHQxwyzPOnn40yW/cZ06JVO+6R02iQiHwAzHCyxwu6x
- H1JhpKIF/j8yIAzaT34U3COVK9VHld+R3lFBe6dXR9UsGN21bGHDXjMMnaCLVW62712ajnVeR
- EPv818iXQRA3A6vHBeW2u620goupY33m695GIoOwe8+/2sQ4Q9mlYqjpbRNDaBZ1WTBYF+S/+
- tHplXS0895MBvj3s2uinceW+bNoJmuT86gDcl7Ai7rHWLCNILbU+XbH8yKf+4nxAQVunGoOeV
- CwkBeCTXo3S551uf46OI/nE1AD6aG+Ur1ndSJzPZTyp7MAZzGwrzrqH2Yo+dLoTzmJs+xvK+n
- JP6a6j05oPHDfXHez3Zof1TuhIqlSOkxLxgwmfOFpKQW6Ls97xzqSRjVLbyufNE89s9hThc/6
- /XxBwc1Gu1Ptb72GEBehjLYWoRVBodcY6JHPnJ5TEAziEIfOG9uuwg0yA08V/iAtIyTJuL12Q
- bYWfqPHD0O+unn/JvaU1LyQYDmchTMfY8MIuhd6ZrmokZDGpIvh8a13LFK6Xpk6Mo3+NBStKQ
- sQjOUFW2EQQ99g/6b3H6xrKBPe3r/+zQS8Ra5p/GwB+HEVKIa2AjSYe9sjOYWuOPS8/+NyGGX
- qcwiBg+eEJ+4Ic/vT8PyeSFMU+4XJHG1L8Ke5jD6KKHrIDbBAD2IFreJJlKQ/E3JqYkLdZYZe
- EbjD/Zm1OmUVfhIvHIM/SaXkMRhuBt0pb3uoUD9gtj+ryhaO0P729siE2rgZvfez/4G2x1lbV
- /9gaGADM7bK6YeKukGoA+M2Cd8QlLluLQDtXLQ378rj10QjrZXN+KgK0VwT+wfGUXrcsK8XJl
- hRTTIbzyB1wrIoRBe
+X-Provags-ID: V03:K1:cg3fYR2XkhSVWKpQgzAQXmMrLe2iXUknhRnt9BQ4JLiL64JAPgl
+ aloh9qRO+mJAl8qMPCPnVTEv+nC6yQr1/YjVOFgJCMTwMs+6Qt28CmN4rococze6p858DVE
+ 4NYU1gx3LbaReywQJ071zmAWQOigkWR0PTmJY+pns0GsEC9G9Mp/75g5DJ6001JhJ6wK7a8
+ RjwTFUvUva95t3fqQOqAQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:RdyG/K0GRPk=:uCuT8QomERVfcmd73qoGJR
+ J4m0SJpzmDKBnIWeK9wAgUUW2s9Tvq0wP6Dpw/4a3+uidYmUT4N2xXWMezRUUKl9h0muLsC/p
+ ZkpWx70kbdTQUJCryjBlsTqEweq0OPO/0mAiGjiD9JwSIIH5271/bqlh2iTbAd74Z3ZjPoaC6
+ DDkwl52XSKPnpzVcoakzZagB6pE9Er35PsyESf6FKNOoo5kwarkerYDo2ah/qz/DY51qNKTDM
+ rgU2K0oFIvagzNIw9usjmpfV7Qx+80tzIx0bxkO4tuY2gzn5AqPHqCsgA2u6mwGNHoFPg05zX
+ GPc3gwnM//S5bylmIb8lXxhkoopvzR9/E/OMnA4a0NziOP6qnwZWaRRqV47K34sI/TUmCB9zl
+ 30eimDAAELlG6yjT8+N78zd0B/KfR2gszPhEdemDy/j7ug7mMUl0w7Q0phfmww9Lk3FeCBUjr
+ wx+Oc3/nahVGGrtkPlBRPEzQyYPOTrndw5hj9LTsIreubABha6qzBhZjogQBcDfFWGYM0HeCV
+ yQd1b4H8/N38Oq4TccntwDjZgkMCnZCZCuJRHOkkXkWrAshPJe2YtY8sQjUPkHavq3QqHjqrH
+ 9GFD8f0EVrG5mszuNZY3pJ89FA0nmUMbFrwT/BzMGJWIYFON+Hq9SQs4ulpU4bY6oAVl+XY84
+ xNpcR2nRHbAknygiI3wnJJjarCAQc0IXx+K4f/EqSKBvI0yTfxZ2hFthNHDuTnnK1YgKKUWpE
+ 9GPTQpMjWTsB5petvIYqjFw7dJrGYI9NDqVRLpWduvkZPriGIAJ2TV9U4OeC93c/0M8fJH0BL
+ OG5PAKaiWyPDo5VncUDwk+yxJk0qRnxPu7Xnet0MoERXCdkAaJxnXaRlQSEPGO9/XvJkuxelR
+ lN5kc0niFxQ6/br+gLJpXTY4DnJlgYMpDx5GzL7idG6e9L/T0mBiXHp8EchTKSbUN2jCQUxC9
+ +9S/Ms0kzNA9yIxoPUPhoRuxcs0TAQ4KZKYa9RDj0MuccQpTKRLxIJYckp0yPRxj0+aSyXJ2o
+ cwUlv0QYd0cl9GkCiGY6uJooIR3ExgU5awKyZf+nHFoGI8DSa8KvBokprIH364tpb6oWMUb8O
+ sqh6xAOaG7mYOVzj/ZGDOVYiDhiu/T7TOJGe0ARf519wE8gO0Syzl68Wj9tDg7bT1iEzqZGy3
+ 3WmXF9FAPHMN9YVHWS9PM8SFsM9pVRTdc0VPKLzM9V7f1zWbVbZD2k1VaMOOupZrGBxUX1PZY
+ plTHOv65yjg1LpZNJ
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jonathan,
+Hi Junio,
 
-On Wed, 22 Apr 2020, Jonathan Nieder wrote:
+On Thu, 23 Apr 2020, Junio C Hamano wrote:
 
-> Johannes Schindelin wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> [...]
-> > --- a/credential.c
-> > +++ b/credential.c
-> > @@ -53,7 +53,12 @@ static int credential_config_callback(const char *v=
-ar, const char *value,
-> >  		char *url =3D xmemdupz(key, dot - key);
-> >  		int matched;
+> > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > >
-> > -		credential_from_url(&want, url);
-> > +		if (credential_from_url_gently(&want, url, 0, 0) < 0) {
-> > +			warning(_("skipping credential lookup for url: %s"), url);
-> > +			credential_clear(c);
->
-> Hm, the error message doesn't seem right here, since `url` is a config
-> key instead of URL whose credential's are being looked up.
->
-> Should the error message include the entirety of `var` to make
-> debugging easier?
-
-I suppose you're right.
-
-BTW I just realized a much worse issue: `credential_clear(c);`. This
-clears the wrong struct. It should clear `want`, not `c`.
-
-> [...]
-> > --- a/t/t0300-credentials.sh
-> > +++ b/t/t0300-credentials.sh
-> > @@ -448,4 +448,17 @@ test_expect_success 'credential system refuses to=
- work with missing protocol' '
-> >  	test_i18ncmp expect stderr
-> >  '
+> >> Yes (modulo doing "greater than" comparison on pointers which is IIRC=
+ not
+> >> permitted in C in general).
 > >
-> > +test_expect_success 'credential config accepts partial URLs' '
-> > +	echo url=3Dhttps://example.com |
-> > +	git -c credential.example.com.username=3Dboo \
-> > +		credential fill >actual &&
+> > Of course, people write a loop like this
+> >
+> > 	char *cp, *ep =3D strchr(string, '\n');
+> >
+> > 	for (cp =3D string; cp < ep; cp++)
+> > 		...
+> >
+> > all the time, and forbidding pointer comparison would make the
+> > language impossible to use ;-)
+> >
+> > I think you are confused with a different rule---what is not kosher
+> > is to compare two pointers that do not point into elements of the
+> > same array.  Whether the comparison is done in (ptr1 < ptr2) way, or
+> > (ptr2 - ptr1 < 0) way, does not change the equation.
+
+Yep, that's my confusion all right.
+
+> Having said that, between
 >
-> Can the tests also check the behavior with bad URLs (that we are
-> appropriately tolerating and warning about them?
-
-Yes, my bad! The next iteration will have a test for that.
-
-> Stepping back: one thing I like about the code in "master" that uses
-> urlmatch_config_entry is that it is not treating these config keys
-> in the same way as URLs that Git would fetch from.  For example, if
-> one of the config keys contains %0a, then that's perfectly fine ---
-> we are not going to write them to a credential helper or to libcurl.
-
-That is actually not what the code does, at least not in `maint-2.17`. It
-very much warns about `%0a` in config keys. The test I am adding to verify
-that the warning above is exercised correctly looks like this:
-
-	git -c credential.$partial.helper=3Dyep \
-                -c credential.with%0anewline.username=3Duh-oh \
-                credential fill >output 2>error &&
-        test_i18ngrep "skipping credential lookup for url" error
-
-That is literally the only way I get `credential_from_url_gently()` to
-return `-1` in the lenient mode.
-
-> The only problem is that the pattern matching syntax doesn't match
-> the behavior that users historically expected.  (Keeping in mind
-> that we never actually provided the behavior that users expected.
-> `credential.example.com.helper` settings applied to all hosts.)
-
-Yes, I fix that, too. It is a bad usability bug, in my eyes, and I think
-it is better to fix it while I'm in the space anyway.
-
-> Would it make sense for parsing these config url patterns to share
-> *less* code with credential_from_url?  Ramifications:
+> 1.	if (strict || slash - url > 0)
+> 2.	if (strict || slash > url)
+>  		c->host =3D url_decode_mem(host, slash - host);
 >
-> - unless we add specific support for it, we'd lose support for
->   patterns that are specific to a user (e.g.
->   "credential.https://user@example.com.helper").
->
-> - likewise, we'd lose support for
->   "credential.https://user:pass@example.com.helper".
->
-> - we could control what "credential.https:///repo.git.helper"
->   means, for example by rejecting it.  When we reject it, the
->   error message could be specific to this use case instead of
->   shared with other URL handling.
->
-> - we wouldn't suport "credential.example.com/repo.git.helper"
->   by mistake.
+> I think the former is moderately easier to read.  It still has the
+> same "Huh?" factor that a comparison between slash and URL guards
+> the size of the region being decoded, which is slash - host, and
+> makes the reader wonder how these two variables, URL and host,
+> relate to each other at this point in the code, though, either way
+> the comparison is spelled.
 
-I think we can have _all_ of this _without_ violating the DRY principle.
+I fully agree! That's why I use `strict || slash - host > 0` in my next
+iteration (actually, I decided to rename `strict`, but that's beside the
+point).
 
-Remember: my main motivation for keeping 2/3 apart from 3/3 was so that it
-is really easy to verify that 2/3 does not break the callers that _need_
-the strict mode.
-
-And since that is the case, we can then enjoy the benefit of the shared
-code for the one caller that wants to match also partial URLs.
-
-> - to sum up, we could specifically define exactly what cases we want
->   to support:
->
-> 	[credential "example.com"]
-> 		# settings for the host
-> 		...
->
-> 	[credential "user@example.com"] # maybe
-> 		# settings for the host/user combination
-> 		...
->
-> 	[credential "https://"]
-> 		# settings for the scheme
-> 		...
->
-> 	[credential "https://example.com"]
-> 		# settings for the host/scheme combination
-> 		...
->
-> 	[credential "https://example.com/"]
-> 		# likewise
-> 		...
->
-> 	[credential "https://user@example.com"] # maybe
-> 		# settings for the host/scheme/user combination
-> 		...
->
-> 	[credential "https://user@example.com/"] # maybe
-> 		# likewise
-> 		...
->
-> 	[credential "https://example.com/repo.git"]
-> 		# settings for the host/scheme/path combination
-> 		...
->
-> 	[credential "https://user@example.com/repo.git"] # maybe
-> 		# settings for the host/scheme/user/path combination
-> 		...
->
->   without accidentally promising support for anything else
->
-> What do you think?
-
-I added tests for all of those. They all work as a naive user (like me)
-would expect them to.
-
-I threw in another test, too:
-
-	[credential "/repo.git"]
-		...
-
-And I also threw in negative tests, to verify that non-matching protocol
-or host name or path mean that the config setting is ignored.
-
-Thank you for your thorough review, it really helps me,
+Ciao,
 Dscho
