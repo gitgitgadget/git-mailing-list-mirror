@@ -8,64 +8,64 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C03CC54FCB
-	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 15:12:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F493C55191
+	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 15:12:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EFAE820767
-	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 15:12:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1C61320706
+	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 15:12:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KUBFGEih"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IqMAHNKS"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727781AbgDXPMp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Apr 2020 11:12:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49230 "EHLO
+        id S1727962AbgDXPMq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Apr 2020 11:12:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49236 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726849AbgDXPMo (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 24 Apr 2020 11:12:44 -0400
-Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 977E6C09B045
-        for <git@vger.kernel.org>; Fri, 24 Apr 2020 08:12:43 -0700 (PDT)
-Received: by mail-pg1-x543.google.com with SMTP id g6so4750637pgs.9
-        for <git@vger.kernel.org>; Fri, 24 Apr 2020 08:12:43 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1726849AbgDXPMp (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 24 Apr 2020 11:12:45 -0400
+Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47768C09B045
+        for <git@vger.kernel.org>; Fri, 24 Apr 2020 08:12:45 -0700 (PDT)
+Received: by mail-pg1-x541.google.com with SMTP id h69so4758193pgc.8
+        for <git@vger.kernel.org>; Fri, 24 Apr 2020 08:12:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=V+qYI0xvGQsUgtH1FSRhdvvtYWSwfJVxZgXG2a6BvmI=;
-        b=KUBFGEihPH6LnXia/Czr60FLtKgr9QjHpSRIV2y7zREJFVDljFyfRFlwSwf7q8wSzN
-         j5hZ0hY57YrR17UGDlHwh+88d8PnBi4QxpyRqo4OvjHLDUaIvckf6vfzUEmSmpT5Ik5c
-         oFzaK0gZ7X4gFnyzEM9sYxZUTFDEQDCGTjIomDdf8/Y9E+z2EajnAFxiY6Xz4iB/mo8O
-         g8hBkQhyYemt+7OEsXLJBmPbbBHvg8CT5HKSuKHV4FYRw/mMCyBNTwWfNlMLfM/es9Nx
-         P9iJ93/WfBX68/KF5khEFg2ff95lnMj2Dr+Z3SoqSO/YUzONkSH/KKHJhR2zUiDqcDQn
-         FVXw==
+        bh=6Svij7AqIu1IfO1+ocfAXfydIcw/vut33rQEygmYm5k=;
+        b=IqMAHNKSz495sMWxticW3h66WMug5h027Ly0WnmWD1kr+Fwmuw0wsyW4r8bhGMeVNg
+         bm8jFLouQeN5J8jLHLlAIQgnO4qLO/ysQB7wYIEyMeu5YksCppqVlaEyS9d9vWemkzj8
+         vhLwXYkqT8RFlij9MpZFFDaVnjDExlZIOpHyd7BMCxspnlwMCrzhIaOXvgULhYUaF1QY
+         yU1QSTc11TPXN9pEAa0rZ+K3o+JH+hKFWE9ADSDy6wQNbXelYcuoM+hyT7SFqT5hv6GG
+         1EoA+DVGBSv82YeEaWlMsyp8A9KmPFhkHQBnrd8dzqVhC8y1dJr+ywSHc3ivCARlxgIX
+         aYdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=V+qYI0xvGQsUgtH1FSRhdvvtYWSwfJVxZgXG2a6BvmI=;
-        b=jxCL9tYjAGgttl1Ye1V2u07V0MX3+91YlSC3kPbxn/MhHUz9JWbnKgatvfhA0DBgbU
-         szcpcpKeSjZTLxZuEliGViJOCe2osvpnhv1ppyKVSLteDuKwlrrQkKXVaZOHc9dSak+s
-         MvEh0Nr0+7BwHVR4XWr0vJLlSF9SIbt687hkOcx/CNuD4y8jK9Y+MetpEsuoqgJRaXQx
-         IQcC2F6TtlcygsijL4pdVpNwmMrCe/LR/kjIQTmNZiSVj4DXN/ylNdQyoKiU3VsClFoZ
-         riiq5OahVzc6cnwOPN3glMsUP8hNhkoNxDLDJ52UHIMXFLlY5wzx4pLsrcZQjbBePVl5
-         kWdg==
-X-Gm-Message-State: AGi0PuZaJ+XqtVoOqckkYRPshvs7oCTfuWq05z3V24FB/nnsslIojocU
-        gqM7uFnTxhG3Xa7T75GdtdQkwgrF
-X-Google-Smtp-Source: APiQypJG8kymck2OrAj7AjKjLIV89s0ciBS50N7YpE/zIWPAoN5P1c2aWtTsiYoQENgZ2VnEAAGmCQ==
-X-Received: by 2002:a62:1dd8:: with SMTP id d207mr10360261pfd.3.1587741162987;
-        Fri, 24 Apr 2020 08:12:42 -0700 (PDT)
+        bh=6Svij7AqIu1IfO1+ocfAXfydIcw/vut33rQEygmYm5k=;
+        b=igrjZeRBZvmTM2e8NuEbqy3K0J+7zOlJiKG6+WpwERysj/NPZfsMVlWLz3g7AAN9kU
+         ytWVPrEJ90MG4UIGxTLaAl012aB+QRe+Go83X9t4PDhf0UnVhhlDRyUNhFiXmYtWLlwW
+         dfKFjtU+fcJleMVBRybBt5Qn5Zfuk3b9E5l0Ggv2JGrAeSuK1fMbw//m1xQ/Du1/xbbN
+         f62N9dsBWGeb5K1VK7p/shnvn12O9ASs15crHJ/VeY3r2vQ8zOZRSexGLx0WqffWLlIR
+         KITVSsqFwTRl7XNBbDBcbGYdPH9rR48OE38G9ljyxqtHIpjJFPj30CB4UhDDiBeWPcLi
+         clLQ==
+X-Gm-Message-State: AGi0PuY4UdvSSwpfjsu/g4A8nJcIYHouU/or6xjJ9Dl9K2N5gIke+cWb
+        fb0Pq79OeTeKRczh8AQHPLyETzPP
+X-Google-Smtp-Source: APiQypLKkPAdGs7RjH212tN0W5h5ACovcOOLD5n0Q51OYqmsr4r79pGjttZ9EXGXHxho6750kbScyA==
+X-Received: by 2002:a62:a504:: with SMTP id v4mr3662639pfm.117.1587741164640;
+        Fri, 24 Apr 2020 08:12:44 -0700 (PDT)
 Received: from localhost.localdomain ([2402:800:6374:f359:1ce8:a621:5f80:1116])
-        by smtp.gmail.com with ESMTPSA id f99sm5078429pjg.22.2020.04.24.08.12.41
+        by smtp.gmail.com with ESMTPSA id f99sm5078429pjg.22.2020.04.24.08.12.43
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 24 Apr 2020 08:12:42 -0700 (PDT)
+        Fri, 24 Apr 2020 08:12:44 -0700 (PDT)
 From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>
-Subject: [PATCH v2 2/4] compat/regex: include alloca.h before undef it
-Date:   Fri, 24 Apr 2020 22:12:31 +0700
-Message-Id: <290ba923b5ee5bcaa4801454b6692deb532bd681.1587740959.git.congdanhqx@gmail.com>
+Subject: [PATCH v2 3/4] graph.c: limit linkage of internal variable
+Date:   Fri, 24 Apr 2020 22:12:32 +0700
+Message-Id: <39f8d85c2f16081415741351c16fb34d74924d3c.1587740959.git.congdanhqx@gmail.com>
 X-Mailer: git-send-email 2.26.2.384.g435bf60bd5
 In-Reply-To: <cover.1587740959.git.congdanhqx@gmail.com>
 References: <cover.1587648870.git.congdanhqx@gmail.com> <cover.1587740959.git.congdanhqx@gmail.com>
@@ -77,29 +77,24 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Somewhere later in the code, we indirectly include alloca.h
-which will define alloca again, thus create a warning about
-redefinition of a preprocessor.
-
-Include it prior to define alloca in order to not define it again.
-
 Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
 ---
- compat/regex/regex.c | 1 +
- 1 file changed, 1 insertion(+)
+ graph.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/compat/regex/regex.c b/compat/regex/regex.c
-index f3e03a9eab..4bef75a716 100644
---- a/compat/regex/regex.c
-+++ b/compat/regex/regex.c
-@@ -62,6 +62,7 @@
- #include <stdint.h>
+diff --git a/graph.c b/graph.c
+index 4fb25ad464..4cd9915075 100644
+--- a/graph.c
++++ b/graph.c
+@@ -1055,7 +1055,7 @@ static void graph_output_commit_line(struct git_graph *graph, struct graph_line
+ 		graph_update_state(graph, GRAPH_COLLAPSING);
+ }
  
- #ifdef GAWK
-+#include <alloca.h>
- #undef alloca
- #define alloca alloca_is_bad_you_should_never_use_it
- #endif
+-const char merge_chars[] = {'/', '|', '\\'};
++static const char merge_chars[] = {'/', '|', '\\'};
+ 
+ static void graph_output_post_merge_line(struct git_graph *graph, struct graph_line *line)
+ {
 -- 
 2.26.2.384.g435bf60bd5
 
