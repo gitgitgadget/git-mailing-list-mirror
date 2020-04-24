@@ -4,61 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.2 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 148F1C54FD0
-	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 16:46:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 36E0BC55186
+	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 16:47:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B820920781
-	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 16:46:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0D356215A4
+	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 16:47:45 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="KkmBbKxA"
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="LvGOkGzX"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728542AbgDXQqF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Apr 2020 12:46:05 -0400
-Received: from avasout04.plus.net ([212.159.14.19]:57940 "EHLO
+        id S1728817AbgDXQrn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Apr 2020 12:47:43 -0400
+Received: from avasout04.plus.net ([212.159.14.19]:58037 "EHLO
         avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726793AbgDXQqF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Apr 2020 12:46:05 -0400
-X-Greylist: delayed 450 seconds by postgrey-1.27 at vger.kernel.org; Fri, 24 Apr 2020 12:46:04 EDT
+        with ESMTP id S1728629AbgDXQrm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Apr 2020 12:47:42 -0400
 Received: from [10.0.2.15] ([217.32.115.138])
         by smtp with ESMTPA
-        id S1LTjk3G4pB7IS1LVj63fe; Fri, 24 Apr 2020 17:38:33 +0100
+        id S1N2jk3LmpB7IS1N3j63j0; Fri, 24 Apr 2020 17:40:10 +0100
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-        t=1587746313; bh=yTWranyKvv7dEOoReRdeYzJxRJRep8sv3qpiBVuM9eI=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=KkmBbKxAthsmmUQybpDJdA2bsKKOGRb3XjdSAabFEorD/UhH4evOlmU5gZb7dcjNO
-         oDnjhxZexpQnQFiWMqbPMkNRon4jjA2Cnj1xCtCJVJ7w4L2h1c1OcPRSJXAAcGzByf
-         O/PM4z14vv7PvTrS51NWl7dfNU4pi5/Um0BiHctha/ug3mjHSaxkyF3zi08eRYFaWT
-         gYyke6elVFnyBVGS3iTgAzVHDvGd5s1BWOyNZ0Sr33vMXGkbbPFgzBWP2uZUYbNcSJ
-         oaVJ65LfRwJxD4mq1rygk8ZH1a1I2vIRrW/VLXPv9RO/6+A9NAX6JzQtjApLSt0nar
-         fqwh7533m0uuw==
+        t=1587746410; bh=7sPsy/A4b4McALzdVv9LATX3rzaRjTY3HD1O43WVa+k=;
+        h=Subject:To:References:From:Date:In-Reply-To;
+        b=LvGOkGzXPJcnjsspQj6EKAWinJDj9dBRiSqPuz3PXjyguMryYm8HZ8ag3BIYVlDnK
+         crY87KdEkwzP1cCiclUSqmTGvtn4QqgvQ1bJ4Xf6W296LvFFa6S9INRlqhnEq/SJfF
+         RmcG/IfDVFE90sdvRNWk5Gm9+U6hhBT+NCWRkncxOBSW1XbMzc2jfSxnn3qLqwZS1L
+         gelotWrWbxAHIdT1cbTtiyfwGe/uiwxd0VgWU6493yrLck/7RBpvFlNKMfoDxjt2+W
+         ythJFJVNFjl3yy7VpWveMyVWyUzpsdspPHzk9PvZWOMO+HiefTUgbpsJnTb9SM7dq6
+         1/8RylH+eCJ/g==
 X-Clacks-Overhead: "GNU Terry Pratchett"
 X-CM-Score: 0.00
 X-CNFS-Analysis: v=2.3 cv=MKb7ZPRl c=1 sm=1 tr=0
  a=T9WNts+jH3PhiGdS1gtV5Q==:117 a=T9WNts+jH3PhiGdS1gtV5Q==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=mDV3o1hIAAAA:8 a=eD07B8ZR4W1u9_2MgIgA:9
- a=QEXdDO2ut3YA:10 a=Dm5x6NYEbZUA:10 a=9S8CEPD2kXIA:10 a=6Pze8sSNJw0A:10
- a=GXUAyPBqdsIA:10 a=yJM6EZoI5SlJf8ks9Ge_:22 a=_FVE-zBwftR9WsbkzFJk:22
+ a=IkcTkHD0fZMA:10 a=ORtwwZdZew9jYSCNUAoA:9 a=QEXdDO2ut3YA:10
 X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH 0/4] fix make sparse warning
-To:     Danh Doan <congdanhqx@gmail.com>
-Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 0/4] Fix Sparse Warning
+To:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        git@vger.kernel.org
 References: <cover.1587648870.git.congdanhqx@gmail.com>
- <86ef24e2-3ab6-5e9c-900b-0eb4dbc1bb04@ramsayjones.plus.com>
- <20200423235809.GA1949@danh.dev>
+ <cover.1587740959.git.congdanhqx@gmail.com>
 From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <4ff17acf-42dc-5a00-bb61-b055144075eb@ramsayjones.plus.com>
-Date:   Fri, 24 Apr 2020 17:38:31 +0100
+Message-ID: <411ec3ea-162e-8e52-0133-3108e0c38f0d@ramsayjones.plus.com>
+Date:   Fri, 24 Apr 2020 17:40:08 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.7.0
 MIME-Version: 1.0
-In-Reply-To: <20200423235809.GA1949@danh.dev>
+In-Reply-To: <cover.1587740959.git.congdanhqx@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-GB
 Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfMEkEmcZBr6SGYNA2P6a/uC9YMrs46ifjCCRFh6lG5YHisHSJIHe2oNE81BD65xRjZfnKxIOU/RcfH1mBSJs6xtljx1JuQDq0+1vDWFnArzCvtjWsdrn
- vIUf1PIIKdgTwCXVyBF6C0Z19ZmTWMdr3S36A21DPxwRormx6et3bQecgZCCs5pwOcX0o3Ff3ZoASQ==
+X-CMAE-Envelope: MS4wfEMgdK42G7LdQ1QKMRSyKQ//K/hvJ0uiJGoYUWKYwNPM7ee/CF+0d4KZ00gdmTjn92az9G3vQp+mpKJhqhVimDqdKFesPV/mcRcQZE5M+Byfp+7hM2jQ
+ jO+NHKzU6ez1uZ/oyErPGrlyYCOMNKqe28k2b88mWmzsnE2FUoXxfJjgnBqbVLDvDBVIs1g1FN/lfw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -66,72 +62,31 @@ X-Mailing-List: git@vger.kernel.org
 
 
 
-On 24/04/2020 00:58, Danh Doan wrote:
-> On 2020-04-24 00:10:25+0100, Ramsay Jones <ramsay@ramsayjones.plus.com> wrote:
->> On 23/04/2020 14:47, Đoàn Trần Công Danh wrote:
->>> It's happened that I tried to run make check on project that support autoconf.
->>
->> I try to ignore autoconf as much as possible, so I don't know why people
-> 
-> For some reason, people refer to autotools as autohell
-> 
->> who use it regularly seem to expect a 'make check' target (is that anything
->> to do with ./config.status --recheck?).
-> 
-> Because it's autotools's recommendation.
-> https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.69/html_node/Basic-Installation.html#Basic-Installation
-> https://www.gnu.org/software/automake/manual/automake.html#Standard-Targets
+On 24/04/2020 16:12, Đoàn Trần Công Danh wrote:
+> Change in v2 from v1:
+> * = { 0 } is an idiom to zero the structure, it shouldn't be changed
+> * change in [4/4] for prototype
+> * ignore diffent function prototype
 
-Ah, OK, that explains alot! :D
+Apart from the regex patch [2/4], these all look good to me.
 
-I have never seen that documented before, so thanks for the reference.
-Having said that, most all 'autotools' projects I have seen have had
-an 'make test' target and _not_ 'make check'! (Well, thinking about
-it, none of those were actual GNU projects - maybe that's the difference).
-
-[snip]
->> For those interested, the 'too much warnings' on the 'pu' branch looks
->> like (for pu@faf094bf11):
->>
->>   $ make sparse >psp-out 2>&1
->>   $ diff nsp-out psp-out
->>   154a155
->>   >     SP refs/reftable-backend.c
->>   406a408
->>   >     SP t/helper/test-proc-receive.c
->>   447a450,511
->>   >     SP reftable/basics.c
->>   > reftable/basics.c:157:6: warning: symbol 'reftable_malloc_ptr' was not declared. Should it be static?
->>   > reftable/basics.c:158:6: warning: symbol 'reftable_realloc_ptr' was not declared. Should it be static?
->>   > reftable/basics.c:159:6: warning: symbol 'reftable_free_ptr' was not declared. Should it be static?
-
-[snip]
-
->>   >     SP reftable/writer.c
->>   > reftable/writer.c:231:31: warning: Using plain integer as NULL pointer
->>   > reftable/writer.c:299:39: warning: Using plain integer as NULL pointer
->>   > reftable/writer.c:347:47: warning: Using plain integer as NULL pointer
->>   > reftable/writer.c:426:31: warning: Using plain integer as NULL pointer
->>   > reftable/writer.c:468:45: warning: Using plain integer as NULL pointer
->>   > reftable/writer.c:584:11: warning: symbol 'debug' was not declared. Should it be static?
->>   >     SP reftable/zlib-compat.c
->>
->> Also, my static-check perl script says the following symbols are not
->> used outside the file which defines them (so they could be marked static):
-> 
-> All of them are in reftable, and they're catched by `make sparse`,
-> too.
-
-Yeah, I didn't even look at the output. ;-)
-
-However, the output from static-check.pl is usually a super-set
-of the those from sparse - because sparse is really only looking
-at the declarations (or lack thereof) in one compilation unit.
-In contrast, static-check.pl looks at all object files to tie up
-definitions with use (so across compilation units). (which is also
-why you have to be careful not to leave stale '*.o' files laying
-around when switching branches).
+Thanks!
 
 ATB,
 Ramsay Jones
 
+> 
+> Đoàn Trần Công Danh (4):
+>   test-parse-pathspec-file.c: s/0/NULL/ for pointer type
+>   compat/regex: include alloca.h before undef it
+>   graph.c: limit linkage of internal variable
+>   progress.c: silence cgcc suggestion about internal linkage
+> 
+>  compat/regex/regex.c                | 1 +
+>  graph.c                             | 2 +-
+>  progress.c                          | 2 +-
+>  progress.h                          | 8 ++++++++
+>  t/helper/test-parse-pathspec-file.c | 6 +++---
+>  t/helper/test-progress.c            | 9 +--------
+>  6 files changed, 15 insertions(+), 13 deletions(-)
+> 
