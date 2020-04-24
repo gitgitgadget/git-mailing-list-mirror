@@ -2,114 +2,103 @@ Return-Path: <SRS0=LF8V=6I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F7DBC54FCB
-	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 23:09:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CC91C54FCB
+	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 23:14:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0EFB420736
-	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 23:09:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4E47A20781
+	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 23:14:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GcKwpvd1"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="StkUlLUz"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726022AbgDXXJ6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Apr 2020 19:09:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40214 "EHLO
+        id S1726050AbgDXXOM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Apr 2020 19:14:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40854 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725874AbgDXXJ5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Apr 2020 19:09:57 -0400
-Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8213C09B049
-        for <git@vger.kernel.org>; Fri, 24 Apr 2020 16:09:57 -0700 (PDT)
-Received: by mail-pf1-x444.google.com with SMTP id 145so5518570pfw.13
-        for <git@vger.kernel.org>; Fri, 24 Apr 2020 16:09:57 -0700 (PDT)
+        with ESMTP id S1725874AbgDXXOL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Apr 2020 19:14:11 -0400
+Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3985C09B049
+        for <git@vger.kernel.org>; Fri, 24 Apr 2020 16:14:09 -0700 (PDT)
+Received: by mail-pg1-x536.google.com with SMTP id o15so5372034pgi.1
+        for <git@vger.kernel.org>; Fri, 24 Apr 2020 16:14:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=ZnZ+wSFCTf88fScaheF3ebtq3Ju/xOF/U6Wzpy3QfH0=;
-        b=GcKwpvd1A2wwHmsL0eHN+LI5ccio7Dn55ZTo9ZBaIcCPegWYBbnPEcp6vynjGh+kfq
-         Mmc4hi8QAt31P0ChmiAhUmCENER/545TAzJ3VpnFzZWpd34ihLHT7wbOewXZ4EcP/QOx
-         +lSnqkoZVCmpiaDxmgwJTrVoyZhDo1hrMsb3WRBKm8/phIWIyf0Njdezh4sZ1rm1kK+I
-         1dxp3FG6xUIUMygYdT4DR3ELB8t3ilgc9NCDtCN5Ybs+gFHwiPfeBfRDzHctNV6Zgsa5
-         SMYSYwgsYmQ3Juir+BdEEEmLZ1GC58mMcODr3BRfHsNbIW4SHbj3PNJ3PDI64xfeVp3O
-         qzfg==
+        bh=+iKjbzHCiTXqCMleIyTqdg2kf21QswuqMC4VAxayalA=;
+        b=StkUlLUzUFRvpJy3OQWBZG2EkjTX0+CSYoNbgUIBYeIgeypMGwi4CArCGybcfuZoJx
+         wCzeE3kDnKY4nLkj+ImP3kek1iHqpaB+X2vNc+8q+4GvUoY1ObAOb1XRcyqrkX29p0SK
+         KahbzmSB27knqp/k9rD0jtvxqIkNtxRn20c+0X+znNhzrE7P6Mv/2MSc0WVSiiecbglV
+         Qq4Ua1mAkErHFkqEXq84stAnEYVMGunZh+MNunsPZrX3NmcQe7uaLxS0xqYEmKA/PIEO
+         SngYVtBC4y9hHKa2t62c6vei5nLeB1l/PgaubkVtBQxQeSIZSRZ2/Zz+9OsHtrBqaNgW
+         0luA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=ZnZ+wSFCTf88fScaheF3ebtq3Ju/xOF/U6Wzpy3QfH0=;
-        b=SJ/DlnIIevgkkT/C3058cOQoa8knP4NQ+yTJtwnzLttfNXoEkvM6lUhfPgYFLriB62
-         775DwV4aPTXRTT+nalWFWwUY7ZNoL8c9sleLvPDRycELeEP12K6OisePXDhPO3kHrFk/
-         F2h9kTru+1evfOCJLQWGcm4eO80MmfC23h0511UsYsElLDnPXWMGCjYFH6Xua9wereSS
-         2oyD3axiIxOZ8/WLUhQLzktcBpsehwCpCPm6Bm6GEUi5dwFcf4qkxBBybMcZnhLZHgzZ
-         IXYh5769rT6RThMuDKgLSUn/2g2kHZ8/5ZlmneF1vZ3JVx7Ywykvz6CeTsgjut5MAmiu
-         /pUA==
-X-Gm-Message-State: AGi0PuZz/D68CyvJQrsZYxap7/GEhAQnNTmkW3Yi+Y+NuxflTQTd+YDE
-        uGeZs3KGYDTQXPmSj/M9J+osrjzt
-X-Google-Smtp-Source: APiQypKQSGkNjQPo5iTzWCxqhbLHLhUSMnrQZbcY8spX5i0whNteANhCf1/ZJhy2F6dZKrjWDC+ZkA==
-X-Received: by 2002:a62:7b03:: with SMTP id w3mr11945950pfc.313.1587769797095;
-        Fri, 24 Apr 2020 16:09:57 -0700 (PDT)
-Received: from localhost ([2402:800:6374:f359:1ce8:a621:5f80:1116])
-        by smtp.gmail.com with ESMTPSA id q97sm5872719pjb.7.2020.04.24.16.09.55
+        bh=+iKjbzHCiTXqCMleIyTqdg2kf21QswuqMC4VAxayalA=;
+        b=AuWVAxjFHco6B8wuecf1Uptv66oMbWsT/7hxzekPCC7R0lNBVekoTdWsjG9nz8PQv2
+         sGIoeaQtJPvpmA8O2jDXIIsV5214D/pprQEAPFT7+hvWmfiq4D5qrkrvGQsJxKa3jixf
+         xJG8cw/hYswoSg7soMMar/crZKWes1Y7T/dQZVGuGEf0PSy8BBvtVxut6cqll7nBXK1W
+         i9r1LvAcbmphDtAlJUvwx3zTBEf7q4rW5GO+09h0Wzp9quElJ6xmiqMl04zfHwQZoEIO
+         TAkWuzyoNn7efCTPZrJF37hDkeKDLMxBZrf8ON6gwevboUTJSUf/mZ71BNQzBgwTsT+m
+         r3iw==
+X-Gm-Message-State: AGi0PuYecJvrTs8Wt88+i7FMMMbcUbzGjJeEKYQtodgE0Lj93STgrYm6
+        nIZHerj4yo7Xsz8mBN+beENyhQ==
+X-Google-Smtp-Source: APiQypK8Er6JPawScn1RXtflU1XAVhlS/eJ1Z0+mif1m0kzf0GDPVZFfFu5sMeMQfGn5zBcZ3SG7qw==
+X-Received: by 2002:a63:5009:: with SMTP id e9mr10985131pgb.381.1587770048382;
+        Fri, 24 Apr 2020 16:14:08 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
+        by smtp.gmail.com with ESMTPSA id c10sm5833368pgh.48.2020.04.24.16.14.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Apr 2020 16:09:56 -0700 (PDT)
-Date:   Sat, 25 Apr 2020 06:09:54 +0700
-From:   Danh Doan <congdanhqx@gmail.com>
-To:     Sibi Siddharthan <sibisiddharthan.github@gmail.com>
-Cc:     Sibi Siddharthan via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 5/8] cmake: support for testing git when building out of
- the source tree
-Message-ID: <20200424230954.GA4071@danh.dev>
-References: <pull.614.git.1587700897.gitgitgadget@gmail.com>
- <166b78f71755bb3f9967b32bfe282210c2bb240d.1587700897.git.gitgitgadget@gmail.com>
- <20200424173433.GL1949@danh.dev>
- <CAKiG+9V=bJNqrHRy8y8cbjkgzrmhOMMz47+8fgfQARAetx4MFQ@mail.gmail.com>
+        Fri, 24 Apr 2020 16:14:07 -0700 (PDT)
+Date:   Fri, 24 Apr 2020 16:14:03 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        James Ramsay <james@jramsay.com.au>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Josh Steadmon <steadmon@google.com>
+Subject: Re: [PATCH] doc: propose hooks managed by the config
+Message-ID: <20200424231403.GD236872@google.com>
+References: <20191210023335.49987-1-emilyshaffer@google.com>
+ <20200420235310.94493-1-emilyshaffer@google.com>
+ <20200421002248.GC236872@google.com>
+ <xmqqh7xdprcv.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAKiG+9V=bJNqrHRy8y8cbjkgzrmhOMMz47+8fgfQARAetx4MFQ@mail.gmail.com>
+In-Reply-To: <xmqqh7xdprcv.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2020-04-25 03:02:49+0530, Sibi Siddharthan <sibisiddharthan.github@gmail.com> wrote:
-> > >  file(GLOB test_scipts "${CMAKE_SOURCE_DIR}/t/t[0-9]*.sh")
-> >
-> > Remember cmake won't be re-run if nothing was changed in CMakeList.txt
-> > If I only change some code, and I decided the change I make should be
-> > tested by a-new-and-independent-test-script.
-> > I need to re-run cmake manually! I don't like it, at all.
-> >
+On Mon, Apr 20, 2020 at 06:20:00PM -0700, Junio C Hamano wrote:
 > 
-> No you don't have re-run CMake.
+> Emily Shaffer <emilyshaffer@google.com> writes:
+> 
+> > Whoops, just realized this doesn't match the proposal below. Wrote these
+> > on different days :)
+> 
+> It often is a good idea to attempt writing anything in one sitting
+> for coherency, and proofread the result on a separate day before
+> sending it out ;-)
 
-Yes, you have to re-run CMake.
-https://cmake.org/cmake/help/v3.14/command/file.html#glob
+Agreed for next time :)
 
-> Note
->
-> We do not recommend using GLOB to collect a list of source files
-> from your source tree. If no CMakeLists.txt file changes when
-> a source is added or removed then the generated build system cannot
-> know when to ask CMake to regenerate. The CONFIGURE_DEPENDS flag may
-> not work reliably on all generators, or if a new generator is added
-> in the future that cannot support it, projects using it will be
-> stuck. Even if CONFIGURE_DEPENDS works reliably, there is still
-> a cost to perform the check on every rebuild. 
+I didn't make it very clear in my initial comment that the only problem
+here is the code snippets and the difference is very minor - I don't
+think it's worth a reroll on its own without hearing feedback about the
+rest. Or, to put it another way, if any interested reader said "I'll
+wait to review" - don't ;)
 
-* Run CMake now.
-* Don't touch anything
-* Create new test-script, let's say t9904-just-for-cmake.sh
-
-* Check if it's run or not, I bet the answer is not
-
-Anyway, Junio said NO, I don't need to be a CMake hater here, anymore.
-
--- 
-Danh
+ - Emily
