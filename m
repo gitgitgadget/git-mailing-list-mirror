@@ -2,90 +2,110 @@ Return-Path: <SRS0=LF8V=6I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 41A54C2BA19
-	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 00:23:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E3C08C2BA19
+	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 00:34:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 13DA52071E
-	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 00:23:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AB18D21473
+	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 00:34:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=envato.com header.i=@envato.com header.b="jpqbNo+C"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="P7ZatrdH"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728156AbgDXAXR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Apr 2020 20:23:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51938 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728061AbgDXAXQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Apr 2020 20:23:16 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CAB1C09B042
-        for <git@vger.kernel.org>; Thu, 23 Apr 2020 17:23:15 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id f18so8116576lja.13
-        for <git@vger.kernel.org>; Thu, 23 Apr 2020 17:23:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=envato.com; s=google;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=5kkeeyuQ4qBaZXp8ykLq0aURzkgvf9AkmTmk8HASmTo=;
-        b=jpqbNo+CoVqw4sT5F71vW1Bu8UHmSktwK9S6vo0D6rCQ2wInQ+vwoOzjlankJTI33O
-         oG2dmMmVHNvE+M0n8rwsj27CQyeknkqGHOnw2uDJcDXtLiti04HcM+yESKb9Wn4oX9Ap
-         YW1OOKLxlV6cIooS9C4KOTzU2i2EqpK49cBpM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=5kkeeyuQ4qBaZXp8ykLq0aURzkgvf9AkmTmk8HASmTo=;
-        b=Jfo8JFHWjHTNZh6N3qD0mM5YI0toNcnbSus/rLdCdU094aWXsxSnN01qAWUlP0xkmP
-         uCpZkE0c273S8evinywx/N0BYbRalQDWSirs9NKw/ptKtmJDtw02cXSsrQY3shYFWkq6
-         J0a3oQ5DHXjsYA6yLZAOoaZdcdyN0jn4ToeA9P08QfG0FWfCFu7w36uN11aUkroSfhT3
-         AhBq3CQsqSJ4FROiK38poaS9qdF7Ueb4OXSEz9n9irAgqqCBv+/tSCZ/uuesHOsgQw/B
-         g0/xPkH6lJT4UDHfFH2ISXCS/NASWaz9VPlAKziODl5TEgVkuOi/ILpgRpT/kEr6cxHY
-         b6WQ==
-X-Gm-Message-State: AGi0Pub5x+lzkP3u0SU25ywfnS5hWAqoslwJAlpyxkFmEe+4snSXKAPO
-        R79hXT4V7xMVTeEjmzOlQgsAfu5P02fKqQCQGK/hyzN1VKbVlw==
-X-Google-Smtp-Source: APiQypIhbZCw3vxQuuU28StsW4WuBk3us2qTAB2jXSVwRL1yRZQJ79+Zy6dh10Mk424SWCVFr6G8Vi4XnXYN4Le48g4=
-X-Received: by 2002:a2e:5855:: with SMTP id x21mr3954610ljd.75.1587687793184;
- Thu, 23 Apr 2020 17:23:13 -0700 (PDT)
+        id S1728244AbgDXAex (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Apr 2020 20:34:53 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:60586 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728151AbgDXAex (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Apr 2020 20:34:53 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 595EFCEC1D;
+        Thu, 23 Apr 2020 20:34:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=ucAFIplbBDUZ
+        WCxQzifVdiygFNc=; b=P7ZatrdHTyg2P4cU3bYHJd7IlBQ7XRBtfMvVkUfdpbFa
+        fymK9SA7ADlx7ZgNGy+/VJGOXnrmZjLrKTRvlULbwf8NAJ8ZNVJ7SJUojoIrV2nr
+        8CDB1O1p+PaHyt8sBSdnFf5DhlqYycyLjcLoQHXleB6d0U1eSQuxryAQhha2HXg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=kLoXJ2
+        eQWB4J7k46f1gX5EkxQfmb+iYg5CRd3roweVmVDDnXsjQ1XRLdkU/Unrv8qnL2JQ
+        FUYvk9nJtqfnxAI2WVZdsISlpXhh2+4UT52cS01YELHc1qsw7C/higFYenS39fcE
+        mfmCpNwAWuDmHrHj3mGF4zBUvalcN6H2bdxjo=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 511C5CEC1C;
+        Thu, 23 Apr 2020 20:34:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9CAF1CEC1B;
+        Thu, 23 Apr 2020 20:34:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Ilya Tretyakov <it@it3xl.ru>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 3/3] credential: handle `credential.<partial-URL>.<key>` again
+References: <pull.615.git.1587588665.gitgitgadget@gmail.com>
+        <pull.615.v2.git.1587685397.gitgitgadget@gmail.com>
+        <daedaffe960581733c25383a2a1b30056a415594.1587685397.git.gitgitgadget@gmail.com>
+        <20200424000558.GB20669@Carlos-MBP>
+Date:   Thu, 23 Apr 2020 17:34:46 -0700
+In-Reply-To: <20200424000558.GB20669@Carlos-MBP> ("Carlo Marcelo Arenas
+        =?utf-8?Q?Bel=C3=B3n=22's?= message of "Thu, 23 Apr 2020 17:05:58 -0700")
+Message-ID: <xmqqpnbxen6h.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-From:   Stan Pitucha <stan.pitucha@envato.com>
-Date:   Fri, 24 Apr 2020 10:23:02 +1000
-Message-ID: <CAJ2_uEOk8xoLvK8B8PYc0_=kA8W_LqKwGyhKghemQDdRzA2nFA@mail.gmail.com>
-Subject: Bad experience with gpg signing failures
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 674F035C-85C3-11EA-804E-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all,
-There are two issues I keep running into with gpg signing usability:
+Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com> writes:
 
-1. When gpg fails to sign the commit, the error message is not
-forwarded. That means you always get "gpg failed to sign the data"
-when the actual gpg error is for example "gpg: skipped ...: Unusable
-secret key". This makes the errors hard to deal with, because you
-don't know which command actually failed without GIT_TRACE. That's
-especially bad in case of transient errors.
+> On Thu, Apr 23, 2020 at 11:43:17PM +0000, Johannes Schindelin via GitGi=
+tGadget wrote:
+>> diff --git a/credential.c b/credential.c
+>> index 52965a5122c..3505f6356d8 100644
+>> --- a/credential.c
+>> +++ b/credential.c
+>> @@ -53,7 +53,13 @@ static int credential_config_callback(const char *v=
+ar, const char *value,
+>>  		char *url =3D xmemdupz(key, dot - key);
+>>  		int matched;
+>> =20
+>> -		credential_from_url(&want, url);
+>> +		if (credential_from_url_gently(&want, url, 1, 0) < 0) {
+>
+> definitely not worth a reroll, but just wondering if would make sense t=
+o call
+> credential_from_url_gently(!quiet) here, just for consistency?
 
-2. When gpg fails to sign the commit, it's not reported where it's
-available. I found that it's possible to recover it from
-COMMIT_EDITMSG from man pages, but it would be great if "gpg failed to
-sign the data" message was followed with "your message draft was saved
-to .git/COMMIT_EDITMSG" to make it more discoverable / not require
-reading full manual to find out about it.
+Speaking of which, it is not clear which one of "...url, 1, 0)" is
+the "quiet" bit.  I somehow thought that somebody suggested to roll
+these two into a flags word and give quiet and the other bit a name,
+and after seeing this line, I tend to agree that would be great for
+readability.
 
--- 
-Stan Pitucha
+> other than that this series is looking great, under the assumption that=
+ there
+> is going to be some more followup with non essential changes.
+>
+> will chip in with an test helper for that series so we can hopefully ke=
+ep our
+> sanity next time someone touches that function again.
 
+Thanks, everybody, for help polishing this topic.
 
-Site Reliability Engineer at Envato
-
-http://envato.com
-
-
-The email and any attachments are confidential and may contain
-information that is exempt from disclosure by law and subject to
-copyright. If you have received this message in error please let me
-know and delete it.
