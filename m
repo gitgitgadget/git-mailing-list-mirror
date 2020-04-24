@@ -7,83 +7,96 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 07B95C2BA1A
-	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 06:48:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5AEBC2BA1A
+	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 06:57:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C8B1C2166E
-	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 06:48:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6BE802084D
+	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 06:57:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mQjoEgc9"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tGd94jtU"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726298AbgDXGsJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Apr 2020 02:48:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55264 "EHLO
+        id S1726520AbgDXG5i (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Apr 2020 02:57:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726051AbgDXGsJ (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 24 Apr 2020 02:48:09 -0400
-Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 510A7C09B045
-        for <git@vger.kernel.org>; Thu, 23 Apr 2020 23:48:09 -0700 (PDT)
-Received: by mail-pf1-x42a.google.com with SMTP id y25so4356999pfn.5
-        for <git@vger.kernel.org>; Thu, 23 Apr 2020 23:48:09 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1726072AbgDXG5i (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 24 Apr 2020 02:57:38 -0400
+Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D46BC09B045
+        for <git@vger.kernel.org>; Thu, 23 Apr 2020 23:57:38 -0700 (PDT)
+Received: by mail-ot1-x332.google.com with SMTP id z25so10667132otq.13
+        for <git@vger.kernel.org>; Thu, 23 Apr 2020 23:57:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=VzKYSRH6EP48Bvq5qd/y7Lro4AQqfRKGp15Rx24/AXo=;
-        b=mQjoEgc96uNVmHkT/bCZvw3bu59szuWIWLKBScrm1KEc+bUiPzHRMnzQMApM1vMEnS
-         G/wXD8n6jdvpOzxnYQPPtqIAYyG1HV7DkwaQxNtEeZPioQYnrLrZAoKPsGcdrgu6zcIA
-         aT8ZyzPcY1MFRk27/KRtrAnolMv6NfyuNgUeEZoCvoD8HO00JBa3sI8hPWuiQ9GszcWl
-         /RUs2HbsLrO6oitjk7NFv77j55fkT0MBsxnGjy6Wva2ICvREoeNGd8/gI0NIKJKtDMYV
-         B02qeI3pSbMYj3rnaeOu4nTt88porBc3tGlNyPVwy8mjKaaWujrk7C9BotiDmO4HAmI9
-         pbMA==
+        h=mime-version:references:in-reply-to:reply-to:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=jqVXJkVT4AzdHGXc+Z+aHp4dFUykdGZVOzmg/JgM/RY=;
+        b=tGd94jtUAspQK656M1jT9DiS2FzUjhLsfUU28Z2cUS39qocfaAFZzQJn7V6WCTCQ1x
+         RVb2A8AjhMB9VFR2XHSjdFcbdgupbxrMsvpq4LaDHBKifUFwv50qg+zM2PNkWYATgTjs
+         8xe9palFstFQeL6hHtZMfFISSJYMpyiVy3B+oxmdH4G2E6YjAmis4OPdrB4Kc7SO2HbO
+         FqYd1uOOaeSa1FVC5KhPdnUNqpKxkWG8JoxocFkqUM3saY7WM+M/QmTBuGfXz3XzrIhW
+         usz7FvZe3DCrJ03aF7xURjmUjy7gzizyeeclJCAiuknErD/Kcuz1nNedeyybbaxnVLVG
+         bJDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=VzKYSRH6EP48Bvq5qd/y7Lro4AQqfRKGp15Rx24/AXo=;
-        b=thrljPu2aUq7X7qduWUd0aPGhzjm3cJNu0fST8tN/ibGjwKDnae7qC8bh0CR5f04Fu
-         AQB8SYLXrvf5Bq78wkZLByz8yVYSmLr3QgSJBiUdLtaLZOH8AKayP60/qoSoERkPOPjy
-         6YHkX674qc1ArTnoD/LdZFc4J7ti+vOJ0Ew6SZfyN11XusLOtcsDAf4kMrJ9nQ3yKwrL
-         aGdvyhwelXmeQHOKq4FpjcpzlFUyYLvhpZ27RsN8TqQpKOieU3osiHXwoqygPAYXUyvX
-         z+CYYOHt92zs8K3Lt6LMt8oR+tHnjeFMJz61hjUAuieARwjLVcn81ujEtIKrnoSE9BO/
-         H8Mw==
-X-Gm-Message-State: AGi0Pua2hw1F1PxOncxivzbr5B+EsJVuabpK0RB9rTyi3nbkmhDIJkHG
-        plNMJHM0uYnHQnzKOl5etUs=
-X-Google-Smtp-Source: APiQypJ71Vt1QoAIoIM8lIGaPQbKcEe61JnIjNZQBdF42MCtTExSOf49qJX0vwouaK7dLFlvjis0gw==
-X-Received: by 2002:a63:f0b:: with SMTP id e11mr7441889pgl.155.1587710887503;
-        Thu, 23 Apr 2020 23:48:07 -0700 (PDT)
-Received: from Carlos-MBP (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
-        by smtp.gmail.com with ESMTPSA id x200sm4044723pgx.50.2020.04.23.23.48.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Apr 2020 23:48:07 -0700 (PDT)
-Date:   Thu, 23 Apr 2020 23:48:05 -0700
-From:   Carlo Marcelo Arenas =?iso-8859-1?Q?Bel=F3n?= <carenas@gmail.com>
-To:     lars.fricke@googlemail.com
-Cc:     git@vger.kernel.org
-Subject: Re: p4merge no longer working after upgrade to 2.26.0
-Message-ID: <20200424064805.GB44448@Carlos-MBP>
-References: <CANYt6aFi+6vKRD71digEh-D0RKkLPBRtek5t8zA-8_cPzwexkQ@mail.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:reply-to
+         :from:date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=jqVXJkVT4AzdHGXc+Z+aHp4dFUykdGZVOzmg/JgM/RY=;
+        b=QR6DDsauXR/3B5hcKBomLD7f5Z2Qg+aiCd6J1eX7LIVYwsHR1947a19XSfiLSE6vC/
+         Vpan0Lvnqhiwx2o+fAhNIEaZ1MCRCy+gkB90E0fCB5eITNypkmGP1zhfgsS//HwjEsFn
+         Mqir8BrSvIeZQnkSBtcXi4ZF4yfUXdtHUUHRZtni+xIrpjTLD40JyitBopXiWAFi6R9g
+         iks4tPURA5G6+stM5as8GHc+eTTevdjBmiTpWkTSxhRp9Cax2SPJxRSSGGMr6f0vlQsP
+         p6Ci5Gvye9ILZesNsmkIpvWEA9xut1NQDeFS5msJAzO6Dup4cn2yBWtO7kf6bUnbUTmv
+         B8aQ==
+X-Gm-Message-State: AGi0PuYvqyMfJ12th87rbkdJQn1N9l5ip+zbALVA9XXM1NOmaoFNSyED
+        ErcJcP6joZoftSISViwdUdMk7O11G+ntu1RUuPoM3q4SnJ8=
+X-Google-Smtp-Source: APiQypKdfrlNTPbk8iX8SzIgqJ01cAfjgzaSeThyz0ZRfOdbKUAlpqhMerBVnqLodA6CH/V+pDCbBNpqw7CdUcObch0=
+X-Received: by 2002:a05:6830:138c:: with SMTP id d12mr6897221otq.310.1587711457342;
+ Thu, 23 Apr 2020 23:57:37 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CANYt6aFi+6vKRD71digEh-D0RKkLPBRtek5t8zA-8_cPzwexkQ@mail.gmail.com>
+References: <CANYt6aFi+6vKRD71digEh-D0RKkLPBRtek5t8zA-8_cPzwexkQ@mail.gmail.com>
+ <20200424064805.GB44448@Carlos-MBP>
+In-Reply-To: <20200424064805.GB44448@Carlos-MBP>
+Reply-To: lars.fricke@googlemail.com
+From:   Lars Fricke <lars.fricke@gmail.com>
+Date:   Fri, 24 Apr 2020 08:57:27 +0200
+Message-ID: <CANYt6aFjp4wVzYk85Ag9mH3AWp4qUS3+4xsGioyQknKz9tmRUA@mail.gmail.com>
+Subject: Re: p4merge no longer working after upgrade to 2.26.0
+To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-does it say it is "not currently available" if you run:
+Thanks Carlo for the pointers
 
-  $ git mergetool --tool-help
+git mergetool --tool-help indeed does NOT list p4merge.
 
-does it work if you do :
+So support was discontinued?
 
-  $ git config --global merge.guitool p4merge
-  $ git config --global mergetool.p4merge.trustExitCode true
+Configuring it as merge.guitool also does not work.
 
-or change your PATH to include the location of the tool?
+Regards,
+Lars
 
-Carlo
-
-PS. mergetool.prompt is a valid confguration, but not mergetool.$TOOL.prompt
+On Fri, Apr 24, 2020 at 8:48 AM Carlo Marcelo Arenas Bel=C3=B3n
+<carenas@gmail.com> wrote:
+>
+> does it say it is "not currently available" if you run:
+>
+>   $ git mergetool --tool-help
+>
+> does it work if you do :
+>
+>   $ git config --global merge.guitool p4merge
+>   $ git config --global mergetool.p4merge.trustExitCode true
+>
+> or change your PATH to include the location of the tool?
+>
+> Carlo
+>
+> PS. mergetool.prompt is a valid confguration, but not mergetool.$TOOL.pro=
+mpt
