@@ -7,64 +7,64 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BB07EC54FD0
-	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 11:50:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 14167C54FCB
+	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 11:50:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9224C20728
+	by mail.kernel.org (Postfix) with ESMTP id E651620767
 	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 11:50:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Cx1GPl85"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZPZ+oMAg"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726888AbgDXLuB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Apr 2020 07:50:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45726 "EHLO
+        id S1726876AbgDXLuA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Apr 2020 07:50:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726831AbgDXLt6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Apr 2020 07:49:58 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 517F3C09B047
-        for <git@vger.kernel.org>; Fri, 24 Apr 2020 04:49:58 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id t14so10400983wrw.12
-        for <git@vger.kernel.org>; Fri, 24 Apr 2020 04:49:58 -0700 (PDT)
+        with ESMTP id S1726289AbgDXLt5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Apr 2020 07:49:57 -0400
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57CD2C09B045
+        for <git@vger.kernel.org>; Fri, 24 Apr 2020 04:49:57 -0700 (PDT)
+Received: by mail-wr1-x444.google.com with SMTP id s10so10452568wrr.0
+        for <git@vger.kernel.org>; Fri, 24 Apr 2020 04:49:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=aFMzCmek53MxhHFVVQcqTiwX0cdUD5NVh36qYidNBrM=;
-        b=Cx1GPl85ftKJoJ95JgyZASiUIlNAVt+4OeUEkSW9QXEtKk4t2FTcAQzNYBSzMh3GAY
-         v2IF2Vx6XIi630WhQIyQSN7X1gq95uVHshbvqCfaaOfSlLjX75lLkFLuZkg3pNnBLFXe
-         kTbrTC7022QMuOh3k8PAyarur30is8CRrqEOK6CH5f9R21P1DNtFvEMLp1u1KrR888lk
-         wGUDXVu11Xc6ys6cJ9bn2xcyF3QB5oqgzCkw9fTD91wqEVwff/YzHIt7vaD58xECJvD8
-         lKsj0F4Bo8g0g3IYEqlXktqft9M27jKgUd5Gz0b5wrC4dYuL4A5Cf0HIGdZZRmCQ9y90
-         UaGQ==
+        bh=jh/TyKdHVyvhSWNQXpsfdU8J5LSRlaHmZJY4sonmRPQ=;
+        b=ZPZ+oMAgDbhJYeHo+StRYBJzZopRQuWGV/A903HlaiCXia+jK4LIPF7t1EK/oqVpCT
+         puOW4tu4Vj+1XYLNili9r8CIbpSwVGbRZW0g6NrgF/vrmUkfL3fJwUccg/2iii0FTe3H
+         uEHCU1jvnZKknCeOjuoDlxUaTZz0cPIt9M2PRn8GU818YOsvUd0HWEXuKD9u5bft/qH+
+         iN52kKZzCyhmLrRxlb6mE4bRqekFtVlwM0kXvflKPqRTJXZQJrLzqrioy8+VE0PwdwJh
+         vvoOx8BgdxL02PoOfxBI1eQzxgeaGCufNy6EUuuJxtYrer8djJG60Qkz5WW7hm6HiJ9R
+         bqOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=aFMzCmek53MxhHFVVQcqTiwX0cdUD5NVh36qYidNBrM=;
-        b=NHEnpJrCy1S2RCR/JG6UVcTirIdR95lumLJzfY9IbZiOqv5s3VfXcrljYyQ1J6Hnq0
-         w8iLK8FSVcTUDm0FQLXtSFhO/Sv+qwSVR3rSMeA7eR97wW8SuOFcwjn8Net9adUYl32q
-         Rh0bMMucCP6tn8SeFdLrtd8/0IdfzMUKCQImsK9CDsNNN9x2zD47EinQcqPWRLaVdu98
-         LRr2TEG4SVqzm5jhr6kcvODdf0z1T7GyA+rMMMFa9kIzzhlvBIHnv6GtGsu6EoANG4j/
-         jmX98nIfHL4IRS0wSOOjn6Z8MHb9ll+We4r0rShuRKROxAC4RzfKwZCJ3TKQX9YOShT1
-         ijiw==
-X-Gm-Message-State: AGi0Pub1pUVnE2aPBUNjnbM4FJKgil6CTi/hQmL6RT2lbYzKDKJnG9fu
-        TslckPm+r29hti9srSYpWrxZSNNj
-X-Google-Smtp-Source: APiQypLsnPAbmLEDYe+JIEH3iu5p1LKD+pGChofe2nQJsinEA2/SNf23gcfAoBDKNR8FUs9JJJxuHw==
-X-Received: by 2002:a5d:6acc:: with SMTP id u12mr11533880wrw.198.1587728996879;
-        Fri, 24 Apr 2020 04:49:56 -0700 (PDT)
+        bh=jh/TyKdHVyvhSWNQXpsfdU8J5LSRlaHmZJY4sonmRPQ=;
+        b=sZaRY8eCOr+by4jg9N9tgYVw9A9YafEKU7IHHWHwsXGupJRNMafu+qyg6HbXSyc53m
+         zYhSwjDD338DkpSZ9yq7Y3dDUp/hUljzNw72980yxtHooJ+y+253/kXxFyOgd5IKwP4M
+         /dwZONiRA8yip/f2Y4qvDE4g+c85l3iWAqLKAaq0ha4til3ZstHz5xIvzKm1fF36mBpA
+         RdnXN99Yx5hAKMeutumNRTNFZcSJT/5S5t6eSWn2ux64O16H9NX16wxuiWj++uVb7CZZ
+         GW/YUKCRb7476t2myGT3a5vLuQbwnLoxPjDcGv1fmMA/Wvy/1da4g/1nvM7KfylV9zvY
+         q+Wg==
+X-Gm-Message-State: AGi0PuZxg8pEv85krpL1HIoEN/kOdhf3AXYmK7piDfM+Uf0/+QG9C056
+        cSj7h8donLXhD87UxvMs6Na+AOfT
+X-Google-Smtp-Source: APiQypLKsOk0sachWgt5JPwlLdjeYBxjrdR7Qko1SqBsSOCwK1Hm2WqngL665FnB0zvrUdvgBq78Ag==
+X-Received: by 2002:adf:edc6:: with SMTP id v6mr10459284wro.8.1587728995858;
+        Fri, 24 Apr 2020 04:49:55 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r18sm4711462wrj.70.2020.04.24.04.49.56
+        by smtp.gmail.com with ESMTPSA id n9sm7956194wrx.61.2020.04.24.04.49.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Apr 2020 04:49:56 -0700 (PDT)
-Message-Id: <0535908dd7ea4487b342c0f86182579279c57b34.1587728992.git.gitgitgadget@gmail.com>
+        Fri, 24 Apr 2020 04:49:55 -0700 (PDT)
+Message-Id: <e92f139dfc732720f5819a954c54f2e3c5f7d1c9.1587728992.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.615.v3.git.1587728992.gitgitgadget@gmail.com>
 References: <pull.615.v2.git.1587685397.gitgitgadget@gmail.com>
         <pull.615.v3.git.1587728992.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 24 Apr 2020 11:49:52 +0000
-Subject: [PATCH v3 3/3] credential: handle `credential.<partial-URL>.<key>`
- again
+Date:   Fri, 24 Apr 2020 11:49:51 +0000
+Subject: [PATCH v3 2/3] credential: optionally allow partial URLs in
+ credential_from_url_gently()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -84,120 +84,119 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-In the patches for CVE-2020-11008, the ability to specify credential
-settings in the config for partial URLs got lost. For example, it used
-to be possible to specify a credential helper for a specific protocol:
+Prior to the fixes for CVE-2020-11008, we were _very_ lenient in what we
+required from a URL in order to parse it into a `struct credential`.
+That led to serious vulnerabilities.
 
-	[credential "https://"]
-		helper = my-https-helper
+There was one call site, though, that really needed that leniency: when
+parsing config settings a la `credential.dev.azure.com.useHTTPPath`.
+Settings like this might be desired when users want to use, say, a given
+user name on a given host, regardless of the protocol to be used.
 
-Likewise, it used to be possible to configure settings for a specific
-host, e.g.:
+In preparation for fixing that bug, let's refactor the code to
+optionally allow for partial URLs. For the moment, this functionality is
+only exposed via the now-renamed function `credential_from_url_1()`, but
+it is not used. The intention is to make it easier to verify that this
+commit does not change the existing behavior unless explicitly allowing
+for partial URLs.
 
-	[credential "dev.azure.com"]
-		useHTTPPath = true
+Please note that this patch does more than just reinstating a way to
+imitate the behavior before those CVE-2020-11008 fixes: Before that, we
+would simply ignore URLs without a protocol. In other words,
+misleadingly, the following setting would be applied to _all_ URLs:
 
-Let's reinstate this behavior.
+	[credential "example.com"]
+		username = that-me
 
-While at it, increase the test coverage to document and verify the
-behavior with a couple other categories of partial URLs.
+The obvious intention is to match the host name only. With this patch,
+we allow precisely that: when parsing the URL with non-zero
+`allow_partial_url`, we do not simply return success if there was no
+protocol, but we simply leave the protocol unset and continue parsing
+the URL.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- credential.c           | 18 +++++++++++++++++-
- t/t0300-credentials.sh | 39 +++++++++++++++++++++++++++++++++++++++
- 2 files changed, 56 insertions(+), 1 deletion(-)
+ credential.c | 42 ++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 36 insertions(+), 6 deletions(-)
 
 diff --git a/credential.c b/credential.c
-index 7dbbf26f174..c1a9ca4e485 100644
+index 64a841eddca..7dbbf26f174 100644
 --- a/credential.c
 +++ b/credential.c
-@@ -35,6 +35,10 @@ int credential_match(const struct credential *want,
- #undef CHECK
+@@ -343,8 +343,31 @@ static int check_url_component(const char *url, int quiet,
+ 	return -1;
  }
  
-+
-+static int credential_from_potentially_partial_url(struct credential *c,
-+						   const char *url);
-+
- static int credential_config_callback(const char *var, const char *value,
- 				      void *data)
+-int credential_from_url_gently(struct credential *c, const char *url,
+-			       int quiet)
++/*
++ * Potentially-partial URLs can, but do not have to, contain
++ *
++ * - a protocol (or scheme) of the form "<protocol>://"
++ *
++ * - a host name (the part after the protocol and before the first slash after
++ *   that, if any)
++ *
++ * - a user name and potentially a password (as "<user>[:<password>]@" part of
++ *   the host name)
++ *
++ * - a path (the part after the host name, if any, starting with the slash)
++ *
++ * Missing parts will be left unset in `struct credential`. Thus, `https://`
++ * will have only the `protocol` set, `example.com` only the host name, and
++ * `/git` only the path.
++ *
++ * Note that an empty host name in an otherwise fully-qualified URL (e.g.
++ * `cert:///path/to/cert.pem`) will be treated as unset if we expect the URL to
++ * be potentially partial, and only then (otherwise, the empty string is used).
++ *
++ * The credential_from_url() function does not allow partial URLs.
++ */
++static int credential_from_url_1(struct credential *c, const char *url,
++				 int allow_partial_url, int quiet)
  {
-@@ -53,7 +57,13 @@ static int credential_config_callback(const char *var, const char *value,
- 		char *url = xmemdupz(key, dot - key);
- 		int matched;
+ 	const char *at, *colon, *cp, *slash, *host, *proto_end;
  
--		credential_from_url(&want, url);
-+		if (credential_from_potentially_partial_url(&want, url) < 0) {
-+			warning(_("skipping credential lookup for key: %s"),
-+				var);
-+			credential_clear(&want);
-+			free(url);
-+			return 0;
-+		}
- 		matched = credential_match(&want, c);
+@@ -357,12 +380,12 @@ int credential_from_url_gently(struct credential *c, const char *url,
+ 	 *   (3) proto://<user>:<pass>@<host>/...
+ 	 */
+ 	proto_end = strstr(url, "://");
+-	if (!proto_end || proto_end == url) {
++	if (!allow_partial_url && (!proto_end || proto_end == url)) {
+ 		if (!quiet)
+ 			warning(_("url has no scheme: %s"), url);
+ 		return -1;
+ 	}
+-	cp = proto_end + 3;
++	cp = proto_end ? proto_end + 3 : url;
+ 	at = strchr(cp, '@');
+ 	colon = strchr(cp, ':');
+ 	slash = strchrnul(cp, '/');
+@@ -382,8 +405,10 @@ int credential_from_url_gently(struct credential *c, const char *url,
+ 		host = at + 1;
+ 	}
  
- 		credential_clear(&want);
-@@ -430,6 +440,12 @@ static int credential_from_url_1(struct credential *c, const char *url,
+-	c->protocol = xmemdupz(url, proto_end - url);
+-	c->host = url_decode_mem(host, slash - host);
++	if (proto_end && proto_end - url > 0)
++		c->protocol = xmemdupz(url, proto_end - url);
++	if (!allow_partial_url || slash - host > 0)
++		c->host = url_decode_mem(host, slash - host);
+ 	/* Trim leading and trailing slashes from path */
+ 	while (*slash == '/')
+ 		slash++;
+@@ -405,6 +430,11 @@ int credential_from_url_gently(struct credential *c, const char *url,
  	return 0;
  }
  
-+static int credential_from_potentially_partial_url(struct credential *c,
-+						   const char *url)
++int credential_from_url_gently(struct credential *c, const char *url, int quiet)
 +{
-+	return credential_from_url_1(c, url, 1, 0);
++	return credential_from_url_1(c, url, 0, quiet);
 +}
 +
- int credential_from_url_gently(struct credential *c, const char *url, int quiet)
+ void credential_from_url(struct credential *c, const char *url)
  {
- 	return credential_from_url_1(c, url, 0, quiet);
-diff --git a/t/t0300-credentials.sh b/t/t0300-credentials.sh
-index efed3ea2955..f796bbfd48b 100755
---- a/t/t0300-credentials.sh
-+++ b/t/t0300-credentials.sh
-@@ -448,4 +448,43 @@ test_expect_success 'credential system refuses to work with missing protocol' '
- 	test_i18ncmp expect stderr
- '
- 
-+test_expect_success 'credential config with partial URLs' '
-+	echo "echo password=yep" | write_script git-credential-yep &&
-+	test_write_lines url=https://user@example.com/repo.git >stdin &&
-+	for partial in \
-+		example.com \
-+		user@example.com \
-+		https:// \
-+		https://example.com \
-+		https://example.com/ \
-+		https://user@example.com \
-+		https://user@example.com/ \
-+		https://example.com/repo.git \
-+		https://user@example.com/repo.git \
-+		/repo.git
-+	do
-+		git -c credential.$partial.helper=yep \
-+			credential fill <stdin >stdout &&
-+		grep yep stdout ||
-+		return 1
-+	done &&
-+
-+	for partial in \
-+		dont.use.this \
-+		http:// \
-+		/repo
-+	do
-+		git -c credential.$partial.helper=yep \
-+			credential fill <stdin >stdout &&
-+		! grep yep stdout ||
-+		return 1
-+	done &&
-+
-+	git -c credential.$partial.helper=yep \
-+		-c credential.with%0anewline.username=uh-oh \
-+		credential fill <stdin >stdout 2>stderr &&
-+	test_i18ngrep "skipping credential lookup for key" stderr
-+
-+'
-+
- test_done
+ 	if (credential_from_url_gently(c, url, 0) < 0)
 -- 
 gitgitgadget
+
