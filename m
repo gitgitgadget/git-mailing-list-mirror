@@ -2,137 +2,182 @@ Return-Path: <SRS0=LF8V=6I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AF651C54FCB
-	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 11:36:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F3D1C54FD0
+	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 11:43:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8D04D20767
-	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 11:36:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DD32820767
+	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 11:43:08 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="lxmAdlGy"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="chIlqbtP"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726746AbgDXLgo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Apr 2020 07:36:44 -0400
-Received: from mout.gmx.net ([212.227.15.15]:55957 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726699AbgDXLgo (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Apr 2020 07:36:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1587728193;
-        bh=rBU8+Nfoz8JWshvse2WLaPqVucqVWuI25dqC7sx9RPw=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=lxmAdlGyJXkw4/mnPW6S2lGaVc5mT75p6ToyyUZ7vi2F3OUxvEHK3C0kn6melvS0T
-         taGsE3ZCdO/wcNLHOUzObbwY2Ca1z1jCOFNwiWws/P79C1XEhJMcOhTNl0nItljrur
-         N7iiWXa8kcc7IdUcSqIBncj1aAv0ERQ5/Fp5pNGQ=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from MININT-QA14EDB.fritz.box ([213.196.212.1]) by mail.gmx.com
- (mrgmx004 [212.227.17.190]) with ESMTPSA (Nemesis) id
- 1M8QS2-1jWMU51wDA-004U0c; Fri, 24 Apr 2020 13:36:33 +0200
-Date:   Fri, 24 Apr 2020 13:36:33 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
+        id S1726831AbgDXLnI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Apr 2020 07:43:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44668 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726247AbgDXLnH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Apr 2020 07:43:07 -0400
+Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75DFAC09B045
+        for <git@vger.kernel.org>; Fri, 24 Apr 2020 04:43:06 -0700 (PDT)
+Received: by mail-pf1-x442.google.com with SMTP id x15so4693034pfa.1
+        for <git@vger.kernel.org>; Fri, 24 Apr 2020 04:43:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=Z0z34NtfSNFjf51ztnR02cjMyvfQDaf8diJgoyXsRY0=;
+        b=chIlqbtPBP1nfGCTrtBt7gGGoSnszlpt4Rfg8iOywfVP6Yp9qqsJjyrffsBtGw29g6
+         rMbvocZ68lMws1ckpvWElKSHgbtn9N1NoqVN14kDUqnwHoLpsNChk5jcFW2U2Tl/aI9s
+         oFnwD5a3rpVFcc/ax1sVPy7FtY4+jv15PealiLJPCgaPh7NcKP0W9nOIpyupughtCN2s
+         TeWiUztHcINcbxTOYQDHaNe5icgasdHDipSkFd7K2nOn9tCNdUIUSt9oSMBMpoQiZAD6
+         Oy40mjLlkau+hZclSXN0CqeeXc2ZtSPOeMfs/6/lJRGsuoODSU7zGDnNKES3YY+EPo7D
+         L6/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=Z0z34NtfSNFjf51ztnR02cjMyvfQDaf8diJgoyXsRY0=;
+        b=VtQriJALMNjcLYlKjK3ZMCAha1WOPI+GFttBdHur83i0n7yMgai1h1nuq1hG3fQJXB
+         aNGrgIZdKD0N1O/h22n38za5PGslysTP3qP67YIOwdMm9h6JbeBGoEs6CwvmJrQ/roHt
+         LQdK1xrtGR0zYZSQYl2wxlZqUo7Wb5Jw9STba91PcHGHJ1FcnwZzB3tDDpehLuGTgJtT
+         L9YF5P3buJB3STfJrG921yR0C373a9iW/3sOOwJjB5vFVSHo0hbAHDxP27lsF5VHqm3y
+         paDQUVC/F2/k/utKPmJrTfSccJRm/duv8iuQtzIPqiwxZKspoijNQEMik9w/nQ57MUSH
+         s42g==
+X-Gm-Message-State: AGi0PubuQTupZt+npoxM2LW3VzfB2lgzSieRIHxIIUxVu+Ko4cxWSLst
+        K6/VXiAcEWIS2RLlGWLBFYw=
+X-Google-Smtp-Source: APiQypIeGAKk7uvehOiVW6sPJOnIPLLhElPcroywVG36kqYo80IgtJkudV6Vx0vBdAtRg8iYwyEXag==
+X-Received: by 2002:a62:cf81:: with SMTP id b123mr8906025pfg.84.1587728585946;
+        Fri, 24 Apr 2020 04:43:05 -0700 (PDT)
+Received: from localhost ([2402:800:6374:f359:1ce8:a621:5f80:1116])
+        by smtp.gmail.com with ESMTPSA id u12sm5595377pfc.15.2020.04.24.04.43.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 24 Apr 2020 04:43:05 -0700 (PDT)
+Date:   Fri, 24 Apr 2020 18:43:02 +0700
+From:   Danh Doan <congdanhqx@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-cc:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Ilya Tretyakov <it@it3xl.ru>
-Subject: Re: [PATCH v2 3/3] credential: handle `credential.<partial-URL>.<key>`
- again
-In-Reply-To: <xmqqlfmlemxk.fsf@gitster.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.2004241336170.18039@tvgsbejvaqbjf.bet>
-References: <pull.615.git.1587588665.gitgitgadget@gmail.com>        <pull.615.v2.git.1587685397.gitgitgadget@gmail.com>        <daedaffe960581733c25383a2a1b30056a415594.1587685397.git.gitgitgadget@gmail.com>        <20200424000558.GB20669@Carlos-MBP>      
-  <xmqqpnbxen6h.fsf@gitster.c.googlers.com> <xmqqlfmlemxk.fsf@gitster.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v4 2/4] date.c: validate and set time in a helper function
+Message-ID: <20200424114302.GG1949@danh.dev>
+References: <cover.1586856398.git.congdanhqx@gmail.com>
+ <cover.1587644889.git.congdanhqx@gmail.com>
+ <0d0e4d8edce37dfef13e573588f0c043ddf07f6a.1587644889.git.congdanhqx@gmail.com>
+ <xmqqzhb2ez1q.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-146235200-1587728194=:18039"
-X-Provags-ID: V03:K1:BAcHXs+olBerOxYGfhtf9+QoBcz9oPAh+OWH2GB8MOdAriC7wUb
- hokKz0p1Ou3OTYAFv0YljyJ5GHm/NpgdRNd3DEv+jOEvDZN/VAUPqoxP63nphSp47+28rw5
- JQZKEnjhdVsbxh1M5NUbgkK9befrlOp7bOrcsidJAgiZZq5LGpAKfCl227UANyMZGgiE20h
- KjpRcTqNTUorxaI5/j5kg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Bup+/70IQ54=:HY2A+1tmUYlVEsQr+74w6n
- iQSl657GbT6Hs75vw4ju7gl9AaoSM2YGW2RUpVL2fd+b6SdKU+3xd7dKd2ti7yeTGyWw+lyjG
- pK4qylE+QZsQPW0Tia1ljVlje+t5PRZhRia4R++ucONNop/vf37/OnSrjj9HvuOTE9kH7pwx7
- xHU0B8hjWM5q2TturcU+uGBpkx0fgG71d7shfKd6RzeesSfz/VPX0F/Axyy1ZF053U4reusIa
- RN+CBCQOAUwELv9hcUdHntIBoClK/ZWRXmXn4kDDhFa+N31Bo7LJbeI5XDoOQjn/RuYlW6rfr
- /Qb58aWVt2c6Y4+1OAXJOb/aRHO1FYM7AMXQGSHl+7z2JhYZhIn5rM7UpJA4vNgKej3prmgaK
- 2JmWEOFwQNzUwL4urhtCXy5AZOUFEyws7PmalfBiZwioy1C8uznmo5nhpft6/EKvUxHCybgZP
- keNuA3p0bAoGXQNrB4zutLX+Cw7Zpt4lYc00UTvkfw/YerqH7UX6KV/m3kADITJ8Ic1MlUGtL
- AXZ4kFHmNZLgnK6MRKAQ9eaQuCAcl03LjXGmH4xdYZaNSEKT8E/OCG8RuazFnTOSO3JDFIOoD
- OfV6ayDKVPJe+5lF0qTiA1bcNXM++UsqmmhE61d2AAg1xuf9xdpzM60mII9e9PCL8wm+nBAaD
- n0hVti0KmZp3XSns8mcZYcIuLyRXFY7Dh4+pfXqYbRaKRjp/cyTw3wb+HfDHrHTYc2cd3DOUW
- 6viiDUKJy0bbPg31iKz1JBlykgMOj+tzgkrvzNmMCxVNTQKIzOZsm5JTfhqdvSNPwF5qAAq21
- JHahnwCoOBvpesuqnFtoYcLdWdF5AWRAVC5NCmJND9YJSsyPcgjTugjd1V2GcNujhpwEMpFfa
- XnuCE4qjCJh+DVm/l0QMxJOEsxYyJEJQwX44eqo+nvmFAI1F7OVX+rTYF/9bg80Yg46DEuJP9
- Ga5IdtyIsaw9kdGcXcVShlv2FcLBHPC3DcohY7r+mLuZjTkg2inIUZEzsC+teVw1LHmeQOIpn
- 1UXv006Lv6IdjdKvLEQM8wLTNPg+C143ISSMq2m1uU+luFD9M1dm7/b4d3Nva1B3H3Ec+FckP
- FJIYqt5nIypmnu0GJzhQ2+ntI2C/V0F3qqP2JFZUOyJYi5L45hw6aQQwOzdHPF0amPwWEt71C
- V3uvheE5fUmWW27sOjPFEt2eDJW8KMw+rimuR0BMM+PCutWLdB12vScFqphJv48ykduy/t3Jh
- iNDDfai92gun88upq
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqzhb2ez1q.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323328-146235200-1587728194=:18039
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-Hi Junio,
-
-On Thu, 23 Apr 2020, Junio C Hamano wrote:
-
-> Junio C Hamano <gitster@pobox.com> writes:
->
-> > Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com> writes:
+On 2020-04-23 13:18:25-0700, Junio C Hamano <gitster@pobox.com> wrote:
+> Đoàn Trần Công Danh  <congdanhqx@gmail.com> writes:
+> 
+> > In a later patch, we will reuse this logic, move it to a helper, now.
 > >
-> >> On Thu, Apr 23, 2020 at 11:43:17PM +0000, Johannes Schindelin via Git=
-GitGadget wrote:
-> >>> diff --git a/credential.c b/credential.c
-> >>> index 52965a5122c..3505f6356d8 100644
-> >>> --- a/credential.c
-> >>> +++ b/credential.c
-> >>> @@ -53,7 +53,13 @@ static int credential_config_callback(const char =
-*var, const char *value,
-> >>>  		char *url =3D xmemdupz(key, dot - key);
-> >>>  		int matched;
-> >>>
-> >>> -		credential_from_url(&want, url);
-> >>> +		if (credential_from_url_gently(&want, url, 1, 0) < 0) {
-> >>
-> >> definitely not worth a reroll, but just wondering if would make sense=
- to call
-> >> credential_from_url_gently(!quiet) here, just for consistency?
+> > While we're at it, explicit states that we intentionally ignore
+> 
+> "explicitly state", perhaps.
+> 
+> > old-and-defective 2nd leap second.
 > >
-> > Speaking of which, it is not clear which one of "...url, 1, 0)" is
-> > the "quiet" bit.  I somehow thought that somebody suggested to roll
-> > these two into a flags word and give quiet and the other bit a name,
-> > and after seeing this line, I tend to agree that would be great for
-> > readability.
->
-> Ah, I should have checked before opening my mouth.  It was this
-> message <20200422233854.GE140314@google.com> from Jonathan Nieder.
->
-> I also am OK with his "two thin wrappers around the underlying
-> helper that takes two separate arguments", if that makes the
-> resulting code easier to follow.  I have a feeling that the caller
-> knows (from the context, or the reason why it calls the
-> credential-from-url code) if it wants strict or nonstrict variant
-> and that is not something the caller is told from its caller.  And
-> if that is the case, "two thin wrappers" approach does make a lot of
-> sense.
+> > Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
+> > ---
+> >  date.c | 22 +++++++++++++++++-----
+> >  1 file changed, 17 insertions(+), 5 deletions(-)
+> >
+> > diff --git a/date.c b/date.c
+> > index b67c5abe24..f5d5a91208 100644
+> > --- a/date.c
+> > +++ b/date.c
+> > @@ -539,6 +539,22 @@ static int set_date(int year, int month, int day, struct tm *now_tm, time_t now,
+> >  	return -1;
+> >  }
+> >  
+> > +static int set_time(long hour, long minute, long second, struct tm *tm)
+> > +{
+> > +	/* C90 and old POSIX accepts 2 leap seconds, it's a defect,
+> > +	 * ignore second number 61
+> > +	 */
+> 
+> 	/*
+> 	 * Style: our multi-line comments ought to be
+> 	 * formatted like this.  Slash-asterisk that opens,
+> 	 * and asterisk-slash that closes, are both on their
+> 	 * own lines.
+> 	 */
+> 
+> But I am not sure we want to even have a new comment here.  After
+> all we are extracting/reinventing exactly the same logic as the
+> original.  Why we allow "60" might be worth commenting, but if a
+> minute that has 62 seconds is a mere historical curiosity, then is
+> it worth explaining why "61", which we never even wrote in the code,
+> is missing from here?
 
-All right, two wrapper functions it is.
+I think single line like:
 
-Ciao,
-Dscho
+	/* We accept 61st second for the single? leap second */
 
---8323328-146235200-1587728194=:18039--
+Or something along the time, is good enough. Not sure if we want the
+word "single" there, though.
+
+I think majority of people don't even know about leap second.
+Probability that know about 62nd second is rarer, I think.
+
+> > +	if (0 <= hour && hour <= 24 &&
+> > +	    0 <= minute && minute < 60 &&
+> > +	    0 <= second && second <= 60) {
+> > +		tm->tm_hour = hour;
+> > +		tm->tm_min = minute;
+> > +		tm->tm_sec = second;
+> > +		return 0;
+> > +	}
+> > +	return -1;
+> > +}
+> 
+> I am a bit surprised to see that you chose to unify with the "check
+> and set" interface of is_date (now set_date).  I was expecting to
+> see that we'd have "check-only" helper functions.
+> 
+> This is not a complaint, at least not yet until we see the result of
+> using it in new code; it may very well be possible that the "check
+> and set" interface would make the new caller(s) clearer.
+> 
+> >  static int match_multi_number(timestamp_t num, char c, const char *date,
+> >  			      char *end, struct tm *tm, time_t now)
+> >  {
+> > @@ -556,12 +572,8 @@ static int match_multi_number(timestamp_t num, char c, const char *date,
+> >  	case ':':
+> >  		if (num3 < 0)
+> >  			num3 = 0;
+> > -		if (num < 25 && num2 >= 0 && num2 < 60 && num3 >= 0 && num3 <= 60) {
+> > -			tm->tm_hour = num;
+> > -			tm->tm_min = num2;
+> > -			tm->tm_sec = num3;
+> > +		if (set_time(num, num2, num3, tm) == 0)
+> >  			break;
+> > -		}
+> >  		return 0;
+> 
+> This caller does become easier to follow, I would say.  Nicely done.
+
+Yes, when I looked around date.c
+
+I saw that the only usecase for validate time is for setting it.
+And the incoming patch also has that usage.
+
+I chose to unify those code path to not buy me too much trouble.
+
+I'll take that "Nicely done" means this unification is OK for this
+series.
+
+-- 
+Danh
