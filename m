@@ -2,92 +2,96 @@ Return-Path: <SRS0=LF8V=6I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C3D5BC2BA19
-	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 00:54:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A4ABC2BA19
+	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 00:58:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 91A1A20704
-	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 00:54:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1C66F206ED
+	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 00:58:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KQH3tWzY"
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="afXZL3M/"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728342AbgDXAyg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Apr 2020 20:54:36 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:60652 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728244AbgDXAyg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Apr 2020 20:54:36 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8C360CEE7E;
-        Thu, 23 Apr 2020 20:54:34 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Csmsy7S+WAaNUP3z+snf2igE6Vo=; b=KQH3tW
-        zYZMRTp8GLDY8Wti6S+opzyDdcVClnunBAKGwcfJ/k6fk+n/N3boih7gBBQNQT/Z
-        lrsBMYoab3rCdDTw7xgcuV9Mw6NhXUyymhWUGlkILIA5pcmB2QA8TLXgFxqwmNPV
-        3G9JumSLTTkn7Iywj773ifWkH1oSZrYL1lO0E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=KEueBY8WUYVwNsy4lQX38NfAcVZOWwAV
-        URTNZbxdPAajhJK9Hu7yuR8XEVQ4W1ajZ3JTCHBHI99dKDum7u/Adoe+3ZXyHn3n
-        DuSJGhtxUaN17AzuCxrZXx+wAt7u2Rh2OabGBkPnKiW6Bf9M4/+BuNZgWVqqURK0
-        XWSBbR6L3M0=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 84671CEE7C;
-        Thu, 23 Apr 2020 20:54:34 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C9395CEE7B;
-        Thu, 23 Apr 2020 20:54:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>, git@vger.kernel.org,
-        Luc Van Oostenryck <luc.vanoostenryck@gmail.com>
-Subject: Re: [PATCH 1/4] C: s/0/NULL/ for pointer type
+        id S1728107AbgDXA64 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Apr 2020 20:58:56 -0400
+Received: from avasout07.plus.net ([84.93.230.235]:35019 "EHLO
+        avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727020AbgDXA6z (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Apr 2020 20:58:55 -0400
+Received: from [10.0.2.15] ([217.32.115.138])
+        by smtp with ESMTPA
+        id Rmg8jRvr3sCJiRmgAjx4kK; Fri, 24 Apr 2020 01:58:54 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+        t=1587689934; bh=6JHo32ZeEylx3Gkm1m76ObwH0JpND8S9Ubwa9AwNG4I=;
+        h=Subject:To:References:From:Date:In-Reply-To;
+        b=afXZL3M/0N/VlYmybfSsLqU4kSfU5DV/rbkO/T9jyeUDUfyXtGyWUR/CTT3HWTPOE
+         aTiBtQaSYDmSOikEJrZmrpEvw0OYj5VOua9frz1cpZw8BybFaL7Su1q1tc5Km/zwik
+         Mh1w7gi8LUnpa7ABFxcXb01/u8pWNg0zp9gTSVTb8ynOYpFuFafDF+jLI+xjzO3GPu
+         uAaGhmm0gdwGXgHoBnjDPqKs4nVxjV9ecjhMsJ2xvzOHVdhXVfcoof90fS5E4pYsy5
+         qjoaIxbl7hSrulETp5XvnXRWA3D4GrDSh8FGIs37rhDNk6HGaLlPgG9v9KEIauzzSn
+         /bN2DPyER9nPA==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=BPIoUGYG c=1 sm=1 tr=0
+ a=T9WNts+jH3PhiGdS1gtV5Q==:117 a=T9WNts+jH3PhiGdS1gtV5Q==:17
+ a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8 a=knonjEixnh5wqxD-4ycA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH 4/4] progress.c: silence cgcc suggestion about internal
+ linkage
+To:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        git@vger.kernel.org
 References: <cover.1587648870.git.congdanhqx@gmail.com>
-        <c4fac2ae9d10bc426cb26e4a102b808549696763.1587648870.git.congdanhqx@gmail.com>
-        <1df91aa4-dda5-64da-6ae3-5d65e50a55c5@ramsayjones.plus.com>
-Date:   Thu, 23 Apr 2020 17:54:30 -0700
-In-Reply-To: <1df91aa4-dda5-64da-6ae3-5d65e50a55c5@ramsayjones.plus.com>
-        (Ramsay Jones's message of "Fri, 24 Apr 2020 01:39:42 +0100")
-Message-ID: <xmqqd07xem9l.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+ <dddf2d402702a616e04e7e446e31e0c6697d8c49.1587648870.git.congdanhqx@gmail.com>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <cbe8fcac-d7d5-8db2-cf69-6f04136337c9@ramsayjones.plus.com>
+Date:   Fri, 24 Apr 2020 01:58:51 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 288A8B8E-85C6-11EA-940A-B0405B776F7B-77302942!pb-smtp20.pobox.com
+In-Reply-To: <dddf2d402702a616e04e7e446e31e0c6697d8c49.1587648870.git.congdanhqx@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfBywOlBfSiDyjNDQVe9b1by/u3UN03J57Q3cxCc9JKrIhQdeWYMXYQJtZLMOxZtgKCKWPvqzlaWs2927fTANj8++uCvK6bUqcAWSdEmVl6uPYqydab/D
+ Fq6Z4c99K91745KBjVnuyAUzOyeuHSesGXDT/2HDOPSOTYVIhxlgbtGPKPpXc4inyL4nZNrUNNZfLQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
-
-> Actually, I have a patch somewhere which suppressed the sparse warning
-> for the '= { 0 }' token sequence used in these initializations. However,
-> I don't seem to be able to find them at the moment! :(
-
-AHHHHHhhhhhhhh.  
-
-Thanks for reminding.  Yeah, I recall that the concensus of those
-who were vocal in that old discussion [*1*] was that "= { 0 }"
-should be taken as an idiom and should not be subject to s/0/NULL/
-conversion.
-
-> [Luc, this topic came up on the sparse and kernel mailing-lists at one
-> point, but I didn't get around to posting my patch to the list - something
-> came up. Hopefully, I will find some time to find it and post it soon.]
 
 
-[References]
+On 23/04/2020 14:47, Đoàn Trần Công Danh wrote:
+> Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
+> ---
+>  progress.c | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/progress.c b/progress.c
+> index 19805ac646..fb53a2ec0c 100644
+> --- a/progress.c
+> +++ b/progress.c
+> @@ -50,7 +50,9 @@ static volatile sig_atomic_t progress_update;
+>   * These are only intended for testing the progress output, i.e. exclusively
+>   * for 'test-tool progress'.
+>   */
+> +extern int progress_testing; /* to silence sparse: internal linkage */
+>  int progress_testing;
+> +extern uint64_t progress_test_ns; /* to silence sparse: internal linkage */
+>  uint64_t progress_test_ns = 0;
+>  void progress_test_force_update(void); /* To silence -Wmissing-prototypes */
+>  void progress_test_force_update(void)
 
-*1*
+My preference would be to add these extern declarations to the
+progress.h header file, with a note that they are only used by
+the 't/helper/test-progress.c' test helper. (Also, remove the
+extern declarations from test-progress.c, of course).
 
-https://lore.kernel.org/git/e6796c60-a870-e761-3b07-b680f934c537@ramsayjones.plus.com/
+But this works as well. :D
+
+ATB,
+Ramsay Jones
+
