@@ -2,184 +2,117 @@ Return-Path: <SRS0=LF8V=6I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.2 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D4266C2BA19
-	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 00:39:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C01A3C2BA19
+	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 00:40:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8597120724
-	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 00:39:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 88C4820728
+	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 00:40:14 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="kbDFgkX2"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="VPz/i2SE"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728231AbgDXAjr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Apr 2020 20:39:47 -0400
-Received: from avasout07.plus.net ([84.93.230.235]:34441 "EHLO
-        avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728151AbgDXAjr (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Apr 2020 20:39:47 -0400
-Received: from [10.0.2.15] ([217.32.115.138])
-        by smtp with ESMTPA
-        id RmNcjRvEpsCJiRmNdjx4fg; Fri, 24 Apr 2020 01:39:45 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-        t=1587688785; bh=QetxJGjrHwODIJ8Saaq4itUstYI7zLKcycP05Y6GZNo=;
-        h=Subject:To:References:From:Cc:Date:In-Reply-To;
-        b=kbDFgkX2w9s6mEJu5pCkRKaRA9Z2oBsEbr4GThfGIaYMpSv/3DP3uElhRmAVVaFpE
-         AW15a5TCrNRnjYRUDwh+7+iRcgT3xT9bsOQXl7qy0pOGmdRUPCOXDTZw2EsmbEYUiL
-         pueHRg9A2c2GXx2ppiu4wqX035j3CiFnLcR4RasxdAYkKLGn1pkmKJMGayIns9D33e
-         ZuEZDxD13Ni4BNFEsynUvj3prDtb679xRUbVq0ezUKc9r+rtyiOUGbG6Kip+0fLrJO
-         KqMSgHLD+zlMW4Rk/8VUy9tXn/hoJfJqhc3QTu17RWeV9TRFSgK17m/fOi8K7BwQqb
-         skmiQ1GqSd1ng==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=BPIoUGYG c=1 sm=1 tr=0
- a=T9WNts+jH3PhiGdS1gtV5Q==:117 a=T9WNts+jH3PhiGdS1gtV5Q==:17
- a=IkcTkHD0fZMA:10 a=5rxgeBVgAAAA:8 a=EBOSESyhAAAA:8 a=pGLkceISAAAA:8
- a=IlnIKXKsE3_y_3QO39QA:9 a=QEXdDO2ut3YA:10 a=PwKx63F5tFurRwaNxrlG:22
- a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH 1/4] C: s/0/NULL/ for pointer type
-To:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
-        git@vger.kernel.org
-References: <cover.1587648870.git.congdanhqx@gmail.com>
- <c4fac2ae9d10bc426cb26e4a102b808549696763.1587648870.git.congdanhqx@gmail.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     Luc Van Oostenryck <luc.vanoostenryck@gmail.com>
-Message-ID: <1df91aa4-dda5-64da-6ae3-5d65e50a55c5@ramsayjones.plus.com>
-Date:   Fri, 24 Apr 2020 01:39:42 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+        id S1728244AbgDXAkN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Apr 2020 20:40:13 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:65473 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728151AbgDXAkN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Apr 2020 20:40:13 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 75208CC173;
+        Thu, 23 Apr 2020 20:40:11 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=bnS28HmZSGme
+        5jfCh9/NaVO3Hnk=; b=VPz/i2SEX1hAK+YUuWKn4kLIY5lK8xqklhu1tV2Gkb8F
+        01FEuOkOU2r231ZKOO2W08SaPEoRvntnHlNjjuWfvWgTHFH8BjAH6r+TxBXkJKf3
+        6Q7nEMzW+bMlJ7ewgkr7wKPBWlDnB61rzLjqDyw/Nep93OFelYabbDWkP1AOdDY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=Yyoe6E
+        BjYPbyXfXE0WUwHc7iSm1gnz+/sWPTRN28Ps9CC4bJx4hPs0TS3lLlDPH7I3TpzC
+        8++whtX5GRCsdPmIqdMR3d1tYV4Vx4kEmWl1dUNwjVMRB7Z6S5qsMW+pxFWUOcrA
+        2K2xpd4tSQPMLl9mBR/QVgaP3XtHeOgcY1QCQ=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6CAF0CC172;
+        Thu, 23 Apr 2020 20:40:11 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B7763CC171;
+        Thu, 23 Apr 2020 20:40:08 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Ilya Tretyakov <it@it3xl.ru>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 3/3] credential: handle `credential.<partial-URL>.<key>` again
+References: <pull.615.git.1587588665.gitgitgadget@gmail.com>
+        <pull.615.v2.git.1587685397.gitgitgadget@gmail.com>
+        <daedaffe960581733c25383a2a1b30056a415594.1587685397.git.gitgitgadget@gmail.com>
+        <20200424000558.GB20669@Carlos-MBP>
+        <xmqqpnbxen6h.fsf@gitster.c.googlers.com>
+Date:   Thu, 23 Apr 2020 17:40:07 -0700
+In-Reply-To: <xmqqpnbxen6h.fsf@gitster.c.googlers.com> (Junio C. Hamano's
+        message of "Thu, 23 Apr 2020 17:34:46 -0700")
+Message-ID: <xmqqlfmlemxk.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <c4fac2ae9d10bc426cb26e4a102b808549696763.1587648870.git.congdanhqx@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfAZPJYG6p9I0+A6KdKEUFJ7NzgucHDryuzViMrqAbztMQjGyYNMDFzbfTZ7eSXGD66ot2MMEqR3KWlBk4ch1qQVycRovvcuG+MH4A2vRsrL/jLoM8CGz
- Udi56JGBn10Njo2/iOVh3BzMAKqCLbyYBCqt2tgVfq9/HDKwXsrw+ylvqgH8eljpLBsJLcznJmZtlg==
+X-Pobox-Relay-ID: 261BF1FA-85C4-11EA-B912-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Junio C Hamano <gitster@pobox.com> writes:
 
+> Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com> writes:
+>
+>> On Thu, Apr 23, 2020 at 11:43:17PM +0000, Johannes Schindelin via GitG=
+itGadget wrote:
+>>> diff --git a/credential.c b/credential.c
+>>> index 52965a5122c..3505f6356d8 100644
+>>> --- a/credential.c
+>>> +++ b/credential.c
+>>> @@ -53,7 +53,13 @@ static int credential_config_callback(const char *=
+var, const char *value,
+>>>  		char *url =3D xmemdupz(key, dot - key);
+>>>  		int matched;
+>>> =20
+>>> -		credential_from_url(&want, url);
+>>> +		if (credential_from_url_gently(&want, url, 1, 0) < 0) {
+>>
+>> definitely not worth a reroll, but just wondering if would make sense =
+to call
+>> credential_from_url_gently(!quiet) here, just for consistency?
+>
+> Speaking of which, it is not clear which one of "...url, 1, 0)" is
+> the "quiet" bit.  I somehow thought that somebody suggested to roll
+> these two into a flags word and give quiet and the other bit a name,
+> and after seeing this line, I tend to agree that would be great for
+> readability.
 
-On 23/04/2020 14:47, Đoàn Trần Công Danh wrote:
-> Fix warning from  `make sparse`.
+Ah, I should have checked before opening my mouth.  It was this
+message <20200422233854.GE140314@google.com> from Jonathan Nieder.
 
-You may want to split the changes to 't/helper/test-parse-pathspec-file.c'
-into its own patch, since those changes are not potentially controversial.
+I also am OK with his "two thin wrappers around the underlying
+helper that takes two separate arguments", if that makes the
+resulting code easier to follow.  I have a feeling that the caller
+knows (from the context, or the reason why it calls the
+credential-from-url code) if it wants strict or nonstrict variant
+and that is not something the caller is told from its caller.  And
+if that is the case, "two thin wrappers" approach does make a lot of
+sense.
 
-The remainder of this patch follows a pattern that I used in a patch that
-was rejected; see https://public-inbox.org/git/e6796c60-a870-e761-3b07-b680f934c537@ramsayjones.plus.com/, et seq.
-
-Actually, I have a patch somewhere which suppressed the sparse warning
-for the '= { 0 }' token sequence used in these initializations. However,
-I don't seem to be able to find them at the moment! :(
-
-[Luc, this topic came up on the sparse and kernel mailing-lists at one
-point, but I didn't get around to posting my patch to the list - something
-came up. Hopefully, I will find some time to find it and post it soon.]
-
-ATB,
-Ramsay Jones
-
-> 
-> Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
-> ---
->  add-interactive.c                   | 2 +-
->  builtin/fmt-merge-msg.c             | 2 +-
->  log-tree.c                          | 4 ++--
->  range-diff.c                        | 2 +-
->  t/helper/test-parse-pathspec-file.c | 6 +++---
->  5 files changed, 8 insertions(+), 8 deletions(-)
-> 
-> diff --git a/add-interactive.c b/add-interactive.c
-> index 29cd2fe020..b8983838b9 100644
-> --- a/add-interactive.c
-> +++ b/add-interactive.c
-> @@ -526,7 +526,7 @@ static int get_modified_files(struct repository *r,
->  
->  	for (i = 0; i < 2; i++) {
->  		struct rev_info rev;
-> -		struct setup_revision_opt opt = { 0 };
-> +		struct setup_revision_opt opt = { NULL };
->  
->  		if (filter == INDEX_ONLY)
->  			s.mode = (i == 0) ? FROM_INDEX : FROM_WORKTREE;
-> diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
-> index 172dfbd852..f4376bccef 100644
-> --- a/builtin/fmt-merge-msg.c
-> +++ b/builtin/fmt-merge-msg.c
-> @@ -494,7 +494,7 @@ static void fmt_merge_msg_sigs(struct strbuf *out)
->  		enum object_type type;
->  		unsigned long size, len;
->  		char *buf = read_object_file(oid, &type, &size);
-> -		struct signature_check sigc = { 0 };
-> +		struct signature_check sigc = { NULL };
->  		struct strbuf sig = STRBUF_INIT;
->  
->  		if (!buf || type != OBJ_TAG)
-> diff --git a/log-tree.c b/log-tree.c
-> index 0064788b25..ca721150d4 100644
-> --- a/log-tree.c
-> +++ b/log-tree.c
-> @@ -449,7 +449,7 @@ static void show_signature(struct rev_info *opt, struct commit *commit)
->  {
->  	struct strbuf payload = STRBUF_INIT;
->  	struct strbuf signature = STRBUF_INIT;
-> -	struct signature_check sigc = { 0 };
-> +	struct signature_check sigc = { NULL };
->  	int status;
->  
->  	if (parse_signed_commit(commit, &payload, &signature) <= 0)
-> @@ -496,7 +496,7 @@ static int show_one_mergetag(struct commit *commit,
->  	struct object_id oid;
->  	struct tag *tag;
->  	struct strbuf verify_message;
-> -	struct signature_check sigc = { 0 };
-> +	struct signature_check sigc = { NULL };
->  	int status, nth;
->  	size_t payload_size;
->  
-> diff --git a/range-diff.c b/range-diff.c
-> index f745567cf6..71dcd947c5 100644
-> --- a/range-diff.c
-> +++ b/range-diff.c
-> @@ -107,7 +107,7 @@ static int read_patches(const char *range, struct string_list *list,
->  		}
->  
->  		if (starts_with(line, "diff --git")) {
-> -			struct patch patch = { 0 };
-> +			struct patch patch = { NULL };
->  			struct strbuf root = STRBUF_INIT;
->  			int linenr = 0;
->  
-> diff --git a/t/helper/test-parse-pathspec-file.c b/t/helper/test-parse-pathspec-file.c
-> index 02f4ccfd2a..b3e08cef4b 100644
-> --- a/t/helper/test-parse-pathspec-file.c
-> +++ b/t/helper/test-parse-pathspec-file.c
-> @@ -6,7 +6,7 @@
->  int cmd__parse_pathspec_file(int argc, const char **argv)
->  {
->  	struct pathspec pathspec;
-> -	const char *pathspec_from_file = 0;
-> +	const char *pathspec_from_file = NULL;
->  	int pathspec_file_nul = 0, i;
->  
->  	static const char *const usage[] = {
-> @@ -20,9 +20,9 @@ int cmd__parse_pathspec_file(int argc, const char **argv)
->  		OPT_END()
->  	};
->  
-> -	parse_options(argc, argv, 0, options, usage, 0);
-> +	parse_options(argc, argv, NULL, options, usage, 0);
->  
-> -	parse_pathspec_file(&pathspec, 0, 0, 0, pathspec_from_file,
-> +	parse_pathspec_file(&pathspec, 0, 0, NULL, pathspec_from_file,
->  			    pathspec_file_nul);
->  
->  	for (i = 0; i < pathspec.nr; i++)
-> 
+Thanks.
