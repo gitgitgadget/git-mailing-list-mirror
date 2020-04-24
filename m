@@ -2,98 +2,129 @@ Return-Path: <SRS0=LF8V=6I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DD8BBC2BA19
-	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 00:07:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B97F9C2BA19
+	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 00:17:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B5CBD2087E
-	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 00:07:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 971D22071E
+	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 00:17:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ni26gG5b"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="cIeVkjNG"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728153AbgDXAHL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Apr 2020 20:07:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49456 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727913AbgDXAHL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Apr 2020 20:07:11 -0400
-Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E2D1C09B042
-        for <git@vger.kernel.org>; Thu, 23 Apr 2020 17:07:11 -0700 (PDT)
-Received: by mail-pj1-x1044.google.com with SMTP id a7so3242462pju.2
-        for <git@vger.kernel.org>; Thu, 23 Apr 2020 17:07:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=j0ELr/7jtZA2f5MwTj756Z0GrCuqnCXqgWf6TctZ5Do=;
-        b=ni26gG5bBJtFcVNT9k77kXUZTK45/V+oiT2WLFdL7NeqHaHBZoZ/PepVaCKhlgqdzt
-         BJerSI+HExVPiOna3OhiytwITORStLSc9fwE+4qCaUiFYh510EUCCYVnHwzH37WCjWNa
-         /t3EMV6tk4+IM/vWxB26kDFBQni6XnY12qxZQ3X0n6cPhEUDh/UwsWywFGA65dfkbZy7
-         Wdj/ZhhwVWarIKhSToif2ixibuDOyHNltR99CP8TSE9q2YJMLZD0bFVPh6GprzVri8Ze
-         mWzopg6zHH3RUZjP+vuZn/Y6uj+Lx7eq1CFheLmKL7vAvmxgr+bk5l8t2vUk2cGC+uN9
-         75AQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=j0ELr/7jtZA2f5MwTj756Z0GrCuqnCXqgWf6TctZ5Do=;
-        b=uXGwBGSBoHTqgSJCClKBRchN5QU1Zyt23Q/foJR0XMgfvdNxhlP/Vg5q+ZkAHT+Vop
-         qqGgCESq7PGJsMPb1AQqWHvT1+zuONlyT3vfSEl7yk3qhX9YXhPKbHZzTDTtW7juSyG2
-         V2KnOYr3rLpX7ewatUfHlQQikWdC5iAFOqQg4ZO6BapnxwafavaXV8+m/kM5J5rPnOk1
-         K3r4Oisd/rcYWfMSZ8diVuCqs9M/TYAkOcRiykPnmOH+uqzsnTZ/mxEbgSrmfZwNlx25
-         SvrncjFVd8Et9Z8AO+X5rRivzSPDRYsrj+rzLiH4gd7QxdDubY2Si28MzWmsDaMBcyuN
-         l1ng==
-X-Gm-Message-State: AGi0PuYgFPvJz7LKZbHkTeE98+vRfa1v5/68w/4fHMaoTvUWUXRbwPJ2
-        FCalr7NZWrIoWe67E/kZqBE=
-X-Google-Smtp-Source: APiQypICRhZBlQn8a36ALILtyGRnEb0bkXqmuMqGNxCWutv/xLCPOxt2hjJKdXoZCEaEtluvxxvcJQ==
-X-Received: by 2002:a17:90a:bf84:: with SMTP id d4mr3455864pjs.82.1587686830396;
-        Thu, 23 Apr 2020 17:07:10 -0700 (PDT)
-Received: from localhost ([2402:800:6374:f359:1ce8:a621:5f80:1116])
-        by smtp.gmail.com with ESMTPSA id b13sm3748574pfo.67.2020.04.23.17.07.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Apr 2020 17:07:09 -0700 (PDT)
-Date:   Fri, 24 Apr 2020 07:07:07 +0700
-From:   Danh Doan <congdanhqx@gmail.com>
-To:     Philip Oakley <philipoakley@iee.email>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        "Brian M . Carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v3 1/2] date.c: skip fractional second part of ISO-8601
-Message-ID: <20200424000707.GB1949@danh.dev>
-References: <cover.1586856398.git.congdanhqx@gmail.com>
- <cover.1587559135.git.congdanhqx@gmail.com>
- <c6d42785bb762f691b00c48b57c73a1933fadbc3.1587559135.git.congdanhqx@gmail.com>
- <xmqqk127jvrh.fsf@gitster.c.googlers.com>
- <20200423011812.GA1930@danh.dev>
- <xmqqmu72gfxu.fsf@gitster.c.googlers.com>
- <1861c472-7756-d433-9185-d83c03d72b9b@iee.email>
+        id S1728229AbgDXARE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Apr 2020 20:17:04 -0400
+Received: from mout.gmx.net ([212.227.17.22]:44593 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728220AbgDXARD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Apr 2020 20:17:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1587687407;
+        bh=TDioRPr53xVJaQxTNG+hF9dja04I8S1M8o3vOreCE78=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=cIeVkjNGDz6KcPG7jz/P3czbUjnUIY+k5be6IrLCOt3b85PcyTTWfjk9AyH0lZXdh
+         l8TV2qbqeFqxxI0lL4Dm7YasG4th/ZiJjKSGr70PL/WrCFs2NrmqOGFeEDFX+DDGTK
+         GaUFiNV+JXfQdqTsnX4RWBXc9yvv82PW+77o1120=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from MININT-QA14EDB.fritz.box ([89.1.212.237]) by mail.gmx.com
+ (mrgmx105 [212.227.17.168]) with ESMTPSA (Nemesis) id
+ 1Mi2Jt-1ixP5T3m7t-00e13i; Fri, 24 Apr 2020 02:16:47 +0200
+Date:   Fri, 24 Apr 2020 02:16:45 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Ilya Tretyakov <it@it3xl.ru>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 3/3] credential: handle `credential.<partial-URL>.<key>`
+ again
+In-Reply-To: <20200424000558.GB20669@Carlos-MBP>
+Message-ID: <nycvar.QRO.7.76.6.2004240215100.18039@tvgsbejvaqbjf.bet>
+References: <pull.615.git.1587588665.gitgitgadget@gmail.com> <pull.615.v2.git.1587685397.gitgitgadget@gmail.com> <daedaffe960581733c25383a2a1b30056a415594.1587685397.git.gitgitgadget@gmail.com> <20200424000558.GB20669@Carlos-MBP>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1861c472-7756-d433-9185-d83c03d72b9b@iee.email>
+Content-Type: multipart/mixed; boundary="8323328-52041762-1587687407=:18039"
+X-Provags-ID: V03:K1:LNDVRbDlFcathYl2K7uyKpO1kKk8I4zhM/qBS7XSTSyEHsdA7tl
+ /vu94Z423WKzyxqzbb4hv38Hwq9N2rLw11nIj1KMacvUlJkcYRTk2onIsLwQbZHjnodM8TP
+ dPCF032ajib4RmyLjqVvragR05W/1DwHeBvZcUSPjuhtFrGNIAkJ0fvFqTQjwvidhCwH5Jb
+ mqitbGQfYZuaLNi1j7NIg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:svU6EZ49fX0=:0yk1f/cslLsN43mSUNlOmG
+ dewNwmLNFhJXAM1wP6byzsviJHGR3yF1cP4qhmCLue+ksGLx+n/c3xygTOAI7XshaoAzOIOMa
+ 7ki3VB+XkYjlTfP80hd+oWBfMddSJInbjfOCaUGpHR2Wg5B4uPFLH+w1uliCtEO5xLNswqPyo
+ fEix23mqLuyDFBCVTMoi9oAFWI69ZguNmgePz0W++n50Gh/9cbzteGMzD0zX5ypz8DBJky3uE
+ eED4g/+t4M6zuFRSOHalDFkbOjTfruUH+1lK7CvxtEDBO3Cu7alaCaTcKb9wFJRELBjVhFhmM
+ 5oi3aLCBEVBYO7PjlHIkiNljBqDGXJPnP5ep2UCED7LcpWVDuVeLWanW6hQc2vzlmCBe9KOce
+ 4Q7kusT0lHXmSBueuCOio9TRkiSVUzr9G82uKMBU5+JpeZ9DHcQQjuC7mc9DPj8P6qgQXrzqH
+ /8g/yaOh85kmNqfvqqUyUeL5/HPp1M5ZRhpkdtX60vYilslMRmyD2nmMH42RI5MEEtfvomGKY
+ qM9k2KDaAz/8mJHZ9da1MGDo92sVTpCQaB+JRBLI3bDKP9tP+prD5xSeVl8b0fL52AFnKvIsp
+ DHz0YPFQYtu3/96DImtnUfHQnGEEyWtOdBDTZc5wJ9tPbvQAj3nNYhG/2vrvdIjC49YlfbVL0
+ UriFADceF/BMjT+Gcn6q7RX8oS3+YoxdilHFu9XBp9lF2iaC/X8F3z+I9eer9a932K/ppUYPF
+ X0oW7mT7p++RImWkV2MdujusZZymllvpZRyxpOjo6f+NLMGsPbsAdkhjOVO89o2Uhon4LaETO
+ eKwmMQ7IbwDMVPJeGyHmXOCk7bIrCjnCFyFmdkQyL/o6MC/5uYWGDHYQom10IdEHlPxvtelPw
+ V+cX6GQeza+NbSGl+AfbpS2DGhMEA5uX2NlF917SztGYTfRKC95/6p75kFe1WBCQEP6dgHlsb
+ L52V1ccRpOHwRZgzWoucWi1DwwDSJYLR73PZ9PfCcYn3Mknmg4i0jUG6VoN/CDkp1r2sce9Gk
+ 5MLXi2yApEYu8L1xZ1ppa+84ba24at5Ovtsn7lQnH/rEho0CozuUYkgcYiY/xL2V2rBqxO7eq
+ Q44jeAHAG62E8YmE0FnEVIxjED7vzr8N9VWaBNQR/nTo0NjLMyy1rNm5WuazQO/5pJ/rnfzLv
+ PQ/Q+TnqaJJ7b7Enni10RwGkzfcBUFi9Vnknw6M6QujBxciFiwSCTUMWnLQN4QpVCWArQnpKe
+ om6y/A4jyah2SbkSL
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2020-04-23 21:41:49+0100, Philip Oakley <philipoakley@iee.email> wrote:
-> On 23/04/2020 20:28, Junio C Hamano wrote:
-> > Danh Doan <congdanhqx@gmail.com> writes:
-> Would is_hhmmss() and is_yyyymmdd() be more obvious abbreviations for
-> most readers?
-> 
-> Now that I type them, they do feel that bit too long... , as naming is
-> hard, maybe stick with the yms and hms, though I do keep wanting to type
-> ytd for the former..
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Not sure if I interpret your opinion correctly,
-Did you mean s/yms/ymd/ and s/ytd/ymd/?
+--8323328-52041762-1587687407=:18039
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Even that, I couldn't grasp the meaning of the last phase?
+Hi Carlo,
 
--- 
-Danh
+On Thu, 23 Apr 2020, Carlo Marcelo Arenas Bel=C3=B3n wrote:
+
+> On Thu, Apr 23, 2020 at 11:43:17PM +0000, Johannes Schindelin via GitGit=
+Gadget wrote:
+> > diff --git a/credential.c b/credential.c
+> > index 52965a5122c..3505f6356d8 100644
+> > --- a/credential.c
+> > +++ b/credential.c
+> > @@ -53,7 +53,13 @@ static int credential_config_callback(const char *v=
+ar, const char *value,
+> >  		char *url =3D xmemdupz(key, dot - key);
+> >  		int matched;
+> >
+> > -		credential_from_url(&want, url);
+> > +		if (credential_from_url_gently(&want, url, 1, 0) < 0) {
+>
+> definitely not worth a reroll, but just wondering if would make sense to=
+ call
+> credential_from_url_gently(!quiet) here, just for consistency?
+
+We don't have any `quiet` variable here.
+
+> other than that this series is looking great, under the assumption that =
+there
+> is going to be some more followup with non essential changes.
+
+I am sure I don't follow. What non-essential changes are you assuming will
+follow up?
+
+> will chip in with an test helper for that series so we can hopefully kee=
+p our
+> sanity next time someone touches that function again.
+
+Are the tests I added to t0300 not enough? Or do you think it will need a
+native test helper that is included in `t/helper/test-tool` and exercised
+in the test suite somehow?
+
+Ciao,
+Dscho
+
+--8323328-52041762-1587687407=:18039--
