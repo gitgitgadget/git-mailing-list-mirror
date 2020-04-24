@@ -2,91 +2,98 @@ Return-Path: <SRS0=LF8V=6I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.2 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 36E0BC55186
-	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 16:47:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 40FD1C54FCB
+	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 16:50:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0D356215A4
-	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 16:47:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1E00F20774
+	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 16:50:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="LvGOkGzX"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="upYCG/aA"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728817AbgDXQrn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Apr 2020 12:47:43 -0400
-Received: from avasout04.plus.net ([212.159.14.19]:58037 "EHLO
-        avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728629AbgDXQrm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Apr 2020 12:47:42 -0400
-Received: from [10.0.2.15] ([217.32.115.138])
-        by smtp with ESMTPA
-        id S1N2jk3LmpB7IS1N3j63j0; Fri, 24 Apr 2020 17:40:10 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-        t=1587746410; bh=7sPsy/A4b4McALzdVv9LATX3rzaRjTY3HD1O43WVa+k=;
-        h=Subject:To:References:From:Date:In-Reply-To;
-        b=LvGOkGzXPJcnjsspQj6EKAWinJDj9dBRiSqPuz3PXjyguMryYm8HZ8ag3BIYVlDnK
-         crY87KdEkwzP1cCiclUSqmTGvtn4QqgvQ1bJ4Xf6W296LvFFa6S9INRlqhnEq/SJfF
-         RmcG/IfDVFE90sdvRNWk5Gm9+U6hhBT+NCWRkncxOBSW1XbMzc2jfSxnn3qLqwZS1L
-         gelotWrWbxAHIdT1cbTtiyfwGe/uiwxd0VgWU6493yrLck/7RBpvFlNKMfoDxjt2+W
-         ythJFJVNFjl3yy7VpWveMyVWyUzpsdspPHzk9PvZWOMO+HiefTUgbpsJnTb9SM7dq6
-         1/8RylH+eCJ/g==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=MKb7ZPRl c=1 sm=1 tr=0
- a=T9WNts+jH3PhiGdS1gtV5Q==:117 a=T9WNts+jH3PhiGdS1gtV5Q==:17
- a=IkcTkHD0fZMA:10 a=ORtwwZdZew9jYSCNUAoA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH v2 0/4] Fix Sparse Warning
-To:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
-        git@vger.kernel.org
-References: <cover.1587648870.git.congdanhqx@gmail.com>
- <cover.1587740959.git.congdanhqx@gmail.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <411ec3ea-162e-8e52-0133-3108e0c38f0d@ramsayjones.plus.com>
-Date:   Fri, 24 Apr 2020 17:40:08 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+        id S1728563AbgDXQuq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Apr 2020 12:50:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37020 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728505AbgDXQup (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Apr 2020 12:50:45 -0400
+Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE094C09B046
+        for <git@vger.kernel.org>; Fri, 24 Apr 2020 09:50:45 -0700 (PDT)
+Received: by mail-pl1-x644.google.com with SMTP id g2so3943814plo.3
+        for <git@vger.kernel.org>; Fri, 24 Apr 2020 09:50:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=LISBEpughaAOrS+D0pygB53qFeSw7EsRe52iD7WONV4=;
+        b=upYCG/aAR0Gjzu9RILbKU1ORQI44mb/VIzsGRTOD6sWmf3OH/yggn1k+PrdhHG8pU3
+         pyO3YKiGAvfllDjD37zeFGOxi2Ln/GQe8O5NnPRZbAXDDAWdBFJMHOPjWyK+3aPzqu8m
+         xh/1AM+mvAHSYA0Mr3VvDxmP5FsfW3qfvNSDjNVSxo3+VC/j9+HmzFyE6EjqbpvHgS27
+         /LSWd9NdJF4e4SN6DBdm9xwJ2LBuqbzJLGS7aCtjqSqZlFnByzbvbkXeyiYlq+X4fnPm
+         FGusgUTrH57qLbtMUUoL1H0KMCAMhZwY8LyY2cn5pui2ftOQD7PfwapDKEufbmNKfNI1
+         iS2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=LISBEpughaAOrS+D0pygB53qFeSw7EsRe52iD7WONV4=;
+        b=hLZjOXego5o3YYtnrkSS5yFD8tjCZh/l7jsEiADyY1jupsENG5jqslUMqKSgXI7KyV
+         +KoPsYMzhV4f0+H7ZRB9PLtUCGaCGWrIiUwgs43sNflEk1ZeCrhaGm07RPtpdGAaRLnC
+         1yLRyJFbnTDOZQXr27lFhmvdgKu24K6daNonizEz8qppaOYKPS5nSAviCUOO8ITsbPPb
+         nZvQXISPn7JalarXiS1TRqRibxfoZR0SBBjfHA1lkqNp5iLo9pZihShvA1wI7dFKAznk
+         uRxastxKDTQp5r5iEW2CJg30HRTfvIr490EOEpSGZna6Wykzjp7DlAOudqQ0lkXYlOAc
+         o9fQ==
+X-Gm-Message-State: AGi0PuZHyguEKVWH+oczlGfhaKe1CvvdgqDukDD18LCoGjjuJ7Q9yMiO
+        IoJGiHdC8zH5OoEflEQ4gG3u0g==
+X-Google-Smtp-Source: APiQypKs7gP92iSW5m3EjjNyCgyTfHhEYi3CoP+jIcrkbiAPhK/ZBKKlkFrkQa474t5oww1ekvOslA==
+X-Received: by 2002:a17:902:8641:: with SMTP id y1mr10594656plt.14.1587747045178;
+        Fri, 24 Apr 2020 09:50:45 -0700 (PDT)
+Received: from localhost ([8.44.146.30])
+        by smtp.gmail.com with ESMTPSA id z190sm6159687pfz.84.2020.04.24.09.50.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 24 Apr 2020 09:50:43 -0700 (PDT)
+Date:   Fri, 24 Apr 2020 10:50:42 -0600
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] push: anonymize URLs in error messages and warnings
+Message-ID: <20200424165042.GA58621@syl.local>
+References: <pull.618.git.1587738008248.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <cover.1587740959.git.congdanhqx@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfEMgdK42G7LdQ1QKMRSyKQ//K/hvJ0uiJGoYUWKYwNPM7ee/CF+0d4KZ00gdmTjn92az9G3vQp+mpKJhqhVimDqdKFesPV/mcRcQZE5M+Byfp+7hM2jQ
- jO+NHKzU6ez1uZ/oyErPGrlyYCOMNKqe28k2b88mWmzsnE2FUoXxfJjgnBqbVLDvDBVIs1g1FN/lfw==
+Content-Disposition: inline
+In-Reply-To: <pull.618.git.1587738008248.gitgitgadget@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Apr 24, 2020 at 02:20:08PM +0000, Johannes Schindelin via GitGitGadget wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
+> Just like 47abd85ba0 (fetch: Strip usernames from url's before storing
+> them, 2009-04-17) and later 882d49ca5c (push: anonymize URL in status
+> output, 2016-07-13), and even later c1284b21f243 (curl: anonymize URLs
+> in error messages and warnings, 2019-03-04) this change anonymizes URLs
+> (read: strips them of user names and especially passwords) in
+> user-facing error messages and warnings.
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>     push: anonymize URLs in error messages and warnings
+>
+>     A token used by GitGitGadget was leaked by this bug. Thankfully, it
+>     seems nobody noticed, and I installed a patched Git on the self-hosted
+>     build agent so that this won't happen anymore.
 
+All looks good to me, thanks.
 
-On 24/04/2020 16:12, Đoàn Trần Công Danh wrote:
-> Change in v2 from v1:
-> * = { 0 } is an idiom to zero the structure, it shouldn't be changed
-> * change in [4/4] for prototype
-> * ignore diffent function prototype
+  Reviewed-by: Taylor Blau <me@ttaylorr.com>
 
-Apart from the regex patch [2/4], these all look good to me.
-
-Thanks!
-
-ATB,
-Ramsay Jones
-
-> 
-> Đoàn Trần Công Danh (4):
->   test-parse-pathspec-file.c: s/0/NULL/ for pointer type
->   compat/regex: include alloca.h before undef it
->   graph.c: limit linkage of internal variable
->   progress.c: silence cgcc suggestion about internal linkage
-> 
->  compat/regex/regex.c                | 1 +
->  graph.c                             | 2 +-
->  progress.c                          | 2 +-
->  progress.h                          | 8 ++++++++
->  t/helper/test-parse-pathspec-file.c | 6 +++---
->  t/helper/test-progress.c            | 9 +--------
->  6 files changed, 15 insertions(+), 13 deletions(-)
-> 
+Thanks,
+Taylor
