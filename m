@@ -2,133 +2,139 @@ Return-Path: <SRS0=LF8V=6I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.2 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B6235C54FD0
-	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 16:54:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BA9ADC54FCB
+	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 16:56:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8F1122075A
-	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 16:54:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6C9CB20728
+	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 16:56:50 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="Wa9dfz7Q"
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="bL+sWD9R"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727059AbgDXQyi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Apr 2020 12:54:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37672 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726753AbgDXQyi (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Apr 2020 12:54:38 -0400
-Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26108C09B046
-        for <git@vger.kernel.org>; Fri, 24 Apr 2020 09:54:38 -0700 (PDT)
-Received: by mail-pl1-x641.google.com with SMTP id g2so3947582plo.3
-        for <git@vger.kernel.org>; Fri, 24 Apr 2020 09:54:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=RmYWV7OjoT/bNWrPKkhTvPJSLNj/cBQBTOEuvDco+XU=;
-        b=Wa9dfz7QIqZFJfNOIkR+6v7lxbe/sgaa/7gdijbCcyZEOpl1o2avd706AM7gpSFYp7
-         5JSfCkMBCrDi8becYDPvJQq6XBOfQ/9EwZGMa+TVN6dtaRdqv0Q4TOZSroC8TT/lXOzx
-         x7hnTgp9eH1vrdV4EW8LDXS5QSwm429eFiiLFxqJDooY4rECeXSsQrRhftvoOx5ReDTM
-         8Ep4BDrtl2lZe59jmpvoyOsJWrBB44JEdes3bQ1sdmWE5iJ+dgREehnGHD3qi9pzr+/2
-         fa8ION+JVbdWvpbC7tEg0PQadC++x0PaxpzwuY9bgSk4ZtS9uUcjN+TieMWdHjpZOdxW
-         ISyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=RmYWV7OjoT/bNWrPKkhTvPJSLNj/cBQBTOEuvDco+XU=;
-        b=gPdGhYMgKHjDN0kzJxIEMdc2yl+Z4L279p4bpmM+ro+TbKRcH9w9ZyBuyfVNl9ClJ+
-         azlb9vZ7iiX4SnRbzgo438WQAyjmyt8FyfVrdO7KpjjAtq8RNhbFFDKONl+l2+rc+Dc6
-         aAuvHQSctQ2GfxdbbounyRbcqBdBa3ewVacKFeO/PLLz2a2xDw9iFAvAcX08ZbMlnuVz
-         gZ4yM+rR8CP/rgXUFpflBYe6GXD3Jyp67CqvQqgWFKh+fqckZTwNGVLYmFzFsXOqwFpG
-         WY9F+r+myl+UeI3xHuFN5sBKc61wNNSsi7jq4fRLvL0mgjXCSgo1/syEPNfQSpjLIboa
-         n21A==
-X-Gm-Message-State: AGi0PuaJe5b8aypBkvOSYAVKPoik4p8FAAuhr/HUrPFUW4QA5YB3GVm3
-        xUAqrr8SR8Lh+zHThOl+CxMjYg==
-X-Google-Smtp-Source: APiQypL4g1WwHQiWCo14yGvvE2clSQm1tDeDr4Vvki/HZ+EwzqWKkR5WaC3cAMdg/VjMxPDwpu0WwA==
-X-Received: by 2002:a17:902:d697:: with SMTP id v23mr8435212ply.262.1587747277563;
-        Fri, 24 Apr 2020 09:54:37 -0700 (PDT)
-Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id r17sm4238366pgn.35.2020.04.24.09.54.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Apr 2020 09:54:36 -0700 (PDT)
-Date:   Fri, 24 Apr 2020 10:54:35 -0600
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        chriscool@tuxfamily.org
-Subject: Re: [PATCH 4/4] pack-bitmap: pass object filter to fill-in traversal
-Message-ID: <20200424165435.GB58621@syl.local>
-References: <cover.1587597151.git.me@ttaylorr.com>
- <65467a058e7dca6cf1e2db9cdab81513989b5db0.1587597151.git.me@ttaylorr.com>
- <20200424054227.GE1648190@coredump.intra.peff.net>
+        id S1727031AbgDXQ4t (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Apr 2020 12:56:49 -0400
+Received: from avasout04.plus.net ([212.159.14.19]:58727 "EHLO
+        avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726753AbgDXQ4t (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Apr 2020 12:56:49 -0400
+Received: from [10.0.2.15] ([217.32.115.138])
+        by smtp with ESMTPA
+        id S1d8jk4KEpB7IS1dAj64Kq; Fri, 24 Apr 2020 17:56:48 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+        t=1587747408; bh=PhiMnV1tsO+oG/ggBqMGFVQlP2BirW5NaxCBwqI8JWk=;
+        h=Subject:To:References:From:Date:In-Reply-To;
+        b=bL+sWD9Rm8Xc/W+Q/IV7J+gPJO/lqx5jWNLCSUkBe904Es9NqOuEyihRoqJpQdiOT
+         1uq7kjB08zzwc+V3QeSMNFpwbUq0ZzJxpldU+PQ0H1HboIpiXde5Fx5Nwdcp95h7Ha
+         1TVAJFTc8+zI06OqQrvuckKQLxa9IQIT2NZVjdF/cNLBnBWgPDbZxpzkD15yrfoIqQ
+         ogu4Z+Cyiw9Qqf6U2BqxlwLKAJzfqE/XpoCqD7NTHVnW4QaX3T7g6Uj51am/zZhdYL
+         UyPF9bx3Ctj4WFTikbPOwOof0K/k3Hh/ydoY9/DNmaEwRzaPkozylW3yVQ0oYC9max
+         TcSNqsa68bHoA==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=MKb7ZPRl c=1 sm=1 tr=0
+ a=T9WNts+jH3PhiGdS1gtV5Q==:117 a=T9WNts+jH3PhiGdS1gtV5Q==:17
+ a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8 a=IV6zVFhp2VCHSBWG5AkA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH v2 2/4] compat/regex: include alloca.h before undef it
+To:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        git@vger.kernel.org
+References: <cover.1587648870.git.congdanhqx@gmail.com>
+ <cover.1587740959.git.congdanhqx@gmail.com>
+ <290ba923b5ee5bcaa4801454b6692deb532bd681.1587740959.git.congdanhqx@gmail.com>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <820d44c5-5852-fa83-a814-8e58dd120565@ramsayjones.plus.com>
+Date:   Fri, 24 Apr 2020 17:56:46 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
+In-Reply-To: <290ba923b5ee5bcaa4801454b6692deb532bd681.1587740959.git.congdanhqx@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200424054227.GE1648190@coredump.intra.peff.net>
+Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfJRN9bUKLQsuGNtjDBWB8wIbFJQ9JM+c5BeJaSuJkndzkbP/SfHDo9V0f/ZGYLwn8ilOYfRLn+htKCJ3gkmU5OdKpiGLk1DSvdJqDKTIY+NFV1UfL0t6
+ IAHzNX2BV0ZkPerqoId5TaldmPyw4d9tOMtdOkw0z+5CHBzXld4h00U0K1DQBqki3GzW4+iNupsM0Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 24, 2020 at 01:42:27AM -0400, Jeff King wrote:
-> On Wed, Apr 22, 2020 at 05:13:35PM -0600, Taylor Blau wrote:
->
-> > From: Jeff King <peff@peff.net>
-> >
-> > Sometimes a bitmap traversal still has to walk some commits manually,
-> > because those commits aren't included in the bitmap packfile (e.g., due
-> > to a push or commit since the last full repack). If we're given an
-> > object filter, we don't pass it down to this traversal. It's not
-> > necessary for correctness because the bitmap code has its own filters to
-> > post-process the bitmap result (which it must, to filter out the objects
-> > that _are_ mentioned in the bitmapped packfile).
-> >
-> > And with blob filters, there was no performance reason to pass along
-> > those filters, either. The fill-in traversal could omit them from the
-> > result, but it wouldn't save us any time to do so, since we'd still have
-> > to walk each tree entry to see if it's a blob or not.
-> >
-> > But now that we support tree filters, there's opportunity for savings. A
-> > tree:depth=0 filter means we can avoid accessing trees entirely, since
-> > we know we won't them (or any of the subtrees or blobs they point to).
->
-> s/won't them/won't include them/ perhaps
 
-Oops. Even though you wrote this patch, I clearly also should have
-proofread it more carefully before sending it to the list ;).
 
-Junio -- assuming that you are comfortable taking this series as-is (and
-please let me know if you are not), would you mind fixing up this typo
-as you apply it?
+On 24/04/2020 16:12, Đoàn Trần Công Danh wrote:
+> Somewhere later in the code, we indirectly include alloca.h
+> which will define alloca again, thus create a warning about
+> redefinition of a preprocessor.
+> 
+> Include it prior to define alloca in order to not define it again.
 
-> > diff --git a/t/perf/p5310-pack-bitmaps.sh b/t/perf/p5310-pack-bitmaps.sh
-> > index b629a211f9..95379b1d4e 100755
-> > --- a/t/perf/p5310-pack-bitmaps.sh
-> > +++ b/t/perf/p5310-pack-bitmaps.sh
-> > @@ -95,4 +95,9 @@ test_perf 'pack to file (partial bitmap)' '
-> >  	git pack-objects --use-bitmap-index --all pack2b </dev/null >/dev/null
-> >  '
-> >
-> > +test_perf 'rev-list with tree filter (partial bitmap)' '
-> > +	git rev-list --use-bitmap-index --count --objects --all \
-> > +		--filter=tree:0 >/dev/null
-> > +'
->
-> This covers perf testing of this partial-bitmap state, but we shoudl
-> make sure that we are covering correctness, too. I think so, because
-> t6113 creates a similar state for all of its tests.
+So, on cygwin, this patch is not required. ie. I don't see any sparse
+errors/warnings for compat/regex/regex.c.
 
-Yeah, we are covered there. The last three tests in t6613 cover
-'--filter=tree:0', bot with and without specified objects (to make sure
-that named objects don't get culled out by the filter), as well as the
-'--filter=tree:1', to make sure that we didn't break that.
+Since cygwin uses a different c library (new-lib rather than glibc),
+I did a quick test on Linux, thus:
 
-> -Peff
+  $ sparse --version
+  v0.6.1-191-gc51a0382
+  $ 
+  $ git checkout master
+  Switched to branch 'master'
+  Your branch is up-to-date with 'origin/master'.
+  $ 
+  $ make clean
+  GIT_VERSION = 2.26.2.266.ge870325ee8
+  ...
+  $ 
+  $ make NO_REGEX=1 sparse >sp-out1 2>&1
+  $ 
+  $ diff sp-out sp-out1
+  0a1,2
+  > GIT_VERSION = 2.26.2.266.ge870325ee8
+  >     * new build flags
+  12a15
+  >     * new prefix flags
+  72a76
+  >     GEN command-list.h
+  226a231
+  >     SP compat/regex/regex.c
+  $ 
+  $ make V=1 NO_REGEX=1 compat/regex/regex.sp
+  cgcc -no-compile -Werror -Wall -Wdeclaration-after-statement -Wformat-security -Wold-style-definition -Woverflow -Wpointer-arith -Wstrict-prototypes -Wunused -Wvla -DENABLE_SHA256 -Wextra -Wmissing-prototypes -Wno-empty-body -Wno-missing-field-initializers -Wno-sign-compare -Wno-unused-parameter  -g -O2 -Wall -I. -DHAVE_SYSINFO -DGIT_HOST_CPU="\"x86_64\"" -DHAVE_ALLOCA_H -DUSE_CURL_FOR_IMAP_SEND -DSHA1_DC -DSHA1DC_NO_STANDARD_INCLUDES -DSHA1DC_INIT_SAFE_HASH_DEFAULT=0 -DSHA1DC_CUSTOM_INCLUDE_SHA1_C="\"cache.h\"" -DSHA1DC_CUSTOM_INCLUDE_UBC_CHECK_C="\"git-compat-util.h\"" -DSHA256_BLK  -DHAVE_PATHS_H -DHAVE_DEV_TTY -DHAVE_CLOCK_GETTIME -DHAVE_CLOCK_MONOTONIC -DHAVE_GETDELIM '-DPROCFS_EXECUTABLE_PATH="/proc/self/exe"'  -DFREAD_READS_DIRECTORIES -DNO_STRLCPY -Icompat/regex -DSHELL_PATH='"/bin/sh"' -DPAGER_ENV='"LESS=FRX LV=-c"' -DGAWK -DNO_MBSUPPORT \
+  	  compat/regex/regex.c
+  $ 
+   
+So, again I don't see a problem. I guess it is possible that the
+version of sparse I am using (see above) has _also_ fixed this
+problem, in addition to the prototype attribute placement fix.
 
-Thanks,
-Taylor
+Another option is that the version of glibc also matters. (I am
+on Linux Mint, which is based on Ubuntu 18.04 LTS) It would not
+be the first time that I have seen errors in system header files
+change from one release to the next ...
+
+[Hmm, I have a fedora 31 system I could try - much more up-to-date! :D ]
+
+ATB,
+Ramsay Jones
+
+> Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
+> ---
+>  compat/regex/regex.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/compat/regex/regex.c b/compat/regex/regex.c
+> index f3e03a9eab..4bef75a716 100644
+> --- a/compat/regex/regex.c
+> +++ b/compat/regex/regex.c
+> @@ -62,6 +62,7 @@
+>  #include <stdint.h>
+>  
+>  #ifdef GAWK
+> +#include <alloca.h>
+>  #undef alloca
+>  #define alloca alloca_is_bad_you_should_never_use_it
+>  #endif
+> 
