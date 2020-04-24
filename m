@@ -2,199 +2,118 @@ Return-Path: <SRS0=LF8V=6I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D0050C54FCB
-	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 17:45:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 63059C54FCB
+	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 18:29:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A501A20774
-	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 17:45:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1493B206D7
+	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 18:29:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l/1oNWvQ"
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="fvvuMpfn"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727123AbgDXRpr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Apr 2020 13:45:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46418 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1727059AbgDXRpr (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 24 Apr 2020 13:45:47 -0400
-Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61EE9C09B047
-        for <git@vger.kernel.org>; Fri, 24 Apr 2020 10:45:47 -0700 (PDT)
-Received: by mail-pl1-x642.google.com with SMTP id w3so3996409plz.5
-        for <git@vger.kernel.org>; Fri, 24 Apr 2020 10:45:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=8x7aMS/eGdhFSsdpC6jGUdpljZvBBLH3h539Koc4CqM=;
-        b=l/1oNWvQ11jIrBo8BlPPvfact0v15RHbUcs801STtolVCOupXxNLVgWsa84RziYrJ4
-         MwiPTEtG3b+O1lXQhy9HaYi6Wqh2zZ4JVcdHxqrhkATbQx4rulS6u9nMOGxkFzq9y2B/
-         7mRML2CYZGAoahcDczP+gRdPKpxR5A9LD3/Asf8VJF30Ldq0uaFnLDFfdzL4aYe+JeLS
-         67RjZLEKQYd/LytuWdh/dNJgi9LtfIAnC/f9AJXoUO+KKrTspBb9ZlpJuuFlM0qWg0CB
-         nV/tZDs5eHFuQnEcc0AkUY3Tme8Sxjn9nJQn8G+whQo+yJfeINacpF4Bm8qjG7W6k4Vw
-         lM/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=8x7aMS/eGdhFSsdpC6jGUdpljZvBBLH3h539Koc4CqM=;
-        b=kL+xXeqintOq0Is9RCekAi1JV8FB1S/t8XLyf0kkBwXzSX6GhA8dWkKPp/x9ODsZdW
-         ts4ZaORN+gaQEnVbfGvdUXmR02kDCXD+A5NPmJwk4kUvF6JKBrbb7ZuWD4h1YMGkXsw3
-         TpO37sK913RV2uuHL/RHBWSzDKzeA4iUu1wmeef89WlIbhb0zvnrZmsoM3pg5pZj7FBE
-         wgssS2Y4DgPptxTFON4I1ulkjc+JWcWlL3qfPttBNQ3KHZZ05SSz9Anp2j4HuLLlkLEX
-         EgqOvZ9jlMVfIwAUItVZZwrGN+/mnRktf3IoQkcWrD5svBah55S3c89B65RwTnHUQ3N0
-         pg6g==
-X-Gm-Message-State: AGi0PuZDTIZcdHO+rehTNTSZc7naocXIXhJDhIgD4Vl4k0MADBoHQtJn
-        dVj2TWUlBVC7vM0SMU+ypz0=
-X-Google-Smtp-Source: APiQypL9CGJ8v8p0Pah6S7LBLau6dSJI980FbuBrbyXVTzg1b1UL0dbBI4HWEISowkIy5n+Ay7CIXA==
-X-Received: by 2002:a17:902:b186:: with SMTP id s6mr10791549plr.16.1587750346910;
-        Fri, 24 Apr 2020 10:45:46 -0700 (PDT)
-Received: from localhost ([2402:800:6374:f359:1ce8:a621:5f80:1116])
-        by smtp.gmail.com with ESMTPSA id a2sm6240765pfg.106.2020.04.24.10.45.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Apr 2020 10:45:46 -0700 (PDT)
-Date:   Sat, 25 Apr 2020 00:45:44 +0700
-From:   Danh Doan <congdanhqx@gmail.com>
-To:     Sibi Siddharthan via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Sibi Siddharthan <sibisiddharthan.github@gmail.com>
-Subject: Re: [PATCH 8/8] ci: modification of main.yml to use cmake for
- vs-build job
-Message-ID: <20200424174544.GN1949@danh.dev>
-References: <pull.614.git.1587700897.gitgitgadget@gmail.com>
- <f0294be3f1151526fe002a55fb79015bd35606b2.1587700897.git.gitgitgadget@gmail.com>
+        id S1728975AbgDXS3f (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Apr 2020 14:29:35 -0400
+Received: from avasout04.plus.net ([212.159.14.19]:36817 "EHLO
+        avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728953AbgDXS3e (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Apr 2020 14:29:34 -0400
+Received: from [10.0.2.15] ([217.32.115.138])
+        by smtp with ESMTPA
+        id S34ujk9PmpB7IS34vj66kS; Fri, 24 Apr 2020 19:29:33 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+        t=1587752973; bh=vXeFtxAYu5FcA2Q5hQdvADM6CxKNGNoHhP7zmSx9ed4=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=fvvuMpfnpIvmvUh9E7ThC+DrFF2bccRLTuUC9NalJpATT0viXQAlszC+G9b5q3Alu
+         BkXh5x9gkpSud8ibQVrAtC3BvMoRY2+8ZqqGR0b5MlXbu0QqElm76FgMafDxFmJMgE
+         N9HliMXNtFCFx7Vknt4B2adbBW3pbEPKhWTJq/zgYFN7vt0yZovWx8+RDgjjMa37G0
+         MSQQ8ZrfWaErYiFwLGVIX6nYKYIPMnZ2sEIqXOYsscU4HmtxbF3VCtqElqqn2QSM4u
+         Cpdztw9c5p0o/Vyhevvzyhu8liYC8Kjavl2DYaseWw+Mds1BDlrvsPBtW1njBEXjG4
+         yC2zNSzahZxig==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=MKb7ZPRl c=1 sm=1 tr=0
+ a=T9WNts+jH3PhiGdS1gtV5Q==:117 a=T9WNts+jH3PhiGdS1gtV5Q==:17
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=wmOa9ne9PhTv1M8BaqAA:9 a=QEXdDO2ut3YA:10
+ a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH v2 2/4] compat/regex: include alloca.h before undef it
+To:     Danh Doan <congdanhqx@gmail.com>
+Cc:     git@vger.kernel.org
+References: <cover.1587648870.git.congdanhqx@gmail.com>
+ <cover.1587740959.git.congdanhqx@gmail.com>
+ <290ba923b5ee5bcaa4801454b6692deb532bd681.1587740959.git.congdanhqx@gmail.com>
+ <820d44c5-5852-fa83-a814-8e58dd120565@ramsayjones.plus.com>
+ <20200424170916.GA29153@danh.dev>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <0bee8daa-99d0-4939-e225-8783bc0457f8@ramsayjones.plus.com>
+Date:   Fri, 24 Apr 2020 19:29:31 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f0294be3f1151526fe002a55fb79015bd35606b2.1587700897.git.gitgitgadget@gmail.com>
+In-Reply-To: <20200424170916.GA29153@danh.dev>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfOhS98uUAthk2QyF1yWOxT/s832Tsb7DBbITCygPGY5/jyTH4Kwmo940rdepaECD935CNelbyaTxFbU+HLBobsQixEdWuX9i2tSZdVp5Zo7Qx+5FUqTn
+ HIT0y0jKlcwBstMYyttPyhjnUAr2b1PWmfJuD/yL5YcJWAhRdMAQ3ZAPhdeFkAcEBQzP2yQCB377Mw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2020-04-24 04:01:37+0000, Sibi Siddharthan via GitGitGadget <gitgitgadget@gmail.com> wrote:
-> From: Sibi Siddharthan <sibisiddharthan.github@gmail.com>
+
+
+On 24/04/2020 18:09, Danh Doan wrote:
+> On 2020-04-24 17:56:46+0100, Ramsay Jones <ramsay@ramsayjones.plus.com> wrote:
+[snip]
+
+>> So, again I don't see a problem. I guess it is possible that the
+>> version of sparse I am using (see above) has _also_ fixed this
+>> problem, in addition to the prototype attribute placement fix.
+>>
+>> Another option is that the version of glibc also matters. (I am
+>> on Linux Mint, which is based on Ubuntu 18.04 LTS) It would not
+>> be the first time that I have seen errors in system header files
+>> change from one release to the next ...
 > 
-> This patch modifies .github/workflows/main.yml to use CMake for
-> Visual Studio builds.
+> I'm using a Linux distro with musl libc.
+
+Ah, OK.
+
+I just tried re-building v0.6.1 to see if any '<alloca.h>' related
+errors/warnings show up for me, but they don't:
+
+  $ sparse --version
+  v0.6.1
+  $ 
+  $ git checkout master
+  Switched to branch 'master'
+  Your branch is up-to-date with 'origin/master'.
+  $ 
+  $ make clean
+  GIT_VERSION = 2.26.2.266.ge870325ee8
+  ...
+  $ 
+  $ make NO_REGEX=1 compat/regex/regex.sp
+      SP compat/regex/regex.c
+  compat/regex/regex_internal.c:925:1: error: symbol 're_string_context_at' redeclared with different type (originally declared at compat/regex/regex_internal.h:433) - different modifiers
+  $ 
+
+> I guess it's the main culprit?
+
+Quite possible, I guess. What do the errors/warnings look like?
+
+> I have another box with glibc, but it's mostly in Windows 10,
+> because my sister is its main user.
 > 
-> Modified the vs-test step to match windows-test step. This speeds
-> up the vs-test. Calling git-cmd from powershell and then calling git-bash
-> to perform the tests slows things down(factor of about 6). So git-bash
-> is directly called from powershell to perform the tests using prove.
-> 
-> NOTE: Since GitHub keeps the same directory for each job
-> (with respect to path) absolute paths are used in the bin-wrapper
-> scripts.
-> 
-> GitHub has switched to CMake 3.17.1 which changed the behaviour of
-> FindCURL module. An extra definition (-DCURL_NO_CURL_CMAKE=ON) has been
-> added to revert to the old behaviour.
-> 
-> Signed-off-by: Sibi Siddharthan <sibisiddharthan.github@gmail.com>
-> ---
->  .github/workflows/main.yml | 43 ++++++++++++++++++++++----------------
->  1 file changed, 25 insertions(+), 18 deletions(-)
-> 
-> diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-> index fd4df939b50..94f9a385225 100644
-> --- a/.github/workflows/main.yml
-> +++ b/.github/workflows/main.yml
-> @@ -80,13 +80,6 @@ jobs:
->      - name: download git-sdk-64-minimal
->        shell: bash
->        run: a=git-sdk-64-minimal && mkdir -p $a && curl -# https://wingit.blob.core.windows.net/ci-artifacts/$a.tar.xz | tar -C $a -xJf -
-> -    - name: generate Visual Studio solution
-> -      shell: powershell
-> -      run: |
-> -        & .\git-sdk-64-minimal\usr\bin\bash.exe -lc @"
-> -          make NDEBUG=1 DEVELOPER=1 vcxproj
-> -        "@
-> -        if (!$?) { exit(1) }
->      - name: download vcpkg artifacts
->        shell: powershell
->        run: |
-> @@ -98,6 +91,13 @@ jobs:
->          Remove-Item compat.zip
->      - name: add msbuild to PATH
->        uses: microsoft/setup-msbuild@v1.0.0
-> +    - name: generate Visual Studio solution
-> +      shell: powershell
-> +      run: |
-> +        & .\git-sdk-64-minimal\usr\bin\bash.exe -lc @"
-> +          cmake . -DCMAKE_PREFIX_PATH=./compat/vcbuild/vcpkg/installed/x64-windows -DMSGFMT_EXE=./git-sdk-64-minimal/mingw64/bin/msgfmt.exe -DPERL_TESTS=OFF -DPYTHON_TESTS=OFF -DCURL_NO_CURL_CMAKE=ON
-> +        "@
-> +        if (!$?) { exit(1) }
+> I'll take a look if it make that warning when my sister agree to leave
+> that box to me.
 
-If you intended to modified some steps to provide a better script for
-that step, I believe you should change in that step.
+Sounds good.
 
-If the order of those steps need to be changed, please clarify your
-reasoning!
+ATB,
+Ramsay Jones
 
->      - name: MSBuild
->        run: msbuild git.sln -property:Configuration=Release -property:Platform=x64 -maxCpuCount:4 -property:PlatformToolset=v142
->      - name: bundle artifact tar
-> @@ -125,9 +125,9 @@ jobs:
->          nr: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
->      steps:
->      - uses: actions/checkout@v1
-> -    - name: download git-64-portable
-> +    - name: download git-sdk-64-minimal
->        shell: bash
-> -      run: a=git-64-portable && mkdir -p $a && curl -# https://wingit.blob.core.windows.net/ci-artifacts/$a.tar.xz | tar -C $a -xJf -
-> +      run: a=git-sdk-64-minimal && mkdir -p $a && curl -# https://wingit.blob.core.windows.net/ci-artifacts/$a.tar.xz | tar -C $a -xJf -
->      - name: download build artifacts
->        uses: actions/download-artifact@v1
->        with:
-> @@ -136,23 +136,30 @@ jobs:
->      - name: extract build artifacts
->        shell: bash
->        run: tar xf artifacts.tar.gz
-> -    - name: test (parallel)
-> +    - name: test
-
-So the test couldn't be run in parallel anymore?
-It's a regression!
-And we don't need the matrix anymore!!!!!
-
-I wonder if Dscho's effort is wasted, he tried very hard to make
-those tests run in parallel.
-He even tried to re-order the matrix in GfW project to let longest
-test run first!
-
-
->        shell: powershell
->        env:
->          MSYSTEM: MINGW64
->          NO_SVN_TESTS: 1
->          GIT_TEST_SKIP_REBASE_P: 1
->        run: |
-> -        & git-64-portable\git-cmd.exe --command=usr\bin\bash.exe -lc @"
-> -          # Let Git ignore the SDK and the test-cache
-> -          printf '%s\n' /git-64-portable/ /test-cache/ >>.git/info/exclude
-> +        & .\git-sdk-64-minimal\usr\bin\bash.exe -lc @"
-> +          # Let Git ignore the SDK
-> +          printf '%s\n' /git-sdk-64-minimal/ >>.git/info/exclude
->  
-> -          cd t &&
-> -          PATH=\"`$PWD/helper:`$PATH\" &&
-> -          test-tool.exe run-command testsuite --jobs=10 -V -x --write-junit-xml \
-> -                  `$(test-tool.exe path-utils slice-tests \
-> -                          ${{matrix.nr}} 10 t[0-9]*.sh)
-> +          ci/run-test-slice.sh ${{matrix.nr}} 10
->          "@
-> +    - name: ci/print-test-failures.sh
-> +      if: failure()
-> +      shell: powershell
-> +      run: |
-> +        & .\git-sdk-64-minimal\usr\bin\bash.exe -lc ci/print-test-failures.sh
-
-What is changed?
-
--- 
-Danh
