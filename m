@@ -2,74 +2,104 @@ Return-Path: <SRS0=LF8V=6I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=BAD_ENC_HEADER,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B2525C2BA19
-	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 00:05:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C7302C2BA19
+	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 00:06:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5E8B92087E
-	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 00:05:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A654921473
+	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 00:06:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=sorrel.sh header.i=@sorrel.sh header.b="m6iyny0r"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Afb3nTed"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728046AbgDXAFZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Apr 2020 20:05:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49178 "EHLO
+        id S1728195AbgDXAGB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Apr 2020 20:06:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49280 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727913AbgDXAFY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Apr 2020 20:05:24 -0400
-X-Greylist: delayed 1952 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 23 Apr 2020 17:05:24 PDT
-Received: from haggis.mythic-beasts.com (haggis.mythic-beasts.com [IPv6:2a00:1098:0:86:1000:0:2:1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82EF5C09B042
-        for <git@vger.kernel.org>; Thu, 23 Apr 2020 17:05:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=sorrel.sh;
-         s=mythic-beasts-k1; h=Subject:To:From:Date;
-        bh=94Nih8tiP2gR/yRIoRf9BQP1mgdBRaGyGdgldpPpJys=; b=m6iyny0rMCfJIalaGKWv6l8Oai
-        3penwrth6Jk2oiG1e4o2zad8gnLMeMzcY0hbCzB2qke5X5+adWygilK6fYPN1kQEH+abDOvc5S76j
-        +H9F99MSyaw4GJw8xdkP64U9hqPZcaYv49S4DDy2hsrn8lWbqkfl7j5/UXvYaBr3FaJvPJVXxYdHa
-        pS3MJw8mnQpHMDdUS9TwzwdwTBxmraIT2uGFEMTZ1nOyxXLT1/ErwWMrOWw/X2VkdIVpMlHGJpq4S
-        nDyZOVGD40nCqhjv8uUBkXp3Jr4Is22DiIsdao4Oao242QQMzCoakflkMgsc8C06vJ2SmNpSx+3Wh
-        vGJNBJMw==;
-Received: from [212.56.100.202] (port=62434 helo=localhost)
-        by haggis.mythic-beasts.com with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92.3)
-        (envelope-from <ash@sorrel.sh>)
-        id 1jRlKr-0003YC-TL; Fri, 24 Apr 2020 00:32:50 +0100
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Originaldate: Tue Apr 21, 2020 at 2:22 AM
-Originalfrom: "Emma Brooks" <me@pluvano.com>
-Original: =?utf-8?q?On_2020-04-21_02:00:35+0100,_Ash_Holland_wrote:
- =0D=0A>_I_would_?=
- =?utf-8?q?also_appreciate_feedback_on_the_word-diff_pattern_here,_I_have?=
- =?utf-8?q?=0D=0A>_no_real_idea_what_should_constitute_a_word_in_a_Markdow?=
- =?utf-8?q?n_document,_apart=0D=0A>_from_that_it_should_probably_be_simila?=
- =?utf-8?q?r_to_the_definition_given_for=0D=0A>_Fountain,_given_that_Fount?=
- =?utf-8?q?ain_appears_to_have_somewhat_similar_inline=0D=0A>_syntax_to_Ma?=
- =?utf-8?q?rkdown.=0D=0A=0D=0ASince_Markdown_can_have_raw_HTML_tags_in_man?=
- =?utf-8?q?y_variants,_it_may_make=0D=0Asense_to_extend_the_word_pattern_t?=
- =?utf-8?q?o_"[^<>=3D_\t]+"_like_HTML's_pattern_so=0D=0Atags_starting/endi?=
- =?utf-8?q?ng_will_not_be_considered_part_of_a_word.=0D=0A?=
-In-Reply-To: <20200421022256.GA29071@pluvano.com>
-Date:   Fri, 24 Apr 2020 00:32:46 +0100
-From:   "Ash Holland" <ash@sorrel.sh>
-To:     "Emma Brooks" <me@pluvano.com>
-Cc:     <git@vger.kernel.org>, "Junio C Hamano" <gitster@pobox.com>,
-        "Boxuan Li" <liboxuan@connect.hku.hk>,
-        "Alban Gruin" <alban.gruin@gmail.com>
-Subject: Re: [PATCH] userdiff: support Markdown
-Message-Id: <C28ZA0MZKHK6.2CCZPZF15D32W@what>
-X-BlackCat-Spam-Score: 39
+        with ESMTP id S1727913AbgDXAGB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Apr 2020 20:06:01 -0400
+Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B001C09B042
+        for <git@vger.kernel.org>; Thu, 23 Apr 2020 17:06:01 -0700 (PDT)
+Received: by mail-pl1-x643.google.com with SMTP id k18so3070914pll.6
+        for <git@vger.kernel.org>; Thu, 23 Apr 2020 17:06:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=GjcPmh96NX5T+78n7E/eBt58p0Jtxspg6FzgZax8vjk=;
+        b=Afb3nTedk0uTcuX7jiKz7g9Isk0qg38WmGbS/uFQEBqUx2389kamzdeH9gmgbWw8Mt
+         VTTTosmlXc8K0ymkmJCPJbFmmfKlNGix5sf0e7XQ+3B6zELqs9LDOiDFPC6jzmw19DT7
+         1EwguEa2/CjRAzSkip3t2R4R/FoyEUEB8FjcTbUIoItPLiW77uf4MCrzhd/zSEWTuhNf
+         atYAMSAYCbcoxzQTqZMKXCUva3n1DiMJMLRK5a/n34Crm+i0cnPfKOF0dJZZB8v+XHDN
+         Bl4IVPSeXkOpS2uuM/MPUSsHb3C9tBPRDuMmmn0TLCgw3yLXg5qcGXvCW0CKXjiyqbM6
+         tdWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=GjcPmh96NX5T+78n7E/eBt58p0Jtxspg6FzgZax8vjk=;
+        b=WXcvLZSuESIubHA27xU2i+VDT1MOdb2BhRxDonIOBHqq4EMhYVhzOqdsWfDI8J5qjL
+         OOUqu5GoGa/A+bD9LfAXdzR3zQSb0zyCOiFaFskf3v/JsB1Cff3gdumdtMsmKO3RIm+K
+         5saYLGk9F9C22tUp/r9gElDyTqSePOZBE7o8XW0aqK2QhaprqCzWrEM9JB6RzuYijdVR
+         +Lt+9TMrRbLLQXzaLkPzgJLvPbZsBWC5Y7x0fFhRk/yDfkXJdRsRXjXI7cHX82a4DR1+
+         E17/wsL68h7AHW8CTBPAAlnQZ4o8Q4xexe7hljWGdVzZdyB3CohvUaVwFRjR8kdB/8iv
+         WptQ==
+X-Gm-Message-State: AGi0PuZ1YIQRFLZr0slULP8iU6acLLjIU1dtPIxLNJtmPU18fpgbJFoQ
+        VNIXpC/213OopXk2WhRf8XM=
+X-Google-Smtp-Source: APiQypKNkC7ePI7yqtZwXdps9T7v2D56CFAFR7eBBLsy6cfJf8pq2/7JUurH3++vKg2aaCDuA3RF7w==
+X-Received: by 2002:a17:90a:17ed:: with SMTP id q100mr3585885pja.80.1587686760747;
+        Thu, 23 Apr 2020 17:06:00 -0700 (PDT)
+Received: from Carlos-MBP (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
+        by smtp.gmail.com with ESMTPSA id e196sm3755919pfh.43.2020.04.23.17.05.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Apr 2020 17:06:00 -0700 (PDT)
+Date:   Thu, 23 Apr 2020 17:05:58 -0700
+From:   Carlo Marcelo Arenas =?iso-8859-1?Q?Bel=F3n?= <carenas@gmail.com>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Ilya Tretyakov <it@it3xl.ru>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 3/3] credential: handle
+ `credential.<partial-URL>.<key>` again
+Message-ID: <20200424000558.GB20669@Carlos-MBP>
+References: <pull.615.git.1587588665.gitgitgadget@gmail.com>
+ <pull.615.v2.git.1587685397.gitgitgadget@gmail.com>
+ <daedaffe960581733c25383a2a1b30056a415594.1587685397.git.gitgitgadget@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <daedaffe960581733c25383a2a1b30056a415594.1587685397.git.gitgitgadget@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue Apr 21, 2020 at 2:22 AM, Emma Brooks wrote:
-> Since Markdown can have raw HTML tags in many variants, it may make
-> sense to extend the word pattern to "[^<>=3D \t]+" like HTML's pattern so
-> tags starting/ending will not be considered part of a word.
+On Thu, Apr 23, 2020 at 11:43:17PM +0000, Johannes Schindelin via GitGitGadget wrote:
+> diff --git a/credential.c b/credential.c
+> index 52965a5122c..3505f6356d8 100644
+> --- a/credential.c
+> +++ b/credential.c
+> @@ -53,7 +53,13 @@ static int credential_config_callback(const char *var, const char *value,
+>  		char *url = xmemdupz(key, dot - key);
+>  		int matched;
+>  
+> -		credential_from_url(&want, url);
+> +		if (credential_from_url_gently(&want, url, 1, 0) < 0) {
 
-Good point, I'll update the pattern to that, thanks!
+definitely not worth a reroll, but just wondering if would make sense to call
+credential_from_url_gently(!quiet) here, just for consistency?
+
+other than that this series is looking great, under the assumption that there
+is going to be some more followup with non essential changes.
+
+will chip in with an test helper for that series so we can hopefully keep our
+sanity next time someone touches that function again.
+
+Carlo
