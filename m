@@ -2,140 +2,286 @@ Return-Path: <SRS0=LF8V=6I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AD3A6C54FD0
-	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 21:12:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4290AC54FD0
+	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 21:20:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8513F20781
-	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 21:12:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1408F2098B
+	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 21:20:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="RHSNq5VT"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tE2wh/yA"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726040AbgDXVMS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Apr 2020 17:12:18 -0400
-Received: from mout.gmx.net ([212.227.15.15]:51323 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725970AbgDXVMQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Apr 2020 17:12:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1587762732;
-        bh=LvcvOWFsaTR8d99zzokls6ItMsERkGw3fWMmKjWHV74=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=RHSNq5VTTt73+enaESUUwzOJSFLyeQ2KRI0TQlQTTS0XCB7tuha7oN9qo114IejCz
-         Dc3lfhLgAsOrCxzwBpGFwNqM20MVttoI6oHYR9/tTOvQT17igjB99I2jy71exPFIJG
-         n6zdueNTG1n6K8fiuaUUAo62Wdt4R3b+cv9DzUHo=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from MININT-QA14EDB.fritz.box ([213.196.212.1]) by mail.gmx.com
- (mrgmx004 [212.227.17.190]) with ESMTPSA (Nemesis) id
- 1Mwwdl-1jGKEJ0CF9-00yQTQ; Fri, 24 Apr 2020 23:12:12 +0200
-Date:   Fri, 24 Apr 2020 23:12:11 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] ci: fix GitHub workflow when on a tagged revision
-In-Reply-To: <xmqqlfmkbob4.fsf@gitster.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.2004242306450.18039@tvgsbejvaqbjf.bet>
-References: <pull.619.git.1587748660308.gitgitgadget@gmail.com> <xmqqlfmkbob4.fsf@gitster.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726124AbgDXVUM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Apr 2020 17:20:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51540 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725970AbgDXVUL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Apr 2020 17:20:11 -0400
+Received: from mail-qt1-x841.google.com (mail-qt1-x841.google.com [IPv6:2607:f8b0:4864:20::841])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFBD7C09B048
+        for <git@vger.kernel.org>; Fri, 24 Apr 2020 14:20:11 -0700 (PDT)
+Received: by mail-qt1-x841.google.com with SMTP id b1so5535977qtt.1
+        for <git@vger.kernel.org>; Fri, 24 Apr 2020 14:20:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=WCRtOXhjlunr6UtSmAorPysroYIKYzVAzQ+U8Qp4XCA=;
+        b=tE2wh/yACIRaWK4aQe9pOWF3ww7Fcoq9eX/7mSflQ8XNbzb8NKLpD+sb1I3huSIpkO
+         Au/FebuYzJNSb8MKNX0SFy/EvEyyAuzIbyNyRzu4+U7vM/qsYHz63B1Lue0mk0EnQ6Z1
+         aC/ZtjxED7zSyGhRnwBIW1ho/XTfHVXp6BMXFXAEnEr6KzhpSav6l8twjRle7Kztl1Ve
+         IvQy4opQjjyM6N0Djl+EqrURp3mrJKnDIB4OLz6cDCMaqHV0YfV89jROAlzKuzEG1+cn
+         ZY76W1lNMGGHGWV4pwqdd5fCn+H9rJLUha9vS9HjjCdG7PSAdZNG2s/7QMG27g0L/tQv
+         rpMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=WCRtOXhjlunr6UtSmAorPysroYIKYzVAzQ+U8Qp4XCA=;
+        b=CIiC57mdjl8PDUmVmFPQKoAhtv+wvu2JmRXAQpPEwTw4l5uLzIAkhvdG+S0JKwJ8F+
+         go4Bmw2+vIssUWX6KB+uAzIxrO6bRnOI5sW15DW1tdeI4bHQcOcblrKDlMp+oL8PA4Uu
+         f6W4fFxUPxSP3XG1Bcz0BAm4LRvx7qYqEng7Jv0mrAUnwFkZGyMWuLRY89aVjPBOe+wv
+         oAyclk8Bj5IPzg2WVeDNKpFQ8NH6PYJHSEGhkhc4mvI/bitm77JhRzfM+dc/8P/sjScD
+         0EpRxVrVzTyP7iCM2uG6EvNeDNRrzDCjKZrAZMwXEzZEWUsHLYloQhUMfyZjXj0bIfJ4
+         a6Ww==
+X-Gm-Message-State: AGi0Pua+Rn2juYHATqIycIJ210iGdndh8BA21Ap04NmF0usaIWenETJb
+        6WbwmAo55Kqm7/BSMLbNQ95VAzacjXoEOKtbYzU=
+X-Google-Smtp-Source: APiQypLS5lOKe55nZRHo2tKih3jsIdOD8avBSLl6hhKuuDgNuClid2leTzqSKilTb3YUDvb+mULfF0XtqpqsL2kbQEg=
+X-Received: by 2002:aed:370a:: with SMTP id i10mr6936322qtb.64.1587763206947;
+ Fri, 24 Apr 2020 14:20:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:H9G/N219QnOpol3jCz4bLteAqMtGQkHoj2Nj+qb743YUOnqLA82
- AAXb3ES8DGuJTLziH+fBcQaPIHsRmDRGQsQpjEyH+SZZuOJhIrh2l3r570Vak25S/UuooJV
- X7JFwPu27OtiCzWtxHoeLFQAvElV6K22XsAODHrv8K/jtQZwLeIhL1exRh7Cf0QPSd4lNEL
- e5w3zZh/4vUJ04E64XrgA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:K4rb96MYe/E=:KiWHwuYO1sK13OvUW/1geP
- bI/RKYVVuon1s8flX5+h43vsESekOhKx3S+ehkGxORESrEynrCj1MJCQ4VxUKh3K99OG/9BnF
- Bg73I6j4/SuDq9BZI22Ej1iUS6kr3v/rhs4sYzb9QMyeRNc+IaY+y0k+CoR1H6PeRNmN1pDuT
- WPkZaa0c6HFo7wdWXGp016rAl5VJzZ8jhR/5JMfn4DHOdlNlcM7O4uVcg6vYFBLbfA+fLyWHm
- WOau6NKvBpJfzZ8klrlB7ZFJJ+WerQJ6wg2VbM23c6CRjzRpQIhvPR1BlIYBdBwblbdux3WCU
- A++KO/UDr1tNG2Fufj8yCBbQ3+j0hm/5QnQbOYys2T5HIpqcMh8adXtr+2zgM77SVCknC22W4
- XsD288g1Dj27OELXY8qTdUUGCsPe30tCdqBhjeHXzw+fS2vUtIkGS8IPaiNPMFWOSWtLXhWY/
- Stevg1yqmn4N1jndd9LIZjgcysptHHFEpXIqgAvIHwi7nkkWFvgcHvPUsYAlImqaQdDG2Jx37
- 1E5bDz5UBsSXNFc7Xw1auvYp+OF9vk+cW47J+Mx6++vsGfaRe+D1Law9uL8ufuE2JfKVvB5gA
- a7aLZkUCGYujR83g89Po8WF8knt/JXOYyFv8HWwfCLNudeE889RuwVe8dSau2b4YTi8hKTYfe
- mxj2tXMl+M1Rj3DxWTIPNc7dOE/ZfyI1evZMZFAfYxlZIJ1EKy5jj/ImiqeM/s267aZ/CjS4z
- OcUz0ByuLrNOUxKtec8hrMQBTN6g4byYkZql4P7nWL6rla6iHXjX9K+Q2f/ZPeUFqt8ZaIN7m
- 8MBlY7ErKdkDIsUug/baA2qJkRoxVpNfL97+wywta3KajcmHaSqpUcuDR7lD3p/QAZ6x8MBRv
- 9oCGOINq/2vWlEafmFd2wEd2urzZCKYOEtCdT7E/QBuUO/YQG9JHZrY68G771WRF5YAhHDpyS
- LHTiW8IukohOYPXBjLa3vQd2rofvHPrXy94Ru2fqWlVZaTXwlanptpMGq6X8M4UpuDpl+VpDi
- GB1VhAd/mJ2Bu9SRzkSD4SmLJTHHJSXmdMJn1KG+NuZirZoA1YCqcWNGnx/CQbBju+HHh1daS
- h+2d0rmx788INP3nubypHo/pdztuc3EDHSTQz5QR98sEOlS3008H+4DL1U6WQPYMJaN7g6Sn6
- aj2KXXPRf3pInvDbynC0m+moyomTB/x4zU4kSdStJBjyykEKNKYdVdse3JdeRVO9M6Sa8Wqo2
- dCvZ+zXRvaWhXQj+8
-Content-Transfer-Encoding: quoted-printable
+References: <pull.614.git.1587700897.gitgitgadget@gmail.com>
+ <ca242cf5bda74aafca6c169ad53ce33a62761027.1587700897.git.gitgitgadget@gmail.com>
+ <20200424171959.GI1949@danh.dev>
+In-Reply-To: <20200424171959.GI1949@danh.dev>
+From:   Sibi Siddharthan <sibisiddharthan.github@gmail.com>
+Date:   Sat, 25 Apr 2020 02:49:55 +0530
+Message-ID: <CAKiG+9Vs1nFR4Lfrh4g=7sNUu_yRr4mz-w=gRm_U7PqY9W5QBg@mail.gmail.com>
+Subject: Re: [PATCH 2/8] cmake: generate the shell/perl/python scripts and
+ templates, translations
+To:     Danh Doan <congdanhqx@gmail.com>
+Cc:     Sibi Siddharthan via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
-
-On Fri, 24 Apr 2020, Junio C Hamano wrote:
-
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
+On Fri, Apr 24, 2020 at 10:50 PM Danh Doan <congdanhqx@gmail.com> wrote:
 >
-> > However, our GitHub workflow does not trigger on tags, therefore, this
-> > logic results in a missing build for that revision.
->
-> Thanks for noticing.  The arrangement we had, which essentially said
-> "we know we will always build tagged version, so a push of a branch
-> that happens to have a tagged version at the tip can be ignored",
-> served us wonderfully.  Now the maintainers of projects (not just
-> this one) are forbidden from tagging the tip of master, queue
-> something else on top and push the result out, as it won't build or
-> test the tagged version, which is a bit sad.
-
-Nobody forbids this... ;-)
-
-And I was wrong, our current GitHub workflow _is_ triggered by tags. See
-e.g. https://github.com/git-for-windows/git/actions/runs/83103626 which
-was triggered by v2.26.2.windows.1.
-
-However, you also see that it failed due to the reason I described in the
-commit message.
-
-I guess that we should either go with this patch (which would trigger full
-runs also on tags), or we could alternatively trigger only on branch
-pushes (and not tag pushes)?
-
-Ciao,
-Dscho
-
->
-> >  ci/lib.sh | 2 ++
-> >  1 file changed, 2 insertions(+)
+> On 2020-04-24 04:01:31+0000, Sibi Siddharthan via GitGitGadget <gitgitgadget@gmail.com> wrote:
+> > From: Sibi Siddharthan <sibisiddharthan.github@gmail.com>
 > >
-> > diff --git a/ci/lib.sh b/ci/lib.sh
-> > index dac36886e37..f151e2f0ecb 100755
-> > --- a/ci/lib.sh
-> > +++ b/ci/lib.sh
-> > @@ -1,6 +1,7 @@
-> >  # Library of functions shared by all CI scripts
+> > This patch implements the placeholder substitution to generate, say,
+> > `git-request-pull` from `git-request-pull.sh`.
 > >
-> >  skip_branch_tip_with_tag () {
-> > +	test -z "$DONT_SKIP_TAGS" || return 0
-> >  	# Sometimes, a branch is pushed at the same time the tag that points
-> >  	# at the same commit as the tip of the branch is pushed, and buildin=
-g
-> >  	# both at the same time is a waste.
-> > @@ -151,6 +152,7 @@ then
-> >  	CC=3D"${CC:-gcc}"
+> > The shell/perl/python scripts and template are generated using CMake
+> > (very similar to what sed does).
 > >
-> >  	cache_dir=3D"$HOME/none"
-> > +	DONT_SKIP_TAGS=3Dt
->
-> Quite straight-forward.  Thanks, will queue.
->
-> >  	export GIT_PROVE_OPTS=3D"--timer --jobs 10"
-> >  	export GIT_TEST_OPTS=3D"--verbose-log -x"
+> > The text translations are only build if `msgfmt` is found in your path.
 > >
-> > base-commit: f72f328bc57e1b0db380ef76e0c1e94a9ed0ac7c
+> > NOTE: The scripts and templates are generated during configuration.
+> >
+> > Signed-off-by: Sibi Siddharthan <sibisiddharthan.github@gmail.com>
+> > ---
+> >  CMakeLists.txt | 107 ++++++++++++++++++++++++++++++++++++++++++++++++-
+> >  1 file changed, 106 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/CMakeLists.txt b/CMakeLists.txt
+> > index 73703bd321f..788b53be873 100644
+> > --- a/CMakeLists.txt
+> > +++ b/CMakeLists.txt
+> > @@ -51,6 +51,11 @@ endif()
+> >
+> >  find_program(SH_EXE sh)
+> >
+> > +find_program(MSGFMT_EXE msgfmt)
 >
+> I suppose find_package(Gettext) can do most of this work?
 >
+
+Will change it using gettext.
+
+> > +if(NOT MSGFMT_EXE)
+> > +     message(WARNING "Text Translations won't be build")
+> > +endif()
+> > +
+> >  #default behaviour
+> >  include_directories(${CMAKE_SOURCE_DIR})
+> >  add_compile_definitions(GIT_HOST_CPU="${CMAKE_SYSTEM_PROCESSOR}")
+> > @@ -525,4 +530,104 @@ endif()
+> >  add_custom_command(OUTPUT ${git_links} ${git_http_links}
+> >               COMMAND ${CMAKE_COMMAND} -P ${CMAKE_BINARY_DIR}/CreateLinks.cmake
+> >               DEPENDS git git-remote-http)
+> > -add_custom_target(git-links ALL DEPENDS ${git_links} ${git_http_links})
+> > \ No newline at end of file
+>
+> No newline at end of file?
+>
+> > +add_custom_target(git-links ALL DEPENDS ${git_links} ${git_http_links})
+> > +
+> > +
+> > +#creating required scripts
+> > +set(SHELL_PATH /bin/sh)
+> > +set(PERL_PATH /usr/bin/perl)
+>
+> Really?
+> Have you tried on, let's say FreeBSD?
+>
+> > +set(LOCALEDIR ${FALLBACK_RUNTIME_PREFIX}/share/locale)
+> > +set(GITWEBDIR ${FALLBACK_RUNTIME_PREFIX}/share/locale)
+> > +set(INSTLIBDIR ${FALLBACK_RUNTIME_PREFIX}/share/perl5)
+> > +
+> > +#shell scripts
+> > +set(git_shell_scripts
+> > +     git-bisect git-difftool--helper git-filter-branch
+> > +     git-merge-octopus git-merge-one-file git-merge-resolve
+> > +     git-mergetool git-quiltimport
+> > +     git-request-pull git-submodule git-web--browse
+> > +     git-mergetool--lib git-parse-remote git-rebase--preserve-merges
+> > +     git-sh-setup git-sh-i18n git-instaweb)
+> > +
+> > +foreach(script ${git_shell_scripts})
+> > +     file(STRINGS ${CMAKE_SOURCE_DIR}/${script}.sh content NEWLINE_CONSUME)
+> > +     string(REPLACE "@SHELL_PATH@" "${SHELL_PATH}" content "${content}")
+> > +     string(REPLACE "@@DIFF@@" "diff" content "${content}")
+> > +     string(REPLACE "@LOCALEDIR@" "${LOCALEDIR}" content "${content}")
+> > +     string(REPLACE "@GITWEBDIR@" "${GITWEBDIR}" content "${content}")
+> > +     string(REPLACE "@@NO_CURL@@" "" content "${content}")
+> > +     string(REPLACE "@@USE_GETTEXT_SCHEME@@" "" content "${content}")
+> > +     string(REPLACE "# @@BROKEN_PATH_FIX@@" "" content "${content}")
+> > +     string(REPLACE "@@PERL@@" "${PERL_PATH}" content "${content}")
+> > +     string(REPLACE "@@SANE_TEXT_GREP@@" "-a" content "${content}")
+> > +     string(REPLACE "@@PAGER_ENV@@" "LESS=FRX LV=-c" content "${content}")
+> > +     file(WRITE ${CMAKE_BINARY_DIR}/${script} ${content})
+> > +endforeach()
+>
+> I assume this do most of sed magic?
+>
+
+Yes
+
+> > +
+> > +#perl scripts
+> > +set(git_perl_scripts
+> > +     git-add--interactive git-archimport git-cvsexportcommit
+> > +     git-cvsimport git-cvsserver git-send-email git-svn)
+> > +
+> > +#create perl header
+> > +file(STRINGS ${CMAKE_SOURCE_DIR}/perl/header_templates/fixed_prefix.template.pl perl_header )
+> > +string(REPLACE "@@PATHSEP@@" ":" perl_header "${perl_header}")
+> > +string(REPLACE "@@INSTLIBDIR@@" "${INSTLIBDIR}" perl_header "${perl_header}")
+> > +
+> > +foreach(script ${git_perl_scripts})
+> > +     file(STRINGS ${CMAKE_SOURCE_DIR}/${script}.perl content NEWLINE_CONSUME)
+> > +     string(REPLACE "#!/usr/bin/perl" "#!/usr/bin/perl\n${perl_header}\n" content "${content}")
+>
+> Hoped that this is tried on BSD?
+>
+> > +     string(REPLACE "@@GIT_VERSION@@" "${PROJECT_VERSION}" content "${content}")
+> > +     file(WRITE ${CMAKE_BINARY_DIR}/${script} ${content})
+> > +endforeach()
+> > +
+> > +#python script
+> > +file(STRINGS ${CMAKE_SOURCE_DIR}/git-p4.py content NEWLINE_CONSUME)
+> > +string(REPLACE "#!/usr/bin/env python" "#!/usr/bin/python" content "${content}")
+> > +file(WRITE ${CMAKE_BINARY_DIR}/git-p4 ${content})
+> > +
+> > +#perl modules
+> > +file(GLOB_RECURSE perl_modules "${CMAKE_SOURCE_DIR}/perl/*.pm")
+> > +
+> > +foreach(pm ${perl_modules})
+> > +     string(REPLACE "${CMAKE_SOURCE_DIR}/perl/" "" file_path ${pm})
+>
+> So, the real source code have reference to CMAKE_SOURCE_DIR?
+> I don't think so? It's purely my guess from previous patch, this
+> function will do
+> string(REPLACE from to file something_I_have_not_checked)
+>
+
+This if for getting the built perl modules in the right place "perl/build/lib"
+Once I glob the files, their paths are absolute, hence a replacement.
+
+> > +     file(STRINGS ${pm} content NEWLINE_CONSUME)
+> > +     string(REPLACE "@@LOCALEDIR@@" "${LOCALEDIR}" content "${content}")
+> > +     string(REPLACE "@@NO_PERL_CPAN_FALLBACKS@@" "" content "${content}")
+> > +     file(WRITE ${CMAKE_BINARY_DIR}/perl/build/lib/${file_path} ${content})
+> > +#test-lib.sh requires perl/build/lib to be the build directory of perl modules
+> > +endforeach()
+> > +
+> > +
+> > +#templates
+> > +file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/templates/blt/branches) #create branches
+> > +set(hooks_templates
+> > +     applypatch-msg.sample pre-applypatch.sample pre-push.sample
+> > +     commit-msg.sample pre-commit.sample pre-rebase.sample
+> > +     fsmonitor-watchman.sample pre-merge-commit.sample pre-receive.sample
+> > +     post-update.sample prepare-commit-msg.sample update.sample)
+>
+> Too much things merged into one line, I hate it.
+>
+
+would you prefer something like this
+set(hooks_templates
+    applypatch-msg.sample
+    pre-applypatch.sample
+    ...)
+
+
+> > +
+> > +#templates have @.*@ replacement so use configure_file instead
+> > +#hooks
+> > +foreach(tm ${hooks_templates})
+> > +     configure_file(${CMAKE_SOURCE_DIR}/templates/hooks--${tm} ${CMAKE_BINARY_DIR}/templates/blt/hooks/${tm} @ONLY)
+> > +endforeach()
+>
+> What does this really means?
+>
+
+The way above replacements(sed magic) use @@.*@@, whereas the
+templates use @.*@.
+This pattern is what autoconf uses to configure Makefile.in, CMake
+also has a similar feature (configure_file)
+
+> > +
+> > +#info
+> > +configure_file(${CMAKE_SOURCE_DIR}/templates/info--exclude ${CMAKE_BINARY_DIR}/templates/blt/info/exclude @ONLY)
+> > +
+> > +#this
+> > +configure_file(${CMAKE_SOURCE_DIR}/templates/this--description ${CMAKE_BINARY_DIR}/templates/blt/description @ONLY)
+> > +
+> > +
+> > +#translations
+> > +if(MSGFMT_EXE)
+> > +     set(po_files bg  ca  de  el  es  fr  is  it  ko  pt_PT  ru  sv  tr  vi  zh_CN  zh_TW)
+>
+> hard coded, so this is a regression, compared to old Makefile?
+>
+> > +     foreach(po ${po_files})
+> > +             file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/po/build/locale/${po}/LC_MESSAGES)
+> > +             add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/po/build/locale/${po}/LC_MESSAGES/git.mo
+> > +                             COMMAND ${MSGFMT_EXE} --check --statistics -o ${CMAKE_BINARY_DIR}/po/build/locale/${po}/LC_MESSAGES/git.mo ${CMAKE_SOURCE_DIR}/po/${po}.po)
+>
+> find_package(Gettext) defines MSGFMT_EXECUTABLE, I think.
+> Have you check Solaris option?
+> Or is this tranlated from current Makefile?
+> I haven't checked current source code!
+>
+> > +             list(APPEND po_gen ${CMAKE_BINARY_DIR}/po/build/locale/${po}/LC_MESSAGES/git.mo)
+> > +     endforeach()
+> > +     add_custom_target(po-gen ALL DEPENDS ${po_gen})
+> > +endif()
+> > --
+> > gitgitgadget
+> >
+>
+> --
+> Danh
+
+Thank You,
+Sibi Siddharthan
