@@ -2,90 +2,92 @@ Return-Path: <SRS0=LF8V=6I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 60281C2BA19
-	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 00:53:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C3D5BC2BA19
+	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 00:54:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0E35820CC7
-	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 00:53:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 91A1A20704
+	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 00:54:37 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="jiWYWi2k"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KQH3tWzY"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728348AbgDXAxD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Apr 2020 20:53:03 -0400
-Received: from avasout07.plus.net ([84.93.230.235]:34846 "EHLO
-        avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728156AbgDXAxC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Apr 2020 20:53:02 -0400
-Received: from [10.0.2.15] ([217.32.115.138])
-        by smtp with ESMTPA
-        id RmaSjRvfbsCJiRmaTjx4iv; Fri, 24 Apr 2020 01:53:01 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-        t=1587689581; bh=eBeXOtiSo9nZYvE9bwZouo5/VzsyKyM3cYJHuWHhNDs=;
-        h=Subject:To:References:From:Date:In-Reply-To;
-        b=jiWYWi2klaEdlf7B2cM2k9IHt423PwvHwy1O2zJkRtZNDK9F822kkddTFQbKqJWvg
-         UJ7iInQ3z39NZjbtEBZ/GxKt9r1K9PM1hJ5Do5QSUSWUom1+7+LQYFSmEDmUgVo/3i
-         mqR2Dj/XdMTLRVyFzZ33c/Kf95yERd4Masaz++KL08aEaXkmf71ImXk2upNzguVCQG
-         LRg+MxSHfT9Y2FP3M7WrbfwU4YW6B8acU2sUCBon6O8rVt3LPTz5ZV9qAO4M7zlFNm
-         7+8GYBe/kAB27gyB0oDKBgP508C5rp4A9GiFZOl6NW8hF44A2e7mxUeEhMfh3m8OFc
-         r+rh44+MDZyuQ==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=BPIoUGYG c=1 sm=1 tr=0
- a=T9WNts+jH3PhiGdS1gtV5Q==:117 a=T9WNts+jH3PhiGdS1gtV5Q==:17
- a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8 a=kkydRZ0R8FtR57HAyx0A:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH 3/4] graph.c: limit linkage of internal variable
-To:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
-        git@vger.kernel.org
+        id S1728342AbgDXAyg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Apr 2020 20:54:36 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:60652 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728244AbgDXAyg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Apr 2020 20:54:36 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8C360CEE7E;
+        Thu, 23 Apr 2020 20:54:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Csmsy7S+WAaNUP3z+snf2igE6Vo=; b=KQH3tW
+        zYZMRTp8GLDY8Wti6S+opzyDdcVClnunBAKGwcfJ/k6fk+n/N3boih7gBBQNQT/Z
+        lrsBMYoab3rCdDTw7xgcuV9Mw6NhXUyymhWUGlkILIA5pcmB2QA8TLXgFxqwmNPV
+        3G9JumSLTTkn7Iywj773ifWkH1oSZrYL1lO0E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=KEueBY8WUYVwNsy4lQX38NfAcVZOWwAV
+        URTNZbxdPAajhJK9Hu7yuR8XEVQ4W1ajZ3JTCHBHI99dKDum7u/Adoe+3ZXyHn3n
+        DuSJGhtxUaN17AzuCxrZXx+wAt7u2Rh2OabGBkPnKiW6Bf9M4/+BuNZgWVqqURK0
+        XWSBbR6L3M0=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 84671CEE7C;
+        Thu, 23 Apr 2020 20:54:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C9395CEE7B;
+        Thu, 23 Apr 2020 20:54:31 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>, git@vger.kernel.org,
+        Luc Van Oostenryck <luc.vanoostenryck@gmail.com>
+Subject: Re: [PATCH 1/4] C: s/0/NULL/ for pointer type
 References: <cover.1587648870.git.congdanhqx@gmail.com>
- <5bd7b929107c277e10a697bc874b702b85691558.1587648870.git.congdanhqx@gmail.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <351abde3-6ae4-dc65-a846-3b45202a07ec@ramsayjones.plus.com>
-Date:   Fri, 24 Apr 2020 01:52:58 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+        <c4fac2ae9d10bc426cb26e4a102b808549696763.1587648870.git.congdanhqx@gmail.com>
+        <1df91aa4-dda5-64da-6ae3-5d65e50a55c5@ramsayjones.plus.com>
+Date:   Thu, 23 Apr 2020 17:54:30 -0700
+In-Reply-To: <1df91aa4-dda5-64da-6ae3-5d65e50a55c5@ramsayjones.plus.com>
+        (Ramsay Jones's message of "Fri, 24 Apr 2020 01:39:42 +0100")
+Message-ID: <xmqqd07xem9l.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <5bd7b929107c277e10a697bc874b702b85691558.1587648870.git.congdanhqx@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfE1BSXS3EiEbGG26gKhdbnED8CVIXrEraAEiGE6ADUrZQJ0M0HwPZCamxvBh4hYgszCFv463YRUzPh4oQan1zZT/l4QOHLqqEESl4DQgZv564PzMOApa
- jgt64WwwTiLI1tMKIVngq6K7Lgoma+Tp+Wv08NvZNLju5JqV+gUGRfAVgAOBy4MhtyT6LNL55ElkvQ==
+Content-Type: text/plain
+X-Pobox-Relay-ID: 288A8B8E-85C6-11EA-940A-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+
+> Actually, I have a patch somewhere which suppressed the sparse warning
+> for the '= { 0 }' token sequence used in these initializations. However,
+> I don't seem to be able to find them at the moment! :(
+
+AHHHHHhhhhhhhh.  
+
+Thanks for reminding.  Yeah, I recall that the concensus of those
+who were vocal in that old discussion [*1*] was that "= { 0 }"
+should be taken as an idiom and should not be subject to s/0/NULL/
+conversion.
+
+> [Luc, this topic came up on the sparse and kernel mailing-lists at one
+> point, but I didn't get around to posting my patch to the list - something
+> came up. Hopefully, I will find some time to find it and post it soon.]
 
 
-On 23/04/2020 14:47, Đoàn Trần Công Danh wrote:
-> Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
-> ---
->  graph.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/graph.c b/graph.c
-> index 4fb25ad464..4cd9915075 100644
-> --- a/graph.c
-> +++ b/graph.c
-> @@ -1055,7 +1055,7 @@ static void graph_output_commit_line(struct git_graph *graph, struct graph_line
->  		graph_update_state(graph, GRAPH_COLLAPSING);
->  }
->  
-> -const char merge_chars[] = {'/', '|', '\\'};
-> +static const char merge_chars[] = {'/', '|', '\\'};
->  
->  static void graph_output_post_merge_line(struct git_graph *graph, struct graph_line *line)
->  {
-> 
+[References]
 
-Yep, LGTM.
+*1*
 
-ATB,
-Ramsay Jones
-
+https://lore.kernel.org/git/e6796c60-a870-e761-3b07-b680f934c537@ramsayjones.plus.com/
