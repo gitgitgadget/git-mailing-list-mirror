@@ -2,104 +2,98 @@ Return-Path: <SRS0=LF8V=6I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C7302C2BA19
-	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 00:06:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DD8BBC2BA19
+	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 00:07:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A654921473
-	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 00:06:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B5CBD2087E
+	for <git@archiver.kernel.org>; Fri, 24 Apr 2020 00:07:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Afb3nTed"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ni26gG5b"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728195AbgDXAGB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Apr 2020 20:06:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49280 "EHLO
+        id S1728153AbgDXAHL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Apr 2020 20:07:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49456 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727913AbgDXAGB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Apr 2020 20:06:01 -0400
-Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B001C09B042
-        for <git@vger.kernel.org>; Thu, 23 Apr 2020 17:06:01 -0700 (PDT)
-Received: by mail-pl1-x643.google.com with SMTP id k18so3070914pll.6
-        for <git@vger.kernel.org>; Thu, 23 Apr 2020 17:06:01 -0700 (PDT)
+        with ESMTP id S1727913AbgDXAHL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Apr 2020 20:07:11 -0400
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E2D1C09B042
+        for <git@vger.kernel.org>; Thu, 23 Apr 2020 17:07:11 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id a7so3242462pju.2
+        for <git@vger.kernel.org>; Thu, 23 Apr 2020 17:07:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=GjcPmh96NX5T+78n7E/eBt58p0Jtxspg6FzgZax8vjk=;
-        b=Afb3nTedk0uTcuX7jiKz7g9Isk0qg38WmGbS/uFQEBqUx2389kamzdeH9gmgbWw8Mt
-         VTTTosmlXc8K0ymkmJCPJbFmmfKlNGix5sf0e7XQ+3B6zELqs9LDOiDFPC6jzmw19DT7
-         1EwguEa2/CjRAzSkip3t2R4R/FoyEUEB8FjcTbUIoItPLiW77uf4MCrzhd/zSEWTuhNf
-         atYAMSAYCbcoxzQTqZMKXCUva3n1DiMJMLRK5a/n34Crm+i0cnPfKOF0dJZZB8v+XHDN
-         Bl4IVPSeXkOpS2uuM/MPUSsHb3C9tBPRDuMmmn0TLCgw3yLXg5qcGXvCW0CKXjiyqbM6
-         tdWQ==
+        bh=j0ELr/7jtZA2f5MwTj756Z0GrCuqnCXqgWf6TctZ5Do=;
+        b=ni26gG5bBJtFcVNT9k77kXUZTK45/V+oiT2WLFdL7NeqHaHBZoZ/PepVaCKhlgqdzt
+         BJerSI+HExVPiOna3OhiytwITORStLSc9fwE+4qCaUiFYh510EUCCYVnHwzH37WCjWNa
+         /t3EMV6tk4+IM/vWxB26kDFBQni6XnY12qxZQ3X0n6cPhEUDh/UwsWywFGA65dfkbZy7
+         Wdj/ZhhwVWarIKhSToif2ixibuDOyHNltR99CP8TSE9q2YJMLZD0bFVPh6GprzVri8Ze
+         mWzopg6zHH3RUZjP+vuZn/Y6uj+Lx7eq1CFheLmKL7vAvmxgr+bk5l8t2vUk2cGC+uN9
+         75AQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=GjcPmh96NX5T+78n7E/eBt58p0Jtxspg6FzgZax8vjk=;
-        b=WXcvLZSuESIubHA27xU2i+VDT1MOdb2BhRxDonIOBHqq4EMhYVhzOqdsWfDI8J5qjL
-         OOUqu5GoGa/A+bD9LfAXdzR3zQSb0zyCOiFaFskf3v/JsB1Cff3gdumdtMsmKO3RIm+K
-         5saYLGk9F9C22tUp/r9gElDyTqSePOZBE7o8XW0aqK2QhaprqCzWrEM9JB6RzuYijdVR
-         +Lt+9TMrRbLLQXzaLkPzgJLvPbZsBWC5Y7x0fFhRk/yDfkXJdRsRXjXI7cHX82a4DR1+
-         E17/wsL68h7AHW8CTBPAAlnQZ4o8Q4xexe7hljWGdVzZdyB3CohvUaVwFRjR8kdB/8iv
-         WptQ==
-X-Gm-Message-State: AGi0PuZ1YIQRFLZr0slULP8iU6acLLjIU1dtPIxLNJtmPU18fpgbJFoQ
-        VNIXpC/213OopXk2WhRf8XM=
-X-Google-Smtp-Source: APiQypKNkC7ePI7yqtZwXdps9T7v2D56CFAFR7eBBLsy6cfJf8pq2/7JUurH3++vKg2aaCDuA3RF7w==
-X-Received: by 2002:a17:90a:17ed:: with SMTP id q100mr3585885pja.80.1587686760747;
-        Thu, 23 Apr 2020 17:06:00 -0700 (PDT)
-Received: from Carlos-MBP (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
-        by smtp.gmail.com with ESMTPSA id e196sm3755919pfh.43.2020.04.23.17.05.59
+        bh=j0ELr/7jtZA2f5MwTj756Z0GrCuqnCXqgWf6TctZ5Do=;
+        b=uXGwBGSBoHTqgSJCClKBRchN5QU1Zyt23Q/foJR0XMgfvdNxhlP/Vg5q+ZkAHT+Vop
+         qqGgCESq7PGJsMPb1AQqWHvT1+zuONlyT3vfSEl7yk3qhX9YXhPKbHZzTDTtW7juSyG2
+         V2KnOYr3rLpX7ewatUfHlQQikWdC5iAFOqQg4ZO6BapnxwafavaXV8+m/kM5J5rPnOk1
+         K3r4Oisd/rcYWfMSZ8diVuCqs9M/TYAkOcRiykPnmOH+uqzsnTZ/mxEbgSrmfZwNlx25
+         SvrncjFVd8Et9Z8AO+X5rRivzSPDRYsrj+rzLiH4gd7QxdDubY2Si28MzWmsDaMBcyuN
+         l1ng==
+X-Gm-Message-State: AGi0PuYgFPvJz7LKZbHkTeE98+vRfa1v5/68w/4fHMaoTvUWUXRbwPJ2
+        FCalr7NZWrIoWe67E/kZqBE=
+X-Google-Smtp-Source: APiQypICRhZBlQn8a36ALILtyGRnEb0bkXqmuMqGNxCWutv/xLCPOxt2hjJKdXoZCEaEtluvxxvcJQ==
+X-Received: by 2002:a17:90a:bf84:: with SMTP id d4mr3455864pjs.82.1587686830396;
+        Thu, 23 Apr 2020 17:07:10 -0700 (PDT)
+Received: from localhost ([2402:800:6374:f359:1ce8:a621:5f80:1116])
+        by smtp.gmail.com with ESMTPSA id b13sm3748574pfo.67.2020.04.23.17.07.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Apr 2020 17:06:00 -0700 (PDT)
-Date:   Thu, 23 Apr 2020 17:05:58 -0700
-From:   Carlo Marcelo Arenas =?iso-8859-1?Q?Bel=F3n?= <carenas@gmail.com>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Ilya Tretyakov <it@it3xl.ru>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 3/3] credential: handle
- `credential.<partial-URL>.<key>` again
-Message-ID: <20200424000558.GB20669@Carlos-MBP>
-References: <pull.615.git.1587588665.gitgitgadget@gmail.com>
- <pull.615.v2.git.1587685397.gitgitgadget@gmail.com>
- <daedaffe960581733c25383a2a1b30056a415594.1587685397.git.gitgitgadget@gmail.com>
+        Thu, 23 Apr 2020 17:07:09 -0700 (PDT)
+Date:   Fri, 24 Apr 2020 07:07:07 +0700
+From:   Danh Doan <congdanhqx@gmail.com>
+To:     Philip Oakley <philipoakley@iee.email>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        "Brian M . Carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v3 1/2] date.c: skip fractional second part of ISO-8601
+Message-ID: <20200424000707.GB1949@danh.dev>
+References: <cover.1586856398.git.congdanhqx@gmail.com>
+ <cover.1587559135.git.congdanhqx@gmail.com>
+ <c6d42785bb762f691b00c48b57c73a1933fadbc3.1587559135.git.congdanhqx@gmail.com>
+ <xmqqk127jvrh.fsf@gitster.c.googlers.com>
+ <20200423011812.GA1930@danh.dev>
+ <xmqqmu72gfxu.fsf@gitster.c.googlers.com>
+ <1861c472-7756-d433-9185-d83c03d72b9b@iee.email>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <daedaffe960581733c25383a2a1b30056a415594.1587685397.git.gitgitgadget@gmail.com>
+In-Reply-To: <1861c472-7756-d433-9185-d83c03d72b9b@iee.email>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 23, 2020 at 11:43:17PM +0000, Johannes Schindelin via GitGitGadget wrote:
-> diff --git a/credential.c b/credential.c
-> index 52965a5122c..3505f6356d8 100644
-> --- a/credential.c
-> +++ b/credential.c
-> @@ -53,7 +53,13 @@ static int credential_config_callback(const char *var, const char *value,
->  		char *url = xmemdupz(key, dot - key);
->  		int matched;
->  
-> -		credential_from_url(&want, url);
-> +		if (credential_from_url_gently(&want, url, 1, 0) < 0) {
+On 2020-04-23 21:41:49+0100, Philip Oakley <philipoakley@iee.email> wrote:
+> On 23/04/2020 20:28, Junio C Hamano wrote:
+> > Danh Doan <congdanhqx@gmail.com> writes:
+> Would is_hhmmss() and is_yyyymmdd() be more obvious abbreviations for
+> most readers?
+> 
+> Now that I type them, they do feel that bit too long... , as naming is
+> hard, maybe stick with the yms and hms, though I do keep wanting to type
+> ytd for the former..
 
-definitely not worth a reroll, but just wondering if would make sense to call
-credential_from_url_gently(!quiet) here, just for consistency?
+Not sure if I interpret your opinion correctly,
+Did you mean s/yms/ymd/ and s/ytd/ymd/?
 
-other than that this series is looking great, under the assumption that there
-is going to be some more followup with non essential changes.
+Even that, I couldn't grasp the meaning of the last phase?
 
-will chip in with an test helper for that series so we can hopefully keep our
-sanity next time someone touches that function again.
-
-Carlo
+-- 
+Danh
