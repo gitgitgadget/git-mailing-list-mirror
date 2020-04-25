@@ -6,38 +6,38 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 36553C55191
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DB07AC55194
 	for <git@archiver.kernel.org>; Sat, 25 Apr 2020 02:21:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 136162084D
+	by mail.kernel.org (Postfix) with ESMTP id B7E5D2084D
 	for <git@archiver.kernel.org>; Sat, 25 Apr 2020 02:21:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726208AbgDYCVF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Apr 2020 22:21:05 -0400
-Received: from mga12.intel.com ([192.55.52.136]:47708 "EHLO mga12.intel.com"
+        id S1726216AbgDYCVH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Apr 2020 22:21:07 -0400
+Received: from mga12.intel.com ([192.55.52.136]:47707 "EHLO mga12.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726059AbgDYCUz (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1726108AbgDYCUz (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 24 Apr 2020 22:20:55 -0400
-IronPort-SDR: f2f+VHRdIL3u9uAfavhSSKs9OvzJKbiO/AualTEGd6KgE/7KPbKFF1BXjzmTUENFW/Q+VrZ0yj
- e0Aidgv/7tyg==
+IronPort-SDR: CtXXB9QJ+4zXTwZfvBpq62YzmHkO2oqql4xWl7i+77kkG0fvEeuG/Os31G4RlckJbeM/LMcCLv
+ 3yKwRQsot+2w==
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
 Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Apr 2020 19:20:53 -0700
-IronPort-SDR: OjD57f2Ny25n3HhEkO+Bif/PDGqtHNm5WWZV9fA8OC6HKLhl2ba53KQqjlJBnXO8VrXECx8Ozu
- cWo3t57vquoA==
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Apr 2020 19:20:52 -0700
+IronPort-SDR: NPpqY1YvuGtB+JDCR38m2CkWMa1koj7u/zuu091L8WX7QVlbq4FcNgznX4YldUoF6K/6w6Wy5I
+ vaVsK2DZW7BA==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.73,314,1583222400"; 
-   d="scan'208";a="281056781"
+   d="scan'208";a="281056780"
 Received: from jekeller-desk.amr.corp.intel.com ([10.166.241.33])
   by fmsmga004.fm.intel.com with ESMTP; 24 Apr 2020 19:20:52 -0700
 From:   Jacob Keller <jacob.e.keller@intel.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Nieder <jrnieder@gmail.com>,
         Jacob Keller <jacob.keller@gmail.com>
-Subject: [PATCH 05/11] completion: remove completion for git switch --orphan
-Date:   Fri, 24 Apr 2020 19:20:39 -0700
-Message-Id: <20200425022045.1089291-7-jacob.e.keller@intel.com>
+Subject: [PATCH 05/11] completion: add test showing subpar completion for git switch --orphan
+Date:   Fri, 24 Apr 2020 19:20:38 -0700
+Message-Id: <20200425022045.1089291-6-jacob.e.keller@intel.com>
 X-Mailer: git-send-email 2.25.2
 In-Reply-To: <20200425022045.1089291-1-jacob.e.keller@intel.com>
 References: <20200425022045.1089291-1-jacob.e.keller@intel.com>
