@@ -6,38 +6,38 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D131C55191
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D7FEC2BA1A
 	for <git@archiver.kernel.org>; Sat, 25 Apr 2020 02:20:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 78C8C20857
+	by mail.kernel.org (Postfix) with ESMTP id 8A9A32084D
 	for <git@archiver.kernel.org>; Sat, 25 Apr 2020 02:20:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726154AbgDYCU4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1726177AbgDYCU4 (ORCPT <rfc822;git@archiver.kernel.org>);
         Fri, 24 Apr 2020 22:20:56 -0400
-Received: from mga12.intel.com ([192.55.52.136]:47708 "EHLO mga12.intel.com"
+Received: from mga12.intel.com ([192.55.52.136]:47707 "EHLO mga12.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726124AbgDYCUx (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1726135AbgDYCUx (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 24 Apr 2020 22:20:53 -0400
-IronPort-SDR: U69Mv9GXItUuPd/HV6VupBxGPkQ4BKyfIX/TSto9SKcsq3Hv5iLNKjJt9QxV7e7XkNTXBz5rSi
- cqB1LTkOqCSg==
+IronPort-SDR: 7RtlZlLDB9SObqxHkSLADdHEFqH1kg/dLsFLfNBXoeMy1VuAHJXUigrnnozsvfURqtheB/lzkz
+ vnw5TZ5ZCRLw==
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
 Received: from fmsmga004.fm.intel.com ([10.253.24.48])
   by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Apr 2020 19:20:52 -0700
-IronPort-SDR: SKm+yE7Qxc5Bc1SMUtTb6bZrP7vOETsdH0Sdlw6q96ZVwCyY0X5cLV9aR1aIJjUaQyOl12mhdR
- Ufz+rdPkKzjQ==
+IronPort-SDR: POMDv5k+oKbtlFf1ui/NlReo7+6ZaBh8nl/NGF8szHtwM5bK41kRS7oWW1BU/fUDVHsOCvoLJ8
+ 96qgA6yrj+DQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.73,314,1583222400"; 
-   d="scan'208";a="281056778"
+   d="scan'208";a="281056779"
 Received: from jekeller-desk.amr.corp.intel.com ([10.166.241.33])
   by fmsmga004.fm.intel.com with ESMTP; 24 Apr 2020 19:20:52 -0700
 From:   Jacob Keller <jacob.e.keller@intel.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Nieder <jrnieder@gmail.com>,
         Jacob Keller <jacob.keller@gmail.com>
-Subject: [PATCH 03/11] completion: add test highlighting subpar git switch --track completion
-Date:   Fri, 24 Apr 2020 19:20:36 -0700
-Message-Id: <20200425022045.1089291-4-jacob.e.keller@intel.com>
+Subject: [PATCH 04/11] completion: add tests showing lack of support for  git switch -c/-C
+Date:   Fri, 24 Apr 2020 19:20:37 -0700
+Message-Id: <20200425022045.1089291-5-jacob.e.keller@intel.com>
 X-Mailer: git-send-email 2.25.2
 In-Reply-To: <20200425022045.1089291-1-jacob.e.keller@intel.com>
 References: <20200425022045.1089291-1-jacob.e.keller@intel.com>
@@ -50,74 +50,91 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jacob Keller <jacob.keller@gmail.com>
 
-If git switch is called with --track, it will attempts to DWIM into
-creating a local tracking branch that tracks the provided remote branch.
-It seems reasonable that, to support this behavior, we should only
-complete remote branches in the form "<remote>/<branch>".
+Add several tests for git switch completion which highlight the expected
+behavior if -c or -C have been provided.
 
-Indeed, current completion is not just sub-par, but could almost be
-described as entirely useless.
-
-  $git switch --track <TAB>
-
-will only report *local* branch names. Indeed a new test case highlights
-this quite well:
-
-  --- expected    2020-04-25 00:25:34.424965326 +0000
-  +++ out_sorted  2020-04-25 00:25:34.441965370 +0000
-  @@ -1,2 +1,2 @@
-  -other/branch-in-other
-  -other/master-in-other
-  +master
-  +matching-branch
-  not ok 100 - git switch - with --track, complete only remote branches # TODO known breakage
-
-Understanding exactly what causes this is not that simple.
-
-First we enable DWIM output by default. Then, if "--track",
-"--no-track", or "--no-guess" is enabled on the command line, we disable
-DWIM. This makes sense, because --track should not include the default
-"DWIM" remote branch names.
-
-Following this, there is a check for "--detach". If "--detach" is *not*
-present, then we set only_local_ref=y. this is done because we would
-like to avoid printing remote references. This immediately seems wrong
-because --track should allow completing remote references.
-
-Finally, if only_local_ref is 'y', and the track_opt for DWIM logic is
-disabled, we complete only local branches. This occurs because --track
-disabled track_opt, and not providing --detach sets only_local_ref to
-'y'.
-
-Fixing this correctly is not trivial, so it is left to a follow up
-change.
+Show that properly recognizing and supporting -c should override the
+behavior for --track.
 
 Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
 ---
- t/t9902-completion.sh | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ t/t9902-completion.sh | 63 +++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 63 insertions(+)
 
 diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index af4661cbcc73..002223160058 100755
+index 002223160058..a134a8791076 100755
 --- a/t/t9902-completion.sh
 +++ b/t/t9902-completion.sh
-@@ -1271,6 +1271,16 @@ test_expect_success 'git switch - with --detach, complete all references' '
+@@ -1288,6 +1288,69 @@ test_expect_success 'git switch - with --no-track, complete only local branch na
  	EOF
  '
  
-+# TODO: Since --track on its own will perform a DWIM to extract the local
-+# branch name, we should complete only the remote branches with their remote
-+# name.
-+test_expect_failure 'git switch - with --track, complete only remote branches' '
-+	test_completion "git switch --track " <<-\EOF
++# TODO: git switch completion does not yet support checking for -c, but it
++# should be able to complete all possible references. Based on a quick
++# examination of the switch/checkout code, -c will disable DWIM logic and thus
++# we should not complete unique remote branch names with -c or -C either.
++test_expect_failure 'git switch - with -c, complete all references' '
++	test_completion "git switch -c new-branch " <<-\EOF
++	HEAD Z
++	master Z
++	matching-branch Z
++	matching-tag Z
 +	other/branch-in-other Z
 +	other/master-in-other Z
 +	EOF
 +'
 +
- test_expect_success 'git switch - with --no-track, complete only local branch names' '
- 	test_completion "git switch --no-track " <<-\EOF
- 	master Z
++test_expect_failure 'git switch - with -c, complete all references' '
++	test_completion "git switch -C new-branch " <<-\EOF
++	HEAD Z
++	master Z
++	matching-branch Z
++	matching-tag Z
++	other/branch-in-other Z
++	other/master-in-other Z
++	EOF
++'
++
++# TODO: ensure that the completion rules for -c override --track
++test_expect_failure 'git switch - with -c and --track, complete all references' '
++	test_completion "git switch -c new-branch --track " <<-EOF
++	HEAD Z
++	master Z
++	matching-branch Z
++	matching-tag Z
++	other/branch-in-other Z
++	other/master-in-other Z
++	EOF
++'
++
++# TODO: git switch with -c and --no-track should allow creating a branch using
++# any reference as a starting point. Because completion support does not
++# recognize -c or -C, this doesn't work yet.
++test_expect_failure 'git switch - with -c and --no-track, complete all references' '
++	test_completion "git switch -c new-branch --no-track " <<-\EOF
++	HEAD Z
++	master Z
++	matching-branch Z
++	matching-tag Z
++	other/branch-in-other Z
++	other/master-in-other Z
++	EOF
++'
++
++test_expect_failure 'git switch - with -C and --no-track, complete all references' '
++	test_completion "git switch -C new-branch --no-track " <<-\EOF
++	HEAD Z
++	master Z
++	matching-branch Z
++	matching-tag Z
++	other/branch-in-other Z
++	other/master-in-other Z
++	EOF
++'
++
+ test_expect_success 'teardown after ref completion' '
+ 	git branch -d matching-branch &&
+ 	git tag -d matching-tag &&
 -- 
 2.25.2
 
