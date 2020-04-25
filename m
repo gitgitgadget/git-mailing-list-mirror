@@ -7,64 +7,62 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9181FC2BA19
-	for <git@archiver.kernel.org>; Sat, 25 Apr 2020 03:57:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 02D48C2BA19
+	for <git@archiver.kernel.org>; Sat, 25 Apr 2020 04:10:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 65F4020704
-	for <git@archiver.kernel.org>; Sat, 25 Apr 2020 03:57:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8F24E2076C
+	for <git@archiver.kernel.org>; Sat, 25 Apr 2020 04:10:15 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZmKhmDWN"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f2ChOPi4"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726105AbgDYD5W (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Apr 2020 23:57:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56242 "EHLO
+        id S1726061AbgDYEKI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 25 Apr 2020 00:10:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58200 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726038AbgDYD5W (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 24 Apr 2020 23:57:22 -0400
-Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com [IPv6:2607:f8b0:4864:20::742])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78817C09B049
-        for <git@vger.kernel.org>; Fri, 24 Apr 2020 20:57:20 -0700 (PDT)
-Received: by mail-qk1-x742.google.com with SMTP id n143so12472201qkn.8
-        for <git@vger.kernel.org>; Fri, 24 Apr 2020 20:57:20 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1726034AbgDYEKH (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 25 Apr 2020 00:10:07 -0400
+Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com [IPv6:2607:f8b0:4864:20::741])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D192C09B049
+        for <git@vger.kernel.org>; Fri, 24 Apr 2020 21:10:07 -0700 (PDT)
+Received: by mail-qk1-x741.google.com with SMTP id l78so12479875qke.7
+        for <git@vger.kernel.org>; Fri, 24 Apr 2020 21:10:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=B1qah8UJfwBc5xgoBRhtWu8I3NXhJ/dNeZS+DruT/3E=;
-        b=ZmKhmDWNsyFdRBCuVxx6KwNS5ywRhSrbolWOTxjqpEJrFSDN71a/+xvFkOCrK3C7cK
-         U4PEmC5Nus4TyIeAAZytNicoT0lK7O/73zTFYpToZDrYbO7ZnJN6V6bh3HgI4A3/kr/n
-         y0WUFUwnPPbGq2VO252YPcuhHXryQVLQ/9kQ63MggvVKePPhfGprSJgUb0xK/ZkMQJIt
-         SzF57g4NHoP7zqDyi9G6HFQkvmhPff5a9VKb5qUk67q/VwpWsTKO7fmZxKQwBy7KxmkL
-         /kpZu4p4BnGTs35PFYcJlDzwoT7Dfd7bbEOBik7lrDZSD6tZG5Gh9KUB1K/LdYJj8XXz
-         IGRA==
+        bh=unEwGZNw8Znm88iJoG34i/UbT616cFqK9b8MWNleCTE=;
+        b=f2ChOPi4SR8nu711ivY8lxxA4XMGnZZXzy4m4noa9NTf2LW2ncM2WvvQV9LIbBMHXk
+         mqPabdtvtZEwuB04QD6y5Sy9J4BD+p/nmUYTd/GYF6luFJU310oN2ljDOg8CtgsBWznd
+         bt7Y9EXZr9lqS+vvJMTiDzhhfURKQFYlZI2Tyx6AcdnMV+sF6ZLLrDJINH706g3OczYw
+         qxR3GPXLaShn8hgiHG5cF4qznm3Z3JtBXWx3m8D9vPe6kdLoZnQpNgkxzlYAcMn8shVo
+         gyrFO1QGc9d6DhLx+XagdrGjVhh7NRyxaerdz4d2fdFVmHBwz+/MQzzTqmxGYh9R8hF1
+         wL+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=B1qah8UJfwBc5xgoBRhtWu8I3NXhJ/dNeZS+DruT/3E=;
-        b=kvEGxK5eO5qqADRf68M1zpKu3Bt0uUnzVneOWCqeln2j5WVbTS4GXYrUikh9BUzo7m
-         R9ZJDaskd2n+Ljf06C2tyolqdsEzm1yDo5UdKKPthcxZ19dvMfpE6+Ol0qnVRFpgsgJ0
-         1AgVU3p0SwgpxnPTNmlbEe4lGBQcRm/qLfRv+bu4xsLnKpbbrdgVaIOD4Qm6Bx7BLIpC
-         XQF6DVfsB0oXmKKmtqxU3bcXbd0G3oZfVwaFlLp1hpDhRGB5d7rHaVRs3n8kzD+1+Kzc
-         mrcPAZtdKNEomgIxJCw676IHLSvUe9XK7te+iLx0nHvxkzbAnTIU3PRvYlxS+SyPCS74
-         LNLQ==
-X-Gm-Message-State: AGi0PuY+MVIjfcLA5Xo8vW/8c3RbfSrJ0dq5D7wzlGNJvCIn/PY+NZUn
-        tKeejd8VGmEtfXZiHR9NvnBGeto0utgnoZO2W5ZBXw==
-X-Google-Smtp-Source: APiQypIJpe5aX6dmL7M7jl6q1REv+zK91+lMHuO5/ZcsJPZy7Yl2EMUiYWiHRTcHEAW8g0Cj1DPXMhVJlVurfPZ2TCc=
-X-Received: by 2002:ae9:dc46:: with SMTP id q67mr12262479qkf.431.1587787039660;
- Fri, 24 Apr 2020 20:57:19 -0700 (PDT)
+        bh=unEwGZNw8Znm88iJoG34i/UbT616cFqK9b8MWNleCTE=;
+        b=LZfAcSIwnRgr5urn7ihUgDeb/9U9/cq59AAxIwDSIM3MCBv8wHb7293TEM9TPSis42
+         d5CqVvV0i7v13k2vhUmMekwHURqu+Xp4rBhlIANQKpXoSwSyRm59xvxl5U3iA4GqSFcZ
+         mkxRgW+IKob0fihDMLCiN3RQPcbRMZTcwYCsjhSuS8wWo3esqWVWpvDVJxpqNdr93+za
+         wmsx6WwcLEbiIQTCPUOYeDMKzhZICbKTWqTVoNo5mJ4hF2cUSQM2VpV9TXYJath2bTgx
+         sIvFUYMnnYvTFWk6pcBRHkunqXsAdkbC/8GROqy4tBwssdHvf2SdF7CFsOKip4UBtqou
+         1iHw==
+X-Gm-Message-State: AGi0PubHFVAR+/7NycGmoiEwTeZ/QcXdvh5I7VQO8VYi7PY2+ZOGUkus
+        3SEQiafCMugOzgs/oOez7HyCJjo7IC/7ZYFjFMh/tw==
+X-Google-Smtp-Source: APiQypJPiyGytfahprQd8FMbRB6rfBBKpwvXGyvwgjtrQiTRyxIp/AJfEi5HE8dVL1fFPWqw3ivBHEvh0TVw68VWExY=
+X-Received: by 2002:a37:7846:: with SMTP id t67mr11737808qkc.77.1587787806702;
+ Fri, 24 Apr 2020 21:10:06 -0700 (PDT)
 MIME-Version: 1.0
 References: <pull.614.git.1587700897.gitgitgadget@gmail.com>
- <166b78f71755bb3f9967b32bfe282210c2bb240d.1587700897.git.gitgitgadget@gmail.com>
- <20200424173433.GL1949@danh.dev> <CAKiG+9V=bJNqrHRy8y8cbjkgzrmhOMMz47+8fgfQARAetx4MFQ@mail.gmail.com>
- <20200424230954.GA4071@danh.dev>
-In-Reply-To: <20200424230954.GA4071@danh.dev>
+ <xmqqv9lod85m.fsf@gitster.c.googlers.com> <CAKiG+9V_nZUXf2a689vZ54rG+xTCFMGcJe_7Av-khaxxuijERg@mail.gmail.com>
+ <xmqq8sikblv2.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqq8sikblv2.fsf@gitster.c.googlers.com>
 From:   Sibi Siddharthan <sibisiddharthan.github@gmail.com>
-Date:   Sat, 25 Apr 2020 09:27:08 +0530
-Message-ID: <CAKiG+9VELgWxiehkwjREQ6H3L+eTt-Wrs0sPLMAucCLiD3Ooeg@mail.gmail.com>
-Subject: Re: [PATCH 5/8] cmake: support for testing git when building out of
- the source tree
-To:     Danh Doan <congdanhqx@gmail.com>
+Date:   Sat, 25 Apr 2020 09:39:55 +0530
+Message-ID: <CAKiG+9Xtof8Hj3npsS-M0SnT_dcjtHjP_+avWB4oOHkaMdnSbw@mail.gmail.com>
+Subject: Re: [PATCH 0/8] CMake build system for git
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Sibi Siddharthan via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
@@ -73,53 +71,60 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If you are adding a new test script you will have re-configure.
-Even in automake you are expected to do this, unless you have a glob
-pattern in Makefile.in somewhere.
-
-On Sat, Apr 25, 2020 at 4:39 AM Danh Doan <congdanhqx@gmail.com> wrote:
+On Sat, Apr 25, 2020 at 3:13 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> On 2020-04-25 03:02:49+0530, Sibi Siddharthan <sibisiddharthan.github@gmail.com> wrote:
-> > > >  file(GLOB test_scipts "${CMAKE_SOURCE_DIR}/t/t[0-9]*.sh")
-> > >
-> > > Remember cmake won't be re-run if nothing was changed in CMakeList.txt
-> > > If I only change some code, and I decided the change I make should be
-> > > tested by a-new-and-independent-test-script.
-> > > I need to re-run cmake manually! I don't like it, at all.
-> > >
-> >
-> > No you don't have re-run CMake.
+> Sibi Siddharthan <sibisiddharthan.github@gmail.com> writes:
 >
-> Yes, you have to re-run CMake.
-> https://cmake.org/cmake/help/v3.14/command/file.html#glob
+> > The goal would be to maintain a CMake build for Git keeping it in sync
+> > with the Makefile.
+> > The Makefile is not going to be replaced at all. The CMake script for
+> > now only supports Linux and Windows.
+> > It does not support BSD, Solaris and others, whereas the Makefile does
+> > support them.
 >
-> > Note
-> >
-> > We do not recommend using GLOB to collect a list of source files
-> > from your source tree. If no CMakeLists.txt file changes when
-> > a source is added or removed then the generated build system cannot
-> > know when to ask CMake to regenerate. The CONFIGURE_DEPENDS flag may
-> > not work reliably on all generators, or if a new generator is added
-> > in the future that cannot support it, projects using it will be
-> > stuck. Even if CONFIGURE_DEPENDS works reliably, there is still
-> > a cost to perform the check on every rebuild.
+> So you are doing (1).  I already said that I feel that engineering
+> burden to divert resources for CMake support would be unacceptably
+> high.
 >
-> * Run CMake now.
-> * Don't touch anything
-> * Create new test-script, let's say t9904-just-for-cmake.sh
->
-> * Check if it's run or not, I bet the answer is not
+> Whenever any of our developers need to add source files, Makefile
+> configuration knobs that people can add to config.mak, etc., you are
+> forcing them to figure out where in the CMakefile to add them or
+> devise ways to allow builders who do not use config.mak (because
+> they use CMake) to do similar tweaks.
 >
 
-The new test script is not added to list of test scripts.
-So yes, you will have to re-run CMake.
-A reconfigure in CMake is going to take less than 2 seconds, not like
-automake which can take as long as the initial configure itself.
+Adding source files to the CMakefile is going to just as long as
+adding it to the Makefile,
+anyone can figure this out and this is not going to take much time at all.
 
-> Anyway, Junio said NO, I don't need to be a CMake hater here, anymore.
+As for the configuration knobs I agree that adding the same to CMake
+is going to a bit longer.
+But anyone who is hacking Git is going to do it with the Makefile or
+(if accepted)CMake script, but not both while hacking.
+So they will continue to make progress with the system they feel comfortable in.
+They will only run into an issue when they try for a PR. Currently the
+CMake script is only used for generating the visual studio solution.
+We can add a (continue-on-error) to vs-build job to make this process
+less of a hindrance.
+If people take the time to hack Git, figuring out how to do the
+configuration knobs in the CMake script is not going to that much take
+time
+compared to the time they spend making Git better.
+
+
+> Any patch that is acceptable to the current project would become
+> unacceptable because they lack updates to CMake part, but I suspect
+> we do not have enough people who are so much devoted to give a good
+> review if updates to CMake part are added.  And it is unclear why it
+> would be beneficial to slow our existing developers down by forcing
+> them to become familiar with CMake.
 >
-> --
-> Danh
+> So..., I am not just "still not convinced", but I am even more
+> convinced that we do not want this series, after thinking about it
+> longer.
+>
+> Thanks.
+>
 
 Thank You,
 Sibi Siddharthan
