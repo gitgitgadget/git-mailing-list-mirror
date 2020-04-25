@@ -5,63 +5,63 @@ X-Spam-Level:
 X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A248C54FCB
-	for <git@archiver.kernel.org>; Sat, 25 Apr 2020 20:42:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D2A03C54FCB
+	for <git@archiver.kernel.org>; Sat, 25 Apr 2020 20:43:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3C4562072B
-	for <git@archiver.kernel.org>; Sat, 25 Apr 2020 20:42:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A94AC2076C
+	for <git@archiver.kernel.org>; Sat, 25 Apr 2020 20:43:21 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DhJvTr2S"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hEI8UmBL"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726230AbgDYUmW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 25 Apr 2020 16:42:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41920 "EHLO
+        id S1726278AbgDYUnU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 25 Apr 2020 16:43:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42078 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726190AbgDYUmV (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Apr 2020 16:42:21 -0400
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 803ADC09B04D
-        for <git@vger.kernel.org>; Sat, 25 Apr 2020 13:42:21 -0700 (PDT)
-Received: by mail-wr1-x442.google.com with SMTP id d17so15813764wrg.11
-        for <git@vger.kernel.org>; Sat, 25 Apr 2020 13:42:21 -0700 (PDT)
+        with ESMTP id S1726190AbgDYUnU (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Apr 2020 16:43:20 -0400
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FDBAC09B04D
+        for <git@vger.kernel.org>; Sat, 25 Apr 2020 13:43:20 -0700 (PDT)
+Received: by mail-wm1-x344.google.com with SMTP id x25so15191500wmc.0
+        for <git@vger.kernel.org>; Sat, 25 Apr 2020 13:43:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:from:date:subject:mime-version:content-transfer-encoding
          :fcc:to:cc;
-        bh=JSA4xZhlA6B2Zxbdqe7yNKm8yvfPps1VkxFWIpSH4p8=;
-        b=DhJvTr2SOqsv77lvh4zrO5MpIaYKGTVZ57SWrBcmFkhGhGrdyiZUAz26Fsub42aY28
-         w0cjs0x1c1973CLdcFkft5BWdycpBLXaIlByZo+HoxTZ5JSyAhK7CvFRnmyiyX/J31iE
-         kDZBO9zZ3wcPboIn5x/0SSLWkkNTJjcp4l45/nmacHBHWmp1Uohv34p06dPzWbPswsFP
-         06R7d2xYdCn49rRwnXwaZt2BdGv0BrOyvk+gMGBuFJAG8+Pbqog8Rm4PiUnh9kuf+XuE
-         bN57EkaBSXhPMgWBFRidWzgJ2rZUecWTS67rMCA3YFjN/Z4V5u0w9zDyK5dtLxQoX90U
-         pESA==
+        bh=Iln18u0Op50R3h5XGatxTPfZEKYMynP2JsInlsWgkdQ=;
+        b=hEI8UmBLfq+BUFRJXEoouZLuRUSHqv0HXRCIi7Pudy8t+NfvCZ1Fec9JlYqLxMC7jX
+         llRTDdPeMxO6VngWER1Wb8emev1xDpQEYPdM6V8ead1wpZaO+IgGzbNK3WUxoqp0lkW8
+         rBny2pTX48Rc/aZB/HNpc2ua/6+rctdm5gQANrOMc5stMywhGZfPBODVCID0BZe/8/7v
+         b30DQ5fWsxwDzMvfOKrUkikkyakxFwYx7dFC8jI+470YXOJ0ullV8tNBeGbchFOFFqbg
+         DTRre2/UWrBnaTUXiR39QM1Nm70mWLgdKAb+cXnUKVtxdlZHTYdWA9lotVQleeUL9cmq
+         XhVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:from:date:subject:mime-version
          :content-transfer-encoding:fcc:to:cc;
-        bh=JSA4xZhlA6B2Zxbdqe7yNKm8yvfPps1VkxFWIpSH4p8=;
-        b=kYeZ0O5SMIYxvdfB4LOIVfRVvtnVQYNzToy+CZPd3AA0hGX90xO/3FQX2nbRUI4niB
-         j3G7Co37fmOh0yP69+g75EXON7sN2Kn3p8FUNireGtJohG0nDZip4gvdilP/E8Yqkhex
-         8bJR7llXxh+pPpaD2dHfxEPtXvyDphDV53+gyPTXnoKRis47KdGIhr085PGraucIjDmz
-         Oo//OvsT5QsPlcgjwZEXm1uywoWhfHystmnk14KIGdrCJeMGVWFTGHxt5ueJDMveYtuL
-         nxskUfHezP7aU7ds44l4B+Aj41pTX14J8LsJp81cRZuBAe9qQAiv8+ZZvZ8C4Y+hgLx3
-         cuPg==
-X-Gm-Message-State: AGi0PuaZ8C1o1nToXa4sWUpHJ1ZUTkbs5YvdB6o3zSb3mgTysAB/8sqs
-        lv9V8Ajqhpjq0Ewshvv0z46ihmz9
-X-Google-Smtp-Source: APiQypLHHPHdu868WFBIBn2u6bF3aPoc5vovWKyAAqDuHr3zMIQZHXsIOeAa7ZKKN6T2UkTR5mqYxQ==
-X-Received: by 2002:adf:fe45:: with SMTP id m5mr19977882wrs.124.1587847339979;
-        Sat, 25 Apr 2020 13:42:19 -0700 (PDT)
+        bh=Iln18u0Op50R3h5XGatxTPfZEKYMynP2JsInlsWgkdQ=;
+        b=JX4Hku787I/WcKJgjzppVgsk9bLRUjZnGnkA6xIBZU4KO11RBSq4z8JZfTzRGh4D9O
+         PaECg/RRgVOd9GA1r6OoGLGW2iN7CtpqEtrIicyXjg/ZQqqoujHnd2TXVDE4JM7SEjBi
+         mA5BtoBNY4zppF554VWNSBMk99+O/c4R16anslsxpG9OBClxyaaWL+nW6JzvtbM6YN/X
+         GVwYKMFDMlvLtyF84foltpSzkopTqzMMJw6JuvURkpFqNmLPMQeUsg+vt5bi2v3MOSqW
+         KYW3ygo0LUgnYZ73vshvAdglZBwJ66Xn/4nOF83Bt8cPnZIgzz6BGIW7Hs1Xva0fCM5l
+         Ke+Q==
+X-Gm-Message-State: AGi0Pualxd0osxRv5aI0Q5O6FolU6259Vf/McpuadwvmnZn2u5D74a9c
+        R5Qmk8zNBR2iwR2LF6jsUED+B5r5
+X-Google-Smtp-Source: APiQypJNjc22NgPXh52UC0XclSMtUHiy2oOVoeBnGfW4pQ8PGnT00UOX+wNmfYTSiRL9PApQExpaHQ==
+X-Received: by 2002:a1c:66d5:: with SMTP id a204mr17750152wmc.69.1587847398801;
+        Sat, 25 Apr 2020 13:43:18 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h13sm13304162wrs.22.2020.04.25.13.42.19
+        by smtp.gmail.com with ESMTPSA id q10sm13236258wrv.95.2020.04.25.13.43.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 25 Apr 2020 13:42:19 -0700 (PDT)
-Message-Id: <pull.767.git.git.1587847338677.gitgitgadget@gmail.com>
+        Sat, 25 Apr 2020 13:43:18 -0700 (PDT)
+Message-Id: <pull.617.git.1587847397970.gitgitgadget@gmail.com>
 From:   "=?UTF-8?Q?Rapha=C3=ABl?= Gertz via GitGitGadget" 
         <gitgitgadget@gmail.com>
-Date:   Sat, 25 Apr 2020 20:42:18 +0000
+Date:   Sat, 25 Apr 2020 20:43:17 +0000
 Subject: [PATCH] commit:fix use of uninitialized value [...] in server log
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -115,9 +115,9 @@ Signed-off-by: Raphaël Gertz <git@rapsys.eu>
     
     Signed-off-by: Raphaël Gertz git@rapsys.eu [git@rapsys.eu]
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-767%2Frapsys%2Fmaster-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-767/rapsys/master-v1
-Pull-Request: https://github.com/git/git/pull/767
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-617%2Frapsys%2Fmaint-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-617/rapsys/maint-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/617
 
  gitweb/README      | 3 +++
  gitweb/gitweb.perl | 4 ++--
@@ -137,10 +137,10 @@ index 471dcfb691b..8964478a3fc 100644
  Any comment/question/concern to:
    Git mailing list <git@vger.kernel.org>
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 1a02a1242d5..37dfce202a0 100755
+index 65a3a9e62e8..76e71259824 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -1420,7 +1420,7 @@ sub href {
+@@ -1406,7 +1406,7 @@ sub href {
  
  		# since we destructively absorb parameters, we keep this
  		# boolean that remembers if we're handling a snapshot
@@ -149,7 +149,7 @@ index 1a02a1242d5..37dfce202a0 100755
  
  		# Summary just uses the project path URL, any other action is
  		# added to the URL
-@@ -6012,7 +6012,7 @@ sub git_history_body {
+@@ -5998,7 +5998,7 @@ sub git_history_body {
  		      $cgi->a({-href => href(action=>$ftype, hash_base=>$commit, file_name=>$file_name)}, $ftype) . " | " .
  		      $cgi->a({-href => href(action=>"commitdiff", hash=>$commit)}, "commitdiff");
  
@@ -159,6 +159,6 @@ index 1a02a1242d5..37dfce202a0 100755
  			      $cgi->a({-href => href(action=>"blob_plain", hash_base=>$commit, file_name=>$file_name)}, "raw");
  
 
-base-commit: e870325ee8575d5c3d7afe0ba2c9be072c692b65
+base-commit: af6b65d45ef179ed52087e80cb089f6b2349f4ec
 -- 
 gitgitgadget
