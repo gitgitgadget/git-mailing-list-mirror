@@ -2,122 +2,108 @@ Return-Path: <SRS0=d/2q=6J=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 12E24C54FCB
-	for <git@archiver.kernel.org>; Sat, 25 Apr 2020 12:56:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CA484C54FCB
+	for <git@archiver.kernel.org>; Sat, 25 Apr 2020 13:13:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ED0FA2071C
-	for <git@archiver.kernel.org>; Sat, 25 Apr 2020 12:56:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9CD2E20704
+	for <git@archiver.kernel.org>; Sat, 25 Apr 2020 13:13:57 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="hLLvPiQ4"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726108AbgDYM4T (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 25 Apr 2020 08:56:19 -0400
-Received: from smtp.hosts.co.uk ([85.233.160.19]:51539 "EHLO smtp.hosts.co.uk"
+        id S1726098AbgDYNN4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 25 Apr 2020 09:13:56 -0400
+Received: from mout.gmx.net ([212.227.15.19]:57975 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726060AbgDYM4S (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Apr 2020 08:56:18 -0400
-Received: from [92.30.123.115] (helo=[192.168.1.39])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1jSKLu-0009Ml-7K; Sat, 25 Apr 2020 13:56:14 +0100
-Subject: Re: [PATCH 0/8] CMake build system for git
-To:     Sibi Siddharthan <sibisiddharthan.github@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Sibi Siddharthan via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-References: <pull.614.git.1587700897.gitgitgadget@gmail.com>
- <xmqqv9lod85m.fsf@gitster.c.googlers.com>
- <CAKiG+9V_nZUXf2a689vZ54rG+xTCFMGcJe_7Av-khaxxuijERg@mail.gmail.com>
- <xmqq8sikblv2.fsf@gitster.c.googlers.com>
- <CAKiG+9Xtof8Hj3npsS-M0SnT_dcjtHjP_+avWB4oOHkaMdnSbw@mail.gmail.com>
-From:   Philip Oakley <philipoakley@iee.email>
-Message-ID: <40da111a-77e0-55b1-a6c2-9edc77cf1f3c@iee.email>
-Date:   Sat, 25 Apr 2020 13:56:15 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+        id S1726060AbgDYNN4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Apr 2020 09:13:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1587820433;
+        bh=XCnnayme1k1ApLYca69/HwdxtPPvbZf7kQ8+EaT6+q0=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=hLLvPiQ4qExq1iktRNoU4JJtwtERRVUT72+m1Iew5NedbIVQVByThr2y2UOqlE1y4
+         sFg4zHLTS33Plk8wwdC2TRUioCELCQbjyza8ECsli8NYYJQ4iMtgv4qZkkXyIBa6+z
+         nycQn2JFBcsb74EOZUvYoS1s059IGbN1v4N8E45w=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from MININT-QA14EDB.fritz.box ([89.1.212.117]) by mail.gmx.com
+ (mrgmx004 [212.227.17.190]) with ESMTPSA (Nemesis) id
+ 1MVvPD-1jaKs00CsX-00RmDo; Sat, 25 Apr 2020 15:13:53 +0200
+Date:   Sat, 25 Apr 2020 15:13:53 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?=C4=90o=C3=A0n_Tr=E1=BA=A7n_C=C3=B4ng_Danh?= 
+        <congdanhqx@gmail.com>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH 0/4] fix make sparse warning
+In-Reply-To: <cover.1587648870.git.congdanhqx@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2004251511550.18039@tvgsbejvaqbjf.bet>
+References: <cover.1587648870.git.congdanhqx@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <CAKiG+9Xtof8Hj3npsS-M0SnT_dcjtHjP_+avWB4oOHkaMdnSbw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
+Content-Type: multipart/mixed; boundary="8323328-559739335-1587820434=:18039"
+X-Provags-ID: V03:K1:0l4o8Nj6D57qPf2oWZ0wE1MT5T1CmP+7Dcwpel7MHZ0HDefn20T
+ yEVfPYYBwRfDlrbx07g81dUTUBypB9UwgW0d2GrWdhLIF0C3KsquXlVECwKa0tJ4+QkHtU6
+ COI6hlA0EO+KayW+aMTdAdz/P4udJ4rpMZoTjXxWdHqIHdjnnkvuviNwhfIpScFTW4YTx3z
+ Hc77Bbp0vPa25+BDOoapQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:LR5OALGxHNc=:6TmK81wF6x4bznZh4C24PY
+ r4Ax/LuAk+vDn7XNLSJWN9WXqDwYdxk/gNiOVrf4czSoYY70GwLwUzfPgxUknPzGuuSUX81pj
+ ZyR7axGxZVTN84T2XiXyydGbCq1l+80JVC3egUO/r9nSgTulMkMKSQHK+VbwVnuzQ2BP/exA4
+ wvHXOkCZyokorsmIVwf5EThpNmsTTQ0XzTtfOWnQIFI1m9y5AryhKw5KarTA0LiLmnGwW6B1Z
+ wDHpF4B7hI/vz9pqra6PaQrFlyJEj7qfNURd5Y+ePS1KgdEwsSD9iVyUpXfSS1bvi31UNd3R+
+ 9VYlJnLJMC6Avj/xMMjlNiFeR/O0Xjir9ni2Eqm2MYo1a2mYQfn5D+175YL8Q6KCkbUQsbhus
+ fWrrlJfsOnX90us6Ht2bTnNLiA+SruWha7wyAiz3egBjLyhKBO6vnYua2PsN4QsUvII8qayre
+ 2rC0QqaZT2/mFGfadvHoTmbs0N2jowgFAOfYbPJn1JkjOA47A7i8I9z20lVN/M8HyyFkGVwYh
+ GEXatAaz3pO0Ng9yxiqnn7+T3VFoG4rLbRbHkNQZkCir/aqs+Y9Xb6EFHxZdPHsMOYnVCiwb7
+ 1FjOltXQx1hO3AqG7dSQT32GT8sjlSlod9plzWpXCbDHhOxN9H/T4EXIOJlF5OSjmEqkERB/V
+ nNLKBoT9hLtQeAkY1f31AJwnyfckf01cNJRpFLL2G7G3OWct9OCx8Utir9BGUSsLQpuc4Q5nE
+ rTAadUrYlcUCouqhrk4JjvJUN7zjNoQD5f80CypoiOW/3zj1CSRePqT3Z28dKQObIN0MGyJ0+
+ UCKemtdjpp9CRrpfbL2H5M8SRJBX/WhqVW1CWbUWuiEhzx5uhsiE0+qW7YpAiAC/yr3gU+7kv
+ YDAFMiy2jBWV9NrcQnKiVwEiDmM1DzYVxI+H/44nfXXg0+X6hV4wJM/3+WC7zVpZbJDTzOtNc
+ FV2fXHVubExEhSbrhVi+2HppUJlzp8YcDwNoh9aOgbAr7aEmY20mQgXo9rAww6E8wDbY7qMf1
+ IqgH/pwFT2DZGpsCAk9DxFKKO2jHrcrErL9vLel+sS6VqQH1Uq66VjwOdt5xDyZ82LjeITusl
+ OH//Ult9AmflpaYrudNkjxrmqvR2uW3YB9G4IV4vD2Fpi3GnPF7SF5PEF9fsmMBjn58e2GVLB
+ 6xAidnv6NjaxZPI9XSJrFoDX7EUFSK+btnwacBAggok74UZrjY8nlI4cQ/Nil6MfBghfLryNR
+ zDC4HTHSuqqsSRepi
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Sibi,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On 25/04/2020 05:09, Sibi Siddharthan wrote:
-> On Sat, Apr 25, 2020 at 3:13 AM Junio C Hamano <gitster@pobox.com> wrote:
->> Sibi Siddharthan <sibisiddharthan.github@gmail.com> writes:
->>
->>> The goal would be to maintain a CMake build for Git keeping it in sync
->>> with the Makefile.
->>> The Makefile is not going to be replaced at all. The CMake script for
->>> now only supports Linux and Windows.
->>> It does not support BSD, Solaris and others, whereas the Makefile does
->>> support them.
->> So you are doing (1).  I already said that I feel that engineering
->> burden to divert resources for CMake support would be unacceptably
->> high.
->>
->> Whenever any of our developers need to add source files, Makefile
->> configuration knobs that people can add to config.mak, etc., you are
->> forcing them to figure out where in the CMakefile to add them or
->> devise ways to allow builders who do not use config.mak (because
->> they use CMake) to do similar tweaks.
->>
-> Adding source files to the CMakefile is going to just as long as
-> adding it to the Makefile,
-> anyone can figure this out and this is not going to take much time at all.
-While figuring these things out isn't /hard/ it can be tedious and time
-consuming for those who are not familiar with the particular tool set
-(as evidenced, in my mind, by the poor dev support for Git for Windows
-because of the need to understand two operating systems and their
-awkward interactions) - those that are familiar and understand the/their
-whole tool set are usually the x10 folks.
->
-> As for the configuration knobs I agree that adding the same to CMake
-> is going to a bit longer.
-> But anyone who is hacking Git is going to do it with the Makefile or
-> (if accepted)CMake script, but not both while hacking.
-> So they will continue to make progress with the system they feel comfortable in.
-> They will only run into an issue when they try for a PR. Currently the
-> CMake script is only used for generating the visual studio solution.
-> We can add a (continue-on-error) to vs-build job to make this process
-> less of a hindrance.
-> If people take the time to hack Git, figuring out how to do the
-> configuration knobs in the CMake script is not going to that much take
-> time
-> compared to the time they spend making Git better.
->
->
->> Any patch that is acceptable to the current project would become
->> unacceptable because they lack updates to CMake part, but I suspect
->> we do not have enough people who are so much devoted to give a good
->> review if updates to CMake part are added.  And it is unclear why it
->> would be beneficial to slow our existing developers down by forcing
->> them to become familiar with CMake.
->>
->> So..., I am not just "still not convinced", but I am even more
->> convinced that we do not want this series, after thinking about it
->> longer.
->>
->> Thanks.
->>
+--8323328-559739335-1587820434=:18039
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Is there a middle way, given that IIUC there is most benefit on the
-Windows side, that on the git.git side the Makefile could contain a
-suitable comment directing those interested in CMake to the relevant
-part of Git-for-Windows. Is there a part that could hold, and track, the
-matching changes to the primary Makefile? 
+Hi Danh,
 
-Are there tools that track and compare CMake and Make variants, or at
-least indicate any divergences to help separately maintaining the CMake
-series?
-> Thank You,
-> Sibi Siddharthan
---
-Philip
+On Thu, 23 Apr 2020, =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh wrote:
+
+> It's happened that I tried to run make check on project that support aut=
+oconf.
+> Git's Makefile told me to run `make sparse` instead.
+>
+> I /think/ if we have a rule in Makefile, we should adhere to it.
+> I also fix another change in ds/blame-on-bloom, which I think it's worth=
+ to
+> fix, see: <20200423133937.GA1984@danh.dev>
+
+FWIW there is still an Azure Pipeline building `sparse` for Ubuntu every
+two weeks: https://dev.azure.com/git/git/_build?definitionId=3D10&_a=3Dsum=
+mary
+
+I created this Pipeline in order to support the proposed project at
+https://github.com/gitgitgadget/git/issues/345 which is: teach our CI
+builds to run `make sparse`.
+
+Maybe it is time to tackle that?
+
+Ciao,
+Dscho
+
+--8323328-559739335-1587820434=:18039--
