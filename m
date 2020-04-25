@@ -2,229 +2,170 @@ Return-Path: <SRS0=d/2q=6J=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-8.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E524BC54FCB
-	for <git@archiver.kernel.org>; Sat, 25 Apr 2020 12:24:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DDA9EC54FCB
+	for <git@archiver.kernel.org>; Sat, 25 Apr 2020 12:33:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BD6062071E
-	for <git@archiver.kernel.org>; Sat, 25 Apr 2020 12:24:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B251C206ED
+	for <git@archiver.kernel.org>; Sat, 25 Apr 2020 12:33:50 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Uptr6WAz"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="kzyY9lYw"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726126AbgDYMYk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 25 Apr 2020 08:24:40 -0400
-Received: from mout.gmx.net ([212.227.15.19]:46533 "EHLO mout.gmx.net"
+        id S1726073AbgDYMdt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 25 Apr 2020 08:33:49 -0400
+Received: from mout.gmx.net ([212.227.15.19]:34037 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726060AbgDYMYj (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Apr 2020 08:24:39 -0400
+        id S1725925AbgDYMdt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Apr 2020 08:33:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1587817474;
-        bh=roAPEHSZTsW/K7pGuoick6JYJuYE3WdjzaGT9b25yEI=;
+        s=badeba3b8450; t=1587818027;
+        bh=Zjov4kXi2dSIgJZcqIseXiiKWdvpkNwv4RoynH78WRg=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Uptr6WAzb+XnM39lww3Rn6oDYeEtnNGi85wBftwUfhaDBiiOZdg+ckHLYSjD3TV3C
-         yzYHR1z4GOHGegSY82BoNwDZyOCssnjT1gUjA9tFdbDtxGsDtyhkv53LQl/5VLBFBH
-         sqr1MNF/mODKlaCPQ9u2ZTGvmE+bwQv4vQemGSPs=
+        b=kzyY9lYwdmJIuQrzsyAH6beYDDmQ9G4P9CGGM7W5/LF1E1lJmBTnMiybPVKzWn9h0
+         MYcilizArLvBAjNFwoJR32TMiHC6nJcYGddCEf8HLEgoF6CXL9CFuXtz0mPPge5Wkg
+         Hb7ceZVmGVkqnW+nGmJcw8pY3GhZLWXddWxaJbUM=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from MININT-QA14EDB.fritz.box ([89.1.212.117]) by mail.gmx.com
  (mrgmx005 [212.227.17.190]) with ESMTPSA (Nemesis) id
- 1McpNo-1itoO01imw-00ZzSY; Sat, 25 Apr 2020 14:24:34 +0200
-Date:   Sat, 25 Apr 2020 14:24:34 +0200 (CEST)
+ 1M3lY1-1jT9574Avj-000vOz; Sat, 25 Apr 2020 14:33:47 +0200
+Date:   Sat, 25 Apr 2020 14:33:47 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Sibi Siddharthan <sibisiddharthan.github@gmail.com>,
-        Sibi Siddharthan via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 0/8] CMake build system for git
-In-Reply-To: <xmqq8sikblv2.fsf@gitster.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.2004251354390.18039@tvgsbejvaqbjf.bet>
-References: <pull.614.git.1587700897.gitgitgadget@gmail.com>        <xmqqv9lod85m.fsf@gitster.c.googlers.com>        <CAKiG+9V_nZUXf2a689vZ54rG+xTCFMGcJe_7Av-khaxxuijERg@mail.gmail.com> <xmqq8sikblv2.fsf@gitster.c.googlers.com>
+To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH] macos: do not assume brew and gettext are always
+ available/wanted
+In-Reply-To: <20200425061531.12845-1-carenas@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2004251430380.18039@tvgsbejvaqbjf.bet>
+References: <pull.616.git.1587628367528.gitgitgadget@gmail.com> <20200425061531.12845-1-carenas@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:k9lSqgbeUsShysGHu4FcaabvM1RarrUDlFaxMBQD+ahTQYmmFZj
- NNpWF/O0p2+7N3l6ipwuhjOnHc252RQVmFcPG6gKWz0wCtqX/+6m4bGMbK6oWprtG051f7R
- UwzCv6jgWa/tMM+AVuYeFFEr8rS9FFdzqVCpXW3ryUEp5ep5OVoC4cvA5N/uU8epNI9zXZA
- /x63IcdK0/IQ4VDLn979A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:OHThH1+V5zo=:g+GrfxzX2i/344G7EtkoGv
- 2tl42migd7/HCkT4vCKYZkfnzTZr3qN49NWRSlVdi5dvPdkaSQzOf/yi0IdvMFNKIiGdQARUh
- 4ZLM5C/OJ4BiczcomD7cfLnNwQozMtD1EeRtBpLhPdQDBLHI10UlkI4fbYYIYDAFHAyTOOfSN
- KSplEx8sU17PRWsg538uSi8l739Jy58Uxo+9IOoOih0lF0M2TPGUvXIQtGQgiA0fiQBL4ifhS
- HtjDtbAogdRB+qWbF+YrUVphEKVYpwhsaL8hj3IXrR9WaXZd/bRs3//5L2pFqJDsBcERDKHXH
- IEOigP/YUmjuQSfzTPpX5DUcroDVEdx6Pn5yXfwWizWPw17YrxffE1/HQSngAup0/hN5xk1xh
- EGzZFlFpgDj5F8DEE00EcMgGFLG47Mx1p/E/X8WNCnQi2TlBuoEJSNw5WKjn+LXBWKa7g3p7t
- qQ4wVG0wHKW7Yq1Kr+XB3V2pntnT1cPHkf4wfenkUTcWNnhcamUXjQdO0LWTQA6iwDQzJ1zsG
- yTSWZZ8Q7O8aB5FBlzBIqU6WzBhRpv2d+MK+oh0a2WqNiq/ywQ1/40DKkX04/mD/Mr9hRH/Tf
- s13HhzoyECkJumufHoEsEK/PbrIwAHfJDR4ShuLkYCwIMOGNbISQ6KN8Ad+bg9J4fYiJJVx+G
- fS2VCAnA3tWziUFhc+4DzT4l24BZn2yM+Hqe57z3me7KYEZSkZT3+hZrJ8LvorEDQ5gHevPve
- tjdjV06Jx5jM2WdEJy4hp/eNSFD/KzI6FhtKtWsCmKBD3EuCZIGIzDJOsDAanQ/wuHztoAA5p
- pkIVy9O/CuCpMFt4mkWRgQ2bzNI5PrsW67v6B4fS6lgJc3jEbnC6k5hl512QoMArRraWr127v
- f9ITLfUdsQuY0dWfT2rYCMGSQd49zTdzHBUEEdh/9FIvwwpZkuXcOQMDkNUAftEbU5cxg5j8h
- +GE9Vbj7ZNHMuG5msjZ5MSjoqHB3qtJb1WGMIF67/7kXPRAQReR9uyNEk8ToEPkWMTyCM7sN8
- GKoUsemUKmzKu/PgsB51P9gm/+zZJGVduGPPk6QD9BYls9tO8C8oHwdr+UAO9YAhx5v6ixKlE
- p6rwWpPKXQVt/zBUj1zVIB4GIk/BhTrRF4E8Ue7BgBiAurKK/R6QGx3iczMP/fp1D2zSQWoN/
- RdClhVgZ7SDTDdwPfpY8NT8I8BE5JEUthK1Lm2bu8MsEuMs+JyreBvRTJxsnKTQwGQvwyCNZM
- SLK/0MdjAaL+Gg+MA
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-1561261481-1587818028=:18039"
+X-Provags-ID: V03:K1:C4+XBuQGeZMabV7srGVTgXGz9SKyhD58/funLlTckTvVATt4IKP
+ 1VAumfmNhfaZM+fLZ8wWStJKHnNbbDjmKXBweBVHXMFO6o0Mq/zi6v78U/7bfluAs1Pofq/
+ zhBTn8SJ6+vlqZi9ncrRM1DRYIrc+hs90Q/XwXpQQwA9+JpsBVqBOrYVKI2LCqXWTt+7bt0
+ kiyGZNrsDsuG7LY+f6IFw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:h3y0MTeTrcA=:9bQIJ4V7+FTEtRZgy8uA7c
+ UpbQjOVUAXOVEYxDGCj/OjMrmv+58RWgHqyZzAHsUbaeDXRMe0ZarmamN/w9kTF/4ZY0MYFWT
+ /Enunq5fYOu0tcK66opNMoStqgteTdKyWItuA3GjHvGyE7obMsTsSX9bkLse2SGs6rl90dIDB
+ 0gTECp2PmEGO+Vt5I7DINt/MdSKo6N7qSs3ufc16vkZ3KVe9IujQzVMvOszqVen71H0lDmn6r
+ 5Ohee3HvsjNfvAy5biyiER7hIxTv8DlNtipQwHkhW43NXJ7KUixcEnfcBUxchjIcrGe1WbwB9
+ rshyYOFOu616V6vjEfW+G06xN21TZPHeTvseU9MdybE/x50POHSstzbthtrI37FHl8mRDhHuA
+ IBHSo9sbh6ir34A6vDv1TBJC8J0lKyghT88zOy1bP/0tWLVQJzuexF4QgUuIU4ZozVbToOTVX
+ G68egSCfXRn9Xh3se+LT2gi/k9ctyfjzBljsBMxR1seJtjvz7M6l3Pse6UpP2UAzKWRlukCXU
+ qcUHCTSEnPX4k2NjIp1NbqjbvXE9UecFXwkn1scp4kdnWQHxORtpUqtt/FozN2w3IY2CpRWoD
+ V/1Uk/z3vglpa0aLroYKIv3K0j47UCgbyj3eT4YQgnCgLYpn0ps2gA/ZHoBYf6sQWUqEcKmek
+ P4/O2jt1ZzbRc+RNErBrYekTcZu2lPeDuEny2TwKcC7OS44l1P/dPUzptaa5XpJkNjxTor6rL
+ 72vTXUxsIXTiNU0sf6SUsKBKAhGfmhxeXqlC7rIkvdHIuG7qCBUwS1f6BSpy4pCEZfU91ltFH
+ azOoCXMdrLJVXVJzg45GMo15OPTyhRwLIbTWz8x1wTxhpN9TDEpi/bDR+7b/jLXriQDcVhRpa
+ BZPp0XLf/BoAYwEZXDmroBJUTBWWtIGzxSf6F5LSkCEcX8M18otiBMApkijPwf6xyGVTSxcaK
+ MT5r2rPoJgi24NTewAQS8NSSc2zD7VXZFefbx4irSeesv2p96i0lZiq8X6mLYE0fwS5mogWYF
+ k9ABHLG6Z1sPs2/4bBo9cYYhmBN2RWcH/u32x8z4yoPV+MRWmKgw3UL2NEv5eyjEypjAunI+P
+ wXBgzwWepI/FBtL0RjKYUm/grPovPu0sDQ9qUG2nmKzFbSUILAt2oaQWV0mXcaj9bBpQkDv9D
+ ugF5zFbjTULo9scHtbnC+IuY9z2S56xpRwxBSxn2uNkzaP0yHMjoKCA++qvI456WLDh+elzq3
+ o2Jwcb16Pz7dwNgeQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Fri, 24 Apr 2020, Junio C Hamano wrote:
+--8323328-1561261481-1587818028=:18039
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> Sibi Siddharthan <sibisiddharthan.github@gmail.com> writes:
+Hi Carlo,
+
+On Fri, 24 Apr 2020, Carlo Marcelo Arenas Bel=C3=B3n wrote:
+
+> since 27a7067308 (macos: do let the build find the gettext
+> headers/libraries/msgfmt, 2020-04-23) a build with `make NO_GETTEXT=3D1`
+> will throw warnings like :
 >
-> > The goal would be to maintain a CMake build for Git keeping it in sync
-> > with the Makefile. The Makefile is not going to be replaced at all.
-> > The CMake script for now only supports Linux and Windows. It does not
-> > support BSD, Solaris and others, whereas the Makefile does support
-> > them.
+>     LINK git
+> ld: warning: directory not found for option '-L/usr/local/opt/gettext/li=
+b'
 >
-> So you are doing (1).  I already said that I feel that engineering
-> burden to divert resources for CMake support would be unacceptably
-> high.
+> localize the change together with all the other package specific tweaks
+> and make sure it only applies when both gettext was needed and brew was
+> the provider.
 
-Would your position change if Sibi was interested in maintaining this, and
-helping with keeping CMake support in shape?
+Okay, that makes sense, but...
 
-If you have a look at https://github.com/git-for-windows/git/pull/2580 and
-at https://github.com/gitgitgadget/git/pull/614, you will probably get the
-same impression as I: in contrast to earlier contributors who just talked
-about adding CMake support, Sibi went ahead and did it, and then polished
-the heck out of the patches, was very responsive and active.
+>
+> Signed-off-by: Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com>
+> ---
+>  Makefile         | 9 +++++++++
+>  config.mak.uname | 7 ++-----
 
-I have a pretty good feeling about this.
+... moving this into the `Makefile`, i.e. make this even more independent
+from Homebrew than before, is probably a bad idea.
 
-> Whenever any of our developers need to add source files, Makefile
-> configuration knobs that people can add to config.mak, etc., you are
-> forcing them to figure out where in the CMakefile to add them or devise
-> ways to allow builders who do not use config.mak (because they use
-> CMake) to do similar tweaks.
+I agree with Eric Sunshine who complained that my patch is not dependent
+on the use of Homebrew. I haven't found a way to make it more dependent
+(there is no `NO_HOMEBREW` knob, even though there are `NO_FINK` and
+`NO_DARWIN_PORTS`), but that does not mean that we should make it even
+worse.
 
-To be honest, I don't think that that happens all that often, and quite
-honestly, I think anybody who has had a look at the Makefile and at
-CMakeLists.txt will have a pretty good idea where new files should go.
-
-> Any patch that is acceptable to the current project would become
-> unacceptable because they lack updates to CMake part, but I suspect
-> we do not have enough people who are so much devoted to give a good
-> review if updates to CMake part are added.  And it is unclear why it
-> would be beneficial to slow our existing developers down by forcing
-> them to become familiar with CMake.
-
-When it comes to new Makefile knobs, I do agree that it would place an
-unacceptable burden on contributors if we expected them to add the same
-knob to CMakeLists.txt. But we already don't do that for our autoconf
-support, so why would we expect it for CMake?
-
-When it comes to adding new, and/or removing, files, I fail to see the
-problem. It is dead easy to keep the Makefile and CMakeLists.txt in sync
-when it comes to lists of files.
-
-Another thing that strikes me as much more favorable this time as compared
-to earlier attempts at adding CMake support is that we now have pretty
-good automated builds that will definitely help with keeping CMake support
-up to date.
-
-So now that I have covered the "it's not all that bad to maintain this"
-angle, let's cover the much more important part: "why would we even bother
-with this?". And that's pretty easy to answer for me: first-class Visual
-Studio support.
-
-It is totally unacceptable to expect a contributor to download three
-quarters of a gigabyte and then let the Git for Windows SDK occupy around
-two full gigabytes on disk, just to get going. This is an upfront cost we
-currently expect from any developer on Windows, whether someone familiar
-with Visual Studio or more familiar with the command-line and GCC or not.
-
-And guess what? Whenever I try to encourage a developer who uses Git and
-who is pretty good with C to "just check out the Git for Windows SDK, run
-`make vcxproj`, then load the generated Visual Studio solution and then
-start developing", the odds are really, really, really high that that's
-the last of it.
-
-This is frustrating. And not only for me: Why should a contributor fight
-so hard just to get started, when all they want to do is to tinker with
-the code in order to see whether there is a chance that they can easily
-make it do what they want?
-
-For some time now, I have an automated build which auto-generates the
-`vs/master` branch from Git for Windows' `master` branch, which has all of
-this preconfigured. But it is too hard to find, and it is definitely too
-hard to go from there to contributing the patches back to the Git project,
-so I think that maybe one contributor used that venue in the last years.
-One. Just one. That's very little return for the effort spent on getting
-Visual Studio support back to functional ever after it was broken with
-Visual Studio 2010's release. And it demonstrates a level of being
-uninviting that I am simply uncomfortable with.
-
-There's more.
-
-If you are a developer who feels at home in IDEs, running `make` in the
-command-line, and finding out about options in the Makefile and how to
-specify them on the command-line, is just very awkward. CMake recognizes
-this, and offers GUIs to configure the builds. So that's nice.
-
-But there's more.
-
-It would appear that in recent years, ARM64-based Windows laptops have
-made great progress. They are affordable, they are fast, and they have
-long battery life. If I could use and develop Git for Windows on one of
-these beauties, I would.
-
-But I can't, because the obstacles to building Git on ARM64 Windows are
-just too high. The mingw-w64 version of GCC "does not really support"
-that. We have literally no ARM64 support whatsoever from MSYS2's side,
-i.e. no Bash, no Perl, no OpenSSH.
-
-And then Sibi comes along and offers CMake support for Git.
-
-CMake can target Visual Studio and clang. Both have pretty good support
-for ARM64 Windows.
-
-So while this is not a complete solution for the ARM64 Windows problem, it
-is at least the most exciting opportunity in that regard that I have seen
-in _years_.
-
-Given all these benefits, I would like to believe that the cost is rather
-minimal in comparison.
-
-And that's coming from me, who is not a fan of CMake at all.
-
-> So..., I am not just "still not convinced", but I am even more
-> convinced that we do not want this series, after thinking about it
-> longer.
-
-Of course, I do hope that I have convinced you above that it might not
-look all that bleak.
-
-But even if I haven't, I would like to propose to run with Sibi's patches
-and merge them first to `pu`, and then to `next`, and let that cook for a
-while (I will merge them into Git for Windows early so that there is also
-some support stream from that side).
-
-I know you think that the maintenance cost is too high, but I think it
-might be more than just manageable. And I don't think that the risk is too
-high to give the patches a try, at least inside `next`, for a couple of
-weeks or even months.
-
-If it turns out that they _do_ add too much of a maintenance burden, big
-deal: we just drop the patches, and that's that. No hard feelings, we gave
-it a try, a scientific test, if you want, and we now have evidence to back
-up your initial suspicion.
-
-If it turns out that they _do_ add value _and_ are easy to maintain, then
-that's good, right? And then, at your leisurely leisure, you can merge
-them down to `master` and eventually into an official release.
-
-What do you think? Doesn't that sound like a good plan?
+Will update my patch to guard the options a bit better.
 
 Ciao,
 Dscho
+
+>  2 files changed, 11 insertions(+), 5 deletions(-)
+>
+> diff --git a/Makefile b/Makefile
+> index 9804a0758b..031a231ad6 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -1303,6 +1303,15 @@ ifeq ($(uname_S),Darwin)
+>  			BASIC_LDFLAGS +=3D -L/opt/local/lib
+>  		endif
+>  	endif
+> +	ifndef NO_GETTEXT
+> +		ifeq ($(shell test -d /usr/local/opt/gettext/ && echo y),y)
+> +			BASIC_CFLAGS +=3D -I/usr/local/opt/gettext/include
+> +			BASIC_LDFLAGS +=3D -L/usr/local/opt/gettext/lib
+> +			ifeq ($(shell test -x /usr/local/opt/gettext/bin/msgfmt && echo y),y=
+)
+> +				MSGFMT =3D /usr/local/opt/gettext/bin/msgfmt
+> +			endif
+> +		endif
+> +	endif
+>  	ifndef NO_APPLE_COMMON_CRYPTO
+>  		NO_OPENSSL =3D YesPlease
+>  		APPLE_COMMON_CRYPTO =3D YesPlease
+> diff --git a/config.mak.uname b/config.mak.uname
+> index 540d124d2e..0ab8e00938 100644
+> --- a/config.mak.uname
+> +++ b/config.mak.uname
+> @@ -133,11 +133,8 @@ ifeq ($(uname_S),Darwin)
+>  	HAVE_BSD_SYSCTL =3D YesPlease
+>  	FREAD_READS_DIRECTORIES =3D UnfortunatelyYes
+>  	HAVE_NS_GET_EXECUTABLE_PATH =3D YesPlease
+> -	BASIC_CFLAGS +=3D -I/usr/local/include -I/usr/local/opt/gettext/includ=
+e
+> -	BASIC_LDFLAGS +=3D -L/usr/local/lib -L/usr/local/opt/gettext/lib
+> -	ifeq ($(shell test -x /usr/local/opt/gettext/bin/msgfmt && echo y),y)
+> -		MSGFMT =3D /usr/local/opt/gettext/bin/msgfmt
+> -	endif
+> +	BASIC_CFLAGS +=3D -I/usr/local/include
+> +	BASIC_LDFLAGS +=3D -L/usr/local/lib
+>  endif
+>  ifeq ($(uname_S),SunOS)
+>  	NEEDS_SOCKET =3D YesPlease
+>
+> base-commit: 27a706730868835ec02a21a9ac4c4fcb3e05d330
+> --
+> 2.26.2.569.g1d74ac4d14
+>
+>
+>
+
+--8323328-1561261481-1587818028=:18039--
