@@ -2,122 +2,142 @@ Return-Path: <SRS0=d/2q=6J=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-6.4 required=3.0 tests=FORGED_MUA_MOZILLA,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 96A34C55185
-	for <git@archiver.kernel.org>; Sat, 25 Apr 2020 09:15:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A350C55186
+	for <git@archiver.kernel.org>; Sat, 25 Apr 2020 09:43:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6E0212071C
-	for <git@archiver.kernel.org>; Sat, 25 Apr 2020 09:15:53 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b6qWE6Oz"
+	by mail.kernel.org (Postfix) with ESMTP id 443762071C
+	for <git@archiver.kernel.org>; Sat, 25 Apr 2020 09:43:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726062AbgDYJPw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 25 Apr 2020 05:15:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48812 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725837AbgDYJPw (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Apr 2020 05:15:52 -0400
-Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03793C09B04A
-        for <git@vger.kernel.org>; Sat, 25 Apr 2020 02:15:51 -0700 (PDT)
-Received: by mail-pj1-x1043.google.com with SMTP id hi11so4925049pjb.3
-        for <git@vger.kernel.org>; Sat, 25 Apr 2020 02:15:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=+eHTaUunDYV7wS2xexMTrS8IY5PNMAnB1yUATnPRJHQ=;
-        b=b6qWE6Ozo1NsoYnF7khUNe2ziWJF7ovHWu5Fukt5Y3PXbQeTKIjTmKIsT3YBDaDz+V
-         s5IQbj7jFZsN9D7iV+R0cs1kk4lj8raIaJeOZjOLz5UX8APXZ7C4A4OUqgBhNEyAqvTc
-         DRb/bolhsgfln3IrF37rK33rCrTbIp4ybhZhJp/ZSrmQnI0nSovRRtKkxF+s8GN0pwdo
-         7i6AT6HOzt7c9qc/MRRYGc8iPCN7KPXDF7sOGPD1aSL/7x2yz8aPqS3ci2hvsT69EWfq
-         tLKUfl0BX57BN7aekq7HAj/Ckw0g4kLA6JUgLBV9kGsTTQUWdAGFfexNYhCILA2UWRj6
-         84VA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=+eHTaUunDYV7wS2xexMTrS8IY5PNMAnB1yUATnPRJHQ=;
-        b=VkXAGrVJZkNG/ljPXtVAlHfjXwk3yU5pzymXQffTjt+09kElWTzHrWT5n2Vo2DFxTv
-         QdmxA3dmcPQ1Dcp500Z1THLXPTKIqfObXF4ePxTkYhRDCovU92/R3BB/cD78uGp6Z/dJ
-         7cGYbZl9zHuCZUoobuT9KDOvMymnHpLxw8LdIHqh0zxMjrsBv6f99VknyugQc2KHO6+Y
-         ptq1GeVPU5ZNXZ/NYKo+DujIZK5s3bUpiKusWc7k7U0DA4jy2WoPL3oo0B34A/OUZi13
-         dQWz3TFUoKBOaeFw6IofKvEc7rsseJjLQnQoWnNSKeNqTnm4OTfSbs2rsF1iyuFtyVgw
-         V39Q==
-X-Gm-Message-State: AGi0PuY/DGNfzJO+I+qbM5KtkLKAKXm0yCqgvNhomn2eWu/dhf3sfskF
-        twHoxkpNgg4k6tnVebVqkgxt6l/a
-X-Google-Smtp-Source: APiQypJgqyvnorWfJvf7WJIMMv9bIAM59Fgps37QjsGaBXcejbQ84tFeSFDXO+ypzy7KhK9r+3sqJA==
-X-Received: by 2002:a17:90a:f313:: with SMTP id ca19mr11299328pjb.7.1587806151070;
-        Sat, 25 Apr 2020 02:15:51 -0700 (PDT)
-Received: from localhost.localdomain (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
-        by smtp.gmail.com with ESMTPSA id k10sm7763454pfa.163.2020.04.25.02.15.50
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 25 Apr 2020 02:15:50 -0700 (PDT)
-From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-To:     git@vger.kernel.org
-Cc:     davvid@gmail.com,
-        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-Subject: [PATCH] macos: move NO_REGEX in macOS to config.mak.uname
-Date:   Sat, 25 Apr 2020 02:15:49 -0700
-Message-Id: <20200425091549.42293-1-carenas@gmail.com>
-X-Mailer: git-send-email 2.26.2.569.g1d74ac4d14
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+        id S1726090AbgDYJne (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 25 Apr 2020 05:43:34 -0400
+Received: from mail-oln040092074061.outbound.protection.outlook.com ([40.92.74.61]:9537
+        "EHLO EUR04-DB3-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1726053AbgDYJne (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Apr 2020 05:43:34 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=hKIBgq+ftV2BVzS5Ht1VtwKX6vGyStz62tBHshQbEIRkejXCx6zr9DwqYHZr42LEodgLeRLNv0Bh2IRAAf5AYBQ63g8zp06kdvfND7FVmr/fMJLTO63k1lxqkLbnM8BJsL3+S/LAMtyFmTbD+Pc1nEKUbxtjInOVric0qX6yB+sYoOa+p3Kn47aMDPRf0i1gXBf7LN6ZGX/2onSBfMa4w7kOlfWHOlRtyj0qMP94lQyDfIFD4NS1oRqB4pxPqcKct76pb53MQbevxfa8dMzqD6TTjeGCTBKGNiqZe8hb81wFiodxqSqCDbfHe9ScXzcl2MSqR7xQJVpx5cYYZge2Gg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=8gHm6eTe8o6F7OwApYzrUc2DYqWX7jJ1Z0xmkjwiKRU=;
+ b=TW27iWmo9WEFbH38wF96Mwy2bX8xA4O7bVi+wZRUgP11wQEWljQwq7ppGrjYnEWL7vtEsFcxsBZaK3QAFPTe+M8vO2SXEEWc1lgcHJdo4rZ2hiIR/4S4baXtd8f9JV9oE8kxVXjc+8iYcXMw2jDykXzmoPC70OaQNEU+a8WoER9hj75TrjIawRH40L/3kNZ7vtSCALTDep5GRA40UdLTT1lPoZDluvVt9lc9Rt8+6C+YWnYG7z0tBJKIAeS1RFVJNlSbvXaJJ+FyOPQdlDEwm0p+lvNe0FUM9UtiiczuYNTj4JadWlHZa9c6x3YXkpEs3sODFtZ5ioJU0kQnS1bmww==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=live.de; dmarc=pass action=none header.from=live.de; dkim=pass
+ header.d=live.de; arc=none
+Received: from VI1EUR04FT048.eop-eur04.prod.protection.outlook.com
+ (2a01:111:e400:7e0e::4d) by
+ VI1EUR04HT150.eop-eur04.prod.protection.outlook.com (2a01:111:e400:7e0e::352)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2937.15; Sat, 25 Apr
+ 2020 09:43:31 +0000
+Received: from AM0PR04MB4771.eurprd04.prod.outlook.com
+ (2a01:111:e400:7e0e::4e) by VI1EUR04FT048.mail.protection.outlook.com
+ (2a01:111:e400:7e0e::259) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2937.15 via Frontend
+ Transport; Sat, 25 Apr 2020 09:43:31 +0000
+X-IncomingTopHeaderMarker: OriginalChecksum:9F61CC991FCF9AD1E90E23F51EDB459ED75006E477E1F25816A31B753BFD5D6E;UpperCasedChecksum:A5E6D913683287066D7A7BE2FA01F9B13FB5D3E45CB4EEA7B9B36A7020913B62;SizeAsReceived:8866;Count:47
+Received: from AM0PR04MB4771.eurprd04.prod.outlook.com
+ ([fe80::58d1:c985:ce97:ee84]) by AM0PR04MB4771.eurprd04.prod.outlook.com
+ ([fe80::58d1:c985:ce97:ee84%6]) with mapi id 15.20.2937.020; Sat, 25 Apr 2020
+ 09:43:30 +0000
+Subject: [PATCH] connect.c: clarify BUG() messages in push_ssh_options
+From:   =?UTF-8?Q?Matthias_A=c3=9fhauer?= <mha1993@live.de>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "Raymond E. Pasco" <ray@ameretat.dev>, git@vger.kernel.org,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Stefan Beller <sbeller@google.com>
+References: <20200423064110.77258-1-ray@ameretat.dev>
+ <20200423112110.45405-1-ray@ameretat.dev>
+ <AM0PR04MB47715A57B110E14D6631EACDA5D30@AM0PR04MB4771.eurprd04.prod.outlook.com>
+ <xmqqeesegfgy.fsf@gitster.c.googlers.com>
+ <AM0PR04MB4771FB8BCD1EEB7E60EF54C7A5D00@AM0PR04MB4771.eurprd04.prod.outlook.com>
+Message-ID: <AM0PR04MB4771946E0134D9D875AB1A8AA5D10@AM0PR04MB4771.eurprd04.prod.outlook.com>
+Date:   Sat, 25 Apr 2020 11:43:29 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
+In-Reply-To: <AM0PR04MB4771FB8BCD1EEB7E60EF54C7A5D00@AM0PR04MB4771.eurprd04.prod.outlook.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
+X-TMN:  [yj63Qgc8Y8X4gjYwVGu7V4H8k2kBG+y4SkKlR6UEqlsPEfFG4gmIjUWAOODL4E7Z]
+X-ClientProxiedBy: FR2P281CA0010.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:a::20) To AM0PR04MB4771.eurprd04.prod.outlook.com
+ (2603:10a6:208:c4::28)
+X-Microsoft-Original-Message-ID: <32115dbd-dfc4-2b0b-0d8a-482b7e2fce92@live.de>
+MIME-Version: 1.0
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-IncomingHeaderCount: 47
+X-EOPAttributedMessage: 0
+X-MS-Office365-Filtering-Correlation-Id: 061ad097-725b-4524-3b8c-08d7e8fd1caa
+X-MS-TrafficTypeDiagnostic: VI1EUR04HT150:
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: OB5lY5OkqfdzJIh28wRyGG9e8xi54u4pg0Jrb7O1F08PRcHUaWA2E7FnwbjNZVlE4A2Y4kPpDolm1r54Vv+il8Y6JfGvh/y/zIqQR9MgunfoQ5I3jaglpYa5TaXNUmeCvzabV06c+9EQA89IXT1ttDzQyVhgUf6qXTahoqEyJ8fi7ISab9tb6ywJVynjFkwOL94A0YOcV9ytm2fjeDw1vA==
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:0;SRV:;IPV:NLI;SFV:NSPM;H:AM0PR04MB4771.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFTY:;SFS:;DIR:OUT;SFP:1901;
+X-MS-Exchange-AntiSpam-MessageData: syeC1ugI0NtfmIv6tKBhh7dexyuM6i88gs/ExqwmrJdYuV5TadGs3tKP6RAZWwI6eVe8i5FNUJFhIFaGnKUi2xmU/8IzWfvEIUL08phW30tXHiWJokf9AHouW5k3QKAW25NQ7/0jK91qu0s1zIcmtdoyo9Yiesyk3f5Z1nVF1ggS3CT7DrKM1ks/hJXhO1w6WZ+yA9oSxTPkCsYOiTMBFw==
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 061ad097-725b-4524-3b8c-08d7e8fd1caa
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Apr 2020 09:43:30.5750
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI1EUR04HT150
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-29de20504e (Makefile: fix default regex settings on Darwin, 2013-05-11)
-added this flag to the Makefile since Mac OS X 10.8 at the time didn't
-have a working REG_EXTENDED|REG_NEWLINE
+The current BUG() messages in push_ssh_options imply that calling push_ssh_options and passing VARIANT_AUTO is always a bug
+and we should check for it once at the top of push_ssh_options instead of multiple times in various if statements. That is
+not actually the case. When the caller passes CONNECT_IPV4, CONNECT_IPV6 or a custom port alongside VARIANT_AUTO we cannot
+translate that to an option to the underlying SSH implementation without knowing the variant. As long as the caller does
+not specify IPV4/IPV6 or a custom port, it is ok for the caller to leave the variant AUTO. Let's explicitly state that the
+bug is in the combination of parameters.
 
-move it to config.mak.uname where all the other system specific settings
-are kept since e1b6dbb554 (Makefile: hoist uname autodetection to
-config.mak.uname, 2013-01-03) and update the rule so it only applies to
-those known broken versions as the problem was most likely fixed in the
-next version when Apple imported TRE on their libc.
-
-Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+Signed-off-by: Matthias Aßhauer <mha1993@live.de>
 ---
- Makefile         | 1 -
- config.mak.uname | 3 +++
- 2 files changed, 3 insertions(+), 1 deletion(-)
+  connect.c | 6 +++---
+  1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index dc356ce4dd..7e3fc7ca79 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1308,7 +1308,6 @@ ifeq ($(uname_S),Darwin)
- 		APPLE_COMMON_CRYPTO = YesPlease
- 		COMPAT_CFLAGS += -DAPPLE_COMMON_CRYPTO
- 	endif
--	NO_REGEX = YesPlease
- 	PTHREAD_LIBS =
- endif
- 
-diff --git a/config.mak.uname b/config.mak.uname
-index 0ab8e00938..f89acdd15f 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -125,6 +125,9 @@ ifeq ($(uname_S),Darwin)
- 		HAVE_GETDELIM = YesPlease
- 	endif
- 	NO_MEMMEM = YesPlease
-+	ifeq ($(shell test `expr "$(uname_R)" : '\([0-9]*\)\.'` -le 12 && echo 1),1)
-+		NO_REGEX = YesPlease
-+	endif
- 	USE_ST_TIMESPEC = YesPlease
- 	HAVE_DEV_TTY = YesPlease
- 	COMPAT_OBJS += compat/precompose_utf8.o
+diff --git a/connect.c b/connect.c
+index 23013c6344..c15e60b13a 100644
+--- a/connect.c
++++ b/connect.c
+@@ -1118,7 +1118,7 @@ static void push_ssh_options(struct argv_array *args, struct argv_array *env,
+  	if (flags & CONNECT_IPV4) {
+  		switch (variant) {
+  		case VARIANT_AUTO:
+-			BUG("VARIANT_AUTO passed to push_ssh_options");
++			BUG("VARIANT_AUTO and CONNECT_IPV4 passed to push_ssh_options");
+  		case VARIANT_SIMPLE:
+  			die(_("ssh variant 'simple' does not support -4"));
+  		case VARIANT_SSH:
+@@ -1130,7 +1130,7 @@ static void push_ssh_options(struct argv_array *args, struct argv_array *env,
+  	} else if (flags & CONNECT_IPV6) {
+  		switch (variant) {
+  		case VARIANT_AUTO:
+-			BUG("VARIANT_AUTO passed to push_ssh_options");
++			BUG("VARIANT_AUTO and CONNECT_IPV6 passed to push_ssh_options");
+  		case VARIANT_SIMPLE:
+  			die(_("ssh variant 'simple' does not support -6"));
+  		case VARIANT_SSH:
+@@ -1147,7 +1147,7 @@ static void push_ssh_options(struct argv_array *args, struct argv_array *env,
+  	if (port) {
+  		switch (variant) {
+  		case VARIANT_AUTO:
+-			BUG("VARIANT_AUTO passed to push_ssh_options");
++			BUG("VARIANT_AUTO and a custom port passed to push_ssh_options");
+  		case VARIANT_SIMPLE:
+  			die(_("ssh variant 'simple' does not support setting port"));
+  		case VARIANT_SSH:
 -- 
-2.26.2.569.g1d74ac4d14
+2.17.1
+
 
