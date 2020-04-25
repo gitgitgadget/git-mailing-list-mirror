@@ -2,132 +2,210 @@ Return-Path: <SRS0=d/2q=6J=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E3AB0C54FCB
-	for <git@archiver.kernel.org>; Sat, 25 Apr 2020 13:58:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 88058C54FCB
+	for <git@archiver.kernel.org>; Sat, 25 Apr 2020 14:13:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C03F520724
-	for <git@archiver.kernel.org>; Sat, 25 Apr 2020 13:58:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5D94C20704
+	for <git@archiver.kernel.org>; Sat, 25 Apr 2020 14:13:01 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="kp/5zdeL"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RCDDf+Vw"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726076AbgDYN6L (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 25 Apr 2020 09:58:11 -0400
-Received: from mout.gmx.net ([212.227.15.19]:36113 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726050AbgDYN6L (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Apr 2020 09:58:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1587823086;
-        bh=VOSRCzigO1TSO9kEZi2+Ecu8tpoOErmcE3XszdkPHoY=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=kp/5zdeLHbEoY3Kb71ntjarxDzbt3gjKBf2icM9uIV2L+20c85RULIJECDVWPrAmW
-         QongEFzBoKgm1Fqjg7SXGs4fkBkf0mZqTBLMXXL+w1SaI+OID8qD5t8carOvZhRn7a
-         TnKnVln1moKE6tjN1krb9jc42GolEPn5zqJJnUco=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from MININT-QA14EDB.fritz.box ([89.1.212.117]) by mail.gmx.com
- (mrgmx004 [212.227.17.190]) with ESMTPSA (Nemesis) id
- 1Mplc7-1iqJvs3x7t-00qD7J; Sat, 25 Apr 2020 15:58:06 +0200
-Date:   Sat, 25 Apr 2020 15:58:06 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Han-Wen Nienhuys <hanwen@google.com>,
-        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
-Subject: Re: [PATCH v9 00/10] Reftable support git-core
-In-Reply-To: <xmqqblnhg99e.fsf@gitster.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.2004251555240.18039@tvgsbejvaqbjf.bet>
-References: <pull.539.v8.git.1585740538.gitgitgadget@gmail.com>        <pull.539.v9.git.1587417295.gitgitgadget@gmail.com>        <xmqqmu74mwaw.fsf@gitster.c.googlers.com>        <CAFQ2z_OhWDzc40WMy=bwUKRJQ4rcvnFmYvk-ga_cTtCjviMoBg@mail.gmail.com>       
- <xmqqftctg9om.fsf@gitster.c.googlers.com> <xmqqblnhg99e.fsf@gitster.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726126AbgDYOMX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 25 Apr 2020 10:12:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38208 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726050AbgDYOMW (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 25 Apr 2020 10:12:22 -0400
+Received: from mail-qt1-x841.google.com (mail-qt1-x841.google.com [IPv6:2607:f8b0:4864:20::841])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CC76C09B04B
+        for <git@vger.kernel.org>; Sat, 25 Apr 2020 07:12:22 -0700 (PDT)
+Received: by mail-qt1-x841.google.com with SMTP id i68so10415450qtb.5
+        for <git@vger.kernel.org>; Sat, 25 Apr 2020 07:12:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=GAkWVNAPqHRB84v3zlNUV0nvXUw+hki+3wQ7ZbqqfSg=;
+        b=RCDDf+VwFO1JAQpyTjk9VRvn7d1c7etHBxpFZuVM5bO9CtgnkjgLxnUMNvdATPZ7yZ
+         vgxV9jhj21jagTTKM1TXrk+2tEzj/3jzOHcP+sw6VBFgEUfFiW6sliuaPryQJo04qf+c
+         QVuDU+h3QX5foFWH3LCfyaLuMU2iB79RcPYqLY/qdtiz/cWwEGxwA7WwUyriOfuQBo4b
+         YDuzEKns8d8epAb/qTXOR4U+JVFYmcZ7O6V5uqZ7RxOzZcXNRav/kHcLs+RNW1Wt/G5r
+         L80vTHkO0Ct6sDKYd81ebXVDdEFsJ8VRQ+wIirVpatFMXJmwLollJFMlWdyahjW3QdyI
+         k/Gw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=GAkWVNAPqHRB84v3zlNUV0nvXUw+hki+3wQ7ZbqqfSg=;
+        b=tGJWkyZ2Xut6Hexrq62M6kRzI3dUUA0v9Y4jPYiqiHmry1vFQDwVlFJlk4PAO5UIdr
+         jJm/eh5nztTwNOy0M43AR5esnVJ3bSktoMzHQUIIa9Cei9CCAEi1Ut6Eq0MUSP7xPKvm
+         1OZDKRMVs3G0aGbWVo8GYK3JBWE+CvMOqeiVmsjAvt9NNtsxsxCE4oBzfdExTJKzw2gc
+         57nW+VzpGlzG0wmH2durdJYVsoQuYaT4zScvdFpoEJZTLuMVkOyYjJ0EOyxxJ4tYHMCQ
+         eiAZbYRSLa7NbJmEFwsj2sH2behAN/jHu7QyKrBMCVneZA8KBRo+oK1VBvPlxLnd2VbQ
+         Wigw==
+X-Gm-Message-State: AGi0PuY4skznelCPfHGT+jZiZ2lMF/49BBt5yOo52mtylwOFmdhNNisU
+        UZBmg8bl7M6an5eIJJCMZ5Nrs5T+uoqGrSTH+bs=
+X-Google-Smtp-Source: APiQypLa1NlXcvdsPJ3z9V0/VQoMKAd2YPf8XCn9JQeGBadcl8isj3ezJ1BaKX7gXyWSo4sLqMJAO9LFVHJE+wiY0S8=
+X-Received: by 2002:ac8:7448:: with SMTP id h8mr14908925qtr.225.1587823941445;
+ Sat, 25 Apr 2020 07:12:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:86jEeyZixUkAIuMp66/9j2A6Ge+/2hn+uxUEesm6HdaDikBzsYO
- PjJY96z4QN5JLw5dOEAhk6FGdDfqkLsgozG3uXfpb7PkVwgGhBzOELyP/co1J4eIwWDgw/D
- YiDjnPRkgThwzcJ30q+lCu7f6LmYSFS9gdXAX/hHD3aupNefbvct9BLU4+yg6QNwueC99Ca
- 3VEwU39Wq3tMQ0BLVNrkg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:3H5Wi0naroc=:l3iTAjYkMOeU1YsBV1BnBk
- /vbRqF+b/u1BaqMCj8VuZSfQtdndSie3RpfFf7+uaUQ1CMAmP5bz6HdE08N9FFOAr5hx4tro6
- 2YB7p0MCABQ+4uwJquHLKE7us6OwkUdw5DKnLpXlCepzLQLD9dhlcTLZNh2SVqvKwBgcVoUk6
- 1vekRjQepegv84YkVZx1zaRnFQgKXJirXrJBhpOxj3lmt2aqySg0B5K3hCjzfDIYwiBIj2sC0
- uSedRQVRtBUvWE4NKHaI1y0Bd3C1Sj98vVXbxTY1HYfCooc6T9rqmkbd9QvLAkEoNm+CUe748
- 1BUcb7pX7KQtkCwjsrkPb0z4qOL2EovHjLdaTTJv7xLaxqWM17BotFlYWLhCgbKwouYmdG9Fa
- LysgfrhVP0uy5cirYNqzVEQUtTruWAX+8wFvcWBUSAQ23HluC6YIH2T3NXeL9fT69eDgAi/RR
- o1TL+g6XRKa2l9tZ2dP9RHAufbMVm0rzaAE4tXoQQ1yA+tTV3lRZ3rxfwl7Ykg+fZccnRjmhA
- RhdLCrWv/A3t8ZlgCofh+G0vMhcugHpr0ZXohL3i7Intz2aWA5JWvP3ItylTzKTUDtnLtVso4
- whA3rBy0mbhLQwJNqY3PSIKZoli/w71Gia80e+ROWdatzW/p9z+hQER+HhRj2ptSW40kUozm6
- N1oTmxoEAQn5ptx7bq+e7MSQ/4+4BeMFpGy3KAf9TPT0XzoZsA9BmZwi4Euv0XU0sIlfP/Tur
- Yft4D0XTLiWhEiDZhWNrrRb6MoTe6SpnO5h2zR01iljrTOTMYVpsRutWhHTdcpR0FCp/v1jCu
- xGjApoz83YAPpAPpfsJMfsIgKYPeRef31K4MaZEtr2qsxc9soUJLHYen/1XGnhhMtRFNcQx5U
- IXpJEvPu6GlDD3+bGEN2ii+uczeFa87Bv8EnjAKOUhDzkjQxyN03W2WpA94If4dMruxlSjcp9
- 1O0uWpDm+bJOQxe1JPDZi5Ie5h0EEB+GG03I4ibnD32o0vAaENixR76w37nFpfzsHcLXuB3qn
- 6nIezWCqSpBvWgAouFE4VuiaDvrR+Apx6ZJqq69PjBFgFOSYPR5s46lxL6IJ0t6eV9td1vuJG
- mqzm99ptS4V2+EdngQ9uZGPS0bq0Uw/UPLmFJ2z5f2Qr5ey7mxccK361JMLPn3rVf2r1Vggkh
- bZOnPaJVdRNI9fPhDhx2mS0+jIh35VsYI1ityJ/Elx5scl08lVa6/19WIdvdO+Ot11MW8Jic+
- 60QJfPwI/w8zKWy9b
-Content-Transfer-Encoding: quoted-printable
+References: <pull.614.git.1587700897.gitgitgadget@gmail.com>
+ <xmqqv9lod85m.fsf@gitster.c.googlers.com> <CAKiG+9V_nZUXf2a689vZ54rG+xTCFMGcJe_7Av-khaxxuijERg@mail.gmail.com>
+ <xmqq8sikblv2.fsf@gitster.c.googlers.com> <CAKiG+9Xtof8Hj3npsS-M0SnT_dcjtHjP_+avWB4oOHkaMdnSbw@mail.gmail.com>
+ <40da111a-77e0-55b1-a6c2-9edc77cf1f3c@iee.email> <nycvar.QRO.7.76.6.2004251523560.18039@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.2004251523560.18039@tvgsbejvaqbjf.bet>
+From:   Sibi Siddharthan <sibisiddharthan.github@gmail.com>
+Date:   Sat, 25 Apr 2020 19:42:10 +0530
+Message-ID: <CAKiG+9VMjft14ttqQuZMwewOGFbnbfJ3uXn0vPiJb05A8wdSwg@mail.gmail.com>
+Subject: Re: [PATCH 0/8] CMake build system for git
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Philip Oakley <philipoakley@iee.email>,
+        Junio C Hamano <gitster@pobox.com>,
+        Sibi Siddharthan via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio & Han-Wen,
+Hi Philip and Dscho
 
-On Thu, 23 Apr 2020, Junio C Hamano wrote:
-
-> Junio C Hamano <gitster@pobox.com> writes:
+On Sat, Apr 25, 2020 at 6:59 PM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
 >
-> > Han-Wen Nienhuys <hanwen@google.com> writes:
-> >
-> >> For example,
-> >>
-> >> not ok 10 - check rev-list
-> >> #
-> >> # echo $SHA >"$REAL/HEAD" &&
-> >> # test "$SHA" =3D "$(git rev-list HEAD)"
-> >> #
-> >>
-> >> What is the right way to approach this? Should the test use
-> >>
-> >>   git update-ref HEAD $SHA
-> >>
-> >> instead of writing to the loose ref?
-> >
-> > Preferred.
-> >
-> > I didn't bother checking the context, but if the test is checking
-> > "the history leading to $SHA has only one commit, i.e.  $SHA, and
-> > rev-list can handle that correctly", certainly that would be a
-> > preferred rewrite, rather than skipping the check for reftable,
-> > which may risk not noticing that HEAD is broken with reftable.
+> Hi Philip,
 >
-> Now I have.  The test is about various low-level machineries we have
-> work correctly even if .git is *not* a directory but is a "gitfile:
-> $other location" (which is an underlying mechanism for multiple
-> worktree support etc.), and it is making sure "git rev-list"
-> understands HEAD in such a repository that uses the gitfile mechanism.
+> On Sat, 25 Apr 2020, Philip Oakley wrote:
 >
-> If I didn't know it, I might have said that "if we are interested in
-> seeing $SHA is a root commit, we should check it more directly,
-> perhaps by making sure 'cat-file commit $SHA' does not say 'parent'
-> and that won't need to write to .git/HEAD at all", but the point of
-> the test is to ensure 'rev-list' works correctly in such a
-> repository, I think "update-ref HEAD $SHA" would be the right "fix"
-> for the test.
+> > On 25/04/2020 05:09, Sibi Siddharthan wrote:
+> > > On Sat, Apr 25, 2020 at 3:13 AM Junio C Hamano <gitster@pobox.com> wrote:
+> > >> Sibi Siddharthan <sibisiddharthan.github@gmail.com> writes:
+> > >>
+> > >>> The goal would be to maintain a CMake build for Git keeping it in
+> > >>> sync with the Makefile. The Makefile is not going to be replaced at
+> > >>> all. The CMake script for now only supports Linux and Windows. It
+> > >>> does not support BSD, Solaris and others, whereas the Makefile does
+> > >>> support them.
+> > >>
+> > >> So you are doing (1).  I already said that I feel that engineering
+> > >> burden to divert resources for CMake support would be unacceptably
+> > >> high.
+> > >>
+> > >> Whenever any of our developers need to add source files, Makefile
+> > >> configuration knobs that people can add to config.mak, etc., you are
+> > >> forcing them to figure out where in the CMakefile to add them or
+> > >> devise ways to allow builders who do not use config.mak (because they
+> > >> use CMake) to do similar tweaks.
+> > >
+> > > Adding source files to the CMakefile is going to just as long as
+> > > adding it to the Makefile, anyone can figure this out and this is not
+> > > going to take much time at all.
+> >
+> > While figuring these things out isn't /hard/ it can be tedious and time
+> > consuming for those who are not familiar with the particular tool set
+> > (as evidenced, in my mind, by the poor dev support for Git for Windows
+> > because of the need to understand two operating systems and their
+> > awkward interactions) - those that are familiar and understand the/their
+> > whole tool set are usually the x10 folks.
 
-I believe the common strategy for this kind of thing is to
+One way of reducing the tediousness is to guide the developers in the
+Contribuiting document
+as to where to add the new source files for both the Makefile and CMake script.
 
-- introduce a `GIT_TEST_*` variable that is used to change the default
-  (follow e.g. GIT_TEST_COMMIT_GRAPH as an example)
+>
+> Is it fair to compare the complexities of the differences between what Git
+> expects and what Windows provides to the difference to add files to
+> Makefile _and_ CMakeLists.txt?
+>
+> When I add a file to the Makefile, what I do (and imagine that _everybody_
+> is doing in that circumstance) is to find an already-existing file that is
+> similar to the one I want to add. For example, if adding
+> `builtin/oakley--helper.c`, I will try to imitate
+> `builtin/submodule--helper.c`.
+>
+> And when you do that, you don't really need to understand Makefiles or
+> CMake. You find the list(s) and add your file there, paying attention to
+> whether it is maintained alphabetically or append-only.
+>
+> That is a _far_ cry from the hoops through which you have to jump to
+> understand, say, the important background details in order to start
+> working on `compat/mingw.c`.
+>
+> At least from my point of view, there is very little analogy between the
+> subject under discussion and what you brought up.
+>
+> Having said that...
+>
+> > > As for the configuration knobs I agree that adding the same to CMake
+> > > is going to a bit longer.
+> > > But anyone who is hacking Git is going to do it with the Makefile or
+> > > (if accepted)CMake script, but not both while hacking.
+> > > So they will continue to make progress with the system they feel comfortable in.
+> > > They will only run into an issue when they try for a PR. Currently the
+> > > CMake script is only used for generating the visual studio solution.
+> > > We can add a (continue-on-error) to vs-build job to make this process
+> > > less of a hindrance.
+> > > If people take the time to hack Git, figuring out how to do the
+> > > configuration knobs in the CMake script is not going to that much take
+> > > time
+> > > compared to the time they spend making Git better.
+> > >
+> > >
+> > >> Any patch that is acceptable to the current project would become
+> > >> unacceptable because they lack updates to CMake part, but I suspect
+> > >> we do not have enough people who are so much devoted to give a good
+> > >> review if updates to CMake part are added.  And it is unclear why it
+> > >> would be beneficial to slow our existing developers down by forcing
+> > >> them to become familiar with CMake.
+> > >>
+> > >> So..., I am not just "still not convinced", but I am even more
+> > >> convinced that we do not want this series, after thinking about it
+> > >> longer.
+> > >>
+> > >> Thanks.
+> > >>
+> >
+> > Is there a middle way, given that IIUC there is most benefit on the
+> > Windows side, that on the git.git side the Makefile could contain a
+> > suitable comment directing those interested in CMake to the relevant
+> > part of Git-for-Windows. Is there a part that could hold, and track, the
+> > matching changes to the primary Makefile?
+>
+> We already use `GIT-VERSION-GEN` as the authoritative source for the Git
+> version, by parsing the line that contains.
+>
+> It would look very similar, at least in my mind, to generate the list of
+> source/script files by parsing the `Makefile`.
+>
+> Sibi, what do you think?
+>
 
-- either add a prereq that guards the test cases that cannot handle that
-  knob (!REFTABLE in this case), or follow GIT_TEST_COMMIT_GRAPH's example
-  again and _force_ its value to 0 for those test cases.
+One way of doing it is to track if the Makefile is changed in a
+commit, run a hook
+to see if it contains any new OBJs and match it with the CMake script.
+But this is too much work, in my opinion.
 
-Ciao,
-Dscho
+For the scripts, things are a bit complicated, suppose people use sed
+and grep to
+do their logic in the Makefile, we add "sed" and "grep" dependencies
+to the build process
+This is not a bad thing, but the same logic can be implemented in
+CMake without "grep" and "sed".
+Also, the Makefile script generation logics are path relative, which
+should be modified in CMake
+to have arbitrary build and source directories.
+
+The better option is to guide developers how to add their build
+changes to CMake also. (This is not hard at all)
+
+> Ciao,
+> Dscho
+
+Thank You,
+Sibi Siddharthan
