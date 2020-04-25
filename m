@@ -6,38 +6,38 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C1411C55191
-	for <git@archiver.kernel.org>; Sat, 25 Apr 2020 02:21:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D1744C54FD0
+	for <git@archiver.kernel.org>; Sat, 25 Apr 2020 02:21:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A99D72084D
-	for <git@archiver.kernel.org>; Sat, 25 Apr 2020 02:21:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B23BE2084D
+	for <git@archiver.kernel.org>; Sat, 25 Apr 2020 02:21:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726186AbgDYCU6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Apr 2020 22:20:58 -0400
+        id S1726189AbgDYCVA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Apr 2020 22:21:00 -0400
 Received: from mga12.intel.com ([192.55.52.136]:47708 "EHLO mga12.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726174AbgDYCU5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Apr 2020 22:20:57 -0400
-IronPort-SDR: NyWrx1L6PbcEguZ4OB2wrkVL42UrGoEEzSWquu6TbvohlGISgeYuvDH20LeFlvi3L128gfFwI0
- JXZtwlwo0NUg==
+        id S1726162AbgDYCU4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Apr 2020 22:20:56 -0400
+IronPort-SDR: c1EuJqRoJ4XblqqeNzkrQRDpgI66h7dnLaTkds+VwqPUCWScxN8yBbjRrMKRDhyfXn5HdOfr7Z
+ eEB7JMBUTV2A==
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
 Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Apr 2020 19:20:54 -0700
-IronPort-SDR: Y73v/fy8orDHlGb8A0mgaSeAXG0Dknxv0o7uQefw38XEzJC5m9fnwCseAU80sZW2M/4sSY2+Df
- sIqkwIoNYOjA==
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Apr 2020 19:20:53 -0700
+IronPort-SDR: zDMwSIXmr8yxy6kwqay+YM1IUA7Y399GUngAP6xFpbr9pi+x9orcp7YcoPVdLpkkfSAyQ2Fren
+ F5Py7p5xWztQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.73,314,1583222400"; 
-   d="scan'208";a="281056796"
+   d="scan'208";a="281056785"
 Received: from jekeller-desk.amr.corp.intel.com ([10.166.241.33])
   by fmsmga004.fm.intel.com with ESMTP; 24 Apr 2020 19:20:53 -0700
 From:   Jacob Keller <jacob.e.keller@intel.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Nieder <jrnieder@gmail.com>,
         Jacob Keller <jacob.keller@gmail.com>
-Subject: [PATCH 11/11] completion: complete remote branches for git switch --track
-Date:   Fri, 24 Apr 2020 19:20:45 -0700
-Message-Id: <20200425022045.1089291-13-jacob.e.keller@intel.com>
+Subject: [PATCH 08/11] completion: perform DWIM logic directly in __git_complete_refs
+Date:   Fri, 24 Apr 2020 19:20:42 -0700
+Message-Id: <20200425022045.1089291-10-jacob.e.keller@intel.com>
 X-Mailer: git-send-email 2.25.2
 In-Reply-To: <20200425022045.1089291-1-jacob.e.keller@intel.com>
 References: <20200425022045.1089291-1-jacob.e.keller@intel.com>
@@ -50,107 +50,79 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jacob Keller <jacob.keller@gmail.com>
 
-git switch --track <remote>/<branch> will be interpreted as a DWIM to
-create a local tracking branch named <branch> tracking the specified
-remote.
+__git_complete_refs is the main function used for completing references.
+It is primarily used as a wrapper around __git_refs, and is easier to
+extend since its arguments are option-like.
 
-Completion support for this case is buggy, because it will instead
-report only local branches.
+One major downside of __git_complete_refs and __git_refs currently, is
+the lack of ability to complete only a subset of refs such as branches
+(refs/heads) or tags (refs/tags).
 
-Fix this by extending __git_complete_refs with a new mode,
-"remote-heads" which will list all reference under refs/remotes/*.
+Normally, a caller might just decide to use __git_heads() or
+__git_tags(). However, in the case of git-switch, it is useful to
+complete both branches *and* DWIM remote branch names.
 
-By doing this, "git switch --track <TAB>" changes from the rather
-useless set of local branches to only listing remote branches.
+Due to the complexity and implementation of __git_refs, it is not easy
+to extend it to support listing only a subset of references.
 
-Note that if the user has specified "-c" or "-C" already on the command
-line, this will still enable completing all references, as the check to
-use the mode "refs" occurs first in an if-elif chain.
+Instead, we can extend __git_complete_refs to do this. For this to be
+done, we must first ensure that "--dwim" support is not tied to calling
+__git_refs.
 
-This finally fixes the "git switch --track" test case, so it is updated
-accordingly.
+Instead of passing $dwim into __git_refs, we can implement
+a __gitcomp_direct_append function which can append to COMPREPLY after
+a call to __gitcomp_direct.
+
+If --dwim is passed to __git_complete_refs, use __gitcomp_direct_append
+to add the output of __git_dwim_remote_heads to the completion list.
+
+In this way, --dwim support is now independent of calling __git_refs.
+
+A future change will add an additional option to control what set of
+references __git_complete_refs will output.
 
 Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
 ---
- contrib/completion/git-completion.bash | 25 +++++++++++++++++++++++--
- t/t9902-completion.sh                  |  5 +----
- 2 files changed, 24 insertions(+), 6 deletions(-)
+ contrib/completion/git-completion.bash | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index f9be0dabb03e..cdd141b2ba1d 100644
+index f1ee25f05690..c582e070711f 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -624,6 +624,19 @@ __git_heads ()
- 			"refs/heads/$cur_*" "refs/heads/$cur_*/**"
+@@ -301,6 +301,19 @@ __gitcomp_direct ()
+ 	COMPREPLY=($1)
  }
  
-+# Lists branches from remote repositories.
-+# 1: A prefix to be added to each listed branch (optional).
-+# 2: List only branches matching this word (optional; list all branches if
-+#    unset or empty).
-+# 3: A suffix to be appended to each listed branch (optional).
-+__git_remote_heads ()
++# Similar to __gitcomp_direct, but appends to COMPREPLY instead.
++# Callers must take care of providing only words that match the current word
++# to be completed and adding any prefix and/or suffix (trailing space!), if
++# necessary.
++# 1: List of newline-separated matching completion words, complete with
++#    prefix and suffix.
++__gitcomp_direct_append ()
 +{
-+	local pfx="${1-}" cur_="${2-}" sfx="${3-}"
++	local IFS=$'\n'
 +
-+	__git for-each-ref --format="${pfx//\%/%%}%(refname:strip=2)$sfx" \
-+			"refs/remotes/$cur_*" "refs/remotes/$cur_*/**"
++	COMPREPLY+=($1)
 +}
 +
- # Lists tags from the local repository.
- # Accepts the same positional parameters as __git_heads() above.
- __git_tags ()
-@@ -783,8 +796,9 @@ __git_refs ()
- # --sfx=<suffix>: A suffix to be appended to each ref instead of the default
- #                 space.
- # --mode=<mode>: What set of refs to complete, one of 'refs' (the default) to
--#                complete all refs, or 'heads' to complete only branches. Note
--#                that --remote is only compatible with --mode=refs.
-+#                complete all refs, 'heads' to complete only branches, or
-+#                'remote-heads' to complete only remote branches. Note that
-+#                --remote is only compatible with --mode=refs.
- __git_complete_refs ()
+ __gitcompappend ()
  {
- 	local remote dwim pfx cur_="$cur" sfx=" " mode="refs"
-@@ -810,6 +824,8 @@ __git_complete_refs ()
- 			__gitcomp_direct "$(__git_refs "$remote" "" "$pfx" "$cur_" "$sfx")" ;;
- 		heads)
- 			__gitcomp_direct "$(__git_heads "$pfx" "$cur_" "$sfx")" ;;
-+		remote-heads)
-+			__gitcomp_direct "$(__git_remote_heads "$pfx" "$cur_" "$sfx")" ;;
- 		*)
- 			return 1 ;;
- 	esac
-@@ -2299,8 +2315,13 @@ _git_switch ()
- 		# local branches, or DWIM with remote branch names. However,
- 		# certain options for creating branches or detaching should
- 		# complete all references.
-+		#
-+		# Additionally, if --track is provided on its own, we should
-+		# complete only remote branch names.
- 		if [ -n "$(__git_find_on_cmdline "-d --detach -c -C")" ]; then
- 			mode="refs"
-+		elif [ -n "$(__git_find_on_cmdline "--track")" ]; then
-+			mode="remote-heads"
- 		fi
+ 	local x i=${#COMPREPLY[@]}
+@@ -787,7 +800,11 @@ __git_complete_refs ()
+ 		shift
+ 	done
  
- 		__git_complete_refs $dwim_opt --mode=$mode
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 68296d79a3e9..7491d8c3b72d 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -1267,10 +1267,7 @@ test_expect_success 'git switch - with --detach, complete all references' '
- 	EOF
- '
+-	__gitcomp_direct "$(__git_refs "$remote" "$dwim" "$pfx" "$cur_" "$sfx")"
++	__gitcomp_direct "$(__git_refs "$remote" "" "$pfx" "$cur_" "$sfx")"
++
++	if [ "$dwim" = "yes" ]; then
++		__gitcomp_direct_append "$(__git_dwim_remote_heads "$pfx" "$cur_" "$sfx")"
++	fi
+ }
  
--# TODO: Since --track on its own will perform a DWIM to extract the local
--# branch name, we should complete only the remote branches with their remote
--# name.
--test_expect_failure 'git switch - with --track, complete only remote branches' '
-+test_expect_success 'git switch - with --track, complete only remote branches' '
- 	test_completion "git switch --track " <<-\EOF
- 	other/branch-in-other Z
- 	other/master-in-other Z
+ # __git_refs2 requires 1 argument (to pass to __git_refs)
 -- 
 2.25.2
 
