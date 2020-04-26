@@ -2,137 +2,149 @@ Return-Path: <SRS0=OyOp=6K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 997CBC54FCB
-	for <git@archiver.kernel.org>; Sun, 26 Apr 2020 16:59:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 74BDFC54FCB
+	for <git@archiver.kernel.org>; Sun, 26 Apr 2020 17:05:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4BA9A2071C
-	for <git@archiver.kernel.org>; Sun, 26 Apr 2020 16:59:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4D94D206DD
+	for <git@archiver.kernel.org>; Sun, 26 Apr 2020 17:05:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="kJywYK3I"
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="IMvV5NH7"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726163AbgDZQ7J (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 26 Apr 2020 12:59:09 -0400
-Received: from mout.gmx.net ([212.227.15.18]:55629 "EHLO mout.gmx.net"
+        id S1726188AbgDZRFL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 26 Apr 2020 13:05:11 -0400
+Received: from mout.web.de ([212.227.15.14]:38597 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726151AbgDZQ7I (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 Apr 2020 12:59:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1587920345;
-        bh=Cb9xMjGE2cKFk3mm7xOKYm0GKTQdOHHuABFSaP/VRDQ=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=kJywYK3IEywAvan1oVnwEf7Ayz8nIKlPKdpxIyyvI7gg9odelg7llXklB2ndag8Tf
-         o2nds7b5tgZgxtk/cDCVuGa0iMSYwjIm1yDwy/nRVvJLgesILrjx1RH3/qqekqiLEk
-         OhgiH1bJUxxRj0P+cnjNIMZ1om5IBYHwokcMd7z4=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from MININT-QA14EDB.fritz.box ([213.196.212.120]) by mail.gmx.com
- (mrgmx004 [212.227.17.190]) with ESMTPSA (Nemesis) id
- 1MRCK6-1jnhFN0Lzw-00N9iK; Sun, 26 Apr 2020 18:59:05 +0200
-Date:   Sun, 26 Apr 2020 18:59:04 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Carlo Arenas <carenas@gmail.com>
-cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH] macos: do let the build find the gettext
+        id S1726143AbgDZRFL (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Apr 2020 13:05:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1587920708;
+        bh=Y0crcdbGgCTDBucYjgjdvvHzuW1R5b/yL4/x1/WxZNw=;
+        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=IMvV5NH7mogl+4RqNpa7eXFvvXR9Nx81qCcqwmHJPa7xACzSn5PZLlVuWAsVDPEZ9
+         td2lkHIRss0wcVr8K5ElToDXqL+ejnMevsRRSUlO4UeFpyeEjzwRaTPK30EfR85kr4
+         GPU9wZGt9G2rQHYRgrjcMp7PfaTGF8LkGwJCIkV4=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb001
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0LlWVj-1isaLj2piZ-00bHsz; Sun, 26
+ Apr 2020 19:05:08 +0200
+Date:   Sun, 26 Apr 2020 19:05:08 +0200
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Carlo Marcelo Arenas =?iso-8859-1?Q?Bel=F3n?= 
+        <carenas@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2] macos: do let the build find the gettext
  headers/libraries/msgfmt
-In-Reply-To: <CAPUEspiici3-tTTe=AWcNWgS4CN8OiqtaE46dQGcNW5weFC8Aw@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2004261856500.18039@tvgsbejvaqbjf.bet>
-References: <pull.616.git.1587628367528.gitgitgadget@gmail.com> <CAPig+cSDQe7YDke=fyfdeSZOimcR5jj3FFk=Q4iOk6uiHsT-Zw@mail.gmail.com> <CAPig+cSkr+2dExzETScru0N5_=JhjVR=QZKuY5CbhstwrUUk5w@mail.gmail.com> <nycvar.QRO.7.76.6.2004251452200.18039@tvgsbejvaqbjf.bet>
- <CAPUEspiici3-tTTe=AWcNWgS4CN8OiqtaE46dQGcNW5weFC8Aw@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+Message-ID: <20200426170508.6uaexvcmorj2ntv3@tb-raspi4>
+References: <pull.616.git.1587628367528.gitgitgadget@gmail.com>
+ <pull.616.v2.git.1587819266388.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Jl1MTDed/Bfi/LCVyaI/W7+t6qjmxABHSCWuke5wcaotdYBt61Z
- 1vI2i8JarL595UDAvTlygBbcLmzsVsmFOkleGMDAvZ1ODhvz7Tev3hSTnxA0Chm60m+dNfc
- ZL3wrkrIvx7U066+1zs6xJNUMMTdXYRjluIGvPEtzHHzTcIOzrW4/e6sQ3kmDCCddPl+YAr
- XdAPlNhUk0B45vvBu1ecQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:poF1KdM7Yqs=:HSRxbCa+JB+Y01n96lqzeU
- B5TrDZPoWwBMvQ8eUPAyNpp84JTtedcbFab5XM2qM4dvYCm4JJB5f3c9MHPRBniLQI3EKD/+l
- 5JZ9dLx0VtVbrftaOb6+00VXVFmxK3fzox0TTxwzLzZJbPevLaSQefm4AicR2BqADdMFkwlmb
- 0j81lv2QlYd9iHN2V4gpdYfOmBr85RRl6uDBEFojV58B6W7/ZQkK88Zg9B1oUD4l+EXmB+mb/
- TZfuYW/+3IakvXIKaKhP1FxCD/IFrwc+djYvBGuyfQxZiI/42uNFlPSwqmla4mkE+4hVcyT/z
- S5TIAFO4SExJo22EF0XYtyrYyt3E2MX6Wo5KtX8ov/KlMA7S9A9SDSepMFUigFuwzQvgFrJxg
- 6FSMhXo80qUeDxYPhJ8tsa7dk+Wjx/ZvM8G6fljQQGj5dpYXaufjsIoEJDx494X7cHuUluF3E
- YwDut587BUDCqgU4DwS+sOR51AxA2/CERrgZfqAUEBxw9KxQz9AJjzVQIdguKAv5GiyTz1Zey
- 7ViKmUK5UAJC7HSbYsLewQW/RWrW+5BAVs3S1sFz75CatQ2E9AanteosVZPC220zcLoRgGoFW
- 2WfQHLi+fhSc2FBke3juEBRO5yF6SaXfuKs8XrTFStdiMfJO4DCqv60RnfdX39I8EX3JnNylh
- dLVit6n8xUP0MT0wMtuQ5HkgsxLewxh62b4i8UWtwJhagvzDmxEm56R4kQfxJz8HQw63Z1BXm
- l69YRxy+chHhfEEdzbPW5jzv0YZgXopUTaILgKUsUkL008+YgUNRMuqMeONpFHvE+MAMsg7d5
- 6rUR5FR8w+0+4T9/9b7Lyo2XFGZQywF0SyRftXIOruG269fjdaL58ANLlfjggA+CX5veff5zE
- 0EUBucItZMcdG/jRVXUEvB9Mceb9L3QkirLpzcYwmUUTr2n0hMYJBn3IpX+V1weYRQqQVybHE
- orscuE8hKhFe8fO1zc3zPPeh0byFgkjOblBEW6jymKCQ+osQ8KUhw+FR3Sz7uBsSf5kVh7S63
- GKFnwi6DTKduD7ZZI/uyJvFxuCNfq9H4t06cn6FPIWVEMxxFJcuRSg3mqpBQfiNnp59qt/5Zp
- 1HDcicFBuXNE40mofKlR76XYC6tuGJhnpZ9BxKLZhML8dkpcW+8QTrgiGCCOPxG7tXzfXH6j0
- yiVGA3xPU/+Do02actGy0fFGCsUQ8ghA3h9zm470/Z44VAXbHghDgmpc/4XkZaYZJJYlOJUuV
- Q09Z1jZseB159//Io
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <pull.616.v2.git.1587819266388.gitgitgadget@gmail.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-Provags-ID: V03:K1:GPf7yVgfBgR3PRA0WdVTyO7LkeD3l83A+HT8rokv1Jbi9NnhwOb
+ pdLg8kC+hKzyLr2mnFfQzByEw8LPJsV3xgurD8UL4NdxbcJo1r3/2/KTBim8cED+P5+Jlzx
+ TfOsw4wNFUBD3mVzYlgTb3nmLKQjaAQHu49j11SZ71u29BGXJMDEDgNbNJjDoCKAXgpmB8k
+ wtuklkl75JnXLckanbxyg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:K9sx49RwTQM=:K4izR/HhRXxtEAE81+JGQJ
+ w+nYQuHIVftgkFGqaIVGqLVCLXB3VhJPFBtfAZmRk0TrMSoyikfEbp573nJc+AlGn7NIfkju0
+ jhr7tsgCqvInFGrQr0A3j65AZW1AQMdqk61Oy+lz4B5gHLZU3dC2kBp4o4pSS65/0uOtjQpk3
+ Qi2kRf/BVx69jd6FnDe0NIFjhbi82cjmUZXYcgNO6aDMljHC370wPIlP2iCx7ojsdgECiz2Yk
+ XSKqYwUAncDsa8Om3fcN/luu0axdGY1BwSW19nduYbOVJtLiOTh7kGsoARohj6bd2Q27ie1dY
+ mLbhBlpFxhOx90hrII+U89H121f9tChFMoHhaRxrY7umHQHH2vXHF6xUMoXo8k6mMYsmz26iV
+ Yrb0Tfaewjw0DzjJugxRDNldsfCtpgqMemZKoe2nZu8YW5I5ix/mYg0jGmQnfi+7QvHenFt03
+ l2zY9quz4nH8R8MlScoMs5p5aHX+e3zPwSy1zqugbxBWVwiKwj+h0FoUiqsHJPcgI4GlVrPPK
+ utcpG0Y9o52U2cHQbsuF5nQw+38fCwItmRXGA7G/1NKsNK+BcWtVnqv9QsxWhD10uZr80igOy
+ EUYdN6WJA7ui53ptCYH36xFoZduSKrMx7qt+2t61fvhK7fy5B7bEpLuy0pzR3yhbTMFqJDrlN
+ SPIyflGyjcK7YX4w1HtPu2fG/jj+idekIUllEncOYxNPUNMCq/0mv1+d/DDZQSnry6YdYpnuq
+ Qf8JsO8199SRl06olDKF8DGebz06IZ3NFhjicfMnIHEqL65DEue7K+l9+0gsZgo9EnGSxCTOs
+ BCIDTHmVTsffx2lvUKR/1yKOVJTqeyOQof/wsBw8PILYsniHGIDWiHPcyb+UNjqJDqx4C361y
+ YNP0qH930q8LPOIWDFHCFXHkTtJC40jibDN+o5f4o79GZ94oRlJXN/SDhWIcHoQ+QNSSeqDBh
+ /ZPYmwBAkcPyP0x01YY4HGdDl1Bc5kOA6feIrGI+LBhAWHKLIVnMzteZDmB71HKUoHv/L7qld
+ 9pHWiKmvqKoQb5UGTRuc0G9HZxu5tzZvsr329rTte0CACED7mldLQ5aNDdVWg3OvL5gouam6k
+ tG3nEbKkovA+EItW1uDrJCVrvFaQtPUePggOfoHSPQWgSTHe1qNlrmcOGZvGN66jwm/xyGq71
+ Msr+Uuo+Y8CVQoYl5fZUfhIQz5FRWHBBRkGupmqkIAf4GUJec6tZwR73vJeRG92jdkMzCyeiN
+ Z0G2zs6PUX2UY+lDA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Carlo,
-
-On Sun, 26 Apr 2020, Carlo Arenas wrote:
-
-> On Sat, Apr 25, 2020 at 5:59 AM Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> >
-> > On Thu, 23 Apr 2020, Eric Sunshine wrote:
-> >
-> > > On Thu, Apr 23, 2020 at 12:17 PM Eric Sunshine <sunshine@sunshineco.=
-com> wrote:
-> > > > I'm slightly leery of seeing these applied globally on Mac OS in
-> > > > config.mak.uname since various package managers on Mac OS install
-> > > > packages in wildly different locations, and these settings might
-> > > > cause the wrong version of a package to be picked up if a user has
-> > > > a preferred version installed elsewhere.
-> > >
-> > > As a follow up, although slightly leery of applying this change
-> > > globally to config.mak.uname, I don't necessarily oppose it either.
-> > > Considering how widely adopted Homebrew is on Mac OS, baking in a
-> > > bit of Homebrew-specific knowledge would make it easier for a Git
-> > > developer to get up and running by eliminating some of the manual
-> > > fiddling and configuration currently necessary.
-> >
-> > I share your concern. But in contrast to Fink and DarwinPorts, we have
-> > no Homebrew-specific knob in the Makefile (does this mean that we
-> > expect users to use Homebrew by default?).
+On Sat, Apr 25, 2020 at 12:54:26PM +0000, Johannes Schindelin via GitGitGa=
+dget wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
 >
-> IMHO the reason why there is no NO_BREW flag is because brew decided to
-
-That is not an opinion, but an assumption.
-
-> use the "default" directory instead of one of their own (which is why it
-> has so many issues with unlinked files that might or not conflict with
-> the system, like gettext), this is also why a NO_BREW flag (similar to
-> the other two introduced since 8eb38cad44 (Disable linking with Fink or
-> DarwinPorts., 2006-07-24)) wouldn't make sense.
+> Apparently a recent Homebrew update now installs `gettext` into a
+> subdirectory under /usr/local/, requiring the CFLAGS/LDFLAGS to list
+> explicit directories _even_ when asking to force-link the `gettext`
+> package.
 >
-> my assumption is also that most people in macOS use brew nowadays
-
-Yes, that is an assumption. One I share, but I would say that it is more a
-suspicion because I do not really want to act on it.
-
-> instead of fink, darwinports or any of the other alternatives, but there
-> is also people that use none and it is that complication why my proposed
-> patch was in what would seem like the wrong place to begin with.  for
-> more context in that last point see: 59f8674006 (Move Fink and Ports
-> check to after config file, 2006-12-12).
+> Likewise, the `msgfmt` tool is no longer in the `PATH`.
 >
-> on that last point, I am afraid there is still at least a problem that
-> needs addressing, but will comment in patch instead for easy of
-> reference.
+> While it is unclear which change is responsible for this breakage (that
+> most notably only occurs on CI build agents that updated very recently),
+> https://github.com/Homebrew/homebrew-core/pull/53489 should fix it.
+>
+> Nevertheless, let's work around this issue, as there are still quite a
+> few build agents out there that need some help in this regard: we
+> explicitly do not call `brew update` in our CI/PR builds anymore.
+>
+> Helped-by: Carlo Marcelo Arenas Bel=F3n <carenas@gmail.com>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-I would have preferred a straight answer right here than a reference to
-something I have not received (yet?).
+It seems as if things are happening fast in the brew-business.
+After debugging (on a local box) and travis-ing (remote) I may have a sugg=
+estion
+for a better commit-message - I can probably send that out as a patch late=
+r today.
+What do you think ?
 
-Ciao,
-Dscho
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+MacOs/brew: Let the build find gettext headers/libraries/msgfmt
+
+Apparently a recent Homebrew update now installs `gettext` into the
+subdirectory /usr/local/opt/gettext/[lib/include].
+
+Sometimes the ci job succeeds:
+ brew link --force gettext
+ Linking /usr/local/Cellar/gettext/0.20.1... 179 symlinks created
+
+And sometimes installing the package "gettext" with force-link fails:
+ brew link --force gettext
+ Warning: Refusing to link macOS provided/shadowed software: gettext
+ If you need to have gettext first in your PATH run:
+  echo 'export PATH=3D"/usr/local/opt/gettext/bin:$PATH"' >> ~/.bash_profi=
+le
+
+(And the is not the final word either, since MacOs itself says:
+ The default interactive shell is now zsh.)
+
+Anyway, The latter requires CFLAGS to include /usr/local/opt/gettext/inclu=
+de
+and LDFLAGS to include /usr/local/opt/gettext/lib.
+
+Likewise, the `msgfmt` tool is no longer in the `PATH`.
+
+While it is unclear which change is responsible for this breakage (that
+most notably only occurs on CI build agents that updated very recently),
+https://github.com/Homebrew/homebrew-core/pull/53489 has fixed it.
+
+Nevertheless, let's work around this issue, as there are still quite a
+few build agents out there that need some help in this regard: we
+explicitly do not call `brew update` in our CI/PR builds anymore.
+
+Helped-by: Carlo Marcelo Arenas Bel=F3n <carenas@gmail.com>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
