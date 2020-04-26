@@ -2,103 +2,108 @@ Return-Path: <SRS0=OyOp=6K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.3 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 78C9DC54FCB
-	for <git@archiver.kernel.org>; Sun, 26 Apr 2020 19:48:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E3D84C54FCB
+	for <git@archiver.kernel.org>; Sun, 26 Apr 2020 20:04:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4F296206BF
-	for <git@archiver.kernel.org>; Sun, 26 Apr 2020 19:48:08 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Cbyy8zQs"
+	by mail.kernel.org (Postfix) with ESMTP id CFAB32070A
+	for <git@archiver.kernel.org>; Sun, 26 Apr 2020 20:04:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726202AbgDZTsH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 26 Apr 2020 15:48:07 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:37696 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726171AbgDZTsH (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 26 Apr 2020 15:48:07 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id C1F9F6042C;
-        Sun, 26 Apr 2020 19:47:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1587930456;
-        bh=7L0Y1V1bH0LvRtE9Y/+RvyeTOLq25cHvU9Cg5O9DgNc=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=Cbyy8zQsOXwmh6TiQNyDckWIiICaI3mY+hE0c8jlcadOdizQFpcDanNop4zF0/Nlx
-         9mt0vbRyn4VCiY4KAuneDLFhjO3UuufNd50nuzIKnPYkLtecQbzUE1/V8oe7cmkJfP
-         LBvAI0i4d+vWkKb8QkmGf0LFP+QxHNNcmyrgdQkCUWtJ5emVr9YEVY5AyLaaGoCMBD
-         +iAg2VrKe3kr85kWIBiZ7aJq2F2OUKVuqpbUIUbQlnEkPvi5wDs0a5D0xxqez9VPtQ
-         sgovoP9uI++Of1+WM+BHvgXCB63sXIXx3gUAnKBpfV6uya6NN3mn1IZsmC3KL4r2AG
-         pI944bFaDgZFd1x7Yjy+zGE8CJn6rgbq3btEipXyXeFXssxk0lLNFFj+yp/T0NsemY
-         GoF2TMO20R1hKOoCjPdjcTz0uJYZiyGqGDzyCfzvUYVxmyHU6k3ikfQtV3ohsaTXJO
-         9yhU3B+2enNVgb6XU8qPG7XMPoOKSrG3/9KaC/DrOm5Ftcxfy/e
-Date:   Sun, 26 Apr 2020 19:47:29 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Paul Smith <paul@mad-scientist.net>
-Cc:     Git List <git@vger.kernel.org>
-Subject: Re: Git configure with static curl is failing
-Message-ID: <20200426194729.GD6421@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Paul Smith <paul@mad-scientist.net>, Git List <git@vger.kernel.org>
-References: <9d9fe8376e47a9f5330cd644c76d96987fc67c57.camel@mad-scientist.net>
+        id S1726250AbgDZUEy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 26 Apr 2020 16:04:54 -0400
+Received: from smtp.hosts.co.uk ([85.233.160.19]:64992 "EHLO smtp.hosts.co.uk"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726171AbgDZUEy (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Apr 2020 16:04:54 -0400
+Received: from [92.30.123.115] (helo=[192.168.1.39])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1jSnWF-0002CU-AB; Sun, 26 Apr 2020 21:04:51 +0100
+Subject: Re: [PATCH] config: use GIT_CONFIG in git config sequence
+To:     Matt Rogers <mattr94@gmail.com>
+Cc:     =?UTF-8?Q?Mateusz_Nowoty=c5=84ski?= <maxmati4@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>, bwilliams.eng@gmail.com
+References: <20200425235716.1822560-1-maxmati4@gmail.com>
+ <CAOjrSZs33-CqV5m4wKROYJT8au1hup7bGZWiEaXMV7cU4p-J=Q@mail.gmail.com>
+ <ff9a63d4-80e4-8090-c85c-03fd3ab43c55@iee.email>
+ <CAOjrSZt7WJy1vv97Rw9MFJyTcB2Ehqq9BjGrXMtV95oB5p53SA@mail.gmail.com>
+From:   Philip Oakley <philipoakley@iee.email>
+Message-ID: <8992c1a7-a638-e823-1cb7-2c8f6b28d486@iee.email>
+Date:   Sun, 26 Apr 2020 21:04:50 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="cQXOx3fnlpmgJsTP"
-Content-Disposition: inline
-In-Reply-To: <9d9fe8376e47a9f5330cd644c76d96987fc67c57.camel@mad-scientist.net>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.5.0-2-amd64)
+In-Reply-To: <CAOjrSZt7WJy1vv97Rw9MFJyTcB2Ehqq9BjGrXMtV95oB5p53SA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Matt,
 
---cQXOx3fnlpmgJsTP
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 26/04/2020 14:30, Matt Rogers wrote:
+>> Given the extra config environment settings, could/should the
+>> --show-scope (or complementary option) also show/clarify these
+>> environment variable settings?
+> I'm lukewarm either way on this one, I think it would be pretty trivial
+> to write something that did this, so that only leaves the question of
+> 'should' we do this, which I don't really have any particularly strong
+> feelings about.  
+My thought was that in some cases folks will feel they 'know' where
+their system and global configs are located, but that 'git config'
+command isn't showing them those contents.
 
-On 2020-04-26 at 19:01:54, Paul Smith wrote:
-> The problem appears to be that configure.ac is not using curl-config to
-> obtain the correct options to link with curl.  If I run
-> /other/curl/bin/curl-config --lib I get the proper flags:
->=20
->   $ /other/curl/bin/curl-config --libs
->   -L/other/curl/lib -lcurl -lssl -lz -lcrypto -ldl -lpthread
->=20
-> If configure.ac tried to use $CURLDIR/bin/curl-config --libs to obtain
-> the right linker options, then the link test for curl would work.
+> What would this even ultimately look like? perhaps
+> something like this for a command of `git config --show-scope`:
+>
+> system var=option (currently ignored due to GIT_CONFIG_NOSYSTEM)
+That's one option.
 
-It doesn't surprise me that configure.ac doesn't use curl-config.  The
-configure script is generally not used by the main developers in favor
-of just using the makefile itself.
+The other, non-programmatic way, it to mention the environment variable
+in the 'git config' man page, at the --show-scope section, telling folk
+that if those env variables are set there won't be any scope to show!
+>
+> Which kind of begs the question of how many people set that variable
+> and then forget that they set it?  
 
-While we should fix that, the makefile does use curl-config, so if you
-just use it with any appropriate options without running configure, it
-will probably work for you.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+The one that caught me was the test suit[1]. I was unable to replicate
+results when I set up a test. This can be bad on Windows where some
+settings need to be auto set (or are commonly set) and maybe result in
+conflicts. Often what doesn't know what's been done on ones behalf.
+There's plenty of spare configs to go round ;-)
 
---cQXOx3fnlpmgJsTP
-Content-Type: application/pgp-signature; name="signature.asc"
+> Although I can totally see why it would
+> be nice to have some kind of config flag that's a big
+> "Just show me everything that's going on option" which considering these
+> variables would probably be a little bit more than the current next-best of
+> `git config --list --show-scope --show-origin`.  Again though, I'm not
+> exactly sure how useful such an option would be.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
+Mateusz's original problem was with discovery of these env variables, so
+ended up with an XY-problem of proposing a patch to redirect the
+~/.gitconfig file, because relevant the env variables weren't (for him,
+and previously myself) discoverable.
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXqXlUQAKCRB8DEliiIei
-gdLgAQCqlCAuu5rDu2zD3ARi9zxcuso9+LLht7W7HPW+RioBtwEAhNL6cdIYnuhK
-VvYt2jOw/qrQM/8pUlJlw034ar5njAw=
-=r5iP
------END PGP SIGNATURE-----
+If we go with a 'No one reads the manuals' developer view, then the
+solution has to be more code... hence my wondering if there was an easy
+win inside the code, or if it needs to be a subjective update to the man
+pages (never 'easy').
 
---cQXOx3fnlpmgJsTP--
+
+The man page
+The GIT_CONFIG_NOSYSTEM only gets its 1 mention as a heading, while
+GIT_CONFIG  has two (+ a heading). Maybe we need to spread the love for
+NOSYSTEM...
+>
+-- 
+Philip
+
+[1]
+https://lore.kernel.org/git/8850d755-07ce-d8d2-6e5c-88393fce34de@iee.org/
