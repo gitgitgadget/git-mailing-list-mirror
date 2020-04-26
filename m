@@ -2,193 +2,184 @@ Return-Path: <SRS0=OyOp=6K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E120AC2BA1A
-	for <git@archiver.kernel.org>; Sun, 26 Apr 2020 04:30:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 38DBEC2BA1A
+	for <git@archiver.kernel.org>; Sun, 26 Apr 2020 06:36:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B339F2070A
-	for <git@archiver.kernel.org>; Sun, 26 Apr 2020 04:30:42 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jKFHUMBB"
+	by mail.kernel.org (Postfix) with ESMTP id 1D907206BF
+	for <git@archiver.kernel.org>; Sun, 26 Apr 2020 06:36:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726113AbgDZEak (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 26 Apr 2020 00:30:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57494 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726096AbgDZEak (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 Apr 2020 00:30:40 -0400
-Received: from mail-qv1-xf44.google.com (mail-qv1-xf44.google.com [IPv6:2607:f8b0:4864:20::f44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA5C3C061A0C
-        for <git@vger.kernel.org>; Sat, 25 Apr 2020 21:30:38 -0700 (PDT)
-Received: by mail-qv1-xf44.google.com with SMTP id fb4so6827822qvb.7
-        for <git@vger.kernel.org>; Sat, 25 Apr 2020 21:30:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=lKQfIVRzm4s42Xhu3XzXdHrtEDtlor5hW9hFHLIrN9E=;
-        b=jKFHUMBBQDxkV1Ud69PtA2Kuk/IWXVaxbCG0Jp5a781az7l5wKR/x8N4CSPb9dPSWd
-         TVV8QCvcxTgfS8D1EgOk5RhDCKpTRpUSkiScCUMoJeQISkb1LKmxxNy/Uo9BIrhRcLe4
-         G5ximSmVYfjc+5dtjxm8B96Mo4mHQpRioBi9b1NGqew2Ai8LLqtaKTjoFhv/9KQBqn+5
-         9fDA10TeAOTXxjWgQeRLrPQ/AB1s1+ZuNLNLx4NTggXzzLcEbIU/nebuswTVmpEjukkz
-         HBrDhLnvbllf/Duu6WlhG1LD90cWfgT/Ilpo8rX3NyvKBrQg3M4ChN3zRQVCHOeEdUIj
-         /8NQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=lKQfIVRzm4s42Xhu3XzXdHrtEDtlor5hW9hFHLIrN9E=;
-        b=UshSkJgJex+kmy1sJGW0ED1ymXSAaWqBZTZY+uOokUYLO2/XydEfYve5T4Rqd/+PeV
-         3a9FIinOmThh2F11aIaUPY+Xf3NRDEm5W01EdXUgU/Q+tOLddxvGdt04lcGqEUbzPJ/O
-         Od3+fgf6/rUUVgZBUm0i1cIGThejZA7UKDEO6aqq6QHsPc8xy7ZVBMbngnSHLxrdvho5
-         NiKMeYVjxE6CeeK804UUuYiZlC3JzOv7miweGQ6x8q/G3q4ycBEPZ00zPVcedgI5mURF
-         ypo9QzocHXZKCmaWOF/sAfBj+DNgeEt1y5bZVc2MlG+LMRR11ozen5qDYkhAPHubMVgy
-         P1Bw==
-X-Gm-Message-State: AGi0PubHqZrXo+te7iTcwpMg65vJKgJoqpZHNmmUYlFWojVDgBVUOXTO
-        IPS5aZXo6vUAxKsEWREEYL/+yJWSm7/NhJYDU6M=
-X-Google-Smtp-Source: APiQypJxqdeMX6t2g6jZMRjJylawuTi7754jMHsZv2GB4yiZOUmxKIvs9KdxH9NCF/nCzYtoWqqiSP3kcP9KZuR+Pbo=
-X-Received: by 2002:ad4:55ab:: with SMTP id f11mr16448676qvx.226.1587875436682;
- Sat, 25 Apr 2020 21:30:36 -0700 (PDT)
+        id S1726156AbgDZGgJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 26 Apr 2020 02:36:09 -0400
+Received: from 14.mo4.mail-out.ovh.net ([46.105.40.29]:37677 "EHLO
+        14.mo4.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726108AbgDZGgI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Apr 2020 02:36:08 -0400
+X-Greylist: delayed 1085 seconds by postgrey-1.27 at vger.kernel.org; Sun, 26 Apr 2020 02:36:06 EDT
+Received: from player763.ha.ovh.net (unknown [10.108.35.13])
+        by mo4.mail-out.ovh.net (Postfix) with ESMTP id 450F32331AC
+        for <git@vger.kernel.org>; Sun, 26 Apr 2020 08:18:00 +0200 (CEST)
+Received: from RCM-web10.webmail.mail.ovh.net (ip-209.net-89-3-147.rev.numericable.fr [89.3.147.209])
+        (Authenticated sender: postmaster@rapsys.eu)
+        by player763.ha.ovh.net (Postfix) with ESMTPSA id E6E3911BFB3CA;
+        Sun, 26 Apr 2020 06:17:55 +0000 (UTC)
 MIME-Version: 1.0
-References: <CAKiG+9V_nZUXf2a689vZ54rG+xTCFMGcJe_7Av-khaxxuijERg@mail.gmail.com>
- <xmqq8sikblv2.fsf@gitster.c.googlers.com> <CAKiG+9Xtof8Hj3npsS-M0SnT_dcjtHjP_+avWB4oOHkaMdnSbw@mail.gmail.com>
- <40da111a-77e0-55b1-a6c2-9edc77cf1f3c@iee.email> <nycvar.QRO.7.76.6.2004251523560.18039@tvgsbejvaqbjf.bet>
- <CAKiG+9VMjft14ttqQuZMwewOGFbnbfJ3uXn0vPiJb05A8wdSwg@mail.gmail.com>
- <nycvar.QRO.7.76.6.2004251624100.18039@tvgsbejvaqbjf.bet> <CAKiG+9XpZjesKs4p_yRvtgEhqwSHDqnjJcNkzqg_AEWr5BeuQg@mail.gmail.com>
- <nycvar.QRO.7.76.6.2004251647520.18039@tvgsbejvaqbjf.bet> <CAKiG+9XwoD+UzHovS_mW76CPX_Vtt1eTaSM-xaszKWwt6R3ewA@mail.gmail.com>
- <20200426004119.otgynhnzvmykitez@danh.dev>
-In-Reply-To: <20200426004119.otgynhnzvmykitez@danh.dev>
-From:   Sibi Siddharthan <sibisiddharthan.github@gmail.com>
-Date:   Sun, 26 Apr 2020 10:00:25 +0530
-Message-ID: <CAKiG+9VQd3R0DtPnxWq-RHwEAf-_kdpspPX_pAeQhBD8t=H_QQ@mail.gmail.com>
-Subject: Re: [PATCH 0/8] CMake build system for git
-To:     Danh Doan <congdanhqx@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Philip Oakley <philipoakley@iee.email>,
-        Junio C Hamano <gitster@pobox.com>,
-        Sibi Siddharthan via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+Date:   Sun, 26 Apr 2020 08:17:55 +0200
+From:   =?UTF-8?Q?Rapha=C3=ABl_Gertz?= <git@rapsys.eu>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     =?UTF-8?Q?Rapha=C3=ABl_Gertz_via_GitGitGadget?= 
+        <gitgitgadget@gmail.com>, git@vger.kernel.org,
+        =?UTF-8?Q?Jakub_Nar?= =?UTF-8?Q?=C4=99bski?= <jnareb@gmail.com>,
+        Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCH] commit:fix use of uninitialized value [...] in server log
+In-Reply-To: <20200426001740.GB877@gmail.com>
+References: <pull.767.git.git.1587847338677.gitgitgadget@gmail.com>
+ <20200426001740.GB877@gmail.com>
+User-Agent: Roundcube Webmail/1.4.2
+Message-ID: <b64c0b21fedd0033c237ad4c0b18c18b@rapsys.eu>
+X-Sender: git@rapsys.eu
+X-Originating-IP: 89.3.147.209
+X-Webmail-UserID: postmaster@rapsys.eu
+X-Ovh-Tracer-Id: 2853030364885388906
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeduhedrheeigdduvdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeggtgfgfffhvffujghffgfkgihisehtkehjtddtreejnecuhfhrohhmpeftrghphhgrtohlpgfivghrthiiuceoghhithesrhgrphhshihsrdgvuheqnecukfhppedtrddtrddtrddtpdekledrfedrudegjedrvddtleenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhhouggvpehsmhhtphdqohhuthdphhgvlhhopehplhgrhigvrhejieefrdhhrgdrohhvhhdrnhgvthdpihhnvghtpedtrddtrddtrddtpdhmrghilhhfrhhomhepghhithesrhgrphhshihsrdgvuhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Apr 26, 2020 at 6:11 AM Danh Doan <congdanhqx@gmail.com> wrote:
->
-> On 2020-04-25 20:27:37+0530, Sibi Siddharthan <sibisiddharthan.github@gmail.com> wrote:
-> > Hi Dscho,
-> >
-> > I guess this is a pain point having to manage two separate build systems.
-> > I will modify CMake script to get its sources from the Makefile.
-> >
-> > > > I understand what you are trying to say, this is not impossible to do but doing
-> > > > so will make the CMake script dependent on the Makefile for the sources.
-> > > > I am not fan of this approach.
-> > > >
-> > > > We should write a separate script (say python) to match each of the sources in
-> > > > the Makefile and the CMake file automatically whenever the changes detected.
-> > > > This excludes the platform specific/compatibility stuff in config.mak.uname.
-> > >
-> > > Hmm. That is an approach that _I_ don't like. Why duplicate the
-> > > information when you don't have to?
-> > >
-> > > I don't see any issue with keeping CMakeLists.txt dependent on Makefile.
-> > > We could of course extract the lists into a separate file that is sourced
-> > > both from the Makefile and from CMakeLists.txt, but that would actually
-> > > not reflect that the Makefile _is_ authoritative. CMakeLists.txt will
-> > > never be the authoritative source.
->
-> (This email is hard to be replied, because Sibi do top-posting.
-> And, I want to quote both on this).
->
-> I'm still not a fan of CMake despite that I need to write it at
-> previous $DAYJOBS.
->
-> I would like to keep Makefile as authoritative source of information,
-> and to convince other developers, we need to keep Makefile as
-> authoritative source of information. Let's say this way, I dislike it,
-> but if it works for you, that's fine, just don't add more burden for
-> existing people.
->
-> Remember that with CMake support, we will never able to use CMake
-> generated build in-tree because we have an existing Makefile in-tree
-> (not a problem since it's expected to be built out-of-tree if CMake is used),
-> but please don't complain if it people accidentally break it.
-> ./configure doesn't work correctly with `--without-<pkg>` and people
-> seems to not interest in my series to respect it, for example.
->
+Hi,
 
-To prevent the CMake script from overwriting the current Makefile,
-I can add a check at the beginning to stop the configure if the build
-is done in source.
+Le 26.04.2020 02:17, Jonathan Nieder a écrit :
+> (cc-ing Jakub Narębski, gitweb expert; Giuseppe Bilotta, who 
+> contributed
+>  snapshot_format)
+> Raphaël Gertz wrote:
+>> Subject: commit:fix use of uninitialized value [...] in server log
+>> 
+>> This change fix the message about uninitialized value when trying to
+>> access undefined hash indexes.
+>> 
+>> The error message fixed:
+>> Use of uninitialized value $params{"action"} in string eq at 
+>> gitweb.cgi
+>> line 1377
+> 
+> Some nitpicks about the commit message (see
+> Documentation/SubmittingPatches "Describe your changes well" for more 
+> on
+> this subject):
+> 
+> - the subject line should start with the subsystem being improved, a
+>   colon, and a space.  Here, that subsystem is gitweb.
+> 
+> - focus on describing what improvement the patch intends to make.  The
+>   description should be in the imperative mood, as though ordering the
+>   codebase to improve.
+> 
+> - try to cover what a person trying to understand whether to apply
+>   this patch would want to know beyond what is already in the patch
+>   itself.  What user-facing behavior change does the patch make?  How
+>   was the problem discovered?  What downsides are there, if any?
+> 
+> I think that would mean something like
+> 
+> 	gitweb: check whether query params are defined before use
+> 
+> 	In normal use, gitweb spams the web server error log:
+> 
+> 	  Use of uninitialized value $params{"action"} in string eq at
+> gitweb.cgi line 1377
+> 
+> 	The 'action' parameter is optional so this is not warning about
+> 	anything meaningful. Check whether the parameter is defined
+> 	before using it to avoid the warning.
+> 
+> 	Signed-off-by: ...
+> 
+Thank's for explaining how to improve the bug report.
 
-> When writing this, I intended to write something to support
-> out-of-tree build with current Makefile. Hopefully, it won't be rocket
-> science.
->
-> Last but not least, (this point was discussed with Sibi off-list)
-> about our test infrastructure, when we add a new test,
-> we can simply run:
->
->         make test
->
-> Makefile will pick it up, and run all tests just fine.
->
-> CMake's glob only works at CMake configuration time.
-> If there's a new test after CMake was run, and nothing changed in
-> CMakeList.txt. The list generated by CMake will still be the same,
-> ctest wouldn't know that there's a new test.
-> People need to manually run cmake again to pick it up (or as Sibi
-> told me off-list, that developer is question can run by hand
->
->         path/to/git/source/t/t-9999-true.sh
->
-> That's not a problem for the person write that test,
-> but it'll be problem for other people, who will fetch the new source
-> to their own repo, and naively run msbuild and ctest.
->
-> It's analogue to this habit in git (me in my previous $DAYJOBS)
->
->         yes | git add -p
->
-> Anyway, get back to the solution (should this series be accepted),
-> I think it'll work if we can split:
->
->         SOURCE_FILES += cmake.c
->
-> into a source-list.mak
->
-> Then, cmake will do some magic with `configure_file` or something
-> similar, IIRC, it's a reduced functionallity of sed.
->
+> Please don't.  A contributor list can be obtained using "git shortlog
+> -n -s -- gitweb".  A second changelog would fall out of sync with
+> that.
+> 
+Didn't know sorry.
 
-Me and Dscho discussed that we will use the Makefile for getting the
-source list.
-So we will basically parse the Makefile for the requires sourced to be
-used( in CMake itself).
-So devs can just maintain the Makefile alone.
-This approach works for
-SCRIPT_SH
-SCRIPT_LIB
-SCRIPT_PERL
-SCRIPT_PYTHON
-TEST_BUILTINS_OBJS
-LIB_OBJS
-BUILTIN_OBJS
-XDIFF_OBJS
-VCSSVN_OBJS
+>> --- a/gitweb/gitweb.perl
+>> +++ b/gitweb/gitweb.perl
+>> @@ -1420,7 +1420,7 @@ sub href {
+>> 
+>>  		# since we destructively absorb parameters, we keep this
+>>  		# boolean that remembers if we're handling a snapshot
+>> -		my $is_snapshot = $params{'action'} eq 'snapshot';
+>> +		my $is_snapshot = defined $params{'action'} && $params{'action'} eq 
+>> 'snapshot';
+> 
+> nit: long line
+> 
+> Other parameters like 'project' similarly use a defined check like
+> this, so it's consistent.  Good.
+> 
+>> 
+>>  		# Summary just uses the project path URL, any other action is
+>>  		# added to the URL
+>> 		if (defined $params{'action'}) {
+> 
+> optional: should we reuse this "if"?  That is, something like
+> 
+> 		my $is_snapshot = 0;
+> 
+> 		if (defined $params{'action'}) {
+> 			$is_snapshot = $params{'action'} eq 'snapshot';
+> 			$href .= ...
+> 
+It may involve less risk to keep the variabe undefined:
+		my $is_snapshot = undef;
+instead of:
+		my $is_snapshot = 0;
 
-PROGRAM_OBJS do not work, as a few of them link with curl and expat.
-As git-bugreport was added recently to the next branch.
-This should not be major issue I guess.
+As I don't have time to maintain the changes and am not a perl Jedi,
+I may have wanted to avoid rewriting lot of code.
 
-> --
-> Danh
+I only intended to make minimalist code modification to avoid breaking
+without noticing something and get cursed for it :)
 
-Thank You,
-Sibi Siddharthan
+>> @@ -6012,7 +6012,7 @@ sub git_history_body {
+>>  		      $cgi->a({-href => href(action=>$ftype, hash_base=>$commit, 
+>> file_name=>$file_name)}, $ftype) . " | " .
+>>  		      $cgi->a({-href => href(action=>"commitdiff", hash=>$commit)}, 
+>> "commitdiff");
+>> 
+>> -		if ($ftype eq 'blob') {
+>> +		if (defined $ftype && $ftype eq 'blob') {
+> 
+> What is this part about?  The commit message doesn't describe it.
+> 
+>>  			print " | " .
+>>  			      $cgi->a({-href => href(action=>"blob_plain", 
+>> hash_base=>$commit, file_name=>$file_name)}, "raw");
+>> 
+>> 
+This is an other test on possibly undefined value.
+
+THis fix intent to remove an other warning in server log when ftype is 
+not defined.
+
+Error log will look like :
+gitweb.cgi: Use of uninitialized value $ftype in string eq at 
+/path/gitweb.cgi line 5962.: /path/gitweb.cgi
+
+I just went to notice I missed an other error message spammed as well :
+gitweb.cgi: Use of uninitialized value $commit_id in open at 
+/path/gitweb.cgi line 3568.: /path/gitweb.cgi
+
+I will try to add the patch for this when possible as well.
+
+Best regards
