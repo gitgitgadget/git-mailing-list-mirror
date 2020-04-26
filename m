@@ -6,78 +6,53 @@ X-Spam-Status: No, score=-2.3 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C8F8CC55191
-	for <git@archiver.kernel.org>; Sun, 26 Apr 2020 09:58:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C109AC55191
+	for <git@archiver.kernel.org>; Sun, 26 Apr 2020 10:00:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B03E62070A
-	for <git@archiver.kernel.org>; Sun, 26 Apr 2020 09:58:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A80C620728
+	for <git@archiver.kernel.org>; Sun, 26 Apr 2020 10:00:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726121AbgDZJ6j (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 26 Apr 2020 05:58:39 -0400
-Received: from smtp.hosts.co.uk ([85.233.160.19]:22886 "EHLO smtp.hosts.co.uk"
+        id S1726143AbgDZKA5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 26 Apr 2020 06:00:57 -0400
+Received: from smtp.hosts.co.uk ([85.233.160.19]:40940 "EHLO smtp.hosts.co.uk"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726112AbgDZJ6j (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 Apr 2020 05:58:39 -0400
+        id S1726112AbgDZKA4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Apr 2020 06:00:56 -0400
 Received: from [92.30.123.115] (helo=[192.168.1.39])
         by smtp.hosts.co.uk with esmtpa (Exim)
         (envelope-from <philipoakley@iee.email>)
-        id 1jSe3Y-0003Ql-64; Sun, 26 Apr 2020 10:58:37 +0100
+        id 1jSe5m-000BG5-Cb; Sun, 26 Apr 2020 11:00:55 +0100
 Subject: Re: [PATCH] config: use GIT_CONFIG in git config sequence
-To:     Junio C Hamano <gitster@pobox.com>,
+To:     Matt Rogers <mattr94@gmail.com>,
         =?UTF-8?Q?Mateusz_Nowoty=c5=84ski?= <maxmati4@gmail.com>
-Cc:     git@vger.kernel.org, mattr94@gmail.com, bwilliams.eng@gmail.com
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>, bwilliams.eng@gmail.com
 References: <20200425235716.1822560-1-maxmati4@gmail.com>
- <xmqq5zdn9k3r.fsf@gitster.c.googlers.com>
+ <CAOjrSZs33-CqV5m4wKROYJT8au1hup7bGZWiEaXMV7cU4p-J=Q@mail.gmail.com>
 From:   Philip Oakley <philipoakley@iee.email>
-Message-ID: <383520d8-0623-ecf5-bb02-230a35359a6b@iee.email>
-Date:   Sun, 26 Apr 2020 10:58:34 +0100
+Message-ID: <ff9a63d4-80e4-8090-c85c-03fd3ab43c55@iee.email>
+Date:   Sun, 26 Apr 2020 11:00:53 +0100
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
  Thunderbird/68.7.0
 MIME-Version: 1.0
-In-Reply-To: <xmqq5zdn9k3r.fsf@gitster.c.googlers.com>
+In-Reply-To: <CAOjrSZs33-CqV5m4wKROYJT8au1hup7bGZWiEaXMV7cU4p-J=Q@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Content-Language: en-GB
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 26/04/2020 01:16, Junio C Hamano wrote:
-> Mateusz Nowotyński <maxmati4@gmail.com> writes:
->
->> Currently, there is no way to use config file other then ~/.gitconfig.
->> This can cause a problem, for example, when running tests of software that
->> depends on git. In such a case user's gitconfig may contain settings that
->> are incompatible with tests.
-> While I can remotely imagine how an environment variable that
-> overrides everything might be useful at times, we already use
-> GIT_CONFIG environment for a different purpose, so even if such a
-> feature were desirable, the name is already taken, and you'd want to
-> hunt for another one.  Also, I do not think I'll take this patch if
-> the justification were solely the above, as it is a solved problem,
-> together with the use of GIT_CONFIG_NOSYSTEM and GIT_ATTR_NOSYSTEM.
+Hi Matt,
 
-Mateusz: is there a discoverability/documentation issue for these extra
-config settings (a better patch maybe there).
-I know in the past (in another context) I had failed to appreciate that
-these had been set so couldn't work out why some problems were occurring
-for me when testing some ideas.
+On 26/04/2020 02:12, Matt Rogers wrote:
+> This would need an appropriate addition to show-scope functionality in order
+> to be considered complete too, as I believe the current code would give it a
+> scope of "unknown" which is obviously incorrect since we know the scope.
 >
-> Tests of a software that depends on git, and perhaps other things,
-> will be affected in things under the testing user's home directory,
-> and not just ~/.gitconfig file.  Providing stable environment to run
-> in to your tests is a useful thing to do, but it is not a viable or
-> a particularly smart strategy for doing so to tweak each and every
-> software that your software may depend on, and your software itself,
-> with a custom change like this patch.
->
-> You can prepare a pretend-home directory for the use of your tests
-> and point the environment variable $HOME to it while running your
-> tests.  See how we do this in our test suite for inspiration---it
-> all happens in t/test-lib.sh, I think.
->
-> Thanks.
->
+Given the extra config environment settings, could/should the
+--show-scope (or complementary option) also show/clarify these
+environment variable settings?
 --
 Philip
