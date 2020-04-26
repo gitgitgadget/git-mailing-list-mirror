@@ -2,101 +2,200 @@ Return-Path: <SRS0=OyOp=6K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B957C54FCB
-	for <git@archiver.kernel.org>; Sun, 26 Apr 2020 00:17:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A1CFC54FCB
+	for <git@archiver.kernel.org>; Sun, 26 Apr 2020 00:17:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D13542071E
-	for <git@archiver.kernel.org>; Sun, 26 Apr 2020 00:17:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5978A206DD
+	for <git@archiver.kernel.org>; Sun, 26 Apr 2020 00:17:46 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="I80kr1uA"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="uiaW8ts3"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726092AbgDZARF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 25 Apr 2020 20:17:05 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:52557 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726070AbgDZARE (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Apr 2020 20:17:04 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C5C7EDB181;
-        Sat, 25 Apr 2020 20:17:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=MZOr886lmuf4
-        8vff4Gv3/GWwT8g=; b=I80kr1uADU3q9LUbJI3uoh/92vQaHnNbHzZDSwnVf3mZ
-        YQhb7UWduZao/sPTAOwZ8TiLw30U+/auEWX9ZC0kKVxXRYDHYQYDXOqw3AUI7A1E
-        LQr9lgscTKXoHJDokjBr2+Nrull0bjhOVQZIJ88vn9DuKq8SANdk7207WwQ97sQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=irsNca
-        R4LbtZGrFfCkk0XqDLCHDXt8+rlTe/88cdAAf/Oc9BKnUKYMmcYxmtjqlA3bxLEY
-        0UEKb05LmPZxxYDYb5y36ax6hUVGFdI0YmaYYDZDanDvQsVb/jTLnIWEyxDUbKt6
-        GId0ybE1ecuO/fH2OOlQKOa2qFt2DMLY7pURA=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id B17A8DB180;
-        Sat, 25 Apr 2020 20:17:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id CDD5ADB17D;
-        Sat, 25 Apr 2020 20:16:58 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Mateusz =?utf-8?Q?Nowoty=C5=84ski?= <maxmati4@gmail.com>
-Cc:     git@vger.kernel.org, mattr94@gmail.com, bwilliams.eng@gmail.com
-Subject: Re: [PATCH] config: use GIT_CONFIG in git config sequence
-References: <20200425235716.1822560-1-maxmati4@gmail.com>
-Date:   Sat, 25 Apr 2020 17:16:56 -0700
-In-Reply-To: <20200425235716.1822560-1-maxmati4@gmail.com> ("Mateusz
-        =?utf-8?Q?Nowoty=C5=84ski=22's?= message of "Sun, 26 Apr 2020 01:57:16
- +0200")
-Message-ID: <xmqq5zdn9k3r.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726102AbgDZARp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 25 Apr 2020 20:17:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46820 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726070AbgDZARp (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Apr 2020 20:17:45 -0400
+Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1149AC061A0C
+        for <git@vger.kernel.org>; Sat, 25 Apr 2020 17:17:45 -0700 (PDT)
+Received: by mail-pf1-x441.google.com with SMTP id x77so6880638pfc.0
+        for <git@vger.kernel.org>; Sat, 25 Apr 2020 17:17:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=Ps2tSrmo1zBgtyhcHgDCyah75XMTIqCIMIHpxwaKH44=;
+        b=uiaW8ts3X+gU+Gp3g5rzSpA30jn6jHiL4s2vZOLlkwnnKATuaqpWIzn/KB6fgc+J/7
+         oG+4xkZGkqpFP2qSlkdcc5sX4jkevLNnmDgrlBZIuLxqgpJLES3BvTITXFQVqBABR5qX
+         c/pASUUAfx7ZAZk6fSRTE1E4etPzvZwGA3W+UElPIwXyhrv3sxrtjKnhpcmhF/peaFEX
+         afwpc6kJB1dhirCwMCbNvRtc4yTG2yXTrEKRRaElFHiaKjNUHHztm1Sb/+/6ld9KKu40
+         nmOID6+AEeypvn4Bkn8GsvrVNBMMC6tpi0YI0q7MCXRj4xKt7RJSj36VWeqTyv9lgY3t
+         OmCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=Ps2tSrmo1zBgtyhcHgDCyah75XMTIqCIMIHpxwaKH44=;
+        b=EZAK/Iy3+ekroG0P51wzy+J/m5cahtmJqeJeTcxsVOOxVre4mwjMwMW0cvbqHE47kH
+         BfDWA4y0zluGN5tjlAuDGQ950iBqawySYeXxckHXDyPvGVHn7D2IX+ljO13yWyS9/mn9
+         3ZlYX6bAXfGH5gof3tQKyELa03V3KbyrJydJJd5nK3oIceJsYFqHlgm5RWPFSrupqFJ7
+         K0x+sbDkh+8V8CiEe0Id1zYip63thrtJEZEMZ8UXaScsdm1WJYLT0K/W1l3Bfqf/sc65
+         WMGWGdS6RtWK0SaE7Vg3QWQEH21U22wEcQmFFzaRkpSSLi52TuteuwR2tGReAJ7XmXil
+         477Q==
+X-Gm-Message-State: AGi0PubYK9uIKmiiLtZBzvvBS5F8fJ8tndC4hKGJv6BqpVgD5kkIDnHv
+        VlAl3VnFFkSr8XE1osav8WjBJdzB
+X-Google-Smtp-Source: APiQypL9/+rzCGfplj62/xGVfLCmAxd5QRwQNHGtr3r14DOMFwW6ioyqT3/tzVrskwodJG+fGP68Jw==
+X-Received: by 2002:a62:92:: with SMTP id 140mr16187613pfa.186.1587860264283;
+        Sat, 25 Apr 2020 17:17:44 -0700 (PDT)
+Received: from gmail.com (174.247.233.35.bc.googleusercontent.com. [35.233.247.174])
+        by smtp.gmail.com with ESMTPSA id o11sm7743696pgd.58.2020.04.25.17.17.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 25 Apr 2020 17:17:43 -0700 (PDT)
+Date:   Sat, 25 Apr 2020 17:17:40 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     =?iso-8859-1?Q?Rapha=EBl?= Gertz via GitGitGadget 
+        <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?iso-8859-1?Q?Rapha=EBl?= Gertz <git@rapsys.eu>,
+        Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
+        Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCH] commit:fix use of uninitialized value [...] in server log
+Message-ID: <20200426001740.GB877@gmail.com>
+References: <pull.767.git.git.1587847338677.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 3E7C34B8-8753-11EA-8387-B0405B776F7B-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <pull.767.git.git.1587847338677.gitgitgadget@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Mateusz Nowoty=C5=84ski <maxmati4@gmail.com> writes:
+(cc-ing Jakub Narębski, gitweb expert; Giuseppe Bilotta, who contributed
+ snapshot_format)
+Raphaël Gertz wrote:
 
-> Currently, there is no way to use config file other then ~/.gitconfig.
-> This can cause a problem, for example, when running tests of software t=
-hat
-> depends on git. In such a case user's gitconfig may contain settings th=
-at
-> are incompatible with tests.
+>     This is a simple fix that I did long ago that check carefully the index
+>     before running tests on it.
+>     
+>     My goal is to avoid re-applying the patch on each distribution update.
 
-While I can remotely imagine how an environment variable that
-overrides everything might be useful at times, we already use
-GIT_CONFIG environment for a different purpose, so even if such a
-feature were desirable, the name is already taken, and you'd want to
-hunt for another one.  Also, I do not think I'll take this patch if
-the justification were solely the above, as it is a solved problem,
-together with the use of GIT_CONFIG_NOSYSTEM and GIT_ATTR_NOSYSTEM.
+Thanks for contributing.  That certainly seems like a good goal. :)
 
-Tests of a software that depends on git, and perhaps other things,
-will be affected in things under the testing user's home directory,
-and not just ~/.gitconfig file.  Providing stable environment to run
-in to your tests is a useful thing to do, but it is not a viable or
-a particularly smart strategy for doing so to tweak each and every
-software that your software may depend on, and your software itself,
-with a custom change like this patch.
+[...]
+> Subject: commit:fix use of uninitialized value [...] in server log
+>
+> This change fix the message about uninitialized value when trying to
+> access undefined hash indexes.
+>
+> The error message fixed:
+> Use of uninitialized value $params{"action"} in string eq at gitweb.cgi
+> line 1377
 
-You can prepare a pretend-home directory for the use of your tests
-and point the environment variable $HOME to it while running your
-tests.  See how we do this in our test suite for inspiration---it
-all happens in t/test-lib.sh, I think.
+Some nitpicks about the commit message (see
+Documentation/SubmittingPatches "Describe your changes well" for more on
+this subject):
 
-Thanks.
+- the subject line should start with the subsystem being improved, a
+  colon, and a space.  Here, that subsystem is gitweb.
 
+- focus on describing what improvement the patch intends to make.  The
+  description should be in the imperative mood, as though ordering the
+  codebase to improve.
 
+- try to cover what a person trying to understand whether to apply
+  this patch would want to know beyond what is already in the patch
+  itself.  What user-facing behavior change does the patch make?  How
+  was the problem discovered?  What downsides are there, if any?
 
+I think that would mean something like
+
+	gitweb: check whether query params are defined before use
+
+	In normal use, gitweb spams the web server error log:
+
+	  Use of uninitialized value $params{"action"} in string eq at gitweb.cgi line 1377
+
+	The 'action' parameter is optional so this is not warning about
+	anything meaningful. Check whether the parameter is defined
+	before using it to avoid the warning.
+
+	Signed-off-by: ...
+
+> Add myself as warning fix author.
+> 
+> Signed-off-by: Raphaël Gertz <git@rapsys.eu>
+> ---
+[...]
+>  gitweb/README      | 3 +++
+>  gitweb/gitweb.perl | 4 ++--
+>  2 files changed, 5 insertions(+), 2 deletions(-)
+> 
+> diff --git a/gitweb/README b/gitweb/README
+> index 471dcfb691b..8964478a3fc 100644
+> --- a/gitweb/README
+> +++ b/gitweb/README
+> @@ -66,5 +66,8 @@ AUTHORS
+>  Originally written by:
+>    Kay Sievers <kay.sievers@vrfy.org>
+>  
+> +Perl warning fix:
+> +  Raphaël Gertz <git@rapsys.eu>
+
+Please don't.  A contributor list can be obtained using "git shortlog
+-n -s -- gitweb".  A second changelog would fall out of sync with
+that.
+
+[...]
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -1420,7 +1420,7 @@ sub href {
+>  
+>  		# since we destructively absorb parameters, we keep this
+>  		# boolean that remembers if we're handling a snapshot
+> -		my $is_snapshot = $params{'action'} eq 'snapshot';
+> +		my $is_snapshot = defined $params{'action'} && $params{'action'} eq 'snapshot';
+
+nit: long line
+
+Other parameters like 'project' similarly use a defined check like
+this, so it's consistent.  Good.
+
+>  
+>  		# Summary just uses the project path URL, any other action is
+>  		# added to the URL
+> 		if (defined $params{'action'}) {
+
+optional: should we reuse this "if"?  That is, something like
+
+		my $is_snapshot = 0;
+
+		if (defined $params{'action'}) {
+			$is_snapshot = $params{'action'} eq 'snapshot';
+			$href .= ...
+
+[...]
+> @@ -6012,7 +6012,7 @@ sub git_history_body {
+>  		      $cgi->a({-href => href(action=>$ftype, hash_base=>$commit, file_name=>$file_name)}, $ftype) . " | " .
+>  		      $cgi->a({-href => href(action=>"commitdiff", hash=>$commit)}, "commitdiff");
+>  
+> -		if ($ftype eq 'blob') {
+> +		if (defined $ftype && $ftype eq 'blob') {
+
+What is this part about?  The commit message doesn't describe it.
+
+>  			print " | " .
+>  			      $cgi->a({-href => href(action=>"blob_plain", hash_base=>$commit, file_name=>$file_name)}, "raw");
+>  
+> 
+
+Thanks and hope that helps,
+Jonathan
