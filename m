@@ -2,149 +2,212 @@ Return-Path: <SRS0=OyOp=6K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+X-Spam-Status: No, score=-9.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 74BDFC54FCB
-	for <git@archiver.kernel.org>; Sun, 26 Apr 2020 17:05:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E2D5BC54FCB
+	for <git@archiver.kernel.org>; Sun, 26 Apr 2020 17:27:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4D94D206DD
-	for <git@archiver.kernel.org>; Sun, 26 Apr 2020 17:05:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A98612071C
+	for <git@archiver.kernel.org>; Sun, 26 Apr 2020 17:27:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="IMvV5NH7"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="agj+Rtxl"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726188AbgDZRFL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 26 Apr 2020 13:05:11 -0400
-Received: from mout.web.de ([212.227.15.14]:38597 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726143AbgDZRFL (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 Apr 2020 13:05:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1587920708;
-        bh=Y0crcdbGgCTDBucYjgjdvvHzuW1R5b/yL4/x1/WxZNw=;
-        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=IMvV5NH7mogl+4RqNpa7eXFvvXR9Nx81qCcqwmHJPa7xACzSn5PZLlVuWAsVDPEZ9
-         td2lkHIRss0wcVr8K5ElToDXqL+ejnMevsRRSUlO4UeFpyeEjzwRaTPK30EfR85kr4
-         GPU9wZGt9G2rQHYRgrjcMp7PfaTGF8LkGwJCIkV4=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb001
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0LlWVj-1isaLj2piZ-00bHsz; Sun, 26
- Apr 2020 19:05:08 +0200
-Date:   Sun, 26 Apr 2020 19:05:08 +0200
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Carlo Marcelo Arenas =?iso-8859-1?Q?Bel=F3n?= 
-        <carenas@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2] macos: do let the build find the gettext
- headers/libraries/msgfmt
-Message-ID: <20200426170508.6uaexvcmorj2ntv3@tb-raspi4>
-References: <pull.616.git.1587628367528.gitgitgadget@gmail.com>
- <pull.616.v2.git.1587819266388.gitgitgadget@gmail.com>
+        id S1726163AbgDZR1M (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 26 Apr 2020 13:27:12 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:37680 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725976AbgDZR1M (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 26 Apr 2020 13:27:12 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id CDA536042C;
+        Sun, 26 Apr 2020 17:27:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1587922031;
+        bh=dwmxgYuW0773b43XvoJ/9c/u4juVokrvOk28i9oA5tI=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
+         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
+         In-Reply-To:References:Content-Type:Content-Disposition;
+        b=agj+Rtxlie7REvi/RTk5pqp8HhS2tpJuCys69lYn6A/taV6XqAfES2QikA6YnLLHe
+         YEJYyTO7ieeqXYx1zWLo9RYG3Hbf0ISlcHGFfBHiBIuZY3A8uZ6dUAKq3/RNaakzax
+         7vXuLpdpQFSj94udz/gc5qDtek+C63BBUYZvpeYo5/vJYD4LaQD9ZMCyryLaQC8I0p
+         w3rY9nxxHlnZ1zqywhiHsfPwtTzxchIL1fjujDcumPebuuLFGrYkh7LbAhGdYRNQCV
+         2fnmkSYk0xnVttqYokYjwD0BX/DFFPaR69gejCcw9edUylNUUkNh4NImFFb2TZd8bV
+         5jEJRXHovyks7k/t97X48JgcX4kvw1HdbD2UgA26XS7eGv5MsrY/KypxgGl4lHNZWe
+         b4bD1ZC+LiJqOv9jRGInwV5KpHkoT9CeSObNEpFWBW98RgJ2olzr0ff2dt7uFJK6Zr
+         bTXNGNo/Pbhwks7IrCINxvxKueirHHBzRv0YmdmPgADex6cK+tx
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     <git@vger.kernel.org>
+Cc:     Jeff King <peff@peff.net>, Ilya Tretyakov <it@it3xl.ru>,
+        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v4] credential: fix matching URLs with multiple levels in path
+Date:   Sun, 26 Apr 2020 17:26:59 +0000
+Message-Id: <20200426172659.118503-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.26.1.301.g55bc3eb7cb9
+In-Reply-To: <20200421225837.GB3515235@coredump.intra.peff.net>
+References: <20200421225837.GB3515235@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <pull.616.v2.git.1587819266388.gitgitgadget@gmail.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-Provags-ID: V03:K1:GPf7yVgfBgR3PRA0WdVTyO7LkeD3l83A+HT8rokv1Jbi9NnhwOb
- pdLg8kC+hKzyLr2mnFfQzByEw8LPJsV3xgurD8UL4NdxbcJo1r3/2/KTBim8cED+P5+Jlzx
- TfOsw4wNFUBD3mVzYlgTb3nmLKQjaAQHu49j11SZ71u29BGXJMDEDgNbNJjDoCKAXgpmB8k
- wtuklkl75JnXLckanbxyg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:K9sx49RwTQM=:K4izR/HhRXxtEAE81+JGQJ
- w+nYQuHIVftgkFGqaIVGqLVCLXB3VhJPFBtfAZmRk0TrMSoyikfEbp573nJc+AlGn7NIfkju0
- jhr7tsgCqvInFGrQr0A3j65AZW1AQMdqk61Oy+lz4B5gHLZU3dC2kBp4o4pSS65/0uOtjQpk3
- Qi2kRf/BVx69jd6FnDe0NIFjhbi82cjmUZXYcgNO6aDMljHC370wPIlP2iCx7ojsdgECiz2Yk
- XSKqYwUAncDsa8Om3fcN/luu0axdGY1BwSW19nduYbOVJtLiOTh7kGsoARohj6bd2Q27ie1dY
- mLbhBlpFxhOx90hrII+U89H121f9tChFMoHhaRxrY7umHQHH2vXHF6xUMoXo8k6mMYsmz26iV
- Yrb0Tfaewjw0DzjJugxRDNldsfCtpgqMemZKoe2nZu8YW5I5ix/mYg0jGmQnfi+7QvHenFt03
- l2zY9quz4nH8R8MlScoMs5p5aHX+e3zPwSy1zqugbxBWVwiKwj+h0FoUiqsHJPcgI4GlVrPPK
- utcpG0Y9o52U2cHQbsuF5nQw+38fCwItmRXGA7G/1NKsNK+BcWtVnqv9QsxWhD10uZr80igOy
- EUYdN6WJA7ui53ptCYH36xFoZduSKrMx7qt+2t61fvhK7fy5B7bEpLuy0pzR3yhbTMFqJDrlN
- SPIyflGyjcK7YX4w1HtPu2fG/jj+idekIUllEncOYxNPUNMCq/0mv1+d/DDZQSnry6YdYpnuq
- Qf8JsO8199SRl06olDKF8DGebz06IZ3NFhjicfMnIHEqL65DEue7K+l9+0gsZgo9EnGSxCTOs
- BCIDTHmVTsffx2lvUKR/1yKOVJTqeyOQof/wsBw8PILYsniHGIDWiHPcyb+UNjqJDqx4C361y
- YNP0qH930q8LPOIWDFHCFXHkTtJC40jibDN+o5f4o79GZ94oRlJXN/SDhWIcHoQ+QNSSeqDBh
- /ZPYmwBAkcPyP0x01YY4HGdDl1Bc5kOA6feIrGI+LBhAWHKLIVnMzteZDmB71HKUoHv/L7qld
- 9pHWiKmvqKoQb5UGTRuc0G9HZxu5tzZvsr329rTte0CACED7mldLQ5aNDdVWg3OvL5gouam6k
- tG3nEbKkovA+EItW1uDrJCVrvFaQtPUePggOfoHSPQWgSTHe1qNlrmcOGZvGN66jwm/xyGq71
- Msr+Uuo+Y8CVQoYl5fZUfhIQz5FRWHBBRkGupmqkIAf4GUJec6tZwR73vJeRG92jdkMzCyeiN
- Z0G2zs6PUX2UY+lDA
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Apr 25, 2020 at 12:54:26PM +0000, Johannes Schindelin via GitGitGa=
-dget wrote:
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> Apparently a recent Homebrew update now installs `gettext` into a
-> subdirectory under /usr/local/, requiring the CFLAGS/LDFLAGS to list
-> explicit directories _even_ when asking to force-link the `gettext`
-> package.
->
-> Likewise, the `msgfmt` tool is no longer in the `PATH`.
->
-> While it is unclear which change is responsible for this breakage (that
-> most notably only occurs on CI build agents that updated very recently),
-> https://github.com/Homebrew/homebrew-core/pull/53489 should fix it.
->
-> Nevertheless, let's work around this issue, as there are still quite a
-> few build agents out there that need some help in this regard: we
-> explicitly do not call `brew update` in our CI/PR builds anymore.
->
-> Helped-by: Carlo Marcelo Arenas Bel=F3n <carenas@gmail.com>
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+46fd7b3900 ("credential: allow wildcard patterns when matching config",
+2020-02-20) introduced support for matching credential helpers using
+urlmatch.  In doing so, it introduced code to percent-encode the paths
+we get from the credential helper so that they could be effectively
+matched by the urlmatch code.
 
-It seems as if things are happening fast in the brew-business.
-After debugging (on a local box) and travis-ing (remote) I may have a sugg=
-estion
-for a better commit-message - I can probably send that out as a patch late=
-r today.
-What do you think ?
+Unfortunately, that code had a bug: it percent-encoded the slashes in
+the path, resulting in any URL path that contained multiple levels
+(i.e., a directory component) not matching.
 
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-MacOs/brew: Let the build find gettext headers/libraries/msgfmt
+We are currently the only caller of the percent-encoding code and could
+simply change it not to encode slashes.  However, we still want to
+encode slashes in the username component, so we need to have both
+behaviors available.
 
-Apparently a recent Homebrew update now installs `gettext` into the
-subdirectory /usr/local/opt/gettext/[lib/include].
+So instead, let's add a flag to control encoding slashes, which is the
+behavior we want here, and use it when calling the code in this case.
+Add a test for credential helper URLs using multiple slashes in the
+path, which our test suite previously lacked, as well as one ensuring
+that we handle usernames with slashes gracefully.
 
-Sometimes the ci job succeeds:
- brew link --force gettext
- Linking /usr/local/Cellar/gettext/0.20.1... 179 symlinks created
+Reported-by: Ilya Tretyakov <it@it3xl.ru>
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+Changes from v3:
+* Don't delete the first character of the summary.
 
-And sometimes installing the package "gettext" with force-link fails:
- brew link --force gettext
- Warning: Refusing to link macOS provided/shadowed software: gettext
- If you need to have gettext first in your PATH run:
-  echo 'export PATH=3D"/usr/local/opt/gettext/bin:$PATH"' >> ~/.bash_profi=
-le
+Changes from v2:
+* Invert the sense of the flag.
+* Shorten the flag name.
 
-(And the is not the final word either, since MacOs itself says:
- The default interactive shell is now zsh.)
+Changes from v1:
+* Continue to encode slashes in usernames.
+* Add a test for encoding slashes in usernames.
+* Hoist existing tests near the other percent-encoding tests.
+* Update commit message.
+* Remove debugging information.
 
-Anyway, The latter requires CFLAGS to include /usr/local/opt/gettext/inclu=
-de
-and LDFLAGS to include /usr/local/opt/gettext/lib.
+ credential.c           |  4 ++--
+ strbuf.c               |  8 +++++---
+ strbuf.h               |  7 ++++++-
+ t/t0300-credentials.sh | 30 ++++++++++++++++++++++++++++++
+ 4 files changed, 43 insertions(+), 6 deletions(-)
 
-Likewise, the `msgfmt` tool is no longer in the `PATH`.
-
-While it is unclear which change is responsible for this breakage (that
-most notably only occurs on CI build agents that updated very recently),
-https://github.com/Homebrew/homebrew-core/pull/53489 has fixed it.
-
-Nevertheless, let's work around this issue, as there are still quite a
-few build agents out there that need some help in this regard: we
-explicitly do not call `brew update` in our CI/PR builds anymore.
-
-Helped-by: Carlo Marcelo Arenas Bel=F3n <carenas@gmail.com>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+diff --git a/credential.c b/credential.c
+index 108d9e183a..f5327d3d9e 100644
+--- a/credential.c
++++ b/credential.c
+@@ -136,14 +136,14 @@ static void credential_format(struct credential *c, struct strbuf *out)
+ 		return;
+ 	strbuf_addf(out, "%s://", c->protocol);
+ 	if (c->username && *c->username) {
+-		strbuf_add_percentencode(out, c->username);
++		strbuf_add_percentencode(out, c->username, STRBUF_ENCODE_SLASH);
+ 		strbuf_addch(out, '@');
+ 	}
+ 	if (c->host)
+ 		strbuf_addstr(out, c->host);
+ 	if (c->path) {
+ 		strbuf_addch(out, '/');
+-		strbuf_add_percentencode(out, c->path);
++		strbuf_add_percentencode(out, c->path, 0);
+ 	}
+ }
+ 
+diff --git a/strbuf.c b/strbuf.c
+index bb0065ccaf..51c83aae2d 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -479,15 +479,17 @@ void strbuf_addbuf_percentquote(struct strbuf *dst, const struct strbuf *src)
+ 	}
+ }
+ 
+-#define URL_UNSAFE_CHARS " <>\"%{}|\\^`:/?#[]@!$&'()*+,;="
++#define URL_UNSAFE_CHARS " <>\"%{}|\\^`:?#[]@!$&'()*+,;="
+ 
+-void strbuf_add_percentencode(struct strbuf *dst, const char *src)
++void strbuf_add_percentencode(struct strbuf *dst, const char *src, int flags)
+ {
+ 	size_t i, len = strlen(src);
+ 
+ 	for (i = 0; i < len; i++) {
+ 		unsigned char ch = src[i];
+-		if (ch <= 0x1F || ch >= 0x7F || strchr(URL_UNSAFE_CHARS, ch))
++		if (ch <= 0x1F || ch >= 0x7F ||
++		    (ch == '/' && (flags & STRBUF_ENCODE_SLASH)) ||
++		    strchr(URL_UNSAFE_CHARS, ch))
+ 			strbuf_addf(dst, "%%%02X", (unsigned char)ch);
+ 		else
+ 			strbuf_addch(dst, ch);
+diff --git a/strbuf.h b/strbuf.h
+index ce8e49c0b2..e524c52e01 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -378,11 +378,16 @@ size_t strbuf_expand_dict_cb(struct strbuf *sb,
+  */
+ void strbuf_addbuf_percentquote(struct strbuf *dst, const struct strbuf *src);
+ 
++#define STRBUF_ENCODE_SLASH 1
++
+ /**
+  * Append the contents of a string to a strbuf, percent-encoding any characters
+  * that are needed to be encoded for a URL.
++ *
++ * If STRBUF_ENCODE_SLASH is set in flags, percent-encode slashes.  Otherwise,
++ * slashes are not percent-encoded.
+  */
+-void strbuf_add_percentencode(struct strbuf *dst, const char *src);
++void strbuf_add_percentencode(struct strbuf *dst, const char *src, int flags);
+ 
+ /**
+  * Append the given byte size as a human-readable string (i.e. 12.23 KiB,
+diff --git a/t/t0300-credentials.sh b/t/t0300-credentials.sh
+index 5555a1524f..87267a7aac 100755
+--- a/t/t0300-credentials.sh
++++ b/t/t0300-credentials.sh
+@@ -366,6 +366,36 @@ test_expect_success 'match percent-encoded values' '
+ 	EOF
+ '
+ 
++test_expect_success 'match percent-encoded values in username' '
++	test_config credential.https://user%2fname@example.com/foo/bar.git.helper "$HELPER" &&
++	check fill <<-\EOF
++	url=https://user%2fname@example.com/foo/bar.git
++	--
++	protocol=https
++	host=example.com
++	username=foo
++	password=bar
++	--
++	EOF
++'
++
++test_expect_success 'fetch with multiple path components' '
++	test_unconfig credential.helper &&
++	test_config credential.https://example.com/foo/repo.git.helper "verbatim foo bar" &&
++	check fill <<-\EOF
++	url=https://example.com/foo/repo.git
++	--
++	protocol=https
++	host=example.com
++	username=foo
++	password=bar
++	--
++	verbatim: get
++	verbatim: protocol=https
++	verbatim: host=example.com
++	EOF
++'
++
+ test_expect_success 'pull username from config' '
+ 	test_config credential.https://example.com.username foo &&
+ 	check fill <<-\EOF
