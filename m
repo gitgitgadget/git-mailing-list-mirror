@@ -2,125 +2,145 @@ Return-Path: <SRS0=OyOp=6K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-14.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DFDFEC54FCB
-	for <git@archiver.kernel.org>; Sun, 26 Apr 2020 20:08:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CB0E3C54FCB
+	for <git@archiver.kernel.org>; Sun, 26 Apr 2020 20:09:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BC1CA206A2
-	for <git@archiver.kernel.org>; Sun, 26 Apr 2020 20:08:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A96F12075B
+	for <git@archiver.kernel.org>; Sun, 26 Apr 2020 20:09:41 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="h4fvwy8y"
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="bS0gG3Zc"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726216AbgDZUIv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 26 Apr 2020 16:08:51 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:37700 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726171AbgDZUIv (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 26 Apr 2020 16:08:51 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 2857D6042C;
-        Sun, 26 Apr 2020 20:08:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1587931730;
-        bh=76vER3/Kn3Pn/qmeh3OwHqHs1xWNsO/0P3YyfEQKQog=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=h4fvwy8ySTSNeB1MzWGlqyHpTrezq9EmwgoFkFJLwJ1FDYKF8Abm8/VEElg/0/t9D
-         8yJQvos3qL27mbJ1U1ZJzFyJuMIdGTonmyHMDVxP/g4xmpkab5xczrCAJKA6exW+Tq
-         sFh3cytB5vbeZHFNlNiyJ4dLXxbKfuNBhVb+wENYiuguUDph1V3E20OqMKVGYxwge+
-         IRhDUR6XHZhjnsLi3YecejBAcBTJEpLqqoUZi0SZuooji39siPpMKR5mZguzKMEmYr
-         83N/Q6f2b5x43S7rEMimMF40DqLjLVau8enGZ44QlOBaTkEMNw/99+c0SDcZGy46nK
-         AdMzJh24xpkctaJWb0PkRFjj5JQd4bT2tyO7TQ9mCnhtgsWkBtpH0ZSazydmZvRDp7
-         Dz6zmvvZeVUy2slDl7VZ8ROWKmgwBPZ+pPIzz0irgPnNV2w3hIi4t5t2IKknxQPz5X
-         JDYNdfpptfxPzZBGDeHoKr+jSv1dK0lloh9aXz+cdW6uidlmpep
-Date:   Sun, 26 Apr 2020 20:08:45 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Mateusz =?utf-8?Q?Nowoty=C5=84ski?= <maxmati4@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        mattr94@gmail.com, bwilliams.eng@gmail.com
-Subject: Re: [PATCH] config: use GIT_CONFIG in git config sequence
-Message-ID: <20200426200845.GE6421@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Mateusz =?utf-8?Q?Nowoty=C5=84ski?= <maxmati4@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        mattr94@gmail.com, bwilliams.eng@gmail.com
-References: <20200425235716.1822560-1-maxmati4@gmail.com>
- <xmqq5zdn9k3r.fsf@gitster.c.googlers.com>
- <5c1005a7-273e-fab0-0d0d-78bd0d3d13f6@gmail.com>
+        id S1726202AbgDZUJk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 26 Apr 2020 16:09:40 -0400
+Received: from mout.web.de ([212.227.15.14]:41093 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726171AbgDZUJk (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Apr 2020 16:09:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1587931777;
+        bh=O8fwJukH6uhDJqO8vAzT5isbz7J60k3bgRjxuwbrTV8=;
+        h=X-UI-Sender-Class:From:To:Cc:Subject:Date:In-Reply-To:References;
+        b=bS0gG3ZcF6szpzwhQQF5aDOYhm+rnh0J14rVasxLLhUIpb7ZVfwXH4cknOjAEp3EM
+         Inwg/u3viRge5u1CPxgBXHaVbegVzN0niS4qlxAYI2qocKg0rIREVdwK3lnDeDe5vE
+         6sN9lTJUBFzttiAnS+PbddXbDDW+1JO+jmh95nSs=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from susi.lan ([195.198.252.176]) by smtp.web.de (mrweb002
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MFLQi-1jNHpU3Vmm-00EOqn; Sun, 26
+ Apr 2020 22:09:36 +0200
+From:   tboegi@web.de
+To:     git@vger.kernel.org, johannes.schindelin@gmx.de,
+        szeder.dev@gmail.com, sunshine@sunshineco.com, carenas@gmail.com
+Cc:     =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
+Subject: [PATCH v3 1/1] MacOs/brew: Let the build find gettext headers/libraries/msgfmt
+Date:   Sun, 26 Apr 2020 22:09:32 +0200
+Message-Id: <20200426200932.3769-1-tboegi@web.de>
+X-Mailer: git-send-email 2.26.1.107.gefe3874640
+In-Reply-To: <pull.616.v2.git.1587819266388.gitgitgadget@gmail.com>
+References: <pull.616.v2.git.1587819266388.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="Lb0e7rgc7IsuDeGj"
-Content-Disposition: inline
-In-Reply-To: <5c1005a7-273e-fab0-0d0d-78bd0d3d13f6@gmail.com>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.5.0-2-amd64)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:HciHB8r7HaPcPSrpyGQoSIKeJzfh2h8y46kplw20TDKayuXW09k
+ bDPKLBKh7Da0GOxu+1ZBpw3i8p6A2+gxhN51q37Irrm/XkYFO4KNbECZeueKrxEtil6jrKq
+ Zl1hCqvsHBU0FH3V95Zp6eWJIwPtOjX/7+9yyl1w+hXAudVNzbKEkCrE0CK5iOdpSQF9ILn
+ d2zzhkzPp+IhjzArEdSXw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:y1r25owSN5c=:q1YVPGr78KacNoh6G4fNFD
+ P93UXm6u16RJIOYd5Vaka+LLuW4bywH8pHp79laWz/YY7t9Z+N3RmddVyeAbAIta2h8LfKAGu
+ SOlAvE7Lr2zuvnTlliRZj36CZLR/awUnttHj2Fm/ujMuQuV6knggpQaTmVivH7xHx2nxir3cW
+ eiL1LN7Txu3rJ+qdsU5MMM6EK7g88R2omqjc2CqDNpakT0/HZT0FA5XNGB1JZc3Nksieie/rS
+ 1iWpQ8Yl+YjIrySUei6kyZ/paoIalpE73imGGclEuBjsBjHWmUzZ8m/6KJ48SF0Nylc6TCHSQ
+ ZZq2GE89lafqKM6bS+ha10qaKyPAgo1yge8bEcLcZAozJSLvYL36qXmsFrXp2joYFNmmn2aNq
+ Cri1KivHszIzwVeWd5Dq6h5wu8nbRDPzZERhBhOsvxsZ2b8OEZd410hb3T2JaoBI1npVafF8s
+ spFFNWNu86GlDOcwi08NzDFCSwJBZirPNKn7lwYNX0cO8kzrxMWCpfsHJOBfdiqv80YUblINA
+ 3DA8GBkTHxGzNdWWfuCkWsFle0BS3jV8KESW5QKuy1YWuT+8neDRQZE9Gud7Gx5DL2yoVXArd
+ B35v3yM84wPh9jQPHn/7V7RZjWGkFRHIX35PBQJUZvsJpRJm/tA95wRVw8TH3jqD5yeThYDyh
+ PZs4FHui0wC6IKwnYZJfEG9/oOFPICikGPfxN2kjD8HsWwX32rdde0Vtjph0UZrbf7rYBzjro
+ ADJHwJJprixmk1ykSgKfmd4qzaZjddmFUGM8dvKWxK7OWjHR3dvZC+5ZznzzAL7o0LFrkw6s7
+ pWAggoc4coClVkNc2FFcTtjpL7ApHdU7t8FyaLAfclzIVjkIZxWIM/prO9ZjjtrlSU5CBayYi
+ FBI7/ZZh/yJ2H+1zTpxvObvaRdm8mLFZOtH30V2A4InWTv2z8MSn8Dl/ug+AHGoqsr8xDeYgx
+ 8Lg8KKXIeG90ucMzHdeKBWsEvVH7XQU/tlvOWh6d0rsOZ1ZqeJY07z1hXAi1SGGNkTN8Pq134
+ gKzUEZVpFsE67jB8+uWlht/TJ36bLvjRokq7kfUZrgoGvINYiCrRwrHBPb9Ry9qsgxSVYS0d1
+ pnU25ARGCjkFRAhfuFcSHmeBVidNXUNp3EiLZhB9blAzl2NSWcy21HLP4vqxMykVzlwriYa7k
+ coptAMEhSNdBwvrmaO+MjkgRS24ec9BvgLoEu79tE4xKLfuCYCocAY4ONJ5Nm8A/D2McCfHIs
+ iUYRSKzRZFsWiwutL
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
---Lb0e7rgc7IsuDeGj
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Apparently a recent Homebrew update now installs `gettext` into the
+subdirectory /usr/local/opt/gettext/[lib/include].
 
-On 2020-04-26 at 19:32:05, Mateusz Nowoty=C5=84ski wrote:
-> On Sat, Apr 25, 2020 at 05:16:56PM -0700, Junio C Hamano wrote:
-> > You can prepare a pretend-home directory for the use of your tests
-> > and point the environment variable $HOME to it while running your
-> > tests.  See how we do this in our test suite for inspiration---it
-> > all happens in t/test-lib.sh, I think.
->=20
-> This is what we do currently but the problem with this solution is that
-> it breaks other software that also uses HOME as base path for their
-> data. For example asdf version manager.
+Sometimes the ci job succeeds:
+ brew link --force gettext
+ Linking /usr/local/Cellar/gettext/0.20.1... 179 symlinks created
 
-I know nothing about the asdf version manager, but if you're relying on
-it for programs, those programs should end up in PATH, and when invoked
-appropriately in those locations, those programs should just work,
-regardless of what $HOME is set to.  If they don't, that would be a
-defect in asdf, since the Unix expectation is that programs in $PATH
-should generally function without regard to the setting of $HOME.  From
-my cursory poking around at the repo, it looks like it should do this
-just fine.
+And sometimes installing the package "gettext" with force-link fails:
+ brew link --force gettext
+ Warning: Refusing to link macOS provided/shadowed software: gettext
+ If you need to have gettext first in your PATH run:
+  echo 'export PATH=3D"/usr/local/opt/gettext/bin:$PATH"' >> ~/.bash_profi=
+le
 
-So you can set $HOME to a temporary directory and still use asdf as long
-as your don't reset $PATH.  Or, if you want to specifically load asdf
-programs first, you could do something like this:
+(And the is not the final word either, since MacOs itself says:
+ The default interactive shell is now zsh.)
 
-  #!/bin/sh
+Anyway, The latter requires CFLAGS to include /usr/local/opt/gettext/inclu=
+de
+and LDFLAGS to include /usr/local/opt/gettext/lib.
 
-  . "$HOME/asdf/asdf.sh"
-  export HOME=3D$(mktemp -d)
-  # Run tests here.
+Likewise, the `msgfmt` tool is no longer in the `PATH`.
 
-Regardless of your tooling, you definitely want to reset $HOME in almost
-every nontrivial shell testsuite, since many users have configuration
-files or data storage that you wouldn't want to use.  For example, if
-you generate a new GnuPG key on every run, the user won't appreciate it
-if you import it as one of their private keys.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+While it is unclear which change is responsible for this breakage (that
+most notably only occurs on CI build agents that updated very recently),
+https://github.com/Homebrew/homebrew-core/pull/53489 has fixed it.
 
---Lb0e7rgc7IsuDeGj
-Content-Type: application/pgp-signature; name="signature.asc"
+Nevertheless, let's work around this issue, as there are still quite a
+few build agents out there that need some help in this regard: we
+explicitly do not call `brew update` in our CI/PR builds anymore.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
+Helped-by: Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+=2D--
+ Changes since V2:
+   Updated the commit message
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXqXqTQAKCRB8DEliiIei
-gRaPAQDHGCfivMkty24HkEbYcEtAUHKzjFey3IY3WlXmUFNCywEAv8RPFfFCeVRK
-5swaj4BV9P7Atyx/Se2Efl6Qtc38FwQ=
-=gd3y
------END PGP SIGNATURE-----
+config.mak.uname | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
---Lb0e7rgc7IsuDeGj--
+diff --git a/config.mak.uname b/config.mak.uname
+index 0ab8e00938..1ea16e8928 100644
+=2D-- a/config.mak.uname
++++ b/config.mak.uname
+@@ -133,8 +133,17 @@ ifeq ($(uname_S),Darwin)
+ 	HAVE_BSD_SYSCTL =3D YesPlease
+ 	FREAD_READS_DIRECTORIES =3D UnfortunatelyYes
+ 	HAVE_NS_GET_EXECUTABLE_PATH =3D YesPlease
+-	BASIC_CFLAGS +=3D -I/usr/local/include
+-	BASIC_LDFLAGS +=3D -L/usr/local/lib
++
++	# Workaround for `gettext` being keg-only and not even being linked via
++	# `brew link --force gettext`, should be obsolete as of
++	# https://github.com/Homebrew/homebrew-core/pull/53489
++	ifeq ($(shell test -d /usr/local/opt/gettext/ && echo y),y)
++		BASIC_CFLAGS +=3D -I/usr/local/include -I/usr/local/opt/gettext/include
++		BASIC_LDFLAGS +=3D -L/usr/local/lib -L/usr/local/opt/gettext/lib
++		ifeq ($(shell test -x /usr/local/opt/gettext/bin/msgfmt && echo y),y)
++			MSGFMT =3D /usr/local/opt/gettext/bin/msgfmt
++		endif
++	endif
+ endif
+ ifeq ($(uname_S),SunOS)
+ 	NEEDS_SOCKET =3D YesPlease
+=2D-
+2.26.1.107.gefe3874640
+
