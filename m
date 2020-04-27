@@ -2,112 +2,122 @@ Return-Path: <SRS0=mOGp=6L=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 97522C4CECC
-	for <git@archiver.kernel.org>; Mon, 27 Apr 2020 21:03:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5BFC2C4CECD
+	for <git@archiver.kernel.org>; Mon, 27 Apr 2020 21:10:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 754742074F
-	for <git@archiver.kernel.org>; Mon, 27 Apr 2020 21:03:18 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VAuwm3iG"
+	by mail.kernel.org (Postfix) with ESMTP id 496A22074F
+	for <git@archiver.kernel.org>; Mon, 27 Apr 2020 21:10:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726856AbgD0VDR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Apr 2020 17:03:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39824 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726853AbgD0VDP (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 27 Apr 2020 17:03:15 -0400
-Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CB0DC0610D5
-        for <git@vger.kernel.org>; Mon, 27 Apr 2020 14:03:14 -0700 (PDT)
-Received: by mail-pj1-x1042.google.com with SMTP id mq3so157611pjb.1
-        for <git@vger.kernel.org>; Mon, 27 Apr 2020 14:03:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=jQMm7D2jwPtLSe4lmIDkLlnCcE8OgXTbRHiPJWkD+34=;
-        b=VAuwm3iGW+2zikZEJaM1H+pChBjN32V3aqpE2vnhpka8PTeW1lk8ajeHVS1RK6pMvq
-         QNg/5/0pxdm62SIknG8X96FBflssrcDIvqMb1OGW0Y5SzH53V73N0SK24zfaQUZhG9rd
-         56SJXYl1lIX8jT7YbnK1RaiXegdAMsfXSJXx0jy3TQXkzR2DZ6BEO9py/jryu04fx2Lj
-         0XXW4UK2nOBDSZJqCXSXPGaD8/5hZaia65CgjSMXSPv50EAGZqHj0VVPX76M4jwuooYm
-         2nXRqhYJyd8z4aOPeEThGS8V9YeHHzNPveMF2EqdQhJBtZx2XVyBwipTBYttWRoiDZJE
-         R/rQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=jQMm7D2jwPtLSe4lmIDkLlnCcE8OgXTbRHiPJWkD+34=;
-        b=cq+nuUjz9xh+nJi2wPtunMwgRYKdXBVB9ctxOKYX+DqW4H1rfAlFIEb+tt9OP6RfhS
-         x7MdL3nKtJbN9oazP2k8DFgwrJm1sbxqb6AZlVLvDYB7R9ZODngqI6hV9BaDZ8ZeANdQ
-         WNU+KW8Sqq3bZpxyrGzit4HSKP3Rnbz/PHpk3ZUTLctKEFuWHgVRWDnCdp1pOMFt67zh
-         ZnZ6D+xNZkFHH/8K8IBB/8RV+RKfQi2ZF40V13mg1RjC0g20pSRALsYQzFbzR6H8BNfO
-         +FD3IfWHQuDl6WWz4PhKp6TanhtBPvJqYD4uFnaDDQZytJJ60uUNP8M2GnOrAMyJcAv6
-         tE7Q==
-X-Gm-Message-State: AGi0PuYfUw9N0FCOAbwfaQWjBWS8kYAVATubXZc/pNPHHmPsVcU6FVoX
-        xhICp7DM6DRijSjFKfuejvfmsLlv
-X-Google-Smtp-Source: APiQypKcneUsdJ4BpCZSnFb508Pgm0qdupK9KymuYVHF3coq05BtXushhWD3rg6wM+ubzC3819RHRw==
-X-Received: by 2002:a17:902:c382:: with SMTP id g2mr22491054plg.290.1588021394011;
-        Mon, 27 Apr 2020 14:03:14 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
-        by smtp.gmail.com with ESMTPSA id l8sm3481720pga.60.2020.04.27.14.03.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Apr 2020 14:03:13 -0700 (PDT)
-Date:   Mon, 27 Apr 2020 14:03:11 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] bugreport: drop time.h include
-Message-ID: <20200427210311.GB36078@google.com>
-References: <20200425003002.GC17217@google.com>
- <20200427204859.171084-1-emilyshaffer@google.com>
+        id S1726888AbgD0VKO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Apr 2020 17:10:14 -0400
+Received: from cloud.peff.net ([104.130.231.41]:41474 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726285AbgD0VKO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Apr 2020 17:10:14 -0400
+Received: (qmail 16221 invoked by uid 109); 27 Apr 2020 21:10:14 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 27 Apr 2020 21:10:14 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 27989 invoked by uid 111); 27 Apr 2020 21:21:35 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 27 Apr 2020 17:21:35 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 27 Apr 2020 17:10:13 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>,
+        git@vger.kernel.org, dirk@ed4u.de, sunshine@sunshineco.com
+Subject: Re: [PATCH v3] git-credential-store: skip empty lines and comments
+ from store
+Message-ID: <20200427211013.GB1732530@coredump.intra.peff.net>
+References: <20200427084235.60798-1-carenas@gmail.com>
+ <20200427125915.88667-1-carenas@gmail.com>
+ <xmqqftco94wx.fsf@gitster.c.googlers.com>
+ <20200427191858.GB1728884@coredump.intra.peff.net>
+ <xmqqv9lk7j7p.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20200427204859.171084-1-emilyshaffer@google.com>
+In-Reply-To: <xmqqv9lk7j7p.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emily Shaffer wrote:
+On Mon, Apr 27, 2020 at 01:43:38PM -0700, Junio C Hamano wrote:
 
-> As pointed out in
-> https://lore.kernel.org/git/20200425003002.GC17217@google.com,
+> >> These files are not supposed to be viewed or edited without the help
+> >> of the credential helpers.  Do these blank lines and comments even
+> >> survive when a new credential is approved, or do we just overwrite
+> >> and lose them?
+> >
+> > That's a good question. In the older code we do save them, because
+> > credential-store passes through lines which don't match the credential
+> > we're operating on.
+> >
+> > But in Carlo's patch, the immediate "continue" means we wouldn't ever
+> > call "other_cb", which is what does that pass-through.
+> 
+> So, does that mean the patch that started this thread will still help
+> users who wrote custom comments and blank lines in their credential
+> store by letting git-credential-store start up, but leaves a ticking
+> bomb for them to lose these precious comments and blanks once they
+> add a new site, change password, etc., at which point the user realizes
+> that comments and blanks are not supported after all?
 
-This breadcrumb shouldn't be needed, since the rest of the commit
-message already speaks for itself.  We can save the future "git log"
-reader some time by leaing it out.
+Yes, exactly. If I start with:
 
->                                                                we don't
-> need to include time.h explicitly because it is included (and possibly
-> managed for portability) by cache.h. Drop the include.
->
-> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
-> ---
-> Thanks for the observation, Jonathan.
->
->  - Emily
->
->  bugreport.c | 1 -
->  1 file changed, 1 deletion(-)
->
-> diff --git a/bugreport.c b/bugreport.c
-> index 089b939a87..e4a7ed3a23 100644
-> --- a/bugreport.c
-> +++ b/bugreport.c
-> @@ -2,7 +2,6 @@
->  #include "parse-options.h"
->  #include "stdio.h"
->  #include "strbuf.h"
-> -#include "time.h"
+  cat >creds <<\EOF
+  # this is a comment
+  https://user:pass@example.com/
+  EOF
 
-Same applies to stdio.h, I believe.  Forgive my laziness in not being
-exhaustive before.
+then:
 
-Thanks,
-Jonathan
+  echo url=https://other:pass@other.example.com |
+  git credential-store --file=creds store
+
+with v2.26.0 results in:
+
+  https://other:pass@other.example.com
+  # this is a comment
+  https://user:pass@example.com
+
+but applying the patch on top:
+
+  https://other:pass@other.example.com
+  https://user:pass@example.com/
+
+That raises another issue about comments, too: we make no promises about
+where we write new entries. They could be inserted between a comment
+line and one it is meant to annotate (that line could even be moved if
+we reject and then re-approve a credential).
+
+> I think the first patch we need is a (belated) documentation patch,
+> that adds to the existing "STORAGE FORMAT".  We already say "Each
+> credential is stored on its own line as a URL", but we do not say
+> anything about allowing other cruft in the file.  We probably
+> should.  Adding a "comment" feature, if anybody feels like it, is OK
+> and we can loosen the paragraph when that happens.
+
+The more I look into it, the more negative I am on adding such a comment
+feature.
+
+> -- >8 --
+> Subject: credential-store: document the file format a bit more
+
+Yeah, this certainly clarifies things. I suppose one could ask why we'd
+bother documenting the format at all, then, though I do think it could
+be helpful for debugging.
+
+> Reading a malformed credential URL line and silently ignoring it
+> does not mean that we promise to torelate and/or keep empty lines
+> and "# commented" lines forever.
+
+s/torelate/tolerate/
+
+-Peff
