@@ -7,63 +7,63 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A24CC54FCB
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B79CAC4CECD
 	for <git@archiver.kernel.org>; Mon, 27 Apr 2020 20:20:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 619D42087E
+	by mail.kernel.org (Postfix) with ESMTP id 9C4442073C
 	for <git@archiver.kernel.org>; Mon, 27 Apr 2020 20:20:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YmZ44LlI"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AsAK9+5e"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726877AbgD0UUn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Apr 2020 16:20:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33160 "EHLO
+        id S1726869AbgD0UUl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Apr 2020 16:20:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33170 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726827AbgD0UUc (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 27 Apr 2020 16:20:32 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9ED9C0A3BED
-        for <git@vger.kernel.org>; Mon, 27 Apr 2020 13:13:51 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id f13so22016326wrm.13
-        for <git@vger.kernel.org>; Mon, 27 Apr 2020 13:13:51 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1726832AbgD0UUd (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 27 Apr 2020 16:20:33 -0400
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F272CC09B050
+        for <git@vger.kernel.org>; Mon, 27 Apr 2020 13:13:43 -0700 (PDT)
+Received: by mail-wr1-x441.google.com with SMTP id s10so22096407wrr.0
+        for <git@vger.kernel.org>; Mon, 27 Apr 2020 13:13:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=k4QBuZIDKlhGSR6tGTK5vS6Ldbu8D3/3CEEgJa+ScqE=;
-        b=YmZ44LlI5gsBIQZBpjM/2wQBJRj+wbqAmrJh7tOdvGH2hsvLLAI8jz2xgb2/O4IUAA
-         FHtnAqlY9Iu2h+EFwMuSBjfrYJhEx9TuWPXxA7ZSmC5RPBonsopjzjys2NCYn6hj3J3V
-         167loOFc+lG+Zihxv2C0bliA7gVqQogX1dmBNwQ0jhqcMzalc4FEnSEpfqqooLtm2iOH
-         JmsTILGrqH4+0IUhB0TNuGd7VIxB4ZeVuzV6X5F2Y6llMQP6Nh6GOdslV6V35NxTWd50
-         rv1MjFKi/dRUS3+iQXQHACnc3LA4UryPLxdrgtPxYeWCAVAefLJ1rH6/TKfkk0RBbGsF
-         PuPQ==
+        bh=c5jxiwoT9rIsUs25Z1wdbQYxfOfdfVcJvvnS9hg6XKE=;
+        b=AsAK9+5e2phHodi8ioplVjKcXUo+BdYKwyfhTi+GdZhs48M3GtLCOBhQM2LC2bDX8B
+         jwEci2vxfF+zoehANU28SoSUcsleEwD6I/b9iDjDEQTEOjqvyn6jy3Nx3bJMaveNH6NO
+         spxlhtmYC8lQ3PPl8+DoT/U2QiSrWTcgarXDLgz/OdwTFq1mellZM/7UFxICtONVp8uu
+         YJZikTYnzJ8cbxyxe2ZV12xEBfkFKSASjetMPXzxYeHl5loo5sDa0THKpyvrJLrugZfl
+         /wHAHDlmfmVLY60Vu1zWMmX8PKz++uWcAoAKX0a05tHudXqmvpTDoou8tVqmzgggkIdh
+         LTqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=k4QBuZIDKlhGSR6tGTK5vS6Ldbu8D3/3CEEgJa+ScqE=;
-        b=gojWWIdbBMWAKtN2oPak1CezqA31yYVYVIL2MPRXvxinuJPjA3tAezeLV7hydM17gc
-         H6tx8MUex083iTsjaCgsm0ic0VgxtuHUGDy5z0N5T0j4JPWdR0THe7QFZO/oAkPqz+Wk
-         8D7OjK6WQE9RBCo/qGkEjNMcKXWn29ip0RqktPvlj4QMshLSwUwqrZrelOFAlLUxLf2R
-         9p8Ff4XcDisek5ygJcBkViBxUZj5SwQs12NEFxemvaakZ0SO5CbPN6H3A61sTqueOP4K
-         4aVNgpzCrWHa8iSpr7BHlCc8NvZ5on8B9DG2Xw4aCQvYpSFibQ6+M77V5/fmVDD1PiLF
-         rN5Q==
-X-Gm-Message-State: AGi0PubNYZAfHvXh7ZndNha4qTgLip6Ebu000/+BNN/Wh93h15SDLoVS
-        yFtv7PjO2dVrZ9TdEhMb7thMGzsv
-X-Google-Smtp-Source: APiQypJjtn5Y6aU456Z5HJu8ad2d1HU0sQpa1dq5NRIXYyJx5+nPdFu/9p435xoRTgUNnxYyR+pBUA==
-X-Received: by 2002:adf:8363:: with SMTP id 90mr27535506wrd.233.1588018430236;
-        Mon, 27 Apr 2020 13:13:50 -0700 (PDT)
+        bh=c5jxiwoT9rIsUs25Z1wdbQYxfOfdfVcJvvnS9hg6XKE=;
+        b=HSm0DWrGYBfuHOc3iezR9a9ku5lD/89qHJVlC27z6BjgJMiMfF85rMQVLGHK6lTkqK
+         BoBSDK7Dw6Gx1pNIM7EydKh4tJzPWEOMTgyCbSOHfwPGSgRNiUHD+Ie/7wo+BT8zNOgz
+         kqXsnyFuULCdVgC+CIw4mDaIJdNIt3+WCZoys1UzGuuzQeD8qJCOgmAxRtimZxCy0/3w
+         XERqB1MoCKx/g3l3ImIxeu4Jxd87t9lXZZW9eAJRdXiZgU9KSlIlcRD3cGAVofal4yJl
+         /nAQshXozT/9hCFugG9cIrWVmx3Npck7/iR1E0D5On+uDJt6CQd+wbjqaQluVM+FIGuF
+         Ajkw==
+X-Gm-Message-State: AGi0PuZK7bt+V+oNtCjPXenfUN67wbeIa7LNHw8YxANC4cqTr6vGDqz3
+        VEofmNnoJ30aWm1wPZRprWJSEWnP
+X-Google-Smtp-Source: APiQypIhOaFsrpzFu2H9I7h4xXA7g1Z7tZi2ZnwqSffbj56iJrFXcPeuYVF3Zr7jRMKwkY2clTxbJA==
+X-Received: by 2002:adf:c3ca:: with SMTP id d10mr30664497wrg.64.1588018422613;
+        Mon, 27 Apr 2020 13:13:42 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w18sm21703068wrn.55.2020.04.27.13.13.49
+        by smtp.gmail.com with ESMTPSA id n6sm302853wmc.28.2020.04.27.13.13.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Apr 2020 13:13:49 -0700 (PDT)
-Message-Id: <8af67b85e49fe5d24a5958fe7bce77a183f74343.1588018418.git.gitgitgadget@gmail.com>
+        Mon, 27 Apr 2020 13:13:42 -0700 (PDT)
+Message-Id: <bc89bcd9c8c9b33e517a21bbe7c441538e288ebc.1588018418.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.539.v10.git.1588018418.gitgitgadget@gmail.com>
 References: <pull.539.v9.git.1587417295.gitgitgadget@gmail.com>
         <pull.539.v10.git.1588018418.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 27 Apr 2020 20:13:37 +0000
-Subject: [PATCH v10 11/12] Add some reftable testing infrastructure
+Date:   Mon, 27 Apr 2020 20:13:29 +0000
+Subject: [PATCH v10 03/12] create .git/refs in files-backend.c
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,116 +78,48 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-* Add GIT_TEST_REFTABLE environment var to control default ref storage
-
-* Add test_prerequisite REFTABLE. Skip t/t3210-pack-refs.sh for REFTABLE.
+This prepares for supporting the reftable format, which will want
+create its own file system layout in .git
 
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- builtin/clone.c      |  2 +-
- builtin/init-db.c    |  2 +-
- refs.c               | 13 +++++++------
- t/t3210-pack-refs.sh |  6 ++++++
- t/test-lib.sh        |  5 +++++
- 5 files changed, 20 insertions(+), 8 deletions(-)
+ builtin/init-db.c    | 2 --
+ refs/files-backend.c | 6 ++++++
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 5259738de88..7a59781a327 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -1109,7 +1109,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	init_db(git_dir, real_git_dir, option_template, GIT_HASH_UNKNOWN,
--		DEFAULT_REF_STORAGE, INIT_DB_QUIET);
-+		default_ref_storage(), INIT_DB_QUIET);
- 
- 	if (real_git_dir)
- 		git_dir = real_git_dir;
 diff --git a/builtin/init-db.c b/builtin/init-db.c
-index eb2781ed6af..6aaa51ec74e 100644
+index 0b7222e7188..3b50b1aa0e5 100644
 --- a/builtin/init-db.c
 +++ b/builtin/init-db.c
-@@ -542,7 +542,7 @@ static const char *const init_db_usage[] = {
- int cmd_init_db(int argc, const char **argv, const char *prefix)
- {
- 	const char *git_dir;
--	const char *ref_storage_format = DEFAULT_REF_STORAGE;
-+	const char *ref_storage_format = default_ref_storage();
- 	const char *real_git_dir = NULL;
- 	const char *work_tree;
- 	const char *template_dir = NULL;
-diff --git a/refs.c b/refs.c
-index cf1e645266f..7d7aad49e3c 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1864,10 +1864,11 @@ struct ref_store *get_main_ref_store(struct repository *r)
- 	if (!r->gitdir)
- 		BUG("attempting to get main_ref_store outside of repository");
+@@ -251,8 +251,6 @@ static int create_default_files(const char *template_path,
+ 	 * We need to create a "refs" dir in any case so that older
+ 	 * versions of git can tell that this is a repository.
+ 	 */
+-	safe_create_dir(git_path("refs"), 1);
+-	adjust_shared_perm(git_path("refs"));
  
--	r->refs_private = ref_store_init(
--                r->gitdir,
--                r->ref_storage_format ? r->ref_storage_format : DEFAULT_REF_STORAGE,
--                REF_STORE_ALL_CAPS);
-+	r->refs_private = ref_store_init(r->gitdir,
-+					 r->ref_storage_format ?
-+						 r->ref_storage_format :
-+						 default_ref_storage(),
-+					 REF_STORE_ALL_CAPS);
- 	return r->refs_private;
- }
+ 	if (refs_init_db(&err))
+ 		die("failed to set up refs db: %s", err.buf);
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 561c33ac8a9..ab7899a9c77 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -3157,9 +3157,15 @@ static int files_init_db(struct ref_store *ref_store, struct strbuf *err)
+ 		files_downcast(ref_store, REF_STORE_WRITE, "init_db");
+ 	struct strbuf sb = STRBUF_INIT;
  
-@@ -1922,7 +1923,7 @@ struct ref_store *get_submodule_ref_store(const char *submodule)
- 		goto done;
- 
- 	/* assume that add_submodule_odb() has been called */
--	refs = ref_store_init(submodule_sb.buf, DEFAULT_REF_STORAGE, /* XXX */
-+	refs = ref_store_init(submodule_sb.buf, default_ref_storage(),
- 			      REF_STORE_READ | REF_STORE_ODB);
- 	register_ref_store_map(&submodule_ref_stores, "submodule",
- 			       refs, submodule);
-@@ -1936,7 +1937,7 @@ struct ref_store *get_submodule_ref_store(const char *submodule)
- 
- struct ref_store *get_worktree_ref_store(const struct worktree *wt)
- {
--	const char *format = DEFAULT_REF_STORAGE; /* XXX */
-+	const char *format = default_ref_storage();
- 	struct ref_store *refs;
- 	const char *id;
- 
-diff --git a/t/t3210-pack-refs.sh b/t/t3210-pack-refs.sh
-index f41b2afb996..edaef2c175a 100755
---- a/t/t3210-pack-refs.sh
-+++ b/t/t3210-pack-refs.sh
-@@ -11,6 +11,12 @@ semantic is still the same.
- '
- . ./test-lib.sh
- 
-+if test_have_prereq REFTABLE
-+then
-+  skip_all='skipping pack-refs tests; incompatible with reftable'
-+  test_done
-+fi
++	files_ref_path(refs, &sb, "refs");
++	safe_create_dir(sb.buf, 1);
++	/* adjust permissions even if directory already exists. */
++	adjust_shared_perm(sb.buf);
 +
- test_expect_success 'enable reflogs' '
- 	git config core.logallrefupdates true
- '
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 0bb1105ec37..3877a91b268 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1502,6 +1502,11 @@ FreeBSD)
- 	;;
- esac
+ 	/*
+ 	 * Create .git/refs/{heads,tags}
+ 	 */
++	strbuf_reset(&sb);
+ 	files_ref_path(refs, &sb, "refs/heads");
+ 	safe_create_dir(sb.buf, 1);
  
-+if test -n "$GIT_TEST_REFTABLE"
-+then
-+  test_set_prereq REFTABLE
-+fi
-+
- ( COLUMNS=1 && test $COLUMNS = 1 ) && test_set_prereq COLUMNS_CAN_BE_1
- test -z "$NO_PERL" && test_set_prereq PERL
- test -z "$NO_PTHREADS" && test_set_prereq PTHREADS
 -- 
 gitgitgadget
 
