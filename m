@@ -2,125 +2,209 @@ Return-Path: <SRS0=mOGp=6L=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C1E22C54FD0
-	for <git@archiver.kernel.org>; Mon, 27 Apr 2020 16:21:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B27B6C54FD0
+	for <git@archiver.kernel.org>; Mon, 27 Apr 2020 16:27:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 971AB206BF
-	for <git@archiver.kernel.org>; Mon, 27 Apr 2020 16:21:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 64CD2206BF
+	for <git@archiver.kernel.org>; Mon, 27 Apr 2020 16:27:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PrTfA7DI"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="Q78Q9JmT"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727010AbgD0QVp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Apr 2020 12:21:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51768 "EHLO
+        id S1728156AbgD0Q1z (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Apr 2020 12:27:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52722 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726229AbgD0QVp (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 27 Apr 2020 12:21:45 -0400
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A660AC0610D5
-        for <git@vger.kernel.org>; Mon, 27 Apr 2020 09:21:43 -0700 (PDT)
-Received: by mail-wm1-x341.google.com with SMTP id u127so300446wmg.1
-        for <git@vger.kernel.org>; Mon, 27 Apr 2020 09:21:43 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1727104AbgD0Q1z (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 27 Apr 2020 12:27:55 -0400
+Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7194C0610D5
+        for <git@vger.kernel.org>; Mon, 27 Apr 2020 09:27:53 -0700 (PDT)
+Received: by mail-pl1-x642.google.com with SMTP id t16so7169843plo.7
+        for <git@vger.kernel.org>; Mon, 27 Apr 2020 09:27:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=QMH6MCZnTjU0u2cPoaSFW3lUE1FSUvECpjLPJlSBc9A=;
-        b=PrTfA7DIZVvF01rqYnmmo9gfWDmA2smidRuGuWPiJt6i6oLDr+H2lVdJ0l3JX7bSwg
-         vfoznkHWZZ6ZBx0OFHWQapEJa/H0NQkrj5tgloaMi4QfoTQVl26Jc3BRkCHnhA+1se9C
-         c+yWVxN/NwUDMzgyMcEOGNK0rJTUuFS6p4POTnrzo7yRRj1E/Wq+oaVHXcanCTzrG6MT
-         qG9eVt0gGUosBMsHSxtUv55RqRbohrhM06aBsyBGDNFdJ++BVrzp5GWZxMxV8a0lWh+f
-         l3et8OT5ltGbRxseTueT/eBIGpNHs9G86mMjeDJm+RmidZCIy6V7a8zsltL4r6zup7iA
-         x2qw==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=GsxVJfJFxd1aK9rUuAOF5ahCKbKGkOBxjVO0W39Hz5Y=;
+        b=Q78Q9JmTUt251ngs7rF1rWLvw4BbIHE2hBXQuYZB2IBIia+dBp7QQFBcYhCtY5EwnO
+         2UzctfpmLb33fsc+7Nrc72nBbMUAYi3s5O75SdgNt0wCvt7cssvMEZNqKP9qilLQByoy
+         zfdPL7V3tsaXA+lUWS0jK+4sSxU7NTtntLZhU3QZouvfzLHmWyjpwibPWV0WutEdaJQB
+         +1F6dz1K6dFWcE+9hbvfFhCsSZkjsQQMNTEGjT4eXjBDuSI3wDGJFQEmMzrunRlUlP/w
+         Z1PvUPy5piDKFLxB8/6h6G+g96d0MALIoaSA/OmgsPNpJPv+BXkeRR1uMIKwrJCKbZu2
+         UnIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=QMH6MCZnTjU0u2cPoaSFW3lUE1FSUvECpjLPJlSBc9A=;
-        b=InykVzpO59ozgwOP+SZj1cmswDdLpVkNX66iQ1JxhwDfzzZMod2+OUMhYg2aeSQ7ko
-         WdC8P4lXkr/8E3utkqaKa21VynWdxbkxOSOPVvVbj2OXzwxkHeweF/NhfCpnRlWiM7wi
-         WVChbmaIIjry6DchE5M8Lg96qlgthmCu5ljX0uY/eYVOzXqhHC4s6OHhuj0YP/zRwsEJ
-         kcijEEAI+eVObcJZUOwNnTPXlP1Rq2HAf6KH07x5UAeVRMjFXm4KGmiUH+6P/x54ExIT
-         mSkx/izTLUqVNlmzIAl3Wfk2DZSXJCguERyX30imT1y8ITjI9maSyt/SVWNzPk9bXSje
-         JJIw==
-X-Gm-Message-State: AGi0PuYcxZiya23PVwzEzCSUV0J5ZK6/f2UHHPEGDX7OAa5IXwhT4NQK
-        nMRiwLjGno6EGqh2eEtsO/pCsCoa
-X-Google-Smtp-Source: APiQypIHvBj47L4qr6KHQliayoqfHN2KpeeAXeYHUFJKJZ1leAu1vnjB/ikK6HthHOT4Z1y+Hum+uQ==
-X-Received: by 2002:a1c:9ad4:: with SMTP id c203mr277199wme.126.1588004502167;
-        Mon, 27 Apr 2020 09:21:42 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c83sm17777573wmd.23.2020.04.27.09.21.41
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=GsxVJfJFxd1aK9rUuAOF5ahCKbKGkOBxjVO0W39Hz5Y=;
+        b=Cr3JrQeugnqp9RZNiQZ9MbgVaKcAQVARQ+AqxUTA2+bqpp0BjC2Z+YZRYIIFCrfo8y
+         kRBKVzB21dTebMigSD3FBixfyhaze7MmUFku3s4xJxrdj9e/NHAGGGo1cBhoQGwbgTdM
+         +P1Dvp6rxRIYHbGl7dQGua0lkYNFY6xXdzYlRygLiqxDbACEA8+Snnfi9ZzoG445dxP+
+         ZZ+q6JuuduGVgcqPxdCPRQK/XF3J6pNVQlRIViZVBU67dgACkXUg9WD530S/xFP5FELE
+         SdIi2D0Mg9C+COvyrMPDHQd/6Go99Bp+0VW7xL7xpbDqBhxvymb5mQmwSAADOjb5tklX
+         ByQA==
+X-Gm-Message-State: AGi0PuYhfIRbPRnvDty8ifSNcPAjFBxa5PuU6fNcYHJRsHfqtDvNGvBh
+        QefTQPz6rr5BFfY53TIjDmFk4+Ok0LK1uw==
+X-Google-Smtp-Source: APiQypI2oJCYNxcyockzt+wa0j4NlLjCZLK8MpcmyomSxFk5oojMsHL1uCiouxeoWwH6Oqp76FioSQ==
+X-Received: by 2002:a17:902:bd02:: with SMTP id p2mr11457771pls.72.1588004872609;
+        Mon, 27 Apr 2020 09:27:52 -0700 (PDT)
+Received: from localhost ([8.44.146.30])
+        by smtp.gmail.com with ESMTPSA id e7sm13222580pfh.161.2020.04.27.09.27.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Apr 2020 09:21:41 -0700 (PDT)
-Message-Id: <pull.771.git.git.1588004500766.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 27 Apr 2020 16:21:39 +0000
-Subject: [PATCH] rebase: display an error if --root and --fork-point are both
- provided
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+        Mon, 27 Apr 2020 09:27:51 -0700 (PDT)
+Date:   Mon, 27 Apr 2020 10:27:49 -0600
+From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>, Elijah Newren <newren@gmail.com>
+Cc:     peff@peff.net, dstolee@microsoft.com, gitster@pobox.com,
+        mhagger@alum.mit.edu
+Subject: [PATCH v2 0/4] commit-graph: write non-split graphs as read-only
+Message-ID: <cover.1588004647.git.me@ttaylorr.com>
+References: <cover.1587422630.git.me@ttaylorr.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <cover.1587422630.git.me@ttaylorr.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+Hi,
 
---root implies we want to rebase all commits since the beginning of
-history.  --fork-point means we want to use the reflog of the specified
-upstream to find the best common ancestor between <upstream> and
-<branch> and only rebase commits since that common ancestor.  These
-options are clearly contradictory, so throw an error (instead of
-segfaulting on a NULL pointer) if both are specified.
+Here's an updated version of my series to resolve a difference between
+the permissions that split- and non-split commit-graphs are written
+with.
 
-Reported-by: Alexander Berg <alexander.berg@atos.net>
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
-    rebase: display an error if --root and --fork-point are both provided
-    
-    --root implies we want to rebase all commits since the beginning of
-    history. --fork-point means we want to use the reflog of the specified
-    upstream to find the best common ancestor between and and only rebase
-    commits since that common ancestor. These options are clearly
-    contradictory, so throw an error (instead of segfaulting on a NULL
-    pointer) if both are specified.
-    
-    Reported-by: Alexander Berg alexander.berg@atos.net
-    [alexander.berg@atos.net]Signed-off-by: Elijah Newren newren@gmail.com
-    [newren@gmail.com]
+Not much has changed since last time, since the main discussion revolved
+around differences between what mode the user passes and how that
+interacts with 'adjust_shared_perm' as well as why split-graphs are
+always read-only for everybody.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-771%2Fnewren%2Frebase-fork-point-root-error-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-771/newren/rebase-fork-point-root-error-v1
-Pull-Request: https://github.com/git/git/pull/771
+Patches 1-3 remain mostly the same, with only some additional
+documentation in the patches and headers about the interaction between
+the 'mode' parameter and the umask and 'core.sharedRepository'. The
+fourth patch is new, and makes sure that split-graphs are also
+respecting 'core.sharedRepository' (and never have permissions above
+0444).
 
- builtin/rebase.c | 3 +++
- 1 file changed, 3 insertions(+)
+The end-state of this is that both split- and non-split graphs have at
+most permission 0444, and both respect core.sharedRepository.
 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index bff53d5d167..287ac1aa21b 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -1652,6 +1652,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 			die(_("cannot combine '--keep-base' with '--root'"));
- 	}
- 
-+	if (options.root && fork_point > 0)
-+		die(_("cannot combine '--root' with '--fork-point'"));
-+
- 	if (action != ACTION_NONE && !in_progress)
- 		die(_("No rebase in progress?"));
- 	setenv(GIT_REFLOG_ACTION_ENVIRONMENT, "rebase", 0);
+Thanks in advance for another look.
 
-base-commit: af6b65d45ef179ed52087e80cb089f6b2349f4ec
--- 
-gitgitgadget
+
+Taylor Blau (4):
+  tempfile.c: introduce 'create_tempfile_mode'
+  lockfile.c: introduce 'hold_lock_file_for_update_mode'
+  commit-graph.c: write non-split graphs as read-only
+  commit-graph.c: ensure graph layers respect core.sharedRepository
+
+ commit-graph.c                |  9 ++++++++-
+ lockfile.c                    | 18 ++++++++++--------
+ lockfile.h                    | 32 ++++++++++++++++++++++++++++----
+ t/t5318-commit-graph.sh       | 11 ++++++++++-
+ t/t5324-split-commit-graph.sh | 18 ++++++++++++++++++
+ t/t6600-test-reach.sh         |  2 ++
+ tempfile.c                    |  6 +++---
+ tempfile.h                    | 10 +++++++++-
+ 8 files changed, 88 insertions(+), 18 deletions(-)
+
+Range-diff against v1:
+1:  aa86e8df40 ! 1:  03c975b0bd tempfile.c: introduce 'create_tempfile_mode'
+    @@ Commit message
+         creates a temporary file with global read-write permissions, introduce a
+         variant here that allows specifying the mode.
+
+    +    Note that the mode given to 'create_tempfile_mode' is not guaranteed to
+    +    be written to disk, since it is subject to both the umask and
+    +    'core.sharedRepository'.
+    +
+         Arguably, all temporary files should have permission 0444, since they
+         are likely to be renamed into place and then not written to again. This
+         is a much larger change than we may want to take on in this otherwise
+    @@ tempfile.c: static void deactivate_tempfile(struct tempfile *tempfile)
+
+      ## tempfile.h ##
+     @@ tempfile.h: struct tempfile {
+    +  * Attempt to create a temporary file at the specified `path`. Return
+       * a tempfile (whose "fd" member can be used for writing to it), or
+       * NULL on error. It is an error if a file already exists at that path.
+    ++ * Note that `mode` will be further modified by the umask, and possibly
+    ++ * `core.sharedRepository`, so it is not guaranteed to have the given
+    ++ * mode.
+       */
+     -struct tempfile *create_tempfile(const char *path);
+     +struct tempfile *create_tempfile_mode(const char *path, int mode);
+2:  dad37d4233 ! 2:  c1c84552bc lockfile.c: introduce 'hold_lock_file_for_update_mode'
+    @@ Commit message
+         functions, and leave the existing functions alone by inlining their
+         definitions in terms of the new mode variants.
+
+    -    Note that even though the commit-graph machinery only calls
+    +    Note that, like in the previous commit, 'hold_lock_file_for_update_mode'
+    +    is not guarenteed to set the given mode, since it may be modified by
+    +    both the umask and 'core.sharedRepository'.
+    +
+    +    Note also that even though the commit-graph machinery only calls
+         'hold_lock_file_for_update', that this is defined in terms of
+         'hold_lock_file_for_update_timeout', and so both need an additional mode
+         parameter here.
+    @@ lockfile.c: NORETURN void unable_to_lock_die(const char *path, int err)
+      			unable_to_lock_die(path, errno);
+
+      ## lockfile.h ##
+    +@@
+    +  * functions. In particular, the state diagram and the cleanup
+    +  * machinery are all implemented in the tempfile module.
+    +  *
+    ++ * Permission bits
+    ++ * ---------------
+    ++ *
+    ++ * If you call either `hold_lock_file_for_update_mode` or
+    ++ * `hold_lock_file_for_update_timeout_mode`, you can specify a suggested
+    ++ * mode for the underlying temporary file. Note that the file isn't
+    ++ * guaranteed to have this exact mode, since it may be limited by either
+    ++ * the umask, 'core.sharedRepository', or both. See `adjust_shared_perm`
+    ++ * for more.
+    +  *
+    +  * Error handling
+    +  * --------------
+     @@ lockfile.h: struct lock_file {
+    -  * timeout_ms is -1, retry indefinitely. The flags argument and error
+    -  * handling are described above.
+    +  * file descriptor for writing to it, or -1 on error. If the file is
+    +  * currently locked, retry with quadratic backoff for at least
+    +  * timeout_ms milliseconds. If timeout_ms is 0, try exactly once; if
+    +- * timeout_ms is -1, retry indefinitely. The flags argument and error
+    +- * handling are described above.
+    ++ * timeout_ms is -1, retry indefinitely. The flags argument, error
+    ++ * handling, and mode are described above.
+       */
+     -int hold_lock_file_for_update_timeout(
+     +int hold_lock_file_for_update_timeout_mode(
+3:  622fd92cee ! 3:  86cf29ce9c commit-graph.c: write non-split graphs as read-only
+    @@ Commit message
+         commit-graph.c: write non-split graphs as read-only
+
+         In the previous commit, Git learned 'hold_lock_file_for_update_mode' to
+    -    allow the caller to specify the permission bits used when acquiring a
+    -    temporary file.
+    +    allow the caller to specify the permission bits (prior to further
+    +    adjustment by the umask and shared repository permissions) used when
+    +    acquiring a temporary file.
+
+         Use this in the commit-graph machinery for writing a non-split graph to
+         acquire an opened temporary file with permissions read-only permissions
+         to match the split behavior. (In the split case, Git uses
+    -    'git_mkstemp_mode' for each of the commit-graph layers with permission
+    +    git_mkstemp_mode' for each of the commit-graph layers with permission
+         bits '0444').
+
+         One can notice this discrepancy when moving a non-split graph to be part
+-:  ---------- > 4:  f83437f130 commit-graph.c: ensure graph layers respect core.sharedRepository
+--
+2.26.0.113.ge9739cdccc
