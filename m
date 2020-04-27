@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 152C0C54FD0
-	for <git@archiver.kernel.org>; Mon, 27 Apr 2020 16:28:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 77B57C54FCB
+	for <git@archiver.kernel.org>; Mon, 27 Apr 2020 16:28:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DB112206B9
-	for <git@archiver.kernel.org>; Mon, 27 Apr 2020 16:28:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 48EA5206B9
+	for <git@archiver.kernel.org>; Mon, 27 Apr 2020 16:28:08 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="CJqfwpFq"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="J6NyWK3e"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728243AbgD0Q2B (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Apr 2020 12:28:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52742 "EHLO
+        id S1728291AbgD0Q2G (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Apr 2020 12:28:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52754 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1727104AbgD0Q2B (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 27 Apr 2020 12:28:01 -0400
-Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38C3EC0610D5
-        for <git@vger.kernel.org>; Mon, 27 Apr 2020 09:28:01 -0700 (PDT)
-Received: by mail-pf1-x443.google.com with SMTP id f7so9230183pfa.9
-        for <git@vger.kernel.org>; Mon, 27 Apr 2020 09:28:01 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1727073AbgD0Q2F (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 27 Apr 2020 12:28:05 -0400
+Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B05CCC0610D5
+        for <git@vger.kernel.org>; Mon, 27 Apr 2020 09:28:04 -0700 (PDT)
+Received: by mail-pj1-x1041.google.com with SMTP id mq3so7729399pjb.1
+        for <git@vger.kernel.org>; Mon, 27 Apr 2020 09:28:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=m8WPRTZAA4ifjAR9b5/RmtGZJzGpRFy5RWTfVKbAGNM=;
-        b=CJqfwpFq3lRBuolgeA0oDAilQpD4Zoe9CXZUEF5FDCysReBjF/DZaSVVLx9bD6yZ4A
-         KszWu74mjP4ldsZmmt02Kge5Zwj9FWvvrMbky90j7LiYhh0GUrqSx4kEFk8wFw416LUl
-         GqbHpT8O6OS6y/3mnPpD/WwdEgICv9PYvOZ6LOXvlDkqjNLqmIxtGRjwveG3YIGSoC+2
-         7GC0fwycavB2wWAvIteqFzKuFp1/uL2e6oJINfDeZYz+O+Dy44wsZ02eUGF/eJzlgj8J
-         v/EDuTR0XayTzCRisOB/2AL2mhdQFimhVkq0dv1+CdsnvezskM5BPJmZsEiy5m148ylT
-         0eTA==
+        bh=sfmJjJOYpZpd7NyY6aMNq33Oxk35HnqhUt3ukJV1d5E=;
+        b=J6NyWK3edw2LnUfdbhmd2GRNYVof9R7gEIT5Mif7vVLpLzTeOSmav6nbFnO65siodN
+         8F0U5WywwkLSqc0bBhKAI3gKrNN7pfGsG9b4c2bq6889Tl0q2RIJ4JA7H20Uotd9/m/V
+         /BKgXeltUyfk4d+ZiUGoscb92hiRifje36roNPl3GdCfpFyaYwEOVphkAtZVZun7uacw
+         j4lbxfubhVTaEGZaMrYS1Ca4gwhHnBUYk+hbyVD3u457wZtobzg0DTqqbtwaxO1WnLQ6
+         ZIGqYdnpEOqU2445LQqtpG6IOh2RucQ6Aie0qBU+TysA1L4md7VQV+2EAo35FezZUD5i
+         XQLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=m8WPRTZAA4ifjAR9b5/RmtGZJzGpRFy5RWTfVKbAGNM=;
-        b=diPgbNAGMgHLQfLfTkQDFngZWbfBl1d8YqLmLCbb+H0bH2f7AkxTtlk3BElInKSG+w
-         8KVwp5PJvtfZW7ZVYoMdiaDilw1xDAi77M+2TbgUyLCH2nHZ48ohHrH6Be0Lc1R83eMt
-         tczIEf4JBC8/o73kzm/w5sfuZjryhLXunL+4l42iYuGcM920rir+psqjH1AvY3OEnHT+
-         qNMOJvTJAEwcQYcHdXYJzURYTBprYTL9/rxJ4Wx0tw0bG2AgnFmu0nDNjxQFtsy8EsAl
-         IhtxGECo0gl//011vOIMytYeBHT4oB3SqH4S4dPQf0k+iF6AkR/4R0VsMct8bOnL4y+f
-         evSQ==
-X-Gm-Message-State: AGi0Puas1kXiVdZdnVb7lkr74EDt3LdYbYuuohCsgSxy/+qR9JQDMKcI
-        9eJKrn5A82OG7iMa3PwXQ1ErGMOZnCFN6A==
-X-Google-Smtp-Source: APiQypI9VD7YxWoL1BoErssfImBDbB8Tq4mpej9cEpi++A5aGBTZOa5EYTn6jMe4lIgjGYRfQL+uXQ==
-X-Received: by 2002:a63:8ac4:: with SMTP id y187mr23593296pgd.294.1588004880298;
-        Mon, 27 Apr 2020 09:28:00 -0700 (PDT)
+        bh=sfmJjJOYpZpd7NyY6aMNq33Oxk35HnqhUt3ukJV1d5E=;
+        b=MuTD0iFKvAWT3IUIydirvDA9VStpFTKrr+rxxKm3UbsezTqPS+6HcBCOhp/t46IBhB
+         faYh/mJzMXKPB62iifzbN0yXsmb27/iHgvONd7D8OQ1XWCcnv5QYY7dlAbZerRYzuuMv
+         PFaXStQkWHvycUxh0cbbtJCKv9N6z2wQWKkoDcJ7TsWI7tumzqAK9YMNIixR1lMb9uSV
+         upWYH/QUMZFssip2MdEa4Q6zFkOls21sOtFP79RWJd5LEriQZrE6X38HU9ahR4yULlmq
+         GrQCY8t8quToiWih3M3Tr0iJF3ATyd90GBQw+xktlouUJ0oewqAeX7q8T4/OYq/RKV4A
+         0Y1g==
+X-Gm-Message-State: AGi0PuZNIsvMdRdxLdrS7zhB0fEAbAMpMXwixPl4Hrm+w0oPHtZOlKqQ
+        bNVbyYZkMyGZ6X4gF7jUMfam7wCD3jquhQ==
+X-Google-Smtp-Source: APiQypLAgi79d0XClDBLLavHe90Ig4O2LHNUMa6Gcb2XvwxALXQjNvCH10uu5kk9RR6VJYHO0R829Q==
+X-Received: by 2002:a17:90a:5aa7:: with SMTP id n36mr24928120pji.45.1588004883802;
+        Mon, 27 Apr 2020 09:28:03 -0700 (PDT)
 Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id n19sm3097903pgd.19.2020.04.27.09.27.59
+        by smtp.gmail.com with ESMTPSA id r23sm13202677pfr.64.2020.04.27.09.28.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Apr 2020 09:27:59 -0700 (PDT)
-Date:   Mon, 27 Apr 2020 10:27:58 -0600
+        Mon, 27 Apr 2020 09:28:03 -0700 (PDT)
+Date:   Mon, 27 Apr 2020 10:28:02 -0600
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, dstolee@microsoft.com, gitster@pobox.com,
         mhagger@alum.mit.edu
-Subject: [PATCH v2 2/4] lockfile.c: introduce 'hold_lock_file_for_update_mode'
-Message-ID: <c1c84552bc69218299ce182388b6a888b3c71056.1588004647.git.me@ttaylorr.com>
+Subject: [PATCH v2 3/4] commit-graph.c: write non-split graphs as read-only
+Message-ID: <86cf29ce9c1e6dc1fc881458c18850c2893b092a.1588004647.git.me@ttaylorr.com>
 References: <cover.1587422630.git.me@ttaylorr.com>
  <cover.1588004647.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -74,164 +75,107 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We use 'hold_lock_file_for_update' (and the '_timeout') variant to
-acquire a lock when updating references, the commit-graph file, and so
-on.
+In the previous commit, Git learned 'hold_lock_file_for_update_mode' to
+allow the caller to specify the permission bits (prior to further
+adjustment by the umask and shared repository permissions) used when
+acquiring a temporary file.
 
-In particular, the commit-graph machinery uses this to acquire a
-temporary file that is used to write a non-split commit-graph. In a
-subsequent commit, an issue in the commit-graph machinery produces
-graph files that have a different permission based on whether or not
-they are part of a multi-layer graph will be addressed.
+Use this in the commit-graph machinery for writing a non-split graph to
+acquire an opened temporary file with permissions read-only permissions
+to match the split behavior. (In the split case, Git uses
+git_mkstemp_mode' for each of the commit-graph layers with permission
+bits '0444').
 
-To do so, the commit-graph machinery will need a version of
-'hold_lock_file_for_update' that takes the permission bits from the
-caller.
+One can notice this discrepancy when moving a non-split graph to be part
+of a new chain. This causes a commit-graph chain where all layers have
+read-only permission bits, except for the base layer, which is writable
+for the current user.
 
-Introduce such a function in this patch for both the
-'hold_lock_file_for_update' and 'hold_lock_file_for_update_timeout'
-functions, and leave the existing functions alone by inlining their
-definitions in terms of the new mode variants.
+Resolve this discrepancy by using the new
+'hold_lock_file_for_update_mode' and passing the desired permission
+bits.
 
-Note that, like in the previous commit, 'hold_lock_file_for_update_mode'
-is not guarenteed to set the given mode, since it may be modified by
-both the umask and 'core.sharedRepository'.
-
-Note also that even though the commit-graph machinery only calls
-'hold_lock_file_for_update', that this is defined in terms of
-'hold_lock_file_for_update_timeout', and so both need an additional mode
-parameter here.
+Doing so causes some test fallout in t5318 and t6600. In t5318, this
+occurs in tests that corrupt a commit-graph file by writing into it. For
+these, 'chmod u+w'-ing the file beforehand resolves the issue. The
+additional spot in 'corrupt_graph_verify' is necessary because of the
+extra 'git commit-graph write' beforehand (which *does* rewrite the
+commit-graph file). In t6600, this is caused by copying a read-only
+commit-graph file into place and then trying to replace it. For these,
+make these files writable.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- lockfile.c | 18 ++++++++++--------
- lockfile.h | 32 ++++++++++++++++++++++++++++----
- 2 files changed, 38 insertions(+), 12 deletions(-)
+ commit-graph.c          |  3 ++-
+ t/t5318-commit-graph.sh | 11 ++++++++++-
+ t/t6600-test-reach.sh   |  2 ++
+ 3 files changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/lockfile.c b/lockfile.c
-index 8e8ab4f29f..cc9a4b8428 100644
---- a/lockfile.c
-+++ b/lockfile.c
-@@ -70,7 +70,8 @@ static void resolve_symlink(struct strbuf *path)
- }
+diff --git a/commit-graph.c b/commit-graph.c
+index f013a84e29..5b5047a7dd 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -1388,7 +1388,8 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
  
- /* Make sure errno contains a meaningful value on error */
--static int lock_file(struct lock_file *lk, const char *path, int flags)
-+static int lock_file(struct lock_file *lk, const char *path, int flags,
-+		     int mode)
- {
- 	struct strbuf filename = STRBUF_INIT;
+ 		f = hashfd(fd, ctx->graph_name);
+ 	} else {
+-		hold_lock_file_for_update(&lk, ctx->graph_name, LOCK_DIE_ON_ERROR);
++		hold_lock_file_for_update_mode(&lk, ctx->graph_name,
++					       LOCK_DIE_ON_ERROR, 0444);
+ 		fd = lk.tempfile->fd;
+ 		f = hashfd(lk.tempfile->fd, lk.tempfile->filename.buf);
+ 	}
+diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
+index 9bf920ae17..fb0aae61c3 100755
+--- a/t/t5318-commit-graph.sh
++++ b/t/t5318-commit-graph.sh
+@@ -96,6 +96,13 @@ test_expect_success 'write graph' '
+ 	graph_read_expect "3"
+ '
  
-@@ -79,7 +80,7 @@ static int lock_file(struct lock_file *lk, const char *path, int flags)
- 		resolve_symlink(&filename);
- 
- 	strbuf_addstr(&filename, LOCK_SUFFIX);
--	lk->tempfile = create_tempfile(filename.buf);
-+	lk->tempfile = create_tempfile_mode(filename.buf, mode);
- 	strbuf_release(&filename);
- 	return lk->tempfile ? lk->tempfile->fd : -1;
- }
-@@ -99,7 +100,7 @@ static int lock_file(struct lock_file *lk, const char *path, int flags)
-  * exactly once. If timeout_ms is -1, try indefinitely.
-  */
- static int lock_file_timeout(struct lock_file *lk, const char *path,
--			     int flags, long timeout_ms)
-+			     int flags, long timeout_ms, int mode)
- {
- 	int n = 1;
- 	int multiplier = 1;
-@@ -107,7 +108,7 @@ static int lock_file_timeout(struct lock_file *lk, const char *path,
- 	static int random_initialized = 0;
- 
- 	if (timeout_ms == 0)
--		return lock_file(lk, path, flags);
-+		return lock_file(lk, path, flags, mode);
- 
- 	if (!random_initialized) {
- 		srand((unsigned int)getpid());
-@@ -121,7 +122,7 @@ static int lock_file_timeout(struct lock_file *lk, const char *path,
- 		long backoff_ms, wait_ms;
- 		int fd;
- 
--		fd = lock_file(lk, path, flags);
-+		fd = lock_file(lk, path, flags, mode);
- 
- 		if (fd >= 0)
- 			return fd; /* success */
-@@ -169,10 +170,11 @@ NORETURN void unable_to_lock_die(const char *path, int err)
- }
- 
- /* This should return a meaningful errno on failure */
--int hold_lock_file_for_update_timeout(struct lock_file *lk, const char *path,
--				      int flags, long timeout_ms)
-+int hold_lock_file_for_update_timeout_mode(struct lock_file *lk,
-+					   const char *path, int flags,
-+					   long timeout_ms, int mode)
- {
--	int fd = lock_file_timeout(lk, path, flags, timeout_ms);
-+	int fd = lock_file_timeout(lk, path, flags, timeout_ms, mode);
- 	if (fd < 0) {
- 		if (flags & LOCK_DIE_ON_ERROR)
- 			unable_to_lock_die(path, errno);
-diff --git a/lockfile.h b/lockfile.h
-index 9843053ce8..db93e6ba73 100644
---- a/lockfile.h
-+++ b/lockfile.h
-@@ -90,6 +90,15 @@
-  * functions. In particular, the state diagram and the cleanup
-  * machinery are all implemented in the tempfile module.
-  *
-+ * Permission bits
-+ * ---------------
-+ *
-+ * If you call either `hold_lock_file_for_update_mode` or
-+ * `hold_lock_file_for_update_timeout_mode`, you can specify a suggested
-+ * mode for the underlying temporary file. Note that the file isn't
-+ * guaranteed to have this exact mode, since it may be limited by either
-+ * the umask, 'core.sharedRepository', or both. See `adjust_shared_perm`
-+ * for more.
-  *
-  * Error handling
-  * --------------
-@@ -156,12 +165,20 @@ struct lock_file {
-  * file descriptor for writing to it, or -1 on error. If the file is
-  * currently locked, retry with quadratic backoff for at least
-  * timeout_ms milliseconds. If timeout_ms is 0, try exactly once; if
-- * timeout_ms is -1, retry indefinitely. The flags argument and error
-- * handling are described above.
-+ * timeout_ms is -1, retry indefinitely. The flags argument, error
-+ * handling, and mode are described above.
-  */
--int hold_lock_file_for_update_timeout(
-+int hold_lock_file_for_update_timeout_mode(
- 		struct lock_file *lk, const char *path,
--		int flags, long timeout_ms);
-+		int flags, long timeout_ms, int mode);
++test_expect_success POSIXPERM 'write graph has correct permissions' '
++	test_path_is_file $objdir/info/commit-graph &&
++	echo "-r--r--r--" >expect &&
++	test_modebits $objdir/info/commit-graph >actual &&
++	test_cmp expect actual
++'
 +
-+static inline int hold_lock_file_for_update_timeout(
-+		struct lock_file *lk, const char *path,
-+		int flags, long timeout_ms)
-+{
-+	return hold_lock_file_for_update_timeout_mode(lk, path, flags,
-+						      timeout_ms, 0666);
-+}
+ graph_git_behavior 'graph exists' full commits/3 commits/1
  
- /*
-  * Attempt to create a lockfile for the file at `path` and return a
-@@ -175,6 +192,13 @@ static inline int hold_lock_file_for_update(
- 	return hold_lock_file_for_update_timeout(lk, path, flags, 0);
+ test_expect_success 'Add more commits' '
+@@ -421,7 +428,8 @@ GRAPH_BYTE_FOOTER=$(($GRAPH_OCTOPUS_DATA_OFFSET + 4 * $NUM_OCTOPUS_EDGES))
+ corrupt_graph_setup() {
+ 	cd "$TRASH_DIRECTORY/full" &&
+ 	test_when_finished mv commit-graph-backup $objdir/info/commit-graph &&
+-	cp $objdir/info/commit-graph commit-graph-backup
++	cp $objdir/info/commit-graph commit-graph-backup &&
++	chmod u+w $objdir/info/commit-graph
  }
  
-+static inline int hold_lock_file_for_update_mode(
-+		struct lock_file *lk, const char *path,
-+		int flags, int mode)
-+{
-+	return hold_lock_file_for_update_timeout_mode(lk, path, flags, 0, mode);
-+}
-+
- /*
-  * Return a nonzero value iff `lk` is currently locked.
-  */
+ corrupt_graph_verify() {
+@@ -435,6 +443,7 @@ corrupt_graph_verify() {
+ 	fi &&
+ 	git status --short &&
+ 	GIT_TEST_COMMIT_GRAPH_DIE_ON_LOAD=true git commit-graph write &&
++	chmod u+w $objdir/info/commit-graph &&
+ 	git commit-graph verify
+ }
+ 
+diff --git a/t/t6600-test-reach.sh b/t/t6600-test-reach.sh
+index b24d850036..475564bee7 100755
+--- a/t/t6600-test-reach.sh
++++ b/t/t6600-test-reach.sh
+@@ -51,8 +51,10 @@ test_expect_success 'setup' '
+ 	done &&
+ 	git commit-graph write --reachable &&
+ 	mv .git/objects/info/commit-graph commit-graph-full &&
++	chmod u+w commit-graph-full &&
+ 	git show-ref -s commit-5-5 | git commit-graph write --stdin-commits &&
+ 	mv .git/objects/info/commit-graph commit-graph-half &&
++	chmod u+w commit-graph-half &&
+ 	git config core.commitGraph true
+ '
+ 
 -- 
 2.26.0.113.ge9739cdccc
 
