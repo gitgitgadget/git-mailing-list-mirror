@@ -2,205 +2,170 @@ Return-Path: <SRS0=mOGp=6L=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C4DDAC54FD0
-	for <git@archiver.kernel.org>; Mon, 27 Apr 2020 12:28:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B3F9C54FCB
+	for <git@archiver.kernel.org>; Mon, 27 Apr 2020 12:59:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 779D5206CD
-	for <git@archiver.kernel.org>; Mon, 27 Apr 2020 12:28:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1499C206D4
+	for <git@archiver.kernel.org>; Mon, 27 Apr 2020 12:59:54 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=atos.net header.i=@atos.net header.b="w6pBFwgv"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rBtXvwgM"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727012AbgD0M20 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Apr 2020 08:28:26 -0400
-Received: from smtppost.atos.net ([193.56.114.176]:9814 "EHLO
-        smarthost3.atos.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1726260AbgD0M2Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Apr 2020 08:28:24 -0400
-X-Greylist: delayed 443 seconds by postgrey-1.27 at vger.kernel.org; Mon, 27 Apr 2020 08:28:24 EDT
+        id S1727022AbgD0M7x (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Apr 2020 08:59:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48378 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726795AbgD0M7w (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 27 Apr 2020 08:59:52 -0400
+Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD8F8C0610D5
+        for <git@vger.kernel.org>; Mon, 27 Apr 2020 05:59:52 -0700 (PDT)
+Received: by mail-pf1-x432.google.com with SMTP id z1so7288875pfn.3
+        for <git@vger.kernel.org>; Mon, 27 Apr 2020 05:59:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=atos.net; i=@atos.net; q=dns/txt; s=mail;
-  t=1587990504; x=1619526504;
-  h=from:to:cc:subject:date:message-id:
-   content-transfer-encoding:mime-version;
-  bh=ws2YqlFWzUP/daI5ahjMcdaWRmy9+jPhbs1jDF/GXK0=;
-  b=w6pBFwgvGgNfNpkOB77OyemG37b/64qp8/R93N7zTKPeN4Y0W0hFPr/d
-   xvKNsfxUkbNrj2L9ldDZNaNfKwMe94e8ZcCFS1ZEPV55hXVYgI+5eJDgm
-   N08fnsLhiBujuB3c6aipxJKGIjXk6vOcgBUHwOBd2lvcb84z5ywP7lksu
-   k=;
-IronPort-SDR: I7I3dgsWmuHtcvTEJ8JWVi5D+iFIpBGIk+iNYU88mB1qDpK+yPKu9rUQbc76K8DIh4RxQO3plQ
- Uzxcy0WtGHu1Hotm8lpwGarg1sW5mGh74ZAKw+p4KLnToKcmAFlSZStnim8+YLvy62tP4bzcad
- IxYTAx6GyjNoSZLhlUXKwOgm3BBoFnPNCZ0zwQn/6vTA8CxY/jqH5+en2huVggXrl7KUJHxiKS
- 5TWSAgVMo8k6RXhqgjlBehZh/Ihh/SJ6SGx4GlZWf6kQMrFCf2hu06joWPemFm5Gebh/3kbvq8
- VqtNpryS3PymMvh5m5J3S2N6
-X-IronPort-AV: E=Sophos;i="5.73,324,1583190000"; 
-   d="scan'208";a="49035404"
-X-MGA-submission: =?us-ascii?q?MDH5/UL6NQoDHC4r6MsUCuEXSyJiEZY6Be1raC?=
- =?us-ascii?q?Qffm49JkK9KFzEPXaq6YB/rTweP/EU0BM/h5ncltDjgEF/iqXmN8BiSS?=
- =?us-ascii?q?FtH7lKP3IQNn0RYF1uQLKy54reI4n0GWhDH1230G75f0G6TrA6t46E3J?=
- =?us-ascii?q?1W?=
-Received: from unknown (HELO GITEXCPRDMB11.ww931.my-it-solutions.net) ([10.89.28.141])
-  by smarthost3.atos.net with ESMTP/TLS/AES256-GCM-SHA384; 27 Apr 2020 14:20:53 +0200
-Received: from GITEXCPRDMB12.ww931.my-it-solutions.net (10.89.28.142) by
- GITEXCPRDMB11.ww931.my-it-solutions.net (10.89.28.141) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1913.5; Mon, 27 Apr 2020 14:20:52 +0200
-Received: from GITEXCPRDMB12.ww931.my-it-solutions.net ([10.89.28.142]) by
- GITEXCPRDMB12.ww931.my-it-solutions.net ([10.89.28.142]) with mapi id
- 15.01.1913.007; Mon, 27 Apr 2020 14:20:52 +0200
-From:   "Berg, Alexander" <alexander.berg@atos.net>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-CC:     "Weiss, Karsten" <karsten.weiss@atos.net>
-Subject: git-rebase v2.26.2 - "--root --empty drop" doesn't work and "--root
- --fork-point $somegibberish" gets SIGSEGV
-Thread-Topic: git-rebase v2.26.2 - "--root --empty drop" doesn't work and
- "--root --fork-point $somegibberish" gets SIGSEGV
-Thread-Index: AdYcjjVQ7ifZpw31RhKdCUl9cuDLmA==
-Date:   Mon, 27 Apr 2020 12:20:52 +0000
-Message-ID: <3910b39cf7c7419eb5b87c7aeb871e11@atos.net>
-Accept-Language: de-DE, en-US
-Content-Language: de-DE
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [160.92.209.239]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=goT77AJfQYdT/5PNQ4aWJqWamT2/cVCx+Vc3AaJvc4M=;
+        b=rBtXvwgMn7VsabYOl9NBKT0wPdeYIlEbVFt4AY6aEQYxjbdrv+wTJK+TojsDEwYzvB
+         SXXlpr5YIa0XyuuXhos7C0kLBvy/1M64y0Pse6wRJdUEvrYPNJNCGu48sirU7yh3Jtr+
+         iqAcJHnkLPXswRcUlmoVU8OcKidhyDLbuPInZHdybve3I+hwE8OVWjeYTAs4fnnBh9iW
+         8H0vrLjRyMX6thvJgFNLxtxt2MHapICp4ITnaS8Aac3GuL4r9wrfie+u64ULaTGFwUp2
+         zFhKQ6DusUfnJpc0Lz/26j2LatnYJQSMi7vLpJoZzRxCtFtNa+Id+r/nzA8gxFfkvmUS
+         ol0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=goT77AJfQYdT/5PNQ4aWJqWamT2/cVCx+Vc3AaJvc4M=;
+        b=ug3/ct8t+WwaufGM7G8K1xGtGNrHcaaxBl9kYZBpw6AdW4fKDUt4N0ePY3VtkyMpZP
+         +Y+MbKfWwngJHkmw/r/SRy1mnrxFNaQ03kf59dl2VPyN9PKbzmvCkLdmVYEPgUFaCe84
+         9KQsz+8wZpHV3HmIGVZq9WY6qCfAFDy/UMCPW5aGSIoWV/Eee9IlORN3Ms8ivXqdDbGx
+         /VIUtvhdq/S0RxzPHhU+KTiEJWNBirfNjDRupUsLAQFcXzFgYRI+RTpke8D4ztLs+y0+
+         Vw/LxWM+H3vLDhb6EQJ4D1iBIDRHi3hL0xc22QDJwueGC7EP0xD8qzs0o5QprK5FSu9W
+         gYyQ==
+X-Gm-Message-State: AGi0PuZ7myKHEzr87+M7aLiYXiF6MIQGLTq8Q/r13vKtutqVeFMq5cjT
+        1CQJBGRjBhTVKamclhMpNfG7sfIl
+X-Google-Smtp-Source: APiQypIHn8WFMRORvWZEJSULsLWK4KAumRoesfB2eaksN45cKmRlvEJU/TnhqvQkDeboBLoOVhLXwA==
+X-Received: by 2002:a62:ae0f:: with SMTP id q15mr23378212pff.181.1587992390934;
+        Mon, 27 Apr 2020 05:59:50 -0700 (PDT)
+Received: from localhost.localdomain (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
+        by smtp.gmail.com with ESMTPSA id h31sm11617822pjb.33.2020.04.27.05.59.49
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 27 Apr 2020 05:59:50 -0700 (PDT)
+From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+To:     git@vger.kernel.org
+Cc:     dirk@ed4u.de, sunshine@sunshineco.com, peff@peff.net,
+        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+Subject: [PATCH v3] git-credential-store: skip empty lines and comments from store
+Date:   Mon, 27 Apr 2020 05:59:15 -0700
+Message-Id: <20200427125915.88667-1-carenas@gmail.com>
+X-Mailer: git-send-email 2.26.2.569.g1d74ac4d14
+In-Reply-To: <20200427084235.60798-1-carenas@gmail.com>
+References: <20200427084235.60798-1-carenas@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear *,
+with the added checks for invalid URLs in credentials, any locally
+modified store files which might have empty lines or even comments
+were reported[1] failing to parse as valid credentials.
 
-AFAIS there are (at least) two bugs in git-rebase at the moment.
-Those findings below occured on a simple branch, without an upstream.
+using the store file in this manner wasn't intended by the original
+code and it had latent issues which the new code dutifully prevented
+but since the strings used wouldn't had been valid credentials anyway
+we could instead detect them and skip the matching logic and therefore
+formalize this "feature".
 
-If you wish to rebase history and drop all empty commits, e.g.
-    git rebase --root --empty drop
-those empty commits are still in place after the operation comletes.
-With git v2.14.xx this operation ("--drop-empty") drops those empty
-commits as expected.
-Is there a new option to be used here or something?
-Or is it just broken?
+trim all lines as they are being read from the store file and skip the
+ones that will be otherwise empty or that start with "#" (therefore
+assuming them to be comments)
 
+[1] https://stackoverflow.com/a/61420852/5005936
 
-As I've experimented with some new options for the above command,
-it seems that user input checking isn't done properly for "--fork-point".
-I've tried
-    git rebase --root --empty drop --fork-point --rebase-merges
-(yes, --fork-point usage is wrong here) and got
-    Segmentation fault (core dumped)
+Reported-by: Dirk <dirk@ed4u.de>
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+---
+v3:
+* avoid using q_to_cr as suggested by Peff
+* a more verbose commit message and slightly more complete documentation 
+v2:
+* use a here-doc for clarity as suggested by Eric
+* improve commit message and include documentation
 
-A colleague of mine looked into this:
-    $ gdb /bin/git                                                         =
-                                                                           =
-    =20
-    (gdb) set args rebase --root --empty drop --fork-point --rebase-merges
-    (gdb) run                                                              =
-                                                                           =
-    =20
-    Starting program: /bin/git rebase --root --empty drop --fork-point --re=
-base-merges                                                                =
-    =20
-    [Thread debugging using libthread_db enabled]                          =
-                                                                           =
-    =20
-    Using host libthread_db library "/lib64/libthread_db.so.1".            =
-                                                                           =
-    =20
-                                                                           =
-                                                                           =
-    =20
-    Program received signal SIGSEGV, Segmentation fault.                   =
-                                                                           =
-    =20
-    is_per_worktree_ref (refname=3D0x0) at refs.c:725                      =
-                                                                           =
-      =20
-    725                     starts_with(refname, "refs/bisect/") ||        =
-                                                                           =
-    =20
-    Missing separate debuginfos, use: debuginfo-install glibc-2.17-292.el7.=
-x86_64 pcre-8.32-17.el7.x86_64 zlib-1.2.7-18.el7.x86_64                    =
-    =20
-    (gdb) bt                                                               =
-                                                                           =
-    =20
-    #0  is_per_worktree_ref (refname=3D0x0) at refs.c:725                  =
-                                                                           =
-      =20
-    #1  ref_type (refname=3Drefname@entry=3D0x0) at refs.c:760             =
-                                                                           =
-        =20
-    #2  0x00000000005739c9 in files_reflog_path (refs=3D0x90ce30, sb=3D0x7f=
-ffffffc5e0, refname=3D0x0) at refs/files-backend.c:176                     =
-          =20
-    #3  0x000000000057402a in files_for_each_reflog_ent (ref_store=3D<optim=
-ized out>, refname=3D0x0, fn=3D0x4d4d20 <collect_one_reflog_ent>, cb_data=
-=3D0x7fffffffc640)
-        at refs/files-backend.c:2060                                       =
-                                                                           =
-    =20
-    #4  0x00000000004d4f4b in get_fork_point (refname=3D0x0, commit=3D0x91c=
-ff0) at commit.c:933                                                       =
-        =20
-    #5  0x0000000000475e69 in cmd_rebase (argc=3D0, argv=3D0x7fffffffdd20, =
-prefix=3D<optimized out>) at builtin/rebase.c:2082                         =
-          =20
-    #6  0x0000000000406cd0 in run_builtin (argv=3D0x7fffffffdd20, argc=3D6,=
- p=3D0x8b3f40 <commands+2016>) at git.c:444                                =
-          =20
-    #7  handle_builtin (argc=3D6, argv=3Dargv@entry=3D0x7fffffffdd20) at gi=
-t.c:674                                                                    =
-          =20
-    #8  0x0000000000407bee in run_argv (argv=3D0x7fffffffda80, argcp=3D0x7f=
-ffffffda8c) at git.c:741                                                   =
-        =20
-    #9  cmd_main (argc=3D6, argc@entry=3D7, argv=3D0x7fffffffdd20, argv@ent=
-ry=3D0x7fffffffdd18) at git.c:872                                          =
-            =20
-    #10 0x0000000000406910 in main (argc=3D7, argv=3D0x7fffffffdd18) at com=
-mon-main.c:52                                                              =
-        =20
-    (gdb) list                                                             =
-                                                                           =
-    =20
-    720                                                                    =
-                                                                           =
-    =20
-    721     static int is_per_worktree_ref(const char *refname)            =
-                                                                           =
-    =20
-    722     {                                                              =
-                                                                           =
-    =20
-    723             return !strcmp(refname, "HEAD") ||                     =
-                                                                           =
-    =20
-    724                     starts_with(refname, "refs/worktree/") ||      =
-                                                                           =
-    =20
-    725                     starts_with(refname, "refs/bisect/") ||        =
-                                                                           =
-    =20
-    726                     starts_with(refname, "refs/rewritten/");       =
-                                                                           =
-    =20
-    727     }                                                              =
-                                                                           =
-    =20
-    728                                                                    =
-                                                                           =
-    =20
-    729     static int is_pseudoref_syntax(const char *refname)            =
-                                                                           =
-    =20
-    (gdb)
+ Documentation/git-credential-store.txt |  7 +++++++
+ credential-store.c                     |  3 +++
+ t/t0302-credential-store.sh            | 15 +++++++++++++++
+ 3 files changed, 25 insertions(+)
 
+diff --git a/Documentation/git-credential-store.txt b/Documentation/git-credential-store.txt
+index 693dd9d9d7..48ab4b13e5 100644
+--- a/Documentation/git-credential-store.txt
++++ b/Documentation/git-credential-store.txt
+@@ -101,6 +101,13 @@ username (if we already have one) match, then the password is returned
+ to Git. See the discussion of configuration in linkgit:gitcredentials[7]
+ for more information.
+ 
++Note that the file used is not a configuration file and should be ideally
++managed only through git, as any manually introduced typos will compromise
++the validation of credentials.
++
++The parser will ignore any lines starting with the '#' character during
++the processing of credentials for read, though.
++
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
+diff --git a/credential-store.c b/credential-store.c
+index c010497cb2..b2f160890d 100644
+--- a/credential-store.c
++++ b/credential-store.c
+@@ -24,6 +24,9 @@ static int parse_credential_file(const char *fn,
+ 	}
+ 
+ 	while (strbuf_getline_lf(&line, fh) != EOF) {
++		strbuf_trim(&line);
++		if (line.len == 0 || *line.buf == '#')
++			continue;
+ 		credential_from_url(&entry, line.buf);
+ 		if (entry.username && entry.password &&
+ 		    credential_match(c, &entry)) {
+diff --git a/t/t0302-credential-store.sh b/t/t0302-credential-store.sh
+index d6b54e8c65..5e6ace3a06 100755
+--- a/t/t0302-credential-store.sh
++++ b/t/t0302-credential-store.sh
+@@ -120,4 +120,19 @@ test_expect_success 'erase: erase matching credentials from both xdg and home fi
+ 	test_must_be_empty "$HOME/.config/git/credentials"
+ '
+ 
++test_expect_success 'get: allow for empty lines or comments in store file' '
++	test_write_lines "#comment" " " "" \
++		 https://user:pass@example.com >"$HOME/.git-credentials" &&
++	check fill store <<-\EOF
++	protocol=https
++	host=example.com
++	--
++	protocol=https
++	host=example.com
++	username=user
++	password=pass
++	--
++	EOF
++'
++
+ test_done
+-- 
+2.26.2.569.g1d74ac4d14
 
-With kind regards,
-    Alex
