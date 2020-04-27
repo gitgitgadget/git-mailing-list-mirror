@@ -2,66 +2,110 @@ Return-Path: <SRS0=mOGp=6L=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1058FC54EEB
-	for <git@archiver.kernel.org>; Mon, 27 Apr 2020 20:12:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3554FC4CECC
+	for <git@archiver.kernel.org>; Mon, 27 Apr 2020 20:20:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F336F2070B
-	for <git@archiver.kernel.org>; Mon, 27 Apr 2020 20:12:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 18692206E2
+	for <git@archiver.kernel.org>; Mon, 27 Apr 2020 20:20:34 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P/loM6NA"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726384AbgD0UMa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Apr 2020 16:12:30 -0400
-Received: from cloud.peff.net ([104.130.231.41]:41326 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725919AbgD0UMa (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Apr 2020 16:12:30 -0400
-Received: (qmail 15681 invoked by uid 109); 27 Apr 2020 20:12:29 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 27 Apr 2020 20:12:29 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27184 invoked by uid 111); 27 Apr 2020 20:23:50 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 27 Apr 2020 16:23:50 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 27 Apr 2020 16:12:28 -0400
-From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Sibi Siddharthan <sibisiddharthan.github@gmail.com>,
-        Sibi Siddharthan via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 0/8] CMake build system for git
-Message-ID: <20200427201228.GD1728884@coredump.intra.peff.net>
-References: <pull.614.git.1587700897.gitgitgadget@gmail.com>
- <xmqqv9lod85m.fsf@gitster.c.googlers.com>
- <CAKiG+9V_nZUXf2a689vZ54rG+xTCFMGcJe_7Av-khaxxuijERg@mail.gmail.com>
- <xmqq8sikblv2.fsf@gitster.c.googlers.com>
- <nycvar.QRO.7.76.6.2004251354390.18039@tvgsbejvaqbjf.bet>
- <20200427200852.GC1728884@coredump.intra.peff.net>
+        id S1726836AbgD0UUd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Apr 2020 16:20:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33142 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726233AbgD0UUc (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 27 Apr 2020 16:20:32 -0400
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 953D6C09B054
+        for <git@vger.kernel.org>; Mon, 27 Apr 2020 13:13:48 -0700 (PDT)
+Received: by mail-wm1-x343.google.com with SMTP id e26so290720wmk.5
+        for <git@vger.kernel.org>; Mon, 27 Apr 2020 13:13:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=gP2mKurovl5RI1/nfB8JPBDqHhvSxbSjyPMBXIBnAvA=;
+        b=P/loM6NALN5ATfNP0NHFqYGjOTnwV+Jj5t0dhkQ0X06wSJ00fX9OFbwsV6QRSwLJLh
+         D7Md4K1d/8F9cXRm2WHExf8ORqKQRW8GK1Dqpr6kemdxM5vBxzRO34uyXJ8QbhBEmFlQ
+         ZMXQyCT2IZWUVfh2OxlKoFENxnA2M1UVSLYsKabSTRQ1OfDEzNZNPs6XK9OlLRuT6JaZ
+         I9WQtLzc+9VHA7PX/e1reKBpVFVqq+okq76AHmUkPli8wwpux9vWHzVZb78onJ19f2nq
+         o4qc5u2i1zhfQT5oWa8cS6P4yX0uHJ/Ew1vRayPpEMVlGwRHTfW76q4wLgbInC8CQ8Sg
+         Jopg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=gP2mKurovl5RI1/nfB8JPBDqHhvSxbSjyPMBXIBnAvA=;
+        b=JClFgHrw2hkdpfvZsFFozFH7YfrBfrmDToAbpFVKv/ZaBNAQ2svJ84AwAXZfyk+ARb
+         Z4OTRdt0dGiqLNVl1zsMlWgN0OuSQeQlztLTWYwOOCoSwyZfO0aA76AyB61u1qMonRep
+         NTgfvgpvm6UhHSNfjGYinpLVEN3yYCM+h3aJ6l8fCtVY9TxfsWpFkbnsEuL53SlJoHc+
+         kaJA2s3zbfTa3NRn/+rckwMbCoJtJnFfiaeHKmp22udQSn+aKDzLB0xo3hiqgvaWJo8G
+         vXkG7ZeFTMwan2KVE9L8RrRsMVfqARw8dzez5tXTCW3AWVniatHyZGFGMJFSDMPzSFeP
+         fB5Q==
+X-Gm-Message-State: AGi0PuZdGjEbiuagQ8UT40VY6/QDx4IDj33ZJ6vM4/OryelRHiAdUpSa
+        wuc0ZOW5H3FPxQfcjGMLVxIncZLK
+X-Google-Smtp-Source: APiQypJROcJ9Y2M5dmF4/JcNXAeljpmxHGKOcJYPfLecrnUMcgu8QJrIUdSoRCOZ/D6EVMwcjeMD9w==
+X-Received: by 2002:a1c:3884:: with SMTP id f126mr424583wma.91.1588018427246;
+        Mon, 27 Apr 2020 13:13:47 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id t17sm21775253wro.2.2020.04.27.13.13.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 Apr 2020 13:13:46 -0700 (PDT)
+Message-Id: <95aae041613c7f6ac683c749ea3863a7fd1e46ef.1588018418.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.539.v10.git.1588018418.gitgitgadget@gmail.com>
+References: <pull.539.v9.git.1587417295.gitgitgadget@gmail.com>
+        <pull.539.v10.git.1588018418.gitgitgadget@gmail.com>
+From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 27 Apr 2020 20:13:34 +0000
+Subject: [PATCH v10 08/12] reftable: clarify how empty tables should be
+ written
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200427200852.GC1728884@coredump.intra.peff.net>
+To:     git@vger.kernel.org
+Cc:     Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 27, 2020 at 04:08:52PM -0400, Jeff King wrote:
+From: Han-Wen Nienhuys <hanwen@google.com>
 
-> Skimming the patches, I do wish I didn't see so much repetition with the
-> existing Makefile. I know that some of the logic will just have to be
-> ported manually, but surely we could be pulling things like the list of
-> libgit_SOURCES from the Makefile as the single source of truth?
+The format allows for some ambiguity, as a lone footer also starts
+with a valid file header. However, the current JGit code will barf on
+this. This commit codifies this behavior into the standard.
 
-Thinking I surely couldn't be the only one to think of this, I dug
-further into some of the sub-threads. And indeed, it seems like you are
-on the same page here.
+Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+---
+ Documentation/technical/reftable.txt | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-IMHO it is worth making the cmake file depend as much as possible on
-what's in the Makefile.
+diff --git a/Documentation/technical/reftable.txt b/Documentation/technical/reftable.txt
+index ee3f36ea851..df5cb5f11b8 100644
+--- a/Documentation/technical/reftable.txt
++++ b/Documentation/technical/reftable.txt
+@@ -731,6 +731,13 @@ version)
+ 
+ Once verified, the other fields of the footer can be accessed.
+ 
++Empty tables
++++++++++++++
++
++A reftable may be empty. In this case, the file starts with a header
++and is immediately followed by a footer.
++
++
+ Varint encoding
+ ^^^^^^^^^^^^^^^
+ 
+-- 
+gitgitgadget
 
--Peff
