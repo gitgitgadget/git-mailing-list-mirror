@@ -2,180 +2,152 @@ Return-Path: <SRS0=mOGp=6L=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-10.2 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 77B57C54FCB
-	for <git@archiver.kernel.org>; Mon, 27 Apr 2020 16:28:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 68057C5519A
+	for <git@archiver.kernel.org>; Mon, 27 Apr 2020 16:28:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 48EA5206B9
-	for <git@archiver.kernel.org>; Mon, 27 Apr 2020 16:28:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2B34E20728
+	for <git@archiver.kernel.org>; Mon, 27 Apr 2020 16:28:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="J6NyWK3e"
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="KRMhrKUE"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728291AbgD0Q2G (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Apr 2020 12:28:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52754 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1727073AbgD0Q2F (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 27 Apr 2020 12:28:05 -0400
-Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B05CCC0610D5
-        for <git@vger.kernel.org>; Mon, 27 Apr 2020 09:28:04 -0700 (PDT)
-Received: by mail-pj1-x1041.google.com with SMTP id mq3so7729399pjb.1
-        for <git@vger.kernel.org>; Mon, 27 Apr 2020 09:28:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=sfmJjJOYpZpd7NyY6aMNq33Oxk35HnqhUt3ukJV1d5E=;
-        b=J6NyWK3edw2LnUfdbhmd2GRNYVof9R7gEIT5Mif7vVLpLzTeOSmav6nbFnO65siodN
-         8F0U5WywwkLSqc0bBhKAI3gKrNN7pfGsG9b4c2bq6889Tl0q2RIJ4JA7H20Uotd9/m/V
-         /BKgXeltUyfk4d+ZiUGoscb92hiRifje36roNPl3GdCfpFyaYwEOVphkAtZVZun7uacw
-         j4lbxfubhVTaEGZaMrYS1Ca4gwhHnBUYk+hbyVD3u457wZtobzg0DTqqbtwaxO1WnLQ6
-         ZIGqYdnpEOqU2445LQqtpG6IOh2RucQ6Aie0qBU+TysA1L4md7VQV+2EAo35FezZUD5i
-         XQLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=sfmJjJOYpZpd7NyY6aMNq33Oxk35HnqhUt3ukJV1d5E=;
-        b=MuTD0iFKvAWT3IUIydirvDA9VStpFTKrr+rxxKm3UbsezTqPS+6HcBCOhp/t46IBhB
-         faYh/mJzMXKPB62iifzbN0yXsmb27/iHgvONd7D8OQ1XWCcnv5QYY7dlAbZerRYzuuMv
-         PFaXStQkWHvycUxh0cbbtJCKv9N6z2wQWKkoDcJ7TsWI7tumzqAK9YMNIixR1lMb9uSV
-         upWYH/QUMZFssip2MdEa4Q6zFkOls21sOtFP79RWJd5LEriQZrE6X38HU9ahR4yULlmq
-         GrQCY8t8quToiWih3M3Tr0iJF3ATyd90GBQw+xktlouUJ0oewqAeX7q8T4/OYq/RKV4A
-         0Y1g==
-X-Gm-Message-State: AGi0PuZNIsvMdRdxLdrS7zhB0fEAbAMpMXwixPl4Hrm+w0oPHtZOlKqQ
-        bNVbyYZkMyGZ6X4gF7jUMfam7wCD3jquhQ==
-X-Google-Smtp-Source: APiQypLAgi79d0XClDBLLavHe90Ig4O2LHNUMa6Gcb2XvwxALXQjNvCH10uu5kk9RR6VJYHO0R829Q==
-X-Received: by 2002:a17:90a:5aa7:: with SMTP id n36mr24928120pji.45.1588004883802;
-        Mon, 27 Apr 2020 09:28:03 -0700 (PDT)
-Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id r23sm13202677pfr.64.2020.04.27.09.28.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Apr 2020 09:28:03 -0700 (PDT)
-Date:   Mon, 27 Apr 2020 10:28:02 -0600
-From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Cc:     peff@peff.net, dstolee@microsoft.com, gitster@pobox.com,
-        mhagger@alum.mit.edu
-Subject: [PATCH v2 3/4] commit-graph.c: write non-split graphs as read-only
-Message-ID: <86cf29ce9c1e6dc1fc881458c18850c2893b092a.1588004647.git.me@ttaylorr.com>
-References: <cover.1587422630.git.me@ttaylorr.com>
- <cover.1588004647.git.me@ttaylorr.com>
+        id S1728297AbgD0Q2I (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Apr 2020 12:28:08 -0400
+Received: from avasout07.plus.net ([84.93.230.235]:38050 "EHLO
+        avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728287AbgD0Q2H (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Apr 2020 12:28:07 -0400
+Received: from [10.0.2.15] ([217.32.115.138])
+        by smtp with ESMTPA
+        id T6bzjVxZSsCJiT6c1jykjp; Mon, 27 Apr 2020 17:28:05 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+        t=1588004885; bh=pincmBbh0BysKiBlGiyEPmWV+K4KzpVJ15U5Iba+axw=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=KRMhrKUE+sEuUa+Lr4IcikSRQAZQSNyPknC9ODjDiNsBReyiGGgi1wtV247+noggv
+         PuCJzRFjQG2B4fcXLzvS1GrKEzh4kv00kqDkKanl/+fGaO76/VYNdiZN1g6WHo8VVW
+         5sdaw2tKlDGXUVcbp6Z4iQGK1+FMKk2DnxPCD3Xk6zaWc0gIcau+eUi/KLBM+xTSMa
+         2PJOzyIyFRPcg5NyX0etRK7WyhzM21msc4NoiCSd6lWgmemG/2A0zv6Pt0lL5KZ5PK
+         mCzTIguYDYXwnSB6cs0gHVDlYHdPRITA4Uvpigl3r6rB8MlM18ImD/R/fOazYRmS2T
+         44F3MfRppXwvw==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=BPIoUGYG c=1 sm=1 tr=0
+ a=T9WNts+jH3PhiGdS1gtV5Q==:117 a=T9WNts+jH3PhiGdS1gtV5Q==:17
+ a=IkcTkHD0fZMA:10 a=5KEJ3k9QAAAA:8 a=mDV3o1hIAAAA:8 a=Sw4BfdOMRlDJS9s9DWwA:9
+ a=QEXdDO2ut3YA:10 a=zlJ5AU5v9O4A:10 a=olg2BfGzmf2haRflzj8J:22
+ a=_FVE-zBwftR9WsbkzFJk:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH v2 2/4] compat/regex: include alloca.h before undef it
+To:     Danh Doan <congdanhqx@gmail.com>
+Cc:     git@vger.kernel.org
+References: <cover.1587648870.git.congdanhqx@gmail.com>
+ <cover.1587740959.git.congdanhqx@gmail.com>
+ <290ba923b5ee5bcaa4801454b6692deb532bd681.1587740959.git.congdanhqx@gmail.com>
+ <820d44c5-5852-fa83-a814-8e58dd120565@ramsayjones.plus.com>
+ <20200424170916.GA29153@danh.dev>
+ <0bee8daa-99d0-4939-e225-8783bc0457f8@ramsayjones.plus.com>
+ <20200424223440.GC721@danh.dev>
+ <ffcaaf4f-a43f-2d20-b70d-dfb8b1d7c687@ramsayjones.plus.com>
+ <20200426005451.f7pyoiijgbk4hpsj@danh.dev>
+ <e9163e0d-2572-e7e0-6aa3-09ce04750b22@ramsayjones.plus.com>
+ <20200427010821.GD14800@danh.dev>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <f3af49c7-6c35-d2f6-c87c-e7342b1c2b6f@ramsayjones.plus.com>
+Date:   Mon, 27 Apr 2020 17:28:03 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
+In-Reply-To: <20200427010821.GD14800@danh.dev>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1588004647.git.me@ttaylorr.com>
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfK4hRpUie5SNMjJ55kN7CBodv9UEKc8GlUgFXJXAUOp4pSfpE+0d/zXZvoK4p0Ny1sWqZTrhgy/LpF2kFUzF1WON2GyI6N6+DCy7rYoRpXia7NahwMCP
+ pHEBbEZ6BjzODbEBoY/nZpB5SJfJaThwMy3oPmWnOOWkQXV1+z2LE9p2Rhj9xD+hQU+EuFFbRYHRyA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the previous commit, Git learned 'hold_lock_file_for_update_mode' to
-allow the caller to specify the permission bits (prior to further
-adjustment by the umask and shared repository permissions) used when
-acquiring a temporary file.
 
-Use this in the commit-graph machinery for writing a non-split graph to
-acquire an opened temporary file with permissions read-only permissions
-to match the split behavior. (In the split case, Git uses
-git_mkstemp_mode' for each of the commit-graph layers with permission
-bits '0444').
 
-One can notice this discrepancy when moving a non-split graph to be part
-of a new chain. This causes a commit-graph chain where all layers have
-read-only permission bits, except for the base layer, which is writable
-for the current user.
+On 27/04/2020 02:08, Danh Doan wrote:
+[snip]
 
-Resolve this discrepancy by using the new
-'hold_lock_file_for_update_mode' and passing the desired permission
-bits.
+>>> musl's alloca.h is available here:
+>>>
+>>> https://git.musl-libc.org/cgit/musl/tree/include/alloca.h
+>>
+>> Hmm, OK, so that partly explains the problem. I wonder if the
+>> musl guys would accept a bug report?
+> 
+> I don't think they have a policy of no `#undef` whatsoever.
 
-Doing so causes some test fallout in t5318 and t6600. In t5318, this
-occurs in tests that corrupt a commit-graph file by writing into it. For
-these, 'chmod u+w'-ing the file beforehand resolves the issue. The
-additional spot in 'corrupt_graph_verify' is necessary because of the
-extra 'git commit-graph write' beforehand (which *does* rewrite the
-commit-graph file). In t6600, this is caused by copying a read-only
-commit-graph file into place and then trying to replace it. For these,
-make these files writable.
+That's fair enough.
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- commit-graph.c          |  3 ++-
- t/t5318-commit-graph.sh | 11 ++++++++++-
- t/t6600-test-reach.sh   |  2 ++
- 3 files changed, 14 insertions(+), 2 deletions(-)
+> But, I think they're picky when come to C-correctly and
+> POSIX-correctly.
+> Does C or POSIX define alloca(3) at all?
 
-diff --git a/commit-graph.c b/commit-graph.c
-index f013a84e29..5b5047a7dd 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -1388,7 +1388,8 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
- 
- 		f = hashfd(fd, ctx->graph_name);
- 	} else {
--		hold_lock_file_for_update(&lk, ctx->graph_name, LOCK_DIE_ON_ERROR);
-+		hold_lock_file_for_update_mode(&lk, ctx->graph_name,
-+					       LOCK_DIE_ON_ERROR, 0444);
- 		fd = lk.tempfile->fd;
- 		f = hashfd(lk.tempfile->fd, lk.tempfile->filename.buf);
- 	}
-diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-index 9bf920ae17..fb0aae61c3 100755
---- a/t/t5318-commit-graph.sh
-+++ b/t/t5318-commit-graph.sh
-@@ -96,6 +96,13 @@ test_expect_success 'write graph' '
- 	graph_read_expect "3"
- '
- 
-+test_expect_success POSIXPERM 'write graph has correct permissions' '
-+	test_path_is_file $objdir/info/commit-graph &&
-+	echo "-r--r--r--" >expect &&
-+	test_modebits $objdir/info/commit-graph >actual &&
-+	test_cmp expect actual
-+'
-+
- graph_git_behavior 'graph exists' full commits/3 commits/1
- 
- test_expect_success 'Add more commits' '
-@@ -421,7 +428,8 @@ GRAPH_BYTE_FOOTER=$(($GRAPH_OCTOPUS_DATA_OFFSET + 4 * $NUM_OCTOPUS_EDGES))
- corrupt_graph_setup() {
- 	cd "$TRASH_DIRECTORY/full" &&
- 	test_when_finished mv commit-graph-backup $objdir/info/commit-graph &&
--	cp $objdir/info/commit-graph commit-graph-backup
-+	cp $objdir/info/commit-graph commit-graph-backup &&
-+	chmod u+w $objdir/info/commit-graph
- }
- 
- corrupt_graph_verify() {
-@@ -435,6 +443,7 @@ corrupt_graph_verify() {
- 	fi &&
- 	git status --short &&
- 	GIT_TEST_COMMIT_GRAPH_DIE_ON_LOAD=true git commit-graph write &&
-+	chmod u+w $objdir/info/commit-graph &&
- 	git commit-graph verify
- }
- 
-diff --git a/t/t6600-test-reach.sh b/t/t6600-test-reach.sh
-index b24d850036..475564bee7 100755
---- a/t/t6600-test-reach.sh
-+++ b/t/t6600-test-reach.sh
-@@ -51,8 +51,10 @@ test_expect_success 'setup' '
- 	done &&
- 	git commit-graph write --reachable &&
- 	mv .git/objects/info/commit-graph commit-graph-full &&
-+	chmod u+w commit-graph-full &&
- 	git show-ref -s commit-5-5 | git commit-graph write --stdin-commits &&
- 	mv .git/objects/info/commit-graph commit-graph-half &&
-+	chmod u+w commit-graph-half &&
- 	git config core.commitGraph true
- '
- 
--- 
-2.26.0.113.ge9739cdccc
+No alloca() is not in either the POSIX or C standard(s).
+This was an extension from the early days of BSD Unix.
 
+For some reason, I thought you had to explicitly '#include <alloca.h>'
+to use it, but it appears that (by default) you get a bonus include
+from the <stdlib.h> header, unless you restrict the headers using the
+various macros and/or compiler command-line options.
+
+As it happens, even on glibc systems, the <alloca.h> header is included
+by the <stdlib.h> header, unless you take steps to suppress it. So, we
+would have had the same issue, if it wasn't for the aforementioned
+'#undef alloca' the the glibc header file.
+
+When I need to look at pp output, while debugging things like this,
+I cherry-pick a patch to the Makefile:
+
+  $ git diff
+  diff --git a/Makefile b/Makefile
+  index 6d5cee270c..cd8753bf54 100644
+  --- a/Makefile
+  +++ b/Makefile
+  @@ -2423,6 +2423,9 @@ $(ASM_OBJ): %.o: %.S GIT-CFLAGS $(missing_dep_dirs)
+   %.s: %.c GIT-CFLAGS FORCE
+          $(QUIET_CC)$(CC) -o $@ -S $(ALL_CFLAGS) $(EXTRA_CPPFLAGS) $<
+   
+  +%.i: %.c GIT-CFLAGS FORCE
+  +       $(QUIET_CC)$(CC) $(ALL_CFLAGS) $(EXTRA_CPPFLAGS) -E $< >$*.i
+  +
+   ifdef USE_COMPUTED_HEADER_DEPENDENCIES
+   # Take advantage of gcc's on-the-fly dependency generation
+   # See <http://gcc.gnu.org/gcc-3.0/features.html>.
+  @@ -2474,7 +2477,7 @@ http-walker.sp http-walker.s http-walker.o: EXTRA_CPPFLAGS = -DNO_EXPAT
+   endif
+   
+   ifdef NO_REGEX
+  -compat/regex/regex.sp compat/regex/regex.o: EXTRA_CPPFLAGS = \
+  +compat/regex/regex.i compat/regex/regex.sp compat/regex/regex.o: EXTRA_CPPFLAGS = \
+          -DGAWK -DNO_MBSUPPORT
+   endif
+   
+  $ 
+
+[The second hunk above is not actually part of the cherry-picked patch,
+but I needed it in this instance to get GAWK and NO_MBSUPPORT passed to
+the compiler!]
+
+  $ make NO_REGEX=1 compat/regex/regex.i
+      CC compat/regex/regex.i
+  $ vim compat/regex/regex.i
+  $ 
+
+... which shows <alloca.h> is indeed being #included from <stdlib.h>.
+[it is protected by a __USE_MISC pp variable, but I didn't bother to
+track it down! ;-)]
+
+ATB,
+Ramsay Jones
+
+  
