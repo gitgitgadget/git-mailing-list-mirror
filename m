@@ -2,100 +2,107 @@ Return-Path: <SRS0=mOGp=6L=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
-	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 31B77C83001
-	for <git@archiver.kernel.org>; Mon, 27 Apr 2020 23:42:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9CEF2C83001
+	for <git@archiver.kernel.org>; Mon, 27 Apr 2020 23:45:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E77A420775
-	for <git@archiver.kernel.org>; Mon, 27 Apr 2020 23:42:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3FE882072D
+	for <git@archiver.kernel.org>; Mon, 27 Apr 2020 23:45:15 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="KemId4DW"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OtcrTs7M"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726251AbgD0Xmp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Apr 2020 19:42:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36334 "EHLO
+        id S1726378AbgD0XpO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Apr 2020 19:45:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36722 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1725968AbgD0Xmo (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 27 Apr 2020 19:42:44 -0400
-Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAE19C0610D5
-        for <git@vger.kernel.org>; Mon, 27 Apr 2020 16:42:44 -0700 (PDT)
-Received: by mail-yb1-xb4a.google.com with SMTP id s62so22887002ybs.0
-        for <git@vger.kernel.org>; Mon, 27 Apr 2020 16:42:44 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1726333AbgD0XpO (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 27 Apr 2020 19:45:14 -0400
+Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 216D4C0610D5
+        for <git@vger.kernel.org>; Mon, 27 Apr 2020 16:45:14 -0700 (PDT)
+Received: by mail-pj1-x1041.google.com with SMTP id mq3so317586pjb.1
+        for <git@vger.kernel.org>; Mon, 27 Apr 2020 16:45:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:subject:from:to:cc;
-        bh=p8T28kGftDzJJIwNDodAsUd11p6G0Z4gitCXhEcJ17o=;
-        b=KemId4DWMzsyGmqgLwl2gqRDZWqHH1LQgJx12/isOAVFZa1e02SW3XTAtvZbFxA7EF
-         Vb7vzgNvFS0B4SEX6voeWeHef2FS1MpjGEcO8+wh5yLbVv9GJI2eQQ241wnuVhXUF9Lc
-         fjIMWwBTzH9YHH0/QbN0CkkVYwsGcJSdEAL5sYROSTNImHmbsa+JkgUkBu1Kx2jfFVMT
-         OXXMs+fDdt5T7qKM/C9YMmt7j7bRq8MMfDFUnPPFl75g/QHLvgxSTZIrl5O1AoouSx7G
-         Is44luRKn7BzfYkCak5uzYORyv5VUyA4Qk5TNFXaFBSym1t63Ye451hhpMANZTpIRnPi
-         BmEA==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=cV9Q2QkrBxIc456TZCRtrHX0eHNrBTJNaB45+PPIbkI=;
+        b=OtcrTs7MWPgjv54NQv8kUDEugh44O1GBSmzR/WXYHiGsoTu5SgSF8mMbukix50I/Iz
+         9oWr1oTvq+x/oNmDfvw+gFTeoleCEUnHmVh7nsjk9c73fQfK0okkfDbqEfCnXbYXMtmX
+         zs2h3i6AiD3ObFKmnumDpsu9f4yMxzt+WSf5YcM/duhnFBQqvBAoGTbE1ugmZv7QNOSh
+         BmMsVIwiEAutXF+zwgIEctVgxQfcWGEEltcFA8GIMDX5gGHQMW/67Q3F80Cf5u3Y+wLQ
+         nUrRQU3y6dQNACpmAxxWs10mLfDSUUW/N1zIk3FzfoeeKsqRWVlAgWloW+lcV6GofIP9
+         RH5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version:subject
-         :from:to:cc;
-        bh=p8T28kGftDzJJIwNDodAsUd11p6G0Z4gitCXhEcJ17o=;
-        b=l2tFPXcox098MwTFQzjQ0BXsKLbx3kUb7emcIJXWvRJ1gVsOlmo5l0Wa8goaECrQ2L
-         EEuo0olwxqmDL5AR1FkvJrhzTDOb63P48Vwq0EfLLV149sI/x527FcUDYGdo4yuFBlAk
-         RtzoOsdYWl01ZVyLJHtW1JIIVJJhmIRFyErBpv2PTc88MorasoG5cj7MwbGp/zCO3e6V
-         spuVhn3MigSecjO/bAuzvMBlJF6pvGToPTMSckPneBR6F4m7K59Cq3oRkprtHj1Lzgwl
-         5nIq0fggUUDXonsnH3fUBeOmvopDCkf5D0t310HlK8PSCAPzUXCoCb330m4SspD57mmR
-         hNzw==
-X-Gm-Message-State: AGi0PuYF5AHP+ZxstvalrL3P+2g8welBz4ZXWryzNInjM8/T8iP27EW4
-        HnB8L+1xnuSF0clqZbEFO6H4JvZ7AufkuYskm97ZGYVhtzzc+faZKIpTsdsUmpgb9UeFAlhmCv9
-        Ho3Ka1LkEt7TCzHMBha8hsGgKJh8CTRSgHSOIDoT4BSbgBmJThy+VQDKKIJjiL3ElulKoQsChrA
-        ==
-X-Google-Smtp-Source: APiQypJps7kfqaD9POwW5G8mLlPnGS2UN9eqgy0fk+pvo5KxTLXuDal8iGnGHj14i6s+DiuzQEYGu5dgxvX2rxNLvFA=
-X-Received: by 2002:a25:bd87:: with SMTP id f7mr31405730ybh.390.1588030963770;
- Mon, 27 Apr 2020 16:42:43 -0700 (PDT)
-Date:   Mon, 27 Apr 2020 16:42:31 -0700
-In-Reply-To: <20200427204859.171084-1-emilyshaffer@google.com>
-Message-Id: <20200427234231.194456-1-emilyshaffer@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.26.2.303.gf8c07b1a785-goog
-Subject: [PATCH v2] bugreport: drop extraneous includes
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     git@vger.kernel.org
-Cc:     Emily Shaffer <emilyshaffer@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=cV9Q2QkrBxIc456TZCRtrHX0eHNrBTJNaB45+PPIbkI=;
+        b=sUlbZCoruM5hoj1T3gAC5g1qxVyaLXVOpcMfSC96XGfTE3l8nGthP+FlTUFCt9vYOb
+         M+8Z1x6MHUaKAZdqM3JbL+LrMe1MyBD658R7I6qwFxWPVhm972jyOYgyRlIFgzxJvB9v
+         yYsqoKXDQrQ+xqQBCnNFWQNujWB0oRFFhX5IDu956LiShj2sUcKhq+SlvHELNa2IiXc8
+         TRyEwYSihK6FM98AcPWPlH/f0lXAtyoqmZuPhRAWOvlS+Nhq0zD236bVkpOXtDLYe8s8
+         0reweFVtoZxZvyd8cfF4PVQeZmEz1UwbBafN+QVQ1aVXIPRjcpqfthRANGABdcmlYBnN
+         SXrQ==
+X-Gm-Message-State: AGi0PuaDz7XT4I0/alw5TZzSG/8UV3d7Y634unZ2QC7KUkwbgR4Hj6WT
+        90dafqhJv4bnD3jZweFcWVk=
+X-Google-Smtp-Source: APiQypKqQqf8o9WfrAs4f/UFwl41gX+LWItDmR0pSoYAVxo3fKuTAJI37rsoTBHVxxn5RhgGZR34pA==
+X-Received: by 2002:a17:902:c50a:: with SMTP id o10mr20996182plx.187.1588031113574;
+        Mon, 27 Apr 2020 16:45:13 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
+        by smtp.gmail.com with ESMTPSA id 28sm335300pjh.43.2020.04.27.16.45.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 Apr 2020 16:45:12 -0700 (PDT)
+Date:   Mon, 27 Apr 2020 16:45:10 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] bugreport: collect list of populated hooks
+Message-ID: <20200427234510.GC36078@google.com>
+References: <20200424233800.200439-1-emilyshaffer@google.com>
+ <20200427233820.179891-1-emilyshaffer@google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200427233820.179891-1-emilyshaffer@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the generic parts of the source files, system headers like <time.h>
-and <stdio.h> are supposed to be included indirectly bt including
-"git-compat-util.h", which manages portability issues.
+Emily Shaffer wrote:
 
-Drop our explicit inclusions and rely on "cache.h", which includes
-"git-compat-util.h".
+> --- a/t/t0091-bugreport.sh
+> +++ b/t/t0091-bugreport.sh
+> @@ -57,5 +57,15 @@ test_expect_success 'can create leading directories outside of a git dir' '
+>  	nongit git bugreport -o foo/bar/baz
+>  '
+>  
+> +test_expect_success 'indicates populated hooks' '
+> +	test_when_finished rm git-bugreport-hooks.txt &&
+> +	test_when_finished rm -fr .git/hooks &&
+> +	mkdir .git/hooks &&
+> +	touch .git/hooks/applypatch-msg &&
+> +	chmod +x .git/hooks/applypatch-msg &&
 
-Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
----
- bugreport.c | 2 --
- 1 file changed, 2 deletions(-)
+optional: could use write_script for this
 
-diff --git a/bugreport.c b/bugreport.c
-index 089b939a87..acacca8fef 100644
---- a/bugreport.c
-+++ b/bugreport.c
-@@ -1,8 +1,6 @@
- #include "cache.h"
- #include "parse-options.h"
--#include "stdio.h"
- #include "strbuf.h"
--#include "time.h"
- #include "help.h"
- #include "compat/compiler.h"
- 
--- 
-2.26.2.303.gf8c07b1a785-goog
+> +	git bugreport -s hooks &&
+> +	test_i18ngrep applypatch-msg git-bugreport-hooks.txt
 
+This should work even when translated, so it can use "grep" instead of
+test_i18ngrep.
+
+A few more things to test:
+- that it doesn't include hooks we *haven't* installed. :)
+- that it isn't confused by the default *.sample hooks
+- what happens when outside a git repository?
+
+Even without such tests,
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+
+Thanks.
