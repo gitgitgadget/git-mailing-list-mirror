@@ -2,104 +2,89 @@ Return-Path: <SRS0=mOGp=6L=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8DB1AC54FD0
-	for <git@archiver.kernel.org>; Mon, 27 Apr 2020 10:57:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F2A4C54FD0
+	for <git@archiver.kernel.org>; Mon, 27 Apr 2020 11:31:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 68376206A4
-	for <git@archiver.kernel.org>; Mon, 27 Apr 2020 10:57:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EDD16206A4
+	for <git@archiver.kernel.org>; Mon, 27 Apr 2020 11:31:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hUoWveuI"
+	dkim=pass (1024-bit key) header.d=diamand.org header.i=@diamand.org header.b="RdmSsScA"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726953AbgD0K55 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Apr 2020 06:57:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57554 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726504AbgD0K55 (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 27 Apr 2020 06:57:57 -0400
-Received: from mail-qt1-x841.google.com (mail-qt1-x841.google.com [IPv6:2607:f8b0:4864:20::841])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBB03C0610D5
-        for <git@vger.kernel.org>; Mon, 27 Apr 2020 03:57:56 -0700 (PDT)
-Received: by mail-qt1-x841.google.com with SMTP id k12so13833527qtm.4
-        for <git@vger.kernel.org>; Mon, 27 Apr 2020 03:57:56 -0700 (PDT)
+        id S1726821AbgD0Lb4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Apr 2020 07:31:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34556 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726390AbgD0Lbz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Apr 2020 07:31:55 -0400
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CE2AC0610D5
+        for <git@vger.kernel.org>; Mon, 27 Apr 2020 04:31:55 -0700 (PDT)
+Received: by mail-wm1-x344.google.com with SMTP id v4so15732360wme.1
+        for <git@vger.kernel.org>; Mon, 27 Apr 2020 04:31:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=jtVxX0PU+0FHw7CNIZ8erFjV6iPdqCT9SVRL4xf4hOc=;
-        b=hUoWveuId11uH9hJp2K9XPOJzF5yoXPBhWNrNrBOzEAUgjt2n5zRgV5jD0Nn+MnWS5
-         TKz03gWDM0rZSYlGBP9pWXATqiLF9k+G/V3iyaS1gbn/vv8JNfDEBAut8Y+4VyvQuGQ1
-         NDdhuLqIwISAz9xNNY09m7WdEb0H8ffgnjvSLK8QaBih0ia62LUBZo+KbO/AjjpYlbAw
-         tPMWgL+625JqleCZPYzv6MUyB0CXjrqcv+hJ93ZvXcagfTulzGVVS2s+iXk3nBBxfdiC
-         TRqaRi72zzOA1C7HpVJSsd6n0zfbkE3hXaiMuVIvOX+pgVeqKjRjTS36xW95sJVcJ5RZ
-         8m0A==
+        d=diamand.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ORerAKZa31lZ7cJE6PlkTD2DOj0UMprl58X+nuaRSNo=;
+        b=RdmSsScAWCCnNaCDl3Z9bXNi9c46sHlalUlCycfJVgDsav8mOO5Q0O1d6hRGredCBd
+         kzfKedfLkxDpGEM5Ap1XlXpJuaE/COCsmwza78mWZ3fVQL8U2zx1/JOskx7+KtEjs8sB
+         Tq/7CJBN4Xl9PP927DfQSpBDtQLKQTMRJkWQ0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=jtVxX0PU+0FHw7CNIZ8erFjV6iPdqCT9SVRL4xf4hOc=;
-        b=pAKAZsJFHax2FMGipvIRwdVoOk4EAEkI29nJQQEnsFc4nrGSH5gyh1ljIbk/6+kySd
-         Lrw9+qSqmxNbqrgoNmBbL0Lb442/8C4z2p/0ORab00yHuVL1v8SmuCGepfX8CefsIfU0
-         7k7UAW90Th2c40qvjkyCZY1Q+IoljD51yMchtwsMeh93+mLDtBmJdlJwAF1ugwyB//x5
-         q0ws5y/bFlYbTz1IiWNq0FO4qjcgX5LPgGSXj8OOu4qgfDUL/Igz2Qv/LbXoKOKFIx4/
-         s1xX6XGnXmIqG7xSQ6icmVu6AFLS8Bgjlc/S/z1+Oj+O+cOMt019+xF9iScDv2vdLP57
-         lwKA==
-X-Gm-Message-State: AGi0PuaQMKj2MlCq+ViWLd7+kOvOx3s3z0fbJ9j3bdEfSmMWWfkIH1ui
-        S9FwdYMb8Tp38b6SD23dPYM=
-X-Google-Smtp-Source: APiQypKXMhlJCRLPKJZWRtOK+KiSAaiTYCavdoGF5bNxN+YlOs5rkTWw/hpQkwclXAeRISH4b1JQRg==
-X-Received: by 2002:ac8:12c2:: with SMTP id b2mr22116237qtj.7.1587985075900;
-        Mon, 27 Apr 2020 03:57:55 -0700 (PDT)
-Received: from [192.168.1.83] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id a194sm10126479qkb.21.2020.04.27.03.57.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Apr 2020 03:57:55 -0700 (PDT)
-Subject: Re: [PATCH 4/4] commit-graph: close descriptors after mmap
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org, peff@peff.net,
-        szeder.dev@gmail.com, dstolee@microsoft.com
-References: <cover.1587677671.git.me@ttaylorr.com>
- <e05db264cb50760cab222157b436e82adeaeadc8.1587677671.git.me@ttaylorr.com>
- <xmqq368tg8po.fsf@gitster.c.googlers.com>
- <2232c379-d0ec-0b52-96b4-379438642785@gmail.com>
- <xmqqmu70d547.fsf@gitster.c.googlers.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <7f344c3c-98e1-fc3c-4018-46e64f8010c0@gmail.com>
-Date:   Mon, 27 Apr 2020 06:57:54 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101
- Thunderbird/76.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ORerAKZa31lZ7cJE6PlkTD2DOj0UMprl58X+nuaRSNo=;
+        b=TSK0dfJFfp6VSEdHZ5N0wrI/n7s9qxlTOeRQkUT86OrHB/xC/uVETbnhea1okBATQD
+         M/v3ODF72x3NgcVHa7CRAUNuBZgfUEsM81j+aZNWhtS3z2gbVC/nbeXeUx/Q5U2JM4a5
+         X6Zl8VnfALL5UiE6gJsEtsQ7VFciXBLmRapUXUEFU9XbMF9xPyVBArK308g+7g0kOSX6
+         t7WzxBtr07JEq0bQqWhFhiaQstTFFmq4q9rf6MOQbMLnOLaFzo0zqe3/cPkhmVdxA/mB
+         qtkvp/hnt0o8LtM2m//hJ0eMpbPP/sNW4b4Jl7AHyTnWUyDL4fTgyebvHE5zdksu1dqg
+         7RjQ==
+X-Gm-Message-State: AGi0PubqClBSYNDXGFKDeP3iP2VkOKUdRoJ4FytINE0nhhIVvEG1FVFi
+        0ZoymxPADPaYd3rDf/VEqIa7FDILQZ96y6oeWgKaWEa1
+X-Google-Smtp-Source: APiQypJcA3wlv+atOiPNGLhKwbTMeOj97d5m6zcqCqFJ/6j1IKMlqwEFd1keGebWchP1uvp5zUXPWgAIDWsgu5KVqQo=
+X-Received: by 2002:a7b:cfc9:: with SMTP id f9mr26774276wmm.61.1587987114082;
+ Mon, 27 Apr 2020 04:31:54 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <xmqqmu70d547.fsf@gitster.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <CANYt6aFi+6vKRD71digEh-D0RKkLPBRtek5t8zA-8_cPzwexkQ@mail.gmail.com>
+ <20200424064805.GB44448@Carlos-MBP> <CANYt6aFjp4wVzYk85Ag9mH3AWp4qUS3+4xsGioyQknKz9tmRUA@mail.gmail.com>
+ <20200424072049.GC44448@Carlos-MBP> <CANYt6aF1o9fmK2rwAA-LPSbd3TeW+x+6LdUj99sg_ANy3Q0kJg@mail.gmail.com>
+ <CANYt6aFN0eAKEhRvNhoiOTu7jO54Kau_ayQMhrdy+7_GPAOCyw@mail.gmail.com> <20200425065250.GB5065@danh.dev>
+In-Reply-To: <20200425065250.GB5065@danh.dev>
+From:   Luke Diamand <luke@diamand.org>
+Date:   Mon, 27 Apr 2020 12:31:43 +0100
+Message-ID: <CAE5ih79Chu7pguToRqmXdKh1BuvP3QGVK+8UDj=5F9_TovE86w@mail.gmail.com>
+Subject: Re: p4merge no longer working after upgrade to 2.26.0
+To:     Danh Doan <congdanhqx@gmail.com>
+Cc:     lars.fricke@googlemail.com,
+        =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>,
+        Git Users <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4/24/2020 4:02 PM, Junio C Hamano wrote:
-> Derrick Stolee <stolee@gmail.com> writes:
-> 
->> From: Derrick Stolee <dstolee@microsoft.com>
->> Date: Fri, 24 Apr 2020 13:11:13 +0000
->> Subject: [PATCH] multi-pack-index: close file descriptor after mmap
->>
->> We recently discovered that the commit-graph was not closing its
->> file descriptor after memory-mapping the file contents. After this
->> mmap() succeeds, there is no need to keep the file descriptor open.
->> In fact, there is signficant reason to close it so we do not run
->> out of descriptors.
-> 
-> The above is sufficient a justification.  Let's leave the remaining
-> two paragraphs under three-dashes.
+On Sat, 25 Apr 2020 at 07:53, Danh Doan <congdanhqx@gmail.com> wrote:
+>
+> On 2020-04-24 11:28:13+0200, Lars Fricke <lars.fricke@gmail.com> wrote:
+> > Just to help anyone who runs into the same problem.
+> >
+> > For whatever reason (maybe broken package on SLES) the wrapper p4merge
+> > was missing from $(git --exec_path)/mergetools.
+>
+> In openSUSE, p4merge is splited into git-p4 subpackage.
+> Which make sense to me.
+>
+> Can you check that?
 
-Works for me! I also thought there were too many first-person pronouns,
-but erred on the side of reporting "how did we figure out this was an
-issue?" in the message.
+That seems kind of weird. They have nothing to do with each other.
 
--Stolee
+>
+>
+> --
+> Danh
