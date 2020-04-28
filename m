@@ -2,121 +2,113 @@ Return-Path: <SRS0=fhRL=6M=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F2F3C83000
-	for <git@archiver.kernel.org>; Tue, 28 Apr 2020 19:35:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C292AC83000
+	for <git@archiver.kernel.org>; Tue, 28 Apr 2020 20:00:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6B4D220731
-	for <git@archiver.kernel.org>; Tue, 28 Apr 2020 19:35:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 98D902176D
+	for <git@archiver.kernel.org>; Tue, 28 Apr 2020 20:00:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KPYbh7br"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="IzibWwW4"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728614AbgD1TfW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Apr 2020 15:35:22 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:55391 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728559AbgD1TfW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Apr 2020 15:35:22 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 31996CF546;
-        Tue, 28 Apr 2020 15:35:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=+5lMFYkcSMmL2nqeZEX1CPpYdF4=; b=KPYbh7
-        brciPicRf7h/aJjIY/w5981jiVrhUUBUp+R9C2lrsBYJx21/A3m2oN1emGocquGr
-        mmO18OhEI7i++FID+2LRiQ7xhN+MyWFRTInf15/Rb1qTT5ykeBnWg/Wvf5TqT452
-        zPrqGD/3EYwivL24dMTYKcUYipGyXX6rqlppg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Wt9Oabr45NyZnW3Vwvv+KhnKcU4PAL5N
-        D0KM4mWEBJpd6iDopLq95c5Y8mnJQ8XYS+SXYElRFsp2GNdPuSKDDAIDICuZWUXX
-        SBhh0Jpe00hRUdjhbb1e0JG1pnx3r3bKBE426CNh0RhGRaMR5opWuNGcJIwcDsmz
-        lfrJVE3H3ZY=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 28F05CF545;
-        Tue, 28 Apr 2020 15:35:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 68CE2CF544;
-        Tue, 28 Apr 2020 15:35:17 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH] rebase: save autostash entry into stash reflog on --quit
-References: <353a67567a90aea8a90bce1de05d005c61b3b670.1588066252.git.liu.denton@gmail.com>
-Date:   Tue, 28 Apr 2020 12:35:15 -0700
-In-Reply-To: <353a67567a90aea8a90bce1de05d005c61b3b670.1588066252.git.liu.denton@gmail.com>
-        (Denton Liu's message of "Tue, 28 Apr 2020 05:31:31 -0400")
-Message-ID: <xmqqv9lj1k0c.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1729038AbgD1UAE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Apr 2020 16:00:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57702 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1728559AbgD1UAE (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 28 Apr 2020 16:00:04 -0400
+Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3B4BC03C1AB
+        for <git@vger.kernel.org>; Tue, 28 Apr 2020 13:00:02 -0700 (PDT)
+Received: by mail-pg1-x543.google.com with SMTP id n16so10971126pgb.7
+        for <git@vger.kernel.org>; Tue, 28 Apr 2020 13:00:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=yO+DTdcyYraGX/2XtVPJ8fFQfZUKzdT6on+iskw21OM=;
+        b=IzibWwW4Jtrz6wfAB/7zhJ3mlPnVAGdndDfm2Tyw5CMxjSOdMDO9s6DjfugXWv4Jgb
+         AZfWxakWti5mdIcAbviDjviXWnVmc1Inu40gAt5iYSamMTScQUEOm9n5gXtQf131aSAZ
+         9N3N1Qj6PvEOAfd0zOkPfuaxcpWe/oqOUP6EbApKfyKQEkDwWzffdlb6Yk5rzoiUYICx
+         YVbzqyqb0xa98teQHbwH1/2tFt1XR0NPUpfhcjTkqIRxL54jlQDyKly6hwCivS8WuDTI
+         khOFWl2KjlP1L4QkwJ21Tdi0/xWZb/Q90YSyt1hjzqK9NDySXbaSv2TtNhD2ePuj1kBY
+         Y9ZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=yO+DTdcyYraGX/2XtVPJ8fFQfZUKzdT6on+iskw21OM=;
+        b=lHAeAhcX5wu5bAKT6EwJgFZWN3rm2APbVAUSq/khBwGs43cRaoZZGNxAjAQ0Mdwaru
+         BrNQXq5EPUb87aTlTINx6LFswFGZaJeeajhe7yXtE9XTxXYw2vEqt08+fY92nc7dTK05
+         TxDzqRi7I9Uf0IU43QHiPTjQFQ/RWGr6kDyxmCntZMmBzHUfP3acdTqmTfbCdRzCfYXc
+         InCMeWldgI8QNFKB6N0F9Qyc8qs4xBt5AChgIoRxqP7+4A/n7+/v0WS07000s0k1zRmg
+         78FgyI8PciVgbqLrkQYF8kOa3Hmpd6P09/cQjPd1uOPHi3T/vOflic+8oAMOcNyYNnyj
+         GU/g==
+X-Gm-Message-State: AGi0PuYN3k3rbDx8dFu4F2cmghv7Lr+ir2SppsOtUip2nKFZ8kIZ5jJj
+        yOIxucN9SsmKgfF3Ci7W/s3Dxg==
+X-Google-Smtp-Source: APiQypKqNRARZhgETTYz3iwwi+Fqen61MSu6qxuQ9ZYugh/Eia/fhnasuYbrd56PXY1UjJeGWnjfSQ==
+X-Received: by 2002:a62:7e8e:: with SMTP id z136mr30458441pfc.151.1588104002433;
+        Tue, 28 Apr 2020 13:00:02 -0700 (PDT)
+Received: from localhost ([8.44.146.30])
+        by smtp.gmail.com with ESMTPSA id w69sm15782648pff.168.2020.04.28.12.59.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 Apr 2020 13:00:00 -0700 (PDT)
+Date:   Tue, 28 Apr 2020 13:59:57 -0600
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v2] fetch-pack: try harder to read an ERR packet
+Message-ID: <20200428195957.GA45908@syl.local>
+References: <20200428074442.29830-1-chriscool@tuxfamily.org>
+ <xmqqzhav1kix.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 63B2554C-8987-11EA-8C86-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqzhav1kix.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
-
-> In a03b55530a (merge: teach --autostash option, 2020-04-07), the
-> --autostash option was introduced for `git merge`. Notably, when
-> `git merge --quit` is run with an autostash entry present, it is saved
-> into the stash reflog. This is contrasted with the current behaviour of
-> `git rebase --quit` where the autostash entry is simply just dropped out
-> of existence.
+On Tue, Apr 28, 2020 at 12:24:06PM -0700, Junio C Hamano wrote:
+> Christian Couder <christian.couder@gmail.com> writes:
 >
-> Adopt the behaviour of `git merge --quit` in `git rebase --quit` and
-> save the autostash entry into the stash reflog instead of just deleting
-> it.
+> > From: SZEDER Gábor <szeder.dev@gmail.com>
+> >
+> > When the server has hung up after sending an ERR packet to the
+> > client, the client might still be writing, for example a "done"
+> > line. Therefore the client might get a write error before reading
+> > the ERR packet.
+> >
+> > When fetching, this could result in the client displaying a
+> > "Broken pipe" error, instead of the more useful error sent by
+> > the server in the ERR packet.
+>
+> Hmm, if the connection gets severed just before the ERR packet the
+> other side has written, we will see "Broken pipe" if we write
+> "done", and no amount of "try to read to collect as much what they
+> said as possible" would help.  If you are lucky and the connection
+> is broken after the ERR reaches on this side, such an "extra effort"
+> may help, but is it really worth the effort?  It is not clear to me
+> if the extra complexity, one more API function people need to learn,
+> and the need to think which one to use every time they want to say
+> write_in_full(), are justifiable.
+>
+> I dunno.
 
-The goal is wrothy, I would think, but I do not think we would
-explain it in terms of "stash reflog".  It is true that what "stash
-list" shows, the list of stasn entries, happens to be implemented as
-reflog entries of a single ref, but the end users would not view
-them as reflog entries, I suspect.  Do you know anybody who would do
-"git reflog stash@{now}"?
+I think that you're right. The more that I thought about my suggestion,
+the more dumb I was convinced that it was.
 
-It is less bad to explain with "reflog of stash ref" in the log
-message, meant to be read by our future developers, but ...
+Sorry.
 
-
-> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-> index f7a6033607..7d0c89a184 100644
-> --- a/Documentation/git-rebase.txt
-> +++ b/Documentation/git-rebase.txt
-> @@ -256,7 +256,8 @@ See also INCOMPATIBLE OPTIONS below.
->  --quit::
->  	Abort the rebase operation but HEAD is not reset back to the
->  	original branch. The index and working tree are also left
-> -	unchanged as a result.
-> +	unchanged as a result. If a temporary stash entry was created
-> +	using --autostash, it will be saved to the stash reflog.
-
-... let's not do so for end-user facing documentation.  "..., it
-will be stashed away".  Or we may not even want to say anything; any
-"--autostash" user would expect that the changes that were stashed
-before "rebase" started would not be discarded, and this change may
-just be a bugfix.
-
-> diff --git a/builtin/rebase.c b/builtin/rebase.c
-> index bc4fc69906..71aec532b1 100644
-> --- a/builtin/rebase.c
-> +++ b/builtin/rebase.c
-> @@ -1556,6 +1556,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->  		goto cleanup;
->  	}
->  	case ACTION_QUIT: {
-> +		save_autostash(state_dir_path("autostash", &options));
->  		if (options.type == REBASE_MERGE) {
->  			struct replay_opts replay = REPLAY_OPTS_INIT;
-
-Nice to see a fix as simple a this one ;-)
+Thanks,
+Taylor
