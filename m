@@ -4,89 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 961E9C83000
-	for <git@archiver.kernel.org>; Tue, 28 Apr 2020 06:52:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B30E1C83000
+	for <git@archiver.kernel.org>; Tue, 28 Apr 2020 07:18:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7082F206B9
-	for <git@archiver.kernel.org>; Tue, 28 Apr 2020 06:52:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8CE1920661
+	for <git@archiver.kernel.org>; Tue, 28 Apr 2020 07:18:08 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OmqBiANU"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OlhYC53u"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726418AbgD1Gws (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Apr 2020 02:52:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47192 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1725867AbgD1Gwr (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 28 Apr 2020 02:52:47 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49888C03C1A9
-        for <git@vger.kernel.org>; Mon, 27 Apr 2020 23:52:46 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id k8so16345649ejv.3
-        for <git@vger.kernel.org>; Mon, 27 Apr 2020 23:52:46 -0700 (PDT)
+        id S1726442AbgD1HSH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Apr 2020 03:18:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51146 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726430AbgD1HSH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Apr 2020 03:18:07 -0400
+Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BF55C03C1A9
+        for <git@vger.kernel.org>; Tue, 28 Apr 2020 00:18:07 -0700 (PDT)
+Received: by mail-pl1-x642.google.com with SMTP id g2so8002947plo.3
+        for <git@vger.kernel.org>; Tue, 28 Apr 2020 00:18:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=nUtTVIHRD94oD87sSmcQdp20b6D5/zbiYTmjO5OuHIo=;
-        b=OmqBiANUITS1cOiTdQECEZqiOnZu1X8U0hjrteVQ6dYVlJ+6XRsVI8V1NmrIkV8SfW
-         nUDDsTSa0YQAzhRHmGnNazIJGcdp+uH0Q8LKarZhViuSTS6RKi/1qEyFyiUCMtrM2Vsp
-         wgWMASfQABhF7h1nixM/lgbl/26UEt2nNGXu2ysEuWkBOHQzjdDeG4aOTm+gcwvdEIB9
-         B1dbOmKc2hU00m6ueoVJHZdF8HbDY19bIA8877gUcznF9moUkauTqjedbUDNkQFGOeIT
-         Rv/xQPC+oDwGn1IlBEJ1VnpF1Z7vBgffYihKw3aE/GxNoHcfYMFL3ivDSdaDj2itjNhN
-         3TSA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=xhJNBli/MbiEqJzeppBR/eZxuhCbPpkzYG6LLrT8AUI=;
+        b=OlhYC53uqLmgu5ccxjo/MRgAkz36OkNdLHFnRL9xstw5IbJdP8bN6l5BUbnDZ0+AZy
+         AO5d9NRMkgiJdiYdaTAieH6LCmh+4R+7KG+UOg+wz+2yNwlNDohK84ZRGuUjXRBxBANm
+         +fMp8OWrHoVjsX1+a/cEvCowPeM47B/xqP32wO4QgBhmq7k9iB/hMwsH9FphvqhTq5zR
+         rJ8J1NbdHUc8YiIijUGfcxDGlkM68vD0HrylgtYOde4w71Cpf6wngPCmjBHQj1sCC/ss
+         WGgaE26eY+uzB9jI2ZnhYisI0M3WH9EEmdI3SzLO8Q6siYa+dgAz8ZemjLulKKgxOkO6
+         wNvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=nUtTVIHRD94oD87sSmcQdp20b6D5/zbiYTmjO5OuHIo=;
-        b=A4mOelfDHOoVT1PJdIcaUZ1UsTeFtnFOUf3razaegaOJniFZon12XeAi/tgzLhvpNB
-         hZi9BcPV1GSVhmg6DPcuL/2bno4uUmHap2xw5IEivewuddHBI728k0WG+72ngG1VBN3T
-         O6tWPrrUA187of+OBNpmSHM6HPEDulsicmoWLYYPTMMX+mpqTVzyDtclSdZo9WwbVi63
-         NL956CRJf67DRWV4/Vco+Lw0+pb6B0sxDHFmrfZJ1NMhE+b6LUo2R1ofrKIX8jylzEwL
-         nT2e4hPyJYaYfTtmCSLLLB7j7G+KjC+RFy+tm+9y2iJd0nb30kS/vOmy08o3c3E1CAQy
-         LrIA==
-X-Gm-Message-State: AGi0PuYWLgkQ2ukYR3bAxt5LjihjEiyaZk/tHLd2vVlmSQp0SITgUCZT
-        jdTIdncT8y8rdcShKHaVUuc2UaDMrSroBzzu/m9oaGNM4Ys/bQ==
-X-Google-Smtp-Source: APiQypKy+W8g/c8Y9iwLbyP+Sxc6pgQT1/9bS69+R734nAgve95+46Zc7ZQeDc98J/MNfRk0gq4D220snU26G99/VqA=
-X-Received: by 2002:a17:906:2488:: with SMTP id e8mr23253754ejb.157.1588056764747;
- Mon, 27 Apr 2020 23:52:44 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=xhJNBli/MbiEqJzeppBR/eZxuhCbPpkzYG6LLrT8AUI=;
+        b=KGvgLb71nh2vIPqPFoqQAbbb873BxWcMmIjQE7ULyO/lohfDAV0Hx0R7E1G0nPYYfJ
+         841g9pb2ejjYy+kXFivo1qVYglEraS5ymPLPF4gwg5tb+fh75sCZkVAkWWE8K45sV/Eh
+         ge27ax32L95ETfz5rBPjGdI85/t8mhSJouvj3OVJJ8IqQAKn42YFNPLrLppUZjOd5QSd
+         eLilqPt+YMUdFCgd3aP1iusemFZx73/YblZ77kksucFBx2Vhdmn07/s1E1gAqOA+7Acs
+         PyDRWBnsHeqnEmcCdU8IlMfb2xM6fyT9e47Zz5wk9d2V/i2wxWWfyZ/EQqkpSmSlQKxZ
+         P8pQ==
+X-Gm-Message-State: AGi0PuYaFFivQINii4Aa3o8I+bN6CXKJUf5D/JQa4RkEYfsUfJzRDDck
+        ClrkiucvXnEsluv/e1Eb/SI=
+X-Google-Smtp-Source: APiQypKjxCrWKZcFXjMWHjp6tsOon3i+gEbLfWfMz9kluxx1HBVFpuXrP1jztINGAU8lPdRHf8467A==
+X-Received: by 2002:a17:902:b592:: with SMTP id a18mr28051875pls.147.1588058284981;
+        Tue, 28 Apr 2020 00:18:04 -0700 (PDT)
+Received: from Carlos-MBP (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
+        by smtp.gmail.com with ESMTPSA id 14sm14227444pfj.90.2020.04.28.00.18.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 Apr 2020 00:18:04 -0700 (PDT)
+Date:   Tue, 28 Apr 2020 00:18:02 -0700
+From:   Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        dirk@ed4u.de, sunshine@sunshineco.com,
+        Stefan Tauner <stefan.tauner@gmx.at>
+Subject: Re: [PATCH v3] git-credential-store: skip empty lines and comments
+ from store
+Message-ID: <20200428071802.GF61348@Carlos-MBP>
+References: <20200427084235.60798-1-carenas@gmail.com>
+ <20200427125915.88667-1-carenas@gmail.com>
+ <xmqqftco94wx.fsf@gitster.c.googlers.com>
+ <20200427191858.GB1728884@coredump.intra.peff.net>
+ <xmqqv9lk7j7p.fsf@gitster.c.googlers.com>
+ <20200428052510.GA201501@google.com>
+ <20200428054155.GB2376380@coredump.intra.peff.net>
 MIME-Version: 1.0
-From:   Son Luong Ngoc <sluongng@gmail.com>
-Date:   Tue, 28 Apr 2020 08:52:34 +0200
-Message-ID: <CAL3xRKc6Q1m=9XJYcafhczCU+ONYjapkUgBi0nKMFoMr+bgjYg@mail.gmail.com>
-Subject: t0000 failed
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200428054155.GB2376380@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey folks,
+On Tue, Apr 28, 2020 at 01:41:55AM -0400, Jeff King wrote:
+> On Mon, Apr 27, 2020 at 10:25:10PM -0700, Jonathan Nieder wrote:
+> 
+> > I wonder if in addition to the above documentation change we may want
+> > something guaranteed to catch all cases where people would have
+> > experienced a regression, like
+> > 
+> > diff --git i/credential-store.c w/credential-store.c
+> > index c010497cb21..294e7716815 100644
+> > --- i/credential-store.c
+> > +++ w/credential-store.c
+> > @@ -24,8 +24,8 @@ static int parse_credential_file(const char *fn,
+> >  	}
+> >  
+> >  	while (strbuf_getline_lf(&line, fh) != EOF) {
+> > -		credential_from_url(&entry, line.buf);
+> > -		if (entry.username && entry.password &&
+> > +		if (!credential_from_url_gently(&entry, line.buf, 1) &&
+> > +		    entry.username && entry.password &&
+> >  		    credential_match(c, &entry)) {
+> >  			found_credential = 1;
+> >  			if (match_cb) {
+> > 
+> > And then we can tighten the handling of unrecognized lines to first
+> > warn and then error out, as a controlled change that doesn't lead
+> > people to regret updating git.
+> 
+> I like that solution, as it mostly brings us back to the original
+> behavior, as weird or unexpected as it was.
 
-Running t0000 with GIT_TEST_FAIL_PREREQS=true is failing.
+I like this version better as well, and we could even reuse my test
+case.
 
-> GIT_TEST_FAIL_PREREQS=true ./t0000-basic.sh
-t/./t0000-basic.sh:836: error: not ok 45 - lazy prereqs do not turn off tracing
-#
-#               run_sub_test_lib_test lazy-prereq-and-tracing
- 'lazy prereqs and -x' -v -x <<-\EOF &&
-#               test_lazy_prereq LAZY true
-#
-#               test_expect_success lazy 'test_have_prereq LAZY && echo trace'
-#
-#               test_done
-#               EOF
-#
-#               grep 'echo trace' lazy-prereq-and-tracing/err
-#
+it wouldn't cover cases where there were leading spaces/tabs around
+the credential which I have to admit I liked just because it is
+more robust to bad input, and there is no sane way now to tell the
+user that there is invalid data anyway, but I am ok eitherway.
 
-This was added recently with
-https://public-inbox.org/git/f35830c0eba216b7b4f144409e302a87ff8b5c06.1585236929.git.gitgitgadget@gmail.com/
-Is this intended?
-
-Cheers,
-Son Luong.
+Carlo
