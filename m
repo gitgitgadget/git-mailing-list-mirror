@@ -2,132 +2,93 @@ Return-Path: <SRS0=fhRL=6M=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EA3F9C83000
-	for <git@archiver.kernel.org>; Tue, 28 Apr 2020 11:25:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2334DC83000
+	for <git@archiver.kernel.org>; Tue, 28 Apr 2020 12:49:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C3F06206D7
-	for <git@archiver.kernel.org>; Tue, 28 Apr 2020 11:25:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EF1F0206D9
+	for <git@archiver.kernel.org>; Tue, 28 Apr 2020 12:49:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="r8kgRUw1"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GQnX/CQE"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726626AbgD1LZW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Apr 2020 07:25:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33408 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726482AbgD1LZW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Apr 2020 07:25:22 -0400
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65287C03C1A9
-        for <git@vger.kernel.org>; Tue, 28 Apr 2020 04:25:22 -0700 (PDT)
-Received: by mail-pg1-x544.google.com with SMTP id t11so10184237pgg.2
-        for <git@vger.kernel.org>; Tue, 28 Apr 2020 04:25:22 -0700 (PDT)
+        id S1726857AbgD1MtC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Apr 2020 08:49:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46626 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726798AbgD1MtC (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 28 Apr 2020 08:49:02 -0400
+Received: from mail-il1-x143.google.com (mail-il1-x143.google.com [IPv6:2607:f8b0:4864:20::143])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F0B6C03C1A9
+        for <git@vger.kernel.org>; Tue, 28 Apr 2020 05:49:02 -0700 (PDT)
+Received: by mail-il1-x143.google.com with SMTP id w6so20127621ilg.1
+        for <git@vger.kernel.org>; Tue, 28 Apr 2020 05:49:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=safKZbojNaToHnBb7w2EeXVc2F+V5UmLrVEC7CXPjkQ=;
-        b=r8kgRUw1q9BChN0a9bekhQwd49Fy0XykT4hMN+7Fp+7ARjvKndwO7v3ru0ArJxY3NR
-         Oxy0myNG2sOFG3pNZaultK6ua6KC0KGihVOk3EiwBUXKSg7ngEm3jMsvJuNg7HcyAIqv
-         dPSMIXq14RhR/I9d2Zt+nPq0LQ9T67UVELY2ybdq4KhUPqJOilCXQDTLy4bvHdFwmB9W
-         xu335NJo3+TTW7eiWCFZ+4JHqnCo5+IuvIKSCfhJ/d4qFbHziQpXwpmkh8SDgo0U7JVU
-         Mcs5AB7lgo8AmNexC5TbAxUELGmVySwt+MNTWkJ3j26i3YD5ootBhttMMvtyLBnL4xmN
-         NvUw==
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=WvjMPihIAHechV/R25Am3HcX9HFGS8fuSsMMzfJiC2w=;
+        b=GQnX/CQEBAE93zw2LdLSGQn0rztREaZPYuz/z6bes1ui2UqNIwQqwSpIgtVvO/C5am
+         LigbK4I78JV1QEn/Ne62s2jiXfqJxKQKmdhJrljds6WaBtwVGaF+NN4TcgkVTcFN8rbz
+         LnDbuVnX2SxckGk+y6na0NXrxxEzYiDkP9/aSGv9pmFllVmLapzMdRAwcKlvJQ65QenL
+         XMPE44uG0ZHHn8LQezW4lUK5CZpcbtZhBcLnOWTMEC4k/TyvYLiWx7HBz1IcUEfTwLRg
+         f0kquE0LyM32FsOyqdPNLO9hOM1k4YS32wcV4CTUMpYhzMO6rF8Q8JpKhCWxPqzP38bZ
+         EU6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=safKZbojNaToHnBb7w2EeXVc2F+V5UmLrVEC7CXPjkQ=;
-        b=kgyfIQtpnjhW69ZA1tyyYdCKofia7eHymKwwnKdCJS6JKZZV/EjyCb/HFVl8MIVnfk
-         TV8gP4KY1MUFHfgLhNyBVDGK0gH1ufcjvgTdbXugp2g2iFLEHPnvYM5QSNFRYvoCjr/Y
-         GrIv/s0Hf3xYM2jd4v4uy43Y8smZtK5r5Xx+ITKujepaT/oJo7NUewXlXl+VKASAw2SW
-         aMKqsxIRqEIWZrWydCGU5qzFLmZ87zhGD8wXhCjRG5dZApYSYYqVzoAE1Fku4da80qCa
-         LMPPK4lJ/jcxV4xBFlRPtmvkc4rnZcjIjvkPQB7ASe45BR0e0rzCW6k9slCsIuFf+PQm
-         OteA==
-X-Gm-Message-State: AGi0PuYj9g7I0n3gTssuCfzx8F96ipksKxopFeXgpKf/fg34bK//eepV
-        MGK6/Il+0WauMoeeTPn0a4o=
-X-Google-Smtp-Source: APiQypJxEIA/OzQG+X/7+S00a1iYQM0OdzpltwNMgHirCb02t9c2BLvPii9/WQOsSagF6UljxF3nTA==
-X-Received: by 2002:a65:64d0:: with SMTP id t16mr26767637pgv.415.1588073121811;
-        Tue, 28 Apr 2020 04:25:21 -0700 (PDT)
-Received: from Carlos-MBP (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
-        by smtp.gmail.com with ESMTPSA id 82sm14715515pfv.214.2020.04.28.04.25.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Apr 2020 04:25:20 -0700 (PDT)
-Date:   Tue, 28 Apr 2020 04:25:18 -0700
-From:   Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        dirk@ed4u.de, sunshine@sunshineco.com,
-        Stefan Tauner <stefan.tauner@gmx.at>
-Subject: Re: [PATCH v3] git-credential-store: skip empty lines and comments
- from store
-Message-ID: <20200428112518.GA15981@Carlos-MBP>
-References: <20200427084235.60798-1-carenas@gmail.com>
- <20200427125915.88667-1-carenas@gmail.com>
- <xmqqftco94wx.fsf@gitster.c.googlers.com>
- <20200427191858.GB1728884@coredump.intra.peff.net>
- <xmqqv9lk7j7p.fsf@gitster.c.googlers.com>
- <20200428052510.GA201501@google.com>
- <20200428054155.GB2376380@coredump.intra.peff.net>
- <20200428071802.GF61348@Carlos-MBP>
- <20200428081627.GB2381876@coredump.intra.peff.net>
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=WvjMPihIAHechV/R25Am3HcX9HFGS8fuSsMMzfJiC2w=;
+        b=jyIRfFJUUyl9ZkUSgx6jT/NKq63n/debwxhzEWmoJeuevBn//t+Ix0y2kly4s6R0q4
+         RwglkJx2vE8vh9ohkdQ5AD5hnDN1XkxARgswHv7mxRw25NwYScAHwH17RZRVu7GROV21
+         hFZcN4vaTW2Cw/8ulXaUrqG+BkiqlbESUgZMZ3fPsvFWpPGxYppzoPZb8BVtMJZ3mljH
+         etD5QqG9QDiT/B3ezOt5JPSxa12grM1RwGWPhQWY94TZCrOsJlYuqx6/+9o/iEaAEIgq
+         pXdGPyJ6N778aLlr1rqIiJUbvoCpPjof5+UZGt9R7EXsDFWK/jsDIBxq5y0ouPqUG9MJ
+         UHXQ==
+X-Gm-Message-State: AGi0PuYE2mwQS0bx5RNRVW/DaZ9U4FqugzHSENlkOHYJKdh5vMxj6XMe
+        Hybxz/FO75E31j1E1jGqhdVIrLDR
+X-Google-Smtp-Source: APiQypId4i/Sh0GYfXERGYBcMtp70FzcognWzGFeooKNXn9hrjDaTB9AYL/ppbzq5PNdk8/ZCind7A==
+X-Received: by 2002:a92:5a5c:: with SMTP id o89mr26217316ilb.47.1588078141623;
+        Tue, 28 Apr 2020 05:49:01 -0700 (PDT)
+Received: from ?IPv6:2601:8c0:37f:6012:6545:71b9:a2ce:487e? ([2601:8c0:37f:6012:6545:71b9:a2ce:487e])
+        by smtp.gmail.com with ESMTPSA id n138sm5839562iod.21.2020.04.28.05.49.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 28 Apr 2020 05:49:01 -0700 (PDT)
+Subject: Re: [PATCH] Teach git-rev-list --simplify-forks
+To:     Derrick Stolee <stolee@gmail.com>, git-ml <git@vger.kernel.org>
+References: <df0b9e59-e6d7-8839-ca3b-86145dc3bdf3@gmail.com>
+ <4ee983f6-402f-85bb-25a8-75b39f07cabb@gmail.com>
+From:   Antonio Russo <antonio.e.russo@gmail.com>
+Message-ID: <070c07f6-5b36-89e7-a9fe-9bd321fcb97e@gmail.com>
+Date:   Tue, 28 Apr 2020 06:49:00 -0600
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
+In-Reply-To: <4ee983f6-402f-85bb-25a8-75b39f07cabb@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20200428081627.GB2381876@coredump.intra.peff.net>
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 28, 2020 at 04:16:27AM -0400, Jeff King wrote:
-> On Tue, Apr 28, 2020 at 12:18:02AM -0700, Carlo Marcelo Arenas Belón wrote:
-> > 
-> > it wouldn't cover cases where there were leading spaces/tabs around
-> > the credential which I have to admit I liked just because it is
-> > more robust to bad input, and there is no sane way now to tell the
-> > user that there is invalid data anyway, but I am ok eitherway.
+On 4/27/20 4:55 AM, Derrick Stolee wrote:
 > 
-> I think if we're discouraging people from hand-editing the file, then
-> that feature would be going in the wrong direction anyway.
+> This is probably because the tests run a second round with GIT_TEST_COMMIT_GRAPH=1, which enables the commit-graph feature. This triggers a different set of logic for the topo-order, which ignores the logic the way you inserted it here.
+> 
 
-I think it will actually encourage them to edit the file (and complain
-of a regression), since they can see the credential is correct, but
-somehow git fails to work with it unlike their previous version.
+Thank you for pointing me at this.  If I now understand correctly, the commit information
+is not yet necessarily loaded for all commits at this point, and therefore the logic here
+will need to be called later on (and makes it more complicated).
 
-remember there is no warning that could explain why that happens and
-with this pach there is no error either.
+Am I correct that this loading of parents happens during traverse_commit_list_filtered
+(for the case of rev-list)?  Also, am I correct that there are not yet any hooks to
+filter out edges (of the graph of commits)?
 
-> Did you or Jonathan want to wrap it up with the test and commit message?
-
-I was going to say Jonathan will have to do it, since he was the only one
-that didn't provide a patch (and therefore a sign off) but guess I can
-save everyone some time and practice my git-send-email skills (which 
-obviously failed me)
-
-Jonathan,
-
-make sure your patch[1] is complete and correct and to resend it with
-a sign off, feel free to add me as Tested-by if you feel like, but I
-added myself as Helped-by anyway ;)
-
-Junio,
-
-didn't fix the typo that Peff suggested fixed[2], because I forgot
-and I wasn't sure if that also means I should SOB it, but if you
-could also consider my suggestion[3] then at you get my SOB warranted ;)
-
-Carlo
-
-PS. guess I should had send it as an RFC instead
-
-[1] https://lore.kernel.org/git/20200428105254.28658-3-carenas@gmail.com/
-[2] https://lore.kernel.org/git/20200427211013.GB1732530@coredump.intra.peff.net/
-[3] https://lore.kernel.org/git/20200427234909.GC61348@Carlos-MBP/
+Thank you,
+Antonio
