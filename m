@@ -2,104 +2,91 @@ Return-Path: <SRS0=fhRL=6M=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 73AC9C83000
-	for <git@archiver.kernel.org>; Tue, 28 Apr 2020 21:17:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CA28EC83000
+	for <git@archiver.kernel.org>; Tue, 28 Apr 2020 21:23:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5992B206D6
-	for <git@archiver.kernel.org>; Tue, 28 Apr 2020 21:17:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A26222072A
+	for <git@archiver.kernel.org>; Tue, 28 Apr 2020 21:23:44 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZN5oe+AT"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726350AbgD1VRh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Apr 2020 17:17:37 -0400
-Received: from cloud.peff.net ([104.130.231.41]:43132 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726307AbgD1VRh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Apr 2020 17:17:37 -0400
-Received: (qmail 23935 invoked by uid 109); 28 Apr 2020 21:17:37 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 28 Apr 2020 21:17:37 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 7508 invoked by uid 111); 28 Apr 2020 21:29:01 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 28 Apr 2020 17:29:01 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 28 Apr 2020 17:17:36 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
+        id S1726658AbgD1VXn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Apr 2020 17:23:43 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:55479 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726274AbgD1VXn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Apr 2020 17:23:43 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 736D3C1888;
+        Tue, 28 Apr 2020 17:23:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=e3gjbjafgjwTblymh9jjjhzLAUM=; b=ZN5oe+
+        ATIsUjmalxQ7Gk6X/UbjUMs7BKFEWDusvLR3H/WNxPf7WgpFeL8JS94TcB3OtQxq
+        LUS7MbhY5jEXnU6m5Z3BcOYZuWuBd96r9LtyrHRQjHG3JbhW8LEOnCwCNsI4nwyD
+        Xk8m68CsrQghexQ1vrP1ExsMWuJV9FY93PGhU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=TpOQ55f8C1txBlM3bsGXIOV7NUUIrb9I
+        AjJhJy0qHV6Vx8LeTuTKnjFNPmuVqCVOcdpVlzW+aUATeolurYCHH/o3DOmLbEuT
+        mhIX0pw5wq+ytAM08H2gSSU19vJqpWO7ss+t2NtgNXmxk/DMiWfJ4QQ6bCKcZ54g
+        w4NxP18NtPM=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6B08CC1887;
+        Tue, 28 Apr 2020 17:23:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9D7A3C1886;
+        Tue, 28 Apr 2020 17:23:39 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
 Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
         Taylor Blau <me@ttaylorr.com>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
         Derrick Stolee <dstolee@microsoft.com>,
         Christian Couder <chriscool@tuxfamily.org>
 Subject: Re: [PATCH v2] fetch-pack: try harder to read an ERR packet
-Message-ID: <20200428211736.GG4000@coredump.intra.peff.net>
 References: <20200428074442.29830-1-chriscool@tuxfamily.org>
- <xmqqzhav1kix.fsf@gitster.c.googlers.com>
- <20200428204908.GA4000@coredump.intra.peff.net>
- <xmqqh7x31fyu.fsf@gitster.c.googlers.com>
+        <xmqqzhav1kix.fsf@gitster.c.googlers.com>
+        <20200428204908.GA4000@coredump.intra.peff.net>
+        <xmqqh7x31fyu.fsf@gitster.c.googlers.com>
+        <20200428211736.GG4000@coredump.intra.peff.net>
+Date:   Tue, 28 Apr 2020 14:23:37 -0700
+In-Reply-To: <20200428211736.GG4000@coredump.intra.peff.net> (Jeff King's
+        message of "Tue, 28 Apr 2020 17:17:36 -0400")
+Message-ID: <xmqqzhavz4me.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqh7x31fyu.fsf@gitster.c.googlers.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 8751E8AA-8996-11EA-9C2D-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 28, 2020 at 02:02:33PM -0700, Junio C Hamano wrote:
+Jeff King <peff@peff.net> writes:
 
-> > I think the "lucky" case happens pretty routinely. The situation we're
-> > trying to catch here is that server does:
-> >
-> >    packet_write("ERR I don't like your request for some reason");
-> >    die("exiting");
-> 
-> OK, if we assume that the communication route is never flaky and
-> everything writtten will go through before TCP shutdown that would
-> happen when die() kills the process (or like test environment that
-> most communication goes locally between two processes), sure, it may
-> look common enough to be worth "fixing".  I simply did not realize
-> that was the shared assumption behind this patch before I went back
-> to the original discussion that was about a racy test.
+>> If the mechanism to do this were limited to the packet IO layer, it
+>> may be more palatable, though.
+>
+> Agreed. There's not a single place where we write, though, since we
+> often form packets in local buffers and then write() them out manually.
+> So it does have to be sprinkled around fetch-pack.c. But certainly the
+> damage can be limited to that client network code.
 
-Certainly the communication route will _sometimes_ be flaky. And there's
-nothing we can do there except say "Broken pipe" or similar, whether the
-other side said ERR or not. So any reads have to be speculative. But
-assuming TCP is functioning, some portion of our ERR packets are simply
-dropped from the incoming TCP buffers. I suspect we don't get more
-reports of this in the wild (and are mostly annoyed by it in racy tests)
-because:
+Yeah, I do not mind "sprinkling all over the place in client network
+code" at all.  The ideal is if we never used write_in_full() and
+always used this "write but if we get a write error then check for
+ERR packet" helper consistently (which means we'd convert all the
+writes done in that layer, and by definition that may have to be
+"all over the place in the client networking code").
 
-  - ERR conditions don't happen all that often (though we have been
-    adding more recently)
-
-  - users may not realize they _could_ have gotten a good message
-    (especially since historically many of these conditions did just
-    involve the server hanging up)
-
-  - I think the race may be easier to win on real networks with latency.
-    Locally, if I write "want bogus" and then "done", the other side may
-    process the "want" between the two and close the pipe. But if
-    there's 50ms between client and server, we've usually managed to
-    "done" into the systems TCP buffer, if not onto the wire, by the
-    time the other side has figured out the error and gotten a FIN
-    packet back to us.
-
-> As long as an extra read on the side that just got a write error
-> won't throw us into a deadlock, I think I am OK, but I am still not
-> sure if the code complexity to have two write_in_full() is worth it.
-
-Yes, I don't see the point of that.
-
-> If the mechanism to do this were limited to the packet IO layer, it
-> may be more palatable, though.
-
-Agreed. There's not a single place where we write, though, since we
-often form packets in local buffers and then write() them out manually.
-So it does have to be sprinkled around fetch-pack.c. But certainly the
-damage can be limited to that client network code.
-
--Peff
+Thanks.
