@@ -2,137 +2,103 @@ Return-Path: <SRS0=fhRL=6M=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DBAEBC83000
-	for <git@archiver.kernel.org>; Tue, 28 Apr 2020 13:57:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 21199C83009
+	for <git@archiver.kernel.org>; Tue, 28 Apr 2020 14:11:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B745B206B9
-	for <git@archiver.kernel.org>; Tue, 28 Apr 2020 13:57:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 01396206E2
+	for <git@archiver.kernel.org>; Tue, 28 Apr 2020 14:11:28 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qk2NDN+Y"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hkUMbu+X"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727058AbgD1N5y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Apr 2020 09:57:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57378 "EHLO
+        id S1728039AbgD1OL1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Apr 2020 10:11:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726931AbgD1N5y (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Apr 2020 09:57:54 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18C05C03C1A9
-        for <git@vger.kernel.org>; Tue, 28 Apr 2020 06:57:54 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id w2so16443323edx.4
-        for <git@vger.kernel.org>; Tue, 28 Apr 2020 06:57:54 -0700 (PDT)
+        with ESMTP id S1726949AbgD1OL0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Apr 2020 10:11:26 -0400
+Received: from mail-qv1-xf44.google.com (mail-qv1-xf44.google.com [IPv6:2607:f8b0:4864:20::f44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91F6EC03C1A9
+        for <git@vger.kernel.org>; Tue, 28 Apr 2020 07:11:25 -0700 (PDT)
+Received: by mail-qv1-xf44.google.com with SMTP id q2so10419910qvd.1
+        for <git@vger.kernel.org>; Tue, 28 Apr 2020 07:11:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=9fbMPIJJp+G0ayGTNH+1zPv+QlKJ5EneAG2UpaOD00s=;
-        b=qk2NDN+YlbOFKwlrMGRvE86JK2vvCePGaUPI3smh52HAHrk+WAphNUHUdE2YSpvg7r
-         n0p0f4HnqQ55kVbTllOYkHl0i6wmvkRAzlZuLg6b5WdE/g5kJBy6c0KUrW5AsC4BPZVM
-         bxnXtWNaxcyjeIfNKPK2ER+YcLfXE/KL6CQ84vPHBstdqjw3eMlZVdPOTHGYl+qmCm+m
-         LhaHlAAMAPpiUlJX0Xxj2aLv4sMHjxyF7QmTwdVk2mBv3iWxzEjRARfYjLUDMT7yk/tK
-         b/fD9JwJ+bJIv+LWQ3xx+ZkirX9FribitGRIb1lQh16IDpYOYNKDcZGIPovVV2MMxFFQ
-         9MyQ==
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=1vEbsEslc1SrM/35mpFdBe0YscR2i9ShumuPGCsYiZU=;
+        b=hkUMbu+XxqnBYnKkU7uDyQjxAxC26Nztpp9KRw51T+ZX1P6rJ0dim559b5KKB4dqA3
+         ro31QmbuEBNJPsjLxAHbIR98f20kZDH4T26tP/uOIVGYocr/eP8eaH8dugNLuOe4tYQS
+         2b3QDToFc2xcSsroyAvn07tddqqfcFQojnd/h16sjZ6TKJ8SG09I3kChkGdPbeG61KH1
+         UOPObp+PgpCUujF3DGqSJSwrqrNXkgLJy+E9ZNmXJPZFT8n7lGffsxwlJI1GxtUSSKFc
+         Ug0pFbP9ApNQpqCU6Iz41Px/MIkaPli3pWdP8OU4DwgQ+4ofPRYf8GdI48Aiw3e2Sstn
+         5Vwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=9fbMPIJJp+G0ayGTNH+1zPv+QlKJ5EneAG2UpaOD00s=;
-        b=bT7dpaszowlwN9FloZMGMena77pj3oLxDhZUNN32BDIbb6gL4YAFzHOjvc2hrAydll
-         CCw3TrEdLT/bZk3ldxzGkS+dcJzCIFMON8VGgthSe0ZIh5qJKDSC3bh2CTd6TRo329gd
-         Rt9bRqUxg308Mb5qg3jpKSxUwGmKbT1iJ0SKf6P68SfcYlKtyjB9H6bDW8EbLUmVjp3u
-         /x5C/sm6/rCAEqT3YwN+VZkE2adDK3fKxVOctVTX1+gSeX88dyXExfXXfZwv7vALfv8S
-         LTDR2S13Px9d0yzVsebhlR/4bvqoAf67iQM2jMqZBEiX11Y7CQ5vm3sTM4/f34syYidU
-         7rjQ==
-X-Gm-Message-State: AGi0PuZgHU4HI9y4ejdULELX6HEYu4Hd6DbGZQ41/t2cl4MOe6Kp90Ud
-        vedqXch4XJALBn4MgWbuijQZWrSjrX0wNdpT4Bk=
-X-Google-Smtp-Source: APiQypJfd2BhbPXTVa9Z+102m16CSG4YeKCi9IUjALDLqZY37i2nHNRjzg+Q4Xeb4vg2W/V4qEWsvs+sR5fxaxA8bYc=
-X-Received: by 2002:aa7:cc88:: with SMTP id p8mr22770806edt.387.1588082272649;
- Tue, 28 Apr 2020 06:57:52 -0700 (PDT)
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=1vEbsEslc1SrM/35mpFdBe0YscR2i9ShumuPGCsYiZU=;
+        b=nHQHgPTEUtEvI+OpEzSnN6bmkV4BxqrcyBSEsu9K54f2bABe+Nm5Y6kjvrTUnp6aGw
+         jvntsvvOEKwA+VVBvAAmT0xeUY2cFINIr6dnFu2wf7uQgcVQ97kjPsVuhGVh5ahh83Vb
+         jkyqhEIqHHTr/U0jLRW5R8Gb8slkae+TawK0OWUrODoR6Xw6aZdMBG+qcoL9Y6dmMInA
+         zaFAnQ+SRgprPy4R2tdU94N5Rts0eFzmLGY8PwaYwzZW0HPRmpV6wjpyJ+uePIej9udo
+         wgavJjXqLxvrLsIniTS2WoRtMROiZUjU0fhDJQ1rFqFBwSXxyl7Mf9ocQxKHo/yR0GMG
+         ehmg==
+X-Gm-Message-State: AGi0Pub2AQ6fcS4RqYhNq10utjqWyggHSikmxzlCP2wJTNIkd27/6d4k
+        /r0hW+U2nif4li/FMg1pRu8MmzZZQx0=
+X-Google-Smtp-Source: APiQypLepVdS+TA8D/97G9FtyyRbWJs7x01U6EijxN/ZooxihuGlMIurt4GLZOlYvEbiLLJAd+dVzw==
+X-Received: by 2002:a0c:e9cc:: with SMTP id q12mr28585533qvo.128.1588083084508;
+        Tue, 28 Apr 2020 07:11:24 -0700 (PDT)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id j16sm7721095qkl.118.2020.04.28.07.11.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 28 Apr 2020 07:11:23 -0700 (PDT)
+Subject: Re: [PATCH] Teach git-rev-list --simplify-forks
+To:     Antonio Russo <antonio.e.russo@gmail.com>,
+        git-ml <git@vger.kernel.org>
+References: <df0b9e59-e6d7-8839-ca3b-86145dc3bdf3@gmail.com>
+ <4ee983f6-402f-85bb-25a8-75b39f07cabb@gmail.com>
+ <070c07f6-5b36-89e7-a9fe-9bd321fcb97e@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <155e3be2-1852-3590-2cd9-c868fa5a696a@gmail.com>
+Date:   Tue, 28 Apr 2020 10:11:22 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101
+ Thunderbird/76.0
 MIME-Version: 1.0
-References: <EED2CFF1-5BEF-429D-AB99-AD148A867614@gmail.com>
-In-Reply-To: <EED2CFF1-5BEF-429D-AB99-AD148A867614@gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Tue, 28 Apr 2020 15:57:41 +0200
-Message-ID: <CAP8UFD32D4WnSbpB1erMTidFpinCNwzqHG_fsyHqRmWgZpsSjA@mail.gmail.com>
-Subject: Re: Git Stash brake splitIndex
-To:     Son Luong Ngoc <sluongng@gmail.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <070c07f6-5b36-89e7-a9fe-9bd321fcb97e@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On 4/28/2020 8:49 AM, Antonio Russo wrote:
+> On 4/27/20 4:55 AM, Derrick Stolee wrote:
+>>
+>> This is probably because the tests run a second round with GIT_TEST_COMMIT_GRAPH=1, which enables the commit-graph feature. This triggers a different set of logic for the topo-order, which ignores the logic the way you inserted it here.
+>>
+> 
+> Thank you for pointing me at this.  If I now understand correctly, the commit information
+> is not yet necessarily loaded for all commits at this point, and therefore the logic here
+> will need to be called later on (and makes it more complicated).
+> 
+> Am I correct that this loading of parents happens during traverse_commit_list_filtered
+> (for the case of rev-list)?  Also, am I correct that there are not yet any hooks to
+> filter out edges (of the graph of commits)?
 
-On Tue, Apr 28, 2020 at 3:21 PM Son Luong Ngoc <sluongng@gmail.com> wrote:
+I mean that if you have a commit-graph, then a completely disjoint set of code
+is run instead of the code you modified. See [1] for the blocks of code that
+are run instead.
 
-> I am on git version 2.26.2.526.g744177e7f7 (latest next)
-> When you do a git stash while using splitIndex, it seems like the index will get corrupted
->
-> Using configs:
-> core.splitindex=true
-> splitindex.maxpercentchange=50
-> splitindex.sharedindexexpire=now
->
-> Reproduce steps:
->
-> mkdir repo
-> cd repo && git init
-> echo a > a
-> commit -a -m 'add a'
+[1] https://github.com/git/git/commit/b45424181e9e8b2284a48c6db7b8db635bbfccc8
 
-It looks like it should be `git commit -a -m 'add a'`
-
-When I try to reproduce the steps using git version 2.26.2.526.g744177e7f7:
-
-mkdir repo
-cd repo && git init
-git config core.splitindex true
-git config splitindex.maxpercentchange 50
-git config splitindex.sharedindexexpire now
-echo a > a
-git commit -a -m 'add a'
-
-I get a segfault then:
-
-Program received signal SIGSEGV, Segmentation fault.
-0x00005555556ccf89 in ewah_each_bit (self=0x0, callback=0x5555557af648
-<replace_entry>, payload=0x555555b47480 <the_index>)
-    at ewah/ewah_bitmap.c:252
-252             while (pointer < self->buffer_size) {
-(gdb) bt
-#0  0x00005555556ccf89 in ewah_each_bit (self=0x0,
-callback=0x5555557af648 <replace_entry>, payload=0x555555b47480
-<the_index>)
-    at ewah/ewah_bitmap.c:252
-#1  0x00005555557af90c in merge_base_index (istate=0x555555b47480
-<the_index>) at split-index.c:162
-#2  0x0000555555748b9f in read_index_from (istate=0x555555b47480
-<the_index>, path=0x555555b4cd80 ".git/index",
-    gitdir=0x555555b4ac20 ".git") at read-cache.c:2335
-#3  0x000055555576faf3 in repo_read_index (repo=0x555555b33f20
-<the_repo>) at repository.c:271
-#4  0x000055555559b91b in prepare_to_commit (index_file=0x555555b4d760
-"/tmp/git/repo/.git/index.lock", prefix=0x0,
-    current_head=0x0, s=0x555555b04420 <s>,
-author_ident=0x7fffffffd810) at builtin/commit.c:927
-#5  0x000055555559d6a4 in cmd_commit (argc=0, argv=0x7fffffffdcf0,
-prefix=0x0) at builtin/commit.c:1595
-#6  0x0000555555570fda in run_builtin (p=0x555555af1218
-<commands+504>, argc=4, argv=0x7fffffffdcf0) at git.c:447
-#7  0x000055555557134b in handle_builtin (argc=4, argv=0x7fffffffdcf0)
-at git.c:672
-#8  0x0000555555571610 in run_argv (argcp=0x7fffffffdb9c,
-argv=0x7fffffffdb90) at git.c:739
-#9  0x0000555555571aba in cmd_main (argc=4, argv=0x7fffffffdcf0) at git.c:870
-#10 0x0000555555641bc4 in main (argc=5, argv=0x7fffffffdce8) at common-main.c:52
-
-It looks like merge_base_index() in split-index.c is calling
-ewah_each_bit(si->replace_bitmap, replace_entry, istate) when
-si->replace_bitmap is NULL.
+Thanks,
+-Stolee
