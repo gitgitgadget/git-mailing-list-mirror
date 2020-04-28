@@ -2,101 +2,113 @@ Return-Path: <SRS0=fhRL=6M=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AC953C83000
-	for <git@archiver.kernel.org>; Tue, 28 Apr 2020 18:10:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1AC3CC83000
+	for <git@archiver.kernel.org>; Tue, 28 Apr 2020 18:15:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 846AA208E0
-	for <git@archiver.kernel.org>; Tue, 28 Apr 2020 18:10:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E95172085B
+	for <git@archiver.kernel.org>; Tue, 28 Apr 2020 18:15:21 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="PSkSUyoZ"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ETlGMpME"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728687AbgD1SKa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Apr 2020 14:10:30 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:63807 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728023AbgD1SKa (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Apr 2020 14:10:30 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7708BCEB6D;
-        Tue, 28 Apr 2020 14:10:28 -0400 (EDT)
+        id S1728509AbgD1SPV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Apr 2020 14:15:21 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:53352 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727827AbgD1SPU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Apr 2020 14:15:20 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id F177AC036C;
+        Tue, 28 Apr 2020 14:15:19 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=o3kLek8kfIb9aXH1mhEYLFScIG8=; b=PSkSUy
-        oZpkVvGnlytQmzyf4VOw4H6ERk5P/3/x6IqwrhgkWRUbZ+9jHyqfDz9+x2CWmLLM
-        rk2L9hpXdh9sjrAA6Eeez32O/FA8E39Xmtgr+6UDo9lcZlyugeRNIW4HXIhW7Jio
-        m6wZG0lfRFaK3ePLJi/ET7/4EjEA7aLhc4jAU=
+        :content-type:content-transfer-encoding; s=sasl; bh=Y5URMme5PKFn
+        vFbqcahAWGnviFk=; b=ETlGMpMERdfw8n76ADAdLu9657eG/pfbxu8lhn8Awu1T
+        t8FOdVHsCExnAMpPTTVx2eYePfvAmIJaIDgz+A4Bf6OopFY7KH+mTAV7/rvg20f9
+        F51KoSgfa8OndCQerVFgVks43oVJCxcucZhBv+lJBG5CQYHQeAm80Jr8Fe+vXZc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=MpEvn8VjlwAp8JXlJTgMs+6VuaqZJM3N
-        b1FWsg2jHbls16RYY5lNhPoRXjZh92VD25cEm0cfM1rROAmL/hP75diguNlblOGC
-        agYPB5IZu81CvAx2KOzaws0UJ5eK7O9z5UE2l9nisk/ivp5NDd0+aPg1TOwvdugu
-        ssXql9b3RE8=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 704EFCEB6C;
-        Tue, 28 Apr 2020 14:10:28 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=EUwPeb
+        nTyCkzYSvHuKZ38eItssv/fT7KN7+tC9ppevYR3ZOWnWwHwx5bmwZb/HvTcUDTyS
+        a9353eYlcgWu8vzBDuzv6Hs9DvMQX9SAEQ7ZHOyhuh0e4hW/OHsDeZofarMv1kAe
+        oKYr6wj8x/bSJ7DKwnlOab5O39Dgdd0VD65Gk=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id E860DC036B;
+        Tue, 28 Apr 2020 14:15:19 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id BC868CEB6B;
-        Tue, 28 Apr 2020 14:10:25 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 28039C036A;
+        Tue, 28 Apr 2020 14:15:17 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jacob Keller <jacob.keller@gmail.com>
-Cc:     Jacob Keller <jacob.e.keller@intel.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 05/11] completion: add test showing subpar completion for git switch --orphan
-References: <20200425022045.1089291-1-jacob.e.keller@intel.com>
-        <20200425022045.1089291-6-jacob.e.keller@intel.com>
-        <xmqqv9lk5wqy.fsf@gitster.c.googlers.com>
-        <CA+P7+xpEMb-A1cOkOxdWf0pM=5o8Cyn9=5HLZPtFNMcLUaypsg@mail.gmail.com>
-        <xmqqo8rb4lyj.fsf@gitster.c.googlers.com>
-        <CA+P7+xoBnS8huHiU+QM8x6LRiSDRYVVS2pduv6i_qrwb1ZS7fg@mail.gmail.com>
-Date:   Tue, 28 Apr 2020 11:10:24 -0700
-In-Reply-To: <CA+P7+xoBnS8huHiU+QM8x6LRiSDRYVVS2pduv6i_qrwb1ZS7fg@mail.gmail.com>
-        (Jacob Keller's message of "Tue, 28 Apr 2020 10:32:02 -0700")
-Message-ID: <xmqqsggn32i7.fsf@gitster.c.googlers.com>
+To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
+Cc:     git@vger.kernel.org, dirk@ed4u.de, sunshine@sunshineco.com,
+        peff@peff.net, jrnieder@gmail.com
+Subject: Re: [PATCH v4 1/4] credential-store: document the file format a bit more
+References: <20200428104858.28573-1-carenas@gmail.com>
+        <20200428105254.28658-1-carenas@gmail.com>
+Date:   Tue, 28 Apr 2020 11:15:15 -0700
+In-Reply-To: <20200428105254.28658-1-carenas@gmail.com> ("Carlo Marcelo
+ Arenas
+        =?utf-8?Q?Bel=C3=B3n=22's?= message of "Tue, 28 Apr 2020 03:52:51 -0700")
+Message-ID: <xmqqlfmf32a4.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 88D4D202-897B-11EA-BE9F-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 3684038C-897C-11EA-B31E-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jacob Keller <jacob.keller@gmail.com> writes:
+Carlo Marcelo Arenas Bel=C3=B3n  <carenas@gmail.com> writes:
 
->> And that same "is this really helping?" reasoning applies equally to
->> the "--orphan" option.
->>
->> I dunno.
->>
+> From: Junio C Hamano <gitster@pobox.com>
 >
-> Fair enough, new branches based on previous branches makes sense.
+> Reading a malformed credential URL line and silently ignoring it
+> does not mean ...
 
-I actually do not have a strong opinion either way.  I just wanted
-to say that it would be good to make it consistent across "checkout
--b", "switch -c" and "checkout/switch --orphan".
-
-It would be nice if "checkout -B" and "switch -C" pair offered
-existing branches, as the intention of using the capital letter is
-clear---the user wants to overwrite an existing one.
-
-On the other hand, I am OK if "checkout -b", "switch -c" and
-"--orphan" offered either:
-
- (1) nothing, as your patch does, or
-
- (2) all branches, except for the currently checked out one.
-
-It would be preferrable if they did the same thing.
+I'd reuse the one I've already queued as 272281ef (credential-store:
+document the file format a bit more, 2020-04-27) for this step.
 
 Thanks.
+
+-- >8 --
+Subject: [PATCH] credential-store: document the file format a bit more
+
+Reading a malformed credential URL line and silently ignoring it
+does not mean that we support empty lines and/or "# commented" lines
+forever.  We should document it to avoid confusion.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/git-credential-store.txt | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/Documentation/git-credential-store.txt b/Documentation/git-c=
+redential-store.txt
+index 693dd9d9d7..76b0798856 100644
+--- a/Documentation/git-credential-store.txt
++++ b/Documentation/git-credential-store.txt
+@@ -94,6 +94,10 @@ stored on its own line as a URL like:
+ https://user:pass@example.com
+ ------------------------------
+=20
++No other kinds of lines (e.g. empty lines or comment lines) are
++allowed in the file, even though some may be silently ignored. Do
++not view or edit the file with editors.
++
+ When Git needs authentication for a particular URL context,
+ credential-store will consider that context a pattern to match against
+ each entry in the credentials file.  If the protocol, hostname, and
+--=20
+2.26.2-266-ge870325ee8
 
