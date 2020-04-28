@@ -8,103 +8,117 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 80A47C83000
-	for <git@archiver.kernel.org>; Tue, 28 Apr 2020 10:53:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D6D74C83004
+	for <git@archiver.kernel.org>; Tue, 28 Apr 2020 10:53:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5941C206D6
-	for <git@archiver.kernel.org>; Tue, 28 Apr 2020 10:53:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B0080206E2
+	for <git@archiver.kernel.org>; Tue, 28 Apr 2020 10:53:15 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GGUSZn1Z"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cbrKIj4N"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726432AbgD1KxM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Apr 2020 06:53:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56498 "EHLO
+        id S1726454AbgD1KxO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Apr 2020 06:53:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56508 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726348AbgD1KxM (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 28 Apr 2020 06:53:12 -0400
-Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EACF5C03C1A9
-        for <git@vger.kernel.org>; Tue, 28 Apr 2020 03:53:11 -0700 (PDT)
-Received: by mail-pj1-x1043.google.com with SMTP id 7so1021632pjo.0
-        for <git@vger.kernel.org>; Tue, 28 Apr 2020 03:53:11 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1726348AbgD1KxO (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 28 Apr 2020 06:53:14 -0400
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44F0FC03C1A9
+        for <git@vger.kernel.org>; Tue, 28 Apr 2020 03:53:14 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id hi11so983689pjb.3
+        for <git@vger.kernel.org>; Tue, 28 Apr 2020 03:53:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=SMnq80ir0pmXq55o9vdOaKi28e7FzsW0VG0+CIoKZMk=;
-        b=GGUSZn1ZmcKOB3GUH0d6ObeiNpWmMI+wmn3a6N6ldEH7SJlIf4A4PSpfRdI1xpsWWX
-         2MPIH5grIxlYibp6IMXLw9+okI+ViLllR46aGTOKGf6I+RbAi94pAOVgSrESx4B89k8y
-         8g/u+sY8A0qqOIiBMR6/Nnea8U/Qu7FDAAGVrpBOeuBekUvPNVjmcrtMqadg/vbLi8Hd
-         GhZijOb45JU5kVw7qc66899gIt0yYSlBBzryReDnx1YX75QY9ltPKuzlTyVRNaIDU/Z2
-         GgDTSHuWlmhrvzpJlz69UDAC5yh3Jd71itCEA3beIOK1NnhCrpFq/KFB3GrzJgCt4SWU
-         x1cQ==
+        bh=HfxT5LCtKtXerLxR9EJu7IhmeEMoXx77a1PYqO3Kt1k=;
+        b=cbrKIj4NfVtKoAJrWaawPhZifVYy3q5u9XWsi1RjOTN4XBuiL2JZKThNwRPS2ulGeA
+         Xn1aw7jwsH7sPiDsCNbqUpaaaT0tp8ZJ/Ns4wXoMd9TF7IA/CBxAuTR9EpszBsnwJex/
+         r9GygTc11N5rwjtrZQ4c9hMePAkhD1/gdewViINjCHias4tZFp6PPkweNNwv4Pw9vxlE
+         2VgSK3CsDL6lK9jUTRxC7ES/w6J4TWVY8qlzQy4FZ4EgmY0ZsVCT/M6xx1vD9edLbjCc
+         omkqYVsGp55S6QhsMYSLZYBO0bG/eZMX0lu8OiYuzkLfU7nUOJGz33VfTPEvVTSWWprH
+         hSPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=SMnq80ir0pmXq55o9vdOaKi28e7FzsW0VG0+CIoKZMk=;
-        b=A11MMC9diogc54BGbXfsZ8aURrMTtTJqFaUbjDZQoRxsfCppg/+tNlhQEGav9KVx2s
-         nCkAGegMCL1FE3wXAVDQp9SKmi2ZC4bV9vXWy+asqAJ+ox0aulpzir6bFt6Ej2wuzQVV
-         wkXFeME2zNLy0CycKgs9G3R4suyQuA16dcxm/2bGqowvaloCXEeocvyTwSr41vbPz+iY
-         LwPowXqejl/98A/y8jWuSa2yZ3LImZC5a51B35n4qqtJQb3DIKKCvYxF55mYSB4MWzkY
-         xYZZzJYGb3dJw5s3Ph5pe5EfPKFs0h9dHDQubLpWO4EPRT0ZK7tGN4ZjTFsJuP9gXKV3
-         ZTgw==
-X-Gm-Message-State: AGi0PuZceZ4P5EeV8WFy5Uh4PqS8GJ7gBeVzBIAekFS4LhX5ZvO3TqGr
-        WMW193RBBZfuHNM8mmcSV3hIyKXOtsg=
-X-Google-Smtp-Source: APiQypJLjO9qM4zOKqJw+YKA2R8xg0Kpm8QWZNiA0S58dHofHx07+0fLFaByolixJbwT4GXwOn7eiw==
-X-Received: by 2002:a17:90a:498a:: with SMTP id d10mr4581518pjh.194.1588071190944;
-        Tue, 28 Apr 2020 03:53:10 -0700 (PDT)
+        bh=HfxT5LCtKtXerLxR9EJu7IhmeEMoXx77a1PYqO3Kt1k=;
+        b=sNCZTV+MOG07AKVnY0R77Ts+L0IfkrUbKrvgKv1/VZ0lIsJj3GoxVgquIIOIQDeV/U
+         YSRpm5VMlmeLK9e7HulUwwpeh3PJCPDH1K/uDI7yv3YP5Un3oE0fEN9DJcbOQxlDbKZg
+         CvTdYKxtNUGzix8fsD75S8SBzbMxRwwVg3KcO+v7prOWBNFZQZfAds5TgY5I/MjlrVW1
+         62lvCZRuKK9uoAcCjupD8mO96/hVEpa9tEkpdtPriSfm5L1D9vUXfqs0yaDKV8KCs2L2
+         gnW5TbC5Drt4/ng9fcvNbsS7hIsp9Ip6FAZUqqTpBC7w4eLejowXpznegNqoorgnTpHx
+         djIA==
+X-Gm-Message-State: AGi0Pubwruj7BpebUlQWyOJFIV6/NoyNGqq94/A0h5wlN/C6A+QQqmHy
+        lt77gJv3Jd++98UOjwgAPNj2cAG+a8M=
+X-Google-Smtp-Source: APiQypKl5koCknORgcKJWnAg7gm7vBiod28ykZUyKWoW4gT06DH3VZz7HSnJ4+s6B3HuNGFrZNwpyw==
+X-Received: by 2002:a17:90a:4fc5:: with SMTP id q63mr4196121pjh.70.1588071193505;
+        Tue, 28 Apr 2020 03:53:13 -0700 (PDT)
 Received: from localhost.localdomain (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
-        by smtp.gmail.com with ESMTPSA id e11sm12513436pfl.85.2020.04.28.03.53.10
+        by smtp.gmail.com with ESMTPSA id e11sm12513436pfl.85.2020.04.28.03.53.12
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 28 Apr 2020 03:53:10 -0700 (PDT)
+        Tue, 28 Apr 2020 03:53:13 -0700 (PDT)
 From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
         <carenas@gmail.com>
 To:     git@vger.kernel.org
 Cc:     dirk@ed4u.de, sunshine@sunshineco.com, peff@peff.net,
-        gitster@pobox.com, jrnieder@gmail.com
-Subject: [PATCH v4 1/4] credential-store: document the file format a bit more
-Date:   Tue, 28 Apr 2020 03:52:51 -0700
-Message-Id: <20200428105254.28658-1-carenas@gmail.com>
+        gitster@pobox.com, jrnieder@gmail.com,
+        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+Subject: [PATCH v4 2/4] git-credential-store: skip empty lines and comments from store
+Date:   Tue, 28 Apr 2020 03:52:52 -0700
+Message-Id: <20200428105254.28658-2-carenas@gmail.com>
 X-Mailer: git-send-email 2.26.2.569.g1d74ac4d14
-In-Reply-To: <20200428104858.28573-1-carenas@gmail.com>
+In-Reply-To: <20200428105254.28658-1-carenas@gmail.com>
 References: <20200428104858.28573-1-carenas@gmail.com>
+ <20200428105254.28658-1-carenas@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Junio C Hamano <gitster@pobox.com>
+with the added checks for invalid URLs in credentials, any locally
+modified store files which might have empty lines or even comments
+were reported[1] failing to parse as valid credentials.
 
-Reading a malformed credential URL line and silently ignoring it
-does not mean that we promise to torelate and/or keep empty lines
-and "# commented" lines forever.
+add corresponding failing cases
 
-Some people seem to take anything that is not explicitly forbidden
-as allowed, but the world does not work that way.
+[1] https://stackoverflow.com/a/61420852/5005936
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Reported-by: Dirk <dirk@ed4u.de>
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
 ---
- Documentation/git-credential-store.txt | 4 ++++
- 1 file changed, 4 insertions(+)
+ t/t0302-credential-store.sh | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/Documentation/git-credential-store.txt b/Documentation/git-credential-store.txt
-index 693dd9d9d7..76b0798856 100644
---- a/Documentation/git-credential-store.txt
-+++ b/Documentation/git-credential-store.txt
-@@ -94,6 +94,10 @@ stored on its own line as a URL like:
- https://user:pass@example.com
- ------------------------------
+diff --git a/t/t0302-credential-store.sh b/t/t0302-credential-store.sh
+index d6b54e8c65..94cdcb9e56 100755
+--- a/t/t0302-credential-store.sh
++++ b/t/t0302-credential-store.sh
+@@ -120,4 +120,19 @@ test_expect_success 'erase: erase matching credentials from both xdg and home fi
+ 	test_must_be_empty "$HOME/.config/git/credentials"
+ '
  
-+No other kinds of lines (e.g. empty lines or comment lines) are
-+allowed in the file, even though some may be silently ignored. Do
-+not view or edit the file with editors.
++test_expect_failure 'get: store file can contain empty/bogus lines' '
++	test_write_lines "#comment" " " "" \
++		 https://user:pass@example.com >"$HOME/.git-credentials" &&
++	check fill store <<-\EOF
++	protocol=https
++	host=example.com
++	--
++	protocol=https
++	host=example.com
++	username=user
++	password=pass
++	--
++	EOF
++'
 +
- When Git needs authentication for a particular URL context,
- credential-store will consider that context a pattern to match against
- each entry in the credentials file.  If the protocol, hostname, and
+ test_done
 -- 
 2.26.2.569.g1d74ac4d14
 
