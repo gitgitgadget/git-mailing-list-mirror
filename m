@@ -2,116 +2,103 @@ Return-Path: <SRS0=fhRL=6M=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 745E3C83000
-	for <git@archiver.kernel.org>; Tue, 28 Apr 2020 20:41:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B89FC83000
+	for <git@archiver.kernel.org>; Tue, 28 Apr 2020 20:49:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 45E4C2085B
-	for <git@archiver.kernel.org>; Tue, 28 Apr 2020 20:41:58 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RD2g8im5"
+	by mail.kernel.org (Postfix) with ESMTP id 227C9208E0
+	for <git@archiver.kernel.org>; Tue, 28 Apr 2020 20:49:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726419AbgD1Ul5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Apr 2020 16:41:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35976 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726180AbgD1Ul4 (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 28 Apr 2020 16:41:56 -0400
-Received: from mail-ua1-x942.google.com (mail-ua1-x942.google.com [IPv6:2607:f8b0:4864:20::942])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5F21C03C1AB
-        for <git@vger.kernel.org>; Tue, 28 Apr 2020 13:41:56 -0700 (PDT)
-Received: by mail-ua1-x942.google.com with SMTP id z16so22882146uae.11
-        for <git@vger.kernel.org>; Tue, 28 Apr 2020 13:41:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=vna5WhIxbhKZus4RlDZuBYnqCrcLuW8KZI4O9y5zbsI=;
-        b=RD2g8im5KdTPTbw5lWqR92T+HUeKUprZtA8WTwOUzh7SxhmDIYlqHbWggVCF+ThDEP
-         x47iISbqHPAisd8HHtGp2wdpCmxCSKocW0m5/Vd9ZED+M/PnYY22fslSq1B29OswXmPu
-         J5v59nHuaR+THhtql1RQOQJqULCB5/tZXQGyWIkIlUmCHGJkvy2PBxbU3BsylFGeTx3i
-         i2azaLosxSFMZt9sOqAYfXDagQ3KEtrlfTNaDpmsHxnm1GyQ//QgbzIf/QoYEYBUr34V
-         eIGarQ2ON7s3YG6soWoi8cdeEOnE5y10+x7IwLc7TWT/U51GdI7RqgQvCo/dqFjQClOg
-         uVMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=vna5WhIxbhKZus4RlDZuBYnqCrcLuW8KZI4O9y5zbsI=;
-        b=BLvlpOyfTa8mIWnS4Q1GP1aG6bp2XUoGWy49nW2faxhV4rqbkeOxdwsrm+tA5jWxb1
-         0DnM4xygIGsx3RUgdzW3zVOyiuLO1MAbF8dRqVCKiKWWt4Kd+aCiZSGCO+Sm2kXkSBN6
-         IMRRulxe+EnBlD8a0KZweAXxB8DuhbaK9sUIYO6wjiVzGJZXp3ii4ek5PX7+hayCsCZg
-         FGUV859OarX/ge9tpjZFa+k8IzznDBjZjehGX0bsnJeDBpvyLrhy/WNwpxQuxn6QoTU4
-         3pPbqFEJg8QTFmtKyOsxjPFmit3Ra4YVquy9TfK9kXcoVHgWs7G3f+Kfc2E722rCM3i8
-         qlHQ==
-X-Gm-Message-State: AGi0PuZhC+tJkTzJOv82BiA6tOB5VPe9OTDPF9Y28SZIFnxbFwpyK5zO
-        CX4mTH9QY/E8QJ7LNgWI6deYog098tcm3ivVrdM=
-X-Google-Smtp-Source: APiQypIKF+W3SYV9ry3zb8CijadDz4hW/CnugYDLd4hpl1V66MP1Ut3uWHwwe9JW8CJ55EhBY5Z7GwHEZ5h7+ASjHsQ=
-X-Received: by 2002:a67:67c4:: with SMTP id b187mr613289vsc.5.1588106515877;
- Tue, 28 Apr 2020 13:41:55 -0700 (PDT)
-MIME-Version: 1.0
-References: <20200425022045.1089291-1-jacob.e.keller@intel.com>
- <20200425022045.1089291-6-jacob.e.keller@intel.com> <xmqqv9lk5wqy.fsf@gitster.c.googlers.com>
- <CA+P7+xpEMb-A1cOkOxdWf0pM=5o8Cyn9=5HLZPtFNMcLUaypsg@mail.gmail.com>
- <xmqqo8rb4lyj.fsf@gitster.c.googlers.com> <CA+P7+xoBnS8huHiU+QM8x6LRiSDRYVVS2pduv6i_qrwb1ZS7fg@mail.gmail.com>
- <xmqqsggn32i7.fsf@gitster.c.googlers.com> <CA+P7+xoSdDjbSAKeCsPz97Rc=ykpuTb2pNKazsCNcau2SBquMA@mail.gmail.com>
- <xmqq8sif2zfr.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqq8sif2zfr.fsf@gitster.c.googlers.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Tue, 28 Apr 2020 13:41:44 -0700
-Message-ID: <CA+P7+xpD7LaYMnoi6L-Z7e9w0j0+ppDCw6fGBzSMfxerw0HrUA@mail.gmail.com>
-Subject: Re: [PATCH 05/11] completion: add test showing subpar completion for
- git switch --orphan
+        id S1726440AbgD1UtK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Apr 2020 16:49:10 -0400
+Received: from cloud.peff.net ([104.130.231.41]:42934 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726208AbgD1UtJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Apr 2020 16:49:09 -0400
+Received: (qmail 23623 invoked by uid 109); 28 Apr 2020 20:49:09 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 28 Apr 2020 20:49:09 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6878 invoked by uid 111); 28 Apr 2020 21:00:33 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 28 Apr 2020 17:00:33 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 28 Apr 2020 16:49:08 -0400
+From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jacob Keller <jacob.e.keller@intel.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
+        Taylor Blau <me@ttaylorr.com>,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v2] fetch-pack: try harder to read an ERR packet
+Message-ID: <20200428204908.GA4000@coredump.intra.peff.net>
+References: <20200428074442.29830-1-chriscool@tuxfamily.org>
+ <xmqqzhav1kix.fsf@gitster.c.googlers.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqzhav1kix.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 28, 2020 at 12:16 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Jacob Keller <jacob.keller@gmail.com> writes:
-> > With this series, that's handled by just checking for "-c/-C" on the
-> > command line and enabling all references. There's no positional checks
-> > done, so every word can complete to a reference.
+On Tue, Apr 28, 2020 at 12:24:06PM -0700, Junio C Hamano wrote:
+
+> Christian Couder <christian.couder@gmail.com> writes:
+> 
+> > From: SZEDER Gábor <szeder.dev@gmail.com>
 > >
-> > I don't know offhand how to add completion which depends on the
-> > position of the word we're completing, so I'd have to investigate how
-> > to make that happen.
->
-> I see.  Even though I say "(3) all branches" is a reasonable
-> behaviour, too, if the starting point has to be more (i.e. including
-> tags), that would not help the issue you have here.  It may not be
-> too bad if we offered all refs (including tags, which may not be a
-> good idea) in that case.  I dunno.
->
-> Thanks.
->
+> > When the server has hung up after sending an ERR packet to the
+> > client, the client might still be writing, for example a "done"
+> > line. Therefore the client might get a write error before reading
+> > the ERR packet.
+> >
+> > When fetching, this could result in the client displaying a
+> > "Broken pipe" error, instead of the more useful error sent by
+> > the server in the ERR packet.
+> 
+> Hmm, if the connection gets severed just before the ERR packet the
+> other side has written, we will see "Broken pipe" if we write
+> "done", and no amount of "try to read to collect as much what they
+> said as possible" would help.  If you are lucky and the connection
+> is broken after the ERR reaches on this side, such an "extra effort"
+> may help, but is it really worth the effort?  It is not clear to me
+> if the extra complexity, one more API function people need to learn,
+> and the need to think which one to use every time they want to say
+> write_in_full(), are justifiable.
 
-Basically, when creating a branch, you often do "git switch -c
-branch-name start-point"
+I think the "lucky" case happens pretty routinely. The situation we're
+trying to catch here is that server does:
 
-branch-name would be the new branch name you want, and I think we
-should complete local branches for this, but start-point can be any
-reference, i.e. a tag, a local branch, or a remote reference.
+   packet_write("ERR I don't like your request for some reason");
+   die("exiting");
 
-I assumed completion would be most useful to complete the start-point,
-and so I opted to lean towards fixing completion for -c/-C to complete
-all references. However, I don't think the branch name should
-necessarily complete from all references and it would make sense to
-complete that portion only by local branch names.
+On the client side, we'll get that final packet and then see that the
+connection is closed. So if we get EPIPE or similar on write(), that
+means we're seeing the closed connection. Which means we'll _always_
+have gotten the ERR packet (in this situation).
 
-I'm just not sure how best to implement that in our completion logic,
-and I would rather ensure that start-point completes properly, if we
-have to choose.
+So the problem it is solving is that there isn't really flow control in
+the protocol. The server might be aborting and dumping out an error
+response while the client is still writing. If the server were to
+continue reading the client request before closing the connection, this
+wouldn't happen. And that's what an HTTP server would be doing.
 
-Thanks,
-Jake
+But I think that's pretty tricky to do in our programs, where the
+protocol framing isn't so structured, and deciding when the client is
+done talking often involves parsing their request. E.g., imagine we die
+with "not our ref" due to a "want" line. We'd have to return an error up
+the stack to the code that is reading want/have/done lines, so that it
+knows to keep pumping the socket until it gets to a break point, and
+_then_ die().
+
+I think by contrast, just having the client handle EPIPE more gracefully
+is a simpler fix.
+
+-Peff
