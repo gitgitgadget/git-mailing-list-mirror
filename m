@@ -2,87 +2,97 @@ Return-Path: <SRS0=fhRL=6M=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AA7E3C83001
-	for <git@archiver.kernel.org>; Tue, 28 Apr 2020 00:25:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DB027C83001
+	for <git@archiver.kernel.org>; Tue, 28 Apr 2020 00:28:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 81DC52072A
-	for <git@archiver.kernel.org>; Tue, 28 Apr 2020 00:25:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A8DD42072A
+	for <git@archiver.kernel.org>; Tue, 28 Apr 2020 00:28:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="P/8qGGUX"
+	dkim=pass (2048-bit key) header.d=gemtalksystems-com.20150623.gappssmtp.com header.i=@gemtalksystems-com.20150623.gappssmtp.com header.b="h0WMEEaP"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726336AbgD1AZx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Apr 2020 20:25:53 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51336 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726284AbgD1AZx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Apr 2020 20:25:53 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2AB2F44C67;
-        Mon, 27 Apr 2020 20:25:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=45fYEbr3xVB4nBMm8jyZsuxMODU=; b=P/8qGG
-        UXmJh/YFEg6K24O/twspyIL6X9GysU21Mv1kW64nGTTqdR7u3tAuHlDqnv93Pf3a
-        UW9Y+cFM+WUPOlP3NS/ub1KcPf+AiyKEIwo1gj6prUCuHC33Qzgbq/Im0bNgoZmQ
-        icn1E7OR4XBB5BPoIbHnV8Nv9Qjl80Q3u8/Ec=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=xgL3RBI40BqxBwTg2bZHyWXtG3QhYQYZ
-        oTaHpZgy3pMfkn3URjsBNQLTEiwIqc19voKSX8kWkRGOC9TAQQBhvpNyFSMwcm7V
-        Qw7UWtRm3uJRZaU8DZHfQVwxR8vIcduVk+wBbuiWxQZyB1JVrbbk3znMYiINU+vh
-        e61YrA/G1tM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2135144C65;
-        Mon, 27 Apr 2020 20:25:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A92E544C64;
-        Mon, 27 Apr 2020 20:25:50 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, peff@peff.net, dstolee@microsoft.com,
-        mhagger@alum.mit.edu
-Subject: Re: [PATCH v2 3/4] commit-graph.c: write non-split graphs as read-only
-References: <cover.1587422630.git.me@ttaylorr.com>
-        <cover.1588004647.git.me@ttaylorr.com>
-        <86cf29ce9c1e6dc1fc881458c18850c2893b092a.1588004647.git.me@ttaylorr.com>
-        <xmqqr1w85vtq.fsf@gitster.c.googlers.com>
-        <20200427235935.GA14984@syl.local>
-Date:   Mon, 27 Apr 2020 17:25:50 -0700
-In-Reply-To: <20200427235935.GA14984@syl.local> (Taylor Blau's message of
-        "Mon, 27 Apr 2020 17:59:35 -0600")
-Message-ID: <xmqqd07s5ucx.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726337AbgD1A23 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Apr 2020 20:28:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43464 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726016AbgD1A23 (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 27 Apr 2020 20:28:29 -0400
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 512D3C0610D5
+        for <git@vger.kernel.org>; Mon, 27 Apr 2020 17:28:29 -0700 (PDT)
+Received: by mail-pl1-x632.google.com with SMTP id s10so7653309plr.1
+        for <git@vger.kernel.org>; Mon, 27 Apr 2020 17:28:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gemtalksystems-com.20150623.gappssmtp.com; s=20150623;
+        h=to:from:subject:cc:message-id:date:user-agent:mime-version
+         :content-transfer-encoding:content-language;
+        bh=U8dKgjCVkcUn22BhcqSZeqZtB79VlJBou25JdmTV6Ws=;
+        b=h0WMEEaP4C3ky/4nWtx1+H4ygBop3dprUIA4fVGs5tVEHWqZ7G+/oOLWJEeOZ6LX45
+         3K5mFaNH7E+6p2zE3Bv5jByoGMzSXZsL8yyf3deVbxLHQO7Lw5XvAMWVzfJH9T0gZsev
+         Oc257xS3W4RoceNnQYt5BrBzvXY22eMD7uGYO1wC/nFilUCyUwCK1KxUjcJsz1oAHDGt
+         nJB+kei1B9QzvyabQmAdd3nWVthoBeBkNOpwA287UaTOqJNiQ6ImhnoYdiDIkn0qWxXG
+         FKcAQApJ27nBhJK1Y9VvJkH8bN8Y90FZSINOHbtSgebjglaxJc55odwXjvOowsi/suhe
+         TdXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:to:from:subject:cc:message-id:date:user-agent
+         :mime-version:content-transfer-encoding:content-language;
+        bh=U8dKgjCVkcUn22BhcqSZeqZtB79VlJBou25JdmTV6Ws=;
+        b=rcLIIBni91Cho5Kv5HVlmvQEoRvXic0xulQyuFEfbvhIT+L7HWOGUn2DdJ93eo8k1u
+         Pga5cO5u3V/2Oqy6WbRBDHeWk+zSpDQyPg6SZut1KWD+CaEYMVWw6RGXJAWvtEW2KDzR
+         X75QBLveAFvySWzgNMUiiO5nlOu8As3maaF00TGezhUhaKUn92j3HeHleho+JoZci545
+         VpA3EdfmmrCcnThGK0rXvTNyrzkbRABXzYtGCeK8x41HVGe5Vw7pIje5rO64Zw9fxeR+
+         GRLJzJFHoDvHO9Vad0z3/36dHai/HV7Ob3odbFt5429n5FlU316+LDpQAbd/5mpgbArM
+         9t9Q==
+X-Gm-Message-State: AGi0PubpvRYblEXCsB37nGFW74bs7qS7s7kKlXSlDqdmc6IjNTTFySfX
+        3ZJuIkZvWhnVdWTU+Q56dexDAA==
+X-Google-Smtp-Source: APiQypIomVFt4Dmfo5bTNOO3gAIxfK/pdwN6se1y0DsJUrou/Ti/wRsiv6wiknxqEziNZ67hjP4T+A==
+X-Received: by 2002:a17:90a:343:: with SMTP id 3mr1658964pjf.178.1588033708562;
+        Mon, 27 Apr 2020 17:28:28 -0700 (PDT)
+Received: from [10.94.156.50] (gateway.gemtalksystems.com. [50.234.234.161])
+        by smtp.gmail.com with ESMTPSA id n23sm399457pjq.18.2020.04.27.17.28.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 27 Apr 2020 17:28:28 -0700 (PDT)
+To:     git@vger.kernel.org
+From:   Dale Henrichs <dale.henrichs@gemtalksystems.com>
+Subject: all memory consuming `git diff-tree` bug
+Cc:     Kurt Kilpela <kurt.kilpela@gemtalksystems.com>
+Message-ID: <5e00fe77-3f72-0729-2b30-9f4f98a28b1c@gemtalksystems.com>
+Date:   Mon, 27 Apr 2020 17:28:26 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D051CCCE-88E6-11EA-923D-C28CBED8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
+When I execute the follow set of commands, the `git diff-tree` command 
+will go on to consume all 30G of ram and then 30G of swap on a system 
+running Ubuntu 18.04.
 
-> Looks good to me; this is definitely necessary. For what it's worth, it
-> passes for me, but my system may not have as restrictive a umask as
-> others.
+git clone git@github.com:GemTalk/Rowan.git
+cd Rowan
+git checkout c70f69b50dc90c0a6207a5aa36705b71b59b92b3
+git diff-tree -r -p --textconv --submodule -C --cc --no-commit-id -U3 
+--root c70f69b50dc90c0a6207a5aa36705b71b59b92b3
 
-Note that umask is not a system thing, but personal.  When I was
-with smaller company, I used to have 002 as my umask, but these days
-I use 077.
+I'm running git 2.26.2 (built from source). The git command line was 
+generated by gitk. It originally showed up in 2.17.1, but reproduced in 
+the latest version of git.
 
-> I'd be happy to re-send this patch, but alternatively if you want to
-> just squash this in, I'd be just as happy.
+Clicking nearby commits (ccffec29f977f9324e8120bf550c745189e76f70 and 
+8b08cec96bbb74b54046abbdb49a5bbd2f82fc3b finish almost immediately, so 
+there seems to be something special about that particular commit.
 
-I'll keep it queued, until we need to replace it with an undated
-series.
+Dale
 
-Thanks.
+
+
