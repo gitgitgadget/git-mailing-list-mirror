@@ -2,139 +2,155 @@ Return-Path: <SRS0=fhRL=6M=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E5B62C83000
-	for <git@archiver.kernel.org>; Tue, 28 Apr 2020 09:16:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B2207C83000
+	for <git@archiver.kernel.org>; Tue, 28 Apr 2020 09:31:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B08F42053B
-	for <git@archiver.kernel.org>; Tue, 28 Apr 2020 09:16:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8BA85206D7
+	for <git@archiver.kernel.org>; Tue, 28 Apr 2020 09:31:49 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=procountor.onmicrosoft.com header.i=@procountor.onmicrosoft.com header.b="IoEbkYjD"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="t0R5EPpC"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726486AbgD1JQU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Apr 2020 05:16:20 -0400
-Received: from mx10.partnercore.fi ([77.86.249.10]:44084 "EHLO
-        mx10.partnercore.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726271AbgD1JQU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Apr 2020 05:16:20 -0400
-X-Greylist: delayed 863 seconds by postgrey-1.27 at vger.kernel.org; Tue, 28 Apr 2020 05:16:19 EDT
-Received: from pps.filterd (mx10.partnercore.fi [127.0.0.1])
-        by mx10.partnercore.fi (8.16.0.42/8.16.0.42) with SMTP id 03S8xuAo030546
-        for <git@vger.kernel.org>; Tue, 28 Apr 2020 12:01:50 +0300
-Received: from eur04-he1-obe.outbound.protection.outlook.com (mail-he1eur04lp2055.outbound.protection.outlook.com [104.47.13.55])
-        by mx10.partnercore.fi with ESMTP id 30pe6rggfy-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
-        for <git@vger.kernel.org>; Tue, 28 Apr 2020 12:01:50 +0300
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=mvzbg9ry/pLMmXKiHNbKndUHfvRd6JhWYmWr5WWzwLsJJRGRDPFFTWwzWI3Vxkw3Fwx8aSbDlaDIvoBce6j7cK8XBucnqgSmI/j7I70MXvSu1CMfKjwzSx1/YDe/C1YL4iNPHgjwmMS9tfva1KSpW8WVMKAOwJfh4dkEM+YHOttC2JPMaZD+T8K4N6VrYgtHZ9J/myeHHhtiYGZ/gfYiucb6GOi1+Ho/m2KPZG08/ItljAZXde/5jJrVD3IduwRFOqFTAljH3DwhM54EamaRX1wxv+++a8Kul2ZNLb1WDutY5PLvyhpcNTWNgoVWE6deg1Q0AiisDAoG+lCtgU+A6g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=fQqiWa8kt++ymyt7tHYZueF/qxzbsJA8vlXVfCOHXv8=;
- b=ep+/o40uyQXqZuv5P7DH9QcSAzNQ7977kn+p3dDiE6KC7yR53Ofp1YpjyJ9zdJsor3eVVlDao/icEEp12frKXZXL6gJdeK5+y2Ufs5pEcna8VWy0E53eE5l6g1yT9JKQAQAz4syVhObLQa6mSmd/OoofMZe66YcoArn/+P+QmPmwQ2FZAvr1lluUeG6JCuxXZbqBEoFjqaop/XiDBo41EJTC/68t827oGPISvN7F0GYUBqo2BZoLl7SuXoZC664l/fBh/D8NpsKl0fJqoA9ToXsiIGkUlT+Wioqof7wB63Qot+ayGKU/FVt/Ey2Ju2K34e8c1psuMaxYY1NLfV+4Zw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=finago.com; dmarc=pass action=none header.from=finago.com;
- dkim=pass header.d=finago.com; arc=none
+        id S1727068AbgD1Jbs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Apr 2020 05:31:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43832 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726951AbgD1Jbs (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 28 Apr 2020 05:31:48 -0400
+Received: from mail-qt1-x844.google.com (mail-qt1-x844.google.com [IPv6:2607:f8b0:4864:20::844])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02D52C03C1A9
+        for <git@vger.kernel.org>; Tue, 28 Apr 2020 02:31:47 -0700 (PDT)
+Received: by mail-qt1-x844.google.com with SMTP id e17so13309875qtp.7
+        for <git@vger.kernel.org>; Tue, 28 Apr 2020 02:31:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=procountor.onmicrosoft.com; s=selector1-procountor-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=fQqiWa8kt++ymyt7tHYZueF/qxzbsJA8vlXVfCOHXv8=;
- b=IoEbkYjDKQTwQbgP6mSxNHgccphtdI8gfnSH4tgqiTXN826cgmFmWXTpRS1qE+91gGx42AOflRQtB9utTs74XMe59senObro6yYpd5JmXXydzjdTicnVI3ZymHvU7MxyYxw5EaWaQPZuFpaq06kc9sX4dqsmnEOrTTa5/cV5cU0=
-Received: from AM6PR09MB2980.eurprd09.prod.outlook.com (2603:10a6:20b:d0::13)
- by AM6PR09MB3447.eurprd09.prod.outlook.com (2603:10a6:20b:f2::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2937.13; Tue, 28 Apr
- 2020 09:01:48 +0000
-Received: from AM6PR09MB2980.eurprd09.prod.outlook.com
- ([fe80::1836:f18a:593b:2cd5]) by AM6PR09MB2980.eurprd09.prod.outlook.com
- ([fe80::1836:f18a:593b:2cd5%6]) with mapi id 15.20.2937.023; Tue, 28 Apr 2020
- 09:01:48 +0000
-From:   =?iso-8859-1?Q?Harri_Meht=E4l=E4?= <harri.mehtala@finago.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Bug: git restore --staged --worktree not working in git version
- 2.26.2.windows.1
-Thread-Topic: Bug: git restore --staged --worktree not working in git version
- 2.26.2.windows.1
-Thread-Index: AdYdOul5yN8K+HC4S7Oe1JWGppWedw==
-Date:   Tue, 28 Apr 2020 09:01:48 +0000
-Message-ID: <AM6PR09MB298072F9FEB469130EAEB8F18BAC0@AM6PR09MB2980.eurprd09.prod.outlook.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: vger.kernel.org; dkim=none (message not signed)
- header.d=none;vger.kernel.org; dmarc=none action=none header.from=finago.com;
-x-originating-ip: [88.115.188.106]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: b5f58d56-2513-456d-9e35-08d7eb52c896
-x-ms-traffictypediagnostic: AM6PR09MB3447:
-x-microsoft-antispam-prvs: <AM6PR09MB344793DA91478172853F539E8BAC0@AM6PR09MB3447.eurprd09.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:5797;
-x-forefront-prvs: 0387D64A71
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM6PR09MB2980.eurprd09.prod.outlook.com;PTR:;CAT:NONE;SFTY:;SFS:(376002)(346002)(396003)(39850400004)(366004)(136003)(86362001)(6916009)(7696005)(6506007)(2906002)(66574012)(316002)(4744005)(33656002)(508600001)(5660300002)(26005)(52536014)(81156014)(66946007)(71200400001)(76116006)(9686003)(66556008)(66446008)(64756008)(186003)(8676002)(55016002)(8936002)(66476007);DIR:OUT;SFP:1102;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: Mn5wPB5mHUNbPEiOUMmqMUB4wly4NPI1qt2A2Lgl/LVnusilr02kgIQoNTFKvBlbA9JsIOALl+UKRaQ/ennZnliS+dEuqukFdu39bXlTFAVyN1gUB/iQEJXsFhuHBtEyZWe2kOraofVoxLZTKs2dhIFj+tKYQhx8DJLapWhOiwvlzUQZr/82AnEfabQBcc1xZHIe36gRKQMG6xBz8xaHWcfa1+q0FXIrgtlupQQU4hR5stYS9TQnr2UZ85i4u3HZv4mKqjw9iHAAYWioLPv7c1TRaSMY/9wXtYDxXOK76s49agpFCI0RE/OtNAUtqfAz1ixAAdyuvNosYKcPeJGCKCd0r72BkpMEM5wh2vRebHB16kPywZe9S9oVI+PZnhrMaFg0HInrqra7uEChOWy1FAdIaTMR80Souk42bo5pZ/GE7amQkxbrwS8VIlSvHXwt
-x-ms-exchange-antispam-messagedata: lItW49/M7iUN+4nxGM2RbJpDUGutvgp3UxL6AObXeeZJd3xjELED+MU/snOP4ItfdMlE3cuy9HZY39ObgycdttMUpiQGLMOkvwgh+Hvs8ALBzLfbC4oBeqx90S3KBGix6qE9ns0b6MZQu5ivFHpUZpL3/lMecCeB9y7+48U0P7vRf1QwWm6n5wQlzjvsCUzZITBGsjWz/nLEqTNqkIiA5kDzfnF98cuuWV7Q5HtxMNcSRduC4xQBGJ98KSpZo2ZuuI1Rgyg2V7p7E4BYhI+B+LtIv7TvnWJ9zi1OV07Dvez1nxbAcJv6v+uoXS4hFRIfKSBLnAVkKVhdocu24Nu4xT4FrKEOmgzIrENJi9FZw9MjLrKcWFEuNTmY2isrxhc6mAAo2V41h/5sAr6DoadbyvYGItiq4UBtIVaa89K7ahuXwvLOrOtqy1CtVdWkbh0rZhffzuwSmUVWXQAFoliAtxwWkE6JcLCJdW0YpuY5Xleft0+ieOMlCl6GUo2ivoJLbVkfnvqxaY2np0lBdLCgclCvlZRE5KMR7B6H7yFhZQafEsJFtcKUgnPhbh0mme8cjBLADwlgKLtIRnOLSG56ShpZiIC5s0yUQUIlOumB1D/2gbiHikO39NJeooHpTdcPZl9bn9m3fcD1kXdO+cqQSwsCcjmEbNwU2+1/mmCGiM2ywHAOtNEoBDU/ao5H6mgMOmMq/cc9urwwUe33CuVEtT29U0HRvm5JB0fcrFtEm/B6ArknOJ7r6JHwKi1NCWqRhhIE6TM5NwM5S8GJhl3ZFYj2vVcn2OfSaE/c4u7nigg=
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Rlze13npESNSA5v/azSNO7Lr1dzcbp9aMHzyr3qjhJA=;
+        b=t0R5EPpCx/6wLBYBopmxuc+7DEqb8GFgpIINonkSc+Q8stxEPB+XtHaIOMTJIOK1sJ
+         oB/YZeM/D+rse5KOdLvumPuKUF6/negm74tz8rNnkFt5yNIC+BWN9+8QP2/VT/Fwx1Kp
+         pplltjWuG6ZRGoT3BvvPV1P1FElzDbTBkt9SuEfC1vLIpJt1R1a05bQfXNgw9bdnDzNs
+         TmLnATGDWlARHImV6g554uOCBIm4V/UQCXG43yl2U/xQEXCm2jsW2IzTsb6sSjVv7vYb
+         k/DzduV0mTlkf9MeOdoXDwFVGLY23zVY61d5Lq9YBu6lUVGWWeUgOG1CJkgZWSybfGoQ
+         BcbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Rlze13npESNSA5v/azSNO7Lr1dzcbp9aMHzyr3qjhJA=;
+        b=neie5WuJ06vhPSqk5NivOHL5v3QBia1Ww1eLSK8gxTyJokJLI4anAaGaMo2H2NHhHq
+         lZNzWQh6SVxOY0Etqg8U+s+IsdQxiUGHsR0VYsILhvskx38OPj4RmukHDdu+T2CXc8rX
+         nIS013E34Ey+F00H6VqrbMzgbOmeQ/A44ZltJWkdNuRoLugHTTQR9FEwcpZv4FdIFsa3
+         lI8NHvfEBP1bQPSEaKWf63y0Lj2GlTSTxC5Xc+3n0a1WE8o5qQULng/cZmBJhINmxJNb
+         LldA6/hJcGWUkgkA14X+ivPxvZ44dEN5pBhADpcqDqKE4YMGYsYII4suDsavl/DKsAhB
+         A1rg==
+X-Gm-Message-State: AGi0PuZg1V0rcN5Cf6M5xwctTfANm+TYPLjGgaOOpKSwKqFTnhA1DwN2
+        iN9QZz0x56NRKMkOhVi7+WN8m4Uu
+X-Google-Smtp-Source: APiQypKr2cNCvsS8CHIgcbkrjWWWxtRhrgdvkl1Ku+Dx3en/R345oO4wOfAVpPR1/6JQGpP2HcxWwA==
+X-Received: by 2002:ac8:4cce:: with SMTP id l14mr27562932qtv.31.1588066306588;
+        Tue, 28 Apr 2020 02:31:46 -0700 (PDT)
+Received: from archbookpro.localdomain (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.65.113])
+        by smtp.gmail.com with ESMTPSA id w42sm13466093qtj.63.2020.04.28.02.31.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 Apr 2020 02:31:45 -0700 (PDT)
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Phillip Wood <phillip.wood123@gmail.com>
+Subject: [PATCH] rebase: save autostash entry into stash reflog on --quit
+Date:   Tue, 28 Apr 2020 05:31:31 -0400
+Message-Id: <353a67567a90aea8a90bce1de05d005c61b3b670.1588066252.git.liu.denton@gmail.com>
+X-Mailer: git-send-email 2.26.0.159.g23e2136ad0
 MIME-Version: 1.0
-X-OriginatorOrg: finago.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b5f58d56-2513-456d-9e35-08d7eb52c896
-X-MS-Exchange-CrossTenant-originalarrivaltime: 28 Apr 2020 09:01:48.1044
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 8712f8a5-8316-4c07-b8cb-d9ac94d3cfbb
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: iEai4EC7VU+b/oYxLNQUoE4Js1cfLvEG6VxuVlUaa4BdbHW6x2tou82FGfmMNw2y9htyHJ+OTRyUg/vh3LdSdH58/naKzM1DrXj1SUQiezY=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM6PR09MB3447
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138,18.0.676
- definitions=2020-04-28_04:2020-04-27,2020-04-28 signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0 mlxlogscore=775 mlxscore=0
- adultscore=0 spamscore=0 malwarescore=0 phishscore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2003020000
- definitions=main-2004280078
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello
+In a03b55530a (merge: teach --autostash option, 2020-04-07), the
+--autostash option was introduced for `git merge`. Notably, when
+`git merge --quit` is run with an autostash entry present, it is saved
+into the stash reflog. This is contrasted with the current behaviour of
+`git rebase --quit` where the autostash entry is simply just dropped out
+of existence.
 
-In git version 2.26.2.windows.1
+Adopt the behaviour of `git merge --quit` in `git rebase --quit` and
+save the autostash entry into the stash reflog instead of just deleting
+it.
 
-I am trying to do git restore --staged --worktree for a file. I understood =
-from the documentation that you can do both.
+Signed-off-by: Denton Liu <liu.denton@gmail.com>
+---
 
-"Specify the restore location. If neither option is specified, by default t=
-he working tree is restored. Specifying --staged will only restore the inde=
-x. Specifying both restores both."
+Notes:
+    This patch is based on 'dl/merge-autostash'.
 
+ Documentation/git-rebase.txt |  3 ++-
+ builtin/rebase.c             |  1 +
+ t/t3420-rebase-autostash.sh  | 20 ++++++++++++++++++++
+ 3 files changed, 23 insertions(+), 1 deletion(-)
 
-______________________
-$ git status=20
-On branch ...
-Your branch is up to date with ...
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index f7a6033607..7d0c89a184 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -256,7 +256,8 @@ See also INCOMPATIBLE OPTIONS below.
+ --quit::
+ 	Abort the rebase operation but HEAD is not reset back to the
+ 	original branch. The index and working tree are also left
+-	unchanged as a result.
++	unchanged as a result. If a temporary stash entry was created
++	using --autostash, it will be saved to the stash reflog.
+ 
+ --apply:
+ 	Use applying strategies to rebase (calling `git-am`
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index bc4fc69906..71aec532b1 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -1556,6 +1556,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		goto cleanup;
+ 	}
+ 	case ACTION_QUIT: {
++		save_autostash(state_dir_path("autostash", &options));
+ 		if (options.type == REBASE_MERGE) {
+ 			struct replay_opts replay = REPLAY_OPTS_INIT;
+ 
+diff --git a/t/t3420-rebase-autostash.sh b/t/t3420-rebase-autostash.sh
+index b97ea62363..ca331733fb 100755
+--- a/t/t3420-rebase-autostash.sh
++++ b/t/t3420-rebase-autostash.sh
+@@ -184,6 +184,26 @@ testrebase () {
+ 		git checkout feature-branch
+ 	'
+ 
++	test_expect_success "rebase$type: --quit" '
++		test_config rebase.autostash true &&
++		git reset --hard &&
++		git checkout -b rebased-feature-branch feature-branch &&
++		test_when_finished git branch -D rebased-feature-branch &&
++		echo dirty >>file3 &&
++		git diff >expect &&
++		test_must_fail git rebase$type related-onto-branch &&
++		test_path_is_file $dotest/autostash &&
++		test_path_is_missing file3 &&
++		git rebase --quit &&
++		test_when_finished git stash drop &&
++		test_path_is_missing $dotest/autostash &&
++		! grep dirty file3 &&
++		git stash show -p >actual &&
++		test_cmp expect actual &&
++		git reset --hard &&
++		git checkout feature-branch
++	'
++
+ 	test_expect_success "rebase$type: non-conflicting rebase, conflicting stash" '
+ 		test_config rebase.autostash true &&
+ 		git reset --hard &&
+-- 
+2.26.0.159.g23e2136ad0
 
-Changes to be committed:
-  (use "git restore --staged <file>..." to unstage)
-        modified:   pom.xml
-
-$ git restore --staged --worktree pom.xml
-
-$ git status
-On branch ...
-Your branch is up to date with ...
-
-Changes to be committed:
-  (use "git restore --staged <file>..." to unstage)
-        modified:   pom.xml
-______________________
-
-It looks like currently I have to do both separately.=20
-
-- Harri Meht=E4l=E4
