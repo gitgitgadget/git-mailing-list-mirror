@@ -5,62 +5,61 @@ X-Spam-Level:
 X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E0189C83002
-	for <git@archiver.kernel.org>; Tue, 28 Apr 2020 02:12:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 772C9C83002
+	for <git@archiver.kernel.org>; Tue, 28 Apr 2020 02:20:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B60D1221F5
-	for <git@archiver.kernel.org>; Tue, 28 Apr 2020 02:12:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4F4B420728
+	for <git@archiver.kernel.org>; Tue, 28 Apr 2020 02:20:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AmTAn0au"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="q/X+jvMF"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726336AbgD1CMv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Apr 2020 22:12:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59660 "EHLO
+        id S1726303AbgD1CU4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Apr 2020 22:20:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60930 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726233AbgD1CMv (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 27 Apr 2020 22:12:51 -0400
-Received: from mail-vk1-xa43.google.com (mail-vk1-xa43.google.com [IPv6:2607:f8b0:4864:20::a43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4186EC03C1A8
-        for <git@vger.kernel.org>; Mon, 27 Apr 2020 19:12:51 -0700 (PDT)
-Received: by mail-vk1-xa43.google.com with SMTP id w68so2165552vke.5
-        for <git@vger.kernel.org>; Mon, 27 Apr 2020 19:12:51 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1726261AbgD1CU4 (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 27 Apr 2020 22:20:56 -0400
+Received: from mail-vk1-xa41.google.com (mail-vk1-xa41.google.com [IPv6:2607:f8b0:4864:20::a41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8462C03C1A8
+        for <git@vger.kernel.org>; Mon, 27 Apr 2020 19:20:55 -0700 (PDT)
+Received: by mail-vk1-xa41.google.com with SMTP id g129so5455335vkh.9
+        for <git@vger.kernel.org>; Mon, 27 Apr 2020 19:20:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=9ujbFjouIVlo4xufks1aaij3ni217irBe8U5zugiARQ=;
-        b=AmTAn0auMzL9x28dBDRWplgmEiJwpYFptJFIIkZh84CjOZLx/3MFU0XcZebW+XkSoX
-         LOqGqUBNLX70emY//02VSaralwbUqSJJuxs7SUvLSKZFMc8bdSoK3xGIEEMAk+ECAl79
-         UOFTVO5QyI1NLfckoIEAV/URRBrg4pdjsMCHkVg1HiMMP76qG/yO2CnuxVv+Q/ALQgpK
-         vYYV6zG0t4PcCwSItK3qvfNpan2wQEvuuLYObGwwm8XTEFCw4kiEApzj6ykPgi7a+Mc9
-         Rt9WoVPcmL89E92XmVuE4X/FhQrQgU/xdjhVAW5cIUHrFQuGHLBVx+Zv2x2XKe4ARmim
-         NAsg==
+        bh=7WArTskR53DfRcSE8fxI7LSPGKncNf2rBZ/lol2uK3E=;
+        b=q/X+jvMFak6y4XLlsshj0x+d9vvw8Au/QXPCobN+6R/5DYvdJzlJaGCVImlIyA0cST
+         AnqE/s6QojeTV3WUJGTf/0lw1Jz0r25be96jbTm16hSNVUrkN10Jtj8BCCE37e2SuVGs
+         z4zEnxxhdsnDoBv7eqgf4WEUVf+iQzjJmRHOWQ/TdceWdl9j4gvAcX3mBa2+JWw0xP6i
+         u1dah9yiofuDetQtqeXs8qOCXFln0pbBGmlyUBFZj6eawWzgMlL0/Jq8MRO+5vgWUuUV
+         CdVs9eaT3cPvR49wFi9RYonZkPMYKhTXo0lw6t9ClXdddkhi10zjnSGL8s94jFZWazMy
+         oEGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=9ujbFjouIVlo4xufks1aaij3ni217irBe8U5zugiARQ=;
-        b=n4GcoGQ3OBrJO8q4sDIm9fUEY0vWeFlDRhMhUvE0qL2HQu/vaZXnroLMPBQAx0mexN
-         lAPoYkqecLq6hZ23OfMK3uhDzInkFgKPGtVcrfk8lGB+FgxVhUC+vUGEnOV/pck4YLDe
-         CRQ3zgYr8Z6KMqtoHN27hSy6E/ENH0Qnh10gyAye3nLCJZzkUCgjIxsZCu12N1V1+uWr
-         CLFmmYgjuD87iymzlAd69mAA2UE8A4+93fF+3sJWsaO5BNX6TfHo8yMFPBR4iQFMo0YK
-         5r0eoso5a2oA9s85f/7PQHPuFj4XpONgbSBeLhZOkjF3qrdt/kImPHIJadRBnr5+HARE
-         33DQ==
-X-Gm-Message-State: AGi0PuZh54a+fcrHEbPspHfITzBLD69tEj/kBsISU2k/u0Xz+O1mRWcu
-        dO4AZBn5YSUZehdDTwnBb/zQPqwkyRYNNlksPbA=
-X-Google-Smtp-Source: APiQypI2MtIDrdjjf/nN4IsNRy3qDM542mmheqrX0fLDN4omDDMu6AYMdZY/dFkCLKD2+cBp58AlPk6hfevwKpMSnSE=
-X-Received: by 2002:a1f:a150:: with SMTP id k77mr20191178vke.88.1588039970317;
- Mon, 27 Apr 2020 19:12:50 -0700 (PDT)
+        bh=7WArTskR53DfRcSE8fxI7LSPGKncNf2rBZ/lol2uK3E=;
+        b=e6NfE+vSR5Ib/RaH2jf1wyk4Q930QqvBH0p6KwpLJnSiJoFMz/J7TJYPQ1ZPyLlpFd
+         iJV4mbjtE+KFah6thjasnZP81vOz66wmwUV+RylfyGseJ59LZNeF/gU96dTLs/q9WG4P
+         CZ5a4fkWc7aoQMlMbws4vCUi4+ySiyiXPsvG3HZl03fH5EasoKHluxVIPqnAhrb12eWF
+         YGN85w9l4cY48LK2P4uqYmYWMPR2RoIt4NlTbZyTLF2Q3t776C+erTeCGG/VxgvUJX36
+         DG8rFOlEkqS5M10xoJ+CIc+/p8cqdzEOpa7WCy5ZpGv3IESC7VLIez2CtVvSU2FynEG9
+         U8ug==
+X-Gm-Message-State: AGi0Puah+NTroevMUp9CdVTAXcggtmr87C73P40rSWBjk5eEK5G/mWNI
+        JOWmpNsElR/uiC4A3HQjN9uFuHyXwP4nYf+wquwy7K6T
+X-Google-Smtp-Source: APiQypI8y80htVPrO3xlcFPM5zpgROVxolOlEeMQhEw5NoNYN9Bkj6L+AqkLnKZbGL+w5ARFWyMWTgfNllQgVGOrZRQ=
+X-Received: by 2002:a1f:9645:: with SMTP id y66mr19029720vkd.40.1588040454921;
+ Mon, 27 Apr 2020 19:20:54 -0700 (PDT)
 MIME-Version: 1.0
 References: <20200425022045.1089291-1-jacob.e.keller@intel.com>
  <20200425022045.1089291-6-jacob.e.keller@intel.com> <xmqqv9lk5wqy.fsf@gitster.c.googlers.com>
 In-Reply-To: <xmqqv9lk5wqy.fsf@gitster.c.googlers.com>
 From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Mon, 27 Apr 2020 19:12:39 -0700
-Message-ID: <CA+P7+xqEFk5_x5hG=zbPUCvz4W5Obr7fMjdPVfKYCZ8A9e2uqA@mail.gmail.com>
+Date:   Mon, 27 Apr 2020 19:20:44 -0700
+Message-ID: <CA+P7+xpEMb-A1cOkOxdWf0pM=5o8Cyn9=5HLZPtFNMcLUaypsg@mail.gmail.com>
 Subject: Re: [PATCH 05/11] completion: add test showing subpar completion for
  git switch --orphan
 To:     Junio C Hamano <gitster@pobox.com>
@@ -72,6 +71,18 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+
+The proposed SQUASH you have in gitster/jk/complete-git-switch is
+correct. The commit message body is correct, but the title could be
+reworded to
+
+"completion: stop completing refs for git switch --orphan"
+
+I can send a v2 if that would be helpful, and I've got it fixed up
+locally if other review increases the need for a new spin.
+
+Thanks,
+Jake
 
 On Mon, Apr 27, 2020 at 4:34 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
@@ -141,16 +152,6 @@ On Mon, Apr 27, 2020 at 4:34 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
 > Perhaps we got some rebase gotcha here?
 >
-
-
-Hmm.. Yea, I think there is a problem. Originally I had one commit
-which added the test case for --orphan and I fixed it later, but I
-rebased things so it was one commit. I probably just forgot to update
-the tests.
-
-Thanks,
-Jake
-
 > >  test_expect_success 'teardown after ref completion' '
 > >       git branch -d matching-branch &&
 > >       git tag -d matching-tag &&
