@@ -2,106 +2,109 @@ Return-Path: <SRS0=fhRL=6M=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E7CF6C83000
-	for <git@archiver.kernel.org>; Tue, 28 Apr 2020 17:14:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EE35FC83001
+	for <git@archiver.kernel.org>; Tue, 28 Apr 2020 17:25:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C10DB20730
-	for <git@archiver.kernel.org>; Tue, 28 Apr 2020 17:14:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A419B2082E
+	for <git@archiver.kernel.org>; Tue, 28 Apr 2020 17:25:16 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Uut9gOk4"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="j4fJk+7K"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728175AbgD1ROM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Apr 2020 13:14:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60000 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726406AbgD1ROM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Apr 2020 13:14:12 -0400
-Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B348C03C1AB
-        for <git@vger.kernel.org>; Tue, 28 Apr 2020 10:14:12 -0700 (PDT)
-Received: by mail-pj1-x1044.google.com with SMTP id h12so1299370pjz.1
-        for <git@vger.kernel.org>; Tue, 28 Apr 2020 10:14:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=AeDdcKqiDRQjHNmaZoE84fLRJqMwIpPE4Dga4Frz9U0=;
-        b=Uut9gOk4Fn9NHvL/aflSe5xhjcS/LLp9otaAkdrebDf+0tSB3EGfQBNF0DBAp5SVL9
-         4RXgMkoq2PhPyPBKpgUrqW9thAPPPwI7c0asDjuQDyy91LCExIcQya2eAQdj11Z/yRIC
-         aQkHHw69TWn1E8U1rM3hvrgLSys7vK5uKA1gNtPa5/1Yd5omibaCi7nZIb+bdguWm6LG
-         Aei3hP26tX17Hh+HbaJ5WN8wLKBephXjQTqbwN14/+yHQJyTglaDTSOBazTf/4KPidqf
-         cj36JfiIkpmYHyE6JUTy2rlWQ5zmLvf8nfMOXNC6iiMw5vB0XUM+6LMF6FhvcfR7c9eR
-         0KzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=AeDdcKqiDRQjHNmaZoE84fLRJqMwIpPE4Dga4Frz9U0=;
-        b=G5kwUQAQ1kh1FxV+jAKl+Z3GD9p+zMmtW9GW6nl0bilfk2HdXX9LA5MOmanBXO3Ha0
-         niH3lAh1vumyXylwoiN6XnvHBeDh5CfBMQn9ZweGbyub4G0eDAaoelFF/XnKGIfwnoRv
-         uk+0GfUwJY56Aq/WJ4qVNa/8QWUo9PP8afnoCaG//wwsROsny98gxjk4f+qXLQnnkUf+
-         55MhNx9iEO/JkK7qTvdkTpTibcs9yybO4xbuS/M3H890YkNlo5Xur5KFj7nFfuUS0W+m
-         SIc+YqxkoU0yUM85Gzikg4H2lxfWqAMRGzvSjwsRsJYnH84v6BEbAomwXScaSqxaWG2j
-         8NRw==
-X-Gm-Message-State: AGi0PuagnSPZZgcYVTA71H325AnAtXhp+3WP2GRwBt+1B/+ql5bB0yyx
-        Nz73AF36RfOXLdF4AAtRP7I=
-X-Google-Smtp-Source: APiQypIOMirZdrhftA00Q2W/BWrmjyNkj+QresFv4oLfFpEG+X89M16h7NsOkMvAQcNFAZwZt7KirQ==
-X-Received: by 2002:a17:90a:37c4:: with SMTP id v62mr6032678pjb.177.1588094051881;
-        Tue, 28 Apr 2020 10:14:11 -0700 (PDT)
-Received: from Carlos-MBP (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
-        by smtp.gmail.com with ESMTPSA id n34sm8971353pgl.43.2020.04.28.10.14.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Apr 2020 10:14:11 -0700 (PDT)
-Date:   Tue, 28 Apr 2020 10:14:08 -0700
-From:   Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>, Dirk <dirk@ed4u.de>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v4 3/4] git-credential-store: fix (WIP)
-Message-ID: <20200428171408.GB56126@Carlos-MBP>
-References: <20200428104858.28573-1-carenas@gmail.com>
- <20200428105254.28658-1-carenas@gmail.com>
- <20200428105254.28658-3-carenas@gmail.com>
- <CAPig+cTjZQ7csu78jFx-w1SfewptTrOeR68aEwst7F2qvowR4Q@mail.gmail.com>
+        id S1728412AbgD1RZP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Apr 2020 13:25:15 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:64098 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728022AbgD1RZP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Apr 2020 13:25:15 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id A627DBFCEA;
+        Tue, 28 Apr 2020 13:25:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=82WpxbKBMsDH16AQF7INg11QnEU=; b=j4fJk+
+        7KMRHrcStIGkrHLaNC26pKzbpvhV9M3czOiv3EAvufWjtsqwtUxGY663DgGETQp9
+        4R2nP46oKwMA1J0E4dOuKoJdVPI+cH4Szn+Us0tLXZ3jS4Jte0y4g/4cXz0cBWsc
+        npjJG0FyNuNgrj+qPraYtMqFEDw5TgLKqTPkQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=CxLCzP0tR1iQbkzc55M0/9WcFt68Bo49
+        RMLdksWJKiEcnrRoMlwhWDduGhAeUcfhWCHYrei6qE/IL625/P6yH5SF9Zu6TYbZ
+        cVXgEu9eOzzbv+cjdB3H7JCORpMWmHjZ30XTQorr+Qbvz95Xz+Vb3dRYV5Fmct0n
+        BkaR1q81pqE=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9F424BFCE9;
+        Tue, 28 Apr 2020 13:25:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C8564BFCE8;
+        Tue, 28 Apr 2020 13:25:10 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
+        <carenas@gmail.com>
+Subject: proto v2 fixes for maint (was Re: Preparing for a Git 2.26.3 release)
+References: <20200428055514.GB201501@google.com>
+Date:   Tue, 28 Apr 2020 10:25:09 -0700
+In-Reply-To: <20200428055514.GB201501@google.com> (Jonathan Nieder's message
+        of "Mon, 27 Apr 2020 22:55:14 -0700")
+Message-ID: <xmqq7dxz4j62.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPig+cTjZQ7csu78jFx-w1SfewptTrOeR68aEwst7F2qvowR4Q@mail.gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3698B108-8975-11EA-972E-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 28, 2020 at 12:11:20PM -0400, Eric Sunshine wrote:
-> On Tue, Apr 28, 2020 at 6:53 AM Carlo Marcelo Arenas Belón
-> <carenas@gmail.com> wrote:
-> > From: Jonathan Nieder <jrnieder@gmail.com>
-> > Subject: git-credential-store: fix (WIP)
-> 
-> Um, what? Did you forget to squash this into the previous patch?
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-no; was documenting his proposal from 20200428052510.GA201501@google.com[1]
-with the hope (unsuccesfully) to save everyone time and easy testing by
-having a series ready to apply.
+> Since then we've heard about a few related (non-security) regressions.
+> I'd like to avoid giving people an excuse not to upgrade, so this
+> morning[1] I promised a discussion of what I'd like to see in a 2.26.3
+> release to help with that.
 
-> > Helped-by: Carlo Marcelo Arenas Belon <carenas@gmail.com>
-> 
-> No sign-off? (Jonathan's)
+Thanks for starting this.  
 
-really my fault, but was expected as documented in:
+I'll have chances to comment on other areas you listed, but since
+I've answered on v2-proto stuff to somebody else already...
 
-  https://lore.kernel.org/git/20200428112518.GA15981@Carlos-MBP/
+> The protocol version change was painful for users that fetch in the
+> same repo from linux-next and other linux remotes[5].  The problem has
+> been isolated and fixed, so we could either apply the revert or apply
+> the fixes[6].
 
-sorry for the confussion and thanks for your review
+The demote patch hasn't even hit 'master'.  
 
-Carlo
+My preference is to merge the demotion down to 'master' and 'maint'
+while merging down this fix to 'next' and to 'master'.
 
-[1] https://lore.kernel.org/git/20200428052510.GA201501@google.com/
+And immediately revert the demotion on 'master', which will make the
+tip of 'master' with v2 as the default, with "this" fix.
+
+That way, those who want to help us polish the code further for the
+next release would use v2 as default with the proposed fix for this
+breakage and can hunt for other breakages in v2, while those on the
+maintenance track (and v2.26.3 JNeider wants to see happen soon)
+would revert to the original protocol as default.
+
+In short, my preference is to ship 2.26.3 with the "demote v2 from
+default", and hopefully try 2.27 with "v2 with negotiation fix" and
+hope people won't find any other remaining glitches in 2.27.  After
+that, we may want to merge the negotiation fix down to 2.26.x track
+but I am not comfortable merging it in a release on the maintenance
+track with the timeframe we seem to be talking about (i.e. a few
+weeks, presumably).
+
+
+
