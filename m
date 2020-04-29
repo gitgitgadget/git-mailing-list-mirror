@@ -2,130 +2,273 @@ Return-Path: <SRS0=05is=6N=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 55AFFC83000
-	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 00:23:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 67255C83000
+	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 00:34:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 282512074A
-	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 00:23:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3B8D02074A
+	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 00:34:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qyl7gwjm"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IqHytGRO"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726378AbgD2AX2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Apr 2020 20:23:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42426 "EHLO
+        id S1726441AbgD2AeD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Apr 2020 20:34:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726353AbgD2AX1 (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 28 Apr 2020 20:23:27 -0400
-Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com [IPv6:2607:f8b0:4864:20::744])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A27EC03C1AC
-        for <git@vger.kernel.org>; Tue, 28 Apr 2020 17:23:27 -0700 (PDT)
-Received: by mail-qk1-x744.google.com with SMTP id o19so331152qkk.5
-        for <git@vger.kernel.org>; Tue, 28 Apr 2020 17:23:27 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1726274AbgD2AeD (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 28 Apr 2020 20:34:03 -0400
+Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 977FAC03C1AC
+        for <git@vger.kernel.org>; Tue, 28 Apr 2020 17:34:01 -0700 (PDT)
+Received: by mail-pl1-x642.google.com with SMTP id h11so155946plr.11
+        for <git@vger.kernel.org>; Tue, 28 Apr 2020 17:34:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=VG2zIMzShQ9d5h+sV7LNxjI60XyuuetuoZJVCgU9LSs=;
-        b=Qyl7gwjmeROI3Ffoc7XwYXFOxhOFB+eol7mhhwvRZlIEqVi0yvoqcKDC48GXLVNQaO
-         blfRTTby7sN4/Dovv3hsjHhloEQ4QZmCr1Wy2EN79cSODJDUCofUSgGcA9m50Rxl1Nw0
-         8t6ru7AB4CM9jUwJjTjRiVmdWNftNHfBgHzaBHNLugEkZJC5rHARTSqhivReg20Sv8hL
-         wArDEiqHsdWMVrYYK77h6X8QX1bU7s3vTtQqtfdBqytNGBzvJ3zUNolJJT1CPscTa0j9
-         RINvCuUi9HqSeJPgqOExSdIMFMQidDXGdOhGHropi9bFQqsl+ha3lDQZBDHBmd6c4BwG
-         iXXQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=MLz4k/xkRuwHRDwhI1CcjMaynvzv7C0GaWVuznI19y8=;
+        b=IqHytGROj0DZ07fLB4g09+/wgokhyipDCKqWq/zVs/XgH/wW2WOzgUTfyIL1V7t6XX
+         zbDDlZYasBuiXfZWJnOKd2JrsgNLxoy4Oi2On1gL9G4YN1bXYGiLbL0S71itlgxnBAl7
+         6hH5rjteU18p7dBQZNiQEEzx0RWW2YyWetUQVm2RtxJ94jypMAg34AYftw7f107q4zzj
+         7NBJTFqJzvC0YDZ2unnwGp8op3z+MQfEYPDoWJ9itNSDxAw+jVfxN25bBOOJIdNlkbcE
+         +H8EXHG79y8izUXHIShI29ONydE5ROFZmGq+VXvv2dK1kc6NMRUjl2rpvM/FeIxl/ea4
+         KzWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=VG2zIMzShQ9d5h+sV7LNxjI60XyuuetuoZJVCgU9LSs=;
-        b=fWLL0REbYoIh1csK5umeiPN4ummqorJAxvmFu19ZJIjl8rK0LbCVnGs4BnYKipTbC8
-         ugDKK1QFN4M2gV5PdhB0mYi8U19Q53RxV0NqxDAJXqBWNiL/hXejVuqfR5y/uCAl9AHQ
-         WQ2toifkE4bgQf8caNH4v7z1UECrzZzvxpAiHqIAwvPyU3iwPjlmwJjtHl2Hp2kInFIu
-         h8jyUpudUA6YxqvPv7+aRewvQUJM3uJMkeywvcLT8R0BQO32Rcp3gwjm3CRE0qlC+3uZ
-         uWoD7qJM5eLjIfnZqGUnhlCkEkKgApocc9OGM5sngel9gbcCW/aVpOwIX5dzv97uFR9B
-         pIqw==
-X-Gm-Message-State: AGi0Pubto4JkTQFgVNLEQgncchIaWWzhiIrtvB+b1WMacp7mfHNC5TP9
-        3crwDzrguSZJqP4CmLh2pORlukLa
-X-Google-Smtp-Source: APiQypKVjDPelu5kYk3oSFc4+Kojet4YXfX8mjbRndJpmChw63JQ/UG5XB7UAIzhDRfkviu0Vp1Bqw==
-X-Received: by 2002:a37:387:: with SMTP id 129mr30388787qkd.147.1588119806440;
-        Tue, 28 Apr 2020 17:23:26 -0700 (PDT)
-Received: from generichostname (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.65.113])
-        by smtp.gmail.com with ESMTPSA id s50sm15214004qtj.1.2020.04.28.17.23.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Apr 2020 17:23:25 -0700 (PDT)
-Date:   Tue, 28 Apr 2020 20:23:23 -0400
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH] rebase: save autostash entry into stash reflog on --quit
-Message-ID: <20200429002323.GB2570028@generichostname>
-References: <353a67567a90aea8a90bce1de05d005c61b3b670.1588066252.git.liu.denton@gmail.com>
- <xmqqv9lj1k0c.fsf@gitster.c.googlers.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=MLz4k/xkRuwHRDwhI1CcjMaynvzv7C0GaWVuznI19y8=;
+        b=KP+gAqA5t6As4GqFTp/pEhGUlonqbHqy61nUzp34ASpoSk9sWkKSRAexIXApY3eioG
+         17eyCyK8uEmVOm1Gg+5ok/k9x3wbmQSfapRDg7d+zJcK8CzTu2ytEyqZ3GtkWVUiVI77
+         CNZNWXSBROtwfNh7l3wnY6CHoLAkmmk2hlHej7jnm1oErNIVnk76OwLF3Nlw1CKyED1C
+         K0idVSC9XhHp14OlXBIU05B7qD5UISsxOCPHcoWVmD6NxZFyDpbEGilWKAJiqMzro6go
+         KAU8CgCwltwzJTaOjIXLHc9FZ+jI6xg6fdcKRDe7wLZxCsDfGK5iBVn6PFCvmm5l4b3F
+         Xmcw==
+X-Gm-Message-State: AGi0PuZnfvZmil5egNeg4vMsc4bYPNp57UyHRLEi8jRwSFjOV7ex4Ycj
+        b0YNAfX06FvkaUoPBmwomfR7peQ1
+X-Google-Smtp-Source: APiQypKwGYysaf9vvAE3V1nWTq0h+UWo2zyiXIq/LFstfaGDBVFzYl+kPRibKjvgsvoT/OZQxqGCYw==
+X-Received: by 2002:a17:902:a40e:: with SMTP id p14mr32205407plq.132.1588120440290;
+        Tue, 28 Apr 2020 17:34:00 -0700 (PDT)
+Received: from localhost.localdomain (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
+        by smtp.gmail.com with ESMTPSA id l30sm14078249pgu.29.2020.04.28.17.33.59
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 28 Apr 2020 17:33:59 -0700 (PDT)
+From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+To:     git@vger.kernel.org
+Cc:     dirk@ed4u.de, sunshine@sunshineco.com, peff@peff.net,
+        gitster@pobox.com, jrnieder@gmail.com,
+        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+Subject: [PATCH v5] credential-store: warn instead of fatal for bogus lines from store
+Date:   Tue, 28 Apr 2020 17:33:03 -0700
+Message-Id: <20200429003303.93583-1-carenas@gmail.com>
+X-Mailer: git-send-email 2.26.2.569.g1d74ac4d14
+In-Reply-To: <20200428104858.28573-1-carenas@gmail.com>
+References: <20200428104858.28573-1-carenas@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqv9lj1k0c.fsf@gitster.c.googlers.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+with the added checks for invalid URLs in credentials, any locally
+modified store files which might have empty lines or even comments
+were reported[1] failing to parse as valid credentials.
 
-On Tue, Apr 28, 2020 at 12:35:15PM -0700, Junio C Hamano wrote:
-> > diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-> > index f7a6033607..7d0c89a184 100644
-> > --- a/Documentation/git-rebase.txt
-> > +++ b/Documentation/git-rebase.txt
-> > @@ -256,7 +256,8 @@ See also INCOMPATIBLE OPTIONS below.
-> >  --quit::
-> >  	Abort the rebase operation but HEAD is not reset back to the
-> >  	original branch. The index and working tree are also left
-> > -	unchanged as a result.
-> > +	unchanged as a result. If a temporary stash entry was created
-> > +	using --autostash, it will be saved to the stash reflog.
-> 
-> ... let's not do so for end-user facing documentation.  "..., it
-> will be stashed away".  Or we may not even want to say anything; any
-> "--autostash" user would expect that the changes that were stashed
-> before "rebase" started would not be discarded, and this change may
-> just be a bugfix.
+instead of doing a hard check for credentials, do a soft one and
+warn the user so any invalid entries could be corrected.
 
-Hmm, in this case, git-merge.txt may need an update as well. From
-'dl/merge-autostash', 
+[1] https://stackoverflow.com/a/61420852/5005936
 
-	'git merge --abort' is equivalent to 'git reset --merge' when
-	`MERGE_HEAD` is present unless `MERGE_AUTOSTASH` is also present in
-	which case 'git merge --abort' applies the stash entry to the worktree
-	whereas 'git reset --merge' will save the stashed changes in the stash
-	reflog.
+Reported-by: Dirk <dirk@ed4u.de>
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Based-on-patch-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+---
+v5:
+* q_to_tab this round, with a single echo to make sure empty line
+  is covered, as that seems to be a popular issue
+* rebase on top of jc/credential-store-file-format-doc
+* implement a redacter for credentials to use on errora to avoid
+  leaking passwordss
+v4:
+* use credential_from_url_gently instead as shown by Jonathan
+* add documentation to clarify "comments" is not a supported feature
+v3:
+* avoid using q_to_cr as suggested by Peff
+* a more verbose commit message and slightly more complete documentation
+v2:
+* use a here-doc for clarity as suggested by Eric
+* improve commit message and include documentation
 
-and
+ Documentation/git-credential-store.txt | 12 +++++-
+ credential-store.c                     | 51 ++++++++++++++++++++++----
+ t/t0302-credential-store.sh            | 43 ++++++++++++++++++++++
+ 3 files changed, 96 insertions(+), 10 deletions(-)
 
-	--quit::
-		Forget about the current merge in progress. Leave the index
-		and the working tree as-is. If `MERGE_AUTOSTASH` is present, the
-		stash entry will be saved to the stash reflog.
+diff --git a/Documentation/git-credential-store.txt b/Documentation/git-credential-store.txt
+index 76b0798856..30d498fe54 100644
+--- a/Documentation/git-credential-store.txt
++++ b/Documentation/git-credential-store.txt
+@@ -95,8 +95,16 @@ https://user:pass@example.com
+ ------------------------------
+ 
+ No other kinds of lines (e.g. empty lines or comment lines) are
+-allowed in the file, even though some may be silently ignored. Do
+-not view or edit the file with editors.
++allowed in the file, even though historically the parser was very
++lenient and some might had been silently ignored.
++
++Do not edit the file with editors as it could compromise the validity
++of your credentials by sometimes subtle formatting issues (like spaces)
++
++In cases where those formatting issues are detected during parsing a
++warning indicating the line found will be printed to stderr so it can
++be corrected at your earliest convenience, but the remaining valid
++credentials will be used to try to find a match as described below.
+ 
+ When Git needs authentication for a particular URL context,
+ credential-store will consider that context a pattern to match against
+diff --git a/credential-store.c b/credential-store.c
+index c010497cb2..5324c56ce1 100644
+--- a/credential-store.c
++++ b/credential-store.c
+@@ -6,6 +6,32 @@
+ 
+ static struct lock_file credential_lock;
+ 
++static char *redact_credential(const struct strbuf *line)
++{
++	struct strbuf redacted_line = STRBUF_INIT;
++	char *at = strchr(line->buf, '@');
++	char *colon;
++	int redacted = 0;
++
++	if (at) {
++		strbuf_addf(&redacted_line, "%.*s",
++			(int)(at - line->buf), line->buf);
++		colon = strrchr(redacted_line.buf, ':');
++		if (colon && *(colon + 1) != '/') {
++			redacted_line.len = colon - redacted_line.buf + 1;
++			strbuf_addstr(&redacted_line, "<redacted>");
++			strbuf_addstr(&redacted_line, at);
++			redacted = 1;
++		}
++		else
++			strbuf_reset(&redacted_line);
++	}
++	if (!redacted)
++		strbuf_addbuf(&redacted_line, line);
++
++	return redacted_line.buf;
++}
++
+ static int parse_credential_file(const char *fn,
+ 				  struct credential *c,
+ 				  void (*match_cb)(struct credential *),
+@@ -15,6 +41,7 @@ static int parse_credential_file(const char *fn,
+ 	struct strbuf line = STRBUF_INIT;
+ 	struct credential entry = CREDENTIAL_INIT;
+ 	int found_credential = 0;
++	int lineno = 0;
+ 
+ 	fh = fopen(fn, "r");
+ 	if (!fh) {
+@@ -24,16 +51,24 @@ static int parse_credential_file(const char *fn,
+ 	}
+ 
+ 	while (strbuf_getline_lf(&line, fh) != EOF) {
+-		credential_from_url(&entry, line.buf);
+-		if (entry.username && entry.password &&
+-		    credential_match(c, &entry)) {
+-			found_credential = 1;
+-			if (match_cb) {
+-				match_cb(&entry);
+-				break;
++		lineno++;
++		if (!credential_from_url_gently(&entry, line.buf, 1)) {
++			if (entry.username && entry.password &&
++				credential_match(c, &entry)) {
++				found_credential = 1;
++				if (match_cb) {
++					match_cb(&entry);
++					break;
++				}
+ 			}
+ 		}
+-		else if (other_cb)
++		else {
++			char *redacted = redact_credential(&line);
++			warning("%s:%d %s: %s", fn, lineno,
++				 _("ignoring invalid credential"), redacted);
++			free(redacted);
++		}
++		if (!found_credential && other_cb)
+ 			other_cb(&line);
+ 	}
+ 
+diff --git a/t/t0302-credential-store.sh b/t/t0302-credential-store.sh
+index d6b54e8c65..68b59e6f98 100755
+--- a/t/t0302-credential-store.sh
++++ b/t/t0302-credential-store.sh
+@@ -120,4 +120,47 @@ test_expect_success 'erase: erase matching credentials from both xdg and home fi
+ 	test_must_be_empty "$HOME/.config/git/credentials"
+ '
+ 
++test_expect_success 'get: credentials without scheme are invalid' '
++	echo "://user:secret@example.com" >"$HOME/.git-credentials" &&
++	cat >expect-stdout <<-\STDOUT &&
++	protocol=https
++	host=example.com
++	username=askpass-username
++	password=askpass-password
++	STDOUT
++	test_config credential.helper store &&
++	git credential fill <<-\EOF >stdout 2>stderr &&
++	protocol=https
++	host=example.com
++	EOF
++	test_cmp expect-stdout stdout &&
++	grep "askpass: Username for '\''https://example.com'\'':" stderr &&
++	grep "askpass: Password for '\''https://askpass-username@example.com'\'':" stderr &&
++	test_i18ngrep "ignoring invalid credential" stderr &&
++	! grep secret stderr
++'
++
++test_expect_success 'get: store file can contain empty/bogus lines' '
++	echo "" > "$HOME/.git-credentials" &&
++	q_to_tab <<-\CONFIG >>"$HOME/.git-credentials" &&
++	#comment
++	Q
++	https://user:pass@example.com
++	CONFIG
++	cat >expect-stdout <<-\STDOUT &&
++	protocol=https
++	host=example.com
++	username=user
++	password=pass
++	STDOUT
++	test_config credential.helper store &&
++	git credential fill <<-\EOF >stdout 2>stderr &&
++	protocol=https
++	host=example.com
++	EOF
++	test_cmp expect-stdout stdout &&
++	test_i18ngrep "ignoring invalid credential" stderr &&
++	test_line_count = 3 stderr
++'
++
+ test_done
 
-both need to be amended to remove the reference to the "stash reflog".
+base-commit: 272281efcc18fcedd248597b8859f343cae1c5a0
+-- 
+2.26.2.569.g1d74ac4d14
 
-When I was writing this documentation, I wanted to distinguish between
-the temporary autostash entry and the actual stash since the autostash
-entry isn't pushed to the stash unless there are conflicts or it's
-explicitly saved. I'm not sure that something like "If a temporary stash
-entry was created using --autostash, it will be stashed away" works very
-well since the word "stash" is overloaded here to mean "a random stash
-commit" and "stashed away in _the_ stash". Unfortunately, I'm also
-having trouble coming up with a suitable phrasing of my own.
-
-I dunno, perhaps I'm overthinking this too and your suggested rewording
-sounds good and I'm just being too picky.
-
-Thanks,
-
-Denton
