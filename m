@@ -7,63 +7,63 @@ X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7EECCC83000
-	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 17:36:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 147B3C83004
+	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 17:36:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5C91620757
-	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 17:36:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E108520757
+	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 17:36:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="zUPKp1OL"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="p7MDWin9"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726836AbgD2Rge (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Apr 2020 13:36:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34392 "EHLO
+        id S1726847AbgD2Rgi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Apr 2020 13:36:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34404 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726423AbgD2Rge (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 29 Apr 2020 13:36:34 -0400
-Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 466C8C03C1AE
-        for <git@vger.kernel.org>; Wed, 29 Apr 2020 10:36:34 -0700 (PDT)
-Received: by mail-pl1-x641.google.com with SMTP id n24so1077608plp.13
-        for <git@vger.kernel.org>; Wed, 29 Apr 2020 10:36:34 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1726423AbgD2Rgh (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 29 Apr 2020 13:36:37 -0400
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C661FC03C1AE
+        for <git@vger.kernel.org>; Wed, 29 Apr 2020 10:36:37 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id fu13so1034121pjb.5
+        for <git@vger.kernel.org>; Wed, 29 Apr 2020 10:36:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=d2eX3af3CZCo1adjL+hWq+uGifBkGN7Lpw1GojnJ2ak=;
-        b=zUPKp1OLp94jtQe1pK77tFzwWAh9l+XYowJFwRDd6oG8okDAuC6EFe58EvtDzfLEu6
-         F+H9FZfXsGRCz8nUUoLWZN7hjBEa7Tj4or6oB44Sxth8bffxABi5cdIHU34ptaHQ3krg
-         X4vkdOm0iKEkkBnf33AebultHl0s0sccs86JB0/D+X0IHcATxjgU2XB6VRsCDEBXiwpJ
-         zFh/X7/9du3KDL6Xr2Fvg0/QNYcFqpZw+9XCU4Uzvh/Vp0oEqprn29Ro74yqU0KC61or
-         RLrzy6p05uIpvZnliZwReKM1ooF+HpGE55d+4z768l4KLiX1ZKD9qL6s3e0oXq2JtQA3
-         xzuw==
+        bh=m8WPRTZAA4ifjAR9b5/RmtGZJzGpRFy5RWTfVKbAGNM=;
+        b=p7MDWin97u9/qwvuq817NQxJIQDjBLWEyMAy2uycqaoXZ6EVvt1ivwNOONDZJ3FeHJ
+         xX+5Ee57JpsgvuZcDGIFyy6lXHmFKvbsrOkzvmAlzZVkktTuaVy79J9OnHzJjNRsZppB
+         kTAHE1G5uv12Ew+nwvIr3dulq363l+sJ2HTvJQOKZXlnMAsnb56xJI5HTsK+Q47sBg1/
+         IyIFa8BX2ohwh6/DtdVefBv7pupeCG3cIc/CkPBnt3GU37wu39+2xKb0S2/ciXc8QIGF
+         RA8Npq6ZcVFWl404euaMtzrIAAK1xr8pZlVxwLWa0p3vjFgD0gxf3d3JWVa9uQbfimmh
+         m/+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=d2eX3af3CZCo1adjL+hWq+uGifBkGN7Lpw1GojnJ2ak=;
-        b=MsHa8f2oJ4B8UhBqL/0Q91vVPdGzuoN3TeSiv0CEnly+vhw/WcOuqHzQZtJwP39v/m
-         zlOcsdE1r9neBIY7EIIOJhoY/7QQR5lR0ibOriFJzv/TxVX+/iyNSb3PA0RoLVS4r5lm
-         jH4pNR5LC8teSQdcmb5mB9mhNZn2hhjM9u6zvkJIHl16EinTDWZ5jdD27RYLdF80Ut57
-         mBr+Nu6zp3ASQsheI29wRhhU67uXYBJPzykJnDakvgADoxGicEtu3Y+N0myKSNpXdxz6
-         9ulu6w0jJgkDEb9uwSwqK6PMJ6UAjFmXhlBQb6GBKHSzlvSJsvO3VwYJVlGE5f2AHtZR
-         /6Ew==
-X-Gm-Message-State: AGi0PubfmRhmmWu6s0TsVROFFyGTHi64M1Dff1ElGxo2aQkA98UPOkQy
-        +VHpFoKXp3O6ggUUO2uCbOxIpcsvFh8bIA==
-X-Google-Smtp-Source: APiQypJGllwHbbWNPty2Bl5XJSbgEoukFil8npuqh2msIsovJOAZud6UxpbhnO5VX3UlDeCs4zMjzw==
-X-Received: by 2002:a17:90a:a402:: with SMTP id y2mr4703542pjp.24.1588181793346;
-        Wed, 29 Apr 2020 10:36:33 -0700 (PDT)
+        bh=m8WPRTZAA4ifjAR9b5/RmtGZJzGpRFy5RWTfVKbAGNM=;
+        b=JbeN0xJgA0Fx6tsFQg57lJdG+tjtv+rZB/bVWE+liGyuPZ3xDao8dFAi3kgJwBa/21
+         zZYf1J0t245mP7Mi3MdeTQb9knk4AlGdLhGpEFsb66lSIRY9PyJlXvuAsGiEjY0yOsoK
+         9XVxJueBFKvlb/gCgcbzbfPGVDiXKmup4dz9Om2UcFokrxjUN/kVrKhjkXDNKgbc0Iy0
+         w07qEa0aPAjRlALq6ka4krv3qvl+tX0/5hPdiT/YYHydwDceE6axqrDX1CdCO37grhJx
+         ZoC2tOC6UvDUCF5UgC8O1s2HewWm/5BG+Xf0LHvZ9CQEd1phlsZ8KBRXJ919Dg7z86ol
+         97Fg==
+X-Gm-Message-State: AGi0PuaO9zxKV8yrPBpGMiIarX+56ct+SeAV8SvCGQJGyMTk50vXggJm
+        McXHn4W+0fHKt7QBNBq0bqCcUt1sCKa4aQ==
+X-Google-Smtp-Source: APiQypI/hHhUfvIfeMokZKBdG7vGt9THszpzHOIIFtbSqQrfB+aaLzZKN8ofe/tZQ8hxoPvY/4Vq9A==
+X-Received: by 2002:a17:90a:25ea:: with SMTP id k97mr4547408pje.122.1588181796784;
+        Wed, 29 Apr 2020 10:36:36 -0700 (PDT)
 Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id j2sm1570763pfb.73.2020.04.29.10.36.32
+        by smtp.gmail.com with ESMTPSA id y7sm1541901pfq.21.2020.04.29.10.36.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Apr 2020 10:36:32 -0700 (PDT)
-Date:   Wed, 29 Apr 2020 11:36:31 -0600
+        Wed, 29 Apr 2020 10:36:36 -0700 (PDT)
+Date:   Wed, 29 Apr 2020 11:36:35 -0600
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, dstolee@microsoft.com, gitster@pobox.com,
         mhagger@alum.mit.edu
-Subject: [PATCH v3 1/5] tempfile.c: introduce 'create_tempfile_mode'
-Message-ID: <03c975b0bd0cd3dd5d693187f12f45fd7565016c.1588181626.git.me@ttaylorr.com>
+Subject: [PATCH v3 2/5] lockfile.c: introduce 'hold_lock_file_for_update_mode'
+Message-ID: <c1c84552bc69218299ce182388b6a888b3c71056.1588181626.git.me@ttaylorr.com>
 References: <cover.1587422630.git.me@ttaylorr.com>
  <cover.1588181626.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -75,78 +75,164 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the next patch, 'hold_lock_file_for_update' will gain an additional
-'mode' parameter to specify permissions for the associated temporary
-file.
+We use 'hold_lock_file_for_update' (and the '_timeout') variant to
+acquire a lock when updating references, the commit-graph file, and so
+on.
 
-Since the lockfile.c machinery uses 'create_tempfile' which always
-creates a temporary file with global read-write permissions, introduce a
-variant here that allows specifying the mode.
+In particular, the commit-graph machinery uses this to acquire a
+temporary file that is used to write a non-split commit-graph. In a
+subsequent commit, an issue in the commit-graph machinery produces
+graph files that have a different permission based on whether or not
+they are part of a multi-layer graph will be addressed.
 
-Note that the mode given to 'create_tempfile_mode' is not guaranteed to
-be written to disk, since it is subject to both the umask and
-'core.sharedRepository'.
+To do so, the commit-graph machinery will need a version of
+'hold_lock_file_for_update' that takes the permission bits from the
+caller.
 
-Arguably, all temporary files should have permission 0444, since they
-are likely to be renamed into place and then not written to again. This
-is a much larger change than we may want to take on in this otherwise
-small patch, so for the time being, make 'create_tempfile' behave as it
-has always done by inlining it to 'create_tempfile_mode' with mode set
-to '0666'.
+Introduce such a function in this patch for both the
+'hold_lock_file_for_update' and 'hold_lock_file_for_update_timeout'
+functions, and leave the existing functions alone by inlining their
+definitions in terms of the new mode variants.
+
+Note that, like in the previous commit, 'hold_lock_file_for_update_mode'
+is not guarenteed to set the given mode, since it may be modified by
+both the umask and 'core.sharedRepository'.
+
+Note also that even though the commit-graph machinery only calls
+'hold_lock_file_for_update', that this is defined in terms of
+'hold_lock_file_for_update_timeout', and so both need an additional mode
+parameter here.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- tempfile.c |  6 +++---
- tempfile.h | 10 +++++++++-
- 2 files changed, 12 insertions(+), 4 deletions(-)
+ lockfile.c | 18 ++++++++++--------
+ lockfile.h | 32 ++++++++++++++++++++++++++++----
+ 2 files changed, 38 insertions(+), 12 deletions(-)
 
-diff --git a/tempfile.c b/tempfile.c
-index d43ad8c191..94aa18f3f7 100644
---- a/tempfile.c
-+++ b/tempfile.c
-@@ -130,17 +130,17 @@ static void deactivate_tempfile(struct tempfile *tempfile)
+diff --git a/lockfile.c b/lockfile.c
+index 8e8ab4f29f..cc9a4b8428 100644
+--- a/lockfile.c
++++ b/lockfile.c
+@@ -70,7 +70,8 @@ static void resolve_symlink(struct strbuf *path)
  }
  
  /* Make sure errno contains a meaningful value on error */
--struct tempfile *create_tempfile(const char *path)
-+struct tempfile *create_tempfile_mode(const char *path, int mode)
+-static int lock_file(struct lock_file *lk, const char *path, int flags)
++static int lock_file(struct lock_file *lk, const char *path, int flags,
++		     int mode)
  {
- 	struct tempfile *tempfile = new_tempfile();
+ 	struct strbuf filename = STRBUF_INIT;
  
- 	strbuf_add_absolute_path(&tempfile->filename, path);
- 	tempfile->fd = open(tempfile->filename.buf,
--			    O_RDWR | O_CREAT | O_EXCL | O_CLOEXEC, 0666);
-+			    O_RDWR | O_CREAT | O_EXCL | O_CLOEXEC, mode);
- 	if (O_CLOEXEC && tempfile->fd < 0 && errno == EINVAL)
- 		/* Try again w/o O_CLOEXEC: the kernel might not support it */
- 		tempfile->fd = open(tempfile->filename.buf,
--				    O_RDWR | O_CREAT | O_EXCL, 0666);
-+				    O_RDWR | O_CREAT | O_EXCL, mode);
- 	if (tempfile->fd < 0) {
- 		deactivate_tempfile(tempfile);
- 		return NULL;
-diff --git a/tempfile.h b/tempfile.h
-index cddda0a33c..4de3bc77d2 100644
---- a/tempfile.h
-+++ b/tempfile.h
-@@ -88,8 +88,16 @@ struct tempfile {
-  * Attempt to create a temporary file at the specified `path`. Return
-  * a tempfile (whose "fd" member can be used for writing to it), or
-  * NULL on error. It is an error if a file already exists at that path.
-+ * Note that `mode` will be further modified by the umask, and possibly
-+ * `core.sharedRepository`, so it is not guaranteed to have the given
-+ * mode.
+@@ -79,7 +80,7 @@ static int lock_file(struct lock_file *lk, const char *path, int flags)
+ 		resolve_symlink(&filename);
+ 
+ 	strbuf_addstr(&filename, LOCK_SUFFIX);
+-	lk->tempfile = create_tempfile(filename.buf);
++	lk->tempfile = create_tempfile_mode(filename.buf, mode);
+ 	strbuf_release(&filename);
+ 	return lk->tempfile ? lk->tempfile->fd : -1;
+ }
+@@ -99,7 +100,7 @@ static int lock_file(struct lock_file *lk, const char *path, int flags)
+  * exactly once. If timeout_ms is -1, try indefinitely.
   */
--struct tempfile *create_tempfile(const char *path);
-+struct tempfile *create_tempfile_mode(const char *path, int mode);
+ static int lock_file_timeout(struct lock_file *lk, const char *path,
+-			     int flags, long timeout_ms)
++			     int flags, long timeout_ms, int mode)
+ {
+ 	int n = 1;
+ 	int multiplier = 1;
+@@ -107,7 +108,7 @@ static int lock_file_timeout(struct lock_file *lk, const char *path,
+ 	static int random_initialized = 0;
+ 
+ 	if (timeout_ms == 0)
+-		return lock_file(lk, path, flags);
++		return lock_file(lk, path, flags, mode);
+ 
+ 	if (!random_initialized) {
+ 		srand((unsigned int)getpid());
+@@ -121,7 +122,7 @@ static int lock_file_timeout(struct lock_file *lk, const char *path,
+ 		long backoff_ms, wait_ms;
+ 		int fd;
+ 
+-		fd = lock_file(lk, path, flags);
++		fd = lock_file(lk, path, flags, mode);
+ 
+ 		if (fd >= 0)
+ 			return fd; /* success */
+@@ -169,10 +170,11 @@ NORETURN void unable_to_lock_die(const char *path, int err)
+ }
+ 
+ /* This should return a meaningful errno on failure */
+-int hold_lock_file_for_update_timeout(struct lock_file *lk, const char *path,
+-				      int flags, long timeout_ms)
++int hold_lock_file_for_update_timeout_mode(struct lock_file *lk,
++					   const char *path, int flags,
++					   long timeout_ms, int mode)
+ {
+-	int fd = lock_file_timeout(lk, path, flags, timeout_ms);
++	int fd = lock_file_timeout(lk, path, flags, timeout_ms, mode);
+ 	if (fd < 0) {
+ 		if (flags & LOCK_DIE_ON_ERROR)
+ 			unable_to_lock_die(path, errno);
+diff --git a/lockfile.h b/lockfile.h
+index 9843053ce8..db93e6ba73 100644
+--- a/lockfile.h
++++ b/lockfile.h
+@@ -90,6 +90,15 @@
+  * functions. In particular, the state diagram and the cleanup
+  * machinery are all implemented in the tempfile module.
+  *
++ * Permission bits
++ * ---------------
++ *
++ * If you call either `hold_lock_file_for_update_mode` or
++ * `hold_lock_file_for_update_timeout_mode`, you can specify a suggested
++ * mode for the underlying temporary file. Note that the file isn't
++ * guaranteed to have this exact mode, since it may be limited by either
++ * the umask, 'core.sharedRepository', or both. See `adjust_shared_perm`
++ * for more.
+  *
+  * Error handling
+  * --------------
+@@ -156,12 +165,20 @@ struct lock_file {
+  * file descriptor for writing to it, or -1 on error. If the file is
+  * currently locked, retry with quadratic backoff for at least
+  * timeout_ms milliseconds. If timeout_ms is 0, try exactly once; if
+- * timeout_ms is -1, retry indefinitely. The flags argument and error
+- * handling are described above.
++ * timeout_ms is -1, retry indefinitely. The flags argument, error
++ * handling, and mode are described above.
+  */
+-int hold_lock_file_for_update_timeout(
++int hold_lock_file_for_update_timeout_mode(
+ 		struct lock_file *lk, const char *path,
+-		int flags, long timeout_ms);
++		int flags, long timeout_ms, int mode);
 +
-+static inline struct tempfile *create_tempfile(const char *path)
++static inline int hold_lock_file_for_update_timeout(
++		struct lock_file *lk, const char *path,
++		int flags, long timeout_ms)
 +{
-+	return create_tempfile_mode(path, 0666);
++	return hold_lock_file_for_update_timeout_mode(lk, path, flags,
++						      timeout_ms, 0666);
 +}
  
  /*
-  * Register an existing file as a tempfile, meaning that it will be
+  * Attempt to create a lockfile for the file at `path` and return a
+@@ -175,6 +192,13 @@ static inline int hold_lock_file_for_update(
+ 	return hold_lock_file_for_update_timeout(lk, path, flags, 0);
+ }
+ 
++static inline int hold_lock_file_for_update_mode(
++		struct lock_file *lk, const char *path,
++		int flags, int mode)
++{
++	return hold_lock_file_for_update_timeout_mode(lk, path, flags, 0, mode);
++}
++
+ /*
+  * Return a nonzero value iff `lk` is currently locked.
+  */
 -- 
 2.26.0.113.ge9739cdccc
 
