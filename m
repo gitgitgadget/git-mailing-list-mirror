@@ -2,85 +2,126 @@ Return-Path: <SRS0=05is=6N=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-6.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B707AC83003
-	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 12:36:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FFCBC83003
+	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 13:02:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 89A1F2085B
-	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 12:36:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7BBAD214D8
+	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 13:02:15 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=sorrel.sh header.i=@sorrel.sh header.b="HxA7LZku"
+	dkim=pass (1024-bit key) header.d=riseup.net header.i=@riseup.net header.b="QDMv3izn"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727029AbgD2MgH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Apr 2020 08:36:07 -0400
-Received: from balrog.mythic-beasts.com ([46.235.227.24]:35773 "EHLO
-        balrog.mythic-beasts.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726781AbgD2MgH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Apr 2020 08:36:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=sorrel.sh;
-         s=mythic-beasts-k1; h=Date:To:From:Subject;
-        bh=vRmlx4uFJYZKCiAr/6VYwY9EE3/UYlcWQZNXSOvFP2E=; b=HxA7LZkukv6ZQHmqv8M304KCwv
-        DnFhrlkdjJuY3OWoPib+/kmif3T3YzlZS5g2X2vzKI6gy2cm3LmG4hj7nvRXJndqk3+cn3ECrDq+y
-        QHaCfPTtMO31GLwH1LzMQvbZp0XLeCEQet6srKbHPEpKcuyAaicFDtUPwEQf8yIZSjnMGGUnGSBXm
-        eluLFoK3W7HBpjrfpP0QP9fgRJl9iF7Oo4D62ms3OiHaTM0YbsHpYw3pZ+X9Mx0/s/8QBn2LD1JJZ
-        Wp08ox6zYQtuVfLZsCjH33/0xgqLCVS0l0jAh4TmIbtmd+bTh3U8HDpqzYDmEJ21/wEfEMR3bYaLi
-        LFwIX8mg==;
-Received: from [212.56.100.202] (port=56887 helo=localhost)
-        by balrog.mythic-beasts.com with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92.3)
-        (envelope-from <ash@sorrel.sh>)
-        id 1jTlwW-0000Vc-CB; Wed, 29 Apr 2020 13:36:04 +0100
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Cc:     <git@vger.kernel.org>, "Junio C Hamano" <gitster@pobox.com>,
-        "Boxuan Li" <liboxuan@connect.hku.hk>,
-        "Alban Gruin" <alban.gruin@gmail.com>
-Subject: Re: [PATCH] userdiff: support Markdown
-From:   "Ash Holland" <ash@sorrel.sh>
-To:     "Johannes Sixt" <j6t@kdbg.org>
-Date:   Wed, 29 Apr 2020 13:21:13 +0100
-Message-Id: <C2DOR3QPGHWC.2H494OQI75ZRW@what>
-In-Reply-To: <91ff4bdb-9b53-8fd1-6282-ac19a9caf1d8@kdbg.org>
-X-BlackCat-Spam-Score: 39
+        id S1726789AbgD2NCO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Apr 2020 09:02:14 -0400
+Received: from mx1.riseup.net ([198.252.153.129]:46010 "EHLO mx1.riseup.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726516AbgD2NCO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Apr 2020 09:02:14 -0400
+Received: from capuchin.riseup.net (unknown [10.0.1.176])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (Client CN "*.riseup.net", Issuer "Sectigo RSA Domain Validation Secure Server CA" (not verified))
+        by mx1.riseup.net (Postfix) with ESMTPS id 49BzF15bDdzFfLf;
+        Wed, 29 Apr 2020 06:02:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=riseup.net; s=squak;
+        t=1588165333; bh=+I/Q857Zz1P01GJtiWDKaMZhrknaErnCK2YjSEtNvlg=;
+        h=From:To:Cc:Subject:Date:From;
+        b=QDMv3izn8rMIAC5m/nxg/OmLo3eQ2SONCJrpyq1oNrb0YiBdP4bFzKGBd56HUA4ZI
+         Y4RV+STqlwmsoF0WWXGFOFkG9IMOKB8wJgKNeDJfdLNr5AdeNsDwvZ6+9naJt+nK9K
+         gdqOWHrkhpRTcfPR4ZqgHanknMX0EMofBTBmJGpQ=
+X-Riseup-User-ID: 45DB7319A25AECC9AA9B4ADFA65624A41C53E6B327720DABBAE9A592E567144E
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+         by capuchin.riseup.net (Postfix) with ESMTPSA id 49BzF03DQgz8vNS;
+        Wed, 29 Apr 2020 06:02:12 -0700 (PDT)
+From:   Ivan Tham <pickfire@riseup.net>
+To:     git@vger.kernel.org
+Cc:     "brian m . carlson" <sandals@crustytoothpaste.net>
+Subject: [PATCH] branch: add '-' to delete previous branch
+Date:   Wed, 29 Apr 2020 21:01:33 +0800
+Message-Id: <20200429130133.520981-1-pickfire@riseup.net>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri Apr 24, 2020 at 8:21 PM BST, Johannes Sixt wrote:
-> Am 24.04.20 um 01:42 schrieb Ash Holland:
-> > On Thu Apr 23, 2020 at 9:17 PM PST, Johannes Sixt wrote:
-> >> Am 21.04.20 um 03:00 schrieb Ash Holland:
-> >>> diff --git a/userdiff.c b/userdiff.c
-> >>> index efbe05e5a..f79adb3a3 100644
-> >>> --- a/userdiff.c
-> >>> +++ b/userdiff.c
-> >>> @@ -79,6 +79,9 @@ PATTERNS("java",
-> >>>  	 "|[-+0-9.e]+[fFlL]?|0[xXbB]?[0-9a-fA-F]+[lL]?"
-> >>>  	 "|[-+*/<>%&^|=3D!]=3D"
-> >>>  	 "|--|\\+\\+|<<=3D?|>>>?=3D?|&&|\\|\\|"),
-> >>> +PATTERNS("markdown",
-> >>> +	 "^ {0,3}#{1,6}( .*)?$",
-> >>
-> >> What is the purpose of making the heading text optional? Why would you
-> >> want to match a sequence of hash marks without any text following it?
-> >=20
-> > Strictly speaking, a markdown heading is allowed to be empty -- see for
-> > example https://spec.commonmark.org/0.29/#example-49. I'm happy to
-> > change it if you think it's more useful to show a previous heading whic=
-h
-> > contains text than an empty one, though.
->
-> I don't know what makes sense, I don't write markdown regularly. A quick
-> check shows that the sequence of hashmarks appears in the hunk header.
-> Is that useful? (A genuine question!)
+Add support to delete previous branch from git checkout/switch to have
+feature parity with git switch -.
 
-I think probably it would be more confusing to have Git silently ignore
-empty headings, having occasionally written documents with empty
-headings in the past (e.g. when I know I want some different sections,
-but I don't know what to call them yet). Probably not many people would
-ever run into this situation either way, though.
+Signed-off-by: Ivan Tham <pickfire@riseup.net>
+---
+ Documentation/git-branch.txt | 10 ++++++++++
+ builtin/branch.c             |  6 +++++-
+ t/t3200-branch.sh            |  7 +++++++
+ 3 files changed, 22 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
+index 135206ff4a..37e7cbbc52 100644
+--- a/Documentation/git-branch.txt
++++ b/Documentation/git-branch.txt
+@@ -265,6 +265,10 @@ start-point is either a local or remote-tracking branch.
+ 	The new branch name must pass all checks defined by
+ 	linkgit:git-check-ref-format[1].  Some of these checks
+ 	may restrict the characters allowed in a branch name.
+++
++You can use the `@{-N}` syntax to refer to the N-th last branch checked out
++using "git checkout" operation. You may also specify `-` which is synonymous to
++`@{-1}`.
+ 
+ <start-point>::
+ 	The new branch head will point to this commit.  It may be
+@@ -334,6 +338,12 @@ $ git branch -D test                                    <2>
+ <2> Delete the "test" branch even if the "master" branch (or whichever branch
+     is currently checked out) does not have all commits from the test branch.
+ 
++To delete the previous branch::
+++
++------------
++$ git branch -D -
++------------
++
+ Listing branches from a specific remote::
+ +
+ ------------
+diff --git a/builtin/branch.c b/builtin/branch.c
+index d8297f80ff..5537f819a6 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -227,9 +227,13 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+ 	}
+ 	for (i = 0; i < argc; i++, strbuf_reset(&bname)) {
+ 		char *target = NULL;
++		const char *arg = argv[i];
+ 		int flags = 0;
+ 
+-		strbuf_branchname(&bname, argv[i], allowed_interpret);
++		if (!strcmp(arg, "-"))
++			arg = "@{-1}";
++
++		strbuf_branchname(&bname, arg, allowed_interpret);
+ 		free(name);
+ 		name = mkpathdup(fmt, bname.buf);
+ 
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index 411a70b0ce..6819107c1d 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -1387,4 +1387,11 @@ test_expect_success 'invalid sort parameter in configuration' '
+ 	)
+ '
+ 
++test_expect_success 'delete previous branch' '
++	git checkout -b a &&
++	git checkout -b b &&
++	git branch -D - &&
++	test_path_is_missing .git/refs/heads/a
++'
++
+ test_done
+-- 
+2.26.2
+
