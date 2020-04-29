@@ -2,113 +2,157 @@ Return-Path: <SRS0=05is=6N=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4736AC83000
-	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 17:26:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 908F2C83000
+	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 17:36:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2396720787
-	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 17:26:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6DBCD20757
+	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 17:36:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="Y9fmBbW0"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="vVD3jx3C"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726839AbgD2R0s (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Apr 2020 13:26:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32858 "EHLO
+        id S1726755AbgD2Rga (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Apr 2020 13:36:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34380 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726554AbgD2R0r (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 29 Apr 2020 13:26:47 -0400
-Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83C36C03C1AE
-        for <git@vger.kernel.org>; Wed, 29 Apr 2020 10:26:47 -0700 (PDT)
-Received: by mail-pg1-x541.google.com with SMTP id n16so1326644pgb.7
-        for <git@vger.kernel.org>; Wed, 29 Apr 2020 10:26:47 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1726456AbgD2Rga (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 29 Apr 2020 13:36:30 -0400
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15B2FC03C1AE
+        for <git@vger.kernel.org>; Wed, 29 Apr 2020 10:36:30 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id a7so1038630pju.2
+        for <git@vger.kernel.org>; Wed, 29 Apr 2020 10:36:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=i+vFBLEnsd1+D7lVc0uXMFC6tG8K/3/teIYs4CR/+Pk=;
-        b=Y9fmBbW0X8ScheKLLYB6nAIY9rq4mPy2m895cuVoOSUElPNfbngRyjeZ/rnVPCBG+w
-         bw9xzDkbAJgdV3eQ4Q7gnh7RZD9KL/5Zc4LcXvKD83utvFfwI1sUf43/X/Qp0mip68Jz
-         8zjolfrAvqhUMWGZCXlCzW7MoG7EPXmW1TdefQvYnEg9ZDiEa/ehfTBno2gXGpI6/ix7
-         8/OGIaMHT2tZzlLfgRNgXQ7BrdVc4xZQvEXdgFuBzn5gYF7k459r3Wo1aFqYzFg2zV/o
-         2d+tBDKUhajPZElXfVaWHXLHGkrXL6K+vxjRsTH9ptLhP+2Ih7xxCB8TPCGO6AF7S94I
-         gQKg==
+        bh=j2S5xsYhYRowG9QOEe65h5HgAOoKzCyp6Udz7Uaf984=;
+        b=vVD3jx3CfXeTrOQXbcY1mE7+/BWRYZZQ5SkT/7Rkz0HYVZic5giiZPK0c7+HE9Ll+Y
+         S+QqBYG1HdWhnRs8v6JlAUlYhpuTG4/CtgMDL6i4py9KJTfXEA2bn8U3tWQB5n9seHAw
+         ZakgvKT5kFd7QH6bh9Q+iUvtmcUe6RSFzxvzgmsu8poPVWO8sNu3U6XQeVq/HNKYPnMa
+         4YXRDhGtourNDlCIIEpQXkmB3fmGmpgQ/k0ukDo/p+TctR6wdrgt98GoB3Doi8+eKqlJ
+         h/uTR8EEYxKbSSClVdK3Jy9e6+BYsfAYzncxgN54DMwViDz5yU3AwryG0XyNAOYspkhR
+         I1Qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=i+vFBLEnsd1+D7lVc0uXMFC6tG8K/3/teIYs4CR/+Pk=;
-        b=DK1I1LdJLsbduyIPxZUNwdUkrhLt7VmXxFfUTQu4wcgeNvEomhDP4SHK5LNoiXDcV5
-         oAd2epwvRIrYI4pSd1JNR5thrgmMBnI6VOoP9RHdti5MwtJgFgsDFdH0g1dmFDXE1Q9V
-         Q0I5vsh0ZOMKGeOT8dWtTrvOaHRhejTVN0D80fRNdsOPqKeZo1JyjXiAZzxwHPD4ikdy
-         hUQQUlLdghFty6ZOsXGS1B80usCEsnalif2ES6t314llNBfwYGdpuna1PcXe3ibGJ5lf
-         8Pg7o5R0zOFLoF1JzRBLqoGJ0u8KxHeZ1EnT5B2JU22ScxFIrffAvcHStSh8kUdv1gaa
-         HCPA==
-X-Gm-Message-State: AGi0Puau8L6PRxmU7ysfU9+TYRnoFOJf/JpGB21iXZ1ebC8NSl5SMuJQ
-        rM9Idfsa52rBv1fMAAaBJ4UycA==
-X-Google-Smtp-Source: APiQypLJF4CRJTKcuY2KxlMh+kSPnZO1GkiHkWLX9NwkaJoY++FPyuygmMLvplDuXm2LVqnrLhnR0A==
-X-Received: by 2002:a63:67c5:: with SMTP id b188mr33828939pgc.111.1588181206959;
-        Wed, 29 Apr 2020 10:26:46 -0700 (PDT)
+        bh=j2S5xsYhYRowG9QOEe65h5HgAOoKzCyp6Udz7Uaf984=;
+        b=irFVDcqvZQsj2Wfrm8nd6CPma/kXC89uIVH1qMQNNw5CLmfCl5gbNQNdRCfTLCHqbu
+         fJtt2BNat/OMLjYDNiZy80xRvOq3Yp1xy+AdL5RrpV6r9Li08taxSVfzYQwwrmtF5m50
+         SqdpW0DerWKsAFgoDnNVOw5EVwX0hOJJmHGk/jKBfCt93i3d+iMbjHb6P15cuJz1120i
+         4zKvcxj407O5OWN33ksWSS/+K3znoOEEODL4GbNuf/PFvnnDO8wWzCqZohkH++vBCvcX
+         Ke23VVU2ycocfWKfjMnASeZHPV7XLG8olMf46Mxhqlsq6M/ZSdhgmUgP5F4GRkXNRcN0
+         6DLw==
+X-Gm-Message-State: AGi0PuZVicveyMD1vTbkE4PPDsADEJvq3kWzQmh/VQVPQ+AsIUNZWm0o
+        W0dIaykaBET6I7GCKQuaTiE82Uubu3M9dA==
+X-Google-Smtp-Source: APiQypLU0++5Oclq1un195UkYdgxR08qqyL6isGT/8CGrq27wCENZYl7HtixS+UIxDS+z7Fysnlf5A==
+X-Received: by 2002:a17:902:9882:: with SMTP id s2mr19031601plp.184.1588181789020;
+        Wed, 29 Apr 2020 10:36:29 -0700 (PDT)
 Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id c12sm1452402pgk.11.2020.04.29.10.26.45
+        by smtp.gmail.com with ESMTPSA id 20sm1547300pfx.116.2020.04.29.10.36.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Apr 2020 10:26:46 -0700 (PDT)
-Date:   Wed, 29 Apr 2020 11:26:44 -0600
+        Wed, 29 Apr 2020 10:36:28 -0700 (PDT)
+Date:   Wed, 29 Apr 2020 11:36:26 -0600
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Subject: Re: What's cooking in git.git (Apr 2020, #03; Tue, 28)
-Message-ID: <20200429172644.GD83442@syl.local>
-References: <xmqqimhjyy9c.fsf@gitster.c.googlers.com>
- <20200429155701.GA83442@syl.local>
- <xmqqr1w6xmtf.fsf@gitster.c.googlers.com>
- <20200429165501.GC83442@syl.local>
- <xmqqy2qew6hw.fsf@gitster.c.googlers.com>
+To:     git@vger.kernel.org
+Cc:     peff@peff.net, dstolee@microsoft.com, gitster@pobox.com,
+        mhagger@alum.mit.edu
+Subject: [PATCH v3 0/5] commit-graph: write non-split graphs as read-only
+Message-ID: <cover.1588181626.git.me@ttaylorr.com>
+References: <cover.1587422630.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqy2qew6hw.fsf@gitster.c.googlers.com>
+In-Reply-To: <cover.1587422630.git.me@ttaylorr.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 29, 2020 at 10:23:39AM -0700, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
->
-> > Right... but I'm not sure that I agree that this other topic "builds" on
-> > the whole series. There is nothing in the last commit that the other
-> > series is dependent on. So, I was suggesting something like:
-> >
-> >   $ git checkout tb/commit-graph-split-strategy
-> >   $ git revert HEAD
-> >   $ git checkout tb/commit-graph-fd-exhaustion-fix
-> >   $ git rebase tb/commit-graph-split-strategy # making sure to drop the final patch
->
-> We cannot do this, as fd-exhaustion-fix is already in 'next'.
+Hi,
 
-Ah, I didn't realize that it was already in next. Yep, makes sense that
-we can't change the topic like this. Now I understand why you prefer the
-below, thanks for an explanation.
+Here's a brief reroll to incorporate suggestions from Junio and Peff in
+the sub-thread beginning at [1]. Not much at all has changed since v2,
+with the exception of:
 
-> >> Why don't we do this:
-> >>
-> >>  $ git checkout tb/commit-graph-fd-exhaustion-fix
-> >>  $ git revert tb/commit-graph-split-strategy
-> >>  $ git checkout master
-> >>  $ git merge tb/commit-graph-fd-exhaustion-fix
-> >>  $ git branch -d tb/commit-graph-fd-exhaustion-fix tb/commit-graph-split-strategy
-> >
-> > That's fine with me, too.
-> >
-> >> That's the simplest solution and we'll have two fewer topics we need
-> >> to worry about when we are done.
->
-> OK.
+  * fixing the aforementioned issue by sprinkling in some 'umask 022's
+    in throughout the new tests
 
-Thanks,
-Taylor
+  * adding in a new final patch to apply the same treatment to
+    the 'commit-graph-chain' file
+
+[1]: https://lore.kernel.org/git/xmqqr1w85vtq.fsf@gitster.c.googlers.com/
+
+Taylor Blau (5):
+  tempfile.c: introduce 'create_tempfile_mode'
+  lockfile.c: introduce 'hold_lock_file_for_update_mode'
+  commit-graph.c: write non-split graphs as read-only
+  commit-graph.c: ensure graph layers respect core.sharedRepository
+  commit-graph.c: make 'commit-graph-chain's read-only
+
+ commit-graph.c                | 12 ++++++++++--
+ lockfile.c                    | 18 ++++++++++--------
+ lockfile.h                    | 32 ++++++++++++++++++++++++++++----
+ t/t5318-commit-graph.sh       | 15 ++++++++++++++-
+ t/t5324-split-commit-graph.sh | 24 ++++++++++++++++++++++++
+ t/t6600-test-reach.sh         |  2 ++
+ tempfile.c                    |  6 +++---
+ tempfile.h                    | 10 +++++++++-
+ 8 files changed, 100 insertions(+), 19 deletions(-)
+
+Range-diff against v2:
+1:  03c975b0bd = 1:  03c975b0bd tempfile.c: introduce 'create_tempfile_mode'
+2:  c1c84552bc = 2:  c1c84552bc lockfile.c: introduce 'hold_lock_file_for_update_mode'
+3:  86cf29ce9c ! 3:  8d5503d2e6 commit-graph.c: write non-split graphs as read-only
+    @@ Commit message
+         commit-graph file into place and then trying to replace it. For these,
+         make these files writable.
+
+    +    Helped-by: Junio C Hamano <gitster@pobox.com>
+         Signed-off-by: Taylor Blau <me@ttaylorr.com>
+
+      ## commit-graph.c ##
+    @@ commit-graph.c: static int write_commit_graph_file(struct write_commit_graph_con
+      	}
+
+      ## t/t5318-commit-graph.sh ##
+    +@@ t/t5318-commit-graph.sh: test_expect_success 'setup full repo' '
+    + 	test_oid_init
+    + '
+    +
+    ++test_expect_success POSIXPERM 'tweak umask for modebit tests' '
+    ++	umask 022
+    ++'
+    ++
+    + test_expect_success 'verify graph with no graph file' '
+    + 	cd "$TRASH_DIRECTORY/full" &&
+    + 	git commit-graph verify
+     @@ t/t5318-commit-graph.sh: test_expect_success 'write graph' '
+      	graph_read_expect "3"
+      '
+4:  f83437f130 ! 4:  4b74e23af2 commit-graph.c: ensure graph layers respect core.sharedRepository
+    @@ commit-graph.c: static int write_commit_graph_file(struct write_commit_graph_con
+      		hold_lock_file_for_update_mode(&lk, ctx->graph_name,
+
+      ## t/t5324-split-commit-graph.sh ##
+    +@@ t/t5324-split-commit-graph.sh: graph_read_expect() {
+    + 	test_cmp expect output
+    + }
+    +
+    ++test_expect_success POSIXPERM 'tweak umask for modebit tests' '
+    ++	umask 022
+    ++'
+    ++
+    + test_expect_success 'create commits and write commit-graph' '
+    + 	for i in $(test_seq 3)
+    + 	do
+     @@ t/t5324-split-commit-graph.sh: test_expect_success 'split across alternate where alternate is not split' '
+      	test_cmp commit-graph .git/objects/info/commit-graph
+      '
+-:  ---------- > 5:  864c916067 commit-graph.c: make 'commit-graph-chain's read-only
+--
+2.26.0.113.ge9739cdccc
