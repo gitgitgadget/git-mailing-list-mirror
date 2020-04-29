@@ -7,59 +7,59 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D02FC83000
-	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 16:16:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D6B10C83004
+	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 16:18:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 48EF0206F0
-	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 16:16:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B427C206F0
+	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 16:18:00 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MSfyPs41"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aldTgS6c"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726476AbgD2QQR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Apr 2020 12:16:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49882 "EHLO
+        id S1726826AbgD2QR7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Apr 2020 12:17:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50164 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726481AbgD2QQR (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 29 Apr 2020 12:16:17 -0400
-Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com [IPv6:2607:f8b0:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22B54C03C1AE
-        for <git@vger.kernel.org>; Wed, 29 Apr 2020 09:16:15 -0700 (PDT)
-Received: by mail-ot1-x344.google.com with SMTP id m13so2173515otf.6
-        for <git@vger.kernel.org>; Wed, 29 Apr 2020 09:16:15 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1726774AbgD2QR5 (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 29 Apr 2020 12:17:57 -0400
+Received: from mail-oi1-x243.google.com (mail-oi1-x243.google.com [IPv6:2607:f8b0:4864:20::243])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D72BFC03C1AD
+        for <git@vger.kernel.org>; Wed, 29 Apr 2020 09:17:57 -0700 (PDT)
+Received: by mail-oi1-x243.google.com with SMTP id t199so2303795oif.7
+        for <git@vger.kernel.org>; Wed, 29 Apr 2020 09:17:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=0z2YnOuvs76m79m982TagG3DB57S3+ycYnwopvwbPJM=;
-        b=MSfyPs41RXUU0XrDTb9C3POeVllfxigUVO/zIjhOagv2ystdWcin0VDnkQ4bmubCVJ
-         8C0tJ2mv0+scivaD5n81ideRxVCYPc9BkdF+br+wmXTErCYr87DENjTt6RhWbOR4KeFt
-         8qS7MP6y3ZSCjJ0pNqYyaI/pcT6GDGTKpejXpTK00H7WJYSujpITFj+buMcQVNxR+vzV
-         xEt8rPb+1Zw6hJCoQaQrJdJsHQC8jy3doucstSUyzrYCTP7LVy0hC+bNZuZEGnDczjor
-         4vtB2CXDIKh/czJv5/qAeHByti0QMft+Jj2pGSg84at3Zn0GQBId4Nf74c9QMa3cv2lx
-         2C2A==
+        bh=No4F1mgSfPwjy+CMgPIc5T76gGelRf8iK/VyOafj+0A=;
+        b=aldTgS6cLH/4YnuGAA1elaX9e1SGsLytlP60Y64BWA9Oos/nB89VCZuG3uzA+huTY9
+         wS5t22adWGk8Pa/9HpYZGw0utBddOi6SoZysEr3OA9H8nWsIXkqQFIDYNn5w//tZHWXh
+         Z3Cy+8c9HM19lVw/kHg004xa96aqLPCJFCVbQrGtT9KUyxOBEm25qDFbhKbX6SkR48iL
+         EdEcoL6zc9QWrC/crLGKqg3XPElSk3tb0U2ab6DGynybc/sGC2dxK9QlvAhzF9tYR9bc
+         rn7TAJbkRoqT4msH/TOgCLGbQF8bOiBk0YnQfb/TW2WgWw9AqE6Zw79FUvAJuDw0XFfj
+         eTEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=0z2YnOuvs76m79m982TagG3DB57S3+ycYnwopvwbPJM=;
-        b=q6KbSkXo/1z9icQQtRogmRSu31R2CVw26ahS2marKwDAl/qGnTikjBRF4WPEmYsCc7
-         iZcIxXJBTiWq1W6SxsjCLurXAit+DkA8oroaKS0Ori2tEXsuY0h7/1oYznrrZj2ybRM9
-         pDFfms+szDwZx8z+XiBfA/4yKqgYfOqVUmAW8qAqivrm1PHiWkwlIVE0Poz0/18NkbZH
-         5u7m5Zy8c3CI5j5uPFAf+nbpN/Z2PUIw/UrTKAXAkNZ/h8K8XPyFAIJQJhZ0eeZToiCT
-         LvwVQLSge0sL/CW6nOPyyK7sfCdNGn7n5sNoa1Fm3WzmFbCvxXRrcyeWVC++zZu8NJR8
-         jGGg==
-X-Gm-Message-State: AGi0Puag0IRTmJIsi0Tn6pjMIdL40Y0+bfENfms2ss3K6MJnivh/K6pb
-        2WglH2CQ5I4//5FGNauTGuCho/vagksyxUyO0F2qpt+zXf4=
-X-Google-Smtp-Source: APiQypKoJm/9Rh1Quhj0KMp/4LuFkWH3uzmAJB8+MxcOmjBduqzfmYvJA8ILt6D9UZtd67QjR1eDa6PvTMTUraKQM6I=
-X-Received: by 2002:a9d:2aa9:: with SMTP id e38mr13485947otb.162.1588176974217;
- Wed, 29 Apr 2020 09:16:14 -0700 (PDT)
+        bh=No4F1mgSfPwjy+CMgPIc5T76gGelRf8iK/VyOafj+0A=;
+        b=uDyd8cRx3zsdTrbGO3NNSL4xAa4koBH0tz2NL6w4w6O7hKI0IlkYZicWxwNKUODRqv
+         NSHj4eHVETCkXoRnyU3AwZEgIWguhg1dlMjdCdtaK04Tj6eA1vT0lYZoWO67r6gd7+vf
+         JUO/BsqFNZ6VU5LhpCi8E++b7w8o+tR8Jt+bWHRfjeZwjNJZJ/Ma8MWdjG9/+tvbKaUN
+         X3Z8U86yDhVKvrMl+k0NMuFPH/GiWLZT6c8zM5wivacxiVrGWGuocBda3zhv0jc0G5cU
+         X+1AhPT4owyGoKeuavDggnMhpznU1HDiBuR5lRjlCaEuxpw05l4DmigNhLVOGOJyAAN3
+         B9Gg==
+X-Gm-Message-State: AGi0PuY+J+I+OxZA/AR25DlMPQvPu/4Lg+U4yAeTOH927rgaMrBKZjb7
+        RhEd/OFQn5Vzk4s6wd9WTYHb7bQrMO2Yfgwwmf8=
+X-Google-Smtp-Source: APiQypK7ebjyh3FxvoEbXQbcVChvOekDiexfkN4wtc4PUimXpbFX3+9/TmbY+nb/SYOXaiigzr7nHORPC+D3Qu18P9Y=
+X-Received: by 2002:aca:fdd5:: with SMTP id b204mr2326939oii.167.1588177077183;
+ Wed, 29 Apr 2020 09:17:57 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200429093811.8475-1-shouryashukla.oo@gmail.com>
-In-Reply-To: <20200429093811.8475-1-shouryashukla.oo@gmail.com>
+References: <20200429093811.8475-1-shouryashukla.oo@gmail.com> <20200429093811.8475-2-shouryashukla.oo@gmail.com>
+In-Reply-To: <20200429093811.8475-2-shouryashukla.oo@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 29 Apr 2020 09:16:01 -0700
-Message-ID: <CABPp-BGkZOyyoFiK3hsJ3FQq8MEBPy5aganHjA66vKFE20Wk0Q@mail.gmail.com>
-Subject: Re: [PATCH v4 1/4] gitfaq: files in .gitignore are tracked
+Date:   Wed, 29 Apr 2020 09:17:43 -0700
+Message-ID: <CABPp-BFJe81XD6Sd0OPoLGG5u2Vr4xoQrM2N=20eLscw0r8oXw@mail.gmail.com>
+Subject: Re: [PATCH v4 2/4] gitfaq: changing the remote of a repository
 To:     Shourya Shukla <shouryashukla.oo@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
@@ -74,45 +74,31 @@ On Wed, Apr 29, 2020 at 2:38 AM Shourya Shukla
 <shouryashukla.oo@gmail.com> wrote:
 >
 > Add issue in 'Common Issues' section which addresses the problem of
-> Git tracking files/paths mentioned in '.gitignore'.
+> changing the remote of a repository, covering various cases in which
+> one might want to change the remote and the ways to do the same.
 >
 > Signed-off-by: Shourya Shukla <shouryashukla.oo@gmail.com>
 > ---
->  Documentation/gitfaq.txt | 9 +++++++++
->  1 file changed, 9 insertions(+)
+>  Documentation/gitfaq.txt | 11 +++++++++++
+>  1 file changed, 11 insertions(+)
 >
 > diff --git a/Documentation/gitfaq.txt b/Documentation/gitfaq.txt
-> index 1cf83df118..b1e758ffd1 100644
+> index b1e758ffd1..7d294306f9 100644
 > --- a/Documentation/gitfaq.txt
 > +++ b/Documentation/gitfaq.txt
-> @@ -223,6 +223,15 @@ a file checked into the repository which is a template or set of defaults which
->  can then be copied alongside and modified as appropriate.  This second, modified
->  file is usually ignored to prevent accidentally committing it.
+> @@ -232,6 +232,17 @@ I asked Git to ignore various files, yet they are still tracked::
+>         it is advised to use `git rm --cached <file>`as well as make
+>         the file pattern is mentioned in the '.gitignore'.
 >
-> +[[files-in-.gitignore-are-tracked]]
-> +I asked Git to ignore various files, yet they are still tracked::
-> +       A `gitignore` file specifies intentionally untracked files
-> +       that Git should ignore. Files already tracked by Git are
-> +       not affected. See linkgit:gitignore[5] for details.
-> +       To ignore and untrack the files appearing in the staging are
-> +       it is advised to use `git rm --cached <file>`as well as make
-> +       the file pattern is mentioned in the '.gitignore'.
+> +[[changing-remote-of-the-repository]]
+> +I want to change the remote of my repository. How do I do that?::
+> +       A remote is an identifier for a location to which Git pushes your
+> +       changes as well as fetches any new changes from (if any). There
+> +       might be different circumstances in which one might need to change
+> +       the remote URL (see linkgit:git-remote[1]). To change the remote URL
+> +       one may use: git remote set-url <name> <newurl>
+> ++
+> +One can list the remotes of a repository using `git remote -v` command.
+> +The default name of a remote is 'origin'.
 
-Mostly looks good, but I can't help but nitpick several small items:
-The first sentence alone seems to slightly undercut the answer, so
-it'd be nice to make sure the first two sentences are just one.  Also,
-it doesn't explain how people get into this state, which is probably
-something users are curious about.  The "To ignore and untrack the
-files" lists multiple end results, making it unclear which parts of
-the end results the suggested steps are addressing.  There's also a
-"staging are" typo (should be "staging area").
-
-How about something like:
-
-The purpose of gitignore files is to ensure that certain files not
-tracked by Git remain untracked.  However, git allows people to
-override the `gitignore` rules by using the --force option to `git
-add`, and sometimes people started tracking a file unintentionally
-before adding a pattern covering it to the gitignore rules.  If you
-want to untrack a file, run `git rm --cached <file>` (and then
-commit).  See linkgit:gitignore[5] for details.
+Looks good to me.  :-)
