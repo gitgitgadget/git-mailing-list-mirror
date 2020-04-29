@@ -2,118 +2,201 @@ Return-Path: <SRS0=05is=6N=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C2A8C83003
-	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 08:42:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AB237C83003
+	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 09:00:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6798A2076B
-	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 08:42:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 856B52076B
+	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 09:00:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tnXrw7GR"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KUKOFwNd"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726386AbgD2Im4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Apr 2020 04:42:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35274 "EHLO
+        id S1726545AbgD2JAa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Apr 2020 05:00:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38028 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726345AbgD2Im4 (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 29 Apr 2020 04:42:56 -0400
-Received: from mail-qt1-x844.google.com (mail-qt1-x844.google.com [IPv6:2607:f8b0:4864:20::844])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA487C03C1AD
-        for <git@vger.kernel.org>; Wed, 29 Apr 2020 01:42:55 -0700 (PDT)
-Received: by mail-qt1-x844.google.com with SMTP id o10so1186991qtr.6
-        for <git@vger.kernel.org>; Wed, 29 Apr 2020 01:42:55 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1726355AbgD2JA3 (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 29 Apr 2020 05:00:29 -0400
+Received: from mail-qt1-x82a.google.com (mail-qt1-x82a.google.com [IPv6:2607:f8b0:4864:20::82a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F98AC03C1AD
+        for <git@vger.kernel.org>; Wed, 29 Apr 2020 02:00:29 -0700 (PDT)
+Received: by mail-qt1-x82a.google.com with SMTP id t20so1171979qtq.13
+        for <git@vger.kernel.org>; Wed, 29 Apr 2020 02:00:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=+oex1v82heDfHUzxd4CNlqucLIDWKuxsI9n4vc8qq74=;
-        b=tnXrw7GRJEtn0WN4jjrNvXr3c8ieLTzLbyi3yKQJbZiKzIy7hgpAEsy7RHoq2RSJQK
-         BEeB4E+IGmVLUq0pBZkqjSztwqrgd/0p07gPA4w5RmnghTnNWizP2YIaG2zzszC/htks
-         KCbyF6PPcgAX7XTKGfjQegBnff0xFCouHMVh4dzmH3exEAHF0m6KqSiyWII/q+Wqq11w
-         1EsQCcN0BuL/wmhG9479GL+X7N5BvJMw3UMgZrpY27hNPUVsiKDPpePl3VnYlBnupGQm
-         jBkbVYeBUSGLHl6CflhwKUpfSh/JI1ETaGw2YIBSBLch+rxhHEr5B6Zs5AiUhLUZdba7
-         iUag==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=E2FLFvNk2gqZ9rZ41fS9t4DIs1FyImN9KepVpVb3D/c=;
+        b=KUKOFwNdOhQLLldJDA3qeVNK77BjjcumcJSI383ecgiYoklQc15ckBCj+bo5EOc08p
+         90HLxYFmFRt5U/Eja6cG6TSbam7dYh931yqmzlKPJmCXTlNzFb7eJHVyT0j8QuNnTl24
+         7uyoNiiRw0/OYhri0cRNPhX953OZzuGvMPXTlZdRihsvJ2Ca7LL1jokP7mIlnJPpcYUz
+         ZEbEO+Z4txshfrov9L59Sx/xxW7VPdVp3MNJSMxgi5ZhlbFd9jiU5ikTe0DOqL/8NFok
+         vN9Hgqw9ubozxUgLdEoiZngcwyDWlUHVs8uXkrFaCf1T7rsvYaBtEMEG2MaBUsGH9Ur7
+         nH5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=+oex1v82heDfHUzxd4CNlqucLIDWKuxsI9n4vc8qq74=;
-        b=Pgzr3XmKgTwMDz2GwojX1+GNIMfsJ6Ntnv48gf9SCrW4TVUNwLelANRk+GdYh1CaSO
-         Q2ie58DKQ6dJ53qBqxDn/Pg2Tq3L0dowyRJlnZ4A7yg5WsIh48EbvXTcrwUDLnFbkLQU
-         R9I6b3nL5wyxUOnbRovncMHIGoJ7iBVIg+b/x4iqPlgbZONia7YQt0ZKgTFvIW/uwggF
-         ZIsR5fWv+H0ZRaaUMs1h9RoxwKcwYCWYdLzWU2HRHHUz16KVOlQoscA3LbVkyF9IcobA
-         SxGTLAKYc/tM0XKLtIa3Nbz1815DnzcHwMyiKJB5Qyad4nxjzPbuUR+ZR6APJx0k4mY/
-         fgrQ==
-X-Gm-Message-State: AGi0PuY+rELZEo4f9Q2Gh7okYBL7he90QdX1Ls04gifgFrA1JFeSd0Qd
-        j22gipZy0p9K3mpDfnUjzjcd9JzBsqECKvJUm0g=
-X-Google-Smtp-Source: APiQypKT0NmTa86GwdwOtiSrI6Sr+h3p+KA6vY0nyHL+RC82dVj+Vbw9aSKTDjIm4fV1OcKlz1/Zw79chuSjIg/f/wY=
-X-Received: by 2002:ac8:19fd:: with SMTP id s58mr33245066qtk.222.1588149774958;
- Wed, 29 Apr 2020 01:42:54 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=E2FLFvNk2gqZ9rZ41fS9t4DIs1FyImN9KepVpVb3D/c=;
+        b=l0g9XQKM3VJcCgpUxw9PZB+qwBauZ/Qtwbr4dijdnD8dfWBFXo2uemGKov2OVr2JI6
+         O4AM5eJweX6752aGQL+Sv7waDgD4T1ADt+Cz66zj6iXvUlWapB65FnLeq8WYe1/neCsq
+         B9xaUxdUegN8tKkx5EFnwQcGB+EyGpIsmLBrd4yoN3Zgybqm9joH5UVxInb+bU0ds5pG
+         3G9BCAsrvN7V7GAmuchfbi3CIQQA89KO5ZB2pRCZIr+O76oAVxJC6ktXQ9UCUu7TgbVz
+         TVgIXBPxkPtd/q7M18oRdJ/ZY5snfQSMvUHZjXEgMmJTbDCMyvY0dhUSA6O38XsN0lHN
+         uttg==
+X-Gm-Message-State: AGi0PubEws8s/tP0VxcgDLgQpjShsKa8HwtgrI6h8QzLwhaOSqImHmgL
+        eYtpk8sXNR61aJ3Y36BN9GIWaQKT
+X-Google-Smtp-Source: APiQypLfBPOfFZr+4FlAv3h0TwFx06fIbwW5hPwwbghzOt3VOm8wd8ajvsi0rNk1ZjNPacR+NOh4SA==
+X-Received: by 2002:ac8:4e86:: with SMTP id 6mr32735373qtp.37.1588150828084;
+        Wed, 29 Apr 2020 02:00:28 -0700 (PDT)
+Received: from archbookpro.localdomain (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.65.113])
+        by smtp.gmail.com with ESMTPSA id m7sm15386308qke.124.2020.04.29.02.00.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Apr 2020 02:00:27 -0700 (PDT)
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Robert Simpson <no-reply@MailScreen.com>
+Subject: [PATCH] switch: fix errors and comments related to -c and -C
+Date:   Wed, 29 Apr 2020 05:00:19 -0400
+Message-Id: <0f7f9eefc056dd4d9b11dab737e00235b3243a2f.1588150804.git.liu.denton@gmail.com>
+X-Mailer: git-send-email 2.26.2.548.gbb00c8a0a9
+In-Reply-To: <60af77100df823b4112c08e6c1b8533f.squirrel@socialwebmail.com>
+References: <60af77100df823b4112c08e6c1b8533f.squirrel@socialwebmail.com>
 MIME-Version: 1.0
-References: <pull.614.git.1587700897.gitgitgadget@gmail.com>
- <xmqqv9lod85m.fsf@gitster.c.googlers.com> <CAKiG+9V_nZUXf2a689vZ54rG+xTCFMGcJe_7Av-khaxxuijERg@mail.gmail.com>
- <xmqq8sikblv2.fsf@gitster.c.googlers.com> <nycvar.QRO.7.76.6.2004251354390.18039@tvgsbejvaqbjf.bet>
- <20200427200852.GC1728884@coredump.intra.peff.net> <20200427201228.GD1728884@coredump.intra.peff.net>
- <20200428135222.GB31366@danh.dev> <20200428210750.GE4000@coredump.intra.peff.net>
-In-Reply-To: <20200428210750.GE4000@coredump.intra.peff.net>
-From:   Sibi Siddharthan <sibisiddharthan.github@gmail.com>
-Date:   Wed, 29 Apr 2020 14:12:43 +0530
-Message-ID: <CAKiG+9U2Eg5yvT4XjgpMUXu4OV-8JF9Hp_ou_P6twxfqJ1tEYA@mail.gmail.com>
-Subject: Re: [PATCH 0/8] CMake build system for git
-To:     Jeff King <peff@peff.net>
-Cc:     Danh Doan <congdanhqx@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Sibi Siddharthan via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Adding the CMake script to contrib/buildsystem is a good option.
-Is there any changes (apart from the CMakeLists.txt critique and) that
-I have to do on my part?
+In d787d311db (checkout: split part of it to new command 'switch',
+2019-03-29), the `git switch` command was created by extracting the
+common functionality of cmd_checkout() in checkout_main(). However, in
+b7b5fce270 (switch: better names for -b and -B, 2019-03-29), these
+the branch creation and force creation options for 'switch' were changed
+to -c and -C, respectively. As a result of this, error messages and
+comments that previously referred to `-b` and `-B` became invalid for
+`git switch`.
 
-Thank You,
-Sibi Siddharthan
+For comments that refer to `-b` and `-B`, add `-c` and `-C` to the
+comment.
 
-On Wed, Apr 29, 2020 at 2:37 AM Jeff King <peff@peff.net> wrote:
->
-> On Tue, Apr 28, 2020 at 08:52:37PM +0700, Danh Doan wrote:
->
-> > On 2020-04-27 16:12:28-0400, Jeff King <peff@peff.net> wrote:
-> > > On Mon, Apr 27, 2020 at 04:08:52PM -0400, Jeff King wrote:
-> > >
-> > > > Skimming the patches, I do wish I didn't see so much repetition with the
-> > > > existing Makefile. I know that some of the logic will just have to be
-> > > > ported manually, but surely we could be pulling things like the list of
-> > > > libgit_SOURCES from the Makefile as the single source of truth?
-> > >
-> > > Thinking I surely couldn't be the only one to think of this, I dug
-> > > further into some of the sub-threads. And indeed, it seems like you are
-> > > on the same page here.
-> > >
-> > > IMHO it is worth making the cmake file depend as much as possible on
-> > > what's in the Makefile.
-> >
-> > Please correct me if I were wrong (I recall this from my memory
-> > without checking anything).
-> >
-> > The worst thing about CMake is we can't override (Make's) variable
-> > in Makefile generated by CMake.
->
-> I really don't know enough about cmake to say one way or the other. I
-> can well believe there are parts of the Makefile that will need to be
-> manually translated, and that it may not ever hit full parity.
->
-> But as long as it just a tool for people using Visual Studio, and if
-> they are happier being able to use that tool, even with a few
-> deficiencies, then it may still be worth doing.
->
-> -Peff
+For error messages that refer to `-b`, introduce `enum cmd_variant` and
+use it to differentiate between `checkout` and `switch` when printing
+out error messages.
+
+An alternative implementation which was considered involved inserting
+option name variants into a struct which is passed in by each command
+variant. Even though this approach is more general and could be
+applicable for future differing option names, it seemed like an
+over-engineered solution when the current pair of options are the only
+differing ones. We should probably avoid adding options which have
+different names anyway.
+
+Reported-by: Robert Simpson <no-reply@MailScreen.com>
+Signed-off-by: Denton Liu <liu.denton@gmail.com>
+---
+
+Notes:
+    Robert, is the email listed above correct? If not, please let me know
+    which email to use. (I hope that this reaches you somehow.)
+
+ builtin/checkout.c | 26 ++++++++++++++++++--------
+ 1 file changed, 18 insertions(+), 8 deletions(-)
+
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 8bc94d392b..0ca74cde08 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -1544,9 +1544,16 @@ static struct option *add_checkout_path_options(struct checkout_opts *opts,
+ 	return newopts;
+ }
+ 
++enum cmd_variant {
++	CMD_CHECKOUT,
++	CMD_SWITCH,
++	CMD_RESTORE
++};
++
+ static int checkout_main(int argc, const char **argv, const char *prefix,
+ 			 struct checkout_opts *opts, struct option *options,
+-			 const char * const usagestr[])
++			 const char * const usagestr[],
++			 enum cmd_variant variant)
+ {
+ 	struct branch_info new_branch_info;
+ 	int parseopt_flags = 0;
+@@ -1586,7 +1593,9 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
+ 	}
+ 
+ 	if ((!!opts->new_branch + !!opts->new_branch_force + !!opts->new_orphan_branch) > 1)
+-		die(_("-b, -B and --orphan are mutually exclusive"));
++		die(variant == CMD_CHECKOUT ?
++				_("-b, -B and --orphan are mutually exclusive") :
++				_("-c, -C and --orphan are mutually exclusive"));
+ 
+ 	if (opts->overlay_mode == 1 && opts->patch_mode)
+ 		die(_("-p and --overlay are mutually exclusive"));
+@@ -1614,7 +1623,7 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
+ 	/*
+ 	 * From here on, new_branch will contain the branch to be checked out,
+ 	 * and new_branch_force and new_orphan_branch will tell us which one of
+-	 * -b/-B/--orphan is being used.
++	 * -b/-B/-c/-C/--orphan is being used.
+ 	 */
+ 	if (opts->new_branch_force)
+ 		opts->new_branch = opts->new_branch_force;
+@@ -1622,7 +1631,7 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
+ 	if (opts->new_orphan_branch)
+ 		opts->new_branch = opts->new_orphan_branch;
+ 
+-	/* --track without -b/-B/--orphan should DWIM */
++	/* --track without -b/-B/--orphan for checkout or -c/-C/--orphan for switch should DWIM */
+ 	if (opts->track != BRANCH_TRACK_UNSPECIFIED && !opts->new_branch) {
+ 		const char *argv0 = argv[0];
+ 		if (!argc || !strcmp(argv0, "--"))
+@@ -1631,7 +1640,8 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
+ 		skip_prefix(argv0, "remotes/", &argv0);
+ 		argv0 = strchr(argv0, '/');
+ 		if (!argv0 || !argv0[1])
+-			die(_("missing branch name; try -b"));
++			die(_("missing branch name; try -%c"),
++					variant == CMD_CHECKOUT ? 'b' : 'c');
+ 		opts->new_branch = argv0 + 1;
+ 	}
+ 
+@@ -1785,7 +1795,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 	options = add_checkout_path_options(&opts, options);
+ 
+ 	ret = checkout_main(argc, argv, prefix, &opts,
+-			    options, checkout_usage);
++			    options, checkout_usage, CMD_CHECKOUT);
+ 	FREE_AND_NULL(options);
+ 	return ret;
+ }
+@@ -1823,7 +1833,7 @@ int cmd_switch(int argc, const char **argv, const char *prefix)
+ 	options = add_common_switch_branch_options(&opts, options);
+ 
+ 	ret = checkout_main(argc, argv, prefix, &opts,
+-			    options, switch_branch_usage);
++			    options, switch_branch_usage, CMD_SWITCH);
+ 	FREE_AND_NULL(options);
+ 	return ret;
+ }
+@@ -1860,7 +1870,7 @@ int cmd_restore(int argc, const char **argv, const char *prefix)
+ 	options = add_checkout_path_options(&opts, options);
+ 
+ 	ret = checkout_main(argc, argv, prefix, &opts,
+-			    options, restore_usage);
++			    options, restore_usage, CMD_RESTORE);
+ 	FREE_AND_NULL(options);
+ 	return ret;
+ }
+-- 
+2.26.2.548.gbb00c8a0a9
+
