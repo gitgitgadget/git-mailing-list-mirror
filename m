@@ -7,107 +7,97 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ADE18C83003
-	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 13:36:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 283D0C83004
+	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 13:37:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8616C206D6
-	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 13:36:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 06F28206D6
+	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 13:37:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mGw0Wd2s"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Myo1eTpz"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726676AbgD2Ngq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Apr 2020 09:36:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52896 "EHLO
+        id S1727866AbgD2Nhf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Apr 2020 09:37:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53056 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726558AbgD2Ngq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Apr 2020 09:36:46 -0400
-Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDC8FC03C1AD
-        for <git@vger.kernel.org>; Wed, 29 Apr 2020 06:36:45 -0700 (PDT)
-Received: by mail-oi1-x235.google.com with SMTP id q204so1751629oia.13
-        for <git@vger.kernel.org>; Wed, 29 Apr 2020 06:36:45 -0700 (PDT)
+        with ESMTP id S1727865AbgD2Nhc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Apr 2020 09:37:32 -0400
+Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BC91C03C1AD
+        for <git@vger.kernel.org>; Wed, 29 Apr 2020 06:37:32 -0700 (PDT)
+Received: by mail-lj1-x242.google.com with SMTP id j3so2618987ljg.8
+        for <git@vger.kernel.org>; Wed, 29 Apr 2020 06:37:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=tKr/B24jjaVDKc9B4dQYluRFP+YiR2mUWfvwcZUGgkY=;
-        b=mGw0Wd2sYluCtpeu2j7VEcDalmZAQsNacfBWO1UU59eJHqIKYd+aZuMNHjzdNxjl5L
-         eUz/pIGHFY07FyHI8MM5sXyWQu8326h9rCTF0K5BJqM0TD044aJYWBxAX/Lxy/b1nnCW
-         S8DRntfF6Sqg8FFOu/VH6s70q+PQt6nbt89apa5PmyJYUc1iYWcg9UtiI/fC2VCLoPuz
-         zNwafL2ZuYc216r3DXK++jna+6vt7J9a8joVG5lIWcn32roEJzJ+lLKUYzyc5Ub6K2Zx
-         9zEpU0jVKWlhN1PmUj8z81vrFvK3jKfXHYFDiN94u/SwIZVnTLVQdaEVrFPbGAZf75ay
-         Z+fg==
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=3KVsaHw+mfayuAnyncThUjThA1MopmzV10gkCsGUeCI=;
+        b=Myo1eTpz3sG7GU0ti4WWKwNONCe1YDQeUgxEKiVcptp6qDO4qmHYDVj5O+e5KX1JBG
+         Ljwa43g+ft8wRVwtaJu4mrNwg2ngEKdCRP8NdPM2ZuRl4rGm1UNqUYKr7r1hjWGkXhxd
+         BR4Bg5B/ZQnaDeEzuAPhFj7VZQNCnkRFk6nJ/mSagDPVx+3GHNrqSvXKOyzic8YrwzfA
+         EPXEA/OCXbncnjH5CCucjlN44uquY9vbfyDwxv0yCwaWQbu/kPJFizO7Z+z383NpUyG3
+         nDQ1atyeHVVpEdqSy6antPlrfNN9hdQIFS8mzufCuU69oc6iY9MV0qFAlw0PHbs8SYBE
+         9Skg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=tKr/B24jjaVDKc9B4dQYluRFP+YiR2mUWfvwcZUGgkY=;
-        b=tegYbLBKb2bXywM4s3NyY55OHtdc23MI8oQ/yIWJvZ6yM/oeI0wbHKQhDKKHRcWsHh
-         iGFVmPz06dU7/+Tfm2OH4k1F9sX+teAPNxN6tZwItIPsK6aF4vMERycblsSn5Pj8WWKw
-         5EnXZUislbo8soerkxxj7M+W6NqnaS1NU/68vhNEKEAhFbdEpI6P90UV1s0jfJx7IzjA
-         EHQEpmfmzwZuWZkrB3KCsSK4nfdSfoWLPj+KP3UQaDi4Q+Br3BUK/iNHpebzeyRIIZzK
-         4N6sKpYW5WIh9gftMGFLQGG5tOXds84jFtFDbkZs8ZAEtH4RxpCbJc1R6puGvIle9F/X
-         lN9w==
-X-Gm-Message-State: AGi0PuY1qfNug2P57MkxXXiiGDxhL0tMRNzywBsNZPIqyjWXl4mUnX88
-        R5QTEGIqloEdc7ZaG3bO+FhW5sLyPIYT3CBRSSDusal2XXk=
-X-Google-Smtp-Source: APiQypKBLzqW7iAr29VV/lv7GwgJMYib5HnhOJ2HaJNW9ozTYhIZQeKrrAfxpGggIu7wHVHt6dxb15hVCP0d7NL4AjQ=
-X-Received: by 2002:aca:4858:: with SMTP id v85mr1600385oia.51.1588167404857;
- Wed, 29 Apr 2020 06:36:44 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version;
+        bh=3KVsaHw+mfayuAnyncThUjThA1MopmzV10gkCsGUeCI=;
+        b=kkm1EYPoljesFlI+tBBLO6+SInzRoLHjP5mxSM+63vjrefDmEA4sgE2ODDJh574NDm
+         FmxH67wQzzqglGC9kYmyQaebreAWnakFW7gLBrYodaLuj4ohqk4+R1THwlUAV3NA7qTm
+         9Kz9OQiYbosdfNYpX1D2zavpoGe19kJsXEA+i3eulyxIDWAs3FtWukUG/CAKTYkZnFHT
+         B4Tta+I34JGad0YEJj85kMbvI4E05fRAGOEpmDmgmZXV0F8ng8pezO0EKlBF/7PsUsOR
+         6CQ2TUQb7T/V7/rbOGDBhybipB4RI+wFgwQrojIQ9jKqoqVvjM4rGyNsHhIWE6gerYHO
+         M2fA==
+X-Gm-Message-State: AGi0PuZvdKZzTyLscnIs86tdKGpsiay4JuJMt+soxcw7n7FIou238WUg
+        IBHm3LtCb5EyULXp8iYi6h8=
+X-Google-Smtp-Source: APiQypKxxibrOdlVOtUU/180NSCKPDmtGWE7jhSaVLMWuRj/QPCCxKYdjlXEkP2W2CTxj4iG/5fz2g==
+X-Received: by 2002:a2e:9712:: with SMTP id r18mr21061084lji.225.1588167450642;
+        Wed, 29 Apr 2020 06:37:30 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id u3sm2831192lff.26.2020.04.29.06.37.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Apr 2020 06:37:28 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Ivan Tham <pickfire@riseup.net>
+Cc:     git@vger.kernel.org,
+        "brian m . carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH] branch: add '-' to delete previous branch
+References: <20200429130133.520981-1-pickfire@riseup.net>
+Date:   Wed, 29 Apr 2020 16:37:27 +0300
+In-Reply-To: <20200429130133.520981-1-pickfire@riseup.net> (Ivan Tham's
+        message of "Wed, 29 Apr 2020 21:01:33 +0800")
+Message-ID: <877dxyo1k8.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
 MIME-Version: 1.0
-From:   Doug Glidden <41mortimer@gmail.com>
-Date:   Wed, 29 Apr 2020 09:36:31 -0400
-Message-ID: <CAHTRwmjXXYAU_LTBF_9sX1CXFnGyHsu5_KHuCp1rB76-4zn=Gg@mail.gmail.com>
-Subject: git fast-export not preserving executable permissions?
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello Git world!
+Ivan Tham <pickfire@riseup.net> writes:
 
-I have run into an issue that I cannot seem to resolve with git
-fast-export. When running a fast-export on a repo that contains
-scripts with executable permissions (e.g. a gradlew script), the
-resulting export does not properly reflect the executable permissions
-on the script files.
+> Add support to delete previous branch from git checkout/switch to have
+> feature parity with git switch -.
 
-To illustrate this issue, I created a small sample repo, with one
-executable file and one non-executable file. From the output below,
-you can see that the mode in the output from fast-export is the same
-for both files; according to the documentation for fast-import, the
-mode for the executable file should be 100755 instead of 100644.
+Maybe I'm late on this, but to me, who leaves in the Linux world,
+"a_command -" strongly suggests a_command will read further input
+from stdin.
 
-    $ ls -gG
-    total 2
-    -rwxr-xr-x 1 106 Apr 29 09:13 executable_script.sh*
-    -rw-r--r-- 1  63 Apr 29 09:12 non_executable_file.txt
+[...]
 
-    $ git fast-export --all
-    blob
-    mark :1
-    data 106
-    #!/bin/bash
+> +To delete the previous branch::
+> ++
+> +------------
+> +$ git branch -D -
 
-    # This is a shell script that should be executable.
-    echo 'The script executed successfully!'
+... so this suggests that the command, when used like this:
 
-    blob
-    mark :2
-    data 63
-    This file is a simple text file that should not be executable.
+$ echo "branch_name" | git branch -D -
 
-    reset refs/heads/dev
-    commit refs/heads/dev
-    mark :3
-    author Doug <41mortimer@gmail.com> 1588167102 -0400
-    committer Doug <41mortimer@gmail.com> 1588167102 -0400
-    data 25
-    Adding some sample files
-    M 100644 :1 executable_script.sh
-    M 100644 :2 non_executable_file.txt
+will delete "branch_name" rather than some "previous" branch, whatever
+that means.
 
-Please let me know if there is any further information I can provide
-about this issue.
+Is this short-cut /that/ important to create yet another confusion?
 
-Thank you,
-Doug
+-- Sergey
