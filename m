@@ -2,113 +2,138 @@ Return-Path: <SRS0=05is=6N=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 379DFC83000
-	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 20:35:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 47B87C83000
+	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 20:36:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 10E4B20B1F
-	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 20:35:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2388B2137B
+	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 20:36:08 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="v3ppgPKr"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tsUy9HAr"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726781AbgD2UfN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Apr 2020 16:35:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34192 "EHLO
+        id S1726822AbgD2UgH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Apr 2020 16:36:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34338 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726456AbgD2UfN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Apr 2020 16:35:13 -0400
-Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7873EC03C1AE
-        for <git@vger.kernel.org>; Wed, 29 Apr 2020 13:35:11 -0700 (PDT)
-Received: by mail-pl1-x643.google.com with SMTP id d24so1264433pll.8
-        for <git@vger.kernel.org>; Wed, 29 Apr 2020 13:35:11 -0700 (PDT)
+        with ESMTP id S1726511AbgD2UgG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Apr 2020 16:36:06 -0400
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3EDCC03C1AE
+        for <git@vger.kernel.org>; Wed, 29 Apr 2020 13:36:06 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id a32so1247271pje.5
+        for <git@vger.kernel.org>; Wed, 29 Apr 2020 13:36:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=nYFDa27Xo9qtCRYfidSWka7aOcilRntZ4qxah/i5cMA=;
-        b=v3ppgPKrn0Q1IBVFBxsRTNWNwx6xWyn4bfcaDDFlCS9cGoct5zZjyfa7ttvEZdGeZc
-         g3L1IlGP6q3FvO3qWt/Qgl1Ev+kVwoCml+NW1BtuxElVa7P6odekHrYBqHo+hQy9ss6y
-         ufZeP46JArxfdnlnT37a8NjnSh45YxgP8rrYo9BF7GbIFSVWkNQjYRbpU5x5oXYLQEky
-         L+ZRTVYcnYnrnwDnL2Aj1qCV2txfGpgEiXklg3sr+xcMcLSA99n/+AA6GwuNibQ43VXR
-         r7skOOkHSDK1nw0s6trRZ7K/poH2xqx0J1wgZc1dG4dJE1Fx9PVpJ3U0eCKbYVCgU45x
-         pB6g==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=7idZlwMEWmC1E+BIatlC3qc566S4hIVfrwBFKQLGmOE=;
+        b=tsUy9HArxJiZrEHMT5MTAgZ+423IncZechYuleAC1EAGiysohMc5DXXzp9kybyYayz
+         GBdT5IKtlfyQoLbTGuh3xHwhCq9o2sPq66KieUP2ZuJFAYJ7UX2JVQReF9gh+Gk0p0rh
+         NbZIzz9A93uaokoD9gfB+x93Lp/JxMgApq0ylPv1b9sF/N6ZDJqgqCtJh7xGuL/WOMmm
+         Dw8XmRXZGkmQHY6v+q2c28GDvMH4Ji3AyHRriteW1MF0d4AnWtJhai5Q7l3+evI5LJ2q
+         7KyoQK/jI9pQmPBkjAlfuimGMtpKMkyqawPYRc6ysdzisj2gEDr//IcsqgLfzxOpnwNb
+         D74g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=nYFDa27Xo9qtCRYfidSWka7aOcilRntZ4qxah/i5cMA=;
-        b=PPBipEIRqdmHqNe2qd3PEP+H+ku7IgG/PcuH+4PYacMZOvf85Mp/scG8rH98oo1INa
-         d8Dh35DfSnM9bVPPj3KwFB5NBP4JW0CXdUAJGGLCbEDaW8NPiEtsLQTOpsEMX0VaD3Eq
-         319LVvkkD5RI8LXajCRcM7B9LWqTbRQAXJj/BEN59JMfko0hLzhYdyeP3Ag5ATc49sZH
-         a2IK/UUuSxaG+4DFEemR0Q02+LTgJFr1BfITXCEbqS9qvCs2o6146sma3FDmfcdutAsW
-         oqvrmBv7SYyXmA6V0pPNknOSMHiQrI5bPUMqLtORU8QVSmroStRoi1jJtdB06YegR5sG
-         FVog==
-X-Gm-Message-State: AGi0PuZs/3EoUntc1rjZIR5RT3VxT54LXYJSIkV6d6YXuBrVVNAaAhMg
-        CvUlwFw5DhCcq0fDor4zAua0aw==
-X-Google-Smtp-Source: APiQypIvEMNkKMog2Cw28ey8J7ZjOVa6Z1NRH65nlQAuz4WMU3XLgb8PSoG+WMj2zFLp27wj5X4c+w==
-X-Received: by 2002:a17:902:d689:: with SMTP id v9mr172117ply.328.1588192510833;
-        Wed, 29 Apr 2020 13:35:10 -0700 (PDT)
-Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id 14sm1769217pfy.38.2020.04.29.13.35.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Apr 2020 13:35:10 -0700 (PDT)
-Date:   Wed, 29 Apr 2020 14:35:08 -0600
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, Sergey Organov <sorganov@gmail.com>,
-        Ivan Tham <pickfire@riseup.net>, git@vger.kernel.org,
-        "brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH] branch: add '-' to delete previous branch
-Message-ID: <20200429203508.GA7899@syl.local>
-References: <20200429130133.520981-1-pickfire@riseup.net>
- <877dxyo1k8.fsf@osv.gnss.ru>
- <20200429190013.GG83442@syl.local>
- <87v9likr5a.fsf@osv.gnss.ru>
- <20200429195745.GC3920@syl.local>
- <xmqqa72uvy7n.fsf@gitster.c.googlers.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=7idZlwMEWmC1E+BIatlC3qc566S4hIVfrwBFKQLGmOE=;
+        b=VI4EFWP+D9gSbMbaVq0oOLWd4vXKKW7/J8UqnTF5jEnm71Hh40dez6cZGZrRB8Fe6N
+         BQ/w7M8o6skvn7+LzJjX2tLmm4fhl22/AJGQ3OOeSgN0+sMUjDR7RbCbAINswExl3bmu
+         yRyQepEwcGanGVXgx/TBWBHiZRFxDFy6XPM294sdS0W2G5fI/2OJ8pqRdnyUx/wFX6cI
+         n/ZUGr7kPshT4rjvpTKR8x0sntGajZzXPPDoHBdJe1HplA7v4OcosYHTWFxJvVtPUR0H
+         jhx4Vavbg76LTFqPFBvne9TmXyp6tcClPjto3wH1RR5zi6PwiqSubmOTS0YRvODQfMVc
+         oN5A==
+X-Gm-Message-State: AGi0PublIB8trhz4Z6tGHs5qqasfaO6FUxDbxRlAGrUm5WLqoF8lToSa
+        KRdXFdg5ljskfAi+ycoJ6NIF+ZbO
+X-Google-Smtp-Source: APiQypI3QDt/03AV6UKKfPo5OwYYVh07WWg74lqSjAZoHqFlr+6X0fIXpL46G7JPmskqAPVncwOE4w==
+X-Received: by 2002:a17:902:bd42:: with SMTP id b2mr143881plx.219.1588192565636;
+        Wed, 29 Apr 2020 13:36:05 -0700 (PDT)
+Received: from localhost.localdomain (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
+        by smtp.gmail.com with ESMTPSA id h14sm1816404pfq.46.2020.04.29.13.36.04
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 29 Apr 2020 13:36:05 -0700 (PDT)
+From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+To:     git@vger.kernel.org
+Cc:     dirk@ed4u.de, sunshine@sunshineco.com, peff@peff.net,
+        gitster@pobox.com, jrnieder@gmail.com,
+        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+Subject: [RFC PATCH v6 0/2] credential-store: prevent fatal errors
+Date:   Wed, 29 Apr 2020 13:35:44 -0700
+Message-Id: <20200429203546.56753-1-carenas@gmail.com>
+X-Mailer: git-send-email 2.26.2.569.g1d74ac4d14
+In-Reply-To: <20200429003303.93583-1-carenas@gmail.com>
+References: <20200429003303.93583-1-carenas@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqa72uvy7n.fsf@gitster.c.googlers.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 29, 2020 at 01:22:36PM -0700, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
->
-> > Again, not sure that this is always the case. This *is* how 'git
-> > checkout' works.
->
-> To be honest, I am somewhat sympathetic to those who find "-" ==
-> "@{-1}" unless it is used as an argument to "git checkout/switch".
-> The use of "-" in "checkout" is the exception, not the norm, and it
-> was sort of justifiable due to similarity to "cd -".  Both are
-> commands to the computer you give to "go to the previous place".
->
-> "git merge -", "git branch -d -" etc. are not about *going* to the
-> previous place, and declaring the "-" is "previous place" is taking
-> it a bit too far, at least to my taste.
+with the added checks for invalid URLs in credentials, any locally
+modified store files which might have empty lines or even comments
+were reported[1] as failing to parse as valid credentials.
 
-OK, I could sympathize with that as well. I still think that my
-suggestion from earlier about documenting the fact that 'git branch -D'
-already understands '@{-N}' as a separate first patch is valid.
+document better the format for the credential file and make sure
+any failures are still handled gently by the new code to avoid
+regressions but make sure that any invalid credentials are flagged
+as such instead of being silently ignored.
 
-If I were the author, I'd cut that as a first patch, and discard the
-remainder if it sounds like we don't want to go with 'git branch -D -',
-which is fine by me. (I don't really care either way, and I can
-understand the arguments in both directions).
+ideally would like to add a test against the use of cert:// to make
+sure that is still well supported but don't know of any use case or
+if it is being used with store (AFAIK, it could and at least in theory
+it should still work fine with the added validations), hence sending
+this as an RFC.
 
-> Oh, I do not like those who advocate "@" as a synonym for "HEAD",
-> either.  If there is one simple thing I want to get rid of from the
-> system, that's it ;-).
->
-> Anyway...
+also, there is no real reason to have 2 patches but I am keeping them
+separated because the first one should be AFAIK otherwise almost ready.
 
-Thanks,
-Taylor
+but considering that we are validating since v4 against a missing
+protocol and printing a warning since v5, it seems we should then
+fully avoid all those silently ignored issues as well (as shown in
+patch 2) which I hope we could squash and release together (if agreed)
+
+[1] https://stackoverflow.com/a/61420852/5005936
+
+Carlo Marcelo Arenas Belón (2):
+  credential-store: warn instead of fatal for bogus lines from store
+  credential-store: warn for any incomplete credentials instead of using
+
+---
+v6:
+* get rid of redacter and only use line number for context
+* make validation more strict to also catch incomplete credentials
+v5:
+* q_to_tab this round, with a single echo to make sure empty line
+  is covered, as that seems to be a popular issue
+* rebase on top of jc/credential-store-file-format-doc
+* implement a redacter for credentials to use on errors to avoid
+  leaking passwordss
+v4:
+* use credential_from_url_gently instead as shown by Jonathan
+* add documentation to clarify "comments" is not a supported feature
+v3:
+* avoid using q_to_cr as suggested by Peff
+* a more verbose commit message and slightly more complete documentation
+v2:
+* use a here-doc for clarity as suggested by Eric
+* improve commit message and include documentation
+
+ Documentation/git-credential-store.txt | 12 +++-
+ credential-store.c                     | 23 +++++---
+ t/t0302-credential-store.sh            | 80 ++++++++++++++++++++++++++
+ 3 files changed, 105 insertions(+), 10 deletions(-)
+
+
+base-commit: 272281efcc18fcedd248597b8859f343cae1c5a0
+-- 
+2.26.2.569.g1d74ac4d14
+
