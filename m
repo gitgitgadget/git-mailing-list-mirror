@@ -2,118 +2,159 @@ Return-Path: <SRS0=05is=6N=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BDD1BC83004
-	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 18:06:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CBC4CC83004
+	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 18:49:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9987D20B1F
-	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 18:06:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9700A20661
+	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 18:49:15 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="w6RkqG0V"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="wwi+9Rof"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726853AbgD2SGs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Apr 2020 14:06:48 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64187 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726423AbgD2SGs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Apr 2020 14:06:48 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B302745F89;
-        Wed, 29 Apr 2020 14:06:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=fMpiNeqDaShL1wh7bmGnYb5+V+8=; b=w6RkqG
-        0VQqAXi195OQVSX71GicKrQWr4V4ibHFGbkNeeYcCZxk1F+nmpBiiGrIo21b3kjh
-        x+WDsEPa2ArRvkXbhVGZsvZ0lEnqt2MLRT9j8gizfvZnpOUlV0aAONG8bPlirUyA
-        zW7qmFeY5vAWviqR2/tZ4HTv/IOrOHNxUk5uQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=eM7hTU+LO8UVBIIJBPV12Vqa+sjf6UFg
-        RczlC9YHhN0Gwo+l1MoezDdHA0UujJnHh+9RY/2oZzfw1LnTDDDaXrfky484Yi19
-        22SQfervzYv9rHb6SGNFQ1Xvrkv0S5DMLXD2oSPy4kguE67rerNWu7dceE2C0N7g
-        Q3qol8UG7UE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AABB145F88;
-        Wed, 29 Apr 2020 14:06:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 343AC45F87;
-        Wed, 29 Apr 2020 14:06:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 2/4] lib-submodule-update: consolidate --recurse-submodules
-References: <cover.1588162842.git.liu.denton@gmail.com>
-        <d5809877af3e20eb9ff459a91d3099846fd32197.1588162842.git.liu.denton@gmail.com>
-Date:   Wed, 29 Apr 2020 11:06:45 -0700
-In-Reply-To: <d5809877af3e20eb9ff459a91d3099846fd32197.1588162842.git.liu.denton@gmail.com>
-        (Denton Liu's message of "Wed, 29 Apr 2020 08:22:24 -0400")
-Message-ID: <xmqqtv12w4i2.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726558AbgD2StO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Apr 2020 14:49:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45798 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726456AbgD2StO (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 29 Apr 2020 14:49:14 -0400
+Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A597C03C1AE
+        for <git@vger.kernel.org>; Wed, 29 Apr 2020 11:49:13 -0700 (PDT)
+Received: by mail-pl1-x630.google.com with SMTP id n24so1150632plp.13
+        for <git@vger.kernel.org>; Wed, 29 Apr 2020 11:49:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=qlRUR9igMrOCZWXjSOr29Tr92I9EDgR6SjxrCrxIjlg=;
+        b=wwi+9RofWMVgL3Pz6fuL/oGZfHxUY1qlcmJ//qjJzZou7hr1YzH7GFdJJj12baPtMA
+         I29wqQgLg2FzRr+qMcSmmvUGp7wR8EjE9SxZsvRNVTjx6jO2HEoZgsnEilXIp2zKj2vZ
+         DIO4z6UhOn4Yns5lOeW+cwiQ20mXm7UiK2x4HBlO5g668eCIQEtnDgx1m4es63gxmlxD
+         dqsm2HMMk4vvoMgPIlPBjQiwc7wxf1+PIMbzg2rlSYx4XXPXbIe6Hi0DLcrIvaHDgCkr
+         JFkJGYenWhyVY/oKG4hiy5ouQVWoO21etvEAGPJ9j/fFxR5+tnu0SR+6QpqRxt/jBSRX
+         acxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=qlRUR9igMrOCZWXjSOr29Tr92I9EDgR6SjxrCrxIjlg=;
+        b=U1txERM3/2UMPDrY9/wbv/RLsx6YX19nl0xNwh7RcawC6WFuuxHPoGC0xIRlW7x22I
+         XT2kGPY+lT299Do5vbrl/zfph0BaIqD+d1+nzytrLJKmQsDd9T3mmctQPmfyz9KNGuZd
+         C/NPJAEXAjhHVX+FMg/5X+THpsXXZLQ11LfVRycfWe7Ga7Ik845Ee6Qhr4apvBTZCK0T
+         Nq47uFmsHHw8kUD2w62DnHbKL90g57zwB44v1RtlCALrFKYSmNqIsEg+EnetqGojgISx
+         hL6R1VWWOLDgSQZwQZ/b5OB2WmAP3T7MnWrOd5envK97nLcG/OQ+RBX/7PGJdwwqg186
+         CY5w==
+X-Gm-Message-State: AGi0PubGVYJQMgbvF/aUi4SzXvGMOMcoot7LasfNIUNjMRVGF2+TeH+g
+        Hin96Z0LJlK0ZohsAQonwTzoow==
+X-Google-Smtp-Source: APiQypIow8YE7fdE/ZpcqNZ9MD39amzoCSGi3DHBSTMAQ8eGJu2Yi5mLUh2eRMH/ZZatFA3qsfqHpg==
+X-Received: by 2002:a17:902:8a88:: with SMTP id p8mr34999157plo.134.1588186152368;
+        Wed, 29 Apr 2020 11:49:12 -0700 (PDT)
+Received: from localhost ([8.44.146.30])
+        by smtp.gmail.com with ESMTPSA id 67sm1656571pfx.108.2020.04.29.11.49.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Apr 2020 11:49:11 -0700 (PDT)
+Date:   Wed, 29 Apr 2020 12:49:09 -0600
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Doug Glidden <41mortimer@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: git fast-export not preserving executable permissions?
+Message-ID: <20200429184909.GE83442@syl.local>
+References: <CAHTRwmjXXYAU_LTBF_9sX1CXFnGyHsu5_KHuCp1rB76-4zn=Gg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3060D138-8A44-11EA-9E53-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAHTRwmjXXYAU_LTBF_9sX1CXFnGyHsu5_KHuCp1rB76-4zn=Gg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
+Hi Doug,
 
-> Both test_submodule_switch_recursing_with_args() and
-> test_submodule_forced_switch_recursing_with_args() call the internal
-> function test_submodule_recursing_with_args_common() with the final
-> argument of `--recurse-submodules`. Consolidate this duplication by
-> appending the argument in test_submodule_recursing_with_args_common().
+On Wed, Apr 29, 2020 at 09:36:31AM -0400, Doug Glidden wrote:
+> Hello Git world!
 >
+> I have run into an issue that I cannot seem to resolve with git
+> fast-export. When running a fast-export on a repo that contains
+> scripts with executable permissions (e.g. a gradlew script), the
+> resulting export does not properly reflect the executable permissions
+> on the script files.
 
-OK, I just made sure that these two are the only callers and they
-both pass the "--recurse-submodules", so the patch looks quite
-sensible.
+Interesting. fast-import and fast-export both understand executable
+modes (although Git only understands the modes 644 and 755 for blobs),
+so this should be working.
 
-Thanks.
+I can not reproduce the issue as-is. Round-tripping a fast-import and
+fast-export preserves executable bits for me:
 
-> Signed-off-by: Denton Liu <liu.denton@gmail.com>
-> ---
->  t/lib-submodule-update.sh | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
+  #!/bin/bash
+
+  set -e
+
+  rm -rf repo client
+
+  git init -q repo
+  git init -q client
+
+  (
+    cd repo
+    printf "x" >x
+    printf "y" >y
+    chmod +x x
+    git add x y
+    git commit -q -m "initial commit"
+  )
+
+  git -C repo fast-export HEAD | git -C client fast-import
+
+  diff -u <(git -C repo ls-tree HEAD) <(git -C client ls-tree HEAD)
+
+> To illustrate this issue, I created a small sample repo, with one
+> executable file and one non-executable file. From the output below,
+> you can see that the mode in the output from fast-export is the same
+> for both files; according to the documentation for fast-import, the
+> mode for the executable file should be 100755 instead of 100644.
 >
-> diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
-> index a3732d3f6c..81457b4c31 100644
-> --- a/t/lib-submodule-update.sh
-> +++ b/t/lib-submodule-update.sh
-> @@ -632,7 +632,7 @@ test_submodule_forced_switch () {
->  # Internal function; use test_submodule_switch_recursing_with_args() or
->  # test_submodule_forced_switch_recursing_with_args() instead.
->  test_submodule_recursing_with_args_common () {
-> -	command="$1"
-> +	command="$1 --recurse-submodules"
->  
->  	######################### Appearing submodule #########################
->  	# Switching to a commit letting a submodule appear checks it out ...
-> @@ -840,7 +840,7 @@ test_submodule_recursing_with_args_common () {
->  # test_submodule_switch_recursing_with_args "$GIT_COMMAND"
->  test_submodule_switch_recursing_with_args () {
->  	cmd_args="$1"
-> -	command="git $cmd_args --recurse-submodules"
-> +	command="git $cmd_args"
->  	test_submodule_recursing_with_args_common "$command"
->  
->  	RESULTDS=success
-> @@ -957,7 +957,7 @@ test_submodule_switch_recursing_with_args () {
->  # away local changes in the superproject is allowed.
->  test_submodule_forced_switch_recursing_with_args () {
->  	cmd_args="$1"
-> -	command="git $cmd_args --recurse-submodules"
-> +	command="git $cmd_args"
->  	test_submodule_recursing_with_args_common "$command"
->  
->  	RESULT=success
+>     $ ls -gG
+>     total 2
+>     -rwxr-xr-x 1 106 Apr 29 09:13 executable_script.sh*
+>     -rw-r--r-- 1  63 Apr 29 09:12 non_executable_file.txt
+>
+>     $ git fast-export --all
+>     blob
+>     mark :1
+>     data 106
+>     #!/bin/bash
+>
+>     # This is a shell script that should be executable.
+>     echo 'The script executed successfully!'
+>
+>     blob
+>     mark :2
+>     data 63
+>     This file is a simple text file that should not be executable.
+>
+>     reset refs/heads/dev
+>     commit refs/heads/dev
+>     mark :3
+>     author Doug <41mortimer@gmail.com> 1588167102 -0400
+>     committer Doug <41mortimer@gmail.com> 1588167102 -0400
+>     data 25
+>     Adding some sample files
+>     M 100644 :1 executable_script.sh
+>     M 100644 :2 non_executable_file.txt
+>
+> Please let me know if there is any further information I can provide
+> about this issue.
+
+Does Git think that the file is executable? Please run 'git ls-tree
+HEAD' to find out.
+
+> Thank you,
+> Doug
+
+Thanks,
+Taylor
