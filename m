@@ -2,126 +2,119 @@ Return-Path: <SRS0=05is=6N=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FFCBC83003
-	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 13:02:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C3292C83003
+	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 13:04:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7BBAD214D8
-	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 13:02:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9E78521775
+	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 13:04:45 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=riseup.net header.i=@riseup.net header.b="QDMv3izn"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pdNN0AJX"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726789AbgD2NCO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Apr 2020 09:02:14 -0400
-Received: from mx1.riseup.net ([198.252.153.129]:46010 "EHLO mx1.riseup.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726516AbgD2NCO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Apr 2020 09:02:14 -0400
-Received: from capuchin.riseup.net (unknown [10.0.1.176])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (Client CN "*.riseup.net", Issuer "Sectigo RSA Domain Validation Secure Server CA" (not verified))
-        by mx1.riseup.net (Postfix) with ESMTPS id 49BzF15bDdzFfLf;
-        Wed, 29 Apr 2020 06:02:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=riseup.net; s=squak;
-        t=1588165333; bh=+I/Q857Zz1P01GJtiWDKaMZhrknaErnCK2YjSEtNvlg=;
-        h=From:To:Cc:Subject:Date:From;
-        b=QDMv3izn8rMIAC5m/nxg/OmLo3eQ2SONCJrpyq1oNrb0YiBdP4bFzKGBd56HUA4ZI
-         Y4RV+STqlwmsoF0WWXGFOFkG9IMOKB8wJgKNeDJfdLNr5AdeNsDwvZ6+9naJt+nK9K
-         gdqOWHrkhpRTcfPR4ZqgHanknMX0EMofBTBmJGpQ=
-X-Riseup-User-ID: 45DB7319A25AECC9AA9B4ADFA65624A41C53E6B327720DABBAE9A592E567144E
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-         by capuchin.riseup.net (Postfix) with ESMTPSA id 49BzF03DQgz8vNS;
-        Wed, 29 Apr 2020 06:02:12 -0700 (PDT)
-From:   Ivan Tham <pickfire@riseup.net>
-To:     git@vger.kernel.org
-Cc:     "brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH] branch: add '-' to delete previous branch
-Date:   Wed, 29 Apr 2020 21:01:33 +0800
-Message-Id: <20200429130133.520981-1-pickfire@riseup.net>
+        id S1727052AbgD2NEo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Apr 2020 09:04:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47926 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726654AbgD2NEo (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Apr 2020 09:04:44 -0400
+Received: from mail-il1-x143.google.com (mail-il1-x143.google.com [IPv6:2607:f8b0:4864:20::143])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C53BC03C1AD
+        for <git@vger.kernel.org>; Wed, 29 Apr 2020 06:04:44 -0700 (PDT)
+Received: by mail-il1-x143.google.com with SMTP id w6so2331808ilg.1
+        for <git@vger.kernel.org>; Wed, 29 Apr 2020 06:04:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=qcwj/sx+XYP1jeevrFn6SpbZ+sL9dYkRLZh+ShMNB4M=;
+        b=pdNN0AJXz1jALoeEXeRaAW4nOehuvWXMWcDi3Tb/6LCpO5Xn/U9w0i4UhzYS4WAq2U
+         UvRNwndzWwA+qsfX/tYkJ6zjzv6jSHG+qo56Yw9FB6MmDRZTh6KkeYTN4YqLOmE+WKah
+         hT9U/b50ih4vXviERythE7jjBnibit4lQi8FvheKIBfF1fNi/pr4Bw50Ysu/mtzUiS1c
+         J9l2LrPa31yPf1xOnhDOnuc+WpWbgmFB7By57cmMPWuRnjCFiPtRZCsRw5tQmLzVpkg+
+         jhhWdAiKNdOccihqF0rbcxS6+wAhk+zSWq7MrVa/nhC972GDrepYdFyHwIlD9SLs8zm1
+         pKhA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=qcwj/sx+XYP1jeevrFn6SpbZ+sL9dYkRLZh+ShMNB4M=;
+        b=PUsqNHek6zL5/gwHfjlZ6WmMNLh5lLsrcTO/GyY/7hJgvzSWDYC9higPEGlSXHj0PB
+         Kq/yjZodd/EG0q1/4pKSey1Naj82103KZcpfIzGvqoWIR+07nNwDPXu4+u2cYCoomQDx
+         hPw3hDXbYAAp5MHjo3CdSXDjPQVPr5YqQp7gtQwg2deOvvgVWlyKdfTRd5XxS8Ow7eju
+         RjpR+tKK/AP4H4AGU+0K/5NBxU0hnfhz3VCBVzyez63XiQeiyB6EUBSw1yzK3MEC0U1B
+         43RBKtjHpDJWboTrjrEhp8TIn2It1sUPDj5SzbqjL2iPGtDg0U6UFy0nI1lny+IlKy3j
+         29SQ==
+X-Gm-Message-State: AGi0PuZV0Wv3ZxZRHqb8atTEn8NlUUnsayyd2nVyr3GvdneN2AdB6X32
+        nAixo2BY62vaJDm+curXJZG6WwYBQxg=
+X-Google-Smtp-Source: APiQypKoalZC9n8KaDgXzaUYcquTW6fa8VTD7/of8gXzrMTwgt0LGnLstF2yQoI0iRjriV9Un1wqBQ==
+X-Received: by 2002:a92:4b11:: with SMTP id m17mr31732409ilg.42.1588165483348;
+        Wed, 29 Apr 2020 06:04:43 -0700 (PDT)
+Received: from ?IPv6:2601:8c0:37f:6012:b42c:57cd:fff4:b8c7? ([2601:8c0:37f:6012:b42c:57cd:fff4:b8c7])
+        by smtp.gmail.com with ESMTPSA id x75sm936483ill.33.2020.04.29.06.04.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 29 Apr 2020 06:04:42 -0700 (PDT)
+Subject: Re: [PATCH v2] Teach git-rev-list --simplify-forks
+To:     Philip Oakley <philipoakley@iee.email>,
+        git-ml <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <df0b9e59-e6d7-8839-ca3b-86145dc3bdf3@gmail.com>
+ <d3079ba8-33e1-3b68-23d2-ea97b9ca1e97@gmail.com>
+ <eda71f1e-b883-82c3-72f2-dc5221804c4b@iee.email>
+From:   Antonio Russo <antonio.e.russo@gmail.com>
+Message-ID: <ceeb706d-83ad-c994-121d-d66724d82a49@gmail.com>
+Date:   Wed, 29 Apr 2020 07:04:41 -0600
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
+In-Reply-To: <eda71f1e-b883-82c3-72f2-dc5221804c4b@iee.email>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add support to delete previous branch from git checkout/switch to have
-feature parity with git switch -.
+On 4/29/20 4:08 AM, Philip Oakley wrote:
+>> +--simplify-forks::
+>> +	Convert the commit graph into a spanning subgraph produced by a
+>> +	depth-first-search of the history graph, searching the leftmost
+>> +	parent first, and discarding edges to commits already visited.
+>> +	Useful with `--graph` to visualize repositories with many merges
+>> +	when you are interested in was added to master, and not when the
+>> +	branch was last rebased.
+> 
+> Does this also need to actually mention that it effectively discard
+> edges to fork points, as per the option name?. No rebasing required for
+> it to be useful.
+>      s/when/where/
+>     "...and not where the branch was last rebased or forked from." - not
+> great but actually mentions the option.
+> 
+> --
+> Philip
 
-Signed-off-by: Ivan Tham <pickfire@riseup.net>
----
- Documentation/git-branch.txt | 10 ++++++++++
- builtin/branch.c             |  6 +++++-
- t/t3200-branch.sh            |  7 +++++++
- 3 files changed, 22 insertions(+), 1 deletion(-)
+Good point.  More generally, my description of the option is not very
+useful unless you already basically understand what it's doing.
 
-diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
-index 135206ff4a..37e7cbbc52 100644
---- a/Documentation/git-branch.txt
-+++ b/Documentation/git-branch.txt
-@@ -265,6 +265,10 @@ start-point is either a local or remote-tracking branch.
- 	The new branch name must pass all checks defined by
- 	linkgit:git-check-ref-format[1].  Some of these checks
- 	may restrict the characters allowed in a branch name.
-++
-+You can use the `@{-N}` syntax to refer to the N-th last branch checked out
-+using "git checkout" operation. You may also specify `-` which is synonymous to
-+`@{-1}`.
- 
- <start-point>::
- 	The new branch head will point to this commit.  It may be
-@@ -334,6 +338,12 @@ $ git branch -D test                                    <2>
- <2> Delete the "test" branch even if the "master" branch (or whichever branch
-     is currently checked out) does not have all commits from the test branch.
- 
-+To delete the previous branch::
-++
-+------------
-+$ git branch -D -
-+------------
-+
- Listing branches from a specific remote::
- +
- ------------
-diff --git a/builtin/branch.c b/builtin/branch.c
-index d8297f80ff..5537f819a6 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -227,9 +227,13 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
- 	}
- 	for (i = 0; i < argc; i++, strbuf_reset(&bname)) {
- 		char *target = NULL;
-+		const char *arg = argv[i];
- 		int flags = 0;
- 
--		strbuf_branchname(&bname, argv[i], allowed_interpret);
-+		if (!strcmp(arg, "-"))
-+			arg = "@{-1}";
-+
-+		strbuf_branchname(&bname, arg, allowed_interpret);
- 		free(name);
- 		name = mkpathdup(fmt, bname.buf);
- 
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index 411a70b0ce..6819107c1d 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -1387,4 +1387,11 @@ test_expect_success 'invalid sort parameter in configuration' '
- 	)
- '
- 
-+test_expect_success 'delete previous branch' '
-+	git checkout -b a &&
-+	git checkout -b b &&
-+	git branch -D - &&
-+	test_path_is_missing .git/refs/heads/a
-+'
-+
- test_done
--- 
-2.26.2
+How about:
 
+> --simplify-forks::
+> 	Omits the parent relationship of the first commit of merged branches.
+> 	Effectively discards all information about the fork point of merged
+> 	branches.  It does so by converting the commit graph into a
+> 	spanning subgraph produced by a depth-first-search of the history
+> 	graph, searching the leftmost parent first, and discarding edges
+> 	to commits already visited.  Useful with `--graph` to visualize
+> 	repositories with many merges when you are most interested in
+> 	when branches were merged.
+
+
+Antonio
