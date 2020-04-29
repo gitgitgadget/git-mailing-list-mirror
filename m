@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ADC93C83003
-	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 09:38:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ACFEDC83004
+	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 09:38:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 866CB20731
-	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 09:38:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8C97A20731
+	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 09:38:46 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nRcn29lA"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ef/0fbjG"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726742AbgD2Jim (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Apr 2020 05:38:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43956 "EHLO
+        id S1726768AbgD2Jip (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Apr 2020 05:38:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43966 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726560AbgD2Jim (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 29 Apr 2020 05:38:42 -0400
-Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C9C6C03C1AD
-        for <git@vger.kernel.org>; Wed, 29 Apr 2020 02:38:42 -0700 (PDT)
-Received: by mail-pl1-x644.google.com with SMTP id s20so649335plp.6
-        for <git@vger.kernel.org>; Wed, 29 Apr 2020 02:38:42 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1726763AbgD2Jip (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 29 Apr 2020 05:38:45 -0400
+Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8D33C03C1AD
+        for <git@vger.kernel.org>; Wed, 29 Apr 2020 02:38:44 -0700 (PDT)
+Received: by mail-pl1-x641.google.com with SMTP id n24so634812plp.13
+        for <git@vger.kernel.org>; Wed, 29 Apr 2020 02:38:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=4sy+SflQaz6sGBUp8bFsSU1rT2xwhz68qdUlPQDZdQQ=;
-        b=nRcn29lA/sgnkv7Ct+Z0JEOWtQm9cs+mwSTcRrdIq5pk/omr0/D5H3ZgkZ0FvkY14W
-         JN2oz73Pa/aAMeYx99iXn2VEQLf9ao6m/gHQFrqqnYRvCwMPkMTE8pmqHfPnddI+mhUC
-         8RiqlezxZAV93wB8Gpil1BQC2gouUxuwdcm6okKQFovyXxoxDZJElHxfmPfmgUODfHK0
-         +1P1uJasNC+v+xv+gjEYZ5lOl74dAOgH2onwDS3eoXJRBIDQvckWd5LSVu9+eAYeXyd9
-         yteBEY8FZlFY8w2ZQyAwzr5incPeshjZw+0PuSNKNSY8fcr2wYGfGYQ4st7e8iOGgYwp
-         il7A==
+        bh=e1zOeUqWUwZXh3Z/CoAi+h+y3jNsWmWfxpZoW30Ukns=;
+        b=ef/0fbjGukgZ1t1wEaiXqRq7cfxwoCF0aUqNut8pOS7Iv7KbsPheg0c5Epyfg4buL0
+         siyQfbqqHiRdCX5Ei0c0pyhLyxrBjQsOAz5qcPnBzLSE9z0AunCn3GXJ8FGj5xRLJaFY
+         znjYJJzvDToc/WvqV8bXWheswCC7fuijFg9fxG2rogpolGLSr5pX/Y5WhWBaTrpNEIp9
+         3YiRpvvRnR/1hM/CTk2h2m07MzunNU8m7GKObfQHccleetAMSdD1btIws1dphFRf4YS/
+         1BZC+1BiDarM09+WI6BlhvxAlcXPgFuu9bMb9tMb6M93ul67ztPsG7Xc2baHSTg7/Mdq
+         Hp4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=4sy+SflQaz6sGBUp8bFsSU1rT2xwhz68qdUlPQDZdQQ=;
-        b=fYIoM2Us1OFycQJU/EwnigsHdFQwWUxZFB8MePR2V21N/FtsSULz9Li99BB+465jR4
-         bS4nXUaRXdBUrQ9eFFr6Ntts+iUdfIWM6wEelZoFHWvUoDxmR/KZpm9VnH4Tf/dBZR8d
-         V6/0RA/zpkcD6MCSbBI3rW2nnzMMngFFz648GhXUTabJGCbTBpujzcGQOjVFSjvomy8f
-         msb1+MK386Q23ToSb7ni5+6xZScMR5mxosu+xh7fZ3ggchzqe+kkqO//itmdSw/ZhmLr
-         Eo1R77243XDe3vp4YQCPga3POnK+h5vzH8Hzo32Uk4D3iLDR4mmlqC2QFjnU2OdKNjV+
-         4rfA==
-X-Gm-Message-State: AGi0Pua7P9qbPoxwMu/NEKy5B0A8jkVHvpEszjKw6Ou2josAPneFwkvP
-        HvAcDcXTDuq+AxqXpFQv2TJbCP3cwjs=
-X-Google-Smtp-Source: APiQypLA9/fI0i5y8vwNB609UZXHpw1gDgwTsslk/Fw/fw7sfUvGThS9zRlcyOb9UO8esjzOoRyGOw==
-X-Received: by 2002:a17:90b:1044:: with SMTP id gq4mr2048820pjb.81.1588153120706;
-        Wed, 29 Apr 2020 02:38:40 -0700 (PDT)
+        bh=e1zOeUqWUwZXh3Z/CoAi+h+y3jNsWmWfxpZoW30Ukns=;
+        b=TX+AWT1bjAwWprteVh16U3OAasA608MslM85aoLiB/4h9pUT9HfPuHdqB//ZI8FVZt
+         TtbIHlx0qaq0Ydz4Tj8pYYoRmvX3aeHAF8aR2ehqHym3G+z+Bk4e33d3aLDuzBGGOzEv
+         juTQVd79JSzQJFHD/raKYvCMoKmpgYCzO8oYFZLwzn+M8LXMaCkXBMl/seMzOajX1vj3
+         QuuYKChxKVPIWan57i/KHb+ZjwfvjQQR36GVeG1Lgvo63mlKE7dGDLEQHplmqF832nQh
+         yeUUCUuIKpBTicbF1gNlCsMaXZ/UGnrPbbOhL5pq2jZo/AcHiqwxZYGpNQf7x977Da/V
+         CYLw==
+X-Gm-Message-State: AGi0PuaUZpYMbQ1PGToVDiYVsu5t2ckHiMCVtqPC8tDr20bU1nVryam9
+        WU7GD7cH5wI1kaeF8glQo811A/Sg1DA=
+X-Google-Smtp-Source: APiQypIrf7JC+UyKT5whq1GZUashvUwnr/5kJsG68o46podOW+yzIwEgnwmtixxG8CgaHeoSw818mQ==
+X-Received: by 2002:a17:90a:5289:: with SMTP id w9mr1901134pjh.97.1588153123725;
+        Wed, 29 Apr 2020 02:38:43 -0700 (PDT)
 Received: from konoha.iitr.ac.in ([103.37.201.176])
-        by smtp.gmail.com with ESMTPSA id o30sm667721pgn.12.2020.04.29.02.38.37
+        by smtp.gmail.com with ESMTPSA id o30sm667721pgn.12.2020.04.29.02.38.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Apr 2020 02:38:39 -0700 (PDT)
+        Wed, 29 Apr 2020 02:38:43 -0700 (PDT)
 From:   Shourya Shukla <shouryashukla.oo@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, newren@gmail.com, sandals@crustytoothpaste.net,
         Shourya Shukla <shouryashukla.oo@gmail.com>
-Subject: [PATCH v4 3/4] gitfaq: shallow cloning a repository
-Date:   Wed, 29 Apr 2020 15:08:10 +0530
-Message-Id: <20200429093811.8475-3-shouryashukla.oo@gmail.com>
+Subject: [PATCH v4 4/4] gitfaq: fetching and pulling a repository
+Date:   Wed, 29 Apr 2020 15:08:11 +0530
+Message-Id: <20200429093811.8475-4-shouryashukla.oo@gmail.com>
 X-Mailer: git-send-email 2.26.2
 In-Reply-To: <20200429093811.8475-1-shouryashukla.oo@gmail.com>
 References: <20200429093811.8475-1-shouryashukla.oo@gmail.com>
@@ -75,36 +75,41 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add issue in 'Common issue' section which covers issues with cloning
-large repositories. Use partial cloning to selectively clone the
-repository.
+Add an issue in 'Common Issues' section which addresses the confusion
+between performing a 'fetch' and a 'pull'.
 
 Signed-off-by: Shourya Shukla <shouryashukla.oo@gmail.com>
 ---
-I wanted to ask why is there no mention of partial cloning in
-the 'git-clone' documentation? Is it because it is an experimental
-feature?
-
- Documentation/gitfaq.txt | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ Documentation/gitfaq.txt | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
 diff --git a/Documentation/gitfaq.txt b/Documentation/gitfaq.txt
-index 7d294306f9..6f32846e3d 100644
+index 6f32846e3d..e091513639 100644
 --- a/Documentation/gitfaq.txt
 +++ b/Documentation/gitfaq.txt
-@@ -243,6 +243,16 @@ I want to change the remote of my repository. How do I do that?::
- One can list the remotes of a repository using `git remote -v` command.
- The default name of a remote is 'origin'.
+@@ -253,6 +253,26 @@ way of cloning it in lesser space?::
+ 	Any entity which has not been cloned to save space can be cloned
+ 	on-demand. See linkgit:partial-clone[1].
  
-+[[shallow-cloning]]
-+The repository I am trying to clone is too big. Is there an alternative
-+way of cloning it in lesser space?::
-+	A good way to save up space when cloning a repository is
-+	by using `partial clones`. A partial clone will clone the
-+	full history of the repository but will skip out the entities
-+	specified by the `--filter` option one uses in `git clone`.
-+	Any entity which has not been cloned to save space can be cloned
-+	on-demand. See linkgit:partial-clone[1].
++[[fetching-and-pulling]]
++How do I know if I want to do a fetch or a pull?::
++	A fetch brings in the latest changes made upstream (i.e., the
++	remote repository we are working on). This allows us to inspect
++	the changes made upstream and integrate all those changes (if
++	and only if we want to) or only cherry pick certain changes.
++	Fetching does not have any immediate effects on the local
++	repository.
++
++	A pull is a wrapper for a fetch and merge. This means that doing
++	a `git pull` will not only fetch the changes made upstream but
++	integrate them as well with our local repository. The merge may
++	go smoothly or have merge conflicts depending on the case. A pull
++	does not allow you to review any changes made upstream but rather
++	merge those changes on their own.
+++
++This is the reason why it is sometimes advised to fetch the changes
++first and then merge them accordingly because not every change might
++be of utility to the user.
 +
  Hooks
  -----
