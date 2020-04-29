@@ -2,144 +2,137 @@ Return-Path: <SRS0=05is=6N=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,HTTP_ESCAPED_HOST,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 82163C83003
-	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 07:31:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A212C83004
+	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 07:56:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5AB96206D6
-	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 07:31:20 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FTByWVlQ"
+	by mail.kernel.org (Postfix) with ESMTP id 00AC420787
+	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 07:56:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726483AbgD2HbT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Apr 2020 03:31:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52400 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726386AbgD2HbT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Apr 2020 03:31:19 -0400
-Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BB73C03C1AD
-        for <git@vger.kernel.org>; Wed, 29 Apr 2020 00:31:19 -0700 (PDT)
-Received: by mail-pf1-x444.google.com with SMTP id x15so703491pfa.1
-        for <git@vger.kernel.org>; Wed, 29 Apr 2020 00:31:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=vLlOo9vsRQQcq1tjpIPOtkEFU2a0gFPfFuGy5NjXGJw=;
-        b=FTByWVlQai7md4nU6whJ5eDJOF82PZOadf4OAqO1OO5uImtg3jsvvUzx+4ziOGhrp/
-         Ma1V1gWov8Kzs0itZ48YkgL3dIgRcHr94dG919EtTJyh83G9cDpso2Boit+ga6d0EYPe
-         YlciCzJB536zhI6vDePGbMIbePqwa7s1qNQjIWTdBj5cBW3SQbnSboYZBJLdSKMz/Xo5
-         ySMiljGqmVzrEXy5ctZxJQzhoyq1RX5tq4vTArPvXtLWUX5AbrRTfgIZZBkymxLeWJod
-         lUhKGPni4iFvJE4RNRAzf9ZufT2g5fFZ564dggbKywsgf5ORr4S8JAU3tCK22YgA90fj
-         Di1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=vLlOo9vsRQQcq1tjpIPOtkEFU2a0gFPfFuGy5NjXGJw=;
-        b=n1hJe+WAaQJKzLoUnwgc2nxbdDMlJ9H6jDipz+cZH0tH2RrI0R+wSHS80krZc2NHK3
-         MJu06RIyWYJ4ZtztIs61c69rhIbThjn4AFOz8cz5xnNuzT0AtY5C1MHGk7Q7vwuCFOHv
-         Kbue7RLb+cB91S9x/3bHpTOmB3z1ej+X0OIQ094S1NMR+cb/8HkdFStXGilpg/UEkuib
-         OA0f/sE0gXyXvoeoivUaOCbf7BSFrKoDcjug11p7d+Vrhzyn04J+CqpUDt0UPf3WpbX/
-         cbUDqZOPcgOwWJdAKAX8Ynr0lr+988ffIv9clJ2VX3PXYfCdkos1ch8g/2h3Qdm45Knq
-         muYA==
-X-Gm-Message-State: AGi0PuZobXME+V0bfTCAiEymT6togP9bRwjeFaCCOBNMe03BHblUix/4
-        dkfOIyjl5yFmTNfzVjquRO0=
-X-Google-Smtp-Source: APiQypJNwMgMGcURCw4cyFUdQk9T2pthqD5xVUSTZh6cyz1tWMPQECCuAd9E/fEgpULcPUn9WUMHGg==
-X-Received: by 2002:a63:310:: with SMTP id 16mr31112302pgd.287.1588145478505;
-        Wed, 29 Apr 2020 00:31:18 -0700 (PDT)
-Received: from Carlos-MBP (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
-        by smtp.gmail.com with ESMTPSA id f136sm379890pfa.59.2020.04.29.00.31.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Apr 2020 00:31:18 -0700 (PDT)
-Date:   Wed, 29 Apr 2020 00:31:16 -0700
-From:   Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, dirk@ed4u.de, sunshine@sunshineco.com,
-        peff@peff.net, jrnieder@gmail.com
-Subject: Re: [PATCH v5] credential-store: warn instead of fatal for bogus
- lines from store
-Message-ID: <20200429073116.GA94208@Carlos-MBP>
-References: <20200428104858.28573-1-carenas@gmail.com>
- <20200429003303.93583-1-carenas@gmail.com>
- <xmqqd07qzz67.fsf@gitster.c.googlers.com>
+        id S1726420AbgD2H4G (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Apr 2020 03:56:06 -0400
+Received: from cloud.peff.net ([104.130.231.41]:43386 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726175AbgD2H4G (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Apr 2020 03:56:06 -0400
+Received: (qmail 30653 invoked by uid 109); 29 Apr 2020 07:56:05 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 29 Apr 2020 07:56:05 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 11205 invoked by uid 111); 29 Apr 2020 08:07:31 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 29 Apr 2020 04:07:31 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 29 Apr 2020 03:56:04 -0400
+From:   Jeff King <peff@peff.net>
+To:     Jiang Xin <worldhello.net@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Git List <git@vger.kernel.org>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Subject: Re: [PATCH v12 3/7] receive-pack: add new proc-receive hook
+Message-ID: <20200429075604.GA637261@coredump.intra.peff.net>
+References: <xmqq3697cax0.fsf@gitster.c.googlers.com>
+ <20200414123257.27449-4-worldhello.net@gmail.com>
+ <xmqqo8rs7ntb.fsf@gitster.c.googlers.com>
+ <CANYiYbE84Jj46m0ZTfAepc7t4v4KcqU9R99WGY9b7cdTXBfw_g@mail.gmail.com>
+ <xmqqzhbc61jv.fsf@gitster.c.googlers.com>
+ <CANYiYbGNTMpdvW7AGs-drOuwhzcR_CJnsCE9TjAWujZtb3cfEg@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqd07qzz67.fsf@gitster.c.googlers.com>
+In-Reply-To: <CANYiYbGNTMpdvW7AGs-drOuwhzcR_CJnsCE9TjAWujZtb3cfEg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 28, 2020 at 09:36:00PM -0700, Junio C Hamano wrote:
-> Carlo Marcelo Arenas Belón  <carenas@gmail.com> writes:
-> > +static char *redact_credential(const struct strbuf *line)
-> > +{
-> > +	struct strbuf redacted_line = STRBUF_INIT;
-> > +	char *at = strchr(line->buf, '@');
-> > +	char *colon;
-> > +	int redacted = 0;
-> > +
-> > +	if (at) {
-> > +		strbuf_addf(&redacted_line, "%.*s",
-> > +			(int)(at - line->buf), line->buf);
-> > +		colon = strrchr(redacted_line.buf, ':');
+On Tue, Apr 28, 2020 at 01:00:00AM +0800, Jiang Xin wrote:
+
+> For over a week, I have not received more comments on reroll v13 on
+> this topic ("jx/proc-receive-hook"). Therefore, I invite Peff and
+> Couder to review because I think it would be very interesting to add a
+> centralized workflow to Github and Gitlab.
 > 
-> Just showing my ignorance, but ...
+>  * [PATCH v13 3/8]:
+> https://public-inbox.org/git/20200418160334.15631-4-worldhello.net@gmail.com/
 > 
->  - Is the above strrchr() that forbids a colon in the password
->    intended, or should it be strchr() that only forbids a colon in
->    the username instead?
+> This patch introduces a new hook "proc-receive" on the server side. It
+> won't break anything except GitHub's "spokes" architecture (I guess).
+> Because in Alibaba, we have such issue when we implement our own
+> "spokes" architecture.  In order to make this special push operation
+> (on a special ref such as "refs/for/master/topic") idempotently on
+> multiple replicas, we extended the protocol of "receive-pack" and let
+> "spokes" to send a request with a flag, which specifies one replica as
+> master replica to execute the "proc-receive" hook.
 
-neither; that ":" is the separator we put in there between username
-and password (unless it was edited out), as any original ":" in both
-is already urlencoded.
+We don't do any magic ref-rewriting like this, so we wouldn't turn such
+a hook on. Presumably without such a hook, the protocol would remain the
+same (i.e., if there was no rewrite, then the report-status response
+wouldn't have the extra field).
 
-strrchr() was used in purpose to back only as much as it is needed
-from the string to hopefully find the beginning of the password.
+And I'm not sure if you're proposing to also use it as the trigger point
+to coordinate the ref update across replicas. That wouldn't be helpful
+for our architecture. All Git client connections to GitHub terminate at
+a proxy layer that handles load balancing, authentication, and routing.
+For pushes, that's the layer that multiplexes the packfile to each
+replica, and it drives the ref update through an out-of-band procedure.
+So there is no master replica at all; they're all talking equally to the
+proxy layer which coordinates things (and the same is true for non-push
+updates; they're coordinated by whichever entity is trying to perform
+the update).
 
-indeed, most of the uglyness of the code comes from the fact it tries
-really hard to only redact the password so the rest of the credential
-is still useful for context and do so without changing the original
-line.
+We do run receive-pack on each replica backend. We have a hacky patch
+for a config option that tells receive-pack to just skip the actual
+ref-transaction, leaving it up to the proxy layer to do. I've been
+pushing for us to actually abandon receive-pack entirely, since most of
+its heavy lifting can be done by sub-programs (for-each-ref for the
+advertisement, index-pack to receive the pack, and update-ref to update
+refs). But it's a non-trivial change, and the benefits are only
+moderate, so it hasn't quite been worth the effort yet.
 
->  - Would it hurt to redact both username and password as sensitive?
->    If not, it would certainly make it simpler to unconditionally:
-> 
->                 int i;
->                 for (i = 0; i < redacted_line.len; i++) {
->                         if (redacted_line.buf[i] != ':')
->                                 redacted_line.buf[i] = 'x';
->                 }
+So I don't really have much of an opinion on it either way.
 
-that would leak the length of the password which might also be considered
-sensitive
+Reading the commit message for patch 3, I do have one small comment. I
+see this:
 
-IMHO if we are redacting both might as well not print anything and let
-the user find the offending credential by line number instead ;) after
-all I got a feeling most of those entries are empty lines or "comments".
+  The reporting function from "receive-pack" to "send-pack" is extended
+  using a backward compatible way by adding key-value pairs after an null
+  character, like:
+  
+      # OK, run this command successfully with optional extended-status.
+      ok <reference>\0ref=refs/pull/123/head old-oid=...
+  
+      # NO, I reject it.
+      ng <reference> <error message>
 
-for example with the current code merged in pu we get :
+but we should probably avoid trickery like stuffing extra data after a
+NUL byte. We could quite easily extend the protocol with a new
+capability here. The server advertises "report-status-v2" or something,
+and the client responds with the appropriate capability to indicate that
+it understands. And then the new format can be something more
+extensible, like:
 
-$ cat secretfile
+  pktline(ref=refs/heads/master)
+  pktline(status=ok)
+  pktline(old-oid=...)
+  pktline(rewrite=refs/pull/123/head)
+  delim-pkt(0001)
+  pktline(ref=refs/heads/other)
+  pktline(status=error)
+  pktline(message=<error message>
+  flush-pkt(0000)
 
-://u:p@example.com
-http://user:some%3apass@example.com
+which would give us room for more keys later, but without worrying about
+parsing issues after the NUL, running out of room in a pktline if you
+have too many keys, etc.
 
-$ git credential-store --file secretfile get
-protocol=http
+I don't have any real thoughts on the hook interface itself. It seems
+like the ok/no/ft/alt responses would allow just about any hook you'd
+want. It does seems to also use NUL trickery in the early part. If we're
+designing from scratch, I think we should strive for a cleaner protocol.
 
-warning: secretfile:1 ignoring invalid credential:
-warning: secretfile:2 ignoring invalid credential: ://u:<redacted>@example.com
-username=user
-password=some:pass
-
-Carlo
+-Peff
