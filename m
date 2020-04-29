@@ -2,168 +2,96 @@ Return-Path: <SRS0=05is=6N=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C6744C83004
-	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 20:36:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 664B9C8300A
+	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 20:37:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9878720B1F
-	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 20:36:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 427C120B1F
+	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 20:37:42 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jrpxBnRT"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="xycrZ/nq"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726951AbgD2UgP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Apr 2020 16:36:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34372 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726511AbgD2UgP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Apr 2020 16:36:15 -0400
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 712DDC03C1AE
-        for <git@vger.kernel.org>; Wed, 29 Apr 2020 13:36:15 -0700 (PDT)
-Received: by mail-pg1-x544.google.com with SMTP id o185so1572753pgo.3
-        for <git@vger.kernel.org>; Wed, 29 Apr 2020 13:36:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=ejKxGjIZsujioWXd42JGBDmqYvzhR5DU0GIkL1HcAn0=;
-        b=jrpxBnRTbzsDmdBrivAfqtOIE9PJvql6TgA6HQ/RM1IhqtFrv7DKqJnDd9GqcpncJ5
-         GDdue8RopYcWCKQWJqOTby//Y36CCRi5dkQiqZQio2iedniAImvVZrSgLmR6sYMxxCyz
-         M3XcTVQjJr4t+NQHz6l36HEZTDUBpvsI9CSmKRv9VoFJXHMoVt1onoCxe3oL5oiewvYT
-         b6aH5yknxeM23vhzwphBAOxCTbWShEpc/6symPAeb1TEFzDRkGlWaFFmlq6N9RpLFTNm
-         PXVOuGdWjtK54T5ZV5aE3tXJHdNBZ5ftBJ61tE463tyXRLM8B4M4B8FacZNZtWS3paeL
-         rF4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=ejKxGjIZsujioWXd42JGBDmqYvzhR5DU0GIkL1HcAn0=;
-        b=pFfbYXLSnedvmXnB2AF4cuAbQKFkLlJLsxysZ7RziwniChEOPBV0eepwhQ1ejfU0ie
-         Tt9dCzwdrVOmGFy0m1OzEaKQDozp2etp6frTqyQKInuQk0PYA66GPNm7Dfsy8mOhdSxA
-         CfpvjdNsC4MajfJFvrrWmC3RsfgiBCv5YV0tiMMioDI78Ziw4lrbX3fP/tiyynevS9C6
-         nypn1yWlQI27wxBB/BmP7fAHob4mAlQOIRuM5D1Hto6twcPBDppK4I0NeZGeuPhFyb5R
-         QVxbk29jVoj1KgJZP6OFFmUeB75LXggWc6RlNGYaUzzHq2W46WJW8KR0P93q03ud9BDd
-         6S/A==
-X-Gm-Message-State: AGi0PuYbhKB5REvK9xI9MnbqCuxdCeZ+Qvp6haP9Sm6eJdOTQ3w6QwzX
-        LRpoo76eEZn3zMAB3Jb8Aip1WQYl
-X-Google-Smtp-Source: APiQypKc0nG5jPi613Gic/vQqTvq52220h5lcLHU6vJwueeYEveDAf2ML49NTlgNhj97i0UXC4+q5g==
-X-Received: by 2002:a62:18c8:: with SMTP id 191mr37871408pfy.255.1588192574671;
-        Wed, 29 Apr 2020 13:36:14 -0700 (PDT)
-Received: from localhost.localdomain (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
-        by smtp.gmail.com with ESMTPSA id h14sm1816404pfq.46.2020.04.29.13.36.13
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 29 Apr 2020 13:36:14 -0700 (PDT)
-From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-To:     git@vger.kernel.org
-Cc:     dirk@ed4u.de, sunshine@sunshineco.com, peff@peff.net,
-        gitster@pobox.com, jrnieder@gmail.com,
-        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-Subject: [RFC PATCH v6 2/2] credential-store: warn for any incomplete credentials instead of using
-Date:   Wed, 29 Apr 2020 13:35:46 -0700
-Message-Id: <20200429203546.56753-3-carenas@gmail.com>
-X-Mailer: git-send-email 2.26.2.569.g1d74ac4d14
-In-Reply-To: <20200429203546.56753-1-carenas@gmail.com>
-References: <20200429003303.93583-1-carenas@gmail.com>
- <20200429203546.56753-1-carenas@gmail.com>
+        id S1727991AbgD2Uhl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Apr 2020 16:37:41 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:64640 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726858AbgD2Uhk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Apr 2020 16:37:40 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0D4BEB0274;
+        Wed, 29 Apr 2020 16:37:38 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=GalcPFXo7NWjl6Ndx1FmVs6xcws=; b=xycrZ/
+        nq26XeHdpI7zzCmoJ6vPXUjHZVVupZqD3L2woPPEu2u9DXo5KAfZ4pM3IBAxTUR2
+        oE4JV3VXzxCv4bFsJ2dms4jDKHxpyyJTnpFRECge27tJXtG4dqdGw0EpqvVvP7DV
+        dAtOx/HvElYMMauhiwBUfc7C+Pbb4KKAw6eBQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=PNWUIJnEPCzdwNeD37IxHODdmZRc1dXn
+        14VHX0bWb/3SyWpEKu+ZX5YrzEhOBwEiMF9fy83IsA+gNqtdalLbZFcVYxw92DgJ
+        Fw4GJwqE7y994JNy+uJT3AvnkYtF7joAuvyx/H6zEJmXaPd3RrvjQnMe7opcrG4O
+        Tfb5SqR8Fzg=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 04801B0271;
+        Wed, 29 Apr 2020 16:37:38 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 25D8DB0270;
+        Wed, 29 Apr 2020 16:37:35 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Sergey Organov <sorganov@gmail.com>,
+        Ivan Tham <pickfire@riseup.net>, git@vger.kernel.org,
+        "brian m . carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH] branch: add '-' to delete previous branch
+References: <20200429130133.520981-1-pickfire@riseup.net>
+        <877dxyo1k8.fsf@osv.gnss.ru> <20200429190013.GG83442@syl.local>
+        <87v9likr5a.fsf@osv.gnss.ru> <20200429195745.GC3920@syl.local>
+        <xmqqa72uvy7n.fsf@gitster.c.googlers.com>
+Date:   Wed, 29 Apr 2020 13:37:33 -0700
+In-Reply-To: <xmqqa72uvy7n.fsf@gitster.c.googlers.com> (Junio C. Hamano's
+        message of "Wed, 29 Apr 2020 13:22:36 -0700")
+Message-ID: <xmqq5zdivxiq.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 41F7EE3A-8A59-11EA-AA26-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-originally any credential found was tried for matching as far as it had
-a username and password, but that resulted in fatal errors as the rules
-were harden.
+Junio C Hamano <gitster@pobox.com> writes:
 
-now that we have a way to report malformed credentials, use it to notify
-the user when username/password was missing, instead of just silently
-skipping.
+> Taylor Blau <me@ttaylorr.com> writes:
+>
+>> Again, not sure that this is always the case. This *is* how 'git
+>> checkout' works.
+>
+> To be honest, I am somewhat sympathetic to those who find "-" ==
+> "@{-1}" unless it is used as an argument to "git checkout/switch".
 
-do the same for credentials that are missing host (or had one that is
-empty) or that are missing a path (for supporting cert://) as well.
+Insert "confusing" before "unless".  Sorry about the typo.
 
-Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
----
- credential-store.c          |  7 ++++---
- t/t0302-credential-store.sh | 38 +++++++++++++++++++++++++++++++++++++
- 2 files changed, 42 insertions(+), 3 deletions(-)
 
-diff --git a/credential-store.c b/credential-store.c
-index 1cc5ca081a..53f77ff6f5 100644
---- a/credential-store.c
-+++ b/credential-store.c
-@@ -26,9 +26,10 @@ static int parse_credential_file(const char *fn,
- 
- 	while (strbuf_getline_lf(&line, fh) != EOF) {
- 		lineno++;
--		if (!credential_from_url_gently(&entry, line.buf, 1)) {
--			if (entry.username && entry.password &&
--				credential_match(c, &entry)) {
-+		if (!credential_from_url_gently(&entry, line.buf, 1) &&
-+			((entry.host && *entry.host) || entry.path) &&
-+			entry.username && entry.password) {
-+			if (credential_match(c, &entry)) {
- 				found_credential = 1;
- 				if (match_cb) {
- 					match_cb(&entry);
-diff --git a/t/t0302-credential-store.sh b/t/t0302-credential-store.sh
-index 801c1eb200..3150f304cb 100755
---- a/t/t0302-credential-store.sh
-+++ b/t/t0302-credential-store.sh
-@@ -139,6 +139,44 @@ test_expect_success 'get: credentials without scheme are invalid' '
- 	test_i18ngrep "ignoring invalid credential" stderr
- '
- 
-+test_expect_success 'get: credentials without valid host/path are invalid' '
-+	echo "https://user:pass@" >"$HOME/.git-credentials" &&
-+	cat >expect-stdout <<-\STDOUT &&
-+	protocol=https
-+	host=example.com
-+	username=askpass-username
-+	password=askpass-password
-+	STDOUT
-+	test_config credential.helper store &&
-+	git credential fill <<-\EOF >stdout 2>stderr &&
-+	protocol=https
-+	host=example.com
-+	EOF
-+	test_cmp expect-stdout stdout &&
-+	grep "askpass: Username for '\''https://example.com'\'':" stderr &&
-+	grep "askpass: Password for '\''https://askpass-username@example.com'\'':" stderr &&
-+	test_i18ngrep "ignoring invalid credential" stderr
-+'
-+
-+test_expect_success 'get: credentials without username/password are invalid' '
-+	echo "https://pass@example.com" >"$HOME/.git-credentials" &&
-+	cat >expect-stdout <<-\STDOUT &&
-+	protocol=https
-+	host=example.com
-+	username=askpass-username
-+	password=askpass-password
-+	STDOUT
-+	test_config credential.helper store &&
-+	git credential fill <<-\EOF >stdout 2>stderr &&
-+	protocol=https
-+	host=example.com
-+	EOF
-+	test_cmp expect-stdout stdout &&
-+	grep "askpass: Username for '\''https://example.com'\'':" stderr &&
-+	grep "askpass: Password for '\''https://askpass-username@example.com'\'':" stderr &&
-+	test_i18ngrep "ignoring invalid credential" stderr
-+'
-+
- test_expect_success 'get: store file can contain empty/bogus lines' '
- 	echo "" > "$HOME/.git-credentials" &&
- 	q_to_tab <<-\CONFIG >>"$HOME/.git-credentials" &&
--- 
-2.26.2.569.g1d74ac4d14
-
+> The use of "-" in "checkout" is the exception, not the norm, and it
+> was sort of justifiable due to similarity to "cd -".  Both are
+> commands to the computer you give to "go to the previous place".
+>
+> "git merge -", "git branch -d -" etc. are not about *going* to the
+> previous place, and declaring the "-" is "previous place" is taking
+> it a bit too far, at least to my taste.
+>
+> Oh, I do not like those who advocate "@" as a synonym for "HEAD",
+> either.  If there is one simple thing I want to get rid of from the
+> system, that's it ;-).
+>
+> Anyway...
