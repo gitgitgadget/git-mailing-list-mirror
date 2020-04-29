@@ -7,59 +7,60 @@ X-Spam-Status: No, score=-6.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B909C83004
-	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 16:55:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E30EC83006
+	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 17:01:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C963A2072A
-	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 16:55:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E534B208FE
+	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 17:01:40 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="TzT9T7X9"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="DIBkzMtt"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726669AbgD2Qzi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Apr 2020 12:55:38 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62711 "EHLO
+        id S1727809AbgD2RBj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Apr 2020 13:01:39 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55720 "EHLO
         pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726554AbgD2Qzh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Apr 2020 12:55:37 -0400
+        with ESMTP id S1726556AbgD2RBj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Apr 2020 13:01:39 -0400
 Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C396E45680;
-        Wed, 29 Apr 2020 12:55:36 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5EE6145719;
+        Wed, 29 Apr 2020 13:01:37 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=uBAbFnTlXgoBFJoo+6GtKbIBTLY=; b=TzT9T7
-        X9IhLF2Qw8FUBe0XEkrC7TXQvvn6zBIBi6CvZUsurqraXzdDu9910hJ2M6Q4hw4j
-        i2Y+WjBHpmctTO84pEhw+0F1vvdIAN4gMxLb57kWLEK6ad5gDACdadiks4hyCokE
-        UpddT7pcv2aYBsNmCU6CsV3FJ+6ZgGOBWUkbI=
+        :content-type; s=sasl; bh=1id8q7reJ5/L3ShIbm3w7/S6mAs=; b=DIBkzM
+        ttoj7hPUon2pd55RmmfWwkhKKcbp3N1QN0pU2rdqM/+LMF90rR1MkuDwaMHmYiuJ
+        wBhl9qL8DexTQzMxOFo54pCk1Zf+iYg/AD9ZOgUdA11vxAPWdhjBV7ZjYqzCBpas
+        uYpv13Aj/fe4mRdPR8rp9LkrLyh8C4PhCif5w=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=FsROMsVnvuogaWKEHxiGnM22Ip5ItnKv
-        RlT5eYl6ZoOIJtYDY0HnRiHAIe0Ck4BUT6hNWdlhzq7X5DmQ+38WVS/3iAzaz6ip
-        fVzSxVeT+3m3Rzy7Xi//7TUJl0RVdgO38UC0GriFi2CdFjWprk1jDz9RjjtqpRpq
-        pa16bv3sMZE=
+        :content-type; q=dns; s=sasl; b=VSaP5p0uDzQV26rnDQwGURxBSB7AYJYq
+        iogGZFOWXYyMZjEFIyB1UH7yzRxkcCiaPhuqCXDAh8fVppwFEfr2N5pua6zq+Y7x
+        bEjHh15QTCnEUTaqPQTXAvdisMH2bkiSJuPCrBSjsNKE/awXF4nxNtsBVmoI9Plu
+        WjZakQZS1m0=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B94A94567F;
-        Wed, 29 Apr 2020 12:55:36 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 55B4645718;
+        Wed, 29 Apr 2020 13:01:37 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 39F024567E;
-        Wed, 29 Apr 2020 12:55:36 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B9BC145716;
+        Wed, 29 Apr 2020 13:01:36 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Shourya Shukla <shouryashukla.oo@gmail.com>
 Cc:     git@vger.kernel.org, newren@gmail.com, sandals@crustytoothpaste.net
-Subject: Re: [PATCH v4 1/4] gitfaq: files in .gitignore are tracked
+Subject: Re: [PATCH v4 2/4] gitfaq: changing the remote of a repository
 References: <20200429093811.8475-1-shouryashukla.oo@gmail.com>
-Date:   Wed, 29 Apr 2020 09:55:35 -0700
-In-Reply-To: <20200429093811.8475-1-shouryashukla.oo@gmail.com> (Shourya
-        Shukla's message of "Wed, 29 Apr 2020 15:08:08 +0530")
-Message-ID: <xmqqimhixmd4.fsf@gitster.c.googlers.com>
+        <20200429093811.8475-2-shouryashukla.oo@gmail.com>
+Date:   Wed, 29 Apr 2020 10:01:35 -0700
+In-Reply-To: <20200429093811.8475-2-shouryashukla.oo@gmail.com> (Shourya
+        Shukla's message of "Wed, 29 Apr 2020 15:08:09 +0530")
+Message-ID: <xmqqees6xm34.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 3F46E070-8A3A-11EA-A969-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 162A3434-8A3B-11EA-8CCF-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -68,38 +69,43 @@ X-Mailing-List: git@vger.kernel.org
 Shourya Shukla <shouryashukla.oo@gmail.com> writes:
 
 > Add issue in 'Common Issues' section which addresses the problem of
-> Git tracking files/paths mentioned in '.gitignore'.
+> changing the remote of a repository, covering various cases in which
+> one might want to change the remote and the ways to do the same.
 >
 > Signed-off-by: Shourya Shukla <shouryashukla.oo@gmail.com>
 > ---
->  Documentation/gitfaq.txt | 9 +++++++++
->  1 file changed, 9 insertions(+)
+>  Documentation/gitfaq.txt | 11 +++++++++++
+>  1 file changed, 11 insertions(+)
 >
 > diff --git a/Documentation/gitfaq.txt b/Documentation/gitfaq.txt
-> index 1cf83df118..b1e758ffd1 100644
+> index b1e758ffd1..7d294306f9 100644
 > --- a/Documentation/gitfaq.txt
 > +++ b/Documentation/gitfaq.txt
-> @@ -223,6 +223,15 @@ a file checked into the repository which is a template or set of defaults which
->  can then be copied alongside and modified as appropriate.  This second, modified
->  file is usually ignored to prevent accidentally committing it.
+> @@ -232,6 +232,17 @@ I asked Git to ignore various files, yet they are still tracked::
+>  	it is advised to use `git rm --cached <file>`as well as make
+>  	the file pattern is mentioned in the '.gitignore'.
 >  
-> +[[files-in-.gitignore-are-tracked]]
-> +I asked Git to ignore various files, yet they are still tracked::
-> +	A `gitignore` file specifies intentionally untracked files
-> +	that Git should ignore. Files already tracked by Git are
-> +	not affected. See linkgit:gitignore[5] for details.
-> +	To ignore and untrack the files appearing in the staging are
-> +	it is advised to use `git rm --cached <file>`as well as make
-> +	the file pattern is mentioned in the '.gitignore'.
+> +[[changing-remote-of-the-repository]]
+> +I want to change the remote of my repository. How do I do that?::
+> +	A remote is an identifier for a location to which Git pushes your
+> +	changes as well as fetches any new changes from (if any). There
+> +	might be different circumstances in which one might need to change
+> +	the remote URL (see linkgit:git-remote[1]). To change the remote URL
+> +	one may use: git remote set-url <name> <newurl>
+> ++
+> +One can list the remotes of a repository using `git remote -v` command.
+> +The default name of a remote is 'origin'.
 
-After trimming down, it got a lot more readable.  The last sentence
-is not quite, though, with riddled with typos.  Also the order of
-untrack/ignore and steps to achieve these two things should match in
-the description.
+With the trimming, it got a lot easier to follow.  
 
-	To untrack and ignore files, use `git rm --cached <file>`
-	and add a pattern to `.gitignore` that matches the <file>.
+We should strive to (1) make sure any FAQ entry can have a pointer
+to more comprehensive and canonical documentation, and (2) an FAQ
+entry with such a pointer does not consume more than one paragraph,
+say no more than 5 lines.
 
-may be the minimum fix.
+It may be tempting to cram as much information as it comes to your
+head as possible when writing a FAQ document, but for those who need
+FAQ list, a list of pointers with clear and concise summary is more
+helpful.
 
 Thanks.
