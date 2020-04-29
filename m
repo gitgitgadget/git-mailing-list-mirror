@@ -2,71 +2,116 @@ Return-Path: <SRS0=05is=6N=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1EDF6C83003
-	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 12:13:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C306AC83007
+	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 12:22:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BCB6120731
-	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 12:13:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A09C221BE5
+	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 12:22:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=sorrel.sh header.i=@sorrel.sh header.b="M6zmkboi"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jzQQk4oJ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726943AbgD2MNe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Apr 2020 08:13:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39860 "EHLO
+        id S1726677AbgD2MWv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Apr 2020 08:22:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41318 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726617AbgD2MNe (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 29 Apr 2020 08:13:34 -0400
-Received: from haggis.mythic-beasts.com (haggis.mythic-beasts.com [IPv6:2a00:1098:0:86:1000:0:2:1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 267ACC03C1AD
-        for <git@vger.kernel.org>; Wed, 29 Apr 2020 05:13:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=sorrel.sh;
-         s=mythic-beasts-k1; h=Date:To:From:Subject;
-        bh=xQzTpN3xBxnZnYdl5kEhiFUo8zxV10xW218gBDl/h/A=; b=M6zmkboiLFgjBamxsq0bg05Jlw
-        vdwuL9INaA+CBF53S8H98euxodtBya/SrkSNXCe/e9A83o6wX3dkzRAdYoOOFeBRNIGUxN9SDwZ37
-        0ruUjb8eFlItmky0RWdtqsK/jU3K3eO1G/ib7xVsefxdiFWvQmw/Owq1dN9E6r7e6aTv1XGInTEs8
-        5JCeqsA9VPNOJhT58wYJMeOKtbd8d47iRwxNtbe1Zj5EMPSVGh8hy96vj4O+yNmq3QybeJ5j8tK+S
-        kpcAnSdc3514Y8SNjwp44mlfjgglBaYb+ttHNpU6xMW8xS4GW/z2qRRYKhLjPBK61SN4KAHU0+N/g
-        untgs4Rg==;
-Received: from [212.56.100.202] (port=54701 helo=localhost)
-        by haggis.mythic-beasts.com with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92.3)
-        (envelope-from <ash@sorrel.sh>)
-        id 1jTlak-0003hm-So; Wed, 29 Apr 2020 13:13:31 +0100
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Cc:     "Emma Brooks" <me@pluvano.com>, <git@vger.kernel.org>,
-        "Boxuan Li" <liboxuan@connect.hku.hk>,
-        "Alban Gruin" <alban.gruin@gmail.com>
-Subject: Re: [PATCH] userdiff: support Markdown
-From:   "Ash Holland" <ash@sorrel.sh>
-To:     "Junio C Hamano" <gitster@pobox.com>
-Date:   Wed, 29 Apr 2020 13:12:18 +0100
-Message-Id: <C2DOKA77RJGH.3JJO8GPAGG9IN@what>
-In-Reply-To: <xmqqv9ljz32g.fsf@gitster.c.googlers.com>
-X-BlackCat-Spam-Score: 39
+        by vger.kernel.org with ESMTP id S1726558AbgD2MWv (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 29 Apr 2020 08:22:51 -0400
+Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0748CC03C1AD
+        for <git@vger.kernel.org>; Wed, 29 Apr 2020 05:22:51 -0700 (PDT)
+Received: by mail-qk1-x72c.google.com with SMTP id s63so1679289qke.4
+        for <git@vger.kernel.org>; Wed, 29 Apr 2020 05:22:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=KuRk8Jf6oZ6XhheTc3T6sd/5vPS38p5k5qkfJamfCaw=;
+        b=jzQQk4oJ47nz0g/qI1VS/mnfnFtPYZVqUStLaLryaqV89PIHtYxk0lZPjD6HqVQd0y
+         SpjwCvWYZjl9HSucw5WKZ4CmFz4zAqKOnM89q+EpLTz2EvODSDHCwRKebMtXf+ZGkzW0
+         O8HRJGKrZzR1bUvlzMv7gKREkucPx3NrWLadPCCvCxItrzF8te2H2VJeYVoMMlFSl1sR
+         22wJ6KNbqbNCSIhu5k1xUXA9PTzmLKeOCFkcuhxAIpDCeJOYZk1x00myWd8/ZY0zwWgm
+         ufIGv6frzUJ93FWsjRYT0ssnrcHpjWQ4AX9lZ6pA2oyrUW1uUtuULdUG4s3QYOkcXFUE
+         TpKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=KuRk8Jf6oZ6XhheTc3T6sd/5vPS38p5k5qkfJamfCaw=;
+        b=qstXemqFX2mv04r+V5Oc10cKY3hAgDPQWK1S2l+cElQMxD0o8N3IWFC31aEk0KFzVm
+         OokiWEHy8yDmKAckhTCBeLZq7RCucz0jkQnPmh5ys3KTqJwpI8s92kTV31vSlgHceDvv
+         0AaARhSw9DOeuwv5zosz/Xagp/v0/yYen5q56E/zVeD3W+CJ8X2CNemQxPVLnOhFewdS
+         eVtebWRPMjIEse7Rdx8vSZbTVcnL0XiMNqr8WadD1amdqrj+UeGoG3r6pqW5mAZiLI/4
+         PvQ2HBKLSSJ/oOrJLOKXHAAV5TGzJCriZLoRQqpaG7xAmks8A7OF/lWtsvuWBjFM6S1B
+         cOOg==
+X-Gm-Message-State: AGi0PubyEBUfGWrV7LwFCLCLyAr5jC4WRW+ARxrQ7US4FLhxsGjzrmzY
+        e67tik79KTSjnptm2oDquPW97gng
+X-Google-Smtp-Source: APiQypINNRiApHp6xtc88raZ88TwSiSaF+os+WFK3B6k+Scf3fXY7QiHCNVVWcZLU0+hWq6PkYQfhA==
+X-Received: by 2002:a37:aca:: with SMTP id 193mr12174594qkk.442.1588162968830;
+        Wed, 29 Apr 2020 05:22:48 -0700 (PDT)
+Received: from archbookpro.localdomain (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.65.113])
+        by smtp.gmail.com with ESMTPSA id t27sm15389383qkg.4.2020.04.29.05.22.47
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Apr 2020 05:22:48 -0700 (PDT)
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Subject: [PATCH 0/4] t: replace incorrect test_must_fail usage (part 5)
+Date:   Wed, 29 Apr 2020 08:22:22 -0400
+Message-Id: <cover.1588162842.git.liu.denton@gmail.com>
+X-Mailer: git-send-email 2.26.2.548.gbb00c8a0a9
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue Apr 28, 2020 at 3:57 PM BST, Junio C Hamano wrote:
-> "Ash Holland" <ash@sorrel.sh> writes:
->
-> > On Tue Apr 21, 2020 at 2:22 AM, Emma Brooks wrote:
-> >> Since Markdown can have raw HTML tags in many variants, it may make
-> >> sense to extend the word pattern to "[^<>=3D \t]+" like HTML's pattern=
- so
-> >> tags starting/ending will not be considered part of a word.
-> >
-> > Good point, I'll update the pattern to that, thanks!
->
-> I just marked the topic as "expecting a reroll" in the "What's
-> cooking" report I have been preparing, but has something happened
-> after this exchange?
+The overall scope of these patches is to replace inappropriate uses of
+test_must_fail. IOW, we should only allow test_must_fail to run on `git`
+and `test-tool`. Ultimately, we will conclude by making test_must_fail
+error out on non-git commands. An advance view of the final series can
+be found here[1].
 
-You've not missed anything, sorry, I've been busy with exams -- I'll
-prepare a v2 later today.
+This is the fifth part. It focuses on lib-submodule-update.sh and tests
+that make use of it.
+
+The first part can be found here[2]. The second part can be found
+here[3]. The third part can be found here[4]. The fourth part can be
+found here[5].
+
+[1]: (may be rebased at any time) https://github.com/Denton-L/git/tree/ready/cleanup-test-must-fail2
+[2]: https://lore.kernel.org/git/cover.1576583819.git.liu.denton@gmail.com/
+[3]: https://lore.kernel.org/git/cover.1577454401.git.liu.denton@gmail.com/
+[4]: https://lore.kernel.org/git/cover.1585209554.git.liu.denton@gmail.com/
+[5]: https://lore.kernel.org/git/cover.1587372771.git.liu.denton@gmail.com/
+
+Denton Liu (4):
+  lib-submodule-update: add space after function name
+  lib-submodule-update: consolidate --recurse-submodules
+  lib-submodule-update: prepend "git" to $command
+  lib-submodule-update: pass OVERWRITING_FAIL
+
+ t/lib-submodule-update.sh        | 47 ++++++++++++++++++++------------
+ t/t1013-read-tree-submodule.sh   |  4 +--
+ t/t2013-checkout-submodule.sh    |  4 +--
+ t/t3426-rebase-submodule.sh      |  8 +++---
+ t/t3512-cherry-pick-submodule.sh |  2 +-
+ t/t3513-revert-submodule.sh      | 22 +++++++++------
+ t/t3906-stash-submodule.sh       | 17 +++++++-----
+ t/t4137-apply-submodule.sh       | 10 ++++---
+ t/t4255-am-submodule.sh          | 10 ++++---
+ t/t5572-pull-submodule.sh        | 16 +++++------
+ t/t6041-bisect-submodule.sh      | 35 +++++++++++++-----------
+ t/t7112-reset-submodule.sh       |  6 ++--
+ t/t7613-merge-submodule.sh       |  8 +++---
+ 13 files changed, 108 insertions(+), 81 deletions(-)
+
+-- 
+2.26.2.548.gbb00c8a0a9
+
