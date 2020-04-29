@@ -7,64 +7,63 @@ X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D9A64C83009
-	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 17:36:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A8EBC83004
+	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 17:36:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B714520757
-	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 17:36:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EB99C20757
+	for <git@archiver.kernel.org>; Wed, 29 Apr 2020 17:36:49 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="CP3NWIMH"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="EoqiEGVT"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726830AbgD2Rgr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Apr 2020 13:36:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34424 "EHLO
+        id S1726949AbgD2Rgt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Apr 2020 13:36:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34436 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726423AbgD2Rgq (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 29 Apr 2020 13:36:46 -0400
-Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4ABBCC03C1AE
-        for <git@vger.kernel.org>; Wed, 29 Apr 2020 10:36:45 -0700 (PDT)
-Received: by mail-pg1-x543.google.com with SMTP id r4so1347308pgg.4
-        for <git@vger.kernel.org>; Wed, 29 Apr 2020 10:36:45 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1726423AbgD2Rgs (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 29 Apr 2020 13:36:48 -0400
+Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BED38C03C1AE
+        for <git@vger.kernel.org>; Wed, 29 Apr 2020 10:36:48 -0700 (PDT)
+Received: by mail-pj1-x1041.google.com with SMTP id t40so1037099pjb.3
+        for <git@vger.kernel.org>; Wed, 29 Apr 2020 10:36:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=IBNnROhPpGuZCkZjhUSkzDnwnuE98m7A7rwPIhTf4UI=;
-        b=CP3NWIMHnoEG+utDm2+QRFrIGzLvuxaQjvxRoWKVDyDNGMpQ5MGdNOrGjZpsAPGk2K
-         L8j7H6Y3kpcWk9Prt+6Y0JYBuQNYhhNEvHtYm8bwk3eM7p0F7F8cOMHwlsb4jHXdr31e
-         Zew3Ot2qK06RTKm5CH1CykbjQe9EsQxbe4N2FAMMJ6+id1gqP71CzT+RhMNqAckxeTyh
-         czWtCQYYJfGW/9iMKmLIMJFS0J8t/J7ruXeATvxvCKZOK+mxs2xTC0g3dSNgjuwxA2nK
-         qNcpi5XH6omG0oFALxxsdqnLo1/ePQ6lzslnL5JMdL3ko8ZF+Qf/nfnBn8TIMLMSg/Ak
-         2RHQ==
+        bh=KWfgPTLeMs4mFOa1WtWOY/XhAUY733qIixSrxgk4CVM=;
+        b=EoqiEGVTVacYjd8ZjuEaHtGam81B35X6Gianv/4raPOyevbivIsBxoJ0Z1gMZx4xwU
+         q2iQGl7x4poLtBxeFTG/PbgD3udQYBVaGvM4ru4lm1BBEhin8uto10dBaIzZksUuznHr
+         lXwFVoJEolqqavC8gX/aGZ+s+OJFY98x5GnfpSSF813U+SXs9+zu10afgkW1nCtvT+G1
+         uDqWj6MoSZIkNjAXPIvMyOMTMrfOedBE+mRo+y0g0kCNhHKI7zQliYCDRGsfZwtfpSfp
+         yw33Pbe4dMHhKs1/obLfo96KN2eq7MaWD4IkaL5lMKfyMlm5KhBurT3C/pXKZ49PmS6M
+         u9vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=IBNnROhPpGuZCkZjhUSkzDnwnuE98m7A7rwPIhTf4UI=;
-        b=ndKvTIjjWbnubCbpOxvQmHm/G9UYTEdwIgg7Fi0dMKX+bXv+VPgLv46NyQ1YGZiLii
-         kaLhbfyF4ru2PE5RP3bzt3yUvNVx0YpLWHMbi3YBm/MRcoJvpj4WntQgkllBkrt6XAQO
-         wyf7AT1eMvqwfOkZneUDSkaDbFcxWtfqQxI+YDlkpeuexyP98XVbVQ9mDuyjtvcNArpo
-         eybfXEzsx16X+Nt4ALAs/U0dT9s1R7vUt1r0s2F/CCxAGKcjmmQIeZdYRXRMYFqusdxh
-         gsVe+KR4i/x9XZKzvvy0JZKx5JXGlEz/y9m7cmuxBPzEGMsTW/W/yscuidez8eX+j1ML
-         1lnw==
-X-Gm-Message-State: AGi0Pubz7I1hjIw7foqoRibtebUiJNkKqNBjNNela8o2Itd3uwPuO4Mu
-        B692IzgTu2G1nNxI/sji8aNeDv612tcoUQ==
-X-Google-Smtp-Source: APiQypI/7gBVswQ+CjkWrcckeZkaUC6ZMvdCwJj17xrIkm+/kl2GGiTuYQeHc/0ljcwp/A0GeuJivQ==
-X-Received: by 2002:a63:214a:: with SMTP id s10mr32300335pgm.98.1588181804391;
-        Wed, 29 Apr 2020 10:36:44 -0700 (PDT)
+        bh=KWfgPTLeMs4mFOa1WtWOY/XhAUY733qIixSrxgk4CVM=;
+        b=UDhkQGrXVaOHvrdrgEtmpnk1oQSDk3iJPs5pj3zxAXIr4tSpsDQBHJ9eg8fILNqpGw
+         kmE9AVYcXXWetPR1FfpIODX5ghsGG96GTuHGWM0IsGyTHW7i42UvtT6/ovAqv2qmMO8+
+         w2ywbc1LaTXsKZ7EbSYw5Nal6r0NKHzHpYVOvUh21jkFamRkga+x/Sal1Yn9GLaOrja2
+         K5DrmagqAF7cJQ5KmhVzM1EjaRi71LnXm6F+EG2bFv+R65wZcCQkEwi5Z98Y3pJWHbSx
+         UIUVI+rbXYNXofSbTOgHIBJlJJSv+GV2VwTvguT7z8fGC42VEU6k6h0xPYBR5reMU62D
+         ngkg==
+X-Gm-Message-State: AGi0PubjeU3uwwCXjOPWT8t2yfSOSh/J0t3wQ+a9S1k3WZXUcVV8VRH8
+        n7Ll5OUG8vk2BI6qcj3UJxjPaN65HpG+OQ==
+X-Google-Smtp-Source: APiQypLREN5rr0yFUetgF3CtO8w+eMI1HvVCNlGLe8/3cm0f1/XiDCtWR/OLUPvLXyv/hpEuTdlyiA==
+X-Received: by 2002:a17:90a:1fcd:: with SMTP id z13mr4344960pjz.151.1588181807827;
+        Wed, 29 Apr 2020 10:36:47 -0700 (PDT)
 Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id x12sm1497505pfq.209.2020.04.29.10.36.43
+        by smtp.gmail.com with ESMTPSA id k4sm1434662pgg.88.2020.04.29.10.36.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Apr 2020 10:36:43 -0700 (PDT)
-Date:   Wed, 29 Apr 2020 11:36:42 -0600
+        Wed, 29 Apr 2020 10:36:47 -0700 (PDT)
+Date:   Wed, 29 Apr 2020 11:36:46 -0600
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, dstolee@microsoft.com, gitster@pobox.com,
         mhagger@alum.mit.edu
-Subject: [PATCH v3 4/5] commit-graph.c: ensure graph layers respect
- core.sharedRepository
-Message-ID: <4b74e23af2ac9e65449e383161f7b7cdabf983ba.1588181626.git.me@ttaylorr.com>
+Subject: [PATCH v3 5/5] commit-graph.c: make 'commit-graph-chain's read-only
+Message-ID: <864c9160675ba199b140ba961258db8d0daad004.1588181626.git.me@ttaylorr.com>
 References: <cover.1587422630.git.me@ttaylorr.com>
  <cover.1588181626.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -76,78 +75,49 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Non-layered commit-graphs use 'adjust_shared_perm' to make the
-commit-graph file readable (or not) to a combination of the user, group,
-and others.
+In a previous commit, we made incremental graph layers read-only by
+using 'git_mkstemp_mode' with permissions '0444'.
 
-Call 'adjust_shared_perm' for split-graph layers to make sure that these
-also respect 'core.sharedRepository'. The 'commit-graph-chain' file
-already respects this configuration since it uses
-'hold_lock_file_for_update' (which calls 'adjust_shared_perm' eventually
-in 'create_tempfile_mode').
+There is no reason that 'commit-graph-chain's should be modifiable by
+the user, since they are generated at a temporary location and then
+atomically renamed into place.
 
-Suggested-by: Junio C Hamano <gitster@pobox.com>
+To ensure that these files are read-only, too, use
+'hold_lock_file_for_update_mode' with the same read-only permission
+bits, and let the umask and 'adjust_shared_perm' take care of the rest.
+
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- commit-graph.c                |  6 ++++++
- t/t5324-split-commit-graph.sh | 22 ++++++++++++++++++++++
- 2 files changed, 28 insertions(+)
+ commit-graph.c                | 3 ++-
+ t/t5324-split-commit-graph.sh | 2 ++
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/commit-graph.c b/commit-graph.c
-index 5b5047a7dd..d05a55901d 100644
+index d05a55901d..b2dfd7701f 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -1386,6 +1386,12 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
- 			return -1;
- 		}
+@@ -1378,7 +1378,8 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
+ 	if (ctx->split) {
+ 		char *lock_name = get_chain_filename(ctx->odb);
  
-+		if (adjust_shared_perm(ctx->graph_name)) {
-+			error(_("unable to adjust shared permissions for '%s'"),
-+			      ctx->graph_name);
-+			return -1;
-+		}
-+
- 		f = hashfd(fd, ctx->graph_name);
- 	} else {
- 		hold_lock_file_for_update_mode(&lk, ctx->graph_name,
+-		hold_lock_file_for_update(&lk, lock_name, LOCK_DIE_ON_ERROR);
++		hold_lock_file_for_update_mode(&lk, lock_name,
++					       LOCK_DIE_ON_ERROR, 0444);
+ 
+ 		fd = git_mkstemp_mode(ctx->graph_name, 0444);
+ 		if (fd < 0) {
 diff --git a/t/t5324-split-commit-graph.sh b/t/t5324-split-commit-graph.sh
-index 53b2e6b455..699c23d077 100755
+index 699c23d077..cff5a41f48 100755
 --- a/t/t5324-split-commit-graph.sh
 +++ b/t/t5324-split-commit-graph.sh
-@@ -36,6 +36,10 @@ graph_read_expect() {
- 	test_cmp expect output
- }
- 
-+test_expect_success POSIXPERM 'tweak umask for modebit tests' '
-+	umask 022
-+'
-+
- test_expect_success 'create commits and write commit-graph' '
- 	for i in $(test_seq 3)
- 	do
-@@ -351,4 +355,22 @@ test_expect_success 'split across alternate where alternate is not split' '
- 	test_cmp commit-graph .git/objects/info/commit-graph
- '
- 
-+while read mode modebits
-+do
-+	test_expect_success POSIXPERM "split commit-graph respects core.sharedrepository $mode" '
-+		rm -rf $graphdir $infodir/commit-graph &&
-+		git reset --hard commits/1 &&
-+		test_config core.sharedrepository "$mode" &&
-+		git commit-graph write --split --reachable &&
-+		ls $graphdir/graph-*.graph >graph-files &&
-+		test_line_count = 1 graph-files &&
-+		echo "$modebits" >expect &&
-+		test_modebits $graphdir/graph-*.graph >actual &&
-+		test_cmp expect actual
-+	'
-+done <<\EOF
-+0666 -r--r--r--
-+0600 -r--------
-+EOF
-+
- test_done
+@@ -366,6 +366,8 @@ do
+ 		test_line_count = 1 graph-files &&
+ 		echo "$modebits" >expect &&
+ 		test_modebits $graphdir/graph-*.graph >actual &&
++		test_cmp expect actual &&
++		test_modebits $graphdir/commit-graph-chain >actual &&
+ 		test_cmp expect actual
+ 	'
+ done <<\EOF
 -- 
 2.26.0.113.ge9739cdccc
-
