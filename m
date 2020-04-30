@@ -2,151 +2,99 @@ Return-Path: <SRS0=Fhy4=6O=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B669C47257
-	for <git@archiver.kernel.org>; Thu, 30 Apr 2020 20:13:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CE092C4724C
+	for <git@archiver.kernel.org>; Thu, 30 Apr 2020 20:20:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1ADBA2082E
-	for <git@archiver.kernel.org>; Thu, 30 Apr 2020 20:13:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AB55D2076D
+	for <git@archiver.kernel.org>; Thu, 30 Apr 2020 20:20:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HRyYb5h/"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="s0XZ+HVc"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727866AbgD3UNy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Apr 2020 16:13:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58806 "EHLO
+        id S1726787AbgD3UUS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Apr 2020 16:20:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59808 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727859AbgD3UNv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Apr 2020 16:13:51 -0400
-Received: from mail-qk1-x743.google.com (mail-qk1-x743.google.com [IPv6:2607:f8b0:4864:20::743])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEF81C035494
-        for <git@vger.kernel.org>; Thu, 30 Apr 2020 13:13:51 -0700 (PDT)
-Received: by mail-qk1-x743.google.com with SMTP id m67so7133764qke.12
-        for <git@vger.kernel.org>; Thu, 30 Apr 2020 13:13:51 -0700 (PDT)
+        with ESMTP id S1726338AbgD3UUS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Apr 2020 16:20:18 -0400
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69E07C035494
+        for <git@vger.kernel.org>; Thu, 30 Apr 2020 13:20:17 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id a5so1334430pjh.2
+        for <git@vger.kernel.org>; Thu, 30 Apr 2020 13:20:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=3CEXbyv2iuZO2zPev4/1oKpnYzrgtunaClCFDO3Pwy8=;
-        b=HRyYb5h/nJ0IvoQaxoGbgp+92jZWtywm1JwFzuEQ8VC5O5v3WxcC7V/666hZQQvcfG
-         7upLzZ3adQez0jp1imDm/i7mSmSFGPPb3jRkZnCZi/HYBIM5a79857nrfnd4ec7ZMPlo
-         +VK15omxseRN5ulPP1Fb5UnN+99I2tkHdZl3C6gm6S6Gs18xs0dGb8JIkQoVfxud8ekF
-         9Go1xP/T6UotJ3nelMa4tC0ndZ+I6JFicKDHcoFQdzLBD50YDfvo2d4jGGDWW0+J2PzS
-         Ww7Pdvym7GI0UeGUey8bUG/yelC0bGccRZk3ymQc16rOBK5TJ1DshA3UJS3uk9//KMGk
-         arNg==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=e5KfB4YXBFg2sDlydEd8ldLIzxfC7sN3sHYcr8UeZDw=;
+        b=s0XZ+HVcSIenqluJolX14I0PQoT+7jZzX8yOgw3/t30q56XST7SS/Vl0CZhJjdcRVP
+         ikJKyv8moHxw2QRBp/5qJMd7eqCSP1IULoFskWVthokrEPPl3BQhXwY0qM8sXhKKFQXs
+         NzTcz3g/o1dhzUVDE8/vKg/Tz+Lv2akI/gyRYSaevzoSyJKWma9gc42PU9M9VakVfPzH
+         EsdrHkFiRaGjjEE77ubSHbb22QMPC3kL+B1zlkaqNqFuBKwMPfRjauPyJluHDDJuWsYM
+         WyfxOEdAp8f1AikNn2mdtPe73bP91pqt9UPkJ0EK5fXBrGJ0vp6Arhv5BHWJ1Rdz7LkW
+         ieAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=3CEXbyv2iuZO2zPev4/1oKpnYzrgtunaClCFDO3Pwy8=;
-        b=SjHPoOYpQVFs54e/bTEHlwkZfGbYoxFBmkAX2PdYj9wdjDQDmuC46hNz57/R0Lbtre
-         HCjHb7XIYVAUuvhZjGEq/5OifTDWQIqPwMczyN4da1pmM97kL9Xx+L1l09SoKLqwpPxZ
-         r3CclyrJE37Q49mkgC8BXEM2OnP3JXZP2xqiG/fCtx4J/4lbuvR+ueIllS0Y+NDtVd0y
-         2CbbGWE213fXJxJ3ny8mnFJOIZgUUtvN96ILU9HE788CotmMQtO0k7dBGtkRaKmX6WOz
-         kI91iZ8jJecHQaU6UdXBg7saB2SvMR9r1NLx/1ODzDLJvlkFAgJKfKHuxufZXrvy5nUn
-         P1Wg==
-X-Gm-Message-State: AGi0Pub7x49lz3y55W83l+7qhHWf0mbjxILa+AtaUKaynH3dC82tdk/c
-        St5oqJsloPjZbuNf15u/pPlmEBtUYOE=
-X-Google-Smtp-Source: APiQypJleMIaJ/wgAH+48/B1HTVZF9jt2q2Ybaolesn99COPyavU4k/SFy8UQfBZPDxaVd8LFfxg/A==
-X-Received: by 2002:a37:4955:: with SMTP id w82mr245435qka.240.1588277630861;
-        Thu, 30 Apr 2020 13:13:50 -0700 (PDT)
-Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id p4sm907030qkg.48.2020.04.30.13.13.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Apr 2020 13:13:49 -0700 (PDT)
-Subject: Re: [PATCH 06/15] run-job: auto-size or use custom pack-files batch
-To:     Son Luong Ngoc <sluongng@gmail.com>, gitgitgadget@gmail.com
-Cc:     dstolee@microsoft.com, git@vger.kernel.org, jrnieder@google.com,
-        peff@peff.net
-References: <CAL3xRKcsa_P6X5Y+c2LWoftfjqEw9eheikrxfwXU=y6KuFHjtQ@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <f7a193f8-8d5f-3f71-45b1-e117742df8f9@gmail.com>
-Date:   Thu, 30 Apr 2020 16:13:48 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101
- Thunderbird/76.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=e5KfB4YXBFg2sDlydEd8ldLIzxfC7sN3sHYcr8UeZDw=;
+        b=PXA+8bPNrc2XSKNz6m7B0KNmBitKWUl38PKMipNzTur50IopHT5y7SlO2n1SNmDrDG
+         D4AF8mY2bZMTF6iUcsOTabbnIy1NJ/UjjMm0XP9RbNTbNsZXhTNWM/m+n8EMz0Ux1jra
+         1gB/ZwgWn/eru0YaBT0VmZaF3tDvlVlb3IVf0N5l4n7czuutd3Yvu+Kl92THJAV4hWsk
+         wde3rgrYHRuKlwreBBmLdJTjXc/YeDT4Qm8ORONbKab1UtsXdg/l0CElxNH/gZdSJpKk
+         RXXFwKRnHEHMt33TOqRlHTGVe1gTEwWXCvmcgLTDYuFEKpsHt8/xZOrXWrVwst3NrrRR
+         hBsA==
+X-Gm-Message-State: AGi0PubCbZeGJ8mlDUY97st4YpukZxRYjfr7n9kHIgoC4PZHz6WeBmdQ
+        NUQYB+/30G+fhXH3NuVEXJo4oQ==
+X-Google-Smtp-Source: APiQypIsMPVML/DTtgU2ul6VHk6zXAcaIugsoy4kC6baVjqyhBYQia2iEXOlVeyTCvDGw/Z0/OeTiQ==
+X-Received: by 2002:a17:902:c113:: with SMTP id 19mr725274pli.95.1588278016906;
+        Thu, 30 Apr 2020 13:20:16 -0700 (PDT)
+Received: from localhost ([8.44.146.30])
+        by smtp.gmail.com with ESMTPSA id r28sm532128pfg.186.2020.04.30.13.20.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 30 Apr 2020 13:20:16 -0700 (PDT)
+Date:   Thu, 30 Apr 2020 14:20:14 -0600
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Son Luong Ngoc <sluongng@gmail.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: Seg Fault on git fetch with fetch.negotiationAlgorithm=skipping
+Message-ID: <20200430202014.GB2014@syl.local>
+References: <450D5CC7-113A-40D8-9CD4-53786198526D@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CAL3xRKcsa_P6X5Y+c2LWoftfjqEw9eheikrxfwXU=y6KuFHjtQ@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+In-Reply-To: <450D5CC7-113A-40D8-9CD4-53786198526D@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4/30/2020 12:48 PM, Son Luong Ngoc wrote:
-> Hi Derrick,
-> 
-> I have been reviewing these jobs' mechanics closely and have some questions:
-> 
->> The dynamic default size is computed with this idea in mind for
->> a client repository that was cloned from a very large remote: there
->> is likely one "big" pack-file that was created at clone time. Thus,
->> do not try repacking it as it is likely packed efficiently by the
->> server. Instead, try packing the other pack-files into a single
->> pack-file.
->>
->> The size is then computed as follows:
->>
->> batch size = total size - max pack size
-> 
-> Could you please elaborate why is this the best value?
+Hi Son,
 
-The intention was to repack everything _except_ the biggest pack,
-but clearly that doesn't always work. There is some logic to "guess"
-the size of the resulting pack that doesn't always reach the total
-batch size, so nothing happens. More investigation is required here.
+On Thu, Apr 30, 2020 at 04:55:07PM +0200, Son Luong Ngoc wrote:
+> Hi folks,
+>
+> We recently encountered a segfault during a git fetch
+> strace output could be found https://gist.github.com/sluongng/e48327cc911c617ed2ef8578acc2ea34
+>
+> The root cause was due to having `fetch.negotiationAlgorithm=skipping`
+> The repo is about linux.git size with a few NULL commit that we have been using `fsck.skipList`
+> on both server and client side to skip.
 
-> In practice I have been testing this out with the following
-> 
->> % cat debug.sh
->> #!/bin/bash
->>
->> temp=$(du -cb .git/objects/pack/*.pack)
->>
->> total_size=$(echo "$temp" | grep total | awk '{print $1}')
->> echo total_size
->> echo $total_size
->>
->> biggest_pack=$(echo "$temp" | sort -n | tail -2 | head -1 | awk '{print $1}')
->> echo biggest pack
->> echo $biggest_pack
->>
->> batch_size=$(expr $total_size - $biggest_pack)
->> echo batch size
->> echo $batch_size
-> 
-> If you were to run
-> 
->> git multi-pack-index repack --batch-size=$(./debug.sh | tail -1)
-> 
-> then nothing would be repack.> 
-> Instead, I have had a lot more success with the following
-> 
->> # Get the 2nd biggest pack size (in bytes) + 1
->> $(du -b .git/objects/pack/*pack | sort -n | tail -2 | head -1 | awk '{print $1}') + 1
-> 
-> I think you also used this approach in t5319 when you used the 3rd
-> biggest pack size
+Are you able to share a core file? If not, it would be very helpful for
+you to 'git fast-export --anonymize ...' and see if you can reproduce
+the problem on an anonymized copy of your repository.
 
-The "second biggest pack" is an interesting approach. At first glance it
-seems like we will stabilize with one big pack and many similarly-sized
-packs. However, even a small deviation in size is inevitable and will
-cause two or more packs to combine and create a "new second biggest"
-pack.
+I can speculate about the cause of the crash from your strace above, but
+a core file would be more helpful.
 
-> Looking forward to a re-roll of this RFC.
+> Is this and edge case for the new algorithm?
+>
+> Cheers,
+> Son Luong.
 
-I do plan to submit a new version of the RFC, but it will look quite
-different based on the feedback so far. I'm still digesting that
-feedback and will take another attempt at it after I wrap up some other
-items that have my attention currently.
-
-Thanks!
--Stolee
-
-
+Thanks,
+Taylor
