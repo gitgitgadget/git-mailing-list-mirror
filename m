@@ -2,123 +2,90 @@ Return-Path: <SRS0=Fhy4=6O=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B3363C47247
-	for <git@archiver.kernel.org>; Thu, 30 Apr 2020 22:10:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C88F5C4724C
+	for <git@archiver.kernel.org>; Thu, 30 Apr 2020 22:57:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 899F220775
-	for <git@archiver.kernel.org>; Thu, 30 Apr 2020 22:10:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9D75C20774
+	for <git@archiver.kernel.org>; Thu, 30 Apr 2020 22:57:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="esIFcMI5"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="wWc6MgQe"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727057AbgD3WKD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Apr 2020 18:10:03 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:62103 "EHLO
+        id S1727113AbgD3W5G (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Apr 2020 18:57:06 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:60070 "EHLO
         pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726784AbgD3WKD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Apr 2020 18:10:03 -0400
+        with ESMTP id S1727092AbgD3W5G (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Apr 2020 18:57:06 -0400
 Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id EBC53BBAC9;
-        Thu, 30 Apr 2020 18:09:59 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8B6AFBBF8D;
+        Thu, 30 Apr 2020 18:57:04 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=61GEwxjeOpHVdePayS+CF7EU7jI=; b=esIFcM
-        I5dAYLMyw7ZXJFX+qdEOKaKxD05F52oesgvSYsOtqXyd5DrzhRjFixfXg4dLrdUb
-        d8DkTE/UcL78NENas7E1R4E1nDwYl/k4dkf1pzJQ+SouOINhi6VBEIYBsMdTQUCL
-        RDSO+0ORkSAdm6lAYAcdQXvqc/H1TNoMrXeZM=
+        :content-type; s=sasl; bh=EpLp8Dhc5QELhF6h+YFkLuAZsfQ=; b=wWc6Mg
+        Qe8nftpzzQuDNHygxVRppY/hOJZMx0pQR9eFUqpHj/Mh6lckHuUh9d6jHZrWN7No
+        +A6Y1q9BiGcxv/qXz2lODmPWXJXcZNBW5jVAqi0ksuuLVoxYbIFLJfVINYY0OyFx
+        UOdZAFbiAtO+jvmtargLyQsdPwnU1Rq+WNNhU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=jgqjehaE3wkLne2NRpWJ0v8HKbMkRpds
-        bgl4WbXdSl1nyVXCgrqLJ+BTpTEPixVb7yMNylrKPHADKhwIpv7z9gbZxnatKUNj
-        GR6zTSyuAkgywBfzX1KtCM9mPy65zscVuoIlEbS7jXMxp40aA5goY0ELHYTuPS/E
-        9BNXHiC1UlI=
+        :content-type; q=dns; s=sasl; b=uIms+1JGpNKRjtph7WyM2RxY9/lBUydg
+        wtNgwZb+jTwm9lbUm59xuLzL6ay6pff40nbU4ggsTIlGycp1YBnFVw87Xd6AHITc
+        mmamBP9aOYdZxgb7huExJ2NCL3Izxwhwbgdq10L/I54UfndjcZS3COXZnvA2NNKp
+        8xwEzVqD+F8=
 Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id E4149BBAC7;
-        Thu, 30 Apr 2020 18:09:59 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 82CDEBBF8C;
+        Thu, 30 Apr 2020 18:57:04 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 39302BBAC6;
-        Thu, 30 Apr 2020 18:09:57 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id BB44CBBF8A;
+        Thu, 30 Apr 2020 18:57:01 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH v3] bugreport: collect list of populated hooks
-References: <20200427233820.179891-1-emilyshaffer@google.com>
-        <20200430012425.209122-1-emilyshaffer@google.com>
-        <20200430015049.GA115238@google.com>
-        <xmqqv9lgswar.fsf@gitster.c.googlers.com>
-Date:   Thu, 30 Apr 2020 15:09:55 -0700
-In-Reply-To: <xmqqv9lgswar.fsf@gitster.c.googlers.com> (Junio C. Hamano's
-        message of "Thu, 30 Apr 2020 10:44:28 -0700")
-Message-ID: <xmqqwo5wpqvg.fsf@gitster.c.googlers.com>
+To:     Jacob Keller <jacob.e.keller@intel.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+        Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH 00/11] refactor git switch completion
+References: <20200425022045.1089291-1-jacob.e.keller@intel.com>
+Date:   Thu, 30 Apr 2020 15:56:59 -0700
+In-Reply-To: <20200425022045.1089291-1-jacob.e.keller@intel.com> (Jacob
+        Keller's message of "Fri, 24 Apr 2020 19:20:33 -0700")
+Message-ID: <xmqqsggkpop0.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 53B7DE24-8B2F-11EA-B05E-B0405B776F7B-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: E7455738-8B35-11EA-873D-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Jacob Keller <jacob.e.keller@intel.com> writes:
 
->> When we do that, this "mkdir .git/hooks" will fail because the
->> directory already exists.  Ideas:
->>
->>  A. Include a preparatory patch in this series that removes that "mv"
->>     command.  That way, this test can do
+> From: Jacob Keller <jacob.keller@gmail.com>
 >
-> While I do not think it is realistic to anticipate that the "test"
-> repository may someday come with a hooks/ directory, even if we did
-> so, we would not enable any hook by default in there.  So "move away
-> and restore" feels way overkill.
+> completion support for git switch is subpar for a number of cases. Most
+> notable is difference between these two completions:
 >
->>   B. Run "git init" ourselves so we know what we're getting:
+>   $git switch <TAB>
+>   Display all 784 possibilities? (y or n)
+>   <list of all references and DWIM remotes>
 >
-> That is certainly safer, and simpler.  But perhaps the simplest
-> would be
->
->     C. Use "mkdir -p .git/hooks" so we won't get affected.
+>   $git switch --track<TAB>
+>   jk-refactor-git-switch-completion master`
+> ...
 
-In the meantime, I added this SQUASH on top.  I do not claim that
-this is the best solution, but the idea is to refuse to be affected
-by what is left in .git/hooks either by the test framework or
-earlier tests in the same test script file.
+We've discussed that it may be a good idea to make sure that "switch
+-c", "checkout -b" and "switch/checkout --orphan" complete the new
+branch name the same way, but haven't done anything else.  I'd very
+much appreciate to see the patches reviewed by those involved more
+in the completion script, before we decide to merge the topic to
+'next'.
 
- t/t0091-bugreport.sh | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
-
-diff --git a/t/t0091-bugreport.sh b/t/t0091-bugreport.sh
-index 612c12a918..9450cc02e3 100755
---- a/t/t0091-bugreport.sh
-+++ b/t/t0091-bugreport.sh
-@@ -58,11 +58,14 @@ test_expect_success 'can create leading directories outside of a git dir' '
- '
- 
- test_expect_success 'indicates populated hooks' '
--	test_when_finished rm git-bugreport-hooks.txt &&
--	test_when_finished rm -fr .git/hooks &&
-+	rm -fr .git/hooks &&
- 	mkdir .git/hooks &&
--	write_script .git/hooks/applypatch-msg &&
--	write_script .git/hooks/prepare-commit-msg.sample &&
-+	for hook in applypatch-msg prepare-commit-msg.sample
-+	do
-+		write_script ".git/hooks/$hook" <<-\EOF || return 1
-+		echo "hook $hook exists"
-+		EOF
-+	done &&
- 	git bugreport -s hooks &&
- 	grep applypatch-msg git-bugreport-hooks.txt &&
- 	! grep prepare-commit-msg git-bugreport-hooks.txt
--- 
-2.26.2-447-gd61d20c9b4
-
+Thanks.
