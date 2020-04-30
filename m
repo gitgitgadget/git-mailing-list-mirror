@@ -3,87 +3,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 33350C47247
-	for <git@archiver.kernel.org>; Thu, 30 Apr 2020 19:49:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B712C47247
+	for <git@archiver.kernel.org>; Thu, 30 Apr 2020 19:52:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 02CF520731
-	for <git@archiver.kernel.org>; Thu, 30 Apr 2020 19:49:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 188C820731
+	for <git@archiver.kernel.org>; Thu, 30 Apr 2020 19:52:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="iZO8UHHd"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="HBHUE9fQ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726579AbgD3Tt4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Apr 2020 15:49:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54992 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726318AbgD3Ttz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Apr 2020 15:49:55 -0400
-Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 204E7C035494
-        for <git@vger.kernel.org>; Thu, 30 Apr 2020 12:49:55 -0700 (PDT)
-Received: by mail-pf1-x444.google.com with SMTP id y25so382974pfn.5
-        for <git@vger.kernel.org>; Thu, 30 Apr 2020 12:49:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=TT9pWGpWEeFgZoOJtVqISqldFmxMdRjDZfVGH2SFs24=;
-        b=iZO8UHHdrx4jz/D23zurjOzx4es1JopwvYieMjJvjZogEXmCFfb8/JnOROvdAJJx+9
-         RI6OqM+6fMdnFdLDkK26ZadVoqM31z55NjRYEurBB5tKqkmXjkzaaC/vw2v9iStnnMe9
-         K5pYVMTS7hj/ahGTUBsnLuDVDAyecm7zkBrXMo4kGKK4orqxwduqats1LLWXhO03OhQq
-         GXjI6FAoVubnyW2TbTjnHL5sPvSoqayuYsQxjVAVJeH9RPw9DjoIghypLROQMgdOJsdL
-         4/av1yOEO4hbAsLTSNWk6jIWvsT5T7llT6Mk30dR+vlFqoBC6BRulfLwmcy4IhRrNM76
-         a1OQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=TT9pWGpWEeFgZoOJtVqISqldFmxMdRjDZfVGH2SFs24=;
-        b=TSt7IIwt1TYReu6RL1Vb6WgxDwmVa7nn+2tL+eTG94/MUh8w+GaqGxfYn1I1cG8sTL
-         axTemrU4vA6c2A1VxfUzTx6zA4t/Y3VeDWR3tgszhbn8eW9vau65bFe5HGUT8ld63b6i
-         ApBIbbVIWxuPJ7RAvgws5jNLwy+mxQXimdFv6q5DtUR5aiTOd3uEvO3Hxl2atii19QWI
-         bmvP3hwAsECPMEtPf90qebImWEKJXWtgQuj/35f6/K88VTvp7tITf1aFX12U8jZJ/A2d
-         pPyXoIaNPv1NQbe5I1tVVMaXOZB32/9RXVm5VQi0jMkgVIIkL9g2Yq8xh1mjncIZK/1I
-         HeCg==
-X-Gm-Message-State: AGi0PuYT43kXRct24DDODri0mLv1zO5HRozdb/3FqEZMy1nI0ViKGTCY
-        CjNl92aoXKxqsf3KqYHI7wXgxw==
-X-Google-Smtp-Source: APiQypI1Ol+yUBY1Wj/g+kyVkGVxKaxj0XPn49Ypty42pTJv5fS7mgJ7u6SyIXqgoHfYAuhLehoUnw==
-X-Received: by 2002:a63:a101:: with SMTP id b1mr597940pgf.292.1588276194677;
-        Thu, 30 Apr 2020 12:49:54 -0700 (PDT)
-Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id gl4sm482503pjb.42.2020.04.30.12.49.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Apr 2020 12:49:53 -0700 (PDT)
-Date:   Thu, 30 Apr 2020 13:49:52 -0600
-From:   Taylor Blau <me@ttaylorr.com>
+        id S1726765AbgD3TwB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Apr 2020 15:52:01 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63181 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726455AbgD3TwA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Apr 2020 15:52:00 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9A78360189;
+        Thu, 30 Apr 2020 15:51:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=AgkAE+N+SZu1gteELjR/S09w5WQ=; b=HBHUE9
+        fQPkHm/dT8DBrCukKGmPzuera3SMeuDp2dbDgh78AiQE2a1dA8VoNUHPZgYeg3CG
+        UCmDjz3tT0awM5djd95Pf/gycwIQAC1TmsWmyH76NlADZiR+/f4DqXYOY6qht241
+        i7g95uvvJknpiO86yt6OCg03lo9oGpFdwu8UI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=H5YTra/MFwipGRJSSRRW9jOZg4DnzakG
+        Gx+wR6FKDnuNoOyHOB2E0Zg4X7m8TfQnHaQIXABGD/mr36oV9utERG8pZEcwCNTu
+        I+KD58BQEk+U8yL8yCyZ8TYtPn6JKNqwjIHtYHtTAKAMdkr0eQ7V0FTgeqsRbOQT
+        X9fNzJaJ6io=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9197E60188;
+        Thu, 30 Apr 2020 15:51:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 212FA60187;
+        Thu, 30 Apr 2020 15:51:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, jonathantanmy@google.com,
-        jrnieder@gmail.com, sunshine@sunshineco.com
-Subject: Re: [PATCH v2 0/4] shallow: extract a header file
-Message-ID: <20200430194952.GA2014@syl.local>
-References: <cover.1588275891.git.me@ttaylorr.com>
+Cc:     Ivan Tham <pickfire@riseup.net>, git@vger.kernel.org,
+        "brian m . carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH] branch: add '-' to delete previous branch
+References: <20200429130133.520981-1-pickfire@riseup.net>
+        <20200429185851.GF83442@syl.local>
+        <20200430145221.z3lpgjstybqztfqb@arch>
+        <20200430155904.GA30682@syl.local>
+Date:   Thu, 30 Apr 2020 12:51:57 -0700
+In-Reply-To: <20200430155904.GA30682@syl.local> (Taylor Blau's message of
+        "Thu, 30 Apr 2020 09:59:04 -0600")
+Message-ID: <xmqqftcksqea.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1588275891.git.me@ttaylorr.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0CFD826C-8B1C-11EA-B1B1-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 30, 2020 at 01:48:43PM -0600, Taylor Blau wrote:
-> Hi,
+Taylor Blau <me@ttaylorr.com> writes:
+
+> It is the case that 'git branch -D @{-N}' already works, which was
+> surprising to me. I am suggesting that you make documenting the existent
+> behavior a new first patch.
 >
-> Here's a reroll of my series to introduce 'shallow.h' after some very
-> helpful review from yesterday evening and early this morning.
+> Of course, that might be the only patch that you end up sending in v2,
+> since it seems that consensus has formed around not supposing '-' as a
+> shorthand for '@{-1}' with 'git branch -D'.
 
-Oops. Forgot to set --in-reply-to to the v1 of this series, which can be
-found in [1]. Since I already sent the cover letter and patches, let's
-just pick it up from here.
-
-Thanks,
-Taylor
-
-[1]: https://lore.kernel.org/git/cover.1588199705.git.me@ttaylorr.com/
+Thanks for concisely summarizing the current status of the
+discussion.
