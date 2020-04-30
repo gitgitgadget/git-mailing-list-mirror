@@ -6,112 +6,155 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A0FA2C47247
-	for <git@archiver.kernel.org>; Thu, 30 Apr 2020 17:44:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ED20AC4724C
+	for <git@archiver.kernel.org>; Thu, 30 Apr 2020 18:09:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 816AC20836
-	for <git@archiver.kernel.org>; Thu, 30 Apr 2020 17:44:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AB4282073E
+	for <git@archiver.kernel.org>; Thu, 30 Apr 2020 18:09:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="osxtsXBT"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="QPzidfUi"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726318AbgD3Roc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Apr 2020 13:44:32 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50896 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726272AbgD3Roc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Apr 2020 13:44:32 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A629A5F216;
-        Thu, 30 Apr 2020 13:44:29 -0400 (EDT)
+        id S1726355AbgD3SJG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Apr 2020 14:09:06 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:65337 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726285AbgD3SJG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Apr 2020 14:09:06 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 84D675047E;
+        Thu, 30 Apr 2020 14:09:04 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=LW+kD2z584JvrHhncqjJRjhJEdM=; b=osxtsX
-        BTBsabswFOl/OiGSg97+lUSgMDzjZVJlO9eKMv+HPYK5C59HZhHdil1wsPRpn2Zv
-        eD6qiNgBhvjyV4cdOprZjQ7gXVhfhXsSr36HTZgAheecgwyuJgh4LMioQvNMLWIg
-        2f1EXCDZ19YGauFrtTck/ZCqH+TUupvoD47p4=
+        :content-type; s=sasl; bh=1funpha3O2aai/HxDtFhmk7OlRs=; b=QPzidf
+        UizLS8zcwkDjaq2oTXvhUwINv9x2uAenY0wqOSaMfEQTlJj81LIL8a8hMu3Ei6bP
+        /heSaNVceFwNb401bSLMgb+genU0OYOfaaQnigKwZPbWXA104f7ujW/9E2m6+fQD
+        MRjOjMZ6ZNSQzSY46S7QROLVv4e6lNeVjJ/YE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=PKsaTexotjOYsGL8r3nOG71sTw9TGI6z
-        TcFlTuy/19+LXFSet5xNZG1g/TgbUGbdCfkeQlyKlBCrlFWheJksMzsu36c7eJsL
-        kC+ZdpiqAL/dbo1Hep5toCcwMEeAOQNwFLx38oov/9WmJrKLweHCgFYVLYQeee7S
-        ijbBS/auctY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9D88B5F215;
-        Thu, 30 Apr 2020 13:44:29 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=aPhmCiq10nzdrSsdyT1x0bthTQlZvLEH
+        PvxGK+CGU4ge7Ede+xTPYR1NRHUD4bGPa3ZesIN9GCeQBMK6z7UllVvx4LzT0TEh
+        U9x8j+pokHtCTzwqccegZwAEtsxgtSJe04UM3wY9iFb34g/aOoU/sefQMVP5PRan
+        2PRkKFJOB6g=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7D2FC50479;
+        Thu, 30 Apr 2020 14:09:04 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 29CA35F214;
-        Thu, 30 Apr 2020 13:44:29 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DD61350476;
+        Thu, 30 Apr 2020 14:09:03 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH v3] bugreport: collect list of populated hooks
-References: <20200427233820.179891-1-emilyshaffer@google.com>
-        <20200430012425.209122-1-emilyshaffer@google.com>
-        <20200430015049.GA115238@google.com>
-Date:   Thu, 30 Apr 2020 10:44:28 -0700
-In-Reply-To: <20200430015049.GA115238@google.com> (Jonathan Nieder's message
-        of "Wed, 29 Apr 2020 18:50:49 -0700")
-Message-ID: <xmqqv9lgswar.fsf@gitster.c.googlers.com>
+To:     douglas.fuller@gmail.com
+Cc:     git@vger.kernel.org, peff@peff.net
+Subject: Re: [PATCH] doc: fix quoting bug in credential cache example
+References: <63f35287c9ced4d674f938bedd439aefa6c46f41.camel@gmail.com>
+Date:   Thu, 30 Apr 2020 11:09:02 -0700
+In-Reply-To: <63f35287c9ced4d674f938bedd439aefa6c46f41.camel@gmail.com>
+        (douglas fuller's message of "Thu, 30 Apr 2020 10:36:47 -0400")
+Message-ID: <xmqqr1w4sv5t.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 3DDA0502-8B0A-11EA-B2AD-C28CBED8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: ACDE089C-8B0D-11EA-ACEF-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+douglas.fuller@gmail.com writes:
 
-> When we do that, this "mkdir .git/hooks" will fail because the
-> directory already exists.  Ideas:
->
->  A. Include a preparatory patch in this series that removes that "mv"
->     command.  That way, this test can do
+> Unquoted semicolons are considered shell argument separators, quote
+> them so the example works correctly.
 
-While I do not think it is realistic to anticipate that the "test"
-repository may someday come with a hooks/ directory, even if we did
-so, we would not enable any hook by default in there.  So "move away
-and restore" feels way overkill.
+I think what you wanted to do might make sense, but the above
+justification is totally incorrect.
 
->   B. Run "git init" ourselves so we know what we're getting:
+>  # or you can specify your own shell snippet
+> -!f() { echo "password=`cat $HOME/.secret`"; }; f
+> +"!f() { echo password=`cat $HOME/.secret`; }; f"
 
-That is certainly safer, and simpler.  But perhaps the simplest
-would be
+This is one of the examples shown, each shows possible value that
+can be given to credential.helper variable.  Reproducing them fully:
 
-    C. Use "mkdir -p .git/hooks" so we won't get affected.
+    # run "git credential-foo"
+    foo
 
->> +	write_script .git/hooks/applypatch-msg &&
->
-> write_script looks for a script on its stdin.  test_eval_ redirects
-> stdin to come from /dev/null, so we happen to get an empty script, but
-> this is subtle.  How about something like
->
-> 	write_script .git/hooks/applypatch-msg <<-\EOF &&
-> 	echo >&2 "rejecting message in $1"
-> 	exit 1
-> 	EOF
+    # same as above, but pass an argument to the helper
+    foo --bar=baz
 
-Yes, that is good.
+    # the arguments are parsed by the shell, so use shell
+    # quoting if necessary
+    foo --bar="whitespace arg"
 
-> or
->
-> 	write_script .git/hooks/applypatch-msg </dev/null &&
+    # you can also use an absolute path, which will not use the git wrapper
+    /path/to/my/helper --with-arguments
 
-This takes us back to the resuling "empty" hook we wanted to avoid
-by switching from "use touch to create something" to "write some
-meaningful contents" approach, no?
+    # or you can specify your own shell snippet
+    !f() { echo "password=`cat $HOME/.secret`"; }; f
 
->> +	git bugreport -s hooks &&
->> +	grep applypatch-msg git-bugreport-hooks.txt &&
->> +	! grep prepare-commit-msg git-bugreport-hooks.txt
->> +'
->
-> Thanks,
+These are examples of values, and how they may have to be quoted in
+various environments is not discussed here.  
 
-Thanks.
+We will not want a patch that says that the second example is wrong
+because "spaces separate arguments in shell and a string with a
+space in it must be quoted", i.e.
+
+    $ git -c credential.helper="foo --bar=baz" frotz
+
+and does this
+
+     # same as above, but pass an argument to the helper
+    -foo --bar=baz
+    +"foo --bar=baz"
+
+because the quoting convention would be different depending on where
+it appears.  In a .git/config file, i.e.
+
+    [credential]
+	helper = foo --bar=baz
+
+is perfectly fine without quoting.
+
+    $ git -c credential.helper='!f() { echo "password=`cat ...`"; }; f' frotz
+
+would be how you would pass a one-shot config from shell.
+
+Now, the reason why I said what you did is correct but the
+justification is wrong is because the semicolon does pose a problem
+in the .git/config file.  In fact
+
+    [credential]
+	helper = !f() { echo "password=`cat ...`"; }; f
+
+would *NOT* work, because semicolon introduces a comment in the
+configuration file.
+
+For this particular case, you can just do
+
+    [credential]
+	helper = !echo password=`cat $HOME/.secret`
+
+without any quoting issues, though.
+
+Having said all that, I think we should clarify what these sample
+strings are in the introductory text in the examples.  
+
+I've always thought that they are illustrating possible values and
+how to express that value in the context the values appear in is up
+to the readers who learn what values to write in this document (and
+they learn from manual for shell to learn the shell quoting
+convention and manual for 'git config' to learn the config quoting
+convention).  Hence my initial reaction to your patch was "shell?
+Quoting for shell is outside the scope of the explanation here".
+
+On the other hand, for anybody who assumes that these examples are
+literally showing what you write after "[credential] helper = " in
+the configuration file, the example clearly is wrong and dq may be
+needed (but yours is also wrong, in that it loses double quotes
+around the argument to echo; if ~/.secret file had a tab in it, the
+helper will now yield a wrong password and you won't be able to log
+in).
+
