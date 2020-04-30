@@ -7,117 +7,138 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 93616C83000
-	for <git@archiver.kernel.org>; Thu, 30 Apr 2020 01:00:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FC04C83000
+	for <git@archiver.kernel.org>; Thu, 30 Apr 2020 01:11:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6DD312082E
-	for <git@archiver.kernel.org>; Thu, 30 Apr 2020 01:00:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0B9CA2082E
+	for <git@archiver.kernel.org>; Thu, 30 Apr 2020 01:11:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HWuc3ZOE"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hefHYqgt"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726486AbgD3BAa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Apr 2020 21:00:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47512 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726279AbgD3BAa (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 29 Apr 2020 21:00:30 -0400
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3A7FC035494
-        for <git@vger.kernel.org>; Wed, 29 Apr 2020 18:00:27 -0700 (PDT)
-Received: by mail-pf1-x442.google.com with SMTP id v63so2025291pfb.10
-        for <git@vger.kernel.org>; Wed, 29 Apr 2020 18:00:27 -0700 (PDT)
+        id S1726338AbgD3BLC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Apr 2020 21:11:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49168 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726291AbgD3BLB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Apr 2020 21:11:01 -0400
+Received: from mail-qt1-x843.google.com (mail-qt1-x843.google.com [IPv6:2607:f8b0:4864:20::843])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B20CEC035494
+        for <git@vger.kernel.org>; Wed, 29 Apr 2020 18:11:00 -0700 (PDT)
+Received: by mail-qt1-x843.google.com with SMTP id t20so3633129qtq.13
+        for <git@vger.kernel.org>; Wed, 29 Apr 2020 18:11:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=QDhZLIKBRo+Tjhb7U693lNPJqFLQuaXaAtTqlTDzjjM=;
-        b=HWuc3ZOERhpL3T3JybQ0eoyDInoMOnNDMkuSGZiED6SRh5wP/6AE1xtVFje/3AKxpw
-         RcFOV163JrVOuoRZIOEJAUr2qX1iPkL99hNe5wdx5F3QOe0w7a+Ll7xoJ2NayNVVw+VV
-         3VN7B88cBCFRsqjUAeiV1b7vaDxRbNAG7qAThLrn1OaJexdpBbXUi08Mw6M/SuW9a8Nk
-         wcAKM9QMg937QIsq8RpNC9Ss2uQzQyIZpYtRCR2jFECYykt/7N/86bSzCfCpCp0Zy1oa
-         oGeOIZ0PPk7I10EYlTpiWBjYSW04QU5FwB1iFpamPEDH0DAMXOW+Py7oB+jupRCsb5WK
-         wpPA==
+        bh=qjNMW8tH+z+V6xhcZQ9lmI8bvYRk7MQVaHW9+2R6ZvI=;
+        b=hefHYqgtmpq72F4FrKDYmRFnGzLJogMxK6vS+Xf7+maRsoNoZQJ4Sc7wtX7lQBndn7
+         oohrV27mPU318F6GdmHJ2TP43sXic48C2yyB162yIJdPCFsj/cYNEj9IpZxTGXgwzrCs
+         xgfk7GfBajOvbVCS6fPTRuEvN1ycyQ/5c++du/Xy25IHfZbsumS7MPPSOeOpK5POqiEV
+         5TmwhupIiKmsuQBYcXdtCzheP9/9fWvyPV1CbaySagRnH9fr4j7Bs7Ygu19uQt/gJBGG
+         lbO8I4ONGNf/U5l3nEZUncDHgRJD27W0Dcfythx/iApjXCMv8MnkHN+EZP0CpKZ9Iyf/
+         FBhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=QDhZLIKBRo+Tjhb7U693lNPJqFLQuaXaAtTqlTDzjjM=;
-        b=bpdplluKkNDng1UXPkOE1zy/l8wyuSQt83y5UT1nio+zJeCBDVq73f9jlUdgD10QFi
-         h8bjeg741/6MUUATN2T4vSqIyWGdYidsz1s2XtSZ57o89r8JajTRSrNDteIDrr+l5CNI
-         DS+unzFw2we1V+D5l9smGU8o8pPZJ6KhtaOHsPbmy57qRqby/2XvebYHgt405NoL0H8C
-         kTe0aYMgk49NKuh1HM0TtMHU9R+i8wgFaDoZG6LDEuOLiM/DidJ6MLle7ktQJIR/UBk6
-         xyaFbDWaiB2YALzOqL+V6KKFhMqBy463Lpirw+K3MgIFZFiQm0dortyWkUV5DASNpvLE
-         gJlg==
-X-Gm-Message-State: AGi0PuYSgGCoE+OzYUzRbttFvM4CGtBKGS++fcDq64m+57/3WpboREYP
-        8DdZMr4DloowJknYnhhxaaPrm9S8
-X-Google-Smtp-Source: APiQypL5enFzv6nobTDcT+NJwh40Tc3r1iH089biDvXOuXDqEhLmsRl9T7X2aFE0YqTxk64E7LbgJQ==
-X-Received: by 2002:aa7:9491:: with SMTP id z17mr923534pfk.264.1588208426965;
-        Wed, 29 Apr 2020 18:00:26 -0700 (PDT)
-Received: from Carlos-MBP (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
-        by smtp.gmail.com with ESMTPSA id a99sm346708pje.35.2020.04.29.18.00.25
+        bh=qjNMW8tH+z+V6xhcZQ9lmI8bvYRk7MQVaHW9+2R6ZvI=;
+        b=t3JGuhYvx6J1k8/8yC9kCN33Pyd2JQgnwCQzskrbcD8MC+2iN4lru5nU8eR92R0rEe
+         2+QsqXac4FLpQ+niKynRmus+hxzGvATldC2GdxUgmqGSQPW/ewN5Bxg5oHBh20vvgatI
+         ttxriE5oEy0aTqCvj0Wkedc+9GSqz9/+biyBx9y4MHEx8daV9lqsJL753SRZIMPzYe5h
+         g7nU2doMJIfWK2fkJd18hdU4SFYLPXGQIceMREvUFzRmBk0P2cHtc5lqVO+MCubgpzEo
+         i0VTqntA3FjOn2PFfwjSJi+SZzzHYiMCaTpTDsuS0Mq2I3Hz4OpJENMyvh0W2eoeMp8q
+         tM3A==
+X-Gm-Message-State: AGi0PuZgxrtHhnv4ic+ixFm/ZOg89nZFohgIfCz9RosHoeJtSoHxOG52
+        3X4Pv/rP0v2z080aUeXgOgP2zl2X
+X-Google-Smtp-Source: APiQypJFF1P4brsQIyXzeTblmdhPyZPCdHDQH92hiD0IG4Q7fDyFAOwzckKkVHRPxq3/+tEMBBcD5g==
+X-Received: by 2002:ac8:bc8:: with SMTP id p8mr1184967qti.135.1588209059882;
+        Wed, 29 Apr 2020 18:10:59 -0700 (PDT)
+Received: from generichostname (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.65.113])
+        by smtp.gmail.com with ESMTPSA id i4sm641048qkh.66.2020.04.29.18.10.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Apr 2020 18:00:26 -0700 (PDT)
-Date:   Wed, 29 Apr 2020 18:00:24 -0700
-From:   Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
+        Wed, 29 Apr 2020 18:10:58 -0700 (PDT)
+Date:   Wed, 29 Apr 2020 21:10:56 -0400
+From:   Denton Liu <liu.denton@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, dirk@ed4u.de, sunshine@sunshineco.com,
-        peff@peff.net, jrnieder@gmail.com
-Subject: Re: [PATCH v6] credential-store: warn instead of fatal for bogus
- lines from store
-Message-ID: <20200430010024.GC33264@Carlos-MBP>
-References: <20200429203546.56753-1-carenas@gmail.com>
- <20200429232322.68038-1-carenas@gmail.com>
- <xmqqlfmdua5o.fsf@gitster.c.googlers.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 4/4] lib-submodule-update: pass OVERWRITING_FAIL
+Message-ID: <20200430011056.GA3036@generichostname>
+References: <cover.1588162842.git.liu.denton@gmail.com>
+ <22eacd20a8213c3281974a6c103fd2d00c95efaa.1588162842.git.liu.denton@gmail.com>
+ <xmqqpnbqw0vz.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqlfmdua5o.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqpnbqw0vz.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 29, 2020 at 04:47:31PM -0700, Junio C Hamano wrote:
-> > instead of doing a hard check for credentials, do a soft one and
-> > warn the user so any invalid entries could be corrected.
+Hi Junio,
+
+On Wed, Apr 29, 2020 at 12:24:48PM -0700, Junio C Hamano wrote:
+> Denton Liu <liu.denton@gmail.com> writes:
 > 
-> instead -> instead
-
-;)
-
-> I do not think dropping "view or" is justifiable.  There is no need
-> to invite the risk of opening with the intention to only view and
-> then end up saving a modification.  In other words, do not encourage
-> use of an *editor* in any way.
+> > We are using `test_must_fail $command`. However, $command is not
+> > necessarily a git command; it could be a test helper function.
+> >
+> > In an effort to stop using test_must_fail with non-git commands, instead
+> > of invoking `test_must_fail $command`, run
+> > `OVERWRITING_FAIL=test_must_fail $command` instead. Increase the
+> > granularity of the test helper functions by specifically choosing the
+> > individual git invocation which is designed to fail.
 > 
-> > +An unparseable or otherwise invalid line is ignored, and a warning
-> > +message points out the problematic line number and file it appears in.
+> Sorry, but I do not know why this is a good idea.
+
+This is useful because currently, when we run a test helper function, we
+just mark the whole thing as `test_must_fail`. However, it's possible
+that the helper function might fail earlier or later than expected due
+to some side effect. If this happens, then the test case will still
+be reported as passing but I think that it should be marked as failing
+instead since it didn't actually display the desired behaviour.
+
+> >  test_submodule_switch_common () {
+> > +	OVERWRITING_FAIL=
+> >  	command="$1"
+> >  	######################### Appearing submodule #########################
+> >  	# Switching to a commit letting a submodule appear creates empty dir ...
+> > @@ -443,7 +446,7 @@ test_submodule_switch_common () {
+> >  		(
+> >  			cd submodule_update &&
+> >  			git branch -t replace_sub1_with_directory origin/replace_sub1_with_directory &&
+> > -			test_must_fail $command replace_sub1_with_directory &&
+> > +			OVERWRITING_FAIL=test_must_fail $command replace_sub1_with_directory &&
 > 
-> OK.  You didn't want to tell them they can remove the problematic
-> line as a whole with their editor?
-
-someone said "do not encourage use of an *editor* in any way" just a few
-lines before ;)
-
-> > +	test_config credential.helper store &&
-> > +	git credential fill <<-\EOF >stdout 2>stderr &&
-> > +	protocol=https
-> > +	host=example.com
-> > +	EOF
-> > +	test_cmp expect-stdout stdout &&
-> > +	test_i18ngrep "ignoring invalid credential" stderr &&
-> > +	test_line_count = 3 stderr
+> Here, $command may or may not be a git command and more importantly,
+> it could be a shell function, right?  Then we need to take it into
+> account that 
 > 
-> The "ignoring invalid credential" message could be translated into
-> two or more lines, but I think that is worrying too much about
-> theoretical possibility, so checking line count would probably be
-> sufficient.
+> 	VAR=VAL shell_function args...
+> 
+> will not work, no?
+> 
+> Some shells do not make this a single-shot environment variable
+> assignment that will not persist once the single function invocation
+> returns.
 
-yes, and specially considering that if I even ended up adding a -c
-option to test_i18ngrep as I intended originally we will still the
-same issue.
+I looked through POSIX specification and it says under 2.9.1 Simple
+Comamnds,
 
-what is the preferred way to do something like this, or is it better
-to add a check for each line formatting issue this is handling?
+	If no command name results, variable assignments shall affect
+	the current execution environment. Otherwise, the variable
+	assignments shall be exported for the execution environment of
+	the command and shall not affect the current execution
+	environment (except for special built-ins).
 
-Carlo
+which makes me suspect that these shells are not POSIX-compliant. What
+are some examples of shells that behave this way?
+
+That being said, I know that we live in the real world and POSIX
+standards don't justify breaking test cases. I'll reroll this to add an
+`OVERWRITING_FAIL=` after the command to ensure that the variable is
+cleared.
+
+Thanks,
+
+Denton
