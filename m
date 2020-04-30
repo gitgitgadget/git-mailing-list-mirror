@@ -2,87 +2,126 @@ Return-Path: <SRS0=Fhy4=6O=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F174C83001
-	for <git@archiver.kernel.org>; Thu, 30 Apr 2020 05:32:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E03BC8300A
+	for <git@archiver.kernel.org>; Thu, 30 Apr 2020 09:22:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 460542073E
-	for <git@archiver.kernel.org>; Thu, 30 Apr 2020 05:32:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 671492173E
+	for <git@archiver.kernel.org>; Thu, 30 Apr 2020 09:22:27 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AaXodGyj"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726505AbgD3Fct (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Apr 2020 01:32:49 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:43052 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726180AbgD3Fct (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Apr 2020 01:32:49 -0400
-Received: by mail-wr1-f67.google.com with SMTP id i10so5213259wrv.10
-        for <git@vger.kernel.org>; Wed, 29 Apr 2020 22:32:46 -0700 (PDT)
+        id S1726396AbgD3JW0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Apr 2020 05:22:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40952 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726127AbgD3JW0 (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 30 Apr 2020 05:22:26 -0400
+Received: from mail-qk1-x743.google.com (mail-qk1-x743.google.com [IPv6:2607:f8b0:4864:20::743])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83D7FC035494
+        for <git@vger.kernel.org>; Thu, 30 Apr 2020 02:22:24 -0700 (PDT)
+Received: by mail-qk1-x743.google.com with SMTP id s9so2259009qkm.6
+        for <git@vger.kernel.org>; Thu, 30 Apr 2020 02:22:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=t+J++kcWoh6ia3r7B+YptHy8V39wO2ymBFelNNJlsyo=;
+        b=AaXodGyjZ+zqE+YxxvsoMn+tleH3P+A1N3FAM8Q5suxVyJy1dAyp42s2+hDu/7OE5h
+         cZ3C5kpj63KlemVfLzF9a0oBhl45+yzAgByDxkVUrl+plvJ+HsZnj+P6bQIY8NHZYKKr
+         pZ3L6k9157nyemjtsnUo9XdBNNov5nN9LK0y4L0wBuLhAjRxbf3r15gV5CCDZMHo22i6
+         QQKXCPthhL8HKTamZFmAgmflp9LIa7RaQ+AGcuKCcFnC+uBBREQph5CG+xmpin7AtfGV
+         zOu68HNMajo3b9soKqvhS20RfpTuNRK5UuHgUwd0xFteMz1POw258V9yq2b8cgsomNgT
+         r9Ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=sYDFdcAgWGhT+8Nzm/5yKbLQfo0Kg2f86K26PF8FOnI=;
-        b=YCowj0wO+1dPSRJWVGzARMoVTzdtJEYNolp10avXVjLMYr065iWXDpiAF09m8gtyxg
-         Kv/RWt1w7B18tHFLpxevmxDaPhROXZXr26lpcDtAUB7QgI+Gy0xnZUYJLLHnpTM+J4pq
-         j6kraElOBgp4y8p3qWJ8dQ0e+oBdFkSOFL3WthYYsdla473skK7Bb+DzEb7vCmqoj2kI
-         z5HNi/K59Kr4IXQ8wK6XFMNJNCJQ931XEEDGUz6UFyRm4FeQoBhXNODAqdiabcFR03SP
-         b1dr6ksAW1Mkt935R9/2A0Yg2525iFHv065vojCQn1yft5hD1TRYg6cX8V02hcEKUWHW
-         dWWA==
-X-Gm-Message-State: AGi0PuYDvzpkWBmJAiK+udqL96nBkrx48HBoYPCii5qdK+ikWfiQpgaC
-        aI12iTva6ijsEpn3yA0ON4Iyd/cj6zGsYWsbKEk=
-X-Google-Smtp-Source: APiQypKMn16MJwgY7ndmvb9VvMk9u7lx3eP6Mm4oeTfKaK6XYEN88mOLocezSBl69nq24rJQSk3g+/lIJISmpVBWBJ4=
-X-Received: by 2002:adf:fc4f:: with SMTP id e15mr1705999wrs.415.1588224765600;
- Wed, 29 Apr 2020 22:32:45 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=t+J++kcWoh6ia3r7B+YptHy8V39wO2ymBFelNNJlsyo=;
+        b=GrHQ+g3/XZo4XXVXi9qYMV9FFYnlXB/ct+Hljcu4zLNjSiKb3WaZ4oUnpB1eyM3tfo
+         H0fqjry+bwvx9c+Yp8EsGyT4UFQ/YkwmN/arr95OIbGaad7vSr3udOh3WWN7J5EBXbQi
+         LRC7NBzIuPvCNjkDe6xJuKmjioTml2PoDiXXeJco1KO7rZDCBw9ceXrmOr/wYJU4GbYg
+         AZdEg8byYBRdPZY9KmG8UP2MJUswqWMZWfxJq9C5csGW3tKClQ46/pFPJ5vYy6mhV139
+         2fJWsv1P7sTNbwQqOeEHGITNwzFWQCN1OFfVANrzMGyNykukNRhgWGaWQFP5DZvYs8Ig
+         0myw==
+X-Gm-Message-State: AGi0PuYo2QPj963zgLKAbqkXvhDzV4UEwmLYWY4RXLVStgKSRh9qnqXR
+        DN9JDvWwFRwzAX1ZQBDQz9Q=
+X-Google-Smtp-Source: APiQypLWzx/c03OkfElY5dfjIDWuO4/lFJEs3jmBTmagswxG3tlNBDI2iGCeLI1DSoAFrJVytLlCVw==
+X-Received: by 2002:ae9:eb52:: with SMTP id b79mr2607281qkg.300.1588238543673;
+        Thu, 30 Apr 2020 02:22:23 -0700 (PDT)
+Received: from generichostname (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.65.113])
+        by smtp.gmail.com with ESMTPSA id g47sm1711787qte.54.2020.04.30.02.22.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 30 Apr 2020 02:22:22 -0700 (PDT)
+Date:   Thu, 30 Apr 2020 05:22:20 -0400
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 4/4] lib-submodule-update: pass OVERWRITING_FAIL
+Message-ID: <20200430092220.GA25331@generichostname>
+References: <cover.1588162842.git.liu.denton@gmail.com>
+ <22eacd20a8213c3281974a6c103fd2d00c95efaa.1588162842.git.liu.denton@gmail.com>
+ <xmqqpnbqw0vz.fsf@gitster.c.googlers.com>
+ <20200430011056.GA3036@generichostname>
+ <xmqqd07ptzbw.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-References: <cover.1588199705.git.me@ttaylorr.com> <c0dc5024a9b368dfbca99b81bc843f66d725f3d7.1588199705.git.me@ttaylorr.com>
- <20200430031138.GC115238@google.com>
-In-Reply-To: <20200430031138.GC115238@google.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 30 Apr 2020 01:32:34 -0400
-Message-ID: <CAPig+cQOMJJQBi2KMqzzZQs-S1KVwzAxdfzEaUvSNskMtYkCrw@mail.gmail.com>
-Subject: Re: [PATCH 5/5] shallow: use struct 'shallow_lock' for additional safety
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqd07ptzbw.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 29, 2020 at 11:11 PM Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Taylor Blau wrote:
-> > +/*
-> > + * shallow_lock is a thin wrapper around 'struct lock_file' in order to restrict
-> > + * which locks can be used with '{commit,rollback}_shallow_file()'.
-> > + */
->
-> I think I disagree with Eric here: it's useful to have a comment here
-> to describe the purpose of the struct (i.e., the "why" as opposed to
-> the "what").
+On Wed, Apr 29, 2020 at 08:41:23PM -0700, Junio C Hamano wrote:
+> Denton Liu <liu.denton@gmail.com> writes:
+> 
+> >> Here, $command may or may not be a git command and more importantly,
+> >> it could be a shell function, right?  Then we need to take it into
+> >> account that 
+> >> 
+> >> 	VAR=VAL shell_function args...
+> >> 
+> >> will not work, no?
+> >> 
+> >> Some shells do not make this a single-shot environment variable
+> >> assignment that will not persist once the single function invocation
+> >> returns.
+> >
+> > ...
+> > which makes me suspect that these shells are not POSIX-compliant. What
+> > are some examples of shells that behave this way?
+> 
+> I think the most relevant thread is the one that contains this
+> message:
+> 
+>   https://public-inbox.org/git/7vljfzz0yd.fsf@alter.siamese.dyndns.org/
+> 
+> FWIW, shells that do not retain the assignment after a function
+> returns are not POSIX compliant.
 
-I'm not, in general, opposed to the structure being documented; it's
-just that the comment, as presented, doesn't seem to add value.
+Hmm, interesting. Running an experiment:
 
-> I wonder if we can go further, though --- when using a shallow_lock,
-> how should I think of it as a caller? In some sense, the use of
-> 'struct lock_file' is an implementation detail, so we could say:
->
->     /*
->     * Lock for updating the $GIT_DIR/shallow file.
->     *
->     * Use `commit_shallow_file()` to commit an update, or
->     * `rollback_shallow_file()` to roll it back. In either case,
->     * any in-memory cached information about which commits are
->     * shallow will be appropriately invalidated so that future
->     * operations reflect the new state.
->     */
->
-> What do you think?
+	$ cat test.sh
+	f () {
+		echo $var
+	}
 
-This comment makes more sense and wouldn't have led to me questioning
-its usefulness. Thanks.
+	var=test f
+	echo $var
+	$ bash test.sh
+	test
+
+	$ bash --posix test.sh
+	test
+	test
+	$ dash test.sh
+	test
+
+
+So it seems like there's a bug in dash. Guess it's time to file a bug
+report...
