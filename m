@@ -2,154 +2,448 @@ Return-Path: <SRS0=Fhy4=6O=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 34B05C8300A
-	for <git@archiver.kernel.org>; Thu, 30 Apr 2020 09:45:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 047AEC8300B
+	for <git@archiver.kernel.org>; Thu, 30 Apr 2020 10:25:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0AD0B2082E
-	for <git@archiver.kernel.org>; Thu, 30 Apr 2020 09:45:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BC41F20787
+	for <git@archiver.kernel.org>; Thu, 30 Apr 2020 10:25:29 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d2thGl+7"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c5Lsi3jx"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726420AbgD3JpU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Apr 2020 05:45:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44522 "EHLO
+        id S1726413AbgD3KZ2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Apr 2020 06:25:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50778 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726396AbgD3JpT (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 30 Apr 2020 05:45:19 -0400
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A790C035494
-        for <git@vger.kernel.org>; Thu, 30 Apr 2020 02:45:18 -0700 (PDT)
-Received: by mail-wr1-x442.google.com with SMTP id x17so6046959wrt.5
-        for <git@vger.kernel.org>; Thu, 30 Apr 2020 02:45:18 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1726127AbgD3KZ2 (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 30 Apr 2020 06:25:28 -0400
+Received: from mail-qv1-xf43.google.com (mail-qv1-xf43.google.com [IPv6:2607:f8b0:4864:20::f43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEC01C035494
+        for <git@vger.kernel.org>; Thu, 30 Apr 2020 03:25:26 -0700 (PDT)
+Received: by mail-qv1-xf43.google.com with SMTP id y19so2698713qvv.4
+        for <git@vger.kernel.org>; Thu, 30 Apr 2020 03:25:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=DZa5DuEz8uI9YlEpflZzrLGnNrEXtnEA1CyfNqTI9b4=;
-        b=d2thGl+7mOH/ZAVlF/z/R9G+OaH0BDwaL0LZjLihxkwOLrnoMDuIzBpTh1o8sfELGc
-         jvtHQKufP/iIIANwMMDFqEObIbTk4CnaS/kxlC2lJxl1mG6fSaYI2fEV8ZhDvKJkprvA
-         KVQsnYeP/Al1OgOxQLU4ZBiDXwvi/rIbtMS7R6FncVRhbLrEG3LoVUqTPHc+iJWEMEDH
-         RXw+9UPD3IZySE/+aIA/6nj9pGr7g1jRtJXuS8wUXEVLrE2uenmx5SPZo4zYoOMs5+Wo
-         dQtgst0agsYERfD8GBShd5dTgvLyFNwVmXHIPFC1MxcPj3HbdbAZE6IzEtDF+uqMYfN7
-         pPSg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=5A5MWVwn5UXNotysOtDS7LZzWQutmJZjV2HkTC7kKRs=;
+        b=c5Lsi3jxEoiXRttVg9RJItrZJ/VF8l6SpmDBxUVm3QWJfTaVrsCdeKPzLAztLipHds
+         T7wMVylSnqvO6lBQ7fxlVzY29P7+AAiFSbYm9CTqre4oyb3BWSyTm05ZH5G9AUMi9Baj
+         /uTsWnlWiGCBo+HiNSlYyZEAYgXyFLJv/zsl2DRh6eK6Hrvn+K+poMF6R/Ssw7ngBjyn
+         TAWXDcCBYHL5C2CyjFQ5Q9tF41xMmgt7B8J3r0d0c37VcpJRT4HuS71q/4cskc7UdvIM
+         C4Rii9lAIdgdjGohH6nqj68WqPidHu5P4tregTngoXvATYsmBnUHv40HzudlcfVCym92
+         mFig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=DZa5DuEz8uI9YlEpflZzrLGnNrEXtnEA1CyfNqTI9b4=;
-        b=t6Ka76wa2x5XyNZob4bzc6ULBuf6EnOzwBrhqPpkOjC11GPEkInmuf88mVlcrRpCfV
-         Cs63D1ECdoDE0TPqareGAT5Jtk7bxVIybEE1sItF8orQQWv8JNrq1DgGW0xGKqrpPrfL
-         xZ+yuHJG8WCaozFBfpspPvN925BAEqbT3fJwWDY00+r9PIZy1QmxCz2z/br/1iiHb/DJ
-         FTljMuCocsQOI1jMmLdlWtLVyLMpcqEQbvumb/cItHEj5YKsglnzA5gQPhl2rXmjzjlg
-         QamdgUyE7PDhC+GirbMDPdFhfaNtjFXtfbVDC0H/IGg/JiUNBtgPKJm2kJLwW2BBrqVN
-         iiMw==
-X-Gm-Message-State: AGi0Pua3LsfyjilqDGmoeMVW8OBCpwrzKIEB9fmYXTeq4sOjKBl5N5Ov
-        owrFhXxhwOFq+nB0lcoOjlXERmrH
-X-Google-Smtp-Source: APiQypL9C2Bf2y2zFBvKXK1KDTX76xS8AolP257YOxfXyBkZHO+Y/NXbQTOB3N+ThPNV03wjw2i4Rw==
-X-Received: by 2002:a05:6000:1008:: with SMTP id a8mr2952389wrx.189.1588239916876;
-        Thu, 30 Apr 2020 02:45:16 -0700 (PDT)
-Received: from [192.168.1.201] (155.20.198.146.dyn.plus.net. [146.198.20.155])
-        by smtp.googlemail.com with ESMTPSA id 19sm11314152wmo.3.2020.04.30.02.45.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Apr 2020 02:45:16 -0700 (PDT)
-Subject: Re: [PATCH] rebase: save autostash entry into stash reflog on --quit
-To:     Denton Liu <liu.denton@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-References: <353a67567a90aea8a90bce1de05d005c61b3b670.1588066252.git.liu.denton@gmail.com>
- <xmqqv9lj1k0c.fsf@gitster.c.googlers.com>
- <20200429002323.GB2570028@generichostname>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <a349bc81-2098-b2ae-76be-09b18b9229ef@gmail.com>
-Date:   Thu, 30 Apr 2020 10:45:15 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=5A5MWVwn5UXNotysOtDS7LZzWQutmJZjV2HkTC7kKRs=;
+        b=Uv2WUWGS3aBaJ5JOkQ+jf/tU6542ksDf6kqX8HAhZb46FUarE85J0lBFXDfiKShgRn
+         mbHlS9zN+PMdUnlAIZEP5pDpz+/iwhF8BaTr5TXe2xkH/55o61S2U1C3mn87UEZGTlYG
+         1vQF9h7q5rHWSD4YVE++GZG/w5YRYbrS5KwuB25zA5UTOimr2ebC8j+9ZDqa648irGTU
+         4VctZ8vEc9gvh9OM5bgsR0ll1lWZ0G6/DVbWMZYdh9bt9pXBjrYygjiLaW0d3jaN+qva
+         LWf4wS1B6cwJ5QaaZyrXX07DY/ofn1ol7kaUUlRK9rBUgJz4gkOpwcK1eKIHs/4Nnp40
+         aIvg==
+X-Gm-Message-State: AGi0Pubea+6vPk4j+e+h/jPtEVePOCDKKboHRcVZaEstfdUTGWndsNsk
+        KHDTf69N1d6n5Yl8dWdz5oDHE+b0
+X-Google-Smtp-Source: APiQypJzj/x6+PKJNnzoRU8WNCeWidJqrBNH/rniSTQKFd94w0llalVwRv9ENcEu/+g1MOWpg8Bpog==
+X-Received: by 2002:a0c:eb09:: with SMTP id j9mr2269974qvp.196.1588242325685;
+        Thu, 30 Apr 2020 03:25:25 -0700 (PDT)
+Received: from archbookpro.localdomain (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.65.113])
+        by smtp.gmail.com with ESMTPSA id j90sm1746871qte.20.2020.04.30.03.25.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 30 Apr 2020 03:25:25 -0700 (PDT)
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v1.1] lib-submodule-update: pass OVERWRITING_FAIL
+Date:   Thu, 30 Apr 2020 06:25:05 -0400
+Message-Id: <f0d8dcf7dc52fe5ad2f1e173cd744bfdeb55eb45.1588242122.git.liu.denton@gmail.com>
+X-Mailer: git-send-email 2.26.2.548.gbb00c8a0a9
+In-Reply-To: <22eacd20a8213c3281974a6c103fd2d00c95efaa.1588162842.git.liu.denton@gmail.com>
+References: <22eacd20a8213c3281974a6c103fd2d00c95efaa.1588162842.git.liu.denton@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20200429002323.GB2570028@generichostname>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Denton
+We are using `test_must_fail $command`. However, $command is not
+necessarily a git command; it could be a test helper function.
 
-On 29/04/2020 01:23, Denton Liu wrote:
-> Hi Junio,
-> 
-> On Tue, Apr 28, 2020 at 12:35:15PM -0700, Junio C Hamano wrote:
->>> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
->>> index f7a6033607..7d0c89a184 100644
->>> --- a/Documentation/git-rebase.txt
->>> +++ b/Documentation/git-rebase.txt
->>> @@ -256,7 +256,8 @@ See also INCOMPATIBLE OPTIONS below.
->>>  --quit::
->>>  	Abort the rebase operation but HEAD is not reset back to the
->>>  	original branch. The index and working tree are also left
->>> -	unchanged as a result.
->>> +	unchanged as a result. If a temporary stash entry was created
->>> +	using --autostash, it will be saved to the stash reflog.
->>
->> ... let's not do so for end-user facing documentation.  "..., it
->> will be stashed away".  Or we may not even want to say anything; any
->> "--autostash" user would expect that the changes that were stashed
->> before "rebase" started would not be discarded, and this change may
->> just be a bugfix.
-> 
-> Hmm, in this case, git-merge.txt may need an update as well. From
-> 'dl/merge-autostash', 
-> 
-> 	'git merge --abort' is equivalent to 'git reset --merge' when
-> 	`MERGE_HEAD` is present unless `MERGE_AUTOSTASH` is also present in
-> 	which case 'git merge --abort' applies the stash entry to the worktree
-> 	whereas 'git reset --merge' will save the stashed changes in the stash
-> 	reflog.
-> 
-> and
-> 
-> 	--quit::
-> 		Forget about the current merge in progress. Leave the index
-> 		and the working tree as-is. If `MERGE_AUTOSTASH` is present, the
-> 		stash entry will be saved to the stash reflog.
-> 
-> both need to be amended to remove the reference to the "stash reflog".
+In an effort to stop using test_must_fail with non-git commands, instead
+of invoking `test_must_fail $command`, run
+`OVERWRITING_FAIL=test_must_fail $command` instead. Increase the
+granularity of the test helper functions by specifically choosing the
+individual git invocation which is designed to fail.
 
-I agree that it would be good to have the documentation for rebase and
-merge match in this case
+This is useful because currently, when we run a test helper function, we
+just mark the whole thing as `test_must_fail`. However, it's possible
+that the helper function might fail earlier or later than expected due
+to an introduced bug. If this happens, then the test case will still
+report as passing but it should really be marked as failing since it
+didn't actually display the intended behaviour.
 
-> When I was writing this documentation, I wanted to distinguish between
-> the temporary autostash entry and the actual stash since the autostash
-> entry isn't pushed to the stash unless there are conflicts or it's
-> explicitly saved. I'm not sure that something like "If a temporary stash
-> entry was created using --autostash, it will be stashed away" works very
-> well since the word "stash" is overloaded here to mean "a random stash
-> commit" and "stashed away in _the_ stash". Unfortunately, I'm also
-> having trouble coming up with a suitable phrasing of my own.
+While we're at it, some helper functions have git commands piping into
+another git command. Break these pipes up into two separate invocations
+with a file buffer so that the return code of the first command is not
+lost.
 
-It's tricky to distinguish between the two, when I was reviewing the
-merge --autostash patches I was wary of the mention of the stash reflog
-but could not come up with anything better to distinguish between
-remembering the stash oid and saving it to the list of stashes. I'm not
-too bothered what we end up doing so long as it is consistent across the
-commands.
+This patch can be better viewed with `--ignore-all-space`.
 
-Best Wishes
+Signed-off-by: Denton Liu <liu.denton@gmail.com>
+---
+Range-diff against v1:
+1:  22eacd20a8 ! 1:  f0d8dcf7dc lib-submodule-update: pass OVERWRITING_FAIL
+    @@ Commit message
+         granularity of the test helper functions by specifically choosing the
+         individual git invocation which is designed to fail.
+     
+    +    This is useful because currently, when we run a test helper function, we
+    +    just mark the whole thing as `test_must_fail`. However, it's possible
+    +    that the helper function might fail earlier or later than expected due
+    +    to an introduced bug. If this happens, then the test case will still
+    +    report as passing but it should really be marked as failing since it
+    +    didn't actually display the intended behaviour.
+    +
+         While we're at it, some helper functions have git commands piping into
+         another git command. Break these pipes up into two separate invocations
+         with a file buffer so that the return code of the first command is not
+    @@ t/lib-submodule-update.sh: test_submodule_switch_common () {
+      			git branch -t replace_sub1_with_directory origin/replace_sub1_with_directory &&
+     -			test_must_fail $command replace_sub1_with_directory &&
+     +			OVERWRITING_FAIL=test_must_fail $command replace_sub1_with_directory &&
+    ++			OVERWRITING_FAIL= &&
+      			test_superproject_content origin/add_sub1 &&
+      			test_submodule_content sub1 origin/add_sub1
+      		)
 
-Phillip
+ t/lib-submodule-update.sh   | 26 ++++++++++++++++++--------
+ t/t3426-rebase-submodule.sh |  4 ++--
+ t/t3513-revert-submodule.sh | 20 ++++++++++++--------
+ t/t3906-stash-submodule.sh  | 15 +++++++++------
+ t/t4137-apply-submodule.sh  |  6 ++++--
+ t/t4255-am-submodule.sh     |  6 ++++--
+ t/t5572-pull-submodule.sh   |  8 ++++----
+ t/t6041-bisect-submodule.sh | 33 ++++++++++++++++++---------------
+ 8 files changed, 71 insertions(+), 47 deletions(-)
 
-> I dunno, perhaps I'm overthinking this too and your suggested rewording
-> sounds good and I'm just being too picky.
-> 
-> Thanks,
-> 
-> Denton
-> 
+diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
+index cd80d77707..f61c3b43df 100644
+--- a/t/lib-submodule-update.sh
++++ b/t/lib-submodule-update.sh
+@@ -304,12 +304,15 @@ test_submodule_content () {
+ # a removed submodule.
+ #
+ # Removing a submodule containing a .git directory must fail even when forced
+-# to protect the history!
++# to protect the history! If we are testing this case,
++# OVERWRITING_FAIL=test_must_fail, otherwise OVERWRITING_FAIL will be the empty
++# string.
+ #
+ 
+ # Internal function; use test_submodule_switch_func(), test_submodule_switch_func(),
+ # or test_submodule_forced_switch() instead.
+ test_submodule_switch_common () {
++	OVERWRITING_FAIL=
+ 	command="$1"
+ 	######################### Appearing submodule #########################
+ 	# Switching to a commit letting a submodule appear creates empty dir ...
+@@ -443,7 +446,8 @@ test_submodule_switch_common () {
+ 		(
+ 			cd submodule_update &&
+ 			git branch -t replace_sub1_with_directory origin/replace_sub1_with_directory &&
+-			test_must_fail $command replace_sub1_with_directory &&
++			OVERWRITING_FAIL=test_must_fail $command replace_sub1_with_directory &&
++			OVERWRITING_FAIL= &&
+ 			test_superproject_content origin/add_sub1 &&
+ 			test_submodule_content sub1 origin/add_sub1
+ 		)
+@@ -456,7 +460,7 @@ test_submodule_switch_common () {
+ 			cd submodule_update &&
+ 			git branch -t replace_sub1_with_directory origin/replace_sub1_with_directory &&
+ 			replace_gitfile_with_git_dir sub1 &&
+-			test_must_fail $command replace_sub1_with_directory &&
++			OVERWRITING_FAIL=test_must_fail $command replace_sub1_with_directory &&
+ 			test_superproject_content origin/add_sub1 &&
+ 			test_git_directory_is_unchanged sub1 &&
+ 			test_submodule_content sub1 origin/add_sub1
+@@ -470,7 +474,7 @@ test_submodule_switch_common () {
+ 		(
+ 			cd submodule_update &&
+ 			git branch -t replace_sub1_with_file origin/replace_sub1_with_file &&
+-			test_must_fail $command replace_sub1_with_file &&
++			OVERWRITING_FAIL=test_must_fail $command replace_sub1_with_file &&
+ 			test_superproject_content origin/add_sub1 &&
+ 			test_submodule_content sub1 origin/add_sub1
+ 		)
+@@ -484,7 +488,7 @@ test_submodule_switch_common () {
+ 			cd submodule_update &&
+ 			git branch -t replace_sub1_with_file origin/replace_sub1_with_file &&
+ 			replace_gitfile_with_git_dir sub1 &&
+-			test_must_fail $command replace_sub1_with_file &&
++			OVERWRITING_FAIL=test_must_fail $command replace_sub1_with_file &&
+ 			test_superproject_content origin/add_sub1 &&
+ 			test_git_directory_is_unchanged sub1 &&
+ 			test_submodule_content sub1 origin/add_sub1
+@@ -559,6 +563,11 @@ test_submodule_switch_common () {
+ # conditions, set the appropriate KNOWN_FAILURE_* variable used in the tests
+ # below to 1.
+ #
++# Removing a submodule containing a .git directory must fail even when forced
++# to protect the history! If we are testing this case,
++# OVERWRITING_FAIL=test_must_fail, otherwise OVERWRITING_FAIL will be the empty
++# string.
++#
+ # Use as follows:
+ #
+ # my_func () {
+@@ -568,6 +577,7 @@ test_submodule_switch_common () {
+ # }
+ # test_submodule_switch_func "my_func"
+ test_submodule_switch_func () {
++	OVERWRITING_FAIL=
+ 	command="$1"
+ 	test_submodule_switch_common "$command"
+ 
+@@ -580,7 +590,7 @@ test_submodule_switch_func () {
+ 			cd submodule_update &&
+ 			git branch -t add_sub1 origin/add_sub1 &&
+ 			>sub1 &&
+-			test_must_fail $command add_sub1 &&
++			OVERWRITING_FAIL=test_must_fail $command add_sub1 &&
+ 			test_superproject_content origin/no_submodule &&
+ 			test_must_be_empty sub1
+ 		)
+@@ -588,7 +598,7 @@ test_submodule_switch_func () {
+ }
+ 
+ test_submodule_switch () {
+-	test_submodule_switch_func "git $1"
++	test_submodule_switch_func "eval \$OVERWRITING_FAIL git $1"
+ }
+ 
+ # Same as test_submodule_switch(), except that throwing away local changes in
+@@ -596,7 +606,7 @@ test_submodule_switch () {
+ test_submodule_forced_switch () {
+ 	command="$1"
+ 	KNOWN_FAILURE_FORCED_SWITCH_TESTS=1
+-	test_submodule_switch_common "git $command"
++	test_submodule_switch_common "eval \$OVERWRITING_FAIL git $command"
+ 
+ 	# When forced, a file in the superproject does not prevent creating a
+ 	# submodule of the same name.
+diff --git a/t/t3426-rebase-submodule.sh b/t/t3426-rebase-submodule.sh
+index 788605ccc0..c6a7f584ed 100755
+--- a/t/t3426-rebase-submodule.sh
++++ b/t/t3426-rebase-submodule.sh
+@@ -17,7 +17,7 @@ git_rebase () {
+ 	git status -su >actual &&
+ 	ls -1pR * >>actual &&
+ 	test_cmp expect actual &&
+-	git rebase "$1"
++	$OVERWRITING_FAIL git rebase "$1"
+ }
+ 
+ test_submodule_switch_func "git_rebase"
+@@ -35,7 +35,7 @@ git_rebase_interactive () {
+ 	test_cmp expect actual &&
+ 	set_fake_editor &&
+ 	echo "fake-editor.sh" >.git/info/exclude &&
+-	git rebase -i "$1"
++	$OVERWRITING_FAIL git rebase -i "$1"
+ }
+ 
+ test_submodule_switch_func "git_rebase_interactive"
+diff --git a/t/t3513-revert-submodule.sh b/t/t3513-revert-submodule.sh
+index 95a7f64471..6c899db7e1 100755
+--- a/t/t3513-revert-submodule.sh
++++ b/t/t3513-revert-submodule.sh
+@@ -15,14 +15,18 @@ git_revert () {
+ 	git status -su >expect &&
+ 	ls -1pR * >>expect &&
+ 	tar cf "$TRASH_DIRECTORY/tmp.tar" * &&
+-	git checkout "$1" &&
+-	git revert HEAD &&
+-	rm -rf * &&
+-	tar xf "$TRASH_DIRECTORY/tmp.tar" &&
+-	git status -su >actual &&
+-	ls -1pR * >>actual &&
+-	test_cmp expect actual &&
+-	git revert HEAD
++	$OVERWRITING_FAIL git checkout "$1" &&
++	if test -z "$OVERWRITING_FAIL"
++	then
++		git checkout "$1" &&
++		git revert HEAD &&
++		rm -rf * &&
++		tar xf "$TRASH_DIRECTORY/tmp.tar" &&
++		git status -su >actual &&
++		ls -1pR * >>actual &&
++		test_cmp expect actual &&
++		git revert HEAD
++	fi
+ }
+ 
+ KNOWN_FAILURE_NOFF_MERGE_DOESNT_CREATE_EMPTY_SUBMODULE_DIR=1
+diff --git a/t/t3906-stash-submodule.sh b/t/t3906-stash-submodule.sh
+index 6a7e801ca0..860940072d 100755
+--- a/t/t3906-stash-submodule.sh
++++ b/t/t3906-stash-submodule.sh
+@@ -8,12 +8,15 @@ test_description='stash can handle submodules'
+ git_stash () {
+ 	git status -su >expect &&
+ 	ls -1pR * >>expect &&
+-	git read-tree -u -m "$1" &&
+-	git stash &&
+-	git status -su >actual &&
+-	ls -1pR * >>actual &&
+-	test_cmp expect actual &&
+-	git stash apply
++	$OVERWRITING_FAIL git read-tree -u -m "$1" &&
++	if test -z "$OVERWRITING_FAIL"
++	then
++		git stash &&
++		git status -su >actual &&
++		ls -1pR * >>actual &&
++		test_cmp expect actual &&
++		git stash apply
++	fi
+ }
+ 
+ KNOWN_FAILURE_STASH_DOES_IGNORE_SUBMODULE_CHANGES=1
+diff --git a/t/t4137-apply-submodule.sh b/t/t4137-apply-submodule.sh
+index b645e303a0..dd08d9e1a4 100755
+--- a/t/t4137-apply-submodule.sh
++++ b/t/t4137-apply-submodule.sh
+@@ -6,13 +6,15 @@ test_description='git apply handling submodules'
+ . "$TEST_DIRECTORY"/lib-submodule-update.sh
+ 
+ apply_index () {
+-	git diff --ignore-submodules=dirty "..$1" | git apply --index -
++	git diff --ignore-submodules=dirty "..$1" >diff &&
++	$OVERWRITING_FAIL git apply --index - <diff
+ }
+ 
+ test_submodule_switch_func "apply_index"
+ 
+ apply_3way () {
+-	git diff --ignore-submodules=dirty "..$1" | git apply --3way -
++	git diff --ignore-submodules=dirty "..$1" >diff &&
++	$OVERWRITING_FAIL git apply --3way - <diff
+ }
+ 
+ test_submodule_switch_func "apply_3way"
+diff --git a/t/t4255-am-submodule.sh b/t/t4255-am-submodule.sh
+index 1b179d5f45..b0fe78a956 100755
+--- a/t/t4255-am-submodule.sh
++++ b/t/t4255-am-submodule.sh
+@@ -6,13 +6,15 @@ test_description='git am handling submodules'
+ . "$TEST_DIRECTORY"/lib-submodule-update.sh
+ 
+ am () {
+-	git format-patch --stdout --ignore-submodules=dirty "..$1" | git am -
++	git format-patch --stdout --ignore-submodules=dirty "..$1" >patch &&
++	$OVERWRITING_FAIL git am - <patch
+ }
+ 
+ test_submodule_switch_func "am"
+ 
+ am_3way () {
+-	git format-patch --stdout --ignore-submodules=dirty "..$1" | git am --3way -
++	git format-patch --stdout --ignore-submodules=dirty "..$1" >patch &&
++	$OVERWRITING_FAIL git am --3way - <patch
+ }
+ 
+ KNOWN_FAILURE_NOFF_MERGE_ATTEMPTS_TO_MERGE_REMOVED_SUBMODULE_FILES=1
+diff --git a/t/t5572-pull-submodule.sh b/t/t5572-pull-submodule.sh
+index f911bf631e..4dd9913b6b 100755
+--- a/t/t5572-pull-submodule.sh
++++ b/t/t5572-pull-submodule.sh
+@@ -13,7 +13,7 @@ reset_branch_to_HEAD () {
+ 
+ git_pull () {
+ 	reset_branch_to_HEAD "$1" &&
+-	git pull
++	$OVERWRITING_FAIL git pull
+ }
+ 
+ # pulls without conflicts
+@@ -21,21 +21,21 @@ test_submodule_switch_func "git_pull"
+ 
+ git_pull_ff () {
+ 	reset_branch_to_HEAD "$1" &&
+-	git pull --ff
++	$OVERWRITING_FAIL git pull --ff
+ }
+ 
+ test_submodule_switch_func "git_pull_ff"
+ 
+ git_pull_ff_only () {
+ 	reset_branch_to_HEAD "$1" &&
+-	git pull --ff-only
++	$OVERWRITING_FAIL git pull --ff-only
+ }
+ 
+ test_submodule_switch_func "git_pull_ff_only"
+ 
+ git_pull_noff () {
+ 	reset_branch_to_HEAD "$1" &&
+-	git pull --no-ff
++	$OVERWRITING_FAIL git pull --no-ff
+ }
+ 
+ KNOWN_FAILURE_NOFF_MERGE_DOESNT_CREATE_EMPTY_SUBMODULE_DIR=1
+diff --git a/t/t6041-bisect-submodule.sh b/t/t6041-bisect-submodule.sh
+index 0e0cdf638d..714d393899 100755
+--- a/t/t6041-bisect-submodule.sh
++++ b/t/t6041-bisect-submodule.sh
+@@ -10,21 +10,24 @@ git_bisect () {
+ 	ls -1pR * >>expect &&
+ 	tar cf "$TRASH_DIRECTORY/tmp.tar" * &&
+ 	GOOD=$(git rev-parse --verify HEAD) &&
+-	git checkout "$1" &&
+-	echo "foo" >bar &&
+-	git add bar &&
+-	git commit -m "bisect bad" &&
+-	BAD=$(git rev-parse --verify HEAD) &&
+-	git reset --hard HEAD^^ &&
+-	git submodule update &&
+-	git bisect start &&
+-	git bisect good $GOOD &&
+-	rm -rf * &&
+-	tar xf "$TRASH_DIRECTORY/tmp.tar" &&
+-	git status -su >actual &&
+-	ls -1pR * >>actual &&
+-	test_cmp expect actual &&
+-	git bisect bad $BAD
++	$OVERWRITING_FAIL git checkout "$1" &&
++	if test -z "$OVERWRITING_FAIL"
++	then
++		echo "foo" >bar &&
++		git add bar &&
++		git commit -m "bisect bad" &&
++		BAD=$(git rev-parse --verify HEAD) &&
++		git reset --hard HEAD^^ &&
++		git submodule update &&
++		git bisect start &&
++		git bisect good $GOOD &&
++		rm -rf * &&
++		tar xf "$TRASH_DIRECTORY/tmp.tar" &&
++		git status -su >actual &&
++		ls -1pR * >>actual &&
++		test_cmp expect actual &&
++		git bisect bad $BAD
++	fi
+ }
+ 
+ test_submodule_switch_func "git_bisect"
+-- 
+2.26.2.548.gbb00c8a0a9
 
