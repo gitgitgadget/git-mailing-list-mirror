@@ -2,94 +2,87 @@ Return-Path: <SRS0=Fhy4=6O=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1312BC83001
-	for <git@archiver.kernel.org>; Thu, 30 Apr 2020 03:43:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F174C83001
+	for <git@archiver.kernel.org>; Thu, 30 Apr 2020 05:32:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C4F2420709
-	for <git@archiver.kernel.org>; Thu, 30 Apr 2020 03:43:30 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=riseup.net header.i=@riseup.net header.b="nwjqie+U"
+	by mail.kernel.org (Postfix) with ESMTP id 460542073E
+	for <git@archiver.kernel.org>; Thu, 30 Apr 2020 05:32:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726435AbgD3Dna (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Apr 2020 23:43:30 -0400
-Received: from mx1.riseup.net ([198.252.153.129]:57570 "EHLO mx1.riseup.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726309AbgD3Dn3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Apr 2020 23:43:29 -0400
-Received: from capuchin.riseup.net (unknown [10.0.1.176])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (Client CN "*.riseup.net", Issuer "Sectigo RSA Domain Validation Secure Server CA" (not verified))
-        by mx1.riseup.net (Postfix) with ESMTPS id 49CLns2jqszFdgj;
-        Wed, 29 Apr 2020 20:43:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=riseup.net; s=squak;
-        t=1588218209; bh=dMtv+FUrSiBruNF0hfCTk/VDpUqSP84q28qeoUtJoUQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=nwjqie+UzDlUnGsJg0kSQuMcQ7seULcwoPLvjrzi7bMWITIsWHuzARUogzTqxCBC+
-         UBc0AkteVWZFKbe6BfdsCLrUkKon8mFNB4s1prr3qSMknSjBro15M+e/1yXeBHJV6t
-         OMUZgwSlD5rz90aLecRpW7kSigrdTfdbcqBxLnm8=
-X-Riseup-User-ID: C8CDA91405CEB3D8C2403F9A9BC29AFF81F9295A82086859C12B6016F858CFD0
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-         by capuchin.riseup.net (Postfix) with ESMTPSA id 49CLnq3cRVz8vMp;
-        Wed, 29 Apr 2020 20:43:27 -0700 (PDT)
-Date:   Thu, 30 Apr 2020 11:43:23 +0800
-From:   Ivan Tham <pickfire@riseup.net>
-To:     Sergey Organov <sorganov@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        "brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH] branch: add '-' to delete previous branch
-Message-ID: <20200430034323.wwsxzru7pcw2xsju@arch>
-References: <20200429130133.520981-1-pickfire@riseup.net>
- <877dxyo1k8.fsf@osv.gnss.ru>
- <20200429190013.GG83442@syl.local>
- <87v9likr5a.fsf@osv.gnss.ru>
+        id S1726505AbgD3Fct (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Apr 2020 01:32:49 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:43052 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726180AbgD3Fct (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Apr 2020 01:32:49 -0400
+Received: by mail-wr1-f67.google.com with SMTP id i10so5213259wrv.10
+        for <git@vger.kernel.org>; Wed, 29 Apr 2020 22:32:46 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=sYDFdcAgWGhT+8Nzm/5yKbLQfo0Kg2f86K26PF8FOnI=;
+        b=YCowj0wO+1dPSRJWVGzARMoVTzdtJEYNolp10avXVjLMYr065iWXDpiAF09m8gtyxg
+         Kv/RWt1w7B18tHFLpxevmxDaPhROXZXr26lpcDtAUB7QgI+Gy0xnZUYJLLHnpTM+J4pq
+         j6kraElOBgp4y8p3qWJ8dQ0e+oBdFkSOFL3WthYYsdla473skK7Bb+DzEb7vCmqoj2kI
+         z5HNi/K59Kr4IXQ8wK6XFMNJNCJQ931XEEDGUz6UFyRm4FeQoBhXNODAqdiabcFR03SP
+         b1dr6ksAW1Mkt935R9/2A0Yg2525iFHv065vojCQn1yft5hD1TRYg6cX8V02hcEKUWHW
+         dWWA==
+X-Gm-Message-State: AGi0PuYDvzpkWBmJAiK+udqL96nBkrx48HBoYPCii5qdK+ikWfiQpgaC
+        aI12iTva6ijsEpn3yA0ON4Iyd/cj6zGsYWsbKEk=
+X-Google-Smtp-Source: APiQypKMn16MJwgY7ndmvb9VvMk9u7lx3eP6Mm4oeTfKaK6XYEN88mOLocezSBl69nq24rJQSk3g+/lIJISmpVBWBJ4=
+X-Received: by 2002:adf:fc4f:: with SMTP id e15mr1705999wrs.415.1588224765600;
+ Wed, 29 Apr 2020 22:32:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
-In-Reply-To: <87v9likr5a.fsf@osv.gnss.ru>
+References: <cover.1588199705.git.me@ttaylorr.com> <c0dc5024a9b368dfbca99b81bc843f66d725f3d7.1588199705.git.me@ttaylorr.com>
+ <20200430031138.GC115238@google.com>
+In-Reply-To: <20200430031138.GC115238@google.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 30 Apr 2020 01:32:34 -0400
+Message-ID: <CAPig+cQOMJJQBi2KMqzzZQs-S1KVwzAxdfzEaUvSNskMtYkCrw@mail.gmail.com>
+Subject: Re: [PATCH 5/5] shallow: use struct 'shallow_lock' for additional safety
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 29, 2020 at 10:50:41PM +0300, Sergey Organov wrote:
->Taylor Blau <me@ttaylorr.com> writes:
+On Wed, Apr 29, 2020 at 11:11 PM Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Taylor Blau wrote:
+> > +/*
+> > + * shallow_lock is a thin wrapper around 'struct lock_file' in order to restrict
+> > + * which locks can be used with '{commit,rollback}_shallow_file()'.
+> > + */
 >
->> In my opinion, it is fairly clear that 'git branch -D -' means "delete
->> the last branch", and not "delete a list of branches from stdin.
->
->Honestly, I'd never guess it'd "delete the last branch". No way.
->
->"-" standing by itself in a command means stdin, stdout, or otherwise a
->typo. Using it for any other meaning is a blasphemy. Sure, nobody will
->die because of this, but it's /extremely/ confusing!
->
->BTW, what about mistyping:
->
->$ git branch -d - f my_branch
->
->for
->
->$ git branch -d -f my_branch
->
->or some such?
+> I think I disagree with Eric here: it's useful to have a comment here
+> to describe the purpose of the struct (i.e., the "why" as opposed to
+> the "what").
 
-I already knew `git checkout -` and `git switch -` exists and have been
-using them quite frequently as my workflow, but when I wanted to go back
-to my original branch and delete the branch, I tried `git branch -D -`
-quite a few times and I am surprised it does not work as expected.
+I'm not, in general, opposed to the structure being documented; it's
+just that the comment, as presented, doesn't seem to add value.
 
-Yes, that typo would have deleted a branch but it could be restored from
-reflog at the very least.
-
->No, it still doesn't look like a good idea to use isolated '-' as
->suggested by the patch.
+> I wonder if we can go further, though --- when using a shallow_lock,
+> how should I think of it as a caller? In some sense, the use of
+> 'struct lock_file' is an implementation detail, so we could say:
 >
->OTOH, for otherwise unusual @{-1}, @{-}, or @- I'd immediately realize I
->must consult the manual, so these would be fine with me.
+>     /*
+>     * Lock for updating the $GIT_DIR/shallow file.
+>     *
+>     * Use `commit_shallow_file()` to commit an update, or
+>     * `rollback_shallow_file()` to roll it back. In either case,
+>     * any in-memory cached information about which commits are
+>     * shallow will be appropriately invalidated so that future
+>     * operations reflect the new state.
+>     */
+>
+> What do you think?
 
-But yes, I didn't know @{-1} or @{-} or @- exists before I was sending
-this patch, I only know I can use - which is very simple.
+This comment makes more sense and wouldn't have led to me questioning
+its usefulness. Thanks.
