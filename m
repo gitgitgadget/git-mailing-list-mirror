@@ -6,56 +6,85 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CCB7C47254
-	for <git@archiver.kernel.org>; Fri,  1 May 2020 07:31:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 152FFC47254
+	for <git@archiver.kernel.org>; Fri,  1 May 2020 07:32:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 20E69214D8
-	for <git@archiver.kernel.org>; Fri,  1 May 2020 07:31:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E56572166E
+	for <git@archiver.kernel.org>; Fri,  1 May 2020 07:32:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728325AbgEAHbP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 1 May 2020 03:31:15 -0400
-Received: from cloud.peff.net ([104.130.231.41]:33378 "HELO cloud.peff.net"
+        id S1728334AbgEAHcY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 1 May 2020 03:32:24 -0400
+Received: from cloud.peff.net ([104.130.231.41]:33394 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726452AbgEAHbO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 May 2020 03:31:14 -0400
-Received: (qmail 2418 invoked by uid 109); 1 May 2020 07:31:14 -0000
+        id S1726452AbgEAHcX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 May 2020 03:32:23 -0400
+Received: (qmail 2432 invoked by uid 109); 1 May 2020 07:32:23 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 01 May 2020 07:31:14 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 01 May 2020 07:32:23 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15914 invoked by uid 111); 1 May 2020 07:31:14 -0000
+Received: (qmail 15940 invoked by uid 111); 1 May 2020 07:32:23 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 01 May 2020 03:31:14 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 01 May 2020 03:32:23 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Fri, 1 May 2020 03:31:13 -0400
+Date:   Fri, 1 May 2020 03:32:22 -0400
 From:   Jeff King <peff@peff.net>
-To:     Andreas Schwab <schwab@linux-m68k.org>
-Cc:     Junio C Hamano <gitster@pobox.com>, douglas.fuller@gmail.com,
-        git@vger.kernel.org
-Subject: Re: [PATCH 1/2] gitcredentials(7): clarify quoting of helper examples
-Message-ID: <20200501073113.GA27392@coredump.intra.peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     douglas.fuller@gmail.com, git@vger.kernel.org
+Subject: Re: [PATCH 2/2] gitcredentials(7): make shell-snippet example more
+ realistic
+Message-ID: <20200501073222.GB27392@coredump.intra.peff.net>
 References: <20200501061917.GC23665@coredump.intra.peff.net>
- <20200501062039.GA25603@coredump.intra.peff.net>
- <87tv10i0ll.fsf@linux-m68k.org>
+ <20200501062316.GB25603@coredump.intra.peff.net>
+ <xmqqy2qcnpb4.fsf@gitster.c.googlers.com>
+ <20200501063207.GA26128@coredump.intra.peff.net>
+ <20200501063513.GB26128@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <87tv10i0ll.fsf@linux-m68k.org>
+In-Reply-To: <20200501063513.GB26128@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 01, 2020 at 09:19:18AM +0200, Andreas Schwab wrote:
+On Fri, May 01, 2020 at 02:35:13AM -0400, Jeff King wrote:
 
-> On Mai 01 2020, Jeff King wrote:
+> On Fri, May 01, 2020 at 02:32:07AM -0400, Jeff King wrote:
 > 
-> >  # or you can specify your own shell snippet
-> > -!f() { echo "password=`cat $HOME/.secret`"; }; f
-> > +[credential]
-> > +helper = "!f() { echo password=$(cat $HOME/.secret); }; f"
+> > > All of them make sense, but I do not think we want to encourage that
+> > > loose style of passing unquoted argument to echo to lose embedded
+> > > $IFS spaces that is not a SP.
+> > 
+> > You mean dropping the quotes in the first patch?
+> > 
+> > Doing:
+> > 
+> >   echo "password=$(cat $HOME/.secret)"
+> > 
+> > already eats some trailing whitespace, though I guess if you have
+> > newlines in your password you are beyond help anyway.
+> > 
+> > I can add back in the quoted \", though it does make the code slightly
+> > harder to read.
 > 
-> That now lacks a pair of quotes around the argument of echo.
+> Or did you mean passing $1 in the test call? It definitely isn't good
+> shell practice, but we know that we're getting a single-word action from
+> Git, per the protocol.
+> 
+> Fully quoting, it looks like this:
+> 
+>   helper = "!f() { test \"$1\" = get && echo \"password=$(cat $HOME/.secret)\"; }; f"
+> 
+> which IMHO is getting a little hard to read. I think that's part of why
+> I gave such an unfinished example in the first place. :)
 
-Right, as discussed in the commit message.
+So I dunno. That's ugly, but I don't think is worth nitpicking over
+more. So here it is with indentation and full-on quoting.
+
+  [1/2]: gitcredentials(7): clarify quoting of helper examples
+  [2/2]: gitcredentials(7): make shell-snippet example more realistic
+
+ Documentation/gitcredentials.txt | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
 -Peff
