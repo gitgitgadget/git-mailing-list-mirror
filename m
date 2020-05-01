@@ -7,197 +7,125 @@ X-Spam-Status: No, score=-6.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B951C47254
-	for <git@archiver.kernel.org>; Fri,  1 May 2020 23:06:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 85A9FC47256
+	for <git@archiver.kernel.org>; Fri,  1 May 2020 23:10:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 71528208DB
-	for <git@archiver.kernel.org>; Fri,  1 May 2020 23:06:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5F764216FD
+	for <git@archiver.kernel.org>; Fri,  1 May 2020 23:10:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="mjajcLxc"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="XGp9qpW9"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726336AbgEAXGf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 1 May 2020 19:06:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56670 "EHLO
+        id S1726336AbgEAXKq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 1 May 2020 19:10:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57320 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726045AbgEAXGf (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 1 May 2020 19:06:35 -0400
-Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00333C061A0C
-        for <git@vger.kernel.org>; Fri,  1 May 2020 16:06:34 -0700 (PDT)
-Received: by mail-pl1-x642.google.com with SMTP id t7so4161909plr.0
-        for <git@vger.kernel.org>; Fri, 01 May 2020 16:06:34 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1726045AbgEAXKq (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 1 May 2020 19:10:46 -0400
+Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADB85C061A0C
+        for <git@vger.kernel.org>; Fri,  1 May 2020 16:10:44 -0700 (PDT)
+Received: by mail-pg1-x542.google.com with SMTP id r4so5201834pgg.4
+        for <git@vger.kernel.org>; Fri, 01 May 2020 16:10:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=yReG/qE4lnMuppF8Tubt7vMKbcs2HHd+mtiATnhZ9GU=;
-        b=mjajcLxccgNnc0AzcJoXYXSA2KrZ7sasxICqsxTNmRQ1lNjI/kSbwiswVM+Wxz63EL
-         jawbPalrcI3KV1Yd7I0iwdQozj9yVhBWaukP7SjAGA7gC37fAsRrxylw/16kl6A+mL7w
-         t0+lM6iyuyxtGMP/1trU7UvnxtMOJW4uEF20khptKFt+9YGlWrfeVGTa9jEbXXW6GjlX
-         Wle1cgVJ1atH3U5tJ+DYX6VZho1EsFZU2BczHEBVn2jXWrG8vCkGb/xgF0ys/RuZ8+aA
-         vLmVg3oyC9z/vGrx4tB/53GLloPbzwGI7gpXLxyTxQvLntW39c3CdNfKLS879COaOlTP
-         IP6g==
+        bh=sUG28fThwNZWu1+IhTPXdH+rfq4bZLz40PZC69kH9bE=;
+        b=XGp9qpW9ipdMD7bV9+dencANK1l2Z5AeCgaOekt/IepAeT0UuN99XlcO9pa8uhYjhn
+         OvU1SGMLGuG7MycmSlqYcYiLRoCLDhutFK/CBO5JPJHfEuKseAm+hJjlMYcLcV9+Mdbs
+         L+GJ7da7RkW6fPwXcx3T14OFeJXulzI1euWy2MO5RwPtGy9+MXzV26EeDEPmuDsmrKuF
+         w1PVpgSl7c+JFRkb5LsBATvkEDdboRn2gBgoD8QqXFwDRKOt7UwJsYY3MbWNppzuVBPD
+         GT4ZylFVQgHJWvVmGTSdozlxMZ1DKqxAzAz57PHAqQQxqdPCG6zL3u2ErLF48GH8lMKz
+         ENiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=yReG/qE4lnMuppF8Tubt7vMKbcs2HHd+mtiATnhZ9GU=;
-        b=O+kVHKvAy2p3IdPqNzmXVPX+Ys283RrMC1xAR1bFpfEZ/KeIlc5nuMbgcMsqtdcdsA
-         hcXSY6M5BxZh41xz4KLoK/KcPjMm+HmY7rP/lpiOGN++CbcCsJARz8NYi+QxU7Fr3n2d
-         Yz18fyJMWjCGMaBTHOEOFbJAbcn4ljnxb8Ebf08zCtzE7K6HFd6qmGM2V23Ye+b8JC3T
-         cHJQrRaoN4BSpExWXx9X8H5FogVi3AjbVCis3gFoa3dvtyx9BRvjswSdGA+Q7gw/p3NF
-         0OYsbGn2zMbqMnW5ZwP7kcHLYN3ftRR2K9yHGvD/WxUcekoKQy191UaQoKxlfoVk2MNf
-         IxGg==
-X-Gm-Message-State: AGi0PuYYtSY+U0O9CuSUX0kLHCW8mO+O4+uUtY1xDuO8QHhX/GpVJYtp
-        1vXg18+Sv0KlxCTwMtmrxPhK8A==
-X-Google-Smtp-Source: APiQypJ6iiPjeJUr9ABBShEQRYkf1YYtStvqnBcQ2ovj86m9qWdQPZuUlG8wVQEIfJOjl6YqgF4plw==
-X-Received: by 2002:a17:90a:2949:: with SMTP id x9mr2398056pjf.33.1588374394136;
-        Fri, 01 May 2020 16:06:34 -0700 (PDT)
+        bh=sUG28fThwNZWu1+IhTPXdH+rfq4bZLz40PZC69kH9bE=;
+        b=sF9ZHlc+vRVbypOvMSZQbr8pOED0B3ytqur1Nyg7/R6IeFtV7wCkX26hdC/3/p8AEy
+         IoxuDW2meO+l2gbrklbaOHeKiIU93oDh95S810dBtKhpbxYVd8J0MYoQvxGcaQrdCyo6
+         i/RAYBmhLlxiMxn2hy/EvFYogDdFLFTsPylXvW8eXGpvcDMznytdxneWGwR1x4dz/qNZ
+         k+Iz7LAHWoQuG6WUC6I7eV3TuDM3jtQC8aP05CtGhvtUcFz9MR25j0LMK3mInRDjbYAF
+         gOYsqVvMAX/vAIVvUxhPXdohMiYxt+d2Gl0GSE5YZDIKU3rVTAGvSsMwxH4HlcwlVx5w
+         p6GQ==
+X-Gm-Message-State: AGi0PuaCLTdF0DMybTUp7lhP+uaMMdJDJEbvdyGR1Ixcj2heiTA1CHKz
+        qQY936QLCGow6tOzzcptEGjdE6dsnxE8rKNr
+X-Google-Smtp-Source: APiQypJXFVkKcYdw/NAMVWC+zU8gNRl7jeX1rXdhp/DXuANWtKJfGQtO4wR2e4mnzx5FMWDPbkYt3Q==
+X-Received: by 2002:a65:58c4:: with SMTP id e4mr6526999pgu.61.1588374643966;
+        Fri, 01 May 2020 16:10:43 -0700 (PDT)
 Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id v94sm578769pjb.39.2020.05.01.16.06.32
+        by smtp.gmail.com with ESMTPSA id fu12sm641989pjb.20.2020.05.01.16.10.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 May 2020 16:06:33 -0700 (PDT)
-Date:   Fri, 1 May 2020 17:06:31 -0600
+        Fri, 01 May 2020 16:10:43 -0700 (PDT)
+Date:   Fri, 1 May 2020 17:10:42 -0600
 From:   Taylor Blau <me@ttaylorr.com>
 To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, peff@peff.net, me@ttaylorr.com,
         garimasigit@gmail.com, szeder.dev@gmail.com, jnareb@gmail.com,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 04/12] bloom: de-duplicate directory entries
-Message-ID: <20200501230631.GA46422@syl.local>
+Subject: Re: [PATCH 05/12] bloom: parse commit before computing filters
+Message-ID: <20200501231042.GB46422@syl.local>
 References: <pull.622.git.1588347029.gitgitgadget@gmail.com>
- <07d0a25f1c438f02d71918e4ca05f2901eb802be.1588347029.git.gitgitgadget@gmail.com>
+ <ef4c08e401bd57dddf327910032220632a36885f.1588347029.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <07d0a25f1c438f02d71918e4ca05f2901eb802be.1588347029.git.gitgitgadget@gmail.com>
+In-Reply-To: <ef4c08e401bd57dddf327910032220632a36885f.1588347029.git.gitgitgadget@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 01, 2020 at 03:30:21PM +0000, Derrick Stolee via GitGitGadget wrote:
+On Fri, May 01, 2020 at 03:30:22PM +0000, Derrick Stolee via GitGitGadget wrote:
 > From: Derrick Stolee <dstolee@microsoft.com>
 >
-> When computing a changed-path Bloom filter, we need to take the
-> files that changed from the diff computation and extract the parent
-> directories. That way, a directory pathspec such as "Documentation"
-> could match commits that change "Documentation/git.txt".
+> When computing changed-path Bloom filters for a commit, we need to
+> know if the commit has a parent or not. If the commit is not parsed,
+> then its parent pointer will be NULL.
 >
-> However, the current code does a poor job of this process. The paths
-> are added to a hashmap, but we do not check if an entry already
-> exists with that path. This can create many duplicate entries and
-> cause the filter to have a much larger length than it should. This
-> means that the filter is more sparse than intended, which helps the
-> false positive rate, but wastes a lot of space.
->
-> Properly use hashmap_get() before hashmap_add(). Also be sure to
-> include a comparison function so these can be matched correctly.
->
-> This has an effect on a test in t0095-bloom.sh. This makes sense,
-> there are ten changes inside "smallDir" so the total number of
-> paths in the filter should be 11. This would result in 11 * 10 bits
-> required, and with 8 bits per byte, this results in 14 bytes.
+> As far as I can tell, the only opportunity to reach this code
+> without parsing the commit is inside "test-tool bloom
+> get_filter_for_commit" but it is best to be safe.
 >
 > Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 > ---
->  bloom.c          | 35 ++++++++++++++++++++++++++---------
->  t/t0095-bloom.sh |  4 ++--
->  2 files changed, 28 insertions(+), 11 deletions(-)
+>  bloom.c | 3 +++
+>  1 file changed, 3 insertions(+)
 >
 > diff --git a/bloom.c b/bloom.c
-> index 2e3e0f5037b..eb08571c628 100644
+> index eb08571c628..c3b81b1a38a 100644
 > --- a/bloom.c
 > +++ b/bloom.c
-> @@ -158,6 +158,19 @@ void init_bloom_filters(void)
->  	init_bloom_filter_slab(&bloom_filters);
->  }
+> @@ -206,6 +206,9 @@ struct bloom_filter *get_bloom_filter(struct repository *r,
+>  	diffopt.max_changes = max_changes;
+>  	diff_setup_done(&diffopt);
 >
-> +static int pathmap_cmp(const void *hashmap_cmp_fn_data,
-> +		       const struct hashmap_entry *eptr,
-> +		       const struct hashmap_entry *entry_or_key,
-> +		       const void *keydata)
-> +{
-> +	const struct pathmap_hash_entry *e1, *e2;
-> +
-> +	e1 = container_of(eptr, const struct pathmap_hash_entry, entry);
-> +	e2 = container_of(entry_or_key, const struct pathmap_hash_entry, entry);
-> +
-> +	return strcmp(e1->path, e2->path);
-> +}
-> +
->  struct bloom_filter *get_bloom_filter(struct repository *r,
->  				      struct commit *c,
->  				      int compute_if_not_present)
-> @@ -203,25 +216,29 @@ struct bloom_filter *get_bloom_filter(struct repository *r,
->  		struct hashmap pathmap;
->  		struct pathmap_hash_entry *e;
->  		struct hashmap_iter iter;
-> -		hashmap_init(&pathmap, NULL, NULL, 0);
-> +		hashmap_init(&pathmap, pathmap_cmp, NULL, 0);
->
->  		for (i = 0; i < diff_queued_diff.nr; i++) {
->  			const char *path = diff_queued_diff.queue[i]->two->path;
->
->  			/*
-> -			* Add each leading directory of the changed file, i.e. for
-> -			* 'dir/subdir/file' add 'dir' and 'dir/subdir' as well, so
-> -			* the Bloom filter could be used to speed up commands like
-> -			* 'git log dir/subdir', too.
-> -			*
-> -			* Note that directories are added without the trailing '/'.
-> -			*/
-> +			 * Add each leading directory of the changed file, i.e. for
-> +			 * 'dir/subdir/file' add 'dir' and 'dir/subdir' as well, so
-> +			 * the Bloom filter could be used to speed up commands like
-> +			 * 'git log dir/subdir', too.
-> +			 *
-> +			 * Note that directories are added without the trailing '/'.
-> +			 */
->  			do {
->  				char *last_slash = strrchr(path, '/');
->
->  				FLEX_ALLOC_STR(e, path, path);
->  				hashmap_entry_init(&e->entry, strhash(path));
-> -				hashmap_add(&pathmap, &e->entry);
-> +
-> +				if (!hashmap_get(&pathmap, &e->entry, NULL))
-> +					hashmap_add(&pathmap, &e->entry);
-> +				else
-> +					free(e);
+> +	/* ensure commit is parsed so we have parent information */
 
-Yep; this seems right on: if we have a match in the hashmap already,
-there's no need to add another one. In fact, it's much better not to, as
-you point out.
+I don't think that this comment is critical to the change, since
+familiar readers will know why this 'parse_commit' call is here, but I
+don't really mind either way...
 
-In the case that we didn't need to add one, we can free up the
-corresponding resources (I had to double-check that 'free()' would
-appropriately discard the flex array, but that's fine).
+> +	parse_commit(c);
+> +
 
-Nice find!
+OK. I figure that we could force the callers to parse these commits, but
+I think that this approach makes more sense. This should be a no-op for
+already-parsed commits, which means we'll get out of this call pretty
+quickly.
 
->  				if (!last_slash)
->  					last_slash = (char*)path;
-> diff --git a/t/t0095-bloom.sh b/t/t0095-bloom.sh
-> index 8f9eef116dc..6defeb544f1 100755
-> --- a/t/t0095-bloom.sh
-> +++ b/t/t0095-bloom.sh
-> @@ -89,8 +89,8 @@ test_expect_success 'get bloom filter for commit with 10 changes' '
->  	git add smallDir &&
->  	git commit -m "commit with 10 changes" &&
->  	cat >expect <<-\EOF &&
-> -	Filter_Length:25
-> -	Filter_Data:82|a0|65|47|0c|92|90|c0|a1|40|02|a0|e2|40|e0|04|0a|9a|66|cf|80|19|85|42|23|
-> +	Filter_Length:14
-> +	Filter_Data:02|b3|c4|a0|34|e7|fe|eb|cb|47|fe|a0|e8|72|
->  	EOF
->  	test-tool bloom get_filter_for_commit "$(git rev-parse HEAD)" >actual &&
->  	test_cmp expect actual
+The benefit there, of course, would be that we don't have to worry about
+some callers forgetting to make sure that they are passing
+already-parsed commits, and that the trade-off we make to allow such a
+thing is pretty cheap, relatively speaking.
+
+>  	if (c->parents)
+>  		diff_tree_oid(&c->parents->item->object.oid, &c->object.oid, "", &diffopt);
+>  	else
 > --
 > gitgitgadget
 
-Makes sense, I figured that there'd be a little bit of test-fallout
-here.
+Makes sense, thanks.
 
   Reviewed-by: Taylor Blau <me@ttaylorr.com>
 
