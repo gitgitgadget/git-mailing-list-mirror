@@ -2,120 +2,137 @@ Return-Path: <SRS0=YBbL=6P=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B3760C47254
-	for <git@archiver.kernel.org>; Fri,  1 May 2020 23:46:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 912BCC47254
+	for <git@archiver.kernel.org>; Fri,  1 May 2020 23:59:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8B96321775
-	for <git@archiver.kernel.org>; Fri,  1 May 2020 23:46:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4AA342166E
+	for <git@archiver.kernel.org>; Fri,  1 May 2020 23:59:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="DGZPHXCH"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="ga9/UW+u"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726562AbgEAXqV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 1 May 2020 19:46:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34756 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726437AbgEAXqV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 May 2020 19:46:21 -0400
-Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E49EAC061A0C
-        for <git@vger.kernel.org>; Fri,  1 May 2020 16:46:20 -0700 (PDT)
-Received: by mail-pl1-x644.google.com with SMTP id s20so4177021plp.6
-        for <git@vger.kernel.org>; Fri, 01 May 2020 16:46:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=V6VkPJ6JAmXltz6vOqLYctzHkTZcdht6TWc/6nXH9iI=;
-        b=DGZPHXCHrqhU20TF2mjIFVqGa5HGDhw9EhvY7rmMu2LcjjyyBNyJogr7efUUV/+/o5
-         DuJfwZ+0XLWx8XGr9Tw+ZseNK5AhQVd7aSWClFopgOeyqjhpxBbwnk0gEt0a7ZEfPxiL
-         qTgLR4zFVo4EOOshWcPx6tWdsK6hzfIvAPctRhWcszCndPIWg8QiEyACt2Lsvbb3h0vx
-         loDk7ANUPfMiB3Xj2MTQGkA2t7NJzWNoXky2BTXvPBcPq5lBwbr7l/ywYEKB/r7p6zoE
-         eI7DVZFwlHEzlRKY/InhNDblU3FLi0W9NEK0/2gypxLPR71bl3amAWoe91zuGCpbQI6V
-         /F/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=V6VkPJ6JAmXltz6vOqLYctzHkTZcdht6TWc/6nXH9iI=;
-        b=WbBoT7vMYF0ixzV6eWps2mjxyXoV511C70nUgkRSPOhCqaKdCCOIE0q+kyv2mMztsi
-         xJgl+qnwlqRisHviFedj/ZtAHryYD4LbZf/3+vQEff5puWO8kgOilWzjOaohwsvOj9qP
-         WDRv9EjJrnoCPS03tk0XL3tMeC+VL+bZwSs9Vq8Gjf7q6y/siPGVUsrcUitmSliS6hE2
-         H4jn/CjcgZteJgDhOU7sX766ijdkeVz9CCXral5uJEb4AMSq4OseKhMk4GKZQE7l/bbr
-         25FMsft1InusuhTnCLShy1yGkkp/SjHcQHvSWYidCoFnxpeo/XUHd1Z1b507j/gTELfV
-         vhvw==
-X-Gm-Message-State: AGi0PuaGG95rMetysHnFekFXTgc7fYFUIFbqebcXpS+UcL8PmudI6X8S
-        IWa+op9Tty35XrlPq+KqziJxyQ==
-X-Google-Smtp-Source: APiQypKF2XPGWU9btCWkcpS460B/hjdGM0TmuZtashCwNSrcBEe6DDZ4AeAItlmamFycubjMMc7m+w==
-X-Received: by 2002:a17:90a:2023:: with SMTP id n32mr2538276pjc.150.1588376780449;
-        Fri, 01 May 2020 16:46:20 -0700 (PDT)
-Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id t80sm3237386pfc.23.2020.05.01.16.46.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 May 2020 16:46:19 -0700 (PDT)
-Date:   Fri, 1 May 2020 17:46:18 -0600
-From:   Taylor Blau <me@ttaylorr.com>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= via GitGitGadget 
-        <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, peff@peff.net, me@ttaylorr.com,
-        garimasigit@gmail.com, szeder.dev@gmail.com, jnareb@gmail.com,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 08/12] line-log: remove unused fields from 'struct
- line_log_data'
-Message-ID: <20200501234618.GE46422@syl.local>
-References: <pull.622.git.1588347029.gitgitgadget@gmail.com>
- <1f326612da05dfa74ebaaee6a852d5ef92a4ed29.1588347029.git.gitgitgadget@gmail.com>
+        id S1726562AbgEAX75 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 1 May 2020 19:59:57 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:37860 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726437AbgEAX74 (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 1 May 2020 19:59:56 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 057C36048E;
+        Fri,  1 May 2020 23:59:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1588377595;
+        bh=LvDTlLmo8M4w4FfL23vgC6LZsLZaZpVm5dSK3MneZMY=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=ga9/UW+uSvEsDpvRRRfin9n7tNXacPUU1jL0+xEYpd5drPGfMEpnE+CLF5mKy/WKq
+         jOaG8Gty+E0k4+KQWiS+fRGhe7B7fyD3vyl0L6dNHSaQJ8Kn7R/TNufzgB+MoGJV4L
+         EeDzdtSL+e/qtVVFx8g/cA8L5ltN9jtlAM2Ek51ejadH7CsJLJXTGBKBfK9w/2qpiR
+         TFAXXvhk33XWKttoeXLpK70I3WVdvp2qAId8yQ1c8WwJ9+47wpQnhdDZa+8jJoWbsb
+         9//eDzpcXmFPy0uaOuZV7ca0sFYm7OOPAy4lmBEcVus7c80VpAWdmKTf9uixSN5Bcx
+         tiWepsojmoLsU/0RaQ1bB4V4Meq3vgGqt030cdbjU2iFb/2712qca6rdtOUtgKQVDv
+         4bMCtDSEr0IO3KQG6qDVA544MHIjIGxFE4XglrGG5d0XayRoWbtxcRzgYvNxEr6DZ8
+         BN/NupubUP4K/elh78b1Ft7R2Yf3/BoPza2pBKlZ7HOaen5WVpM
+Date:   Fri, 1 May 2020 23:59:48 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>,
+        Leonardo Bras <leobras.c@gmail.com>, git@vger.kernel.org,
+        Jan Viktorin <viktorin@rehivetech.com>,
+        Michal Nazarewicz <mina86@mina86.com>
+Subject: Re: [PATCH] send-email: Defines smtpPassCmd config option
+Message-ID: <20200501235948.GD6530@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
+        Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>,
+        Leonardo Bras <leobras.c@gmail.com>, git@vger.kernel.org,
+        Jan Viktorin <viktorin@rehivetech.com>,
+        Michal Nazarewicz <mina86@mina86.com>
+References: <20200501105131.297457-1-leobras.c@gmail.com>
+ <20200501125308.GE33264@Carlos-MBP>
+ <xmqqees3odrb.fsf@gitster.c.googlers.com>
+ <20200501222723.GF41612@syl.local>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="hoZxPH4CaxYzWscb"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <1f326612da05dfa74ebaaee6a852d5ef92a4ed29.1588347029.git.gitgitgadget@gmail.com>
+In-Reply-To: <20200501222723.GF41612@syl.local>
+X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
+ 5.6.0-trunk-amd64)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 01, 2020 at 03:30:25PM +0000, SZEDER Gábor via GitGitGadget wrote:
-> From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
->
-> Remove the unused fields 'status', 'arg_alloc', 'arg_nr' and 'args'
-> from 'struct line_log_data'.  They were already part of the struct
-> when it was introduced in commit 12da1d1f6 (Implement line-history
-> search (git log -L), 2013-03-28), but as far as I can tell none of
-> them have ever been actually used.
->
-> Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  line-log.h | 3 ---
->  1 file changed, 3 deletions(-)
->
-> diff --git a/line-log.h b/line-log.h
-> index 8ee7a2bd4a1..882c5055bb8 100644
-> --- a/line-log.h
-> +++ b/line-log.h
-> @@ -46,10 +46,7 @@ void sort_and_merge_range_set(struct range_set *);
->  struct line_log_data {
->  	struct line_log_data *next;
->  	char *path;
-> -	char status;
->  	struct range_set ranges;
-> -	int arg_alloc, arg_nr;
-> -	const char **args;
->  	struct diff_filepair *pair;
->  	struct diff_ranges diff;
->  };
-> --
-> gitgitgadget
 
-Very sensible.
+--hoZxPH4CaxYzWscb
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-  Reviewed-by: Taylor Blau <me@ttaylorr.com>
+On 2020-05-01 at 22:27:23, Taylor Blau wrote:
+> On Fri, May 01, 2020 at 08:50:48AM -0700, Junio C Hamano wrote:
+> > Documenting that "git send-email" can use "git credential" for its
+> > password store, if it is not already documented, is of course a good
+> > change.
+>=20
+> I agree completely.
 
-Thanks,
-Taylor
+I also concur.
+
+> > But I am not sure why this is "a good alternative".  Having more
+> > choices that do not offer anything substantially different is a bad
+> > thing.  Is this "new mechanism" better in what way?  Simpler to use?
+> > Faster?  Less error prone?  Something else?
+>=20
+> Ditto. I don't think that an increased surface-area of possibilities to
+> specify your password to 'git send-email' is useful. Put another way:
+> why *not* use the in-built credential helper, which is already
+> supported?
+>=20
+> Would having it documented eliminate some rationale for invoking a
+> separate program?
+
+I think perhaps many folks aren't aware that you can invoke Git with an
+arbitrary shell command as "credential.helper", which of course makes
+life a lot easier.  So if you want to invoke a separate command, it's
+really as easy as this:
+
+  git config credential.smtp://smtp.crustytoothpaste.net.helper \
+    '!f() { echo username=3Dmy-username; echo "password=3D$(my-password-com=
+mand)"; }; f'
+
+So I think that documenting the use of the credential helper is step 1,
+because probably most people _do_ want to use that for their passwords,
+and then documenting that credential helpers can be arbitrary shell
+commands that speak the protocol is step 2, so that people who don't can
+figure out a way to do what they want.
+
+I'll send some patches later which document the latter feature, since I
+don't think we mention it anywhere outside of the FAQ.  I actually
+didn't know about it until Peff mentioned it to me one time.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--hoZxPH4CaxYzWscb
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.20 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXqy38gAKCRB8DEliiIei
+gWVpAP99B0eOBp8nYQ+WKHjjPJcosHiV+zxUj79OuikBPYH1ogD7BS1v89cuRBMk
+SIjLaCwoIltOlauTRCHwDa27m+jRUQs=
+=cY6N
+-----END PGP SIGNATURE-----
+
+--hoZxPH4CaxYzWscb--
